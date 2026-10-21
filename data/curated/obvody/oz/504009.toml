@@ -1,0 +1,127 @@
+# Council obvody of Sereď (504009), Galanta.
+# Transcribed by an AI agent in job obvod-rules-050 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 s počtom poslancov 10 tvoria okrsky 1-6. VOLEBNÝ OKRSOK č. 1: Dolnostredská, Kostolná, Mládežnícka Mlynárska, Novomestská, Považský breh. VOLEBNÝ OKRSOK č. 2: Cukrovarská, Kukučínova, Niklová, Školská. VOLEBNÝ OKRSOK č. 3: D.Štúra, Fándlyho. VOLEBNÝ OKRSOK č. 4: Amazonská, Bratislavská, Jarná, Južná, Kasárenská, Letná, Malý háj, Nový majer, Pažitná, Poľná, Pribinova, Priemyselná, Trnavská cesta, Vonkajší rad. VOLEBNÝ OKRSOK č. 5: Garbiarska, Námestie slobody, Parková, Starý most, Šintavská. VOLEBNÝ OKRSOK č. 6: Dolnomajerská, M.R. Štefánika, Námestie republiky a občania mesta, ktorí majú trvalý pobyt mesto Sereď bez určenia ulice
+#   obvod 2: Volebný obvod č. 2 s počtom poslancov 9 tvoria okrsky 7-13. VOLEBNÝ OKRSOK č. 7: A. Hlinku, Čepeňská 1211 – 1214, Kúpeľné námestie, Pekárska, Poštová, SNP, Spádová, Vinárska, Záhradná. VOLEBNÝ OKRSOK č. 8: Jesenského, Komenského, Železničná. VOLEBNÝ OKRSOK č. 9: Hornomajerská, Hviezdoslavova, Čepeňská-rodinné domy, Čepeňská 3047, 3081, 3735 a 4305, Fraňa Kráľa, Jilemnického, Krásna, Legionárska, Nová, Orechová, Priečna, Rovná, Slnečná, Slnečná II, Šulekovská, Vysoká. VOLEBNÝ OKRSOK č. 10: Dlhá, Hrnčiarska, Ivana Krasku, Lipová, Ľ.Podjavorinskej, Malá ulička, Pivovarská, Pod hrádzou, Podzámska, Športová, Topoľová, Vojanská. VOLEBNÝ OKRSOK č. 11: 8.mája, Dolnočepeňská, Družstevná, Kuzmányho, Matičná, Murgašova, Obežná, Sládkovičova, Stromová, Svätoplukova, Štefana Moyzesa. VOLEBNÝ OKRSOK č. 12: Jasná, Jelšová, Krátka, Krížna, Lúčna, Mierová, Pionierska, Severná, Strednočepeňská, Tehelná, Vážska, Veterná. VOLEBNÝ OKRSOK č. 13: Hornočepeňská, Konvalinková, Levanduľová, Nezábudková, Púpavová, Tulipánová, Ulica Za kaplnkou
+obec = "504009"
+name = "Sereď"
+date = 2026-06-18
+fill = "nearest"
+note = "Resolution 156/2026 sets 2 obvody (10 + 9 seats); the attached PDF lists volebné okrsky by street and states obvod 1 = okrsky 1-6, obvod 2 = okrsky 7-13. Rules transcribed from the okrsok street lists. 'Južná' (okrsok 4) is not in the address register and is omitted. Okrsok 6 also has 'občania mesta, ktorí majú trvalý pobyt mesto Sereď bez určenia ulice': citizens registered only at the town (no house), who are not in the address register; the document places no addresses without a street, so fill_nearest does."
+
+[[document]]
+url = "https://www.sered.sk/modules/file_storage/download.php?file=2200e017%7C2791&inline=1"
+sha256 = "3b1e669dd6ef19bf6bc27e9b3cdd0128007edeca60793380316a0f8ba8d1d316"
+title = "Uznesenie MsZ č. 156/2026 - volebné obvody a počet poslancov MsZ (zo dňa 18.06.2026)"
+
+[obvod.1]
+seats = 10
+rules = [
+  {street = "Dolnostredská"},
+  {street = "Kostolná"},
+  {street = "Mládežnícka"},
+  {street = "Mlynárska"},
+  {street = "Novomestská"},
+  {street = "Považský breh"},
+  {street = "Cukrovarská"},
+  {street = "Kukučínova"},
+  {street = "Niklová"},
+  {street = "Školská"},
+  {street = "D. Štúra", written = "D.Štúra"},
+  {street = "Fándlyho"},
+  {street = "Amazonská"},
+  {street = "Bratislavská"},
+  {street = "Jarná"},
+  {street = "Kasárenská"},
+  {street = "Letná"},
+  {street = "Malý háj"},
+  {street = "Nový majer"},
+  {street = "Pažitná"},
+  {street = "Poľná"},
+  {street = "Pribinova"},
+  {street = "Priemyselná"},
+  {street = "Trnavská cesta"},
+  {street = "Vonkajší rad"},
+  {street = "Garbiarska"},
+  {street = "Námestie slobody"},
+  {street = "Parková"},
+  {street = "Starý most"},
+  {street = "Šintavská"},
+  {street = "Dolnomajerská"},
+  {street = "M.R.Štefánika", written = "M.R. Štefánika"},
+  {street = "Námestie republiky"},
+]
+
+[obvod.2]
+seats = 9
+rules = [
+  {street = "A.Hlinku", written = "A. Hlinku"},
+  {street = "Čepeňská", note = "Document lists Čepeňská 1211–1214 (okrsok 7) and Čepeňská rodinné domy plus 3047, 3081, 3735, 4305 (okrsok 9); both okrsky are in obvod 2, so the whole street is in obvod 2."},
+  {street = "Kúpeľné námestie"},
+  {street = "Pekárska"},
+  {street = "Poštová"},
+  {street = "SNP"},
+  {street = "Spádová"},
+  {street = "Vinárska"},
+  {street = "Záhradná"},
+  {street = "Jesenského"},
+  {street = "Komenského"},
+  {street = "Železničná"},
+  {street = "Hornomajerská"},
+  {street = "Hviezdoslavova"},
+  {street = "Fraňa Kráľa"},
+  {street = "Jilemnického"},
+  {street = "Krásna"},
+  {street = "Legionárska"},
+  {street = "Nová"},
+  {street = "Orechová"},
+  {street = "Priečna"},
+  {street = "Rovná"},
+  {street = "Slnečná"},
+  {street = "Slnečná II"},
+  {street = "Šulekovská"},
+  {street = "Vysoká"},
+  {street = "Dlhá"},
+  {street = "Hrnčiarska"},
+  {street = "Ivana Krasku"},
+  {street = "Lipová"},
+  {street = "Ľ. Podjavorinskej", written = "Ľ.Podjavorinskej"},
+  {street = "Malá ulička"},
+  {street = "Pivovarská"},
+  {street = "Pod hrádzou"},
+  {street = "Podzámska"},
+  {street = "Športová"},
+  {street = "Topoľová"},
+  {street = "Vojanská"},
+  {street = "8.mája"},
+  {street = "Dolnočepeňská"},
+  {street = "Družstevná"},
+  {street = "Kuzmányho"},
+  {street = "Matičná"},
+  {street = "Murgašova"},
+  {street = "Obežná"},
+  {street = "Sládkovičova"},
+  {street = "Stromová"},
+  {street = "Svätoplukova"},
+  {street = "Štefana Moyzesa"},
+  {street = "Jasná"},
+  {street = "Jelšová"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Lúčna"},
+  {street = "Mierová"},
+  {street = "Pionierska"},
+  {street = "Severná"},
+  {street = "Strednočepeňská"},
+  {street = "Tehelná"},
+  {street = "Vážska"},
+  {street = "Veterná"},
+  {street = "Hornočepeňská"},
+  {street = "Konvalinková"},
+  {street = "Levanduľová ulica", written = "Levanduľová"},
+  {street = "Nezábudková"},
+  {street = "Púpavová ulica", written = "Púpavová"},
+  {street = "Tulipánová"},
+  {street = "Ulica Za kaplnkou"},
+]

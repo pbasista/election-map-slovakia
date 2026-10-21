@@ -1,0 +1,146 @@
+# Sites the research agents may cite.
+#
+# Selection rule for the media-* categories: rank brands by online weekly
+# reach in the Reuters Institute Digital News Report 2026; keep those with
+# measured net trust (trust - distrust) of at least +5 points; take the top
+# 10; on equal reach, higher net trust wins. A brand counts only if both its
+# online reach and its trust are published on the country page, so a country
+# yields fewer than 10 hosts when fewer brands qualify (noted per category).
+#   https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2026/<country>
+# Ukraine is not covered by that report, so the Institute of Mass
+# Information's High Quality List (H1 2026) is the credibility filter there:
+#   https://imi.org.ua/en/monitorings/bilij-spysok-imi-za-pershe-pivrichchya-2026-roku-uvijshly-18-media
+# and the Internews Ukraine 2025 survey supplies what reach data exists.
+# Slovak Hungarian-language media have no trust data; they are taken by
+# readership in the Forum Minority Research Institute's 2021 survey of
+# Hungarians in Slovakia, which measured seven such news sites.
+#
+# A host matches itself and all its subdomains. Hosts in the blocklist file
+# never match, whatever the allowlist says.
+blocklist = "blocklist-konspiratori.txt"
+# Official websites of municipalities and regions (category `official`).
+official_sites = "municipal-domains.toml"
+# The reports the media-* categories were selected from (rule above); the
+# About page lists them next to the allowlist.
+references = [
+    "https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2026",
+    "https://imi.org.ua/en/monitorings/bilij-spysok-imi-za-pershe-pivrichchya-2026-roku-uvijshly-18-media",
+    "https://internews.ua/en/media-research/ukrainian-media-news-consumption-and-trust-in-2025",
+    "https://forumszemle.eu/en/2022/11/22/press-tv-radio-internet-details-on-media-consumption-of-hungarians-in-slovakia-in-2021/",
+]
+
+# User-generated sections are excluded on every allowed host: any host with a
+# `blog` label (blog.sme.sk, *.blog.pravda.sk) and any path with a segment
+# for blogs, reader discussions or forums (/blog/..., aktuality.sk/diskusia/...,
+# /diskusie/, Czech /diskuse/, /forum/).
+[exclude]
+host_labels = ["blog"]
+path_segments = ["blog", "diskusia", "diskusie", "diskuse", "forum"]
+
+[categories]
+# Only 7 qualify: tvnoviny.sk (Markiza, net +2), topky.sk, refresher.sk,
+# cas.sk, dennikn.sk (net -2) and pluska.sk fall below +5; startitup.sk,
+# 360tka.sk and dnes24.sk have no trust score.
+media-sk = [
+    "aktuality.sk",
+    "sme.sk",
+    "ta3.com",
+    "pravda.sk",
+    "noviny.sk",
+    "spravy.stvr.sk",
+    "hnonline.sk",
+]
+# Only 9 qualify: Blesk is below +5; DenikN.cz, Super.cz, Parlamentnilisty.cz,
+# Extra.cz, Lidovky.cz and Forum24.cz have no trust score.
+media-cz = [
+    "seznamzpravy.cz",
+    "idnes.cz",
+    "novinky.cz",
+    "aktualne.cz",
+    "cnn.iprima.cz",
+    "ct24.ceskatelevize.cz",
+    "tn.nova.cz",
+    "denik.cz",
+    "irozhlas.cz",
+]
+# Only 5 qualify: index.hu, origo.hu, atv.hu (net +2), tenyek.hu (TV2),
+# blikk.hu, hirado.hu and hirtv.hu fall below +5; the rest have no trust score.
+media-hu = ["telex.hu", "24.hu", "444.hu", "rtl.hu", "hvg.hu"]
+# Only 8 qualify: TVP.info (net +4), Wyborcza.pl (net +3) and Fakt.pl fall
+# below +5; Kanal Zero, Gazeta.pl, NaszeMiasto.pl and Polityka.pl have no
+# trust score.
+media-pl = [
+    "onet.pl",
+    "wp.pl",
+    "tvn24.pl",
+    "interia.pl",
+    "rmf24.pl",
+    "polsatnews.pl",
+    "radiozet.pl",
+    "newsweek.pl",
+]
+# Only 9 qualify: Heute is below +5; meinbezirk.at, GMX, KroneHit, CNN, BBC
+# and Puls 24 have no trust score (the trust table rates Puls 4 News, a
+# different brand).
+media-at = [
+    "orf.at",
+    "krone.at",
+    "derstandard.at",
+    "oe24.at",
+    "kurier.at",
+    "kleinezeitung.at",
+    "diepresse.com",
+    "nachrichten.at",
+    "news.at",
+]
+# The first five are the IMI-listed sites with a reach figure in the Internews
+# 2025 survey (national news sites used most often), in that order. The other
+# five have no reach figure; they follow the order of IMI's own list, which is
+# not a ranking, so their selection and order are unverified.
+media-ua = [
+    "pravda.com.ua",
+    "suspilne.media",
+    "hromadske.ua",
+    "ukrinform.ua",
+    "nv.ua",
+    "espreso.tv",
+    "babel.ua",
+    "radiosvoboda.org",
+    "texty.org.ua",
+    "lb.ua",
+]
+# Slovak media in Hungarian, by readership in the Forum Institute survey. Only
+# 7: the survey measured no other Slovak Hungarian-language news site.
+media-sk-hu = [
+    "ujszo.com",
+    "parameter.sk",
+    "felvidek.ma",
+    "hirek.sk",
+    "bumm.sk",
+    "ma7.sk",
+    "korkep.sk",
+]
+# Official sites and public registers; municipal and regional domains are
+# added from municipal-domains.toml.
+official = [
+    "minv.sk",
+    "volby.statistics.sk",
+    "slov-lex.sk",
+    "orsr.sk",
+    "rpvs.gov.sk",
+    "crz.gov.sk",
+    "registeruz.sk",
+    "uvo.gov.sk",
+    "nrsr.sk",
+]
+
+# The candidate research runs per language: the agents of one language search
+# these categories, in that language, so a person is researched in each
+# language separately (`ems job make research --only <language>`).
+[research]
+sk = ["media-sk", "official"]
+hu = ["media-sk-hu", "media-hu"]
+cs = ["media-cz"]
+pl = ["media-pl"]
+de = ["media-at"]
+uk = ["media-ua"]

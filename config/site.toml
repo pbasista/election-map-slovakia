@@ -1,0 +1,24 @@
+# Absolute URL of the site's own domain (a custom domain of the Pages
+# project; see docs/deploy.md). It makes the language links and the
+# canonical link of every page absolute and keeps search engines off
+# <pages_project>.pages.dev, which keeps serving the same files. Empty: the
+# site is known only by its pages.dev address and links stay relative.
+base_url = "https://volebnamapa.sk"
+# The source code repository, linked from the About dialog.
+repository = "https://github.com/pbasista/election-map-slovakia"
+# Cloudflare Pages project that `release.yml` uploads dist/ to.
+pages_project = "election-map-slovakia"
+# Election day of the 2026 municipal and regional elections.
+election = 2026-10-24
+# true switches the UI to show results first (after the election).
+results_mode = false
+# Cloudflare Pages allows 20,000 files per deployment on the Free plan
+# (https://developers.cloudflare.com/pages/platform/limits/, checked
+# 2026-10-18); `check` fails above this, leaving headroom for files added
+# outside the build.
+file_budget = 19000
+# Cloudflare Pages per-file limit: 25 MiB (same page).
+max_file_bytes = 26214400
+# Images larger than this (512 KiB) are left out of cached copies and keep
+# only their link, so a few photo-heavy pages cannot dominate the repository.
+cache_image_max_bytes = 524288

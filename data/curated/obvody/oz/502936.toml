@@ -1,0 +1,27 @@
+# Council obvody of Veľký Ďur (502936), Levice.
+# Transcribed by an AI agent in job obvod-rules-151 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 (Dolný Ďur, Horný Ďur) 7 poslancov
+#   obvod 2: Volebný obvod č. 2 (Rohožnica) 2 poslanci
+obec = "502936"
+name = "Veľký Ďur"
+date = 2026-06-04
+
+[[document]]
+url = "https://www.velkydur.sk/download_file_f.php?id=2446244"
+sha256 = "f120bf8b308cd8687953b7b748faff7c3afef732fb20a697662294bbf3b0e5fe"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 283/28/2026 zo dňa 04.06.2026)"
+
+[obvod.1]
+seats = 7
+rules = [
+  {part = "Dolný Ďur"},
+  {part = "Horný Ďur"},
+]
+
+[obvod.2]
+seats = 2
+rules = [
+  {part = "Rohožnica"},
+]

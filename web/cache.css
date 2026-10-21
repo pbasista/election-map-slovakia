@@ -1,0 +1,45 @@
+/* Cached copies of cited pages (cache.py): the page's own styles are gone,
+   so this keeps the text readable and the images within the page. */
+:root {
+  color-scheme: light dark;
+  font: 16px/1.5 system-ui, sans-serif;
+}
+body {
+  margin: 0 auto;
+  max-width: 48rem;
+  padding: 0 1rem 2rem;
+}
+.cache-banner {
+  position: sticky;
+  top: 0;
+  margin: 0 -1rem 1rem;
+  padding: 0.5rem 1rem;
+  background: #fff4cc;
+  color: #222;
+  border-bottom: 1px solid #c9b25a;
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+.cache-banner a {
+  color: inherit;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+table {
+  border-collapse: collapse;
+  max-width: 100%;
+  display: block;
+  overflow-x: auto;
+}
+td,
+th {
+  border: 1px solid #8888;
+  padding: 0.25rem 0.5rem;
+}
+nav ul,
+header ul,
+footer ul {
+  padding-left: 1rem;
+}

@@ -1,0 +1,32 @@
+# Council obvody of Šuňava (524107), Poprad.
+# Transcribed by an AI agent in job obvod-rules-155 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: miestnu časť Nižná Šuňava Ulice: SNP, Družstevná, Záhradná, Jagrová, Mieru, Š. Šmálika, Športová, Hŕbky, Tatranská, Tichá sa volia 4 poslanci.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: miestnu časť Vyšná Šuňava Ulice: SNP, Lúčna, Cintorínska, Pod vodojemom, Poľnohospodárska, Štrbská, Liptovská, Krátka, Podhorská, Okružná sa volia 4 poslanci.
+obec = "524107"
+name = "Šuňava"
+date = 2026-07-20
+note = "Notice-board page says uznesenie č. 284/2026 zo dňa 20. 7. 2026; the PDF itself (dated 21.07.2026) cites 'uznesením č. 294/2018 zo dňa 21.06.2018', apparently a leftover from the 2018 template. Date taken from the web page. Obvody are defined by miestne časti; SNP and Š. Šmálika lie in both parts and are split by part. Trojičné námestie (Vyšná Šuňava) is not listed but falls under part Vyšná Šuňava."
+
+[[document]]
+url = "https://www.sunava.sk/e_download.php?file=/data/uredni_deska/obsah671_1.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20obvodov%20a%20ur%C4%8Den%C3%AD%20po%C4%8Dtu%20poslancov%20pre%20vo%C4%BEby%20do%20samospr%C3%A1vy%202026.pdf"
+sha256 = "f79e0a566a87c3a84ed8919277789f3cc066d0fc4fd2b67ad0b5f122224c44b0"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (Šuňava, 21.07.2026)"
+
+[[document]]
+url = "https://www.sunava.sk/urad/uradna-tabula/oznamenie-o-urceni-poctu-poslancov-a-o-utvoreni-volebnych-obvodov-pre-volby-do-organov-samospravy-obci-2026-713.html"
+sha256 = "6aa576c1635fee1291071fee321b1167eb8881ab5b89fae3525ebc79d6ea4533"
+title = "Úradná tabuľa: Oznámenie o určení počtu poslancov a o utvorení volebných obvodov 2026"
+
+[obvod.1]
+seats = 4
+rules = [
+  {part = "Nižná Šuňava"},
+]
+
+[obvod.2]
+seats = 4
+rules = [
+  {part = "Vyšná Šuňava"},
+]

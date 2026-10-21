@@ -1,0 +1,124 @@
+# Council obvody of Rožňava (525529), Rožňava.
+# Transcribed by an AI agent in job obvod-rules-065 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Malá, Rožňavská Baňa, Nadabula, Rožňava 3655, bez ulice Dovčíkova, Kozmonautov, Krásnohorská, Ružová, Sama Tomášika, Slnečná, Vitéz kert, Banícka, Cintorínska, Hornocintorínska, Hrnčiarska, Huta, Jána Brocku, Jasná, Juraja Marikovszkého, Klobučnícka, Krátka, Kúpeľná, Majerská, Martina Kukučína, Podrákošská, Skalná, Splavná, Strmá, Útulná, Čučmianska dlhá, J. A. Komenského, Lesná, Čučmianska, Sama Czabána, Akademika Hronca, Alej Antona Kissa, Betliarska, Cyrila a Metoda, Janka Kráľa, Kósu – Schoppera, Kvetná, Lipová, Námestie 1. mája, Námestie baníkov, Normová, Pod Kalváriou, Šafárikova, Špitálska, Tichá, Tlačiarenska, Záhradnícka, Zeleného stromu, Mierová, Zlatá, Hviezdoslavova, Jarná, Letná, Strelnica, Štítnická, Vajanského, Železničná,
+#   obvod 2: Budovateľská, Chalupkova, Jozefa Mikulíka, Pionierov, Šípkova, Kolomana Tichyho, Košická, Páterova, Pavla Dobšinského, Pod Gombášom, Rumunská, 29. augusta, 9. mája, Alej Jána Pavla II., Bočná,Eernesta Rótha, Františky Andrássyovej, Garbiarska, Gemerská, Južná, Kasárenská, Laca Novomeského, Szilvássyho, Tehelná, Andreja Cházára, Jovická, M. R. Štefánika, Okružná, Východná, Zoltána Fábryho, Kyjevská, Dúhova, Edelényska, Zakarpatská
+obec = "525529"
+name = "Rožňava"
+date = 2026-07-14
+fill = "nearest"
+note = "Council resolution 114/2026 of 14 Jul 2026 kept the 2022 obvody (2 obvody, 7 + 6 seats); the city's announcement of 15 Jul 2026 lists the streets. The document also names 'Vitéz kert' and 'Skalná' (obvod 1), which are not in the address register and are left out. The okrsky announcement (okrsky 1-7, 9, 17, 18 -> obvod 1; 8, 10-16 -> obvod 2) agrees with the street lists. The announcement's 'Rožňava 3655, bez ulice' (obvod 1) is okrsok 9's 'Rožňava 3655, občania s trvalým pobytom „mesto Rožňava“': the street-less house súp. č. 3655 and citizens registered only at the town (no house, not in the address register). The other addresses without a street of the part Rožňava are placed by fill_nearest."
+
+[[document]]
+url = "https://www.roznava.sk/files/2026-07-15-071757-Oznamenie_vol._obvody_a_pocet_poslancov-1.pdf"
+sha256 = "be7964d421048d7752397861fcf21e7a62a306335e16d9ff5be04a33cf510322"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie MZ č. 114/2026 zo dňa 14. 07. 2026)"
+
+[[document]]
+url = "https://www.roznava.sk/files/2026-07-28-064011-Volebn___okrsky__volebn___miestnoasti_a_volebn___obvody.pdf"
+sha256 = "819898c586346f99722665bf0ddf6edbabe786b883d98c4e9fcdf19c25bcdbd1"
+title = "Oznámenie o vytvorení spoločných volebných okrskov a ich zaradení do volebných obvodov"
+
+[obvod.1]
+seats = 7
+rules = [
+  {part = "Rožňavská Baňa"},
+  {part = "Nadabula"},
+  {part = "Rožňava", numbers = "3655", note = "'Rožňava 3655' (okrsok 9, obvod 1): the house without a street súp. č. 3655"},
+  {street = "Malá"},
+  {street = "Dovčíkova"},
+  {street = "Kozmonautov"},
+  {street = "Krásnohorská"},
+  {street = "Ružová"},
+  {street = "Sama Tomášika"},
+  {street = "Slnečná"},
+  {street = "Banícka"},
+  {street = "Cintorínska"},
+  {street = "Hornocintorínska"},
+  {street = "Hrnčiarska"},
+  {street = "Huta"},
+  {street = "Jána Brocku"},
+  {street = "Jasná"},
+  {street = "Juraja Marikovszkého"},
+  {street = "Klobučnícka"},
+  {street = "Krátka"},
+  {street = "Kúpeľná"},
+  {street = "Majerská"},
+  {street = "Martina Kukučína"},
+  {street = "Podrákošská"},
+  {street = "Splavná"},
+  {street = "Strmá"},
+  {street = "Útulná"},
+  {street = "Čučmianska dlhá"},
+  {street = "J. A. Komenského"},
+  {street = "Lesná"},
+  {street = "Čučmianska"},
+  {street = "Sama Czabána"},
+  {street = "Akademika Hronca"},
+  {street = "Alej Antona Kissa"},
+  {street = "Betliarska"},
+  {street = "Cyrila a Metoda"},
+  {street = "Janka Kráľa"},
+  {street = "Kósu-Schoppera", written = "Kósu – Schoppera", note = "Same street; the document writes the hyphen with spaces as a dash."},
+  {street = "Kvetná"},
+  {street = "Lipová"},
+  {street = "Námestie 1. mája"},
+  {street = "Námestie baníkov"},
+  {street = "Normová"},
+  {street = "Pod Kalváriou"},
+  {street = "Šafárikova"},
+  {street = "Špitálska"},
+  {street = "Tichá"},
+  {street = "Tlačiarenská", written = "Tlačiarenska", note = "Typo in the document (missing accent on final a); the okrsky announcement of 28 Jul 2026 spells it Tlačiarenská."},
+  {street = "Záhradnícka"},
+  {street = "Zeleného stromu"},
+  {street = "Mierová"},
+  {street = "Zlatá"},
+  {street = "Hviezdoslavova"},
+  {street = "Jarná"},
+  {street = "Letná"},
+  {street = "Strelnica"},
+  {street = "Štítnická"},
+  {street = "Vajanského"},
+  {street = "Železničná"},
+]
+
+[obvod.2]
+seats = 6
+rules = [
+  {street = "Budovateľská"},
+  {street = "Chalupkova"},
+  {street = "Jozefa Mikulíka"},
+  {street = "Pionierov"},
+  {street = "Šípková", written = "Šípkova", note = "Typo in the document (missing accent on final a); the okrsky announcement spells it Šípková."},
+  {street = "Kolomana Tichyho"},
+  {street = "Košická"},
+  {street = "Páterova"},
+  {street = "Pavla Dobšinského"},
+  {street = "Pod Gombášom"},
+  {street = "Rumunská"},
+  {street = "29. augusta"},
+  {street = "9. mája"},
+  {street = "Alej Jána Pavla II."},
+  {street = "Bočná"},
+  {street = "Ernesta Rótha", written = "Eernesta Rótha", note = "Typo in the document (doubled E); the okrsky announcement spells it Ernesta Rótha."},
+  {street = "Františky Andrássyovej"},
+  {street = "Garbiarska"},
+  {street = "Gemerská"},
+  {street = "Južná"},
+  {street = "Kasárenská"},
+  {street = "Laca Novomeského"},
+  {street = "Szilvássyho"},
+  {street = "Tehelná"},
+  {street = "Andreja Cházára"},
+  {street = "Jovická"},
+  {street = "M. R. Štefánika"},
+  {street = "Okružná"},
+  {street = "Východná"},
+  {street = "Zoltána Fábryho"},
+  {street = "Kyjevská"},
+  {street = "Dúhová", written = "Dúhova", note = "Typo in the document (missing accent on final a); the okrsky announcement spells it Dúhová."},
+  {street = "Edelényska"},
+  {street = "Zakarpatská"},
+]

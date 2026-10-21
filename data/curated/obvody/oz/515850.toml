@@ -1,0 +1,80 @@
+# Council obvody of Veľký Krtíš (515850), Veľký Krtíš.
+# Transcribed by an AI agent in job obvod-rules-082 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č. 1 tvoria ulice: A.H.Škultétyho, or.č. (2-14), párne čísla A.H.Škultétyho, or.č. (107), nepárne čísla A.H.Škultétyho, or.č. (110-113) A.H.Škultétyho, or.č. (115), nepárne čísla A.H.Škultétyho, or.č. (1-15), nepárne čísla A.H.Škultétyho, or.č. (16-101) J.Kráľa, or. č. (1-33), nepárne čísla Lučenská, or.č. (77), nepárne čísla Lučenská, or. č. (46-82), párne čísla Lučenská, or. č. (96-98), párne čísla Lučenská, or. č. (2-42), párne čísla Lučenská, or. č. (84) Lučenská, or. č. (86) Mikszáthova, celá ulica Okružná, celá ulica Št.Tučeka, or. č. (1-37) Št.Tučeka, or. č. (39-99), nepárne čísla Št.Tučeka, or. č. (103-119), nepárne čísla Št.Tučeka, or. č. (137, 150, 163A, 163B) Št.Tučeka, or. č. (151-163), nepárne čísla Št.Tučeka, or. č. (165-167), nepárne čísla Za Parkom, celá ulica SNP, celá ulica Venevská, celá ulica Nám. A. H. Škultétyho, celá ulica Nemocničná, celá ulica Novohradská, celá ulica Za Poštou, celá ulica Banícka, celá ulica I.Madácha, celá ulica Mierová, celá ulica Školská, celá ulica Železničná, celá ulica M.R.Štefánika, celá ulica Osloboditeľov, celá ulica Písecká, celá ulica
+#   obvod 2: volebný obvod č. 2 tvoria ulice A.H.Škultétyho, or. č. (98), párne čísla A.H.Škultétyho, or.č. (77), párne čísla A.H.Škultétyho, or.č. (79), párne čísla A.H.Škultétyho, or.č. (83), párne čísla A.H.Škultétyho, or.č. (102) J.Kráľa, or.č. (2-14), párne čísla Št. Tučeka, or.č. (141-147), nepárne čísla Št. Tučeka, or.č. (38-56), párne čísla Št. Tučeka, or.č. (169), nepárne čísla Št. Tučeka, or.č.(149), nepárne čísla Št. Tučeka, or.č.(129-135), nepárne čísla Vinohradnícka, celá ulica Boženy Němcovej, or.č. (1-29), nepárne čísla Boženy Němcovej, or.č. (2-34), párne čísla Boženy Němcovej, or.č. (31-67), nepárne čísla Lučenská, or.č. (1-41), nepárne čísla Poľná, celá ulica P.O.Hviezdoslava, celá ulica Ľ.Štúra, celá ulica Lučenská, or.č. (79-91), nepárne čísla Lučenská, or.č. (43-71), nepárne čísla Červenej Armády, celá ulica Družobná, celá ulica Dúbravská cesta, celá ulica Duklianska, celá ulica Mládežnícka, celá ulica Pionierska, celá ulica Záhradná, celá ulica
+obec = "515850"
+name = "Veľký Krtíš"
+date = 2026-06-24
+fill = "nearest"
+note = "Resolution 326/2026 of 24 June 2026 (identical text in the announcement) defines obvody by street and house-number lists only. fill_nearest covers what it leaves out: J.A.Komenského (whole street, not named), A.H.Škultétyho 103-106 and 108, J.Kráľa 77, Lučenská 73, Št.Tučeka 121, 123, 127, 139, and the 1351 addresses without a street (by súpisné číslo). A.H.Škultétyho 77, 79, 83, 98 are listed in both obvody (16-101 in 1, explicitly in 2); placed in obvod 2."
+
+[[document]]
+url = "https://www.velky-krtis.sk/download_file_f.php?id=2434407"
+sha256 = "ce098ae71a85f21a0f28cb1d8723ac43e2a8648c533bac840e4288e353695077"
+title = "Uznesenia z 25. zasadnutia MsZ 24. 6. 2026 (č. 311-328/2026), uznesenie č. 326/2026"
+
+[[document]]
+url = "https://www.velky-krtis.sk/download_file_f.php?id=2443312"
+sha256 = "791d73e88569b29bb5c462a7b745e9ddf2a33feed7040f2d799d3e4187c2cb2c"
+title = "Oznámenie o utvorení volebných obvodov a určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026"
+
+[obvod.1]
+seats = 8
+rules = [
+  {street = "A.H.Škultétyho", numbers = "2-14", parity = "even"},
+  {street = "A.H.Škultétyho", numbers = "1-15", parity = "odd"},
+  {street = "A.H.Škultétyho", numbers = "16-101", except = "77, 79, 83, 98", note = "The document puts 16-101 in obvod 1 but lists 77, 79, 83 and 98 explicitly in obvod 2; the explicit numbers are taken as exceptions."},
+  {street = "A.H.Škultétyho", numbers = "107, 110-113, 115"},
+  {street = "J.Kráľa", numbers = "1-33", parity = "odd"},
+  {street = "Lučenská", numbers = "77"},
+  {street = "Lučenská", numbers = "2-42, 46-82, 96-98", parity = "even"},
+  {street = "Lučenská", numbers = "84, 86"},
+  {street = "Lučenská", numbers = "44, 88, 90, 92, 94, 100", note = "Even numbers the document omits; every other even number of Lučenská (2-42, 46-86, 96-98) is in obvod 1.", inferred = true},
+  {street = "Mikszáthova"},
+  {street = "Okružná"},
+  {street = "Št.Tučeka", numbers = "1-37"},
+  {street = "Št.Tučeka", numbers = "39-99, 103-119, 151-163, 165-167", parity = "odd"},
+  {street = "Št.Tučeka", numbers = "137, 150, 163A, 163B"},
+  {street = "Št.Tučeka", numbers = "101", note = "Omitted by the document; neighbours 99 and 103 are both in obvod 1.", inferred = true},
+  {street = "Za Parkom"},
+  {street = "SNP"},
+  {street = "Venevská"},
+  {street = "Nám.A.H.Škultétyho", written = "Nám. A. H. Škultétyho", note = "Same square; the document only adds spaces after the abbreviations."},
+  {street = "Nemocničná"},
+  {street = "Novohradská"},
+  {street = "Za Poštou"},
+  {street = "Banícka"},
+  {street = "I.Madácha"},
+  {street = "Mierová"},
+  {street = "Školská"},
+  {street = "Železničná"},
+  {street = "M.R.Štefánika"},
+  {street = "Osloboditeľov"},
+  {street = "Písecká"},
+]
+
+[obvod.2]
+seats = 7
+rules = [
+  {street = "A.H.Škultétyho", numbers = "77, 79, 83, 98, 102", note = "The document writes 77, 79 and 83 as 'párne čísla' though they are odd; read as those single house numbers."},
+  {street = "J.Kráľa", numbers = "2-14", parity = "even"},
+  {street = "Št.Tučeka", numbers = "129-135, 141-147, 149, 169", parity = "odd", written = "Št. Tučeka", note = "Same street as Št.Tučeka; the document only adds a space after 'Št.'."},
+  {street = "Št.Tučeka", numbers = "38-56", parity = "even", written = "Št. Tučeka", note = "Same street as Št.Tučeka; the document only adds a space after 'Št.'."},
+  {street = "Vinohradnícka"},
+  {street = "Boženy Němcovej", numbers = "1-29, 31-67", parity = "odd"},
+  {street = "Boženy Němcovej", numbers = "2-34", parity = "even"},
+  {street = "Boženy Němcovej", numbers = "36", note = "Only number of Boženy Němcovej the document omits; the rest of the street is in obvod 2.", inferred = true},
+  {street = "Lučenská", numbers = "1-41, 43-71, 79-91", parity = "odd"},
+  {street = "Poľná"},
+  {street = "P.O.Hviezdoslava"},
+  {street = "Ľ.Štúra"},
+  {street = "Červenej Armády"},
+  {street = "Družobná"},
+  {street = "Dúbravská cesta"},
+  {street = "Duklianska"},
+  {street = "Mládežnícka"},
+  {street = "Pionierska"},
+  {street = "Záhradná"},
+]

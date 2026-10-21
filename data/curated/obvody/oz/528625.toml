@@ -1,0 +1,27 @@
+# Council obvody of Nový Ruskov (528625), Trebišov.
+# Transcribed by an AI agent in job obvod-rules-182 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Obecné zastupiteľstvo schvaľuje volebné obvody číslo 1. Veľký Ruskov a volebný obvod číslo 2. Malý Ruskov; Obecné zastupiteľstvo schvaľuje 5. poslancov za Veľký Ruskov a 2. poslancov Malý Ruskov
+#   obvod 2: Obecné zastupiteľstvo schvaľuje volebné obvody číslo 1. Veľký Ruskov a volebný obvod číslo 2. Malý Ruskov; Obecné zastupiteľstvo schvaľuje 5. poslancov za Veľký Ruskov a 2. poslancov Malý Ruskov
+obec = "528625"
+name = "Nový Ruskov"
+date = 2026-06-18
+note = "No separate 2026 oznámenie or uznesenia PDF for the 27th session is published (the oznámenie on the elections page is from 2022); the decision is transcribed from the official minutes (zápisnica) of 18.6.2026, items 8 and 9: uznesenie 187 sets obvod 1 = Veľký Ruskov, obvod 2 = Malý Ruskov; uznesenie 188 sets 5 and 2 seats."
+
+[[document]]
+url = "https://novyruskov.sk/wp-content/uploads/dokumenty/zapisnice-zasadnuti-oz/zapisnica-z-27.-zasadnutia-oz-18.6.2026-dt5m3d.pdf"
+sha256 = "d62747018b14e1fab1ae9db089454328de43ace4171b1025f5fd0051fe1aeb2c"
+title = "Zápisnica z 27. zasadnutia OZ dňa 18.6.2026 (uznesenia č. 187 a 188)"
+
+[obvod.1]
+seats = 5
+rules = [
+  {part = "Veľký Ruskov"},
+]
+
+[obvod.2]
+seats = 2
+rules = [
+  {part = "Malý Ruskov"},
+]

@@ -1,0 +1,68 @@
+# Enabled UI languages, in switcher order. `name` is the language's own name
+# for itself; `site_name` is the site's name in that language (header, page
+# titles, and `{site}` in its UI strings); `script` is the ISO 15924 code;
+# `direction` is "ltr" or "rtl". A language without its own UI strings uses
+# those of the first `fallback` language, but keeps its own `site_name` in the
+# header. The rue and rmc names are unreviewed renderings.
+fallback = ["en", "sk"]
+
+# Browser language codes that map to an enabled language. Browsers report
+# Romani as `rom`; the site ships Carpathian Romani as `rmc`.
+[aliases]
+rom = "rmc"
+
+[language.sk]
+name = "Slovenčina"
+site_name = "Volebná mapa Slovenska"
+script = "Latn"
+direction = "ltr"
+
+[language.en]
+name = "English"
+site_name = "Election Map Slovakia"
+script = "Latn"
+direction = "ltr"
+
+[language.cs]
+name = "Čeština"
+site_name = "Volební mapa Slovenska"
+script = "Latn"
+direction = "ltr"
+
+[language.hu]
+name = "Magyar"
+site_name = "Szlovákia választási térképe"
+script = "Latn"
+direction = "ltr"
+
+[language.pl]
+name = "Polski"
+site_name = "Mapa wyborcza Słowacji"
+script = "Latn"
+direction = "ltr"
+
+[language.uk]
+name = "Українська"
+site_name = "Виборча карта Словаччини"
+script = "Cyrl"
+direction = "ltr"
+
+[language.de]
+name = "Deutsch"
+site_name = "Wahlkarte der Slowakei"
+script = "Latn"
+direction = "ltr"
+
+# Rusyn, Slovak standard (Cyrillic).
+[language.rue]
+name = "Русиньскый"
+site_name = "Волебна мапа Словеньска"
+script = "Cyrl"
+direction = "ltr"
+
+# Carpathian Romani, Slovak standard.
+[language.rmc]
+name = "Romanes"
+site_name = "Voľbengeri mapa Slovensko"
+script = "Latn"
+direction = "ltr"

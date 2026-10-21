@@ -1,0 +1,2172 @@
+/* Election Map Slovakia. System fonts only: the site loads nothing from elsewhere.
+ *
+ * The page is the map; everything else floats on it as cards and round
+ * buttons. Both themes are colour tokens on :root: light by default, dark
+ * under [data-theme="dark"], which js/theme.js stamps before the first paint
+ * from the visitor's choice or the device's. The map's canvas reads the
+ * `--map-*` tokens (js/map.js) and is redrawn when the theme changes.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* The map around Slovakia, and under the panes. */
+  --bg: #dfe5ea;
+  --surface: #ffffff;
+  --surface-2: #f1f3f6;
+  --surface-3: #e5e9ee;
+  /* Floating controls let the map show through, blurred. */
+  --glass: rgb(255 255 255 / 0.84);
+  --line: #dde1e8;
+  --line-strong: #c3cad6;
+  --text: #131820;
+  --text-dim: #414b59;
+  --text-faint: #5b6675;
+  --primary: #1c6fa8;
+  --primary-deep: #dceaf6;
+  /* The selected place, on the map and in the pane. */
+  --accent: #c8324a;
+  --accent-deep: #fbe5e9;
+  /* Notices the visitor has to heed (.notice): an amber bar and icon on a
+     plain box in the text colours, calm next to the ballots. The box is
+     lighter (dark theme: darker) than every map fill, and of none of their
+     hues, so the legend's swatches of those fills stand out on it. */
+  --warning: #a15c00;
+  --notice-bg: #ffffff;
+  /* Errors, and controversies research found (.affairs): a red of its own,
+     deeper than the selection's, on its tint. */
+  --danger: #b23641;
+  --danger-deep: #fbe9eb;
+  /* The chair badge: holds the office now. A green apart from the
+     primary (research) and the red (controversies). */
+  --office: #2e7d32;
+  --shadow: 0 1px 2px rgb(16 24 40 / 0.08), 0 6px 20px rgb(16 24 40 / 0.12);
+  --shadow-lg: 0 2px 6px rgb(16 24 40 / 0.1), 0 18px 48px rgb(16 24 40 / 0.22);
+  --scrim: rgb(16 24 40 / 0.4);
+
+  --map-land: #fbfaf7;
+  --map-kraj: #4a515c;
+  --map-okres: #8a919c;
+  --map-obec: #aeb4bd;
+  --map-pending: #f3e3c3;
+  --map-none: #e1e3e7;
+  --map-zsk: #6a3d9a;
+  --map-city: #0b7a6c;
+  --map-council: #b4441c;
+  --map-accent: var(--accent);
+  --map-pin: #ffffff;
+  --map-house: #6b7280;
+  --map-text: #1d2229;
+  /* Okres and obec names: muted below the borders, still 5:1 on land. */
+  --map-label: #5d6470;
+  --map-halo: rgb(251 250 247 / 0.92);
+  /* The countries around Slovakia: a duller land below it, their borders
+     and names fainter than its own. */
+  --map-neighbour: #eceeee;
+  --map-neighbour-line: #a3abb5;
+  --map-neighbour-label: #6e7681;
+  --map-neighbour-halo: rgb(236 238 238 / 0.92);
+
+  --fs-xs: 12px;
+  --fs-sm: 13.5px;
+  --fs-base: 15px;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --fab: 40px;
+  /* Distance of the floating things from the edges of the screen. */
+  --edge: 12px;
+  --pane-width: 400px;
+  --sheet-height: 58dvh;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0b0f14;
+  --surface: #161d28;
+  --surface-2: #1f2836;
+  --surface-3: #2a3648;
+  --glass: rgb(22 29 40 / 0.82);
+  --line: #303d50;
+  --line-strong: #55688a;
+  --text: #e9eef6;
+  --text-dim: #b6c2d4;
+  --text-faint: #98a6bc;
+  --primary: #74c0f4;
+  --primary-deep: #123249;
+  --accent: #f0677c;
+  --accent-deep: #34202b;
+  --warning: #f5b544;
+  --notice-bg: #10151d;
+  --danger: #f08891;
+  --danger-deep: #3b1f27;
+  --office: #81c784;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px rgb(0 0 0 / 0.45);
+  --shadow-lg: 0 2px 6px rgb(0 0 0 / 0.4), 0 18px 48px rgb(0 0 0 / 0.6);
+  --scrim: rgb(0 0 0 / 0.6);
+
+  --map-land: #1a212b;
+  --map-kraj: #c3ccd8;
+  --map-okres: #7f8b9c;
+  --map-obec: #46536a;
+  --map-pending: #4a3b1c;
+  --map-none: #2b313b;
+  --map-zsk: #b49cf5;
+  --map-city: #3fcab5;
+  --map-council: #f08a5d;
+  --map-pin: #f4f6f9;
+  --map-house: #8e9aab;
+  --map-text: #e3e9f1;
+  --map-label: #a3afbf;
+  --map-halo: rgb(26 33 43 / 0.92);
+  --map-neighbour: #11161d;
+  --map-neighbour-line: #445064;
+  --map-neighbour-label: #808b9b;
+  --map-neighbour-halo: rgb(17 22 29 / 0.92);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: var(--fs-base) / 1.45 var(--sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--primary);
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Headings take focus from script so screen readers announce a new pane;
+   a ring around them would look like a control. */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+h2 {
+  font-size: 1.2rem;
+  line-height: 1.3;
+  margin: 0;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.muted {
+  color: var(--text-faint);
+}
+
+.small {
+  font-size: var(--fs-sm);
+}
+
+.error {
+  color: var(--danger);
+}
+
+.grow {
+  flex: 1 1 auto;
+}
+
+.ico {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ico .fill {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* A warning: the same box wherever it is (ballots, help), lined up with the
+   ballot cards (.contest). */
+.notice {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 0 10px 8px;
+  padding: 10px 12px;
+  background: var(--notice-bg);
+  color: var(--text-dim);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--warning);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+}
+
+.notice .ico {
+  color: var(--warning);
+  /* Centred on the first line of text. */
+  margin-top: calc((1lh - 20px) / 2);
+}
+
+.noscript {
+  padding: 24px;
+}
+
+/* ---------- the map ---------- */
+
+.app,
+.map {
+  position: fixed;
+  inset: 0;
+}
+
+.map {
+  background: var(--bg);
+}
+
+.map:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: -3px;
+}
+
+.leaflet-container {
+  font: inherit;
+  background: var(--bg);
+}
+
+.km-canvas {
+  position: absolute;
+  pointer-events: none;
+}
+
+.map-error {
+  position: fixed;
+  z-index: 1100;
+  left: 50%;
+  bottom: 72px;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--danger);
+  box-shadow: var(--shadow);
+}
+
+/* Unobtrusive, but always there. */
+.leaflet-container .leaflet-control-attribution {
+  margin: 0 var(--edge) calc(6px + env(safe-area-inset-bottom)) 0;
+  padding: 1px 7px;
+  border-radius: var(--radius-sm);
+  background: var(--glass);
+  color: var(--text-faint);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.leaflet-container .leaflet-control-attribution a {
+  color: var(--text-dim);
+}
+
+/* ---------- floating things ---------- */
+
+.float,
+.fab,
+.zoom,
+.popover {
+  background: var(--glass);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  -webkit-backdrop-filter: blur(14px) saturate(1.5);
+  backdrop-filter: blur(14px) saturate(1.5);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .float,
+  .fab,
+  .zoom,
+  .popover {
+    background: var(--surface);
+  }
+}
+
+/* The left column: the search card and, under it, the pane. Clicks in the
+   space between go through to the map. */
+.side {
+  position: fixed;
+  /* Over the buttons, which the search results may reach on a phone. */
+  z-index: 1001;
+  top: calc(var(--edge) + env(safe-area-inset-top));
+  left: calc(var(--edge) + env(safe-area-inset-left));
+  bottom: calc(var(--edge) + env(safe-area-inset-bottom));
+  width: var(--pane-width);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.side > * {
+  pointer-events: auto;
+}
+
+/* Over the pane, which the search results drop over. The title and the
+   search box take turns in it, both 42px high (unless the tagline wraps on a
+   narrow phone), so the pane under it stays put. */
+.finder {
+  --finder-pad: 10px;
+  position: relative;
+  z-index: 1;
+  flex: none;
+  padding: var(--finder-pad);
+  border-radius: var(--radius);
+}
+
+.title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+}
+
+.title[hidden],
+.search[hidden] {
+  display: none;
+}
+
+.title,
+.search {
+  animation: finder-swap 0.16s ease-out;
+}
+
+@keyframes finder-swap {
+  from {
+    opacity: 0;
+  }
+}
+
+.search {
+  animation-name: finder-search-in;
+}
+
+/* The box grows out of the search button at the right end of the title. */
+@keyframes finder-search-in {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+}
+
+.brand {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  margin: 0;
+  padding-left: 4px;
+  font: inherit;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.brand-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+/* Wraps on narrow phones rather than cut off the date. */
+.brand-tagline {
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+  line-height: 1.3;
+}
+
+.search-open,
+.search-close {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.search-open {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  background: var(--surface-2);
+  color: var(--text-dim);
+}
+
+/* The whole title is the button's to click. */
+.search-open::after {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--finder-pad));
+  border-radius: calc(var(--radius) - 1px);
+}
+
+.search-open:hover,
+.search-open:focus-visible {
+  background: var(--surface-3);
+  color: var(--text);
+}
+
+.search-open:focus-visible {
+  outline: none;
+}
+
+.search-open:focus-visible::after {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+.logo {
+  width: 26px;
+  height: 26px;
+  flex: none;
+  fill: var(--accent);
+}
+
+.logo-mark {
+  fill: none;
+  stroke: var(--surface);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.translation-pending {
+  margin: 8px 4px 0;
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+}
+
+/* ---------- search ---------- */
+
+.search {
+  position: relative;
+}
+
+.search > .ico {
+  position: absolute;
+  left: 11px;
+  top: 11px;
+  color: var(--text-faint);
+  pointer-events: none;
+}
+
+.search input {
+  width: 100%;
+  height: 42px;
+  padding: 0 44px 0 39px;
+  font-size: 16px; /* below 16px, iOS zooms the page on focus */
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+}
+
+/* The box has its own close button. */
+.search input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.search-close {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 34px;
+  height: 34px;
+  background: none;
+  color: var(--text-faint);
+}
+
+.search-close:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.search input::placeholder {
+  color: var(--text-faint);
+}
+
+.search input:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -1px;
+  border-color: transparent;
+}
+
+.search [role="listbox"] {
+  position: absolute;
+  z-index: 1;
+  left: -10px;
+  right: -10px;
+  top: calc(100% + 10px);
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  max-height: min(60dvh, 480px);
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+}
+
+.search [role="listbox"][hidden] {
+  display: none;
+}
+
+.search [role="option"] {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0 8px;
+  padding: 7px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.search [role="option"].active {
+  background: var(--surface-2);
+}
+
+.opt-label {
+  font-weight: 600;
+}
+
+.opt-detail {
+  grid-row: 2;
+  color: var(--text-faint);
+  font-size: var(--fs-sm);
+}
+
+.opt-type {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  align-self: center;
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+}
+
+/* ---------- round buttons and popovers ---------- */
+
+.controls {
+  position: fixed;
+  z-index: 1000;
+  right: calc(var(--edge) + env(safe-area-inset-right));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* An open popover goes over the search results and the sheet. */
+.controls:has(.popover) {
+  z-index: 1300;
+}
+
+.controls.top {
+  top: calc(var(--edge) + env(safe-area-inset-top));
+}
+
+/* Above the attribution line. */
+.controls.bottom {
+  bottom: calc(var(--edge) + 22px + env(safe-area-inset-bottom));
+}
+
+.fab {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--fab);
+  height: var(--fab);
+  padding: 0;
+  border-radius: 50%;
+  color: var(--text-dim);
+  cursor: pointer;
+  /* A long press is a gesture of its own on some buttons (controls.js
+   * usePressOrMenu): no text selection or callout, and no double-tap zoom
+   * delaying a tap. */
+  -webkit-touch-callout: none;
+  user-select: none;
+  touch-action: manipulation;
+  transition:
+    color 0.12s ease,
+    background 0.12s ease;
+}
+
+.fab:hover:not(:disabled),
+.fab[aria-expanded="true"] {
+  color: var(--text);
+  background: var(--surface);
+}
+
+.fab[aria-expanded="true"] {
+  color: var(--primary);
+}
+
+.fab:disabled {
+  cursor: default;
+  color: var(--line-strong);
+}
+
+/* The state on a button's icon (controls.js Popover `badge`): the language
+   code. In the lower right, ringed in the surface colour so it stands off
+   the icon's lines. Stays within the screen edge margin so it is never cut
+   off. */
+.fab-badge {
+  position: absolute;
+  right: -4px;
+  bottom: -3px;
+  padding: 2px 3px;
+  border: 1.5px solid var(--surface);
+  border-radius: var(--radius-sm);
+  color: var(--surface);
+  background: var(--primary);
+  font: 700 9px/1 var(--sans);
+  letter-spacing: 0.02em;
+}
+
+/* The zoom buttons are one pill. */
+.zoom {
+  display: flex;
+  flex-direction: column;
+  border-radius: calc(var(--fab) / 2);
+}
+
+.zoom .fab {
+  border: 0;
+  background: none;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.zoom .fab:hover:not(:disabled) {
+  background: var(--surface-2);
+}
+
+.zoom .fab + .fab {
+  border-top: 1px solid var(--line);
+  border-radius: 0 0 50% 50%;
+}
+
+.zoom .fab:first-child {
+  border-radius: 50% 50% 0 0;
+}
+
+.anchor {
+  position: relative;
+}
+
+/* Popovers open to the left of their button: from its top in the upper
+   stack, from its bottom in the lower one. */
+.popover {
+  position: absolute;
+  top: 0;
+  right: calc(100% + 10px);
+  width: max-content;
+  min-width: 220px;
+  max-width: min(340px, calc(100vw - var(--fab) - 3 * var(--edge) - 10px));
+  max-height: calc(100dvh - 2 * var(--edge));
+  overflow-y: auto;
+  padding: 12px;
+  border-radius: var(--radius);
+  font-size: var(--fs-sm);
+  animation: pop-in 0.14s ease-out;
+}
+
+.controls.bottom .popover {
+  top: auto;
+  bottom: 0;
+}
+
+.popover p {
+  margin: 0 0 10px;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateX(6px) scale(0.98);
+  }
+}
+
+.pop-title {
+  margin: 0 0 8px;
+  padding: 0 2px;
+  font-size: var(--fs-xs);
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* In a popover the notice's icon and text line up with the radio buttons
+   and their labels above it (.option): 4 px accent + 6 px = the 10 px padding,
+   and a 16 px icon like the 16 px radio. */
+.popover .notice {
+  margin: 0 0 10px;
+  padding: 8px 10px 8px 6px;
+}
+
+.popover .options + .notice {
+  margin: 8px 0 0;
+}
+
+.popover .notice .ico {
+  width: 16px;
+  height: 16px;
+  margin-top: calc((1lh - 16px) / 2);
+}
+
+.options {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: var(--surface-2);
+}
+
+.option:has(:checked),
+.option[aria-current="true"] {
+  background: var(--primary-deep);
+  font-weight: 600;
+}
+
+.option input {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--primary);
+}
+
+.option .ico {
+  width: 18px;
+  height: 18px;
+  color: var(--text-dim);
+}
+
+.option[aria-current="true"] .ico {
+  color: var(--primary);
+}
+
+/* A constituency overlay's icon in the colour of its borders on the map:
+   the menu is its legend too. */
+.option.layer-zsk .ico {
+  color: var(--map-zsk);
+}
+
+.option.layer-city .ico {
+  color: var(--map-city);
+}
+
+.option.layer-oz .ico {
+  color: var(--map-council);
+}
+
+.pop-note {
+  margin: 8px 0 0;
+  padding: 0 2px;
+  color: var(--text-faint);
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+}
+
+/* The boundaries legend: a notice's box and accent without its icon, which
+   would only take room from the explanations; the swatches line up with the
+   checkbox icons above it. */
+.popover .notice.legend {
+  display: block;
+  padding: 8px 10px;
+}
+
+/* A map colour and what it means, in the boundaries legend. */
+.popover .key {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+}
+
+.popover .key + .key {
+  margin-top: 6px;
+}
+
+/* A patch of map, not a checkbox: wider than tall, filled as js/map.js fills
+   those obce. Outlined in the okres border colour, darker than the obec
+   one, so that even the palest fill reads as a patch on the notice. */
+.swatch {
+  flex: 0 0 22px;
+  height: 14px;
+  margin-top: calc((1lh - 14px) / 2);
+  border: 1px solid var(--map-okres);
+  border-radius: 2px;
+}
+
+.swatch.pending {
+  background: var(--map-pending);
+}
+
+.swatch.none {
+  background: var(--map-none);
+}
+
+/* A council constituency border drawn from the addresses: dashed, as
+   js/map.js draws it. */
+.swatch.approximate {
+  border: 0;
+  border-radius: 0;
+  height: 0;
+  margin-top: calc(1lh / 2);
+  border-top: 2px dashed var(--map-council);
+}
+
+.swatch.council {
+  border: 0;
+  border-radius: 0;
+  height: 0;
+  margin-top: calc(1lh / 2);
+  border-top: 2px solid var(--map-council);
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.more:hover {
+  text-decoration: underline;
+}
+
+.more .ico {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- the pane ---------- */
+
+.pane {
+  position: relative;
+  flex: 0 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  animation: pane-in 0.18s ease-out;
+}
+
+@keyframes pane-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+.pane-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: 12px;
+  border-radius: inherit;
+}
+
+.pane-grip {
+  display: none;
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+.close:hover {
+  background: var(--surface-3);
+  color: var(--text);
+}
+
+.close .ico {
+  width: 18px;
+  height: 18px;
+}
+
+/* Above the sticky filter bar, which the pane's content scrolls under. */
+.pane > .close {
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  right: 10px;
+}
+
+.panel-head {
+  padding: 16px 54px 6px 16px;
+}
+
+.panel-head p {
+  margin: 3px 0 0;
+  font-size: var(--fs-sm);
+}
+
+.panel-body {
+  padding: 0 16px;
+}
+
+.intro {
+  margin: 6px 0 0;
+  color: var(--text-dim);
+  font-size: var(--fs-sm);
+}
+
+.back,
+.link {
+  background: none;
+  border: 0;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+/* Back from a candidate card: an icon beside the name, in the header. */
+.back {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-top: -6px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.back .ico {
+  width: 22px;
+  height: 22px;
+  stroke-width: 2.5;
+}
+
+.back:hover {
+  background: var(--surface-2);
+}
+
+.panel-head.has-back {
+  display: flex;
+  gap: 4px;
+  align-items: flex-start;
+  padding-left: 6px;
+}
+
+.panel-head.has-back > div {
+  min-width: 0;
+}
+
+.link {
+  padding: 2px 10px 8px;
+  font-size: var(--fs-sm);
+}
+
+.group {
+  margin: 20px 16px 8px;
+  font-size: var(--fs-xs);
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* ---------- ballots ---------- */
+
+.contest {
+  margin: 0 10px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+/* A contest's header: the summary on the ballots; on the candidate card a
+   button and the pin that shows the contest on the map, side by side in one
+   row (.contest-bar). No arrow: open, the header stands out from the
+   candidates under it, tinted; closed, it is muted, and a grey bar at its
+   side says that it opens to more candidates. The whole row lights up under
+   the pointer, the pin a shade of its own. */
+.contest-head {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  list-style: none;
+}
+
+.contest-head::-webkit-details-marker {
+  display: none;
+}
+
+summary.contest-head,
+button.contest-head {
+  cursor: pointer;
+}
+
+summary.contest-head,
+.contest-bar {
+  border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+}
+
+.contest-bar {
+  display: flex;
+  align-items: center;
+}
+
+details:not([open]) > summary.contest-head {
+  border-radius: calc(var(--radius) - 1px);
+}
+
+details:not([open]) > summary.contest-head,
+.contest:not(.open) > .contest-bar.opens {
+  box-shadow: inset 3px 0 0 var(--line-strong);
+}
+
+details[open] > .contest-head,
+.contest.open > .contest-bar {
+  background: var(--surface-2);
+}
+
+summary.contest-head:hover,
+.contest-bar.opens:hover {
+  background: var(--surface-2);
+}
+
+details[open] > .contest-head:hover,
+.contest.open > .contest-bar.opens:hover {
+  background: var(--surface-3);
+}
+
+.contest-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.contest-title {
+  font-weight: 600;
+  display: block;
+  margin: 0;
+}
+
+.contest-meta {
+  font-size: var(--fs-sm);
+  color: var(--text-faint);
+}
+
+details:not([open]) > .contest-head .contest-title,
+.contest:not(.open) > .contest-bar .contest-title {
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.contest-map {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin: 0 6px 0 -4px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.contest-map:hover {
+  background: var(--primary-deep);
+}
+
+/* A number beside a heading: the findings of a kind on the candidate card. */
+.count {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--surface-3);
+  color: var(--text-dim);
+  font-size: var(--fs-xs);
+  font-weight: 650;
+  line-height: 1.6;
+  text-align: center;
+  vertical-align: 1px;
+  font-variant-numeric: tabular-nums;
+}
+
+.contest > .muted {
+  padding: 0 12px 10px;
+  margin: 0;
+}
+
+.cands {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 4px;
+}
+
+/* A candidate row: the name is the button that opens the card, and a click
+   anywhere else in the row but its other buttons does the same
+   (ballots.js `CandidateRow`). */
+.cand {
+  display: flex;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  padding: 5px 12px 6px 8px;
+  line-height: 1.3;
+  cursor: pointer;
+}
+
+.cand:hover,
+.cand:has(.cand-open:focus-visible) {
+  background: var(--surface-2);
+}
+
+.cand-open {
+  margin-right: 5px;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: start;
+  cursor: pointer;
+}
+
+/* Pointing at a party, or focusing it: its candidates on these ballots. */
+.cand.highlighted {
+  background: var(--primary-deep);
+}
+
+/* Muted by the filter: still listed, after the others, faded. */
+.cand.dimmed {
+  opacity: 0.45;
+  filter: grayscale(1);
+}
+
+.cand.dimmed:hover,
+.cand.dimmed:focus-within {
+  opacity: 0.8;
+}
+
+/* Research found controversies: a red edge down the whole row, beside the
+   mark after the name, so the row stands out while scrolling a long list. */
+.cand.flagged {
+  box-shadow: inset 4px 0 0 var(--danger);
+}
+
+.cand.current {
+  background: var(--accent-deep);
+}
+
+.cand .num {
+  flex: 0 0 1.6em;
+  text-align: right;
+  font-weight: 700;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.cand .who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* The name and its badges, centred on each line they wrap onto. */
+.cand .name-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 2px;
+}
+
+.cand .name {
+  font-weight: 600;
+}
+
+.cand .meta {
+  font-size: var(--fs-sm);
+  color: var(--text-faint);
+}
+
+/* The badges after a candidate's name: party tags and logos, then the
+   marks (controversies, the chair: holds the office now, research). One
+   height for all, 18 px with a 1 px border, centred on the name's line;
+   party tags are square-cornered and grey, marks round and tinted in
+   their colour, grouped apart. */
+.party,
+.party-logo,
+.in-office,
+.researched,
+.affairs {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  box-sizing: border-box;
+  height: 18px;
+  min-width: 18px;
+  margin: 0 3px 0 0;
+  padding: 0 4px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text-dim);
+  font-size: var(--fs-xs);
+  font-weight: 650;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: middle;
+  font-variant-numeric: tabular-nums;
+}
+
+.in-office .ico,
+.researched .ico,
+.affairs .ico {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.5;
+}
+
+.party.independent {
+  border-style: dashed;
+  font-weight: 400;
+}
+
+/* Logos are drawn for white paper, so they keep a white chip in the dark
+   theme too; wide wordmarks shrink to the chip's width. */
+.party-logo {
+  width: auto;
+  max-width: 48px;
+  padding: 1px 2px;
+  border-color: var(--line);
+  object-fit: contain;
+  background: #fff;
+}
+
+/* The marks: what is known about the candidate rather than who nominated
+   them, together in one outlined capsule after the parties. A capsule
+   rather than a rule before them, which would be left hanging at the start
+   of a line when the marks wrap onto one of their own. */
+.marks {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 3px;
+  padding: 1px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.marks > * {
+  margin: 0;
+}
+
+.in-office,
+.researched,
+.affairs {
+  padding: 0 6px 0 4px;
+  border-radius: 999px;
+}
+
+/* The candidate holds the office now: a chair and the share of the vote
+   that won it, in a colour of its own. */
+.in-office {
+  border-color: var(--office);
+  background: color-mix(in srgb, var(--office) 12%, transparent);
+  color: var(--office);
+}
+
+/* Research found something on the candidate: the count beside a
+   magnifier, in the primary colour. Found nothing: the magnifier alone,
+   faint; not researched yet: faint and dashed. */
+.researched {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
+}
+
+.researched.none,
+.researched.not {
+  padding: 0;
+  border-color: var(--line-strong);
+  background: none;
+  color: var(--text-faint);
+}
+
+.researched.not {
+  border-style: dashed;
+  opacity: 0.7;
+}
+
+/* Controversies: the warning sign and their number in red on a light red
+   tint, first of the marks. */
+.affairs {
+  border-color: var(--danger);
+  background: var(--danger-deep);
+  color: var(--danger);
+}
+
+/* The badges as buttons in a ballots row (each adds itself to the
+   filter, or takes itself out); a party's is a button around its tag or
+   logo. */
+button.affairs,
+button.in-office,
+button.researched {
+  cursor: pointer;
+}
+
+.party-button {
+  display: inline-flex;
+  margin: 0 3px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.party-button .party,
+.party-button .party-logo {
+  margin: 0;
+}
+
+.party-button:hover,
+button.affairs:hover,
+button.in-office:hover,
+button.researched:hover {
+  outline: 2px solid color-mix(in srgb, var(--primary) 45%, transparent);
+  outline-offset: 1px;
+}
+
+/* In the filter: ringed, until pressed again. */
+.party-button.active,
+button.affairs.active,
+button.in-office.active,
+button.researched.active {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+/* The candidate filter, under the place's name: its groups side by side,
+   wrapping as they must; stays in view while the lists scroll under it,
+   clear of the pane's close button. */
+.filter-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0 4px;
+  padding: 6px 54px 6px 16px;
+  border-block: 1px solid var(--line);
+  background: var(--surface);
+}
+
+/* Stuck, the bar shares its line with the pane's close button: a rule
+   from border to border closes the filter off, the button outside it. */
+.filter-bar.stuck::after {
+  content: "";
+  position: absolute;
+  inset: 0 52px 0 auto;
+  border-right: 1px solid var(--line);
+}
+
+/* A group: its mode switch and its chips on one tinted pill. */
+.filter-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 3px 2px 2px;
+  border-radius: 13px;
+  background: var(--surface-2);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 1px 1px 6px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  line-height: 18px;
+}
+
+/* Hidden by their group: struck through, like the switch's eye. */
+.filter-group.hide .chip > span {
+  text-decoration: line-through;
+}
+
+.chip .party-logo {
+  margin: 0;
+  vertical-align: top;
+}
+
+/* A mark's chip shows the mark's icon, in the mark's colour. */
+.chip > .ico {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.5;
+}
+
+.affairs-chip > .ico {
+  color: var(--danger);
+}
+
+.researched-chip > .ico {
+  color: var(--primary);
+}
+
+.office-chip > .ico {
+  color: var(--office);
+}
+
+.chip-remove {
+  display: inline-flex;
+  padding: 3px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+.chip-remove:hover {
+  background: var(--surface-3);
+}
+
+.chip-remove .ico {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.5;
+}
+
+/* The group's mode: an eye in the primary colour while only these are
+   shown, struck through and dim while they are hidden. */
+.filter-mode {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--surface);
+  cursor: pointer;
+}
+
+.filter-group.hide .filter-mode {
+  background: var(--text-dim);
+}
+
+.filter-mode:hover {
+  outline: 2px solid color-mix(in srgb, var(--primary) 45%, transparent);
+  outline-offset: 1px;
+}
+
+.filter-mode .ico {
+  width: 15px;
+  height: 15px;
+  stroke-width: 2.25;
+}
+
+.filter-clear {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 8px 3px 5px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--primary);
+  font-size: var(--fs-xs);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.filter-clear:hover {
+  background: var(--surface-2);
+}
+
+.filter-clear .ico {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2;
+}
+
+/* The mayor or president in office who does not stand again. */
+.holder {
+  padding: 8px 12px 8px 18px;
+  font-size: var(--fs-sm);
+  color: var(--text-faint);
+}
+
+.holder p {
+  margin: 0 0 3px;
+}
+
+.offices {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.offices li + li {
+  margin-top: 6px;
+}
+
+/* How an office was won (ballots.js `OfficeResult`): a meter a line, its
+   share, a thin bar and the vote counts, in columns shared by the two
+   lines, so that their figures and bars align. */
+.won {
+  display: grid;
+  grid-template-columns: auto minmax(28px, 1fr) auto;
+  align-items: center;
+  gap: 1px 8px;
+  margin: 3px 0 0;
+}
+
+.won .meter {
+  display: contents;
+}
+
+.won strong {
+  color: var(--text);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+
+.won .bar {
+  position: relative;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--surface-3);
+}
+
+.won .fill,
+.won .turnout {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+}
+
+.won .fill {
+  background: var(--office);
+}
+
+/* Those who voted, behind the candidate's share of all registered. */
+.won .turnout {
+  background: color-mix(in srgb, var(--office) 28%, transparent);
+}
+
+.won .caption {
+  color: var(--text-dim);
+  font-size: var(--fs-xs);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.25;
+}
+
+/* After the contests of a council: where its obvody come from. */
+.sources {
+  margin: -2px 14px 10px;
+  font-size: var(--fs-sm);
+  color: var(--text-faint);
+}
+
+.sources p,
+.sources ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sources li {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ---------- candidate card ---------- */
+
+.facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 14px;
+  margin: 10px 0;
+}
+
+.facts dt {
+  color: var(--text-faint);
+}
+
+.facts dd {
+  margin: 0;
+}
+
+/* The offices held, with their results charted: the pane's full width. */
+.facts .wide {
+  grid-column: 1 / -1;
+}
+
+/* The card's word on controversies, under the name: in the red of their
+   mark, with a jump to them. */
+.affairs-alert {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 10px 10px 4px;
+  padding: 10px 12px;
+  background: var(--danger-deep);
+  border: 1px solid var(--danger);
+  border-left-width: 4px;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+}
+
+.affairs-alert .ico {
+  flex: none;
+  color: var(--danger);
+}
+
+.affairs-alert p {
+  flex: 1;
+  margin: 0;
+  font-weight: 650;
+}
+
+.affairs-alert .link {
+  flex: none;
+  font-weight: 650;
+}
+
+/* Research findings: each a box like the candidacies. What one reads first
+   is the AI's claim and the site it comes from; the quote that backs it is
+   one tap away, set off from the claim. */
+.finding-kind {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 16px 16px 8px;
+  font-size: var(--fs-sm);
+  font-weight: 650;
+  /* Below the sticky head of the pane when jumped to. */
+  scroll-margin-top: 12px;
+}
+
+.finding-kind.affair {
+  color: var(--danger);
+}
+
+.finding-kind .ico {
+  width: 16px;
+  height: 16px;
+}
+
+.findings {
+  list-style: none;
+  margin: 0;
+  padding: 0 10px;
+}
+
+.finding {
+  margin-bottom: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.finding.affair {
+  background: var(--danger-deep);
+  border-color: var(--danger);
+  border-left-width: 4px;
+}
+
+.finding p {
+  margin: 0;
+}
+
+.finding .claim {
+  line-height: 1.45;
+}
+
+.finding .finding-source {
+  margin-top: 4px;
+  font-size: var(--fs-sm);
+}
+
+.finding-source a {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.evidence {
+  margin-top: 6px;
+  font-size: var(--fs-sm);
+}
+
+.evidence summary {
+  width: fit-content;
+  color: var(--text-faint);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.evidence blockquote {
+  margin: 6px 0;
+  padding: 0 0 0 10px;
+  border-left: 3px solid var(--line-strong);
+  color: var(--text-dim);
+  font-style: italic;
+  line-height: 1.45;
+}
+
+/* A machine translation of the quote: tagged, and not in italics, so it is
+   not mistaken for the quote itself. */
+.finding .translated {
+  margin-bottom: 6px;
+  padding-left: 13px;
+  color: var(--text-dim);
+}
+
+.translated .mt {
+  display: inline-block;
+  padding: 0 5px;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text-faint);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.evidence-links {
+  padding-left: 13px;
+  color: var(--text-faint);
+  font-size: var(--fs-xs);
+  overflow-wrap: anywhere;
+}
+
+.evidence-links a {
+  color: var(--primary);
+}
+
+/* ---------- the About dialog ---------- */
+
+.about-dialog {
+  width: min(720px, calc(100vw - 32px));
+  max-width: none;
+  max-height: min(88dvh, 960px);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-lg);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.about-dialog::backdrop {
+  background: var(--scrim);
+}
+
+.about-dialog[open] {
+  animation: dialog-in 0.16s ease-out;
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+  }
+}
+
+.about {
+  padding: 0 24px 24px;
+  font-size: var(--fs-base);
+}
+
+.about-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 -24px;
+  padding: 14px 16px 12px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+/* In a section, Back sits before the title, which takes the room between
+   it and Close. */
+.about-head h2 {
+  flex: 1;
+}
+
+.about-head .back {
+  margin: 0 -4px 0 -14px;
+}
+
+.about h3 {
+  margin: 24px 0 8px;
+}
+
+.about p,
+.about li {
+  color: var(--text-dim);
+}
+
+/* The main page's sections: one row each, title over a line of what is in
+   it, the whole row the link. */
+.about-sections {
+  margin: 16px 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.about-sections a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+}
+
+.about-sections a:hover {
+  background: var(--surface-2);
+}
+
+.about-sections strong {
+  display: block;
+  color: var(--primary);
+}
+
+.about-sections a span span {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+.about-sections .ico {
+  width: 16px;
+  height: 16px;
+  margin-left: auto;
+  color: var(--primary);
+}
+
+/* The license line: last, quiet, one line, the flag beside it the cue for
+   what "EUPL" means. */
+.license {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+  font-size: var(--fs-sm);
+}
+
+.license a {
+  color: var(--text-faint);
+}
+
+.license a:hover {
+  color: var(--primary);
+}
+
+/* A flat dark-blue rectangle sinks into the dark page: there a light edge
+   picks it out, and a shadow lifts it in both themes. */
+.eu-flag {
+  flex: none;
+  display: block;
+  border-radius: 3px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
+}
+
+[data-theme="dark"] .eu-flag {
+  outline: 1px solid var(--text-faint);
+}
+
+.links {
+  word-break: break-all;
+}
+
+.allowlist dt {
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.allowlist dd {
+  margin: 0;
+  color: var(--text-dim);
+}
+
+.coverage {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+.coverage th,
+.coverage td {
+  padding: 5px 10px 5px 0;
+  border-bottom: 1px solid var(--line);
+  text-align: start;
+  vertical-align: top;
+}
+
+.coverage thead th {
+  color: var(--text-faint);
+  font-weight: 600;
+}
+
+.coverage .num {
+  padding-right: 0;
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- phones: the pane is a sheet from the bottom ---------- */
+
+@media (max-width: 640px) {
+  :root {
+    --edge: 10px;
+  }
+
+  .side {
+    right: calc(var(--edge) + env(safe-area-inset-right));
+    bottom: auto;
+    width: auto;
+  }
+
+  .finder {
+    --finder-pad: 8px;
+  }
+
+  /* Under the search card; app.js measures it. */
+  .controls.top {
+    top: calc(var(--edge) + env(safe-area-inset-top) + var(--finder-height, 60px) + 10px);
+  }
+
+  .pane {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--sheet-height);
+    border-width: 1px 0 0;
+    border-radius: 16px 16px 0 0;
+    box-shadow: var(--shadow-lg);
+    padding-bottom: env(safe-area-inset-bottom);
+    /* Pinch zooms the page here too, and zoomed in, strokes pan it any way
+       (pane.js leaves them alone then); no double-tap zoom delaying taps. */
+    touch-action: manipulation;
+    animation-name: sheet-in;
+    animation-duration: 0.22s;
+  }
+
+  .pane.settling {
+    transition: transform 0.18s ease-out;
+  }
+
+  @keyframes sheet-in {
+    from {
+      transform: translateY(100%);
+    }
+  }
+
+  .pane-grip {
+    display: block;
+    flex: none;
+    height: 22px;
+    position: relative;
+    cursor: grab;
+  }
+
+  .pane-grip::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    width: 40px;
+    height: 5px;
+    margin-left: -20px;
+    border-radius: 3px;
+    background: var(--line-strong);
+  }
+
+  .pane > .close {
+    top: 14px;
+  }
+
+  .panel-head {
+    padding-top: 2px;
+  }
+
+  /* The sheet covers the lower half: the zoom and help buttons give way, the
+     attribution moves above it. */
+  .pane-open .controls.bottom {
+    display: none;
+  }
+
+  .pane-open .leaflet-bottom {
+    bottom: var(--sheet-height);
+  }
+
+  /* The attribution goes bottom left, beside the buttons rather than under
+     them, and may wrap. */
+  .controls.bottom {
+    bottom: calc(var(--edge) + env(safe-area-inset-bottom));
+  }
+
+  .leaflet-bottom.leaflet-right {
+    right: auto;
+    left: 0;
+  }
+
+  .leaflet-container .leaflet-control-attribution {
+    margin-left: calc(var(--edge) + env(safe-area-inset-left));
+    max-width: calc(100vw - var(--fab) - 3 * var(--edge));
+    font-size: 10px;
+  }
+
+  .about-dialog {
+    width: calc(100vw - 16px);
+    max-height: calc(100dvh - 16px);
+  }
+
+  .about {
+    padding: 0 18px 20px;
+  }
+
+  .about-head {
+    margin: 0 -18px;
+    padding-left: 18px;
+  }
+}
+
+/* After the phone rules, so it wins over their sheet animation. */
+@media (prefers-reduced-motion: reduce) {
+  .title,
+  .search,
+  .pane,
+  .popover,
+  .about-dialog[open] {
+    animation: none;
+  }
+
+  .pane.settling,
+  .fab {
+    transition: none;
+  }
+}

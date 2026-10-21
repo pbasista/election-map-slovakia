@@ -1,0 +1,27 @@
+# Council obvody of Horný Bar (501603), Dunajská Streda.
+# Transcribed by an AI agent in job obvod-rules-133 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa obec Horný Bar sa volí 5 poslancov.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa obec Šuľany sa volí 4 poslancov.
+obec = "501603"
+name = "Horný Bar"
+date = 2026-06-11
+note = "Document is a scanned (image-only) but clearly legible announcement dated 21.07.2026, signed by the mayor; read visually. Total 9 seats."
+
+[[document]]
+url = "https://www.hornybar.sk/e_download.php?file=/data/uredni_deska/obsah465_1.pdf&original=Ozn%C3%A1menie%20-%20volebn%C3%A9%20obvody.pdf"
+sha256 = "6d117da45486751897fd477c231d15e500110bf84061ecfbd043914e316056bb"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie OZ č. 17/2026 zo dňa 11. júna 2026)"
+
+[obvod.1]
+seats = 5
+rules = [
+  {part = "Horný Bar", note = "'obec Horný Bar' here means the part (časť obce) Horný Bar, as opposed to Šuľany in obvod 2."},
+]
+
+[obvod.2]
+seats = 4
+rules = [
+  {part = "Šuľany", note = "'obec Šuľany' = the part (časť obce) Šuľany of Horný Bar."},
+]

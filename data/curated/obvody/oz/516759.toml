@@ -1,0 +1,33 @@
+# Council obvody of Hodruša-Hámre (516759), Žarnovica.
+# Transcribed by an AI agent in job obvod-rules-123 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode č. 1 - Banská Hodruša, ktorý zahŕňa katastrálne územie Banská Hodruša volia sa 3 poslanci
+#   obvod 2: Vo volebnom obvode č. 2 - Dolné Hámre, ktorý zahŕňa katastrálne územie Dolné Hámre volí sa 5 poslancov
+#   obvod 3: Vo volebnom obvode č. 3 - Kopanice, ktorý zahŕňa katastrálne územie Kopanice volí sa 1 poslanec
+obec = "516759"
+name = "Hodruša-Hámre"
+date = 2026-06-25
+
+[[document]]
+url = "https://www.hodrusa-hamre.sk/download_file_f.php?id=2444338"
+sha256 = "fb10b076797fcfcdca33b9d37115b8f601ffef02f45230ebe2a6ca705fa969d6"
+title = "Oznámenie o utvorení volebných obvodov a určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie OZ č. 2/6/2026OZ zo dňa 25.6.2026)"
+
+[obvod.1]
+seats = 3
+rules = [
+  {part = "Banská Hodruša", note = "Document defines obvod č. 1 - Banská Hodruša as k.ú. Banská Hodruša; the part of the same name is used because k.ú. rules left 14 register addresses unassigned at ingest."},
+]
+
+[obvod.2]
+seats = 5
+rules = [
+  {part = "Dolné Hámre", note = "Document defines obvod č. 2 - Dolné Hámre as k.ú. Dolné Hámre; the part of the same name is used because k.ú. rules left 14 register addresses unassigned at ingest."},
+]
+
+[obvod.3]
+seats = 1
+rules = [
+  {part = "Kopanice", note = "Document defines obvod č. 3 - Kopanice as k.ú. Kopanice; the part of the same name is used because k.ú. rules left 14 register addresses unassigned at ingest."},
+]

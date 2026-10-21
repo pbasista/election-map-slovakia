@@ -1,0 +1,28 @@
+# Council obvody of Lubina (506184), Nové Mesto nad Váhom.
+# Transcribed by an AI agent in job obvod-rules-134 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Lubina obvod č.1.- počet poslancov 4 /Lubina obec a Hrabové/
+#   obvod 2: Lubina obvod č. 2- počet poslancov 4 /miestna časť Hrnčiarové a Miškech Dedinka/
+obec = "506184"
+name = "Lubina"
+date = 2026-06-24
+note = "Uznesenie č. 46/2026 (page 27 of the published resolutions of 24.6.2026). Seats: 4 + 4 = 8 total."
+
+[[document]]
+url = "https://www.obeclubina.sk/download_file_f.php?id=2431989"
+sha256 = "e51e5e84f97e8e6942499591f5e68b82656ec88c84302f3e1ed7da5bc41f1aeb"
+title = "Uznesenia OZ Lubina zo zasadnutia dňa 24.6.2026 (Uznesenie č. 46/2026 z 24.6.2026)"
+
+[obvod.1]
+seats = 4
+rules = [
+  {part = "Lubina", note = "'Lubina obec a Hrabové': Hrabové is a settlement (kopanica) within the časť obce Lubina, not a separate part in the register, so the whole part Lubina."},
+]
+
+[obvod.2]
+seats = 4
+rules = [
+  {part = "Hrnčiarové"},
+  {part = "Miškech Dedinka"},
+]

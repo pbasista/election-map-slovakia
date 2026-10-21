@@ -1,0 +1,34 @@
+# Council obvody of Poniky (508918), Banská Bystrica.
+# Transcribed by an AI agent in job obvod-rules-144 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode č. 1, ktorý zahŕňa časť obce Poniky sa volí 5 poslancov.
+#   obvod 2: Vo volebnom obvode č. 2, ktorý zahŕňa časť obce Ponická Lehôtka sa volia 2 poslanci.
+#   obvod 3: Vo volebnom obvode č. 3, ktorý zahŕňa časť obce Ponická Huta sa volia 2 poslanci.
+obec = "508918"
+name = "Poniky"
+date = 2026-06-30
+note = "The announcement is a scanned PDF (no text layer) but clearly legible; read from the rendered image. Obvody are whole parts of the municipality. Confirmed by the municipality's letter of 29 July 2026 assigning okrsky 1-3 to obvody 1-3 (parts Poniky, Ponická Lehôtka, Ponická Huta)."
+
+[[document]]
+url = "https://www.poniky.sk/e_download.php?file=/data/editor/224sk_3.pdf&original=Ur%C4%8Denie%20po%C4%8Dtu%20poslancov.pdf"
+sha256 = "e599bb74fbad381327ad3b89a909cf5cb5865baa441b1c717a7af1aab0c4beb6"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie č. 260/2026 zo dňa 30. 06. 2026)"
+
+[obvod.1]
+seats = 5
+rules = [
+  {part = "Poniky"},
+]
+
+[obvod.2]
+seats = 2
+rules = [
+  {part = "Ponická Lehôtka"},
+]
+
+[obvod.3]
+seats = 2
+rules = [
+  {part = "Ponická Huta"},
+]

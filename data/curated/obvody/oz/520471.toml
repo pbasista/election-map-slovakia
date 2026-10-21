@@ -1,0 +1,70 @@
+# Council obvody of Medzilaborce (520471), Medzilaborce.
+# Transcribed by an AI agent in job obvod-rules-102 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Komenského, Cintorínska, gen. Svobodu, Poľná, Májová, Ševčenkova, Dobrianskeho, čsl. Armády, Zámočnícka
+#   obvod 2: A. Warholu, Laborecká, Švermova, Fučíkova, Popradova, Kukorelliho, Duk. hrdinov, Mierová, Václavského, Duchnovičova, kpt. Nálepku, Gorkého, Tolstého, Pod úbočou, SNP
+#   obvod 3: Vydraň
+#   obvod 4: Borov
+obec = "520471"
+name = "Medzilaborce"
+date = 2026-07-20
+fill = "nearest"
+note = "Main source is the announcement (oznámenie) of uznesenie č. 23/2026 of 20.07.2026: 13 seats in 4 obvody. The resolution number in the announcement matches the published resolution on the mayor's workload (also called č. 23/2026), so the number may be a clerical error; the obvody resolution itself is not published separately. The draft material (single obvod of 12 seats) was changed when adopted; it is used only to place Danová. Addresses in the town part Medzilaborce that have no street (661 numbered by súpisné číslo) are not named in the document; fill_nearest places them by the nearest street address."
+
+[[document]]
+url = "https://www.medzilaborce-urad.sk/download_file_f.php?id=2446235"
+sha256 = "b90412c7eb7ec0fe5fcbaa81de6492feeb311a8b2fb2f6c081072583e10ececf"
+title = "Oznámenie o určení počtu poslancov a utvorení volebných obvodov (uznesenie MsZ č. 23/2026 zo dňa 20.07.2026)"
+
+[[document]]
+url = "https://www.medzilaborce-urad.sk/download_file_f.php?id=2441501"
+sha256 = "36ff23662290c1fcd726dcd4a1ee646f50e90871cfcc9bee08dbfd220e21ea47"
+title = "Materiál č. 4 na MsZ 20.07.2026: Návrh volebných obvodov a návrh počtu poslancov 2026-2030"
+
+[obvod.1]
+seats = 5
+rules = [
+  {street = "Komenského"},
+  {street = "Cintorínska"},
+  {street = "Generála Svobodu", written = "gen. Svobodu", note = "'gen.' abbreviates 'Generála'; same street"},
+  {street = "Poľná"},
+  {street = "Májová"},
+  {street = "Ševčenkova"},
+  {street = "Dobrianskeho"},
+  {street = "Čsl.armády", written = "čsl. Armády", note = "same name, differing only in spacing and capitalisation"},
+  {street = "Zámočnícka"},
+]
+
+[obvod.2]
+seats = 6
+rules = [
+  {street = "Andy Warhola", written = "A. Warholu", note = "'A.' is the initial of Andy; 'Warholu' is the dative form; same street"},
+  {street = "Laborecká"},
+  {street = "Švermova"},
+  {street = "Fučíkova"},
+  {street = "Popradova"},
+  {street = "Kukorelliho"},
+  {street = "Dukelských hrdinov", written = "Duk. hrdinov", note = "'Duk.' abbreviates 'Dukelských'; same street"},
+  {street = "Mierová"},
+  {street = "Václavského"},
+  {street = "Duchnovičova"},
+  {street = "Kpt.Nálepku", written = "kpt. Nálepku", note = "same name, differing only in spacing and capitalisation"},
+  {street = "Gorkého"},
+  {street = "Tolstého"},
+  {street = "Pod Úbočou", written = "Pod úbočou", note = "same name, differing only in capitalisation"},
+  {street = "SNP"},
+]
+
+[obvod.3]
+seats = 1
+rules = [
+  {part = "Vydraň"},
+  {street = "Danová", note = "The announcement omits Danová. The council material (návrh uznesenia, MsZ 20.07.2026) groups 'miestna časť Vydraň, ulica Danová – okrsok č. 6', and the obvody follow the okrsky (1–2, 3–5, 6, 7), so Danová goes with Vydraň in obvod 3.", inferred = true},
+]
+
+[obvod.4]
+seats = 1
+rules = [
+  {part = "Borov"},
+]

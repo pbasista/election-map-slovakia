@@ -1,0 +1,27 @@
+# Council obvody of Prečín (513563), Považská Bystrica.
+# Transcribed by an AI agent in job obvod-rules-159 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: obvod č.1 Prečín kde sa bude voliť 7 poslancov obecného zastupiteľstva
+#   obvod 2: obvod č.2 Zemianska Závada kde sa budú voliť 2 poslanci obecného zastupiteľstva
+obec = "513563"
+name = "Prečín"
+date = 2026-06-11
+note = "The municipality's announcement (web page) states the two obvody by part of the municipality; the resolution text itself is not published. The date is that of the council meeting of 11 June 2026, whose published agenda (pozvánka, item 8) included 'určenie počtu poslancov a volebných obvodov na volebné obdobie 2026-2030'; it is the only council meeting between the agenda and the announcement (10 July 2026)."
+
+[[document]]
+url = "https://www.precin.eu/blog/volby-do-organov-samospravy-obci-oznam"
+sha256 = "20e99d3240d3312a16b6ca4a96abc93a16e14312142400d5d49487ab42d592d9"
+title = "Voľby do orgánov samosprávy obcí – OZNAM (Obec Prečín, publikované 10. 7. 2026)"
+
+[obvod.1]
+seats = 7
+rules = [
+  {part = "Prečín"},
+]
+
+[obvod.2]
+seats = 2
+rules = [
+  {part = "Zemianska Závada"},
+]

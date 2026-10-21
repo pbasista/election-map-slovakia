@@ -1,0 +1,41 @@
+# Council obvody of Ludanice (505048), Topoľčany.
+# Transcribed by an AI agent in job obvod-rules-139 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Ludanice, ktorý zahŕňa: ulice: 1. mája, 9. mája, Cintorínska, Družstevná, Hviezdoslavova, Kpt. Nálepku, Nádražná, Pivovarská, Pod Vinohradmi, SNP, Topoľčianska, Slobody, Štúrova a Trojičné námestie
+#   obvod 2: Mýtna Nová Ves, ktorý tvorí: miestna časť obce Ludanice - Mýtna Nová Ves
+obec = "505048"
+name = "Ludanice"
+date = 2026-06-16
+note = "Scanned (image-only) announcement signed 17.07.2026, read visually; text is clear. Its heading says '29. októbra 2026' (form typo for the 24 Oct 2026 elections). 9 councillors: obvod 1 Ludanice 7, obvod 2 Mýtna Nová Ves 2."
+
+[[document]]
+url = "https://www.obecludanice.sk/data/news_files/obecludanice.sk/135692/oznamenie-o-urceni-poctu-poslancov-a-utvoreni-volebneho-obvodu-pre-volby-do-organov-samospravy-obci.pdf"
+sha256 = "e819f809aec5f2a98edf66c7bf7e39213c5ac5274417f0ed00cf36055600353c"
+title = "Oznámenie o utvorení volebných obvodov a určení počtu poslancov (uznesenie OZ č. 268/2026 zo dňa 16.06.2026)"
+
+[obvod.1]
+seats = 7
+rules = [
+  {street = "1.mája", written = "1. mája", note = "Same street; the document only adds a space after the period."},
+  {street = "9.mája", written = "9. mája", note = "Same street; the document only adds a space after the period."},
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Hviezdoslavova"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku", note = "Same street; the document only adds a space after the period."},
+  {street = "Nádražná"},
+  {street = "Pivovarská"},
+  {street = "Pod vinohradmi", written = "Pod Vinohradmi", note = "Same street; the document only differs in capitalisation."},
+  {street = "SNP"},
+  {street = "Topoľčianska"},
+  {street = "Slobody"},
+  {street = "Štúrova"},
+  {street = "Trojičné Námestie", written = "Trojičné námestie", note = "Same street; the document only differs in capitalisation."},
+  {part = "Ludanice", note = "Obvod 1 is named 'Ludanice' and lists every street of the part Ludanice; this rule catches the one register address in part Ludanice without a street."},
+]
+
+[obvod.2]
+seats = 2
+rules = [
+  {part = "Mýtna Nová Ves"},
+]

@@ -1,0 +1,44 @@
+# Council obvody of Kriváň (518549), Detva.
+# Estimated by hand: the documents below give the obvody's names and seats
+# but not which addresses are in which (see the note).
+#   obvod 1: Časť obce „Pod traťou“
+#   obvod 2: Časť obce „Nad traťou“
+obec = "518549"
+name = "Kriváň"
+date = 2026-07-08
+note = "Estimated: uznesenie č. 18/6 and the Oznámenie name obvod 1 'Časť obce Pod traťou' (5 seats) and obvod 2 'Časť obce Nad traťou' (4) without listing houses. The railway (OpenStreetMap) crosses Kriváň west to east and turns south-east; the side north of it, along the main road, lies lower, towards the Slatina (391–405 m against 429–503 m south of it), so it is taken as 'pod traťou'. Pairs of points 250 m either side of the track, every 500 m along it, put each house on its side of the railway: 419 and 323 addresses, close to the 5:4 seats."
+estimated = true
+
+[[document]]
+url = "https://www.obeckrivan.sk/e_download.php?file=/data/uredni_deska/obsah353_2.pdf&original=OSO_ozn%C3%A1menie_po%C4%8Det%20poslancov_vol.obvody_2026.pdf"
+sha256 = "ba0b2fff4f18cdd712170390395282659c134778c2f4bf288502414de2dc5e2b"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (21.07.2026)"
+
+[[document]]
+url = "https://www.obeckrivan.sk/e_download.php?file=/data/uredni_deska/obsah352_6.pdf&original=18%20OZ_uznesenia_na%20zverejnenie.pdf"
+sha256 = "cb386e192c32b50e9510aa2eba7d1edcbbbcc74f8e403331530e4b14316de089"
+title = "Uznesenia z 18. zasadnutia OZ (uznesenie č. 18/6 z 08.07.2026)"
+
+[obvod.1]
+seats = 5
+rules = [
+  {near = [19.42895, 48.53097], note = "north of the track, 1.7 km from the western track point 19.40695, 48.53347"},
+  {near = [19.43583, 48.53042], note = "north of the track, 2.2 km"},
+  {near = [19.44167, 48.53025], note = "north of the track, 2.7 km"},
+  {near = [19.4485, 48.53099], note = "north of the track, 3.2 km"},
+  {near = [19.45657, 48.53009], note = "north of the track, 3.7 km"},
+  {near = [19.46321, 48.52648], note = "north-east of the track, 4.2 km"},
+  {near = [19.46683, 48.52208], note = "north-east of the track, 4.7 km"},
+]
+
+[obvod.2]
+seats = 4
+rules = [
+  {near = [19.42817, 48.52651], note = "south of the track, 1.7 km"},
+  {near = [19.4348, 48.52599], note = "south of the track, 2.2 km"},
+  {near = [19.44253, 48.5258], note = "south of the track, 2.7 km"},
+  {near = [19.44913, 48.52651], note = "south of the track, 3.2 km"},
+  {near = [19.45438, 48.52583], note = "south of the track, 3.7 km"},
+  {near = [19.45789, 48.52367], note = "south-west of the track, 4.2 km"},
+  {near = [19.46066, 48.52018], note = "south-west of the track, 4.7 km"},
+]

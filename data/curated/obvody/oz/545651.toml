@@ -1,0 +1,33 @@
+# Council obvody of Veľké Držkovce (545651), Bánovce nad Bebravou.
+# Transcribed by an AI agent in job obvod-rules-002 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 – miestna časť obce Čuklasovce.................počet volených poslancov – 2
+#   obvod 2: Volebný obvod č. 2 – miestna časť obce Horné Držkovce.........počet volených poslancov – 2
+#   obvod 3: Volebný obvod č. 3 – miestna časť obce Dolné Držkovce.........počet volených poslancov – 3
+obec = "545651"
+name = "Veľké Držkovce"
+date = 2026-06-23
+
+[[document]]
+url = "https://www.velkedrzkovce.sk/files/2026-07-07-143658-Ur__enie_vol.obv_po__et_posl_zapis.mvk.pdf"
+sha256 = "e424ebb4c6cc1f0cc0fc67bfb36dd6546f033c783a20588f22a56ee55ef799bb"
+title = "Voľby do orgánov samosprávy obcí v roku 2026 – určenie volebných obvodov, počtu poslancov obecného zastupiteľstva, zapisovateľky MVK (č. 563/2026, uznesenie OZ č. 34-5/2026)"
+
+[obvod.1]
+seats = 2
+rules = [
+  {part = "Čuklasovce"},
+]
+
+[obvod.2]
+seats = 2
+rules = [
+  {part = "Horné Držkovce"},
+]
+
+[obvod.3]
+seats = 3
+rules = [
+  {part = "Dolné Držkovce"},
+]

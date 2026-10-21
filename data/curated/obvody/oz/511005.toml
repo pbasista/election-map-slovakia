@@ -1,0 +1,34 @@
+# Council obvody of Liptovské Sliače (511005), Ružomberok.
+# Transcribed by an AI agent in job obvod-rules-116 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: časť obce Nižný Sliač sa volí 3 poslancov.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: časť obce Stredný Sliač sa volí 5 poslancov.
+#   obvod 3: Vo volebnom obvode číslo 3, ktorý zahŕňa: časť obce Vyšný Sliač sa volí 3 poslancov.
+obec = "511005"
+name = "Liptovské Sliače"
+date = 2026-06-26
+note = "Announcement is a scanned form (signed 09.07.2026, text layer partly garbled); read from the rendered page. 11 poslancov in 3 obvody, each obvod one časť obce."
+
+[[document]]
+url = "https://www.liptovskesliace.sk/e_download.php?file=/data/editor/225sk_3.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20obvodov%20a%20o%20ur%C4%8Den%C3%AD%20po%C4%8Dtu%20poslancov%20pre%20vo%C4%BEby%20do%20OSO%2024.10.2026.pdf"
+sha256 = "f68f37b2b57a4b2e323c015935f53b038cd44814e482136e7aa89fc8d24838af"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie č. 204/18/2026 zo dňa 26.06.2026)"
+
+[obvod.1]
+seats = 3
+rules = [
+  {part = "Nižný Sliač"},
+]
+
+[obvod.2]
+seats = 5
+rules = [
+  {part = "Stredný Sliač"},
+]
+
+[obvod.3]
+seats = 3
+rules = [
+  {part = "Vyšný Sliač"},
+]

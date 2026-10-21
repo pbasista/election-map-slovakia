@@ -1,0 +1,21 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.12/schema.json",
+  "files": {
+    "includes": ["web/**", "!web/vendor", "!web/img"]
+  },
+  "formatter": { "enabled": false },
+  "assist": {
+    "enabled": true,
+    "actions": { "source": { "organizeImports": "on" } }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "style": { "noDescendingSpecificity": "off" },
+      "suspicious": {
+        "noConsole": { "level": "error", "options": { "allow": ["error"] } }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+# Council obvody of Dedinky (525618), Rožňava.
+# Transcribed by an AI agent in job obvod-rules-181 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: 1 | v budove Obecného úradu, Dedinky č. 44 | 3
+#   obvod 2: 2 | v budove Dobšinská Maša č. 30 | 2
+obec = "525618"
+name = "Dedinky"
+date = 2026-07-14
+note = "The only 2026 document is the starosta's announcement dated 14.07.2026 (posted on the úradná tabuľa under 'Určenie volebných obvodov do samosprávy obcí'); no council resolution on the obvody is published (the site lists only the 07.05.2026 OZ session for 2026, which does not deal with the obvody), so 'date' is the announcement's date. The announcement gives for each obvod only its polling room and seats (obvod 1: Obecný úrad, Dedinky č. 44, 3 seats; obvod 2: Dobšinská Maša č. 30, 2 seats) and does not name the territory. The territory is inferred from the polling rooms: obvod 1 = part Dedinky, obvod 2 = part Dobšinská Maša (the municipality's only two parts). Consistent with this, candidate Ing. Saskia Kisová, resident at Dobšinská Maša 38 (uznesenie č. 163 of 07.05.2026), is registered in obvod 2, and the seats 3 + 2 match the registered-candidates list of 03.09.2026."
+
+[[document]]
+url = "https://www.dedinky.eu/e_download.php?file=/data/uredni_deska/obsah239_4.pdf&original=07%20-%20%20Vytvorenie%20volebnych%20obvodov%20a%20miestnosti%202026.pdf"
+sha256 = "4fa6757fdf4291155353ff2079ae1d0bdeaa7296aabb681f888d3daff790507e"
+title = "Vytvorenie volebných obvodov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov v roku 2026 (Obec Dedinky, 14.07.2026)"
+
+[obvod.1]
+seats = 3
+rules = [
+  {part = "Dedinky", note = "Document names only the polling room (Obecný úrad, Dedinky č. 44); obvod 1 taken as the part Dedinky.", inferred = true},
+]
+
+[obvod.2]
+seats = 2
+rules = [
+  {part = "Dobšinská Maša", note = "Document names only the polling room (Dobšinská Maša č. 30); obvod 2 taken as the part Dobšinská Maša. Candidate S. Kisová (resident Dobšinská Maša 38) is registered in obvod 2.", inferred = true},
+]

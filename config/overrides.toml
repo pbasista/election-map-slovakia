@@ -1,0 +1,40 @@
+# Manual fixes that `ems candidates` applies to the MV SR candidate
+# lists, and `ems addresses` to the address register. Codes are ZBGIS
+# municipality codes (ŠÚ SR, 6 digits) or BA / KE for the cities of
+# Bratislava and Košice. Candidacy ids are `<contest>#<ballot number>`, e.g.
+# `oz:528595/2#7` or `zsk:7/2#9` (see docs/pipeline.md, Identifiers).
+
+# Municipality names in the candidate lists that do not match ZBGIS by
+# normalized name within their okres:
+#   "<okres>/<obec>" as written in the list = "<code>"
+# Currently every name matches once spaces and dashes are normalized.
+[obec]
+
+# Municipality names in the address register that do not match ZBGIS by
+# normalized name within their okres:
+#   "<okres>/<obec>" as written in the register = "<code>"
+# ZBGIS names the two military districts "<name> (vojenský obvod)".
+[address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+# Residence of regional candidates whose obec name is ambiguous within the
+# kraj and is not resolved by a municipal candidacy of the same person:
+#   "<candidacy id>" = "<code>"
+[residence]
+# Tibor Focko, Kamienka: PSK obvod 2 is okres Humenné (PSK resolution
+# 1007/2026), so Kamienka (Humenné), not Kamienka (Stará Ľubovňa).
+"zsk:7/2#9" = "520349"
+
+# Person merge corrections. Candidacies are merged automatically when obec,
+# first name, surname and age agree, except where that key repeats within
+# one elected body: then none of them merge.
+#
+# [[person.merge]] makes the listed candidacies one person;
+# [[person.split]] makes them a person of their own.
+
+# Two Igor Oračko, 49, on the council ballot of Stráne pod Tatrami; the
+# mayoral candidate is the school caretaker (same occupation), not the
+# unemployed one.
+[[person.merge]]
+candidacies = ["starosta:523909#3", "oz:523909/1#38"]

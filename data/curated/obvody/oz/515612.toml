@@ -1,0 +1,41 @@
+# Council obvody of Tornaľa (515612), Revúca.
+# Transcribed by an AI agent in job obvod-rules-099 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: mestskú časť Behynce, sa volí jeden poslanec.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: mestskú časť Starňa, sa volí jeden poslanec.
+#   obvod 3: Vo volebnom obvode číslo 3, ktorý zahŕňa: mestskú časť Králik, sa volí jeden poslanec.
+#   obvod 4: Vo volebnom obvode číslo 4, ktorý zahŕňa: mestskú časť Tornaľa, sa volí desať poslancov.
+obec = "515612"
+name = "Tornaľa"
+date = 2026-06-25
+note = "The announcement defines the obvody by mestská časť only (Behynce, Starňa, Králik, Tornaľa), transcribed as part rules on the register's parts. The separate list of okrsky (Zoznam volebných okrskov a obvodov, 27.07.2026, download_file_f.php?id=2449589) agrees: obvod 3 = Králik streets (A. Pénteka, Mierová 222-288 even / 223-259 odd, Nová, Poľná, Pri Majeri, Tichá, Úzka), obvod 4 includes Osada Železné. The single register address 'Alex. Pénteka' 29 lies in part Tornaľa in the register and so falls in obvod 4 by the part rule, though the okrsky list names A. Pénteka under Králik (obvod 3)."
+
+[[document]]
+url = "https://www.mestotornala.sk/download_file_f.php?id=2442070"
+sha256 = "de4b7ebb83fab29830918f30ab601fb526b87f900d73ced18de4498c5a4e45a9"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie MsZ č. 110/2026 zo dňa 25.06.2026)"
+
+[obvod.1]
+seats = 1
+rules = [
+  {part = "Behynce"},
+]
+
+[obvod.2]
+seats = 1
+rules = [
+  {part = "Starňa"},
+]
+
+[obvod.3]
+seats = 1
+rules = [
+  {part = "Králik"},
+]
+
+[obvod.4]
+seats = 10
+rules = [
+  {part = "Tornaľa"},
+]

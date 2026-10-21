@@ -1,0 +1,113 @@
+# Council obvody of Handlová (513997), Prievidza.
+# Transcribed by an AI agent in job obvod-rules-079 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod tvoria ulice: 1. mája, ČSA, Majerníková, Mierové námestie, Remata, Prievidzská, Dimitrovová, Krátka, Lipová, Poštová, Pstruhárska, Okružná, Morovnianska cesta, Kvetná, M. Krššákovej, M. Vladovej, M. R. Štefánika, Savina, Športová, Švermová, Mostná, mestská časť Morovno, Brigádnicka, Hečkova, Hlboká, Hviezdoslavova, Olbrachta, J. L. Bellu, Jánošíková, Kpt. Nálepku, L. Novomeského, Ligetská Odbojárov, Robotnícka.
+#   obvod 2: volebný obvod tvoria ulice: 1. mája, 29. augusta, Dimitrovova, Obrancov mieru, Poštová, Ružová, Údernícka, Fučíkova, J. Vallu, Liptovská, M. Čulena, Náhradné pole, Šmeralova, Zápotockého, Partizánska, SNP, Potočná, Železničiarska, Banská cesta, I. Krasku, Mlynská, Pekárska, Duklianska, F. Nádaždyho, Námestie baníkov, Cintorínska, Gagarina, Hurbanova, J. Kráľa, Jilemnického, Kremnická, Kunešovská, Pionierov, Ľ. Štúra, Mládežnícka, Parková, Sadová, S. Chalúpku, Školská, mesto Handlová, Ciglianska, Pod Šachtou, Stará cesta, Žiarska, mestská časť Nová Lehota.
+obec = "513997"
+name = "Handlová"
+date = 2026-06-25
+fill = "nearest"
+note = "The resolution text itself (uznesenie č. 1075 B/P) was not found as a file; the city's obvody page publishes its content. Obvod 1 = okrsky 1-10, obvod 2 = okrsky 11-18 of the okrsky PDF, whose house-number ranges were used for the streets the page lists in both obvody (1. mája, Dimitrovova, Poštová). Štrajková is missing from the page but in okrsok 12 (obvod 2). 'mesto Handlová' (obvod 2) and okrsok 13's 'Adresa Handlová' mean citizens registered only at the town (no house), who are not in the address register; okrsok 13 lists the street-less houses súp. č. 2156, 2317 and 3909, and the other addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.handlova.sk/14024/volebne-obvody-mesta-handlova"
+sha256 = "f9fdc91906185409569c3fee4858312934241a98efe497c386336576bc881bc8"
+title = "Volebné obvody mesta Handlová (uznesenie MsZ č. 1075 B/P z 25. 6. 2026)"
+
+[[document]]
+url = "https://www.handlova.sk/data/page/handlova.sk/14024/hranice-volebnych-okrskov_komunalne-volby_2026.pdf"
+sha256 = "e60b7b4f1a6bbb1e1e4190bf526caa2a484f3501b9e22f3c4bdacc44fa7bc0d9"
+title = "Hranice volebných okrskov pre voľby 24. októbra 2026 (25.06.2026)"
+
+[obvod.1]
+seats = 9
+rules = [
+  {street = "1.mája", numbers = "1-35", parity = "odd", written = "1. mája", note = "Split from okrsky 7 and 9 of the okrsky PDF (obvod 1 = okrsky 1-10): 1.mája 2-10 P; 1, 7, 9, 17-35 N, 12-58 P. Unlisted odd 3, 5, 11-15 lie inside this range and are kept here."},
+  {street = "1.mája", numbers = "2-58", parity = "even", written = "1. mája", note = "Okrsky 7 and 9: 2-10 P and 12-58 P."},
+  {street = "Československej Armády", written = "ČSA", note = "ČSA is the abbreviation of Československej armády; okrsok 7 lists ČSA 2-46 P, the only part of the street in either obvod."},
+  {street = "Majerníkova", written = "Majerníková", note = "Document's misspelling (long á) of Majerníkova."},
+  {street = "Mierové Námestie", written = "Mierové námestie"},
+  {street = "Remata"},
+  {street = "Prievidzská"},
+  {street = "Dimitrovova", numbers = "21-41", parity = "odd", written = "Dimitrovová", note = "Okrsok 9: Dimitrovova 21-41 N, 22-24 P; page spells it 'Dimitrovová' (long á). Remaining numbers of the street are in obvod 2 (okrsok 11: 1-19 N, 2-20 P, 26-28 P)."},
+  {street = "Dimitrovova", numbers = "22-24", parity = "even", written = "Dimitrovová", note = "Okrsok 9: 22-24 P."},
+  {street = "Krátka"},
+  {street = "Lipová"},
+  {street = "Poštová", numbers = "40-52", parity = "even", note = "Okrsok 9: Poštová 40-52 P. Okrsok 11 (obvod 2) has 2-18 P; numbers listed in neither okrsok fall to obvod 2's whole-street rule."},
+  {street = "Pstruhárska"},
+  {street = "Okružná"},
+  {street = "Morovnianska cesta"},
+  {street = "Kvetná"},
+  {street = "Márie Krššákovej", written = "M. Krššákovej"},
+  {street = "Márie Vladovej", written = "M. Vladovej"},
+  {street = "M. R. Štefánika"},
+  {street = "Savina"},
+  {street = "Športová"},
+  {street = "Švermova", written = "Švermová", note = "Document's misspelling (long á) of Švermova; the okrsky PDF writes Švermova."},
+  {street = "Mostná"},
+  {part = "Morovno"},
+  {street = "Brigádnická", written = "Brigádnicka", note = "Document's misspelling (short a) of Brigádnická."},
+  {street = "Hečkova"},
+  {street = "Hlboká"},
+  {street = "Hviezdoslavova"},
+  {street = "Ivana Olbrachta", written = "Olbrachta", note = "First name dropped; okrsky PDF writes 'I. Olbrachta'. Only street of that name."},
+  {street = "J. L. Bellu"},
+  {street = "Jánošíkova", written = "Jánošíková", note = "Document's misspelling (long á) of Jánošíkova."},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "L. Novomeského"},
+  {street = "Ligetská"},
+  {street = "Odbojárov"},
+  {street = "Robotnícka"},
+]
+
+[obvod.2]
+seats = 8
+rules = [
+  {street = "1.mája", written = "1. mája", note = "Rest of the street: okrsok 11 lists 1. mája 37-101 N, 60-102 P; more specific number rules in obvod 1 take 1-35 N and 2-58 P."},
+  {street = "29.augusta", written = "29. augusta"},
+  {street = "Dimitrovova", note = "Rest of the street: okrsok 11 lists 1-19 N, 2-20 P, 26-28 P; 21-41 N and 22-24 P are in obvod 1."},
+  {street = "Obrancov Mieru", written = "Obrancov mieru"},
+  {street = "Poštová", note = "Rest of the street: okrsok 11 lists Poštová 2-18 P; 40-52 P is in obvod 1."},
+  {street = "Ružová"},
+  {street = "Údernícka"},
+  {street = "Fučíkova"},
+  {street = "Štrajková", note = "Not on the obvody page list, but okrsok 12 of the okrsky PDF (an obvod 2 okrsok, published with the resolution) lists Štrajková C."},
+  {street = "Jána Vallu", written = "J. Vallu"},
+  {street = "Liptovská"},
+  {street = "Marka Čulena", written = "M. Čulena"},
+  {street = "Náhradné Pole", written = "Náhradné pole"},
+  {street = "Šmeralova"},
+  {street = "Zápotockého"},
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Potočná"},
+  {street = "Železničiarska"},
+  {street = "Banská cesta"},
+  {street = "Ivana Krasku", written = "I. Krasku"},
+  {street = "Mlynská"},
+  {street = "Pekárska"},
+  {street = "Duklianska"},
+  {street = "Ferka Nádaždyho", written = "F. Nádaždyho"},
+  {street = "Námestie baníkov"},
+  {street = "Cintorínska"},
+  {street = "Gagarina"},
+  {street = "Hurbanova"},
+  {street = "Janka Kráľa", written = "J. Kráľa"},
+  {street = "Jilemnického"},
+  {street = "Kremnická"},
+  {street = "Kunešovská"},
+  {street = "Pionierov"},
+  {street = "Ľudovíta Štúra", written = "Ľ. Štúra"},
+  {street = "Mládežnícka"},
+  {street = "Parková"},
+  {street = "Sadová"},
+  {street = "S. Chalúpku"},
+  {street = "Školská"},
+  {part = "Handlová", numbers = "2156, 2317, 3909", note = "okrsok 13 (obvod 2) lists 'súp. č. 2156, súp. č. 2317, súp. č.3909' (houses without a street) besides 'Adresa Handlová' (citizens registered only at the town)"},
+  {street = "Ciglianska"},
+  {street = "Pod Šachtou"},
+  {street = "Stará cesta"},
+  {street = "Žiarska"},
+  {part = "Nová Lehota"},
+]

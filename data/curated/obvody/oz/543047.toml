@@ -1,0 +1,27 @@
+# Council obvody of Klátova Nová Ves (543047), Partizánske.
+# Transcribed by an AI agent in job obvod-rules-150 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č.1 – Klátova Nová Ves - počet poslancov: 7
+#   obvod 2: volebný obvod č.2 – Janova Ves - počet poslancov: 2
+obec = "543047"
+name = "Klátova Nová Ves"
+note = "The document is a scanned image (HP Scan) but plainly legible; transcribed from the rendered page. No date of the council's decision is published: Uznesenie č. 23/2026 states none, the website's council-meetings list for 2026 is empty (last meeting listed 12.11.2025), and the other election notices (okrsky, zapisovateľ, delegovanie) carry no date. Bounds only: the decision had to be made by 21.7.2026 (deadline in the Speaker's decision No. 145/2026 Z. z.), the elections page 'Voľby 2026 - informácie' is dated 21.7.2026, and the scan was made 2026-08-07. `date` is therefore left out rather than guessed. The obvody are named after the two settlements, which are parts of the municipality; they are transcribed as part rules (Klátova Nová Ves and Janova Ves) rather than cadastral areas, since some addresses carry no k.ú. The part Sádok (31 addresses) is not named in the document; it lies in k.ú. Klátova Nová Ves, so it is placed in obvod 1 (inferred)."
+
+[[document]]
+url = "https://www.klatovanovaves.sk/download_file_f.php?id=2453522"
+sha256 = "a5ec7231f1f0a215ec3bf3b8abb7d271f3303b64a8523ccc270a40d0172940c5"
+title = "Uznesenie č. 23/2026 Obecného zastupiteľstva obce Klátova Nová Ves (Volebne-obvody.pdf)"
+
+[obvod.1]
+seats = 7
+rules = [
+  {part = "Klátova Nová Ves", note = "The document names the obvod 'Klátova Nová Ves'; taken as the part Klátova Nová Ves."},
+  {part = "Sádok", note = "Sádok is not named in the document; it is a settlement in k.ú. Klátova Nová Ves, so it belongs with obvod 1 (Klátova Nová Ves), not Janova Ves.", inferred = true},
+]
+
+[obvod.2]
+seats = 2
+rules = [
+  {part = "Janova Ves"},
+]

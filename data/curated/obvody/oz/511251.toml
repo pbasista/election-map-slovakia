@@ -1,0 +1,28 @@
+# Council obvody of Boľkovce (511251), Lučenec.
+# Transcribed by an AI agent in job obvod-rules-176 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa s.č.: 1,2,3,6,7,13,17,22,24,25,26,27,30,31,32,33,34,35,36,37,39,40,41,42,43,46,47,48,49,50,53, 54,56,57,58,59,65,67,70,71,76,78,83,84,85,86,87,89,90,91,94,96,97,98,99,100,104,105,106, 107,108,109,110,111,112,113,114,220,222,224,230,237,238,243,249,250,256,287,288,292, 335,336,348,352,357 sa volia 3 poslanci.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa s.č.: 125,128,131,133,134,135,136,147,149,150,153,154,155,156,157,158,159,160,161,162,163, 164,165,166,167,168,170,171,172,173,174,176,177,178,179,180,181,183,184,185,186,190, 191,193,194,197,198,199,200,206,207,208,209,210,212,213,214,215,216,217,218,219,231, 232,233,234,235,239,240,241,242,254,262,270,277,280,281,282,294,321,322,323,324,325, 326, 327,328,329,330,347,350,351,353,354,358,374,383,386,389,392,393,402 sa volia 3 poslanci.
+obec = "511251"
+name = "Boľkovce"
+date = 2026-06-17
+fill = "nearest"
+note = "Scanned one-page announcement (image only), read visually at 300 dpi; council resolution č. 353/3/2026 of 17.06.2026, announcement dated 26.06.2026. Both obvody are defined only by lists of súpisné čísla (85 in obvod 1, 102 in obvod 2), all present in the address register. The 163 other register addresses (e.g. 4, 5, 8, 10, 11, …, most numbers 300–391; likely uninhabited/recreational buildings) are not named in the document and are placed by fill_nearest. Obvod 1 is the eastern settlement, obvod 2 the western one about 4.5 km away, so the nearest-address fill is unambiguous (62 to obvod 1, 101 to obvod 2, no near ties)."
+
+[[document]]
+url = "https://www.bolkovce.sk/download_file_f.php?id=2431211"
+sha256 = "c3b98423f0a575c7c3342c92509bb5ffa877897d7686921037141c836d2418b6"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie OZ č. 353/3/2026 zo dňa 17.06.2026)"
+
+[obvod.1]
+seats = 3
+rules = [
+  {part = "Boľkovce", numbers = "1, 2, 3, 6, 7, 13, 17, 22, 24, 25, 26, 27, 30, 31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 43, 46, 47, 48, 49, 50, 53, 54, 56, 57, 58, 59, 65, 67, 70, 71, 76, 78, 83, 84, 85, 86, 87, 89, 90, 91, 94, 96, 97, 98, 99, 100, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 220, 222, 224, 230, 237, 238, 243, 249, 250, 256, 287, 288, 292, 335, 336, 348, 352, 357", by = "supisne"},
+]
+
+[obvod.2]
+seats = 3
+rules = [
+  {part = "Boľkovce", numbers = "125, 128, 131, 133, 134, 135, 136, 147, 149, 150, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 170, 171, 172, 173, 174, 176, 177, 178, 179, 180, 181, 183, 184, 185, 186, 190, 191, 193, 194, 197, 198, 199, 200, 206, 207, 208, 209, 210, 212, 213, 214, 215, 216, 217, 218, 219, 231, 232, 233, 234, 235, 239, 240, 241, 242, 254, 262, 270, 277, 280, 281, 282, 294, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 347, 350, 351, 353, 354, 358, 374, 383, 386, 389, 392, 393, 402", by = "supisne"},
+]

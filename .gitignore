@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Downloads and agent jobs in flight: reproducible, not source
+/data/raw/
+/data/jobs/
+
+# Build output and tool caches
+/data/build/
+/dist/
+.ruff_cache/
+.pytest_cache/

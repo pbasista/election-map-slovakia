@@ -1,0 +1,86 @@
+# Council obvody of Liptovský Hrádok (510726), Liptovský Mikuláš.
+# Transcribed by an AI agent in job obvod-rules-111 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, vymedzený katastrálnym územím Dovalovo, ktorý zahŕňa mestskú časť Dovalovo, ulice: Agátová, Brezová, Cédrová, Cintorínska, Družstevná, Gálovská, Hlavná, Javorová, Ulica ku Lazíku, Ulica na Sihoť, Nižné Hriadky, Nová, Slnečná, Školská, Úvrate, Vyšné Hriadky, Vyšný koniec, sa volia 2 poslanci.
+#   obvod 2: Vo volebnom obvode číslo 2, vymedzený katastrálnym územím Liptovský Hrádok, ktorý zahŕňa ulice: Belanská, ČSA, Dr. A. Škarvana, Dr. J. Gašperíka, Duklianska, Fraňa Kráľa, Hradná, Hurbanova, Hviezdoslavova, J. D. Matejovie, J. Kollára, Jakuba Grajchmana, Jána Nepomuka Bobulu, Janka Silana, Juraja Martinku, K Belej, Komenského, Kpt. Nálepku, Lichardova, Lužnica, Magdalény Zai, Mariána Blahu, Martina Rázusa, Maša, Matúškova, Moyzesova, Námestie Františka Wisnera, Nižné fabriky, Pálenica, Partizánska, Pod lipami, Prekážka, Pri tehelni, Pri úpuste, Pri železnici, Sady M. R. Štefánika, SNP, Športová, Štúrova, Vyšné fabriky, Výroška, Záhradná, Zdravotnícka, sa volia 11 poslanci.
+obec = "510726"
+name = "Liptovský Hrádok"
+date = 2026-07-02
+note = "Announcement of the mayor dated 15.7.2026 citing council resolution no. 27/2026 of 2 July 2026. Streets 'Námestie Františka Wisnera' and 'Zdravotnícka' (obvod 2) are not in the address register and are left out. Farská (Dovalovo) is not listed but lies in k.ú. Dovalovo, so it is placed in obvod 1."
+
+[[document]]
+url = "https://www.liptovskyhradok.sk/download_file_f.php?id=2443653"
+sha256 = "c28664fb179d8f4d20c41eeccae30b61c5c427ee4b443c493e6a2fa08427e9a2"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie MsZ č. 27/2026 zo dňa 2. júla 2026)"
+
+[obvod.1]
+seats = 2
+rules = [
+  {street = "Agátová"},
+  {street = "Brezová"},
+  {street = "Cédrová"},
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Gálovská"},
+  {street = "Hlavná"},
+  {street = "Javorová"},
+  {street = "Ulica ku Lazíku"},
+  {street = "Ulica na Sihoť"},
+  {street = "Nižné Hriadky"},
+  {street = "Nová"},
+  {street = "Slnečná"},
+  {street = "Školská"},
+  {street = "Úvrate"},
+  {street = "Vyšné Hriadky"},
+  {street = "Vyšný koniec"},
+  {street = "Farská", note = "Not named in the document, but it is a street of the Dovalovo part, inside k.ú. Dovalovo, which the document says defines obvod 1.", inferred = true},
+  {ku = "Dovalovo", note = "Document defines the obvod by this katastrálne územie; covers addresses without a street."},
+]
+
+[obvod.2]
+seats = 11
+rules = [
+  {street = "Belanská"},
+  {street = "ČSA"},
+  {street = "Dr. A. Škarvana"},
+  {street = "Dr. J. Gašperíka"},
+  {street = "Duklianska"},
+  {street = "Fraňa Kráľa"},
+  {street = "Hradná"},
+  {street = "Hurbanova"},
+  {street = "Hviezdoslavova"},
+  {street = "J. D. Matejovie"},
+  {street = "J. Kollára"},
+  {street = "Jakuba Grajchmana"},
+  {street = "Jána Nepomuka Bobulu"},
+  {street = "Janka Silana"},
+  {street = "Juraja Martinku"},
+  {street = "K Belej"},
+  {street = "Komenského"},
+  {street = "Kpt. Nálepku"},
+  {street = "Lichardova"},
+  {street = "Lúžnica", written = "Lužnica", note = "Document writes 'Lužnica' without the accent; the register's 'Lúžnica' is the same street (only such name in the town)."},
+  {street = "Magdalény Zai"},
+  {street = "Mariána Blahu"},
+  {street = "Martina Rázusa"},
+  {street = "Maša"},
+  {street = "Matúškova"},
+  {street = "Moyzesova"},
+  {street = "Nižné fabriky"},
+  {street = "Pálenica"},
+  {street = "Partizánska"},
+  {street = "Pod lipami"},
+  {street = "Prekážka"},
+  {street = "Pri tehelni"},
+  {street = "Pri úpuste"},
+  {street = "Pri železnici"},
+  {street = "Sady M. R. Štefánika"},
+  {street = "SNP"},
+  {street = "Športová"},
+  {street = "Štúrova"},
+  {street = "Vyšné fabriky"},
+  {street = "Výroška"},
+  {street = "Záhradná"},
+  {ku = "Liptovský Hrádok", note = "Document defines the obvod by this katastrálne územie; covers addresses without a street."},
+]

@@ -1,0 +1,63 @@
+# Council obvody of Vysoké Tatry (560103), Poprad.
+# Transcribed by an AI agent in job obvod-rules-100 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 /tvoria časti mesta Podbanské, Štrbské Pleso, Vyšné Hágy / - počet poslancov: 1.
+#   obvod 2: Volebný obvod č. 2 /tvoria časti mesta Nová Polianka, Tatranská Polianka/ - počet poslancov: 1.
+#   obvod 3: Volebný obvod č. 3 /tvoria časti mesta Tatranské Zruby, Nový Smokovec, Starý Smokovec, Horný Smokovec - počet poslancov: 2.
+#   obvod 4: Volebný obvod č. 4 /tvorí časť mesta Dolný Smokovec/ - počet poslancov: 2.
+#   obvod 5: Volebný obvod č. 5 /tvoria časti mesta Tatranská Lesná, Tatranská Lomnica, Tatranské Matliare, Kežmarské Žľaby - počet poslancov: 3.
+#   obvod 6: Volebný obvod č. 6 /tvorí časť mesta Tatranská Kotlina/ - počet poslancov: 1.
+obec = "560103"
+name = "Vysoké Tatry"
+date = 2026-06-25
+
+[[document]]
+url = "https://www.vysoketatry.sk/download_file_f.php?id=2440467"
+sha256 = "bcc2caccf46ba3f4b5418b91ef4e530fd7f820575d76bcf11c950cdf0de6502f"
+title = "OZNÁMENIE o určení volebných obvodov a počtu poslancov pre voľby do orgánov samosprávy obcí v roku 2026 na volebné obdobie 2026-2030 v meste Vysoké Tatry (uznesenie MsZ č. 44/2026 zo dňa 25. 6. 2026)"
+
+[obvod.1]
+seats = 1
+rules = [
+  {part = "Podbanské"},
+  {part = "Štrbské Pleso"},
+  {part = "Vyšné Hágy"},
+]
+
+[obvod.2]
+seats = 1
+rules = [
+  {part = "Nová Polianka"},
+  {part = "Tatranská Polianka"},
+]
+
+[obvod.3]
+seats = 2
+rules = [
+  {part = "Tatranské Zruby"},
+  {part = "Nový Smokovec"},
+  {part = "Starý Smokovec"},
+  {part = "Horný Smokovec"},
+]
+
+[obvod.4]
+seats = 2
+rules = [
+  {part = "Dolný Smokovec"},
+]
+
+[obvod.5]
+seats = 3
+rules = [
+  {part = "Tatranská Lesná"},
+  {part = "Tatranská Lomnica"},
+  {part = "Tatranské Matliare"},
+  {part = "Kežmarské Žľaby"},
+]
+
+[obvod.6]
+seats = 1
+rules = [
+  {part = "Tatranská Kotlina"},
+]

@@ -1,0 +1,27 @@
+# Council obvody of Veľký Šariš (525405), Prešov.
+# Transcribed by an AI agent in job obvod-rules-091 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: vo volebnom obvode číslo 1, ktorý zahŕňa Veľký Šariš bude deväť poslancov
+#   obvod 2: vo volebnom obvode číslo 2, ktorý zahŕňa miestnu časť Kanaš budú dvaja poslanci
+obec = "525405"
+name = "Veľký Šariš"
+date = 2026-06-25
+note = "The announcement defines the obvody by parts of the town: obvod 1 = Veľký Šariš, obvod 2 = miestna časť Kanaš; mapped to the register parts of the same names."
+
+[[document]]
+url = "https://www.velkysaris.sk/oznamenie--o--utvoreni-volebnych-obvodov-a--o-urceni-poctu-poslancov-mestskeho-zastupitelstva-vo-velkom-sarisi-oznam/mid/566712/.html"
+sha256 = "45526a74b3de1f7399ede78ef9e3b8d10f68ef7631e98f337aaeb5ec5cb21b22"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov Mestského zastupiteľstva vo Veľkom Šariši (uznesenie MsZ č. 81/2026-23/XXX zo dňa 25.6.2026)"
+
+[obvod.1]
+seats = 9
+rules = [
+  {part = "Veľký Šariš"},
+]
+
+[obvod.2]
+seats = 2
+rules = [
+  {part = "Kanaš"},
+]

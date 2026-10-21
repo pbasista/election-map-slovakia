@@ -1,0 +1,42 @@
+# Council obvody of Stará Turá (506524), Nové Mesto nad Váhom.
+# Transcribed by an AI agent in job obvod-rules-078 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Stará Turá
+#   obvod 2: Paprad, Černochov Vrch, Jazviny
+#   obvod 3: Topolecká, Súš
+obec = "506524"
+name = "Stará Turá"
+date = 2026-06-30
+note = "Oznámenie (dated 09.07.2026) cites uznesenie č. 34 - 34/2026 zo dňa 30.06.2026: 13 poslancov in 3 obvody, defined by parts of the town. A Sept 2025 council material proposing 11 poslancov in one obvod was evidently not adopted. The mayor's okrsky decision of 23.7.2026 confirms: obvod 2 = okrsky 7 (Černochov Vrch, Drgoňova Dolina, Durcova Dolina, Jazviny, U Mikulcov) and 8 (Paprad); obvod 3 = okrsky 9 (Hlavina, Topolecká) and 10 (Lazy, Súš, U Samkov, Trávniky); all streets of the register lie in part Stará Turá (obvod 1)."
+
+[[document]]
+url = "https://www.staratura.sk/resources/File/oznamenie-o-utvoreni-volebnych-obvodov-a-o-urceni-poctu-poslancov-pre-volby-do-organov-samospravy-obci-24-oktobra-2026.pdf"
+sha256 = "8d5ebb2f8f164743fce739205c5ebb17fe42f869db791f309566e55b3537f223"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie MsZ č. 34/2026 zo dňa 30.06.2026)"
+
+[[document]]
+url = "https://www.staratura.sk/resources/File/rozhodnutie-komunalne-volby-2026-okrsky-stara-tura.pdf"
+sha256 = "1df9bb6ed096893a81161c495bb870826aa797cc533816138fc3ab6d03747cd3"
+title = "Rozhodnutie o volebných obvodoch, volebných okrskoch - Voľby do orgánov samosprávy obcí 2026 (23. 7. 2026)"
+
+[obvod.1]
+seats = 11
+rules = [
+  {part = "Stará Turá"},
+]
+
+[obvod.2]
+seats = 1
+rules = [
+  {part = "Paprad"},
+  {part = "Černochov Vrch"},
+  {part = "Jazviny"},
+]
+
+[obvod.3]
+seats = 1
+rules = [
+  {part = "Topolecká"},
+  {part = "Súš"},
+]

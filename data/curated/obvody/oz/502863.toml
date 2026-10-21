@@ -1,0 +1,63 @@
+# Council obvody of Tlmače (502863), Levice.
+# Transcribed by an AI agent in job obvod-rules-137 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa 3 volebné okrsky: volebný okrsok č. 1, volebný okrsok č. 2, volebný okrsok č. 3 sa volí 9 poslancov. [Utvorenie volebných okrskov:] Volebný okrsok č. 1 tvorí: Lipová ulica, Kotlárska ulica, Mládežnícka ulica, Ulica Na Festúnku, Záhradná ulica. Volebný okrsok č. 2 tvorí: Dlhá ulica, Námestie odborárov, Kozmálovská cesta, Francúzska ulica, Viničná ulica. Volebný okrsok č. 3 tvorí: Námestie 1. mája, Topoľová ulica, Slovanská ulica, Školská ulica, Ružová ulica, ulica Československej Armády
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa 1 volebný okrsok: volebný okrsok č. 4 sa volí 2 poslancov. [Utvorenie volebných okrskov:] Volebný okrsok č. 4 tvorí: Cintorínska ulica, Cintorínska, Krátka ulica, Levická cesta, Mlynská ulica, Mlynská, Nám. Slov. Národného Povstania, Nová ulica, Potočná ulica, Stará ulica, Stará, Tekovská cesta, Tekovská ulica, Továrenská cesta, Továrenská ulica
+obec = "502863"
+name = "Tlmače"
+date = 2026-06-25
+note = "The announcement defines the obvody by volebné okrsky (obvod 1 = okrsky 1-3, obvod 2 = okrsok 4); the streets are taken from the mayor's okrsky announcement of 13.07.2026, which lists them under obvod 1 and 2 (its text mistakenly mentions the referendum of 4 July 2026, a template leftover; it is headed for the 24.10.2026 elections). The okrsky together list every register street; addresses without a street are assigned by part (Lipník -> 1, Tlmače -> 2)."
+
+[[document]]
+url = "https://www.mestotlmace.sk/modules/file_storage/download.php?file=22656ecc%7C1312&inline=1"
+sha256 = "0a3dd81366b6c1fa34bb339c929805739112669521e4271667e0099deeed2865"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie MsZ č. 11/250626 zo dňa 25.06.2026), Tlmače 7.7.2026"
+
+[[document]]
+url = "https://www.mestotlmace.sk/modules/file_storage/download.php?file=48f49b85%7C1339&inline=1"
+sha256 = "715665119c71790fb4669c9649b49e0f6881cb894f9f58844babb354f4218395"
+title = "Oznámenie - Utvorenie volebných okrskov a určenie volebných miestností v meste Tlmače, 13.07.2026"
+
+[obvod.1]
+seats = 9
+rules = [
+  {street = "Lipová ulica"},
+  {street = "Kotlárska ulica"},
+  {street = "Mládežnícka", written = "Mládežnícka ulica", note = "document adds 'ulica'; same street as the register's 'Mládežnícka'"},
+  {street = "Ulica Na Festunku", written = "Ulica Na Festúnku", note = "document spells 'Festúnku' with ú; same street as the register's 'Ulica Na Festunku'"},
+  {street = "Záhradná ulica"},
+  {street = "Dlhá ulica"},
+  {street = "Námestie Odborárov", written = "Námestie odborárov", note = "only capitalisation differs; same square as the register's 'Námestie Odborárov'"},
+  {street = "Kozmálovská cesta"},
+  {street = "Francúzska", written = "Francúzska ulica", note = "document adds 'ulica'; same street as the register's 'Francúzska'"},
+  {street = "Viničná ulica"},
+  {street = "Námestie 1.mája", written = "Námestie 1. mája", note = "only a space differs; same square as the register's 'Námestie 1.mája'"},
+  {street = "Topoľová ulica"},
+  {street = "Slovanská ulica"},
+  {street = "Školská ulica"},
+  {street = "Ružová ulica"},
+  {street = "Československej Armády", written = "ulica Československej Armády", note = "document prefixes 'ulica'; same street as the register's 'Československej Armády'"},
+  {part = "Lipník", note = "addresses without a street in part Lipník: all streets of okrsky 1-3 (obvod 1) are exactly the streets of part Lipník, so the part belongs to obvod 1", inferred = true},
+]
+
+[obvod.2]
+seats = 2
+rules = [
+  {street = "Cintorínska ulica"},
+  {street = "Cintorínska"},
+  {street = "Krátka ulica"},
+  {street = "Levická cesta"},
+  {street = "Mlynská ulica"},
+  {street = "Mlynská"},
+  {street = "Nám. Slov. Národného Povstania"},
+  {street = "Nová ulica"},
+  {street = "Potočná ulica"},
+  {street = "Stará ulica"},
+  {street = "Stará"},
+  {street = "Tekovská cesta"},
+  {street = "Tekovská ulica"},
+  {street = "Továrenská cesta"},
+  {street = "Továrenská ulica"},
+  {part = "Tlmače", note = "addresses without a street in part Tlmače: all streets of okrsok 4 (obvod 2) are exactly the streets of part Tlmače, so the part belongs to obvod 2", inferred = true},
+]

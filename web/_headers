@@ -1,0 +1,54 @@
+# Cloudflare Pages response headers, copied to dist/_headers by `ems
+# build` and applied by `ems serve` as well. Syntax and limits:
+# https://developers.cloudflare.com/pages/configuration/headers/ (at most
+# 100 rules, 2,000 characters per line; a header set by two matching rules
+# gets both values joined by a comma, so the Cache-Control rules below must
+# not overlap).
+
+# The site loads nothing from other origins and runs no inline script; the
+# policy makes the browser enforce that. data: images are the favicons
+# written inline in the HTML.
+/*
+  Content-Security-Policy: default-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+
+# File names carry no content hash, so browsers keep a copy only briefly and
+# then revalidate it (Pages answers with its ETag, usually 304). Code and
+# data share the lifetime so that a deployment does not pair new code with
+# old data for long. HTML keeps the Pages default (max-age=0,
+# must-revalidate).
+/assets/app.css
+  Cache-Control: public, max-age=300, must-revalidate
+
+/assets/js/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+/i18n/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+/data/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+/geo/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+/addr/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+# Vendored libraries and party logos change only with a deliberate upgrade.
+/assets/vendor/*
+  Cache-Control: public, max-age=86400
+
+/assets/img/*
+  Cache-Control: public, max-age=86400
+
+# Cached copies of the pages research cites. A copy's name is the hash of
+# its content, so it never changes. They are sanitized when cached (no
+# scripts, frames or remote loads); the sandbox makes sure nothing in them
+# runs or reaches the site's storage, and search engines should index the
+# originals, not the copies.
+/cache/*
+  Content-Security-Policy: sandbox allow-popups allow-popups-to-escape-sandbox
+  X-Robots-Tag: noindex
+  Cache-Control: public, max-age=86400

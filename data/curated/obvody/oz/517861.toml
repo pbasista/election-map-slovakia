@@ -1,0 +1,28 @@
+# Council obvody of Petrovice (517861), Bytča.
+# Transcribed by an AI agent in job obvod-rules-154 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1., ktorý zahŕňa: Petrovice, Pláne, Magale sa volí 6 poslancov.
+#   obvod 2: Vo volebnom obvode číslo 2., ktorý zahŕňa: Setechov sa volí 3 poslancov.
+obec = "517861"
+name = "Petrovice"
+date = 2026-06-03
+
+[[document]]
+url = "https://www.obecpetrovice.sk/blocks/files/019f1716-ae0a-7153-ab67-e843085af566.pdf"
+sha256 = "74ef35b265fa065aae5abf8ed2ea06c90e407c41d2c1b0eff722d7658f990061"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie OZ č. 241 zo dňa 3.6.2026)"
+
+[obvod.1]
+seats = 6
+rules = [
+  {part = "Petrovice"},
+  {part = "Pláne"},
+  {part = "Magale"},
+]
+
+[obvod.2]
+seats = 3
+rules = [
+  {part = "Setechov"},
+]

@@ -1,0 +1,60 @@
+# Council obvody of Šaštín-Stráže (504891), Senica.
+# Transcribed by an AI agent in job obvod-rules-101 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode č. 1, ktorý zahŕňa katastrálne územie časti mesta Stráže sa volia 4 poslanci.
+#   obvod 2: Vo volebnom obvode č. 2, ktorý zahŕňa ulice: Alej, Do Gazárky, RO Gazárka, J. Kollára, Jesenského, Kláštorné nám., M. Nešpora, Nádražná, Pri bitúnku, Pri Kadúbku, Pri rybníku, Slnečná, Štúrova, Železničiarska a Lúčna sa volia 4 poslanci.
+#   obvod 3: Vo volebnom obvode č. 3, ktorý zahŕňa ulice: Borová, J. Hollého, Komenského, Metodova, Nám. Slobody, Na pažiti, Novoveská, Piesočná, U Vulgana, Zákostolie, Zápotočná, Záhumenice sa volia 3 poslanci.
+obec = "504891"
+name = "Šaštín-Stráže"
+date = 2026-06-17
+fill = "nearest"
+note = "Source is the mayor's announcement of 15 July 2026 citing resolution No. 685/2026 of 17 June 2026 (11 councillors, 3 obvody). Obvod 1 is defined as the cadastral area of the town part Stráže; obvody 2 and 3 list the streets of Šaštín. The document does not place the addresses without a street in the part Šaštín (súpisné čísla such as 550, 559, 623, 686, 1026, 1482, 1508, 1727); fill_nearest assigns them to the obvod of the nearest address. Šaštín 548 (no street, part Šaštín) is located in k.ú. Stráže nad Myjavou, so the k.ú. rule places it in obvod 1."
+
+[[document]]
+url = "https://www.mestosastinstraze.sk/e_download.php?file=/data/uredni_deska/obsah12272_6.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20obvodov%20a%20o%20ur%C4%8Den%C3%AD%20po%C4%8Dtu%20poslancov%20pre%20vo%C4%BEby%20do%20org%C3%A1nov%20%20samospr%C3%A1vy%20obc%C3%AD%2024.%20okt%C3%B3bra%202026.pdf"
+sha256 = "05ddef9f959b4c4ef11fbc6efb3bd004f23d51d3366657091ef1668dd58bcd27"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie MsZ č. 685/2026 zo dňa 17.06.2026)"
+
+[obvod.1]
+seats = 4
+rules = [
+  {ku = "Stráže nad Myjavou", note = "'katastrálne územie časti mesta Stráže' is the k.ú. Stráže nad Myjavou."},
+]
+
+[obvod.2]
+seats = 4
+rules = [
+  {street = "Alej"},
+  {street = "Do Gazárky"},
+  {street = "Ro Gazárka", written = "RO Gazárka", note = "The document writes 'RO Gazárka' with different capitalisation; same street as the register's 'Ro Gazárka'."},
+  {street = "J. Kollára"},
+  {street = "Jesenského"},
+  {street = "Kláštorné nám."},
+  {street = "M. Nešpora"},
+  {street = "Nádražná"},
+  {street = "Pri Bitúnku", written = "Pri bitúnku", note = "The document writes 'Pri bitúnku' with different capitalisation; same street as the register's 'Pri Bitúnku'."},
+  {street = "Pri Kadúbku"},
+  {street = "Pri Rybníku", written = "Pri rybníku", note = "The document writes 'Pri rybníku' with different capitalisation; same street as the register's 'Pri Rybníku'."},
+  {street = "Slnečná"},
+  {street = "Štúrova"},
+  {street = "Železničiarska"},
+  {street = "Lúčna"},
+]
+
+[obvod.3]
+seats = 3
+rules = [
+  {street = "Borová"},
+  {street = "J. Hollého"},
+  {street = "Komenského"},
+  {street = "Metodova"},
+  {street = "Nám. Slobody"},
+  {street = "Na pažiti"},
+  {street = "Novoveská"},
+  {street = "Piesočná"},
+  {street = "U Vulgana"},
+  {street = "Zákostolie"},
+  {street = "Zápotočná"},
+  {street = "Záhumenice"},
+]

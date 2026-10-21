@@ -1,0 +1,34 @@
+# Council obvody of Kočovce (506125), Nové Mesto nad Váhom.
+# Transcribed by an AI agent in job obvod-rules-146 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa Kočovce sa volia 3 poslanci,
+#   obvod 2: vo volebnom obvode číslo 2, ktorý zahŕňa Beckovskú Viesku sa volia 3 poslanci,
+#   obvod 3: vo volebnom obvode číslo 3, ktorý zahŕňa Rakoľuby sa volia 3 poslanci.
+obec = "506125"
+name = "Kočovce"
+date = 2026-06-22
+note = "Document is a scanned image (clearly legible), transcribed by reading the scan. Each obvod is one whole part of the municipality."
+
+[[document]]
+url = "https://www.kocovce.sk/download_file_f.php?id=2445260"
+sha256 = "f99d73a81ce2c0b93e9b98c6c3774044404248d94b6f8a4035a2b0c80c8f5ee6"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie OZ č. 42/2026-OZ zo dňa 22.6.2026), zo dňa 14.7.2026"
+
+[obvod.1]
+seats = 3
+rules = [
+  {part = "Kočovce"},
+]
+
+[obvod.2]
+seats = 3
+rules = [
+  {part = "Beckovská Vieska"},
+]
+
+[obvod.3]
+seats = 3
+rules = [
+  {part = "Rakoľuby"},
+]

@@ -1,0 +1,27 @@
+# Council obvody of Stankovany (511030), Ružomberok.
+# Transcribed by an AI agent in job obvod-rules-167 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: viacmandátový volebný obvod č. 1 - volebný okrsok č. 1 pre voľby poslancov v obci Stankovany miestna časť Stankovany – bude sa voliť 7 poslancov
+#   obvod 2: viacmandátový volebný obvod č. 2 - volebný okrsok č. 1 pre voľby poslancov v obci Stankovany miestna časť Rojkov – budú sa voliť 2 poslanci
+obec = "511030"
+name = "Stankovany"
+date = 2026-07-06
+note = "Transcribed from the obec's elections page quoting uznesenie č. 081/2026/06; the resolution PDF itself was not opened."
+
+[[document]]
+url = "https://www.stankovany.sk/urad/volby/volby-do-organov-samospravy-a-samospravnych-krajov-2026/"
+sha256 = "9555609770a9949172ea1201e4ee6bad168f0b3223d6b78701f3a26e4ef1af3d"
+title = "Voľby do orgánov samosprávy a samosprávnych krajov 2026 (uznesenie OZ č. 081/2026/06 zo dňa 06.07.2026)"
+
+[obvod.1]
+seats = 7
+rules = [
+  {part = "Stankovany"},
+]
+
+[obvod.2]
+seats = 2
+rules = [
+  {part = "Rojkov"},
+]

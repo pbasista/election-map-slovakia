@@ -1,0 +1,27 @@
+# Council obvody of Radošina (505421), Topoľčany.
+# Transcribed by an AI agent in job obvod-rules-138 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 Radošina v ktorom bude 8 poslancov
+#   obvod 2: Volebný obvod č. 2 Radošina -Bzince v ktorom bude 1 poslanec
+obec = "505421"
+name = "Radošina"
+date = 2026-06-17
+note = "Uznesenie č. 27/2026 of 17.6.2026: two obvody, 9 councillors in total. The PDF's table layout jumbles the text order; the obvod texts are reassembled from its phrases. Obvod 2 'Radošina-Bzince' is the part Bzince, obvod 1 'Radošina' the part Radošina."
+
+[[document]]
+url = "https://www.radosina.sk/download_file_f.php?id=2426922"
+sha256 = "a3d13aaad312129fbec4074b90ba34742391ce558cc701e7f3157e3064dc8fd1"
+title = "Uznesenia Obecného zastupiteľstva obce Radošina zo dňa 17.6.2026, č. 20-37/2026 (Uznesenie č. 27/2026 – určenie volebných obvodov a počtu poslancov)"
+
+[obvod.1]
+seats = 8
+rules = [
+  {part = "Radošina"},
+]
+
+[obvod.2]
+seats = 1
+rules = [
+  {part = "Bzince", note = "The document's 'Radošina-Bzince' is the part of the municipality Bzince."},
+]

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!-- Root page template: `ems build` writes it to /index.html (see
+     build.py). It sends the visitor to /<lang>/: the language they chose
+     last time, else the first of their browser languages the site has
+     (with aliases such as rom → rmc), else the first fallback language. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <title>{{title}}</title>
+{{alternates}}{{canonical}}
+    <link rel="icon" href="data:," />
+    <meta name="km-config" content="{{config}}" />
+    <script src="/assets/js/picker.js"></script>
+  </head>
+  <body>
+    <ul>
+{{links}}
+    </ul>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+# Council obvody of Hriňová (518468), Detva.
+# Transcribed by an AI agent in job obvod-rules-063 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: miestne časti: Krivec, Blato, Zánemecká, Pivnička, Riečka, Priehalina Sujovci, Luptákovci, Kružliakovci
+#   obvod 2: miestne časti: Slanec, Mangútovo, Jaseňovo, Štoliansko, Horná Hriňová, Biele Vody, Vrch Slatina, Snohy ulice: Pod Grapou, J. Kráľa, Hutianska cesta, Pod cintorínom, Kpt. Nálepku, Potočná, B. S. Timravy, Strojárska, Vajanského, Horná, Tršovky, Pod Kalváriou, Gondova, Do Rakov, Pod priehradou, Skalisko Jarabová, Šuľkovci, Skalisko, Paprčkovci
+#   obvod 3: bytové domy: 1566,1567, 1568, 1569, 1570, 1571, 1572, 1573, 1574, 1601, 1602, 1603, 1604,1608, 1609, 1610 domy: 2000, 2514, 3425
+#   obvod 4: ulice: Jarmočná, Lúčna, Parková, Murínka, Partizánska-okrem stavieb z obvodu č. 3 Lievajovci
+obec = "518468"
+name = "Hriňová"
+date = 2026-06-16
+fill = "nearest"
+note = "Obvody also name settlements (osady) that the address register has as súpisné numbers without street in part Hriňová: Sujovci, Luptákovci, Kružliakovci (obvod 1), Jarabová, Šuľkovci, Skalisko, Paprčkovci (obvod 2), Lievajovci (obvod 4). The street-less addresses of part Hriňová other than 2514 and the 32 centre buildings placed in obvod 4 have no rule and take the obvod of the nearest selected address (fill_nearest). Streets Slanecká (part Slanec) and Vrchárska (part Krivec) fall under their parts' rules."
+
+[[document]]
+url = "https://www.hrinova.sk/e_download.php?file=/data/editor/483sk_3.pdf&original=Pr%C3%ADloha%20k%20uzneseniu%20MsZ%20%C4%8D.%2045_2026_A%20zo%20d%C5%88a%2016.06.2026.pdf"
+sha256 = "33468223980709fe31797ef7a71a4f24a548b4c7b72700bc3fc89a87869d8d29"
+title = "Príloha k uzneseniu MsZ č. 45/2026/A zo dňa 16.06.2026 – Určenie volebných obvodov a počtu poslancov Mestského zastupiteľstva v Hriňovej"
+
+[obvod.1]
+seats = 5
+rules = [
+  {part = "Krivec"},
+  {part = "Blato"},
+  {part = "Zánemecká"},
+  {part = "Pivnička"},
+  {part = "Riečka"},
+  {part = "Priehalina"},
+]
+
+[obvod.2]
+seats = 3
+rules = [
+  {part = "Slanec"},
+  {part = "Mangútovo"},
+  {part = "Jasenovo", note = "document writes 'Jaseňovo'; the register's part is 'Jasenovo', same part"},
+  {part = "Štoliansko"},
+  {part = "Horná Hriňová"},
+  {part = "Biele Vody"},
+  {part = "Vrchslatina", note = "document writes 'Vrch Slatina'; the register's part is 'Vrchslatina', same part"},
+  {part = "Snohy"},
+  {street = "Pod Grapou"},
+  {street = "J. Kráľa"},
+  {street = "Hutianska cesta"},
+  {street = "Pod cintorínom"},
+  {street = "Kpt. Nálepku"},
+  {street = "Potočná"},
+  {street = "B.S.Timravy", written = "B. S. Timravy", note = "document spells it with spaces between the initials; same street"},
+  {street = "Strojárska"},
+  {street = "Vajanského"},
+  {street = "Horná"},
+  {street = "Tršovky"},
+  {street = "Pod Kalváriou"},
+  {street = "Ulica Gondova", written = "Gondova", note = "the register names it with the prefix 'Ulica'; the document drops 'Ulica', same street"},
+  {street = "Ulica Do Rakov", written = "Do Rakov", note = "the register names it with the prefix 'Ulica'; the document drops 'Ulica', same street"},
+  {street = "Ulica Pod priehradou", written = "Pod priehradou", note = "the register names it with the prefix 'Ulica'; the document drops 'Ulica', same street"},
+  {street = "Ulica Skalisko", written = "Skalisko", note = "the register names it with the prefix 'Ulica'; the document drops 'Ulica', same street"},
+]
+
+[obvod.3]
+seats = 3
+rules = [
+  {street = "Partizánska", numbers = "1574, 1601, 1602, 1603, 1609, 1610", by = "supisne", note = "bytové domy of obvod 3 by súpisné číslo that lie on Partizánska (register: 1610/1, 1610/3, 1609/3B-3E, 1603/9, 1603/11, 1602/13-21, 1601/23, 1601/25, 1574/27-33)"},
+  {street = "Školská", numbers = "1566, 1567, 1568, 1569, 1570, 1571, 1572, 1573, 1604, 1608, 2000, 3425", by = "supisne", note = "bytové domy and domy 2000, 3425 of obvod 3 by súpisné číslo that lie on Školská (register: 1608/1, 2000/2, 1608/3, 1604/5-9, 1566/12, 1570/13, 3425/14C, 1570/15, 1569/17-19, 1568/21-23, 1567/25-27, 1573/31-35, 1572/37-41, 1571/43-47)"},
+  {part = "Hriňová", numbers = "2514", note = "dom 2514 has no street in the register; it is súpisné číslo 2514 in part Hriňová"},
+]
+
+[obvod.4]
+seats = 2
+rules = [
+  {street = "Jarmočná"},
+  {street = "Lúčna"},
+  {street = "Parková"},
+  {street = "Murínka"},
+  {street = "Partizánska", note = "Partizánska except the obvod 3 buildings, which the obvod 3 rule selects by súpisné číslo"},
+  {street = "Školská", note = "the document names Školská nowhere except its bytové domy in obvod 3; its other houses (family houses 4-26 even, 29) lie in the town centre between Partizánska and Lúčna-area streets of obvod 4, and obvod 3 holds only the listed buildings", inferred = true},
+  {part = "Hriňová", numbers = "1577, 1605, 1606, 1907, 2070, 2071, 2100, 2109, 2142, 2176, 2192, 2211, 2213, 2216, 2217, 2219, 2301, 2302, 2304, 2306, 2308, 2309, 2564, 3095, 3260, 3287, 3333, 3565, 3639, 3740, 3839, 3929", note = "street-less buildings in the town centre around the obvod 3 bytové domy on Partizánska/Školská; obvod 3 is a closed list of buildings, so these go with the surrounding Partizánska/Školská houses of obvod 4 (nearest non-obvod-3 address is in obvod 4 for each)", inferred = true},
+]

@@ -1,0 +1,163 @@
+# Council obvody of Topoľčany (504998), Topoľčany.
+# Transcribed by an AI agent in job obvod-rules-038 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Ul. Clementisova, Ul. B. Němcovej, Ul. Podjavorinskej, Ul. krušovská/okrem č. 2301, 2302, 2285/, Ul. Sladovnícka, Ul. Gogoľova, Ul. V. Beniaka, Ul. Gorkého, Ul. Bernolákova, Ul. J.Bottu, Ul. Janka Kráľa, Ul. Kukučínova, Ul. Moyzesova, Ul. l7. novembra, Nám. Ľ. Štúra, Nám. M. R. Štefánika, Ul. J. Wolkra, Ul. Obchodná, Ul. Škultétyho, Ul. Štúrova, Ul. M. Rázusa, Ul. Palárikova, Ul. J. Hollého, Ul. Sama Chalupku, Zelený rínok, Park A. Dubčeka, Ul. kpt. Jaroša, Ul. Palkovičova, Ul. Šafárikova, Ul. Čsl. armády, Ul. sv. Cyrila a sv. Metoda, Ul. Pribinova, Ul. P. Mudroňa, Ul. T. Vansovej
+#   obvod 2: Ul. Tribečská, Ul. J. Matušku, Ul. P. O. Hviezdoslava, Práznovská cesta, Ul. krušovská 2301, 2302, 2285, Ul. pivovarnícka, Ul. Gagarinova , Ul. K. Kuzmányho Ul. J. Jesenského, Priemyselná ulica
+#   obvod 3: Ul. M. Benku, Ul. streďanská, Ul. D. Jurkoviča, Ul. M. A. Bazovského, Ul. Ľ. Fullu, Ul. J. Alexyho, Ul. Dr. P. Adámiho, Ul. Fraňa Kráľa, Ul. Jána Kollára, Ul. mieru, Ul. športovcov, Ul. záhradnícka, Ul. železničiarska, Ul. krátka, Ul. Stummerova všetky nepárne orientačné čísla a párne orientačné čísla po 112 a orientačné čísla 142, 148, 168, 170, 172, Mestský park, Ul. Timravy, Ul. Pavlovova
+#   obvod 4: Ul. cintorínska, Ul. pod kalváriou, Ul. Stummerova všetky párne orientačné čísla od 114 mimo orientačných čísel 142, 148, 168, 170, 172, Ul. dopravná, Ul. A. Grznára, Ul. Komenského, Ul. cukrovarnícka, Ul. inovecká, Ul. Vajanského, Ul. jaselská, Ul. Hurbanova, Ul. M. Závodného, Ul. odbojárov, Ul. slovenských partizánov, Ul. topoľová, Ul. družby, Ul. Kalinčiakova, Ul. pionierska, Ul. Puškinova, Park športovcov, Ul. budovateľská, Ul. tovarnícka, Ul. agátová, Ul. astrová, Ul. brezová, Ul. ľaliová, Ul. malinová, Ul. margarétová, Ul. muškátová, Ul. orgovánová, Ul. ružová, Ul. snežienková, Ul. šípová, Ul. nezábudková, Ul. narcisová, Ul. javorová, Ul. fialková, Ul. sedmikrásková, Ul. Sládkovičova, Ul. slnečná, Ul. tulipánová, Ul. Andreja Hlinku, Ul. jahodová, Ul. Rastislavova, Ul. hrebíčková, Ul. skýcovská, Ul. kpt. Žalmana, Ul. Mojmírova, Ul. P. Jilemnického, Ul. pílska, Ul. Radlinského, Ul. slobody, Ul. povstania, Ul. Svätoplukova, Ul. Václavská, Ul. lipová, Ul. Ladislava Dorušáka, Ul. Ladislava Mokrého
+#   obvod 5: Mestská časť Malé Bedzany, Mestská časť Veľké Bedzany
+obec = "504998"
+name = "Topoľčany"
+date = 2026-08-05
+fill = "nearest"
+note = "Source is the city's announcement on topolcany.sk summarising the resolution adopted at the 25th council session on 5 Aug 2026; the resolution PDF itself was not found. The document names non-address places (Zelený rínok, Park A. Dubčeka, Mestský park, Park športovcov), which are left out. It covers every register street, but not the ~1,665 addresses in part Topoľčany that have no street (súpisné číslo only). For those, fill_nearest assigns the obvod of the nearest address that a rule places. Malé Bedzany and Veľké Bedzany form obvod 5 as whole parts."
+
+[[document]]
+url = "https://www.topolcany.sk/mid/455893/obvody-a-pocty-poslancov-pre-volby-do-samospravy-obci-v-roku-2026-oznam.html"
+sha256 = "03f4a2555bb109775be359f1e7cc9660424c61542a058c64d1f2e662cf2b8189"
+title = "Obvody a počty poslancov pre voľby do samosprávy obcí v roku 2026 (oznam, uznesenie MsZ z 25. zasadnutia dňa 5. 8. 2026)"
+
+[obvod.1]
+seats = 6
+rules = [
+  {street = "Clementisova"},
+  {street = "B. Němcovej"},
+  {street = "Podjavorinskej"},
+  {street = "Krušovská", written = "Ul. krušovská", note = "Krušovská except súpisné čísla 2301, 2302, 2285, which are in obvod 2."},
+  {street = "Sladovnícka"},
+  {street = "Gogoľova"},
+  {street = "V. Beniaka"},
+  {street = "Gorkého"},
+  {street = "Bernolákova"},
+  {street = "J. Bottu", written = "Ul. J.Bottu"},
+  {street = "Janka Kráľa"},
+  {street = "Kukučínova"},
+  {street = "Moyzesova"},
+  {street = "17. novembra", written = "Ul. l7. novembra", note = "The document writes \"l7\" with a lowercase letter l in place of the digit 1, a typo for 17. novembra."},
+  {street = "Nám. Ľ. Štúra"},
+  {street = "Nám. M. R. Štefánika"},
+  {street = "J. Wolkra"},
+  {street = "Obchodná"},
+  {street = "Škultétyho"},
+  {street = "Štúrova"},
+  {street = "M. Rázusa"},
+  {street = "Palárikova"},
+  {street = "J. Hollého"},
+  {street = "Sama Chalupku"},
+  {street = "kpt. Jaroša"},
+  {street = "Palkovičova"},
+  {street = "Šafárikova"},
+  {street = "Čsl. armády"},
+  {street = "Sv. Cyrila a sv. Metoda", written = "Ul. sv. Cyrila a sv. Metoda"},
+  {street = "Pribinova"},
+  {street = "P. Mudroňa"},
+  {street = "T. Vansovej"},
+]
+
+[obvod.2]
+seats = 4
+rules = [
+  {street = "Tribečská"},
+  {street = "J. Matušku"},
+  {street = "P. O. Hviezdoslava"},
+  {street = "Práznovská cesta"},
+  {street = "Krušovská", numbers = "2285, 2301, 2302", by = "supisne", written = "Ul. krušovská 2301, 2302, 2285", note = "Four-digit numbers read as súpisné čísla (the street's orientačné čísla run 1–89)."},
+  {street = "Pivovarnícka", written = "Ul. pivovarnícka"},
+  {street = "Gagarinova"},
+  {street = "K. Kuzmányho"},
+  {street = "J. Jesenského"},
+  {street = "Priemyselná ulica", written = "Priemyselná ulica"},
+]
+
+[obvod.3]
+seats = 5
+rules = [
+  {street = "M. Benku"},
+  {street = "Streďanská", written = "Ul. streďanská"},
+  {street = "D. Jurkoviča"},
+  {street = "M. A. Bazovského"},
+  {street = "Ľ. Fullu"},
+  {street = "J. Alexyho"},
+  {street = "Dr. P. Adámiho"},
+  {street = "Fraňa Kráľa"},
+  {street = "Jána Kollára"},
+  {street = "Mieru", written = "Ul. mieru"},
+  {street = "Športovcov", written = "Ul. športovcov"},
+  {street = "Záhradnícka", written = "Ul. záhradnícka"},
+  {street = "Železničiarska", written = "Ul. železničiarska"},
+  {street = "Krátka", written = "Ul. krátka"},
+  {street = "Stummerova", note = "All odd and even orientačné čísla up to 112, plus 142, 148, 168, 170, 172; the even numbers from 114 (other than those) are in obvod 4."},
+  {street = "Stummerova", numbers = "142, 148, 168, 170, 172"},
+  {street = "Timravy"},
+  {street = "Pavlovova"},
+]
+
+[obvod.4]
+seats = 4
+rules = [
+  {street = "Cintorínska", written = "Ul. cintorínska"},
+  {street = "Pod kalváriou", written = "Ul. pod kalváriou"},
+  {street = "Stummerova", numbers = "114-", parity = "even", except = "142, 148, 168, 170, 172"},
+  {street = "Dopravná", written = "Ul. dopravná"},
+  {street = "A. Grznára"},
+  {street = "Komenského"},
+  {street = "Cukrovarnícka", written = "Ul. cukrovarnícka"},
+  {street = "Inovecká", written = "Ul. inovecká"},
+  {street = "Vajanského"},
+  {street = "Jaselská", written = "Ul. jaselská"},
+  {street = "Hurbanova"},
+  {street = "M. Závodného"},
+  {street = "Odbojárov", written = "Ul. odbojárov"},
+  {street = "Slov. partizánov", written = "Ul. slovenských partizánov"},
+  {street = "Topoľová", written = "Ul. topoľová"},
+  {street = "Družby", written = "Ul. družby"},
+  {street = "Kalinčiakova"},
+  {street = "Pionierska", written = "Ul. pionierska"},
+  {street = "Puškinova"},
+  {street = "Budovateľská", written = "Ul. budovateľská"},
+  {street = "Tovarnícka", written = "Ul. tovarnícka"},
+  {street = "Agátová", written = "Ul. agátová"},
+  {street = "Astrová", written = "Ul. astrová"},
+  {street = "Brezová", written = "Ul. brezová"},
+  {street = "Ľaliová", written = "Ul. ľaliová"},
+  {street = "Malinová", written = "Ul. malinová"},
+  {street = "Margarétová", written = "Ul. margarétová"},
+  {street = "Muškátová", written = "Ul. muškátová"},
+  {street = "Orgovánová", written = "Ul. orgovánová"},
+  {street = "Ružová", written = "Ul. ružová"},
+  {street = "Snežienková", written = "Ul. snežienková"},
+  {street = "Šípová", written = "Ul. šípová"},
+  {street = "Nezábudková", written = "Ul. nezábudková"},
+  {street = "Narcisová", written = "Ul. narcisová"},
+  {street = "Javorová", written = "Ul. javorová"},
+  {street = "Fialková", written = "Ul. fialková"},
+  {street = "Sedmikrásková", written = "Ul. sedmikrásková"},
+  {street = "Sládkovičova"},
+  {street = "Slnečná", written = "Ul. slnečná"},
+  {street = "Tulipánová", written = "Ul. tulipánová"},
+  {street = "Andreja Hlinku"},
+  {street = "Jahodová", written = "Ul. jahodová"},
+  {street = "Rastislavova"},
+  {street = "Hrebíčková", written = "Ul. hrebíčková"},
+  {street = "Skýcovská", written = "Ul. skýcovská"},
+  {street = "kpt. Žalmana"},
+  {street = "Mojmírova"},
+  {street = "P. Jilemnického"},
+  {street = "Pílska", written = "Ul. pílska"},
+  {street = "Radlinského"},
+  {street = "Slobody", written = "Ul. slobody"},
+  {street = "Povstania", written = "Ul. povstania"},
+  {street = "Svätoplukova"},
+  {street = "Václavská"},
+  {street = "Lipová", written = "Ul. lipová"},
+  {street = "Ladislava Dorušáka"},
+  {street = "Ulica Ladislava Mokrého", written = "Ul. Ladislava Mokrého"},
+]
+
+[obvod.5]
+seats = 1
+rules = [
+  {part = "Malé Bedzany"},
+  {part = "Veľké Bedzany"},
+]

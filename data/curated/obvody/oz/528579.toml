@@ -1,0 +1,27 @@
+# Council obvody of Maťovské Vojkovce (528579), Michalovce.
+# Transcribed by an AI agent in job obvod-rules-186 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode č. 1 Maťovce budú voliť 5 poslancov
+#   obvod 2: a vo volebnom obvode č. 2 Kapušianske Vojkovce budú voliť 2 poslancov.
+obec = "528579"
+name = "Maťovské Vojkovce"
+date = 2026-07-20
+note = "The announcement names the obvody only by the village names: obvod č. 1 Maťovce, obvod č. 2 Kapušianske Vojkovce. Each is mapped to the part (časť obce) of that name; the two former villages are also the two k.ú. of the municipality."
+
+[[document]]
+url = "https://www.matovskevojkovce.sk/data/6a61fb8771ef1_zakladne_informacie.pdf"
+sha256 = "edd490c0350417e72a502a037c784064d9955254639c9a817dcf21395d5ee26e"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebného obvodu pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie OZ č. 3 zo dňa 20.07.2026), zo dňa 21.07.2026"
+
+[obvod.1]
+seats = 5
+rules = [
+  {part = "Maťovce"},
+]
+
+[obvod.2]
+seats = 2
+rules = [
+  {part = "Kapušianske Vojkovce"},
+]

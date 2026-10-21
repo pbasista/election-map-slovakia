@@ -1,0 +1,82 @@
+# Council obvody of Nováky (514268), Prievidza.
+# Transcribed by an AI agent in job obvod-rules-107 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Okrsok č. 1 - Dom kultúry, ul. M. R. Štefánika 9 Nováky (južná časť mesta po ul. Svätoplukovu) Okrsok č. 2 - Základná škola, ul. Pribinova 123 Nováky (časť mesta od ul. Svätoplukovej po ul. Pribinovu)
+#   obvod 2: Okrsok č. 3 -Centrum voľného času, ul. J. C. Hronského 356 Nováky (stred mesta od ul. Pribinovej po ul. Lehotskú) Okrsok č. 4 -Základná škola, ul. J. C. Hronského 356 Nováky (severná časť mesta od ul. Lehotskej)
+#   obvod 3: Okrsok č. 5 -Požiarna zbrojnica, ul. Jesenského 952 Nováky (západná časť mesta od železničnej trate a Horné Lelovce)
+obec = "514268"
+name = "Nováky"
+date = 2026-06-15
+fill = "nearest"
+note = "Resolution 780/2026 of 15.06.2026 sets 11 seats in 3 obvody: obvod 1 'južná časť mesta po ul. Pribinovu, t. j. chemická a banícka kolónia' (4), obvod 2 'časť mesta od ul. Pribinovej, pre stred a severnú časť mesta' (5), obvod 3 'od železničnej trate pre západnú časť mesta a časť Horné Lelovce' (2). The Oznámenie (text used verbatim) describes the obvody by precincts 1-2, 3-4 and 5 and leaves obvod 2's seat count blank ('sa volia poslanci'); 5 seats taken from resolution 780/2026 (11 - 4 - 2). No street list exists in any document, so every street was placed by its address coordinates (register) against the railway (OSM main line) and Pribinova; all street rules are marked inferred. Uncertain: Pribinova itself (boundary street, put in obvod 1) and Mateja Bela (put in obvod 2). fill_nearest covers the ~508 addresses without a street in part Nováky (scattered súpisné numbers, garages, industrial sites)."
+
+[[document]]
+url = "https://novaky.sk/data/page/novaky.sk/31376/urcenie-obvodov-a-poslancov.pdf"
+sha256 = "ca3744e9fb3f19390b17460efada3f83651095740e6b1b64aa2763ba81045322"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (Nováky, 13. 07. 2026)"
+
+[[document]]
+url = "https://novaky.sk/data/news_files/novaky.sk/134684/uznesenia-zo-dna-15-06-2026.pdf"
+sha256 = "e5bdb7b8785f3aaac28b517c66f3d43fca0b066773b6c826dfd580f103397def"
+title = "Uznesenia zo zasadnutia Mestského zastupiteľstva v Novákoch zo dňa 15. 06. 2026 (Uznesenie č. 780/2026)"
+
+[[document]]
+url = "https://novaky.sk/data/page/novaky.sk/31376/okrsky-a-miestnosti.pdf"
+sha256 = "a0e9ec1da9576d02132e8749bdd476b318a1cbb566cd80d7bbccb29788cc6b89"
+title = "Určenie volebných okrskov a volebných miestností, Nováky, 30. 06. 2026"
+
+[obvod.1]
+seats = 4
+rules = [
+  {street = "Baníkov", note = "South of Pribinova, east of the railway (chemická a banícka kolónia)", inferred = true},
+  {street = "Chemikov", note = "South of Pribinova, east of the railway (chemická a banícka kolónia)", inferred = true},
+  {street = "Čerešňová", note = "South of Pribinova, east of the railway (chemická a banícka kolónia)", inferred = true},
+  {street = "Fraňa Kráľa", note = "South of Pribinova, east of the railway (chemická a banícka kolónia)", inferred = true},
+  {street = "Hviezdoslavova", note = "South of Pribinova, east of the railway (chemická a banícka kolónia)", inferred = true},
+  {street = "Ivana Krasku", note = "South of Pribinova, east of the railway (chemická a banícka kolónia)", inferred = true},
+  {street = "Krátka", note = "South of Pribinova, east of the railway (chemická a banícka kolónia)", inferred = true},
+  {street = "Kukučínova", note = "South of Pribinova, east of the railway (chemická a banícka kolónia)", inferred = true},
+  {street = "M. R. Štefánika", note = "South of Pribinova, east of the railway (chemická a banícka kolónia)", inferred = true},
+  {street = "Martina Rázusa", note = "South of Pribinova, east of the railway (chemická a banícka kolónia)", inferred = true},
+  {street = "Svätoplukova", note = "South of Pribinova, east of the railway (chemická a banícka kolónia)", inferred = true},
+  {street = "Športová", note = "South of Pribinova, east of the railway (chemická a banícka kolónia)", inferred = true},
+  {street = "Štúrova", note = "South of Pribinova, east of the railway (chemická a banícka kolónia)", inferred = true},
+  {street = "Pribinova", note = "Boundary street ('po ul. Pribinovu' / 'od ul. Pribinovej'); placed whole in obvod 1 because okrsok 2 (obvod 1) votes in the school on Pribinova (Pribinova 123); the document does not say which side the street itself belongs to.", inferred = true},
+]
+
+[obvod.2]
+seats = 5
+rules = [
+  {street = "Andreja Hlinku", note = "North of Pribinova and east of the railway (stred a severná časť mesta)", inferred = true},
+  {street = "Bernolákova", note = "North of Pribinova and east of the railway (stred a severná časť mesta)", inferred = true},
+  {street = "Chalúpkova", note = "North of Pribinova and east of the railway (stred a severná časť mesta)", inferred = true},
+  {street = "Ernesta Ottu", note = "North of Pribinova and east of the railway (stred a severná časť mesta)", inferred = true},
+  {street = "Gašpara Košťála", note = "North of Pribinova and east of the railway (stred a severná časť mesta)", inferred = true},
+  {street = "J. C. Hronského", note = "North of Pribinova and east of the railway (stred a severná časť mesta)", inferred = true},
+  {street = "Lehotská", note = "North of Pribinova and east of the railway (stred a severná časť mesta)", inferred = true},
+  {street = "Matice Slovenskej", note = "North of Pribinova and east of the railway (stred a severná časť mesta)", inferred = true},
+  {street = "Nám. SNP", note = "North of Pribinova and east of the railway (stred a severná časť mesta)", inferred = true},
+  {street = "Rastislavova", note = "North of Pribinova and east of the railway (stred a severná časť mesta)", inferred = true},
+  {street = "Suvorovova", note = "North of Pribinova and east of the railway (stred a severná časť mesta)", inferred = true},
+  {street = "Šimonovská", note = "North of Pribinova and east of the railway (stred a severná časť mesta)", inferred = true},
+  {street = "Tajovského", note = "North of Pribinova and east of the railway (stred a severná časť mesta)", inferred = true},
+  {street = "Tichá", note = "North of Pribinova and east of the railway (stred a severná časť mesta)", inferred = true},
+  {street = "Žitná", note = "North of Pribinova and east of the railway (stred a severná časť mesta)", inferred = true},
+  {street = "Mateja Bela", note = "Short street leaving the Pribinova / Nám. SNP / M. R. Štefánika junction eastwards next to the centre (Rastislavova); placed in obvod 2 (stred mesta); not named in the document.", inferred = true},
+  {street = "Priemyselná", note = "Industrial zone east of the town; nearest streets Lehotská and Mateja Bela 54 are in obvod 2.", inferred = true},
+  {street = "Trenčianska", part = "Nováky", numbers = "1-38", note = "Trenčianska crosses the railway: numbers 3-36 lie east of it (obvod 2), 40-62 west of it (obvod 3).", inferred = true},
+  {part = "Laskár", note = "Settlement north-east of the town, east of the railway; nearest addresses Andreja Hlinku (obvod 2).", inferred = true},
+]
+
+[obvod.3]
+seats = 2
+rules = [
+  {part = "Horné Lelovce", note = "Named in the document (\"a Horné Lelovce\"); all its addresses lie west of the railway."},
+  {street = "Hurbanova", note = "West of the railway (západná časť mesta od železničnej trate)", inferred = true},
+  {street = "Jesenského", note = "West of the railway (západná časť mesta od železničnej trate)", inferred = true},
+  {street = "Partizánska", note = "West of the railway (západná časť mesta od železničnej trate)", inferred = true},
+  {street = "Šoltesovej", note = "West of the railway (západná časť mesta od železničnej trate)", inferred = true},
+  {street = "Vajanského", note = "West of the railway (západná časť mesta od železničnej trate)", inferred = true},
+  {street = "Trenčianska", part = "Nováky", numbers = "39-", note = "Trenčianska numbers 40-62 in part Nováky lie west of the railway.", inferred = true},
+]

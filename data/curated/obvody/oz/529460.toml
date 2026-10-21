@@ -1,0 +1,190 @@
+# Council obvody of Bratislava-Petržalka (529460), Bratislava V.
+# Transcribed by an AI agent in job obvod-rules-077 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Ulice: Bohrova, Bratská, Černyševského, Daliborovo nám., Dargovská, Distribučná, Dubnická, Einsteinova, Farského, Gercenova, Gogoľova, Goralská, Handlovská, Harmanecká, Hrobárska, Jaroslavova, Jungmannova, Kapicova, Kapitulský dvor, Kaukazská, Kežmarské nám., Kopčianska, Krasovského, Kremnická, Krupinská, Kubínska, Lenardova, Levočská, Ľubietovská, Macharova, Mánesovo nám., Muchovo nám., Nábrežná, Nobelovo nám., Novobanská, Očovská, Pečnianska, Pifflova, Planckova, Prevádzková, Pri smaltovni, Pri vojenskom cintoríne, Prokopova, Röntgenova, Rusovská cesta č. 5 – 36, Šrobárovo nám., Údernícka, Ulica Generála Goliana, Ulica Generála Viesta, Ulica Gustáva Mallého, Ulica závodu Matador, Vavilovova, Viedenská cesta, Vilová, Vlastenecké nám., Vranovská, Wolkrova, Zadunajská cesta, Záporožská.
+#   obvod 2: Ulice: Andrusovova, Belinského, Bratislava-Petržalka, Fedinova, Hálova, Iľjušinova, Jiráskova, Kolmá, Markova, Nám. Jána Pavla II., Nám. Republiky, Pajštúnska, Panónska cesta, Prokofievova, Rusovská cesta č. 46 – 56, Ševčenkova, Švabinského, Tupolevova, Ulica Ondreja Štefanka.
+#   obvod 3: Ulice: Ambroseho, Bradáčova, Dudova, Furdekova, Gessayova, Hrobákova, Kutlíkova, Lachova, Nám. hraničiarov, Osuského, Romanova, Rovniankova, Starohájska.
+#   obvod 4: Ulice: A. Gwerkovej, Blagoevova, Bosákova, Bulíkova, Dolnozemská cesta, Haanova, Jankolova, Klokočova, Kočánkova, Lužná, M. C. Sklodowskej, Mamateyova, Májová, Medveďovej, Mlynarovičova, Ovsištské nám., Pankúchova, Pobrežná, Polereckého, Pri Seči, Sosnová, Šustekova.
+#   obvod 5: Ulice: Brančská, Bratislava-Petržalka, Budatínska, domy pri Malom Draždiaku, Holíčska, Lietavská č. 2 – 16 (párne), Smolenická, Starhradská, Strečnianska, Šintavská, Tematínska, Topoľčianska, Znievska.
+#   obvod 6: Ulice: Andreja Hadíka, Antolská, Azúrová, Béžová, Beňadická, Betliarska, Bzovícka, Dropia, Fiľakovská, Fialová, Humenské nám., Hýlia, Janíkovské role, Jána Lajčiaka, Jasovská, Krásnohorská, Labutia, Lietavská č. 1 – 15 (nepárne), Ľubovnianska, Oranžová, Sitnianska, Šášovská, Turnianska, Urpínska, Vígľašská, Vyšehradská, Zuzany Chalupovej, Žehrianska, Žltá.
+obec = "529460"
+name = "Bratislava-Petržalka"
+date = 2026-06-30
+fill = "nearest"
+note = "Transcribed from the published announcement of resolution No. 594 of 30 June 2026 (35 seats, 6 obvody). The council draft (material 71/2026) differed: it moved Kutlíkova to obvod V and gave other seat counts; the announcement keeps Kutlíkova in obvod 3 and has seats 7/5/6/5/6/6, and that is what is used here. Names in the document with no register addresses were left out: Distribučná, Kapitulský dvor, Prevádzková, Šrobárovo nám., Ulica Generála Viesta, Nám. Republiky, Andreja Hadíka, Azúrová, Dropia, Fiľakovská, Hýlia, Jána Lajčiaka, Oranžová. The document puts 'Bratislava-Petržalka' (residents registered only to the city district, with no street) in both obvod 2 and obvod 5, and puts 'domy pri Malom Draždiaku' in obvod 5 without numbers. Neither can be mapped to register addresses. fill_nearest covers the 561 addresses without a street (súpisné only, incl. the houses at Malý Draždiak), Jantárová cesta (not in the document), and the Rusovská cesta numbers outside 5–36 (obvod 1) and 46–56 (obvod 2)."
+
+[[document]]
+url = "https://www.petrzalka.sk/wp-content/uploads/2026/07/na-web-VOLBY-2026_oznamenie-o-utvoreni-volebnych-obvodov-a-pocet.pdf"
+sha256 = "86321b778fd9414adcb76260ae9e8a907d76c484cbe339f74dc3737c0250df90"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov v mestskej časti Bratislava-Petržalka (č. 27826/8118/ROV/2026, 16. 7. 2026), podľa uznesenia MiZ č. 594 zo dňa 30. júna 2026"
+
+[obvod.1]
+seats = 7
+rules = [
+  {street = "Bohrova"},
+  {street = "Bratská"},
+  {street = "Černyševského"},
+  {street = "Daliborovo nám."},
+  {street = "Dargovská"},
+  {street = "Dubnická"},
+  {street = "Einsteinova"},
+  {street = "Farského"},
+  {street = "Gercenova"},
+  {street = "Gogoľova"},
+  {street = "Goralská"},
+  {street = "Handlovská"},
+  {street = "Harmanecká"},
+  {street = "Hrobárska"},
+  {street = "Jaroslavova"},
+  {street = "Jungmannova"},
+  {street = "Kapicova"},
+  {street = "Kaukazská"},
+  {street = "Kežmarské nám."},
+  {street = "Kopčianska"},
+  {street = "Krasovského"},
+  {street = "Kremnická"},
+  {street = "Krupinská"},
+  {street = "Kubínska"},
+  {street = "Lenardova"},
+  {street = "Levočská"},
+  {street = "Ľubietovská"},
+  {street = "Macharova"},
+  {street = "Mánesovo nám."},
+  {street = "Muchovo námestie", written = "Muchovo nám.", note = "'nám.' is the abbreviation of 'námestie'; same square."},
+  {street = "Nábrežná"},
+  {street = "Nobelovo nám."},
+  {street = "Novobanská"},
+  {street = "Očovská"},
+  {street = "Pečnianska"},
+  {street = "Pifflova"},
+  {street = "Planckova"},
+  {street = "Pri smaltovni"},
+  {street = "Pri vojenskom cintoríne"},
+  {street = "Prokopova"},
+  {street = "Röntgenova"},
+  {street = "Rusovská cesta", numbers = "5-36"},
+  {street = "Údernícka"},
+  {street = "Ulica generála Goliana", written = "Ulica Generála Goliana", note = "Only capitalisation differs (Generála/generála); same street."},
+  {street = "Ulica Gustáva Mallého"},
+  {street = "Ulica závodu Matador"},
+  {street = "Vavilovova"},
+  {street = "Viedenská cesta"},
+  {street = "Vilová"},
+  {street = "Vlastenecké námestie", written = "Vlastenecké nám.", note = "'nám.' is the abbreviation of 'námestie'; same square."},
+  {street = "Vranovská"},
+  {street = "Wolkrova"},
+  {street = "Zadunajská cesta"},
+  {street = "Záporožská"},
+  {street = "Sad Janka Kráľa", note = "Park on the Danube bank at the north end of Petržalka, by Viedenská cesta and Krasovského, both in obvod 1; the document does not name it.", inferred = true},
+]
+
+[obvod.2]
+seats = 5
+rules = [
+  {street = "Andrusovova"},
+  {street = "Belinského"},
+  {street = "Fedinova"},
+  {street = "Hálova"},
+  {street = "Iľjušinova"},
+  {street = "Jiráskova"},
+  {street = "Kolmá"},
+  {street = "Markova"},
+  {street = "Námestie Jána Pavla II.", written = "Nám. Jána Pavla II.", note = "'Nám.' is the abbreviation of 'Námestie'; same square."},
+  {street = "Pajštúnska"},
+  {street = "Panónska cesta"},
+  {street = "Prokofievova"},
+  {street = "Rusovská cesta", numbers = "46-56"},
+  {street = "Ševčenkova"},
+  {street = "Švabinského"},
+  {street = "Tupolevova"},
+  {street = "Ulica Ondreja Štefanka"},
+]
+
+[obvod.3]
+seats = 6
+rules = [
+  {street = "Ambroseho"},
+  {street = "Bradáčova"},
+  {street = "Dudova"},
+  {street = "Furdekova"},
+  {street = "Gessayova"},
+  {street = "Hrobákova"},
+  {street = "Kutlíkova"},
+  {street = "Lachova"},
+  {street = "Nám. Hraničiarov", written = "Nám. hraničiarov", note = "Only capitalisation differs (hraničiarov/Hraničiarov); same square."},
+  {street = "Osuského"},
+  {street = "Romanova"},
+  {street = "Rovniankova"},
+  {street = "Starohájska"},
+]
+
+[obvod.4]
+seats = 5
+rules = [
+  {street = "A. Gwerkovej"},
+  {street = "Blagoevova"},
+  {street = "Bosákova"},
+  {street = "Bulíkova"},
+  {street = "Dolnozemská cesta"},
+  {street = "Haanova"},
+  {street = "Jankolova"},
+  {street = "Klokočova"},
+  {street = "Kočánkova"},
+  {street = "Lužná"},
+  {street = "M. Curie Sklodowskej", written = "M. C. Sklodowskej", note = "Document abbreviates 'Curie' to the initial 'C.'; same street as register 'M. Curie Sklodowskej' (Marie Curie-Sklodowskej)."},
+  {street = "Mamateyova"},
+  {street = "Májová"},
+  {street = "Medveďovej"},
+  {street = "Mlynarovičova"},
+  {street = "Ovsištské námestie", written = "Ovsištské nám.", note = "'nám.' is the abbreviation of 'námestie'; same square."},
+  {street = "Pankúchova"},
+  {street = "Pobrežná"},
+  {street = "Polereckého"},
+  {street = "Pri Seči"},
+  {street = "Sosnová"},
+  {street = "Šustekova"},
+]
+
+[obvod.5]
+seats = 6
+rules = [
+  {street = "Brančská"},
+  {street = "Budatínska"},
+  {street = "Holíčska"},
+  {street = "Lietavská", numbers = "2-16", parity = "even"},
+  {street = "Smolenická"},
+  {street = "Starhradská"},
+  {street = "Strečnianska"},
+  {street = "Šintavská"},
+  {street = "Tematínska"},
+  {street = "Topoľčianska"},
+  {street = "Znievska"},
+]
+
+[obvod.6]
+seats = 6
+rules = [
+  {street = "Antolská"},
+  {street = "Béžová"},
+  {street = "Beňadická"},
+  {street = "Betliarska"},
+  {street = "Bzovícka"},
+  {street = "Fialová"},
+  {street = "Humenské nám."},
+  {street = "Janíkovské Role", written = "Janíkovské role", note = "Only capitalisation differs (role/Role); same street."},
+  {street = "Jasovská"},
+  {street = "Krásnohorská"},
+  {street = "Labutia"},
+  {street = "Lietavská", numbers = "1-15", parity = "odd"},
+  {street = "Ľubovnianska"},
+  {street = "Sitnianska"},
+  {street = "Šášovská"},
+  {street = "Turnianska"},
+  {street = "Urpínska"},
+  {street = "Vígľašská"},
+  {street = "Vyšehradská"},
+  {street = "Zuzany Chalupovej"},
+  {street = "Žehrianska"},
+  {street = "Žltá"},
+]

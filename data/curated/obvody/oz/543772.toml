@@ -1,0 +1,34 @@
+# Council obvody of Somotor (543772), Trebišov.
+# Transcribed by an AI agent in job obvod-rules-163 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: časť obce Somotor
+#   obvod 2: časť obce Véč
+#   obvod 3: časť obce Nová Vieska pri Bodrogu
+obec = "543772"
+name = "Somotor"
+date = 2026-07-13
+note = "Document is the obec's úradná tabuľa entry (obecsomotor.sk/uradna-tabula?id=12411), whose attached scanned PDF (hosted on the CMS host obec.dobraobec.sk/files/128/uradna_tabula/20a0a_...) was read visually; text is clear. Agátová ulica spans parts Somotor and Véč; part rules split it accordingly."
+
+[[document]]
+url = "https://obecsomotor.sk/uradna-tabula?id=12411"
+sha256 = "0807d3c775e40c0fc3e45bc0f89142017ad0d75a08db87c87d142bfbd86f2f50"
+title = "Úradná tabuľa: Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 356/7/2026 zo dňa 13.7.2026), vyvesené 15.07.2026"
+
+[obvod.1]
+seats = 5
+rules = [
+  {part = "Somotor"},
+]
+
+[obvod.2]
+seats = 2
+rules = [
+  {part = "Véč"},
+]
+
+[obvod.3]
+seats = 2
+rules = [
+  {part = "Nová Vieska pri Bodrogu"},
+]

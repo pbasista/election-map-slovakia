@@ -1,0 +1,67 @@
+# Council obvody of Stará Ľubovňa (526665), Stará Ľubovňa.
+# Transcribed by an AI agent in job obvod-rules-070 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Bernolákova, Komenského, Letná, Lipová, Mierová, Okružná, Štúrova, Tatranská, Tehelná, Vansovej, Vsetínska, Zimná
+#   obvod 2: 1. mája, 17. novembra, Budovateľská, Duklianskych hrdinov, Farbiarska, Garbiarska, Hviezdoslavova, Janka Kráľa, Jarmočná, Levočská, Mýtna, Nám. gen. Štefánika, Nám. sv. Mikuláša, Obrancov mieru, Podsadek, Poľská, Popradská, Prešovská, Sládkovičova, SNP, Stará Ľubovňa – bez ulice, Továrenská, Za vodou, Zamoyského, Zámocká, Mariánska ulica, Michalská ulica, Rastislavova ulica, Ľubomírska ulica
+obec = "526665"
+name = "Stará Ľubovňa"
+date = 2026-06-25
+note = "Document is a scanned (image-only) extract of resolution no. 1009 of 25.06.2026, read visually; lists match the 2022 announcement. Obchodná is not named in the resolution and was placed in obvod 2 by location (inferred). The elections page staralubovna.sk/volby-do-organov-samospravy-obci/ still shows 2022 files."
+
+[[document]]
+url = "https://www.staralubovna.sk/resources/File/urcenie-volebnych-obvodov-a-poctu-poslancov.pdf"
+sha256 = "ed03aadb08deca29e54895167c74c29a648a993aeff8b71720c5cf111387ec70"
+title = "Výpis z uznesení č. XXVIII/2026 zo zasadnutia MsZ v Starej Ľubovni zo dňa 25.06.2026, uznesenie č. 1009 (Určenie volebných obvodov a počtu poslancov)"
+
+[obvod.1]
+seats = 10
+rules = [
+  {street = "Bernolákova"},
+  {street = "Komenského"},
+  {street = "Letná"},
+  {street = "Lipová"},
+  {street = "Mierová"},
+  {street = "Okružná"},
+  {street = "Štúrova"},
+  {street = "Tatranská"},
+  {street = "Tehelná"},
+  {street = "Vansovej"},
+  {street = "Vsetínska"},
+  {street = "Zimná"},
+]
+
+[obvod.2]
+seats = 9
+rules = [
+  {street = "1.mája", written = "1. mája", note = "Same street; the register writes it without the space after the dot."},
+  {street = "17.novembra", written = "17. novembra", note = "Same street; the register writes it without the space after the dot."},
+  {street = "Budovateľská"},
+  {street = "Duklianskych hrdinov"},
+  {street = "Farbiarska"},
+  {street = "Garbiarska"},
+  {street = "Hviezdoslavova"},
+  {street = "Janka Kráľa"},
+  {street = "Jarmočná"},
+  {street = "Levočská"},
+  {street = "Mýtna"},
+  {street = "Nám. gen. Štefánika"},
+  {street = "Nám. sv. Mikuláša"},
+  {street = "Obrancov mieru"},
+  {part = "Podsadek", note = "Podsadek is a part of the town (also a street name in the register); whole part incl. its addresses without street."},
+  {street = "Poľská"},
+  {street = "Popradská"},
+  {street = "Prešovská"},
+  {street = "Sládkovičova"},
+  {street = "SNP"},
+  {part = "Stará Ľubovňa", note = "'Stará Ľubovňa – bez ulice': addresses of the part Stará Ľubovňa without a street; streets assigned to obvod 1 are more specific and stay there. Kept as the houses' reading: 1,260 of the register's 1,262 street-less houses lie in part Stará Ľubovňa (the other 2 in Podsadek, also obvod 2), and the resolution lists nothing else that could place them."},
+  {street = "Továrenská"},
+  {street = "Za vodou"},
+  {street = "Zamoyského"},
+  {street = "Zámocká"},
+  {street = "Mariánska ulica"},
+  {street = "Michalská ulica"},
+  {street = "Rastislavova ulica"},
+  {street = "Ľubomírska ulica"},
+  {street = "Obchodná", note = "Obchodná (seat of the town office) is not named in the resolution; it lies in the centre between Nám. gen. Štefánika and Levočská, both in obvod 2; it is also covered by 'Stará Ľubovňa – bez ulice' / rest of the part Stará Ľubovňa.", inferred = true},
+]

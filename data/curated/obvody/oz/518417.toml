@@ -1,0 +1,29 @@
+# Council obvody of Hontianske Nemce (518417), Krupina.
+# Transcribed by an AI agent in job obvod-rules-136 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: obvod č.1 -5 poslancov Hontianske Nemce
+#   obvod 2: obvod č.2 -2 poslanci Rakovec Majer Sitnianska Lehôtka
+obec = "518417"
+name = "Hontianske Nemce"
+date = 2026-07-27
+note = "The document is the mayor's announcement (\"určujem\", citing § 11 ods. 3 písm. d) zákona č. 369/1990 Zb.); no council resolution on the obvody was found on the website (only the February and April 2026 council minutes are published). The PDF carries no date; date is the posting date on the website (Vyvesené: 27. 7. 2026), which matches the PDF creation date. Obvod 2 includes the settlement Majer, which the address register has no separate part for: its addresses are súpisné čísla in part Hontianske Nemce. I selected them by location and numbering (see the rule note)."
+
+[[document]]
+url = "https://www.hontianskenemce.sk/e_download.php?file=/data/uredni_deska/obsah872_1.pdf&original=ozn%C3%A1menie%20o%20po%C4%8Dte%20poslancov.pdf"
+sha256 = "bb9ad277155911260488ac9f2ada8856405e97df23c595b86b43762ebd2e7d24"
+title = "Oznámenie o určení počtu poslancov a utvorení volebných obvodov (starostka obce, vyvesené 27. 7. 2026)"
+
+[obvod.1]
+seats = 5
+rules = [
+  {part = "Hontianske Nemce"},
+]
+
+[obvod.2]
+seats = 2
+rules = [
+  {part = "Rakovec"},
+  {part = "Sitnianska Lehôtka"},
+  {part = "Hontianske Nemce", numbers = "372-397, 549-550, 566-568, 1500-1520", by = "supisne", note = "Majer (osada about 2 km east of the village, OSM hamlet at 48.2829, 19.0192) has no part of its own in the register; its houses are súpisné numbers in part Hontianske Nemce. These are all the part's addresses in the Majer area, east of 19.005 E, including the southern cluster near the locality Holcer. The old series 372-397 follows Rakovec's 301-368, and the newer series 1500-1520 (Rakovec uses 14xx, Sitnianska Lehôtka 16xx) covers both clusters. No. 371 (isolated, about 1.2 km further south at 48.2674, 19.0100) is left in obvod 1 because nothing places it in Majer.", inferred = true},
+]

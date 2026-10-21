@@ -1,0 +1,40 @@
+# Council obvody of Valaliky (522139), Košice - okolie.
+# Transcribed by an AI agent in job obvod-rules-118 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: časť obce Buzice sa volia 4 poslanci.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: časť obce Bernátovce sa volia 3 poslanci.
+#   obvod 3: Vo volebnom obvode číslo 3, ktorý zahŕňa: časť obce Všechsvätých sa volia 2 poslanci.
+#   obvod 4: Vo volebnom obvode číslo 4, ktorý zahŕňa: časť obce Košťany sa volia 2 poslanci.
+obec = "522139"
+name = "Valaliky"
+date = 2026-07-01
+
+[[document]]
+url = "https://www.valaliky.sk/e_download.php?file=/data/uredni_deska/obsah3777_1.pdf&original=Utvorenie%20volebn%C3%BDch%20obvodov%20a%20ur%C4%8Denie%20po%C4%8Dtu%20poslancov.pdf"
+sha256 = "90b329feedb55eb21962d3d41ed68c5e83cc373bc4673da9b9369bc0e338e74c"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie OZ č. 67/2026 zo dňa 01.07.2026)"
+
+[obvod.1]
+seats = 4
+rules = [
+  {part = "Buzice"},
+]
+
+[obvod.2]
+seats = 3
+rules = [
+  {part = "Bernátovce"},
+]
+
+[obvod.3]
+seats = 2
+rules = [
+  {part = "Všechsvätých"},
+]
+
+[obvod.4]
+seats = 2
+rules = [
+  {part = "Košťany"},
+]

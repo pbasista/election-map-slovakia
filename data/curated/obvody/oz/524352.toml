@@ -1,0 +1,54 @@
+# Council obvody of Drienov (524352), Prešov.
+# Transcribed by an AI agent in job obvod-rules-149 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 Volebný okrsok č. 1 Počet poslancov 5 Počet voličov 1009 ul. Košická ul. Letná ul. Mierová ul. Mlynská ul. Okružná ul. Osloboditeľov ul. Partizánska ul. Pod Dvorom ul. Tehelná
+#   obvod 2: Volebný obvod č. 2 Volebný okrsok č. 2 Počet poslancov 4 Počet voličov 826 ul. Jarková ul. Jarná ul. Krátka ul. Kvetná ul. Májová ul. Nám. Kpt. Nálepku ul. Záhradná ul. Revolučná ul. Žižkova
+obec = "524352"
+name = "Drienov"
+date = 2026-06-24
+fill = "nearest"
+note = "Documents are scanned announcements (clear, read from the images). Council resolution č. 18/2026 of 24 June 2026 set 2 obvody, 9 seats (5 + 4). All 18 register streets are listed. The 48 addresses without a street (súpisné numbers only) are not mentioned by the document; fill_nearest places them."
+
+[[document]]
+url = "https://www.drienov.sk/e_download.php?file=/data/uredni_deska/obsah510_9.pdf&original=Ozn%C3%A1menie.pdf"
+sha256 = "2f045bb0447c70f67691bf44e551d856291b35820bd421f0c723e9be78135fdc"
+title = "Oznámenie o určení počtu obvodov a počtu poslancov obecného zastupiteľstva obce Drienov (uznesenie OZ č. 18/2026 zo dňa 24. júna 2026)"
+
+[[document]]
+url = "https://www.drienov.sk/e_download.php?file=/data/uredni_deska/obsah510_4.pdf&original=Volebn%C3%BD%20obvod%20%C4%8D.1.pdf"
+sha256 = "87273b1a364db2f0cb2d9d2b2792152b9d4dd6e724fe98f78ad18202577d2a70"
+title = "Oznámenie – Volebný obvod č. 1"
+
+[[document]]
+url = "https://www.drienov.sk/e_download.php?file=/data/uredni_deska/obsah510_11.pdf&original=Volebn%C3%BD%20obvod%20%C4%8D.2.pdf"
+sha256 = "0798d4e7b3e4d839326b647e93334c3d2ca6cd57465635737082de81218a90b9"
+title = "Oznámenie – Volebný obvod č. 2"
+
+[obvod.1]
+seats = 5
+rules = [
+  {street = "Košická"},
+  {street = "Letná"},
+  {street = "Mierová"},
+  {street = "Mlynská"},
+  {street = "Okružná"},
+  {street = "Osloboditeľov"},
+  {street = "Partizánska"},
+  {street = "Pod Dvorom"},
+  {street = "Tehelná"},
+]
+
+[obvod.2]
+seats = 4
+rules = [
+  {street = "Jarková"},
+  {street = "Jarná"},
+  {street = "Krátka"},
+  {street = "Kvetná"},
+  {street = "Májová"},
+  {street = "Námestie kpt. Nálepku", written = "Nám. Kpt. Nálepku", note = "'Nám. Kpt.' abbreviates 'Námestie kpt.'; the only square of that name in Drienov."},
+  {street = "Záhradná"},
+  {street = "Revolučná"},
+  {street = "Žižkova"},
+]

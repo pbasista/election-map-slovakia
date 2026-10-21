@@ -1,0 +1,30 @@
+# Council obvody of Stratená (526291), Rožňava.
+# Estimated by hand: no 2026 document says which addresses are in which
+# obvod (see the note). The candidate list gives the obvody and seats, the
+# 2022 notice their territory then.
+obec = "526291"
+name = "Stratená"
+note = "Estimated: the council set two obvody on 22.6.2026 but published no resolution or Oznámenie; the candidate list gives only obvod 1 with 2 seats and obvod 2 with 1 seat. In 2022 (uznesenie č. 171) obvod 1 was the obec Stratená and obvod 2 its part Dobšinská Ľadová Jaskyňa; the same two territories are assumed (98 and 45 addresses, about two to one like the seats)."
+estimated = true
+
+[[document]]
+url = "https://www.obecstratena.sk/e_download.php?file=/data/uredni_deska/obsah334_2.docx&original=ZOZNAM%20ZAREGISTROVAN%C3%9DCH%20KANDID%C3%81TOV%20NA%20POSLANCA%20OZ%20OBCE%20STRATEN%C3%81.docx"
+sha256 = "be344e150cfe7167e197b71797dfef2f9cceb6234796ed981ef2cedaeb08ef36"
+title = "Zoznam zaregistrovaných kandidátov pre voľby do Obecného zastupiteľstva obce Stratená (3.9.2026)"
+
+[[document]]
+url = "https://www.obecstratena.sk/e_download.php?file=data/uredni_deska/obsah160_2.odt&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%A9ho%20obvodu%20a%20o%20ur%C4%8Den%C3%AD%20po%C4%8Dtu%20poslancov%20pre%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vy%20obc%C3%AD%2029.10.2022.odt"
+sha256 = "4f9b49feb9c6a9ef2f7ba5c640d8c4bc8c3968254dfa3bd9c5058f7295eaa113"
+title = "Oznámenie o utvorení volebného obvodu a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 29.10.2022 (2022 territories)"
+
+[obvod.1]
+seats = 2
+rules = [
+  {part = "Stratená"},
+]
+
+[obvod.2]
+seats = 1
+rules = [
+  {part = "Dobšinská Ľadová Jaskyňa"},
+]

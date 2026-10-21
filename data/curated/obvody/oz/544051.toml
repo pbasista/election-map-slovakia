@@ -1,0 +1,151 @@
+# Council obvody of Vranov nad Topľou (544051), Vranov nad Topľou.
+# Transcribed by an AI agent in job obvod-rules-055 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č. 1 LOMNICA - 1 poslanec: Kláštorná, Lomnická, Palárikova, Porubská, Vajanského, Záborského
+#   obvod 2: volebný obvod č. 2 ČEMERNÉ - 4 poslanci: Čemernianska, Kvetná, Sadová, Svätoplukova, Tolstého, Gorkého, Tehelná, Cintorínska, Železničná, Ulica kpt. Nálepku, Ružová, Kukučínova, Puškinova, Prešovská, Zimná, Jarková, Herlianska, Makovická, Veterná, Lesnícka, Trepská, Slanská, Opálová, Toplianska, Orechová, Námestie P. P. Gojdiča, Ulica na Gavre
+#   obvod 3: volebný obvod č. 3 SEVER - 6 poslancov: M. Benku, Mierová, Budovateľská, Mlynská, Dubník, Ulica 1. mája, Staničná, B. Nemcovej, Duklianskych hrdinov (okrem 1002), Hronského, Sídlisko II, Dobrianskeho, Mariánske námestie, Námestie slobody 1-3, 1237 – 1240, 1491 – 1493
+#   obvod 4: volebný obvod č. 4 CENTRUM - 6 poslancov: Námestie slobody 4 – 6, 96 -97, 964 - 969, 999, Na hrunku, Okulka, Sídlisko 1. mája, Duklianskych hrdinov 1002, Ulica J. Kráľa, Kalinčiakova, A. Dubčeka, Sídlisko I, Dr. C. Daxnera, Pribinova, Rázusova, Štúrova, Hviezdoslavova, Lesná, M.R.Štefánika 135 – 146, 188, 874 – 876, 1181, 2464 - 2465, 2600, 2694 - 2695, 2738, 2773
+#   obvod 5: volebný obvod č. 5 JUH - 8 poslancov: M. R. Štefánika 211 – 227, 856 – 868, 2630, 2673, 2702, 2740, Hlovíkova, Bernolákova, Ondavská, Juh, Lúčna, Gen. Svobodu, Jarná, Obchodná, Slnečná, Viničná, E. Urxa, Dlhá, Záhradná, Nemocničná, Pod dolami, Krátka, Na vŕšku, Podhrunská, Námestie Jána Pavla II. Domašská, J. Matušku, Komenského, Nerudova, P. J. Šafárika, Školská, Sládkovičova
+obec = "544051"
+name = "Vranov nad Topľou"
+date = 2026-07-16
+fill = "nearest"
+note = "The adopted resolution 257/2026 (16.7.2026) states only the 5 obvody (LOMNICA 1, ČEMERNÉ 4, SEVER 6, CENTRUM 6, JUH 8 poslancov); the street lists come from the dôvodová správa of the council material (návrh na vytvorenie volebných obvodov, dated 08.07.2026), adopted with the same obvody and seats. Numbers on Námestie slobody, M. R. Štefánika and Duklianskych hrdinov are súpisné čísla. Unlisted numbers placed by neighbours are marked inferred. fill_nearest covers: Námestie slobody s.č. 98/151, 79/153, 79/153A, 2466/157, 2467/159, 2675/161, 2675/163, 1000/162 (between obvod 3 and 4 numbers, ambiguous) and the addresses without a street in mestská časť Vranov (split between obvody 3–5; Lomnica and Čemerné ones are covered by part rules)."
+
+[[document]]
+url = "https://www.vranov.sk/download.php?file=s03/sub/Uznesenia+47.+MsZ+%282026%29"
+sha256 = "26bc48e9f83bb7f010428dfaa91eb3f32f75122037d07664b7482eb0e4629a64"
+title = "Uznesenie MsZ č. 257/2026 zo zasadnutia 47. MsZ dňa 16.7.2026 – Volebné obvody"
+
+[[document]]
+url = "https://www.vranov.sk/download.php?file=s03/sub/Materi%C3%A1ly+na+MsZ+%282026%29+47"
+sha256 = "f3bdd33942c1f96320297a5c931d438fe938328a6a1e7664d536d7502eb854cf"
+title = "Materiály na 47. MsZ (2026), bod 2: Návrh na určenie volebných obvodov v meste Vranov nad Topľou … 2026 - 2030 (dôvodová správa so zoznamom ulíc)"
+
+[obvod.1]
+seats = 1
+rules = [
+  {part = "Lomnica", note = "Dôvodová správa: mestská časť Lomnica je samostatným volebným obvodom; covers its addresses without a street."},
+  {street = "Kláštorná"},
+  {street = "Lomnická"},
+  {street = "Palárikova"},
+  {street = "Porubská"},
+  {street = "Vajanského"},
+  {street = "Záborského"},
+]
+
+[obvod.2]
+seats = 4
+rules = [
+  {part = "Čemerné", note = "Dôvodová správa: mestská časť Čemerné je samostatným volebným obvodom; covers its addresses without a street."},
+  {street = "Čemernianska"},
+  {street = "Kvetná"},
+  {street = "Sadová"},
+  {street = "Svätoplukova"},
+  {street = "Tolstého"},
+  {street = "Gorkého"},
+  {street = "Tehelná"},
+  {street = "Cintorínska"},
+  {street = "Železničná"},
+  {street = "Kpt. Nálepku", written = "Ulica kpt. Nálepku"},
+  {street = "Ružová"},
+  {street = "Kukučínova"},
+  {street = "Puškinova"},
+  {street = "Prešovská"},
+  {street = "Zimná"},
+  {street = "Jarková"},
+  {street = "Herlianska"},
+  {street = "Makovická"},
+  {street = "Veterná"},
+  {street = "Lesnícka"},
+  {street = "Trepská"},
+  {street = "Slanská"},
+  {street = "Opálová"},
+  {street = "Toplianska", note = "Register has Toplianska in parts Vranov and Čemerné; the document puts the whole street in obvod 2."},
+  {street = "Orechová"},
+  {street = "Námestie P. P. Gojdiča"},
+  {street = "Ulica na Gavre"},
+]
+
+[obvod.3]
+seats = 6
+rules = [
+  {street = "M. Benku"},
+  {street = "Mierová"},
+  {street = "Budovateľská"},
+  {street = "Mlynská"},
+  {street = "Dubník"},
+  {street = "1. mája", written = "Ulica 1. mája"},
+  {street = "Staničná"},
+  {street = "B. Němcovej", written = "B. Nemcovej"},
+  {street = "Duklianskych hrdinov", note = "okrem súpisné č. 1002, which is in obvod 4"},
+  {street = "Hronského"},
+  {street = "Sídlisko II"},
+  {street = "Dobrianskeho"},
+  {street = "Mariánske námestie"},
+  {street = "Námestie slobody", numbers = "1-3, 1237-1240, 1491-1493", by = "supisne", note = "Document numbers are súpisné čísla (orientačné on this street are 113-198)."},
+  {street = "Námestie slobody", numbers = "1248, 1620, 1786", by = "supisne", note = "Unlisted s.č. 1248/142, 1620/142A, 1786/144 on the even side next to 1240/146 and 1239/148 (obvod 3).", inferred = true},
+  {street = "Námestie slobody", numbers = "2710", by = "supisne", note = "Unlisted s.č. 2710/150A between 1238/150 and 1237/152, both obvod 3.", inferred = true},
+]
+
+[obvod.4]
+seats = 6
+rules = [
+  {street = "Námestie slobody", numbers = "4-6, 96-97, 964-969, 999", by = "supisne", note = "Document numbers are súpisné čísla."},
+  {street = "Na hrunku"},
+  {street = "Okulka"},
+  {street = "Sídlisko 1. mája"},
+  {street = "Duklianskych hrdinov", numbers = "1002", by = "supisne"},
+  {street = "Janka Kráľa", written = "Ulica J. Kráľa"},
+  {street = "Kalinčiakova"},
+  {street = "Alexandra Dubčeka", written = "A. Dubčeka"},
+  {street = "Sídlisko I"},
+  {street = "Dr. C. Daxnera"},
+  {street = "Pribinova"},
+  {street = "Rázusova"},
+  {street = "Štúrova"},
+  {street = "Hviezdoslavova"},
+  {street = "Lesná"},
+  {street = "M. R. Štefánika", numbers = "135-146, 188, 874-876, 1181, 2464-2465, 2600, 2694-2695, 2738, 2773", by = "supisne", written = "M.R.Štefánika", note = "Document numbers are súpisné čísla (orientačné on this street are 153-238)."},
+  {street = "Námestie slobody", numbers = "80, 81, 177", by = "supisne", note = "Unlisted s.č. 80/143, 81/145, 177/147A on the odd side between 6/141, 96/147 and 97/149, all obvod 4.", inferred = true},
+  {street = "Námestie slobody", numbers = "2716, 2715, 998, 2582, 1789", by = "supisne", note = "Unlisted s.č. 2716/168A, 2715/174A, 998/176, 2582/186A, 1789/198 among 999/164-174 and 964-969/178-194, all obvod 4.", inferred = true},
+  {street = "M. R. Štefánika", numbers = "1806", by = "supisne", note = "Unlisted s.č. 1806/161A between 139/161 and 140/163, both obvod 4.", inferred = true},
+  {street = "M. R. Štefánika", numbers = "210, 2598, 2601, 190", by = "supisne", note = "Unlisted s.č. 210/177, 2598/177A, 2601/177D, 190/177F among 2600/177C, 188/177E, 2773/177G, all obvod 4.", inferred = true},
+  {street = "M. R. Štefánika", numbers = "2727, 2726, 873, 2427, 870, 2708", by = "supisne", note = "Unlisted s.č. 2727/202C, 2726/202D, 873/204, 2427/206, 870/210, 2708/210A on the even side between 2695/202B and 1181/210B, both obvod 4.", inferred = true},
+]
+
+[obvod.5]
+seats = 8
+rules = [
+  {street = "M. R. Štefánika", numbers = "211-227, 856-868, 2630, 2673, 2702, 2740", by = "supisne", note = "Document numbers are súpisné čísla."},
+  {street = "M. R. Štefánika", numbers = "2441, 2790, 189", by = "supisne", note = "Unlisted s.č. 2441/189A, 2790/201A, 189/217 on the odd side among 211-227 (obvod 5).", inferred = true},
+  {street = "M. R. Štefánika", numbers = "806", by = "supisne", note = "Unlisted s.č. 806/238A next to 856/238 (obvod 5).", inferred = true},
+  {street = "M. R. Štefánika", numbers = "869", by = "supisne", note = "Unlisted s.č. 869/212 next to 2673/212A and 2702/212B (obvod 5).", inferred = true},
+  {street = "Hlovíkova"},
+  {street = "Bernolákova"},
+  {street = "Ondavská"},
+  {street = "Juh"},
+  {street = "Lúčna"},
+  {street = "Gen. Svobodu"},
+  {street = "Jarná"},
+  {street = "Obchodná"},
+  {street = "Slnečná"},
+  {street = "Viničná"},
+  {street = "E. Urxa"},
+  {street = "Dlhá"},
+  {street = "Záhradná"},
+  {street = "Nemocničná"},
+  {street = "Pod dolami"},
+  {street = "Krátka"},
+  {street = "Na vŕšku"},
+  {street = "Podhrunská"},
+  {street = "Námestie Jána Pavla II."},
+  {street = "Domašská"},
+  {street = "Janka Matušku", written = "J. Matušku"},
+  {street = "Komenského"},
+  {street = "Nerudova"},
+  {street = "P. J. Šafárika"},
+  {street = "Školská"},
+  {street = "Sládkovičova"},
+]

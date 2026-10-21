@@ -1,0 +1,146 @@
+# Council obvody of Bernolákovo (507814), Senec.
+# Transcribed by an AI agent in job obvod-rules-053 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 tvoria ulice: Azalková, Brečtanová, Brusnicová, Fialková, Hájna, Hornádska, Hronská, Hurbanova, Chmeľová, Ipeľská, Konvalinková, Krátka, Kvetná, Kysucká, Ľaliová, Ľanová, Moravská, Muškátová, Nálepkova, Narcisová, Okružná, Ondavská, Oravská, Orgovánová, Osiková, Park Belvéder, Poľná, Poľovnícka, Potočná, Pšeničná, Ražná, Roľnícka, Snežienková, Staničná, Stredná, Štúrova, Toryská, Trnavská, Tulipánová, Vážska, Železničná
+#   obvod 2: Volebný obvod č. 2 tvoria ulice: Ampérova, Baničova, Bernolákova, Bottova, Budovateľská, Clementisova, Družstevná, Dukelská, Fándlyho, Gaštanová alej, Grobská, Hlavná, Hlboká, Hlinkova, Hodžova, Horný dvor, Hrušková, Hviezdoslavova, Chalupkova, Jesenského, Kalinčiakova, Kaštieľ, Kollárova, Komenského, Kukučínova, Lekárenská, Mostová, Národného oslobodenia, Obilná, Orechová, Plemenárska, Poštová, Pribinova, Priemyselná, Sacky, Senecká cesta, Sládkovičova, Slaná, Strojárenská, Svätoplukova, Šakoňská cesta, Školská, Tajovského, Trnková, Viničná, Vŕšky, Záhradná
+#   obvod 3: Volebný obvod č. 3 tvoria ulice: Agátová, Borovicová, Brezová, Broskyňová, Buková, Čerešňová, Čučoriedková, Dubová, Dunajská, Figová, Hrubé Lúky, Jabloňová, Jelšová, Kondrótova, Lesná, Lipová, Lúčna, Malinová, Marhuľová, Mierová, Nevädzová, Púpavová, Rezedová, Riečna, Sadová, Slivková, Slnečnicová, Smreková, Stromová, Šalviová, Šípková, Tabaková, Topoľový rad, Višňová, Záhradkárska oblasť
+obec = "507814"
+name = "Bernolákovo"
+date = 2026-06-23
+fill = "nearest"
+note = "Adopted resolution 18/24/2026 (in the combined Uznesenia PDF, p. 18) gives 5/5/3 seats; the draft material proposed 5/5/5 with the same streets. Seats 5/5/3 confirmed by the municipality's candidate list announcement. Streets named in the resolution but absent from the address register are left out: Ondavská, Park Belvéder, Roľnícka, Snežienková, Toryská (obvod 1), Hodžova, Plemenárska (obvod 2), Brezová, Záhradkárska oblasť (obvod 3). The resolution assigns streets only; the 385 addresses without a street (súpisné čísla in part Bernolákovo, scattered across the whole municipality incl. gardens/chaty and outlying farms) are not covered by it and are placed by fill_nearest."
+
+[[document]]
+url = "https://www.bernolakovo.sk/data/news_files/bernolakovo.sk/135341/uznesenia.pdf"
+sha256 = "f46db91fb4032815136735db91377b32b34401d7bc949c0eb950d622da268c56"
+title = "Uznesenie č. 18/24/2026 z 24. zasadnutia Obecného zastupiteľstva Obce Bernolákovo zo dňa 23.6.2026 (Určenie volebných obvodov vo volebnom období 2026-2030)"
+
+[obvod.1]
+seats = 5
+rules = [
+  {street = "Azalková"},
+  {street = "Brečtanová"},
+  {street = "Brusnicová"},
+  {street = "Fialková"},
+  {street = "Hájna"},
+  {street = "Hornádska"},
+  {street = "Hronská"},
+  {street = "Hurbanova"},
+  {street = "Chmeľová"},
+  {street = "Ipeľská"},
+  {street = "Konvalinková"},
+  {street = "Krátka"},
+  {street = "Kvetná"},
+  {street = "Kysucká"},
+  {street = "Ľaliová"},
+  {street = "Ľanová"},
+  {street = "Moravská"},
+  {street = "Muškátová"},
+  {street = "Nálepkova"},
+  {street = "Narcisová"},
+  {street = "Okružná"},
+  {street = "Oravská"},
+  {street = "Orgovánová"},
+  {street = "Osiková"},
+  {street = "Poľná"},
+  {street = "Poľovnícka"},
+  {street = "Potočná"},
+  {street = "Pšeničná"},
+  {street = "Ražná"},
+  {street = "Staničná"},
+  {street = "Stredná"},
+  {street = "Štúrova"},
+  {street = "Trnavská"},
+  {street = "Tulipánová"},
+  {street = "Vážska"},
+  {street = "Železničná"},
+]
+
+[obvod.2]
+seats = 5
+rules = [
+  {street = "Ampérova"},
+  {street = "Baničova"},
+  {street = "Bernolákova"},
+  {street = "Bottova"},
+  {street = "Budovateľská"},
+  {street = "Clementisova"},
+  {street = "Družstevná"},
+  {street = "Dukelská"},
+  {street = "Fándlyho"},
+  {street = "Gaštanová alej"},
+  {street = "Grobská"},
+  {street = "Hlavná"},
+  {street = "Hlboká"},
+  {street = "Hlinkova"},
+  {street = "Horný dvor"},
+  {street = "Hrušková"},
+  {street = "Hviezdoslavova"},
+  {street = "Chalupkova"},
+  {street = "Jesenského"},
+  {street = "Kalinčiakova"},
+  {street = "Kaštieľ"},
+  {street = "Kollárova"},
+  {street = "Komenského"},
+  {street = "Kukučínova"},
+  {street = "Lekárenská"},
+  {street = "Mostová"},
+  {street = "Národného oslobodenia"},
+  {street = "Obilná"},
+  {street = "Orechová"},
+  {street = "Poštová"},
+  {street = "Pribinova"},
+  {street = "Priemyselná"},
+  {street = "Sacky"},
+  {street = "Senecká cesta"},
+  {street = "Sládkovičova"},
+  {street = "Slaná"},
+  {street = "Strojárenská"},
+  {street = "Svätoplukova"},
+  {street = "Šakoňská cesta"},
+  {street = "Školská"},
+  {street = "Tajovského"},
+  {street = "Trnková"},
+  {street = "Viničná"},
+  {street = "Vŕšky"},
+  {street = "Záhradná"},
+]
+
+[obvod.3]
+seats = 3
+rules = [
+  {street = "Agátová"},
+  {street = "Borovicová"},
+  {street = "Broskyňová"},
+  {street = "Buková"},
+  {street = "Čerešňová"},
+  {street = "Čučoriedková"},
+  {street = "Dubová"},
+  {street = "Dunajská"},
+  {street = "Figová"},
+  {street = "Hrubé Lúky"},
+  {street = "Jabloňová"},
+  {street = "Jelšová"},
+  {street = "Kondrótova"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+  {street = "Lúčna"},
+  {street = "Malinová"},
+  {street = "Marhuľová"},
+  {street = "Mierová"},
+  {street = "Nevädzová"},
+  {street = "Púpavová"},
+  {street = "Rezedová"},
+  {street = "Riečna"},
+  {street = "Sadová"},
+  {street = "Slivková"},
+  {street = "Slnečnicová"},
+  {street = "Smreková"},
+  {street = "Stromová"},
+  {street = "Šalviová"},
+  {street = "Šípková"},
+  {street = "Tabaková"},
+  {street = "Topoľový rad"},
+  {street = "Višňová"},
+]

@@ -1,0 +1,37 @@
+# Council obvody of Podbrezová (508853), Brezno.
+# Transcribed by an AI agent in job obvod-rules-124 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: miestne časti obce • Lopej (ulica Belohrad, Čelno, Dolná, Družby, Hámor, Jozefa Murgaša, Partizánska, Pod Grapľom) • Vajsková • Skalica sa volia 3 poslanci.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: miestnu časť obce • Podbrezová (ulica Sládkovičova, Šupkova, Kolkáreň, Bendíčka, Smreková, Švermov rad, Štúrov rad, Hviezdoslavova, Chalupkova) sa volia 4 poslanci.
+#   obvod 3: Vo volebnom obvode číslo 3, ktorý zahŕňa: miestne časti obce • Štiavnička • Chvatimech sa volia 4 poslanci.
+obec = "508853"
+name = "Podbrezová"
+date = 2026-06-03
+note = "Obvody are defined by miestne časti; the streets listed in parentheses lie wholly in the respective part, so part rules are used."
+
+[[document]]
+url = "https://www.podbrezova.sk/volby-do-organov-samospravy-obci-a-do-organov-samospravnych-krajov-2026.html"
+sha256 = "fb69c82c55e173051ef892761a97453583d6d9a6e067852a3eb383c7d5a07fc1"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie OZ č. 26/2026/UZ zo dňa 03.06.2026)"
+
+[obvod.1]
+seats = 3
+rules = [
+  {part = "Lopej"},
+  {part = "Vajsková"},
+  {part = "Skalica"},
+]
+
+[obvod.2]
+seats = 4
+rules = [
+  {part = "Podbrezová"},
+]
+
+[obvod.3]
+seats = 4
+rules = [
+  {part = "Štiavnička"},
+  {part = "Chvatimech"},
+]

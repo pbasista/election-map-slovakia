@@ -1,0 +1,90 @@
+# Council obvody of Modra (508101), Pezinok.
+# Transcribed by an AI agent in job obvod-rules-066 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 – Modra. Vo volebnom obvode č. 1 bude volených 10 poslancov. [Webstránka: okrsky č. 1. – 5.] Okrsok 1: Dukelská, Kalinčiakova, Kukučínova, Podhorská, Nám. Slobody, Kuzmányho, Ulica za Štadiónom; Okrsok 2: Hviezdoslavova, Bratislavská, Zochova, Cpinova, Dr. Bodického, Fr. Kráľa, Hečkova, Jesenského, Kollárova, Kellenbergerova, Sládkovičova, Bernolákova, Štefánikova, Vinárska, Sokolská, Ulica Ferdinanda Píseckého, Ulica Jána Bakoša; Okrsok 3: Štúrova, Horná, Baštová, Dolná, Kostolná, Moyzesova, Súkenícka, Komenského č. 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, mesto Modra; Okrsok 4: Družstevná, Komenského č. 1, 2, 4, 6; Okrsok 5: 1. mája, Čsl. armády, Erneyho, Hrnčiarska, Krátka, Šúrska, SNP, Vajanského, Komenského č. 8, 10, 12, 14, 16, 18, 20, 22, 24,26, 28
+#   obvod 2: Volebný obvod č. 2 – Kráľová, Harmónia, Piesok. Vo volebnom obvode č. 2 budú volení 3 poslanci. [Webstránka: okrsky č. 6. – 7.] Okrsok 6: Partizánska, Trnavská, Karpatská, Národná, Puškinova, Pod vinicami; Okrsok 7: Lúčna, Potočná, Muškátová ulica, Leánková ulica, Tramínová ulica, Strapáková ulica, Malagová ulica, Šípková ulica, Veštíkova ulica, časť Harmónia, časť Piesok
+obec = "508101"
+name = "Modra"
+date = 2026-06-25
+note = "Resolution 693/27/2026 defines obvod 1 = Modra (10 seats) and obvod 2 = Kráľová, Harmónia, Piesok (3 seats); the elections page states obvod 1 = okrsky 1–5 and obvod 2 = okrsky 6–7, so streets are taken from the mayor's okrsky document (scanned PDFs, read from rendered images). Kráľová is not a register part (it lies in part Modra), so it is given by its okrsok 6–7 streets. Veštíkova ulica (okrsok 7) has no addresses in the register and is omitted. Addresses in part Modra without a street go to obvod 1 via rest."
+
+[[document]]
+url = "https://www.modra.sk/wp-content/uploads/2026/07/Uznesenie-o-urceni-volebnych-obvodov.pdf"
+sha256 = "fc19eb11f339b7c151680e9031f82c3c597e744af71682bcc2aea57879ea936e"
+title = "Uznesenie MsZ mesta Modry č. 693/27/2026 z 25.06.2026"
+
+[[document]]
+url = "https://www.modra.sk/wp-content/uploads/2026/07/Urcenie-volebnych-okrskov-Modra.pdf"
+sha256 = "4c2efa380eb994ae531865b153dc91f3a6745c72596d4ddd2660b7b6e159c810"
+title = "Určenie volebných okrskov a miestností pre voľby 24. októbra 2026 (zaradené ulice)"
+
+[obvod.1]
+seats = 10
+rules = [
+  {street = "Dukelská"},
+  {street = "Kalinčiakova"},
+  {street = "Kukučínova"},
+  {street = "Podhorská"},
+  {street = "Nám. slobody", written = "Nám. Slobody"},
+  {street = "Kuzmányho"},
+  {street = "Za štadiónom", written = "Ulica za Štadiónom", note = "document adds 'Ulica' and capitalises 'Štadiónom'; same street as register's Za štadiónom"},
+  {street = "Hviezdoslavova"},
+  {street = "Bratislavská"},
+  {street = "Zochova"},
+  {street = "Cpinova"},
+  {street = "Dr.Bodického", written = "Dr. Bodického"},
+  {street = "Fraňa Kráľa", written = "Fr. Kráľa", note = "'Fr.' abbreviates Fraňa; same street"},
+  {street = "Hečkova"},
+  {street = "Jesenského"},
+  {street = "Kollárova"},
+  {street = "Kellenbergerova"},
+  {street = "Sládkovičova"},
+  {street = "Bernolákova"},
+  {street = "Štefánikova"},
+  {street = "Vinárska"},
+  {street = "Sokolská"},
+  {street = "Ulica Ferdinanda Píseckého"},
+  {street = "Ulica Jána Bakoša"},
+  {street = "Štúrova"},
+  {street = "Horná"},
+  {street = "Baštová"},
+  {street = "Dolná"},
+  {street = "Kostolná"},
+  {street = "Moyzesova"},
+  {street = "Súkenícka"},
+  {street = "Komenského", note = "document splits Komenského among okrsky 3, 4 and 5, all of which lie in obvod 1"},
+  {street = "Družstevná"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "Čsl. armády"},
+  {street = "Erneyho"},
+  {street = "Hrnčiarska"},
+  {street = "Krátka"},
+  {street = "Šúrska"},
+  {street = "SNP"},
+  {street = "Vajanského"},
+  {street = "Na starom trhu", note = "not listed in the okrsky document; small street in the historic centre of Modra next to Štúrova (okrsok 3), so obvod 1 – Modra", inferred = true},
+  {street = "Inovačná ulica", note = "not listed (new street); in the industrial zone at the south edge of Modra town near Šúrska (okrsok 5), far from Kráľová, so obvod 1 – Modra", inferred = true},
+  {rest = true, note = "obvod 1 is 'Modra' (town proper); okrsok 3 includes 'mesto Modra', i.e. addresses in part Modra without a street name"},
+]
+
+[obvod.2]
+seats = 3
+rules = [
+  {street = "Partizánska"},
+  {street = "Trnavská"},
+  {street = "Karpatská"},
+  {street = "Národná"},
+  {street = "Puškinova"},
+  {street = "Pod Vinicami", written = "Pod vinicami"},
+  {street = "Lúčna"},
+  {street = "Potočná"},
+  {street = "Muškátová ulica"},
+  {street = "Leánková ulica"},
+  {street = "Tramínová ulica"},
+  {street = "Strapáková ulica"},
+  {street = "Malagová ulica"},
+  {street = "Šípková ulica"},
+  {part = "Harmónia"},
+  {part = "Piesok"},
+]

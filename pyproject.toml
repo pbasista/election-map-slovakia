@@ -1,0 +1,85 @@
+[project]
+name = "election-map-slovakia"
+dynamic = ["version"]
+description = "Static zoomable map of Slovakia's 2026 municipal and regional election constituencies and their candidates."
+readme = "README.md"
+license = "EUPL-1.2"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "Peter Bašista" }]
+requires-python = ">=3.11"
+dependencies = ["shapely>=2.1", "pyproj"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: GIS",
+]
+
+[project.scripts]
+ems = "election_map_slovakia.cli:main"
+
+[project.urls]
+Homepage = "https://volebnamapa.sk"
+Repository = "https://github.com/pbasista/election-map-slovakia"
+Issues = "https://github.com/pbasista/election-map-slovakia/issues"
+Releases = "https://github.com/pbasista/election-map-slovakia/releases"
+License = "https://github.com/pbasista/election-map-slovakia/blob/main/LICENSE"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4",
+    "ruff>=0.12",
+    "ty>=0.0.1a21",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/election_map_slovakia/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/election_map_slovakia"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+# Pydocstyle (D, PEP 257) keeps docstrings honest; PLR2004 flags magic numbers,
+# so format constants end up named.  BLE001 makes `except Exception` say why
+# it is right, and RUF100 keeps a suppression from outliving the rule it
+# names.  C901 and PLR0912 guard against a function growing into several.
+select = ["E", "F", "W", "D", "I", "BLE001", "C901", "PLR0912", "PLR2004", "RUF100"]
+# The formatter keeps code within 88 columns; it never breaks comments or
+# strings, and some (URLs, official names) must stay verbatim.
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
+
+[tool.ruff.lint.per-file-ignores]
+# Tests need no docstrings and naturally use literal fixture values.
+"tests/**" = ["D", "PLR2004"]
+
+# ty runs over the package only; tests use deliberately partial fixtures.
+[tool.ty.environment]
+python-version = "3.11"
+
+[tool.ty.src]
+include = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

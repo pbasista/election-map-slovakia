@@ -1,0 +1,32 @@
+# Council obvody of Janíky (501662), Dunajská Streda.
+# Transcribed by an AI agent in job obvod-rules-158 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: Horné Janíky Búštelek sa volí 4 poslancov.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: Dolné Janíky sa volí 3 poslancov.
+obec = "501662"
+name = "Janíky"
+date = 2026-07-07
+
+[[document]]
+url = "https://www.janiky.sk/sk/urad/volby-a-referenda/volby-do-organov-samospravy-obci-2026/utvoreni-volebnych-obvodov-a-o-urceni-poctu-poslancov-pre-volby-do-organov-samospravy-obci-24-oktobra-2026-839sk.html"
+sha256 = "25a87468738f56c574728db9de9982df53e6f463ed20d67239d3a04ce683632b"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie OZ č. 124/2026 zo dňa 07.07.2026)"
+
+[[document]]
+url = "https://www.janiky.sk/evt_file.php?file=4440"
+sha256 = "33f05454a93530e46452fa462dd9b91bc6abc0acd4e9bdf7b7034549d4cfc26b"
+title = "Utvorenie volebných obvodov a určenie počtu poslancov (OSO26_V510.docx)"
+
+[obvod.1]
+seats = 4
+rules = [
+  {part = "Horné Janíky"},
+  {part = "Búštelek"},
+]
+
+[obvod.2]
+seats = 3
+rules = [
+  {part = "Dolné Janíky"},
+]

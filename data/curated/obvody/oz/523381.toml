@@ -1,0 +1,114 @@
+# Council obvody of Poprad (523381), Poprad.
+# Transcribed by an AI agent in job obvod-rules-015 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 – Centrum, Západ, Veľká, Spišská Sobota, Matejovce a Stráže pod Tatrami s počtom poslancov 9,
+#   obvod 2: Volebný obvod č. 2 – JUH I, JUH II, JUH III, JUH IV, JUH V, JUH VI a Kvetnica s počtom poslancov 10.
+obec = "523381"
+name = "Poprad"
+date = 2026-07-16
+fill = "nearest"
+note = "Resolution 166/2026 (scanned PDF, read visually) defines the obvody by city sections, not streets: obvod 1 = Centrum, Západ and the parts Veľká, Spišská Sobota, Matejovce, Stráže pod Tatrami; obvod 2 = housing estates Juh I-VI and the part Kvetnica. Streets of part Poprad were assigned using the city's official 2026 list of streets per volebný okrsok: okrsky 1-21 (polling stations MsÚ, ZŠ Francisciho, ZŠ Komenského and the outer parts) = obvod 1, okrsky 22-43 (ZŠ Dostojevského, SŠ D. Tatarku, ZŠ Tajovského, ZŠ Jarná, SŠ Letná) and 44 (Kvetnica, incl. Dubová, Jedľová) = obvod 2; no street is split between these two groups, and the population split (22,686 vs 24,884 inhabitants) matches the 9:10 seats exactly. Športová, Svitská cesta and Teplická cesta (no residents) were placed by location. fill_nearest concerns the ~3,100 addresses without a street in part Poprad (numbered by súpisné číslo), which the document cannot place."
+
+[[document]]
+url = "https://www.poprad.sk/download.dat?id=96D4368DC88B4C32806589B33FE84B87-3416F707CE149114E219266117A1298C"
+sha256 = "cf0a1a8bc541d50e626aba9dbb85fc29a9857432e11ce7a22af4400751a1ebd0"
+title = "Zverejnenie volebných obvodov a počtu poslancov mestského zastupiteľstva v nich (21.07.2026) s Uznesením MsZ č. 166/2026 zo dňa 16.07.2026"
+
+[[document]]
+url = "https://www.poprad.sk/download.dat?id=3F7CC63CB4F040118E02DDA151C45F51-0CD0D104C823CE20F6B42E88E7DC5B3C"
+sha256 = "6cd6bb19daeec7a7a4040947027c81c29b612d50b29aa59fc08fcd97e298f5c1"
+title = "Zoznam ulíc, volebných okrskov a volebných miestností pre voľby do orgánov samosprávy mesta 24.10.2026 (30.07.2026)"
+
+[obvod.1]
+seats = 9
+rules = [
+  {part = "Veľká"},
+  {part = "Spišská Sobota"},
+  {part = "Matejovce"},
+  {part = "Stráže pod Tatrami"},
+  {street = "1. mája"},
+  {street = "29. augusta"},
+  {street = "Alžbetina"},
+  {street = "Banícka"},
+  {street = "Bernolákova"},
+  {street = "Brežný riadok"},
+  {street = "Dominika Tatarku"},
+  {street = "Drevárska"},
+  {street = "Duklianska"},
+  {street = "Francisciho"},
+  {street = "Halatova"},
+  {street = "Hraničná"},
+  {street = "Huszova"},
+  {street = "Hviezdoslavova"},
+  {street = "Jazzová"},
+  {street = "Jiřího Wolkera"},
+  {street = "Joliota Curie"},
+  {street = "Karpatská"},
+  {street = "Komenského"},
+  {street = "Kvetná"},
+  {street = "Levočská"},
+  {street = "Mlynská"},
+  {street = "Mnoheľova"},
+  {street = "Murgašova"},
+  {street = "Nábrežie Jána Pavla II."},
+  {street = "Námestie svätého Egídia"},
+  {street = "Nová"},
+  {street = "Nové nábrežie"},
+  {street = "Okružná"},
+  {street = "Partizánska"},
+  {street = "Podtatranská"},
+  {street = "Popradské nábrežie"},
+  {street = "Popradskej brigády"},
+  {street = "Sadová"},
+  {street = "Sládkovičova"},
+  {street = "Slovenského odboja"},
+  {street = "Staré ihrisko"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Tatranská"},
+  {street = "Tatranské námestie"},
+  {street = "Traktorová"},
+  {street = "Vajanského"},
+  {street = "Záhradnícka"},
+  {street = "Zdravotnícka"},
+  {street = "Športová", note = "no residents in the okrsky list; street at the Aquacity next to Spišská Sobota (north-east), far from the Juh housing estates, so in Centrum/obvod 1", inferred = true},
+  {street = "Svitská cesta", note = "no residents in the okrsky list; road in the north-west next to Veľká (obvod 1), not in Juh", inferred = true},
+  {street = "Teplická cesta", note = "no residents in the okrsky list; road in the north-west next to Veľká (obvod 1), not in Juh", inferred = true},
+]
+
+[obvod.2]
+seats = 10
+rules = [
+  {part = "Kvetnica"},
+  {street = "Bajkalská"},
+  {street = "Dlhé hony"},
+  {street = "Dostojevského"},
+  {street = "Dubová"},
+  {street = "Jarná"},
+  {street = "Jedľová"},
+  {street = "Jesenná"},
+  {street = "Kopečná"},
+  {street = "Letná"},
+  {street = "Ludvíka Svobodu"},
+  {street = "Moyzesova"},
+  {street = "MPČĽ"},
+  {street = "Novomeského"},
+  {street = "Pavlovova"},
+  {street = "Podjavorinskej"},
+  {street = "Rastislavova"},
+  {street = "Rázusova"},
+  {street = "Slnečná"},
+  {street = "Šoltésovej"},
+  {street = "Šrobárova"},
+  {street = "Suchoňova"},
+  {street = "Svätoplukova"},
+  {street = "Tajovského"},
+  {street = "Tolstého"},
+  {street = "Tomášikova"},
+  {street = "Uherova"},
+  {street = "Ul. mládeže"},
+  {street = "Ústecko-Orlická"},
+  {street = "Záborského"},
+  {street = "Zimná"},
+]

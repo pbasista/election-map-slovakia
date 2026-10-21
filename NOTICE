@@ -1,0 +1,41 @@
+NOTICE
+======
+
+This project is licensed under the European Union Public Licence v1.2
+(EUPL-1.2) -- see LICENSE. The data it processes and publishes in derived
+form remains under the terms of its providers:
+
+* Administrative boundaries (ZBGIS) -- (c) Úrad geodézie, kartografie a
+  katastra Slovenskej republiky (ÚGKK SR), CC BY 4.0.
+  https://opendata.skgeodesy.sk/
+
+* Borders of the countries around Slovakia -- Natural Earth (admin 0
+  countries, 1:10m, v5.1.2), public domain. https://www.naturalearthdata.com/
+
+* Address register with coordinates -- Ministerstvo vnútra Slovenskej
+  republiky (MV SR), CC0 1.0. https://data.slovensko.sk/
+
+* Candidate lists of the 2026 municipal and regional elections -- (c) MV SR,
+  published at https://www.minv.sk/; redistributed in derived form.
+
+* data/curated/obvody/ -- constituency membership transcribed from the
+  official decisions of the eight self-governing regions and of the cities
+  of Bratislava and Košice (each file names its source document); official
+  documents, redistributed in derived form.
+
+* config/blocklist-konspiratori.txt -- a dated snapshot of the list
+  published at https://www.konspiratori.sk/zoznam-stranok.
+
+Third-party libraries vendored into web/vendor/:
+
+* web/vendor/leaflet/ -- Leaflet 1.9.4 (leaflet.js, leaflet.css), unmodified.
+  Copyright (c) 2010-2023 Volodymyr Agafonkin, (c) 2010-2011 CloudMade;
+  BSD 2-Clause License, full text in web/vendor/leaflet/LICENSE.
+  Upstream: https://leafletjs.com/
+
+* web/vendor/preact-htm.module.js -- Preact 10.x and htm 3.x, bundled as
+  one ES module. Copyright Jason Miller and contributors, MIT License; the
+  full notice is embedded as a comment at the top of the file.
+  Upstream: https://preactjs.com/ and https://github.com/developit/htm
+
+Everything else in this distribution is licensed under the EUPL-1.2.

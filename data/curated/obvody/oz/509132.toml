@@ -1,0 +1,47 @@
+# Council obvody of Čadca (509132), Čadca.
+# Transcribed by an AI agent in job obvod-rules-032 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: mestskú časť : Horelica
+#   obvod 2: mestskú časť : Čadečka, Milošová, Podzávoz
+#   obvod 3: mestskú časť : Čadca, Drahošanka, Rieka, Vojty
+#   obvod 4: mestskú časť : U Hluška, U Siheľníka
+obec = "509132"
+name = "Čadca"
+date = 2026-06-25
+note = "Obvody are defined by mestské časti only, transcribed as part rules. Palárikova has addresses in both parts U Hluška (obvod 4) and Čadca (obvod 3); it follows the part of each address as the document defines obvody by parts. The city's scanned 'Zoznam ulíc a okrskov' (07.07.2026) lists local streets per obvod/okrsok and was not used for rules."
+
+[[document]]
+url = "https://www.mestocadca.sk/files/attachments/oznameniae-o-utvoreni-volebnych-obvodov-a-o-urceni-poctu-poslancov-volby-24-10-2026.pdf"
+sha256 = "bba359394931ecb46a385af45052ac311af840d19a0d416b86bf92833a47fbd1"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie MsZ Čadca č. 47/2026 zo dňa 25.06.2026)"
+
+[obvod.1]
+seats = 2
+rules = [
+  {part = "Horelica"},
+]
+
+[obvod.2]
+seats = 4
+rules = [
+  {part = "Čadečka"},
+  {part = "Milošová"},
+  {part = "Podzávoz"},
+]
+
+[obvod.3]
+seats = 7
+rules = [
+  {part = "Čadca"},
+  {part = "Drahošanka"},
+  {part = "Rieka"},
+  {part = "Vojty"},
+]
+
+[obvod.4]
+seats = 12
+rules = [
+  {part = "U Hluška"},
+  {part = "U Siheľníka"},
+]

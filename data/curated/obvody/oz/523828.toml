@@ -1,0 +1,27 @@
+# Council obvody of Spišská Belá (523828), Kežmarok.
+# Transcribed by an AI agent in job obvod-rules-092 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Mesto Spišská Belá (okrem mestskej časti Strážky)
+#   obvod 2: Mestská časť Strážky
+obec = "523828"
+name = "Spišská Belá"
+date = 2026-06-16
+note = "The announcement PDF is a filled-in form scan (read visually, clearly legible): 11 councillors in 2 obvody. The okrsky notice on the city website confirms obvod 2 = okrsok 6 (Strážky streets Ladislava Medňanského, Nad kaštieľom, Popradská, …) and obvod 1 = okrsky 1–5 (all other streets)."
+
+[[document]]
+url = "https://spisskabela.sk/wp-content/uploads/2026/07/Oznamenie-o-tvoreni-volebnych-obvodov-a-urceni-poctu-poslancov.pdf"
+sha256 = "6b66b3dc6e282d5ef249cf1a6ede6b2bd2043f8a33193a3f5ed9aed83705f951"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie MsZ č. 84/2026 zo dňa 16.6.2026)"
+
+[obvod.1]
+seats = 10
+rules = [
+  {part = "Spišská Belá"},
+]
+
+[obvod.2]
+seats = 1
+rules = [
+  {part = "Strážky"},
+]

@@ -1,0 +1,129 @@
+# Council obvody of Púchov (513610), Púchov.
+# Transcribed by an AI agent in job obvod-rules-054 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Hoštínska, J. Kráľa, Komenského 637, 638, 643, 646, 647, 648, 649, 650, 653, 655, 657, 658, 659, 660, 661, 662, 663, 664, 665, 666, 669, 670, 671, 672, 1114, 1294, 1625, 1626, 1627, 1630, 1651, 1652, 1961, Kuzmányho, Pod Lachovcom, Podjavorinskej, Sládkovičova, Vodárska, Za cintorínom, Hrabovská, Riečna, Streženická cesta, Svätoplukova, Športovcov
+#   obvod 2: Dlhé lúky, Chmelinec, Dvory, Mládežnícka, Nimnická cesta, Okružná, Pod Zábrehom, Potôčky, časť obce Púchov 4012, 4123, 4518, 4520, 4613, 4624, 4627, Samoty 1062, 1072, 1229, 1230, 1708, 1782, 1787, 1798, 1822, 1952, Zábreh
+#   obvod 3: Komenského 651, 1642, 1643, Námestie slobody, Moyzesova, Mudroňova, F. Urbánka, Hollého, Moravská 684, 1631, 1632, 1634, 1635, 1636, 1668, 1864, 1866, 1877, 1878, 1879, 1880, 1881, 1882, 1883, 1884, 4404, 1628, 1629, Nábrežie slobody, Požiarna 1637, 784, 794, 1048, 1245, 1638, 1640, 1644, Royova 770, 771, 772, 773, 775, 776, 778, 779, 780, 781, 782, 796, 1905, 785, 786, 787, 788, 790, 791, 792, 1075, 1319, Štefánikova 812, 816, 828, 832, 1638, 1641
+#   obvod 4: Mesto Púchov /obyvatelia bez adresy/, 1. mája 870, 871, 873, 875, 876, 877, 878, 874, 880, 883, 885, 886, 887, 888, 889, 894, 898, 899, 901, 903, 937, 939, 1159, 1160, 1490, 1888, Komenského 827, Obrancov mieru 877, 1150, 1151, 1152, 1157, 1085, 1086, 1092, 1093, 1094, 1095, 1096, 1154, 1155, 1156, Požiarna 824, 825, Štefánikova 810, 813, 818, 821, 822, 827, 870, Pribinova 1639, 1169, 1170, 1171, 1172, 1173, Rastislavova 1164, 1165, 1166, 1166, 1167, Mojmírova
+#   obvod 5: F. Hečku, Hurbanova, Jesenského, Jilemnického, Kukučínova, Lichardova, Slovanská, Spojová, Školská, Štúrova, T. Vansovej, Továrenská, Vajanského, Železničná, I. Krasku, J. Smreka, kpt. Jaroša, Trenčianska, Vŕšok, Astrová, Kvetinová, Novonosická, Ružová, Sadová, Tulipánová, Záhradná, Záskalie, časť obce Nosice
+#   obvod 6: Samoty 1028, Vsetínska, časť obce Vieska-Bezdedov, časť obce Ihrište, časť obce Hoštiná
+obec = "513610"
+name = "Púchov"
+date = 2026-06-24
+fill = "nearest"
+note = "Seats of obvod 1 are not legible in the PDF text layer (\"sa volia poslanci\"); 2 is derived from the total of 17 minus 3+4+4+3+1 of obvody 2-6. The document assigns several streets by súpisné čísla. fill_nearest covers: streets not named in the document (Gorazdova, Hoenningovo námestie, Poštová, Sedlišťská, Župné námestie); súpisné čísla of split streets not listed (Komenského 639, 652, 656, 673, 1343, 1713-1715, 4550-4556; Požiarna 1291, 1292, 1645; Štefánikova 725, 726, 814, 817, 820, 823, 826, 1956, 1967; Samoty 1029, 1031, 1060, 1061); and the ~1018 addresses without street in časť Púchov other than the 7 listed in obvod 2. \"Mesto Púchov /obyvatelia bez adresy/\" (obvod 4) concerns residents registered without address, not an address area."
+
+[[document]]
+url = "https://www.puchov.sk/download_file_f.php?id=2441051"
+sha256 = "f192f5e2d6e2adac0e1660efaf524204dfc846138768a37788f4ea60cfe1a2f8"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie MsZ č. 105/2026 zo dňa 24.6.2026)"
+
+[obvod.1]
+seats = 2
+rules = [
+  {street = "Hoštínska"},
+  {street = "J. Kráľa"},
+  {street = "Komenského", numbers = "637, 638, 643, 646, 647, 648, 649, 650, 653, 655, 657, 658, 659, 660, 661, 662, 663, 664, 665, 666, 669, 670, 671, 672, 1114, 1294, 1625, 1626, 1627, 1630, 1651, 1652, 1961", by = "supisne", note = "Street split by súpisné čísla; unlisted súpisné čísla are left to fill_nearest."},
+  {street = "Kuzmányho"},
+  {street = "Pod Lachovcom"},
+  {street = "Podjavorinskej"},
+  {street = "Sládkovičova"},
+  {street = "Vodárska"},
+  {street = "Za cintorínom"},
+  {street = "Hrabovská"},
+  {street = "Riečna"},
+  {street = "Streženická cesta"},
+  {street = "Svätoplukova"},
+  {street = "Športovcov"},
+  {part = "Hrabovka", note = "Addresses without street in časť Hrabovka; both its streets (Hrabovská, Riečna) are in obvod 1.", inferred = true},
+]
+
+[obvod.2]
+seats = 3
+rules = [
+  {street = "Dlhé lúky"},
+  {street = "Chmelinec"},
+  {street = "Dvory"},
+  {street = "Mládežnícka"},
+  {street = "Nimnická cesta"},
+  {street = "Okružná"},
+  {street = "Pod Zábrehom"},
+  {street = "Potôčky"},
+  {part = "Púchov", numbers = "4012, 4123, 4518, 4520, 4613, 4624, 4627"},
+  {street = "Samoty", numbers = "1062, 1072, 1229, 1230, 1708, 1782, 1787, 1798, 1822, 1952", by = "supisne", note = "Street split by súpisné čísla; unlisted súpisné čísla are left to fill_nearest."},
+  {street = "Zábreh"},
+]
+
+[obvod.3]
+seats = 4
+rules = [
+  {street = "Komenského", numbers = "651, 1642, 1643", by = "supisne", note = "Street split by súpisné čísla; unlisted súpisné čísla are left to fill_nearest."},
+  {street = "Námestie slobody"},
+  {street = "Moyzesova"},
+  {street = "Mudroňova"},
+  {street = "F. Urbánka"},
+  {street = "Hollého"},
+  {street = "Moravská", note = "The document lists only súpisné čísla of this street, all in this obvod; addresses with other súpisné čísla of the street are assigned here as the whole street."},
+  {street = "Nábrežie slobody"},
+  {street = "Požiarna", numbers = "1637, 784, 794, 1048, 1245, 1638, 1640, 1644", by = "supisne", note = "Street split by súpisné čísla; unlisted súpisné čísla are left to fill_nearest."},
+  {street = "Royova", note = "The document lists only súpisné čísla of this street, all in this obvod; addresses with other súpisné čísla of the street are assigned here as the whole street."},
+  {street = "Štefánikova", numbers = "812, 816, 828, 832, 1638, 1641", by = "supisne", note = "Street split by súpisné čísla; unlisted súpisné čísla are left to fill_nearest."},
+]
+
+[obvod.4]
+seats = 4
+rules = [
+  {street = "1.mája", written = "1. mája", note = "The document lists only súpisné čísla of this street, all in this obvod; addresses with other súpisné čísla of the street are assigned here as the whole street. Súpisné číslo 903 listed in the document is not in the register."},
+  {street = "Komenského", numbers = "827", by = "supisne", note = "Street split by súpisné čísla; unlisted súpisné čísla are left to fill_nearest."},
+  {street = "Obrancov mieru", note = "The document lists only súpisné čísla of this street, all in this obvod; addresses with other súpisné čísla of the street are assigned here as the whole street."},
+  {street = "Požiarna", numbers = "824, 825", by = "supisne", note = "Street split by súpisné čísla; unlisted súpisné čísla are left to fill_nearest."},
+  {street = "Štefánikova", numbers = "810, 813, 818, 821, 822, 827, 870", by = "supisne", note = "Street split by súpisné čísla; unlisted súpisné čísla are left to fill_nearest."},
+  {street = "Pribinova", note = "The document lists only súpisné čísla of this street, all in this obvod; addresses with other súpisné čísla of the street are assigned here as the whole street."},
+  {street = "Rastislavova", note = "The document lists only súpisné čísla of this street, all in this obvod; addresses with other súpisné čísla of the street are assigned here as the whole street."},
+  {street = "Mojmírova"},
+]
+
+[obvod.5]
+seats = 3
+rules = [
+  {street = "F. Hečku"},
+  {street = "Hurbanova"},
+  {street = "Jesenského"},
+  {street = "Jilemnického"},
+  {street = "Kukučínova"},
+  {street = "Lichardova"},
+  {street = "Slovanská"},
+  {street = "Spojová"},
+  {street = "Školská"},
+  {street = "Štúrova"},
+  {street = "T. Vansovej"},
+  {street = "Továrenská"},
+  {street = "Vajanského"},
+  {street = "Železničná"},
+  {street = "I. Krasku"},
+  {street = "J. Smreka"},
+  {street = "kpt. Jaroša"},
+  {street = "Trenčianska"},
+  {street = "Vŕšok"},
+  {street = "Astrová"},
+  {street = "Kvetinová"},
+  {street = "Novonosická"},
+  {street = "Ružová"},
+  {street = "Sadová"},
+  {street = "Tulipánová"},
+  {street = "Záhradná"},
+  {street = "Záskalie"},
+  {part = "Nosice"},
+  {part = "Horné Kočkovce", note = "Addresses without street in časť Horné Kočkovce; every street of this part is in obvod 5.", inferred = true},
+]
+
+[obvod.6]
+seats = 1
+rules = [
+  {street = "Samoty", numbers = "1028", by = "supisne", note = "Street split by súpisné čísla; unlisted súpisné čísla are left to fill_nearest."},
+  {street = "Vsetínska"},
+  {part = "Vieska-Bezdedov"},
+  {part = "Ihrište"},
+  {part = "Hoštiná"},
+]

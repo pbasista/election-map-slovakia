@@ -1,0 +1,94 @@
+# Council obvody of Snina (520802), Snina.
+# Transcribed by an AI agent in job obvod-rules-068 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Sládkovičova, Daľkovská, Nad Cirochou, Ševčenkova, Gorkého, Duchnovičova, Pugačevova, 25. novembra, Starinská, Gladkova, Letná, Perečínska, Vajanského, Gen. Svobodu, Česká, Slovenská, Moravská, Štúrova, Rybnícka, Podrybnícka, Jána Bottu, Kpt. Nálepku, SNP, Puškinova, Šafárikova, Hurbanova, Hámorská, Pálenčiarska, Kalinčiakova, Pribinova, Rastislavova, Svätoplukova, P. Jilemnického, Duk. hrdinov, B. Němcovej, Mierová, Podhorská, Švermova, Kollárova, 1. mája, Námestie Jána Pavla II., Kukučínova, Študentská 1439/2, 1440/3, 1442/5, 2046/39, 2047/40, 2048/41, mesto Snina, Komenského, Stakčínska, Strojárska, Janka Kráľa, Partizánska, Staničná, Hviezdoslavova
+#   obvod 2: Pčolinská, Jesenského, Lesnícka, Študentská 1443/6, 1444/7, 1445/8, 1450/13, 1454/17, 1455/18, 1456/19, 1458/21, 1459/22, 1460/23, 1461/24, 1462/25, 1463/26, 1464/27, 1465/28, 1466/29, 1467/30, 1468/31, 1469/32, 1470/33, 1471/34, 1472/35, 1473/36, 1474/37, Palárikova, Budovateľská, Vihorlatská, Strojárska 600/82, 601/83, 604/86, 605/87, Čs. armády, Dobrianskeho, Gagarinova, Námestie Božieho milosrdenstva
+obec = "520802"
+name = "Snina"
+date = 2026-02-19
+fill = "nearest"
+note = "Resolution MsZ č. 412/2026 of 19 Feb 2026: 2 obvody, 12 + 6 seats. 'Rybnícka' is named in obvod 1 but has no addresses in the register (left out). Študentská and Strojárska are split by house numbers given as súpisné/orientačné pairs; Študentská 1 and 46 are not listed and were placed by inference (see rule notes). 'mesto Snina' among the obvod 1 streets means citizens registered only at the town (no house), who are not in the address register; the addresses without a street, and the unlisted new houses Študentská 47-58, are placed by fill_nearest."
+
+[[document]]
+url = "https://www.snina.sk/e_download.php?file=/data/uredni_deska/obsah3672_1.pdf&original=pr%C3%ADloha%20uzn.%20MsZ%20%C4%8D.%20412-2026%20-%20Volebn%C3%A9%20obvody%20s%20patriacimi%20ulicami%20a%20po%C4%8Dtom%20poslancov.pdf"
+sha256 = "823a79d467034cdb8463dff7923c2aafaae897ffb8d44840d25cb8648d7a35eb"
+title = "Príloha uznesenia MsZ č. 412/2026 zo dňa 19. 02. 2026: Volebné obvody"
+
+[[document]]
+url = "https://www.snina.sk/e_download.php?file=/data/uredni_deska/obsah3672_6.pdf&original=Ozn%C3%A1menie%20o%20po%C4%8Dte%20volebn%C3%BDch%20obvodov%20a%20po%C4%8Dte%20poslancov.pdf"
+sha256 = "2354808ec905a294f56ad4bbeed7ca96154b25576c2883fa98d21a15053c7d4f"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (09. 07. 2026)"
+
+[obvod.1]
+seats = 12
+rules = [
+  {street = "Sládkovičova"},
+  {street = "Daľkovská"},
+  {street = "Nad Cirochou"},
+  {street = "Ševčenkova"},
+  {street = "Gorkého"},
+  {street = "Duchnovičova"},
+  {street = "Pugačevova"},
+  {street = "25.novembra", written = "25. novembra", note = "Same street; the document only adds a space after the period."},
+  {street = "Starinská"},
+  {street = "Gladkova"},
+  {street = "Ulica Letná", written = "Letná", note = "Same street; the register name adds 'Ulica'."},
+  {street = "Perečínska"},
+  {street = "Vajanského"},
+  {street = "Gen. Svobodu"},
+  {street = "Česká"},
+  {street = "Slovenská"},
+  {street = "Moravská"},
+  {street = "Štúrova"},
+  {street = "Ulica podrybnícka", written = "Podrybnícka", note = "Same street; the register name adds 'Ulica' (Ulica podrybnícka)."},
+  {street = "Jána Bottu"},
+  {street = "Kpt. Nálepku"},
+  {street = "SNP"},
+  {street = "Puškinova"},
+  {street = "Šafárikova"},
+  {street = "Hurbanova"},
+  {street = "Hámorská"},
+  {street = "Pálenčiarska"},
+  {street = "Kalinčiakova"},
+  {street = "Pribinova"},
+  {street = "Rastislavova"},
+  {street = "Svätoplukova"},
+  {street = "P. Jilemnického"},
+  {street = "Duk.hrdinov", written = "Duk. hrdinov", note = "Same street; the document only adds a space after the period."},
+  {street = "B. Němcovej"},
+  {street = "Mierová"},
+  {street = "Podhorská"},
+  {street = "Švermova"},
+  {street = "Kollárova"},
+  {street = "1.mája", written = "1. mája", note = "Same street; the document only adds a space after the period."},
+  {street = "Námestie Jána Pavla II", written = "Námestie Jána Pavla II.", note = "Same square; the document adds a final period after the Roman numeral."},
+  {street = "Kukučínova"},
+  {street = "Komenského"},
+  {street = "Stakčínska"},
+  {street = "Strojárska"},
+  {street = "Janka Kráľa"},
+  {street = "Partizánska"},
+  {street = "Staničná"},
+  {street = "Hviezdoslavova"},
+  {street = "Študentská", numbers = "2, 3, 5, 39, 40, 41", note = "Document lists Študentská by súpisné/orientačné pairs 1439/2, 1440/3, 1442/5, 2046/39, 2047/40, 2048/41; transcribed by orientačné number."},
+  {street = "Študentská", numbers = "1", note = "Študentská 1438/1 is not listed; it adjoins Študentská 2 and 3 (obvod 1) and Rastislavova (obvod 1).", inferred = true},
+]
+
+[obvod.2]
+seats = 6
+rules = [
+  {street = "Pčolinská"},
+  {street = "Jesenského"},
+  {street = "Lesnícka"},
+  {street = "Palárikova"},
+  {street = "Budovateľská"},
+  {street = "Vihorlatská"},
+  {street = "Čs.armády", written = "Čs. armády", note = "Same street; the document only adds a space after the period."},
+  {street = "Dobrianskeho"},
+  {street = "Gagarinova"},
+  {street = "Námestie Božieho milosrdenstva"},
+  {street = "Študentská", numbers = "6, 7, 8, 13, 17, 18, 19, 21-37", note = "Document lists Študentská 1443/6 ... 1474/37 by súpisné/orientačné pairs; transcribed by orientačné number (21-37 are all listed consecutively)."},
+  {street = "Študentská", numbers = "46", note = "Študentská 4123/46 is not listed; it continues the listed Študentská 37 (obvod 2) and lies next to Jesenského (obvod 2).", inferred = true},
+  {street = "Strojárska", numbers = "82, 83, 86, 87", note = "Document lists Strojárska 600/82, 601/83, 604/86, 605/87; the rest of Strojárska is in obvod 1."},
+]

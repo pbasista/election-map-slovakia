@@ -1,0 +1,27 @@
+# Council obvody of Ploské (521884), Košice - okolie.
+# Transcribed by an AI agent in job obvod-rules-173 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: okrsok č. 1 Ploské sa volí 4 poslancov.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: okrsok č. 1 Ploské-Ortáše sa volí 3 poslancov.
+obec = "521884"
+name = "Ploské"
+date = 2026-07-06
+note = "The announcement is a scanned image (no text layer); transcribed from the rendered scan, which is clearly legible. 7 poslancov in 2 obvody. The form says 'okrsok č. 1' for both obvody; obvod 1 is the part Ploské and obvod 2 the part Ortáše (written 'Ploské-Ortáše')."
+
+[[document]]
+url = "https://www.ploske.sk/e_download.php?file=/data/uredni_deska/obsah702_5.pdf&original=OZN%C3%81MENIE%20o%20utvoren%C3%AD%20volebn%C3%BDch%20obvodov%20a%20o%20ur%C4%8Den%C3%AD%20po%C4%8Dtu%20poslancov.pdf"
+sha256 = "7109b851895e6dc4bb245f7469b33fc5e82d28834453836f86e5b75ea7a43552"
+title = "OZNÁMENIE o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 4/9/2026 zo dňa 6.7.2026)"
+
+[obvod.1]
+seats = 4
+rules = [
+  {part = "Ploské"},
+]
+
+[obvod.2]
+seats = 3
+rules = [
+  {part = "Ortáše", note = "Document writes 'Ploské-Ortáše', i.e. the part Ortáše of the obec Ploské; it also says 'okrsok č. 1' as for obvod 1, apparently a form slip."},
+]

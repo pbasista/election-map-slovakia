@@ -1,0 +1,157 @@
+# Council obvody of Košice-Západ (598224), Košice II.
+# Transcribed by an AI agent in job obvod-rules-030 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 zahrňujúci územie Luníka I, II a III – 5 poslancov. Luník I: Blatná, Brečtanová, Fatranská, Fialková, Husárska, Inovecká, Inžinierska, Laborecká, Lesnícka, Medická, Ondavská, Poľovnícka, Považská, Robotnícka, Ružová 89-95 nepárne, Stokrásková, Strážovská, Súľovská, Trieda SNP 1-39 nepárne, Zvončeková, Obchodná Luník II: Hronská 6-12 párne, Ipeľská, Kysucká, Pokroku, Sokolovská, Trieda SNP 4-26 párne, Výstavby, Čapajevova Luník III: Brigádnická, Hronská 7-17 nepárne, Ľudová, Obrody, Popradská 5-11 nepárne, Ružínska, Slobody, Trieda SNP 34-52 párne
+#   obvod 2: Volebný obvod č. 2 zahrňujúci územie Luníka V a VI – 3 poslanci. Luník V: Bernolákova 1-35 nepárne, Idanská 1-41 nepárne, Matuškova, Muškátová, Orgovánová, Pražská, Ružová 45-50 všetky, Toryská, Trieda SNP 47-55 nepárne, Ružová 27-43 nepárne Luník VI: Bernolákova 2-26 párne, Idanská 2-6 párne, Moldavská 1-37 nepárne, Narcisová, Tri hôrky, Trieda SNP 57-85 nepárne, Jazmínová
+#   obvod 3: Volebný obvod č. 3 zahrňujúci územie Luníka IV, VII, VIII, IBV a GROT – 5 poslancov. Luník IV: Gudernova, Kežmarská, Nešporova, Šafárikova trieda 1-21 nepárne, Trieda SNP 54-84 párne, Uherova, Markušova Luník VII: Bardejovská, Humenská, Michalovská, Rožňavská, Šafárikova trieda 4-10 párne, Trebišovská, Trieda SNP 86-104 párne, Moldavská 41-51 nepárne Luník VIII: Hellova, Jedlíkova, Petzvalova, Stodolova, Mikovíniho IBV: Bratislavská, Brnenská, Čičky-Majer, Čsl.odboja, Diamantová, Hodonínska, Jantárové námestie, Jihlavská, Karlovarská, Kremnická, Lučenecká, Martinská, Opálová, Piešťanská, Plzenská, Popradská 2-90 párne, Rubínová, Sliačska, Smaragdová, Stropkovská, Štiavnická, Topásová, Trnavská, Žilinská GROT: Breznianska, Fiľakovská, Levická, Novobanská, Prievidzská, Púchovská, Topoľčianska, Tvrdošínska, Žarnovická
+obec = "598224"
+name = "Košice-Západ"
+date = 2026-06-23
+fill = "nearest"
+note = "The resolution (adopted 23.6.2026, signed 24.6.2026) defines the obvody by Luníky (Luník I–VIII, IBV, GROT); the official notice links the district's 'Zoznam ulíc podľa Luníkov' (katalog-ulic page, published 25.11.2022) for the streets of each Luník, transcribed here. Fiľakovská (GROT) has no addresses in the register and is omitted. Streets/numbers missing from the list (Zuzkin/Aničkin/Katkin Park, Moldavská cesta, Ružová 92, Moldavská 2A/2B/39, Popradská 1/1A/3A-3G/13/15/92/92A) are placed by inferred rules from the nearest addresses. fill_nearest is set for the 3461 addresses without a street (súpisné čísla only), which the document does not address individually."
+
+[[document]]
+url = "https://www.kosicezapad.sk/download_file_f.php?id=2443109"
+sha256 = "91b632a55aed158e9e626abd13fcf252822efc0bd7ea47234f4ad66872c665e5"
+title = "Uznesenie MZ č. 228-23/06-2026 – Volebné obvody v mestskej časti Košice-Západ a počet poslancov miestneho zastupiteľstva v nich (voľby 2026)"
+
+[[document]]
+url = "https://www.kosicezapad.sk/volebne-obvody-v-mestskej-casti-kosice-zapad-a-pocet-poslancov-miestneho-zastupitelstva-v-nich-pre-volby-do-organov-samospravy-obci-v-roku-2026-oznam/mid/579803/.html"
+sha256 = "ea1ba211b0d33c3f43e5b808962cc375a24de402b83d791ea8404fb4d52271f7"
+title = "Volebné obvody v mestskej časti Košice-Západ a počet poslancov miestneho zastupiteľstva v nich pre voľby do orgánov samosprávy obcí v roku 2026 (oznam)"
+
+[[document]]
+url = "https://www.kosicezapad.sk/katalog-ulic.html"
+sha256 = "d8deda156117df5d70b50d7c6c5f8f2fae4aabcdb1b54a2fef9797276b0ba5f7"
+title = "Katalóg ulíc – Zoznam ulíc podľa Luníkov"
+
+[obvod.1]
+seats = 5
+rules = [
+  {street = "Blatná"},
+  {street = "Brečtanová"},
+  {street = "Fatranská"},
+  {street = "Fialková"},
+  {street = "Husárska"},
+  {street = "Inovecká"},
+  {street = "Inžinierska"},
+  {street = "Laborecká"},
+  {street = "Lesnícka"},
+  {street = "Medická"},
+  {street = "Ondavská"},
+  {street = "Poľovnícka"},
+  {street = "Považská"},
+  {street = "Robotnícka"},
+  {street = "Ružová", numbers = "89-95", parity = "odd"},
+  {street = "Stokrásková"},
+  {street = "Strážovská"},
+  {street = "Súľovská"},
+  {street = "Trieda SNP", numbers = "1-39", parity = "odd"},
+  {street = "Zvončeková"},
+  {street = "Obchodná"},
+  {street = "Hronská", numbers = "6-12", parity = "even"},
+  {street = "Ipeľská"},
+  {street = "Kysucká"},
+  {street = "Pokroku"},
+  {street = "Sokolovská"},
+  {street = "Trieda SNP", numbers = "4-26", parity = "even"},
+  {street = "Výstavby"},
+  {street = "Čapajevova"},
+  {street = "Brigádnická"},
+  {street = "Hronská", numbers = "7-17", parity = "odd"},
+  {street = "Ľudová"},
+  {street = "Obrody"},
+  {street = "Popradská", numbers = "5-11", parity = "odd"},
+  {street = "Ružínska"},
+  {street = "Slobody"},
+  {street = "Trieda SNP", numbers = "34-52", parity = "even"},
+  {street = "Zuzkin Park", note = "Not in the street list; Zuzkin park is in Luník I (the district names \"Luník I Zuzkin park 4\" for posters); all its addresses lie among Luník I addresses.", inferred = true},
+  {street = "Aničkin Park", note = "Not in the street list; nearest addresses all in obvod 1 (Luník I).", inferred = true},
+  {street = "Katkin Park", note = "Not in the street list; nearest addresses all in obvod 1 (Luník I).", inferred = true},
+  {street = "Ružová", numbers = "92", note = "Ružová 92 not covered by the list (89-95 odd in Luník I, 27-50 in Luník V); lies next to Ružová 89, 91 (Luník I).", inferred = true},
+  {street = "Popradská", numbers = "3", note = "Popradská 3A-3G not covered by the list (5-11 odd in Luník III, 2-90 even in IBV); nearest addresses in Luník III.", inferred = true},
+]
+
+[obvod.2]
+seats = 3
+rules = [
+  {street = "Bernolákova", numbers = "1-35", parity = "odd"},
+  {street = "Idanská", numbers = "1-41", parity = "odd"},
+  {street = "Matuškova"},
+  {street = "Muškátová"},
+  {street = "Orgovánová"},
+  {street = "Pražská"},
+  {street = "Ružová", numbers = "45-50"},
+  {street = "Toryská"},
+  {street = "Trieda SNP", numbers = "47-55", parity = "odd"},
+  {street = "Ružová", numbers = "27-43", parity = "odd"},
+  {street = "Bernolákova", numbers = "2-26", parity = "even"},
+  {street = "Idanská", numbers = "2-6", parity = "even"},
+  {street = "Moldavská", numbers = "1-37", parity = "odd"},
+  {street = "Narcisová"},
+  {street = "Tri hôrky"},
+  {street = "Trieda SNP", numbers = "57-85", parity = "odd"},
+  {street = "Jazmínová"},
+  {street = "Moldavská", numbers = "2", note = "Moldavská 2A, 2B not covered by the list (1-37 odd in Luník VI); nearest addresses in Luník VI.", inferred = true},
+  {street = "Moldavská cesta", note = "Not in the street list; nearest addresses all in obvod 2 (Luník VI).", inferred = true},
+]
+
+[obvod.3]
+seats = 5
+rules = [
+  {street = "Gudernova"},
+  {street = "Kežmarská"},
+  {street = "Nešporova"},
+  {street = "Šafárikova trieda", numbers = "1-21", parity = "odd"},
+  {street = "Trieda SNP", numbers = "54-84", parity = "even"},
+  {street = "Uherova"},
+  {street = "Markušova"},
+  {street = "Bardejovská"},
+  {street = "Humenská"},
+  {street = "Michalovská"},
+  {street = "Rožňavská"},
+  {street = "Šafárikova trieda", numbers = "4-10", parity = "even"},
+  {street = "Trebišovská"},
+  {street = "Trieda SNP", numbers = "86-104", parity = "even"},
+  {street = "Moldavská", numbers = "41-51", parity = "odd"},
+  {street = "Hellova"},
+  {street = "Jedlíkova"},
+  {street = "Petzvalova"},
+  {street = "Stodolova"},
+  {street = "Mikovíniho"},
+  {street = "Bratislavská"},
+  {street = "Brnenská"},
+  {street = "Čičky-majer", written = "Čičky-Majer"},
+  {street = "Československého odboja", written = "Čsl.odboja", note = "'Čsl.odboja' is the usual abbreviation of 'Československého odboja' (Čsl. = Československého); the register has no other street of that name, and this IBV street lies among the other IBV streets of the list."},
+  {street = "Diamantová"},
+  {street = "Hodonínska"},
+  {street = "Jantárové námestie"},
+  {street = "Jihlavská"},
+  {street = "Karlovarská"},
+  {street = "Kremnická"},
+  {street = "Lučenecká"},
+  {street = "Martinská"},
+  {street = "Opálová"},
+  {street = "Piešťanská"},
+  {street = "Plzenská"},
+  {street = "Popradská", numbers = "2-90", parity = "even"},
+  {street = "Rubínová"},
+  {street = "Sliačska"},
+  {street = "Smaragdová"},
+  {street = "Stropkovská"},
+  {street = "Štiavnická"},
+  {street = "Topásová"},
+  {street = "Trnavská"},
+  {street = "Žilinská"},
+  {street = "Breznianska"},
+  {street = "Levická"},
+  {street = "Novobanská"},
+  {street = "Prievidzská"},
+  {street = "Púchovská"},
+  {street = "Topoľčianska"},
+  {street = "Tvrdošínska"},
+  {street = "Žarnovická"},
+  {street = "Moldavská", numbers = "39", note = "Moldavská 39 not covered by the list (1-37 odd in Luník VI, 41-51 odd in Luník VII); nearest address is in obvod 3 (213 m) vs obvod 2 (286 m). Uncertain.", inferred = true},
+  {street = "Popradská", numbers = "1, 13, 15, 92", note = "Popradská 1, 1A, 13, 15, 92, 92A not covered by the list (5-11 odd in Luník III, 2-90 even in IBV); nearest addresses in IBV (obvod 3).", inferred = true},
+]

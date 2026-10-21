@@ -1,0 +1,153 @@
+# Releasing, on a version tag: `git tag v0.1.0 && git push origin v0.1.0` is
+# the whole procedure. The tag has to match __version__ in
+# src/election_map_slovakia/__init__.py, the one place the version is
+# written down.
+#
+# The checks run first (ci.yml); then the site is built from the official
+# inputs and checked, deployed to Cloudflare Pages once that succeeds, and
+# attached to a GitHub release. Deploying needs the repository secrets
+# CLOUDFLARE_API_TOKEN (Account › Cloudflare Pages › Edit) and
+# CLOUDFLARE_ACCOUNT_ID; the project is `pages_project` in config/site.toml.
+# See docs/deploy.md.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+# One release at a time; a newer one waits instead of cancelling one that
+# may be halfway through the upload.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  # The tag push does not itself trigger CI (its trigger is branches), so the
+  # checks run here. Nothing below starts until they are green.
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  build:
+    needs: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    outputs:
+      project: ${{ steps.site.outputs.project }}
+      url: ${{ steps.site.outputs.url }}
+      archive: ${{ steps.archive.outputs.name }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with:
+          python-version: "3.14"
+          enable-cache: true
+
+      # A tag that disagrees with the version would publish a site under a
+      # name nobody can reproduce from the source.
+      - name: The tag must match __version__
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          version="$(grep -Po '(?<=^__version__ = ")[^"]+' src/election_map_slovakia/__init__.py)"
+          if [ "$tag" != "$version" ]; then
+            echo "tag $tag does not match __version__ $version" >&2
+            exit 1
+          fi
+
+      - run: uv sync --locked
+
+      # `fetch` revalidates every input with the server anyway; the cache only
+      # spares the downloads. The day in the key starts a fresh entry daily,
+      # since an entry cannot be updated once saved.
+      - id: day
+        run: echo "day=$(date -u +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+      - id: raw
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: data/raw/
+          key: raw-${{ hashFiles('config/inputs.toml') }}-${{ steps.day.outputs.day }}
+          restore-keys: |
+            raw-${{ hashFiles('config/inputs.toml') }}-
+            raw-
+      - run: uv run ems fetch
+      # Saved right after `fetch`, so a later failure does not lose it.
+      - if: steps.raw.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: data/raw/
+          key: raw-${{ hashFiles('config/inputs.toml') }}-${{ steps.day.outputs.day }}
+
+      # candidates, addresses, geo, build and check, stopping at the first
+      # that fails: a site that does not pass `check` is never deployed.
+      - run: uv run ems make
+
+      - id: site
+        run: |
+          uv run python -c '
+          from election_map_slovakia import config
+          site = config.load().site
+          pages = "https://" + site.pages_project + ".pages.dev"
+          print("project=" + site.pages_project)
+          print("url=" + (site.base_url or pages))
+          ' >> "$GITHUB_OUTPUT"
+      - id: archive
+        run: |
+          name="election-map-slovakia-${GITHUB_REF_NAME#v}.tar.gz"
+          tar -czf "$name" -C dist .
+          echo "name=$name" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        with:
+          name: archive
+          path: ${{ steps.archive.outputs.name }}
+          # Already compressed.
+          compression-level: 0
+          retention-days: 7
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: production
+      url: ${{ needs.build.outputs.url }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      # --branch: the production branch of the Pages project. A tag is
+      # checked out on no branch, and an upload without one would become a
+      # preview deployment instead of the site.
+      - uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4.1.3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4.151.1"
+          command: >-
+            pages deploy dist
+            --project-name=${{ needs.build.outputs.project }}
+            --branch=main
+            --commit-hash=${{ github.sha }}
+            --commit-message=${{ github.ref_name }}
+
+  github-release:
+    needs: [build, deploy]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: archive
+      - name: Create the GitHub release
+        run: gh release create "$GITHUB_REF_NAME" --generate-notes "${{ needs.build.outputs.archive }}"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}

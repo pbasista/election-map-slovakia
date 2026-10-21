@@ -1,0 +1,64 @@
+# Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy mesta Košice (24. októbra 2026),
+# Mesto Košice (06.07.2026, spis MK/A/2026/09092, zverejnené 8. 7. 2026).
+# Announces uznesenie Mestského zastupiteľstva v Košiciach č. 1142 zo dňa 30. júna 2026: 51 poslancov v 14 obvodoch.
+# NOTE (interpretation): the document splits Košice-Sever: obvod 2 also contains two 1-metre-wide strips of Sever
+# (along its borders in k.ú. Čermeľ and k.ú. Severné Mesto, see the document's annex) that connect Kavečany/Ťahanovce
+# with Džungľa; per the document no residents live there. These strips are ignored here: Sever is listed whole in obvod 1.
+source = "https://static.kosice.sk/files/manual/volby/volby2026_volebne_obvody.pdf"
+date = 2026-06-30
+
+[obvod.1]  # Sever (except the strips assigned to obvod 2), 4
+seats = 4
+obce = ["598151"]
+
+[obvod.2]  # Kavečany, Ťahanovce, Džungľa (+ uninhabited strips of Sever), 1
+seats = 1
+obce = ["598119", "598127", "599891"]
+
+[obvod.3]  # Sídlisko Ťahanovce, 4
+seats = 4
+obce = ["599875"]
+
+[obvod.4]  # Staré Mesto, 5
+seats = 5
+obce = ["598186"]
+
+[obvod.5]  # Západ, 8
+seats = 8
+obce = ["598224"]
+
+[obvod.6]  # Sídlisko KVP, 5
+seats = 5
+obce = ["599883"]
+
+[obvod.7]  # Luník IX, Myslava, 2
+seats = 2
+obce = ["599972", "598216"]
+
+[obvod.8]  # Pereš, Lorinčík, Poľov, 1
+seats = 1
+obce = ["598208", "598194", "599859"]
+
+[obvod.9]  # Šaca, 1
+seats = 1
+obce = ["599841"]
+
+[obvod.10]  # Barca, Šebastovce, 1
+seats = 1
+obce = ["599093", "599786"]
+
+[obvod.11]  # Juh, 5
+seats = 5
+obce = ["599824"]
+
+[obvod.12]  # Nad jazerom, 5
+seats = 5
+obce = ["599816"]
+
+[obvod.13]  # Krásna, Vyšné Opátske, Košická Nová Ves, 3
+seats = 3
+obce = ["599794", "599913", "599018"]
+
+[obvod.14]  # Dargovských hrdinov, 6
+seats = 6
+obce = ["598682"]
