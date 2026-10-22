@@ -7,7 +7,11 @@ since the map is not shipped; Preact + htm) are copied as is to `/assets/`;
 `i18n/<lang>.json` holds the hand-written UI strings, Slovak and English
 (the build adds the other languages' and the occupations' translations;
 the card and the tooltip of a translated occupation give the Slovak
-original; party names stay as the official lists write them). The whole page is the map; the site name
+original; party names stay as the official lists write them).
+`app.description` is the search engines' description of a page, and
+`app.features`, what the site offers in a paragraph, is on the root page in
+each fallback language and in an app shell's `<noscript>`, for search
+engines that do not run the page's scripts. The whole page is the map; the site name
 with the search, round buttons for language, boundaries, light/dark theme,
 zoom and help (the disclaimer, and from there the About dialog) float on
 it. Clicking a place or a search result opens a pane with the ballots there

@@ -8,13 +8,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="referrer" content="no-referrer" />
+    <!-- Proves to Seznam Webmaster (Seznam.cz search) that the site is ours;
+         it looks for the tag on the root page and may check it again. -->
+    <meta name="seznam-wmt" content="1wkHvcCJfPPrAUi5g9LgSBbuABl6vZxJ" />
     <title>{{title}}</title>
+    <meta name="description" content="{{description}}" />
 {{alternates}}{{canonical}}
     <link rel="icon" href="data:," />
     <meta name="km-config" content="{{config}}" />
     <script src="/assets/js/picker.js"></script>
   </head>
   <body>
+    <h1>{{title}}</h1>
+{{features}}
     <ul>
 {{links}}
     </ul>

@@ -83,6 +83,22 @@ def test_page_names_person(first: str, surname: str, named: bool):
     assert research.names_person(text, first, surname) is named
 
 
+def test_named_persons_keep_their_order_and_unknown_ones_fail():
+    cfg = config.load(REPO / "config")
+    data = {
+        "persons": [{"id": "aaaaaaaaaaaa"}, {"id": "bbbbbbbbbbbb"}],
+        "candidacies": [],
+        "contests": [],
+    }
+    only = ["person:bbbbbbbbbbbb", "person:aaaaaaaaaaaa", "person:bbbbbbbbbbbb"]
+    assert research.selected_persons(cfg, data, only) == [
+        "bbbbbbbbbbbb",
+        "aaaaaaaaaaaa",
+    ]
+    with pytest.raises(research.jobs.JobError, match="cccccccccccc"):
+        research.selected_persons(cfg, data, ["person:cccccccccccc"])
+
+
 def test_sanitized_copy_runs_nothing_and_loads_nothing_remote():
     markup = """<html lang="sk"><head><title>Článok</title>
     <meta property="article:published_time" content="2026-09-04T19:29:00+02:00">

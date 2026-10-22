@@ -15,6 +15,10 @@
 #
 # `sha256`, for any kind, pins the file's digest: for a release that never
 # changes, any other content is rejected.
+#
+# `optional = true` marks an input no step reads, kept as a record of a
+# source: if it fails, `ems fetch` warns and still succeeds, so a release
+# does not stop on it. A step that reads one fails.
 
 # Named in the User-Agent so server operators can reach us: the repository,
 # where they can open an issue.
@@ -91,22 +95,27 @@ kind = "csv"
 expect = "IDENTIFIKATOR;KRAJ;OKRES;OBEC;CAST_OBCE;ULICA;SUPISNE_CISLO;ORIENTACNE_CISLO_CELE;PSC;ADRBOD_X;ADRBOD_Y"
 
 # Regional council constituencies (VÚC obvody), one announcement per kraj, as
-# linked from https://www.minv.sk/?samosprava26-info10
+# linked from https://www.minv.sk/?samosprava26-info10. Records of the
+# sources of data/curated/obvody/zsk-*.toml, transcribed by hand: optional,
+# since some regional servers time out or turn CI runners away.
 
 [input.zsk-obvody-ba]
 url = "https://bratislavskykraj.sk/wp-content/uploads/2026/07/Urcenie-volebnych-obvodov-1.pdf"
 file = "Urcenie-volebnych-obvodov-1.pdf"
 kind = "pdf"
+optional = true
 
 [input.zsk-obvody-tt]
 url = "https://osam.trnava-vuc.sk/OSamApi/fileDownloadEUT/0bb77b1c-ef04-4389-9592-92284c054c64"
 file = "urcenie-volebnych-obvodov.pdf"
 kind = "pdf"
+optional = true
 
 [input.zsk-obvody-tn]
 url = "https://www.tsk.sk/buxus/docs/Oznamenie_o_volebnych_obvodoch_volby_2026.pdf"
 file = "Oznamenie_o_volebnych_obvodoch_volby_2026.pdf"
 kind = "pdf"
+optional = true
 
 # Nitra publishes its constituencies as a web page, not a PDF. The footer
 # names the load-balancer node that served it: "(HA1)", "(HA2)".
@@ -116,26 +125,31 @@ file = "volebne-obvody.html"
 kind = "html"
 expect = "Volebný obvod č. 1"
 volatile = '\(HA\d+\)'
+optional = true
 
 [input.zsk-obvody-za]
 url = "https://www.zilinskazupa.sk/wp-content/uploads/2026/07/ZSK_OZNAMENIE-o-VO-o-pocte-poslancov-a-sidlach-VK_2026-2030.pdf"
 file = "ZSK_OZNAMENIE-o-VO-o-pocte-poslancov-a-sidlach-VK_2026-2030.pdf"
 kind = "pdf"
+optional = true
 
 [input.zsk-obvody-bb]
 url = "https://www.bbsk.sk/storage/app/media/dokumenty/volby-2026/volebn-obvody-oznamenie-s-obcami.pdf"
 file = "volebn-obvody-oznamenie-s-obcami.pdf"
 kind = "pdf"
+optional = true
 
 [input.zsk-obvody-po]
 url = "https://psk.sk/dokument/e32a53cc-1f51-4f16-97a8-37435434f175/stiahnut?force=false"
 file = "30_zpsk_uznesenia_1007-2026.pdf"
 kind = "pdf"
+optional = true
 
 [input.zsk-obvody-ke]
 url = "https://www.kosickazupa.sk/files/2026-07-10-080956-Uznesenie_567_2026.pdf"
 file = "Uznesenie_567_2026.pdf"
 kind = "pdf"
+optional = true
 
 # Final results of the previous elections and the by-elections since, ŠÚ SR,
 # for the current holders of every elected body (see

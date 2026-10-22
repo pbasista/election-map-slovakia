@@ -46,10 +46,11 @@
  * different kinds for one place (an obec's name, the number of its obvod)
  * are stacked rather than hiding each other, and an area partly in the
  * free part of the map (out from under the controls and pane) whose label
- * would not be is named in that part. A street (or part of an obec) chosen
- * in the search is drawn too: a band around its houses under the labels, a
- * dot on each house above them. A click is resolved here by point in
- * polygon.
+ * would not be is named in that part, or not at all where the label has no
+ * room there: a name cut off reads as another. A street (or part of an
+ * obec) chosen in the search is drawn too: a band around its houses under
+ * the labels, a dot on each house above them. A click is resolved here by
+ * point in polygon.
  *
  * Drawing goes by the latest view the page sent: views that come while one
  * is drawn are folded into the next drawing, and so is every file that
@@ -1078,6 +1079,10 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
   // the same view (a shard or address file comes, a selection, a theme)
   // takes them again. Key: area and text; value: {file, at}.
   let spots = { view: '', of: new Map() };
+  // Where `spot` put each label, in Z0 pixels, at one zoom: a label stays
+  // there while the map pans as long as it is whole in the free part, rather
+  // than following the middle of what is in view. Key as in `spots`.
+  let kept = { zoom: null, at: new Map() };
 
   /* Names the countries around in *view*, each at the one of its places
    * (geo.py `label_spots`) that leaves the name the most room: the least of
@@ -1135,13 +1140,16 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
     const placer = new Placer();
     const viewKey = `${view.zoom} ${view.x} ${view.y} ${free}`;
     if (spots.view !== viewKey) spots = { view: viewKey, of: new Map() };
+    if (kept.zoom !== view.zoom) kept = { zoom: view.zoom, at: new Map() };
     const street = place?.shape?.points.map(([lat, lon]) => toPixel(view, lat, lon));
     if (street) streetBand(ctx, view, street, place.shape.edges);
     // The selected point's dot (radius 6 + stroke) is drawn above the labels;
     // a label that would sit under it moves just below it instead.
     const pin = place && Number.isFinite(place.lat) ? toPixel(view, place.lat, place.lon) : null;
     const PIN = 9;
+    // *p* null (`spot`): the label is not drawn.
     const label = (name, p, font, size, color, { kind, area, keepInside = false, gap = 0 }) => {
+      if (!p) return;
       let { x, y } = p;
       if (pin) {
         const half = textWidth(ctx, font, name) / 2 + 2;
@@ -1150,33 +1158,46 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
       }
       if (keepInside) {
         // Kraj names label the whole country view; one at the edge of a
-        // narrow (phone) map with no room in the part of its kraj in view
-        // would be cut off, so it slides inwards.
+        // narrow (phone) map or by the pane, with no room in the part of
+        // its kraj in view, would be cut off, so it slides inwards.
         const half = textWidth(ctx, font, name) / 2 + 4;
-        x = Math.min(Math.max(x, view.visible[0] + half), view.visible[2] - half);
+        x = Math.min(Math.max(x, free[0] + half), free[2] - half);
+        y = Math.min(Math.max(y, free[1] + size / 2), free[3] - size / 2);
       }
       drawText(ctx, placer, name, x, y, font, size, color, { gap, kind, area, bounds: free });
     };
     const at = ([lon, lat]) => toPixel(view, lat, lon);
-    /* Where the label *text* of *area* goes: at the area's own spot *p* if
-     * the whole label is in the free part of the map. Else, so that an
-     * area seen only in part (its spot panned away or under a pane) is
-     * still named, where the part of it in the free part leaves the label
-     * the most room (`visibleSpot`), if it fits there; else at *p*. */
+    // Whether a label *w* × *h* centred at *q* is whole in the free part.
+    const fits = (q, w, h) => q.x - w / 2 >= free[0] && q.x + w / 2 <= free[2] && q.y - h / 2 >= free[1] && q.y + h / 2 <= free[3];
+    /* Where the label *text* of *area* goes, or null where it would be cut
+     * off: a name half under the pane or past the edge of the map reads as
+     * another word. Where it was last drawn at this zoom, if the whole label
+     * is still in the free part of the map: a pan moves a label only once
+     * the edge of the map or a pane reaches it. Else at the area's own spot
+     * *p*, if the whole label is in the free part. Else, so that an area
+     * seen only in part (its spot panned away or under a pane) is still
+     * named, where the part of it in the free part leaves the label the
+     * most room (`visibleSpot`), if it fits there. */
     const spot = (area, p, text, font, size) => {
       if (!area) return p;
       const w = textWidth(ctx, font, text) + 4;
       const h = size + 2;
-      if (p.x - w / 2 >= free[0] && p.x + w / 2 <= free[2] && p.y - h / 2 >= free[1] && p.y + h / 2 <= free[3]) {
+      const key = `${area.own} ${text}`;
+      const last = kept.at.get(key);
+      const q = last && { x: Math.round(last.x * view.k) - view.x, y: Math.round(last.y * view.k) - view.y };
+      if (q && fits(q, w, h)) return q;
+      if (fits(p, w, h)) {
+        kept.at.set(key, { x: (p.x + view.x) / view.k, y: (p.y + view.y) / view.k });
         return p;
       }
-      const key = `${area.own} ${text}`;
       let found = spots.of.get(key);
       if (found?.file !== area.file) {
         found = { file: area.file, at: visibleSpot(area, free, view, w, h) };
         spots.of.set(key, found);
       }
-      return found.at ?? p;
+      if (found.at) kept.at.set(key, { x: (found.at.x + view.x) / view.k, y: (found.at.y + view.y) / view.k });
+      else kept.at.delete(key);
+      return found.at;
     };
     // The other parts of an area of several (geo.py `parts`: [lon, lat,
     // room in metres]) are labelled too where *text* fits in the room: the
@@ -1184,9 +1205,11 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
     const metresPerPixel = (lat) => (40075016.686 * Math.cos((lat * Math.PI) / 180)) / (256 * 2 ** view.zoom);
     const inParts = (parts, text, font, size, draw) => {
       if (!parts) return;
-      const need = Math.hypot(textWidth(ctx, font, text) / 2 + 2, size / 2 + 1);
+      const w = textWidth(ctx, font, text) + 4;
+      const need = Math.hypot(w / 2, size / 2 + 1);
       for (const [lon, lat, room] of parts) {
-        if (room / metresPerPixel(lat) >= need) draw(at([lon, lat]));
+        const p = at([lon, lat]);
+        if (room / metresPerPixel(lat) >= need && fits(p, w, size + 2)) draw(p);
       }
     };
     // Obvod numbers before the names: where an overlay is drawn, which obvod
@@ -1204,6 +1227,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
       );
       const text = (o) => obvodText(o.id.slice(o.id.lastIndexOf('/') + 1));
       const number = (o) => (p) =>
+        p &&
         drawText(ctx, placer, text(o), p.x, p.y, OBVOD_FONT, 12, COLOR[name], {
           kind: name,
           area: coarseAreas.get(o.id),
@@ -1217,7 +1241,8 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
     if (z < OKRES_ZOOM) {
       for (const k of coarse.kraje) {
         const area = coarseAreas.get(`kraj:${k.id}`);
-        const p = spot(area, at(k.label), k.name, KRAJ_FONT, 14);
+        // Where no whole spot is free, at its own, slid inwards.
+        const p = spot(area, at(k.label), k.name, KRAJ_FONT, 14) ?? at(k.label);
         label(k.name, p, KRAJ_FONT, 14, COLOR.kraj, { kind: 'kraj', area, keepInside: true });
       }
       for (const k of coarse.kraje) {
@@ -1252,6 +1277,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
         const pieces = features.filter((a) => a.piece);
         const text = (a) => obvodText(a.feature.properties.oz);
         const number = (a) => (p) =>
+          p &&
           drawText(ctx, placer, text(a), p.x, p.y, OBVOD_FONT, 12, COLOR.council, {
             kind: 'oz',
             area: a.piece,

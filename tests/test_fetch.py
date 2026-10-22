@@ -64,7 +64,13 @@ def stub() -> Iterator[Stub]:
 
 
 def make_input(stub: Stub, name: str, kind: str, **kw) -> Input:
-    defaults = {"members": (), "expect": "", "volatile": None, "sha256": ""}
+    defaults = {
+        "members": (),
+        "expect": "",
+        "volatile": None,
+        "sha256": "",
+        "optional": False,
+    }
     defaults.update(kw)
     return Input(name, f"{stub.base}/{name}", f"{name}.{kind}", kind, **defaults)
 

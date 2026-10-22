@@ -54,7 +54,9 @@ Each download is checked before it replaces the previous copy (zip members,
 XLSX worksheets, PDF signature, CSV header, GeoJSON features, and the sha256
 where an input pins it); an address CSV with more than 1 % fewer rows than
 the previous one is rejected unless `--force` is given. The exit code is 1 if
-any input failed.
+any input failed, except an input marked `optional` (read by no step: the
+regional constituency announcements, records of the sources of the curated
+regional obvody), whose failure is only a warning.
 
 `candidates` reads the four MV SR candidate lists and the municipality table
 of ZBGIS (level 0, unpacked once into `data/build/`). Every row is matched to

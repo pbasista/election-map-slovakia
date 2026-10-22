@@ -448,7 +448,12 @@ def occupation_id(text: str) -> str:
 
 _NOTES = (
     ("app.title", "browser tab title of the page"),
-    ("app.description", "page description for search engines"),
+    ("app.description", "page description for search engines, at most 160 characters"),
+    (
+        "app.features",
+        "paragraph for search engines and visitors without JavaScript: what"
+        " the site offers",
+    ),
     ("app.noscript", "shown when JavaScript is off"),
     (
         "app.tagline",
@@ -710,14 +715,20 @@ ITEM_SCHEMA: dict[str, Any] = {
 
 
 def _letters_by_script(text: str) -> dict[str, list[str]]:
-    """Return script (``LATIN``, ``CYRILLIC``, …) → the words written in it."""
+    """Return script (``LATIN``, ``CYRILLIC``, …) → the words with letters in it.
+
+    A word counts in every script of its letters, so a look-alike letter of
+    another script inside a word (Latin "á" in "примátор") is caught too.
+    """
     out: dict[str, list[str]] = {}
     for word in _WORD.findall(text):
-        for ch in word:
-            if ch.isalpha():
-                script = unicodedata.name(ch, "UNKNOWN").split(" ", 1)[0]
-                out.setdefault(script, []).append(word)
-                break
+        scripts = {
+            unicodedata.name(ch, "UNKNOWN").split(" ", 1)[0]
+            for ch in word
+            if ch.isalpha()
+        }
+        for script in scripts:
+            out.setdefault(script, []).append(word)
     return out
 
 

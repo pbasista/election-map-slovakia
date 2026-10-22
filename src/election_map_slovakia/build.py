@@ -19,6 +19,9 @@ keys)::
                              web/_headers (see :func:`header_rules`), plus
                              a noindex rule for the pages.dev hosts once the
                              site has a domain of its own (:func:`headers`)
+    sitemap.xml              the root page and every language's app shell,
+                             absolute under ``base_url``; none without it
+                             (:func:`sitemap`)
     assets/                  web/app.css, web/cache.css, web/js/, web/vendor/,
                              web/img/, verbatim
     i18n/<lang>.json         UI strings: web/i18n/<lang>.json, or for other
@@ -163,6 +166,7 @@ CACHE_DIR = "cache"
 """Below ``dist/``: the cached copies of the pages research cites."""
 PARTY_LOGOS = config.PARTY_LOGO_DIR.relative_to(WEB_DIR).as_posix()
 HEADERS = "_headers"
+SITEMAP = "sitemap.xml"
 PREFIX = 2
 MANIFEST = "manifest.json"
 # Also in web/js/i18n.js: the language the visitor last chose.
@@ -756,6 +760,24 @@ def headers(cfg: Config, web: Path) -> bytes:
     ).encode()
 
 
+def sitemap(cfg: Config) -> bytes | None:
+    """Return ``sitemap.xml``: the root page and every language's app shell.
+
+    A sitemap lists absolute URLs only, so without ``base_url`` there is
+    none. The pages name their other languages themselves (:func:`shells`).
+    """
+    base = cfg.site.base_url
+    if not base:
+        return None
+    urls = [f"{base}/", *(f"{base}/{code}/" for code in cfg.languages.codes)]
+    entries = "".join(f"  <url><loc>{html.escape(u)}</loc></url>\n" for u in urls)
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{entries}</urlset>\n"
+    ).encode()
+
+
 def shells(
     cfg: Config, web: Path, strings: Mapping[str, Mapping[str, Any]]
 ) -> dict[str, bytes]:
@@ -793,6 +815,7 @@ def shells(
             "title": html.escape(s["app.title"]),
             "description": html.escape(s["app.description"]),
             "noscript": html.escape(s["app.noscript"]),
+            "features": html.escape(s["app.features"]),
             "alternates": alternates,
             "canonical": canonical(f"{lang.code}/"),
             "config": _attribute_json(app_config),
@@ -818,6 +841,13 @@ def shells(
                 for lang in langs.languages
                 if lang.code == code
             )
+        ),
+        # The page is in the first fallback language (web/picker.html).
+        "description": html.escape(strings[langs.fallback[0]]["app.description"]),
+        # What the site offers, in each fallback language.
+        "features": "\n".join(
+            f'    <p lang="{code}">{html.escape(strings[code]["app.features"])}</p>'
+            for code in langs.fallback
         ),
         "alternates": alternates,
         "canonical": canonical(""),
@@ -881,6 +911,9 @@ def assemble(cfg: Config) -> Site:
         files = {path: encode(value) for path, value in content.items()}
         files.update(shells(cfg, web, strings.ui))
         files[HEADERS] = headers(cfg, web)
+        site_map = sitemap(cfg)
+        if site_map is not None:
+            files[SITEMAP] = site_map
 
     copies = {f"assets/{name}": web / name for name in ASSETS}
     copies["geo"] = paths["geo"]

@@ -563,6 +563,18 @@ h3 {
   display: none;
 }
 
+/* Beside the pane, not over it, where the screen leaves room for both: the
+   candidates stay in sight while a search runs. Aligned with the top of the
+   search card, as wide as the pane. */
+@media (min-width: 960px) {
+  .pane-open .search [role="listbox"] {
+    left: calc(100% + var(--finder-pad) + 10px);
+    right: auto;
+    top: calc(-1 * var(--finder-pad));
+    width: var(--pane-width);
+  }
+}
+
 .search [role="option"] {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -911,6 +923,10 @@ h3 {
 
 .pane {
   position: relative;
+  /* Its own stacking context: the sticky filter bar and the close button
+     are layered within the pane only, so the search results, which drop
+     over the pane from the finder, stay above them. */
+  isolation: isolate;
   flex: 0 1 auto;
   min-height: 0;
   display: flex;
@@ -1361,8 +1377,9 @@ details:not([open]) > .contest-head .contest-title,
 }
 
 /* Research found something on the candidate: the count beside a
-   magnifier, in the primary colour. Found nothing: the magnifier alone,
-   faint; not researched yet: faint and dashed. */
+   magnifier, in the primary colour, on a tint. Found nothing: the
+   magnifier alone, outlined in a muted primary, so a researched candidate
+   stands out from one not researched yet: faint grey and dashed. */
 .researched {
   border-color: var(--primary);
   background: color-mix(in srgb, var(--primary) 10%, transparent);
@@ -1372,13 +1389,18 @@ details:not([open]) > .contest-head .contest-title,
 .researched.none,
 .researched.not {
   padding: 0;
-  border-color: var(--line-strong);
   background: none;
-  color: var(--text-faint);
+}
+
+.researched.none {
+  border-color: color-mix(in srgb, var(--primary) 55%, var(--line-strong));
+  color: color-mix(in srgb, var(--primary) 70%, var(--text-faint));
 }
 
 .researched.not {
+  border-color: var(--line-strong);
   border-style: dashed;
+  color: var(--text-faint);
   opacity: 0.7;
 }
 

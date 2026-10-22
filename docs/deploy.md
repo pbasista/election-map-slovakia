@@ -67,6 +67,9 @@ Every page names its address there as canonical, the language links are
 absolute, and `dist/_headers` answers on `<project>.pages.dev` and every
 `<hash>.<project>.pages.dev` with `X-Robots-Tag: noindex`, so search engines
 list the site only under its domain. Those addresses keep working.
+`sitemap.xml` lists the root page and every language's page under the
+domain: submit `https://volebnamapa.sk/sitemap.xml` to Google Search
+Console, Bing Webmaster Tools and Seznam Webmaster.
 
 Setup, once, after the Pages project exists:
 

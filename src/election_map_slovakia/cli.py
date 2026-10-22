@@ -69,7 +69,8 @@ def build_parser() -> argparse.ArgumentParser:
             "Download the inputs declared in config/inputs.toml into"
             " data/raw/<name>/ and record them in data/raw/manifest.json."
             " Files the server reports as unchanged, or whose content is"
-            " unchanged, are kept as they are."
+            " unchanged, are kept as they are. Fails if an input fails,"
+            " except an optional one (read by no step), which only warns."
         ),
     )
     p.add_argument(
@@ -219,7 +220,8 @@ def _run_fetch(args: argparse.Namespace) -> int:
     if unknown:
         _error(f"ems fetch: unknown input {unknown[0]!r}; known: {', '.join(names)}")
         return 2
-    failed = False
+    optional = {inp.name for inp in cfg.inputs.inputs if inp.optional}
+    failed, warned = False, []
     width = max(map(len, names))
     try:
         for o in fetch.fetch(cfg.inputs, cfg.raw_dir, only=args.only, force=args.force):
@@ -227,10 +229,22 @@ def _run_fetch(args: argparse.Namespace) -> int:
             _print(
                 [f"{o.name:<{width}}  {o.status:<9} {size:>10}  {o.detail}".rstrip()]
             )
-            failed = failed or o.status == "failed"
+            if o.status != "failed":
+                continue
+            if o.name in optional:
+                warned.append(o.name)
+            else:
+                failed = True
     except fetch.ManifestError as e:
         _error(f"ems: {e}")
         return 1
+    if warned:
+        # A record of a source that no step reads must not stop a release
+        # because its server is down or turns the runner away.
+        _error(
+            f"ems fetch: warning: optional input(s) {', '.join(warned)} failed;"
+            " no step reads them"
+        )
     return 1 if failed else 0
 
 
@@ -284,6 +298,12 @@ def _input(cfg: config.Config, name: str) -> _Raw:
     inp = next((i for i in cfg.inputs.inputs if i.name == name), None)
     if inp is None:
         raise ConfigError(f"config/{config.INPUTS_FILE}: input {name!r} missing")
+    # fetch lets an optional input fail, so no step may depend on one.
+    if inp.optional:
+        raise ConfigError(
+            f"config/{config.INPUTS_FILE}: input {name!r} is optional, so no"
+            " step may read it"
+        )
     path = cfg.raw_dir / name / inp.file
     if not path.is_file():
         raise ConfigError(f"{path} missing; run `ems fetch` first")

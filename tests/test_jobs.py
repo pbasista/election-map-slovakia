@@ -131,6 +131,9 @@ def test_script_must_be_the_languages():
     assert check("Data: ZBGIS © ÚGKK SR", "Дані: ZBGIS © ÚGKK SR", lang="uk") == []
     assert check("pensioner", "пенсионер, ы", lang="uk")
     assert check("pensioner", "dôchodca", lang="cs")
+    # A letter of another script inside a word, either way round.
+    assert check("the mayor said", "примátор сказав", lang="uk")
+    assert check("Ráž said", "Rážа powiedział", lang="pl")
 
 
 def test_untranslated_copy_needs_the_flag():

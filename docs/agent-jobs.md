@@ -78,13 +78,15 @@ per research language (the `[research]` table: Slovak agents search Slovak
 media and official sites, Hungarian ones the Hungarian-language media, …)
 and per constituency: `--only` takes research languages and places, a
 place selecting every candidate a resident can vote for, from mayor and
-council up to regional president:
+council up to regional president; `person:<id>` selects one person, and a
+list of them keeps its order:
 
 ```sh
 uv run ems job make research --only sk okres:807 --size 45   # Slovak, okres Michalovce
 uv run ems job make research --only hu cs pl de uk okres:807 --size 150
 uv run ems job make research --only sk oz:522279/2           # one constituency
 uv run ems job make research --only sk again predseda:8      # once more, under new rules
+uv run ems job make research --only sk person:9a9a5bf4bc1d person:f0a615feabae
 uv run ems research status --only okres:807                  # coverage per language
 uv run ems research read data/jobs/research-001 URL --person ID
 echo '{"id": …}' | uv run ems research submit data/jobs/research-001

@@ -61,6 +61,10 @@ npx --yes @biomejs/biome@2.5.12 ci
 A push to any branch runs these checks; a version tag builds the site and
 deploys it ([docs/deploy.md](docs/deploy.md)).
 
+The screenshot above, `docs/img/main.png`, is taken from the built site by
+`python3 scripts/screenshot.py` (after `uv run ems build`). It needs only
+a Chromium-family browser, found on `PATH` or passed with `--browser`.
+
 ## License
 
 EUPL-1.2, see [LICENSE](LICENSE). The data sources and their licenses are

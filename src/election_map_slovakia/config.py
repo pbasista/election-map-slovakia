@@ -124,6 +124,8 @@ class Input:
     volatile: re.Pattern[bytes] | None
     sha256: str
     """The digest the file must have (a pinned release), or empty."""
+    optional: bool
+    """No step reads it (a record of a source): a failed download only warns."""
 
 
 @dataclass(frozen=True)
@@ -472,9 +474,10 @@ def _load_input(t: _Table, name: str, entry: object) -> Input:
     sha256 = it.string("sha256") if "sha256" in it.data else ""
     if "sha256" in it.data and not _SHA256.fullmatch(sha256):
         raise it.error("sha256", "must be 64 lowercase hex digits")
+    optional = it.get("optional", bool) if "optional" in it.data else False
     # Keys that belong to another kind are reported as unknown here.
     it.reject_unknown()
-    return Input(name, url, file, kind, members, expect, volatile, sha256)
+    return Input(name, url, file, kind, members, expect, volatile, sha256, optional)
 
 
 def _input_checks(

@@ -55,12 +55,12 @@ const SLOVAKIA = [
 // `limitZoomOut`).
 const MIN_ZOOM = 6;
 // Share of the view added around it when loading shards and drawing, so a
-// short pan needs neither.
+// pan shows the map around until it is drawn again.
 const PAD = 0.25;
 // The canvas is drawn at most at this many pixels per CSS pixel: sharper
 // is not visibly so on a phone, and a canvas costs its pixels squared.
 const MAX_PIXEL_RATIO = 2;
-// Pixels per CSS pixel of the drafts drawn while the view moves.
+// Pixels per CSS pixel of the drafts drawn while the view zooms.
 const DRAFT_RATIO = 1;
 // How far a zoom may go from that of the drawing asked for last before the
 // view is drawn again: scaled up by CSS that much more, a drawing blurs.
@@ -403,12 +403,24 @@ export async function createMap(element, { onPick, insets, onZoom }) {
     return x0 < mx || y0 < my || x1 > sent.w - mx || y1 > sent.h - my;
   }
 
-  // While the view moves: a draft of it when the last drawing no longer
-  // serves, once that has come back.
+  /* Whether the view has panned from the drawing asked for last, at its
+   * zoom. */
+  function panned() {
+    if (map.getZoom() !== sent.zoom) return false;
+    const { min } = map.getPixelBounds();
+    return Math.abs(min.x - sent.visible[0] - sent.x) >= 1 || Math.abs(min.y - sent.visible[1] - sent.y) >= 1;
+  }
+
+  // While the view moves, once the last drawing has come back: a pan, a
+  // drag's inertia included, is drawn again as it goes, so the labels at
+  // the edges of the map keep in view (draw.js `spot`) rather than jumping
+  // once it stops; a zoom gets a draft when the last drawing no longer
+  // serves.
   function follow() {
     owed = false;
     if (map._animatingZoom || !sent) return;
     if (drawn < seq) owed = true;
+    else if (panned()) sharp();
     else if (stale()) request(DRAFT_RATIO);
   }
 
@@ -461,6 +473,8 @@ export async function createMap(element, { onPick, insets, onZoom }) {
         const [city, obvod] = p.area.split('/');
         const area = { city, obvod: obvod ? Number(obvod) : null };
         if ((await renderer.call('select', { area })) === undefined || gen !== selection) return;
+        // The pane that opens or closes with it changes the free part.
+        sharp();
         if (view) {
           zoomer.stop();
           fit(await renderer.call('areaBox', area), 13, gen);
@@ -472,6 +486,9 @@ export async function createMap(element, { onPick, insets, onZoom }) {
       const place = info ? { ...p, info } : null;
       const street = await renderer.call('select', place);
       if (gen !== selection || street === undefined) return;
+      // The pane that opens or closes with it changes the free part, which
+      // the labels keep to (`freePart`).
+      sharp();
       const point = place && Number.isFinite(place.lat) ? L.latLng(place.lat, place.lon) : null;
       if (place && view) zoomer.stop();
       if (view === 'place' && point && place.label) {

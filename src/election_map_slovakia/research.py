@@ -15,7 +15,9 @@ Research runs per language and constituency: ``--only`` takes research
 languages (``sk``, ``hu``, …; none: all) and places, which select every
 candidate a resident of the place can vote for: ``okres:<code>``,
 ``kraj:<code>``, an obec code, or a contest id (``oz:522279/2``,
-``zsk:8/7``, ``predseda:8``) for that contest alone. A person already
+``zsk:8/7``, ``predseda:8``) for that contest alone. ``person:<id>``
+selects one person: a list worked out elsewhere keeps its order, after
+the people the places select. A person already
 researched in all of a language's categories, or in a pending job of that
 language, is left out, unless ``again`` is among them: then only pending
 jobs keep a person out, so that research done under older rules can be
@@ -82,6 +84,8 @@ _CONTEST = re.compile(r"(starosta|oz|predseda|zsk):([0-9A-Z]+)(?:/(\d+))?")
 _KRAJ = re.compile(r"kraj:(\d)")
 AGAIN = "again"
 """The ``--only`` token that makes research of persons researched already."""
+PERSON = "person:"
+"""The prefix of an ``--only`` token that selects one person by id."""
 _RANK = {"predseda": 0, "starosta": 1, "zsk": 2, "oz": 3}
 LANGUAGE_NAMES = {
     "sk": "Slovak",
@@ -206,21 +210,30 @@ def split_only(cfg: Config, only: Iterable[str]) -> tuple[list[str], list[str]]:
 def selected_persons(
     cfg: Config, data: Mapping[str, Any], places: Sequence[str]
 ) -> list[str]:
-    """Return the persons standing in a contest *places* select, by priority."""
-    contests = _places(cfg, data, places)
-    size = Counter(
-        _kind_area(c["contest"])[1]
-        for c in data["candidacies"]
-        if c["contest"].startswith("oz:")
-    )
-    rank: dict[str, tuple[int, int]] = {}
-    for c in data["candidacies"]:
-        if c["contest"] not in contests:
-            continue
-        kind, area = _kind_area(c["contest"])
-        key = (_RANK[kind], -size[area] if kind in ("starosta", "oz") else 0)
-        rank[c["person"]] = min(rank.get(c["person"], key), key)
-    return sorted(rank, key=lambda p: (rank[p], p))
+    """Return the persons *places* select: by priority, then the named ones."""
+    named = [p.removeprefix(PERSON) for p in places if p.startswith(PERSON)]
+    unknown = sorted(set(named) - {p["id"] for p in data["persons"]})
+    if unknown:
+        raise jobs.JobError(f"{NAME}: no person {', '.join(unknown)}")
+    places = [p for p in places if not p.startswith(PERSON)]
+    out: list[str] = []
+    if places or not named:
+        contests = _places(cfg, data, places)
+        size = Counter(
+            _kind_area(c["contest"])[1]
+            for c in data["candidacies"]
+            if c["contest"].startswith("oz:")
+        )
+        rank: dict[str, tuple[int, int]] = {}
+        for c in data["candidacies"]:
+            if c["contest"] not in contests:
+                continue
+            kind, area = _kind_area(c["contest"])
+            key = (_RANK[kind], -size[area] if kind in ("starosta", "oz") else 0)
+            rank[c["person"]] = min(rank.get(c["person"], key), key)
+        out = sorted(rank, key=lambda p: (rank[p], p))
+    seen = set(out)
+    return out + [p for p in dict.fromkeys(named) if p not in seen]
 
 
 def _kind_area(contest: str) -> tuple[str, str]:
