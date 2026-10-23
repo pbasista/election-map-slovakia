@@ -11,17 +11,20 @@ import {
   EyeIcon,
   EyeOffIcon,
   FilterOffIcon,
+  InkCircle,
   MapPinIcon,
   SearchIcon,
   WarningIcon,
 } from './icons.js';
 import { Notice } from './pane.js';
+import { togglePick } from './picks.js';
 
-/* The candidate filter (app.js keeps it across places): `parties` chosen
- * ({short, name, logo}, INDEPENDENT among them) and whether their
- * candidates are the only ones shown or hidden (`partyMode` 'only' or
- * 'hide'); `marks`, mark name (MARKS) → its mode likewise, for each mark
- * added. Muted candidates stay on the list, faded and after the others. */
+/* The candidate filter (app.js keeps it across places, and in the URL:
+ * filterParams): `parties` chosen ({short, name, logo}, INDEPENDENT among
+ * them) and whether their candidates are the only ones shown or hidden
+ * (`partyMode` 'only' or 'hide'); `marks`, mark name (MARKS) → its mode
+ * likewise, for each mark added. Muted candidates stay on the list, faded
+ * and after the others. */
 export const NO_FILTER = { parties: [], partyMode: 'only', marks: {} };
 
 /* The independent candidates: a member of the party filter like a party,
@@ -29,6 +32,15 @@ export const NO_FILTER = { parties: [], partyMode: 'only', marks: {} };
 const INDEPENDENT = { short: '', name: '', logo: null };
 const partyName = (p) => p.name || t('candidate.independent');
 const partyShort = (p) => (p.name ? p.short : t('candidate.independent_short'));
+
+/* An element id of the component's own: a contest and its candidates may
+ * show in the pane and in Favourites beside it at once. */
+let serial = 0;
+function useOwnId(prefix) {
+  const id = useRef(null);
+  id.current ??= `${prefix}-${++serial}`;
+  return id.current;
+}
 
 /* Whether candidate *c* stands for the party named *name* (INDEPENDENT's:
  * for none). A coalition's candidate stands for each of its parties. */
@@ -53,6 +65,43 @@ function isMuted(c, filter) {
     (filter.parties.length && mutedBy(filter.partyMode, party)) ||
       MARKS.some(([name, covers]) => name in filter.marks && mutedBy(filter.marks[name], covers(c))),
   );
+}
+
+/* The filter in the URL hash (app.js), as [key, value] pairs, none for a
+ * group not used: `fp` the parties by their short forms (unique, see
+ * config.py `load_parties`), "-" the independents, after a "!" when they
+ * are hidden rather than the only ones shown; `fm` the marks added, each
+ * after a "!" when hidden. */
+export function filterParams(filter) {
+  const params = [];
+  const hide = (mode) => (mode === 'hide' ? '!' : '');
+  if (filter.parties.length) {
+    const shorts = filter.parties.map((p) => (p.name ? p.short : '-'));
+    params.push(['fp', hide(filter.partyMode) + shorts.join(',')]);
+  }
+  const marks = MARKS.filter(([name]) => name in filter.marks).map(([name]) => hide(filter.marks[name]) + name);
+  if (marks.length) params.push(['fm', marks.join(',')]);
+  return params;
+}
+
+/* The filter that hash values *fp* and *fm* (filterParams) name, the
+ * parties looked up by short form in data/index.json's *parties*; what is
+ * not known there is left out (a party gone since the link was made). */
+export function parseFilter(fp, fm, parties) {
+  const known = new Map(Object.values(parties).map(([short, name, logo = null]) => [short, { short, name, logo }]));
+  const named = (fp ?? '').replace(/^!/, '').split(',');
+  const chosen = new Map();
+  for (const short of named) {
+    const p = short === '-' ? INDEPENDENT : known.get(short);
+    if (p) chosen.set(p.name, p);
+  }
+  const marks = {};
+  for (const token of (fm ?? '').split(',')) {
+    const name = token.replace(/^!/, '');
+    if (MARKS.some(([mark]) => mark === name)) marks[name] = token.startsWith('!') ? 'hide' : 'only';
+  }
+  const partyMode = chosen.size && fp.startsWith('!') ? 'hide' : 'only';
+  return { parties: [...chosen.values()], partyMode, marks };
 }
 
 /* What the research on a candidate searched, the scope said before any
@@ -210,17 +259,20 @@ function Controversies({ candidate: c, actions }) {
   return html`<${Mark} name="affairs" cls="affairs" label=${label} actions=${actions}><${WarningIcon} />${n}<//>`;
 }
 
-/* One candidacy: its name is the button that opens the card (a click
+/* One candidacy: its ballot number is a button that circles it (or takes
+ * the circle off), as a voter circles the numbers of their candidates on
+ * the ballot; its name is the button that opens the card (a click
  * elsewhere on the row does too), then who nominated it, then apart from
  * those its marks: what is known about the candidate. Party tags and marks
- * are buttons of their own where *actions* (the ballots) are given:
- * {onParty(party), onMark(name), hasParty(name), hasMark(name),
- * hoverProps(name)}, see Parties and Mark. *muted*: the filter fades the
- * row. A row of the party pointed at is highlighted by Ballots. */
+ * are buttons of their own. *actions*: {onParty(party), onMark(name),
+ * hasParty(name), hasMark(name), hoverProps(name), isPicked(id),
+ * onPick(id)}, see Parties, Mark and useRowActions. *muted*: the filter
+ * fades the row. A row of the party pointed at is highlighted by Ballots. */
 export function CandidateRow({ candidate, onCandidate, current = false, actions, muted = false }) {
   const c = candidate;
   const flagged = Boolean(c.research?.affairs);
-  const metaId = `km-meta-${c.id}`;
+  const picked = actions.isPicked(c.id);
+  const metaId = useOwnId('km-meta');
   const classes = ['cand', current && 'current', flagged && 'flagged', muted && 'dimmed'];
   return html`
     <div
@@ -230,7 +282,16 @@ export function CandidateRow({ candidate, onCandidate, current = false, actions,
         if (!e.target.closest('button')) onCandidate(c.id);
       }}
     >
-      <span class="num" aria-hidden="true">${c.number}</span>
+      <button
+        type="button"
+        class="num"
+        aria-pressed=${picked ? 'true' : 'false'}
+        aria-label=${t('pick.label', { n: c.number })}
+        title=${t(picked ? 'pick.remove' : 'pick.add', { n: c.number })}
+        onClick=${() => actions.onPick(c.id)}
+      >
+        ${c.number}<${InkCircle} />
+      </button>
       <span class="who">
         <span class="name-line">
           <button
@@ -272,8 +333,12 @@ function contestKind(id) {
 /* What stands under a contest's name: how many are elected (one mayor or
  * president; a council's seats where known, else the 2022 number, labelled
  * so) and how many stand, with how many of them the filter leaves shown
- * (*unmuted*) where it mutes some. */
-function ContestHead({ contest, unmuted }) {
+ * (*unmuted*) where it mutes some; and how many of them the visitor has
+ * circled (*picked*), if any. More circled than are elected, both numbers
+ * are highlighted with a warning: on the ballot itself that would make it
+ * invalid. Circling more is still allowed: the visitor may circle whom
+ * they like best, to choose among them later. */
+function ContestHead({ contest, unmuted, picked }) {
   const n = contest.candidates.length;
   const kind = contestKind(contest.id);
   const single = kind.startsWith('starosta') || kind === 'predseda';
@@ -288,9 +353,18 @@ function ContestHead({ contest, unmuted }) {
     unmuted < n
       ? t('contest.candidates_filtered', { shown: formatNumber(unmuted), n: formatNumber(n) })
       : t('contest.candidates', { n: formatNumber(n) });
+  const limit = single ? 1 : (contest.seats ?? contest.seats2022);
+  const over = limit !== null && picked > limit;
+  const warning = over ? t('contest.too_many', { picked: formatNumber(picked), n: formatNumber(limit) }) : null;
+  const flag = (cls, text) =>
+    over ? html`<span class=${`${cls} over`} title=${warning}><${WarningIcon} />${text}</span>` : text;
   return html`
     <span class="contest-title">${contest.label}</span>
-    <span class="contest-meta">${elected ? `${elected} · ${candidates}` : candidates}</span>
+    <span class="contest-meta">
+      ${elected ? html`${flag('seats', elected)} · ` : null}${candidates}
+      ${picked ? html` · ${flag('picked', t('contest.picked', { n: formatNumber(picked) }))}` : null}
+    </span>
+    ${over ? html`<span class="sr-only">${warning}</span>` : null}
   `;
 }
 
@@ -308,74 +382,68 @@ function Holder({ contest }) {
 }
 
 /* *candidates* in list order: those the *filter* leaves shown, then those it
- * mutes, each group in ballot order; and which are muted. */
-function byFilter(candidates, filter) {
-  const muted = new Map(candidates.map((c) => [c, isMuted(c, filter)]));
+ * mutes, each group in ballot order; and which are muted. The circled ones
+ * (*actions* `isPicked`) never are. */
+function byFilter(candidates, filter, actions) {
+  const muted = new Map(candidates.map((c) => [c, !actions.isPicked(c.id) && isMuted(c, filter)]));
   const order = [...candidates.filter((c) => !muted.get(c)), ...candidates.filter((c) => muted.get(c))];
   return { order, muted, unmuted: order.length - [...muted.values()].filter(Boolean).length };
 }
 
-const rows = (list, muted, props) =>
-  list.map(
-    (c) => html`<li key=${c.id}>
-      <${CandidateRow} candidate=${c} muted=${muted.get(c)} ...${props} />
-    </li>`,
-  );
-
-/* A contest on the ballots. Its header shows whether it is open: open, it
- * stands out from the candidates under it; closed, it is muted, its
- * candidates put away; its tooltip says what a press does. *listed*: one of
- * all the council obvody of an obec, listed at once: closed, and how the
- * visitor leaves it says nothing about the kind. */
-function Contest({ contest, listed = false, onCandidate, filter, actions }) {
-  const kind = contestKind(contest.id);
-  const [open, setOpen] = useState(() => !listed && !closedKinds.has(kind));
-  const onToggle = (e) => {
-    setOpen(e.currentTarget.open);
-    if (listed) return;
-    if (e.currentTarget.open) closedKinds.delete(kind);
-    else closedKinds.add(kind);
+/* A contest: its header, which opens and closes the list of its candidates
+ * and shows whether it is open: open, it stands out from the candidates
+ * under it; closed, it is muted, and a bar at its side marks it as one
+ * that opens to more candidates; its tooltip says what a press does.
+ *
+ * Open or closed, it lists first *current* (the candidate of a card,
+ * highlighted), then the candidates circled while it is shown, so that a
+ * circle taken off by mistake can be put back where it was. Open, it lists
+ * the others too, those the filter mutes after the rest. With *pin* (My
+ * candidates) the circled ones stay first when it opens; otherwise they
+ * take their places among the others, in ballot order.
+ *
+ * *initiallyOpen*, and `onOpen(open)` when the visitor opens or closes it.
+ * *map* ({label, onClick}), where the contest has a place on the map, is a
+ * pin at the header's end that shows it there. */
+export function Contest({ contest, current = null, pin = false, initiallyOpen = false, onOpen, onCandidate, filter, actions, map }) {
+  const [open, setOpen] = useState(initiallyOpen);
+  const kept = useRef(new Set());
+  for (const c of contest.candidates) if (actions.isPicked(c.id)) kept.current.add(c.id);
+  const rest = contest.candidates.filter((c) => c !== current);
+  const keptRest = rest.filter((c) => kept.current.has(c.id));
+  const { order, muted, unmuted } = byFilter(rest, filter, actions);
+  let listed = keptRest;
+  if (open) listed = pin ? [...keptRest, ...order.filter((c) => !kept.current.has(c.id))] : order;
+  const opens = rest.length > 0;
+  // Whether some candidates show while it is closed: then it opens to the others.
+  const some = Boolean(current) || keptRest.length > 0;
+  const tooltip = some
+    ? t(open ? 'contest.hide_others' : 'contest.show_all')
+    : t(open ? 'contest.hide_candidates' : 'contest.show_candidates');
+  const picked = contest.candidates.filter((c) => actions.isPicked(c.id)).length;
+  const head = html`<span class="contest-text">
+    <${ContestHead} contest=${contest} unmuted=${unmuted + (current ? 1 : 0)} picked=${picked} />
+  </span>`;
+  const list = useOwnId('km-list');
+  const toggle = () => {
+    setOpen(!open);
+    onOpen?.(!open);
   };
-  const { order, muted, unmuted } = byFilter(contest.candidates, filter);
+  const row = (c, props) => html`<li key=${c.id}>
+    <${CandidateRow} candidate=${c} onCandidate=${onCandidate} actions=${actions} ...${props} />
+  </li>`;
   return html`
-    <details class="contest" open=${open} onToggle=${onToggle}>
-      <summary class="contest-head" title=${t(open ? 'contest.hide_candidates' : 'contest.show_candidates')}>
-        <span class="contest-text"><${ContestHead} contest=${contest} unmuted=${unmuted} /></span>
-      </summary>
-      <${Holder} contest=${contest} />
-      ${
-        order.length
-          ? html`<ol class="cands">${rows(order, muted, { onCandidate, actions })}</ol>`
-          : html`<p class="muted">${t('contest.no_candidates')}</p>`
-      }
-    </details>
-  `;
-}
-
-/* The contest of *candidate* on the candidate card. The candidate is always
- * shown, first and never muted by the filter; the other candidates only once
- * the visitor opens the contest by its header, which a bar at its side marks
- * as one that opens and whose tooltip says so. *map* ({label, onClick}),
- * where the contest has a place on the map, is a pin at the header's end
- * that shows it there. */
-export function CandidacyContest({ contest, candidate, onCandidate, filter, actions, map }) {
-  const [open, setOpen] = useState(false);
-  const others = contest.candidates.filter((c) => c !== candidate);
-  const { order, muted, unmuted } = byFilter(others, filter);
-  const head = html`<span class="contest-text"><${ContestHead} contest=${contest} unmuted=${unmuted + 1} /></span>`;
-  const list = `km-list-${candidate.id}`;
-  return html`
-    <section class=${open || !others.length ? 'contest open' : 'contest'}>
-      <div class=${others.length ? 'contest-bar opens' : 'contest-bar'}>
+    <section class=${open || !opens ? 'contest open' : 'contest'}>
+      <div class=${opens ? 'contest-bar opens' : 'contest-bar'}>
         ${
-          others.length
+          opens
             ? html`<button
                 type="button"
                 class="contest-head"
-                title=${t(open ? 'contest.hide_others' : 'contest.show_all')}
+                title=${tooltip}
                 aria-expanded=${open ? 'true' : 'false'}
                 aria-controls=${list}
-                onClick=${() => setOpen(!open)}
+                onClick=${toggle}
               >
                 ${head}
               </button>`
@@ -389,25 +457,47 @@ export function CandidacyContest({ contest, candidate, onCandidate, filter, acti
             : null
         }
       </div>
-      ${open ? html`<${Holder} contest=${contest} />` : null}
-      <ol class="cands" id=${list}>
-        <li key=${candidate.id}>
-          <${CandidateRow} candidate=${candidate} current onCandidate=${onCandidate} actions=${actions} />
-        </li>
-        ${open ? rows(order, muted, { onCandidate, actions }) : null}
-      </ol>
+      ${open || !contest.candidates.length ? html`<${Holder} contest=${contest} />` : null}
+      ${
+        contest.candidates.length
+          ? html`<ol class="cands" id=${list}>
+              ${current ? row(current, { current: true }) : null}
+              ${listed.map((c) => row(c, { muted: muted.get(c) }))}
+            </ol>`
+          : html`<p class="muted">${t('contest.no_candidates')}</p>`
+      }
     </section>
   `;
 }
 
-/* The filter's handlers that the buttons on candidate rows use (*actions*
- * of CandidateRow), for the rows inside *section* (a ref) of *candidates*
- * (id → candidate). The party pointed at or focused has its candidates
- * highlighted by a class on their rows, not by rendering them again, which
- * with a few hundred candidates takes tens of milliseconds, while a pointer
- * on its way across the pane (dragging the map, say) passes many party
- * tags. */
-export function useRowActions(section, candidates, filter, onFilter) {
+/* A contest on the ballots, open unless the visitor has closed one of its
+ * kind. *listed*: one of all the council obvody of an obec, listed at
+ * once: closed, and how the visitor leaves it says nothing about the
+ * kind. */
+function BallotContest({ contest, listed = false, ...props }) {
+  const kind = contestKind(contest.id);
+  const onOpen = (open) => {
+    if (listed) return;
+    if (open) closedKinds.delete(kind);
+    else closedKinds.add(kind);
+  };
+  return html`<${Contest}
+    contest=${contest}
+    initiallyOpen=${!listed && !closedKinds.has(kind)}
+    onOpen=${onOpen}
+    ...${props}
+  />`;
+}
+
+/* The handlers that the buttons on candidate rows use (*actions* of
+ * CandidateRow), for the rows inside *section* (a ref) of *candidates*
+ * (id → candidate): the filter's (*filter*, `onFilter(next)`) and the
+ * circles' (*picks*, `onPicks(next)`, picks.js). The party pointed at or
+ * focused has its candidates highlighted by a class on their rows, not by
+ * rendering them again, which with a few hundred candidates takes tens of
+ * milliseconds, while a pointer on its way across the pane (dragging the
+ * map, say) passes many party tags. */
+export function useRowActions(section, candidates, filter, onFilter, picks, onPicks) {
   const hovered = useRef(null);
   const highlight = () => {
     const name = hovered.current;
@@ -422,6 +512,7 @@ export function useRowActions(section, candidates, filter, onFilter) {
     hovered.current = value;
     highlight();
   };
+  const picked = new Set(picks);
   return {
     hoverProps: (name) => ({ onMouseEnter: point(name), onMouseLeave: point(null), onFocus: point(name), onBlur: point(null) }),
     hasParty: (name) => filter.parties.some((f) => f.name === name),
@@ -436,6 +527,8 @@ export function useRowActions(section, candidates, filter, onFilter) {
       const { [name]: _, ...rest } = filter.marks;
       onFilter({ ...filter, marks: name in filter.marks ? rest : { ...rest, [name]: 'only' } });
     },
+    isPicked: (id) => picked.has(id),
+    onPick: (id) => onPicks(togglePick(picks, id)),
   };
 }
 
@@ -559,13 +652,29 @@ export function FilterBar({ filter, onFilter, actions }) {
 
 const MUNICIPAL = new Set(['starosta', 'oz']);
 
+/* Whether contest *id* is of the municipal elections (mayor, council)
+ * rather than the regional ones. */
+export const isMunicipal = (id) => MUNICIPAL.has(id.split(':')[0]);
+
 /* The ballots of obec *code*; *label* names the address, street or part
  * chosen in it, if any. *scope* ({obvod, street, part}) narrows its council
  * obvod (data.js `ballots`); `approximate`: the obvod was taken from the
  * map's approximate boundary at a clicked point. *focus*: the candidacy
  * whose card was just left, whose row then takes the focus. *filter* (see
- * NO_FILTER) and `onFilter(next)` the candidate filter. */
-export function Ballots({ code, label, scope = {}, approximate = false, focus, onCandidate, filter, onFilter }) {
+ * NO_FILTER) and `onFilter(next)` the candidate filter; *picks* and
+ * `onPicks(next)` the circled candidates (picks.js). */
+export function Ballots({
+  code,
+  label,
+  scope = {},
+  approximate = false,
+  focus,
+  onCandidate,
+  filter,
+  onFilter,
+  picks,
+  onPicks,
+}) {
   const { obvod = null, street = null, part = null } = scope;
   const [result, failed] = useLoaded(
     () => ballots(code, { obvod, street, part }),
@@ -577,6 +686,8 @@ export function Ballots({ code, label, scope = {}, approximate = false, focus, o
     new Map((result?.contests ?? []).flatMap((c) => c.candidates.map((x) => [x.id, x]))),
     filter,
     onFilter,
+    picks,
+    onPicks,
   );
 
   useEffect(() => {
@@ -591,8 +702,8 @@ export function Ballots({ code, label, scope = {}, approximate = false, focus, o
   if (result === null) return html`<p class="panel-body error">${t('place.missing')}</p>`;
   if (!result) return html`<p class="panel-body muted loading">${t('panel.loading')}</p>`;
   const { obec, council, obvod: placeObvod, estimated, contests } = result;
-  const municipal = contests.filter((c) => MUNICIPAL.has(c.id.split(':')[0]));
-  const regional = contests.filter((c) => !MUNICIPAL.has(c.id.split(':')[0]));
+  const municipal = contests.filter((c) => isMunicipal(c.id));
+  const regional = contests.filter((c) => !isMunicipal(c.id));
   const firstCouncil = municipal.findIndex((c) => c.council);
   const where = [
     label ? obec.name : null,
@@ -614,7 +725,7 @@ export function Ballots({ code, label, scope = {}, approximate = false, focus, o
   // The sources of a council's obvody follow the last of its contests.
   const area = (c) => c?.id.split('/')[0];
   const withSources = (list, c, i) => html`
-    <${Contest}
+    <${BallotContest}
       key=${c.id}
       contest=${c}
       listed=${c.council === 'pending' || c.council === 'choose'}

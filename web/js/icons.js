@@ -92,6 +92,28 @@ export const ArrowIcon = () => icon(html`<path d="M5 12h14m-5.5-5.5L19 12l-5.5 5
 
 export const CheckIcon = () => icon(html`<path d="m5 12.5 4.5 4.5L19 7.5" />`);
 
+/* A heart: Favourites, the candidates circled. Not a star, which browsers
+ * use for bookmarking the page, nor a circled number, which reads as a
+ * number or a step. */
+export const HeartIcon = () =>
+  icon(html`<path d="M12 19.5s-7.5-4.6-7.5-10.1A4.1 4.1 0 0 1 12 7a4.1 4.1 0 0 1 7.5 2.4c0 5.5-7.5 10.1-7.5 10.1z" />`);
+
+/* The loop a voter's pen draws around a candidate's number on the ballot:
+ * stretched over the number whatever its width (app.css `.ink`), its end
+ * running past its start as a hand-drawn one does. */
+export const InkCircle = () => html`
+  <svg class="ink" viewBox="0 0 40 28" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d="M27 3.6C19.5 1.6 7.8 2.9 4.2 9.6 1 15.6 6.4 24.6 18.6 25 30.4 25.4 38 19.6 37.2 12 36.5 5.6 28.6 2.6 20.4 3.4" />
+  </svg>
+`;
+
+/* Two chain links: copies a link. */
+export const LinkIcon = () =>
+  icon(html`
+    <path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.2 1.2" />
+    <path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.2-1.2" />
+  `);
+
 /* A chair seen from the side: the candidate holds the office now. */
 export const ChairIcon = () => icon(html`<path d="M7 3v18M7 12.5h11V21M7 16.5h11" />`);
 

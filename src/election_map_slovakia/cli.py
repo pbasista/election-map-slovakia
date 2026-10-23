@@ -69,7 +69,9 @@ def build_parser() -> argparse.ArgumentParser:
             "Download the inputs declared in config/inputs.toml into"
             " data/raw/<name>/ and record them in data/raw/manifest.json."
             " Files the server reports as unchanged, or whose content is"
-            " unchanged, are kept as they are. Fails if an input fails,"
+            " unchanged, are kept as they are. When the server fails, a pinned"
+            " input is taken from a copy with its sha256, on disk or in"
+            " data/fallback/, with a warning. Fails if an input fails,"
             " except an optional one (read by no step), which only warns."
         ),
     )
@@ -221,14 +223,22 @@ def _run_fetch(args: argparse.Namespace) -> int:
         _error(f"ems fetch: unknown input {unknown[0]!r}; known: {', '.join(names)}")
         return 2
     optional = {inp.name for inp in cfg.inputs.inputs if inp.optional}
-    failed, warned = False, []
+    failed, warned, copied = False, [], []
     width = max(map(len, names))
     try:
-        for o in fetch.fetch(cfg.inputs, cfg.raw_dir, only=args.only, force=args.force):
+        for o in fetch.fetch(
+            cfg.inputs,
+            cfg.raw_dir,
+            fallback_dir=cfg.fallback_dir,
+            only=args.only,
+            force=args.force,
+        ):
             size = output.format_size(o.bytes) if o.status != "failed" else ""
             _print(
                 [f"{o.name:<{width}}  {o.status:<9} {size:>10}  {o.detail}".rstrip()]
             )
+            if o.status == "fallback":
+                copied.append(o.name)
             if o.status != "failed":
                 continue
             if o.name in optional:
@@ -244,6 +254,11 @@ def _run_fetch(args: argparse.Namespace) -> int:
         _error(
             f"ems fetch: warning: optional input(s) {', '.join(warned)} failed;"
             " no step reads them"
+        )
+    if copied:
+        _error(
+            f"ems fetch: warning: the server of input(s) {', '.join(copied)}"
+            " failed; their pinned copies are used"
         )
     return 1 if failed else 0
 

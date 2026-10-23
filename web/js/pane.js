@@ -17,11 +17,16 @@ export const Notice = ({ children }) => html`
 `;
 
 export const PHONE = matchMedia('(max-width: 640px)');
+/* Wide enough for a second pane beside the first (Favourites, app.js), as
+ * the search results go beside the pane (app.css). */
+export const WIDE = matchMedia('(min-width: 960px)');
 // Pixels down, or pixels per ms, that close the sheet when let go.
 const SWIPE_DISTANCE = 96;
 const SWIPE_SPEED = 0.5;
 
-export function Pane({ paneRef, onClose, children }) {
+/* *label* names the pane for screen readers; *beside*: the pane beside
+ * the left column, which only wide screens have room for (app.css). */
+export function Pane({ paneRef, onClose, label = t('panel.label'), beside = false, children }) {
   const body = useRef(null);
   const drag = useRef(null);
 
@@ -56,6 +61,9 @@ export function Pane({ paneRef, onClose, children }) {
     if (!PHONE.matches || e.touches.length !== 1 || visualViewport.scale > 1) return;
     const fromGrip = Boolean(e.target.closest('.pane-grip'));
     if (!fromGrip && body.current.scrollTop > 0) return;
+    // A long press in a text field selects its text, and moving the finger
+    // then moves the selection, not the sheet.
+    if (e.target.closest('input, textarea')) return;
     drag.current = { y: e.touches[0].clientY, time: e.timeStamp, dy: 0, fromGrip };
   }
 
@@ -91,9 +99,9 @@ export function Pane({ paneRef, onClose, children }) {
 
   return html`
     <aside
-      class="pane"
+      class=${beside ? 'pane beside' : 'pane'}
       ref=${paneRef}
-      aria-label=${t('panel.label')}
+      aria-label=${label}
       onTouchStart=${onTouchStart}
       onTouchMove=${onTouchMove}
       onTouchEnd=${onTouchEnd}

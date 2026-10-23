@@ -15,7 +15,7 @@
   --surface: #ffffff;
   --surface-2: #f1f3f6;
   --surface-3: #e5e9ee;
-  /* Floating controls let the map show through, blurred. */
+  /* The attribution lets the map show through. */
   --glass: rgb(255 255 255 / 0.84);
   --line: #dde1e8;
   --line-strong: #c3cad6;
@@ -40,6 +40,9 @@
   /* The chair badge: holds the office now. A green apart from the
      primary (research) and the red (controversies). */
   --office: #2e7d32;
+  /* The ballpoint blue of a voter's pen: the circles around the numbers of
+     the candidates circled (.num .ink). */
+  --ink: #1f4fc4;
   --shadow: 0 1px 2px rgb(16 24 40 / 0.08), 0 6px 20px rgb(16 24 40 / 0.12);
   --shadow-lg: 0 2px 6px rgb(16 24 40 / 0.1), 0 18px 48px rgb(16 24 40 / 0.22);
   --scrim: rgb(16 24 40 / 0.4);
@@ -102,6 +105,7 @@
   --danger: #f08891;
   --danger-deep: #3b1f27;
   --office: #81c784;
+  --ink: #8fb0ff;
   --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px rgb(0 0 0 / 0.45);
   --shadow-lg: 0 2px 6px rgb(0 0 0 / 0.4), 0 18px 48px rgb(0 0 0 / 0.6);
   --scrim: rgb(0 0 0 / 0.6);
@@ -305,24 +309,15 @@ h3 {
 
 /* ---------- floating things ---------- */
 
+/* Opaque: a backdrop filter (the map blurred behind them) made Firefox
+   drop frames throughout a pan, however light the filter. */
 .float,
 .fab,
 .zoom,
 .popover {
-  background: var(--glass);
+  background: var(--surface);
   border: 1px solid var(--line);
   box-shadow: var(--shadow);
-  -webkit-backdrop-filter: blur(14px) saturate(1.5);
-  backdrop-filter: blur(14px) saturate(1.5);
-}
-
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .float,
-  .fab,
-  .zoom,
-  .popover {
-    background: var(--surface);
-  }
 }
 
 /* The left column: the search card and, under it, the pane. Clicks in the
@@ -658,7 +653,8 @@ h3 {
   background: var(--surface);
 }
 
-.fab[aria-expanded="true"] {
+.fab[aria-expanded="true"],
+.fab[aria-pressed="true"] {
   color: var(--primary);
 }
 
@@ -695,8 +691,6 @@ h3 {
   border: 0;
   background: none;
   box-shadow: none;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
 }
 
 .zoom .fab:hover:not(:disabled) {
@@ -1049,6 +1043,105 @@ h3 {
   min-width: 0;
 }
 
+/* Favourites' title and, beside it, the button that copies the link to
+   them (favourites.js `CopyLink`): a round icon filled in the primary
+   colour, the one call to action there. */
+.favourites-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.share-button {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--surface);
+  cursor: pointer;
+}
+
+.share-button:hover {
+  background: color-mix(in srgb, var(--primary) 82%, var(--text));
+}
+
+.share-button .ico {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.25;
+}
+
+/* The link to copy by hand, where the browser would not copy it. */
+.share-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 4px 0 8px;
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+.share-field input {
+  padding: 6px 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-size: 16px; /* below 16px, iOS zooms the page on focus */
+}
+
+/* Favourites beside the left column (pane.js `WIDE`), level with the
+   search card, reaching as far as allowed towards the buttons. Under the
+   left column, so that the search results, which go beside the pane too,
+   drop over it. */
+.pane.beside {
+  position: fixed;
+  z-index: 1000;
+  top: calc(var(--edge) + env(safe-area-inset-top));
+  left: calc(var(--edge) + env(safe-area-inset-left) + var(--pane-width) + 10px);
+  width: min(
+    1200px,
+    calc(
+      100vw - 2 * var(--edge) - var(--pane-width) - var(--fab) - 20px - env(safe-area-inset-left) -
+        env(safe-area-inset-right)
+    )
+  );
+  max-height: calc(100dvh - 2 * var(--edge) - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+}
+
+/* Narrower, Favourites are in the pane, which then takes the page's width
+   left of the buttons; the search card keeps its width. On a phone the
+   sheet is the screen's width anyway. Either way, the contests are in as
+   many columns as fit. */
+@media (min-width: 641px) {
+  .wide .side {
+    width: min(
+      1200px,
+      calc(100vw - 3 * var(--edge) - var(--fab) - env(safe-area-inset-left) - env(safe-area-inset-right))
+    );
+  }
+
+  .wide .finder {
+    width: var(--pane-width);
+    max-width: 100%;
+  }
+
+  /* Lines no longer than read well. */
+  .favourites .intro {
+    max-width: 75ch;
+  }
+
+  .favourite-contests {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+    align-items: start;
+  }
+}
+
 .link {
   padding: 2px 10px 8px;
   font-size: var(--fs-sm);
@@ -1072,12 +1165,12 @@ h3 {
   background: var(--surface);
 }
 
-/* A contest's header: the summary on the ballots; on the candidate card a
-   button and the pin that shows the contest on the map, side by side in one
-   row (.contest-bar). No arrow: open, the header stands out from the
-   candidates under it, tinted; closed, it is muted, and a grey bar at its
-   side says that it opens to more candidates. The whole row lights up under
-   the pointer, the pin a shade of its own. */
+/* A contest's header: a button and, where the contest has a place on the
+   map, the pin that shows it there, side by side in one row (.contest-bar).
+   No arrow: open, the header stands out from the candidates under it,
+   tinted; closed, it is muted, and a grey bar at its side says that it
+   opens to more candidates. The whole row lights up under the pointer, the
+   pin a shade of its own. */
 .contest-head {
   display: flex;
   flex: 1;
@@ -1090,48 +1183,32 @@ h3 {
   color: inherit;
   font: inherit;
   text-align: start;
-  list-style: none;
 }
 
-.contest-head::-webkit-details-marker {
-  display: none;
-}
-
-summary.contest-head,
 button.contest-head {
   cursor: pointer;
-}
-
-summary.contest-head,
-.contest-bar {
-  border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
 }
 
 .contest-bar {
   display: flex;
   align-items: center;
+  border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
 }
 
-details:not([open]) > summary.contest-head {
+/* Closed with no candidate shown under it, the header is the whole box. */
+.contest:has(> .cands:empty) > .contest-bar {
   border-radius: calc(var(--radius) - 1px);
 }
 
-details:not([open]) > summary.contest-head,
 .contest:not(.open) > .contest-bar.opens {
   box-shadow: inset 3px 0 0 var(--line-strong);
 }
 
-details[open] > .contest-head,
-.contest.open > .contest-bar {
-  background: var(--surface-2);
-}
-
-summary.contest-head:hover,
+.contest.open > .contest-bar,
 .contest-bar.opens:hover {
   background: var(--surface-2);
 }
 
-details[open] > .contest-head:hover,
 .contest.open > .contest-bar.opens:hover {
   background: var(--surface-3);
 }
@@ -1152,7 +1229,21 @@ details[open] > .contest-head:hover,
   color: var(--text-faint);
 }
 
-details:not([open]) > .contest-head .contest-title,
+/* More circled than are elected (ballots.js `ContestHead`): the number of
+   seats and of the circled, in the warning colour with its sign. */
+.contest-meta .over {
+  color: var(--warning);
+  font-weight: 650;
+}
+
+.contest-meta .over .ico {
+  width: 14px;
+  height: 14px;
+  margin-right: 2px;
+  vertical-align: -2px;
+  stroke-width: 2.25;
+}
+
 .contest:not(.open) > .contest-bar .contest-title {
   color: var(--text-dim);
   font-weight: 500;
@@ -1202,6 +1293,11 @@ details:not([open]) > .contest-head .contest-title,
   list-style: none;
   margin: 0;
   padding: 0 0 4px;
+}
+
+/* A closed contest with no candidate to show while closed. */
+.cands:empty {
+  display: none;
 }
 
 /* A candidate row: the name is the button that opens the card, and a click
@@ -1256,12 +1352,60 @@ details:not([open]) > .contest-head .contest-title,
   background: var(--accent-deep);
 }
 
+/* The ballot number: a button that circles it (ballots.js `CandidateRow`).
+   Circled, the number is in the pen's blue with a loop drawn around it;
+   under the pointer or focused, a faint loop says what a press does. Its
+   target reaches beyond the number, for a finger. */
 .cand .num {
+  position: relative;
   flex: 0 0 1.6em;
-  text-align: right;
-  font-weight: 700;
+  align-self: flex-start;
+  padding: 0;
+  border: 0;
+  background: none;
   color: var(--text-faint);
+  font-weight: 700;
+  text-align: center;
   font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.cand .num::before {
+  content: "";
+  position: absolute;
+  inset: -5px -4px;
+}
+
+.cand .num .ink {
+  position: absolute;
+  left: -5px;
+  top: -3px;
+  width: calc(100% + 10px);
+  height: calc(100% + 6px);
+  overflow: visible;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cand .num .ink path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.cand .num:hover .ink,
+.cand .num:focus-visible .ink {
+  opacity: 0.4;
+}
+
+.cand .num[aria-pressed="true"] {
+  color: var(--ink);
+}
+
+.cand .num[aria-pressed="true"] .ink {
+  opacity: 1;
 }
 
 .cand .who {

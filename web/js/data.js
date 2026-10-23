@@ -228,6 +228,17 @@ async function contest(id, index) {
   };
 }
 
+/* The contests *ids* (as in `ballots`), leaving out an id whose area is not
+ * known (from a link made by hand, say). */
+export async function contests(ids) {
+  const index = await dataIndex();
+  const known = ids.filter((id) => {
+    const { kind, area } = parseContest(id);
+    return kind === 'predseda' || kind === 'zsk' ? area in index.kraje : area in index.obce;
+  });
+  return Promise.all(known.map((id) => contest(id, index)));
+}
+
 /* Every contest a voter in obec *code* votes in, the most local first, so
  * that clicking around the map what heads the list changes with the place:
  * municipal council, mayor, then in Bratislava and Košice city council and
@@ -333,12 +344,14 @@ export async function findings(c) {
 
 /* Where a contest is voted, for showing it on the map, with what it is
  * (the key of its card.map_* string): {obec, obvod} for a municipal contest
- * (`obvod` the council obvod where the obec has several), {area} for a
- * Bratislava or Košice city contest ('BA' the city, 'BA/3' a city council
- * obvod; app.js `r`); null for a regional one. */
+ * (`obvod` the council obvod where the obec has several), else {area}
+ * (app.js `r`): for a Bratislava or Košice city contest 'BA' the city,
+ * 'BA/3' a city council obvod; for a regional one 'kraj:1' the kraj (its
+ * president), 'kraj:1/3' its regional council obvod. */
 export function contestArea(id, index) {
   const { kind, area, obvod } = parseContest(id);
-  if (kind !== 'starosta' && kind !== 'oz') return null;
+  if (kind === 'predseda') return { area: `kraj:${area}`, what: 'kraj' };
+  if (kind === 'zsk') return { area: `kraj:${area}/${obvod}`, what: 'obvod' };
   if (area === 'BA' || area === 'KE') {
     return kind === 'oz' ? { area: `${area}/${obvod}`, what: 'obvod' } : { area, what: 'city' };
   }

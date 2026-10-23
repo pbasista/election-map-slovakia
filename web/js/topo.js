@@ -253,6 +253,62 @@ export function addArc(path, file, a) {
   for (let i = start[a] + 1; i < start[a + 1]; i++) path.lineTo(xy[2 * i], xy[2 * i + 1]);
 }
 
+/* Adds to *path* the dashes of arc *a* of *file* that reach into *box* [x0,
+ * y0, x1, y1] (relative to the file's origin), for a stroke without a dash
+ * pattern: *dash* the lengths as setLineDash takes them (an even number),
+ * starting at the arc's first vertex as the canvas starts each subpath. The
+ * canvas dashes the whole of a path, and zoomed in the borders it dashes run
+ * on for hundreds of views beyond the one drawn: that cost more than all
+ * else in a drawing. */
+export function addDashedArc(path, file, a, box, dash) {
+  const { xy, start } = file;
+  const period = dash.reduce((sum, d) => sum + d, 0);
+  // Distance along the arc, and whether the last point added ends a dash
+  // that goes on.
+  let along = 0;
+  let down = false;
+  for (let i = start[a]; i + 1 < start[a + 1]; i++) {
+    const x0 = xy[2 * i];
+    const y0 = xy[2 * i + 1];
+    const x1 = xy[2 * i + 2];
+    const y1 = xy[2 * i + 3];
+    const length = Math.hypot(x1 - x0, y1 - y0);
+    const out =
+      Math.max(x0, x1) < box[0] || Math.min(x0, x1) > box[2] || Math.max(y0, y1) < box[1] || Math.min(y0, y1) > box[3];
+    if (out || !length) {
+      along += length;
+      down &&= !out;
+      continue;
+    }
+    // The dash or gap *along* is in (k, even for a dash), and how far into
+    // it; rounding may leave it at the very end of the last gap.
+    let into = along % period;
+    let k = 0;
+    while (k < dash.length - 1 && into >= dash[k]) into -= dash[k++];
+    if (into >= dash[k]) {
+      into = 0;
+      k = 0;
+    }
+    for (let t = 0; t < length; ) {
+      const step = Math.min(dash[k] - into, length - t);
+      if (k % 2 === 0) {
+        if (!down) path.moveTo(x0 + ((x1 - x0) * t) / length, y0 + ((y1 - y0) * t) / length);
+        path.lineTo(x0 + ((x1 - x0) * (t + step)) / length, y0 + ((y1 - y0) * (t + step)) / length);
+        down = true;
+      } else {
+        down = false;
+      }
+      t += step;
+      into += step;
+      if (into >= dash[k]) {
+        into = 0;
+        k = (k + 1) % dash.length;
+      }
+    }
+    along += length;
+  }
+}
+
 /* Area of *feature* in squared Z0 pixels: holes taken off whichever way they
  * wind (shoelace). */
 function area(file, feature) {

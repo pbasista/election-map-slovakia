@@ -50,6 +50,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import os
 import re
 import unicodedata
 from collections import Counter
@@ -88,6 +89,11 @@ _SCRIPTS = {"Latn": "LATIN", "Cyrl": "CYRILLIC"}
 # Letters of a neighbouring language that the target language does not use:
 # Slovak in Czech, Russian in Ukrainian.
 _FOREIGN_LETTERS = {"cs": "äôľĺŕ", "uk": "ыэъё"}
+# A name in another grammatical form shares a stem of at least _MIN_STEM
+# letters with the source's form; the endings after it, in either form, are
+# at most _ENDING letters ("Eľk-o"/"Eľk-a", "Michalovc-iach"/"Michalovc-e").
+_ENDING = 4
+_MIN_STEM = 3
 
 
 @dataclass(frozen=True)
@@ -183,9 +189,10 @@ GUIDES: dict[str, Guide] = {
 - Equivalents: `SZČO`, `živnostník` → "ФОП" or "підприємець"; `starosta`
   → "староста"; `primátor` → "мер"; `konateľ` → "директор компанії" /
   "керівник товариства"; `okres` → "округ"; `kraj` → "край".
-- Names of people, places and companies stay in Latin script as in the
-  source (the site lists them in Slovak); abbreviations without a Ukrainian
-  equivalent may stay too.
+- Names of people, places and companies stay in Latin script, in their
+  basic (nominative) form, as the site lists them in Slovak: "мер Viliam
+  Zahorčák", not "Віліамом Загорчаком" nor "Viliamom Zahorčákom".
+  Abbreviations without a Ukrainian equivalent may stay too.
 - Address the reader with "ви".""",
     ),
     "de": Guide(
@@ -213,8 +220,10 @@ GUIDES: dict[str, Guide] = {
   Slovakia borrow, in Cyrillic.
 - The site's name in Rusyn is "Волебна мапа Словеньска".
 - Keep the gender of the Slovak form (`učiteľka` → feminine).
-- Names of people, places and companies stay in Latin script as in the
-  source; Slovak abbreviations without a Rusyn equivalent may stay too.""",
+- Names of people, places and companies stay in Latin script, in their
+  basic (nominative) form, as the site lists them in Slovak: "прімар Viliam
+  Zahorčák", not "Віліамом Загорчаком" nor "Viliamom Zahorčákom". Slovak
+  abbreviations without a Rusyn equivalent may stay too.""",
     ),
     "rmc": Guide(
         "Romani",
@@ -253,8 +262,10 @@ discloses that these translations are machine-made.
 - Keep names of people, places, companies, organisations, products and
   licences as in the source (e.g. "MV SR", "ÚGKK SR", "ZBGIS", "CC BY 4.0",
   "CC0", "EUPL-1.2", "Natural Earth", "Leaflet", "konspiratori.sk",
-  "Reuters Institute Digital News Report"); translate the generic words
-  around them.
+  "Reuters Institute Digital News Report"), in the source's spelling and
+  script (a language written in Latin script may decline them, e.g. Czech
+  "Maroše Eľka"; never replace a name by a description to avoid it);
+  translate the generic words around them.
 - Write the language's own punctuation and quotation marks; keep
   numbers and dates as they are.
 - `identical`: if the right translation is exactly the source text (a
@@ -277,7 +288,8 @@ Write `output.json` here, as README.md describes: `{{"items": [{{"id": …,
 ingest check rejects an item whose placeholders or markup differ from the
 source, that is empty, much shorter or longer than the source (or longer
 than `max_length`), or in another script than {language}'s ({script}),
-except for words that are in the source as they are.
+except for words that are in the source as they are and the source's names
+in another grammatical form.
 """
 
 _UI_PART = """\
@@ -525,6 +537,25 @@ _NOTES = (
         " {text} is the occupation as written in Slovak",
     ),
     ("candidate.", "line of a candidate on a ballot"),
+    (
+        "pick.",
+        "the button on a candidate's ballot number: pressing it circles the"
+        " number, as Slovak voters circle the numbers of their candidates on"
+        " the ballot, and adds the candidate to Favourites; {n} is the"
+        " number",
+    ),
+    (
+        "favourites.title",
+        "name of the list of every candidate the visitor has circled, a"
+        " heading and a button's name: one word, the usual word for"
+        " favourites in apps, nothing that says 'my' (a link shares the list)",
+    ),
+    (
+        "favourites.",
+        "Favourites: the list of every candidate the visitor has circled,"
+        " which a link shares; its button, text and the button that copies"
+        " the link (an icon whose tooltip this is)",
+    ),
     ("card.", "candidate card"),
     ("research.", "candidate card, research section"),
     ("about.category.", "name of a group of news sources in the About dialog"),
@@ -542,6 +573,7 @@ _LIMITS = (
     ("theme.title", 24),
     ("layers.title", 24),
     ("search.type.", 24),
+    ("favourites.title", 20),
     ("country.", 28),
     ("theme.system", 30),
     ("search.placeholder", 34),
@@ -789,19 +821,44 @@ def _script_problems(
 ) -> Iterator[str]:
     """Yield words in the wrong script or with letters foreign to *lang*.
 
-    Words of the source (*known*) are names or abbreviations kept as written.
+    Words of the source (*known*) are names or abbreviations kept as written,
+    or names in another grammatical form (:func:`_name_form`).
     """
+    names = {w for w in known if w[:1].isupper()}
+
+    def kept(word: str) -> bool:
+        return word in known or _name_form(word, names)
+
     wanted = _SCRIPTS.get(script)
     for name, words in _letters_by_script(text).items():
-        foreign = sorted({w for w in words if w not in known})
+        foreign = sorted({w for w in words if not kept(w)})
         if name != wanted and foreign:
             yield f"not in {script} script: {', '.join(foreign[:5])}"
     letters = set(_FOREIGN_LETTERS.get(lang, ""))
     odd = sorted(
-        {w for w in _WORD.findall(text) if w not in known and set(w.lower()) & letters}
+        {w for w in _WORD.findall(text) if not kept(w) and set(w.lower()) & letters}
     )
     if odd:
         yield f"letters foreign to {lang}: {', '.join(odd[:5])}"
+
+
+def _name_form(word: str, names: set[str]) -> bool:
+    """Return whether *word* is a source name (*names*) in another form.
+
+    Translations decline names (Slovak "Eľko", Czech "Eľka"; "OĽaNO's"), and
+    the source may have a name declined where the translation needs its basic
+    form ("v Michalovciach", "in Michalovce"). So a capitalised word in one
+    script counts as a name of the source when the two share a stem and
+    differ only in their endings. A look-alike letter of another script in
+    it still fails.
+    """
+    if not word[:1].isupper() or len(_letters_by_script(word)) != 1:
+        return False
+    for name in names:
+        stem = len(os.path.commonprefix([word, name]))
+        if stem >= _MIN_STEM and max(len(word), len(name)) - stem <= _ENDING:
+            return True
+    return False
 
 
 def _copy_problems(text: str, copies: list[str], identical: bool) -> Iterator[str]:

@@ -50,7 +50,7 @@ dozen would otherwise make every copy megabytes."""
 MAX_IMAGES = 20
 _ASIDE = frozenset({"nav", "aside", "footer", "header"})
 STYLESHEET = "/assets/cache.css"
-WAYBACK_API = "https://archive.org/wayback/available"
+WAYBACK_CDX = "https://web.archive.org/cdx/search/cdx"
 _IMAGE_TYPES = {
     b"\xff\xd8\xff": "image/jpeg",
     b"\x89PNG\r\n\x1a\n": "image/png",
@@ -213,7 +213,13 @@ def archive(cfg: Config, url: str, fetched: dt.date) -> Page:
     try:
         response = download(cfg, url, MAX_PAGE_BYTES)
     except CacheError as e:
-        snapshot = _snapshot(cfg, url)
+        try:
+            snapshot = _snapshot(cfg, url)
+        except CacheError as lookup:
+            raise CacheError(
+                f"{e}; the Internet Archive could not be asked for a snapshot"
+                f" ({lookup}); try again later"
+            ) from None
         if not snapshot:
             raise CacheError(f"{e}; the Internet Archive has no snapshot") from None
         response, via = download(cfg, snapshot, MAX_PAGE_BYTES), snapshot
@@ -238,16 +244,30 @@ def archive(cfg: Config, url: str, fetched: dt.date) -> Page:
 
 
 def _snapshot(cfg: Config, url: str) -> str:
-    """Return the raw URL of the latest Internet Archive snapshot of *url*."""
-    query = urllib.parse.urlencode({"url": url})
+    """Return the raw URL of the latest Internet Archive snapshot of *url*.
+
+    "" if it has none; raise CacheError if the archive cannot be asked.
+
+    A failed lookup is not "no snapshot": the archive limits the request
+    rate (HTTP 429), and a page turned away for want of a snapshot it has
+    would cost a finding.
+    """
+    query = urllib.parse.urlencode(
+        {
+            "url": url,
+            "filter": "statuscode:200",
+            "limit": "-1",  # the latest capture only
+            "fl": "timestamp",
+            "output": "json",  # "[]" for none; plain text would be empty
+        }
+    )
+    answer = download(cfg, f"{WAYBACK_CDX}?{query}", 1 << 16)
     try:
-        answer = download(cfg, f"{WAYBACK_API}?{query}", 1 << 16)
-        closest = json.loads(answer.data)["archived_snapshots"].get("closest") or {}
-    except (CacheError, ValueError, KeyError, AttributeError):
-        return ""
-    if closest.get("status") != "200" or not closest.get("timestamp"):
-        return ""
-    return f"https://web.archive.org/web/{closest['timestamp']}id_/{url}"
+        rows = json.loads(answer.data)
+        # A header row, then the captures.
+        return f"https://web.archive.org/web/{rows[-1][0]}id_/{url}" if rows[1:] else ""
+    except (ValueError, IndexError, TypeError, KeyError):
+        raise CacheError(f"{WAYBACK_CDX}: not a CDX answer") from None
 
 
 def decode(response: Response) -> str:

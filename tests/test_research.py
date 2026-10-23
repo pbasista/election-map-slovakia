@@ -1,3 +1,4 @@
+import datetime as dt
 from pathlib import Path
 
 import pytest
@@ -127,3 +128,40 @@ def test_sanitized_copy_runs_nothing_and_loads_nothing_remote():
     assert page.title == "Článok" and page.language == "sk"
     assert page.published == "2026-09-04"
     assert "Text zlý dobrý" in page.text
+
+
+@pytest.mark.parametrize(
+    ("cdx", "outcome"),
+    [
+        # The archive is asked too often: the page is not "without snapshot".
+        (cache.CacheError("cannot fetch …: HTTP 429 Too Many Requests"), "try again"),
+        (b"[]", "has no snapshot"),
+        (b'[["timestamp"], ["20240201202642"]]', "copied"),
+    ],
+)
+def test_page_turned_away_comes_from_the_archive(
+    monkeypatch: pytest.MonkeyPatch, cdx: Exception | bytes, outcome: str
+):
+    url = "https://korzar.sme.sk/c/1/clanok.html"
+    snapshot = f"https://web.archive.org/web/20240201202642id_/{url}"
+
+    def download(_cfg: config.Config, src: str, _limit: int) -> cache.Response:
+        if src.startswith(cache.WAYBACK_CDX):
+            if isinstance(cdx, Exception):
+                raise cdx
+            return cache.Response(cdx, "application/json", None, src)
+        if src == snapshot:
+            body = "<html><body><p>Ján Novák z Michaloviec</p></body></html>"
+            return cache.Response(body.encode(), "text/html", "utf-8", src)
+        raise cache.CacheError(f"cannot fetch {src}: HTTP 403 Forbidden")
+
+    monkeypatch.setattr(cache, "download", download)
+    cfg = config.load(REPO / "config")
+    fetched = dt.date(2026, 10, 22)
+    if outcome == "copied":
+        page = cache.archive(cfg, url, fetched)
+        assert page.via == snapshot and page.url == url
+        assert "Ján Novák z Michaloviec" in page.text
+    else:
+        with pytest.raises(cache.CacheError, match=outcome):
+            cache.archive(cfg, url, fetched)

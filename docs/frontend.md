@@ -11,20 +11,37 @@ original; party names stay as the official lists write them).
 `app.description` is the search engines' description of a page, and
 `app.features`, what the site offers in a paragraph, is on the root page in
 each fallback language and in an app shell's `<noscript>`, for search
-engines that do not run the page's scripts. The whole page is the map; the site name
-with the search, round buttons for language, boundaries, light/dark theme,
-zoom and help (the disclaimer, and from there the About dialog) float on
-it. Clicking a place or a search result opens a pane with the ballots there
-(a bottom sheet on phones); it closes with its button, Esc or, on phones, a
-swipe down. A contest's header shows whether it is open: tinted when open;
-muted, with a grey bar at its side for the candidates it hides, when closed;
-its tooltip says what a press does. On a candidate card each
-of the candidate's contests starts closed, showing just the candidate; its
-header opens it to the others, whom the filter applies to (never to the
-candidate, who stays first), and its pin shows the municipality, city
-district, constituency or, in Bratislava and Košice, the city or its
-council constituency on the map while the card stays open. The theme follows the device unless chosen in the theme menu
-(kept in localStorage); `js/theme.js` applies it before the first paint.
+engines that do not run the page's scripts. The whole page is the map; the
+site name with the search, round buttons for language, boundaries,
+light/dark theme and Favourites, zoom and help (the disclaimer, and from
+there the About dialog) float on it. Clicking a place or a search result
+opens a pane with the ballots there (a bottom sheet on phones); it closes
+with its button, Esc or, on phones, a swipe down. A contest's header shows
+whether it is open: tinted when open; muted, with a grey bar at its side
+for the candidates it hides, when closed; its tooltip says what a press
+does. A candidate's ballot number circles the candidate (`js/picks.js`), as
+voters circle numbers on the ballot: a contest lists its circled candidates
+even when closed, the filter never mutes them, and its header counts them,
+flagging the number of seats when more are circled than are elected (which
+on the ballot itself would make it invalid). On a candidate card each of
+the candidate's contests starts closed, showing just the candidate (and
+those circled); its header opens it to the others, whom the filter applies
+to (never to the candidate, who stays first), and its pin shows the
+municipality, city district, constituency or, in Bratislava and Košice, the
+city or its council constituency, or for a regional contest the
+self-governing region or its regional constituency on the map while the
+card stays open. Favourites (`js/favourites.js`) lists every circled
+candidate's contest the same way, the circled first, with a link button by
+its title that copies a link to them and the filter alone, with the list
+open. It opens only with its button: from 960 px wide as a pane of its own
+beside the first, as the search results are, as wide as the page allows,
+where a candidate chosen opens in the first pane and a map click keeps the
+list open, but a place found by the search or shown by a pin closes it, as
+it would hide that place. Narrower, it is what the pane shows, as wide as
+the page allows on a tablet, where a pin closes it too; a phone's sheet
+leaves the place in view above the list. The theme follows the device
+unless chosen in the theme menu (kept in localStorage); `js/theme.js`
+applies it before the first paint.
 The map uses Leaflet for the view, without any tile layer, and one canvas
 of its own, drawn in a worker (`js/render.js` running `js/draw.js`) so that
 fetching, decoding and drawing never hold up the page's main thread: it
@@ -35,17 +52,21 @@ bounded by size (`js/topo.js`), with labels and, from zoom 16, house
 numbers, all in the theme's colours. The countries around Slovakia are drawn
 below it, duller, with dashed borders and their names where most of each
 shows; they cannot be clicked, and the lowest zoom keeps every view within
-them. Areas are only filled; every border is
-stroked once from the topology, in the style of the highest boundary it is
-part of. Zoom is continuous (`js/zoom.js`): wheel, trackpad, pinch, buttons
-and double-click scale the canvas every frame. While a pan or zoom goes on,
-the view is drawn again at a lower resolution whenever the last drawing no
-longer covers it, and sharp once the gesture settles; what has not loaded
-yet is added as it comes. The selected place, candidate and the About
-dialog are kept in the URL hash, so links can be shared. The About dialog
-(`js/about.js`) is a short page with the project's purpose, the source code
-and the license, and links to its sections (`#v=about-method`,
-`-sources`, `-research`, `-disclaimers`). The site makes no requests to
-other servers; `web/_headers` (the base of `dist/_headers`) sets a
-Content-Security-Policy that lets the browser enforce this, and short cache
-lifetimes with revalidation, since file names carry no content hash.
+them. Areas are only filled; every border is stroked once from the
+topology, in the style of the highest boundary it is part of; a dashed one
+is cut into its dashes only where the drawing shows it (the canvas would
+dash it whole, far beyond the view when zoomed in). Zoom is continuous
+(`js/zoom.js`): wheel, trackpad, pinch, buttons and double-click scale the
+canvas every frame. While a pan or zoom goes on, the view is drawn again at
+a lower resolution whenever the last drawing no longer covers it, and sharp
+once the gesture settles; what has not loaded yet is added as it comes. The
+selected place, candidate, Favourites and the About dialog are kept in the
+URL hash, so links can be shared, and so are the circled candidates and the
+filter, though Back and Forward leave those as they are (`js/app.js`).
+The About dialog (`js/about.js`) is a short page with the project's
+purpose, the source code, the version (a link to its GitHub release) and
+the license, and links to its sections (`#v=about-method`, `-sources`,
+`-research`, `-disclaimers`). The site makes no requests to other servers;
+`web/_headers` (the base of `dist/_headers`) sets a Content-Security-Policy
+that lets the browser enforce this, and short cache lifetimes with
+revalidation, since file names carry no content hash.

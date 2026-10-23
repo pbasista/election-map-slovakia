@@ -62,6 +62,7 @@
 import { addressFile, Cache, fetchJSON, shownNumber } from './files.js';
 import {
   addArc,
+  addDashedArc,
   addFeature,
   binPath,
   binsIn,
@@ -749,12 +750,8 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
     }
     ctx.strokeStyle = COLOR['neighbour-line'];
     ctx.lineWidth = 1 / view.k;
-    ctx.setLineDash(NEIGHBOUR_DASH.map((d) => d / view.k));
-    for (const bin of bins) {
-      const path = binPath(bin, 'lines', () => linesPath(file, bin.arcs, () => true));
-      if (path) ctx.stroke(path);
-    }
-    ctx.setLineDash([]);
+    const dashes = dashedPath(file, bins, view, NEIGHBOUR_DASH, () => true);
+    if (dashes) ctx.stroke(dashes);
   }
 
   function drawShapes(ctx, view) {
@@ -788,14 +785,18 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
         if (!names.includes(name)) continue;
         placeFile(ctx, file, view);
         ctx.lineWidth = style.weight / view.k;
-        ctx.setLineDash(style.dash ? style.dash.map((d) => d / view.k) : []);
+        const pick = (code) => inLayer(name, code);
+        if (style.dash) {
+          const path = dashedPath(file, bins, view, style.dash, pick);
+          if (path) ctx.stroke(path);
+          continue;
+        }
         for (const bin of bins) {
-          const path = binPath(bin, name, () => linesPath(file, bin.arcs, (code) => inLayer(name, code)));
+          const path = binPath(bin, name, () => linesPath(file, bin.arcs, pick));
           if (path) ctx.stroke(path);
         }
       }
     }
-    ctx.setLineDash([]);
     drawHighlight(ctx, view);
   }
 
@@ -813,13 +814,37 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
     return any ? path : null;
   }
 
+  /* The dashes, *dash* CSS pixels long and apart (setLineDash), of the arcs
+   * of *file* in *bins* whose code passes *pick* that *view* shows, as one
+   * path to stroke without a dash pattern (topo.js `addDashedArc`), or null
+   * if there are none. Made for each drawing: it depends on the view. */
+  function dashedPath(file, bins, view, dash, pick) {
+    const [ox, oy] = file.origin;
+    // A cap reaching into the canvas from a dash just outside it.
+    const m = 4 / view.k;
+    const box = [view.box[0] - ox - m, view.box[1] - oy - m, view.box[2] - ox + m, view.box[3] - oy + m];
+    const lengths = dash.map((d) => d / view.k);
+    const path = new Path2D();
+    let any = false;
+    for (const bin of bins) {
+      for (const a of bin.arcs) {
+        const code = file.lines[a];
+        if (code & FOREIGN || !pick(code)) continue;
+        addDashedArc(path, file, a, box, lengths);
+        any = true;
+      }
+    }
+    return any ? path : null;
+  }
+
   /* The overlay whose obvod of the selected place is highlighted at zoom
    * *z*: the finest drawn there that cuts the place out of what is around.
-   * A selected city area (a Bratislava or Košice city contest's) is the
-   * cities' at every zoom, whether or not their overlay is on: it is all
-   * there is to see of the selection. */
+   * A selected area (a contest's without a place: a Bratislava or Košice
+   * city contest's, a regional one's) is its overlay's at every zoom,
+   * whether or not that is on: it is all there is to see of the
+   * selection. */
   function highlighted(z) {
-    if (place?.area) return 'city';
+    if (place?.area) return 'kraj' in place.area ? 'zsk' : 'city';
     const info = place?.info;
     if (!info?.okres) return null;
     const can = (name) => drawsOverlay(name, z) && within(z, OVERLAYS[name].highlight);
@@ -828,12 +853,16 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
     return can('zsk') ? 'zsk' : null;
   }
 
-  /* Whether a feature with properties *p* is in city *area* ({city,
-   * obvod}): in the whole city, or in its council obvod. */
-  const inArea = (area, p) => p.city === area.city && (area.obvod === null || p.city_obvod === area.obvod);
+  /* Whether a feature with properties *p* is in *area*: {city, obvod} the
+   * whole city or its council obvod, {kraj, zsk} the whole kraj or its
+   * regional obvod. */
+  const inArea = (area, p) =>
+    'kraj' in area
+      ? p.kraj === area.kraj && (area.zsk === null || p.zsk === area.zsk)
+      : p.city === area.city && (area.obvod === null || p.city_obvod === area.obvod);
 
-  /* The selected obvod or city area (its border from the files drawn now,
-   * so it is theirs), the selected obec and the selected point. */
+  /* The selected obvod or area (its border from the files drawn now, so it
+   * is theirs), the selected obec and the selected point. */
   function drawHighlight(ctx, view) {
     const info = place?.info;
     const overlay = highlighted(level());
@@ -844,6 +873,12 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
           city: (p) => p.city === info.city && p.city_obvod === info.cityObvod,
           oz: (p) => p.id === info.code && p.oz === place.obvod,
         }[overlay];
+    // Its border: of a whole kraj the kraj (or state) border, else the
+    // overlay's.
+    const edge =
+      place?.area && 'kraj' in place.area && place.area.zsk === null
+        ? (code) => (code & RANK) >= 2
+        : (code) => (code & FLAG[overlay]) !== 0;
     if (member) {
       // The features of the obvod, and the arcs with its flag around them:
       // an arc on an okres border is in both shards, and only one of the
@@ -862,7 +897,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
         }
         if (!around.size) continue;
         if (overlay === 'oz') line = unionPath(file, members);
-        else for (const a of around) if (file.lines[a] & FLAG[overlay]) addArc(line, file, a);
+        else for (const a of around) if (edge(file.lines[a])) addArc(line, file, a);
         units.push([file, fill, line]);
       }
       const color = overlay === 'oz' ? COLOR.council : COLOR[overlay];
@@ -1485,7 +1520,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
       return pieces.length ? boxOf(pieces) : obec.box;
     },
 
-    /* The box in Z0 pixels of city *area* ({city, obvod}), or null. */
+    /* The box in Z0 pixels of *area* (as `inArea` takes it), or null. */
     areaBox(area) {
       const cells = coarse.features.filter((f) => inArea(area, f.properties));
       return cells.length ? boxOf(cells) : null;

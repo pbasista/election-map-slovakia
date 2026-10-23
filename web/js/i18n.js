@@ -16,6 +16,8 @@ export const election = config.election;
 export const researchCategories = config.research;
 // The project's source code repository, linked from the About dialog.
 export const repository = config.repository;
+// The site's version (__version__), named in the About dialog.
+export const version = config.version;
 
 let strings = {};
 // The language the strings are in: the page's, or for a language with no

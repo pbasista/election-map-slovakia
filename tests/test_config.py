@@ -49,6 +49,13 @@ def test_party_logo_needs_license(cfg: Path):
         config.load(cfg)
 
 
+def test_party_short_form_used_twice(cfg: Path):
+    # A shared link's filter names its parties by short form.
+    edit(cfg / "parties.toml", 'short = "Alternatíva"', 'short = "Bratia Slovenska"')
+    with pytest.raises(config.ConfigError, match=r"short: is also the short form"):
+        config.load(cfg)
+
+
 def test_unknown_fallback_language(cfg: Path):
     edit(cfg / "languages.toml", 'fallback = ["en", "sk"]', 'fallback = ["en", "ru"]')
     with pytest.raises(config.ConfigError, match=r"languages\.toml: fallback: 'ru'"):

@@ -4,8 +4,9 @@ A zoomable map of every constituency of the Slovak municipal and regional
 elections of 24 October 2026, with the candidates standing in each. Click a
 place or search for an address, a municipality or a candidate to see every
 ballot voted on there; a candidate card adds AI-researched, source-linked
-notes on the candidate's career and controversies. It is at
-**<https://volebnamapa.sk>**.
+notes on the candidate's career and controversies. Circle candidates'
+numbers as on the ballot to gather them in one list, which a link shares.
+It is at **<https://volebnamapa.sk>**.
 
 ![The map around Banská Bystrica, its council constituency No. 1 highlighted where the visitor clicked, and beside the map the ballots voted on there with the candidates in ballot order, their parties and marks](docs/img/main.png)
 

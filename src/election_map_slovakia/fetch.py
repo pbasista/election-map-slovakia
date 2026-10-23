@@ -5,6 +5,10 @@ file next to its target and only replaces the previous file after passing its
 integrity check, so a failed or corrupt download never destroys a good copy.
 ``data/raw/manifest.json`` records what is on disk: URL, sha256, size, when it
 was retrieved, and the server's validators for the next conditional request.
+When the server fails, a pinned input (its sha256 fixed in the config) is
+taken from a copy with that digest: the one on disk, else one committed in
+``data/fallback/``, laid out like ``data/raw/`` with its own manifest. A
+release thus does not depend on the server being up.
 """
 
 from __future__ import annotations
@@ -15,6 +19,7 @@ import http.client
 import json
 import os
 import re
+import shutil
 import ssl
 import tempfile
 import urllib.error
@@ -54,7 +59,7 @@ class Outcome:
     """What fetching one input did."""
 
     name: str
-    status: str  # new, updated, unchanged or failed
+    status: str  # new, updated, unchanged, fallback or failed
     bytes: int
     detail: str
 
@@ -76,29 +81,37 @@ def fetch(
     inputs: Inputs,
     raw_dir: Path,
     *,
+    fallback_dir: Path | None = None,
     only: Sequence[str] = (),
     force: bool = False,
 ) -> Iterator[Outcome]:
     """Fetch the inputs named in *only* (default: all), yielding each outcome.
 
-    *force* skips the conditional request and accepts a drop in row count.
-    The manifest is rewritten after every input, so an interrupted run keeps
-    what it already fetched.
+    *fallback_dir* holds committed copies of pinned inputs, for when their
+    server fails. *force* skips the conditional request and accepts a drop
+    in row count. The manifest is rewritten after every input, so an
+    interrupted run keeps what it already fetched.
     """
     manifest_path = raw_dir / MANIFEST_FILE
     manifest = load_manifest(manifest_path)
     configured = {inp.name for inp in inputs.inputs}
     manifest = {name: e for name, e in manifest.items() if name in configured}
+    fallback = load_manifest(fallback_dir / MANIFEST_FILE) if fallback_dir else {}
     context = ssl_context(inputs.ca_certificates)
     agent = user_agent(inputs.contact)
     for inp in inputs.inputs:
         if only and inp.name not in only:
             continue
         previous = manifest.get(inp.name)
+        committed = (
+            (fallback_dir, fallback[inp.name])
+            if fallback_dir and inp.name in fallback
+            else None
+        )
         with progress.stage(f"fetching {inp.name}"):
             try:
                 outcome, entry = _fetch_one(
-                    inp, raw_dir, previous, force, context, agent
+                    inp, raw_dir, previous, committed, force, context, agent
                 )
             except FetchError as e:
                 outcome = Outcome(inp.name, "failed", 0, str(e))
@@ -126,6 +139,7 @@ def _fetch_one(
     inp: Input,
     raw_dir: Path,
     previous: dict[str, Any] | None,
+    committed: tuple[Path, dict[str, Any]] | None,
     force: bool,
     context: ssl.SSLContext,
     agent: str,
@@ -157,9 +171,11 @@ def _fetch_one(
         if e.code == http.client.NOT_MODIFIED and previous is not None:
             entry = {**previous, "checked_at": now}
             return _unchanged(inp, entry, "not modified"), entry
-        raise FetchError(f"HTTP {e.code} {e.reason}") from e
+        return _pinned_copy(
+            inp, target, previous, committed, f"HTTP {e.code} {e.reason}"
+        )
     except (urllib.error.URLError, OSError) as e:
-        raise FetchError(f"cannot connect: {e}") from e
+        return _pinned_copy(inp, target, previous, committed, f"cannot connect: {e}")
 
     target.parent.mkdir(parents=True, exist_ok=True)
     with response:
@@ -208,6 +224,59 @@ def _fetch_one(
     return Outcome(
         inp.name, "new" if previous is None else "updated", size, detail
     ), entry
+
+
+def _pinned_copy(
+    inp: Input,
+    target: Path,
+    previous: dict[str, Any] | None,
+    committed: tuple[Path, dict[str, Any]] | None,
+    problem: str,
+) -> tuple[Outcome, dict[str, Any]]:
+    """Take *inp*, whose server failed with *problem*, from a copy.
+
+    Only a pinned input, and only from a copy with the pinned digest: its
+    content is fixed, so the copy is what the server would send, and a
+    release need not wait for the server (statistics.sk's past results were
+    all gone two days before the 2026 elections). The copy on disk stays,
+    its manifest entry as it was, since nothing was checked; else the
+    *committed* one (its directory and manifest entry) is copied in, with
+    that entry, which says when it was downloaded.
+    """
+    if not inp.sha256:
+        raise FetchError(problem)
+    if previous is not None and _sha256(target) == inp.sha256:
+        return Outcome(
+            inp.name, "fallback", previous["bytes"], f"{problem}; copy on disk"
+        ), previous
+    if committed is None:
+        raise FetchError(problem)
+    directory, entry = committed
+    copy = directory / entry["path"]
+    if (
+        entry["sha256"] != inp.sha256
+        or not copy.is_file()
+        or _sha256(copy) != inp.sha256
+    ):
+        raise FetchError(f"{problem}; the committed copy is not the pinned one")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    fd, name = tempfile.mkstemp(dir=target.parent, prefix=f".{target.name}.")
+    os.close(fd)
+    tmp = Path(name)
+    try:
+        shutil.copyfile(copy, tmp)
+        check(inp, tmp)
+        os.replace(tmp, target)
+    finally:
+        tmp.unlink(missing_ok=True)
+    return Outcome(
+        inp.name, "fallback", entry["bytes"], f"{problem}; committed copy"
+    ), entry
+
+
+def _sha256(path: Path) -> str:
+    with path.open("rb") as f:
+        return hashlib.file_digest(f, "sha256").hexdigest()
 
 
 def _download(

@@ -142,6 +142,7 @@ from pathlib import Path
 from typing import Any
 
 from election_map_slovakia import (
+    __version__,
     addresses,
     candidates,
     config,
@@ -804,6 +805,8 @@ def shells(
             lang: list(categories) for lang, categories in cfg.sources.research.items()
         },
         "repository": cfg.site.repository,
+        # The About dialog names the version, linked to its release.
+        "version": __version__,
     }
     template = (web / SHELL).read_text(encoding="utf-8")
     out = {}

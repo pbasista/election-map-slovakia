@@ -16,9 +16,11 @@ succeeded:
 1. **ci** — the checks above.
 2. **build** — checks that the tag matches `__version__` in
    `src/election_map_slovakia/__init__.py`, downloads the official inputs
-   (`ems fetch`, with `data/raw/` kept in the Actions cache), builds and
-   checks the site (`ems make`) and keeps `dist/` and its archive
-   `election-map-slovakia-X.Y.Z.tar.gz` as workflow artifacts.
+   (`ems fetch`; `data/raw/` is kept in the Actions cache, which GitHub
+   shares only among runs of the same tag, so it spares the downloads of a
+   re-run; a pinned input whose server fails comes from `data/fallback/`),
+   builds and checks the site (`ems make`) and keeps `dist/` and its
+   archive `election-map-slovakia-X.Y.Z.tar.gz` as workflow artifacts.
 3. **deploy** — uploads `dist/` to the Cloudflare Pages project
    (`pages_project` in `config/site.toml`) with Wrangler, as a production
    deployment of the branch `main`.

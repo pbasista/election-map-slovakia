@@ -14,7 +14,9 @@
 #   geojson  a GeoJSON FeatureCollection with at least one feature
 #
 # `sha256`, for any kind, pins the file's digest: for a release that never
-# changes, any other content is rejected.
+# changes, any other content is rejected. When the server of a pinned input
+# fails, `ems fetch` takes a copy with that digest, on disk or committed in
+# data/fallback/<name>/<file> (with its entry in data/fallback/manifest.json).
 #
 # `optional = true` marks an input no step reads, kept as a record of a
 # source: if it fails, `ems fetch` warns and still succeeds, so a release

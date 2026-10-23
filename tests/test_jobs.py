@@ -134,6 +134,15 @@ def test_script_must_be_the_languages():
     # A letter of another script inside a word, either way round.
     assert check("the mayor said", "примátор сказав", lang="uk")
     assert check("Ráž said", "Rážа powiedział", lang="pl")
+    # Names declined by the translation keep their script and letters.
+    assert check("Maroš Eľko said", "Podle Maroše Eľka", lang="cs") == []
+    assert check("OĽaNO's minister", "ministr OĽaNO's", lang="cs") == []
+    assert check("Béla Bugár said", "Béla Bugára сказав", lang="uk") == []
+    assert check("Býva v Michalovciach.", "Живе в Michalovce.", lang="uk") == []
+    # Not a name of the source, nor one in another form.
+    assert check("Maroš Eľko said", "Eľko řekl, že veľmi", lang="cs")
+    assert check("Maroš Eľko said", "Podle Eľkovského", lang="cs")
+    assert check("Béla Bugár said", "Béla Bugárа сказав", lang="uk")
 
 
 def test_untranslated_copy_needs_the_flag():

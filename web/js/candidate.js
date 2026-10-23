@@ -3,7 +3,7 @@
  * candidates.py), and the state of the research on them. */
 
 import { html, useEffect, useRef } from '../vendor/preact-htm.module.js';
-import { CandidacyContest, FilterBar, OfficeResult, researchScope, useRowActions } from './ballots.js';
+import { Contest, FilterBar, OfficeResult, researchScope, useRowActions } from './ballots.js';
 import {
   contestArea,
   dataIndex,
@@ -126,8 +126,9 @@ function AffairsAlert({ candidate: c }) {
 }
 
 /* *filter* and `onFilter(next)` as for the ballots (ballots.js): the other
- * candidates of each of the person's contests follow it; the person never. */
-export function CandidateCard({ id, onCandidate, onPlace, onClose, filter, onFilter }) {
+ * candidates of each of the person's contests follow it; the person never.
+ * *picks* and `onPicks(next)` the circled candidates (picks.js). */
+export function CandidateCard({ id, onCandidate, onPlace, onClose, filter, onFilter, picks, onPicks }) {
   // Null for a candidacy that does not exist.
   const [result, failed] = useLoaded(
     () => Promise.all([person(id), dataIndex()]).then(([p, index]) => p && { ...p, index }),
@@ -140,6 +141,8 @@ export function CandidateCard({ id, onCandidate, onPlace, onClose, filter, onFil
     new Map((result?.candidacies ?? []).flatMap((x) => x.contest.candidates.map((c) => [c.id, c]))),
     filter,
     onFilter,
+    picks,
+    onPicks,
   );
 
   useEffect(() => {
@@ -206,14 +209,14 @@ export function CandidateCard({ id, onCandidate, onPlace, onClose, filter, onFil
       ${candidacies.length > 1 ? html`<p class="panel-body muted">${t('card.merged')}</p>` : null}
       ${candidacies.map((x) => {
         const target = contestArea(x.contest.id, index);
-        return html`<${CandidacyContest}
+        return html`<${Contest}
           key=${x.candidate.id}
           contest=${x.contest}
-          candidate=${x.candidate}
+          current=${x.candidate}
           onCandidate=${onCandidate}
           filter=${filter}
           actions=${actions}
-          map=${target && { label: t(`card.map_${target.what}`), onClick: () => onPlace(target) }}
+          map=${{ label: t(`card.map_${target.what}`), onClick: () => onPlace(target) }}
         />`;
       })}
       <${Research} candidate=${c} />

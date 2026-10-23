@@ -213,6 +213,11 @@ class Config:
         return self.root / "data" / "raw"
 
     @property
+    def fallback_dir(self) -> Path:
+        """Return ``data/fallback``, for committed copies of pinned inputs."""
+        return self.root / "data" / "fallback"
+
+    @property
     def build_dir(self) -> Path:
         """Return ``data/build``, for intermediate pipeline output."""
         return self.root / "data" / "build"
@@ -556,18 +561,36 @@ def load_overrides(path: Path) -> Overrides:
     return Overrides(obec, residence, merge, split, address)
 
 
+def _party_short(pt: _Table, name: str, shorts: dict[str, str]) -> str:
+    """Return party *name*'s short form, recording it in *shorts*.
+
+    *shorts* maps the short forms seen so far to their parties: a link
+    names the parties of its candidate filter by their short forms
+    (web/js/ballots.js ``filterParams``), the independents as "-", in a
+    list after "!" when they are hidden.
+    """
+    short = pt.string("short")
+    if not short or len(short) > _MAX_SHORT:
+        raise pt.error("short", f"must be 1-{_MAX_SHORT} characters")
+    if short in shorts:
+        raise pt.error("short", f"is also the short form of {shorts[short]!r}")
+    if short == "-" or "," in short or short.startswith("!"):
+        raise pt.error("short", 'must not be "-", contain "," or start with "!"')
+    shorts[short] = name
+    return short
+
+
 def load_parties(path: Path, logo_dir: Path) -> dict[str, Party]:
     """Load ``parties.toml`` and check that the logos it names exist."""
     t = _Table(path, _read_toml(path))
     parties = {}
+    shorts: dict[str, str] = {}
     for name, entry in t.get("party", dict).items():
         key = f"party.{name}"
         if not isinstance(entry, dict):
             raise t.error(key, "must be a table")
         pt = _Table(path, entry, prefix=key + ".")
-        short = pt.string("short")
-        if not short or len(short) > _MAX_SHORT:
-            raise pt.error("short", f"must be 1-{_MAX_SHORT} characters")
+        short = _party_short(pt, name, shorts)
         full = pt.string("name")
         if not full:
             raise pt.error("name", "must not be empty")

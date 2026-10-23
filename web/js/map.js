@@ -461,8 +461,9 @@ export async function createMap(element, { onPick, insets, onZoom }) {
 
   return {
     /* Shows *p* ({obec, lat?, lon?, label?, obvod?, street?, part?}, or
-     * {area} for a Bratislava or Košice city contest: 'BA' the city, 'BA/3'
-     * its council obvod) as the selected place, or nothing; a street or part
+     * {area} for a contest's area (data.js `contestArea`): 'BA' the city of
+     * Bratislava, 'BA/3' its council obvod, 'kraj:1' a kraj, 'kraj:1/3' its
+     * regional obvod) as the selected place, or nothing; a street or part
      * is highlighted. *view*: 'place' zooms to the house of an address (one
      * with a label), to the street or part, to the council obvod or area, or
      * to the whole obec otherwise; 'obec' to the obec; null only pans a
@@ -470,8 +471,10 @@ export async function createMap(element, { onPick, insets, onZoom }) {
     async select(p, view = null) {
       const gen = ++selection;
       if (p?.area) {
-        const [city, obvod] = p.area.split('/');
-        const area = { city, obvod: obvod ? Number(obvod) : null };
+        const kraj = p.area.startsWith('kraj:');
+        const [code, obvod] = p.area.slice(kraj ? 'kraj:'.length : 0).split('/');
+        const n = obvod ? Number(obvod) : null;
+        const area = kraj ? { kraj: code, zsk: n } : { city: code, obvod: n };
         if ((await renderer.call('select', { area })) === undefined || gen !== selection) return;
         // The pane that opens or closes with it changes the free part.
         sharp();

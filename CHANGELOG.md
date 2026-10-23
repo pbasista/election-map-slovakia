@@ -4,6 +4,82 @@ Notable changes, newest first. The version is set in
 `src/election_map_slovakia/__init__.py`; tagging `vX.Y.Z` builds and deploys
 it (see [docs/deploy.md](docs/deploy.md)).
 
+## 0.3.0 — 2026-10-23
+
+- **Circle your candidates, as on the ballot, and share them.** A
+  candidate's ballot number now circles the candidate, in pen blue, on the
+  ballots and on candidate cards. A contest counts its circled candidates
+  and, when more are circled than are elected, flags the number of seats:
+  on the ballot itself that would make it invalid (circling more is still
+  allowed, to choose among them later). Circled candidates stay listed in a
+  closed contest, and the filter never mutes them. A new round button with
+  a heart, Favourites, below the others, shows the number circled and opens
+  a list of every circled candidate's contest, the circled first and the
+  rest a click away. On a wide screen the list opens beside the pane, as
+  wide as the screen allows, and the pane keeps the ballots or the card of a
+  candidate picked in the list; a place found by the search closes it, as
+  it would hide the place. On a narrower screen the list is what the pane
+  shows. The circles, the filter and whether the list is open are now kept
+  in the page's address, so a link shares them, and a link button by the
+  list's title copies a link to them, with the list open, without the place
+  shown on the map. Back and Forward still go from place to place and keep
+  the circles and the filter.
+- **Regional contests on the map.** The pin of a regional president's or
+  regional council's contest, on a candidate card or in Favourites, shows
+  the self-governing region or its regional constituency on the map, as
+  those of municipal contests show theirs.
+- **About names the site's version.** The About dialog's line on the
+  source code now starts with the site's version, its number linked to that
+  version's release on GitHub with its notes.
+- **Releases do not depend on the past results' server.** Two days before
+  the elections, volby.statistics.sk answered 404 for every past results
+  file (2022 and the by-elections since), which would have stopped the
+  release at `ems fetch`. Those files never change and are pinned by their
+  sha256, so copies of them are now committed in `data/fallback/`: when the
+  server of a pinned input fails, `ems fetch` takes the copy on disk or the
+  committed one, if it has the pinned digest, and warns.
+- **Floating controls are opaque.** The search card, the round buttons, the
+  zoom buttons and their menus no longer blur the map behind them: with any
+  backdrop filter on the page, however light, Firefox dropped about twice
+  as many frames while the map was panned. They now have the solid
+  background the pane already had. Dropping the blur only while the map
+  moves was measured too: it saved less, varied more, and the controls
+  would change look at the start and end of every pan.
+- **The map draws about three times faster when zoomed in.** The dashed
+  borders (of the countries around, and the approximate council
+  constituency borders) were dashed by the canvas along their whole
+  length, which zoomed in runs on for hundreds of views beyond the one
+  drawn: at street level that was two thirds of each drawing. They are now
+  dashed only where the drawing shows them, with the dashes where they
+  were. A drawing at street level on a 2× screen takes about 29 ms instead
+  of 94 ms in Firefox and 26 ms instead of 74 ms in Chrome, so the map
+  keeps up with a pan, and a fast fling no longer shows blank edges.
+- **Michalovce researched again in the Slovak media.** The 101 candidates
+  for mayor and city council were searched again, thoroughly, in the
+  Slovak media (Korzár included): 64 findings on 29 of them, 10 of them
+  affairs, where the first run had 9 findings on 5. Their findings from
+  official sites are unchanged.
+- **Košice region researched again in the Slovak media.** The 6 candidates
+  for regional president now have 26 findings (10 affairs), up from 18,
+  with court cases brought up to date. The 29 candidates for the regional
+  council in the Michalovce constituency not covered by the Michalovce
+  rerun have 23 findings on 7 of them (13 affairs), up from 1. The new
+  findings of both reruns are translated into every language.
+- **Declined names pass the translation check.** The check that a
+  translation is in its language's script let a Latin-script word through
+  only in the source's exact form, so a name declined by the translation
+  (Czech "Maroše Eľka" for "Maroš Eľko") was rejected and translators wrote
+  names in Cyrillic or left them out. A capitalised word that is a source
+  name with another ending now passes; the Ukrainian and Rusyn prompts ask
+  for names in Latin script in their basic form, and the affected Czech,
+  Ukrainian and Rusyn translations are redone that way.
+- **Pages turned away come from the Internet Archive again.** When sme.sk
+  turned a cited page away, the archive's snapshot was looked up with its
+  availability API, which answers 429 under load; that was taken for "no
+  snapshot", so Korzár articles the archive has were rejected. The lookup
+  now asks the archive's CDX index, and a failed lookup says so ("try again
+  later") instead of claiming there is no snapshot.
+
 ## 0.2.0 — 2026-10-21
 
 - **Releases no longer stop on a regional announcement.** The regional

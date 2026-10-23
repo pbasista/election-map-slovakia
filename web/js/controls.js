@@ -1,5 +1,6 @@
-/* The round buttons floating on the map and the small popovers they open:
- * language, boundaries, theme, zoom, and help with the disclaimer.
+/* The round buttons floating on the map: those with a small popover
+ * (language, boundaries, theme, zoom, and help with the disclaimer) and
+ * Favourites, which shows the candidates circled.
  *
  * A popover is a non-modal dialog next to its button: opening it moves focus
  * into it; Esc, a click elsewhere or focus leaving it closes it. Only one is
@@ -9,11 +10,12 @@
  */
 
 import { html, useEffect, useRef, useState } from '../vendor/preact-htm.module.js';
-import { lang, languages, switchLanguage, t } from './i18n.js';
+import { formatNumber, lang, languages, switchLanguage, t } from './i18n.js';
 import {
   ArrowIcon,
   CheckIcon,
   GlobeIcon,
+  HeartIcon,
   HelpIcon,
   LAYER_ICON,
   LayersIcon,
@@ -158,6 +160,23 @@ function Popover({ name, label, icon, badge, open, onToggle, onPress, children }
 }
 
 const Title = ({ name, children }) => html`<h2 class="pop-title" id=${`km-${name}-title`}>${children}</h2>`;
+
+/* Shows and hides Favourites (favourites.js), with how many are circled on
+ * it once there are some. Pressed while they are shown. */
+export function FavouritesButton({ count, open, onPress }) {
+  const label = t('favourites.open', { n: formatNumber(count) });
+  return html`<button
+    type="button"
+    class="fab"
+    aria-label=${label}
+    title=${label}
+    aria-pressed=${open ? 'true' : 'false'}
+    onClick=${onPress}
+  >
+    <${HeartIcon} />
+    ${count ? html`<span class="fab-badge" aria-hidden="true">${formatNumber(count)}</span>` : null}
+  </button>`;
+}
 
 /* The button opens the menu of every language, each by its own name, the
  * page's marked; choosing one keeps the hash, so the same place stays

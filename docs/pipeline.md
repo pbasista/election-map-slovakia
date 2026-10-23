@@ -48,15 +48,23 @@ below go to stdout, so `uv run ems geo > geo.txt` keeps just the summary.
 election and boundary files, and Natural Earth's countries) into
 `data/raw/<name>/` and records URL, sha256, size and retrieval time in
 `data/raw/manifest.json`. It prints one line per input: `new`, `updated`,
-`unchanged` or `failed`. Unchanged files are detected by conditional request
-where the server supports it, otherwise by content, and are left untouched.
-Each download is checked before it replaces the previous copy (zip members,
-XLSX worksheets, PDF signature, CSV header, GeoJSON features, and the sha256
-where an input pins it); an address CSV with more than 1 % fewer rows than
-the previous one is rejected unless `--force` is given. The exit code is 1 if
-any input failed, except an input marked `optional` (read by no step: the
-regional constituency announcements, records of the sources of the curated
-regional obvody), whose failure is only a warning.
+`unchanged`, `fallback` or `failed`. Unchanged files are detected by
+conditional request where the server supports it, otherwise by content, and
+are left untouched. Each download is checked before it replaces the
+previous copy (zip members, XLSX worksheets, PDF signature, CSV header,
+GeoJSON features, and the sha256 where an input pins it); an address CSV
+with more than 1 % fewer rows than the previous one is rejected unless
+`--force` is given. When the server of a pinned input fails, the input is
+taken from a copy with the pinned sha256 (`fallback`, with a warning): the
+one on disk, else the one committed in `data/fallback/`, laid out like
+`data/raw/` with its own `manifest.json`, whose entry (and so the retrieval
+date in the About dialog) it keeps. The past election results are there:
+in October 2026, two days before the elections, volby.statistics.sk
+answered 404 for all of them, and a release starts with an empty
+`data/raw/`. The exit code is 1 if any input failed, except an input marked
+`optional` (read by no step: the regional constituency announcements,
+records of the sources of the curated regional obvody), whose failure is
+only a warning.
 
 `candidates` reads the four MV SR candidate lists and the municipality table
 of ZBGIS (level 0, unpacked once into `data/build/`). Every row is matched to
@@ -222,6 +230,8 @@ Hand-curated inputs, committed:
   were transcribed from, by sha256, and the cached copies of the pages
   research cites
 - `data/curated/research/` — what the `research` jobs found per candidate
+- `data/fallback/` — copies of pinned inputs, for when their server fails
+  (see `fetch` above)
 
 The obvod files name their source document (`source`) and decision date
 (`date`).

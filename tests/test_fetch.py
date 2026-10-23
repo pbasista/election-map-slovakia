@@ -1,3 +1,4 @@
+import hashlib
 import io
 import json
 import re
@@ -36,7 +37,11 @@ def stub() -> Iterator[Stub]:
 
     class Handler(BaseHTTPRequestHandler):
         def do_GET(self):
-            res = state.resources[self.path]
+            res = state.resources.get(self.path)
+            if res is None:
+                state.statuses.append(404)
+                self.send_error(404)
+                return
             match = res.etag is not None and self.headers["If-None-Match"] == res.etag
             state.conditional.append(self.headers["If-None-Match"] is not None)
             state.statuses.append(304 if match else 200)
@@ -76,10 +81,14 @@ def make_input(stub: Stub, name: str, kind: str, **kw) -> Input:
 
 
 def run(
-    tmp_path: Path, *inputs: Input, force: bool = False
+    tmp_path: Path,
+    *inputs: Input,
+    force: bool = False,
+    fallback_dir: Path | None = None,
 ) -> dict[str, fetch.Outcome]:
     cfg = Inputs("test@example.org", (), inputs)
-    return {o.name: o for o in fetch.fetch(cfg, tmp_path, force=force)}
+    outcomes = fetch.fetch(cfg, tmp_path, fallback_dir=fallback_dir, force=force)
+    return {o.name: o for o in outcomes}
 
 
 def csv_body(rows: int) -> bytes:
@@ -190,3 +199,55 @@ def test_pinned_digest_rejects_other_content(stub: Stub, tmp_path: Path):
     assert outcome.status == "failed"
     assert "is pinned" in outcome.detail
     assert list((tmp_path / "g").iterdir()) == []
+
+
+def test_server_failure_keeps_only_a_pinned_copy_on_disk(stub: Stub, tmp_path: Path):
+    body = b"%PDF-1.7 results"
+    pinned = make_input(stub, "r", "pdf", sha256=hashlib.sha256(body).hexdigest())
+    unpinned = make_input(stub, "u", "pdf")
+    stub.resources["/r"] = Resource(body)
+    stub.resources["/u"] = Resource(body)
+    run(tmp_path, pinned, unpinned)
+    before = manifest(tmp_path)
+    stub.resources.clear()
+
+    outcomes = run(tmp_path, pinned, unpinned)
+    assert outcomes["r"].status == "fallback"
+    assert outcomes["r"].detail == "HTTP 404 Not Found; copy on disk"
+    assert outcomes["u"].status == "failed"
+    assert manifest(tmp_path) == before
+
+    # A copy changed on disk is not the pinned content, even at the same size.
+    (tmp_path / "r" / "r.pdf").write_bytes(b"%PDF-1.7 RESULTS")
+    assert run(tmp_path, pinned)["r"].status == "failed"
+
+
+def test_server_failure_installs_the_committed_pinned_copy(stub: Stub, tmp_path: Path):
+    body = b"%PDF-1.7 results"
+    pinned = make_input(stub, "r", "pdf", sha256=hashlib.sha256(body).hexdigest())
+    fallback = tmp_path / "fallback"
+    (fallback / "r").mkdir(parents=True)
+    (fallback / "r" / "r.pdf").write_bytes(body)
+    entry = {
+        "url": pinned.url,
+        "path": "r/r.pdf",
+        "sha256": pinned.sha256,
+        "bytes": len(body),
+        "retrieved_at": "2026-10-19T21:38:25+00:00",
+    }
+    (fallback / "manifest.json").write_text(json.dumps({"inputs": {"r": entry}}))
+    raw = tmp_path / "raw"
+
+    outcome = run(raw, pinned, fallback_dir=fallback)["r"]
+    assert outcome.status == "fallback"
+    assert outcome.detail == "HTTP 404 Not Found; committed copy"
+    assert (raw / "r" / "r.pdf").read_bytes() == body
+    # The entry says when the copy was downloaded, not when it was copied.
+    assert manifest(raw)["r"] == entry
+
+    # A committed copy that is not the pinned content is refused.
+    (raw / "r" / "r.pdf").unlink()
+    (fallback / "r" / "r.pdf").write_bytes(b"%PDF-1.7 RESULTS")
+    outcome = run(raw, pinned, fallback_dir=fallback)["r"]
+    assert outcome.status == "failed"
+    assert "not the pinned one" in outcome.detail

@@ -7,7 +7,7 @@
 
 import { html, useEffect, useRef } from '../vendor/preact-htm.module.js';
 import { getJSON, useLoaded } from './data.js';
-import { formatDate, formatNumber, repository, t } from './i18n.js';
+import { formatDate, formatNumber, repository, t, version } from './i18n.js';
 import { ArrowIcon, BackIcon, CloseIcon } from './icons.js';
 
 // Section → the keys of its title and of its line on the main page.
@@ -67,11 +67,17 @@ function EuFlag() {
   </svg>`;
 }
 
-/* The repository sentence, its {github} the link: "GitHub" in the case the
- * sentence needs (about.github), never the long URL. */
+/* The version, its number a link to its release, whose notes say what
+ * changed (only a tag of __version__ is deployed, docs/deploy.md, so the
+ * release exists); then the repository sentence, its {github} the link:
+ * "GitHub" in the case the sentence needs (about.github), never the long
+ * URL. */
 function repositoryLine() {
+  const [versionBefore, versionAfter = ''] = t('about.version').split('{version}');
   const [before, after = ''] = t('about.repository').split('{github}');
-  return html`${before}<${Link} href=${repository}>${t('about.github')}<//>${after}`;
+  const release = html`<${Link} href=${`${repository}/releases/tag/v${version}`}>${version}<//>`;
+  const github = html`<${Link} href=${repository}>${t('about.github')}<//>`;
+  return html`${versionBefore}${release}${versionAfter}${' · '}${before}${github}${after}`;
 }
 
 function Main({ sectionHash, onSection }) {
