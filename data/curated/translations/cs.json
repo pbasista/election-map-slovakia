@@ -11589,8 +11589,8 @@
    "text": "Obce s jedním volebním obvodem do zastupitelstva mají obvod přiřazen přímo. Obce a městské části s více obvody je vymezují vlastními usneseními podle ulic, čísel popisných a orientačních nebo částí obce. Tato usnesení z webových stránek obcí přepsal do pravidel AI agent a pravidla jsme ověřili tak, že každou adresu obce přiřadí právě do jednoho obvodu; usnesení jsou odkázána níže. U obcí, jejichž usnesení ještě není zpracováno, se zobrazí všechny obvody. Počet mandátů vychází z těchto usnesení; u zastupitelstva s jedním obvodem, jehož počet pro rok 2026 zatím není znám, se uvádí počet zvolený v roce 2022 (Statistický úřad Slovenské republiky), takto označený."
   },
   "about.method.research": {
-   "src": "Candidate research: for each candidate, AI agents search the sites on the list below, separately for each research language (sources in Slovak, in Hungarian and so on), decide which pages are about the candidate rather than someone with the same name, and report each relevant fact as a finding: a one-sentence claim, a verbatim quote and the page it comes from, sorted as career or controversy. Every research result first says what was searched (which sites, and when) and only then what was found; nothing found there is no proof that nothing exists. A candidate not researched yet is marked as such: no research has been done on them.",
-   "text": "Průzkum kandidátů: agenti umělé inteligence u každé kandidující osoby prohledávají weby ze seznamu níže, zvlášť pro každý jazyk průzkumu (zdroje ve slovenštině, v maďarštině atd.), posoudí, které stránky se skutečně týkají této osoby, a ne někoho se stejným jménem, a každou podstatnou skutečnost uvedou jako zjištění: tvrzení v jedné větě, doslovný citát a stránku, z níž pochází, zařazené jako kariéra, nebo kontroverze. U každého výsledku průzkumu nejprve uvádíme, co se prohledávalo (které weby a kdy), a teprve potom, co se našlo; pokud se tam nic nenašlo, není to důkaz, že nic neexistuje. Kandidát, který ještě nebyl prověřen, je tak také označen: průzkum o něm zatím nebyl proveden."
+   "src": "Candidate research: for each candidate, AI agents search the sites on the list below, separately for each research language (sources in Slovak, in Hungarian and so on), decide which pages are about the candidate rather than someone with the same name, and report each relevant fact as a finding: a one-sentence claim, a verbatim quote and the page it comes from. Findings are sorted as career, serious controversy (charges brought by the police or prosecutors, a court decision against the candidate or another serious matter an authority has established) or allegations and disputes (claims the candidate denies or no one has confirmed, cases that ended in the candidate's favour, and lesser matters); in doubt, a finding goes among the allegations and disputes. Every research result first says what was searched (which sites, and when) and only then what was found; nothing found there is no proof that nothing exists. A candidate not researched yet is marked as such: no research has been done on them.",
+   "text": "Průzkum kandidátů: agenti umělé inteligence u každé kandidující osoby prohledávají weby ze seznamu níže, zvlášť pro každý jazyk průzkumu (zdroje ve slovenštině, v maďarštině atd.), posoudí, které stránky se skutečně týkají této osoby, a ne někoho se stejným jménem, a každou podstatnou skutečnost uvedou jako zjištění: tvrzení v jedné větě, doslovnou citaci a stránku, ze které pochází. Zjištění jsou zařazena jako kariéra, závažná kontroverze (obvinění vznesené policií či státním zastupitelstvem, soudní rozhodnutí v neprospěch kandidáta nebo jiná závažná věc, kterou potvrdil úřad), nebo podezření a spory (tvrzení, která kandidát popírá nebo která nikdo nepotvrdil, případy skončené v jeho prospěch a méně závažné věci); v případě pochybností se zjištění zařadí mezi podezření a spory. Každý výsledek průzkumu nejprve uvádí, co bylo prověřeno (které weby a kdy), a teprve potom, co bylo nalezeno; to, že se tam nic nenašlo, není důkazem, že nic neexistuje. Kandidát, který ještě nebyl prověřen, je tak označen: průzkum o něm dosud nebyl proveden."
   },
   "about.method.research_check": {
    "src": "Every page cited is downloaded and kept, and a finding is accepted only if its quote appears word for word in the kept copy and the page names the candidate; the copy is linked next to the original. The claims are written by artificial intelligence and no one checks them one by one; a quote in a language other than that of the interface comes with a machine translation that no one has checked. The research covers only the sites on the list and may miss things: finding nothing does not mean there is nothing.",
@@ -12133,8 +12133,8 @@
    "text": "Kliknutím přidáte do filtru: „{name}“."
   },
   "filter.affairs": {
-   "src": "Controversies",
-   "text": "Kontroverze"
+   "src": "Serious controversies",
+   "text": "Závažné kontroverze"
   },
   "filter.affairs_add": {
    "src": "Click to add controversies to the filter.",
@@ -12143,6 +12143,10 @@
   "filter.clear": {
    "src": "Clear filter",
    "text": "Zrušit filtr"
+  },
+  "filter.disputes": {
+   "src": "Allegations and disputes",
+   "text": "Podezření a spory"
   },
   "filter.drop": {
    "src": "Click to remove “{name}” from the filter.",
@@ -12333,12 +12337,12 @@
    "text": "okres {name}"
   },
   "research.affairs_alert": {
-   "src": "Searched only the sites on our list ({scope}); controversies found about this candidate: {n}",
-   "text": "Prověřeno jen na webech z našeho seznamu ({scope}); nalezené kontroverze o tomto kandidátovi: {n}"
+   "src": "Searched only the sites on our list ({scope}); serious controversies found about this candidate: {n}",
+   "text": "Prověřeno jen na webech z našeho seznamu ({scope}); nalezené závažné kontroverze o tomto kandidátovi: {n}"
   },
   "research.affairs_badge": {
-   "src": "Searched only the sites on our list: {scope} (on {date}). Controversies found: {n}. Details on the candidate card.",
-   "text": "Prověřeno jen na webech z našeho seznamu: {scope} ({date}). Nalezené kontroverze: {n}. Podrobnosti na kartě kandidáta."
+   "src": "Searched only the sites on our list: {scope} (on {date}). Serious controversies found: {n}. Details on the candidate card.",
+   "text": "Prověřeno jen na webech z našeho seznamu: {scope} ({date}). Nalezené závažné kontroverze: {n}. Podrobnosti na kartě kandidáta."
   },
   "research.affairs_show": {
    "src": "Show",
@@ -12360,6 +12364,10 @@
    "src": "The copy of the page saved when it was cited, in which the quote was checked word for word",
    "text": "Kopie stránky uložená při citování, v níž byl citát doslovně ověřen"
   },
+  "research.disputes_badge": {
+   "src": "Searched only the sites on our list: {scope} (on {date}). Allegations and disputes found: {n} (unproven or lesser matters). Details on the candidate card.",
+   "text": "Prověřeno jen na webech z našeho seznamu: {scope} ({date}). Nalezená podezření a spory: {n} (neprokázané nebo méně závažné věci). Podrobnosti na kartě kandidáta."
+  },
   "research.done": {
    "src": "Researched on {date}; sources searched in: {languages} (source list version {version}).",
    "text": "Prozkoumáno {date}; prohledané zdroje v jazycích: {languages} (verze seznamu zdrojů {version})."
@@ -12369,12 +12377,24 @@
    "text": "Zjištění: {n}."
   },
   "research.kind.affair": {
-   "src": "Controversies",
-   "text": "Kontroverze"
+   "src": "Serious controversies",
+   "text": "Závažné kontroverze"
+  },
+  "research.kind.affair_note": {
+   "src": "Charges brought by the police or prosecutors, court decisions against the candidate and other serious matters an authority has established.",
+   "text": "Obvinění vznesená policií či státním zastupitelstvem, soudní rozhodnutí v neprospěch kandidáta a další závažné věci, které potvrdil úřad."
   },
   "research.kind.cv": {
    "src": "Career and public roles",
    "text": "Kariéra a veřejné působení"
+  },
+  "research.kind.dispute": {
+   "src": "Allegations and disputes",
+   "text": "Podezření a spory"
+  },
+  "research.kind.dispute_note": {
+   "src": "Claims the candidate denies or that no court or authority has confirmed, cases that ended in the candidate's favour, and lesser matters.",
+   "text": "Tvrzení, která kandidát popírá nebo která nepotvrdil soud ani úřad, případy, které skončily v jeho prospěch, a méně závažné věci."
   },
   "research.lang.cs": {
    "src": "Czech",

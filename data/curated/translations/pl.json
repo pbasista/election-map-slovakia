@@ -11589,8 +11589,8 @@
    "text": "Gminy z jednym okręgiem wyborczym do rady mają go przypisanego bezpośrednio. Gminy i dzielnice miast z kilkoma okręgami określają je we własnych uchwałach, według ulic, numerów domów lub części gminy. Agent AI przepisał te uchwały ze stron internetowych gmin na reguły, które sprawdzono pod kątem tego, czy każdy adres gminy trafia do dokładnie jednego okręgu; uchwały są podlinkowane poniżej. Jeśli uchwała nie została jeszcze opracowana, wyświetlane są wszystkie okręgi. Liczba mandatów pochodzi z tych uchwał; przy radzie z jednym okręgiem, której liczba na 2026 r. nie jest jeszcze znana, podano liczbę wybraną w 2022 r. (Urząd Statystyczny Republiki Słowackiej), oznaczoną jako taka."
   },
   "about.method.research": {
-   "src": "Candidate research: for each candidate, AI agents search the sites on the list below, separately for each research language (sources in Slovak, in Hungarian and so on), decide which pages are about the candidate rather than someone with the same name, and report each relevant fact as a finding: a one-sentence claim, a verbatim quote and the page it comes from, sorted as career or controversy. Every research result first says what was searched (which sites, and when) and only then what was found; nothing found there is no proof that nothing exists. A candidate not researched yet is marked as such: no research has been done on them.",
-   "text": "Badanie kandydatów: w przypadku każdego kandydata agenci sztucznej inteligencji przeszukują strony z poniższej listy, osobno dla każdego języka badania (źródła po słowacku, po węgiersku itd.), oceniają, które strony rzeczywiście dotyczą tego kandydata, a nie kogoś o tym samym nazwisku, i każdy istotny fakt podają jako ustalenie: twierdzenie w jednym zdaniu, dosłowny cytat i stronę, z której pochodzi, zaklasyfikowane jako kariera lub kontrowersja. Przy każdym wyniku badania najpierw podajemy, co przeszukano (które strony i kiedy), a dopiero potem, co znaleziono; jeśli nic tam nie znaleziono, nie jest to dowód, że nic nie istnieje. Kandydat, który nie został jeszcze sprawdzony, jest tak oznaczony: badania na jego temat jeszcze nie przeprowadzono."
+   "src": "Candidate research: for each candidate, AI agents search the sites on the list below, separately for each research language (sources in Slovak, in Hungarian and so on), decide which pages are about the candidate rather than someone with the same name, and report each relevant fact as a finding: a one-sentence claim, a verbatim quote and the page it comes from. Findings are sorted as career, serious controversy (charges brought by the police or prosecutors, a court decision against the candidate or another serious matter an authority has established) or allegations and disputes (claims the candidate denies or no one has confirmed, cases that ended in the candidate's favour, and lesser matters); in doubt, a finding goes among the allegations and disputes. Every research result first says what was searched (which sites, and when) and only then what was found; nothing found there is no proof that nothing exists. A candidate not researched yet is marked as such: no research has been done on them.",
+   "text": "Badanie kandydatów: w przypadku każdego kandydata agenci sztucznej inteligencji przeszukują strony z poniższej listy, osobno dla każdego języka badania (źródła po słowacku, po węgiersku itd.), oceniają, które strony rzeczywiście dotyczą kandydata, a nie kogoś o tym samym imieniu i nazwisku, i każdy istotny fakt podają jako ustalenie: twierdzenie w jednym zdaniu, dosłowny cytat i stronę, z której pochodzi. Ustalenia są klasyfikowane jako kariera, poważne kontrowersje (zarzuty postawione przez policję lub prokuraturę, orzeczenie sądu na niekorzyść kandydata lub inna poważna sprawa stwierdzona przez urząd) albo podejrzenia i spory (twierdzenia, którym kandydat zaprzecza lub których nikt nie potwierdził, sprawy zakończone na jego korzyść oraz sprawy mniejszej wagi); w razie wątpliwości ustalenie trafia do podejrzeń i sporów. Każdy wynik badania najpierw podaje, co sprawdzono (które strony i kiedy), a dopiero potem, co znaleziono; to, że nic tam nie znaleziono, nie dowodzi, że nic nie istnieje. Kandydat, który nie został jeszcze zbadany, jest tak oznaczony: nie przeprowadzono wobec niego żadnego badania."
   },
   "about.method.research_check": {
    "src": "Every page cited is downloaded and kept, and a finding is accepted only if its quote appears word for word in the kept copy and the page names the candidate; the copy is linked next to the original. The claims are written by artificial intelligence and no one checks them one by one; a quote in a language other than that of the interface comes with a machine translation that no one has checked. The research covers only the sites on the list and may miss things: finding nothing does not mean there is nothing.",
@@ -12133,8 +12133,8 @@
    "text": "Kliknij, aby dodać „{name}” do filtra."
   },
   "filter.affairs": {
-   "src": "Controversies",
-   "text": "Kontrowersje"
+   "src": "Serious controversies",
+   "text": "Poważne kontrowersje"
   },
   "filter.affairs_add": {
    "src": "Click to add controversies to the filter.",
@@ -12143,6 +12143,10 @@
   "filter.clear": {
    "src": "Clear filter",
    "text": "Wyczyść filtr"
+  },
+  "filter.disputes": {
+   "src": "Allegations and disputes",
+   "text": "Podejrzenia i spory"
   },
   "filter.drop": {
    "src": "Click to remove “{name}” from the filter.",
@@ -12333,12 +12337,12 @@
    "text": "powiat {name}"
   },
   "research.affairs_alert": {
-   "src": "Searched only the sites on our list ({scope}); controversies found about this candidate: {n}",
-   "text": "Sprawdzono tylko na stronach z naszej listy ({scope}); znalezione kontrowersje dotyczące tego kandydata: {n}"
+   "src": "Searched only the sites on our list ({scope}); serious controversies found about this candidate: {n}",
+   "text": "Sprawdzono tylko na stronach z naszej listy ({scope}); znalezione poważne kontrowersje dotyczące tego kandydata: {n}"
   },
   "research.affairs_badge": {
-   "src": "Searched only the sites on our list: {scope} (on {date}). Controversies found: {n}. Details on the candidate card.",
-   "text": "Sprawdzono tylko na stronach z naszej listy: {scope} ({date}). Znalezione kontrowersje: {n}. Szczegóły na karcie kandydata."
+   "src": "Searched only the sites on our list: {scope} (on {date}). Serious controversies found: {n}. Details on the candidate card.",
+   "text": "Sprawdzono tylko na stronach z naszej listy: {scope} ({date}). Znalezione poważne kontrowersje: {n}. Szczegóły na karcie kandydata."
   },
   "research.affairs_show": {
    "src": "Show",
@@ -12360,6 +12364,10 @@
    "src": "The copy of the page saved when it was cited, in which the quote was checked word for word",
    "text": "Kopia strony zapisana w chwili cytowania, w której cytat sprawdzono słowo w słowo"
   },
+  "research.disputes_badge": {
+   "src": "Searched only the sites on our list: {scope} (on {date}). Allegations and disputes found: {n} (unproven or lesser matters). Details on the candidate card.",
+   "text": "Sprawdzono tylko na stronach z naszej listy: {scope} ({date}). Znalezione podejrzenia i spory: {n} (nieudowodnione lub mniejszej wagi). Szczegóły na karcie kandydata."
+  },
   "research.done": {
    "src": "Researched on {date}; sources searched in: {languages} (source list version {version}).",
    "text": "Zbadano {date}; przeszukane źródła w językach: {languages} (wersja listy źródeł {version})."
@@ -12369,12 +12377,24 @@
    "text": "Ustalenia: {n}."
   },
   "research.kind.affair": {
-   "src": "Controversies",
-   "text": "Kontrowersje"
+   "src": "Serious controversies",
+   "text": "Poważne kontrowersje"
+  },
+  "research.kind.affair_note": {
+   "src": "Charges brought by the police or prosecutors, court decisions against the candidate and other serious matters an authority has established.",
+   "text": "Zarzuty postawione przez policję lub prokuraturę, orzeczenia sądu na niekorzyść kandydata oraz inne poważne sprawy stwierdzone przez urząd."
   },
   "research.kind.cv": {
    "src": "Career and public roles",
    "text": "Kariera i funkcje publiczne"
+  },
+  "research.kind.dispute": {
+   "src": "Allegations and disputes",
+   "text": "Podejrzenia i spory"
+  },
+  "research.kind.dispute_note": {
+   "src": "Claims the candidate denies or that no court or authority has confirmed, cases that ended in the candidate's favour, and lesser matters.",
+   "text": "Twierdzenia, którym kandydat zaprzecza lub których nie potwierdził żaden sąd ani urząd, sprawy zakończone na jego korzyść oraz sprawy mniejszej wagi."
   },
   "research.lang.cs": {
    "src": "Czech",

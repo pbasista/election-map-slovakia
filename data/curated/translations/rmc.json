@@ -11586,8 +11586,8 @@
    "text": "Gava jekhe obvodoha andro zastupiteľstvo les len priamo priradzimen. Gava the forošiske kotora buter obvodenca len thoven andre peskere uznesenia, pal o ulici, numeri le kherengere abo kotora le gavestere. AI agentos prepisinďa kala uznesenia andal o webi le gavengere andre pravidla, save sas skontrolimen, hoj sako adresa le gavestere te džal ča andro jekh obvod; o uznesenia hine phandle tele. Kaj o uznesenie mek naj spracimen, sikhaven pes savore obvodi. O gindo mandátura avel andal kala uznesenia; ke zastupiteľstvo jekhe obvodoha, savoro gindo pro berš 2026 mék na prindžarďol, sikhavas o gindo, so sas kidlo andro berš 2022 (Štatistikakero úrados la Slovačiko republikakero), avka sikhado."
   },
   "about.method.research": {
-   "src": "Candidate research: for each candidate, AI agents search the sites on the list below, separately for each research language (sources in Slovak, in Hungarian and so on), decide which pages are about the candidate rather than someone with the same name, and report each relevant fact as a finding: a one-sentence claim, a verbatim quote and the page it comes from, sorted as career or controversy. Every research result first says what was searched (which sites, and when) and only then what was found; nothing found there is no proof that nothing exists. A candidate not researched yet is marked as such: no research has been done on them.",
-   "text": "Prieskumos pal o kandidáti: pal sako kandidátos o agenta la umelo inteligencijakere roden pro weby andal o zoznamos tele, korkoro pal sako čhib (zdroja andre slovačiko, andre ungrikano the avka dureder), rozhodinen, save stránki hine čačes pal o kandidátos the na pal vareko avro le jekhe lavenca, the sako važno fakta den sar zisťišagos: jekh vetakeri phenďi, doslovno citátos the e stránka, khatar avel, zaradzimen sar kariéra abo kontroverzija. Pašal sako výsledkos le rodibnaskero angluňes phenas, so rodľam (save weby the kana), the ča paloda, so arakhľam; te odoj ňič na arakhľam, oda nane dôkazis, hoj ňič na hin. Kandidátos, savo mek na sas preskúmimen, hino avka the označimen: pal leste mek na sas rodiben."
+   "src": "Candidate research: for each candidate, AI agents search the sites on the list below, separately for each research language (sources in Slovak, in Hungarian and so on), decide which pages are about the candidate rather than someone with the same name, and report each relevant fact as a finding: a one-sentence claim, a verbatim quote and the page it comes from. Findings are sorted as career, serious controversy (charges brought by the police or prosecutors, a court decision against the candidate or another serious matter an authority has established) or allegations and disputes (claims the candidate denies or no one has confirmed, cases that ended in the candidate's favour, and lesser matters); in doubt, a finding goes among the allegations and disputes. Every research result first says what was searched (which sites, and when) and only then what was found; nothing found there is no proof that nothing exists. A candidate not researched yet is marked as such: no research has been done on them.",
+   "text": "Prieskumos pal o kandidáti: pal sako kandidátos o agenta la umelo inteligencijakere roden pro weby andal o zoznamos tele, korkoro pal sako čhib le prieskumoskeri (zdroja andre slovačiko, andre ungrikano the avka dureder), rozhodinen, save stránki hine čačes pal o kandidátos the na pal vareko avro le jekhe lavenca, the sako važno fakta den sar zisťišagos: jekh vetakeri phenďi, doslovno citátos the e stránka, khatar avel. Zisťišagi hine zaradzimen sar kariéra, phari kontroverzija (obviňeňje, so dine e polícija abo e prokuratúra, rozhodnutje le súdoskero pro nasimpen le kandidátoskero abo aver phari veca, so potvrdzinďa o úrados) abo podozreňja the spori (phenďa, so o kandidátos odphenel abo so ňiko na potvrdzinďa, prípadi, so pes skončinde pro leskero lačhipen, the tikneder veci); te na džanas, o zisťišagos džal maškar o podozreňja the spori. Pašal sako výsledkos le rodibnaskero angluňes phenas, so rodľam (save weby the kana), the ča paloda, so arakhľam; te odoj ňič na arakhľam, oda nane dôkazis, hoj ňič na hin. Kandidátos, savo mek na sas preskúmimen, hino avka the označimen: pal leste mek na sas rodiben."
   },
   "about.method.research_check": {
    "src": "Every page cited is downloaded and kept, and a finding is accepted only if its quote appears word for word in the kept copy and the page names the candidate; the copy is linked next to the original. The claims are written by artificial intelligence and no one checks them one by one; a quote in a language other than that of the interface comes with a machine translation that no one has checked. The research covers only the sites on the list and may miss things: finding nothing does not mean there is nothing.",
@@ -12130,8 +12130,8 @@
    "text": "Klikin, kaj te thoves andro filtros: „{name}“."
   },
   "filter.affairs": {
-   "src": "Controversies",
-   "text": "Kontroverziji"
+   "src": "Serious controversies",
+   "text": "Phare kontroverziji"
   },
   "filter.affairs_add": {
    "src": "Click to add controversies to the filter.",
@@ -12140,6 +12140,10 @@
   "filter.clear": {
    "src": "Clear filter",
    "text": "Zrušin o filtros"
+  },
+  "filter.disputes": {
+   "src": "Allegations and disputes",
+   "text": "Podozreňja the spori"
   },
   "filter.drop": {
    "src": "Click to remove “{name}” from the filter.",
@@ -12330,12 +12334,12 @@
    "text": "okresis {name}"
   },
   "research.affairs_alert": {
-   "src": "Searched only the sites on our list ({scope}); controversies found about this candidate: {n}",
-   "text": "Preskúmimen ča pro weby andal amaro zoznamos ({scope}); arakhle kontroverziji pal kada kandidátos: {n}"
+   "src": "Searched only the sites on our list ({scope}); serious controversies found about this candidate: {n}",
+   "text": "Preskúmimen ča pro weby andal amaro zoznamos ({scope}); arakhle phare kontroverziji pal kada kandidátos: {n}"
   },
   "research.affairs_badge": {
-   "src": "Searched only the sites on our list: {scope} (on {date}). Controversies found: {n}. Details on the candidate card.",
-   "text": "Preskúmimen ča pro weby andal amaro zoznamos: {scope} ({date}). Arakhle kontroverziji: {n}. Buter pre karta le kandidátoskeri."
+   "src": "Searched only the sites on our list: {scope} (on {date}). Serious controversies found: {n}. Details on the candidate card.",
+   "text": "Preskúmimen ča pro weby andal amaro zoznamos: {scope} ({date}). Arakhle phare kontroverziji: {n}. Buter pre karta le kandidátoskeri."
   },
   "research.affairs_show": {
    "src": "Show",
@@ -12357,6 +12361,10 @@
    "src": "The copy of the page saved when it was cited, in which the quote was checked word for word",
    "text": "E kópija la stránkakeri, savi sas uložimen, kana sas citimen, the andre savi sas o citátos skontrolimen lav pal lav"
   },
+  "research.disputes_badge": {
+   "src": "Searched only the sites on our list: {scope} (on {date}). Allegations and disputes found: {n} (unproven or lesser matters). Details on the candidate card.",
+   "text": "Preskúmimen ča pro weby andal amaro zoznamos: {scope} ({date}). Arakhle podozreňja the spori: {n} (na dokazimen abo tikneder veci). Buter pre karta le kandidátoskeri."
+  },
   "research.done": {
    "src": "Researched on {date}; sources searched in: {languages} (source list version {version}).",
    "text": "Preskúminďa {date}; zdroja sas rodinde andre čhiba: {languages} (verzija le zoznamoskere zdrojengere {version})."
@@ -12366,12 +12374,24 @@
    "text": "Zisťišaga: {n}."
   },
   "research.kind.affair": {
-   "src": "Controversies",
-   "text": "Kontroverziji"
+   "src": "Serious controversies",
+   "text": "Phare kontroverziji"
+  },
+  "research.kind.affair_note": {
+   "src": "Charges brought by the police or prosecutors, court decisions against the candidate and other serious matters an authority has established.",
+   "text": "Obviňeňja, so dine e polícija abo e prokuratúra, rozhodnutja le súdoskere pro nasimpen le kandidátoskero the aver phare veci, so potvrdzinďa o úrados."
   },
   "research.kind.cv": {
    "src": "Career and public roles",
    "text": "Kariéra the verejno buťi"
+  },
+  "research.kind.dispute": {
+   "src": "Allegations and disputes",
+   "text": "Podozreňja the spori"
+  },
+  "research.kind.dispute_note": {
+   "src": "Claims the candidate denies or that no court or authority has confirmed, cases that ended in the candidate's favour, and lesser matters.",
+   "text": "Phenďa, so o kandidátos odphenel abo so na potvrdzinďa ňisavo súdos aňi úrados, prípadi, so pes skončinde pro leskero lačhipen, the tikneder veci."
   },
   "research.lang.cs": {
    "src": "Czech",

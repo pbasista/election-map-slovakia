@@ -11586,8 +11586,8 @@
    "text": "Громадам з одним виборчим округом до ради його призначено безпосередньо. Громади та міські частини з кількома округами визначають їх власними рішеннями — за вулицями, номерами будинків або частинами громади. ШІ-агент переписав ці рішення з вебсайтів громад у правила, які ми перевірили: кожна адреса громади потрапляє рівно в один округ; посилання на рішення наведено нижче. Якщо рішення ще не опрацьовано, показано всі округи. Кількість мандатів взято з цих рішень; для ради з одним округом, кількість якої на 2026 рік ще невідома, показано кількість, обрану у 2022 році (Статистичне управління Словацької Республіки), з відповідною позначкою."
   },
   "about.method.research": {
-   "src": "Candidate research: for each candidate, AI agents search the sites on the list below, separately for each research language (sources in Slovak, in Hungarian and so on), decide which pages are about the candidate rather than someone with the same name, and report each relevant fact as a finding: a one-sentence claim, a verbatim quote and the page it comes from, sorted as career or controversy. Every research result first says what was searched (which sites, and when) and only then what was found; nothing found there is no proof that nothing exists. A candidate not researched yet is marked as such: no research has been done on them.",
-   "text": "Дослідження кандидатів: агенти штучного інтелекту для кожного кандидата переглядають сайти зі списку нижче, окремо для кожної мови дослідження (джерела словацькою, угорською тощо), визначають, які сторінки справді стосуються цього кандидата, а не когось з тим самим ім’ям, і подають кожен суттєвий факт як знахідку: твердження в одному реченні, дослівну цитату та сторінку, з якої вона походить, з позначкою «кар’єра» або «скандал». Кожен результат дослідження спершу вказує, що саме переглянуто (які сайти й коли), і лише потім — що знайдено; якщо там нічого не знайдено, це не доказ, що нічого не існує. Кандидата, якого ще не досліджували, так і позначено: дослідження щодо нього ще не проводилося."
+   "src": "Candidate research: for each candidate, AI agents search the sites on the list below, separately for each research language (sources in Slovak, in Hungarian and so on), decide which pages are about the candidate rather than someone with the same name, and report each relevant fact as a finding: a one-sentence claim, a verbatim quote and the page it comes from. Findings are sorted as career, serious controversy (charges brought by the police or prosecutors, a court decision against the candidate or another serious matter an authority has established) or allegations and disputes (claims the candidate denies or no one has confirmed, cases that ended in the candidate's favour, and lesser matters); in doubt, a finding goes among the allegations and disputes. Every research result first says what was searched (which sites, and when) and only then what was found; nothing found there is no proof that nothing exists. A candidate not researched yet is marked as such: no research has been done on them.",
+   "text": "Дослідження кандидатів: агенти штучного інтелекту для кожного кандидата переглядають сайти зі списку нижче, окремо для кожної мови дослідження (джерела словацькою, угорською тощо), визначають, які сторінки справді стосуються цього кандидата, а не когось з таким самим ім’ям, і подають кожен суттєвий факт як знахідку: твердження в одному реченні, дослівну цитату та сторінку, з якої вона походить. Знахідки поділено на кар’єру, серйозні скандали (обвинувачення, висунуті поліцією чи прокуратурою, рішення суду не на користь кандидата або інша серйозна справа, яку встановив державний орган) та звинувачення й суперечки (твердження, які кандидат заперечує або які ніхто не підтвердив, справи, що завершилися на його користь, і менш серйозні справи); у разі сумніву знахідку зараховують до звинувачень і суперечок. Кожен результат дослідження спочатку повідомляє, що саме перевірено (які сайти і коли), і лише потім — що знайдено; те, що там нічого не знайдено, не доводить, що нічого немає. Кандидата, якого ще не досліджено, позначено відповідно: дослідження щодо нього ще не проводилося."
   },
   "about.method.research_check": {
    "src": "Every page cited is downloaded and kept, and a finding is accepted only if its quote appears word for word in the kept copy and the page names the candidate; the copy is linked next to the original. The claims are written by artificial intelligence and no one checks them one by one; a quote in a language other than that of the interface comes with a machine translation that no one has checked. The research covers only the sites on the list and may miss things: finding nothing does not mean there is nothing.",
@@ -12130,8 +12130,8 @@
    "text": "Натисніть, щоб додати «{name}» до фільтра."
   },
   "filter.affairs": {
-   "src": "Controversies",
-   "text": "Суперечності та скандали"
+   "src": "Serious controversies",
+   "text": "Серйозні скандали"
   },
   "filter.affairs_add": {
    "src": "Click to add controversies to the filter.",
@@ -12140,6 +12140,10 @@
   "filter.clear": {
    "src": "Clear filter",
    "text": "Очистити фільтр"
+  },
+  "filter.disputes": {
+   "src": "Allegations and disputes",
+   "text": "Звинувачення та суперечки"
   },
   "filter.drop": {
    "src": "Click to remove “{name}” from the filter.",
@@ -12330,12 +12334,12 @@
    "text": "округ {name}"
   },
   "research.affairs_alert": {
-   "src": "Searched only the sites on our list ({scope}); controversies found about this candidate: {n}",
-   "text": "Перевірено лише на сайтах з нашого списку ({scope}); знайдені суперечності та скандали щодо цього кандидата: {n}"
+   "src": "Searched only the sites on our list ({scope}); serious controversies found about this candidate: {n}",
+   "text": "Перевірено лише на сайтах з нашого списку ({scope}); знайдені серйозні скандали щодо цього кандидата: {n}"
   },
   "research.affairs_badge": {
-   "src": "Searched only the sites on our list: {scope} (on {date}). Controversies found: {n}. Details on the candidate card.",
-   "text": "Перевірено лише на сайтах з нашого списку: {scope} ({date}). Знайдені суперечності та скандали: {n}. Подробиці — на картці кандидата."
+   "src": "Searched only the sites on our list: {scope} (on {date}). Serious controversies found: {n}. Details on the candidate card.",
+   "text": "Перевірено лише на сайтах з нашого списку: {scope} ({date}). Знайдені серйозні скандали: {n}. Подробиці — на картці кандидата."
   },
   "research.affairs_show": {
    "src": "Show",
@@ -12357,6 +12361,10 @@
    "src": "The copy of the page saved when it was cited, in which the quote was checked word for word",
    "text": "Копія сторінки, збережена під час цитування, у якій цитату перевірено дослівно"
   },
+  "research.disputes_badge": {
+   "src": "Searched only the sites on our list: {scope} (on {date}). Allegations and disputes found: {n} (unproven or lesser matters). Details on the candidate card.",
+   "text": "Перевірено лише на сайтах з нашого списку: {scope} ({date}). Знайдені звинувачення та суперечки: {n} (недоведені або менш серйозні справи). Подробиці — на картці кандидата."
+  },
   "research.done": {
    "src": "Researched on {date}; sources searched in: {languages} (source list version {version}).",
    "text": "Досліджено {date}; джерела переглянуто мовами: {languages} (версія списку джерел {version})."
@@ -12366,12 +12374,24 @@
    "text": "Знахідки: {n}."
   },
   "research.kind.affair": {
-   "src": "Controversies",
-   "text": "Суперечності та скандали"
+   "src": "Serious controversies",
+   "text": "Серйозні скандали"
+  },
+  "research.kind.affair_note": {
+   "src": "Charges brought by the police or prosecutors, court decisions against the candidate and other serious matters an authority has established.",
+   "text": "Обвинувачення, висунуті поліцією чи прокуратурою, рішення суду не на користь кандидата та інші серйозні справи, які встановив державний орган."
   },
   "research.kind.cv": {
    "src": "Career and public roles",
    "text": "Кар’єра та публічна діяльність"
+  },
+  "research.kind.dispute": {
+   "src": "Allegations and disputes",
+   "text": "Звинувачення та суперечки"
+  },
+  "research.kind.dispute_note": {
+   "src": "Claims the candidate denies or that no court or authority has confirmed, cases that ended in the candidate's favour, and lesser matters.",
+   "text": "Твердження, які кандидат заперечує або які не підтвердив ні суд, ні державний орган, справи, що завершилися на його користь, і менш серйозні справи."
   },
   "research.lang.cs": {
    "src": "Czech",

@@ -7,8 +7,9 @@ job's categories (``config/sources.toml``: ``[research]`` maps a language to
 the categories its agents search), decides which hits are about this person
 and not a namesake, and reports each relevant fact as a finding: the page,
 a verbatim quote, a one-sentence claim in English and Slovak, whether it is
-career (``cv``) or a controversy (``affair``), and what in the source ties it
-to the candidate. A person with no finding is reported with an empty list:
+career (``cv``), a serious, established controversy (``affair``) or a
+disputed or lesser one (``dispute``), and what in the source ties it to
+the candidate. A person with no finding is reported with an empty list:
 "researched, nothing found" is a result too.
 
 Research runs per language and constituency: ``--only`` takes research
@@ -72,7 +73,7 @@ CACHE_DIR = "cache"
 DOCUMENTS_DIR = "documents"
 PRIORITY = "office"
 DEFAULT_SIZE = 40
-KINDS = ("cv", "affair")
+KINDS = ("cv", "affair", "dispute")
 MIN_QUOTE = 20
 MAX_QUOTE = 600
 MAX_CLAIM = 300
@@ -758,10 +759,26 @@ finding:
   expertise, a business or organisation they built or run, initiatives or
   decisions they led and their results, awards, public activity beyond the
   routine.
-- `affair`: controversies the source reports: investigations, charges,
-  court cases, conflicts of interest, scandals. Report what the source says,
-  attributed ("according to the police…"), never more; note acquittals or
-  outcomes if the source gives them.
+- `affair`: a serious controversy, established with certainty: criminal
+  proceedings against the candidate (charges, an indictment, detention, an
+  investigation stated to be about their own conduct), a court decision
+  against them in a matter of public relevance (a conviction, a penal
+  order, a judgment that they acted unlawfully), or another very serious
+  matter established by an authority or undisputed (a binding sanction for
+  a conflict of interest, an audit finding serious breaches they were
+  responsible for, removal from office for misconduct, a confirmed offence
+  such as drunk driving).
+- `dispute`: any other controversy: allegations the candidate denies or no
+  authority has confirmed (often brought by political opponents to make
+  the news), a criminal complaint with no charges, an investigation of a
+  matter that names no charge against the candidate, a case that ended in
+  their favour (acquittal, charges dropped), political quarrels, minor
+  fines, or anything whose wrongness is unclear. When in doubt between
+  the two, `dispute`.
+
+For both, report what the source says, attributed ("according to the
+police…"), never more, and note acquittals or outcomes if the source gives
+them.
 
 Not:
 

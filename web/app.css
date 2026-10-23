@@ -1342,8 +1342,9 @@ button.contest-head {
   opacity: 0.8;
 }
 
-/* Research found controversies: a red edge down the whole row, beside the
-   mark after the name, so the row stands out while scrolling a long list. */
+/* Research found serious controversies: a red edge down the whole row,
+   beside the mark after the name, so the row stands out while scrolling a
+   long list. Allegations and disputes alone do not flag it. */
 .cand.flagged {
   box-shadow: inset 4px 0 0 var(--danger);
 }
@@ -1440,7 +1441,8 @@ button.contest-head {
 .party-logo,
 .in-office,
 .researched,
-.affairs {
+.affairs,
+.disputes {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1464,7 +1466,8 @@ button.contest-head {
 
 .in-office .ico,
 .researched .ico,
-.affairs .ico {
+.affairs .ico,
+.disputes .ico {
   flex: none;
   width: 12px;
   height: 12px;
@@ -1507,7 +1510,8 @@ button.contest-head {
 
 .in-office,
 .researched,
-.affairs {
+.affairs,
+.disputes {
   padding: 0 6px 0 4px;
   border-radius: 999px;
 }
@@ -1548,18 +1552,27 @@ button.contest-head {
   opacity: 0.7;
 }
 
-/* Controversies: the warning sign and their number in red on a light red
-   tint, first of the marks. */
+/* Serious controversies: the warning sign and their number in red on a
+   light red tint, first of the marks. */
 .affairs {
   border-color: var(--danger);
   background: var(--danger-deep);
   color: var(--danger);
 }
 
+/* Allegations and disputes: in the amber of the notices, calmer than the
+   red, and their row not flagged. */
+.disputes {
+  border-color: var(--warning);
+  background: color-mix(in srgb, var(--warning) 10%, transparent);
+  color: var(--warning);
+}
+
 /* The badges as buttons in a ballots row (each adds itself to the
    filter, or takes itself out); a party's is a button around its tag or
    logo. */
 button.affairs,
+button.disputes,
 button.in-office,
 button.researched {
   cursor: pointer;
@@ -1583,6 +1596,7 @@ button.researched {
 
 .party-button:hover,
 button.affairs:hover,
+button.disputes:hover,
 button.in-office:hover,
 button.researched:hover {
   outline: 2px solid color-mix(in srgb, var(--primary) 45%, transparent);
@@ -1592,6 +1606,7 @@ button.researched:hover {
 /* In the filter: ringed, until pressed again. */
 .party-button.active,
 button.affairs.active,
+button.disputes.active,
 button.in-office.active,
 button.researched.active {
   outline: 2px solid var(--primary);
@@ -1676,6 +1691,10 @@ button.researched.active {
 
 .affairs-chip > .ico {
   color: var(--danger);
+}
+
+.disputes-chip > .ico {
+  color: var(--warning);
 }
 
 .researched-chip > .ico {
@@ -1927,6 +1946,18 @@ button.researched.active {
   color: var(--danger);
 }
 
+.finding-kind.dispute {
+  color: var(--warning);
+}
+
+/* What a kind of controversy holds, under its heading. */
+.finding-kind-note {
+  margin: -4px 16px 8px;
+  color: var(--text-dim);
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+}
+
 .finding-kind .ico {
   width: 16px;
   height: 16px;
@@ -1949,6 +1980,11 @@ button.researched.active {
   background: var(--danger-deep);
   border-color: var(--danger);
   border-left-width: 4px;
+}
+
+/* Allegations and disputes: an amber edge, no tint and no thick bar. */
+.finding.dispute {
+  border-color: color-mix(in srgb, var(--warning) 55%, var(--line));
 }
 
 .finding p {

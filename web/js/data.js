@@ -116,9 +116,10 @@ function decodeResult(body, [votes, valid, voters, eligible, obvod = null]) {
  * original then in `occupationSk`; `parties` are {short, name, logo} from
  * the index's party table; `offices` the offices the person holds now,
  * [{body, since, result}], from the *entry* of the contest in its area file;
- * `research` {date, findings, languages, affairs} (affairs: how
- * many of the findings are controversies) from the area file's *researched*
- * summaries, null while the person is not researched yet. */
+ * `research` {date, findings, languages, affairs, disputes} (how many of
+ * the findings are serious controversies, how many disputed or lesser
+ * ones) from the area file's *researched* summaries, null while the
+ * person is not researched yet. */
 function decodeCandidate(contest, entry, row, translated, index, researched) {
   const [number, titleBefore, firstName, surname, titleAfter, age, occupation, parties, person] =
     row;
@@ -152,6 +153,7 @@ function decodeCandidate(contest, entry, row, translated, index, researched) {
           findings: research[1],
           languages: research[2],
           affairs: research[3],
+          disputes: research[4],
         }
       : null,
   };
@@ -316,9 +318,9 @@ export async function person(candidacyId) {
 }
 
 /* What research found on candidate *c*, from data/research/<lang>/<area>.json
- * beside the candidate's area file: [{kind ('cv' or 'affair'), claim (in the
- * page's language, else English), quote (as written in the page's
- * `language`), quoteTranslated (machine translation into the page's
+ * beside the candidate's area file: [{kind ('cv', 'affair' or 'dispute'),
+ * claim (in the page's language, else English), quote (as written in the
+ * page's `language`), quoteTranslated (machine translation into the page's
  * language, or null), url, title, published (or ''), cache (the sha256 of
  * the cached copy), category}]. The file lists only persons with findings
  * and exists only where there are some. */

@@ -11589,8 +11589,8 @@
    "text": "Az egy választókerületű településeken a választókerület közvetlenül hozzá van rendelve. A több választókerületű települések és városrészek saját határozataikban jelölik ki őket utcák, házszámok vagy településrészek szerint. Ezeket a határozatokat egy MI-ügynök írta át szabályokká a települések honlapjairól, és ellenőriztük, hogy a település minden címét pontosan egy választókerületbe sorolják; a határozatok alább elérhetők. Ahol a határozatot még nem dolgoztuk fel, minden választókerület megjelenik. A mandátumok száma ezekből a határozatokból származik; az egy választókerületes képviselő-testületnél, amelynek 2026-os száma még nem ismert, a 2022-ben megválasztottak száma látható (Szlovák Köztársaság Statisztikai Hivatala), ekként megjelölve."
   },
   "about.method.research": {
-   "src": "Candidate research: for each candidate, AI agents search the sites on the list below, separately for each research language (sources in Slovak, in Hungarian and so on), decide which pages are about the candidate rather than someone with the same name, and report each relevant fact as a finding: a one-sentence claim, a verbatim quote and the page it comes from, sorted as career or controversy. Every research result first says what was searched (which sites, and when) and only then what was found; nothing found there is no proof that nothing exists. A candidate not researched yet is marked as such: no research has been done on them.",
-   "text": "A jelöltek kutatása: mesterséges intelligencia ügynökök minden jelöltnél átkutatják az alábbi listán szereplő weboldalakat, minden kutatási nyelven külön (szlovák, magyar stb. nyelvű források), eldöntik, mely oldalak szólnak valóban a jelöltről, és nem valaki másról ugyanezzel a névvel, és minden lényeges tényt megállapításként közölnek: egymondatos állítás, szó szerinti idézet és a forrásoldal, pályafutás vagy vitatott ügy szerint besorolva. Minden kutatási eredménynél először azt közöljük, mit kerestünk át (mely weboldalakat és mikor), és csak utána azt, mit találtunk; ha ott semmit sem találtunk, az nem bizonyítja, hogy semmi sem létezik. A még nem ellenőrzött jelölt ugyanígy meg van jelölve: róla még nem készült kutatás."
+   "src": "Candidate research: for each candidate, AI agents search the sites on the list below, separately for each research language (sources in Slovak, in Hungarian and so on), decide which pages are about the candidate rather than someone with the same name, and report each relevant fact as a finding: a one-sentence claim, a verbatim quote and the page it comes from. Findings are sorted as career, serious controversy (charges brought by the police or prosecutors, a court decision against the candidate or another serious matter an authority has established) or allegations and disputes (claims the candidate denies or no one has confirmed, cases that ended in the candidate's favour, and lesser matters); in doubt, a finding goes among the allegations and disputes. Every research result first says what was searched (which sites, and when) and only then what was found; nothing found there is no proof that nothing exists. A candidate not researched yet is marked as such: no research has been done on them.",
+   "text": "A jelöltek kutatása: mesterséges intelligencia ügynökök minden jelöltnél átkutatják az alábbi listán szereplő weboldalakat, minden kutatási nyelven külön (szlovák, magyar stb. nyelvű források), eldöntik, mely oldalak szólnak valóban a jelöltről, és nem valaki másról ugyanezzel a névvel, és minden lényeges tényt megállapításként közölnek: egymondatos állítás, szó szerinti idézet és az oldal, ahonnan származik. A megállapítások besorolása: pályafutás, súlyos vitatott ügy (a rendőrség vagy az ügyészség által emelt vád, a jelölt számára kedvezőtlen bírósági döntés vagy más súlyos ügy, amelyet egy hatóság megállapított) vagy gyanúk és viták (olyan állítások, amelyeket a jelölt tagad, vagy amelyeket senki sem erősített meg, a jelölt javára lezárult ügyek, valamint kevésbé súlyos ügyek); kétség esetén a megállapítás a gyanúk és viták közé kerül. Minden kutatási eredménynél először azt közöljük, mit kerestünk át (mely weboldalakat és mikor), és csak utána azt, mit találtunk; ha ott semmit sem találtunk, az nem bizonyítja, hogy semmi sem létezik. A még nem ellenőrzött jelölt ugyanígy meg van jelölve: róla még nem készült kutatás."
   },
   "about.method.research_check": {
    "src": "Every page cited is downloaded and kept, and a finding is accepted only if its quote appears word for word in the kept copy and the page names the candidate; the copy is linked next to the original. The claims are written by artificial intelligence and no one checks them one by one; a quote in a language other than that of the interface comes with a machine translation that no one has checked. The research covers only the sites on the list and may miss things: finding nothing does not mean there is nothing.",
@@ -12133,8 +12133,8 @@
    "text": "Kattintson, hogy hozzáadja a szűrőhöz: „{name}”."
   },
   "filter.affairs": {
-   "src": "Controversies",
-   "text": "Vitatott ügyek"
+   "src": "Serious controversies",
+   "text": "Súlyos vitatott ügyek"
   },
   "filter.affairs_add": {
    "src": "Click to add controversies to the filter.",
@@ -12143,6 +12143,10 @@
   "filter.clear": {
    "src": "Clear filter",
    "text": "Szűrő törlése"
+  },
+  "filter.disputes": {
+   "src": "Allegations and disputes",
+   "text": "Gyanúk és viták"
   },
   "filter.drop": {
    "src": "Click to remove “{name}” from the filter.",
@@ -12333,12 +12337,12 @@
    "text": "{name} járás"
   },
   "research.affairs_alert": {
-   "src": "Searched only the sites on our list ({scope}); controversies found about this candidate: {n}",
-   "text": "Csak a listánkon szereplő weboldalakon ellenőrizve ({scope}); a jelöltről talált vitatott ügyek: {n}"
+   "src": "Searched only the sites on our list ({scope}); serious controversies found about this candidate: {n}",
+   "text": "Csak a listánkon szereplő weboldalakon ellenőrizve ({scope}); a jelöltről talált súlyos vitatott ügyek: {n}"
   },
   "research.affairs_badge": {
-   "src": "Searched only the sites on our list: {scope} (on {date}). Controversies found: {n}. Details on the candidate card.",
-   "text": "Csak a listánkon szereplő weboldalakon ellenőrizve: {scope} ({date}). Talált vitatott ügyek: {n}. Részletek a jelölt adatlapján."
+   "src": "Searched only the sites on our list: {scope} (on {date}). Serious controversies found: {n}. Details on the candidate card.",
+   "text": "Csak a listánkon szereplő weboldalakon ellenőrizve: {scope} ({date}). Talált súlyos vitatott ügyek: {n}. Részletek a jelölt kártyáján."
   },
   "research.affairs_show": {
    "src": "Show",
@@ -12360,6 +12364,10 @@
    "src": "The copy of the page saved when it was cited, in which the quote was checked word for word",
    "text": "Az oldal hivatkozáskor mentett másolata, amelyben az idézetet szó szerint ellenőrizték"
   },
+  "research.disputes_badge": {
+   "src": "Searched only the sites on our list: {scope} (on {date}). Allegations and disputes found: {n} (unproven or lesser matters). Details on the candidate card.",
+   "text": "Csak a listánkon szereplő weboldalakon ellenőrizve: {scope} ({date}). Talált gyanúk és viták: {n} (nem bizonyított vagy kevésbé súlyos ügyek). Részletek a jelölt kártyáján."
+  },
   "research.done": {
    "src": "Researched on {date}; sources searched in: {languages} (source list version {version}).",
    "text": "Kutatás dátuma: {date}; átkutatott források nyelve: {languages} (a forráslista verziója: {version})."
@@ -12369,12 +12377,24 @@
    "text": "Megállapítások: {n}."
   },
   "research.kind.affair": {
-   "src": "Controversies",
-   "text": "Vitatott ügyek"
+   "src": "Serious controversies",
+   "text": "Súlyos vitatott ügyek"
+  },
+  "research.kind.affair_note": {
+   "src": "Charges brought by the police or prosecutors, court decisions against the candidate and other serious matters an authority has established.",
+   "text": "A rendőrség vagy az ügyészség által emelt vádak, a jelölt számára kedvezőtlen bírósági döntések és egyéb súlyos ügyek, amelyeket egy hatóság megállapított."
   },
   "research.kind.cv": {
    "src": "Career and public roles",
    "text": "Pályafutás és közéleti szerepek"
+  },
+  "research.kind.dispute": {
+   "src": "Allegations and disputes",
+   "text": "Gyanúk és viták"
+  },
+  "research.kind.dispute_note": {
+   "src": "Claims the candidate denies or that no court or authority has confirmed, cases that ended in the candidate's favour, and lesser matters.",
+   "text": "Olyan állítások, amelyeket a jelölt tagad, vagy amelyeket sem bíróság, sem hatóság nem erősített meg, a jelölt javára lezárult ügyek, valamint kevésbé súlyos ügyek."
   },
   "research.lang.cs": {
    "src": "Czech",

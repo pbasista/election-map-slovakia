@@ -8,6 +8,7 @@ import { formatDate, formatList, formatNumber, formatPercent, researchCategories
 import {
   ChairIcon,
   CloseIcon,
+  DisputeIcon,
   EyeIcon,
   EyeOffIcon,
   FilterOffIcon,
@@ -48,10 +49,12 @@ const standsFor = (c, name) =>
   name === INDEPENDENT.name ? !c.parties.length : c.parties.some((p) => p.name === name);
 
 /* The marks of a row that are filters too, in the bar's order, each with
- * whom it covers: research found controversies; research done (whatever
- * it found); holds the office the contest elects (the chair). */
+ * whom it covers: research found serious controversies; disputed or
+ * lesser ones; research done (whatever it found); holds the office the
+ * contest elects (the chair). */
 const MARKS = [
   ['affairs', (c) => Boolean(c.research?.affairs), WarningIcon],
+  ['disputes', (c) => Boolean(c.research?.disputes), DisputeIcon],
   ['researched', (c) => Boolean(c.research), SearchIcon],
   ['office', inOffice, ChairIcon],
 ];
@@ -249,14 +252,24 @@ function Researched({ candidate: c, actions }) {
     ><${SearchIcon} />${r.findings ? formatNumber(r.findings) : null}<//>`;
 }
 
-/* Research found controversies about the candidate: a red warning sign
- * with their number, first of the marks, so that it is not passed over
- * among the findings. */
+/* Research found serious controversies about the candidate: a red warning
+ * sign with their number, first of the marks, so that it is not passed
+ * over among the findings. */
 function Controversies({ candidate: c, actions }) {
   const r = c.research;
   const n = formatNumber(r.affairs);
   const label = t('research.affairs_badge', { scope: researchScope(r), date: formatDate(r.date), n });
   return html`<${Mark} name="affairs" cls="affairs" label=${label} actions=${actions}><${WarningIcon} />${n}<//>`;
+}
+
+/* Research found disputed or lesser controversies: allegations not
+ * established, in amber, after the serious ones, and without flagging the
+ * row. */
+function Disputes({ candidate: c, actions }) {
+  const r = c.research;
+  const n = formatNumber(r.disputes);
+  const label = t('research.disputes_badge', { scope: researchScope(r), date: formatDate(r.date), n });
+  return html`<${Mark} name="disputes" cls="disputes" label=${label} actions=${actions}><${DisputeIcon} />${n}<//>`;
 }
 
 /* One candidacy: its ballot number is a button that circles it (or takes
@@ -309,6 +322,7 @@ export function CandidateRow({ candidate, onCandidate, current = false, actions,
           ${' '}<${Parties} candidate=${c} actions=${actions} />
           <span class="marks">
             ${flagged ? html`<${Controversies} candidate=${c} actions=${actions} />` : null}
+            ${c.research?.disputes ? html`<${Disputes} candidate=${c} actions=${actions} />` : null}
             ${inOffice(c) ? html`<${InOffice} candidate=${c} actions=${actions} />` : null}
             <${Researched} candidate=${c} actions=${actions} />
           </span>

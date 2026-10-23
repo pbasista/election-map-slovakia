@@ -71,7 +71,8 @@ and (in Bratislava and Košice) city file of one place and nothing twice::
                            person, (residence)]]}},
                        persons: {person: [candidacy, ...]},
                        (research): {person: [date, findings,
-                                             [language, ...], affairs]}}
+                                             [language, ...], affairs,
+                                             disputes]}}
 
 ``persons`` lists, for every person with a candidacy in the file who stands
 in more than one contest, all their candidacies (in any file). ``seats`` is
@@ -323,13 +324,13 @@ def _contest_entry(
 
 
 def research_summary(cfg: Config, records: Mapping[str, Any]) -> dict[str, list[Any]]:
-    """Return person → ``[date, findings, [language, ...], affairs]``.
+    """Return person → ``[date, findings, [language, ...], affairs, disputes]``.
 
     *records* maps persons to their curated research (:mod:`research`). The
     date is the latest a category was researched, the languages those of
     ``[research]`` in ``sources.toml`` whose every category is researched,
-    and *affairs* how many of the findings are controversies, which the
-    ballots mark.
+    *affairs* how many of the findings are serious controversies, which the
+    ballots flag, and *disputes* how many are disputed or lesser ones.
     """
     out = {}
     for person, record in records.items():
@@ -341,11 +342,13 @@ def research_summary(cfg: Config, records: Mapping[str, Any]) -> dict[str, list[
         ]
         if not languages:
             continue
+        kinds = Counter(f["kind"] for f in record["findings"])
         out[person] = [
             max(s["date"] for s in seen.values()),
             len(record["findings"]),
             languages,
-            sum(f["kind"] == "affair" for f in record["findings"]),
+            kinds["affair"],
+            kinds["dispute"],
         ]
     return out
 

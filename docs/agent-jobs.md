@@ -94,18 +94,23 @@ uv run ems job ingest data/jobs/research-*
 ```
 
 A finding is a verbatim quote from an allowlisted page, a one-sentence
-claim in English and Slovak, whether it is career (`cv`) or a controversy
-(`affair`), and what ties the page to the candidate. Only what makes a
-candidate stand out counts: no election results, candidacies or the office
-held now, which the site shows from the official data. Ingest (and `research
-submit`, which an agent can call per person while it works) fetches every
-cited page, keeps a sanitized copy (`src/election_map_slovakia/cache.py`:
-no scripts, frames or remote loads; images inlined; from the Internet
-Archive's latest snapshot where a site turns automated clients away) and
-rejects a finding whose page is not allowed for the job's categories,
-cannot be fetched, does not contain the quote verbatim or does not name
-the person. A person with no finding is recorded as researched, nothing
-found. Accepted research goes to `data/curated/research/<id[:2]>/<id>.json`
-(per category: date, job; findings), the copies to
-`data/curated/cache/<sha256>.html`; the site shows them on the candidate
-card with links to the original and to the copy (`/cache/`).
+claim in English and Slovak, whether it is career (`cv`), a serious,
+established controversy (`affair`: charges, a court decision against the
+candidate, another very serious matter an authority established) or a
+disputed or lesser one (`dispute`: allegations denied or unconfirmed, a
+complaint with no charges, a case ended in the candidate's favour, a
+political quarrel), and what ties the page to the candidate. Only what
+makes a candidate stand out counts: no election results, candidacies or
+the office held now, which the site shows from the official data. Ingest
+(and `research submit`, which an agent can call per person while it works)
+fetches every cited page, keeps a sanitized copy
+(`src/election_map_slovakia/cache.py`: no scripts, frames or remote loads;
+images inlined; from the Internet Archive's latest snapshot where a site
+turns automated clients away) and rejects a finding whose page is not
+allowed for the job's categories, cannot be fetched, does not contain the
+quote verbatim or does not name the person. A person with no finding is
+recorded as researched, nothing found. Accepted research goes to
+`data/curated/research/<id[:2]>/<id>.json` (per category: date, job;
+findings), the copies to `data/curated/cache/<sha256>.html`; the site
+shows them on the candidate card with links to the original and to the
+copy (`/cache/`).

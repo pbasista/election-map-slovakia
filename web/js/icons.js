@@ -138,3 +138,13 @@ export const WarningIcon = () =>
     <path d="M12 9.5v4.5" />
     <circle class="fill" cx="12" cy="17.1" r="1.1" />
   `);
+
+/* A question mark in a circle: what is claimed, not established (allegations
+ * and disputes), beside the warning sign of serious controversies. Large and
+ * plain, as it is drawn at 12 px in a mark. */
+export const DisputeIcon = () =>
+  icon(html`
+    <circle cx="12" cy="12" r="9.2" />
+    <path d="M9.6 9.6a2.5 2.5 0 1 1 3.6 2.2c-.7.4-1.2.9-1.2 1.8" />
+    <circle class="fill" cx="12" cy="16.8" r="1.2" />
+  `);

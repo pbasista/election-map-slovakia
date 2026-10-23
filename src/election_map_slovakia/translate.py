@@ -458,6 +458,19 @@ def occupation_id(text: str) -> str:
 
 # --- make ---------------------------------------------------------------------
 
+# The two kinds of controversy research reports, named alike in every
+# string that mentions them.
+_CONTROVERSIES = (
+    "research findings come in two kinds of controversy: serious ones"
+    " ('affairs': charges, court decisions against the candidate, matters an"
+    " authority established), marked in red, and 'allegations and disputes'"
+    " (unproven or denied claims, cases that ended in the candidate's"
+    " favour, lesser matters), marked in amber; keep the two names the same"
+    " wherever they appear, and never name the second with the word for"
+    " criminal charges (as Slovak 'obvinenie'), which belong to the first"
+    " (Slovak: 'Podozrenia a spory')"
+)
+
 _NOTES = (
     ("app.title", "browser tab title of the page"),
     ("app.description", "page description for search engines, at most 160 characters"),
@@ -557,6 +570,12 @@ _NOTES = (
         " the link (an icon whose tooltip this is)",
     ),
     ("card.", "candidate card"),
+    ("research.kind.cv", "candidate card, research section"),
+    ("research.kind.", _CONTROVERSIES),
+    ("research.affairs_", _CONTROVERSIES),
+    ("research.disputes_", _CONTROVERSIES),
+    ("filter.affairs", _CONTROVERSIES),
+    ("filter.disputes", _CONTROVERSIES),
     ("research.", "candidate card, research section"),
     ("about.category.", "name of a group of news sources in the About dialog"),
     ("about.", "About dialog"),

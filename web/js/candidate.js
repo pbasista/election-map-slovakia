@@ -15,17 +15,20 @@ import {
   useLoaded,
 } from './data.js';
 import { formatDate, formatNumber, t } from './i18n.js';
-import { BackIcon, WarningIcon } from './icons.js';
+import { BackIcon, DisputeIcon, WarningIcon } from './icons.js';
 import { Notice } from './pane.js';
 
-// Controversies first: they are what a voter must not miss.
-const KINDS = ['affair', 'cv'];
+/* Serious controversies first: they are what a voter must not miss; then
+ * allegations and disputes, then the career. Each controversy kind with
+ * its mark's icon and a line on what it holds. */
+const KINDS = ['affair', 'dispute', 'cv'];
+const KIND_ICON = { affair: WarningIcon, dispute: DisputeIcon };
 const AFFAIRS_ID = 'km-affairs';
 
 /* One finding: the AI's claim and where it comes from at a glance; the
  * quote it rests on in the page's own language (and a machine translation
  * where that is not the page's) and the cached copy the quote was checked
- * against behind a disclosure, open for a controversy. */
+ * against behind a disclosure, open for a serious controversy. */
 function Finding({ finding: f }) {
   const host = new URL(f.url).hostname.replace(/^www\./, '');
   return html`
@@ -88,14 +91,15 @@ function Research({ candidate: c }) {
     else if (r.findings) {
       found = KINDS.map((kind) => {
         const group = list.filter((f) => f.kind === kind);
+        const Icon = KIND_ICON[kind];
         return group.length
           ? html`
               <h4 class=${`finding-kind ${kind}`} id=${kind === 'affair' ? AFFAIRS_ID : undefined}>
-                ${kind === 'affair' ? html`<${WarningIcon} />` : null}${t(`research.kind.${kind}`)}${' '}<span
-                  class="count"
+                ${Icon ? html`<${Icon} />` : null}${t(`research.kind.${kind}`)}${' '}<span class="count"
                   >${formatNumber(group.length)}</span
                 >
               </h4>
+              ${Icon ? html`<p class="finding-kind-note">${t(`research.kind.${kind}_note`)}</p>` : null}
               <ul class="findings">
                 ${group.map((f) => html`<${Finding} key=${f.url + f.quote} finding=${f} />`)}
               </ul>

@@ -4,6 +4,25 @@ Notable changes, newest first. The version is set in
 `src/election_map_slovakia/__init__.py`; tagging `vX.Y.Z` builds and deploys
 it (see [docs/deploy.md](docs/deploy.md)).
 
+## 0.3.1 — 2026-10-23
+
+- **Serious controversies apart from allegations and disputes.** A
+  controversy is now serious only when it is established: charges brought
+  by the police or prosecutors (or detention, an indictment), a court
+  decision against the candidate, or another serious matter an authority
+  established (a binding conflict-of-interest sanction, an audit finding,
+  removal from office). Everything else, such as an opponent's allegation the
+  candidate denies, a criminal complaint with no charges, a case that ended
+  in the candidate's favour or a political quarrel, is among the
+  allegations and disputes, and so is a finding in doubt. Of the 383
+  controversies found so far, 53 (on 38 candidates) remain serious and 330
+  are allegations and disputes; 190 candidates had only those. The serious
+  ones keep the red warning mark and the red edge of the row; allegations
+  and disputes get an amber mark of their own, a question mark in a
+  circle, a filter of their own and a section of their own on the
+  candidate card, each kind with a line on what it holds. Research
+  reports the two kinds from now on.
+
 ## 0.3.0 — 2026-10-23
 
 - **Circle your candidates, as on the ballot, and share them.** A
