@@ -17,6 +17,8 @@ uv run ems check                     # verify dist/ before deploying
 uv run ems make                      # candidates, addresses, geo, build, check
 uv run ems make --force              # also redo the steps that are up to date
 uv run ems serve --port 8000         # http://127.0.0.1:8000/
+uv run ems results poll --deploy     # election night: volbysr.sk → live/ → Pages
+uv run ems results fake mid          # dummy live results for testing the app
 ```
 
 To rebuild the site after `fetch` (or after changing `config/`,
@@ -152,7 +154,12 @@ candidate-name search index sharded by two-letter prefix, the UI strings per
 language, an app shell per language under `/<lang>/` and a root page that
 picks the language (stored choice, browser languages with the aliases from
 `config/languages.toml`, then the first fallback). It prints file counts and
-sizes (raw and gzip) per group. The layout is described in
+sizes (raw and gzip) per group. The code goes to `/assets/<v>/`, the
+vendored libraries to `/assets/vendor/<vv>/` and the images to
+`/assets/img/<iv>/`, each version a hash of its files, and the app fetches
+its JSON with `?v=<data version>`, a hash of the data, so that a release
+replaces browsers' copies of what changed and keeps the rest (see "Cache
+busting" in the module doc). The layout is described in
 `src/election_map_slovakia/build.py`. `serve` serves `dist/` with Python's HTTP server
 for local testing, adding the response headers of `dist/_headers` and
 answering missing paths with `dist/404.html` and status 404, as Cloudflare
@@ -166,7 +173,8 @@ Cloudflare Pages allows 20,000 files and 25 MiB per file), valid JSON,
 present (assets, shells and UI strings of every language, geometry shards,
 the address and candidate files of every municipality, name shards), every
 contest in exactly the area file the frontend looks in, no HTML, JS or CSS
-referring to another origin except as a link target, every address point
+referring to another origin except as a link target (and the live results
+origin in the app shells' config, which the CSP's connect-src names), every address point
 within its municipality's bounding box, at every level of detail the
 borders drawn are the municipalities' own edges, each drawn once, with every
 kraj, okres, obvod and the country (merged from the municipalities) bounded
@@ -175,6 +183,13 @@ leave no gap at its border at any level and are named in every language.
 It lists the problems and exits
 with 1 if there are any. The checks are described in
 `src/election_map_slovakia/check.py`.
+
+`results` makes the live results site in `live/`, a Cloudflare Pages
+project of its own that the app reads on election night: from volbysr.sk
+as the votes are counted (`poll`), from the definitive CSV tables (`final`)
+or as dummy data (`fake`); `results serve` and `results deploy` serve and
+upload it. Its file format, the sources and the night's steps are in
+[results.md](results.md).
 
 ## Identifiers
 
@@ -196,7 +211,9 @@ with 1 if there are any. The checks are described in
 
 - `config/site.toml` — the site's own domain (`base_url`, empty until it
   has one), source repository, Cloudflare Pages project, election date,
-  output budgets
+  live results origin (`live_url`, replaced by the environment variable
+  `EMS_LIVE_URL` if set), the days after the polls close that the app polls
+  it (`live_days`) and its Pages project, output budgets
 - `config/languages.toml` — UI languages with the site's name in each,
   fallback chain, browser aliases
 - `config/sources.toml` — allowlist of sources for research, by category,

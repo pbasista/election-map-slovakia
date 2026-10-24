@@ -4,6 +4,113 @@ Notable changes, newest first. The version is set in
 `src/election_map_slovakia/__init__.py`; tagging `vX.Y.Z` builds and deploys
 it (see [docs/deploy.md](docs/deploy.md)).
 
+## 0.4.0 — 2026-10-24
+
+- **Live 2026 results.** On election night the site shows the results as
+  they are counted and, from the next day, the final ones, without a new
+  release: they come from a site of their own, `live.volebnamapa.sk` (a
+  second Cloudflare Pages project holding only the results), which the
+  page reads from the polls' closing, every minute while it is in view,
+  for a week (`live_days`), and after that once per page load, so that a
+  page left open or an old copy of the site stops polling.
+  - While the polls are open (07:00–20:00 Slovak time), a line under the
+    site name says the voting is under way and when the polls close, with
+    a still bar of how much of the voting day has passed.
+  - Then a status line tells, in a line where it fits, how far the count
+    has got and the time of the results (Slovak time, 24-hour clock);
+    each contest says whether it is counted yet, and while counting how
+    much of it and how many valid votes, and its candidates are listed by
+    votes, each with a bar of their share. How far a count has got is the
+    share of the registered voters whose polling districts are counted,
+    each district whole however many voted there, so that districts of
+    every size weigh as they should (those still to count estimated from
+    the last election); the districts counted are in the tooltip.
+  - A council's seats, where only the 2022 number was known, are the 2026
+    number once the results give it.
+  - The elected get a medal, an eight-pointed star on a ribbon in the
+    results' own green (which past figures never use), the one badge
+    without a ring, as only winning earns it. It stands right after the
+    name, before the parties, as these elections elect persons rather
+    than parties. "Elected 2026" is a filter mark like the others, and
+    Favourites count the circled elected. A council's substitutes are not
+    marked: they are all its other candidates with a vote, in the order of
+    their votes.
+  - A winner is called before the count ends only when no uncounted vote
+    could change it: when fewer rivals than seats could still reach them
+    even if every registered voter of the districts not counted yet voted
+    (at most the registered voters at the last election plus 10 %). Such a
+    call's medal is drawn in outline, and its tooltip says what it rests
+    on.
+  - The map can colour by one candidate's share (a pin at the end of their
+    row, under the contest's own) the areas of their contest, or for a
+    mayor or council candidate their one municipality or council
+    constituency, in shades of the results' green; or every municipality
+    by the turnout of the municipal elections, of Bratislava's and
+    Košice's own elections of a city mayor and council (on ballots of
+    their own), or of the regional elections (the boundaries
+    menu, or one contest's from the pin in its header, pressed again once
+    the area is shown), in shades of the colour the area is drawn in (a
+    municipality's red, a council constituency's orange, the cities' green,
+    a regional contest's violet), so that nothing changes colour. The scale
+    spans the values shown (30–50 % where every area lies between them),
+    the areas not counted yet left out of it; the labels give the values,
+    and a legend the scale. A regional contest is coloured by municipality
+    where the night brings each municipality's votes once it is fully
+    counted (by regional constituency until then), and by municipality in
+    the final results.
+  - `ems results` makes the live site: `poll` follows the count on
+    volbysr.sk and writes `live/` when it changes, `final` reads the
+    definitive tables, `fake` writes dummy results of five stages of the
+    night to test with, `serve` and `deploy`. See
+    [docs/results.md](docs/results.md).
+  - Search engines learn of it too: the pages' title, description and the
+    text they read without running the page name the live results.
+- **A map pin on every contest of a place's ballots**, as on a candidate's
+  card: here and in Favourites it fits the map to the contest's area (the
+  municipality, a council or regional constituency, the city, the
+  self-governing region) and highlights it, leaving the place selected,
+  its ballots and Favourites open as they are, so that the pin's next
+  press (the turnout) is at hand.
+  Every contest's pin is in the colour its area is drawn in on the map;
+  a candidate's votes pin in the results' green.
+- **A release reaches every browser at once.** The code is now under
+  `/assets/<version>/`, named by a hash of it, and browsers keep it for
+  good; the data files are fetched with the hash of the data appended, so
+  a release replaces the browser's copies on the next page load instead of
+  after a few minutes, and an unchanged part stays cached. The libraries
+  and the images (party logos) have folders and hashes of their own, so a
+  release that changes only the app's code leaves them, and the data,
+  cached.
+- **Favourites as a QR code.** A second button by the Favourites title
+  shows the link to them, with the filter, as a QR code in a dialog of its
+  own, as large as the screen allows and white in the dark theme too, for
+  another device's camera to open them there. It follows every change; a
+  link too long for a code says so.
+- **Past turnout in every contest's header.** At the end of each header a
+  short horizontal meter, like the candidates' vote bars, gives the
+  turnout of the last election in the contest's area, its share and year
+  above it, without making the header taller; the tooltip gives the
+  numbers (who voted of all registered) and which election that was (the
+  2022 elections, or a municipal by-election since). A council's figures
+  are of the whole municipality where it now has several constituencies,
+  as the 2022 ones were drawn otherwise; a regional constituency's are
+  summed over its municipalities. Once counted, the meter shows the 2026
+  turnout in green, the last election's left on it as a grey tick with
+  its figures under it, so that the two compare at a glance.
+- **Cross candidates out; hide with one press.** Every button on a
+  candidate row now has an alternate press, Shift+click or a double click
+  or tap. On the ballot number it crosses the candidate out with a red
+  cross (the opposite of circling, which it replaces): the list then mutes
+  the candidate like those the filter excludes, the filter bar counts the
+  crossed out, and the link carries them (`x`). On a party tag or a mark
+  it adds the party or mark to the filter with its candidates hidden,
+  where a plain press shows only them; each press, repeated, undoes
+  itself. With Shift held, the pointer previews the alternate press: a
+  faint cross on a number, a faint dashed ring on a party tag or a mark.
+  Each party in the filter now has its own mode, so that some parties can
+  be shown and others hidden at once; links made before read as they did.
+  The tooltips and the help say how.
+
 ## 0.3.1 — 2026-10-23
 
 - **Serious controversies apart from allegations and disputes.** A

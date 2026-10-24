@@ -1,6 +1,7 @@
 /* The round buttons floating on the map: those with a small popover
- * (language, boundaries, theme, zoom, and help with the disclaimer) and
- * Favourites, which shows the candidates circled.
+ * (language, boundaries and the 2026 results on the map, theme, zoom, and
+ * help with the disclaimer) and Favourites, which shows the candidates
+ * circled.
  *
  * A popover is a non-modal dialog next to its button: opening it moves focus
  * into it; Esc, a click elsewhere or focus leaving it closes it. Only one is
@@ -25,10 +26,16 @@ import {
   SunIcon,
   SystemIcon,
 } from './icons.js';
+import { useLive } from './live.js';
+import { setMapMode, useMapMode } from './mapmode.js';
 import { Notice } from './pane.js';
 
 // Broadest first.
 const OVERLAYS = ['zsk', 'city', 'oz'];
+// Each turnout layer by the overlay icon of its areas, so that the two
+// parts of the menu read together: the municipalities, the two cities,
+// the regions.
+const TURNOUT_ICON = { municipal: LAYER_ICON.oz, city: LAYER_ICON.city, regional: LAYER_ICON.zsk };
 const THEME_ICON = { system: SystemIcon, light: SunIcon, dark: MoonIcon };
 
 // A held press opens the menu after this long, as a touch context menu does.
@@ -229,8 +236,13 @@ export function LanguageMenu({ open, onToggle, hash }) {
 
 /* The constituency overlays, each switched on or off on its own; whichever
  * are on, the map draws each from the zoom where it reads (map.js
- * `OVERLAYS`). The icons are in the colours their borders are drawn in. */
+ * `OVERLAYS`). The icons are in the colours their borders are drawn in.
+ * Once there are 2026 results, the turnout of either election can be shown
+ * on the map too (mapmode.js). */
 export function LayerMenu({ open, onToggle, overlays, onOverlays }) {
+  const { status } = useLive();
+  const mode = useMapMode();
+  const counting = status && status.phase !== 'none';
   return html`
     <${Popover} name="layers" label=${t('layers.button')} icon=${LayersIcon} open=${open} onToggle=${onToggle}>
       <${Title} name="layers">${t('layers.title')}<//>
@@ -262,6 +274,30 @@ export function LayerMenu({ open, onToggle, overlays, onOverlays }) {
                 <p class="key"><span class="swatch pending"></span>${t('layers.oz_pending')}</p>
                 <p class="key"><span class="swatch none"></span>${t('layers.oz_none')}</p>
               </div>
+            `
+          : null
+      }
+      ${
+        counting
+          ? html`
+              <fieldset class="options results-options">
+                <legend class="pop-title">${t('mapmode.title')}</legend>
+                ${[null, 'municipal', 'city', 'regional'].map((election) => {
+                  const Icon = TURNOUT_ICON[election];
+                  return html`
+                    <label class=${election ? `option turnout-${election}` : 'option'} key=${election ?? 'off'}>
+                      <input
+                        type="radio"
+                        name="km-results"
+                        checked=${election ? mode?.kind === 'turnout' && mode.election === election : !mode}
+                        onChange=${() => setMapMode(election && { kind: 'turnout', election })}
+                      />
+                      ${Icon ? html`<${Icon} />` : html`<span class="ico" aria-hidden="true"></span>`}
+                      <span>${t(election ? `mapmode.turnout_${election}_option` : 'mapmode.off')}</span>
+                    </label>
+                  `;
+                })}
+              </fieldset>
             `
           : null
       }

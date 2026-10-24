@@ -49,9 +49,22 @@ export class Cache {
   }
 }
 
+/* The build's data version (km-config `dataVersion`), asked for with every
+ * data file (`?v=`) so that a release with other data replaces the
+ * browser's copies (build.py, Cache busting). The page sets it from its
+ * config (i18n.js); the map's renderer, which may run in a worker without
+ * the page, from its options (draw.js). */
+let dataVersion = '';
+export function setDataVersion(version) {
+  dataVersion = version;
+}
+
+/* The URL to fetch the site's data file *path* (/geo/index.json) by. */
+export const dataUrl = (path) => `${path}?v=${dataVersion}`;
+
 /* *missing*, if given, stands for a file that does not exist (HTTP 404). */
 export async function fetchJSON(path, missing) {
-  const response = await fetch(path);
+  const response = await fetch(dataUrl(path));
   if (response.status === 404 && missing !== undefined) return missing;
   if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
   return response.json();

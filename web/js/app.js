@@ -3,7 +3,8 @@
  *
  * The page is the map. Floating on it: the site name with the search, the
  * language, boundary, theme and Favourites buttons, the zoom buttons and
- * help; a pane with a place's ballots or a candidate card opens where there
+ * help, and while the map shows 2026 results their legend (mapmode.js); a
+ * pane with a place's ballots or a candidate card opens where there
  * is something to show, and closes again (pane.js). Favourites (the
  * candidates circled) open in a pane of their own beside it where the
  * screen is wide enough, else in the pane.
@@ -19,10 +20,11 @@
  * the About dialog (`v=about-<section>` one of its sections, about.js).
  *
  * So does the visitor's own work, so that a link shares it too: `k` the
- * candidates circled (picks.js), `fp` and `fm` the filter (ballots.js
- * `filterParams`). That changes in place: Back and Forward go from place to
- * place, and leave the circles and the filter as they are. Only a link
- * typed or pasted into the address bar brings its own.
+ * candidates circled (picks.js), `fp`, `fm` and `x` the filter (ballots.js
+ * `filterParams`), the candidates crossed out included. That changes in
+ * place: Back and Forward go from place to place, and leave the circles
+ * and the filter as they are. Only a link typed or pasted into the address
+ * bar brings its own.
  */
 
 import { html, render, useEffect, useRef, useState } from '../vendor/preact-htm.module.js';
@@ -34,7 +36,9 @@ import { dataIndex } from './data.js';
 import { Favourites } from './favourites.js';
 import { election, formatDate, loadStrings, t, translationPending } from './i18n.js';
 import { Logo } from './icons.js';
+import { LiveStatus } from './live.js';
 import { createMap } from './map.js';
+import { MapResults } from './mapmode.js';
 import { AboutDialog, Pane, PHONE, WIDE } from './pane.js';
 import { formatPicks, parsePicks } from './picks.js';
 import { Search } from './search.js';
@@ -64,12 +68,12 @@ function readHash() {
 }
 
 /* The visitor's work a link carries: the circled candidates, and the
- * filter as its hash values (`fp`, `fm`), whose parties are known only
- * once data/index.json has loaded; null for a filter it has not. */
+ * filter as its hash values (`fp`, `fm`, `x`), whose parties are known
+ * only once data/index.json has loaded; null for a filter it has not. */
 function readWork() {
   const p = new URLSearchParams(location.hash.slice(1));
-  const [fp, fm] = [p.get('fp'), p.get('fm')];
-  return { picks: parsePicks(p.get('k')), linked: fp || fm ? { fp, fm } : null };
+  const [fp, fm, x] = [p.get('fp'), p.get('fm'), p.get('x')];
+  return { picks: parsePicks(p.get('k')), linked: fp || fm || x ? { fp, fm, x } : null };
 }
 
 /* The hash of selection *s* with the circled candidates *picks* and the
@@ -107,6 +111,7 @@ function App() {
   const [menu, setMenu] = useState(null);
   const finder = useRef(null);
   const pane = useRef(null);
+  const legend = useRef(null);
   // How the map should move for the next selection (map.js `select`); a page
   // opened on a shared link goes to the place or area it names.
   const pendingView = useRef(state.obec || state.area ? 'place' : null);
@@ -126,8 +131,8 @@ function App() {
   // `NO_FILTER`): kept from place to place.
   const [picks, setPicks] = useState(() => readWork().picks);
   const [filter, setFilter] = useState(NO_FILTER);
-  // The filter a link names ({fp, fm}), until data/index.json has loaded to
-  // look up its parties; the address keeps it till then.
+  // The filter a link names ({fp, fm, x}), until data/index.json has loaded
+  // to look up its parties; the address keeps it till then.
   const [linked, setLinked] = useState(() => readWork().linked);
   const filterHash = linked ? Object.entries(linked).filter(([, value]) => value) : filterParams(filter);
   const link = (s) => hashOf(s, picks, filterHash);
@@ -160,8 +165,9 @@ function App() {
   latestNavigate.current = navigate;
 
   /* The pixels of the map that the search card, the pane and the right-hand
-   * buttons cover; the map keeps places it moves to out from under them.
-   * Layout boxes, not the transformed ones: the pane may be sliding in. */
+   * buttons cover, and on phones the results' legend, as wide as the map
+   * there; the map keeps places it moves to out from under them. Layout
+   * boxes, not the transformed ones: the pane may be sliding in. */
   function insets() {
     const out = { top: 0, right: 56, bottom: 0, left: 0 };
     const side = finder.current.parentElement;
@@ -176,6 +182,10 @@ function App() {
     } else {
       out.top = cardBottom;
     }
+    // Under the search card (app.css). Elsewhere it is a corner of the map,
+    // and a band as wide as the map kept clear for it would cost labels.
+    const l = legend.current;
+    if (l && PHONE.matches) out.top = Math.max(out.top, l.offsetTop + l.offsetHeight);
     return out;
   }
 
@@ -216,7 +226,7 @@ function App() {
     dataIndex().then(
       (index) => {
         if (!live) return;
-        setFilter(parseFilter(linked.fp, linked.fm, index.parties));
+        setFilter(parseFilter(linked, index.parties));
         setLinked(null);
       },
       (e) => console.error(e),
@@ -331,10 +341,7 @@ function App() {
     onFilter=${changeFilter}
     focus=${cardLeft?.favourites ? cardLeft.id : null}
     onCandidate=${(id) => openCandidate(id, true)}
-    onPlace=${({ obec, obvod, area }) =>
-      // Beside the pane, or as wide as the page in it above a phone's sheet,
-      // Favourites would hide the place shown.
-      navigate({ favourites: !beside && PHONE.matches, obec, obvod, area }, 'place')}
+    onArea=${(target) => map?.fitArea(target, true)}
     onBack=${beside ? null : closeFavourites}
     link=${`${location.origin}${location.pathname}${link({ favourites: true })}`}
   />`;
@@ -372,6 +379,7 @@ function App() {
       onFilter=${changeFilter}
       picks=${picks}
       onPicks=${setPicks}
+      onArea=${(target) => map?.fitArea(target, true)}
     />`;
   }
 
@@ -396,6 +404,7 @@ function App() {
             </span>
           <//>
           ${translationPending() ? html`<p class="translation-pending" role="note">${t('translation.pending')}</p>` : null}
+          <${LiveStatus} />
         </header>
         ${paneOpen ? html`<${Pane} paneRef=${pane} onClose=${closePane}>${content}<//>` : null}
       </div>
@@ -436,6 +445,7 @@ function App() {
           }}
         />
       </div>
+      <${MapResults} map=${map} legendRef=${legend} />
       <div class="map" ref=${mapElement} role="application" aria-label=${t('map.label')}></div>
       ${mapFailed ? html`<p class="map-error" role="alert">${t('error.load')}</p>` : null}
       ${

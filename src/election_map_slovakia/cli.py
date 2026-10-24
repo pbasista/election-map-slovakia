@@ -8,8 +8,10 @@ the exit code.
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import json
 import sys
+import time
 from collections import Counter
 from collections.abc import Iterable, Sequence
 from pathlib import Path
@@ -30,6 +32,7 @@ from election_map_slovakia import (
     output,
     progress,
     research,
+    results,
     stamp,
     xlsx,
 )
@@ -212,6 +215,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     _add_job_parser(commands)
     _add_research_parser(commands)
+    _add_results_parser(commands)
     return parser
 
 
@@ -736,6 +740,220 @@ def _run_research_status(args: argparse.Namespace) -> int:
     return 0
 
 
+def _add_results_parser(commands: argparse._SubParsersAction) -> None:
+    p = commands.add_parser(
+        "results",
+        help="election night: the live results site (poll, final, fake, serve, deploy)",
+        description=(
+            "Write the live results site, live/ (git-ignored), from volbysr.sk"
+            " (poll), the definitive CSV tables (final) or dummy data (fake);"
+            " serve it locally or deploy it to its Cloudflare Pages project."
+            " See docs/results.md and src/election_map_slovakia/results.py."
+        ),
+    )
+    sub = p.add_subparsers(title="results commands", metavar="COMMAND", required=True)
+
+    def directory(parser: argparse.ArgumentParser) -> None:
+        parser.add_argument(
+            "--dir",
+            type=Path,
+            default=None,
+            help=f"the live site's directory (default: {results.LIVE_DIR}/)",
+        )
+
+    poll = sub.add_parser(
+        "poll",
+        help="poll volbysr.sk and rewrite live/ whenever the counting moves on",
+        description=(
+            "Fetch the progress files of volbysr.sk every INTERVAL seconds"
+            " (conditional requests), and when one changed the per-unit"
+            " files; keep every file fetched under data/raw/results/<UTC"
+            " time>/ and rewrite live/ when its content changed."
+        ),
+    )
+    poll.add_argument(
+        "--interval",
+        type=int,
+        default=results.INTERVAL,
+        help=f"seconds between polls (default {results.INTERVAL})",
+    )
+    poll.add_argument("--once", action="store_true", help="poll once and stop")
+    poll.add_argument(
+        "--deploy", action="store_true", help="deploy live/ after every change"
+    )
+    directory(poll)
+    poll.set_defaults(run=_run_results_poll)
+    final = sub.add_parser(
+        "final",
+        help="put the definitive results (CSV zips of volbysr.sk) into live/",
+        description=(
+            "Read the definitive results, the zip of CSV tables (or a"
+            " directory of them) of the municipal and/or regional election,"
+            " e.g. https://volbysr.sk/oso/files/OSO2026_SK_csv.zip, into"
+            " live/, replacing the contests they have. With both elections"
+            " the phase becomes final."
+        ),
+    )
+    final.add_argument("packages", nargs="+", type=Path, metavar="ZIP_OR_DIR")
+    directory(final)
+    final.set_defaults(run=_run_results_final)
+    fake = sub.add_parser(
+        "fake",
+        help="write dummy results into live/ for testing the app",
+        description=(
+            "Write deterministic dummy results of the counting at STAGE"
+            " (none, early, mid, late, final) from data/build/; the counts"
+            " only grow from stage to stage for the same --seed."
+        ),
+    )
+    fake.add_argument("stage", choices=list(results.STAGES), metavar="STAGE")
+    fake.add_argument("--seed", type=int, default=0, help="random seed (default 0)")
+    directory(fake)
+    fake.set_defaults(run=_run_results_fake)
+    serve = sub.add_parser(
+        "serve",
+        help="serve live/ locally with the live site's headers (CORS)",
+        description=(
+            "Serve live/ until interrupted, with the headers of the live site"
+            " (Access-Control-Allow-Origin: *, no-cache). Build the main site"
+            f" with EMS_LIVE_URL=http://127.0.0.1:{results.PORT} to read it."
+        ),
+    )
+    serve.add_argument("--host", default="127.0.0.1", help="address to bind")
+    serve.add_argument(
+        "--port", type=int, default=results.PORT, help=f"port (default {results.PORT})"
+    )
+    directory(serve)
+    serve.set_defaults(run=_run_results_serve)
+    deploy = sub.add_parser(
+        "deploy",
+        help="upload live/ to its Cloudflare Pages project",
+        description=(
+            "Show what live/ holds, check it, and upload it with Wrangler to"
+            " the Pages project live_pages_project of config/site.toml,"
+            " after asking unless --yes."
+        ),
+    )
+    deploy.add_argument("--yes", action="store_true", help="do not ask")
+    directory(deploy)
+    deploy.set_defaults(run=_run_results_deploy)
+
+
+def _live_dir(cfg: config.Config, args: argparse.Namespace) -> Path:
+    return args.dir if args.dir is not None else cfg.root / results.LIVE_DIR
+
+
+def _reference(cfg: config.Config) -> results.Reference:
+    try:
+        return results.load_reference(cfg.build_dir, cfg.curated_dir)
+    except results.ResultsError as e:
+        raise ConfigError(str(e)) from e
+
+
+def _report_written(directory: Path, written: dict | None) -> None:
+    if written is None:
+        _print([f"{directory}: unchanged"])
+    else:
+        _print(results.describe(directory))
+
+
+def _run_results_poll(args: argparse.Namespace) -> int:
+    cfg = config.load()
+    out = _live_dir(cfg, args)
+    client = results.Client(
+        results.BASE_URL,
+        results.browser_agent(cfg.inputs.contact),
+        fetch.ssl_context(cfg.inputs.ca_certificates),
+        cfg.raw_dir / results.RAW_DIR,
+    )
+    poller = results.Poller(client, _reference(cfg), out, _log)
+    project = cfg.site.live_pages_project
+    try:
+        while True:
+            started = time.monotonic()
+            try:
+                written = poller.cycle()
+            except OSError as e:
+                _log(f"poll failed: {e}")
+                written = None
+            if written is not None and args.deploy:
+                code = results.deploy(out, project)
+                _log(
+                    f"deploy to {project}: " + ("done" if code == 0 else f"exit {code}")
+                )
+            if args.once:
+                return 0
+            time.sleep(max(0.0, args.interval - (time.monotonic() - started)))
+    except KeyboardInterrupt:
+        return 0
+
+
+def _log(message: str) -> None:
+    _error(f"{dt.datetime.now(results.TIMEZONE):%H:%M:%S} {message}")
+
+
+def _run_results_final(args: argparse.Namespace) -> int:
+    cfg = config.load()
+    out = _live_dir(cfg, args)
+    built = cfg.build_dir / candidates.OUTPUT_FILE
+    okres_of = (
+        {o["code"]: o.get("okres", "") for o in json.loads(built.read_bytes())["obce"]}
+        if built.is_file()
+        else {}
+    )
+    try:
+        live, elections = results.read_final(args.packages, okres_of)
+        merged = results.merge(results.read_live(out), live, elections)
+        written = results.write(out, merged)
+    except (results.ResultsError, OSError, KeyError, ValueError) as e:
+        _error(f"ems results final: {e}")
+        return 1
+    _report_written(out, written)
+    return 0
+
+
+def _run_results_fake(args: argparse.Namespace) -> int:
+    cfg = config.load()
+    out = _live_dir(cfg, args)
+    written = results.write(out, results.fake(_reference(cfg), args.stage, args.seed))
+    _report_written(out, written)
+    return 0
+
+
+def _run_results_serve(args: argparse.Namespace) -> int:
+    cfg = config.load()
+    out = _live_dir(cfg, args)
+    if results.read_status(out) is None:
+        raise ConfigError(f"{out} has no live site; run `ems results fake` or `poll`")
+    results.write_static(out)
+    try:
+        build.serve(out, args.host, args.port)
+    except KeyboardInterrupt:
+        pass
+    except OSError as e:
+        _error(f"ems results serve: {args.host}:{args.port}: {e.strerror}")
+        return 1
+    return 0
+
+
+def _run_results_deploy(args: argparse.Namespace) -> int:
+    cfg = config.load()
+    out = _live_dir(cfg, args)
+    project = cfg.site.live_pages_project
+    results.write_static(out)
+    _print(results.describe(out))
+    problems = results.check(out)
+    if problems:
+        _print([f"  {p}" for p in problems])
+        _error(f"ems results deploy: {out} breaks the contract; not deployed")
+        return 1
+    _print([" ".join(results.deploy_command(out, project))])
+    if not args.yes and input(f"deploy to {project}? [y/N] ").strip().lower() != "y":
+        _print(["not deployed"])
+        return 1
+    return results.deploy(out, project)
+
+
 def _print(lines: Iterable[str]) -> None:
     """Print *lines* to stdout, below any progress line still open."""
     progress.end_line()
@@ -760,7 +978,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         parser.print_help()
         return 2
     try:
-        if run is _run_serve:
+        if run in (
+            _run_serve,
+            _run_results_serve,
+            _run_results_poll,
+            _run_results_deploy,
+        ):
             return run(args)
         with progress.stage(args.command) as stage:
             code = run(args)

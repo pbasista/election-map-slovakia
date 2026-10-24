@@ -1,5 +1,7 @@
 import dataclasses
+import html
 import json
+import re
 import shutil
 from pathlib import Path
 
@@ -128,6 +130,50 @@ def test_person_lists_candidacies_in_other_files():
     assert "p4" not in files["data/kraj/1.json"]["persons"]
 
 
+def past(election: str, eligible: int, voters: int) -> dict:
+    return {
+        "election": election,
+        "day": "2022-10-29",
+        "eligible": eligible,
+        "voters": voters,
+    }
+
+
+def test_regional_past_sums_the_obce_of_each_2026_obvod():
+    data = {
+        "obce": [
+            # The cities have no regional figures: their districts do.
+            {"code": "BA", "kraj": "1"},
+            {"code": "528595", "kraj": "1", "past": past("osk2022", 100, 30)},
+            {"code": "508063", "kraj": "1", "past": past("osk2022", 200, 50)},
+            {"code": "508071", "kraj": "1", "past": past("osk2022", 300, 60)},
+        ]
+    }
+    props = {"528595": {"zsk": 1}, "508063": {"zsk": 2}, "508071": {"zsk": 2}}
+    assert build.regional_past(data, props) == {
+        "zsk:1/1": past("osk2022", 100, 30),
+        "zsk:1/2": past("osk2022", 500, 110),
+    }
+
+
+def test_past_of_a_council_of_several_obvody_is_marked_whole():
+    data = DATA | {
+        "contests": [
+            c if c["kind"] == "zsk" else c | {"past": past("oso2022", 1000, 400)}
+            for c in DATA["contests"]
+        ]
+    }
+    files = build.area_files(data, {}, regional={"zsk:1/2": past("osk2022", 500, 110)})
+    row = ["oso2022", "2022-10-29", 1000, 400]
+    okres = files["data/okres/101.json"]["contests"]
+    assert okres["oz:528595/2"]["past"] == [*row, 1]
+    assert okres["starosta:528595"]["past"] == row
+    assert files["data/okres/106.json"]["contests"]["oz:508063/1"]["past"] == row
+    kraj = files["data/kraj/1.json"]["contests"]
+    assert kraj["zsk:1/2"]["past"] == ["osk2022", "2022-10-29", 500, 110]
+    assert "past" not in kraj["zsk:1/1"]
+
+
 def test_name_shards_find_a_person_by_each_name_word():
     data = {
         "candidacies": [
@@ -199,3 +245,95 @@ def test_build_is_deterministic(tmp_path: Path):
     assert pending["_missing"]["ui"] == len(
         json.loads((REPO / "web/i18n/en.json").read_bytes())
     )
+
+
+def versions(site: build.Site) -> dict[str, str]:
+    """The code, vendor, image and data versions of *site*, and its live URL."""
+    shell = site.files["sk/index.html"].decode()
+    match = re.search(r'<meta name="km-config" content="([^"]*)"', shell)
+    assert match is not None
+    app = json.loads(html.unescape(match[1]))
+    code = re.search(r'<script type="module" src="/assets/(\w+)/js/app.js">', shell)
+    vendor = re.search(r'src="/assets/vendor/(\w+)/leaflet/leaflet.js"', shell)
+    assert code is not None and vendor is not None
+    [images] = (t.split("/")[2] for t in site.copies if t.startswith("assets/img/"))
+    return {
+        "code": code[1],
+        "vendor": vendor[1],
+        "images": images,
+        "data": app["dataVersion"],
+        "live": app["live"],
+    }
+
+
+def test_versions_and_live_origin(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setenv(config.LIVE_URL_ENV, "http://127.0.0.1:8766")
+    cfg = project(tmp_path / "project")
+    # A party with a logo, which data/index.json names under the images.
+    data = json.loads((cfg.build_dir / "candidates.json").read_bytes())
+    data["candidacies"][0]["parties"] = ["Demokrati"]
+    (cfg.build_dir / "candidates.json").write_text(json.dumps(data))
+    site = build.assemble(cfg)
+    first = versions(site)
+    code, vendor = first["code"], first["vendor"]
+    assert first["live"] == "http://127.0.0.1:8766"
+    shell = site.files["sk/index.html"].decode()
+    # The preload is of the very URL the app fetches, or it goes unused.
+    assert f'href="/i18n/sk.json?v={first["data"]}"' in shell
+    assert f'src="/assets/{code}/js/picker.js"' in site.files["index.html"].decode()
+    assert "assets/cache.css" in site.copies
+    index = json.loads(site.files["data/index.json"])
+    assert index["parties"]["Demokrati"][2] == (
+        f"/assets/img/{first['images']}/parties/demokrati.svg"
+    )
+    # The modules import the libraries from their versioned directory.
+    app_js = site.files[f"assets/{code}/js/app.js"].decode()
+    assert f"from '/assets/vendor/{vendor}/preact-htm.module.js'" in app_js
+    assert "../vendor/" not in app_js
+    rules = build.header_rules(site.files[build.HEADERS].decode())
+    csp = build.response_headers(rules, "/sk/")["Content-Security-Policy"]
+    assert "; connect-src 'self' http://127.0.0.1:8766;" in csp
+    immutable = "public, max-age=31536000, immutable"
+    cache_control = {
+        path: build.response_headers(rules, path)["Cache-Control"]
+        for path in (
+            f"/assets/{code}/js/app.js",
+            f"/assets/vendor/{vendor}/leaflet/leaflet.js",
+            f"/assets/img/{first['images']}/parties/demokrati.svg",
+            "/assets/cache.css",
+            "/geo/x.json",
+        )
+    }
+    assert cache_control == {
+        f"/assets/{code}/js/app.js": immutable,
+        f"/assets/vendor/{vendor}/leaflet/leaflet.js": immutable,
+        f"/assets/img/{first['images']}/parties/demokrati.svg": immutable,
+        "/assets/cache.css": "public, max-age=86400",
+        "/geo/x.json": "public, max-age=86400",
+    }
+    # Other code: new code URLs only; the libraries, images and data keep theirs.
+    css = cfg.root / "web" / "app.css"
+    css.write_text(css.read_text() + "\n/* changed */\n")
+    second = versions(build.assemble(cfg))
+    assert second["code"] != code
+    assert {k: second[k] for k in ("vendor", "images", "data")} == {
+        k: first[k] for k in ("vendor", "images", "data")
+    }
+    # Another library: new library and code URLs.
+    lib = cfg.root / "web" / "vendor" / "preact-htm.module.js"
+    lib.write_text(lib.read_text() + "\n")
+    third = versions(build.assemble(cfg))
+    assert third["vendor"] != second["vendor"]
+    assert third["code"] != second["code"]
+    assert third["images"] == second["images"]
+    # Other data: a new data version.
+    (cfg.build_dir / "addr" / "index.json").write_text('{"obce": []}')
+    assert versions(build.assemble(cfg))["data"] != third["data"]
+    monkeypatch.setenv(config.LIVE_URL_ENV, "")
+    cfg = config.load(cfg.root / "config")
+    site = build.assemble(cfg)
+    assert versions(site)["live"] == ""
+    csp = build.response_headers(
+        build.header_rules(site.files[build.HEADERS].decode()), "/sk/"
+    )["Content-Security-Policy"]
+    assert "; connect-src 'self';" in csp

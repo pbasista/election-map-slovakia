@@ -7,13 +7,20 @@ where it is, not as a failure somewhere downstream.
 from __future__ import annotations
 
 import datetime as dt
+import os
 import re
 import tomllib
+import urllib.parse
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, TypeVar
+from zoneinfo import ZoneInfo
 
 SITE_FILE = "site.toml"
+# Overrides site.toml's live_url at build time, e.g. a local results server.
+LIVE_URL_ENV = "EMS_LIVE_URL"
+# The election's times (site.toml polls_open, polls_close) are Slovak time.
+_SLOVAK_TIME = ZoneInfo("Europe/Bratislava")
 LANGUAGES_FILE = "languages.toml"
 SOURCES_FILE = "sources.toml"
 INPUTS_FILE = "inputs.toml"
@@ -60,7 +67,20 @@ class Site:
     pages_project: str
     """Cloudflare Pages project the deploy workflow uploads to."""
     election: dt.date
-    results_mode: bool
+    polls_open: dt.datetime
+    polls_close: dt.datetime
+    """When the polls open and close on election day (site.toml gives the
+    times of day in Slovak time; these carry its offset)."""
+    live_url: str | None
+    """Origin of the live results site (``live_url``, or the ``EMS_LIVE_URL``
+    environment variable if set; empty: none). The frontend fetches the
+    results from there, so the CSP and ``check`` allow exactly this origin."""
+    live_window: tuple[dt.datetime, dt.datetime] | None
+    """When the app reads the live results every minute: from the polls'
+    closing for ``live_days``; before, it reads nothing, after, once per
+    page load. None with ``EMS_LIVE_URL`` set, a test server: any time."""
+    live_pages_project: str
+    """Cloudflare Pages project ``ems results deploy`` uploads live/ to."""
     file_budget: int
     max_file_bytes: int
     cache_image_max_bytes: int
@@ -269,16 +289,47 @@ def load_site(path: Path) -> Site:
     election = t.get("election", dt.date)
     if isinstance(election, dt.datetime):
         raise t.error("election", "must be a date without a time")
+    open_time = t.get("polls_open", dt.time)
+    close_time = t.get("polls_close", dt.time)
+    if not open_time < close_time:
+        raise t.error("polls_close", "must be later than polls_open")
+    polls_open = dt.datetime.combine(election, open_time, _SLOVAK_TIME)
+    polls_close = dt.datetime.combine(election, close_time, _SLOVAK_TIME)
     pages_project = t.string("pages_project")
     # It becomes the host name <project>.pages.dev.
     if len(pages_project) > _MAX_LABEL or not _LABEL.fullmatch(pages_project):
         raise t.error("pages_project", "must be lowercase letters, digits and dashes")
+    live_url = os.environ.get(LIVE_URL_ENV, t.string("live_url")).rstrip("/")
+    parts = urllib.parse.urlsplit(live_url)
+    # An origin: the CSP's connect-src and `check` name it as it is, and the
+    # frontend appends the file paths.
+    if live_url and (
+        parts.scheme not in ("https", "http")
+        or not parts.netloc
+        or live_url != f"{parts.scheme}://{parts.netloc}"
+    ):
+        source = LIVE_URL_ENV if LIVE_URL_ENV in os.environ else "live_url"
+        raise t.error(source, "must be empty or an http(s) origin without a path")
+    live_pages_project = t.string("live_pages_project")
+    if len(live_pages_project) > _MAX_LABEL or not _LABEL.fullmatch(live_pages_project):
+        raise t.error(
+            "live_pages_project", "must be lowercase letters, digits and dashes"
+        )
+    live_days = dt.timedelta(days=t.positive_int("live_days"))
+    # A test server (EMS_LIVE_URL) is polled at any time.
+    live_window = (
+        None if LIVE_URL_ENV in os.environ else (polls_close, polls_close + live_days)
+    )
     site = Site(
         base_url=base_url.rstrip("/") or None,
         pages_project=pages_project,
         repository=repository,
         election=election,
-        results_mode=t.get("results_mode", bool),
+        polls_open=polls_open,
+        polls_close=polls_close,
+        live_url=live_url or None,
+        live_window=live_window,
+        live_pages_project=live_pages_project,
         file_budget=t.positive_int("file_budget"),
         max_file_bytes=t.positive_int("max_file_bytes"),
         cache_image_max_bytes=t.positive_int("cache_image_max_bytes"),

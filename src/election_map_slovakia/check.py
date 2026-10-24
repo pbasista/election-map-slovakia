@@ -10,21 +10,28 @@ json       every ``.json`` file parses
 headers    ``_headers`` parses and stays within the Cloudflare Pages
            limits (100 rules, 2,000 characters per line)
 links      every file the frontend can request exists: the files HTML
-           pages, scripts and app.css refer to, the literal paths in the
+           pages, scripts and app.css refer to (the code below
+           ``assets/<v>/``, the libraries below ``assets/vendor/<vv>/``,
+           which the build points the modules' imports at; see ``build``),
+           the literal paths in the
            scripts, the 404 page, the shell and UI strings of every
            language, every geo shard of every okres and every level of the
            countries around Slovakia, and for every obec in the geo shards
-           its address file and candidate files; every address file and name
-           shard the indexes list; the cached copy of every page a research
-           finding cites
+           its address file and candidate files; every address file, name
+           shard and party logo the indexes list; the cached copy of every
+           page a research finding cites and the stylesheet they link
 contests   every contest of ``candidates.json`` is in exactly one candidate
            area file, the one the frontend looks in (``areaPath`` in
            ``web/js/data.js``)
 origins    no HTML, JS or CSS refers to another origin, except as the
            target of a link (``href``, not on ``<link>``), as an XML
-           namespace or in a comment; cached copies of cited pages
+           namespace or in a comment, and the live results origin
+           (``live_url``) in the HTML (the app shells' config, which the
+           scripts read it from); cached copies of cited pages
            (``cache/``) are documents, not code, and are not checked: what
-           they refer to is only links (``cache.py`` sanitizes them)
+           they refer to is only links (``cache.py`` sanitizes them). The
+           CSP's connect-src in ``_headers`` is ``'self'`` and exactly the
+           live results origin, if there is one
 addresses  every address point lies in the bounding box of its obec at the
            finest level of detail, widened by ``addresses.MAX_OUTSIDE``;
            in an obec whose council obvod goes by address every address
@@ -64,7 +71,15 @@ from typing import Any
 
 import numpy as np
 
-from election_map_slovakia import addresses, build, candidates, config, geo, progress
+from election_map_slovakia import (
+    addresses,
+    build,
+    cache,
+    candidates,
+    config,
+    geo,
+    progress,
+)
 from election_map_slovakia.output import format_size
 
 # https://developers.cloudflare.com/pages/platform/limits/
@@ -73,8 +88,12 @@ MAX_HEADER_LINE = 2000
 SHOWN_PROBLEMS = 20
 
 _CODE = (".html", ".js", ".mjs", ".css")
+_LEAFLET_CSS = re.compile(
+    rf"{build.ASSETS_DIR}/{build.VENDOR_DIR}/[^/]+/leaflet/leaflet\.css"
+)
 _HTML_REF = re.compile(r"""\b(?:src|href)\s*=\s*["']([^"']*)["']""")
-_JS_IMPORT = re.compile(r"""\b(?:from|import)\s*\(?\s*["'](\.{1,2}/[^"']+)["']""")
+# Relative imports, and the absolute ones of the libraries the build writes.
+_JS_IMPORT = re.compile(r"""\b(?:from|import)\s*\(?\s*["']((?:\.{1,2})?/[^"']+)["']""")
 _JS_PATH = re.compile(r"""(["'`])(/[\w./-]*\.\w+)\1""")
 _CSS_URL = re.compile(r"""url\(\s*["']?([^"')]+)["']?\s*\)""")
 _URL = re.compile(
@@ -184,7 +203,7 @@ def _local_target(page: str, ref: str) -> str | None:
 def _code_references(dist: Path, rels: Iterable[str]) -> Iterator[tuple[str, str]]:
     """Yield (``dist/`` path, referring file) for the static references."""
     for rel in rels:
-        if not rel.endswith(_CODE) or rel == "assets/vendor/leaflet/leaflet.css":
+        if not rel.endswith(_CODE) or _LEAFLET_CSS.fullmatch(rel):
             continue
         text = (dist / rel).read_text(encoding="utf-8")
         if rel.endswith(".html"):
@@ -282,6 +301,13 @@ def _index_requests(
         yield from (
             (f"addr/{row[0]}.json", "addr/index.json") for row in addr_index["obce"]
         )
+    if data_index is not None:
+        # A party is [short, name] or [short, name, logo].
+        yield from (
+            (logo.removeprefix("/"), "data/index.json")
+            for _, _, *logos in data_index["parties"].values()
+            for logo in logos
+        )
     if geo is None or data_index is None:
         return
     for code, props in sorted(geo.features.items()):
@@ -331,6 +357,7 @@ def check_links(
         (build.NOT_FOUND, "Cloudflare Pages"),
         *_index_requests(geo, data_index, addr_index),
         *_research_requests(dist, sorted(rels)),
+        (cache.STYLESHEET.removeprefix("/"), "the cached copies (cache.py)"),
     ]
     wanted: dict[str, str] = {}
     for target, by in requests:
@@ -401,10 +428,35 @@ def _allowed(text: str, start: int, url: str, comments: list[tuple[int, int]]) -
     return tag is not None and tag.group(1).lower() not in _RESOURCE_TAGS
 
 
+def _connect_sources(dist: Path) -> list[str] | None:
+    """Return the sources the CSP of the app pages lets them fetch from.
+
+    None if ``_headers`` is missing or broken (``check_headers`` says so).
+    """
+    try:
+        rules = build.header_rules((dist / build.HEADERS).read_text(encoding="utf-8"))
+    except (OSError, build.BuildError):
+        return None
+    policy = next(
+        (
+            value
+            for name, value in build.response_headers(rules, "/").items()
+            if name.lower() == "content-security-policy"
+        ),
+        "",
+    )
+    directives: dict[str, list[str]] = {}
+    for directive in policy.split(";"):
+        name, *sources = directive.split() or [""]
+        directives.setdefault(name.lower(), sources)
+    return directives.get("connect-src", directives.get("default-src", ["*"]))
+
+
 def check_origins(dist: Path, rels: Iterable[str], site: config.Site) -> Check:
     """Return the check that no code refers to another origin."""
     result = Check("origins")
     own = urllib.parse.urlsplit(site.base_url).netloc if site.base_url else None
+    live = site.live_url
     for rel in sorted(rels):
         if not rel.endswith(_CODE) or rel.startswith(f"{build.CACHE_DIR}/"):
             continue
@@ -413,7 +465,15 @@ def check_origins(dist: Path, rels: Iterable[str], site: config.Site) -> Check:
         comments = _comment_spans(text) if not rel.endswith(".html") else []
         for m in _URL.finditer(text):
             url = m.group()
-            if urllib.parse.urlsplit(url).netloc == own:
+            # The live results origin as a value of the shells' config (the
+            # escaped quote ends it), not as a prefix of a longer host.
+            if (
+                live
+                and rel.endswith(".html")
+                and (url == live or url.startswith(f"{live}&quot;"))
+            ):
+                continue
+            if _netloc(url) == own:
                 continue
             # A link target the About dialog builds from the shell's config.
             if url.startswith(site.repository):
@@ -421,7 +481,25 @@ def check_origins(dist: Path, rels: Iterable[str], site: config.Site) -> Check:
             if not _allowed(text, m.start(), url, comments):
                 line = text.count("\n", 0, m.start()) + 1
                 result.problems.append(f"{rel}:{line}: {url}")
+    connect = _connect_sources(dist)
+    expected = ["'self'", live] if live else ["'self'"]
+    if connect is not None and sorted(connect) != sorted(expected):
+        result.problems.append(
+            f"{build.HEADERS}: CSP connect-src is {' '.join(connect)},"
+            f" expected {' '.join(expected)}"
+        )
     return result
+
+
+def _netloc(url: str) -> str | None:
+    """Return the host of *url*, or None where it does not parse.
+
+    A match can run on into the shells' escaped config, brackets and all.
+    """
+    try:
+        return urllib.parse.urlsplit(url).netloc
+    except ValueError:
+        return None
 
 
 def _points(content: dict[str, Any]) -> Iterator[tuple[float, float]]:

@@ -29,6 +29,13 @@ the turnout of the unit it was won in, summed from the per-okrsok tables of
 2022 (votes tab05f/tab08f and tab06d/tab09d, turnout tab02bf and tab02bd)
 or read from the by-election tables (votes tab05d/tab08e, turnout tab02be).
 
+Mayors, councils and presidents also have their past election
+(:class:`Past`), with the turnout of their whole area: the latest
+by-election that elected the mayor, or the whole council, again, else the
+regular election of 2022; for a president, the regional election of 2022.
+The 2022 regional turnout is kept per obec too, for the 2026 regional
+obvody (unknown here) to be summed from.
+
 Bodies are named like the 2026 contests without obvod: ``starosta:<obec>``,
 ``oz:<obec>``, ``predseda:<kraj>``, ``zsk:<kraj>``, with ``BA``/``KE`` for the
 cities of Bratislava and Košice.
@@ -143,6 +150,16 @@ class Result:
 
 
 @dataclass(frozen=True)
+class Past:
+    """The last election of a body before 2026: its turnout in the body's area."""
+
+    election: str
+    """The results input it comes from, one of :data:`INPUTS`."""
+    day: dt.date
+    turnout: Turnout
+
+
+@dataclass(frozen=True)
 class Holder:
     """A person holding (a seat in) a body, as elected."""
 
@@ -218,6 +235,8 @@ class Unit:
 class Election:
     """The municipal election of one day, reduced to what changes holders."""
 
+    name: str
+    """The results input it comes from, one of :data:`INPUTS`."""
     day: dt.date
     units: list[Unit]
     mayors: dict[str, list[dict[str, str]]]
@@ -240,6 +259,13 @@ class Holders:
     """Council body → seats elected in 2022."""
     unknown: set[str] = field(default_factory=set)
     """Municipality codes of the results that are not 2026 areas."""
+    past: dict[str, Past] = field(default_factory=dict)
+    """Mayor, council or president body → its last election, see :func:`apply`;
+    the turnout is the whole area's, the 2026 council obvody being new."""
+    regional: dict[str, Past] = field(default_factory=dict)
+    """Obec code (Bratislava and Košice districts as such) → the 2022
+    regional election in it, to be summed over the 2026 regional obvody,
+    which are not known here."""
 
     def all(self) -> Iterable[Holder]:
         """Yield every holder, in body order."""
@@ -257,7 +283,7 @@ def load(paths: Mapping[str, Path], admin: candidates.Admin) -> Holders:
     holders = Holders()
     apply(holders, _read_municipal_2022(paths[MUNICIPAL_2022]), admin)
     for name, day in BY_ELECTIONS.items():
-        apply(holders, _read_by_election(paths[name], day), admin)
+        apply(holders, _read_by_election(paths[name], name, day), admin)
     _add_regional(holders, paths[REGIONAL_2022])
     return holders
 
@@ -281,21 +307,17 @@ def apply(holders: Holders, election: Election, admin: candidates.Admin) -> None
         if code is None:
             holders.unknown.add(unit.obec)
             continue
-        if unit.typ == _NOT_HELD:
-            mayor, council = unit.seats == 0, False
-        elif unit.typ in _TYPES:
-            mayor, council = _TYPES[unit.typ]
-        else:
-            raise IncumbentsError(f"{election.day}: unknown election type {unit.typ!r}")
+        mayor, council = _offices(election, unit)
         oz = f"oz:{code}"
         if election.day == ELECTION_2022:
             holders.seats_2022[oz] = unit.seats
+        whole = unit.seats >= holders.seats_2022.get(oz, 0)
         if council:
             elected = [
                 _holder(oz, election.day, r, _result(election, unit, r, r["VOOBEC"]))
                 for r in election.members.get(unit.obec, [])
             ]
-            if unit.seats >= holders.seats_2022.get(oz, 0):
+            if whole:
                 holders.bodies[oz] = elected
             else:
                 # A councillor elected again has vacated the earlier seat.
@@ -309,8 +331,52 @@ def apply(holders: Holders, election: Election, admin: candidates.Admin) -> None
             ]
             holders.bodies[starosta] = winners
             holders.bodies[oz] = _without(holders.bodies.get(oz, []), winners)
+        held = unit.typ != _NOT_HELD
+        _add_past(
+            holders,
+            election,
+            unit,
+            code,
+            mayor=mayor and held,
+            council=council and whole,
+        )
     for body in [b for b, hs in holders.bodies.items() if not hs]:
         del holders.bodies[body]
+
+
+def _offices(election: Election, unit: Unit) -> tuple[bool, bool]:
+    """Return whether *unit* elected (mayor, council); see :data:`_TYPES`."""
+    if unit.typ == _NOT_HELD:
+        return unit.seats == 0, False
+    if unit.typ in _TYPES:
+        return _TYPES[unit.typ]
+    raise IncumbentsError(f"{election.day}: unknown election type {unit.typ!r}")
+
+
+def _add_past(
+    holders: Holders,
+    election: Election,
+    unit: Unit,
+    code: str,
+    *,
+    mayor: bool,
+    council: bool,
+) -> None:
+    """Make *election* the past election of the bodies of area *code* it renewed.
+
+    That is the regular one of 2022, then a by-election that elected the
+    *mayor* or the whole *council*. Voters of a municipality vote for both on
+    one roll, so the turnout of the municipality is that of either body.
+    """
+    turnout = election.turnout.get((unit.obec, ""))
+    if turnout is None:
+        return
+    past = Past(election.name, election.day, turnout)
+    regular = election.day == ELECTION_2022
+    if regular or mayor:
+        holders.past[f"starosta:{code}"] = past
+    if regular or council:
+        holders.past[f"oz:{code}"] = past
 
 
 def _without(holders: Iterable[Holder], others: Sequence[Holder]) -> list[Holder]:
@@ -368,6 +434,7 @@ def _read_municipal_2022(path: Path) -> Election:
         )
         turnout = _turnout(_csv(z, path, "tab02bf"), _municipal_units)
     return Election(
+        MUNICIPAL_2022,
         ELECTION_2022,
         _units(units),
         _elected(mayors, ("OBEC", "PC_HL"), won_mayor),
@@ -376,7 +443,7 @@ def _read_municipal_2022(path: Path) -> Election:
     )
 
 
-def _read_by_election(path: Path, day: dt.date) -> Election:
+def _read_by_election(path: Path, name: str, day: dt.date) -> Election:
     with _open(path) as z:
         units = _xlsx(z, path, "tab0dd")
         mayors = _xlsx(z, path, "tab0ad")
@@ -389,6 +456,7 @@ def _read_by_election(path: Path, day: dt.date) -> Election:
         )
         turnout = _turnout(_xlsx(z, path, "tab02be"), _municipal_units)
     return Election(
+        name,
         day,
         _units(units),
         _elected(mayors, ("OBEC", "PC_HL"), won_mayor),
@@ -474,7 +542,7 @@ def _by_obec(rows: Iterable[dict[str, str]]) -> dict[str, list[dict[str, str]]]:
 
 
 def _add_regional(holders: Holders, path: Path) -> None:
-    """Add the presidents and councillors elected in the 2022 regional election."""
+    """Add the 2022 regional election: its winners, and turnout per kraj and obec."""
     with _open(path) as z:
         units = _csv(z, path, "tab0dc")
         presidents = {(r["KRAJ"], r["PC_HL"]): r for r in _csv(z, path, "tab0a")}
@@ -497,8 +565,15 @@ def _add_regional(holders: Holders, path: Path) -> None:
             lambda r: (
                 (("predseda", kraj_of[r["OBEC"]]), "P_HL_PRE"),
                 (("zsk", obvod_of[r["OBEC"]]), "P_HL_POS"),
+                (("obec", r["OBEC"]), "P_HL_POS"),
             ),
         )
+    for (unit, code), t in turnout.items():
+        past = Past(REGIONAL_2022, ELECTION_2022, t)
+        if unit == "predseda":
+            holders.past[f"predseda:{code}"] = past
+        elif unit == "obec":
+            holders.regional[code] = past
     kraj_of_obvod = {r["VOBVOD"]: r["KRAJ"] for r in units}
     for (kraj, number), votes in sorted(won_president.items()):
         row = presidents[(kraj, number)]
@@ -737,6 +812,21 @@ def result_json(r: Result) -> dict[str, int]:
     if r.obvod is not None:
         out["obvod"] = r.obvod
     return out
+
+
+def past_json(p: Past) -> dict[str, object]:
+    """Return ``{election, day, eligible, voters}`` of a :class:`Past`.
+
+    ``election`` is its results input without ``results-`` (``oso2022``,
+    ``osk2022``, ``oso202303``, …); ``eligible`` and ``voters`` are those of
+    :class:`Turnout`.
+    """
+    return {
+        "election": p.election.removeprefix("results-"),
+        "day": p.day.isoformat(),
+        "eligible": p.turnout.eligible,
+        "voters": p.turnout.voters,
+    }
 
 
 def report(inc: Incumbency) -> list[str]:

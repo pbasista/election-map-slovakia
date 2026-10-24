@@ -107,6 +107,18 @@ export const InkCircle = () => html`
   </svg>
 `;
 
+/* The cross a pen draws over a candidate's number: crossed out by the
+ * visitor, stretched over the number like InkCircle. */
+export const InkCross = () => html`
+  <svg class="ink-cross" viewBox="0 0 40 28" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d="M7 4.5C15 9.5 24 16.5 33.5 24.5M32 3.5C23.5 9 14.5 16.5 6.5 24.6" />
+  </svg>
+`;
+
+/* A hand-drawn cross, unlike the straight one that closes or removes: the
+ * candidates crossed out, in the filter. */
+export const CrossOutIcon = () => icon(html`<path d="M5 6c4.5 3.6 9 7.6 14 12.5M18.5 5.5c-4.4 3.9-8.7 8-13 13" />`);
+
 /* Two chain links: copies a link. */
 export const LinkIcon = () =>
   icon(html`
@@ -114,8 +126,39 @@ export const LinkIcon = () =>
     <path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.2-1.2" />
   `);
 
+/* A QR code in outline: its three corner squares and a few modules. */
+export const QrIcon = () =>
+  icon(html`
+    <rect x="3.5" y="3.5" width="7" height="7" rx="1" />
+    <rect x="13.5" y="3.5" width="7" height="7" rx="1" />
+    <rect x="3.5" y="13.5" width="7" height="7" rx="1" />
+    <path d="M14 14h2.5v2.5M20.5 14v.01M14 20.5h.01M17.5 20.5h3v-3" />
+  `);
+
 /* A chair seen from the side: the candidate holds the office now. */
 export const ChairIcon = () => icon(html`<path d="M7 3v18M7 12.5h11V21M7 16.5h11" />`);
+
+/* Elected: a decoration, an eight-pointed star hanging from a ribbon's two
+ * straps; a star, not a sports medal's disc, with deep points that still
+ * read at the badge's size (more points blur into a disc there), and solid,
+ * a hole in it reading as an eye. Not a five-pointed star, which reads as
+ * a favourite, nor a check mark, which reads as done. */
+export const MedalIcon = () =>
+  icon(html`
+    <path class="fill" d="M5 1.2h4.6l3 6.8H8.2zM19 1.2h-4.6l-3 6.8h4.4z" />
+    <path
+      class="fill"
+      d="M12 8.6 13.5 12.3 17.2 10.7 15.6 14.4 19.3 15.9 15.6 17.4 17.2 21.1 13.5 19.5 12 23.2 10.5 19.5 6.8 21.1 8.4 17.4 4.7 15.9 8.4 14.4 6.8 10.7 10.5 12.3z"
+    />
+  `);
+
+/* The decoration in outline, not won yet: a winner this site calls before
+ * it is official. */
+export const MedalOutlineIcon = () =>
+  icon(html`
+    <path d="M5.8 2h3.2l2.6 5.8H8.4zM18.2 2H15l-2.6 5.8h3.2z" />
+    <path d="M12 9.4 13.4 12.6 16.6 11.3 15.3 14.5 18.5 15.9 15.3 17.3 16.6 20.5 13.4 19.2 12 22.4 10.6 19.2 7.4 20.5 8.7 17.3 5.5 15.9 8.7 14.5 7.4 11.3 10.6 12.6z" />
+  `);
 
 /* The filter's two modes: an open eye, only these are shown; struck
  * through, these are hidden. */

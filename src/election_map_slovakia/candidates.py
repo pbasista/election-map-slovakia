@@ -12,9 +12,10 @@ strings; keys in parentheses are omitted where they do not apply)::
 
     kraje:       [{code, name}]                         code "1".."8" (ZBGIS IDN2)
     okresy:      [{code, name, kraj}]                   code "101".."813" (IDN3)
-    obce:        [{code, name, (okres), kraj, (city)}]  city: BA/KE for districts
+    obce:        [{code, name, (okres), kraj, (city),   city: BA/KE for districts
+                   (past)}]
     contests:    [{id, kind, area, (obvod), (incumbent),
-                   (seats_2022)}]                       id "oz:528595/2"
+                   (seats_2022), (past)}]               id "oz:528595/2"
     candidacies: [{id, contest, number, person, title_before, title_after,
                    first_name, surname, age, occupation, parties, independent,
                    (residence), (incumbent)}]           id "oz:528595/2#7"
@@ -38,6 +39,15 @@ that contest or null. ``result`` is how the role was won,
 Both are omitted when empty or vacant. A council contest's ``seats_2022`` is
 the number of councillors the whole council of its area had elected in the
 regular election of 2022 (by-elections leave it unchanged).
+
+``past`` is the last election of the whole body a contest elects, with the
+turnout in the body's whole area, ``{election, day, eligible, voters}``
+(:func:`incumbents.past_json`; for a council all its obvody together): for
+mayor and council contests the latest by-election that elected the mayor or
+the whole council, else the regular election of 2022; for president
+contests the regional election of 2022. Regional council contests have
+none, their 2026 obvody being unknown here; an obec's ``past`` is the
+regional election of 2022 in it, for ``build`` to sum over them.
 """
 
 from __future__ import annotations
@@ -806,6 +816,9 @@ def _contest_json(c: Candidacy, result: Result) -> dict[str, object]:
     seats_2022 = result.incumbency.holders.seats_2022.get(f"oz:{c.area}")
     if c.kind == "oz" and seats_2022:
         contest["seats_2022"] = seats_2022
+    past = result.incumbency.holders.past.get(c.contest.partition("/")[0])
+    if past is not None:
+        contest["past"] = incumbents.past_json(past)
     return contest
 
 
@@ -820,6 +833,9 @@ def to_json(result: Result) -> dict[str, list[dict[str, object]]]:
         item["kraj"] = o.kraj
         if o.city is not None:
             item["city"] = o.city
+        past = result.incumbency.holders.regional.get(o.code)
+        if past is not None:
+            item["past"] = incumbents.past_json(past)
         obce.append(item)
     contests: dict[str, dict[str, object]] = {}
     candidacies = []

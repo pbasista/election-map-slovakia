@@ -40,6 +40,10 @@
   /* The chair badge: holds the office now. A green apart from the
      primary (research) and the red (controversies). */
   --office: #2e7d32;
+  /* The 2026 results (live.js): their medal, vote bars, turnout and status,
+     a jade apart from the office green and the map's teal, so that they
+     never pass for past figures, which stay grey. */
+  --result: #0b7d5a;
   /* The ballpoint blue of a voter's pen: the circles around the numbers of
      the candidates circled (.num .ink). */
   --ink: #1f4fc4;
@@ -105,6 +109,7 @@
   --danger: #f08891;
   --danger-deep: #3b1f27;
   --office: #81c784;
+  --result: #4fd1a1;
   --ink: #8fb0ff;
   --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px rgb(0 0 0 / 0.45);
   --shadow-lg: 0 2px 6px rgb(0 0 0 / 0.4), 0 18px 48px rgb(0 0 0 / 0.6);
@@ -483,6 +488,67 @@ h3 {
   color: var(--text-dim);
 }
 
+/* The state of the 2026 results under the site's name (live.js
+   `LiveStatus`): a pulsing dot while counting goes on, still once final. */
+.live-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 4px 0;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--result);
+}
+
+.live-dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--result);
+  animation: live-pulse 1.6s ease-in-out infinite;
+}
+
+.live-status.final .live-dot {
+  animation: none;
+}
+
+@keyframes live-pulse {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot {
+    animation: none;
+  }
+}
+
+/* The voting under way (live.js `VotingStatus`), before any results: in
+   the primary colour rather than the results' green, a still bar of how
+   much of the voting day has passed in place of the dot. */
+.live-status.voting {
+  color: var(--primary);
+}
+
+.voting-bar {
+  position: relative;
+  flex: none;
+  width: 40px;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--surface-3);
+}
+
+.voting-bar > span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: var(--primary);
+}
+
 /* ---------- search ---------- */
 
 .search {
@@ -831,6 +897,25 @@ h3 {
   color: var(--map-council);
 }
 
+/* A turnout layer's icon, its overlay's, in the colour the layer shades the
+   map in (mapmode.js `toneOf`); "None" keeps an icon's room, so that the
+   labels line up. */
+.option.turnout-municipal .ico {
+  color: var(--map-accent);
+}
+
+.option.turnout-city .ico {
+  color: var(--map-city);
+}
+
+.option.turnout-regional .ico {
+  color: var(--map-zsk);
+}
+
+span.ico {
+  flex: none;
+}
+
 .pop-note {
   margin: 8px 0 0;
   padding: 0 2px;
@@ -1043,9 +1128,9 @@ h3 {
   min-width: 0;
 }
 
-/* Favourites' title and, beside it, the button that copies the link to
-   them (favourites.js `CopyLink`): a round icon filled in the primary
-   colour, the one call to action there. */
+/* Favourites' title and, beside it, the buttons that copy the link to
+   them and show it as a QR code (favourites.js `CopyLink`, `QrButton`):
+   round icons filled in the primary colour, the calls to action there. */
 .favourites-title {
   display: flex;
   align-items: center;
@@ -1092,6 +1177,58 @@ h3 {
   border-radius: var(--radius-sm);
   background: var(--surface-2);
   font-size: 16px; /* below 16px, iOS zooms the page on focus */
+}
+
+/* The link as a QR code in a dialog of its own (favourites.js `QrDialog`):
+   white with its quiet zone in the dark theme too, as large as the screen
+   allows, so that another device's camera reads it from a distance. */
+.qr-dialog {
+  width: min(560px, calc(100vw - 24px));
+  max-width: none;
+  max-height: calc(100dvh - 24px);
+  padding: 12px 16px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-lg);
+  overflow-y: auto;
+}
+
+.qr-dialog::backdrop {
+  background: var(--scrim);
+}
+
+.qr-dialog[open] {
+  animation: dialog-in 0.16s ease-out;
+}
+
+.qr-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.qr-head h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+/* Square, the largest that leaves the heading and the caption in view. */
+.qr-dialog .qr {
+  display: block;
+  width: min(100%, calc(100dvh - 190px));
+  height: auto;
+  margin: 0 auto;
+  border-radius: var(--radius-sm);
+}
+
+.qr-dialog p {
+  margin: 10px 0 0;
+  font-size: var(--fs-sm);
+  text-align: center;
 }
 
 /* Favourites beside the left column (pane.js `WIDE`), level with the
@@ -1249,6 +1386,10 @@ button.contest-head {
   font-weight: 500;
 }
 
+/* A contest's map pin (mapmode.js `ContestMapButton`), in the colour its
+   area is drawn in on the map (--tone: a municipality's red, a council
+   obvod's orange, the cities' green, a regional contest's violet), so
+   that it reads as the area it shows. */
 .contest-map {
   display: grid;
   flex: none;
@@ -1260,12 +1401,109 @@ button.contest-head {
   border: 0;
   border-radius: 50%;
   background: none;
-  color: var(--primary);
+  color: var(--tone, var(--primary));
   cursor: pointer;
 }
 
 .contest-map:hover {
-  background: var(--primary-deep);
+  background: color-mix(in srgb, var(--tone, var(--primary)) 14%, transparent);
+}
+
+/* Showing the contest's 2026 turnout on the map: filled in that colour, as
+   the votes' pin is in the results' green while it shows them. */
+.contest-map[aria-pressed="true"] {
+  background: var(--tone);
+  color: var(--surface);
+}
+
+/* The turnout in the header (ballots.js `Turnout`): a short track like the
+   votes' bars, the share above it at its start and the year at its end, at
+   the end of the header so that it adds no height. Grey for the last
+   election; in the results' green for 2026, the last election then a grey
+   tick on the track, its figures under it led by the same tick. */
+.gauge {
+  display: grid;
+  flex: none;
+  align-content: center;
+  gap: 3px;
+  width: 64px;
+  color: var(--text-faint);
+  font-size: var(--fs-xs);
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+
+.gauge-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.gauge-line strong {
+  color: var(--text-dim);
+  font-size: var(--fs-sm);
+  font-weight: 650;
+}
+
+.gauge-bar {
+  position: relative;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--surface-3);
+}
+
+.gauge-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: var(--text-faint);
+}
+
+.gauge-tick,
+.gauge-line.past > span::before {
+  width: 2px;
+  border-radius: 1px;
+  background: var(--text-dim);
+}
+
+.gauge-tick {
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  margin-left: -1px;
+}
+
+.gauge-line.past > span::before {
+  content: "";
+  display: inline-block;
+  height: 9px;
+  margin-right: 4px;
+  vertical-align: -1px;
+}
+
+.gauge.live > .gauge-line:first-child,
+.gauge.live > .gauge-line:first-child strong {
+  color: var(--result);
+}
+
+.gauge.live .gauge-fill {
+  background: var(--result);
+}
+
+/* How far the 2026 count of the contest has got (ballots.js `ResultsLine`). */
+.contest-results {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 1px;
+  color: var(--result);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.contest-results.pending {
+  color: var(--text-faint);
+  font-weight: 400;
 }
 
 /* A number beside a heading: the findings of a kind on the candidate card. */
@@ -1331,15 +1569,23 @@ button.contest-head {
   background: var(--primary-deep);
 }
 
-/* Muted by the filter: still listed, after the others, faded. */
-.cand.dimmed {
+/* Muted by the filter: still listed, after the others, faded and grey,
+   all but a crossed-out number, whose red cross says at full strength
+   why (its digits fade under it). The row's background stays, its red
+   edge turns grey. */
+.cand.dimmed > :not(.num),
+.cand.dimmed:not(.crossed) > .num {
   opacity: 0.45;
   filter: grayscale(1);
 }
 
-.cand.dimmed:hover,
-.cand.dimmed:focus-within {
+.cand.dimmed:is(:hover, :focus-within) > :not(.num),
+.cand.dimmed:not(.crossed):is(:hover, :focus-within) > .num {
   opacity: 0.8;
+}
+
+.cand.crossed > .num {
+  color: color-mix(in srgb, var(--text-faint) 45%, transparent);
 }
 
 /* Research found serious controversies: a red edge down the whole row,
@@ -1349,14 +1595,21 @@ button.contest-head {
   box-shadow: inset 4px 0 0 var(--danger);
 }
 
+.cand.dimmed.flagged {
+  box-shadow: inset 4px 0 0 var(--line-strong);
+}
+
 .cand.current {
   background: var(--accent-deep);
 }
 
 /* The ballot number: a button that circles it (ballots.js `CandidateRow`).
    Circled, the number is in the pen's blue with a loop drawn around it;
-   under the pointer or focused, a faint loop says what a press does. Its
-   target reaches beyond the number, for a finger. */
+   under the pointer or focused, a faint loop says what a press does.
+   Crossed out, a red cross is drawn over it and the name is struck
+   through. With Shift held, the pointer previews a faint cross instead,
+   the alternate press, or fades the cross a Shift+click would take away.
+   Its target reaches beyond the number, for a finger. */
 .cand .num {
   position: relative;
   flex: 0 0 1.6em;
@@ -1377,7 +1630,8 @@ button.contest-head {
   inset: -5px -4px;
 }
 
-.cand .num .ink {
+.cand .num .ink,
+.cand .num .ink-cross {
   position: absolute;
   left: -5px;
   top: -3px;
@@ -1388,12 +1642,17 @@ button.contest-head {
   pointer-events: none;
 }
 
-.cand .num .ink path {
+.cand .num .ink path,
+.cand .num .ink-cross path {
   fill: none;
   stroke: var(--ink);
   stroke-width: 1.8;
   stroke-linecap: round;
   vector-effect: non-scaling-stroke;
+}
+
+.cand .num .ink-cross path {
+  stroke: var(--danger);
 }
 
 .cand .num:hover .ink,
@@ -1407,6 +1666,26 @@ button.contest-head {
 
 .cand .num[aria-pressed="true"] .ink {
   opacity: 1;
+}
+
+.cand.crossed .num .ink-cross {
+  opacity: 1;
+}
+
+.shift .cand .num:hover .ink {
+  opacity: 0;
+}
+
+.shift .cand .num:hover .ink-cross {
+  opacity: 0.4;
+}
+
+.shift .cand .num[aria-pressed="true"]:hover .ink {
+  opacity: 1;
+}
+
+.cand.crossed .name {
+  text-decoration: line-through;
 }
 
 .cand .who {
@@ -1432,17 +1711,18 @@ button.contest-head {
   color: var(--text-faint);
 }
 
-/* The badges after a candidate's name: party tags and logos, then the
-   marks (controversies, the chair: holds the office now, research). One
-   height for all, 18 px with a 1 px border, centred on the name's line;
-   party tags are square-cornered and grey, marks round and tinted in
-   their colour, grouped apart. */
+/* The badges after a candidate's name: elected first, then
+   party tags and logos, then the marks (controversies, the chair: holds
+   the office now, research). One height for all, 18 px with a 1 px
+   border, centred on the name's line; party tags are square-cornered and
+   grey, marks round and tinted in their colour, grouped apart. */
 .party,
 .party-logo,
 .in-office,
 .researched,
 .affairs,
-.disputes {
+.disputes,
+.elected {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1472,6 +1752,66 @@ button.contest-head {
   width: 12px;
   height: 12px;
   stroke-width: 2.5;
+}
+
+/* Elected in 2026 (ballots.js `Elected`): the medal alone in the results'
+   green, the one badge without a ring, as only winning earns it, drawn as
+   large as the badges are high so that its ribbon reads; called by this
+   site on a partial count, not officially yet, in outline. The filter's
+   ring shows around it all the same (border-radius). */
+.elected .ico {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+.elected.called .ico {
+  stroke-width: 1.8;
+}
+
+.elected {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  color: var(--result);
+}
+
+/* A candidate's 2026 votes (ballots.js `Votes`): the share on a bar in the
+   results' green, then the number, a line of their own under the name. The
+   bars are all as wide, so that the rows compare at a glance. */
+.votes {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 2px 0 1px;
+  color: var(--text-dim);
+  font-size: var(--fs-xs);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.votes-bar {
+  position: relative;
+  flex: none;
+  width: 96px;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--surface-3);
+}
+
+.votes-bar > span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: var(--result);
+}
+
+.votes strong {
+  color: var(--result);
+  font-size: var(--fs-sm);
+  font-weight: 700;
 }
 
 .party.independent {
@@ -1569,12 +1909,13 @@ button.contest-head {
 }
 
 /* The badges as buttons in a ballots row (each adds itself to the
-   filter, or takes itself out); a party's is a button around its tag or
-   logo. */
+   filter, or takes itself out, ballots.js `useRowActions`); a party's is a
+   button around its tag or logo. */
 button.affairs,
 button.disputes,
 button.in-office,
-button.researched {
+button.researched,
+button.elected {
   cursor: pointer;
 }
 
@@ -1598,18 +1939,34 @@ button.researched {
 button.affairs:hover,
 button.disputes:hover,
 button.in-office:hover,
-button.researched:hover {
+button.researched:hover,
+button.elected:hover {
   outline: 2px solid color-mix(in srgb, var(--primary) 45%, transparent);
   outline-offset: 1px;
 }
 
-/* In the filter: ringed, until pressed again. */
+/* In the filter: ringed, until pressed again; dashed and dim where their
+   candidates are hidden, like the mode switch of a hidden group. With
+   Shift held, the pointer previews the alternate press, which hides them
+   or, hidden already, takes them out: a faint dashed ring. */
 .party-button.active,
 button.affairs.active,
 button.disputes.active,
 button.in-office.active,
-button.researched.active {
+button.researched.active,
+button.elected.active {
   outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.party-button.active.excluded,
+button.active.excluded {
+  outline: 2px dashed var(--text-dim);
+}
+
+.shift
+  :is(.party-button, button.affairs, button.disputes, button.in-office, button.researched, button.elected):hover {
+  outline: 2px dashed color-mix(in srgb, var(--text-dim) 45%, transparent);
   outline-offset: 1px;
 }
 
@@ -1703,6 +2060,26 @@ button.researched.active {
 
 .office-chip > .ico {
   color: var(--office);
+}
+
+.elected-chip > .ico {
+  color: var(--result);
+}
+
+/* Favourites' count of the circled elected in 2026. */
+.favourites-elected {
+  color: var(--result);
+  font-weight: 600;
+}
+
+/* The candidates crossed out: the red cross of their numbers, the count
+   not struck through like a hidden group's names, as it names no one. */
+.crossed-chip > .ico {
+  color: var(--danger);
+}
+
+.filter-group.hide .crossed-chip > span {
+  text-decoration: none;
 }
 
 .chip-remove {
@@ -2363,12 +2740,251 @@ button.researched.active {
   .search,
   .pane,
   .popover,
-  .about-dialog[open] {
+  .about-dialog[open],
+  .qr-dialog[open] {
     animation: none;
   }
 
   .pane.settling,
   .fab {
     transition: none;
+  }
+}
+
+/* ---------- the 2026 results on the map (js/mapmode.js) ---------- */
+
+/* The steps of a candidate's votes on the map, lowest first: the results'
+   green, like the medal, mixed into the land from a tint that still reads
+   as a patch on it to the green itself, under borders and labels that stay
+   readable on each. A turnout is mixed the same way from the colour its
+   area is drawn in (draw.js `TONE_STEPS`). */
+:root {
+  --map-result-1: #deebe4;
+  --map-result-2: #bddace;
+  --map-result-3: #99c7b7;
+  --map-result-4: #72b39e;
+  --map-result-5: #4c9f84;
+  --map-result-6: #238a6a;
+}
+
+[data-theme="dark"] {
+  --map-result-1: #213a3c;
+  --map-result-2: #28514b;
+  --map-result-3: #30695b;
+  --map-result-4: #38846d;
+  --map-result-5: #409e7f;
+  --map-result-6: #48b890;
+}
+
+/* The turnout choices in the boundaries menu, after the overlays. */
+.results-options {
+  margin-top: 14px;
+}
+
+/* The pin at the end of a counted candidate's row that shows their votes
+   on the map, under the pin of the contest's header: in the results'
+   green their votes are drawn in; filled while it shows them. */
+.votes-map {
+  display: grid;
+  flex: none;
+  align-self: center;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin: 0 -1px 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--result);
+  cursor: pointer;
+}
+
+.votes-map .ico {
+  width: 16px;
+  height: 16px;
+}
+
+.votes-map:hover {
+  background: color-mix(in srgb, var(--result) 14%, transparent);
+}
+
+.votes-map[aria-pressed="true"] {
+  background: var(--result);
+  color: var(--surface);
+}
+
+/* The legend: a chip at the foot of the map beside the zoom buttons, above
+   the attribution. Under the panes (.side) and Favourites beside them
+   (.pane.beside, which may reach down over it), never over them. */
+.map-legend {
+  position: fixed;
+  z-index: 999;
+  right: calc(var(--edge) + var(--fab) + 10px + env(safe-area-inset-right));
+  bottom: calc(var(--edge) + 22px + env(safe-area-inset-bottom));
+  width: max-content;
+  min-width: 200px;
+  max-width: min(320px, calc(100vw - var(--fab) - 3 * var(--edge) - 10px));
+  padding: 8px 6px 8px 10px;
+  border-radius: var(--radius);
+  font-size: var(--fs-xs);
+}
+
+.map-legend-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.map-legend-title {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.map-legend-title strong {
+  font-size: var(--fs-sm);
+}
+
+.map-legend-title span {
+  color: var(--text-dim);
+}
+
+.map-legend-close {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin-top: -3px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+.map-legend-close:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.map-legend-close .ico {
+  width: 16px;
+  height: 16px;
+}
+
+.map-legend-scale {
+  display: flex;
+  height: 10px;
+  margin: 8px 4px 0 0;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: 3px;
+}
+
+.map-legend-scale > span {
+  flex: 1;
+}
+
+.map-legend-scale .step-1 {
+  background: var(--map-result-1);
+}
+
+.map-legend-scale .step-2 {
+  background: var(--map-result-2);
+}
+
+.map-legend-scale .step-3 {
+  background: var(--map-result-3);
+}
+
+.map-legend-scale .step-4 {
+  background: var(--map-result-4);
+}
+
+.map-legend-scale .step-5 {
+  background: var(--map-result-5);
+}
+
+.map-legend-scale .step-6 {
+  background: var(--map-result-6);
+}
+
+/* A turnout's steps: its area's colour (--tone, mapmode.js `toneOf`)
+   mixed into the land as the map mixes it (draw.js `TONE_STEPS`). */
+.map-legend.toned .step-1 {
+  background: color-mix(in srgb, var(--tone) 15%, var(--map-land));
+}
+
+.map-legend.toned .step-2 {
+  background: color-mix(in srgb, var(--tone) 32%, var(--map-land));
+}
+
+.map-legend.toned .step-3 {
+  background: color-mix(in srgb, var(--tone) 49%, var(--map-land));
+}
+
+.map-legend.toned .step-4 {
+  background: color-mix(in srgb, var(--tone) 66%, var(--map-land));
+}
+
+.map-legend.toned .step-5 {
+  background: color-mix(in srgb, var(--tone) 83%, var(--map-land));
+}
+
+.map-legend.toned .step-6 {
+  background: var(--tone);
+}
+
+/* The lowest and highest step's values at the ends, what all counted come
+   to between them. */
+.map-legend-ends {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 3px 4px 0 0;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.map-legend-total {
+  color: var(--result);
+  font-weight: 600;
+}
+
+.map-legend.toned .map-legend-total {
+  color: var(--tone);
+}
+
+.map-legend-none {
+  margin: 6px 0 0;
+  color: var(--text-faint);
+}
+
+/* On a phone the foot of the map is the sheet's: the legend goes under the
+   search card, left of the buttons; with the sheet open, the map between
+   is narrow, and the pane names the contest. */
+@media (max-width: 640px) {
+  .map-legend {
+    top: calc(var(--edge) + env(safe-area-inset-top) + var(--finder-height, 60px) + 10px);
+    right: auto;
+    bottom: auto;
+    left: calc(var(--edge) + env(safe-area-inset-left));
+    min-width: 0;
+    max-width: calc(100vw - var(--fab) - 3 * var(--edge) - env(safe-area-inset-left) - env(safe-area-inset-right));
+    padding: 6px 4px 6px 10px;
+  }
+
+  .pane-open .map-legend-title span {
+    display: none;
+  }
+
+  .pane-open .map-legend-scale {
+    margin-top: 4px;
   }
 }

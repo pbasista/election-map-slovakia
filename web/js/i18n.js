@@ -7,17 +7,30 @@
  * to say that the translation is incomplete.
  */
 
+import { dataUrl, setDataVersion } from './files.js';
+
 const config = JSON.parse(document.querySelector('meta[name="km-config"]').content);
 
 export const lang = document.documentElement.lang;
 export const languages = config.languages;
 export const election = config.election;
+// When the polls open and close, as Dates (config/site.toml).
+export const polls = config.polls?.map((iso) => new Date(iso)) ?? null;
 // Research language → the source categories its research searches.
 export const researchCategories = config.research;
 // The project's source code repository, linked from the About dialog.
 export const repository = config.repository;
 // The site's version (__version__), named in the About dialog.
 export const version = config.version;
+// Asked for with every data file (files.js `dataUrl`), set here before
+// anything is fetched.
+export const dataVersion = config.dataVersion;
+setDataVersion(dataVersion);
+// The origin of the live results (config/site.toml live_url); empty: none.
+export const liveUrl = config.live || '';
+// When the app reads them every minute, as Dates; null: any time (a test
+// server; config/site.toml live_days).
+export const liveWindow = config.liveWindow?.map((iso) => new Date(iso)) ?? null;
 
 let strings = {};
 // The language the strings are in: the page's, or for a language with no
@@ -25,7 +38,7 @@ let strings = {};
 let locale = lang;
 
 export async function loadStrings() {
-  const response = await fetch(`/i18n/${lang}.json`);
+  const response = await fetch(dataUrl(`/i18n/${lang}.json`));
   if (!response.ok) throw new Error(`/i18n/${lang}.json: HTTP ${response.status}`);
   strings = await response.json();
   if (strings._locale) {

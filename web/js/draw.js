@@ -41,6 +41,15 @@
  * the cities are large enough, the municipal ones once the obce are. A
  * selected place highlights its obvod of the finest overlay drawn.
  *
+ * The 2026 results (`setResults`, mapmode.js) colour the land in steps of
+ * one colour: in the shards every obec by its value, or by that of its
+ * regional obvod where only the obvod's is known (election night); below
+ * them every regional obvod by its own value or that of its obce together.
+ * The fills are cached paths like the land's, made again only when the
+ * values change, under the borders and labels; an obec's name carries its
+ * value, and an obvod's value is written at its label where no obec names
+ * stand for it.
+ *
  * Labels and house numbers are drawn above them with greedy collision
  * avoidance: thousands of DOM tooltips would be far too slow. Labels of
  * different kinds for one place (an obec's name, the number of its obvod)
@@ -59,7 +68,7 @@
  * below (`level`).
  */
 
-import { addressFile, Cache, fetchJSON, shownNumber } from './files.js';
+import { addressFile, Cache, fetchJSON, setDataVersion, shownNumber } from './files.js';
 import {
   addArc,
   addDashedArc,
@@ -126,6 +135,18 @@ const APPROX_DASH = [5, 4];
 // The theme's colours by name (map.js `readColors`), as the page last sent.
 const COLOR = {};
 
+// How much of a turnout's tone each step of the results has, the rest the
+// land's, lowest first (app.css `.map-legend.toned` mixes the same).
+const TONE_STEPS = [0.15, 0.32, 0.49, 0.66, 0.83, 1];
+
+/* Colour *b* mixed into *a* by *f* (both #rrggbb), as CSS color-mix(in
+ * srgb) mixes them. */
+function mix(a, b, f) {
+  const channel = (hex, i) => Number.parseInt(hex.slice(1 + 2 * i, 3 + 2 * i), 16);
+  const rgb = [0, 1, 2].map((i) => Math.round(channel(a, i) + (channel(b, i) - channel(a, i)) * f));
+  return `rgb(${rgb.join(' ')})`;
+}
+
 /* Line style of a rank (0 obec … 3 country) at zoom *z*. */
 function rankStyle(rank, z) {
   if (rank === 0) return { color: COLOR.obec, weight: z >= 14 ? 1 : z >= 12 ? 0.8 : 0.6 };
@@ -156,6 +177,9 @@ const NAME_SIZE = 12;
 const NAME_FONT = `600 ${NAME_SIZE}px ${FONT}`;
 const KRAJ_FONT = `700 14px ${FONT}`;
 const OBVOD_FONT = `700 12px ${FONT}`;
+// How far below a 12 px name or number its result value goes: their boxes
+// (`drawText`, 14 px high) just touch, so the value is not stacked above.
+const VALUE_DROP = 14;
 const HOUSE_SIZE = 11;
 const HOUSE_FONT = `${HOUSE_SIZE}px ${FONT}`;
 // Names of the countries around: capitals, spaced out, as maps name what is
@@ -259,7 +283,8 @@ function textWidth(ctx, font, text) {
  * pixels around it are kept clear of later labels. Where it would cover
  * labels of its place only (`stackable`), it goes just above them, or else
  * below, so that both read; if it is wholly within *bounds* [x0, y0, x1,
- * y1], it stays so. *kind* and *area* as in `Placer`. */
+ * y1], it stays so. *kind* and *area* as in `Placer`. Returns the y it was
+ * drawn at, or null where it was not. */
 function drawText(ctx, placer, text, x, y, font, size, color, style = {}) {
   const { align = 'center', gap = 0, halo = COLOR.halo, kind = null, area = null, bounds = null } = style;
   const w = textWidth(ctx, font, text);
@@ -278,7 +303,7 @@ function drawText(ctx, placer, text, x, y, font, size, color, style = {}) {
     return placer.overlaps(label);
   };
   const hits = at(y);
-  if (!hits) return false;
+  if (!hits) return null;
   // Above the labels of its place it would cover, or else below: a step
   // clear of those met at each, up to STACK of them. The box is left where
   // it was last tried.
@@ -297,7 +322,7 @@ function drawText(ctx, placer, text, x, y, font, size, color, style = {}) {
         break;
       }
     }
-    if (cy === null) return false;
+    if (cy === null) return null;
   }
   placer.add(label);
   ctx.font = font;
@@ -307,7 +332,7 @@ function drawText(ctx, placer, text, x, y, font, size, color, style = {}) {
   ctx.strokeText(text, x, cy);
   ctx.fillStyle = color;
   ctx.fillText(text, x, cy);
-  return true;
+  return cy;
 }
 
 /* Squared distance from (px, py) to the segment (ax, ay)–(bx, by). */
@@ -548,12 +573,16 @@ function spanningTree(points) {
 
 /* The renderer of the map, once geo/coarse.json is decoded (an error if it
  * cannot be). *geoIndex* is geo/index.json, *coarse* the bytes of
- * geo/coarse.json, *colors* the theme's (`COLOR`), *strings* the labels'
+ * geo/coarse.json, *dataVersion* the build's (files.js `setDataVersion`),
+ * *colors* the theme's (`COLOR`), *strings* the labels'
  * {obvod: 'No. {n}', countries: {AT: 'Austria', …}} in the page's language,
  * *surface(w, h)* makes a canvas and *present(canvas, view, seq)* hands a
  * drawing of *view* over (the page's latest view: its *seq*). The methods
  * are what render.js passes the page's messages to. */
-export async function createRenderer({ geoIndex, coarse: bytes, colors, strings, surface, present }) {
+export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, colors, strings, surface, present }) {
+  // In a worker this module has its own files.js, which the page's config
+  // did not reach.
+  setDataVersion(dataVersion);
   Object.assign(COLOR, colors);
   const coarse = decode(JSON.parse(new TextDecoder().decode(bytes)), Infinity);
   // The regional obvody that hold a part of Bratislava or Košice.
@@ -651,12 +680,27 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
   // (data/index.json), which the council overlay colours them by.
   let overlays = { zsk: true, city: true, oz: true };
   let councils = null;
+  // The 2026 results shown (`setResults`): {steps, tone, obce, zsk,
+  // councils}, `tone` 'result' (the colours `result-<n>`) or the colour a
+  // turnout is mixed from ('accent', 'council', 'city', 'zsk'), `obce` obec
+  // code → [step, text], `zsk` '<kraj>/<n>' → [step, text, whole], `whole`
+  // where the obvod is known only as a whole, `councils` '<obec>/<n>' →
+  // [step, text] a municipal council obvod's; null for none.
+  let results = null;
+  const zskOf = (p) => `${p.kraj}/${p.zsk}`;
   let place = null;
   // Counts calls of `select`: a slower one that comes back late is dropped.
   let selection = 0;
   // The selected obec for when its shard is not drawn: {code, obec}, obec
   // ({file, feature}) from the coarsest shard once that has come.
   let selectedObec = null;
+  // A contest's area shown from its pin on the ballots or in Favourites
+  // (`showArea`), highlighted beside the selected place until the selection
+  // changes: {area} as `inArea` takes it, or {info, obvod, obec} an obec or
+  // its council obvod, with *obec* from its coarsest shard (`obecFeature`)
+  // for while its own is not drawn. `areaAsked`: the one last asked for.
+  let areaShown = null;
+  let areaAsked = null;
   // The page's latest view: {view, free, seq} (`show`).
   let current = null;
   const level = () => Math.floor(current.view.zoom);
@@ -716,6 +760,35 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
     ];
   }
 
+  /* The step of the results of a feature with properties *p* in the
+   * shards: its council obvod's where it is one and that is shown (a
+   * council candidate's), else its obec's own, else its regional obvod's
+   * where only that is known; undefined for none. */
+  function obecStep(p) {
+    const piece = p.oz === undefined ? undefined : results.councils.get(`${p.id}/${p.oz}`);
+    if (piece) return piece[0];
+    const own = results.obce.get(p.id);
+    if (own) return own[0];
+    const obvod = results.zsk.get(zskOf(p));
+    return obvod?.[2] ? obvod[0] : undefined;
+  }
+
+  /* Fills the features of *file* in *bins* in the colour of their step of
+   * the results, *stepOf(feature)*, over the land: one path per step and
+   * bin, cached under *group* (`setResults` lets go of them). */
+  function fillResults(ctx, file, bins, group, stepOf) {
+    for (let s = 0; s < results.steps; s++) {
+      ctx.fillStyle =
+        results.tone === 'result' ? COLOR[`result-${s + 1}`] : mix(COLOR.land, COLOR[results.tone], TONE_STEPS[s]);
+      for (const bin of bins) {
+        const path = binPath(bin, `${group} result-${s}`, () =>
+          unionPath(file, bin.features.filter((f) => stepOf(f) === s)),
+        );
+        if (path) ctx.fill(path, 'evenodd');
+      }
+    }
+  }
+
   // Whether coarse.json is drawn: below the zoom bands of the shards, and in
   // them until the shards in view have come.
   let coarseShown = true;
@@ -768,14 +841,23 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
         coarse.landPath ??= unionPath(coarse, [{ arcs: coarse.land }]);
         ctx.fillStyle = COLOR.land;
         ctx.fill(coarse.landPath, 'evenodd');
+        // The results by regional obvod, cell by cell.
+        if (results) fillResults(ctx, coarse, bins, 'coarse', (f) => results.zsk.get(zskOf(f.properties))?.[0]);
         continue;
       }
-      for (const [name, color, which] of fillGroups(z)) {
+      const groups = fillGroups(z);
+      for (const [name, color, which] of groups) {
         ctx.fillStyle = color;
         for (const bin of bins) {
           const path = binPath(bin, name, () => unionPath(file, bin.features.filter(which)));
           if (path) ctx.fill(path, 'evenodd');
         }
+      }
+      // Over the land only: the council overlay's obce of no known obvod or
+      // no council keep their colours.
+      if (results) {
+        const [land, , which] = groups[0];
+        fillResults(ctx, file, bins, land, (f) => (which(f) ? obecStep(f.properties) : undefined));
       }
     }
     for (const name of LINES) {
@@ -861,8 +943,67 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
       ? p.kraj === area.kraj && (area.zsk === null || p.zsk === area.zsk)
       : p.city === area.city && (area.obvod === null || p.city_obvod === area.obvod);
 
+  /* Fills faintly and outlines in *color* the features that *member* picks
+   * of the files drawn now, the outline along the arcs *edge* picks around
+   * them (for *overlay* 'oz', a council obvod within one obec, its
+   * outline): an arc on an okres border is in both shards, and only one of
+   * the two copies has a member on its side. */
+  function drawArea(ctx, view, member, overlay, edge, color) {
+    const files = lodFor(view.zoom) === null ? [coarse] : [...shown.values()].map((s) => s.file);
+    const units = [];
+    for (const file of files) {
+      const fill = new Path2D();
+      let line = new Path2D();
+      const around = new Set();
+      const members = file.features.filter((f) => member(f.properties));
+      for (const f of members) {
+        addFeature(fill, file, f);
+        for (const p of f.arcs) for (const ring of p) for (const r of ring) around.add(r < 0 ? ~r : r);
+      }
+      if (!around.size) continue;
+      if (overlay === 'oz') line = unionPath(file, members);
+      else for (const a of around) if (edge(file.lines[a])) addArc(line, file, a);
+      units.push([file, fill, line]);
+    }
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.12;
+    for (const [file, fill] of units) {
+      placeFile(ctx, file, view);
+      ctx.fill(fill, 'evenodd');
+    }
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = color;
+    for (const [file, , line] of units) {
+      placeFile(ctx, file, view);
+      ctx.lineWidth = 3 / view.k;
+      ctx.stroke(line);
+    }
+  }
+
+  /* Outlines obec *obec* ({file, features}, `shownObec`) in *color*, with a
+   * faint fill. */
+  function drawObec(ctx, view, obec, color) {
+    // An obec cut into council obvody is several features.
+    const path = unionPath(obec.file, obec.features);
+    placeFile(ctx, obec.file, view);
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.08;
+    ctx.fill(path, 'evenodd');
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2.5 / view.k;
+    ctx.stroke(path);
+  }
+
+  /* Its border: of a whole kraj the kraj (or state) border, else the
+   * overlay's. */
+  const areaEdge = (area, overlay) =>
+    area && 'kraj' in area && area.zsk === null ? (code) => (code & RANK) >= 2 : (code) => (code & FLAG[overlay]) !== 0;
+
   /* The selected obvod or area (its border from the files drawn now, so it
-   * is theirs), the selected obec and the selected point. */
+   * is theirs), the selected obec, a contest's area shown from its pin
+   * (`areaShown`, in its overlay's colour, instead of the selected place's
+   * obvod, which would read as part of it) and the selected point. */
   function drawHighlight(ctx, view) {
     const info = place?.info;
     const overlay = highlighted(level());
@@ -873,60 +1014,25 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
           city: (p) => p.city === info.city && p.city_obvod === info.cityObvod,
           oz: (p) => p.id === info.code && p.oz === place.obvod,
         }[overlay];
-    // Its border: of a whole kraj the kraj (or state) border, else the
-    // overlay's.
-    const edge =
-      place?.area && 'kraj' in place.area && place.area.zsk === null
-        ? (code) => (code & RANK) >= 2
-        : (code) => (code & FLAG[overlay]) !== 0;
-    if (member) {
-      // The features of the obvod, and the arcs with its flag around them:
-      // an arc on an okres border is in both shards, and only one of the
-      // two copies has a member on its side. A council obvod within an obec
-      // is one shard's: its outline.
-      const files = lodFor(view.zoom) === null ? [coarse] : [...shown.values()].map((s) => s.file);
-      const units = [];
-      for (const file of files) {
-        const fill = new Path2D();
-        let line = new Path2D();
-        const around = new Set();
-        const members = file.features.filter((f) => member(f.properties));
-        for (const f of members) {
-          addFeature(fill, file, f);
-          for (const p of f.arcs) for (const ring of p) for (const r of ring) around.add(r < 0 ? ~r : r);
-        }
-        if (!around.size) continue;
-        if (overlay === 'oz') line = unionPath(file, members);
-        else for (const a of around) if (edge(file.lines[a])) addArc(line, file, a);
-        units.push([file, fill, line]);
-      }
+    if (member && !areaShown) {
       const color = overlay === 'oz' ? COLOR.council : COLOR[overlay];
-      ctx.fillStyle = color;
-      ctx.globalAlpha = 0.12;
-      for (const [file, fill] of units) {
-        placeFile(ctx, file, view);
-        ctx.fill(fill, 'evenodd');
-      }
-      ctx.globalAlpha = 1;
-      ctx.strokeStyle = color;
-      for (const [file, , line] of units) {
-        placeFile(ctx, file, view);
-        ctx.lineWidth = 3 / view.k;
-        ctx.stroke(line);
-      }
+      drawArea(ctx, view, member, overlay, areaEdge(place?.area, overlay), color);
     }
     const obec = info?.okres ? shownObec(info) : null;
-    if (obec) {
-      // Its outline: an obec cut into council obvody is several features.
-      const path = unionPath(obec.file, obec.features);
-      placeFile(ctx, obec.file, view);
-      ctx.fillStyle = COLOR.accent;
-      ctx.globalAlpha = 0.08;
-      ctx.fill(path, 'evenodd');
-      ctx.globalAlpha = 1;
-      ctx.strokeStyle = COLOR.accent;
-      ctx.lineWidth = 2.5 / view.k;
-      ctx.stroke(path);
+    if (obec) drawObec(ctx, view, obec, COLOR.accent);
+    if (areaShown?.area) {
+      const a = areaShown.area;
+      const kind = 'kraj' in a ? 'zsk' : 'city';
+      drawArea(ctx, view, (p) => inArea(a, p), kind, areaEdge(a, kind), COLOR[kind]);
+    } else if (areaShown) {
+      // An obec other than the selected one (which is outlined already),
+      // and its council obvod where it is drawn as its obvody.
+      const { info: shownInfo, obvod } = areaShown;
+      const own = shown.get(shownInfo.okres);
+      const o = own ? featureOf(own.file, shownInfo) : areaShown.obec;
+      if (o && shownInfo.code !== info?.code) drawObec(ctx, view, o, COLOR.accent);
+      const pieces = o && obvod !== null ? o.features.filter((f) => f.properties.oz === obvod) : [];
+      if (pieces.length) drawObec(ctx, view, { file: o.file, features: pieces }, COLOR.council);
     }
     if (place && Number.isFinite(place.lat)) {
       const p = toPixel(view, place.lat, place.lon);
@@ -1153,7 +1259,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
     const style = { halo: COLOR['neighbour-halo'] };
     for (const [name, places] of names) {
       places.find(([, p]) =>
-        drawText(ctx, placer, name, p.x, p.y, NEIGHBOUR_FONT, NEIGHBOUR_SIZE, COLOR['neighbour-label'], style),
+        drawText(ctx, placer, name, p.x, p.y, NEIGHBOUR_FONT, NEIGHBOUR_SIZE, COLOR['neighbour-label'], style) !== null,
       );
     }
     ctx.letterSpacing = '0px';
@@ -1163,8 +1269,9 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
   const obvodText = (n) => strings.obvod.replace('{n}', n);
 
   /* The labels, by priority (`Placer`), *free* the part of *view* left
-   * uncovered: obvod numbers, then the names of the kraje, okresy or obce,
-   * the countries around and house numbers. */
+   * uncovered: obvod numbers, then the names of the kraje, the results of
+   * the regional obvody, the names of the okresy or obce (with their
+   * results), the countries around and house numbers. */
   function drawLabels(ctx, view, free) {
     ctx.setTransform(view.ratio, 0, 0, view.ratio, 0, 0);
     // The halo of the labels in the canvas's default line style.
@@ -1182,9 +1289,9 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
     // a label that would sit under it moves just below it instead.
     const pin = place && Number.isFinite(place.lat) ? toPixel(view, place.lat, place.lon) : null;
     const PIN = 9;
-    // *p* null (`spot`): the label is not drawn.
+    // *p* null (`spot`): the label is not drawn. Returns as `drawText`.
     const label = (name, p, font, size, color, { kind, area, keepInside = false, gap = 0 }) => {
-      if (!p) return;
+      if (!p) return null;
       let { x, y } = p;
       if (pin) {
         const half = textWidth(ctx, font, name) / 2 + 2;
@@ -1199,7 +1306,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
         x = Math.min(Math.max(x, free[0] + half), free[2] - half);
         y = Math.min(Math.max(y, free[1] + size / 2), free[3] - size / 2);
       }
-      drawText(ctx, placer, name, x, y, font, size, color, { gap, kind, area, bounds: free });
+      return drawText(ctx, placer, name, x, y, font, size, color, { gap, kind, area, bounds: free });
     };
     const at = ([lon, lat]) => toPixel(view, lat, lon);
     // Whether a label *w* × *h* centred at *q* is whole in the free part.
@@ -1284,7 +1391,18 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
         const area = coarseAreas.get(`kraj:${k.id}`);
         inParts(k.parts, k.name, KRAJ_FONT, 14, (p) => label(k.name, p, KRAJ_FONT, 14, COLOR.kraj, { kind: 'kraj', area }));
       }
-    } else if (!obce) {
+    }
+    // The results of the regional obvody where no obec names carry them: all
+    // below the shards, else those known only as a whole. After the names of
+    // the kraje, before those of the okresy, both stacking with them.
+    for (const o of results ? coarse.obvody : []) {
+      const r = o.id.startsWith('zsk:') && results.zsk.get(o.id.slice('zsk:'.length));
+      if (!r || (obce && !r[2])) continue;
+      const area = coarseAreas.get(o.id);
+      const p = spot(area, at(o.label), r[1], OBVOD_FONT, 12);
+      if (p) drawText(ctx, placer, r[1], p.x, p.y, OBVOD_FONT, 12, COLOR.text, { kind: 'result', area, bounds: free });
+    }
+    if (z >= OKRES_ZOOM && !obce) {
       const okresName = (o) => (p) =>
         label(o.name, p, NAME_FONT, NAME_SIZE, COLOR.label, { kind: 'okres', area: coarseAreas.get(`okres:${o.id}`) });
       for (const o of coarse.okresy) {
@@ -1307,7 +1425,8 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
           if (a.obec.label) inView.add(a.obec);
         }
       }
-      // The council obvody of the obce drawn as theirs.
+      // The council obvody of the obce drawn as theirs, each with its value
+      // under its number where the results give one.
       if (drawsOverlay('oz', z) && within(z, OVERLAYS.oz.numbers)) {
         const pieces = features.filter((a) => a.piece);
         const text = (a) => obvodText(a.feature.properties.oz);
@@ -1319,7 +1438,11 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
             bounds: free,
           });
         for (const a of pieces) {
-          number(a)(spot(a.piece, at(a.feature.properties.oz_label), text(a), OBVOD_FONT, 12));
+          const { id, oz, oz_label: labelAt } = a.feature.properties;
+          const p = spot(a.piece, at(labelAt), text(a), OBVOD_FONT, 12);
+          const y = p && number(a)(p);
+          const r = typeof y === 'number' && results?.councils.get(`${id}/${oz}`);
+          if (r) drawText(ctx, placer, r[1], p.x, y + VALUE_DROP, OBVOD_FONT, 12, COLOR.text, { kind: 'result', area: a.piece, bounds: free });
         }
         for (const a of pieces) inParts(a.feature.properties.oz_parts, text(a), OBVOD_FONT, 12, number(a));
       }
@@ -1328,19 +1451,20 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
       // has it), by the area of the whole obec; then its other parts, if it
       // has several.
       const named = [...inView].sort((a, b) => b.area - a.area);
+      // With the results, an obec's value goes under its name, where that is
+      // drawn, as a label of its own, so that the name stays where it was.
       const obecName = (a) => (p) =>
         label(a.label.properties.name, p, NAME_FONT, NAME_SIZE, COLOR.label, { kind: 'obec', area: a, gap: OBEC_GAP });
       for (const a of named) {
-        const { lx, ly, properties } = a.label;
-        const { name } = properties;
-        if (a.area * scale < OBEC_ROOM * textWidth(ctx, NAME_FONT, name) * NAME_SIZE) continue;
-        const p = { x: Math.round(lx * view.k) - view.x, y: Math.round(ly * view.k) - view.y };
-        obecName(a)(spot(a, p, name, NAME_FONT, NAME_SIZE));
+        const { lx, ly } = a.label;
+        const text = a.label.properties.name;
+        if (a.area * scale < OBEC_ROOM * textWidth(ctx, NAME_FONT, text) * NAME_SIZE) continue;
+        const p = spot(a, { x: Math.round(lx * view.k) - view.x, y: Math.round(ly * view.k) - view.y }, text, NAME_FONT, NAME_SIZE);
+        const y = obecName(a)(p);
+        const r = typeof y === 'number' && results?.obce.get(a.label.properties.id);
+        if (r) drawText(ctx, placer, r[1], p.x, y + VALUE_DROP, OBVOD_FONT, 12, COLOR.text, { kind: 'result', area: a, bounds: free });
       }
-      for (const a of named) {
-        const { properties } = a.label;
-        inParts(properties.parts, properties.name, NAME_FONT, NAME_SIZE, obecName(a));
-      }
+      for (const a of named) inParts(a.label.properties.parts, a.label.properties.name, NAME_FONT, NAME_SIZE, obecName(a));
     }
     if (neighbours) drawNeighbourNames(ctx, placer, view, free);
     if (z >= ADDRESS_ZOOM) drawHouses(ctx, placer, view);
@@ -1507,8 +1631,21 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
         : null;
       if (gen !== selection) return undefined;
       place = p ? { ...p, shape } : null;
+      areaShown = null;
+      areaAsked = null;
       redraw();
       return shape?.points ?? null;
+    },
+
+    /* Highlights a contest's area beside the selected place (`areaShown`):
+     * {area} as `inArea` takes it, or {info, obvod} an obec or its council
+     * obvod; null for none. The next selection lets go of it. */
+    async showArea(asked) {
+      areaAsked = asked;
+      const obec = asked?.info ? await obecFeature(asked.info) : null;
+      if (areaAsked !== asked) return;
+      areaShown = asked && { ...asked, obec };
+      redraw();
     },
 
     /* The box in Z0 pixels of obec *info* (data.js `obecInfo`), or of its
@@ -1532,6 +1669,28 @@ export async function createRenderer({ geoIndex, coarse: bytes, colors, strings,
     setOverlays(wanted, counts) {
       overlays = wanted;
       councils = counts ?? councils;
+      redraw();
+    },
+
+    /* Colours the land by the 2026 results *next* (mapmode.js): {steps,
+     * tone, obce: {code: [step, text]}, zsk: {'<kraj>/<n>': [step, text,
+     * whole]}, councils: {'<obec>/<n>': [step, text]}}, step 0 the lowest
+     * of *steps*, `tone` as `results` has it, `whole` where the obvod is
+     * known only as a whole; null for none. The fills cached for the values
+     * before are let go. */
+    setResults(next) {
+      results = next && {
+        steps: next.steps,
+        tone: next.tone,
+        obce: new Map(Object.entries(next.obce)),
+        zsk: new Map(Object.entries(next.zsk)),
+        councils: new Map(Object.entries(next.councils)),
+      };
+      for (const file of [coarse, ...[...shown.values()].map((s) => s.file)]) {
+        for (const bin of file.bins) {
+          for (const key of bin.paths?.keys() ?? []) if (key.includes(' result-')) bin.paths.delete(key);
+        }
+      }
       redraw();
     },
 

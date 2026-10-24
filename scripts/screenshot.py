@@ -12,11 +12,14 @@ browser as they are (e.g. `-- --no-sandbox` where its sandbox cannot run).
 
 The scene: the English page in the dark theme, 1280×800 at twice the pixel
 density, Banská Bystrica clicked in its council constituency No. 1, so the
-pane lists the ballots there beside the map.
+pane lists the ballots there beside the map; as on the day before the
+elections whenever it is taken: the page's clock set to noon that day, so
+no voting line, and the live results' origin blocked, so no results.
 """
 
 import argparse
 import base64
+import datetime as dt
 import functools
 import http.server
 import json
@@ -29,12 +32,17 @@ import sys
 import tempfile
 import threading
 import time
+import tomllib
 import urllib.request
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
 OUT = ROOT / "docs/img/main.png"
+SITE = ROOT / "config/site.toml"
+# As the build reads it (config.py LIVE_URL_ENV).
+LIVE_URL_ENV = "EMS_LIVE_URL"
 WIDTH, HEIGHT, SCALE = 1280, 800, 2
 # Banská Bystrica (obec 508438), a point in its council constituency No. 1;
 # `~`: the constituency of a clicked point, as the map marks it.
@@ -43,6 +51,23 @@ HASH = "#o=508438&ll=48.73850,19.14650&n=1~"
 READY = "Municipal council of Banská Bystrica, constituency 1"
 # After the pane is ready: time for the map to fit the constituency and draw.
 SETTLE = 3.0
+# Shifts the page's clock (Date) to the time filled in (ms since the epoch),
+# running on from there. Injected over DevTools (which needs the Page
+# domain enabled for it), it runs before the page's own scripts and outside
+# its CSP.
+CLOCK = """(() => {
+  const shift = %d - Date.now();
+  const RealDate = Date;
+  class ShiftedDate extends RealDate {
+    constructor(...args) {
+      super(...(args.length ? args : [RealDate.now() + shift]));
+    }
+    static now() {
+      return RealDate.now() + shift;
+    }
+  }
+  globalThis.Date = ShiftedDate;
+})();"""
 TIMEOUT = 60.0
 BROWSERS = (
     "chromium",
@@ -178,6 +203,22 @@ def wait_until_ready(tools: DevTools, deadline: float) -> None:
     sys.exit(f"screenshot: the pane did not show {READY!r} in {TIMEOUT:.0f} s")
 
 
+def day_before() -> tuple[int, str | None]:
+    """Return noon of the day before the elections and the live origin.
+
+    Noon in Slovak time, in ms since the epoch; the live results' origin as
+    the build has it (config/site.toml, EMS_LIVE_URL), or None.
+    """
+    site = tomllib.loads(SITE.read_text())
+    noon = dt.datetime.combine(
+        site["election"] - dt.timedelta(days=1),
+        dt.time(12),
+        ZoneInfo("Europe/Bratislava"),
+    )
+    live = os.environ.get(LIVE_URL_ENV, site["live_url"]).rstrip("/")
+    return int(noon.timestamp() * 1000), live or None
+
+
 def main() -> None:
     """Take the screenshot."""
     parser = argparse.ArgumentParser(description=__doc__.split("\n", 1)[0])
@@ -187,9 +228,14 @@ def main() -> None:
     if not (DIST / "en/index.html").exists():
         sys.exit("screenshot: no dist/en/index.html; run `uv run ems build` first")
     server = serve(DIST)
+    noon, live = day_before()
     url = f"http://127.0.0.1:{server.server_port}/en/{HASH}"
     deadline = time.monotonic() + TIMEOUT
-    with tempfile.TemporaryDirectory(prefix="ems-screenshot-") as profile:
+    # The browser's helpers may still be writing to the profile as it goes;
+    # a leftover in /tmp is no reason to fail after the shot.
+    with tempfile.TemporaryDirectory(
+        prefix="ems-screenshot-", ignore_cleanup_errors=True
+    ) as profile:
         command = [
             find_browser(args.browser),
             "--headless",
@@ -221,6 +267,11 @@ def main() -> None:
                 "Emulation.setEmulatedMedia",
                 features=[{"name": "prefers-color-scheme", "value": "dark"}],
             )
+            tools.call("Page.enable")
+            tools.call("Page.addScriptToEvaluateOnNewDocument", source=CLOCK % noon)
+            if live:
+                tools.call("Network.enable")
+                tools.call("Network.setBlockedURLs", urls=[f"{live}/*"])
             tools.call("Page.navigate", url=url)
             wait_until_ready(tools, deadline)
             time.sleep(SETTLE)

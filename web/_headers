@@ -5,42 +5,45 @@
 # gets both values joined by a comma, so the Cache-Control rules below must
 # not overlap).
 
-# The site loads nothing from other origins and runs no inline script; the
-# policy makes the browser enforce that. data: images are the favicons
-# written inline in the HTML.
+# The site loads nothing from other origins but the live results (the
+# build writes the origin of live_url in config/site.toml into connect-src)
+# and runs no inline script; the policy makes the browser enforce that.
+# data: images are the favicons written inline in the HTML.
 /*
-  Content-Security-Policy: default-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; connect-src {{connect}}; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer
 
-# File names carry no content hash, so browsers keep a copy only briefly and
-# then revalidate it (Pages answers with its ETag, usually 304). Code and
-# data share the lifetime so that a deployment does not pair new code with
-# old data for long. HTML keeps the Pages default (max-age=0,
-# must-revalidate).
-/assets/app.css
-  Cache-Control: public, max-age=300, must-revalidate
+# The app's code lives in /assets/<v>/, the vendored libraries in
+# /assets/vendor/<vv>/ and the images in /assets/img/<iv>/, each version a
+# hash of its tree (see build.py), so a URL there always names the same
+# bytes: browsers keep them for good. The one rule matches all three
+# (:version is <v>, "vendor" or "img"), and nothing else, so no other
+# Cache-Control joins it. HTML keeps the Pages default (max-age=0,
+# must-revalidate), so a new release reaches every visitor on their next
+# page load with the new versions.
+/assets/:version/*
+  Cache-Control: public, max-age=31536000, immutable
 
-/assets/js/*
-  Cache-Control: public, max-age=300, must-revalidate
-
-/i18n/*
-  Cache-Control: public, max-age=300, must-revalidate
-
-/data/*
-  Cache-Control: public, max-age=300, must-revalidate
-
-/geo/*
-  Cache-Control: public, max-age=300, must-revalidate
-
-/addr/*
-  Cache-Control: public, max-age=300, must-revalidate
-
-# Vendored libraries and party logos change only with a deliberate upgrade.
-/assets/vendor/*
+# The stylesheet of the cached copies (below) keeps its name.
+/assets/cache.css
   Cache-Control: public, max-age=86400
 
-/assets/img/*
+# The app fetches every JSON file with ?v=<data version>, a hash of all of
+# them, so a release with other data changes the URLs. The lifetime is not
+# forever all the same: a page loaded before a deployment still asks for
+# the old version and gets the new files under it, and a rollback would
+# bring that version back; a day bounds such a mismatch.
+/i18n/*
+  Cache-Control: public, max-age=86400
+
+/data/*
+  Cache-Control: public, max-age=86400
+
+/geo/*
+  Cache-Control: public, max-age=86400
+
+/addr/*
   Cache-Control: public, max-age=86400
 
 # Cached copies of the pages research cites. A copy's name is the hash of

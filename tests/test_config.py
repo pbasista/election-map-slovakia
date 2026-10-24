@@ -102,9 +102,35 @@ def test_boolean_is_not_a_number(cfg: Path):
 
 
 def test_unknown_key_rejected(cfg: Path):
-    edit(cfg / "site.toml", "results_mode = false", "result_mode = false")
+    edit(cfg / "site.toml", "election = ", "result_mode = false\nelection = ")
     with pytest.raises(config.ConfigError, match="site.toml: result"):
         config.load(cfg)
+
+
+def test_live_url_from_environment(cfg: Path, monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.delenv(config.LIVE_URL_ENV, raising=False)
+    assert config.load(cfg).site.live_url == "https://live.volebnamapa.sk"
+    monkeypatch.setenv(config.LIVE_URL_ENV, "http://127.0.0.1:8766/")
+    assert config.load(cfg).site.live_url == "http://127.0.0.1:8766"
+    monkeypatch.setenv(config.LIVE_URL_ENV, "")
+    assert config.load(cfg).site.live_url is None
+    monkeypatch.setenv(config.LIVE_URL_ENV, "https://live.example.sk/results")
+    with pytest.raises(config.ConfigError, match="EMS_LIVE_URL: must be empty"):
+        config.load(cfg)
+
+
+def test_live_window_from_polls_close(cfg: Path, monkeypatch: pytest.MonkeyPatch):
+    # The released site polls from the polls' closing for live_days; a test
+    # server (EMS_LIVE_URL) at any time.
+    monkeypatch.delenv(config.LIVE_URL_ENV, raising=False)
+    edit(cfg / "site.toml", "live_days = 7", "live_days = 3")
+    site = config.load(cfg).site
+    assert site.live_window is not None
+    start, end = site.live_window
+    assert start == site.polls_close
+    assert end.isoformat() == "2026-10-27T20:00:00+01:00"
+    monkeypatch.setenv(config.LIVE_URL_ENV, "http://127.0.0.1:8766")
+    assert config.load(cfg).site.live_window is None
 
 
 def test_key_of_another_input_kind_rejected(cfg: Path):

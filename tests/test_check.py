@@ -1,5 +1,6 @@
 import dataclasses
 import json
+import re
 import shutil
 from pathlib import Path
 
@@ -70,8 +71,9 @@ def write_json(path: Path, content: object) -> None:
 
 
 @pytest.fixture
-def site(tmp_path: Path) -> tuple[Path, config.Config]:
+def site(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[Path, config.Config]:
     """A complete site for one obec, built from the real web/ and config/."""
+    monkeypatch.delenv(config.LIVE_URL_ENV, raising=False)
     root = tmp_path / "project"
     shutil.copytree(REPO / "config", root / "config")
     shutil.copytree(REPO / "web", root / "web")
@@ -159,7 +161,7 @@ def test_over_budget(site):
     found = problems(dist, cfg, small)
     assert found["files"] == [f"{n:,} files, budget {n - 1:,}"]
     assert any(
-        p.startswith("assets/vendor/leaflet/leaflet.js:") for p in found["sizes"]
+        re.match(r"assets/vendor/\w+/leaflet/leaflet\.js:", p) for p in found["sizes"]
     )
 
 
@@ -178,12 +180,16 @@ def test_missing_files(site):
     (dist / "geo/okres/106/1.json").unlink()
     shutil.rmtree(dist / "uk")
     (dist / "404.html").unlink()
+    # Only the modules' rewritten imports name the libraries.
+    [qrcode] = dist.glob("assets/vendor/*/qrcode-generator.module.js")
+    qrcode.unlink()
     missing = {p.split()[0] for p in problems(dist, cfg)["links"]}
     assert missing == {
         "404.html",
         "addr/508063.json",
         "geo/okres/106/1.json",
         "uk/index.html",
+        qrcode.relative_to(dist).as_posix(),
     }
 
 
@@ -198,11 +204,11 @@ def test_third_party_resource(site):
             '<a href="https://example.org/about">about</a>\n</head>',
         )
     )
-    css = dist / "assets/app.css"
+    [css] = dist.glob("assets/*/app.css")
     css.write_text(
         css.read_text() + "\nbody { background: url(//cdn.example.net/x.png); }\n"
     )
-    js = dist / "assets/js/data.js"
+    [js] = dist.glob("assets/*/js/data.js")
     js.write_text(js.read_text() + "\nfetch('https://api.example.com/v1');\n")
     found = [p.split(": ", 1)[1] for p in problems(dist, cfg)["origins"]]
     # The plain link is fine; the three fetched resources are not.
@@ -211,6 +217,23 @@ def test_third_party_resource(site):
         "https://api.example.com/v1",
         "https://fonts.example.com/a.css",
     ]
+
+
+def test_live_origin_only_in_config_and_csp(site):
+    dist, cfg = site
+    live = cfg.site.live_url
+    assert live is not None
+    [js] = dist.glob("assets/*/js/data.js")
+    js.write_text(js.read_text() + f"\nfetch('{live}/status.json');\n")
+    found = problems(dist, cfg)["origins"]
+    assert [p.split(": ", 1)[1] for p in found] == [f"{live}/status.json"]
+    # A longer host is another origin.
+    found = problems(dist, cfg, dataclasses.replace(cfg.site, live_url=live[:-3]))
+    assert (
+        f"_headers: CSP connect-src is 'self' {live}, expected 'self' {live[:-3]}"
+        in (found["origins"])
+    )
+    assert any(p.startswith("sk/index.html:") for p in found["origins"])
 
 
 def test_address_outside_its_obec(site):

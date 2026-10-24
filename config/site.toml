@@ -10,8 +10,26 @@ repository = "https://github.com/pbasista/election-map-slovakia"
 pages_project = "election-map-slovakia"
 # Election day of the 2026 municipal and regional elections.
 election = 2026-10-24
-# true switches the UI to show results first (after the election).
-results_mode = false
+# The polls' opening hours that day, Slovak time (decision of the Speaker of
+# the National Council no. 145/2026 Coll.; https://www.minv.sk/?volby-samosprava26).
+# The search card shows the voting under way between them.
+polls_open = 07:00:00
+polls_close = 20:00:00
+# Origin of the live results: a separate Cloudflare Pages project holding
+# only the results JSON, deployed by hand on election night (`ems results`;
+# docs/deploy.md). The app reads them from there, and the CSP lets it
+# (connect-src). The environment variable EMS_LIVE_URL replaces it at build
+# time, e.g. http://127.0.0.1:8766 for a local results server; empty: no
+# live results.
+live_url = "https://live.volebnamapa.sk"
+# Days after the polls close that the app reads the live results every
+# minute. Before the polls close it reads nothing; after these days, once
+# per page load, so that a copy of the site left open or cached stops
+# polling. Built with EMS_LIVE_URL (a test server), it polls at any time.
+live_days = 7
+# Cloudflare Pages project `ems results deploy` uploads live/ to; its
+# custom domain is live_url (docs/deploy.md).
+live_pages_project = "election-map-slovakia-live"
 # Cloudflare Pages allows 20,000 files per deployment on the Free plan
 # (https://developers.cloudflare.com/pages/platform/limits/, checked
 # 2026-10-18); `check` fails above this, leaving headroom for files added

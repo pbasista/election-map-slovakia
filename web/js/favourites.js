@@ -3,8 +3,9 @@
  * its first candidate was circled. A contest is listed as on the candidate
  * card: closed, just the circled candidates; opened by its header, the
  * others after them, the filter applying to those only. The page's
- * address holds the circles and the filter (app.js), and a button by the
- * title copies a link to them alone, without the place shown on the map.
+ * address holds the circles and the filter (app.js); buttons by the title
+ * copy a link to them alone, without the place shown on the map, or show
+ * it as a QR code, for another device's camera.
  *
  * On a wide screen the list is a panel of its own beside the pane, as wide
  * as the page allows, so that the pane keeps the ballots or the card of a
@@ -15,7 +16,8 @@ import { html, useEffect, useRef, useState } from '../vendor/preact-htm.module.j
 import { Contest, FilterBar, isMunicipal, useRowActions } from './ballots.js';
 import { contestArea, contests, dataIndex, useLoaded } from './data.js';
 import { formatNumber, t } from './i18n.js';
-import { BackIcon, CheckIcon, LinkIcon } from './icons.js';
+import { BackIcon, CheckIcon, CloseIcon, LinkIcon, QrIcon } from './icons.js';
+import { decodeResults, NOT_COUNTED, useLive } from './live.js';
 import { byContest } from './picks.js';
 
 // How long the button says that it has copied the link.
@@ -93,14 +95,113 @@ function CopyFailed({ link }) {
   </label>`;
 }
 
+/* The button that shows *link* as a QR code in a dialog of its own
+ * (QrDialog); `onOpen()` opens it. */
+function QrButton({ onOpen }) {
+  const label = t('favourites.qr');
+  return html`<button type="button" class="share-button" title=${label} aria-label=${label} aria-haspopup="dialog" onClick=${onOpen}>
+    <${QrIcon} />
+  </button>`;
+}
+
+/* The error correction levels to try, most robust first: M recovers a
+ * code partly hidden by glare on a screen; L holds the longest links. */
+const QR_LEVELS = ['M', 'L'];
+
+/* The modules of *text* as a QR code (the encoder's object), the version
+ * the smallest that holds it; null where the text is too long for any. */
+function encodeQr(qrcode, text) {
+  for (const level of QR_LEVELS) {
+    try {
+      const code = qrcode(0, level);
+      code.addData(text);
+      code.make();
+      return code;
+    } catch {
+      // Too long at this level: the next holds more.
+    }
+  }
+  return null;
+}
+
+/* The quiet zone around a code that the standard asks for, in modules. */
+const QUIET = 4;
+
+/* *link* as a QR code: one path, each row's runs of dark modules a
+ * rectangle, dark on white whatever the theme, as scanners expect. The
+ * encoder is loaded only once a code is asked for. */
+function QrCode({ link }) {
+  const [lib, failed] = useLoaded(() => import('../vendor/qrcode-generator.module.js'), []);
+  if (failed) return html`<p class="error">${t('error.load')}</p>`;
+  if (!lib) return html`<p class="muted loading">${t('panel.loading')}</p>`;
+  const code = encodeQr(lib.qrcode, link);
+  if (!code) return html`<p class="muted">${t('favourites.qr_too_long')}</p>`;
+  const n = code.getModuleCount();
+  let d = '';
+  for (let r = 0; r < n; r++) {
+    for (let c = 0; c < n; c++) {
+      if (!code.isDark(r, c)) continue;
+      const start = c;
+      while (c + 1 < n && code.isDark(r, c + 1)) c++;
+      d += `M${start + QUIET} ${r + QUIET}h${c - start + 1}v1H${start + QUIET}z`;
+    }
+  }
+  const size = n + 2 * QUIET;
+  return html`<svg class="qr" viewBox=${`0 0 ${size} ${size}`} role="img" aria-label=${t('favourites.qr_label')} shape-rendering="crispEdges">
+    <rect width=${size} height=${size} fill="#fff" />
+    <path d=${d} fill="#000" />
+  </svg>`;
+}
+
+/* The QR code of *link* in a modal dialog over the page, as large as the
+ * screen allows, for another device's camera to read it from across a
+ * table; it does not push the list of favourites down. Esc, the close
+ * button or a click on the backdrop close it (`onClose()`), and focus goes
+ * back to the button that opened it. It follows the link as it changes. */
+function QrDialog({ link, onClose }) {
+  const dialog = useRef(null);
+  useEffect(() => {
+    const d = dialog.current;
+    const before = document.activeElement;
+    d.showModal();
+    return () => {
+      if (d.open) d.close();
+      if (before?.isConnected) before.focus();
+    };
+  }, []);
+  return html`<dialog
+    class="qr-dialog"
+    ref=${dialog}
+    aria-labelledby="km-qr-title"
+    onClose=${onClose}
+    onClick=${(e) => {
+      if (e.target === dialog.current) dialog.current.close();
+    }}
+    onKeyDown=${(e) => {
+      // Esc closes the dialog alone, not Favourites behind it (app.js).
+      if (e.key === 'Escape') e.stopPropagation();
+    }}
+  >
+    <header class="qr-head">
+      <h2 id="km-qr-title">${t('favourites.qr_title')}</h2>
+      <button type="button" class="close" aria-label=${t('panel.close')} title=${t('panel.close')} onClick=${() => dialog.current.close()}>
+        <${CloseIcon} />
+      </button>
+    </header>
+    <${QrCode} link=${link} />
+    <p class="muted">${t('favourites.qr_caption')}</p>
+  </dialog>`;
+}
+
 /* *picks* and `onPicks(next)` the circled candidates (picks.js); *filter*
  * and `onFilter(next)` the candidate filter (ballots.js); *link* the link
- * to share them by. `onPlace(target)` shows a contest's area on the map
- * (data.js `contestArea`); `onBack()`, where given, goes back to what the
- * pane showed before. *focus*: the candidacy whose card was just left,
- * whose row then takes the focus; else the title takes it once the list
- * is in. */
-export function Favourites({ picks, onPicks, filter, onFilter, onCandidate, onPlace, onBack, focus, link }) {
+ * to share them by. `onArea(target)` fits the map to a contest's area
+ * (data.js `contestArea`), the pin in its header, leaving the place
+ * selected, its ballots and this list as they are. `onBack()`, where
+ * given, goes back to what the pane showed before. *focus*: the candidacy
+ * whose card was just left, whose row then takes the focus; else the title
+ * takes it once the list is in. */
+export function Favourites({ picks, onPicks, filter, onFilter, onCandidate, onArea, onBack, focus, link }) {
   /* The contests listed since the list opened: one whose circles are all
    * taken off stays, so that they can be put back. */
   const seen = useRef([]);
@@ -108,6 +209,7 @@ export function Favourites({ picks, onPicks, filter, onFilter, onCandidate, onPl
   const ids = seen.current;
   const [result, failed] = useLoaded(() => Promise.all([contests(ids), dataIndex()]), [ids.join(',')]);
   const [copy, setCopy] = useState(null);
+  const [qr, setQr] = useState(false);
   const heading = useRef(null);
   const section = useRef(null);
   const focused = useRef(false);
@@ -121,6 +223,15 @@ export function Favourites({ picks, onPicks, filter, onFilter, onCandidate, onPl
     picks,
     onPicks,
   );
+  // How many of the circled the 2026 results have elected so far.
+  const live = useLive();
+  let elected = 0;
+  for (const c of list) {
+    const entry = live.of(c.id);
+    if (!entry || entry === NOT_COUNTED) continue;
+    const { byNumber } = decodeResults(c, entry);
+    elected += c.candidates.filter((x) => picks.includes(x.id) && byNumber.get(x.number)?.elected).length;
+  }
 
   useEffect(() => {
     if (!result) return;
@@ -149,9 +260,21 @@ export function Favourites({ picks, onPicks, filter, onFilter, onCandidate, onPl
     <div>
       <div class="favourites-title">
         <h2 id="km-favourites" tabindex="-1" ref=${heading}>${t('favourites.title')}</h2>
-        ${picks.length ? html`<${CopyLink} link=${link} state=${copy} onState=${setCopy} />` : null}
+        ${
+          picks.length
+            ? html`<${CopyLink} link=${link} state=${copy} onState=${setCopy} />
+                <${QrButton} onOpen=${() => setQr(true)} />`
+            : null
+        }
       </div>
-      ${picks.length ? html`<p class="muted">${t('favourites.count', { n: formatNumber(picks.length) })}</p>` : null}
+      ${
+        picks.length
+          ? html`<p class="muted">
+              ${t('favourites.count', { n: formatNumber(picks.length) })}
+              ${elected ? html` · <span class="favourites-elected">${t('favourites.elected', { n: formatNumber(elected) })}</span>` : null}
+            </p>`
+          : null
+      }
     </div>
   </header>`;
 
@@ -176,7 +299,7 @@ export function Favourites({ picks, onPicks, filter, onFilter, onCandidate, onPl
                   onCandidate=${onCandidate}
                   filter=${filter}
                   actions=${actions}
-                  map=${{ label: t(`card.map_${target.what}`), onClick: () => onPlace(target) }}
+                  map=${{ label: t(`card.map_${target.what}`), onClick: () => onArea(target) }}
                 />`;
               })}
             </div>`
@@ -199,6 +322,7 @@ export function Favourites({ picks, onPicks, filter, onFilter, onCandidate, onPl
     <section class="favourites" aria-labelledby="km-favourites" ref=${section}>
       ${head}
       ${copy === 'failed' && picks.length ? html`<${CopyFailed} link=${link} />` : null}
+      ${qr && picks.length ? html`<${QrDialog} link=${link} onClose=${() => setQr(false)} />` : null}
       ${body}
     </section>
   `;

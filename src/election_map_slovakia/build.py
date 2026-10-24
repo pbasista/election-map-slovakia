@@ -22,8 +22,15 @@ keys)::
     sitemap.xml              the root page and every language's app shell,
                              absolute under ``base_url``; none without it
                              (:func:`sitemap`)
-    assets/                  web/app.css, web/cache.css, web/js/, web/vendor/,
-                             web/img/, verbatim
+    assets/<v>/              web/app.css and web/js/; <v> is the code
+                             version (below), and the modules import the
+                             vendored libraries from assets/vendor/<vv>/
+                             (:func:`code_files`)
+    assets/vendor/<vv>/      web/vendor/, verbatim; <vv> its version
+    assets/img/<iv>/         web/img/ (party logos), verbatim; <iv> its
+                             version
+    assets/cache.css         web/cache.css, unversioned: the cached copies
+                             link it by this path (cache.py STYLESHEET)
     i18n/<lang>.json         UI strings: web/i18n/<lang>.json, or for other
                              languages the curated translations of the
                              current strings of the first fallback language
@@ -61,11 +68,35 @@ keys)::
     cache/<sha256>.html      the cached copy of every page a finding cites,
                              from data/curated/cache/ (see cache.py)
 
+Cache busting. The code, the vendored libraries and the images each live
+under a directory named by a short hash of their files
+(:func:`content_version`): ``/assets/<v>/``, ``/assets/vendor/<vv>/`` and
+``/assets/img/<iv>/``. A release that changes a file of one moves that
+tree to new URLs, which browsers may keep for good (``immutable`` in
+web/_headers), and a release that changes none of a tree keeps its URLs
+and the browsers' copies: the libraries, which change only with a
+deliberate upgrade, and the logos outlast changes to the app's code. The
+app's modules import each other by relative paths, so they need not know
+``<v>``; their imports of the libraries (``'../vendor/…'`` in web/js, which
+keeps web/ runnable as it is) are rewritten to ``/assets/vendor/<vv>/``,
+and ``<v>`` is the hash of the rewritten files, so a library upgrade is new
+code too. The JSON the app fetches at runtime (``data/``, ``i18n/``,
+``geo/``, ``addr/``) keeps its paths and is requested with ``?v=<dv>``,
+the data version: a short hash of all of those files. A browser's copy
+then belongs to the version it was fetched for and a release with other
+data makes the app ask for new URLs. ``data/index.json`` names the party
+logos under ``/assets/img/<iv>/``, so new images are a new data version
+too, and new code is not. The app shells carry the data version in the
+``km-config`` meta JSON (:func:`shells`) as ``dataVersion``, and ``live``,
+the live results origin (``live_url``, see
+:mod:`election_map_slovakia.config`), which the CSP's connect-src in
+``_headers`` allows (:func:`headers`).
+
 Each contest is in exactly one area file, so a click loads the okres, kraj
 and (in Bratislava and Košice) city file of one place and nothing twice::
 
     data/<area>.json  {contests: {contest: {(seats), (sources), (holder),
-                          (incumbents), candidates: [
+                          (incumbents), (past), candidates: [
                           [number, title_before, first_name, surname,
                            title_after, age, occupation, [party, ...],
                            person, (residence)]]}},
@@ -94,6 +125,15 @@ valid ballots for that office (for a council: the voters with a valid
 ballot, each of whom could vote for several), the voters who took part and
 those on the roll, in the unit it was won in, the municipality, kraj or
 ``obvod`` (its number in that election) of the body's area.
+``past`` is the turnout of the last election of the contest's body,
+``[election, day, eligible, voters, (1)]``: the results input without
+``results-`` (``oso2022``, ``osk2022``, ``oso202303``, …), its ISO day, the
+voters on the roll and those who took part, in the whole municipality,
+city or kraj, or for a regional council contest in the obce that make up
+its 2026 obvod (:func:`regional_past`); see
+:mod:`election_map_slovakia.candidates` for which election. The trailing
+``1`` marks a council of several obvody in 2026: its figures are of the
+whole municipality or city, the 2022 obvody being different.
 ``research`` summarizes, for each researched person of the file, when (the
 latest date) and in which research languages they were researched and how
 many findings there are (:func:`research_summary`); a person without an
@@ -123,19 +163,21 @@ age being those of the person's first candidacy; ``names`` maps each prefix
 to its person count, so the search picks the smallest shard among the words
 of a query. ``parties`` gives every party named in a candidacy its short
 form, official name and logo (``config/parties.toml``; the logo a path under
-``assets/``).
+``/assets/img/<iv>/``).
 """
 
 from __future__ import annotations
 
 import functools
+import hashlib
 import html
+import itertools
 import json
 import re
 import shutil
 import urllib.parse
 from collections import Counter, defaultdict
-from collections.abc import Collection, Iterator, Mapping
+from collections.abc import Collection, Iterable, Iterator, Mapping
 from dataclasses import dataclass
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -145,6 +187,7 @@ from typing import Any
 from election_map_slovakia import (
     __version__,
     addresses,
+    cache,
     candidates,
     config,
     geo,
@@ -163,10 +206,26 @@ SHELL = "index.html"
 PICKER = "picker.html"
 NOT_FOUND = "404.html"
 I18N_DIR = "i18n"
-ASSETS = ("app.css", "cache.css", "js", "vendor", "img")
+ASSETS_DIR = "assets"
+# In web/ and, each below a version of its own, in ASSETS_DIR: the app's
+# code (its directory named by the version), the vendored libraries and the
+# images.
+APP_CSS = "app.css"
+JS_DIR = "js"
+VENDOR_DIR = "vendor"
+IMAGES_DIR = "img"
+# How the modules directly in web/js import the vendored libraries; the
+# build points it at the libraries' versioned directory (code_files).
+_VENDOR_IMPORT = re.compile(rb"""(["'])\.\./vendor/""")
+# In web/; copied unversioned to cache.STYLESHEET, the path the cached
+# copies link, fixed in each copy when it was cached.
+CACHE_STYLESHEET = "cache.css"
+# Hex digits of the asset and data versions: 40 bits, so two releases
+# sharing a version by chance is not a concern.
+VERSION_DIGITS = 10
 CACHE_DIR = "cache"
 """Below ``dist/``: the cached copies of the pages research cites."""
-PARTY_LOGOS = config.PARTY_LOGO_DIR.relative_to(WEB_DIR).as_posix()
+PARTY_LOGOS = config.PARTY_LOGO_DIR.relative_to(Path(WEB_DIR) / IMAGES_DIR).as_posix()
 HEADERS = "_headers"
 SITEMAP = "sitemap.xml"
 PREFIX = 2
@@ -206,6 +265,53 @@ class Site:
 def encode(content: object) -> bytes:
     """Return *content* as compact, key-sorted UTF-8 JSON."""
     return output.to_json(content, sort_keys=True)
+
+
+def tree(name: str, source: Path) -> Iterator[tuple[str, bytes]]:
+    """Yield (path, content) of the file or directory tree *source*.
+
+    A path is *name* for a file, else *name*/<path below *source*>, in
+    sorted order, so that :func:`content_version` sees a stable sequence.
+    """
+    if not source.exists():
+        raise BuildError(f"{source} missing")
+    if source.is_file():
+        yield name, source.read_bytes()
+        return
+    for path in sorted(p for p in source.rglob("*") if p.is_file()):
+        yield f"{name}/{path.relative_to(source).as_posix()}", path.read_bytes()
+
+
+def content_version(files: Iterable[tuple[str, bytes]]) -> str:
+    """Return a short hash of the (path, content) pairs *files*, in order.
+
+    Paths count as well as contents: a file renamed is a new version.
+    """
+    digest = hashlib.sha256()
+    for path, content in files:
+        digest.update(f"{path}\0{len(content)}\0".encode())
+        digest.update(content)
+    return digest.hexdigest()[:VERSION_DIGITS]
+
+
+def code_files(web: Path, vendor: str) -> dict[str, bytes]:
+    """Return the app's code: path below its directory → content.
+
+    The modules directly in web/js import the vendored libraries from
+    ``'../vendor/…'``; that prefix becomes *vendor*, the URL of the
+    libraries' versioned directory (``/assets/vendor/<vv>``). A module in a
+    subdirectory of js/ would mean another directory by it and is left as
+    it is (``check`` reports what it imports if that is missing).
+    """
+    out = dict(tree(APP_CSS, web / APP_CSS))
+    for path, content in tree(JS_DIR, web / JS_DIR):
+        flat = path.count("/") == 1
+        out[path] = (
+            _VENDOR_IMPORT.sub(lambda m: m[1] + f"{vendor}/".encode(), content)
+            if flat and path.endswith(".js")
+            else content
+        )
+    return out
 
 
 def area_file(contest: Mapping[str, Any], okres_of: Mapping[str, str]) -> str:
@@ -250,15 +356,18 @@ def area_files(
     seats: Mapping[str, int],
     sources: Mapping[str, list[list[str]]] | None = None,
     researched: Mapping[str, list[Any]] | None = None,
+    regional: Mapping[str, Mapping[str, Any]] | None = None,
 ) -> dict[str, dict[str, Any]]:
     """Return the candidate area files; see the module doc.
 
     *data* is ``candidates.json``; *seats* maps obvod contests to their seat
     count where known; *sources* is :func:`obvod_sources`; *researched* maps
-    persons to their research summary (:func:`research_summary`).
+    persons to their research summary (:func:`research_summary`); *regional*
+    is :func:`regional_past`.
     """
     sources = sources or {}
     researched = researched or {}
+    regional = regional or {}
     okres_of = {o["code"]: o.get("okres", "") for o in data["obce"]}
     files: dict[str, dict[str, Any]] = defaultdict(
         lambda: {"contests": {}, "persons": {}}
@@ -268,7 +377,11 @@ def area_files(
     for contest in data["contests"]:
         path = path_of[contest["id"]] = area_file(contest, okres_of)
         files[path]["contests"][contest["id"]] = _contest_entry(
-            contest, seats, sources, single=council_obvody[contest["area"]] == 1
+            contest,
+            seats,
+            sources,
+            regional.get(contest["id"]),
+            single=council_obvody[contest["area"]] == 1,
         )
     by_person: dict[str, list[str]] = defaultdict(list)
     for c in data["candidacies"]:
@@ -295,12 +408,14 @@ def _contest_entry(
     contest: Mapping[str, Any],
     seats: Mapping[str, int],
     sources: Mapping[str, list[list[str]]],
+    regional: Mapping[str, Any] | None,
     *,
     single: bool,
 ) -> dict[str, Any]:
     """Return a contest's entry of an area file, without its candidates.
 
-    *single*: the contest's council (if it is one) is elected in one obvod.
+    *regional* is the contest's :func:`regional_past`, if any; *single*: the
+    contest's council (if it is one) is elected in one obvod.
     """
     entry: dict[str, Any] = {"candidates": []}
     if contest["id"] in seats:
@@ -320,6 +435,16 @@ def _contest_entry(
             number,
             _result_row(holder["result"]),
         ]
+    past = contest.get("past", regional)
+    if past is not None:
+        entry["past"] = [
+            past["election"],
+            past["day"],
+            past["eligible"],
+            past["voters"],
+        ]
+        if contest["kind"] == "oz" and not single:
+            entry["past"].append(1)
     return entry
 
 
@@ -422,6 +547,25 @@ def obec_props(geo_dir: Path) -> dict[str, dict[str, Any]]:
     return props
 
 
+def regional_past(
+    data: Mapping[str, Any], props: Mapping[str, Mapping[str, Any]]
+) -> dict[str, dict[str, Any]]:
+    """Return regional council contest → its ``past``, as in ``candidates.json``.
+
+    The obce's 2022 figures (``candidates.json``) summed over the 2026 obvod
+    each is in (*props*, :func:`obec_props`): the 2022 obvody were different.
+    """
+    out: dict[str, dict[str, Any]] = {}
+    for o in data["obce"]:
+        if "past" in o:
+            past = o["past"]
+            contest = f"zsk:{o['kraj']}/{props[o['code']]['zsk']}"
+            total = out.setdefault(contest, {**past, "eligible": 0, "voters": 0})
+            total["eligible"] += past["eligible"]
+            total["voters"] += past["voters"]
+    return out
+
+
 def obvod_seats(geo_dir: Path, curated: Path) -> dict[str, int]:
     """Return obvod contest → seats, where known.
 
@@ -464,8 +608,13 @@ def site_index(
     props: Mapping[str, Mapping[str, Any]],
     shards: Mapping[str, list[Any]],
     parties: Mapping[str, config.Party],
+    images: str,
 ) -> dict[str, Any]:
-    """Return ``data/index.json``; see the module doc."""
+    """Return ``data/index.json``; see the module doc.
+
+    *images* is the URL of the versioned image directory,
+    ``/assets/img/<iv>``.
+    """
     named = {p for c in data["candidacies"] for p in c["parties"]}
     if missing := sorted(named - parties.keys()):
         raise BuildError(
@@ -495,7 +644,7 @@ def site_index(
         "names": {prefix: len(rows) for prefix, rows in shards.items()},
         "parties": {
             name: [p.short, p.name]
-            + ([f"/assets/{PARTY_LOGOS}/{p.logo}"] if p.logo else [])
+            + ([f"{images}/{PARTY_LOGOS}/{p.logo}"] if p.logo else [])
             for name, p in sorted(parties.items())
             if name in named
         },
@@ -746,12 +895,18 @@ def _attribute_json(content: object) -> str:
 def headers(cfg: Config, web: Path) -> bytes:
     """Return ``_headers``: web/_headers, plus a noindex rule for pages.dev.
 
-    The rule is added once the site has a domain of its own (``base_url``):
+    The CSP's connect-src (``{{connect}}`` in web/_headers) adds the live
+    results origin (``live_url``) to the site's own. The noindex rule is
+    added once the site has a domain of its own (``base_url``):
     Pages keeps serving every deployment at <project>.pages.dev and at
     <hash>.<project>.pages.dev, and a search engine should know the site
     only by its domain.
     """
-    text = (web / HEADERS).read_text(encoding="utf-8")
+    live = cfg.site.live_url
+    connect = f"'self' {live}" if live else "'self'"
+    text = _fill(
+        (web / HEADERS).read_text(encoding="utf-8"), {"connect": connect}, HEADERS
+    )
     base = cfg.site.base_url
     pages = f"{cfg.site.pages_project}.pages.dev"
     if not base or urllib.parse.urlsplit(base).hostname == pages:
@@ -783,9 +938,19 @@ def sitemap(cfg: Config) -> bytes | None:
 
 
 def shells(
-    cfg: Config, web: Path, strings: Mapping[str, Mapping[str, Any]]
+    cfg: Config,
+    web: Path,
+    strings: Mapping[str, Mapping[str, Any]],
+    assets: str,
+    vendor: str,
+    data_version: str,
 ) -> dict[str, bytes]:
-    """Return the app shells, the root language picker and the 404 page."""
+    """Return the app shells, the root language picker and the 404 page.
+
+    *assets* and *vendor* are the URLs of the versioned code and library
+    directories (``/assets/<v>``, ``/assets/vendor/<vv>``), *data_version*
+    what the app appends to the JSON it fetches (``?v=``).
+    """
     langs = cfg.languages
     base = cfg.site.base_url or ""
     alternates = "\n".join(
@@ -802,6 +967,9 @@ def shells(
         "languages": [[lang.code, lang.name] for lang in langs.languages],
         "storage": STORAGE_KEY,
         "election": str(cfg.site.election),
+        # When the polls open and close (ISO 8601 with the offset): the search
+        # card shows the voting under way between them.
+        "polls": [cfg.site.polls_open.isoformat(), cfg.site.polls_close.isoformat()],
         # Research language → the source categories it searches: the scope
         # the app states before every research result.
         "research": {
@@ -810,6 +978,14 @@ def shells(
         "repository": cfg.site.repository,
         # The About dialog names the version, linked to its release.
         "version": __version__,
+        # Appended to every JSON file the app fetches (``?v=``; module doc).
+        "dataVersion": data_version,
+        # The origin the app fetches the live results from; empty: none.
+        "live": cfg.site.live_url or "",
+        # When the app reads them every minute (ISO 8601); null: any time.
+        "liveWindow": [when.isoformat() for when in cfg.site.live_window]
+        if cfg.site.live_window
+        else None,
     }
     template = (web / SHELL).read_text(encoding="utf-8")
     out = {}
@@ -824,6 +1000,9 @@ def shells(
             "features": html.escape(s["app.features"]),
             "alternates": alternates,
             "canonical": canonical(f"{lang.code}/"),
+            "assets": assets,
+            "vendor": vendor,
+            "data_version": data_version,
             "config": _attribute_json(app_config),
         }
         out[f"{lang.code}/index.html"] = _fill(template, values, SHELL).encode()
@@ -859,6 +1038,7 @@ def shells(
         "canonical": canonical(""),
         "config": _attribute_json(picker_config),
         "links": links,
+        "assets": assets,
     }
     picker = (web / PICKER).read_text(encoding="utf-8")
     out["index.html"] = _fill(picker, values, PICKER).encode()
@@ -879,6 +1059,14 @@ def assemble(cfg: Config) -> Site:
     for step, path in paths.items():
         if not path.exists():
             raise BuildError(f"{path} missing; run `ems {step}` first")
+    # The libraries are hashed before the code that names their directory,
+    # the images before data/index.json, which names the party logos.
+    vendor, images = (
+        f"{ASSETS_DIR}/{name}/{content_version(tree(name, web / name))}"
+        for name in (VENDOR_DIR, IMAGES_DIR)
+    )
+    code = code_files(web, f"/{vendor}")
+    assets = f"{ASSETS_DIR}/{content_version(sorted(code.items()))}"
     with progress.stage("making the candidate, name search and UI string files"):
         data = json.loads(paths["candidates"].read_bytes())
         manifest_path = cfg.raw_dir / MANIFEST
@@ -887,12 +1075,14 @@ def assemble(cfg: Config) -> Site:
         )
         content: dict[str, object] = {}
         records = research_records(cfg)
+        props = obec_props(paths["geo"])
         content.update(
             area_files(
                 data,
                 obvod_seats(paths["geo"], cfg.curated_dir),
                 obvod_sources(cfg.curated_dir),
                 research_summary(cfg, records),
+                regional_past(data, props),
             )
         )
         translations = {
@@ -902,7 +1092,7 @@ def assemble(cfg: Config) -> Site:
         shards = name_shards(data)
         content.update({f"data/names/{p}.json": rows for p, rows in shards.items()})
         content["data/index.json"] = site_index(
-            data, obec_props(paths["geo"]), shards, cfg.parties
+            data, props, shards, cfg.parties, f"/{images}"
         )
         content["data/about.json"] = about(cfg, manifest, data, records)
         occupations = sorted({c["occupation"] for c in data["candidacies"]} - {""})
@@ -915,13 +1105,25 @@ def assemble(cfg: Config) -> Site:
             }
         )
         files = {path: encode(value) for path, value in content.items()}
-        files.update(shells(cfg, web, strings.ui))
-        files[HEADERS] = headers(cfg, web)
-        site_map = sitemap(cfg)
-        if site_map is not None:
-            files[SITEMAP] = site_map
+    with progress.stage("hashing the data files"):
+        # Everything the app fetches with ?v=: the generated JSON (so far
+        # only data/ and i18n/) and the copied geo/ and addr/.
+        data_version = content_version(
+            itertools.chain(
+                sorted(files.items()),
+                tree("geo", paths["geo"]),
+                tree("addr", paths["addr"]),
+            )
+        )
+    files.update(shells(cfg, web, strings.ui, f"/{assets}", f"/{vendor}", data_version))
+    files.update({f"{assets}/{path}": content for path, content in code.items()})
+    files[HEADERS] = headers(cfg, web)
+    site_map = sitemap(cfg)
+    if site_map is not None:
+        files[SITEMAP] = site_map
 
-    copies = {f"assets/{name}": web / name for name in ASSETS}
+    copies = {vendor: web / VENDOR_DIR, images: web / IMAGES_DIR}
+    copies[cache.STYLESHEET.removeprefix("/")] = web / CACHE_STYLESHEET
     copies["geo"] = paths["geo"]
     copies["addr"] = paths["addr"]
     cached = cfg.curated_dir / research.CACHE_DIR

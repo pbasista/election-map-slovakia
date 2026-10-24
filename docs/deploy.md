@@ -90,6 +90,53 @@ Setup, once, after the Pages project exists:
 
 Moving to another domain later is a new `base_url` and a new release.
 
+## Live results
+
+On election night the results come from a second Pages project,
+`election-map-slovakia-live` (`live_pages_project` in `config/site.toml`),
+which holds only results JSON and is deployed by hand from a local machine
+(`ems results`), so that publishing results needs no release of the site.
+The site reads them from `live_url` in `config/site.toml`
+(`https://live.volebnamapa.sk`, a custom domain of that project): the build
+puts it in the app shells' config (`live`), and adds it to the CSP's
+`connect-src` in `dist/_headers`, so the browser lets the app fetch from
+there and from nowhere else; `ems check` accepts exactly this origin, and
+only in the shells' config, not in the scripts. The live project's own
+`_headers` (written by `ems results`) allow any origin to read the files
+(`Access-Control-Allow-Origin: *`) and make browsers revalidate them.
+
+The app reads them only from the polls' closing (`polls_close`), every
+minute while the page is in view, for `live_days` (7) days; before that
+it reads nothing, after that once per page load (`liveWindow` in the
+shells' config), so that a page left open, or an old copy of the site in
+a cache, stops polling while the final results stay shown.
+
+Setup, once: create the project like the main one (`npx wrangler pages
+project create election-map-slovakia-live --production-branch=main`) and
+add `live.volebnamapa.sk` as its custom domain. To test locally, build the
+site with another origin, e.g. a local server of the results:
+
+```sh
+EMS_LIVE_URL=http://127.0.0.1:8766 uv run ems build
+```
+
+`EMS_LIVE_URL=` (empty) builds the site without live results. A build
+with `EMS_LIVE_URL` set polls at any time, so that a test server can be
+tried before the election.
+
+## Caching
+
+Pages serves HTML with `max-age=0, must-revalidate`, so every page load
+sees the current release. The code is under `/assets/<v>/`, the vendored
+libraries under `/assets/vendor/<vv>/` and the images under
+`/assets/img/<iv>/`, each version a hash of its files, which browsers keep
+for good; the JSON is fetched with `?v=` and a hash of the data and kept a
+day (`web/_headers`). A release keeps the versions, and so the browsers'
+copies, of whatever it does not change: a code change leaves the
+libraries, the images and the data cached; a library upgrade is new code
+too, since the code names the libraries' directory; new images are new
+data, since `data/index.json` names the party logos.
+
 ## By hand
 
 The same build locally, then a look at the result:

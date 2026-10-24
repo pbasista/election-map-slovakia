@@ -11649,8 +11649,8 @@
    "text": "abgerufen am {date}"
   },
   "about.software": {
-   "src": "The site uses the Leaflet (BSD-2-Clause license), Preact and htm (MIT license) libraries. It loads nothing from other servers: no map tiles, fonts or analytics.",
-   "text": "Die Website verwendet die Bibliotheken Leaflet (Lizenz BSD-2-Clause), Preact und htm (Lizenz MIT). Sie lädt nichts von anderen Servern: keine Kartenkacheln, Schriften oder Analysedienste."
+   "src": "The site uses the Leaflet (BSD-2-Clause license), Preact, htm and qrcode-generator (MIT license) libraries. It loads nothing from other servers: no map tiles, fonts or analytics.",
+   "text": "Die Website verwendet die Bibliotheken Leaflet (Lizenz BSD-2-Clause), Preact, htm und qrcode-generator (Lizenz MIT). Sie lädt nichts von anderen Servern: keine Kartenkacheln, Schriften oder Analysedienste."
   },
   "about.software.title": {
    "src": "Software",
@@ -11673,12 +11673,12 @@
    "text": "Version {version}"
   },
   "app.description": {
-   "src": "Every constituency of Slovakia's 2026 local and regional elections: your ballots by address, the candidates, who holds office now and sourced notes on them.",
-   "text": "Alle Wahlkreise der Kommunal- und Regionalwahlen 2026 in der Slowakei: Ihre Stimmzettel nach Adresse, die Kandidaten, Amtsinhaber und belegte Hinweise zu ihnen."
+   "src": "Slovakia's 2026 local and regional elections by constituency: your ballots by address, the candidates with sourced notes, and live results as the votes are counted.",
+   "text": "Die Kommunal- und Regionalwahlen 2026 in der Slowakei nach Wahlkreisen: Ihre Stimmzettel nach Adresse, die Kandidaten mit belegten Hinweisen und Live-Ergebnisse während der Auszählung."
   },
   "app.features": {
-   "src": "Enter your address or click the map to see every ballot you will vote on – mayor, municipal council, regional president and regional council – with the candidates in ballot order and their parties. The map marks who holds each office now and with what share of the vote they won it in 2022, and for the candidates researched so far it adds notes on their career and controversies, each linked to its source. It covers every municipality and constituency in Slovakia, with no ads and no tracking.",
-   "text": "Geben Sie Ihre Adresse ein oder klicken Sie auf die Karte, um jeden Stimmzettel zu sehen, auf dem Sie abstimmen – Bürgermeister, Gemeinderat, Präsident des Kraj und Regionalrat – mit den Kandidaten in der Reihenfolge auf dem Stimmzettel und ihren Parteien. Die Karte zeigt, wer das Amt derzeit innehat und mit welchem Stimmenanteil er es 2022 gewonnen hat. Bei den bisher recherchierten Kandidaten ergänzt sie Hinweise zu Karriere und Kontroversen, jeweils mit Link zur Quelle. Sie deckt alle Gemeinden und Wahlkreise der Slowakei ab, ohne Werbung und ohne Tracking."
+   "src": "Enter your address or click the map to see every ballot you will vote on – mayor, municipal council, regional president and regional council – with the candidates in ballot order and their parties. The map marks who holds each office now and with what share of the vote they won it in 2022, and for the candidates researched so far it adds notes on their career and controversies, each linked to its source. On election night it shows the results as they are counted – each candidate's votes, the turnout and the winners, on the ballots and on the map – and then the final results. It covers every municipality and constituency in Slovakia, with no ads and no tracking.",
+   "text": "Geben Sie Ihre Adresse ein oder klicken Sie auf die Karte, um jeden Stimmzettel zu sehen, auf dem Sie abstimmen – Bürgermeister, Gemeinderat, Präsident des Kraj und Regionalrat – mit den Kandidaten in der Reihenfolge auf dem Stimmzettel und ihren Parteien. Die Karte zeigt, wer das Amt derzeit innehat und mit welchem Stimmenanteil er es 2022 gewonnen hat. Bei den bisher recherchierten Kandidaten ergänzt sie Hinweise zu Karriere und Kontroversen, jeweils mit Link zur Quelle. In der Wahlnacht zeigt sie die Ergebnisse, wie sie ausgezählt werden – die Stimmen der Kandidaten, die Wahlbeteiligung und die Gewinner, auf den Stimmzetteln und auf der Karte – und danach die Endergebnisse. Sie deckt alle Gemeinden und Wahlkreise der Slowakei ab, ohne Werbung und ohne Tracking."
   },
   "app.noscript": {
    "src": "{site} needs JavaScript.",
@@ -11689,8 +11689,8 @@
    "text": "Kommunal- und Regionalwahlen, {date}"
   },
   "app.title": {
-   "src": "{site} – candidates and constituencies 2026",
-   "text": "{site} – Kandidaten und Wahlkreise 2026"
+   "src": "{site} – candidates, constituencies and results 2026",
+   "text": "{site} – Kandidaten, Wahlkreise und Ergebnisse 2026"
   },
   "ballots.intro": {
    "src": "Voters with permanent residence here receive these ballots:",
@@ -12108,17 +12108,41 @@
    "src": "circled: {n}",
    "text": "eingekreist: {n}"
   },
+  "favourites.elected": {
+   "src": "elected: {n}",
+   "text": "gewählt: {n}"
+  },
   "favourites.empty": {
    "src": "No candidate is circled yet. Click a candidate's number on any ballot to circle it, as you would on the ballot itself: the candidate then appears here, with everyone else you circle.",
    "text": "Noch ist kein Kandidat eingekreist. Klicken Sie auf einem beliebigen Stimmzettel auf die Nummer eines Kandidaten, um sie einzukreisen, wie Sie es auf dem echten Stimmzettel tun würden: Der Kandidat erscheint dann hier, zusammen mit allen anderen, die Sie einkreisen."
   },
   "favourites.intro": {
-   "src": "The candidates you have circled, from every ballot. A contest's header opens it to its other candidates. The page's address holds your circles and the filter, and the link button by the title copies a link to them, to keep or to share.",
-   "text": "Die Kandidaten, die Sie eingekreist haben, von allen Stimmzetteln. Die Kopfzeile einer Wahl zeigt auch deren übrige Kandidaten. Die Adresse der Seite enthält Ihre Kreise und den Filter, und die Link-Schaltfläche neben dem Titel kopiert einen Link dazu, damit Sie sie speichern oder weitergeben können."
+   "src": "The candidates you have circled, from every ballot. A contest's header opens it to its other candidates. The page's address holds your circles and the filter; the link button by the title copies a link to them, to keep or to share, and the QR code button shows the link as a code for another device's camera.",
+   "text": "Die Kandidaten, die Sie eingekreist haben, von allen Stimmzetteln. Die Kopfzeile einer Wahl zeigt auch deren übrige Kandidaten. Die Adresse der Seite enthält Ihre Kreise und den Filter; die Link-Schaltfläche neben dem Titel kopiert einen Link dazu, damit Sie sie speichern oder weitergeben können, und die QR-Code-Schaltfläche zeigt den Link als Code für die Kamera eines anderen Geräts."
   },
   "favourites.open": {
    "src": "Favourites (circled: {n})",
    "text": "Favoriten (eingekreist: {n})"
+  },
+  "favourites.qr": {
+   "src": "Show a QR code of the link to these favourites and the filter, to open them on another device by pointing its camera at it",
+   "text": "Einen QR-Code des Links zu diesen Favoriten samt Filter anzeigen, um sie auf einem anderen Gerät zu öffnen, indem Sie dessen Kamera darauf richten"
+  },
+  "favourites.qr_caption": {
+   "src": "Point another device's camera at the code to open these favourites and the filter there. The code follows every change you make.",
+   "text": "Richten Sie die Kamera eines anderen Geräts auf den Code, um diese Favoriten samt Filter dort zu öffnen. Der Code folgt jeder Ihrer Änderungen."
+  },
+  "favourites.qr_label": {
+   "src": "QR code of the link to these favourites and the filter",
+   "text": "QR-Code des Links zu diesen Favoriten samt Filter"
+  },
+  "favourites.qr_title": {
+   "src": "QR code of these favourites",
+   "text": "QR-Code dieser Favoriten"
+  },
+  "favourites.qr_too_long": {
+   "src": "The link is too long for a QR code. Copy it with the link button instead.",
+   "text": "Der Link ist für einen QR-Code zu lang. Kopieren Sie ihn stattdessen mit der Link-Schaltfläche."
   },
   "favourites.title": {
    "src": "Favourites",
@@ -12140,6 +12164,14 @@
    "src": "Clear filter",
    "text": "Filter löschen"
   },
+  "filter.crossed": {
+   "src": "Crossed out",
+   "text": "Durchgestrichen"
+  },
+  "filter.crossed_n": {
+   "src": "crossed out: {n}",
+   "text": "durchgestrichen: {n}"
+  },
   "filter.disputes": {
    "src": "Allegations and disputes",
    "text": "Vorwürfe und Streitfälle"
@@ -12148,6 +12180,10 @@
    "src": "Click to remove “{name}” from the filter.",
    "text": "Klicken Sie, um „{name}“ aus dem Filter zu entfernen."
   },
+  "filter.elected": {
+   "src": "Elected 2026",
+   "text": "Gewählt 2026"
+  },
   "filter.hide": {
    "src": "Hide these",
    "text": "Diese ausblenden"
@@ -12155,6 +12191,18 @@
   "filter.label": {
    "src": "Candidate filter",
    "text": "Kandidatenfilter"
+  },
+  "filter.mark_hide": {
+   "src": "The candidates with “{name}” are hidden. Shift+click or double-click to take it out of the filter; click to show only them instead.",
+   "text": "Die Kandidaten mit „{name}“ sind ausgeblendet. Mit Shift+Klick oder Doppelklick entfernen Sie dies aus dem Filter; ein Klick zeigt stattdessen nur sie an."
+  },
+  "filter.mark_none": {
+   "src": "Click to show only the candidates with “{name}”; Shift+click or double-click to hide them.",
+   "text": "Klicken Sie, um nur die Kandidaten mit „{name}“ anzuzeigen; mit Shift+Klick oder Doppelklick blenden Sie sie aus."
+  },
+  "filter.mark_only": {
+   "src": "Only the candidates with “{name}” are shown. Click to take it out of the filter; Shift+click or double-click to hide them instead.",
+   "text": "Nur die Kandidaten mit „{name}“ werden angezeigt. Klicken Sie, um dies aus dem Filter zu entfernen; mit Shift+Klick oder Doppelklick blenden Sie sie stattdessen aus."
   },
   "filter.mode_hide": {
    "src": "These are hidden. Click to show only these instead.",
@@ -12188,6 +12236,18 @@
    "src": "{name}. Click to remove the party from the filter.",
    "text": "{name}. Klicken Sie, um die Partei aus dem Filter zu entfernen."
   },
+  "filter.party_hide": {
+   "src": "{name}. The candidates of this party are hidden. Shift+click or double-click to take it out of the filter; click to show only them instead.",
+   "text": "{name}. Die Kandidaten dieser Partei sind ausgeblendet. Mit Shift+Klick oder Doppelklick entfernen Sie die Partei aus dem Filter; ein Klick zeigt stattdessen nur ihre Kandidaten an."
+  },
+  "filter.party_none": {
+   "src": "{name}. Click to show only the candidates of this party (and of any other party chosen so); Shift+click or double-click to hide them.",
+   "text": "{name}. Klicken Sie, um nur die Kandidaten dieser Partei (und weiterer so ausgewählter Parteien) anzuzeigen; mit Shift+Klick oder Doppelklick blenden Sie sie aus."
+  },
+  "filter.party_only": {
+   "src": "{name}. Only the candidates of this party (and of any other party chosen so) are shown. Click to take it out of the filter; Shift+click or double-click to hide them instead.",
+   "text": "{name}. Nur die Kandidaten dieser Partei (und weiterer so ausgewählter Parteien) werden angezeigt. Klicken Sie, um die Partei aus dem Filter zu entfernen; mit Shift+Klick oder Doppelklick blenden Sie ihre Kandidaten stattdessen aus."
+  },
   "filter.remove": {
    "src": "Remove from the filter: {name}",
    "text": "Aus dem Filter entfernen: {name}"
@@ -12197,8 +12257,8 @@
    "text": "Recherchiert"
   },
   "help.how": {
-   "src": "Click a place on the map or search for an address, a municipality or a candidate. You will see every contest voted on there, with the candidates in ballot order. Click a candidate's number to circle it, as on the ballot: Favourites lists everyone you circle, to keep or to share.",
-   "text": "Klicken Sie auf einen Ort auf der Karte oder suchen Sie nach einer Adresse, einer Gemeinde oder einem Kandidaten. Sie sehen alle Wahlen, die dort stattfinden, mit den Kandidaten in der Reihenfolge des Stimmzettels. Klicken Sie auf die Nummer eines Kandidaten, um sie wie auf dem Stimmzettel einzukreisen: „Favoriten“ zeigt alle, die Sie einkreisen, damit Sie sie speichern oder weitergeben können."
+   "src": "Click a place on the map or search for an address, a municipality or a candidate. You will see every contest voted on there, with the candidates in ballot order. Click a candidate's number to circle it, as on the ballot: Favourites lists everyone you circle, to keep or to share. Shift+click the number, or double-tap it, to cross the candidate out instead: the list then mutes them, as the filter does. A party's tag or a mark adds it to the filter the same way: a click shows only those candidates, Shift+click or a double tap hides them.",
+   "text": "Klicken Sie auf einen Ort auf der Karte oder suchen Sie nach einer Adresse, einer Gemeinde oder einem Kandidaten. Sie sehen alle Wahlen, die dort stattfinden, mit den Kandidaten in der Reihenfolge des Stimmzettels. Klicken Sie auf die Nummer eines Kandidaten, um sie wie auf dem Stimmzettel einzukreisen: „Favoriten“ zeigt alle, die Sie einkreisen, damit Sie sie speichern oder weitergeben können. Mit Shift+Klick oder Doppeltippen auf die Nummer streichen Sie den Kandidaten stattdessen durch: Die Liste blendet ihn dann ab, wie es der Filter tut. Das Kürzel einer Partei oder eine Markierung fügen Sie auf dieselbe Weise zum Filter hinzu: Ein Klick zeigt nur diese Kandidaten an, Shift+Klick oder Doppeltippen blendet sie aus."
   },
   "help.open": {
    "src": "Help and disclaimer",
@@ -12213,12 +12273,12 @@
    "text": "Grenzen der Wahlkreise"
   },
   "layers.city": {
-   "src": "City council constituencies of Bratislava and Košice",
-   "text": "Wahlkreise der Stadtvertretungen von Bratislava und Košice"
+   "src": "Bratislava and Košice",
+   "text": "Bratislava und Košice"
   },
   "layers.oz": {
-   "src": "Municipal council constituencies",
-   "text": "Wahlkreise der Gemeindevertretungen"
+   "src": "Municipal councils",
+   "text": "Gemeindevertretungen"
   },
   "layers.oz_approximate": {
    "src": "Approximate constituency boundary, drawn between the addresses",
@@ -12241,8 +12301,8 @@
    "text": "Wahlkreise"
   },
   "layers.zsk": {
-   "src": "Regional council constituencies",
-   "text": "Wahlkreise der Regionalvertretungen"
+   "src": "Regional councils",
+   "text": "Regionalvertretungen"
   },
   "map.attribution": {
    "src": "Boundaries: ZBGIS © ÚGKK SR, CC BY 4.0 · Neighbouring countries: Natural Earth · Addresses: MV SR, CC0",
@@ -12267,6 +12327,90 @@
   "map.zoom_out": {
    "src": "Zoom out",
    "text": "Verkleinern"
+  },
+  "mapmode.candidate_hide": {
+   "src": "Take the candidate's votes off the map",
+   "text": "Stimmen des Kandidaten auf der Karte ausblenden"
+  },
+  "mapmode.candidate_show": {
+   "src": "Show the candidate's votes on the map",
+   "text": "Stimmen des Kandidaten auf der Karte anzeigen"
+  },
+  "mapmode.close": {
+   "src": "Take the results off the map",
+   "text": "Ergebnisse auf der Karte ausblenden"
+  },
+  "mapmode.contest_turnout_hide": {
+   "src": "Take the turnout off the map",
+   "text": "Die Wahlbeteiligung von der Karte nehmen"
+  },
+  "mapmode.contest_turnout_show": {
+   "src": "Show the 2026 turnout in this contest's area on the map",
+   "text": "Die Wahlbeteiligung 2026 im Gebiet dieser Wahl auf der Karte zeigen"
+  },
+  "mapmode.legend": {
+   "src": "Results on the map",
+   "text": "Ergebnisse auf der Karte"
+  },
+  "mapmode.none": {
+   "src": "Nothing to show yet.",
+   "text": "Noch nichts anzuzeigen."
+  },
+  "mapmode.off": {
+   "src": "None",
+   "text": "Keine"
+  },
+  "mapmode.share_valid": {
+   "src": "share of the valid votes",
+   "text": "Anteil an den gültigen Stimmen"
+  },
+  "mapmode.share_voters": {
+   "src": "share of the voters with a valid ballot",
+   "text": "Anteil an den Wählern mit gültigem Stimmzettel"
+  },
+  "mapmode.title": {
+   "src": "2026 turnout on the map",
+   "text": "Wahlbeteiligung 2026 auf der Karte"
+  },
+  "mapmode.turnout_by": {
+   "src": "Share of the registered voters who voted",
+   "text": "Anteil der eingetragenen Wähler, die gewählt haben"
+  },
+  "mapmode.turnout_city": {
+   "src": "Turnout 2026 · Bratislava and Košice cities",
+   "text": "Wahlbeteiligung 2026 · Städte Bratislava und Košice"
+  },
+  "mapmode.turnout_city_option": {
+   "src": "Bratislava and Košice cities",
+   "text": "Städte Bratislava und Košice"
+  },
+  "mapmode.turnout_municipal": {
+   "src": "Turnout 2026 · municipal elections",
+   "text": "Wahlbeteiligung 2026 · Kommunalwahlen"
+  },
+  "mapmode.turnout_municipal_option": {
+   "src": "Municipal elections",
+   "text": "Kommunalwahlen"
+  },
+  "mapmode.turnout_of": {
+   "src": "share of the registered voters who voted",
+   "text": "Anteil der eingetragenen Wahlberechtigten, die gewählt haben"
+  },
+  "mapmode.turnout_regional": {
+   "src": "Turnout 2026 · regional elections",
+   "text": "Wahlbeteiligung 2026 · Regionalwahlen"
+  },
+  "mapmode.turnout_regional_option": {
+   "src": "Regional elections",
+   "text": "Regionalwahlen"
+  },
+  "mapmode.turnout_title": {
+   "src": "Turnout 2026",
+   "text": "Wahlbeteiligung 2026"
+  },
+  "mapmode.turnout_total": {
+   "src": "{turnout} overall",
+   "text": "insgesamt {turnout}"
   },
   "nav.language": {
    "src": "Language",
@@ -12305,16 +12449,24 @@
    "text": "Wird geladen…"
   },
   "pick.add": {
-   "src": "Circle no. {n}, as on the ballot: the candidate is added to Favourites.",
-   "text": "Nr. {n} wie auf dem Stimmzettel einkreisen: Der Kandidat wird zu „Favoriten“ hinzugefügt."
+   "src": "Circle no. {n}, as on the ballot: the candidate is added to Favourites. Shift+click or double-click to cross the candidate out instead, muted like those the filter mutes.",
+   "text": "Nr. {n} wie auf dem Stimmzettel einkreisen: Der Kandidat wird zu „Favoriten“ hinzugefügt. Mit Shift+Klick oder Doppelklick streichen Sie den Kandidaten stattdessen durch; er wird dann abgeblendet wie die vom Filter abgeblendeten."
+  },
+  "pick.crossed_state": {
+   "src": "crossed out",
+   "text": "durchgestrichen"
   },
   "pick.label": {
    "src": "Circle no. {n}",
    "text": "Nr. {n} einkreisen"
   },
   "pick.remove": {
-   "src": "No. {n} is circled. Click to remove the circle.",
-   "text": "Nr. {n} ist eingekreist. Klicken Sie, um den Kreis zu entfernen."
+   "src": "No. {n} is circled. Click to remove the circle; Shift+click or double-click to cross the candidate out instead.",
+   "text": "Nr. {n} ist eingekreist. Klicken Sie, um den Kreis zu entfernen; mit Shift+Klick oder Doppelklick streichen Sie den Kandidaten stattdessen durch."
+  },
+  "pick.uncross": {
+   "src": "No. {n} is crossed out, muted like those the filter mutes. Shift+click or double-click to remove the cross; click to circle the candidate instead.",
+   "text": "Nr. {n} ist durchgestrichen und wird abgeblendet wie die vom Filter abgeblendeten. Mit Shift+Klick oder Doppelklick heben Sie das Durchstreichen auf; ein Klick kreist den Kandidaten stattdessen ein."
   },
   "place.kraj": {
    "src": "{name} kraj",
@@ -12520,6 +12672,102 @@
    "src": "{votes} of {valid} voters",
    "text": "{votes} / {valid} Wähler"
   },
+  "results.called": {
+   "src": "Called by this site, not official yet: even if all of the at most {remaining} registered voters in the districts not counted yet voted against them, they would keep their place. That maximum is the registered voters at the {election} plus 10 % ({bound}), less the {eligible} registered in the districts counted so far.",
+   "text": "Von dieser Website ermittelt, noch nicht amtlich: Selbst wenn alle höchstens {remaining} eingetragenen Wähler in den noch nicht ausgezählten Wahlbezirken dagegen stimmten, bliebe der Platz erhalten. Dieses Maximum sind die eingetragenen Wähler bei den {election} plus 10 % ({bound}), abzüglich der {eligible} Eingetragenen in den bisher ausgezählten Wahlbezirken."
+  },
+  "results.called_complete": {
+   "src": "Called by this site: every district is counted; the official result is still to be confirmed.",
+   "text": "Von dieser Website ermittelt: Alle Wahlbezirke sind ausgezählt; das amtliche Ergebnis muss noch bestätigt werden."
+  },
+  "results.counted_council": {
+   "src": "2026: counted · seats filled: {filled} of {seats}",
+   "text": "2026: ausgezählt · besetzte Sitze: {filled} von {seats}"
+  },
+  "results.counted_mayor": {
+   "src": "2026: counted · winner known",
+   "text": "2026: ausgezählt · Sieger steht fest"
+  },
+  "results.counted_title": {
+   "src": "On election night only the winners are published; every candidate's votes come with the final results.",
+   "text": "In der Wahlnacht werden nur die Gewinner veröffentlicht; die Stimmen aller Kandidaten folgen mit den endgültigen Ergebnissen."
+  },
+  "results.counting": {
+   "src": "2026: counting · {counted} counted · {valid} valid votes",
+   "text": "2026: Auszählung · {counted} ausgezählt · gültige Stimmen: {valid}"
+  },
+  "results.counting_title": {
+   "src": "Counted: {eligible} of about {registered} registered voters, all those registered in the {districts} of {districts_all} polling districts reported so far. The total is estimated from the last election.",
+   "text": "Ausgezählt: {eligible} von etwa {registered} Wahlberechtigten, alle Eingetragenen der {districts} von {districts_all} Wahlbezirke, die bisher Ergebnisse gemeldet haben. Die Gesamtzahl ist nach der letzten Wahl geschätzt."
+  },
+  "results.counting_units": {
+   "src": "Counted: {districts} of {districts_all} polling districts.",
+   "text": "Ausgezählt: {districts} von {districts_all} Wahlbezirken."
+  },
+  "results.counting_votes": {
+   "src": "2026: counting · {valid} valid votes so far",
+   "text": "2026: Auszählung läuft · bisher {valid} gültige Stimmen"
+  },
+  "results.elected": {
+   "src": "Elected in 2026.",
+   "text": "Bei den Wahlen 2026 gewählt."
+  },
+  "results.final": {
+   "src": "2026: final results · {valid} valid votes",
+   "text": "2026: endgültige Ergebnisse · {valid} gültige Stimmen"
+  },
+  "results.final_plain": {
+   "src": "2026: final results",
+   "text": "2026: endgültige Ergebnisse"
+  },
+  "results.pending": {
+   "src": "2026: not counted yet",
+   "text": "2026: noch nicht ausgezählt"
+  },
+  "results.status_counting": {
+   "src": "Results: counting",
+   "text": "Zwischenstand"
+  },
+  "results.status_final": {
+   "src": "Results: final",
+   "text": "Ergebnisse: endgültig"
+  },
+  "results.status_municipal": {
+   "src": "municipal {share}",
+   "text": "kommunal {share}"
+  },
+  "results.status_regional": {
+   "src": "regional {share}",
+   "text": "regional {share}"
+  },
+  "results.status_source": {
+   "src": "Results of the 2026 elections as published by the Statistical Office of the Slovak Republic (volbysr.sk), as this site last took them.",
+   "text": "Ergebnisse der Wahlen 2026, wie sie das Statistische Amt der Slowakischen Republik (volbysr.sk) veröffentlicht, in dem Stand, in dem diese Website sie zuletzt übernommen hat."
+  },
+  "results.status_units": {
+   "src": "The percentages are of the registered voters whose polling districts are counted, each district whole however many voted there. Counted so far: polling districts of the regional elections {regional}, municipalities of the municipal elections {municipal}.",
+   "text": "Die Prozente beziehen sich auf die Wahlberechtigten der ausgezählten Wahlbezirke, jeder Bezirk ganz, gleich wie viele dort gewählt haben. Bisher ausgezählt: Wahlbezirke der Regionalwahlen {regional}, Gemeinden der Kommunalwahlen {municipal}."
+  },
+  "results.turnout": {
+   "src": "Turnout 2026: {voters} of {eligible} registered voters voted ({turnout}).",
+   "text": "Wahlbeteiligung 2026: {voters} von {eligible} eingetragenen Wählern haben gewählt ({turnout})."
+  },
+  "results.turnout_partial": {
+   "src": "Turnout 2026 so far, in the districts counted: {voters} of {eligible} registered voters voted ({turnout}).",
+   "text": "Wahlbeteiligung 2026 bisher, in den ausgezählten Wahlbezirken: {voters} von {eligible} eingetragenen Wählern haben gewählt ({turnout})."
+  },
+  "results.votes": {
+   "src": "{n} votes",
+   "text": "{n} Stimmen"
+  },
+  "results.votes_title": {
+   "src": "2026: {votes} of {valid} valid ballots ({share}).",
+   "text": "2026: {votes} von {valid} gültigen Stimmzetteln ({share})."
+  },
+  "results.votes_title_multi": {
+   "src": "2026: {votes} votes from {valid} voters with a valid ballot ({share}); each could vote for several candidates.",
+   "text": "2026: {votes} Stimmen von {valid} Wählern mit gültigem Stimmzettel ({share}); jeder konnte mehrere Kandidaten wählen."
+  },
   "search.close": {
    "src": "Close search",
    "text": "Suche schließen"
@@ -12603,6 +12851,54 @@
   "translation.pending": {
    "src": "The translation into this language is not complete yet: untranslated texts are shown in English, occupations in Slovak.",
    "text": "Die Übersetzung in diese Sprache ist noch nicht vollständig: Nicht übersetzte Texte erscheinen auf Englisch, Berufe auf Slowakisch."
+  },
+  "turnout.badge": {
+   "src": "turnout {year}",
+   "text": "Wahlbeteiligung {year}"
+  },
+  "turnout.detail": {
+   "src": "Past turnout ({election}): {voters} of {eligible} registered voters voted ({turnout}).",
+   "text": "Bisherige Wahlbeteiligung ({election}): {voters} von {eligible} eingetragenen Wählern haben gewählt ({turnout})."
+  },
+  "turnout.election_by": {
+   "src": "municipal by-election of {date}",
+   "text": "kommunale Nachwahl vom {date}"
+  },
+  "turnout.election_municipal": {
+   "src": "municipal elections of {date}",
+   "text": "Kommunalwahlen vom {date}"
+  },
+  "turnout.election_regional": {
+   "src": "regional elections of {date}",
+   "text": "Regionalwahlen vom {date}"
+  },
+  "turnout.hide": {
+   "src": "Click to hide the numbers.",
+   "text": "Klicken Sie, um die Zahlen auszublenden."
+  },
+  "turnout.show": {
+   "src": "Click for the numbers.",
+   "text": "Zahlen per Klick anzeigen."
+  },
+  "turnout.summary": {
+   "src": "Past turnout ({election}): {turnout}.",
+   "text": "Bisherige Wahlbeteiligung ({election}): {turnout}."
+  },
+  "turnout.whole": {
+   "src": "The figures are of the whole municipality, not of this constituency.",
+   "text": "Die Zahlen gelten für die ganze Gemeinde, nicht für diesen Wahlkreis."
+  },
+  "turnout.whole_city": {
+   "src": "The figures are of the whole city, not of this constituency.",
+   "text": "Die Zahlen gelten für die ganze Stadt, nicht für diesen Wahlkreis."
+  },
+  "voting.status": {
+   "src": "Voting under way · polls close at {time}",
+   "text": "Es wird gewählt · Wahllokale schließen um {time}"
+  },
+  "voting.title": {
+   "src": "The polls are open from {open} to {close} (Slovak time); the bar shows how much of the voting day has passed. The results come in after the polls close.",
+   "text": "Die Wahllokale sind von {open} bis {close} Uhr (slowakische Zeit) geöffnet; der Balken zeigt, wie viel vom Wahltag vergangen ist. Die Ergebnisse kommen nach Schließung der Wahllokale."
   }
  }
 }

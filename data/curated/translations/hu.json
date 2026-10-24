@@ -11653,8 +11653,8 @@
    "text": "letöltve: {date}"
   },
   "about.software": {
-   "src": "The site uses the Leaflet (BSD-2-Clause license), Preact and htm (MIT license) libraries. It loads nothing from other servers: no map tiles, fonts or analytics.",
-   "text": "A webhely a Leaflet (BSD-2-Clause licenc), a Preact és a htm (MIT licenc) könyvtárakat használja. Semmit sem tölt be más szerverekről: sem térképcsempéket, sem betűtípusokat, sem analitikát."
+   "src": "The site uses the Leaflet (BSD-2-Clause license), Preact, htm and qrcode-generator (MIT license) libraries. It loads nothing from other servers: no map tiles, fonts or analytics.",
+   "text": "A webhely a Leaflet (BSD-2-Clause licenc), a Preact, a htm és a qrcode-generator (MIT licenc) könyvtárakat használja. Semmit sem tölt be más szerverekről: sem térképcsempéket, sem betűtípusokat, sem analitikát."
   },
   "about.software.title": {
    "src": "Software",
@@ -11677,12 +11677,12 @@
    "text": "Verzió: {version}"
   },
   "app.description": {
-   "src": "Every constituency of Slovakia's 2026 local and regional elections: your ballots by address, the candidates, who holds office now and sourced notes on them.",
-   "text": "A 2026-os szlovákiai helyi és megyei választások összes körzete: cím szerint szavazólapok, jelöltek, jelenlegi tisztségviselők és forrással ellátott adatok."
+   "src": "Slovakia's 2026 local and regional elections by constituency: your ballots by address, the candidates with sourced notes, and live results as the votes are counted.",
+   "text": "A 2026-os szlovákiai helyi és megyei választások körzetenként: szavazólapok cím szerint, jelöltek forrással ellátott adatokkal és élő eredmények a szavazatszámlálás alatt."
   },
   "app.features": {
-   "src": "Enter your address or click the map to see every ballot you will vote on – mayor, municipal council, regional president and regional council – with the candidates in ballot order and their parties. The map marks who holds each office now and with what share of the vote they won it in 2022, and for the candidates researched so far it adds notes on their career and controversies, each linked to its source. It covers every municipality and constituency in Slovakia, with no ads and no tracking.",
-   "text": "Adja meg a címét, vagy kattintson a térképre, és megtekintheti az összes szavazólapot, amelyen szavazni fog – polgármester, helyi önkormányzati képviselő-testület, megyei elnök és megyei képviselő-testület – a jelöltekkel a szavazólapi sorrendben és pártjaikkal. A térkép jelzi, ki tölti be jelenleg a tisztséget, és 2022-ben a szavazatok mekkora részével nyerte el; az eddig feltárt jelölteknél pályafutásukról és vitás ügyeikről is közöl feljegyzéseket, mindegyiket a forrására mutató hivatkozással. Szlovákia minden településére és választókerületére kiterjed, reklámok és követés nélkül."
+   "src": "Enter your address or click the map to see every ballot you will vote on – mayor, municipal council, regional president and regional council – with the candidates in ballot order and their parties. The map marks who holds each office now and with what share of the vote they won it in 2022, and for the candidates researched so far it adds notes on their career and controversies, each linked to its source. On election night it shows the results as they are counted – each candidate's votes, the turnout and the winners, on the ballots and on the map – and then the final results. It covers every municipality and constituency in Slovakia, with no ads and no tracking.",
+   "text": "Adja meg a címét, vagy kattintson a térképre, és megtekintheti az összes szavazólapot, amelyen szavazni fog – polgármester, helyi önkormányzati képviselő-testület, megyei elnök és megyei képviselő-testület – a jelöltekkel a szavazólapi sorrendben és pártjaikkal. A térkép jelzi, ki tölti be jelenleg a tisztséget, és 2022-ben a szavazatok mekkora részével nyerte el; az eddig feltárt jelölteknél pályafutásukról és vitás ügyeikről is közöl feljegyzéseket, mindegyiket a forrására mutató hivatkozással. A választás éjszakáján a számlálással együtt mutatja az eredményeket – a jelöltek szavazatait, a részvételt és a győzteseket, a szavazólapokon és a térképen –, majd a végeredményt. Szlovákia minden településére és választókerületére kiterjed, reklámok és követés nélkül."
   },
   "app.noscript": {
    "src": "{site} needs JavaScript.",
@@ -11693,8 +11693,8 @@
    "text": "Önkormányzati és megyei választások, {date}"
   },
   "app.title": {
-   "src": "{site} – candidates and constituencies 2026",
-   "text": "{site} – jelöltek és választókerületek 2026"
+   "src": "{site} – candidates, constituencies and results 2026",
+   "text": "{site} – jelöltek, választókerületek és eredmények 2026"
   },
   "ballots.intro": {
    "src": "Voters with permanent residence here receive these ballots:",
@@ -12112,17 +12112,41 @@
    "src": "circled: {n}",
    "text": "bekarikázva: {n}"
   },
+  "favourites.elected": {
+   "src": "elected: {n}",
+   "text": "megválasztott: {n}"
+  },
   "favourites.empty": {
    "src": "No candidate is circled yet. Click a candidate's number on any ballot to circle it, as you would on the ballot itself: the candidate then appears here, with everyone else you circle.",
    "text": "Még senkit sem karikázott be. Kattintson egy jelölt számára bármelyik szavazólapon, hogy bekarikázza, ahogyan a valódi szavazólapon tenné: a jelölt ezután itt jelenik meg, mindenki mással együtt, akit bekarikáz."
   },
   "favourites.intro": {
-   "src": "The candidates you have circled, from every ballot. A contest's header opens it to its other candidates. The page's address holds your circles and the filter, and the link button by the title copies a link to them, to keep or to share.",
-   "text": "Az Ön által bekarikázott jelöltek az összes szavazólapról. Egy választás fejléce annak többi jelöltjét is megmutatja. Az oldal webcíme tartalmazza a karikáit és a szűrőt, a cím melletti link gomb pedig linket másol hozzájuk, hogy megőrizze vagy megossza őket."
+   "src": "The candidates you have circled, from every ballot. A contest's header opens it to its other candidates. The page's address holds your circles and the filter; the link button by the title copies a link to them, to keep or to share, and the QR code button shows the link as a code for another device's camera.",
+   "text": "Az Ön által bekarikázott jelöltek az összes szavazólapról. Egy választás fejléce annak többi jelöltjét is megmutatja. Az oldal webcíme tartalmazza a karikáit és a szűrőt; a cím melletti link gomb linket másol hozzájuk, hogy megőrizze vagy megossza őket, a QR-kód gomb pedig kódként mutatja meg a linket egy másik eszköz kamerája számára."
   },
   "favourites.open": {
    "src": "Favourites (circled: {n})",
    "text": "Kedvencek (bekarikázva: {n})"
+  },
+  "favourites.qr": {
+   "src": "Show a QR code of the link to these favourites and the filter, to open them on another device by pointing its camera at it",
+   "text": "QR-kód megjelenítése az ezekhez a kedvencekhez és a szűrőhöz vezető linkről, hogy egy másik eszközön is megnyithassa őket, ha a kamerájával a kódra irányít"
+  },
+  "favourites.qr_caption": {
+   "src": "Point another device's camera at the code to open these favourites and the filter there. The code follows every change you make.",
+   "text": "Irányítsa egy másik eszköz kameráját a kódra, és azon megnyílnak ezek a kedvencek a szűrővel együtt. A kód minden módosításával együtt változik."
+  },
+  "favourites.qr_label": {
+   "src": "QR code of the link to these favourites and the filter",
+   "text": "Az ezekhez a kedvencekhez és a szűrőhöz vezető link QR-kódja"
+  },
+  "favourites.qr_title": {
+   "src": "QR code of these favourites",
+   "text": "Ezeknek a kedvenceknek a QR-kódja"
+  },
+  "favourites.qr_too_long": {
+   "src": "The link is too long for a QR code. Copy it with the link button instead.",
+   "text": "A link túl hosszú egy QR-kódhoz. Másolja ki inkább a link gombbal."
   },
   "favourites.title": {
    "src": "Favourites",
@@ -12144,6 +12168,14 @@
    "src": "Clear filter",
    "text": "Szűrő törlése"
   },
+  "filter.crossed": {
+   "src": "Crossed out",
+   "text": "Áthúzva"
+  },
+  "filter.crossed_n": {
+   "src": "crossed out: {n}",
+   "text": "áthúzva: {n}"
+  },
   "filter.disputes": {
    "src": "Allegations and disputes",
    "text": "Gyanúk és viták"
@@ -12152,6 +12184,10 @@
    "src": "Click to remove “{name}” from the filter.",
    "text": "Kattintson, hogy eltávolítsa a szűrőből: „{name}”."
   },
+  "filter.elected": {
+   "src": "Elected 2026",
+   "text": "Megválasztottak 2026"
+  },
   "filter.hide": {
    "src": "Hide these",
    "text": "Ezek elrejtése"
@@ -12159,6 +12195,18 @@
   "filter.label": {
    "src": "Candidate filter",
    "text": "Jelöltszűrő"
+  },
+  "filter.mark_hide": {
+   "src": "The candidates with “{name}” are hidden. Shift+click or double-click to take it out of the filter; click to show only them instead.",
+   "text": "A(z) „{name}” jelölésű jelöltek el vannak rejtve. Shift+kattintással vagy dupla kattintással eltávolítja a jelölést a szűrőből; kattintással ehelyett csak őket mutatja."
+  },
+  "filter.mark_none": {
+   "src": "Click to show only the candidates with “{name}”; Shift+click or double-click to hide them.",
+   "text": "Kattintson, hogy csak a(z) „{name}” jelölésű jelöltek látszódjanak; Shift+kattintással vagy dupla kattintással elrejti őket."
+  },
+  "filter.mark_only": {
+   "src": "Only the candidates with “{name}” are shown. Click to take it out of the filter; Shift+click or double-click to hide them instead.",
+   "text": "Csak a(z) „{name}” jelölésű jelöltek láthatók. Kattintson, hogy eltávolítsa a jelölést a szűrőből; Shift+kattintással vagy dupla kattintással ehelyett elrejti őket."
   },
   "filter.mode_hide": {
    "src": "These are hidden. Click to show only these instead.",
@@ -12192,6 +12240,18 @@
    "src": "{name}. Click to remove the party from the filter.",
    "text": "{name}. Kattintson a párt szűrőből való eltávolításához."
   },
+  "filter.party_hide": {
+   "src": "{name}. The candidates of this party are hidden. Shift+click or double-click to take it out of the filter; click to show only them instead.",
+   "text": "{name}. Ennek a pártnak a jelöltjei el vannak rejtve. Shift+kattintással vagy dupla kattintással eltávolítja a pártot a szűrőből; kattintással ehelyett csak az ő jelöltjeit mutatja."
+  },
+  "filter.party_none": {
+   "src": "{name}. Click to show only the candidates of this party (and of any other party chosen so); Shift+click or double-click to hide them.",
+   "text": "{name}. Kattintson, hogy csak ennek a pártnak (és az így kiválasztott többi pártnak) a jelöltjei látszódjanak; Shift+kattintással vagy dupla kattintással elrejti őket."
+  },
+  "filter.party_only": {
+   "src": "{name}. Only the candidates of this party (and of any other party chosen so) are shown. Click to take it out of the filter; Shift+click or double-click to hide them instead.",
+   "text": "{name}. Csak ennek a pártnak (és az így kiválasztott többi pártnak) a jelöltjei láthatók. Kattintson, hogy eltávolítsa a pártot a szűrőből; Shift+kattintással vagy dupla kattintással ehelyett elrejti a jelöltjeit."
+  },
   "filter.remove": {
    "src": "Remove from the filter: {name}",
    "text": "Eltávolítás a szűrőből: {name}"
@@ -12201,8 +12261,8 @@
    "text": "Kutatás elvégezve"
   },
   "help.how": {
-   "src": "Click a place on the map or search for an address, a municipality or a candidate. You will see every contest voted on there, with the candidates in ballot order. Click a candidate's number to circle it, as on the ballot: Favourites lists everyone you circle, to keep or to share.",
-   "text": "Kattintson egy helyre a térképen, vagy keressen címet, települést vagy jelöltet. Megjelenik minden ott tartott választás, a jelöltekkel a szavazólapon szereplő sorrendben. Egy jelölt számára kattintva bekarikázhatja azt, ahogyan a szavazólapon: a Kedvencek listán mindenki megjelenik, akit bekarikáz, hogy megőrizhesse vagy megoszthassa."
+   "src": "Click a place on the map or search for an address, a municipality or a candidate. You will see every contest voted on there, with the candidates in ballot order. Click a candidate's number to circle it, as on the ballot: Favourites lists everyone you circle, to keep or to share. Shift+click the number, or double-tap it, to cross the candidate out instead: the list then mutes them, as the filter does. A party's tag or a mark adds it to the filter the same way: a click shows only those candidates, Shift+click or a double tap hides them.",
+   "text": "Kattintson egy helyre a térképen, vagy keressen címet, települést vagy jelöltet. Megjelenik minden ott tartott választás, a jelöltekkel a szavazólapon szereplő sorrendben. Egy jelölt számára kattintva bekarikázhatja azt, ahogyan a szavazólapon: a Kedvencek listán mindenki megjelenik, akit bekarikáz, hogy megőrizhesse vagy megoszthassa. Ha Shift+kattintással kattint a számra, vagy duplán koppint rá, a jelöltet ehelyett áthúzza: a lista ekkor elhalványítja, ahogyan a szűrő is. Egy párt címkéjét vagy egy jelölést ugyanígy adhat hozzá a szűrőhöz: kattintással csak ezek a jelöltek láthatók, Shift+kattintással vagy dupla koppintással elrejti őket."
   },
   "help.open": {
    "src": "Help and disclaimer",
@@ -12217,12 +12277,12 @@
    "text": "Választókerületek határai"
   },
   "layers.city": {
-   "src": "City council constituencies of Bratislava and Košice",
-   "text": "Bratislava és Košice városi közgyűlési választókerületei"
+   "src": "Bratislava and Košice",
+   "text": "Pozsony és Kassa"
   },
   "layers.oz": {
-   "src": "Municipal council constituencies",
-   "text": "Önkormányzati képviselő-testületi választókerületek"
+   "src": "Municipal councils",
+   "text": "Önkormányzati testületek"
   },
   "layers.oz_approximate": {
    "src": "Approximate constituency boundary, drawn between the addresses",
@@ -12245,8 +12305,8 @@
    "text": "Választókerületek"
   },
   "layers.zsk": {
-   "src": "Regional council constituencies",
-   "text": "Megyei közgyűlési választókerületek"
+   "src": "Regional councils",
+   "text": "Megyei közgyűlések"
   },
   "map.attribution": {
    "src": "Boundaries: ZBGIS © ÚGKK SR, CC BY 4.0 · Neighbouring countries: Natural Earth · Addresses: MV SR, CC0",
@@ -12271,6 +12331,90 @@
   "map.zoom_out": {
    "src": "Zoom out",
    "text": "Kicsinyítés"
+  },
+  "mapmode.candidate_hide": {
+   "src": "Take the candidate's votes off the map",
+   "text": "A jelölt szavazatainak eltávolítása a térképről"
+  },
+  "mapmode.candidate_show": {
+   "src": "Show the candidate's votes on the map",
+   "text": "A jelölt szavazatainak megjelenítése a térképen"
+  },
+  "mapmode.close": {
+   "src": "Take the results off the map",
+   "text": "Az eredmények eltávolítása a térképről"
+  },
+  "mapmode.contest_turnout_hide": {
+   "src": "Take the turnout off the map",
+   "text": "A részvétel eltávolítása a térképről"
+  },
+  "mapmode.contest_turnout_show": {
+   "src": "Show the 2026 turnout in this contest's area on the map",
+   "text": "A 2026-os részvétel megjelenítése a térképen e választás területén"
+  },
+  "mapmode.legend": {
+   "src": "Results on the map",
+   "text": "Eredmények a térképen"
+  },
+  "mapmode.none": {
+   "src": "Nothing to show yet.",
+   "text": "Egyelőre nincs mit megjeleníteni."
+  },
+  "mapmode.off": {
+   "src": "None",
+   "text": "Nincs"
+  },
+  "mapmode.share_valid": {
+   "src": "share of the valid votes",
+   "text": "részesedés az érvényes szavazatokból"
+  },
+  "mapmode.share_voters": {
+   "src": "share of the voters with a valid ballot",
+   "text": "részesedés az érvényes szavazólapot leadó választók körében"
+  },
+  "mapmode.title": {
+   "src": "2026 turnout on the map",
+   "text": "Részvétel 2026 a térképen"
+  },
+  "mapmode.turnout_by": {
+   "src": "Share of the registered voters who voted",
+   "text": "A szavazók aránya a névjegyzékben szereplő választók között"
+  },
+  "mapmode.turnout_city": {
+   "src": "Turnout 2026 · Bratislava and Košice cities",
+   "text": "Részvétel 2026 · Pozsony és Kassa városa"
+  },
+  "mapmode.turnout_city_option": {
+   "src": "Bratislava and Košice cities",
+   "text": "Pozsony és Kassa városa"
+  },
+  "mapmode.turnout_municipal": {
+   "src": "Turnout 2026 · municipal elections",
+   "text": "Részvétel 2026 · önkormányzati választások"
+  },
+  "mapmode.turnout_municipal_option": {
+   "src": "Municipal elections",
+   "text": "Önkormányzati választások"
+  },
+  "mapmode.turnout_of": {
+   "src": "share of the registered voters who voted",
+   "text": "a szavazók aránya a névjegyzékben szereplő választók között"
+  },
+  "mapmode.turnout_regional": {
+   "src": "Turnout 2026 · regional elections",
+   "text": "Részvétel 2026 · megyei választások"
+  },
+  "mapmode.turnout_regional_option": {
+   "src": "Regional elections",
+   "text": "Megyei választások"
+  },
+  "mapmode.turnout_title": {
+   "src": "Turnout 2026",
+   "text": "Részvétel 2026"
+  },
+  "mapmode.turnout_total": {
+   "src": "{turnout} overall",
+   "text": "összesen {turnout}"
   },
   "nav.language": {
    "src": "Language",
@@ -12309,16 +12453,24 @@
    "text": "Betöltés…"
   },
   "pick.add": {
-   "src": "Circle no. {n}, as on the ballot: the candidate is added to Favourites.",
-   "text": "{n}. szám bekarikázása, ahogyan a szavazólapon: a jelölt bekerül a Kedvencek közé."
+   "src": "Circle no. {n}, as on the ballot: the candidate is added to Favourites. Shift+click or double-click to cross the candidate out instead, muted like those the filter mutes.",
+   "text": "{n}. szám bekarikázása, ahogyan a szavazólapon: a jelölt bekerül a Kedvencek közé. Shift+kattintással vagy dupla kattintással ehelyett áthúzza a jelöltet, és a lista elhalványítja, ahogyan a szűrő is."
+  },
+  "pick.crossed_state": {
+   "src": "crossed out",
+   "text": "áthúzva"
   },
   "pick.label": {
    "src": "Circle no. {n}",
    "text": "{n}. szám bekarikázása"
   },
   "pick.remove": {
-   "src": "No. {n} is circled. Click to remove the circle.",
-   "text": "{n}. szám bekarikázva. Kattintson a karika eltávolításához."
+   "src": "No. {n} is circled. Click to remove the circle; Shift+click or double-click to cross the candidate out instead.",
+   "text": "{n}. szám bekarikázva. Kattintson a karika eltávolításához; Shift+kattintással vagy dupla kattintással ehelyett áthúzza a jelöltet."
+  },
+  "pick.uncross": {
+   "src": "No. {n} is crossed out, muted like those the filter mutes. Shift+click or double-click to remove the cross; click to circle the candidate instead.",
+   "text": "{n}. szám áthúzva, a lista elhalványítja, ahogyan a szűrő is. Shift+kattintással vagy dupla kattintással megszünteti az áthúzást; kattintással ehelyett bekarikázza a jelöltet."
   },
   "place.kraj": {
    "src": "{name} kraj",
@@ -12524,6 +12676,102 @@
    "src": "{votes} of {valid} voters",
    "text": "{votes} / {valid} választó"
   },
+  "results.called": {
+   "src": "Called by this site, not official yet: even if all of the at most {remaining} registered voters in the districts not counted yet voted against them, they would keep their place. That maximum is the registered voters at the {election} plus 10 % ({bound}), less the {eligible} registered in the districts counted so far.",
+   "text": "Az oldal saját megállapítása, még nem hivatalos: még ha a meg nem számlált szavazókörök legfeljebb {remaining} névjegyzékben szereplő választója mind ellene szavazna is, megtartaná a helyét. Ez a maximum a legutóbbi választások ({election}) névjegyzékében szereplő választók száma plusz 10% ({bound}), mínusz az eddig megszámlált szavazókörök {eligible} névjegyzékben szereplő választója."
+  },
+  "results.called_complete": {
+   "src": "Called by this site: every district is counted; the official result is still to be confirmed.",
+   "text": "Az oldal saját megállapítása: minden szavazókör megszámlálva, a hivatalos eredményt még meg kell erősíteni."
+  },
+  "results.counted_council": {
+   "src": "2026: counted · seats filled: {filled} of {seats}",
+   "text": "2026: megszámlálva · betöltött mandátumok: {filled} / {seats}"
+  },
+  "results.counted_mayor": {
+   "src": "2026: counted · winner known",
+   "text": "2026: megszámlálva · a győztes ismert"
+  },
+  "results.counted_title": {
+   "src": "On election night only the winners are published; every candidate's votes come with the final results.",
+   "text": "A választás éjszakáján csak a győztesek jelennek meg; az összes jelölt szavazatait a végleges eredmények hozzák."
+  },
+  "results.counting": {
+   "src": "2026: counting · {counted} counted · {valid} valid votes",
+   "text": "2026: számlálás · megszámolva {counted} · érvényes szavazat: {valid}"
+  },
+  "results.counting_title": {
+   "src": "Counted: {eligible} of about {registered} registered voters, all those registered in the {districts} of {districts_all} polling districts reported so far. The total is estimated from the last election.",
+   "text": "Megszámolva: {eligible} a mintegy {registered} névjegyzékben szereplő választóból, mindazok, akik a(z) {districts_all} szavazókörből eddig eredményt leadott {districts} szavazókörben szerepelnek a névjegyzékben. Az összesített szám az előző választás alapján becsült."
+  },
+  "results.counting_units": {
+   "src": "Counted: {districts} of {districts_all} polling districts.",
+   "text": "Megszámolt szavazókörök: {districts} a {districts_all}-ből."
+  },
+  "results.counting_votes": {
+   "src": "2026: counting · {valid} valid votes so far",
+   "text": "2026: folyik a számlálás · érvényes szavazat eddig: {valid}"
+  },
+  "results.elected": {
+   "src": "Elected in 2026.",
+   "text": "Megválasztva 2026-ban."
+  },
+  "results.final": {
+   "src": "2026: final results · {valid} valid votes",
+   "text": "2026: végleges eredmények · érvényes szavazat: {valid}"
+  },
+  "results.final_plain": {
+   "src": "2026: final results",
+   "text": "2026: végleges eredmények"
+  },
+  "results.pending": {
+   "src": "2026: not counted yet",
+   "text": "2026: még nincs megszámlálva"
+  },
+  "results.status_counting": {
+   "src": "Results: counting",
+   "text": "Eredmények: számlálás"
+  },
+  "results.status_final": {
+   "src": "Results: final",
+   "text": "Eredmények: végleges"
+  },
+  "results.status_municipal": {
+   "src": "municipal {share}",
+   "text": "helyi {share}"
+  },
+  "results.status_regional": {
+   "src": "regional {share}",
+   "text": "megyei {share}"
+  },
+  "results.status_source": {
+   "src": "Results of the 2026 elections as published by the Statistical Office of the Slovak Republic (volbysr.sk), as this site last took them.",
+   "text": "A 2026-os választások eredményei a Szlovák Statisztikai Hivatal (volbysr.sk) közzététele szerint, abban az állapotban, ahogyan ez az oldal legutóbb átvette őket."
+  },
+  "results.status_units": {
+   "src": "The percentages are of the registered voters whose polling districts are counted, each district whole however many voted there. Counted so far: polling districts of the regional elections {regional}, municipalities of the municipal elections {municipal}.",
+   "text": "A százalékok a megszámolt szavazókörök névjegyzékében szereplő választókra vonatkoznak, minden szavazókör egészében, függetlenül attól, hányan szavaztak benne. Eddig megszámolva: a megyei választások szavazókörei {regional}, az önkormányzati választások települései {municipal}."
+  },
+  "results.turnout": {
+   "src": "Turnout 2026: {voters} of {eligible} registered voters voted ({turnout}).",
+   "text": "Részvétel 2026: a(z) {eligible} névjegyzékben szereplő választóból {voters} szavazott ({turnout})."
+  },
+  "results.turnout_partial": {
+   "src": "Turnout 2026 so far, in the districts counted: {voters} of {eligible} registered voters voted ({turnout}).",
+   "text": "Részvétel 2026 eddig, a megszámlált szavazókörökben: a(z) {eligible} névjegyzékben szereplő választóból {voters} szavazott ({turnout})."
+  },
+  "results.votes": {
+   "src": "{n} votes",
+   "text": "{n} szavazat"
+  },
+  "results.votes_title": {
+   "src": "2026: {votes} of {valid} valid ballots ({share}).",
+   "text": "2026: {votes} szavazat {valid} érvényes szavazólapból ({share})."
+  },
+  "results.votes_title_multi": {
+   "src": "2026: {votes} votes from {valid} voters with a valid ballot ({share}); each could vote for several candidates.",
+   "text": "2026: {votes} szavazat {valid} érvényes szavazólapot leadó választótól ({share}); mindenki több jelöltre is szavazhatott."
+  },
   "search.close": {
    "src": "Close search",
    "text": "Keresés bezárása"
@@ -12607,6 +12855,54 @@
   "translation.pending": {
    "src": "The translation into this language is not complete yet: untranslated texts are shown in English, occupations in Slovak.",
    "text": "Az erre a nyelvre készülő fordítás még nem teljes: a lefordítatlan szövegek angolul, a foglalkozások szlovákul jelennek meg."
+  },
+  "turnout.badge": {
+   "src": "turnout {year}",
+   "text": "részvétel {year}"
+  },
+  "turnout.detail": {
+   "src": "Past turnout ({election}): {voters} of {eligible} registered voters voted ({turnout}).",
+   "text": "Korábbi részvétel ({election}): a(z) {eligible} névjegyzékben szereplő választóból {voters} szavazott ({turnout})."
+  },
+  "turnout.election_by": {
+   "src": "municipal by-election of {date}",
+   "text": "önkormányzati időközi választás, {date}"
+  },
+  "turnout.election_municipal": {
+   "src": "municipal elections of {date}",
+   "text": "önkormányzati választások, {date}"
+  },
+  "turnout.election_regional": {
+   "src": "regional elections of {date}",
+   "text": "megyei választások, {date}"
+  },
+  "turnout.hide": {
+   "src": "Click to hide the numbers.",
+   "text": "Kattintson a számok elrejtéséhez."
+  },
+  "turnout.show": {
+   "src": "Click for the numbers.",
+   "text": "Kattintson a számok megjelenítéséhez."
+  },
+  "turnout.summary": {
+   "src": "Past turnout ({election}): {turnout}.",
+   "text": "Korábbi részvétel ({election}): {turnout}."
+  },
+  "turnout.whole": {
+   "src": "The figures are of the whole municipality, not of this constituency.",
+   "text": "A számok az egész településre vonatkoznak, nem erre a választókerületre."
+  },
+  "turnout.whole_city": {
+   "src": "The figures are of the whole city, not of this constituency.",
+   "text": "A számok az egész városra vonatkoznak, nem erre a választókerületre."
+  },
+  "voting.status": {
+   "src": "Voting under way · polls close at {time}",
+   "text": "Szavazás folyik · a szavazóhelyiségek {time}-kor zárnak"
+  },
+  "voting.title": {
+   "src": "The polls are open from {open} to {close} (Slovak time); the bar shows how much of the voting day has passed. The results come in after the polls close.",
+   "text": "A szavazóhelyiségek {open} és {close} között vannak nyitva (szlovákiai idő szerint); a sáv azt mutatja, mennyi telt el a választás napjából. Az eredmények a szavazóhelyiségek zárása után érkeznek."
   }
  }
 }

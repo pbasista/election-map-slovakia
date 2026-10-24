@@ -27,12 +27,14 @@
  * the view to are its to answer too: it has the geometry. Without
  * OffscreenCanvas (Safari before 16.4) it runs on the page the same way,
  * on a canvas element. Colours come from the theme (app.css `--map-*`); a
- * theme change redraws.
+ * theme change redraws. The 2026 results (mapmode.js) go to the renderer
+ * as they change, which colours the land by them (`setResults`).
  */
 
 import { dataIndex, obecInfo } from './data.js';
-import { fetchJSON } from './files.js';
-import { stringsUnder, t } from './i18n.js';
+import { dataUrl, fetchJSON } from './files.js';
+import { dataVersion, stringsUnder, t } from './i18n.js';
+import { STEPS } from './mapmode.js';
 import { Z0 } from './topo.js';
 import { smoothZoom } from './zoom.js';
 
@@ -88,6 +90,9 @@ const COLORS = [
   'neighbour-line',
   'neighbour-label',
   'neighbour-halo',
+  // The steps of a candidate's 2026 votes, lowest first (mapmode.js); a
+  // turnout mixes its area's colour into the land (draw.js `TONE_STEPS`).
+  ...Array.from({ length: STEPS }, (_, i) => `result-${i + 1}`),
 ];
 
 /* The theme's map colours by name (draw.js `COLOR`). */
@@ -216,6 +221,15 @@ async function startRenderer(options, onFrame, onFail) {
   };
 }
 
+/* *name* as data.js `contestArea` names an area ('BA', 'BA/3', 'kraj:1',
+ * 'kraj:1/3') as the renderer takes it: {city, obvod} or {kraj, zsk}. */
+function parseArea(name) {
+  const kraj = name.startsWith('kraj:');
+  const [code, obvod] = name.slice(kraj ? 'kraj:'.length : 0).split('/');
+  const n = obvod ? Number(obvod) : null;
+  return kraj ? { kraj: code, zsk: n } : { city: code, obvod: n };
+}
+
 /* Creates the map in *element*. `onPick({obec, lat, lon, label?})` is called
  * when the user clicks a place; `insets()` returns the pixels {top, right,
  * bottom, left} of the map that floating controls and panes cover, which
@@ -270,7 +284,7 @@ export async function createMap(element, { onPick, insets, onZoom }) {
   // parses it.
   const [geoIndex, coarse] = await Promise.all([
     fetchJSON('/geo/index.json'),
-    fetch('/geo/coarse.json').then((response) => {
+    fetch(dataUrl('/geo/coarse.json')).then((response) => {
       if (!response.ok) throw new Error(`/geo/coarse.json: HTTP ${response.status}`);
       return response.arrayBuffer();
     }),
@@ -371,6 +385,7 @@ export async function createMap(element, { onPick, insets, onZoom }) {
     {
       geoIndex,
       coarse,
+      dataVersion,
       colors: readColors(),
       strings: { obvod: t('map.obvod', { n: '{n}' }), countries: stringsUnder('country.') },
     },
@@ -471,10 +486,7 @@ export async function createMap(element, { onPick, insets, onZoom }) {
     async select(p, view = null) {
       const gen = ++selection;
       if (p?.area) {
-        const kraj = p.area.startsWith('kraj:');
-        const [code, obvod] = p.area.slice(kraj ? 'kraj:'.length : 0).split('/');
-        const n = obvod ? Number(obvod) : null;
-        const area = kraj ? { kraj: code, zsk: n } : { city: code, obvod: n };
+        const area = parseArea(p.area);
         if ((await renderer.call('select', { area })) === undefined || gen !== selection) return;
         // The pane that opens or closes with it changes the free part.
         sharp();
@@ -522,6 +534,31 @@ export async function createMap(element, { onPick, insets, onZoom }) {
       }
       if (overlays !== wanted) return;
       renderer.send('setOverlays', wanted, councils);
+    },
+
+    /* Fits the map to *target* (data.js `contestArea`: {area} or {obec,
+     * obvod}) without selecting it: the area of a contest whose results it
+     * shows (mapmode.js), or with *highlight* of a contest whose pin was
+     * pressed on the ballots or in Favourites, which highlights it beside
+     * the selected place until the selection changes (draw.js `showArea`).
+     * A selection made meanwhile moves the map instead. */
+    async fitArea(target, highlight = false) {
+      const gen = selection;
+      const area = target.area ? parseArea(target.area) : null;
+      const info = area ? null : await obecInfo(target.obec);
+      const box = area ? await renderer.call('areaBox', area) : await renderer.call('obecBox', info, target.obvod);
+      if (gen !== selection) return;
+      if (highlight) renderer.send('showArea', area ? { area } : { info, obvod: target.obvod });
+      zoomer.stop();
+      fit(box, area ? 13 : 14, gen);
+    },
+
+    /* Colours the land by the 2026 results *shown* (draw.js `setResults`),
+     * or no longer for null. Their legend, coming or going, changes the
+     * free part. */
+    setResults(shown) {
+      renderer.send('setResults', shown);
+      sharp();
     },
 
     zoomIn() {

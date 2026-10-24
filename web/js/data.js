@@ -82,12 +82,17 @@ function parseCandidacy(id) {
   return { contest: id.slice(0, hash), number: Number(id.slice(hash + 1)) };
 }
 
-function areaPath(contest, index) {
+/* The area file a contest is in (build.py `area_file`), by name: kraj/<k>,
+ * city/<BA|KE> or okres/<code>. The live results (live.js) name theirs
+ * alike. */
+export function areaName(contest, index) {
   const { kind, area } = parseContest(contest);
-  if (kind === 'predseda' || kind === 'zsk') return `/data/kraj/${area}.json`;
-  if (area === 'BA' || area === 'KE') return `/data/city/${area}.json`;
-  return `/data/okres/${index.obce[area][1]}.json`;
+  if (kind === 'predseda' || kind === 'zsk') return `kraj/${area}`;
+  if (area === 'BA' || area === 'KE') return `city/${area}`;
+  return `okres/${index.obce[area][1]}`;
 }
+
+const areaPath = (contest, index) => `/data/${areaName(contest, index)}.json`;
 
 /* Slovak occupation → its translation into the page's language, from
  * /i18n/<lang>/occupations.json, fetched once with the first candidates;
@@ -208,6 +213,11 @@ export function contestLabel(id, index) {
   }
 }
 
+/* `past` is the turnout of the last election of the contest's body (build.py
+ * `past`): {election, date, eligible, voters, whole}, `election` the results
+ * name (oso2022, osk2022, oso202303, …), `whole` set when the figures are of
+ * the whole municipality or city rather than this council obvod; null when
+ * not known. */
 async function contest(id, index) {
   const [file, translated] = await Promise.all([getJSON(areaPath(id, index)), occupations()]);
   const entry = file.contests[id] ?? { candidates: [] };
@@ -226,6 +236,15 @@ async function contest(id, index) {
     seats2022: entry.seats_2022 ?? null,
     sources: entry.sources ?? [],
     holder,
+    past: entry.past
+      ? {
+          election: entry.past[0],
+          date: entry.past[1],
+          eligible: entry.past[2],
+          voters: entry.past[3],
+          whole: entry.past[4] === 1,
+        }
+      : null,
     candidates: entry.candidates.map((row) => decodeCandidate(id, entry, row, translated, index, file.research)),
   };
 }
@@ -250,7 +269,7 @@ export async function contests(ids) {
  * point, or {street, part} chosen in the search, whose houses may all be in
  * one obvod.
  *
- * Returns {obec, contests: [{id, label, seats, seats2022, sources, holder, candidates,
+ * Returns {obec, contests: [{id, label, seats, seats2022, sources, holder, past, candidates,
  * council?}], council, obvod, estimated}: `holder` the mayor or president in office
  * ({name, since, number, won}, `number` null when not standing in the contest);
  * `council` 'single' (one obvod), 'address' (several, and
