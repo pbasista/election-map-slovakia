@@ -76,8 +76,10 @@ const addressFiles = new Cache(16);
 
 /* addr/<obec>.json with its points decoded: every group (street or part of
  * the obec) gets `lon` and `lat` arrays parallel to `numbers`, NaN where the
- * address has no point, and where the obec's council obvod goes by address
- * (`council` 'address') `obvody`, the council obvod of each number. */
+ * address has no point, where the obec's council obvod goes by address
+ * (`council` 'address') `obvody`, the council obvod of each number, and
+ * where its okrsky are drawn (geo/index.json `okrsky.drawn`) `okrsky`, the
+ * okrsok of each; null where the file gives none. */
 export function addressFile(obec) {
   return addressFiles.get(obec, async () => {
     const file = await fetchJSON(`/addr/${obec}.json`);
@@ -102,7 +104,8 @@ export function addressFile(obec) {
           lat[i] = y / SCALE;
         }
         const obvody = g.obvod ? new Array(n).fill(g.obvod) : (g.obvody ?? null);
-        groups.push({ kind, name: g.name, numbers: g.numbers, lon, lat, obvody });
+        const okrsky = g.okrsok ? new Array(n).fill(g.okrsok) : (g.okrsky ?? null);
+        groups.push({ kind, name: g.name, numbers: g.numbers, lon, lat, obvody, okrsky });
       }
     }
     return { council: file.council, groups };

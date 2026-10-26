@@ -1,4 +1,5 @@
 import datetime as dt
+import tomllib
 from pathlib import Path
 
 import numpy as np
@@ -8,7 +9,8 @@ from election_map_slovakia import config, obvodrules, obvody
 from election_map_slovakia.candidates import Obec
 from election_map_slovakia.config import Obvod, ObvodList
 
-CURATED = Path(__file__).resolve().parent.parent / "data" / "curated" / "obvody"
+ELECTION = config.load(Path(__file__).resolve().parent.parent / "config").election_dir
+CURATED = ELECTION / obvody.DIRECTORY
 
 AREA = {
     o.code: o
@@ -107,6 +109,8 @@ def test_repository_files_are_well_formed():
         config.load_obvody(f)
     for path in sorted((CURATED / obvody.RULES_DIRECTORY).glob("*.toml")):
         assert obvody.load_rule_sets(CURATED.parent)[path.stem].obec == path.stem
+    for path in sorted((ELECTION / obvody.OKRSKY_DIRECTORY).glob("*.toml")):
+        assert obvody.okrsok_rule_sets(ELECTION)[path.stem].whole
 
 
 # --- rule sets -----------------------------------------------------------
@@ -136,7 +140,7 @@ def place(street: str, number: str, part: str = "Alfa") -> obvody.Place:
 
 
 def obvody_of(rules: obvody.RuleSet, places: list[obvody.Place]) -> list[int]:
-    return obvody.assign(rules, places).obvody
+    return obvody.assign(rules, places).units
 
 
 def test_orientacne_ranges_with_letters_and_open_end():
@@ -227,7 +231,7 @@ def test_conflicts_unassigned_and_unused_reported():
     )
     places = [place("Hlavná", "1/10"), place("Hlavná", "1/30"), place("Hlavná", "2/5")]
     a = obvody.assign(rules, places)
-    assert a.obvody == [0, 0, 1]
+    assert a.units == [0, 0, 1]
     assert list(a.conflicts) == [0] and a.unassigned == [1]
     assert [r.street for r in a.unused] == ["Zelená"]
     problems = a.problems(places)
@@ -240,7 +244,7 @@ def test_ku_rules_by_point():
     assert rules.by_ku
     places = [place("", "1"), place("", "2"), place("", "3")]
     a = obvody.assign(rules, places, kus=["Alfa", "Beta", None])
-    assert a.obvody == [1, 2, 0]
+    assert a.units == [1, 2, 0]
 
 
 def test_fill_from_nearest_then_street_then_part():
@@ -256,7 +260,7 @@ def test_fill_from_nearest_then_street_then_part():
     nan = float("nan")
     points = np.array([[0, 0], [100, 0], [90, 5], [nan, nan], [nan, nan], [nan, nan]])
     a = obvody.assign(rules, places, points=points)
-    assert a.obvody == [1, 2, 2, 2, 2, 0]
+    assert a.units == [1, 2, 2, 2, 2, 0]
     assert a.filled == [2, 4] and a.unassigned == [5]
 
 
@@ -285,7 +289,7 @@ def test_near_points_split_a_part_in_an_estimated_rule_set():
     ).planar()
     a = obvody.assign(rules, places, points=points)
     # Beta is its part's, wherever its point; without a point, none.
-    assert a.obvody == [1, 2, 3, 0]
+    assert a.units == [1, 2, 3, 0]
     with pytest.raises(obvody.ObvodyError, match="only for an estimated"):
         obvody.rule_set({**data, "estimated": False}, "test")
     with pytest.raises(obvody.ObvodyError, match="needs a note"):
@@ -333,6 +337,11 @@ def test_rule_form(rule: dict, message: str):
         ("Ulica Alfonza Šilhára", "Alfonza Šilhára", True),
         ("Štefánikova trieda", "Štefánikova", False),
         ("SNP", "Slovenského národného povstania", False),
+        ("Hlavné nám.", "Hlavné námestie", True),
+        ("Trojičné námestie", "Trojičné nám.", True),
+        ("Čsl. armády", "Československej armády", True),
+        ("Hlavné nám.", "Hlavná", False),
+        ("Nová", "Novácka", False),
     ],
 )
 def test_same_name(written: str, name: str, same: bool):
@@ -355,10 +364,196 @@ def test_name_problems_and_dump_round_trip(tmp_path: Path):
     assert obvody.name_problems(rules, ["Hlavná"], [], []) == [
         "obvod 1: Nová: the obec has no street 'Nová'"
     ]
-    path = tmp_path / "data" / "curated" / "obvody" / "oz" / "500001.toml"
+    path = obvody.rules_path(tmp_path, "500001")
     path.parent.mkdir(parents=True)
     path.write_text(obvody.dump(rules, ["header"]), encoding="utf-8")
-    assert obvody.load_rule_sets(tmp_path / "data" / "curated") == {"500001": rules}
+    assert obvody.load_rule_sets(tmp_path) == {"500001": rules}
+
+
+def okrsky_set(okrsky: dict[str, list[int]], tables: dict, **extra) -> dict:
+    """Return a rule set of obvod 1 (Hlavná, Krátka) and 2 (the rest), with okrsky."""
+    data = {
+        "obec": "500001",
+        "name": "Alfa",
+        "document": [DOCUMENT],
+        "obvod": {
+            "1": {"seats": 3, "rules": [{"street": "Hlavná"}, {"street": "Krátka"}]},
+            "2": {"seats": 2, "rules": [{"rest": True}]},
+        },
+        "okrsok": tables,
+        **extra,
+    }
+    for n, numbers in okrsky.items():
+        data["obvod"][n]["okrsky"] = numbers
+    return data
+
+
+def test_okrsky_share_the_addresses_of_their_obvod(tmp_path: Path):
+    tables = {
+        "1": {"rules": [{"street": "Hlavná", "numbers": "1-10"}, {"street": "Lúčna"}]},
+        "2": {"rules": [{"rest": True}]},
+    }
+    data = okrsky_set({"1": [1, 2], "2": [3]}, tables, okrsky_date=dt.date(2026, 7, 1))
+    rules = obvody.rule_set(data, "test")
+    assert rules.okrsok_areas and rules.okrsok_obvod == {1: 1, 2: 1, 3: 2}
+    places = [
+        place("Hlavná", "1/5"),
+        place("Hlavná", "2/50"),
+        place("Krátka", "3/1"),
+        place("Lúčna", "4/1"),
+    ]
+    a = obvody.assign(rules, places)
+    assert a.units == [1, 1, 1, 2]
+    k = obvody.assign_okrsky(rules, places, a.units)
+    # The rest is obvod 1's, and Lúčna, of obvod 2, is okrsok 3 whatever
+    # the rules of okrsok 1 say: but they name it only for addresses of
+    # another obvod, which the check reports.
+    assert k.units == [1, 2, 2, 3]
+    assert k.problems(places) == [
+        "okrsok 1: Lúčna: selects addresses only of obvod 2, not of its okrsok's"
+    ]
+    path = obvody.rules_path(tmp_path, "500001")
+    path.parent.mkdir(parents=True)
+    path.write_text(obvody.dump(rules), encoding="utf-8")
+    assert obvody.load_rule_sets(tmp_path) == {"500001": rules}
+
+
+def test_okrsky_known_only_by_obvod():
+    rules = obvody.rule_set(okrsky_set({"1": [1, 2], "2": [3]}, {}), "test")
+    assert rules.okrsky == {1: (1, 2), 2: (3,)} and not rules.okrsok_areas
+
+
+def test_addressless_okrsok_takes_no_address():
+    tables = {
+        "1": {"rules": [{"street": "Hlavná"}]},
+        "2": {"rules": [{"rest": True}]},
+        "3": {"addressless": True},
+        # Obvod 2's other okrsok has every address: it needs no rules.
+        "5": {"addressless": True},
+    }
+    rules = obvody.rule_set(okrsky_set({"1": [1, 2, 3], "2": [4, 5]}, tables), "test")
+    assert rules.addressless == (3, 5) and rules.okrsok_areas
+    places = [place("Hlavná", "1/5"), place("Krátka", "3/1"), place("Lúčna", "4/1")]
+    a = obvody.assign(rules, places)
+    assert obvody.assign_okrsky(rules, places, a.units).units == [1, 2, 4]
+    assert obvody.rule_set(tomllib.loads(obvody.dump(rules)), "test") == rules
+
+
+@pytest.mark.parametrize(
+    ("okrsky", "tables", "message"),
+    [
+        ({"1": [1, 2]}, {}, "in every obvod or in none"),
+        ({"1": [1, 2], "2": [4]}, {}, "numbered 1..3"),
+        ({"1": [1, 2], "2": [2]}, {}, "numbered 1..3"),
+        (
+            {"1": [1], "2": [2]},
+            {"2": {"rules": [{"rest": True}]}},
+            "alone in its obvod",
+        ),
+        (
+            {"1": [1, 2], "2": [3]},
+            {"1": {"rules": [{"rest": True}]}},
+            "2 share an obvod",
+        ),
+        (
+            {"1": [1, 2], "2": [3]},
+            {"1": {"rules": [{"rest": True}]}, "2": {"rules": [{"rest": True}]}},
+            "more than one rule is the rest",
+        ),
+    ],
+)
+def test_okrsky_form(okrsky: dict, tables: dict, message: str):
+    with pytest.raises(obvody.ObvodyError, match=message):
+        obvody.rule_set(okrsky_set(okrsky, tables), "test")
+
+
+def whole_set(tables: dict, **extra) -> dict:
+    """Return ``okrsky/500001.toml`` of an obec with one council obvod."""
+    return {
+        "obec": "500001",
+        "name": "Alfa",
+        "document": [DOCUMENT],
+        "okrsok": tables,
+        **extra,
+    }
+
+
+def test_okrsky_of_an_obec_with_one_obvod(tmp_path: Path):
+    tables = {
+        "1": {"rules": [{"part": "Beta"}, {"street": "Hlavná", "numbers": "1-9"}]},
+        "2": {"rules": [{"rest": True}]},
+        "3": {"addressless": True},
+    }
+    rules = obvody.okrsky_set(whole_set(tables, okrsky_fill="nearest"), "test")
+    assert rules.whole and rules.okrsok_areas and rules.okrsky == {1: (1, 2, 3)}
+    places = [
+        place("Hlavná", "1/5"),
+        place("Hlavná", "2/50"),
+        place("", "7", "Beta"),
+        place("Krátka", "3/1", "Beta"),
+    ]
+    a = obvody.assign(rules, places)
+    assert a.units == [1, 1, 1, 1]
+    assert obvody.assign_okrsky(rules, places, a.units).units == [1, 2, 1, 1]
+    path = obvody.okrsky_path(tmp_path, "500001")
+    path.parent.mkdir(parents=True)
+    path.write_text(obvody.dump(rules, ["header"]), encoding="utf-8")
+    assert obvody.okrsok_rule_sets(tmp_path) == {"500001": rules}
+    # An obec with council obvody keeps its okrsky in its rule set.
+    council = obvody.rules_path(tmp_path, "500001")
+    council.parent.mkdir(parents=True)
+    council.write_text(obvody.dump(rule_set([{"rest": True}])), encoding="utf-8")
+    with pytest.raises(obvody.ObvodyError, match="the obec has council obvody"):
+        obvody.okrsok_rule_sets(tmp_path)
+
+
+def test_okrsky_file_with_one_okrsok_of_addresses():
+    # The others hold only residents without an address: the one with the
+    # addresses is the whole obec, its table empty, and stays so in its file.
+    tables = {"1": {}, "2": {"addressless": True}, "3": {"addressless": True}}
+    rules = obvody.okrsky_set(whole_set(tables), "test")
+    assert rules.okrsok_areas and rules.okrsky == {1: (1, 2, 3)}
+    places = [place("Hlavná", "1/5"), place("", "7", "Beta")]
+    assert obvody.assign_okrsky(rules, places, [1, 1]).units == [1, 1]
+    again = obvody.okrsky_set(tomllib.loads(obvody.dump(rules)), "test")
+    assert again == rules
+    tables["1"] = {"rules": [{"rest": True}]}
+    with pytest.raises(obvody.ObvodyError, match="alone in its obvod"):
+        obvody.okrsky_set(whole_set(tables), "test")
+
+
+@pytest.mark.parametrize(
+    ("tables", "extra", "message"),
+    [
+        ({"1": {"rules": [{"rest": True}]}}, {}, "numbered 1..N, N at least 2"),
+        (
+            {"1": {"rules": [{"part": "Beta"}]}, "3": {"rules": [{"rest": True}]}},
+            {},
+            "numbered 1..N",
+        ),
+        (
+            {"1": {"rules": [{"part": "Beta"}]}, "2": {"rules": []}},
+            {},
+            "okrsok.2.rules: must not be empty",
+        ),
+        (
+            {"1": {"rules": [{"part": "Beta"}]}, "2": {"rules": [{"rest": True}]}},
+            {"obvod": {}},
+            "obvod: unknown key",
+        ),
+        (
+            {
+                "1": {"rules": [{"near": [17.1, 48.1]}]},
+                "2": {"rules": [{"rest": True}]},
+            },
+            {},
+            "near rules are only for an estimated rule set",
+        ),
+    ],
+)
+def test_okrsky_file_form(tables: dict, extra: dict, message: str):
+    with pytest.raises(obvody.ObvodyError, match=message):
+        obvody.okrsky_set(whole_set(tables, **extra), "test")
 
 
 @pytest.mark.parametrize(

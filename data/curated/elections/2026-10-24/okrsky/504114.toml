@@ -1,0 +1,30 @@
+# Okrsky of Váhovce, transcribed by an AI agent in job okrsok-rules-481 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: číslami: od s.č. 0 - 430
+#   okrsok 2: číslami: od s.č. 431 - 878
+obec = "504114"
+name = "Váhovce"
+okrsky_date = 2026-07-21
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document read from the image. Okrsky split by súpisné číslo; any address above 878 takes the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.obecvahovce.sk/e_download.php?file=/data/uredni_deska/obsah521_1.pdf&original=Scan_1059.pdf"
+sha256 = "892c83554239c57330bf24d6d3c96ebb8612237322a5b1d4b5a808a571ab1fae"
+title = "Určenie volebných okrskov a volebných miestností"
+
+[[document]]
+url = "https://www.obecvahovce.sk/urad/uradna-tabula-obce/urcenie-volebnych-okrskov-a-volebnych-miestnosti-531.html"
+sha256 = "94fe0f7a8ba851c4d56d4f467a9ef68f6be2b7438b79648f4e2e1803fc17e01b"
+title = "Určenie volebných okrskov a volebných miestností (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {part = "Váhovce", numbers = "0-430"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Váhovce", numbers = "431-878"},
+]

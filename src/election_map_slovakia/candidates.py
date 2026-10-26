@@ -13,7 +13,7 @@ strings; keys in parentheses are omitted where they do not apply)::
     kraje:       [{code, name}]                         code "1".."8" (ZBGIS IDN2)
     okresy:      [{code, name, kraj}]                   code "101".."813" (IDN3)
     obce:        [{code, name, (okres), kraj, (city),   city: BA/KE for districts
-                   (past)}]
+                   (past), (okrsky_2022)}]
     contests:    [{id, kind, area, (obvod), (incumbent),
                    (seats_2022), (past)}]               id "oz:528595/2"
     candidacies: [{id, contest, number, person, title_before, title_after,
@@ -47,7 +47,12 @@ mayor and council contests the latest by-election that elected the mayor or
 the whole council, else the regular election of 2022; for president
 contests the regional election of 2022. Regional council contests have
 none, their 2026 obvody being unknown here; an obec's ``past`` is the
-regional election of 2022 in it, for ``build`` to sum over them.
+regional election of 2022 in it, for ``build`` to sum over them. An obec's
+``okrsky_2022`` is the turnout of each of its okrsky in the regular
+municipal election of 2022, ``{election, day, okrsky: [[okrsok, eligible,
+voters], …]}`` (:func:`incumbents.okrsky_json`), where it had several: for
+``build`` to sum over the okrsky of each 2026 council obvod, where they are
+known and the same.
 """
 
 from __future__ import annotations
@@ -836,6 +841,9 @@ def to_json(result: Result) -> dict[str, list[dict[str, object]]]:
         past = result.incumbency.holders.regional.get(o.code)
         if past is not None:
             item["past"] = incumbents.past_json(past)
+        okrsky = result.incumbency.holders.okrsky.get(o.code)
+        if okrsky is not None:
+            item["okrsky_2022"] = incumbents.okrsky_json(okrsky)
         obce.append(item)
     contests: dict[str, dict[str, object]] = {}
     candidacies = []

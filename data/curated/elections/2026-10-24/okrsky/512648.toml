@@ -1,0 +1,99 @@
+# Okrsky of Sučany, transcribed by an AI agent in job okrsok-rules-279 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Pri Váhu, Stará hradská, 29.augusta, Podskala, Námestie SNP, Jánošíkova, Kollárova, Hviezdoslavova, Hurbanova, Fučíkova, Čsl. armády, Dukelských hrdinov a obec Sučany
+#   okrsok 2: Fr. Kráľa, Kalinčiakova, Mierová, Osloboditeľov, Partizánska, Pod Brezinou, Stromová, Podhradská cesta, Stará Teheleň, Štiavnická cesta, Moyzesova, Kuzmányho, Horčičkova, Tehelná, Kpt. Nálepku a Stredisko Evanjelickej DIAKONIE -Diakonické centrum Sučany
+#   okrsok 3: 1. mája, Ď. Langsfelda, Gen. Svobodu, Hlavná, Hodžova, Ing. Kožucha, J. Kostru, Jilemnického, Pionierska, J. A. Komenského, Malý diel, Sládkovičova, Sokolská, Sološenkova, Štúrova, Vrútocká cesta, Železničná, Stará Prefa, Družstevná, Pod Bukovinou
+#   okrsok 4: Budovateľská, Fatranská cesta, Hrabinská, Kráľova, Krivánska, Meškalská, Turianska, Vážska, Pod Kečkou, Hradiská, Brezová a Hubová, Smreková, Pod strelnicou, Pod Stratencom, Pri spádoch, Borovicová, Jedľová, Brestová, Ústav na výkon trestu odňatia slobody pre mladistvých, Sučany
+obec = "512648"
+name = "Sučany"
+okrsky_date = 2026-07-14
+okrsky_fill = "nearest"
+okrsky_note = "Kpt. Nálepku is Kapitána Nálepku. Streets the document does not list: SNP (4 addresses) and Ulica priemyselná (1) — placed by fill_nearest, as are the 62 addresses without a street. \"obec Sučany\" in okrsok 1 (residents registered only to the obec), the Diakonické centrum (okrsok 2) and the youth prison (okrsok 4) are institutions/addressless groups not mapped to streets."
+
+[[document]]
+url = "https://www.sucany.sk/obec/volby-a-referenda/spojene-volby-samospravy-a-kraje-2026/"
+sha256 = "a61f2f321c049cf142563aed865eb8930347a92e8b765d5184f1ee7c9366f651"
+title = "Rozdelenie ulíc do volebných okrskov (Spojené voľby samosprávy a kraje 2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Pri Váhu"},
+  {street = "Stará Hradská", written = "Stará hradská"},
+  {street = "29.augusta"},
+  {street = "Podskala"},
+  {street = "Námestie SNP"},
+  {street = "Jánošíkova"},
+  {street = "Kollárova"},
+  {street = "Hviezdoslavova"},
+  {street = "Hurbanova"},
+  {street = "Fučíkova"},
+  {street = "Československej armády", written = "Čsl. armády"},
+  {street = "Dukelských hrdinov"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Fraňa Kráľa", written = "Fr. Kráľa"},
+  {street = "Kalinčiakova"},
+  {street = "Mierová"},
+  {street = "Osloboditeľov"},
+  {street = "Partizánska"},
+  {street = "Pod Brezinou"},
+  {street = "Stromová"},
+  {street = "Podhradská cesta"},
+  {street = "Stará Teheleň"},
+  {street = "Štiavnická cesta"},
+  {street = "Moyzesova"},
+  {street = "Kuzmányho"},
+  {street = "Horčičkova"},
+  {street = "Tehelná"},
+  {street = "Kapitána Nálepku", written = "Kpt. Nálepku", note = "Kpt. is the standard abbreviation of Kapitán (captain); the same street."},
+]
+
+[okrsok.3]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Ďurka Langsfelda", written = "Ď. Langsfelda"},
+  {street = "Gen.Svobodu", written = "Gen. Svobodu"},
+  {street = "Hlavná"},
+  {street = "Hodžova"},
+  {street = "Ing. Kožucha"},
+  {street = "Jána Kostru", written = "J. Kostru"},
+  {street = "Jilemnického"},
+  {street = "Pionierska"},
+  {street = "J.A.Komenského", written = "J. A. Komenského"},
+  {street = "Malý Diel", written = "Malý diel"},
+  {street = "Sládkovičova"},
+  {street = "Sokolská"},
+  {street = "Sološenkova"},
+  {street = "Štúrova"},
+  {street = "Vrútocká cesta"},
+  {street = "Železničná"},
+  {street = "Stará Prefa"},
+  {street = "Družstevná"},
+  {street = "Pod Bukovinou"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Fatranská cesta"},
+  {street = "Hrabinská"},
+  {street = "Kráľova"},
+  {street = "Krivánska"},
+  {street = "Meškalská"},
+  {street = "Turianska"},
+  {street = "Vážska"},
+  {street = "Pod Kečkou"},
+  {street = "Hradiská"},
+  {street = "Brezová"},
+  {street = "Hubová"},
+  {street = "Smreková"},
+  {street = "Pod strelnicou"},
+  {street = "Pod Stratencom"},
+  {street = "Pri spádoch"},
+  {street = "Borovicová"},
+  {street = "Jedľová"},
+  {street = "Brestová"},
+]

@@ -1,0 +1,29 @@
+# Okrsky of Lozorno, transcribed by an AI agent in job okrsok-rules-311 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súpisné č. 1 – 700
+#   okrsok 2: súpisné č. 701 – 1375
+obec = "508055"
+name = "Lozorno"
+okrsky_date = 2026-07-14
+okrsky_note = "The document splits the obec by súpisné číslo only: okrsok 1 súpisné č. 1-700, okrsok 2 súpisné č. 701-1375; the rules apply these ranges to every address of the part Lozorno. Súpisné čísla above 1375 (if any) are put in okrsok 2 as the continuation of its range."
+
+[[document]]
+url = "https://www.lozorno.sk/e_download.php?file=/data/uredni_deska/obsah6811_1.pdf&original=Utvorenie%20vol.%20okrskov%20a%20ur%C4%8Denie%20vol.%20miestnosti.pdf"
+sha256 = "49d84dddfd0be811e8b1ced7dbc6b328daa84acc0806187988d4482c585b236e"
+title = "Utvorenie volebných okrskov a určenie volebnej miestnosti pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov 2026 v obci Lozorno"
+
+[[document]]
+url = "https://www.lozorno.sk/samosprava/volby/utvorenie-volebnych-okrskov-a-urcenie-volebnej-miestnosti-pre-volby-do-organov-samospravy-obci-a-pre-volby-do-organov-samospravnych-krajov-2026-v-obci-lozorno-7121.html"
+sha256 = "b660e88a5f87bed7a19b76ff3b65fc5a8fc8e183995c982f5724f10c809a82aa"
+title = "Utvorenie volebných okrskov a určenie volebnej miestnosti (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {part = "Lozorno", numbers = "1-700"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lozorno", numbers = "701-"},
+]

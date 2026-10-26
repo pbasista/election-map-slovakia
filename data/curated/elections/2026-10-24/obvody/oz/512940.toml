@@ -1,0 +1,38 @@
+# Council obvody of Dohňany (512940), Púchov.
+# Transcribed by an AI agent in job obvod-rules-131 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa Dohňany budú zvolení 5 poslanci.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa miestne časti Mostište a Zbora budú zvolení 2 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-130 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+obec = "512940"
+name = "Dohňany"
+date = 2026-07-06
+okrsky_note = "The mayor's decision (undated) lists okrsky 1 and 2 in obvod 1, both voting in Dom kultúrnych tradícií, Dohňany 76, and okrsky 3 (Kultúrny dom Mostište) and 4 (Kultúrny dom Zbora) in obvod 2, but gives no streets or parts per okrsok; how Dohňany is split between okrsky 1 and 2 is not published on the website, so only the grouping is given."
+
+[[document]]
+url = "https://www.dohnany.sk/download_file_f.php?id=2442433"
+sha256 = "0b8f9c419823f89571a17077cad5c8c6eb8db60b98ad43f2c4f7814f581b80ba"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie OZ č. 2026/33/359 zo dňa 6. júla 2026)"
+
+[[document]]
+url = "https://www.dohnany.sk/download_file_f.php?id=2443502"
+sha256 = "d1cefbc0272ac46a75f0ee5a54ee7408495f6443f8f2c8f9e3637259a4b98c72"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby 24. 10. 2026"
+
+[obvod.1]
+seats = 5
+okrsky = [1, 2]
+rules = [
+  {part = "Dohňany"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [3, 4]
+rules = [
+  {part = "Mostište"},
+  {part = "Zbora"},
+]

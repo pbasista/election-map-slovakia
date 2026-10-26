@@ -1,0 +1,22 @@
+# Okrsky of Župčany, transcribed by an AI agent in job okrsok-rules-520 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od súp. čísla 0 - do súp. č. 315
+#   okrsok 2: od súp. č. 316 do neurčito
+obec = "525511"
+name = "Župčany"
+
+[[document]]
+url = "https://zupcany.sk/wp-content/uploads/dokumenty/volby-do-samosprav-2026/okrsky-fe4bpm.pdf"
+sha256 = "380015ea98c2df074bc7742c62522949d3a6c78c8b6c4da16091e50500b57581"
+title = "Utvorenie volebných okrskov a určenie volebných miestnosti pre voľby do samosprávy obcí a voľby do samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {part = "Župčany", numbers = "0-315"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Župčany", numbers = "316-"},
+]

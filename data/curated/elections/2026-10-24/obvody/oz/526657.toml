@@ -1,0 +1,57 @@
+# Council obvody of Žehra (526657), Spišská Nová Ves.
+# Transcribed by an AI agent in job obvod-rules-187 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Žehra od s.č. 1 až s.č. 113, Žehra časť Hodkovce od s.č. 1 až s.č. 34, Žehra bez adresy
+#   obvod 2: Žehra od s.č. 114 až s.č. 187
+# Okrsky added by an AI agent in job okrsok-rules-187 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Žehra od s.č. 1 - 113, Hodkovce od s.č. 1 - 34, Hodkovce od s.č. 1 - 34, Žehra bez adresy
+#   okrsok 2: Žehra č. 165, 166, 167, 168,169, 170, 171, 172, Žehra č. 173, 174, 177 a 187
+#   okrsok 3: Žehra č. 114, 115, 117, 119, 120, 121, 122, 123, Žehra č. 124, 125, 150, 152, 154, 156, 158, 159, Žehra č. 160, 161, 162, 163, 164, 175, 176, 178, Žehra č. 179, 180, 182, 183
+obec = "526657"
+name = "Žehra"
+date = 2026-07-20
+note = "Scanned one-page Oznámenie (no text layer), read from the rendered image; text is clear. 9 seats in 2 obvody. The document defines obvody by súpisné čísla: part Žehra 1-113 and Hodkovce 1-34 in obvod 1, Žehra 114-187 in obvod 2; 'Žehra bez adresy' (residents without an address) in obvod 1 has no addresses to map. Register addresses the document does not cover were placed by inferred rules: Hodkovce 400-410 (obvod 1, the only obvod containing Hodkovce) and Žehra 188, 300-309, 500 by the obvod of the nearest listed houses."
+okrsky_date = 2026-07-30
+okrsky_fill = "nearest"
+okrsky_note = "Scanned one-page Oznámenie of the mayor (30.07.2026), read from the image. Obvod 2 (Žehra 114-187) is split by listed súpisné čísla; addresses of obvod 2 not listed take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.obeczehra.sk/e_download.php?file=/data/multipage/editor/editor-33-401-sk_1.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20obvodov%20a%20ur%C4%8D.%20po%C4%8Dtu%20poslancov.pdf"
+sha256 = "e5883559f58714e828e1deffcd2bd3c46566e40064d61f6aaa62471891f21cf8"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie OZ č. OZ-36-26-B-17 zo dňa 20.07.2026)"
+
+[[document]]
+url = "https://www.obeczehra.sk/e_download.php?file=/data/multipage/editor/editor-33-401-sk_3.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "aa0a8e8f657fbde24d67c48343dff976b2d18203691461506a306da6e916f8bc"
+title = "Oznámenie o utvorení volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov v roku 2026"
+
+[obvod.1]
+seats = 2
+okrsky = [1]
+rules = [
+  {part = "Žehra", numbers = "1-113"},
+  {part = "Hodkovce", numbers = "1-34"},
+  {part = "Hodkovce", note = "Register has Hodkovce s.č. 400-410 beyond the listed 1-34; obvod 2 contains only Žehra s.č. 114-187, so all of Hodkovce belongs to obvod 1.", inferred = true},
+  {part = "Žehra", numbers = "188, 300, 301, 304, 305, 307, 309", note = "Newer s.č. not listed in the document; each lies nearest to houses of obvod 1 (188 next to s.č. 110; 300, 301, 305, 307 among s.č. 1-102 in the village centre; 304 and 309 east of the village beyond s.č. 111-113).", inferred = true},
+]
+
+[obvod.2]
+seats = 7
+okrsky = [2, 3]
+rules = [
+  {part = "Žehra", numbers = "114-187"},
+  {part = "Žehra", numbers = "302, 303, 306, 308, 500", note = "Newer s.č. not listed in the document; each lies nearest to houses of obvod 2 (302, 303 west of s.č. 152-160; 306 and 500 by s.č. 165-170; 308 by s.č. 120-124).", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Žehra", numbers = "165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 177, 187"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Žehra", numbers = "114, 115, 117, 119, 120, 121, 122, 123, 124, 125, 150, 152, 154, 156, 158, 159, 160, 161, 162, 163, 164, 175, 176, 178, 179, 180, 182, 183"},
+]

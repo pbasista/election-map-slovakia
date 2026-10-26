@@ -1,0 +1,32 @@
+# Okrsky of Fintice, transcribed by an AI agent in job okrsok-rules-464 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: číslo domu od 1 do 410
+#   okrsok 2: číslo domu od 411 vyššie
+obec = "524395"
+name = "Fintice"
+okrsky_date = 2026-07-23
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky are split by house number (číslo domu, read as súpisné číslo) across the whole obec, applied to both parts Fintice and Gribľovec."
+
+[[document]]
+url = "https://www.uradne.sk/user/tablenews/file/1585716"
+sha256 = "2f99e0e7807000fb02e3e336e57af6192f85b6cb679877b22037b44af6fcdb55"
+title = "Rozhodnutie starostu Obce Fintice o utvorení volebných okrskov a určení volebných miestností"
+
+[[document]]
+url = "https://www.fintice.sk/samosprava/uradna-tabula?p=1&detail=74648&count=10&tagSelect=volby%2Freferenda&subcategory="
+sha256 = "f0066fe34f52a036623547020402c25aa8dc20d7c1e4233ddb6b8fbee17e0e3e"
+title = "Úradná tabuľa: Rozhodnutie starostu Obce Fintice o utvorení volebných okrskov a určení volebných miestností (page linking the PDF)"
+
+[okrsok.1]
+rules = [
+  {part = "Fintice", numbers = "1-410"},
+  {part = "Gribľovec", numbers = "1-410"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Fintice", numbers = "411-"},
+  {part = "Gribľovec", numbers = "411-"},
+]

@@ -1,0 +1,29 @@
+# Okrsky of Magnezitovce, transcribed by an AI agent in job okrsok-rules-638 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebnú miestnosť: Obecný úrad, SPOZ-zasadačka, Mníšany č. 59
+#   okrsok 2: Kultúrny dom, Kopráš č. 28
+obec = "525944"
+name = "Magnezitovce"
+okrsky_date = 2026-07-20
+okrsky_note = "The document gives only the two polling stations (Obecný úrad Mníšany č. 59; Kultúrny dom Kopráš č. 28), as many as the parts, each in another part: each okrsok is given the part of its station, numbered in the order the stations are listed."
+
+[[document]]
+url = "https://www.uradne.sk/user/tablenews/file/1586772"
+sha256 = "8895adccd42c8fb7402e1e65b2a70689dbb353bf3ac9ec83f4bcf933a7fcbf43"
+title = "Vytvorenie volebných okrskov a určenie volebnej miestnosti"
+
+[[document]]
+url = "https://www.magnezitovce.sk/samosprava/uradna-tabula?p=2&detail=75007&count=10&tagSelect=&subcategory="
+sha256 = "5c3a38cfe74872756a42af9def6a2fcb4ea5de18672d40fde3bb3491fa3ff227"
+title = "Vytvorenie volebných okrskov a určenie volebnej miestnosti (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {part = "Mníšany", note = "The document gives only the two polling stations (Obecný úrad Mníšany č. 59; Kultúrny dom Kopráš č. 28), as many as the parts, each in another part: each okrsok is given the part of its station, numbered in the order the stations are listed.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kopráš", note = "The document gives only the two polling stations (Obecný úrad Mníšany č. 59; Kultúrny dom Kopráš č. 28), as many as the parts, each in another part: each okrsok is given the part of its station, numbered in the order the stations are listed.", inferred = true},
+]

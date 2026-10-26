@@ -1,0 +1,50 @@
+# Okrsky of Ladce, transcribed by an AI agent in job okrsok-rules-393 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cementárska ulica, Záhradná ulica, Farská ulica, Obec Ladce, Ulica Janka Kráľa, Podhorská ulica, Pod Skalkou, Pod hájom, Lúčkovská ulica, Pod rotbánom, Kopanice
+#   okrsok 2: Hviezdoslavova ulica, Ulica Ľudovíta Štúra, Za kaštieľom, Ulica Pavla Koyša, Ulica Jána Kollára, Kukučínova ulica, Vážska ulica
+#   okrsok 3: Hviezdoslavova ulica - Tunežice, Podjavorinskej ulica, Tajovského ulica, Kalinčiakova ulica, Bottova ulica
+obec = "513296"
+name = "Ladce"
+okrsky_fill = "nearest"
+okrsky_note = "Hviezdoslavova ulica runs through both parts: in Ladce it is okrsok 2, in Tunežice ('Hviezdoslavova ulica - Tunežice') okrsok 3; the whole part Tunežice (all its streets) is okrsok 3. 'Obec Ladce' in okrsok 1 are voters registered without an address; addresses without a street in the part Ladce take the nearest placed address. The document states no decision date."
+
+[[document]]
+url = "https://www.ladce.sk/_public/files/page/4326/zoznam-volebnych-okrskov-a-volebnych-miestnosti.pdf"
+sha256 = "61e167d441cd72e8ecd71e661f7a3dd932e5b65c8e27e4efcfc16e00d9c4716a"
+title = "Zoznam volebných okrskov a volebných miestností pre spojené voľby do orgánov samosprávy obcí a samosprávnych krajov v obci Ladce (24.10.2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Cementárska ulica"},
+  {street = "Záhradná ulica"},
+  {street = "Farská ulica"},
+  {street = "Ulica Janka Kráľa"},
+  {street = "Podhorská ulica"},
+  {street = "Pod Skalkou"},
+  {street = "Pod hájom"},
+  {street = "Lúčkovská ulica"},
+  {street = "Pod rotbánom"},
+  {street = "Kopanice"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hviezdoslavova ulica", part = "Ladce"},
+  {street = "Ulica Ľudovíta Štúra"},
+  {street = "Za kaštieľom"},
+  {street = "Ulica Pavla Koyša"},
+  {street = "Ulica Jána Kollára"},
+  {street = "Kukučínova ulica"},
+  {street = "Vážska ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hviezdoslavova ulica", part = "Tunežice"},
+  {street = "Podjavorinskej ulica"},
+  {street = "Tajovského ulica"},
+  {street = "Kalinčiakova ulica"},
+  {street = "Bottova ulica"},
+  {part = "Tunežice", note = "every street of the part Tunežice is in okrsok 3; its addresses without a street too", inferred = true},
+]

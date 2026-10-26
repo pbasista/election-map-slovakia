@@ -1,0 +1,51 @@
+# Okrsky of Svodín, transcribed by an AI agent in job okrsok-rules-261 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Maďarskosvodínska cesta, Dolná mlynská ulica, Horná mlynská, Krížna, Malokostolná, Morušová, Novovieska, Školská, Bieleho kríža, Pála Pathóa, sv.Floriána, svätého Urbána, Veľkolesná, Hlavnosecká, Krátka
+#   okrsok 2: Nemeckosvodínska cesta, Dlhý rad, Dolná jablčná, Dolný koniec, Horná jablčná, Kamenárska, Kopcová, Kostolná, Lipová, Malá škovránková, Škovránková, kopca Tenkesa, Veterná, Hlavná
+obec = "503568"
+name = "Svodín"
+okrsky_fill = "nearest"
+okrsky_note = "The document is undated (published on the obec's Voľby 2026 page with the 2026 election documents). \"Novovieska\" is the register's Novovieska cesta (the only street of that name). Hlavné námestie and Krivá cesta, which the document does not name, and the addresses without a street take the okrsok of the nearest placed address."
+
+[[document]]
+url = "https://www.svodin.sk/e_download.php?file=/data/multipage/editor/editor-82-310-sk_7.pdf&original=Tla%C4%8Divo%20Volebn%C3%A9%20okrsky_miestnosti_s%C3%ADdlo.pdf"
+sha256 = "ed07c36fe3c69161ce96da33da72cf93e5a4989ce846875bcab376f98bd87eee"
+title = "Volebné okrsky, miestnosti, sídlo"
+
+[okrsok.1]
+rules = [
+  {street = "Maďarskosvodínska cesta"},
+  {street = "Dolná mlynská ulica"},
+  {street = "Horná mlynská ulica", written = "Horná mlynská"},
+  {street = "Krížna ulica", written = "Krížna"},
+  {street = "Malokostolná ulica", written = "Malokostolná"},
+  {street = "Morušová ulica", written = "Morušová"},
+  {street = "Novovieska cesta", written = "Novovieska", note = "the document leaves out \"cesta\"; the register has no other Novovieska street"},
+  {street = "Školská ulica", written = "Školská"},
+  {street = "Ulica Bieleho kríža", written = "Bieleho kríža"},
+  {street = "Ulica Pála Pathóa", written = "Pála Pathóa"},
+  {street = "Ulica sv. Floriána", written = "sv.Floriána"},
+  {street = "Ulica svätého Urbána", written = "svätého Urbána"},
+  {street = "Veľkolesná ulica", written = "Veľkolesná"},
+  {street = "Hlavnosecká ulica", written = "Hlavnosecká"},
+  {street = "Krátka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Nemeckosvodínska cesta"},
+  {street = "Dlhý rad"},
+  {street = "Dolná jablčná ulica", written = "Dolná jablčná"},
+  {street = "Dolný koniec"},
+  {street = "Horná jablčná ulica", written = "Horná jablčná"},
+  {street = "Kamenárska ulica", written = "Kamenárska"},
+  {street = "Kopcová ulica", written = "Kopcová"},
+  {street = "Kostolná ulica", written = "Kostolná"},
+  {street = "Lipová ulica", written = "Lipová"},
+  {street = "Malá škovránková ulica", written = "Malá škovránková"},
+  {street = "Škovránková ulica", written = "Škovránková"},
+  {street = "Ulica kopca Tenkesa", written = "kopca Tenkesa"},
+  {street = "Veterná ulica", written = "Veterná"},
+  {street = "Hlavná ulica", written = "Hlavná"},
+]

@@ -1,0 +1,241 @@
+# Council obvody of Fiľakovo (511391), Lučenec.
+# Transcribed by an AI agent in job obvod-rules-084 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Gorkého, Jánošíkova, Poľná, Partizánska, Tajovského, Hviezdoslavova, Športová, Bottu, Kalajová, B.Němcovej, Biskupická, Obrancov mieru, Malocintorínska, Železničná, Jána Záhradnícka, Parková, Sládkovičova, Ulica Viliama Hulitu, Ulica Hurbanova
+#   obvod 2: Mocsáryho, Školská, 1. mája, Štúrova, Vajanského Čajkovského, 29. augusta,, Kvetná, Kukučínova, Mládežnícka, Československej armády, Družstevná, Ružová, Tulipánová Fialková, B. Bartóka, Jókaiho, Smetanova, Námestie slobody, SNP, Malá, Koháryho námestie, Námestie padlých hrdinov, Rázusova, Hlavná, Podhradská, Trhová, Radničná Baštová, Jilemnického
+#   obvod 3: Hollého, Tehelná, Šávoľská cesta, Továrenská, Kpt. Nálepku, Lučenská, I. Madácha, Egreš, Moyzesova, B. S. Timravy, Bernolákova, Jesenského Mlynská, Úzka, Gemerská, Tichá, Viničná, Farská Lúka, Daxnerova, Puškinova, Švermova, J. Kalinčiaka, J. Kráľa, Odborárska, L. N. Tolstého, Ulica Cebriánova, Ulica pod Vereškou
+# Okrsky added by an AI agent in job okrsok-rules-083 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Gorkého, Jánošíkova, Poľná, Partizánska, Tajovského, Hviezdoslavova, Športová, Kalajova, B. Němcovej, Biskupická párne orientačné čísla od 10 do 94 a nepárne od č.17 do 63, Ulica Viliama Hulitu
+#   okrsok 2: Obrancov mieru, Malocintorínska, Hurbanova, Železničná, žel. stanica, Bottova, Záhradnícka, Parková čísla domov 1278/2-10 a 1541/9-13
+#   okrsok 3: Parková 1285/1-3, 1286/5-7, 1548/15-21, Sládkovičova, Biskupická čísla domov 1215/2, 1216/4, 1259/1-5, 1260/7-15
+#   okrsok 4: Mocsáryho, Školská, ul. 1. mája, Štúrova, Vajanského
+#   okrsok 5: Čajkovského, 29. augusta, Kukučínova, Mládežnícka, Čsl. armády, Družstevná, Ružová, Tulipánová, Kvetná, Fialková, Bartóka, Jókaiho, Smetanova
+#   okrsok 6: Námestie slobody, ul. SNP, Malá, Koháryho nám., Nám. Padlých hrdinov, Rázusova, Hlavná, Podhradská, Trhová, Radničná, Baštová, Jilemnického
+#   okrsok 7: Hollého, Tehelná, Šávoľská, Továrenská, kpt. Nálepku, Lučenecká, I. Madácha, Egreš, Moyzesova,Timravy, Bernolákova, Jesenského
+#   okrsok 8: Mlynská, Úzka, Gemerská, Tichá, Viničná, Daxnerova, Puškinova, Švermova, Kalinčiakova, J.Kráľa, Odborárska, Tolstého, Ulica Cebriánova, Ulica pod Vereškou
+#   okrsok 9: Sídlisko /bytové domy/ a rodinné domy na ul. Farská lúka
+obec = "511391"
+name = "Fiľakovo"
+date = 2026-06-23
+fill = "nearest"
+note = "Announcement of MsZ resolution 55/2026 of 23.06.2026 (13 seats, 3 obvody). The document lists streets only; the 519 register addresses without a street (súpisné čísla in part Fiľakovo) are not assigned by it, so fill_nearest places them by the nearest street address. Ulica Viliama Hulitu, Ulica Hurbanova (obvod 1) and Ulica Cebriánova (obvod 3) are named but have no addresses in the register, so they are left out."
+okrsky_fill = "nearest"
+okrsky_note = "Undated table of okrsky for 24.10.2026 (no decision date given). Parková and Biskupická are split by the orientačné čísla after the slash (e.g. 1278/2-10 read as orientačné 2–10 even). Biskupická even numbers below 10, odd numbers above 63 and other unlisted numbers, plus the 519 street-less addresses, are placed by fill_nearest. Hurbanova, Ulica Viliama Hulitu, Ulica Cebriánova and 'žel. stanica' have no register addresses."
+
+[[document]]
+url = "https://www.filakovo.sk/download_file_f.php?id=2432718"
+sha256 = "817aa515e00a5d29d86cf56de578a6710aa777160925502373c465cab00528d4"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie MsZ č. 55/2026 zo dňa 23.06.2026)"
+
+[[document]]
+url = "https://www.filakovo.sk/download_file_f.php?id=2474393"
+sha256 = "b493820b3e2e22140610cf35e270c54508edc77cb1c0f934fef13f26ccb81852"
+title = "Volebné okrsky a sídla volebných komisií pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov v meste Fiľakovo dňa 24. októbra 2026"
+
+[obvod.1]
+seats = 4
+okrsky = [1, 2, 3]
+rules = [
+  {street = "Gorkého"},
+  {street = "Jánošíkova"},
+  {street = "Poľná"},
+  {street = "Partizánska"},
+  {street = "Tajovského"},
+  {street = "Hviezdoslavova"},
+  {street = "Športová"},
+  {street = "Jána Bottu", written = "Bottu", note = "the PDF's text layer has 'Bottu' with the given name 'Jána' displaced before 'Záhradnícka' (line-wrap in the table); Jána Bottu is the only Bottu street"},
+  {street = "Kalajová"},
+  {street = "B. Němcovej", written = "B.Němcovej", note = "same name, missing space after the initial"},
+  {street = "Biskupická"},
+  {street = "Obrancov mieru"},
+  {street = "Malocintorínska"},
+  {street = "Železničná"},
+  {street = "Záhradnícka"},
+  {street = "Parková"},
+  {street = "Sládkovičova"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [4, 5, 6]
+rules = [
+  {street = "Mocsáryho"},
+  {street = "Školská"},
+  {street = "1.mája", written = "1. mája", note = "same name, register writes it without the space"},
+  {street = "Štúrova"},
+  {street = "Vajanského"},
+  {street = "Čajkovského"},
+  {street = "29.augusta", written = "29. augusta", note = "same name, register writes it without the space"},
+  {street = "Kvetná"},
+  {street = "Kukučínova"},
+  {street = "Mládežnícka"},
+  {street = "Československej armády"},
+  {street = "Družstevná"},
+  {street = "Ružová"},
+  {street = "Tulipánová"},
+  {street = "Fialková"},
+  {street = "B. Bartóka"},
+  {street = "Jókaiho"},
+  {street = "Smetanova"},
+  {street = "Námestie slobody"},
+  {street = "SNP"},
+  {street = "Malá"},
+  {street = "Koháryho námestie"},
+  {street = "Námestie padlých hrdinov"},
+  {street = "Rázusova"},
+  {street = "Hlavná"},
+  {street = "Podhradská"},
+  {street = "Trhová"},
+  {street = "Radničná"},
+  {street = "Baštová"},
+  {street = "Jilemnického"},
+]
+
+[obvod.3]
+seats = 5
+okrsky = [7, 8, 9]
+rules = [
+  {street = "Hollého"},
+  {street = "Tehelná"},
+  {street = "Šávoľská cesta"},
+  {street = "Továrenská"},
+  {street = "Kpt. Nálepku"},
+  {street = "Lučenská"},
+  {street = "I. Madácha"},
+  {street = "Egreš"},
+  {street = "Moyzesova"},
+  {street = "B. S. Timravy"},
+  {street = "Bernolákova"},
+  {street = "Jesenského"},
+  {street = "Mlynská"},
+  {street = "Úzka"},
+  {street = "Gemerská"},
+  {street = "Tichá"},
+  {street = "Viničná"},
+  {street = "Farská lúka", written = "Farská Lúka", note = "same name, capitalisation differs"},
+  {street = "Daxnerova"},
+  {street = "Puškinova"},
+  {street = "Švermova"},
+  {street = "J. Kalinčiaka"},
+  {street = "J. Kráľa"},
+  {street = "Odborárska"},
+  {street = "L.N. Tolstého", written = "L. N. Tolstého", note = "same name, spacing of initials differs"},
+  {street = "Ulica pod Vereškou"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Gorkého"},
+  {street = "Jánošíkova"},
+  {street = "Poľná"},
+  {street = "Partizánska"},
+  {street = "Tajovského"},
+  {street = "Hviezdoslavova"},
+  {street = "Športová"},
+  {street = "Kalajová", written = "Kalajova"},
+  {street = "B. Němcovej"},
+  {street = "Biskupická", numbers = "10-94", parity = "even"},
+  {street = "Biskupická", numbers = "17-63", parity = "odd"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Obrancov mieru"},
+  {street = "Malocintorínska"},
+  {street = "Železničná"},
+  {street = "Jána Bottu", written = "Bottova", note = "Bottova (Ján Botto) is the register's Jána Bottu; obvod resolution names 'Bottu'."},
+  {street = "Záhradnícka"},
+  {street = "Parková", numbers = "2-10", parity = "even"},
+  {street = "Parková", numbers = "9-13", parity = "odd"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Parková", numbers = "1-7, 15-21", parity = "odd"},
+  {street = "Sládkovičova"},
+  {street = "Biskupická", numbers = "2, 4"},
+  {street = "Biskupická", numbers = "1-15", parity = "odd"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Mocsáryho"},
+  {street = "Školská"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "Štúrova"},
+  {street = "Vajanského"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Čajkovského"},
+  {street = "29.augusta", written = "29. augusta"},
+  {street = "Kukučínova"},
+  {street = "Mládežnícka"},
+  {street = "Československej armády", written = "Čsl. armády", note = "'Čsl.' abbreviates Československej."},
+  {street = "Družstevná"},
+  {street = "Ružová"},
+  {street = "Tulipánová"},
+  {street = "Kvetná"},
+  {street = "Fialková"},
+  {street = "B. Bartóka", written = "Bartóka"},
+  {street = "Jókaiho"},
+  {street = "Smetanova"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Námestie slobody"},
+  {street = "SNP"},
+  {street = "Malá"},
+  {street = "Koháryho námestie", written = "Koháryho nám.", note = "'nám.' abbreviates námestie."},
+  {street = "Námestie padlých hrdinov", written = "Nám. Padlých hrdinov"},
+  {street = "Rázusova"},
+  {street = "Hlavná"},
+  {street = "Podhradská"},
+  {street = "Trhová"},
+  {street = "Radničná"},
+  {street = "Baštová"},
+  {street = "Jilemnického"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Hollého"},
+  {street = "Tehelná"},
+  {street = "Šávoľská cesta", written = "Šávoľská", note = "Šávoľská is the register's Šávoľská cesta (obvod resolution: Šávoľská cesta)."},
+  {street = "Továrenská"},
+  {street = "Kpt. Nálepku", written = "kpt. Nálepku"},
+  {street = "Lučenská", written = "Lučenecká", note = "Document writes Lučenecká; the register street is Lučenská (obvod 3 resolution also names Lučenská)."},
+  {street = "I. Madácha"},
+  {street = "Egreš"},
+  {street = "Moyzesova"},
+  {street = "B. S. Timravy", written = "Timravy"},
+  {street = "Bernolákova"},
+  {street = "Jesenského"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Mlynská"},
+  {street = "Úzka"},
+  {street = "Gemerská"},
+  {street = "Tichá"},
+  {street = "Viničná"},
+  {street = "Daxnerova"},
+  {street = "Puškinova"},
+  {street = "Švermova"},
+  {street = "J. Kalinčiaka", written = "Kalinčiakova", note = "Kalinčiakova (Ján Kalinčiak) is the register's J. Kalinčiaka (obvod resolution: J. Kalinčiaka)."},
+  {street = "J. Kráľa", written = "J.Kráľa"},
+  {street = "Odborárska"},
+  {street = "L.N. Tolstého", written = "Tolstého"},
+  {street = "Ulica pod Vereškou"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Farská lúka"},
+]

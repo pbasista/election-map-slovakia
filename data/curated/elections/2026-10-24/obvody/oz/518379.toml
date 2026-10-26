@@ -1,0 +1,53 @@
+# Council obvody of Dúbravy (518379), Detva.
+# Transcribed by an AI agent in job obvod-rules-160 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Dúbravy
+#   obvod 2: Hradná, Želobudza, Iviny
+# Okrsky added by an AI agent in job okrsok-rules-159 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dúbravy
+#   okrsok 2: Hradná, Želobudza
+#   okrsok 3: Iviny
+obec = "518379"
+name = "Dúbravy"
+date = 2026-07-07
+note = "Obvod 2 also names 'Hradná', a settlement that is not a separate časť obce in the register (only Dúbravy, Iviny, Želobudza); its addresses fall within part Dúbravy and cannot be separated without súpisné numbers, so they stay in obvod 1 with the rest of part Dúbravy. Uncertain for Hradná's houses."
+okrsky_date = 2026-07-10
+okrsky_note = "Mayor's decision of 10.07.2026: okrsok 1 Dúbravy, 2 Hradná, Želobudza, 3 Iviny. Hradná is not a register part; its houses lie in part Dúbravy, which the obvod rules put wholly in obvod 1, so they stay in okrsok 1 (contradiction with the document for Hradná's houses; the obvod is followed)."
+
+[[document]]
+url = "https://www.dubravy.sk/e_download.php?file=/data/uredni_deska/obsah3846_2.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20obvodov%20a%20o%20ur%C4%8Den%C3%AD%20po%C4%8Dtu%20poslancov.pdf"
+sha256 = "4853e1a4421e70a6afcc0700a1d8deea70ed9e8946c3d571a44ec77dbe3ea4bc"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 93/2026 zo dňa 07.07.2026)"
+
+[[document]]
+url = "https://www.dubravy.sk/e_download.php?file=/data/uredni_deska/obsah3846_5.pdf&original=Ozn%C3%A1menie%20o%20vytvoren%C3%AD%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "2a95acfc1b3f760b94b19d493daf6365bf619563ce94614f364b611c8545c38f"
+title = "Oznámenie o vytvorení volebných okrskov (10.07.2026)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Dúbravy"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2, 3]
+rules = [
+  {part = "Želobudza"},
+  {part = "Iviny"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Želobudza"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Iviny"},
+]

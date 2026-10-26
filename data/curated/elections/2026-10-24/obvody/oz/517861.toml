@@ -1,0 +1,42 @@
+# Council obvody of Petrovice (517861), Bytča.
+# Transcribed by an AI agent in job obvod-rules-154 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1., ktorý zahŕňa: Petrovice, Pláne, Magale sa volí 6 poslancov.
+#   obvod 2: Vo volebnom obvode číslo 2., ktorý zahŕňa: Setechov sa volí 3 poslancov.
+# Okrsky added by an AI agent in job okrsok-rules-153 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: OKRSOK č. 1.: Volebný obvod č. 1. - Petrovice, Pláne, Magale
+#   okrsok 2: OKRSOK č. 2.: Volebný obvod č. 2. - Setechov
+obec = "517861"
+name = "Petrovice"
+date = 2026-06-03
+okrsky_date = 2026-07-23
+okrsky_note = "Mayor's decision dated 23.7.2026 (scanned; its heading says 'v roku 2025', an evident typo for the 2026 elections it names)."
+
+[[document]]
+url = "https://www.obecpetrovice.sk/blocks/files/019f1716-ae0a-7153-ab67-e843085af566.pdf"
+sha256 = "74ef35b265fa065aae5abf8ed2ea06c90e407c41d2c1b0eff722d7658f990061"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie OZ č. 241 zo dňa 3.6.2026)"
+
+[[document]]
+url = "https://www.obecpetrovice.sk/blocks/files/019fac95-5762-7c05-8b1e-78e03d7e9146.pdf"
+sha256 = "f94c23036b862ca8abfa954fce64363e1519a96f5deefb118e9f55995bae4fd0"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[obvod.1]
+seats = 6
+okrsky = [1]
+rules = [
+  {part = "Petrovice"},
+  {part = "Pláne"},
+  {part = "Magale"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Setechov"},
+]

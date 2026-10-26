@@ -1,0 +1,23 @@
+# Okrsky of Podhorany, transcribed by an AI agent in job okrsok-rules-591 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Mechenice
+#   okrsok 2: Sokolníky
+obec = "500674"
+name = "Podhorany"
+okrsky_date = 2026-07-10
+
+[[document]]
+url = "https://www.podhorany.sk/files/2026-07-10-105625-Utvorenie_volebn__ch_okrskov_vol.obvod.pdf"
+sha256 = "dba32f4b6296e1fca2bd4f2d0b86512b55f88affc239e853824fe54556b2e271"
+title = "Utvorenie volebných okrskov s vymedzením ich územného obvodu a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Mechenice"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Sokolníky"},
+]

@@ -1,0 +1,149 @@
+# Council obvody of Sliač (518808), Zvolen.
+# Transcribed by an AI agent in job obvod-rules-108 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1: volia sa 3 poslanci Okrsok č. 1: Clementisova, ČSA, Hájnická, Hronská, J. Fučíka, Kalinčiakova, Kollárova, Kpt. Nálepku, Krátka, Letecká, Ľudovíta Štúra, Mládežnícka, Sládkovičova, SNP or. č. 1 -7, Teheľňa – osada, Trebuľa, Zvolenská Okrsok č. 2: Samporská
+#   obvod 2: Volebný obvod č. 2: volia sa 4 poslanci Okrsok č. 3: Rybárska – celá ulica Okrsok č. 4: 1.mája, Brezová, Janka Kráľa, Lipová, MDŽ, Mlynská, Na Dolinke, Pionierska, SNP or. č. od 8, Š. Záhorského, Topoľová, Továrenská, Ulica Františka Papánka, Ulica Hany Ponickej, Ulica gen. Otta Smika, Ulica Ľ. Podjavorinskej, Ulica B. S. Timravy, Ulica Kopaniska, Za Školou
+#   obvod 3: Volebný obvod č. 3: volia sa 4 poslanci Okrsok č. 5: Družstevná, Horská, Hviezdoslavova, Jarná, Kukučínova, Kúpeľná, Letná, Mirka Nešpora, Na Brázdach, Na Slatinkách, Nová, Partizánska, Poľovnícka, Tajovského, Železničná Okrsok č. 6: B. Nemcovej, Gorkého, J. Cikkera, Pod Kozákom, Nový Partizán, Starý Partizán,
+# Okrsky added by an AI agent in job okrsok-rules-107 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Clementisova, ČSA, Hájnická, Hronská, J. Fučíka, Kalinčiakova, Kollárova, Kpt. Nálepku, Krátka, Letecká, Ľudovíta Štúra, Mládežnícka, Sládkovičova, SNP or. č. 1 -7, Teheľňa – osada, Trebuľa, Zvolenská
+#   okrsok 2: Samporská
+#   okrsok 3: Rybárska – celá ulica
+#   okrsok 4: 1.mája, Brezová, Janka Kráľa, Lipová, MDŽ, Mlynská, Na Dolinke, Pionierska, SNP or. č. od 8, Š. Záhorského, Topoľová, Továrenská, Ulica Františka Papánka, Ulica Hany Ponickej, Ulica gen. Otta Smika, Ulica Ľ. Podjavorinskej, Ulica B. S. Timravy, Ulica Kopaniska, Za Školou
+#   okrsok 5: Družstevná, Horská, Hviezdoslavova, Jarná, Kukučínova, Kúpeľná, Letná, Mirka Nešpora, Na Brázdach, Na Slatinkách, Nová, Partizánska, Poľovnícka, Tajovského, Železničná
+#   okrsok 6: B. Nemcovej, Gorkého, J. Cikkera, Pod Kozákom, Nový Partizán, Starý Partizán
+obec = "518808"
+name = "Sliač"
+date = 2026-06-29
+fill = "nearest"
+note = "Uznesenie MsZ č. 194/2026 of 29.6.2026 creates 3 obvody (11 seats): 'Volebný obvod č. 1 Hájniky + Sampor 3 poslanci, Volebný obvod č. 2 Rybáre po železničnú trať 4 poslanci, Volebný obvod č. 3 Rybáre pod Kúpeľmi 4 poslanci' (an earlier attempt at the 29th session of 18.6.2026, changed to one obvod, was void as the council was not quorate). The streets come from the city's Oznámenie (file vymenovanie-okrskov.pdf), which lists the streets of each okrsok under each obvod. Hájniky and Sampor are taken as whole parts (obvod 1) and part Sliač-kúpele (spa) as obvod 3. 'Ulica Kopaniska' (obvod 2) is not in the address register and is left out. fill_nearest covers the addresses of part Rybáre without a street (numbered by súpisné číslo), which the document does not assign."
+okrsky_note = "The city's Oznámenie lists the streets of each okrsok under each obvod; no separate mayor's decision date is given. Okrsok 2 'Samporská' is taken as the whole part Sampor (its only street). 'Ulica Kopaniska' (okrsok 4) is not in the register. Okrsky 1, 4 and 5 are the rest of their obvod."
+
+[[document]]
+url = "https://www.sliac.sk/wp-content/uploads/2026/07/vymenovanie-okrskov.pdf"
+sha256 = "6831fb08098d7582583ad192242e23e3156d780cb24d03c958c86ed04f62c257"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie č. 194/2026-MsZ z 29. júna 2026)"
+
+[[document]]
+url = "https://www.sliac.sk/wp-content/uploads/2026/08/Uznesenia-30.-MsZ-29.6.2026.pdf"
+sha256 = "08d61b8466c0a7b5d7d3489cf533bfb3c9dc348d6bbac86bfd86f75ed5ff6a77"
+title = "Uznesenia 30. Mestského zastupiteľstva zo dňa 29.6.2026 (Uznesenie číslo 194/2026)"
+
+[obvod.1]
+seats = 3
+okrsky = [1, 2]
+rules = [
+  {part = "Hájniky", note = "The resolution defines obvod 1 as 'Hájniky + Sampor'."},
+  {part = "Sampor", note = "The resolution defines obvod 1 as 'Hájniky + Sampor'."},
+  {street = "Clementisova"},
+  {street = "ČSA"},
+  {street = "Hájnická"},
+  {street = "Hronská"},
+  {street = "Júliusa Fučíka", written = "J. Fučíka", note = "'J.' is the initial of Júliusa; the only Fučík street."},
+  {street = "Kalinčiakova"},
+  {street = "Kollárova"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Krátka"},
+  {street = "Letecká"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Mládežnícka"},
+  {street = "Sládkovičova"},
+  {street = "SNP", numbers = "1-7"},
+  {street = "Tehelňa", written = "Teheľňa", note = "Document writes 'Teheľňa – osada' (settlement Tehelňa in Hájniky); 'Teheľňa' is a spelling variant of the register's Tehelňa."},
+  {street = "Trebuľa"},
+  {street = "Zvolenská"},
+  {street = "Samporská"},
+  {street = "Ulica Slnečnicová", note = "Not named in the document; the street is in part Hájniky, which the resolution puts wholly in obvod 1.", inferred = true},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [3, 4]
+rules = [
+  {street = "Rybárska"},
+  {street = "1.mája"},
+  {street = "Prvého mája", note = "Not named in the document; register variant of 1.mája (numbers 17-21 within the 1.mája range), which is in obvod 2.", inferred = true},
+  {street = "Brezová"},
+  {street = "Janka Kráľa"},
+  {street = "Lipová"},
+  {street = "MDŽ"},
+  {street = "Mlynská"},
+  {street = "Na Dolinke"},
+  {street = "Pionierska"},
+  {street = "SNP", numbers = "8-"},
+  {street = "Š. Záhorského"},
+  {street = "Š.Záhorského", written = "Š. Záhorského", note = "Register variant of Š. Záhorského without the space; same street."},
+  {street = "Topoľová"},
+  {street = "Továrenská"},
+  {street = "Ulica Františka Papánka"},
+  {street = "Ulica Hany Ponickej"},
+  {street = "Ulica gen. Otta Smika"},
+  {street = "Ulica Ľ. Podjavorinskej"},
+  {street = "Ulica B. S. Timravy"},
+  {street = "Za Školou"},
+]
+
+[obvod.3]
+seats = 4
+okrsky = [5, 6]
+rules = [
+  {street = "Družstevná"},
+  {street = "Horská"},
+  {street = "Hviezdoslavova"},
+  {street = "Jarná"},
+  {street = "Kukučínova"},
+  {street = "Kúpelná", written = "Kúpeľná", note = "Spelling variant (ľ vs l) of the register's Kúpelná; the only spa street."},
+  {street = "Letná"},
+  {street = "Mirka Nešpora"},
+  {street = "Na Brázdach"},
+  {street = "Na Slatinkách"},
+  {street = "Nová"},
+  {street = "Partizánska"},
+  {street = "Poľovnícka"},
+  {street = "Tajovského"},
+  {street = "Železničná"},
+  {street = "Boženy Nemcovej", written = "B. Nemcovej", note = "'B.' is the initial of Boženy."},
+  {street = "Gorkého"},
+  {street = "J. Cikkera"},
+  {street = "Pod Kozákom"},
+  {street = "Nový Partizán"},
+  {street = "Starý Partizán"},
+  {part = "Sliač-kúpele", note = "Part Sliač-kúpele (the spa) is not named; its streets Kúpeľná, Nový Partizán and Starý Partizán are all in obvod 3 ('Rybáre pod Kúpeľmi').", inferred = true},
+]
+
+[okrsok.1]
+rules = [
+  {rest = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Sampor"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Rybárska"},
+]
+
+[okrsok.4]
+rules = [
+  {rest = true},
+]
+
+[okrsok.5]
+rules = [
+  {rest = true},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Boženy Nemcovej", written = "B. Nemcovej"},
+  {street = "Gorkého"},
+  {street = "J. Cikkera"},
+  {street = "Pod Kozákom"},
+  {street = "Nový Partizán"},
+  {street = "Starý Partizán"},
+]

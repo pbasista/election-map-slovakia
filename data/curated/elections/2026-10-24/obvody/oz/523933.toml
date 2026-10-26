@@ -1,0 +1,150 @@
+# Council obvody of Štrba (523933), Poprad.
+# Transcribed by an AI agent in job obvod-rules-115 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode č. 1 – Štrba, ktorý zahŕňa ulice – 1.mája, 29.januára, A.Sládkoviča, Brezová, Čsl.Armády, Dr. Markušovského, Družstevná, Hlavná, Hviezdoslavova, J.Gejdoša, J.Kráľa, Jurkovičova, Krátka, Krôn, Liptovská, M.Benku, M.Janošku, Mlynská, P.Z.Vrbického, Poľná, Raštub, SNP, Strmá, Školská, Štefánikova, Štepánkovická, Tatranská sa volí 6 poslancov
+#   obvod 2: Vo volebnom obvode č. 2 – Tatranská Štrba, Štrbské Pleso, ktorý zahŕňa ulice Bellova, Horská, Partizánska, Popradská, Rekreačná, Pullmanova, Štúrova, Železničná, K vodopádom, Kúpeľná, Limbová, Maše Haľamovej, Móryho, Poštová, Pri jazere, Szentiványho, Športová sa volia 3 poslanci
+# Okrsky added by an AI agent in job okrsok-rules-114 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ktorý zahŕňa ulice: 29. januára, Družstevná, Hlavná, Hviezdoslavova, J. Kráľa, Mlynská, P. Z. Vrbického, Raštub, SNP, Strmá, Školská, Štepánkovická
+#   okrsok 2: ktorý zahŕňa ulice: 1.mája, A.Sládkoviča, Brezová, Čsl.armády, Dr.Markušovského, J.Gejdoša, Jurkovičova, Krôn, M.Benku, Liptovská, M.Janošku, Poľná, Štefánikova, Tatranská
+#   okrsok 3: ktorý zahŕňa ulice: Bellova, Horská, Lesná, Lúčna, Partizánska, Popradská, Pullmanova, Rekreačná, Štúrova, Železničná
+#   okrsok 4: ktorý zahŕňa ulice: K vodopádom, Kúpeľná, Limbová, Maše Haľamovej, Móryho, Poštová, Pri jazere, Szentiványho, Športová
+obec = "523933"
+name = "Štrba"
+date = 2026-04-24
+note = "Source is the mayor's announcement (scanned PDF, read visually) of council resolution č. 326/2026 of 24.04.2026; total 9 poslanci. Obvod 1 is titled 'Štrba' (the part Štrba), obvod 2 'Tatranská Štrba, Štrbské Pleso' (those two parts); part rules carry addresses without a street and the Tatranská Štrba streets Lesná and Lúčna, which the street list of obvod 2 omits but which lie in part Tatranská Štrba. 'Krátka' (obvod 1) is not in the address register and is left out."
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky from the 'Volebné miestnosti' section of the municipality's Voľby page (no date of the mayor's decision stated; page updated 28.7.2026). Addresses without a street in part Štrba (obvod 1) are not assigned by the document: fill_nearest. In obvod 2, addresses without a street are placed by their part (Tatranská Štrba → 3, Štrbské Pleso → 4), matching the streets of each part."
+
+[[document]]
+url = "https://www.strba.sk/download_file_f.php?id=2449018"
+sha256 = "f4679eb0ffa775123d5fe4b9e65888010f09895bad392b0bdb153044b7e001f6"
+title = "Oznámenie o určení počtu poslancov a utvorení volebných obvodov pre voľby do orgánov samospráv obcí 24. októbra 2026 (Obec Štrba, 16. júla 2026; uz. OZ č. 326/2026 zo dňa 24.04.2026)"
+
+[[document]]
+url = "https://www.strba.sk/volby.html"
+sha256 = "885ed4b3602e7cc042ad008fcf332dc8a56ad10939f6f564ae9024f045a85caf"
+title = "Voľby – Volebné miestnosti (okrsky č. 1–4 s ulicami), aktualizované 28.7.2026"
+
+[obvod.1]
+seats = 6
+okrsky = [1, 2]
+rules = [
+  {part = "Štrba", note = "obvod titled 'Štrba': the part Štrba, incl. addresses without a street"},
+  {street = "1. mája", written = "1.mája"},
+  {street = "29. januára", written = "29.januára"},
+  {street = "A. Sládkoviča", written = "A.Sládkoviča"},
+  {street = "Brezová"},
+  {street = "Čsl. Armády", written = "Čsl.Armády"},
+  {street = "Dr. Markušovského"},
+  {street = "Družstevná"},
+  {street = "Hlavná"},
+  {street = "Hviezdoslavova"},
+  {street = "J. Gejdoša", written = "J.Gejdoša"},
+  {street = "J. Kráľa", written = "J.Kráľa"},
+  {street = "Jurkovičova"},
+  {street = "Krôn"},
+  {street = "Liptovská"},
+  {street = "M. Benku", written = "M.Benku"},
+  {street = "M. Janošku", written = "M.Janošku"},
+  {street = "Mlynská"},
+  {street = "P. Z. Vrbického", written = "P.Z.Vrbického"},
+  {street = "Poľná"},
+  {street = "Raštub"},
+  {street = "SNP"},
+  {street = "Strmá"},
+  {street = "Školská"},
+  {street = "Štefánikova"},
+  {street = "Štepánkovická"},
+  {street = "Tatranská"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [3, 4]
+rules = [
+  {part = "Tatranská Štrba", note = "obvod titled 'Tatranská Štrba, Štrbské Pleso'; covers addresses without a street and streets Lesná and Lúčna (part Tatranská Štrba) not named in the list"},
+  {part = "Štrbské Pleso", note = "obvod titled 'Tatranská Štrba, Štrbské Pleso'"},
+  {street = "Bellova"},
+  {street = "Horská"},
+  {street = "Partizánska"},
+  {street = "Popradská"},
+  {street = "Rekreačná"},
+  {street = "Pullmanova"},
+  {street = "Štúrova"},
+  {street = "Železničná"},
+  {street = "K vodopádom"},
+  {street = "Kúpeľná"},
+  {street = "Limbová"},
+  {street = "Maše Haľamovej"},
+  {street = "Móryho"},
+  {street = "Poštová"},
+  {street = "Pri jazere"},
+  {street = "Szentiványho"},
+  {street = "Športová"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "29. januára"},
+  {street = "Družstevná"},
+  {street = "Hlavná"},
+  {street = "Hviezdoslavova"},
+  {street = "J. Kráľa"},
+  {street = "Mlynská"},
+  {street = "P. Z. Vrbického"},
+  {street = "Raštub"},
+  {street = "SNP"},
+  {street = "Strmá"},
+  {street = "Školská"},
+  {street = "Štepánkovická"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1. mája", written = "1.mája"},
+  {street = "A. Sládkoviča", written = "A.Sládkoviča"},
+  {street = "Brezová"},
+  {street = "Čsl. Armády", written = "Čsl.armády"},
+  {street = "Dr. Markušovského", written = "Dr.Markušovského"},
+  {street = "J. Gejdoša", written = "J.Gejdoša"},
+  {street = "Jurkovičova"},
+  {street = "Krôn"},
+  {street = "M. Benku", written = "M.Benku"},
+  {street = "Liptovská"},
+  {street = "M. Janošku", written = "M.Janošku"},
+  {street = "Poľná"},
+  {street = "Štefánikova"},
+  {street = "Tatranská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bellova"},
+  {street = "Horská"},
+  {street = "Lesná"},
+  {street = "Lúčna"},
+  {street = "Partizánska"},
+  {street = "Popradská"},
+  {street = "Pullmanova"},
+  {street = "Rekreačná"},
+  {street = "Štúrova"},
+  {street = "Železničná"},
+  {part = "Tatranská Štrba", note = "addresses without a street in part Tatranská Štrba, whose streets are all in okrsok 3", inferred = true},
+]
+
+[okrsok.4]
+rules = [
+  {street = "K vodopádom"},
+  {street = "Kúpeľná"},
+  {street = "Limbová"},
+  {street = "Maše Haľamovej"},
+  {street = "Móryho"},
+  {street = "Poštová"},
+  {street = "Pri jazere"},
+  {street = "Szentiványho"},
+  {street = "Športová"},
+  {part = "Štrbské Pleso", note = "addresses without a street in part Štrbské Pleso, whose streets are all in okrsok 4", inferred = true},
+]

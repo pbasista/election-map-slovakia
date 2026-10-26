@@ -1,0 +1,42 @@
+# Okrsky of Šúrovce, transcribed by an AI agent in job okrsok-rules-442 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hlavná, Horná, Hájská, Nedárska, Južná, Krakovská, Krátka, Seredská, Valtašúrska
+#   okrsok 2: Hlohovská, Nová, Michalská, Ružová, Slnečná, Staničná, Školská, Varašúrska, Varavská, Vážská
+obec = "507636"
+name = "Šúrovce"
+okrsky_date = 2026-07-17
+okrsky_fill = "nearest"
+okrsky_note = "All register streets are listed; addresses without a street take the nearest okrsok."
+
+[[document]]
+url = "https://www.surovce.sk/modules/file_storage/download.php?file=edcff814%7C1589&inline=1"
+sha256 = "6f170d4c99a3ea52de76a6c80a023772748ab75b77e7bfde833d97929d5d426d"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná"},
+  {street = "Horná"},
+  {street = "Hájská"},
+  {street = "Nedárska"},
+  {street = "Južná"},
+  {street = "Krakovská"},
+  {street = "Krátka"},
+  {street = "Seredská"},
+  {street = "Valtašúrska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlohovská"},
+  {street = "Nová"},
+  {street = "Michalská"},
+  {street = "Ružová"},
+  {street = "Slnečná"},
+  {street = "Staničná"},
+  {street = "Školská"},
+  {street = "Varašúrska"},
+  {street = "Varavská"},
+  {street = "Vážská"},
+]

@@ -1,0 +1,62 @@
+# Okrsky of Zálesie, transcribed by an AI agent in job okrsok-rules-360 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bazová, Cintorínska, Dolnomajerská, Domky, Družstevná, Dunajská, Hornozelenická, Ivánska, Jaseňová, Jazerná, Konečná, Ku gaštanu, Lesná, Lipová, Malinovská, Muškátová, Obilná, Okružná, Pri kríži, Siladická, Slnečná, Trojičné námestie, Topoľová, Turčianska, Záhumenná
+#   okrsok 2: Dlhá, Fülova, Ignáca Gešaja, Krajná, Krátka, Krížna, Lúčna, Novobystrická, Poľná, Starobystrická, Stredná, Terchovská, Tichá, Veselá, Za záhradami
+obec = "555509"
+name = "Zálesie"
+okrsky_date = 2026-07-16
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF read from rendered image. 'Trojičné námestie' (okrsok 1) is not in the register; left out. Register streets Jágerňa and U Rusa are not in the document; placed by fill_nearest."
+
+[[document]]
+url = "https://www.obeczalesie.sk/modules/file_storage/download.php?file=8b818282%7C1079&inline=1"
+sha256 = "f9465520b6314094fea02ab7cead6bc3179c635eaaaeeb7ed4637aae4c910e73"
+title = "Rozhodnutie o utvorení okrskov a určení volebných miestností pre voľby do orgánov samosprávy obcí a samosprávnych krajov 2026 obec Zálesie"
+
+[okrsok.1]
+rules = [
+  {street = "Bazová"},
+  {street = "Cintorínska"},
+  {street = "Dolnomajerská"},
+  {street = "Domky"},
+  {street = "Družstevná"},
+  {street = "Dunajská"},
+  {street = "Hornozelenická"},
+  {street = "Ivanská", written = "Ivánska", note = "Register spells it Ivanská; same street, accent differs."},
+  {street = "Jaseňová"},
+  {street = "Jazerná"},
+  {street = "Konečná"},
+  {street = "Ku gaštanu"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+  {street = "Malinovská"},
+  {street = "Muškátová"},
+  {street = "Obilná"},
+  {street = "Okružná"},
+  {street = "Pri kríži"},
+  {street = "Siladická"},
+  {street = "Slnečná"},
+  {street = "Topoľová"},
+  {street = "Turčianska"},
+  {street = "Záhumenná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dlhá"},
+  {street = "Fülova ulica", written = "Fülova"},
+  {street = "Ignáca Gešaja"},
+  {street = "Krajná"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Lúčna"},
+  {street = "Novobystrická ulica", written = "Novobystrická"},
+  {street = "Poľná"},
+  {street = "Starobystrická"},
+  {street = "Stredná"},
+  {street = "Terchovská"},
+  {street = "Tichá"},
+  {street = "Veselá"},
+  {street = "Za záhradami"},
+]

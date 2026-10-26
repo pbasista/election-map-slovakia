@@ -1,0 +1,69 @@
+# Okrsky of Veľká Lomnica, transcribed by an AI agent in job okrsok-rules-271 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Nový Dvor
+#   okrsok 2: Futbalová, Golfová, Kamenná ulica, Krátka, Na kopci, Okružná, Pod lesom, Severná, Školská, Športová, Tatranská, Termálna, Ulica Gerlachovská, Ulica Kôprovská, Ulica Ľadová, Ulica Vysoká, Železničná, Občania s trvalým pobytom Veľká Lomnica
+#   okrsok 3: Agátová, Borovicová, Brezová, Buková, Cintorínska, Dubová, Gaštanová, Javorová, Jilemnického, Lesná, Lipová, Poľná, Popradská, Skalnatá, Smreková, Studený Potok, Topoľová, Záhradná
+obec = "524000"
+name = "Veľká Lomnica"
+okrsky_date = 2026-07-30
+okrsky_fill = "nearest"
+okrsky_note = "Okrsok 2 also holds citizens registered only at \"Veľká Lomnica\" (no street); addresses without a street (súpisné only) take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.velkalomnica.sk/download_file_f.php?id=2450757"
+sha256 = "e749292c16819823b768255060daedf7dfbd29b093617d9d25eb3e3e2aa8e6f5"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností VOĽBY 2026"
+
+[[document]]
+url = "https://www.velkalomnica.sk/volby-do-organov-samospravy-obci-2026.html"
+sha256 = "9424e944e9ff739290ff821947b32b2047ff96d44024faf23550dda1b7feb4e2"
+title = "Voľby do orgánov samosprávy obcí 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Nový Dvor"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Futbalová"},
+  {street = "Golfová"},
+  {street = "Kamenná ulica"},
+  {street = "Krátka"},
+  {street = "Na kopci"},
+  {street = "Okružná"},
+  {street = "Pod lesom"},
+  {street = "Severná"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Tatranská"},
+  {street = "Termálna"},
+  {street = "Ulica Gerlachovská"},
+  {street = "Ulica Kôprovská"},
+  {street = "Ulica Ľadová"},
+  {street = "Ulica Vysoká"},
+  {street = "Železničná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová"},
+  {street = "Borovicová"},
+  {street = "Brezová"},
+  {street = "Buková"},
+  {street = "Cintorínska"},
+  {street = "Dubová"},
+  {street = "Gaštanová"},
+  {street = "Javorová"},
+  {street = "Jilemnického"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+  {street = "Poľná"},
+  {street = "Popradská"},
+  {street = "Skalnatá"},
+  {street = "Smreková"},
+  {street = "Studený Potok"},
+  {street = "Topoľová"},
+  {street = "Záhradná"},
+]

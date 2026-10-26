@@ -11536,6 +11536,10 @@
    "src": "Borders of the countries around Slovakia, Natural Earth, public domain",
    "text": "A Szlovákiát körülvevő országok határai, Natural Earth, közkincs"
   },
+  "about.inputs.osm": {
+   "src": "Roads, railways and water features of the base map, © OpenStreetMap contributors, Geofabrik's extract of Slovakia, license ODbL 1.0",
+   "text": "Az alaptérkép útjai, vasútjai és vízrajza, © az OpenStreetMap közreműködői, a Geofabrik szlovákiai kivágata, ODbL 1.0 licenc"
+  },
   "about.inputs.results": {
    "src": "Results of the 2022 municipal and regional elections and of the by-elections since, Statistical Office of the Slovak Republic",
    "text": "A 2022-es önkormányzati és megyei választások, valamint az azóta tartott időközi választások eredményei, Szlovák Statisztikai Hivatal"
@@ -11557,8 +11561,8 @@
    "text": "Licenc"
   },
   "about.licenses": {
-   "src": "The shapes on the map are derived from the ZBGIS boundaries (simplified and merged into constituencies) and, around Slovakia, from Natural Earth. Candidate data are reproduced without changes to their content, only rearranged.",
-   "text": "A térképen látható alakzatok a ZBGIS határaiból (egyszerűsítve és választókerületekké összevonva), Szlovákia környékén pedig a Natural Earth adataiból származnak. A jelöltek adatait tartalmi változtatás nélkül, csupán átrendezve közöljük."
+   "src": "The shapes on the map are derived from the ZBGIS boundaries (simplified and merged into constituencies) and, around Slovakia, from Natural Earth. The base map is derived from OpenStreetMap (selected, simplified and cut per district) and is published under the same license, ODbL 1.0. Candidate data are reproduced without changes to their content, only rearranged.",
+   "text": "A térképen látható alakzatok a ZBGIS határaiból (egyszerűsítve és választókerületekké összevonva), Szlovákia környékén pedig a Natural Earth adataiból származnak. Az alaptérkép az OpenStreetMapből származik (válogatva, egyszerűsítve és járásonként felosztva), és ugyanazon licenc, az ODbL 1.0 alatt tesszük közzé. A jelöltek adatait tartalmi változtatás nélkül, csupán átrendezve közöljük."
   },
   "about.logos.title": {
    "src": "Party logos (Wikimedia Commons; the other parties have no freely licensed logo and are shown by their short name)",
@@ -11581,8 +11585,8 @@
    "text": "A jelenlegi tisztségviselőket a 2022-es választások és az azóta tartott összes önkormányzati időközi választás végleges eredményeiből (Szlovák Statisztikai Hivatal) állítottuk össze, és település vagy kerület, név és életkor alapján rendeltük a jelöltekhez. Hiányoznak a megüresedett mandátumot átvevő pótképviselők és az időközi választás nélküli távozások, a vezetéknevét megváltoztató jelöltet pedig nem kapcsoljuk össze, ezért a szék jelölés („jelenleg ő tölti be ezt a tisztséget”) hiányos lehet. Azt, hogy ki hogyan szerezte meg a tisztséget, ugyanezekből a végleges eredményekből közöljük, azon a területen számolva, ahol megválasztották: polgármesternél a településen, elnöknél a kerületben, képviselőnél az akkori választókerületben (vagy az egész településen, ha egy választókerülete volt). A polgármester és az elnök aránya az érvényes szavazólapokból számított; a képviselő-testületnél, ahol minden választó több jelöltre is szavazhatott, az érvényes szavazólapot leadó választók számából, így egy választókerület arányai együtt több mint 100 %-ot tesznek ki. Közöljük az összes névjegyzékben szereplő választóhoz viszonyított arányt és a részvételt (a szavazáson részt vevők aránya a névjegyzékben szereplőkhöz képest) is."
   },
   "about.method.map": {
-   "src": "The map is drawn directly from the ZBGIS municipal boundaries at several levels of detail, without a base map from other servers. The regional council constituencies and the city council constituencies of Bratislava and Košice consist of whole municipalities and city districts, as set by the decisions of the regions and cities. The countries around Slovakia are drawn coarser, from Natural Earth, for orientation only.",
-   "text": "A térkép közvetlenül a ZBGIS településhatáraiból készül több részletességi szinten, más szerverekről származó alaptérkép nélkül. A megyei közgyűlési választókerületek, valamint Bratislava és Košice városi közgyűlési választókerületei egész településekből és városrészekből állnak, a megyék és városok határozatai szerint. A Szlovákiát körülvevő országok durvábban, a Natural Earth alapján vannak megrajzolva, csak tájékozódás céljából."
+   "src": "The map is drawn directly from the ZBGIS municipal boundaries at several levels of detail, without a base map from other servers. The regional council constituencies and the city council constituencies of Bratislava and Košice consist of whole municipalities and city districts, as set by the decisions of the regions and cities. The countries around Slovakia are drawn coarser, from Natural Earth, for orientation only. The faint roads, railways, rivers and lakes under the colours, also for orientation only, come from OpenStreetMap, simplified for each zoom.",
+   "text": "A térkép közvetlenül a ZBGIS településhatáraiból készül több részletességi szinten, más szerverekről származó alaptérkép nélkül. A megyei közgyűlési választókerületek, valamint Bratislava és Košice városi közgyűlési választókerületei egész településekből és városrészekből állnak, a megyék és városok határozatai szerint. A Szlovákiát körülvevő országok durvábban, a Natural Earth alapján vannak megrajzolva, csak tájékozódás céljából. A színek alatti halvány utak, vasutak, folyók és tavak, szintén csak tájékozódás céljából, az OpenStreetMapből származnak, minden nagyításhoz egyszerűsítve."
   },
   "about.method.obvody": {
    "src": "Municipalities with one council constituency have it assigned directly. Municipalities and city districts with several constituencies define them in their own resolutions, by streets, house numbers or parts of the municipality. An AI agent transcribed these resolutions from the municipalities' websites into rules, which were checked to put every address of the municipality into exactly one constituency; the resolutions are linked below. Where a resolution has not been processed yet, all constituencies are shown. The number of seats comes from these resolutions; a council with one constituency whose 2026 number is not known yet shows the number elected in 2022 (Statistical Office of the Slovak Republic), labelled as such.",
@@ -11677,12 +11681,12 @@
    "text": "Verzió: {version}"
   },
   "app.description": {
-   "src": "Slovakia's 2026 local and regional elections by constituency: your ballots by address, the candidates with sourced notes, and live results as the votes are counted.",
-   "text": "A 2026-os szlovákiai helyi és megyei választások körzetenként: szavazólapok cím szerint, jelöltek forrással ellátott adatokkal és élő eredmények a szavazatszámlálás alatt."
+   "src": "Slovakia's 2026 local and regional elections: results by constituency, municipality and polling district, ballots by address, candidates with sourced notes.",
+   "text": "Szlovákia 2026-os helyhatósági és megyei választásai: eredmények körzetenként, községenként és szavazókörönként, szavazólapok cím szerint, jelöltek forrásokkal."
   },
   "app.features": {
-   "src": "Enter your address or click the map to see every ballot you will vote on – mayor, municipal council, regional president and regional council – with the candidates in ballot order and their parties. The map marks who holds each office now and with what share of the vote they won it in 2022, and for the candidates researched so far it adds notes on their career and controversies, each linked to its source. On election night it shows the results as they are counted – each candidate's votes, the turnout and the winners, on the ballots and on the map – and then the final results. It covers every municipality and constituency in Slovakia, with no ads and no tracking.",
-   "text": "Adja meg a címét, vagy kattintson a térképre, és megtekintheti az összes szavazólapot, amelyen szavazni fog – polgármester, helyi önkormányzati képviselő-testület, megyei elnök és megyei képviselő-testület – a jelöltekkel a szavazólapi sorrendben és pártjaikkal. A térkép jelzi, ki tölti be jelenleg a tisztséget, és 2022-ben a szavazatok mekkora részével nyerte el; az eddig feltárt jelölteknél pályafutásukról és vitás ügyeikről is közöl feljegyzéseket, mindegyiket a forrására mutató hivatkozással. A választás éjszakáján a számlálással együtt mutatja az eredményeket – a jelöltek szavazatait, a részvételt és a győzteseket, a szavazólapokon és a térképen –, majd a végeredményt. Szlovákia minden településére és választókerületére kiterjed, reklámok és követés nélkül."
+   "src": "Enter your address or click the map to see every ballot voted on there – mayor, municipal council, regional president and regional council – with the candidates in ballot order, their parties and the results of the 2026 elections: each candidate's votes and share, the winners and the turnout, on the ballots and on the map, down to the polling districts. The map also marks who holds each office now and with what share of the vote they won it in 2022, and for the candidates researched it adds notes on their career and controversies, each linked to its source. It covers every municipality and constituency in Slovakia, with no ads and no tracking.",
+   "text": "Adja meg a címét, vagy kattintson a térképre, és láthatja az ott leadott összes szavazólapot – polgármester, községi vagy városi képviselő-testület, megyeelnök és megyei közgyűlés –, a jelöltekkel a szavazólapon szereplő sorrendben, pártjaikkal és a 2026-os választások eredményeivel: minden jelölt szavazatai és aránya, a megválasztottak és a részvétel, a szavazólapokon és a térképen, egészen a szavazókörökig. A térkép azt is jelöli, ki tölti be most az egyes tisztségeket és milyen szavazataránnyal nyerte el 2022-ben, a megvizsgált jelölteknél pedig adatokat közöl pályájukról és botrányaikról, mindegyiket a forrására hivatkozva. Szlovákia minden községére és választókörzetére kiterjed, reklámok és követés nélkül."
   },
   "app.noscript": {
    "src": "{site} needs JavaScript.",
@@ -11787,6 +11791,38 @@
   "card.offices": {
    "src": "In office now",
    "text": "Jelenlegi tisztségei"
+  },
+  "card.origins_highest": {
+   "src": "Highest share",
+   "text": "Legnagyobb arány"
+  },
+  "card.origins_map_obce": {
+   "src": "Show the candidate's votes on the map by municipality",
+   "text": "A jelölt szavazatainak megjelenítése a térképen településenként"
+  },
+  "card.origins_map_okrsky": {
+   "src": "Show the candidate's votes on the map by polling district",
+   "text": "A jelölt szavazatainak megjelenítése a térképen szavazókörönként"
+  },
+  "card.origins_most": {
+   "src": "Most votes",
+   "text": "Legtöbb szavazat"
+  },
+  "card.origins_obce": {
+   "src": "Votes by municipality",
+   "text": "Szavazatok településenként"
+  },
+  "card.origins_okrsky": {
+   "src": "Votes by polling district",
+   "text": "Szavazatok szavazókörönként"
+  },
+  "card.origins_okrsok": {
+   "src": "No. {n}",
+   "text": "{n}. sz."
+  },
+  "card.origins_okrsok_in": {
+   "src": "{name}, No. {n}",
+   "text": "{name}, {n}. sz."
   },
   "card.parties": {
    "src": "Nominated by",
@@ -12269,8 +12305,16 @@
    "text": "Súgó és jogi nyilatkozat"
   },
   "layers.auto": {
-   "src": "Those switched on appear by zoom: the regional ones on the whole map, those of Bratislava and Košice as you zoom in on the cities, those of municipal councils as you zoom in on a municipality.",
-   "text": "A bekapcsolt választókerületek a nagyítástól függően jelennek meg: a megyeiek az egész térképen, Bratislaváé és Košicéé a városokra nagyítva, az önkormányzati képviselő-testületekéi egy településre nagyítva."
+   "src": "Those switched on appear by zoom: the regional ones on the whole map, those of Bratislava and Košice as you zoom in on the cities, those of municipal councils as you zoom in on a municipality, and polling districts as you zoom in further.",
+   "text": "A bekapcsolt választókerületek a nagyítástól függően jelennek meg: a megyeiek az egész térképen, Bratislaváé és Košicéé a városokra nagyítva, az önkormányzati képviselő-testületekéi egy településre nagyítva, a szavazókörök pedig további nagyításkor."
+  },
+  "layers.base": {
+   "src": "Roads, railways and water features",
+   "text": "Utak, vasutak és vízrajz"
+  },
+  "layers.base_title": {
+   "src": "Base map",
+   "text": "Alaptérkép"
   },
   "layers.button": {
    "src": "Constituency boundaries",
@@ -12279,6 +12323,18 @@
   "layers.city": {
    "src": "Bratislava and Košice",
    "text": "Pozsony és Kassa"
+  },
+  "layers.okrsky": {
+   "src": "Polling districts",
+   "text": "Szavazókörök"
+  },
+  "layers.okrsky_approximate": {
+   "src": "Approximate polling district boundary, drawn between the addresses",
+   "text": "A szavazókör hozzávetőleges határa, a címek között húzva"
+  },
+  "layers.okrsky_border": {
+   "src": "Polling district boundary",
+   "text": "Szavazókör határa"
   },
   "layers.oz": {
    "src": "Municipal councils",
@@ -12309,8 +12365,8 @@
    "text": "Megyei közgyűlések"
   },
   "map.attribution": {
-   "src": "Boundaries: ZBGIS © ÚGKK SR, CC BY 4.0 · Neighbouring countries: Natural Earth · Addresses: MV SR, CC0",
-   "text": "Határok: ZBGIS © ÚGKK SR, CC BY 4.0 · Szomszédos országok: Natural Earth · Címek: MV SR, CC0"
+   "src": "Boundaries: ZBGIS © ÚGKK SR, CC BY 4.0 · Base map: © OpenStreetMap contributors, ODbL · Neighbouring countries: Natural Earth · Addresses: MV SR, CC0",
+   "text": "Határok: ZBGIS © ÚGKK SR, CC BY 4.0 · Alaptérkép: © az OpenStreetMap közreműködői, ODbL · Szomszédos országok: Natural Earth · Címek: MV SR, CC0"
   },
   "map.label": {
    "src": "Map",
@@ -12319,6 +12375,10 @@
   "map.obvod": {
    "src": "No. {n}",
    "text": "{n}. sz."
+  },
+  "map.okrsok": {
+   "src": "district {n}",
+   "text": "{n}. szavazókör"
   },
   "map.zoom": {
    "src": "Zoom",
@@ -12356,6 +12416,30 @@
    "src": "Results on the map",
    "text": "Eredmények a térképen"
   },
+  "mapmode.level_councils": {
+   "src": "council constituencies",
+   "text": "önkormányzati választókerületek"
+  },
+  "mapmode.level_obce": {
+   "src": "municipalities",
+   "text": "települések"
+  },
+  "mapmode.level_okrsky": {
+   "src": "polling districts",
+   "text": "szavazókörök"
+  },
+  "mapmode.level_zsk": {
+   "src": "regional constituencies",
+   "text": "megyei választókerületek"
+  },
+  "mapmode.levels": {
+   "src": "By {units}, finer as you zoom in",
+   "text": "{units} szerint, nagyítva részletesebben"
+  },
+  "mapmode.levels_one": {
+   "src": "By {units}",
+   "text": "{units} szerint"
+  },
   "mapmode.none": {
    "src": "Nothing to show yet.",
    "text": "Egyelőre nincs mit megjeleníteni."
@@ -12371,6 +12455,34 @@
   "mapmode.share_voters": {
    "src": "share of the voters with a valid ballot",
    "text": "részesedés az érvényes szavazólapot leadó választók körében"
+  },
+  "mapmode.tip_obvod": {
+   "src": "{name}, constituency No. {n}",
+   "text": "{name}, {n}. választókerület"
+  },
+  "mapmode.tip_okrsok": {
+   "src": "Polling district No. {n}, {name}",
+   "text": "{name}, {n}. szavazókör"
+  },
+  "mapmode.tip_past": {
+   "src": "2022: {turnout} · {voters} of {eligible}",
+   "text": "2022: {turnout} · {eligible} választóból {voters}"
+  },
+  "mapmode.tip_turnout": {
+   "src": "Turnout {turnout} · {voters} of {eligible} voted",
+   "text": "Részvétel {turnout} · {eligible} választóból {voters} szavazott"
+  },
+  "mapmode.tip_votes": {
+   "src": "{share} · {votes} of {valid}",
+   "text": "{share} · {valid} szavazatból {votes}"
+  },
+  "mapmode.tip_winner": {
+   "src": "Most votes: {name}, {share}",
+   "text": "Legtöbb szavazat: {name}, {share}"
+  },
+  "mapmode.tip_zsk": {
+   "src": "{kraj} kraj, constituency No. {n}",
+   "text": "{kraj} kraj, {n}. választókerület"
   },
   "mapmode.title": {
    "src": "2026 turnout on the map",
@@ -12415,6 +12527,46 @@
   "mapmode.turnout_total": {
    "src": "{turnout} overall",
    "text": "összesen {turnout}"
+  },
+  "mapmode.units": {
+   "src": "Show by",
+   "text": "Megjelenítés"
+  },
+  "mapmode.units_obce": {
+   "src": "Municipalities",
+   "text": "Települések"
+  },
+  "mapmode.units_okrsky": {
+   "src": "Polling districts",
+   "text": "Szavazókörök"
+  },
+  "mapmode.winner_count": {
+   "src": "The most votes in {n} of the areas shown",
+   "text": "Legtöbb szavazat a megjelenített területek közül {n} területen"
+  },
+  "mapmode.winner_hide": {
+   "src": "Take who got the most votes off the map",
+   "text": "Eltávolítás a térképről: ki hol kapta a legtöbb szavazatot"
+  },
+  "mapmode.winner_of": {
+   "src": "the candidate with the most votes in each area",
+   "text": "az egyes területeken a legtöbb szavazatot kapott jelölt"
+  },
+  "mapmode.winner_of_council": {
+   "src": "the top candidate in each area, not those elected",
+   "text": "az egyes területeken a legtöbb szavazatot kapott jelölt, nem a megválasztottak"
+  },
+  "mapmode.winner_show": {
+   "src": "Show on the map who got the most votes where",
+   "text": "Megjelenítés a térképen: ki hol kapta a legtöbb szavazatot"
+  },
+  "mapmode.winner_title": {
+   "src": "Most votes",
+   "text": "Legtöbb szavazat"
+  },
+  "mapmode.winner_total": {
+   "src": "Overall: {name}, {share}",
+   "text": "Összesen: {name}, {share}"
   },
   "nav.language": {
    "src": "Language",
@@ -12484,9 +12636,25 @@
    "src": "council constituency No. {n}",
    "text": "{n}. választókerület"
   },
+  "place.obvody": {
+   "src": "council constituencies No. {n}",
+   "text": "választókerületek: {n}."
+  },
   "place.okres": {
    "src": "okres {name}",
    "text": "{name} járás"
+  },
+  "place.okrsky": {
+   "src": "polling districts No. {n}",
+   "text": "szavazókörök: {n}."
+  },
+  "place.okrsok": {
+   "src": "polling district No. {n}",
+   "text": "{n}. szavazókör"
+  },
+  "place.okrsok_approximate": {
+   "src": "polling district No. {n} (by an approximate boundary)",
+   "text": "{n}. szavazókör (hozzávetőleges határ szerint)"
   },
   "research.affairs_alert": {
    "src": "Searched only the sites on our list ({scope}); serious controversies found about this candidate: {n}",
@@ -12676,6 +12844,14 @@
    "src": "{votes} of {valid} voters",
    "text": "{votes} / {valid} választó"
   },
+  "results.awaiting": {
+   "src": "Polls closed · results will appear here as they come in",
+   "text": "A szavazás véget ért · az eredmények folyamatosan itt jelennek meg"
+  },
+  "results.awaiting_title": {
+   "src": "The polls closed at {close} (Slovak time). The Statistical Office of the Slovak Republic publishes the results through the night as they are counted; this page checks for them every minute and shows them as they come.",
+   "text": "A szavazóhelyiségek {close} órakor zártak be (szlovákiai idő szerint). A Szlovák Köztársaság Statisztikai Hivatala az éjszaka folyamán, a számlálás ütemében teszi közzé az eredményeket; ez az oldal percenként ellenőrzi őket, és megjeleníti, amint megérkeznek."
+  },
   "results.called": {
    "src": "Called by this site, not official yet: even if all of the at most {remaining} registered voters in the districts not counted yet voted against them, they would keep their place. That maximum is the registered voters at the {election} plus 10 % ({bound}), less the {eligible} registered in the districts counted so far.",
    "text": "Az oldal saját megállapítása, még nem hivatalos: még ha a meg nem számlált szavazókörök legfeljebb {remaining} névjegyzékben szereplő választója mind ellene szavazna is, megtartaná a helyét. Ez a maximum a legutóbbi választások ({election}) névjegyzékében szereplő választók száma plusz 10% ({bound}), mínusz az eddig megszámlált szavazókörök {eligible} névjegyzékben szereplő választója."
@@ -12724,9 +12900,41 @@
    "src": "2026: final results",
    "text": "2026: végleges eredmények"
   },
+  "results.in_seats": {
+   "src": "Place {place} by votes: within the seats ({n}) on the count so far.",
+   "text": "{place}. hely a szavazatok szerint: eddig a mandátumokon belül ({n})."
+  },
+  "results.note_all_elected": {
+   "src": "Counted: every candidate is elected, there being no more of them than seats filled; their votes have not been published yet. They will appear here once the Statistical Office publishes them.",
+   "text": "Megszámolva: minden jelölt megválasztott, mivel nincsenek többen, mint a betöltött mandátumok; szavazataikat még nem tették közzé. Itt jelennek meg, amint a Statisztikai Hivatal közzéteszi őket."
+  },
+  "results.note_counted": {
+   "src": "Counted; who is elected and the candidates' votes have not been published yet. They will appear here once the Statistical Office publishes them.",
+   "text": "Megszámolva; azt, hogy ki nyert mandátumot, és a jelöltek szavazatait még nem tették közzé. Itt jelennek meg, amint a Statisztikai Hivatal közzéteszi őket."
+  },
+  "results.note_partial": {
+   "src": "Turnout counted so far; the candidates' votes have not been published yet. They will appear here once the Statistical Office publishes them.",
+   "text": "Eddig a részvételt számolták meg; a jelöltek szavazatait még nem tették közzé. Itt jelennek meg, amint a Statisztikai Hivatal közzéteszi őket."
+  },
+  "results.note_turnout": {
+   "src": "Turnout counted; who is elected and the candidates' votes have not been published yet. They will appear here once the Statistical Office publishes them.",
+   "text": "A részvételt megszámolták; azt, hogy ki nyert mandátumot, és a jelöltek szavazatait még nem tették közzé. Itt jelennek meg, amint a Statisztikai Hivatal közzéteszi őket."
+  },
+  "results.note_winner": {
+   "src": "Counted: the turnout and the winner are known; the other candidates' votes have not been published yet. They will appear here once the Statistical Office publishes them.",
+   "text": "Megszámolva: a részvétel és a győztes ismert; a többi jelölt szavazatait még nem tették közzé. Itt jelennek meg, amint a Statisztikai Hivatal közzéteszi őket."
+  },
   "results.pending": {
    "src": "2026: not counted yet",
    "text": "2026: még nincs megszámlálva"
+  },
+  "results.seats_line": {
+   "src": "↑ seats: {n}",
+   "text": "↑ mandátumok: {n}"
+  },
+  "results.seats_line_title": {
+   "src": "On the count so far, the candidates above this line would win the seats ({n}): as many of the first places by votes as there are seats. The order can still change as the count goes on.",
+   "text": "Az eddigi számlálás szerint a mandátumokat ({n}) a vonal fölötti jelöltek szereznék meg: annyi első hely a szavazatok szerint, ahány mandátum van. A sorrend a számlálás folytatásával még változhat."
   },
   "results.status_counting": {
    "src": "Results: counting",
@@ -12760,6 +12968,14 @@
    "src": "Turnout 2026 so far, in the districts counted: {voters} of {eligible} registered voters voted ({turnout}).",
    "text": "Részvétel 2026 eddig, a megszámlált szavazókörökben: a(z) {eligible} névjegyzékben szereplő választóból {voters} szavazott ({turnout})."
   },
+  "results.turnout_unit": {
+   "src": "Turnout 2026 ({unit}): {voters} of {eligible} registered voters voted ({turnout}).",
+   "text": "Részvétel 2026 ({unit}): {eligible} választóból {voters} szavazott ({turnout})."
+  },
+  "results.valid_votes": {
+   "src": "Valid votes 2026: {valid}",
+   "text": "Érvényes szavazatok 2026: {valid}"
+  },
   "results.votes": {
    "src": "{n} votes",
    "text": "{n} szavazat"
@@ -12771,6 +12987,30 @@
   "results.votes_title_multi": {
    "src": "2026: {votes} votes from {valid} voters with a valid ballot ({share}); each could vote for several candidates.",
    "text": "2026: {votes} szavazat {valid} érvényes szavazólapot leadó választótól ({share}); mindenki több jelöltre is szavazhatott."
+  },
+  "results.withdrawn": {
+   "src": "withdrew",
+   "text": "visszalépett"
+  },
+  "results.withdrawn_title": {
+   "src": "Withdrew from the election but stayed on the ballot: the votes cast for them count among the valid ones, yet cannot elect them.",
+   "text": "Visszalépett a választástól, de a szavazólapon maradt: a rá leadott szavazatok érvényesnek számítanak, de nem választhatják meg."
+  },
+  "scope.all": {
+   "src": "Whole contest",
+   "text": "Teljes választás"
+  },
+  "scope.label": {
+   "src": "Results for",
+   "text": "Eredmények"
+  },
+  "scope.obvod": {
+   "src": "Constituency No. {n}",
+   "text": "{n}. választókerület"
+  },
+  "scope.okrsok": {
+   "src": "Polling district No. {n}",
+   "text": "{n}. szavazókör"
   },
   "search.close": {
    "src": "Close search",
@@ -12879,6 +13119,14 @@
   "turnout.hide": {
    "src": "Click to hide the numbers.",
    "text": "Kattintson a számok elrejtéséhez."
+  },
+  "turnout.okrsky": {
+   "src": "The figures are of the polling districts that make up this constituency now: {okrsky}.",
+   "text": "A számok azokra a szavazókörökre vonatkoznak, amelyek most ezt a választókerületet alkotják: {okrsky}."
+  },
+  "turnout.okrsok_2022": {
+   "src": "Turnout in this polling district at the municipal elections of 2022: {voters} of {eligible} registered voters voted ({turnout}).",
+   "text": "Részvétel ebben a szavazókörben a 2022-es önkormányzati választáson: {eligible} választóból {voters} szavazott ({turnout})."
   },
   "turnout.show": {
    "src": "Click for the numbers.",

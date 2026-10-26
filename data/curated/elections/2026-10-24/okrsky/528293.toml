@@ -1,0 +1,51 @@
+# Okrsky of Čierna nad Tisou, transcribed by an AI agent in job okrsok-rules-549 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Zimná, Záhradná, Hlavná 109/36,38; 195/29; Jesenná 187/1,3,5,7; Jarná 185/1,3,5,7
+#   okrsok 2: Radova, 1. Mája, Slov. Nár. Povstania, Trakanská - celá ulica, Školská 171/16,18; 172/12,14; 173/6,8,10; 160/7; 161/9,11; 162/13,15; 163/17,19; 164/21,23; 165/25,27,29,31,33,35; 169/24; 188/26,28; 174/2,4, Dukelských hrdinov 104/3,5,7,9; 138/1; 139/11,13,15; 141/19,23; 142/25,29; 143/16,18,20; 147/4, Obrancov mieru 177/12,14; 178/8,10, Hlavná 10/4; 12/2, Železničná 114/5,7,9; 115/11,13,15; 116/17
+#   okrsok 3: Hlavná 103/1,3,5,7; 108/25,27; 111/24,26,28,30; 113/6; 110/32,34, Letná 183/2,4, Námestie pionierov, Obrancov mieru 180/2,4, Dukelských hrdinov 148/2, Jesenského, Jilemnického, Jarná 184/9,11, Jesenná 186/9,11, Bez ulice
+obec = "528293"
+name = "Čierna nad Tisou"
+okrsky_date = 2026-07-20
+okrsky_note = "Scanned document, read from the images. Addresses are written súpisné/orientačné; rules use the orientačné numbers. Streets listed with numbers in only one okrsok (Školská, Železničná) are taken whole. 'Bez ulice' (okrsok 3) is read as all addresses without a street, given as the part rule; house numbers of split streets (Hlavná, Jarná, Jesenná, Dukelských hrdinov, Obrancov mieru) that the document does not list also fall to that rule."
+
+[[document]]
+url = "https://www.ciernanadtisou.sk/files/2026-07-21-155721-Inform__cia_o_utvoren___volebn__ch_okrskov.pdf"
+sha256 = "28e0da7c8a28f4f1af2033fa72b1a31e0e4fe32cde0f198513116ea68ad37dbc"
+title = "Informácia o utvorení volebných okrskov a určení volebných miestností v meste Čierna nad Tisou"
+
+[okrsok.1]
+rules = [
+  {street = "Zimná"},
+  {street = "Záhradná"},
+  {street = "Hlavná", numbers = "29, 36, 38"},
+  {street = "Jesenná", numbers = "1, 3, 5, 7"},
+  {street = "Jarná", numbers = "1, 3, 5, 7"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1. Mája"},
+  {street = "Slov. Nár. Povstania"},
+  {street = "Trakanská"},
+  {street = "Školská"},
+  {street = "Železničná"},
+  {street = "Radová", written = "Radova", note = "Missing accent; the only similar street."},
+  {street = "Dukelských hrdinov", numbers = "1, 3, 4, 5, 7, 9, 11, 13, 15, 16, 18, 19, 20, 23, 25, 29"},
+  {street = "Obrancov mieru", numbers = "8, 10, 12, 14"},
+  {street = "Hlavná", numbers = "2, 4"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Letná"},
+  {street = "Námestie pionierov"},
+  {street = "Jesenského"},
+  {street = "Jilemnického"},
+  {street = "Hlavná", numbers = "1, 3, 5, 6, 7, 24-28, 30, 32, 34"},
+  {street = "Obrancov mieru", numbers = "2, 4"},
+  {street = "Dukelských hrdinov", numbers = "2"},
+  {street = "Jarná", numbers = "9, 11"},
+  {street = "Jesenná", numbers = "9, 11"},
+  {part = "Čierna nad Tisou", note = "'Bez ulice': addresses without a street."},
+]

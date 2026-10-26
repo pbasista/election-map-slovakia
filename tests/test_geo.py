@@ -227,6 +227,50 @@ def test_council_cut_is_a_coverage_on_the_grid_with_its_neighbours():
     geo.topology([geo.rings(g) for g in grid], 1)
 
 
+def test_okrsky_tile_the_shard_features_they_are_cut_from():
+    # Obec "a" of the shards in council obvody 1 (west) and 2 (east); okrsok
+    # 1 is obvod 1, okrsky 2 and 3 are drawn at full detail missing obvod
+    # 2's border by a fraction of a unit. Cut from the shard's obvod 2, they
+    # tile it, and every border between okrsky is drawn, the one on the
+    # obvod border flagged so.
+    a1, a2 = shapely.box(0, 0, 40, 50), shapely.box(40, 0, 100, 50)
+    b = shapely.box(0, 50, 100, 80)
+    okrsky = {
+        "a": [
+            geo.Okrsok(1, 1, a1, False),
+            geo.Okrsok(2, 2, shapely.box(40.3, -0.4, 70.3, 50.3), True),
+            geo.Okrsok(3, 2, shapely.box(70.3, -0.4, 100.4, 50.3), True),
+        ]
+    }
+    units = [("a", 1), ("a", 2), ("b", 0)]
+    shard = shapely.orient_polygons(np.array([a1, a2, b]))
+    gridded = {lod.level: shard for lod in geo.SHARD_LODS}
+    features, levels = geo.okrsky_levels(okrsky, units, gridded, _Identity(), 1)
+    properties = geo.okrsok_properties(features, _Identity())
+    assert [(p["obec"], p["okrsok"], p["obvod"]) for p in properties] == [
+        ("a", 1, 1),
+        ("a", 2, 2),
+        ("a", 3, 2),
+    ]
+    shard_topo = geo.topology([geo.rings(g) for g in shard], 1)
+    shard_file = geo.topology_file(
+        shard_topo, 1, [0, 1, 2], [{"id": c} for c, _ in units], lambda s: 0
+    )
+    for grid in levels.values():
+        assert shapely.is_valid(grid).all()
+        assert shapely.equals(shapely.union_all(grid), shapely.union(a1, a2))
+        assert shapely.area(grid).tolist() == pytest.approx([2000, 1500, 1500], abs=60)
+        topo = geo.topology([geo.rings(g) for g in grid], 1)
+        file = geo.topology_file(topo, 1, [0, 1, 2], properties, geo.okrsok_code)
+        drawn = sorted(c for c in file["lines"] if not c & geo.FOREIGN)
+        okrsok = geo.OKRSOK | geo.APPROX
+        assert drawn == [okrsok, okrsok | geo.COUNCIL]
+        assert geo.verify_okrsky([file], [shard_file], {"a": [1, 2, 3]}) == []
+        assert geo.verify_okrsky([file], [shard_file], {"a": [1, 2]}) == [
+            "obec a: okrsky [1, 2, 3] drawn, the index says [1, 2]"
+        ]
+
+
 def test_lone_houses_draw_no_island_but_a_large_cluster_stays():
     # Houses every 50 m, obvod 1 in the west, 2 in the east, but for one
     # house of obvod 2 in the west (a wrong point, say), a block of four of

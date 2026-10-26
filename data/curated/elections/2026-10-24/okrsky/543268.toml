@@ -1,0 +1,76 @@
+# Okrsky of Krompachy, transcribed by an AI agent in job okrsok-rules-230 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Banícka štvrť, Banská ulica, Cintorínska ulica, Dolina, Horská ulica, Ulica Júliusa Barča Ivana, Kúpeľná ulica, Lesnícka ulica, Ulica Mikuláša Šprinca, Námestie slobody, Partizánska ulica, Sadová ulica, Turistická ulica, Zemanská ulica, Krompachy bez udania ulice
+#   okrsok 2: Mlynská ulica, Slovinská ulica
+#   okrsok 3: Lorencova ulica
+#   okrsok 4: Hlavná ulica, Stará Maša, Štúrova ulica, Trangusova ulica
+#   okrsok 5: Maurerova ulica, Poštová ulica, Robotnícka ulica, Veterná ulica
+#   okrsok 6: Ulica 29. augusta, Družstevná ulica, Hornádska ulica, Ulica Janka Jesenského, Ulica kpt. Nálepku, Rázusova ulica, Ulica SNP, Stará cesta
+obec = "543268"
+name = "Krompachy"
+okrsky_date = 2026-07-20
+okrsky_note = "Register streets Podskalka (1 address) and RO Plejsy (3) are not in the document; they fall to okrsok 1 through its part rule for 'Krompachy bez udania ulice'."
+
+[[document]]
+url = "https://www.krompachy.sk/files/00008372/1784550689.pdf"
+sha256 = "097ef59bfdb3e9ece1e96d2cb69a4894b5a484d55181e321d4412b4d2d3aa537"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Banícka Štvrť", written = "Banícka štvrť"},
+  {street = "Banská ulica"},
+  {street = "Cintorínska ulica"},
+  {street = "Dolina"},
+  {street = "Horská ulica"},
+  {street = "Ulica Júliusa Barča Ivana"},
+  {street = "Kúpeľná ulica"},
+  {street = "Lesnícka ulica"},
+  {street = "Ulica Mikuláša Šprinca"},
+  {street = "Námestie slobody"},
+  {street = "Partizánska ulica"},
+  {street = "Sadová ulica"},
+  {street = "Turistická ulica"},
+  {street = "Zemanská ulica"},
+  {part = "Krompachy", note = "'Krompachy bez udania ulice': the addresses without a street. This rule also takes the register streets Podskalka and RO Plejsy, which the document does not name."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mlynská ulica"},
+  {street = "Slovinská ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Lorencova ulica"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Hlavná ulica"},
+  {street = "Stará Maša"},
+  {street = "Štúrova ulica"},
+  {street = "Trangusova ulica"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Maurerova ulica"},
+  {street = "Poštová ulica"},
+  {street = "Robotnícka ulica"},
+  {street = "Veterná ulica"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Ulica 29. augusta"},
+  {street = "Družstevná ulica"},
+  {street = "Hornádska ulica"},
+  {street = "Ulica Janka Jesenského"},
+  {street = "Ulica kpt. Nálepku"},
+  {street = "Rázusova ulica"},
+  {street = "Ulica SNP"},
+  {street = "Stará cesta"},
+]

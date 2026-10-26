@@ -1,0 +1,25 @@
+# Okrsky of Pruské, transcribed by an AI agent in job okrsok-rules-436 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Pruské časť Pruské č. 1 – 336; Voliči, ktorých miestom trvalého pobytu je obec Pruské
+#   okrsok 2: Pruské časť Pruské č. 337 – 870; Pruské časť Podvažie č. 1 – 130; Pruské časť Savčina č. 1 – 110
+obec = "513598"
+name = "Pruské"
+okrsky_note = "Published on the obec's elections page on 20.7.2026 (no decision date stated). Okrsok 2 covers parts Podvažie (č. 1–130) and Savčina (č. 1–110) as whole parts. Voliči with trvalý pobyt only 'obec Pruské' belong to okrsok 1 (text only)."
+
+[[document]]
+url = "https://www.obecpruske.sk/volby-do-organov-uzemnej-samospravy-2026.html"
+sha256 = "88e47e6511419a1d86df3d7c3c1bcf0b85d5ed8f314efbf746afd465f0382a9b"
+title = "Voľby do orgánov územnej samosprávy 2026 – Volebné okrsky a volebné miestnosti (zverejnené 20.7.2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Pruské", numbers = "1-336"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Pruské", numbers = "337-870"},
+  {part = "Podvažie"},
+  {part = "Savčina"},
+]

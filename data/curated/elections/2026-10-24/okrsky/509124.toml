@@ -1,0 +1,43 @@
+# Okrsky of Závadka nad Hronom, transcribed by an AI agent in job okrsok-rules-485 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Clementisova ul., Hronská ul., Hviezdoslavova ul., Kukučínová ul., Osloboditeľov, Partizánska, Rázusová, Slatvinska, Športová, Štúrová, Záhradná
+#   okrsok 2: Fučíkova, Hrbok, Mierova, Paseka
+obec = "509124"
+name = "Závadka nad Hronom"
+okrsky_date = 2026-07-20
+okrsky_fill = "nearest"
+okrsky_note = "Scanned letter to Okresný úrad (20.07.2026) read from the image; it is the notice, the date is the letter date. 4 addresses without a street take the nearest placed address."
+
+[[document]]
+url = "https://www.zavadkanadhronom.sk/evt_file.php?file=2722"
+sha256 = "7603f4d84acc90d9cc0e2baea464355f5867697c2204aa05ea2de9b4958b3732"
+title = "Oznam - okrsky a sídlo okrskových volebných komisií pre Voľby do orgánov samosprávy obcí a Voľby do orgánov samosprávnych krajov - 24. 10. 2026"
+
+[[document]]
+url = "https://www.zavadkanadhronom.sk/volby/volby-do-organov-samospravy-obci-24-oktobra-2026-1101sk.html"
+sha256 = "3b70a0bc0e599262d22b4f621a80e549e446b79c03ac30b4dbf62047e8fe4d52"
+title = "Voľby do orgánov samosprávy obcí - 24. októbra 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Clementisova", written = "Clementisova ul."},
+  {street = "Hronská", written = "Hronská ul."},
+  {street = "Hviezdoslavova", written = "Hviezdoslavova ul."},
+  {street = "Kukučínova", written = "Kukučínová ul.", note = "Typo/diacritics variant in the document (Kukučínová, Rázusová, Slatvinska, Štúrová, Mierova); same street."},
+  {street = "Osloboditeľov"},
+  {street = "Partizánska"},
+  {street = "Rázusova", written = "Rázusová", note = "Typo/diacritics variant in the document (Kukučínová, Rázusová, Slatvinska, Štúrová, Mierova); same street."},
+  {street = "Slatvinská", written = "Slatvinska", note = "Typo/diacritics variant in the document (Kukučínová, Rázusová, Slatvinska, Štúrová, Mierova); same street."},
+  {street = "Športová"},
+  {street = "Štúrova", written = "Štúrová", note = "Typo/diacritics variant in the document (Kukučínová, Rázusová, Slatvinska, Štúrová, Mierova); same street."},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Fučíkova"},
+  {street = "Hrbok"},
+  {street = "Mierová", written = "Mierova", note = "Typo/diacritics variant in the document (Kukučínová, Rázusová, Slatvinska, Štúrová, Mierova); same street."},
+  {street = "Paseka"},
+]

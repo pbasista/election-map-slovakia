@@ -1,0 +1,48 @@
+# Okrsky of Jacovce, transcribed by an AI agent in job okrsok-rules-540 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Do okrsku č. 1 patria ulice: Hlboká, Májová, Pekárenská, Potočná, Školská, Záhradkárska, Zemianská, Obec Jacovce
+#   okrsok 2: Do okrsku č. 2 patria ulice: Bedzianská, Bočná, Brezová, Farská, Javorová, Jarabina, Kuzmická, Mlynská, Pod Hôrkou, Poľná, Pri Majeri, Slobody, Záplotie
+obec = "556157"
+name = "Jacovce"
+okrsky_date = 2026-07-28
+okrsky_note = "Okrsok 1's entry 'Obec Jacovce' (residents registered at the obec / houses without a street) is a part rule: street rules are more specific, so it takes only addresses without a street."
+
+[[document]]
+url = "https://www.obecjacovce.sk/download_file_f.php?id=2456413"
+sha256 = "b8b253b9a86f3ad88c5c84772163d734990cd68cf2b3b9dd234b69faf5aef54c"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností"
+
+[[document]]
+url = "https://www.obecjacovce.sk/volby-oktober-2026-oznam/mid/545139/.html"
+sha256 = "b5d8779389b24dc7f5eca1997d2409ec65681dcdfea114b4ad65fefb9ad3ed3c"
+title = "VOĽBY OKTÓBER 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Hlboká"},
+  {street = "Májová"},
+  {street = "Pekárenská"},
+  {street = "Potočná"},
+  {street = "Školská"},
+  {street = "Záhradkárska"},
+  {street = "Zemianská"},
+  {part = "Jacovce", note = "document's 'Obec Jacovce': addresses without a street"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bedzianska", written = "Bedzianská", note = "spelling variant (á/a) of the same street"},
+  {street = "Bočná"},
+  {street = "Brezová"},
+  {street = "Farská"},
+  {street = "Javorová"},
+  {street = "Jarabina"},
+  {street = "Kuzmická"},
+  {street = "Mlynská"},
+  {street = "Pod Hôrkou"},
+  {street = "Poľná"},
+  {street = "Pri Majeri"},
+  {street = "Slobody"},
+  {street = "Záplotie"},
+]

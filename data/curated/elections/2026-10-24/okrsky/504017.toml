@@ -1,0 +1,81 @@
+# Okrsky of Sládkovičovo, transcribed by an AI agent in job okrsok-rules-245 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Družstevná, Fučíkova /celá ulica/, Galantská, Jesenského, Seredská, SNP, Štvrť Marína, Veľkoúľanská, Z. Kodálya, Zátišie, Železničná. Do tohto okrsku boli zaradení i občania, ktorým boli zrušené trvalé pobyty.
+#   okrsok 2: Devátova, J. Dalloša, Košútska, Mlynská a Školská
+#   okrsok 3: Budovateľská, F.Kazinczyho, Janka Kráľa, Kapitána Nálepku, Krátka, Lipová, Mierová, Muškátová, Poľná, Richterova, Sadová ulica, Slnečná ulica, Veterná ulica a Záhradnícka
+#   okrsok 4: Abrahámska, Cintorínska, Cukrovar, Cukrovarská, Dánoš, Hviezdoslavova, Pionierska, Sigetská
+#   okrsok 5: pre voličov s trvalým pobytom na Novom Dvore
+obec = "504017"
+name = "Sládkovičovo"
+okrsky_fill = "nearest"
+okrsky_note = "Two identical postings of the same document; the later one used. No decision date stated. Družstevná is not in the register. Addresses without a street (súpisné only) take the nearest placed address."
+
+[[document]]
+url = "https://www.sladkovicovo.sk/e_download.php?file=/data/uredni_deska/obsah5311_1.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20%282%29.pdf"
+sha256 = "79c3889323222ed7b2dc076cc92fb12812e3dbc3286bb9413682517bd76de460"
+title = "Utvorenie volebných okrskov v Sládkovičove pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov dňa 24. 10. 2026"
+
+[[document]]
+url = "https://www.sladkovicovo.sk/samosprava/volby-referendum/utvorenie-volebnych-okrskov-v-sladkovicove-pre-volby-do-organov-samospravy-obci-a-do-organov-samospravnych-krajov-dna-24-10-2026-5433.html?kshow=83"
+sha256 = "6b364f11a8e24c5f3e808ae2cbebf023b552d1484893accb5a25eecbdbfdc6ea"
+title = "Utvorenie volebných okrskov v Sládkovičove (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {street = "Fučíkova"},
+  {street = "Galantská"},
+  {street = "Jesenského"},
+  {street = "Seredská"},
+  {street = "SNP"},
+  {street = "Štvrť Marína"},
+  {street = "Veľkoúľanská"},
+  {street = "Zátišie"},
+  {street = "Železničná"},
+  {street = "Z.Kodálya", written = "Z. Kodálya"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Devátova"},
+  {street = "J. Dalloša"},
+  {street = "Košútska"},
+  {street = "Mlynská"},
+  {street = "Školská"},
+  {street = "Devátová", written = "Devátova", note = "The register has the street both as Devátova and Devátová; both are the one Devátova street of the document."},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Budovateľská"},
+  {street = "F.Kazinczyho"},
+  {street = "Janka Kráľa"},
+  {street = "Kapitána Nálepku"},
+  {street = "Krátka"},
+  {street = "Lipová"},
+  {street = "Mierová"},
+  {street = "Muškátová"},
+  {street = "Poľná"},
+  {street = "Richterova"},
+  {street = "Sadová ulica"},
+  {street = "Slnečná ulica"},
+  {street = "Veterná ulica"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Abrahámska"},
+  {street = "Cintorínska"},
+  {street = "Cukrovar"},
+  {street = "Cukrovarská"},
+  {street = "Dánoš"},
+  {street = "Hviezdoslavova"},
+  {street = "Pionierska"},
+  {street = "Sigetská"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Nový Dvor", written = "Novom Dvore", note = "\"na Novom Dvore\" is the locative of Nový Dvor, the street/settlement of the register."},
+]

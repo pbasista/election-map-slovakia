@@ -1,0 +1,40 @@
+# Okrsky of Zemplínska Teplica, transcribed by an AI agent in job okrsok-rules-597 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okružná, Soroška, Agátová, Orechová, Cintorínska, Na záhumní, Pod kostolom, Lesná, Požiarnická, Bez pobytu
+#   okrsok 2: Hlavná, Obchodná, Jarná, Letná, Jesenná, Zimná, Nová, Sečovská, Záhradná
+obec = "544019"
+name = "Zemplínska Teplica"
+okrsky_date = 2026-07-21
+okrsky_fill = "nearest"
+okrsky_note = "'Pod kostolom' (okrsok 1) is not in the address register and is left out. 'Bez pobytu' (residents without address) belong to okrsok 1. fill_nearest places the 45 addresses without street."
+
+[[document]]
+url = "https://www.zemplinskateplica.sk/files/2026-07-21-165146-Utvorenie_volebnych_okrskov_a_ur__enie_volebn__ch_miestnost__.pdf"
+sha256 = "eb61866cab500e10b6507e8c8a3f35edadc68a4db67adcf38787dd6a1207cc9a"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov v roku 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Okružná ulica", written = "Okružná"},
+  {street = "Ulica Soroška", written = "Soroška"},
+  {street = "Agátová ulica", written = "Agátová"},
+  {street = "Orechová ulica", written = "Orechová"},
+  {street = "Cintorínska ulica", written = "Cintorínska"},
+  {street = "Ulica na záhumní", written = "Na záhumní"},
+  {street = "Lesná ulica", written = "Lesná"},
+  {street = "Požiarnická ulica", written = "Požiarnická"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná ulica", written = "Hlavná"},
+  {street = "Obchodná ulica", written = "Obchodná"},
+  {street = "Jarná ulica", written = "Jarná"},
+  {street = "Letná ulica", written = "Letná"},
+  {street = "Jesenná ulica", written = "Jesenná"},
+  {street = "Zimná ulica", written = "Zimná"},
+  {street = "Nová ulica", written = "Nová"},
+  {street = "Sečovská ulica", written = "Sečovská"},
+  {street = "Záhradná ulica", written = "Záhradná"},
+]

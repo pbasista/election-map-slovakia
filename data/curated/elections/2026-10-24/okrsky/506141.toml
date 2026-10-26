@@ -1,0 +1,24 @@
+# Okrsky of Kostolné, transcribed by an AI agent in job okrsok-rules-615 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Voliči: Kostolné
+#   okrsok 2: Voliči: Babulicov Vrch, U Tížikov, U Mihálikov, U Hajtúnov, U Medveďov, U Hučkov.
+obec = "506141"
+name = "Kostolné"
+okrsky_date = 2026-07-30
+okrsky_note = "Okrsok 2 also lists the settlements U Tížikov, U Mihálikov, U Hajtúnov, U Medveďov, U Hučkov, which are not parts, streets or k.ú. in the register and the document gives no house numbers for them; they cannot be selected and stay with their part (Kostolné → okrsok 1 unless they lie in Babulicov Vrch)."
+
+[[document]]
+url = "https://www.kostolne.sk/download_file_f.php?id=2450429"
+sha256 = "006bdf8d168705bea51f98c81455d683250b57de7f792588628a0c11b57c8725"
+title = "Volebné okrsky a volebné miestnosti"
+
+[okrsok.1]
+rules = [
+  {part = "Kostolné"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Babulicov Vrch"},
+]

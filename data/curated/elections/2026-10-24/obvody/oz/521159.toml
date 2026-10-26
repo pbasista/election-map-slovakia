@@ -1,0 +1,40 @@
+# Council obvody of Baška (521159), Košice - okolie.
+# Transcribed by an AI agent in job obvod-rules-174 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č. 1 /obec Baška/ … pre volebný obvod č. 1 / obec Baška/ - 6 poslancov
+#   obvod 2: volebný obvod č. 2 /Baška časť Maša/ … pre volebný obvod č. 2 / Baška časť Maša/ - 1 poslanec
+# Okrsky added by an AI agent in job okrsok-rules-173 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Obec Baška
+#   okrsok 2: Baška časť Maša
+obec = "521159"
+name = "Baška"
+date = 2026-06-11
+okrsky_date = 2026-07-15
+okrsky_note = "The document numbers the okrsok of each obvod 'Okrsok č. 1' (one per obvod, both at Obecný úrad Baška 71); numbered here 1 (obvod 1, obec Baška) and 2 (obvod 2, časť Maša)."
+
+[[document]]
+url = "https://www.baska-obec.sk/download_file_f.php?id=2446614"
+sha256 = "94049f181d4d9d0d763763af5f45005933744bcbd6ad7fbfa934b46206f22a07"
+title = "Výpis uznesenia zo zasadnutia Obecného zastupiteľstva v Baške, ktoré sa konalo dňa 11.6.2026 – Uznesenie č. 129"
+
+[[document]]
+url = "https://www.baska-obec.sk/download_file_f.php?id=2446722"
+sha256 = "9713eab2d86eda4240f3303115f13c8496d42ab8e2763ee59082ac3bae8fe8ac"
+title = "Určenie volebných okrskov pre voľby do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov v roku 2026"
+
+[obvod.1]
+seats = 6
+okrsky = [1]
+rules = [
+  {part = "Baška", note = "Document names obvod 1 '/obec Baška/' in contrast to obvod 2 '/Baška časť Maša/'; taken as the časť obce Baška (everything except Maša)."},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [2]
+rules = [
+  {part = "Maša"},
+]

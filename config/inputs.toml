@@ -12,6 +12,7 @@
 #         differ between otherwise identical responses, ignored when deciding
 #         whether the page changed
 #   geojson  a GeoJSON FeatureCollection with at least one feature
+#   pbf   an OpenStreetMap PBF file, starting with its OSMHeader block
 #
 # `sha256`, for any kind, pins the file's digest: for a release that never
 # changes, any other content is rejected. When the server of a pinned input
@@ -88,6 +89,19 @@ file = "ne_10m_admin_0_countries.geojson"
 kind = "geojson"
 sha256 = "239eec57ac17f100a11e2536cffc56752c318b50ae765b0918ff7aab4ce8f255"
 
+# The base map under the election colours (src/election_map_slovakia/
+# basemap.py): roads, railways, rivers and lakes from OpenStreetMap, © its
+# contributors, ODbL 1.0, in Geofabrik's extract of Slovakia. Geofabrik keeps
+# the extract of 1 January of every year for good (the daily ones only for
+# a while), so that one is pinned: the same input on every machine, and a
+# base map for orientation needs no fresher roads. Too large (311 MiB) for
+# data/fallback/.
+[input.osm-slovakia]
+url = "https://download.geofabrik.de/europe/slovakia-260101.osm.pbf"
+file = "slovakia-260101.osm.pbf"
+kind = "pbf"
+sha256 = "694a009cfa6f0a27e164d91247fbdfb5b0c32d2c9421c5bbf570b56560c71644"
+
 # Addresses with coordinates, MV SR, CC0: the "všetky kraje" distribution of
 # https://data.slovensko.sk/datasety/adresy-podla-krajov
 [input.addresses]
@@ -98,7 +112,7 @@ expect = "IDENTIFIKATOR;KRAJ;OKRES;OBEC;CAST_OBCE;ULICA;SUPISNE_CISLO;ORIENTACNE
 
 # Regional council constituencies (VÚC obvody), one announcement per kraj, as
 # linked from https://www.minv.sk/?samosprava26-info10. Records of the
-# sources of data/curated/obvody/zsk-*.toml, transcribed by hand: optional,
+# sources of data/curated/elections/2026-10-24/obvody/zsk-*.toml, transcribed by hand: optional,
 # since some regional servers time out or turn CI runners away.
 
 [input.zsk-obvody-ba]
@@ -152,6 +166,44 @@ url = "https://www.kosickazupa.sk/files/2026-07-10-080956-Uznesenie_567_2026.pdf
 file = "Uznesenie_567_2026.pdf"
 kind = "pdf"
 optional = true
+
+# Territorial division of the 2026 municipal elections, ŠÚ SR: per obec its
+# council obvody, okrsky and seats (tab0dd), published before the elections
+# (https://www.volbysr.sk/oso/sk/uzemne_clenenie.html). The okrsok-rules
+# jobs check the okrsky they transcribe against it
+# (src/election_map_slovakia/okrsokrules.py). Pinned: its data is not
+# revised, but ŠÚ SR exported the file anew on 25 October 2026 (the same
+# rows, a new creation time inside), so the digest is of that copy.
+
+[input.units-oso2026]
+url = "https://www.volbysr.sk/oso/files/xlsx/OSO2026_SK_tab0dd.xlsx"
+file = "OSO2026_SK_tab0dd.xlsx"
+kind = "xlsx"
+sha256 = "dc96fa6b568e99a581d8d13eb851924ab9fd2b567e5721c1979d24c36e0ee4e3"
+
+# Final results of the 2026 elections, ŠÚ SR: the definitive CSV tables of
+# the municipal (OSO) and regional (OSK) elections, published after the
+# counting (https://www.volbysr.sk/oso/sk/subory_na_stiahnutie.html and
+# osk/). The results step of `ems make` turns them into the results the
+# site shows (src/election_map_slovakia/results.py, docs/results.md).
+# Final releases, so pinned, with committed copies. A later election adds
+# its own as results-oso<year> and results-osk<year>, the year of its
+# election day (site.toml `election`): the names the results step reads.
+# `members` are the tables it reads.
+
+[input.results-oso2026]
+url = "https://www.volbysr.sk/oso/files/OSO2026_SK_csv.zip"
+file = "OSO2026_SK_csv.zip"
+kind = "zip"
+members = ["OSO2026_SK_tab02d.csv", "OSO2026_SK_tab02e.csv", "OSO2026_SK_tab02f.csv", "OSO2026_SK_tab05d.csv", "OSO2026_SK_tab05f.csv", "OSO2026_SK_tab08e.csv", "OSO2026_SK_tab08f.csv", "OSO2026_SK_tab02x.csv", "OSO2026_SK_tab02ex.csv", "OSO2026_SK_tab02fx.csv", "OSO2026_SK_tab05x.csv", "OSO2026_SK_tab05fx.csv", "OSO2026_SK_tab08ex.csv", "OSO2026_SK_tab08fx.csv"]
+sha256 = "85f96834885989cf2baed6942618decbf51de80e90e4bb6bfd6883a5d11702e2"
+
+[input.results-osk2026]
+url = "https://www.volbysr.sk/osk/files/OSK2026_SK_csv.zip"
+file = "OSK2026_SK_csv.zip"
+kind = "zip"
+members = ["OSK2026_SK_tab02a.csv", "OSK2026_SK_tab02b.csv", "OSK2026_SK_tab02c.csv", "OSK2026_SK_tab02d.csv", "OSK2026_SK_tab06a.csv", "OSK2026_SK_tab06c.csv", "OSK2026_SK_tab06d.csv", "OSK2026_SK_tab09b.csv", "OSK2026_SK_tab09c.csv", "OSK2026_SK_tab09d.csv"]
+sha256 = "f6d0c01ff503f8cd38ceff4d77f83ed53f7efb0846cfc5875498d9f881de7ab8"
 
 # Final results of the previous elections and the by-elections since, ŠÚ SR,
 # for the current holders of every elected body (see

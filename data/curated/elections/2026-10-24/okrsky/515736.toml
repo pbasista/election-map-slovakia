@@ -1,0 +1,30 @@
+# Okrsky of Veľké Teriakovce, transcribed by an AI agent in job okrsok-rules-628 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre obyvateľov: Veľkých Teriakoviec, Malých Teriakoviec a Krásnej
+#   okrsok 2: pre obyvateľov: Vrboviec nad Rimavou
+obec = "515736"
+name = "Veľké Teriakovce"
+okrsky_note = "The document is undated. Same file is also published under the VÚC section."
+
+[[document]]
+url = "https://velketeriakovce.sk/wp-content/uploads/dokumenty/volby-do-samosprav/utvorenie-volebnych-okrskov-a-urcenie-voleb.miestnosti-229jir.pdf"
+sha256 = "1fae8d3e23b7daa36308fe4d08d3de8f337b35e6814a7b436421443fff87b9d5"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do OSO a OSK"
+
+[[document]]
+url = "https://velketeriakovce.sk/dokumenty/volby/volby-do-samosprav/"
+sha256 = "37ee0018d0ee91fb27d261246212f2986bde2ca1cee924305e70aef10efee550"
+title = "Voľby do samospráv"
+
+[okrsok.1]
+rules = [
+  {part = "Veľké Teriakovce"},
+  {part = "Malé Teriakovce"},
+  {part = "Krásna"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vrbovce nad Rimavou"},
+]

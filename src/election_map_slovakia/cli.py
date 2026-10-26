@@ -19,6 +19,7 @@ from pathlib import Path
 from election_map_slovakia import (
     __version__,
     addresses,
+    basemap,
     build,
     candidates,
     check,
@@ -29,6 +30,7 @@ from election_map_slovakia import (
     incumbents,
     jobs,
     obvody,
+    okrsokrules,
     output,
     progress,
     research,
@@ -119,7 +121,8 @@ def build_parser() -> argparse.ArgumentParser:
             " obvod and Bratislava and Košice city obvod borders are its obce"
             " borders, and the countries around Slovakia from Natural Earth,"
             f" reaching under its ZBGIS border, to data/build/{geo.OUTPUT_DIR}/."
-            " Obvod membership comes from data/curated/obvody/ and is checked"
+            " Obvod membership comes from data/curated/elections/<election"
+            " day>/obvody/ and is checked"
             f" against data/build/{candidates.OUTPUT_FILE} (run `ems"
             " candidates` first). Fails if neighbouring areas do not share"
             " their borders, or the countries around leave a gap at Slovakia's."
@@ -155,14 +158,30 @@ def build_parser() -> argparse.ArgumentParser:
     p.set_defaults(run=_run_addresses)
 
     p = commands.add_parser(
+        "basemap",
+        help="build the faded base map: roads, railways, rivers, lakes",
+        description=(
+            "Read the OpenStreetMap extract of Slovakia from data/raw/ and"
+            " write the roads by class, the railways, the rivers and larger"
+            " streams and the water areas, simplified per level of detail of"
+            " the obce shards and clipped to each okres (ZBGIS level 1), plus"
+            " a coarse file of the motorways, major rivers and lakes for the"
+            f" country view, to data/build/{basemap.OUTPUT_DIR}/. The layout is"
+            " described in src/election_map_slovakia/basemap.py." + _SKIPPED
+        ),
+    )
+    _add_force(p)
+    p.set_defaults(run=_run_basemap)
+
+    p = commands.add_parser(
         "build",
         help="assemble the static site in dist/",
         description=(
             "Wipe dist/ and write the site: the app shell per language and"
             " the language picker, web/ assets, UI strings, the geometry and"
-            " address files, and the candidates split per okres, city and"
-            " kraj plus a name search index. Needs the output of"
-            " `candidates`, `geo` and `addresses` in data/build/. The layout"
+            " address files, the base map, and the candidates split per okres,"
+            " city and kraj plus a name search index. Needs the output of"
+            " `candidates`, `geo`, `basemap` and `addresses` in data/build/. The layout"
             " is described in src/election_map_slovakia/build.py."
         ),
     )
@@ -194,7 +213,10 @@ def build_parser() -> argparse.ArgumentParser:
             " `ems fetch`, or after changing the configuration, the curated"
             " data or web/; then `ems serve` shows the result. Steps whose"
             " inputs have not changed since they last succeeded are skipped;"
-            " build and check always run."
+            " build and check always run. `results` writes the election's"
+            " final results from its inputs results-oso<year> and"
+            " results-osk<year> where config/inputs.toml has them, and"
+            " otherwise leaves the results as `ems results` left them."
         ),
     )
     _add_force(p)
@@ -355,7 +377,7 @@ def _stamp(
     values = (values or {}) | {f"config input {inp.name}": inp for _, inp in inputs}
     with progress.stage("comparing the inputs with the last successful run"):
         record = stamp.Stamp(
-            cfg.build_dir / f"{step}.stamp.json",
+            _stamp_path(cfg, step),
             stamp.inputs(
                 cfg.root, step, [*(p for p, _ in inputs), *files], trees, values
             ),
@@ -368,6 +390,11 @@ def _stamp(
     progress.note("running: " + ("--force" if force else "; ".join(changes)))
     record.forget()
     return record
+
+
+def _stamp_path(cfg: config.Config, step: str) -> Path:
+    """Return where *step* records its last successful run."""
+    return cfg.build_dir / f"{step}.stamp.json"
 
 
 def _run_geo(args: argparse.Namespace) -> int:
@@ -385,8 +412,8 @@ def _run_geo(args: argparse.Namespace) -> int:
         args.force or bool(args.preview),
         [out],
         inputs=[*zbgis.values(), countries],
-        files=[built],
-        trees=[cfg.curated_dir / obvody.DIRECTORY, places],
+        files=[built, *_okrsky_files(cfg)],
+        trees=[cfg.election_dir / obvody.DIRECTORY, places],
     )
     if record is None:
         return 0
@@ -395,7 +422,7 @@ def _run_geo(args: argparse.Namespace) -> int:
     try:
         paths = {level: _extract_gpkg(cfg, raw) for level, raw in zbgis.items()}
         result = geo.build(
-            paths, countries[0], cfg.curated_dir, places, data["contests"], counts
+            paths, countries[0], cfg.election_dir, places, data["contests"], counts
         )
         previews = []
         if args.preview:
@@ -414,10 +441,39 @@ def _run_geo(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_basemap(args: argparse.Namespace) -> int:
+    cfg = config.load()
+    osm = _input(cfg, basemap.INPUT)
+    zbgis = _input(cfg, geo.INPUTS[1])
+    out = cfg.build_dir / basemap.OUTPUT_DIR
+    record = _stamp(
+        cfg,
+        "basemap",
+        args.force,
+        [out],
+        inputs=[osm, zbgis],
+        # libosmium assembles the water areas.
+        values={"osmium": basemap.LIBRARY},
+    )
+    if record is None:
+        return 0
+    try:
+        files = basemap.build(osm[0], _extract_gpkg(cfg, zbgis))
+    except (basemap.BaseMapError, geo.GeoError, gpkg.GpkgError) as e:
+        _error(f"ems basemap: {e}")
+        return 1
+    sizes = basemap.write(files, out)
+    record.record()
+    _print(basemap.report(files, sizes))
+    _print([f"wrote {out.relative_to(cfg.root)}/ ({len(sizes)} files)"])
+    return 0
+
+
 def _run_addresses(args: argparse.Namespace) -> int:
     cfg = config.load()
     register = _input(cfg, addresses.INPUT)
     zbgis = _input(cfg, candidates.ZBGIS_INPUT)
+    units = _input(cfg, okrsokrules.UNITS_INPUT)
     built = _built_candidates(cfg)
     out = cfg.build_dir / addresses.OUTPUT_DIR
     outside = cfg.build_dir / addresses.OUTSIDE_FILE
@@ -427,9 +483,9 @@ def _run_addresses(args: argparse.Namespace) -> int:
         "addresses",
         args.force,
         [out, outside, places],
-        inputs=[register, zbgis],
-        files=[built],
-        trees=[cfg.curated_dir / obvody.DIRECTORY],
+        inputs=[register, zbgis, units],
+        files=[built, *_okrsky_files(cfg)],
+        trees=[cfg.election_dir / obvody.DIRECTORY],
         values={"overrides address": cfg.overrides.address},
     )
     if record is None:
@@ -439,11 +495,17 @@ def _run_addresses(args: argparse.Namespace) -> int:
         result = addresses.build(
             register[0],
             _extract_gpkg(cfg, zbgis),
-            cfg.curated_dir,
+            cfg.election_dir,
             contests,
             cfg.overrides.address,
+            okrsokrules.okrsok_counts(cfg),
         )
-    except (addresses.AddressesError, gpkg.GpkgError, obvody.ObvodyError) as e:
+    except (
+        addresses.AddressesError,
+        gpkg.GpkgError,
+        obvody.ObvodyError,
+        jobs.JobError,
+    ) as e:
         _error(f"ems addresses: {e}")
         return 1
     sizes = addresses.write(result, out)
@@ -453,6 +515,44 @@ def _run_addresses(args: argparse.Namespace) -> int:
     _print(addresses.report(result, sizes))
     _print([f"wrote {out.relative_to(cfg.root)}/ ({len(sizes):,} files)"])
     return 0
+
+
+def _run_results(args: argparse.Namespace) -> int:
+    """Run the results step of `make`: the final results of the pinned inputs."""
+    cfg = config.load()
+    packages = _final_inputs(cfg)
+    out = cfg.results_dir
+    if not packages:
+        names = " and ".join(results.final_inputs(cfg.site.election.year))
+        progress.note(
+            f"no {names} in config/{config.INPUTS_FILE}: the results stay as"
+            " `ems results` left them"
+        )
+        return 0
+    record = _stamp(
+        cfg,
+        "results",
+        args.force,
+        [out],
+        inputs=packages,
+        files=[_built_candidates(cfg)],
+        trees=[cfg.build_dir / geo.OUTPUT_DIR, cfg.election_dir / obvody.DIRECTORY],
+    )
+    if record is None:
+        return 0
+    try:
+        written = _write_final(cfg, [p for p, _ in packages], out, merge=False)
+    except (results.ResultsError, OSError, KeyError, ValueError) as e:
+        _error(f"ems results: {e}")
+        return 1
+    record.record()
+    _report_written(out, written)
+    return 0
+
+
+def _okrsky_files(cfg: config.Config) -> list[Path]:
+    """Return the okrsky files of the election; not-found.json beside them is not read."""
+    return sorted((cfg.election_dir / obvody.OKRSKY_DIRECTORY).glob("*.toml"))
 
 
 def _built_candidates(cfg: config.Config) -> Path:
@@ -494,6 +594,8 @@ _MAKE_STEPS = {
     "candidates": _run_candidates,
     "addresses": _run_addresses,
     "geo": _run_geo,
+    "basemap": _run_basemap,
+    "results": _run_results,
     "build": _run_build,
     "check": _run_check,
 }
@@ -743,11 +845,12 @@ def _run_research_status(args: argparse.Namespace) -> int:
 def _add_results_parser(commands: argparse._SubParsersAction) -> None:
     p = commands.add_parser(
         "results",
-        help="election night: the live results site (poll, final, fake, serve, deploy)",
+        help="election results: poll, final, fake, deploy",
         description=(
-            "Write the live results site, live/ (git-ignored), from volbysr.sk"
+            "Write the election's results, data/build/results/<election day>/"
+            " (which `ems build` copies into the site), from volbysr.sk"
             " (poll), the definitive CSV tables (final) or dummy data (fake);"
-            " serve it locally or deploy it to its Cloudflare Pages project."
+            " build the site and deploy it on an election night (deploy)."
             " See docs/results.md and src/election_map_slovakia/results.py."
         ),
     )
@@ -758,17 +861,17 @@ def _add_results_parser(commands: argparse._SubParsersAction) -> None:
             "--dir",
             type=Path,
             default=None,
-            help=f"the live site's directory (default: {results.LIVE_DIR}/)",
+            help="the results directory (default: data/build/results/<election day>/)",
         )
 
     poll = sub.add_parser(
         "poll",
-        help="poll volbysr.sk and rewrite live/ whenever the counting moves on",
+        help="poll volbysr.sk and rewrite the results whenever the counting moves on",
         description=(
             "Fetch the progress files of volbysr.sk every INTERVAL seconds"
             " (conditional requests), and when one changed the per-unit"
             " files; keep every file fetched under data/raw/results/<UTC"
-            " time>/ and rewrite live/ when its content changed."
+            " time>/ and rewrite the results when their content changed."
         ),
     )
     poll.add_argument(
@@ -779,27 +882,40 @@ def _add_results_parser(commands: argparse._SubParsersAction) -> None:
     )
     poll.add_argument("--once", action="store_true", help="poll once and stop")
     poll.add_argument(
-        "--deploy", action="store_true", help="deploy live/ after every change"
+        "--deploy",
+        action="store_true",
+        help="build and deploy the site after every change (as `results deploy --yes`)",
     )
     directory(poll)
     poll.set_defaults(run=_run_results_poll)
     final = sub.add_parser(
         "final",
-        help="put the definitive results (CSV zips of volbysr.sk) into live/",
+        help="write the definitive results (CSV zips of volbysr.sk)",
         description=(
-            "Read the definitive results, the zip of CSV tables (or a"
-            " directory of them) of the municipal and/or regional election,"
-            " e.g. https://volbysr.sk/oso/files/OSO2026_SK_csv.zip, into"
-            " live/, replacing the contests they have. With both elections"
-            " the phase becomes final."
+            "Read the definitive results, the zips of CSV tables of the"
+            " municipal and the regional election: the zips or directories"
+            " of them given; else the election's inputs results-oso<year> and"
+            " results-osk<year> where config/inputs.toml has them (`ems"
+            " fetch` downloads them); else downloaded from"
+            " https://volbysr.sk/oso/files/OSO<year>_SK_csv.zip and"
+            " osk/files/OSK<year>_SK_csv.zip and kept under"
+            " data/raw/results/<UTC time>/. They replace the contests they"
+            " have in the results; with both elections the phase becomes"
+            " final."
         ),
     )
-    final.add_argument("packages", nargs="+", type=Path, metavar="ZIP_OR_DIR")
+    final.add_argument(
+        "packages",
+        nargs="*",
+        type=Path,
+        metavar="ZIP_OR_DIR",
+        help="read these instead of the inputs or the downloaded packages",
+    )
     directory(final)
     final.set_defaults(run=_run_results_final)
     fake = sub.add_parser(
         "fake",
-        help="write dummy results into live/ for testing the app",
+        help="write dummy results for testing the app",
         description=(
             "Write deterministic dummy results of the counting at STAGE"
             " (none, early, mid, late, final) from data/build/; the counts"
@@ -810,42 +926,40 @@ def _add_results_parser(commands: argparse._SubParsersAction) -> None:
     fake.add_argument("--seed", type=int, default=0, help="random seed (default 0)")
     directory(fake)
     fake.set_defaults(run=_run_results_fake)
-    serve = sub.add_parser(
-        "serve",
-        help="serve live/ locally with the live site's headers (CORS)",
-        description=(
-            "Serve live/ until interrupted, with the headers of the live site"
-            " (Access-Control-Allow-Origin: *, no-cache). Build the main site"
-            f" with EMS_LIVE_URL=http://127.0.0.1:{results.PORT} to read it."
-        ),
-    )
-    serve.add_argument("--host", default="127.0.0.1", help="address to bind")
-    serve.add_argument(
-        "--port", type=int, default=results.PORT, help=f"port (default {results.PORT})"
-    )
-    directory(serve)
-    serve.set_defaults(run=_run_results_serve)
     deploy = sub.add_parser(
         "deploy",
-        help="upload live/ to its Cloudflare Pages project",
+        help="build the site with the results and upload it to Cloudflare Pages",
         description=(
-            "Show what live/ holds, check it, and upload it with Wrangler to"
-            " the Pages project live_pages_project of config/site.toml,"
-            " after asking unless --yes."
+            "Show what the results hold and check them, build the site"
+            " (`ems build`) and upload dist/ with Wrangler to the Pages"
+            " project pages_project of config/site.toml as a production"
+            " deployment, after asking unless --yes. A release (a version"
+            " tag) deploys the same way through CI."
         ),
     )
     deploy.add_argument("--yes", action="store_true", help="do not ask")
-    directory(deploy)
     deploy.set_defaults(run=_run_results_deploy)
 
 
-def _live_dir(cfg: config.Config, args: argparse.Namespace) -> Path:
-    return args.dir if args.dir is not None else cfg.root / results.LIVE_DIR
+def _results_dir(cfg: config.Config, args: argparse.Namespace) -> Path:
+    """Return the directory a results command writes; see :func:`_written`."""
+    return args.dir if args.dir is not None else cfg.results_dir
+
+
+def _written(cfg: config.Config, directory: Path) -> None:
+    """Note that a results command has rewritten *directory*.
+
+    The results step of `make` would take the election's results directory
+    for its own output, up to date, and keep what poll, fake or final wrote
+    there instead of the results of the inputs: its stamp goes.
+    """
+    if directory.resolve() == cfg.results_dir.resolve():
+        _stamp_path(cfg, "results").unlink(missing_ok=True)
 
 
 def _reference(cfg: config.Config) -> results.Reference:
     try:
-        return results.load_reference(cfg.build_dir, cfg.curated_dir)
+        return results.load_reference(cfg.build_dir, cfg.election_dir)
     except results.ResultsError as e:
         raise ConfigError(str(e)) from e
 
@@ -857,17 +971,48 @@ def _report_written(directory: Path, written: dict | None) -> None:
         _print(results.describe(directory))
 
 
-def _run_results_poll(args: argparse.Namespace) -> int:
-    cfg = config.load()
-    out = _live_dir(cfg, args)
-    client = results.Client(
+def _client(cfg: config.Config) -> results.Client:
+    """Return the client of volbysr.sk, archiving into data/raw/results/."""
+    return results.Client(
         results.BASE_URL,
         results.browser_agent(cfg.inputs.contact),
         fetch.ssl_context(cfg.inputs.ca_certificates),
         cfg.raw_dir / results.RAW_DIR,
     )
+
+
+def _final_inputs(cfg: config.Config) -> list[_Raw]:
+    """Return the election's final results inputs that config/inputs.toml has."""
+    names = {inp.name for inp in cfg.inputs.inputs}
+    wanted = results.final_inputs(cfg.site.election.year)
+    return [_input(cfg, name) for name in wanted if name in names]
+
+
+def _write_final(
+    cfg: config.Config, packages: Sequence[Path], out: Path, *, merge: bool
+) -> dict | None:
+    """Write the definitive results of *packages* to *out*; return the status.
+
+    With *merge*, into the results there, replacing the contests the
+    packages have; else in their place. Written as of the packages' newest
+    data, so that the same packages give the same files, and only if they
+    keep the contract (``results.check``): a unit whose votes do not add up
+    stops it.
+    """
+    ref = _reference(cfg)
+    data = json.loads(_built_candidates(cfg).read_bytes())
+    live, elections = results.read_final(packages, ref.contests)
+    merged = results.merge(results.read_live(out) if merge else None, live, elections)
+    merged.past = results.okrsok_past(merged, results.okrsky_then(data))
+    return results.write(out, merged, results.data_time(merged), checked=True)
+
+
+def _run_results_poll(args: argparse.Namespace) -> int:
+    cfg = config.load()
+    out = _results_dir(cfg, args)
+    client = _client(cfg)
     poller = results.Poller(client, _reference(cfg), out, _log)
-    project = cfg.site.live_pages_project
+    project = cfg.site.pages_project
     try:
         while True:
             started = time.monotonic()
@@ -876,8 +1021,10 @@ def _run_results_poll(args: argparse.Namespace) -> int:
             except OSError as e:
                 _log(f"poll failed: {e}")
                 written = None
+            if written is not None:
+                _written(cfg, out)
             if written is not None and args.deploy:
-                code = results.deploy(out, project)
+                code = _run_build(args) or results.deploy(cfg.root, project)
                 _log(
                     f"deploy to {project}: " + ("done" if code == 0 else f"exit {code}")
                 )
@@ -894,64 +1041,65 @@ def _log(message: str) -> None:
 
 def _run_results_final(args: argparse.Namespace) -> int:
     cfg = config.load()
-    out = _live_dir(cfg, args)
-    built = cfg.build_dir / candidates.OUTPUT_FILE
-    okres_of = (
-        {o["code"]: o.get("okres", "") for o in json.loads(built.read_bytes())["obce"]}
-        if built.is_file()
-        else {}
-    )
+    out = _results_dir(cfg, args)
     try:
-        live, elections = results.read_final(args.packages, okres_of)
-        merged = results.merge(results.read_live(out), live, elections)
-        written = results.write(out, merged)
+        packages = (
+            args.packages
+            or [path for path, _ in _final_inputs(cfg)]
+            or results.fetch_final(_client(cfg), cfg.site.election.year)
+        )
+        _print([f"reading {p}" for p in packages])
+        written = _write_final(cfg, packages, out, merge=True)
     except (results.ResultsError, OSError, KeyError, ValueError) as e:
         _error(f"ems results final: {e}")
         return 1
+    if written is not None:
+        _written(cfg, out)
     _report_written(out, written)
     return 0
 
 
 def _run_results_fake(args: argparse.Namespace) -> int:
     cfg = config.load()
-    out = _live_dir(cfg, args)
-    written = results.write(out, results.fake(_reference(cfg), args.stage, args.seed))
-    _report_written(out, written)
-    return 0
-
-
-def _run_results_serve(args: argparse.Namespace) -> int:
-    cfg = config.load()
-    out = _live_dir(cfg, args)
-    if results.read_status(out) is None:
-        raise ConfigError(f"{out} has no live site; run `ems results fake` or `poll`")
-    results.write_static(out)
+    out = _results_dir(cfg, args)
     try:
-        build.serve(out, args.host, args.port)
-    except KeyboardInterrupt:
-        pass
-    except OSError as e:
-        _error(f"ems results serve: {args.host}:{args.port}: {e.strerror}")
+        counts = okrsokrules.okrsok_counts(cfg)
+        rule_sets = obvody.okrsok_rule_sets(cfg.election_dir)
+    except (jobs.JobError, obvody.ObvodyError) as e:
+        _error(f"ems results fake: {e}")
         return 1
+    live = results.fake(
+        _reference(cfg),
+        args.stage,
+        args.seed,
+        counts,
+        {obec: rules.okrsky for obec, rules in rule_sets.items()},
+    )
+    written = results.write(out, live)
+    if written is not None:
+        _written(cfg, out)
+    _report_written(out, written)
     return 0
 
 
 def _run_results_deploy(args: argparse.Namespace) -> int:
     cfg = config.load()
-    out = _live_dir(cfg, args)
-    project = cfg.site.live_pages_project
-    results.write_static(out)
+    out = cfg.results_dir
+    project = cfg.site.pages_project
     _print(results.describe(out))
     problems = results.check(out)
     if problems:
         _print([f"  {p}" for p in problems])
         _error(f"ems results deploy: {out} breaks the contract; not deployed")
         return 1
-    _print([" ".join(results.deploy_command(out, project))])
+    code = _run_build(args)
+    if code:
+        return code
+    _print([" ".join(results.deploy_command(project))])
     if not args.yes and input(f"deploy to {project}? [y/N] ").strip().lower() != "y":
         _print(["not deployed"])
         return 1
-    return results.deploy(out, project)
+    return results.deploy(cfg.root, project)
 
 
 def _print(lines: Iterable[str]) -> None:
@@ -980,7 +1128,6 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         if run in (
             _run_serve,
-            _run_results_serve,
             _run_results_poll,
             _run_results_deploy,
         ):

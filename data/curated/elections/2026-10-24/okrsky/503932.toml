@@ -1,0 +1,31 @@
+# Okrsky of Neded, transcribed by an AI agent in job okrsok-rules-343 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: občania prihlásení na trvalý pobyt na číslach: 1-352, 1274,1279,1289-1291,1295-1300,1303,1314-1319,1325-1327,1341-1346,1501,1502 a občania bez adresy
+#   okrsok 2: občania prihlásení na trvalý pobyt na číslach: 354-843, 1281,1301,1322,1334,1337
+#   okrsok 3: občania prihlásení na trvalý pobyt na číslach: 845-1269,1275-1276,1280,1282-1288,1292-1294,1305-1312,,1324,1330-1333,1336,1340,1492,1521
+obec = "503932"
+name = "Neded"
+okrsky_date = 2026-07-06
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky are given by súpisné čísla; numbers the document does not list (e.g. 353, 844, newer numbers) take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.neded.sk/modules/file_storage/download.php?file=897ce43b%7C976&inline=1"
+sha256 = "8eff9f316f79515e6b5961560612a9334cb9667c664ba929c4db332fd87397b4"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Neded", numbers = "1-352, 1274, 1279, 1289-1291, 1295-1300, 1303, 1314-1319, 1325-1327, 1341-1346, 1501, 1502"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Neded", numbers = "354-843, 1281, 1301, 1322, 1334, 1337"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Neded", numbers = "845-1269, 1275-1276, 1280, 1282-1288, 1292-1294, 1305-1312, 1324, 1330-1333, 1336, 1340, 1492, 1521"},
+]

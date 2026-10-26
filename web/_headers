@@ -5,12 +5,12 @@
 # gets both values joined by a comma, so the Cache-Control rules below must
 # not overlap).
 
-# The site loads nothing from other origins but the live results (the
-# build writes the origin of live_url in config/site.toml into connect-src)
-# and runs no inline script; the policy makes the browser enforce that.
-# data: images are the favicons written inline in the HTML.
+# The site loads nothing from other origins, the results included (they
+# are in /results/, see below), and runs no inline script; the policy makes
+# the browser enforce that. data: images are the favicons written inline in
+# the HTML.
 /*
-  Content-Security-Policy: default-src 'self'; connect-src {{connect}}; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; connect-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer
 
@@ -44,6 +44,18 @@
   Cache-Control: public, max-age=86400
 
 /addr/*
+  Cache-Control: public, max-age=86400
+
+# The results of the election of a day (/results/<day>/, docs/results.md).
+# status.json changes with every deployment of new results, so it is always
+# revalidated; the app asks for every other file with ?v=<the hash of its
+# content that status.json lists>, kept for a day like the other JSON. The
+# second rule needs a directory below the day (okres/, okrsky/, ...), so it
+# never matches status.json and the two do not overlap.
+/results/:day/status.json
+  Cache-Control: no-cache
+
+/results/:day/:kind/*
   Cache-Control: public, max-age=86400
 
 # Cached copies of the pages research cites. A copy's name is the hash of

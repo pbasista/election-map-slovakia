@@ -1,0 +1,66 @@
+# Okrsky of Ivanka pri Nitre, transcribed by an AI agent in job okrsok-rules-332 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ábelova ulica, Horná ulica, Hornocintorínska ulica, Konopárenská ulica, Ulica Mateja Tučku, Myrtina, Na Pílu, Na Stanicu, Ulica Južná, Ulica Východná, Ulica Západná, Urbárska ulica, Buková ulica, Dubová ulica, Agátová ulica, Brezová ulica, Jaseňová ulica, Javorová ulica, Vŕbová ulica
+#   okrsok 2: Občania s TP na obci, Krakovská ulica, Mojmírovská ulica, Novozámocká ulica, Ulica Pri Parku
+#   okrsok 3: Bárdyho ulica, Beňadikova ulica, Gergelova ulica, Konečná ulica, Ulica Luk, Na Štrkovisko, Nosákova ulica, Orolská ulica, Ulica Pri Tehelni, Vinohradská ulica, Ulica Kračiny
+obec = "558320"
+name = "Ivanka pri Nitre"
+okrsky_note = "Okrsok 2 includes 'Občania s TP na obci' (registered at the obec without address), given as the rest. 'ulica'/'Ulica' left out of names where the register omits it. The document is undated."
+
+[[document]]
+url = "https://ivankaprinitre.sk/web/wp-content/uploads/2026/07/Utvorenie-volebných-okrskov-a-určenie-volebných-miestností.pdf"
+sha256 = "469f708a6ef022a2304cbb10eb9bc8d2c37354933cf08a26c83fc027745d637d"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://ivankaprinitre.sk/web/2026/07/17/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov/"
+sha256 = "4862ae832f3399d960b586bc877129ffc32b42826632e76d822f20ce9d8a288e"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {street = "Ábelova", written = "Ábelova ulica"},
+  {street = "Horná", written = "Horná ulica"},
+  {street = "Hornocintorínska", written = "Hornocintorínska ulica"},
+  {street = "Konopárenská", written = "Konopárenská ulica"},
+  {street = "Mateja Tučku", written = "Ulica Mateja Tučku"},
+  {street = "Myrtina"},
+  {street = "Na Pílu"},
+  {street = "Na Stanicu"},
+  {street = "Ulica Južná"},
+  {street = "Ulica Východná"},
+  {street = "Ulica Západná"},
+  {street = "Urbárska", written = "Urbárska ulica"},
+  {street = "Buková ulica"},
+  {street = "Dubová ulica"},
+  {street = "Agátová ulica"},
+  {street = "Brezová ulica"},
+  {street = "Jaseňová ulica"},
+  {street = "Javorová ulica"},
+  {street = "Vŕbová ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krakovská", written = "Krakovská ulica"},
+  {street = "Mojmírovská", written = "Mojmírovská ulica"},
+  {street = "Novozámocká", written = "Novozámocká ulica"},
+  {street = "Pri Parku", written = "Ulica Pri Parku"},
+  {rest = true},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bárdyho", written = "Bárdyho ulica"},
+  {street = "Beňadikova", written = "Beňadikova ulica"},
+  {street = "Gergelova", written = "Gergelova ulica"},
+  {street = "Konečná", written = "Konečná ulica"},
+  {street = "Luk", written = "Ulica Luk"},
+  {street = "Na Štrkovisko"},
+  {street = "Nosákova", written = "Nosákova ulica"},
+  {street = "Orolská", written = "Orolská ulica"},
+  {street = "Pri Tehelni", written = "Ulica Pri Tehelni"},
+  {street = "Vinohradská", written = "Vinohradská ulica"},
+  {street = "Ulica Kračiny"},
+]

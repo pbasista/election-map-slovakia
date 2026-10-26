@@ -28,9 +28,10 @@ Each checked item gets a review sheet, ``review/<obec>.html`` in the job
 directory: its obvody drawn as ``geo`` will draw them, coloured, with every
 address point and the rules. ``accept`` copies the documents to
 ``data/curated/cache/<sha256>.<ext>`` and writes the rule set to
-``data/curated/obvody/oz/<obec>.toml``; an obec reported not found goes to
-``data/curated/obvody/oz-not-found.json`` with the URLs tried, and ``make``
-leaves it out unless named with ``--only``.
+``obvody/oz/<obec>.toml`` in the election's data
+(:attr:`election_map_slovakia.config.Config.election_dir`); an obec
+reported not found goes to ``obvody/oz-not-found.json`` there with the URLs
+tried, and ``make`` leaves it out unless named with ``--only``.
 """
 
 from __future__ import annotations
@@ -63,7 +64,7 @@ DEFAULT_SIZE = 1
 CACHE_DIR = "cache"
 """Below ``data/curated/``: the official documents, by sha256."""
 NOT_FOUND_FILE = "oz-not-found.json"
-"""Below ``data/curated/obvody/``."""
+"""Below ``obvody/`` in :attr:`election_map_slovakia.config.Config.election_dir`."""
 DOCUMENTS_DIR = "documents"
 REVIEW_DIR = "review"
 REVIEW_LEVEL = 1
@@ -78,6 +79,9 @@ SHARED_HOSTS = {
     # domain in the path (e.g. /data/uploads/staremesto.sk/...).
     "data.moderneobce.sk": True,
     "www.obce.info": True,
+    # Civium: municipal websites built as script-only apps over its API,
+    # whose files lie under a numeric institution id, not the domain.
+    "app.civium.sk": False,
 }
 """Hosts that publish for many municipalities → whether the path must name
 the obec's website domain."""
@@ -88,8 +92,16 @@ KNOWN_WEBSITES = {
     # "BA Nové Mesto": the district calls banm.sk its official site and runs
     # its notice board there (checked by hand, 2026-10-19).
     "Bratislava-Nové Mesto": "banm.sk",
+    # Obce whose own sites lie under .com or .org, where a site named after
+    # an obec is as often a commercial guide to it (each calls itself the
+    # obec's official site; checked by hand, 2026-10-24).
+    "Kráľovský Chlmec": "kralovskychlmec.org",
+    "Liptovská Osada": "liptovskaosada.com",
+    "Tisovec": "tisovec.com",
+    "Zázrivá": "zazriva.com",
 }
-"""Official domains that carry no word of the obec's name, by obec name."""
+"""Official domains checked by hand that carry no word of the obec's name
+or lie outside :data:`OFFICIAL_TLDS`, by obec name."""
 _MIN_WORD = 3
 _URLS = re.compile(r"https?://\S+")
 _SEARCH_TITLES = (
@@ -98,7 +110,7 @@ _SEARCH_TITLES = (
     "určenie volebných obvodov a počtu poslancov",
 )
 
-_RULE_SCHEMA: dict[str, Any] = {
+RULE_SCHEMA: dict[str, Any] = {
     "type": "object",
     "additionalProperties": False,
     "description": "one rule; see prompt.md for the meaning of each field",
@@ -171,7 +183,7 @@ ITEM_SCHEMA: dict[str, Any] = {
                     "rules": {
                         "type": "array",
                         "minItems": 1,
-                        "items": _RULE_SCHEMA,
+                        "items": RULE_SCHEMA,
                     },
                 },
             },
@@ -190,7 +202,7 @@ def places_dir(cfg: Config) -> Path:
 
 def not_found_path(cfg: Config) -> Path:
     """Return the file of the obce whose document was not found."""
-    return cfg.curated_dir / obvody.DIRECTORY / NOT_FOUND_FILE
+    return cfg.election_dir / obvody.DIRECTORY / NOT_FOUND_FILE
 
 
 def load_not_found(cfg: Config) -> dict[str, Any]:
@@ -199,7 +211,8 @@ def load_not_found(cfg: Config) -> dict[str, Any]:
     return json.loads(path.read_bytes()) if path.is_file() else {}
 
 
-def _candidate_data(cfg: Config) -> dict[str, Any]:
+def candidate_data(cfg: Config) -> dict[str, Any]:
+    """Return ``candidates.json``; fail if ``ems candidates`` has not run."""
     path = cfg.build_dir / candidates.OUTPUT_FILE
     if not path.is_file():
         raise jobs.JobError(f"{path} missing; run `ems candidates` first")
@@ -212,7 +225,7 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
     ``--only`` takes obec codes or names; it also brings back obce whose
     document was not found before.
     """
-    data = _candidate_data(cfg)
+    data = candidate_data(cfg)
     names = {o["code"]: o for o in data["obce"]}
     okresy = {o["code"]: o["name"] for o in data["okresy"]}
     kraje = {k["code"]: k["name"] for k in data["kraje"]}
@@ -221,7 +234,7 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
     directory = places_dir(cfg)
     if not directory.is_dir():
         raise jobs.JobError(f"{directory} missing; run `ems addresses` first")
-    curated = set(obvody.load_rule_sets(cfg.curated_dir))
+    curated = set(obvody.load_rule_sets(cfg.election_dir))
     not_found = load_not_found(cfg)
     pending = {i["id"] for j in options.pending for i in j.items}
     only = {search_key(x) for x in options.only}
@@ -343,8 +356,10 @@ def official_problems(name: str, website: str, urls: Sequence[str]) -> list[str]
 
 def _download(cfg: Config, url: str) -> bytes:
     """Return the content at *url*; raise JobError if it cannot be had."""
+    # Agents copy links as shown, with spaces and diacritics in the path.
     request = urllib.request.Request(
-        url, headers={"User-Agent": fetch.user_agent(cfg.inputs.contact)}
+        urllib.parse.quote(url, safe=":/?#[]@!$&'()*+,;=%~"),
+        headers={"User-Agent": fetch.user_agent(cfg.inputs.contact)},
     )
     context = fetch.ssl_context(cfg.inputs.ca_certificates)
     try:
@@ -365,18 +380,22 @@ def _extension(url: str, data: bytes) -> str:
         return "pdf"
     if b"<html" in data[:2048].lower() or b"<!doctype html" in data[:2048].lower():
         return "html"
+    # Some obce publish Word files, behind download scripts (download.php).
+    if data.startswith(b"PK\x03\x04") and b"word/document.xml" in data:
+        return "docx"
     suffix = Path(urllib.parse.urlsplit(url).path).suffix.lower().lstrip(".")
     return suffix if re.fullmatch(r"[a-z0-9]{1,5}", suffix) else "bin"
 
 
-def _documents_index(job: jobs.Job) -> dict[str, str]:
+def documents_index(job: jobs.Job) -> dict[str, str]:
+    """Return URL → file name of the documents a job's checks fetched."""
     path = job.path / DOCUMENTS_DIR / "index.json"
     return json.loads(path.read_bytes()) if path.is_file() else {}
 
 
-def _keep(cfg: Config, job: jobs.Job, url: str) -> str:
+def keep(cfg: Config, job: jobs.Job, url: str) -> str:
     """Fetch *url* into the job's documents (once); return its file name."""
-    index = _documents_index(job)
+    index = documents_index(job)
     if url in index and (job.path / DOCUMENTS_DIR / index[url]).is_file():
         return index[url]
     data = _download(cfg, url)
@@ -436,7 +455,7 @@ def check(
     shas = {}
     for url in urls:
         try:
-            shas[url] = _keep(cfg, job, url).split(".")[0]
+            shas[url] = keep(cfg, job, url).split(".")[0]
         except jobs.JobError as e:
             problems.append(str(e))
     if problems:
@@ -469,7 +488,8 @@ _SHEET_WIDTH = 900
 
 
 @functools.cache
-def _obce_and_kus(gpkg: Path) -> tuple[dict[str, Any], dict[str, list[geo.Ku]]]:
+def obce_and_kus(gpkg: Path) -> tuple[dict[str, Any], dict[str, list[geo.Ku]]]:
+    """Return the obce and their k.ú. of a ZBGIS level, EPSG:5514."""
     obce = {c: g for c, (_, g) in geo.read_layer(gpkg, "obec", "IDN4", "NM4").items()}
     return obce, geo.read_kus(gpkg)
 
@@ -487,10 +507,10 @@ def write_review(
     gpkg = cfg.build_dir / f"USJ_hranice_{REVIEW_LEVEL}.gpkg"
     drawing = ""
     if gpkg.is_file() and not assignment.unassigned and not assignment.conflicts:
-        obce, kus = _obce_and_kus(gpkg)
+        obce, kus = obce_and_kus(gpkg)
         to_wgs84 = geo.transformer()
         split = geo.council_split(
-            rules, places, assignment.obvody, kus.get(rules.obec, []), to_wgs84
+            rules, places, assignment.units, kus.get(rules.obec, []), to_wgs84
         )
         obec = geo.to_grid(obce[rules.obec], to_wgs84, 10**geo.DECIMALS)
         pieces: list[tuple[int, Any]] = []
@@ -500,7 +520,7 @@ def write_review(
             )
         except geo.GeoError as e:
             problems = [*problems, f"(review) {e}"]
-        drawing = _svg(obec, pieces, places, assignment, split.approximate)
+        drawing = review_svg(obec, pieces, places, assignment, split.approximate)
     path = job.path / REVIEW_DIR / f"{rules.obec}.html"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
@@ -509,21 +529,26 @@ def write_review(
     return path
 
 
-def _colour(n: int) -> str:
+def colour(n: int) -> str:
+    """Return the review sheets' colour of obvod (or okrsok) *n*."""
     return _COLOURS[(n - 1) % len(_COLOURS)]
 
 
-def _svg(
+def review_svg(
     obec: Any,
     pieces: Sequence[tuple[int, Any]],
     places: obvody.ObecPlaces,
     assignment: obvody.Assignment,
     approximate: bool,
+    outlines: Sequence[Any] = (),
 ) -> str:
-    """Return the obec, its obvody and its address points as SVG.
+    """Return the obec, its obvody (or okrsky) and its address points as SVG.
 
-    All are in grid units (1/100,000 degree), as the map rounds them; east
-    is shrunk by the cosine of the latitude.
+    *pieces* are (number, area) coloured by number, the address points by
+    their unit in *assignment*; *outlines* are drawn over them as borders
+    (the obvody, around the okrsky). All are in grid units (1/100,000
+    degree), as the map rounds them; east is shrunk by the cosine of the
+    latitude.
     """
     x0, y0, x1, y1 = obec.bounds
     east = np.cos(np.radians((y0 + y1) / 2 / 10**geo.DECIMALS))
@@ -551,13 +576,17 @@ def _svg(
     dash = ' stroke-dasharray="4 3"' if approximate else ""
     for n, g in pieces:
         out.append(
-            f'<path d="{path(g)}" fill="{_colour(n)}" fill-opacity="0.22"'
-            f' stroke="{_colour(n)}" stroke-width="1.5"{dash} fill-rule="evenodd"/>'
+            f'<path d="{path(g)}" fill="{colour(n)}" fill-opacity="0.22"'
+            f' stroke="{colour(n)}" stroke-width="1.5"{dash} fill-rule="evenodd"/>'
         )
+    out += [
+        f'<path d="{path(g)}" fill="none" stroke="#333" stroke-width="3"/>'
+        for g in outlines
+    ]
     out.append(f'<path d="{path(obec)}" fill="none" stroke="#000" stroke-width="2"/>')
     located = ~np.isnan(places.points[:, 0])
     x, y = places.points[located].T
-    number = np.array(assignment.obvody)[located]
+    number = np.array(assignment.units)[located]
     filled = np.isin(np.flatnonzero(located), assignment.filled)
     for n in sorted(set(number.tolist())):
         sel = number == n
@@ -566,7 +595,7 @@ def _svg(
             for a, b in zip(x[sel], y[sel], strict=True)
         )
         out.append(
-            f'<path d="{dots}" stroke="{_colour(n) if n else "#000"}" stroke-width="3"'
+            f'<path d="{dots}" stroke="{colour(n) if n else "#000"}" stroke-width="3"'
             ' stroke-linecap="round"/>'
         )
     if filled.any():
@@ -591,8 +620,8 @@ def _page(
 ) -> str:
     """Return the review sheet: drawing, problems, obvody with their rules."""
     e = html.escape
-    counts = Counter(assignment.obvody)
-    filled = Counter(assignment.obvody[i] for i in assignment.filled)
+    counts = Counter(assignment.units)
+    filled = Counter(assignment.units[i] for i in assignment.filled)
     texts = {o["number"]: o["text"] for o in out["obvody"]}
     rows = []
     for n, seats in rules.seats.items():
@@ -602,10 +631,10 @@ def _page(
             + (f" — {e(r.note)}" if r.note else "")
             + "</li>"
             for r in rules.rules
-            if r.obvod == n
+            if r.unit == n
         )
         rows.append(
-            f'<tr><td><span class="key" style="background:{_colour(n)}"></span>'
+            f'<tr><td><span class="key" style="background:{colour(n)}"></span>'
             f" <b>{n}</b></td><td>{seats}</td><td>{counts[n]:,}"
             + (f" ({filled[n]:,} by the nearest)" if filled[n] else "")
             + f'</td><td><ul>{listed}</ul></td><td class="text">{e(texts.get(n, ""))}</td></tr>'
@@ -645,7 +674,7 @@ ul {{ margin: 0; padding-left: 1.2em; }}
 def accept(cfg: Config, job: jobs.Job, accepted: list[jobs.Accepted]) -> list[str]:
     """Write the accepted rule sets and documents into ``data/curated/``."""
     lines = []
-    index = _documents_index(job)
+    index = documents_index(job)
     not_found = load_not_found(cfg)
     cache = cfg.curated_dir / CACHE_DIR
     for item, out in accepted:
@@ -671,7 +700,7 @@ def accept(cfg: Config, job: jobs.Job, accepted: list[jobs.Accepted]) -> list[st
                 target.write_bytes((job.path / DOCUMENTS_DIR / name).read_bytes())
             shas[d["url"]] = name.split(".")[0]
         rules = rule_set(item, out, shas)
-        path = obvody.rules_path(cfg.curated_dir, code)
+        path = obvody.rules_path(cfg.election_dir, code)
         path.parent.mkdir(parents=True, exist_ok=True)
         header = [
             f"Council obvody of {item['name']} ({code}), {item['okres']}.",

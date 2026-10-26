@@ -1,0 +1,43 @@
+# Okrsky of Spišské Bystré, transcribed by an AI agent in job okrsok-rules-482 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Partizánska, SNP, Hornádska, Michalská, Jána Lačeka, Vodárenska, Pod lesom
+#   okrsok 2: Cintorínska, Hviezdoslavova, Kukučínova, Školská, Slnečná, Krátka, Kamenec, Družstevná
+obec = "523852"
+name = "Spišské Bystré"
+okrsky_date = 2026-07-14
+okrsky_fill = "nearest"
+okrsky_note = "Addresses without a street (51) take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.spisskebystre.sk/e_download.php?file=/data/uredni_deska/obsah1191_3.pdf&original=Okrsky.pdf"
+sha256 = "6b2731ed6cc46d285f6ad3eeac07d50e1d1483fca377ff109b0113bdcc224f6e"
+title = "Oznámenie o určení volebných okrskov a volebných miestností"
+
+[[document]]
+url = "https://www.spisskebystre.sk/urad/volby-referendum/"
+sha256 = "bf9dbb5d408c062c1ac27c421539d873930159032449f9a120edd49f44e4d027"
+title = "Voľby / referendum"
+
+[okrsok.1]
+rules = [
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Hornádska"},
+  {street = "Michalská"},
+  {street = "Jána Lačeka"},
+  {street = "Vodárenska"},
+  {street = "Pod lesom"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Hviezdoslavova"},
+  {street = "Kukučínova"},
+  {street = "Školská"},
+  {street = "Slnečná"},
+  {street = "Krátka"},
+  {street = "Kamenec"},
+  {street = "Družstevná"},
+]

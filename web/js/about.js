@@ -33,6 +33,7 @@ const INPUT_GROUPS = [
   ['zbgis-', 'about.inputs.zbgis'],
   ['addresses', 'about.inputs.addresses'],
   ['natural-earth-', 'about.inputs.countries'],
+  ['osm-', 'about.inputs.osm'],
   ['zsk-obvody-', 'about.inputs.zsk'],
   ['results-', 'about.inputs.results'],
 ];

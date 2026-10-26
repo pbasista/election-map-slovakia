@@ -1,0 +1,29 @@
+# Okrsky of Čalovec, transcribed by an AI agent in job okrsok-rules-543 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volebný okrsok č. 1; volebná miestnosť: zasadacia miestnosť obecného úradu v Čalovci, 946 02 Čalovec č. 170
+#   okrsok 2: volebný okrsok č. 2; volebná miestnosť: kultúrno-spoločenská miestnosť Čalovec-Violín č. 56, 946 02 Čalovec-Violín č. 56
+obec = "501085"
+name = "Čalovec"
+okrsky_date = 2026-07-20
+okrsky_note = "The document gives only the polling stations: okrsok 1 at the obecný úrad Čalovec č. 170, okrsok 2 at the kultúrno-spoločenská miestnosť Čalovec-Violín č. 56. Two okrsky, two parts, each station in another part: each okrsok takes the part of its station (inferred)."
+
+[[document]]
+url = "https://www.calovec.sk/urad/uradna-tabula/oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-pre-volby-do-organov-samospravy-obce-ktore-platia-aj-pre-volby-do-organov-samospravnych-krajov-ktore-sa-budu-konat-dna-24102026-626.html"
+sha256 = "84a1a0a09a906aac89a8fda9adb16c066dfd52c27748281e6ee430bcf75bbf3d"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností (úradná tabuľa)"
+
+[[document]]
+url = "https://www.calovec.sk/e_download.php?file=/data/uredni_deska/obsah590_1.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Den%C3%AD%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "6b7311196660116c10d022e91cff45a33b1a94b386336ffd516f5b3aac3fe4b1"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Čalovec", note = "Station in part Čalovec (č. 170).", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Violín", note = "Station in part Violín (č. 56).", inferred = true},
+]

@@ -1,0 +1,29 @@
+# Okrsky of Klenovec, transcribed by an AI agent in job okrsok-rules-334 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre č. domov od 1 – 224
+#   okrsok 2: pre č. domov 225 – 600
+#   okrsok 3: pre č. domov nad 600
+obec = "515043"
+name = "Klenovec"
+okrsky_note = "The okrsky are defined by house numbers (čísla domov), read as súpisné čísla over the whole obec. The notice is undated."
+
+[[document]]
+url = "https://www.klenovec.sk/e_download.php?file=/data/uredni_deska/obsah922_1.pdf&original=Ozn%C3%A1menie%20o%20%C4%8Dase%20a%20mieste%20konania%20volieb.pdf"
+sha256 = "0f3f9f84b89231ba4dda1ca895da189a151fb225333a47fb621c97446f74b70c"
+title = "Oznámenie o čase a mieste konania volieb do orgánov samosprávnych krajov a volieb do orgánov samosprávy obcí 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Klenovec", numbers = "1-224"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Klenovec", numbers = "225-600"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Klenovec", numbers = "601-"},
+]

@@ -1,0 +1,44 @@
+# Council obvody of Záhorce (516546), Veľký Krtíš.
+# Transcribed by an AI agent in job obvod-rules-171 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: viacmandátový volebný obvod č. 1 pre voľby poslancov v časti obce Záhorce, v ktorom sa budú voliť piati poslanci,
+#   obvod 2: viacmandátový volebný obvod č. 2 pre voľby poslancov v časti obce Selešťany, v ktorom sa budú voliť dvaja poslanci,
+# Okrsky added by an AI agent in job okrsok-rules-170 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Záhorce
+#   okrsok 2: Selešťany
+obec = "516546"
+name = "Záhorce"
+date = 2026-06-29
+okrsky_date = 2026-07-23
+
+[[document]]
+url = "https://www.zahorce.sk/e_download.php?file=/data/uredni_deska/obsah365_4.pdf&original=Uznesenie%20UZN%2029.6.2026%20-%20final%20-%20opraven%C3%BD.pdf"
+sha256 = "702f7d89e2b5fcddd6440ba661596a1a504633be2ac4e47d5522f9e243e6b9f6"
+title = "Uznesenie OZ č. 3/2026 zo zasadnutia 29. júna 2026 (uznesenie č. 08-03/2026)"
+
+[[document]]
+url = "https://www.zahorce.sk/e_download.php?file=/data/multipage/editor/editor-11-39-sk_1.pdf&original=Ozn%C3%A1menie%20-%20web%202026.pdf"
+sha256 = "044940e4e679dc276d57c520d59900ccef0851a765ae0e6b4a2989225379d2a9"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných okrskov pre voľby do orgánov samosprávy obcí 24. októbra 2026"
+
+[[document]]
+url = "https://www.zahorce.sk/e_download.php?file=/data/multipage/editor/editor-11-39-sk_3.pdf&original=Ur%C5%A1enie%20obvodov%20-%20OSO.pdf"
+sha256 = "a14726239f7438db4007e8eab5edf7826599d90a5c8f399d4722f40b002cf385"
+title = "Určenie volebných okrskov a volebných miestností (23.7.2026)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Záhorce"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Selešťany"},
+]

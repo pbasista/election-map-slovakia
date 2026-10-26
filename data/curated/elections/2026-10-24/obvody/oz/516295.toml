@@ -1,0 +1,35 @@
+# Council obvody of Pôtor (516295), Veľký Krtíš.
+# Transcribed by an AI agent in job obvod-rules-170 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 Pôtor - volebná miestnosť kultúrny dom Okrsok č.1: Pôtor, miestne časti: Elektráreň, Salaš, Háj, Slatinka, Počet poslancov OcZ – 5 poslancov
+#   obvod 2: Volebný obvod č. 2 Žihľava - volebná miestnosť kultúrny dom Okrsok č.2: Žihľava, miestne časti: Dolné Vátovce, Horné Vátovce Počet poslancov OcZ – 2poslanci
+# Okrsky added by an AI agent in job okrsok-rules-169 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č.1: Pôtor, miestne časti: Elektráreň, Salaš, Háj, Slatinka
+#   okrsok 2: Okrsok č.2: Žihľava, miestne časti: Dolné Vátovce, Horné Vátovce
+obec = "516295"
+name = "Pôtor"
+note = "The council's resolution itself is not published. The obvody and seats are taken from the scanned notice-board document Č. j. 323/2026 of 06.07.2026 signed by the starosta (read from the rendered page image), which lists 'Volebný obvod č. 1 Pôtor' with 5 poslancov and 'Volebný obvod č. 2 Žihľava' with 2 poslanci; the seats agree with the registered candidate list of 3.9.2026 (obvod 1: 5, obvod 2: 2). The later version Č. j. 327/2026 of 8.7.2026 repeats the same obvody without the seat counts. Date: the agenda of the 19th council meeting on 24.6.2026 contains 'Schválenie počtu poslancov obce'; the date is taken from that agenda because the minutes or resolutions are not published. No published document states the decision date; the agenda of the council meeting of 2026-06-24 lists the item."
+okrsky_date = 2026-07-06
+okrsky_note = "Mayor's document Č. j. 323/2026 of 06.07.2026 (scan, read from the input transcription) sets okrsok 1 Pôtor (obvod 1) and okrsok 2 Žihľava (obvod 2)."
+
+[[document]]
+url = "https://www.obecpotor.sk/files/2026-07-06-113544-Utvorenie_okrskov_a_ur__enie_volebn__ch_miestnost___pre_vo__by_do_org__nov_samospr__vy_obc___a_pre_vo__by_do_org__nov_samospr__vnych_krajov_2026_v_obci_P__tor..pdf"
+sha256 = "5f776ec312506ef9fbc923d3a4661d7ddb6f4f7a9d8065a48d10b5f2a9d94158"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov 2026 v obci Pôtor, Č. j. 323/2026 zo dňa 06.07.2026"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Pôtor", note = "Obvod 1 is the village Pôtor with its local settlements Elektráreň, Salaš, Háj and Slatinka; these are not separate parts in the register, so I take them to be in the Pôtor part."},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Žihľava", note = "Obvod 2 is Žihľava with its local settlements Dolné Vátovce and Horné Vátovce; these are not separate parts in the register, so I take them to be in the Žihľava part."},
+]

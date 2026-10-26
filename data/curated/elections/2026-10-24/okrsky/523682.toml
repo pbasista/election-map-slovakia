@@ -1,0 +1,62 @@
+# Okrsky of Ľubica, transcribed by an AI agent in job okrsok-rules-252 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bernolákova, Gen. Svobodu, Grodkovského ulica, Hraničná ulica, Jesenského, Kirchberg, Mayerova ulica, Na vŕšku, Povstalecká, Úzka, voliči s trvalým pobytom Obec Ľubica
+#   okrsok 2: Pod lesom, Poľná, Športová, Vrbovská
+#   okrsok 3: 8. mája, Bardejovská, Hlboká, Chrenová ulica, Jarná, Kruhová, Lanškrounská, Levočská, Mierová, Petržalská, Remeselnícka
+#   okrsok 4: Budovateľská, Jánošíkova, Karola Kuzmányho, Podtatranská, Slnečná, Svätej Alžbety, Školská
+obec = "523682"
+name = "Ľubica"
+okrsky_date = 2026-07-30
+okrsky_fill = "nearest"
+okrsky_note = "Addresses without a street placed by fill_nearest. Grodkovského ulica, Kirchberg and Mayerova ulica (okrsok 1) are not in the address register and are left out."
+
+[[document]]
+url = "https://www.obeclubica.sk/download_file_f.php?id=2450734"
+sha256 = "3e61190e7923e459900cff6ed848ef29b70c3ebc9232247fe59d1d451ca2f0e9"
+title = "Určenie okrskov"
+
+[okrsok.1]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Gen. Svobodu"},
+  {street = "Hraničná ulica"},
+  {street = "Jesenského"},
+  {street = "Na vŕšku"},
+  {street = "Povstalecká"},
+  {street = "Úzka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Pod lesom"},
+  {street = "Poľná"},
+  {street = "Športová"},
+  {street = "Vrbovská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "8.mája", written = "8. mája"},
+  {street = "Bardejovská"},
+  {street = "Hlboká"},
+  {street = "Chrenová ulica"},
+  {street = "Jarná"},
+  {street = "Kruhová"},
+  {street = "Lanškrounská"},
+  {street = "Levočská"},
+  {street = "Mierová"},
+  {street = "Petržalská"},
+  {street = "Remeselnícka"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Jánošíkova"},
+  {street = "Karola Kuzmányho"},
+  {street = "Podtatranská"},
+  {street = "Slnečná"},
+  {street = "Svätej Alžbety"},
+  {street = "Školská"},
+]

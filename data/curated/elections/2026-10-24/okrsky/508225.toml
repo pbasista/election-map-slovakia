@@ -1,0 +1,93 @@
+# Okrsky of Slovenský Grob, transcribed by an AI agent in job okrsok-rules-214 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Družstevná, Hlinícka, Chorvátska, Lúčna, Mlynská, Nová, Obchodná, Pažitná, Poľná, Poštová, Pri štadióne, Ružová, Stredná, Športová, Viničná, Vinohradnícka
+#   okrsok 2: Ulice: Hlavná, Lipová, Orechová, Školská, Vajnorská cesta, Záhradná, Záhumenná
+#   okrsok 3: Ulice: Ihrisková, Koceľova, Mojmírova, Pezinská, Pribinova, Rastislavova, Slavomírova, Svätoplukova, Štepnice
+#   okrsok 4: Ulice: Bočná, Diamantová, Dlhá, Južná, Nábrežná, Okružná, Pri jazere, Rubínová, Severná, Slnečná, Stromová, Topásová
+#   okrsok 5: Ulice: C.Majerníka, Dúhová, J.Alexyho, Krajná, Ľ.Fullu, M.A. Bazovského, M.Benku, M.Galandu, Pri parku, Smaragdová, Tichá
+obec = "508225"
+name = "Slovenský Grob"
+okrsky_date = 2026-07-13
+okrsky_fill = "nearest"
+okrsky_note = "The 25 addresses without a street (numbered by súpisné číslo) are not named by the document; they take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.slovensky-grob.sk/wp-content/uploads/2026/07/Urcenie_okrsky_volby_2026.pdf"
+sha256 = "196253c320334081a6a6d8d5c3837166f53decfcf68e4b84980ac17578100cbd"
+title = "Určenie volebných okrskov a volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Družstevná"},
+  {street = "Hlinícka"},
+  {street = "Chorvátska"},
+  {street = "Lúčna"},
+  {street = "Mlynská"},
+  {street = "Nová"},
+  {street = "Obchodná"},
+  {street = "Pažitná"},
+  {street = "Poľná"},
+  {street = "Poštová"},
+  {street = "Pri štadióne"},
+  {street = "Ružová"},
+  {street = "Stredná"},
+  {street = "Športová"},
+  {street = "Viničná"},
+  {street = "Vinohradnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná"},
+  {street = "Lipová"},
+  {street = "Orechová"},
+  {street = "Školská"},
+  {street = "Vajnorská cesta"},
+  {street = "Záhradná"},
+  {street = "Záhumenná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Ihrisková"},
+  {street = "Koceľova"},
+  {street = "Mojmírova"},
+  {street = "Pezinská"},
+  {street = "Pribinova"},
+  {street = "Rastislavova"},
+  {street = "Slavomírova"},
+  {street = "Svätoplukova"},
+  {street = "Štepnice"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bočná"},
+  {street = "Diamantová"},
+  {street = "Dlhá"},
+  {street = "Južná"},
+  {street = "Nábrežná"},
+  {street = "Okružná"},
+  {street = "Pri jazere"},
+  {street = "Rubínová"},
+  {street = "Severná"},
+  {street = "Slnečná"},
+  {street = "Stromová"},
+  {street = "Topásová"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "C. Majerníka"},
+  {street = "Dúhová"},
+  {street = "J. Alexyho"},
+  {street = "Krajná"},
+  {street = "Ľ. Fullu"},
+  {street = "M. A. Bazovského"},
+  {street = "M. Benku"},
+  {street = "M. Galandu"},
+  {street = "Pri parku"},
+  {street = "Smaragdová"},
+  {street = "Tichá"},
+]

@@ -1,0 +1,124 @@
+# Council obvody of Tvrdošín (510114), Tvrdošín.
+# Transcribed by an AI agent in job obvod-rules-093 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa Mesto Tvrdošín I.-ulice: Farská, A. Škarvana, Múčna, Hviezdoslavova, Radničná, Oravské nábrežie, Trojičné námestie, Nové Hrádky, Kukučínova, Bernolákova, A. Hlinku, Cintorínska, SNP, Vojtaššákova, Spiežová, Hlísno sa volia 3 poslanci.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa Mesto Tvrdošín II.-ulice: Vladina, Školská, Ústianska, Pod Žiarcom sa volia 2 poslanci.
+#   obvod 3: Vo volebnom obvode číslo 3, ktorý zahŕňa sídlisko Medvedzie I. - BD: 127/2, 130/3, 129/4, 128/5, 126/7, 125/8, 124/9, 141/19, 140/20, 143/23, 137/59, 254/126, 264/53, CSS Orava 136, SPŠ 133/7 sa volia 2 poslanci.
+#   obvod 4: Vo volebnom obvode číslo 4, ktorý zahŕňa sídlisko Medvedzie II. - BD: 123/10, 122/13, 168/38, 158/40, 159/41, 161/43, 163/45, 165/48, 166/49, 164/46, 162/44, 160/42, 167/37, 155 – byt v ZŠ, 256/50, 262/52 sa volia 2 poslanci.
+#   obvod 5: Vo volebnom obvode číslo 5, ktorý zahŕňa sídlisko Medvedzie III. - BD: 145/21, 142/24, 144/26, 146/27, 147/28, 148/29, 149/30, 150/32, 151/33, 154/24, 152/35, 153/36, 259/51 sa volia 2 poslanci.
+#   obvod 6: Vo volebnom obvode číslo 6, ktorý zahŕňa mestskú časť Krásna Hôrka - ulice: M.R.Štefánika, Staničná, Hrdinov, Zvoničná, J.Matušku, Železničná, Nová, Breziny sa volí 1 poslanec.
+#   obvod 7: Vo volebnom obvode číslo 7, ktorý zahŕňa mestskú časť Medvedzie - ulice: Pod Velingom, Konopná, Družstevná, Hríbiky sa volí 1 poslanec.
+# Okrsky added by an AI agent in job okrsok-rules-092 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Tvrdošín, kde patria ulice: Farská, A. Škarvana, Múčna, Hviezdoslavova, Radničná, Oravské nábrežie, Trojičné námestie, Nové Hrádky, Kukučínova, Bernolákova, A. Hlinku, Cintorínska, SNP, Vojtaššákova, Spiežová, Hlísno
+#   okrsok 2: Tvrdošín, kde patria ulice: Vladina, Školská, Ústianska, Pod Žiarcom
+#   okrsok 3: Medvedzie, kde patria bytovky číslo: 127/2,130/3,129/4,128/5, 126/7, 125/8, 124/9,141/19, 140/20, 143/23, 137/59, 254/126, 264/53, CSS Orava 136, SPŠ 133/17
+#   okrsok 4: Medvedzie, kde patria bytovky číslo: 123/10, 122/13, 167/37,168/38, 158/40, 159/41, 160/42, 161/43, 162/44, 163/45, 164/46, 165/48, 166/49, 155 – byt v ZŠ, 256/50, 262/52
+#   okrsok 5: Medvedzie, kde patria bytovky číslo: 145/21, 142/24, 144/26, 146/27, 147/28, 148/29, 149/30, 150/32, 151/33, 154/34, 152/35, 153/36, 259/51
+#   okrsok 6: Krásna Hôrka, kde patria ulice: M. R. Štefánika, Staničná, Hrdinov, Zvoničná, J. Matušku, Železničná, Nová, Breziny
+#   okrsok 7: Medvedzie, kde patria ulice: Pod Velingom, Konopná, Družstevná, Hríbiky
+obec = "510114"
+name = "Tvrdošín"
+date = 2026-07-20
+fill = "nearest"
+note = "Scanned announcement (2 pages; the text layer is partial OCR), transcribed from the rendered pages. MsZ resolution č. 31/2026 of 20.07.2026: 13 poslancov in 7 obvody (3+2+2+2+2+1+1). Obvody 3-5 are the Medvedzie sídlisko listed by bytový dom (súpisné/orientačné), matched by súpisné číslo; Sídlisko houses not listed (131, 132, 134, 135, 138, 139, 272, 353, 354, 355, 370) are inferred from their neighbours. fill_nearest covers the addresses without a street in časti Tvrdošín (117, incl. the k.ú. Oravice house; 32 lack coordinates) and Medvedzie (211, mostly garages súp. č. 3001+ beside the sídlisko), which the document does not assign."
+okrsky_date = 2026-07-30
+okrsky_note = "Each okrsok coincides with the obvod of the same number (same streets / blocks)."
+
+[[document]]
+url = "https://www.tvrdosin.sk/e_download.php?file=/data/editor/473sk_1.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20obvodov%20a%20o%20ur%C4%8Den%C3%AD%20po%C4%8Dtu%20poslancov.pdf"
+sha256 = "633af93d4c98ea24b6a77a732069ab48d36cb9b680b793108e02eb273a4acb5a"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie MsZ č. 31/2026 zo dňa 20.07.2026), Tvrdošín 21.07.2026"
+
+[[document]]
+url = "https://www.tvrdosin.sk/e_download.php?file=/data/editor/473sk_4.pdf&original=Volebn%C3%A9%20okrsky%20a%20miestnosti.pdf"
+sha256 = "5bebd7cc796376a8c17ffa7f7d553139e4e2d4787589b63a3bfb8933ab5a9094"
+title = "Volebné okrsky a volebné miestnosti (30.07.2026)"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {street = "Farská"},
+  {street = "A. Škarvana"},
+  {street = "Múčna"},
+  {street = "Hviezdoslavova"},
+  {street = "Radničná"},
+  {street = "Oravské Nábrežie", written = "Oravské nábrežie", note = "Same street; the document writes 'nábrežie' in lower case."},
+  {street = "Trojičné námestie"},
+  {street = "Nové Hrádky"},
+  {street = "Kukučínova"},
+  {street = "Bernolákova"},
+  {street = "A. Hlinku"},
+  {street = "Cintorínska"},
+  {street = "SNP"},
+  {street = "Vojtaššákova"},
+  {street = "Spiežová"},
+  {street = "Hlísno"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {street = "Vladina"},
+  {street = "Školská"},
+  {street = "Ústianská", written = "Ústianska", note = "Same street; the register spells it 'Ústianská', the document 'Ústianska'."},
+  {street = "Pod Žiarcom"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {street = "Sídlisko", numbers = "124-130, 133, 136, 137, 140, 141, 143, 264", by = "supisne", note = "Document lists bytové domy as súpisné/orientačné: 127/2, 130/3, 129/4, 128/5, 126/7, 125/8, 124/9, 141/19, 140/20, 143/23, 137/59, 264/53; 'CSS Orava 136' is Sídlisko 136/58 and 'SPŠ 133/7' is Sídlisko 133/17 in the register (orientačné 17, the document's '7' read as a slip). Matched by súpisné číslo."},
+  {street = "Michalské námestie", note = "The document's '254/126' is the register's only address on Michalské námestie (súp. 254, or. 126); the document does not name the street."},
+  {street = "Sídlisko", numbers = "131, 132", by = "supisne", note = "Not listed by the document; Sídlisko house (súp./or. č. 131/15, 132/16) placed with the nearest listed blocks (264/53, 126/7), all in obvod 3.", inferred = true},
+  {street = "Sídlisko", numbers = "134, 135, 353", by = "supisne", note = "Not listed by the document; Sídlisko house (súp./or. č. 134/18, 135/57, 353/64) placed with the nearest listed blocks (133/17, 264/53; northern edge of the sídlisko), all in obvod 3.", inferred = true},
+  {street = "Sídlisko", numbers = "138, 354", by = "supisne", note = "Not listed by the document; Sídlisko house (súp./or. č. 138/60, 354/66) placed with the nearest listed blocks (140/20, 141/19), all in obvod 3.", inferred = true},
+  {street = "Sídlisko", numbers = "272", by = "supisne", note = "Not listed by the document; Sídlisko house (súp./or. č. 272/55) placed with the nearest listed blocks (Michalské námestie 254/126, 129/4), all in obvod 3.", inferred = true},
+  {street = "Sídlisko", numbers = "355", by = "supisne", note = "Not listed by the document; Sídlisko house (súp./or. č. 355/63) placed with the nearest listed blocks (130/3, 127/2, 128/5), all in obvod 3.", inferred = true},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [4]
+rules = [
+  {street = "Sídlisko", numbers = "122, 123, 155, 158-168, 256, 262", by = "supisne", note = "Document lists bytové domy as súpisné/orientačné: 123/10, 122/13, 168/38, 158/40, 159/41, 161/43, 163/45, 165/48, 166/49, 164/46, 162/44, 160/42, 167/37, '155 – byt v ZŠ' (register Sídlisko 155/62), 256/50, 262/52. Matched by súpisné číslo."},
+]
+
+[obvod.5]
+seats = 2
+okrsky = [5]
+rules = [
+  {street = "Sídlisko", numbers = "142, 144-154, 259", by = "supisne", note = "Document lists bytové domy as súpisné/orientačné: 145/21, 142/24, 144/26, 146/27, 147/28, 148/29, 149/30, 150/32, 151/33, 154/24, 152/35, 153/36, 259/51; the register has 154/34 (the document's '154/24' repeats the orientačné of 142/24, a slip). Matched by súpisné číslo."},
+  {street = "Sídlisko", numbers = "139", by = "supisne", note = "Not listed by the document; Sídlisko house (súp./or. č. 139/61) placed with the nearest listed blocks (145/21 (60 m); 155/62 of obvod 4 is 77 m), all in obvod 5.", inferred = true},
+  {street = "Sídlisko", numbers = "370", by = "supisne", note = "Not listed by the document; Sídlisko house (súp./or. č. 370/67) placed with the nearest listed blocks (142/24, 145/21), all in obvod 5.", inferred = true},
+]
+
+[obvod.6]
+seats = 1
+okrsky = [6]
+rules = [
+  {street = "M. R. Štefánika", written = "M.R.Štefánika", note = "Same street; the document writes the initials without spaces."},
+  {street = "Staničná"},
+  {street = "Hrdinov"},
+  {street = "Zvoničná"},
+  {street = "J.Matušku"},
+  {street = "Železničná"},
+  {street = "Nová"},
+  {street = "Breziny"},
+  {part = "Krásna Hôrka", note = "Addresses of časť Krásna Hôrka without a street; obvod 6 is the only obvod of the mestská časť Krásna Hôrka.", inferred = true},
+]
+
+[obvod.7]
+seats = 1
+okrsky = [7]
+rules = [
+  {street = "Pod Velingom"},
+  {street = "Konopná"},
+  {street = "Družstevná"},
+  {street = "Hríbiky"},
+]

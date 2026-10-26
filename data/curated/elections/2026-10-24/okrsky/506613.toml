@@ -1,0 +1,56 @@
+# Okrsky of Trenčianske Teplice, transcribed by an AI agent in job okrsok-rules-355 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Sady pod Dedovcom, Gogolova, Štvrť SNP č.: 7, 8, 15,16, 17, 18, 19, 20, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89.
+#   okrsok 2: Šrobárova, Nádražná, Štvrť SNP č.: 1, 2, 3, 4, 5, 9, 10, 11, 12, 13, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32.
+#   okrsok 3: Štvrť SNP č.: 14, 34, 35, 36, 37, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 65, 66, 68, 68A, 70, 97, 99, 100, Kaňová, Samota Skalica, Teheľňa, Ľ. Podjavorinskej
+#   okrsok 4: Gen.M.R.Štefánika, Baračka, Hurbanova, Bagarova, Pod Klepáčom, Partizánska, Červené Kopanice, 17. novembra, T.G. Masaryka, Kúpeľná, Hviezdoslavova, Poštová, Ľ. Štúra, občania prihlásení na Mesto Trenčianske Teplice
+obec = "506613"
+name = "Trenčianske Teplice"
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky are a table on the elections web page (no PDF; no decision date given). Štvrť SNP numbers read as orientačné (register range 1-100). Unlisted addresses (Samota Arpád, Štvrť SNP numbers not in any list, addresses without a street) take the okrsok of the nearest address. Okrsok 4 also holds residents registered only to the town."
+
+[[document]]
+url = "https://www.teplice.sk/volby-do-organov-uzemnej-samospravy-2026.html"
+sha256 = "b6cc9e8213ffebe1df0ab294ba180fe33272d0886e2406be05e6f63a7769ddb1"
+title = "Volebné okrsky a volebné miestnosti pre voľby do územnej samosprávy 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Sady Pod Dedovcom", written = "Sady pod Dedovcom"},
+  {street = "Gogolova"},
+  {street = "Štvrť SNP", numbers = "7, 8, 15, 16, 17, 18, 19, 20, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Šrobárova"},
+  {street = "Nádražná"},
+  {street = "Štvrť SNP", numbers = "1, 2, 3, 4, 5, 9, 10, 11, 12, 13, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Kaňová"},
+  {street = "Samota Skalica"},
+  {street = "Teheľňa"},
+  {street = "Ľ. Podjavorinskej"},
+  {street = "Štvrť SNP", numbers = "14, 34, 35, 36, 37, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 65, 66, 68, 68A, 70, 97, 99, 100"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Gen. M. R. Štefánika", written = "Gen.M.R.Štefánika"},
+  {street = "Baračka"},
+  {street = "Hurbanova"},
+  {street = "Bagarova"},
+  {street = "Pod Klepáčom"},
+  {street = "Partizánska"},
+  {street = "Červené Kopanice"},
+  {street = "17.novembra", written = "17. novembra"},
+  {street = "T. G. Masaryka", written = "T.G. Masaryka"},
+  {street = "Kúpeľná"},
+  {street = "Hviezdoslavova"},
+  {street = "Poštová"},
+  {street = "Ľ. Štúra"},
+]

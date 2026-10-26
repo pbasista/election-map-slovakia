@@ -1,0 +1,28 @@
+# Okrsky of Ozdín, transcribed by an AI agent in job okrsok-rules-637 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ozdín – sála Obecného úradu, Ozdín 52
+#   okrsok 2: Bystrička – sála Kultúrneho domu, Bystrička 1
+obec = "511684"
+name = "Ozdín"
+okrsky_note = "The scanned list (read from the rendered image, dated 10.07.2026) gives each okrsok only its polling station: č. 1 Ozdín – sála Obecného úradu, Ozdín 52; č. 2 Bystrička – sála Kultúrneho domu, Bystrička 1. Two okrsky, two parts, each station in another part: each okrsok is given the part of its station (inferred)."
+
+[[document]]
+url = "https://www.uradne.sk/user/tablenews/file/1583312"
+sha256 = "a7f4ea2ccc99b7f0feb75bf0818b80cfc2ad6ef42e4cd6f9f8f5a074b8eb533a"
+title = "Zoznam volebných okrskov a volebných miestností pre voľby do samosprávy obcí a volieb do orgánov samosprávnych krajov v roku 2026"
+
+[[document]]
+url = "https://www.ozdin.sk/samosprava/uradna-tabula?p=1&detail=73623&count=100&tagSelect=&subcategory="
+sha256 = "0407e59a4814e2a8df15d66fb777989d2cb1cfcb1b328854080a4aba7219b4da"
+title = "Zoznam volebných okrskov a volebných miestností (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {part = "Ozdín", note = "Polling station in part Ozdín.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Bystrička", note = "Polling station in part Bystrička.", inferred = true},
+]

@@ -1,0 +1,32 @@
+# Okrsky of Trnovec nad Váhom, transcribed by an AI agent in job okrsok-rules-377 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre občanov prihlásených na trvalý pobyt na číslach 1 - 512, 918, 974, 976, 977, 980, 981, 896, 987, 990 – 992, 998, 999, 1011 - 1013, 1017 – 1021, 1027 – 1043, 1047, 1053, 1060, 1062, 1064, 1066- 1069, 1071-1074 a občania prihlásení na trvalý pobyt v časti obce Nový Dvor
+#   okrsok 2: pre občanov prihlásených na obec a občanov prihlásených na trvalý pobyt na číslach 515 – 850, 906, 907, 910 – 917, 919 – 964, 966 – 973, 982, 985, 988, 989, 993 – 997, 1000 – 1009, 1010, 1015, 1022, 1026, 1044, 1048 –1052, 1054 – 1059, 1061, 1063, 1070
+#   okrsok 3: pre občanov s trvalým pobytom v časti obce Horný Jatov a Kľučiareň
+obec = "504092"
+name = "Trnovec nad Váhom"
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky 1 and 2 are lists of súpisné čísla in the part Trnovec nad Váhom; numbers in neither list (e.g. 513-514, 851-905, 908-909, 965, 975, 978-979, 983-984, 986, 1014, 1016, 1023-1025, 1045-1046, 1065, 1075-) take the nearest okrsok via fill_nearest. '896' in okrsok 1's list is kept as written (possibly meant 986). The decision page states no date. Okrsok 2 also takes voters registered only to the obec."
+
+[[document]]
+url = "https://www.trnovecnadvahom.sk/31484/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti"
+sha256 = "2d5bd345932cacc9d8a6ee62cdd46e76b6859dd8e9dfbc7f0b6981467b0c7349"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Trnovec nad Váhom", numbers = "1-512, 896, 918, 974, 976, 977, 980, 981, 987, 990-992, 998, 999, 1011-1013, 1017-1021, 1027-1043, 1047, 1053, 1060, 1062, 1064, 1066-1069, 1071-1074"},
+  {part = "Nový Dvor"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Trnovec nad Váhom", numbers = "515-850, 906, 907, 910-917, 919-964, 966-973, 982, 985, 988, 989, 993-997, 1000-1010, 1015, 1022, 1026, 1044, 1048-1052, 1054-1059, 1061, 1063, 1070"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Horný Jatov"},
+  {part = "Kľučiareň"},
+]

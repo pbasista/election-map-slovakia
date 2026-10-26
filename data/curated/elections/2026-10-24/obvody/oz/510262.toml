@@ -1,0 +1,522 @@
+# Council obvody of Liptovský Mikuláš (510262), Liptovský Mikuláš.
+# Transcribed by an AI agent in job obvod-rules-016 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Ulice 1. mája, Bernolákova, Belopotockého súp. č. 720, Bottova, Čsl. brigády, Druhá, Družstevná, Ester Šimerovej Martinčekovej, Garbiarska, Guothova, Hollého, Hriadky, Hurbanova, Hviezdoslavova, J. Rumana, Jánošíkovo nábrežie, Jesenského, Jilemnického, Kolomana Sokola, Komenského, Kpt. Nálepku, Kukučínova, Kuzmányho, M. M. Hodžu, M. Pišúta, Majeríkova, Martina Martinčeka, Moyzesova, Námestie mieru, Námestie osloboditeľov, Pod stráňami okrem súp. č. 812, 1099 a 1100, Podtatranského, Prídavky, Prvá, Sládkovičova, Stodolova, Stráne, Školská, Šoltésovej, Štefánikova okrem súp. č. 1509 a 1780, Štúrova, Tomášikova, Tranovského, Tretia, Zápotockého a OBČANIA S TRVALÝM POBYTOM: MESTO L. MIKULÁŠ (podľa zákona č. 253/1998 Z.z. o hlásení pobytu občanov SR a registri obyvateľov SR v znení neskorších predpisov)
+#   obvod 2: Ulice Alexyho, Bellova, Belopotockého okrem súp. čísla 720, Björnsonova, Borbisova, Demänovská cesta súp. č. 865, Hlboké, J. Dudu, J. Volka Starohorského, Jura Janošku, Kamenné pole, Kmeťova, Kollárova, Krátka, Majerská, Nábrežie 4. apríla, Nábrežie Dr. A. Stodolu, Nábrežie Janka Kráľa, Nešporova, Nová, Partizánov, Pltnícka, Poľnohospodárska, Priemyselná, Rázusova, Socháňova, Športová, Vajanského, Vansovej, Vrbická, Vrlíkova, Za Havlovci a Zg. Vrbického
+#   obvod 3: Podbreziny, mestská časť Vitálišovce, mestská časť Svätý Štefan
+#   obvod 4: mestská časť Okoličné, mestská časť Stošice
+#   obvod 5: mestská časť Iľanovo, mestská časť Ploštín
+#   obvod 6: mestská časť Demänová, mestská časť Bodice
+#   obvod 7: mestská časť Palúdzka, mestská časť Andice, mestská časť Benice
+#   obvod 8: mestská časť Liptovská Ondrašová, Ráztoky
+# Okrsky added by an AI agent in job okrsok-rules-015 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Mestská časť Staré Mesto: Hurbanova súp. č. 1490, 1491, 1494, 1496, 1498, 1523, Jesenského súp. č. 222, 308, 727, 728, 729, Majeríkova súp. č. 741, 742, 1244, 1416, 1484, Štefánikova okrem súp. č. 1509 a 1780.
+#   okrsok 2: Mestská časť Staré Mesto: Bottova, Hurbanova súp. č. 380, 862, 1184, 1218, 1243, 1410, 1642, 2073, 2074, Jánošíkovo nábrežie, Jesenského súp. č. 1314, 1315, 1398, Jilemnického, Komenského, M. M. Hodžu súp. č. 34, 860, 1209, 1215, 4737, Majeríkova súp. č. 1210, 1215, 1397, Štúrova súp. č. 775, 870, 1349, 1610, 4255 a OBČANIA S TRVALÝM POBYTOM: MESTO L. MIKULÁŠ (podľa zákona č. 253/1998 Z.z. o hlásení pobytu občanov SR a registri obyvateľov SR v znení neskorších predpisov).
+#   okrsok 3: Mestská časť Staré Mesto: Belopotockého súp. č. 720, Bernolákova, Ester Šimerovej Martinčekovej, Garbiarska, Hollého, J. Rumana, Kolomana Sokola, Kukučínova, M. Pišúta, M.M. Hodžu súp. č. 17, 18, 24, 1167, 1634, 3326, 4058, 4396, Martina Martinčeka, Moyzesova, Námestie mieru, Námestie osloboditeľov, Pod stráňami okrem súp. č. 812, 1099 a 1100, Podtatranského orient. č. od 1 do 16, Prídavky, Stráne, Štúrova súp. č. 801, 803, 804, 805, 806, 808, 1171, 1793, 1968, 2341, 4330, Tomášikova, Veľké lúky.
+#   okrsok 4: Mestská časť Staré Mesto: Čsl. brigády – nepárne orient. čísla, Hriadky, Hviezdoslavova, Kuzmányho, Podtatranského orient. č. od 18 do 75, Sládkovičova, Školská, Šoltésovej, Tranovského okrem súp. č. 111, Zápotockého.
+#   okrsok 5: Mestská časť Staré Mesto: 1. mája od Námestia osloboditeľov po ul. Kpt. Nálepku, Čsl. brigády párne orient. čísla, Stodolova, Tranovského súp. č. 111.
+#   okrsok 6: Mestská časť Staré Mesto: Druhá, Družstevná, Guothova, Kpt. Nálepku, Prvá, Tretia, 1. mája od ul. Kpt. Nálepku po most v Okoličnom.
+#   okrsok 7: Mestská časť Vrbica-Nábrežie: Alexyho, Björnsonova, Borbisova - severná strana, J. Dudu, Jura Janošku - východná strana, Krátka, Nešporova, Nová, Priemyselná, Socháňova.
+#   okrsok 8: Mestská časť Vrbica-Nábrežie: Borbisova - južná strana a súp. č. 1958, 1969, Nábrežie Dr. A. Stodolu súp. č. 1567 (A-1), 1574 (A-2), 1575 (A-3), 1580 (B-1), 1584 (B-2), 1585 (B-3), 1686 (D-1), 1747 (D-2).
+#   okrsok 9: Mestská časť Vrbica-Nábrežie: Nábrežie Dr. A. Stodolu súp. č. 1681 (C-1), 1734 (C-2), 1749 (C-3), 1778 (E-1), 1785 (E-2), 1786 (E-3), 1796 (F-1), 1797 (F-2).
+#   okrsok 10: Mestská časť Vrbica-Nábrežie: Majerská súp. č. 4332, Nábrežie Dr. A. Stodolu súp. č. 1808 (F-3), 1799 (G-1), 1177, ul. Vrbická súp. č. 1883 (K-1, K-2) a 4250, Vrlíkova súp. č. 1884 (M).
+#   okrsok 11: Mestská časť Vrbica-Nábrežie: Belopotockého okrem súp. čísla 720, Demänovská cesta súp. č. 865, Hlboké, J. Volka Starohorského, Kamenné pole, Kmeťova, Nábrežie 4. apríla súp. č. 1833 (H), 1837 (I-1), 1844 (I-2), 1859 (I-3), 1860 (I-4), 1861 (I-5), 1868 (L), 1040, 1936, 1998, 4066, 1986, Nábrežie Janka Kráľa, Partizánov, Pltnícka, Poľnohospodárska, Športová, Vajanského, Vrlíkova okrem súp. č. 1884 (M).
+#   okrsok 12: Mestská časť Vrbica-Nábrežie: Jura Janošku - západná strana, Rázusova, Vrbická okrem súp. č. 1883 (K-1, K-2), 4250 a 4329, Za Havlovci , Zg. Vrbického.
+#   okrsok 13: Mestská časť Vrbica-Nábrežie: Bellova, Kollárova, Vansovej, Vrbická 4329/1A.
+#   okrsok 14: Mestská časť Podbreziny: Agátová súp. č. 498, Smrečianska, Za traťou, Žiarska súp. č. 601, 602, 603, 604, 635, 636, 679.
+#   okrsok 15: Mestská časť Podbreziny: Cédrová, Dubová, Priebežná súp. č. 489, 492.
+#   okrsok 16: Mestská časť Podbreziny: Agátová súp. č. 485, Brezová, Priebežná súp. č. 484, 486.
+#   okrsok 17: Mestská časť Podbreziny: Jabloňová, Lipová, Morušová súp. č. 517, 522, Pod slivkou súp. č. 519, 520. Mestská časť Vitálišovce: Brezie, Mojšova, Nad Brezím, Vitálišovská, Zadná, Zemianska, Žiarska súp. č. 19, 20, 178, 197, 211, 701, 820, 836, 1037, 1047, 1053, 1055, 1086. Mestská časť Svätý Štefan.
+#   okrsok 18: Mestská časť Podbreziny: Gaštanová, Hrušková, Morušová súp. č. 523, 524, Pod slivkou súp. č. 512.
+#   okrsok 19: Mestská časť Podbreziny: Hradišská súp. č. 626, Jahodová, Jefremovská súp. č. 613, 614, Lounská.
+#   okrsok 20: Mestská časť Podbreziny: Hradišská súp. č. 627, Jefremovská súp. č. 632, 633, 634, Kemi.
+#   okrsok 21: Mestská časť Podbreziny: Opavská, Senická.
+#   okrsok 22: Mestská časť Okoličné: 3. februára, Cintorínska, Gazdovská, Kláštorná, Mateja Linčovského, Mierová, Ohradná, Okoličianska, Pálenická, Pobrežná, Podbrezinská, Riečna, Sihoťská, Smrečianska, Staničná, Za mostom. Mestská časť Stošice: Agrárna, Lúčna, Margarétkova, Medovková, Nevädzova, Pod horou, Podbeľová, Podhoranská, Poľná, Púpavova, Sadová, Stojšova, Stošická, Šalviová, Vrchhrádok, Zalomená.
+#   okrsok 23: Mestská časť Iľanovo: 4. apríla, Iľanovská, Krajná, Ploštínska, Ponad ohrady, Porubská, Trstica, Za vodou.
+#   okrsok 24: Mestská časť Ploštín: Do cintorína, Hlavná, Malé pole, Na kút, Palesáky, Pod cestou, Podsádočné, Rovná, Tretiny, Vŕšok, Výhon, Za ulicou, Za školou.
+#   okrsok 25: Mestská časť Demänová: Alexandra Kubíniho, Armádna, Daniela Šlachtu, Dechtárska, Demänovská cesta, Dlhá, Dlžiny, Igora Rumanského, Kút, Michalovská, Mládeže, Mlynisko, Obchodná, Odbojárska, P . J. Kerna, Pod dubom, Pod Sitieňom, Rovnosti, Široká, Trávniky, Za štadiónom.
+#   okrsok 26: Mestská časť Bodice: Bodická, Cez vody, K vode, Lazná, Pod brehom, Potočná.
+#   okrsok 27: Mestská časť Palúdzka - východ: A. Kostolného, Budovateľská, Demänovská, Glejárska, Chrenoviská, Jána Švermu, Lesnícka, Malý Rím, Mlynská, Palučanská od mosta cez Váh po Demänovskú ul., Parková, Petrovičovo nábrežie, SNP , V Luhoch, Za Luhami, Za mlynom, Zádvorie, Žuﬀova.
+#   okrsok 28: Mestská časť Palúdzka – západ: Alfonza Gromu, Aloisa Lutonského, Antona Droppu, Baranovská, Branislava Lichardusa, Družby, Dušana Pálku, Eduarda Balla, Eduarda Penkalu, Františka Klimeša, J. M. Oberuča, Jánošíkova, Júliusa Lenka, Kokavcova, Kurucká, Ladislava Čemického, Ladislava Hanusa, Mikuláša Štalmacha, Námestie SNP , Okružná, Osadná, Palugayho, Pavla Štraussa, Priehradná, Sone Kovačevičovej, Vladimíra Kunu, Vranov, Za Bocianom, Za pastierňou.
+#   okrsok 29: Mestská časť Palúdzka – západ: Palučanská od Demänovskej ul. smerom na západ, Pavla Vilikovského.
+#   okrsok 30: Mestská časť Andice: Andická. Mestská časť Benice: Benická, Na ohrad, Pod hájikom, Za humnami.
+#   okrsok 31: Mestská časť Liptovská Ondrašová: Hony, Medze, Mincova, Obrcianova, Ondrašovská od ulice Roľnícka smerom na Bobrovec, Pod Dielom, Požiarnická, Role, Roľnícka.
+#   okrsok 32: Mestská časť Liptovská Ondrašová: Boltižiarova, Dušana Kováča, Hrdinov SNP , Lidická, Matejkova, Matúškova, Mišíkova, Mútnik, Ondrašovská od Ráztockej po ulicu Roľnícka, Ondrejova, Pod Čerencom, Pod stráňami 812, 1099, 1100 a 1233, Pongrácovská, Prekopaná, Ráztocká, Revolučná, Ružičkova, S.B. Hroboňa, Slnečná, Štefánikova 1509 a 1780, Tatranská, Tehelná, Tehliarska, Za poštou, Záhradná. Mestská časť Ráztoky.
+obec = "510262"
+name = "Liptovský Mikuláš"
+date = 2026-06-25
+note = "Transcribed from the city's Oznámenie of 16.7.2026 on resolution MsZ č. 74/2026 of 25.6.2026 (25 poslancov, 8 obvodov). Obvod 1 also includes citizens registered only at \"mesto L. Mikuláš\" (no address), which needs no rule. Streets Veľké lúky and Pod Hájom and the street-less addresses of časti Staré Mesto and Vrbica-Nábrežie are not named in the document and were placed by part/nearest streets (inferred). Exceptions by súpisné číslo (Belopotockého 720, Demänovská cesta 865, Pod Stráňami 812/1099/1100, Štefánikova 1509/1780) checked against the address register."
+okrsky_date = 2026-07-16
+okrsky_fill = "nearest"
+okrsky_note = "Mayor's decision of 16.07.2026 lists 32 okrsky by streets, súpisné čísla, street sides and street sections. Street sides (Borbisova north/south, Jura Janošku east/west) are given as odd/even from the address points; the sections of 1. mája (at Kpt. Nálepku), Palúčanská (at Demänovská) and Ondrašovská (at Roľnícka) are split by orientačné čísla at the crossing seen in the address points (inferred). Okrsok 32 is the rest of obvod 8 (incl. Pod Stráňami 812/1099/1100, Štefánikova 1509/1780, part Ráztoky). Okrsok 17 includes part Vitálišovce and k.ú. Svätý Štefan. Streets not in the register (Alexandra Kubíniho, Igora Rumanského, Sihoťská) are left out. Addresses not covered by any listed súpisné číslo or street (other numbers of streets split by súpisné číslo such as M. M. Hodžu, Štúrova, Majeríkova, Nábrežie Dr. A. Stodolu, Nábrežie 4. apríla; Podtatranského 17; Pod Hájom; street-less addresses) take the okrsok of the nearest address (fill_nearest). 'OBČANIA S TRVALÝM POBYTOM: MESTO L. MIKULÁŠ' (okrsok 2) are residents without an address."
+
+[[document]]
+url = "https://www.mikulas.sk/filesII/2026_prilohy/volby2026/Obvody%20a%20poslanci_OSO26_V510.pdf"
+sha256 = "069966a9c84984cf5d3f76aea95564d5f65379c0d6a13cbb434306ccd6d6bed1"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie MsZ č. 74/2026 zo dňa 25.6.2026)"
+
+[[document]]
+url = "https://www.mikulas.sk/filesII/2026_prilohy/volby2026/Obvody%20a%20okrsky%202026.pdf"
+sha256 = "4a94aec87191cf5d9ed592e5977beee29cfed5aa071d157ef212991bd9a8f2ff"
+title = "Oznámenie o utvorení volebných okrskov s vymedzením ich územného obvodu a o určení volebných miestností (16.07.2026)"
+
+[obvod.1]
+seats = 4
+okrsky = [1, 2, 3, 4, 5, 6]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Bernolákova"},
+  {street = "Belopotockého", numbers = "720", by = "supisne"},
+  {street = "Bottova"},
+  {street = "Čsl. brigády"},
+  {street = "Druhá"},
+  {street = "Družstevná"},
+  {street = "Ester Šimerovej Martinčekovej"},
+  {street = "Garbiarska"},
+  {street = "Guothova"},
+  {street = "Hollého"},
+  {street = "Hriadky"},
+  {street = "Hurbanova"},
+  {street = "Hviezdoslavova"},
+  {street = "J.Rumana", written = "J. Rumana"},
+  {street = "Jánošíkovo nábr.", written = "Jánošíkovo nábrežie", note = "Document lists the whole street in obvod 1, including nos. 10 and 12 registered in časť Liptovská Ondrašová."},
+  {street = "Jesenského"},
+  {street = "Jilemnického"},
+  {street = "Kolomana Sokola"},
+  {street = "Komenského"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Kukučínova"},
+  {street = "Kuzmányho"},
+  {street = "M.M.Hodžu", written = "M. M. Hodžu"},
+  {street = "M. Pišúta"},
+  {street = "Majeríkova"},
+  {street = "Martina Martinčeka"},
+  {street = "Moyzesova"},
+  {street = "Námestie mieru"},
+  {street = "Námestie osloboditeľov"},
+  {street = "Pod Stráňami", except = "812, 1099, 1100", by = "supisne", written = "Pod stráňami", note = "Excepted súpisné čísla 812, 1099, 1100 lie in časť Liptovská Ondrašová and so fall to obvod 8 by its part rule."},
+  {street = "Podtatranského"},
+  {street = "Prídavky"},
+  {street = "Prvá"},
+  {street = "Sládkovičova"},
+  {street = "Stodolova"},
+  {street = "Stráne"},
+  {street = "Školská"},
+  {street = "Šoltésovej"},
+  {street = "Štefánikova", except = "1509, 1780", by = "supisne", note = "Excepted súpisné čísla 1509, 1780 lie in časť Liptovská Ondrašová and so fall to obvod 8 by its part rule."},
+  {street = "Štúrova"},
+  {street = "Tomášikova"},
+  {street = "Tranovského"},
+  {street = "Tretia"},
+  {street = "Zápotockého"},
+  {street = "Veľké lúky", note = "Street not named in the document; in časť Staré Mesto, its nearest addresses are all in obvod 1.", inferred = true},
+  {street = "Pod Hájom", note = "Street not named in the document; in časť Staré Mesto, its nearest addresses are in obvod 1.", inferred = true},
+  {part = "Staré Mesto", note = "Addresses without a street (súpisné číslo only) in časť Staré Mesto, which the document does not mention; the named streets of Staré Mesto are in obvod 1.", inferred = true},
+]
+
+[obvod.2]
+seats = 7
+okrsky = [7, 8, 9, 10, 11, 12, 13]
+rules = [
+  {street = "Alexyho"},
+  {street = "Bellova"},
+  {street = "Belopotockého"},
+  {street = "Björnsonova"},
+  {street = "Borbisova"},
+  {street = "Demänovská cesta", numbers = "865", by = "supisne", note = "Only súp. č. 865 (Demänovská cesta 76, časť Vrbica-Nábrežie); the rest of the street lies in časť Demänová (obvod 6)."},
+  {street = "Hlboké"},
+  {street = "J.Dudu", written = "J. Dudu"},
+  {street = "J. Volka Starohorského"},
+  {street = "Jura Janošku"},
+  {street = "Kamenné pole"},
+  {street = "Kmeťova"},
+  {street = "Kollárova"},
+  {street = "Krátka"},
+  {street = "Majerská"},
+  {street = "Nábrežie 4. apríla"},
+  {street = "Nábrežie Dr. Aurela Stodolu", written = "Nábrežie Dr. A. Stodolu"},
+  {street = "Nábrežie Janka Kráľa"},
+  {street = "Nešporova"},
+  {street = "Nová"},
+  {street = "Partizánov"},
+  {street = "Pltnícka"},
+  {street = "Poľnohospodárska"},
+  {street = "Priemyselná"},
+  {street = "Rázusova"},
+  {street = "Socháňova"},
+  {street = "Športová"},
+  {street = "Vajanského"},
+  {street = "Vansovej"},
+  {street = "Vrbická"},
+  {street = "Vrlíkova"},
+  {street = "Za Havlovci"},
+  {street = "Zgútha Vrbického", written = "Zg. Vrbického"},
+  {part = "Vrbica-Nábrežie", note = "Addresses without a street (súpisné číslo only) in časť Vrbica-Nábrežie, which the document does not mention; the named streets of Vrbica-Nábrežie are in obvod 2.", inferred = true},
+]
+
+[obvod.3]
+seats = 7
+okrsky = [14, 15, 16, 17, 18, 19, 20, 21]
+rules = [
+  {part = "Podbreziny"},
+  {part = "Vitálišovce"},
+  {ku = "Svätý Štefan", note = "Written in the document as \"mestská časť Svätý Štefan\"; it is a cadastral area without a časť obce of that name in the register and has no registered addresses."},
+]
+
+[obvod.4]
+seats = 1
+okrsky = [22]
+rules = [
+  {part = "Okoličné"},
+  {part = "Stošice"},
+]
+
+[obvod.5]
+seats = 1
+okrsky = [23, 24]
+rules = [
+  {part = "Iľanovo"},
+  {part = "Ploštín"},
+]
+
+[obvod.6]
+seats = 1
+okrsky = [25, 26]
+rules = [
+  {part = "Demänová"},
+  {part = "Bodice"},
+]
+
+[obvod.7]
+seats = 3
+okrsky = [27, 28, 29, 30]
+rules = [
+  {part = "Palúdzka"},
+  {part = "Andice"},
+  {part = "Benice"},
+]
+
+[obvod.8]
+seats = 1
+okrsky = [31, 32]
+rules = [
+  {part = "Liptovská Ondrašová"},
+  {part = "Ráztoky"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Hurbanova", numbers = "1490, 1491, 1494, 1496, 1498, 1523", by = "supisne"},
+  {street = "Jesenského", numbers = "222, 308, 727, 728, 729", by = "supisne"},
+  {street = "Majeríkova", numbers = "741, 742, 1244, 1416, 1484", by = "supisne"},
+  {street = "Štefánikova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bottova"},
+  {street = "Hurbanova", numbers = "380, 862, 1184, 1218, 1243, 1410, 1642, 2073, 2074", by = "supisne"},
+  {street = "Jánošíkovo nábr."},
+  {street = "Jilemnického"},
+  {street = "Komenského"},
+  {street = "Jesenského", numbers = "1314, 1315, 1398", by = "supisne"},
+  {street = "M.M.Hodžu", numbers = "34, 860, 1209, 1215, 4737", by = "supisne"},
+  {street = "Majeríkova", numbers = "1210, 1215, 1397", by = "supisne"},
+  {street = "Štúrova", numbers = "775, 870, 1349, 1610, 4255", by = "supisne"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Belopotockého", numbers = "720", by = "supisne"},
+  {street = "Bernolákova"},
+  {street = "Ester Šimerovej Martinčekovej"},
+  {street = "Garbiarska"},
+  {street = "Hollého"},
+  {street = "J.Rumana"},
+  {street = "Kolomana Sokola"},
+  {street = "Kukučínova"},
+  {street = "M. Pišúta"},
+  {street = "Martina Martinčeka"},
+  {street = "Moyzesova"},
+  {street = "Námestie mieru"},
+  {street = "Námestie osloboditeľov"},
+  {street = "Pod Stráňami"},
+  {street = "Prídavky"},
+  {street = "Stráne"},
+  {street = "Tomášikova"},
+  {street = "Veľké lúky"},
+  {street = "M.M.Hodžu", numbers = "17, 18, 24, 1167, 1634, 3326, 4058, 4396", by = "supisne"},
+  {street = "Podtatranského", numbers = "1-16"},
+  {street = "Štúrova", numbers = "801, 803, 804, 805, 806, 808, 1171, 1793, 1968, 2341, 4330", by = "supisne"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Čsl. brigády", parity = "odd"},
+  {street = "Hriadky"},
+  {street = "Hviezdoslavova"},
+  {street = "Kuzmányho"},
+  {street = "Sládkovičova"},
+  {street = "Školská"},
+  {street = "Šoltésovej"},
+  {street = "Tranovského"},
+  {street = "Zápotockého"},
+  {street = "Podtatranského", numbers = "18-75"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "1.mája", numbers = "1-70, 1A, 1B, 17A, 19A, 43A, 43B, 43C, 43E, 176-182", note = "the document gives 1. mája from Námestie osloboditeľov to Kpt. Nálepku (okrsok 5) and from Kpt. Nálepku to the bridge to Okoličné (okrsok 6); the split by numbers is placed at the crossing with Kpt. Nálepku from the address points (inferred)", inferred = true},
+  {street = "Čsl. brigády", parity = "even"},
+  {street = "Stodolova"},
+  {street = "Tranovského", numbers = "111", by = "supisne"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Druhá"},
+  {street = "Družstevná"},
+  {street = "Guothova"},
+  {street = "Kpt.Nálepku"},
+  {street = "Prvá"},
+  {street = "Tretia"},
+  {street = "1.mája", numbers = "71-175, 183, 77A, 88A, 92A, 105A, 107A, 109A, 113A, 115A, 120A, 120D, 120M, 120P, 130A", note = "the document gives 1. mája from Námestie osloboditeľov to Kpt. Nálepku (okrsok 5) and from Kpt. Nálepku to the bridge to Okoličné (okrsok 6); the split by numbers is placed at the crossing with Kpt. Nálepku from the address points (inferred)", inferred = true},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Alexyho"},
+  {street = "Björnsonova"},
+  {street = "Borbisova", parity = "odd", note = "side of the street given as parity from the address points (north/east = odd, south/west = even) (inferred)", inferred = true},
+  {street = "J.Dudu"},
+  {street = "Jura Janošku", parity = "odd", note = "side of the street given as parity from the address points (north/east = odd, south/west = even) (inferred)", inferred = true},
+  {street = "Krátka"},
+  {street = "Nešporova"},
+  {street = "Nová"},
+  {street = "Priemyselná"},
+  {street = "Socháňova"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Borbisova", parity = "even", note = "side of the street given as parity from the address points (north/east = odd, south/west = even) (inferred)", inferred = true},
+  {street = "Borbisova", numbers = "1958, 1969", by = "supisne"},
+  {street = "Nábrežie Dr. Aurela Stodolu", numbers = "1567, 1574, 1575, 1580, 1584, 1585, 1686, 1747", by = "supisne", written = "Nábrežie Dr. A. Stodolu", note = "spelling variant of the register's name"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Nábrežie Dr. Aurela Stodolu", numbers = "1681, 1734, 1749, 1778, 1785, 1786, 1796, 1797", by = "supisne", written = "Nábrežie Dr. A. Stodolu", note = "spelling variant of the register's name"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Majerská", numbers = "4332", by = "supisne"},
+  {street = "Nábrežie Dr. Aurela Stodolu", numbers = "1808, 1799, 1177", by = "supisne", written = "Nábrežie Dr. A. Stodolu", note = "spelling variant of the register's name"},
+  {street = "Vrbická", numbers = "1883, 4250", by = "supisne"},
+  {street = "Vrlíkova", numbers = "1884", by = "supisne"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Belopotockého"},
+  {street = "Demänovská cesta"},
+  {street = "Hlboké"},
+  {street = "J. Volka Starohorského"},
+  {street = "Kamenné pole"},
+  {street = "Kmeťova"},
+  {street = "Nábrežie 4. apríla", numbers = "1833, 1837, 1844, 1859, 1860, 1861, 1868, 1040, 1936, 1998, 4066, 1986", by = "supisne"},
+  {street = "Nábrežie Janka Kráľa"},
+  {street = "Partizánov"},
+  {street = "Pltnícka"},
+  {street = "Poľnohospodárska"},
+  {street = "Športová"},
+  {street = "Vajanského"},
+  {street = "Vrlíkova"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Jura Janošku", parity = "even", note = "side of the street given as parity from the address points (north/east = odd, south/west = even) (inferred)", inferred = true},
+  {street = "Rázusova"},
+  {street = "Vrbická"},
+  {street = "Za Havlovci"},
+  {street = "Zgútha Vrbického", written = "Zg. Vrbického", note = "spelling variant of the register's name"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Bellova"},
+  {street = "Kollárova"},
+  {street = "Vansovej"},
+  {street = "Vrbická", numbers = "4329", by = "supisne"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Agátová", numbers = "498", by = "supisne"},
+  {street = "Smrečianska"},
+  {street = "Za traťou"},
+  {street = "Žiarska", numbers = "601, 602, 603, 604, 635, 636, 679", by = "supisne"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Cédrová"},
+  {street = "Dubová"},
+  {street = "Priebežná", numbers = "489, 492", by = "supisne"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Agátová", numbers = "485", by = "supisne"},
+  {street = "Brezová"},
+  {street = "Priebežná", numbers = "484, 486", by = "supisne"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Jabloňová"},
+  {street = "Lipová"},
+  {street = "Morušová", numbers = "517, 522", by = "supisne"},
+  {street = "Pod slivkou", numbers = "519, 520", by = "supisne"},
+  {part = "Vitálišovce"},
+  {ku = "Svätý Štefan"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Gaštanová"},
+  {street = "Hrušková"},
+  {street = "Morušová", numbers = "523, 524", by = "supisne"},
+  {street = "Pod slivkou", numbers = "512", by = "supisne"},
+]
+
+[okrsok.19]
+rules = [
+  {street = "Hradišská", numbers = "626", by = "supisne"},
+  {street = "Jahodová"},
+  {street = "Jefremovská", numbers = "613, 614", by = "supisne"},
+  {street = "Lounská"},
+]
+
+[okrsok.20]
+rules = [
+  {street = "Hradišská", numbers = "627", by = "supisne"},
+  {street = "Jefremovská", numbers = "632, 633, 634", by = "supisne"},
+  {street = "Kemi"},
+]
+
+[okrsok.21]
+rules = [
+  {street = "Opavská"},
+  {street = "Senická"},
+]
+
+[okrsok.23]
+rules = [
+  {part = "Iľanovo"},
+]
+
+[okrsok.24]
+rules = [
+  {part = "Ploštín"},
+]
+
+[okrsok.25]
+rules = [
+  {part = "Demänová"},
+]
+
+[okrsok.26]
+rules = [
+  {part = "Bodice"},
+]
+
+[okrsok.27]
+rules = [
+  {street = "A. Kostolného"},
+  {street = "Budovateľská"},
+  {street = "Demänovská"},
+  {street = "Glejárska"},
+  {street = "Chrenoviská"},
+  {street = "Jána Švermu", written = "Jána  Švermu"},
+  {street = "Lesnícka"},
+  {street = "Malý Rím"},
+  {street = "Mlynská"},
+  {street = "Palúčanská", numbers = "1-20, 10A, 15A", written = "Palučanská", note = "Palučanská from the bridge over the Váh to Demänovská: the addresses east of the crossing with Demänovská (inferred from the address points)", inferred = true},
+  {street = "Parková"},
+  {street = "Petrovičovo nábrežie"},
+  {street = "SNP"},
+  {street = "V Luhoch"},
+  {street = "Za Luhami"},
+  {street = "Za mlynom"},
+  {street = "Zádvorie"},
+  {street = "Žuffova", written = "Žuﬀova", note = "spelling variant of the register's name"},
+]
+
+[okrsok.28]
+rules = [
+  {street = "Alfonza Gromu"},
+  {street = "Aloisa Lutonského"},
+  {street = "Antona Droppu"},
+  {street = "Baranovská"},
+  {street = "Branislava Lichardusa"},
+  {street = "Družby"},
+  {street = "Dušana Pálku"},
+  {street = "Eduarda Balla"},
+  {street = "Eduarda Penkalu"},
+  {street = "Františka Klimeša"},
+  {street = "J.M.Oberuča", written = "J. M. Oberuča"},
+  {street = "Jánošíkova"},
+  {street = "Júliusa Lenka"},
+  {street = "Kokavcova"},
+  {street = "Kurucká"},
+  {street = "Ladislava Čemického"},
+  {street = "Ladislava Hanusa"},
+  {street = "Mikuláša Štalmacha"},
+  {street = "Námestie SNP"},
+  {street = "Okružná"},
+  {street = "Osadná"},
+  {street = "Palugyayho", written = "Palugayho", note = "spelling variant of the register's name"},
+  {street = "Pavla Štraussa"},
+  {street = "Priehradná"},
+  {street = "Sone Kovačevičovej"},
+  {street = "Vladimíra Kunu"},
+  {street = "Vranov"},
+  {street = "Za Bocianom"},
+  {street = "Za pastierňou"},
+]
+
+[okrsok.29]
+rules = [
+  {street = "Palúčanská", numbers = "21-, 21A, 39A, 40A, 40B, 40C, 50A", written = "Palučanská", note = "Palučanská from Demänovská westwards: the addresses west of the crossing (inferred from the address points)", inferred = true},
+  {street = "Pavla Vilikovského"},
+]
+
+[okrsok.30]
+rules = [
+  {part = "Andice"},
+  {part = "Benice"},
+]
+
+[okrsok.31]
+rules = [
+  {street = "Hony"},
+  {street = "Medze"},
+  {street = "Mincova"},
+  {street = "Obrcianova"},
+  {street = "Ondrašovská", numbers = "42-", note = "Ondrašovská is split at Roľnícka (from Ráztocká to Roľnícka in okrsok 32, from Roľnícka towards Bobrovec in okrsok 31); the number split is placed at the crossing from the address points (inferred)", inferred = true},
+  {street = "Pod Dielom"},
+  {street = "Požiarnická"},
+  {street = "Role"},
+  {street = "Roľnícka"},
+]
+
+[okrsok.32]
+rules = [
+  {rest = true},
+]

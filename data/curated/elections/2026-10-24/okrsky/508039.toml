@@ -1,0 +1,58 @@
+# Okrsky of Láb, transcribed by an AI agent in job okrsok-rules-383 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Drahy, Grínava, Hlavná ulica, Hviezdna ulica, Krátka ulica, Lúčka, Mesačná ulica, Na kúte, Okružná ulica, Rádek, Slnečná ulica, Školská ulica, Štvrtecká ulica, Ulica Antona Milatu, Ulica Ignáca Juračku, Veterná ulica, Vŕšok, Zohorská ulica
+#   okrsok 2: ulice: Ambrov mlyn, Cintorínska ulica, Jazerná ulica, Leknová ulica, Lipová ulica, Malý Chríb, Na bahnách, Pri štadióne, Stránky, Topoľová ulica, Trstinová ulica, Ulica Benjamína Záhradníka, Ulica Karola Salixa, Ulica M.Kišoňovej-Hubovej, Veľký Chríb, Vrbovec, Výhony, bez ulice
+obec = "508039"
+name = "Láb"
+okrsky_date = 2026-07-14
+okrsky_note = "Both okrsky vote at the Obecný úrad. \"bez ulice\" (addresses without a street) is in okrsok 2, given as its rest rule."
+
+[[document]]
+url = "https://www.obeclab.sk/wp-content/uploads/2026/07/urcenie-volebnych-okrskov-a-miestnosti.doc"
+sha256 = "9027dca59ee289f7685ae13a7319761fcb2450821808d14c6eb1157c589fbce4"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (OL-2026/182)"
+
+[okrsok.1]
+rules = [
+  {street = "Drahy"},
+  {street = "Grínava"},
+  {street = "Hlavná ulica"},
+  {street = "Hviezdna ulica"},
+  {street = "Krátka ulica"},
+  {street = "Lúčka"},
+  {street = "Mesačná ulica"},
+  {street = "Na kúte"},
+  {street = "Okružná ulica"},
+  {street = "Rádek"},
+  {street = "Slnečná ulica"},
+  {street = "Školská ulica"},
+  {street = "Štvrtecká ulica"},
+  {street = "Ulica Antona Milatu"},
+  {street = "Ulica Ignáca Juračku"},
+  {street = "Veterná ulica"},
+  {street = "Vŕšok"},
+  {street = "Zohorská ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ambrov mlyn"},
+  {street = "Cintorínska ulica"},
+  {street = "Jazerná ulica"},
+  {street = "Leknová ulica"},
+  {street = "Lipová ulica"},
+  {street = "Malý Chríb"},
+  {street = "Na bahnách"},
+  {street = "Pri štadióne"},
+  {street = "Stránky"},
+  {street = "Topoľová ulica"},
+  {street = "Trstinová ulica"},
+  {street = "Ulica Benjamína Záhradníka"},
+  {street = "Ulica Karola Salixa"},
+  {street = "Veľký Chríb"},
+  {street = "Vrbovec"},
+  {street = "Výhony"},
+  {street = "Ulica Márie Kišoňovej-Hubovej", written = "Ulica M.Kišoňovej-Hubovej"},
+  {rest = true},
+]

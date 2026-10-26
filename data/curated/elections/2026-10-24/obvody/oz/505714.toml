@@ -1,0 +1,95 @@
+# Council obvody of Veľké Ripňany (505714), Topoľčany.
+# Transcribed by an AI agent in job obvod-rules-130 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Obec Veľké Ripňany, ulice: Topoľčianska, Piešťanská, Obsolovská, Nitrianska, Hlohovecká, Kút, Vieska, Vinohradská, Školská, Mládežnícka, Malinová, Poštová, Muškátová, Nábrežná, Mlynská, Majerská, Nová, Studená dolina, Lúčna ulica, Orechová, sa volí 7 poslancov.
+#   obvod 2: Obec Behynce, ulice: Hlavná, Staničná, Okružná, Pri zvonici, Družstevná, sa volia 2 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-129 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Topoľčianska, Piešťanská, Obsolovská, Nitrianska, Školská, Malinová, Muškátová, Nábrežná, Mlynská, Obec
+#   okrsok 2: Ulice: Hlohovecká, Kút, Majerská, Mládežnícka, Nová, Poštová, Vieska, Vinohradská, Studená dolina, Orechová, Lúčna ulica
+#   okrsok 3: Ulice: Hlavná, Okružná, Staničná, Družstevná, Pri zvonici
+obec = "505714"
+name = "Veľké Ripňany"
+date = 2026-06-08
+note = "The announcement says 9 poslancov in total, but its obvody add up to 7 + 2. The text of obvod 1 comes from a two-column table cell, so the order 'Topoľčianska … Nová, Studená dolina, Lúčna ulica, Orechová' is my reconstruction of how its lines wrap."
+okrsky_fill = "nearest"
+okrsky_note = "The undated document 'Určenie okrskov' (published 21.7.2026 on the 2026 elections notice page) gives obvod 1 (Veľké Ripňany) okrsky 1 and 2 and obvod 2 (Behynce) okrsok 3. 'Obec' in okrsok 1 most likely means voters registered only at the municipality, not an address; the addresses without a street in obvod 1 are placed by fill_nearest. No date stated."
+
+[[document]]
+url = "https://www.velkeripnany.sk/data/news_files/velkeripnany.sk/136430/oznamenie-volebne-obvody-a-poslanci.pdf"
+sha256 = "d5f3efab5b3565be7d7fbf047e756fc5d99d4591a0b4395420948485cf9d3439"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 33 zo dňa 8.6.2026)"
+
+[[document]]
+url = "https://www.velkeripnany.sk/data/news_files/velkeripnany.sk/136430/urcenie-okrskov.pdf"
+sha256 = "6071ba7d3d760726ca008835abc9a5d1c937fe016c6494ce4666c3cf5edd26c7"
+title = "Určenie okrskov s vymedzením ich územného obvodu, určenie volebných miestností"
+
+[obvod.1]
+seats = 7
+okrsky = [1, 2]
+rules = [
+  {street = "Topoľčianska"},
+  {street = "Piešťanská"},
+  {street = "Obsolovská"},
+  {street = "Nitrianska"},
+  {street = "Hlohovecká"},
+  {street = "Kút"},
+  {street = "Vieska"},
+  {street = "Vinohradská"},
+  {street = "Školská"},
+  {street = "Mládežnícka"},
+  {street = "Malinová"},
+  {street = "Poštová"},
+  {street = "Muškátová"},
+  {street = "Nábrežná"},
+  {street = "Mlynská"},
+  {street = "Majerská"},
+  {street = "Nová"},
+  {street = "Studená dolina"},
+  {street = "Lúčna ulica"},
+  {street = "Orechová"},
+  {part = "Veľké Ripňany", note = "Obvod 1 is the obec Veľké Ripňany; the part rule covers its addresses without a street."},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [3]
+rules = [
+  {street = "Hlavná"},
+  {street = "Staničná"},
+  {street = "Okružná"},
+  {street = "Pri Zvonici", written = "Pri zvonici", note = "Same street; the document writes 'zvonici' in lower case."},
+  {street = "Družstevná"},
+  {part = "Behynce", note = "Obvod 2 is Behynce; the part rule covers its addresses without a street."},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Topoľčianska"},
+  {street = "Piešťanská"},
+  {street = "Obsolovská"},
+  {street = "Nitrianska"},
+  {street = "Školská"},
+  {street = "Malinová"},
+  {street = "Muškátová"},
+  {street = "Nábrežná"},
+  {street = "Mlynská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlohovecká"},
+  {street = "Kút"},
+  {street = "Majerská"},
+  {street = "Mládežnícka"},
+  {street = "Nová"},
+  {street = "Poštová"},
+  {street = "Vieska"},
+  {street = "Vinohradská"},
+  {street = "Studená dolina"},
+  {street = "Orechová"},
+  {street = "Lúčna ulica"},
+]

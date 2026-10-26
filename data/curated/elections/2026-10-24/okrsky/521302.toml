@@ -1,0 +1,56 @@
+# Okrsky of Čečejovce, transcribed by an AI agent in job okrsok-rules-511 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Mlynská, Košická, Paňovská, Krátka, Severná, Majerská, Hlavná, Južná, Buzická, Staničná, Školská, Východná, Kvetná
+#   okrsok 2: Kostolná, Pešia, Západná, Úzka, Dúhová, Agátová, Slnečná, Muškátová, Orgovánová, Letná, Časť SELEŠKA, Družstevná, Jarková, Viničná, Záhradná, Lúčna
+obec = "521302"
+name = "Čečejovce"
+okrsky_fill = "nearest"
+okrsky_note = "Undated notice. Addresses without a street take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.cecejovce.sk/e_download.php?file=/data/uredni_deska/obsah553_3.pdf&original=Zverejnenia%20-%20Ozn%C3%A1menie%20-%20volebn%C3%A1%20miestnos%C5%A5.pdf"
+sha256 = "9070bef50c81a8e14c157e47985664fc5e1ba5cb3f41bc551da1f296c627f450"
+title = "Utvorenie volebných okrskov, volebné miestnosti v obci"
+
+[[document]]
+url = "https://www.cecejovce.sk/uradna-tabula-1/volby-do-organov-samospravy-obci-2026-onkormanyzati-valasztasok-2026-627.html"
+sha256 = "aca5b50a80ffdf0e719d5dd881155165d7b91a931b26f6bd7dd309190f5243bf"
+title = "Voľby do orgánov samosprávy obcí 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Mlynská"},
+  {street = "Košická"},
+  {street = "Paňovská"},
+  {street = "Krátka"},
+  {street = "Severná"},
+  {street = "Majerská"},
+  {street = "Hlavná"},
+  {street = "Južná"},
+  {street = "Buzická"},
+  {street = "Staničná"},
+  {street = "Školská"},
+  {street = "Východná"},
+  {street = "Kvetná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kostolná"},
+  {street = "Pešia"},
+  {street = "Západná"},
+  {street = "Úzka"},
+  {street = "Dúhová"},
+  {street = "Agátová"},
+  {street = "Slnečná"},
+  {street = "Muškátová"},
+  {street = "Orgovánová"},
+  {street = "Letná"},
+  {part = "Seleška"},
+  {street = "Družstevná"},
+  {street = "Jarková"},
+  {street = "Viničná"},
+  {street = "Záhradná"},
+  {street = "Lúčna"},
+]

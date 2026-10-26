@@ -26,10 +26,15 @@ export const version = config.version;
 // anything is fetched.
 export const dataVersion = config.dataVersion;
 setDataVersion(dataVersion);
-// The origin of the live results (config/site.toml live_url); empty: none.
-export const liveUrl = config.live || '';
-// When the app reads them every minute, as Dates; null: any time (a test
-// server; config/site.toml live_days).
+// The path of the election's results on this site (/results/<day>, from
+// the build's data/build/results/<day>/; nothing there before results).
+export const resultsPath = config.results;
+// Whether the app polls them (config/site.toml live); without, it reads
+// them once per page load.
+export const live = config.live;
+// When, polling, it reads them every minute, as Dates; null: any time (a
+// build with EMS_RESULTS_ANYTIME=1, for testing; config/site.toml
+// live_days).
 export const liveWindow = config.liveWindow?.map((iso) => new Date(iso)) ?? null;
 
 let strings = {};

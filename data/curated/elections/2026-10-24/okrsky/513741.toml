@@ -1,0 +1,29 @@
+# Okrsky of Udiča, transcribed by an AI agent in job okrsok-rules-370 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Udiča
+#   okrsok 2: Prosné
+#   okrsok 3: Upohlav
+obec = "513741"
+name = "Udiča"
+okrsky_date = 2026-07-22
+
+[[document]]
+url = "https://www.obecudica.sk/e_download.php?file=/data/uredni_deska/obsah2590_1.pdf&original=Vytvorenie_okrskov_volebne_miestnosti.pdf"
+sha256 = "339852b3004f13861140a36b6facb1af7095eff142c0bf63025832ad2a72d429"
+title = "Utvorenie volebných okrskov a určenie volebnej miestnosti (starosta, 22. 7. 2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Udiča"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Prosné"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Upohlav"},
+]

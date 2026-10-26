@@ -1,0 +1,59 @@
+# Okrsky of Leopoldov, transcribed by an AI agent in job okrsok-rules-255 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Jozefa Murgaša, Štúrova, Gojdičova, Nádražná, Sládkovičova, Trnavská cesta, Moyzesova, Šulekovská cesta
+#   okrsok 2: Emila Pauloviča, Jána Simonidesa, Emila Skákalu, Hlohovská cesta, Bernolákova, Hurbanova, M.R.Štefánika, 1.mája, Nám.sv.Ignáca, Rázusova, ZO ŠTRKOVKA, Občania bez trvalého pobytu
+#   okrsok 3: Hollého, Piešťanská cesta, Strečanského, Holubyho, Gucmanova, Záhradnícka, Kukučínova, Janka Kráľa, Hviezdoslavova, Jilemnického, I. Krasku, Dlhá
+obec = "507253"
+name = "Leopoldov"
+okrsky_date = 2026-07-24
+okrsky_fill = "nearest"
+okrsky_note = "Cintorinská (in the register) is not named by the document, and addresses without a street: placed by fill_nearest. \"Občania bez trvalého pobytu\" (okrsok 2) gets no rule."
+
+[[document]]
+url = "https://www.leopoldov.sk/files/documents/volby/2026/volebne_okrsky.pdf"
+sha256 = "3cbaf82e4ea241d25fa9e041eb99cfff27f9e2f2288b8207c7973e3355c419ce"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí"
+
+[okrsok.1]
+rules = [
+  {street = "Jozefa Murgaša"},
+  {street = "Štúrova"},
+  {street = "Gojdičova"},
+  {street = "Nádražná"},
+  {street = "Sládkovičova"},
+  {street = "Trnavská cesta"},
+  {street = "Moyzesova"},
+  {street = "Šulekovská cesta"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Emila Pauloviča"},
+  {street = "Jána Simonidesa"},
+  {street = "Emila Skákalu"},
+  {street = "Hlohovská cesta"},
+  {street = "Bernolákova"},
+  {street = "Hurbanova"},
+  {street = "M.R.Štefánika"},
+  {street = "1.mája"},
+  {street = "Nám.sv.Ignáca"},
+  {street = "Rázusova"},
+  {street = "ZO ŠTRKOVKA"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hollého"},
+  {street = "Piešťanská cesta"},
+  {street = "Strečanského"},
+  {street = "Holubyho"},
+  {street = "Gucmanova"},
+  {street = "Záhradnícka"},
+  {street = "Kukučínova"},
+  {street = "Janka Kráľa"},
+  {street = "Hviezdoslavova"},
+  {street = "Jilemnického"},
+  {street = "I. Krasku"},
+  {street = "Dlhá"},
+]

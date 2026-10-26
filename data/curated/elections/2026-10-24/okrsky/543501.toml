@@ -1,0 +1,23 @@
+# Okrsky of Richnava, transcribed by an AI agent in job okrsok-rules-624 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Súpisné čísla domov 1 - 387
+#   okrsok 2: Bez súpisného čísla, voliči s priezviskom A - K
+#   okrsok 3: Bez súpisného čísla, voliči s priezviskom L - Ž
+obec = "543501"
+name = "Richnava"
+okrsky_date = 2026-07-17
+okrsky_note = "Okrsky 2 and 3 hold only residents registered without a house number, split by surname (A-K / L-Ž); okrsok 1 (súpisné čísla 1-387) therefore holds every address of the obec."
+
+[[document]]
+url = "https://www.richnava.sk/e_download.php?file=/data/editor/185sk_5.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD%20pre%20vo%C4%BEby%20do%20OSO%20a%20OSK.pdf"
+sha256 = "5cbc935b0fc6780053a9d7ccad81216246e5c4a332095c5687eb9d71a2c36a3c"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov v roku 2026"
+
+[okrsok.1]
+
+[okrsok.2]
+addressless = true
+
+[okrsok.3]
+addressless = true

@@ -1,0 +1,64 @@
+# Okrsky of Moravany nad Váhom, transcribed by an AI agent in job okrsok-rules-387 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok: 1, ulice (celá ulica): CINTORÍNSKA, DUCOVSKÁ, HUBINSKÁ, KAŠTIELSKA, KOSTOLECKÁ, LESNÁ, MORAVANY nad VÁHOM, NA VÝHONE, NADBREŽNÁ, PÁLENICKÁ, PIEŠŤANSKÁ, POD LESOM, RADOVÁ, SEVERNÁ, SLADOVÁ, SLNEČNÁ, ŠKOLSKÁ, VENDELÍNKOVÁ, VINOHRAD, VRCHNÁ, VÝTOCKÁ
+#   okrsok 2: Okrsok: 2, ulice (celá ulica): DRUŽSTEVNÁ, HLBOKÁ, HLINÍKOVÁ, INOVECKÁ, JARNÁ, JUŽNÁ, KRÍŽNA, KÚPEĽNÁ, LÚČNA, NOVÁ, OKRUŽNÁ, OSUŠINY, PODHORSKÁ, PRÚDY, ŠPORTOVÁ, VÁŽSKA, ZÁPADNÁ
+obec = "507342"
+name = "Moravany nad Váhom"
+okrsky_note = "Document lists every street as 'Celá ulica'. Its okrsok 1 entry 'MORAVANY nad VÁHOM' is the addresses without a street, given as a part rule for okrsok 1."
+
+[[document]]
+url = "https://www.moravany.sk/e_download.php?file=/data/uredni_deska/obsah589_9.pdf&original=INFORM%C3%81CIA%20O%20UTVOREN%C3%8D%20VOLEBN%C3%9DCH%20OKRSKOV.pdf"
+sha256 = "eb8af4abe5ccd69f681bdbfc3696311a212dfe8ebed8bb95c1dff416538e7748"
+title = "Informácia o utvorení volebných okrskov"
+
+[[document]]
+url = "https://www.moravany.sk/samosprava/zverejnovanie/uradna-tabula/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-2026-610.html"
+sha256 = "b93939cab89d8c4d375ed0a4425df7d1605d07aaad4b1209ea0e54e4d7d096a6"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska", written = "CINTORÍNSKA"},
+  {street = "Ducovská", written = "DUCOVSKÁ"},
+  {street = "Hubinská", written = "HUBINSKÁ"},
+  {street = "Kaštieľska", written = "KAŠTIELSKA", note = "diacritics differ; same street"},
+  {street = "Kostolecká", written = "KOSTOLECKÁ"},
+  {street = "Lesná", written = "LESNÁ"},
+  {street = "Na Výhone", written = "NA VÝHONE"},
+  {street = "Nadbrežná", written = "NADBREŽNÁ"},
+  {street = "Pálenická", written = "PÁLENICKÁ"},
+  {street = "Piešťanská", written = "PIEŠŤANSKÁ"},
+  {street = "Pod lesom", written = "POD LESOM"},
+  {street = "Radová", written = "RADOVÁ"},
+  {street = "Severná", written = "SEVERNÁ"},
+  {street = "Sladová", written = "SLADOVÁ"},
+  {street = "Slnečná", written = "SLNEČNÁ"},
+  {street = "Školská", written = "ŠKOLSKÁ"},
+  {street = "Vendelínkova", written = "VENDELÍNKOVÁ", note = "diacritics differ; same street"},
+  {street = "Vinohrad", written = "VINOHRAD"},
+  {street = "Vrchná", written = "VRCHNÁ"},
+  {street = "Výtocká", written = "VÝTOCKÁ"},
+  {part = "Moravany nad Váhom", note = "the document's entry MORAVANY nad VÁHOM (Celá ulica): the houses numbered without a street; street rules elsewhere are more specific"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná", written = "DRUŽSTEVNÁ"},
+  {street = "Hlboká", written = "HLBOKÁ"},
+  {street = "Hliníková", written = "HLINÍKOVÁ"},
+  {street = "Inovecká", written = "INOVECKÁ"},
+  {street = "Jarná", written = "JARNÁ"},
+  {street = "Južná", written = "JUŽNÁ"},
+  {street = "Krížna", written = "KRÍŽNA"},
+  {street = "Kúpeľná", written = "KÚPEĽNÁ"},
+  {street = "Lúčna", written = "LÚČNA"},
+  {street = "Nová", written = "NOVÁ"},
+  {street = "Okružná", written = "OKRUŽNÁ"},
+  {street = "Osušiny", written = "OSUŠINY"},
+  {street = "Podhorská", written = "PODHORSKÁ"},
+  {street = "Prúdy", written = "PRÚDY"},
+  {street = "Športová", written = "ŠPORTOVÁ"},
+  {street = "Vážska", written = "VÁŽSKA"},
+  {street = "Západná", written = "ZÁPADNÁ"},
+]

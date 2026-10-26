@@ -15,36 +15,53 @@ links      every file the frontend can request exists: the files HTML
            which the build points the modules' imports at; see ``build``),
            the literal paths in the
            scripts, the 404 page, the shell and UI strings of every
-           language, every geo shard of every okres and every level of the
+           language, every geo shard of every okres, every okrsky file the
+           geo index lists and every level of the
            countries around Slovakia, and for every obec in the geo shards
            its address file and candidate files; every address file, name
-           shard and party logo the indexes list; the cached copy of every
+           shard and party logo the indexes list, and every base map file
+           of the base index; the cached copy of every
            page a research finding cites and the stylesheet they link
 contests   every contest of ``candidates.json`` is in exactly one candidate
            area file, the one the frontend looks in (``areaPath`` in
            ``web/js/data.js``)
 origins    no HTML, JS or CSS refers to another origin, except as the
            target of a link (``href``, not on ``<link>``), as an XML
-           namespace or in a comment, and the live results origin
-           (``live_url``) in the HTML (the app shells' config, which the
-           scripts read it from); cached copies of cited pages
+           namespace or in a comment; cached copies of cited pages
            (``cache/``) are documents, not code, and are not checked: what
            they refer to is only links (``cache.py`` sanitizes them). The
-           CSP's connect-src in ``_headers`` is ``'self'`` and exactly the
-           live results origin, if there is one
+           CSP's connect-src in ``_headers`` is ``'self'`` alone
+results    every directory of ``results/`` is an election day's and holds
+           results that keep the contract of docs/results.md
+           (``results.check``): its ``status.json`` well-formed, every
+           file it lists there with that hash, and no other; the votes of
+           every unit counted of a mayor's or president's contest are its
+           valid ballots, a council's within them and its seats
 addresses  every address point lies in the bounding box of its obec at the
            finest level of detail, widened by ``addresses.MAX_OUTSIDE``;
            in an obec whose council obvod goes by address every address
            has one of its obvody, and the shards cut exactly those obce,
-           into exactly their obvody
+           into exactly their obvody; every address has its okrsok
+           exactly in the obce whose okrsky the map draws
 geometry   at each level of detail the lines drawn are the borders of its
            obce (or coarse cells), each exactly once, and every kraj,
            okres, obvod and the country merged from them is bounded by
            exactly the lines drawn as its border, and the council obvody
-           within an obec by exactly the lines flagged so (``geo.verify``); the
+           within an obec by exactly the lines flagged so (``geo.verify``);
+           the okrsky the index lists, and no other, tile their obec's
+           shard features at each level within ``geo.MAX_OKRSKY_OFFSET``,
+           and the lines drawn are exactly the borders between two okrsky of
+           an obec, those between council obvody flagged so
+           (``geo.verify_okrsky``); the
            countries around Slovakia have the lines drawn between them,
            each once, leave no gap at Slovakia's border at any level
            (``geo.verify_neighbours``) and have names in every language
+base       the base map has the shards' levels of detail and okresy
+           (``base/index.json`` against ``geo/index.json``), its index
+           lists exactly the files the app may request, with their sizes,
+           and each file has only the line classes of its level and water
+           areas whose rings are exactly the arcs coded as such
+           (``basemap.verify``)
 i18n       every UI string is translated into every language (none taken
            from a fallback language) and each language's occupations file
            holds as many as its UI strings say; notes the share of
@@ -58,6 +75,7 @@ images are not vendored.
 
 from __future__ import annotations
 
+import datetime as dt
 import json
 import math
 import posixpath
@@ -73,12 +91,14 @@ import numpy as np
 
 from election_map_slovakia import (
     addresses,
+    basemap,
     build,
     cache,
     candidates,
     config,
     geo,
     progress,
+    results,
 )
 from election_map_slovakia.output import format_size
 
@@ -244,9 +264,11 @@ class _Geo:
     bounds: dict[str, tuple[float, float, float, float]] = field(default_factory=dict)
     """obec → (west, south, east, north) at the finest level of detail."""
     shards: list[str] = field(default_factory=list)
-    """Every file of ``okres/`` and ``neighbours/`` the index lists."""
+    """Every file of ``okres/``, ``okrsky/`` and ``neighbours/`` the index lists."""
     council: dict[str, dict[str, set[int]]] = field(default_factory=dict)
     """obec cut into council obvody → shard → its obvody (``oz``) there."""
+    okrsky: set[str] = field(default_factory=set)
+    """The obce whose okrsky the map draws (``okrsky.drawn`` of the index)."""
 
 
 def _geo(dist: Path, geo_index: Any) -> _Geo:
@@ -280,10 +302,20 @@ def _geo(dist: Path, geo_index: Any) -> _Geo:
                         )
                     west, south, east, north = (float(v) for v in box)
                     out.bounds[code] = (west, south, east, north)
+    okrsky = geo_index["okrsky"]
+    out.okrsky = set(okrsky["drawn"])
+    out.shards += [
+        f"geo/{geo.okrsky_path(okres, band['lod'])}"
+        for okres in okrsky["okresy"]
+        for band in okrsky["bands"]
+    ]
     out.shards += [
         f"geo/{geo.neighbours_path(n['lod'])}" for n in geo_index["neighbours"]
     ]
     return out
+
+
+_BASE_INDEX = f"{basemap.OUTPUT_DIR}/{basemap.INDEX_FILE}"
 
 
 def _index_requests(
@@ -335,6 +367,7 @@ def check_links(
     geo: _Geo | None,
     data_index: Any,
     addr_index: Any,
+    base_index: Any,
 ) -> Check:
     """Return the check that every file the frontend can request exists."""
     result = Check("links")
@@ -342,6 +375,7 @@ def check_links(
         "geo/index.json": geo,
         "data/index.json": data_index,
         "addr/index.json": addr_index,
+        _BASE_INDEX: base_index,
     }
     result.problems += [
         f"{name} missing or broken"
@@ -356,6 +390,10 @@ def check_links(
         # Without it Pages answers a missing file with the root page and 200.
         (build.NOT_FOUND, "Cloudflare Pages"),
         *_index_requests(geo, data_index, addr_index),
+        *(
+            (f"{basemap.OUTPUT_DIR}/{rel}", _BASE_INDEX)
+            for rel in (basemap.requested(base_index) if base_index else ())
+        ),
         *_research_requests(dist, sorted(rels)),
         (cache.STYLESHEET.removeprefix("/"), "the cached copies (cache.py)"),
     ]
@@ -374,6 +412,38 @@ def check_links(
         for target, by in sorted(wanted.items())
         if target not in rels
     ]
+    return result
+
+
+def check_basemap(
+    dist: Path, sizes: dict[str, int], base_index: Any, geo_index: Any
+) -> Check:
+    """Return the check of the base map against the shards and its index."""
+    result = Check("base")
+    if base_index is None or geo_index is None:
+        result.problems.append(f"{_BASE_INDEX} or geo/index.json missing or broken")
+        return result
+    if base_index["bands"] != geo_index["shards"]:
+        result.problems.append(f"{_BASE_INDEX}: bands differ from the geo shards'")
+    if base_index["okresy"] != sorted(geo_index["okresy"]):
+        result.problems.append(f"{_BASE_INDEX}: okresy differ from the geo shards'")
+    listed = base_index["files"]
+    wanted = basemap.requested(base_index)
+    if sorted(listed) != sorted(wanted):
+        result.problems.append(
+            f"{_BASE_INDEX}: lists {len(listed)} files, not the {len(wanted)} the app"
+            " may request"
+        )
+    prefix = f"{basemap.OUTPUT_DIR}/"
+    for rel, size in sorted(listed.items()):
+        if sizes.get(prefix + rel) != size:
+            result.problems.append(f"{prefix}{rel}: not {size:,} bytes as listed")
+            continue
+        content = _load(dist, prefix + rel)
+        if content is None:
+            continue  # `json` reports it
+        result.checked += 1
+        result.problems += [f"{prefix}{rel}: {p}" for p in basemap.verify(rel, content)]
     return result
 
 
@@ -456,7 +526,6 @@ def check_origins(dist: Path, rels: Iterable[str], site: config.Site) -> Check:
     """Return the check that no code refers to another origin."""
     result = Check("origins")
     own = urllib.parse.urlsplit(site.base_url).netloc if site.base_url else None
-    live = site.live_url
     for rel in sorted(rels):
         if not rel.endswith(_CODE) or rel.startswith(f"{build.CACHE_DIR}/"):
             continue
@@ -465,14 +534,6 @@ def check_origins(dist: Path, rels: Iterable[str], site: config.Site) -> Check:
         comments = _comment_spans(text) if not rel.endswith(".html") else []
         for m in _URL.finditer(text):
             url = m.group()
-            # The live results origin as a value of the shells' config (the
-            # escaped quote ends it), not as a prefix of a longer host.
-            if (
-                live
-                and rel.endswith(".html")
-                and (url == live or url.startswith(f"{live}&quot;"))
-            ):
-                continue
             if _netloc(url) == own:
                 continue
             # A link target the About dialog builds from the shell's config.
@@ -482,12 +543,35 @@ def check_origins(dist: Path, rels: Iterable[str], site: config.Site) -> Check:
                 line = text.count("\n", 0, m.start()) + 1
                 result.problems.append(f"{rel}:{line}: {url}")
     connect = _connect_sources(dist)
-    expected = ["'self'", live] if live else ["'self'"]
-    if connect is not None and sorted(connect) != sorted(expected):
+    if connect is not None and connect != ["'self'"]:
         result.problems.append(
-            f"{build.HEADERS}: CSP connect-src is {' '.join(connect)},"
-            f" expected {' '.join(expected)}"
+            f"{build.HEADERS}: CSP connect-src is {' '.join(connect)}, expected 'self'"
         )
+    return result
+
+
+def check_results(dist: Path) -> Check:
+    """Return the check of the results of each election in ``results/``."""
+    result = Check("results")
+    root = dist / config.RESULTS_DIR
+    days = sorted(root.iterdir()) if root.is_dir() else []
+    for directory in days:
+        result.checked += 1
+        rel = directory.relative_to(dist).as_posix()
+        try:
+            dt.date.fromisoformat(directory.name)
+        except ValueError:
+            result.problems.append(f"{rel}: not an election day (YYYY-MM-DD)")
+            continue
+        if not directory.is_dir():
+            result.problems.append(f"{rel}: not a directory")
+            continue
+        result.problems += [f"{rel}/{p}" for p in results.check(directory)]
+        status = results.read_status(directory)
+        if status is not None:
+            result.notes.append(
+                f"{rel}: phase {status.get('phase')}, version {status.get('version')}"
+            )
     return result
 
 
@@ -523,7 +607,8 @@ def check_addresses(
     """Return the check that address points lie within their obec.
 
     And that in the obce whose council obvod goes by address every address
-    has one of the obec's obvody, and the map draws all of them.
+    has one of the obec's obvody, and the map draws all of them; and that
+    every address has its okrsok exactly where the map draws the okrsky.
     """
     result = Check("addresses")
     if geo is None or data_index is None:
@@ -546,6 +631,7 @@ def check_addresses(
         result.problems += _council_problems(
             rel, content, data_index["obce"][code][4], code in geo.council
         )
+        result.problems += _okrsok_problems(rel, content, code in geo.okrsky)
         if code not in geo.bounds:
             result.problems.append(f"{rel}: obec {code} not in the geo shards")
             continue
@@ -600,11 +686,40 @@ def _council_problems(rel: str, content: Any, councils: int, cut: bool) -> list[
     return problems
 
 
+def _okrsok_problems(rel: str, content: Any, drawn: bool) -> list[str]:
+    """Return the problems of the per-address okrsky of an address file.
+
+    *drawn*: the map draws the obec's okrsky.
+    """
+    problems = []
+    for kind in (addresses.STREETS, addresses.PARTS):
+        for group in content[kind]:
+            given = "okrsok" in group or "okrsky" in group
+            numbers = (
+                [group["okrsok"]] * len(group["numbers"])
+                if "okrsok" in group
+                else group.get("okrsky", [])
+            )
+            if given != drawn:
+                problems.append(
+                    f"{rel}: {group['name']}: okrsky {'given' if given else 'missing'},"
+                    f" but the map {'does not draw' if given else 'draws'} them"
+                )
+            elif given and (
+                len(numbers) != len(group["numbers"]) or min(numbers, default=1) < 1
+            ):
+                problems.append(
+                    f"{rel}: {group['name']}: okrsky {numbers[:5]} are not one per address"
+                )
+    return problems
+
+
 def check_geometry(dist: Path, geo_index: Any, languages: config.Languages) -> Check:
     """Return the check that each level draws its own obce's borders.
 
-    And that the countries around Slovakia meet it at every level, and are
-    named in every language.
+    And that the okrsky of every obec the index lists tile it at every
+    level, and that the countries around Slovakia meet it at every level,
+    and are named in every language.
     """
     result = Check("geometry")
     if geo_index is None:
@@ -619,6 +734,25 @@ def check_geometry(dist: Path, geo_index: Any, languages: config.Languages) -> C
             result.checked += sum(len(f["features"]) for f in files)
             result.problems += [f"geo/{name}: {p}" for p in geo.verify(files)]
             outlines[name] = geo.country_outline(files)
+    okrsky = geo_index["okrsky"]
+    for band in okrsky["bands"]:
+        name = geo.okrsky_path("*", band["lod"])
+        with progress.stage(f"geo/{name}"):
+            files = [
+                _load(dist, f"geo/{geo.okrsky_path(okres, band['lod'])}")
+                for okres in okrsky["okresy"]
+            ]
+            shards = [
+                _load(dist, f"geo/okres/{okres}/{band['lod']}.json")
+                for okres in okrsky["okresy"]
+            ]
+            if any(f is None for f in [*files, *shards]):
+                continue  # missing or broken: the links and json checks say so
+            result.checked += sum(len(f["features"]) for f in files)
+            result.problems += [
+                f"geo/{name}: {p}"
+                for p in geo.verify_okrsky(files, shards, okrsky["drawn"])
+            ]
     strings = {code: _load(dist, f"i18n/{code}.json") or {} for code in languages.codes}
     for band in geo_index["neighbours"]:
         rel = geo.neighbours_path(band["lod"])
@@ -686,18 +820,23 @@ def run(
         geo = _geo(dist, geo_index) if geo_index is not None else None
         data_index = _load(dist, "data/index.json")
         addr_index = _load(dist, "addr/index.json")
+        base_index = _load(dist, _BASE_INDEX)
     checks = [*check_budget(sizes, site)]
     for name, check in (
         ("json", lambda: check_json(dist, sorted(rels))),
         ("headers", lambda: check_headers(dist)),
         (
             "links",
-            lambda: check_links(dist, rels, languages, geo, data_index, addr_index),
+            lambda: check_links(
+                dist, rels, languages, geo, data_index, addr_index, base_index
+            ),
         ),
         ("contests", lambda: check_contests(dist, rels, contests, data_index)),
         ("origins", lambda: check_origins(dist, rels, site)),
+        ("results", lambda: check_results(dist)),
         ("addresses", lambda: check_addresses(dist, rels, geo, data_index)),
         ("geometry", lambda: check_geometry(dist, geo_index, languages)),
+        ("base", lambda: check_basemap(dist, sizes, base_index, geo_index)),
         ("i18n", lambda: check_translations(dist, languages)),
     ):
         with progress.stage(f"checking {name}"):

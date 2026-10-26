@@ -1,0 +1,29 @@
+# Okrsky of Motešice, transcribed by an AI agent in job okrsok-rules-614 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Horné Motešice
+#   okrsok 2: Dolné Motešice
+#   okrsok 3: Peťovka
+obec = "506273"
+name = "Motešice"
+okrsky_note = "The page (Munipolis site, content in the page's embedded data) lists 3 okrsky by part and polling station only; okrsky are mapped to the parts they are named after (inferred). No decision date is given."
+
+[[document]]
+url = "https://motesice.sk/p/volby-do-oso-a-osk-2026"
+sha256 = "ce6d883241766ad7ec96dd37ecabd21d1a622c9ee220e2eef2e0af60aec7f9e3"
+title = "Voľby do OSO a OSK 2026 – Volebné okrsky"
+
+[okrsok.1]
+rules = [
+  {part = "Horné Motešice", note = "Each okrsok is named after a part of the obec and has its station in that part; the page gives no further territory, so each okrsok takes its part.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dolné Motešice", note = "Each okrsok is named after a part of the obec and has its station in that part; the page gives no further territory, so each okrsok takes its part.", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Peťovka", note = "Each okrsok is named after a part of the obec and has its station in that part; the page gives no further territory, so each okrsok takes its part.", inferred = true},
+]

@@ -1,0 +1,44 @@
+# Okrsky of Huncovce, transcribed by an AI agent in job okrsok-rules-582 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulica Jarná, Mlynská, Krátka, Pri rybníku, Farská, Záhradná, Úzka, Športová, Alejová, Železničná, Hlavná súp.č. od 24 po 180, od súp.č. 391 po 414 a od súp.č. 415 po 550, a občania s TP Huncovce
+#   okrsok 2: ulica Cintorínska, Riečna, Lomnická, Nová, Vrbovská, Školská, Tatranská, Poľná, S. Rosenberga, Hlavná od súp.č. 1 po 23, a od súp.č. 181 po 202, Hlavná súp. č. 232, 672.
+obec = "523526"
+name = "Huncovce"
+okrsky_date = 2026-06-25
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF, read from rendered image. Hlavná is split by súpisné číslo (okrsok 1: 24-180, 391-414, 415-550; okrsok 2: 1-23, 181-202, 232, 672); Hlavná addresses with other súpisné čísla, and addresses without a street, take the nearest by fill_nearest. 'a občania s TP Huncovce' (okrsok 1) are residents registered only to the obec."
+
+[[document]]
+url = "https://www.huncovce.sk/modules/file_storage/download.php?file=fd93a2e2%7C901&inline=1"
+sha256 = "1c08a83ca1586fde7077b4986b4f69c674eb099c370712a040ce6f03ffbf0aa4"
+title = "Oznámenie o utvorení volebných okrskov a volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Jarná"},
+  {street = "Mlynská"},
+  {street = "Krátka"},
+  {street = "Pri Rybníku", written = "Pri rybníku"},
+  {street = "Farská"},
+  {street = "Záhradná"},
+  {street = "Úzka"},
+  {street = "Športová"},
+  {street = "Alejová"},
+  {street = "Železničná"},
+  {street = "Hlavná", numbers = "24-180, 391-550", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Riečna"},
+  {street = "Lomnická"},
+  {street = "Nová"},
+  {street = "Vrbovská"},
+  {street = "Školská"},
+  {street = "Tatranská"},
+  {street = "Poľná"},
+  {street = "Samuela Rosenberga", written = "S. Rosenberga"},
+  {street = "Hlavná", numbers = "1-23, 181-202, 232, 672", by = "supisne"},
+]

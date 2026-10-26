@@ -1,0 +1,29 @@
+# Okrsky of Čerín, transcribed by an AI agent in job okrsok-rules-631 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 Čerín
+#   okrsok 2: Volebný okrsok č. 2 Čačín
+obec = "508519"
+name = "Čerín"
+okrsky_date = 2026-07-29
+okrsky_note = "The okrsky are named after the two parts (okrsok 1 Čerín, okrsok 2 Čačín), each with its polling station in that part. Date is the notice's date (R2026/1199)."
+
+[[document]]
+url = "https://www.cerin.sk/zverejnovanie/uradna-tabula/volebne-okrsky-a-volebne-miestnosti-v-obci-cerin-626.html"
+sha256 = "c7c649ac2b6e61e254f88ce51c71925e8e9fa149c94ad566203fc8c1d08b05af"
+title = "Volebné okrsky a volebné miestnosti v obci Čerín"
+
+[[document]]
+url = "https://www.cerin.sk/e_download.php?file=/data/uredni_deska/obsah535_1.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti%20zverejnenie.pdf"
+sha256 = "95ea34d5a4b2d1005c9940e9cc0460c19c0dd7f292d21371e49e252c61c1f233"
+title = "Voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov v roku 2026 – volebné okrsky a volebné miestnosti - zverejnenie"
+
+[okrsok.1]
+rules = [
+  {part = "Čerín"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Čačín"},
+]

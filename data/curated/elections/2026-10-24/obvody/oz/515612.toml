@@ -1,0 +1,139 @@
+# Council obvody of Tornaľa (515612), Revúca.
+# Transcribed by an AI agent in job obvod-rules-099 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: mestskú časť Behynce, sa volí jeden poslanec.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: mestskú časť Starňa, sa volí jeden poslanec.
+#   obvod 3: Vo volebnom obvode číslo 3, ktorý zahŕňa: mestskú časť Králik, sa volí jeden poslanec.
+#   obvod 4: Vo volebnom obvode číslo 4, ktorý zahŕňa: mestskú časť Tornaľa, sa volí desať poslancov.
+# Okrsky added by an AI agent in job okrsok-rules-098 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: mestská časť Behynce, bez ulice
+#   okrsok 2: mestská časť Starňa - Dlhá, Družby, Košická, Lipová, Mládežnícka, Nemocničná, Rožňavská, Višňová
+#   okrsok 3: Bakulinyho, B. Němcovej, Bottova, Cintorínska, Dr. J. Töröka, Krížna, Mlynská, Mliekarenská, Osada Železné, Priemyselná, Puškinova, Roľnícka, Šafárikova, Tulipánová, Záhradnícka
+#   okrsok 4: Cesta Gemerských žriediel, Daxnerova, Francisciho, Hlavné námestie, Kollárova, Mierová 2-16 párne čísla, Mierová 1-47 nepárne čísla, Mierová 290, Odborárska, Sládkovičova, Štúrova, Tomášikova
+#   okrsok 5: Mierová 18-114 párne čísla, Mierová 49-129 nepárne čísla, Škultétyho
+#   okrsok 6: I. Mája, Hurbanova, Hviezdoslavova, Komenského, Kostolné námestie, Letná, Poštová 1-71
+#   okrsok 7: Družstevná, Južná, Poštová 87-107, Školská – nepárne čísla
+#   okrsok 8: Dobšinského, Mierová 116-220 párne čísla, Mierová 131-221 nepárne čísla, Mierová 261-271 a 1973 nepárne čísla, Mierová 292-298 párne čísla, Pri Slanej, Školská – párne čísla, Tabaková, Závodná
+#   okrsok 9: A. Pénteka, Mierová 222-288 párne čísla, Mierová 223-259 nepárne čísla, Nová, Poľná, Pri Majeri, Tichá, Úzka
+obec = "515612"
+name = "Tornaľa"
+date = 2026-06-25
+note = "The announcement defines the obvody by mestská časť only (Behynce, Starňa, Králik, Tornaľa), transcribed as part rules on the register's parts. The separate list of okrsky (Zoznam volebných okrskov a obvodov, 27.07.2026, download_file_f.php?id=2449589) agrees: obvod 3 = Králik streets (A. Pénteka, Mierová 222-288 even / 223-259 odd, Nová, Poľná, Pri Majeri, Tichá, Úzka), obvod 4 includes Osada Železné. The single register address 'Alex. Pénteka' 29 lies in part Tornaľa in the register and so falls in obvod 4 by the part rule, though the okrsky list names A. Pénteka under Králik (obvod 3)."
+okrsky_date = 2026-07-27
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky are numbered as in the list (Králik is okrsok 9, obvod 3). Osada Železné is taken as k.ú. Železné. fill_nearest covers addresses without a street in part Tornaľa, Drevosklad and Alex. Pénteka 29 (not named in obvod 4's okrsky; the list names A. Pénteka under Králik), and Mierová/Poštová numbers outside the listed ranges."
+
+[[document]]
+url = "https://www.mestotornala.sk/download_file_f.php?id=2442070"
+sha256 = "de4b7ebb83fab29830918f30ab601fb526b87f900d73ced18de4498c5a4e45a9"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie MsZ č. 110/2026 zo dňa 25.06.2026)"
+
+[[document]]
+url = "https://www.mestotornala.sk/download_file_f.php?id=2449589"
+sha256 = "aae7c28344565685531ba11110c279aad0d00f2f36705dc01b95d784e12bcb87"
+title = "Zoznam volebných okrskov mesta Tornaľa pre voľby do orgánov samosprávy obcí 2026 (27.07.2026)"
+
+[obvod.1]
+seats = 1
+okrsky = [1]
+rules = [
+  {part = "Behynce"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [2]
+rules = [
+  {part = "Starňa"},
+]
+
+[obvod.3]
+seats = 1
+okrsky = [9]
+rules = [
+  {part = "Králik"},
+]
+
+[obvod.4]
+seats = 10
+okrsky = [3, 4, 5, 6, 7, 8]
+rules = [
+  {part = "Tornaľa"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bakulínyho", written = "Bakulinyho"},
+  {street = "Boženy Nemcovej", written = "B. Němcovej"},
+  {street = "Bottova"},
+  {street = "Cintorínska"},
+  {street = "Dr. Töröka", written = "Dr. J. Töröka", note = "Same street: the register omits the initial J."},
+  {street = "Krížna"},
+  {street = "Mlynská"},
+  {street = "Mliekárenská", written = "Mliekarenská"},
+  {ku = "Železné"},
+  {street = "Priemyselná"},
+  {street = "Puškinova"},
+  {street = "Roľnícka"},
+  {street = "Šafárikova"},
+  {street = "Tulipánová"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Cesta Gemerských Žriediel", written = "Cesta Gemerských žriediel"},
+  {street = "Daxnerova"},
+  {street = "Francisciho"},
+  {street = "Hlavné Námestie", written = "Hlavné námestie"},
+  {street = "Kollárova"},
+  {street = "Mierová", numbers = "2-16", parity = "even"},
+  {street = "Mierová", numbers = "1-47", parity = "odd"},
+  {street = "Mierová", numbers = "290"},
+  {street = "Odborárska"},
+  {street = "Sládkovičova"},
+  {street = "Štúrova"},
+  {street = "Tomašíkova", written = "Tomášikova"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Mierová", numbers = "18-114", parity = "even"},
+  {street = "Mierová", numbers = "49-129", parity = "odd"},
+  {street = "Škultétyho"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "1. mája", written = "I. Mája", note = "Same street: 'I.' is the PDF's rendering of '1.' (1. mája)."},
+  {street = "Hurbanova"},
+  {street = "Hviezdoslavova"},
+  {street = "Komenského"},
+  {street = "Kostolné námestie"},
+  {street = "Letná"},
+  {street = "Poštová", numbers = "1-71"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Družstevná"},
+  {street = "Južná"},
+  {street = "Poštová", numbers = "87-107"},
+  {street = "Školská", parity = "odd"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Dobšinského"},
+  {street = "Mierová", numbers = "116-220", parity = "even"},
+  {street = "Mierová", numbers = "131-221", parity = "odd"},
+  {street = "Mierová", numbers = "261-271, 1973", parity = "odd"},
+  {street = "Mierová", numbers = "292-298", parity = "even"},
+  {street = "Pri Slanej"},
+  {street = "Školská", parity = "even"},
+  {street = "Tabaková"},
+  {street = "Závodná"},
+]

@@ -1,0 +1,112 @@
+# Council obvody of Trenčianska Teplá (506559), Trenčín.
+# Transcribed by an AI agent in job obvod-rules-106 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa ulice: A. Bernoláka, A. Hlinku, Cukrovarská, Dubovecká, Hasičská, Hrádky, J. Braneckého, J. M. Hurbana, Krížová, Ľ. Podjavorinskej, Ľ. Štúra, M. Kukučína, M. R. Štefánika, M. Rázusa, Mayerova, P. O. Hviezdoslava, Partizánska, Podhájska, Príles, Revolučná, SNP, Š. Straku, Školská, Športovcov, Teplická, Vážska, Železničná a Žilinská sa volí 9 poslancov.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa miestnu časť Dobrá sa volia 2 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-105 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Mayerova, M. R. Štefánika, A. Hlinku, Revolučná, A. Bernoláka, Podhájska, občania prihlásení na Obec Trenčianska Teplá
+#   okrsok 2: ulice: Žilinská, Teplická, Hasičská, SNP, Krížová, Ľ. Podjavorinskej, Partizánska, Dubovecká, M. Kukučína, J. M. Hurbana, Príles
+#   okrsok 3: ulice: Š. Straku, P. O. Hviezdoslava, M. Rázusa, J. Braneckého, Školská, Ľ. Štúra, Hrádky, Športovcov, Železničná, Cukrovarská, Vážska
+#   okrsok 4: miestna časť Dobrá
+obec = "506559"
+name = "Trenčianska Teplá"
+date = 2026-07-15
+note = "Source is the mayor's announcement (scanned, read from the image) of OZ resolution No. 87/2026 of 15 July 2026; the resolution itself was not found online. All 28 register streets lie in part Trenčianska Teplá and are listed in obvod 1."
+okrsky_date = 2026-07-22
+okrsky_fill = "nearest"
+okrsky_note = "Date is the mayor's announcement (22.7.2026). Addresses without a street in part Trenčianska Teplá are placed by fill_nearest; residents registered at the municipal office ('občania prihlásení na Obec') belong to okrsok 1 but have no address in the register."
+
+[[document]]
+url = "https://www.trencianskatepla.sk/e_download.php?file=/data/multipage/editor/editor-17-155-sk_6.PDF&original=1_2nova.PDF"
+sha256 = "7c0b5b4789935992310338b4f6edecadf061db29f7f3594f6fe44e3ceca0bf32"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (Uznesenie OZ č. 87/2026 zo dňa 15. 7. 2026), 16. 7. 2026"
+
+[[document]]
+url = "https://www.trencianskatepla.sk/e_download.php?file=/data/multipage/editor/editor-17-155-sk_3.PDF&original=4_23072026123414_20260723123414.PDF"
+sha256 = "c7604e2e7c30d2d4e3450e96ce2d11dcfeed8551a0ec88321dac7bb4aa90c21f"
+title = "Oznámenie o utvorení volebných okrskov s vymedzením ich územného obvodu a o určení volebných miestností, 22. 7. 2026"
+
+[obvod.1]
+seats = 9
+okrsky = [1, 2, 3]
+rules = [
+  {street = "A. Bernoláka"},
+  {street = "A. Hlinku"},
+  {street = "Cukrovarská"},
+  {street = "Dubovecká"},
+  {street = "Hasičská"},
+  {street = "Hrádky"},
+  {street = "J. Braneckého"},
+  {street = "J. M. Hurbana"},
+  {street = "Krížová"},
+  {street = "Ľ. Podjavorinskej"},
+  {street = "Ľ. Štúra"},
+  {street = "M. Kukučína"},
+  {street = "M. R. Štefánika"},
+  {street = "M. Rázusa"},
+  {street = "Mayerova"},
+  {street = "P. O. Hviezdoslava"},
+  {street = "Partizánska"},
+  {street = "Podhájska"},
+  {street = "Príles"},
+  {street = "Revolučná"},
+  {street = "Š. Straku"},
+  {street = "Školská"},
+  {street = "SNP"},
+  {street = "Športovcov"},
+  {street = "Teplická"},
+  {street = "Vážska"},
+  {street = "Železničná"},
+  {street = "Žilinská"},
+  {part = "Trenčianska Teplá", note = "Addresses without a street in part Trenčianska Teplá: obvod 1 comprises all streets of that part, while obvod 2 is only the part Dobrá.", inferred = true},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [4]
+rules = [
+  {part = "Dobrá"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Mayerova"},
+  {street = "M. R. Štefánika"},
+  {street = "A. Hlinku"},
+  {street = "Revolučná"},
+  {street = "A. Bernoláka"},
+  {street = "Podhájska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Žilinská"},
+  {street = "Teplická"},
+  {street = "Hasičská"},
+  {street = "SNP"},
+  {street = "Krížová"},
+  {street = "Ľ. Podjavorinskej"},
+  {street = "Partizánska"},
+  {street = "Dubovecká"},
+  {street = "M. Kukučína"},
+  {street = "J. M. Hurbana"},
+  {street = "Príles"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Š. Straku"},
+  {street = "P. O. Hviezdoslava"},
+  {street = "M. Rázusa"},
+  {street = "J. Braneckého"},
+  {street = "Školská"},
+  {street = "Ľ. Štúra"},
+  {street = "Hrádky"},
+  {street = "Športovcov"},
+  {street = "Železničná"},
+  {street = "Cukrovarská"},
+  {street = "Vážska"},
+]

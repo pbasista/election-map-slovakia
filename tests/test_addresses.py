@@ -1,8 +1,9 @@
 from pathlib import Path
 
+import numpy as np
 import pytest
 
-from election_map_slovakia import addresses as addr
+from election_map_slovakia import addresses as addr, obvody
 from election_map_slovakia.addresses import STREETS, House
 from election_map_slovakia.candidates import Admin, Obec
 
@@ -68,6 +69,41 @@ def test_council_status_single_and_several_incl_city_districts():
     house = House("1/1", (1, "", 1, ""), (1, 2))
     content = addr.obec_file({(STREETS, "Hlavná"): [house]}, council["529362"])
     assert (content["council"], content["obvod"]) == ("single", 1)
+
+
+def test_okrsok_per_address_in_each_group_of_an_obec_with_one_obvod():
+    document = {"url": "https://obec.sk/u.pdf", "sha256": "0" * 64, "title": "U"}
+    tables = {
+        "1": {"rules": [{"street": "Hlavná", "numbers": "1-9"}]},
+        "2": {"rules": [{"rest": True}]},
+    }
+    data = {"obec": "521001", "name": "Bidovce", "document": [document]}
+    rules = obvody.okrsky_set(data | {"okrsok": tables}, "test")
+    hlavna = [House(n, (int(n), "", -1, ""), None) for n in ("5", "20")]
+    kratka = [House("1", (1, "", -1, ""), None)]
+    places = obvody.ObecPlaces(
+        [obvody.Place("Hlavná", "", "", n) for n in ("5", "20")]
+        + [obvody.Place("Krátka", "", "", "1")],
+        np.full((3, 2), np.nan),
+        [None] * 3,
+        [],
+        [((STREETS, "Hlavná"), 2), ((STREETS, "Krátka"), 1)],
+    )
+    okrsky, _ = addr.assign_okrsky({"521001": rules}, {"521001": places})
+    content = addr.obec_file(
+        {(STREETS, "Hlavná"): hlavna, (STREETS, "Krátka"): kratka},
+        [1],
+        None,
+        okrsky["521001"],
+    )
+    assert content["council"] == "single"
+    assert [
+        (g["name"], g.get("okrsok"), g.get("okrsky")) for g in content[STREETS]
+    ] == [
+        ("Hlavná", None, [1, 2]),
+        ("Krátka", 2, None),
+    ]
+    assert "obvod" not in content[STREETS][0]
 
 
 def test_far_points_dropped_but_address_kept():

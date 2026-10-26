@@ -1,0 +1,54 @@
+# Council obvody of Poniky (508918), Banská Bystrica.
+# Transcribed by an AI agent in job obvod-rules-144 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode č. 1, ktorý zahŕňa časť obce Poniky sa volí 5 poslancov.
+#   obvod 2: Vo volebnom obvode č. 2, ktorý zahŕňa časť obce Ponická Lehôtka sa volia 2 poslanci.
+#   obvod 3: Vo volebnom obvode č. 3, ktorý zahŕňa časť obce Ponická Huta sa volia 2 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-143 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 Poniky; územne časť obce Poniky
+#   okrsok 2: Volebný okrsok č. 2 Ponická Lehôtka; územne časť obce Ponická Lehôtka
+#   okrsok 3: Volebný okrsok č. 3 Ponická Huta; územne časť obce Ponická Huta
+obec = "508918"
+name = "Poniky"
+date = 2026-06-30
+note = "The announcement is a scanned PDF (no text layer) but clearly legible; read from the rendered image. Obvody are whole parts of the municipality. Confirmed by the municipality's letter of 29 July 2026 assigning okrsky 1-3 to obvody 1-3 (parts Poniky, Ponická Lehôtka, Ponická Huta)."
+okrsky_note = "Scanned letters (read from image). Each okrsok is one part and one obvod. No decision date stated (letters dated 29 July 2026)."
+
+[[document]]
+url = "https://www.poniky.sk/e_download.php?file=/data/editor/224sk_3.pdf&original=Ur%C4%8Denie%20po%C4%8Dtu%20poslancov.pdf"
+sha256 = "e599bb74fbad381327ad3b89a909cf5cb5865baa441b1c717a7af1aab0c4beb6"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie č. 260/2026 zo dňa 30. 06. 2026)"
+
+[[document]]
+url = "https://www.poniky.sk/e_download.php?file=/data/editor/224sk_6.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti.pdf"
+sha256 = "37bf5895d14b77f79e0222318b719e7e30e9e8501ef975a6093cb4eadc464577"
+title = "Voľby 2026 – volebné okrsky a miestnosti (list starostky z 29. júla 2026)"
+
+[[document]]
+url = "https://www.poniky.sk/e_download.php?file=/data/editor/224sk_7.pdf&original=Zaradenie%20okrskov%20do%20vol.%20obvodov.pdf"
+sha256 = "80239efc605303d30121b0e8290fd0db9bfd49c486c6018548b2e4377f05784a"
+title = "Informácia o zaradení jednotlivých volebných okrskov do volebných obvodov (29. júl 2026)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Poniky"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Ponická Lehôtka"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Ponická Huta"},
+]

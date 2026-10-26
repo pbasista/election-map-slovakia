@@ -1,0 +1,28 @@
+# Okrsky of Horné Srnie, transcribed by an AI agent in job okrsok-rules-420 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov zo súpisných čísel 1 - 460 + voličov s trvalým pobytom Obec Horné Srnie
+#   okrsok 2: pre voličov zo súpisných čísel 461 - 1100
+obec = "506036"
+name = "Horné Srnie"
+okrsky_note = "The document splits the okrsky by súpisné číslo over the whole village (1–460 and 461–1100), not by streets; residents with permanent residence only at the obec (no address) vote in okrsok 1. Notice posted 28. 7. 2026; no decision date stated."
+
+[[document]]
+url = "https://www.hornesrnie.sk/zverejnovanie/uradna-tabula-obce/zverejnenie-informacii-o-utvoreni-volebnych-okrskov-a-o-urceni-volebnych-miestnosti-625.html"
+sha256 = "b9b91047be06e383a295988186ac415a5cf482204938c6c894da6cc526a51817"
+title = "Zverejnenie informácií o utvorení volebných okrskov a o určení volebných miestností"
+
+[[document]]
+url = "https://www.hornesrnie.sk/e_download.php?file=/data/uredni_deska/obsah598_1.pdf&original=Zverejnenie_okrsky_miestnosti.pdf"
+sha256 = "e7e212b013bd0388d0b0359f3c935db290ea46aa3698242fc9bbfbd6c3cdb55e"
+title = "Zverejnenie informácií o utvorení volebných okrskov a o určení volebných miestností (PDF)"
+
+[okrsok.1]
+rules = [
+  {part = "Horné Srnie", numbers = "1-460"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Horné Srnie", numbers = "461-1100"},
+]

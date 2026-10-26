@@ -1,0 +1,37 @@
+# Okrsky of Moravské Lieskové, transcribed by an AI agent in job okrsok-rules-302 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súpisné čísla: 1-142; 589-746; 1292; 1346; 1362-1364; 1366; 1372; 1377; 1381; 1395; 1422-1427; 1440; 1443; 1451-1454
+#   okrsok 2: súpisné čísla: 145-587; 1295; 1298; 1300; 1344; 1348; 1351; 1354; 1365; 1373; 1379-1380; 1387; 1389; 1404-1407; 1410-1412; 1429; 1431; 1441; 1447
+#   okrsok 3: miestna časť: Brestové, Bučkovec, Šance
+obec = "506265"
+name = "Moravské Lieskové"
+okrsky_fill = "nearest"
+okrsky_note = "The obec's notice lists okrsky 1 and 2 by súpisné čísla in the part Moravské Lieskové and okrsok 3 by parts. Súpisné čísla of the part Moravské Lieskové not in either list take the nearest okrsok (fill_nearest). The notice is undated."
+
+[[document]]
+url = "https://moravskelieskove.sk/wp-content/uploads/2026/10/Volby_oznam.pdf"
+sha256 = "e45bedbe4c3cfeda242c44f91420fc8b655b5377e533aa535eb58804e3e40b6b"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov konané 24.10.2026 (oznam)"
+
+[[document]]
+url = "https://moravskelieskove.sk/aktuality/nezaradene/oznamenie-volebnych-okrskov-a-volebnych-miestnosti/"
+sha256 = "d1a72cadc6330c3efd89ad9125e61bbfbbf2cd58e731dd76bffb687c8e369b7f"
+title = "Oznámenie volebných okrskov a volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Moravské Lieskové", numbers = "1-142, 589-746, 1292, 1346, 1362-1364, 1366, 1372, 1377, 1381, 1395, 1422-1427, 1440, 1443, 1451-1454"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Moravské Lieskové", numbers = "145-587, 1295, 1298, 1300, 1344, 1348, 1351, 1354, 1365, 1373, 1379-1380, 1387, 1389, 1404-1407, 1410-1412, 1429, 1431, 1441, 1447"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Brestové"},
+  {part = "Bučkovec"},
+  {part = "Šance"},
+]

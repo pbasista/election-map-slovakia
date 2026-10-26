@@ -1,0 +1,30 @@
+# Okrsky of Bobrovec, transcribed by an AI agent in job okrsok-rules-476 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Súpisné čísla domov 1- 460
+#   okrsok 2: Súpisné čísla domov 462- 849
+obec = "510327"
+name = "Bobrovec"
+okrsky_date = 2026-07-08
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document read from the rendered page: okrsok 1 = súpisné čísla 1–460, okrsok 2 = 462–849. Súpisné číslo 461 and the numbers above 849 in the register (906–967) are not covered and take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.bobrovec.eu/evt_file.php?file=7820"
+sha256 = "e1a78bc3cd72328c14077739636078e2dcbd0f1ab91616515e252470f67f1683"
+title = "Volebné okrsky a miestnosti"
+
+[[document]]
+url = "https://www.bobrovec.eu/samosprava-1/volby-a-referenda/volby-do-organov-samospravy-obci-a-do-organov-samospravnych-krajov/vyhlasenie-volieb-do-oso-a-do-osk-1241sk.html"
+sha256 = "00d652e1866abd0cd8dafc0babc5a0b036c3bcb419986835c94d3613004cbd7f"
+title = "Vyhlásenie volieb do OSO a do OSK (page linking the document)"
+
+[okrsok.1]
+rules = [
+  {part = "Bobrovec", numbers = "1-460"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Bobrovec", numbers = "462-849"},
+]

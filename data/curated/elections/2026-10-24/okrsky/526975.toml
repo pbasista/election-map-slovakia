@@ -1,0 +1,44 @@
+# Okrsky of Podolínec, transcribed by an AI agent in job okrsok-rules-444 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Baštová, Bernolákova, Gen. Štefánika, Hliník, Janka Hollého, Jozefa Smreka, Kláštorná, Letná, Námestie Mariánske, Tatranská, Terézie Vansovej, Zimná
+#   okrsok 2: Družstevná, Hviezdoslavova, Kukučínova, Lesná, Moyzesova, Sládkovičova, Sv. Anny, Školská, Štúrova
+obec = "526975"
+name = "Podolínec"
+okrsky_date = 2026-07-15
+okrsky_fill = "nearest"
+okrsky_note = "fill_nearest places the 73 addresses without street."
+
+[[document]]
+url = "https://www.podolinec.eu/resources/File/ozn-menie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti.pdf"
+sha256 = "8a92eb152bba056eb2491d8eeb47821c42157ea3f3b90dec9acef2320212f672"
+title = "OZNÁMENIE o utvorení volebných okrskov a určení volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Baštová"},
+  {street = "Bernolákova"},
+  {street = "Gen. Štefánika"},
+  {street = "Hliník"},
+  {street = "Janka Hollého"},
+  {street = "Jozefa Smreka"},
+  {street = "Kláštorná"},
+  {street = "Letná"},
+  {street = "Námestie Mariánske"},
+  {street = "Tatranská"},
+  {street = "Terézie Vansovej"},
+  {street = "Zimná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Hviezdoslavova"},
+  {street = "Kukučínova"},
+  {street = "Lesná"},
+  {street = "Moyzesova"},
+  {street = "Sládkovičova"},
+  {street = "Sv. Anny"},
+  {street = "Školská"},
+  {street = "Štúrova"},
+]

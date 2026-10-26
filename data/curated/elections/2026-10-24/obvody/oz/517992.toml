@@ -1,0 +1,41 @@
+# Council obvody of Súľov-Hradná (517992), Bytča.
+# Transcribed by an AI agent in job obvod-rules-166 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: časť Súľov sa volia 4 poslanci
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: časť Hradná sa volia 3 poslanci
+# Okrsky added by an AI agent in job okrsok-rules-165 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 Súľov
+#   okrsok 2: Okrsok č. 2 Hradná
+obec = "517992"
+name = "Súľov-Hradná"
+date = 2026-07-20
+note = "The document is a scanned image without a text layer, but it is clean and plainly legible. 7 councillors in 2 obvody."
+okrsky_date = 2026-07-20
+okrsky_note = "Mayor's announcement of 20.07.2026: okrsok 1 Súľov, okrsok 2 Hradná, each equal to the obvod of the same part."
+
+[[document]]
+url = "https://sulov-hradna.sk/wp-content/uploads/2026/07/ouvo2026.pdf"
+sha256 = "72ddfdf1cba948b407d6731d7066ee121eb4ececec4c0c3b4c09d6fe5f559b19"
+title = "OZNÁMENIE o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie OZ č. 38 - 40 zo dňa 20.07.2026)"
+
+[[document]]
+url = "https://sulov-hradna.sk/wp-content/uploads/2026/07/uvovo2026.pdf"
+sha256 = "2c949badc5c320a8c45dc9704a452ce3d935600d68edae40cb111289d90955eb"
+title = "Oznámenie o utvorení volebných okrskov a o určení volebných miestností pre voľby do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov v roku 2026"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Súľov"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Hradná"},
+]

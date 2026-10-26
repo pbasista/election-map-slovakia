@@ -1,0 +1,41 @@
+# Okrsky of Hrabušice, transcribed by an AI agent in job okrsok-rules-524 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bernolákova, Jarná, Letná, Slovenského raja, Zimná a oprávnených voličov prihlásených na Obec Hrabušice
+#   okrsok 2: E. Makovického, Gaštanová, Hlavná, Píla, Hviezdoslavova, Lúčna, Nová, Obchodná, Partizánska, Tomášovská, Zelená, Majer, Podlesok
+obec = "526592"
+name = "Hrabušice"
+okrsky_date = 2026-07-14
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF, read from the image. The document omits the register streets Hágy and Sokol (2 addresses each) and addresses without a street; these take the okrsok of the nearest placed address (fill_nearest). Voters registered only to the obec vote in okrsok 1."
+
+[[document]]
+url = "https://www.hrabusice.sk/e_download.php?file=/data/editor/231sk_8.pdf&original=Urc%CC%8Cenie%20okrskov%20a%20volebnej%20miestnosti%20pre%20vol%CC%8Cby%20do%20orga%CC%81nov%20samospra%CC%81vy%20obci%CC%81%20a%20do%20orga%CC%81nov%20samospra%CC%81vnych%20krajov%2024.%20okto%CC%81bra%202026.pdf"
+sha256 = "418ad16ce46505d1cf13723c0420248d1e57c14107a6918ed5311208fbb556d0"
+title = "Určenie okrskov a volebnej miestnosti pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov 24. októbra 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Bernoláková", written = "Bernolákova", note = "the register writes Bernoláková, the document Bernolákova: the same street"},
+  {street = "Jarná"},
+  {street = "Letná"},
+  {street = "Slov. Raja", written = "Slovenského raja"},
+  {street = "Zimná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "E.Makovického", written = "E. Makovického"},
+  {street = "Gaštanová"},
+  {street = "Hlavná"},
+  {street = "Píla"},
+  {street = "Hviezdoslavova"},
+  {street = "Lúčna"},
+  {street = "Nová"},
+  {street = "Obchodná"},
+  {street = "Partizánska"},
+  {street = "Tomášovská"},
+  {street = "Zelená"},
+  {street = "Majer"},
+  {street = "Podlesok"},
+]

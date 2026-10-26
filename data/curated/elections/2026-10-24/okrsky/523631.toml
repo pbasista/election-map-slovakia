@@ -1,0 +1,40 @@
+# Okrsky of Liptovská Teplička, transcribed by an AI agent in job okrsok-rules-539 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kufajka, Pilisko, Ráztocká, Teplická, Záhrady, Horárne, Zaglinka, č. d. 732, 733, 736
+#   okrsok 2: Bory, Uhlárová, Drevárska, Koliesko, Kobyliarky, Ul. Š. Náhalku, Pod úbočou, Na jarku, Potočná, Úzka, Ul. Š. Garaja, č. d. 535, 683, 689, 725, 726, 730, 734, 735
+obec = "523631"
+name = "Liptovská Teplička"
+okrsky_fill = "nearest"
+okrsky_note = "Horárne and Zaglinka (okrsok 1) are settlements not in the register as streets or parts; left out. Numbered houses without a street (\"č. d.\") are encoded as súpisné čísla in part Liptovská Teplička; other addresses without a street take the nearest okrsok (fill_nearest). No decision date is stated."
+
+[[document]]
+url = "https://www.liptovskateplicka.sk/evt_file.php?file=8200&original=Spojen%C3%A9%20vo%C4%BEby%202026%20-%20Voleb.okrsky%20a%20vol.miestnosti.pdf"
+sha256 = "db834e1a4483dcf15db0fee1edca7677427fb16341dc34a29ae2aa89d4bbafdf"
+title = "OZNÁMENIE o určení volebných okrskov a volebných miestností VOĽBY DO ORGÁNOV SAMOSPRÁVY A VOĽBY DO SAMOSPRÁVNYCH KRAJOV 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Kufajka"},
+  {street = "Pilisko"},
+  {street = "Ráztocka", written = "Ráztocká", note = "same street, the register writes it without the long á"},
+  {street = "Teplická"},
+  {street = "Záhrady"},
+  {part = "Liptovská Teplička", numbers = "732, 733, 736"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bory"},
+  {street = "Uhlárová"},
+  {street = "Drevárska"},
+  {street = "Koliesko"},
+  {street = "Kobyliarky"},
+  {street = "Ul. Štefana Nahalku", written = "Ul. Š. Náhalku", note = "same street (Štefan Náhalka); the register writes Nahalku without the long á"},
+  {street = "Pod úbočou"},
+  {street = "Na jarku"},
+  {street = "Potočná"},
+  {street = "Úzka"},
+  {street = "Ul. Štefana Garaja", written = "Ul. Š. Garaja"},
+  {part = "Liptovská Teplička", numbers = "535, 683, 689, 725, 726, 730, 734, 735"},
+]

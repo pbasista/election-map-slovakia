@@ -1,0 +1,30 @@
+# Okrsky of Nový Život, transcribed by an AI agent in job okrsok-rules-307 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 – Obecný úrad, Nový Život, Eliášovce 55
+#   okrsok 2: Okrsok č. 2 – Kultúrny dom, Nový Život, Tonkovce 330
+#   okrsok 3: Okrsok č. 3 – Kultúrny dom, Nový Život, Vojtechovce 607
+obec = "501808"
+name = "Nový Život"
+okrsky_date = 2026-07-13
+okrsky_note = "The document lists only each okrsok's polling station (Eliášovce 55, Tonkovce 330, Vojtechovce 607); each okrsok is given the part of the municipality of its station (inferred)."
+
+[[document]]
+url = "https://www.novyzivot.sk/evt_file.php?file=2382&original=Utvorenie%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "edf0446ff996918652038d9fbf5257411379d75285c7b7b5b078bac10efee5a0"
+title = "Utvorenie volebných okrskov s vymedzením ich územného obvodu a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Eliášovce", note = "The document gives only the polling station, which lies in the part Eliášovce; 3 okrsky for 3 parts, each station in another part.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Tonkovce", note = "The document gives only the polling station, which lies in the part Tonkovce; 3 okrsky for 3 parts, each station in another part.", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Vojtechovce", note = "The document gives only the polling station, which lies in the part Vojtechovce; 3 okrsky for 3 parts, each station in another part.", inferred = true},
+]

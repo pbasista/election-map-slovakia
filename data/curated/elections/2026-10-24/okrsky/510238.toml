@@ -1,0 +1,23 @@
+# Okrsky of Zuberec, transcribed by an AI agent in job okrsok-rules-465 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok číslo 1 je pre obyvateľov našej obce od čísla domu 1 po číslo 320
+#   okrsok 2: okrsok číslo 2 je pre obyvateľov od čísla domu 321
+obec = "510238"
+name = "Zuberec"
+okrsky_note = "The obec's notice splits the okrsky by house number (číslo domu = súpisné číslo): okrsok 1 houses 1–320, okrsok 2 from 321. No decision date is given."
+
+[[document]]
+url = "https://www.zuberec.sk/obec-2/hlasenie-obecneho-rozhlasu/oznamenie-k-spojenym-volbam-24102026-1961sk.html"
+sha256 = "2116eb06bb4f570ea890d38f1c5a4ad9ee1057d35d15262a0c7e3ad365903017"
+title = "Oznámenie k spojeným voľbám 24.10.2026"
+
+[okrsok.1]
+rules = [
+  {part = "Zuberec", numbers = "1-320"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Zuberec", numbers = "321-"},
+]

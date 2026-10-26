@@ -1,0 +1,44 @@
+# Okrsky of Zborov, transcribed by an AI agent in job okrsok-rules-523 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Budovateľská, Duklianska, Mlynská, Na Stebníčku, Nám. Čsl. Armády, Obrancov mieru, Osloboditeľov, Pod 100 lipami, SNP, Sokolovská, Šarišská, Štúrova, Úzka, Zákutie od č. 1 – 42
+#   okrsok 2: Bardejovská, Hlavná, Krátky rad, Lesná, Podhradie, Školská, Tehelná, Zákutie od č. 43 - 100
+obec = "519961"
+name = "Zborov"
+okrsky_fill = "nearest"
+okrsky_note = "The 31 addresses without a street take the okrsok of the nearest address (fill_nearest). No decision date stated (published 30.7.2026)."
+
+[[document]]
+url = "https://www.zborov.sk/modules/file_storage/download.php?file=088e5299%7C2405&inline=1"
+sha256 = "40d46f62703016025c226e89e936e3ee1bb461fb3b8041cae5977141a9e5d0f5"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Duklianska"},
+  {street = "Mlynská"},
+  {street = "Na Stebníčku"},
+  {street = "Nám. Čsl. Arm.", written = "Nám. Čsl. Armády"},
+  {street = "Obrancov Mieru", written = "Obrancov mieru"},
+  {street = "Osloboditeľov"},
+  {street = "Pod 100 Lipami", written = "Pod 100 lipami"},
+  {street = "SNP"},
+  {street = "Sokolovská"},
+  {street = "Šarišská"},
+  {street = "Štúrova"},
+  {street = "Úzka"},
+  {street = "Zákutie", numbers = "1-42"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bardejovská"},
+  {street = "Hlavná"},
+  {street = "Krátky rad"},
+  {street = "Lesná"},
+  {street = "Podhradie"},
+  {street = "Školská"},
+  {street = "Tehelná"},
+  {street = "Zákutie", numbers = "43-100"},
+]

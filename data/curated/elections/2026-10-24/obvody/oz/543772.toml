@@ -1,0 +1,50 @@
+# Council obvody of Somotor (543772), Trebišov.
+# Transcribed by an AI agent in job obvod-rules-163 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: časť obce Somotor
+#   obvod 2: časť obce Véč
+#   obvod 3: časť obce Nová Vieska pri Bodrogu
+# Okrsky added by an AI agent in job okrsok-rules-162 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č.1 zahŕňa voličov z časti obce Somotor a voličov, ktorým bol zrušený trvalý pobyt
+#   okrsok 2: Okrsok č.2 zahŕňa voličov z časti obce Véč
+#   okrsok 3: Okrsok č.3 zahŕňa voličov z časti obce Nová Vieska pri Bodrogu
+obec = "543772"
+name = "Somotor"
+date = 2026-07-13
+note = "Document is the obec's úradná tabuľa entry (obecsomotor.sk/uradna-tabula?id=12411), whose attached scanned PDF (hosted on the CMS host obec.dobraobec.sk/files/128/uradna_tabula/20a0a_...) was read visually; text is clear. Agátová ulica spans parts Somotor and Véč; part rules split it accordingly."
+okrsky_date = 2026-07-20
+okrsky_note = "Scanned one-page decision of the starosta dated 20.7.2026 (read from the rendered image), listed on the obec's Dokumenty page (kat. 2634) and hosted on the CMS host obec.dobraobec.sk (files/128, no obec domain in the path), so the listing page is given as the document. Each okrsok is the part of the obvod with the same number. (The referendum document of 18.5.2026, 4c823_..., has the same split but was not used.)"
+
+[[document]]
+url = "https://obecsomotor.sk/uradna-tabula?id=12411"
+sha256 = "0807d3c775e40c0fc3e45bc0f89142017ad0d75a08db87c87d142bfbd86f2f50"
+title = "Úradná tabuľa: Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 356/7/2026 zo dňa 13.7.2026), vyvesené 15.07.2026"
+
+[[document]]
+url = "https://obecsomotor.sk/dokumenty?kat=2634"
+sha256 = "5997ae2b9908203e0e82594838eae2534e0057095178e1227f14c0ac3ff72e6d"
+title = "Dokumenty – voľby 2026: Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov v roku 2026 (starosta, 20.7.2026; scanned PDF on obec.dobraobec.sk/files/128/dokumenty/88546_...)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Somotor"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Véč"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Nová Vieska pri Bodrogu"},
+]

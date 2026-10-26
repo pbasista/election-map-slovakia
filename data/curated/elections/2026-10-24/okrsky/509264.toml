@@ -1,0 +1,24 @@
+# Okrsky of Kysucký Lieskovec, transcribed by an AI agent in job okrsok-rules-467 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Od súpisného čísla po súpisné číslo: 0–54, 383–424, 429–704, 707–707, 709–710, 716–750, 752–759, 761–761, 772–772, 775–786, 803–809, 811–824, 830–854, 868–875, 888–901, 790–799
+#   okrsok 2: Od súpisného čísla po súpisné číslo: 55–382, 425–428, 705–706, 708–708, 711–715, 751–751, 760–760, 762–771, 773–774, 800–802, 810–810, 825–829, 855–867, 876–887, 787–789
+obec = "509264"
+name = "Kysucký Lieskovec"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned table (read from the rendered page) of súpisné číslo ranges per okrsok; undated. Numbers above 901 (not in either table) take the nearest okrsok via fill_nearest. The site sits behind a Websupport proof-of-work browser check. The PDF was fetched through the check by hand and seeded into the job's document cache (documents/index.json); it is linked from https://www.kysuckylieskovec.sk/subor/26348/volebne-miestnosti-pre-volby-do-organov-samospravy-obci-a-samospravnych-krajov."
+
+[[document]]
+url = "https://www.kysuckylieskovec.sk/assets/files/doc_files/4988.pdf"
+sha256 = "29eaf35eb55cc31e9767d38cd6a1645bffeded8e0039fdc93bd35796ac627245"
+title = "Volebné miestnosti pre voľby do orgánov samosprávy obcí a samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {part = "Kysucký Lieskovec", numbers = "0-54, 383-424, 429-704, 707, 709-710, 716-750, 752-759, 761, 772, 775-786, 790-799, 803-809, 811-824, 830-854, 868-875, 888-901"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kysucký Lieskovec", numbers = "55-382, 425-428, 705-706, 708, 711-715, 751, 760, 762-771, 773-774, 787-789, 800-802, 810, 825-829, 855-867, 876-887"},
+]

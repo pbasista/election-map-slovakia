@@ -1,0 +1,43 @@
+# Okrsky of Nemecká, transcribed by an AI agent in job okrsok-rules-508 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Andreja Sládkoviča, Hronská, Jána Švermu, Janka Kráľa (od č. 1 po číslo 44), Jozefa Gregora Tajovského, Mládežnícka, Partizánska, Pod Hrbkom, Podskalie, Sama Chalupku, Slovenského nár. povstania, Školská, Tehelná, Zábrežná
+#   okrsok 2: ulice: 1. mája, Krátka, Odbojárov, Sviniarka, Štvrť Kapitána Nálepku, Za Štadiónom, Zámostského, Janka Kráľa (od č. 45)
+obec = "508829"
+name = "Nemecká"
+okrsky_fill = "nearest"
+okrsky_note = "Starosta's notice posted 27.07.2026 (decision date not stated). 'Sviniarka' (okrsok 2) is not in the register; left out. Addresses without a street take the nearest okrsok."
+
+[[document]]
+url = "https://www.nemecka.info/zverejnovanie-1/uradna-tabula/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-716.html"
+sha256 = "f888b3d52da413f05eb9c5b2a4ac33615fd9b7c798c3f56be3652b69f8c6e6af"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Andreja Sládkoviča"},
+  {street = "Hronská"},
+  {street = "Jána Švermu"},
+  {street = "Jozefa Gregora Tajovského"},
+  {street = "Mládežnícka"},
+  {street = "Partizánska"},
+  {street = "Pod Hrbkom"},
+  {street = "Podskalie"},
+  {street = "Sama Chalupku"},
+  {street = "Slovenského Nár. Povstania", written = "Slovenského nár. povstania"},
+  {street = "Školská"},
+  {street = "Tehelná"},
+  {street = "Zábrežná"},
+  {street = "Janka Kráľa", numbers = "1-44"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Krátka"},
+  {street = "Odbojárov"},
+  {street = "Štvrť Kapitána Nálepku"},
+  {street = "Za Štadiónom"},
+  {street = "Zámostského"},
+  {street = "Janka Kráľa", numbers = "45-"},
+]

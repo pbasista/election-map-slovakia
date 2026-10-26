@@ -1,0 +1,53 @@
+# Okrsky of Košice-Myslava, transcribed by an AI agent in job okrsok-rules-330 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Myslava (Girbeš, Kamenný potok, Maša), Ku Bangortu, Na Kope, Na Kope I, Na Kope II, Na Kope III, Na Kope IV, Na Kope V, Na Kope VI, Na Kope VII, Na Kope VIII, Na Kope IX, Na Kope X, Povrazová, Ulica na Grunte, Vrchná, Chmeľníky, Ku hájovni, Pod Gruntom, Pod horou, Ulica nad Bangortami
+#   okrsok 2: Ku potoku, Myslavská, Nižné Chmeľníky, Pod Hrabinou, Za Dolným mlynom, Za priekopou
+obec = "598216"
+name = "Košice-Myslava"
+okrsky_note = "Document undated (published 15.7.2026). Okrsok 1 also lists 'Myslava (Girbeš, Kamenný potok, Maša)', i.e. addresses without a street; okrsok 1 is therefore the rest."
+
+[[document]]
+url = "https://www.myslava.eu/download_file_f.php?id=2443257"
+sha256 = "a7c34bf079eb1f24a7f7978369aa5ecf7f2bf2cb28a33e4e6cf2ece737d6c3bf"
+title = "Volebné okrsky (web-volebne-okrsky.pdf)"
+
+[[document]]
+url = "https://www.myslava.eu/volebne-okrsky-oznam/mid/379197/.html"
+sha256 = "9d9d6ee03598d733280f8687e65fe991db73d4b106d5179d43ea8768aecf8fe1"
+title = "Úradná tabuľa: Volebné okrsky (zverejnené 15.7.2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Ku Bangortu"},
+  {street = "Na Kope"},
+  {street = "Na Kope I"},
+  {street = "Na Kope II"},
+  {street = "Na Kope III"},
+  {street = "Na Kope IV"},
+  {street = "Na Kope V"},
+  {street = "Na Kope VI"},
+  {street = "Na Kope VII"},
+  {street = "Na Kope VIII"},
+  {street = "Na Kope IX"},
+  {street = "Na Kope X"},
+  {street = "Povrazová"},
+  {street = "Ulica na Grunte"},
+  {street = "Vrchná"},
+  {street = "Chmeľníky"},
+  {street = "Ku Hájovni"},
+  {street = "Pod Gruntom"},
+  {street = "Pod Horou"},
+  {street = "Nad Bangortami", written = "Ulica nad Bangortami", note = "left-out 'Ulica'; same street"},
+  {rest = true, note = "'Myslava (Girbeš, Kamenný potok, Maša)': addresses without a street (súpisné čísla in the settlements Girbeš, Kamenný potok, Maša) go to okrsok 1"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ku Potoku"},
+  {street = "Myslavská"},
+  {street = "Nižné Chmeľníky"},
+  {street = "Pod Hrabinou"},
+  {street = "Za Dolným Mlynom"},
+  {street = "Za Priekopou"},
+]

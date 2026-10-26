@@ -1,0 +1,23 @@
+# Okrsky of Lazy pod Makytou, transcribed by an AI agent in job okrsok-rules-336 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1, Volebná miestnosť: Požiarna zbrojnica v Dubkovej - 020 55 Lazy pod Makytou, Dubková č. 29
+#   okrsok 2: Volebný okrsok č. 2, Volebná miestnosť: Základná škola s materskou školou Lazy pod Makytou, 020 55 Lazy pod Makytou č. 148
+obec = "513300"
+name = "Lazy pod Makytou"
+okrsky_date = 2026-07-15
+
+[[document]]
+url = "https://www.lazypodmakytou.sk/download_file_f.php?id=2443821"
+sha256 = "4a2a2bdb6cb957218df88641996de1dea415f4acceda8e6544e7fbe3d509ebaa"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre Voľby do orgánov samosprávy obcí"
+
+[okrsok.1]
+rules = [
+  {part = "Dubková", note = "The document gives each okrsok only its polling station; okrsky as many as parts, station in this part, so the okrsok is the part of its station.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lazy pod Makytou", note = "The document gives each okrsok only its polling station; okrsky as many as parts, station in this part, so the okrsok is the part of its station.", inferred = true},
+]

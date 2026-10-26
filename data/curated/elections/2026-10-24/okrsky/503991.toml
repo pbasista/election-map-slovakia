@@ -1,0 +1,54 @@
+# Okrsky of Selice, transcribed by an AI agent in job okrsok-rules-428 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Jilemnického, Poľná, A. Moyzesa, Pionierska, G. Steinera, Poľovnícka, J. A. Komenského, Družstevná, Vážska, Orechová, Budovateľská, 9. mája, Hviezdoslavova, časť Čsl. armády
+#   okrsok 2: ulice: Školská, Mlynská, Hollého, Agátová, Perjés, Revolučná, Malá, Záhradnícka, Mierová, Športová, Jatovská, Jazerná, Kováčska, Sov. Armády, časť Čsl. armády
+obec = "503991"
+name = "Selice"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF (posted 14.8.2026), read by OCR + check; undated. The document splits Čsl. armády ('časť') between both okrsky without house numbers, so no rule is given for it: its addresses (and the 6 without street) take the okrsok of the nearest placed address (fill_nearest). Both okrsky vote in the Kultúrny dom, Čsl. armády 913/85."
+
+[[document]]
+url = "https://www.obecselice.eu/modules/file_storage/download.php?file=26a3924e%7C172&inline=1"
+sha256 = "192d218ce8c7bd899e3ed9abe7b92468921309716c7636928f102f6c393299e1"
+title = "Volebné okrsky a volebné miestnosti"
+
+[[document]]
+url = "https://www.obecselice.eu/volby-2026/volby-do-organov-samospravy-obci/"
+sha256 = "c1a2b24aaa7642b2988dcd853fc6b50e4e6745b0452571477ffe38aa1f4e56e4"
+title = "Voľby do orgánov samosprávy obcí 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Jilemnického"},
+  {street = "Poľná"},
+  {street = "A. Moyzesa"},
+  {street = "Pionierska"},
+  {street = "G. Steinera"},
+  {street = "Poľovnícka"},
+  {street = "J. A. Komenského"},
+  {street = "Družstevná"},
+  {street = "Vážska"},
+  {street = "Orechová"},
+  {street = "Budovateľská"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Hviezdoslavova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Školská"},
+  {street = "Mlynská"},
+  {street = "Hollého"},
+  {street = "Agátová"},
+  {street = "Perjéš", written = "Perjés", note = "é vs š in the ending: same street, the only Perjéš in the register"},
+  {street = "Revolučná"},
+  {street = "Malá"},
+  {street = "Záhradnícka"},
+  {street = "Mierová"},
+  {street = "Športová"},
+  {street = "Jatovská"},
+  {street = "Jazerná"},
+  {street = "Kováčska"},
+  {street = "Sovietskej Armády", written = "Sov. Armády", note = "abbreviation of Sovietskej"},
+]

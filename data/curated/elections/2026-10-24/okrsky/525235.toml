@@ -1,0 +1,47 @@
+# Okrsky of Šarišské Michaľany, transcribed by an AI agent in job okrsok-rules-558 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Čerešňová, Hviezdoslavova, Jarková, Komenského, Kpt. Nálepku, M. Zeleného, Mlynská, Požiarnická, Ružová, Sabinovská, SNP, Štúrova, Záhradná, Železničiarska
+#   okrsok 2: Družstevná, Michalská, M.R. Štefánika, Pod lesíkom, Prešovská
+obec = "525235"
+name = "Šarišské Michaľany"
+okrsky_date = 2026-07-23
+okrsky_fill = "nearest"
+okrsky_note = "\"Komenského\" is the register's \"J. A. Komenského\" (the only such street). Addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.sarisskemichalany.sk/obec-2/volby/volby-do-organov-samospravy-obci-a-samospravnych-krajov-2026/"
+sha256 = "218df25b31575f64dc3f52f38d447b1c76b07193fb2e4ddbc7231dc497b1001b"
+title = "Voľby do orgánov samosprávy obcí a samosprávnych krajov 2026"
+
+[[document]]
+url = "https://www.sarisskemichalany.sk/e_download.php?file=/data/editor/152sk_8.pdf&original=Utvorenie.pdf"
+sha256 = "8f6f1f79a5db8c244468d4e13af65a245585052808c7d8e57579c5ee8f453de5"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Šarišské Michaľany"
+
+[okrsok.1]
+rules = [
+  {street = "Čerešňová"},
+  {street = "Hviezdoslavova"},
+  {street = "Jarková"},
+  {street = "Mlynská"},
+  {street = "Požiarnická"},
+  {street = "Ružová"},
+  {street = "Sabinovská"},
+  {street = "SNP"},
+  {street = "Štúrova"},
+  {street = "Záhradná"},
+  {street = "Železničiarska"},
+  {street = "J. A. Komenského", written = "Komenského"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "M.Zeleného", written = "M. Zeleného"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Michalská"},
+  {street = "Prešovská"},
+  {street = "M. R. Štefánika", written = "M.R. Štefánika"},
+  {street = "Pod Lesíkom", written = "Pod lesíkom"},
+]

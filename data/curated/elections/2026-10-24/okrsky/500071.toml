@@ -1,0 +1,29 @@
+# Okrsky of Branč, transcribed by an AI agent in job okrsok-rules-455 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov - obyvateľov s trvalým pobytom v časti obce Branč
+#   okrsok 2: pre voličov - obyvateľov s trvalým pobytom v časti obce Veľká Ves
+obec = "500071"
+name = "Branč"
+okrsky_date = 2026-07-09
+okrsky_note = "Scanned decision read from the image."
+
+[[document]]
+url = "https://www.branc.sk/download_file_f.php?id=2440590"
+sha256 = "f1e9f7db410a3789b692e97aa8a01bf6afd31cd752db3c33961fb07c418d6991"
+title = "ROZHODNUTIE o určení volebných okrskov a volebných miestností"
+
+[[document]]
+url = "https://www.branc.sk/rozhodnutie-o-urceni-volebnych-okrskov-a-volebnych-miestnosti-oznam/mid/583285/.html"
+sha256 = "7dfc4d3fcd3bb88e4c7e6249f60292df961a680c354dd5374ed380a55411d482"
+title = "ROZHODNUTIE o určení volebných okrskov a volebných miestností (oznam)"
+
+[okrsok.1]
+rules = [
+  {part = "Branč"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Veľká Ves"},
+]

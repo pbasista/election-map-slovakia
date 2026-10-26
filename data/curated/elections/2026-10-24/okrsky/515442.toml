@@ -1,0 +1,24 @@
+# Okrsky of Rimavská Seč, transcribed by an AI agent in job okrsok-rules-576 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Rimavská Seč pobyt na obci, Rimavská Seč 1 až Rimavská Seč 300
+#   okrsok 2: Rimavská Seč 301 až Rimavská Seč 650
+obec = "515442"
+name = "Rimavská Seč"
+okrsky_fill = "nearest"
+okrsky_note = "The obec's sample notices of the time and place of voting for okrsky 1 and 2 give each okrsok's addresses by súpisné číslo (1–300 incl. residents registered only to the obec; 301–650). Both vote in the ZŠ, Rimavská Seč 32. No decision date is published; súpisné čísla over 650 take the nearest placed address."
+
+[[document]]
+url = "https://www.rimavskasec.eu/download_file_f.php?id=2451054"
+sha256 = "91cca3705a4559c9af066f5af5a799db94338ca69c141cfa1dedc0845e10c13f"
+title = "OZNÁMENIE o čase a mieste konania volieb okrsky 1, 2"
+
+[okrsok.1]
+rules = [
+  {part = "Rimavská Seč", numbers = "1-300"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Rimavská Seč", numbers = "301-650"},
+]

@@ -1,0 +1,50 @@
+# Council obvody of Liptovské Revúce (510718), Ružomberok.
+# Transcribed by an AI agent in job obvod-rules-147 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: č. 1 - Nižná Revúca až po Rakytov, kde v každej časti budú zvolení 3 poslanci.
+#   obvod 2: č. 2 – Stredná Revúca, kde v každej časti budú zvolení 3 poslanci.
+#   obvod 3: č. 3 – Vyšná Revúca, kde v každej časti budú zvolení 3 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-146 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1: Hasičská zbrojnica, spoločenská miestnosť Nižná Revúca 213 (č. d. 1 – 296)
+#   okrsok 2: Okrsok č. 2: Obecný úrad, obradná miestnosť, Stredná Revúca 386 (č. d. 297 – 530)
+#   okrsok 3: Okrsok č. 3: Hasičská zbrojnica, spoločenská miestnosť, Vyšná Revúca 563 (č. d. 531 – 800)
+obec = "510718"
+name = "Liptovské Revúce"
+date = 2026-07-15
+note = "Scanned announcement (read from the image), dated 16.07.2026, citing Uznesenie č. 34/2026 zo dňa 15.7.2026; same division by časti obce as in 2022."
+okrsky_date = 2026-07-16
+okrsky_note = "Scanned mayor's decision of 16.07.2026 (read from the image): 3 okrsky by house-number ranges Nižná (1–296), Stredná (297–530), Vyšná Revúca (531–800), matching the three obvody (one časť each), so each okrsok is its whole obvod."
+
+[[document]]
+url = "https://www.liptovskerevuce.sk/e_download.php?file=/data/multipage/editor/editor-58-119-sk_3.pdf&original=2%20Ozn%C3%A1menie%20o%20ur%C4%8Den%C3%AD%20po%C4%8Dtu%20poslancov%20a%20o%20utvoren%C3%AD%20volebn%C3%BDch%20obvodov%20pre%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vy%20obc%C3%AD%2024.10.2026.pdf"
+sha256 = "ccf61599ac7b13b0f474b0dcd5983d5c371059089ff57d723049abc63e315506"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 24.10.2026 (Uznesenie OZ č. 34/2026 zo dňa 15.7.2026)"
+
+[[document]]
+url = "https://www.liptovskerevuce.sk/e_download.php?file=/data/multipage/editor/editor-58-119-sk_5.pdf&original=4%20ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20mietnost%C3%AD%20v%20obci%20Liptovsk%C3%A9%20Rev%C3%BAce%20%2824.10.2026%29.pdf"
+sha256 = "bda7eac6955403f8e1f26117235be647bb99be4207b9a2ba7417873d1e9005a1"
+title = "Určenie volebných okrskov a miestností v obci Liptovské Revúce pre voľby do orgánov samosprávy obcí a orgánov samosprávnych krajov v roku 2026"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {part = "Nižná Revúca", note = "'až po Rakytov' names the settlement Rakytov at the end of the part; it has no part of its own in the register, so the whole part Nižná Revúca is the obvod."},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Stredná Revúca"},
+]
+
+[obvod.3]
+seats = 3
+okrsky = [3]
+rules = [
+  {part = "Vyšná Revúca"},
+]

@@ -1,0 +1,63 @@
+# Council obvody of Skalité (509451), Čadca.
+# Estimated by hand: the documents below give the obvody's seats and their
+# volebné okrsky, and the okrsky by hamlet names, but not which addresses
+# are in which (see the note).
+#   obvod 1: volebné okrsky č. 1 a 2 (ZŠ s MŠ Kudlov 781)
+#   obvod 2: volebné okrsky č. 3 a 4 (ZpS Goral 1710/1720)
+# Okrsky added by an AI agent in job okrsok-rules-104 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+obec = "509451"
+name = "Skalité"
+date = 2026-06-08
+fill = "nearest"
+note = "Estimated: uznesenie č. 59/2026 sets obvod 1 (6 seats) and obvod 2 (7); the elections page makes obvod 1 the volebné okrsky 1 and 2 (polling station ZŠ s MŠ Kudlov 781) and obvod 2 the okrsky 3 and 4. The 2023 NRSR page lists the okrsky only by hamlet names: the eastern hamlets (Kudlov, Chajsovka, U Varmuza, U Serafína, ... U Svedov, U Migasa) form okrsky 1 and 2, the western part with Ústredie, Bory, Poľana, Tridsiatok, Sihly and Rieky okrsky 3 and 4. Each address goes to the nearest of these hamlets (OpenStreetMap), those bordering the dividing line and a few in each core: 741 and 907 addresses with a point, close to the 6:7 seats. Addresses without a point take the obvod most of their part got."
+estimated = true
+okrsky_note = "The 2026 elections page gives obvod 1 = okrsky 1, 2 (ZŠ s MŠ Kudlov 781) and obvod 2 = okrsky 3, 4 (ZpS Goral 1710/1720) but no territory per okrsok. The 2023 NRSR page lists okrsky by hamlet names, but the register has no streets (all addresses by súpisné číslo in one part), so no rules can be written; and 2023 is another election."
+
+[[document]]
+url = "https://www.skalite.sk/modules/file_storage/download.php?file=1aad0a87%7C1294&inline=1"
+sha256 = "59a4aef8025348fdbf817768c8b459c81cb272afbf6083e5bbb66a6192387396"
+title = "Uznesenie OZ 8. 6. 2026 (uznesenie č. 59/2026)"
+
+[[document]]
+url = "https://www.skalite.sk/obecny-urad/volby-a-referenda/volby-do-organov-uzemnej-samospravy-2026/"
+sha256 = "82244a8d0c186d08c444aaf46ab33af92a75791ab16428da81d6c0c9edbb8cce"
+title = "Voľby do orgánov územnej samosprávy 2026 (obvody by volebné okrsky)"
+
+[[document]]
+url = "https://www.skalite.sk/obecny-urad/volby-a-referenda/volby-do-nrsr-2023/"
+sha256 = "7a111011406abe5a90bf6b250fe8e70923975f4da04c06922fedc05402ba7014"
+title = "Voľby do NRSR 2023 (volebné okrsky by hamlet names)"
+
+[obvod.1]
+seats = 6
+okrsky = [1, 2]
+rules = [
+  {near = [18.94338, 49.49792], note = "Chajsovka"},
+  {near = [18.94158, 49.5012], note = "U Jargaša"},
+  {near = [18.96488, 49.49829], note = "U Serafína"},
+  {near = [18.9596, 49.49842], note = "U Varmuza"},
+  {near = [18.92493, 49.49635], note = "U Gocala"},
+  {near = [18.91533, 49.49626], note = "U Migasa"},
+  {near = [18.93495, 49.49725], note = "Na Bore"},
+  {near = [18.91983, 49.49431], note = "U Mikulov"},
+  {near = [18.91288, 49.4941], note = "U Svedov"},
+  {near = [18.9412, 49.4982], note = "ZŠ s MŠ Kudlov 781, the polling station"},
+]
+
+[obvod.2]
+seats = 7
+okrsky = [3, 4]
+rules = [
+  {near = [18.89781, 49.49354], note = "Bory"},
+  {near = [18.90553, 49.49305], note = "Pod Ruckami"},
+  {near = [18.90764, 49.48887], note = "Sihly"},
+  {near = [18.90849, 49.49107], note = "Tridsiatok"},
+  {near = [18.88366, 49.49789], note = "U Krupeľa"},
+  {near = [18.8726, 49.50337], note = "U Šimurdov"},
+  {near = [18.8964, 49.4968], note = "Ústredie"},
+  {near = [18.88259, 49.50583], note = "Na Potôčku"},
+  {near = [18.90999, 49.49735], note = "Poľana"},
+  {near = [18.87292, 49.50892], note = "U Filipa"},
+]

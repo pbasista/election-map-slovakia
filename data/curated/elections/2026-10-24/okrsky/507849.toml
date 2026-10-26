@@ -1,0 +1,24 @@
+# Okrsky of Budmerice, transcribed by an AI agent in job okrsok-rules-321 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Súpisné číslo 0 - 540
+#   okrsok 2: Súpisné číslo 541 - 2078
+obec = "507849"
+name = "Budmerice"
+okrsky_date = 2026-07-16
+okrsky_note = "Okrsok 2 ends at súpisné číslo 2078 in the document; written open-ended (541-) so that any higher number lands there too."
+
+[[document]]
+url = "https://www.budmerice.sk/download_file_f.php?id=2444197"
+sha256 = "9c48b21d837143a530f1571a313b22b27db634ca5ce6f07b2cb8c49e780ef9a5"
+title = "Oznámenie o utvorení volebných okrskov a určení volebnej miestnosti"
+
+[okrsok.1]
+rules = [
+  {part = "Budmerice", numbers = "0-540"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Budmerice", numbers = "541-"},
+]

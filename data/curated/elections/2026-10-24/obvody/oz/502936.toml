@@ -1,0 +1,41 @@
+# Council obvody of Veľký Ďur (502936), Levice.
+# Transcribed by an AI agent in job obvod-rules-151 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 (Dolný Ďur, Horný Ďur) 7 poslancov
+#   obvod 2: Volebný obvod č. 2 (Rohožnica) 2 poslanci
+# Okrsky added by an AI agent in job okrsok-rules-150 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 – Dolný Ďur, Horný Ďur
+#   okrsok 2: Volebný okrsok č. 2 - Rohožnica
+obec = "502936"
+name = "Veľký Ďur"
+date = 2026-06-04
+okrsky_date = 2026-07-21
+okrsky_note = "Starosta's announcement of 21.07.2026: okrsok 1 = Dolný Ďur, Horný Ďur (= obvod 1), okrsok 2 = Rohožnica (= obvod 2)."
+
+[[document]]
+url = "https://www.velkydur.sk/download_file_f.php?id=2446244"
+sha256 = "f120bf8b308cd8687953b7b748faff7c3afef732fb20a697662294bbf3b0e5fe"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 283/28/2026 zo dňa 04.06.2026)"
+
+[[document]]
+url = "https://www.velkydur.sk/download_file_f.php?id=2449890"
+sha256 = "085d7386ea5dc60a37842c51276b1433d5036e44deeb082515a67652497ec02c"
+title = "Oznámenie o utvorenom volebnom okrsku a určenej volebnej miestnosti pre voľby do orgánov samosprávy obcí 2026 (21. 07. 2026)"
+
+[obvod.1]
+seats = 7
+okrsky = [1]
+rules = [
+  {part = "Dolný Ďur"},
+  {part = "Horný Ďur"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Rohožnica"},
+]

@@ -1,0 +1,43 @@
+# Okrsky of Zemianske Kostoľany, transcribed by an AI agent in job okrsok-rules-486 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: J. Hagaru, Kpt. Weinholda, 4. apríla, Ľ. Štúra, Krátka, Mlynská, B. Nemcovej, Kpt. Nálepku, J. A. Komenského, Partizánska.
+#   okrsok 2: Pod horou, Domovina, Pažite, Žulovská, SNP.
+obec = "514454"
+name = "Zemianske Kostoľany"
+okrsky_date = 2026-07-23
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky are defined in the notice forming the okrsková volebná komisia (scan, read from image), dated 23.07.2026. Addresses without a street take the nearest placed address."
+
+[[document]]
+url = "https://www.zemianskekostolany.sk/e_download.php?file=/data/uredni_deska/obsah3634_1.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20Miestnej%20volebnej%20komisie%2C%20Okrskovej%20volebnej%20komisie%20pre%20okrsok%20%C4%8D.%201%20a%20Okrskovej%20volebnej%20komisie%20pre%20okrsok%20%C4%8D.%202.pdf"
+sha256 = "5f0a3ce2d2853ee01d01f4b40775cbd79ee61f27c80b314a42d840fc17193a28"
+title = "Oznámenie o utvorení Miestnej volebnej komisie, Okrskovej volebnej komisie pre okrsok č. 1 a Okrskovej volebnej komisie pre okrsok č. 2"
+
+[[document]]
+url = "https://www.zemianskekostolany.sk/zverejnovanie/volby/oznamenie-o-utvoreni-miestnej-volebnej-komisie-a-okrskovej-volebnej-komisie-pre-okrsok-c-1-a-okrskovej-volebnej-komisie-pre-okrsok-c-2-3645.html"
+sha256 = "8097a2211b17b713d7287a791d4b7fee89f46746b02152e2fffbe710a95d210e"
+title = "Oznámenie o utvorení Miestnej volebnej komisie a Okrskovej volebnej komisie pre okrsok č. 1 a Okrskovej volebnej komisie pre okrsok č. 2 (page)"
+
+[okrsok.1]
+rules = [
+  {street = "J. Hagaru"},
+  {street = "Kpt. Weinholda"},
+  {street = "Ľ. Štúra"},
+  {street = "Krátka"},
+  {street = "Mlynská"},
+  {street = "Kpt. Nálepku"},
+  {street = "J. A. Komenského"},
+  {street = "Partizánska"},
+  {street = "4.apríla", written = "4. apríla"},
+  {street = "B. Němcovej", written = "B. Nemcovej", note = "Same name without the Czech háček; only such street."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Pod horou"},
+  {street = "Domovina"},
+  {street = "Pažite"},
+  {street = "Žulovská"},
+  {street = "SNP"},
+]

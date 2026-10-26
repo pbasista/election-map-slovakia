@@ -1,0 +1,55 @@
+# Okrsky of Markušovce, transcribed by an AI agent in job okrsok-rules-532 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Jareček,
+#   okrsok 2: Banícka, Brezová, Krátka, Matejovská cesta, Pod horou, Pod Stožkami, Poľná, Slovenská, Sv.J.Nepomuckého – or.č.50 – 125, Za tehelňou, Železničná, rodinný dom súp.č.668,755,756,760
+#   okrsok 3: Brunské, Bystrá, Hornádska, Komenského, Michalská, Odorínska cesta, Podhradová, SNP, Sv. J. Nepomuckého – or.č. 1 - 49, Školská, voliči s trvalým pobytom Markušovce (bez ulice, súpisného a orientačného čísla).
+obec = "543331"
+name = "Markušovce"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF read from the rendered image; undated (published 23.7.2026). Voters without street and number vote in okrsok 3 (addressless). Register addresses without a street (91) apart from súp.č. 668, 755, 756, 760, and Sv.J.Nepomuckého numbers above 125, take the nearest placed address."
+
+[[document]]
+url = "https://www.markusovce.sk/data/news_files/markusovce.sk/137395/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti.pdf"
+sha256 = "83c4aae496a50dc2eb3c429822e1d0b3b602c5d77fbc3ffafa240ff8705d017b"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.markusovce.sk/novinka/137395/n"
+sha256 = "aa74c4992f2aaabe0de3ba8880f0932e88d56e5495dde1708f728fdfa968988f"
+title = "Úradná tabuľa - Utvorenie vol. okrskov a určenie vol. miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Jareček"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Banícka"},
+  {street = "Brezová"},
+  {street = "Krátka"},
+  {street = "Matejovská cesta"},
+  {street = "Pod Stožkami"},
+  {street = "Poľná"},
+  {street = "Slovenská"},
+  {street = "Železničná"},
+  {street = "Pod Horou", written = "Pod horou"},
+  {street = "Za Tehelňou", written = "Za tehelňou"},
+  {street = "Sv.J.Nepomuckého", numbers = "50-125", written = "Sv.J.Nepomuckého"},
+  {part = "Markušovce", numbers = "668, 755, 756, 760", note = "rodinný dom súp.č. 668, 755, 756, 760"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Brunské"},
+  {street = "Bystrá"},
+  {street = "Hornádska"},
+  {street = "Komenského"},
+  {street = "Michalská"},
+  {street = "Odorínska cesta"},
+  {street = "Podhradová"},
+  {street = "SNP"},
+  {street = "Školská"},
+  {street = "Sv.J.Nepomuckého", numbers = "1-49", written = "Sv. J. Nepomuckého"},
+]

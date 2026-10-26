@@ -1,0 +1,36 @@
+# Council obvody of Dolný Lieskov (546640), Považská Bystrica.
+# Transcribed by an AI agent in job obvod-rules-172 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: číslo 1 – DOLNÝ LIESKOV s jedným volebným okrskom; volebný obvod č. 1 Dolný Lieskov – 4 poslanci
+#   obvod 2: číslo 2 – TŔSTIE s jedným volebným okrskom; volebný obvod č. 2 Tŕstie – 2 poslanci
+# Okrsky added by an AI agent in job okrsok-rules-171 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: miestna časť Dolný Lieskov
+#   okrsok 2: miestna časť Tŕstie
+obec = "546640"
+name = "Dolný Lieskov"
+date = 2026-06-02
+note = "Official listing page dolnylieskov.sk/dokumenty?kat=486 (Dokumenty > Voľby), entry 'Oznámenie o určení počtu poslancov a o utvorení volebných obvodov do orgánov samosprávy dňa 24.10.2026', links its attachment PDF, which is hosted on the CMS host obec.dobraobec.sk/files/7/dokumenty/ (see tried); obvod texts are transcribed from that PDF (announcement of 7 July 2026 citing uznesenia 23/b/2026 and 23/c/2026 of 2 June 2026). Obvody follow the two parts of the municipality."
+okrsky_date = 2026-07-31
+okrsky_note = "The listing page dolnylieskov.sk/dokumenty?kat=486 links the attachment 'Určenie volebných okrskov a volebných miestností' (hosted on obec.dobraobec.sk/files/7/dokumenty/, see tried), dated 31 July 2026: obvod 1 = okrsok 1 (miestna časť Dolný Lieskov), obvod 2 = okrsok 2 (miestna časť Tŕstie)."
+
+[[document]]
+url = "https://dolnylieskov.sk/dokumenty?kat=486"
+sha256 = "592bfcefb75b802fd3721d8b4da6cc8331a96b83b0d00344ad76771c121a19c0"
+title = "Dokumenty – Voľby: Oznámenie o určení počtu poslancov a o utvorení volebných obvodov do orgánov samosprávy dňa 24.10.2026"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Dolný Lieskov"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Tŕstie"},
+]

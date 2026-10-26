@@ -1,0 +1,62 @@
+# Okrsky of Mužla, transcribed by an AI agent in job okrsok-rules-344 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bánomská ulica, Dlhý rad, Dobráňska ulica, Dolná záhradná ulica, Horná záhradná ulica, K studni Pána, Komárňanská cesta, Krajcárova ulička, Malá Dolnosecká ulica, Medená cesta, Surdícka ulica, Školská ulica, Špitálska ulička, Trhová hradská, Ulica svätého Tomáša, Ulička svätého Jána, Župná ulička
+#   okrsok 2: Obyvatelia bez súpisného čísla, Časť obce Čenkov, Časť obce Jurský Chlm, Časť obce Malá Mužla, Obyvatelia s trvalým pobytom na Železničnej stanici Mužla, Bagotova ulička, Cintorínska ulica, Dallošova ulica, Dolnosecká ulica, Hlavné námestie, Horná ulica, Hornosecká ulica, Jarková ulica, K farskej pivnici, Malá ulica, Orechový rad, Poľná ulica, Poľovnícka ulica, Pri starej pošte, Vinohradnícka cesta
+obec = "503401"
+name = "Mužla"
+okrsky_fill = "nearest"
+okrsky_note = "The table (XLSX) is undated. It omits the register street Kostolná ulička (1 address) and the addresses without a street in part Mužla; these take the okrsok of the nearest placed address (fill_nearest). \"Obyvatelia bez súpisného čísla\" and the residents at Železničná stanica Mužla vote in okrsok 2."
+
+[[document]]
+url = "https://muzla.sk/wp-content/uploads/2026/07/Kopia-Tlacivo-Volebne-okrsky_miestnosti_sidlo_-webre.xlsx"
+sha256 = "c19e42667c37c144a8bb78024a600fad7bcd21464c9fb7678d86b27b7bfca3c1"
+title = "Volebné okrsky a volebné miestnosti"
+
+[[document]]
+url = "https://muzla.sk/onkormanyzati-valasztasok/?lang=sk"
+sha256 = "dad5b5a8a344891b96a6b92f970b18e7c022c78e7d55c0134a48520e1de202c8"
+title = "Voľby do orgánov samosprávy obcí (page linking the table)"
+
+[okrsok.1]
+rules = [
+  {street = "Bánomská ulica"},
+  {street = "Dlhý rad"},
+  {street = "Dobráňska ulica"},
+  {street = "Dolná záhradná ulica"},
+  {street = "Horná záhradná ulica"},
+  {street = "K studni Pána"},
+  {street = "Komárňanská cesta"},
+  {street = "Krajcárova ulička"},
+  {street = "Malá Dolnosecká ulica"},
+  {street = "Medená cesta"},
+  {street = "Surdícka ulica"},
+  {street = "Školská ulica"},
+  {street = "Špitálska ulička"},
+  {street = "Trhová hradská"},
+  {street = "Ulica svätého Tomáša"},
+  {street = "Ulička svätého Jána"},
+  {street = "Župná ulička"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Čenkov"},
+  {part = "Jurský Chlm"},
+  {part = "Malá Mužla"},
+  {street = "Bagotova ulička"},
+  {street = "Cintorínska ulica"},
+  {street = "Dallošova ulica"},
+  {street = "Dolnosecká ulica"},
+  {street = "Hlavné námestie"},
+  {street = "Horná ulica"},
+  {street = "Hornosecká ulica"},
+  {street = "Jarková ulica"},
+  {street = "K farskej pivnici"},
+  {street = "Malá ulica"},
+  {street = "Orechový rad"},
+  {street = "Poľná ulica"},
+  {street = "Poľovnícka ulica"},
+  {street = "Pri starej pošte"},
+  {street = "Vinohradnícka cesta"},
+]

@@ -1,0 +1,337 @@
+# Council obvody of Dolný Kubín (509540), Dolný Kubín.
+# Transcribed by an AI agent in job obvod-rules-051 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod číslo 1: Brezovec volia sa 5 poslanci. [Utvorenie volebných okrskov, 1.7.2026:] okrsok 1 sídlisko BREZOVEC I.: ulice: Nemocničná, Námestie Jána Vojtaššáka, Nemocnica s poliklinikou; okrsok 2 sídlisko BREZOVEC II.: ulice: Ľudovíta Štúra, Dukelských hrdinov, Na Ožnici; okrsok 3 sídlisko BREZOVEC III.: ulice: Martina Hattalu, M. M. Hodžu, Centrum sociálnych služieb Dolný Kubín; okrsok 4 sídlisko BREZOVEC IV.: ulice: Odbojárov, Mierová, Tulská, J. Gagarina, Družby, M. Gaceka, Jána Hollého
+#   obvod 2: Volebný obvod číslo 2: Veľký Bysterec, Malý Bysterec, Beňova Lehota, Záskalie volia sa 6 poslanci. [Utvorenie volebných okrskov, 1.7.2026:] okrsok 5 sídlisko BYSTEREC I.: ulica: Na Sihoti; okrsok 6 sídlisko BYSTEREC II.: ulice: Bysterecká, Lucenkova, Nad brehmi; okrsok 7 sídlisko BYSTEREC III.: ulice: Hurbanova, SNP, Námestie Slobody; okrsok 8 sídlisko BYSTEREC IV.: ulice: Športovcov, Pelhřimovská; okrsok 9 sídlisko BYSTEREC V.: ulica: Okružná; okrsok 10 MALÝ BYSTEREC: ulice: Zochova, Bohúňova, MDD, MDŽ, Generála Svobodu, Fučíkova, Miloša Uhra, Lopušná, Veterná; okrsok 11 BEŇOVA LEHOTA: ulica: Beňovolehotská; okrsok 12 ZÁSKALIE: ulice: Andreja Halašu, Pltisko, 29. augusta, Jilemnického, Rybárska, Severná, Timravina, Záskalická, Na lánoch, Hôrky
+#   obvod 3: Volebný obvod číslo 3: Staré mesto, Medzihradné, Banisko, Srňacie volia sa 4 poslanci. [Utvorenie volebných okrskov, 1.7.2026:] okrsok 13 STARÉ MESTO I.: ulice: M. R. Štefánika, Československej armády, Staničná, Železničiarov, Bernolákova, Aleja Slobody, J. Ťatliaka, A. Sládkoviča, Obrancov mieru, Radlinského; okrsok 14 STARÉ MESTO II.: ulice: Samuela Nováka, Gäceľská cesta, Hviezdoslavovo námestie, Kohútov Sad, Matúškova, Janoškova, voliči bez adresy trvalého pobytu; okrsok 15 MEDZIHRADNÉ: ulice: Medzihradská, E. Hroboňovej, Martina Hamuljaka, Šmidkeho, Jána Bottu, Mila Urbana, Na Kopanici, Partizánska cesta (Srňacie); okrsok 16 sídlisko BANISKO: ulice: Chočská, Slnečná
+#   obvod 4: Volebný obvod číslo 4: Kňažia, Mokraď volia sa 1 poslanci. [Utvorenie volebných okrskov, 1.7.2026:] okrsok 17 MOKRAĎ: ulice: Kocmál, Kubínska, Mokraďská, Nábrežie Oravy (súp.č. 3441, 499, 533, 610, 613, 626), Priemyselná; okrsok 18 KŇAŽIA: ulice: 9. mája, 1. mája, 28. októbra, Vodárenská, Pod Dúbravou, Nábrežie Oravy (súp.č. 220 - 252, 3396, 3433), J. A. Komenského, Na Záhumní, Jelšavská, Kalinova, Kpt. Jaroša, Kňažská, Mládežnícka, Pod Čereňou, Kpt. Nálepku
+# Okrsky added by an AI agent in job okrsok-rules-050 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Nemocničná, Námestie Jána Vojtaššáka, Nemocnica s poliklinikou
+#   okrsok 2: ulice: Ľudovíta Štúra, Dukelských hrdinov, Na Ožnici
+#   okrsok 3: ulice: Martina Hattalu, M. M. Hodžu, Centrum sociálnych služieb Dolný Kubín
+#   okrsok 4: ulice: Odbojárov, Mierová, Tulská, J. Gagarina, Družby, M. Gaceka, Jána Hollého
+#   okrsok 5: ulica: Na Sihoti
+#   okrsok 6: ulice: Bysterecká, Lucenkova, Nad brehmi
+#   okrsok 7: ulice: Hurbanova, SNP, Námestie Slobody
+#   okrsok 8: ulice: Športovcov, Pelhřimovská
+#   okrsok 9: ulica: Okružná
+#   okrsok 10: ulice: Zochova, Bohúňova, MDD, MDŽ, Generála Svobodu, Fučíkova, Miloša Uhra, Lopušná, Veterná
+#   okrsok 11: ulica: Beňovolehotská
+#   okrsok 12: ulice: Andreja Halašu, Pltisko, 29. augusta, Jilemnického, Rybárska, Severná, Timravina, Záskalická, Na lánoch, Hôrky
+#   okrsok 13: ulice: M. R. Štefánika, Československej armády, Staničná, Železničiarov, Bernolákova, Aleja Slobody, J. Ťatliaka, A. Sládkoviča, Obrancov mieru, Radlinského
+#   okrsok 14: ulice: Samuela Nováka, Gäceľská cesta, Hviezdoslavovo námestie, Kohútov Sad, Matúškova, Janoškova, voliči bez adresy trvalého pobytu
+#   okrsok 15: ulice: Medzihradská, E. Hroboňovej, Martina Hamuljaka, Šmidkeho, Jána Bottu, Mila Urbana, Na Kopanici, Partizánska cesta (Srňacie)
+#   okrsok 16: ulice: Chočská, Slnečná
+#   okrsok 17: ulice: Kocmál, Kubínska, Mokraďská, Nábrežie Oravy (súp.č. 3441, 499, 533, 610, 613, 626), Priemyselná
+#   okrsok 18: ulice: 9. mája, 1. mája, 28. októbra, Vodárenská, Pod Dúbravou, Nábrežie Oravy (súp.č. 220 - 252, 3396, 3433), J. A. Komenského, Na Záhumní, Jelšavská, Kalinova, Kpt. Jaroša, Kňažská, Mládežnícka, Pod Čereňou, Kpt. Nálepku
+obec = "509540"
+name = "Dolný Kubín"
+date = 2026-06-25
+fill = "nearest"
+note = "The announcement of resolution MsZ 43/2026 (25 June 2026) defines obvody by locality names only (Brezovec; Veľký/Malý Bysterec, Beňova Lehota, Záskalie; Staré mesto, Medzihradné, Banisko, Srňacie; Kňažia, Mokraď). The streets come from the city's official okrsky document, which assigns every street to an okrsok and volebný obvod; all 89 register streets are listed there. Nábrežie Oravy is split by súpisné číslo between okrsky 17 and 18, both in obvod 4, so the whole street is in obvod 4. Addresses without a street in parts other than Dolný Kubín follow their part. Addresses without a street in part Dolný Kubín (about 1000, split between Brezovec = obvod 1 and Staré mesto/Banisko = obvod 3) are not assignable from the documents, so they use fill_nearest. Seats 5+6+4+1 = 16."
+okrsky_date = 2026-07-01
+okrsky_fill = "nearest"
+okrsky_note = "Mayor's decision of 1.7.2026 lists streets per okrsok. Parts Malý Bysterec, Beňova Lehota, Záskalie, Medzihradné, Srňacie, Mokraď, Kňažia are given to their okrsok so their addresses without a street follow them. Nábrežie Oravy is split by súpisné číslo as written; its other numbers follow their part. 'Nemocnica s poliklinikou' and 'Centrum sociálnych služieb' are facilities, not streets. fill_nearest covers addresses without a street in parts Dolný Kubín and Veľký Bysterec."
+
+[[document]]
+url = "https://www.dolnykubin.sk/download_file_f.php?id=2441535"
+sha256 = "255b78b21fbe2602d88badfbc2378bdd6b917266d53c91d79ca70000a37c8dc1"
+title = "Oznámenie o určení počtu poslancov mestského zastupiteľstva a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí konaných dňa 24. október 2026 (uznesenie MsZ č. 43/2026 zo dňa 25. júna 2026)"
+
+[[document]]
+url = "https://www.dolnykubin.sk/download_file_f.php?id=2449040"
+sha256 = "9ec4b55aba21d7dd05394352e46dd1be9801fb537a1a2ea02e1a1e7a8f846705"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v Meste Dolný Kubín pre voľby do orgánov samosprávnych krajov a pre voľby do orgánov samosprávy obcí (1.7.2026), with streets per okrsok and volebný obvod"
+
+[obvod.1]
+seats = 5
+okrsky = [1, 2, 3, 4]
+rules = [
+  {street = "Nemocničná"},
+  {street = "Námestie Jána Vojtaššáka"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Dukelských hrdinov"},
+  {street = "Na Ožnici"},
+  {street = "Martina Hattalu"},
+  {street = "M. M. Hodžu"},
+  {street = "Odbojárov"},
+  {street = "Mierová"},
+  {street = "Tulská"},
+  {street = "J. Gagarina"},
+  {street = "Družby"},
+  {street = "M. Gaceka"},
+  {street = "Jána Hollého"},
+]
+
+[obvod.2]
+seats = 6
+okrsky = [5, 6, 7, 8, 9, 10, 11, 12]
+rules = [
+  {street = "Na Sihoti"},
+  {street = "Bysterecká"},
+  {street = "Lucenkova"},
+  {street = "Nad brehmi"},
+  {street = "Hurbanova"},
+  {street = "SNP"},
+  {street = "Námestie Slobody"},
+  {street = "Športovcov"},
+  {street = "Pelhřimovská"},
+  {street = "Okružná"},
+  {street = "Zochova"},
+  {street = "Bohúňova"},
+  {street = "MDD"},
+  {street = "MDŽ"},
+  {street = "Generála Svobodu"},
+  {street = "Fučíkova"},
+  {street = "Miloša Uhra"},
+  {street = "Lopušná"},
+  {street = "Veterná"},
+  {street = "Beňovolehotská"},
+  {street = "Andreja Halašu"},
+  {street = "Pltisko"},
+  {street = "29.augusta", written = "29. augusta"},
+  {street = "Jilemnického"},
+  {street = "Rybárska"},
+  {street = "Severná"},
+  {street = "Timravina"},
+  {street = "Záskalická"},
+  {street = "Na lánoch"},
+  {street = "Hôrky"},
+  {part = "Veľký Bysterec", note = "addresses without a street in this part; the announcement names the part in this obvod"},
+  {part = "Malý Bysterec", note = "addresses without a street in this part; the announcement names the part in this obvod"},
+  {part = "Beňova Lehota", note = "addresses without a street in this part; the announcement names the part in this obvod"},
+  {part = "Záskalie", note = "addresses without a street in this part; the announcement names the part in this obvod"},
+]
+
+[obvod.3]
+seats = 4
+okrsky = [13, 14, 15, 16]
+rules = [
+  {street = "M. R. Štefánika"},
+  {street = "Československej armády"},
+  {street = "Staničná"},
+  {street = "Železničiarov"},
+  {street = "Bernolákova"},
+  {street = "Aleja Slobody"},
+  {street = "J. Ťatliaka"},
+  {street = "A. Sládkoviča"},
+  {street = "Obrancov mieru"},
+  {street = "Radlinského"},
+  {street = "Samuela Nováka"},
+  {street = "Gäceľská cesta"},
+  {street = "Hviezdoslavovo námestie"},
+  {street = "Kohútov Sad"},
+  {street = "Matúškova"},
+  {street = "Janoškova"},
+  {street = "Medzihradská"},
+  {street = "E. Hroboňovej"},
+  {street = "Martina Hamuljaka"},
+  {street = "Šmidkeho"},
+  {street = "Jána Bottu"},
+  {street = "Mila Urbana"},
+  {street = "Na Kopanici"},
+  {street = "Partizánska cesta"},
+  {street = "Chočská"},
+  {street = "Slnečná"},
+  {part = "Medzihradné", note = "addresses without a street in this part; the announcement names the part in this obvod"},
+  {part = "Srňacie", note = "addresses without a street in this part; the announcement names the part in this obvod"},
+]
+
+[obvod.4]
+seats = 1
+okrsky = [17, 18]
+rules = [
+  {street = "Kocmál"},
+  {street = "Kubínska"},
+  {street = "Mokraďská"},
+  {street = "Nábrežie Oravy"},
+  {street = "Priemyselná"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "28.októbra", written = "28. októbra"},
+  {street = "Vodárenská"},
+  {street = "Pod Dúbravou"},
+  {street = "J. A. Komenského"},
+  {street = "Na Záhumní"},
+  {street = "Jelšavská"},
+  {street = "Kalinova"},
+  {street = "Kpt. Jaroša"},
+  {street = "Kňažská"},
+  {street = "Mládežnícka"},
+  {street = "Pod Čereňou"},
+  {street = "Kpt. Nálepku"},
+  {part = "Kňažia", note = "addresses without a street in this part; the announcement names the part in this obvod"},
+  {part = "Mokraď", note = "addresses without a street in this part; the announcement names the part in this obvod"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Nemocničná"},
+  {street = "Námestie Jána Vojtaššáka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ľudovíta Štúra"},
+  {street = "Dukelských hrdinov"},
+  {street = "Na Ožnici"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Martina Hattalu"},
+  {street = "M. M. Hodžu"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Odbojárov"},
+  {street = "Mierová"},
+  {street = "Tulská"},
+  {street = "J. Gagarina"},
+  {street = "Družby"},
+  {street = "M. Gaceka"},
+  {street = "Jána Hollého"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Na Sihoti"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bysterecká"},
+  {street = "Lucenkova"},
+  {street = "Nad brehmi"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Hurbanova"},
+  {street = "SNP"},
+  {street = "Námestie Slobody"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Športovcov"},
+  {street = "Pelhřimovská"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Okružná"},
+]
+
+[okrsok.10]
+rules = [
+  {part = "Malý Bysterec"},
+  {street = "Zochova"},
+  {street = "Bohúňova"},
+  {street = "MDD"},
+  {street = "MDŽ"},
+  {street = "Generála Svobodu"},
+  {street = "Fučíkova"},
+  {street = "Miloša Uhra"},
+  {street = "Lopušná"},
+  {street = "Veterná"},
+]
+
+[okrsok.11]
+rules = [
+  {part = "Beňova Lehota"},
+  {street = "Beňovolehotská"},
+]
+
+[okrsok.12]
+rules = [
+  {part = "Záskalie"},
+  {street = "Andreja Halašu"},
+  {street = "Pltisko"},
+  {street = "29.augusta", written = "29. augusta"},
+  {street = "Jilemnického"},
+  {street = "Rybárska"},
+  {street = "Severná"},
+  {street = "Timravina"},
+  {street = "Záskalická"},
+  {street = "Na lánoch"},
+  {street = "Hôrky"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "M. R. Štefánika"},
+  {street = "Československej armády"},
+  {street = "Staničná"},
+  {street = "Železničiarov"},
+  {street = "Bernolákova"},
+  {street = "Aleja Slobody"},
+  {street = "J. Ťatliaka"},
+  {street = "A. Sládkoviča"},
+  {street = "Obrancov mieru"},
+  {street = "Radlinského"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Samuela Nováka"},
+  {street = "Gäceľská cesta"},
+  {street = "Hviezdoslavovo námestie"},
+  {street = "Kohútov Sad"},
+  {street = "Matúškova"},
+  {street = "Janoškova"},
+]
+
+[okrsok.15]
+rules = [
+  {part = "Medzihradné"},
+  {part = "Srňacie"},
+  {street = "Medzihradská"},
+  {street = "E. Hroboňovej"},
+  {street = "Martina Hamuljaka"},
+  {street = "Šmidkeho"},
+  {street = "Jána Bottu"},
+  {street = "Mila Urbana"},
+  {street = "Na Kopanici"},
+  {street = "Partizánska cesta"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Chočská"},
+  {street = "Slnečná"},
+]
+
+[okrsok.17]
+rules = [
+  {part = "Mokraď"},
+  {street = "Kocmál"},
+  {street = "Kubínska"},
+  {street = "Mokraďská"},
+  {street = "Nábrežie Oravy", numbers = "499, 533, 610, 613, 626, 3441", by = "supisne"},
+  {street = "Priemyselná"},
+]
+
+[okrsok.18]
+rules = [
+  {part = "Kňažia"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "28.októbra", written = "28. októbra"},
+  {street = "Vodárenská"},
+  {street = "Pod Dúbravou"},
+  {street = "Nábrežie Oravy", numbers = "220-252, 3396, 3433", by = "supisne"},
+  {street = "J. A. Komenského"},
+  {street = "Na Záhumní"},
+  {street = "Jelšavská"},
+  {street = "Kalinova"},
+  {street = "Kpt. Jaroša"},
+  {street = "Kňažská"},
+  {street = "Mládežnícka"},
+  {street = "Pod Čereňou"},
+  {street = "Kpt. Nálepku"},
+]

@@ -1,0 +1,107 @@
+# Okrsky of Rovinka, transcribed by an AI agent in job okrsok-rules-200 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: na obci, pri jazere a na ulici: Broskyňová, Čerešňová, Dunajská, Hlavná, Jabloňová, Lekárenská, Orechová, Rovinka, Sadová, Slivková, Športová, Višňová
+#   okrsok 2: Družstevná, Gazdovská, Hrádzna, Jazdecká, Ľanová, Majerská, Maková, Obilná, Okružná, Pasienková, Pluhová, Pšeničná, Repková, Slnečnicová, Úzka, Za hrádzou, Žitná
+#   okrsok 3: Agátová, Astrová, Brezová, Jazerná, Lipová, Narcisová, Orgovánová, Pivonková, Platanová, Potočná, Púpavová, Riečna
+#   okrsok 4: Krajná, Kvetná, Levanduľová, Lúčna, Krásna, Medovková, Nechtíková, Podbeľová, Rozmarínová, Slnečná, Súmračná, Topoľová, Veterná, Záhradná, Železničná
+#   okrsok 5: Belasá, Bronzová, Cínová, Dúhová, Farebná, Jarná, Jasná, Krátka, Medená, Nová, Poľná, Rovná, Školská, Vojenská, Zelená
+obec = "508209"
+name = "Rovinka"
+okrsky_date = 2026-08-03
+
+[[document]]
+url = "https://www.obecrovinka.sk/aktuality/informacia-o-utvoreni-volebnych-okrskov-a-urcenie-volebnych-miestnosti-a22-1641"
+sha256 = "97cfcade20c6e2575d0b0f8d4113096c9dd86e38e5e13e0d14f34049d8a880f5"
+title = "Informácia o utvorení volebných okrskov a určenie volebných miestností (starosta, 3.8.2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Broskyňová ulica", written = "Broskyňová"},
+  {street = "Čerešňová"},
+  {street = "Dunajská"},
+  {street = "Hlavná"},
+  {street = "Jabloňová"},
+  {street = "Lekárenská"},
+  {street = "Orechová"},
+  {street = "Sadová"},
+  {street = "Slivková"},
+  {street = "Športová"},
+  {street = "Višňová"},
+  {part = "Rovinka", note = "the addresses without a street: the document lists 'Rovinka' (houses numbered in the obec only) and residents registered 'na obci, pri jazere' in okrsok 1"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Gazdovská"},
+  {street = "Hrádzna"},
+  {street = "Jazdecká"},
+  {street = "Ľanová ulica", written = "Ľanová"},
+  {street = "Majerská"},
+  {street = "Maková ulica", written = "Maková"},
+  {street = "Obilná"},
+  {street = "Okružná"},
+  {street = "Pasienková"},
+  {street = "Pluhová"},
+  {street = "Pšeničná ulica", written = "Pšeničná"},
+  {street = "Repková"},
+  {street = "Slnečnicová ulica", written = "Slnečnicová"},
+  {street = "Úzka"},
+  {street = "Za hrádzou"},
+  {street = "Žitná ulica", written = "Žitná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová"},
+  {street = "Astrová"},
+  {street = "Brezová"},
+  {street = "Jazerná"},
+  {street = "Lipová ulica", written = "Lipová"},
+  {street = "Narcisová"},
+  {street = "Orgovánová"},
+  {street = "Pivonková"},
+  {street = "Platanová ulica", written = "Platanová"},
+  {street = "Potočná"},
+  {street = "Púpavová"},
+  {street = "Riečna"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Krajná"},
+  {street = "Kvetná"},
+  {street = "Levanduľová ulica", written = "Levanduľová"},
+  {street = "Lúčna"},
+  {street = "Krásna"},
+  {street = "Medovková ulica", written = "Medovková"},
+  {street = "Nechtíková ulica", written = "Nechtíková"},
+  {street = "Podbeľová ulica", written = "Podbeľová"},
+  {street = "Rozmarínová ulica", written = "Rozmarínová"},
+  {street = "Slnečná"},
+  {street = "Súmračná"},
+  {street = "Topoľová ulica", written = "Topoľová"},
+  {street = "Veterná"},
+  {street = "Záhradná"},
+  {street = "Železničná"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Belasá"},
+  {street = "Bronzová"},
+  {street = "Cínová ulica", written = "Cínová"},
+  {street = "Dúhová"},
+  {street = "Farebná"},
+  {street = "Jarná"},
+  {street = "Jasná"},
+  {street = "Krátka"},
+  {street = "Medená"},
+  {street = "Nová"},
+  {street = "Poľná"},
+  {street = "Rovná"},
+  {street = "Školská"},
+  {street = "Vojenská"},
+  {street = "Zelená"},
+]

@@ -1,0 +1,39 @@
+# Okrsky of Plešivec, transcribed by an AI agent in job okrsok-rules-555 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulica Čsl. armády, Domická ulica, Gemerská ulica, Ulica 1.mája, Letná ulica, Ulica Gyula Rudnayho, Vinohradná ulica
+#   okrsok 2: Daxnerova ulica, Hradná ulica, Ulica obrancov mieru, Okružná ulica, Osada, Ulica pokroku, Štítnická ulica, Slnečná ulica, Železničná ulica
+obec = "526096"
+name = "Plešivec"
+okrsky_date = 2026-07-01
+okrsky_fill = "nearest"
+okrsky_note = "Both okrsky have their polling station in Kultúrne stredisko Gyula Rudnayho. Addresses without a street placed by fill_nearest."
+
+[[document]]
+url = "https://www.obecplesivec.sk/download_file_f.php?id=2440576"
+sha256 = "6978c84c378598a4fc569d4ff1c0ca2d6fa921115d95fe7d93c8d45bcd54e175"
+title = "Volebné okrsky a volebné miestnosti v obci Plešivec"
+
+[okrsok.1]
+rules = [
+  {street = "Ulica Československej armády", written = "Ulica Čsl. armády"},
+  {street = "Domická ulica"},
+  {street = "Gemerská ulica"},
+  {street = "Ulica 1. mája", written = "Ulica 1.mája"},
+  {street = "Letná ulica"},
+  {street = "Ulica Gyula Rudnayho"},
+  {street = "Vinohradná ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Daxnerova ulica"},
+  {street = "Hradná ulica"},
+  {street = "Ulica obrancov mieru"},
+  {street = "Okružná ulica"},
+  {street = "Osada"},
+  {street = "Ulica pokroku"},
+  {street = "Štítnická ulica"},
+  {street = "Slnečná ulica"},
+  {street = "Železničná ulica"},
+]

@@ -1,0 +1,25 @@
+# Okrsky of Soblahov, transcribed by an AI agent in job okrsok-rules-478 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: DOLNÝ KONIEC: od č.d. 1- 126, od č.d. 482- 635 + lokality: Palmovská, Palmovská za horizontom, Rybníky, NB7 a voliči, ktorých miestom pobytu je obec Soblahov
+#   okrsok 2: HORNÝ KONIEC: od č.d. 127- 480, od č.d. 636 - 682 + lokality: Majer, bytovky 740, 741, 753 – 767, Cintorínska ul., 922
+obec = "506508"
+name = "Soblahov"
+okrsky_date = 2026-07-17
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky are given by súpisné čísla (č.d.) plus named localities. The localities (Palmovská, Palmovská za horizontom, Rybníky, NB7 for okrsok 1; Majer, Cintorínska ul. for okrsok 2) are not streets or parts in the register and their numbers are not stated, so addresses outside the listed number ranges (e.g. 481, 683-739, 742-752, 768-921, 923-) take the nearest placed address. The document is linked from the obec's elections page https://www.soblahov.sk/zverejnovanie/volby-a-referenda/spojene-volby-do-organov-uzemnej-samospravy-2026/spojene-volby-do-organov-uzemnej-samospravy-2026/"
+
+[[document]]
+url = "https://www.soblahov.sk/modules/file_storage/download.php?file=5233dada%7C515&inline=1"
+sha256 = "6cb2cd4279647eaddffd1922516460f2d90bccac0e1a4e11db1eb304d272cf59"
+title = "Utvorenie volebných okrskov s vymedzením ich územného obvodu a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Soblahov", numbers = "1-126, 482-635"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Soblahov", numbers = "127-480, 636-682, 740, 741, 753-767, 922"},
+]

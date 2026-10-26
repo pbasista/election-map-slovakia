@@ -1,0 +1,49 @@
+# Okrsky of Madunice, transcribed by an AI agent in job okrsok-rules-495 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: A. Dubčeka, A. S. Puškina, Cintorínska, Karola Kabáta, Ľudovíta Štúra, M. R. Štefánika, Michala Bubniča, Mlynárska, Osloboditeľov, SNP, Školská, Záhradná, Železničná
+#   okrsok 2: Družstevná, Elektrárenská, Jána Hollého, Janka Kráľa, Malá Ulička, Malý Kút, P. O. Hviezdoslava, Slnečná, Vážska, Veľká Ulička, Výhon, Záhajné, Nová ulica, Veterná ulica a Severná ulica
+obec = "507288"
+name = "Madunice"
+okrsky_fill = "nearest"
+okrsky_note = "Kostolánska (4 addresses, not named) and addresses without a street are placed by fill_nearest. Veterná ulica (okrsok 2) is not in the register and is left out. No decision date stated."
+
+[[document]]
+url = "https://www.madunice.sk/spojene-volby-2026-oznam/mid/562175/.html"
+sha256 = "dfd05d57e959aa36291c08df64969fe1071175f5a572c1cf4a00b2636c87b21d"
+title = "Spojené voľby 2026 (okrsky a zoznam ulíc)"
+
+[okrsok.1]
+rules = [
+  {street = "A. Dubčeka"},
+  {street = "A. S. Puškina"},
+  {street = "Cintorínska"},
+  {street = "Karola Kabáta"},
+  {street = "Ľudovíta Štúra"},
+  {street = "M. R. Štefánika"},
+  {street = "Michala Bubniča"},
+  {street = "Mlynárska"},
+  {street = "Osloboditeľov"},
+  {street = "SNP"},
+  {street = "Školská"},
+  {street = "Záhradná"},
+  {street = "Železničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Elektrárenská"},
+  {street = "Jána Hollého"},
+  {street = "Janka Kráľa"},
+  {street = "Malá Ulička"},
+  {street = "Malý Kút"},
+  {street = "P. O. Hviezdoslava"},
+  {street = "Slnečná"},
+  {street = "Vážska"},
+  {street = "Veľká Ulička"},
+  {street = "Výhon"},
+  {street = "Záhajné"},
+  {street = "Nová ulica"},
+  {street = "Severná ulica"},
+]

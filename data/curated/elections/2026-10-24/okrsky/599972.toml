@@ -1,0 +1,26 @@
+# Okrsky of Košice-Luník IX, transcribed by an AI agent in job okrsok-rules-645 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hrebendova 2A, Hrebendova č. 1-3, Hrebendova 10 – 12
+#   okrsok 2: Krčméryho č. 1 –15, Podjavorinskej 3 - 13
+obec = "599972"
+name = "Košice-Luník IX"
+okrsky_date = 2026-07-31
+okrsky_fill = "nearest"
+okrsky_note = "Scan, read from the page image. The page links the file relatively under <base href=\"/\">, so the working URL is under /files/ (the /samosprava/files/ path 404s). Register numbers the document does not list (Hrebendova 4-9, 13-20; Podjavorinskej 1, 2, 14-18) and addresses without a street placed by fill_nearest. Residents registered only to the city part (no address) vote in okrsok 1 per the document."
+
+[[document]]
+url = "https://www.mclunik9.sk/files/obsahy-stranok/volby/2026-08-03-142202-Utvorenie_volebn__h_okrskov_a_ur__enie_volebn__ch_miestnost__.pdf"
+sha256 = "a49c8fa72b3397d5a4a71900170e2087857d6b7245ed1252d79982b80d0202f3"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {street = "Hrebendova", numbers = "1-3, 2A, 10-12"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krčméryho", numbers = "1-15"},
+  {street = "Podjavorinskej", numbers = "3-13"},
+]

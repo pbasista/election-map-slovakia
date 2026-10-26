@@ -1,0 +1,39 @@
+# Okrsky of Prašice, transcribed by an AI agent in job okrsok-rules-296 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okšovská, 1.mája, Partizánska, Nemečkovská cesta, Lipová, Pri majeri, Krátka, Obec Prašice, Cintorínska
+#   okrsok 2: Slnečná, Novosvetská, Budovateľská, Mládežnícka, Mlynská, Družstevná, Žalmanová, Studničná
+obec = "505374"
+name = "Prašice"
+okrsky_date = 2026-07-31
+okrsky_note = "\"Obec Prašice\" (addresses without a street) is listed in okrsok 1, encoded as part Prašice under the street rules."
+
+[[document]]
+url = "https://www.prasice.sk/download_file_f.php?id=2453148"
+sha256 = "9c9784498ae2d04c8d467e9669e665209d6eea3a2579a164e71d4675ce50a8d7"
+title = "Oznámenie o určení volebných okrskov a volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Okšovská"},
+  {street = "1.mája"},
+  {street = "Partizánska"},
+  {street = "Nemečkovská cesta"},
+  {street = "Lipová"},
+  {street = "Pri Majeri", written = "Pri majeri"},
+  {street = "Krátka"},
+  {street = "Cintorínska"},
+  {part = "Prašice"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Slnečná"},
+  {street = "Novosvetská"},
+  {street = "Budovateľská"},
+  {street = "Mládežnícka"},
+  {street = "Mlynská"},
+  {street = "Družstevná"},
+  {street = "Žalmanová"},
+  {street = "Studničná"},
+]

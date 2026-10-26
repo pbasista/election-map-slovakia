@@ -1,0 +1,36 @@
+# Okrsky of Detvianska Huta, transcribed by an AI agent in job okrsok-rules-545 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Detvianska Huta, Vrchdobroč
+#   okrsok 2: Komárno, Ľuľovka, Brnovka
+#   okrsok 3: Žabica, Bratkovica, Blažková Jama
+obec = "518271"
+name = "Detvianska Huta"
+okrsky_note = "Settlements Ľuľovka, Brnovka (okrsok 2) and Blažková Jama (okrsok 3) are not parts in the register; their addresses lie within the listed parts. The document is undated."
+
+[[document]]
+url = "https://www.detvianskahuta.eu/e_download.php?file=/data/editor/69sk_3.pdf&original=ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "2cf8253e604bb3d292aee96c386c584db06995eaa0a1f5c77d09e4c2a5d4e142"
+title = "Informácia o utvorení volebných okrskov"
+
+[[document]]
+url = "https://www.detvianskahuta.eu/samosprava/uradna-tabula/volby-do-organov-samospravy-obce-a-organov-samospravnych-krajov-2026/"
+sha256 = "3ba05cfcbab64a1613156a2f50e0cb63b7de4f97632fd06c457c3c8d2cfafef2"
+title = "Voľby do orgánov samosprávy obce a orgánov samosprávnych krajov 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Detvianska Huta"},
+  {part = "Vrchdobroč"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Komárno"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Žabica"},
+  {part = "Bratkovica"},
+]

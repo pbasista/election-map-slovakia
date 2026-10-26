@@ -1,0 +1,379 @@
+# Council obvody of Šaľa (504025), Šaľa.
+# Transcribed by an AI agent in job obvod-rules-040 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: 1. mája, 8. mája, Agátová, Bilická, Bottova, Čsl. armády, Dostihová ulica, Hlboká, Horná, Hurbanova, J. Kollára, Jánošíkova, Kpt. Jaroša, Kráľovská, Kvetná, L. Novomeského, M. M. Hodžu, Malá, Murgašova, Nádražná, Námestie Sv. Trojice, Nemocničná, Nešporova, Okružná, Parkúrová ulica, Partizánska, Robotnícka, Sadová, Sládkovičova, Smetanova, SNP, Staničná, Štúrova, Švermova, Ulica J. Feketeházyho, Ulica Likavka, Ulica Sama Chalupku, Váhová, Vajanského, Voltížna ulica
+#   obvod 2: B. Nemcovej, Brezová, Broskyňová, Budovateľská, Diakovská, Dolná, Drieňová, Družstevná, Dubová, Gagarinova, Gaštanová, Hetméň, Hlavná, Hrabová, Hviezdoslavova, J. Palárika, Jabloňová ulica, Jarmočná, Jaseňová, Javorová, Jazerná, Jelšová, Jesenského, Kalinčiakova, Kilič, Krátka, Krížna, Kukučínova, Kúpeľná, Lesná, Letná, Liesková, Lipová, M. R. Štefánika, Markovičova, Mostová, Nábrežná, Námestie Sv. Juraja, Nezábudková, Orechová, P. J. Šafárika, P. Pázmaňa, Pažitná, Pionierska, Ružová, Slivková ulica, Školská, Topoľová, Tulipánová, V. Šrobára, Vinohradnícka, Vlčanská, Záhradnícka, Železničná
+#   obvod 3: Bernolákova, Cintorínska, Dlhoveská, Dózsova, Fr. Kráľa, Gen. L. Svobodu, Gorkého, Hliník, Hollého, Hospodárska, Jilemnického, Komenského, Lúčna, Lužná, Narcisová, Nitrianska, Nivy, Nová, Poľná ulica, Pribinovo námestie, Priečna, Slnečná, Trnovecká, Ulica Germánska, Ulica Rímska, Úzka
+# Okrsky added by an AI agent in job okrsok-rules-039 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 8. mája, Partizánska, SNP, Štúrova
+#   okrsok 2: Bottova, Čsl. armády, Hlboká, Horná, J. Kollára, Kvetná, Robotnícka, Voltížna ulica
+#   okrsok 3: Nešporova, Okružná, Parkúrová ulica, Váhová, Vajanského
+#   okrsok 4: Agátová, Bilická, Dostihová ulica, Jánošíkova, Kpt. Jaroša, Kráľovská, súp. č. 776 až 821, 2109, 2193, 2676, 5138 (rodinné domy), Murgašova, Nádražná, Sládkovičova, Smetanova, Staničná, Švermova, Ulica Likavka, Ulica Sama Chalupku
+#   okrsok 5: Kráľovská, súp. č. 828, 829, 2489, 2490, 2551 (bytové domy), L. Novomeského, Malá, Nemocničná, Sadová
+#   okrsok 6: 1. mája, bez ulice, Hurbanova, M. M. Hodžu, Námestie Sv. Trojice, Ulica J. Feketeházyho
+#   okrsok 7: Hviezdoslavova, M. R. Štefánika, Mostová, Nábrežná, P. Pázmaňa
+#   okrsok 8: Diakovská, Lesná, Letná, Pažitná, Tulipánová, V. Šrobára, Vlčanská
+#   okrsok 9: Hlavná, Jarmočná, Jazerná, Jesenského, Krátka, Kúpeľná, Námestie Sv. Juraja, Nezábudková
+#   okrsok 10: Dolná, Družstevná, Hetméň, Kilič, Liesková, P. J. Šafárika, Pionierska, Záhradnícka
+#   okrsok 11: B. Nemcovej, Budovateľská, Kukučínova, Železničná
+#   okrsok 12: Brezová, Broskyňová, Drieňová, Dubová, Gagarinova, Gaštanová, Hrabová, J. Palárika, Jabloňová ulica, Jaseňová, Javorová, Jelšová, Kalinčiakova, Krížna, Lipová, Markovičova, Orechová, Ružová, Slivková ulica, Školská, Topoľová, Vinohradnícka
+#   okrsok 13: Bernolákova, Dózsova, Gorkého, Hliník, Komenského, Nitrianska, Nová, Pribinovo námestie, Priečna, Trnovecká, Úzka
+#   okrsok 14: Narcisová
+#   okrsok 15: Gen. L. Svobodu, Hospodárska, Jilemnického, Lužná, Nivy, Poľná ulica
+#   okrsok 16: Fr. Kráľa, Lúčna, Ulica Rímska
+#   okrsok 17: Cintorínska, Dlhoveská, Slnečná
+#   okrsok 18: Hollého, Ulica Germánska
+obec = "504025"
+name = "Šaľa"
+date = 2026-04-09
+fill = "nearest"
+note = "Document is a scanned PDF with an OCR text layer; transcribed from the rendered page and checked visually. Decision: Uznesenie č. 2/2026 – XXXI. of 9 April 2026; 18 councillors, 3 obvody of 6. 'Pribinovo námestie' (obvod 3) is not in the address register and is omitted. About 1,560 addresses of časť Šaľa have no street in the register; the document lists streets only, so they are assigned by fill_nearest (obvod 1 or 2). Addresses of Veča without a street go to obvod 3 by an inferred part rule; Hetméň (named in obvod 2) by a part rule."
+okrsky_date = 2026-07-28
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF; okrsok numbers read from the rendered pages. Kráľovská: the bytové domy (súp. č. 828, 829, 2489, 2490, 2551) go to okrsok 5, the rest of the street (rodinné domy) to okrsok 4. 'bez ulice' (okrsok 6) = addresses of part Šaľa without a street within obvod 1; Hetméň (okrsok 10) as a part. Pribinovo námestie is not in the register. The register has both 'M. M. Hodžu' and 'M.M.Hodžu'; both go to okrsok 6. fill_nearest covers addresses without a street in obvod 2 (Šaľa) and obvod 3 (Veča)."
+
+[[document]]
+url = "https://www.sala.sk/data/component_file/100/13027/f7921.pdf"
+sha256 = "869491790033a5c16c137f4b0b35f8261ee34aa00624316386dac85362e6e1ae"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (Uznesenie MsZ č. 2/2026 – XXXI. zo dňa 9. apríla 2026), zverejnené 20. 07. 2026"
+
+[[document]]
+url = "https://www.sala.sk/data/component_file/100/13282/f8126.pdf"
+sha256 = "85f9664a3b48f4cd7a59fd9ead8460d7553c64ad1b0740f558ce97987ef04980"
+title = "Informácia o utvorení volebných okrskov a určení volebných miestností (28.07.2026)"
+
+[obvod.1]
+seats = 6
+okrsky = [1, 2, 3, 4, 5, 6]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "8.mája", written = "8. mája"},
+  {street = "Agátová"},
+  {street = "Bilická"},
+  {street = "Bottova"},
+  {street = "Čsl. armády"},
+  {street = "Dostihová ulica"},
+  {street = "Hlboká"},
+  {street = "Horná"},
+  {street = "Hurbanova"},
+  {street = "J. Kollára"},
+  {street = "Jánošíkova"},
+  {street = "Kpt. Jaroša"},
+  {street = "Kráľovská"},
+  {street = "Kvetná"},
+  {street = "L. Novomeského"},
+  {street = "M. M. Hodžu"},
+  {street = "M.M.Hodžu", written = "M. M. Hodžu", note = "register has the street under two spellings; both are the same street"},
+  {street = "Malá"},
+  {street = "Murgašova"},
+  {street = "Nádražná"},
+  {street = "Námestie Sv. Trojice"},
+  {street = "Nemocničná"},
+  {street = "Nešporova"},
+  {street = "Okružná"},
+  {street = "Parkúrová ulica"},
+  {street = "Partizánska"},
+  {street = "Robotnícka"},
+  {street = "Sadová"},
+  {street = "Sládkovičova"},
+  {street = "Smetanova"},
+  {street = "SNP"},
+  {street = "Staničná"},
+  {street = "Štúrova"},
+  {street = "Švermova"},
+  {street = "Ulica J. Feketeházyho"},
+  {street = "Ulica Likavka"},
+  {street = "Ulica Sama Chalupku"},
+  {street = "Váhová"},
+  {street = "Vajanského"},
+  {street = "Voltížna ulica"},
+]
+
+[obvod.2]
+seats = 6
+okrsky = [7, 8, 9, 10, 11, 12]
+rules = [
+  {street = "B. Nemcovej"},
+  {street = "Brezová"},
+  {street = "Broskyňová"},
+  {street = "Budovateľská"},
+  {street = "Diakovská"},
+  {street = "Dolná"},
+  {street = "Drieňová"},
+  {street = "Družstevná"},
+  {street = "Dubová"},
+  {street = "Gagarinova"},
+  {street = "Gaštanová"},
+  {part = "Hetméň", note = "Hetméň is a časť obce without streets in the register"},
+  {street = "Hlavná"},
+  {street = "Hrabová"},
+  {street = "Hviezdoslavova"},
+  {street = "J. Palárika"},
+  {street = "Jabloňová ulica"},
+  {street = "Jarmočná"},
+  {street = "Jaseňová"},
+  {street = "Javorová"},
+  {street = "Jazerná"},
+  {street = "Jelšová"},
+  {street = "Jesenského"},
+  {street = "Kalinčiakova"},
+  {street = "Kilič"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Kukučínova"},
+  {street = "Kúpeľná"},
+  {street = "Lesná"},
+  {street = "Letná"},
+  {street = "Liesková"},
+  {street = "Lipová"},
+  {street = "M. R. Štefánika"},
+  {street = "Markovičova"},
+  {street = "Mostová"},
+  {street = "Nábrežná"},
+  {street = "Námestie Sv. Juraja"},
+  {street = "Nezábudková"},
+  {street = "Orechová"},
+  {street = "P. J. Šafárika"},
+  {street = "P. Pázmaňa"},
+  {street = "Pažitná"},
+  {street = "Pionierska"},
+  {street = "Ružová"},
+  {street = "Slivková ulica"},
+  {street = "Školská"},
+  {street = "Topoľová"},
+  {street = "Tulipánová"},
+  {street = "V. Šrobára"},
+  {street = "Vinohradnícka"},
+  {street = "Vlčanská"},
+  {street = "Záhradnícka"},
+  {street = "Železničná"},
+]
+
+[obvod.3]
+seats = 6
+okrsky = [13, 14, 15, 16, 17, 18]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Cintorínska"},
+  {street = "Dlhoveská"},
+  {street = "Dózsova"},
+  {street = "Fr. Kráľa"},
+  {street = "Gen. L. Svobodu"},
+  {street = "Gorkého"},
+  {street = "Hliník"},
+  {street = "Hollého"},
+  {street = "Hospodárska"},
+  {street = "Jilemnického"},
+  {street = "Komenského"},
+  {street = "Lúčna"},
+  {street = "Lužná"},
+  {street = "Narcisová"},
+  {street = "Nitrianska"},
+  {street = "Nivy"},
+  {street = "Nová"},
+  {street = "Poľná ulica"},
+  {street = "Priečna"},
+  {street = "Slnečná"},
+  {street = "Trnovecká"},
+  {street = "Ulica Germánska"},
+  {street = "Ulica Rímska"},
+  {street = "Úzka"},
+  {part = "Veča", note = "addresses of časť Veča without a street; every Veča street of the register is in obvod 3, which the document composes of Veča streets only", inferred = true},
+]
+
+[okrsok.1]
+rules = [
+  {street = "8.mája", written = "8. mája"},
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Štúrova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bottova"},
+  {street = "Čsl. armády"},
+  {street = "Hlboká"},
+  {street = "Horná"},
+  {street = "J. Kollára"},
+  {street = "Kvetná"},
+  {street = "Robotnícka"},
+  {street = "Voltížna ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Nešporova"},
+  {street = "Okružná"},
+  {street = "Parkúrová ulica"},
+  {street = "Váhová"},
+  {street = "Vajanského"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Agátová"},
+  {street = "Bilická"},
+  {street = "Dostihová ulica"},
+  {street = "Jánošíkova"},
+  {street = "Kpt. Jaroša"},
+  {street = "Kráľovská"},
+  {street = "Murgašova"},
+  {street = "Nádražná"},
+  {street = "Sládkovičova"},
+  {street = "Smetanova"},
+  {street = "Staničná"},
+  {street = "Švermova"},
+  {street = "Ulica Likavka"},
+  {street = "Ulica Sama Chalupku"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Kráľovská", numbers = "828, 829, 2489, 2490, 2551", by = "supisne"},
+  {street = "L. Novomeského"},
+  {street = "Malá"},
+  {street = "Nemocničná"},
+  {street = "Sadová"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {part = "Šaľa"},
+  {street = "Hurbanova"},
+  {street = "M. M. Hodžu"},
+  {street = "M.M.Hodžu", written = "M. M. Hodžu"},
+  {street = "Námestie Sv. Trojice"},
+  {street = "Ulica J. Feketeházyho"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "M. R. Štefánika"},
+  {street = "Mostová"},
+  {street = "Nábrežná"},
+  {street = "P. Pázmaňa"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Diakovská"},
+  {street = "Lesná"},
+  {street = "Letná"},
+  {street = "Pažitná"},
+  {street = "Tulipánová"},
+  {street = "V. Šrobára"},
+  {street = "Vlčanská"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Hlavná"},
+  {street = "Jarmočná"},
+  {street = "Jazerná"},
+  {street = "Jesenského"},
+  {street = "Krátka"},
+  {street = "Kúpeľná"},
+  {street = "Námestie Sv. Juraja"},
+  {street = "Nezábudková"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Dolná"},
+  {street = "Družstevná"},
+  {part = "Hetméň"},
+  {street = "Kilič"},
+  {street = "Liesková"},
+  {street = "P. J. Šafárika"},
+  {street = "Pionierska"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "B. Nemcovej"},
+  {street = "Budovateľská"},
+  {street = "Kukučínova"},
+  {street = "Železničná"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Brezová"},
+  {street = "Broskyňová"},
+  {street = "Drieňová"},
+  {street = "Dubová"},
+  {street = "Gagarinova"},
+  {street = "Gaštanová"},
+  {street = "Hrabová"},
+  {street = "J. Palárika"},
+  {street = "Jabloňová ulica"},
+  {street = "Jaseňová"},
+  {street = "Javorová"},
+  {street = "Jelšová"},
+  {street = "Kalinčiakova"},
+  {street = "Krížna"},
+  {street = "Lipová"},
+  {street = "Markovičova"},
+  {street = "Orechová"},
+  {street = "Ružová"},
+  {street = "Slivková ulica"},
+  {street = "Školská"},
+  {street = "Topoľová"},
+  {street = "Vinohradnícka"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Dózsova"},
+  {street = "Gorkého"},
+  {street = "Hliník"},
+  {street = "Komenského"},
+  {street = "Nitrianska"},
+  {street = "Nová"},
+  {street = "Priečna"},
+  {street = "Trnovecká"},
+  {street = "Úzka"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Narcisová"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Gen. L. Svobodu"},
+  {street = "Hospodárska"},
+  {street = "Jilemnického"},
+  {street = "Lužná"},
+  {street = "Nivy"},
+  {street = "Poľná ulica"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Fr. Kráľa"},
+  {street = "Lúčna"},
+  {street = "Ulica Rímska"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Dlhoveská"},
+  {street = "Slnečná"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Hollého"},
+  {street = "Ulica Germánska"},
+]

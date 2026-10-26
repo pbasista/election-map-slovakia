@@ -1,9 +1,10 @@
 """Assemble the static site in ``dist/`` and serve it for local testing.
 
 ``build`` wipes ``dist/`` and writes it from ``web/`` (the frontend source),
-``data/build/`` (output of ``candidates``, ``geo`` and ``addresses``) and the
-configuration. Every file is a pure function of those inputs, so two builds
-from the same inputs are byte for byte identical.
+``data/build/`` (output of ``candidates``, ``geo``, ``basemap``,
+``addresses`` and ``results``) and the configuration. Every file is a pure
+function of those inputs, so two builds from the same inputs are byte for
+byte identical.
 
 Output (paths relative to ``dist/``; JSON is compact UTF-8 with sorted
 keys)::
@@ -52,6 +53,8 @@ keys)::
                              ~0.15 MB gzip when complete; the app fetches it
                              once with the first candidates it shows)
     geo/                     data/build/geo/, verbatim (see geo)
+    base/                    data/build/base/, verbatim: the base map (see
+                             basemap)
     addr/                    data/build/addr/, verbatim (see addresses)
     data/index.json          names and facts every view needs (below)
     data/about.json          source allowlist, inputs, obvod decisions
@@ -67,6 +70,10 @@ keys)::
                              (:func:`research_files`)
     cache/<sha256>.html      the cached copy of every page a finding cites,
                              from data/curated/cache/ (see cache.py)
+    results/<day>/           data/build/results/<day>/, verbatim, if there:
+                             the results of the election of that day
+                             (``Config.results_dir``; see results.py and
+                             docs/results.md)
 
 Cache busting. The code, the vendored libraries and the images each live
 under a directory named by a short hash of their files
@@ -82,15 +89,17 @@ keeps web/ runnable as it is) are rewritten to ``/assets/vendor/<vv>/``,
 and ``<v>`` is the hash of the rewritten files, so a library upgrade is new
 code too. The JSON the app fetches at runtime (``data/``, ``i18n/``,
 ``geo/``, ``addr/``) keeps its paths and is requested with ``?v=<dv>``,
-the data version: a short hash of all of those files. A browser's copy
-then belongs to the version it was fetched for and a release with other
-data makes the app ask for new URLs. ``data/index.json`` names the party
-logos under ``/assets/img/<iv>/``, so new images are a new data version
-too, and new code is not. The app shells carry the data version in the
-``km-config`` meta JSON (:func:`shells`) as ``dataVersion``, and ``live``,
-the live results origin (``live_url``, see
-:mod:`election_map_slovakia.config`), which the CSP's connect-src in
-``_headers`` allows (:func:`headers`).
+the data version: a short hash of all of those files and the results. A
+browser's copy then belongs to the version it was fetched for and a release
+with other data makes the app ask for new URLs. ``data/index.json`` names
+the party logos under ``/assets/img/<iv>/``, so new images are a new data
+version too, and new code is not. The results files are requested with
+``?v=`` the hash of each that their ``status.json`` lists, and
+``status.json`` itself is revalidated on every load (web/_headers). The
+app shells carry the data version in the ``km-config`` meta JSON
+(:func:`shells`) as ``dataVersion``, and ``results``, the path of the
+election's results (``/results/<day>``), named even before there are any:
+a page loaded then finds them there once a deployment brings them.
 
 Each contest is in exactly one area file, so a click loads the okres, kraj
 and (in Bratislava and Košice) city file of one place and nothing twice::
@@ -126,14 +135,17 @@ ballot, each of whom could vote for several), the voters who took part and
 those on the roll, in the unit it was won in, the municipality, kraj or
 ``obvod`` (its number in that election) of the body's area.
 ``past`` is the turnout of the last election of the contest's body,
-``[election, day, eligible, voters, (1)]``: the results input without
+``[election, day, eligible, voters, (whole)]``: the results input without
 ``results-`` (``oso2022``, ``osk2022``, ``oso202303``, …), its ISO day, the
 voters on the roll and those who took part, in the whole municipality,
 city or kraj, or for a regional council contest in the obce that make up
 its 2026 obvod (:func:`regional_past`); see
-:mod:`election_map_slovakia.candidates` for which election. The trailing
-``1`` marks a council of several obvody in 2026: its figures are of the
-whole municipality or city, the 2022 obvody being different.
+:mod:`election_map_slovakia.candidates` for which election. A council of
+several obvody in 2026 has ``whole``: the 2022 obvody were drawn
+otherwise, so either ``1``, the figures being of the whole municipality or
+city, or the numbers of the okrsky that make up the obvod, the figures
+being of those okrsky in 2022, where the obec has as many okrsky as then
+(:func:`council_past`).
 ``research`` summarizes, for each researched person of the file, when (the
 latest date) and in which research languages they were researched and how
 many findings there are (:func:`research_summary`); a person without an
@@ -187,6 +199,7 @@ from typing import Any
 from election_map_slovakia import (
     __version__,
     addresses,
+    basemap,
     cache,
     candidates,
     config,
@@ -356,18 +369,19 @@ def area_files(
     seats: Mapping[str, int],
     sources: Mapping[str, list[list[str]]] | None = None,
     researched: Mapping[str, list[Any]] | None = None,
-    regional: Mapping[str, Mapping[str, Any]] | None = None,
+    pasts: Mapping[str, Mapping[str, Any]] | None = None,
 ) -> dict[str, dict[str, Any]]:
     """Return the candidate area files; see the module doc.
 
     *data* is ``candidates.json``; *seats* maps obvod contests to their seat
     count where known; *sources* is :func:`obvod_sources`; *researched* maps
-    persons to their research summary (:func:`research_summary`); *regional*
-    is :func:`regional_past`.
+    persons to their research summary (:func:`research_summary`); *pasts*
+    maps contests to the ``past`` made here (:func:`regional_past`,
+    :func:`council_past`), which replaces theirs.
     """
     sources = sources or {}
     researched = researched or {}
-    regional = regional or {}
+    pasts = pasts or {}
     okres_of = {o["code"]: o.get("okres", "") for o in data["obce"]}
     files: dict[str, dict[str, Any]] = defaultdict(
         lambda: {"contests": {}, "persons": {}}
@@ -380,7 +394,7 @@ def area_files(
             contest,
             seats,
             sources,
-            regional.get(contest["id"]),
+            pasts.get(contest["id"]),
             single=council_obvody[contest["area"]] == 1,
         )
     by_person: dict[str, list[str]] = defaultdict(list)
@@ -408,14 +422,14 @@ def _contest_entry(
     contest: Mapping[str, Any],
     seats: Mapping[str, int],
     sources: Mapping[str, list[list[str]]],
-    regional: Mapping[str, Any] | None,
+    computed: Mapping[str, Any] | None,
     *,
     single: bool,
 ) -> dict[str, Any]:
     """Return a contest's entry of an area file, without its candidates.
 
-    *regional* is the contest's :func:`regional_past`, if any; *single*: the
-    contest's council (if it is one) is elected in one obvod.
+    *computed* is the contest's ``past`` made here (:func:`area_files`), if
+    any; *single*: the contest's council (if it is one) is elected in one obvod.
     """
     entry: dict[str, Any] = {"candidates": []}
     if contest["id"] in seats:
@@ -435,7 +449,7 @@ def _contest_entry(
             number,
             _result_row(holder["result"]),
         ]
-    past = contest.get("past", regional)
+    past = computed or contest.get("past")
     if past is not None:
         entry["past"] = [
             past["election"],
@@ -444,7 +458,7 @@ def _contest_entry(
             past["voters"],
         ]
         if contest["kind"] == "oz" and not single:
-            entry["past"].append(1)
+            entry["past"].append(past.get("okrsky", 1))
     return entry
 
 
@@ -566,15 +580,59 @@ def regional_past(
     return out
 
 
-def obvod_seats(geo_dir: Path, curated: Path) -> dict[str, int]:
+def council_past(
+    data: Mapping[str, Any], rule_sets: Mapping[str, obvody.RuleSet]
+) -> dict[str, dict[str, Any]]:
+    """Return council obvod contest → its ``past``, summed from okrsky.
+
+    For an obec whose rule set gives the okrsky of each obvod (*rule_sets*,
+    :func:`election_map_slovakia.obvody.load_rule_sets`), each obvod's
+    ``past`` is that of the same okrsky in the regular municipal election of
+    2022 (``okrsky_2022`` in *data*, ``candidates.json``), with ``okrsky``,
+    their numbers. Only where the council's latest whole election is that
+    one and the obec has the same okrsok numbers as then: the okrsky are
+    matched by number, which a change of their count would shift. Its obvody
+    then have the turnout of their own area, not of the whole municipality.
+    """
+    past_of = {
+        c["area"]: c["past"]
+        for c in data["contests"]
+        if c["kind"] == "oz" and "past" in c
+    }
+    out: dict[str, dict[str, Any]] = {}
+    for o in data["obce"]:
+        rules = rule_sets.get(o["code"])
+        then = o.get("okrsky_2022")
+        if rules is None or not rules.okrsky or then is None:
+            continue
+        whole = past_of.get(o["code"])
+        turnout = {n: (eligible, voters) for n, eligible, voters in then["okrsky"]}
+        if (
+            whole is None
+            or whole["election"] != then["election"]
+            or set(turnout) != set(rules.okrsok_obvod)
+        ):
+            continue
+        for obvod, numbers in rules.okrsky.items():
+            out[f"oz:{o['code']}/{obvod}"] = {
+                "election": then["election"],
+                "day": then["day"],
+                "eligible": sum(turnout[n][0] for n in numbers),
+                "voters": sum(turnout[n][1] for n in numbers),
+                "okrsky": list(numbers),
+            }
+    return out
+
+
+def obvod_seats(geo_dir: Path, election_dir: Path) -> dict[str, int]:
     """Return obvod contest → seats, where known.
 
     Regional and city council obvody from ``geo``; the council obvody of the
-    obce with a rule set from it.
+    obce with a rule set from it (in *election_dir*, :attr:`Config.election_dir`).
     """
     coarse = json.loads((geo_dir / geo.COARSE_FILE).read_bytes())
     seats = {o["id"]: o["seats"] for o in coarse["obvody"]}
-    for code, rules in obvody.load_rule_sets(curated).items():
+    for code, rules in obvody.load_rule_sets(election_dir).items():
         seats |= {f"oz:{code}/{n}": s for n, s in rules.seats.items()}
     return seats
 
@@ -586,19 +644,19 @@ def _sources_key(contest: Mapping[str, Any]) -> str:
     return str(contest["area"]) if contest["kind"] == "oz" else ""
 
 
-def obvod_sources(curated: Path) -> dict[str, list[list[str]]]:
+def obvod_sources(election_dir: Path) -> dict[str, list[list[str]]]:
     """Return area → the official documents that set its obvody.
 
     Areas are an obec (council obvody by address), ``BA``/``KE`` (city
     council) or ``zsk-<kraj>`` (regional council), as named by the curated
-    files; documents are ``[title, url]``, the title empty where the curated
-    file records none.
+    files in *election_dir*; documents are ``[title, url]``, the title empty
+    where the curated file records none.
     """
     out = {
         path.stem: [["", config.load_obvody(path).source]]
-        for path in sorted((curated / "obvody").glob("*.toml"))
+        for path in sorted((election_dir / obvody.DIRECTORY).glob("*.toml"))
     }
-    for code, rules in obvody.load_rule_sets(curated).items():
+    for code, rules in obvody.load_rule_sets(election_dir).items():
         out[code] = [[d.title, d.url] for d in rules.documents]
     return out
 
@@ -712,7 +770,7 @@ def about(
         o["code"]: o["name"] for o in data["obce"] if o["code"] in candidates.CITY_CODES
     }
     membership = []
-    for path in sorted((cfg.curated_dir / "obvody").glob("*.toml")):
+    for path in sorted((cfg.election_dir / obvody.DIRECTORY).glob("*.toml")):
         listed = config.load_obvody(path)
         if path.stem not in names:
             raise BuildError(f"{path}: no kraj or city named {path.stem!r}")
@@ -731,7 +789,7 @@ def about(
             "date": str(rules.date) if rules.date else None,
         }
         for rules in sorted(
-            obvody.load_rule_sets(cfg.curated_dir).values(),
+            obvody.load_rule_sets(cfg.election_dir).values(),
             key=lambda r: (candidates.search_key(r.name), r.obec),
         )
     ]
@@ -895,18 +953,12 @@ def _attribute_json(content: object) -> str:
 def headers(cfg: Config, web: Path) -> bytes:
     """Return ``_headers``: web/_headers, plus a noindex rule for pages.dev.
 
-    The CSP's connect-src (``{{connect}}`` in web/_headers) adds the live
-    results origin (``live_url``) to the site's own. The noindex rule is
-    added once the site has a domain of its own (``base_url``):
-    Pages keeps serving every deployment at <project>.pages.dev and at
-    <hash>.<project>.pages.dev, and a search engine should know the site
-    only by its domain.
+    The noindex rule is added once the site has a domain of its own
+    (``base_url``): Pages keeps serving every deployment at
+    <project>.pages.dev and at <hash>.<project>.pages.dev, and a search
+    engine should know the site only by its domain.
     """
-    live = cfg.site.live_url
-    connect = f"'self' {live}" if live else "'self'"
-    text = _fill(
-        (web / HEADERS).read_text(encoding="utf-8"), {"connect": connect}, HEADERS
-    )
+    text = (web / HEADERS).read_text(encoding="utf-8")
     base = cfg.site.base_url
     pages = f"{cfg.site.pages_project}.pages.dev"
     if not base or urllib.parse.urlsplit(base).hostname == pages:
@@ -944,12 +996,14 @@ def shells(
     assets: str,
     vendor: str,
     data_version: str,
+    results_path: str,
 ) -> dict[str, bytes]:
     """Return the app shells, the root language picker and the 404 page.
 
     *assets* and *vendor* are the URLs of the versioned code and library
     directories (``/assets/<v>``, ``/assets/vendor/<vv>``), *data_version*
-    what the app appends to the JSON it fetches (``?v=``).
+    what the app appends to the JSON it fetches (``?v=``), *results_path*
+    the URL of the election's results directory.
     """
     langs = cfg.languages
     base = cfg.site.base_url or ""
@@ -980,9 +1034,13 @@ def shells(
         "version": __version__,
         # Appended to every JSON file the app fetches (``?v=``; module doc).
         "dataVersion": data_version,
-        # The origin the app fetches the live results from; empty: none.
-        "live": cfg.site.live_url or "",
-        # When the app reads them every minute (ISO 8601); null: any time.
+        # The election's results directory (status.json and the files it
+        # names, docs/results.md); nothing there before there are results.
+        "results": results_path,
+        # Whether the app polls them (site.toml live); without, it reads them
+        # once per page load.
+        "live": cfg.site.live,
+        # When, polling, it reads them every minute (ISO 8601); null: any time.
         "liveWindow": [when.isoformat() for when in cfg.site.live_window]
         if cfg.site.live_window
         else None,
@@ -1054,6 +1112,7 @@ def assemble(cfg: Config) -> Site:
     paths = {
         "candidates": built / candidates.OUTPUT_FILE,
         "geo": built / geo.OUTPUT_DIR,
+        "basemap": built / basemap.OUTPUT_DIR,
         "addr": built / addresses.OUTPUT_DIR,
     }
     for step, path in paths.items():
@@ -1079,10 +1138,11 @@ def assemble(cfg: Config) -> Site:
         content.update(
             area_files(
                 data,
-                obvod_seats(paths["geo"], cfg.curated_dir),
-                obvod_sources(cfg.curated_dir),
+                obvod_seats(paths["geo"], cfg.election_dir),
+                obvod_sources(cfg.election_dir),
                 research_summary(cfg, records),
-                regional_past(data, props),
+                regional_past(data, props)
+                | council_past(data, obvody.load_rule_sets(cfg.election_dir)),
             )
         )
         translations = {
@@ -1105,17 +1165,34 @@ def assemble(cfg: Config) -> Site:
             }
         )
         files = {path: encode(value) for path, value in content.items()}
+    # The election's results, as `ems results` or the results step left them.
+    results_dir = cfg.results_dir
+    results_target = f"{config.RESULTS_DIR}/{cfg.site.election.isoformat()}"
+    has_results = results_dir.is_dir()
     with progress.stage("hashing the data files"):
         # Everything the app fetches with ?v=: the generated JSON (so far
-        # only data/ and i18n/) and the copied geo/ and addr/.
+        # only data/ and i18n/), the copied geo/, base/ and addr/, and the
+        # results.
         data_version = content_version(
             itertools.chain(
                 sorted(files.items()),
                 tree("geo", paths["geo"]),
+                tree(basemap.OUTPUT_DIR, paths["basemap"]),
                 tree("addr", paths["addr"]),
+                tree(results_target, results_dir) if has_results else (),
             )
         )
-    files.update(shells(cfg, web, strings.ui, f"/{assets}", f"/{vendor}", data_version))
+    files.update(
+        shells(
+            cfg,
+            web,
+            strings.ui,
+            f"/{assets}",
+            f"/{vendor}",
+            data_version,
+            f"/{results_target}",
+        )
+    )
     files.update({f"{assets}/{path}": content for path, content in code.items()})
     files[HEADERS] = headers(cfg, web)
     site_map = sitemap(cfg)
@@ -1125,7 +1202,10 @@ def assemble(cfg: Config) -> Site:
     copies = {vendor: web / VENDOR_DIR, images: web / IMAGES_DIR}
     copies[cache.STYLESHEET.removeprefix("/")] = web / CACHE_STYLESHEET
     copies["geo"] = paths["geo"]
+    copies[basemap.OUTPUT_DIR] = paths["basemap"]
     copies["addr"] = paths["addr"]
+    if has_results:
+        copies[results_target] = results_dir
     cached = cfg.curated_dir / research.CACHE_DIR
     for record in records.values():
         for f in record["findings"]:
@@ -1181,7 +1261,10 @@ _GROUPS = (
     ("cache/", "cached pages"),
     ("data/index.json", "data/index.json"),
     ("geo/", "geometry"),
+    (f"geo/{geo.OKRSKY_DIR}/", "  of it okrsky"),
+    (f"{basemap.OUTPUT_DIR}/", "base map"),
     ("addr/", "addresses"),
+    (f"{config.RESULTS_DIR}/", "results"),
     ("i18n/", "UI strings and occupations"),
     ("assets/", "assets"),
 )

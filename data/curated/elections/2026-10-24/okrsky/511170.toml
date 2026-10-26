@@ -1,0 +1,29 @@
+# Okrsky of Východná, transcribed by an AI agent in job okrsok-rules-419 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok od č. 1 do č. 433
+#   okrsok 2: Volebný okrsok od č 434 do č.1736, Svarín a Čierny Váh do č. 3030
+obec = "511170"
+name = "Východná"
+okrsky_fill = "nearest"
+okrsky_note = "Undated one-page notice attached to the 2026 election item on the úradná tabuľa. Numbers are súpisné čísla. Okrsok 2 covers 434-1736 plus Svarín and Čierny Váh (settlements numbered up to 3030, not parts in the register), so its range is taken as 434-3030. Addresses outside these ranges take the nearest placed okrsok."
+
+[[document]]
+url = "https://www.vychodna.eu/e_download.php?file=/data/uredni_deska/obsah2406_4.pdf&original=VOLEBN%C3%89%20OKRSKY.pdf"
+sha256 = "e0b475487e017aebc441671fb3bbdf71f75dc8f44c79a65ec77be41c3983c36d"
+title = "Volebné okrsky"
+
+[[document]]
+url = "https://www.vychodna.eu/zverejnovanie/uradna-tabula-1/komunalne-volby-2026/vyhlasenie-volieb-2899.html"
+sha256 = "5d27e35f64be0def22545a55e15d8e2fb3861e0aaa5e03349fb658c82102bf1d"
+title = "Komunálne voľby 2026 – Vyhlásenie volieb (page linking the document)"
+
+[okrsok.1]
+rules = [
+  {part = "Východná", numbers = "1-433"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Východná", numbers = "434-3030"},
+]

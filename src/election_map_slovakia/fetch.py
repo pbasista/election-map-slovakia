@@ -325,10 +325,11 @@ def check(inp: Input, path: Path) -> dict[str, int]:
         return {"rows": _check_xlsx(path)}
     if inp.kind == "zip":
         _check_zip(inp, path)
-    elif inp.kind == "pdf":
+    elif inp.kind in _SIGNATURES:
+        offset, signature, problem = _SIGNATURES[inp.kind]
         with path.open("rb") as f:
-            if f.read(4) != b"%PDF":
-                raise FetchError("not a PDF")
+            if f.read(offset + len(signature))[offset:] != signature:
+                raise FetchError(problem)
     elif inp.kind == "html":
         try:
             text = path.read_text(encoding="utf-8")
@@ -339,6 +340,15 @@ def check(inp: Input, path: Path) -> dict[str, int]:
     elif inp.kind == "geojson":
         _check_geojson(path)
     return {}
+
+
+_SIGNATURES = {
+    "pdf": (0, b"%PDF", "not a PDF"),
+    # An OSM PBF file's first BlobHeader, after its 4-byte length: field 1,
+    # `type`, the 9-byte string "OSMHeader".
+    "pbf": (4, b"\x0a\x09OSMHeader", "not an OSM PBF file (no OSMHeader block first)"),
+}
+"""Kind → (offset, bytes there, problem otherwise) of the files told by their start."""
 
 
 def _check_geojson(path: Path) -> None:

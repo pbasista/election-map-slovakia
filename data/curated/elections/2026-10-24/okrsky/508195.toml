@@ -1,0 +1,29 @@
+# Okrsky of Plavecký Štvrtok, transcribed by an AI agent in job okrsok-rules-346 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: občania bývajúci na čísle 0 až 450
+#   okrsok 2: občania bývajúci na čísle 451 a vyššie
+obec = "508195"
+name = "Plavecký Štvrtok"
+okrsky_date = 2026-07-16
+okrsky_note = "The decision splits the obec by house number ('bývajúci na čísle 0 až 450' / '451 a vyššie'); read as súpisné číslo, the obec-wide numbering."
+
+[[document]]
+url = "https://www.obecplaveckystvrtok.sk/download_file_f.php?id=2444312"
+sha256 = "a6ccaf54381ab57b6a7a8447c3f37d5b72ae9c53285c0943db6ab6e490759a94"
+title = "Určenie volebných okrskov a volebných miestností"
+
+[[document]]
+url = "https://www.obecplaveckystvrtok.sk/volby-do-organov-samospravy-obci-a-do-organov-samospravnych-krajov-2026.html"
+sha256 = "d42654b8a59f8810d2485f262d659d64c15bae8fb98354992363de6210621113"
+title = "Voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Plavecký Štvrtok", numbers = "1-450"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Plavecký Štvrtok", numbers = "451-"},
+]

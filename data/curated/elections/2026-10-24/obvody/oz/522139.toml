@@ -1,0 +1,58 @@
+# Council obvody of Valaliky (522139), Košice - okolie.
+# Transcribed by an AI agent in job obvod-rules-118 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: časť obce Buzice sa volia 4 poslanci.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: časť obce Bernátovce sa volia 3 poslanci.
+#   obvod 3: Vo volebnom obvode číslo 3, ktorý zahŕňa: časť obce Všechsvätých sa volia 2 poslanci.
+#   obvod 4: Vo volebnom obvode číslo 4, ktorý zahŕňa: časť obce Košťany sa volia 2 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-117 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Buzice
+#   okrsok 2: Bernátovce
+#   okrsok 3: Všechsvätých
+#   okrsok 4: Košťany
+obec = "522139"
+name = "Valaliky"
+date = 2026-07-01
+okrsky_date = 2026-07-10
+okrsky_note = "Mayor's decision of 10.07.2026 creates 4 okrsky, one per part of the municipality, each coinciding with the obvod of that part."
+
+[[document]]
+url = "https://www.valaliky.sk/e_download.php?file=/data/uredni_deska/obsah3777_1.pdf&original=Utvorenie%20volebn%C3%BDch%20obvodov%20a%20ur%C4%8Denie%20po%C4%8Dtu%20poslancov.pdf"
+sha256 = "90b329feedb55eb21962d3d41ed68c5e83cc373bc4673da9b9369bc0e338e74c"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie OZ č. 67/2026 zo dňa 01.07.2026)"
+
+[[document]]
+url = "https://www.valaliky.sk/e_download.php?file=/data/uredni_deska/obsah3781_1.pdf&original=Ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20volebnych%20miestnost%C3%AD.pdf"
+sha256 = "0c80806cfd93153f1d524572130076c0687abcdffec2f91e89bfc39aff771c4b"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 24. októbra 2026 (starosta, p.č. 664/4973/2026, 10.07.2026)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Buzice"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Bernátovce"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Všechsvätých"},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [4]
+rules = [
+  {part = "Košťany"},
+]

@@ -1,0 +1,30 @@
+# Okrsky of Hviezdoslavov, transcribed by an AI agent in job okrsok-rules-226 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Príslušnosť voličov v okrsku podľa súpisného čísla: Od čísla 1 po číslo 770
+#   okrsok 2: Príslušnosť voličov v okrsku podľa súpisného čísla: Od čísla 771 po číslo 1300
+#   okrsok 3: Príslušnosť voličov v okrsku podľa súpisného čísla: Od čísla 1301
+obec = "501638"
+name = "Hviezdoslavov"
+okrsky_date = 2026-07-21
+okrsky_note = "Okrsky are defined by súpisné číslo ranges over the whole obec (1-770, 771-1300, 1301-)."
+
+[[document]]
+url = "https://www.hviezdoslavov.sk/data/page/hviezdoslavov.sk/31332/vytvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti.pdf"
+sha256 = "4c0dd9c5e6c17b2ee4af12bacefae3c5f7cb6f528212032736d72c8a9fe3c36b"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Hviezdoslavov", numbers = "1-770"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Hviezdoslavov", numbers = "771-1300"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Hviezdoslavov", numbers = "1301-"},
+]

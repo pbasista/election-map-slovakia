@@ -1,0 +1,63 @@
+# Okrsky of Záhorská Ves, transcribed by an AI agent in job okrsok-rules-538 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cintorínska, Družstevná, Hlavná orientačné č. 2-150 (párne), 248, 1-75 (nepárne), Malá ulička, Pivničná, Poľná, Povodňová, Pri druhej kaplnke, Pri prvej kaplnke, Sokolská, Spojná, Stupavská, Školská, Športová, Veľká ulička, V majeri, Za sýpkou
+#   okrsok 2: Dlhá, Hlavná orientačné č. 152-246 (párne) 79-155 (nepárne), Kasárenská, Lucie Poppovej, Moravská, Pod vŕškom, Pri barine, Pri hrádzi, Pri trati, Šancová, Továrenská, Úzka ulička, V Jertáši, V zákostolí, Železničná, a pre voličov, ktorí majú trvalý pobyt evidovaný na obec Záhorská Ves
+obec = "508365"
+name = "Záhorská Ves"
+okrsky_date = 2026-07-20
+okrsky_fill = "nearest"
+okrsky_note = "Hlavná is split by orientačné číslo; numbers not listed (e.g. odd 77, numbers above 155/248) , Povodňové námestie (7 addresses, not in the document) and the 9 addresses without a street take the okrsok of the nearest address. Okrsok 2 also holds residents registered only to the obec."
+
+[[document]]
+url = "https://www.zahorskaves.sk/data/news_files/zahorskaves.sk/135706/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti.pdf"
+sha256 = "c5debcf41fe8b5af914488c50c93d75aacdc5fa9adb2e885f0d693261153c899"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.zahorskaves.sk/novinka/135706/volby-do-samospravy-obci-2026"
+sha256 = "0feb46139900872faa16c5d5acdb865de7e32e0cc321918b57eb536b809fb286"
+title = "Voľby do samosprávy obcí 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Hlavná", numbers = "2-150", parity = "even"},
+  {street = "Hlavná", numbers = "248"},
+  {street = "Hlavná", numbers = "1-75", parity = "odd"},
+  {street = "Družstevná"},
+  {street = "Malá ulička"},
+  {street = "Pivničná"},
+  {street = "Poľná"},
+  {street = "Povodňová"},
+  {street = "Pri druhej kaplnke"},
+  {street = "Pri prvej kaplnke"},
+  {street = "Sokolská"},
+  {street = "Spojná"},
+  {street = "Stupavská"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Veľká ulička"},
+  {street = "V majeri"},
+  {street = "Za sýpkou"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dlhá"},
+  {street = "Hlavná", numbers = "152-246", parity = "even"},
+  {street = "Hlavná", numbers = "79-155", parity = "odd"},
+  {street = "Kasárenská"},
+  {street = "Lucie Poppovej"},
+  {street = "Moravská"},
+  {street = "Pod vŕškom"},
+  {street = "Pri barine"},
+  {street = "Pri hrádzi"},
+  {street = "Pri trati"},
+  {street = "Šancová"},
+  {street = "Továrenská"},
+  {street = "Úzka ulička"},
+  {street = "V Jertáši"},
+  {street = "V zákostolí"},
+  {street = "Železničná"},
+]

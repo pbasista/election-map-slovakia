@@ -1,0 +1,38 @@
+# Okrsky of Trenčianska Turná, transcribed by an AI agent in job okrsok-rules-299 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Súpisné čísla domov 1-170, 237, 800-842, 860-870, 878-879, 1011, 1400-1477, 2015, 2087-2092, 2161, 2178
+#   okrsok 2: Súpisné čísla domov 236, 405-699, 881-882, 884, 871-877, 1350-1351, 2002, 2006, 2010, 2018, 2039, 2051, 2068, 2131, 2138, 2159, 2188, 2218, 3000-3058
+#   okrsok 3: Súpisné čísla domov 171-402, 700-798, 844-859, 880, 883, 1100-1174, 1258, 1300-1349, 2045, 2115-2127, 2200, 2247
+#   okrsok 4: Súpisné čísla domov 885-992, 2012, 2134, 2203, 2206, 2233, 2245, 4000-4057
+obec = "506567"
+name = "Trenčianska Turná"
+okrsky_date = 2026-06-29
+okrsky_fill = "nearest"
+okrsky_note = "The document assigns okrsky by súpisné čísla only, without naming parts. Okrsok 4 votes in Kultúrny dom Hámre; the same súpisné ranges are applied in both parts (Hámre only for okrsok 4's ranges). Addresses whose súpisné číslo falls in no listed range take the okrsok of the nearest placed address (fill_nearest). The document lists 236 (okrsok 2) and 237 (okrsok 1) separately although they fall within okrsok 3's range 171-402; the single numbers are taken as exceptions to that range."
+
+[[document]]
+url = "https://www.trencianskaturna.sk/e_download.php?file=/data/multipage/editor/editor-17-79-sk_10.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "fa407d77c58ed573f956f78b642a7453116af8f3689341705be9912657871427"
+title = "Utvorenie volebných okrskov (Volebné okrsky a volebné miestnosti)"
+
+[okrsok.1]
+rules = [
+  {part = "Trenčianska Turná", numbers = "1-170, 237, 800-842, 860-870, 878-879, 1011, 1400-1477, 2015, 2087-2092, 2161, 2178"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Trenčianska Turná", numbers = "236, 405-699, 881-882, 884, 871-877, 1350-1351, 2002, 2006, 2010, 2018, 2039, 2051, 2068, 2131, 2138, 2159, 2188, 2218, 3000-3058"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Trenčianska Turná", numbers = "171-235, 238-402, 700-798, 844-859, 880, 883, 1100-1174, 1258, 1300-1349, 2045, 2115-2127, 2200, 2247"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Trenčianska Turná", numbers = "885-992, 2012, 2134, 2203, 2206, 2233, 2245, 4000-4057"},
+  {part = "Hámre", numbers = "885-992, 2012, 2134, 2203, 2206, 2233, 2245, 4000-4057"},
+]

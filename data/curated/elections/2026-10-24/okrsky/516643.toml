@@ -1,0 +1,231 @@
+# Okrsky of Banská Štiavnica, transcribed by an AI agent in job okrsok-rules-191 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Akademická, Andreja Kmeťa, Andreja Sládkoviča, Antona Pécha, Bočná, Botanická, Daniela Licharda, Dolná Resla, Dolná ružová, Družicová, Farská, Horná Resla, Horná ružová, Ing. Štefana Višňovského, Jána Bottu, Jaroslava Augustu, Jozefa Karola Hella, Kamenná, Kammerhofská, Katova, Klinger, Koncová, Kutnohorská, Malá okružná, Martina Kukučína, Nad Rozgrundom, Námestie sv. Trojice, Novozámocká, Pavla Kyrmezera, miestna časť Počúvadlianske Jazero, Pod Červenou studňou, Pod Paradajzom, Radničné námestie, Samuela Mikovíniho, Staromestská, Staronová, Starozámocká, Strieborná, Úvozná, Viery Václavekovej, Vilová, Vodárenská, s. č. 2602 a voliči s trvalým pobytom na mesto Banská Štiavnica
+#   okrsok 2: 8. mája, Alžbety Gwerkovej Göllnerovej, Banícka, Belianska, Belianske jazero, Dr. Imricha Tótha, Družstevná, Ďurka Langsfelda, Hájik, Jána Hollého, Jána Palárika, Jozefa Miloslava Hurbana, Jurija Gagarina, Lesnícka, Ľudmily Podjavorinskej, Mierová, Michala Miloslava Hodžu, Michalská, Mládežnícka č. 1 - 20, Osadná, Pavla Országha Hviezdoslava, Petra Jilemnického, Pod Kalváriou, Poľnohospodárska, Pustá, SNP č. 1 - 21/B, Svätozára Hurbana Vajanského, Šobov, Športová, Výskumnícka a Záhradná
+#   okrsok 3: Antona Bernoláka, Drevená, Ivana Krasku, Janka Matušku, Juraja Fándlyho, Križovatka, Ľudovíta Štúra, Malé trhovisko, Martina Hattalu, Na Zigmund šachtu, Pavla Dobšinského, Pletiarska, Remeselnícka, Robotnícka, Slovanská, Spojná, Staničná, Tabaková, Trate mládeže, Údolná, Zvonová a Železničiarska
+#   okrsok 4: 1.mája, Andreja Trúchleho Sytnianskeho, Dolná, Dr. Vladimíra Clementisa, Eleny Maróthy – Šoltésovej, Jozefa Horáka, Karola Šmidkeho, Kolpašská, Ladislava Novomeského, Martina Benku, Okrúhla, Pod Trojickým vrchom, miestna časť Banky a to ulice: Hadová, Hlavná, Horná, Majer, Na jazero a Vyhnianska
+#   okrsok 5: Ludvíka Svobodu
+#   okrsok 6: Bratská, Drieňová, Energetikov, Kysihýbelská, Okrajová, Ovocná, Pátrovská, Poľovnícka a Roľnícka
+#   okrsok 7: MUDr. Jána Straku, SNP od čísla 22 až 58 a Učiteľská
+#   okrsok 8: Antolská, Brezová, Budovateľská, Cintorínska, Ferka Urbánka, G. Z. Laskomerského, Horná Huta, Hutnícka, Jána Amosa Komenského, Kremenisko, Ladislava Exnára, Lintich, Na Mária šachtu, Obchodná, Povrazník, Rakytová, Špitálska a voliči s trvalým pobytom na adrese 1908 a 1909
+#   okrsok 9: 29. augusta, Boženy Němcovej, Boženy Slančíkovej - Timravy, Ilijská, Janka Jesenského, Jozefa Cígera Hronského, Jozefa Gregora Tajovského, Jozefa Ignáca Bajzu, Jozefa Kollára, Jozefa Škultétyho, Kríková, Krížna, Na Matej štôlňu, Na Maximilián šachtu, Nám. padlých hrdinov, Obrancov mieru, Partizánska, Podhájska, Potočná, Požiarnická, Rudolfa Debnárika, Sama Chalupku, Srnčia, Stratená, Školská, Štefana Krčméryho, Štefana Moyzesa a Úzka
+obec = "516643"
+name = "Banská Štiavnica"
+okrsky_date = 2026-07-14
+okrsky_fill = "nearest"
+okrsky_note = "Mládežnícka 21-25 not covered by the document (only 1-20 in okrsok 2): fill_nearest. Addresses without street (other than Počúvadlianske Jazero and s.č. 2602, 1908, 1909) by fill_nearest. \"SNP\" as in register; \"Nám. padlých hrdinov\" = Námestie padlých hrdinov. Date is the oznámenie date (14.7.2026)."
+
+[[document]]
+url = "https://www.banskastiavnica.sk/wp-content/uploads/2026/07/20260714_Oznamenie-o-okrskoch-a-volebnych-miestnostiach-do-OSO-2026.pdf"
+sha256 = "028b5c6a9c8e2a0c74a797ce21ec97678d232a20966b1ca88c89a2b858842ae1"
+title = "Oznámenie o počte poslancov, volebných obvodoch, okrskoch a volebných miestnostiach"
+
+[okrsok.1]
+rules = [
+  {part = "Počúvadlianske Jazero"},
+  {part = "Banská Štiavnica", numbers = "2602"},
+  {street = "Akademická"},
+  {street = "Andreja Kmeťa"},
+  {street = "Andreja Sládkoviča"},
+  {street = "Antona Pécha"},
+  {street = "Bočná"},
+  {street = "Botanická"},
+  {street = "Daniela Licharda"},
+  {street = "Dolná Resla"},
+  {street = "Dolná ružová"},
+  {street = "Družicová"},
+  {street = "Farská"},
+  {street = "Horná Resla"},
+  {street = "Horná ružová"},
+  {street = "Ing. Štefana Višňovského"},
+  {street = "Jána Bottu"},
+  {street = "Jaroslava Augustu"},
+  {street = "Jozefa Karola Hella"},
+  {street = "Kamenná"},
+  {street = "Kammerhofská"},
+  {street = "Katova"},
+  {street = "Klinger"},
+  {street = "Koncová"},
+  {street = "Kutnohorská"},
+  {street = "Malá okružná"},
+  {street = "Martina Kukučína"},
+  {street = "Nad Rozgrundom"},
+  {street = "Námestie sv. Trojice"},
+  {street = "Novozámocká"},
+  {street = "Pavla Kyrmezera"},
+  {street = "Pod Červenou studňou"},
+  {street = "Pod Paradajzom"},
+  {street = "Radničné námestie"},
+  {street = "Samuela Mikovíniho"},
+  {street = "Staromestská"},
+  {street = "Staronová"},
+  {street = "Starozámocká"},
+  {street = "Strieborná"},
+  {street = "Úvozná"},
+  {street = "Viery Václavekovej"},
+  {street = "Vilová"},
+  {street = "Vodárenská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "8. mája"},
+  {street = "Alžbety Gwerkovej Göllnerovej"},
+  {street = "Banícka"},
+  {street = "Belianska"},
+  {street = "Belianske jazero"},
+  {street = "Dr. Imricha Tótha"},
+  {street = "Družstevná"},
+  {street = "Ďurka Langsfelda"},
+  {street = "Hájik"},
+  {street = "Jána Hollého"},
+  {street = "Jána Palárika"},
+  {street = "Jozefa Miloslava Hurbana"},
+  {street = "Jurija Gagarina"},
+  {street = "Lesnícka"},
+  {street = "Ľudmily Podjavorinskej"},
+  {street = "Mierová"},
+  {street = "Michala Miloslava Hodžu"},
+  {street = "Michalská"},
+  {street = "Mládežnícka", numbers = "1-20"},
+  {street = "Osadná"},
+  {street = "Pavla Országha Hviezdoslava"},
+  {street = "Petra Jilemnického"},
+  {street = "Pod Kalváriou"},
+  {street = "Poľnohospodárska"},
+  {street = "Pustá"},
+  {street = "SNP", numbers = "1-21, 21A, 21B"},
+  {street = "Svätozára Hurbana Vajanského"},
+  {street = "Šobov"},
+  {street = "Športová"},
+  {street = "Výskumnícka"},
+  {street = "Záhradná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Antona Bernoláka"},
+  {street = "Drevená"},
+  {street = "Ivana Krasku"},
+  {street = "Janka Matušku"},
+  {street = "Juraja Fándlyho"},
+  {street = "Križovatka"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Malé trhovisko"},
+  {street = "Martina Hattalu"},
+  {street = "Na Zigmund šachtu"},
+  {street = "Pavla Dobšinského"},
+  {street = "Pletiarska"},
+  {street = "Remeselnícka"},
+  {street = "Robotnícka"},
+  {street = "Slovanská"},
+  {street = "Spojná"},
+  {street = "Staničná"},
+  {street = "Tabaková"},
+  {street = "Trate mládeže"},
+  {street = "Údolná"},
+  {street = "Zvonová"},
+  {street = "Železničiarska"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "1. mája", written = "1.mája"},
+  {street = "Andreja Trúchleho Sytnianskeho"},
+  {street = "Dolná"},
+  {street = "Dr. Vladimíra Clementisa"},
+  {street = "Eleny Maróthy-Šoltésovej", written = "Eleny Maróthy – Šoltésovej"},
+  {street = "Jozefa Horáka"},
+  {street = "Karola Šmidkeho"},
+  {street = "Kolpašská"},
+  {street = "Ladislava Novomeského"},
+  {street = "Martina Benku"},
+  {street = "Okrúhla"},
+  {street = "Pod Trojickým vrchom"},
+  {street = "Hadová"},
+  {street = "Hlavná"},
+  {street = "Horná"},
+  {street = "Majer"},
+  {street = "Na jazero"},
+  {street = "Vyhnianska"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Ludvíka Svobodu"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bratská"},
+  {street = "Drieňová"},
+  {street = "Energetikov"},
+  {street = "Kysihýbelská"},
+  {street = "Okrajová"},
+  {street = "Ovocná"},
+  {street = "Pátrovská"},
+  {street = "Poľovnícka"},
+  {street = "Roľnícka"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "MUDr. Jána Straku"},
+  {street = "SNP", numbers = "22-58"},
+  {street = "Učiteľská"},
+]
+
+[okrsok.8]
+rules = [
+  {part = "Banská Štiavnica", numbers = "1908, 1909"},
+  {street = "Antolská"},
+  {street = "Brezová"},
+  {street = "Budovateľská"},
+  {street = "Cintorínska"},
+  {street = "Ferka Urbánka"},
+  {street = "G. Z. Laskomerského"},
+  {street = "Horná Huta"},
+  {street = "Hutnícka"},
+  {street = "Jána Amosa Komenského"},
+  {street = "Kremenisko"},
+  {street = "Ladislava Exnára"},
+  {street = "Lintich"},
+  {street = "Na Mária šachtu"},
+  {street = "Obchodná"},
+  {street = "Povrazník"},
+  {street = "Rakytová"},
+  {street = "Špitálska"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "29.augusta", written = "29. augusta"},
+  {street = "Boženy Němcovej"},
+  {street = "Boženy Slančíkovej-Timravy", written = "Boženy Slančíkovej - Timravy"},
+  {street = "Ilijská"},
+  {street = "Janka Jesenského"},
+  {street = "Jozefa Cígera Hronského"},
+  {street = "Jozefa Gregora Tajovského"},
+  {street = "Jozefa Ignáca Bajzu"},
+  {street = "Jozefa Kollára"},
+  {street = "Jozefa Škultétyho"},
+  {street = "Kríková"},
+  {street = "Krížna"},
+  {street = "Na Matej štôlňu"},
+  {street = "Na Maximilián šachtu"},
+  {street = "Námestie padlých hrdinov", written = "Nám. padlých hrdinov"},
+  {street = "Obrancov mieru"},
+  {street = "Partizánska"},
+  {street = "Podhájska"},
+  {street = "Potočná"},
+  {street = "Požiarnická"},
+  {street = "Rudolfa Debnárika"},
+  {street = "Sama Chalupku"},
+  {street = "Srnčia"},
+  {street = "Stratená"},
+  {street = "Školská"},
+  {street = "Štefana Krčméryho"},
+  {street = "Štefana Moyzesa"},
+  {street = "Úzka"},
+]

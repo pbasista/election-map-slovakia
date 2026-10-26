@@ -10,15 +10,17 @@ import datetime as dt
 import os
 import re
 import tomllib
-import urllib.parse
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, TypeVar
 from zoneinfo import ZoneInfo
 
 SITE_FILE = "site.toml"
-# Overrides site.toml's live_url at build time, e.g. a local results server.
-LIVE_URL_ENV = "EMS_LIVE_URL"
+# Set to 1 at build time, the app reads the results every minute at any
+# time instead of only from the polls' closing (site.toml live, live_days):
+# for testing with results of `ems results fake` or `poll` before an
+# election.
+RESULTS_ANYTIME_ENV = "EMS_RESULTS_ANYTIME"
 # The election's times (site.toml polls_open, polls_close) are Slovak time.
 _SLOVAK_TIME = ZoneInfo("Europe/Bratislava")
 LANGUAGES_FILE = "languages.toml"
@@ -26,13 +28,18 @@ SOURCES_FILE = "sources.toml"
 INPUTS_FILE = "inputs.toml"
 OVERRIDES_FILE = "overrides.toml"
 PARTIES_FILE = "parties.toml"
+ELECTIONS_DIR = "elections"
+"""Below ``data/curated/``: the data of each election (:attr:`Config.election_dir`)."""
+RESULTS_DIR = "results"
+"""Below ``data/build/`` and ``dist/``: the results of each election
+(:attr:`Config.results_dir`)."""
 # Relative to the project root; the files are copied to dist/ with web/.
 PARTY_LOGO_DIR = Path("web") / "img" / "parties"
 _LOGO_SUFFIXES = (".svg", ".png", ".webp")
 # Short forms go into compact candidate rows next to the name.
 _MAX_SHORT = 20
 
-INPUT_KINDS = ("xlsx", "zip", "csv", "pdf", "html", "geojson")
+INPUT_KINDS = ("xlsx", "zip", "csv", "pdf", "html", "geojson", "pbf")
 _INPUT_NAME = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 _SHA256 = re.compile(r"[0-9a-f]{64}")
 # ZBGIS municipality code (ŠÚ SR, 6 digits) or one of the two synthetic city
@@ -71,16 +78,14 @@ class Site:
     polls_close: dt.datetime
     """When the polls open and close on election day (site.toml gives the
     times of day in Slovak time; these carry its offset)."""
-    live_url: str | None
-    """Origin of the live results site (``live_url``, or the ``EMS_LIVE_URL``
-    environment variable if set; empty: none). The frontend fetches the
-    results from there, so the CSP and ``check`` allow exactly this origin."""
+    live: bool
+    """Whether the app polls the results (site.toml ``live``, or
+    ``EMS_RESULTS_ANYTIME=1``); without, it reads them once per page load."""
     live_window: tuple[dt.datetime, dt.datetime] | None
-    """When the app reads the live results every minute: from the polls'
-    closing for ``live_days``; before, it reads nothing, after, once per
-    page load. None with ``EMS_LIVE_URL`` set, a test server: any time."""
-    live_pages_project: str
-    """Cloudflare Pages project ``ems results deploy`` uploads live/ to."""
+    """When the app, polling, reads the results every minute: from the
+    polls' closing for ``live_days``; before, it reads nothing, after, once
+    per page load. None with ``EMS_RESULTS_ANYTIME=1``, for testing: any
+    time."""
     file_budget: int
     max_file_bytes: int
     cache_image_max_bytes: int
@@ -188,7 +193,10 @@ class Obvod:
 
 @dataclass(frozen=True)
 class ObvodList:
-    """``data/curated/obvody/<area>.toml``: which units form each obvod."""
+    """``obvody/<area>.toml`` of an election: which units form each obvod.
+
+    See :attr:`Config.election_dir`.
+    """
 
     path: Path
     source: str
@@ -247,6 +255,31 @@ class Config:
         """Return ``data/curated``, for hand-curated, committed inputs."""
         return self.root / "data" / "curated"
 
+    @property
+    def election_dir(self) -> Path:
+        """Return ``data/curated/elections/<election day>``: the election's data.
+
+        The election is ``site.toml`` ``election``; its data, such as its
+        obvody, are curated by hand or by jobs.
+
+        What the state sets anew for each election (constituencies, okrsky)
+        is kept per election, so that a later one adds a directory of its
+        own instead of changing this one's.
+        """
+        return self.curated_dir / ELECTIONS_DIR / self.site.election.isoformat()
+
+    @property
+    def results_dir(self) -> Path:
+        """Return ``data/build/results/<election day>``: the election's results.
+
+        ``ems results`` (``poll``, ``final``, ``fake``) writes them, the
+        ``results`` step of ``ems make`` from the final results inputs;
+        ``build`` copies them to ``dist/results/<election day>/``. Keyed
+        by the day, like :attr:`election_dir`, so that a later election's
+        results never replace these.
+        """
+        return self.build_dir / RESULTS_DIR / self.site.election.isoformat()
+
 
 def find_config_dir(start: Path | None = None) -> Path:
     """Return the ``config`` directory of the project containing *start*.
@@ -299,27 +332,12 @@ def load_site(path: Path) -> Site:
     # It becomes the host name <project>.pages.dev.
     if len(pages_project) > _MAX_LABEL or not _LABEL.fullmatch(pages_project):
         raise t.error("pages_project", "must be lowercase letters, digits and dashes")
-    live_url = os.environ.get(LIVE_URL_ENV, t.string("live_url")).rstrip("/")
-    parts = urllib.parse.urlsplit(live_url)
-    # An origin: the CSP's connect-src and `check` name it as it is, and the
-    # frontend appends the file paths.
-    if live_url and (
-        parts.scheme not in ("https", "http")
-        or not parts.netloc
-        or live_url != f"{parts.scheme}://{parts.netloc}"
-    ):
-        source = LIVE_URL_ENV if LIVE_URL_ENV in os.environ else "live_url"
-        raise t.error(source, "must be empty or an http(s) origin without a path")
-    live_pages_project = t.string("live_pages_project")
-    if len(live_pages_project) > _MAX_LABEL or not _LABEL.fullmatch(live_pages_project):
-        raise t.error(
-            "live_pages_project", "must be lowercase letters, digits and dashes"
-        )
     live_days = dt.timedelta(days=t.positive_int("live_days"))
-    # A test server (EMS_LIVE_URL) is polled at any time.
-    live_window = (
-        None if LIVE_URL_ENV in os.environ else (polls_close, polls_close + live_days)
-    )
+    anytime = os.environ.get(RESULTS_ANYTIME_ENV, "")
+    if anytime not in ("", "0", "1"):
+        raise ConfigError(f"{RESULTS_ANYTIME_ENV}: must be 1, 0 or empty")
+    live = t.get("live", bool) or anytime == "1"
+    live_window = None if anytime == "1" else (polls_close, polls_close + live_days)
     site = Site(
         base_url=base_url.rstrip("/") or None,
         pages_project=pages_project,
@@ -327,9 +345,8 @@ def load_site(path: Path) -> Site:
         election=election,
         polls_open=polls_open,
         polls_close=polls_close,
-        live_url=live_url or None,
+        live=live,
         live_window=live_window,
-        live_pages_project=live_pages_project,
         file_budget=t.positive_int("file_budget"),
         max_file_bytes=t.positive_int("max_file_bytes"),
         cache_image_max_bytes=t.positive_int("cache_image_max_bytes"),

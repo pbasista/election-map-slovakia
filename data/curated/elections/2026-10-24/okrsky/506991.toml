@@ -1,0 +1,57 @@
+# Okrsky of Drahovce, transcribed by an AI agent in job okrsok-rules-345 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hlavná, Poštová, Bratislavská, Šálkova, Južná, Tichá, Dedinská, Važina, Lazy, Záhradná ulica
+#   okrsok 2: Majer, Staničná, Pod Bystercom, Štefánikova, Kostolná, Kalvária, Lipová, Hviezdoslavova, Cintorínska, Vážska, Školská, Andreja Hlinku, Riadok, Voderady
+obec = "506991"
+name = "Drahovce"
+okrsky_date = 2026-06-16
+okrsky_fill = "nearest"
+okrsky_note = "Read from a scan. Date: council resolution 123/2026 of 16.6.2026 created okrsky 1 and 2 (the street list is in the notice of 28.7.2026). \"Voderady\" is the part Voderady. Addresses without a street in the part Drahovce are placed by fill_nearest."
+
+[[document]]
+url = "https://www.obecdrahovce.sk/obecny-urad/uradna-tabula/oznamenie-pre-volby-do-organov-uzemnej-samospravy-9465.html"
+sha256 = "45cfff5bf0abc864c6e2ba1f14cf5e86bc1be4ac6984e58541de618b93b8708e"
+title = "Oznámenie pre voľby do orgánov územnej samosprávy (Informácia o vytvorených okrskoch)"
+
+[[document]]
+url = "https://www.obecdrahovce.sk/e_download.php?file=/data/uredni_deska/obsah9457_1.pdf&original=Oznamenie.pdf"
+sha256 = "6fdfebc002b89e289e0c7e9a8cb31246143d0b60217737047539d858a1db8a53"
+title = "Oznámenie – vytvorené volebné okrsky (scan)"
+
+[[document]]
+url = "https://www.obecdrahovce.sk/e_download.php?file=/data/uredni_deska/obsah9455_1.pdf&original=Uznesenie.pdf"
+sha256 = "cd6a7931ffe8d9dfffa472b473bace41bee28a0b55463ae1a7f816e952c73605"
+title = "Výpis uznesení OZ 16.6.2026 (uznesenie 123/2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná"},
+  {street = "Poštová"},
+  {street = "Bratislavská"},
+  {street = "Šálkova"},
+  {street = "Južná"},
+  {street = "Tichá"},
+  {street = "Dedinská"},
+  {street = "Važina"},
+  {street = "Lazy"},
+  {street = "Záhradná ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Majer"},
+  {street = "Staničná"},
+  {street = "Pod Bystercom"},
+  {street = "Štefánikova"},
+  {street = "Kostolná"},
+  {street = "Kalvária"},
+  {street = "Hviezdoslavova"},
+  {street = "Cintorínska"},
+  {street = "Vážska"},
+  {street = "Školská"},
+  {street = "Riadok"},
+  {street = "Lipová"},
+  {street = "A.Hlinku", written = "Andreja Hlinku"},
+  {part = "Voderady"},
+]

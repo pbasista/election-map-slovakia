@@ -1,0 +1,32 @@
+# Okrsky of Málinec, transcribed by an AI agent in job okrsok-rules-581 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: voliči od súpisného čísla 1 – 350 + časti Dobrý Potok, Ipeľ, Vlčovo
+#   okrsok 2: voliči od súpisného čísla 351 - 520
+obec = "511595"
+name = "Málinec"
+okrsky_date = 2026-07-09
+okrsky_note = "Scanned PDF read from the image. The document divides by súpisné číslo (1–350 / 351–520) plus the parts Dobrý Potok, Ipeľ, Vlčovo in okrsok 1. The numbers are applied to the parts Málinec and Chladná Studňa (the latter not named in the document); okrsok 2 is the rest (351–520 and anything outside the ranges). The part Chladná Studňa has only súpisné čísla above the okrsok 1 range, so it falls to okrsok 2."
+
+[[document]]
+url = "https://malinec.sk/wp-content/uploads/2026/07/Informacia-o-utvoreni-volebnych-okrskov.pdf"
+sha256 = "42334060f6f5f46624517019509cc644a7ea331d64a13b92ecde2d9f6f503d5c"
+title = "Informácia o utvorení volebných okrskov v obci Málinec"
+
+[[document]]
+url = "https://malinec.sk/2026/07/07/volby-do-organov-uzemnej-samospravy-2026/"
+sha256 = "0553388842984a0aee9430e42cd22d52535be2415c317b1fba09a3449fcad912"
+title = "Voľby do orgánov územnej samosprávy 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Málinec", numbers = "1-350"},
+  {part = "Dobrý Potok"},
+  {part = "Ipeľ"},
+  {part = "Vlčovo"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

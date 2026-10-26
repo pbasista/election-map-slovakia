@@ -1,0 +1,44 @@
+# Okrsky of Dolné Vestenice, transcribed by an AI agent in job okrsok-rules-605 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ul.Komenského a Gumárenská
+#   okrsok 2: ul. Rudolfa Jašíka, Obrancov mieru, M. R. Štefánika, Námestie Andreja Hlinku, Nižovecká, Záhumenská, Jozefa Malíka, Krátka, Družstevná, Záhradná, Ľudovíta Štúra, Ladislava Môcika, Kopanice, Cintorínska, Molvičky, adresa pobytu obec Dolné Vestenice
+obec = "513989"
+name = "Dolné Vestenice"
+okrsky_note = "Okrsok 2 includes voters with 'adresa pobytu obec Dolné Vestenice', so it takes the rest. Page published 13.7.2026; the decision itself is undated."
+
+[[document]]
+url = "https://www.dolnevestenice.sk/download_file_f.php?id=2441801"
+sha256 = "46a6050ef822e4da8c8ede97ccb2140d6880c51d8618a767f5c793c539ef6e1e"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.dolnevestenice.sk/volebne-okrsky-oznam/mid/525853/.html"
+sha256 = "0aca970f0db931c4ba1a0d9d6d4870e65a93108b1305231b48a9bb56b82a17f3"
+title = "Volebné okrsky"
+
+[okrsok.1]
+rules = [
+  {street = "Komenského"},
+  {street = "Gumárenská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Rudolfa Jašíka"},
+  {street = "Záhumenská"},
+  {street = "Krátka"},
+  {street = "Družstevná"},
+  {street = "Záhradná"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Ladislava Môcika"},
+  {street = "Kopanice"},
+  {street = "Cintorínska"},
+  {street = "Molvičky"},
+  {street = "Námestie Andreja Hlinku"},
+  {street = "Nižovecká"},
+  {street = "Obrancov Mieru", written = "Obrancov mieru"},
+  {street = "M.R.Štefánika", written = "M. R. Štefánika"},
+  {street = "Jozefa Málika", written = "Jozefa Malíka", note = "accent misplaced in the document; the register's only such street"},
+  {rest = true},
+]

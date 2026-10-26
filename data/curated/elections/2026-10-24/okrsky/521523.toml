@@ -1,0 +1,24 @@
+# Okrsky of Kecerovce, transcribed by an AI agent in job okrsok-rules-616 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kecerovské Pekľany
+#   okrsok 2: Kecerovské Kostoľany
+obec = "521523"
+name = "Kecerovce"
+okrsky_date = 2026-07-10
+okrsky_note = "Scanned decision (page 2 of the PDF). Its text says '1 volebný okrsok' but the table lists 2 okrsky by časť obce; the table is used."
+
+[[document]]
+url = "https://www.obeckecerovce.sk/files/2026-07-21-223803-kecerovce_oznam_22_2026.pdf"
+sha256 = "cc37cedec35d42d9013e3b8206eb1fb4538eacbe9a46eafe5b1b72bb52386bc1"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 24. októbra 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Kecerovské Pekľany"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kecerovské Kostoľany"},
+]

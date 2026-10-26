@@ -1,0 +1,25 @@
+# Okrsky of Parchovany, transcribed by an AI agent in job okrsok-rules-569 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: časť Nová, Lesná, Družstevná, časť Hlavná, Brezová, Lipová, Rybníková, Farská, Cintorínska, časť Staničná, časť Mlynská. Súpisné čísla : od 1 po 291. Do tohto okrsku sú zapísaní aj voliči, ktorí sú prihlásení na Obci Parchovany.
+#   okrsok 2: Ulice: časť Staničná, časť Mlynská, Krížna, Lúčna, Dlhá, časť Nová, časť Hlavná, Športová, Majerská, Gaštanová, Poľná. Súpisné čísla: od 292 po 584. Do tohto okrsku sú zapísaní aj voliči z miestnej časti Božčice.
+obec = "528676"
+name = "Parchovany"
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky are defined by súpisné čísla (1–291 / 292–584) in part Parchovany; the street lists (\"časť Nová\" etc.) only describe them. Božčice votes in okrsok 2; voters registered only to the obec in okrsok 1. Súpisné čísla above 584 take the nearest okrsok (fill_nearest). Published 9.7.2026; the decision's own date is not given."
+
+[[document]]
+url = "https://www.parchovany.sk/novinka/138409/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti"
+sha256 = "f61b2bbf9feac3c618b7f56e962cb6e78c377b875d4939667a6422e58261ac03"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Parchovany", numbers = "1-291"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Parchovany", numbers = "292-584"},
+  {part = "Božčice"},
+]

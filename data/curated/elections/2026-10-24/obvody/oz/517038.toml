@@ -1,0 +1,45 @@
+# Council obvody of Lovčica-Trubín (517038), Žiar nad Hronom.
+# Transcribed by an AI agent in job obvod-rules-153 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa časť obce Lovčica, sa volia 4 poslanci.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa časť obce Trubín, sa volia 4 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-152 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: OKRSOK č. 1 – územný obvod Lovčica
+#   okrsok 2: OKRSOK č. 2 – územný obvod Trubín
+obec = "517038"
+name = "Lovčica-Trubín"
+date = 2026-06-12
+okrsky_date = 2026-07-22
+okrsky_note = "Mayor's decision of 22.07.2026: okrsok 1 is Lovčica, okrsok 2 Trubín, matching obvody 1 (Lovčica) and 2 (Trubín)."
+
+[[document]]
+url = "https://www.lovcica-trubin.sk/download_file_f.php?id=2442210"
+sha256 = "88b94897515e1d5514985d54f611b637e2a93cde9de258ca61e73b7d8249264e"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 31-6/2026 zo dňa 12. 06. 2026)"
+
+[[document]]
+url = "https://www.lovcica-trubin.sk/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-2026.html"
+sha256 = "b419fe61602c926aaba95c36ff8816c76ae854b956f81eed249b3051b4dadcda"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 2026"
+
+[[document]]
+url = "https://www.lovcica-trubin.sk/download_file_f.php?id=2448071"
+sha256 = "5e614a873b4d02c9eac45f6d9c65126ca7ebddc98baa563a56f9cf9c2028b35c"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a samosprávnych krajov v roku 2026 (22. 07. 2026)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Lovčica"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [2]
+rules = [
+  {part = "Trubín"},
+]

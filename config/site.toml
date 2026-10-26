@@ -6,7 +6,8 @@
 base_url = "https://volebnamapa.sk"
 # The source code repository, linked from the About dialog.
 repository = "https://github.com/pbasista/election-map-slovakia"
-# Cloudflare Pages project that `release.yml` uploads dist/ to.
+# Cloudflare Pages project that `release.yml` uploads dist/ to, and `ems
+# results deploy` on an election night (docs/results.md).
 pages_project = "election-map-slovakia"
 # Election day of the 2026 municipal and regional elections.
 election = 2026-10-24
@@ -15,21 +16,18 @@ election = 2026-10-24
 # The search card shows the voting under way between them.
 polls_open = 07:00:00
 polls_close = 20:00:00
-# Origin of the live results: a separate Cloudflare Pages project holding
-# only the results JSON, deployed by hand on election night (`ems results`;
-# docs/deploy.md). The app reads them from there, and the CSP lets it
-# (connect-src). The environment variable EMS_LIVE_URL replaces it at build
-# time, e.g. http://127.0.0.1:8766 for a local results server; empty: no
-# live results.
-live_url = "https://live.volebnamapa.sk"
-# Days after the polls close that the app reads the live results every
-# minute. Before the polls close it reads nothing; after these days, once
-# per page load, so that a copy of the site left open or cached stops
-# polling. Built with EMS_LIVE_URL (a test server), it polls at any time.
+# Whether the app polls the results, i.e. reads them every minute for
+# live_days: on for an election night and the days after, off once the
+# final results are built into the site and nothing changes any more. Off,
+# the app reads them once per page load. Built with EMS_RESULTS_ANYTIME=1
+# (for testing), it polls at any time either way.
+live = false
+# Days after the polls close that the app reads the results every minute
+# (dist/results/<election>/status.json, written by `ems results` and the
+# results step of `ems make`; docs/results.md). Before the polls close it
+# reads nothing; after these days, once per page load, so that a copy of
+# the site left open or cached stops polling.
 live_days = 7
-# Cloudflare Pages project `ems results deploy` uploads live/ to; its
-# custom domain is live_url (docs/deploy.md).
-live_pages_project = "election-map-slovakia-live"
 # Cloudflare Pages allows 20,000 files per deployment on the Free plan
 # (https://developers.cloudflare.com/pages/platform/limits/, checked
 # 2026-10-18); `check` fails above this, leaving headroom for files added

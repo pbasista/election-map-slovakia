@@ -1,0 +1,45 @@
+# Okrsky of Dulovce, transcribed by an AI agent in job okrsok-rules-450 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cintorínska, Družstevná, Dvorská Hlavná, Hurbanovská, Mierová, Murdroňovská, Nová, Robotnícka, Záhradná
+#   okrsok 2: Kamenica, Krivá, Novozámocká, Podháj, Poľná, Podbrežná, Rovná, Starohorská, Urbárska, Úzka
+obec = "501123"
+name = "Dulovce"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned, undated document. Kamenica and Podháj (okrsok 2) are not streets in the register; addresses without a street (248) are placed by fill_nearest. Residents registered only to 'Obec Dulovce' without a number vote in okrsok 1."
+
+[[document]]
+url = "https://www.dulovce.sk/download_file_f.php?id=2444219"
+sha256 = "b0330834f6f916b5508f462068bca25da38e44610d43e1b47f7079ebc4a08a2f"
+title = "Vytvorenie volebných okrskov"
+
+[[document]]
+url = "https://www.dulovce.sk/volby-do-organov-samospravy-obci-2026.phtml?id3=204475"
+sha256 = "c14667a214c2055e2ff78852599f8351327409f069f01ef87672ee855fc10779"
+title = "Voľby do orgánov samosprávy obcí 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Dvorská"},
+  {street = "Hlavná"},
+  {street = "Hurbanovská"},
+  {street = "Mierová"},
+  {street = "Nová"},
+  {street = "Robotnícka"},
+  {street = "Záhradná"},
+  {street = "Mudroňovská", written = "Murdroňovská", note = "Typo: extra r; the register has Mudroňovská only."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krivá"},
+  {street = "Novozámocká"},
+  {street = "Poľná"},
+  {street = "Podbrežná"},
+  {street = "Rovná"},
+  {street = "Starohorská"},
+  {street = "Urbárska"},
+  {street = "Úzka"},
+]

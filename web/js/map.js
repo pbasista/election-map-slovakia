@@ -34,7 +34,7 @@
 import { dataIndex, obecInfo } from './data.js';
 import { dataUrl, fetchJSON } from './files.js';
 import { dataVersion, stringsUnder, t } from './i18n.js';
-import { STEPS } from './mapmode.js';
+import { SERIES, STEPS } from './mapmode.js';
 import { Z0 } from './topo.js';
 import { smoothZoom } from './zoom.js';
 
@@ -80,6 +80,7 @@ const COLORS = [
   'zsk',
   'city',
   'council',
+  'okrsok',
   'accent',
   'pin',
   'house',
@@ -90,9 +91,21 @@ const COLORS = [
   'neighbour-line',
   'neighbour-label',
   'neighbour-halo',
+  // The base map (draw.js `drawBase`): opaque colours, and the opacity the
+  // whole of it is drawn at.
+  'base-water',
+  'base-waterway',
+  'base-road',
+  'base-major',
+  'base-rail',
+  'base-alpha',
   // The steps of a candidate's 2026 votes, lowest first (mapmode.js); a
   // turnout mixes its area's colour into the land (draw.js `TONE_STEPS`).
   ...Array.from({ length: STEPS }, (_, i) => `result-${i + 1}`),
+  // A winner's colour, by the candidates' places overall, those beyond the
+  // last in one colour (mapmode.js `SERIES`).
+  ...Array.from({ length: SERIES }, (_, i) => `series-${i + 1}`),
+  'series-other',
 ];
 
 /* The theme's map colours by name (draw.js `COLOR`). */
@@ -230,8 +243,8 @@ function parseArea(name) {
   return kraj ? { kraj: code, zsk: n } : { city: code, obvod: n };
 }
 
-/* Creates the map in *element*. `onPick({obec, lat, lon, label?})` is called
- * when the user clicks a place; `insets()` returns the pixels {top, right,
+/* Creates the map in *element*. `onPick(p)` is called when the user clicks
+ * a place (draw.js `pick`); `insets()` returns the pixels {top, right,
  * bottom, left} of the map that floating controls and panes cover, which
  * moves to a place keep it out of; `onZoom({canZoomIn, canZoomOut})` reports
  * the zoom limits whenever they change. Resolves once the country outline is
@@ -387,7 +400,11 @@ export async function createMap(element, { onPick, insets, onZoom }) {
       coarse,
       dataVersion,
       colors: readColors(),
-      strings: { obvod: t('map.obvod', { n: '{n}' }), countries: stringsUnder('country.') },
+      strings: {
+        obvod: t('map.obvod', { n: '{n}' }),
+        okrsok: t('map.okrsok', { n: '{n}' }),
+        countries: stringsUnder('country.'),
+      },
     },
     onFrame,
     onFail,
@@ -453,6 +470,43 @@ export async function createMap(element, { onPick, insets, onZoom }) {
     const picked = await renderer.call('pick', lng, lat, map.getZoom());
     if (picked) onPick(picked);
   });
+  // The tooltip of what the pointer is over (`setHover`), where there is a
+  // pointer that hovers: while a handler is set, asked of the renderer one
+  // question at a time, the latest position each, and not while the map
+  // moves. `latest`: the pointer's last position on the map (a mousemove
+  // event), null once it left; `pointer` the one not asked about yet.
+  let onHover = null;
+  let latest = null;
+  let pointer = null;
+  let asking = false;
+  let moving = false;
+  const hovers = window.matchMedia('(hover: hover)');
+  async function ask() {
+    asking = true;
+    while (pointer && onHover) {
+      const e = pointer;
+      pointer = null;
+      const unit = await renderer.call('hover', e.latlng.lng, e.latlng.lat);
+      // Gone meanwhile: the pointer left the map, or it started to move.
+      if (e !== latest || moving) continue;
+      onHover?.(unit && { unit, x: e.containerPoint.x, y: e.containerPoint.y });
+    }
+    asking = false;
+  }
+  map.on('mousemove', (e) => {
+    if (!onHover || moving || !hovers.matches) return;
+    pointer = e;
+    latest = e;
+    if (!asking) ask();
+  });
+  map.on('mouseout movestart', (e) => {
+    if (e.type === 'movestart') moving = true;
+    latest = null;
+    onHover?.(null);
+  });
+  map.on('moveend', () => {
+    moving = false;
+  });
   document.addEventListener('themechange', () => renderer.send('setColors', readColors()));
   sharp();
   await firstShown;
@@ -475,7 +529,7 @@ export async function createMap(element, { onPick, insets, onZoom }) {
   }
 
   return {
-    /* Shows *p* ({obec, lat?, lon?, label?, obvod?, street?, part?}, or
+    /* Shows *p* ({obec, lat?, lon?, label?, obvod?, okrsok?, street?, part?}, or
      * {area} for a contest's area (data.js `contestArea`): 'BA' the city of
      * Bratislava, 'BA/3' its council obvod, 'kraj:1' a kraj, 'kraj:1/3' its
      * regional obvod) as the selected place, or nothing; a street or part
@@ -525,7 +579,8 @@ export async function createMap(element, { onPick, insets, onZoom }) {
       }
     },
 
-    /* Switches the overlays on or off: *wanted* {zsk, city, oz}. */
+    /* Switches the overlays on or off: *wanted* {zsk, city, oz, okrsky,
+     * base}, `base` the base map. */
     async setOverlays(wanted) {
       overlays = wanted;
       if (wanted.oz && !councils) {
@@ -559,6 +614,14 @@ export async function createMap(element, { onPick, insets, onZoom }) {
     setResults(shown) {
       renderer.send('setResults', shown);
       sharp();
+    },
+
+    /* Calls *handler*({unit, x, y}) with the unit of the results the
+     * pointer is over (draw.js `unitAt`) at (x, y) in the map's pixels, and
+     * handler(null) when it is over none or the map moves; none for null. */
+    setHover(handler) {
+      onHover = handler;
+      latest = null;
     },
 
     zoomIn() {

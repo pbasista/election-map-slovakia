@@ -19,9 +19,10 @@ import {
   MedalOutlineIcon,
   SearchIcon,
   WarningIcon,
+  WithdrawnIcon,
 } from './icons.js';
-import { decodeResults, NOT_COUNTED, resultsVars, useLive } from './live.js';
-import { ContestMapButton, MapButton } from './mapmode.js';
+import { decodeResults, NOT_COUNTED, placeResults, resultsVars, SCOPES, useLive } from './live.js';
+import { ContestMapButton, MapButton, WinnerMapButton } from './mapmode.js';
 import { Notice } from './pane.js';
 import { formatPicks, parsePicks, togglePick } from './picks.js';
 
@@ -314,8 +315,16 @@ function Elected({ candidate: c, actions }) {
   <//>`;
 }
 
+/* Withdrew from the election yet stayed on the ballot: a grey door with an
+ * arrow out right after the name, where the medal would be, as such a
+ * candidate cannot be elected. Not a filter mark. */
+function Withdrawn() {
+  return html`<${Mark} cls="withdrawn-mark" label=${t('results.withdrawn_title')}><${WithdrawnIcon} /><//>`;
+}
+
 /* A candidate's 2026 votes: their share on a bar in the results' green,
- * then the number. */
+ * then the number; a candidate who withdrew yet stayed on the ballot, whose
+ * votes count, in grey and marked so after it. */
 function Votes({ candidate: c }) {
   const r = c.result;
   if (r.share === null) return null;
@@ -324,10 +333,11 @@ function Votes({ candidate: c }) {
     valid: formatNumber(r.valid),
     share: formatPercent(r.share),
   });
-  return html`<span class="votes" title=${label}>
+  return html`<span class=${r.withdrawn ? 'votes withdrawn-votes' : 'votes'} title=${label}>
     <span class="votes-bar" aria-hidden="true"><span style=${{ width: width(r.share) }}></span></span>
     <strong>${formatPercent(r.share)}</strong>
     <span>${t('results.votes', { n: formatNumber(r.votes) })}</span>
+    ${r.withdrawn ? html`<span class="withdrawn" title=${t('results.withdrawn_title')}>${t('results.withdrawn')}</span>` : null}
   </span>`;
 }
 
@@ -341,14 +351,26 @@ function Votes({ candidate: c }) {
  * own. Once counted, at the row's end like the pin of the contest's
  * header, a pin shows the candidate's votes on the map (mapmode.js).
  * *actions*: see useRowActions. *muted*: the filter fades the row. A row
- * of the party pointed at is highlighted by useRowActions. */
-export function CandidateRow({ candidate, onCandidate, current = false, actions, muted = false }) {
+ * of the party pointed at is highlighted by useRowActions. *seat*
+ * ({place, seats, end}, `seatPlaces`): on a partial count of a council, a
+ * place that would win a seat so far, the number in the results' green,
+ * said to a screen reader; `end`, the last of them followed by a row
+ * that is not, draws a dashed line under it, labelled. */
+export function CandidateRow({ candidate, onCandidate, current = false, actions, muted = false, seat = null }) {
   const c = candidate;
   const flagged = Boolean(c.research?.affairs);
   const picked = actions.isPicked(c.id);
   const crossed = !picked && actions.isCrossed(c.id);
   const metaId = useOwnId('km-meta');
-  const classes = ['cand', current && 'current', flagged && 'flagged', crossed && 'crossed', muted && 'dimmed'];
+  const classes = [
+    'cand',
+    current && 'current',
+    flagged && 'flagged',
+    crossed && 'crossed',
+    muted && 'dimmed',
+    seat && 'in-seats',
+    seat?.end && 'seats-end',
+  ];
   const state = crossed ? t('pick.crossed_state') : muted ? t('filter.muted') : null;
   return html`
     <div
@@ -383,6 +405,7 @@ export function CandidateRow({ candidate, onCandidate, current = false, actions,
             ${state ? html`<span class="sr-only"> (${state})</span>` : null}
           </button>
           ${' '}${c.result ? html`<${Elected} candidate=${c} actions=${actions} />` : null}
+          ${c.result?.withdrawn ? html`<${Withdrawn} />` : null}
           <${Parties} candidate=${c} actions=${actions} />
           <span class="marks">
             ${flagged ? html`<${Controversies} candidate=${c} actions=${actions} />` : null}
@@ -392,9 +415,17 @@ export function CandidateRow({ candidate, onCandidate, current = false, actions,
           </span>
         </span>
         ${c.result ? html`<${Votes} candidate=${c} />` : null}
+        ${seat ? html`<span class="sr-only">${t('results.in_seats', { place: seat.place, n: formatNumber(seat.seats) })}</span>` : null}
         <span class="meta" id=${metaId}>${t('candidate.age', { n: c.age })} · <${Occupation} candidate=${c} /></span>
       </span>
       ${c.result && c.result.share !== null ? html`<${MapButton} candidate=${c} />` : null}
+      ${
+        seat?.end
+          ? html`<span class="seats-line" title=${t('results.seats_line_title', { n: formatNumber(seat.seats) })} aria-hidden="true">
+              ${t('results.seats_line', { n: formatNumber(seat.seats) })}
+            </span>`
+          : null
+      }
     </div>
   `;
 }
@@ -457,9 +488,12 @@ function ContestHead({ contest, unmuted, picked, results, pending }) {
  * counted yet; counting, with the share counted (of its registered voters,
  * live.js `countShare`; its okrsky in the tooltip) and the valid votes
  * counted, which tells how much a lead may still change; counted, with the
- * winners only so far (municipal contests on election night); final. */
+ * winners only so far (municipal contests on election night); final, the
+ * valid votes alone, as final goes without saying once the elections are
+ * over. */
 function ResultsLine({ results: r, single }) {
   if (!r) return html`<span class="contest-results pending">${t('results.pending')}</span>`;
+  if (r.status === 'final' && !r.valid) return null;
   const vars = resultsVars(r);
   let text;
   let title = null;
@@ -469,7 +503,7 @@ function ResultsLine({ results: r, single }) {
   } else if (r.status === 'winner') {
     text = t(single || r.filled === null ? 'results.counted_mayor' : 'results.counted_council', vars);
     title = t('results.counted_title');
-  } else text = t(r.valid ? 'results.final' : 'results.final_plain', vars);
+  } else text = t('results.valid_votes', vars);
   return html`<span class=${`contest-results ${r.status}`} title=${title}>
     ${r.status === 'partial' ? html`<span class="live-dot" aria-hidden="true"></span>` : null}${text}
   </span>`;
@@ -524,8 +558,10 @@ function Turnout({ past, live }) {
 
 /* The turnout of the last election in a contest's area, for whoever
  * wonders how many vote there, and which election that was, not this
- * year's. A council's is of the whole municipality where it has several
- * constituencies now: those of the last election were drawn otherwise. */
+ * year's. A council's where it has several constituencies now is of the
+ * okrsky that make up the constituency, where they are the same as then;
+ * else of the whole municipality: those of the last election were drawn
+ * otherwise. */
 function pastTurnout(contest) {
   const p = contest.past;
   const share = p.voters / p.eligible;
@@ -536,23 +572,96 @@ function pastTurnout(contest) {
     turnout: formatPercent(share),
   });
   const whole = p.whole ? t(contestKind(contest.id) === 'oz:city' ? 'turnout.whole_city' : 'turnout.whole') : null;
-  return { share, year: p.date.slice(0, 4), label: whole ? `${text} ${whole}` : text };
+  const okrsky = p.okrsky ? t('turnout.okrsky', { okrsky: numberRanges(p.okrsky) }) : null;
+  const note = whole ?? okrsky;
+  return { share, year: p.date.slice(0, 4), label: note ? `${text} ${note}` : text };
+}
+
+/* *numbers* in order, as ranges: [7, 1, 2, 3] → "1–3, 7". */
+function numberRanges(numbers) {
+  const sorted = [...numbers].sort((a, b) => a - b);
+  const out = [];
+  for (let i = 0; i < sorted.length; ) {
+    let j = i;
+    while (j + 1 < sorted.length && sorted[j + 1] === sorted[j] + 1) j++;
+    out.push(j > i ? `${sorted[i]}–${sorted[j]}` : `${sorted[i]}`);
+    i = j + 1;
+  }
+  return out.join(', ');
 }
 
 /* The 2026 turnout so far: of the districts counted while counting goes
- * on. */
-const liveTurnout = (r) => ({
+ * on; with *unit* named, of that unit of the contest's area (`inUnit`). */
+const liveTurnout = (r, unit = null) => ({
   share: r.voters / r.eligible,
   year: '2026',
-  label: t(r.status === 'partial' ? 'results.turnout_partial' : 'results.turnout', resultsVars(r)),
+  label: unit
+    ? t('results.turnout_unit', { ...resultsVars(r), unit })
+    : t(r.status === 'partial' ? 'results.turnout_partial' : 'results.turnout', resultsVars(r)),
 });
+
+/* An okrsok's turnout at the 2022 municipal elections, *past* [eligible,
+ * voters] (live.js `placeResults`), where it is the same okrsok as then. */
+const okrsokPast = ([eligible, voters]) => ({
+  share: voters / eligible,
+  year: '2022',
+  label: t('turnout.okrsok_2022', {
+    voters: formatNumber(voters),
+    eligible: formatNumber(eligible),
+    turnout: formatPercent(voters / eligible),
+  }),
+});
+
+/* Results *r* (live.js `decodeResults`) narrowed to a unit of the contest's
+ * area, *record* [eligible, voters, valid, {number: votes}] (live.js
+ * `placeResults`): the unit's votes, shares and turnout. Who is elected
+ * and the state of the count stay the contest's. */
+function inUnit(r, [eligible, voters, valid, votes]) {
+  const byNumber = new Map(
+    [...r.byNumber].map(([n, x]) => {
+      const v = votes[n] ?? 0;
+      return [n, { ...x, votes: x.votes === null ? null : v, share: x.share === null || !valid ? null : v / valid }];
+    }),
+  );
+  return { ...r, eligible, voters, valid, byNumber };
+}
+
+/* The name of *scope* (one of SCOPES) of *place* (as `Contest` takes
+ * it). */
+function scopeName(scope, place) {
+  if (scope === 'all') return t('scope.all');
+  if (scope === 'obec') return place.name;
+  return t(`scope.${scope}`, { n: place[scope] });
+}
+
+/* The choice of the scope of a contest's results, where the place shown
+ * lies in units of its area with figures of their own (*units*, live.js
+ * `placeResults`): the whole contest or one of those units, *shown* (one
+ * of SCOPES) pressed. A press chooses that scope for every contest on the
+ * ballots (`onLevel`). *place*: as `Contest` takes it. */
+function ScopeChoice({ units, shown, place, onLevel }) {
+  return html`<div class="contest-scope" role="group" aria-label=${t('scope.label')}>
+    ${['all', ...units.map((u) => u.scope)].map(
+      (scope) => html`<button
+        type="button"
+        key=${scope}
+        aria-pressed=${scope === shown ? 'true' : 'false'}
+        onClick=${() => onLevel(scope)}
+      >
+        ${scopeName(scope, place)}
+      </button>`,
+    )}
+  </div>`;
+}
 
 /* *candidates* in list order: those the *filter* leaves shown, then those it
  * mutes, each group in ballot order or, *ranked* (the 2026 results are in),
- * by votes, those without any after the rest; and which are muted. The
+ * by votes, those without any after the rest; within each, those who
+ * withdrew last, so that they are seen apart. And which are muted. The
  * circled ones (*actions* `isPicked`) never are. */
 function byFilter(candidates, filter, actions, ranked) {
-  const sorted = ranked ? [...candidates].sort((a, b) => (b.result?.votes ?? -1) - (a.result?.votes ?? -1)) : candidates;
+  const byVotes = ranked ? [...candidates].sort((a, b) => (b.result?.votes ?? -1) - (a.result?.votes ?? -1)) : candidates;
+  const sorted = [...byVotes.filter((c) => !c.result?.withdrawn), ...byVotes.filter((c) => c.result?.withdrawn)];
   const muted = new Map(sorted.map((c) => [c, !actions.isPicked(c.id) && isMuted(c, filter)]));
   const order = [...sorted.filter((c) => !muted.get(c)), ...sorted.filter((c) => muted.get(c))];
   return { order, muted, unmuted: order.length - [...muted.values()].filter(Boolean).length };
@@ -578,6 +687,37 @@ function withResults(contest, results) {
   });
 }
 
+/* On a partial count of a contest of several seats (a municipal or
+ * regional council obvod; *r* the whole contest's, live.js
+ * `decodeResults`), the places that would win them so far: ballot number
+ * → place for the first `seats` candidates by votes (with any, and not
+ * withdrawn), while nobody is elected yet; null otherwise. The whole
+ * contest's, whatever unit the list shows. */
+function seatPlaces(contest, r) {
+  const kind = contest.id.split(':')[0];
+  if (r?.status !== 'partial' || !r.seats || kind === 'starosta' || kind === 'predseda') return null;
+  const all = [...r.byNumber];
+  if (all.some(([, x]) => x.elected)) return null;
+  const ranked = all.filter(([, x]) => x.votes > 0 && !x.withdrawn).sort((a, b) => b[1].votes - a[1].votes);
+  return new Map(ranked.slice(0, r.seats).map(([n], i) => [n, i + 1]));
+}
+
+/* What a contest counted on election night does not have yet, said where
+ * its rows would otherwise stand without votes and confuse (*r* the whole
+ * contest's, live.js `decodeResults`): counting with no candidate's votes
+ * yet; or counted with the turnout and at most the winners (status
+ * `winner`): who they are where known, the candidates' votes not published
+ * until the final results. Null where the votes are there. */
+function nightNote(contest, r) {
+  if (!r || r.status === 'final') return null;
+  const all = [...r.byNumber.values()];
+  if (r.status === 'partial') return all.some((x) => x.votes !== null) ? null : t('results.note_partial');
+  const elected = all.filter((x) => x.elected).length;
+  if (elected && elected >= contest.candidates.length) return t('results.note_all_elected');
+  if (elected) return t('results.note_winner');
+  return t(r.eligible === null ? 'results.note_counted' : 'results.note_turnout');
+}
+
 /* A contest: its header, which opens and closes the list of its candidates
  * and shows whether it is open: open, it stands out from the candidates
  * under it; closed, it is muted, and a bar at its side marks it as one
@@ -593,13 +733,40 @@ function withResults(contest, results) {
  * *initiallyOpen*, and `onOpen(open)` when the visitor opens or closes it.
  * *map* ({label, onClick}), where the contest has a place on the map, is a
  * pin at the header's end that shows it there, and once counted its 2026
- * turnout (mapmode.js `ContestMapButton`). In the header, the turnout of
- * the last election there and, once counted, of 2026 (Turnout). */
-export function Contest({ contest, current = null, pin = false, initiallyOpen = false, onOpen, onCandidate, filter, actions, map }) {
+ * turnout (mapmode.js `ContestMapButton`); before it, once the
+ * candidates' votes are in, a button that shows who got the most votes
+ * where (`WinnerMapButton`). In the header, the turnout of the last
+ * election there and, once counted, of 2026 (Turnout).
+ *
+ * *place* ({obec, name, obvod, okrsok}: the obec or city district of the
+ * ballots, named, and its council obvod and okrsok where known), once
+ * counted: where it lies in units of the contest's area with figures of
+ * their own (live.js `placeResults`), a choice of the scope of the results
+ * (`ScopeChoice`); the candidates' votes and the 2026 turnout are then
+ * those of the finest of those units not finer than *level* (one of
+ * SCOPES, the ballots' choice for all their contests; `onLevel(next)`
+ * changes it), with an okrsok's 2022 turnout where known. */
+export function Contest({
+  contest,
+  current = null,
+  pin = false,
+  initiallyOpen = false,
+  onOpen,
+  onCandidate,
+  filter,
+  actions,
+  map,
+  place = null,
+  level = 'all',
+  onLevel,
+}) {
   const [open, setOpen] = useState(initiallyOpen);
   const live = useLive();
   const entry = live.of(contest.id);
-  const results = entry && entry !== NOT_COUNTED ? decodeResults(contest, entry) : null;
+  const whole = entry && entry !== NOT_COUNTED ? decodeResults(contest, entry) : null;
+  const units = whole && place ? placeResults(contest.id, place) : [];
+  const unit = units.filter((u) => SCOPES.indexOf(u.scope) <= SCOPES.indexOf(level)).at(-1) ?? null;
+  const results = unit ? inUnit(whole, unit.record) : whole;
   const candidates = withResults(contest, results);
   const shown = current && (candidates.find((c) => c.id === current.id) ?? current);
   const kept = useRef(new Set());
@@ -616,14 +783,19 @@ export function Contest({ contest, current = null, pin = false, initiallyOpen = 
     ? t(open ? 'contest.hide_others' : 'contest.show_all')
     : t(open ? 'contest.hide_candidates' : 'contest.show_candidates');
   const picked = contest.candidates.filter((c) => actions.isPicked(c.id)).length;
-  const past = contest.past ? pastTurnout(contest) : null;
-  const now = results?.eligible && results.voters !== null ? liveTurnout(results) : null;
+  let past = contest.past ? pastTurnout(contest) : null;
+  // A unit's own 2022 turnout only: the contest's is of its whole area.
+  if (unit) past = unit.past ? okrsokPast(unit.past) : null;
+  const now = results?.eligible && results.voters !== null ? liveTurnout(results, unit && scopeName(unit.scope, place)) : null;
+  // Who got the most votes where, once the candidates' votes are in: on
+  // election night a municipality's give the winners only.
+  const winnerMap = Boolean(whole?.valid) && whole.status !== 'winner' && [...whole.byNumber.values()].some((r) => r.votes);
   const head = html`<span class="contest-text">
       <${ContestHead}
         contest=${contest}
         unmuted=${unmuted + (current ? 1 : 0)}
         picked=${picked}
-        results=${results}
+        results=${whole}
         pending=${entry === NOT_COUNTED}
       />
     </span>
@@ -633,9 +805,27 @@ export function Contest({ contest, current = null, pin = false, initiallyOpen = 
     setOpen(!open);
     onOpen?.(!open);
   };
-  const row = (c, props) => html`<li key=${c.id}>
-    <${CandidateRow} candidate=${c} onCandidate=${onCandidate} actions=${actions} ...${props} />
-  </li>`;
+  const places = seatPlaces(contest, whole);
+  const note = open || some ? nightNote(contest, whole) : null;
+  const rows = [...(shown ? [shown] : []), ...listed];
+  const row = (c, i) => {
+    const place = places?.get(c.number);
+    const seat = place && {
+      place,
+      seats: whole.seats,
+      end: place === whole.seats && i + 1 < rows.length && !places.has(rows[i + 1].number),
+    };
+    return html`<li key=${c.id}>
+      <${CandidateRow}
+        candidate=${c}
+        onCandidate=${onCandidate}
+        actions=${actions}
+        current=${c === shown}
+        muted=${c !== shown && muted.get(c)}
+        seat=${seat}
+      />
+    </li>`;
+  };
   return html`
     <section class=${open || !opens ? 'contest open' : 'contest'}>
       <div class=${opens ? 'contest-bar opens' : 'contest-bar'}>
@@ -653,14 +843,16 @@ export function Contest({ contest, current = null, pin = false, initiallyOpen = 
               </button>`
             : html`<div class="contest-head">${head}</div>`
         }
+        ${map && winnerMap ? html`<${WinnerMapButton} contest=${contest} />` : null}
         ${map ? html`<${ContestMapButton} contest=${contest} map=${map} counted=${Boolean(now)} />` : null}
       </div>
+      ${units.length ? html`<${ScopeChoice} units=${units} shown=${unit?.scope ?? 'all'} place=${place} onLevel=${onLevel} />` : null}
       ${open || !contest.candidates.length ? html`<${Holder} contest=${contest} />` : null}
+      ${note ? html`<p class="results-note">${note}</p>` : null}
       ${
         contest.candidates.length
           ? html`<ol class="cands" id=${list}>
-              ${shown ? row(shown, { current: true }) : null}
-              ${listed.map((c) => row(c, { muted: muted.get(c) }))}
+              ${rows.map(row)}
             </ol>`
           : html`<p class="muted">${t('contest.no_candidates')}</p>`
       }
@@ -970,20 +1162,33 @@ const MUNICIPAL = new Set(['starosta', 'oz']);
  * rather than the regional ones. */
 export const isMunicipal = (id) => MUNICIPAL.has(id.split(':')[0]);
 
+/* The scope of the results on the ballots (live.js SCOPES) the visitor
+ * chose last: kept from place to place, each with its own units, as one
+ * looks through the okrsky of a town, say. */
+let keptLevel = 'all';
+
 /* The ballots of obec *code*; *label* names the address, street or part
  * chosen in it, if any. *scope* ({obvod, street, part}) narrows its council
  * obvod (data.js `ballots`); `approximate`: the obvod was taken from the
- * map's approximate boundary at a clicked point. *focus*: the candidacy
- * whose card was just left, whose row then takes the focus. *filter* (see
- * NO_FILTER) and `onFilter(next)` the candidate filter; *picks* and
- * `onPicks(next)` the circled candidates (picks.js). `onArea(target)` fits
- * the map to a contest's area (data.js `contestArea`), the pin in its
- * header, leaving the place and these ballots as they are. */
+ * map's approximate boundary at a clicked point. *okrsok*: the place's
+ * okrsok (polling district), where known, `okrsokApproximate` likewise;
+ * of a street or part, its houses' okrsok where they share one, else
+ * their okrsky and council obvody are named (data.js `ballots` `group`).
+ * *focus*: the candidacy whose card was just left, whose row then takes
+ * the focus. *filter* (see NO_FILTER) and `onFilter(next)` the candidate
+ * filter; *picks* and `onPicks(next)` the circled candidates (picks.js).
+ * `onArea(target)` fits the map to a contest's area (data.js
+ * `contestArea`), the pin in its header, leaving the place and these
+ * ballots as they are. The counted contests' results are of one scope for
+ * all (`Contest` *level*): the whole contest, or the place's obec, council
+ * obvod or okrsok. */
 export function Ballots({
   code,
   label,
   scope = {},
   approximate = false,
+  okrsok = null,
+  okrsokApproximate = false,
   focus,
   onCandidate,
   filter,
@@ -998,6 +1203,11 @@ export function Ballots({
     [code, obvod, street, part],
   );
   const [index] = useLoaded(dataIndex, []);
+  const [level, setLevel] = useState(keptLevel);
+  const onLevel = (next) => {
+    keptLevel = next;
+    setLevel(next);
+  };
   const section = useRef(null);
   const actions = useRowActions(
     section,
@@ -1019,13 +1229,25 @@ export function Ballots({
   if (failed) return html`<p class="panel-body error">${t('error.load')}</p>`;
   if (result === null) return html`<p class="panel-body error">${t('place.missing')}</p>`;
   if (!result) return html`<p class="panel-body muted loading">${t('panel.loading')}</p>`;
-  const { obec, council, obvod: placeObvod, estimated, contests } = result;
+  const { obec, council, obvod: placeObvod, estimated, contests, group } = result;
   const municipal = contests.filter((c) => isMunicipal(c.id));
   const regional = contests.filter((c) => !isMunicipal(c.id));
   const firstCouncil = municipal.findIndex((c) => c.council);
+  // A street's or part's okrsok where all its houses are in one; where they
+  // are in several, which (and its council obvody likewise).
+  const placeOkrsok = okrsok ?? (group.okrsky.length === 1 ? group.okrsky[0] : null);
   const where = [
     label ? obec.name : null,
-    placeObvod ? t('place.obvod', { n: placeObvod }) : null,
+    placeObvod
+      ? t('place.obvod', { n: placeObvod })
+      : group.obvody.length > 1
+        ? t('place.obvody', { n: numberRanges(group.obvody) })
+        : null,
+    placeOkrsok
+      ? t(okrsokApproximate ? 'place.okrsok_approximate' : 'place.okrsok', { n: placeOkrsok })
+      : group.okrsky.length > 1
+        ? t('place.okrsky', { n: numberRanges(group.okrsky) })
+        : null,
     obec.okresName ? t('place.okres', { name: obec.okresName }) : null,
     t('place.kraj', { name: obec.krajName }),
   ].filter(Boolean);
@@ -1039,6 +1261,7 @@ export function Ballots({
   };
   const note = notes[council]?.();
   const councilNote = note ? html`<${Notice}>${note}<//>` : null;
+  const place = { obec: obec.code, name: obec.name, obvod: placeObvod, okrsok: placeOkrsok };
 
   // The sources of a council's obvody follow the last of its contests.
   const area = (c) => c?.id.split('/')[0];
@@ -1056,6 +1279,9 @@ export function Ballots({
       filter=${filter}
       actions=${actions}
       map=${pin(c)}
+      place=${place}
+      level=${level}
+      onLevel=${onLevel}
     />
     ${c.sources.length && area(list[i + 1]) !== area(c) ? html`<${Sources} sources=${c.sources} />` : null}
   `;

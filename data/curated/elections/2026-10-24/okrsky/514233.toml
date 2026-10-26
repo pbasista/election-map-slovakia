@@ -1,0 +1,49 @@
+# Okrsky of Nitrianske Rudno, transcribed by an AI agent in job okrsok-rules-417 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Pre ulice: Československých partizánov, Hlavná, Hlboká cesta, Hviezdoslavova, Jána Bottu, Janka Kráľa, Jilemnického, Kolotoč, Madvova, občania s trvalým pobytom na obci
+#   okrsok 2: Pre ulice: Mladých budovateľov, Okružná, Pod borinou, Podhorská, Poštová, Predné Záhumnie, Sama Chalúpku, Sládkovičova, Školská, Športová, Štúrova, časť Priehrada
+obec = "514233"
+name = "Nitrianske Rudno"
+okrsky_date = 2026-07-28
+okrsky_fill = "nearest"
+okrsky_note = "Okrsok 1 also holds 'občania s trvalým pobytom na obci' (no address). Addresses in part Nitrianske Rudno without a street take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.nitrianskerudno.sk/wp-content/uploads/2026/08/Utvorenie-volebnych-okrskov-a-miestnosti-s-rozdelenim-ulic-do-okrskov-A3.pdf"
+sha256 = "1082392398aefa8c5338c04cfb6e2035443659679713164e1dd35e834031d015"
+title = "Rozdelenie ulíc do volebných okrskov a volebných miestností"
+
+[[document]]
+url = "https://www.nitrianskerudno.sk/wp-content/uploads/2026/07/Utvorenie-volebnych-okrskov-a-miestnosti-2026.pdf"
+sha256 = "71dd93b9f6122d6d5840b62c426a22149a808e1288d89560585d2c324d36e092"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Československých Partizánov", written = "Československých partizánov"},
+  {street = "Hlavná"},
+  {street = "Hlboká cesta"},
+  {street = "Hviezdoslavova"},
+  {street = "Jána Bottu"},
+  {street = "Janka Kráľa"},
+  {street = "Jilemnického"},
+  {street = "Kolotoč"},
+  {street = "Madvova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mladých budovateľov"},
+  {street = "Okružná"},
+  {street = "Pod Borinou", written = "Pod borinou"},
+  {street = "Podhorská"},
+  {street = "Poštová"},
+  {street = "Predné Záhumnie"},
+  {street = "Sama Chalúpku"},
+  {street = "Sládkovičova"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Štúrova"},
+  {part = "Priehrada"},
+]

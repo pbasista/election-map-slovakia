@@ -1,0 +1,59 @@
+# Okrsky of Spišské Vlachy, transcribed by an AI agent in job okrsok-rules-263 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dobrá Voľa, Za Mestom, Partizánska, Vajanského 1-51, Slobody, 9. mája, Hviezdoslavova, SNP, Mlynská, Požiarnická, Cintorínska, Jarná, Bez ulice
+#   okrsok 2: Kostolná, Železničná, Jilemnického, J. Fabiniho, Slovenská, Spišská, Kukučínova, Tajovského, 1. mája, Vajanského 52-155
+#   okrsok 3: Včelná, Záhradná, Hornádska, Komenského, Sládkovičova, Štúrova, Slnečná, Lipová, Okolie
+obec = "543594"
+name = "Spišské Vlachy"
+okrsky_date = 2026-07-28
+okrsky_note = "The website (Civium CMS, JavaScript app) lists the PDF on app.civium.sk (institution 4 = Spišské Vlachy). \"Bez ulice\" (addresses without a street) is in okrsok 1, given as its rest rule."
+
+[[document]]
+url = "https://app.civium.sk/uploads/documents/4/2026/07/c07cf1-volby-okrsky-2026.pdf"
+sha256 = "7fe658cd82e6da7a91eca64cf3e48e08d48f86fc7002e4c020b0b853d094b863"
+title = "Oznámenie o utvorení volebných okrskov pre voľby do orgánov samosprávy obcí 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Za Mestom"},
+  {street = "Partizánska"},
+  {street = "Vajanského", numbers = "1-51"},
+  {street = "Slobody"},
+  {street = "Hviezdoslavova"},
+  {street = "SNP"},
+  {street = "Mlynská"},
+  {street = "Požiarnická"},
+  {street = "Cintorínska"},
+  {street = "Jarná"},
+  {street = "9.mája", written = "9. mája"},
+  {part = "Dobrá Voľa"},
+  {rest = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kostolná"},
+  {street = "Železničná"},
+  {street = "Jilemnického"},
+  {street = "J. Fabiniho"},
+  {street = "Slovenská"},
+  {street = "Spišská"},
+  {street = "Kukučínova"},
+  {street = "Tajovského"},
+  {street = "Vajanského", numbers = "52-"},
+  {street = "1.mája", written = "1. mája"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Včelná"},
+  {street = "Záhradná"},
+  {street = "Hornádska"},
+  {street = "Komenského"},
+  {street = "Sládkovičova"},
+  {street = "Štúrova"},
+  {street = "Slnečná"},
+  {street = "Lipová"},
+  {street = "Okolie"},
+]

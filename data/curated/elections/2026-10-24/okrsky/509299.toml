@@ -1,0 +1,30 @@
+# Okrsky of Makov, transcribed by an AI agent in job okrsok-rules-348 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: časť Makov-ústredie
+#   okrsok 2: časť Čierne, Potok, Kopanice, Trojačka
+obec = "509299"
+name = "Makov"
+
+[[document]]
+url = "https://www.makov.sk/evt_file.php?file=7805&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20ich%20umiestnenie.pdf"
+sha256 = "16cdb63f6e376128e402debe0dfdc24f2c53a51375ef7ce7b722fc1110ee70a8"
+title = "Oznámenie o utvorení volebných okrskov a ich umiestnenie"
+
+[[document]]
+url = "https://www.makov.sk/samosprava/komunalne-a-zupne-volby-2026/volby-do-organov-samospravy-obci/oznamenie-o-utvoreni-volebnych-okrskov-a-ich-umiestnenie-1794sk.html"
+sha256 = "54f4ac5271fa961122fe08af43737227f95dbf8be6657add2006c37b285ed792"
+title = "Oznámenie o utvorení volebných okrskov a ich umiestnenie (page)"
+
+[okrsok.1]
+rules = [
+  {part = "Makov"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Čierne"},
+  {part = "Potok"},
+  {part = "Kopanice"},
+  {part = "Trojačka"},
+]

@@ -11533,6 +11533,10 @@
    "src": "Borders of the countries around Slovakia, Natural Earth, public domain",
    "text": "Кордони країн навколо Словаччини, Natural Earth, суспільне надбання"
   },
+  "about.inputs.osm": {
+   "src": "Roads, railways and water features of the base map, © OpenStreetMap contributors, Geofabrik's extract of Slovakia, license ODbL 1.0",
+   "text": "Дороги, залізниці та гідрографія базової карти, © учасники OpenStreetMap, витяг Словаччини від Geofabrik, ліцензія ODbL 1.0"
+  },
   "about.inputs.results": {
    "src": "Results of the 2022 municipal and regional elections and of the by-elections since, Statistical Office of the Slovak Republic",
    "text": "Результати виборів до органів самоврядування громад і країв 2022 року та проміжних виборів відтоді, Статистичне управління Словацької Республіки"
@@ -11554,8 +11558,8 @@
    "text": "Ліцензія"
   },
   "about.licenses": {
-   "src": "The shapes on the map are derived from the ZBGIS boundaries (simplified and merged into constituencies) and, around Slovakia, from Natural Earth. Candidate data are reproduced without changes to their content, only rearranged.",
-   "text": "Форми на карті походять із меж ZBGIS (спрощених і об’єднаних в округи), а навколо Словаччини — з Natural Earth. Дані про кандидатів відтворено без змін змісту, лише впорядковано інакше."
+   "src": "The shapes on the map are derived from the ZBGIS boundaries (simplified and merged into constituencies) and, around Slovakia, from Natural Earth. The base map is derived from OpenStreetMap (selected, simplified and cut per district) and is published under the same license, ODbL 1.0. Candidate data are reproduced without changes to their content, only rearranged.",
+   "text": "Форми на карті походять із меж ZBGIS (спрощених і об’єднаних в округи), а навколо Словаччини — з Natural Earth. Базову карту отримано з OpenStreetMap (відібрано, спрощено й поділено за округами) і опубліковано під тією самою ліцензією, ODbL 1.0. Дані про кандидатів відтворено без змін змісту, лише впорядковано інакше."
   },
   "about.logos.title": {
    "src": "Party logos (Wikimedia Commons; the other parties have no freely licensed logo and are shown by their short name)",
@@ -11578,8 +11582,8 @@
    "text": "Хто зараз обіймає посаду, ми встановили за остаточними результатами виборів 2022 року та всіх проміжних виборів до органів громад відтоді (Статистичне управління Словацької Республіки) і зіставили з кандидатами за громадою чи краєм, іменем і віком. Бракує тих, хто зайняв звільнений мандат як наступний у списку, та відходів з посади без проміжних виборів, а кандидата, який змінив прізвище, не зіставлено; тож позначка стільця («зараз обіймає цю посаду») може бути неповною. Як кожен здобув посаду, ми подаємо за тими самими остаточними результатами, у тій одиниці, де його обрано: у громаді — для старости чи мера, у краї — для голови, у тодішньому виборчому окрузі (або в усій громаді, якщо вона мала один округ) — для депутата. Частку старости, мера чи голови рахують від дійсних бюлетенів; для ради, де кожен виборець міг голосувати за кількох кандидатів, — від кількості виборців із дійсним бюлетенем, тож частки в одному окрузі разом дають понад 100 %. Подаємо також частку від усіх зареєстрованих виборців і явку (частку тих, хто взяв участь, серед зареєстрованих)."
   },
   "about.method.map": {
-   "src": "The map is drawn directly from the ZBGIS municipal boundaries at several levels of detail, without a base map from other servers. The regional council constituencies and the city council constituencies of Bratislava and Košice consist of whole municipalities and city districts, as set by the decisions of the regions and cities. The countries around Slovakia are drawn coarser, from Natural Earth, for orientation only.",
-   "text": "Карту побудовано безпосередньо з меж громад ZBGIS на кількох рівнях деталізації, без базової карти з інших серверів. Округи виборів до рад країв і до міських рад Bratislava і Košice складаються з цілих громад і міських районів відповідно до рішень країв і міст. Країни навколо Словаччини намальовано грубіше, за даними Natural Earth, лише для орієнтації."
+   "src": "The map is drawn directly from the ZBGIS municipal boundaries at several levels of detail, without a base map from other servers. The regional council constituencies and the city council constituencies of Bratislava and Košice consist of whole municipalities and city districts, as set by the decisions of the regions and cities. The countries around Slovakia are drawn coarser, from Natural Earth, for orientation only. The faint roads, railways, rivers and lakes under the colours, also for orientation only, come from OpenStreetMap, simplified for each zoom.",
+   "text": "Карту побудовано безпосередньо з меж громад ZBGIS на кількох рівнях деталізації, без базової карти з інших серверів. Округи виборів до рад країв і до міських рад Bratislava і Košice складаються з цілих громад і міських районів відповідно до рішень країв і міст. Країни навколо Словаччини намальовано грубіше, за даними Natural Earth, лише для орієнтації. Бліді дороги, залізниці, річки та озера під кольорами, також лише для орієнтації, взято з OpenStreetMap і спрощено для кожного масштабу."
   },
   "about.method.obvody": {
    "src": "Municipalities with one council constituency have it assigned directly. Municipalities and city districts with several constituencies define them in their own resolutions, by streets, house numbers or parts of the municipality. An AI agent transcribed these resolutions from the municipalities' websites into rules, which were checked to put every address of the municipality into exactly one constituency; the resolutions are linked below. Where a resolution has not been processed yet, all constituencies are shown. The number of seats comes from these resolutions; a council with one constituency whose 2026 number is not known yet shows the number elected in 2022 (Statistical Office of the Slovak Republic), labelled as such.",
@@ -11674,12 +11678,12 @@
    "text": "Версія {version}"
   },
   "app.description": {
-   "src": "Slovakia's 2026 local and regional elections by constituency: your ballots by address, the candidates with sourced notes, and live results as the votes are counted.",
-   "text": "Місцеві й крайові вибори 2026 у Словаччині за округами: ваші бюлетені за адресою, кандидати з відомостями із джерелами та результати наживо під час підрахунку голосів."
+   "src": "Slovakia's 2026 local and regional elections: results by constituency, municipality and polling district, ballots by address, candidates with sourced notes.",
+   "text": "Місцеві та крайові вибори 2026 у Словаччині: результати за округами, громадами й дільницями, бюлетені за адресою, кандидати з нотатками з джерелами."
   },
   "app.features": {
-   "src": "Enter your address or click the map to see every ballot you will vote on – mayor, municipal council, regional president and regional council – with the candidates in ballot order and their parties. The map marks who holds each office now and with what share of the vote they won it in 2022, and for the candidates researched so far it adds notes on their career and controversies, each linked to its source. On election night it shows the results as they are counted – each candidate's votes, the turnout and the winners, on the ballots and on the map – and then the final results. It covers every municipality and constituency in Slovakia, with no ads and no tracking.",
-   "text": "Введіть свою адресу або клацніть на мапі, щоб побачити всі бюлетені, за якими ви голосуватимете, – на старосту чи мера, до сільської або міської ради, на голову краю та до ради краю – з кандидатами в порядку їх розташування в бюлетені та їхніми партіями. Мапа показує, хто обіймає кожну посаду зараз і з якою часткою голосів здобув її у 2022 році, а щодо досі перевірених кандидатів додає відомості про їхню кар'єру та скандали, кожне з посиланням на джерело. У ніч виборів показує результати в міру підрахунку – голоси кандидатів, явку та переможців, у бюлетенях і на мапі, – а потім остаточні результати. Вона охоплює всі громади та виборчі округи Словаччини, без реклами та без стеження."
+   "src": "Enter your address or click the map to see every ballot voted on there – mayor, municipal council, regional president and regional council – with the candidates in ballot order, their parties and the results of the 2026 elections: each candidate's votes and share, the winners and the turnout, on the ballots and on the map, down to the polling districts. The map also marks who holds each office now and with what share of the vote they won it in 2022, and for the candidates researched it adds notes on their career and controversies, each linked to its source. It covers every municipality and constituency in Slovakia, with no ads and no tracking.",
+   "text": "Введіть адресу або клацніть на мапі, щоб побачити всі бюлетені, за якими там голосували, – на старосту чи мера, до сільської чи міської ради, на голову краю та до крайової ради – з кандидатами в порядку бюлетеня, їхніми партіями та результатами виборів 2026: голоси й частка кожного кандидата, обрані та явка, у бюлетенях і на мапі, аж до виборчих дільниць. Мапа також позначає, хто обіймає кожну посаду зараз і з якою часткою голосів здобув її у 2022 році, а для перевірених кандидатів додає відомості про їхню кар'єру та скандали, кожне з посиланням на джерело. Охоплює всі громади та виборчі округи Словаччини, без реклами й без стеження."
   },
   "app.noscript": {
    "src": "{site} needs JavaScript.",
@@ -11784,6 +11788,38 @@
   "card.offices": {
    "src": "In office now",
    "text": "Зараз на посаді"
+  },
+  "card.origins_highest": {
+   "src": "Highest share",
+   "text": "Найвища частка"
+  },
+  "card.origins_map_obce": {
+   "src": "Show the candidate's votes on the map by municipality",
+   "text": "Показати голоси кандидата на карті за громадами"
+  },
+  "card.origins_map_okrsky": {
+   "src": "Show the candidate's votes on the map by polling district",
+   "text": "Показати голоси кандидата на карті за виборчими дільницями"
+  },
+  "card.origins_most": {
+   "src": "Most votes",
+   "text": "Найбільше голосів"
+  },
+  "card.origins_obce": {
+   "src": "Votes by municipality",
+   "text": "Голоси за громадами"
+  },
+  "card.origins_okrsky": {
+   "src": "Votes by polling district",
+   "text": "Голоси за виборчими дільницями"
+  },
+  "card.origins_okrsok": {
+   "src": "No. {n}",
+   "text": "№ {n}"
+  },
+  "card.origins_okrsok_in": {
+   "src": "{name}, No. {n}",
+   "text": "{name}, № {n}"
   },
   "card.parties": {
    "src": "Nominated by",
@@ -12266,8 +12302,16 @@
    "text": "Довідка та застереження"
   },
   "layers.auto": {
-   "src": "Those switched on appear by zoom: the regional ones on the whole map, those of Bratislava and Košice as you zoom in on the cities, those of municipal councils as you zoom in on a municipality.",
-   "text": "Увімкнені округи з’являються залежно від масштабу: округи країв — на всій карті, округи Bratislava і Košice — під час наближення до цих міст, округи місцевих рад — під час наближення до громади."
+   "src": "Those switched on appear by zoom: the regional ones on the whole map, those of Bratislava and Košice as you zoom in on the cities, those of municipal councils as you zoom in on a municipality, and polling districts as you zoom in further.",
+   "text": "Увімкнені округи з’являються залежно від масштабу: округи країв — на всій карті, округи Bratislava і Košice — під час наближення до цих міст, округи місцевих рад — під час наближення до громади, а виборчі дільниці — під час подальшого наближення."
+  },
+  "layers.base": {
+   "src": "Roads, railways and water features",
+   "text": "Дороги, залізниці та гідрографія"
+  },
+  "layers.base_title": {
+   "src": "Base map",
+   "text": "Базова карта"
   },
   "layers.button": {
    "src": "Constituency boundaries",
@@ -12276,6 +12320,18 @@
   "layers.city": {
    "src": "Bratislava and Košice",
    "text": "Братислава і Кошиці"
+  },
+  "layers.okrsky": {
+   "src": "Polling districts",
+   "text": "Виборчі дільниці"
+  },
+  "layers.okrsky_approximate": {
+   "src": "Approximate polling district boundary, drawn between the addresses",
+   "text": "Приблизна межа виборчої дільниці, проведена між адресами"
+  },
+  "layers.okrsky_border": {
+   "src": "Polling district boundary",
+   "text": "Межа виборчої дільниці"
   },
   "layers.oz": {
    "src": "Municipal councils",
@@ -12306,8 +12362,8 @@
    "text": "Ради країв"
   },
   "map.attribution": {
-   "src": "Boundaries: ZBGIS © ÚGKK SR, CC BY 4.0 · Neighbouring countries: Natural Earth · Addresses: MV SR, CC0",
-   "text": "Межі: ZBGIS © ÚGKK SR, CC BY 4.0 · Сусідні країни: Natural Earth · Адреси: MV SR, CC0"
+   "src": "Boundaries: ZBGIS © ÚGKK SR, CC BY 4.0 · Base map: © OpenStreetMap contributors, ODbL · Neighbouring countries: Natural Earth · Addresses: MV SR, CC0",
+   "text": "Межі: ZBGIS © ÚGKK SR, CC BY 4.0 · Базова карта: © учасники OpenStreetMap, ODbL · Сусідні країни: Natural Earth · Адреси: MV SR, CC0"
   },
   "map.label": {
    "src": "Map",
@@ -12316,6 +12372,10 @@
   "map.obvod": {
    "src": "No. {n}",
    "text": "№ {n}"
+  },
+  "map.okrsok": {
+   "src": "district {n}",
+   "text": "дільниця {n}"
   },
   "map.zoom": {
    "src": "Zoom",
@@ -12353,6 +12413,30 @@
    "src": "Results on the map",
    "text": "Результати на карті"
   },
+  "mapmode.level_councils": {
+   "src": "council constituencies",
+   "text": "округами місцевих рад"
+  },
+  "mapmode.level_obce": {
+   "src": "municipalities",
+   "text": "громадами"
+  },
+  "mapmode.level_okrsky": {
+   "src": "polling districts",
+   "text": "виборчими дільницями"
+  },
+  "mapmode.level_zsk": {
+   "src": "regional constituencies",
+   "text": "виборчими округами країв"
+  },
+  "mapmode.levels": {
+   "src": "By {units}, finer as you zoom in",
+   "text": "За {units}, детальніше під час наближення"
+  },
+  "mapmode.levels_one": {
+   "src": "By {units}",
+   "text": "За {units}"
+  },
   "mapmode.none": {
    "src": "Nothing to show yet.",
    "text": "Поки що немає чого показати."
@@ -12368,6 +12452,34 @@
   "mapmode.share_voters": {
    "src": "share of the voters with a valid ballot",
    "text": "частка від виборців із дійсним бюлетенем"
+  },
+  "mapmode.tip_obvod": {
+   "src": "{name}, constituency No. {n}",
+   "text": "{name}, виборчий округ № {n}"
+  },
+  "mapmode.tip_okrsok": {
+   "src": "Polling district No. {n}, {name}",
+   "text": "Виборча дільниця № {n}, {name}"
+  },
+  "mapmode.tip_past": {
+   "src": "2022: {turnout} · {voters} of {eligible}",
+   "text": "2022: {turnout} · {voters} з {eligible}"
+  },
+  "mapmode.tip_turnout": {
+   "src": "Turnout {turnout} · {voters} of {eligible} voted",
+   "text": "Явка {turnout} · проголосували {voters} з {eligible}"
+  },
+  "mapmode.tip_votes": {
+   "src": "{share} · {votes} of {valid}",
+   "text": "{share} · {votes} з {valid}"
+  },
+  "mapmode.tip_winner": {
+   "src": "Most votes: {name}, {share}",
+   "text": "Найбільше голосів: {name}, {share}"
+  },
+  "mapmode.tip_zsk": {
+   "src": "{kraj} kraj, constituency No. {n}",
+   "text": "{kraj} kraj, виборчий округ № {n}"
   },
   "mapmode.title": {
    "src": "2026 turnout on the map",
@@ -12412,6 +12524,46 @@
   "mapmode.turnout_total": {
    "src": "{turnout} overall",
    "text": "загалом {turnout}"
+  },
+  "mapmode.units": {
+   "src": "Show by",
+   "text": "Показати за"
+  },
+  "mapmode.units_obce": {
+   "src": "Municipalities",
+   "text": "Громади"
+  },
+  "mapmode.units_okrsky": {
+   "src": "Polling districts",
+   "text": "Виборчі дільниці"
+  },
+  "mapmode.winner_count": {
+   "src": "The most votes in {n} of the areas shown",
+   "text": "Найбільше голосів на {n} з показаних територій"
+  },
+  "mapmode.winner_hide": {
+   "src": "Take who got the most votes off the map",
+   "text": "Прибрати з карти, хто де отримав найбільше голосів"
+  },
+  "mapmode.winner_of": {
+   "src": "the candidate with the most votes in each area",
+   "text": "кандидат із найбільшою кількістю голосів на кожній території"
+  },
+  "mapmode.winner_of_council": {
+   "src": "the top candidate in each area, not those elected",
+   "text": "кандидат із найбільшою кількістю голосів на кожній території, а не всі обрані"
+  },
+  "mapmode.winner_show": {
+   "src": "Show on the map who got the most votes where",
+   "text": "Показати на карті, хто де отримав найбільше голосів"
+  },
+  "mapmode.winner_title": {
+   "src": "Most votes",
+   "text": "Найбільше голосів"
+  },
+  "mapmode.winner_total": {
+   "src": "Overall: {name}, {share}",
+   "text": "Загалом: {name}, {share}"
   },
   "nav.language": {
    "src": "Language",
@@ -12481,9 +12633,25 @@
    "src": "council constituency No. {n}",
    "text": "виборчий округ № {n}"
   },
+  "place.obvody": {
+   "src": "council constituencies No. {n}",
+   "text": "виборчі округи № {n}"
+  },
   "place.okres": {
    "src": "okres {name}",
    "text": "округ {name}"
+  },
+  "place.okrsky": {
+   "src": "polling districts No. {n}",
+   "text": "виборчі дільниці № {n}"
+  },
+  "place.okrsok": {
+   "src": "polling district No. {n}",
+   "text": "виборча дільниця № {n}"
+  },
+  "place.okrsok_approximate": {
+   "src": "polling district No. {n} (by an approximate boundary)",
+   "text": "виборча дільниця № {n} (за приблизною межею)"
   },
   "research.affairs_alert": {
    "src": "Searched only the sites on our list ({scope}); serious controversies found about this candidate: {n}",
@@ -12673,6 +12841,14 @@
    "src": "{votes} of {valid} voters",
    "text": "{votes} / {valid} виборців"
   },
+  "results.awaiting": {
+   "src": "Polls closed · results will appear here as they come in",
+   "text": "Голосування завершено · результати з’являтимуться тут у міру надходження"
+  },
+  "results.awaiting_title": {
+   "src": "The polls closed at {close} (Slovak time). The Statistical Office of the Slovak Republic publishes the results through the night as they are counted; this page checks for them every minute and shows them as they come.",
+   "text": "Виборчі дільниці закрилися о {close} (за словацьким часом). Статистичне управління Словацької Республіки публікує результати протягом ночі в міру підрахунку; ця сторінка перевіряє їх щохвилини й показує, щойно вони надходять."
+  },
   "results.called": {
    "src": "Called by this site, not official yet: even if all of the at most {remaining} registered voters in the districts not counted yet voted against them, they would keep their place. That maximum is the registered voters at the {election} plus 10 % ({bound}), less the {eligible} registered in the districts counted so far.",
    "text": "Визначено цим сайтом, ще не офіційно: навіть якби всі щонайбільше {remaining} зареєстрованих виборців у ще не підрахованих дільницях проголосували проти, кандидат однаково зберіг би своє місце. Цей максимум — зареєстровані виборці на минулих виборах ({election}) плюс 10 % ({bound}), мінус {eligible} зареєстрованих у дільницях, підрахованих досі."
@@ -12721,9 +12897,41 @@
    "src": "2026: final results",
    "text": "2026: остаточні результати"
   },
+  "results.in_seats": {
+   "src": "Place {place} by votes: within the seats ({n}) on the count so far.",
+   "text": "Місце {place} за голосами: поки що в межах мандатів ({n})."
+  },
+  "results.note_all_elected": {
+   "src": "Counted: every candidate is elected, there being no more of them than seats filled; their votes have not been published yet. They will appear here once the Statistical Office publishes them.",
+   "text": "Підраховано: обрано всіх кандидатів, бо їх не більше, ніж заповнених мандатів; їхні голоси ще не опубліковано. Вони з’являться тут, щойно Статистичне управління їх опублікує."
+  },
+  "results.note_counted": {
+   "src": "Counted; who is elected and the candidates' votes have not been published yet. They will appear here once the Statistical Office publishes them.",
+   "text": "Підраховано; хто обраний і голоси кандидатів ще не опубліковано. Вони з’являться тут, щойно Статистичне управління їх опублікує."
+  },
+  "results.note_partial": {
+   "src": "Turnout counted so far; the candidates' votes have not been published yet. They will appear here once the Statistical Office publishes them.",
+   "text": "Поки що підраховано явку; голоси кандидатів ще не опубліковано. Вони з’являться тут, щойно Статистичне управління їх опублікує."
+  },
+  "results.note_turnout": {
+   "src": "Turnout counted; who is elected and the candidates' votes have not been published yet. They will appear here once the Statistical Office publishes them.",
+   "text": "Явку підраховано; хто обраний і голоси кандидатів ще не опубліковано. Вони з’являться тут, щойно Статистичне управління їх опублікує."
+  },
+  "results.note_winner": {
+   "src": "Counted: the turnout and the winner are known; the other candidates' votes have not been published yet. They will appear here once the Statistical Office publishes them.",
+   "text": "Підраховано: явка й переможець відомі; голоси інших кандидатів ще не опубліковано. Вони з’являться тут, щойно Статистичне управління їх опублікує."
+  },
   "results.pending": {
    "src": "2026: not counted yet",
    "text": "2026: ще не підраховано"
+  },
+  "results.seats_line": {
+   "src": "↑ seats: {n}",
+   "text": "↑ мандати: {n}"
+  },
+  "results.seats_line_title": {
+   "src": "On the count so far, the candidates above this line would win the seats ({n}): as many of the first places by votes as there are seats. The order can still change as the count goes on.",
+   "text": "За поточним підрахунком мандати ({n}) здобули б кандидати над цією лінією: стільки перших місць за голосами, скільки є мандатів. Порядок ще може змінитися, поки триває підрахунок."
   },
   "results.status_counting": {
    "src": "Results: counting",
@@ -12757,6 +12965,14 @@
    "src": "Turnout 2026 so far, in the districts counted: {voters} of {eligible} registered voters voted ({turnout}).",
    "text": "Явка 2026 поки що, у підрахованих дільницях: проголосували {voters} з {eligible} зареєстрованих виборців ({turnout})."
   },
+  "results.turnout_unit": {
+   "src": "Turnout 2026 ({unit}): {voters} of {eligible} registered voters voted ({turnout}).",
+   "text": "Явка 2026 ({unit}): проголосували {voters} з {eligible} зареєстрованих виборців ({turnout})."
+  },
+  "results.valid_votes": {
+   "src": "Valid votes 2026: {valid}",
+   "text": "Дійсні голоси 2026: {valid}"
+  },
   "results.votes": {
    "src": "{n} votes",
    "text": "голосів: {n}"
@@ -12768,6 +12984,30 @@
   "results.votes_title_multi": {
    "src": "2026: {votes} votes from {valid} voters with a valid ballot ({share}); each could vote for several candidates.",
    "text": "2026: {votes} голосів від {valid} виборців із дійсним бюлетенем ({share}); кожен міг голосувати за кількох кандидатів."
+  },
+  "results.withdrawn": {
+   "src": "withdrew",
+   "text": "знявся(-лася)"
+  },
+  "results.withdrawn_title": {
+   "src": "Withdrew from the election but stayed on the ballot: the votes cast for them count among the valid ones, yet cannot elect them.",
+   "text": "Знявся(-лася) з виборів, але залишився(-лася) у бюлетені: голоси, віддані за цю особу, зараховуються до дійсних, проте обраною вона бути не може."
+  },
+  "scope.all": {
+   "src": "Whole contest",
+   "text": "Усі вибори"
+  },
+  "scope.label": {
+   "src": "Results for",
+   "text": "Результати для"
+  },
+  "scope.obvod": {
+   "src": "Constituency No. {n}",
+   "text": "Округ № {n}"
+  },
+  "scope.okrsok": {
+   "src": "Polling district No. {n}",
+   "text": "Дільниця № {n}"
   },
   "search.close": {
    "src": "Close search",
@@ -12876,6 +13116,14 @@
   "turnout.hide": {
    "src": "Click to hide the numbers.",
    "text": "Натисніть, щоб приховати цифри."
+  },
+  "turnout.okrsky": {
+   "src": "The figures are of the polling districts that make up this constituency now: {okrsky}.",
+   "text": "Цифри стосуються виборчих дільниць, які тепер утворюють цей виборчий округ: {okrsky}."
+  },
+  "turnout.okrsok_2022": {
+   "src": "Turnout in this polling district at the municipal elections of 2022: {voters} of {eligible} registered voters voted ({turnout}).",
+   "text": "Явка на цій виборчій дільниці на місцевих виборах 2022 року: проголосували {voters} з {eligible} зареєстрованих виборців ({turnout})."
   },
   "turnout.show": {
    "src": "Click for the numbers.",

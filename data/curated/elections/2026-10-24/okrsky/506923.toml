@@ -1,0 +1,45 @@
+# Okrsky of Dolná Krupá, transcribed by an AI agent in job okrsok-rules-430 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hlavná, Krátka, Horná, Dolný Chríb, Nám. L. van Beethovena, Nová, Družstevná, Školská
+#   okrsok 2: Podhájska, Na Doline, Hoštáky, Jána Dopjeru, Trnavská cesta, Nám. Sv. Vendelína, M.H. Chotekovej, Horný Chríb, Potočná, Andreja Kubinu, Jozefa Brunsvika, Parková, Rybníčky, Potôčky
+obec = "506923"
+name = "Dolná Krupá"
+okrsky_date = 2026-07-22
+okrsky_fill = "nearest"
+okrsky_note = "The 5 addresses without a street take the okrsok of the nearest placed address."
+
+[[document]]
+url = "https://www.dolnakrupa.sk/modules/file_storage/download.php?file=76bacf6c%7C835&inline=1"
+sha256 = "c942eb0b1c8b3a7d30b0a555bd998ab972c3bcaa3afb16dbe3fc6e5f2ef7b79b"
+title = "Určenie volebných okrskov a volebných miestností (starosta, 22. 7. 2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná"},
+  {street = "Krátka"},
+  {street = "Horná"},
+  {street = "Dolný Chríb"},
+  {street = "Nám.L.van Beethovena", written = "Nám. L. van Beethovena"},
+  {street = "Nová"},
+  {street = "Družstevná"},
+  {street = "Školská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Podhájska"},
+  {street = "Na Doline"},
+  {street = "Hoštáky"},
+  {street = "Jána Dopjeru"},
+  {street = "Trnavská cesta"},
+  {street = "Námestie Sv.Vendelína", written = "Nám. Sv. Vendelína"},
+  {street = "M.H.Chotekovej", written = "M.H. Chotekovej"},
+  {street = "Horný Chríb"},
+  {street = "Potočná"},
+  {street = "Andreja Kubinu"},
+  {street = "Jozefa Brunsvika"},
+  {street = "Parková"},
+  {street = "Rybníčky"},
+  {street = "Potôčky"},
+]

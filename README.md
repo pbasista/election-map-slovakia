@@ -1,14 +1,14 @@
 # Election Map Slovakia
 
 A zoomable map of every constituency of the Slovak municipal and regional
-elections of 24 October 2026, with the candidates standing in each. Click a
-place or search for an address, a municipality or a candidate to see every
-ballot voted on there; a candidate card adds AI-researched, source-linked
-notes on the candidate's career and controversies. Circle candidates'
-numbers as on the ballot to gather them in one list, which a link shares.
-On election night it shows the results live as they are counted, partial
-ones included: each candidate's votes, the turnout and the winners, on the
-ballots and on the map, and then the final results
+elections of 24 October 2026, with the candidates standing in each and
+their results. Click a place or search for an address, a municipality or
+a candidate to see every ballot voted on there; a candidate card adds
+AI-researched, source-linked notes on the candidate's career and
+controversies. Circle candidates' numbers as on the ballot to gather them
+in one list, which a link shares. The results, shown live as they were
+counted on election night, are each candidate's votes, the turnout and
+the winners, on the ballots and on the map, down to the polling districts
 ([docs/results.md](docs/results.md)).
 It is at **<https://volebnamapa.sk>**.
 
@@ -16,8 +16,7 @@ It is at **<https://volebnamapa.sk>**.
 
 It is a static site: a Python pipeline turns official open data into plain
 files, served as they are by Cloudflare Pages. The browser loads nothing
-from other servers than the site's own and, for the live results,
-`live.volebnamapa.sk`.
+from other servers than the site's own, the results included.
 
 ## Install
 
@@ -52,10 +51,10 @@ steps whose inputs changed.
   rules and candidate research by AI agents
 - [docs/deploy.md](docs/deploy.md) — CI, releases, Cloudflare Pages and the
   site's own domain
-- [docs/results.md](docs/results.md) — the live election results: their
-  files, sources and the election night
+- [docs/results.md](docs/results.md) — the election results: their files,
+  sources and an election night
 - [docs/testing.md](docs/testing.md) — the checks, and the site in a
-  headless browser with dummy live results
+  headless browser with its results or dummy ones
 - [CHANGELOG.md](CHANGELOG.md)
 
 ## Development

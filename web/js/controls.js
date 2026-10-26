@@ -31,7 +31,7 @@ import { setMapMode, useMapMode } from './mapmode.js';
 import { Notice } from './pane.js';
 
 // Broadest first.
-const OVERLAYS = ['zsk', 'city', 'oz'];
+const OVERLAYS = ['zsk', 'city', 'oz', 'okrsky'];
 // Each turnout layer by the overlay icon of its areas, so that the two
 // parts of the menu read together: the municipalities, the two cities,
 // the regions.
@@ -237,8 +237,9 @@ export function LanguageMenu({ open, onToggle, hash }) {
 /* The constituency overlays, each switched on or off on its own; whichever
  * are on, the map draws each from the zoom where it reads (map.js
  * `OVERLAYS`). The icons are in the colours their borders are drawn in.
- * Once there are 2026 results, the turnout of either election can be shown
- * on the map too (mapmode.js). */
+ * Below them the base map (roads, railways, waters), on by default. Once
+ * there are 2026 results, the turnout of either election can be shown on
+ * the map too (mapmode.js). */
 export function LayerMenu({ open, onToggle, overlays, onOverlays }) {
   const { status } = useLive();
   const mode = useMapMode();
@@ -266,17 +267,43 @@ export function LayerMenu({ open, onToggle, overlays, onOverlays }) {
       </fieldset>
       <p class="pop-note">${t('layers.auto')}</p>
       ${
-        overlays.oz
+        overlays.oz || overlays.okrsky
           ? html`
               <div class="notice legend" role="note">
-                <p class="key"><span class="swatch council"></span>${t('layers.oz_council')}</p>
-                <p class="key"><span class="swatch approximate"></span>${t('layers.oz_approximate')}</p>
-                <p class="key"><span class="swatch pending"></span>${t('layers.oz_pending')}</p>
-                <p class="key"><span class="swatch none"></span>${t('layers.oz_none')}</p>
+                ${
+                  overlays.oz
+                    ? html`
+                        <p class="key"><span class="swatch council"></span>${t('layers.oz_council')}</p>
+                        <p class="key"><span class="swatch approximate"></span>${t('layers.oz_approximate')}</p>
+                        <p class="key"><span class="swatch pending"></span>${t('layers.oz_pending')}</p>
+                        <p class="key"><span class="swatch none"></span>${t('layers.oz_none')}</p>
+                      `
+                    : null
+                }
+                ${
+                  overlays.okrsky
+                    ? html`
+                        <p class="key"><span class="swatch okrsok"></span>${t('layers.okrsky_border')}</p>
+                        <p class="key"><span class="swatch okrsok-approximate"></span>${t('layers.okrsky_approximate')}</p>
+                      `
+                    : null
+                }
               </div>
             `
           : null
       }
+      <fieldset class="options base-options">
+        <legend class="pop-title">${t('layers.base_title')}</legend>
+        <label class="option layer-base">
+          <input
+            type="checkbox"
+            checked=${overlays.base}
+            onChange=${(e) => onOverlays({ ...overlays, base: e.currentTarget.checked })}
+          />
+          <${LAYER_ICON.base} />
+          <span>${t('layers.base')}</span>
+        </label>
+      </fieldset>
       ${
         counting
           ? html`

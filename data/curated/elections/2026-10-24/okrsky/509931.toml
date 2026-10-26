@@ -1,0 +1,24 @@
+# Okrsky of Oravské Veselé, transcribed by an AI agent in job okrsok-rules-403 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Pre voličov: s.č. 0 – 456
+#   okrsok 2: Pre voličov: s.č. 457 - 1034
+obec = "509931"
+name = "Oravské Veselé"
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by súpisné číslo; any number above 1034 takes the okrsok of the nearest address (fill_nearest). The notice states no decision date."
+
+[[document]]
+url = "https://www.oravskevesele.sk/e_download.php?file=/data/uredni_deska/obsah1391_1.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Den%C3%AD%20volebnej%20miestnosti%20pre%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vy%20obci%20a%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vych%20krajov%20kt.%20sa%20uskuto%C4%8Dnia%2024.10.2026.pdf"
+sha256 = "6fe6a9c5e188d806b817bb6c43655062eb2ab1d6265fe82ef61aacb028eb1f28"
+title = "Oznámenie o utvorení volebných okrskov a určení volebnej miestnosti"
+
+[okrsok.1]
+rules = [
+  {part = "Oravské Veselé", numbers = "0-456"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Oravské Veselé", numbers = "457-1034"},
+]

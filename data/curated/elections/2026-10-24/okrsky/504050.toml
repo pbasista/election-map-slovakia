@@ -1,0 +1,31 @@
+# Okrsky of Šoporňa, transcribed by an AI agent in job okrsok-rules-258 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súp. č. 1-700
+#   okrsok 2: súp. č. 701-1179
+#   okrsok 3: súp. č. 1180-2000 a časť Štrkovec
+obec = "504050"
+name = "Šoporňa"
+okrsky_date = 2026-07-21
+okrsky_note = "The okrsky are set by súpisné číslo across the whole village; okrsok 3 (1180-2000) is taken open-ended (1180-)."
+
+[[document]]
+url = "https://www.soporna.sk/e_download.php?file=/data/editor/191sk_7.pdf&original=Utvorenie%20volebnych%20okrskov.pdf"
+sha256 = "d88527e081dea67c35fd1463064d02566710ae2606868734203db2c494781a6a"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Šoporňa", numbers = "1-700"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Šoporňa", numbers = "701-1179"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Šoporňa", numbers = "1180-"},
+  {part = "Štrkovec"},
+]

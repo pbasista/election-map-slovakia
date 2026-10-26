@@ -1,0 +1,81 @@
+# Okrsky of Turany, transcribed by an AI agent in job okrsok-rules-276 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bazovského, Brodzany, Černík, Družstevná, Fatranská, Hlboká cesta, Chrenovo, Jánošíkova, Jesenského, M. R. Štefánika, Moyzesova, Osloboditeľov, Partizánska, Priehrada, Trusalová, Vaňovská, Záhreby a osoby s evidovaným trvalým pobytom na mesto Turany.
+#   okrsok 2: Cintorínska, Hviezdoslavova, J. Kráľa, Kollárova, Komenského, Krížna, Malý riadok, Mierová, Mohylka, Na Dubovú, Polík, Riečna, Sládkovičova, Školská, Štúrova, 1. mája a Železničná.
+#   okrsok 3: Budovateľská, Červenej armády, Robotnícka a Sadová.
+#   okrsok 4: Doliny, Generála Fraňu, Generála Nosáka, Krpelianska, Mládeže, Obchodná, Petra Mendela, Rybárska, Slnečná a SNP.
+obec = "512681"
+name = "Turany"
+okrsky_date = 2026-07-08
+okrsky_fill = "nearest"
+okrsky_note = "Addresses without a street take the nearest placed address. 'Záhreby' in the document is the register's Zábrehy (letter swap; no other similar street). 'osoby s evidovaným trvalým pobytom na mesto Turany' belong to okrsok 1."
+
+[[document]]
+url = "https://www.turany.sk/download_file_f.php?id=2440264"
+sha256 = "aad75571bb37ed24eba30fd29fa706d678a936e67349dceb28b944739d97b09d"
+title = "Určenie volebných okrskov a volebných miestností pre voľby 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Bazovského"},
+  {street = "Brodzany"},
+  {street = "Černík"},
+  {street = "Družstevná"},
+  {street = "Fatranská"},
+  {street = "Hlboká cesta"},
+  {street = "Chrenovo"},
+  {street = "Jánošíkova"},
+  {street = "Jesenského"},
+  {street = "M. R. Štefánika"},
+  {street = "Moyzesova"},
+  {street = "Osloboditeľov"},
+  {street = "Partizánska"},
+  {street = "Priehrada"},
+  {street = "Trusalová"},
+  {street = "Vaňovská"},
+  {street = "Zábrehy", written = "Záhreby", note = "Typo: letters swapped; the register has Zábrehy and no Záhreby."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Hviezdoslavova"},
+  {street = "J. Kráľa"},
+  {street = "Kollárova"},
+  {street = "Komenského"},
+  {street = "Krížna"},
+  {street = "Malý riadok"},
+  {street = "Mierová"},
+  {street = "Mohylka"},
+  {street = "Na Dubovú"},
+  {street = "Polík"},
+  {street = "Riečna"},
+  {street = "Sládkovičova"},
+  {street = "Školská"},
+  {street = "Štúrova"},
+  {street = "Železničná"},
+  {street = "1.mája", written = "1. mája"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Červenej armády"},
+  {street = "Robotnícka"},
+  {street = "Sadová"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Doliny"},
+  {street = "Generála Fraňu"},
+  {street = "Krpelianska"},
+  {street = "Mládeže"},
+  {street = "Obchodná"},
+  {street = "Petra Mendela"},
+  {street = "Rybárska"},
+  {street = "Slnečná"},
+  {street = "SNP"},
+  {street = "Gen. Nosáka", written = "Generála Nosáka"},
+]

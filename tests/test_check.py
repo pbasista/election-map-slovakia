@@ -1,13 +1,15 @@
 import dataclasses
+import datetime as dt
 import json
 import re
 import shutil
 from pathlib import Path
 
+import numpy as np
 import pytest
 import shapely
 
-from election_map_slovakia import build, check, config, geo
+from election_map_slovakia import basemap, build, check, config, geo, results
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -65,6 +67,48 @@ def neighbours() -> dict:
     return geo.topology_file(topo, 1000, [0], [{"id": "AT"}], geo.neighbour_code)
 
 
+def okrsky(numbers: tuple[int, ...] = (1, 2)) -> dict:
+    """Jakubov's okrsky *numbers*: 1 its western half, 2 the eastern."""
+    halves = {
+        n: shapely.box(
+            1_700_000 + 5_000 * (n - 1),
+            4_840_000,
+            1_705_000 + 5_000 * (n - 1),
+            4_850_000,
+        )
+        for n in numbers
+    }
+    g = shapely.orient_polygons(np.array(list(halves.values())))
+    properties = [
+        {"obec": "508063", "okrsok": n, "obvod": 1, "label": [17.0 + 0.05 * n, 48.45]}
+        for n in halves
+    ]
+    topo = geo.topology([geo.rings(x) for x in g], 100_000)
+    return geo.topology_file(
+        topo, 100_000, range(len(halves)), properties, geo.okrsok_code
+    )
+
+
+def base_map() -> dict:
+    """A motorway across Jakubov and a pond in it."""
+    return {
+        "scale": 100_000,
+        "arcs": [
+            [1_700_000, 4_845_000, 10_000, 0],
+            [1_702_000, 4_842_000, 1_000, 0, 0, 1_000, -1_000, 0],
+        ],
+        "lines": [basemap.MOTORWAY, basemap.WATER],
+        "features": [{"properties": {}, "arcs": [[[1]]]}],
+    }
+
+
+SHARD_BANDS = [
+    {"lod": "2", "zoom": [9.5, 12]},
+    {"lod": "1", "zoom": [12, 14]},
+    {"lod": "0", "zoom": [14, None]},
+]
+
+
 def write_json(path: Path, content: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(content, ensure_ascii=False))
@@ -73,7 +117,7 @@ def write_json(path: Path, content: object) -> None:
 @pytest.fixture
 def site(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[Path, config.Config]:
     """A complete site for one obec, built from the real web/ and config/."""
-    monkeypatch.delenv(config.LIVE_URL_ENV, raising=False)
+    monkeypatch.delenv(config.RESULTS_ANYTIME_ENV, raising=False)
     root = tmp_path / "project"
     shutil.copytree(REPO / "config", root / "config")
     shutil.copytree(REPO / "web", root / "web")
@@ -81,6 +125,7 @@ def site(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[Path, config.
     obec = {"id": "508063", "name": "Jakubov", "okres": "106", "kraj": "1", "zsk": 1}
     for lod in "210":
         write_json(built / f"geo/okres/106/{lod}.json", topology(obec))
+        write_json(built / f"geo/okrsky/106/{lod}.json", okrsky())
     write_json(
         built / "geo/coarse.json",
         topology({"kraj": "1", "okres": "106", "zsk": 1})
@@ -95,17 +140,22 @@ def site(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[Path, config.
     write_json(
         built / "geo/index.json",
         {
-            "shards": [
-                {"lod": "2", "zoom": [9.5, 12]},
-                {"lod": "1", "zoom": [12, 14]},
-                {"lod": "0", "zoom": [14, None]},
-            ],
+            "shards": SHARD_BANDS,
             "okresy": {"106": [17.0, 48.4, 17.1, 48.5]},
             "neighbours": [
                 {"lod": "0", "zoom": [0, None], "extent": [16.9, 48.3, 17.2, 48.6]}
             ],
+            "okrsky": {
+                "bands": SHARD_BANDS,
+                "okresy": {"106": [17.0, 48.4, 17.1, 48.5]},
+                "drawn": {"508063": [1, 2]},
+            },
         },
     )
+    base = {basemap.okres_path("106", lod): base_map() for lod in "210"}
+    base[basemap.COARSE_FILE] = base_map()
+    base[basemap.INDEX_FILE] = {"bands": SHARD_BANDS, "okresy": ["106"]}
+    basemap.write(base, built / basemap.OUTPUT_DIR)
     write_json(
         built / "addr/index.json", {"obce": [["508063", "Jakubov", "106", "jakubov"]]}
     )
@@ -116,7 +166,12 @@ def site(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[Path, config.
             "obvod": 1,
             "streets": [],
             "parts": [
-                {"name": "Jakubov", "numbers": ["1"], "points": [1705000, 4845000]}
+                {
+                    "name": "Jakubov",
+                    "numbers": ["1"],
+                    "points": [1705000, 4845000],
+                    "okrsok": 2,
+                }
             ],
         },
     )
@@ -128,6 +183,14 @@ def site(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[Path, config.
     for code in ("cs", "hu", "pl", "uk", "de", "rue", "rmc"):
         write_json(root / f"data/curated/translations/{code}.json", {"ui": ui})
     cfg = config.load(root / "config")
+    # The final results of Jakubov's mayor.
+    final = results.Live("final")
+    final.add(
+        "okres/106",
+        "starosta:508063",
+        results.Record("final", (1, 1), 500, 200, 195, 1, 1, [(1, 195, 1)]),
+    )
+    results.write(cfg.results_dir, final, dt.datetime(2026, 10, 25, tzinfo=dt.UTC))
     dist = tmp_path / "dist"
     build.write(build.assemble(cfg), dist)
     return dist, cfg
@@ -219,21 +282,32 @@ def test_third_party_resource(site):
     ]
 
 
-def test_live_origin_only_in_config_and_csp(site):
+def test_connect_src_only_self(site):
     dist, cfg = site
-    live = cfg.site.live_url
-    assert live is not None
-    [js] = dist.glob("assets/*/js/data.js")
-    js.write_text(js.read_text() + f"\nfetch('{live}/status.json');\n")
-    found = problems(dist, cfg)["origins"]
-    assert [p.split(": ", 1)[1] for p in found] == [f"{live}/status.json"]
-    # A longer host is another origin.
-    found = problems(dist, cfg, dataclasses.replace(cfg.site, live_url=live[:-3]))
-    assert (
-        f"_headers: CSP connect-src is 'self' {live}, expected 'self' {live[:-3]}"
-        in (found["origins"])
+    headers = dist / build.HEADERS
+    headers.write_text(
+        headers.read_text().replace(
+            "connect-src 'self';", "connect-src 'self' https://live.example.sk;"
+        )
     )
-    assert any(p.startswith("sk/index.html:") for p in found["origins"])
+    assert problems(dist, cfg)["origins"] == [
+        "_headers: CSP connect-src is 'self' https://live.example.sk, expected 'self'"
+    ]
+
+
+def test_results(site):
+    dist, cfg = site
+    day = dist / "results/2026-10-24"
+    area = day / "okres/106.json"
+    area.write_text(area.read_text().replace('"final"', '"partial"', 1))
+    (day / "okres/107.json").write_text("{}")
+    shutil.copytree(day, dist / "results/latest")
+    found = problems(dist, cfg)["results"]
+    assert found == [
+        "results/2026-10-24/okres/107.json is not in status.json",
+        "results/2026-10-24/okres/106: hash differs from status.json",
+        "results/latest: not an election day (YYYY-MM-DD)",
+    ]
 
 
 def test_address_outside_its_obec(site):
@@ -243,3 +317,43 @@ def test_address_outside_its_obec(site):
     content["parts"][0]["points"] = [1805000, 4845000]
     path.write_text(json.dumps(content))
     assert len(problems(dist, cfg)["addresses"]) == 1
+
+
+def test_okrsok_missing_from_the_map_and_from_an_address(site):
+    dist, cfg = site
+    write_json(dist / "geo/okrsky/106/1.json", okrsky((1,)))
+    path = dist / "addr/508063.json"
+    content = json.loads(path.read_text())
+    del content["parts"][0]["okrsok"]
+    path.write_text(json.dumps(content))
+    found = problems(dist, cfg)
+    assert [p.split(": ", 1)[1] for p in found["geometry"]] == [
+        "obec 508063: okrsky [1] drawn, the index says [1, 2]",
+        "obec 508063: the okrsky overlap by 0.0 m² and lie 1130.46 m off the obec"
+        " on average",
+    ]
+    assert found["addresses"] == [
+        "addr/508063.json: Jakubov: okrsky missing, but the map draws them"
+    ]
+
+
+def test_base_map(site):
+    dist, cfg = site
+    (dist / "base/okres/106/1.json").unlink()
+    index = json.loads((dist / "base/index.json").read_bytes())
+    index["okresy"].append("107")
+    (dist / "base/index.json").write_text(json.dumps(index))
+    found = problems(dist, cfg)
+    assert found["links"] == [
+        "base/okres/106/1.json missing (needed by base/index.json)",
+        *(
+            f"base/okres/107/{lod}.json missing (needed by base/index.json)"
+            for lod in "012"
+        ),
+    ]
+    assert found["base"] == [
+        "base/index.json: okresy differ from the geo shards'",
+        "base/index.json: lists 4 files, not the 7 the app may request",
+        "base/okres/106/1.json: not "
+        f"{index['files']['okres/106/1.json']:,} bytes as listed",
+    ]

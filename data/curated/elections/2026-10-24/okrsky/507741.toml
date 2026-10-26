@@ -1,0 +1,51 @@
+# Okrsky of Voderady, transcribed by an AI agent in job okrsok-rules-570 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice Agátová, Cíferská, Hlavná, Jozefov dvor, Krátka, Mlynská, Parková, Pavlická, Pažitná, Slnečná, Športová, Trnavská, Záhradná, Voderady (voliči prihlásení na obec Voderady)
+#   okrsok 2: Dlhá, Hlinická, Kandijská, Koniarekova, Nová, Podhájska, Poštová, Školská, Štefánikova, Ulica A.Kubinu
+obec = "507741"
+name = "Voderady"
+okrsky_date = 2026-07-17
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF with a poor text layer; text transcribed from it with diacritics restored ('tef,ĺnikova' read as Štefánikova). Okrsok 1 also has 'Voderady (voliči prihlásení na obec Voderady)'. Platanová ulica and Zichyho námestie are not in the document, and addresses without a street, take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.voderady.sk/e_download.php?file=/data/editor/280sk_9.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "35c059a601dd0d9b8a8dce41a2f226b009b7d2e5784008ad3e64ea836fed7c6f"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Voderady"
+
+[[document]]
+url = "https://www.voderady.sk/obec/volby-a-referendum/volby-do-organov-uzemnej-samospravy-2026/"
+sha256 = "b3de75a27be1660c161f971a0ed5db26a0904874e85660531b3b79ed08fadaf6"
+title = "Voľby do orgánov územnej samosprávy 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Agátová ulica", written = "Agátová"},
+  {street = "Cíferská ulica", written = "Cíferská"},
+  {street = "Hlavná ulica", written = "Hlavná"},
+  {street = "Jozefov dvor"},
+  {street = "Krátka ulica", written = "Krátka"},
+  {street = "Mlynská ulica", written = "Mlynská"},
+  {street = "Parková ulica", written = "Parková"},
+  {street = "Pavlická ulica", written = "Pavlická"},
+  {street = "Pažitná ulica", written = "Pažitná"},
+  {street = "Slnečná ulica", written = "Slnečná"},
+  {street = "Športová ulica", written = "Športová"},
+  {street = "Trnavská ulica", written = "Trnavská"},
+  {street = "Záhradná ulica", written = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dlhá ulica", written = "Dlhá"},
+  {street = "Hlinická ulica", written = "Hlinická"},
+  {street = "Kandijská ulica", written = "Kandijská"},
+  {street = "Koniarekova ulica", written = "Koniarekova"},
+  {street = "Nová ulica", written = "Nová"},
+  {street = "Podhájska ulica", written = "Podhájska"},
+  {street = "Poštová ulica", written = "Poštová"},
+  {street = "Školská ulica", written = "Školská"},
+  {street = "Štefánikova ulica", written = "Štefánikova"},
+  {street = "Ulica A. Kubinu", written = "Ulica A.Kubinu"},
+]

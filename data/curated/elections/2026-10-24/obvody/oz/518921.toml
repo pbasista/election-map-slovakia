@@ -1,0 +1,60 @@
+# Council obvody of Vígľaš (518921), Detva.
+# Transcribed by an AI agent in job obvod-rules-140 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: „starý Vígľaš“ zahŕňa územia ulíc: Podhorská, Zámocká, Pod Baštou, Lesnícka, Zvolenská, Riečna, Železničná, Partizánska, Slov. národného povstania, Káplnská, Malinovského, Poľná a miestna časť Hájniková
+#   obvod 2: „Pstruša“ zahŕňa územie Pod rohy, Pstruša, Dolinky, Kocaň, Malý Sliač a Pod boky
+#   obvod 3: „Za školou“ zahŕňa územie pri ZŠ
+# Okrsky added by an AI agent in job okrsok-rules-139 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volia voliči bývajúci v starej časti Vígľaša t.j ulica Zvolenská, Podhorská, Zámocká, Pod Baštou, Lesnícka, Železničná, Riečna, Partizánska, Slov. národného povstania, Káplnská, Malinovského, Poľná a miestna časť Hájniková
+#   okrsok 2: Pstruša volia bývajúci na Pstruši, Dolinkách, Podrohy, Kocaň, Malý Sliač a Pod boky
+#   okrsok 3: volia voliči bývajúci v miestnej časti za školou
+obec = "518921"
+name = "Vígľaš"
+date = 2026-06-24
+note = "Document is a scan (legible, transcribed by reading the image). Obvod 3 'Za školou' (územie pri ZŠ) names no streets; transcribed as rest, i.e. the street-less addresses of part Vígľaš. Obvod 1 also includes 'miestna časť Hájniková', which is not a part in the register; its street-less addresses cannot be told apart from the obvod 3 area by the document, so they fall into rest (obvod 3) — uncertain."
+okrsky_note = "The okrsky are listed on the municipality's 2026 elections web page (no separate decision document or date); each okrsok coincides with one obvod."
+
+[[document]]
+url = "https://www.viglas.net/download_file_f.php?id=2435785"
+sha256 = "fdd3addb9977db7722d43eb667b4d71f17493808f550dc682e52ea5848a48b99"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 192/2026 zo dňa 24.6.2026)"
+
+[[document]]
+url = "https://www.viglas.net/volby-do-organov-samospravy-obci-a-samospravnych-krajov-2026.html"
+sha256 = "aec692abf3f6b10ec1c571d5a4942f3735cdc7f3bc0e68055fcf017e59149de7"
+title = "Voľby do orgánov samosprávy obcí a samosprávnych krajov 2026 (volebné okrsky)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {street = "Podhorská"},
+  {street = "Zámocká"},
+  {street = "Pod Baštou"},
+  {street = "Lesnícka"},
+  {street = "Zvolenská"},
+  {street = "Riečna"},
+  {street = "Železničná"},
+  {street = "Partizánska"},
+  {street = "Slov. národného povstania"},
+  {street = "Káplnská"},
+  {street = "Malinovského"},
+  {street = "Poľná"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Pstruša", note = "Pod rohy, Dolinky, Kocaň, Malý Sliač, Pod boky are localities of part Pstruša, not register parts"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {rest = true, note = "area by the school without named streets; = street-less addresses of part Vígľaš"},
+]

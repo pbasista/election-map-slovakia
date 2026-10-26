@@ -1,0 +1,44 @@
+# Council obvody of Veľké Rovné (518085), Bytča.
+# Transcribed by an AI agent in job obvod-rules-103 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebné okrsky č. 1 a 2 - časti obce Svetom-Kútie, Rimanovice, Ústredie, Horevsie, Čepele, Nižný koniec, Sídlisko, osoby s trvalým pobytom Obec Veľké Rovné
+#   obvod 2: volebný okrsok č.3 – časti obce Potoky, Žarnov, Soľné, Madzín, Ráztoky, Dolinky
+# Okrsky added by an AI agent in job okrsok-rules-102 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+obec = "518085"
+name = "Veľké Rovné"
+date = 2026-06-23
+note = "The announcement is a scanned PDF (no text layer); transcribed from the rendered page, which is clearly legible. Obvod 2 lists six časti obce that are all register parts; obvod 1 lists local settlement names (Svetom-Kútie, Rimanovice, Ústredie, Horevsie, Čepele, Nižný koniec, Sídlisko) that all lie in the register part Veľké Rovné."
+okrsky_date = 2026-07-17
+okrsky_note = "Grouping only. The mayor's announcement of 17.07.2026: okrsok 1 (Svetom-Kútie, Rimanovice, Ústredie, Horevie, Čepele, osoby s trvalým pobytom Obec Veľké Rovné), okrsok 2 (Nižný koniec, Sídlisko), okrsok 3 (Potoky, Žarnov, Soľné, Madzín, Ráztoky, Dolinky). Okrsky 1 and 2 are named by local settlement names that all lie in the register part Veľké Rovné, which has no streets (addresses by súpisné číslo only), so no rule can split obvod 1 between them."
+
+[[document]]
+url = "https://www.velkerovne.sk/wp-content/uploads/docs/vk2026_11.pdf"
+sha256 = "fe8497bce2a8a8e66131303ff24f27b685863d867823ad13ffb50bf416de6218"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie OZ č. 405/21/9 zo dňa 23.06.2026)"
+
+[[document]]
+url = "https://www.velkerovne.sk/wp-content/uploads/docs/vk2026_12.pdf"
+sha256 = "3015b80e6e86151eaa259fd03457b56f76fb1f41f65aa3475f29f559e7719c68"
+title = "Oznámenie o utvorení volebných okrskov, určení volebných miestností a vymenovanie zapisovateliek okrskových volebných komisií pre voľby do orgánov samosprávy obcí 24. októbra 2026"
+
+[obvod.1]
+seats = 6
+okrsky = [1, 2]
+rules = [
+  {part = "Veľké Rovné", note = "The document names the local parts Svetom-Kútie, Rimanovice, Ústredie, Horevsie, Čepele, Nižný koniec, Sídlisko (not register parts); together with the remaining parts all assigned to obvod 2, these make up the register part Veľké Rovné."},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [3]
+rules = [
+  {part = "Potoky"},
+  {part = "Žarnov"},
+  {part = "Soľné"},
+  {part = "Madzín"},
+  {part = "Ráztoky"},
+  {part = "Dolinky"},
+]

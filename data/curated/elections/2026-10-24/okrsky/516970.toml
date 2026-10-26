@@ -1,0 +1,59 @@
+# Okrsky of Kremnica, transcribed by an AI agent in job okrsok-rules-363 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ul. J. Kollára, Zámocké námestie, Zlatá ulica, Továrenská ulica, Langsfeldova ulica, Štúrova ulica, Rumunskej armády, Kutnohorská ulica, Banská cesta, Nová dolina, Ul. J. Horvátha (čísla domov 860, 861, 862, 863, 865, 871, 872, 878, 887, 888, 892, 893, 894, 896, 897, 898, 899, 900, 901, 912, 913, 916, 917, 918, 919, 920 a 922), Revolta, Mesto Kremnica (bez určenia ulice a čísla domu)
+#   okrsok 2: Ul. ČSA, Dolná ulica
+#   okrsok 3: Štefánikovo námestie, Námestie SNP, Angyalova ulica, Bystrická ulica, Partizánska dolina, Ul. P. Križku, Matunákova ulica, Zechenterova ulica, Ul. Sama Chalupku
+#   okrsok 4: Ul. J. Horvátha, Galandov majer, Veternícka ulica
+obec = "516970"
+name = "Kremnica"
+okrsky_date = 2026-07-20
+okrsky_fill = "nearest"
+okrsky_note = "Ulica Jula Horvátha is split by súpisné čísla: the listed house numbers in okrsok 1, the rest of the street in okrsok 4. 'Mesto Kremnica (bez určenia ulice a čísla domu)' in okrsok 1 are voters registered without an address; the addresses without a street take the nearest placed address."
+
+[[document]]
+url = "https://www.kremnica.sk/download_file_f.php?id=2446514"
+sha256 = "02000bb7745ee90275fd1e367fd37b9e855a39e8dc8033c226d2d1acebae8568"
+title = "Určenie okrskov (primátor mesta Kremnica, 20. júla 2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Ulica Jána Kollára"},
+  {street = "Zámocké námestie"},
+  {street = "Zlatá ulica"},
+  {street = "Továrenská ulica"},
+  {street = "Kutnohorská ulica"},
+  {street = "Banská cesta"},
+  {street = "Nová dolina"},
+  {street = "Revolta"},
+  {street = "Ulica Jurka Langsfelda", written = "Langsfeldova ulica", note = "the register names the street after Jurko Langsfeld; the document uses the adjective form"},
+  {street = "Ulica Ľudovíta Štúra", written = "Štúrova ulica", note = "the register names the street after Ľudovít Štúr; the document uses the adjective form"},
+  {street = "Ulica Rumunskej armády", written = "Rumunskej armády"},
+  {street = "Ulica Jula Horvátha", numbers = "860, 861, 862, 863, 865, 871, 872, 878, 887, 888, 892, 893, 894, 896, 897, 898, 899, 900, 901, 912, 913, 916, 917, 918, 919, 920, 922", by = "supisne", written = "Ul. J. Horvátha"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ulica Československej armády", written = "Ul. ČSA", note = "ČSA is the usual abbreviation of Československej armády"},
+  {street = "Dolná ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Štefánikovo námestie"},
+  {street = "Námestie SNP"},
+  {street = "Angyalova ulica"},
+  {street = "Bystrická ulica"},
+  {street = "Partizánska dolina"},
+  {street = "Ulica Pavla Križku"},
+  {street = "Matunákova ulica"},
+  {street = "Zechenterova ulica"},
+  {street = "Ulica Sama Chalupku"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Ulica Jula Horvátha", written = "Ul. J. Horvátha"},
+  {street = "Galandov majer"},
+  {street = "Veternícka ulica"},
+]

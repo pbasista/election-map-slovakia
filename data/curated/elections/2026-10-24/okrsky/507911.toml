@@ -1,0 +1,132 @@
+# Okrsky of Chorvátsky Grob, transcribed by an AI agent in job okrsok-rules-196 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Hlavná ulica, Hlboká cesta, Chorvátska ulica, Jadranská ulica, Južná ulica, Lúčna ulica, Námestie Josipa Andriča, Obchodná ulica, Poľná ulica, Športová ulica, Toskánska ulica, Ulica Antona Bernoláka, Ulica Hoštáky, Ulica Výhon, Záhradná ulica
+#   okrsok 2: Ulice: Dlhá ulica, Karpatská ulica, Krátka ulica, Severná ulica, Svätoplukova ulica, Školská ulica, Ulica Antona Václavíka, Ulica Malé Vinice, Ulica Mila Urbana, Ulica Na Kŕčoch, Ulica Pod vinicami
+#   okrsok 3: Ulice: Agátová ulica, Bazová ulica, Blahútova ulica, Borovicová ulica, Brusnicová ulica, Buková ulica, Černicová ulica, Čiernovodská ulica, Dubová ulica, Golfová ulica, Hlohová ulica, Hornodvorská ulica, Hrušková ulica, Jarabinová ulica, Jaseňová ulica, Jazdecká ulica, Jazmínová ulica, Jedľová ulica, Jelšová ulica, Lipová ulica, Malá ulica, Malinová ulica, Osiková ulica, Platanová ulica, Šalviová ulica, Šípková ulica, Ulica Šajtoš, Vajnorská ulica, Vavrínová ulica
+#   okrsok 4: Ulice: Bottova ulica, Hviezdoslavova ulica, Chalupkova ulica, Javorová alej, Kukučínova ulica, Nevädzová ulica, Pezinská ulica, Púpavová ulica, Štúrova ulica, Triblavinská ulica, Ulica Janka Kráľa, Ulica Na Pasienku
+#   okrsok 5: Ulice: Drozdia ulica, Hájska ulica, Jastrabia ulica, Kolibríková ulica, Konopná ulica, Ľanová ulica, Oblúková ulica, Rybáriková ulica, Slávičia ulica, Slnečná ulica, Sokolia ulica, Topoľová ulica, Ulica Hrudky, Žilinská ulica, Žitná ulica
+#   okrsok 6: Ulice: Brezová ulica, Čerešňová ulica, Jantárová ulica, Monarská alej, Pálffyho ulica, Rubínová ulica, Smaragdová ulica, Šúrska ulica, Ulica Hlavný dvor, Ulica Suché Miesto, Zafírová ulica
+obec = "507911"
+name = "Chorvátsky Grob"
+okrsky_date = 2026-07-20
+okrsky_fill = "nearest"
+okrsky_note = "Addresses without a street (160, by súpisné číslo) are not covered by the street lists; fill_nearest places them. Streets the document names but the register lacks, left out: okrsok 1: Not in the address register, left out: Hlavná ulica; okrsok 3: Not in the address register, left out: Malá ulica, Malinová ulica; okrsok 5: Not in the address register, left out: Oblúková ulica."
+
+[[document]]
+url = "https://www.chorvatskygrob.sk/data/page/chorvatskygrob/31327/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti.pdf"
+sha256 = "56ac947d5de3af1e5e98a7afd60d06b51d4735095f3299d34d2bc7b85e023b79"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Hlboká cesta"},
+  {street = "Chorvátska ulica"},
+  {street = "Jadranská ulica"},
+  {street = "Južná ulica"},
+  {street = "Lúčna ulica"},
+  {street = "Námestie Josipa Andriča"},
+  {street = "Obchodná ulica"},
+  {street = "Poľná ulica"},
+  {street = "Športová ulica"},
+  {street = "Toskánska ulica"},
+  {street = "Ulica Antona Bernoláka"},
+  {street = "Ulica Hoštáky"},
+  {street = "Ulica Výhon"},
+  {street = "Záhradná ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dlhá ulica"},
+  {street = "Karpatská ulica"},
+  {street = "Krátka ulica"},
+  {street = "Severná ulica"},
+  {street = "Svätoplukova ulica"},
+  {street = "Školská ulica"},
+  {street = "Ulica Antona Václavíka"},
+  {street = "Ulica Malé Vinice"},
+  {street = "Ulica Mila Urbana"},
+  {street = "Ulica Na Kŕčoch"},
+  {street = "Ulica Pod vinicami"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová ulica"},
+  {street = "Bazová ulica"},
+  {street = "Blahútova ulica"},
+  {street = "Borovicová ulica"},
+  {street = "Brusnicová ulica"},
+  {street = "Buková ulica"},
+  {street = "Černicová ulica"},
+  {street = "Čiernovodská ulica"},
+  {street = "Dubová ulica"},
+  {street = "Golfová ulica"},
+  {street = "Hlohová ulica"},
+  {street = "Hornodvorská ulica"},
+  {street = "Hrušková ulica"},
+  {street = "Jarabinová ulica"},
+  {street = "Jaseňová ulica"},
+  {street = "Jazdecká ulica"},
+  {street = "Jazmínová ulica"},
+  {street = "Jedľová ulica"},
+  {street = "Jelšová ulica"},
+  {street = "Lipová ulica"},
+  {street = "Osiková ulica"},
+  {street = "Platanová ulica"},
+  {street = "Šalviová ulica"},
+  {street = "Šípková ulica"},
+  {street = "Ulica Šajtoš"},
+  {street = "Vajnorská ulica"},
+  {street = "Vavrínová ulica"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bottova ulica"},
+  {street = "Hviezdoslavova ulica"},
+  {street = "Chalupkova ulica"},
+  {street = "Javorová alej"},
+  {street = "Kukučínova ulica"},
+  {street = "Nevädzová ulica"},
+  {street = "Pezinská ulica"},
+  {street = "Púpavová ulica"},
+  {street = "Štúrova ulica"},
+  {street = "Triblavinská ulica"},
+  {street = "Ulica Janka Kráľa"},
+  {street = "Ulica Na Pasienku"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Drozdia ulica"},
+  {street = "Hájska ulica"},
+  {street = "Jastrabia ulica"},
+  {street = "Kolibríková ulica"},
+  {street = "Konopná ulica"},
+  {street = "Ľanová ulica"},
+  {street = "Rybáriková ulica"},
+  {street = "Slávičia ulica"},
+  {street = "Slnečná ulica"},
+  {street = "Sokolia ulica"},
+  {street = "Topoľová ulica"},
+  {street = "Ulica Hrudky"},
+  {street = "Žilinská ulica"},
+  {street = "Žitná ulica"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Brezová ulica"},
+  {street = "Čerešňová ulica"},
+  {street = "Jantárová ulica"},
+  {street = "Monarská alej"},
+  {street = "Pálffyho ulica"},
+  {street = "Rubínová ulica"},
+  {street = "Smaragdová ulica"},
+  {street = "Šúrska ulica"},
+  {street = "Ulica Hlavný Dvor", written = "Ulica Hlavný dvor"},
+  {street = "Ulica Suché Miesto"},
+  {street = "Zafírová ulica"},
+]

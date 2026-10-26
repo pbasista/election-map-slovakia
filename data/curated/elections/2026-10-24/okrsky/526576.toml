@@ -1,0 +1,31 @@
+# Okrsky of Hnilčík, transcribed by an AI agent in job okrsok-rules-611 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: voliči od súp. čísla 92, miestna časť Zimná dolina, Cechy, Štolvek, Grétla
+#   okrsok 2: voliči Dolnej časti obce, miestna časť Ráztoky, Bindt a voliči, ktorí majú trvalý pobyt hlásený len na obci
+obec = "526576"
+name = "Hnilčík"
+okrsky_date = 2026-07-09
+okrsky_note = "Okrsok 1 covers voters 'od súp. čísla 92' plus the settlements Zimná dolina, Cechy, Štolvek, Grétla, which are not parts in the register (they lie within part Hnilčík and are assumed to be within the 92+ numbering); okrsok 2 the 'Dolná časť obce' (read as súpisné čísla below 92 in part Hnilčík), the parts Ráztoky and Bindt, and residents registered only to the obec."
+
+[[document]]
+url = "https://www.uradne.sk/user/tablenews/file/1587082"
+sha256 = "2014a9b50f0e563b7a90dd808be00d89923de3c74503011d5dd7dde8e00184fd"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.obechnilcik.sk/samosprava/uradna-tabula?p=2&detail=75113&count=10"
+sha256 = "a42f999c623f2e632e409bb3ebbf396235619b868bec2d354b126c9fe5c9ed7c"
+title = "Úradná tabuľa – Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Hnilčík", numbers = "92-"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Hnilčík", numbers = "1-91", note = "'Dolná časť obce' taken as the numbers below 92", inferred = true},
+  {part = "Ráztoky"},
+  {part = "Bindt"},
+]

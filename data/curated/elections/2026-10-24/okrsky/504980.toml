@@ -1,0 +1,24 @@
+# Okrsky of Závod, transcribed by an AI agent in job okrsok-rules-349 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súp. č. 0 - 600
+#   okrsok 2: súp. č. 601 - 1217
+obec = "504980"
+name = "Závod"
+okrsky_date = 2026-07-23
+okrsky_note = "The okrsky are split by súpisné číslo over the whole obec: 0-600 and 601-1217."
+
+[[document]]
+url = "https://obeczavod.sk/wp-content/uploads/dokumenty/volby-do-samosprav/spojene-volby-26-okrsky-dzcf09.pdf"
+sha256 = "cd3f6f0ec624527b1b7815f16491d0891998758ee66cff5fa23dcdd77933180c"
+title = "Oznámenie o utvorení volebných okrskov, určenie volebných miestností a vymedzenie územného obvodu volebných okrskov"
+
+[okrsok.1]
+rules = [
+  {part = "Závod", numbers = "0-600"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Závod", numbers = "601-"},
+]

@@ -1,0 +1,44 @@
+# Okrsky of Košice-Pereš, transcribed by an AI agent in job okrsok-rules-439 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bystrická (párne), Krásnohorská, Krompašská, Perešská, Revúcka, Svidnícka, Chatky, prihlásení na MČ
+#   okrsok 2: Betliarska, Bystrická (nepárne), Gelnická, Haburská, Jasovská, Jelšavská, Medzevská, Na Košarisku, Sabinovská, Vranovská
+obec = "598208"
+name = "Košice-Pereš"
+okrsky_date = 2026-07-29
+okrsky_fill = "nearest"
+okrsky_note = "'Chatky' (okrsok 1) is not a street in the register and is left out; addresses without a street take the nearest placed address. Residents registered only to the district (prihlásení na MČ) vote in okrsok 1."
+
+[[document]]
+url = "https://www.mcperes.sk/download_file_f.php?id=2450397"
+sha256 = "bcc37cc085fa4d6eea3e7bf0658d20dde246a7f24a17f18bcb5d5ffac68fdf49"
+title = "Určenie volebných okrskov a volebných miestností pre Voľby do OSO a OSK 2026"
+
+[[document]]
+url = "https://www.mcperes.sk/volby-do-oso-a-osk-2026.html"
+sha256 = "a08bcd4831c8bd33d827854745ddbb8b91bcb426f482fe83227e34b28a5c863a"
+title = "Voľby do OSO a OSK 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Bystrická", parity = "even"},
+  {street = "Krásnohorská"},
+  {street = "Krompašská"},
+  {street = "Perešská"},
+  {street = "Revúcka"},
+  {street = "Svidnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bystrická", parity = "odd"},
+  {street = "Betliarska"},
+  {street = "Gelnická"},
+  {street = "Haburská"},
+  {street = "Jasovská"},
+  {street = "Jelšavská"},
+  {street = "Medzevská"},
+  {street = "Na Košarisku"},
+  {street = "Sabinovská"},
+  {street = "Vranovská"},
+]

@@ -1,0 +1,59 @@
+# Okrsky of Zemianska Olča, transcribed by an AI agent in job okrsok-rules-305 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice patriace do volebného okrsku - Kvetná, Jarná, Dunajská, Hlavná, Kapitánska, Kúpeľná, Malá cesta, Mierová, Mlynský rad, Námestie Hrdinov, Školská, Záhradnícky Rad, Železničná
+#   okrsok 2: ulice patriace do volebného okrsku - Dlhý dvor, Jókaiho, Kolárovská, Komárňanská, Kostolná, Krátka, Lipová, Mládeže, Námestie Slobody, Nová, Pekárska, Petőfiho, Piesočná, Poľovnícky rad, Ružová, Úzka, Vinohradnícky rad, Bayerova záhrada
+obec = "501417"
+name = "Zemianska Olča"
+okrsky_date = 2026-07-20
+okrsky_fill = "nearest"
+okrsky_note = "Scanned letter of the mayor to Okresný úrad dated 20.07.2026, read from the image. Addresses without a street take the nearest placed address."
+
+[[document]]
+url = "https://www.zemianskaolca.sk/e_download.php?file=/data/uredni_deska/obsah1796_1.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "c788b83a889454c35d2417241795819a30b0afd3e9543787080c1f55ac96d0fb"
+title = "Voľby do orgánov samosprávy obcí a Voľby do orgánov samosprávnych krajov – utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.zemianskaolca.sk/zverejnovanie/uradna-tabula/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-1919.html?kshow=1"
+sha256 = "774c7665553c103dbaf470c99b4b667281b9d9d8e825514d8bfd31d3fc974daf"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {street = "Kvetná"},
+  {street = "Jarná"},
+  {street = "Dunajská"},
+  {street = "Hlavná"},
+  {street = "Kapitánska"},
+  {street = "Kúpeľná"},
+  {street = "Malá cesta"},
+  {street = "Mierová"},
+  {street = "Námestie Hrdinov"},
+  {street = "Školská"},
+  {street = "Záhradnícky Rad"},
+  {street = "Železničná"},
+  {street = "Mlynský Rad", written = "Mlynský rad"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Jókaiho"},
+  {street = "Kolárovská"},
+  {street = "Komárňanská"},
+  {street = "Kostolná"},
+  {street = "Krátka"},
+  {street = "Lipová"},
+  {street = "Mládeže"},
+  {street = "Námestie Slobody"},
+  {street = "Nová"},
+  {street = "Pekárska"},
+  {street = "Piesočná"},
+  {street = "Poľovnícky rad"},
+  {street = "Ružová"},
+  {street = "Úzka"},
+  {street = "Bayerova záhrada"},
+  {street = "Dlhý Dvor", written = "Dlhý dvor"},
+  {street = "Petöfiho", written = "Petőfiho", note = "Same name; the register writes ö for the Hungarian ő."},
+  {street = "Vinohradnícky Rad", written = "Vinohradnícky rad"},
+]

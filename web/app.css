@@ -60,6 +60,9 @@
   --map-zsk: #6a3d9a;
   --map-city: #0b7a6c;
   --map-council: #b4441c;
+  /* The okrsky (polling districts): a blue apart from the others, drawn
+     thinner, as the finest units. */
+  --map-okrsok: #2f64b5;
   --map-accent: var(--accent);
   --map-pin: #ffffff;
   --map-house: #6b7280;
@@ -73,6 +76,15 @@
   --map-neighbour-line: #a3abb5;
   --map-neighbour-label: #6e7681;
   --map-neighbour-halo: rgb(236 238 238 / 0.92);
+  /* The base map (roads, railways, waters): opaque colours a little darker
+     than the land, drawn at --map-base-alpha over the land and the results'
+     fills, so it stays faint and the fills read the same under it. */
+  --map-base-water: #8fb8e0;
+  --map-base-waterway: #6fa3d6;
+  --map-base-road: #bab3a8;
+  --map-base-major: #a8977f;
+  --map-base-rail: #8f959e;
+  --map-base-alpha: 0.5;
 
   --fs-xs: 12px;
   --fs-sm: 13.5px;
@@ -124,6 +136,7 @@
   --map-zsk: #b49cf5;
   --map-city: #3fcab5;
   --map-council: #f08a5d;
+  --map-okrsok: #7ea6ea;
   --map-pin: #f4f6f9;
   --map-house: #8e9aab;
   --map-text: #e3e9f1;
@@ -133,6 +146,12 @@
   --map-neighbour-line: #445064;
   --map-neighbour-label: #808b9b;
   --map-neighbour-halo: rgb(17 22 29 / 0.92);
+  --map-base-water: #2a5582;
+  --map-base-waterway: #3a6ea3;
+  --map-base-road: #4a5567;
+  --map-base-major: #5e6b80;
+  --map-base-rail: #6a7485;
+  --map-base-alpha: 0.6;
 }
 
 * {
@@ -227,6 +246,16 @@ h3 {
 .ico .fill {
   fill: currentColor;
   stroke: none;
+}
+
+/* Finer lines inside an icon's outline (the okrsky overlay's). */
+.ico .thin {
+  stroke-width: 1.25;
+}
+
+/* A panel filled more faintly than its neighbour (the winner map's). */
+.ico .fill.faint {
+  opacity: 0.45;
 }
 
 /* A warning: the same box wherever it is (ballots, help), lined up with the
@@ -509,10 +538,6 @@ h3 {
   animation: live-pulse 1.6s ease-in-out infinite;
 }
 
-.live-status.final .live-dot {
-  animation: none;
-}
-
 @keyframes live-pulse {
   50% {
     opacity: 0.25;
@@ -530,6 +555,12 @@ h3 {
    much of the voting day has passed in place of the dot. */
 .live-status.voting {
   color: var(--primary);
+}
+
+/* The polls closed, nothing counted yet (live.js `VotingStatus`): the
+   results' pulsing dot, the words quieter than a count's. */
+.live-status.awaiting {
+  color: var(--text-dim);
 }
 
 .voting-bar {
@@ -897,6 +928,10 @@ h3 {
   color: var(--map-council);
 }
 
+.option.layer-okrsky .ico {
+  color: var(--map-okrsok);
+}
+
 /* A turnout layer's icon, its overlay's, in the colour the layer shades the
    map in (mapmode.js `toneOf`); "None" keeps an icon's room, so that the
    labels line up. */
@@ -979,6 +1014,21 @@ span.ico {
   height: 0;
   margin-top: calc(1lh / 2);
   border-top: 2px solid var(--map-council);
+}
+
+/* An okrsok (polling district) border, thinner, in the okrsky's blue;
+   dashed where drawn from the addresses. */
+.swatch.okrsok,
+.swatch.okrsok-approximate {
+  border: 0;
+  border-radius: 0;
+  height: 0;
+  margin-top: calc(1lh / 2);
+  border-top: 1.5px solid var(--map-okrsok);
+}
+
+.swatch.okrsok-approximate {
+  border-top-style: dashed;
 }
 
 .more {
@@ -1332,8 +1382,9 @@ button.contest-head {
   border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
 }
 
-/* Closed with no candidate shown under it, the header is the whole box. */
-.contest:has(> .cands:empty) > .contest-bar {
+/* Closed with no candidate shown under it, the header is the whole box
+   (unless the choice of the results' scope is under it). */
+.contest:has(> .cands:empty):not(:has(> .contest-scope)) > .contest-bar {
   border-radius: calc(var(--radius) - 1px);
 }
 
@@ -1413,6 +1464,32 @@ button.contest-head {
    the votes' pin is in the results' green while it shows them. */
 .contest-map[aria-pressed="true"] {
   background: var(--tone);
+  color: var(--surface);
+}
+
+/* Who leads where (mapmode.js `WinnerMapButton`), before the pin: in the
+   results' green, filled while the map shows it. */
+.winner-map {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin: 0 -2px 0 -4px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--result);
+  cursor: pointer;
+}
+
+.winner-map:hover {
+  background: color-mix(in srgb, var(--result) 14%, transparent);
+}
+
+.winner-map[aria-pressed="true"] {
+  background: var(--result);
   color: var(--surface);
 }
 
@@ -1504,6 +1581,55 @@ button.contest-head {
 .contest-results.pending {
   color: var(--text-faint);
   font-weight: 400;
+}
+
+/* What a contest counted on election night does not have yet (ballots.js
+   `nightNote`): the candidates' votes, so that rows without them do not
+   puzzle. */
+.results-note {
+  margin: 0;
+  padding: 6px 12px 7px;
+  border-top: 1px solid var(--line);
+  color: var(--text-dim);
+  font-size: var(--fs-sm);
+  line-height: 1.35;
+}
+
+/* The scope of a contest's results (ballots.js `ScopeChoice`): the whole
+   contest or a unit of its area that holds the place, as parts of one
+   control under the header, the one shown pressed. */
+.contest-scope {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 6px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  overflow: hidden;
+  font-size: var(--fs-sm);
+}
+
+.contest-scope button {
+  flex: 1 1 auto;
+  padding: 3px 8px;
+  border: 0;
+  background: none;
+  color: var(--text-dim);
+  font: inherit;
+  cursor: pointer;
+}
+
+.contest-scope button + button {
+  border-left: 1px solid var(--line-strong);
+}
+
+.contest-scope button:hover {
+  background: var(--surface-2);
+}
+
+.contest-scope button[aria-pressed="true"] {
+  background: var(--surface-3);
+  color: var(--text);
+  font-weight: 600;
 }
 
 /* A number beside a heading: the findings of a kind on the candidate card. */
@@ -1601,6 +1727,39 @@ button.contest-head {
 
 .cand.current {
   background: var(--accent-deep);
+}
+
+/* On a partial count of a council, the places that would win a seat so far
+   (ballots.js `seatPlaces`): their numbers in the results' green, unless
+   circled or crossed; under the last of them a dashed line in that green,
+   labelled at its right end, where the places that would not follow. */
+.cand.in-seats:not(.crossed) > .num:not([aria-pressed="true"]) {
+  color: var(--result);
+}
+
+.cand.seats-end {
+  position: relative;
+}
+
+li:has(> .cand.seats-end) + li > .cand {
+  border-top: 1px dashed var(--result);
+}
+
+.seats-line {
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  z-index: 1;
+  transform: translateY(50%);
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--result);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+  cursor: help;
 }
 
 /* The ballot number: a button that circles it (ballots.js `CandidateRow`).
@@ -1722,6 +1881,7 @@ button.contest-head {
 .researched,
 .affairs,
 .disputes,
+.withdrawn-mark,
 .elected {
   display: inline-flex;
   align-items: center;
@@ -1747,7 +1907,8 @@ button.contest-head {
 .in-office .ico,
 .researched .ico,
 .affairs .ico,
-.disputes .ico {
+.disputes .ico,
+.withdrawn-mark .ico {
   flex: none;
   width: 12px;
   height: 12px;
@@ -1812,6 +1973,35 @@ button.contest-head {
   color: var(--result);
   font-size: var(--fs-sm);
   font-weight: 700;
+}
+
+/* A candidate who withdrew yet stayed on the ballot (ballots.js
+   `Withdrawn`): a grey round badge with a door after the name, their share
+   and bar in grey, and a quiet tag after the votes, which count all the
+   same. */
+.withdrawn-mark {
+  padding: 0 4px;
+  border-color: var(--text-faint);
+  border-radius: 999px;
+  background: var(--surface-3);
+  color: var(--text);
+  cursor: help;
+}
+
+.withdrawn-votes strong {
+  color: var(--text-faint);
+}
+
+.withdrawn-votes .votes-bar > span {
+  background: var(--text-faint);
+}
+
+.votes .withdrawn {
+  padding: 0 5px;
+  border: 1px dashed var(--line-strong);
+  border-radius: 999px;
+  color: var(--text-dim);
+  cursor: help;
 }
 
 .party.independent {
@@ -2776,7 +2966,37 @@ button.active.excluded {
   --map-result-6: #48b890;
 }
 
-/* The turnout choices in the boundaries menu, after the overlays. */
+/* A winner map's colours (mapmode.js `SERIES`), one for each of the
+   candidates with the most votes, the rest in a grey: hues far apart, of
+   about one lightness, so that none reads as more than another, under
+   labels that stay readable on each. */
+:root {
+  --map-series-1: #5b8fd0;
+  --map-series-2: #f0a04b;
+  --map-series-3: #6fb35f;
+  --map-series-4: #e06a6c;
+  --map-series-5: #ad87c4;
+  --map-series-6: #e3c94e;
+  --map-series-7: #5fb8b0;
+  --map-series-8: #e796b4;
+  --map-series-other: #c3c6cb;
+}
+
+[data-theme="dark"] {
+  --map-series-1: #3d68a3;
+  --map-series-2: #b07030;
+  --map-series-3: #4b8640;
+  --map-series-4: #a8474a;
+  --map-series-5: #7d5e93;
+  --map-series-6: #a08b2c;
+  --map-series-7: #3f8a84;
+  --map-series-8: #a65f7c;
+  --map-series-other: #4b525c;
+}
+
+/* The base map and the turnout choices in the boundaries menu, after the
+   overlays. */
+.base-options,
 .results-options {
   margin-top: 14px;
 }
@@ -2964,6 +3184,139 @@ button.active.excluded {
 .map-legend-none {
   margin: 6px 0 0;
   color: var(--text-faint);
+}
+
+/* Which units the map shows the results by, as zoomed (mapmode.js
+   `levelsOf`): a quiet line under the title. */
+.map-legend-levels {
+  margin: 2px 4px 0 0;
+  color: var(--text-faint);
+}
+
+/* A winner map's candidates: each one's colour, name and the units they
+   lead. */
+.map-legend-leaders {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 3px 8px;
+  max-height: 40vh;
+  margin: 8px 4px 0 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.map-legend-leaders li {
+  display: contents;
+}
+
+.map-legend-swatch {
+  width: 18px;
+  height: 11px;
+  align-self: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+}
+
+.map-legend-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.map-legend-count {
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.map-legend.winner .map-legend-ends {
+  justify-content: flex-start;
+  margin-top: 6px;
+}
+
+/* The unit under the pointer while the map shows results: its name, its
+   figures and an okrsok's 2022 turnout, beside the pointer, which it never
+   takes from the map. */
+.map-tip {
+  position: fixed;
+  z-index: 998;
+  display: flex;
+  flex-direction: column;
+  max-width: 280px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  color: var(--text-dim);
+  font-size: var(--fs-xs);
+  line-height: 1.4;
+  pointer-events: none;
+}
+
+.map-tip strong {
+  color: var(--text);
+}
+
+/* Where a candidate's votes came from (candidate.js `VoteOrigins`), under
+   their contest on the card: the units with the most votes and with the
+   highest share side by side. */
+.origins {
+  margin: 4px 0 14px;
+}
+
+.origins-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.origins-head h4 {
+  margin: 0;
+  font-size: var(--fs-sm);
+}
+
+.origins-head .votes-map {
+  margin: 0;
+}
+
+.origins-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 4px 16px;
+}
+
+.origins h5 {
+  margin: 6px 0 2px;
+  color: var(--text-dim);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+
+.origins-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-xs);
+}
+
+.origins-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 1px 0;
+}
+
+.origins-unit {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.origins-figures {
+  flex: none;
+  color: var(--result);
+  font-variant-numeric: tabular-nums;
 }
 
 /* On a phone the foot of the map is the sheet's: the legend goes under the

@@ -1,0 +1,44 @@
+# Okrsky of Jelšava, transcribed by an AI agent in job okrsok-rules-554 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Námestie republiky, Námestie SNP, Muránska, Mníšanská, Tomášikova, Jesenského, Teplá Voda, Medzník, Obyvatelia bez adresy
+#   okrsok 2: Štefánikova, Armádna, 9. mája, Teplická, Železničná, Pri štadióne, Ševcovská, Kúpelná, Kejďák
+obec = "525791"
+name = "Jelšava"
+okrsky_fill = "nearest"
+okrsky_note = "The list is undated. Hrádok is not named and is placed by fill_nearest, as are addresses without a street. Okrsok 1 also holds residents without an address."
+
+[[document]]
+url = "https://www.jelsava.sk/download_file_f.php?id=2485790"
+sha256 = "a0086c2ce9967f7531a91e8d7e0e20d8963b65caaac006f804edeeb0fd09583a"
+title = "Rozdelenie volebných okrskov podľa ulíc"
+
+[[document]]
+url = "https://www.jelsava.sk/volby-2026-oznam/mid/502036/.html"
+sha256 = "ad9c35d9effdbe903250ab38c2d6714b65e2f8df467bdf04668b82b6f95b9566"
+title = "Voľby 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Námestie Republiky"},
+  {street = "Námestie SNP"},
+  {street = "Muránska"},
+  {street = "Mníšanská"},
+  {street = "Tomášikova"},
+  {street = "Jesenského"},
+  {street = "Teplá Voda"},
+  {street = "Medzník"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Štefánikova"},
+  {street = "Armádna"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Teplická"},
+  {street = "Železničná"},
+  {street = "Pri Štadióne"},
+  {street = "Ševcovská"},
+  {street = "Kúpelná"},
+  {street = "Kejďák"},
+]

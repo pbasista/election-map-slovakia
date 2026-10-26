@@ -1,0 +1,148 @@
+# Okrsky of Štúrovo, transcribed by an AI agent in job okrsok-rules-194 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Baraoltská, Bruntálska, Dunajská, Hasičská, Hlavná, Jesenského - nepárne čísla 11-71,75-83, 99 - 139 a párne čísla od 14 – 64, Kamenická cesta, Kostolná, Sobieskeho, Námestie Sv. Imricha, Námestie slobody (aj obyvatelia s trvalým pobytom Štúrovo, bez ďalšej adresy, súp. č. 1790, 3169, 3348, 3461, 3575), Nánanská cesta, Ostrihomská cesta, Pri colnici, Pri starej pošte, Pri Vadaši, Széchenyiho, Továrenská cesta, Jozefa Bema, Svätého Štefana - stará časť (1 - 17 a 2, 10, 12, 14)
+#   okrsok 2: Agátová, Bocskaiho rad, Dolná, Javorová, Kasárenská, Komenského, Orechová, Orgovánová, Novocintorínska, Pri majeri, Ružová, Svätoplukova, Kozmonautov, Mateja Bela, Želiarsky svah (len rodinné domy).
+#   okrsok 3: Adyho, Balassiho, Krátka, Kossuthova, Mierová, Petőfiho stará časť (rodinné domy 1-65 a 2-90), Športová, Trhovnícka, Svätého Štefana (18 - 44 a 48 párne čísla), Jána Husa, M. Zrínskeho, Vajanského, Vörösmartyho (len rodinné domy).
+#   okrsok 4: Gaštanová (1,3,5 - sídlisko "Papagáj"), Jesenského (76,78,80,82 - sídlisko „Papagáj“), Petőfiho (staré sídlisko 67 - 113), Petőfiho (92 - 108 - sídlisko „Papagáj“), Svätého Štefana (19 – 33 nepárne čísla), Záhradnícka celá (31, 33).
+#   okrsok 5: Družstevný rad (39 a 41), Družstevný rad (33, 35, 37), Gaštanová (2 - 10 čínsky múr), Jesenského č.87 - služobný byt Polikliniky, Lipová, Svätého Štefana (35 - 83 nepárne čísla), Slnečná.
+#   okrsok 6: Jesenského (66, 68, 70, 72, 74), Družstevný rad (1-31 a 6-22).
+#   okrsok 7: Bartókova (celá), Smetanova (celá).
+#   okrsok 8: Jesenského (len č. 73), Na vyhliadke, Nárcisová, Nová, F. Rákócziho celá ulica (35 - 41 a 58 - 80), Želiarsky svah (len činžový dom 27 a 29).
+#   okrsok 9: Štefánikova ulica celá (12 - 48 a 13 - 23), Vörösmartyho ulica - len činžový dom č. 2, 4, 6.
+#   okrsok 10: Dubčekova, J. Kráľa, Sládkovičova (štúrovská časť), Tehliarska cesta, Železničný rad.
+obec = "503584"
+name = "Štúrovo"
+okrsky_date = 2026-07-08
+okrsky_fill = "nearest"
+okrsky_note = "Kostolná is not in the register (left out). The addressless residents (súp. č. 1790, 3169, 3348, 3461, 3575, okrsok 1) are not given a rule. House numbers the document omits (e.g. Jesenského 84+, 85, 89-97; Svätého Štefana 4-8, 16, 46, 50+; Družstevný rad 2-4, 24+) and all addresses without a street (numbered by súpisné číslo only) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.sturovo.sk/2026-volby-do-organov-samospravy-obci.html"
+sha256 = "913b4bc09e390b2cefca6a855cee274e309950ff42d4265f2ab9c218d89a1cac"
+title = "2026 Voľby do orgánov samosprávy obcí (Informácie pre voliča: volebné okrsky a miestnosti)"
+
+[[document]]
+url = "https://www.sturovo.sk/download_file_f.php?id=2441843"
+sha256 = "14509071dd744e88e4226be364975cfa1b201a47f5b26bd9c9351ba1a42f6cfd"
+title = "Informácie pre voliča – určenie volebných okrskov a miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Baraoltská"},
+  {street = "Bruntálska"},
+  {street = "Dunajská"},
+  {street = "Hasičská"},
+  {street = "Hlavná"},
+  {street = "Kamenická cesta"},
+  {street = "Sobieskeho"},
+  {street = "Námestie slobody"},
+  {street = "Nánanská cesta"},
+  {street = "Ostrihomská cesta"},
+  {street = "Pri colnici"},
+  {street = "Pri starej pošte"},
+  {street = "Pri Vadaši"},
+  {street = "Széchenyiho"},
+  {street = "Továrenská cesta"},
+  {street = "Jozefa Bema"},
+  {street = "Nám. Sv. Imricha", written = "Námestie Sv. Imricha"},
+  {street = "Jesenského", numbers = "11-71, 75-83, 99-139", parity = "odd"},
+  {street = "Jesenského", numbers = "14-64", parity = "even"},
+  {street = "Svätého Štefana", numbers = "1-17", parity = "odd"},
+  {street = "Svätého Štefana", numbers = "2, 10, 12, 14"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Bocskaiho rad"},
+  {street = "Dolná"},
+  {street = "Javorová"},
+  {street = "Kasárenská"},
+  {street = "Komenského"},
+  {street = "Orechová"},
+  {street = "Orgovánová"},
+  {street = "Novocintorínska"},
+  {street = "Pri majeri"},
+  {street = "Ružová"},
+  {street = "Svätoplukova"},
+  {street = "Kozmonautov"},
+  {street = "Mateja Bela"},
+  {street = "Želiarsky svah"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Adyho"},
+  {street = "Balassiho"},
+  {street = "Krátka"},
+  {street = "Kossuthova"},
+  {street = "Športová"},
+  {street = "Trhovnícka"},
+  {street = "Jána Husa"},
+  {street = "M. Zrínskeho"},
+  {street = "Vajanského"},
+  {street = "Vörösmartyho"},
+  {street = "Mierova", written = "Mierová", note = "Same street; the document adds an accent."},
+  {street = "Petőfiho", numbers = "1-65", parity = "odd"},
+  {street = "Petőfiho", numbers = "2-90", parity = "even"},
+  {street = "Svätého Štefana", numbers = "18-44, 48", parity = "even"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Gaštanová", numbers = "1, 3, 5"},
+  {street = "Jesenského", numbers = "76, 78, 80, 82"},
+  {street = "Petőfiho", numbers = "67-113", parity = "odd"},
+  {street = "Petőfiho", numbers = "92-108", parity = "even"},
+  {street = "Svätého Štefana", numbers = "19-33", parity = "odd"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Družstevný rad", numbers = "33, 35, 37, 39, 41"},
+  {street = "Gaštanová", numbers = "2-10", parity = "even"},
+  {street = "Jesenského", numbers = "87"},
+  {street = "Lipová"},
+  {street = "Svätého Štefana", numbers = "35-83", parity = "odd"},
+  {street = "Slnečná"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Jesenského", numbers = "66-74", parity = "even"},
+  {street = "Družstevný rad", numbers = "1-31", parity = "odd"},
+  {street = "Družstevný rad", numbers = "6-22", parity = "even"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Bartókova"},
+  {street = "Smetanova"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Jesenského", numbers = "73"},
+  {street = "Na výhliadke", written = "Na vyhliadke", note = "Same street, spelling variant."},
+  {street = "Narcisova", written = "Nárcisová", note = "Same street, spelling variant."},
+  {street = "Nová ulica", written = "Nová"},
+  {street = "F. Rákócziho"},
+  {street = "Želiarsky svah", numbers = "27, 29"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Štefánikova"},
+  {street = "Vörösmartyho", numbers = "2, 4, 6"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Dubčekova"},
+  {street = "J. Kráľa"},
+  {street = "Sládkovičova"},
+  {street = "Tehliarska cesta"},
+  {street = "Železničný rad"},
+]

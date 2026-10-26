@@ -1,0 +1,48 @@
+# Okrsky of Medzev, transcribed by an AI agent in job okrsok-rules-325 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Mariánske námestie, Prochotská, Robotnícka, Revolučná, Šugovská dolina, Sídlisko Mladosť, Mierová, Miroslavská
+#   okrsok 2: Aljašská, Hámornícka, Grunt, Jarná, Partizánska, Štóska
+#   okrsok 3: Kováčska
+obec = "521671"
+name = "Medzev"
+okrsky_date = 2026-07-29
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document read from the rendered page. Addresses without a street (334) are placed by the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.medzev.sk/e_download.php?file=/data/uredni_deska/obsah4125_5.pdf&original=Utvorenie%20okrskov%20pre%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vy%20obc%C3%AD%20a%20org%C3%A1nov%20samospr%C3%A1vnych%20krajov.pdf"
+sha256 = "f12aa940f21112c95989db6fcdfff434eeea4fc88c9c38d2d077ea1bc4c9fdec"
+title = "Utvorenie volebných okrskov a určenie volebných miestností na zabezpečenie volieb do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov dňa 24.10.2026"
+
+[[document]]
+url = "https://www.medzev.sk/mesto/povinne-zverejnovanie/uradna-tabula/volby-do-organov-samospravy-4627.html"
+sha256 = "3b438bf1fd62a9246fd078c23f59ff86f30e8c3eae5c0d8ee7beaa0e329a9db1"
+title = "Voľby do orgánov samosprávy"
+
+[okrsok.1]
+rules = [
+  {street = "Mariánske Námestie", written = "Mariánske námestie"},
+  {street = "Prochotská"},
+  {street = "Robotnícka"},
+  {street = "Revolučná"},
+  {street = "Šugovská Dolina", written = "Šugovská dolina"},
+  {street = "Sídlisko Mladosť"},
+  {street = "Mierová"},
+  {street = "Miroslavská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Aljašská"},
+  {street = "Hámornícka"},
+  {street = "Grunt"},
+  {street = "Jarná"},
+  {street = "Partizánska"},
+  {street = "Štóska"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Kováčska"},
+]

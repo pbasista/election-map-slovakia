@@ -1,0 +1,29 @@
+# Okrsky of Trstice, transcribed by an AI agent in job okrsok-rules-293 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: obyvatelia s číslami domov od 1 do 500
+#   okrsok 2: obyvatelia s číslami domov od 501 do 1000
+#   okrsok 3: obyvatelia s číslami domov od 1001
+obec = "504106"
+name = "Trstice"
+okrsky_note = "Only document found is the obec announcement of 22.10.2026 giving okrsky by house numbers (súpisné, no streets in Trstice); no date of the mayor's decision stated."
+
+[[document]]
+url = "https://www.trstice.sk/udalosti/hlasenie-miestneho-rozhlasu/informacie-o-volbach-177sk.html"
+sha256 = "61915f32f5328cf982056e0631a9e8ee1b31b435b96c222df3611afee8f43daa"
+title = "Informácie o voľbách (hlásenie miestneho rozhlasu, 22.10.2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Trstice", numbers = "1-500"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Trstice", numbers = "501-1000"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Trstice", numbers = "1001-"},
+]

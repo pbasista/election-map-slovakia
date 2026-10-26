@@ -1,0 +1,29 @@
+# Okrsky of Liptovská Osada, transcribed by an AI agent in job okrsok-rules-518 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: voliči súpisné číslo 0 – 300
+#   okrsok 2: voliči súpisné číslo 301 – 1106
+obec = "510637"
+name = "Liptovská Osada"
+okrsky_date = 2026-07-20
+okrsky_note = "Scanned PDF read from the image. The document splits the obec by súpisné číslo only (0–300 / 301–1106), not by part; applied to both parts (Liptovská Osada, Korytnica-kúpele). Okrsok 2 is given as the rest (covers 301–1106 and anything outside the stated ranges). The part Korytnica-kúpele has only súpisné čísla above the okrsok 1 range, so it falls to okrsok 2."
+
+[[document]]
+url = "https://www.liptovskaosada.com/images/novinky/volby2026/volebn%C3%A9_okrsky_a_miestnosti.pdf"
+sha256 = "334b709a484b1117f4d22823aedb1a38e5065e0e636054b4c5519083be979c4a"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov, ktoré sa budú konať 24.10.2026"
+
+[[document]]
+url = "https://www.liptovskaosada.com/index.php/novinky"
+sha256 = "437224e89a9f60b0f0e76339a3207ee186778bfc94175bf0b5abd291716d089d"
+title = "Novinky – Voľby do samosprávy obcí a voľby do VÚC 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Liptovská Osada", numbers = "0-300"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

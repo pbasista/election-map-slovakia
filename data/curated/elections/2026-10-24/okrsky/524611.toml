@@ -1,0 +1,25 @@
+# Okrsky of Kamenica, transcribed by an AI agent in job okrsok-rules-566 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Súpisné čísla 1-380
+#   okrsok 2: Súpisné čísla 381 – 722
+obec = "524611"
+name = "Kamenica"
+okrsky_date = 2026-07-14
+okrsky_fill = "nearest"
+okrsky_note = "A scanned document, read from the page image. The okrsky are given by súpisné číslo ranges (1–380 and 381–722). Any address above 722 takes the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://kamenica.sk/clients/kamenica.sk/uploads/kniznica/1784121591utvor-voleb-okrskov-a-urcenie-vol-miestnosti-kom-volby-2026.pdf"
+sha256 = "a6623a445b5878cbf7b40a1dfb5c9826e9e8e8ecb58fe724a1f78d23a7fb45b0"
+title = "Utvorenie volebných okrskov a určenie volebných miestností - Kom. voľby 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Kamenica", numbers = "1-380"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kamenica", numbers = "381-722"},
+]

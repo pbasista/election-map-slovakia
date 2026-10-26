@@ -1,0 +1,62 @@
+# Council obvody of Bzince pod Javorinou (505897), Nové Mesto nad Váhom.
+# Transcribed by an AI agent in job obvod-rules-128 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod Bzince pod Javorinou č.1 - počet poslancov 5
+#   obvod 2: Volebný obvod Cetuna, Vrzávka č.2 - počet poslancov 2
+#   obvod 3: Volebný obvod Hrušové, Hrubá Strana č.3 - počet poslancov 2
+# Okrsky added by an AI agent in job okrsok-rules-127 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č.1 Bzince pod Javorinou
+#   okrsok 2: Okrsok č.2 Hrušové
+#   okrsok 3: Okrsok č.3 Cetuna
+#   okrsok 4: Okrsok č.4 Hrubá Strana
+obec = "505897"
+name = "Bzince pod Javorinou"
+date = 2026-06-24
+note = "Obvody defined by parts of the municipality (časti obce); all register streets lie in part Bzince pod Javorinou."
+okrsky_note = "The mayor's list (undated) names 4 okrsky by part. Okrsok 3 Cetuna is the only okrsok of obvod 2 (Cetuna, Vrzávka), so it covers Vrzavka too."
+
+[[document]]
+url = "https://obecbzince.sk/wp-content/uploads/dokumenty/komunalne-volby/schvalene-volebne-obvody-tspiw9.docx"
+sha256 = "63eecd50ef207f049692021ff45efed28c27defa4665600bd75973deb30e223e"
+title = "Schválené volebné obvody – uznesenie OZ č. 39/2026 zo dňa 24. júna 2026"
+
+[[document]]
+url = "https://obecbzince.sk/wp-content/uploads/dokumenty/komunalne-volby/volebne-okrsky-a-volebne-miestnosti-ft4p9h.docx"
+sha256 = "273a3d9e0723ef4bdea126d361e706c52718ddbe900ee6ead338bc347fab6de2"
+title = "Volebné okrsky a volebné miestnosti pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Bzince pod Javorinou"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Cetuna"},
+  {part = "Vrzavka", note = "Document writes 'Vrzávka'; same part of the municipality as register's 'Vrzavka'."},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [2, 4]
+rules = [
+  {part = "Hrušové"},
+  {part = "Hrubá Strana"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Hrušové"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Hrubá Strana"},
+]

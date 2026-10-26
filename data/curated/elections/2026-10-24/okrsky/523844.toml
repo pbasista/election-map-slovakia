@@ -1,0 +1,50 @@
+# Okrsky of Spišská Teplica, transcribed by an AI agent in job okrsok-rules-500 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: 1. mája, Budovateľská, Krátka, Lesná, Mládeže, Obrancov mieru, Podhrádok, Svitská, Školská
+#   okrsok 2: ulice: Cintorínska, Družstevná, Mlynská, Okružná, Osloboditeľov, Pokroku, Popradská, Tatranská, Vápenica, Vodárenská, Záhradná, Patrónska, Topoľová
+obec = "523844"
+name = "Spišská Teplica"
+okrsky_date = 2026-07-21
+okrsky_fill = "nearest"
+okrsky_note = "spisskateplica.sk is a campaign site; the official site is obecspisskateplica.sk. Addresses without a street (155) take the nearest placed address."
+
+[[document]]
+url = "https://www.obecspisskateplica.sk/e_download.php?file=/data/uredni_deska/obsah967_1.pdf&original=Inform%C3%A1cia%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20miestnost%C3%AD.pdf"
+sha256 = "77fcdea4a25c6bff9fbb93ffaffd9007859576a90998100832202a4630ae09a2"
+title = "Informácia o utvorení volebných okrskov a miestností"
+
+[[document]]
+url = "https://www.obecspisskateplica.sk/zverejnovanie-1/uradna-tabula/informacia-o-utvoreni-volebnych-okrskov-a-miestnosti-1040.html"
+sha256 = "7dff94f75b6fa03260507b9520d843dbc94dba5fe8cc0db787f9208fa6bcf488"
+title = "Informácia o utvorení volebných okrskov a miestností (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {street = "1. mája"},
+  {street = "Budovateľská"},
+  {street = "Krátka"},
+  {street = "Lesná"},
+  {street = "Mládeže"},
+  {street = "Obrancov mieru"},
+  {street = "Podhrádok"},
+  {street = "Svitská"},
+  {street = "Školská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Mlynská"},
+  {street = "Okružná"},
+  {street = "Osloboditeľov"},
+  {street = "Pokroku"},
+  {street = "Popradská"},
+  {street = "Tatranská"},
+  {street = "Vápenica"},
+  {street = "Vodárenská"},
+  {street = "Záhradná"},
+  {street = "Patrónska"},
+  {street = "Topoľová"},
+]

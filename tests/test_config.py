@@ -107,30 +107,43 @@ def test_unknown_key_rejected(cfg: Path):
         config.load(cfg)
 
 
-def test_live_url_from_environment(cfg: Path, monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.delenv(config.LIVE_URL_ENV, raising=False)
-    assert config.load(cfg).site.live_url == "https://live.volebnamapa.sk"
-    monkeypatch.setenv(config.LIVE_URL_ENV, "http://127.0.0.1:8766/")
-    assert config.load(cfg).site.live_url == "http://127.0.0.1:8766"
-    monkeypatch.setenv(config.LIVE_URL_ENV, "")
-    assert config.load(cfg).site.live_url is None
-    monkeypatch.setenv(config.LIVE_URL_ENV, "https://live.example.sk/results")
-    with pytest.raises(config.ConfigError, match="EMS_LIVE_URL: must be empty"):
-        config.load(cfg)
+def test_results_dir_per_election(cfg: Path):
+    loaded = config.load(cfg)
+    assert loaded.results_dir == loaded.root / "data/build/results/2026-10-24"
 
 
 def test_live_window_from_polls_close(cfg: Path, monkeypatch: pytest.MonkeyPatch):
-    # The released site polls from the polls' closing for live_days; a test
-    # server (EMS_LIVE_URL) at any time.
-    monkeypatch.delenv(config.LIVE_URL_ENV, raising=False)
+    # The released site polls from the polls' closing for live_days; a build
+    # for testing (EMS_RESULTS_ANYTIME=1) at any time.
+    monkeypatch.delenv(config.RESULTS_ANYTIME_ENV, raising=False)
     edit(cfg / "site.toml", "live_days = 7", "live_days = 3")
     site = config.load(cfg).site
     assert site.live_window is not None
     start, end = site.live_window
     assert start == site.polls_close
     assert end.isoformat() == "2026-10-27T20:00:00+01:00"
-    monkeypatch.setenv(config.LIVE_URL_ENV, "http://127.0.0.1:8766")
+    monkeypatch.setenv(config.RESULTS_ANYTIME_ENV, "0")
+    assert config.load(cfg).site.live_window == site.live_window
+    monkeypatch.setenv(config.RESULTS_ANYTIME_ENV, "1")
     assert config.load(cfg).site.live_window is None
+    monkeypatch.setenv(config.RESULTS_ANYTIME_ENV, "yes")
+    with pytest.raises(config.ConfigError, match="EMS_RESULTS_ANYTIME: must be"):
+        config.load(cfg)
+
+
+def test_live_toggle(cfg: Path, monkeypatch: pytest.MonkeyPatch):
+    # site.toml `live` turns polling on or off; a build for testing
+    # (EMS_RESULTS_ANYTIME=1) polls even with it off.
+    monkeypatch.delenv(config.RESULTS_ANYTIME_ENV, raising=False)
+    edit(cfg / "site.toml", "live = false", "live = true")
+    assert config.load(cfg).site.live
+    edit(cfg / "site.toml", "live = true", "live = false")
+    assert not config.load(cfg).site.live
+    monkeypatch.setenv(config.RESULTS_ANYTIME_ENV, "1")
+    assert config.load(cfg).site.live
+    edit(cfg / "site.toml", "live = false", 'live = "no"')
+    with pytest.raises(config.ConfigError, match="live: expected bool"):
+        config.load(cfg)
 
 
 def test_key_of_another_input_kind_rejected(cfg: Path):

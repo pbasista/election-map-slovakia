@@ -1,0 +1,50 @@
+# Council obvody of Hronský Beňadik (516830), Žarnovica.
+# Transcribed by an AI agent in job obvod-rules-135 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č.1 časť obce Hronský Beňadik; Volebný obvod č. 1 – počet poslancov 7
+#   obvod 2: Volebný obvod č. 2 časť obce Psiare; Volebný obvod č. 2 – počet poslancov 2
+# Okrsky added by an AI agent in job okrsok-rules-134 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný obvod - Hronský Beňadik, okrsok č. 1
+#   okrsok 2: Volebný obvod - Psiare, okrsok č. 2
+obec = "516830"
+name = "Hronský Beňadik"
+date = 2026-06-29
+note = "Text transcribed from Uznesenie č. 271/2026 as recorded in the minutes of the council session of 29 June 2026 (text PDF). The separately published 'Výpis z uznesenia č. 271/2026' is a scan whose text is too faint to read; the minutes give 7 + 2 = 9 seats."
+okrsky_note = "The elections page states okrsok 1 = obvod Hronský Beňadik, okrsok 2 = obvod Psiare; the mayor's PDF (undated in its text layer) lists okrsok 1 Dom kultúry and okrsok 2 Stará škola Psiare."
+
+[[document]]
+url = "https://www.hronskybenadik.sk/download_file_f.php?id=2453369"
+sha256 = "0b3c19649563211d878b8eded04bc04cbbbab321c4ff5d18acf6d23c0232a15a"
+title = "Zápisnica z 25. zasadnutia Obecného zastupiteľstva v Hronskom Beňadiku zo dňa 29. júna 2026 (Uznesenie č. 271/2026)"
+
+[[document]]
+url = "https://www.hronskybenadik.sk/download_file_f.php?id=2447079"
+sha256 = "ccbae29bb125a785da89d2269fea478437daee963981fcf0168e9ae557832a05"
+title = "Výpis z uznesenia - č. 271/2026"
+
+[[document]]
+url = "https://www.hronskybenadik.sk/volby-do-organov-samospravy-obci-24-10-2026.html"
+sha256 = "5d5fe1fd1f3d870c4d4ac0ce9c75bff45ffcc83907352e3087bed592c2c30ead"
+title = "Voľby do orgánov samosprávy obcí 24.10.2026 (Určenie volebných okrskov a určenie volebných miestností)"
+
+[[document]]
+url = "https://www.hronskybenadik.sk/download_file_f.php?id=2447020"
+sha256 = "441201f8a7aa9c028ba1485d60e062653988833597eb2327292a66a84ee8900e"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[obvod.1]
+seats = 7
+okrsky = [1]
+rules = [
+  {part = "Hronský Beňadik"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Psiare"},
+]

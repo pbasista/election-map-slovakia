@@ -214,10 +214,11 @@ export function contestLabel(id, index) {
 }
 
 /* `past` is the turnout of the last election of the contest's body (build.py
- * `past`): {election, date, eligible, voters, whole}, `election` the results
- * name (oso2022, osk2022, oso202303, …), `whole` set when the figures are of
- * the whole municipality or city rather than this council obvod; null when
- * not known. */
+ * `past`): {election, date, eligible, voters, whole, okrsky}, `election` the
+ * results name (oso2022, osk2022, oso202303, …), `whole` set when the figures
+ * are of the whole municipality or city rather than this council obvod,
+ * `okrsky` the numbers of the okrsky they are of where they are this
+ * obvod's, summed over its okrsky (else null); null when not known. */
 async function contest(id, index) {
   const [file, translated] = await Promise.all([getJSON(areaPath(id, index)), occupations()]);
   const entry = file.contests[id] ?? { candidates: [] };
@@ -243,6 +244,7 @@ async function contest(id, index) {
           eligible: entry.past[2],
           voters: entry.past[3],
           whole: entry.past[4] === 1,
+          okrsky: Array.isArray(entry.past[4]) ? entry.past[4] : null,
         }
       : null,
     candidates: entry.candidates.map((row) => decodeCandidate(id, entry, row, translated, index, file.research)),
@@ -270,14 +272,15 @@ export async function contests(ids) {
  * one obvod.
  *
  * Returns {obec, contests: [{id, label, seats, seats2022, sources, holder, past, candidates,
- * council?}], council, obvod, estimated}: `holder` the mayor or president in office
+ * council?}], council, obvod, estimated, group}: `holder` the mayor or president in office
  * ({name, since, number, won}, `number` null when not standing in the contest);
  * `council` 'single' (one obvod), 'address' (several, and
  * the place's is known: `obvod`), 'choose' (several, known by address, but
  * no address chosen), 'pending' (several, not known by address yet) or
  * 'none'. Without an obvod every council obvod is listed, with `council`
  * set. `estimated`: the obec has not published which addresses are in which
- * obvod, so they are a guess. */
+ * obvod, so they are a guess. `group`: the council obvody and okrsky of the
+ * houses of the street or part chosen (`groupUnits`). */
 export async function ballots(code, where = {}) {
   const index = await dataIndex();
   const obec = await obecInfo(code);
@@ -285,7 +288,9 @@ export async function ballots(code, where = {}) {
   let council = 'none';
   const councilIds = [];
   const byAddress = index.by_address.includes(obec.code);
-  const obvod = obec.councils > 1 && byAddress ? (where.obvod ?? (await groupObvod(code, where))) : null;
+  const group = await groupUnits(code, where);
+  const one = group.obvody.length === 1 ? group.obvody[0] : null;
+  const obvod = obec.councils > 1 && byAddress ? (where.obvod ?? one) : null;
   if (obec.councils === 1) {
     council = 'single';
     councilIds.push(`oz:${obec.code}/1`);
@@ -301,18 +306,21 @@ export async function ballots(code, where = {}) {
   ids.push(`zsk:${obec.kraj}/${obec.zsk}`, `predseda:${obec.kraj}`);
   const contests = await Promise.all(ids.map((id) => contest(id, index)));
   for (const c of contests) if (councilIds.includes(c.id)) c.council = council;
-  return { obec, council, obvod, estimated: index.estimated.includes(obec.code), contests };
+  return { obec, council, obvod, estimated: index.estimated.includes(obec.code), contests, group };
 }
 
-/* The council obvod of all the houses of the street or part *where* names
- * in obec *code*, or null if they are in several (or none is named). */
-async function groupObvod(code, { street, part }) {
+/* The council obvody and the okrsky of the houses of the street or part
+ * *where* names in obec *code*, as the address file gives them (files.js
+ * `addressFile`), each in order: {obvody, okrsky}, empty where it gives
+ * none or none is named. */
+async function groupUnits(code, { street, part }) {
   const name = street ?? part;
-  if (!name) return null;
+  if (!name) return { obvody: [], okrsky: [] };
   const kind = street ? 'streets' : 'parts';
   const group = (await addressFile(code)).groups.find((g) => g.kind === kind && g.name === name);
-  const obvody = new Set(group?.obvody ?? []);
-  return obvody.size === 1 ? [...obvody][0] : null;
+  const numbers = (values) =>
+    [...new Set((values ?? []).filter((v) => v != null).map(Number))].sort((a, b) => a - b);
+  return { obvody: numbers(group?.obvody), okrsky: numbers(group?.okrsky) };
 }
 
 /* A candidacy and every candidacy of the same person, each with its whole

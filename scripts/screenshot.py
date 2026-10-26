@@ -14,7 +14,8 @@ The scene: the English page in the dark theme, 1280×800 at twice the pixel
 density, Banská Bystrica clicked in its council constituency No. 1, so the
 pane lists the ballots there beside the map; as on the day before the
 elections whenever it is taken: the page's clock set to noon that day, so
-no voting line, and the live results' origin blocked, so no results.
+no voting line, and the results (/results/) blocked, so none even in a
+build that reads them at any time (EMS_RESULTS_ANYTIME).
 """
 
 import argparse
@@ -41,8 +42,8 @@ ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
 OUT = ROOT / "docs/img/main.png"
 SITE = ROOT / "config/site.toml"
-# As the build reads it (config.py LIVE_URL_ENV).
-LIVE_URL_ENV = "EMS_LIVE_URL"
+# The results' files, as the shells' config names them (build.py).
+RESULTS = "*/results/*"
 WIDTH, HEIGHT, SCALE = 1280, 800, 2
 # Banská Bystrica (obec 508438), a point in its council constituency No. 1;
 # `~`: the constituency of a clicked point, as the map marks it.
@@ -203,20 +204,15 @@ def wait_until_ready(tools: DevTools, deadline: float) -> None:
     sys.exit(f"screenshot: the pane did not show {READY!r} in {TIMEOUT:.0f} s")
 
 
-def day_before() -> tuple[int, str | None]:
-    """Return noon of the day before the elections and the live origin.
-
-    Noon in Slovak time, in ms since the epoch; the live results' origin as
-    the build has it (config/site.toml, EMS_LIVE_URL), or None.
-    """
+def day_before() -> int:
+    """Return noon of the day before the elections, in ms since the epoch."""
     site = tomllib.loads(SITE.read_text())
     noon = dt.datetime.combine(
         site["election"] - dt.timedelta(days=1),
         dt.time(12),
         ZoneInfo("Europe/Bratislava"),
     )
-    live = os.environ.get(LIVE_URL_ENV, site["live_url"]).rstrip("/")
-    return int(noon.timestamp() * 1000), live or None
+    return int(noon.timestamp() * 1000)
 
 
 def main() -> None:
@@ -228,7 +224,7 @@ def main() -> None:
     if not (DIST / "en/index.html").exists():
         sys.exit("screenshot: no dist/en/index.html; run `uv run ems build` first")
     server = serve(DIST)
-    noon, live = day_before()
+    noon = day_before()
     url = f"http://127.0.0.1:{server.server_port}/en/{HASH}"
     deadline = time.monotonic() + TIMEOUT
     # The browser's helpers may still be writing to the profile as it goes;
@@ -269,9 +265,8 @@ def main() -> None:
             )
             tools.call("Page.enable")
             tools.call("Page.addScriptToEvaluateOnNewDocument", source=CLOCK % noon)
-            if live:
-                tools.call("Network.enable")
-                tools.call("Network.setBlockedURLs", urls=[f"{live}/*"])
+            tools.call("Network.enable")
+            tools.call("Network.setBlockedURLs", urls=[RESULTS])
             tools.call("Page.navigate", url=url)
             wait_until_ready(tools, deadline)
             time.sleep(SETTLE)

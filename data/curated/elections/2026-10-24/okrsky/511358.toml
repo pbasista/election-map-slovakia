@@ -1,0 +1,52 @@
+# Okrsky of Divín, transcribed by an AI agent in job okrsok-rules-412 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: B. S. Timravy, Družstevná, Fučíkova, Hrnčiarska, Hurbanova, Lazná, Divín - Lazy, Lúčna, Nálepkova, Partizánska, Potočná, Sládkovičova, Športová, Štúrova, Švermova
+#   okrsok 2: Cintorínska, Hradná, J. Kráľa, Jánskeho, Jilemnického, Mlynská, Mons. Konštantína Loju, Moyzesova, Námestie mieru, Novohradská, SNP, Štefánikova, Záhradná, Zelená, Divín
+obec = "511358"
+name = "Divín"
+okrsky_date = 2026-07-14
+okrsky_fill = "nearest"
+okrsky_note = "Two-column table in the DOCX. 'Divín - Lazy' read as part Divínske Lazy. 'Divín' in okrsok 2 (residents without a street address) and 'Rekreačná oblasť' (column unclear, not in register) get no rule; addresses without a street take the nearest okrsok. Námestie mieru = register Námestie Mieru (case)."
+
+[[document]]
+url = "https://divin.sk/wp-content/uploads/dokumenty/volby-do-samosprav/vytvorenie-vol.-okrskov-a-urcenie-miestnosti-5xw3wu.docx"
+sha256 = "379f7656596517f6f1227b9b03c590477ab1d06e64d527107bdf70ee58c9a3bd"
+title = "Oznámenie o vytvorení volebných okrskov a určení volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "B. S. Timravy"},
+  {street = "Družstevná"},
+  {street = "Fučíkova"},
+  {street = "Hrnčiarska"},
+  {street = "Hurbanova"},
+  {street = "Lazná"},
+  {street = "Lúčna"},
+  {street = "Nálepkova"},
+  {street = "Partizánska"},
+  {street = "Potočná"},
+  {street = "Sládkovičova"},
+  {street = "Športová"},
+  {street = "Štúrova"},
+  {street = "Švermova"},
+  {part = "Divínske Lazy", note = "document writes 'Divín - Lazy'"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Hradná"},
+  {street = "J. Kráľa"},
+  {street = "Jánskeho"},
+  {street = "Jilemnického"},
+  {street = "Mlynská"},
+  {street = "Moyzesova"},
+  {street = "Novohradská"},
+  {street = "SNP"},
+  {street = "Štefánikova"},
+  {street = "Záhradná"},
+  {street = "Zelená"},
+  {street = "Ul. Mons. Konštantína Loju", written = "Mons. Konštantína Loju"},
+  {street = "Námestie Mieru", written = "Námestie mieru"},
+]

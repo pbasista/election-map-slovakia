@@ -1,0 +1,30 @@
+# Okrsky of Svederník, transcribed by an AI agent in job okrsok-rules-506 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Svederník, Marček
+#   okrsok 2: Zárieč-Keblov
+obec = "518000"
+name = "Svederník"
+okrsky_date = 2026-08-06
+okrsky_note = "Scanned decision read from the rendered page; date handwritten \"6.8.\" 2026. svedernik.info is the obec's official site (Obec Svederník)."
+
+[[document]]
+url = "https://www.svedernik.info/pages/attachments/yWydXvccTNERxEZEbGBG4R.pdf"
+sha256 = "1c3fbd3454f464bf22615e0b7085858ef5aa775b09ba4f322677b871fe8506eb"
+title = "Rozhodnutie starostu obce o utvorení volebných okrskov pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov v roku 2026"
+
+[[document]]
+url = "https://www.svedernik.info/pages/volby-do-organov-samospravy-obci-a-do-organov-samospravnych-krajov-24-oktober-2026"
+sha256 = "ca1fb2dc6e3d994fc8943d84ec94dfd4ca3e5358eafe12bf70ce1f44b4a82c00"
+title = "Voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov, 24. október 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Svederník"},
+  {part = "Marček"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Zárieč-Keblov"},
+]

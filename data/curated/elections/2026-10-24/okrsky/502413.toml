@@ -1,0 +1,46 @@
+# Okrsky of Kalná nad Hronom, transcribed by an AI agent in job okrsok-rules-434 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 29.augusta, Dlhá, Krátka, Mieru, Mlynská, Ružová, Úzka, Školská, Viničná
+#   okrsok 2: Červenej armády, Nitrianska, Nová, Komenského, Tekovská, SNP, Hronská, Júliusa Fučíka, Mochovská, Záhradná, Holubia, Kpt. Nálepku, Slnečná
+obec = "502413"
+name = "Kalná nad Hronom"
+okrsky_date = 2026-07-09
+okrsky_fill = "nearest"
+okrsky_note = "The part Mochovce (not named) is inferred into okrsok 2 with Mochovská cesta. Mochovská read as the register street Mochovská cesta (left-out \"cesta\"). The document omits the register street Nádražná (1 address), and the addresses without a street; these take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.kalna.eu/modules/file_storage/download.php?file=0ac7fea3%7C5775&inline=1"
+sha256 = "0ad12c20820bdea0fb278028f2b96061fd18418d7efe1154290e89cc4056ee74"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "29.augusta"},
+  {street = "Dlhá"},
+  {street = "Krátka"},
+  {street = "Mieru"},
+  {street = "Mlynská"},
+  {street = "Ružová"},
+  {street = "Úzka"},
+  {street = "Školská"},
+  {street = "Viničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Červenej Armády", written = "Červenej armády"},
+  {street = "Nitrianska"},
+  {street = "Nová"},
+  {street = "Komenského"},
+  {street = "Tekovská"},
+  {street = "SNP"},
+  {street = "Hronská"},
+  {street = "Júliusa Fučíka"},
+  {street = "Mochovská cesta", written = "Mochovská", note = "the register names the street Mochovská cesta; the document leaves out \"cesta\"; no other street of the obec is called Mochovská"},
+  {part = "Mochovce", note = "the document does not name the part Mochovce; placed in okrsok 2, whose Mochovská cesta and Kalnica streets lead to it", inferred = true},
+  {street = "Záhradná"},
+  {street = "Holubia"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Slnečná"},
+]

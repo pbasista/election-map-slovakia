@@ -1,0 +1,33 @@
+# Okrsky of Cinobaňa, transcribed by an AI agent in job okrsok-rules-517 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 CINOBAŇA – pre občanov s trvalým pobytom v Cinobani
+#   okrsok 2: Okrsok č. 2 KATARÍNSKA HUTA – pre občanov s trvalým pobytom v časti Maša, Katarínska Huta, Hrnčiarky a Žihľava
+#   okrsok 3: Okrsok č. 3 TURIČKY – pre občanov s trvalým pobytom v časti Turičky
+obec = "511315"
+name = "Cinobaňa"
+okrsky_date = 2026-07-22
+okrsky_note = "Document writes 'TURIČKY'; the part is Turíčky."
+
+[[document]]
+url = "https://www.cinobana.sk/e_download.php?file=/data/uredni_deska/obsah206_9.pdf&original=Ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20miestnost%C3%AD%202026.pdf"
+sha256 = "7247b78a60dbc6edab2d807d100d2f54d566e6bd8dc65b10897d1ceea241bee1"
+title = "Určenie volebných okrskov a miestností 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Cinobaňa"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Maša"},
+  {part = "Katarínska Huta"},
+  {part = "Hrnčiarky"},
+  {part = "Žihľava"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Turíčky"},
+]

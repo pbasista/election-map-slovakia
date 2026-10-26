@@ -1,0 +1,37 @@
+# Council obvody of Krišovská Liesková (528463), Michalovce.
+# Transcribed by an AI agent in job obvod-rules-184 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 zahŕňa voličov bývajúcich v obecnej časti Krížany od čísla domu 1 do 121 a od čísla domu 133 do 143.
+#   obvod 2: Volebný obvod č. 2 zahŕňa voličov bývajúcich v obecnej časti Liesková od čísla domu 1 do 108 a v obecnej časti Krížany od čísla domu 122 do 132.
+# Okrsky added by an AI agent in job okrsok-rules-184 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný obvod č. 1 – volebný okrsok č. 1 - Kultúrny dom Krišovská Liesková, Krížany 145
+#   okrsok 2: Volebný obvod č. 2 – volebný okrsok č. 2 - Kultúrny dom Krišovská Liesková, Liesková 25
+obec = "528463"
+name = "Krišovská Liesková"
+date = 2026-07-20
+note = "Obvody text from the municipality's 'Základné informácie' PDF; identical wording in the minutes of the OZ meeting of 20.7.2026 (uznesenia č. 67/2026 and 68/2026, https://www.uradne.sk/user/tablenews/file/1596324, linked from the notice board), which also gives the seats: 4 in obvod 1, 3 in obvod 2. Numbers are súpisné čísla within parts. Krížany numbers above 143 are not named by the document and are put in obvod 1 (Krížany)."
+okrsky_note = "The document assigns one okrsok to each obvod (okrsok 1 = obvod 1, okrsok 2 = obvod 2); text is the document's line naming obvod and okrsok."
+
+[[document]]
+url = "https://www.krisovskalieskova.sk/files/2026-07-21-101303-Z__kladn__-inform__cie.pdf"
+sha256 = "72570bdbe9a1bd34b886b37e1b4cdd5477f94662573389f94be37076d6ea7640"
+title = "Základné informácie – Voľby do orgánov samosprávy obcí 2026 (Obec Krišovská Liesková)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Krížany", numbers = "1-121, 133-143"},
+  {part = "Krížany", note = "Krížany house numbers above 143 (e.g. 145, the cultural house of obvod 1's polling station) are not named; assigned to obvod 1 with the rest of Krížany.", inferred = true},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Krížany", numbers = "122-132"},
+  {part = "Liesková", note = "Document says Liesková 1 to 108; whole part used so any higher number also falls here."},
+]

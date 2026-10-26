@@ -1,0 +1,29 @@
+# Okrsky of Svinia, transcribed by an AI agent in job okrsok-rules-623 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: všetky ulice v obci, okrem ul. Hložskej
+#   okrsok 2: ul. Hložská
+obec = "525171"
+name = "Svinia"
+okrsky_date = 2026-07-20
+okrsky_note = "Scanned PDF read from the rendered image. Okrsok 1 is 'všetky ulice v obci, okrem ul. Hložskej' (rest, including addresses without a street); okrsok 2 is Hložská. Set by OZ resolution č. 30/2026, document dated 20.07.2026."
+
+[[document]]
+url = "https://www.obecsvinia.sk/files/2026-07-20-102710-Zverejnenie_po__tu_okrskov_vo_volebnom_obvode.pdf"
+sha256 = "db46decac38e85bcd49247f0ba1c7fd27034c0ea74dc0fa075d9d960ae126b70"
+title = "Voľby do orgánov samosprávy obce 2026 – Zverejnenie počtu okrskov vo volebnom obvode"
+
+[[document]]
+url = "https://www.obecsvinia.sk/volby-do-organov-samospravy-obci-dna-24102026-od-700-hod-do-2000-hod-a73-973"
+sha256 = "b23a46c175d14871f232eeb4b4b073b45485a5d8bc82a0a7ea183a8ffda7e208"
+title = "Voľby do orgánov samosprávy obcí dňa 24.10.2026"
+
+[okrsok.1]
+rules = [
+  {rest = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hložská"},
+]

@@ -1,0 +1,70 @@
+# Okrsky of Borský Mikuláš, transcribed by an AI agent in job okrsok-rules-238 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1. mája, Borová, Detvianska, Dr.V.Cintulu, Hurbanova, Chodecká, M.R.Štefánika, Na hliníkoch, Na humnisku, Na vŕšku, Na dereši, Sadová, Sládkovičova, Záhorácka, Zemanská a voliči, ktorých miestom trvalého pobytu je obec
+#   okrsok 2: Družstevná, Kollárová, Kostolná, Kováčska, Lesná, Na barine, Na rybníčkoch, Na záhradách, Peterská, Pri Struhe, Štúrova
+#   okrsok 3: Bratislavská, Cintorínska, Habánska, Habány, J.Hollého, Komenského, L. Svobodu, Na doline, Na výhone, Ságelská, Šaštínska, Školská, U sv. Jána, Urbárska, V ohrade, Za mostom, Smuha
+obec = "504238"
+name = "Borský Mikuláš"
+okrsky_fill = "nearest"
+okrsky_note = "Notice of the starosta's okrsky for 24 Oct 2026 (no decision date given). Okrsok 1 also holds voters registered only to the obec. The 3 addresses without a street take the nearest okrsok."
+
+[[document]]
+url = "https://www.borskymikulas.sk/oznamy/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-.html"
+sha256 = "fdd428dd059571b7889e0ab3c4e800212ad80ef35acdd9f31bdddf066fd07a4c"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Borová"},
+  {street = "Detvianska"},
+  {street = "Dr.V.Cintulu"},
+  {street = "Hurbanova"},
+  {street = "Chodecká"},
+  {street = "M.R.Štefánika"},
+  {street = "Na Hliníkoch", written = "Na hliníkoch"},
+  {street = "Na humnisku"},
+  {street = "Na Vŕšku", written = "Na vŕšku"},
+  {street = "Na Dereši", written = "Na dereši"},
+  {street = "Sadová"},
+  {street = "Sládkovičova"},
+  {street = "Záhorácka"},
+  {street = "Zemanská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Kollárova", written = "Kollárová", note = "Kollárová is the register's Kollárova (vowel length typo)."},
+  {street = "Kostolná"},
+  {street = "Kováčska"},
+  {street = "Lesná"},
+  {street = "Na Barine", written = "Na barine"},
+  {street = "Na Rybníčkoch", written = "Na rybníčkoch"},
+  {street = "Na Záhradách", written = "Na záhradách"},
+  {street = "Peterská"},
+  {street = "Pri Struhe"},
+  {street = "Štúrova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bratislavská"},
+  {street = "Cintorínska"},
+  {street = "Habánska"},
+  {street = "Habány"},
+  {street = "Jána Hollého", written = "J.Hollého"},
+  {street = "Komenského"},
+  {street = "L.Svobodu", written = "L. Svobodu"},
+  {street = "Na Doline", written = "Na doline"},
+  {street = "Na Výhone", written = "Na výhone"},
+  {street = "Ságelská"},
+  {street = "Šaštínska"},
+  {street = "Školská"},
+  {street = "U Sv.Jána", written = "U sv. Jána"},
+  {street = "Urbárska"},
+  {street = "V Ohrade", written = "V ohrade"},
+  {street = "Za Mostom", written = "Za mostom"},
+  {street = "Smuha"},
+]

@@ -1,0 +1,59 @@
+# Okrsky of Košice-Šaca, transcribed by an AI agent in job okrsok-rules-207 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ranná, Mierová, Šemšianská, Jarková, Kvetná, Lúčna, Smreková, Dúbravská, Borovicová, Maloidanská, Buzinská, Kamenná, Ku mlynu, Kaštieľná, Jabloňová, Na záhumní, Nemessányiho, Pod stavencom, Fakultná nemocnica AGEL Košice-Šaca a.s. /Lúčna ulica/, Kardiocentrum AGEL a.s. /Lúčna ulica/, Ľudvikov Dvor
+#   okrsok 2: Námestie oceliarov, Železiarenská párne čísla od 2 do 20, Fyziatricko-rehabilitačné oddelenie fakultnej nemocnice AGEL Košice-Šaca a.s /Železiarenská ul./
+#   okrsok 3: Mládežnícka, Železiarenská párne čísla 22 až 76, Železiarenská nepárne čísla od 1 do 43, Učňovská, ÚVTOS /Budovateľská ul./
+obec = "599841"
+name = "Košice-Šaca"
+okrsky_date = 2026-06-25
+okrsky_fill = "nearest"
+okrsky_note = "Cesta do Hanisky (not in the document) and Železiarenská numbers outside the listed ranges (odd above 43, even above 76), plus addresses without a street, take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.saca.sk/download_file_f.php?id=2431995"
+sha256 = "ea75d42efccce36cf742b6284ca0ee3a2ebd21ecca6f938ce4beefa2b4faf736"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestnosti"
+
+[[document]]
+url = "https://www.saca.sk/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-2026.html"
+sha256 = "179a4a2eec43280d329836b387bf05650f6c61c8179e2c209a8f850c02e907c7"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Ranná"},
+  {street = "Mierová"},
+  {street = "Jarková"},
+  {street = "Kvetná"},
+  {street = "Lúčna"},
+  {street = "Smreková"},
+  {street = "Dúbravská"},
+  {street = "Borovicová"},
+  {street = "Maloidanská"},
+  {street = "Buzinská"},
+  {street = "Kamenná"},
+  {street = "Jabloňová"},
+  {street = "Nemessányiho"},
+  {street = "Šemšianska", written = "Šemšianská", note = "spelling variant of the same street"},
+  {street = "Ku Mlynu", written = "Ku mlynu"},
+  {street = "Kaštieľna", written = "Kaštieľná", note = "spelling variant of the same street"},
+  {street = "Na Záhumní", written = "Na záhumní"},
+  {street = "Pod Stavencom", written = "Pod stavencom"},
+  {street = "Ľudvíkov Dvor", written = "Ľudvikov Dvor", note = "missing accent; same street"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Nám. Oceliarov", written = "Námestie oceliarov"},
+  {street = "Železiarenská", numbers = "2-20", parity = "even"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Mládežnícka"},
+  {street = "Učňovská"},
+  {street = "Železiarenská", numbers = "22-76", parity = "even"},
+  {street = "Železiarenská", numbers = "1-43", parity = "odd"},
+  {street = "Budovateľská", written = "ÚVTOS /Budovateľská ul./"},
+]

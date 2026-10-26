@@ -1,0 +1,30 @@
+# Okrsky of Papradno, transcribed by an AI agent in job okrsok-rules-227 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov z čísla domu 0 – 599
+#   okrsok 2: pre voličov z čísla domu 600 a viac
+obec = "513466"
+name = "Papradno"
+okrsky_date = 2026-06-26
+okrsky_note = "The obec has no streets; the okrsky split it by house (súpisné) number across the whole obec (both parts Papradno and Podjavorník share one numbering series in one k.ú.)."
+
+[[document]]
+url = "https://www.papradno.sk/data/tabula/2026/utvorenie-okrskov-a-urcenie-volebnych-miestnosti.pdf"
+sha256 = "c837c115f4199a87e020e82afe6aec8e6040f4263b5aed4d11304a607e18e413"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 2026"
+
+[[document]]
+url = "https://www.papradno.sk/uradna-tabula/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-konane-v-rovnaky-den-a-v-rovnakom-case-v-roku-2026"
+sha256 = "add5977f05013daca98ec2208e349b9b3ee187b03eb787e97abfacfa8fa87201"
+title = "Úradná tabuľa: Utvorenie volebných okrskov a určenie volebných miestností 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Papradno", numbers = "0-599"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Papradno", numbers = "600-"},
+  {part = "Podjavorník", numbers = "600-"},
+]

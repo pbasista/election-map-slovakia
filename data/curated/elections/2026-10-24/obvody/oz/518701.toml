@@ -1,0 +1,39 @@
+# Council obvody of Rykynčice (518701), Krupina.
+# Transcribed by an AI agent in job obvod-rules-169 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: č. 1 - Horné Rykynčice; 1 za hornú časť obce (Horné Rykynčice)
+#   obvod 2: č. 2 -Dolné Rykynčice; 4 za dolnú časť obce (Dolné Rykynčice)
+# Okrsky added by an AI agent in job okrsok-rules-168 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 – Horné Rykynčice, občania s trvalým pobytom Horné Rykynčice
+#   okrsok 2: Okrsok č. 2 – Dolné Rykynčice, občania s trvalým pobytom Dolné Rykynčice
+obec = "518701"
+name = "Rykynčice"
+date = 2026-07-02
+okrsky_note = "The notice is undated in its text; its file name gives 2026-07-20, so date is left out. Each okrsok coincides with the obvod of the same part."
+
+[[document]]
+url = "https://www.rykyncice.sk/files/2026-07-06-105633-V__pis_uznesenia.pdf"
+sha256 = "8fe8ae7d8e1f5a2c1e078fe0c286734e45e6c46b81f0018bcc881c601825a386"
+title = "Výpis uznesenia zo zasadnutia OZ obce Rykynčice konaného dňa 2.7.2026 (uznesenia č. 217/07/2026 a 218/07/2026)"
+
+[[document]]
+url = "https://www.rykyncice.sk/files/2026-07-20-113512-ozn__menie_.pdf"
+sha256 = "d234935ec1cbf8ed2a42aed0ef2b7c8b6bb4fe1c7e55197c4962edabaf236061"
+title = "Oznámenie (zapisovateľka MVK, počet obyvateľov, volebné okrsky), 2026-07-20"
+
+[obvod.1]
+seats = 1
+okrsky = [1]
+rules = [
+  {part = "Horné Rykynčice"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [2]
+rules = [
+  {part = "Dolné Rykynčice"},
+]

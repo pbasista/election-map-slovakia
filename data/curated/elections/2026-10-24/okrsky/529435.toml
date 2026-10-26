@@ -1,0 +1,55 @@
+# Okrsky of Bratislava-Čunovo, transcribed by an AI agent in job okrsok-rules-490 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: CSENÁROVA ULICA, GRÁNEROVA ULICA, GRUBIČOVA ULICA, HRANIČIARSKA, JANKOVIČOVA ULICA, NA HRÁDZI, OVSENÁ, PETRŽALSKÁ, RAŽNÁ, SCHENGENSKÁ, SKÝCOVSKÁ, SOCHOROVA, SZÁPARYHO ULICA, TURISTICKÁ, ZÁHUMENNÁ, ZICHYHO ULICA, ZSITVAYOVA ULICA, ZÁHRADKÁRSKA OSADA A OBČANIA PRIHLÁSENÍ NA OBEC
+#   okrsok 2: BORIEVKOVÁ ULICA, CEZMÍNOVÁ, CÉDROVÁ ULICA, CIROKOVÁ ULICA, DLHÁ, CHRENOVÁ ULICA, IBERKOVÁ, IBIŠTEKOVÁ, K PASIENKOM, KONOPISKÁ, KRUŠPÁNOVÁ, LIPKAVCOVÁ ULICA, LIPNICOVÁ ULICA, NOVOSADNÁ, PLAMIENKOVÁ ULICA, PROSOVÁ ULICA, PÝROVÁ ULICA, RAKYTNÍKOVÁ, REBRÍČKOVÁ, ROZCHODNÍKOVÁ ULICA, SMRŽOVÁ ULICA, ZOBOVÁ
+obec = "529435"
+name = "Bratislava-Čunovo"
+okrsky_note = "Streets the document names that the register lacks: JANKOVIČOVA ULICA, SZÁPARYHO ULICA, K PASIENKOM, PROSOVÁ ULICA, PÝROVÁ ULICA, ROZCHODNÍKOVÁ ULICA."
+
+[[document]]
+url = "https://www.cunovo.eu/files/2026-07-31-120505-ur__enie_okrskov.pdf"
+sha256 = "b9b556d716a95d8538bb69e7d6a9a38ca1995dc7e0605d5f44779e158ec8af4a"
+title = "Oznámenie o určení volebných okrskov a volebných miestností (starostka, zverejnené 31. 7. 2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Csenárova ulica", written = "CSENÁROVA ULICA"},
+  {street = "Gránerova ulica", written = "GRÁNEROVA ULICA"},
+  {street = "Grubičova ulica", written = "GRUBIČOVA ULICA"},
+  {street = "Hraničiarska", written = "HRANIČIARSKA"},
+  {street = "Na hrádzi", written = "NA HRÁDZI"},
+  {street = "Ovsená", written = "OVSENÁ"},
+  {street = "Petržalská", written = "PETRŽALSKÁ"},
+  {street = "Ražná", written = "RAŽNÁ"},
+  {street = "Schengenská", written = "SCHENGENSKÁ"},
+  {street = "Skýcovská", written = "SKÝCOVSKÁ"},
+  {street = "Sochorova", written = "SOCHOROVA"},
+  {street = "Turistická", written = "TURISTICKÁ"},
+  {street = "Záhumenná", written = "ZÁHUMENNÁ"},
+  {street = "Zichyho ulica", written = "ZICHYHO ULICA"},
+  {street = "Zsitvayova ulica", written = "ZSITVAYOVA ULICA"},
+  {part = "Bratislava-Čunovo", note = "ZÁHRADKÁRSKA OSADA A OBČANIA PRIHLÁSENÍ NA OBEC: the addresses without a street"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Borievková ulica", written = "BORIEVKOVÁ ULICA"},
+  {street = "Cezmínová", written = "CEZMÍNOVÁ"},
+  {street = "Cédrová ulica", written = "CÉDROVÁ ULICA"},
+  {street = "Ciroková ulica", written = "CIROKOVÁ ULICA"},
+  {street = "Dlhá", written = "DLHÁ"},
+  {street = "Chrenová ulica", written = "CHRENOVÁ ULICA"},
+  {street = "Iberková", written = "IBERKOVÁ"},
+  {street = "Ibišteková", written = "IBIŠTEKOVÁ"},
+  {street = "Konopiská", written = "KONOPISKÁ"},
+  {street = "Krušpánová", written = "KRUŠPÁNOVÁ"},
+  {street = "Lipkavcová ulica", written = "LIPKAVCOVÁ ULICA"},
+  {street = "Lipnicová ulica", written = "LIPNICOVÁ ULICA"},
+  {street = "Novosadná", written = "NOVOSADNÁ"},
+  {street = "Plamienková ulica", written = "PLAMIENKOVÁ ULICA"},
+  {street = "Rakytníková", written = "RAKYTNÍKOVÁ"},
+  {street = "Rebríčková", written = "REBRÍČKOVÁ"},
+  {street = "Smržová ulica", written = "SMRŽOVÁ ULICA"},
+  {street = "Zobová", written = "ZOBOVÁ"},
+]

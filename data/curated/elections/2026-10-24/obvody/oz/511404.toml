@@ -1,0 +1,49 @@
+# Council obvody of Fiľakovské Kováče (511404), Lučenec.
+# Transcribed by an AI agent in job obvod-rules-179 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: viacmandátový volebný obvod č. 1 pre voľby poslancov v časti obce Fiľakovské Kováče, v ktorom sa budú voliť štyria poslanci
+#   obvod 2: viacmandátový volebný obvod č. 2 pre voľby poslancov v časti Kurtáň, v ktorom sa budú voliť dvaja poslanci
+#   obvod 3: jednomandátový volebný obvod č. 3 v časti obce Fiľakovské Kľačany, v ktorom sa bude voliť jeden poslanec
+# Okrsky added by an AI agent in job okrsok-rules-178 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volebný obvod č. 1 v časti obce Fiľakovské Kováče, Kultúrny dom
+#   okrsok 2: volebný obvod č. 2 v časti obce Kurtáň, reštaurácia Hamilton
+#   okrsok 3: volebný obvod č. 3 v časti obce Fiľakovské Kľačany, klub mládeže
+obec = "511404"
+name = "Fiľakovské Kováče"
+date = 2026-05-25
+note = "Resolution text is in the minutes of the 25.5.2026 council meeting (Uznesenie č. 145/2022-2026 B); obvody coincide with the three parts of the municipality."
+okrsky_note = "No separate okrsky document is published. The scanned Oznámenie (signed by the mayor) gives one polling place per obvod: obvod 1 in časť Fiľakovské Kováče (Kultúrny dom), obvod 2 in časť Kurtáň (reštaurácia Hamilton), obvod 3 in časť Fiľakovské Kľačany (klub mládeže). With 3 okrsky and 3 obvody each obvod is one okrsok; the okrsky are numbered as the obvody (the document does not number them). The minutes of 25.5.2026 mention the usual 3 okrsky (only one for the referendum)."
+
+[[document]]
+url = "https://filakovskekovace.sk/wp-content/uploads/dokumenty/zapisnice-z-oz/zapisnica-zo-17.-zasadnutia-oz-2-4-9yks9k.pdf"
+sha256 = "f716c95d950f36e511a00b8ac981dd594d81751be5289a77eadf9c8170d7da9a"
+title = "Zápisnica zo zasadnutia OZ č. 17/2022-2026 zo dňa 25.5.2026, Uznesenie č. 145/2022-2026 B)"
+
+[[document]]
+url = "https://filakovskekovace.sk/wp-content/uploads/dokumenty/komunalne-volby/brwbcf4d425097c_013967-sciqnm.pdf"
+sha256 = "19ad3e04b77f26acb180461a3c234aacd655e87656eea8f60936a2dd7b69c873"
+title = "Oznámenie k voľbám do samosprávy obcí a do orgánov samosprávnych krajov v roku 2026"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Fiľakovské Kováče"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Kurtáň"},
+]
+
+[obvod.3]
+seats = 1
+okrsky = [3]
+rules = [
+  {part = "Fiľakovské Kľačany"},
+]

@@ -1,0 +1,48 @@
+# Okrsky of Jarok, transcribed by an AI agent in job okrsok-rules-457 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hlavná ul., Krátka ul., Kúty, Obecná ul., Pri ihrisku, Školská ul., Titváňska ul., Záhumenice, Zálužská ul.
+#   okrsok 2: Brehy, Cabajská ul., Hasičská ul., K mostu, Lackov dvor, Nová ul., Nový Sliváš, Piesková ul., Pod cintorínom, Pod kostolom, Pod lipami, Pod vinohradmi, Pusté, Spojovacia ul., Starý Sliváš, Štepnice
+obec = "500356"
+name = "Jarok"
+okrsky_date = 2026-07-10
+okrsky_fill = "nearest"
+okrsky_note = "'ul.' read as 'ulica'. A 22 Oct 2026 notice moved the polling rooms within the KD but keeps the same street lists. Addresses without a street take the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.jarok.sk/e_download.php?file=/data/uredni_deska/obsah747_1.pdf&original=Vytvorenie%20okrskov%20a%20hl.%20miestnost%C3%AD.pdf"
+sha256 = "7d37d60cffaded42f6a45ef7003cef2db5d6a3e5fea7e9b02b73928f196f9a1a"
+title = "Informácia o utvorení volebných okrskov a o určení volebných miestností v obci Jarok"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná ulica", written = "Hlavná ul."},
+  {street = "Krátka ulica", written = "Krátka ul."},
+  {street = "Kúty"},
+  {street = "Obecná", written = "Obecná ul."},
+  {street = "Pri ihrisku"},
+  {street = "Školská ulica", written = "Školská ul."},
+  {street = "Titváňska", written = "Titváňska ul."},
+  {street = "Záhumenice"},
+  {street = "Zálužská", written = "Zálužská ul."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Brehy"},
+  {street = "Cabajská", written = "Cabajská ul."},
+  {street = "Hasičská ulica", written = "Hasičská ul."},
+  {street = "K mostu"},
+  {street = "Lackov dvor"},
+  {street = "Nová ulica", written = "Nová ul."},
+  {street = "Nový Sliváš"},
+  {street = "Piesková ulica", written = "Piesková ul."},
+  {street = "Pod cintorínom"},
+  {street = "Pod kostolom"},
+  {street = "Pod lipami"},
+  {street = "Pod vinohradmi"},
+  {street = "Pusté"},
+  {street = "Spojovacia ulica", written = "Spojovacia ul."},
+  {street = "Starý Sliváš"},
+  {street = "Štepnice"},
+]

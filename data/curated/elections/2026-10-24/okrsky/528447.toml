@@ -1,0 +1,111 @@
+# Okrsky of Kráľovský Chlmec, transcribed by an AI agent in job okrsok-rules-224 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: BOĽSKÁ, HLAVNÁ 2 – 114, HLAVNÁ 1 – 43, HLBOKÁ, HVIEZDOSLAVOVÁ, KAPUŠANSKÁ, KOLLÁROVA, KOSTOLNÝ RAD, KVETNÁ, M. LECZU, PRAMEŇOVÁ, RÁZUSOVA, SVÄTUŠSKÁ, TRHOVISKO, ZÁHRADNÁ
+#   okrsok 2: BEZ ULICE, HLAVNÁ 140 – 156, HLAVNÁ 63 – 97, HLAVNÁ 178-184, J.A.KOMENSKÉHO, L. KOSSUTHA 60–116, L. KOSSUTHA 71 – 133, L. MÉCSA, PODHRADSKÁ, PRI ŠTADIÓNE 2 – 82, PRI ŠTADIÓNE 1– 43, ŠTEFÁNIKOVA, Z. LÓRÁNRFFYOVEJ
+#   okrsok 3: FEJSÉŠ
+#   okrsok 4: IBRÁNYIHO 1 – 55, Z. FÁBRYHO
+#   okrsok 5: F. RÁKÓCZIHO, HLAVNÁ 107 – 127, HLAVNÁ 186 – 208, J. MAJLÁTHA, L. KOSSUTHA 63 – 69, M. HUNYADIHO, NEMOCNIČNÁ, S. CHALUPKU
+#   okrsok 6: DOBRÁNSKA, E. ADYHO, HLAVNÁ 147 –177, HLAVNÁ 212 – 262, HOREŠSKÁ, IBRÁNYIHO 18 – 28, M. BELA, PRIBENÍCKA, S. PETŐFIHO, ÚJHELYSKÁ
+#   okrsok 7: CYRILA A METÓDA, JÓZSEFA ATTILU, KAZINCZYHO, L. KOSSUTHA 1 – 61A, L. KOSSUTHA 2 – 54, Ľ. ŠTÚRA, M. HELMECZIHO, MIEROVA, PRI ŠTADIÓNE 45 – 77, PRI ŠTADIÓNE 86 – 110
+obec = "528447"
+name = "Kráľovský Chlmec"
+okrsky_date = 2026-07-06
+okrsky_fill = "nearest"
+okrsky_note = "Paired ranges of one street (e.g. HLAVNÁ 2 – 114 and HLAVNÁ 1 – 43) are read as the even and odd sides. IBRÁNYIHO 1 – 55 (okrsok 4) overlaps IBRÁNYIHO 18 – 28 (okrsok 6): 18–28 go to okrsok 6, the rest of 1–55 to okrsok 4. Numbers the document leaves out (gaps in Hlavná, L. Kossutha, Pri Štadióne, Ibrányiho 56-57) and addresses without a street take the okrsok of the nearest placed address (fill_nearest). \"BEZ ULICE\" in okrsok 2 is the voters registered without a street, not given a rule."
+
+[[document]]
+url = "https://www.kralovskychlmec.org/e_download.php?file=/data/multipage/editor/editor-73-559-sk_5.pdf&original=Rozhodnutie%20prim%C3%A1tora%20-%20utvorenie%20volebn%C3%BDch%20okrskov%2C%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "ec083120306ed9f85d6acb80402b7269271f277373220ef6fc05050cc2c0dc06"
+title = "Rozhodnutie primátora - utvorenie volebných okrskov, určenie volebných miestností"
+
+[[document]]
+url = "https://www.kralovskychlmec.org/e_download.php?file=/data/multipage/editor/editor-73-559-sk_6.pdf&original=Pr%C3%ADloha%20%C4%8D.%201%20-%20%20volebn%C3%A9%20okrsky%20utvoren%C3%A9%20pod%C4%BEa%20ul%C3%ADc.pdf"
+sha256 = "dfca21cb03c88d30eb170655df4f315c8d77ce859709148c2ffb1068ceb72c99"
+title = "Príloha č. 1 - volebné okrsky utvorené podľa ulíc"
+
+[okrsok.1]
+rules = [
+  {street = "Boľská"},
+  {street = "Hlavná", numbers = "2-114", parity = "even"},
+  {street = "Hlavná", numbers = "1-43", parity = "odd"},
+  {street = "Hlboká"},
+  {street = "Hviezdoslavova", written = "HVIEZDOSLAVOVÁ", note = "the document adds an accent: Hviezdoslavova"},
+  {street = "Kapušanská"},
+  {street = "Kollárova"},
+  {street = "Kostolný rad"},
+  {street = "Kvetná"},
+  {street = "M. Leczu"},
+  {street = "Prameňová"},
+  {street = "Rázusova"},
+  {street = "Svätušská"},
+  {street = "Trhovisko"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná", numbers = "140-156", parity = "even"},
+  {street = "Hlavná", numbers = "63-97", parity = "odd"},
+  {street = "Hlavná", numbers = "178-184", parity = "even"},
+  {street = "J. A. Komenského"},
+  {street = "L. Kossutha", numbers = "60-116", parity = "even"},
+  {street = "L. Kossutha", numbers = "71-133", parity = "odd"},
+  {street = "L. Mécsa"},
+  {street = "Podhradská"},
+  {street = "Pri Štadióne", numbers = "2-82", parity = "even"},
+  {street = "Pri Štadióne", numbers = "1-43", parity = "odd"},
+  {street = "Štefánikova"},
+  {street = "Z. Lorántffyovej", written = "Z. LÓRÁNRFFYOVEJ", note = "typo in the document for Z. Lorántffyovej (Zsuzsanna Lorántffy), the only similar street"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Fejséš"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Ibrányiho", numbers = "1-55", except = "18-28"},
+  {street = "Z. Fábryho"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "F. Rákócziho"},
+  {street = "Hlavná", numbers = "107-127", parity = "odd"},
+  {street = "Hlavná", numbers = "186-208", parity = "even"},
+  {street = "J. Majlátha"},
+  {street = "L. Kossutha", numbers = "63-69", parity = "odd"},
+  {street = "M. Hunyadiho"},
+  {street = "Nemocničná"},
+  {street = "S. Chalupku"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Dobránska"},
+  {street = "E. Adyho"},
+  {street = "Hlavná", numbers = "147-177", parity = "odd"},
+  {street = "Hlavná", numbers = "212-262", parity = "even"},
+  {street = "Horešská"},
+  {street = "Ibrányiho", numbers = "18-28"},
+  {street = "M. Bela"},
+  {street = "Pribenícka"},
+  {street = "S. Petőfiho"},
+  {street = "Újhelyská"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Cyrila a Metoda", written = "CYRILA A METÓDA", note = "the document writes Metóda, the register Metoda: the same street"},
+  {street = "József Attila", written = "JÓZSEFA ATTILU", note = "the document declines the name (Józsefa Attilu); the register writes József Attila"},
+  {street = "Kazinczyho"},
+  {street = "L. Kossutha", numbers = "1-61, 61A", parity = "odd"},
+  {street = "L. Kossutha", numbers = "2-54", parity = "even"},
+  {street = "Ľ. Štúra"},
+  {street = "M. Helmecziho"},
+  {street = "Mierova"},
+  {street = "Pri Štadióne", numbers = "45-77", parity = "odd"},
+  {street = "Pri Štadióne", numbers = "86-110", parity = "even"},
+]

@@ -1,0 +1,30 @@
+# Okrsky of Likavka, transcribed by an AI agent in job okrsok-rules-365 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre súpisné čísla: 0, 2, 10,12 až 114, 132, 664 až 1044, 1090 až 1111, 1114, 1116, 1117.
+#   okrsok 2: pre súpisné čísla: 9, 117 až 131, 133 až 660, 1058, 1115, 1118.
+obec = "510599"
+name = "Likavka"
+okrsky_date = 2026-07-21
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky defined by súpisné čísla (the village has no streets). Súpisné čísla in neither list (e.g. 1, 3-8, 11, 115-116, 661-663, 1045-1057, 1059-1089, 1112-1113, >1118) take the nearest placed address. The document cites the referendum decision by mistake but is for the 24 Oct 2026 elections."
+
+[[document]]
+url = "https://www.likavka.sk/e_download.php?file=/data/editor/366skabove_7.pdf&original=Volebn%C3%A9%20okrsky%20-%20vyhl%C3%A1senie.pdf"
+sha256 = "95a46c7667c91efc0e0119b22c70f0a277bec47f12e86a2e780dc2289d06c371"
+title = "Vyhlásenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.likavka.sk/samosprava/volby-a-referenda/volby-do-organov-samospravy-obci-2026/"
+sha256 = "8d97a00c596b1b744697beb932d41a9fbb8adfd356781e42615ca5933b4981cd"
+title = "Voľby do orgánov samosprávy obcí 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Likavka", numbers = "0, 2, 10, 12-114, 132, 664-1044, 1090-1111, 1114, 1116, 1117"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Likavka", numbers = "9, 117-131, 133-660, 1058, 1115, 1118"},
+]

@@ -1,0 +1,24 @@
+# Okrsky of Omšenie, transcribed by an AI agent in job okrsok-rules-462 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: V okrsku 01 volia voliči s trvalým pobytom č.d. 0 - 330
+#   okrsok 2: V okrsku 02 volia voliči s trvalým pobytom č.d. 331 - 999
+obec = "506354"
+name = "Omšenie"
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by číslo domu (súpisné): 0-330 and 331-999; any higher number placed by fill_nearest. The document states no decision date."
+
+[[document]]
+url = "https://www.omsenie.sk/e_download.php?file=/data/multipage/editor/editor-89-146-sk_5.pdf&original=Ozn%C3%A1menie%20o%20%C4%8Dase%20a%20mieste%20konania%20volieb%202026.pdf"
+sha256 = "8f5c1870a158ea479e5b5b3f95595dac5827cd3c219c60e4dc301ecc56f1cc5a"
+title = "Oznámenie o čase a mieste konania volieb 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Omšenie", numbers = "1-330"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Omšenie", numbers = "331-999"},
+]

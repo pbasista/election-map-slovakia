@@ -1,0 +1,39 @@
+# Okrsky of Mútne, transcribed by an AI agent in job okrsok-rules-438 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: územný obvod od čísla domu 1 - 290
+#   okrsok 2: územný obvod od čísla domu 291 - 640
+#   okrsok 3: územný obvod od čísla domu 641 - 926
+obec = "509850"
+name = "Mútne"
+okrsky_date = 2026-07-09
+okrsky_note = "The okrsky are set by house (súpisné) number for the whole obec, applied in each of its parts; okrsok 3 (641-926) is taken open-ended. Text from a .doc file."
+
+[[document]]
+url = "https://www.mutne.sk/e_download.php?file=/data/uredni_deska/obsah294_2.doc&original=Utvorenie%20okrskov%20a%20volebn%C3%BDch%20miestnost%C3%AD.doc"
+sha256 = "272203140afc506447745da8485db8c64b02f0c7f2627fe2c7b1d1ad7b5acfc1"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností"
+
+[[document]]
+url = "https://www.mutne.sk/zverejnovanie/oznamy/informacie-k-volbam-do-organov-samospravy-obci-v-sobotu-24-oktobra-2026-418.html"
+sha256 = "53f4e210bfce27048410bbf125b8073dc7898dd49b98857bb728d631d298eba8"
+title = "Informácie k voľbám do orgánov samosprávy obcí v sobotu 24. októbra 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Mútne", numbers = "1-290"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Duľov", numbers = "291-640"},
+  {part = "Mútne", numbers = "291-640"},
+  {part = "Mútňanská Píla", numbers = "291-640"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Duľov", numbers = "641-"},
+  {part = "Mútne", numbers = "641-"},
+  {part = "Mútňanská Píla", numbers = "641-"},
+]

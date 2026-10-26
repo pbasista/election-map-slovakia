@@ -1,0 +1,49 @@
+# Okrsky of Topoľčianky, transcribed by an AI agent in job okrsok-rules-329 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cintorínska celá ulica, Dlhovského celá ulica, Hlavná od 124-289, Holešovská celá ulica, Hostianska celá ulica, Hrádza celá ulica, Lipová od 53-124, Machulinská celá ulica, Parková celá ulica, Pažiťská celá ulica, Pod Hájom celá ulica, Športová celá ulica, Tekovská celá ulica, Vígľašská celá ulica, Záhradnícka celá ulica, Obec Topoľčianky všetci občania, ktorí majú trvalý pobyt na obci
+#   okrsok 2: Hlavná od 1-123, Kopaničky celá ulica, Lipová od 1-52, Litoměřická celá ulica, Mlynská celá ulica, Moravecká celá ulica, Partizánska celá ulica, SNP celá ulica, Železničná celá ulica, Žikavecká celá ulica, Žitavanská celá ulica
+obec = "500828"
+name = "Topoľčianky"
+okrsky_date = 2026-07-20
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document read from page images. Numbers are orientačné (document says 'ulice a orientačné čísla domov'). Okrsok 1 also takes voters registered only at 'Obec Topoľčianky' (no address). Addresses without a street in the register take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.topolcianky.sk/e_download.php?file=/data/editor/615sk_5.pdf&original=Ur%C4%8Denie%20volebn%C3%BDch%20okrskov%2C%20volebn%C3%BDch%20miestnost%C3%AD%20a%20zoznam%20ul%C3%ADc%20pod%C4%BEa%20okrskov.pdf"
+sha256 = "46bb28b6b747987a761dc61bdb7ab5aa0217cad136e414a8f0c187ed9790ffba"
+title = "Určenie volebných okrskov, volebných miestností a zoznam ulíc podľa okrskov"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Dlhovského"},
+  {street = "Hlavná", numbers = "124-289"},
+  {street = "Holešovská"},
+  {street = "Hostianska"},
+  {street = "Hrádza"},
+  {street = "Lipová", numbers = "53-124"},
+  {street = "Machulinská"},
+  {street = "Parková"},
+  {street = "Pažiťská"},
+  {street = "Pod Hájom"},
+  {street = "Športová"},
+  {street = "Tekovská"},
+  {street = "Vígľašská"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná", numbers = "1-123"},
+  {street = "Kopaničky"},
+  {street = "Lipová", numbers = "1-52"},
+  {street = "Litoměřická"},
+  {street = "Mlynská"},
+  {street = "Moravecká"},
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Železničná"},
+  {street = "Žikavecká"},
+  {street = "Žitavanská"},
+]

@@ -23,8 +23,8 @@ Items already curated, or in a job not ingested yet, are not made again;
 Items rejected at ingest go into new jobs the next time `make` runs.
 `data/jobs/` is git-ignored scratch; what is committed is `data/curated/`.
 The framework is `src/election_map_slovakia/jobs.py`, the translation kind
-`translate.py`, the obvod-rules kind `obvodrules.py`, the research kind
-`research.py`.
+`translate.py`, the obvod-rules kind `obvodrules.py`, the okrsok-rules kind
+`okrsokrules.py`, the research kind `research.py`.
 
 `translation` jobs translate the UI strings (from English, with the Slovak
 for reference, one job per language), the candidates' occupations (from
@@ -63,14 +63,53 @@ candidate lists' obvody, and every address of the municipality lands in
 exactly one obvod. Each checked item gets a review sheet,
 `data/jobs/obvod-rules-NNN/review/<obec>.html`: the obvody as the map will
 draw them, every address point coloured by obvod, the rules and the
-document's text. Accepted rule sets go to `data/curated/obvody/oz/`, their
-documents to `data/curated/cache/<sha256>.<ext>`, municipalities reported
-not found to `data/curated/obvody/oz-not-found.json` (made again only when
-named with `--only`). Where a municipality publishes only the obvody's
-names and seats, a hand-made rule set marked `estimated = true` places the
-addresses by guess (parts, or the nearest of `near` points such as hamlets
-or the ends of the village, explained in its `note`); the ballots say the
-obvody are an estimate.
+document's text. Accepted rule sets go to `obvody/oz/` in the election's
+data, `data/curated/elections/<election day>/`, their documents to
+`data/curated/cache/<sha256>.<ext>`, municipalities reported not found to
+`obvody/oz-not-found.json` there (made again only when named with
+`--only`). Where a municipality publishes only the obvody's names and
+seats, a hand-made rule set marked `estimated = true` places the addresses
+by guess (parts, or the nearest of `near` points such as hamlets or the ends
+of the village, explained in its `note`); the ballots say the obvody are an
+estimate.
+
+`okrsok-rules` jobs (one municipality per job, the most addresses first)
+transcribe the okrsky (polling districts) of every municipality with
+several: the agent finds the decision that set them on the municipality's
+website. For a municipality with a rule set of council obvody (whose
+documents, often listing the okrsky too, the job hands over with local
+copies) it writes which okrsky make up each obvod and, for the obvody with
+several, rules that share the obvod's addresses among its okrsky; or,
+where no document lists the okrsky's streets, only which okrsky make up
+each obvod. For a municipality that elects its council in one obvod it
+writes rules that share all its addresses among the okrsky (often by part
+of the municipality). The rules take the form of the obvod rules:
+
+```sh
+uv run ems fetch --only units-oso2026         # okrsky per municipality, ŠÚ SR
+uv run ems addresses                          # data/build/obvod-addresses/
+uv run ems job make okrsok-rules              # every municipality still to do
+uv run ems job ingest data/jobs/okrsok-rules-*
+uv run ems make                               # geo draws them, build uses them
+```
+
+Ingest accepts the okrsky only if their documents are official (as above;
+a file on a CMS host that does not name the municipality, such as
+`obec.dobraobec.sk/files/<n>/…`, also when an official page among the
+documents links to it), they are numbered 1..N for the N okrsky the
+Statistical Office lists for the municipality, each in one obvod, every
+address of an obvod with several okrsky (of the municipality, with one
+obvod) lands in exactly one of them, each such okrsok has addresses, no
+okrsok rule selects only addresses of another obvod, and the okrsky can be
+drawn within their obvod. The review sheet,
+`data/jobs/okrsok-rules-NNN/review/<obec>.html`, draws the okrsky within the
+obvody. Accepted okrsky are added to the rule set, or, for a municipality
+with one obvod, written to `okrsky/<obec>.toml` in the election's data;
+municipalities reported not found go to `okrsky/not-found.json` there,
+losing any okrsky an earlier ingest gave them.
+With the okrsky known, the ballots give a council obvod the 2022 turnout
+of its okrsky, where the municipality has the same okrsky as then
+(`build.council_past`), and `ems geo` draws them.
 
 `research` jobs have an agent search the allowlisted sites
 (`config/sources.toml`) for what they say about each candidate. They run

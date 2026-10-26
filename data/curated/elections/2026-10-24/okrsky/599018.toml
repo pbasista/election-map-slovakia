@@ -1,0 +1,44 @@
+# Okrsky of Košice-Košická Nová Ves, transcribed by an AI agent in job okrsok-rules-310 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Agátová, Brestová, Buková, Mliečna, Na Doline, Poľná, Sv. Ladislava, Vínová a občania s trvalým pobytom na obci bez konkrétnej adresy a občania s trvalým pobytom v záhradkárskych lokalitách
+#   okrsok 2: Čerešňová, Furčianska, Herlianska, Jaseňová, Ortvaňová, Trnková, Vyšná Úvrať, Ulica Zelená stráň, Ulica Ku Gederu
+obec = "599018"
+name = "Košice-Košická Nová Ves"
+
+[[document]]
+url = "https://www.kosickanovaves.sk/uradna-tabula?p=1&detail=73715&count=10&tagSelect=volby%2Freferenda&subcategory=86"
+sha256 = "d7a77770ea4056f4a1c87d2bade0aa9c67d9636c4f8a846c6f5f5b9be4c6f35b"
+title = "Oznámenie o utvorení volebných okrskov (úradná tabuľa, 14. 7. 2026)"
+
+[[document]]
+url = "https://www.uradne.sk/user/tablenews/file/1583578"
+sha256 = "b1dfeb2e03220357e4f2f5ebf3c1840211d6bd7934a602043c998a4c987fbfe8"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 2026 (PDF linked from the úradná tabuľa page)"
+
+[okrsok.1]
+rules = [
+  {part = "Košice-Košická Nová Ves", note = "občania s trvalým pobytom bez konkrétnej adresy a v záhradkárskych lokalitách: the addresses without a street"},
+  {street = "Agátová"},
+  {street = "Brestová"},
+  {street = "Buková"},
+  {street = "Mliečna"},
+  {street = "Na Doline"},
+  {street = "Poľná"},
+  {street = "Sv.Ladislava", written = "Sv. Ladislava"},
+  {street = "Vínová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Čerešňová"},
+  {street = "Furčianska"},
+  {street = "Herlianska"},
+  {street = "Jaseňová"},
+  {street = "Ortvaňová"},
+  {street = "Trnková"},
+  {street = "Vyšná Úvrať"},
+  {street = "Ulica Zelená stráň"},
+  {street = "Ulica ku Gederu", written = "Ulica Ku Gederu"},
+  {street = "Arm. Gen. Ľ. Svobodu", note = "not in the document (2 addresses, 8-10); placed with Furčianska, the street it adjoins at the Furča edge of the district", inferred = true},
+]

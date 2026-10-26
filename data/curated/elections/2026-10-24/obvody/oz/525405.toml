@@ -1,0 +1,181 @@
+# Council obvody of Veľký Šariš (525405), Prešov.
+# Transcribed by an AI agent in job obvod-rules-091 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: vo volebnom obvode číslo 1, ktorý zahŕňa Veľký Šariš bude deväť poslancov
+#   obvod 2: vo volebnom obvode číslo 2, ktorý zahŕňa miestnu časť Kanaš budú dvaja poslanci
+# Okrsky added by an AI agent in job okrsok-rules-090 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dr. Greša, Dr. Leščáka, Harminy, Hlavná, Jarková, Kláštorná, kpt. Nálepku, Nám. sv.Jakuba, Pekárska, Pod hradom, Poľná, Rákocziho, Severná, Tulčická, Východná, Zámocká, Západná
+#   okrsok 2: Agátová, Doliny, Jelšová, Kanašská, Korpašská, Ľ. Štúra, Pivovarská, Pod Bikošom, Pod Sordokom, Pri Toryse, Sabinovská, Staničná, Tichá, Tomášika Dumína, Záhradná
+#   okrsok 3: Červeného Kríža, Dujavská, J. Záborského, Letná, M. Nemcovej, M.R.Štefánika, Prešovská, Púchovská, Slovenská, Staré Ihrisko, Zimná
+#   okrsok 4: A. Sládkoviča, Janka Kráľa, Matice Slovenskej, P. O. Hviezdoslava, Školská
+#   okrsok 5: A. Hlinku, Baratoky, Dlhá, Eleny Lackovej, Farská, Gardom, Južná, Kamence, kpt. Jaroša, Krátka, Martina Šarošiho, mesto Veľký Šariš, Mlynská, Poľovnícka, Slnečná, Štefana Rómera, Veterná, Vrbová
+#   okrsok 6: Bažantia, Bočná, Brezová, Broskyňová, Cintorínska, Čerešňová, Dubová, Dúbravská, Fintická, Gaštanová, Hríbová, Jabloňová, Jahodová, Jarná, Jasná, Jazdecká, Jedľová, Jesenná, Krásna lúka, Kvetná, Lesnícka, Lipová, Lúčna, Močiarna, Okružná, Orgovánová, Pod lesom, Pod Pachmaľom, Púpavová
+#   okrsok 7: Pod Hrbom, Ružová, Sadová, Slávičia, Smreková, Strážovská, Stromová, Šarišská, Šípková, Trnková, Višňová, Za kostolom
+obec = "525405"
+name = "Veľký Šariš"
+date = 2026-06-25
+note = "The announcement defines the obvody by parts of the town: obvod 1 = Veľký Šariš, obvod 2 = miestna časť Kanaš; mapped to the register parts of the same names."
+okrsky_date = 2026-07-30
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky 1-5 lie in obvod 1 (Veľký Šariš), 6-7 in obvod 2 (Kanaš). 'mesto Veľký Šariš' in okrsok 5 means residents registered only to the town (no address). Street Železničná (4 addresses) is not named by the document, and addresses without street are not addressed; both left to fill_nearest."
+
+[[document]]
+url = "https://www.velkysaris.sk/oznamenie--o--utvoreni-volebnych-obvodov-a--o-urceni-poctu-poslancov-mestskeho-zastupitelstva-vo-velkom-sarisi-oznam/mid/566712/.html"
+sha256 = "45526a74b3de1f7399ede78ef9e3b8d10f68ef7631e98f337aaeb5ec5cb21b22"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov Mestského zastupiteľstva vo Veľkom Šariši (uznesenie MsZ č. 81/2026-23/XXX zo dňa 25.6.2026)"
+
+[[document]]
+url = "https://www.velkysaris.sk/download_file_f.php?id=2452211"
+sha256 = "b2c567af1c2ad9314b2c5b64ace6d248a8b0015b36d523c729bc80e827926aed"
+title = "Rozhodnutie primátora mesta Veľký Šariš o utvorení volebných okrskov a určení volebných miestností (voľby 24. októbra 2026)"
+
+[obvod.1]
+seats = 9
+okrsky = [1, 2, 3, 4, 5]
+rules = [
+  {part = "Veľký Šariš"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [6, 7]
+rules = [
+  {part = "Kanaš"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Dr. Greša"},
+  {street = "Dr. Leščáka"},
+  {street = "Harminy"},
+  {street = "Hlavná"},
+  {street = "Jarková"},
+  {street = "Kláštorná"},
+  {street = "kpt.Nálepku", written = "kpt. Nálepku"},
+  {street = "Nám.sv.Jakuba", written = "Nám. sv.Jakuba"},
+  {street = "Pekárska"},
+  {street = "Pod hradom"},
+  {street = "Poľná"},
+  {street = "Rákocziho"},
+  {street = "Severná"},
+  {street = "Tulčická"},
+  {street = "Východná"},
+  {street = "Zámocká"},
+  {street = "Západná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Doliny"},
+  {street = "Jelšová"},
+  {street = "Kanašská"},
+  {street = "Korpašská"},
+  {street = "Ľ. Štúra"},
+  {street = "Pivovarská"},
+  {street = "Pod Bikošom"},
+  {street = "Pod Sordokom"},
+  {street = "Pri Toryse"},
+  {street = "Sabinovská"},
+  {street = "Staničná"},
+  {street = "Tichá"},
+  {street = "Tomášika Dumína"},
+  {street = "Záhradná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Červeného Kríža"},
+  {street = "Dujavská"},
+  {street = "J. Záborského"},
+  {street = "Letná"},
+  {street = "M. Nemcovej"},
+  {street = "M. R. Štefánika", written = "M.R.Štefánika"},
+  {street = "Prešovská"},
+  {street = "Púchovská"},
+  {street = "Slovenská"},
+  {street = "Staré Ihrisko"},
+  {street = "Zimná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "A. Sládkoviča"},
+  {street = "Janka Kráľa"},
+  {street = "Matice Slovenskej"},
+  {street = "P. O. Hviezdoslava"},
+  {street = "Školská"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "A. Hlinku"},
+  {street = "Baratoky"},
+  {street = "Dlhá"},
+  {street = "Eleny Lackovej"},
+  {street = "Farská"},
+  {street = "Gardom"},
+  {street = "Južná"},
+  {street = "Kamence"},
+  {street = "kpt. Jaroša"},
+  {street = "Krátka"},
+  {street = "Martina Šarošiho"},
+  {street = "Mlynská"},
+  {street = "Poľovnícka"},
+  {street = "Slnečná"},
+  {street = "Štefana Rómera"},
+  {street = "Veterná"},
+  {street = "Vŕbová", written = "Vrbová"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bažantia"},
+  {street = "Bočná"},
+  {street = "Brezová"},
+  {street = "Broskyňová"},
+  {street = "Cintorínska"},
+  {street = "Čerešňová"},
+  {street = "Dubová"},
+  {street = "Dúbravská"},
+  {street = "Fintická"},
+  {street = "Gaštanová"},
+  {street = "Hríbová"},
+  {street = "Jabloňová"},
+  {street = "Jahodová"},
+  {street = "Jarná"},
+  {street = "Jasná"},
+  {street = "Jazdecká"},
+  {street = "Jedľová"},
+  {street = "Jesenná"},
+  {street = "Krásna lúka"},
+  {street = "Kvetná"},
+  {street = "Lesnícka"},
+  {street = "Lipová"},
+  {street = "Lúčna"},
+  {street = "Močiarna"},
+  {street = "Okružná"},
+  {street = "Orgovánová"},
+  {street = "Pod lesom"},
+  {street = "Pod Pachmaľom"},
+  {street = "Púpavová"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Pod Hrbom"},
+  {street = "Ružová"},
+  {street = "Sadová"},
+  {street = "Slávičia"},
+  {street = "Smreková"},
+  {street = "Strážovská"},
+  {street = "Stromová"},
+  {street = "Šarišská"},
+  {street = "Šípková"},
+  {street = "Trnková"},
+  {street = "Višňová"},
+  {street = "Za kostolom"},
+]

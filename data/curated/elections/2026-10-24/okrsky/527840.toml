@@ -1,0 +1,131 @@
+# Okrsky of Stropkov, transcribed by an AI agent in job okrsok-rules-213 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Budovateľská, Družstevná, Rovná, Sitnická, Sokolovská, Strečkova, Vojtovská, Vranovská
+#   okrsok 2: Ulice: Akad. Pavlova, Hlinky, Hviezdoslavova, J. Gagarina, Jarková, Jilemnického, Letná, Zimná, Nový riadok, Ciolkovského
+#   okrsok 3: Ulice: Kukučínova, Mlynská, Gen. Sázavského
+#   okrsok 4: Ulice: Hrnčiarska 742/18, 743/20, 786/66, 1566/2,4,6,8, 1597/22,24,26,28, 1601/30,32,34, 1604/9,11, 1605/13,15, 1606/17,19, 2291/10 Za jarkom, Orgovánová
+#   okrsok 5: Ulice: A. Kmeťa, Bernolákova, Cintorínska, Kvetná, Ľ .Štúra, Pod Laščikom, Ružová, Mládeže, Nám. SNP, Záhradná, Zámocká, Za dubami, Hlavná 38/2, 44/1,3,5,7,9, 47/20, 49/11,13,15,17, 50/19,21,23, 60/30, 72/42
+#   okrsok 6: Ulice: Konštantínova, Puškinova, Metodova, Andreja Hlinku, Sládkovičova, Bankovská, Majerská, J. Kráľa, P. Horova, Kalinčiakova
+#   okrsok 7: Ulice: Krátka, Hlavná 80/50, 1649/31,33, 1650/37,39, 1651/43,45, 1652/49 Hrnčiarska 1618/36,38,40, 1619/42,44,50, 1627/21,23,25, 1654/72, 2180/34B
+#   okrsok 8: Ulice: Šarišská, Školská, Pri rybníku, Samuela Jurkoviča, Chotčanská, Nábrežná, Matice slovenskej 920/48,50, 924/56,58, Hrnčiarska 796/63,65, 797/76,78, 798/80, 799/82, 800/84, 802/86, Ondavská, Petejovská
+#   okrsok 9: Ulice: Športová, Štefánikova, Matice slovenskej 901/2A,901/2B, 901/2C, 902/4,6,8, 903/16,18,20, 906/24,26,28, 907/30,32, 908/7, 909/9, 910/11, 911/13, 912/15, 913/34,36, 914/40,42, 915/44,46, 916/17, 917/19, 918/21, 919/23, 921/25, 922/27, 923/52,54, 1552/10,12,14, 1774/38 Hrnčiarska 787/68,70, 788/88, 789/51,53, 790/90, 791/55, 792/57, 793/59, 1620/41
+#   okrsok 10: Ulice: Čerlinská, Šandalská, Bokšanská
+obec = "527840"
+name = "Stropkov"
+okrsky_date = 2026-07-20
+okrsky_fill = "nearest"
+okrsky_note = "Hlavná, Hrnčiarska and Matice slovenskej are split by house numbers (súpisné/orientačné; the orientačné after the slash are used). Their numbers the document does not list, the street Požiarnická (not in the document) and addresses without a street take the nearest placed address. Pod vlekom inferred to okrsok 10 (Bokša)."
+
+[[document]]
+url = "https://www.stropkov.sk/download_file_f.php?id=2446008"
+sha256 = "35a5bb941ecd7e7b170cbeb9ddda9a9711c4e03f307f64dfe88a58fe0f8e5485"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre vykonanie volieb do orgánov samosprávy obcí ... 24.10.2026"
+
+[okrsok.1]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Družstevná"},
+  {street = "Rovná"},
+  {street = "Sokolovská"},
+  {street = "Vojtovská"},
+  {street = "Vranovská"},
+  {street = "Sitnícka", written = "Sitnická", note = "same street, document's spelling of the ending"},
+  {street = "Strečková", written = "Strečkova", note = "same street, length mark differs"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Akad. Pavlova"},
+  {street = "Hlinky"},
+  {street = "Hviezdoslavova"},
+  {street = "J. Gagarina"},
+  {street = "Jarková"},
+  {street = "Jilemnického"},
+  {street = "Letná"},
+  {street = "Zimná"},
+  {street = "Nový riadok"},
+  {street = "Ciolkovského"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Kukučínova"},
+  {street = "Mlynská"},
+  {street = "Gen. Sázavského"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Hrnčiarska", numbers = "2, 4, 6, 8, 9, 10, 11, 13, 15, 17, 18, 19, 20, 22, 24, 26, 28, 30, 32, 34, 66"},
+  {street = "Za jarkom"},
+  {street = "Orgovánová"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "A. Kmeťa"},
+  {street = "Bernolákova"},
+  {street = "Cintorínska"},
+  {street = "Kvetná"},
+  {street = "Ľ. Štúra"},
+  {street = "Ružová"},
+  {street = "Mládeže"},
+  {street = "Nám. SNP"},
+  {street = "Záhradná"},
+  {street = "Zámocká"},
+  {street = "Za dubami"},
+  {street = "Pod Laščíkom", written = "Pod Laščikom", note = "same street, length mark missing in document"},
+  {street = "Hlavná", numbers = "1, 2, 3, 5, 7, 9, 11, 13, 15, 17, 19, 20, 21, 23, 30, 42"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Konštantínova"},
+  {street = "Puškinova"},
+  {street = "Metodova"},
+  {street = "Andreja Hlinku"},
+  {street = "Sládkovičova"},
+  {street = "Bankovská"},
+  {street = "Majerská"},
+  {street = "J. Kráľa"},
+  {street = "P. Horova"},
+  {street = "Kalinčiakova"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Krátka"},
+  {street = "Hlavná", numbers = "31, 33, 37, 39, 43, 45, 49, 50"},
+  {street = "Hrnčiarska", numbers = "21, 23, 25, 34B, 36, 38, 40, 42, 44, 50, 72"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Šarišská"},
+  {street = "Školská"},
+  {street = "Pri rybníku"},
+  {street = "Samuela Jurkoviča"},
+  {street = "Chotčanská"},
+  {street = "Nábrežná"},
+  {street = "Ondavská"},
+  {street = "Petejovská"},
+  {street = "Matice slovenskej", numbers = "48, 50, 56, 58"},
+  {street = "Hrnčiarska", numbers = "63, 65, 76, 78, 80, 82, 84, 86"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Športová"},
+  {street = "Štefánikova"},
+  {street = "Matice slovenskej", numbers = "2A, 2B, 2C, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 52, 54"},
+  {street = "Hrnčiarska", numbers = "41, 51, 53, 55, 57, 59, 68, 70, 88, 90"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Čerlinská"},
+  {street = "Šandalská"},
+  {street = "Bokšanská"},
+  {street = "Pod vlekom", note = "not in the document; a street of the part Bokša, whose other streets all vote in okrsok 10", inferred = true},
+]

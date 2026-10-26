@@ -1,0 +1,163 @@
+# Council obvody of Smižany (560154), Spišská Nová Ves.
+# Transcribed by an AI agent in job obvod-rules-085 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 zahŕňa okrsky: č. 1 – Kultúrny dom, Tatranská 80 č. 2 – Školský klub detí ZŠ Komenského 3 č. 4 – Kaštieľ, Tatranská 109 č. 5 – Radnica, Námestie M. Pajdušáka 50 č. 6 – ZŠ Povýšenia sv. Kríža, Smreková 26 a budú ho tvoriť ulice: Agatová Antona Kreta Brezová Brusník Dezidera Štraucha Hollého Hviezdoslavova Iliašovská J. Majkuta Jabloňová Jahodová Javorová Jesenského Komenského Košiarny briežok Krátka Kukučínova Ľ. Podjavorinskej Lipová Maša Mlynská Mojmírova Nábrežná Nálepkova Námestie M. Pajdušáka Nová Okružná Pavla Suržina Pribinova Rázusova Ružová Sládkovičova Slovenského Raja Smreková Staničná Štefana Hozu Štefánikova Štúrova Tatranská Tomášovská Topoľová Za Kaštieľom Záhradky Volí sa 9 poslancov
+#   obvod 2: Volebný obvod č. 2 zahŕňa okrsok: č. 3 – Materská škola, Zelená 1 a budú ho tvoriť ulice: Bystrá Hornádska Lúčna Poľná Rybníky Stredná Štrkovec Veterná Vrbová Za Mostom Zelená Volia sa 4 poslanci
+# Okrsky added by an AI agent in job okrsok-rules-084 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hollého, Jahodová, Jesenského, Košiarny briežok, Ľ.Podjavorinskej, Mlynská, Rázusova, Ružová, Sládkovičova, Staničná, Tatranská or.č. 33-127 nepárne čísla, Tatranská or.č. 80-124 párne čísla
+#   okrsok 2: Brusník, Hviezdoslavova, Iliašovská, J.Majkuta, Komenského, Kukučínova, Nábrežná, Štefánikova, Štúrova, Tatranská or.č. 1-31 nepárne čísla, Tatranská or.č. 2-78 párne čísla
+#   okrsok 3: Bystrá, Hornádska, Lúčna, Poľná, Rybníky, Stredná, Štrkovec, Veterná, Vrbová, Za Mostom, Zelená
+#   okrsok 4: Maša, Slovenského Raja, Za Kaštieľom, Záhradky
+#   okrsok 5: Jabloňová, Nálepkova, Pavla Suržina, Tomášovská
+#   okrsok 6: Agatová, Antona Kreta, Brezová, Dezidera Štraucha, Javorová, Krátka, Lipová, Mojmírova, Námestie M. Pajdušáka, Nová, Okružná, Pribinova, Smreková, Štefana Hozu, Topoľová
+obec = "560154"
+name = "Smižany"
+date = 2026-06-17
+fill = "nearest"
+note = "The announcement lists streets only. 'Antona Kreta' (obvod 1) is not in the address register and is left out. The 867 addresses without a street (numbered by súpisné číslo only) are not assigned by the document; fill_nearest places them by the nearest addressed building."
+okrsky_date = 2026-07-27
+okrsky_fill = "nearest"
+okrsky_note = "Antona Kreta (okrsok 6) is not in the address register and is left out. fill_nearest covers Tatranská 126 and 128 (beyond the document's ranges) and the addresses without a street (súpisné čísla only) in obvod 1."
+
+[[document]]
+url = "https://www.smizany.sk/download_file_f.php?id=2447123"
+sha256 = "cb7dc076528468f2854d62061d7706f3bb8952bc061794270a20081a417d9061"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obce Smižany 24. októbra 2026 (uznesenie OZ č. 536/39/2026 zo dňa 17.06.2026)"
+
+[[document]]
+url = "https://www.smizany.sk/download_file_f.php?id=2449048"
+sha256 = "02e52bd3082add536ffff12832bb821e990fb90e53b3f7af3c4bbf1613e21558"
+title = "Volebné okrsky a volebné miestnosti pre voľby do orgánov samosprávy obcí (27.07.2026)"
+
+[obvod.1]
+seats = 9
+okrsky = [1, 2, 4, 5, 6]
+rules = [
+  {street = "Agatová"},
+  {street = "Brezová"},
+  {street = "Brusník"},
+  {street = "Dezidera Štraucha"},
+  {street = "Hollého"},
+  {street = "Hviezdoslavova"},
+  {street = "Iliašovská"},
+  {street = "J. Majkuta"},
+  {street = "Jabloňová"},
+  {street = "Jahodová"},
+  {street = "Javorová"},
+  {street = "Jesenského"},
+  {street = "Komenského"},
+  {street = "Košiarny briežok"},
+  {street = "Krátka"},
+  {street = "Kukučínova"},
+  {street = "Ľ. Podjavorinskej"},
+  {street = "Lipová"},
+  {street = "Maša"},
+  {street = "Mlynská"},
+  {street = "Mojmírova"},
+  {street = "Nábrežná"},
+  {street = "Nálepkova"},
+  {street = "Námestie M. Pajdušáka"},
+  {street = "Nová"},
+  {street = "Okružná"},
+  {street = "Pavla Suržina"},
+  {street = "Pribinova"},
+  {street = "Rázusova"},
+  {street = "Ružová"},
+  {street = "Sládkovičova"},
+  {street = "Slovenského Raja"},
+  {street = "Smreková"},
+  {street = "Staničná"},
+  {street = "Štefana Hozu"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Tatranská"},
+  {street = "Tomášovská"},
+  {street = "Topoľová"},
+  {street = "Za Kaštieľom"},
+  {street = "Záhradky"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [3]
+rules = [
+  {street = "Bystrá"},
+  {street = "Hornádska"},
+  {street = "Lúčna"},
+  {street = "Poľná"},
+  {street = "Rybníky"},
+  {street = "Stredná"},
+  {street = "Štrkovec"},
+  {street = "Veterná"},
+  {street = "Vrbová"},
+  {street = "Za Mostom"},
+  {street = "Zelená"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Hollého"},
+  {street = "Jahodová"},
+  {street = "Jesenského"},
+  {street = "Košiarny briežok"},
+  {street = "Ľ. Podjavorinskej", written = "Ľ.Podjavorinskej"},
+  {street = "Mlynská"},
+  {street = "Rázusova"},
+  {street = "Ružová"},
+  {street = "Sládkovičova"},
+  {street = "Staničná"},
+  {street = "Tatranská", numbers = "33-127", parity = "odd"},
+  {street = "Tatranská", numbers = "80-124", parity = "even"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Brusník"},
+  {street = "Hviezdoslavova"},
+  {street = "Iliašovská"},
+  {street = "J. Majkuta", written = "J.Majkuta"},
+  {street = "Komenského"},
+  {street = "Kukučínova"},
+  {street = "Nábrežná"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Tatranská", numbers = "1-31", parity = "odd"},
+  {street = "Tatranská", numbers = "2-78", parity = "even"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Maša"},
+  {street = "Slovenského Raja"},
+  {street = "Za Kaštieľom"},
+  {street = "Záhradky"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Jabloňová"},
+  {street = "Nálepkova"},
+  {street = "Pavla Suržina"},
+  {street = "Tomášovská"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Agatová"},
+  {street = "Brezová"},
+  {street = "Dezidera Štraucha"},
+  {street = "Javorová"},
+  {street = "Krátka"},
+  {street = "Lipová"},
+  {street = "Mojmírova"},
+  {street = "Námestie M. Pajdušáka"},
+  {street = "Nová"},
+  {street = "Okružná"},
+  {street = "Pribinova"},
+  {street = "Smreková"},
+  {street = "Štefana Hozu"},
+  {street = "Topoľová"},
+]

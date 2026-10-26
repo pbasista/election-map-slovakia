@@ -1,0 +1,24 @@
+# Okrsky of Lisková, transcribed by an AI agent in job okrsok-rules-433 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre súpisné čísla: 0-112, 368-432, 590-817, 906-908, 1024-1025.
+#   okrsok 2: pre súpisné čísla: 114-364, 433-587, 818-893, 900-902, 904, 910-940, 1002-1023, 1027- 1029.
+obec = "510785"
+name = "Lisková"
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by súpisné číslo; numbers the document omits (113, 365-367, 588-589, 894-899, 903, 905, 909, 941-1001, 1026, above 1029) take the okrsok of the nearest address (fill_nearest). No decision date stated."
+
+[[document]]
+url = "https://www.liskova.sk/download_file_f.php?id=2449866"
+sha256 = "25aa7d846ce126dd5f606c9067734a9bcabf6895bbde6031475315604ebc835d"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Lisková", numbers = "0-112, 368-432, 590-817, 906-908, 1024-1025"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lisková", numbers = "114-364, 433-587, 818-893, 900-902, 904, 910-940, 1002-1023, 1027-1029"},
+]

@@ -1,0 +1,97 @@
+# Okrsky of Cífer, transcribed by an AI agent in job okrsok-rules-243 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Bernolákova, Cintorínska, Hviezdoslavova, Izabelina ulica, Kaplnská, Ľudovíta Štúra, Nám. Andreja Hlinku, Nová, Rybníková ulica, SNP, Sokolská, Trnavská, Ulica sv. Michala, Vendelínska.
+#   okrsok 2: Ulice: Andreja Sládkoviča, Budovateľská, Družstevná, Hlboká, Jozefa Kubányiho, Juraja Fándlyho, Palárikova, Štefana Moyzesa, Východná, Záhradná.
+#   okrsok 3: Ulice: Alejová ulica, Hájska, Karolov dvor, Lipová ulica, Lúčna, Ľudovíta Pavetitša, M. Schneidra – Trnavského, M.R. Štefánika, Mlynská, Poľná ulica, Potočná, Severná, Slnečná, Stromová ulica, Štadiónová, Ulica Eugena Suchoňa, Ulica Márie Hollósyovej, Ulica Šarloty Zičiovej, Veterná
+#   okrsok 4: Ulice: Avarská ulica, Germánska ulica, Keltská ulica, Rímska ulica, Ulica sv. Petra a Pavla, Ulica Titusa Kolníka, Veľkomoravská ulica, Záhumenská ulica.
+#   okrsok 5: Ulice: Krátka ulica, Nad vŕškami, Orechová cesta, Roľnícka ulica, Ulica Jána Dopjeru, Ulica sv. Prokopa, Za humnami.
+obec = "506877"
+name = "Cífer"
+okrsky_date = 2026-07-21
+okrsky_fill = "nearest"
+okrsky_note = "Ulica sv. Michala (okrsok 1) is not in the register and is left out. Marka Čulena (60 addresses) is not in the document; it and the addresses without a street in the part Cífer take the nearest placed address."
+
+[[document]]
+url = "https://www.cifer.sk/e_download.php?file=/data/multipage/editor/editor-34-320-sk_1.pdf&original=Ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20miestnost%C3%AD_C%C3%ADfer.pdf"
+sha256 = "6a353e88d21eed83d1ad243f415286a80ba79f893eeb112d07c44a69842ee49e"
+title = "Rozhodnutie starostu Obce Cífer zo dňa 21. júla 2026 o utvorení volebných okrskov a určení volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Cintorínska"},
+  {street = "Hviezdoslavova"},
+  {street = "Izabelina ulica"},
+  {street = "Kaplnská"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Nám. Andreja Hlinku"},
+  {street = "Nová"},
+  {street = "Rybníková ulica"},
+  {street = "SNP"},
+  {street = "Sokolská"},
+  {street = "Trnavská"},
+  {street = "Vendelínska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Andreja Sládkoviča"},
+  {street = "Budovateľská"},
+  {street = "Družstevná"},
+  {street = "Hlboká"},
+  {street = "Jozefa Kubányiho"},
+  {street = "Juraja Fándlyho"},
+  {street = "Palárikova"},
+  {street = "Štefana Moyzesa"},
+  {street = "Východná"},
+  {street = "Záhradná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hájska"},
+  {street = "Karolov dvor"},
+  {street = "Lúčna"},
+  {street = "Ľudovíta Pavetitša"},
+  {street = "Mlynská"},
+  {street = "Potočná"},
+  {street = "Severná"},
+  {street = "Slnečná"},
+  {street = "Štadiónová"},
+  {street = "Ulica Eugena Suchoňa"},
+  {street = "Veterná"},
+  {street = "Alejová", written = "Alejová ulica"},
+  {street = "Lipová", written = "Lipová ulica"},
+  {street = "M. Schneidra-Trnavského", written = "M. Schneidra – Trnavského"},
+  {street = "M.R.Štefánika", written = "M.R. Štefánika"},
+  {street = "Poľná", written = "Poľná ulica"},
+  {street = "Stromová", written = "Stromová ulica"},
+  {street = "Márie Hollósyovej", written = "Ulica Márie Hollósyovej", note = "same street; the register leaves out the word Ulica"},
+  {street = "Šarloty Zičiovej", written = "Ulica Šarloty Zičiovej", note = "same street; the register leaves out the word Ulica"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Avarská ulica"},
+  {street = "Germánska ulica"},
+  {street = "Keltská ulica"},
+  {street = "Rímska ulica"},
+  {street = "Ulica sv. Petra a Pavla"},
+  {street = "Ulica Titusa Kolníka"},
+  {street = "Veľkomoravská ulica"},
+  {street = "Záhumenská ulica"},
+  {part = "Pác", note = "all streets of the part Pác are in okrsok 4; its addresses without a street too", inferred = true},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Krátka ulica"},
+  {street = "Nad vŕškami"},
+  {street = "Orechová cesta"},
+  {street = "Roľnícka ulica"},
+  {street = "Ulica Jána Dopjeru"},
+  {street = "Ulica sv. Prokopa"},
+  {street = "Za humnami"},
+  {part = "Jarná", note = "all streets of the part Jarná are in okrsok 5; its addresses without a street too", inferred = true},
+]

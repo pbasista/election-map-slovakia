@@ -1,0 +1,48 @@
+# Okrsky of Pukanec, transcribed by an AI agent in job okrsok-rules-338 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Nová, Pažiť, Štiavnická cesta, Za Školou, Záhradná, miestna časť Majere a občania s pobytom obec Pukanec
+#   okrsok 2: Breznická cesta, Červená cesta, Čierne Blato, Dlhá, Hrnčiarska, Krátka, Krížna, Kúty, Námestie Mieru, Na Žliabku, Partizánska cesta, Pod Hradbami, Potočná, Prieložná, Sľúkova Brána, ul. SNP, Viničná, Vodná, Za Múrom a ulica Závoz
+obec = "502693"
+name = "Pukanec"
+okrsky_fill = "nearest"
+okrsky_note = "Source is the obec's election notice of 20.10.2026 listing the streets of each okrsok; no formal decision with date found. Addresses without a street in the part Pukanec (registered by súpisné číslo) take the nearest okrsok (fill_nearest); residents registered only to the obec belong to okrsok 1 per the notice."
+
+[[document]]
+url = "https://www.pukanec.sk/volby-24-10--2026-oznam--oznam/mid/440103/.html"
+sha256 = "8e9a792d6fe9ab155e79aadb24e7d0c93aa33d13faa3110e1713d1f032e79abc"
+title = "Voľby 24.10. 2026 - oznam"
+
+[okrsok.1]
+rules = [
+  {street = "Nová"},
+  {street = "Pažiť"},
+  {street = "Štiavnická cesta"},
+  {street = "Za Školou"},
+  {street = "Záhradná"},
+  {part = "Majere"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Breznická cesta"},
+  {street = "Červená cesta"},
+  {street = "Čierne Blato"},
+  {street = "Dlhá"},
+  {street = "Hrnčiarska"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Kúty"},
+  {street = "Námestie Mieru"},
+  {street = "Na Žliabku"},
+  {street = "Partizánska cesta"},
+  {street = "Pod Hradbami"},
+  {street = "Sľúkova Brána"},
+  {street = "SNP"},
+  {street = "Vodná"},
+  {street = "Za Múrom"},
+  {street = "Závoz"},
+  {street = "Potočná cesta", written = "Potočná", note = "document leaves out 'cesta'; the register has only this street of that name"},
+  {street = "Prieložná cesta", written = "Prieložná", note = "document leaves out 'cesta'; the register has only this street of that name"},
+  {street = "Viničná cesta", written = "Viničná", note = "document leaves out 'cesta'; the register has only this street of that name"},
+]

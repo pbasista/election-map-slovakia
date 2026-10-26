@@ -11536,6 +11536,10 @@
    "src": "Borders of the countries around Slovakia, Natural Earth, public domain",
    "text": "Hranice států kolem Slovenska, Natural Earth, volné dílo"
   },
+  "about.inputs.osm": {
+   "src": "Roads, railways and water features of the base map, © OpenStreetMap contributors, Geofabrik's extract of Slovakia, license ODbL 1.0",
+   "text": "Silnice, železnice a vodstvo podkladové mapy, © přispěvatelé OpenStreetMap, výřez Slovenska od Geofabrik, licence ODbL 1.0"
+  },
   "about.inputs.results": {
    "src": "Results of the 2022 municipal and regional elections and of the by-elections since, Statistical Office of the Slovak Republic",
    "text": "Výsledky voleb do orgánů samosprávy obcí a krajů 2022 a nových voleb od té doby, Statistický úřad SR"
@@ -11557,8 +11561,8 @@
    "text": "Licence"
   },
   "about.licenses": {
-   "src": "The shapes on the map are derived from the ZBGIS boundaries (simplified and merged into constituencies) and, around Slovakia, from Natural Earth. Candidate data are reproduced without changes to their content, only rearranged.",
-   "text": "Tvary na mapě jsou odvozeny z hranic ZBGIS (zjednodušené a sloučené do obvodů) a kolem Slovenska z Natural Earth. Údaje o kandidátech jsou převzaty beze změny obsahu, pouze jinak uspořádány."
+   "src": "The shapes on the map are derived from the ZBGIS boundaries (simplified and merged into constituencies) and, around Slovakia, from Natural Earth. The base map is derived from OpenStreetMap (selected, simplified and cut per district) and is published under the same license, ODbL 1.0. Candidate data are reproduced without changes to their content, only rearranged.",
+   "text": "Tvary na mapě jsou odvozeny z hranic ZBGIS (zjednodušené a sloučené do obvodů) a kolem Slovenska z Natural Earth. Podkladová mapa je odvozena z OpenStreetMap (vybraná, zjednodušená a rozdělená podle okresů) a je zveřejněna pod stejnou licencí, ODbL 1.0. Údaje o kandidátech jsou převzaty beze změny obsahu, pouze jinak uspořádány."
   },
   "about.logos.title": {
    "src": "Party logos (Wikimedia Commons; the other parties have no freely licensed logo and are shown by their short name)",
@@ -11581,8 +11585,8 @@
    "text": "Kdo je nyní ve funkci, jsme sestavili z definitivních výsledků voleb z roku 2022 a všech nových voleb do orgánů obcí od té doby (Statistický úřad SR) a přiřadili ke kandidátům podle obce nebo kraje, jména a věku. Chybějí náhradníci, kteří nastoupili na uvolněný mandát, i odchody z funkce bez nových voleb, a kandidát, který si změnil příjmení, se nespojí; značka židle („tuto funkci nyní zastává“) proto nemusí být úplná. Jak kdo funkci získal, uvádíme z týchž definitivních výsledků, a to za území, v němž byl zvolen: za obec u starosty, za kraj u předsedy, za tehdejší volební obvod (nebo celou obec, pokud měla jeden obvod) u zastupitele. Podíl u starosty a předsedy je z platných hlasovacích lístků; u zastupitelstva, kde mohl každý volič volit více kandidátů, je z počtu voličů s platným hlasovacím lístkem, takže podíly v jednom obvodu dávají dohromady více než 100 %. Uvádíme také podíl ze všech zapsaných voličů a účast (podíl zúčastněných voličů ze zapsaných)."
   },
   "about.method.map": {
-   "src": "The map is drawn directly from the ZBGIS municipal boundaries at several levels of detail, without a base map from other servers. The regional council constituencies and the city council constituencies of Bratislava and Košice consist of whole municipalities and city districts, as set by the decisions of the regions and cities. The countries around Slovakia are drawn coarser, from Natural Earth, for orientation only.",
-   "text": "Mapa se kreslí přímo z hranic obcí ZBGIS v několika úrovních podrobnosti, bez podkladové mapy z jiných serverů. Obvody pro volby do krajských zastupitelstev a městských zastupitelstev Bratislavy a Košic se skládají z celých obcí a městských částí podle rozhodnutí krajů a měst. Státy kolem Slovenska jsou nakresleny hruběji, podle Natural Earth, jen pro orientaci."
+   "src": "The map is drawn directly from the ZBGIS municipal boundaries at several levels of detail, without a base map from other servers. The regional council constituencies and the city council constituencies of Bratislava and Košice consist of whole municipalities and city districts, as set by the decisions of the regions and cities. The countries around Slovakia are drawn coarser, from Natural Earth, for orientation only. The faint roads, railways, rivers and lakes under the colours, also for orientation only, come from OpenStreetMap, simplified for each zoom.",
+   "text": "Mapa se kreslí přímo z hranic obcí ZBGIS v několika úrovních podrobnosti, bez podkladové mapy z jiných serverů. Obvody pro volby do krajských zastupitelstev a městských zastupitelstev Bratislavy a Košic se skládají z celých obcí a městských částí podle rozhodnutí krajů a měst. Státy kolem Slovenska jsou nakresleny hruběji, podle Natural Earth, jen pro orientaci. Bledé silnice, železnice, řeky a jezera pod barvami, také jen pro orientaci, pocházejí z OpenStreetMap, zjednodušené pro každé přiblížení."
   },
   "about.method.obvody": {
    "src": "Municipalities with one council constituency have it assigned directly. Municipalities and city districts with several constituencies define them in their own resolutions, by streets, house numbers or parts of the municipality. An AI agent transcribed these resolutions from the municipalities' websites into rules, which were checked to put every address of the municipality into exactly one constituency; the resolutions are linked below. Where a resolution has not been processed yet, all constituencies are shown. The number of seats comes from these resolutions; a council with one constituency whose 2026 number is not known yet shows the number elected in 2022 (Statistical Office of the Slovak Republic), labelled as such.",
@@ -11677,12 +11681,12 @@
    "text": "Verze {version}"
   },
   "app.description": {
-   "src": "Slovakia's 2026 local and regional elections by constituency: your ballots by address, the candidates with sourced notes, and live results as the votes are counted.",
-   "text": "Komunální a krajské volby 2026 podle obvodů: hlasovací lístky podle adresy, kandidáti se zjištěními se zdroji a průběžné výsledky během sčítání hlasů."
+   "src": "Slovakia's 2026 local and regional elections: results by constituency, municipality and polling district, ballots by address, candidates with sourced notes.",
+   "text": "Komunální a krajské volby 2026 na Slovensku: výsledky podle obvodů, obcí a okrsků, hlasovací lístky podle adresy a kandidáti se zjištěními se zdroji."
   },
   "app.features": {
-   "src": "Enter your address or click the map to see every ballot you will vote on – mayor, municipal council, regional president and regional council – with the candidates in ballot order and their parties. The map marks who holds each office now and with what share of the vote they won it in 2022, and for the candidates researched so far it adds notes on their career and controversies, each linked to its source. On election night it shows the results as they are counted – each candidate's votes, the turnout and the winners, on the ballots and on the map – and then the final results. It covers every municipality and constituency in Slovakia, with no ads and no tracking.",
-   "text": "Zadejte svou adresu nebo klikněte do mapy a uvidíte všechny hlasovací lístky, které dostanete – na starostu či primátora, do obecního či městského zastupitelstva, na předsedu kraje a do zastupitelstva kraje – s kandidáty v pořadí na lístku a jejich stranami. Mapa označuje, kdo funkci zastává nyní a s jakým podílem hlasů ji v roce 2022 získal, a u dosud prověřených kandidátů přidává zjištění o jejich kariéře a kauzách, každé s odkazem na zdroj. Ve volební noci zobrazuje průběžné výsledky, jak se sčítají – hlasy kandidátů, účast a vítěze, na lístcích i na mapě – a poté konečné výsledky. Pokrývá všechny obce a volební obvody na Slovensku, bez reklam a bez sledování."
+   "src": "Enter your address or click the map to see every ballot voted on there – mayor, municipal council, regional president and regional council – with the candidates in ballot order, their parties and the results of the 2026 elections: each candidate's votes and share, the winners and the turnout, on the ballots and on the map, down to the polling districts. The map also marks who holds each office now and with what share of the vote they won it in 2022, and for the candidates researched it adds notes on their career and controversies, each linked to its source. It covers every municipality and constituency in Slovakia, with no ads and no tracking.",
+   "text": "Zadejte adresu nebo klikněte do mapy a uvidíte všechny hlasovací lístky, o kterých se tam hlasovalo – na starostu či primátora, do obecního nebo městského zastupitelstva, na předsedu kraje a do zastupitelstva kraje – s kandidáty v pořadí na lístku, jejich stranami a výsledky voleb 2026: hlasy a podíl každého kandidáta, zvolené a účast, na lístcích i na mapě, až po volební okrsky. Mapa také označuje, kdo funkci zastává nyní a s jakým podílem hlasů ji v roce 2022 získal, a u prověřených kandidátů přidává zjištění o jejich kariéře a kauzách, každé s odkazem na zdroj. Pokrývá všechny obce a volební obvody na Slovensku, bez reklam a bez sledování."
   },
   "app.noscript": {
    "src": "{site} needs JavaScript.",
@@ -11787,6 +11791,38 @@
   "card.offices": {
    "src": "In office now",
    "text": "Nyní ve funkci"
+  },
+  "card.origins_highest": {
+   "src": "Highest share",
+   "text": "Nejvyšší podíl"
+  },
+  "card.origins_map_obce": {
+   "src": "Show the candidate's votes on the map by municipality",
+   "text": "Zobrazit hlasy kandidáta na mapě podle obcí"
+  },
+  "card.origins_map_okrsky": {
+   "src": "Show the candidate's votes on the map by polling district",
+   "text": "Zobrazit hlasy kandidáta na mapě podle volebních okrsků"
+  },
+  "card.origins_most": {
+   "src": "Most votes",
+   "text": "Nejvíce hlasů"
+  },
+  "card.origins_obce": {
+   "src": "Votes by municipality",
+   "text": "Hlasy podle obcí"
+  },
+  "card.origins_okrsky": {
+   "src": "Votes by polling district",
+   "text": "Hlasy podle volebních okrsků"
+  },
+  "card.origins_okrsok": {
+   "src": "No. {n}",
+   "text": "č. {n}"
+  },
+  "card.origins_okrsok_in": {
+   "src": "{name}, No. {n}",
+   "text": "{name}, č. {n}"
   },
   "card.parties": {
    "src": "Nominated by",
@@ -12269,8 +12305,16 @@
    "text": "Nápověda a upozornění"
   },
   "layers.auto": {
-   "src": "Those switched on appear by zoom: the regional ones on the whole map, those of Bratislava and Košice as you zoom in on the cities, those of municipal councils as you zoom in on a municipality.",
-   "text": "Zapnuté obvody se zobrazují podle přiblížení: krajské na celé mapě, bratislavské a košické při přiblížení na tato města, obvody obecních zastupitelstev při přiblížení na obec."
+   "src": "Those switched on appear by zoom: the regional ones on the whole map, those of Bratislava and Košice as you zoom in on the cities, those of municipal councils as you zoom in on a municipality, and polling districts as you zoom in further.",
+   "text": "Zapnuté obvody se zobrazují podle přiblížení: krajské na celé mapě, bratislavské a košické při přiblížení na tato města, obvody obecních zastupitelstev při přiblížení na obec a volební okrsky při dalším přiblížení."
+  },
+  "layers.base": {
+   "src": "Roads, railways and water features",
+   "text": "Silnice, železnice a vodstvo"
+  },
+  "layers.base_title": {
+   "src": "Base map",
+   "text": "Podkladová mapa"
   },
   "layers.button": {
    "src": "Constituency boundaries",
@@ -12279,6 +12323,18 @@
   "layers.city": {
    "src": "Bratislava and Košice",
    "text": "Bratislava a Košice"
+  },
+  "layers.okrsky": {
+   "src": "Polling districts",
+   "text": "Volební okrsky"
+  },
+  "layers.okrsky_approximate": {
+   "src": "Approximate polling district boundary, drawn between the addresses",
+   "text": "Přibližná hranice volebního okrsku, vedená mezi adresami"
+  },
+  "layers.okrsky_border": {
+   "src": "Polling district boundary",
+   "text": "Hranice volebního okrsku"
   },
   "layers.oz": {
    "src": "Municipal councils",
@@ -12309,8 +12365,8 @@
    "text": "Krajská zastupitelstva"
   },
   "map.attribution": {
-   "src": "Boundaries: ZBGIS © ÚGKK SR, CC BY 4.0 · Neighbouring countries: Natural Earth · Addresses: MV SR, CC0",
-   "text": "Hranice: ZBGIS © ÚGKK SR, CC BY 4.0 · Sousední státy: Natural Earth · Adresy: MV SR, CC0"
+   "src": "Boundaries: ZBGIS © ÚGKK SR, CC BY 4.0 · Base map: © OpenStreetMap contributors, ODbL · Neighbouring countries: Natural Earth · Addresses: MV SR, CC0",
+   "text": "Hranice: ZBGIS © ÚGKK SR, CC BY 4.0 · Podkladová mapa: © přispěvatelé OpenStreetMap, ODbL · Sousední státy: Natural Earth · Adresy: MV SR, CC0"
   },
   "map.label": {
    "src": "Map",
@@ -12319,6 +12375,10 @@
   "map.obvod": {
    "src": "No. {n}",
    "text": "Č. {n}"
+  },
+  "map.okrsok": {
+   "src": "district {n}",
+   "text": "okrsek {n}"
   },
   "map.zoom": {
    "src": "Zoom",
@@ -12356,6 +12416,30 @@
    "src": "Results on the map",
    "text": "Výsledky na mapě"
   },
+  "mapmode.level_councils": {
+   "src": "council constituencies",
+   "text": "volebních obvodů do zastupitelstev obcí"
+  },
+  "mapmode.level_obce": {
+   "src": "municipalities",
+   "text": "obcí"
+  },
+  "mapmode.level_okrsky": {
+   "src": "polling districts",
+   "text": "volebních okrsků"
+  },
+  "mapmode.level_zsk": {
+   "src": "regional constituencies",
+   "text": "volebních obvodů krajů"
+  },
+  "mapmode.levels": {
+   "src": "By {units}, finer as you zoom in",
+   "text": "Podle {units}, při přiblížení podrobněji"
+  },
+  "mapmode.levels_one": {
+   "src": "By {units}",
+   "text": "Podle {units}"
+  },
   "mapmode.none": {
    "src": "Nothing to show yet.",
    "text": "Zatím není co zobrazit."
@@ -12371,6 +12455,34 @@
   "mapmode.share_voters": {
    "src": "share of the voters with a valid ballot",
    "text": "podíl z voličů s platným hlasovacím lístkem"
+  },
+  "mapmode.tip_obvod": {
+   "src": "{name}, constituency No. {n}",
+   "text": "{name}, volební obvod č. {n}"
+  },
+  "mapmode.tip_okrsok": {
+   "src": "Polling district No. {n}, {name}",
+   "text": "Volební okrsek č. {n}, {name}"
+  },
+  "mapmode.tip_past": {
+   "src": "2022: {turnout} · {voters} of {eligible}",
+   "text": "2022: {turnout} · {voters} z {eligible}"
+  },
+  "mapmode.tip_turnout": {
+   "src": "Turnout {turnout} · {voters} of {eligible} voted",
+   "text": "Účast {turnout} · volilo {voters} z {eligible}"
+  },
+  "mapmode.tip_votes": {
+   "src": "{share} · {votes} of {valid}",
+   "text": "{share} · {votes} z {valid}"
+  },
+  "mapmode.tip_winner": {
+   "src": "Most votes: {name}, {share}",
+   "text": "Nejvíce hlasů: {name}, {share}"
+  },
+  "mapmode.tip_zsk": {
+   "src": "{kraj} kraj, constituency No. {n}",
+   "text": "{kraj} kraj, volební obvod č. {n}"
   },
   "mapmode.title": {
    "src": "2026 turnout on the map",
@@ -12415,6 +12527,46 @@
   "mapmode.turnout_total": {
    "src": "{turnout} overall",
    "text": "celkem {turnout}"
+  },
+  "mapmode.units": {
+   "src": "Show by",
+   "text": "Zobrazit podle"
+  },
+  "mapmode.units_obce": {
+   "src": "Municipalities",
+   "text": "Obce"
+  },
+  "mapmode.units_okrsky": {
+   "src": "Polling districts",
+   "text": "Volební okrsky"
+  },
+  "mapmode.winner_count": {
+   "src": "The most votes in {n} of the areas shown",
+   "text": "Nejvíce hlasů v {n} ze zobrazených oblastí"
+  },
+  "mapmode.winner_hide": {
+   "src": "Take who got the most votes off the map",
+   "text": "Skrýt z mapy, kdo kde získal nejvíce hlasů"
+  },
+  "mapmode.winner_of": {
+   "src": "the candidate with the most votes in each area",
+   "text": "kandidát s nejvíce hlasy v každé oblasti"
+  },
+  "mapmode.winner_of_council": {
+   "src": "the top candidate in each area, not those elected",
+   "text": "kandidát s nejvíce hlasy v každé oblasti, ne všichni zvolení"
+  },
+  "mapmode.winner_show": {
+   "src": "Show on the map who got the most votes where",
+   "text": "Zobrazit na mapě, kdo kde získal nejvíce hlasů"
+  },
+  "mapmode.winner_title": {
+   "src": "Most votes",
+   "text": "Nejvíce hlasů"
+  },
+  "mapmode.winner_total": {
+   "src": "Overall: {name}, {share}",
+   "text": "Celkem: {name}, {share}"
   },
   "nav.language": {
    "src": "Language",
@@ -12484,9 +12636,25 @@
    "src": "council constituency No. {n}",
    "text": "volební obvod č. {n}"
   },
+  "place.obvody": {
+   "src": "council constituencies No. {n}",
+   "text": "volební obvody č. {n}"
+  },
   "place.okres": {
    "src": "okres {name}",
    "text": "okres {name}"
+  },
+  "place.okrsky": {
+   "src": "polling districts No. {n}",
+   "text": "volební okrsky č. {n}"
+  },
+  "place.okrsok": {
+   "src": "polling district No. {n}",
+   "text": "volební okrsek č. {n}"
+  },
+  "place.okrsok_approximate": {
+   "src": "polling district No. {n} (by an approximate boundary)",
+   "text": "volební okrsek č. {n} (podle přibližné hranice)"
   },
   "research.affairs_alert": {
    "src": "Searched only the sites on our list ({scope}); serious controversies found about this candidate: {n}",
@@ -12676,6 +12844,14 @@
    "src": "{votes} of {valid} voters",
    "text": "{votes} / {valid} voličů"
   },
+  "results.awaiting": {
+   "src": "Polls closed · results will appear here as they come in",
+   "text": "Hlasování skončilo · výsledky se zde objeví průběžně"
+  },
+  "results.awaiting_title": {
+   "src": "The polls closed at {close} (Slovak time). The Statistical Office of the Slovak Republic publishes the results through the night as they are counted; this page checks for them every minute and shows them as they come.",
+   "text": "Volební místnosti se zavřely v {close} (slovenského času). Statistický úřad Slovenské republiky zveřejňuje výsledky během noci, jak se sčítají; tato stránka je každou minutu kontroluje a zobrazí je, jakmile přijdou."
+  },
   "results.called": {
    "src": "Called by this site, not official yet: even if all of the at most {remaining} registered voters in the districts not counted yet voted against them, they would keep their place. That maximum is the registered voters at the {election} plus 10 % ({bound}), less the {eligible} registered in the districts counted so far.",
    "text": "Určeno touto stránkou, zatím ne oficiálně: i kdyby všichni z nejvýše {remaining} zapsaných voličů v dosud nesečtených okrscích hlasovali proti, své místo si udrží. Toto maximum tvoří zapsaní voliči v minulých volbách ({election}) plus 10 % ({bound}), minus {eligible} zapsaných v okrscích sečtených dosud."
@@ -12724,9 +12900,41 @@
    "src": "2026: final results",
    "text": "2026: konečné výsledky"
   },
+  "results.in_seats": {
+   "src": "Place {place} by votes: within the seats ({n}) on the count so far.",
+   "text": "{place}. místo podle hlasů: zatím v rámci mandátů ({n})."
+  },
+  "results.note_all_elected": {
+   "src": "Counted: every candidate is elected, there being no more of them than seats filled; their votes have not been published yet. They will appear here once the Statistical Office publishes them.",
+   "text": "Sečteno: zvoleni jsou všichni kandidáti, protože jich není víc než obsazených mandátů; jejich hlasy ještě nebyly zveřejněny. Objeví se zde, jakmile je Statistický úřad zveřejní."
+  },
+  "results.note_counted": {
+   "src": "Counted; who is elected and the candidates' votes have not been published yet. They will appear here once the Statistical Office publishes them.",
+   "text": "Sečteno; kdo je zvolen a hlasy kandidátů ještě nebyly zveřejněny. Objeví se zde, jakmile je Statistický úřad zveřejní."
+  },
+  "results.note_partial": {
+   "src": "Turnout counted so far; the candidates' votes have not been published yet. They will appear here once the Statistical Office publishes them.",
+   "text": "Účast je zatím sečtena; hlasy kandidátů ještě nebyly zveřejněny. Objeví se zde, jakmile je Statistický úřad zveřejní."
+  },
+  "results.note_turnout": {
+   "src": "Turnout counted; who is elected and the candidates' votes have not been published yet. They will appear here once the Statistical Office publishes them.",
+   "text": "Účast je sečtena; kdo je zvolen a hlasy kandidátů ještě nebyly zveřejněny. Objeví se zde, jakmile je Statistický úřad zveřejní."
+  },
+  "results.note_winner": {
+   "src": "Counted: the turnout and the winner are known; the other candidates' votes have not been published yet. They will appear here once the Statistical Office publishes them.",
+   "text": "Sečteno: účast a vítěz jsou známi; hlasy ostatních kandidátů ještě nebyly zveřejněny. Objeví se zde, jakmile je Statistický úřad zveřejní."
+  },
   "results.pending": {
    "src": "2026: not counted yet",
    "text": "2026: zatím nesečteno"
+  },
+  "results.seats_line": {
+   "src": "↑ seats: {n}",
+   "text": "↑ mandáty: {n}"
+  },
+  "results.seats_line_title": {
+   "src": "On the count so far, the candidates above this line would win the seats ({n}): as many of the first places by votes as there are seats. The order can still change as the count goes on.",
+   "text": "Podle dosavadního sčítání by mandáty ({n}) získali kandidáti nad touto čarou: tolik prvních míst podle hlasů, kolik je mandátů. Pořadí se ještě může změnit, dokud sčítání pokračuje."
   },
   "results.status_counting": {
    "src": "Results: counting",
@@ -12760,6 +12968,14 @@
    "src": "Turnout 2026 so far, in the districts counted: {voters} of {eligible} registered voters voted ({turnout}).",
    "text": "Dosavadní účast 2026 v sečtených okrscích: volilo {voters} z {eligible} zapsaných voličů ({turnout})."
   },
+  "results.turnout_unit": {
+   "src": "Turnout 2026 ({unit}): {voters} of {eligible} registered voters voted ({turnout}).",
+   "text": "Účast 2026 ({unit}): volilo {voters} z {eligible} zapsaných voličů ({turnout})."
+  },
+  "results.valid_votes": {
+   "src": "Valid votes 2026: {valid}",
+   "text": "Platných hlasů 2026: {valid}"
+  },
   "results.votes": {
    "src": "{n} votes",
    "text": "hlasů: {n}"
@@ -12771,6 +12987,30 @@
   "results.votes_title_multi": {
    "src": "2026: {votes} votes from {valid} voters with a valid ballot ({share}); each could vote for several candidates.",
    "text": "2026: {votes} hlasů od {valid} voličů s platným hlasovacím lístkem ({share}); každý mohl volit více kandidátů."
+  },
+  "results.withdrawn": {
+   "src": "withdrew",
+   "text": "odstoupil(a)"
+  },
+  "results.withdrawn_title": {
+   "src": "Withdrew from the election but stayed on the ballot: the votes cast for them count among the valid ones, yet cannot elect them.",
+   "text": "Odstoupil(a) z voleb, ale zůstal(a) na hlasovacím lístku: hlasy, které dostal(a), se počítají mezi platné, zvolen(a) však být nemůže."
+  },
+  "scope.all": {
+   "src": "Whole contest",
+   "text": "Celé volby"
+  },
+  "scope.label": {
+   "src": "Results for",
+   "text": "Výsledky za"
+  },
+  "scope.obvod": {
+   "src": "Constituency No. {n}",
+   "text": "Obvod č. {n}"
+  },
+  "scope.okrsok": {
+   "src": "Polling district No. {n}",
+   "text": "Okrsek č. {n}"
   },
   "search.close": {
    "src": "Close search",
@@ -12879,6 +13119,14 @@
   "turnout.hide": {
    "src": "Click to hide the numbers.",
    "text": "Kliknutím čísla skryjete."
+  },
+  "turnout.okrsky": {
+   "src": "The figures are of the polling districts that make up this constituency now: {okrsky}.",
+   "text": "Čísla jsou za volební okrsky, které nyní tvoří tento volební obvod: {okrsky}."
+  },
+  "turnout.okrsok_2022": {
+   "src": "Turnout in this polling district at the municipal elections of 2022: {voters} of {eligible} registered voters voted ({turnout}).",
+   "text": "Účast v tomto volebním okrsku v komunálních volbách 2022: volilo {voters} z {eligible} zapsaných voličů ({turnout})."
   },
   "turnout.show": {
    "src": "Click for the numbers.",

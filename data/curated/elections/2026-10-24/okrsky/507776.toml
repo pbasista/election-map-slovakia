@@ -1,0 +1,55 @@
+# Okrsky of Zeleneč, transcribed by an AI agent in job okrsok-rules-451 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: A. Hlinku, Argentínska, Družstevná, Hlavná, Hliník, Krátka, Mlynská, Nová, Obchodná, Palárikova, Pažiť, Podolky, Sládkovičova, Školská, Športová, Ulička, Vengerova, Výhon, Vinohradnícka
+#   okrsok 2: Astrová, Agátová, Bernolákova, Cintorínska, Jána Klempu, Janka Kráľa, Kapitulská, Lúčna, M. R. Štefánika, Narcisová, Nezábudková, Ružová, Štúrova
+obec = "507776"
+name = "Zeleneč"
+okrsky_date = 2026-07-20
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document, read from the image. The 9 addresses without a street take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.zelenec.sk/e_download.php?file=/data/multipage/editor/editor-62-477-sk_10.pdf&original=DX-2500N_20261020_083713.pdf"
+sha256 = "1b64f73ce7d4bc80db24e800ccb7f4da7d38f011ad0de117f46ed4064544a6d5"
+title = "Určenie volebných okrskov"
+
+[okrsok.1]
+rules = [
+  {street = "Andreja Hlinku", written = "A. Hlinku"},
+  {street = "Argentínska"},
+  {street = "Družstevná"},
+  {street = "Hlavná"},
+  {street = "Hliník"},
+  {street = "Krátka"},
+  {street = "Mlynská"},
+  {street = "Nová"},
+  {street = "Obchodná"},
+  {street = "Palárikova"},
+  {street = "Pažiť"},
+  {street = "Podolky"},
+  {street = "Sládkovičova"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Ulička"},
+  {street = "Vengerova"},
+  {street = "Výhon"},
+  {street = "Vinohradnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Astrová"},
+  {street = "Agátová"},
+  {street = "Bernolákova"},
+  {street = "Cintorínska"},
+  {street = "Jána Klempu"},
+  {street = "Janka Kráľa"},
+  {street = "Kapitulská"},
+  {street = "Lúčna"},
+  {street = "M. R. Štefánika"},
+  {street = "Narcisová"},
+  {street = "Nezábudková"},
+  {street = "Ružová"},
+  {street = "Štúrova"},
+]

@@ -1,0 +1,41 @@
+# Council obvody of Zbehy (500950), Nitra.
+# Transcribed by an AI agent in job obvod-rules-132 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod číslo 1: zahŕňa Zbehy a volí sa 7 poslancov
+#   obvod 2: Volebný obvod číslo 2: zahŕňa Andač a volia sa 2 poslanci
+# Okrsky added by an AI agent in job okrsok-rules-131 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ZBEHY, ZBEHY HOLOTKA
+#   okrsok 2: ANDAČ
+obec = "500950"
+name = "Zbehy"
+date = 2026-07-13
+note = "The announcement is a scanned PDF (no text layer) but it is clearly legible; text transcribed from the rendered image. Announcement dated 16.07.2026; the council's resolutions no. 49 and 50 are from 13.07.2026. The announcement names only Zbehy and Andač; the part Holotka is not named and is placed in obvod 1 (see the rule note)."
+okrsky_note = "Mayor's (starosta's) undated document: okrsok 1 = Zbehy and Zbehy Holotka (obvod 1), okrsok 2 = Andač (obvod 2). The document's heading for okrsok 2 repeats 'okrsku č.1' by mistake. Confirms Holotka with Zbehy."
+
+[[document]]
+url = "https://www.zbehy.sk/data/news_files/zbehy.sk/135850/oznamenie-utvoreni-poctu-poslancov-a-volebnych-obvodov.pdf"
+sha256 = "0655fc2281c02a9af4b4259aeda12c56376facae60a211d08e49d62cf4255f4b"
+title = "Oznámenie o utvorení volebného obvodu a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenia č. 49 a 50 zo dňa 13.07.2026)"
+
+[[document]]
+url = "https://www.zbehy.sk/data/news_files/zbehy.sk/135850/utvorenie-volebnych-okrskov-a-volebnych-miestnosti.pdf"
+sha256 = "b9c5a9dba085b9cbaabc192321f39cd8107d798157e4807756c216320a6aad03"
+title = "Utvorenie volebných okrskov a určenie volebnej miestnosti pre voľby do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov 24. októbra 2026"
+
+[obvod.1]
+seats = 7
+okrsky = [1]
+rules = [
+  {part = "Zbehy"},
+  {part = "Holotka", note = "Holotka is a settlement of Zbehy, not named in the announcement; the municipality's 2026 polling-district document puts 'ZBEHY HOLOTKA' together with Zbehy in okrsok 1, while Andač forms okrsok 2, so 'Zbehy' in the announcement means Zbehy including Holotka.", inferred = true},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Andač"},
+]

@@ -1,0 +1,60 @@
+# Okrsky of Limbach, transcribed by an AI agent in job okrsok-rules-410 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Cintorínska, Černicová, Družstevná, Gaštanová, Krátka, Limbašská dolina, Limbová, Malokarpatská, Mlynské pole, Pod dúblami, Podlesná, Potočná, Pri kockách, Priečna, Raková, Silvánska, SNP, Suchý vrch, Záhradná
+#   okrsok 2: Ulice: 1.mája, Iršajská, Sadová, Slnečná, Školská, Športová, Vavrinecká, Vinohradnícka
+obec = "508047"
+name = "Limbach"
+okrsky_date = 2026-07-13
+okrsky_note = "Scanned PDFs, read from rendered images. Addresses without a street (42) go to okrsok 1 per the notice for residents without a concrete address."
+
+[[document]]
+url = "https://www.limbach.sk/files/2026-07-17-093019-Inform__cia_o_utvoren___volebn__ch_okrskov_s_vymedzen__m_ich___zemn__ho_obvodu_a_o_ur__en___volebn__ch_miestnost___pre_vo__by_do_org__nov_samospr__vnych_obc___a_pre_vo__by_do_org__nov_samospr__vnych_krajov_2026.pdf"
+sha256 = "2ab418e6b8948b4f936de8d0a2fc3f3f5a1d1ab89e2afe14b5118a459f077716"
+title = "Informácia o utvorení volebných okrskov s vymedzením ich územného obvodu a o určení volebných miestností"
+
+[[document]]
+url = "https://www.limbach.sk/files/2026-07-17-092815-Oznam_ob__anom_s_trval__m_pobytom_obec_Limbach___bez_konkr__nej_adresy__.pdf"
+sha256 = "3e010cd21ba25fbbe72fc19df0c058c947245335dfd51033a3d879edf6fa3309"
+title = "Oznam občanom s trvalým pobytom obec Limbach (bez konkrétnej adresy)"
+
+[[document]]
+url = "https://www.limbach.sk/volby-do-organov-uzemnej-samospravy-2026-volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-a73-1206"
+sha256 = "18391ce78ae54bceeb3765666af3cbd940e26084f9701eb8acb600d9a63c3c69"
+title = "Voľby do orgánov územnej samosprávy 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Černicová"},
+  {street = "Družstevná"},
+  {street = "Gaštanová"},
+  {street = "Krátka ulica", written = "Krátka"},
+  {street = "Limbašská dolina"},
+  {street = "Limbová"},
+  {street = "Malokarpatská"},
+  {street = "Mlynské Pole", written = "Mlynské pole"},
+  {street = "Pod Dúblami", written = "Pod dúblami"},
+  {street = "Podlesná"},
+  {street = "Potočná"},
+  {street = "Pri Kockách", written = "Pri kockách"},
+  {street = "Priečna ulica", written = "Priečna"},
+  {street = "Raková"},
+  {street = "Silvánska"},
+  {street = "SNP"},
+  {street = "Suchý vrch"},
+  {street = "Záhradná"},
+  {part = "Limbach", note = "občania s trvalým pobytom obec Limbach (bez konkrétnej adresy) vote in okrsok 1 per the separate notice"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája"},
+  {street = "Iršajská"},
+  {street = "Sadová"},
+  {street = "Slnečná"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Vavrinecká"},
+  {street = "Vinohradnícka"},
+]

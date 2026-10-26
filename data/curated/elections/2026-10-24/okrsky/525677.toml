@@ -1,0 +1,23 @@
+# Okrsky of Gemerské Teplice, transcribed by an AI agent in job okrsok-rules-643 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Sála Kultúrneho domu v Jelšavskej Teplici č. 56
+#   okrsok 2: Sála Kultúrneho domu v Gemerskom Milhosti č. 46
+obec = "525677"
+name = "Gemerské Teplice"
+okrsky_date = 2026-07-21
+
+[[document]]
+url = "https://www.gemerske-teplice.sk/e_download.php?file=/data/uredni_deska/obsah1200_7.pdf&original=Ozn%C3%A1menie%20-%20Po%C4%8Det%20vytvoren%C3%BDch%20volebn%C3%BDch%20okrskov%2C%20Volebn%C3%A1%20miestnos%C5%A5.pdf"
+sha256 = "4e2644bac61e2c6e15f4798a81b9ef2d396930e245bfd2df9fad60aa41c5e7aa"
+title = "Oznámenie – Počet vytvorených volebných okrskov, Volebná miestnosť (21. 7. 2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Jelšavská Teplica", note = "The document gives only the number of okrsky (2) and the two polling stations, listed in this order without okrsok numbers: Sála KD v Jelšavskej Teplici č. 56, Sála KD v Gemerskom Milhosti č. 46. The obec has 2 parts with a station in each, so each okrsok gets the part of its station; numbering follows the order of the list.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Gemerský Milhosť", note = "The document gives only the number of okrsky (2) and the two polling stations, listed in this order without okrsok numbers: Sála KD v Jelšavskej Teplici č. 56, Sála KD v Gemerskom Milhosti č. 46. The obec has 2 parts with a station in each, so each okrsok gets the part of its station; numbering follows the order of the list.", inferred = true},
+]

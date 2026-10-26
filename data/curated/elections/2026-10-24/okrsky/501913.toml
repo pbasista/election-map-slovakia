@@ -1,0 +1,57 @@
+# Okrsky of Štvrtok na Ostrove, transcribed by an AI agent in job okrsok-rules-406 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Sem patria ulice: Ulica 0 – bezdomovci, Alžbetínska ulica, Balvania ulica, Bielokrížna ulica, Cintorínska ulica, Čakanská cesta, Dolný diel, Funduš, Gazdovský rad, Hlavná ulica, Hubická cesta, Jarčeky, Jozefínska ulica
+#   okrsok 2: Sem patria ulice: Horný diel, Malá cesta, Miloslavovská ulica, Poľná ulica, Slepá ulica, Šamorínska cesta, Školský rad, Škôlská ulica, Ulica Györgya Nárayho, Ulica Lászlóa Kovácsa, Ulica Mihálya Méreyho, Ulica sv. Jakuba, Úzka ulica, Veterná ulica, Želiarska ulica
+obec = "501913"
+name = "Štvrtok na Ostrove"
+okrsky_date = 2026-07-29
+okrsky_fill = "nearest"
+okrsky_note = "Street list from the notice of 29.07.2026. 'Ulica 0 – bezdomovci' (okrsok 1) has no register address; okrsok 1 has streets, so it is only in the text. Mýtne námestie and Trhové námestie are not listed: placed by the polling station on each square (OcÚ on Mýtne nám. = okrsok 1, Kultúrny dom on Trhové nám. = okrsok 2), inferred. 'Ulica Mihálya Méreyho' = register 'Ulica M. Méreyho' (initial). The 281 addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.stvrtoknaostrove.sk/wp-content/uploads/2026/07/Ozna%CC%81menie-okrsok_ulice.pdf"
+sha256 = "5d8ed07e29dfde75339736ac868294e3c02d48d0990b7bcf5ea9780b8d9d97fe"
+title = "Oznámenie o zriadení volebných okrskov a volebných miestností pre spojené voľby dňa 24.10.2026 (okrsok ulice)"
+
+[[document]]
+url = "https://www.stvrtoknaostrove.sk/uradna-tabula/uradne-oznamy-obce/"
+sha256 = "19bffdfd906b2e02533e19f35504069262f8625e9374d4ac83bcc1d39c29e2f6"
+title = "Úradné oznamy obce"
+
+[okrsok.1]
+rules = [
+  {street = "Alžbetínska ulica"},
+  {street = "Balvania ulica"},
+  {street = "Bielokrížna ulica"},
+  {street = "Cintorínska ulica"},
+  {street = "Čakanská cesta"},
+  {street = "Dolný diel"},
+  {street = "Funduš"},
+  {street = "Gazdovský rad"},
+  {street = "Hlavná ulica"},
+  {street = "Hubická cesta"},
+  {street = "Jarčeky"},
+  {street = "Jozefínska ulica"},
+  {street = "Mýtne námestie", note = "not listed; the okrsok 1 polling station (Obecný úrad, Mýtne nám. 454/1) is on it", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Horný diel"},
+  {street = "Malá cesta"},
+  {street = "Miloslavovská ulica"},
+  {street = "Poľná ulica"},
+  {street = "Slepá ulica"},
+  {street = "Šamorínska cesta"},
+  {street = "Školský rad"},
+  {street = "Škôlská ulica"},
+  {street = "Ulica Györgya Nárayho"},
+  {street = "Ulica Lászlóa Kovácsa"},
+  {street = "Úzka ulica"},
+  {street = "Veterná ulica"},
+  {street = "Želiarska ulica"},
+  {street = "Ulica M. Méreyho", written = "Ulica Mihálya Méreyho"},
+  {street = "ulica sv. Jakuba", written = "Ulica sv. Jakuba"},
+  {street = "Trhové námestie", note = "not listed; the okrsok 2 polling station (Kultúrny dom, Trhové nám. 12/1) is on it", inferred = true},
+]

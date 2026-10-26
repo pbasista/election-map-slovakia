@@ -1,8 +1,8 @@
 # Testing
 
 The checks that CI runs, and how to see a change in a real browser: the
-built site served locally, with dummy live results if the change concerns
-them, driven by a headless Chromium or Firefox.
+built site served locally, with its final results or dummy ones if the
+change concerns them, driven by a headless Chromium or Firefox.
 
 ## Checks
 
@@ -22,23 +22,29 @@ when a check fails, rather than running it again:
 uv run pytest -q > /tmp/ems-pytest.log 2>&1; echo rc=$?
 ```
 
-## The site locally, with dummy results
+## The site locally, with results
+
+```sh
+uv run ems make                         # the final results of the inputs
+EMS_RESULTS_ANYTIME=1 uv run ems build  # read them at any time
+uv run ems serve --port 8765 &          # dist/, the results in it
+```
+
+The site reads its results from `dist/results/<election day>/` on the same
+server, so one server is all it takes. A plain build reads them once per
+page load (with `live` off in site.toml, or past the polls' closing plus
+`live_days`), which also works; `EMS_RESULTS_ANYTIME=1` polls at any
+time. For dummy results in place of the final ones:
 
 ```sh
 uv run ems results fake mid             # none, early, mid, late or final
-uv run ems results serve --port 8766 &  # live/
-EMS_LIVE_URL=http://127.0.0.1:8766 uv run ems build
-uv run ems serve --port 8765 &          # dist/
+EMS_RESULTS_ANYTIME=1 uv run ems build
 ```
 
 The stages and what each holds are in
-[results.md](results.md#testing-the-app-with-dummy-results). Build with
-`EMS_LIVE_URL` pointing at the local results: a plain build fetches them
-from the real live origin, and only from the polls' closing (site.toml
-`live_days`), while a build with `EMS_LIVE_URL` polls at any time. Start
-`ems serve` after the build, since it reads
-`dist/_headers` once, at startup. Without `fake`, `live/` holds what
-`poll` last fetched.
+[results.md](results.md#testing-the-app-with-dummy-results). Start
+`ems serve` after the build, since it reads `dist/_headers` once, at
+startup.
 
 Places worth opening (`/en/#…`):
 
@@ -140,10 +146,8 @@ beyond a Chromium-family browser: `scripts/screenshot.py`.
 
 ## Afterwards
 
-Put `live/` and `dist/` back to the real state and stop the servers:
+Put the results and `dist/` back to the real state and stop the server:
 
 ```sh
-uv run ems results poll --once
-uv run ems build
-uv run ems check
+uv run ems make
 ```

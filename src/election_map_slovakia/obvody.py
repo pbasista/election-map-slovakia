@@ -2,14 +2,15 @@
 
 Regional council obvody, and the city council obvody of Bratislava and
 Košice, consist of whole obce or city districts. Their membership is
-transcribed from the official decisions into
-``data/curated/obvody/<area>.toml`` (form: :func:`election_map_slovakia.config.load_obvody`);
-:func:`resolve` checks it against the municipalities of the area.
+transcribed from the official decisions into ``obvody/<area>.toml`` in the
+election's curated data (:attr:`election_map_slovakia.config.Config.election_dir`;
+form: :func:`election_map_slovakia.config.load_obvody`); :func:`resolve`
+checks it against the municipalities of the area.
 
 An obec (or city district) that elects its council in several obvody sets
 them in a resolution of its council, by streets and house numbers, parts of
 the obec (časti obce) or cadastral areas (katastrálne územia, k.ú.). Its rule
-set, ``data/curated/obvody/oz/<obec>.toml`` (written by ``ems job ingest``
+set, ``obvody/oz/<obec>.toml`` there (written by ``ems job ingest``
 from an ``obvod-rules`` job, see :mod:`election_map_slovakia.obvodrules`),
 gives every address of the obec its obvod (:func:`assign`)::
 
@@ -75,6 +76,70 @@ published only the obvody's names and seats (``the lower end``, ``above
 the railway``, named hamlets), so the rules are a guess from the geography,
 mostly by ``near`` points, which its ``note`` (then required) explains. The
 map and the ballots say so.
+
+The okrsky (volebné okrsky: the polling districts, each with its polling
+station and its roll of voters) are set by the mayor for each election, and
+each lies within one council obvod. A rule set may give each obvod its
+okrsky, numbered across the obec 1..N, and the okrsky of an obvod that has
+several rules of their own, which choose among the addresses of that obvod
+only (:func:`assign_okrsky`; added by an ``okrsok-rules`` job, see
+:mod:`election_map_slovakia.okrsokrules`)::
+
+    okrsky_date = 2026-07-23         # of the decision on them; optional
+    okrsky_fill = "nearest"          # optional, as fill, within an obvod
+    okrsky_note = "…"                # optional
+
+    [obvod.1]
+    seats = 7
+    okrsky = [1, 2]
+    rules = […]
+
+    [okrsok.1]
+    rules = [{street = "Bratislavská"}]
+
+    [okrsok.2]
+    rules = [{rest = true}]
+
+Either every obvod lists its okrsky or none does. An okrsok alone in its
+obvod has no rules: it is the obvod. The okrsky of the obvody with several
+either all have rules or, where no document lists their streets, none in
+the rule set has: then only which okrsky make up each obvod is known
+(:attr:`RuleSet.okrsok_areas` is false). Okrsok rules take the forms above;
+``rest = true`` is the rest of their obvod, at most once per obvod. An
+okrsok of the residents registered without an address (bez ulice,
+trvalý pobyt len na obec) has ``addressless = true`` instead of rules: no
+address is in it, and the other okrsky of its obvod share the addresses as
+if it were not there.
+
+An obec that elects its council in one obvod but votes in several okrsky
+has no rule set; its okrsky are in ``okrsky/<obec>.toml`` in the
+election's data (:func:`okrsky_path`; written by ``ems job ingest`` from an
+``okrsok-rules`` job)::
+
+    obec = "123456"
+    name = "…"
+    okrsky_date = 2026-07-20         # optional, as above
+    okrsky_fill = "nearest"          # optional
+    okrsky_note = "…"                # optional
+
+    [[document]]
+    url = "https://…"
+    sha256 = "…"
+    title = "Utvorenie volebných okrskov"
+
+    [okrsok.1]
+    rules = [{part = "Horná Ves"}]
+
+    [okrsok.2]
+    rules = [{rest = true}]
+
+The okrsky are numbered 1..N (N ≥ 2), each with rules of the forms above,
+which choose among all the addresses of the obec, or ``addressless =
+true``; where the others are all addressless, the one okrsok with the
+addresses has an empty table. :func:`okrsky_set` reads it as a rule set whose one obvod 1 is the
+whole obec and holds every okrsok (:attr:`RuleSet.whole`), so the okrsky
+of both kinds of obec are assigned and drawn alike;
+:func:`okrsok_rule_sets` returns every rule set that gives the okrsky.
 """
 
 from __future__ import annotations
@@ -100,10 +165,16 @@ from election_map_slovakia.config import Obvod, ObvodList
 DIRECTORY = "obvody"
 RULES_DIRECTORY = "oz"
 """Rule sets, below :data:`DIRECTORY`."""
+OKRSKY_DIRECTORY = "okrsky"
+"""Below the election's data: the okrsky of the obce with one council obvod."""
 ORIENTACNE = "orientacne"
 SUPISNE = "supisne"
 PARITIES = ("odd", "even")
 FILL_NEAREST = "nearest"
+OBVOD = "obvod"
+OKRSOK = "okrsok"
+"""The units a rule places an address in."""
+_PLURAL = {OBVOD: "obvody", OKRSOK: "okrsky"}
 # Precedence levels of a rule selecting an address, most specific first.
 LETTER, NUMBERS, STREET, PART, KU, NEAR, REST = range(7)
 LEVELS = (
@@ -122,6 +193,7 @@ _PLANAR = (np.cos(np.radians(48.7)), 1.0)
 _EXTENT = (16.8, 47.7, 22.6, 49.7)
 """West, south, east, north: Slovakia, for a ``near`` point."""
 _LONLAT = 2  # coordinates of a near point
+_SEVERAL = 2  # okrsky of an obec with one council obvod
 _OBEC = re.compile(r"\d{6}")
 _SHA256 = re.compile(r"[0-9a-f]{64}")
 _ITEM = re.compile(r"(\d+)\s*([^\W\d_]*)(?:\s*(-)\s*(\d*))?")
@@ -129,6 +201,10 @@ _HOUSE = re.compile(r"0*(\d+)\s*([^\W\d_]*)")
 _DASHES = str.maketrans("\u2010\u2011\u2012\u2013\u2014\u2212", "------")
 # Words a document may add to or drop from a street name.
 _FILLER = frozenset({"ulica", "ul"})
+_WORD = re.compile(r"[^\W_]+\.?")
+"""A word of a street name, with the dot that marks it abbreviated."""
+# Standard abbreviations that are not the start of their word.
+_ABBREVIATIONS = {"cs": "ceskoslovensk", "csl": "ceskoslovensk"}
 _SHOWN = 5
 """Examples listed per problem."""
 
@@ -207,7 +283,8 @@ class Document:
 class Rule:
     """One rule of a rule set; see the module doc."""
 
-    obvod: int
+    unit: int
+    """The obvod (or okrsok, by :attr:`level`) the rule places addresses in."""
     street: str | None = None
     part: str | None = None
     ku: str | None = None
@@ -222,6 +299,8 @@ class Rule:
     written: str | None = None
     inferred: bool = False
     note: str | None = None
+    level: str = OBVOD
+    """:data:`OBVOD` or :data:`OKRSOK`: what :attr:`unit` numbers."""
 
     @property
     def numbered(self) -> bool:
@@ -262,12 +341,12 @@ class Rule:
                 if x
             )
             what += f" {numbers} ({self.kind})"
-        return f"obvod {self.obvod}: {what}"
+        return f"{self.level} {self.unit}: {what}"
 
 
 @dataclass(frozen=True)
 class RuleSet:
-    """``data/curated/obvody/oz/<obec>.toml``; see the module doc."""
+    """``obvody/oz/<obec>.toml``; see the module doc."""
 
     obec: str
     name: str
@@ -275,35 +354,106 @@ class RuleSet:
     """The council's decision; None where no published document states it."""
     documents: tuple[Document, ...]
     seats: dict[int, int]
-    """Obvod number → councillors elected there; numbered 1..N."""
+    """Obvod number → councillors elected there; numbered 1..N. ``{1: 0}``
+    in a :attr:`whole` rule set, which does not state the council's size."""
     rules: tuple[Rule, ...]
     fill: bool = False
     """Whether addresses no rule selects take the nearest one's obvod."""
     note: str | None = None
     estimated: bool = False
     """Whether the rules are a guess that no document states."""
+    okrsky: dict[int, tuple[int, ...]] = field(default_factory=dict)
+    """Obvod → its okrsky; empty where they are not known."""
+    okrsok_rules: tuple[Rule, ...] = ()
+    """The rules of the okrsky of the obvody with several."""
+    okrsky_fill: bool = False
+    """Whether addresses no okrsok rule selects take the nearest one's okrsok."""
+    okrsky_date: dt.date | None = None
+    """The decision that set the okrsky (the mayor's, or the council's), where known."""
+    okrsky_note: str | None = None
+    addressless: tuple[int, ...] = ()
+    """Okrsky of residents registered without an address, which no address
+    is in (``addressless = true`` in their table)."""
+    whole: bool = False
+    """Whether it is the okrsky of an obec with one council obvod
+    (``okrsky/<obec>.toml``): obvod 1 is the whole obec."""
 
     @property
     def by_ku(self) -> bool:
         """Return whether the obvody are unions of whole k.ú."""
         return all(r.ku or r.rest for r in self.rules)
 
+    @property
+    def okrsok_obvod(self) -> dict[int, int]:
+        """Return okrsok → its obvod, by okrsok number."""
+        return dict(sorted((k, o) for o, ks in self.okrsky.items() for k in ks))
 
-def rules_path(curated: Path, obec: str) -> Path:
-    """Return the path of the rule set of *obec* below ``data/curated/``."""
-    return curated / DIRECTORY / RULES_DIRECTORY / f"{obec}.toml"
+    @property
+    def mapped(self) -> dict[int, list[int]]:
+        """Return obvod → its okrsky that have addresses."""
+        return {
+            o: [k for k in ks if k not in self.addressless]
+            for o, ks in self.okrsky.items()
+        }
+
+    @property
+    def okrsok_areas(self) -> bool:
+        """Return whether every address can be given its okrsok.
+
+        That is where the okrsky are known and those with addresses that
+        share an obvod have rules (:func:`assign_okrsky`).
+        """
+        return bool(self.okrsky) and (
+            bool(self.okrsok_rules) or all(len(k) == 1 for k in self.mapped.values())
+        )
 
 
-def load_rule_sets(curated: Path) -> dict[str, RuleSet]:
-    """Return obec → rule set, of every rule set in ``data/curated/``."""
+def rules_path(election_dir: Path, obec: str) -> Path:
+    """Return the path of the rule set of *obec* in the election's data.
+
+    *election_dir* is :attr:`election_map_slovakia.config.Config.election_dir`.
+    """
+    return election_dir / DIRECTORY / RULES_DIRECTORY / f"{obec}.toml"
+
+
+def okrsky_path(election_dir: Path, obec: str) -> Path:
+    """Return the path of the okrsky of *obec*, one with one council obvod."""
+    return election_dir / OKRSKY_DIRECTORY / f"{obec}.toml"
+
+
+def load_rule_sets(election_dir: Path) -> dict[str, RuleSet]:
+    """Return obec → rule set, of every rule set of the election (*election_dir*)."""
+    return _load(sorted((election_dir / DIRECTORY / RULES_DIRECTORY).glob("*.toml")))
+
+
+def okrsok_rule_sets(election_dir: Path) -> dict[str, RuleSet]:
+    """Return obec → rule set, of every obec of the election whose okrsky are known.
+
+    The rule sets of :func:`load_rule_sets` that give their okrsky, and the
+    okrsky of the obce with one council obvod (:func:`okrsky_set`).
+    """
+    rule_sets = load_rule_sets(election_dir)
+    whole = _load(sorted((election_dir / OKRSKY_DIRECTORY).glob("*.toml")), True)
+    both = sorted(whole.keys() & rule_sets.keys())
+    if both:
+        raise ObvodyError(
+            f"{okrsky_path(election_dir, both[0])}: the obec has council obvody;"
+            f" its okrsky belong in {rules_path(election_dir, both[0])}"
+        )
+    out = {c: r for c, r in rule_sets.items() if r.okrsky} | whole
+    return dict(sorted(out.items()))
+
+
+def _load(paths: Sequence[Path], whole: bool = False) -> dict[str, RuleSet]:
+    """Return obec → rule set of the files *paths*, okrsky files if *whole*."""
     out = {}
-    for path in sorted((curated / DIRECTORY / RULES_DIRECTORY).glob("*.toml")):
+    for path in paths:
         try:
             with path.open("rb") as f:
                 data = tomllib.load(f)
         except tomllib.TOMLDecodeError as e:
             raise ObvodyError(f"{path}: invalid TOML: {e}") from e
-        rules = rule_set(data, str(path))
+        rules = (okrsky_set if whole else rule_set)(data, str(path))
         if rules.obec != path.stem:
             raise ObvodyError(f"{path}: obec {rules.obec} in the file of {path.stem}")
         out[rules.obec] = rules
@@ -359,21 +509,103 @@ def rule_set(data: Mapping[str, Any], where: str) -> RuleSet:
     *where* names the source in errors.
     """
     t = _Fields(data, where)
-    obec = t.text("obec", required=True)
-    if not _OBEC.fullmatch(obec or ""):
+    obec, documents = _source(t, where)
+    date = _date(t, "date")
+    seats, rules, okrsky = _obvod_tables(t, where)
+    fill = t.choice("fill", (FILL_NEAREST,)) == FILL_NEAREST
+    okrsok_rules, addressless = _okrsok_rules(t, where, seats, okrsky)
+    okrsky_date = _date(t, "okrsky_date")
+    okrsky_fill = t.choice("okrsky_fill", (FILL_NEAREST,)) == FILL_NEAREST
+    okrsky_note = t.text("okrsky_note")
+    if not okrsky and (okrsky_date or okrsky_note):
+        raise t.error("okrsky_date", "okrsky_date and okrsky_note need the okrsky")
+    if okrsky_fill and not okrsok_rules:
+        raise t.error("okrsky_fill", "is for okrsok rules")
+    out = RuleSet(
+        obec,
+        t.text("name", required=True) or "",
+        date,
+        documents,
+        seats,
+        rules,
+        fill,
+        t.text("note"),
+        bool(t.get("estimated", bool)),
+        okrsky,
+        okrsok_rules,
+        okrsky_fill,
+        okrsky_date,
+        okrsky_note,
+        addressless,
+    )
+    t.done()
+    _check_estimated(out, t)
+    return out
+
+
+def okrsky_set(data: Mapping[str, Any], where: str) -> RuleSet:
+    """Return the okrsky in *data* (a parsed ``okrsky/<obec>.toml``) as a rule set.
+
+    Its one obvod 1 holds every address and every okrsok; see the module
+    doc. Checks the form only, like :func:`rule_set`.
+    """
+    t = _Fields(data, where)
+    obec, documents = _source(t, where)
+    tables = t.get("okrsok", dict, required=True)
+    numbers = sorted(int(k) for k in tables if re.fullmatch(r"[1-9]\d*", k))
+    if len(numbers) < _SEVERAL or numbers != list(range(1, len(tables) + 1)):
+        raise t.error("okrsok", "the okrsky must be numbered 1..N, N at least 2")
+    okrsky = {1: tuple(numbers)}
+    okrsok_rules, addressless = _okrsok_rules(t, where, {1: 0}, okrsky)
+    out = RuleSet(
+        obec,
+        t.text("name", required=True) or "",
+        None,
+        documents,
+        {1: 0},
+        (Rule(1, rest=True),),
+        okrsky=okrsky,
+        okrsok_rules=okrsok_rules,
+        okrsky_fill=t.choice("okrsky_fill", (FILL_NEAREST,)) == FILL_NEAREST,
+        okrsky_date=_date(t, "okrsky_date"),
+        okrsky_note=t.text("okrsky_note"),
+        addressless=addressless,
+        whole=True,
+    )
+    t.done()
+    if not out.okrsok_areas:
+        raise t.error("okrsok", "the okrsky that share the obec need their rules")
+    _check_estimated(out, t)
+    return out
+
+
+def _source(t: _Fields, where: str) -> tuple[str, tuple[Document, ...]]:
+    """Return the obec code and the documents of rule set *t*."""
+    obec = t.text("obec", required=True) or ""
+    if not _OBEC.fullmatch(obec):
         raise t.error("obec", "must be a 6-digit obec code")
-    date = t.get("date", dt.date)
-    if isinstance(date, dt.datetime):
-        raise t.error("date", "must be a date without a time")
     documents = tuple(
         _document(d, f"{where}.document[{i}]")
         for i, d in enumerate(t.get("document", list, required=True))
     )
     if not documents:
         raise t.error("document", "must list the official document")
-    table = t.get("obvod", dict, required=True)
-    seats, rules = {}, []
-    for key, entry in table.items():
+    return obec, documents
+
+
+def _date(t: _Fields, key: str) -> dt.date | None:
+    value = t.get(key, dt.date)
+    if isinstance(value, dt.datetime):
+        raise t.error(key, "must be a date without a time")
+    return value
+
+
+def _obvod_tables(
+    t: _Fields, where: str
+) -> tuple[dict[int, int], tuple[Rule, ...], dict[int, tuple[int, ...]]]:
+    """Return the seats, rules and okrsky of the obvody of rule set *t*."""
+    seats, rules, okrsky = {}, [], {}
+    for key, entry in t.get("obvod", dict, required=True).items():
         if not re.fullmatch(r"[1-9]\d*", key):
             raise t.error(f"obvod.{key}", "obvod number must be a positive integer")
         o = _Fields(entry, f"{where}.obvod.{key}")
@@ -386,33 +618,108 @@ def rule_set(data: Mapping[str, Any], where: str) -> RuleSet:
         rules += [
             _rule(int(key), r, f"{o.where}.rules[{i}]") for i, r in enumerate(listed)
         ]
+        numbers = o.get("okrsky", list)
+        if numbers is not None:
+            if not numbers or not all(
+                isinstance(k, int) and not isinstance(k, bool) and k > 0
+                for k in numbers
+            ):
+                raise o.error("okrsky", "must list positive okrsok numbers")
+            okrsky[int(key)] = tuple(numbers)
         o.done()
     if sorted(seats) != list(range(1, len(seats) + 1)):
         raise t.error("obvod", f"must be numbered 1..{len(seats)} without gaps")
     if sum(r.rest for r in rules) > 1:
         raise t.error("obvod", "more than one rule is the rest")
-    fill = t.choice("fill", (FILL_NEAREST,)) == FILL_NEAREST
-    out = RuleSet(
-        obec or "",
-        t.text("name", required=True) or "",
-        date,
-        documents,
-        dict(sorted(seats.items())),
-        tuple(rules),
-        fill,
-        t.text("note"),
-        bool(t.get("estimated", bool)),
+    return dict(sorted(seats.items())), tuple(rules), dict(sorted(okrsky.items()))
+
+
+def _check_numbering(
+    t: _Fields, seats: Mapping[int, int], okrsky: Mapping[int, tuple[int, ...]]
+) -> None:
+    """Fail unless the okrsky of every obvod or none are listed, numbered 1..N."""
+    if okrsky and set(okrsky) != set(seats):
+        raise t.error("obvod", "the okrsky must be listed in every obvod or in none")
+    numbers = sorted(k for ks in okrsky.values() for k in ks)
+    if numbers != list(range(1, len(numbers) + 1)):
+        raise t.error(
+            "obvod", f"the okrsky must be numbered 1..{len(numbers)}, each in one obvod"
+        )
+
+
+def _okrsok_rules(
+    t: _Fields,
+    where: str,
+    seats: Mapping[int, int],
+    okrsky: Mapping[int, tuple[int, ...]],
+) -> tuple[tuple[Rule, ...], tuple[int, ...]]:
+    """Return the okrsok rules of rule set *t* and its okrsky without addresses.
+
+    Checks the okrsky of its obvody; see the module doc.
+    """
+    _check_numbering(t, seats, okrsky)
+    obvod_of = {k: o for o, ks in okrsky.items() for k in ks}
+    tables = t.get("okrsok", dict) or {}
+    for key in tables:
+        if not re.fullmatch(r"[1-9]\d*", key) or int(key) not in obvod_of:
+            raise t.error(f"okrsok.{key}", "is no okrsok of the obvody")
+    addressless = tuple(
+        sorted(
+            int(k)
+            for k, e in tables.items()
+            if isinstance(e, Mapping) and e.get("addressless")
+        )
     )
-    t.done()
-    _check_estimated(out, t)
-    return out
+    mapped = {o: [k for k in ks if k not in addressless] for o, ks in okrsky.items()}
+    rules: list[Rule] = []
+    for key, entry in tables.items():
+        rules += _okrsok_table(t, where, key, entry, mapped[obvod_of[int(key)]])
+    shared = {k for ks in mapped.values() if len(ks) > 1 for k in ks}
+    missing = sorted(shared - {r.unit for r in rules})
+    if rules and missing:
+        raise t.error(
+            "okrsok",
+            f"okrsky {', '.join(map(str, missing))} share an obvod but have no rules",
+        )
+    rests = Counter(obvod_of[r.unit] for r in rules if r.rest)
+    if any(n > 1 for n in rests.values()):
+        raise t.error("okrsok", "more than one rule is the rest of an obvod")
+    return tuple(sorted(rules, key=lambda r: r.unit)), addressless
+
+
+def _okrsok_table(
+    t: _Fields, where: str, key: str, entry: object, mapped: Sequence[int]
+) -> list[Rule]:
+    """Return the rules of table ``okrsok.<key>``.
+
+    *mapped* are the okrsky with addresses of its obvod.
+    """
+    o = _Fields(entry, f"{where}.okrsok.{key}")
+    if o.get("addressless", bool):
+        o.done()
+        if not mapped:
+            raise t.error(f"okrsok.{key}", "its obvod needs an okrsok with addresses")
+        return []
+    if len(mapped) == 1:
+        # An empty table only numbers it, as an okrsky file must.
+        if entry:
+            raise t.error(f"okrsok.{key}", "is alone in its obvod: it has no rules")
+        return []
+    listed = o.get("rules", list, required=True)
+    if not listed:
+        raise o.error("rules", "must not be empty")
+    o.done()
+    return [
+        _rule(int(key), r, f"{o.where}.rules[{i}]", OKRSOK)
+        for i, r in enumerate(listed)
+    ]
 
 
 def _check_estimated(rules: RuleSet, t: _Fields) -> None:
     """Fail unless *rules* has a note if estimated, and near rules only then."""
     if rules.estimated and not rules.note:
         raise t.error("estimated", "an estimated rule set needs a note saying how")
-    if not rules.estimated and any(r.near for r in rules.rules):
+    if not rules.estimated and any(r.near for r in (*rules.rules, *rules.okrsok_rules)):
         raise t.error("obvod", "near rules are only for an estimated rule set")
 
 
@@ -429,13 +736,13 @@ def _document(data: object, where: str) -> Document:
     return out
 
 
-def _rule(obvod: int, data: object, where: str) -> Rule:
+def _rule(unit: int, data: object, where: str, level: str = OBVOD) -> Rule:
     t = _Fields(data, where)
     rest = t.get("rest", bool)
     if rest is False:
         raise t.error("rest", "must be true, or left out")
     rule = Rule(
-        obvod,
+        unit,
         street=t.text("street"),
         part=t.text("part"),
         ku=t.text("ku"),
@@ -448,6 +755,7 @@ def _rule(obvod: int, data: object, where: str) -> Rule:
         written=t.text("written"),
         inferred=bool(t.get("inferred", bool)),
         note=t.text("note"),
+        level=level,
     )
     t.done()
     problem = _rule_problem(rule)
@@ -644,27 +952,37 @@ def load_places(path: Path) -> ObecPlaces:
 
 @dataclass
 class Assignment:
-    """The obvod of every address of an obec, and what went wrong."""
+    """The obvod (or okrsok) of every address of an obec, and what went wrong."""
 
-    obvody: list[int]
-    """Per address its obvod, 0 where it has none."""
+    units: list[int]
+    """Per address its obvod (or okrsok), 0 where it has none."""
     rules: list[Rule | None]
     """Per address the rule that decided, None where none did."""
     filled: list[int] = field(default_factory=list)
     """Addresses placed by ``fill``."""
     unassigned: list[int] = field(default_factory=list)
     conflicts: dict[int, tuple[Rule, ...]] = field(default_factory=dict)
-    """Address → rules of one level for different obvody that select it."""
+    """Address → rules of one level for different units that select it."""
     unused: list[Rule] = field(default_factory=list)
     """Rules that decide no address."""
+    level: str = OBVOD
+    """What :attr:`units` are: :data:`OBVOD` or :data:`OKRSOK`."""
+    elsewhere: list[tuple[Rule, tuple[int, ...]]] = field(default_factory=list)
+    """Okrsok rules that select addresses only of other obvody than their
+    okrsok's, with those obvody (:func:`assign_okrsky`)."""
 
     def problems(self, places: Sequence[Place]) -> list[str]:
-        """Return why the assignment fails: addresses in none or two obvody."""
+        """Return why the assignment fails.
+
+        Addresses in no unit or in two, okrsok rules that select addresses
+        of another obvod only.
+        """
         out = []
+        plural = _PLURAL[self.level]
         if self.unassigned:
             groups = Counter(_where(places[i]) for i in self.unassigned)
             out.append(
-                f"{len(self.unassigned):,} addresses in no obvod, in "
+                f"{len(self.unassigned):,} addresses in no {self.level}, in "
                 + ", ".join(f"{g} ({n})" for g, n in groups.most_common(_SHOWN))
                 + (f" and {len(groups) - _SHOWN} more" if len(groups) > _SHOWN else "")
             )
@@ -674,9 +992,15 @@ class Assignment:
                 for rules in self.conflicts.values()
             )
             out.append(
-                f"{len(self.conflicts):,} addresses selected for two obvody by: "
+                f"{len(self.conflicts):,} addresses selected for two {plural} by: "
                 + "; ".join(f"{p} ({n})" for p, n in pairs.most_common(_SHOWN))
             )
+        out += [
+            f"{r.describe()}: selects addresses only of obvod "
+            + ", ".join(map(str, obvody))
+            + ", not of its okrsok's"
+            for r, obvody in self.elsewhere
+        ]
         return out
 
 
@@ -696,8 +1020,73 @@ def assign(
     point), needed where a rule names a k.ú. *points* (n × 2, NaN where none)
     are :meth:`ObecPlaces.planar`, for ``fill`` and ``near`` rules.
     """
-    index = _RuleIndex(rules.rules)
-    out = Assignment([0] * len(places), [None] * len(places))
+    return _assign(rules.rules, rules.fill, OBVOD, places, kus, points)
+
+
+def assign_okrsky(
+    rules: RuleSet,
+    places: Sequence[Place],
+    obvody: Sequence[int],
+    kus: Sequence[str | None] | None = None,
+    points: np.ndarray | None = None,
+) -> Assignment:
+    """Return the okrsok of each of *places*, in obvod *obvody* (:func:`assign`).
+
+    An okrsok alone in its obvod takes all its addresses; the okrsky of an
+    obvod with several share its addresses by their rules, which see only
+    those. *kus* and *points* are as for :func:`assign`. Needs
+    :attr:`RuleSet.okrsok_areas`.
+    """
+    out = Assignment([0] * len(places), [None] * len(places), level=OKRSOK)
+    rows_of: dict[int, list[int]] = defaultdict(list)
+    for i, o in enumerate(obvody):
+        rows_of[o].append(i)
+    for obvod, okrsky in rules.mapped.items():
+        rows = rows_of.get(obvod, [])
+        if len(okrsky) == 1:
+            for i in rows:
+                out.units[i] = okrsky[0]
+            continue
+        sub = _assign(
+            [r for r in rules.okrsok_rules if r.unit in okrsky],
+            rules.okrsky_fill,
+            OKRSOK,
+            [places[i] for i in rows],
+            [kus[i] for i in rows] if kus is not None else None,
+            points[rows] if points is not None else None,
+        )
+        for j, i in enumerate(rows):
+            out.units[i], out.rules[i] = sub.units[j], sub.rules[j]
+        out.filled += [rows[j] for j in sub.filled]
+        out.unassigned += [rows[j] for j in sub.unassigned]
+        out.conflicts |= {rows[j]: c for j, c in sub.conflicts.items()}
+        out.unused += sub.unused
+    out.filled.sort()
+    out.unassigned.sort()
+    obvod_of = rules.okrsok_obvod
+    for rule in out.unused:
+        hit = {
+            obvody[i]
+            for i, place in enumerate(places)
+            if _level(rule, place, kus[i] if kus is not None else None, None)
+            is not None
+        }
+        if hit and obvod_of[rule.unit] not in hit:
+            out.elsewhere.append((rule, tuple(sorted(hit))))
+    return out
+
+
+def _assign(
+    rules: Sequence[Rule],
+    fill: bool,
+    level: str,
+    places: Sequence[Place],
+    kus: Sequence[str | None] | None,
+    points: np.ndarray | None,
+) -> Assignment:
+    """Return the unit of each of *places* by *rules* (see :func:`assign`)."""
+    index = _RuleIndex(rules)
+    out = Assignment([0] * len(places), [None] * len(places), level=level)
     used: set[int] = set()
     for i, place in enumerate(places):
         ku = kus[i] if kus is not None else None
@@ -706,23 +1095,23 @@ def assign(
         candidates = index.candidates(place)
         nearest = _nearest(candidates, place, points[i] if points is not None else None)
         for rule in candidates:
-            level = _level(rule, place, ku, nearest)
-            if level is None or level > best_level:
+            precedence = _level(rule, place, ku, nearest)
+            if precedence is None or precedence > best_level:
                 continue
-            if level < best_level:
-                best, best_level = [], level
+            if precedence < best_level:
+                best, best_level = [], precedence
             best.append(rule)
         if not best:
             out.unassigned.append(i)
             continue
         used.update(id(r) for r in best)
-        if len({r.obvod for r in best}) > 1:
-            out.conflicts[i] = tuple(sorted(set(best), key=rules.rules.index))
+        if len({r.unit for r in best}) > 1:
+            out.conflicts[i] = tuple(sorted(set(best), key=list(rules).index))
             continue
-        out.obvody[i] = best[0].obvod
+        out.units[i] = best[0].unit
         out.rules[i] = best[0]
-    out.unused = [r for r in rules.rules if id(r) not in used]
-    if rules.fill and out.unassigned:
+    out.unused = [r for r in rules if id(r) not in used]
+    if fill and out.unassigned:
         _fill(out, places, points)
     return out
 
@@ -808,19 +1197,19 @@ def _level(
 
 def _fill(out: Assignment, places: Sequence[Place], points: np.ndarray | None) -> None:
     """Place the unassigned addresses by the nearest placed one (see the doc)."""
-    placed = np.array([o != 0 for o in out.obvody])
+    placed = np.array([o != 0 for o in out.units])
     located = (
         ~np.any(np.isnan(points), axis=1)
         if points is not None
         else np.zeros(len(places), dtype=bool)
     )
     sources = np.flatnonzero(placed & located)
-    # Without a point: the obvod most of its street (or else its part) got.
+    # Without a point: the unit most of its street (or else its part) got.
     by_group: dict[tuple[str, str], Counter[int]] = defaultdict(Counter)
     by_part: dict[str, Counter[int]] = defaultdict(Counter)
     for i in np.flatnonzero(placed).tolist():
-        by_group[(places[i].street, places[i].part)][out.obvody[i]] += 1
-        by_part[places[i].part][out.obvody[i]] += 1
+        by_group[(places[i].street, places[i].part)][out.units[i]] += 1
+        by_part[places[i].part][out.units[i]] += 1
     tree = (
         shapely.STRtree(shapely.points(points[sources]))
         if points is not None and len(sources)
@@ -828,17 +1217,17 @@ def _fill(out: Assignment, places: Sequence[Place], points: np.ndarray | None) -
     )
     left = []
     for i in out.unassigned:
-        obvod = 0
+        unit = 0
         if tree is not None and points is not None and located[i]:
             nearest = tree.query_nearest(shapely.points(points[i]), all_matches=False)
-            obvod = out.obvody[int(sources[int(nearest[0])])]
+            unit = out.units[int(sources[int(nearest[0])])]
         else:
             p = places[i]
             c = by_group.get((p.street, p.part)) or by_part.get(p.part)
             if c:
-                obvod = min(c, key=lambda o: (-c[o], o))
-        if obvod:
-            out.obvody[i] = obvod
+                unit = min(c, key=lambda o: (-c[o], o))
+        if unit:
+            out.units[i] = unit
             out.filled.append(i)
         else:
             left.append(i)
@@ -852,21 +1241,30 @@ def same_name(written: str, name: str) -> bool:
     """Return whether *written* reads as the street *name*.
 
     Words compare like the search does; a word may be abbreviated to its
-    start (``gen.``, ``M. R.``), first names may be left out, and ``ulica``
-    may be added or dropped: ``M. R. Štefánika`` is ``Milana Rastislava
-    Štefánika``, ``Hollého`` is ``Jána Hollého``.
+    start (``gen.``, ``M. R.``, ``nám.``; the last word only with its dot),
+    ``Čs.`` and ``Čsl.`` are ``Československ…``, first names may be left
+    out, and ``ulica`` may be added or dropped: ``M. R. Štefánika`` is
+    ``Milana Rastislava Štefánika``, ``Hollého`` is ``Jána Hollého``,
+    ``Hlavné nám.`` is ``Hlavné námestie``.
     """
-    a = [w for w in search_key(written).split() if w not in _FILLER]
-    b = [w for w in search_key(name).split() if w not in _FILLER]
+    a, b = _words(written), _words(name)
     if not a or not b:
         return a == b
-    return (
-        all(
-            x.startswith(y) or y.startswith(x)
-            for x, y in zip(reversed(a), reversed(b), strict=False)
-        )
-        and a[-1] == b[-1]
-    )
+    (p, p_short), (q, q_short) = a[-1], b[-1]
+    return all(
+        x.startswith(y) or y.startswith(x)
+        for (x, _), (y, _) in zip(reversed(a), reversed(b), strict=False)
+    ) and (p == q or (p_short and q.startswith(p)) or (q_short and p.startswith(q)))
+
+
+def _words(name: str) -> list[tuple[str, bool]]:
+    """Return the words of street *name* as compared, each with whether it ends in a dot."""
+    out = []
+    for word in _WORD.findall(name):
+        key = search_key(word)
+        if key not in _FILLER:
+            out.append((_ABBREVIATIONS.get(key, key), word.endswith(".")))
+    return out
 
 
 def name_problems(
@@ -887,7 +1285,7 @@ def name_problems(
         "k.ú.": {search_key(k) for k in kus},
     }
     out = []
-    for r in rules.rules:
+    for r in (*rules.rules, *rules.okrsok_rules):
         for kind, name in (("street", r.street), ("part", r.part), ("k.ú.", r.ku)):
             if name is not None and search_key(name) not in known[kind]:
                 out.append(f"{r.describe()}: the obec has no {kind} {name!r}")
@@ -935,23 +1333,43 @@ def _toml_rule(r: Rule) -> str:
 
 
 def dump(rules: RuleSet, header: Sequence[str] = ()) -> str:
-    """Return *rules* as the TOML of a rule set file, *header* as comments."""
+    """Return *rules* as the TOML of its file, *header* as comments.
+
+    A :attr:`RuleSet.whole` rule set as ``okrsky/<obec>.toml``, without its
+    one obvod.
+    """
     s = _toml_string
     lines = [f"# {h}" for h in header]
     lines += [f"obec = {s(rules.obec)}", f"name = {s(rules.name)}"]
-    if rules.date:
-        lines.append(f"date = {rules.date.isoformat()}")
-    if rules.fill:
-        lines.append(f"fill = {s(FILL_NEAREST)}")
-    if rules.note:
-        lines.append(f"note = {s(rules.note)}")
-    if rules.estimated:
-        lines.append("estimated = true")
+    keys = (
+        ("date", rules.date and rules.date.isoformat()),
+        ("fill", rules.fill and s(FILL_NEAREST)),
+        ("note", rules.note and s(rules.note)),
+        ("estimated", rules.estimated and "true"),
+        ("okrsky_date", rules.okrsky_date and rules.okrsky_date.isoformat()),
+        ("okrsky_fill", rules.okrsky_fill and s(FILL_NEAREST)),
+        ("okrsky_note", rules.okrsky_note and s(rules.okrsky_note)),
+    )
+    lines += [f"{key} = {value}" for key, value in keys if value]
     for d in rules.documents:
         lines += ["", "[[document]]", f"url = {s(d.url)}", f"sha256 = {s(d.sha256)}"]
         lines.append(f"title = {s(d.title)}")
-    for number, seats in rules.seats.items():
-        lines += ["", f"[obvod.{number}]", f"seats = {seats}", "rules = ["]
-        lines += [f"  {_toml_rule(r)}," for r in rules.rules if r.obvod == number]
+    for number, seats in {} if rules.whole else rules.seats.items():
+        lines += ["", f"[obvod.{number}]", f"seats = {seats}"]
+        if number in rules.okrsky:
+            lines.append(f"okrsky = [{', '.join(map(str, rules.okrsky[number]))}]")
+        lines.append("rules = [")
+        lines += [f"  {_toml_rule(r)}," for r in rules.rules if r.unit == number]
+        lines.append("]")
+    numbers = {r.unit for r in rules.okrsok_rules} | set(rules.addressless)
+    for number in rules.okrsky[1] if rules.whole else sorted(numbers):
+        lines += ["", f"[okrsok.{number}]"]
+        if number not in numbers:
+            continue
+        if number in rules.addressless:
+            lines.append("addressless = true")
+            continue
+        lines.append("rules = [")
+        lines += [f"  {_toml_rule(r)}," for r in rules.okrsok_rules if r.unit == number]
         lines.append("]")
     return "\n".join(lines) + "\n"

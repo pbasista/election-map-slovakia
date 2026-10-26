@@ -1,0 +1,58 @@
+# Council obvody of Santovka (502715), Levice.
+# Transcribed by an AI agent in job obvod-rules-168 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Levická č. 1 – 46, Vrbická č. 1 – 58, Vodárenská č. 1 – 87, Cintorínska č. 1 – 3,. Hviezdna č. 1 – 5, Kvetná č. 1 – 17, Domadická č.1 – 6 Rozmarínová č.1 – 16, Parková č.1 – 11, Maďarovská č. 1 –3, Kúpeľná č. – celá
+#   obvod 2: Maďarovská č. 5 –79, Horná č. 1 –20, Poľná č. 1 – 5, Lipová č. 1 –13, Ružová č. 1 – 26
+# Okrsky added by an AI agent in job okrsok-rules-167 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Levická č. 1 – 46, Vrbická č. 1 – 58, Vodárenská č. 1 – 87, Cintorínska č. 1 – 3, Hviezdna č. 1 – 5, Kvetná č. 1 – 17, Domadická č.1 – 6, Rozmarínová č.1 – 16, Parková č.1 – 11, Maďarovská č. 1 –3, Kúpeľná č. – celá
+#   okrsok 2: Maďarovská č. 5 –79, Horná č. 1 –20, Poľná č. 1 – 5, Lipová č. 1 –13, Ružová č. 1 – 26
+obec = "502715"
+name = "Santovka"
+date = 2026-07-06
+note = "The announcement lists streets only. Addresses without a street (numbered by súpisné číslo) are placed by part: part Santovka holds all obvod 1 streets, part Malinovec all obvod 2 streets (Horná, Poľná, Lipová, Ružová) and the far end of Maďarovská."
+okrsky_date = 2026-07-16
+okrsky_note = "The mayor's okrsky decision of 16.7.2026 puts okrsok 1 alone in obvod 1 and okrsok 2 alone in obvod 2 without listing streets; each okrsok is its whole obvod, so the texts are the obvody's streets from the obvody announcement."
+
+[[document]]
+url = "https://www.santovka.sk/download_file_f.php?id=2440045"
+sha256 = "31a4ca2cc62e4b6e11c84d8b18dd84dccb4c314a528bd5da6caf02bee185af29"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 48/2026 zo dňa 6.7.2026), Santovka_obvody_poslanci_24-10-2026.pdf"
+
+[[document]]
+url = "https://www.santovka.sk/download_file_f.php?id=2444029"
+sha256 = "611feed43e3f792503270a4f9665f76c13a82b5513a5865cf076868ce6824e21"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v Obci Santovka (16.7.2026)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {street = "Levická", numbers = "1-46"},
+  {street = "Vrbická", numbers = "1-58"},
+  {street = "Vodárenská", numbers = "1-87"},
+  {street = "Cintorínska", numbers = "1-3"},
+  {street = "Hviezdna", numbers = "1-5"},
+  {street = "Kvetná", numbers = "1-17"},
+  {street = "Domadická", numbers = "1-6"},
+  {street = "Rozmarínová", numbers = "1-16"},
+  {street = "Parková", numbers = "1-11"},
+  {street = "Maďarovská", numbers = "1-3"},
+  {street = "Kúpeľná"},
+  {part = "Santovka", note = "Addresses without a street in part Santovka; the document lists only streets, and every other street of part Santovka is in obvod 1.", inferred = true},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {street = "Maďarovská", numbers = "5-79"},
+  {street = "Maďarovská", numbers = "4", note = "The document gives Maďarovská 1–3 to obvod 1 and 5–79 to obvod 2 and does not mention 4. The register has Maďarovská 172/4, which sits next to no. 5 and away from nos. 1–3, so it goes to obvod 2.", inferred = true},
+  {street = "Horná", numbers = "1-20"},
+  {street = "Poľná", numbers = "1-5"},
+  {street = "Lipová", numbers = "1-13"},
+  {street = "Ružová", numbers = "1-26"},
+  {part = "Malinovec", note = "Addresses without a street in part Malinovec; the document lists only streets, and every street of part Malinovec is in obvod 2.", inferred = true},
+]

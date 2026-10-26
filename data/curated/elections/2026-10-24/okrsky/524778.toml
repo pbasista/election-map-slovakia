@@ -1,0 +1,68 @@
+# Okrsky of Lipany, transcribed by an AI agent in job okrsok-rules-301 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Jarková, Jána Bottu, Komenského, Moyzesova, Štúrova
+#   okrsok 2: Dubovická roveň, Kpt. Nálepku, Krivianska, Kuzmányho, Mlynská, Sabinovská, Sládkovičova, Tehelná, Za kúpaliskom, Za traťou, Záhradná, Železničná
+#   okrsok 3: Kollárova, Námestie sv. Martina
+#   okrsok 4: Hviezdoslavova, Kukučínova, Ovocinárska, Rovinky, Sama Chalupku, Tajovského, Voliči s pobytom Lipany
+#   okrsok 5: Janka Kráľa, Jánošíkova, Odbojárska, Pod Hájom, Pod kopaninou, Poľná
+obec = "524778"
+name = "Lipany"
+okrsky_fill = "nearest"
+okrsky_note = "Undated document. Okrsok 4 also holds voters registered only at \"Lipany\". Addresses without a street take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.lipany.sk/data/page/lipany.sk/31439/2026_volebne-okrsky-a-volebne-miestnosti.pdf"
+sha256 = "4f59262fc286a170f52c8efd558afc7d59154dfb52b2cc3db25baad83fbbd467"
+title = "Určenie volebných okrskov a volebných miestností v meste Lipany"
+
+[okrsok.1]
+rules = [
+  {street = "Jarková"},
+  {street = "Jána Bottu"},
+  {street = "Komenského"},
+  {street = "Moyzesova"},
+  {street = "Štúrova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dubovická roveň"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Krivianska"},
+  {street = "Kuzmányho"},
+  {street = "Mlynská"},
+  {street = "Sabinovská"},
+  {street = "Sládkovičova"},
+  {street = "Tehelná"},
+  {street = "Za kúpaliskom"},
+  {street = "Za traťou"},
+  {street = "Záhradná"},
+  {street = "Železničná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Kollárova"},
+  {street = "Námestie sv. Martina"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "Kukučínova"},
+  {street = "Ovocinárska"},
+  {street = "Rovinky"},
+  {street = "Sama Chalupku"},
+  {street = "Tajovského"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Janka Kráľa"},
+  {street = "Jánošíkova"},
+  {street = "Odbojárska"},
+  {street = "Pod Hájom"},
+  {street = "Pod kopaninou"},
+  {street = "Poľná"},
+]

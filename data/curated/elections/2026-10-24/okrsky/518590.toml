@@ -1,0 +1,86 @@
+# Okrsky of Ľubotice, transcribed by an AI agent in job okrsok-rules-262 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bardejovská, Cintorínska, Domašská, Chmeľová, Jána Kostru, Kalinčiakova, Kapušianska, Korabinského, Ku ihrisku, Ľubochnianska, Rampová, Sadová, Strážnická
+#   okrsok 2: Československých letcov, Gagarinova, Hájnova, Hviezdna, Jarková, Krátka, Krivá, Ku Bánovcu, Kvetná, Makarenkova, Mesačná, Nižňanská, Platanová, Pod Hájom, Polárna, Slnečná, Šebastovská, Za potokom, Záhradná
+#   okrsok 3: Bánovecká, Bazová, Bedľová, Brezová, Fialková, Hapáková, Jedľová, Južná, Krížna, Letná, Lipová, Mätová, Medovková, Orgovánová, Pri vodojeme, Púpavová, Roľnícka, Repíková, Sekčovská, Severná, Šalgovická, Šípková, Tekeľova, Vodárenská, Vrchná, Východná, Západná, Zimná
+obec = "518590"
+name = "Ľubotice"
+okrsky_fill = "nearest"
+okrsky_note = "Source is the obec's news page of 19.10.2026 listing the streets of each okrsok (the decision itself was not found; no date). Roľnícka is not in the register; left out. Obchodná, Prešovská, Strojnícka and addresses without a street (incl. Šarišské Lúky) are not listed and take the nearest okrsok (fill_nearest). lubotice.sk is an unofficial portal, not used."
+
+[[document]]
+url = "https://www.obeclubotice.sk/novinka/142478/n"
+sha256 = "f32da455eea37c013acf296a49105467a3b3be90010d6daee1b91cf5103abad4"
+title = "Voľby 2026 (zmena volebných miestností, zoznam ulíc okrskov)"
+
+[okrsok.1]
+rules = [
+  {street = "Bardejovská"},
+  {street = "Cintorínska"},
+  {street = "Domašská"},
+  {street = "Chmeľová"},
+  {street = "Jána Kostru"},
+  {street = "Kalinčiakova"},
+  {street = "Kapušianska"},
+  {street = "Korabinského"},
+  {street = "Ku ihrisku"},
+  {street = "Ľubochnianska"},
+  {street = "Rampová"},
+  {street = "Sadová"},
+  {street = "Strážnická"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Československých letcov"},
+  {street = "Gagarinova"},
+  {street = "Hájnova"},
+  {street = "Hviezdna"},
+  {street = "Jarková"},
+  {street = "Krátka"},
+  {street = "Krivá"},
+  {street = "Ku Bánovcu"},
+  {street = "Kvetná"},
+  {street = "Makarenkova"},
+  {street = "Mesačná"},
+  {street = "Nižňanská"},
+  {street = "Platanova", written = "Platanová", note = "accent typo; same street"},
+  {street = "Pod Hájom"},
+  {street = "Polárna"},
+  {street = "Slnečná"},
+  {street = "Šebastovská"},
+  {street = "Za potokom"},
+  {street = "Záhradná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bánovecká"},
+  {street = "Bazová"},
+  {street = "Bedľová"},
+  {street = "Brezová"},
+  {street = "Fialková"},
+  {street = "Hapákova", written = "Hapáková", note = "accent typo; same street"},
+  {street = "Jedľová"},
+  {street = "Južná"},
+  {street = "Krížna"},
+  {street = "Letná"},
+  {street = "Lipová"},
+  {street = "Mätová"},
+  {street = "Medovková"},
+  {street = "Orgovánová"},
+  {street = "Pri vodojeme"},
+  {street = "Púpavová"},
+  {street = "Repíková"},
+  {street = "Sekčovská"},
+  {street = "Severná"},
+  {street = "Šalgovická"},
+  {street = "Šípková"},
+  {street = "Tekeľova"},
+  {street = "Vodárenská"},
+  {street = "Vrchná"},
+  {street = "Východná"},
+  {street = "Západná"},
+  {street = "Zimná"},
+]

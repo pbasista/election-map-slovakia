@@ -1,0 +1,51 @@
+# Okrsky of Zavar, transcribed by an AI agent in job okrsok-rules-480 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Blavská, Budovateľská, Diaľničná, Hlinícka, Košárska, Majerská, Mlynská, Muškátová, Pažitná, Vetrová, Viktorínova, Záhrady, Záhumenská, Zdravotnícka
+#   okrsok 2: Ulice: Hlavná, Krátka, Poronda, Športová, Tichá, Na vŕšku, Vinohradská, Výhon, Prílohy
+obec = "507768"
+name = "Zavar"
+okrsky_date = 2026-07-24
+okrsky_fill = "nearest"
+okrsky_note = "Streets Logistická and Železničná (register) are not named in the document; placed by fill_nearest, as are addresses without street."
+
+[[document]]
+url = "https://www.zavar.sk/data/news_files/zavar.sk/135778/volebne-okrsky-komunalne-volby-2026.pdf"
+sha256 = "932c3b4e7a2ae11114cda77832c2f41fbb2f9f96f6b403d2f4c735097805054c"
+title = "Rozhodnutie starostu Obce Zavar o utvorení volebných okrskov a určenie volebných miestností vo volebných okrskoch"
+
+[[document]]
+url = "https://www.zavar.sk/novinka/135778/n"
+sha256 = "908b005ec13f1db832352f84fb881ae123c5bba311ae01a9d072f2c3e2b006f7"
+title = "Voľby do orgánov územnej samosprávy 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Blavská"},
+  {street = "Budovateľská"},
+  {street = "Diaľničná"},
+  {street = "Hlinícka"},
+  {street = "Košárska"},
+  {street = "Majerská"},
+  {street = "Mlynská"},
+  {street = "Muškátová"},
+  {street = "Pažitná"},
+  {street = "Vetrová"},
+  {street = "Viktorínova"},
+  {street = "Záhrady"},
+  {street = "Záhumenská"},
+  {street = "Zdravotnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná"},
+  {street = "Krátka"},
+  {street = "Poronda"},
+  {street = "Športová"},
+  {street = "Tichá"},
+  {street = "Ulica Na vŕšku", written = "Na vŕšku"},
+  {street = "Vinohradská"},
+  {street = "Výhon"},
+  {street = "Prílohy"},
+]

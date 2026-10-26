@@ -1,0 +1,184 @@
+# Council obvody of Bytča (517461), Bytča.
+# Transcribed by an AI agent in job obvod-rules-064 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 – mestská časť Veľká Bytča, mestská časť Malá Bytča, počet poslancov 12
+#   obvod 2: Volebný obvod č. 2 – mestská časť Hliník nad Váhom, počet poslancov 2
+#   obvod 3: Volebný obvod č. 3 – mestská časť Hrabové, mestská časť Mikšová-Beňov, počet poslancov 2
+#   obvod 4: Volebný obvod č. 4 – mestská časť Pšurnovice, počet poslancov 1
+# Okrsky added by an AI agent in job okrsok-rules-063 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1.Mája, Bottova, Dukelská, E.Lániho, Hlavná, Hollého, Hurbanova, Hviezdoslavova, Kilianova, Kukučínova, Lombardiniho, Mičurova, Miksova, Radlinského, Sidónie Sakalovej, Sládkovičova, Škorvánkova, Štefánikova, Štúrova, Zámocká, Zámok
+#   okrsok 2: Červeňanského, Hlinícka, Hlinkova, Janka Kráľa (č. domu 1 – 9), Kolárovská, Kollárova, Moyzesova, Na Sahare, Na Tehelňu, Pod Hájom, S. Bíroša, Švecova
+#   okrsok 3: Dostojevského, Družstevná, Fraňa Kráľa, Janka Kráľa (č. domu 11 – 17), Komenského, Kvetná, Na Salaš, Popoliška, Pšurnovická, Rázusova, SNP, Záhradná
+#   okrsok 4: E.Geromettu, Krag. Martýrov, Mieru, Námestie SR, Thurzova, Treskoňova
+#   okrsok 5: Brezová, Broskyňová, Čerešňová, Gaštanová, Jabloňová, Marhuľová, Morušová, Slivková, Višňová, Hrušková
+#   okrsok 6: Javorová, Lúčna, Malobytčianska, Okružná
+#   okrsok 7: Hliník nad Váhom
+#   okrsok 8: Hrabové
+#   okrsok 9: Pšurnovice
+#   okrsok 10: Malá Bytča
+#   okrsok 11: Mikšová, Beňov
+obec = "517461"
+name = "Bytča"
+date = 2026-06-24
+note = "Uznesenie MsZ Bytča č. 84/2026 of 24.6.2026 defines obvody by mestské časti; all register streets lie in part Veľká Bytča (obvod 1). Total 17 seats (uznesenie č. 83/2026)."
+okrsky_date = 2026-07-28
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky assigned to obvody by the mayor's 'Zaradenie volebných okrskov do volebných obvodov'. Janka Kráľa: 1–9 in okrsok 2, 11–17 (and the rest of the street) in okrsok 3. Slivková is not in the register. Addresses without a street in Veľká Bytča are placed with fill_nearest."
+
+[[document]]
+url = "https://www.bytca.sk/wp-content/uploads/2026/06/UZN240626.pdf"
+sha256 = "517f707ae8b4fcda91f2f3fe43991669aa5385780025da79cde79c8026f1a93f"
+title = "Uznesenia Mestského zastupiteľstva v Bytči, konaného dňa 24. 6. 2026 (uznesenie č. 84/2026)"
+
+[[document]]
+url = "https://www.bytca.sk/wp-content/uploads/2026/06/Zverejnenie-volebny%CC%81ch-obvodov.pdf"
+sha256 = "4e61ea55a8dac389b86d1f71dea1277a552e249254663ea7dd95d7a4bebbc821"
+title = "Informácia o určení volebných obvodov a počtu poslancov pre voľby do orgánov samosprávy v meste Bytča"
+
+[[document]]
+url = "https://www.bytca.sk/wp-content/uploads/2026/06/Utvorenie-voleb.okrskov-a-urc%CC%8Cenie-voleb.miestnosti-pre-vol%CC%8Cby-do-orga%CC%81nov-samospra%CC%81vy.pdf"
+sha256 = "51a029c0509749c36f22ef256cc964c1df1ebd5009f21bf92c08e749da0f98a0"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy (28.07.2026)"
+
+[[document]]
+url = "https://www.bytca.sk/wp-content/uploads/2026/06/Zaradenie-voleb.okrskov-do-voleb.obvodov-utvoreny%CC%81ch-pre-vol%CC%8Cby-do-orga%CC%81nov-samospra%CC%81vy.pdf"
+sha256 = "7ef658bed4faaf56fb0721102d9824ce4f75ebaa6da89e278050ebc1b053557e"
+title = "Zaradenie volebných okrskov do volebných obvodov utvorených pre voľby do orgánov samosprávy (28.07.2026)"
+
+[obvod.1]
+seats = 12
+okrsky = [1, 2, 3, 4, 5, 6, 10]
+rules = [
+  {part = "Veľká Bytča"},
+  {part = "Malá Bytča"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [7]
+rules = [
+  {part = "Hliník nad Váhom"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [8, 11]
+rules = [
+  {part = "Hrabové"},
+  {part = "Mikšová", note = "The document's 'mestská časť Mikšová-Beňov' covers the register parts Mikšová and Beňov; the okrsok assignment (okrsok č. 11 – Mikšová, Beňov → obvod 3) confirms both."},
+  {part = "Beňov", note = "Part of 'mestská časť Mikšová-Beňov'; okrsok č. 11 (Mikšová, Beňov) is assigned to obvod 3."},
+]
+
+[obvod.4]
+seats = 1
+okrsky = [9]
+rules = [
+  {part = "Pšurnovice"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "1.mája", written = "1.Mája"},
+  {street = "Bottova"},
+  {street = "Dukelska", written = "Dukelská"},
+  {street = "Eliáša Lániho", written = "E.Lániho"},
+  {street = "Hlavná"},
+  {street = "Hollého"},
+  {street = "Hurbanova"},
+  {street = "Hviezdoslavova"},
+  {street = "Kilianova"},
+  {street = "Kukučínova"},
+  {street = "Lombardiniho"},
+  {street = "Mičurova"},
+  {street = "Miksova"},
+  {street = "Radlinského"},
+  {street = "Sidónie Sakalovej"},
+  {street = "Sládkovičova"},
+  {street = "Škorvánkova"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Zámocká"},
+  {street = "Zámok"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Červeňanského"},
+  {street = "Hlinická"},
+  {street = "Hlinkova"},
+  {street = "Janka Kráľa", numbers = "1-9"},
+  {street = "Kolárovská"},
+  {street = "Kollárova"},
+  {street = "Moyzesova"},
+  {street = "Na Sahare"},
+  {street = "Na Tehelňu"},
+  {street = "Pod Hájom"},
+  {street = "Stanislava Bíroša", written = "S. Bíroša"},
+  {street = "Švecova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Dostojevského"},
+  {street = "Družstevná"},
+  {street = "Fraňa Kráľa"},
+  {street = "Janka Kráľa"},
+  {street = "Komenského"},
+  {street = "Kvetna", written = "Kvetná"},
+  {street = "Na Salaš"},
+  {street = "Popoliška"},
+  {street = "Pšurnovická"},
+  {street = "Rázusova"},
+  {street = "SNP"},
+  {street = "Záhradná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Eugena Geromettu", written = "E.Geromettu"},
+  {street = "Kragujevackých Martýrov", written = "Krag. Martýrov"},
+  {street = "Mieru"},
+  {street = "Nám. Slovenskej Republiky", written = "Námestie SR", note = "'Námestie SR' abbreviates Námestie Slovenskej republiky, the register's Nám. Slovenskej Republiky."},
+  {street = "Thurzova"},
+  {street = "Treskoňova"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Brezová"},
+  {street = "Broskyňová ulica", written = "Broskyňová"},
+  {street = "Čerešňová ulica", written = "Čerešňová"},
+  {street = "Gaštanová"},
+  {street = "Jabloňová ulica", written = "Jabloňová"},
+  {street = "Marhuľová ulica", written = "Marhuľová"},
+  {street = "Morušová ulica", written = "Morušová"},
+  {street = "Višňová ulica", written = "Višňová"},
+  {street = "Hrušková ulica", written = "Hrušková"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Javorová"},
+  {street = "Lúčna"},
+  {street = "Malobytčianska"},
+  {street = "Okružná"},
+]
+
+[okrsok.8]
+rules = [
+  {part = "Hrabové"},
+]
+
+[okrsok.10]
+rules = [
+  {part = "Malá Bytča"},
+]
+
+[okrsok.11]
+rules = [
+  {part = "Mikšová"},
+  {part = "Beňov"},
+]

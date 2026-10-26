@@ -1,0 +1,57 @@
+# Okrsky of Lokca, transcribed by an AI agent in job okrsok-rules-514 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Trojičné námestie, Vyšný koniec, Magurská, Budínska, Bazová, Rínok, Komárnik (časť ulice), Lán, Trnková, Limbová, Južná, Slnečná, Kolónia, Gaštanová, Podkošariská, Šípková, Školská, Bandiková, Hradská (časť ulice), Západná, Pri zdravotnom stredisku (časť ulice), Pustina, Lipová, Pod kostolom
+#   okrsok 2: Komárnik (časť ulice), Pri zdravotnom stredisku (časť ulice), Hradská (časť ulice), Záhumnica, Veterná, Hliník, Mlynská, Urbárska, Polianka, Brezová, Východná, Javorová, Grúnik, Smreková, Jedľová, Krátka, Severná, Jabloňová
+obec = "509809"
+name = "Lokca"
+okrsky_date = 2026-07-28
+okrsky_fill = "nearest"
+okrsky_note = "Komárnik, Hradská and Pri zdravotnom stredisku are listed in both okrsky as 'časť ulice' without saying which numbers; they get no rule and each of their addresses takes the okrsok of the nearest placed address (fill_nearest), as do the addresses without a street. Šípková (okrsok 1) and Jedľová (okrsok 2) are not in the address register and are left out."
+
+[[document]]
+url = "https://www.lokca.sk/e_download.php?file=/data/uredni_deska/obsah1230_1.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti.pdf"
+sha256 = "cab3d8c1e0bf79acd985d4d8b2f82f16f0a35ae7b7f23ba62369916c13cf6785"
+title = "Volebné okrsky a volebné miestnosti"
+
+[okrsok.1]
+rules = [
+  {street = "Trojičné námestie"},
+  {street = "Vyšný koniec"},
+  {street = "Magurská"},
+  {street = "Budínska"},
+  {street = "Bazová"},
+  {street = "Rínok"},
+  {street = "Lán"},
+  {street = "Trnková"},
+  {street = "Limbová"},
+  {street = "Južná"},
+  {street = "Slnečná"},
+  {street = "Kolónia"},
+  {street = "Gaštanová"},
+  {street = "Podkošariská"},
+  {street = "Školská"},
+  {street = "Bandiková"},
+  {street = "Západná"},
+  {street = "Pustina"},
+  {street = "Lipová"},
+  {street = "Pod kostolom"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Záhumnica"},
+  {street = "Veterná"},
+  {street = "Hliník"},
+  {street = "Mlynská"},
+  {street = "Urbárska"},
+  {street = "Polianka"},
+  {street = "Brezová"},
+  {street = "Východná"},
+  {street = "Javorová"},
+  {street = "Grúnik"},
+  {street = "Smreková"},
+  {street = "Krátka"},
+  {street = "Severná"},
+  {street = "Jabloňová"},
+]

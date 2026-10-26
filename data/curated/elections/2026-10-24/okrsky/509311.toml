@@ -1,0 +1,29 @@
+# Okrsky of Nová Bystrica, transcribed by an AI agent in job okrsok-rules-327 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: VOLEBNÝ OKRSOK č. 1 - Nová Bystrica Dom kultúry /sála/ č.s. 657
+#   okrsok 2: VOLEBNÝ OKRSOK č. 2 – Vychylovka ZŠ s MŠ Vychylovka /jedáleň/ č.s. 687
+obec = "509311"
+name = "Nová Bystrica"
+okrsky_fill = "nearest"
+okrsky_note = "The document names each okrsok after a part of the obec (č. 1 Nová Bystrica, č. 2 Vychylovka) with its polling station there, without listing addresses; each okrsok is given that part (inferred). The single address of part Riečnica takes the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.novabystrica.sk/images/stories/2026/Volby_2026/Utvorenie_volebn%C3%BDch_okrskov_ur%C4%8Denie_volebn%C3%BDch_miestnost%C3%AD_a_zapisovate%C4%BEky.pdf"
+sha256 = "1dae66f619285eb73fb5c13b02cbd8fd1d207e8c92375cbb1b8f739cbb0d17c3"
+title = "Utvorenie volebných okrskov, určenie volebných miestností a zapisovateľky okrskovej volebnej komisie"
+
+[[document]]
+url = "https://www.novabystrica.sk/sk/informacie-ou/2846-vyhlasenie-volieb-do-organov-samospravy-a-obci-a-volby-do-organov-samospravnych-krajov"
+sha256 = "d88bfac2cbc050ca73cb7ffeea06de82aff11cec1c0e28f2364f40ac07f30c36"
+title = "Vyhlásenie volieb do orgánov samosprávy a obcí a voľby do orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {part = "Nová Bystrica", note = "okrsok named Nová Bystrica, station Dom kultúry č.s. 657 in Nová Bystrica", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vychylovka", note = "okrsok named Vychylovka, station ZŠ s MŠ Vychylovka č.s. 687", inferred = true},
+]

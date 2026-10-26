@@ -1,0 +1,23 @@
+# Okrsky of Lúč na Ostrove, transcribed by an AI agent in job okrsok-rules-531 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: číslo volebného okrsku č. 1 - Volebná miestnosť v budove - Obecný úrad a kultúrny dom vo Veľkej Lúči č. 20
+#   okrsok 2: číslo volebného okrsku č. 2 - Volebná miestnosť v budove - Centrum voľného času /CVČ/ vo Malej Lúči č. 20
+obec = "501743"
+name = "Lúč na Ostrove"
+okrsky_note = "The undated decision (DOCX on the obec's Voľby page) gives each of the 2 okrsky only its polling station, one in each of the two parts of the obec (Veľká Lúč, Malá Lúč); each okrsok is inferred to be the part of its station."
+
+[[document]]
+url = "https://www.lucnaostrove.sk/modules/file_storage/download.php?file=4486d01c%7C545"
+sha256 = "08e61641ac311ecdae42f30ac831e8c769aa509b2078a793f69ee93be3bfd381"
+title = "Utvorenie volebných okrskov pre voľby do orgánov samosprávy obcí a voľby do samosprávnych krajov v roku 2026 a určenie volebných miestností (starosta)"
+
+[okrsok.1]
+rules = [
+  {part = "Veľká Lúč", note = "the document gives okrsok 1 only its polling station, Obecný úrad a kultúrny dom vo Veľkej Lúči č. 20: the part Veľká Lúč", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Malá Lúč", note = "the document gives okrsok 2 only its polling station, Centrum voľného času v Malej Lúči č. 20: the part Malá Lúč", inferred = true},
+]

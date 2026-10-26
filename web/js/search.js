@@ -298,6 +298,7 @@ export function Search({ onPlace, onCandidate, children }) {
           lon: group.lon[i],
           label: option.label,
           obvod: group.obvody?.[i] ?? null,
+          okrsok: group.okrsky?.[i] ?? null,
         },
         'place',
       );

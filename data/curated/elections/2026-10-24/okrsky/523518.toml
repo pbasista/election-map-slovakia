@@ -1,0 +1,45 @@
+# Okrsky of Hranovnica, transcribed by an AI agent in job okrsok-rules-340 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Sládkovičova, Štúrova, Lúčna, Školská, Hranovnické Pleso, Dubina, Mlynská
+#   okrsok 2: Budovateľská, Lipová, Topoľová, Slnečná, Hviezdoslavova, M.R. Štefánika, Víťazstva, Družstevná, Hviezdoslavova; Voliči s trvalým pobytom Hranovnica (bez konkrétnej adresy) – bezdomovci
+#   okrsok 3: Rovná, SNP
+obec = "523518"
+name = "Hranovnica"
+okrsky_date = 2026-07-29
+okrsky_fill = "nearest"
+okrsky_note = "The document lists streets only; the 632 addresses without a street and Pod Babkou 15 (not in the document) take the okrsok of the nearest placed address (fill_nearest). 'Voliči s trvalým pobytom Hranovnica (bez konkrétnej adresy) – bezdomovci' of okrsok 2 are residents without an address."
+
+[[document]]
+url = "https://www.hranovnica.sk/e_download.php?file=/data/uredni_deska/obsah13308_1.pdf&original=ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Den%C3%AD%20volebn%C3%BDch%20miestnost%C3%AD%20pre%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vy%20obc%C3%AD%20a%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vnych%20krajov.pdf"
+sha256 = "96dffc0202042371274c7ac8c0d867ec5e063a53739cd2bd147d0a1f2863bf18"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností (starostka, 29. 7. 2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Sládkovičova"},
+  {street = "Štúrova"},
+  {street = "Lúčna"},
+  {street = "Školská"},
+  {street = "Hranovnické Pleso"},
+  {street = "Dubina"},
+  {street = "Mlynská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Lipová"},
+  {street = "Topoľová"},
+  {street = "Slnečná"},
+  {street = "Hviezdoslavova"},
+  {street = "M. R. Štefánika", written = "M.R. Štefánika"},
+  {street = "Víťazstva"},
+  {street = "Družstevná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Rovná"},
+  {street = "SNP"},
+]

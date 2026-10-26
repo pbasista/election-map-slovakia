@@ -1,0 +1,25 @@
+# Okrsky of Sečovská Polianka, transcribed by an AI agent in job okrsok-rules-529 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súpisné čísla domov 0 až 377
+#   okrsok 2: súpisné čísla domov 378 až 801
+obec = "529133"
+name = "Sečovská Polianka"
+okrsky_date = 2026-07-22
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky split by súpisné číslo: 0-377 and 378-801. Any súpisné number above 801 takes the nearest placed address."
+
+[[document]]
+url = "https://secovskapolianka.sk/wp-content/uploads/dokumenty/komunalne-volby/utvorenie_volebnych_okrskov_a_urcenie_volebnych_miestnosti_2026-6b9je7.pdf"
+sha256 = "814ac3fbb14153aad28cce08cac7028e2c27812d8174803808a7181b6274ee4e"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby 24. októbra 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Sečovská Polianka", numbers = "0-377"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Sečovská Polianka", numbers = "378-801"},
+]

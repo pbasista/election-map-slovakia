@@ -1,0 +1,79 @@
+# Council obvody of Jaslovské Bohunice (507156), Trnava.
+# Transcribed by an AI agent in job obvod-rules-141 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č.1 tvorí časť obce Jaslovce a Bohunice, volí sa 8 poslancov Obecného zastupiteľstva
+#   obvod 2: volebný obvod č.2 tvorí časť obce Paderovce, volí sa 1 poslanec Obecného zastupiteľstva.
+# Okrsky added by an AI agent in job okrsok-rules-140 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Blavská ulica, Cintorínska ulica, Bohunická ulica, Jaslovská ulica, Pri mlyne, Pri rybníku, Námestie sv. Michala, Nová ulica, Záhradná ulica, Záhumenická ulica a obyvatelia s trvalým pobytom Jaslovské Bohunice
+#   okrsok 2: Agátová ulica, Čerešňová ulica, Dubová ulica, Gaštanová ulica, Jabloňová ulica, Javorová ulica, Krátka ulica, Krížna ulica, Lipová ulica, Orechová ulica, Sídlisko, Šidúnky, Školská ulica, Športová ulica, Trnavská ulica
+#   okrsok 3: Paderovská ulica, Lúčna ulica, Poľná ulica
+obec = "507156"
+name = "Jaslovské Bohunice"
+date = 2026-07-06
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky page of the 2026 elections lists streets per okrsok. 'Športová ulica' (okrsok 2) is not in the address register and is left out. 'Obyvatelia s trvalým pobytom Jaslovské Bohunice' (okrsok 1) are residents without an address. The 18 addresses without a street in obvod 1 are not covered by the document and take the okrsok of the nearest address (fill_nearest). The page gives no decision date."
+
+[[document]]
+url = "https://www.jaslovske-bohunice.sk/e_download.php?file=/data/uredni_deska/obsah2000_1.pdf&original=Z%C3%A1pis_OZ_06_07_2026_final.pdf"
+sha256 = "5ac8f2af45aece3d61c26d1a91671eb572809ab1a2994d973a33d3dcfd72effa"
+title = "Zápis zo zasadnutia Obecného zastupiteľstva obce Jaslovské Bohunice konaného 06.07.2026 (uznesenia 651/IX a 653/IX)"
+
+[[document]]
+url = "https://www.jaslovske-bohunice.sk/obec-2/volby/samosprava-a-samospravne-kraje/2026/zverejnenie-volebnych-obvodov-a-pocet-poslancov-2037sk.html"
+sha256 = "ba2d4e66ce00d2ba01a6b649e44c9707b1d40f98365cfbab80f90a500f290e09"
+title = "Zverejnenie volebných obvodov a počet poslancov"
+
+[[document]]
+url = "https://www.jaslovske-bohunice.sk/obec-2/volby/samosprava-a-samospravne-kraje/2026/zverejnenie-okrskov-a-sidla-volebnych-miestnosti-2040sk.html"
+sha256 = "770fb31d7863acdaf12dbc10e9157a12c101cbe6481fa669e6ee0dc7fcacfc8a"
+title = "Zverejnenie okrskov a sídla volebných miestností"
+
+[obvod.1]
+seats = 8
+okrsky = [1, 2]
+rules = [
+  {part = "Jaslovce"},
+  {part = "Bohunice"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [3]
+rules = [
+  {part = "Paderovce"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Blavská ulica"},
+  {street = "Cintorínska ulica"},
+  {street = "Bohunická ulica"},
+  {street = "Jaslovská ulica"},
+  {street = "Pri mlyne"},
+  {street = "Pri rybníku"},
+  {street = "Námestie sv. Michala"},
+  {street = "Nová ulica"},
+  {street = "Záhradná ulica"},
+  {street = "Záhumenická ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová ulica"},
+  {street = "Čerešňová ulica"},
+  {street = "Dubová ulica"},
+  {street = "Gaštanová ulica"},
+  {street = "Jabloňová ulica"},
+  {street = "Javorová ulica"},
+  {street = "Krátka ulica"},
+  {street = "Krížna ulica"},
+  {street = "Lipová ulica"},
+  {street = "Orechová ulica"},
+  {street = "Sídlisko"},
+  {street = "Šidúnky"},
+  {street = "Školská ulica"},
+  {street = "Trnavská ulica"},
+]

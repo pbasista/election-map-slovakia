@@ -1,0 +1,23 @@
+# Okrsky of Budkovce, transcribed by an AI agent in job okrsok-rules-606 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: celá obec Budkovce
+#   okrsok 2: časť obce Dolný les
+obec = "522376"
+name = "Budkovce"
+okrsky_note = "Okrsok 1 is 'celá obec Budkovce' (read as the part Budkovce), okrsok 2 the part Dolný Les (written 'Dolný les'). Notice published 21.10.2026; no decision date stated."
+
+[[document]]
+url = "https://www.budkovce.sk/docs/261021_Ozn%C3%A1menie%20o%20okrskoch%20a%20volebn%C3%BDch%20miestnostiach.pdf"
+sha256 = "3e60ec6e8f2b2247b6c895ba113a9561eaf5bcae3d0ae0cdf386f9e42558a002"
+title = "Oznámenie o okrskoch a volebných miestnostiach"
+
+[okrsok.1]
+rules = [
+  {part = "Budkovce"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dolný Les"},
+]

@@ -1,0 +1,73 @@
+# Okrsky of Zákamenné, transcribed by an AI agent in job okrsok-rules-267 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Pre voličov z ulíc: Kamenná ulica, Klampiarska ulica, Námestie J. Vojtaššáka, Slnečná ulica, Školská ulica, Športová ulica, Ulica Dolinka, Ulica Jána Vojtaššáka, Ulica Nižný koniec, Ulica pod Kalváriou, Ulica Podkamenné, Ulica Špitál, Včelárska ulica, Veterná ulica, Západná ulica.
+#   okrsok 2: Pre voličov z ulíc: Hlavná ulica, Lesnícka ulica, Lúčna ulica, Obecná ulica, Oravická ulica, Ulica na Polianku, Ulica Oravice, Ulica pri Bielej Orave, Ulica pri potoku, Ulica Vrchná Mrzačka, Vrchová ulica.
+#   okrsok 3: Pre voličov z ulíc: Mariánska ulica, Ulica Farský Briežok, Ulica Grúnik, Ulica M. Medveckej, Ulica Maršalkov grúň, Ulica Spodná Mrzačka, Ulica Vyšný koniec.
+#   okrsok 4: Pre voličov z ulíc: Goralská ulica, Kviatková ulica, Ulica Babinec, Ulica Grúň, Ulica Kocandy, Ulica pod Kýčerou, Ulica Poriečie, Záhradnícka ulica.
+obec = "510203"
+name = "Zákamenné"
+okrsky_fill = "nearest"
+okrsky_note = "Posted 9. 7. 2026 (decision date not stated). The one address without a street takes the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.zakamenne.sk/zverejnovanie/volby/oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-839.html"
+sha256 = "5865c28665f5a8d43e05f2b9005e04a62b33a047481935d3fc257dda7b361697"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestnosti"
+
+[okrsok.1]
+rules = [
+  {street = "Kamenná ulica"},
+  {street = "Klampiarska ulica"},
+  {street = "Námestie J. Vojtaššáka"},
+  {street = "Slnečná ulica"},
+  {street = "Školská ulica"},
+  {street = "Športová ulica"},
+  {street = "Ulica Dolinka"},
+  {street = "Ulica Jána Vojtaššáka"},
+  {street = "Ulica Nižný koniec"},
+  {street = "Ulica pod Kalváriou"},
+  {street = "Ulica Podkamenné"},
+  {street = "Ulica Špitál"},
+  {street = "Včelárska ulica"},
+  {street = "Veterná ulica"},
+  {street = "Západná ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná ulica"},
+  {street = "Lesnícka ulica"},
+  {street = "Lúčna ulica"},
+  {street = "Obecná ulica"},
+  {street = "Oravická ulica"},
+  {street = "Ulica na Polianku"},
+  {street = "Ulica Oravice"},
+  {street = "Ulica pri Bielej Orave"},
+  {street = "Ulica pri potoku"},
+  {street = "Ulica Vrchná Mrzačka"},
+  {street = "Vrchová ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Mariánska ulica"},
+  {street = "Ulica Farský briežok", written = "Ulica Farský Briežok"},
+  {street = "Ulica Grúnik"},
+  {street = "Ulica M. Medveckej"},
+  {street = "Ulica Maršalkov grúň"},
+  {street = "Ulica Spodná Mrzačka"},
+  {street = "Ulica Vyšný koniec"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Goralská ulica"},
+  {street = "Kviatková ulica"},
+  {street = "Ulica Babinec"},
+  {street = "Ulica Grúň"},
+  {street = "Ulica Kocandy"},
+  {street = "Ulica pod Kýčerou"},
+  {street = "Ulica Poriečie"},
+  {street = "Záhradnícka ulica"},
+]

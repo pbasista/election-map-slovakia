@@ -1,0 +1,206 @@
+# Council obvody of Holíč (504378), Skalica.
+# Transcribed by an AI agent in job obvod-rules-069 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 – počet poslancov 8 Ulice: Bottova, Fučíkova, Jednoradová, Jesenského, Kátovská, kpt. Nálepku, Kukučínova, M.R. Štefánika, Mlynská, Partizánska, Potočná, Sasinkova, Schiffelova, Ulica A. Dubčeka, D. Rapanta, Hodonínska, Hollého, Lesná, Ružová, Staničná, Bernolákova, Hviezdoslavova, Lúčky, M. Nešpora 33-34, Bratislavská, J.J. Boora, SNP 1-8, Ulica Márie Terézie, Námestie mieru, Námestie sv. Martina, Školská, Zámocká
+#   obvod 2: Volebný obvod č. 2-počet poslancov 7 Ulice: Hurbanova, M. Nešpora 1-6, M. Nešpora 9-31, M. Nešpora 35-45, Moyzesova, Bažantnica, Betlehém, Kopčanská, Pod sýpkou, Pri kaštieli, Svätojánska, SNP 9-47, Kollárova, Pod hrebeňom, 29. augusta, Budovateľská, Duklianska, Gagarinova, Lidická, Palárikova, Pri štadióne, Priateľstva, Priečna, Rodinné domky, Sibírska, Sv. Anny, Športová, Štúrova, Veterná, Vrádištská, Vysoká
+# Okrsky added by an AI agent in job okrsok-rules-068 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bottova, Fučíkova, Jednoradová 1 -14, Jesenského, Kátovská, kpt. Nálepku, Kukučínova, M.R. Štefánika, Mlynská, Partizánska, Potočná, Sasinkova, Schiffelova, Ulica A. Dubčeka.
+#   okrsok 2: D. Rapanta, Hodonínska 15, Hollého, Jednoradová 15-16, Lesná, Ružová, Staničná.
+#   okrsok 3: Bernolákova, Hodonínska 1 -11, Hviezdoslavova, Lúčky, M. Nešpora 33 -34,Nám. mieru, Nám. sv. Martina, Školská, Zámocká.
+#   okrsok 4: Bratislavská, J.J. Boora , SNP 1-8, Ulica Márie Terézie, J. Čabelku
+#   okrsok 5: Hurbanova, M. Nešpora 1-6, 9-31, 35 - 45, Moyzesova.
+#   okrsok 6: Bažantnica, Betlehém, Kopčanská, Pod sýpkou, Pri kaštieli 1 -26, Svätojánska.
+#   okrsok 7: SNP 9 - 47, Kollárova, Pod hrebeňom.
+#   okrsok 8: 29. augusta, Budovateľská, Duklianska, Gagarinova, Lidická, Palárikova , Pri štadióne, Priateľstva, Priečna, Rodinné domky, Sibírska, Sv. Anny, Športová, Štúrova, Veterná, Vrádištská, Vysoká.
+obec = "504378"
+name = "Holíč"
+date = 2026-03-05
+fill = "nearest"
+note = "Rules transcribed from MsZ resolution č. 545/2026 of 5 March 2026 (in the session conclusions PDF on egov.holic.sk, pages 5-6). The city's 2026 announcement of obvody and okrsky gives the same split and adds J. Čabelku to obvod 1. fill_nearest covers: the 1346 addresses without a street (the resolution lists streets only), SNP numbers above 47 (the resolution covers only SNP 1-47), and any M. Nešpora numbers outside 1-6, 9-31, 33-34, 35-45 (e.g. 7, 8, 32)."
+okrsky_fill = "nearest"
+okrsky_note = "The city's announcement of obvody, okrsky and polling stations for 24.10.2026 (undated, so no date). Jednoradová (1-14 / 15-16) and Hodonínska (15 / 1-11) are split between okrsky 1-3; Hodonínska numbers 12-14 and 16-21 are not listed and, with the addresses without a street, are left to fill_nearest. SNP and M. Nešpora are split only between obvody, so within each obvod they are whole."
+
+[[document]]
+url = "https://egov.holic.sk/FileOutputHttpHandler.ashx?arguments=CE%2bEsRcYvS%2fro3u3QBLW1ck8%2futcU1FBRFBJGKToNRTUp%2f8Wowc%2bka4zBsEMwM%2f101b5owTdZqQRnq9k425lHlcvrG7GUuhhDA%3d%3d"
+sha256 = "ef9ddf568fafd2042f2a90828c37db11ec06e49b1c7429f9866f5ea6796535b4"
+title = "Závery z rokovania Mestského zastupiteľstva v Holíči dňa 05.03.2026 – uznesenie č. 545/2026 (volebné obvody a počet poslancov 2026 – 2030)"
+
+[[document]]
+url = "https://www.holic.sk/e_download.php?file=/data/uredni_deska/obsah20_4.pdf&original=Volebn%C3%A9%20obvody%2C%20okrsky%2C%20miestnosti%20-%20utvorenie.pdf"
+sha256 = "130524473085d434d7fa445310637af9ca9ab5edacbd9950335c84fdb63e9e88"
+title = "Volebné obvody, volebné miestnosti a počet poslancov v meste Holíč pre voľby do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov, konaných dňa 24.10.2026"
+
+[obvod.1]
+seats = 8
+okrsky = [1, 2, 3, 4]
+rules = [
+  {street = "Bottova"},
+  {street = "Fučíkova"},
+  {street = "Jednoradová"},
+  {street = "Jesenského"},
+  {street = "Kátovská"},
+  {street = "Kpt. Nálepku", written = "kpt. Nálepku", note = "The document writes the abbreviation \"kpt.\" in lower case; same street as the register's Kpt. Nálepku."},
+  {street = "Kukučínova"},
+  {street = "M. R. Štefánika", written = "M.R. Štefánika", note = "The document writes the initials without a space (\"M.R.\"); same street as M. R. Štefánika."},
+  {street = "Mlynská"},
+  {street = "Partizánska"},
+  {street = "Potočná"},
+  {street = "Sasinkova"},
+  {street = "Schiffelova"},
+  {street = "Ulica A. Dubčeka"},
+  {street = "D. Rapanta"},
+  {street = "Hodonínska"},
+  {street = "Hollého"},
+  {street = "Lesná"},
+  {street = "Ružová"},
+  {street = "Staničná"},
+  {street = "Bernolákova"},
+  {street = "Hviezdoslavova"},
+  {street = "Lúčky"},
+  {street = "M. Nešpora", numbers = "33-34", note = "Numbers not listed in the resolution (M. Nešpora 7, 8, 32 and above 45 if they exist) are left to fill_nearest."},
+  {street = "Bratislavská"},
+  {street = "J. J. Boora", written = "J.J. Boora", note = "The document writes the initials without a space (\"J.J.\"); same street as J. J. Boora."},
+  {street = "SNP", numbers = "1-8", note = "The resolution covers only SNP 1-8 (obvod 1) and 9-47 (obvod 2), but the register has numbers up to 107; numbers above 47 are left to fill_nearest."},
+  {street = "Ulica Márie Terézie"},
+  {street = "Námestie mieru"},
+  {street = "Námestie sv. Martina"},
+  {street = "Školská"},
+  {street = "Zámocká"},
+  {street = "J. Čabelku", note = "Not named in resolution 545/2026; the city's announcement \"Volebné obvody, volebné miestnosti a počet poslancov v meste Holíč\" (holic.sk, second document) lists J. Čabelku in volebný okrsok č. 4 of volebný obvod č. 1."},
+]
+
+[obvod.2]
+seats = 7
+okrsky = [5, 6, 7, 8]
+rules = [
+  {street = "Hurbanova"},
+  {street = "M. Nešpora", numbers = "1-6", note = "Numbers not listed in the resolution (M. Nešpora 7, 8, 32 and above 45 if they exist) are left to fill_nearest."},
+  {street = "M. Nešpora", numbers = "9-31", note = "Numbers not listed in the resolution (M. Nešpora 7, 8, 32 and above 45 if they exist) are left to fill_nearest."},
+  {street = "M. Nešpora", numbers = "35-45", note = "Numbers not listed in the resolution (M. Nešpora 7, 8, 32 and above 45 if they exist) are left to fill_nearest."},
+  {street = "Moyzesova"},
+  {street = "Bažantnica"},
+  {street = "Betlehém"},
+  {street = "Kopčanská"},
+  {street = "Pod sýpkou"},
+  {street = "Pri kaštieli"},
+  {street = "Svätojánska"},
+  {street = "SNP", numbers = "9-47", note = "The resolution covers only SNP 1-8 (obvod 1) and 9-47 (obvod 2), but the register has numbers up to 107; numbers above 47 are left to fill_nearest."},
+  {street = "Kollárova"},
+  {street = "Pod hrebeňom"},
+  {street = "29. augusta"},
+  {street = "Budovateľská"},
+  {street = "Duklianska"},
+  {street = "Gagarinova"},
+  {street = "Lidická"},
+  {street = "Palárikova"},
+  {street = "Pri štadióne"},
+  {street = "Priateľstva"},
+  {street = "Priečna"},
+  {street = "Rodinné domky"},
+  {street = "Sibírska"},
+  {street = "Sv. Anny"},
+  {street = "Športová"},
+  {street = "Štúrova"},
+  {street = "Veterná"},
+  {street = "Vrádištská"},
+  {street = "Vysoká"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Bottova"},
+  {street = "Fučíkova"},
+  {street = "Jednoradová", numbers = "1-14"},
+  {street = "Jesenského"},
+  {street = "Kátovská"},
+  {street = "Kpt. Nálepku", written = "kpt. Nálepku"},
+  {street = "Kukučínova"},
+  {street = "M. R. Štefánika", written = "M.R. Štefánika"},
+  {street = "Mlynská"},
+  {street = "Partizánska"},
+  {street = "Potočná"},
+  {street = "Sasinkova"},
+  {street = "Schiffelova"},
+  {street = "Ulica A. Dubčeka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "D. Rapanta"},
+  {street = "Hodonínska", numbers = "15"},
+  {street = "Hollého"},
+  {street = "Jednoradová", numbers = "15-16"},
+  {street = "Lesná"},
+  {street = "Ružová"},
+  {street = "Staničná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Hodonínska", numbers = "1-11"},
+  {street = "Hviezdoslavova"},
+  {street = "Lúčky"},
+  {street = "M. Nešpora"},
+  {street = "Námestie mieru", written = "Nám. mieru"},
+  {street = "Námestie sv. Martina", written = "Nám. sv. Martina"},
+  {street = "Školská"},
+  {street = "Zámocká"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bratislavská"},
+  {street = "J. J. Boora", written = "J.J. Boora"},
+  {street = "SNP"},
+  {street = "Ulica Márie Terézie"},
+  {street = "J. Čabelku"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Hurbanova"},
+  {street = "M. Nešpora"},
+  {street = "Moyzesova"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bažantnica"},
+  {street = "Betlehém"},
+  {street = "Kopčanská"},
+  {street = "Pod sýpkou"},
+  {street = "Pri kaštieli"},
+  {street = "Svätojánska"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "SNP"},
+  {street = "Kollárova"},
+  {street = "Pod hrebeňom"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "29. augusta"},
+  {street = "Budovateľská"},
+  {street = "Duklianska"},
+  {street = "Gagarinova"},
+  {street = "Lidická"},
+  {street = "Palárikova"},
+  {street = "Pri štadióne"},
+  {street = "Priateľstva"},
+  {street = "Priečna"},
+  {street = "Rodinné domky"},
+  {street = "Sibírska"},
+  {street = "Sv. Anny"},
+  {street = "Športová"},
+  {street = "Štúrova"},
+  {street = "Veterná"},
+  {street = "Vrádištská"},
+  {street = "Vysoká"},
+]

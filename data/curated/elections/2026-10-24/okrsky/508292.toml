@@ -1,0 +1,58 @@
+# Okrsky of Veľký Biel, transcribed by an AI agent in job okrsok-rules-260 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bratislavská, Mierová, Obchodná, Poštová, Robotnícka, Školská, Športová, Železničná, Kaštieľska, Slnečná, Pri jazere, Farská, Slivková
+#   okrsok 2: Cintorínska, Kostolná, Krátka, Malobielska, Nová, Poľovnícka, Senecká, Lúčna, Poľná, Záhradná, Orechová, Vinohradnícka, Kvetná, Potočná, Trnková, Javorová, Brezová, Lipová ulica, Agátová ulica
+obec = "508292"
+name = "Veľký Biel"
+okrsky_fill = "nearest"
+okrsky_note = "Document for the 2026 elections is signed 'vo Veľkom Bieli, 30.8.2018' (an evident leftover from the 2018 template), so no date is given. Agátová ulica is not in the register and is left out. Addresses without a street (439) take the nearest placed address."
+
+[[document]]
+url = "https://www.velkybiel.eu/e_download.php?file=/data/uredni_deska/obsah515_1.pdf&original=Volebn%C3%A9%20okrsky%20%282%29.pdf"
+sha256 = "b1586c8ec609a6b9bd6a9fe21dc0edda3b55c4a9852833794528c293cad8156d"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Veľký Biel pre voľby do orgánov samosprávy obcí v roku 2026"
+
+[[document]]
+url = "https://www.velkybiel.eu/oznamy/uradna-tabula/komunalne-volby-2026/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-obci-velky-biel-pre-volby-do-organov-samospravy-obci-v-roku-2026-557.html"
+sha256 = "b3ad4b2b605e666e750642e050b3733e81575ef3d964f7f4db837dbe751b989b"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Veľký Biel (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {street = "Bratislavská"},
+  {street = "Mierová"},
+  {street = "Obchodná"},
+  {street = "Poštová"},
+  {street = "Robotnícka"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Železničná"},
+  {street = "Kaštieľska"},
+  {street = "Slnečná"},
+  {street = "Pri jazere"},
+  {street = "Farská"},
+  {street = "Slivková"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Kostolná"},
+  {street = "Krátka"},
+  {street = "Malobielska"},
+  {street = "Nová"},
+  {street = "Poľovnícka"},
+  {street = "Senecká"},
+  {street = "Lúčna"},
+  {street = "Poľná"},
+  {street = "Záhradná"},
+  {street = "Orechová"},
+  {street = "Vinohradnícka"},
+  {street = "Kvetná"},
+  {street = "Potočná"},
+  {street = "Trnková"},
+  {street = "Javorová"},
+  {street = "Brezová"},
+  {street = "Lipová ulica"},
+]

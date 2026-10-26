@@ -1,0 +1,59 @@
+# Okrsky of Pliešovce, transcribed by an AI agent in job okrsok-rules-266 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: bez pobytu, Cesta armády, Cintorínska, Hviezdoslavova, Ku Rybníku, Lesnícka, Námestie padlých hrdinov, Obrancov mieru, Pod Hálikom, Školská, Vlkanovská, Zvolenská cesta
+#   okrsok 2: Časti obce: Lonec, Pliešovce (bez ulíc), Podjavorie, Boženy Němcovej, Červenákova, Družstevná, Fraňa Kráľa, Hrádocká, Janka Jesenského, Jilemnického, Kollárova, Kostolná, Kukučínova, Námestie SNP, Sitnícka, Ku Pieskam, Sládkovičova, Štúrova, Tajovského
+#   okrsok 3: Časti obce: Dolinky, Polomy, Zaježová
+obec = "518689"
+name = "Pliešovce"
+okrsky_date = 2026-07-20
+okrsky_note = "Okrsok 1 also lists \"bez pobytu\" (voters without an address). Okrsok 2 lists the street \"Ku Pieskam\", which the register lacks; left out. \"Pliešovce (bez ulíc)\" is encoded as the part Pliešovce, overridden by the street rules."
+
+[[document]]
+url = "https://www.pliesovce.sk/download_file_f.php?id=2445742"
+sha256 = "a5565d7d1f8b8391eaabfbc11fdc0991486c0571ff9a9774a538599a6dd2716e"
+title = "Volebné okrsky a volebné miestnosti"
+
+[okrsok.1]
+rules = [
+  {street = "Cesta armády"},
+  {street = "Cintorínska"},
+  {street = "Hviezdoslavova"},
+  {street = "Ku Rybníku"},
+  {street = "Lesnícka"},
+  {street = "Námestie padlých hrdinov"},
+  {street = "Obrancov mieru"},
+  {street = "Pod Hálikom"},
+  {street = "Školská"},
+  {street = "Vlkanovská"},
+  {street = "Zvolenská cesta"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lonec"},
+  {part = "Pliešovce"},
+  {part = "Podjavorie"},
+  {street = "Boženy Němcovej"},
+  {street = "Červenákova"},
+  {street = "Družstevná"},
+  {street = "Fraňa Kráľa"},
+  {street = "Hrádocká"},
+  {street = "Janka Jesenského"},
+  {street = "Jilemnického"},
+  {street = "Kollárova"},
+  {street = "Kostolná"},
+  {street = "Kukučínova"},
+  {street = "Námestie SNP"},
+  {street = "Sitnícka"},
+  {street = "Sládkovičova"},
+  {street = "Štúrova"},
+  {street = "Tajovského"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Dolinky"},
+  {part = "Polomy"},
+  {part = "Zaježová"},
+]

@@ -1,0 +1,55 @@
+# Council obvody of Vysoká nad Kysucou (509515), Čadca.
+# Transcribed by an AI agent in job obvod-rules-117 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 – (miestna časť Semeteš a Vrchrieka, Nižný koniec, Ústredie po cesta „ Furmanec“) – volí sa 5 poslancov
+#   obvod 2: Volebný obvod č. 2 – (Vyšný koniec, miestna časť Jedľovník, Nižný Kelčov) – volia sa 2 poslanci
+#   obvod 3: Volebný obvod č. 3 – (miestna časť Zlámaná, Zátoka a Vyšný Kelčov) – volia sa 2 poslanci
+# Okrsky added by an AI agent in job okrsok-rules-116 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: miestna časť Semeteš a Vrchrieka, Nižný koniec, Ústredie po cesta „ Furmanec“
+#   okrsok 2: Vyšný koniec, miestna časť Jedľovník, Nižný Kelčov
+#   okrsok 3: miestna časť Zlámaná, Zátoka a Vyšný Kelčov
+obec = "509515"
+name = "Vysoká nad Kysucou"
+date = 2026-06-24
+note = "Decided by Uznesenie č. 5/2026-15.6 of the OZ on 24.06.2026 (PDF 'Uznesenia OZ 5/2026', published on the council portal app.digi-sprava.cz/verejny-portal/vysoka-nad-kysucou linked from the obec's site as 'Obecné zastupiteľstvo od roku 2026'; the download needs a session cookie and the host is not the obec's domain, so it is not listed in documents). The obec's elections page repeats the obvody text verbatim; seats (5/2/2) are from the resolution and match the registered-candidates list on the obec's site. The resolution splits the časť Vysoká nad Kysucou (no streets, súpisné čísla only) into 'Nižný koniec, Ústredie po cestu Furmanec' (obvod 1) and 'Vyšný koniec' (obvod 2) without listing numbers; the boundary was placed at the unnamed road branching south from road 487 at about 18.5296 E toward the Furmanec locality (OSM way 227054437), which coincides with the break between súpisné čísla 384 and 385. Houses directly along that road and the exact boundary are uncertain."
+okrsky_note = "The elections page gives one okrsok per obvod (obvod č. 1 – okrsok č. 1, etc.) with the same parts as the obvody."
+
+[[document]]
+url = "https://www.vysokanadkysucou.sk/sk/komunalne-volby-2026"
+sha256 = "c88bc9db23c4d9c115bf20b00e6855169770bdd24d80db2d3f681903662d2298"
+title = "Spojené voľby 2026 – Volebné obvody a okrsky (aktualizácia 06. 07. 2026)"
+
+[[document]]
+url = "https://www.vysokanadkysucou.sk/images/stories/dokumenty/Volby/2026/Komun%C3%A1lne/Zoznam_kandida%CC%81tov_-_poslanci.pdf"
+sha256 = "759e1168a67b97b06fb6cd110a3a26b57cf6704f9307529d8dd1e2a35c15de7c"
+title = "Zoznam zaregistrovaných kandidátov pre voľby do Obecného zastupiteľstva obce Vysoká nad Kysucou 24. októbra 2026 (počet poslancov v obvodoch)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Semeteš"},
+  {part = "Vrchrieka"},
+  {part = "Vysoká nad Kysucou", note = "Nižný koniec and Ústredie up to the Furmanec road: all of the časť Vysoká nad Kysucou except the Vyšný koniec numbers assigned to obvod 2"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Vysoká nad Kysucou", numbers = "385-473, 498, 1097, 1133, 1135, 1168, 1191, 1316, 1318, 1322, 1343, 1356, 1358", note = "Vyšný koniec = the western (upstream) end of the časť Vysoká nad Kysucou, west of the road to Furmanec that branches south from road 487 at about 18.5296 E (OSM way 227054437); súpisné čísla chosen by address coordinates west of that road; old numbers 385-473 run continuously west of it, 1-384 east of it", inferred = true},
+  {part = "Jedľovník"},
+  {part = "Nižný Kelčov"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Zlámaná"},
+  {part = "Zátoka"},
+  {part = "Vyšný Kelčov"},
+]

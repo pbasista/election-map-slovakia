@@ -1,0 +1,41 @@
+# Council obvody of Lipová (503321), Nové Zámky.
+# Transcribed by an AI agent in job obvod-rules-145 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: časť obce Mlynský Sek sa volí 7 poslancov
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: časť obce Ondrochov sa volia 2 poslanci
+# Okrsky added by an AI agent in job okrsok-rules-144 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1, pre časť Mlynský Sek
+#   okrsok 2: Volebný okrsok č. 2, pre časť Ondrochov
+obec = "503321"
+name = "Lipová"
+date = 2026-06-29
+note = "Document is a scanned image (one page), read visually; text is clear. Total 9 poslancov."
+okrsky_date = 2026-07-21
+okrsky_note = "Scanned one-page mayor's decision of 21.07.2026, read visually. Each okrsok is one part, matching the obvod of that part."
+
+[[document]]
+url = "https://www.lipova.eu/modules/file_storage/download.php?file=8a0ace90%7C838&inline=1"
+sha256 = "bdfcd1bf85385e58c0b52d8841cd24077295d446c6d1bb10e82687b8a7b8bfe8"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenia OZ č. 361/2026 a 362/2026 zo dňa 29.06.2026), zo dňa 9.7.2026"
+
+[[document]]
+url = "https://www.lipova.eu/modules/file_storage/download.php?file=649dc999%7C841&inline=1"
+sha256 = "88e168e1b34615b1bdb2a09035f6b42efe41458538e76b79ba770ff3b2f17454"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí 24. októbra 2026 v Obci Lipová (21.07.2026)"
+
+[obvod.1]
+seats = 7
+okrsky = [1]
+rules = [
+  {part = "Mlynský Sek"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Ondrochov"},
+]

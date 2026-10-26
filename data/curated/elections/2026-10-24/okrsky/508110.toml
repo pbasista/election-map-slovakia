@@ -1,0 +1,105 @@
+# Okrsky of Most pri Bratislave, transcribed by an AI agent in job okrsok-rules-235 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ul. Achátová, ul. Levanduľová, ul. Repíková, ul. Anízová, ul. Majoránová, ul. Rozmarínová, ul. Bazalková, ul. Mätová, ul. Rubínová, ul. Bratislavská, ul. Diamantová, ul. Medovková, ul. Nálepkova, ul. Smaragdová, ul. Snežienková, ul. Feniklová, ul. Nezábudková, ul. Šalviová, ul. Fialková, ul. Opálová, ul. Tomášovská, ul. Jantárová, ul. Oreganová, ul. Tymianová, ul. Jazmínová, ul. Pažítková, ul. Žihľavová, ul. Konvalinková, ul. Rascová
+#   okrsok 2: ul. Agátová, ul. Dunajská, ul. Poľná, ul. Borovicová I., ul. Javorová, ul. Smreková, ul. Borovicová II., ul. Jedľová, ul. Školská, ul. Brezová, ul. Jelšová, ul. Športová, ul. Budovateľská, ul. Krátka, ul. Veterná, ul. Družstevná, ul. Limbová, ul. Záhradná
+#   okrsok 3: ul. 29. augusta, ul. Ľ. Kukorelliho, ul. Pri Šúrskom kanáli, ul. Broskyňová, ul. Ľ. Podjavorinskej, ul. Sekvojová, ul. Buková, ul. Marhuľová, ul. Slivková, ul. Čerešňová, ul. Mesačná, ul. Slnečná, ul. Dubová, ul. M. Kukučína, ul. Súmračná, ul. Hrušková, ul. Jazerná, ul. M. R. Štefánika, ul. Nové polia, ul. Škoricová, ul. Tichá, ul. Kamilková, ul. Orgovánová, ul. Višňová, ul. Klinčeková, ul. P. O. Hviezdoslava, ul. Zadné záhrady, ul. Lipová, ul. Pri tureckom kopci, ul. Záleská
+obec = "508110"
+name = "Most pri Bratislave"
+okrsky_date = 2026-07-29
+okrsky_fill = "nearest"
+okrsky_note = "Technická (1 address) is not in the document; it and the addresses without a street go to the okrsok of the nearest address (fill_nearest). Document text is in three columns; okrsok texts list its streets."
+
+[[document]]
+url = "https://www.mostpribratislave.sk/data/page/mostpribratislave/31351/urcenie-okrskov.pdf"
+sha256 = "4b3103dbb76a1e4b9191172006343c8f93b5b952303a78cb987a308a5f490877"
+title = "Určenie volebných okrskov a volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Achátová"},
+  {street = "Levanduľová"},
+  {street = "Repíková"},
+  {street = "Anízová"},
+  {street = "Majoránová"},
+  {street = "Rozmarínová"},
+  {street = "Bazalková"},
+  {street = "Mätová"},
+  {street = "Rubínová"},
+  {street = "Bratislavská"},
+  {street = "Diamantová"},
+  {street = "Medovková"},
+  {street = "Nálepkova"},
+  {street = "Smaragdová"},
+  {street = "Snežienková"},
+  {street = "Feniklová"},
+  {street = "Nezábudková"},
+  {street = "Šalviová"},
+  {street = "Fialková"},
+  {street = "Opálová"},
+  {street = "Tomášovská"},
+  {street = "Jantárová"},
+  {street = "Oreganová"},
+  {street = "Tymianová"},
+  {street = "Jazmínová"},
+  {street = "Pažítková"},
+  {street = "Žihľavová"},
+  {street = "Konvalinková"},
+  {street = "Rascová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Dunajská"},
+  {street = "Poľná"},
+  {street = "Borovicová I."},
+  {street = "Javorová"},
+  {street = "Smreková"},
+  {street = "Borovicová II."},
+  {street = "Jedľová"},
+  {street = "Školská"},
+  {street = "Brezová"},
+  {street = "Jelšová"},
+  {street = "Športová"},
+  {street = "Budovateľská"},
+  {street = "Krátka"},
+  {street = "Veterná"},
+  {street = "Družstevná"},
+  {street = "Limbová"},
+  {street = "Záhradná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "29. augusta"},
+  {street = "Ľ. Kukorelliho"},
+  {street = "Pri Šúrskom kanáli"},
+  {street = "Broskyňová"},
+  {street = "Ľ. Podjavorinskej"},
+  {street = "Sekvojová"},
+  {street = "Buková"},
+  {street = "Marhuľová"},
+  {street = "Slivková"},
+  {street = "Čerešňová"},
+  {street = "Mesačná"},
+  {street = "Slnečná"},
+  {street = "Dubová"},
+  {street = "M. Kukučína"},
+  {street = "Súmračná"},
+  {street = "Hrušková"},
+  {street = "Jazerná"},
+  {street = "M. R. Štefánika"},
+  {street = "Nové polia"},
+  {street = "Škoricová"},
+  {street = "Tichá"},
+  {street = "Kamilková"},
+  {street = "Orgovánová"},
+  {street = "Višňová"},
+  {street = "Klinčeková"},
+  {street = "P. O. Hviezdoslava"},
+  {street = "Zadné záhrady"},
+  {street = "Lipová"},
+  {street = "Pri tureckom kopci"},
+  {street = "Záleská"},
+]

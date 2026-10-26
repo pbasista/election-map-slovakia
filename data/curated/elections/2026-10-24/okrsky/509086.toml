@@ -1,0 +1,60 @@
+# Okrsky of Valaská, transcribed by an AI agent in job okrsok-rules-337 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Valaská, sídlisko – východ, ulice: bez ulice, Budovateľská, Chalupkova, Kpt. Jána Nálepku, Kukučínova, Námestie 1. mája, Októbrová, Partizánska cesta, Pod Hrbom, Štúrova, Trieda Dukelských hrdinov 455, 456, 457, 458, 462, 463, 464, Tehelná, Pod Lipovou
+#   okrsok 2: Valaská – sídlisko – západ, ulice: Hronská, Švermova, Trieda Dukelských hrdinov 439, 440, 441, 442, 443, 444, 445, 453, 454, Školská
+#   okrsok 3: Valaská – materská časť obce, ulice: Cesta Osloboditeľov, Javorová, Na Studničke, Potôčky, Tatranská, Vladislava Valacha, Záhradná
+#   okrsok 4: Valaská, časť Piesok, ulice: Mierová, Pod Dielom, Robotnícka, Strojárenská
+obec = "509086"
+name = "Valaská"
+okrsky_date = 2026-07-27
+okrsky_fill = "nearest"
+okrsky_note = "Trieda Dukelských Hrdinov is split by the document's (súpisné) block numbers; its other numbers, the street Hnusno (not named in the document) and the addresses without a street take the nearest placed address (fill_nearest). Okrsok 1's 'bez ulice' is read as residents registered without an address, not as all street-less houses, which lie also in the other okrsky (e.g. Piesok)."
+
+[[document]]
+url = "https://www.valaska.sk/download_file_f.php?id=2448820"
+sha256 = "ea6b07ed670a2a8092cbcbf2b75c8f98164edb022eed92390f392b76696401cf"
+title = "Určenie volebných okrskov a miestností pre Voľby 24.10.2026"
+
+[okrsok.1]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Chalupkova"},
+  {street = "Kpt. Jána Nálepku"},
+  {street = "Kukučínova"},
+  {street = "Októbrová"},
+  {street = "Partizánska cesta"},
+  {street = "Pod Hrbom"},
+  {street = "Štúrova"},
+  {street = "Tehelná"},
+  {street = "Pod Lipovou"},
+  {street = "Námestie 1.mája", written = "Námestie 1. mája"},
+  {street = "Trieda Dukelských Hrdinov", numbers = "455-458, 462-464", by = "supisne", written = "Trieda Dukelských hrdinov"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hronská"},
+  {street = "Švermova"},
+  {street = "Školská"},
+  {street = "Trieda Dukelských Hrdinov", numbers = "439-445, 453, 454", by = "supisne", written = "Trieda Dukelských hrdinov"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Cesta Osloboditeľov"},
+  {street = "Javorová"},
+  {street = "Na Studničke"},
+  {street = "Potôčky"},
+  {street = "Tatranská"},
+  {street = "Vladislava Valacha"},
+  {street = "Záhradná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Mierová"},
+  {street = "Pod Dielom"},
+  {street = "Robotnícka"},
+  {street = "Strojárenská"},
+]

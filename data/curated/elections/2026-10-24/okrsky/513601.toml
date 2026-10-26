@@ -1,0 +1,30 @@
+# Okrsky of Pružina, transcribed by an AI agent in job okrsok-rules-356 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: s. č. 0 – 380
+#   okrsok 2: s. č. 381 – 1228
+obec = "513601"
+name = "Pružina"
+okrsky_note = "Scanned notice (read from the rendered image): okrsok 1 = súpisné čísla 0–380, okrsok 2 = s. č. 381–1228, both voting in Kultúrny dom Pružina 412. The obec has no streets; the ranges are applied to súpisné čísla in both parts (Pružina and Briestenné). pruzina.eu is the obec's official site (\"Pružina - Oficiálne stránky obce\"). No date stated."
+
+[[document]]
+url = "https://pruzina.eu/wp-content/uploads/dokumenty/volby-do-samosprav/volby-do-organov-samosprav-obci-a-krajov-24_10_2026-s6she0.pdf"
+sha256 = "e5aaeb158bbd858f2e31227606950da2a68d0fc4a4679e44fc3d22923b22940e"
+title = "Voľby do orgánov samosprávy obcí a Voľby do orgánov samosprávnych krajov konaných 24.10.2026"
+
+[[document]]
+url = "https://pruzina.eu/dokument/volby-do-organov-samosprav-obci-24-oktobra-2026-od-7-00-do-20-00-hod/"
+sha256 = "1d85deed1135347f7414535880cb1e5479b62809aa9e891a6a47a142d53c117e"
+title = "Voľby do orgánov samospráv obcí – 24.októbra 2026 (page linking the document)"
+
+[okrsok.1]
+rules = [
+  {part = "Pružina", numbers = "1-380"},
+  {part = "Briestenné", numbers = "1-380"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Pružina", numbers = "381-"},
+  {part = "Briestenné", numbers = "381-"},
+]

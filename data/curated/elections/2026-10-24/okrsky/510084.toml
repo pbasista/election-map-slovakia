@@ -1,0 +1,28 @@
+# Okrsky of Štefanov nad Oravou, transcribed by an AI agent in job okrsok-rules-629 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 Volebná miestnosť: Budova Obecného úradu Ul. Plátenícka č. 61/1
+#   okrsok 2: Okrsok č. 2 Volebná miestnosť: Budova Materskej školy Ul. Hlavná č. 127/48
+obec = "510084"
+name = "Štefanov nad Oravou"
+okrsky_note = "The document gives each of the 2 okrsky only its polling station: okrsok 1 Budova Obecného úradu, Plátenícka 61/1 (in part Dolný Štefanov), okrsok 2 Budova Materskej školy, Hlavná 127/48 (in part Horný Štefanov). The obec has 2 parts, so each okrsok is given the part of its station (inferred)."
+
+[[document]]
+url = "https://www.stefanovnadoravou.sk/download_file_f.php?id=2446124"
+sha256 = "156b29d332561f762ee8390b582c454272ec4a5d8329d717e267d2276c66597d"
+title = "Počet poslancov, okrskov"
+
+[[document]]
+url = "https://www.stefanovnadoravou.sk/volby-2026.html"
+sha256 = "f5d2d651fe222beb0161187d9ddc552a3ece82a574615860f922a07cac112274"
+title = "Voľby 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Dolný Štefanov", note = "polling station Plátenícka 61/1 lies in Dolný Štefanov", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Horný Štefanov", note = "polling station Hlavná 127/48 lies in Horný Štefanov", inferred = true},
+]

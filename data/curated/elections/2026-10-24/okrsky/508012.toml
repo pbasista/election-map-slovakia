@@ -1,0 +1,54 @@
+# Okrsky of Kostolište, transcribed by an AI agent in job okrsok-rules-422 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Baráky, Cintorínska ulica, Hlavná ulica, Hliníky, Kvetná ulica, Mlynská ulica, Sacharínka, Slnečná ulica, Stružka, Športová ulica, Ulica Jozefa Gavalíka, Za kostolom, Zvonárová ulica, bez ulice (bez čísla)
+#   okrsok 2: ulice: Agátová ulica, Borová ulica, Gajarská ulica, Hubová ulica, Jakubovská ulica, Javorová ulica, Malinová ulica, Malý lázok, Pod lesom, Prašná ulica, Pri potoku, Šutrovňa, Ulica Martina Benku, Za bytovkou
+obec = "508012"
+name = "Kostolište"
+okrsky_date = 2026-07-17
+
+[[document]]
+url = "https://www.kostoliste.sk/e_download.php?file=/data/editor/126sk_6.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebnej%20miestnosti.pdf"
+sha256 = "29c80b60edf67a4e1d62cdf138f1c06e931f54af64518abde2327b6da1428639"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.kostoliste.sk/udalosti-v-obci/spojene-volby-2026/"
+sha256 = "4aac80cccec49648664d944e9556a491de4ac0231b9b9159d0f31e54e2771aea"
+title = "Spojené voľby 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Baráky"},
+  {street = "Cintorínska ulica"},
+  {street = "Hlavná ulica"},
+  {street = "Hliníky"},
+  {street = "Kvetná ulica"},
+  {street = "Mlynská ulica"},
+  {street = "Sacharínka"},
+  {street = "Slnečná ulica"},
+  {street = "Stružka"},
+  {street = "Športová ulica"},
+  {street = "Ulica Jozefa Gavalíka"},
+  {street = "Za kostolom"},
+  {street = "Zvonárova ulica", written = "Zvonárová ulica", note = "accent differs (Zvonárová/Zvonárova); the only such street"},
+  {rest = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová ulica"},
+  {street = "Borová ulica"},
+  {street = "Gajarská ulica"},
+  {street = "Hubová ulica"},
+  {street = "Jakubovská ulica"},
+  {street = "Javorová ulica"},
+  {street = "Malinová ulica"},
+  {street = "Malý lázok"},
+  {street = "Pod lesom"},
+  {street = "Prašná ulica"},
+  {street = "Pri potoku"},
+  {street = "Šutrovňa"},
+  {street = "Ulica Martina Benku"},
+  {street = "Za bytovkou"},
+]

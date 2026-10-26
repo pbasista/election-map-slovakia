@@ -1,0 +1,50 @@
+# Okrsky of Pohorelá, transcribed by an AI agent in job okrsok-rules-416 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulica Kpt. Nálepku, po súpisné číslo 259, ulica Hviezdoslavova (celá ulica), ulica Jesenského (celá ulica), ulica Za Vŕšok (celá ulica), ulica Clementisova (celá ulica), ulica Za Hronom (celá ulica)
+#   okrsok 2: ulica Kpt. Nálepku, od súpisného čísla 260, ulica Nová (celá ulica), ulica Školská (celá ulica), ulica Športová (celá ulica), ulica Jánošíkova (celá ulica), ulica Pod Brezinou (celá ulica), ulica Partizánska (celá ulica), ulica Orlová (celá ulica), ulica M. R. Štefánika (celá ulica), ulica Za Potokom (celá ulica)
+#   okrsok 3: miestna časť Pohorelská Maša
+obec = "508870"
+name = "Pohorelá"
+okrsky_date = 2026-07-20
+okrsky_fill = "nearest"
+okrsky_note = "Kpt. Nálepku is split by súpisné číslo (up to 259 / from 260). The street 1.mája and addresses without a street in part Pohorelá are not named in the document; they take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.pohorela.sk/evt_file.php?file=5306&original=Zoznam%20volebn%C3%BDch%20okrskov%20Samospr%C3%A1va2026%20Pohorel%C3%A1.pdf"
+sha256 = "1c1d53c4d26b678039b0d2e104bab3370a7ba1fbaa023a537c241e6577432af3"
+title = "Zoznam utvorených volebných okrskov, určenie volebných miestností"
+
+[[document]]
+url = "https://www.pohorela.sk/samosprava/volby-a-referenda/volby-do-organov-samospravy-obci-2026/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-2012sk.html"
+sha256 = "d8da05b16d544c2419a0391bc5dc83216ba04a539e51b3fc0b027f70c0419e7c"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Kpt. Nálepku", numbers = "1-259", by = "supisne"},
+  {street = "Hviezdoslavova"},
+  {street = "Jesenského"},
+  {street = "Za Vŕšok"},
+  {street = "Clementisova"},
+  {street = "Za Hronom"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kpt. Nálepku", numbers = "260-", by = "supisne"},
+  {street = "Nová"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Jánošíkova"},
+  {street = "Pod Brezinou"},
+  {street = "Partizánska"},
+  {street = "Orlová"},
+  {street = "M. R. Štefánika"},
+  {street = "Za Potokom"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Pohorelská Maša"},
+]

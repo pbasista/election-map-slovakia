@@ -1,0 +1,250 @@
+# Council obvody of Levoča (543292), Levoča.
+# Transcribed by an AI agent in job obvod-rules-062 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: ulice: Baštová, Gustáva Hermanna, Gymnaziálny priechod, Hradby, Kláštorská, Mäsiarska, Námestie Majstra Pavla, Nová, Ružová, Špitálska, Uholná, Vetrová, Žiacka, Fraňa Kráľa, Kežmarská cesta, Košická, Lesná, Lúčna, Mariánska hora, Ovocinárska, Prešovská, Sadová, Športovcov, Vodárenská, Za sedriou, Farma Hradisko, Námestie Štefana Kluberta, Okružná, Pod vinicou, Pri strelnici, Štúrova, Gašpara Haina, Milana Rastislava Štefánika, Sídlisko pri prameni, Staničná, Železničný riadok, Bottova, Dlhá, Kasárenská, Krátka, Kukučínova, Michala Hlaváčka, Móricova, Probstnerova cesta, Rozvoj, Vysoká, Viničná, Tatranská, Ulica za Bergerovcom, Kováčova vila, Levočské kúpele, Levočská Dolina, Nový dvor, Závada, Levoča s. č. 2024, Levoča s. č. 2026, Levoča s. č. 2045, Levoča s. č. 2001, Levoča s. č. 2016, Levoča s. č. 2047, Levoča s. č. 2085, Levoča s. č. 3396, Odorica
+#   obvod 2: ulice: Gerlachovská, Kežmarská, Krivánska, Lomnická, Mengusovská, Novovoveská cesta, Popradská cesta, Predmestie, Pri likérke, Pri podkove, Slavkovská, Ždiarska, Poľná, Potočná, Ruskinovská, Jána Francisciho, Nad tehelňou, Jozefa Czauczika, Viktora Greschika, Levočské Lúky, Ulica Štefana Zamkovského
+# Okrsky added by an AI agent in job okrsok-rules-061 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Baštová, Gustáva Hermanna, Gymnaziálny priechod, Hradby, Kláštorská, Mäsiarska, Námestie Majstra Pavla, Nová, Ružová, Špitálska, Uholná, Ulica za Bergerovcom, Vetrová, Žiacka
+#   okrsok 2: Fraňa Kráľa, Kežmarská cesta, Košická, Lesná, Lúčna, Mariánska hora, Ovocinárska, Prešovská, Sadová, Tatranská, Ulica športovcov, Vodárenská, Za sedriou, Farma Hradisko
+#   okrsok 3: Námestie Štefana Kluberta, Okružná, Pod vinicou, Pri strelnici, Štúrova, Viničná
+#   okrsok 4: Gašpara Haina, M. R. Štefánika, Sídlisko pri prameni, Staničná, Železničný riadok
+#   okrsok 5: Bottova, Dlhá, Kasárenská, Krátka, Kukučínova, Michala Hlaváčka, Móricova, Nový Dvor, Odorica, Probstnerova cesta, Rozvoj, Vysoká
+#   okrsok 6: Gerlachovská, Kežmarská, Krivánska, Lomnická, Mengusovská, Novoveská cesta, Popradská cesta, Predmestie, Pri likérke, Pri podkove, Slavkovská, Ždiarska, Poľná, Potočná, Ruskinovská
+#   okrsok 7: Jána Francisciho č. 1 - 20, Nad tehelňou č. 1 - 30
+#   okrsok 8: Jána Francisciho č. 21 - 38, Nad tehelňou č. 31 - 48
+#   okrsok 9: Jána Francisciho č. 39 - 48, Jozefa Czauczika, Viktora Greschika, Ulica Štefana Zamkovského
+#   okrsok 10: Levočské Lúky
+#   okrsok 11: Kováčova vila, Levočské kúpele, Levočská Dolina, Závada, Levoča s. č. 2024, Levoča s. č. 2026, Levoča s. č. 2045, Levoča s. č. 2001, Levoča s. č. 2016, Levoča s. č. 2047, Levoča s. č. 2085, Levoča s. č. 3396
+obec = "543292"
+name = "Levoča"
+date = 2026-06-11
+fill = "nearest"
+note = "Document is a scanned announcement (read visually, text clear). \"Ulica za Bergerovcom\" (obvod 1) is not in the address register and is left out. Levočská Dolina, Závada and Levočské Lúky are written as parts (the document covers \"mestské časti\"). Sirotínska ulica is not named; placed in obvod 1 by location. The ~1539 addresses of part Levoča without a street (other than the 8 súpisné čísla listed for obvod 1) are not assigned by the document and are left to fill_nearest."
+okrsky_date = 2026-07-21
+okrsky_fill = "nearest"
+okrsky_note = "Ulica za Bergerovcom (okrsok 1) is not in the register and is left out. Not named and left to fill_nearest: Sirotínska ulica and the addresses of part Levoča without a street other than the súpisné čísla listed for okrsok 11. Two copies of the decision are published (a scan and a text version); the text version was used."
+
+[[document]]
+url = "https://www.levoca.sk/wp-content/uploads/2026/07/Oznamenie-o-urceni-poctu-poslancov-a-o-utvoreni-volebnych-obvodov-pre-volby-do-organov-samospravy-obci-2026-mesto-Levoca-01072026-zverejnenie_.pdf"
+sha256 = "ee32311093740899f638bf46eb71563a513f9baa44d6664a8bd6befd6ba1d862"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie MsZ č. 30/37 zo dňa 11. 06. 2026), zverejnené 01. 07. 2026"
+
+[[document]]
+url = "https://www.levoca.sk/wp-content/uploads/2026/07/Volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-2026-utvorenie-voleb.-okrskov-a-urcenie-voleb.-miestn.-17072026.pdf"
+sha256 = "9b553bd60083c8467dbdd2a341752fdbfa22dc9a5c516d9cb9071f86c421f825"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí 2026 (21. 07. 2026)"
+
+[obvod.1]
+seats = 9
+okrsky = [1, 2, 3, 4, 5, 11]
+rules = [
+  {street = "Baštová ulica", written = "Baštová", note = "document omits \"ulica\"; same street Baštová ulica"},
+  {street = "Ulica Gustáva Hermanna", written = "Gustáva Hermanna", note = "document omits \"Ulica\"; same street Ulica Gustáva Hermanna"},
+  {street = "Gymnaziálny priechod"},
+  {street = "Hradby"},
+  {street = "Kláštorská ulica", written = "Kláštorská", note = "document omits \"ulica\"; same street Kláštorská ulica"},
+  {street = "Mäsiarska ulica", written = "Mäsiarska", note = "document omits \"ulica\"; same street Mäsiarska ulica"},
+  {street = "Námestie Majstra Pavla"},
+  {street = "Nová ulica", written = "Nová", note = "document omits \"ulica\"; same street Nová ulica"},
+  {street = "Ružová ulica", written = "Ružová", note = "document omits \"ulica\"; same street Ružová ulica"},
+  {street = "Špitálska ulica", written = "Špitálska", note = "document omits \"ulica\"; same street Špitálska ulica"},
+  {street = "Uholná ulica", written = "Uholná", note = "document omits \"ulica\"; same street Uholná ulica"},
+  {street = "Vetrová ulica", written = "Vetrová", note = "document omits \"ulica\"; same street Vetrová ulica"},
+  {street = "Žiacka ulica", written = "Žiacka", note = "document omits \"ulica\"; same street Žiacka ulica"},
+  {street = "Ulica Fraňa Kráľa", written = "Fraňa Kráľa", note = "document omits \"Ulica\"; same street Ulica Fraňa Kráľa"},
+  {street = "Kežmarská cesta"},
+  {street = "Košická ulica", written = "Košická", note = "document omits \"ulica\"; same street Košická ulica"},
+  {street = "Lesná ulica", written = "Lesná", note = "document omits \"ulica\"; same street Lesná ulica"},
+  {street = "Lúčna ulica", written = "Lúčna", note = "document omits \"ulica\"; same street Lúčna ulica"},
+  {street = "Mariánska hora"},
+  {street = "Ovocinárska ulica", written = "Ovocinárska", note = "document omits \"ulica\"; same street Ovocinárska ulica"},
+  {street = "Prešovská ulica", written = "Prešovská", note = "document omits \"ulica\"; same street Prešovská ulica"},
+  {street = "Sadová ulica", written = "Sadová", note = "document omits \"ulica\"; same street Sadová ulica"},
+  {street = "Ulica športovcov", written = "Športovcov", note = "document omits \"Ulica\"; same street Ulica športovcov"},
+  {street = "Vodárenská ulica", written = "Vodárenská", note = "document omits \"ulica\"; same street Vodárenská ulica"},
+  {street = "Za sédriou", written = "Za sedriou", note = "document writes \"Za sedriou\" without the accent; same street Za sédriou"},
+  {street = "Farma Hradisko"},
+  {street = "Námestie Štefana Kluberta"},
+  {street = "Okružná ulica", written = "Okružná", note = "document omits \"ulica\"; same street Okružná ulica"},
+  {street = "Pod vinicou"},
+  {street = "Pri strelnici"},
+  {street = "Štúrova ulica", written = "Štúrova", note = "document omits \"ulica\"; same street Štúrova ulica"},
+  {street = "Ulica Gašpara Haina", written = "Gašpara Haina", note = "document omits \"Ulica\"; same street Ulica Gašpara Haina"},
+  {street = "Ulica Milana Rastislava Štefánika", written = "Milana Rastislava Štefánika", note = "document omits \"Ulica\"; same street Ulica Milana Rastislava Štefánika"},
+  {street = "Sídlisko pri prameni"},
+  {street = "Staničná ulica", written = "Staničná", note = "document omits \"ulica\"; same street Staničná ulica"},
+  {street = "Železničný riadok"},
+  {street = "Bottova ulica", written = "Bottova", note = "document omits \"ulica\"; same street Bottova ulica"},
+  {street = "Dlhá ulica", written = "Dlhá", note = "document omits \"ulica\"; same street Dlhá ulica"},
+  {street = "Kasárenská ulica", written = "Kasárenská", note = "document omits \"ulica\"; same street Kasárenská ulica"},
+  {street = "Krátka ulica", written = "Krátka", note = "document omits \"ulica\"; same street Krátka ulica"},
+  {street = "Kukučínova ulica", written = "Kukučínova", note = "document omits \"ulica\"; same street Kukučínova ulica"},
+  {street = "Ulica Michala Hlaváčka", written = "Michala Hlaváčka", note = "document omits \"Ulica\"; same street Ulica Michala Hlaváčka"},
+  {street = "Móricova ulica", written = "Móricova", note = "document omits \"ulica\"; same street Móricova ulica"},
+  {street = "Probstnerova cesta"},
+  {street = "Rozvoj"},
+  {street = "Vysoká ulica", written = "Vysoká", note = "document omits \"ulica\"; same street Vysoká ulica"},
+  {street = "Viničná ulica", written = "Viničná", note = "document omits \"ulica\"; same street Viničná ulica"},
+  {street = "Tatranská ulica", written = "Tatranská", note = "document omits \"ulica\"; same street Tatranská ulica"},
+  {street = "Kováčova vila"},
+  {street = "Levočské kúpele"},
+  {part = "Levočská Dolina"},
+  {street = "Nový Dvor", written = "Nový dvor", note = "document writes \"dvor\" lowercase; same street Nový Dvor"},
+  {part = "Závada"},
+  {street = "Odorica"},
+  {part = "Levoča", numbers = "2001, 2016, 2024, 2026, 2045, 2047, 2085, 3396", by = "supisne", note = "\"Levoča s. č. …\": buildings without a street in part Levoča, by súpisné číslo"},
+  {street = "Sirotínska ulica", note = "not named in the document; its single address lies in the historic centre between Špitálska and Mäsiarska, both in obvod 1", inferred = true},
+]
+
+[obvod.2]
+seats = 8
+okrsky = [6, 7, 8, 9, 10]
+rules = [
+  {street = "Gerlachovská ulica", written = "Gerlachovská", note = "document omits \"ulica\"; same street Gerlachovská ulica"},
+  {street = "Kežmarská ulica", written = "Kežmarská", note = "document omits \"ulica\"; same street Kežmarská ulica"},
+  {street = "Krivánska ulica", written = "Krivánska", note = "document omits \"ulica\"; same street Krivánska ulica"},
+  {street = "Lomnická ulica", written = "Lomnická", note = "document omits \"ulica\"; same street Lomnická ulica"},
+  {street = "Mengusovská ulica", written = "Mengusovská", note = "document omits \"ulica\"; same street Mengusovská ulica"},
+  {street = "Novoveská cesta", written = "Novovoveská cesta", note = "document writes \"Novovoveská cesta\" (typo with doubled \"vo\"); the only such street is Novoveská cesta"},
+  {street = "Popradská cesta"},
+  {street = "Predmestie"},
+  {street = "Pri likérke"},
+  {street = "Pri podkove"},
+  {street = "Slavkovská ulica", written = "Slavkovská", note = "document omits \"ulica\"; same street Slavkovská ulica"},
+  {street = "Ždiarska ulica", written = "Ždiarska", note = "document omits \"ulica\"; same street Ždiarska ulica"},
+  {street = "Poľná ulica", written = "Poľná", note = "document omits \"ulica\"; same street Poľná ulica"},
+  {street = "Potočná ulica", written = "Potočná", note = "document omits \"ulica\"; same street Potočná ulica"},
+  {street = "Ruskinovská ulica", written = "Ruskinovská", note = "document omits \"ulica\"; same street Ruskinovská ulica"},
+  {street = "Ulica Jána Francisciho", written = "Jána Francisciho", note = "document omits \"Ulica\"; same street Ulica Jána Francisciho"},
+  {street = "Nad tehelňou"},
+  {street = "Ulica Jozefa Czauczika", written = "Jozefa Czauczika", note = "document omits \"Ulica\"; same street Ulica Jozefa Czauczika"},
+  {street = "Ulica Viktora Greschika", written = "Viktora Greschika", note = "document omits \"Ulica\"; same street Ulica Viktora Greschika"},
+  {part = "Levočské Lúky"},
+  {street = "Ulica Štefana Zamkovského"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Baštová ulica", written = "Baštová"},
+  {street = "Ulica Gustáva Hermanna", written = "Gustáva Hermanna"},
+  {street = "Gymnaziálny priechod"},
+  {street = "Hradby"},
+  {street = "Kláštorská ulica", written = "Kláštorská"},
+  {street = "Mäsiarska ulica", written = "Mäsiarska"},
+  {street = "Námestie Majstra Pavla"},
+  {street = "Nová ulica", written = "Nová"},
+  {street = "Ružová ulica", written = "Ružová"},
+  {street = "Špitálska ulica", written = "Špitálska"},
+  {street = "Uholná ulica", written = "Uholná"},
+  {street = "Vetrová ulica", written = "Vetrová"},
+  {street = "Žiacka ulica", written = "Žiacka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ulica Fraňa Kráľa", written = "Fraňa Kráľa"},
+  {street = "Kežmarská cesta"},
+  {street = "Košická ulica", written = "Košická"},
+  {street = "Lesná ulica", written = "Lesná"},
+  {street = "Lúčna ulica", written = "Lúčna"},
+  {street = "Mariánska hora"},
+  {street = "Ovocinárska ulica", written = "Ovocinárska"},
+  {street = "Prešovská ulica", written = "Prešovská"},
+  {street = "Sadová ulica", written = "Sadová"},
+  {street = "Tatranská ulica", written = "Tatranská"},
+  {street = "Ulica športovcov"},
+  {street = "Vodárenská ulica", written = "Vodárenská"},
+  {street = "Za sédriou", written = "Za sedriou"},
+  {street = "Farma Hradisko"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Námestie Štefana Kluberta"},
+  {street = "Okružná ulica", written = "Okružná"},
+  {street = "Pod vinicou"},
+  {street = "Pri strelnici"},
+  {street = "Štúrova ulica", written = "Štúrova"},
+  {street = "Viničná ulica", written = "Viničná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Ulica Gašpara Haina", written = "Gašpara Haina"},
+  {street = "Ulica Milana Rastislava Štefánika", written = "M. R. Štefánika", note = "M. R. Štefánika is the initials of Milana Rastislava Štefánika"},
+  {street = "Sídlisko pri prameni"},
+  {street = "Staničná ulica", written = "Staničná"},
+  {street = "Železničný riadok"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Bottova ulica", written = "Bottova"},
+  {street = "Dlhá ulica", written = "Dlhá"},
+  {street = "Kasárenská ulica", written = "Kasárenská"},
+  {street = "Krátka ulica", written = "Krátka"},
+  {street = "Kukučínova ulica", written = "Kukučínova"},
+  {street = "Ulica Michala Hlaváčka", written = "Michala Hlaváčka"},
+  {street = "Móricova ulica", written = "Móricova"},
+  {street = "Nový Dvor"},
+  {street = "Odorica"},
+  {street = "Probstnerova cesta"},
+  {street = "Rozvoj"},
+  {street = "Vysoká ulica", written = "Vysoká"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Gerlachovská ulica", written = "Gerlachovská"},
+  {street = "Kežmarská ulica", written = "Kežmarská"},
+  {street = "Krivánska ulica", written = "Krivánska"},
+  {street = "Lomnická ulica", written = "Lomnická"},
+  {street = "Mengusovská ulica", written = "Mengusovská"},
+  {street = "Novoveská cesta"},
+  {street = "Popradská cesta"},
+  {street = "Predmestie"},
+  {street = "Pri likérke"},
+  {street = "Pri podkove"},
+  {street = "Slavkovská ulica", written = "Slavkovská"},
+  {street = "Ždiarska ulica", written = "Ždiarska"},
+  {street = "Poľná ulica", written = "Poľná"},
+  {street = "Potočná ulica", written = "Potočná"},
+  {street = "Ruskinovská ulica", written = "Ruskinovská"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Ulica Jána Francisciho", numbers = "1-20", written = "Jána Francisciho"},
+  {street = "Nad tehelňou", numbers = "1-30"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Ulica Jána Francisciho", numbers = "21-38", written = "Jána Francisciho"},
+  {street = "Nad tehelňou", numbers = "31-48"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Ulica Jána Francisciho", numbers = "39-48", written = "Jána Francisciho"},
+  {street = "Ulica Jozefa Czauczika", written = "Jozefa Czauczika"},
+  {street = "Ulica Viktora Greschika", written = "Viktora Greschika"},
+  {street = "Ulica Štefana Zamkovského"},
+]
+
+[okrsok.10]
+rules = [
+  {part = "Levočské Lúky"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Kováčova vila"},
+  {street = "Levočské kúpele"},
+  {part = "Levočská Dolina"},
+  {part = "Závada"},
+  {part = "Levoča", numbers = "2001, 2016, 2024, 2026, 2045, 2047, 2085, 3396"},
+]

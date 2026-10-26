@@ -1,0 +1,78 @@
+# Okrsky of Varín, transcribed by an AI agent in job okrsok-rules-290 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Alexandra Trizuljaka, Farská, Hlboké, Jozefa Martinčeka, Koňhorská, Kpt. Ladislava Pfliegla, Krivánska, Ku Železnej studničke, Májová, Na Rybníkoch, Námestie sv. Floriána, Obec Varín, Ondreja Meszarosa, Pltnícka, Pod Vajánkom, Priemyselná, Sama Chalupku, Starohradská, Športová, Ulica Brehy
+#   okrsok 2: Antona Bernoláka, Hájik, Jána Bottu, M. R. Štefánika, Martina Kukučína, Námestie na Záhumní, P. O. Hviezdoslava (čísla domov 453, 455, 456, 501, 502, 503, 504, 511, 512, 513, 514, 515, 516, 517, 518, 519, 521, 522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 532, 533, 534, 562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574, 575, 576, 577, 578, 580, 581, 582, 583, 584, 585, 586, 587, 809, 860, 861, 862, 2083, 2085, 2086), Školská, Záhumnie I., Záhumnie II., Záhumnie III., Záhumnie IV., Železničná
+#   okrsok 3: Andreja Hlinku, Antona Horeckého, Dubenec, Fatranská, Hrnčiarska, J. G. Tajovského, Juraja Jánošíka, Kamence, Ľudovíta Štúra, Októbrová, P. O. Hviezdoslava (čísla domov 535, 536, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559, 560, 561, 809, 861, 986, 998, 2057), Ulica Mons. Jozefa Nogu, Záhrady
+obec = "518069"
+name = "Varín"
+okrsky_note = "P. O. Hviezdoslava is split by house (súpisné) numbers; 809 and 861 are listed in both okrsok 2 and 3 (kept in 2). Undated notice."
+
+[[document]]
+url = "https://www.varin.sk/download_file_f.php?id=2444631"
+sha256 = "460873407d4840b3a5ebf86e2a32acd645a6beb2f3fc8595e7c76a9387fddc31"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov"
+
+[[document]]
+url = "https://www.varin.sk/volby-do-organov-uzemnej-samospravy-2026.html"
+sha256 = "fbc99a74390907979197e3783c6f28bda47cd9925ba26af26f68a3e75953e161"
+title = "Voľby do orgánov územnej samosprávy 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Alexandra Trizuljaka"},
+  {street = "Farská"},
+  {street = "Hlboké"},
+  {street = "Jozefa Martinčeka"},
+  {street = "Koňhorská"},
+  {street = "Kpt. Ladislava Pfliegla"},
+  {street = "Krivánska"},
+  {street = "Ku Železnej Studničke", written = "Ku Železnej studničke"},
+  {street = "Májová"},
+  {street = "Na Rybníkoch"},
+  {street = "Námestie sv. Floriána"},
+  {street = "Ondreja Meszarosa"},
+  {street = "Pltnícka"},
+  {street = "Pod Vajánkom"},
+  {street = "Priemyselná"},
+  {street = "Sama Chalupku"},
+  {street = "Starohradská"},
+  {street = "Športová"},
+  {street = "Ulica Brehy"},
+  {part = "Varín", note = "'Obec Varín': addresses without a street"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Antona Bernoláka"},
+  {street = "Hájik"},
+  {street = "Jána Bottu"},
+  {street = "M.R.Štefánika", written = "M. R. Štefánika"},
+  {street = "Martina Kukučína"},
+  {street = "Námestie Na Záhumní", written = "Námestie na Záhumní"},
+  {street = "Školská"},
+  {street = "Záhumnie I."},
+  {street = "Záhumnie II."},
+  {street = "Záhumnie III."},
+  {street = "Záhumnie IV."},
+  {street = "Železničná"},
+  {street = "P. O. Hviezdoslava", numbers = "453, 455, 456, 501, 502, 503, 504, 511, 512, 513, 514, 515, 516, 517, 518, 519, 521, 522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 532, 533, 534, 562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574, 575, 576, 577, 578, 580, 581, 582, 583, 584, 585, 586, 587, 809, 860, 861, 862, 2083, 2085, 2086", by = "supisne"},
+  {street = "P. O. Hviezdoslava", note = "house numbers of P. O. Hviezdoslava the document lists in neither okrsok", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Andreja Hlinku"},
+  {street = "Antona Horeckého"},
+  {street = "Dubenec"},
+  {street = "Fatranská"},
+  {street = "Hrnčiarska"},
+  {street = "J. G. Tajovského"},
+  {street = "Juraja Jánošíka"},
+  {street = "Kamence"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Októbrová"},
+  {street = "Ulica Mons. Jozefa Nogu"},
+  {street = "Záhrady"},
+  {street = "P. O. Hviezdoslava", numbers = "535, 536, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559, 560, 561, 986, 998, 2057", by = "supisne", note = "the document also lists 809 and 861 here, but already in okrsok 2; they are kept in okrsok 2"},
+]

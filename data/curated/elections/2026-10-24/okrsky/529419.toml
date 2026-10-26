@@ -1,0 +1,82 @@
+# Okrsky of Bratislava-Lamač, transcribed by an AI agent in job okrsok-rules-347 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Bakošova 1-36, Na barine, Malokarpatské námestie, Osoby s TP evidovaným na mestskú časť
+#   okrsok 2: Ulice: Borinská, Cesta na Klanec, Podháj, Segnáre, Stanekova, Vrančovičova, Dominika Tatarku, Hany Ponickej, Ivana Kadlečíka, Jána Langoša, Stavby len so súpisným číslom
+#   okrsok 3: Ulice: Havelkova, Heyrovského, Podlesná, Rajtákova, Rozálska, Studenohorská 73-91, Vysokohorská, Záhrady, Zelenohorská, Zhorínska, Zidiny
+#   okrsok 4: Ulice: Furmanská, Hodonínska, Kuneradská, Lediny, Pod násypom, Povoznícka, Skerličova, Studenohorská 1-24, Zlatohorská
+#   okrsok 5: Ulica: Studenohorská 25-71
+#   okrsok 6: Ulice: Bakošova 38-46, Lamačská cesta, Pod Zečákom, Rácova
+obec = "529419"
+name = "Bratislava-Lamač"
+okrsky_date = 2026-07-20
+okrsky_fill = "nearest"
+okrsky_note = "Okrsok 1 also takes voters registered only to the mestská časť (no address). Okrsok 2's 'Stavby len so súpisným číslom' is a part rule, which also catches the few register streets the document does not name. Studenohorská numbers between the listed ranges (none expected) take the nearest okrsok."
+
+[[document]]
+url = "https://www.lamac.sk/files/documents/zverejnovanie/volby/komunalne/2026/oznamenie_o_urceni_volebnych_okrskov.pdf"
+sha256 = "0069deb8fc406f6339bf7783796d71c43ee018f750f17e0ee1925c190c6bd17b"
+title = "Oznámenie o určení volebných okrskov a o určení volebných miestností pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {street = "Bakošova", numbers = "1-36"},
+  {street = "Na barine"},
+  {street = "Malokarpatské námestie"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Borinská"},
+  {street = "Cesta na Klanec"},
+  {street = "Podháj"},
+  {street = "Segnáre"},
+  {street = "Stanekova"},
+  {street = "Vrančovičova"},
+  {street = "Ulica Dominika Tatarku", written = "Dominika Tatarku"},
+  {street = "Ulica Hany Ponickej", written = "Hany Ponickej"},
+  {street = "Ulica Ivana Kadlečíka", written = "Ivana Kadlečíka"},
+  {street = "Ulica Jána Langoša", written = "Jána Langoša"},
+  {part = "Bratislava-Lamač", note = "'Stavby len so súpisným číslom': the buildings without a street; as a part rule it also takes the register streets the document does not name (Pridánky, Ulica Jána Holíka, Ulica Milana Šimečku, Ulica Petra Legnera, Vysoká Hora)"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Havelkova"},
+  {street = "Heyrovského"},
+  {street = "Podlesná"},
+  {street = "Rajtákova"},
+  {street = "Rozálska"},
+  {street = "Studenohorská", numbers = "73-91"},
+  {street = "Vysokohorská"},
+  {street = "Záhrady"},
+  {street = "Zelenohorská"},
+  {street = "Zhorínska"},
+  {street = "Zidiny"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Furmanská"},
+  {street = "Hodonínska"},
+  {street = "Kuneradská"},
+  {street = "Lediny"},
+  {street = "Pod násypom"},
+  {street = "Povoznícka"},
+  {street = "Skerličova"},
+  {street = "Studenohorská", numbers = "1-24"},
+  {street = "Zlatohorská"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Studenohorská", numbers = "25-71"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bakošova", numbers = "38-46"},
+  {street = "Lamačská cesta"},
+  {street = "Pod Zečákom"},
+  {street = "Rácova"},
+]

@@ -1,0 +1,29 @@
+# Okrsky of Brezovica, transcribed by an AI agent in job okrsok-rules-577 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 - do súp. č. 320
+#   okrsok 2: Volebný okrsok č. 2 – od súp. č. 321
+obec = "524239"
+name = "Brezovica"
+okrsky_date = 2026-07-17
+okrsky_note = "brezovica.sk is Brezovica in okres Tvrdošín; this obec's site is brezovicanadtorysou.sk. The okrsky are split by súpisné číslo (up to 320 / from 321)."
+
+[[document]]
+url = "https://www.brezovicanadtorysou.sk/e_download.php?file=/data/editor/136sk_7.pdf&original=Volebn%C3%A9%20okrsky.pdf"
+sha256 = "831a7d564c0d634f5cb90eecb33b6bfe3c35756449d9b69329959ff2e4717001"
+title = "Utvorenie volebných okrskov pre spojené voľby do orgánov samosprávy obcí a orgánov samosprávnych krajov – 24. októbra 2026"
+
+[[document]]
+url = "https://www.brezovicanadtorysou.sk/e_download.php?file=/data/editor/136sk_9.pdf&original=Volebn%C3%A9%20okrsky%2C%20volebn%C3%A9%20miestnosti.pdf"
+sha256 = "00d5dc3920f2c5703d198694ffbdaaa999349a22d0d2f51b03b87dcdcf16eaf5"
+title = "Volebné okrsky, volebné miestnosti"
+
+[okrsok.1]
+rules = [
+  {part = "Brezovica", numbers = "1-320"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Brezovica", numbers = "321-"},
+]

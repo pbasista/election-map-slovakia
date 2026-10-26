@@ -1,0 +1,145 @@
+# Council obvody of Medzilaborce (520471), Medzilaborce.
+# Transcribed by an AI agent in job obvod-rules-102 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Komenského, Cintorínska, gen. Svobodu, Poľná, Májová, Ševčenkova, Dobrianskeho, čsl. Armády, Zámočnícka
+#   obvod 2: A. Warholu, Laborecká, Švermova, Fučíkova, Popradova, Kukorelliho, Duk. hrdinov, Mierová, Václavského, Duchnovičova, kpt. Nálepku, Gorkého, Tolstého, Pod úbočou, SNP
+#   obvod 3: Vydraň
+#   obvod 4: Borov
+# Okrsky added by an AI agent in job okrsok-rules-101 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulica Ševčenkova, Dobrianskeho, Čsl. armády, Zámočnícka, Komenského (s.č. 122 – 127, 134, 151), Ulica gen. Svobodu (s.č. 128 – 130) a Cintorínska
+#   okrsok 2: Ulica gen. Svobodu (s.č. 131 – 132), Májová, Komenského (s.č. 659 – 672) a Ulica Poľná
+#   okrsok 3: Ulica A. Warhola, Laborecká, Švermova, Dukelských hrdinov, Fučíkova, Popradova, Kukorelliho, Mierová a Václavského.
+#   okrsok 4: Ulica Duchnovičova (b.j. – s.č.: 473 – 478, 530 - 533), Gorkého, Tolstého a kpt. Nálepku (rodinné domy – s. č. 367 – 392, b.j. – s.č. 436 – 442 a 662).
+#   okrsok 5: Ulica Duchnovičova (s. č . 479, rodinné domy s. č. 480 – 748, 818), kpt. Nálepku (rodinné domy s. č. 393 – 756, 830, 871, 925, 931, 933), Pod Úbočou, Ulica SNP
+#   okrsok 6: Ulica Danová a miestna časť Vydraň
+#   okrsok 7: miestna časť Borov
+obec = "520471"
+name = "Medzilaborce"
+date = 2026-07-20
+fill = "nearest"
+note = "Main source is the announcement (oznámenie) of uznesenie č. 23/2026 of 20.07.2026: 13 seats in 4 obvody. The resolution number in the announcement matches the published resolution on the mayor's workload (also called č. 23/2026), so the number may be a clerical error; the obvody resolution itself is not published separately. The draft material (single obvod of 12 seats) was changed when adopted; it is used only to place Danová. Addresses in the town part Medzilaborce that have no street (661 numbered by súpisné číslo) are not named in the document; fill_nearest places them by the nearest street address."
+okrsky_date = 2026-07-20
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky per 'volebne-okrsky-podla-ulic-a-cisel' (súpisné numbers). Split streets: Komenského and gen. Svobodu listed numbers go to okrsok 1, rest of the street to okrsok 2; Duchnovičova and kpt. Nálepku listed numbers of okrsok 4 go there, rest to okrsok 5 (okrsok 5's ranges 480–748 and 393–756 overlap okrsok 4's, so okrsok 5 takes the street remainder). Addresses without street in part Medzilaborce placed by fill_nearest."
+
+[[document]]
+url = "https://www.medzilaborce-urad.sk/download_file_f.php?id=2446235"
+sha256 = "b90412c7eb7ec0fe5fcbaa81de6492feeb311a8b2fb2f6c081072583e10ececf"
+title = "Oznámenie o určení počtu poslancov a utvorení volebných obvodov (uznesenie MsZ č. 23/2026 zo dňa 20.07.2026)"
+
+[[document]]
+url = "https://www.medzilaborce-urad.sk/download_file_f.php?id=2441501"
+sha256 = "36ff23662290c1fcd726dcd4a1ee646f50e90871cfcc9bee08dbfd220e21ea47"
+title = "Materiál č. 4 na MsZ 20.07.2026: Návrh volebných obvodov a návrh počtu poslancov 2026-2030"
+
+[[document]]
+url = "https://www.medzilaborce-urad.sk/download_file_f.php?id=2457612"
+sha256 = "fa485935c2d955c30c9ee8c3e8229d3ce41f75afb458e71bc87ca72e3e1687f1"
+title = "Volebné okrsky podľa ulíc a čísel (príloha k určeniu volebných okrskov, 24.10.2026)"
+
+[[document]]
+url = "https://www.medzilaborce-urad.sk/download_file_f.php?id=2457610"
+sha256 = "67d681fa69717fa26d6ce4089a00277696c6bd577aa187679744d02a9fc51d47"
+title = "Určenie volebných okrskov a volebných miestností (primátor, 20.07.2026)"
+
+[obvod.1]
+seats = 5
+okrsky = [1, 2]
+rules = [
+  {street = "Komenského"},
+  {street = "Cintorínska"},
+  {street = "Generála Svobodu", written = "gen. Svobodu", note = "'gen.' abbreviates 'Generála'; same street"},
+  {street = "Poľná"},
+  {street = "Májová"},
+  {street = "Ševčenkova"},
+  {street = "Dobrianskeho"},
+  {street = "Čsl.armády", written = "čsl. Armády", note = "same name, differing only in spacing and capitalisation"},
+  {street = "Zámočnícka"},
+]
+
+[obvod.2]
+seats = 6
+okrsky = [3, 4, 5]
+rules = [
+  {street = "Andy Warhola", written = "A. Warholu", note = "'A.' is the initial of Andy; 'Warholu' is the dative form; same street"},
+  {street = "Laborecká"},
+  {street = "Švermova"},
+  {street = "Fučíkova"},
+  {street = "Popradova"},
+  {street = "Kukorelliho"},
+  {street = "Dukelských hrdinov", written = "Duk. hrdinov", note = "'Duk.' abbreviates 'Dukelských'; same street"},
+  {street = "Mierová"},
+  {street = "Václavského"},
+  {street = "Duchnovičova"},
+  {street = "Kpt.Nálepku", written = "kpt. Nálepku", note = "same name, differing only in spacing and capitalisation"},
+  {street = "Gorkého"},
+  {street = "Tolstého"},
+  {street = "Pod Úbočou", written = "Pod úbočou", note = "same name, differing only in capitalisation"},
+  {street = "SNP"},
+]
+
+[obvod.3]
+seats = 1
+okrsky = [6]
+rules = [
+  {part = "Vydraň"},
+  {street = "Danová", note = "The announcement omits Danová. The council material (návrh uznesenia, MsZ 20.07.2026) groups 'miestna časť Vydraň, ulica Danová – okrsok č. 6', and the obvody follow the okrsky (1–2, 3–5, 6, 7), so Danová goes with Vydraň in obvod 3.", inferred = true},
+]
+
+[obvod.4]
+seats = 1
+okrsky = [7]
+rules = [
+  {part = "Borov"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Ševčenkova"},
+  {street = "Dobrianskeho"},
+  {street = "Čsl.armády", written = "Čsl. armády"},
+  {street = "Zámočnícka"},
+  {street = "Komenského", numbers = "122-127, 134, 151", by = "supisne"},
+  {street = "Generála Svobodu", numbers = "128-130", by = "supisne", written = "gen. Svobodu"},
+  {street = "Cintorínska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Generála Svobodu", written = "gen. Svobodu"},
+  {street = "Májová"},
+  {street = "Komenského"},
+  {street = "Poľná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Andy Warhola", written = "A. Warhola"},
+  {street = "Laborecká"},
+  {street = "Švermova"},
+  {street = "Dukelských hrdinov"},
+  {street = "Fučíkova"},
+  {street = "Popradova"},
+  {street = "Kukorelliho"},
+  {street = "Mierová"},
+  {street = "Václavského"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Duchnovičova", numbers = "473-478, 530-533", by = "supisne"},
+  {street = "Gorkého"},
+  {street = "Tolstého"},
+  {street = "Kpt.Nálepku", numbers = "367-392, 436-442, 662", by = "supisne", written = "kpt. Nálepku"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Duchnovičova"},
+  {street = "Kpt.Nálepku", written = "kpt. Nálepku"},
+  {street = "Pod Úbočou"},
+  {street = "SNP"},
+]

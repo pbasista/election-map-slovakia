@@ -1,0 +1,45 @@
+# Okrsky of Vikartovce, transcribed by an AI agent in job okrsok-rules-598 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Hlavná, Májová, bezdomovci - občania s trvalým pobytom na obci Vikartovce
+#   okrsok 2: Ulice: Hornádska Konečná, Konečná, Krížna, Lesná, Lúčna, Majerská, Nižná, Nová, Okružná, Riečna, Rovná, Severná, Slnečná, Školská, Vikartovský mlyn, Záhradná
+obec = "524034"
+name = "Vikartovce"
+okrsky_date = 2026-07-22
+okrsky_fill = "nearest"
+okrsky_note = "Vikartovský mlyn (named in okrsok 2) is not in the register and is left out. The 67 addresses without a street take the okrsok of the nearest address (fill_nearest). Okrsok 1 also holds homeless residents registered to the obec."
+
+[[document]]
+url = "https://www.vikartovce.sk/e_download.php?file=/data/uredni_deska/obsah776_1.pdf&original=Urcenie_okrskov.pdf"
+sha256 = "83deb1a782f45afa67bff72a76f526d36dc03f774ff473fd36ff898e75e93e7c"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností"
+
+[[document]]
+url = "https://www.vikartovce.sk/samosprava/volby/informacia-o-utvoreni-volebnych-okrskov-859.html"
+sha256 = "cef350242ace34269b004baf5f908ffdd6942035df6ef1d48425211d525846e3"
+title = "Informácia o utvorení volebných okrskov"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná"},
+  {street = "Májová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hornádska", written = "Hornádska Konečná", note = "the document writes 'Hornádska Konečná, Konečná' (a missing comma); Hornádska is the register street, Konečná follows separately"},
+  {street = "Konečná"},
+  {street = "Krížna"},
+  {street = "Lesná"},
+  {street = "Lúčna"},
+  {street = "Majerská"},
+  {street = "Nižná"},
+  {street = "Nová"},
+  {street = "Okružná"},
+  {street = "Riečna"},
+  {street = "Rovná"},
+  {street = "Severná"},
+  {street = "Slnečná"},
+  {street = "Školská"},
+  {street = "Záhradná"},
+]

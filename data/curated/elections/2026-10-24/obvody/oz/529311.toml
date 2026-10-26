@@ -1,0 +1,330 @@
+# Council obvody of Bratislava-Podunajské Biskupice (529311), Bratislava II.
+# Transcribed by an AI agent in job obvod-rules-041 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Achátová, Akvamarinová, Ametystová, Amurská, Beidl, Biskupická, Borágová, Borekova, Citrinová, Devätinova, Dneperská, Družobná, Dvojkrížna, Farmárska, Gajc, Granátová, Hájovňa, Hlbinná, Hviezdna, Hviezdoslavova, Hydinárska, Janka Kráľa, Jastrabinová, Jégenešská, Jókaiho, Jonatánová, Kapsičková, Ketelec, Komárovská, Korálová, Kovová, Krajinská, Kvetinárska, Lieskovec, Lieskovská cesta, Ligurčeková, Linzbothova, Lopárska, Madáchova, Máchova, Malachitová, Monardová, Mramorová, Murárska, Nákovná, Nákupná, Nezvalova, Oblúková, Odeská, Orechová, Orenburská, Ovčiarska, Padlých hrdinov, Parcelná, Parenicová, Perličková, Pasienková, Petöfiho, Popradská, Požiarnická, Pri hrádzi, Pri trati, Prípojná, Pšeničná, Ruženínová, Sĺňavská, Slovnaftská, Staromlynská, Šamorínska, Šikmá, Trojičné námestie, Učiteľská, Ulica 8. mája, Ulica akd. mal. Jozefa Nagya, Ulica svornosti, Vetvárska, Vinohradnícka, Vratičová, Výtvarná, Závodná, Žiacka
+#   obvod 2: Baltská, Bodrocká, Dudvážska, Hornádska, Hronská, Ipeľská, Kazanská, Korytnická, Latorická, Podzáhradná, Uzbecká
+#   obvod 3: Bieloruská, Estónska, Geologická, Lotyšská, Podunajská, Priekopnícka, Špaldová, Vrakunská, obyvatelia bez domova
+# Okrsky added by an AI agent in job okrsok-rules-040 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Amurská, Beidl, Devätinová, Dneperská, Hydinárska, Ketelec, Lieskovec, Lieskovská cesta, Mramorová, Orechová, Padlých hrdinov, Požiarnická, Šamorínska, Trojičné námestie, Vetvárska, Vinohradnícka
+#   okrsok 2: Achátová, Akvamarínová, Ametystová, Borágová, Citrínová, Farmárska, Gajc, Granátová, Hájovňa, Hviezdoslavova, Janka Kráľa, Odeská, Parcelná, Pri trati (vrátane DOS Gerium), Sĺňavská, Staromlynská, Učiteľská, Ul. 8 mája
+#   okrsok 3: Družobná, Dvojkrížna, Hviezdna, Jókaiho, Madáchova, Máchova, Nezvalova, Orenburská, Petöfiho, Popradská, Výtvarná, Žiacka
+#   okrsok 4: Biskupická, Hlbinná, Jastrabinová, Jegenešská, Jonatánová, Korálová, Krajinská, Ligurčeková, Linzbothova, Lopárska, Malachitová, Murárska, Nákovná, Nákupná, Oblúková, Pasienková, Pšeničná, Šikmá
+#   okrsok 5: Borekova, Kapsičková, Komárovská, Kovová, Kvetinárska, Monardová, Ovčiarska, Parenicová, Perličková, Pri hrádzi, Prípojná, Ruženínová, Ul. akad. mal. Jozefa Nagya, Vratičová, Závodná, Slovnaftská, Ulica svornosti
+#   okrsok 6: Hornádska, Hronská
+#   okrsok 7: Bodrocká
+#   okrsok 8: Dudvážska, Uzbecká
+#   okrsok 9: Ipeľská, Latorická
+#   okrsok 10: Baltská, Podzáhradná 1-13
+#   okrsok 11: Kazanská, Podzáhradná 14-44
+#   okrsok 12: Korytnická, Podzáhradná 45-106
+#   okrsok 13: Estónska, Vrakunská, Špaldová
+#   okrsok 14: Geologická, Podunajská, obyvatelia bez domova
+#   okrsok 15: Bieloruská 1-58
+#   okrsok 16: Bieloruská 60-66, Lotyšská, Priekopnícka
+obec = "529311"
+name = "Bratislava-Podunajské Biskupice"
+date = 2026-06-23
+fill = "nearest"
+note = "Source is the mayor's announcement (16.07.2026) of council resolution č. 385/2022-2026 of 23.06.2026: 15 poslancov in 3 obvody (5/6/4). The PDF is a table whose extracted text is scrambled; the street lists were reassembled in alphabetical order. Named streets not in the address register and left out: Akvamarinová, 'Ulica akd. mal. Jozefa Nagya' (as extracted; probably 'akad.') in obvod 1; obvod 3 also lists 'obyvatelia bez domova' (homeless residents), which has no addresses. The document does not mention the register streets Osada pri tehelni and Štátne lesy, nor the 1440 addresses without a street (numbered by súpisné číslo); these are placed by fill_nearest."
+okrsky_date = 2026-07-28
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky from the mayor's announcement of 28.07.2026 (per Rozhodnutie č. 2 of the mayor; the 15.06.2026 notice gives only the okrsky per obvod). Not in the register, left out: Akvamarínová, Ul. akad. mal. Jozefa Nagya. Not named by the document, placed by fill_nearest: Osada pri tehelni, Štátne lesy (obvod 1), Bieloruská 59 if present, and addresses without street. 'Obyvatelia bez domova' (okrsok 14) has no address. Date is the 28.07.2026 announcement; the decision itself is undated in it."
+
+[[document]]
+url = "https://www.biskupice.sk/evt_file.php?file=15311&original=20260716_Oznamenie_oUtvoreniVOaUrceniPoctuPoslancov_VUC_BA-PB.pdf"
+sha256 = "2f7b428fb1445b774d875a35da7e347e26514e770adeaf045291528a1e75f3a9"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie MZ č. 385/2022-2026 zo dňa 23.06.2026), zo dňa 16.07.2026"
+
+[[document]]
+url = "https://www.biskupice.sk/evt_file.php?file=15320&original=20260729_Oznamenie_VolebneOkrsky_Sidla_VymedzenieUzemnychObvodov_VUC.pdf"
+sha256 = "6ab23eae7a42f493c388702c091dd74a6ac64bdb51d493bb494df16fff1110b4"
+title = "Oznámenie – Volebné okrsky a sídla okrskových volebných miestností (vymedzenie územných obvodov), 28.07.2026"
+
+[[document]]
+url = "https://www.biskupice.sk/evt_file.php?file=15318&original=20260716_Oznamenie_Obvody_Sidla_OkVK_VUC_BA-PB.pdf"
+sha256 = "b8634a82fb81105c74b01f947ebf65b1556265aac680cf494ed966b1ae924a8a"
+title = "Oznámenie o určení volebných okrskov a k nim prislúchajúce sídla volebných miestností"
+
+[obvod.1]
+seats = 5
+okrsky = [1, 2, 3, 4, 5]
+rules = [
+  {street = "Achátová"},
+  {street = "Ametystová"},
+  {street = "Amurská"},
+  {street = "Beidl"},
+  {street = "Biskupická"},
+  {street = "Borágová"},
+  {street = "Borekova"},
+  {street = "Citrínová", written = "Citrinová"},
+  {street = "Devätinová", written = "Devätinova"},
+  {street = "Dneperská"},
+  {street = "Družobná"},
+  {street = "Dvojkrížna"},
+  {street = "Farmárska"},
+  {street = "Gajc"},
+  {street = "Granátová"},
+  {street = "Hájovňa"},
+  {street = "Hlbinná"},
+  {street = "Hviezdna"},
+  {street = "Hviezdoslavova"},
+  {street = "Hydinárska"},
+  {street = "Janka Kráľa"},
+  {street = "Jastrabinová"},
+  {street = "Jegenešská", written = "Jégenešská"},
+  {street = "Jókaiho"},
+  {street = "Jonatánová"},
+  {street = "Kapsičková"},
+  {street = "Ketelec"},
+  {street = "Komárovská"},
+  {street = "Korálová"},
+  {street = "Kovová"},
+  {street = "Krajinská"},
+  {street = "Kvetinárska"},
+  {street = "Lieskovec"},
+  {street = "Lieskovská cesta"},
+  {street = "Ligurčeková"},
+  {street = "Linzbothova"},
+  {street = "Lopárska"},
+  {street = "Madáchova"},
+  {street = "Máchova"},
+  {street = "Malachitová"},
+  {street = "Monardová"},
+  {street = "Mramorová"},
+  {street = "Murárska"},
+  {street = "Nákovná"},
+  {street = "Nákupná"},
+  {street = "Nezvalova"},
+  {street = "Oblúková"},
+  {street = "Odeská"},
+  {street = "Orechová"},
+  {street = "Orenburská"},
+  {street = "Ovčiarska"},
+  {street = "Padlých hrdinov"},
+  {street = "Parcelná"},
+  {street = "Parenicová"},
+  {street = "Perličková"},
+  {street = "Pasienková"},
+  {street = "Petőfiho", written = "Petöfiho"},
+  {street = "Popradská"},
+  {street = "Požiarnická"},
+  {street = "Pri hrádzi"},
+  {street = "Pri trati"},
+  {street = "Prípojná"},
+  {street = "Pšeničná"},
+  {street = "Ruženínová"},
+  {street = "Sĺňavská"},
+  {street = "Slovnaftská"},
+  {street = "Staromlynská"},
+  {street = "Šamorínska"},
+  {street = "Šikmá"},
+  {street = "Trojičné nám.", written = "Trojičné námestie", note = "'nám.' is the register's abbreviation of 'námestie'; the document's 'Trojičné námestie' is the register street 'Trojičné nám.', the only square of that name in the district."},
+  {street = "Učiteľská"},
+  {street = "Ul. 8.mája", written = "Ulica 8. mája"},
+  {street = "Ulica svornosti"},
+  {street = "Vetvárska"},
+  {street = "Vinohradnícka"},
+  {street = "Vratičová"},
+  {street = "Výtvarná"},
+  {street = "Závodná"},
+  {street = "Žiacka"},
+]
+
+[obvod.2]
+seats = 6
+okrsky = [6, 7, 8, 9, 10, 11, 12]
+rules = [
+  {street = "Baltská"},
+  {street = "Bodrocká"},
+  {street = "Dudvážska"},
+  {street = "Hornádska"},
+  {street = "Hronská"},
+  {street = "Ipeľská"},
+  {street = "Kazanská"},
+  {street = "Korytnická"},
+  {street = "Latorická"},
+  {street = "Podzáhradná"},
+  {street = "Uzbecká"},
+]
+
+[obvod.3]
+seats = 4
+okrsky = [13, 14, 15, 16]
+rules = [
+  {street = "Bieloruská"},
+  {street = "Estónska"},
+  {street = "Geologická"},
+  {street = "Lotyšská"},
+  {street = "Podunajská"},
+  {street = "Priekopnícka"},
+  {street = "Špaldová"},
+  {street = "Vrakunská"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Amurská"},
+  {street = "Beidl"},
+  {street = "Devätinová"},
+  {street = "Dneperská"},
+  {street = "Hydinárska"},
+  {street = "Ketelec"},
+  {street = "Lieskovec"},
+  {street = "Lieskovská cesta"},
+  {street = "Mramorová"},
+  {street = "Orechová"},
+  {street = "Padlých hrdinov"},
+  {street = "Požiarnická"},
+  {street = "Šamorínska"},
+  {street = "Trojičné nám.", written = "Trojičné námestie", note = "register abbreviates 'námestie' as 'nám.'; same square"},
+  {street = "Vetvárska"},
+  {street = "Vinohradnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Achátová"},
+  {street = "Ametystová"},
+  {street = "Borágová"},
+  {street = "Citrínová"},
+  {street = "Farmárska"},
+  {street = "Gajc"},
+  {street = "Granátová"},
+  {street = "Hájovňa"},
+  {street = "Hviezdoslavova"},
+  {street = "Janka Kráľa"},
+  {street = "Odeská"},
+  {street = "Parcelná"},
+  {street = "Pri trati", note = "document adds '(vrátane DOS Gerium)', a care home on this street"},
+  {street = "Sĺňavská"},
+  {street = "Staromlynská"},
+  {street = "Učiteľská"},
+  {street = "Ul. 8.mája", written = "Ul. 8 mája", note = "same street, spacing/dot only"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Družobná"},
+  {street = "Dvojkrížna"},
+  {street = "Hviezdna"},
+  {street = "Jókaiho"},
+  {street = "Madáchova"},
+  {street = "Máchova"},
+  {street = "Nezvalova"},
+  {street = "Orenburská"},
+  {street = "Petőfiho", written = "Petöfiho", note = "document writes ö for the Hungarian ő; same street (Petőfi)"},
+  {street = "Popradská"},
+  {street = "Výtvarná"},
+  {street = "Žiacka"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Biskupická"},
+  {street = "Hlbinná"},
+  {street = "Jastrabinová"},
+  {street = "Jegenešská"},
+  {street = "Jonatánová"},
+  {street = "Korálová"},
+  {street = "Krajinská"},
+  {street = "Ligurčeková"},
+  {street = "Linzbothova"},
+  {street = "Lopárska"},
+  {street = "Malachitová"},
+  {street = "Murárska"},
+  {street = "Nákovná"},
+  {street = "Nákupná"},
+  {street = "Oblúková"},
+  {street = "Pasienková"},
+  {street = "Pšeničná"},
+  {street = "Šikmá"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Borekova"},
+  {street = "Kapsičková"},
+  {street = "Komárovská"},
+  {street = "Kovová"},
+  {street = "Kvetinárska"},
+  {street = "Monardová"},
+  {street = "Ovčiarska"},
+  {street = "Parenicová"},
+  {street = "Perličková"},
+  {street = "Pri hrádzi"},
+  {street = "Prípojná"},
+  {street = "Ruženínová"},
+  {street = "Vratičová"},
+  {street = "Závodná"},
+  {street = "Slovnaftská"},
+  {street = "Ulica svornosti"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Hornádska"},
+  {street = "Hronská"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Bodrocká"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Dudvážska"},
+  {street = "Uzbecká"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Ipeľská"},
+  {street = "Latorická"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Baltská"},
+  {street = "Podzáhradná", numbers = "1-13"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Kazanská"},
+  {street = "Podzáhradná", numbers = "14-44"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Korytnická"},
+  {street = "Podzáhradná", numbers = "45-106"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Estónska"},
+  {street = "Vrakunská"},
+  {street = "Špaldová"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Geologická"},
+  {street = "Podunajská"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Bieloruská", numbers = "1-58"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Bieloruská", numbers = "60-66"},
+  {street = "Lotyšská"},
+  {street = "Priekopnícka"},
+]

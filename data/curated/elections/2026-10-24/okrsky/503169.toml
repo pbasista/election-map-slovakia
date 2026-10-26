@@ -1,0 +1,23 @@
+# Okrsky of Dubník, transcribed by an AI agent in job okrsok-rules-456 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1, volebná miestnosť č.1 v budove ZŠ Dubník, Sídlo: Dubník 93
+#   okrsok 2: Okrsok č. 2, volebná miestnosť č. 2 v budove firmy Agrocontract Mikuláš a.s. (administratívna budova v mechanizačnom stredisku), Sídlo: Dvor Mikuláš 904
+obec = "503169"
+name = "Dubník"
+okrsky_date = 2026-07-10
+
+[[document]]
+url = "https://www.obec-dubnik.sk/e_download.php?file=/data/multipage/editor/editor-20-95-sk_7.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Den%C3%AD%20volebn%C3%BDch%20miestnost%C3%AD%20-%20Spojen%C3%A9%20vo%C4%BEby%202026.pdf"
+sha256 = "0532377d65b2ce1b07c6d22deb66b15813a707ecf6fc1f132185ac585366d023"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností - Spojené voľby 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Dubník", note = "Only the polling station is given; 2 okrsky, 2 parts, station in part Dubník.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dvor Mikuláš", note = "Only the polling station is given; 2 okrsky, 2 parts, station in part Dvor Mikuláš.", inferred = true},
+]

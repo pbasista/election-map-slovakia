@@ -1,0 +1,135 @@
+# Okrsky of Košice-Sídlisko Ťahanovce, transcribed by an AI agent in job okrsok-rules-550 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Budapeštianska 5, 7; Európska trieda 1, 3, 5, 7, 9, 11; Na Demetri 1, 2, 3, 4, 5, 6; Pri hati 5, 6, 7, 8, 9; Ulica Zelený dvor 1; s. č. 2669, s. č. 2671, s. č. 2672, s. č. 2715, s. č. 2730, s. č. 3707, s. č. 3712, s. č. 3772, s. č. 3773, s. č. 3798, s. č. 3801, s. č. 3832
+#   okrsok 2: Budapeštianska 2 - 48 párne čísla
+#   okrsok 3: s. č. 0; Americká trieda 1, 3; Sofijská 1 - 7 všetky čísla
+#   okrsok 4: Sofijská 8 - 29 všetky čísla
+#   okrsok 5: Berlínska 1 - 20 všetky čísla
+#   okrsok 6: Berlínska 21 - 31 všetky čísla; Bukureštská 1 - 10 všetky čísla
+#   okrsok 7: Bukureštská 11 - 32 všetky čísla
+#   okrsok 8: Varšavská 1 - 20 všetky čísla
+#   okrsok 9: Juhoslovanská 1, 3, 5, 7; Varšavská 21 - 29 všetky čísla
+#   okrsok 10: Belehradská 1 - 19 všetky čísla; Maďarská 3, 5
+#   okrsok 11: Čínska 1 - 31 nepárne čísla; Čínska 2 - 10 párne čísla
+#   okrsok 12: Čínska 12 - 26 párne čísla; Hanojská 1, 2, 3, 4, 5
+#   okrsok 13: Pekinská 1 - 19 všetky čísla
+#   okrsok 14: Havanská 1 - 25 všetky čísla
+#   okrsok 15: Helsinská 1 - 21 nepárne čísla; Helsinská 2 - 24 párne čísla
+#   okrsok 16: Aténska 1 - 25 všetky čísla
+#   okrsok 17: Viedenská 1 - 31 nepárne čísla; Viedenská 2 - 20 párne čísla
+#   okrsok 18: Bruselská 1 - 16 všetky čísla; Viedenská 22 - 38 párne čísla
+obec = "599875"
+name = "Košice-Sídlisko Ťahanovce"
+okrsky_date = 2026-07-23
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by house numbers per the annex table. Okrsok 1's 's. č.' entries are súpisné čísla of addresses without a street; okrsok 3's 's. č. 0' (residents without an address) has no address rule. Addresses the table leaves out (Ázijská trieda, Dopravná, Magnezitárska, numbers beyond the listed ranges, other street-less addresses) take the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://tahanovce.sk/wp-content/uploads/2026/06/Utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti.pdf"
+sha256 = "d47fefdc21d0085b2a1271eacd704f194d5d38983786db3d8c22238817f6217e"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Budapeštianska", numbers = "5, 7"},
+  {street = "Európska trieda", numbers = "1, 3, 5, 7, 9, 11"},
+  {street = "Na Demetri", numbers = "1-6"},
+  {street = "Pri hati", numbers = "5-9"},
+  {street = "Ulica Zelený dvor", numbers = "1"},
+  {part = "Košice-Sídlisko Ťahanovce", numbers = "2669, 2671, 2672, 2715, 2730, 3707, 3712, 3772, 3773, 3798, 3801, 3832"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Budapeštianska", numbers = "2-48", parity = "even"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Americká trieda", numbers = "1, 3"},
+  {street = "Sofijská", numbers = "1-7"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Sofijská", numbers = "8-29"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Berlínska", numbers = "1-20"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Berlínska", numbers = "21-31"},
+  {street = "Bukureštská", numbers = "1-10"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Bukureštská", numbers = "11-32"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Varšavská", numbers = "1-20"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Juhoslovanská", numbers = "1, 3, 5, 7"},
+  {street = "Varšavská", numbers = "21-29"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Belehradská", numbers = "1-19"},
+  {street = "Maďarská", numbers = "3, 5"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Čínska", numbers = "1-31", parity = "odd"},
+  {street = "Čínska", numbers = "2-10", parity = "even"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Čínska", numbers = "12-26", parity = "even"},
+  {street = "Hanojská"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Pekinská"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Havanská", numbers = "1-25"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Helsinská", numbers = "1-21", parity = "odd"},
+  {street = "Helsinská", numbers = "2-24", parity = "even"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Aténska"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Viedenská", numbers = "1-31", parity = "odd"},
+  {street = "Viedenská", numbers = "2-20", parity = "even"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Bruselská", numbers = "1-16"},
+  {street = "Viedenská", numbers = "22-38", parity = "even"},
+]

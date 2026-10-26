@@ -1,0 +1,29 @@
+# Okrsky of Hôrka, transcribed by an AI agent in job okrsok-rules-553 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: časť obce: Kišovce
+#   okrsok 2: časti obce: Ondrej, Primovce, Hôrka
+obec = "523488"
+name = "Hôrka"
+
+[[document]]
+url = "https://www.obechorka.sk/e_download.php?file=/data/editor/170sk_5.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti.pdf"
+sha256 = "f2694ebb1702a5dec6aa68a38c105fffd1ae39e42f72accb97f121bba863d80c"
+title = "Utvorenie volebných okrskov a určenie volebných miestnosti (stránka VOĽBY 2026)"
+
+[[document]]
+url = "https://www.obechorka.sk/volby-2026/"
+sha256 = "054039e5316d8980c01155c941358c48b2753f52d56d363354544706ec249b8b"
+title = "VOĽBY 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Kišovce"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Ondrej"},
+  {part = "Primovce"},
+  {part = "Hôrka"},
+]

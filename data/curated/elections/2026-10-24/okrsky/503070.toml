@@ -1,0 +1,24 @@
+# Okrsky of Bešeňov, transcribed by an AI agent in job okrsok-rules-459 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od č.d. 1 do č.d. 300
+#   okrsok 2: od č.d. 301 do č.d. 639
+obec = "503070"
+name = "Bešeňov"
+okrsky_date = 2026-07-06
+okrsky_note = "By súpisné číslo (č.d.): 1-300 and 301-639. Okrsok 2 is given as 301- so any house number above 639 (newer houses) also falls there."
+
+[[document]]
+url = "https://besenov.sk/wp-content/uploads/dokumenty/volby-do-samosprav/vytvorene-okrsky-jo11oq.pdf"
+sha256 = "00879792a754b1c66a6e40871d9f0ea8ac54ab217ef99c13c358a926f8930d83"
+title = "Utvorené volebné okrsky a určené volebné miestnosti"
+
+[okrsok.1]
+rules = [
+  {part = "Bešeňov", numbers = "1-300"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Bešeňov", numbers = "301-"},
+]

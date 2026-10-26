@@ -1,0 +1,116 @@
+# Okrsky of Košice-Krásna, transcribed by an AI agent in job okrsok-rules-229 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1. mája, Benkova, Bernatovská, Čechovova, Goetheho, Golianova, Horná, Keldišová, Kertésová, Križinova, Ku štrkovisku, Na banisegu, Nábrežná, Nová, Opátska, Pri Hornáde, Pri Krásnej, Pri sídlisku, Rehoľná, Rybárska, sv. Gorazda, Traťová, Valalická, Za mostom, Žiacka
+#   okrsok 2: Adamova, Bogoľ, Feketeova pažiť, Krajná, Goldírova, K Hutke, K majeru, Kladenská, Lackova, Minská, Na Polianku, Ulica na prednom Záhumní, Ulica na zadnom Záhumní, Ortoviská, Prašná, Pri studničke, Rešov Majer, Sajkov, Smutná, Šuhajova, Východná, Vyšný dvor, Zelená
+#   okrsok 3: Benediktínska, Harmincova, K lesu, Malokarpatská, Meškova, Modranská, Na brehu, Nad Belogradom, Pezinská, Polesná, Pri Teleku, Račianska, Rulandská, Skalická, Staroslovanská, Svätovavrinecká, Tibavská, Tokajská, Tramínová, Vínna; voliči s trvalým pobytom Košice-Krásna
+#   okrsok 4: Alexandra Dubčeka, Baničova, Beniakova, Bezručova, Edisonova, Harčarova, Konopná, Mozartova, Na močidlách, Na pažiti, Orná, Pasienková, Piesočná, Pollova, Štrková, Tatarkova, Ukrajinská, Urbárska
+obec = "599794"
+name = "Košice-Krásna"
+okrsky_date = 2026-07-27
+okrsky_fill = "nearest"
+okrsky_note = "Register names prefixed 'Ulica' are written without it in the document. 'Keldišová'/'Kertésová' are the register's Keldišova/Kertésova (long-vowel spelling variant of the same name). Na banisegu, Pri Krásnej and Sajkov are not in the register and are left out. Námestie sv. Cyrila a Metoda (1 address) is not named; it and addresses without a street take the nearest placed address. Residents registered only to Košice-Krásna vote in okrsok 3."
+
+[[document]]
+url = "https://www.kosicekrasna.sk/files/2026-07-29-145449-Vo__by_2026_okrsky_a_vol._miestnosti.pdf"
+sha256 = "c6a7cc5a83c944e1186c11ea9be91fa81ed244b0093923ef814fcb7a0877b34b"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností na voľby do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Ulica 1. mája", written = "1. mája"},
+  {street = "Benkova"},
+  {street = "Bernatovská"},
+  {street = "Čechovova"},
+  {street = "Goetheho"},
+  {street = "Golianova"},
+  {street = "Horná"},
+  {street = "Keldišova", written = "Keldišová"},
+  {street = "Kertésova", written = "Kertésová"},
+  {street = "Križinova"},
+  {street = "Ku štrkovisku"},
+  {street = "Nábrežná"},
+  {street = "Nová"},
+  {street = "Opátska"},
+  {street = "Pri Hornáde"},
+  {street = "Pri Sídlisku", written = "Pri sídlisku"},
+  {street = "Rehoľná"},
+  {street = "Rybárska"},
+  {street = "Ulica sv. Gorazda", written = "sv. Gorazda"},
+  {street = "Traťová"},
+  {street = "Valalická"},
+  {street = "Za mostom"},
+  {street = "Žiacka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Adamova"},
+  {street = "Bogoľ"},
+  {street = "Feketeova Pažiť", written = "Feketeova pažiť"},
+  {street = "Krajná"},
+  {street = "Goldírova"},
+  {street = "Ulica k Hutke", written = "K Hutke"},
+  {street = "K Majeru", written = "K majeru"},
+  {street = "Kladenská"},
+  {street = "Lackova"},
+  {street = "Minská"},
+  {street = "Ulica na Polianku", written = "Na Polianku"},
+  {street = "Ulica na prednom Záhumní"},
+  {street = "Ulica na zadnom Záhumní"},
+  {street = "Ortoviská"},
+  {street = "Prašná"},
+  {street = "Ulica pri studničke", written = "Pri studničke"},
+  {street = "Rešov Majer"},
+  {street = "Smutná"},
+  {street = "Šuhajova"},
+  {street = "Východná"},
+  {street = "Vyšný Dvor", written = "Vyšný dvor"},
+  {street = "Zelená"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Benediktínska"},
+  {street = "Harmincova"},
+  {street = "K lesu"},
+  {street = "Malokarpatská"},
+  {street = "Meškova"},
+  {street = "Modranská"},
+  {street = "Na Brehu", written = "Na brehu"},
+  {street = "Nad Belogradom"},
+  {street = "Pezinská"},
+  {street = "Polesná"},
+  {street = "Pri Teleku"},
+  {street = "Račianska"},
+  {street = "Rulandská"},
+  {street = "Skalická"},
+  {street = "Staroslovanská"},
+  {street = "Ulica Svätovavrinecká", written = "Svätovavrinecká"},
+  {street = "Tibavská"},
+  {street = "Tokajská"},
+  {street = "Tramínová"},
+  {street = "Vínna"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Ulica Alexandra Dubčeka", written = "Alexandra Dubčeka"},
+  {street = "Baničova"},
+  {street = "Beniakova"},
+  {street = "Bezručova"},
+  {street = "Edisonova"},
+  {street = "Harčarova"},
+  {street = "Konopná"},
+  {street = "Mozartova"},
+  {street = "Na močidlách"},
+  {street = "Na Pažiti", written = "Na pažiti"},
+  {street = "Orná"},
+  {street = "Pasienková"},
+  {street = "Piesočná"},
+  {street = "Pollova"},
+  {street = "Štrková"},
+  {street = "Tatarkova"},
+  {street = "Ukrajinská"},
+  {street = "Urbárska"},
+]

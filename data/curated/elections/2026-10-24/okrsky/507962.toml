@@ -1,0 +1,29 @@
+# Okrsky of Jakubov, transcribed by an AI agent in job okrsok-rules-449 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: číslo domu 0-330
+#   okrsok 2: číslo domu 331 a vyššie
+obec = "507962"
+name = "Jakubov"
+okrsky_date = 2026-07-27
+okrsky_note = "The document splits the obec by 'číslo domu' (súpisné číslo): 0-330 and 331 and higher; applied to all addresses of the obec by súpisné číslo."
+
+[[document]]
+url = "https://data.moderneobce.sk/data/page/jakubov.sk/31326/utvorenie-volebneho-okrsku-spojene-volby-2026.pdf"
+sha256 = "63052783482af56b7f96567213fd54a7bfe50c425a51ffed612cbb9a2f2abd3d"
+title = "Utvorenie volebného okrsku a určenie volebnej miestnosti pre Spojené voľby 2026"
+
+[[document]]
+url = "https://www.jakubov.sk/31326/spojene-volby-2026"
+sha256 = "bb8bb64756eabc13c21ccd5e540dbf3a36a7343fb52c0a48ff0af740cf9df609"
+title = "Spojené voľby 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Jakubov", numbers = "0-330"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Jakubov", numbers = "331-"},
+]

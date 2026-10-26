@@ -1,0 +1,65 @@
+# Okrsky of Kráľová pri Senci, transcribed by an AI agent in job okrsok-rules-427 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cintorínska, Družstevná, Hasičská, K čerpačke, Kasárenská, Kaštieľska, Kráľovská, Krátka, Lesná, Malokrmešská, Pálffyho, Poľná, Poštová, Pri Čiernej vode, Pri veži, Školská, Športová, Tehelná, Výhonská, Záhumenská, Žigmudova
+#   okrsok 2: 8.mája, Bodoház, Bodovská, Čerešňová, Hlavná, Hradská, Hrušková, Krížna, Krmešská, Lúčna, Majerská, Marhuľová, Na Paseke, Narcisová, Pivovarnícka, Pri hájiku, Pri kaplnke, Púpavová, Récka, Sadová, Slnečná, Slnečnicová, Termálna, Urbárska, Včelárska, Veterná, Vinohradnícka
+obec = "503894"
+name = "Kráľová pri Senci"
+okrsky_date = 2026-07-24
+okrsky_fill = "nearest"
+okrsky_note = "Okrsok 2 names streets the register lacks (Hradská, Hrušková, Marhuľová, Na Paseke, Včelárska, Vinohradnícka); they are left out. Addresses without a street take the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.kralovaprisenci.sk/e_download.php?file=/data/editor/258sk_6.pdf&original=Ozn%C3%A1menie%20okrsky%202026.pdf"
+sha256 = "ba942f058288908c900d924cf44d45ff8fbf1714a3294bdd2f064b982c0d33c2"
+title = "Oznámenie o vytvorených okrskoch (Volebné okrsky a miestnosti)"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Hasičská"},
+  {street = "K čerpačke"},
+  {street = "Kasárenská"},
+  {street = "Kaštieľska"},
+  {street = "Kráľovská"},
+  {street = "Krátka"},
+  {street = "Lesná"},
+  {street = "Malokrmešská"},
+  {street = "Pálffyho"},
+  {street = "Poľná"},
+  {street = "Poštová"},
+  {street = "Pri Čiernej vode"},
+  {street = "Pri veži"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Tehelná"},
+  {street = "Výhonská"},
+  {street = "Záhumenská"},
+  {street = "Žigmundova", written = "Žigmudova", note = "Typo in the document; the register has Žigmundova and no similar street."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "8. mája", written = "8.mája"},
+  {street = "Bodoház"},
+  {street = "Bodovská"},
+  {street = "Čerešňová"},
+  {street = "Hlavná"},
+  {street = "Krížna"},
+  {street = "Krmešská"},
+  {street = "Lúčna"},
+  {street = "Majerská"},
+  {street = "Narcisová"},
+  {street = "Pivovarnícka"},
+  {street = "Pri hájiku"},
+  {street = "Pri kaplnke"},
+  {street = "Púpavová"},
+  {street = "Récka"},
+  {street = "Sadová"},
+  {street = "Slnečná"},
+  {street = "Slnečnicová"},
+  {street = "Termálna"},
+  {street = "Urbárska"},
+  {street = "Veterná"},
+]

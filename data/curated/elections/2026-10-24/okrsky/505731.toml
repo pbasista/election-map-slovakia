@@ -1,0 +1,28 @@
+# Okrsky of Veľký Klíž, transcribed by an AI agent in job okrsok-rules-599 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Klíž
+#   okrsok 2: Klížske Hradište
+obec = "505731"
+name = "Veľký Klíž"
+okrsky_note = "Scanned notice read from the rendered page. No decision date is stated."
+
+[[document]]
+url = "https://www.velky-kliz.sk/modules/file_storage/download.php?file=059cd148%7C805&inline=1"
+sha256 = "83b924807d21e59dbb97d43281398bf0f598e610fe9d5142f98e056edb750b94"
+title = "Zverejnenie utvorených volebných okrskov a určení volebných miestností"
+
+[[document]]
+url = "https://www.velky-kliz.sk/samosprava/volby-2026/"
+sha256 = "283dd99a50c0236ce1e70fafd451800917eb8e5b72c4ab0ac03b83a002a96031"
+title = "Voľby 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Klíž"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Klížske Hradište"},
+]

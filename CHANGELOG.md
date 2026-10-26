@@ -4,6 +4,178 @@ Notable changes, newest first. The version is set in
 `src/election_map_slovakia/__init__.py`; tagging `vX.Y.Z` builds and deploys
 it (see [docs/deploy.md](docs/deploy.md)).
 
+## 0.5.0 — 2026-10-26
+
+- **Withdrawn candidates set apart; no "final results" statements.** A
+  candidate who withdrew but stayed on the ballot has a grey badge with a
+  door after the name (its tooltip says what it means), their share and
+  bar in grey, and comes last in the list. The results' status line under
+  the title and a contest's "2026: final results" are gone, final going
+  without saying now; a contest gives its valid votes. The page
+  description and the text for search engines and visitors without
+  JavaScript now lead with the results, by constituency, municipality and
+  polling district. The base map's label names its water by the
+  cartographic term ("water features", Slovak and Czech "vodstvo",
+  Polish and Ukrainian "hydrography" and so on) instead of "waters",
+  which in several languages meant lakes or bodies of water alone. A page
+  loaded after the polls closed no longer flashes "results awaited"
+  before status.json is read; it says so only once that has been tried
+  and found nothing counted. Polling is off in this release (site.toml
+  `live = false`): the final results are in the site, so the app reads
+  them once per page load instead of every minute; the polling stays, to
+  be turned on again for the next election night.
+- **City okrsky and withdrawn candidates in the results.** Bratislava's
+  and Košice's own contests put the votes of okrsky sharing a number in a
+  council obvod (a number per district) in the right okrsok: by the shares
+  ŠÚ SR gives each vote row (a mayor's of the okrsok's valid ballots, a
+  council's of its votes together), not by the order of the rows, which
+  differs per candidate and had summed the votes of different okrsky into one
+  (Luník IX's mayor shares adding up to well over 100 %, the districts'
+  figures wrong). Okrsky whose votes still fit more than one way are left
+  out of the okrsok files, and so are the districts' figures they make
+  unknown; `final` names them. Candidates who withdrew but stayed on the
+  ballot keep their votes, which ŠÚ SR counts among the valid ones (flag
+  `-1`): the app shows them with a "withdrew" mark, never elected nor in
+  the seats line. `results.check` (`ems check`, `ems results deploy`) now
+  requires the votes of every counted unit of a mayor's or president's
+  contest to be its valid ballots, and a council's within the valid ballots
+  and the seats; `ems results final` and `ems make` write nothing that
+  fails it, and `ems results fake` keeps to it. A city district with no
+  figures of its own no longer shows its known okrsky summed instead.
+- **Results in the site, per election.** The results are files of the
+  site, `results/<election day>/` (`status.json`, the area and okrsok
+  files, as before), read from the site's own origin; the separate Pages
+  project `election-map-slovakia-live` (`live.volebnamapa.sk`) is no
+  longer read, and the CSP's connect-src is `'self'` alone. The definitive
+  2026 packages are pinned inputs, `results-oso2026` and
+  `results-osk2026` (with copies in `data/fallback/`; a later election's
+  are `results-oso<year>`, `results-osk<year>`), and a new step of
+  `ems make`, `results` (after `basemap`), writes the final results from
+  them into `data/build/results/<election day>/`, as of the packages'
+  data, so every release carries the same results; `build` copies them
+  into `dist/` and hashes them into the data version, `dist/_headers`
+  revalidates `status.json` on every load, `ems check` verifies them, and
+  the size report has them as a group. `ems results poll`, `final` and
+  `fake` write the election's results directory by default (`--dir`
+  elsewhere); `final` reads the pinned inputs when configured, else
+  downloads the packages; `ems results deploy` and `poll --deploy` build
+  the site and upload it to the main project as a production deployment.
+  `ems results serve`, `live_url`, `live_pages_project` and
+  `EMS_LIVE_URL` are gone: `ems serve` serves the results, and a build
+  with `EMS_RESULTS_ANYTIME=1` reads them at any time, for testing. The
+  old project and its `live` DNS record can be deleted (docs/deploy.md).
+- **Base map.** A faint base map under the election colours, for
+  orientation: rivers, larger streams, lakes and reservoirs, roads by
+  class (minor streets from zoom 13) and railways, from OpenStreetMap
+  (Geofabrik's extract of Slovakia of 1 January 2026, pinned; ODbL, see
+  NOTICE). A new step, `ems basemap` (in `ems make` after `geo`), writes
+  it per okres at the shards' levels of detail and a coarse file for the
+  country view (`base/`, 239 files, 17 MB, 6.2 MB gzipped); the map draws
+  it above the area fills and below every border and label, at a theme's
+  opacity, and the layers menu switches it off. A new input kind `pbf`;
+  `ems check` verifies the base map against the shards and its index.
+- **Results awaited.** After the polls close and before anything is
+  counted, the line under the site's name says that the results are
+  awaited and will appear as they come in, instead of nothing.
+- **Counted, votes not yet published.** A contest counted without its
+  candidates' votes (on election night a municipality's turnout, its
+  winners at most) says so in a note above its candidates, so that rows
+  without votes do not puzzle.
+- **Seats on a partial count.** On a partial count of a municipal or
+  regional council, the candidates who would win a seat so far have their
+  numbers in the results' green, and a dashed line labelled with the seats
+  follows the last of them, its tooltip explaining it.
+- **2022 turnout of a council constituency.** Where a municipality elects
+  its council in several constituencies, a constituency's 2022 turnout was
+  the whole municipality's, the 2022 constituencies having been drawn
+  otherwise. Now it is that of the polling districts (okrsky) that make up
+  the constituency in 2026, where the municipality's decision says which
+  they are and it has the same polling districts as in 2022; the tooltip
+  names them.
+- **Polling districts (okrsky).** The municipalities of several council
+  constituencies have their polling districts transcribed from the
+  decisions that set them (`okrsok-rules` jobs): which make up each
+  constituency, and their streets. The pipeline draws them within the
+  constituencies. The municipalities that elect
+  their council in one constituency but vote in several polling districts
+  (456) get `okrsok-rules` jobs too, their polling districts drawn within
+  the whole municipality (`okrsky/<obec>.toml`).
+- **Polling district areas and addresses on the site.** `ems geo` cuts the
+  polling districts from the municipalities' map features at every level
+  of detail and writes them per okres beside them
+  (`geo/okrsky/<okres>/<lod>.json`, listed in `geo/index.json`; a line code
+  of its own for a border between two polling districts), replacing the
+  pipeline-only GeoJSON of `data/build/okrsky/`; `ems addresses` gives each
+  address its polling district where they are drawn (`okrsok`, `okrsky` in
+  `addr/<obec>.json`); `ems check` requires the polling districts to tile
+  their municipality and the addresses to have one exactly there.
+- **Data per election.** The curated data the state sets anew for each
+  election, the constituencies and now the polling districts, are kept per
+  election, in `data/curated/elections/<election day>/`, so that a later
+  election adds its own instead of changing these.
+- **Final results per polling district.** `ems results final` (and
+  `ems results fake final`) also write each contest's figures per okrsok,
+  from the 2026 packages' tables per okrsok, in files of their own beside
+  the results' area files (`okrsky/<area>.json`), with an okrsok's 2022
+  turnout where the municipality kept the same okrsky (417 of 630).
+  Bratislava's and Košice's city-wide results go to their districts'
+  okrsky; the few that cannot be matched (9 and 5) are left out.
+- **Polling districts in the app.** The polling districts are an overlay
+  of their own, drawn and numbered when zoomed in; a click or an address
+  found by the search says its polling district. With the final results,
+  the units' figures and a polling district's 2022 turnout show in a
+  tooltip under the pointer, and the candidate card lists where a
+  candidate's votes came from, the polling districts with the most votes
+  and the highest share.
+- **Results at every map level, and per unit on the ballots.** The results
+  on the map follow the zoom as the boundary overlays do, for every mode:
+  regional constituencies, then municipalities, from zoom 11 the council
+  constituencies of a split municipality (any contest's polling districts
+  summed per constituency), from zoom 13 the polling districts drawn, on
+  one scale over all of them, each unit labelled with its value and named
+  with its figures under the pointer; the legend says by which units,
+  replacing its municipalities/polling districts switch. Every counted
+  contest, councils too, can colour the map by who got the most votes
+  where (for a council its top candidate, not those elected); switching
+  between a contest's candidates, turnout and most votes keeps the view
+  instead of fitting the map to the contest again. On the
+  ballots, a contest's results and turnout can be narrowed to the place's
+  municipality, council constituency or polling district, one choice for
+  all contests, kept while browsing places. A street or part chosen in
+  the search is named with its polling district where all its houses
+  share one, else with its polling districts' and constituencies' numbers.
+- **Every mayoral candidate as soon as a municipality is counted.** On
+  election night ŠÚ SR publishes a municipality's mayoral candidates'
+  votes as soon as it is fully counted, not only once every municipality
+  is: `ems results poll` now fetches them then (and the council
+  candidates' too, once published), so that the contest shows every
+  candidate's votes and share, final, instead of the elected mayor alone.
+  Files that a poll finds due (a municipality just found fully counted)
+  are fetched in the same poll, not at the next change of the count.
+- **The count's progress no longer reads 0 % once it has begun.** The
+  status line and a contest's count give how far the count has got in
+  tenths below 10 % and as "< 0.1 %" below that, since the small
+  municipalities, counted first, are a fraction of a per cent of the
+  voters: 163 municipalities counted read "municipal 0 %" before.
+- **Regional turnout per municipality on election night.** ŠÚ SR
+  publishes a municipality's regional turnout once it is counted, but its
+  votes only later; the live results now carry that turnout meanwhile, so
+  that the regional turnout map shows each municipality counted, while a
+  candidate's map shows its constituency as a whole there.
+- **Councillors known before their votes.** Where a counted council has
+  as many seats filled as candidates (every seat, or more seats than
+  candidates), the app marks them all elected, though ŠÚ SR has not
+  published their votes yet. A withdrawn candidate still listed leaves a
+  seat fewer filled, so then nothing is marked.
+- **Definitive results straight from volbysr.sk, in their 2026 form.**
+  `ems results final` without arguments downloads both elections' CSV
+  zips and keeps them under `data/raw/results/`. It reads the 2026
+  tables, which differ from 2022's (comma-separated, columns named in
+  full, summed per municipality, constituency and kraj, the two cities'
+  own contests in tables of their own), and refuses a package lacking a
+  table or column it reads. A council constituency's seats come from the
+  candidate lists where the tables give only the whole council's.
+
 ## 0.4.0 — 2026-10-24
 
 - **Live 2026 results.** On election night the site shows the results as

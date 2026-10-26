@@ -1,0 +1,41 @@
+# Okrsky of Kopčany, transcribed by an AI agent in job okrsok-rules-380 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bratislavská, Kollárova, Sasinkova, Priečna, Slnečná, Športová, Kopčany(občania s trvalým pobytom na adrese obec Kopčany).
+#   okrsok 2: Masarykova, Štefánikovo námestie, Hurbanova, Moravská, Marxova, Damborského, Pri Žrebčíne, Vrbovské
+obec = "504459"
+name = "Kopčany"
+okrsky_date = 2026-07-22
+okrsky_note = "'Vrbovské' (okrsok 2) is not a register street and is left out; addresses without a street go to okrsok 1 as the document says."
+
+[[document]]
+url = "https://www.kopcany.sk/e_download.php?file=/data/uredni_deska/obsah1517_7.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A1%20miestnos%C5%A5.pdf"
+sha256 = "256d5aabd742be57e4dbd3ec88963e787dc89f1d257fc8a5bebe5705ed68602e"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov v roku 2026"
+
+[[document]]
+url = "https://www.kopcany.sk/obcan/volby-a-referendum/volby-do-organov-samospravy-obci-2026-1533.html"
+sha256 = "1520238d3ccce9ddeb0631c0a00f317aeae00f6a73f1bcfa646866544b18a9ca"
+title = "Voľby do orgánov samosprávy obcí 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Bratislavská"},
+  {street = "Kollárova"},
+  {street = "Sasinkova"},
+  {street = "Priečna"},
+  {street = "Slnečná"},
+  {street = "Športová"},
+  {part = "Kopčany", note = "občania s trvalým pobytom na adrese obec Kopčany: addresses without a street"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Masarykova"},
+  {street = "Hurbanova"},
+  {street = "Moravská"},
+  {street = "Marxova"},
+  {street = "Damborského"},
+  {street = "Pri Žrebčíne"},
+  {street = "Štefánikovo Námestie", written = "Štefánikovo námestie"},
+]

@@ -152,9 +152,12 @@ class Kind:
 def kinds() -> dict[str, Kind]:
     """Return every job kind by name."""
     # Imported here: the kinds' modules build on this one.
-    from election_map_slovakia import obvodrules, research, translate
+    from election_map_slovakia import obvodrules, okrsokrules, research, translate
 
-    return {k.name: k for k in (translate.KIND, obvodrules.KIND, research.KIND)}
+    return {
+        k.name: k
+        for k in (translate.KIND, obvodrules.KIND, okrsokrules.KIND, research.KIND)
+    }
 
 
 def output_schema(kind: Kind) -> dict[str, Any]:

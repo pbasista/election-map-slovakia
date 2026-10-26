@@ -1,0 +1,42 @@
+# Okrsky of Selce, transcribed by an AI agent in job okrsok-rules-458 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dolná, Družstevná, Horná, Husádok, Ku strelnici, Selčianska cesta, Školská, Vyšovec
+#   okrsok 2: Mlynská, Nemčianska, Nová, Partizánska, Poľná, Potočná, Športová, Selce bez ulice, Bezdomovci
+obec = "508985"
+name = "Selce"
+okrsky_note = "Scanned PDF, read from the rendered image; undated. Both okrsky vote in the veľká sála of the Kultúrny dom, Selčianska cesta 132. Okrsok 2 also has 'Selce bez ulice, Bezdomovci'. (obecselce.sk is another Selce, okres Krupina.)"
+
+[[document]]
+url = "https://www.selce.sk/e_download.php?file=/data/uredni_deska/obsah742_5.pdf&original=Volebn%C3%A9%20okrsky%20v%20obci%20Selce%20pre%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vy%20obc%C3%AD%20a%20voliev%20do%20org%C3%A1nov%20samospr%C3%A1vnych%20krajov%202026.pdf"
+sha256 = "7591a14cf4bfa74612ddb1e7913e0909cb1a6febbcf00ea192e5bde9cf1b4313"
+title = "Volebné okrsky v obci Selce pre voľby do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov v roku 2026"
+
+[[document]]
+url = "https://www.selce.sk/zverejnovanie/uradna-tabula/volby-do-organov-samospravy-obci-2026-844.html"
+sha256 = "c98e0ea8bcffc82d438a9036c53c76929eda0fa9601c81fcee42676186d9a4de"
+title = "Voľby do orgánov samosprávy obcí 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Dolná ulica", written = "Dolná"},
+  {street = "Družstevná ulica", written = "Družstevná"},
+  {street = "Horná ulica", written = "Horná"},
+  {street = "Husádok"},
+  {street = "Ku Strelnici", written = "Ku strelnici"},
+  {street = "Selčianska cesta"},
+  {street = "Školská ulica", written = "Školská"},
+  {street = "Vyšovec"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mlynská ulica", written = "Mlynská"},
+  {street = "Nemčianska ulica", written = "Nemčianska"},
+  {street = "Nová ulica", written = "Nová"},
+  {street = "Partizánska ulica", written = "Partizánska"},
+  {street = "Poľná ulica", written = "Poľná"},
+  {street = "Potočná ulica", written = "Potočná"},
+  {street = "Športová ulica", written = "Športová"},
+  {part = "Selce", note = "'Selce bez ulice': the addresses of Selce without a street; streets are taken by the more specific street rules"},
+]

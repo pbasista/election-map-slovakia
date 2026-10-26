@@ -1,0 +1,23 @@
+# Okrsky of Moravany, transcribed by an AI agent in job okrsok-rules-620 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 01 volebná miestnosť – Dom kultúry Moravany č.98
+#   okrsok 2: Okrsok č. 02 volebná miestnosť – Dom kultúry Moravany časť Lučkovce č.1059
+obec = "522791"
+name = "Moravany"
+okrsky_note = "The undated notice gives each of the 2 okrsky only its polling station, one in each part of the obec (Dom kultúry Moravany č. 98; Dom kultúry, časť Lučkovce č. 1059); each okrsok is inferred to be the part of its station."
+
+[[document]]
+url = "https://www.obecmoravany.sk/files/2026-07-27-143803-Obec_Moravany_okrsky.pdf"
+sha256 = "a23f8022ee55d29fc25533ae0dd79d3d83217d03124fc8765c955111a956287d"
+title = "Informácia o utvorení volebných okrskov s vymedzením ich územného obvodu a o určení volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Moravany", note = "the document gives okrsok 1 only its polling station, Dom kultúry Moravany č. 98: the part Moravany", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lučkovce", note = "the document gives okrsok 2 only its polling station, Dom kultúry in the part Lučkovce č. 1059: the part Lučkovce", inferred = true},
+]

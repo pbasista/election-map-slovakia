@@ -1,0 +1,25 @@
+# Okrsky of Dvorníky, transcribed by an AI agent in job okrsok-rules-502 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dvorníky súp. č. od 1 – do 427
+#   okrsok 2: Dvorníky súp. č. od 428 – do 906 a voliči, ktorí majú evidovaný trvalý pobyt na adrese: Dvorníky
+obec = "507024"
+name = "Dvorníky"
+okrsky_fill = "nearest"
+okrsky_note = "The document splits the obec by súpisné číslo ('Dvorníky súp. č.'); súpisné čísla run across the whole obec and all of part Posádka's are ≥428, so Posádka goes to okrsok 2 by the same range (inferred). No decision date stated (published 22.7.2026)."
+
+[[document]]
+url = "https://dvorniky.sk/2026/07/22/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-2026-utvorenie-okrskov-a-urcenie-volebnych-miestnosti/"
+sha256 = "e285e32165019591b389872b9c1cf3f82cc0fb252de51201d37a7d8cab3e8e06"
+title = "Voľby 2026 – utvorenie okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Dvorníky", numbers = "1-427"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dvorníky", numbers = "428-"},
+  {part = "Posádka", numbers = "428-", note = "document names only Dvorníky súp. č.; Posádka shares the obec's súpisné numbering", inferred = true},
+]

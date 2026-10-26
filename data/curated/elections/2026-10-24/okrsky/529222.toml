@@ -1,0 +1,38 @@
+# Okrsky of Vechec, transcribed by an AI agent in job okrsok-rules-604 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Hlavná, Lúčna, Veterná, Lomnická, Poľná, Družstevná
+#   okrsok 2: ulice: Slanská, Školská, Mlynská, Lesná
+obec = "529222"
+name = "Vechec"
+okrsky_date = 2026-07-30
+okrsky_fill = "nearest"
+okrsky_note = "The 3 addresses without a street take the nearest okrsok (fill_nearest). vechec.sk returns 403; the official site is obecvechec.sk."
+
+[[document]]
+url = "https://www.obecvechec.sk/modules/file_storage/download.php?file=0a1d4e89%7C782&inline=1"
+sha256 = "af44f23dba2e1c6a5766ea2654a4b241159b0a97d65fd2638f289951d82fb188"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestnosti"
+
+[[document]]
+url = "https://www.obecvechec.sk/zverejnovanie/volby/volby-2026/"
+sha256 = "aac8614683a7956119c96cf273a9b9e57d380c32606c65f2e9dd2aab4c4557b6"
+title = "Voľby 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná"},
+  {street = "Lúčna"},
+  {street = "Veterná"},
+  {street = "Lomnická"},
+  {street = "Poľná"},
+  {street = "Družstevná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Slanská"},
+  {street = "Školská"},
+  {street = "Mlynská"},
+  {street = "Lesná"},
+]

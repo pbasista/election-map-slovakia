@@ -1,0 +1,51 @@
+# Okrsky of Kamenec pod Vtáčnikom, transcribed by an AI agent in job okrsok-rules-499 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cesta na Brús, Cesta na Hájik, Cesta na Jandovú, Cesta na Vinohrady, Na Záhumnie, Hornokamenčianska, Koncová, Krátka, Na Kopanicu, Na Papiereň – orientačné čísla 75-83 = bytovky, Školská, Športová, Za Besedou
+#   okrsok 2: Bočná, Bystričianska cesta, Dolnokamenčianska, Fialková, Klinčeková, Konvalinková, Kvetová, Na Kopaničky, Na Lúčky, Na Papiereň – okrem bytoviek, Na Pažite, Na Žmúrov, Púpavová, Ružičková, Tichá
+obec = "514063"
+name = "Kamenec pod Vtáčnikom"
+okrsky_date = 2026-07-08
+okrsky_fill = "nearest"
+okrsky_note = "Na Papiereň: orientačné čísla 75-83 (bytovky) in okrsok 1, the rest in okrsok 2. 'Na Žmúrov' is the register's Na Žmurov. Addresses without a street take the nearest placed address."
+
+[[document]]
+url = "https://kamenec.sk/wp-content/uploads/dokumenty/volby-do-samosprav/zverejnenie-volebnych-okrskov-a-volebnych-miestnosti-62lovc.pdf"
+sha256 = "128730c7d3c866f2be496a836648ccb99c66abdea3d0efc356f02a790ef7a895"
+title = "Zverejnenie volebných okrskov a volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Cesta na Brús"},
+  {street = "Cesta na Hájik"},
+  {street = "Cesta na Jandovú"},
+  {street = "Cesta na Vinohrady"},
+  {street = "Na Záhumnie"},
+  {street = "Hornokamenčianska"},
+  {street = "Koncová"},
+  {street = "Krátka"},
+  {street = "Na Kopanicu"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Za Besedou"},
+  {street = "Na Papiereň", numbers = "75-83"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bočná"},
+  {street = "Bystričianska cesta"},
+  {street = "Dolnokamenčianska"},
+  {street = "Fialková"},
+  {street = "Klinčeková"},
+  {street = "Konvalinková"},
+  {street = "Kvetová"},
+  {street = "Na Kopaničky"},
+  {street = "Na Lúčky"},
+  {street = "Na Papiereň"},
+  {street = "Na Pažite"},
+  {street = "Púpavová"},
+  {street = "Ružičková"},
+  {street = "Tichá"},
+  {street = "Na Žmurov", written = "Na Žmúrov", note = "same name, long ú in the document"},
+]

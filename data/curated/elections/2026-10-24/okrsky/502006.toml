@@ -1,0 +1,23 @@
+# Okrsky of Vrakúň, transcribed by an AI agent in job okrsok-rules-244 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre obyvateľov časti obce Vrakúň
+#   okrsok 2: pre obyvateľov časti obce Nekyje na Ostrove
+obec = "502006"
+name = "Vrakúň"
+okrsky_note = "Scanned notice dated 30.07.2026 (read from the rendered image); it does not state the date of the mayor's decision."
+
+[[document]]
+url = "http://www.vrakun.sk/vrakunj36/images/dokumenty/volby/2026/v_roku_2026_boli_vytvorene_2_volebne_okrsky.pdf"
+sha256 = "a81eba794e54a5e98640a445667fe5feede4dae9bff205c975cbc3d725376018"
+title = "Oznámenie – Pre voľby do orgánov samosprávy obcí a samosprávnych krajov v roku 2026 boli vytvorené 2 volebné okrsky"
+
+[okrsok.1]
+rules = [
+  {part = "Vrakúň"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Nekyje na Ostrove"},
+]

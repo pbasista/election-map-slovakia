@@ -1,0 +1,48 @@
+# Okrsky of Biely Kostol, transcribed by an AI agent in job okrsok-rules-408 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Bronzová, Cintorínska, Keltská, Ľadová, Lomená, Pionierske námestie, Poľná, Poľovnícka, Rekreačná, Rybná, Stromová, Viničná, Vysoká
+#   okrsok 2: Ulice: Atletická, Hlavná, Jabloňová, Krátka, Malá, Okružná, Potočná, Sadová, Slnečná, Stredná, Športová, Záhradná
+obec = "580473"
+name = "Biely Kostol"
+okrsky_date = 2026-07-09
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document, read from the page image. The document leaves out Železná and the addresses without a street; they take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.bielykostol.sk/e_download.php?file=/data/editor/102sk_3.PDF&original=Utvorenie%20volebn%C3%BDch%20okrskov%202026.PDF"
+sha256 = "99b6577ad03a9dfb64da5791fc2753f7e8eb6e4f11111f01c254b2c0b2e2b388"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Bronzová"},
+  {street = "Cintorínska"},
+  {street = "Keltská"},
+  {street = "Ľadová"},
+  {street = "Lomená"},
+  {street = "Pionierske Námestie"},
+  {street = "Poľná"},
+  {street = "Poľovnícka"},
+  {street = "Rekreačná"},
+  {street = "Rybná"},
+  {street = "Stromová"},
+  {street = "Viničná"},
+  {street = "Vysoká"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Atletická"},
+  {street = "Hlavná"},
+  {street = "Jabloňová"},
+  {street = "Krátka"},
+  {street = "Malá"},
+  {street = "Okružná"},
+  {street = "Potočná"},
+  {street = "Sadová"},
+  {street = "Slnečná"},
+  {street = "Stredná"},
+  {street = "Športová"},
+  {street = "Záhradná"},
+]

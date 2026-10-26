@@ -1,0 +1,80 @@
+# Okrsky of Lehota pod Vtáčnikom, transcribed by an AI agent in job okrsok-rules-316 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: 1.mája, 29. augusta, 9. mája, Jevgenija Sirku, Kováčova, Lehota pod Vtáčnikom 0, Mravečnica, Námestie SNP – súpisné čísla 35, 38, 39, 40, 41, 45, 47, 48, 49, 50, 51, 52, 53, 54, 55, Osloboditeľov, Starohájska, Veľká Lehota – súpisné číslo 2006, Veľká Lehota – súpisné číslo 2064, Veľká Lehota – súpisné číslo 2119
+#   okrsok 2: Ulice: Banícka, Kpt. Jaroša, Mlynská, Partizánska, Podhradská, Suchý potok
+#   okrsok 3: Ulice: Dubinky, Fučíkova, Hviezdoslavova, Kapitána Nálepku, Lúčna, Moyzesova, Náklo, Námestie SNP – súpisné čísla 42, 43, 747, Nová ulica, Záhradná, Obrancov mieru – súpisné čísla 497, 498, 500, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 512, 513, 539, 540, 541, 542, 543, 544, 546, 547, 548, 549, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559, 560, 561, 1104, Rázusova, Školská
+#   okrsok 4: Ulice: 4. apríla, Dedinská, Dúbravská, Hájska, Jesenského, Jilemnického, Konečná, Krátka, Krížna, Kukučínova, Obrancov mieru – súpisné čísla 514, 515, 516, 517, 518, 519, 520, 521, 522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 1090, 1092, Sovietskej armády, Úzka
+obec = "514136"
+name = "Lehota pod Vtáčnikom"
+okrsky_date = 2026-07-28
+okrsky_fill = "nearest"
+okrsky_note = "Námestie SNP and Obrancov mieru are split by súpisné čísla as listed; their other súpisné numbers, and addresses without a street other than Veľká Lehota 2006/2064/2119, are placed by fill_nearest. 'Lehota pod Vtáčnikom 0' (residents registered to the obec only) is in okrsok 1; there is no addressless okrsok to model it, so it is left in the text only."
+
+[[document]]
+url = "https://www.lehotapodvtacnikom.sk/download_file_f.php?id=2459312"
+sha256 = "993dd7a23a54f42c091adac078a7da099537a885c895bcd6215e1de7cee36697"
+title = "Určenie volebných okrskov a pridelenie ulíc"
+
+[[document]]
+url = "https://www.lehotapodvtacnikom.sk/volby-do-organov-samospravy-obci-a-volby-do-organov-tsk-2026-.html"
+sha256 = "a10b1c224bb2c2b24368f749c5a09331c22a27bd359e1f8e8c059f247ae201c0"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov TSK 2026"
+
+[okrsok.1]
+rules = [
+  {street = "1.mája"},
+  {street = "29.augusta", written = "29. augusta"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Jevgenija Sirku"},
+  {street = "Kováčova"},
+  {street = "Mravečnica"},
+  {street = "Námestie SNP", numbers = "35, 38, 39, 40, 41, 45, 47, 48, 49, 50, 51, 52, 53, 54, 55", by = "supisne"},
+  {street = "Osloboditeľov"},
+  {street = "Starohájska"},
+  {part = "Veľká Lehota", numbers = "2006, 2064, 2119"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Banícka"},
+  {street = "Kpt. Jaroša"},
+  {street = "Mlynská"},
+  {street = "Partizánska"},
+  {street = "Podhradská"},
+  {street = "Suchý Potok", written = "Suchý potok"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Dubinky"},
+  {street = "Fučíkova"},
+  {street = "Hviezdoslavova"},
+  {street = "Kapitána Nálepku"},
+  {street = "Lúčna"},
+  {street = "Moyzesova"},
+  {street = "Náklo"},
+  {street = "Námestie SNP", numbers = "42, 43, 747", by = "supisne"},
+  {street = "Nová ulica"},
+  {street = "Záhradná"},
+  {street = "Obrancov Mieru", numbers = "497, 498, 500, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 512, 513, 539, 540, 541, 542, 543, 544, 546, 547, 548, 549, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559, 560, 561, 1104", by = "supisne", written = "Obrancov mieru"},
+  {street = "Rázusova"},
+  {street = "Školská"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "4.apríla", written = "4. apríla"},
+  {street = "Dedinská"},
+  {street = "Dúbravská"},
+  {street = "Hájska"},
+  {street = "Jesenského"},
+  {street = "Jilemnického"},
+  {street = "Konečná"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Kukučínova"},
+  {street = "Obrancov Mieru", numbers = "514, 515, 516, 517, 518, 519, 520, 521, 522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 1090, 1092", by = "supisne", written = "Obrancov mieru"},
+  {street = "Sovietskej Armády", written = "Sovietskej armády"},
+  {street = "Úzka"},
+]

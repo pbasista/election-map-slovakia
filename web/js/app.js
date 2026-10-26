@@ -12,10 +12,12 @@
  * What is selected lives in the URL hash, so a link can be shared and back
  * and forward work: `o` obec code, `ll` "lat,lon" of the picked point, `a`
  * the address shown, `n` its council obvod where the obec has several (`n=3~`
- * when taken from the approximate boundary at a clicked point), `s` or `p`
- * the street or part of the obec chosen in the search (highlighted on the
- * map), `c` an open candidacy, `r` a contest's area shown on the map
- * without a place (a Bratislava or Košice city contest's, a regional one's:
+ * when taken from the approximate boundary at a clicked point), `d` its
+ * okrsok (polling district) where the obec's are drawn (`d=3~` likewise),
+ * `s` or `p` the street or part of the obec chosen in the search
+ * (highlighted on the map), `c` an open candidacy, `r` a contest's area
+ * shown on the map without a place (a Bratislava or Košice city contest's,
+ * a regional one's:
  * data.js `contestArea`), `f=1` Favourites shown (favourites.js), `v=about`
  * the About dialog (`v=about-<section>` one of its sections, about.js).
  *
@@ -58,6 +60,8 @@ function readHash() {
     label: p.get('a'),
     obvod: Number.parseInt(p.get('n') ?? '', 10) || null,
     approximate: (p.get('n') ?? '').endsWith('~'),
+    okrsok: Number.parseInt(p.get('d') ?? '', 10) || null,
+    okrsokApproximate: (p.get('d') ?? '').endsWith('~'),
     street: p.get('s'),
     part: p.get('p'),
     candidate: p.get('c'),
@@ -85,6 +89,7 @@ function hashOf(s, picks, filter) {
   if (s.obec && Number.isFinite(s.lat)) p.set('ll', `${s.lat.toFixed(5)},${s.lon.toFixed(5)}`);
   if (s.obec && s.label) p.set('a', s.label);
   if (s.obec && s.obvod) p.set('n', `${s.obvod}${s.approximate ? '~' : ''}`);
+  if (s.obec && s.okrsok) p.set('d', `${s.okrsok}${s.okrsokApproximate ? '~' : ''}`);
   if (s.obec && s.street) p.set('s', s.street);
   if (s.obec && s.part) p.set('p', s.part);
   if (s.candidate) p.set('c', s.candidate);
@@ -100,8 +105,9 @@ function hashOf(s, picks, filter) {
 
 function App() {
   const [state, setState] = useState(readHash);
-  // The constituency overlays switched on (map.js `setOverlays`).
-  const [overlays, setOverlays] = useState({ zsk: true, city: true, oz: true });
+  // The constituency overlays and the base map switched on (map.js
+  // `setOverlays`).
+  const [overlays, setOverlays] = useState({ zsk: true, city: true, oz: true, okrsky: true, base: true });
   const [mapFailed, setMapFailed] = useState(false);
   const mapElement = useRef(null);
   // The map.js handle, once the map is up.
@@ -254,6 +260,8 @@ function App() {
           label: p.label,
           obvod: p.obvod,
           approximate: p.approximate,
+          okrsok: p.okrsok,
+          okrsokApproximate: p.okrsokApproximate,
         }),
       insets,
       onZoom: setZoomLimits,
@@ -270,7 +278,7 @@ function App() {
     const view = pendingView.current;
     pendingView.current = null;
     map.select(state.obec ? state : state.area ? { area: state.area } : null, view);
-  }, [map, moves, state.obec, state.lat, state.lon, state.street, state.part, state.obvod, state.area]);
+  }, [map, moves, state.obec, state.lat, state.lon, state.street, state.part, state.obvod, state.okrsok, state.area]);
 
   useEffect(() => {
     map?.setOverlays(overlays);
@@ -373,6 +381,8 @@ function App() {
       label=${label}
       scope=${{ obvod: state.obvod, street: state.street, part: state.part }}
       approximate=${state.approximate}
+      okrsok=${state.okrsok}
+      okrsokApproximate=${state.okrsokApproximate}
       focus=${cardLeft && !cardLeft.favourites ? cardLeft.id : null}
       onCandidate=${openCandidate}
       filter=${filter}

@@ -1,0 +1,29 @@
+# Okrsky of Veľké Revištia, transcribed by an AI agent in job okrsok-rules-635 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1: Kultúrny dom, Vyšné Revištia 31
+#   okrsok 2: Volebný okrsok č. 2: Kultúrny dom, Gajdoš 230
+obec = "523232"
+name = "Veľké Revištia"
+okrsky_date = 2026-07-29
+okrsky_note = "The document gives each okrsok only its polling station (its body mistakenly repeats 'pre konanie referenda dňa 4. júla 2026', but the title and date are for the 24 October 2026 elections). Two okrsky, two parts, each station in another part: each okrsok gets the part of its station (inferred)."
+
+[[document]]
+url = "https://www.velkerevistia.sk/download_file_f.php?id=2449840"
+sha256 = "0ce93711bffac66631ba5f5e2dd36ea31412c46a3be804236a9d6f9d3fe46c79"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov 24. októbra 2026"
+
+[[document]]
+url = "https://www.velkerevistia.sk/volby-a-referenda-2026.html"
+sha256 = "307e3ed1946a15724277a45b03c33ab67716e552bac8d6d5bdd181cc5a0a7e49"
+title = "Voľby a referendá 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Vyšné Revištia", note = "part of the polling station", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Gajdoš", note = "part of the polling station", inferred = true},
+]

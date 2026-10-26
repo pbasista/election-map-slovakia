@@ -1,0 +1,295 @@
+# Council obvody of Bratislava-Vrakuňa (529338), Bratislava II.
+# Transcribed by an AI agent in job obvod-rules-058 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Anízová, Bazalková, Blatuchova, Bodliaková, Brezová, Čakanková, Čučoriedková, Egrešová, Hradská nepárne 1 -29, Hradská párne 2-84, Hrušovská, Imelová, Jesienková, Krokusová, Levanduľová, Majoránová, Margarétová, Marhuľová, Medovkova, Modricová, Nechtíková, Orgovánová, Orchideová, Ostružinová, Platanová, Pod agátmi, Pod gaštanmi, Podbeľová, Podpriehradná, Prasličková, Priehradná, Rascová, Rebarborová, Repíková, Ríbezľová, Slnečnicová, Tymianová,
+#   obvod 2: Amarelková, Arménska, Begóniová, Borovicová, Estónska, Hlohova, Hradská nepárne 31-105, Hradská párne 86-154, Ihličnatá, Irisová, Jazmínová, Kosodrevinová, Kríková 1 -7, Leknová, Magnóliová, Majerská, Maková, Malodunajská, Mostná, obec BA Vrakuňa, Osiková, Palinova, Píniová, Podunajská, Poľnohospodárska 1 -26, Rajecká, Ráztočná, Skorocelova, Šípová, Šíravská, Železničná 1 -34, Žihľavová , obyvatelia v nehnuteľnostiach bez opisného čísla a obyvatelia s trvalým pobytom v mestskej časti Bratislava-Vrakuňa
+#   obvod 3: Bučinová, Jedľová, Kríková 2-8 párne 10-18, Poľnohospodárska 27-117, Stavbárska 1-42, Vŕbová 2-6, Železničná 35-100
+#   obvod 4: Bebravská, Čiližská, , Dvojkrížna, Hnilecká, Slatinská, Vážska, Žitavská
+#   obvod 5: Bodvianska, Čiernovodská, Domašská, Kaméliová, Kazanská, Rajčianska, Stavbárska 44-58, Toplianska, Toryská, Vŕbová 8-12a
+# Okrsky added by an AI agent in job okrsok-rules-057 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bazalková, Blat úchová, Bodliaková, Brezová, , Čučoriedková, Egrešová, Hrušovská, Imelová, Jesienková, Krokusová, Margarétová, Marhuľová, Medovkova, Modricová, Nechtíková, Ostružinová, Pod agátmi, Pod gaštanmi, Podbeľová, Priehradná, Rascová, Rebarborová, Repíková, Ríbezľová, Slnečnicová, Tymianová
+#   okrsok 2: Anízová, Čakanková, Hradská nepárne 1 -29, Hradská párne 2 -84, Levanduľová, Majoránová, Orgovánová, Orchideová, Platanová, Podpriehradná, Prasličková
+#   okrsok 3: Arménska, Amarelková, Begóniová, Borovicová, Estónska, Hlohová, Ihličnatá, Irisová, Jazmínová, Kosodrevinová, Leknová, Magnóliová, Majerská, Maková, Malodunajská, Mostná, Osiková, Palinová, Píniová, Podunajská, Ráztočná, Skorocelová, Šípová, Žihľavová
+#   okrsok 4: Hradská nepárne 31 -105, Hradská párne 86 -154, Kríková 1-7 nepárne, Poľnohospodárska 1 -26, Šíravská, Železničná 1 -34, obyvatelia v nehnuteľnostiach bez orientačného čísla a obyvatelia s trvalým pobytom v mestskej časti Bratislava-Vrakuňa
+#   okrsok 5: Rajecká
+#   okrsok 6: Kríková 2-8 párne, Kríková 10-18, Poľnohospodárska 27-117
+#   okrsok 7: Bučinová, Jedľová, Vŕbová 2-6, Železničná 35-100
+#   okrsok 8: Stavbárska 1-42
+#   okrsok 9: Čiližská, Vážska
+#   okrsok 10: Dvojkrížna, Hnilecká, Slatinská
+#   okrsok 11: Bebravská, Žitavská
+#   okrsok 12: Domašská, Kaméliová, Stavbárska 44-58, Toplianska, Vŕbová 8-12a
+#   okrsok 13: Bodvianska, Kazanská, Toryská
+#   okrsok 14: Čiernovodská, Rajčianska
+obec = "529338"
+name = "Bratislava-Vrakuňa"
+date = 2026-04-14
+note = "File name says 2022-2030 but content is the 2026-2030 announcement. Document streets without register addresses omitted (Amarelková, Blatuchova, Hlohova, Osiková, Palinova, Pod gaštanmi). Addresses without street assigned to obvod 2 via rest. Gagarinova inferred to obvod 5. Kríková 1-7 vs 2-8 overlap interpreted by parity."
+okrsky_fill = "nearest"
+okrsky_note = "The decision is undated. Streets split by numbers in the document are given as whole streets: the obvod rules already split them the same way (Hradská, Kríková, Poľnohospodárska, Železničná, Stavbárska, Vŕbová). Okrsok 4 takes the rest of obvod 2, as the document assigns it the addresses without orientačné číslo. Document names without register addresses omitted (Blat úchová, Pod gaštanmi, Amarelková, Hlohová, Osiková, Palinová). Gagarinova 29 (obvod 5, not in the document) is placed by fill_nearest."
+
+[[document]]
+url = "https://www.vrakuna.sk/data/page/vrakuna.sk/31466/oznamenie-o-urceni-poctu-poslancov-a-o-utvoreni-volebnych-obvodov-pre-volby-do-organov-samospravy-obci-na-volebne-obdobie-2022-2030.pdf"
+sha256 = "ca65547310a8ac30fadbbd2415103edb8288e0c42edc9ac90a8d805f6eed77c3"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí na volebné obdobie 2026 – 2030 (uznesenie č. 343/XIX/2026 zo dňa 14.04.2026)"
+
+[[document]]
+url = "https://www.vrakuna.sk/data/page/vrakuna.sk/31466/volebne-okrsky-a-volebne-miestnosti.pdf"
+sha256 = "21a0d1923006ea38ead090953b1718b554c60c032753550f2750a670fd40fc01"
+title = "Volebné okrsky a volebné miestnosti (starosta MČ Bratislava-Vrakuňa), voľby 24. októbra 2026"
+
+[obvod.1]
+seats = 2
+okrsky = [1, 2]
+rules = [
+  {street = "Anízová"},
+  {street = "Bazalková"},
+  {street = "Bodliaková"},
+  {street = "Brezová"},
+  {street = "Čakanková"},
+  {street = "Čučoriedková"},
+  {street = "Egrešová"},
+  {street = "Hrušovská"},
+  {street = "Imelová"},
+  {street = "Jesienková"},
+  {street = "Krokusová"},
+  {street = "Levanduľová"},
+  {street = "Majoránová"},
+  {street = "Margarétová"},
+  {street = "Marhuľová"},
+  {street = "Medovková", written = "Medovkova"},
+  {street = "Modricová"},
+  {street = "Nechtíková"},
+  {street = "Orgovánová"},
+  {street = "Orchideová"},
+  {street = "Ostružinová"},
+  {street = "Platanová"},
+  {street = "Pod agátmi"},
+  {street = "Podbeľová"},
+  {street = "Podpriehradná"},
+  {street = "Prasličková"},
+  {street = "Priehradná"},
+  {street = "Rascová"},
+  {street = "Rebarborová"},
+  {street = "Repíková"},
+  {street = "Ríbezľová"},
+  {street = "Slnečnicová"},
+  {street = "Tymiánová", written = "Tymianová"},
+  {street = "Hradská", numbers = "1-29", parity = "odd"},
+  {street = "Hradská", numbers = "2-84", parity = "even"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [3, 4, 5]
+rules = [
+  {street = "Arménska"},
+  {street = "Begóniová"},
+  {street = "Borovicová"},
+  {street = "Estónska"},
+  {street = "Ihličnatá"},
+  {street = "Irisová"},
+  {street = "Jazmínová"},
+  {street = "Kosodrevinová"},
+  {street = "Leknová"},
+  {street = "Magnóliová"},
+  {street = "Majerská"},
+  {street = "Maková"},
+  {street = "Malodunajská"},
+  {street = "Mostná"},
+  {street = "Píniová"},
+  {street = "Podunajská"},
+  {street = "Rajecká"},
+  {street = "Ráztočná"},
+  {street = "Skorocelová", written = "Skorocelova"},
+  {street = "Šípová"},
+  {street = "Šíravská"},
+  {street = "Žihľavová"},
+  {street = "Hradská", note = "document: nepárne 31-105, párne 86-154; remainder of Hradská beyond obvod 1 ranges"},
+  {street = "Kríková", numbers = "1-7", parity = "odd", note = "document lists \"Kríková 1 -7\" in obvod 2 and \"Kríková 2-8 párne 10-18\" in obvod 3; read as odd 1-7 here, even numbers in obvod 3"},
+  {street = "Poľnohospodárska", numbers = "1-26"},
+  {street = "Železničná", numbers = "1-34"},
+  {rest = true, note = "\"obec BA Vrakuňa ... obyvatelia v nehnuteľnostiach bez opisného čísla\" (addresses without a street, súpisné only) belong to obvod 2"},
+]
+
+[obvod.3]
+seats = 3
+okrsky = [6, 7, 8]
+rules = [
+  {street = "Bučinová"},
+  {street = "Jedľová"},
+  {street = "Kríková", note = "\"Kríková 2-8 párne 10-18\": even numbers and the remainder of Kríková"},
+  {street = "Poľnohospodárska", note = "27-117 per document"},
+  {street = "Stavbárska", numbers = "1-42"},
+  {street = "Vŕbová", numbers = "2-6"},
+  {street = "Železničná", note = "35-100 per document"},
+]
+
+[obvod.4]
+seats = 3
+okrsky = [9, 10, 11]
+rules = [
+  {street = "Bebravská"},
+  {street = "Čiližská"},
+  {street = "Dvojkrížna"},
+  {street = "Hnilecká"},
+  {street = "Slatinská"},
+  {street = "Vážska"},
+  {street = "Žitavská"},
+]
+
+[obvod.5]
+seats = 3
+okrsky = [12, 13, 14]
+rules = [
+  {street = "Bodvianska"},
+  {street = "Čiernovodská"},
+  {street = "Domašská"},
+  {street = "Kaméliová"},
+  {street = "Kazanská"},
+  {street = "Rajčianska"},
+  {street = "Toplianska"},
+  {street = "Toryská"},
+  {street = "Stavbárska", note = "44-58 per document; remainder of Stavbárska"},
+  {street = "Vŕbová", note = "8-12a per document; remainder of Vŕbová"},
+  {street = "Gagarinova", note = "Gagarinova 29 not named in document; border street next to Kazanská/Rajčianska area, both in obvod 5", inferred = true},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Bazalková"},
+  {street = "Bodliaková"},
+  {street = "Brezová"},
+  {street = "Čučoriedková"},
+  {street = "Egrešová"},
+  {street = "Hrušovská"},
+  {street = "Imelová"},
+  {street = "Jesienková"},
+  {street = "Krokusová"},
+  {street = "Margarétová"},
+  {street = "Marhuľová"},
+  {street = "Medovková", written = "Medovkova"},
+  {street = "Modricová"},
+  {street = "Nechtíková"},
+  {street = "Ostružinová"},
+  {street = "Pod agátmi"},
+  {street = "Podbeľová"},
+  {street = "Priehradná"},
+  {street = "Rascová"},
+  {street = "Rebarborová"},
+  {street = "Repíková"},
+  {street = "Ríbezľová"},
+  {street = "Slnečnicová"},
+  {street = "Tymiánová", written = "Tymianová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Anízová"},
+  {street = "Čakanková"},
+  {street = "Hradská"},
+  {street = "Levanduľová"},
+  {street = "Majoránová"},
+  {street = "Orgovánová"},
+  {street = "Orchideová"},
+  {street = "Platanová"},
+  {street = "Podpriehradná"},
+  {street = "Prasličková"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Arménska"},
+  {street = "Begóniová"},
+  {street = "Borovicová"},
+  {street = "Estónska"},
+  {street = "Ihličnatá"},
+  {street = "Irisová"},
+  {street = "Jazmínová"},
+  {street = "Kosodrevinová"},
+  {street = "Leknová"},
+  {street = "Magnóliová"},
+  {street = "Majerská"},
+  {street = "Maková"},
+  {street = "Malodunajská"},
+  {street = "Mostná"},
+  {street = "Píniová"},
+  {street = "Podunajská"},
+  {street = "Ráztočná"},
+  {street = "Skorocelová"},
+  {street = "Šípová"},
+  {street = "Žihľavová"},
+]
+
+[okrsok.4]
+rules = [
+  {rest = true},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Rajecká"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Kríková"},
+  {street = "Poľnohospodárska"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Bučinová"},
+  {street = "Jedľová"},
+  {street = "Vŕbová"},
+  {street = "Železničná"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Stavbárska"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Čiližská"},
+  {street = "Vážska"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Dvojkrížna"},
+  {street = "Hnilecká"},
+  {street = "Slatinská"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Bebravská"},
+  {street = "Žitavská"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Domašská"},
+  {street = "Kaméliová"},
+  {street = "Stavbárska"},
+  {street = "Toplianska"},
+  {street = "Vŕbová"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Bodvianska"},
+  {street = "Kazanská"},
+  {street = "Toryská"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Čiernovodská"},
+  {street = "Rajčianska"},
+]

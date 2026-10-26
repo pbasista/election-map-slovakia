@@ -34,7 +34,9 @@ Mayors, councils and presidents also have their past election
 by-election that elected the mayor, or the whole council, again, else the
 regular election of 2022; for a president, the regional election of 2022.
 The 2022 regional turnout is kept per obec too, for the 2026 regional
-obvody (unknown here) to be summed from.
+obvody (unknown here) to be summed from, and the 2022 municipal turnout per
+okrsok of every obec of several, for the 2026 council obvody whose okrsky
+are known to be summed from (``build``).
 
 Bodies are named like the 2026 contests without obvod: ``starosta:<obec>``,
 ``oz:<obec>``, ``predseda:<kraj>``, ``zsk:<kraj>``, with ``BA``/``KE`` for the
@@ -247,6 +249,9 @@ class Election:
     turnout: dict[tuple[str, ...], Turnout]
     """``(obec, obvod)`` → turnout of a council obvod, ``(obec, "")`` →
     turnout of the municipality with the valid ballots for mayor."""
+    okrsky: dict[str, dict[int, Turnout]] = field(default_factory=dict)
+    """Obec code → okrsok → its turnout, with the valid ballots for the
+    council; where the tables are per okrsok (the regular election)."""
 
 
 @dataclass
@@ -266,6 +271,10 @@ class Holders:
     """Obec code (Bratislava and Košice districts as such) → the 2022
     regional election in it, to be summed over the 2026 regional obvody,
     which are not known here."""
+    okrsky: dict[str, dict[int, Turnout]] = field(default_factory=dict)
+    """Obec code → okrsok → its turnout in the regular municipal election of
+    2022, for the obce of several okrsky: the 2026 council obvody that are
+    unions of the same okrsky have it summed (``build``)."""
 
     def all(self) -> Iterable[Holder]:
         """Yield every holder, in body order."""
@@ -311,6 +320,11 @@ def apply(holders: Holders, election: Election, admin: candidates.Admin) -> None
         oz = f"oz:{code}"
         if election.day == ELECTION_2022:
             holders.seats_2022[oz] = unit.seats
+            # The city-wide tables of Bratislava and Košice number the okrsky
+            # of each district anew: only the districts' own are kept.
+            okrsky = election.okrsky.get(unit.obec, {})
+            if code in admin.obce and len(okrsky) > 1:
+                holders.okrsky[code] = okrsky
         whole = unit.seats >= holders.seats_2022.get(oz, 0)
         if council:
             elected = [
@@ -432,7 +446,11 @@ def _read_municipal_2022(path: Path) -> Election:
         won_member = _winners(
             _csv(z, path, "tab08f"), ("OBEC", "VOOBEC", "PC_HL"), _ELECTED_2022
         )
-        turnout = _turnout(_csv(z, path, "tab02bf"), _municipal_units)
+        rows = _csv(z, path, "tab02bf")
+        turnout = _turnout(rows, _municipal_units)
+    okrsky: dict[str, dict[int, Turnout]] = defaultdict(dict)
+    for (obec, okrsok), t in _turnout(rows, _okrsok_units).items():
+        okrsky[obec][int(okrsok)] = t
     return Election(
         MUNICIPAL_2022,
         ELECTION_2022,
@@ -440,6 +458,7 @@ def _read_municipal_2022(path: Path) -> Election:
         _elected(mayors, ("OBEC", "PC_HL"), won_mayor),
         _elected(members, ("OBEC", "VOOBEC", "PC_HL"), won_member),
         turnout,
+        dict(okrsky),
     )
 
 
@@ -500,6 +519,10 @@ def _elected(
 
 def _municipal_units(r: Mapping[str, str]) -> Iterable[tuple[tuple[str, ...], str]]:
     return (((r["OBEC"], r["VOOBEC"]), "P_HL_ZAS"), ((r["OBEC"], ""), "P_HL_STA"))
+
+
+def _okrsok_units(r: Mapping[str, str]) -> Iterable[tuple[tuple[str, ...], str]]:
+    return (((r["OBEC"], r["OKRSOK"]), "P_HL_ZAS"),)
 
 
 def _turnout(
@@ -826,6 +849,19 @@ def past_json(p: Past) -> dict[str, object]:
         "day": p.day.isoformat(),
         "eligible": p.turnout.eligible,
         "voters": p.turnout.voters,
+    }
+
+
+def okrsky_json(okrsky: Mapping[int, Turnout]) -> dict[str, object]:
+    """Return ``{election, day, okrsky: [[okrsok, eligible, voters], …]}``.
+
+    The turnout of each okrsok of an obec in the regular municipal election
+    of 2022 (:attr:`Holders.okrsky`), named like :func:`past_json`.
+    """
+    return {
+        "election": MUNICIPAL_2022.removeprefix("results-"),
+        "day": ELECTION_2022.isoformat(),
+        "okrsky": [[n, t.eligible, t.voters] for n, t in sorted(okrsky.items())],
     }
 
 

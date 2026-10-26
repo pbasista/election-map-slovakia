@@ -1,0 +1,30 @@
+# Okrsky of Vinné, transcribed by an AI agent in job okrsok-rules-265 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od č. domu 1 až po č. domu 377
+#   okrsok 2: od č. domu 378 až po č. domu 9 149
+obec = "523259"
+name = "Vinné"
+okrsky_date = 2026-07-22
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky are split by house number (č. domu, read as súpisné číslo); date is the date of the announcement. Two register addresses fall outside 1–9149 and take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.vinne.sk/download_file_f.php?id=2447455"
+sha256 = "bdb7b265ee2e28f2111a8d26433ff2628a313213d9e3fabe9dac4a3032de9ab9"
+title = "Oznámenie o utvorení volebných okrskov a určenie volebnej miestnosti"
+
+[[document]]
+url = "https://www.vinne.sk/volby-oso-a-vuc-2026.html"
+sha256 = "6179a32865df6f927285c48c75fff4a4ecf87d6ffd667dfc3f9d4f031707d1fc"
+title = "Voľby OSO a VÚC 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Vinné", numbers = "1-377"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vinné", numbers = "378-9149"},
+]

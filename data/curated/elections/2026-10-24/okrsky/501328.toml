@@ -1,0 +1,49 @@
+# Okrsky of Pribeta, transcribed by an AI agent in job okrsok-rules-250 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Nádražná ulica, Novozámocká ulica, Nový rad, Revolučná ulica, Dlhá ulica, Rúbaňská ulica, Mierová ulica, Hlavná ulica, Krátka ulica, Pri stanici, Pribeta.
+#   okrsok 2: Vojnická ulica, Družstevná ulica, Modranská ulica, Ružová ulica, Robotnícka ulica, Kvetná ulica, Školská ulica, Obchodná ulica, Komárňanská ulica, Jarková ulica, Lúčna ulica, Jarmočná ulica, Športová ulica, Cintorínska ulica, Mládežnícka ulica, Podzáhradná ulica, Námestie Jána Kalvína.
+obec = "501328"
+name = "Pribeta"
+okrsky_date = 2026-07-22
+
+[[document]]
+url = "https://www.pribeta.sk/files/2026-07-29-090339-Ozn__menie_-_Volebn___okrsky.pdf"
+sha256 = "2fe7bb42fb595efc722b40549c425f34abee4dced1bdde2efbeadf9955c078e8"
+title = "Oznámenie – Utvorenie volebných okrskov a určenie volebných miestností (starosta, 22. 7. 2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Pribeta", note = "the document ends okrsok 1 with 'Pribeta': the addresses without a street (numbered in the obec only)"},
+  {street = "Nádražná ulica"},
+  {street = "Novozámocká ulica"},
+  {street = "Nový rad"},
+  {street = "Revolučná ulica"},
+  {street = "Dlhá ulica"},
+  {street = "Rúbaňská ulica"},
+  {street = "Mierová ulica"},
+  {street = "Hlavná ulica"},
+  {street = "Krátka ulica"},
+  {street = "Pri stanici"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Vojnická ulica"},
+  {street = "Družstevná ulica"},
+  {street = "Modranská ulica"},
+  {street = "Ružová ulica"},
+  {street = "Robotnícka ulica"},
+  {street = "Kvetná ulica"},
+  {street = "Školská ulica"},
+  {street = "Obchodná ulica"},
+  {street = "Komárňanská ulica"},
+  {street = "Jarková ulica"},
+  {street = "Lúčna ulica"},
+  {street = "Jarmočná ulica"},
+  {street = "Športová ulica"},
+  {street = "Cintorínska ulica"},
+  {street = "Mládežnícka ulica"},
+  {street = "Podzáhradná ulica"},
+  {street = "Námestie Jána Kalvína"},
+]

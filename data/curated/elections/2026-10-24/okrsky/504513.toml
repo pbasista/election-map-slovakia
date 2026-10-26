@@ -1,0 +1,58 @@
+# Okrsky of Kúty, transcribed by an AI agent in job okrsok-rules-285 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bratislavská, Konečná, Hollého, Športová, Na Hliníku, Za zbrojnicou, Štúrova, Brnenská, Hlboká cesta, Hurbanova
+#   okrsok 2: Za školou, Školská, Kozia, Sasinkova, Dr. Š. Heska, Gorazdova, Kollárova, Továrenská, Na cihlách, Zelnická
+#   okrsok 3: Nám. Radlinského + voliči prihlásení k trvalému pobytu na Obec Kúty, Štefánikova, Nová, Železničiarska, Textilná
+obec = "504513"
+name = "Kúty"
+okrsky_date = 2026-07-14
+okrsky_fill = "nearest"
+okrsky_note = "Štátny Les (one address) is not named; it and addresses without a street are placed by fill_nearest. Voters registered only to \"Obec Kúty\" belong to okrsok 3 (no rule). An earlier notice (file 1954) gave only the polling stations."
+
+[[document]]
+url = "https://www.kuty.sk/samosprava/spojene-samospravne-volby-2026/volby-do-organov-samospravy-obci-24102026/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-2498sk.html"
+sha256 = "ab428b7668409f33ee5c640a8ede605c3275543328d38d2a0d8747add094b4fe"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.kuty.sk/evt_file.php?file=1956"
+sha256 = "b86c381ee70481394407415730181e7dd153961574d592ea6c6d8c12d08294dd"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (PDF)"
+
+[okrsok.1]
+rules = [
+  {street = "Bratislavská"},
+  {street = "Konečná"},
+  {street = "Hollého"},
+  {street = "Športová"},
+  {street = "Na Hliníku"},
+  {street = "Za zbrojnicou"},
+  {street = "Štúrova"},
+  {street = "Brnenská"},
+  {street = "Hlboká cesta"},
+  {street = "Hurbanova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Za školou"},
+  {street = "Školská"},
+  {street = "Kozia"},
+  {street = "Sasinkova"},
+  {street = "Gorazdova"},
+  {street = "Kollárova"},
+  {street = "Továrenská"},
+  {street = "Zelnická"},
+  {street = "Dr. Štefana Heska", written = "Dr. Š. Heska"},
+  {street = "Na Cihlách", written = "Na cihlách"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Štefánikova"},
+  {street = "Nová"},
+  {street = "Železničiarska"},
+  {street = "Textilná"},
+  {street = "Radlinského Námestie", written = "Nám. Radlinského", note = "Same square, word order differs."},
+]

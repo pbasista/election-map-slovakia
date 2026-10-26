@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from election_map_slovakia import build, config
+from election_map_slovakia import build, config, obvody
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -103,6 +103,10 @@ def project(root: Path) -> config.Config:
     write_geo(built / "geo")
     (built / "addr").mkdir(parents=True)
     (built / "addr" / "index.json").write_text("{}")
+    (built / "base").mkdir()
+    (built / "base" / "index.json").write_text(
+        '{"bands": [], "okresy": [], "files": {}}'
+    )
     (built / "candidates.json").write_text(json.dumps(DATA, ensure_ascii=False))
     return config.load(root / "config")
 
@@ -163,7 +167,7 @@ def test_past_of_a_council_of_several_obvody_is_marked_whole():
             for c in DATA["contests"]
         ]
     }
-    files = build.area_files(data, {}, regional={"zsk:1/2": past("osk2022", 500, 110)})
+    files = build.area_files(data, {}, pasts={"zsk:1/2": past("osk2022", 500, 110)})
     row = ["oso2022", "2022-10-29", 1000, 400]
     okres = files["data/okres/101.json"]["contests"]
     assert okres["oz:528595/2"]["past"] == [*row, 1]
@@ -172,6 +176,53 @@ def test_past_of_a_council_of_several_obvody_is_marked_whole():
     kraj = files["data/kraj/1.json"]["contests"]
     assert kraj["zsk:1/2"]["past"] == ["osk2022", "2022-10-29", 500, 110]
     assert "past" not in kraj["zsk:1/1"]
+
+
+def okrsky_rules(obec: str, okrsky: dict[str, list[int]]) -> obvody.RuleSet:
+    document = {"url": "https://obec.sk/u.pdf", "sha256": "0" * 64, "title": "U"}
+    obvod = {
+        n: {"seats": 1, "rules": [{"rest": True} if n == "1" else {"part": "B"}]}
+        | {"okrsky": numbers}
+        for n, numbers in okrsky.items()
+    }
+    data = {"obec": obec, "name": "A", "document": [document], "obvod": obvod}
+    return obvody.rule_set(data, "test")
+
+
+def test_council_past_sums_the_same_okrsky_of_2022():
+    then = {
+        "election": "oso2022",
+        "day": "2022-10-29",
+        "okrsky": [[1, 100, 30], [2, 200, 50], [3, 300, 90]],
+    }
+    data = {
+        "obce": [
+            {"code": "500001", "okrsky_2022": then},
+            {"code": "500002", "okrsky_2022": then},
+            {"code": "500003", "okrsky_2022": then},
+        ],
+        "contests": [
+            {"kind": "oz", "area": "500001", "past": past("oso2022", 600, 170)},
+            {"kind": "oz", "area": "500002", "past": past("oso2022", 600, 170)},
+            # The whole council elected again in a by-election since.
+            {"kind": "oz", "area": "500003", "past": past("oso202303", 610, 150)},
+        ],
+    }
+    rule_sets = {
+        "500001": okrsky_rules("500001", {"1": [1, 3], "2": [2]}),
+        # One okrsok more than in 2022: the numbers may mean other areas.
+        "500002": okrsky_rules("500002", {"1": [1, 2], "2": [3, 4]}),
+        "500003": okrsky_rules("500003", {"1": [1, 2], "2": [3]}),
+    }
+    assert build.council_past(data, rule_sets) == {
+        "oz:500001/1": past("oso2022", 400, 120) | {"okrsky": [1, 3]},
+        "oz:500001/2": past("oso2022", 200, 50) | {"okrsky": [2]},
+    }
+    files = build.area_files(
+        DATA, {}, pasts={"oz:528595/2": past("oso2022", 400, 120) | {"okrsky": [1, 3]}}
+    )
+    contest = files["data/okres/101.json"]["contests"]["oz:528595/2"]
+    assert contest["past"] == ["oso2022", "2022-10-29", 400, 120, [1, 3]]
 
 
 def test_name_shards_find_a_person_by_each_name_word():
@@ -248,7 +299,7 @@ def test_build_is_deterministic(tmp_path: Path):
 
 
 def versions(site: build.Site) -> dict[str, str]:
-    """The code, vendor, image and data versions of *site*, and its live URL."""
+    """The code, vendor, image and data versions of *site*, and its results path."""
     shell = site.files["sk/index.html"].decode()
     match = re.search(r'<meta name="km-config" content="([^"]*)"', shell)
     assert match is not None
@@ -262,12 +313,11 @@ def versions(site: build.Site) -> dict[str, str]:
         "vendor": vendor[1],
         "images": images,
         "data": app["dataVersion"],
-        "live": app["live"],
+        "results": app["results"],
     }
 
 
-def test_versions_and_live_origin(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setenv(config.LIVE_URL_ENV, "http://127.0.0.1:8766")
+def test_versions_and_results(tmp_path: Path):
     cfg = project(tmp_path / "project")
     # A party with a logo, which data/index.json names under the images.
     data = json.loads((cfg.build_dir / "candidates.json").read_bytes())
@@ -276,7 +326,9 @@ def test_versions_and_live_origin(tmp_path: Path, monkeypatch: pytest.MonkeyPatc
     site = build.assemble(cfg)
     first = versions(site)
     code, vendor = first["code"], first["vendor"]
-    assert first["live"] == "http://127.0.0.1:8766"
+    # The results' path is named before there are any.
+    assert first["results"] == "/results/2026-10-24"
+    assert not any(t.startswith("results/") for t in site.copies)
     shell = site.files["sk/index.html"].decode()
     # The preload is of the very URL the app fetches, or it goes unused.
     assert f'href="/i18n/sk.json?v={first["data"]}"' in shell
@@ -292,7 +344,7 @@ def test_versions_and_live_origin(tmp_path: Path, monkeypatch: pytest.MonkeyPatc
     assert "../vendor/" not in app_js
     rules = build.header_rules(site.files[build.HEADERS].decode())
     csp = build.response_headers(rules, "/sk/")["Content-Security-Policy"]
-    assert "; connect-src 'self' http://127.0.0.1:8766;" in csp
+    assert "; connect-src 'self';" in csp
     immutable = "public, max-age=31536000, immutable"
     cache_control = {
         path: build.response_headers(rules, path)["Cache-Control"]
@@ -302,14 +354,22 @@ def test_versions_and_live_origin(tmp_path: Path, monkeypatch: pytest.MonkeyPatc
             f"/assets/img/{first['images']}/parties/demokrati.svg",
             "/assets/cache.css",
             "/geo/x.json",
+            "/results/2026-10-24/status.json",
+            "/results/2026-10-24/okres/101.json",
+            "/results/2026-10-24/okrsky/okres/101.json",
         )
     }
+    day = "public, max-age=86400"
     assert cache_control == {
         f"/assets/{code}/js/app.js": immutable,
         f"/assets/vendor/{vendor}/leaflet/leaflet.js": immutable,
         f"/assets/img/{first['images']}/parties/demokrati.svg": immutable,
-        "/assets/cache.css": "public, max-age=86400",
-        "/geo/x.json": "public, max-age=86400",
+        "/assets/cache.css": day,
+        "/geo/x.json": day,
+        # Revalidated on every load: it names the current results files.
+        "/results/2026-10-24/status.json": "no-cache",
+        "/results/2026-10-24/okres/101.json": day,
+        "/results/2026-10-24/okrsky/okres/101.json": day,
     }
     # Other code: new code URLs only; the libraries, images and data keep theirs.
     css = cfg.root / "web" / "app.css"
@@ -328,12 +388,12 @@ def test_versions_and_live_origin(tmp_path: Path, monkeypatch: pytest.MonkeyPatc
     assert third["images"] == second["images"]
     # Other data: a new data version.
     (cfg.build_dir / "addr" / "index.json").write_text('{"obce": []}')
-    assert versions(build.assemble(cfg))["data"] != third["data"]
-    monkeypatch.setenv(config.LIVE_URL_ENV, "")
-    cfg = config.load(cfg.root / "config")
+    fourth = versions(build.assemble(cfg))
+    assert fourth["data"] != third["data"]
+    # The election's results: copied, and a new data version.
+    cfg.results_dir.mkdir(parents=True)
+    (cfg.results_dir / "status.json").write_text('{"phase": "none"}')
     site = build.assemble(cfg)
-    assert versions(site)["live"] == ""
-    csp = build.response_headers(
-        build.header_rules(site.files[build.HEADERS].decode()), "/sk/"
-    )["Content-Security-Policy"]
-    assert "; connect-src 'self';" in csp
+    assert site.copies["results/2026-10-24"] == cfg.results_dir
+    assert versions(site)["data"] != fourth["data"]
+    assert versions(site)["results"] == "/results/2026-10-24"

@@ -5,6 +5,7 @@
 import { html, useEffect, useRef } from '../vendor/preact-htm.module.js';
 import { Contest, FilterBar, OfficeResult, researchScope, useRowActions } from './ballots.js';
 import {
+  areaName,
   contestArea,
   dataIndex,
   displayName,
@@ -14,8 +15,10 @@ import {
   person,
   useLoaded,
 } from './data.js';
-import { formatDate, formatNumber, t } from './i18n.js';
-import { BackIcon, DisputeIcon, WarningIcon } from './icons.js';
+import { formatDate, formatNumber, formatPercent, t } from './i18n.js';
+import { BackIcon, DisputeIcon, MapPinIcon, WarningIcon } from './icons.js';
+import { NOT_COUNTED, useLive } from './live.js';
+import { candidateMode, setMapMode, useDrawnOkrsky, useMapMode } from './mapmode.js';
 import { Notice } from './pane.js';
 
 /* Serious controversies first: they are what a voter must not miss; then
@@ -129,6 +132,89 @@ function AffairsAlert({ candidate: c }) {
   `;
 }
 
+// How many units the origins of the votes list each way.
+const ORIGINS = 5;
+// The share of a handful of ballots says little: the highest shares are
+// those of the units with at least this many valid ballots (of all, where
+// fewer than two have as many).
+const ORIGIN_VALID = 30;
+
+/* Where candidate *c*'s votes in *contest* came from, once its results
+ * give them by unit: by okrsok in the final results, else by obec or city
+ * district (the contest's `areas`). The units with the most of the
+ * candidate's votes and those where the candidate had the highest share,
+ * and a pin that shows the candidate's votes on the map (by the units of
+ * the zoom, mapmode.js). Nothing for a contest of one unit. */
+function VoteOrigins({ candidate: c, contest, index }) {
+  const live = useLive();
+  const current = useMapMode();
+  const drawn = useDrawnOkrsky();
+  const entry = live.of(contest.id);
+  if (!entry || entry === NOT_COUNTED) return null;
+  const name = areaName(contest.id, index);
+  const okrsky = live.hasOkrsky(name) ? live.okrsky(name)?.contests[contest.id] : null;
+  // By okrsok where the map draws them, as it shows them zoomed in.
+  const keys = Object.keys(okrsky ?? {});
+  const byOkrsky = keys.length > 1 && keys.some((key) => drawn?.keys.has(key));
+  // An okrsok key is '<obec>/<n>'; an area an obec code, or on election
+  // night a regional obvod, which is not one of the contest's units.
+  const records = byOkrsky ? Object.entries(okrsky) : Object.entries(entry.areas ?? {}).filter(([key]) => index.obce[key]);
+  const rows = records
+    .filter(([, [, , valid]]) => valid)
+    .map(([key, [, , valid, votes]]) => ({ key, votes: votes[c.number] ?? 0, valid }));
+  if (rows.length < 2) return null;
+  const obce = new Set(rows.map((r) => r.key.split('/')[0]));
+  const unitName = (key) => {
+    if (!byOkrsky) return index.obce[key]?.[0] ?? key;
+    const [code, n] = key.split('/');
+    const obec = index.obce[code]?.[0] ?? code;
+    return obce.size > 1 ? t('card.origins_okrsok_in', { n, name: obec }) : t('card.origins_okrsok', { n });
+  };
+  const most = [...rows].sort((a, b) => b.votes - a.votes).slice(0, ORIGINS);
+  const sizeable = rows.filter((r) => r.valid >= ORIGIN_VALID);
+  const highest = [...(sizeable.length > 1 ? sizeable : rows)]
+    .sort((a, b) => b.votes / b.valid - a.votes / a.valid)
+    .slice(0, ORIGINS);
+  const by = byOkrsky ? 'okrsky' : 'obce';
+  const on = current?.kind === 'candidate' && current.id === c.id;
+  const label = t(on ? 'mapmode.candidate_hide' : 'mapmode.candidate_show');
+  const list = (items) => html`<ol class="origins-list">
+    ${items.map(
+      (r) => html`<li key=${r.key}>
+        <span class="origins-unit">${unitName(r.key)}</span>
+        <span class="origins-figures">${formatNumber(r.votes)} · ${formatPercent(r.votes / r.valid)}</span>
+      </li>`,
+    )}
+  </ol>`;
+  return html`
+    <div class="origins panel-body">
+      <div class="origins-head">
+        <h4>${t(`card.origins_${by}`)}</h4>
+        <button
+          type="button"
+          class="votes-map"
+          aria-pressed=${on ? 'true' : 'false'}
+          title=${label}
+          aria-label=${label}
+          onClick=${() => setMapMode(on ? null : candidateMode(c, contest))}
+        >
+          <${MapPinIcon} />
+        </button>
+      </div>
+      <div class="origins-columns">
+        <section>
+          <h5>${t('card.origins_most')}</h5>
+          ${list(most)}
+        </section>
+        <section>
+          <h5>${t('card.origins_highest')}</h5>
+          ${list(highest)}
+        </section>
+      </div>
+    </div>
+  `;
+}
+
 /* *filter* and `onFilter(next)` as for the ballots (ballots.js): the other
  * candidates of each of the person's contests follow it; the person never.
  * *picks* and `onPicks(next)` the circled candidates (picks.js). */
@@ -214,14 +300,15 @@ export function CandidateCard({ id, onCandidate, onPlace, onClose, filter, onFil
       ${candidacies.map((x) => {
         const target = contestArea(x.contest.id, index);
         return html`<${Contest}
-          key=${x.candidate.id}
-          contest=${x.contest}
-          current=${x.candidate}
-          onCandidate=${onCandidate}
-          filter=${filter}
-          actions=${actions}
-          map=${{ label: t(`card.map_${target.what}`), onClick: () => onPlace(target) }}
-        />`;
+            key=${x.candidate.id}
+            contest=${x.contest}
+            current=${x.candidate}
+            onCandidate=${onCandidate}
+            filter=${filter}
+            actions=${actions}
+            map=${{ label: t(`card.map_${target.what}`), onClick: () => onPlace(target) }}
+          />
+          <${VoteOrigins} key=${`${x.candidate.id} origins`} candidate=${x.candidate} contest=${x.contest} index=${index} />`;
       })}
       <${Research} candidate=${c} />
       <p class="panel-body muted small">${t('card.disclaimer')}</p>

@@ -1,0 +1,36 @@
+# Okrsky of Vlčany, transcribed by an AI agent in job okrsok-rules-295 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: č.d.: 5-399, 1450-1452,1454-1457,1470-1500,1502-1534,1536,1540-1541,1544-1547,1552, 1564-1565,1567-1569,1575-1576,1581,1585,1587,1589,1593-1594,1600-1604,1619-1623,1627, 1633-1634,1637,1638,1641,1644,1646,1651,1652,1653,1660,1662-1663
+#   okrsok 2: č.d.: 0,401-904,1458-1466,1535,1537,1538,1542,1548,1549,1563,1566,1574,1579,1582,1586,1582, 1586,1591,1592,1596,1626,1647-1649,1655, 1661,1664-1665,1667-1668
+#   okrsok 3: č.d.: 906-1412,1427,1432,1467-1469,1539,1543,1568,1570-1573,1577,1578,1580,1584,1590, 1597,1598,1605-1608,1613,1617,1628,1630-1632,1635,1640,1645,1658,1666
+obec = "504165"
+name = "Vlčany"
+okrsky_date = 2026-07-16
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by súpisné číslo (č.d.). The document lists 1568 both in okrsok 1 (range 1567-1569) and okrsok 3; it is excluded from both rules and placed by the nearest address. Numbers not listed in any okrsok (e.g. 400, 905, 1413-1449, 1453) also go by the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.obecvlcany.sk/evt_file.php?file=3230"
+sha256 = "20663f567272414a67ce07240b6283dc785699aabd4a47f0fc8f43421001f44c"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Vlčany"
+
+[[document]]
+url = "https://www.obecvlcany.sk/zverejnovanie/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-2026/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-1003sk.html"
+sha256 = "77190bdf2d4cce1f31ca9c0dd7d4a63d80c24b51a839ec15e22eb31a19e2a857"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Vlčany", numbers = "5-399, 1450-1452, 1454-1457, 1470-1500, 1502-1534, 1536, 1540-1541, 1544-1547, 1552, 1564-1565, 1567-1569, 1575-1576, 1581, 1585, 1587, 1589, 1593-1594, 1600-1604, 1619-1623, 1627, 1633-1634, 1637, 1638, 1641, 1644, 1646, 1651, 1652, 1653, 1660, 1662-1663", except = "1568"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vlčany", numbers = "0, 401-904, 1458-1466, 1535, 1537, 1538, 1542, 1548, 1549, 1563, 1566, 1574, 1579, 1582, 1586, 1586, 1591, 1592, 1596, 1626, 1647-1649, 1655, 1661, 1664-1665, 1667-1668"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Vlčany", numbers = "906-1412, 1427, 1432, 1467-1469, 1539, 1543, 1570-1573, 1577, 1578, 1580, 1584, 1590, 1597, 1598, 1605-1608, 1613, 1617, 1628, 1630-1632, 1635, 1640, 1645, 1658, 1666"},
+]

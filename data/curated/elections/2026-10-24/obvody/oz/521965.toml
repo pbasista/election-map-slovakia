@@ -1,0 +1,39 @@
+# Council obvody of Sady nad Torysou (521965), Košice - okolie.
+# Transcribed by an AI agent in job obvod-rules-164 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: Byster sa volia 4 poslanci.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: Zdobu sa volia 4 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-163 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 BYSTER
+#   okrsok 2: Okrsok č. 2 ZDOBA
+obec = "521965"
+name = "Sady nad Torysou"
+date = 2026-07-13
+okrsky_date = 2026-07-17
+
+[[document]]
+url = "https://www.sadynadtorysou.sk/modules/file_storage/download.php?file=8400d49c%7C663&inline=1"
+sha256 = "2745879f043ff441189819aadb8205263956751030bf55c06e4ea5fb26fc8e89"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 211/2026 zo dňa 13.07.2026)"
+
+[[document]]
+url = "https://www.sadynadtorysou.sk/modules/file_storage/download.php?file=4172244d%7C661&inline=1"
+sha256 = "b05a6fd089146d61367256b326632d4862f7144bad18021c426a5761741459f9"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (17.07.2026)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Byster"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [2]
+rules = [
+  {part = "Zdoba"},
+]

@@ -1,0 +1,116 @@
+# Okrsky of Šahy, transcribed by an AI agent in job okrsok-rules-202 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hontianska cesta, Bitúnková, I. Madácha, L. Pongrácza, Nemocničná, Kuzmányho, A. Sipossa, Záhradnícka, Lesná, Bernecká, Železničná
+#   okrsok 2: Hlavné námestie, Tabánska, J. Kráľa, Mlynská, Ružová, Sládkovičová, J. Jesenského, Petöfiho, 1. mája
+#   okrsok 3: Tešmacká cesta, Hviezdoslavova, SNP, Kapitulská, Školská, F. Rákócziho II., Podzámocká, E. B. Lukáča, J. Rotaridesa, kpt. Nálepku, Kalvarenská, Parková, Námestie B. Bartóka, Priemyselná, Námestie kráľa svätého Štefana.
+#   okrsok 4: A. Gyürkyho, gr. I. Széchenyiho, Gy. Szondyho, J. Thuróczyho (č. 25,27,29,31,33), K. Mikszátha (1-14)
+#   okrsok 5: Námestie M. R. Štefánika, K. Mikszátha (č. 15 a 16), Ľ. Štúra, Severná, Mládežnícka, Cintorínska, Obrancov mieru, Zs. Móricza
+#   okrsok 6: M. M. Hodžu, Fegyvernekiho, J. Smreka, Vinárska, Hangyás, Vajanského, Agátová, A. Kmeťa, A. Szokolyiho, Pivničná, Olvárska cesta, J. Thuróczyho (okrem 25,27,29,31,33), B.Němcovej, Gy. Thúryho
+#   okrsok 7: Šahy časť Tešmák
+#   okrsok 8: Šahy časť Preseľany nad Ipľom
+obec = "502782"
+name = "Šahy"
+okrsky_date = 2026-07-10
+okrsky_fill = "nearest"
+okrsky_note = "Olvárska cesta (okrsok 6) is not in the register; left out. K. Mikszátha 17 is not listed; it and addresses without a street in part Šahy take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.sahy.sk/download_file_f.php?id=2442827"
+sha256 = "07e10ae992134f14cdd1fcee2ffb257a447d3780435c156b74b96e3c81c5f1c6"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Hontianska cesta"},
+  {street = "Bitúnková"},
+  {street = "I. Madácha"},
+  {street = "L. Pongrácza"},
+  {street = "Nemocničná"},
+  {street = "Kuzmányho"},
+  {street = "A. Sipossa"},
+  {street = "Záhradnícka"},
+  {street = "Lesná"},
+  {street = "Bernecká"},
+  {street = "Železničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavné námestie"},
+  {street = "Tabánska"},
+  {street = "J. Kráľa"},
+  {street = "Mlynská"},
+  {street = "Ružová"},
+  {street = "J. Jesenského"},
+  {street = "1. mája"},
+  {street = "Sládkovičova", written = "Sládkovičová", note = "typo of Sládkovičova (long final a)"},
+  {street = "Petőfiho", written = "Petöfiho", note = "ö vs ő, same name"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Tešmácka cesta", written = "Tešmacká cesta", note = "accent misplaced"},
+  {street = "Hviezdoslavova"},
+  {street = "SNP"},
+  {street = "Kapitulská"},
+  {street = "Školská"},
+  {street = "F. Rákócziho II."},
+  {street = "Podzámocká"},
+  {street = "E. B. Lukáča"},
+  {street = "J. Rotaridesa"},
+  {street = "Kpt. Nálepku"},
+  {street = "Parková"},
+  {street = "Námestie B. Bartóka"},
+  {street = "Priemyselná"},
+  {street = "Námestie kráľa svätého Štefana"},
+  {street = "Kalvárenská", written = "Kalvarenská", note = "missing accent"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "A. Gyürkyho"},
+  {street = "Gr. I. Széchenyiho"},
+  {street = "Gy. Szondyho"},
+  {street = "J. Thuróczyho", numbers = "25, 27, 29, 31, 33"},
+  {street = "K. Mikszátha", numbers = "1-14"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Námestie M. R. Štefánika"},
+  {street = "Ľ. Štúra"},
+  {street = "Severná"},
+  {street = "Mládežnícka"},
+  {street = "Cintorínska"},
+  {street = "Obrancov mieru"},
+  {street = "Zs. Móricza"},
+  {street = "K. Mikszátha", numbers = "15-16"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "M. M. Hodžu"},
+  {street = "F. Fegyvernekiho"},
+  {street = "J. Smreka"},
+  {street = "Vinárska"},
+  {street = "Hangyás"},
+  {street = "Vajanského"},
+  {street = "Agátová"},
+  {street = "A. Kmeťa"},
+  {street = "A. Szokolyiho"},
+  {street = "Pivničná"},
+  {street = "B. Němcovej"},
+  {street = "Gy. Thúryho"},
+  {street = "J. Thuróczyho", except = "25, 27, 29, 31, 33"},
+]
+
+[okrsok.7]
+rules = [
+  {part = "Tešmák"},
+]
+
+[okrsok.8]
+rules = [
+  {part = "Preseľany nad Ipľom"},
+]

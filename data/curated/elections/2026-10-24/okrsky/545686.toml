@@ -1,0 +1,29 @@
+# Okrsky of Melčice-Lieskové, transcribed by an AI agent in job okrsok-rules-567 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: časť obce Melčice a časť obce Melčice - Dolina
+#   okrsok 2: časť obce Zemianske Lieskové
+obec = "545686"
+name = "Melčice-Lieskové"
+okrsky_date = 2026-09-18
+okrsky_note = "'Melčice - Dolina' is not a part in the register; it lies within part Melčice."
+
+[[document]]
+url = "https://www.melcice-lieskove.sk/modules/file_storage/download.php?file=1c32ba7b%7C1403&inline=1"
+sha256 = "71dbb4e8a9879285ce78bc15a57002f69d79a4b743a26cdeb811e41979300783"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností (Určenie volebných okrskov)"
+
+[[document]]
+url = "https://www.melcice-lieskove.sk/urad/komunalne-volby-/komunalne-volby-2026/"
+sha256 = "ad94e791ebc3976f99c83ad57e0dccde4ad6094aead20132bc720b3aea047eed"
+title = "Komunálne voľby 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Melčice"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Zemianske Lieskové"},
+]

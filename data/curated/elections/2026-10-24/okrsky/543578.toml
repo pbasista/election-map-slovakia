@@ -1,0 +1,61 @@
+# Okrsky of Spišské Podhradie, transcribed by an AI agent in job okrsok-rules-366 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Bezdomovci, Mariánske námestie, Štúrova, Trhovisko
+#   okrsok 2: Ulice: Bielidla, Galova, Hviezdoslavova, Jarmočná, Robotnícka, Štefánikova
+#   okrsok 3: Ulice: Komenského, Levočská cesta, Májová, Spišská Kapitula, Starý jarok
+#   okrsok 4: Ulice: Dr. Špirka, Kúpeľná, miestna časť Hlinisko, Palešovo námestie, Podzámková, Prešovská, Sídlisko Hrad, Školská, Ulica sv. Jána Pavla II., Vodný rad
+#   okrsok 5: miestna časť Katúň
+obec = "543578"
+name = "Spišské Podhradie"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document, read from the image; undated. 'miestna časť Hlinisko' (okrsok 4) is not a part or street in the register: left out. Streets the document omits (1.čsl. Armadného Zboru, Kpt. Nálepku, one address each) and addresses without a street in Spišské Podhradie take the nearest placed address. 'Bezdomovci' (okrsok 1) are addressless voters."
+
+[[document]]
+url = "https://www.spisskepodhradie.sk/modules/file_storage/download.php?file=39c93f47%7C1948&inline=1"
+sha256 = "94c26299c8329c5f3c16f387291deb89fb4c489a3fd768601f7be3e62e2f658d"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností – voľby do orgánov samosprávy a voľby do orgánov samosprávnych krajov 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Mariánske námestie"},
+  {street = "Štúrova"},
+  {street = "Trhovisko"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bielidla"},
+  {street = "Galova"},
+  {street = "Hviezdoslavova"},
+  {street = "Jarmočná"},
+  {street = "Robotnícka"},
+  {street = "Štefánikova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Komenského"},
+  {street = "Levočská cesta"},
+  {street = "Májová"},
+  {street = "Spišská Kapitula"},
+  {street = "Starý jarok"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Dr. Špirka"},
+  {street = "Kúpeľná"},
+  {street = "Palešovo námestie"},
+  {street = "Podzámková"},
+  {street = "Prešovská"},
+  {street = "Sídlisko Hrad"},
+  {street = "Školská"},
+  {street = "Ulica sv. Jána Pavla II."},
+  {street = "Vodný Rad", written = "Vodný rad"},
+]
+
+[okrsok.5]
+rules = [
+  {part = "Katúň"},
+]

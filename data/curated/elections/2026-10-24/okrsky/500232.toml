@@ -1,0 +1,25 @@
+# Okrsky of Golianovo, transcribed by an AI agent in job okrsok-rules-503 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Príslušnosť voličov v okrsku podľa súpisného čísla: od čísla 2 po číslo 376
+#   okrsok 2: Príslušnosť voličov v okrsku podľa súpisného čísla: od čísla 377 po číslo 867
+obec = "500232"
+name = "Golianovo"
+okrsky_date = 2026-07-29
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky are given by súpisné číslo ranges (2–376 and 377–867). Any address outside them (e.g. č. 1 or above 867) takes the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.golianovo.sk/files/2026-07-29-140951-Ozn__menie_o___ase_a_mieste_konania_volieb.pdf"
+sha256 = "b344b98328ea3e2245c902ce366b6ed7a47a50371fe261f952b1d0e229442418"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Golianovo", numbers = "2-376"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Golianovo", numbers = "377-867"},
+]

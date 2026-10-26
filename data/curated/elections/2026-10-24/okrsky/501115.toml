@@ -1,0 +1,63 @@
+# Okrsky of Svätý Peter, transcribed by an AI agent in job okrsok-rules-237 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice : Hlavná, Cintorínska, Dolná, Dulovská cesta, Horná, Krátka, Mierová, Mudroňovská cesta, Severná
+#   okrsok 2: ulice : Malá, Marcelovská cesta, Podzáhradná (orientačné čísla od 1 do 34), Poľná, Robotnícka, Rozmarínová, Široká, Školská, Úzka
+#   okrsok 3: ulice : Agátová, Briežky, Budovateľská, Dlhá, Hurbanovská cesta, Nová, Pionierska, Pivničná, Podzáhradná (orientačné čísla od 35), Ulica Zichyho, Ulica J. Kossányiho, Tulipánová ulica
+obec = "501115"
+name = "Svätý Peter"
+okrsky_date = 2026-07-14
+okrsky_fill = "nearest"
+okrsky_note = "Addresses without a street take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.svatypeter.eu/e_download.php?file=/data/uredni_deska/obsah297_1.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD%20.pdf"
+sha256 = "bd95ce36a156b036cfd7bd6088c3f4e350beafb5909ea12e8e26476d3a96158a"
+title = "Utvorenie volebných okrskov s vymedzením ich územného obvodu a určenie volebných miestností"
+
+[[document]]
+url = "https://www.svatypeter.eu/samosprava/volby/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-hlasovanie-do-organov-samospravy-obci-a-pre-volby-do-organov-samospravnych-krajov-425.html"
+sha256 = "ad63312f284b3d0847fd24d84cf6ae49f12b739692689bfc0abc72bd613da3c9"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre hlasovanie do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná"},
+  {street = "Cintorínska"},
+  {street = "Dolná"},
+  {street = "Dulovská cesta"},
+  {street = "Horná"},
+  {street = "Krátka"},
+  {street = "Mierová"},
+  {street = "Mudroňovská cesta"},
+  {street = "Severná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Malá"},
+  {street = "Marcelovská cesta"},
+  {street = "Poľná"},
+  {street = "Robotnícka"},
+  {street = "Rozmarínová"},
+  {street = "Široká"},
+  {street = "Školská"},
+  {street = "Úzka"},
+  {street = "Podzáhradná", numbers = "1-34"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová"},
+  {street = "Briežky"},
+  {street = "Budovateľská"},
+  {street = "Dlhá"},
+  {street = "Hurbanovská cesta"},
+  {street = "Nová"},
+  {street = "Pionierska"},
+  {street = "Pivničná"},
+  {street = "Ulica Zichyho"},
+  {street = "Ulica J. Kossányiho"},
+  {street = "Podzáhradná", numbers = "35-"},
+  {street = "Tulipánová Ulica", written = "Tulipánová ulica"},
+]

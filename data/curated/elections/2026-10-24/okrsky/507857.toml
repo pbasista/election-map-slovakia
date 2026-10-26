@@ -1,0 +1,47 @@
+# Okrsky of Častá, transcribed by an AI agent in job okrsok-rules-421 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Andreja Hlinku, Červený Kameň, Družstevná, Fándlyho, Hlavná, Mraznická, Pastierska, Píla–rázcestie, Podzámocká, Zámocká, bez ulice, len Častá
+#   okrsok 2: ulice: Cintorínska, Karpatská, Kíperská, Mesačná, Na vŕšku, Nová, Podhorská, Poľná, Ružová, Slnečná, Sokolská, Štefanovská, Veterná, Záhradnícka
+obec = "507857"
+name = "Častá"
+okrsky_date = 2026-07-02
+okrsky_fill = "nearest"
+okrsky_note = "Červený Kameň is a part of the obec (part rule). Okrsok 1 also holds voters \"bez ulice, len Častá\"; addresses without a street take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.casta.sk/www/wp-content/uploads/2026/07/Urcenie-volebnych-okrskov-a-volebnej-miestnosti-.pdf"
+sha256 = "6c25c1b619a3482abb092ff2397fd648a7b3da84c1c4ae6920b68dc57e39ac1f"
+title = "Určenie volebných okrskov a volebnej miestnosti"
+
+[okrsok.1]
+rules = [
+  {street = "Andreja Hlinku"},
+  {street = "Družstevná"},
+  {street = "Fándlyho"},
+  {street = "Hlavná"},
+  {street = "Mraznická"},
+  {street = "Pastierska"},
+  {street = "Píla-rázcestie"},
+  {street = "Podzámocká"},
+  {street = "Zámocká"},
+  {part = "Červený Kameň"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Karpatská"},
+  {street = "Kíperská"},
+  {street = "Mesačná"},
+  {street = "Na vŕšku"},
+  {street = "Nová"},
+  {street = "Podhorská"},
+  {street = "Poľná"},
+  {street = "Ružová"},
+  {street = "Slnečná"},
+  {street = "Sokolská"},
+  {street = "Štefanovská"},
+  {street = "Veterná"},
+  {street = "Záhradnícka"},
+]

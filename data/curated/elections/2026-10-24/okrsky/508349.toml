@@ -1,0 +1,56 @@
+# Okrsky of Vysoká pri Morave, transcribed by an AI agent in job okrsok-rules-395 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov, ktorí majú trvalý pobyt na uliciach: Bazová, Družstevná, Dúbrava, Hlavná, Hraničiarska, Krátka, Krížna, Kvetná, Lúčna, Mládežnícka, Námestie A. Kadnára, Námestie Oslobodenia, Nandin Dvor, Nová, Orechová, Pod Vŕškom, Poľná, Riečna, Zemianské I., Zemianské II., Zemianské III.
+#   okrsok 2: pre voličov, ktorí majú trvalý pobyt na uliciach: Robotnícka, Rybárska, Slnečná, Spojná, Staničná, Stromová, Športová, Tichá, Továrenská, Ulica kasárne, Veterná, Záhradná
+obec = "508349"
+name = "Vysoká pri Morave"
+okrsky_date = 2026-07-10
+okrsky_fill = "nearest"
+okrsky_note = "Addresses without a street take the nearest placed address."
+
+[[document]]
+url = "https://www.vysokaprimorave.sk/images/Utvorenie_volebnych_okrskov_a_urcenie_volebnych_miestnosti_pre_volby_do_organov_samospravy_obci_a_pre_volby_do_organov_samospravnych_krajov_1.pdf"
+sha256 = "49119076402bf7dd730442d911b2f3ed571e127f53b58dcb4f282caa9d7d2263"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov dňa 24. októbra 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Bazová"},
+  {street = "Družstevná"},
+  {street = "Dúbrava"},
+  {street = "Hlavná"},
+  {street = "Hraničiarska"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Kvetná"},
+  {street = "Lúčna"},
+  {street = "Mládežnícka"},
+  {street = "Námestie Antona Kadnára", written = "Námestie A. Kadnára"},
+  {street = "Námestie Oslobodenia"},
+  {street = "Nandin Dvor"},
+  {street = "Nová"},
+  {street = "Orechová"},
+  {street = "Pod Vŕškom"},
+  {street = "Poľná"},
+  {street = "Riečna"},
+  {street = "Zemianske I.", written = "Zemianské I.", note = "Document misspells Zemianske as Zemianské; same street."},
+  {street = "Zemianske II.", written = "Zemianské II.", note = "Document misspells Zemianske as Zemianské; same street."},
+  {street = "Zemianske III.", written = "Zemianské III.", note = "Document misspells Zemianske as Zemianské; same street."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Robotnícka"},
+  {street = "Rybárska"},
+  {street = "Slnečná"},
+  {street = "Spojná"},
+  {street = "Staničná"},
+  {street = "Stromová"},
+  {street = "Športová"},
+  {street = "Tichá"},
+  {street = "Továrenská"},
+  {street = "Ulica kasárne"},
+  {street = "Veterná"},
+  {street = "Záhradná"},
+]

@@ -1,0 +1,26 @@
+# Okrsky of Jánovce, transcribed by an AI agent in job okrsok-rules-626 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov s trvalým pobytom v obci od súpisného čísla 0 – 205
+#   okrsok 2: pre voličov s trvalým pobytom v obci od súpisného čísla 206 – 500
+obec = "523542"
+name = "Jánovce"
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky are given by súpisné číslo ranges (0–205 and 206–500) across the whole obec. They are applied to both parts, Jánovce and Machalovce, on the reading that súpisné čísla are numbered across the obec. Addresses above 500 take the okrsok of the nearest placed address. The announcement (1.9.2026) gives no date of the decision."
+
+[[document]]
+url = "https://obec-janovce.sk/aktuality/nezaradene/volebne-okrsky-v-spojenych-volbach-2026/"
+sha256 = "11fa73bc05d94965207e9b8a38e75b059b8792e3fde3cc1c8481e5d06e84657c"
+title = "Volebné okrsky v Spojených voľbách 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Jánovce", numbers = "1-205"},
+  {part = "Machalovce", numbers = "1-205"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Jánovce", numbers = "206-500"},
+  {part = "Machalovce", numbers = "206-500"},
+]

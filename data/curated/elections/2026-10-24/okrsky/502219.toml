@@ -1,0 +1,29 @@
+# Okrsky of Drženice, transcribed by an AI agent in job okrsok-rules-632 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: časť obce Drženice
+#   okrsok 2: časť obce Kmeťovce
+obec = "502219"
+name = "Drženice"
+okrsky_date = 2026-06-24
+okrsky_note = "The only 2026 document is council resolution č. 180 (24.06.2026), which sets one obvod and recommends two okrsky, one for časť obce Drženice and one for časť obce Kmeťovce; no separate mayor's decision with numbers or stations is published. Numbering (1 Drženice, 2 Kmeťovce) follows the order in the resolution and is inferred."
+
+[[document]]
+url = "https://www.drzenice.sk/download_file_f.php?id=2448474"
+sha256 = "71475e16bbb7e63228dba770fdb2656576ef1f3588a4c550a2713e07fb7d2def"
+title = "Určenie volebného obvodu a volebných okrskov (Uznesenie OZ č. 180 z 24.06.2026)"
+
+[[document]]
+url = "https://www.drzenice.sk/volby-do-organov-uzemnej-samospravy-2026-oznam/mid/563173/.html"
+sha256 = "65a3df59072dca4847fe902588b51609e698873bd7565bd9af63bdab1282f78e"
+title = "Voľby do orgánov územnej samosprávy 2026 (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {part = "Drženice", note = "Okrsok number inferred from the order in the resolution.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kmeťovce", note = "Okrsok number inferred from the order in the resolution.", inferred = true},
+]

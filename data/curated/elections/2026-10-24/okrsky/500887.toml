@@ -1,0 +1,80 @@
+# Okrsky of Veľké Zálužie, transcribed by an AI agent in job okrsok-rules-270 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Potočná, Družstevná, Titváň, Za humnami, Dlhý rad, Pažiť, Kúty, Pri mlyne, Rínok, Pod kaštieľom, Jozefa Petroviča, Kostolná, Fabrická, Jarocká, Výmoľ, Poľná, Pod pažiťou, Chotárna, Cintorínska, Cintorínska č. d. 369-390, 1279, 1571; 1624; 1625; Hlavná č. d. 1, 76, 253-255, 359, 367-368, 1438;
+#   okrsok 2: Okružná, Spojovacia, Tichá, J. Hollého, Podvinohrady, Malináreň, Vinohrady, Konopniská, Vodná, Lúčna, Veľká Urbankova, Malá Urbankova, Cintorínska č. d. 412-417, 441, 1388; Hlavná č. d. 443, 450-453, 461, 483-494, 669-677, 694,-718, 1328, 1474, 1484, 1529, 1545, 1549, 1569;
+#   okrsok 3: Agátová, Školská, Pivovarská, Obecná, Rapatská, Budín, Sliváše, Piesková, Úzka, Žatevná, Dubina, Hlavná č. d. 853-858, 956-959, 1134-1138, 1145-1149, 1239-1240, 1330;
+obec = "500887"
+name = "Veľké Zálužie"
+okrsky_date = 2026-07-08
+okrsky_fill = "nearest"
+okrsky_note = "Hlavná and Cintorínska split by súpisné čísla listed in the document; Cintorínska otherwise whole in okrsok 1. Hlavná addresses not listed, street Majer (not in document) and addresses without street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.velkezaluzie.eu/e_download.php?file=/data/editor/343sk_6.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "7847427677f4053774b9ddd7e8c135bdfcbe99c04213460c5f91de6002b9709f"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.velkezaluzie.eu/obcan/volby-do-organov-samospravy-obci/"
+sha256 = "77b829f8188bbcd6210b696bfe3901ea999b9b1c71a0c48855348e1714d54cfe"
+title = "Voľby do orgánov samosprávy obcí"
+
+[okrsok.1]
+rules = [
+  {street = "Potočná"},
+  {street = "Družstevná"},
+  {street = "Titváň"},
+  {street = "Za humnami"},
+  {street = "Dlhý rad"},
+  {street = "Pažiť"},
+  {street = "Kúty"},
+  {street = "Pri mlyne"},
+  {street = "Rínok"},
+  {street = "Pod kaštieľom"},
+  {street = "Jozefa Petroviča"},
+  {street = "Kostolná"},
+  {street = "Fabrická"},
+  {street = "Jarocká"},
+  {street = "Výmoľ"},
+  {street = "Poľná"},
+  {street = "Pod pažiťou"},
+  {street = "Chotárna"},
+  {street = "Cintorínska"},
+  {street = "Cintorínska", numbers = "369-390, 1279, 1571, 1624, 1625", by = "supisne"},
+  {street = "Hlavná", numbers = "1, 76, 253-255, 359, 367-368, 1438", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Okružná"},
+  {street = "Spojovacia"},
+  {street = "Tichá"},
+  {street = "J.Hollého", written = "J. Hollého"},
+  {street = "Podvinohrady"},
+  {street = "Malináreň"},
+  {street = "Vinohrady"},
+  {street = "Konopniská"},
+  {street = "Vodná"},
+  {street = "Lúčna"},
+  {street = "Veľká Urbankova"},
+  {street = "Malá Urbankova"},
+  {street = "Cintorínska", numbers = "412-417, 441, 1388", by = "supisne"},
+  {street = "Hlavná", numbers = "443, 450-453, 461, 483-494, 669-677, 694-718, 1328, 1474, 1484, 1529, 1545, 1549, 1569", by = "supisne", note = "'694,-718' read as range 694-718"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová"},
+  {street = "Školská"},
+  {street = "Pivovarská"},
+  {street = "Obecná"},
+  {street = "Rapatská"},
+  {street = "Budín"},
+  {street = "Sliváše"},
+  {street = "Piesková"},
+  {street = "Úzka"},
+  {street = "Žatevná"},
+  {street = "Dubina"},
+  {street = "Hlavná", numbers = "853-858, 956-959, 1134-1138, 1145-1149, 1239-1240, 1330", by = "supisne"},
+]

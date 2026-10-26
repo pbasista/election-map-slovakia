@@ -1,0 +1,28 @@
+# Okrsky of Majcichov, transcribed by an AI agent in job okrsok-rules-496 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov rodinných domov od súp. č. 1 - 432
+#   okrsok 2: pre voličov rodinných domov od súp. č. 433 - 880; voliči, ktorí majú trvalý pobyt na obci
+obec = "507296"
+name = "Majcichov"
+okrsky_note = "Split by súpisné číslo (1–432 / 433–880). Voters with trvalý pobyt only 'na obci' belong to okrsok 2 (text only). The notice states no date."
+
+[[document]]
+url = "https://www.majcichov.sk/e_download.php?file=/data/editor/180sk_7.pdf&original=volebn%C3%A9%20okrsky%20volby%202026.pdf"
+sha256 = "a59ef3b2c124f1bc7216c35f63e43488e4c1212859491eee81e463d83c37c44b"
+title = "Oznámenie k voľbám do orgánov samosprávy obcí a voľbám do orgánov samosprávnych krajov - Volebné okrsky"
+
+[[document]]
+url = "https://www.majcichov.sk/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov/"
+sha256 = "166db90a8ecbac039819bffc22d44ee6f7349ffd72e5e3c784c3dca480b2cb96"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {part = "Majcichov", numbers = "1-432"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Majcichov", numbers = "433-880"},
+]

@@ -1,0 +1,68 @@
+# Okrsky of Kanianka, transcribed by an AI agent in job okrsok-rules-460 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Banícka, Bojnická cesta – orientačné čísla 3 až 24, ČSĽA – orientačné čísla 19 až 25 a 32 až 44, Hviezdoslavova, Košovská, Krátka, Kukučínova, Lazianska cesta, Lesná, Lipová, Lúčna, Mierová, Mlynská, Pionierov, Pod Vinicou – orientačné čísla 1 až 13 a 2 až 12, Poľovnícka, Porubská cesta, Sládkovičova, Stará cesta, Športová, Štúrova, Tehelná, Veterná, Záhradná, Pánsky háj, Za Lančekom, Zlatná, Slnečná ulica a Ulica Jozefa Hanku.
+#   okrsok 2: ulice: Bojnická cesta – obytné domy súpisné číslo 593 a 594, Nová – obytné domy súpisné číslo 595, 596, 597 a 598.
+#   okrsok 3: ulice: Agátova, Bojnická cesta – obytné domy súpisné číslo 590 a 591, ČSĽA – orientačné čísla 1 až 18, 20 a 26-30, Lyžiarska, Májová, Nová – obytný dom súpisné číslo 600, Pod vinicou – orientačné čísla 14 až 67, SNP, Šípkova, Školská – obytný dom súpisné číslo 589.
+obec = "514071"
+name = "Kanianka"
+okrsky_date = 2026-07-22
+okrsky_fill = "nearest"
+okrsky_note = "Not in the document, so placed by the nearest address (fill_nearest): Ružová (91 addresses), the Nová blocks 701-706 (orientačné 1A-55A), the Školská blocks 523-525 (1B-72B) and 592/2, Bojnická cesta 1 and 2, Pod Vinicou 69. 'Slnečná ulica' and 'Ulica Jozefa Hanku' are not in the register and are left out."
+
+[[document]]
+url = "https://kanianka.sk/wp-content/uploads/2026/07/SKM_C251i26072209390.pdf"
+sha256 = "055620ea7b283e403c5cf99d36293ed78bfb44fe70bc323581592657ff2a64fb"
+title = "Určenie volebných okrskov a volebných miestností (starosta, 22. 7. 2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Banícka"},
+  {street = "Bojnická cesta", numbers = "3-24"},
+  {street = "Čsľa", numbers = "19, 21-25, 32-44", written = "ČSĽA", note = "the register's 'Čsľa' is the document's 'ČSĽA' (Československej armády), the same street; the document puts 20 both in 19 až 25 here and explicitly in okrsok 3: the explicit mention wins"},
+  {street = "Hviezdoslavova"},
+  {street = "Košovská"},
+  {street = "Krátka"},
+  {street = "Kukučínova"},
+  {street = "Lazianska cesta"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+  {street = "Lúčna"},
+  {street = "Mierová"},
+  {street = "Mlynská"},
+  {street = "Pionierov"},
+  {street = "Pod Vinicou", numbers = "1-13", parity = "odd"},
+  {street = "Pod Vinicou", numbers = "2-12", parity = "even"},
+  {street = "Poľovnícka"},
+  {street = "Porubská cesta"},
+  {street = "Sládkovičova"},
+  {street = "Stará cesta"},
+  {street = "Športová"},
+  {street = "Štúrova"},
+  {street = "Tehelná"},
+  {street = "Veterná"},
+  {street = "Záhradná"},
+  {street = "Pánsky Háj", written = "Pánsky háj"},
+  {street = "Za Lančekom"},
+  {street = "Zlatná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bojnická cesta", numbers = "593, 594", by = "supisne"},
+  {street = "Nová", numbers = "595-598", by = "supisne"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová", written = "Agátova"},
+  {street = "Bojnická cesta", numbers = "590, 591", by = "supisne"},
+  {street = "Čsľa", numbers = "1-18, 20, 26-30", written = "ČSĽA", note = "the register's 'Čsľa' is the document's 'ČSĽA' (Československej armády), the same street"},
+  {street = "Lyžiarska"},
+  {street = "Májová"},
+  {street = "Nová", numbers = "600", by = "supisne"},
+  {street = "Pod Vinicou", numbers = "14-67", written = "Pod vinicou"},
+  {street = "SNP"},
+  {street = "Šípková", written = "Šípkova"},
+  {street = "Školská", numbers = "589", by = "supisne"},
+]

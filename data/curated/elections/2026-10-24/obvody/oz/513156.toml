@@ -1,0 +1,108 @@
+# Council obvody of Ilava (513156), Ilava.
+# Transcribed by an AI agent in job obvod-rules-086 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 – Kukučínová, SNP, Stred Patria sem: Mierové námestie, Ružová, Farská, Moyzesova, Košecká, SNP, Záhumenská, Kukučínová a občania s trvalým pobytom Ilava. Volia sa 3 poslanci.
+#   obvod 2: Volebný obvod č. 2 – Medňanská, Skala, Jesenského, Slnečná a Iliavka Patria sem: Medňanská, Skala, Jesenského, Kalinčiakova, Hollého, Slnečná, Lašteky I., mestská časť Iliavka, Iliavčanská dolina a Záštepy. Volia sa 3 poslanci.
+#   obvod 3: Volebný obvod č. 3 – Nemocnica s poliklinikou Patria sem: Pivovarská, Ľ. Štúra, Hviezdoslavova, Sládkovičova a Štefánikova. Volia sa 2 poslanci.
+#   obvod 4: Volebný obvod č. 4 – Sihoť Patria sem: Kpt. Nálepku, Sihoť, Záhradnícka, J. L. Bellu, Nádražná, Hurbanova, Mládežnícka a Za kanálom. Volia sa 2 poslanci.
+#   obvod 5: Volebný obvod č. 5 – Klobušice Patrí sem mestská časť Klobušice. Volia sa 2 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-085 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Mierové námestie, ulice Ružová, Farská, Moyzesova, Košecká, SNP, Záhumenská, Kukučínova, občania s trvalým pobytom Ilava
+#   okrsok 2: ulice Medňanská, Skala, Jesenského, Kalinčiakova, Hollého, Slnečná a Lašteky I
+#   okrsok 3: ulice Pivovarská, Ľ. Štúra, Hviezdoslavova, Sládkovičova, Štefánikova
+#   okrsok 4: ulice Kpt. Nálepku, Sihoť, Záhradnícka, J. L .Bellu, Nádražná, Hurbanova, Mládežnícka, Za kanálom
+#   okrsok 5: mestská časť Klobušice
+#   okrsok 6: mestská časť lliavka, Iliavčanská dolina a Záštepy
+obec = "513156"
+name = "Ilava"
+date = 2026-07-07
+fill = "nearest"
+note = "Source is the city's official elections page summarising the MsZ decision of 7.7.2026 (12 poslanci, 5 obvodov); the resolution PDF itself was not found online. 'Lašteky I.' (obvod 2) and 'Za kanálom' (obvod 4) are localities not in the street register; 'občania s trvalým pobytom Ilava' (obvod 1) means residents registered only to the town without an address. The ~579 addresses of part Ilava without a street (súpisné-only, presumably incl. Lašteky I. and Za kanálom) are not assignable by rule, so fill_nearest places them by the nearest addressed street."
+okrsky_fill = "nearest"
+okrsky_note = "The 2026 elections page of the city states that all six okrsky stay as they were (incl. the polling station in Iliavka) but publishes no new list; the okrsky are therefore taken from the mayor's announcement for the referendum of 4.7.2026 (22.4.2026), whose okrsky 1-5 match obvody 1-5 word for word and okrsok 6 (Iliavka, Iliavčanská dolina, Záštepy) is the rest of obvod 2. Date omitted since the decision for the October elections is not published. Okrsok 2 is the rest of obvod 2 (its streets plus Lašteky I., not in the register); addresses of obvod 2 without a street in part Ilava go by fill_nearest."
+
+[[document]]
+url = "https://www.ilava.sk/mesto/volby-a-referendum/volby-do-organov-samospravy-obci/volby-2026-2/"
+sha256 = "1b0d7da514f0c7fa1d6088b7de7a383478c0b6113cc820841825af0c0a45488d"
+title = "Voľby 2026 – Volebné obvody v meste Ilava (schválené MsZ dňa 7.7.2026)"
+
+[[document]]
+url = "https://www.ilava.sk/e_download.php?file=/data/editor/785sk_2.pdf&original=volebn%C3%A9%20okrsky%20a%20miestnosti%20utvorenie.pdf"
+sha256 = "d01fe3fb90d69f319435c03649594a1bf9fdc31d4a5f99ffcc9fcf11a3154d60"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre referendum konané dňa 4.7.2026 (primátor, 22.4.2026)"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {street = "Mierové námestie"},
+  {street = "Ružová"},
+  {street = "Farská"},
+  {street = "Moyzesova"},
+  {street = "Košecká"},
+  {street = "SNP"},
+  {street = "Záhumenská"},
+  {street = "Kukučínova", written = "Kukučínová", note = "Same street: the page writes 'Kukučínová' here (and 'Kukučínova' in the candidate section); register spelling is Kukučínova."},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2, 6]
+rules = [
+  {street = "Medňanská"},
+  {street = "Skala"},
+  {street = "Jesenského"},
+  {street = "Kalinčiakova"},
+  {street = "Hollého"},
+  {street = "Slnečná"},
+  {part = "Iliavka"},
+  {street = "Iliavčanská dolina"},
+  {street = "Záštepy"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {street = "Pivovarská"},
+  {street = "Ľ. Štúra"},
+  {street = "Hviezdoslavova"},
+  {street = "Sládkovičova"},
+  {street = "Štefánikova"},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [4]
+rules = [
+  {street = "Kpt. Nálepku"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku", note = "The register has the same street twice, as 'Kpt. Nálepku' and 'Kpt.Nálepku' (without space); both are the document's Kpt. Nálepku."},
+  {street = "Sihoť"},
+  {street = "Záhradnícka"},
+  {street = "J. L. Bellu"},
+  {street = "Nádražná"},
+  {street = "Hurbanova"},
+  {street = "Mládežnícka"},
+]
+
+[obvod.5]
+seats = 2
+okrsky = [5]
+rules = [
+  {part = "Klobušice"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]
+
+[okrsok.6]
+rules = [
+  {part = "Iliavka"},
+  {street = "Iliavčanská dolina"},
+  {street = "Záštepy"},
+]

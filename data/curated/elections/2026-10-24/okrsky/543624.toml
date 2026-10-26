@@ -1,0 +1,54 @@
+# Okrsky of Spišský Štvrtok, transcribed by an AI agent in job okrsok-rules-547 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Voliči s trvalým pobytom: ČSĽA, Jarná, Javorová, Kováčska, Krátka, Mečedeľovce, Mlynská, Námestie slobody, Osloboditeľov, Partizánska, Potočná, Školská, Tehelná, Vysoká, Záhradná, Gaštanová
+#   okrsok 2: Voliči s trvalým pobytom: Agátova, Aljová, Cintorínska, Družstevná, Ku Kremni, Lipová, Lúčna, Majerická ulica, Nová, Obrancov mieru, Poľná, Sadová, Stavbárska, Tatranská, Zelená
+obec = "543624"
+name = "Spišský Štvrtok"
+okrsky_date = 2026-07-29
+okrsky_fill = "nearest"
+okrsky_note = "'Mečedeľovce' in okrsok 1 is the part Mečedelovce. The addresses without a street in part Spišský Štvrtok take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.spisskystvrtok.sk/e_download.php?file=/data/uredni_deska/obsah1052_1.pdf&original=volebn%C3%A9%20okrsky%20a%20ulice.pdf"
+sha256 = "aef63f9740495b3f72c1fa7d36255b8e4f76436cd60c441a23fd2d2477cc2d20"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Spišský Štvrtok"
+
+[okrsok.1]
+rules = [
+  {street = "ČSĽA"},
+  {street = "Jarná"},
+  {street = "Javorová"},
+  {street = "Kováčska"},
+  {street = "Krátka"},
+  {street = "Mlynská"},
+  {street = "Námestie slobody"},
+  {street = "Osloboditeľov"},
+  {street = "Partizánska"},
+  {street = "Potočná"},
+  {street = "Školská"},
+  {street = "Tehelná"},
+  {street = "Vysoká"},
+  {street = "Záhradná"},
+  {street = "Gaštanová"},
+  {part = "Mečedelovce"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Ku Kremni"},
+  {street = "Lipová"},
+  {street = "Lúčna"},
+  {street = "Majerická ulica"},
+  {street = "Nová"},
+  {street = "Obrancov mieru"},
+  {street = "Poľná"},
+  {street = "Sadová"},
+  {street = "Stavbárska"},
+  {street = "Tatranská"},
+  {street = "Zelená"},
+  {street = "Agátová", written = "Agátova", note = "Missing accent; the register's Agátová."},
+  {street = "Alejová", written = "Aljová", note = "Typo for Alejová (the register has no other similar street)."},
+]

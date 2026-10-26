@@ -1,0 +1,116 @@
+# Okrsky of Námestovo, transcribed by an AI agent in job okrsok-rules-221 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulica: Bernolákova, Cyrila a Metoda, Československej armády, Hattalova, Hlinisko, Kliňanská cesta, Lesnícka, Mieru, Michalov, Slanická Osada, Nábrežie, Námestie Antona Bernoláka, Nová slanická, Vojenské, Vojenské I., Priehradná, Vodárenská, 2061, 2322, 2318, 2002, 2160, 1314, 2019, 2336, 2009, 2115.
+#   okrsok 2: Ulica: Štefánikova.
+#   okrsok 3: Ulica: Červeného kríža, Hviezdoslavova, Hviezdoslavovo námestie, Mila Urbana, Mláka a Mlynská.
+#   okrsok 4: Ulica: 1. Mája, Komenského, Mirka Nešpora, Ružová, Sama Chalupku, Slanická, Slobody, Vrbová, Smreková.
+#   okrsok 5: Ulica: 9. Mája, Antona Kršáka, Borinova, Brezová, Florinova, Kamenická, Kukučínova, Kvetná, Lazová, Lesná, Miklošicova, Okružná, Orlovova, Plátennícka, Poľanová, Rázusova, SNP, Strojárenská, Šípová.
+#   okrsok 6: Ulica: Bottova, Hamuljakova, Ľudovíta Štúra, Severná, Sládkovičova, Lúčna.
+#   okrsok 7: Ulica: Janka Kráľa, Slnečná 162, Veterná, Záhradkárska.
+#   okrsok 8: Ulica: Slnečná 161, 163, 164, 165 a 166.
+obec = "509868"
+name = "Námestovo"
+okrsky_fill = "nearest"
+okrsky_note = "The document lists Slnečná 162 in okrsok 7 and Slnečná 161, 163-166 in okrsok 8; these are read as súpisné čísla (the register's orientačné run 1-28), so okrsok 7 takes the rest of Slnečná. The bare numbers in okrsok 1 are read as súpisné čísla of addresses without a street in Námestovo. Not named in the document and placed by fill_nearest: Jelšová, Miestneho priemyslu, Polom, Vojtaššákova, Za vodou and addresses without a street. The decision has no date."
+
+[[document]]
+url = "https://www.namestovo.sk/uploads/fck/file/volby/Spojen%C3%A9%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vy%20obc%C3%AD%20a%20do%20org%C3%A1nov%20samospr%C3%A1vnych%20krajov%202026/Ur%C4%8Denie%20volebn%C3%BDch%20okskov%20a%20volebn%C3%BDch%20miestnost%C3%AD%202026.docx"
+sha256 = "005a7133e06b68ff95f39501bf5a386ff78378e8b866154242638b972197a410"
+title = "Určenie volebných okrskov a volebných miestností 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Cyrila a Metoda"},
+  {street = "Československej armády"},
+  {street = "Hattalova"},
+  {street = "Hlinisko"},
+  {street = "Kliňanská cesta"},
+  {street = "Lesnícka"},
+  {street = "Mieru"},
+  {street = "Michalov"},
+  {street = "Nábrežie"},
+  {street = "Námestie Antona Bernoláka"},
+  {street = "Nová slanická"},
+  {street = "Vojenské"},
+  {street = "Vojenské I", written = "Vojenské I."},
+  {street = "Priehradná"},
+  {street = "Vodárenská"},
+  {part = "Slanická Osada"},
+  {part = "Námestovo", numbers = "2061, 2322, 2318, 2002, 2160, 1314, 2019, 2336, 2009, 2115"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Štefánikova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Červeného kríža"},
+  {street = "Hviezdoslavova"},
+  {street = "Hviezdoslavovo námestie"},
+  {street = "Mila Urbana"},
+  {street = "Mláka"},
+  {street = "Mlynská"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "1.mája", written = "1. Mája"},
+  {street = "Komenského"},
+  {street = "Mirka Nešpora"},
+  {street = "Ružová"},
+  {street = "Sama Chalupku"},
+  {street = "Slanická"},
+  {street = "Slobody"},
+  {street = "Vrbová"},
+  {street = "Smreková"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "9.mája", written = "9. Mája"},
+  {street = "Antona Kršáka"},
+  {street = "Borinova"},
+  {street = "Brezová"},
+  {street = "Florinova"},
+  {street = "Kamenická"},
+  {street = "Kukučínova"},
+  {street = "Kvetná"},
+  {street = "Lazová"},
+  {street = "Lesná"},
+  {street = "Miklošicova"},
+  {street = "Okružná"},
+  {street = "Orlovova"},
+  {street = "Plátennícka"},
+  {street = "Poľanová"},
+  {street = "Rázusova"},
+  {street = "SNP"},
+  {street = "Strojárenská"},
+  {street = "Šípová"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bottova"},
+  {street = "Hamuljakova"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Severná"},
+  {street = "Sládkovičova"},
+  {street = "Lúčna"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Janka Kráľa"},
+  {street = "Slnečná"},
+  {street = "Veterná"},
+  {street = "Záhradkárska"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Slnečná", numbers = "161, 163-166", by = "supisne"},
+]

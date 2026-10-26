@@ -1,0 +1,84 @@
+# Okrsky of Košice-Vyšné Opátske, transcribed by an AI agent in job okrsok-rules-300 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Alšavská, Hájnická, Jačmenná, Južné nábrežie, Kukuričná, Nevädzová, Nižný Heringeš, Nižná úvrať, Opatovská cesta 1 – 53 nepárne, Ovsená, Pod vinicami, Prvosienková, Ražná, Roľnícka, Sečovská cesta, Snežienková, Šarišská, Tigria, Zemplínska, Žatevná, Žitná, MČ – zrušený trvalý pobyt
+#   okrsok 2: Bažantia, Dubová, Drozdia, Jelenia, Klinčeková, Kosatcová, Králičia, Liesková, Opatovská cesta – párne, Opatovská cesta 55-155 nepárne, Osiková, Pod hrebienkom, Príkra, Pšeničná, Púpavová, Slávičia, Šafranová, Šípková, Škovránčia, Včelárska paseka, Viničná, V úvoze, Zajačia, MČ – chaty
+#   okrsok 3: Bazová, Borievková, Cédrová, Cezmínová, Hlohová, Hrabová, Jarabinová, Jelšová, Píniová
+obec = "599913"
+name = "Košice-Vyšné Opátske"
+okrsky_date = 2026-07-30
+okrsky_note = "Drozdia (okrsok 2) and Píniová (okrsok 3) are not in the register, left out. 'MČ – zrušený trvalý pobyt' (okrsok 1) holds addressless residents. Addresses without a street are placed by 'rest' in okrsok 2, whose list ends with 'MČ – chaty' (cottages, which have no street)."
+
+[[document]]
+url = "https://www.vysneopatske.sk/download_file_f.php?id=2450468"
+sha256 = "cedeb3e4e7bf830e9ce9185cd6706298e2e89a76bbdda7a2c575e77b4d107db7"
+title = "Určenie volebných okrskov a volebných miestností"
+
+[[document]]
+url = "https://www.vysneopatske.sk/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-2026.html"
+sha256 = "6c47ad98714cb13d491f1bc07df1d69b8837532b6f252b96eb3d89e799a5ceba"
+title = "Voľby do orgánov samosprávy obcí a samosprávnych krajov 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Alšavská"},
+  {street = "Hájnická"},
+  {street = "Jačmenná"},
+  {street = "Južné nábrežie"},
+  {street = "Kukuričná"},
+  {street = "Nevädzová"},
+  {street = "Nižný Heringeš"},
+  {street = "Nižná úvrať"},
+  {street = "Opatovská cesta", numbers = "1-53", parity = "odd"},
+  {street = "Ovsená"},
+  {street = "Pod vinicami"},
+  {street = "Prvosienková"},
+  {street = "Ražná"},
+  {street = "Roľnícka"},
+  {street = "Sečovská cesta"},
+  {street = "Snežienková"},
+  {street = "Šarišská"},
+  {street = "Tigria"},
+  {street = "Zemplínska"},
+  {street = "Žatevná"},
+  {street = "Žitná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bažantia"},
+  {street = "Dubová"},
+  {street = "Jelenia"},
+  {street = "Klinčeková"},
+  {street = "Kosatcová"},
+  {street = "Králičia"},
+  {street = "Liesková"},
+  {street = "Opatovská cesta", parity = "even"},
+  {street = "Opatovská cesta", numbers = "55-", parity = "odd"},
+  {street = "Osiková"},
+  {street = "Pod hrebienkom"},
+  {street = "Príkra"},
+  {street = "Pšeničná"},
+  {street = "Púpavová"},
+  {street = "Slávičia"},
+  {street = "Šafranová"},
+  {street = "Šípková"},
+  {street = "Škovránčia"},
+  {street = "Včelárska paseka"},
+  {street = "Viničná"},
+  {street = "V úvoze"},
+  {street = "Zajačia"},
+  {rest = true, note = "MČ – chaty: addresses without a street"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bazová"},
+  {street = "Borievková"},
+  {street = "Cédrová ulica", written = "Cédrová"},
+  {street = "Cezmínová"},
+  {street = "Hlohová"},
+  {street = "Hrabová"},
+  {street = "Jarabinová"},
+  {street = "Jelšová"},
+]

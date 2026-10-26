@@ -1,0 +1,167 @@
+# Council obvody of Vráble (500933), Nitra.
+# Transcribed by an AI agent in job obvod-rules-074 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: 1. volebný obvod zahŕňa ulice: Sídl. Lúky, Sídl. Žitava, Žitavská, Staničná, Vinohrady, Vráble;
+#   obvod 2: 2. volebný obvod zahŕňa ulice: 1. mája, Krátka, Levická, Moravská, Partizánska, Poštová, Šafárikova, Sídl. Kaška, Školská, Záhradná, Cintorínska, Družstevná, Hlavná, Hliníková, Hviezdoslavova, Kostolná, Ul. Martina Benku, Nám. kpt. Nálepku, Štúrova, Bernolákova, Chalupkova, Dukelská, Hurbanova, Kollárova, Kukučínova, Podmájska, Sládkovičova, Za Humnami, Orechová, Okružná, Horný Ohaj, Dyčka.
+# Okrsky added by an AI agent in job okrsok-rules-073 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Sídl. Žitava, Žitavská
+#   okrsok 2: Sídl. Lúky 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, Staničná, Vinohrady, časť obce Vráble
+#   okrsok 3: Sídl. Lúky 38A, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 64, 65, 66, 67
+#   okrsok 4: Sídl. Lúky 60, 61, 62, 63, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92
+#   okrsok 5: Bernolákova, Hurbanova, Chalupkova, Kollárova, Kukučínova, Levická 1, 3, 5, 7, 7A, 9, 13, 15, 15A, 15B, 15C, 15D, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 47A, 49, 51, 53, 55, 57, Sládkovičova
+#   okrsok 6: Dukelská, Levická 5A, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 78, 80, Partizánska, Podmájska, Poštová, Sídl. Kaška, Šafárikova, Školská, Záhradná
+#   okrsok 7: 1. mája, Cintorínska, Družstevná, Hlavná, Hliníková, Hviezdoslavova, Kostolná, Krátka, Martina Benku, Moravská, Nám. Kpt. Nálepku, Okružná, Orechová, Štúrova, Za Humnami
+#   okrsok 8: časť obce Horný Ohaj
+#   okrsok 9: časť obce Dyčka
+obec = "500933"
+name = "Vráble"
+date = 2026-06-24
+note = "Resolution 384a/2026 and 384b/2026 of 24 June 2026 are on page 163 of the city's combined PDF of all council resolutions 2022–2026. The city's home page restates them. Čerešňové námestie (1 address) is not named and was placed in obvod 2 by inference."
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky from the city's 'Spojené voľby 2026' page (section 'Volebné okrsky - Kde a ako voliť'); no decision date stated. Okrsok 2 'časť obce Vráble' = part Vráble addresses without a street in obvod 1. fill_nearest covers unlisted Sídl. Lúky numbers (1-6, 37-39, 93), unlisted Levická numbers, Čerešňové námestie and addresses without street in obvod 2's part Vráble."
+
+[[document]]
+url = "https://www.vrable.sk/download_file_f.php?id=1774652"
+sha256 = "8c073ca8a7438974bb142e591276f02a14b75e3f446527a161ce325529ec2fc8"
+title = "Uznesenia Mestského zastupiteľstva vo Vrábľoch (zbierka 2022–2026), 34. zasadnutie 24. 6. 2026, uznesenie č. 384a/2026 a 384b/2026 (s. 163)"
+
+[[document]]
+url = "https://www.vrable.sk/"
+sha256 = "625709a9b06f418b0f2bbcc3e64b82cc73cc2a49c62cae98381c65ca7c33ea94"
+title = "Mesto Vráble – Voľby 2026: Informácia o rozdelení volebných obvodov a o počte poslancov"
+
+[[document]]
+url = "https://www.vrable.sk/spojene-volby-2026.html"
+sha256 = "11c82537167d5509dfac22680059b5d853d5a952237c0e146a1d53463b9089c0"
+title = "Spojené voľby 2026 – Volebné okrsky - Kde a ako voliť"
+
+[obvod.1]
+seats = 7
+okrsky = [1, 2, 3, 4]
+rules = [
+  {street = "Sídl. Lúky"},
+  {street = "Sídl. Žitava"},
+  {street = "Žitavská"},
+  {street = "Staničná"},
+  {street = "Vinohrady"},
+  {part = "Vráble", note = "The resolution lists 'Vráble' among the streets of obvod 1; read as the addresses of the časť Vráble without a street name (the city's election page lists 'časť obce Vráble' under okrsok 2, which is in obvod 1). Streets of Vráble named for obvod 2 stay there by their street rules."},
+]
+
+[obvod.2]
+seats = 6
+okrsky = [5, 6, 7, 8, 9]
+rules = [
+  {street = "1.mája", written = "1. mája", note = "Same street; the register writes it without the space after the period."},
+  {street = "Krátka"},
+  {street = "Levická"},
+  {street = "Moravská"},
+  {street = "Partizánska"},
+  {street = "Poštová"},
+  {street = "Šafárikova"},
+  {street = "Sídl. Kaška"},
+  {street = "Školská"},
+  {street = "Záhradná"},
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Hlavná"},
+  {street = "Hliníková"},
+  {street = "Hviezdoslavova"},
+  {street = "Kostolná"},
+  {street = "Martina Benku", written = "Ul. Martina Benku", note = "Same street; the document prefixes 'Ul.' (ulica)."},
+  {street = "Nám. Kpt. Nálepku", written = "Nám. kpt. Nálepku", note = "Same square; only the capitalisation of 'kpt.' differs."},
+  {street = "Štúrova"},
+  {street = "Bernolákova"},
+  {street = "Chalupkova"},
+  {street = "Dukelská"},
+  {street = "Hurbanova"},
+  {street = "Kollárova"},
+  {street = "Kukučínova"},
+  {street = "Podmájska"},
+  {street = "Sládkovičova"},
+  {street = "Za Humnami"},
+  {street = "Orechová"},
+  {street = "Okružná"},
+  {part = "Horný Ohaj"},
+  {part = "Dyčka"},
+  {street = "Čerešňové námestie", note = "Not named in the resolution (1 address, no. 6). It is the town-centre square of Vráble, surrounded by streets of obvod 2 (Hlavná, Moravská, Nám. Kpt. Nálepku); the city's election page lists it under no okrsok either.", inferred = true},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Sídl. Žitava"},
+  {street = "Žitavská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Sídl. Lúky", numbers = "7-36"},
+  {street = "Staničná"},
+  {street = "Vinohrady"},
+  {part = "Vráble"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Sídl. Lúky", numbers = "38A, 40-59, 64-67"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Sídl. Lúky", numbers = "60-63, 68-92"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Hurbanova"},
+  {street = "Chalupkova"},
+  {street = "Kollárova"},
+  {street = "Kukučínova"},
+  {street = "Levická", numbers = "1, 3, 5, 7, 7A, 9, 13, 15, 15A, 15B, 15C, 15D, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 47A, 49, 51, 53, 55, 57"},
+  {street = "Sládkovičova"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Dukelská"},
+  {street = "Levická", numbers = "5A, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 78, 80"},
+  {street = "Partizánska"},
+  {street = "Podmájska"},
+  {street = "Poštová"},
+  {street = "Sídl. Kaška"},
+  {street = "Šafárikova"},
+  {street = "Školská"},
+  {street = "Záhradná"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Hlavná"},
+  {street = "Hliníková"},
+  {street = "Hviezdoslavova"},
+  {street = "Kostolná"},
+  {street = "Krátka"},
+  {street = "Martina Benku"},
+  {street = "Moravská"},
+  {street = "Nám. Kpt. Nálepku"},
+  {street = "Okružná"},
+  {street = "Orechová"},
+  {street = "Štúrova"},
+  {street = "Za Humnami"},
+]
+
+[okrsok.8]
+rules = [
+  {part = "Horný Ohaj"},
+]
+
+[okrsok.9]
+rules = [
+  {part = "Dyčka"},
+]

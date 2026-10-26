@@ -1,0 +1,54 @@
+# Okrsky of Zvolenská Slatina, transcribed by an AI agent in job okrsok-rules-284 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Borovinská cesta, Boroviny - Krvavník, Komenského, Kráľová, Malá strana, Maloslatinská, Nový dvor, Očovská cesta, Pod Dielom, Pod Hájom, Poľovnícka, Slovenského národného povstania, Stred, Športová, Úhrady
+#   okrsok 2: Budovateľská, Cintorínska cesta, Čsl. Armády, Družstevná, Hviezdoslavova, Mierová, Sebechov, Sládkovičova, Školská, T. Vansovej, Slatinka
+obec = "518972"
+name = "Zvolenská Slatina"
+okrsky_date = 2026-07-16
+okrsky_fill = "nearest"
+okrsky_note = "Scanned notices, read from the images; date is the date of the notices. Slatinka (okrsok 2) is a part of the obec. Addresses without a street take the nearest placed address."
+
+[[document]]
+url = "https://www.zvolenskaslatina.sk/e_download.php?file=/data/editor/97sk_5.pdf&original=20260716131643.pdf"
+sha256 = "bd76257e7f9fb75ff567041568495d17226e6cae86fdd4b836e947670bcdec3b"
+title = "Informácia o čase a mieste konania volieb - okrsok číslo 1"
+
+[[document]]
+url = "https://www.zvolenskaslatina.sk/e_download.php?file=/data/editor/97sk_6.pdf&original=20260716131739.pdf"
+sha256 = "7cc4a3ac0be69764294254f8a786081c64e6dc53d82cde5fb56c1071664482dc"
+title = "Informácia o čase a mieste konania volieb okrsok číslo 2"
+
+[okrsok.1]
+rules = [
+  {street = "Borovinská cesta"},
+  {street = "Boroviny-Krvavník", written = "Boroviny - Krvavník"},
+  {street = "Komenského"},
+  {street = "Kráľová"},
+  {street = "Malá Strana", written = "Malá strana"},
+  {street = "Maloslatinská"},
+  {street = "Nový dvor"},
+  {street = "Očovská cesta"},
+  {street = "Pod Dielom"},
+  {street = "Pod Hájom"},
+  {street = "Poľovnícka"},
+  {street = "Slov.nár.povstania", written = "Slovenského národného povstania", note = "the register abbreviates Slovenského národného povstania"},
+  {street = "Stred"},
+  {street = "Športová"},
+  {street = "Úhrady"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Cintorínska cesta"},
+  {street = "Čsl. armády", written = "Čsl. Armády"},
+  {street = "Družstevná"},
+  {street = "Hviezdoslavova"},
+  {street = "Mierová"},
+  {street = "Sebechov"},
+  {street = "Sládkovičova"},
+  {street = "Školská"},
+  {street = "Terézie Vansovej", written = "T. Vansovej"},
+  {part = "Slatinka"},
+]

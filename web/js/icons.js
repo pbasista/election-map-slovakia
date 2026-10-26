@@ -37,7 +37,9 @@ export const LayersIcon = () =>
 /* The constituency overlays, for the boundaries menu, in shapes rather than
  * words so that they read in every language: a municipality cut into its
  * council constituencies, a larger region around municipalities (a regional
- * constituency), a city. */
+ * constituency), a city; the polling districts, a municipality's outline
+ * cut by thin lines into many small parts; and the base map, a river and a
+ * road that crosses it. */
 export const LAYER_ICON = {
   oz: () =>
     icon(html`
@@ -54,6 +56,16 @@ export const LAYER_ICON = {
   city: () =>
     icon(html`
       <path class="fill" d="M2 21v-8.5L7.5 7l5.5 5.5V21H8.75v-4.5h-2.5V21zM14.5 21V10l3.25-7.5L21 10v11z" />
+    `),
+  okrsky: () =>
+    icon(html`
+      <path d="M3.5 6.5 11 3l9.5 3.5v11L13 21l-9.5-3.5z" />
+      <path class="thin" d="M11 3v8.5M3.5 12 11 11.5l9.5.5M13 21l-2-9.5M7.5 4.8l.4 6.9M16 4.7l-.4 7.2" />
+    `),
+  base: () =>
+    icon(html`
+      <path d="M3 16c3-3 6 2 9-1s6-6 9-3" />
+      <path class="thin" d="M8 3.5 16 20.5" />
     `),
 };
 
@@ -137,6 +149,20 @@ export const QrIcon = () =>
 
 /* A chair seen from the side: the candidate holds the office now. */
 export const ChairIcon = () => icon(html`<path d="M7 3v18M7 12.5h11V21M7 16.5h11" />`);
+
+/* A door with an arrow out of it: the candidate withdrew from the election
+ * (yet stayed on the ballot). */
+export const WithdrawnIcon = () =>
+  icon(html`<path d="M10.5 4H5.5v16h5" /><path d="M10 12h10m-3.5-3.5L20 12l-3.5 3.5" />`);
+
+/* The winner map: a folded map whose panels are in colours of their own,
+ * each area by who leads there. */
+export const WinnerMapIcon = () =>
+  icon(html`
+    <path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z" />
+    <path class="fill" d="M9 4v13.5L3 20V6.5z" />
+    <path class="fill faint" d="M21 4v13.5L15 20V6.5z" />
+  `);
 
 /* Elected: a decoration, an eight-pointed star hanging from a ribbon's two
  * straps; a star, not a sports medal's disc, with deep points that still

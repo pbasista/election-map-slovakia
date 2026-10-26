@@ -1,0 +1,65 @@
+# Okrsky of Zlaté Klasy, transcribed by an AI agent in job okrsok-rules-375 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bratislavská cesta, celá ulica, Cintorínska ulica, celá ulica, Čakanská cesta, celá ulica, Hlavná ulica, celá ulica, Horná ulica, celá ulica, Kolárska ulica, celá ulica, Krajná cesta, celá ulica, Krížna ulica, celá ulica, Nový rad, celá ulica, Orgovánová ulica, celá ulica, Pekná cesta, celá ulica, Poštová ulica, celá ulica, Pri Hlinisku, celá ulica, Slepá ulica, celá ulica, Vodárenská ulica, celá ulica, Za záhradami, celá ulica
+#   okrsok 2: súp.č. (0), Agátová ulica, celá ulica, Hasičská ulica, celá ulica, Malomágerská cesta, celá ulica, Nový trh, celá ulica, Prievozská cesta, celá ulica, Sídlisko, celá ulica, Šamorínska cesta, celá ulica, Školská ulica, celá ulica, Športová ulica, celá ulica, Ulica Zsigmondovcov, celá ulica, Záhradnícka ulica, celá ulica
+#   okrsok 3: Dunajská ulica, celá ulica, Obchodná ulica, celá ulica, Poľná ulica, celá ulica, Slávičia ulica, celá ulica, Veterná ulica, celá ulica, Viničná ulica, celá ulica
+obec = "502022"
+name = "Zlaté Klasy"
+okrsky_fill = "nearest"
+okrsky_note = "Read from a scan (register printout with handwritten polling stations, printed 15.7.2026; no decision date stated). Every street is listed; \"súp.č. (0)\" in okrsok 2 is residents without an address (no rule). Addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.zlateklasy.sk/uradna-tabula/"
+sha256 = "e1d37e1e30e1e5aee16c450c6268ebc7fd8c4c8676052b3dc44f434bd2951da9"
+title = "Úradná tabuľa (odkaz „zoznam okrskov“)"
+
+[[document]]
+url = "https://www.zlateklasy.sk/e_download.php?file=/data/editor/58skabove_5.pdf&original=zoznam%20okrskov.pdf"
+sha256 = "939336034c65bf371361880ddf0048029c53b68d72e6c5a875a88528e5bb0b03"
+title = "Zoznam okrskov – Voľby do orgánov samosprávy obcí v roku 2026 (scan)"
+
+[okrsok.1]
+rules = [
+  {street = "Bratislavská cesta"},
+  {street = "Cintorínska ulica"},
+  {street = "Čakanská cesta"},
+  {street = "Hlavná ulica"},
+  {street = "Horná ulica"},
+  {street = "Kolárska ulica"},
+  {street = "Krajná cesta"},
+  {street = "Krížna ulica"},
+  {street = "Nový Rad", written = "Nový rad"},
+  {street = "Orgovánová ulica"},
+  {street = "Pekná cesta"},
+  {street = "Poštová ulica"},
+  {street = "Pri Hlinisku"},
+  {street = "Slepá ulica"},
+  {street = "Vodárenská ulica"},
+  {street = "Za Záhradami", written = "Za záhradami"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová ulica"},
+  {street = "Hasičská ulica"},
+  {street = "Malomágerská cesta"},
+  {street = "Nový trh"},
+  {street = "Prievozská cesta"},
+  {street = "Sídlisko"},
+  {street = "Šamorínska cesta"},
+  {street = "Školská ulica"},
+  {street = "Športová ulica"},
+  {street = "Ulica Zsigmondovcov"},
+  {street = "Záhradnícka ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Dunajská ulica"},
+  {street = "Obchodná ulica"},
+  {street = "Poľná ulica"},
+  {street = "Slávičia ulica"},
+  {street = "Veterná ulica"},
+  {street = "Viničná ulica"},
+]

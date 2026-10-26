@@ -1,0 +1,97 @@
+# Okrsky of Cabaj-Čápor, transcribed by an AI agent in job okrsok-rules-249 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Brezová ulica; Cedronská ulica; Dolinská ulica; Družstevná ulica; Nová ulica; Školská ulica; Ulica Dolný Talag; Ulica Domovina; Ulica Horný Talag; Wágnerova ulica; Ulica pri sýpke; Ulica nad školou
+#   okrsok 2: Agátova ulica; Cintorínska ulica; Čingovská ulica; Dubová ulica; Ďurinkova ulica; Hlavná ulica; Hrabová ulica; Klzová ulica; Kostolná ulica; Námestie sv. Urbana; Podhájska ulica; Smreková ulica; Sudovského ulica; Trojičné námestie; Ulica sv. Trojice; Ulica pri parku; Vinohradnícka ulica; Vŕbová ulica; Záhradná ulica
+#   okrsok 3: Ulica k potoku; Nitrianska ulica; Slivková ulica; Slnečná ulica; Ulica Jána Domastu; Ulica pod lipkami; Ulica pri lávke; Ulica za ihriskom; Novocabajská ulica; Fialková ulica; Muškátová ulica; Narcisová ulica; Orgovánová ulica; Púpavová ulica; Ružová ulica; Tulipánová ulica; Šalianska ulica; Močenská ulica; Trnovecká ulica; Ulica k majeru; Ulica na Hrúšťov; Ulica na Fízeš
+#   okrsok 4: Čerešňová ulica; Farská ulica; Fraštacká ulica; Hviezdoslavova ulica; Krátka ulica; Námestie sv. Michala; Ulica Funduše; Poľná ulica; Ulica na hoferské humná; Štepnická ulica; Trhové námestie; Ulica za farskou záhradou; Ulica Sádová; Ulica za humnami
+obec = "545589"
+name = "Cabaj-Čápor"
+okrsky_date = 2026-07-14
+okrsky_fill = "nearest"
+okrsky_note = "fill_nearest for the 12 addresses without a street. Okrsok 2: Agátova ulica is the register's Agátová ulica (accent typo); Trojičné námestie is not in the address register, left out. Okrsok 4: Poľná ulica and Trhové námestie are not in the address register, left out."
+
+[[document]]
+url = "https://www.cabajcapor.sk/download_file_f.php?id=2442912"
+sha256 = "14dc5a7a901dacd4f6efc02481dc742850e8980a35b7b4795b4f8e049df2ab94"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Brezová ulica"},
+  {street = "Cedronská ulica"},
+  {street = "Dolinská ulica"},
+  {street = "Družstevná ulica"},
+  {street = "Nová ulica"},
+  {street = "Školská ulica"},
+  {street = "Ulica Dolný Talag"},
+  {street = "Ulica Domovina"},
+  {street = "Ulica Horný Talag"},
+  {street = "Wágnerova ulica"},
+  {street = "Ulica pri sýpke"},
+  {street = "Ulica nad školou"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová ulica", written = "Agátova ulica"},
+  {street = "Cintorínska ulica"},
+  {street = "Čingovská ulica"},
+  {street = "Dubová ulica"},
+  {street = "Ďurinkova ulica"},
+  {street = "Hlavná ulica"},
+  {street = "Hrabová ulica"},
+  {street = "Klzová ulica"},
+  {street = "Kostolná ulica"},
+  {street = "Námestie sv. Urbana"},
+  {street = "Podhájska ulica"},
+  {street = "Smreková ulica"},
+  {street = "Sudovského ulica"},
+  {street = "Ulica sv. Trojice"},
+  {street = "Ulica pri parku"},
+  {street = "Vinohradnícka ulica"},
+  {street = "Vŕbová ulica"},
+  {street = "Záhradná ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Ulica k potoku"},
+  {street = "Nitrianska ulica"},
+  {street = "Slivková ulica"},
+  {street = "Slnečná ulica"},
+  {street = "Ulica Jána Domastu"},
+  {street = "Ulica pod lipkami"},
+  {street = "Ulica pri lávke"},
+  {street = "Ulica za ihriskom"},
+  {street = "Novocabajská ulica"},
+  {street = "Fialková ulica"},
+  {street = "Muškátová ulica"},
+  {street = "Narcisová ulica"},
+  {street = "Orgovánová ulica"},
+  {street = "Púpavová ulica"},
+  {street = "Ružová ulica"},
+  {street = "Tulipánová ulica"},
+  {street = "Šalianska ulica"},
+  {street = "Močenská ulica"},
+  {street = "Trnovecká ulica"},
+  {street = "Ulica k majeru"},
+  {street = "Ulica na Hrúšťov"},
+  {street = "Ulica na Fízeš"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Čerešňová ulica"},
+  {street = "Farská ulica"},
+  {street = "Fraštacká ulica"},
+  {street = "Hviezdoslavova ulica"},
+  {street = "Krátka ulica"},
+  {street = "Námestie sv. Michala"},
+  {street = "Ulica Funduše"},
+  {street = "Ulica na hoferské humná"},
+  {street = "Štepnická ulica"},
+  {street = "Ulica za farskou záhradou"},
+  {street = "Ulica Sádová"},
+  {street = "Ulica za humnami"},
+]

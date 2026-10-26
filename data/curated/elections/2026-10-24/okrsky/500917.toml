@@ -1,0 +1,45 @@
+# Okrsky of Vinodol, transcribed by an AI agent in job okrsok-rules-542 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Kostolná, Na sihoti, Na výhone, Pesecká, Pod hájom, Školská, Športová, Úzka a Vinodol - bez adresy
+#   okrsok 2: Ulice: Agátová, Donátová, Hlavná, Hlboká, K vodárni, Novohorská, Obecná, Telepy, Tichá
+obec = "500917"
+name = "Vinodol"
+okrsky_date = 2026-07-27
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document read from the page image. Register street Farská ulica is not in the document, and register addresses without a street are not covered ('Vinodol - bez adresy' in okrsok 1 means voters registered without an address); these take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://obec-vinodol.sk/wp-content/uploads/2026/07/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-obci-vinodol-pre-volby-do-organov-obci-a-volby-do-samospravnych-organov.pdf"
+sha256 = "4bd81c2e8f4841c7d4c7720efff93522f1d111415a2d25086ddd43dea5ef9cd5"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Vinodol"
+
+[[document]]
+url = "https://obec-vinodol.sk/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-obci-vinodol-pre-volby-do-organov-obci-a-volby-do-samospravnych-organov/"
+sha256 = "2691ef40e068b6c1bcca627f660e6abd6cf6edbb6d47d1fcd5dad59a42f19885"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (page)"
+
+[okrsok.1]
+rules = [
+  {street = "Kostolná ulica"},
+  {street = "Na sihoti"},
+  {street = "Na výhone"},
+  {street = "Pesecká ulica"},
+  {street = "Pod hájom"},
+  {street = "Školská ulica"},
+  {street = "Športová Ulica"},
+  {street = "Úzka ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová ulica"},
+  {street = "Donátova ulica", written = "Donátová", note = "Document writes 'Donátová' (long á), the register 'Donátova'; the same street, no other similar name."},
+  {street = "Hlavná ulica"},
+  {street = "Hlboká ulica"},
+  {street = "K vodárni"},
+  {street = "Novohorská ulica"},
+  {street = "Obecná ulica"},
+  {street = "Telepy"},
+  {street = "Tichá ulica"},
+]

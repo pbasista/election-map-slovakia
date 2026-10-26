@@ -1,0 +1,73 @@
+# Okrsky of Bošany, transcribed by an AI agent in job okrsok-rules-357 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Družstevná, Janka Kráľa s. č. 928, 1300, 1301, 1302, Jesenského, Jilemnického, Komenského, Nábr. Ľ. Štúra, Park Garbiarov, Riečna, Sládkovičova, SNP, Staničná, Športovcov, ČSA od s. č. 551 do 623 a 1367 a 1438
+#   okrsok 2: Bernolákova, Janka Kráľa s.č. 663, 915, 916, 921, 922, 926, 1353, 1420, 1478, Malobošianska, Mlynská, Slnečná, Školská, Vajanského, Záhradná, ČSA od 624 do 1472
+#   okrsok 3: B. Němcovej, Dukelská, Fándlyho, Garbiarska, Hviezdoslavova, Jána Bottu, Krátka, M. R. Štefánika, Mládeže, Moyzesova, Partizánska, Podjavorinskej, Pribinova, Remenárska, Škultétyho, Sádovská, Továrenská, Časť BAŠTÍN, ČSA od 343 do 550 a 1181 a 1412 a 1427
+obec = "542733"
+name = "Bošany"
+okrsky_fill = "nearest"
+okrsky_note = "ČSA and Janka Kráľa are split by súpisné čísla as the document lists them; ČSA 624–1472 in okrsok 2 excludes the numbers named for okrsky 1 and 3 (1181, 1367, 1412, 1427, 1438). Janka Kráľa and ČSA houses whose súpisné číslo the document does not list, and addresses without a street, take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.bosany.sk/download_file_f.php?id=2438372"
+sha256 = "7b7b1b967a271d85d495eb70d3d53dd535f9bcf170c3778eaaf9ae922b11fc02"
+title = "Informácie k spojeným voľbám – 24.10.2026 (13. Utvorenie volebných okrskov a určenie volebných miestností)"
+
+[[document]]
+url = "https://www.bosany.sk/informacie-k-spojenym-volbam-do-samospravnych-organov-obci-a-do-organov-samospravneho-kraja-oznam/mid/582982/.html"
+sha256 = "ac146cbaf4ff39dd151885907e01c1aa57558f01562f592acf87859b53776b1a"
+title = "Informácie k spojeným voľbám do samosprávnych orgánov obcí a do orgánov samosprávneho kraja"
+
+[okrsok.1]
+rules = [
+  {street = "Družstevná"},
+  {street = "Jesenského"},
+  {street = "Jilemnického"},
+  {street = "Komenského"},
+  {street = "Nábr. Ľ. Štúra"},
+  {street = "Park garbiarov", written = "Park Garbiarov"},
+  {street = "Riečna"},
+  {street = "Sládkovičova"},
+  {street = "SNP"},
+  {street = "Staničná"},
+  {street = "Športovcov"},
+  {street = "Janka Kráľa", numbers = "928, 1300, 1301, 1302", by = "supisne"},
+  {street = "ČSA", numbers = "551-623, 1367, 1438", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Malobošianska"},
+  {street = "Mlynská"},
+  {street = "Slnečná"},
+  {street = "Školská"},
+  {street = "Vajanského"},
+  {street = "Záhradná"},
+  {street = "Janka Kráľa", numbers = "663, 915, 916, 921, 922, 926, 1353, 1420, 1478", by = "supisne"},
+  {street = "ČSA", numbers = "624-1180, 1182-1366, 1368-1411, 1413-1426, 1428-1437, 1439-1472", by = "supisne"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "B. Němcovej"},
+  {street = "Dukelská"},
+  {street = "Fándlyho"},
+  {street = "Garbiarska"},
+  {street = "Hviezdoslavova"},
+  {street = "Jána Bottu"},
+  {street = "Krátka"},
+  {street = "M. R. Štefánika"},
+  {street = "Mládeže"},
+  {street = "Moyzesova"},
+  {street = "Partizánska"},
+  {street = "Podjavorinskej"},
+  {street = "Pribinova"},
+  {street = "Remenárska"},
+  {street = "Škultétyho"},
+  {street = "Sádovská"},
+  {street = "Továrenská"},
+  {part = "Baštín"},
+  {street = "ČSA", numbers = "343-550, 1181, 1412, 1427", by = "supisne"},
+]

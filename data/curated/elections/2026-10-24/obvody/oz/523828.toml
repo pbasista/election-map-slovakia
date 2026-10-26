@@ -1,0 +1,99 @@
+# Council obvody of Spišská Belá (523828), Kežmarok.
+# Transcribed by an AI agent in job obvod-rules-092 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Mesto Spišská Belá (okrem mestskej časti Strážky)
+#   obvod 2: Mestská časť Strážky
+# Okrsky added by an AI agent in job okrsok-rules-091 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Krátka Kúpeľná Moskovská Nová Okružná SNP Záhradná
+#   okrsok 2: 1. mája Agátová Greisigerova Kallsteinova Južná Lipová Mierová Športová Vojtasova Weberova
+#   okrsok 3: Ladislava Novomeského Letná Osloboditeľov Štefánikova Tatranská Továrenská
+#   okrsok 4: Hviezdoslavova Partizánska Petzvalova Slnečná
+#   okrsok 5: Družstevná Generála Ludvíka Svobodu Kpt. Jána Nálepku Šarpanec Zimná Na píle
+#   okrsok 6: Ladislava Medňanského Margity Czobleovej Nad kaštieľom Popradská Hraničná
+obec = "523828"
+name = "Spišská Belá"
+date = 2026-06-16
+note = "The announcement PDF is a filled-in form scan (read visually, clearly legible): 11 councillors in 2 obvody. The okrsky notice on the city website confirms obvod 2 = okrsok 6 (Strážky streets Ladislava Medňanského, Nad kaštieľom, Popradská, …) and obvod 1 = okrsky 1–5 (all other streets)."
+okrsky_date = 2026-09-22
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky text from the web page (the street lists are line-separated, joined by spaces). The page is dated 22.9.2026 (a re-publication noting the moved polling station for Mierová); used as the date. \"Na píle\" is not in the register and is left out. fill_nearest covers the addresses without a street in obvod 1 (numbered by súpisné číslo)."
+
+[[document]]
+url = "https://spisskabela.sk/wp-content/uploads/2026/07/Oznamenie-o-tvoreni-volebnych-obvodov-a-urceni-poctu-poslancov.pdf"
+sha256 = "6b66b3dc6e282d5ef249cf1a6ede6b2bd2043f8a33193a3f5ed9aed83705f951"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie MsZ č. 84/2026 zo dňa 16.6.2026)"
+
+[[document]]
+url = "https://spisskabela.sk/mesto/aktuality/oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-v-meste-spisska-bela-a-mestskej-casti-strazky/"
+sha256 = "0473d5105ed081b03c895936ddf8fd635293f2d3cf6baf5a10028dd8ec11b9fc"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností v meste Spišská Belá a mestskej časti Strážky (22.9.2026)"
+
+[obvod.1]
+seats = 10
+okrsky = [1, 2, 3, 4, 5]
+rules = [
+  {part = "Spišská Belá"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [6]
+rules = [
+  {part = "Strážky"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Krátka"},
+  {street = "Kúpeľná"},
+  {street = "Moskovská"},
+  {street = "Nová"},
+  {street = "Okružná"},
+  {street = "Slov. Nár. Povstania", written = "SNP", note = "SNP is the abbreviation of Slovenského národného povstania"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Agátová"},
+  {street = "Greisigerova"},
+  {street = "Kaltsteinova", written = "Kallsteinova", note = "spelling variant of the same street (Kaltstein)"},
+  {street = "Južná"},
+  {street = "Lipová"},
+  {street = "Mierová"},
+  {street = "Športová"},
+  {street = "Vojtasova"},
+  {street = "Weberova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Ladislava Novomeského"},
+  {street = "Letná"},
+  {street = "Osloboditeľov"},
+  {street = "Štefánikova"},
+  {street = "Tatranská"},
+  {street = "Továrenská"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "Partizánska"},
+  {street = "Petzvalova"},
+  {street = "Slnečná"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Družstevná"},
+  {street = "Generála Ludvíka Svobodu"},
+  {street = "Gen. Ludvíka Svobodu", written = "Generála Ludvíka Svobodu"},
+  {street = "Kpt. Jána Nálepku"},
+  {street = "Šarpanec"},
+  {street = "Zimná"},
+]

@@ -1,0 +1,28 @@
+# Okrsky of Krásnohorské Podhradie, transcribed by an AI agent in job okrsok-rules-526 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: občania prihlásení na trvalý pobyt od súpisného čísla 1- 412
+#   okrsok 2: občania prihlásení na trvalý pobyt od súpisného čísla 413 -761
+obec = "525871"
+name = "Krásnohorské Podhradie"
+okrsky_note = "Scanned notice (read from the rendered page): okrsky split by súpisné číslo of trvalý pobyt, 1–412 and 413–761. No separate utvorenie document on the site; the notice states no decision date."
+
+[[document]]
+url = "https://www.obeckrasnohorskepodhradie.sk/files/2026-07-29-191208-Ozn__menie_o___ase_a_miestne_konania_volieb_.pdf"
+sha256 = "98b1d475c87eee09b3d4f2fd3adf8ed465183a711192645ed0acf88bca93b80a"
+title = "OZNÁMENIE o čase a mieste konania volieb do orgánov samosprávy obcí a do orgánov samosprávnych krajov"
+
+[[document]]
+url = "https://www.obeckrasnohorskepodhradie.sk/volby-do-organov-samospravy-obci-2026--a73-965"
+sha256 = "d189558a70ac16a34b9d7f0ba228d6af378624c9d67b020294235ce7eea777e3"
+title = "Voľby do orgánov samosprávy obcí 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Krásnohorské Podhradie", numbers = "1-412"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Krásnohorské Podhradie", numbers = "413-761"},
+]

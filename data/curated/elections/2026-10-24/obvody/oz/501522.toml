@@ -1,0 +1,152 @@
+# Council obvody of Veľký Meder (501522), Dunajská Streda.
+# Transcribed by an AI agent in job obvod-rules-035 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode č. 1, ktorý zahŕňa: mestskú časť Veľký Meder (volebné okrsky 1až 7) sa volí 12 poslancov.
+#   obvod 2: Vo volebnom obvode č. 2, ktorý zahŕňa: mestskú časť Ižop (volebný okrsok č. 8) sa volí 1 poslanec.
+# Okrsky added by an AI agent in job okrsok-rules-034 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Komárňanská 1-6, 8-172, Mlynská, Nám.Mládeže, Nezábudková, Partizánska, Zelená
+#   okrsok 2: Cintorínska, Čičovská, Čiližská, Dubová, Hraničná, Ižopská, Kurtaserská, Lastovičková, Letná, Ľ.Štúra, Nám.B.Bartóka, Orechová, P.O.Hviezdoslava, Petőfiho, Poľovnícka, Pri prameni, Promenádna, Rekreačná, Rozmarínová, Slnečná, Svätého Štefana, Turistická, Námestie László Kovácsa
+#   okrsok 3: Agátová, Besnyeiho, Fialková, Fučíkova, Jahodová, Jenő Farkasa, Józsefa Nagy Rátza, Lajosa Kazinczyho, Max. Gorkého, Mierová, Okočská, Orgovánová, Táborská, Tibora Ága, Tichá, Železničná, Istvána Cseriho, Jozefa Janigu
+#   okrsok 4: Dunajská, Lesná, Medveďovská cesta, Nagy Dür, Nový Dvor, Šarkaň, Štadiónová, Tajlok, Želiarska
+#   okrsok 5: Sídl.M.Corvina 1 - 32, Komárňanská 7 (voliči bez adresy trvalého pobytu)
+#   okrsok 6: Bitunková, Bratislavská, Dolná, J.Gagarina, Jelenia, Krátka, Kúpeľná, Kvetná, Lipová, Ľ. Kossutha, Malá, Mostová, Nám.Hrdinov, Nová, Podzáhradná, Priemyslová, Rybárska, Stará, Záhradnícka
+#   okrsok 7: Labutia, Sídl.M.Corvina 33 - 61, Ružová
+#   okrsok 8: Hlavná, Hrušková, Ižop Pusta, Konopná, Konvalinková, Kostolná, Mládeže, Podlesná, Športová, Zemiansky Les
+obec = "501522"
+name = "Veľký Meder"
+date = 2026-06-17
+okrsky_date = 2026-07-27
+okrsky_fill = "nearest"
+okrsky_note = "Mayor's decision of 27.7.2026. Cintorínska, Nagy Dür and Istvána Cseriho are not in the register and are left out. Addresses of obvod 1 without a street take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.velkymeder.sk/evt_file.php?file=5083&original=info_oznamenie_o_utvoreni_volebnych_obvodov.pdf"
+sha256 = "5356d2047ab4c3d8c7de90082713e87e248a9f3805c069555738801bd8092ab6"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie č. 5-MsZ/2026-12/a zo dňa 17.6.2026)"
+
+[[document]]
+url = "https://www.velkymeder.sk/evt_file.php?file=5096&original=info_utvorenie_volebnych_okrskov_a_miestnosti.pdf"
+sha256 = "5402aeaacb3ccb3aa22638dc8e21269c8cb9bbfdbee83e09e2c78e762a3d4cc9"
+title = "Utvorenie volebných okrskov a určenie miestností na hlasovanie, Spojené voľby 24.10.2026 (27.7.2026)"
+
+[obvod.1]
+seats = 12
+okrsky = [1, 2, 3, 4, 5, 6, 7]
+rules = [
+  {part = "Veľký Meder"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [8]
+rules = [
+  {part = "Ižop"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Komárňanská", except = "7"},
+  {street = "Mlynská"},
+  {street = "Nám. Mládeže", written = "Nám.Mládeže"},
+  {street = "Nezábudková"},
+  {street = "Partizánska"},
+  {street = "Zelená"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Čičovská"},
+  {street = "Čiližská"},
+  {street = "Dubová"},
+  {street = "Hraničná"},
+  {street = "Ižopská"},
+  {street = "Kurtaserská"},
+  {street = "Lastovičková"},
+  {street = "Letná"},
+  {street = "Ľ. Štúra", written = "Ľ.Štúra"},
+  {street = "Nám. Bélu Bartóka", written = "Nám.B.Bartóka"},
+  {street = "Orechová"},
+  {street = "P. O. Hviezdoslava", written = "P.O.Hviezdoslava"},
+  {street = "Petőfiho ulica", written = "Petőfiho"},
+  {street = "Poľovnícka"},
+  {street = "Pri prameni"},
+  {street = "Promenádna"},
+  {street = "Rekreačná"},
+  {street = "Rozmarínová"},
+  {street = "Slnečná"},
+  {street = "Ul. Svätého Štefana", written = "Svätého Štefana"},
+  {street = "Turistická"},
+  {street = "Námestie László Kovácsa"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová"},
+  {street = "Besnyeiho"},
+  {street = "Fialková"},
+  {street = "Fučíkova"},
+  {street = "Jahodová"},
+  {street = "Jenő Farkasa"},
+  {street = "Józsefa Nagy Rátza"},
+  {street = "Lajosa Kazinczyho"},
+  {street = "Max. Gorkého"},
+  {street = "Mierová"},
+  {street = "Okočská"},
+  {street = "Orgovánová"},
+  {street = "Táborská"},
+  {street = "Tibora Ága"},
+  {street = "Tichá"},
+  {street = "Železničná"},
+  {street = "Jozefa Janigu"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Dunajská"},
+  {street = "Lesná"},
+  {street = "Medveďovská cesta"},
+  {street = "Osada Nový Dvor", written = "Nový Dvor"},
+  {street = "Šarkaň"},
+  {street = "Štadiónová"},
+  {street = "Osada Tajlok", written = "Tajlok"},
+  {street = "Želiarska"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Sídl.M.Corvina", numbers = "1-32"},
+  {street = "Komárňanská", numbers = "7"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bitunková"},
+  {street = "Bratislavská"},
+  {street = "Dolná"},
+  {street = "J. Gagarina", written = "J.Gagarina"},
+  {street = "Jelenia"},
+  {street = "Krátka"},
+  {street = "Kúpeľná"},
+  {street = "Kvetná"},
+  {street = "Lipová"},
+  {street = "Ľ. Kossútha", written = "Ľ. Kossutha"},
+  {street = "Malá"},
+  {street = "Mostová"},
+  {street = "Nám. Hrdinov", written = "Nám.Hrdinov"},
+  {street = "Nová"},
+  {street = "Podzáhradná"},
+  {street = "Priemyslová"},
+  {street = "Rybárska"},
+  {street = "Stará"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Labutia"},
+  {street = "Sídl.M.Corvina", numbers = "33-61"},
+  {street = "Ružová"},
+]

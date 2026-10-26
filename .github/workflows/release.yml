@@ -79,8 +79,9 @@ jobs:
           path: data/raw/
           key: raw-${{ hashFiles('config/inputs.toml') }}-${{ steps.day.outputs.day }}
 
-      # candidates, addresses, geo, build and check, stopping at the first
-      # that fails: a site that does not pass `check` is never deployed.
+      # candidates, addresses, geo, basemap, results (the final results of
+      # their pinned inputs), build and check, stopping at the first that
+      # fails: a site that does not pass `check` is never deployed.
       - run: uv run ems make
 
       - id: site

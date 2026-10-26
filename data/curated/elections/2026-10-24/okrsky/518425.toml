@@ -1,0 +1,37 @@
+# Okrsky of Hontianske Tesáre, transcribed by an AI agent in job okrsok-rules-557 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebná miestnosť: KD Hontianske Tesáre 66
+#   okrsok 2: Volebná miestnosť: KD Báčovce 33
+#   okrsok 3: Volebná miestnosť: KD Dvorníky 13
+#   okrsok 4: Volebná miestnosť: KD Šipice 4
+obec = "518425"
+name = "Hontianske Tesáre"
+okrsky_date = 2026-07-30
+okrsky_fill = "nearest"
+okrsky_note = "The document gives each of the 4 okrsky only its polling station, one in each of the 4 parts (Hontianske Tesáre, Báčovce, Dvorníky, Šipice); each okrsok is given the part of its station (inferred). The text is the station, as the document names nothing else."
+
+[[document]]
+url = "https://www.hontiansketesare.sk/e_download.php?file=/data/uredni_deska/obsah2957_3.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "82cd69bb86034772224a9abf2fc71d95ed3affc398908279d67a83c7909db3df"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Hontianske Tesáre", note = "the document gives only the polling station (Volebná miestnosť: KD Hontianske Tesáre 66); the okrsok is the part of its station", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Báčovce", note = "the document gives only the polling station (Volebná miestnosť: KD Báčovce 33); the okrsok is the part of its station", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Dvorníky", note = "the document gives only the polling station (Volebná miestnosť: KD Dvorníky 13); the okrsok is the part of its station", inferred = true},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Šipice", note = "the document gives only the polling station (Volebná miestnosť: KD Šipice 4); the okrsok is the part of its station", inferred = true},
+]
