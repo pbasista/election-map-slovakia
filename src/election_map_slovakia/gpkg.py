@@ -2,7 +2,7 @@
 
 ZBGIS ships each level of detail as one ``.gpkg`` inside a zip;
 :func:`extract` unpacks it once into ``data/build/``. :class:`GeoPackage`
-lists the feature layers and reads their columns; :func:`geometry` decodes
+finds the feature layers and reads their columns; :func:`geometry` decodes
 the GeoPackage binary geometry blob of a feature.
 """
 
@@ -34,14 +34,18 @@ class GpkgError(Exception):
     """The GeoPackage is missing, unreadable or lacks an expected layer."""
 
 
-def wkb(blob: bytes) -> bytes:
+def _check_header(blob: bytes) -> None:
+    if len(blob) < _HEADER or blob[:2] != _MAGIC:
+        raise GpkgError("geometry blob lacks the GeoPackage 'GP' header")
+
+
+def _wkb(blob: bytes) -> bytes:
     """Return the WKB part of a GeoPackage geometry *blob*.
 
     The envelope size comes from the flags byte; the WKB carries its own
     byte order, so the header's byte-order bit only matters for the header.
     """
-    if len(blob) < _HEADER or blob[:2] != _MAGIC:
-        raise GpkgError("geometry blob lacks the GeoPackage 'GP' header")
+    _check_header(blob)
     flags = blob[3]
     if flags & _FLAG_EXTENDED:
         raise GpkgError("extended GeoPackage geometry types are not supported")
@@ -56,8 +60,7 @@ def wkb(blob: bytes) -> bytes:
 
 def srs_id(blob: bytes) -> int:
     """Return the spatial reference system id in a geometry *blob*'s header."""
-    if len(blob) < _HEADER or blob[:2] != _MAGIC:
-        raise GpkgError("geometry blob lacks the GeoPackage 'GP' header")
+    _check_header(blob)
     order = "<" if blob[3] & _FLAG_LITTLE_ENDIAN else ">"
     return struct.unpack_from(order + "i", blob, 4)[0]
 
@@ -65,7 +68,7 @@ def srs_id(blob: bytes) -> int:
 def geometry(blob: bytes) -> shapely.Geometry:
     """Decode a GeoPackage geometry *blob* into a shapely geometry."""
     try:
-        return shapely.from_wkb(wkb(blob))
+        return shapely.from_wkb(_wkb(blob))
     except shapely.errors.GEOSException as e:
         raise GpkgError(f"invalid WKB in geometry blob: {e}") from e
 
@@ -124,51 +127,46 @@ class GeoPackage:
         """Close the database."""
         self._db.close()
 
-    def layers(self) -> dict[str, list[str]]:
-        """Return each feature layer with its column names, in table order."""
+    def _query(self, sql: str, parameters: Sequence[object] = ()) -> list[tuple]:
         try:
-            names = [
-                row[0]
-                for row in self._db.execute(
-                    "SELECT table_name FROM gpkg_contents"
-                    " WHERE data_type = 'features' ORDER BY table_name"
-                )
-            ]
-            return {
-                name: [
-                    row[1]
-                    for row in self._db.execute(f"PRAGMA table_info({_quote(name)})")
-                ]
-                for name in names
-            }
+            return self._db.execute(sql, parameters).fetchall()
         except sqlite3.Error as e:
             raise GpkgError(f"{self.path}: {e}") from e
 
+    def _layers(self) -> list[str]:
+        """Return the names of the feature layers, sorted."""
+        return [
+            name
+            for (name,) in self._query(
+                "SELECT table_name FROM gpkg_contents"
+                " WHERE data_type = 'features' ORDER BY table_name"
+            )
+        ]
+
     def layer(self, prefix: str) -> str:
         """Return the one layer named *prefix* plus a level suffix (``obec_0``)."""
-        names = [n for n in self.layers() if n.rsplit("_", 1)[0] == prefix]
+        names = [n for n in self._layers() if n.rsplit("_", 1)[0] == prefix]
         if len(names) != 1:
             raise GpkgError(f"{self.path}: expected one {prefix} layer")
         return names[0]
 
     def geometry_column(self, layer: str) -> str:
         """Return the name of the geometry column of *layer*."""
-        try:
-            row = self._db.execute(
-                "SELECT column_name FROM gpkg_geometry_columns WHERE table_name = ?",
-                (layer,),
-            ).fetchone()
-        except sqlite3.Error as e:
-            raise GpkgError(f"{self.path}: {e}") from e
-        if row is None:
+        found = self._query(
+            "SELECT column_name FROM gpkg_geometry_columns WHERE table_name = ?",
+            (layer,),
+        )
+        if not found:
             raise GpkgError(f"{self.path}: layer {layer!r} has no geometry column")
-        return row[0]
+        return found[0][0]
 
     def rows(self, layer: str, columns: Sequence[str]) -> Iterator[tuple]:
         """Yield the values of *columns* for every feature of *layer*."""
-        available = self.layers().get(layer)
-        if available is None:
+        if layer not in self._layers():
             raise GpkgError(f"{self.path}: no layer {layer!r}")
+        available = {
+            row[1] for row in self._query(f"PRAGMA table_info({_quote(layer)})")
+        }
         missing = [c for c in columns if c not in available]
         if missing:
             raise GpkgError(

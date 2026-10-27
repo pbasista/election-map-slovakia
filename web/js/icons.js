@@ -34,12 +34,13 @@ export const LayersIcon = () =>
     <path d="m3 12 9 4.8 9-4.8M3 16.2 12 21l9-4.8" />
   `);
 
-/* The constituency overlays, for the boundaries menu, in shapes rather than
+/* The map's layers, for their menus, in shapes rather than
  * words so that they read in every language: a municipality cut into its
  * council constituencies, a larger region around municipalities (a regional
  * constituency), a city; the polling districts, a municipality's outline
- * cut by thin lines into many small parts; and the base map, a river and a
- * road that crosses it. */
+ * cut by thin lines into many small parts; and the base map's layers, a
+ * river and a road that crosses it, and buildings as a map draws them, in
+ * plan. */
 export const LAYER_ICON = {
   oz: () =>
     icon(html`
@@ -67,7 +68,26 @@ export const LAYER_ICON = {
       <path d="M3 16c3-3 6 2 9-1s6-6 9-3" />
       <path class="thin" d="M8 3.5 16 20.5" />
     `),
+  buildings: () =>
+    icon(html`
+      <path d="M3.5 6.5 9 4.5l2 5.5-5.5 2zM12.5 12.5l6.5-2.3 2.4 6.8-6.5 2.3zM4 15.5l4-1.4 1.4 4-4 1.4zM14 3.5l4-1.2 1.2 3.8-4 1.2z" />
+    `),
 };
+
+/* The base map's button: its river and road with a building beside them. */
+export const BaseMapIcon = () =>
+  icon(html`
+    <path d="M3 17c3-3 6 2 9-1s6-6 9-3" />
+    <path class="thin" d="M8 3.5 16 20.5" />
+    <path d="M14.5 4.5h5v5h-5z" />
+  `);
+
+/* A ballot going into the box: the turnout on the map. */
+export const TurnoutIcon = () =>
+  icon(html`
+    <path d="M3 12.5h18M4.5 12.5V20h15v-7.5M8 12.5V4h8v8.5" />
+    <path class="thin" d="m10 8.3 1.5 1.5 2.6-3" />
+  `);
 
 export const SunIcon = () =>
   icon(html`
@@ -103,6 +123,26 @@ export const BackIcon = () => icon(html`<path d="m14.5 18-6-6 6-6" />`);
 export const ArrowIcon = () => icon(html`<path d="M5 12h14m-5.5-5.5L19 12l-5.5 5.5" />`);
 
 export const CheckIcon = () => icon(html`<path d="m5 12.5 4.5 4.5L19 7.5" />`);
+
+/* Points down: what it opens unfolds below (app.css turns it up when
+ * open). */
+export const ExpandIcon = () => icon(html`<path d="m6 9.5 6 6 6-6" />`);
+
+/* The buttons put away on a phone with the sheet open (app.js). */
+export const MoreIcon = () =>
+  icon(html`
+    <circle class="fill" cx="12" cy="5.5" r="1.4" />
+    <circle class="fill" cx="12" cy="12" r="1.4" />
+    <circle class="fill" cx="12" cy="18.5" r="1.4" />
+  `);
+
+/* The map's credits, folded on a phone (map.js). */
+export const InfoIcon = () =>
+  icon(html`
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 11v5.5" />
+    <circle class="fill" cx="12" cy="7.6" r="1.1" />
+  `);
 
 /* A heart: Favourites, the candidates circled. Not a star, which browsers
  * use for bookmarking the page, nor a circled number, which reads as a

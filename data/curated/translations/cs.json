@@ -11537,8 +11537,8 @@
    "text": "Hranice států kolem Slovenska, Natural Earth, volné dílo"
   },
   "about.inputs.osm": {
-   "src": "Roads, railways and water features of the base map, © OpenStreetMap contributors, Geofabrik's extract of Slovakia, license ODbL 1.0",
-   "text": "Silnice, železnice a vodstvo podkladové mapy, © přispěvatelé OpenStreetMap, výřez Slovenska od Geofabrik, licence ODbL 1.0"
+   "src": "Roads, railways, water features and buildings of the base map, © OpenStreetMap contributors, Geofabrik's extract of Slovakia, license ODbL 1.0",
+   "text": "Silnice, železnice, vodstvo a budovy podkladové mapy, © přispěvatelé OpenStreetMap, výřez Slovenska od Geofabrik, licence ODbL 1.0"
   },
   "about.inputs.results": {
    "src": "Results of the 2022 municipal and regional elections and of the by-elections since, Statistical Office of the Slovak Republic",
@@ -11561,8 +11561,8 @@
    "text": "Licence"
   },
   "about.licenses": {
-   "src": "The shapes on the map are derived from the ZBGIS boundaries (simplified and merged into constituencies) and, around Slovakia, from Natural Earth. The base map is derived from OpenStreetMap (selected, simplified and cut per district) and is published under the same license, ODbL 1.0. Candidate data are reproduced without changes to their content, only rearranged.",
-   "text": "Tvary na mapě jsou odvozeny z hranic ZBGIS (zjednodušené a sloučené do obvodů) a kolem Slovenska z Natural Earth. Podkladová mapa je odvozena z OpenStreetMap (vybraná, zjednodušená a rozdělená podle okresů) a je zveřejněna pod stejnou licencí, ODbL 1.0. Údaje o kandidátech jsou převzaty beze změny obsahu, pouze jinak uspořádány."
+   "src": "The shapes on the map are derived from the ZBGIS boundaries (simplified and merged into constituencies) and, around Slovakia, from Natural Earth. The base map is derived from OpenStreetMap (selected, simplified and cut per district or municipality) and is published under the same license, ODbL 1.0. Candidate data are reproduced without changes to their content, only rearranged.",
+   "text": "Tvary na mapě jsou odvozeny z hranic ZBGIS (zjednodušené a sloučené do obvodů) a kolem Slovenska z Natural Earth. Podkladová mapa je odvozena z OpenStreetMap (vybraná, zjednodušená a rozdělená podle okresů či obcí) a je zveřejněna pod stejnou licencí, ODbL 1.0. Údaje o kandidátech jsou převzaty beze změny obsahu, pouze jinak uspořádány."
   },
   "about.logos.title": {
    "src": "Party logos (Wikimedia Commons; the other parties have no freely licensed logo and are shown by their short name)",
@@ -11585,8 +11585,8 @@
    "text": "Kdo je nyní ve funkci, jsme sestavili z definitivních výsledků voleb z roku 2022 a všech nových voleb do orgánů obcí od té doby (Statistický úřad SR) a přiřadili ke kandidátům podle obce nebo kraje, jména a věku. Chybějí náhradníci, kteří nastoupili na uvolněný mandát, i odchody z funkce bez nových voleb, a kandidát, který si změnil příjmení, se nespojí; značka židle („tuto funkci nyní zastává“) proto nemusí být úplná. Jak kdo funkci získal, uvádíme z týchž definitivních výsledků, a to za území, v němž byl zvolen: za obec u starosty, za kraj u předsedy, za tehdejší volební obvod (nebo celou obec, pokud měla jeden obvod) u zastupitele. Podíl u starosty a předsedy je z platných hlasovacích lístků; u zastupitelstva, kde mohl každý volič volit více kandidátů, je z počtu voličů s platným hlasovacím lístkem, takže podíly v jednom obvodu dávají dohromady více než 100 %. Uvádíme také podíl ze všech zapsaných voličů a účast (podíl zúčastněných voličů ze zapsaných)."
   },
   "about.method.map": {
-   "src": "The map is drawn directly from the ZBGIS municipal boundaries at several levels of detail, without a base map from other servers. The regional council constituencies and the city council constituencies of Bratislava and Košice consist of whole municipalities and city districts, as set by the decisions of the regions and cities. The countries around Slovakia are drawn coarser, from Natural Earth, for orientation only. The faint roads, railways, rivers and lakes under the colours, also for orientation only, come from OpenStreetMap, simplified for each zoom.",
-   "text": "Mapa se kreslí přímo z hranic obcí ZBGIS v několika úrovních podrobnosti, bez podkladové mapy z jiných serverů. Obvody pro volby do krajských zastupitelstev a městských zastupitelstev Bratislavy a Košic se skládají z celých obcí a městských částí podle rozhodnutí krajů a měst. Státy kolem Slovenska jsou nakresleny hruběji, podle Natural Earth, jen pro orientaci. Bledé silnice, železnice, řeky a jezera pod barvami, také jen pro orientaci, pocházejí z OpenStreetMap, zjednodušené pro každé přiblížení."
+   "src": "The map is drawn directly from the ZBGIS municipal boundaries at several levels of detail, without a base map from other servers. The regional council constituencies and the city council constituencies of Bratislava and Košice consist of whole municipalities and city districts, as set by the decisions of the regions and cities. The countries around Slovakia are drawn coarser, from Natural Earth, for orientation only. The faint roads, railways, rivers and lakes under the colours, simplified for each zoom, and the outlines of the buildings drawn as you zoom in close, also for orientation only, come from OpenStreetMap.",
+   "text": "Mapa se kreslí přímo z hranic obcí ZBGIS v několika úrovních podrobnosti, bez podkladové mapy z jiných serverů. Obvody pro volby do krajských zastupitelstev a městských zastupitelstev Bratislavy a Košic se skládají z celých obcí a městských částí podle rozhodnutí krajů a měst. Státy kolem Slovenska jsou nakresleny hruběji, podle Natural Earth, jen pro orientaci. Bledé silnice, železnice, řeky a jezera pod barvami, zjednodušené pro každé přiblížení, a obrysy budov zobrazené při velkém přiblížení, také jen pro orientaci, pocházejí z OpenStreetMap."
   },
   "about.method.obvody": {
    "src": "Municipalities with one council constituency have it assigned directly. Municipalities and city districts with several constituencies define them in their own resolutions, by streets, house numbers or parts of the municipality. An AI agent transcribed these resolutions from the municipalities' websites into rules, which were checked to put every address of the municipality into exactly one constituency; the resolutions are linked below. Where a resolution has not been processed yet, all constituencies are shown. The number of seats comes from these resolutions; a council with one constituency whose 2026 number is not known yet shows the number elected in 2022 (Statistical Office of the Slovak Republic), labelled as such.",
@@ -12316,6 +12316,10 @@
    "src": "Base map",
    "text": "Podkladová mapa"
   },
+  "layers.buildings": {
+   "src": "Buildings",
+   "text": "Budovy"
+  },
   "layers.button": {
    "src": "Constituency boundaries",
    "text": "Hranice volebních obvodů"
@@ -12323,6 +12327,14 @@
   "layers.city": {
    "src": "Bratislava and Košice",
    "text": "Bratislava a Košice"
+  },
+  "layers.group": {
+   "src": "Map layers",
+   "text": "Vrstvy mapy"
+  },
+  "layers.legend": {
+   "src": "What the lines mean",
+   "text": "Co znamenají čáry"
   },
   "layers.okrsky": {
    "src": "Polling districts",
@@ -12368,6 +12380,10 @@
    "src": "Boundaries: ZBGIS © ÚGKK SR, CC BY 4.0 · Base map: © OpenStreetMap contributors, ODbL · Neighbouring countries: Natural Earth · Addresses: MV SR, CC0",
    "text": "Hranice: ZBGIS © ÚGKK SR, CC BY 4.0 · Podkladová mapa: © přispěvatelé OpenStreetMap, ODbL · Sousední státy: Natural Earth · Adresy: MV SR, CC0"
   },
+  "map.credits": {
+   "src": "Map data sources and licences",
+   "text": "Zdroje a licence dat mapy"
+  },
   "map.label": {
    "src": "Map",
    "text": "Mapa"
@@ -12392,6 +12408,10 @@
    "src": "Zoom out",
    "text": "Oddálit"
   },
+  "mapmode.button": {
+   "src": "2026 turnout on the map: {layer}",
+   "text": "Účast 2026 na mapě: {layer}"
+  },
   "mapmode.candidate_hide": {
    "src": "Take the candidate's votes off the map",
    "text": "Skrýt hlasy kandidáta z mapy"
@@ -12412,9 +12432,21 @@
    "src": "Show the 2026 turnout in this contest's area on the map",
    "text": "Zobrazit na mapě účast 2026 v oblasti těchto voleb"
   },
+  "mapmode.key_turnout": {
+   "src": "Turnout {turnout}",
+   "text": "Účast {turnout}"
+  },
   "mapmode.legend": {
    "src": "Results on the map",
    "text": "Výsledky na mapě"
+  },
+  "mapmode.legend_less": {
+   "src": "Show less of the legend",
+   "text": "Zobrazit méně z legendy"
+  },
+  "mapmode.legend_more": {
+   "src": "Show the whole legend",
+   "text": "Zobrazit celou legendu"
   },
   "mapmode.level_councils": {
    "src": "council constituencies",
@@ -12455,6 +12487,10 @@
   "mapmode.share_voters": {
    "src": "share of the voters with a valid ballot",
    "text": "podíl z voličů s platným hlasovacím lístkem"
+  },
+  "mapmode.show_ballots": {
+   "src": "Show the ballots here",
+   "text": "Zobrazit hlasovací lístky zde"
   },
   "mapmode.tip_obvod": {
    "src": "{name}, constituency No. {n}",
@@ -12572,6 +12608,10 @@
    "src": "Language",
    "text": "Jazyk"
   },
+  "nav.more": {
+   "src": "More: language, map layers, appearance, Favourites",
+   "text": "Další: jazyk, vrstvy mapy, vzhled, Oblíbení"
+  },
   "nav.switch": {
    "src": "Language: {current}. Choose another language",
    "text": "Jazyk: {current}. Vybrat jiný jazyk"
@@ -12603,6 +12643,14 @@
   "panel.loading": {
    "src": "Loading…",
    "text": "Načítá se…"
+  },
+  "panel.lower": {
+   "src": "Lower the panel",
+   "text": "Stáhnout panel níž"
+  },
+  "panel.raise": {
+   "src": "Raise the panel",
+   "text": "Vytáhnout panel výš"
   },
   "pick.add": {
    "src": "Circle no. {n}, as on the ballot: the candidate is added to Favourites. Shift+click or double-click to cross the candidate out instead, muted like those the filter mutes.",

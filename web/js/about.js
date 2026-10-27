@@ -28,6 +28,8 @@ export function aboutSection(view) {
 
 export const aboutView = (section) => (section ? `about-${section}` : 'about');
 
+// The data sources (data/about.json `inputs`) by name prefix, each group
+// under its own line.
 const INPUT_GROUPS = [
   ['candidates-', 'about.inputs.candidates'],
   ['zbgis-', 'about.inputs.zbgis'],
@@ -38,8 +40,33 @@ const INPUT_GROUPS = [
   ['results-', 'about.inputs.results'],
 ];
 
+const METHOD = [
+  'about.method.candidates',
+  'about.method.map',
+  'about.method.addresses',
+  'about.method.obvody',
+  'about.method.approximate',
+  'about.method.incumbents',
+];
+
+const DISCLAIMERS = [
+  'disclaimer.indicative',
+  'disclaimer.errors',
+  'disclaimer.exhaustive',
+  'disclaimer.ai',
+  'disclaimer.translation',
+];
+
 const Link = ({ href, children }) =>
   html`<a href=${href} rel="noopener noreferrer" target="_blank">${children ?? href}</a>`;
+
+// The flag's twelve stars, on a circle of a third of its height around its
+// centre, clockwise from the top, to 0.1 of a unit.
+const STARS = Array.from({ length: 12 }, (_, i) => {
+  const angle = (i * Math.PI) / 6;
+  const round = (v) => Math.round(v * 10) / 10;
+  return [round(405 + 180 * Math.sin(angle)), round(270 - 180 * Math.cos(angle))];
+});
 
 /* The flag of the European Union in its official geometry: the cue for what
  * "EUPL" means even if the acronym says nothing to the reader. */
@@ -53,32 +80,24 @@ function EuFlag() {
       />
     </defs>
     <rect x="0" y="0" width="810" height="540" fill="#003399" />
-    <use href="#eu-star" x="405" y="90" />
-    <use href="#eu-star" x="495" y="114.1" />
-    <use href="#eu-star" x="560.9" y="180" />
-    <use href="#eu-star" x="585" y="270" />
-    <use href="#eu-star" x="560.9" y="360" />
-    <use href="#eu-star" x="495" y="425.9" />
-    <use href="#eu-star" x="405" y="450" />
-    <use href="#eu-star" x="315" y="425.9" />
-    <use href="#eu-star" x="249.1" y="360" />
-    <use href="#eu-star" x="225" y="270" />
-    <use href="#eu-star" x="249.1" y="180" />
-    <use href="#eu-star" x="315" y="114.1" />
+    ${STARS.map(([x, y]) => html`<use href="#eu-star" x=${x} y=${y} />`)}
   </svg>`;
 }
 
-/* The version, its number a link to its release, whose notes say what
- * changed (only a tag of __version__ is deployed, docs/deploy.md, so the
- * release exists); then the repository sentence, its {github} the link:
- * "GitHub" in the case the sentence needs (about.github), never the long
- * URL. */
+/* String *key* with its {*name*} placeholder replaced by *node*. */
+function fill(key, name, node) {
+  const [before, after = ''] = t(key).split(`{${name}}`);
+  return html`${before}${node}${after}`;
+}
+
+/* The version, linked to its release notes (only a tagged __version__ is
+ * deployed, docs/deploy.md, so the release exists); then the repository
+ * sentence, its {github} a link reading "GitHub" in the grammatical case
+ * the sentence needs (about.github) rather than the long URL. */
 function repositoryLine() {
-  const [versionBefore, versionAfter = ''] = t('about.version').split('{version}');
-  const [before, after = ''] = t('about.repository').split('{github}');
   const release = html`<${Link} href=${`${repository}/releases/tag/v${version}`}>${version}<//>`;
   const github = html`<${Link} href=${repository}>${t('about.github')}<//>`;
-  return html`${versionBefore}${release}${versionAfter}${' · '}${before}${github}${after}`;
+  return html`${fill('about.version', 'version', release)}${' · '}${fill('about.repository', 'github', github)}`;
 }
 
 function Main({ sectionHash, onSection }) {
@@ -113,28 +132,9 @@ function Main({ sectionHash, onSection }) {
   `;
 }
 
-function Method() {
-  return html`
-    <p>${t('about.method.candidates')}</p>
-    <p>${t('about.method.map')}</p>
-    <p>${t('about.method.addresses')}</p>
-    <p>${t('about.method.obvody')}</p>
-    <p>${t('about.method.approximate')}</p>
-    <p>${t('about.method.incumbents')}</p>
-  `;
-}
+const Method = () => METHOD.map((key) => html`<p>${t(key)}</p>`);
 
-function Disclaimers() {
-  return html`
-    <ul>
-      <li>${t('disclaimer.indicative')}</li>
-      <li>${t('disclaimer.errors')}</li>
-      <li>${t('disclaimer.exhaustive')}</li>
-      <li>${t('disclaimer.ai')}</li>
-      <li>${t('disclaimer.translation')}</li>
-    </ul>
-  `;
-}
+const Disclaimers = () => html`<ul>${DISCLAIMERS.map((key) => html`<li>${t(key)}</li>`)}</ul>`;
 
 /* The sections listing what data/about.json says, once it has loaded. */
 function Loaded({ render }) {

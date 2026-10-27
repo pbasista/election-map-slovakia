@@ -136,10 +136,11 @@ election's data (:func:`okrsky_path`; written by ``ems job ingest`` from an
 The okrsky are numbered 1..N (N ≥ 2), each with rules of the forms above,
 which choose among all the addresses of the obec, or ``addressless =
 true``; where the others are all addressless, the one okrsok with the
-addresses has an empty table. :func:`okrsky_set` reads it as a rule set whose one obvod 1 is the
-whole obec and holds every okrsok (:attr:`RuleSet.whole`), so the okrsky
-of both kinds of obec are assigned and drawn alike;
-:func:`okrsok_rule_sets` returns every rule set that gives the okrsky.
+addresses has an empty table. :func:`okrsky_set` reads it as a rule set
+whose one obvod 1 is the whole obec and holds every okrsok
+(:attr:`RuleSet.whole`), so the okrsky of both kinds of obec are assigned
+and drawn alike; :func:`okrsok_rule_sets` returns every rule set that gives
+the okrsky.
 """
 
 from __future__ import annotations
@@ -150,7 +151,7 @@ import json
 import re
 import tomllib
 from collections import Counter, defaultdict
-from collections.abc import Mapping, Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, NamedTuple
@@ -195,6 +196,8 @@ _EXTENT = (16.8, 47.7, 22.6, 49.7)
 _LONLAT = 2  # coordinates of a near point
 _SEVERAL = 2  # okrsky of an obec with one council obvod
 _OBEC = re.compile(r"\d{6}")
+_NUMBER = re.compile(r"[1-9]\d*")
+"""A table key that numbers an obvod or okrsok."""
 _SHA256 = re.compile(r"[0-9a-f]{64}")
 _ITEM = re.compile(r"(\d+)\s*([^\W\d_]*)(?:\s*(-)\s*(\d*))?")
 _HOUSE = re.compile(r"0*(\d+)\s*([^\W\d_]*)")
@@ -314,34 +317,28 @@ class Rule:
 
     def describe(self) -> str:
         """Return the rule as one line, for reports."""
-        what = (
-            "the rest"
-            if self.rest
-            else f"k.ú. {self.ku}"
-            if self.ku
-            else " in ".join(
-                x
-                for x in (
-                    self.street,
-                    self.near and f"near {self.near[0]}, {self.near[1]}",
-                    self.part and f"part {self.part}",
-                )
-                if x is not None
-            )
-            or "the obec"
-        )
+        what = self._selection()
         if self.numbered:
-            numbers = " ".join(
-                x
-                for x in (
-                    self.numbers,
-                    self.parity,
-                    self.excluded and f"except {self.excluded}",
-                )
-                if x
+            narrowed = (
+                self.numbers,
+                self.parity,
+                self.excluded and f"except {self.excluded}",
             )
-            what += f" {numbers} ({self.kind})"
+            what += f" {' '.join(x for x in narrowed if x)} ({self.kind})"
         return f"{self.level} {self.unit}: {what}"
+
+    def _selection(self) -> str:
+        """Return what the rule selects before any numbers narrow it."""
+        if self.rest:
+            return "the rest"
+        if self.ku:
+            return f"k.ú. {self.ku}"
+        where = (
+            self.street,
+            self.near and f"near {self.near[0]}, {self.near[1]}",
+            self.part and f"part {self.part}",
+        )
+        return " in ".join(x for x in where if x is not None) or "the obec"
 
 
 @dataclass(frozen=True)
@@ -512,31 +509,31 @@ def rule_set(data: Mapping[str, Any], where: str) -> RuleSet:
     obec, documents = _source(t, where)
     date = _date(t, "date")
     seats, rules, okrsky = _obvod_tables(t, where)
-    fill = t.choice("fill", (FILL_NEAREST,)) == FILL_NEAREST
+    fill = _nearest_fill(t, "fill")
     okrsok_rules, addressless = _okrsok_rules(t, where, seats, okrsky)
     okrsky_date = _date(t, "okrsky_date")
-    okrsky_fill = t.choice("okrsky_fill", (FILL_NEAREST,)) == FILL_NEAREST
+    okrsky_fill = _nearest_fill(t, "okrsky_fill")
     okrsky_note = t.text("okrsky_note")
     if not okrsky and (okrsky_date or okrsky_note):
         raise t.error("okrsky_date", "okrsky_date and okrsky_note need the okrsky")
     if okrsky_fill and not okrsok_rules:
         raise t.error("okrsky_fill", "is for okrsok rules")
     out = RuleSet(
-        obec,
-        t.text("name", required=True) or "",
-        date,
-        documents,
-        seats,
-        rules,
-        fill,
-        t.text("note"),
-        bool(t.get("estimated", bool)),
-        okrsky,
-        okrsok_rules,
-        okrsky_fill,
-        okrsky_date,
-        okrsky_note,
-        addressless,
+        obec=obec,
+        name=t.text("name", required=True) or "",
+        date=date,
+        documents=documents,
+        seats=seats,
+        rules=rules,
+        fill=fill,
+        note=t.text("note"),
+        estimated=bool(t.get("estimated", bool)),
+        okrsky=okrsky,
+        okrsok_rules=okrsok_rules,
+        okrsky_fill=okrsky_fill,
+        okrsky_date=okrsky_date,
+        okrsky_note=okrsky_note,
+        addressless=addressless,
     )
     t.done()
     _check_estimated(out, t)
@@ -552,21 +549,21 @@ def okrsky_set(data: Mapping[str, Any], where: str) -> RuleSet:
     t = _Fields(data, where)
     obec, documents = _source(t, where)
     tables = t.get("okrsok", dict, required=True)
-    numbers = sorted(int(k) for k in tables if re.fullmatch(r"[1-9]\d*", k))
+    numbers = sorted(int(k) for k in tables if _NUMBER.fullmatch(k))
     if len(numbers) < _SEVERAL or numbers != list(range(1, len(tables) + 1)):
         raise t.error("okrsok", "the okrsky must be numbered 1..N, N at least 2")
     okrsky = {1: tuple(numbers)}
     okrsok_rules, addressless = _okrsok_rules(t, where, {1: 0}, okrsky)
     out = RuleSet(
-        obec,
-        t.text("name", required=True) or "",
-        None,
-        documents,
-        {1: 0},
-        (Rule(1, rest=True),),
+        obec=obec,
+        name=t.text("name", required=True) or "",
+        date=None,
+        documents=documents,
+        seats={1: 0},
+        rules=(Rule(1, rest=True),),
         okrsky=okrsky,
         okrsok_rules=okrsok_rules,
-        okrsky_fill=t.choice("okrsky_fill", (FILL_NEAREST,)) == FILL_NEAREST,
+        okrsky_fill=_nearest_fill(t, "okrsky_fill"),
         okrsky_date=_date(t, "okrsky_date"),
         okrsky_note=t.text("okrsky_note"),
         addressless=addressless,
@@ -600,32 +597,38 @@ def _date(t: _Fields, key: str) -> dt.date | None:
     return value
 
 
+def _nearest_fill(t: _Fields, key: str) -> bool:
+    """Return whether *key* of *t* is ``"nearest"``, the one fill there is."""
+    return t.choice(key, (FILL_NEAREST,)) == FILL_NEAREST
+
+
 def _obvod_tables(
     t: _Fields, where: str
 ) -> tuple[dict[int, int], tuple[Rule, ...], dict[int, tuple[int, ...]]]:
     """Return the seats, rules and okrsky of the obvody of rule set *t*."""
     seats, rules, okrsky = {}, [], {}
     for key, entry in t.get("obvod", dict, required=True).items():
-        if not re.fullmatch(r"[1-9]\d*", key):
+        if not _NUMBER.fullmatch(key):
             raise t.error(f"obvod.{key}", "obvod number must be a positive integer")
+        number = int(key)
         o = _Fields(entry, f"{where}.obvod.{key}")
-        seats[int(key)] = o.get("seats", int, required=True)
-        if seats[int(key)] <= 0:
+        seats[number] = o.get("seats", int, required=True)
+        if seats[number] <= 0:
             raise o.error("seats", "must be positive")
         listed = o.get("rules", list, required=True)
         if not listed:
             raise o.error("rules", "must not be empty")
         rules += [
-            _rule(int(key), r, f"{o.where}.rules[{i}]") for i, r in enumerate(listed)
+            _rule(number, r, f"{o.where}.rules[{i}]") for i, r in enumerate(listed)
         ]
-        numbers = o.get("okrsky", list)
-        if numbers is not None:
-            if not numbers or not all(
+        listed_okrsky = o.get("okrsky", list)
+        if listed_okrsky is not None:
+            if not listed_okrsky or not all(
                 isinstance(k, int) and not isinstance(k, bool) and k > 0
-                for k in numbers
+                for k in listed_okrsky
             ):
                 raise o.error("okrsky", "must list positive okrsok numbers")
-            okrsky[int(key)] = tuple(numbers)
+            okrsky[number] = tuple(listed_okrsky)
         o.done()
     if sorted(seats) != list(range(1, len(seats) + 1)):
         raise t.error("obvod", f"must be numbered 1..{len(seats)} without gaps")
@@ -661,7 +664,7 @@ def _okrsok_rules(
     obvod_of = {k: o for o, ks in okrsky.items() for k in ks}
     tables = t.get("okrsok", dict) or {}
     for key in tables:
-        if not re.fullmatch(r"[1-9]\d*", key) or int(key) not in obvod_of:
+        if not _NUMBER.fullmatch(key) or int(key) not in obvod_of:
             raise t.error(f"okrsok.{key}", "is no okrsok of the obvody")
     addressless = tuple(
         sorted(
@@ -1086,6 +1089,7 @@ def _assign(
 ) -> Assignment:
     """Return the unit of each of *places* by *rules* (see :func:`assign`)."""
     index = _RuleIndex(rules)
+    order = list(rules)
     out = Assignment([0] * len(places), [None] * len(places), level=level)
     used: set[int] = set()
     for i, place in enumerate(places):
@@ -1106,7 +1110,7 @@ def _assign(
             continue
         used.update(id(r) for r in best)
         if len({r.unit for r in best}) > 1:
-            out.conflicts[i] = tuple(sorted(set(best), key=list(rules).index))
+            out.conflicts[i] = tuple(sorted(set(best), key=order.index))
             continue
         out.units[i] = best[0].unit
         out.rules[i] = best[0]
@@ -1156,14 +1160,12 @@ def _nearest(
     That is the one nearest to *point* (planar, see :meth:`ObecPlaces.planar`)
     of those whose part, if any, is the place's; None without a point.
     """
-    if point is None or np.isnan(point).any():
-        return None
     near = [
         r
         for r in rules
         if r.near is not None and (r.part is None or _key(r.part) == _key(place.part))
     ]
-    if not near:
+    if not near or point is None or np.isnan(point).any():
         return None
     return min(
         near,
@@ -1210,17 +1212,21 @@ def _fill(out: Assignment, places: Sequence[Place], points: np.ndarray | None) -
     for i in np.flatnonzero(placed).tolist():
         by_group[(places[i].street, places[i].part)][out.units[i]] += 1
         by_part[places[i].part][out.units[i]] += 1
-    tree = (
-        shapely.STRtree(shapely.points(points[sources]))
-        if points is not None and len(sources)
-        else None
-    )
+    # The nearest placed address with a point, of each located one left.
+    nearest: dict[int, int] = {}
+    if points is not None and len(sources):
+        asked = np.array([i for i in out.unassigned if located[i]], dtype=int)
+        found_in, found = shapely.STRtree(
+            shapely.points(points[sources])
+        ).query_nearest(shapely.points(points[asked]), all_matches=False)
+        nearest = dict(
+            zip(asked[found_in].tolist(), sources[found].tolist(), strict=True)
+        )
     left = []
     for i in out.unassigned:
         unit = 0
-        if tree is not None and points is not None and located[i]:
-            nearest = tree.query_nearest(shapely.points(points[i]), all_matches=False)
-            unit = out.units[int(sources[int(nearest[0])])]
+        if i in nearest:
+            unit = out.units[nearest[i]]
         else:
             p = places[i]
             c = by_group.get((p.street, p.part)) or by_part.get(p.part)
@@ -1307,9 +1313,14 @@ def _toml_string(value: str) -> str:
 
 def _toml_rule(r: Rule) -> str:
     """Return rule *r* as a TOML inline table."""
-    pairs = [
-        (k, v)
-        for k, v in (
+    fields = []
+    if r.near:
+        fields.append(f"near = [{r.near[0]}, {r.near[1]}]")
+    if r.rest:
+        fields.append("rest = true")
+    fields += [
+        f"{key} = {_toml_string(value)}"
+        for key, value in (
             ("street", r.street),
             ("part", r.part),
             ("ku", r.ku),
@@ -1320,16 +1331,16 @@ def _toml_rule(r: Rule) -> str:
             ("written", r.written),
             ("note", r.note),
         )
-        if v is not None
+        if value is not None
     ]
-    fields = [f"{k} = {_toml_string(v)}" for k, v in pairs]
-    if r.rest:
-        fields.insert(0, "rest = true")
-    if r.near:
-        fields.insert(0, f"near = [{r.near[0]}, {r.near[1]}]")
     if r.inferred:
         fields.append("inferred = true")
     return f"{{{', '.join(fields)}}}"
+
+
+def _toml_rules(rules: Iterable[Rule]) -> list[str]:
+    """Return the lines of a ``rules`` array of *rules*."""
+    return ["rules = [", *(f"  {_toml_rule(r)}," for r in rules), "]"]
 
 
 def dump(rules: RuleSet, header: Sequence[str] = ()) -> str:
@@ -1354,22 +1365,19 @@ def dump(rules: RuleSet, header: Sequence[str] = ()) -> str:
     for d in rules.documents:
         lines += ["", "[[document]]", f"url = {s(d.url)}", f"sha256 = {s(d.sha256)}"]
         lines.append(f"title = {s(d.title)}")
-    for number, seats in {} if rules.whole else rules.seats.items():
-        lines += ["", f"[obvod.{number}]", f"seats = {seats}"]
-        if number in rules.okrsky:
-            lines.append(f"okrsky = [{', '.join(map(str, rules.okrsky[number]))}]")
-        lines.append("rules = [")
-        lines += [f"  {_toml_rule(r)}," for r in rules.rules if r.unit == number]
-        lines.append("]")
-    numbers = {r.unit for r in rules.okrsok_rules} | set(rules.addressless)
-    for number in rules.okrsky[1] if rules.whole else sorted(numbers):
+    if not rules.whole:
+        for number, seats in rules.seats.items():
+            lines += ["", f"[obvod.{number}]", f"seats = {seats}"]
+            if number in rules.okrsky:
+                lines.append(f"okrsky = [{', '.join(map(str, rules.okrsky[number]))}]")
+            lines += _toml_rules(r for r in rules.rules if r.unit == number)
+    with_table = {r.unit for r in rules.okrsok_rules} | set(rules.addressless)
+    # An okrsky file numbers every okrsok, the one alone with the addresses by
+    # an empty table.
+    for number in rules.okrsky[1] if rules.whole else sorted(with_table):
         lines += ["", f"[okrsok.{number}]"]
-        if number not in numbers:
-            continue
         if number in rules.addressless:
             lines.append("addressless = true")
-            continue
-        lines.append("rules = [")
-        lines += [f"  {_toml_rule(r)}," for r in rules.okrsok_rules if r.unit == number]
-        lines.append("]")
+        elif number in with_table:
+            lines += _toml_rules(r for r in rules.okrsok_rules if r.unit == number)
     return "\n".join(lines) + "\n"

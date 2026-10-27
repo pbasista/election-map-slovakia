@@ -3,7 +3,10 @@ NOTICE
 
 This project is licensed under the European Union Public Licence v1.2
 (EUPL-1.2) -- see LICENSE. The data it processes and publishes in derived
-form remains under the terms of its providers:
+form remains under the terms of its providers.
+
+Data
+----
 
 * Administrative boundaries (ZBGIS) -- (c) Úrad geodézie, kartografie a
   katastra Slovenskej republiky (ÚGKK SR), CC BY 4.0.
@@ -12,13 +15,14 @@ form remains under the terms of its providers:
 * Borders of the countries around Slovakia -- Natural Earth (admin 0
   countries, 1:10m, v5.1.2), public domain. https://www.naturalearthdata.com/
 
-* Roads, railways and waters of the base map -- (c) OpenStreetMap
+* Roads, railways, waters and buildings of the base map -- (c) OpenStreetMap
   contributors, Open Database License (ODbL) 1.0, from Geofabrik's extract
   of Slovakia of 1 January 2026. https://www.openstreetmap.org/copyright
   The base map files (data/build/base/, base/ on the site) are a derived
-  database of it (roads, railways, waterways and water areas selected,
-  simplified and cut per okres by src/election_map_slovakia/basemap.py) and
-  are published under the ODbL 1.0 as well:
+  database of it: roads, railways, waterways and water areas selected,
+  simplified and cut per okres, and building outlines rounded and grouped
+  per obec, by src/election_map_slovakia/basemap.py.
+  They are published under the ODbL 1.0 as well:
   https://opendatacommons.org/licenses/odbl/1-0/
 
 * Address register with coordinates -- Ministerstvo vnútra Slovenskej
@@ -27,17 +31,30 @@ form remains under the terms of its providers:
 * Candidate lists of the 2026 municipal and regional elections -- (c) MV SR,
   published at https://www.minv.sk/; redistributed in derived form.
 
-* data/curated/elections/*/obvody/ -- constituency membership transcribed from the
-  official decisions of the eight self-governing regions and of the cities
-  of Bratislava and Košice (each file names its source document); official
-  documents, redistributed in derived form.
+* Election results and the territorial division of the elections (the
+  final results of 2022 to 2026 and the okrsky of 2026) -- Štatistický
+  úrad Slovenskej republiky (ŠÚ SR), published at https://volbysr.sk/ and
+  https://volby.statistics.sk/; redistributed in derived form.
+
+* data/curated/elections/*/obvody/ -- constituency membership transcribed
+  from the official decisions of the eight self-governing regions and of
+  the cities of Bratislava and Košice (each file names its source
+  document); official documents, redistributed in derived form.
+
+* Party logos in web/img/parties/ -- each with its source and licence
+  (and author, where the licence requires attribution) in
+  config/parties.toml.
 
 * config/blocklist-konspiratori.txt -- a dated snapshot of the list
   published at https://www.konspiratori.sk/zoznam-stranok.
 
+Libraries
+---------
+
 Third-party libraries vendored into web/vendor/:
 
-* web/vendor/leaflet/ -- Leaflet 1.9.4 (leaflet.js, leaflet.css), unmodified.
+* web/vendor/leaflet/ -- Leaflet 1.9.4 (leaflet.js, leaflet.css),
+  unmodified but for the source-map comment removed from leaflet.js.
   Copyright (c) 2010-2023 Volodymyr Agafonkin, (c) 2010-2011 CloudMade;
   BSD 2-Clause License, full text in web/vendor/leaflet/LICENSE.
   Upstream: https://leafletjs.com/
@@ -46,5 +63,11 @@ Third-party libraries vendored into web/vendor/:
   one ES module. Copyright Jason Miller and contributors, MIT License; the
   full notice is embedded as a comment at the top of the file.
   Upstream: https://preactjs.com/ and https://github.com/developit/htm
+
+* web/vendor/qrcode-generator.module.js -- qrcode-generator 2.0.4.
+  Copyright (c) 2009 Kazuhiko Arase, MIT License; the full notice is
+  embedded as a comment at the top of the file, which replaces the
+  upstream header. "QR Code" is a registered trademark of DENSO WAVE
+  INCORPORATED. Upstream: https://github.com/kazuhikoarase/qrcode-generator
 
 Everything else in this distribution is licensed under the EUPL-1.2.

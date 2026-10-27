@@ -145,22 +145,11 @@ def _fetch_one(
     agent: str,
 ) -> tuple[Outcome, dict[str, Any]]:
     target = raw_dir / inp.name / inp.file
-    # The previous download only counts if it is the same resource and still
-    # on disk as recorded.
-    if not (
-        previous is not None
-        and previous.get("url") == inp.url
-        and previous.get("path") == f"{inp.name}/{inp.file}"
-        and target.is_file()
-        and target.stat().st_size == previous.get("bytes")
-    ):
+    if previous is not None and not _on_disk(inp, previous, target):
         previous = None
     headers = {"User-Agent": agent}
     if previous is not None and not force:
-        if previous.get("etag"):
-            headers["If-None-Match"] = previous["etag"]
-        if previous.get("last_modified"):
-            headers["If-Modified-Since"] = previous["last_modified"]
+        headers |= _conditional(previous)
     now = dt.datetime.now(dt.UTC).isoformat(timespec="seconds")
 
     request = urllib.request.Request(inp.url, headers=headers)
@@ -184,6 +173,7 @@ def _fetch_one(
             "last_modified": response.headers.get("Last-Modified"),
         }
         tmp, sha256, size = _download(response, target, inp.sha256)
+    old_rows = previous.get("rows") if previous is not None else None
     try:
         with progress.stage(f"checking {inp.file}"):
             stats = check(inp, tmp)
@@ -193,26 +183,15 @@ def _fetch_one(
             # What is on disk stays, so the manifest keeps describing it.
             entry = {**previous, **validators, "checked_at": now}
             return _unchanged(inp, entry, "same content"), entry
-        old_rows = previous.get("rows") if previous is not None else None
-        rows = stats.get("rows")
-        if (
-            inp.kind == "csv"
-            and not force
-            and old_rows
-            and rows is not None
-            and rows < old_rows * (1 - MAX_ROW_DROP)
-        ):
-            raise FetchError(
-                f"{rows:,} rows, down from {old_rows:,} (more than"
-                f" {MAX_ROW_DROP:.0%}); kept the previous file, --force accepts it"
-            )
+        if inp.kind == "csv" and not force:
+            _check_row_drop(stats.get("rows"), old_rows)
         os.replace(tmp, target)
     finally:
         tmp.unlink(missing_ok=True)
 
     entry = {
         "url": inp.url,
-        "path": f"{inp.name}/{inp.file}",
+        "path": _manifest_path(inp),
         "sha256": sha256,
         "bytes": size,
         "retrieved_at": now,
@@ -220,10 +199,43 @@ def _fetch_one(
         **validators,
         **stats,
     }
-    detail = _rows_detail(rows, old_rows)
-    return Outcome(
-        inp.name, "new" if previous is None else "updated", size, detail
-    ), entry
+    status = "new" if previous is None else "updated"
+    detail = _rows_detail(stats.get("rows"), old_rows)
+    return Outcome(inp.name, status, size, detail), entry
+
+
+def _manifest_path(inp: Input) -> str:
+    """Return where *inp* lands, relative to ``data/raw/``."""
+    return f"{inp.name}/{inp.file}"
+
+
+def _on_disk(inp: Input, previous: dict[str, Any], target: Path) -> bool:
+    """Return whether *previous* records *inp* as it is still on disk."""
+    return (
+        previous.get("url") == inp.url
+        and previous.get("path") == _manifest_path(inp)
+        and target.is_file()
+        and target.stat().st_size == previous.get("bytes")
+    )
+
+
+def _conditional(previous: dict[str, Any]) -> dict[str, str]:
+    """Return the headers asking for the file only if it changed since *previous*."""
+    headers = {}
+    if previous.get("etag"):
+        headers["If-None-Match"] = previous["etag"]
+    if previous.get("last_modified"):
+        headers["If-Modified-Since"] = previous["last_modified"]
+    return headers
+
+
+def _check_row_drop(rows: int | None, old_rows: int | None) -> None:
+    """Raise if *rows* fell more than :data:`MAX_ROW_DROP` below *old_rows*."""
+    if old_rows and rows is not None and rows < old_rows * (1 - MAX_ROW_DROP):
+        raise FetchError(
+            f"{rows:,} rows, down from {old_rows:,} (more than"
+            f" {MAX_ROW_DROP:.0%}); kept the previous file, --force accepts it"
+        )
 
 
 def _pinned_copy(
@@ -238,9 +250,9 @@ def _pinned_copy(
     Only a pinned input, and only from a copy with the pinned digest: its
     content is fixed, so the copy is what the server would send, and a
     release need not wait for the server (statistics.sk's past results were
-    all gone two days before the 2026 elections). The copy on disk stays,
-    its manifest entry as it was, since nothing was checked; else the
-    *committed* one (its directory and manifest entry) is copied in, with
+    all gone two days before the 2026 elections). A copy on disk stays as
+    it is, manifest entry included, since nothing was checked. Else the
+    *committed* copy (its directory and manifest entry) is copied in with
     that entry, which says when it was downloaded.
     """
     if not inp.sha256:
@@ -260,9 +272,8 @@ def _pinned_copy(
     ):
         raise FetchError(f"{problem}; the committed copy is not the pinned one")
     target.parent.mkdir(parents=True, exist_ok=True)
-    fd, name = tempfile.mkstemp(dir=target.parent, prefix=f".{target.name}.")
+    fd, tmp = _temp_file(target)
     os.close(fd)
-    tmp = Path(name)
     try:
         shutil.copyfile(copy, tmp)
         check(inp, tmp)
@@ -279,6 +290,15 @@ def _sha256(path: Path) -> str:
         return hashlib.file_digest(f, "sha256").hexdigest()
 
 
+def _temp_file(target: Path) -> tuple[int, Path]:
+    """Create a hidden temporary file beside *target*; return its fd and path.
+
+    Beside it, so that ``os.replace`` moves it into place atomically.
+    """
+    fd, name = tempfile.mkstemp(dir=target.parent, prefix=f".{target.name}.")
+    return fd, Path(name)
+
+
 def _download(
     response: http.client.HTTPResponse, target: Path, pinned: str
 ) -> tuple[Path, str, int]:
@@ -290,8 +310,7 @@ def _download(
     size = 0
     expected = response.headers.get("Content-Length")
     total = int(expected) if expected is not None and expected.isdigit() else None
-    fd, name = tempfile.mkstemp(dir=target.parent, prefix=f".{target.name}.")
-    tmp = Path(name)
+    fd, tmp = _temp_file(target)
     try:
         with (
             progress.stage(f"downloading {target.name}", total, format_size) as s,
@@ -305,13 +324,14 @@ def _download(
     except (OSError, http.client.HTTPException) as e:
         tmp.unlink(missing_ok=True)
         raise FetchError(f"download interrupted: {e}") from e
+    sha256 = digest.hexdigest()
     if total is not None and total != size:
         tmp.unlink(missing_ok=True)
         raise FetchError(f"truncated: got {size:,} of {total:,} bytes")
-    if pinned and digest.hexdigest() != pinned:
+    if pinned and sha256 != pinned:
         tmp.unlink(missing_ok=True)
-        raise FetchError(f"sha256 {digest.hexdigest()}, but {pinned} is pinned")
-    return tmp, digest.hexdigest(), size
+        raise FetchError(f"sha256 {sha256}, but {pinned} is pinned")
+    return tmp, sha256, size
 
 
 def check(inp: Input, path: Path) -> dict[str, int]:
@@ -445,11 +465,11 @@ def _rows_detail(rows: int | None, old_rows: int | None) -> str:
 def _write_json(path: Path, data: object) -> None:
     """Write *data* to *path* atomically."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    fd, name = tempfile.mkstemp(dir=path.parent, prefix=f".{path.name}.")
+    fd, tmp = _temp_file(path)
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, sort_keys=True, ensure_ascii=False)
             f.write("\n")
-        os.replace(name, path)
+        os.replace(tmp, path)
     finally:
-        Path(name).unlink(missing_ok=True)
+        tmp.unlink(missing_ok=True)

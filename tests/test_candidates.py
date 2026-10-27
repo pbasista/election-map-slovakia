@@ -1,4 +1,5 @@
 import zipfile
+from dataclasses import replace
 from pathlib import Path
 from xml.sax.saxutils import escape
 
@@ -364,7 +365,7 @@ def test_person_ids_stable_across_unrelated_changes():
 
 
 def entry(kind: str, region: str, number: int, **kw) -> Entry:
-    fields = dict(
+    base = Entry(
         kind=kind,
         source="test",
         region=region,
@@ -382,8 +383,7 @@ def entry(kind: str, region: str, number: int, **kw) -> Entry:
         independent=False,
         residence="",
     )
-    fields.update(kw)
-    return Entry(**fields)
+    return replace(base, **kw)
 
 
 MATCH_ADMIN = Admin(

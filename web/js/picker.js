@@ -4,22 +4,20 @@
  * written above it. */
 (() => {
   const c = JSON.parse(document.querySelector('meta[name="km-config"]').content);
-  let lang = null;
+  let stored = null;
   try {
-    lang = localStorage.getItem(c.storage);
+    stored = localStorage.getItem(c.storage);
   } catch {
     // Storage disabled: fall through to the browser languages.
   }
-  if (!c.codes.includes(lang)) {
-    lang = c.fallback[0];
-    for (const tag of navigator.languages ?? [navigator.language]) {
-      const base = tag.toLowerCase().split('-')[0];
-      const code = c.aliases[base] ?? base;
-      if (c.codes.includes(code)) {
-        lang = code;
-        break;
-      }
-    }
-  }
+  // The first of the browser's languages the site has.
+  const browser = () =>
+    (navigator.languages ?? [navigator.language])
+      .map((tag) => {
+        const base = tag.toLowerCase().split('-')[0];
+        return c.aliases[base] ?? base;
+      })
+      .find((code) => c.codes.includes(code));
+  const lang = c.codes.includes(stored) ? stored : (browser() ?? c.fallback[0]);
   location.replace(`/${lang}/${location.hash}`);
 })();

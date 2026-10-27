@@ -1,7 +1,7 @@
 /* The round buttons floating on the map: those with a small popover
- * (language, boundaries and the 2026 results on the map, theme, zoom, and
- * help with the disclaimer) and Favourites, which shows the candidates
- * circled.
+ * (language; the map's layers: constituency boundaries, the 2026 turnout
+ * and the base map; theme, zoom, and help with the disclaimer) and
+ * Favourites, which shows the candidates circled.
  *
  * A popover is a non-modal dialog next to its button: opening it moves focus
  * into it; Esc, a click elsewhere or focus leaving it closes it. Only one is
@@ -14,7 +14,9 @@ import { html, useEffect, useRef, useState } from '../vendor/preact-htm.module.j
 import { formatNumber, lang, languages, switchLanguage, t } from './i18n.js';
 import {
   ArrowIcon,
+  BaseMapIcon,
   CheckIcon,
+  ExpandIcon,
   GlobeIcon,
   HeartIcon,
   HelpIcon,
@@ -25,6 +27,7 @@ import {
   PlusIcon,
   SunIcon,
   SystemIcon,
+  TurnoutIcon,
 } from './icons.js';
 import { useLive } from './live.js';
 import { setMapMode, useMapMode } from './mapmode.js';
@@ -32,8 +35,21 @@ import { Notice } from './pane.js';
 
 // Broadest first.
 const OVERLAYS = ['zsk', 'city', 'oz', 'okrsky'];
-// Each turnout layer by the overlay icon of its areas, so that the two
-// parts of the menu read together: the municipalities, the two cities,
+// The legend of an overlay switched on: [swatch class (app.css), string].
+const OVERLAY_KEYS = {
+  oz: [
+    ['council', 'layers.oz_council'],
+    ['approximate', 'layers.oz_approximate'],
+    ['pending', 'layers.oz_pending'],
+    ['none', 'layers.oz_none'],
+  ],
+  okrsky: [
+    ['okrsok', 'layers.okrsky_border'],
+    ['okrsok-approximate', 'layers.okrsky_approximate'],
+  ],
+};
+// Each turnout layer by the overlay icon of its areas, so that the turnout
+// menu reads with the constituencies': the municipalities, the two cities,
 // the regions.
 const TURNOUT_ICON = { municipal: LAYER_ICON.oz, city: LAYER_ICON.city, regional: LAYER_ICON.zsk };
 const THEME_ICON = { system: SystemIcon, light: SunIcon, dark: MoonIcon };
@@ -98,8 +114,9 @@ function usePressOrMenu(onPress, onMenu) {
 }
 
 /* A button and the popover it opens. `onToggle(open)`; with `onPress`, see
- * usePressOrMenu. *badge*, on the icon, shows the button's current state. */
-function Popover({ name, label, icon, badge, open, onToggle, onPress, children }) {
+ * usePressOrMenu. *badge*, on the icon, shows the button's current state;
+ * *on*, a dot, that what the popover sets is in effect. */
+function Popover({ name, label, icon, badge, on, open, onToggle, onPress, children }) {
   const anchor = useRef(null);
   const button = useRef(null);
   const panel = useRef(null);
@@ -112,8 +129,25 @@ function Popover({ name, label, icon, badge, open, onToggle, onPress, children }
     const outside = (e) => {
       if (!anchor.current.contains(e.target)) onToggle(false);
     };
+    // On screen whatever its content: at most as tall as the screen (app.css,
+    // it scrolls past that), and moved up (in the lower column, down) by as
+    // much as it would run past the screen's edge beside its button. Again
+    // as its content grows or shrinks (a disclosure) and the window resizes.
+    const place = () => {
+      const edge = parseFloat(getComputedStyle(p).getPropertyValue('--edge'));
+      const top = anchor.current.getBoundingClientRect().top + p.offsetTop;
+      const shift = Math.min(0, innerHeight - edge - top - p.offsetHeight) || Math.max(0, edge - top);
+      p.style.translate = shift ? `0 ${shift}px` : '';
+    };
+    const resize = new ResizeObserver(place);
+    for (const e of [p, ...p.children]) resize.observe(e);
     document.addEventListener('pointerdown', outside);
-    return () => document.removeEventListener('pointerdown', outside);
+    addEventListener('resize', place);
+    return () => {
+      document.removeEventListener('pointerdown', outside);
+      removeEventListener('resize', place);
+      resize.disconnect();
+    };
   }, [open]);
 
   return html`
@@ -135,7 +169,7 @@ function Popover({ name, label, icon, badge, open, onToggle, onPress, children }
     >
       <button
         type="button"
-        class="fab"
+        class=${on ? 'fab on' : 'fab'}
         ref=${button}
         id=${`km-${name}-button`}
         aria-label=${label}
@@ -146,7 +180,8 @@ function Popover({ name, label, icon, badge, open, onToggle, onPress, children }
         ...${onPress ? pressOrMenu : { onClick: () => onToggle(!open) }}
       >
         <${icon} />
-        ${badge ? html`<span class="fab-badge" aria-hidden="true">${badge}</span>` : null}
+        ${badge ? html`<${Badge}>${badge}<//>` : null}
+        ${on ? html`<span class="fab-dot" aria-hidden="true"></span>` : null}
       </button>
       ${
         open
@@ -168,6 +203,9 @@ function Popover({ name, label, icon, badge, open, onToggle, onPress, children }
 
 const Title = ({ name, children }) => html`<h2 class="pop-title" id=${`km-${name}-title`}>${children}</h2>`;
 
+/* A round button's current state on its icon: a language code, a count. */
+const Badge = ({ children }) => html`<span class="fab-badge" aria-hidden="true">${children}</span>`;
+
 /* Shows and hides Favourites (favourites.js), with how many are circled on
  * it once there are some. Pressed while they are shown. */
 export function FavouritesButton({ count, open, onPress }) {
@@ -181,7 +219,7 @@ export function FavouritesButton({ count, open, onPress }) {
     onClick=${onPress}
   >
     <${HeartIcon} />
-    ${count ? html`<span class="fab-badge" aria-hidden="true">${formatNumber(count)}</span>` : null}
+    ${count ? html`<${Badge}>${formatNumber(count)}<//>` : null}
   </button>`;
 }
 
@@ -234,101 +272,120 @@ export function LanguageMenu({ open, onToggle, hash }) {
   `;
 }
 
-/* The constituency overlays, each switched on or off on its own; whichever
- * are on, the map draws each from the zoom where it reads (map.js
- * `OVERLAYS`). The icons are in the colours their borders are drawn in.
- * Below them the base map (roads, railways, waters), on by default. Once
- * there are 2026 results, the turnout of either election can be shown on
- * the map too (mapmode.js). */
-export function LayerMenu({ open, onToggle, overlays, onOverlays }) {
+/* A map layer's checkbox row, with the layer's icon. */
+const LayerCheck = ({ layer, overlays, onOverlays, children }) => {
+  const Icon = LAYER_ICON[layer];
+  return html`
+    <label class=${`option layer-${layer}`}>
+      <input
+        type="checkbox"
+        value=${layer}
+        checked=${overlays[layer]}
+        onChange=${(e) => onOverlays({ ...overlays, [layer]: e.currentTarget.checked })}
+      />
+      <${Icon} />
+      <span>${children}</span>
+    </label>
+  `;
+};
+
+/* The map's layers, one button each in one group, each with its popover:
+ *
+ * - the constituency overlays, each switched on or off on its own; whichever
+ *   are on, the map draws each from the zoom where it reads (map.js
+ *   `OVERLAYS`). The icons are in the colours their borders are drawn in.
+ *   When each appears and the legend of those on are folded under them, so
+ *   that the menu stays short (on a phone, on the screen);
+ * - once there are 2026 results, the turnout of either election on the map
+ *   (mapmode.js), the button dotted while one is shown;
+ * - the base map: roads, railways and waters, and buildings, both on by
+ *   default.
+ *
+ * `menu` is the open popover (app.js), `toggle(name)` its onToggle. */
+export function LayerMenus({ menu, toggle, overlays, onOverlays }) {
   const { status } = useLive();
   const mode = useMapMode();
   const counting = status && status.phase !== 'none';
+  const turnout = mode?.kind === 'turnout' ? mode.election : null;
+  const legend = OVERLAYS.flatMap((k) => (overlays[k] ? (OVERLAY_KEYS[k] ?? []) : []));
+  const layers = { overlays, onOverlays };
   return html`
-    <${Popover} name="layers" label=${t('layers.button')} icon=${LayersIcon} open=${open} onToggle=${onToggle}>
-      <${Title} name="layers">${t('layers.title')}<//>
-      <fieldset class="options">
-        <legend class="sr-only">${t('layers.title')}</legend>
-        ${OVERLAYS.map((k) => {
-          const Icon = LAYER_ICON[k];
-          return html`
-            <label class=${`option layer-${k}`} key=${k}>
-              <input
-                type="checkbox"
-                value=${k}
-                checked=${overlays[k]}
-                onChange=${(e) => onOverlays({ ...overlays, [k]: e.currentTarget.checked })}
-              />
-              <${Icon} />
-              <span>${t(`layers.${k}`)}</span>
-            </label>
-          `;
-        })}
-      </fieldset>
-      <p class="pop-note">${t('layers.auto')}</p>
-      ${
-        overlays.oz || overlays.okrsky
-          ? html`
-              <div class="notice legend" role="note">
-                ${
-                  overlays.oz
-                    ? html`
-                        <p class="key"><span class="swatch council"></span>${t('layers.oz_council')}</p>
-                        <p class="key"><span class="swatch approximate"></span>${t('layers.oz_approximate')}</p>
-                        <p class="key"><span class="swatch pending"></span>${t('layers.oz_pending')}</p>
-                        <p class="key"><span class="swatch none"></span>${t('layers.oz_none')}</p>
-                      `
-                    : null
-                }
-                ${
-                  overlays.okrsky
-                    ? html`
-                        <p class="key"><span class="swatch okrsok"></span>${t('layers.okrsky_border')}</p>
-                        <p class="key"><span class="swatch okrsok-approximate"></span>${t('layers.okrsky_approximate')}</p>
-                      `
-                    : null
-                }
-              </div>
-            `
-          : null
-      }
-      <fieldset class="options base-options">
-        <legend class="pop-title">${t('layers.base_title')}</legend>
-        <label class="option layer-base">
-          <input
-            type="checkbox"
-            checked=${overlays.base}
-            onChange=${(e) => onOverlays({ ...overlays, base: e.currentTarget.checked })}
-          />
-          <${LAYER_ICON.base} />
-          <span>${t('layers.base')}</span>
-        </label>
-      </fieldset>
+    <div class="fab-group" role="group" aria-label=${t('layers.group')}>
+      <${Popover}
+        name="constituencies"
+        label=${t('layers.button')}
+        icon=${LayersIcon}
+        open=${menu === 'constituencies'}
+        onToggle=${toggle('constituencies')}
+      >
+        <${Title} name="constituencies">${t('layers.title')}<//>
+        <fieldset class="options">
+          <legend class="sr-only">${t('layers.title')}</legend>
+          ${OVERLAYS.map((k) => html`<${LayerCheck} key=${k} layer=${k} ...${layers}>${t(`layers.${k}`)}<//>`)}
+        </fieldset>
+        <details class="pop-more">
+          <summary>${t('layers.legend')}<${ExpandIcon} /></summary>
+          <p class="pop-note">${t('layers.auto')}</p>
+          ${
+            legend.length
+              ? html`
+                  <div class="notice legend" role="note">
+                    ${legend.map(([swatch, key]) => html`<p class="key"><span class=${`swatch ${swatch}`}></span>${t(key)}</p>`)}
+                  </div>
+                `
+              : null
+          }
+        </details>
+      <//>
       ${
         counting
           ? html`
-              <fieldset class="options results-options">
-                <legend class="pop-title">${t('mapmode.title')}</legend>
-                ${[null, 'municipal', 'city', 'regional'].map((election) => {
-                  const Icon = TURNOUT_ICON[election];
-                  return html`
-                    <label class=${election ? `option turnout-${election}` : 'option'} key=${election ?? 'off'}>
-                      <input
-                        type="radio"
-                        name="km-results"
-                        checked=${election ? mode?.kind === 'turnout' && mode.election === election : !mode}
-                        onChange=${() => setMapMode(election && { kind: 'turnout', election })}
-                      />
-                      ${Icon ? html`<${Icon} />` : html`<span class="ico" aria-hidden="true"></span>`}
-                      <span>${t(election ? `mapmode.turnout_${election}_option` : 'mapmode.off')}</span>
-                    </label>
-                  `;
-                })}
-              </fieldset>
+              <${Popover}
+                name="turnout"
+                label=${t('mapmode.button', { layer: t(turnout ? `mapmode.turnout_${turnout}_option` : 'mapmode.off') })}
+                icon=${TurnoutIcon}
+                on=${turnout !== null}
+                open=${menu === 'turnout'}
+                onToggle=${toggle('turnout')}
+              >
+                <${Title} name="turnout">${t('mapmode.title')}<//>
+                <fieldset class="options">
+                  <legend class="sr-only">${t('mapmode.title')}</legend>
+                  ${[null, 'municipal', 'city', 'regional'].map((election) => {
+                    const Icon = TURNOUT_ICON[election];
+                    return html`
+                      <label class=${election ? `option turnout-${election}` : 'option'} key=${election ?? 'off'}>
+                        <input
+                          type="radio"
+                          name="km-turnout"
+                          checked=${election ? turnout === election : !mode}
+                          onChange=${() => setMapMode(election && { kind: 'turnout', election })}
+                        />
+                        ${Icon ? html`<${Icon} />` : html`<span class="ico" aria-hidden="true"></span>`}
+                        <span>${t(election ? `mapmode.turnout_${election}_option` : 'mapmode.off')}</span>
+                      </label>
+                    `;
+                  })}
+                </fieldset>
+              <//>
             `
           : null
       }
-    <//>
+      <${Popover}
+        name="base"
+        label=${t('layers.base_title')}
+        icon=${BaseMapIcon}
+        open=${menu === 'base'}
+        onToggle=${toggle('base')}
+      >
+        <${Title} name="base">${t('layers.base_title')}<//>
+        <fieldset class="options">
+          <legend class="sr-only">${t('layers.base_title')}</legend>
+          <${LayerCheck} layer="base" ...${layers}>${t('layers.base')}<//>
+          <${LayerCheck} layer="buildings" ...${layers}>${t('layers.buildings')}<//>
+        </fieldset>
+      <//>
+    </div>
   `;
 }
 
@@ -391,30 +448,28 @@ export function HelpMenu({ open, onToggle, aboutHash, onAbout }) {
   `;
 }
 
+const ZoomButton = ({ label, icon, disabled, onClick }) => html`
+  <button type="button" class="fab" aria-label=${label} title=${label} disabled=${disabled} onClick=${onClick}>
+    <${icon} />
+  </button>
+`;
+
 /* Zoom by one level, animated (map.js `zoomIn`). */
 export function ZoomButtons({ map, limits }) {
   return html`
-    <div class="zoom" role="group" aria-label=${t('map.zoom')}>
-      <button
-        type="button"
-        class="fab"
-        aria-label=${t('map.zoom_in')}
-        title=${t('map.zoom_in')}
+    <div class="fab-group" role="group" aria-label=${t('map.zoom')}>
+      <${ZoomButton}
+        label=${t('map.zoom_in')}
+        icon=${PlusIcon}
         disabled=${!limits.canZoomIn}
         onClick=${() => map?.zoomIn()}
-      >
-        <${PlusIcon} />
-      </button>
-      <button
-        type="button"
-        class="fab"
-        aria-label=${t('map.zoom_out')}
-        title=${t('map.zoom_out')}
+      />
+      <${ZoomButton}
+        label=${t('map.zoom_out')}
+        icon=${MinusIcon}
         disabled=${!limits.canZoomOut}
         onClick=${() => map?.zoomOut()}
-      >
-        <${MinusIcon} />
-      </button>
+      />
     </div>
   `;
 }

@@ -36,7 +36,9 @@ TURNOUT = inc.Turnout(eligible=1000, voters=500, valid=480)
 
 
 def election(day, units, mayors=None, members=None) -> Election:
-    turnout = {(u.obec, obvod): TURNOUT for u in units for obvod in ("", "1", "3")}
+    turnout: dict[tuple[str, ...], inc.Turnout] = {
+        (u.obec, obvod): TURNOUT for u in units for obvod in ("", "1", "3")
+    }
     name = {d: n for n, d in inc.BY_ELECTIONS.items()}.get(day, inc.MUNICIPAL_2022)
     return Election(name, day, units, mayors or {}, members or {}, turnout)
 

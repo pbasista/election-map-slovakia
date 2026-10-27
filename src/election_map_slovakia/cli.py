@@ -15,6 +15,7 @@ import time
 from collections import Counter
 from collections.abc import Iterable, Sequence
 from pathlib import Path
+from typing import NamedTuple
 
 from election_map_slovakia import (
     __version__,
@@ -159,14 +160,15 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = commands.add_parser(
         "basemap",
-        help="build the faded base map: roads, railways, rivers, lakes",
+        help="build the faded base map: roads, railways, rivers, lakes, buildings",
         description=(
             "Read the OpenStreetMap extract of Slovakia from data/raw/ and"
             " write the roads by class, the railways, the rivers and larger"
             " streams and the water areas, simplified per level of detail of"
             " the obce shards and clipped to each okres (ZBGIS level 1), plus"
             " a coarse file of the motorways, major rivers and lakes for the"
-            f" country view, to data/build/{basemap.OUTPUT_DIR}/. The layout is"
+            " country view, and the buildings of each obec (ZBGIS level 0), to"
+            f" data/build/{basemap.OUTPUT_DIR}/. The layout is"
             " described in src/election_map_slovakia/basemap.py." + _SKIPPED
         ),
     )
@@ -249,7 +251,9 @@ def _run_fetch(args: argparse.Namespace) -> int:
         _error(f"ems fetch: unknown input {unknown[0]!r}; known: {', '.join(names)}")
         return 2
     optional = {inp.name for inp in cfg.inputs.inputs if inp.optional}
-    failed, warned, copied = False, [], []
+    failed = False
+    warned: list[str] = []
+    copied: list[str] = []
     width = max(map(len, names))
     try:
         for o in fetch.fetch(
@@ -265,11 +269,9 @@ def _run_fetch(args: argparse.Namespace) -> int:
             )
             if o.status == "fallback":
                 copied.append(o.name)
-            if o.status != "failed":
-                continue
-            if o.name in optional:
+            elif o.status == "failed" and o.name in optional:
                 warned.append(o.name)
-            else:
+            elif o.status == "failed":
                 failed = True
     except fetch.ManifestError as e:
         _error(f"ems: {e}")
@@ -306,13 +308,11 @@ def _run_candidates(args: argparse.Namespace) -> int:
     if record is None:
         return 0
     try:
-        gpkg_path = _extract_gpkg(cfg, zbgis)
-        paths = {kind: path for kind, (path, _) in lists.items()}
         result = candidates.build(
-            paths,
-            gpkg_path,
+            {kind: raw.path for kind, raw in lists.items()},
+            _extract_gpkg(cfg, zbgis),
             cfg.overrides,
-            {name: path for name, (path, _) in results.items()},
+            {name: raw.path for name, raw in results.items()},
             cfg.site.election,
         )
     except (
@@ -331,8 +331,11 @@ def _run_candidates(args: argparse.Namespace) -> int:
     return 0
 
 
-_Raw = tuple[Path, config.Input]
-"""A downloaded input file and its entry in config/inputs.toml."""
+class _Raw(NamedTuple):
+    """A downloaded input file and its entry in config/inputs.toml."""
+
+    path: Path
+    inp: config.Input
 
 
 def _input(cfg: config.Config, name: str) -> _Raw:
@@ -348,13 +351,12 @@ def _input(cfg: config.Config, name: str) -> _Raw:
     path = cfg.raw_dir / name / inp.file
     if not path.is_file():
         raise ConfigError(f"{path} missing; run `ems fetch` first")
-    return path, inp
+    return _Raw(path, inp)
 
 
 def _extract_gpkg(cfg: config.Config, raw: _Raw) -> Path:
     """Return the GeoPackage of a ZBGIS input, unpacked into data/build/."""
-    archive, inp = raw
-    return gpkg.extract(archive, inp.members[0], cfg.build_dir)
+    return gpkg.extract(raw.path, raw.inp.members[0], cfg.build_dir)
 
 
 def _stamp(
@@ -374,12 +376,14 @@ def _stamp(
     other files and directories it reads, *values* configuration it gets.
     """
     inputs = list(inputs)
-    values = (values or {}) | {f"config input {inp.name}": inp for _, inp in inputs}
+    values = (values or {}) | {
+        f"config input {raw.inp.name}": raw.inp for raw in inputs
+    }
     with progress.stage("comparing the inputs with the last successful run"):
         record = stamp.Stamp(
             _stamp_path(cfg, step),
             stamp.inputs(
-                cfg.root, step, [*(p for p, _ in inputs), *files], trees, values
+                cfg.root, step, [*(raw.path for raw in inputs), *files], trees, values
             ),
             outputs,
         )
@@ -422,7 +426,7 @@ def _run_geo(args: argparse.Namespace) -> int:
     try:
         paths = {level: _extract_gpkg(cfg, raw) for level, raw in zbgis.items()}
         result = geo.build(
-            paths, countries[0], cfg.election_dir, places, data["contests"], counts
+            paths, countries.path, cfg.election_dir, places, data["contests"], counts
         )
         previews = []
         if args.preview:
@@ -444,21 +448,24 @@ def _run_geo(args: argparse.Namespace) -> int:
 def _run_basemap(args: argparse.Namespace) -> int:
     cfg = config.load()
     osm = _input(cfg, basemap.INPUT)
-    zbgis = _input(cfg, geo.INPUTS[1])
+    okresy = _input(cfg, geo.INPUTS[1])
+    obce = _input(cfg, geo.INPUTS[0])
     out = cfg.build_dir / basemap.OUTPUT_DIR
     record = _stamp(
         cfg,
         "basemap",
         args.force,
         [out],
-        inputs=[osm, zbgis],
-        # libosmium assembles the water areas.
+        inputs=[osm, okresy, obce],
+        # libosmium assembles the water areas and multipolygon buildings.
         values={"osmium": basemap.LIBRARY},
     )
     if record is None:
         return 0
     try:
-        files = basemap.build(osm[0], _extract_gpkg(cfg, zbgis))
+        files = basemap.build(
+            osm.path, _extract_gpkg(cfg, okresy), _extract_gpkg(cfg, obce)
+        )
     except (basemap.BaseMapError, geo.GeoError, gpkg.GpkgError) as e:
         _error(f"ems basemap: {e}")
         return 1
@@ -493,7 +500,7 @@ def _run_addresses(args: argparse.Namespace) -> int:
     contests = json.loads(built.read_bytes())["contests"]
     try:
         result = addresses.build(
-            register[0],
+            register.path,
             _extract_gpkg(cfg, zbgis),
             cfg.election_dir,
             contests,
@@ -541,7 +548,7 @@ def _run_results(args: argparse.Namespace) -> int:
     if record is None:
         return 0
     try:
-        written = _write_final(cfg, [p for p, _ in packages], out, merge=False)
+        written = _write_final(cfg, [raw.path for raw in packages], out, merge=False)
     except (results.ResultsError, OSError, KeyError, ValueError) as e:
         _error(f"ems results: {e}")
         return 1
@@ -612,9 +619,8 @@ def _run_make(args: argparse.Namespace) -> int:
                 code = 1
             stage.failed = code != 0
         if code:
-            skipped = (
-                f" ({', '.join(names[i + 1 :])} not run)" if names[i + 1 :] else ""
-            )
+            rest = names[i + 1 :]
+            skipped = f" ({', '.join(rest)} not run)" if rest else ""
             _error(
                 f"ems make: stopped at `{name}`{skipped}; fix the problem above"
                 " and run `ems make` again"
@@ -946,14 +952,14 @@ def _results_dir(cfg: config.Config, args: argparse.Namespace) -> Path:
     return args.dir if args.dir is not None else cfg.results_dir
 
 
-def _written(cfg: config.Config, directory: Path) -> None:
-    """Note that a results command has rewritten *directory*.
+def _written(cfg: config.Config, directory: Path, written: dict | None) -> None:
+    """Note that a results command wrote *directory*, unless *written* is None.
 
     The results step of `make` would take the election's results directory
     for its own output, up to date, and keep what poll, fake or final wrote
     there instead of the results of the inputs: its stamp goes.
     """
-    if directory.resolve() == cfg.results_dir.resolve():
+    if written is not None and directory.resolve() == cfg.results_dir.resolve():
         _stamp_path(cfg, "results").unlink(missing_ok=True)
 
 
@@ -1021,8 +1027,7 @@ def _run_results_poll(args: argparse.Namespace) -> int:
             except OSError as e:
                 _log(f"poll failed: {e}")
                 written = None
-            if written is not None:
-                _written(cfg, out)
+            _written(cfg, out, written)
             if written is not None and args.deploy:
                 code = _run_build(args) or results.deploy(cfg.root, project)
                 _log(
@@ -1045,7 +1050,7 @@ def _run_results_final(args: argparse.Namespace) -> int:
     try:
         packages = (
             args.packages
-            or [path for path, _ in _final_inputs(cfg)]
+            or [raw.path for raw in _final_inputs(cfg)]
             or results.fetch_final(_client(cfg), cfg.site.election.year)
         )
         _print([f"reading {p}" for p in packages])
@@ -1053,8 +1058,7 @@ def _run_results_final(args: argparse.Namespace) -> int:
     except (results.ResultsError, OSError, KeyError, ValueError) as e:
         _error(f"ems results final: {e}")
         return 1
-    if written is not None:
-        _written(cfg, out)
+    _written(cfg, out, written)
     _report_written(out, written)
     return 0
 
@@ -1076,8 +1080,7 @@ def _run_results_fake(args: argparse.Namespace) -> int:
         {obec: rules.okrsky for obec, rules in rule_sets.items()},
     )
     written = results.write(out, live)
-    if written is not None:
-        _written(cfg, out)
+    _written(cfg, out, written)
     _report_written(out, written)
     return 0
 
@@ -1114,10 +1117,16 @@ def _error(message: str) -> None:
     print(message, file=sys.stderr)
 
 
+# Commands that run until interrupted or wait for an answer: a progress
+# stage around them would stay open the whole time.
+_UNSTAGED = frozenset({_run_serve, _run_results_poll, _run_results_deploy})
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """Run the command line and return the exit code.
 
-    Every command but ``serve`` reports its progress as a stage of its own.
+    Every command but serve, results poll and results deploy reports its
+    progress as a stage of its own.
     """
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -1126,11 +1135,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         parser.print_help()
         return 2
     try:
-        if run in (
-            _run_serve,
-            _run_results_poll,
-            _run_results_deploy,
-        ):
+        if run in _UNSTAGED:
             return run(args)
         with progress.stage(args.command) as stage:
             code = run(args)

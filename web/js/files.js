@@ -74,6 +74,10 @@ export async function fetchJSON(path, missing) {
 const SCALE = 100000;
 const addressFiles = new Cache(16);
 
+/* A value per number of a group of *n*: *one* for all of them, else *each*
+ * as the file lists them; null where it gives neither. */
+const perNumber = (n, one, each) => (one ? new Array(n).fill(one) : (each ?? null));
+
 /* addr/<obec>.json with its points decoded: every group (street or part of
  * the obec) gets `lon` and `lat` arrays parallel to `numbers`, NaN where the
  * address has no point, where the obec's council obvod goes by address
@@ -103,8 +107,8 @@ export function addressFile(obec) {
           lon[i] = x / SCALE;
           lat[i] = y / SCALE;
         }
-        const obvody = g.obvod ? new Array(n).fill(g.obvod) : (g.obvody ?? null);
-        const okrsky = g.okrsok ? new Array(n).fill(g.okrsok) : (g.okrsky ?? null);
+        const obvody = perNumber(n, g.obvod, g.obvody);
+        const okrsky = perNumber(n, g.okrsok, g.okrsky);
         groups.push({ kind, name: g.name, numbers: g.numbers, lon, lat, obvody, okrsky });
       }
     }

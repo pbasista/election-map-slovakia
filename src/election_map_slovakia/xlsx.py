@@ -149,7 +149,7 @@ def _value(c: ET.Element, shared: Sequence[str]) -> str:
         inline = c.find(f"{_NS}is")
         return _text(inline) if inline is not None else ""
     v = c.find(f"{_NS}v")
-    raw = v.text or "" if v is not None else ""
+    raw = (v.text or "") if v is not None else ""
     if kind == "s":
         try:
             return shared[int(raw)]

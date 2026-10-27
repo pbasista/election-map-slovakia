@@ -1,67 +1,83 @@
-/* Election Map Slovakia: a map of the constituencies of the 2026 Slovak
- * municipal and regional elections, with the candidates on every ballot.
+/* Election Map Slovakia: a map of the 2026 Slovak municipal and regional
+ * elections, with the candidates on every ballot.
  *
  * The page is the map. Floating on it: the site name with the search, the
- * language, boundary, theme and Favourites buttons, the zoom buttons and
- * help, and while the map shows 2026 results their legend (mapmode.js); a
- * pane with a place's ballots or a candidate card opens where there
- * is something to show, and closes again (pane.js). Favourites (the
- * candidates circled) open in a pane of their own beside it where the
- * screen is wide enough, else in the pane.
+ * language, boundaries, theme and Favourites buttons, zoom and help, and
+ * while the map shows 2026 results, their legend (mapmode.js). A pane
+ * (pane.js) shows a place's ballots or a candidate card. Favourites (the
+ * circled candidates) open in a second pane beside it where the screen is
+ * wide enough, else in the pane.
  *
- * What is selected lives in the URL hash, so a link can be shared and back
- * and forward work: `o` obec code, `ll` "lat,lon" of the picked point, `a`
- * the address shown, `n` its council obvod where the obec has several (`n=3~`
- * when taken from the approximate boundary at a clicked point), `d` its
- * okrsok (polling district) where the obec's are drawn (`d=3~` likewise),
- * `s` or `p` the street or part of the obec chosen in the search
- * (highlighted on the map), `c` an open candidacy, `r` a contest's area
- * shown on the map without a place (a Bratislava or Košice city contest's,
- * a regional one's:
- * data.js `contestArea`), `f=1` Favourites shown (favourites.js), `v=about`
- * the About dialog (`v=about-<section>` one of its sections, about.js).
+ * The selection lives in the URL hash, so a link can be shared and Back and
+ * Forward work:
+ *   o     obec code
+ *   ll    "lat,lon" of the picked point
+ *   a     the address shown
+ *   n     council obvod, where the obec has several (`n=3~`: taken from the
+ *         approximate boundary at a clicked point)
+ *   d     okrsok (polling district), where the obec's are drawn (`d=3~`
+ *         likewise)
+ *   s, p  the street or part of the obec chosen in the search (highlighted)
+ *   c     an open candidacy
+ *   r     a contest's area shown without a place: a Bratislava or Košice
+ *         city contest's or a regional one's (data.js `contestArea`)
+ *   f=1   Favourites shown (favourites.js)
+ *   v     `about` the About dialog, `about-<section>` one of its sections
+ *         (about.js)
  *
- * So does the visitor's own work, so that a link shares it too: `k` the
- * candidates circled (picks.js), `fp`, `fm` and `x` the filter (ballots.js
- * `filterParams`), the candidates crossed out included. That changes in
- * place: Back and Forward go from place to place, and leave the circles
- * and the filter as they are. Only a link typed or pasted into the address
- * bar brings its own.
+ * The visitor's own work is in the hash too, so a link shares it: `k` the
+ * circled candidates (picks.js); `fp`, `fm` and `x` the filter, crossed-out
+ * candidates included (ballots.js `filterParams`). It changes in place:
+ * Back and Forward move between places and leave the circles and the
+ * filter alone. Only a link typed or pasted into the address bar brings
+ * its own.
  */
 
 import { html, render, useEffect, useRef, useState } from '../vendor/preact-htm.module.js';
 import { aboutSection, aboutView } from './about.js';
 import { Ballots, filterParams, NO_FILTER, parseFilter } from './ballots.js';
 import { CandidateCard } from './candidate.js';
-import { FavouritesButton, HelpMenu, LanguageMenu, LayerMenu, ThemeMenu, ZoomButtons } from './controls.js';
+import { FavouritesButton, HelpMenu, LanguageMenu, LayerMenus, ThemeMenu, ZoomButtons } from './controls.js';
 import { dataIndex } from './data.js';
 import { Favourites } from './favourites.js';
 import { election, formatDate, loadStrings, t, translationPending } from './i18n.js';
-import { Logo } from './icons.js';
+import { Logo, MoreIcon } from './icons.js';
 import { LiveStatus } from './live.js';
 import { createMap } from './map.js';
-import { MapResults } from './mapmode.js';
+import { MapResults, useMapMode } from './mapmode.js';
 import { AboutDialog, Pane, PHONE, WIDE } from './pane.js';
 import { formatPicks, parsePicks } from './picks.js';
 import { Search } from './search.js';
 
-// The history.state of the entries the site makes, which a link typed or
-// pasted into the address bar makes without.
+// The history.state of the site's own entries; a link typed or pasted into
+// the address bar makes one without it.
 const OWN = { km: true };
 
+const hashParams = () => new URLSearchParams(location.hash.slice(1));
+
+/* A unit number with an approximate mark (`3~`) as [number, approximate]. */
+function parseUnit(value) {
+  const text = value ?? '';
+  return [Number.parseInt(text, 10) || null, text.endsWith('~')];
+}
+
+const formatUnit = (n, approximate) => `${n}${approximate ? '~' : ''}`;
+
 function readHash() {
-  const p = new URLSearchParams(location.hash.slice(1));
+  const p = hashParams();
   const ll = (p.get('ll') ?? '').split(',').map(Number);
   const point = ll.length === 2 && ll.every(Number.isFinite);
+  const [obvod, approximate] = parseUnit(p.get('n'));
+  const [okrsok, okrsokApproximate] = parseUnit(p.get('d'));
   return {
     obec: p.get('o'),
     lat: point ? ll[0] : null,
     lon: point ? ll[1] : null,
     label: p.get('a'),
-    obvod: Number.parseInt(p.get('n') ?? '', 10) || null,
-    approximate: (p.get('n') ?? '').endsWith('~'),
-    okrsok: Number.parseInt(p.get('d') ?? '', 10) || null,
-    okrsokApproximate: (p.get('d') ?? '').endsWith('~'),
+    obvod,
+    approximate,
+    okrsok,
+    okrsokApproximate,
     street: p.get('s'),
     part: p.get('p'),
     candidate: p.get('c'),
@@ -72,10 +88,10 @@ function readHash() {
 }
 
 /* The visitor's work a link carries: the circled candidates, and the
- * filter as its hash values (`fp`, `fm`, `x`), whose parties are known
- * only once data/index.json has loaded; null for a filter it has not. */
+ * filter's hash values {fp, fm, x} (null without a filter), whose parties
+ * can be looked up only once data/index.json has loaded. */
 function readWork() {
-  const p = new URLSearchParams(location.hash.slice(1));
+  const p = hashParams();
   const [fp, fm, x] = [p.get('fp'), p.get('fm'), p.get('x')];
   return { picks: parsePicks(p.get('k')), linked: fp || fm || x ? { fp, fm, x } : null };
 }
@@ -85,35 +101,53 @@ function readWork() {
 function hashOf(s, picks, filter) {
   const p = new URLSearchParams();
   if (s.view) p.set('v', s.view);
-  if (s.obec) p.set('o', s.obec);
-  if (s.obec && Number.isFinite(s.lat)) p.set('ll', `${s.lat.toFixed(5)},${s.lon.toFixed(5)}`);
-  if (s.obec && s.label) p.set('a', s.label);
-  if (s.obec && s.obvod) p.set('n', `${s.obvod}${s.approximate ? '~' : ''}`);
-  if (s.obec && s.okrsok) p.set('d', `${s.okrsok}${s.okrsokApproximate ? '~' : ''}`);
-  if (s.obec && s.street) p.set('s', s.street);
-  if (s.obec && s.part) p.set('p', s.part);
+  if (s.obec) {
+    p.set('o', s.obec);
+    if (Number.isFinite(s.lat)) p.set('ll', `${s.lat.toFixed(5)},${s.lon.toFixed(5)}`);
+    if (s.label) p.set('a', s.label);
+    if (s.obvod) p.set('n', formatUnit(s.obvod, s.approximate));
+    if (s.okrsok) p.set('d', formatUnit(s.okrsok, s.okrsokApproximate));
+    if (s.street) p.set('s', s.street);
+    if (s.part) p.set('p', s.part);
+  }
   if (s.candidate) p.set('c', s.candidate);
   if (s.area && !s.obec) p.set('r', s.area);
   if (s.favourites) p.set('f', '1');
   if (picks.length) p.set('k', formatPicks(picks));
   for (const [key, value] of filter) p.set(key, value);
-  // What a fragment may hold as it is (RFC 3986) reads better in a link
-  // than percent-encoded; URLSearchParams reads it back either way.
+  // Characters a fragment may hold as they are (RFC 3986) read better in a
+  // link than percent-encoded; URLSearchParams reads them back either way.
   const hash = p.toString().replace(/%(3A|2F|2C|21|7E)/g, (_, hex) => String.fromCharCode(Number.parseInt(hex, 16)));
   return hash ? `#${hash}` : '';
 }
 
+/* Puts *hash* in the address bar as one of the site's own entries: a new
+ * entry with *push*, else in place of the current one. */
+function writeHash(hash, push = false) {
+  const url = hash || location.pathname;
+  if (push) history.pushState(OWN, '', url);
+  else history.replaceState(OWN, '', url);
+}
+
 function App() {
   const [state, setState] = useState(readHash);
-  // The constituency overlays and the base map switched on (map.js
-  // `setOverlays`).
-  const [overlays, setOverlays] = useState({ zsk: true, city: true, oz: true, okrsky: true, base: true });
+  // The constituency overlays and the base map's roads, railways and water
+  // (`base`) and buildings switched on (map.js `setOverlays`).
+  const [overlays, setOverlays] = useState({
+    zsk: true,
+    city: true,
+    oz: true,
+    okrsky: true,
+    base: true,
+    buildings: true,
+  });
   const [mapFailed, setMapFailed] = useState(false);
   const mapElement = useRef(null);
   // The map.js handle, once the map is up.
   const [map, setMap] = useState(null);
   const [zoomLimits, setZoomLimits] = useState({ canZoomIn: true, canZoomOut: true });
-  // The open popover: 'language', 'layers', 'theme', 'help' or null.
+  // The open popover: 'language', 'constituencies', 'turnout', 'base',
+  // 'theme', 'help' or null.
   const [menu, setMenu] = useState(null);
   const finder = useRef(null);
   const pane = useRef(null);
@@ -130,9 +164,21 @@ function App() {
   // Whether the candidate last opened was chosen in Favourites.
   const openedFrom = useRef(false);
   const besidePane = useRef(null);
-  // Whether the screen has room for Favourites beside the pane (WIDE).
+  // Whether the screen has room for Favourites beside the pane (WIDE), and
+  // whether it is a phone's, where the pane is a sheet (PHONE).
   const [wide, setWide] = useState(WIDE.matches);
+  const [phone, setPhone] = useState(PHONE.matches);
   const beside = wide && state.favourites;
+  // The sheet's height (pane.js SNAPS) and the place it is of: a place
+  // opened, or another one picked, opens at `half`.
+  const [sheet, setSheet] = useState({ place: null, snap: 'half' });
+  // The element at the top of the sheet that the legend goes in, on a phone.
+  const [sheetTop, setSheetTop] = useState(null);
+  // Whether the buttons put away under "more" are out (on a phone with the
+  // sheet open).
+  const [more, setMore] = useState(false);
+  const topControls = useRef(null);
+  const mode = useMapMode();
   // The candidates circled (picks.js) and the candidate filter (ballots.js
   // `NO_FILTER`): kept from place to place.
   const [picks, setPicks] = useState(() => readWork().picks);
@@ -161,7 +207,7 @@ function App() {
     if (view) setMoves((n) => n + 1);
     if (hash === location.hash) return;
     ownHash.current = hash;
-    history.pushState(OWN, '', hash || location.pathname);
+    writeHash(hash, true);
     setState(readHash());
   }
 
@@ -170,28 +216,33 @@ function App() {
   const latestNavigate = useRef(navigate);
   latestNavigate.current = navigate;
 
-  /* The pixels of the map that the search card, the pane and the right-hand
-   * buttons cover, and on phones the results' legend, as wide as the map
-   * there; the map keeps places it moves to out from under them. Layout
-   * boxes, not the transformed ones: the pane may be sliding in. */
+  /* What covers the map, in pixels from each edge: the search card, the
+   * pane, the buttons on the right, and on a phone the results' legend
+   * under the search card (`legend`, its share of `top`). The map keeps the
+   * places it moves to clear of them where there is room (map.js `room`).
+   * Layout boxes rather than transformed ones, as the pane may be sliding
+   * in; a phone's sheet counts at the height it is heading to (pane.js). */
   function insets() {
-    const out = { top: 0, right: 56, bottom: 0, left: 0 };
+    const out = { top: 0, right: 56, bottom: 0, left: 0, legend: 0 };
     const side = finder.current.parentElement;
     const cardBottom = side.offsetTop + finder.current.offsetTop + finder.current.offsetHeight;
     const p = pane.current;
     if (PHONE.matches) {
       out.top = cardBottom;
-      // The sheet is fixed to the viewport.
-      if (p) out.bottom = innerHeight - p.offsetTop;
+      if (p) out.bottom = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sheet-height'));
     } else if (p) {
       out.left = side.offsetLeft + p.offsetLeft + p.offsetWidth;
     } else {
       out.top = cardBottom;
     }
-    // Under the search card (app.css). Elsewhere it is a corner of the map,
-    // and a band as wide as the map kept clear for it would cost labels.
+    // Under the search card (app.css); with the sheet open, in it. Elsewhere
+    // it is a corner of the map, and a band as wide as the map kept clear
+    // for it would cost labels.
     const l = legend.current;
-    if (l && PHONE.matches) out.top = Math.max(out.top, l.offsetTop + l.offsetHeight);
+    if (l && PHONE.matches) {
+      out.legend = Math.max(0, l.offsetTop + l.offsetHeight - out.top);
+      out.top += out.legend;
+    }
     return out;
   }
 
@@ -208,7 +259,7 @@ function App() {
         // The circles and the filter stay as they are, and the address
         // with them.
         const hash = hashOf(readHash(), work.current.picks, work.current.filterHash);
-        if (hash !== location.hash) history.replaceState(OWN, '', hash || location.pathname);
+        if (hash !== location.hash) writeHash(hash);
       } else {
         const next = readWork();
         setPicks(next.picks);
@@ -247,22 +298,13 @@ function App() {
     const hash = link(state);
     if (hash === location.hash) return;
     ownHash.current = hash;
-    history.replaceState(OWN, '', hash || location.pathname);
+    writeHash(hash);
   }, [picks, filter, linked]);
 
   useEffect(() => {
     createMap(mapElement.current, {
-      onPick: (p) =>
-        latestNavigate.current({
-          obec: p.obec,
-          lat: p.lat,
-          lon: p.lon,
-          label: p.label,
-          obvod: p.obvod,
-          approximate: p.approximate,
-          okrsok: p.okrsok,
-          okrsokApproximate: p.okrsokApproximate,
-        }),
+      onPick: ({ obec, lat, lon, label, obvod, approximate, okrsok, okrsokApproximate }) =>
+        latestNavigate.current({ obec, lat, lon, label, obvod, approximate, okrsok, okrsokApproximate }),
       insets,
       onZoom: setZoomLimits,
     })
@@ -302,9 +344,14 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const onChange = () => setWide(WIDE.matches);
-    WIDE.addEventListener('change', onChange);
-    return () => WIDE.removeEventListener('change', onChange);
+    const onWide = () => setWide(WIDE.matches);
+    const onPhone = () => setPhone(PHONE.matches);
+    WIDE.addEventListener('change', onWide);
+    PHONE.addEventListener('change', onPhone);
+    return () => {
+      WIDE.removeEventListener('change', onWide);
+      PHONE.removeEventListener('change', onPhone);
+    };
   }, []);
 
   // Favourites in a pane of their own beside the left column; on narrower
@@ -312,17 +359,48 @@ function App() {
   const inPane = state.favourites && !beside;
   const favouritesShown = beside || (inPane && !state.candidate);
   const paneOpen = Boolean(state.obec || state.candidate || inPane);
+  const about = aboutSection(state.view);
+  // Focus inside a pane would be lost with it; the map is where it was.
+  const releaseFocus = (container) => {
+    if (container.current?.contains(document.activeElement)) mapElement.current.focus();
+  };
   const closePane = () => {
-    // Focus inside the pane would be lost with it; the map is where it was.
-    if (pane.current?.contains(document.activeElement)) mapElement.current.focus();
+    releaseFocus(pane);
     navigate({});
   };
   // In the pane: back to the place's ballots, or with no place, it closes.
   const closeFavourites = () => {
-    if (besidePane.current?.contains(document.activeElement)) mapElement.current.focus();
+    releaseFocus(besidePane);
     if (inPane && !state.obec) closePane();
     else navigate({ ...state, favourites: false });
   };
+
+  const placeKey = paneOpen
+    ? [state.obec, state.lat, state.lon, state.obvod, state.okrsok, state.street, state.part].join('|')
+    : null;
+  const snap = sheet.place === placeKey ? sheet.snap : 'half';
+  const setSnap = (next) => setSheet({ place: placeKey, snap: next });
+  // Results put on the map from the sheet: the map is what they are for, so
+  // the sheet goes down to `peek`, before the map fits them (mapmode.js,
+  // which reads the sheet's height through `insets`). Taken off, the sheet
+  // stays as it is.
+  useEffect(() => {
+    if (mode) setSnap('peek');
+  }, [mode]);
+  // What covers the map has changed.
+  useEffect(() => {
+    map?.redraw();
+  }, [snap]);
+  useEffect(() => setMore(false), [paneOpen]);
+  // The buttons put away go back on a click elsewhere.
+  useEffect(() => {
+    if (!more) return undefined;
+    const outside = (e) => {
+      if (!topControls.current.contains(e.target)) setMore(false);
+    };
+    document.addEventListener('pointerdown', outside);
+    return () => document.removeEventListener('pointerdown', outside);
+  }, [more]);
 
   useEffect(() => {
     const onKey = (e) => {
@@ -336,7 +414,7 @@ function App() {
   });
 
   const toggle = (name) => (open) => setMenu(open ? name : null);
-  const about = aboutSection(state.view);
+  const fitArea = (target) => map?.fitArea(target, true);
   const openCandidate = (id, fromFavourites = false) => {
     openedFrom.current = fromFavourites;
     navigate({ ...state, candidate: id, view: null });
@@ -349,7 +427,7 @@ function App() {
     onFilter=${changeFilter}
     focus=${cardLeft?.favourites ? cardLeft.id : null}
     onCandidate=${(id) => openCandidate(id, true)}
-    onArea=${(target) => map?.fitArea(target, true)}
+    onArea=${fitArea}
     onBack=${beside ? null : closeFavourites}
     link=${`${location.origin}${location.pathname}${link({ favourites: true })}`}
   />`;
@@ -389,7 +467,7 @@ function App() {
       onFilter=${changeFilter}
       picks=${picks}
       onPicks=${setPicks}
-      onArea=${(target) => map?.fitArea(target, true)}
+      onArea=${fitArea}
     />`;
   }
 
@@ -416,7 +494,13 @@ function App() {
           ${translationPending() ? html`<p class="translation-pending" role="note">${t('translation.pending')}</p>` : null}
           <${LiveStatus} />
         </header>
-        ${paneOpen ? html`<${Pane} paneRef=${pane} onClose=${closePane}>${content}<//>` : null}
+        ${
+          paneOpen
+            ? html`<${Pane} paneRef=${pane} onClose=${closePane} snap=${snap} onSnap=${setSnap} topRef=${setSheetTop}>
+                ${content}
+              <//>`
+            : null
+        }
       </div>
       ${
         beside
@@ -425,23 +509,41 @@ function App() {
             <//>`
           : null
       }
-      <div class="controls top">
-        <${LanguageMenu} open=${menu === 'language'} onToggle=${toggle('language')} hash=${link(state)} />
-        <${LayerMenu}
-          open=${menu === 'layers'}
-          onToggle=${toggle('layers')}
-          overlays=${overlays}
-          onOverlays=${setOverlays}
-        />
-        <${ThemeMenu} open=${menu === 'theme'} onToggle=${toggle('theme')} />
-        <${FavouritesButton}
-          count=${picks.length}
-          open=${favouritesShown}
-          onPress=${() =>
-            favouritesShown
-              ? closeFavourites()
-              : navigate({ ...state, favourites: true, candidate: wide ? state.candidate : null, view: null })}
-        />
+      <div
+        class=${more ? 'controls top more-open' : 'controls top'}
+        ref=${topControls}
+        onKeyDown=${(e) => {
+          // A popover open closes first (controls.js).
+          if (e.key !== 'Escape' || !more || e.defaultPrevented) return;
+          e.preventDefault();
+          setMore(false);
+          topControls.current.querySelector('.controls-more').focus();
+        }}
+      >
+        <button
+          type="button"
+          class="fab controls-more"
+          aria-label=${t('nav.more')}
+          title=${t('nav.more')}
+          aria-expanded=${more ? 'true' : 'false'}
+          aria-controls="km-more"
+          onClick=${() => setMore(!more)}
+        >
+          <${MoreIcon} />
+        </button>
+        <div class="controls-stack" id="km-more">
+          <${LanguageMenu} open=${menu === 'language'} onToggle=${toggle('language')} hash=${link(state)} />
+          <${LayerMenus} menu=${menu} toggle=${toggle} overlays=${overlays} onOverlays=${setOverlays} />
+          <${ThemeMenu} open=${menu === 'theme'} onToggle=${toggle('theme')} />
+          <${FavouritesButton}
+            count=${picks.length}
+            open=${favouritesShown}
+            onPress=${() =>
+              favouritesShown
+                ? closeFavourites()
+                : navigate({ ...state, favourites: true, candidate: wide ? state.candidate : null, view: null })}
+          />
+        </div>
       </div>
       <div class="controls bottom">
         <${ZoomButtons} map=${map} limits=${zoomLimits} />
@@ -455,7 +557,13 @@ function App() {
           }}
         />
       </div>
-      <${MapResults} map=${map} legendRef=${legend} />
+      <${MapResults}
+        map=${map}
+        legendRef=${legend}
+        phone=${phone}
+        sheet=${phone && paneOpen ? sheetTop : null}
+        insets=${insets}
+      />
       <div class="map" ref=${mapElement} role="application" aria-label=${t('map.label')}></div>
       ${mapFailed ? html`<p class="map-error" role="alert">${t('error.load')}</p>` : null}
       ${

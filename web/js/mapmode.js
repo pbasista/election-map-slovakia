@@ -1,55 +1,57 @@
-/* The 2026 results on the map: one candidate's share of the votes across
- * the areas of their contest, who got the most votes where in a contest,
- * or the turnout of the municipal or of the regional elections across the
- * country. The map colours the land by it in STEPS intensities of the
- * results' green (draw.js `setResults`), the scale fitted to the values
- * shown so that their differences show, or the top candidate's in a colour
- * of each candidate's own, and a legend floats on the map with the scale
- * or the candidates and a close button.
+/* The 2026 results on the map, in one of three modes: a candidate's share
+ * of the votes across the areas of their contest, who got the most votes
+ * where in a contest, or a turnout (of the municipal or the regional
+ * elections across the country, or of one contest). The map colours the
+ * land in STEPS intensities of a colour (draw.js `setResults`) on a scale
+ * fitted to the values shown, or for a winner map in a colour per leading
+ * candidate. A legend with the scale or the candidates and a close button
+ * floats on the map.
  *
- * What is shown (the mode) is one for the page, chosen in a candidate's
- * row (`MapButton`), a contest's header (`ContestMapButton`,
+ * The mode is one for the page, chosen in a candidate's row
+ * (`MapButton`), a contest's header (`ContestMapButton`,
  * `WinnerMapButton`), the candidate card or the boundaries menu
  * (controls.js), so it lives here rather than being passed down through
- * the panes. The values come from the live results (live.js), and follow
- * them: a contest's `areas` (an obec or city district each, or on election
- * night a regional obvod `obvod:<n>` of the kraj), else the contest's own
- * figures over its own area (a mayor's obec, a council's obec or council
- * obvod, a regional obvod, a kraj's obvody); the turnout of the municipal
- * elections from the mayoral (else council) contests of every municipality
- * and city district, that of Bratislava's and Košice's own elections
- * likewise from theirs, that of the regional ones from each kraj's
- * presidential contest.
+ * the panes. The values come from the live results (live.js) and follow
+ * them:
+ * - a contest: its `areas` (an obec or city district each, or on election
+ *   night a regional obvod `obvod:<n>` of the kraj), else its own figures
+ *   over its own area (a mayor's obec, a council's obec or council obvod,
+ *   a regional obvod, a kraj's obvody);
+ * - the municipal turnout: the mayoral (else council) contests of every
+ *   municipality and city district;
+ * - Bratislava's and Košice's own elections: likewise from theirs;
+ * - the regional turnout: each kraj's presidential contest.
  *
  * The units follow the zoom, as the boundary overlays do (draw.js
- * `OVERLAYS`), each as fine as its figures go: below the zoom of the obce
- * the regional obvody, each by its obce together (unless the contest is of
- * one obec, which would colour a whole obvod by it); from there every obec
- * by its own figure; from the council overlay's zoom, the council obvody of
- * the obce split into several (a council's own figure, any other
- * contest's okrsky together, live.js `okrsokCouncils`); from the okrsky
- * overlay's zoom, every okrsok drawn (geo/index.json `okrsky.drawn`) with
- * figures of its own in the final results (live.js `okrsky`). An obec
- * without finer figures keeps its own at every zoom. One scale spans the
- * units of every level, so that a colour means the same at each zoom.
- * Pointing at the map names the unit under the pointer with its figures,
- * and in the municipal elections an okrsok's turnout with its 2022 one
- * where it is the same okrsok as then (the 2022 municipal turnout, so not
- * in the regional ones). */
+ * `OVERLAYS`), each as fine as its figures go:
+ * - below the obce's zoom, the regional obvody, each its obce summed
+ *   (unless the contest is of one obec, which would colour a whole obvod);
+ * - from there, every obec by its own figure;
+ * - from the council overlay's zoom, the council obvody of the obce split
+ *   into several (a council's own figure, any other contest's okrsky
+ *   summed, live.js `okrsokCouncils`);
+ * - from the okrsky overlay's zoom, every okrsok drawn (geo/index.json
+ *   `okrsky.drawn`) with figures of its own in the final results (live.js
+ *   `okrsky`).
+ * An obec without finer figures keeps its own at every zoom. One scale
+ * spans the units of every level, so that a colour means the same at each
+ * zoom. Pointing at the map (on a touch screen, tapping it) names the unit
+ * there with its figures; in the municipal elections an okrsok also with
+ * its 2022 municipal turnout where it is the same okrsok as then. */
 
-import { html, useEffect, useMemo, useState } from '../vendor/preact-htm.module.js';
-import { areaName, contestArea, dataIndex, displayName, getJSON, useLoaded } from './data.js';
+import { html, render, useEffect, useLayoutEffect, useMemo, useRef, useState } from '../vendor/preact-htm.module.js';
+import { areaName, contestArea, dataIndex, displayName, getJSON, hasCouncilObvody, isCity, useLoaded } from './data.js';
 import { formatList, formatNumber, formatPercent, t } from './i18n.js';
-import { CloseIcon, MapPinIcon, WinnerMapIcon } from './icons.js';
-import { addRecord, NOT_COUNTED, okrsokCouncils, useLive } from './live.js';
+import { ArrowIcon, CloseIcon, ExpandIcon, MapPinIcon, WinnerMapIcon } from './icons.js';
+import { addRecord, isSingle, NOT_COUNTED, okrsokCouncils, useLive } from './live.js';
 
 /* The intensities of the colour: app.css `--map-result-<n>` for a
  * candidate's votes, a turnout's tone mixed into the land (draw.js
  * `TONE_STEPS`, app.css `.map-legend.toned`). */
 export const STEPS = 6;
 /* The colours of a winner map, app.css `--map-series-<n>`: one for each of
- * the candidates with the most votes overall, the rest `--map-series-other`
- * alike. */
+ * the candidates with the most votes overall, the rest share
+ * `--map-series-other`. */
 export const SERIES = 8;
 const PALETTE = [...Array.from({ length: SERIES }, (_, i) => `series-${i + 1}`), 'series-other'];
 // Values beyond these quantiles (where there are enough to tell) take the
@@ -57,14 +59,16 @@ const PALETTE = [...Array.from({ length: SERIES }, (_, i) => `series-${i + 1}`),
 const TRIM = 0.05;
 const TRIM_FROM = 20;
 
-/* What the map shows: null, {kind: 'candidate', id, contest, number, name,
- * label, multi} (a candidacy, its contest's id and label, `multi` a
- * council), {kind: 'winner', contest, label, names, multi} (who got the
- * most votes where, `names` number → [name, surname], `multi` a council,
- * whose top candidate is not all it elects), {kind: 'turnout', election:
- * 'municipal' | 'city' | 'regional'} (the city one Bratislava's and
- * Košice's own elections) or {kind: 'turnout', contest, label}: one
- * contest's (ContestMapButton). */
+/* What the map shows, one of:
+ * - null;
+ * - {kind: 'candidate', id, contest, number, name, surname, label, multi}:
+ *   a candidacy, its contest's id and label, `multi` for a council;
+ * - {kind: 'winner', contest, label, names, multi}: who got the most votes
+ *   where, `names` number → [name, surname], `multi` for a council, whose
+ *   top candidate is not all it elects;
+ * - {kind: 'turnout', election: 'municipal' | 'city' | 'regional'}, 'city'
+ *   for Bratislava's and Košice's own elections;
+ * - {kind: 'turnout', contest, label}: one contest's (ContestMapButton). */
 let mode = null;
 const listeners = new Set();
 
@@ -85,54 +89,56 @@ export function useMapMode() {
   return mode;
 }
 
-/* The mode that shows the votes of candidate *c* (data.js) in contest
- * *contest* on the map. */
-export const candidateMode = (c, contest) => ({
-  kind: 'candidate',
-  id: c.id,
-  contest: c.contest,
-  number: c.number,
-  name: displayName(c),
-  label: contest.label,
-  multi: !(contest.id.startsWith('starosta:') || contest.id.startsWith('predseda:')),
-});
+/* A button that shows mode *next* on the map, or takes it off while it is
+ * shown (*on*). */
+function ToggleButton({ cls, next, on, label, children }) {
+  return html`<button
+    type="button"
+    class=${cls}
+    aria-pressed=${on ? 'true' : 'false'}
+    title=${label}
+    aria-label=${label}
+    onClick=${() => setMapMode(on ? null : next)}
+  >
+    ${children}
+  </button>`;
+}
 
-/* The button at the end of counted candidate *c*'s row (ballots.js) that
- * shows their votes on the map, or takes them off it: across the areas of
- * their contest where it has several, else over its one area. */
-export function MapButton({ candidate: c }) {
+/* The button that shows counted candidate *c*'s votes on the map, across
+ * the areas of their contest where it has several, else over its one
+ * area; *label* names the contest. At the end of the candidate's row
+ * (ballots.js) and by the origins of their votes (candidate.js). */
+export function MapButton({ candidate: c, label }) {
   const current = useMapMode();
   const on = current?.kind === 'candidate' && current.id === c.id;
-  const label = t(on ? 'mapmode.candidate_hide' : 'mapmode.candidate_show');
   const next = {
     kind: 'candidate',
     id: c.id,
     contest: c.contest,
     number: c.number,
     name: displayName(c),
-    label: c.result.contestLabel,
-    multi: c.result.multi,
+    surname: c.surname,
+    label,
+    multi: !isSingle(c.contest),
   };
-  return html`<button
-    type="button"
-    class="votes-map"
-    aria-pressed=${on ? 'true' : 'false'}
-    title=${label}
-    aria-label=${label}
-    onClick=${() => setMapMode(on ? null : next)}
+  return html`<${ToggleButton}
+    cls="votes-map"
+    next=${next}
+    on=${on}
+    label=${t(on ? 'mapmode.candidate_hide' : 'mapmode.candidate_show')}
   >
     <${MapPinIcon} />
-  </button>`;
+  <//>`;
 }
 
 /* The colour the map shows mode *m* in (draw.js `setResults`): a
- * candidate's votes in the results' green, like the medal; a turnout in the
- * colour its area is drawn in otherwise (app.css `--map-<tone>`), so that
- * nothing changes colour unexpectedly: a municipality's red, a council
- * obvod's orange, Bratislava's and Košice's green, a regional contest's
- * violet. The turnout across the country of the municipal elections is
- * the municipalities', that of the two cities' own elections theirs. A
- * winner map has a colour for each candidate instead: null. */
+ * candidate's votes in the results' green, like the medal; a turnout in
+ * the colour its area is drawn in otherwise (app.css `--map-<tone>`), so
+ * that nothing changes colour unexpectedly: a municipality's red, a
+ * council obvod's orange, Bratislava's and Košice's green, a regional
+ * contest's violet. The municipal turnout across the country is the
+ * municipalities' colour, the two cities' own elections theirs. A winner
+ * map has a colour per candidate instead: null. */
 export function toneOf(m, index) {
   if (m.kind === 'candidate') return 'result';
   if (m.kind === 'winner') return null;
@@ -140,17 +146,18 @@ export function toneOf(m, index) {
   const [kind, area] = m.contest.split(':');
   const code = area.split('/')[0];
   if (kind === 'predseda' || kind === 'zsk') return 'zsk';
-  if (code === 'BA' || code === 'KE') return 'city';
-  return kind === 'oz' && (index?.obce[code]?.[4] ?? 0) > 1 ? 'council' : 'accent';
+  if (isCity(code)) return 'city';
+  return kind === 'oz' && index && hasCouncilObvody(index, code) ? 'council' : 'accent';
 }
 
-/* The pin at the end of a contest's header (ballots.js `Contest`). A press
- * shows the contest's area on the map (*map* {label, onClick}); once the
- * contest is counted (*counted*), the next press colours that area by the
- * 2026 turnout, in the area's own colour (`toneOf`), and the one after
- * takes it off again; the pin is filled in that colour meanwhile. While
- * the map shows another of the contest's results, the area is there
- * already: the first press shows its turnout, in the view as it is. */
+/* The pin at the end of a contest's header (ballots.js `Contest`). Its
+ * first press shows the contest's area on the map (*map* {label,
+ * onClick}). Once the contest is counted (*counted*), the next press
+ * colours the area by the 2026 turnout in the area's own colour
+ * (`toneOf`), and the one after takes that off again; the pin is filled
+ * in that colour meanwhile. While the map shows another of the contest's
+ * results, the area is there already, so the first press shows its
+ * turnout, in the view as it is. */
 export function ContestMapButton({ contest, map, counted }) {
   const current = useMapMode();
   const [index] = useLoaded(dataIndex, []);
@@ -183,35 +190,31 @@ export function ContestMapButton({ contest, map, counted }) {
 /* The button before the pin of a contest's header (ballots.js `Contest`)
  * once its candidates' votes are counted: it colours each unit of the
  * contest's area (as `MapResults` has them at the zoom) by the candidate
- * with the most votes there, or takes that off the map. In a council of
- * several seats that is its top candidate there, not all it elects, which
- * the legend says. */
+ * with the most votes there. In a council that is its top candidate there,
+ * not all it elects, as the legend says. */
 export function WinnerMapButton({ contest }) {
   const current = useMapMode();
   const on = current?.kind === 'winner' && current.contest === contest.id;
-  const label = t(on ? 'mapmode.winner_hide' : 'mapmode.winner_show');
   const next = {
     kind: 'winner',
     contest: contest.id,
     label: contest.label,
     names: Object.fromEntries(contest.candidates.map((c) => [c.number, [displayName(c), c.surname]])),
-    multi: !(contest.id.startsWith('starosta:') || contest.id.startsWith('predseda:')),
+    multi: !isSingle(contest.id),
   };
-  return html`<button
-    type="button"
-    class="winner-map"
-    aria-pressed=${on ? 'true' : 'false'}
-    title=${label}
-    aria-label=${label}
-    onClick=${() => setMapMode(on ? null : next)}
+  return html`<${ToggleButton}
+    cls="winner-map"
+    next=${next}
+    on=${on}
+    label=${t(on ? 'mapmode.winner_hide' : 'mapmode.winner_show')}
   >
     <${WinnerMapIcon} />
-  </button>`;
+  <//>`;
 }
 
-/* The names of the area files (data.js `areaName`) that the figures of
- * mode *m* are in: the contest's, or every one of the election's that the
- * live results list. */
+/* The names of the area files (data.js `areaName`) that hold the figures
+ * of mode *m*: the contest's, or all of the election's that the live
+ * results list. */
 function areaFiles(m, live, index) {
   if (m.contest) return [areaName(m.contest, index)];
   const prefix = { municipal: 'okres/', city: 'city/', regional: 'kraj/' }[m.election];
@@ -226,26 +229,28 @@ function inArea(m, code, row) {
   const [c, n] = area.split('/');
   if (kind === 'predseda') return row[2] === c;
   if (kind === 'zsk') return row[2] === c && row[3] === Number(n);
-  if (c === 'BA' || c === 'KE') return row[5] === c && (kind !== 'oz' || row[6] === Number(n));
+  if (isCity(c)) return row[5] === c && (kind !== 'oz' || row[6] === Number(n));
   return code === c;
 }
 
-/* The names of the municipal area files whose okrsky group those of mode
- * *m* by council obvod (live.js `okrsokCouncils`): of the okresy of the
- * obce in its area split into several council obvody. */
+/* The municipal area files whose okrsky group those of mode *m* by council
+ * obvod (live.js `okrsokCouncils`): those of the okresy of the obce in its
+ * area that are split into several council obvody. */
 function councilFiles(m, index) {
   const names = new Set();
   for (const [code, row] of Object.entries(index.obce)) {
-    if (row[1] && (row[4] ?? 0) > 1 && inArea(m, code, row)) names.add(`okres/${row[1]}`);
+    if (row[1] && hasCouncilObvody(index, code) && inArea(m, code, row)) names.add(`okres/${row[1]}`);
   }
   return [...names];
 }
 
-/* What the figures of *m* are taken from, as live.js has it now: {main}
- * the contest's entry, or the contests of each of area files *names* that
- * has loaded; {okrsky} the figures by okrsok of those, {councils} of area
- * files *councilNames* (`councilFiles`), where there are any and they have
- * loaded. Their identities change exactly when the figures may. */
+/* What the figures of *m* come from, as live.js has it now:
+ * - main: the contest's entry, or the contests of each of area files
+ *   *names* that has loaded;
+ * - okrsky: the figures by okrsok of those;
+ * - councils: those of area files *councilNames* (`councilFiles`).
+ * Each list holds only what exists and has loaded. Their identities
+ * change exactly when the figures may. */
 function sourcesOf(m, live, names, councilNames) {
   const main = m.contest
     ? [live.of(m.contest)].filter((entry) => entry && entry !== NOT_COUNTED)
@@ -255,8 +260,8 @@ function sourcesOf(m, live, names, councilNames) {
 }
 
 /* The leader of an area's *votes* ({number: votes}) of *valid*: [their
- * votes, valid, number, votes]; null without votes, or where two lead
- * alike, which no colour could say. */
+ * votes, valid, number, votes]; null without votes, or on a tie for the
+ * lead, which no colour could show. */
 function leader(votes, valid) {
   let best = null;
   let tie = false;
@@ -281,178 +286,221 @@ const recordOf = (e) => [
   Object.fromEntries((e.candidates ?? []).map(([n, v]) => [n, v])),
 ];
 
-/* The figures of mode *m* from *sources* (`sourcesOf`) by unit, each
- * [part, whole]: [votes, valid] of a candidate, [voters, eligible] of a
- * turnout, [the leader's votes, valid, the leader's number, votes] of a
- * winner map. By obec code (`obce`); by council obvod '<obec>/<k>' of an
- * obec split into several (`councils`); by okrsok '<obec>/<n>' of those
- * drawn (*drawn* `keys`, `useDrawnOkrsky`; `okrsky`), with an okrsok's
- * 2022 municipal turnout as [voters, eligible] (`past`); by regional
- * obvod '<kraj>/<n>' (`regional`), its obce together, or as a whole where
- * only that is known (those in the Set `whole`); and of all counted
- * (`total`, null if unknown). `local` where the contest is of one obec;
- * `ranking` the numbers of a winner map's candidates, most votes first. */
-function figures(m, sources, index, drawn) {
-  // Records [eligible, voters, valid, votes] first, each made a figure at
-  // the end: a unit known by its parts is their records summed.
-  const obce = new Map();
-  const whole = new Map();
-  const councils = new Map();
-  const okrsky = new Map();
-  const past = new Map();
-  const councilSums = new Map();
-  const obecSums = new Map();
-  // The cities (BA, KE) whose districts' figures are the `areas` of their
-  // contest: a district missing from them is one whose votes are not known
-  // (okrsky not told apart), which its okrsky that are known would belie.
-  const byAreas = new Set();
-  const totals = new Map();
-  let local = false;
-  let piece = false;
-  let ranking = [];
-  // An area of the live results: an obec, or `obvod:<n>` of *kraj*.
-  const put = (key, kraj, rec) => {
-    if (key.startsWith('obvod:')) whole.set(`${kraj}/${key.slice('obvod:'.length)}`, rec);
-    else if (index.obce[key]) obce.set(key, rec);
-  };
-  // Every regional obvod of *kraj* as a whole.
-  const wholeKraj = (kraj, rec) => {
-    for (const [, , k, n] of Object.values(index.obce)) if (k === kraj) whole.set(`${kraj}/${n}`, rec);
-  };
-  const councilMaps = sources.councils.map((file) => okrsokCouncils(file, index));
-  const councilOf = (key) => {
-    for (const map of councilMaps) {
+/* The records [eligible, voters, valid, {number: votes}] of a mode's units
+ * as they are gathered from the live results, before `figures` turns them
+ * into figures. A unit known only by its parts gets their records summed. */
+class Records {
+  constructor(index, drawn, councilFiles) {
+    this.index = index;
+    this.drawn = drawn;
+    this.councilMaps = councilFiles.map((file) => okrsokCouncils(file, index));
+    // Obec code → record.
+    this.obce = new Map();
+    // Regional obvod '<kraj>/<n>' known only as a whole → record.
+    this.whole = new Map();
+    // Council obvod '<obec>/<k>' → its own record.
+    this.councils = new Map();
+    // Drawn okrsok '<obec>/<n>' → record, and its 2022 municipal turnout.
+    this.okrsky = new Map();
+    this.past = new Map();
+    // All okrsky summed by council obvod and by obec.
+    this.councilSums = new Map();
+    this.obecSums = new Map();
+    // The cities (BA, KE) whose districts' figures are the `areas` of their
+    // contest: a district missing from them is one whose votes are not
+    // known (okrsky not told apart), which its known okrsky would belie.
+    this.byAreas = new Set();
+    this.totals = new Map();
+    // Whether the contest is of one obec; whether of one council obvod of
+    // an obec split into several; a winner map's candidates by votes.
+    this.local = false;
+    this.piece = false;
+    this.ranking = [];
+  }
+
+  addTotal(rec) {
+    addRecord(this.totals, 0, rec);
+  }
+
+  /* An area of the live results: an obec, or `obvod:<n>` of *kraj*. */
+  put(key, kraj, rec) {
+    if (key.startsWith('obvod:')) this.whole.set(`${kraj}/${key.slice('obvod:'.length)}`, rec);
+    else if (this.index.obce[key]) this.obce.set(key, rec);
+  }
+
+  /* Every regional obvod of *kraj* as a whole. */
+  wholeKraj(kraj, rec) {
+    for (const [, , k, n] of Object.values(this.index.obce)) if (k === kraj) this.whole.set(`${kraj}/${n}`, rec);
+  }
+
+  councilOf(key) {
+    for (const map of this.councilMaps) {
       const council = map.get(key);
       if (council) return council;
     }
     return undefined;
-  };
-  // The okrsky among *records* ('<obec>/<n>' → record): each drawn one a
-  // unit of its own, with its 2022 municipal turnout from *file* where
-  // *withPast* (one without an area, addressless, is none); all of them
-  // summed by council obvod and by obec.
-  const byOkrsok = (records, file, withPast) => {
+  }
+
+  /* The okrsky among *records* ('<obec>/<n>' → record): each drawn one a
+   * unit of its own, with its 2022 municipal turnout from *file* if
+   * *withPast*; all of them summed by council obvod and by obec. (An
+   * okrsok without an area, addressless, is not drawn.) */
+  addOkrsky(records, file, withPast) {
     for (const [key, rec] of Object.entries(records ?? {})) {
-      if (drawn.keys.has(key)) {
-        okrsky.set(key, rec);
-        if (withPast && file.past?.[key]) past.set(key, file.past[key]);
+      if (this.drawn.keys.has(key)) {
+        this.okrsky.set(key, rec);
+        if (withPast && file.past?.[key]) this.past.set(key, file.past[key]);
       }
-      const council = councilOf(key);
-      if (council) addRecord(councilSums, council, rec);
-      addRecord(obecSums, key.split('/')[0], rec);
+      const council = this.councilOf(key);
+      if (council) addRecord(this.councilSums, council, rec);
+      addRecord(this.obecSums, key.split('/')[0], rec);
     }
-  };
-  if (m.contest) {
-    const [entry] = sources.main;
-    const [kind, area] = m.contest.split(':');
-    const code = area.split('/')[0];
-    const city = code === 'BA' || code === 'KE';
-    const areas = Object.entries(entry?.areas ?? {});
-    for (const [key, rec] of areas) put(key, code, rec);
-    if (city && entry?.areas) byAreas.add(code);
-    const total = entry ? recordOf(entry) : null;
-    if (total) addRecord(totals, 0, total);
-    if (m.kind === 'winner') ranking = [...(entry?.candidates ?? [])].sort((a, b) => b[1] - a[1]).map(([n]) => n);
-    local = (kind === 'starosta' || kind === 'oz') && !city && Boolean(index.obce[code]);
-    // A council of one obvod of an obec split into several: the obvod is
-    // its whole area, and the obec as a whole has no figure of it.
-    piece = local && kind === 'oz' && (index.obce[code][4] ?? 0) > 1;
-    // Without areas, the contest's own area: a city's contest its districts
-    // (a city council obvod's those in it), which are obce, the city not.
-    if (!areas.length && total) {
-      if (kind === 'predseda') wholeKraj(code, total);
-      else if (kind === 'zsk') whole.set(area, total);
-      else if (city) {
-        const obvod = kind === 'oz' ? Number(area.split('/')[1]) : null;
-        for (const [k, row] of Object.entries(index.obce)) {
-          if (row[5] === code && (obvod === null || row[6] === obvod)) obce.set(k, total);
-        }
-      } else if (piece) councils.set(area, total);
-      else if (local) obce.set(code, total);
-    }
-    // `past` is of the 2022 municipal elections: a municipal contest's.
-    const withPast = m.kind === 'turnout' && (kind === 'starosta' || kind === 'oz');
-    for (const file of sources.okrsky) byOkrsok(file.contests[m.contest], file, withPast);
-  } else if (m.election === 'municipal' || m.election === 'city') {
-    // A municipality's turnout is its mayor's contest's; where that has
-    // none (a contest not held, or without its figures yet), its council
-    // obvody's together; a council obvod's its council's. Bratislava's and
-    // Košice's districts are municipalities here, electing their own. The
-    // two cities' own elections, of a city mayor and council over all their
-    // districts, are on ballots of their own, so a layer of their own
-    // ('city', from the city files): by district where the mayor's contest
-    // has `areas`, else the whole city alike. Their okrsky likewise.
-    const mayors = new Map();
-    const councilTurnouts = new Map();
-    for (const contests of sources.main) {
-      for (const [id, e] of Object.entries(contests)) {
-        if (!e.eligible || e.voters == null) continue;
-        const [kind, area] = id.split(':');
-        const code = area.split('/')[0];
-        if (!index.obce[code]) continue;
-        if (kind === 'starosta') mayors.set(code, e);
-        else if (kind === 'oz') {
-          addRecord(councilTurnouts, code, recordOf(e));
-          if (m.election === 'municipal' && (index.obce[code][4] ?? 0) > 1) councils.set(area, recordOf(e));
-        }
+  }
+}
+
+/* One contest's records (mode *m* with a `contest`): its `areas`, else its
+ * own figures over its own area; and its okrsky. */
+function gatherContest(rs, m, sources) {
+  const { index } = rs;
+  const [entry] = sources.main;
+  const [kind, area] = m.contest.split(':');
+  const code = area.split('/')[0];
+  const city = isCity(code);
+  const areas = Object.entries(entry?.areas ?? {});
+  for (const [key, rec] of areas) rs.put(key, code, rec);
+  if (city && entry?.areas) rs.byAreas.add(code);
+  const total = entry ? recordOf(entry) : null;
+  if (total) rs.addTotal(total);
+  if (m.kind === 'winner') rs.ranking = [...(entry?.candidates ?? [])].sort((a, b) => b[1] - a[1]).map(([n]) => n);
+  rs.local = (kind === 'starosta' || kind === 'oz') && !city && Boolean(index.obce[code]);
+  // A council of one obvod of an obec split into several: the obvod is its
+  // whole area, and the obec as a whole has no figure of it.
+  rs.piece = rs.local && kind === 'oz' && hasCouncilObvody(index, code);
+  // Without areas, the contest's own area. A city contest's is its
+  // districts (a city council obvod's, those in it), which are obce; the
+  // city is not.
+  if (!areas.length && total) {
+    if (kind === 'predseda') rs.wholeKraj(code, total);
+    else if (kind === 'zsk') rs.whole.set(area, total);
+    else if (city) {
+      const obvod = kind === 'oz' ? Number(area.split('/')[1]) : null;
+      for (const [k, row] of Object.entries(index.obce)) {
+        if (row[5] === code && (obvod === null || row[6] === obvod)) rs.obce.set(k, total);
       }
-    }
-    const turnouts = new Map(councilTurnouts);
-    for (const [code, e] of mayors) turnouts.set(code, recordOf(e));
-    for (const [code, rec] of turnouts) {
-      addRecord(totals, 0, rec);
-      const areas = Object.entries(mayors.get(code)?.areas ?? {});
-      if (m.election === 'municipal') obce.set(code, rec);
-      else if (areas.length) {
-        byAreas.add(code);
-        for (const [key, a] of areas) put(key, null, a);
-      } else {
-        for (const [k, row] of Object.entries(index.obce)) if (row[5] === code) obce.set(k, rec);
-      }
-    }
-    for (const file of sources.okrsky) {
-      // The mayor's okrsky, else the council obvody's: each okrsok is in
-      // one of them.
-      const contests = Object.entries(file.contests);
-      const withMayor = new Set(contests.filter(([id]) => id.startsWith('starosta:')).map(([id]) => id.split(':')[1]));
-      for (const [id, records] of contests) {
-        const [kind, area] = id.split(':');
-        if (kind === 'starosta' || (kind === 'oz' && !withMayor.has(area.split('/')[0]))) byOkrsok(records, file, true);
-      }
-    }
-  } else {
-    for (const contests of sources.main) {
-      const [id, e] = Object.entries(contests).find(([key]) => key.startsWith('predseda:')) ?? [];
-      if (!e?.eligible || e.voters == null) continue;
-      const kraj = id.slice('predseda:'.length);
-      addRecord(totals, 0, recordOf(e));
-      const areas = Object.entries(e.areas ?? {});
-      for (const [key, a] of areas) put(key, kraj, a);
-      // Without areas, the kraj as a whole: each of its obvody.
-      if (!areas.length) wholeKraj(kraj, recordOf(e));
-    }
-    for (const file of sources.okrsky) {
-      for (const [id, records] of Object.entries(file.contests)) {
-        if (id.startsWith('predseda:')) byOkrsok(records, file, false);
+    } else if (rs.piece) rs.councils.set(area, total);
+    else if (rs.local) rs.obce.set(code, total);
+  }
+  // `past` is of the 2022 municipal elections: a municipal contest's.
+  const withPast = m.kind === 'turnout' && (kind === 'starosta' || kind === 'oz');
+  for (const file of sources.okrsky) rs.addOkrsky(file.contests[m.contest], file, withPast);
+}
+
+/* The municipal turnout (mode *m*, election 'municipal' or 'city'). A
+ * municipality's turnout is its mayor's contest's; where that has none (a
+ * contest not held, or without its figures yet), its council obvody's
+ * summed; a council obvod's is its council's. Bratislava's and Košice's
+ * districts are municipalities here, electing their own. The two cities'
+ * own elections (a city mayor and council over all their districts) are
+ * on ballots of their own, so a layer of their own ('city', from the city
+ * files): by district where the mayor's contest has `areas`, else the
+ * whole city alike. Their okrsky likewise. */
+function gatherMunicipal(rs, m, sources) {
+  const { index } = rs;
+  const mayors = new Map();
+  const councilTurnouts = new Map();
+  for (const contests of sources.main) {
+    for (const [id, e] of Object.entries(contests)) {
+      if (!e.eligible || e.voters == null) continue;
+      const [kind, area] = id.split(':');
+      const code = area.split('/')[0];
+      if (!index.obce[code]) continue;
+      if (kind === 'starosta') mayors.set(code, e);
+      else if (kind === 'oz') {
+        addRecord(councilTurnouts, code, recordOf(e));
+        if (m.election === 'municipal' && hasCouncilObvody(index, code)) rs.councils.set(area, recordOf(e));
       }
     }
   }
-  for (const [key, rec] of councilSums) if (!councils.has(key)) councils.set(key, rec);
-  // An obec without a figure of its own: its okrsky together; but not the
+  const turnouts = new Map(councilTurnouts);
+  for (const [code, e] of mayors) turnouts.set(code, recordOf(e));
+  for (const [code, rec] of turnouts) {
+    rs.addTotal(rec);
+    const areas = Object.entries(mayors.get(code)?.areas ?? {});
+    if (m.election === 'municipal') rs.obce.set(code, rec);
+    else if (areas.length) {
+      rs.byAreas.add(code);
+      for (const [key, a] of areas) rs.put(key, null, a);
+    } else {
+      for (const [k, row] of Object.entries(index.obce)) if (row[5] === code) rs.obce.set(k, rec);
+    }
+  }
+  for (const file of sources.okrsky) {
+    // The mayor's okrsky, else the council obvody's: each okrsok is in one
+    // of them.
+    const contests = Object.entries(file.contests);
+    const withMayor = new Set(contests.filter(([id]) => id.startsWith('starosta:')).map(([id]) => id.split(':')[1]));
+    for (const [id, records] of contests) {
+      const [kind, area] = id.split(':');
+      if (kind === 'starosta' || (kind === 'oz' && !withMayor.has(area.split('/')[0]))) rs.addOkrsky(records, file, true);
+    }
+  }
+}
+
+/* The regional turnout: each kraj's presidential contest. */
+function gatherRegional(rs, sources) {
+  for (const contests of sources.main) {
+    const [id, e] = Object.entries(contests).find(([key]) => key.startsWith('predseda:')) ?? [];
+    if (!e?.eligible || e.voters == null) continue;
+    const kraj = id.slice('predseda:'.length);
+    rs.addTotal(recordOf(e));
+    const areas = Object.entries(e.areas ?? {});
+    for (const [key, a] of areas) rs.put(key, kraj, a);
+    // Without areas, the kraj as a whole: each of its obvody.
+    if (!areas.length) rs.wholeKraj(kraj, recordOf(e));
+  }
+  for (const file of sources.okrsky) {
+    for (const [id, records] of Object.entries(file.contests)) {
+      if (id.startsWith('predseda:')) rs.addOkrsky(records, file, false);
+    }
+  }
+}
+
+/* The figures of mode *m* from *sources* (`sourcesOf`) by unit, each
+ * [part, whole]: [votes, valid] of a candidate, [voters, eligible] of a
+ * turnout, [the leader's votes, valid, the leader's number, votes] of a
+ * winner map:
+ * - obce: by obec code;
+ * - councils: by council obvod '<obec>/<k>' of an obec split into several;
+ * - okrsky: by okrsok '<obec>/<n>' of those drawn (*drawn* `keys`,
+ *   `useDrawnOkrsky`), with `past` an okrsok's 2022 municipal turnout as
+ *   [voters, eligible];
+ * - regional: by regional obvod '<kraj>/<n>', its obce summed, or as a
+ *   whole where only that is known (those in the Set `whole`);
+ * - total: of all counted, null if unknown;
+ * - local: whether the contest is of one obec;
+ * - ranking: a winner map's candidates' numbers, most votes first. */
+function figures(m, sources, index, drawn) {
+  const rs = new Records(index, drawn, sources.councils);
+  if (m.contest) gatherContest(rs, m, sources);
+  else if (m.election === 'municipal' || m.election === 'city') gatherMunicipal(rs, m, sources);
+  else gatherRegional(rs, sources);
+
+  for (const [key, rec] of rs.councilSums) if (!rs.councils.has(key)) rs.councils.set(key, rec);
+  // An obec without a figure of its own: its okrsky summed; but not the
   // obec of a council obvod's contest, whose okrsky are only the obvod's.
-  if (!piece) {
-    for (const [code, rec] of obecSums) {
-      if (!obce.has(code) && index.obce[code] && !byAreas.has(index.obce[code][5])) obce.set(code, rec);
+  if (!rs.piece) {
+    for (const [code, rec] of rs.obecSums) {
+      if (!rs.obce.has(code) && index.obce[code] && !rs.byAreas.has(index.obce[code][5])) rs.obce.set(code, rec);
     }
   }
   const regional = new Map();
-  if (!local) {
-    for (const [code, rec] of obce) {
+  if (!rs.local) {
+    for (const [code, rec] of rs.obce) {
       const [, , kraj, zsk] = index.obce[code];
       addRecord(regional, `${kraj}/${zsk}`, rec);
     }
   }
-  for (const [key, rec] of whole) regional.set(key, rec);
+  for (const [key, rec] of rs.whole) regional.set(key, rec);
   const of = {
     candidate: ([, , valid, votes]) => (valid ? [votes[m.number] ?? 0, valid] : null),
     winner: ([, , valid, votes]) => (valid ? leader(votes, valid) : null),
@@ -466,17 +514,17 @@ function figures(m, sources, index, drawn) {
     }
     return out;
   };
-  const total = totals.get(0);
+  const total = rs.totals.get(0);
   return {
-    obce: figs(obce),
-    councils: figs(councils),
-    okrsky: figs(okrsky),
+    obce: figs(rs.obce),
+    councils: figs(rs.councils),
+    okrsky: figs(rs.okrsky),
     regional: figs(regional),
-    whole: new Set(whole.keys()),
-    past: figs(past, turnoutOf),
+    whole: new Set(rs.whole.keys()),
+    past: figs(rs.past, turnoutOf),
     total: total ? of(total) : null,
-    local,
-    ranking,
+    local: rs.local,
+    ranking: rs.ranking,
   };
 }
 
@@ -513,13 +561,15 @@ function cellsOf(figs, cell) {
   return { obce: cells(figs.obce), zsk, councils: cells(figs.councils), okrsky: cells(figs.okrsky) };
 }
 
-/* What the map and the legend show of *figs* (`figures`): {shown} as
- * draw.js `setResults` takes it, {scale} [low, high] the shares of the
- * lowest and highest step, `below`/`above` whether values lie beyond
- * them, `digits` of the percentages; null with no values. The scale spans
- * the values of the units of every level (`allFigures`), not from zero:
- * areas not counted yet have none and are left uncoloured, so they do not
- * widen it. */
+/* What the map and the legend show of *figs* (`figures`); null with no
+ * values:
+ * - shown: as draw.js `setResults` takes it;
+ * - scale: [low, high], the shares of the lowest and the highest step;
+ * - below, above: whether values lie beyond them;
+ * - digits: of the percentages.
+ * The scale spans the values of the units of every level (`allFigures`),
+ * not from zero: areas not counted yet have no value and stay uncoloured,
+ * so they do not widen it. */
 function present(figs) {
   const share = ([part, all]) => part / all;
   const values = allFigures(figs)
@@ -536,8 +586,8 @@ function present(figs) {
     else high = low + 0.01;
   }
   const digits = high < 0.1 ? 1 : 0;
-  // All values alike (a single area, say), there is nothing to tell apart:
-  // the strongest step, so that the area shows.
+  // All values alike (a single area, say): nothing to tell apart, so the
+  // strongest step, for the area to show.
   const alike = values[0] === values.at(-1);
   const step = (v) =>
     alike ? STEPS - 1 : Math.min(STEPS - 1, Math.max(0, Math.floor(((v - low) / (high - low)) * STEPS)));
@@ -622,6 +672,11 @@ function tipLines(hit, figs, m, index) {
   return [unit, value, then].filter(Boolean);
 }
 
+/* *lines* (`tipLines`) as a tooltip's or a card's content: the unit's name
+ * in bold, then its figures. */
+const tipContent = (lines) =>
+  lines.map((line, i) => (i ? html`<span key=${i}>${line}</span>` : html`<strong key=${i}>${line}</strong>`));
+
 /* The candidates of a winner map who lead somewhere, each in their colour,
  * with how many of the units shown they lead. */
 function Leaders({ m, leaders }) {
@@ -638,9 +693,133 @@ function Leaders({ m, leaders }) {
   </ul>`;
 }
 
+/* The same as a row of chips, by surname as the map names them, scrolled
+ * sideways where wider than the screen: the legend in a phone's sheet. */
+function Chips({ m, leaders }) {
+  return html`<ul class="map-legend-chips">
+    ${leaders.map(
+      ([n, count, colour]) => html`<li key=${n} title=${t('mapmode.winner_count', { n: formatNumber(count) })}>
+        <span class="map-legend-swatch" style=${{ background: `var(--map-${PALETTE[colour]})` }}></span>
+        <span class="map-legend-name">${m.names[n]?.[1] ?? n}</span>
+        <span class="map-legend-count">${formatNumber(count)}</span>
+      </li>`,
+    )}
+  </ul>`;
+}
+
+/* The figure of all counted in mode *m* (*total* as `figures` has it) in
+ * short: the turnout, or the share of the candidate shown or of the one
+ * with the most votes after their surname. Beside the legend's title
+ * (*titled*), which names the turnout or the candidate, without that.
+ * Null where unknown. */
+function keyFigure(m, total, titled = false) {
+  if (!total?.[1]) return null;
+  const share = formatPercent(total[0] / total[1]);
+  if (m.kind === 'turnout') return t(titled ? 'mapmode.turnout_total' : 'mapmode.key_turnout', { turnout: share });
+  if (m.kind === 'candidate' && titled) return share;
+  const surname = m.kind === 'winner' ? m.names[total[2]]?.[1] : m.surname;
+  return `${surname ?? m.name ?? total[2]} ${share}`;
+}
+
+/* The legend's title, subtitle and summary (the figure of all counted,
+ * *total* as `figures` has it, null where unknown) for mode *m*. */
+function legendText(m, total) {
+  const share = total?.[1] ? formatPercent(total[0] / total[1]) : null;
+  if (m.kind === 'candidate') {
+    return {
+      title: m.name,
+      subtitle: `${m.label} · ${t(m.multi ? 'mapmode.share_voters' : 'mapmode.share_valid')}`,
+      summary: total ? `${formatPercent(total[0] / total[1])} · ${t('results.votes', { n: formatNumber(total[0]) })}` : null,
+    };
+  }
+  if (m.kind === 'winner') {
+    return {
+      title: t('mapmode.winner_title'),
+      subtitle: `${m.label} · ${t(m.multi ? 'mapmode.winner_of_council' : 'mapmode.winner_of')}`,
+      summary: total
+        ? t('mapmode.winner_total', { name: m.names[total[2]]?.[0] ?? total[2], share: formatPercent(total[0] / total[1]) })
+        : null,
+    };
+  }
+  return {
+    title: m.contest ? t('mapmode.turnout_title') : t(`mapmode.turnout_${m.election}`),
+    subtitle: m.contest ? `${m.label} · ${t('mapmode.turnout_of')}` : t('mapmode.turnout_by'),
+    summary: share && t('mapmode.turnout_total', { turnout: share }),
+  };
+}
+
+/* Renders *children* into element *into*, a root of its own: the legend in
+ * the sheet (pane.js), as this Preact has no portals. */
+function Portal({ into, children }) {
+  useLayoutEffect(() => {
+    render(children, into);
+  });
+  useLayoutEffect(() => () => render(null, into), [into]);
+  return null;
+}
+
+// Pixels between the tapped point, or the edges of the map left uncovered,
+// and the card of the unit tapped.
+const CARD_GAP = 12;
+
+/* The unit tapped on a touch screen (map.js `setInspect`), *at* {x, y,
+ * pick}: its figures, *lines* (`tipLines`), in a card by the tap, kept
+ * within the part of the map left uncovered (*insets*, app.js), with a
+ * button that picks the place there as the tap would have. Esc or a press
+ * outside the map closes it (`onClose`); on the map, map.js and MapResults
+ * see to that. */
+function TapCard({ lines, at, insets, onClose }) {
+  const card = useRef(null);
+
+  useLayoutEffect(() => {
+    const el = card.current;
+    const i = insets();
+    const right = innerWidth - i.right - el.offsetWidth - CARD_GAP;
+    const bottom = innerHeight - i.bottom - el.offsetHeight - CARD_GAP;
+    // Below the tap, or above it where there is no room below.
+    const below = at.y + CARD_GAP;
+    const top = below <= bottom ? below : at.y - el.offsetHeight - CARD_GAP;
+    el.style.left = `${Math.max(i.left + CARD_GAP, Math.min(right, at.x - el.offsetWidth / 2))}px`;
+    el.style.top = `${Math.max(i.top + CARD_GAP, Math.min(bottom, top))}px`;
+  });
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key !== 'Escape') return;
+      // Handled: app.js would close the pane as well.
+      e.preventDefault();
+      onClose();
+    };
+    const outside = (e) => {
+      if (!card.current.contains(e.target) && !e.target.closest('.leaflet-container')) onClose();
+    };
+    // Before app.js's Esc and any press's own handling.
+    document.addEventListener('keydown', onKey, true);
+    document.addEventListener('pointerdown', outside, true);
+    return () => {
+      document.removeEventListener('keydown', onKey, true);
+      document.removeEventListener('pointerdown', outside, true);
+    };
+  }, []);
+
+  return html`<div class="map-tip map-card" ref=${card} role="dialog" aria-label=${lines[0]}>
+    ${tipContent(lines)}
+    <button
+      type="button"
+      class="map-card-ballots"
+      onClick=${() => {
+        onClose();
+        at.pick();
+      }}
+    >
+      ${t('mapmode.show_ballots')}<${ArrowIcon} />
+    </button>
+  </div>`;
+}
+
 /* Where the tooltip of the pointer at *tip* {x, y} goes: below and right
- * of it, or left of it near the right edge of the page, where it would not
- * fit. */
+ * of it, or left of it near the right edge of the page, where it would
+ * not fit. */
 const tipStyle = ({ x, y }) => ({
   left: `${x}px`,
   top: `${y}px`,
@@ -659,18 +838,29 @@ export function useDrawnOkrsky() {
   }, [geo]);
 }
 
-/* Shows the mode on *map* (map.js) and its legend: what is shown, by
+/* Shows the mode on *map* (map.js) with its legend: what is shown, by
  * which units, the scale (or the leaders) and the share or turnout of all
- * counted; while the pointer is over the map, a tooltip of the unit under
- * it. The map is fitted to a contest's area when the results shown become
- * that contest's, not as they change between its modes or the zoom
- * changes their units. *legendRef* gets the legend's element (app.js
- * `insets`). */
-export function MapResults({ map, legendRef }) {
+ * counted. While the pointer is over the map, a tooltip names the unit
+ * under it; on a touch screen a card shows the unit tapped (`TapCard`).
+ * The map is fitted to a contest's area when the results shown become
+ * that contest's, not as they switch between its modes or the zoom
+ * changes their units. *legendRef* gets the legend's element over the map
+ * (app.js `insets`, which *insets* is).
+ *
+ * On a *phone* the legend over the map is a pill under the search card
+ * with the figure of all counted (`keyFigure`), which unfolds into the
+ * whole legend. With the sheet open, it is a bar at the top of the sheet,
+ * rendered into element *sheet* (pane.js): the title, the figure, the
+ * scale or the leaders' chips, the rest unfolded on demand. */
+export function MapResults({ map, legendRef, phone, sheet, insets }) {
   const m = useMapMode();
   const live = useLive();
   const [index] = useLoaded(dataIndex, []);
   const [tip, setTip] = useState(null);
+  // The unit tapped (map.js `setInspect`), and whether the legend is
+  // unfolded on a phone.
+  const [tapped, setTapped] = useState(null);
+  const [unfolded, setUnfolded] = useState(false);
   const drawn = useDrawnOkrsky();
   const ready = Boolean(m && index && drawn);
   const sources = ready
@@ -685,6 +875,9 @@ export function MapResults({ map, legendRef }) {
   }, [m, index, drawn, ...sources.main, ...sources.okrsky, ...sources.councils]);
   const shown = result?.p ?? null;
   const total = result?.figs.total ?? null;
+  // For the tap handler, which is set once per mode.
+  const latest = useRef(null);
+  latest.current = { m, index, figs: shown ? result.figs : null, tapped };
 
   useEffect(() => {
     map?.setResults(shown?.shown ?? null);
@@ -701,37 +894,38 @@ export function MapResults({ map, legendRef }) {
   useEffect(() => {
     if (!map || !m) return undefined;
     map.setHover(setTip);
+    // A tap on a unit with figures shows them; one beside the card closes
+    // it; elsewhere the tap picks the place.
+    map.setInspect((hit) => {
+      const now = latest.current;
+      const lines = hit?.unit && now.figs ? tipLines(hit.unit, now.figs, now.m, now.index) : null;
+      setTapped(lines ? hit : null);
+      return Boolean(lines || now.tapped);
+    });
     return () => {
       map.setHover(null);
+      map.setInspect(null);
       setTip(null);
+      setTapped(null);
     };
   }, [map, m]);
 
+  // Each mode's legend starts folded.
+  useEffect(() => setUnfolded(false), [m]);
+  // The legend unfolded or folded covers more or less of the map.
+  useEffect(() => {
+    map?.redraw();
+  }, [unfolded]);
+
   if (!m) return null;
   const percent = (share) => formatPercent(share, shown?.digits ?? 0);
-  let title;
-  let subtitle;
-  let summary = null;
-  if (m.kind === 'candidate') {
-    title = m.name;
-    subtitle = `${m.label} · ${t(m.multi ? 'mapmode.share_voters' : 'mapmode.share_valid')}`;
-    if (total) summary = `${formatPercent(total[0] / total[1])} · ${t('results.votes', { n: formatNumber(total[0]) })}`;
-  } else if (m.kind === 'winner') {
-    title = t('mapmode.winner_title');
-    subtitle = `${m.label} · ${t(m.multi ? 'mapmode.winner_of_council' : 'mapmode.winner_of')}`;
-    if (total) {
-      summary = t('mapmode.winner_total', { name: m.names[total[2]]?.[0] ?? total[2], share: formatPercent(total[0] / total[1]) });
-    }
-  } else if (m.contest) {
-    title = t('mapmode.turnout_title');
-    subtitle = `${m.label} · ${t('mapmode.turnout_of')}`;
-    if (total?.[1]) summary = t('mapmode.turnout_total', { turnout: formatPercent(total[0] / total[1]) });
-  } else {
-    title = t(`mapmode.turnout_${m.election}`);
-    subtitle = t('mapmode.turnout_by');
-    if (total?.[1]) summary = t('mapmode.turnout_total', { turnout: formatPercent(total[0] / total[1]) });
-  }
+  const { title, subtitle, summary } = legendText(m, total);
   const scale = shown?.scale;
+  const steps = (extra = '') => html`<div class=${`map-legend-scale${extra}`} aria-hidden="true">
+    ${Array.from({ length: STEPS }, (_, i) => html`<span class=${`step-${i + 1}`}></span>`)}
+  </div>`;
+  const low = scale && (shown.below ? `≤ ${percent(scale[0])}` : percent(scale[0]));
+  const high = scale && (shown.above ? `≥ ${percent(scale[1])}` : percent(scale[1]));
   let body;
   if (shown && m.kind === 'winner') {
     body = html`
@@ -740,49 +934,104 @@ export function MapResults({ map, legendRef }) {
     `;
   } else if (scale) {
     body = html`
-      <div class="map-legend-scale" aria-hidden="true">
-        ${Array.from({ length: STEPS }, (_, i) => html`<span class=${`step-${i + 1}`}></span>`)}
-      </div>
+      ${steps()}
       <p class="map-legend-ends">
-        <span>${shown.below ? `≤ ${percent(scale[0])}` : percent(scale[0])}</span>
+        <span>${low}</span>
         ${summary ? html`<span class="map-legend-total">${summary}</span>` : null}
-        <span>${shown.above ? `≥ ${percent(scale[1])}` : percent(scale[1])}</span>
+        <span>${high}</span>
       </p>
     `;
   } else {
     body = html`<p class="map-legend-none">${t('mapmode.none')}</p>`;
   }
-  const classes = ['map-legend', 'float', tone && tone !== 'result' && 'toned', m.kind === 'winner' && 'winner'];
+  const classes = ['map-legend', tone && tone !== 'result' && 'toned', m.kind === 'winner' && 'winner'];
+  const style = tone ? { '--tone': `var(--map-${tone})` } : undefined;
   const lines = tip && shown && index ? tipLines(tip.unit, result.figs, m, index) : null;
+  const tappedLines = tapped && shown && index ? tipLines(tapped.unit, result.figs, m, index) : null;
   const levels = shown ? levelsOf(result.figs) : [];
-  return html`
-    <section
-      class=${classes.filter(Boolean).join(' ')}
-      style=${tone ? { '--tone': `var(--map-${tone})` } : undefined}
+  const levelsLine = levels.length
+    ? html`<p class="map-legend-levels">${t(levels.length > 1 ? 'mapmode.levels' : 'mapmode.levels_one', { units: formatList(levels) })}</p>`
+    : null;
+  const key = keyFigure(m, total, Boolean(sheet));
+  const close = html`<button
+    type="button"
+    class="map-legend-close"
+    title=${t('mapmode.close')}
+    aria-label=${t('mapmode.close')}
+    onClick=${() => setMapMode(null)}
+  >
+    <${CloseIcon} />
+  </button>`;
+  const fold = html`<button
+    type="button"
+    class="map-legend-fold"
+    title=${t(unfolded ? 'mapmode.legend_less' : 'mapmode.legend_more')}
+    aria-label=${t(unfolded ? 'mapmode.legend_less' : 'mapmode.legend_more')}
+    aria-expanded=${unfolded ? 'true' : 'false'}
+    onClick=${() => setUnfolded(!unfolded)}
+  >
+    <${ExpandIcon} />
+  </button>`;
+
+  let legend;
+  if (sheet) {
+    let row;
+    if (shown && m.kind === 'winner') row = html`<${Chips} m=${m} leaders=${shown.leaders} />`;
+    else if (scale) row = html`<div class="map-legend-row"><span>${low}</span>${steps()}<span>${high}</span></div>`;
+    else row = html`<p class="map-legend-none">${t('mapmode.none')}</p>`;
+    legend = html`<${Portal} into=${sheet}>
+      <section class=${[...classes, 'bar'].filter(Boolean).join(' ')} style=${style} aria-label=${t('mapmode.legend')}>
+        <div class="map-legend-head">
+          <p class="map-legend-title"><strong>${title}</strong></p>
+          ${key ? html`<span class="map-legend-key">${key}</span>` : null}
+          ${fold}${close}
+        </div>
+        ${unfolded ? html`<p class="map-legend-sub">${subtitle}</p>${levelsLine}` : null}
+        ${row}
+      </section>
+    <//>`;
+  } else if (phone && !unfolded) {
+    // The leader overall in their colour, the first (`presentWinner`).
+    const mark =
+      m.kind === 'winner'
+        ? html`<span class="map-legend-swatch" style=${{ background: `var(--map-${PALETTE[0]})` }}></span>`
+        : steps(' mini');
+    legend = html`<section
+      class=${[...classes, 'float', 'pill'].filter(Boolean).join(' ')}
+      style=${style}
+      ref=${legendRef}
+      aria-label=${t('mapmode.legend')}
+    >
+      <button
+        type="button"
+        class="map-legend-unfold"
+        title=${t('mapmode.legend_more')}
+        aria-expanded="false"
+        onClick=${() => setUnfolded(true)}
+      >
+        ${shown ? mark : null}
+        <strong>${key ?? title}</strong>
+      </button>
+      ${close}
+    </section>`;
+  } else {
+    legend = html`<section
+      class=${[...classes, 'float'].filter(Boolean).join(' ')}
+      style=${style}
       ref=${legendRef}
       aria-label=${t('mapmode.legend')}
     >
       <div class="map-legend-head">
         <p class="map-legend-title"><strong>${title}</strong><span>${subtitle}</span></p>
-        <button
-          type="button"
-          class="map-legend-close"
-          title=${t('mapmode.close')}
-          aria-label=${t('mapmode.close')}
-          onClick=${() => setMapMode(null)}
-        >
-          <${CloseIcon} />
-        </button>
+        ${phone ? fold : null}${close}
       </div>
-      ${levels.length ? html`<p class="map-legend-levels">${t(levels.length > 1 ? 'mapmode.levels' : 'mapmode.levels_one', { units: formatList(levels) })}</p>` : null}
+      ${levelsLine}
       ${body}
-    </section>
-    ${
-      lines
-        ? html`<div class="map-tip" role="tooltip" style=${tipStyle(tip)}>
-            ${lines.map((line, i) => (i ? html`<span key=${i}>${line}</span>` : html`<strong key=${i}>${line}</strong>`))}
-          </div>`
-        : null
-    }
+    </section>`;
+  }
+  return html`
+    ${legend}
+    ${lines ? html`<div class="map-tip" role="tooltip" style=${tipStyle(tip)}>${tipContent(lines)}</div>` : null}
+    ${tappedLines ? html`<${TapCard} lines=${tappedLines} at=${tapped} insets=${insets} onClose=${() => setTapped(null)} />` : null}
   `;
 }

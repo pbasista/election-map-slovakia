@@ -63,6 +63,7 @@ import unicodedata
 from collections import Counter, defaultdict
 from collections.abc import Iterable, Iterator, Mapping, Sequence
 from dataclasses import dataclass
+from itertools import pairwise
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -75,6 +76,7 @@ if TYPE_CHECKING:
 
 KINDS = ("starosta", "oz", "predseda", "zsk")
 MUNICIPAL = ("starosta", "oz")
+_REGIONAL = ("predseda", "zsk")
 OUTPUT_FILE = "candidates.json"
 # Inputs in config/inputs.toml: the list of each contest kind, and the
 # boundaries level whose attribute tables name the municipalities.
@@ -416,46 +418,45 @@ def _columns(kind: str, header: Sequence[str], path: Path) -> dict[str, int]:
 
 def read_list(kind: str, path: Path, known_parties: Iterable[str] = ()) -> list[Entry]:
     """Read one candidate list of *kind*."""
-    header, rows = xlsx.find_header(
-        xlsx.read_rows(path), "Kraj" if kind in ("predseda", "zsk") else "Okres"
-    )
-    col = _columns(kind, header, path)
     municipal = kind in MUNICIPAL
+    header, rows = xlsx.find_header(
+        xlsx.read_rows(path), "Okres" if municipal else "Kraj"
+    )
+    columns = _columns(kind, header, path)
     known = frozenset(known_parties)
     entries = []
     for line, row in enumerate(rows, 1):
-        cells = row + [""] * (len(header) - len(row))
-
-        def get(name: str, cells: list[str] = cells) -> str:
-            return clean(cells[col[name]])
-
+        # Trailing empty cells may be missing from a row.
+        cell = {
+            name: clean(row[i]) if i < len(row) else "" for name, i in columns.items()
+        }
         source = f"{path.name}: data row {line}"
         try:
             if municipal:
-                before, after = split_title(get("title"))
+                before, after = split_title(cell["title"])
             else:
-                before, after = get("title_before"), get("title_after")
+                before, after = cell["title_before"], cell["title_after"]
             parties, independent = parse_parties(
-                get("parties"), ";" if municipal else ",", known
+                cell["parties"], ";" if municipal else ",", known
             )
             entries.append(
                 Entry(
                     kind=kind,
                     source=source,
-                    region=get("okres" if municipal else "kraj"),
-                    okres_code=get("okres_code") if municipal else "",
-                    obec=get("obec") if municipal else "",
-                    obvod=int(get("obvod")) if "obvod" in col else None,
-                    number=int(get("number")),
-                    first_name=get("first_name"),
-                    surname=get("surname"),
+                    region=cell["okres" if municipal else "kraj"],
+                    okres_code=cell.get("okres_code", ""),
+                    obec=cell.get("obec", ""),
+                    obvod=int(cell["obvod"]) if "obvod" in cell else None,
+                    number=int(cell["number"]),
+                    first_name=cell["first_name"],
+                    surname=cell["surname"],
                     title_before=before,
                     title_after=after,
-                    age=int(get("age")),
-                    occupation=get("occupation"),
+                    age=int(cell["age"]),
+                    occupation=cell["occupation"],
                     parties=parties,
                     independent=independent,
-                    residence="" if municipal else get("residence"),
+                    residence=cell.get("residence", ""),
                 )
             )
         except (ValueError, CandidatesError) as e:
@@ -534,7 +535,7 @@ def build(
         with progress.stage(f"reading {lists[kind].name}"):
             entries += read_list(kind, lists[kind])
     known = {p for e in entries for p in e.parties if "," in p}
-    for kind in KINDS[2:]:
+    for kind in _REGIONAL:
         with progress.stage(f"reading {lists[kind].name}"):
             entries += read_list(kind, lists[kind], known)
     with progress.stage("matching municipalities and residences"):
@@ -565,10 +566,11 @@ def match(
     pending = []
     for e in entries:
         if e.kind in MUNICIPAL:
-            override = overrides.obec.get(f"{e.region}/{e.obec}")
+            place = f"{e.region}/{e.obec}"
+            override = overrides.obec.get(place)
             if override is not None:
-                used_obec.add(f"{e.region}/{e.obec}")
-                area = _known(admin, override, f"overrides obec {e.region}/{e.obec}")
+                used_obec.add(place)
+                area = _known(admin, override, f"overrides obec {place}")
             else:
                 area = _match_obec(e, admin, municipal)
             if area is None:
@@ -583,13 +585,12 @@ def match(
         contest = f"{e.kind}:{area}" + (f"/{e.obvod}" if e.obvod is not None else "")
         c = Candidacy(contest, e.kind, area, e.obvod, e, area)
         candidacies.append(c)
-        if e.kind not in MUNICIPAL:
+        if e.kind in _REGIONAL:
             pending.append(c)
 
     residence_by = _match_residences(pending, candidacies, admin, overrides, unmatched)
-    stale = sorted(set(overrides.obec) - used_obec)
-    if stale:
-        unmatched.add(f"unused override obec {stale[0]!r}")
+    for place in set(overrides.obec) - used_obec:
+        unmatched.add(f"unused override obec {place!r}")
     if unmatched:
         raise CandidatesError(
             f"{len(unmatched)} unmatched (add them to overrides.toml):\n  "
@@ -651,9 +652,7 @@ def _match_residences(
     for obec in admin.obce.values():
         by_name[(obec.kraj, name_key(obec.name))].append(obec.code)
     municipal = {
-        (_merge_area(admin, c.obec), *_name_age(c.entry))
-        for c in candidacies
-        if c.kind in MUNICIPAL
+        _person_key(admin, c.obec, c.entry) for c in candidacies if c.kind in MUNICIPAL
     }
     residence_by: Counter[str] = Counter()
     used = set()
@@ -667,9 +666,7 @@ def _match_residences(
         options = by_name.get((c.area, name_key(c.entry.residence)), [])
         if len(options) > 1:
             options = [
-                o
-                for o in options
-                if (_merge_area(admin, o), *_name_age(c.entry)) in municipal
+                o for o in options if _person_key(admin, o, c.entry) in municipal
             ]
             how = "municipal candidacy"
         else:
@@ -682,18 +679,23 @@ def _match_residences(
             continue
         c.obec = options[0]
         residence_by[how] += 1
-    for cid in sorted(set(overrides.residence) - used):
+    for cid in set(overrides.residence) - used:
         unmatched.add(f"unused override residence {cid!r}")
     return residence_by
 
 
-def _merge_area(admin: Admin, code: str) -> str:
+def merge_area(admin: Admin, code: str) -> str:
     """Return the obec persons are merged on: a district counts as its city."""
     return admin.obce[code].city or code
 
 
-def _name_age(e: Entry) -> tuple[str, str, int]:
-    return person_name_key(e.first_name), person_name_key(e.surname), e.age
+def _person_key(admin: Admin, obec: str, e: Entry) -> PersonKey:
+    return (
+        merge_area(admin, obec),
+        person_name_key(e.first_name),
+        person_name_key(e.surname),
+        e.age,
+    )
 
 
 def check_numbers(candidacies: Sequence[Candidacy]) -> None:
@@ -735,9 +737,7 @@ def merge_persons(
             if cid not in by_id:
                 raise CandidatesError(f"overrides.toml: no candidacy {cid!r}")
 
-    keys: dict[str, PersonKey] = {
-        c.id: (_merge_area(admin, c.obec), *_name_age(c.entry)) for c in candidacies
-    }
+    keys = {c.id: _person_key(admin, c.obec, c.entry) for c in candidacies}
     by_key: dict[PersonKey, list[Candidacy]] = defaultdict(list)
     for c in candidacies:
         by_key[keys[c.id]].append(c)
@@ -775,7 +775,7 @@ def _persons(
         for cid in m:
             by_id[cid].person = pid
     persons.sort(key=lambda p: p.id)
-    for a, b in zip(persons, persons[1:]):
+    for a, b in pairwise(persons):
         if a.id == b.id:
             raise CandidatesError(
                 f"person id collision {a.id}: {a.candidacies[0]}, {b.candidacies[0]}"
@@ -818,10 +818,11 @@ def _contest_json(c: Candidacy, result: Result) -> dict[str, object]:
     held = result.incumbency.contests.get(c.contest)
     if held is not None:
         contest["incumbent"] = incumbents.contest_json(*held)
-    seats_2022 = result.incumbency.holders.seats_2022.get(f"oz:{c.area}")
-    if c.kind == "oz" and seats_2022:
-        contest["seats_2022"] = seats_2022
-    past = result.incumbency.holders.past.get(c.contest.partition("/")[0])
+    if c.kind == "oz":
+        seats_2022 = result.incumbency.holders.seats_2022.get(c.body)
+        if seats_2022:
+            contest["seats_2022"] = seats_2022
+    past = result.incumbency.holders.past.get(c.body)
     if past is not None:
         contest["past"] = incumbents.past_json(past)
     return contest
@@ -900,8 +901,8 @@ def report(result: Result) -> Iterator[str]:
     kinds = Counter(c.kind for c in cs)
     yield f"candidacies {len(cs):,}: " + ", ".join(f"{k} {kinds[k]:,}" for k in KINDS)
     obvody: dict[str, Counter[str]] = {k: Counter() for k in ("oz", "zsk")}
-    for contest in {(c.kind, c.area, c.contest) for c in cs if c.obvod is not None}:
-        obvody[contest[0]][contest[1]] += 1
+    for c in {c.contest: c for c in cs if c.obvod is not None}.values():
+        obvody[c.kind][c.area] += 1
     multi = sum(1 for n in obvody["oz"].values() if n > 1)
     yield (
         f"municipal obvody {obvody['oz'].total():,} in {len(obvody['oz']):,} obce,"

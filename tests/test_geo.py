@@ -246,7 +246,7 @@ def test_okrsky_tile_the_shard_features_they_are_cut_from():
     shard = shapely.orient_polygons(np.array([a1, a2, b]))
     gridded = {lod.level: shard for lod in geo.SHARD_LODS}
     features, levels = geo.okrsky_levels(okrsky, units, gridded, _Identity(), 1)
-    properties = geo.okrsok_properties(features, _Identity())
+    properties = geo.okrsok_properties(features, levels[0], 1)
     assert [(p["obec"], p["okrsok"], p["obvod"]) for p in properties] == [
         ("a", 1, 1),
         ("a", 2, 2),

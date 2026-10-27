@@ -1,7 +1,7 @@
 [project]
 name = "election-map-slovakia"
 dynamic = ["version"]
-description = "Static zoomable map of Slovakia's 2026 municipal and regional election constituencies and their candidates."
+description = "Static zoomable map of Slovakia's 2026 municipal and regional elections: constituencies, candidates, ballots by address and results."
 readme = "README.md"
 license = "EUPL-1.2"
 license-files = ["LICENSE", "NOTICE"]
@@ -56,9 +56,9 @@ docstring-code-format = true
 
 [tool.ruff.lint]
 # Pydocstyle (D, PEP 257) keeps docstrings honest; PLR2004 flags magic numbers,
-# so format constants end up named.  BLE001 makes `except Exception` say why
+# so format constants end up named. BLE001 makes `except Exception` say why
 # it is right, and RUF100 keeps a suppression from outliving the rule it
-# names.  C901 and PLR0912 guard against a function growing into several.
+# names. C901 and PLR0912 guard against a function growing into several.
 select = ["E", "F", "W", "D", "I", "BLE001", "C901", "PLR0912", "PLR2004", "RUF100"]
 # The formatter keeps code within 88 columns; it never breaks comments or
 # strings, and some (URLs, official names) must stay verbatim.
@@ -74,10 +74,10 @@ convention = "pep257"
 # Tests need no docstrings and naturally use literal fixture values.
 "tests/**" = ["D", "PLR2004"]
 
-# ty runs over the package only; tests use deliberately partial fixtures.
 [tool.ty.environment]
 python-version = "3.11"
 
+# ty runs over the package only; tests use deliberately partial fixtures.
 [tool.ty.src]
 include = ["src"]
 

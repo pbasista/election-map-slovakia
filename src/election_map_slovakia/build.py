@@ -340,6 +340,11 @@ def area_file(contest: Mapping[str, Any], okres_of: Mapping[str, str]) -> str:
     return f"data/okres/{okres_of[area]}.json"
 
 
+def _okres_of(data: Mapping[str, Any]) -> dict[str, str]:
+    """Return obec → its okres ("" for Bratislava and Košice) of *data*."""
+    return {o["code"]: o.get("okres", "") for o in data["obce"]}
+
+
 def _result_row(r: Mapping[str, int]) -> list[int]:
     row = [r["votes"], r["valid"], r["voters"], r["eligible"]]
     if "obvod" in r:
@@ -347,18 +352,22 @@ def _result_row(r: Mapping[str, int]) -> list[int]:
     return row
 
 
+# A candidate row of an area file, before the optional residence.
+_CANDIDATE_FIELDS = (
+    "number",
+    "title_before",
+    "first_name",
+    "surname",
+    "title_after",
+    "age",
+    "occupation",
+    "parties",
+    "person",
+)
+
+
 def _candidate_row(c: Mapping[str, Any]) -> list[Any]:
-    row = [
-        c["number"],
-        c["title_before"],
-        c["first_name"],
-        c["surname"],
-        c["title_after"],
-        c["age"],
-        c["occupation"],
-        c["parties"],
-        c["person"],
-    ]
+    row = [c[field] for field in _CANDIDATE_FIELDS]
     if "residence" in c:
         row.append(c["residence"])
     return row
@@ -382,7 +391,7 @@ def area_files(
     sources = sources or {}
     researched = researched or {}
     pasts = pasts or {}
-    okres_of = {o["code"]: o.get("okres", "") for o in data["obce"]}
+    okres_of = _okres_of(data)
     files: dict[str, dict[str, Any]] = defaultdict(
         lambda: {"contests": {}, "persons": {}}
     )
@@ -401,20 +410,19 @@ def area_files(
     for c in data["candidacies"]:
         by_person[c["person"]].append(c["id"])
     for c in sorted(data["candidacies"], key=lambda c: (c["contest"], c["number"])):
-        path = path_of[c["contest"]]
-        entry = files[path]["contests"][c["contest"]]
+        person = c["person"]
+        file = files[path_of[c["contest"]]]
+        entry = file["contests"][c["contest"]]
         entry["candidates"].append(_candidate_row(c))
         if "incumbent" in c:
             entry.setdefault("incumbents", {})[str(c["number"])] = [
                 [office["body"], office["since"], _result_row(office["result"])]
                 for office in c["incumbent"]
             ]
-        if len(by_person[c["person"]]) > 1:
-            files[path]["persons"][c["person"]] = by_person[c["person"]]
-        if c["person"] in researched:
-            files[path].setdefault("research", {})[c["person"]] = researched[
-                c["person"]
-            ]
+        if len(by_person[person]) > 1:
+            file["persons"][person] = by_person[person]
+        if person in researched:
+            file.setdefault("research", {})[person] = researched[person]
     return dict(files)
 
 
@@ -473,17 +481,16 @@ def research_summary(cfg: Config, records: Mapping[str, Any]) -> dict[str, list[
     """
     out = {}
     for person, record in records.items():
-        seen = record["researched"]
         languages = [
             lang
             for lang, categories in cfg.sources.research.items()
-            if all(c in seen for c in categories)
+            if research.done(record, categories)
         ]
         if not languages:
             continue
         kinds = Counter(f["kind"] for f in record["findings"])
         out[person] = [
-            max(s["date"] for s in seen.values()),
+            max(s["date"] for s in record["researched"].values()),
             len(record["findings"]),
             languages,
             kinds["affair"],
@@ -508,7 +515,7 @@ def research_files(
     file's language where the page is in another one. *translations* maps
     language → its curated research translations (:mod:`translate`).
     """
-    okres_of = {o["code"]: o.get("okres", "") for o in data["obce"]}
+    okres_of = _okres_of(data)
     contest_of = {c["id"]: c for c in data["contests"]}
     areas: dict[str, set[str]] = defaultdict(set)
     for c in data["candidacies"]:
@@ -521,25 +528,33 @@ def research_files(
         for area, persons in sorted(areas.items()):
             files[f"data/research/{lang}/{area}"] = {
                 person: [
-                    [
-                        f["kind"],
-                        f["claim"].get(lang)
-                        or own.get(f["claim"]["en"])
-                        or f["claim"]["en"],
-                        f["quote"],
-                        None if f["language"] == lang else own.get(f["quote"]),
-                        f["url"],
-                        f["title"],
-                        f["published"],
-                        f["cache"],
-                        f["category"],
-                        f["language"],
-                    ]
-                    for f in records[person]["findings"]
+                    _finding_row(f, lang, own) for f in records[person]["findings"]
                 ]
                 for person in sorted(persons)
             }
     return files
+
+
+def _finding_row(
+    finding: Mapping[str, Any], lang: str, translated: Mapping[str, str]
+) -> list[Any]:
+    """Return *finding* as a row of a *lang* findings file (:func:`research_files`).
+
+    *translated* maps English claims and foreign quotes to *lang*.
+    """
+    claim = finding["claim"]
+    return [
+        finding["kind"],
+        claim.get(lang) or translated.get(claim["en"]) or claim["en"],
+        finding["quote"],
+        None if finding["language"] == lang else translated.get(finding["quote"]),
+        finding["url"],
+        finding["title"],
+        finding["published"],
+        finding["cache"],
+        finding["category"],
+        finding["language"],
+    ]
 
 
 def research_records(cfg: Config) -> dict[str, Any]:
@@ -630,9 +645,15 @@ def obvod_seats(geo_dir: Path, election_dir: Path) -> dict[str, int]:
     Regional and city council obvody from ``geo``; the council obvody of the
     obce with a rule set from it (in *election_dir*, :attr:`Config.election_dir`).
     """
+    return _obvod_seats(geo_dir, obvody.load_rule_sets(election_dir))
+
+
+def _obvod_seats(
+    geo_dir: Path, rule_sets: Mapping[str, obvody.RuleSet]
+) -> dict[str, int]:
     coarse = json.loads((geo_dir / geo.COARSE_FILE).read_bytes())
     seats = {o["id"]: o["seats"] for o in coarse["obvody"]}
-    for code, rules in obvody.load_rule_sets(election_dir).items():
+    for code, rules in rule_sets.items():
         seats |= {f"oz:{code}/{n}": s for n, s in rules.seats.items()}
     return seats
 
@@ -644,19 +665,22 @@ def _sources_key(contest: Mapping[str, Any]) -> str:
     return str(contest["area"]) if contest["kind"] == "oz" else ""
 
 
-def obvod_sources(election_dir: Path) -> dict[str, list[list[str]]]:
+def obvod_sources(
+    election_dir: Path, rule_sets: Mapping[str, obvody.RuleSet]
+) -> dict[str, list[list[str]]]:
     """Return area → the official documents that set its obvody.
 
     Areas are an obec (council obvody by address), ``BA``/``KE`` (city
     council) or ``zsk-<kraj>`` (regional council), as named by the curated
-    files in *election_dir*; documents are ``[title, url]``, the title empty
-    where the curated file records none.
+    files in *election_dir* and *rule_sets* (its council rule sets);
+    documents are ``[title, url]``, the title empty where the curated file
+    records none.
     """
     out = {
         path.stem: [["", config.load_obvody(path).source]]
         for path in sorted((election_dir / obvody.DIRECTORY).glob("*.toml"))
     }
-    for code, rules in obvody.load_rule_sets(election_dir).items():
+    for code, rules in rule_sets.items():
         out[code] = [[d.title, d.url] for d in rules.documents]
     return out
 
@@ -744,7 +768,8 @@ def about(
     cfg: Config,
     manifest: Mapping[str, Any],
     data: Mapping[str, Any],
-    records: Mapping[str, Any] | None = None,
+    records: Mapping[str, Any],
+    rule_sets: Mapping[str, obvody.RuleSet],
 ) -> dict[str, Any]:
     """Return ``data/about.json``: what the About dialog lists from the config.
 
@@ -752,19 +777,16 @@ def about(
     records carry their retrieval date. *data* is ``candidates.json``, for
     the names of the areas of the curated obvod files. *records* is the
     curated research (:func:`research_records`), counted per research
-    language: candidates researched and those with findings.
+    language: candidates researched and those with findings. *rule_sets*
+    are the council rule sets (:func:`obvody.load_rule_sets`).
     """
-    records = records or {}
     recorded = manifest.get("inputs", {})
-    inputs = [
-        {"name": i.name, "url": i.url}
-        | (
-            {"retrieved": recorded[i.name]["retrieved_at"][:10]}
-            if i.name in recorded
-            else {}
-        )
-        for i in cfg.inputs.inputs
-    ]
+    inputs = []
+    for i in cfg.inputs.inputs:
+        entry = {"name": i.name, "url": i.url}
+        if i.name in recorded:
+            entry["retrieved"] = recorded[i.name]["retrieved_at"][:10]
+        inputs.append(entry)
     names = {f"zsk-{k['code']}": k["name"] for k in data["kraje"]}
     names |= {
         o["code"]: o["name"] for o in data["obce"] if o["code"] in candidates.CITY_CODES
@@ -789,8 +811,7 @@ def about(
             "date": str(rules.date) if rules.date else None,
         }
         for rules in sorted(
-            obvody.load_rule_sets(cfg.election_dir).values(),
-            key=lambda r: (candidates.search_key(r.name), r.obec),
+            rule_sets.values(), key=lambda r: (candidates.search_key(r.name), r.obec)
         )
     ]
     sources = cfg.sources
@@ -823,10 +844,7 @@ def about(
             [
                 lang,
                 list(categories),
-                sum(
-                    all(c in r["researched"] for c in categories)
-                    for r in records.values()
-                ),
+                sum(research.done(r, categories) for r in records.values()),
                 sum(
                     any(f["category"] in categories for f in r["findings"])
                     for r in records.values()
@@ -878,6 +896,11 @@ def hand_written(cfg: Config, web: Path) -> dict[str, dict[str, str]]:
     return own
 
 
+def _site_names(langs: config.Languages) -> dict[str, str]:
+    """Return language → the site's name in it (``languages.toml``)."""
+    return {lang.code: lang.site_name for lang in langs.languages}
+
+
 def i18n_files(cfg: Config, web: Path, occupations: Collection[str]) -> Strings:
     """Return the UI strings and occupations of every language.
 
@@ -896,7 +919,7 @@ def i18n_files(cfg: Config, web: Path, occupations: Collection[str]) -> Strings:
     base_code = langs.fallback[0]
     own = hand_written(cfg, web)
     base = own[base_code]
-    site_names = {lang.code: lang.site_name for lang in langs.languages}
+    site_names = _site_names(langs)
     out = Strings({}, {}, [])
     for code in langs.codes:
         curated = translate.load(cfg, code)
@@ -1006,6 +1029,7 @@ def shells(
     the URL of the election's results directory.
     """
     langs = cfg.languages
+    site_names = _site_names(langs)
     base = cfg.site.base_url or ""
     alternates = "\n".join(
         f'    <link rel="alternate" hreflang="{code}" href="{base}/{code}/" />'
@@ -1017,34 +1041,7 @@ def shells(
     def canonical(path: str) -> str:
         return f'\n    <link rel="canonical" href="{base}/{path}" />' if base else ""
 
-    app_config = {
-        "languages": [[lang.code, lang.name] for lang in langs.languages],
-        "storage": STORAGE_KEY,
-        "election": str(cfg.site.election),
-        # When the polls open and close (ISO 8601 with the offset): the search
-        # card shows the voting under way between them.
-        "polls": [cfg.site.polls_open.isoformat(), cfg.site.polls_close.isoformat()],
-        # Research language → the source categories it searches: the scope
-        # the app states before every research result.
-        "research": {
-            lang: list(categories) for lang, categories in cfg.sources.research.items()
-        },
-        "repository": cfg.site.repository,
-        # The About dialog names the version, linked to its release.
-        "version": __version__,
-        # Appended to every JSON file the app fetches (``?v=``; module doc).
-        "dataVersion": data_version,
-        # The election's results directory (status.json and the files it
-        # names, docs/results.md); nothing there before there are results.
-        "results": results_path,
-        # Whether the app polls them (site.toml live); without, it reads them
-        # once per page load.
-        "live": cfg.site.live,
-        # When, polling, it reads them every minute (ISO 8601); null: any time.
-        "liveWindow": [when.isoformat() for when in cfg.site.live_window]
-        if cfg.site.live_window
-        else None,
-    }
+    config_json = _attribute_json(_app_config(cfg, data_version, results_path))
     template = (web / SHELL).read_text(encoding="utf-8")
     out = {}
     for lang in langs.languages:
@@ -1061,7 +1058,7 @@ def shells(
             "assets": assets,
             "vendor": vendor,
             "data_version": data_version,
-            "config": _attribute_json(app_config),
+            "config": config_json,
         }
         out[f"{lang.code}/index.html"] = _fill(template, values, SHELL).encode()
     picker_config = {
@@ -1077,14 +1074,7 @@ def shells(
     )
     values = {
         # Shown before a language is known: the names in the fallback languages.
-        "title": html.escape(
-            " · ".join(
-                lang.site_name
-                for code in langs.fallback
-                for lang in langs.languages
-                if lang.code == code
-            )
-        ),
+        "title": html.escape(" · ".join(site_names[code] for code in langs.fallback)),
         # The page is in the first fallback language (web/picker.html).
         "description": html.escape(strings[langs.fallback[0]]["app.description"]),
         # What the site offers, in each fallback language.
@@ -1103,6 +1093,39 @@ def shells(
     not_found = (web / NOT_FOUND).read_text(encoding="utf-8")
     out[NOT_FOUND] = _fill(not_found, {"title": values["title"]}, NOT_FOUND).encode()
     return out
+
+
+def _app_config(cfg: Config, data_version: str, results_path: str) -> dict[str, Any]:
+    """Return the ``km-config`` of the app shells; see :func:`shells`."""
+    site = cfg.site
+    return {
+        "languages": [[lang.code, lang.name] for lang in cfg.languages.languages],
+        "storage": STORAGE_KEY,
+        "election": str(site.election),
+        # When the polls open and close (ISO 8601 with the offset): the search
+        # card shows the voting under way between them.
+        "polls": [site.polls_open.isoformat(), site.polls_close.isoformat()],
+        # Research language → the source categories it searches: the scope
+        # the app states before every research result.
+        "research": {
+            lang: list(categories) for lang, categories in cfg.sources.research.items()
+        },
+        "repository": site.repository,
+        # The About dialog names the version, linked to its release.
+        "version": __version__,
+        # Appended to every JSON file the app fetches (``?v=``; module doc).
+        "dataVersion": data_version,
+        # The election's results directory (status.json and the files it
+        # names, docs/results.md); nothing there before there are results.
+        "results": results_path,
+        # Whether the app polls them (site.toml live); without, it reads them
+        # once per page load.
+        "live": site.live,
+        # When, polling, it reads them every minute (ISO 8601); null: any time.
+        "liveWindow": [when.isoformat() for when in site.live_window]
+        if site.live_window
+        else None,
+    }
 
 
 def assemble(cfg: Config) -> Site:
@@ -1128,58 +1151,27 @@ def assemble(cfg: Config) -> Site:
     assets = f"{ASSETS_DIR}/{content_version(sorted(code.items()))}"
     with progress.stage("making the candidate, name search and UI string files"):
         data = json.loads(paths["candidates"].read_bytes())
-        manifest_path = cfg.raw_dir / MANIFEST
-        manifest = (
-            json.loads(manifest_path.read_bytes()) if manifest_path.is_file() else {}
-        )
-        content: dict[str, object] = {}
         records = research_records(cfg)
-        props = obec_props(paths["geo"])
-        content.update(
-            area_files(
-                data,
-                obvod_seats(paths["geo"], cfg.election_dir),
-                obvod_sources(cfg.election_dir),
-                research_summary(cfg, records),
-                regional_past(data, props)
-                | council_past(data, obvody.load_rule_sets(cfg.election_dir)),
-            )
-        )
-        translations = {
-            code: translate.load(cfg, code).research for code in cfg.languages.codes
-        }
-        content.update(research_files(cfg, data, records, translations))
-        shards = name_shards(data)
-        content.update({f"data/names/{p}.json": rows for p, rows in shards.items()})
-        content["data/index.json"] = site_index(
-            data, props, shards, cfg.parties, f"/{images}"
-        )
-        content["data/about.json"] = about(cfg, manifest, data, records)
-        occupations = sorted({c["occupation"] for c in data["candidacies"]} - {""})
-        strings = i18n_files(cfg, web, occupations)
-        content.update({f"i18n/{code}.json": s for code, s in strings.ui.items()})
-        content.update(
-            {
-                f"i18n/{code}/occupations.json": o
-                for code, o in strings.occupations.items()
-            }
+        content, strings = _data_files(
+            cfg, web, data, records, paths["geo"], f"/{images}"
         )
         files = {path: encode(value) for path, value in content.items()}
-    # The election's results, as `ems results` or the results step left them.
-    results_dir = cfg.results_dir
+    # Besides the generated JSON (so far only data/ and i18n/), the app
+    # fetches with ?v= these copies: geo/, base/, addr/ and the election's
+    # results, as `ems results` or the results step left them.
+    fetched = {
+        "geo": paths["geo"],
+        basemap.OUTPUT_DIR: paths["basemap"],
+        "addr": paths["addr"],
+    }
     results_target = f"{config.RESULTS_DIR}/{cfg.site.election.isoformat()}"
-    has_results = results_dir.is_dir()
+    if cfg.results_dir.is_dir():
+        fetched[results_target] = cfg.results_dir
     with progress.stage("hashing the data files"):
-        # Everything the app fetches with ?v=: the generated JSON (so far
-        # only data/ and i18n/), the copied geo/, base/ and addr/, and the
-        # results.
         data_version = content_version(
             itertools.chain(
                 sorted(files.items()),
-                tree("geo", paths["geo"]),
-                tree(basemap.OUTPUT_DIR, paths["basemap"]),
-                tree("addr", paths["addr"]),
-                tree(results_target, results_dir) if has_results else (),
+                *(tree(target, source) for target, source in fetched.items()),
             )
         )
     files.update(
@@ -1193,27 +1185,76 @@ def assemble(cfg: Config) -> Site:
             f"/{results_target}",
         )
     )
-    files.update({f"{assets}/{path}": content for path, content in code.items()})
+    files.update({f"{assets}/{path}": blob for path, blob in code.items()})
     files[HEADERS] = headers(cfg, web)
     site_map = sitemap(cfg)
     if site_map is not None:
         files[SITEMAP] = site_map
 
-    copies = {vendor: web / VENDOR_DIR, images: web / IMAGES_DIR}
-    copies[cache.STYLESHEET.removeprefix("/")] = web / CACHE_STYLESHEET
-    copies["geo"] = paths["geo"]
-    copies[basemap.OUTPUT_DIR] = paths["basemap"]
-    copies["addr"] = paths["addr"]
-    if has_results:
-        copies[results_target] = results_dir
-    cached = cfg.curated_dir / research.CACHE_DIR
-    for record in records.values():
-        for f in record["findings"]:
-            copies[f"{CACHE_DIR}/{f['cache']}.html"] = cached / f"{f['cache']}.html"
-    for target, source in copies.items():
+    copies = {
+        vendor: web / VENDOR_DIR,
+        images: web / IMAGES_DIR,
+        cache.STYLESHEET.removeprefix("/"): web / CACHE_STYLESHEET,
+        **fetched,
+        **_cached_pages(cfg, records),
+    }
+    for source in copies.values():
         if not source.exists():
             raise BuildError(f"{source} missing")
     return Site(files, copies, strings.log)
+
+
+def _data_files(
+    cfg: Config,
+    web: Path,
+    data: Mapping[str, Any],
+    records: Mapping[str, Any],
+    geo_dir: Path,
+    images: str,
+) -> tuple[dict[str, object], Strings]:
+    """Return the generated JSON, ``dist/`` path → content, and the UI strings.
+
+    *data* is ``candidates.json``, *records* the curated research
+    (:func:`research_records`), *images* the URL of the versioned image
+    directory.
+    """
+    manifest_path = cfg.raw_dir / MANIFEST
+    manifest = json.loads(manifest_path.read_bytes()) if manifest_path.is_file() else {}
+    rule_sets = obvody.load_rule_sets(cfg.election_dir)
+    props = obec_props(geo_dir)
+    content: dict[str, object] = {}
+    content |= area_files(
+        data,
+        _obvod_seats(geo_dir, rule_sets),
+        obvod_sources(cfg.election_dir, rule_sets),
+        research_summary(cfg, records),
+        regional_past(data, props) | council_past(data, rule_sets),
+    )
+    translations = {
+        code: translate.load(cfg, code).research for code in cfg.languages.codes
+    }
+    content |= research_files(cfg, data, records, translations)
+    shards = name_shards(data)
+    content |= {f"data/names/{p}.json": rows for p, rows in shards.items()}
+    content["data/index.json"] = site_index(data, props, shards, cfg.parties, images)
+    content["data/about.json"] = about(cfg, manifest, data, records, rule_sets)
+    occupations = sorted({c["occupation"] for c in data["candidacies"]} - {""})
+    strings = i18n_files(cfg, web, occupations)
+    content |= {f"i18n/{code}.json": s for code, s in strings.ui.items()}
+    content |= {
+        f"i18n/{code}/occupations.json": o for code, o in strings.occupations.items()
+    }
+    return content, strings
+
+
+def _cached_pages(cfg: Config, records: Mapping[str, Any]) -> dict[str, Path]:
+    """Return ``dist/`` path → source of the cached copy of each page research cites."""
+    cached = cfg.curated_dir / research.CACHE_DIR
+    return {
+        f"{CACHE_DIR}/{f['cache']}.html": cached / f"{f['cache']}.html"
+        for record in records.values()
+        for f in record["findings"]
+    }
 
 
 def write(site: Site, directory: Path) -> dict[str, tuple[int, int]]:
@@ -1322,16 +1363,17 @@ def header_rules(text: str) -> list[HeaderRule]:
             continue
         if not rules:
             raise BuildError(f"{HEADERS}:{n}: header before any URL pattern")
+        _, added, removed = rules[-1]
         if stripped.startswith("!"):
-            rules[-1][2].append(stripped[1:].strip())
+            removed.append(stripped[1:].strip())
             continue
         name, colon, value = stripped.partition(":")
         if not colon or not name.strip():
             raise BuildError(f"{HEADERS}:{n}: expected `Name: value`")
-        rules[-1][1].append((name.strip(), value.strip()))
+        added.append((name.strip(), value.strip()))
     return [
-        HeaderRule(_url_pattern(url), tuple(headers), tuple(detach))
-        for url, headers, detach in rules
+        HeaderRule(_url_pattern(url), tuple(added), tuple(removed))
+        for url, added, removed in rules
     ]
 
 
@@ -1349,9 +1391,9 @@ def response_headers(rules: list[HeaderRule], path: str) -> dict[str, str]:
             out.pop(name.lower(), None)
         for name, value in rule.headers:
             key = name.lower()
-            out[key] = (
-                (name, f"{out[key][1]}, {value}") if key in out else (name, value)
-            )
+            if key in out:
+                value = f"{out[key][1]}, {value}"
+            out[key] = (name, value)
     return dict(out.values())
 
 

@@ -1,16 +1,15 @@
 /* Favourites: every candidate the visitor has circled, on whichever
- * ballots, by contest, municipal then regional, each group in the order
- * its first candidate was circled. A contest is listed as on the candidate
- * card: closed, just the circled candidates; opened by its header, the
- * others after them, the filter applying to those only. The page's
- * address holds the circles and the filter (app.js); buttons by the title
- * copy a link to them alone, without the place shown on the map, or show
- * it as a QR code, for another device's camera.
+ * ballots, by contest, municipal then regional, the contests in the order
+ * their first candidate was circled. A contest is listed as on the
+ * candidate card: closed, just the circled candidates; opened by its
+ * header, the others after them, the filter applying to those only. The
+ * page's address holds the circles and the filter (app.js); buttons by the
+ * title copy a link to them alone, without the place shown on the map, or
+ * show it as a QR code for another device's camera.
  *
  * On a wide screen the list is a panel of its own beside the pane, as wide
  * as the page allows, so that the pane keeps the ballots or the card of a
- * candidate chosen here; on a narrower one it is what the pane shows
- * (app.js). */
+ * candidate chosen here; on a narrower one the pane shows it (app.js). */
 
 import { html, useEffect, useRef, useState } from '../vendor/preact-htm.module.js';
 import { Contest, FilterBar, isMunicipal, useRowActions } from './ballots.js';
@@ -23,8 +22,8 @@ import { byContest } from './picks.js';
 // How long the button says that it has copied the link.
 const COPIED_MS = 2500;
 
-/* The button that copies *link*, an icon by the title; *state* and
- * `onState(next)` whether it has: null, 'copied' or 'failed' (CopyFailed). */
+/* The button that copies *link*, an icon by the title. *state* and
+ * `onState(next)`: whether it has, null, 'copied' or 'failed' (CopyFailed). */
 function CopyLink({ link, state, onState }) {
   useEffect(() => {
     if (state !== 'copied') return;
@@ -79,8 +78,8 @@ function copyBySelection(text) {
   return copied;
 }
 
-/* Where the browser does not let the page write to the clipboard, the link
- * is shown instead, selected, to be copied by hand. */
+/* Where the browser does not let the page write to the clipboard, the
+ * link, selected, to copy by hand. */
 function CopyFailed({ link }) {
   const field = useRef(null);
   // setSelectionRange too: iOS ignores select() on a read-only field.
@@ -95,8 +94,7 @@ function CopyFailed({ link }) {
   </label>`;
 }
 
-/* The button that shows *link* as a QR code in a dialog of its own
- * (QrDialog); `onOpen()` opens it. */
+/* The button that opens the QR code dialog (QrDialog): `onOpen()`. */
 function QrButton({ onOpen }) {
   const label = t('favourites.qr');
   return html`<button type="button" class="share-button" title=${label} aria-label=${label} aria-haspopup="dialog" onClick=${onOpen}>
@@ -154,10 +152,10 @@ function QrCode({ link }) {
 }
 
 /* The QR code of *link* in a modal dialog over the page, as large as the
- * screen allows, for another device's camera to read it from across a
- * table; it does not push the list of favourites down. Esc, the close
- * button or a click on the backdrop close it (`onClose()`), and focus goes
- * back to the button that opened it. It follows the link as it changes. */
+ * screen allows, for another device's camera to read from across a table;
+ * it does not push the list down. Esc, the close button or a click on the
+ * backdrop close it (`onClose()`), and focus goes back to the button that
+ * opened it. It follows the link as it changes. */
 function QrDialog({ link, onClose }) {
   const dialog = useRef(null);
   useEffect(() => {
@@ -193,17 +191,19 @@ function QrDialog({ link, onClose }) {
   </dialog>`;
 }
 
-/* *picks* and `onPicks(next)` the circled candidates (picks.js); *filter*
- * and `onFilter(next)` the candidate filter (ballots.js); *link* the link
- * to share them by. `onArea(target)` fits the map to a contest's area
- * (data.js `contestArea`), the pin in its header, leaving the place
- * selected, its ballots and this list as they are. `onBack()`, where
- * given, goes back to what the pane showed before. *focus*: the candidacy
- * whose card was just left, whose row then takes the focus; else the title
- * takes it once the list is in. */
+/* The list of favourites.
+ * - picks and `onPicks(next)`: the circled candidates (picks.js); filter
+ *   and `onFilter(next)`: the candidate filter (ballots.js); link: the
+ *   link to share them by.
+ * - onArea(target): fits the map to a contest's area (data.js
+ *   `contestArea`), the pin in its header, leaving the place selected,
+ *   its ballots and this list as they are.
+ * - onBack(): where given, goes back to what the pane showed before.
+ * - focus: the candidacy whose card was just left; its row takes the
+ *   focus, else the title does once the list is in. */
 export function Favourites({ picks, onPicks, filter, onFilter, onCandidate, onArea, onBack, focus, link }) {
-  /* The contests listed since the list opened: one whose circles are all
-   * taken off stays, so that they can be put back. */
+  // The contests listed since the list opened: one whose circles are all
+  // taken off stays, so that they can be put back.
   const seen = useRef([]);
   for (const id of byContest(picks).keys()) if (!seen.current.includes(id)) seen.current.push(id);
   const ids = seen.current;
@@ -230,7 +230,7 @@ export function Favourites({ picks, onPicks, filter, onFilter, onCandidate, onAr
     const entry = live.of(c.id);
     if (!entry || entry === NOT_COUNTED) continue;
     const { byNumber } = decodeResults(c, entry);
-    elected += c.candidates.filter((x) => picks.includes(x.id) && byNumber.get(x.number)?.elected).length;
+    elected += c.candidates.filter((x) => actions.isPicked(x.id) && byNumber.get(x.number)?.elected).length;
   }
 
   useEffect(() => {

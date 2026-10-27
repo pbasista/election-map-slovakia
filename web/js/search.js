@@ -2,27 +2,29 @@
  * numbers and candidates.
  *
  * addr/index.json (see addresses.py) loads on first focus. Names match by
- * prefix of their search key, either from the start or from any word. A
- * query is "<name> [number][, <obec or okres>]": `Račianska 154,
- * Bratislava-Rača`. Picking a street or part without a number scopes the box
- * to it and lists its house numbers from addr/<obec>.json. Candidate names
- * come from the name shards (see build.py).
+ * prefix of their search key, from the start or from any word. A query is
+ * "<name> [number][, <obec or okres>]": `Račianska 154, Bratislava-Rača`.
+ * Picking a street or part scopes the box to it and lists its house numbers
+ * from addr/<obec>.json. Candidate names come from the name shards (see
+ * build.py).
  *
  * ARIA combobox (1.2 pattern): the input owns a listbox popup and points to
  * the active option with aria-activedescendant; focus stays in the input.
  */
 
 import { html, useEffect, useRef, useState } from '../vendor/preact-htm.module.js';
-import { contestLabel, dataIndex, findPersons, searchKey } from './data.js';
+import { contestLabel, contestOf, dataIndex, findPersons, searchKey } from './data.js';
 import { addressFile, fetchJSON } from './files.js';
 import { t } from './i18n.js';
 import { CloseIcon, SearchIcon } from './icons.js';
 
 const LIMITS = { obec: 5, street: 8, part: 4, person: 6, number: 40 };
-// With this few streets or parts matching a query with a number, their files
-// load at once and the matching houses are listed directly.
+// With at most this many streets, parts and obce matching a query with a
+// number, their files load at once and the matching houses are listed.
 const DIRECT_FILES = 4;
 const NUMBER = /^(.*\S)\s+(\d+\s*\p{L}?(?:\s*\/\s*\d*\s*\p{L}?)?)$/u;
+// An option's type → the kind of its group in the address files.
+const GROUP_KIND = { street: 'streets', part: 'parts' };
 
 let addressIndex = null;
 function loadIndex() {
@@ -40,6 +42,7 @@ function loadIndex() {
       parts: ix.parts,
     };
   });
+  // A failed load is tried again on the next search.
   addressIndex.catch(() => {
     addressIndex = null;
   });
@@ -53,23 +56,24 @@ function rank(key, q) {
   return -1;
 }
 
+const normalNumber = (s) => s.replace(/\s+/g, '').toLowerCase();
+
+/* The query as {name, number, context}: the name and the part after the
+ * comma as search keys, the house number normalized ('' for none). */
 function parse(raw) {
   const comma = raw.indexOf(',');
   const main = (comma < 0 ? raw : raw.slice(0, comma)).trim();
   const context = comma < 0 ? '' : searchKey(raw.slice(comma + 1));
   const m = main.match(NUMBER);
-  if (m) return { name: searchKey(m[1]), number: normalNumber(m[2]), context };
-  return { name: searchKey(main), number: '', context };
+  return { name: searchKey(m ? m[1] : main), number: m ? normalNumber(m[2]) : '', context };
 }
-
-const normalNumber = (s) => s.replace(/\s+/g, '').toLowerCase();
 
 /* How well house number *shown* ("2811/154", "125") matches what was typed:
  * lower is better, -1 is no match. The orientačné číslo (after the slash)
  * is the number on the street side, so it ranks first. */
 function numberRank(shown, typed) {
-  const s = shown.toLowerCase();
   if (!typed) return 0;
+  const s = shown.toLowerCase();
   const parts = s.split('/');
   const last = parts[parts.length - 1];
   if (s === typed || last === typed) return 0;
@@ -79,7 +83,9 @@ function numberRank(shown, typed) {
   return -1;
 }
 
-function houseOptions(code, obecName, groups, typed, limit) {
+/* The houses of *groups* (streets or parts of obec *code*) whose number
+ * matches *typed*, best first, at most LIMITS.number. */
+function houseOptions(code, obecName, groups, typed) {
   const found = [];
   for (const group of groups) {
     group.numbers.forEach((n, i) => {
@@ -88,7 +94,7 @@ function houseOptions(code, obecName, groups, typed, limit) {
     });
   }
   found.sort((a, b) => a.r - b.r);
-  return found.slice(0, limit).map(({ group, i }) => ({
+  return found.slice(0, LIMITS.number).map(({ group, i }) => ({
     type: 'number',
     code,
     group,
@@ -102,70 +108,98 @@ const collator = new Intl.Collator('sk');
 const byRank = (a, b) =>
   a.r - b.r || a.c - b.c || collator.compare(a.name, b.name) || collator.compare(a.where, b.where);
 
+/* How well the obec of *code* matches *context*, the part of the query
+ * after the comma: 0 by its name (or with no context), 1 by a later word of
+ * its name, 2 by its okres; -1 not at all. */
+function contextRank(ix, code, context) {
+  if (!context) return 0;
+  const o = ix.byCode.get(code);
+  const r = rank(o.key, context);
+  if (r >= 0) return r;
+  return rank(ix.okresKeys[o.okres], context) >= 0 ? 2 : -1;
+}
+
+/* The obce matching query *q*, best first. */
+function matchObce(ix, q) {
+  const found = [];
+  for (const o of ix.obce) {
+    const r = rank(o.key, q.name);
+    const c = r >= 0 ? contextRank(ix, o.code, q.context) : -1;
+    if (c >= 0) found.push({ r, c, name: o.name, where: '', o });
+  }
+  return found.sort(byRank);
+}
+
+/* The streets or parts (*type*) of the index's *list* matching query *q*,
+ * one entry per obec they are in, best first. */
+function matchNamed(ix, list, type, q) {
+  const found = [];
+  for (const [name, key, codes] of list) {
+    const r = rank(key, q.name);
+    if (r < 0) continue;
+    for (const code of codes) {
+      const c = contextRank(ix, code, q.context);
+      if (c >= 0) found.push({ r, c, name, where: ix.byCode.get(code).name, type, code });
+    }
+  }
+  return found.sort(byRank);
+}
+
+/* The houses numbered *q.number* in the streets and parts *places* and the
+ * obce *obce*, where they are few enough to load; else none. */
+async function directHouses(ix, q, places, obce) {
+  if (places.length + obce.length > DIRECT_FILES) return [];
+  const lists = await Promise.all([
+    ...places.map(async (s) => {
+      const file = await addressFile(s.code);
+      const groups = file.groups.filter((g) => g.kind === GROUP_KIND[s.type] && g.name === s.name);
+      return houseOptions(s.code, ix.byCode.get(s.code).name, groups, q.number);
+    }),
+    // Villages number their houses within the parts of the obec.
+    ...obce.map(async ({ o }) => {
+      const file = await addressFile(o.code);
+      return houseOptions(o.code, o.name, file.groups.filter((g) => g.kind === 'parts'), q.number);
+    }),
+  ]);
+  return lists.flat().slice(0, LIMITS.number);
+}
+
+/* The candidates whose names match search key *name*. */
+async function personOptions(name) {
+  const [persons, index] = await Promise.all([findPersons(name, LIMITS.person), dataIndex()]);
+  return persons.map((p) => {
+    const [first] = p.candidacies;
+    const more = p.candidacies.length > 1 ? ` +${p.candidacies.length - 1}` : '';
+    return {
+      type: 'person',
+      candidacy: first,
+      label: t('search.person', { name: p.name, age: p.age }),
+      detail: `${contestLabel(contestOf(first), index)}${more}`,
+    };
+  });
+}
+
+/* The options for the text *raw*: within *scope* (the street or part the
+ * box is scoped to) its house numbers; else the matching houses where few
+ * places match a query with a number, or the obce, streets, parts and,
+ * for a plain name, candidates. */
 async function search(raw, scope) {
   const ix = await loadIndex();
   if (scope) {
     const file = await addressFile(scope.code);
     const group = file.groups.find((g) => g.kind === scope.kind && g.name === scope.name);
     const typed = normalNumber(raw.slice(scope.prefix.length));
-    return houseOptions(scope.code, ix.byCode.get(scope.code).name, [group], typed, LIMITS.number);
+    return houseOptions(scope.code, ix.byCode.get(scope.code).name, [group], typed);
   }
   const q = parse(raw);
   if (!q.name) return [];
-  /* How well the obec of *code* matches the part after the comma: 0 by its
-   * name (or when there is no such part), 1 by a later word of its name, 2
-   * by its okres; -1 not at all. */
-  const context = (code) => {
-    if (!q.context) return 0;
-    const o = ix.byCode.get(code);
-    const r = rank(o.key, q.context);
-    if (r >= 0) return r;
-    return rank(ix.okresKeys[o.okres], q.context) >= 0 ? 2 : -1;
-  };
-  const obce = [];
-  for (const o of ix.obce) {
-    const r = rank(o.key, q.name);
-    const c = r >= 0 ? context(o.code) : -1;
-    if (c >= 0) obce.push({ r, c, name: o.name, where: '', o });
-  }
-  obce.sort(byRank);
-  const named = (list, type) => {
-    const out = [];
-    for (const [name, key, codes] of list) {
-      const r = rank(key, q.name);
-      if (r < 0) continue;
-      for (const code of codes) {
-        const c = context(code);
-        if (c >= 0) out.push({ r, c, name, where: ix.byCode.get(code).name, type, code });
-      }
-    }
-    return out.sort(byRank);
-  };
-  const streets = named(ix.streets, 'street');
-  const parts = named(ix.parts, 'part');
-
+  const obce = matchObce(ix, q);
+  const streets = matchNamed(ix, ix.streets, 'street', q);
+  const parts = matchNamed(ix, ix.parts, 'part', q);
   if (q.number) {
-    const targets = [...streets, ...parts];
-    if (targets.length + obce.length <= DIRECT_FILES) {
-      const lists = await Promise.all([
-        ...targets.map(async (s) => {
-          const file = await addressFile(s.code);
-          const kind = s.type === 'street' ? 'streets' : 'parts';
-          const groups = file.groups.filter((g) => g.kind === kind && g.name === s.name);
-          return houseOptions(s.code, ix.byCode.get(s.code).name, groups, q.number, LIMITS.number);
-        }),
-        // Villages number their houses within the parts of the obec.
-        ...obce.map(async ({ o }) => {
-          const file = await addressFile(o.code);
-          const groups = file.groups.filter((g) => g.kind === 'parts');
-          return houseOptions(o.code, o.name, groups, q.number, LIMITS.number);
-        }),
-      ]);
-      const houses = lists.flat();
-      if (houses.length) return houses.slice(0, LIMITS.number);
-    }
+    const houses = await directHouses(ix, q, [...streets, ...parts], obce);
+    if (houses.length) return houses;
   }
-
   const options = [
     ...obce.slice(0, LIMITS.obec).map(({ o }) => ({
       type: 'obec',
@@ -182,18 +216,7 @@ async function search(raw, scope) {
       detail: ix.byCode.get(s.code).name,
     })),
   ];
-  if (!q.number && !q.context && q.name.length >= 2) {
-    const [persons, index] = await Promise.all([findPersons(q.name, LIMITS.person), dataIndex()]);
-    for (const p of persons) {
-      const more = p.candidacies.length > 1 ? ` +${p.candidacies.length - 1}` : '';
-      options.push({
-        type: 'person',
-        candidacy: p.candidacies[0],
-        label: t('search.person', { name: p.name, age: p.age }),
-        detail: `${contestLabel(p.candidacies[0].split('#')[0], index)}${more}`,
-      });
-    }
-  }
+  if (!q.number && !q.context && q.name.length >= 2) options.push(...(await personOptions(q.name)));
   return options;
 }
 
@@ -306,9 +329,8 @@ export function Search({ onPlace, onCandidate, children }) {
       hide(true);
       onCandidate(option.candidacy);
     } else {
-      const kind = option.type === 'street' ? 'streets' : 'parts';
       const prefix = `${option.name} `;
-      scope.current = { code: option.code, kind, name: option.name, prefix };
+      scope.current = { code: option.code, kind: GROUP_KIND[option.type], name: option.name, prefix };
       const text = prefix + (option.number ?? '');
       setQuery(text);
       // The map highlights the street or part and fits the view to it.

@@ -46,7 +46,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from collections import Counter
-from collections.abc import Mapping, Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from pathlib import Path
 from typing import Any
 
@@ -252,16 +252,23 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
         items.append(
             _item(obec, okresy, kraje, numbers, candidacies_by_contest, p, data["obce"])
         )
-    items.sort(key=lambda i: (-i["address_count"], i["id"]))
-    prompt = PROMPT
-    batches = []
-    for start in range(0, len(items), options.size):
-        chunk = items[start : start + options.size]
-        title = "council obvod rules of " + ", ".join(
-            f"{i['name']} ({i['id']})" for i in chunk
-        )
-        batches.append(jobs.Batch(chunk, prompt, title))
-    return batches
+    return batches(items, PROMPT, options.size, "council obvod rules")
+
+
+def batches(
+    items: list[dict[str, Any]], prompt: str, size: int, what: str
+) -> list[jobs.Batch]:
+    """Return *items* in batches of *size*, the obce with the most addresses first.
+
+    Each batch is titled *what* "of" its obce.
+    """
+    items = sorted(items, key=lambda i: (-i["address_count"], i["id"]))
+    out = []
+    for start in range(0, len(items), size):
+        chunk = items[start : start + size]
+        title = f"{what} of " + ", ".join(f"{i['name']} ({i['id']})" for i in chunk)
+        out.append(jobs.Batch(chunk, prompt, title))
+    return out
 
 
 def _item(
@@ -275,18 +282,6 @@ def _item(
 ) -> dict[str, Any]:
     """Return the input item of an obec."""
     code, name = obec["code"], obec["name"]
-    streets: dict[str, list[Any]] = {}
-    parts: Counter[str] = Counter()
-    for x in p.places:
-        parts[x.part] += 1
-        if not x.street:
-            continue
-        entry = streets.setdefault(x.street, [x.street, 0, [], []])
-        entry[1] += 1
-        if x.part not in entry[2]:
-            entry[2].append(x.part)
-        if (n := obvody.house(x.orientacne)) is not None:
-            entry[3].append(n[0])
     city = next((o["name"] for o in obce if o["code"] == obec.get("city")), None)
     item: dict[str, Any] = {
         "id": code,
@@ -297,22 +292,57 @@ def _item(
             {"number": n, "candidates": candidacies.get(f"oz:{code}/{n}", 0)}
             for n in numbers
         ],
-        "address_count": len(p.places),
-        "without_street": sum(not x.street for x in p.places),
-        "streets": [
-            [s, n, sorted(ps), [min(o), max(o)] if o else None]
-            for s, n, ps, o in sorted(
-                streets.values(), key=lambda e: (search_key(e[0]), e[0])
-            )
-        ],
-        "parts": [[part, n] for part, n in sorted(parts.items())],
-        "kus": p.ku_names,
+        **address_fields(p),
         "search": [f'"{name}" {t} 2026' for t in _SEARCH_TITLES]
         + [f"{name} volebné obvody 2026 poslanci"],
     }
     if city:
         item["city"] = city
     return item
+
+
+def address_fields(
+    p: obvody.ObecPlaces, obvod_of: Sequence[int] | None = None
+) -> dict[str, Any]:
+    """Return the fields of an input item on the addresses of an obec.
+
+    Its streets (with their parts and range of orientačné čísla), parts and
+    k.ú. Given *obvod_of*, the obvod of each address, each street and part
+    also lists the obvody of its addresses.
+    """
+    streets: dict[str, list[Any]] = {}
+    parts: dict[str, list[Any]] = {}
+    for i, x in enumerate(p.places):
+        part = parts.setdefault(x.part, [x.part, 0, set()])
+        part[1] += 1
+        if obvod_of is not None:
+            part[2].add(obvod_of[i])
+        if not x.street:
+            continue
+        street = streets.setdefault(x.street, [x.street, 0, set(), [], set()])
+        street[1] += 1
+        street[2].add(x.part)
+        if (n := obvody.house(x.orientacne)) is not None:
+            street[3].append(n[0])
+        if obvod_of is not None:
+            street[4].add(obvod_of[i])
+    by_obvod = obvod_of is not None
+    return {
+        "address_count": len(p.places),
+        "without_street": sum(not x.street for x in p.places),
+        "streets": [
+            [s, n, sorted(ps), [min(h), max(h)] if h else None]
+            + ([sorted(o)] if by_obvod else [])
+            for s, n, ps, h, o in sorted(
+                streets.values(), key=lambda e: (search_key(e[0]), e[0])
+            )
+        ],
+        "parts": [
+            [part, n] + ([sorted(o)] if by_obvod else [])
+            for part, n, o in sorted(parts.values(), key=lambda e: e[0])
+        ],
+        "kus": p.ku_names,
+    }
 
 
 # --- check -----------------------------------------------------------------------
@@ -325,33 +355,40 @@ def official_problems(name: str, website: str, urls: Sequence[str]) -> list[str]
     """
     host = (urllib.parse.urlsplit(website).hostname or "").lower()
     domain = ".".join(host.split(".")[-2:])
-    folded = re.sub(r"[^a-z0-9]", "", domain.split(".")[0])
-    words = [w for w in search_key(name).split() if len(w) >= _MIN_WORD]
-    whole = search_key(name).replace(" ", "")
-    named = whole in folded or any(w in folded for w in words)
     if KNOWN_WEBSITES.get(name) != domain:
-        if not domain.endswith(OFFICIAL_TLDS):
+        problem = _unofficial(name, domain)
+        if problem:
             return [
-                f"website {website!r}: {domain!r} is not under"
-                f" {', '.join(OFFICIAL_TLDS)}, so it is not evidently the obec's own"
+                f"website {website!r}: {problem}, so it is not evidently the obec's own"
             ]
-        if not named:
-            return [
-                f"website {website!r}: its domain {domain!r} carries no word of"
-                f" {name!r}, so it is not evidently the obec's own"
-            ]
-    out = []
-    for url in urls:
-        parts = urllib.parse.urlsplit(url)
-        h = (parts.hostname or "").lower()
-        if h == domain or h.endswith(f".{domain}"):
-            continue
-        if h in SHARED_HOSTS and (
-            not SHARED_HOSTS[h] or domain in urllib.parse.unquote(parts.path).lower()
-        ):
-            continue
-        out.append(f"document {url!r} is not on {domain} (the obec's website)")
-    return out
+    return [
+        f"document {url!r} is not on {domain} (the obec's website)"
+        for url in urls
+        if not _published_on(url, domain)
+    ]
+
+
+def _unofficial(name: str, domain: str) -> str | None:
+    """Return why *domain* does not look like the obec *name*'s own, or None."""
+    if not domain.endswith(OFFICIAL_TLDS):
+        return f"{domain!r} is not under {', '.join(OFFICIAL_TLDS)}"
+    label = re.sub(r"[^a-z0-9]", "", domain.split(".")[0])
+    key = search_key(name)
+    words = [w for w in key.split() if len(w) >= _MIN_WORD]
+    if key.replace(" ", "") in label or any(w in label for w in words):
+        return None
+    return f"its domain {domain!r} carries no word of {name!r}"
+
+
+def _published_on(url: str, domain: str) -> bool:
+    """Return whether *url* is on the website *domain* or a shared host for it."""
+    parts = urllib.parse.urlsplit(url)
+    host = (parts.hostname or "").lower()
+    if host == domain or host.endswith(f".{domain}"):
+        return True
+    if host not in SHARED_HOSTS:
+        return False
+    return not SHARED_HOSTS[host] or domain in urllib.parse.unquote(parts.path).lower()
 
 
 def _download(cfg: Config, url: str) -> bytes:
@@ -376,9 +413,11 @@ def _download(cfg: Config, url: str) -> bytes:
 
 
 def _extension(url: str, data: bytes) -> str:
+    """Return the file extension of document *data*, by its content first."""
     if data.startswith(b"%PDF-"):
         return "pdf"
-    if b"<html" in data[:2048].lower() or b"<!doctype html" in data[:2048].lower():
+    head = data[:2048].lower()
+    if b"<html" in head or b"<!doctype html" in head:
         return "html"
     # Some obce publish Word files, behind download scripts (download.php).
     if data.startswith(b"PK\x03\x04") and b"word/document.xml" in data:
@@ -406,6 +445,54 @@ def keep(cfg: Config, job: jobs.Job, url: str) -> str:
     return name
 
 
+def sha256_of(name: str) -> str:
+    """Return the sha256 of a document from its file name (:func:`keep`)."""
+    return name.split(".")[0]
+
+
+def fetch_documents(
+    cfg: Config, job: jobs.Job, urls: Sequence[str]
+) -> tuple[dict[str, str], list[str]]:
+    """Fetch *urls* (:func:`keep`); return URL → sha256 and the failures."""
+    shas, problems = {}, []
+    for url in urls:
+        try:
+            shas[url] = sha256_of(keep(cfg, job, url))
+        except jobs.JobError as e:
+            problems.append(str(e))
+    return shas, problems
+
+
+def decision_date(out: Mapping[str, Any]) -> dt.date | None:
+    """Return the ``date`` of output item *out*, None where it gives none."""
+    if "date" not in out:
+        return None
+    try:
+        return dt.date.fromisoformat(out["date"])
+    except ValueError:
+        raise obvody.ObvodyError("date: not a date") from None
+
+
+def document_tables(
+    out: Mapping[str, Any], shas: Mapping[str, str]
+) -> list[dict[str, str]]:
+    """Return the ``document`` tables of a rule set for the documents of *out*."""
+    return [
+        {"url": d["url"], "sha256": shas[d["url"]], "title": d["title"]}
+        for d in out["documents"]
+    ]
+
+
+def place_name_problems(rules: obvody.RuleSet, p: obvody.ObecPlaces) -> list[str]:
+    """Return :func:`election_map_slovakia.obvody.name_problems` against *p*."""
+    return obvody.name_problems(
+        rules,
+        sorted({x.street for x in p.places if x.street}),
+        sorted({x.part for x in p.places}),
+        p.ku_names,
+    )
+
+
 def rule_set(
     item: Mapping[str, Any], out: Mapping[str, Any], shas: Mapping[str, str]
 ) -> obvody.RuleSet:
@@ -417,20 +504,13 @@ def rule_set(
     if len(set(numbers)) != len(numbers):
         raise obvody.ObvodyError("an obvod number is listed twice")
     data: dict[str, Any] = {"obec": item["id"], "name": item["name"]}
-    if "date" in out:
-        try:
-            data["date"] = dt.date.fromisoformat(out["date"])
-        except ValueError:
-            raise obvody.ObvodyError("date: not a date") from None
-    data |= {
-        "document": [
-            {"url": d["url"], "sha256": shas[d["url"]], "title": d["title"]}
-            for d in out["documents"]
-        ],
-        "obvod": {
-            str(o["number"]): {"seats": o["seats"], "rules": o["rules"]}
-            for o in out["obvody"]
-        },
+    date = decision_date(out)
+    if date is not None:
+        data["date"] = date
+    data["document"] = document_tables(out, shas)
+    data["obvod"] = {
+        str(o["number"]): {"seats": o["seats"], "rules": o["rules"]}
+        for o in out["obvody"]
     }
     if out.get("fill_nearest"):
         data["fill"] = obvody.FILL_NEAREST
@@ -452,12 +532,7 @@ def check(
     problems = official_problems(item["name"], out["website"], urls)
     if problems:
         return problems
-    shas = {}
-    for url in urls:
-        try:
-            shas[url] = keep(cfg, job, url).split(".")[0]
-        except jobs.JobError as e:
-            problems.append(str(e))
+    shas, problems = fetch_documents(cfg, job, urls)
     if problems:
         return problems
     try:
@@ -465,15 +540,11 @@ def check(
     except obvody.ObvodyError as e:
         return [str(e)]
     p = obvody.load_places(places_dir(cfg) / f"{item['id']}.json")
-    names = obvody.name_problems(
-        rules,
-        sorted({x.street for x in p.places if x.street}),
-        sorted({x.part for x in p.places}),
-        p.ku_names,
-    )
     a = obvody.assign(rules, p.places, p.kus, p.planar())
     numbers = [o["number"] for o in item["obvody"]]
-    problems = names + addresses.check_assignment(rules, numbers, p, a)
+    problems = place_name_problems(rules, p) + addresses.check_assignment(
+        rules, numbers, p, a
+    )
     write_review(cfg, job, rules, p, a, out, problems)
     return problems
 
@@ -555,19 +626,22 @@ def review_svg(
     k = _SHEET_WIDTH / max((x1 - x0) * east, 1.0)
     height = round((y1 - y0) * k) + 2
 
+    def point(x: float, y: float, sep: str = ",") -> str:
+        return f"{(x - x0) * east * k:.1f}{sep}{(y1 - y) * k:.1f}"
+
     def path(g: Any) -> str:
-        d = []
-        for part in shapely.get_parts(g):
-            for ring in (part.exterior, *part.interiors):
-                xy = shapely.get_coordinates(ring)
-                d.append(
-                    "M"
-                    + " ".join(
-                        f"{(x - x0) * east * k:.1f},{(y1 - y) * k:.1f}" for x, y in xy
-                    )
-                    + "Z"
-                )
-        return "".join(d)
+        return "".join(
+            "M" + " ".join(point(x, y) for x, y in shapely.get_coordinates(ring)) + "Z"
+            for part in shapely.get_parts(g)
+            for ring in (part.exterior, *part.interiors)
+        )
+
+    def dots(xy: np.ndarray, stroke: str, width: int) -> str:
+        d = "".join(f"M{point(x, y, ' ')}h0" for x, y in xy)
+        return (
+            f'<path d="{d}" stroke="{stroke}" stroke-width="{width}"'
+            ' stroke-linecap="round"/>'
+        )
 
     out = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{_SHEET_WIDTH + 2}"'
@@ -585,29 +659,60 @@ def review_svg(
     ]
     out.append(f'<path d="{path(obec)}" fill="none" stroke="#000" stroke-width="2"/>')
     located = ~np.isnan(places.points[:, 0])
-    x, y = places.points[located].T
+    xy = places.points[located]
     number = np.array(assignment.units)[located]
-    filled = np.isin(np.flatnonzero(located), assignment.filled)
     for n in sorted(set(number.tolist())):
-        sel = number == n
-        dots = "".join(
-            f"M{(a - x0) * east * k:.1f} {(y1 - b) * k:.1f}h0"
-            for a, b in zip(x[sel], y[sel], strict=True)
-        )
-        out.append(
-            f'<path d="{dots}" stroke="{colour(n) if n else "#000"}" stroke-width="3"'
-            ' stroke-linecap="round"/>'
-        )
+        out.append(dots(xy[number == n], colour(n) if n else "#000", 3))
+    filled = np.isin(np.flatnonzero(located), assignment.filled)
     if filled.any():
-        dots = "".join(
-            f"M{(a - x0) * east * k:.1f} {(y1 - b) * k:.1f}h0"
-            for a, b in zip(x[filled], y[filled], strict=True)
-        )
-        out.append(
-            f'<path d="{dots}" stroke="#000" stroke-width="1" stroke-linecap="round"/>'
-        )
+        out.append(dots(xy[filled], "#000", 1))
     out.append("</svg>")
     return "\n".join(out)
+
+
+REVIEW_STYLE = """\
+body { font: 14px/1.4 system-ui, sans-serif; margin: 1.5em; }
+table { border-collapse: collapse; } td, th { border: 1px solid #ccc; padding: .3em .5em; vertical-align: top; }
+.key { display: inline-block; width: 1em; height: 1em; vertical-align: middle; }
+.text { max-width: 40em; font-size: 12px; color: #444; } .problems { color: #b00; }
+ul { margin: 0; padding-left: 1.2em; }"""
+"""The CSS of the review sheets."""
+
+
+def rule_items(rules: Iterable[obvody.Rule]) -> str:
+    """Return *rules* as the HTML list items of a review sheet."""
+    return "".join(
+        f"<li>{html.escape(r.describe().split(': ', 1)[1])}"
+        + (" <i>(inferred)</i>" if r.inferred else "")
+        + (f" — {html.escape(r.note)}" if r.note else "")
+        + "</li>"
+        for r in rules
+    )
+
+
+def document_items(rules: obvody.RuleSet) -> str:
+    """Return the documents of *rules* as the HTML list items of a review sheet."""
+    return "".join(
+        f'<li><a href="{html.escape(d.url)}">{html.escape(d.title)}</a>'
+        f" <code>{d.sha256[:12]}</code></li>"
+        for d in rules.documents
+    )
+
+
+def issues_html(problems: Sequence[str], unused: Iterable[obvody.Rule]) -> str:
+    """Return the problems and unused rules of a review sheet as HTML."""
+    issues = [*problems, *(f"unused rule: {r.describe()}" for r in unused)]
+    if not issues:
+        return "<p>No problems.</p>"
+    items = "".join(f"<li>{html.escape(p)}</li>" for p in issues)
+    return f'<ul class="problems">{items}</ul>'
+
+
+def unit_cell(n: int) -> str:
+    """Return the review sheet's table cell of obvod (or okrsok) *n*."""
+    return (
+        f'<td><span class="key" style="background:{colour(n)}"></span> <b>{n}</b></td>'
+    )
 
 
 def _page(
@@ -625,40 +730,23 @@ def _page(
     texts = {o["number"]: o["text"] for o in out["obvody"]}
     rows = []
     for n, seats in rules.seats.items():
-        listed = "".join(
-            f"<li>{e(r.describe().split(': ', 1)[1])}"
-            + (" <i>(inferred)</i>" if r.inferred else "")
-            + (f" — {e(r.note)}" if r.note else "")
-            + "</li>"
-            for r in rules.rules
-            if r.unit == n
-        )
+        listed = rule_items(r for r in rules.rules if r.unit == n)
         rows.append(
-            f'<tr><td><span class="key" style="background:{colour(n)}"></span>'
-            f" <b>{n}</b></td><td>{seats}</td><td>{counts[n]:,}"
+            f"<tr>{unit_cell(n)}<td>{seats}</td><td>{counts[n]:,}"
             + (f" ({filled[n]:,} by the nearest)" if filled[n] else "")
             + f'</td><td><ul>{listed}</ul></td><td class="text">{e(texts.get(n, ""))}</td></tr>'
         )
-    docs = "".join(
-        f'<li><a href="{e(d.url)}">{e(d.title)}</a> <code>{d.sha256[:12]}</code></li>'
-        for d in rules.documents
-    )
-    issues = [*problems, *(f"unused rule: {r.describe()}" for r in assignment.unused)]
     return f"""<!doctype html>
 <html lang="sk"><head><meta charset="utf-8">
 <title>{e(rules.name)} ({rules.obec}): council obvody</title>
 <style>
-body {{ font: 14px/1.4 system-ui, sans-serif; margin: 1.5em; }}
-table {{ border-collapse: collapse; }} td, th {{ border: 1px solid #ccc; padding: .3em .5em; vertical-align: top; }}
-.key {{ display: inline-block; width: 1em; height: 1em; vertical-align: middle; }}
-.text {{ max-width: 40em; font-size: 12px; color: #444; }} .problems {{ color: #b00; }}
-ul {{ margin: 0; padding-left: 1.2em; }}
+{REVIEW_STYLE}
 </style></head><body>
 <h1>{e(rules.name)} ({rules.obec})</h1>
 <p>{len(places.places):,} addresses; decision of {rules.date.isoformat() if rules.date else "an unstated date"}; documents:</p>
-<ul>{docs}</ul>
+<ul>{document_items(rules)}</ul>
 {f"<p>{e(rules.note)}</p>" if rules.note else ""}
-{'<ul class="problems">' + "".join(f"<li>{e(p)}</li>" for p in issues) + "</ul>" if issues else "<p>No problems.</p>"}
+{issues_html(problems, assignment.unused)}
 {drawing or "<p>(no drawing: the addresses are not all placed, or ZBGIS level 1 is not extracted)</p>"}
 <p>Polygons: as the map draws them (dashed: approximate, from the address points). Dots: addresses by obvod; black inner dots: placed by the nearest address.</p>
 <table><tr><th>obvod</th><th>seats</th><th>addresses</th><th>rules</th><th>document text</th></tr>
@@ -671,35 +759,22 @@ ul {{ margin: 0; padding-left: 1.2em; }}
 # --- accept --------------------------------------------------------------------------
 
 
+OBVOD_TEXT = "  obvod "
+"""How a rule set's header begins its quote of the document on an obvod."""
+
+
 def accept(cfg: Config, job: jobs.Job, accepted: list[jobs.Accepted]) -> list[str]:
     """Write the accepted rule sets and documents into ``data/curated/``."""
     lines = []
     index = documents_index(job)
     not_found = load_not_found(cfg)
-    cache = cfg.curated_dir / CACHE_DIR
     for item, out in accepted:
         code = item["id"]
         if out["status"] == "not_found":
-            not_found[code] = {
-                "name": item["name"],
-                "job": job.name,
-                "tried": out["tried"],
-                "note": out.get("note", ""),
-            }
-            lines.append(
-                f"{item['name']} ({code}): not found, {len(out['tried'])} URLs tried"
-            )
+            lines.append(record_not_found(not_found, job, item, out))
             continue
         not_found.pop(code, None)
-        cache.mkdir(parents=True, exist_ok=True)
-        shas = {}
-        for d in out["documents"]:
-            name = index[d["url"]]
-            target = cache / name
-            if not target.is_file():
-                target.write_bytes((job.path / DOCUMENTS_DIR / name).read_bytes())
-            shas[d["url"]] = name.split(".")[0]
-        rules = rule_set(item, out, shas)
+        rules = rule_set(item, out, cache_documents(cfg, job, index, out))
         path = obvody.rules_path(cfg.election_dir, code)
         path.parent.mkdir(parents=True, exist_ok=True)
         header = [
@@ -708,13 +783,53 @@ def accept(cfg: Config, job: jobs.Job, accepted: list[jobs.Accepted]) -> list[st
             "checked by `ems job ingest` against the address register. The document's",
             "text per obvod, verbatim:",
         ]
-        for o in out["obvody"]:
-            header += [f"  obvod {o['number']}: " + " ".join(o["text"].split())]
+        header += [
+            f"{OBVOD_TEXT}{o['number']}: " + " ".join(o["text"].split())
+            for o in out["obvody"]
+        ]
         path.write_text(obvody.dump(rules, header), encoding="utf-8")
         lines.append(f"{item['name']} ({code}): {path.relative_to(cfg.root)}")
     if not_found or not_found_path(cfg).is_file():
         jobs.write_json(not_found_path(cfg), dict(sorted(not_found.items())))
     return lines
+
+
+def record_not_found(
+    not_found: dict[str, Any],
+    job: jobs.Job,
+    item: Mapping[str, Any],
+    out: Mapping[str, Any],
+) -> str:
+    """Add *item*, which *out* reports not found, to *not_found*.
+
+    Returns the line of the ingest report.
+    """
+    not_found[item["id"]] = {
+        "name": item["name"],
+        "job": job.name,
+        "tried": out["tried"],
+        "note": out.get("note", ""),
+    }
+    return f"{item['name']} ({item['id']}): not found, {len(out['tried'])} URLs tried"
+
+
+def cache_documents(
+    cfg: Config, job: jobs.Job, index: Mapping[str, str], out: Mapping[str, Any]
+) -> dict[str, str]:
+    """Copy the documents of *out* into ``data/curated/cache/``; return URL → sha256.
+
+    *index* is the job's :func:`documents_index`.
+    """
+    cache = cfg.curated_dir / CACHE_DIR
+    cache.mkdir(parents=True, exist_ok=True)
+    shas = {}
+    for d in out["documents"]:
+        name = index[d["url"]]
+        target = cache / name
+        if not target.is_file():
+            target.write_bytes((job.path / DOCUMENTS_DIR / name).read_bytes())
+        shas[d["url"]] = sha256_of(name)
+    return shas
 
 
 PROMPT = """\

@@ -17,15 +17,14 @@ languages (``sk``, ``hu``, …; none: all) and places, which select every
 candidate a resident of the place can vote for: ``okres:<code>``,
 ``kraj:<code>``, an obec code, or a contest id (``oz:522279/2``,
 ``zsk:8/7``, ``predseda:8``) for that contest alone. ``person:<id>``
-selects one person: a list worked out elsewhere keeps its order, after
-the people the places select. A person already
-researched in all of a language's categories, or in a pending job of that
-language, is left out, unless ``again`` is among them: then only pending
-jobs keep a person out, so that research done under older rules can be
-done again (its findings are replaced on ingest). The one
-priority, ``office``, puts regional presidents first, then mayors of the
-largest municipalities (by council candidates, a proxy of size), regional
-councillors and the rest.
+selects one person; the persons named so come after those the places
+select, in the order given. A person already researched in all of a
+language's categories, or in a pending job of that language, is left out,
+unless ``again`` is among them: then only pending jobs keep a person out,
+so that research done under older rules can be done again (its findings
+are replaced on ingest). The one priority, ``office``, puts regional
+presidents first, then mayors of the largest municipalities (by council
+candidates, a proxy of size), regional councillors and the rest.
 
 ``check`` (run by ``ems job ingest`` and ``ems research submit``) accepts an
 item only if every finding
@@ -57,6 +56,7 @@ import datetime as dt
 import fcntl
 import json
 import re
+import shutil
 import unicodedata
 from collections import Counter, defaultdict
 from collections.abc import Generator, Iterable, Iterator, Mapping, Sequence
@@ -217,24 +217,30 @@ def selected_persons(
     if unknown:
         raise jobs.JobError(f"{NAME}: no person {', '.join(unknown)}")
     places = [p for p in places if not p.startswith(PERSON)]
-    out: list[str] = []
-    if places or not named:
-        contests = _places(cfg, data, places)
-        size = Counter(
-            _kind_area(c["contest"])[1]
-            for c in data["candidacies"]
-            if c["contest"].startswith("oz:")
-        )
-        rank: dict[str, tuple[int, int]] = {}
-        for c in data["candidacies"]:
-            if c["contest"] not in contests:
-                continue
-            kind, area = _kind_area(c["contest"])
-            key = (_RANK[kind], -size[area] if kind in ("starosta", "oz") else 0)
-            rank[c["person"]] = min(rank.get(c["person"], key), key)
-        out = sorted(rank, key=lambda p: (rank[p], p))
-    seen = set(out)
-    return out + [p for p in dict.fromkeys(named) if p not in seen]
+    ranked = _by_office(data, _places(cfg, data, places)) if places or not named else []
+    seen = set(ranked)
+    return ranked + [p for p in dict.fromkeys(named) if p not in seen]
+
+
+def _by_office(data: Mapping[str, Any], contests: set[str]) -> list[str]:
+    """Return the candidates in *contests*, in the order of :data:`PRIORITY`.
+
+    A person ranks by their highest contest; municipal ones by the number of
+    council candidates of the municipality, a proxy of its size.
+    """
+    size = Counter(
+        _kind_area(c["contest"])[1]
+        for c in data["candidacies"]
+        if c["contest"].startswith("oz:")
+    )
+    rank: dict[str, tuple[int, int]] = {}
+    for c in data["candidacies"]:
+        if c["contest"] not in contests:
+            continue
+        kind, area = _kind_area(c["contest"])
+        key = (_RANK[kind], -size[area] if kind in ("starosta", "oz") else 0)
+        rank[c["person"]] = min(rank.get(c["person"], key), key)
+    return sorted(rank, key=lambda p: (rank[p], p))
 
 
 def _kind_area(contest: str) -> tuple[str, str]:
@@ -254,7 +260,7 @@ def curated_path(cfg: Config, person: str) -> Path:
     return cfg.curated_dir / CURATED_DIR / person[:2] / f"{person}.json"
 
 
-def done(cfg: Config, record: Mapping[str, Any], categories: Iterable[str]) -> bool:
+def done(record: Mapping[str, Any], categories: Iterable[str]) -> bool:
     """Return whether *record* covers *categories*."""
     seen = record.get("researched", {})
     return all(c in seen for c in categories)
@@ -359,33 +365,34 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
         todo = [
             p
             for p in persons
-            if p not in pending
-            and (again or not done(cfg, researched(cfg, p), categories))
+            if p not in pending and (again or not done(researched(cfg, p), categories))
         ]
+        language = LANGUAGE_NAMES.get(lang, lang)
         context = {
             "language": lang,
             "categories": list(categories),
             "hosts": sources.hosts(cfg.sources, categories),
         }
-        prompt = PROMPT.format(
-            language=LANGUAGE_NAMES.get(lang, lang),
-            categories=", ".join(categories),
-            official=(
-                "\n- `official` also covers the official website of every"
-                " municipality and region; each item lists the ones of the"
-                " places the person stands in (`official_sites`)."
-                if sources.OFFICIAL in categories
-                else ""
-            ),
-        )
+        prompt = _prompt(language, categories)
         for start in range(0, len(todo), options.size):
             chunk = person_items(cfg, data, todo[start : start + options.size])
             title = (
-                f"research in {LANGUAGE_NAMES.get(lang, lang)} sources:"
+                f"research in {language} sources:"
                 f" {len(chunk)} candidates from {chunk[0]['name']}"
             )
             batches.append(jobs.Batch(chunk, prompt, title, context))
     return batches
+
+
+def _prompt(language: str, categories: Sequence[str]) -> str:
+    return PROMPT.format(
+        language=language,
+        categories=", ".join(categories),
+        official=_OFFICIAL if sources.OFFICIAL in categories else "",
+        min_quote=MIN_QUOTE,
+        max_quote=MAX_QUOTE,
+        max_claim=MAX_CLAIM,
+    )
 
 
 # --- check --------------------------------------------------------------------
@@ -547,8 +554,8 @@ def accept(cfg: Config, job: jobs.Job, accepted: list[jobs.Accepted]) -> list[st
     categories = job.context["categories"]
     index = _documents(job)
     today = dt.date.today().isoformat()
-    target = cfg.curated_dir / CACHE_DIR
-    target.mkdir(parents=True, exist_ok=True)
+    cached = cfg.curated_dir / CACHE_DIR
+    cached.mkdir(parents=True, exist_ok=True)
     lines = []
     for item, out in accepted:
         record = researched(cfg, item["id"])
@@ -558,37 +565,16 @@ def accept(cfg: Config, job: jobs.Job, accepted: list[jobs.Accepted]) -> list[st
         new = []
         for f in out["findings"]:
             doc = index[f["url"]]
-            copy = target / f"{doc['cache']}.html"
+            copy = cached / f"{doc['cache']}.html"
             if not copy.is_file():
-                copy.write_bytes(
-                    (job.path / DOCUMENTS_DIR / f"{doc['cache']}.html").read_bytes()
-                )
-            new.append(
-                {
-                    "category": sources.category(f["url"], cfg.sources),
-                    "url": f["url"],
-                    "title": f.get("title") or doc["title"],
-                    "published": f.get("published") or doc["published"],
-                    "language": doc["language"] or job.context["language"],
-                    "cache": doc["cache"],
-                    "fetched": doc["fetched"],
-                    "via": doc["via"],
-                    "kind": f["kind"],
-                    "claim": {"en": f["claim_en"], "sk": f["claim_sk"]},
-                    "quote": " ".join(f["quote"].split()),
-                    "identity": f["identity"],
-                    "job": job.name,
-                }
-            )
-        seen = record.get("researched", {})
-        for c in categories:
-            seen[c] = {
-                "date": today,
-                "job": job.name,
-            }
+                shutil.copyfile(job.path / DOCUMENTS_DIR / copy.name, copy)
+            new.append(_curated_finding(cfg, job, f, doc))
+        done_now = {c: {"date": today, "job": job.name} for c in categories}
         content = {
             "name": item["name"],
-            "researched": dict(sorted(seen.items())),
+            "researched": dict(
+                sorted((record.get("researched", {}) | done_now).items())
+            ),
             "findings": sorted(
                 kept + new, key=lambda f: (f["category"], f["url"], f["quote"])
             ),
@@ -596,11 +582,30 @@ def accept(cfg: Config, job: jobs.Job, accepted: list[jobs.Accepted]) -> list[st
         path = curated_path(cfg, item["id"])
         path.parent.mkdir(parents=True, exist_ok=True)
         jobs.write_json(path, content)
-        lines.append(
-            f"{item['name']} ({item['id']}): "
-            + (f"findings: {len(new)}" if new else "nothing found")
-        )
+        found = f"findings: {len(new)}" if new else "nothing found"
+        lines.append(f"{item['name']} ({item['id']}): {found}")
     return lines
+
+
+def _curated_finding(
+    cfg: Config, job: jobs.Job, f: Mapping[str, Any], doc: Mapping[str, str]
+) -> dict[str, Any]:
+    """Return the curated record of finding *f*, whose page *doc* describes."""
+    return {
+        "category": sources.category(f["url"], cfg.sources),
+        "url": f["url"],
+        "title": f.get("title") or doc["title"],
+        "published": f.get("published") or doc["published"],
+        "language": doc["language"] or job.context["language"],
+        "cache": doc["cache"],
+        "fetched": doc["fetched"],
+        "via": doc["via"],
+        "kind": f["kind"],
+        "claim": {"en": f["claim_en"], "sk": f["claim_sk"]},
+        "quote": " ".join(f["quote"].split()),
+        "identity": f["identity"],
+        "job": job.name,
+    }
 
 
 # --- agent helpers ---------------------------------------------------------------
@@ -613,14 +618,14 @@ def read(cfg: Config, job: jobs.Job, url: str, person: str | None) -> dict[str, 
     (or the start of the text); the copy is kept for the check.
     """
     category = sources.category(url, cfg.sources)
-    if category not in job.context["categories"]:
-        return {
-            "url": url,
-            "allowed": False,
-            "reason": f"not in the job's categories ({', '.join(job.context['categories'])})"
+    categories = job.context["categories"]
+    if category not in categories:
+        reason = (
+            f"not in the job's categories ({', '.join(categories)})"
             if category
-            else "not on the allowlist (or excluded or blocked)",
-        }
+            else "not on the allowlist (or excluded or blocked)"
+        )
+        return {"url": url, "allowed": False, "reason": reason}
     try:
         record, text = keep(cfg, job, url)
     except cache.CacheError as e:
@@ -706,7 +711,7 @@ def coverage(cfg: Config, only: Iterable[str]) -> Iterator[str]:
     yield f"{len(persons)} candidates selected"
     for lang in languages:
         categories = cfg.sources.research[lang]
-        finished = [p for p in persons if done(cfg, records[p], categories)]
+        finished = [p for p in persons if done(records[p], categories)]
         found = sum(
             any(f["category"] in categories for f in records[p].get("findings", []))
             for p in finished
@@ -718,8 +723,14 @@ def coverage(cfg: Config, only: Iterable[str]) -> Iterator[str]:
         )
 
 
-PROMPT = (
-    """\
+_OFFICIAL = (
+    "\n- `official` also covers the official website of every"
+    " municipality and region; each item lists the ones of the"
+    " places the person stands in (`official_sites`)."
+)
+"""The part of :data:`PROMPT` for jobs that search the official sites."""
+
+PROMPT = """\
 # Candidate research in {language} sources
 
 Each item of `input.json` is one candidate of the Slovak municipal and
@@ -823,10 +834,8 @@ whose page is not allowed, cannot be fetched, does not contain the quote
 verbatim, or does not name the person. `ems research read <job> <url>
 --person <id>` shows whether a page can be cited and the passages that name
 the person.
-""".replace("{min_quote}", str(MIN_QUOTE))
-    .replace("{max_quote}", str(MAX_QUOTE))
-    .replace("{max_claim}", str(MAX_CLAIM))
-)
+"""
+"""Instructions of a research job; :func:`_prompt` fills in the fields."""
 
 
 KIND = jobs.Kind(

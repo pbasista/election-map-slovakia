@@ -4,6 +4,104 @@ Notable changes, newest first. The version is set in
 `src/election_map_slovakia/__init__.py`; tagging `vX.Y.Z` builds and deploys
 it (see [docs/deploy.md](docs/deploy.md)).
 
+## 0.6.0 — 2026-10-27
+
+- **Buildings on the map.**
+  From zoom 16 the base map draws the buildings of OpenStreetMap,
+  so that a place can be found by the houses around it,
+  under the house numbers and every border.
+  `ems basemap` writes them per municipality
+  (`base/obec/<obec>.json`, 2.6 million buildings, 82 MiB, 26 MiB gzipped),
+  and the app loads those of the municipalities in view.
+  The base map menu switches them off on their own.
+- **Roads and railways unlike borders.**
+  Roads were thin grey lines like the municipality borders.
+  Now a wide road is a light band in a casing,
+  the major ones yellow and the motorways orange,
+  and a railway is a dark line with ticks across it,
+  as on the web maps people know; the borders are as they were.
+- **The layers menu in three.**
+  One button showed the constituencies, the base map and the turnout,
+  with the zoom note and the legend, taller than a phone's screen.
+  Now three buttons in one group open short menus of their own:
+  the constituencies (the zoom note and the legend
+  folded under "What the lines mean"),
+  the 2026 turnout (the button dotted while one is shown)
+  and the base map.
+  Every menu stays on the screen, scrolling inside if it must.
+- **The map on a phone.** The sheet with a place's ballots or a
+  candidate card stops at three heights: lowered to its first row, half
+  the screen (where a place opens) and up to the search card; it follows
+  a drag from its grip, or from the content scrolled to the top, and
+  settles at the nearest height or the next one a flick goes to, a drag
+  down from the lowest closing it as before; its grip is a button that
+  steps through them. Results put on the map from the sheet lower it, so
+  the map shows them before it fits them; their legend is then a bar at
+  the top of the sheet (the title, the overall figure, the scale or the
+  candidates who lead as a row of chips, the units sentence on demand),
+  and without the sheet a pill under the search card ("Turnout 48.5 %",
+  "Vallo 64.4 %") that unfolds into the whole legend. On a touch screen
+  a tap on the coloured map shows that area's figures in a card, with a
+  button to its ballots, rather than picking the place. The map's
+  credits, shown in full as the map loads, fold into an ⓘ button after
+  the first touch of the map or five seconds, as OSMF's attribution
+  guidelines allow; the language, map layer, appearance and Favourites
+  buttons go under one "more" button while the sheet is open. Wherever
+  the panes and the legend would leave a place less than 160 px to be
+  fitted into, they give way (the legend first), rather than the map
+  zooming out to the country. Wider screens are as they were.
+- **Polling district numbers where the districts are drawn.**
+  A polling district's number was placed in its area as drawn
+  from the address points, which can hold a piece
+  that the map draws in another constituency
+  (a stray: a house far from the rest of its street).
+  The number then stood in another district, without a border:
+  in Michalovce, okrsok 7 showed in constituency 6's eastern part,
+  around one house of Užhorodská.
+  The numbers now go in the districts as drawn;
+  10 of the 3,278 were elsewhere.
+- **A name or number once in each part of its area.**
+  An area seen only in part, its label's own spot out of view,
+  had its label slid to wherever its visible part had the most room,
+  even into one of its other parts that bore a label of its own:
+  "No. 6" stood twice in each of the two smaller of Michalovce's
+  constituency 6, once by the polling district's number
+  and once by the municipality's name.
+  Where another part is labelled in view, the label now stays in its own
+  part; a council constituency's or a municipality's result
+  goes under the first of its labels drawn.
+- **Panning right after a pinch.**
+  On a phone, a pan begun within a quarter of a second of a pinch zoom
+  did nothing:
+  Leaflet ignores a drag while it "animates" the end of a pinch,
+  and with continuous zoom that animation goes nowhere,
+  so it lasted its full 250 ms fallback.
+  Such an animation now ends at once (zoom.js `dragAfterPinch`).
+- **A faster build.**
+  `ems make --force` takes 1 min 53 s instead of 4 min 59 s (8 CPUs),
+  its output byte for byte the same.
+  `geo`, `basemap` and `check` run their independent pieces
+  in worker processes (`parallel.py`).
+  `geo` loads and assigns each obec's addresses once, not twice,
+  and finds the nearest okrsok and the shared Voronoi edges
+  without measuring every polygon or sorting rows as records;
+  `addresses` reuses the council obvody it has just assigned;
+  `basemap` hands libosmium only the ways it draws
+  and assembles only the water areas.
+  The test that the curated rule sets load
+  loaded them all once per file: the tests take 13 s, not 3 minutes.
+- **Code and documentation review.**
+  The pipeline and the app are refactored for readability
+  (long functions split, repetition pulled into helpers,
+  clearer names and comments), with outputs byte-identical.
+  The README and the docs are restructured into short,
+  scannable sections with semantic line breaks.
+  NOTICE now also lists qrcode-generator, the ŠÚ SR results,
+  the 2026 okrsky list and the party logos,
+  and says that Leaflet ships without its source-map comment.
+  Okrsok-rules job items name a city district's city
+  rather than its code.
+
 ## 0.5.0 — 2026-10-26
 
 - **Withdrawn candidates set apart; no "final results" statements.** A

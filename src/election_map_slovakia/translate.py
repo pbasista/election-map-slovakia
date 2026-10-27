@@ -33,7 +33,7 @@ A UI translation whose ``src`` is not the current English text is stale and
 counts as missing: ``build`` falls back to English for it, and ``make``
 makes a job for it again. Occupations and research texts are keyed by their
 text, so a changed one is simply a new one. Output item ids are the UI key,
-or for the others :func:`occupation_id` of the text.
+or for the others :func:`text_id` of the text.
 
 The deterministic checks of an output item (:func:`problems`): not empty;
 the same ``{placeholders}`` and markup as the source; a length within bounds
@@ -57,7 +57,7 @@ from collections import Counter
 from collections.abc import Iterable, Iterator, Mapping
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import Any, NamedTuple
 
 from election_map_slovakia import candidates, jobs, research
 from election_map_slovakia.config import Config
@@ -414,8 +414,8 @@ def save(cfg: Config, code: str, curated: Curated) -> None:
 def research_texts(cfg: Config) -> list[tuple[str, str]]:
     """Return (text, its language) of every curated research claim and quote.
 
-    Claims count in English, their translation source; most frequent first
-    would not mean anything here, so in file order, each text once.
+    Claims count as English, their translation source. In file order, each
+    text once.
     """
     root = cfg.curated_dir / research.CURATED_DIR
     seen: dict[str, str] = {}
@@ -451,8 +451,8 @@ def occupation_counts(data: Mapping[str, Any]) -> Counter[str]:
     return Counter(c["occupation"] for c in data["candidacies"] if c["occupation"])
 
 
-def occupation_id(text: str) -> str:
-    """Return the job item id of an occupation: a hash of its text."""
+def text_id(text: str) -> str:
+    """Return the job item id of an occupation or research text: its hash."""
     return hashlib.sha256(text.encode()).hexdigest()[:_ID_LENGTH]
 
 
@@ -505,13 +505,38 @@ _NOTES = (
         "translation.pending",
         "notice on the pages of a language whose translation is incomplete",
     ),
-    ("layers.button", "tooltip of the boundaries button, which opens the menu"),
+    (
+        "layers.group",
+        "accessible name of the group of the three map buttons: constituency"
+        " boundaries, turnout on the map, base map",
+    ),
+    (
+        "layers.button",
+        "tooltip of the constituency boundaries button, which opens their menu",
+    ),
     ("layers.oz_", "entry of the map legend"),
-    ("layers.auto", "note in the boundaries menu under its checkboxes"),
+    (
+        "layers.legend",
+        "fold-out in the boundaries menu that opens the note on when each"
+        " overlay appears and the legend of the lines and colours; short",
+    ),
+    ("layers.auto", "note in the fold-out of the boundaries menu"),
+    (
+        "layers.base_title",
+        "title of the base map menu, also its button's tooltip",
+    ),
+    ("layers.base", "base map menu: a layer it switches on and off"),
+    ("layers.buildings", "base map menu: a layer it switches on and off"),
     (
         "layers.",
         "boundaries menu: its title and the names of the constituency"
         " overlays it switches on and off",
+    ),
+    (
+        "mapmode.button",
+        "tooltip of the turnout button, which opens the menu of the turnout"
+        " layers; {layer} is the option shown (mapmode.off or one of the"
+        " mapmode.turnout_…_option)",
     ),
     (
         "map.attribution",
@@ -659,16 +684,12 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
     pending = _pending_ids(options.pending)
     own = hand_written(cfg)
     source, reference = ui_source(cfg, SOURCE), ui_source(cfg, REFERENCE)
-    built = cfg.build_dir / candidates.OUTPUT_FILE
-    counts: Counter[str] = Counter()
-    if OCCUPATIONS in selection.parts:
-        if not built.is_file():
-            raise jobs.JobError(f"{built} missing; run `ems candidates` first")
-        counts = occupation_counts(json.loads(built.read_bytes()))
+    occupations = _occupations(cfg) if OCCUPATIONS in selection.parts else []
     texts = research_texts(cfg) if RESEARCH in selection.parts else []
+    targets = {lang: research_targets(cfg, lang) for _, lang in texts}
     batches = []
     for code in selection.langs:
-        guide(code)
+        guide(code)  # every selected language needs one, jobs or not
         curated = load(cfg, code)
         if UI in selection.parts and code not in own:
             done = curated.ui_strings(source)
@@ -679,70 +700,98 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
             ]
             if items:
                 batches.append(_batch(cfg, code, UI, items))
-        if OCCUPATIONS in selection.parts and code != REFERENCE:
-            todo = [
-                text
-                for text, _ in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
-                if text not in curated.occupations
-                and (code, OCCUPATIONS, occupation_id(text)) not in pending
+        if code != REFERENCE:
+            items = [
+                {"id": text_id(t), "source": t}
+                for t in occupations
+                if t not in curated.occupations
+                and (code, OCCUPATIONS, text_id(t)) not in pending
             ]
-            n = math.ceil(len(todo) / options.size)
-            for i in range(n):
-                chunk = todo[len(todo) * i // n : len(todo) * (i + 1) // n]
-                items = [{"id": occupation_id(t), "source": t} for t in chunk]
-                batches.append(_batch(cfg, code, OCCUPATIONS, items))
-        todo_research = [
-            {"id": occupation_id(t), "source": t, "source_language": lang}
+            batches += [
+                _batch(cfg, code, OCCUPATIONS, chunk)
+                for chunk in _even_chunks(items, options.size)
+            ]
+        items = [
+            {"id": text_id(t), "source": t, "source_language": lang}
             for t, lang in texts
-            if code in research_targets(cfg, lang)
+            if code in targets[lang]
             and t not in curated.research
-            and (code, RESEARCH, occupation_id(t)) not in pending
+            and (code, RESEARCH, text_id(t)) not in pending
         ]
-        for start in range(0, len(todo_research), options.size):
-            chunk = todo_research[start : start + options.size]
-            batches.append(_batch(cfg, code, RESEARCH, chunk))
+        batches += [
+            _batch(cfg, code, RESEARCH, items[start : start + options.size])
+            for start in range(0, len(items), options.size)
+        ]
     return batches
+
+
+def _occupations(cfg: Config) -> list[str]:
+    """Return the occupations of ``candidates.json``, most frequent first."""
+    built = cfg.build_dir / candidates.OUTPUT_FILE
+    if not built.is_file():
+        raise jobs.JobError(f"{built} missing; run `ems candidates` first")
+    counts = occupation_counts(json.loads(built.read_bytes()))
+    return sorted(counts, key=lambda text: (-counts[text], text))
+
+
+def _even_chunks(items: list[dict[str, Any]], size: int) -> list[list[dict[str, Any]]]:
+    """Split *items* into the fewest chunks of at most *size*, evenly."""
+    n = math.ceil(len(items) / size)
+    return [items[len(items) * i // n : len(items) * (i + 1) // n] for i in range(n)]
+
+
+class _Part(NamedTuple):
+    """How the jobs of one part are worded."""
+
+    what: str
+    """What the prompt says is translated."""
+    prompt: str
+    """The part's section of the prompt."""
+    label: str
+    """What a job's title calls the items."""
+    source_language: str
+
+
+_PART_JOBS = {
+    UI: _Part("the interface of a website", _UI_PART, "UI strings", SOURCE),
+    OCCUPATIONS: _Part(
+        "candidates' occupations", _OCCUPATIONS_PART, "occupations", REFERENCE
+    ),
+    # Per item: claims are English, quotes in their page's language.
+    RESEARCH: _Part(
+        "what news media say about candidates",
+        _RESEARCH_PART,
+        "research texts",
+        "various",
+    ),
+}
+_SCRIPT_NAMES = {"Latn": "Latin", "Cyrl": "Cyrillic"}
 
 
 def _batch(
     cfg: Config, code: str, part: str, items: list[dict[str, Any]]
 ) -> jobs.Batch:
     g = guide(code)
+    p = _PART_JOBS[part]
     script = _script(cfg, code)
-    what, part_text, label, source_lang = {
-        UI: ("the interface of a website", _UI_PART, "UI strings", SOURCE),
-        OCCUPATIONS: (
-            "candidates' occupations",
-            _OCCUPATIONS_PART,
-            "occupations",
-            REFERENCE,
-        ),
-        # Per item: claims are English, quotes in their page's language.
-        RESEARCH: (
-            "what news media say about candidates",
-            _RESEARCH_PART,
-            "research texts",
-            "various",
-        ),
-    }[part]
     prompt = _COMMON.format(
         language=g.name,
         lang=code,
-        what=what,
-        part=part_text.format(language=g.name),
+        what=p.what,
+        part=p.prompt.format(language=g.name),
         guide=g.text,
-        script={"Latn": "Latin", "Cyrl": "Cyrillic"}.get(script, script),
+        script=_SCRIPT_NAMES.get(script, script),
         reference=" (or to the Slovak `sk`)" if part == UI else "",
     )
     return jobs.Batch(
         items=items,
         prompt=prompt,
-        title=f"{len(items)} {label} into {g.name}",
+        title=f"{len(items)} {p.label} into {g.name}",
         context={
             "lang": code,
             "language": g.name,
             "part": part,
-            "source_language": source_lang,
+            "source_language": p.source_language,
         },
     )
 
@@ -817,12 +866,12 @@ def problems(
 
 
 def _form_problems(source: str, text: str, max_length: int | None) -> Iterator[str]:
-    placeholders = sorted(_PLACEHOLDER.findall(source))
-    if sorted(_PLACEHOLDER.findall(text)) != placeholders:
-        yield (
-            f"placeholders {sorted(_PLACEHOLDER.findall(text))} differ from the"
-            f" source's {placeholders}"
-        )
+    wanted, got = (
+        sorted(_PLACEHOLDER.findall(source)),
+        sorted(_PLACEHOLDER.findall(text)),
+    )
+    if got != wanted:
+        yield f"placeholders {got} differ from the source's {wanted}"
     if sorted(_MARKUP.findall(text)) != sorted(_MARKUP.findall(source)):
         yield "markup differs from the source's"
     if "\n" in text:

@@ -218,6 +218,7 @@ exactly the ones between two council obvody.
 
 from __future__ import annotations
 
+import functools
 import heapq
 import itertools
 import json
@@ -227,7 +228,7 @@ from collections import Counter, defaultdict
 from collections.abc import Callable, Hashable, Iterable, Iterator, Mapping, Sequence
 from dataclasses import dataclass, field, replace
 from pathlib import Path
-from typing import Any
+from typing import Any, NamedTuple, TypeVar
 from xml.sax.saxutils import escape
 
 import numpy as np
@@ -235,7 +236,7 @@ import pyproj
 import shapely
 from pyproj.enums import TransformDirection
 
-from election_map_slovakia import config, obvody, output, progress
+from election_map_slovakia import config, obvody, output, parallel, progress
 from election_map_slovakia.candidates import (
     CITIES,
     CITY_CODES,
@@ -396,13 +397,17 @@ class Result:
     """Per council obvod within an obec, the areas of its polygons at full
     detail, m², largest first."""
     okrsky: dict[str, list[Okrsok]] = field(default_factory=dict)
-    """Obec → its okrsky drawn (:func:`okrsok_areas`), in ``okrsky/``."""
+    """Obec → its okrsky drawn (:func:`address_cuts`), in ``okrsky/``."""
     okrsky_by_obvod: list[str] = field(default_factory=list)
     """Obce whose okrsky are known only by obvod, not drawn."""
 
 
+@functools.cache
 def transformer() -> pyproj.Transformer:
-    """Return the EPSG:5514 → WGS84 (lon, lat) transformation for Slovakia."""
+    """Return the EPSG:5514 → WGS84 (lon, lat) transformation for Slovakia.
+
+    Made once per process: finding it in PROJ's database takes a while.
+    """
     group = pyproj.transformer.TransformerGroup(
         f"EPSG:{SOURCE_SRS}", "EPSG:4326", always_xy=True
     )
@@ -411,6 +416,20 @@ def transformer() -> pyproj.Transformer:
         if any((s.get("authority"), s.get("code")) == _TRANSFORMATION for s in steps):
             return t
     raise GeoError("PROJ lacks EPSG:4836 (S-JTSK to WGS 84 for Slovakia)")
+
+
+def _from_wgs84(lonlat: np.ndarray, to_wgs84: pyproj.Transformer) -> np.ndarray:
+    """Return the n × 2 WGS84 points *lonlat* in EPSG:5514."""
+    x, y = to_wgs84.transform(
+        lonlat[:, 0], lonlat[:, 1], direction=TransformDirection.INVERSE
+    )
+    return np.column_stack([x, y])
+
+
+def _to_wgs84(xy: np.ndarray, to_wgs84: pyproj.Transformer) -> np.ndarray:
+    """Return the n × 2 EPSG:5514 points *xy* in WGS84 (lon, lat)."""
+    lon, lat = to_wgs84.transform(xy[:, 0], xy[:, 1])
+    return np.column_stack([lon, lat])
 
 
 def read_layer(
@@ -558,31 +577,90 @@ class Points:
     """The addresses of each point."""
 
 
-def council_splits(
-    election_dir: Path,
-    places_dir: Path,
-    kus: Mapping[str, Sequence[Ku]],
-    to_wgs84: pyproj.Transformer,
-) -> dict[str, Split]:
-    """Return obec → its cut, for every obec with a rule set.
+def address_cuts(
+    election_dir: Path, places_dir: Path, kus: Mapping[str, Sequence[Ku]]
+) -> tuple[dict[str, Split], dict[str, list[Okrsok]], list[str]]:
+    """Return how the obce are cut by their addresses.
 
+    That is obec → its cut into council obvody, for every obec with a rule
+    set; obec → its okrsky, where its rule set places every address in one;
+    and the obce whose rule sets give their okrsky only by obvod.
     *election_dir* is :attr:`election_map_slovakia.config.Config.election_dir`;
     *places_dir* holds the addresses ``ems addresses`` wrote
     (:func:`election_map_slovakia.obvody.write_places`); *kus* is
-    :func:`read_kus` of level 0.
+    :func:`read_kus` of level 0. Each obec is done in a worker process
+    (:func:`_cut_obec`).
     """
-    out = {}
-    for code, rules in obvody.load_rule_sets(election_dir).items():
-        path = places_dir / f"{code}.json"
-        if not path.is_file():
-            raise GeoError(f"{path} missing; run `ems addresses` first")
-        p = obvody.load_places(path)
-        a = obvody.assign(rules, p.places, p.kus, p.planar())
+    council = obvody.load_rule_sets(election_dir)
+    okrsky = obvody.okrsok_rule_sets(election_dir)
+    by_obvod = [c for c, r in okrsky.items() if not r.okrsok_areas]
+    drawn = {c: r for c, r in okrsky.items() if r.okrsok_areas}
+    codes = sorted(council.keys() | drawn.keys())
+    tasks = [
+        (code, council.get(code), drawn.get(code), places_dir, kus.get(code, []))
+        for code in codes
+    ]
+    splits: dict[str, Split] = {}
+    areas: dict[str, list[Okrsok]] = {}
+    for code, (split, okrsky_drawn) in zip(
+        codes, parallel.each(_cut_obec, tasks), strict=True
+    ):
+        if split is not None:
+            splits[code] = split
+        if okrsky_drawn is not None:
+            areas[code] = okrsky_drawn
+    return splits, areas, by_obvod
+
+
+def _cut_obec(
+    code: str,
+    council: obvody.RuleSet | None,
+    okrsky: obvody.RuleSet | None,
+    places_dir: Path,
+    kus: Sequence[Ku],
+) -> tuple[Split | None, list[Okrsok] | None]:
+    """Return the cut of obec *code* by *council* and its okrsky by *okrsky*.
+
+    Either rule set may be missing; where both are given they are the same
+    (:func:`election_map_slovakia.obvody.okrsok_rule_sets`). The okrsky of an
+    obec with one council obvod are cut from the whole obec
+    (:func:`whole_split`). Fails where an address is in no obvod or okrsok
+    or in two, or an okrsok rule selects addresses of another obvod only.
+    """
+    rules = council or okrsky
+    assert rules is not None
+    to_wgs84 = transformer()
+    p = _load_places(places_dir, code)
+    planar = p.planar()
+    a = obvody.assign(rules, p.places, p.kus, planar)
+    split = None
+    if council is not None:
         problems = a.problems(p.places)
         if problems:
             raise GeoError(f"{rules.name} ({code}): " + "; ".join(problems))
-        out[code] = council_split(rules, p, a.units, kus.get(code, []), to_wgs84)
-    return out
+        split = council_split(council, p, a.units, kus, to_wgs84)
+    if okrsky is None:
+        return split, None
+    k = obvody.assign_okrsky(okrsky, p.places, a.units, p.kus, planar)
+    problems = k.problems(p.places)
+    if problems:
+        raise GeoError(f"{rules.name} ({code}), okrsky: " + "; ".join(problems))
+    within = whole_split(kus) if split is None else split
+    return split, okrsky_split(okrsky, p, k.units, within, kus, to_wgs84)
+
+
+def _load_places(places_dir: Path, code: str) -> obvody.ObecPlaces:
+    path = places_dir / f"{code}.json"
+    if not path.is_file():
+        raise GeoError(f"{path} missing; run `ems addresses` first")
+    return obvody.load_places(path)
+
+
+def _obec_area(rules: obvody.RuleSet, kus: Sequence[Ku]) -> Any:
+    """Return the obec of *rules* as the union of its *kus*."""
+    if not kus:
+        raise GeoError(f"{rules.name} ({rules.obec}): no k.ú.")
+    return shapely.coverage_union_all([g for _, _, g in kus])
 
 
 def council_split(
@@ -592,15 +670,13 @@ def council_split(
     kus: Sequence[Ku],
     to_wgs84: pyproj.Transformer,
 ) -> Split:
-    """Return how to cut an obec with *rules* (see :func:`council_splits`).
+    """Return how to cut an obec with *rules* (see :func:`address_cuts`).
 
     *assigned* is the obvod of each of *places*, *kus* the obec's k.ú.
     """
     numbers = tuple(rules.seats)
     located = ~np.isnan(places.points[:, 0])
-    lon, lat = places.points[located].T / 10**DECIMALS
-    x, y = to_wgs84.transform(lon, lat, direction=TransformDirection.INVERSE)
-    xy = np.column_stack([x, y])
+    xy = _from_wgs84(places.points[located] / 10**DECIMALS, to_wgs84)
     obvod = np.array(assigned)[located]
     ku_obvod = _ku_obvody(rules, places, assigned, kus)
     if ku_obvod is not None:
@@ -613,9 +689,7 @@ def council_split(
     keys, chosen, homes = _point_votes(
         places, np.flatnonzero(located).tolist(), xy, obvod
     )
-    if not kus:
-        raise GeoError(f"{rules.name} ({rules.obec}): no k.ú.")
-    obec = shapely.coverage_union_all([g for _, _, g in kus])
+    obec = _obec_area(rules, kus)
     split = _voronoi_split(numbers, keys, chosen, homes, obec)
     return replace(split, estimated=rules.estimated)
 
@@ -629,7 +703,16 @@ def _point_votes(
     okrsok. One point per place: entrances of a block can share it, rarely
     across units, where the more frequent one takes it.
     """
-    keys, inverse = np.unique(np.round(xy, 2), axis=0, return_inverse=True)
+    # As np.unique(axis=0, return_inverse=True), which sorts rows as records,
+    # several times slower.
+    rounded = np.round(xy, 2)
+    order = np.lexsort((rounded[:, 1], rounded[:, 0]))
+    ordered = rounded[order]
+    first = np.ones(len(order), dtype=bool)
+    first[1:] = np.any(ordered[1:] != ordered[:-1], axis=1)
+    keys = ordered[first]
+    inverse = np.empty(len(order), dtype=int)
+    inverse[order] = np.cumsum(first) - 1
     votes: dict[int, Counter[int]] = {}
     homes: list[list[Home]] = [[] for _ in keys]
     for k, u, i in zip(inverse.ravel().tolist(), units.tolist(), rows, strict=True):
@@ -694,12 +777,13 @@ def _voronoi_split(
     """
     points = Points(xy, obvod, tuple(tuple(h) for h in homes))
     present = sorted(set(obvod.tolist()))
+    seeds = shapely.multipoints(xy)
     if len(present) == 1:
-        whole = shapely.box(*shapely.multipoints(xy).bounds).buffer(1e6)
+        whole = shapely.box(*seeds.bounds).buffer(1e6)
         return Split(numbers, True, None, ((present[0], whole),), points)
-    box = shapely.box(*shapely.multipoints(xy).bounds).buffer(1e5)
+    box = shapely.box(*seeds.bounds).buffer(1e5)
     cells = shapely.get_parts(
-        shapely.voronoi_polygons(shapely.multipoints(xy), extend_to=box, ordered=True)
+        shapely.voronoi_polygons(seeds, extend_to=box, ordered=True)
     )
     if len(cells) != len(xy):
         raise GeoError(f"{len(cells)} Voronoi cells for {len(xy)} points")
@@ -737,19 +821,32 @@ def _faces(
     cell's point.
     """
     lines = shapely.intersection(shapely.union_all(shapely.boundary(cells)), obec)
-    edges = shapely.union_all([shapely.boundary(obec), lines])
+    faces, inner = _faces_in(shapely.union_all([shapely.boundary(obec), lines]), obec)
+    cell = _containing(cells, inner)
+    return faces, cell, shapely.contains(faces, shapely.points(xy[cell]))
+
+
+def _faces_in(edges: Any, area: Any) -> tuple[np.ndarray, np.ndarray]:
+    """Return the faces of the noded *edges* within *area*, and a point in each."""
     faces = shapely.get_parts(shapely.polygonize(shapely.get_parts(edges)))
     inner = shapely.point_on_surface(faces)
-    keep = shapely.intersects(obec, inner)
-    faces, inner = faces[keep], inner[keep]
-    tree = shapely.STRtree(cells)
-    face, found = tree.query(inner, predicate="within")
-    cell = np.full(len(faces), -1)
-    cell[face] = found
-    # An inner point on a cell's border is within none: the nearest.
-    for i in np.flatnonzero(cell < 0).tolist():
-        cell[i] = tree.query_nearest(inner[i], all_matches=False)[0]
-    return faces, cell, shapely.contains(faces, shapely.points(xy[cell]))
+    shapely.prepare(area)
+    keep = shapely.intersects(area, inner)
+    return faces[keep], inner[keep]
+
+
+def _containing(areas: np.ndarray, points: np.ndarray) -> np.ndarray:
+    """Return the index of the one of *areas* each of *points* is within.
+
+    A point on the border between two is within none: it gets the nearest.
+    """
+    tree = shapely.STRtree(areas)
+    found = np.full(len(points), -1)
+    point, area = tree.query(points, predicate="within")
+    found[point] = area
+    for i in np.flatnonzero(found < 0).tolist():
+        found[i] = tree.query_nearest(points[i], all_matches=False)[0]
+    return found
 
 
 def _smoothed(
@@ -831,18 +928,7 @@ def _borders(cells: np.ndarray) -> list[tuple[int, int, float]]:
     from noded lines), so a border is the same segments on both sides.
     Cells that meet in a point share none: drawn, they are separate pieces.
     """
-    rings, cell = shapely.get_rings(cells, return_index=True)
-    xy, ring = shapely.get_coordinates(rings, return_index=True)
-    along = ring[:-1] == ring[1:]
-    a, b = xy[:-1][along], xy[1:][along]
-    owner = cell[ring[:-1][along]]
-    swap = ((a[:, 0] > b[:, 0]) | ((a[:, 0] == b[:, 0]) & (a[:, 1] > b[:, 1])))[:, None]
-    segments = np.column_stack([np.where(swap, b, a), np.where(swap, a, b)])
-    _, inverse = np.unique(segments, axis=0, return_inverse=True)
-    order = np.argsort(inverse.ravel(), kind="stable")
-    key = inverse.ravel()[order]
-    twin = np.flatnonzero(key[:-1] == key[1:])
-    first, second = order[twin], order[twin + 1]
+    segments, owner, first, second = _twin_segments(cells)
     length = np.hypot(*(segments[first, 2:] - segments[first, :2]).T)
     shared: defaultdict[tuple[int, int], float] = defaultdict(float)
     for i, j, s in zip(
@@ -851,6 +937,30 @@ def _borders(cells: np.ndarray) -> list[tuple[int, int, float]]:
         if s > 0 and i != j:
             shared[min(i, j), max(i, j)] += s
     return [(i, j, s) for (i, j), s in shared.items()]
+
+
+def _twin_segments(
+    polygons: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Return the segments of the rings of *polygons* that two rings share.
+
+    Returns every segment as [x0, y0, x1, y1], the lesser end first; the
+    polygon of each; and the indexes of the two segments of each shared
+    pair.
+    """
+    rings, polygon = shapely.get_rings(polygons, return_index=True)
+    xy, ring = shapely.get_coordinates(rings, return_index=True)
+    along = ring[:-1] == ring[1:]
+    a, b = xy[:-1][along], xy[1:][along]
+    owner = polygon[ring[:-1][along]]
+    swap = ((a[:, 0] > b[:, 0]) | ((a[:, 0] == b[:, 0]) & (a[:, 1] > b[:, 1])))[:, None]
+    segments = np.column_stack([np.where(swap, b, a), np.where(swap, a, b)])
+    # Sorted as records by np.unique(axis=0), several times slower; lexsort
+    # is stable, so twins come in the order of their polygons alike.
+    order = np.lexsort(segments.T[::-1])
+    rows = segments[order]
+    twin = np.flatnonzero(np.all(rows[:-1] == rows[1:], axis=1))
+    return segments, owner, order[twin], order[twin + 1]
 
 
 def _pieces(
@@ -975,9 +1085,11 @@ def _ku_obvody(
             named |= {c: rest for c, _, _ in kus if c not in named}
         return named
     per: dict[str, set[int]] = {}
+    # Per name, not per address: the names repeat over the addresses.
+    code_by_name = {k: code_of[search_key(k)] for k in set(places.kus) if k is not None}
     for ku, o in zip(places.kus, assigned, strict=True):
         if ku is not None:
-            per.setdefault(code_of[search_key(ku)], set()).add(o)
+            per.setdefault(code_by_name[ku], set()).add(o)
     if len(kus) < _SIDES or any(len(s) != 1 for s in per.values()):
         return None
     named = {c: min(s) for c, s in per.items()}
@@ -1024,12 +1136,7 @@ def ku_pieces(
 
 def to_grid_float(geometries: Any, to_wgs84: pyproj.Transformer, scale: int) -> Any:
     """Return EPSG:5514 *geometries* in WGS84 times *scale*, not rounded."""
-
-    def grid(xy: np.ndarray) -> np.ndarray:
-        lon, lat = to_wgs84.transform(xy[:, 0], xy[:, 1])
-        return np.column_stack([lon, lat]) * scale
-
-    return shapely.transform(geometries, grid)
+    return shapely.transform(geometries, lambda xy: _to_wgs84(xy, to_wgs84) * scale)
 
 
 def cut_council(
@@ -1065,8 +1172,7 @@ def cut_council(
         split = splits[code]
         assert split.points is not None
         regions = [(n, to_grid_float(g, to_wgs84, scale)) for n, g in split.regions]
-        x, y = to_wgs84.transform(*split.points.xy.T)
-        points = replace(split.points, xy=np.column_stack([x, y]) * scale)
+        points = replace(split.points, xy=_to_wgs84(split.points.xy, to_wgs84) * scale)
         pieces = _grid_cut(code, gridded[i], regions, points, bends)
         rows = list(range(len(out), len(out) + len(pieces)))
         whole.append((code, gridded[i], [n for n, _ in regions], rows))
@@ -1130,43 +1236,6 @@ class Okrsok:
     """Whether its border is drawn from the address points, not the document."""
 
 
-def okrsok_areas(
-    election_dir: Path,
-    places_dir: Path,
-    kus: Mapping[str, Sequence[Ku]],
-    splits: Mapping[str, Split],
-    to_wgs84: pyproj.Transformer,
-) -> tuple[dict[str, list[Okrsok]], list[str]]:
-    """Return obec → its okrsky, where its rule set places every address in one.
-
-    Also returns the obce whose rule sets give their okrsky only by obvod.
-    Arguments as for :func:`council_splits`, *splits* its result; the
-    okrsky of an obec with one council obvod are cut from the whole obec
-    (:func:`whole_split`). Fails where an address is in no okrsok or in
-    two, or an okrsok rule selects addresses of another obvod only.
-    """
-    out: dict[str, list[Okrsok]] = {}
-    by_obvod = []
-    for code, rules in obvody.okrsok_rule_sets(election_dir).items():
-        if not rules.okrsok_areas:
-            by_obvod.append(code)
-            continue
-        path = places_dir / f"{code}.json"
-        if not path.is_file():
-            raise GeoError(f"{path} missing; run `ems addresses` first")
-        p = obvody.load_places(path)
-        planar = p.planar()
-        a = obvody.assign(rules, p.places, p.kus, planar)
-        k = obvody.assign_okrsky(rules, p.places, a.units, p.kus, planar)
-        problems = k.problems(p.places)
-        if problems:
-            raise GeoError(f"{rules.name} ({code}), okrsky: " + "; ".join(problems))
-        mine = kus.get(code, [])
-        split = whole_split(mine) if rules.whole else splits[code]
-        out[code] = okrsky_split(rules, p, k.units, split, mine, to_wgs84)
-    return out, by_obvod
-
-
 def okrsky_split(
     rules: obvody.RuleSet,
     places: obvody.ObecPlaces,
@@ -1186,9 +1255,7 @@ def okrsky_split(
     whose houses all share their points with another's (a block split by
     entrance) gets no area of its own and is left out.
     """
-    if not kus:
-        raise GeoError(f"{rules.name} ({rules.obec}): no k.ú.")
-    obec = shapely.coverage_union_all([g for _, _, g in kus])
+    obec = _obec_area(rules, kus)
     located = np.flatnonzero(~np.isnan(places.points[:, 0])).tolist()
     obvod_of = rules.okrsok_obvod
     out = []
@@ -1199,7 +1266,7 @@ def okrsky_split(
                 [g for c, _, g in kus if split.kus.get(c) == obvod]
             )
             if split.kus is not None
-            else _polygonal(shapely.intersection(dict(split.regions)[obvod], obec))
+            else polygonal(shapely.intersection(dict(split.regions)[obvod], obec))
         )
         if len(numbers) == 1:
             out.append(Okrsok(numbers[0], obvod, area, split.approximate))
@@ -1211,9 +1278,7 @@ def okrsky_split(
             raise GeoError(
                 f"{name}: okrsky {', '.join(map(str, missing))} have no address point"
             )
-        lon, lat = places.points[rows].T / 10**DECIMALS
-        x, y = to_wgs84.transform(lon, lat, direction=TransformDirection.INVERSE)
-        xy = np.column_stack([x, y])
+        xy = _from_wgs84(places.points[rows] / 10**DECIMALS, to_wgs84)
         by_ku = _ku_okrsky(places, rows, xy, units, kus, split, obvod)
         if by_ku is not None:
             groups: dict[int, list[Any]] = defaultdict(list)
@@ -1229,7 +1294,7 @@ def okrsky_split(
             cut = _voronoi_split(tuple(numbers), keys, chosen, homes, area)
             exact = False
             pieces = [
-                (n, _polygonal(shapely.intersection(g, area))) for n, g in cut.regions
+                (n, polygonal(shapely.intersection(g, area))) for n, g in cut.regions
             ]
         _check_tiling(name, area, [g for _, g in pieces])
         out += [
@@ -1259,10 +1324,11 @@ def _ku_okrsky(
     mine = [ku for ku in kus if split.kus.get(ku[0]) == obvod]
     code_of = {search_key(name): c for c, name, _ in mine}
     per: dict[str, set[int]] = defaultdict(set)
+    keys = {k: search_key(k) for k in {places.kus[i] for i in rows} if k is not None}
     for i, u in zip(rows, units.tolist(), strict=True):
         ku = places.kus[i]
-        if ku is not None and search_key(ku) in code_of:
-            per[code_of[search_key(ku)]].add(u)
+        if ku is not None and keys[ku] in code_of:
+            per[code_of[keys[ku]]].add(u)
     if any(len(s) != 1 for s in per.values()):
         return None
     named = {c: min(s) for c, s in per.items()}
@@ -1305,6 +1371,7 @@ def okrsky_levels(
     the obvod (:func:`_reaching`), simplified as the level's are
     (:data:`CUT_TOLERANCE`), and every feature with an edge the cuts bent
     is bent alike, so that they stay a coverage that shares its vertices.
+    The levels are cut in worker processes (:func:`_okrsky_level`).
     """
     row = {u: i for i, u in enumerate(units)}
     features = [(c, o) for c, os in okrsky.items() for o in os]
@@ -1315,38 +1382,63 @@ def okrsky_levels(
     for c, count in whole.items():
         if count > 1 or (c, 0) not in row:
             raise GeoError(f"obec {c}: okrsky in council obvody the map does not cut")
-    regions = {
-        key: _reaching([features[r][1].area for r in rows])
-        for key, rows in groups.items()
-        if len(rows) > 1
-    }
+    several = [(key, rows) for key, rows in groups.items() if len(rows) > 1]
+    reaching = parallel.each(
+        _reaching, [([features[r][1].area for r in rows],) for _, rows in several]
+    )
+    regions = dict(zip([key for key, _ in several], reaching, strict=True))
     lines = {key: shapely.union_all(shapely.boundary(g)) for key, g in regions.items()}
-    out: dict[int, np.ndarray] = {}
+    areas = {key: to_grid_float(g, to_wgs84, scale) for key, g in regions.items()}
+    names = [(c, o.number) for c, o in features]
+    tasks = []
     for lod in SHARD_LODS:
         level = lod.level
-        geometries = np.empty(len(features), dtype=object)
-        bends: dict[_Edge, set[_Point]] = {}
-        for (c, n), rows in groups.items():
-            piece = gridded[level][row[(c, n)] if (c, n) in row else row[(c, 0)]]
-            if len(rows) == 1:
-                geometries[rows[0]] = piece
-                continue
-            areas = to_grid_float(regions[(c, n)], to_wgs84, scale)
-            cut = to_grid_float(
-                shapely.simplify(lines[(c, n)], CUT_TOLERANCE[level]), to_wgs84, scale
+        pieces = {
+            (c, n): gridded[level][row[(c, n)] if (c, n) in row else row[(c, 0)]]
+            for c, n in groups
+        }
+        cuts = {
+            key: to_grid_float(
+                shapely.simplify(g, CUT_TOLERANCE[level]), to_wgs84, scale
             )
-            faces, owner = _cut_faces(piece, cut, areas)
-            _add_bends(piece, faces, bends)
-            for k, r in enumerate(rows):
-                mine = faces[owner == k]
-                if not len(mine):
-                    raise GeoError(
-                        f"obec {c}, okrsok {features[r][1].number}: no area at"
-                        f" level {level}"
-                    )
-                geometries[r] = shapely.coverage_union_all(mine)
-        out[level] = shapely.orient_polygons(_bend(geometries, _Chains(bends)))
-    return features, out
+            for key, g in lines.items()
+        }
+        tasks.append((level, groups, pieces, areas, cuts, names))
+    levels = [lod.level for lod in SHARD_LODS]
+    return features, dict(zip(levels, parallel.each(_okrsky_level, tasks), strict=True))
+
+
+def _okrsky_level(
+    level: int,
+    groups: Mapping[tuple[str, int], Sequence[int]],
+    pieces: Mapping[tuple[str, int], Any],
+    areas: Mapping[tuple[str, int], np.ndarray],
+    cuts: Mapping[tuple[str, int], Any],
+    names: Sequence[tuple[str, int]],
+) -> np.ndarray:
+    """Return the okrsky of one *level*, in grid units (see :func:`okrsky_levels`).
+
+    Per obvod (obec, number): *groups* are the rows of its okrsky in *names*
+    (obec, okrsok), *pieces* its shard feature; where it has several okrsky,
+    *areas* are theirs reaching beyond it and *cuts* their borders, simplified
+    for the level, all in grid units.
+    """
+    geometries = np.empty(len(names), dtype=object)
+    bends: dict[_Edge, set[_Point]] = {}
+    for key, rows in groups.items():
+        piece = pieces[key]
+        if len(rows) == 1:
+            geometries[rows[0]] = piece
+            continue
+        faces, owner = _cut_faces(piece, cuts[key], areas[key])
+        _add_bends(piece, faces, bends)
+        for k, r in enumerate(rows):
+            mine = faces[owner == k]
+            if not len(mine):
+                c, number = names[r]
+                raise GeoError(f"obec {c}, okrsok {number}: no area at level {level}")
+            geometries[r] = shapely.coverage_union_all(mine)
+    return shapely.orient_polygons(_bend(geometries, _Chains(bends)))
 
 
 OKRSOK_REACH = 200.0
@@ -1382,7 +1474,8 @@ def _reaching(areas: Sequence[Any]) -> np.ndarray:
         axis=0,
     )
     points = shapely.points(xy)
-    _, label = shapely.STRtree(inside).query_nearest(points, all_matches=False)
+    okrsky = shapely.STRtree(inside)
+    label = _nearest(okrsky, points)
     # The edges between the Voronoi cells of points of two okrsky divide the
     # land beyond the obvod; the cells share their edges vertex for vertex.
     cells = shapely.get_parts(
@@ -1392,19 +1485,8 @@ def _reaching(areas: Sequence[Any]) -> np.ndarray:
             ordered=True,
         )
     )
-    rings, cell = shapely.get_rings(cells, return_index=True)
-    coords, ring = shapely.get_coordinates(rings, return_index=True)
-    along = ring[:-1] == ring[1:]
-    a, b = coords[:-1][along], coords[1:][along]
-    side = label[cell[ring[:-1][along]]]
-    swap = ((a[:, 0] > b[:, 0]) | ((a[:, 0] == b[:, 0]) & (a[:, 1] > b[:, 1])))[:, None]
-    segments = np.column_stack([np.where(swap, b, a), np.where(swap, a, b)])
-    _, inverse = np.unique(segments, axis=0, return_inverse=True)
-    order = np.argsort(inverse.ravel(), kind="stable")
-    key = inverse.ravel()[order]
-    twin = np.flatnonzero(key[:-1] == key[1:])
-    one, other = order[twin], order[twin + 1]
-    between = one[side[one] != side[other]]
+    segments, cell, one, other = _twin_segments(cells)
+    between = one[label[cell[one]] != label[cell[other]]]
     dividing = shapely.linestrings(segments[between].reshape(-1, 2, 2))
     # Noded together on a fine grid, which keeps the noding robust, and
     # polygonized, the faces share their borders exactly; each goes to the
@@ -1413,16 +1495,11 @@ def _reaching(areas: Sequence[Any]) -> np.ndarray:
         [*shapely.boundary(inside), *dividing, shapely.boundary(reach)],
         grid_size=_NODING_GRID,
     )
-    faces = shapely.get_parts(shapely.polygonize(shapely.get_parts(edges)))
-    inner = shapely.point_on_surface(faces)
-    keep = shapely.intersects(reach, inner)
-    faces, inner = faces[keep], inner[keep]
+    faces, inner = _faces_in(edges, reach)
     within = shapely.intersects(whole, inner)
     owner = np.empty(len(faces), dtype=int)
     rows = np.flatnonzero(within)
-    _, owner[rows] = shapely.STRtree(inside).query_nearest(
-        inner[rows], all_matches=False
-    )
+    owner[rows] = _nearest(okrsky, inner[rows])
     rows = np.flatnonzero(~within)
     _, nearest = shapely.STRtree(points).query_nearest(inner[rows], all_matches=False)
     owner[rows] = label[nearest]
@@ -1431,15 +1508,46 @@ def _reaching(areas: Sequence[Any]) -> np.ndarray:
     )
 
 
+def _nearest(tree: shapely.STRtree, points: np.ndarray) -> np.ndarray:
+    """Return the index of the geometry of *tree* nearest to each of *points*.
+
+    As ``tree.query_nearest(points, all_matches=False)``, which measures the
+    distance to every candidate polygon in full, even one around the point.
+    A point within :data:`_NODING_GRID` of one geometry only, the usual case
+    here, is near it by a prepared query of the geometries instead.
+    """
+    area, point = shapely.STRtree(points).query(
+        tree.geometries, predicate="dwithin", distance=_NODING_GRID
+    )
+    count = np.bincount(point, minlength=len(points))
+    out = np.empty(len(points), dtype=int)
+    alone = count[point] == 1
+    out[point[alone]] = area[alone]
+    rest = np.flatnonzero(count != 1)
+    out[rest] = tree.query_nearest(points[rest], all_matches=False)[1]
+    return out
+
+
 def okrsok_properties(
-    features: Sequence[OkrsokUnit], to_wgs84: pyproj.Transformer
+    features: Sequence[OkrsokUnit], drawn: np.ndarray, scale: int
 ) -> list[dict[str, Any]]:
-    """Return the properties of the okrsky *features*; see the module doc."""
-    areas = np.array([o.area for _, o in features])
+    """Return the properties of the okrsky *features*; see the module doc.
+
+    *drawn* are their geometries at level 0 in grid units
+    (:func:`okrsky_levels`), which hold their labels. An okrsok's area drawn
+    from the address points can have a piece that the shards draw in
+    another obvod (a stray, :data:`STRAY_HOUSES`), and its label there would
+    name an okrsok that is not drawn around it.
+    """
+    labels = np.round(label_points(drawn) / scale, DECIMALS).tolist()
     out = []
-    for (c, o), label in zip(features, labels(areas, to_wgs84), strict=True):
-        p: dict[str, Any] = {"obec": c, "okrsok": o.number, "obvod": o.obvod}
-        p["label"] = label
+    for (c, o), label in zip(features, labels, strict=True):
+        p: dict[str, Any] = {
+            "obec": c,
+            "okrsok": o.number,
+            "obvod": o.obvod,
+            "label": label,
+        }
         if o.approximate:
             p["approx"] = 1
         out.append(p)
@@ -1475,11 +1583,8 @@ def okrsky_problems(
     """
     m2 = _M2_PER_DEGREE2 / scale**2
     metres = math.sqrt(m2)
-    rows: dict[str, list[int]] = defaultdict(list)
-    for i, p in enumerate(properties):
-        rows[p["obec"]].append(i)
     problems = []
-    for code, r in sorted(rows.items()):
+    for code, r in sorted(_rows_by(properties, lambda p: p["obec"]).items()):
         numbers = [properties[i]["okrsok"] for i in r]
         if len(set(numbers)) != len(numbers):
             problems.append(f"obec {code}: an okrsok drawn twice")
@@ -1514,20 +1619,9 @@ def verify_okrsky(
     each once, those coded COUNCIL exactly the ones between okrsky of two
     council obvody.
     """
-    properties: list[Mapping[str, Any]] = []
-    geometries, segments, codes = [], [], []
-    scale = 1
-    for content in files:
-        arcs, g = decode(content)
-        geometries.append(g)
-        properties += [f["properties"] for f in content["features"]]
-        scale = content["scale"]
-        for xy, code in zip(arcs, content["lines"], strict=True):
-            if not code & FOREIGN:
-                segments.append(_segments(xy))
-                codes.append(np.full(len(xy) - 1, code))
+    level = _read_level(files)
     numbers: dict[str, list[int]] = defaultdict(list)
-    for p in properties:
+    for p in level.properties:
         numbers[p["obec"]].append(p["okrsok"])
     problems = [
         f"obec {c}: okrsky {sorted(numbers.get(c, []))} drawn, the index says"
@@ -1535,14 +1629,10 @@ def verify_okrsky(
         for c in sorted(numbers.keys() | drawn.keys())
         if sorted(numbers.get(c, [])) != sorted(drawn.get(c, []))
     ]
-    if not geometries:
+    if not len(level.features):
         return problems
-    features = np.concatenate(geometries)
     problems += _okrsok_lines(
-        features,
-        properties,
-        np.concatenate([np.empty((0, 2), np.int64), *segments]),
-        np.concatenate([np.empty(0, np.int64), *codes]),
+        level.features, level.properties, level.segments, level.codes
     )
     pieces: dict[str, list[Any]] = defaultdict(list)
     for content in shards:
@@ -1550,7 +1640,9 @@ def verify_okrsky(
         for f, piece in zip(content["features"], g, strict=True):
             pieces[f["properties"]["id"]].append(piece)
     areas = {c: shapely.union_all(shapely.make_valid(p)) for c, p in pieces.items()}
-    return problems + okrsky_problems(properties, features, areas, scale)
+    return problems + okrsky_problems(
+        level.properties, level.features, areas, level.scale
+    )
 
 
 def _okrsok_lines(
@@ -1572,21 +1664,15 @@ def _okrsok_lines(
         problems.append(f"{(counts > 1).sum()} segments drawn more than once")
 
     def outline(key: Callable[[Mapping[str, Any]], Hashable]) -> set[tuple[int, int]]:
-        rows: dict[Hashable, list[int]] = defaultdict(list)
-        for i, p in enumerate(properties):
-            rows[key(p)].append(i)
-        merged = [shapely.coverage_union_all(features[r]) for r in rows.values()]
-        return {
-            (a, b)
-            for a, b in _boundary_segments(np.array(merged, dtype=object)).tolist()
-        }
+        merged = _merged(features, _rows_by(properties, key).values())
+        return {(a, b) for a, b in _boundary_segments(merged).tolist()}
 
     obce = outline(lambda p: p["obec"])
-    obvody = outline(lambda p: (p["obec"], p["obvod"]))
+    council = outline(lambda p: (p["obec"], p["obvod"]))
     every = [(a, b) for a, b in _boundary_segments(features).tolist()]
     for name, inner, flag in (
         ("okrsky", [s for s in every if s not in obce], OKRSOK),
-        ("council obvody", [s for s in obvody if s not in obce], COUNCIL),
+        ("council obvody", [s for s in council if s not in obce], COUNCIL),
     ):
         problems += _compare(
             f"the {name} within an obec",
@@ -1594,6 +1680,63 @@ def _okrsok_lines(
             segment[(code & flag) == flag],
         )
     return problems
+
+
+_K = TypeVar("_K", bound=Hashable)
+
+
+def _rows_by(
+    properties: Iterable[Mapping[str, Any]], key: Callable[[Mapping[str, Any]], _K]
+) -> dict[_K, list[int]]:
+    """Return each *key* of *properties* → the indexes with it, in order."""
+    rows: dict[_K, list[int]] = {}
+    for i, p in enumerate(properties):
+        rows.setdefault(key(p), []).append(i)
+    return rows
+
+
+def _merged(features: np.ndarray, groups: Iterable[Sequence[int]]) -> np.ndarray:
+    """Return each group of the coverage *features* merged into one geometry."""
+    return np.array(
+        [shapely.coverage_union_all(features[list(r)]) for r in groups], dtype=object
+    )
+
+
+class _Level(NamedTuple):
+    """The topology files of one level of detail, decoded."""
+
+    properties: list[Mapping[str, Any]]
+    features: np.ndarray
+    """Their geometries, grid units."""
+    segments: np.ndarray
+    """The segments drawn (all but on arcs coded FOREIGN), as sorted key pairs."""
+    codes: np.ndarray
+    """The line code of each segment."""
+    scale: int
+
+
+def _read_level(files: Iterable[Mapping[str, Any]]) -> _Level:
+    properties: list[Mapping[str, Any]] = []
+    geometries = [np.empty(0, dtype=object)]
+    segments = [np.empty((0, 2), np.int64)]
+    codes = [np.empty(0, np.int64)]
+    scale = 1
+    for content in files:
+        arcs, g = decode(content)
+        geometries.append(g)
+        properties += [f["properties"] for f in content["features"]]
+        scale = content["scale"]
+        for xy, code in zip(arcs, content["lines"], strict=True):
+            if not code & FOREIGN:
+                segments.append(_segments(xy))
+                codes.append(np.full(len(xy) - 1, code))
+    return _Level(
+        properties,
+        np.concatenate(geometries),
+        np.concatenate(segments),
+        np.concatenate(codes),
+        scale,
+    )
 
 
 _Point = tuple[float, float]
@@ -1656,18 +1799,8 @@ def _cut_faces(
     inside = obec if shapely.is_valid(obec) else shapely.make_valid(obec)
     lines = shapely.intersection(lines, inside)
     edges = shapely.union_all([shapely.boundary(obec), lines], grid_size=1.0)
-    faces = shapely.get_parts(shapely.polygonize(shapely.get_parts(edges)))
-    inner = shapely.point_on_surface(faces)
-    keep = shapely.intersects(inside, inner)
-    faces, inner = faces[keep], inner[keep]
-    tree = shapely.STRtree(areas)
-    owner = np.full(len(faces), -1)
-    face, area = tree.query(inner, predicate="within")
-    owner[face] = area
-    # A face's inner point on an area's border is within none: the nearest.
-    for i in np.flatnonzero(owner < 0).tolist():
-        owner[i] = tree.query_nearest(inner[i], all_matches=False)[0]
-    return faces, owner
+    faces, inner = _faces_in(edges, inside)
+    return faces, _containing(areas, inner)
 
 
 def _add_bends(obec: Any, faces: np.ndarray, bends: dict[_Edge, set[_Point]]) -> None:
@@ -1771,7 +1904,7 @@ class _Chains:
         for (a, b), points in sorted(bends.items()):
             dx, dy = b[0] - a[0], b[1] - a[1]
             inner = sorted(
-                points, key=lambda p: (p[0] - a[0]) * dx + (p[1] - a[1]) * dy
+                points, key=lambda p: ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy, p)
             )
             for position, p in enumerate([a, *inner, b]):
                 self.where.setdefault(p, {})[len(self.chains)] = position
@@ -1916,12 +2049,11 @@ def to_grid(
     Coordinates are in that unit (integral), so shared vertices compare
     exactly; rings are oriented as in GeoJSON.
     """
-
-    def grid(xy: np.ndarray) -> np.ndarray:
-        lon, lat = to_wgs84.transform(xy[:, 0], xy[:, 1])
-        return np.rint(np.column_stack([lon, lat]) * scale)
-
-    return shapely.orient_polygons(shapely.transform(geometries, grid))
+    return shapely.orient_polygons(
+        shapely.transform(
+            geometries, lambda xy: np.rint(_to_wgs84(xy, to_wgs84) * scale)
+        )
+    )
 
 
 Rings = list[list[np.ndarray]]
@@ -2178,9 +2310,8 @@ def lonlat(xy: np.ndarray, to_wgs84: pyproj.Transformer) -> list[float]:
 
 def labels(geometries: np.ndarray, to_wgs84: pyproj.Transformer) -> list[list[float]]:
     """Return the WGS84 centre of the largest circle inside each of *geometries*."""
-    xy = label_points(geometries)
-    lon, lat = to_wgs84.transform(xy[:, 0], xy[:, 1])
-    return np.round(np.column_stack([lon, lat]), DECIMALS).tolist()
+    lonlat = _to_wgs84(label_points(geometries), to_wgs84)
+    return np.round(lonlat, DECIMALS).tolist()
 
 
 def other_parts(geometry: Any) -> list[tuple[float, float, float]]:
@@ -2255,16 +2386,20 @@ def unit_properties(
     pieces = [i for i, (_, n) in enumerate(units) if n]
     own = label_points(gridded[pieces]) if pieces else np.empty((0, 2))
     piece_label = dict(zip(pieces, own, strict=True))
+    # The piece holding the obec's point, else its first.
+    first: dict[str, int] = {}
     labelled: dict[str, int] = {}
     for i in pieces:
         code = units[i][0]
+        first.setdefault(code, i)
         if shapely.intersects_xy(gridded[i], *centres[code]):
             labelled.setdefault(code, i)
+    holder = first | labelled
     out = []
     for i, (code, n) in enumerate(units):
         p = dict(props[code])
         if n:
-            if labelled.get(code, next(j for j in pieces if units[j][0] == code)) != i:
+            if holder[code] != i:
                 del p["label"]
                 p.pop("parts", None)
             p |= {
@@ -2285,7 +2420,6 @@ def grid_levels(
     bases: Sequence[Unit],
     obce: Mapping[int, np.ndarray],
     splits: Mapping[str, Split],
-    to_wgs84: pyproj.Transformer,
     scale: int,
 ) -> tuple[list[Unit], dict[int, np.ndarray]]:
     """Return the shard features and each level rounded to the grid.
@@ -2293,29 +2427,38 @@ def grid_levels(
     *bases* and *obce* are :func:`obec_levels`; the obce cut by their address
     points are cut here (:func:`cut_council`), alike at every level, their
     cuts simplified as the level's borders are (:data:`CUT_TOLERANCE`).
+    The levels are done in worker processes (:func:`_grid_level`).
     """
+    levels = [lod.level for lod in SHARD_LODS]
+    tasks = [(bases, obce[level], splits, level, scale) for level in levels]
     gridded: dict[int, np.ndarray] = {}
     units: list[Unit] = []
-    for lod in SHARD_LODS:
-        with progress.stage(f"rounding level {lod.level} and cutting council obvody"):
-            simple = {
-                code: replace(s, regions=_simplified(s.regions, lod.level))
-                for code, s in splits.items()
-            }
-            here, gridded[lod.level] = cut_council(
-                bases,
-                to_grid(obce[lod.level], to_wgs84, scale),
-                simple,
-                to_wgs84,
-                scale,
-            )
+    for level, (here, gridded[level]) in zip(
+        levels, parallel.each(_grid_level, tasks), strict=True
+    ):
         if units and here != units:
             raise GeoError(
-                f"level {lod.level}: the council obvody cut differently than at"
-                f" level {SHARD_LODS[0].level}"
+                f"level {level}: the council obvody cut differently than at"
+                f" level {levels[0]}"
             )
         units = here
     return units, gridded
+
+
+def _grid_level(
+    bases: Sequence[Unit],
+    obce: np.ndarray,
+    splits: Mapping[str, Split],
+    level: int,
+    scale: int,
+) -> tuple[list[Unit], np.ndarray]:
+    """Return the shard features of ZBGIS *level* (see :func:`grid_levels`)."""
+    to_wgs84 = transformer()
+    simple = {
+        code: replace(s, regions=_simplified(s.regions, level))
+        for code, s in splits.items()
+    }
+    return cut_council(bases, to_grid(obce, to_wgs84, scale), simple, to_wgs84, scale)
 
 
 def _simplified(
@@ -2352,17 +2495,14 @@ def build(
         members = memberships(election_dir, admin, contests)
     to_wgs84 = transformer()
     kus = read_kus(paths[0])
-    with progress.stage("placing the addresses of the council obvody by their rules"):
-        splits = council_splits(election_dir, places, kus, to_wgs84)
-    with progress.stage("drawing the okrsky within the council obvody"):
-        okrsky, okrsky_by_obvod = okrsok_areas(
-            election_dir, places, kus, splits, to_wgs84
-        )
+    with progress.stage("cutting the obce into council obvody and okrsky"):
+        splits, okrsky, okrsky_by_obvod = address_cuts(election_dir, places, kus)
     codes = obec_codes(admin)
     bases, obce = obec_levels(paths, admin, splits)
     props = obec_properties(admin, codes, members)
     scale = 10**DECIMALS
-    units, gridded = grid_levels(bases, obce, splits, to_wgs84, scale)
+    with progress.stage("rounding the levels and cutting council obvody"):
+        units, gridded = grid_levels(bases, obce, splits, scale)
     with progress.stage("placing the obce labels"):
         merged = merge_units(bases, obce[0])
         centres = label_points(merged)
@@ -2387,10 +2527,10 @@ def build(
         if n
     ]
     bboxes: dict[str, list[float]] = {}
-    okres_rows = {
-        okres: [i for i, p in enumerate(properties) if p["okres"] == okres]
-        for okres in sorted(admin.okresy)
-    }
+    by_okres: dict[str, list[int]] = defaultdict(list)
+    for i, p in enumerate(properties):
+        by_okres[p["okres"]].append(i)
+    okres_rows = {okres: by_okres[okres] for okres in sorted(admin.okresy)}
     for lod in SHARD_LODS:
         with progress.stage(f"level of detail {lod.level}"):
             features = [rings(g) for g in gridded[lod.level]]
@@ -2401,10 +2541,7 @@ def build(
                         topo, scale, rows, properties, unit_code(okres)
                     )
                     if lod is SHARD_LODS[-1]:
-                        xy = np.concatenate(
-                            [r for f in rows for p in features[f] for r in p]
-                        )
-                        bboxes[okres] = _bbox(xy / scale)
+                        bboxes[okres] = _rows_bbox(features, rows, scale)
             with progress.stage("measuring overlaps and gaps"):
                 result.coverage.append(
                     coverage(
@@ -2429,17 +2566,7 @@ def build(
         )
     result.files[COARSE_FILE] = coarse
     result.coverage.insert(0, cells)
-    drawn = {o["id"] for o in coarse["obvody"]}
-    missing = sorted(
-        str(c["id"]) for c in contests if _is_obvod_contest(c) and c["id"] not in drawn
-    )
-    if missing:
-        raise GeoError(f"contests without an obvod: {', '.join(missing)}")
-    for o in coarse["obvody"]:
-        area = o["id"].split(":")[1].split("/")[0]
-        result.seats[area] = result.seats.get(area, 0) + o["seats"]
-        if candidates.get(o["id"], 0) < o["seats"]:
-            result.short.append((o["id"], candidates.get(o["id"], 0), o["seats"]))
+    _count_seats(result, coarse["obvody"], contests, candidates)
     bad = [
         f"{c.name}: overlap {c.overlap:.1f} m², gaps {c.gaps:.1f} m²"
         for c in result.coverage
@@ -2448,10 +2575,7 @@ def build(
     if bad:
         raise GeoError("\n  ".join(["neighbours do not share borders:", *bad]))
     result.files["index.json"] = {
-        "shards": [
-            {"lod": str(lod.level), "zoom": [lod.from_zoom, lod.until_zoom]}
-            for lod in SHARD_LODS
-        ],
+        "shards": _bands(),
         "okresy": bboxes,
         "neighbours": [
             {
@@ -2473,6 +2597,45 @@ def build(
     return result
 
 
+def _bands() -> list[dict[str, Any]]:
+    """Return the shard levels of detail as ``index.json`` lists them."""
+    return [
+        {"lod": str(lod.level), "zoom": [lod.from_zoom, lod.until_zoom]}
+        for lod in SHARD_LODS
+    ]
+
+
+def _rows_bbox(
+    features: Sequence[Rings], rows: Iterable[int], scale: int
+) -> list[float]:
+    """Return the :func:`_bbox` of the gridded *features* of *rows*."""
+    xy = np.concatenate([r for f in rows for p in features[f] for r in p])
+    return _bbox(xy / scale)
+
+
+def _count_seats(
+    result: Result,
+    drawn: Sequence[Mapping[str, Any]],
+    contests: Sequence[Mapping[str, Any]],
+    candidates: Mapping[str, int],
+) -> None:
+    """Set the seats and short obvody of *result* from the obvody *drawn*.
+
+    Fails unless every obvod contest has one.
+    """
+    ids = {o["id"] for o in drawn}
+    missing = sorted(
+        str(c["id"]) for c in contests if _is_obvod_contest(c) and c["id"] not in ids
+    )
+    if missing:
+        raise GeoError(f"contests without an obvod: {', '.join(missing)}")
+    for o in drawn:
+        area = o["id"].split(":")[1].split("/")[0]
+        result.seats[area] = result.seats.get(area, 0) + o["seats"]
+        if candidates.get(o["id"], 0) < o["seats"]:
+            result.short.append((o["id"], candidates.get(o["id"], 0), o["seats"]))
+
+
 def _add_okrsky(
     files: dict[str, dict[str, Any]],
     okrsky: Mapping[str, Sequence[Okrsok]],
@@ -2489,10 +2652,7 @@ def _add_okrsky(
     (:func:`okrsky_problems`).
     """
     index: dict[str, Any] = {
-        "bands": [
-            {"lod": str(lod.level), "zoom": [lod.from_zoom, lod.until_zoom]}
-            for lod in SHARD_LODS
-        ],
+        "bands": _bands(),
         "okresy": {},
         "drawn": {c: sorted(o.number for o in os) for c, os in sorted(okrsky.items())},
     }
@@ -2500,12 +2660,13 @@ def _add_okrsky(
         return index
     with progress.stage("cutting them from the shards"):
         features, levels = okrsky_levels(okrsky, units, gridded, to_wgs84, scale)
-    properties = okrsok_properties(features, to_wgs84)
-    okres_rows: dict[str, list[int]] = defaultdict(list)
+    properties = okrsok_properties(features, levels[0], scale)
+    by_okres: dict[str, list[int]] = defaultdict(list)
     for i, (c, _) in enumerate(features):
         okres = admin.obce[c].okres
         assert okres is not None  # okrsky are drawn in ZBGIS obce only
-        okres_rows[okres].append(i)
+        by_okres[okres].append(i)
+    okres_rows = sorted(by_okres.items())
     codes = list(dict.fromkeys(c for c, _ in units))
     problems = []
     for lod in SHARD_LODS:
@@ -2515,17 +2676,14 @@ def _add_okrsky(
             f"level {lod.level}: {p}"
             for p in okrsky_problems(properties, geometries, obce, scale)
         ]
-        features_rings = [rings(g) for g in geometries]
-        topo = topology(features_rings, scale)
-        for okres, rows in sorted(okres_rows.items()):
+        drawn = [rings(g) for g in geometries]
+        topo = topology(drawn, scale)
+        for okres, rows in okres_rows:
             files[okrsky_path(okres, str(lod.level))] = topology_file(
                 topo, scale, rows, properties, okrsok_code
             )
             if lod is SHARD_LODS[-1]:
-                xy = np.concatenate(
-                    [r for f in rows for p in features_rings[f] for r in p]
-                )
-                index["okresy"][okres] = _bbox(xy / scale)
+                index["okresy"][okres] = _rows_bbox(drawn, rows, scale)
     if problems:
         raise GeoError("\n  ".join(["the okrsky do not tile their obce:", *problems]))
     return index
@@ -2601,7 +2759,7 @@ def read_countries(path: Path, to_wgs84: pyproj.Transformer) -> dict[str, Any]:
             raise GeoError(
                 f"{path.name}: {f['properties'].get('ADMIN')} has no ISO 3166 code"
             )
-        land = _polygonal(shapely.intersection(land, extent))
+        land = polygonal(shapely.intersection(land, extent))
         out[code] = shapely.union(out[code], land) if code in out else land
     if "SK" not in out:
         raise GeoError(f"{path.name}: no Slovakia")
@@ -2610,17 +2768,11 @@ def read_countries(path: Path, to_wgs84: pyproj.Transformer) -> dict[str, Any]:
 
 def _metres(lonlat: Any, to_wgs84: pyproj.Transformer) -> Any:
     """Return WGS84 *lonlat* in EPSG:5514, its long edges bent as they project."""
-
-    def back(xy: np.ndarray) -> np.ndarray:
-        x, y = to_wgs84.transform(
-            xy[:, 0], xy[:, 1], direction=TransformDirection.INVERSE
-        )
-        return np.column_stack([x, y])
-
-    return shapely.transform(shapely.segmentize(lonlat, 0.05), back)
+    lonlat = shapely.segmentize(lonlat, 0.05)
+    return shapely.transform(lonlat, lambda xy: _from_wgs84(xy, to_wgs84))
 
 
-def _polygonal(g: Any) -> Any:
+def polygonal(g: Any) -> Any:
     """Return the polygons of *g* (an overlay may add lines and points)."""
     parts = shapely.get_parts(shapely.get_parts(g))
     return shapely.multipolygons(
@@ -2661,7 +2813,7 @@ def neighbour_areas(countries: Mapping[str, Any], slovakia: Any) -> dict[str, An
         )
     )
     return {
-        k: _polygonal(
+        k: polygonal(
             shapely.union(
                 shapely.difference(g, under),
                 shapely.intersection(between, shapely.union_all(cells[owner == k])),
@@ -2674,7 +2826,7 @@ def neighbour_areas(countries: Mapping[str, Any], slovakia: Any) -> dict[str, An
 def _exact_coverage(areas: Mapping[str, Any], clip: Any) -> dict[str, Any]:
     """Return *areas* within *clip* as an exact coverage; see the module doc."""
     keys = list(areas)
-    clipped = [_polygonal(shapely.intersection(areas[k], clip)) for k in keys]
+    clipped = [polygonal(shapely.intersection(areas[k], clip)) for k in keys]
     lines = shapely.union_all(shapely.boundary(np.array(clipped)))
     pieces = shapely.get_parts(shapely.polygonize(shapely.get_parts(lines)))
     inside = shapely.point_on_surface(pieces)
@@ -2740,7 +2892,7 @@ def label_spots(
     border for the most zoomed in views. ``room`` is the distance of
     the place to the edge of the part that shows, in metres.
     """
-    shows = _polygonal(
+    shows = polygonal(
         shapely.intersection(
             shapely.difference(area, slovakia),
             _metres(shapely.box(*EXTENT), to_wgs84),
@@ -2760,26 +2912,21 @@ def label_spots(
     while squares:
         x, y, side = squares.pop()
         square = shapely.box(x, y, x + side, y + side)
-        piece = _polygonal(shapely.intersection(shows, square))
+        piece = polygonal(shapely.intersection(shows, square))
         smallest = side <= SPOT_CELL
         if smallest:
-            piece = _polygonal(shapely.intersection(piece, strip))
+            piece = polygonal(shapely.intersection(piece, strip))
         if piece.is_empty:
             continue
         centres.append(shapely.get_point(shapely.maximum_inscribed_circle(piece), 0))
         if not smallest and shapely.intersects(slovakia, square):
             half = side / 2
             squares += [(x + dx, y + dy, half) for dx in (0, half) for dy in (0, half)]
-    room = shapely.distance(np.array(centres), edge)
-    xy = shapely.get_coordinates(np.array(centres))
-    lon, lat = to_wgs84.transform(xy[:, 0], xy[:, 1])
+    room = shapely.distance(np.array(centres), edge).tolist()
+    lonlat = _to_wgs84(shapely.get_coordinates(np.array(centres)), to_wgs84).tolist()
     return sorted(
-        [
-            round(float(a), BBOX_DECIMALS),
-            round(float(b), BBOX_DECIMALS),
-            round(float(r)),
-        ]
-        for a, b, r in zip(lon, lat, room, strict=True)
+        [round(lon, BBOX_DECIMALS), round(lat, BBOX_DECIMALS), round(r)]
+        for (lon, lat), r in zip(lonlat, room, strict=True)
     )
 
 
@@ -2860,22 +3007,12 @@ def _coarse(
     *obce* are the geometries of :data:`COARSE_LEVEL` and *properties* theirs.
     """
     keys = ("kraj", "okres", "zsk", "city", "city_obvod")
-
-    def groups(key: Callable[[Mapping[str, Any]], Hashable]) -> dict[Any, list[int]]:
-        out: dict[Any, list[int]] = {}
-        for i, p in enumerate(properties):
-            out.setdefault(key(p), []).append(i)
-        return out
-
-    def unions(areas: Iterable[Sequence[int]]) -> np.ndarray:
-        return np.array([shapely.coverage_union_all(obce[list(a)]) for a in areas])
-
-    cells = groups(lambda p: tuple(p.get(k) for k in keys))
+    cells = _rows_by(properties, lambda p: tuple(p.get(k) for k in keys))
     cell_props = [
         {k: v for k, v in zip(keys, key, strict=True) if v is not None} for key in cells
     ]
     scale = 10**DECIMALS
-    simple = shapely.coverage_simplify(unions(cells.values()), COARSE_TOLERANCE)
+    simple = shapely.coverage_simplify(_merged(obce, cells.values()), COARSE_TOLERANCE)
     features = [rings(g) for g in to_grid(simple, to_wgs84, scale)]
     topo = topology(features, scale)
     content = topology_file(topo, scale, range(len(features)), cell_props, unit_code())
@@ -2892,21 +3029,19 @@ def _coarse(
             )
         ]
 
-    kraje = groups(lambda p: p["kraj"])
+    def placed_by(key: str) -> list[tuple[str, dict[str, Any]]]:
+        """Each value of *key*, sorted, and its area :func:`placed`."""
+        rows = _rows_by(properties, lambda p: p[key])
+        codes = sorted(rows)
+        merged = _merged(obce, [rows[c] for c in codes])
+        return list(zip(codes, placed(merged), strict=True))
+
     content["kraje"] = [
-        {"id": k, "name": admin.kraje[k]} | where
-        for k, where in zip(
-            sorted(kraje), placed(unions(kraje[k] for k in sorted(kraje))), strict=True
-        )
+        {"id": k, "name": admin.kraje[k]} | where for k, where in placed_by("kraj")
     ]
-    okresy = groups(lambda p: p["okres"])
     content["okresy"] = [
         {"id": o, "name": admin.okresy[o][0], "kraj": admin.okresy[o][1]} | where
-        for o, where in zip(
-            sorted(okresy),
-            placed(unions(okresy[o] for o in sorted(okresy))),
-            strict=True,
-        )
+        for o, where in placed_by("okres")
     ]
     index = {p["id"]: i for i, p in enumerate(properties)}
     areas = [
@@ -2924,7 +3059,7 @@ def _coarse(
         {"id": obvod, "seats": seats} | where
         for (obvod, seats, _), where in zip(
             obvod_rows,
-            placed(unions(rows for *_, rows in obvod_rows)),
+            placed(_merged(obce, [rows for *_, rows in obvod_rows])),
             strict=True,
         )
     ]
@@ -2969,14 +3104,11 @@ def coverage(
     to_wgs84: pyproj.Transformer,
 ) -> Coverage:
     """Measure overlaps and gaps between the gridded *features*, in m²."""
-
-    def back(xy: np.ndarray) -> np.ndarray:
-        x, y = to_wgs84.transform(
-            xy[:, 0] / scale, xy[:, 1] / scale, direction=TransformDirection.INVERSE
+    g = shapely.make_valid(
+        shapely.transform(
+            _polygons(features), lambda xy: _from_wgs84(xy / scale, to_wgs84)
         )
-        return np.column_stack([x, y])
-
-    g = shapely.make_valid(shapely.transform(_polygons(features), back))
+    )
     union = shapely.union_all(g)
     holes = [
         shapely.Polygon(ring)
@@ -3038,19 +3170,7 @@ def verify(files: Iterable[Mapping[str, Any]]) -> list[str]:
     ``coverage_union``, must be bounded by exactly the arcs coded as its
     border. So every higher-level border is made of the obce's own edges.
     """
-    properties: list[Mapping[str, Any]] = []
-    geometries, drawn, codes = [], [], []
-    for content in files:
-        arcs, g = decode(content)
-        geometries.append(g)
-        properties += [f["properties"] for f in content["features"]]
-        for xy, code in zip(arcs, content["lines"], strict=True):
-            if not code & FOREIGN:
-                drawn.append(_segments(xy))
-                codes.append(np.full(len(xy) - 1, code))
-    features = np.concatenate(geometries)
-    segments = np.concatenate(drawn)
-    code = np.concatenate(codes)
+    properties, features, segments, code, _ = _read_level(files)
     problems = []
     invalid = ~shapely.is_empty(shapely.coverage_invalid_edges(features))
     if invalid.any():
@@ -3064,16 +3184,10 @@ def verify(files: Iterable[Mapping[str, Any]]) -> list[str]:
     problems += _compare("the features", _boundary_segments(features), unique)
     problems += _verify_council(features, properties, segments, code)
     for name, key, test in _UNITS:
-        units: dict[Hashable, list[int]] = {}
-        for i, p in enumerate(properties):
-            k = key(p)
-            if k is not None:
-                units.setdefault(k, []).append(i)
+        units = _rows_by(properties, key)
+        units.pop(None, None)
         try:
-            merged = np.array(
-                [shapely.coverage_union_all(features[r]) for r in units.values()],
-                dtype=object,
-            )
+            merged = _merged(features, units.values())
         except shapely.errors.GEOSException as e:
             problems.append(f"cannot merge the features into every {name}: {e}")
             continue
@@ -3095,24 +3209,17 @@ def _verify_council(
     obvody that are not borders of the obce, and those coded APPROX the ones
     of the obce cut by their address points.
     """
-    cut = sorted({p["id"] for p in properties if "oz" in p})
-    if not cut and not (code & COUNCIL).any():
+    if not any("oz" in p for p in properties) and not (code & COUNCIL).any():
         return []
     problems = []
     for name, which in (
         ("", lambda p: True),
         (" approximate", lambda p: "approx" in p),
     ):
-        rows: dict[str, list[int]] = {}
-        pieces = []
-        for i, p in enumerate(properties):
-            if "oz" in p and which(p):
-                rows.setdefault(p["id"], []).append(i)
-                pieces.append(i)
-        obce = [shapely.coverage_union_all(features[r]) for r in rows.values()]
-        outer = {
-            tuple(s) for s in _boundary_segments(np.array(obce, dtype=object)).tolist()
-        }
+        pieces = [i for i, p in enumerate(properties) if "oz" in p and which(p)]
+        rows = _rows_by((properties[i] for i in pieces), lambda p: p["id"])
+        obce = _merged(features[pieces], rows.values())
+        outer = {tuple(s) for s in _boundary_segments(obce).tolist()}
         inner = np.array(
             [
                 s
@@ -3136,8 +3243,9 @@ def _compare(name: str, borders: np.ndarray, drawn: np.ndarray) -> list[str]:
     have, _ = _unique_rows(drawn)
     if np.array_equal(want, have):
         return []
-    missing = {tuple(s) for s in want.tolist()} - {tuple(s) for s in have.tolist()}
-    extra = {tuple(s) for s in have.tolist()} - {tuple(s) for s in want.tolist()}
+    wanted = {tuple(s) for s in want.tolist()}
+    had = {tuple(s) for s in have.tolist()}
+    missing, extra = wanted - had, had - wanted
     problems = []
     if missing:
         problems.append(f"{len(missing)} segments bounding {name} are not drawn so")

@@ -21,14 +21,20 @@
  * geo.py picked for it that leaves its name the most room in the view
  * (`drawNeighbourNames`). The lowest zoom keeps every view within them.
  *
- * The base map (base/, basemap.py: roads, railways, rivers and lakes from
+ * The base map (base/, basemap.py: roads, railways, waters and buildings from
  * OpenStreetMap) loads with the shards, a file per okres at their level of
  * detail, and base/coarse.json with the coarse view. It is drawn faint (at
  * the theme's `base-alpha`) over the land and the results' fills, below
  * every border, highlight and label (`drawBase`), from cached paths per bin
- * and class, each class of line from the zoom it helps at (`BASE_LINES`):
- * minor roads only from zoom 13, the dense classes as hairlines below zoom
- * 16, which keeps a city view cheap to rasterize.
+ * and class, each class of line from the zoom it helps at: minor roads only
+ * from zoom 13, the dense classes as hairlines below zoom 16, which keeps a
+ * city view cheap to rasterize. So that no road or railway passes for a
+ * border, they look as on the web maps people know: a wide road is a light
+ * band in a casing, the major ones in yellow and orange (`BASE_ROADS`), a
+ * railway a dark line with ticks across it (`BASE_RAILS`). The buildings
+ * (base/obec/<obec>.json) load as the address files do, from the zoom in
+ * base/index.json, for the obce in view (`loadBuildings`), and are filled
+ * under the roads, cell by cell (`decodeBuildings`).
  *
  * Every geo file is a topology: each border is one arc, coded with the
  * highest boundary it is part of. Polygons are only filled (and hit tested
@@ -97,14 +103,17 @@ import {
   addArc,
   addDashedArc,
   addFeature,
+  arcOf,
   binPath,
   binsIn,
+  borderArcs,
   boxContains,
   boxesIntersect,
   contains,
   decode,
   mercX,
   mercY,
+  partAt,
   releasePaths,
   unionPath,
   Z0,
@@ -175,24 +184,39 @@ const LINES = [
 const APPROX_DASH = [5, 4];
 const OKRSOK_DASH = [3, 3];
 
-// The base map (base/, basemap.py): its line classes in the order they are
-// stroked, waters below roads and railways above, each [code, colour, the
-// width it is stroked at from each zoom level on: [[zoom, CSS px], …], not
-// at all below the first; dense: whether it is a hairline below
-// HAIRLINE_ZOOM]. The water areas (code 16) are filled.
-const BASE_LINES = [
+// The base map (base/, basemap.py): its line classes, waterways first, each
+// [code, colour, the width it is stroked at from each zoom level on:
+// [[zoom, CSS px], …], not at all below the first; dense: whether it is a
+// hairline below HAIRLINE_ZOOM]. The water areas (code 16) are filled.
+const BASE_WATERWAYS = [
   [0, 'base-waterway', [[12, 0.6], [14, 0.9], [16, 1.3]], true], // streams
   [1, 'base-waterway', [[9, 0.6], [12, 0.9], [14, 1.3], [16, 2]], true], // canals
   [2, 'base-waterway', [[0, 1.2], [9, 1.2], [11, 1.4], [13, 1.8], [15, 2.5]], false], // rivers
+];
+// The roads, least first, so that a greater one runs over a lesser one where
+// they meet. As on the web maps people know, and unlike any border, a road
+// at least CASED_WIDTH wide is a band: stroked in its colour (the casing),
+// then CASING narrower on each side in `<colour>-fill` over it, light (warm
+// tints for the major classes); a narrower one is one line in its colour.
+const BASE_ROADS = [
   // Minor roads from zoom 13 only: below it their mesh would grey the towns.
-  [3, 'base-road', [[13, 1], [16, 2.2], [17, 3.5], [18, 5]], true],
+  [3, 'base-road', [[13, 1], [16, 2.4], [17, 3.5], [18, 5]], true],
   [4, 'base-road', [[12, 1], [16, 3], [17, 4.5], [18, 6.5]], true],
-  [5, 'base-road', [[9, 0.6], [11, 0.9], [12, 1.2], [13, 1.6], [14, 2.2], [15, 3], [16, 4], [17, 6], [18, 8]], false],
+  [5, 'base-major', [[9, 0.6], [11, 0.9], [12, 1.2], [13, 1.6], [14, 2.2], [15, 3], [16, 4], [17, 6], [18, 8]], false],
   [6, 'base-major', [[9, 0.8], [11, 1.1], [12, 1.5], [13, 2], [14, 2.6], [15, 3.5], [16, 4.6], [17, 6.5], [18, 9]], false],
-  [7, 'base-major', [[0, 1.2], [8, 1.4], [10, 1.6], [12, 2], [13, 2.4], [14, 3], [15, 4], [16, 5.2], [17, 7], [18, 10]], false],
-  [8, 'base-major', [[0, 1.4], [8, 1.6], [10, 1.8], [12, 2.2], [13, 2.8], [14, 3.4], [15, 4.4], [16, 5.6], [17, 7.5], [18, 10]], false],
-  [9, 'base-rail', [[12, 0.6], [14, 0.9], [16, 1.2]], true], // trams
-  [10, 'base-rail', [[9, 0.7], [12, 0.9], [14, 1.2], [16, 1.6]], true], // railways
+  [7, 'base-motorway', [[0, 1.2], [8, 1.4], [10, 1.6], [12, 2], [13, 2.4], [14, 3], [15, 4], [16, 5.2], [17, 7], [18, 10]], false],
+  [8, 'base-motorway', [[0, 1.4], [8, 1.6], [10, 1.8], [12, 2.2], [13, 2.8], [14, 3.4], [15, 4.4], [16, 5.6], [17, 7.5], [18, 10]], false],
+];
+const CASED_WIDTH = 2.2;
+const CASING = 0.7;
+// The railways, over the roads: a line with ticks across it, the symbol of
+// a railway on paper maps, which no border has; the trams thinner, lighter
+// and with ticks only from zoom 14. Each is a line class, and its ticks
+// from each zoom level on: [[zoom, [length across, width, gap]]] in CSS
+// px, sparse: in Bratislava's rail yards they cost 2 ms of a drawing.
+const BASE_RAILS = [
+  [9, 'base-tram', [[12, 0.6], [14, 0.9], [16, 1.2]], true, [[14, [3, 1, 8]], [16, [4, 1.2, 10]]]],
+  [10, 'base-rail', [[9, 0.7], [12, 0.9], [14, 1.2], [16, 1.6]], true, [[11, [3.5, 1, 9]], [14, [5, 1.2, 10]], [16, [6, 1.5, 12]]]],
 ];
 // Below this zoom the dense classes (minor and tertiary streets, streams,
 // railways) are at most one canvas pixel wide: the rasterizer draws those
@@ -204,14 +228,48 @@ const HAIRLINE_ZOOM = 16;
 // Base map files kept loaded, in vertices, apart from the shards': about as
 // many as the shards of the same okresy.
 const BASE_VERTICES = 300000;
+// Buildings files kept loaded (`loadBuildings`), in vertices: the obce of
+// a few views of a city.
+const BUILDING_VERTICES = 500000;
+// The side of a cell of the buildings (`decodeBuildings`) in Z0 pixels:
+// about 400 m, a sixth of a view across at zoom 16. Smaller cells leave
+// fewer buildings out of view to fill: at zoom 16 in Bratislava (1440 ×
+// 900 px) filling cells of 16 pixels took 11 ms, of 32 12 ms, whole obce
+// 19 ms.
+const BUILDING_BIN = 16;
 
-/* The width of a base map line of *widths* (`BASE_LINES`) at zoom *z*, or
- * 0 where it is not drawn. */
-function baseWidth(widths, z) {
-  let w = 0;
-  for (const [from, px] of widths) if (z >= from) w = px;
-  return w;
-}
+// An overlay is drawn from zoom `lines`, its obvod numbers within
+// `numbers` and the selected place's obvod highlighted within `highlight`
+// (zooms by `level`): numbers and a highlight need the obvody neither much
+// smaller nor much larger than the view.
+const OVERLAYS = {
+  zsk: { lines: 0, numbers: [9, 11], highlight: [0, 10] },
+  city: { lines: 10, numbers: [11, 13], highlight: [10, 13] },
+  oz: { lines: 11, numbers: [12, Infinity], highlight: [11, Infinity] },
+  okrsky: { lines: 13, numbers: [14, Infinity], highlight: [13, Infinity] },
+};
+const within = (z, [from, to]) => z >= from && z <= to;
+
+/* The value of *steps* ([[zoom, value], …], by zoom) from zoom *z* on, or
+ * undefined below the first. */
+const fromZoom = (steps, z) => steps.findLast(([from]) => z >= from)?.[1];
+
+/* The level of detail of *bands* (geo/index.json: [{lod, zoom: [from,
+ * to]}], `to` null for none) drawn at zoom *z*, or null for none. */
+const lodAt = (bands, z) => bands.find((b) => z >= b.zoom[0] && (b.zoom[1] === null || z < b.zoom[1]))?.lod ?? null;
+
+/* The side of a bin of a file of *band* (topo.js `decode`) in Z0 pixels:
+ * BIN_PIXELS at the lowest zoom it is drawn at. */
+const bandBinSize = (band) => BIN_PIXELS / 2 ** (band.zoom[0] - Z0);
+
+/* The side of a bin of the files of each level of detail of *bands*. */
+const binSizes = (bands) => Object.fromEntries(bands.map((b) => [b.lod, bandBinSize(b)]));
+
+/* The vertices of a decoded file, by which the caches of files weigh it. */
+const vertices = (file) => file.xy.length / 2;
+
+// A file that fails to load is reported; the map goes on without it.
+const logError = (e) => console.error(e);
 
 // The theme's colours by name (map.js `readColors`), as the page last sent.
 const COLOR = {};
@@ -287,6 +345,9 @@ const NEIGHBOUR_SPACING = '2px';
 // The dashes of their borders, in pixels.
 const NEIGHBOUR_DASH = [6, 4];
 
+// Side of a bucket of the labels' grid (`Placer`), in pixels.
+const BUCKET = 64;
+
 /* Labels are placed greedily in priority order; a grid of buckets keeps the
  * overlap test cheap with thousands of house numbers. A label is
  * {box: [x0, y0, x1, y1], gap, kind, area}: its box (with a pixel or two
@@ -295,9 +356,19 @@ const NEIGHBOUR_DASH = [6, 4];
  * ('obec:<code>', 'zsk:<kraj>/<n>'…, see `cellKeys`) and the keys of the
  * areas it overlaps, its own among them. */
 class Placer {
-  constructor() {
-    this.cell = 64;
-    this.grid = new Map();
+  grid = new Map();
+
+  /* The keys of the grid's buckets that *label* reaches into, its gap
+   * included. */
+  *buckets(label) {
+    const [x0, y0, x1, y1] = label.box;
+    const { gap } = label;
+    for (let gx = Math.floor((x0 - gap) / BUCKET); gx <= Math.floor((x1 + gap) / BUCKET); gx++) {
+      for (let gy = Math.floor((y0 - gap) / BUCKET); gy <= Math.floor((y1 + gap) / BUCKET); gy++) {
+        // One number a bucket: no canvas is anywhere near 100003 buckets high.
+        yield gx * 100003 + gy;
+      }
+    }
   }
 
   /* The labels placed that *label* would overlap, or null if one of them is
@@ -306,35 +377,24 @@ class Placer {
   overlaps(label) {
     const [x0, y0, x1, y1] = label.box;
     const { gap } = label;
-    const c = this.cell;
     const out = [];
-    for (let gx = Math.floor((x0 - gap) / c); gx <= Math.floor((x1 + gap) / c); gx++) {
-      for (let gy = Math.floor((y0 - gap) / c); gy <= Math.floor((y1 + gap) / c); gy++) {
-        const bucket = this.grid.get(gx * 100003 + gy);
-        if (!bucket) continue;
-        for (const r of bucket) {
-          const [rx0, ry0, rx1, ry1] = r.box;
-          const g = gap + r.gap;
-          if (!(x0 - g < rx1 && x1 + g > rx0 && y0 - g < ry1 && y1 + g > ry0)) continue;
-          if (!stackable(label, r)) return null;
-          if (x0 < rx1 && x1 > rx0 && y0 < ry1 && y1 > ry0) out.push(r);
-        }
+    for (const key of this.buckets(label)) {
+      for (const r of this.grid.get(key) ?? []) {
+        const [rx0, ry0, rx1, ry1] = r.box;
+        const g = gap + r.gap;
+        if (!(x0 - g < rx1 && x1 + g > rx0 && y0 - g < ry1 && y1 + g > ry0)) continue;
+        if (!stackable(label, r)) return null;
+        if (x0 < rx1 && x1 > rx0 && y0 < ry1 && y1 > ry0) out.push(r);
       }
     }
     return out;
   }
 
   add(label) {
-    const [x0, y0, x1, y1] = label.box;
-    const { gap } = label;
-    const c = this.cell;
-    for (let gx = Math.floor((x0 - gap) / c); gx <= Math.floor((x1 + gap) / c); gx++) {
-      for (let gy = Math.floor((y0 - gap) / c); gy <= Math.floor((y1 + gap) / c); gy++) {
-        const key = gx * 100003 + gy;
-        const bucket = this.grid.get(key);
-        if (bucket) bucket.push(label);
-        else this.grid.set(key, [label]);
-      }
+    for (const key of this.buckets(label)) {
+      const bucket = this.grid.get(key);
+      if (bucket) bucket.push(label);
+      else this.grid.set(key, [label]);
     }
   }
 }
@@ -472,24 +532,12 @@ function visibleSpot(area, rect, view, w, h) {
   const x1 = Math.min(rect[2], box[2] * k - view.x);
   const y1 = Math.min(rect[3], box[3] * k - view.y);
   if ((x1 - x0) * s < 2 * need || y1 - y0 < 2 * need) return null;
-  const border = new Set();
-  for (const f of area.features) {
-    for (const polygon of f.arcs) {
-      for (const ring of polygon) {
-        for (const r of ring) {
-          const a = r < 0 ? ~r : r;
-          if (border.has(a)) border.delete(a);
-          else border.add(a);
-        }
-      }
-    }
-  }
   const { xy, start } = file;
   const [ox, oy] = file.origin;
   const near = [];
   // The rows spanned by the segments right of the rect: y0, y1 of each.
   const right = [];
-  for (const a of border) {
+  for (const a of borderArcs(area.features).keys()) {
     let px = 0;
     let py = 0;
     for (let i = start[a]; i < start[a + 1]; i++) {
@@ -541,8 +589,44 @@ function visibleSpot(area, rect, view, w, h) {
     const value = d + SPOT_ROUND * plain;
     return { x, y, half, d, value, max: value + slope * half * Math.SQRT2 };
   };
-  const heap = [];
-  const push = (c) => {
+  const heap = new CellHeap();
+  const size = Math.min((x1 - x0) * s, y1 - y0);
+  for (let x = x0 * s; x < x1 * s; x += size) {
+    for (let y = y0; y < y1; y += size) heap.push(cell(x + size / 2, y + size / 2, size / 2));
+  }
+  let best = cell(((x0 + x1) / 2) * s, (y0 + y1) / 2, 0);
+  let probes = heap.length;
+  while (heap.length && probes < SPOT_PROBES) {
+    const c = heap.pop();
+    if (c.value > best.value) best = c;
+    // A cell that cannot hold a better spot, or one with room, is done.
+    if (c.max - best.value <= SPOT_PRECISION || c.d + c.half * Math.SQRT2 < need) continue;
+    const half = c.half / 2;
+    for (const [dx, dy] of QUARTERS) heap.push(cell(c.x + dx * half, c.y + dy * half, half));
+    probes += 4;
+  }
+  return best.d >= need ? { x: Math.round(best.x / s), y: Math.round(best.y) } : null;
+}
+
+// The directions of the quarters of a cell from its centre.
+const QUARTERS = [
+  [-1, -1],
+  [1, -1],
+  [-1, 1],
+  [1, 1],
+];
+
+/* The cells `visibleSpot` has yet to search, the one that may hold the
+ * most room (`max`) on top: a binary max-heap. */
+class CellHeap {
+  items = [];
+
+  get length() {
+    return this.items.length;
+  }
+
+  push(c) {
+    const heap = this.items;
     let i = heap.length;
     heap.push(c);
     while (i > 0) {
@@ -552,8 +636,10 @@ function visibleSpot(area, rect, view, w, h) {
       i = parent;
     }
     heap[i] = c;
-  };
-  const pop = () => {
+  }
+
+  pop() {
+    const heap = this.items;
     const top = heap[0];
     const last = heap.pop();
     if (heap.length) {
@@ -569,30 +655,7 @@ function visibleSpot(area, rect, view, w, h) {
       heap[i] = last;
     }
     return top;
-  };
-  const size = Math.min((x1 - x0) * s, y1 - y0);
-  for (let x = x0 * s; x < x1 * s; x += size) {
-    for (let y = y0; y < y1; y += size) push(cell(x + size / 2, y + size / 2, size / 2));
   }
-  let best = cell(((x0 + x1) / 2) * s, (y0 + y1) / 2, 0);
-  let probes = heap.length;
-  while (heap.length && probes < SPOT_PROBES) {
-    const c = pop();
-    if (c.value > best.value) best = c;
-    // A cell that cannot hold a better spot, or one with room, is done.
-    if (c.max - best.value <= SPOT_PRECISION || c.d + c.half * Math.SQRT2 < need) continue;
-    const half = c.half / 2;
-    for (const [dx, dy] of [
-      [-1, -1],
-      [1, -1],
-      [-1, 1],
-      [1, 1],
-    ]) {
-      push(cell(c.x + dx * half, c.y + dy * half, half));
-    }
-    probes += 4;
-  }
-  return best.d >= need ? { x: Math.round(best.x / s), y: Math.round(best.y) } : null;
 }
 
 /* Sets the transform of *ctx* to draw the coordinates of *file* in *view*. */
@@ -601,6 +664,167 @@ function placeFile(ctx, file, view) {
   const [ox, oy] = file.origin;
   ctx.setTransform(s, 0, 0, s, view.ratio * (ox * view.k - view.x), view.ratio * (oy * view.k - view.y));
 }
+
+/* Fills each of *bins* with its path *key* (`binPath`), made by
+ * *make(bin)*, even-odd. */
+function fillBins(ctx, bins, key, make) {
+  for (const bin of bins) {
+    const path = binPath(bin, key, () => make(bin));
+    if (path) ctx.fill(path, 'evenodd');
+  }
+}
+
+/* Strokes the path *key* of each of *bins*, as `fillBins` fills. */
+function strokeBins(ctx, bins, key, make) {
+  for (const bin of bins) {
+    const path = binPath(bin, key, () => make(bin));
+    if (path) ctx.stroke(path);
+  }
+}
+
+/* The water areas of *bin* of base map *file* as one path, or null. */
+function waterPath(file, bin) {
+  if (!bin.features.length) return null;
+  const path = new Path2D();
+  for (const f of bin.features) addFeature(path, file, f);
+  return path;
+}
+
+/* The buildings of an obec (base/obec/<code>.json: {scale, counts, xy},
+ * the rings' vertices delta coded in 1/scale degree, one sequence for the
+ * whole file, each hole after its outer ring) as {origin, cells,
+ * vertices}: in Z0 pixels relative to *origin* as a decoded geo file
+ * (`placeFile`), a path for each cell of BUILDING_BIN pixels a building
+ * starts in, with its holes, for the nonzero rule (they wind the other
+ * way), and the box around it: {box, path}. A drawing fills only the
+ * cells in view: an obec's buildings are several times those in view. */
+function decodeBuildings({ scale, counts, xy }) {
+  const ox = mercX(xy[0] / scale);
+  const oy = mercY(xy[1] / scale);
+  const cells = new Map();
+  let cell = null;
+  const ring = [];
+  let lon = 0;
+  let lat = 0;
+  let i = 0;
+  for (const n of counts) {
+    ring.length = 0;
+    let area = 0;
+    for (let j = 0; j < n; j++, i += 2) {
+      lon += xy[i];
+      lat += xy[i + 1];
+      ring.push(mercX(lon / scale) - ox, mercY(lat / scale) - oy);
+      if (j) area += ring[2 * j - 2] * ring[2 * j + 1] - ring[2 * j] * ring[2 * j - 1];
+    }
+    area += ring[2 * n - 2] * ring[1] - ring[0] * ring[2 * n - 1];
+    // An outer ring winds counter-clockwise in lon/lat, so its area by the
+    // shoelace formula is negative with y down; a hole goes with its outer
+    // ring.
+    if (area < 0 || !cell) {
+      const key = `${Math.floor(ring[0] / BUILDING_BIN)} ${Math.floor(ring[1] / BUILDING_BIN)}`;
+      cell = cells.get(key);
+      if (!cell) {
+        cell = { box: emptyBox(), path: new Path2D() };
+        cells.set(key, cell);
+      }
+    }
+    const { box, path } = cell;
+    path.moveTo(ring[0], ring[1]);
+    for (let k = 0; k < ring.length; k += 2) {
+      if (k) path.lineTo(ring[k], ring[k + 1]);
+      box[0] = Math.min(box[0], ring[k] + ox);
+      box[1] = Math.min(box[1], ring[k + 1] + oy);
+      box[2] = Math.max(box[2], ring[k] + ox);
+      box[3] = Math.max(box[3], ring[k + 1] + oy);
+    }
+    path.closePath();
+  }
+  return { origin: [ox, oy], cells: [...cells.values()], vertices: i / 2 };
+}
+
+/* The arcs of *file* among *arcs* this file draws whose code passes
+ * *pick*, as one path, or null if there are none. */
+function linesPath(file, arcs, pick) {
+  const path = new Path2D();
+  let any = false;
+  for (const a of arcs) {
+    const code = file.lines[a];
+    if (code & FOREIGN || !pick(code)) continue;
+    addArc(path, file, a);
+    any = true;
+  }
+  return any ? path : null;
+}
+
+/* The dashes, *dash* CSS pixels long and apart (setLineDash), of the arcs
+ * of *file* in *bins* whose code passes *pick* that *view* shows, as one
+ * path to stroke without a dash pattern (topo.js `addDashedArc`), or null
+ * if there are none. Made for each drawing: it depends on the view. */
+function dashedPath(file, bins, view, dash, pick) {
+  const [ox, oy] = file.origin;
+  // A cap reaching into the canvas from a dash just outside it.
+  const m = 4 / view.k;
+  const box = [view.box[0] - ox - m, view.box[1] - oy - m, view.box[2] - ox + m, view.box[3] - oy + m];
+  const lengths = dash.map((d) => d / view.k);
+  const path = new Path2D();
+  let any = false;
+  for (const bin of bins) {
+    for (const a of bin.arcs) {
+      const code = file.lines[a];
+      if (code & FOREIGN || !pick(code)) continue;
+      addDashedArc(path, file, a, box, lengths);
+      any = true;
+    }
+  }
+  return any ? path : null;
+}
+
+/* The box [x0, y0, x1, y1] around nothing, for `grow` to widen. */
+const emptyBox = () => [Infinity, Infinity, -Infinity, -Infinity];
+
+/* Widens *box* to take in box *b*. */
+function grow(box, b) {
+  box[0] = Math.min(box[0], b[0]);
+  box[1] = Math.min(box[1], b[1]);
+  box[2] = Math.max(box[2], b[2]);
+  box[3] = Math.max(box[3], b[3]);
+}
+
+/* The box around *features*. */
+function boxOf(features) {
+  const box = emptyBox();
+  for (const f of features) grow(box, f.box);
+  return box;
+}
+
+// The length of the equator, in metres (EPSG:3857).
+const EQUATOR = 40075016.686;
+
+/* The metres a pixel spans at latitude *lat* at *zoom*. */
+const metresPerPixel = (lat, zoom) => (EQUATOR * Math.cos((lat * Math.PI) / 180)) / (256 * 2 ** zoom);
+
+/* The point (x, y) in Z0 pixels in CSS pixels of the canvas of *view*:
+ * whole pixels, as Leaflet's layer points, so that labels whose boxes just
+ * touch do not overlap. */
+const pixelAt = (view, x, y) => ({ x: Math.round(x * view.k) - view.x, y: Math.round(y * view.k) - view.y });
+
+/* The point (lat, lon) likewise. */
+const toPixel = (view, lat, lon) => pixelAt(view, mercX(lon), mercY(lat));
+
+/* The part of *view* the map shows (not the canvas around it) and *pad*
+ * times its size on every side, in Z0 pixels. */
+function viewPixels(view, pad) {
+  const [x0, y0, x1, y1] = view.visible;
+  const dx = (x1 - x0) * pad;
+  const dy = (y1 - y0) * pad;
+  const { k } = view;
+  return [(view.x + x0 - dx) / k, (view.y + y0 - dy) / k, (view.x + x1 + dx) / k, (view.y + y1 + dy) / k];
+}
+
+/* The first feature of *file* whose properties pass *which* that holds the
+ * point (x, y) in Z0 pixels, or undefined. */
+const featureAt = (file, x, y, which = () => true) =>
+  file.features.find((f) => which(f.properties) && boxContains(f.box, x, y) && contains(file, f, x, y));
 
 /* [x, y] in Z0 pixels of every house of address *group*, NaN where it has
  * no point; made once per group. */
@@ -685,12 +909,6 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
   const cityZsk = new Set(
     coarse.features.filter((f) => f.properties.city).map((f) => `zsk:${f.properties.kraj}/${f.properties.zsk}`),
   );
-  const grow = (box, b) => {
-    box[0] = Math.min(box[0], b[0]);
-    box[1] = Math.min(box[1], b[1]);
-    box[2] = Math.max(box[2], b[2]);
-    box[3] = Math.max(box[3], b[3]);
-  };
   /* The areas the labels name, as `Placer` and `visibleSpot` take them:
    * {own, over, file, features, box}. Those of coarse.json by key
    * ('kraj:1', 'okres:101', 'zsk:1/1', 'oz:BA/1'), each the union of its
@@ -701,7 +919,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
     for (const own of keys) {
       let a = coarseAreas.get(own);
       if (!a) {
-        a = { own, over: [own], file: coarse, features: [], box: [Infinity, Infinity, -Infinity, -Infinity] };
+        a = { own, over: [own], file: coarse, features: [], box: emptyBox() };
         coarseAreas.set(own, a);
       }
       a.features.push(f);
@@ -725,8 +943,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
       let obec = obce.get(p.id);
       if (!obec) {
         const own = `obec:${p.id}`;
-        const box = [Infinity, Infinity, -Infinity, -Infinity];
-        obec = { own, over: [own, ...cellKeys(p)], file, features: [], box, label: null, area: 0 };
+        obec = { own, over: [own, ...cellKeys(p)], file, features: [], box: emptyBox(), label: null, area: 0 };
         obce.set(p.id, obec);
       }
       obec.features.push(f);
@@ -742,49 +959,34 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
   }
   const bands = geoIndex.shards;
   const coarsestLod = bands[0].lod;
-  // The shards drawn at zoom *z*: each band runs from zoom[0] up to zoom[1].
-  const lodFor = (z) =>
-    bands.find((b) => z >= b.zoom[0] && (b.zoom[1] === null || z < b.zoom[1]))?.lod ?? null;
-  const binSize = Object.fromEntries(
-    bands.map((b) => [b.lod, BIN_PIXELS / 2 ** (b.zoom[0] - Z0)]),
-  );
+  const binSize = binSizes(bands);
+  const lodFor = (z) => lodAt(bands, z);
   // The okrsky (polling districts) of the obce that have them drawn
   // (geo/index.json `okrsky`): a file per okres and level of detail, in
   // bands of their own.
   const okrsokBands = geoIndex.okrsky.bands;
-  const okrsokLodFor = (z) =>
-    okrsokBands.find((b) => z >= b.zoom[0] && (b.zoom[1] === null || z < b.zoom[1]))?.lod ?? null;
-  const okrsokBinSize = Object.fromEntries(
-    okrsokBands.map((b) => [b.lod, BIN_PIXELS / 2 ** (b.zoom[0] - Z0)]),
-  );
+  const okrsokBinSize = binSizes(okrsokBands);
   const okrsokObce = new Set(Object.keys(geoIndex.okrsky.drawn));
 
   // The countries around: the finest level whose band has begun at the zoom
   // and whose extent holds all that is drawn (a very large view keeps a
   // coarser one). {lod, file} once one has come.
   const neighbourBands = [...geoIndex.neighbours].sort((a, b) => b.zoom[0] - a.zoom[0]);
-  const neighbourFiles = new Map();
+  const neighbourFiles = new Cache(Infinity);
   let neighbours = null;
   const neighbourBand = (zoom, box) =>
     neighbourBands.find(
       (b) =>
         zoom >= b.zoom[0] && b.extent[0] <= box[0] && b.extent[1] <= box[1] && b.extent[2] >= box[2] && b.extent[3] >= box[3],
     ) ?? neighbourBands.at(-1);
-  function loadNeighbours(band) {
-    let file = neighbourFiles.get(band.lod);
-    if (!file) {
-      file = fetchJSON(`/geo/neighbours/${band.lod}.json`).then((topo) =>
-        decode(topo, BIN_PIXELS / 2 ** (band.zoom[0] - Z0)),
-      );
-      neighbourFiles.set(band.lod, file);
-      file.catch(() => neighbourFiles.delete(band.lod));
-    }
-    return file;
-  }
+  const loadNeighbours = (band) =>
+    neighbourFiles.get(band.lod, async () =>
+      decode(await fetchJSON(`/geo/neighbours/${band.lod}.json`), bandBinSize(band)),
+    );
 
   // The overlays switched on, and the number of council obvody of every obec
   // (data/index.json), which the council overlay colours them by.
-  let overlays = { zsk: true, city: true, oz: true, okrsky: true, base: true };
+  let overlays = { zsk: true, city: true, oz: true, okrsky: true, base: true, buildings: true };
   let councils = null;
   // The 2026 results shown (`setResults`): {steps, tone, palette, obce,
   // zsk, councils, okrsky, okrsokObce}, `tone` 'result' (the colours
@@ -798,11 +1000,13 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
   let results = null;
   const zskOf = (p) => `${p.kraj}/${p.zsk}`;
   const okrsokKey = (p) => `${p.obec}/${p.okrsok}`;
+  // The selected place (`select`): {obec, info, lat?, lon?, label?, obvod?,
+  // okrsok?, shape} or {area}; null for none.
   let place = null;
   // Counts calls of `select`: a slower one that comes back late is dropped.
   let selection = 0;
   // The selected obec for when its shard is not drawn: {code, obec}, obec
-  // ({file, feature}) from the coarsest shard once that has come.
+  // from the coarsest shard (`featureOf`) once that has come.
   let selectedObec = null;
   // A contest's area shown from its pin on the ballots or in Favourites
   // (`showArea`), highlighted beside the selected place until the selection
@@ -824,7 +1028,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
   const okrskyShown = new Map();
   let okrskyWanted = new Set();
   let okrskyLod = null;
-  const shards = new Cache(SHARD_VERTICES, (file) => file.xy.length / 2);
+  const shards = new Cache(SHARD_VERTICES, vertices);
   const addresses = new Map();
   let wantedAddresses = new Set();
 
@@ -843,45 +1047,20 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
   // bin like the shards' (`drawBase`) and let go when it is no longer drawn.
   const baseShown = new Map();
   let baseCoarse = null;
-  const baseFiles = new Cache(BASE_VERTICES, (file) => file.xy.length / 2);
+  const baseFiles = new Cache(BASE_VERTICES, vertices);
   const loadBase = (path, size) => baseFiles.get(path, async () => decode(await fetchJSON(`/base/${path}`), size));
+  // The buildings (`loadBuildings`): base/index.json `buildings`, {zoom,
+  // obce: Set of the codes that have a file}, once it has come; obec code
+  // → its decoded file (`decodeBuildings`) drawn, and those wanted.
+  let buildingsIndex = null;
+  let buildingsAsked = false;
+  const buildingsShown = new Map();
+  let wantedBuildings = new Set();
+  const buildingFiles = new Cache(BUILDING_VERTICES, (file) => file.vertices);
+  const loadBuildingFile = (code) =>
+    buildingFiles.get(code, async () => decodeBuildings(await fetchJSON(`/base/obec/${code}.json`)));
 
-  /* The water areas of *bin* of base map *file* as one path, or null. */
-  function waterPath(file, bin) {
-    if (!bin.features.length) return null;
-    const path = new Path2D();
-    for (const f of bin.features) addFeature(path, file, f);
-    return path;
-  }
-
-  // The part of *view* the map shows (not the canvas around it) and *pad*
-  // times its size on every side, in Z0 pixels.
-  const viewPixels = (view, pad) => {
-    const [x0, y0, x1, y1] = view.visible;
-    const dx = (x1 - x0) * pad;
-    const dy = (y1 - y0) * pad;
-    const { k } = view;
-    return [(view.x + x0 - dx) / k, (view.y + y0 - dy) / k, (view.x + x1 + dx) / k, (view.y + y1 + dy) / k];
-  };
-  // Whole pixels, as Leaflet's layer points: labels whose boxes just touch
-  // do not overlap.
-  const toPixel = (view, lat, lon) => ({
-    x: Math.round(mercX(lon) * view.k) - view.x,
-    y: Math.round(mercY(lat) * view.k) - view.y,
-  });
-
-  // An overlay is drawn from zoom `lines`, its obvod numbers within
-  // `numbers` and the selected place's obvod highlighted within `highlight`
-  // (zooms by `level`): numbers and a highlight need the obvody neither much
-  // smaller nor much larger than the view.
-  const OVERLAYS = {
-    zsk: { lines: 0, numbers: [9, 11], highlight: [0, 10] },
-    city: { lines: 10, numbers: [11, 13], highlight: [10, 13] },
-    oz: { lines: 11, numbers: [12, Infinity], highlight: [11, Infinity] },
-    okrsky: { lines: 13, numbers: [14, Infinity], highlight: [13, Infinity] },
-  };
   const drawsOverlay = (name, z) => overlays[name] && z >= OVERLAYS[name].lines;
-  const within = (z, [from, to]) => z >= from && z <= to;
   // The results' units of the council obvody and of the okrsky show from
   // the zoom their overlay draws their borders at, whether it is on or not.
   const showsUnits = (name, z) => z >= OVERLAYS[name].lines;
@@ -925,20 +1104,20 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
     return unit ? results[unit[0]].get(unit[1])[0] : undefined;
   };
 
+  /* The colour of step *s* of the results. */
+  function stepColor(s) {
+    if (results.palette) return COLOR[results.palette[s]];
+    if (results.tone === 'result') return COLOR[`result-${s + 1}`];
+    return mix(COLOR.land, COLOR[results.tone], TONE_STEPS[s]);
+  }
+
   /* Fills the features of *file* in *bins* in the colour of their step of
    * the results, *stepOf(feature)*, over the land: one path per step and
    * bin, cached under *group* (`setResults` lets go of them). */
   function fillResults(ctx, file, bins, group, stepOf) {
     for (let s = 0; s < results.steps; s++) {
-      if (results.palette) ctx.fillStyle = COLOR[results.palette[s]];
-      else if (results.tone === 'result') ctx.fillStyle = COLOR[`result-${s + 1}`];
-      else ctx.fillStyle = mix(COLOR.land, COLOR[results.tone], TONE_STEPS[s]);
-      for (const bin of bins) {
-        const path = binPath(bin, `${group} result-${s}`, () =>
-          unionPath(file, bin.features.filter((f) => stepOf(f) === s)),
-        );
-        if (path) ctx.fill(path, 'evenodd');
-      }
+      ctx.fillStyle = stepColor(s);
+      fillBins(ctx, bins, `${group} result-${s}`, (bin) => unionPath(file, bin.features.filter((f) => stepOf(f) === s)));
     }
   }
 
@@ -975,48 +1154,85 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
     const bins = binsIn(file, view.box);
     placeFile(ctx, file, view);
     ctx.fillStyle = COLOR.neighbour;
-    for (const bin of bins) {
-      const path = binPath(bin, 'land', () => unionPath(file, bin.features));
-      if (path) ctx.fill(path, 'evenodd');
-    }
+    fillBins(ctx, bins, 'land', (bin) => unionPath(file, bin.features));
     ctx.strokeStyle = COLOR['neighbour-line'];
     ctx.lineWidth = 1 / view.k;
     const dashes = dashedPath(file, bins, view, NEIGHBOUR_DASH, () => true);
     if (dashes) ctx.stroke(dashes);
   }
 
-  /* The base map: roads, railways and waters, faint, over the land and the
-   * results' fills and under every border, highlight and label, at the
-   * theme's `base-alpha`. Each class is one path per bin in view, made once
-   * and scaled by the transform: the rasterizer works only on what is near
-   * the view, and nothing is built again for a pan or zoom. */
+  /* The base map: waters, buildings, roads and railways, faint, over the
+   * land and the results' fills and under every border, highlight and
+   * label, at the theme's `base-alpha`. Each class is one path per bin in
+   * view, made once and scaled by the transform, and the buildings one per
+   * cell: the rasterizer works only on what is near the view, and nothing
+   * is built again for a pan or zoom but the railways' ticks. Each step
+   * goes over all the files, so that the casing of a road in one never
+   * cuts the fill of a road in the next. (Drawn opaque on a canvas of its
+   * own and laid on at `base-alpha`, the casings would not show faintly
+   * under the fills, but that took 2.5 ms more of a drawing of 30.) */
   function drawBase(ctx, view) {
-    if (!overlays.base) return;
-    const files = [...baseShown.values()].map((s) => s.file);
-    if (coarseShown && baseCoarse) files.unshift(baseCoarse);
     const z = level();
+    const files = [];
+    if (overlays.base) {
+      if (coarseShown && baseCoarse) files.push(baseCoarse);
+      for (const s of baseShown.values()) files.push(s.file);
+    }
+    const drawnFiles = files.map((file) => [file, binsIn(file, view.box)]).filter(([, bins]) => bins.length);
     // One canvas pixel, in the units of the paths (`placeFile`).
     const hairline = 1 / (view.k * view.ratio);
+    // The width of line class [code, colour, widths, dense] in CSS px, and
+    // whether it is a hairline.
+    const widthOf = ([, , widths, dense]) => [fromZoom(widths, z) ?? 0, dense && z < HAIRLINE_ZOOM];
+    const stroke = (code, color, px, hair) => {
+      ctx.strokeStyle = COLOR[color];
+      ctx.lineWidth = hair ? Math.min(px / view.k, hairline) : px / view.k;
+      for (const [file, bins] of drawnFiles) {
+        placeFile(ctx, file, view);
+        strokeBins(ctx, bins, `base-${code}`, (bin) => linesPath(file, bin.arcs, (c) => c === code));
+      }
+    };
     ctx.globalAlpha = Number(COLOR['base-alpha']);
-    for (const file of files) {
-      const bins = binsIn(file, view.box);
-      if (!bins.length) continue;
+    ctx.fillStyle = COLOR['base-water'];
+    for (const [file, bins] of drawnFiles) {
       placeFile(ctx, file, view);
-      ctx.fillStyle = COLOR['base-water'];
-      for (const bin of bins) {
-        const path = binPath(bin, 'base-water', () => waterPath(file, bin));
-        if (path) ctx.fill(path, 'evenodd');
+      fillBins(ctx, bins, 'base-water', (bin) => waterPath(file, bin));
+    }
+    if (overlays.buildings && z >= buildingsIndex?.zoom) {
+      ctx.fillStyle = COLOR['base-building'];
+      for (const file of buildingsShown.values()) {
+        placeFile(ctx, file, view);
+        for (const cell of file.cells) if (boxesIntersect(cell.box, view.box)) ctx.fill(cell.path);
       }
-      for (const [code, color, widths, dense] of BASE_LINES) {
-        const w = baseWidth(widths, z);
-        if (!w) continue;
-        ctx.strokeStyle = COLOR[color];
-        ctx.lineWidth = dense && z < HAIRLINE_ZOOM ? Math.min(w / view.k, hairline) : w / view.k;
-        for (const bin of bins) {
-          const path = binPath(bin, `base-${code}`, () => linesPath(file, bin.arcs, (c) => c === code));
-          if (path) ctx.stroke(path);
-        }
+    }
+    for (const line of BASE_WATERWAYS) {
+      const [px, hair] = widthOf(line);
+      if (px) stroke(line[0], line[1], px, hair);
+    }
+    // The roads' casings (or whole narrow roads), then their fills.
+    for (const line of BASE_ROADS) {
+      const [px, hair] = widthOf(line);
+      if (px) stroke(line[0], line[1], px, hair);
+    }
+    for (const line of BASE_ROADS) {
+      const [px, hair] = widthOf(line);
+      if (!hair && px >= CASED_WIDTH) stroke(line[0], `${line[1]}-fill`, px - 2 * CASING, false);
+    }
+    for (const [code, color, widths, dense, ticks] of BASE_RAILS) {
+      const [px, hair] = widthOf([code, color, widths, dense]);
+      if (!px) continue;
+      stroke(code, color, px, hair);
+      const tick = fromZoom(ticks, z);
+      if (!tick) continue;
+      const [across, along, gap] = tick;
+      ctx.lineCap = 'butt';
+      ctx.lineWidth = across / view.k;
+      for (const [file, bins] of drawnFiles) {
+        placeFile(ctx, file, view);
+        const path = dashedPath(file, bins, view, [along, gap], (c) => c === code);
+        if (path) ctx.stroke(path);
       }
+      ctx.lineCap = 'round';
     }
     ctx.globalAlpha = 1;
   }
@@ -1049,10 +1265,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
       const groups = fillGroups(z);
       for (const [name, color, which] of groups) {
         ctx.fillStyle = color;
-        for (const bin of bins) {
-          const path = binPath(bin, name, () => unionPath(file, bin.features.filter(which)));
-          if (path) ctx.fill(path, 'evenodd');
-        }
+        fillBins(ctx, bins, name, (bin) => unionPath(file, bin.features.filter(which)));
       }
       // Over the land only: the council overlay's obce of no known obvod or
       // no council keep their colours. Cached apart below and from the
@@ -1077,50 +1290,10 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
           if (path) ctx.stroke(path);
           continue;
         }
-        for (const bin of bins) {
-          const path = binPath(bin, name, () => linesPath(file, bin.arcs, pick));
-          if (path) ctx.stroke(path);
-        }
+        strokeBins(ctx, bins, name, (bin) => linesPath(file, bin.arcs, pick));
       }
     }
     drawHighlight(ctx, view);
-  }
-
-  /* The arcs of *file* among *arcs* this file draws whose code passes
-   * *pick*, as one path, or null if there are none. */
-  function linesPath(file, arcs, pick) {
-    const path = new Path2D();
-    let any = false;
-    for (const a of arcs) {
-      const code = file.lines[a];
-      if (code & FOREIGN || !pick(code)) continue;
-      addArc(path, file, a);
-      any = true;
-    }
-    return any ? path : null;
-  }
-
-  /* The dashes, *dash* CSS pixels long and apart (setLineDash), of the arcs
-   * of *file* in *bins* whose code passes *pick* that *view* shows, as one
-   * path to stroke without a dash pattern (topo.js `addDashedArc`), or null
-   * if there are none. Made for each drawing: it depends on the view. */
-  function dashedPath(file, bins, view, dash, pick) {
-    const [ox, oy] = file.origin;
-    // A cap reaching into the canvas from a dash just outside it.
-    const m = 4 / view.k;
-    const box = [view.box[0] - ox - m, view.box[1] - oy - m, view.box[2] - ox + m, view.box[3] - oy + m];
-    const lengths = dash.map((d) => d / view.k);
-    const path = new Path2D();
-    let any = false;
-    for (const bin of bins) {
-      for (const a of bin.arcs) {
-        const code = file.lines[a];
-        if (code & FOREIGN || !pick(code)) continue;
-        addDashedArc(path, file, a, box, lengths);
-        any = true;
-      }
-    }
-    return any ? path : null;
   }
 
   /* The overlay whose obvod of the selected place is highlighted at zoom
@@ -1162,7 +1335,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
       const members = file.features.filter((f) => member(f.properties));
       for (const f of members) {
         addFeature(fill, file, f);
-        for (const p of f.arcs) for (const ring of p) for (const r of ring) around.add(r < 0 ? ~r : r);
+        for (const p of f.arcs) for (const ring of p) for (const r of ring) around.add(arcOf(r));
       }
       if (!around.size) continue;
       if (overlay === 'oz') line = unionPath(file, members);
@@ -1282,6 +1455,33 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
     present(canvas, view, seq);
   }
 
+  /* Lets go of the files of *drawnFiles* (okres → {lod, file}) whose okres
+   * *keep(okres)* no longer wants. */
+  function dropUnwanted(drawnFiles, keep) {
+    for (const [okres, s] of drawnFiles) {
+      if (!keep(okres)) {
+        drawnFiles.delete(okres);
+        releasePaths(s.file);
+      }
+    }
+  }
+
+  /* Loads the file of *okres* at *lod* (*load()*) into *drawnFiles*, unless
+   * it is drawn already. Once it comes, it replaces the one drawn, if
+   * *wants()* still and no other came meanwhile, and *done()* is called. */
+  function loadInto(drawnFiles, okres, lod, load, wants, done = redraw) {
+    if (drawnFiles.get(okres)?.lod === lod) return;
+    load()
+      .then((file) => {
+        const old = drawnFiles.get(okres);
+        if (!wants() || old?.lod === lod) return;
+        if (old) releasePaths(old.file);
+        drawnFiles.set(okres, { lod, file });
+        done();
+      })
+      .catch(logError);
+  }
+
   /* Loads what *view* shows and lets go of what it no longer does: the
    * shards of the okresy in its canvas at the level of detail of its zoom,
    * their base map (`refreshBase`), the countries around and
@@ -1296,12 +1496,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
     );
     // An okres of another band stays drawn until its new shard has come: a
     // zoom shows the detail it had meanwhile, not a hole.
-    for (const [okres, s] of shown) {
-      if (!wanted.has(okres)) {
-        shown.delete(okres);
-        releasePaths(s.file);
-      }
-    }
+    dropUnwanted(shown, (okres) => wanted.has(okres));
     const band = neighbourBand(view.zoom, box);
     if (neighbours?.lod !== band.lod) {
       loadNeighbours(band)
@@ -1312,20 +1507,14 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
           neighbours = { lod: band.lod, file };
           redraw();
         })
-        .catch((e) => console.error(e));
+        .catch(logError);
     }
     for (const okres of wanted) {
-      if (shown.get(okres)?.lod === lod) continue;
-      loadShard(okres, lod)
-        .then((file) => {
-          const old = shown.get(okres);
-          if (!wanted.has(okres) || wantedLod !== lod || old?.lod === lod) return;
-          if (old) releasePaths(old.file);
-          shown.set(okres, { lod, file });
-          settle();
-          redraw();
-        })
-        .catch((e) => console.error(e));
+      const wants = () => wanted.has(okres) && wantedLod === lod;
+      loadInto(shown, okres, lod, () => loadShard(okres, lod), wants, () => {
+        settle();
+        redraw();
+      });
     }
     settle();
     refreshOkrsky(view);
@@ -1337,12 +1526,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
    * detail, drawn as soon as it comes (it is not needed to replace the
    * coarse view). */
   function refreshBase() {
-    for (const [okres, s] of baseShown) {
-      if (!overlays.base || !wanted.has(okres)) {
-        baseShown.delete(okres);
-        releasePaths(s.file);
-      }
-    }
+    dropUnwanted(baseShown, (okres) => overlays.base && wanted.has(okres));
     if (!overlays.base) return;
     if (!baseCoarse) {
       loadBase('coarse.json', Infinity)
@@ -1350,60 +1534,53 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
           baseCoarse = file;
           redraw();
         })
-        .catch((e) => console.error(e));
+        .catch(logError);
     }
     const lod = wantedLod;
     for (const okres of wanted) {
-      if (baseShown.get(okres)?.lod === lod) continue;
-      loadBase(`okres/${okres}/${lod}.json`, binSize[lod])
-        .then((file) => {
-          const old = baseShown.get(okres);
-          if (!overlays.base || !wanted.has(okres) || wantedLod !== lod || old?.lod === lod) return;
-          if (old) releasePaths(old.file);
-          baseShown.set(okres, { lod, file });
-          redraw();
-        })
-        .catch((e) => console.error(e));
+      const wants = () => overlays.base && wanted.has(okres) && wantedLod === lod;
+      loadInto(baseShown, okres, lod, () => loadBase(`okres/${okres}/${lod}.json`, binSize[lod]), wants);
     }
   }
 
   /* Loads the okrsky files *view* wants (`wantsOkrsky`), as `refresh` the
    * shards: those of the okresy in it that have okrsky drawn. */
   function refreshOkrsky(view) {
-    const lod = wantsOkrsky(Math.floor(view.zoom)) ? okrsokLodFor(view.zoom) : null;
+    const lod = wantsOkrsky(Math.floor(view.zoom)) ? lodAt(okrsokBands, view.zoom) : null;
     const extents = geoIndex.okrsky.okresy;
     okrskyLod = lod;
     okrskyWanted = new Set(
       lod === null ? [] : Object.keys(extents).filter((o) => boxesIntersect(extents[o], view.bounds)),
     );
-    for (const [okres, s] of okrskyShown) {
-      if (!okrskyWanted.has(okres)) {
-        okrskyShown.delete(okres);
-        releasePaths(s.file);
-      }
-    }
+    dropUnwanted(okrskyShown, (okres) => okrskyWanted.has(okres));
     for (const okres of okrskyWanted) {
-      if (okrskyShown.get(okres)?.lod === lod) continue;
-      loadOkrsky(okres, lod)
-        .then((file) => {
-          const old = okrskyShown.get(okres);
-          if (!okrskyWanted.has(okres) || okrskyLod !== lod || old?.lod === lod) return;
-          if (old) releasePaths(old.file);
-          okrskyShown.set(okres, { lod, file });
-          redraw();
-        })
-        .catch((e) => console.error(e));
+      const wants = () => okrskyWanted.has(okres) && okrskyLod === lod;
+      loadInto(okrskyShown, okres, lod, () => loadOkrsky(okres, lod), wants);
     }
   }
 
   /* Once every shard in view has come: coarse.json is no longer drawn (it
    * is below the zoom bands of the shards, and in them until then), and the
-   * address files load. */
+   * address and buildings files load. */
   function settle() {
     if (wantedLod === null) coarseShown = true;
     if (![...wanted].every((o) => shown.get(o)?.lod === wantedLod)) return;
     if (wantedLod !== null) coarseShown = false;
     loadAddresses();
+    loadBuildings();
+  }
+
+  /* The codes of the obce whose shards' features reach into the view, or
+   * the tenth of it around. */
+  function obceInView() {
+    const view = viewPixels(current.view, 0.1);
+    const codes = new Set();
+    for (const s of shown.values()) {
+      for (const f of s.file.features) {
+        if (boxesIntersect(f.box, view)) codes.add(f.properties.id);
+      }
+    }
+    return codes;
   }
 
   function loadAddresses() {
@@ -1413,13 +1590,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
       addresses.clear();
       return;
     }
-    const view = viewPixels(current.view, 0.1);
-    const codes = new Set();
-    for (const s of shown.values()) {
-      for (const f of s.file.features) {
-        if (boxesIntersect(f.box, view)) codes.add(f.properties.id);
-      }
-    }
+    const codes = obceInView();
     wantedAddresses = new Set([...codes].slice(0, MAX_ADDRESS_FILES));
     for (const code of addresses.keys()) if (!wantedAddresses.has(code)) addresses.delete(code);
     for (const code of wantedAddresses) {
@@ -1430,7 +1601,40 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
           addresses.set(code, file);
           redraw();
         })
-        .catch((e) => console.error(e));
+        .catch(logError);
+    }
+  }
+
+  /* Loads the buildings of the obce in view that have them, while they
+   * are on and from their zoom (base/index.json `buildings`, asked for
+   * once), and lets go of the others. */
+  function loadBuildings() {
+    if (overlays.buildings && !buildingsIndex && !buildingsAsked) {
+      buildingsAsked = true;
+      fetchJSON('/base/index.json')
+        .then(({ buildings }) => {
+          buildingsIndex = { zoom: buildings.zoom, obce: new Set(buildings.obce) };
+          loadBuildings();
+        })
+        .catch((e) => {
+          buildingsAsked = false;
+          logError(e);
+        });
+    }
+    const on = overlays.buildings && buildingsIndex && level() >= buildingsIndex.zoom;
+    wantedBuildings = on ? new Set([...obceInView()].filter((code) => buildingsIndex.obce.has(code))) : new Set();
+    const before = buildingsShown.size;
+    for (const code of buildingsShown.keys()) if (!wantedBuildings.has(code)) buildingsShown.delete(code);
+    if (buildingsShown.size !== before) redraw();
+    for (const code of wantedBuildings) {
+      if (buildingsShown.has(code)) continue;
+      loadBuildingFile(code)
+        .then((file) => {
+          if (!wantedBuildings.has(code)) return;
+          buildingsShown.set(code, file);
+          redraw();
+        })
+        .catch(logError);
     }
   }
 
@@ -1440,7 +1644,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
    * what is under it, so the band is made on a canvas of its own. */
   function streetBand(ctx, view, pixels, edges) {
     const lat = place.shape.points[0][0];
-    const perPixel = (40075016.686 * Math.cos((lat * Math.PI) / 180)) / (256 * 2 ** view.zoom);
+    const perPixel = metresPerPixel(lat, view.zoom);
     const r = Math.min(Math.max(STREET_REACH / perPixel, STREET_PIXELS[0]), STREET_PIXELS[1]);
     const path = new Path2D();
     for (const [i, j] of edges) {
@@ -1500,17 +1704,142 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
   // there while the map pans as long as it is whole in the free part, rather
   // than following the middle of what is in view. Key as in `spots`.
   let kept = { zoom: null, at: new Map() };
+  // The selected point's dot (radius 6 + stroke) is drawn above the labels;
+  // a label that would sit under it moves this far below its centre.
+  const PIN = 9;
 
-  /* Names the countries around in *view*, each at the one of its places
+  /* What the labels of a drawing share: {ctx, view, free, z, placer} (*free*
+   * the part of *view* left uncovered, map.js `freePart`; `z` by `level`)
+   * and the ways to place and draw a label. */
+  function labelling(ctx, view, free) {
+    const placer = new Placer();
+    const pin = place && Number.isFinite(place.lat) ? toPixel(view, place.lat, place.lon) : null;
+    // Whether a label *w* × *h* centred at *q* is whole in the free part.
+    const fits = (q, w, h) => q.x - w / 2 >= free[0] && q.x + w / 2 <= free[2] && q.y - h / 2 >= free[1] && q.y + h / 2 <= free[3];
+    const keep = (key, p) => kept.at.set(key, { x: (p.x + view.x) / view.k, y: (p.y + view.y) / view.k });
+    // Where the labels of the other parts of an area of several go (geo.py
+    // `parts`: [lon, lat, room in metres]): those of the parts whose room
+    // holds the box *w* × *size* of the text, whole in the free part.
+    const partSpots = (parts, w, size) => {
+      const need = Math.hypot(w / 2, size / 2 + 1);
+      return (parts ?? []).flatMap(([lon, lat, room]) => {
+        const q = toPixel(view, lat, lon);
+        return room / metresPerPixel(lat, view.zoom) >= need && fits(q, w, size + 2) ? [q] : [];
+      });
+    };
+    return {
+      ctx,
+      view,
+      free,
+      z: level(),
+      placer,
+
+      /* The point [lon, lat] in pixels of the canvas (`toPixel`). */
+      at: ([lon, lat]) => toPixel(view, lat, lon),
+
+      /* Where the label *text* of *area* goes, or null where it would be
+       * cut off: a name half under the pane or past the edge of the map
+       * reads as another word. Where it was last drawn at this zoom, if the
+       * whole label is still in the free part of the map: a pan moves a
+       * label only once the edge of the map or a pane reaches it. Else at
+       * the area's own spot *p*, if the whole label is in the free part.
+       * Else, so that an area seen only in part (its spot panned away or
+       * under a pane) is still named, where the part of it in the free part
+       * leaves the label the most room (`visibleSpot`), if it fits there.
+       * Where one of its other *parts* is labelled in view (`inParts`), it
+       * stays in its own part, the one holding *p* (`partAt`): it would
+       * else stand a second time in a part named already. */
+      spot(area, p, text, font, size, parts) {
+        if (!area) return p;
+        const w = textWidth(ctx, font, text) + 4;
+        const h = size + 2;
+        const key = `${area.own} ${text}`;
+        const z0 = (r) => [(r.x + view.x) / view.k, (r.y + view.y) / view.k];
+        let within = area;
+        if (partSpots(parts, w, size).length) {
+          const part = partAt(area.file, area.features, ...z0(p));
+          within = part && { file: area.file, features: [part], box: part.box };
+        }
+        const last = kept.at.get(key);
+        const q = last && pixelAt(view, last.x, last.y);
+        const ours = (r) => within === area || (within && contains(area.file, within.features[0], ...z0(r)));
+        if (q && fits(q, w, h) && ours(q)) return q;
+        if (fits(p, w, h)) {
+          keep(key, p);
+          return p;
+        }
+        let found = spots.of.get(key);
+        if (found?.file !== area.file) {
+          found = { file: area.file, at: within && visibleSpot(within, free, view, w, h) };
+          spots.of.set(key, found);
+        }
+        if (found.at) keep(key, found.at);
+        else kept.at.delete(key);
+        return found.at;
+      },
+
+      /* Draws the name *text* at *p* (`spot`), out from under the pin, and
+       * with *keepInside* slid into the free part; none where *p* is null.
+       * Returns as `drawText`. */
+      label(text, p, font, size, color, { kind, area, keepInside = false, gap = 0 }) {
+        if (!p) return null;
+        let { x, y } = p;
+        if (pin) {
+          const half = textWidth(ctx, font, text) / 2 + 2;
+          const hits = Math.abs(p.x - pin.x) < half + PIN && Math.abs(p.y - pin.y) < size / 2 + PIN;
+          if (hits) y = pin.y + PIN + size / 2 + 2;
+        }
+        if (keepInside) {
+          // Kraj names label the whole country view; one at the edge of a
+          // narrow (phone) map or by the pane, with no room in the part of
+          // its kraj in view, would be cut off, so it slides inwards.
+          const half = textWidth(ctx, font, text) / 2 + 4;
+          x = Math.min(Math.max(x, free[0] + half), free[2] - half);
+          y = Math.min(Math.max(y, free[1] + size / 2), free[3] - size / 2);
+        }
+        return drawText(ctx, placer, text, x, y, font, size, color, { gap, kind, area, bounds: free });
+      },
+
+      /* Draws the 12 px number *text* of *area*, a label of *kind*, at *p*;
+       * none where *p* is null. Returns as `drawText`. */
+      number(text, p, font, color, kind, area) {
+        return p && drawText(ctx, placer, text, p.x, p.y, font, 12, color, { kind, area, bounds: free });
+      },
+
+      /* Draws the value *text* of the results of *area* at (x, y). */
+      value(text, x, y, area) {
+        drawText(ctx, placer, text, x, y, OBVOD_FONT, 12, COLOR.text, { kind: 'result', area, bounds: free });
+      },
+
+      /* Draws a label at *p* by *draw(p)* (`label`, `number`; none where
+       * *p* is null) and the *value* of the results of *area*, if any,
+       * under it. Returns whether the label was drawn. */
+      labelWithValue(draw, p, value, area) {
+        const y = draw(p);
+        if (typeof y !== 'number') return false;
+        if (value) this.value(value, p.x, y + VALUE_DROP, area);
+        return true;
+      },
+
+      /* Labels the other parts of an area of several (geo.py `parts`) by
+       * *draw(p)* where *text* fits in the room: the box of the text within
+       * the largest circle inside the part (`partSpots`). */
+      inParts(parts, text, font, size, draw) {
+        for (const p of partSpots(parts, textWidth(ctx, font, text) + 4, size)) draw(p);
+      },
+    };
+  }
+
+  /* Names the countries around in the view, each at the one of its places
    * (geo.py `label_spots`) that leaves the name the most room: the least of
-   * the place's own room at this zoom and its distance to the edges of
-   * *free*, the free part of the map (map.js `freePart`), with the whole name
-   * inside both. The places are in the country, out of Slovakia, so a name
-   * never covers it; one that would cover a Slovak name tries the next
-   * place. The names with the most room go first. */
-  function drawNeighbourNames(ctx, placer, view, free) {
+   * the place's own room at this zoom and its distance to the edges of the
+   * free part of the map, with the whole name inside both. The places are
+   * in the country, out of Slovakia, so a name never covers it; one that
+   * would cover a Slovak name tries the next place. The names with the most
+   * room go first. */
+  function drawNeighbourNames({ ctx, placer, view, free }) {
     // Metres a pixel spans at the equator.
-    const metres = 40075016.686 / (256 * 2 ** view.zoom);
+    const metres = EQUATOR / (256 * 2 ** view.zoom);
     ctx.letterSpacing = NEIGHBOUR_SPACING;
     const names = [];
     for (const f of neighbours.file.features) {
@@ -1554,86 +1883,34 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
     ctx.lineCap = 'butt';
     ctx.lineJoin = 'miter';
     ctx.textBaseline = 'middle';
-    const z = level();
-    const placer = new Placer();
     const viewKey = `${view.zoom} ${view.x} ${view.y} ${free}`;
     if (spots.view !== viewKey) spots = { view: viewKey, of: new Map() };
     if (kept.zoom !== view.zoom) kept = { zoom: view.zoom, at: new Map() };
     const street = place?.shape?.points.map(([lat, lon]) => toPixel(view, lat, lon));
     if (street) streetBand(ctx, view, street, place.shape.edges);
-    // The selected point's dot (radius 6 + stroke) is drawn above the labels;
-    // a label that would sit under it moves just below it instead.
-    const pin = place && Number.isFinite(place.lat) ? toPixel(view, place.lat, place.lon) : null;
-    const PIN = 9;
-    // *p* null (`spot`): the label is not drawn. Returns as `drawText`.
-    const label = (name, p, font, size, color, { kind, area, keepInside = false, gap = 0 }) => {
-      if (!p) return null;
-      let { x, y } = p;
-      if (pin) {
-        const half = textWidth(ctx, font, name) / 2 + 2;
-        const hits = Math.abs(p.x - pin.x) < half + PIN && Math.abs(p.y - pin.y) < size / 2 + PIN;
-        if (hits) y = pin.y + PIN + size / 2 + 2;
-      }
-      if (keepInside) {
-        // Kraj names label the whole country view; one at the edge of a
-        // narrow (phone) map or by the pane, with no room in the part of
-        // its kraj in view, would be cut off, so it slides inwards.
-        const half = textWidth(ctx, font, name) / 2 + 4;
-        x = Math.min(Math.max(x, free[0] + half), free[2] - half);
-        y = Math.min(Math.max(y, free[1] + size / 2), free[3] - size / 2);
-      }
-      return drawText(ctx, placer, name, x, y, font, size, color, { gap, kind, area, bounds: free });
-    };
-    const at = ([lon, lat]) => toPixel(view, lat, lon);
-    // Whether a label *w* × *h* centred at *q* is whole in the free part.
-    const fits = (q, w, h) => q.x - w / 2 >= free[0] && q.x + w / 2 <= free[2] && q.y - h / 2 >= free[1] && q.y + h / 2 <= free[3];
-    /* Where the label *text* of *area* goes, or null where it would be cut
-     * off: a name half under the pane or past the edge of the map reads as
-     * another word. Where it was last drawn at this zoom, if the whole label
-     * is still in the free part of the map: a pan moves a label only once
-     * the edge of the map or a pane reaches it. Else at the area's own spot
-     * *p*, if the whole label is in the free part. Else, so that an area
-     * seen only in part (its spot panned away or under a pane) is still
-     * named, where the part of it in the free part leaves the label the
-     * most room (`visibleSpot`), if it fits there. */
-    const spot = (area, p, text, font, size) => {
-      if (!area) return p;
-      const w = textWidth(ctx, font, text) + 4;
-      const h = size + 2;
-      const key = `${area.own} ${text}`;
-      const last = kept.at.get(key);
-      const q = last && { x: Math.round(last.x * view.k) - view.x, y: Math.round(last.y * view.k) - view.y };
-      if (q && fits(q, w, h)) return q;
-      if (fits(p, w, h)) {
-        kept.at.set(key, { x: (p.x + view.x) / view.k, y: (p.y + view.y) / view.k });
-        return p;
-      }
-      let found = spots.of.get(key);
-      if (found?.file !== area.file) {
-        found = { file: area.file, at: visibleSpot(area, free, view, w, h) };
-        spots.of.set(key, found);
-      }
-      if (found.at) kept.at.set(key, { x: (found.at.x + view.x) / view.k, y: (found.at.y + view.y) / view.k });
-      else kept.at.delete(key);
-      return found.at;
-    };
-    // The other parts of an area of several (geo.py `parts`: [lon, lat,
-    // room in metres]) are labelled too where *text* fits in the room: the
-    // box of the text within the largest circle inside the part.
-    const metresPerPixel = (lat) => (40075016.686 * Math.cos((lat * Math.PI) / 180)) / (256 * 2 ** view.zoom);
-    const inParts = (parts, text, font, size, draw) => {
-      if (!parts) return;
-      const w = textWidth(ctx, font, text) + 4;
-      const need = Math.hypot(w / 2, size / 2 + 1);
-      for (const [lon, lat, room] of parts) {
-        const p = at([lon, lat]);
-        if (room / metresPerPixel(lat) >= need && fits(p, w, size + 2)) draw(p);
-      }
-    };
+    const l = labelling(ctx, view, free);
     // Obvod numbers before the names: where an overlay is drawn, which obvod
-    // is which is what the map is looked at for. Where the cities' numbers
-    // are drawn, the regional obvody within them go unnumbered: two numbers
-    // of two councils side by side would read as one series.
+    // is which is what the map is looked at for.
+    drawObvodNumbers(l);
+    // Obce are named from the zoom their shards are drawn at, okresy before.
+    const obce = lodFor(view.zoom) !== null;
+    if (l.z < OKRES_ZOOM) drawKrajNames(l);
+    // After the names of the kraje, before those of the okresy, both
+    // stacking with them.
+    drawZskResults(l, obce);
+    if (l.z >= OKRES_ZOOM && !obce) drawOkresNames(l);
+    if (obce) drawShardLabels(l);
+    if (neighbours) drawNeighbourNames(l);
+    if (l.z >= ADDRESS_ZOOM) drawHouses(l);
+    if (street) streetDots(ctx, street);
+  }
+
+  /* The numbers of the regional and the city obvody where their overlays
+   * number them (`labelling` *l*). Where the cities' numbers are drawn, the
+   * regional obvody within them go unnumbered: two numbers of two councils
+   * side by side would read as one series. */
+  function drawObvodNumbers(l) {
+    const { z } = l;
     const cityNumbers = drawsOverlay('city', z) && within(z, OVERLAYS.city.numbers);
     for (const [name, prefix] of [
       ['zsk', 'zsk:'],
@@ -1644,116 +1921,135 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
         (o) => o.id.startsWith(prefix) && !(name === 'zsk' && cityNumbers && cityZsk.has(o.id)),
       );
       const text = (o) => obvodText(o.id.slice(o.id.lastIndexOf('/') + 1));
-      const number = (o) => (p) =>
-        p &&
-        drawText(ctx, placer, text(o), p.x, p.y, OBVOD_FONT, 12, COLOR[name], {
-          kind: name,
-          area: coarseAreas.get(o.id),
-          bounds: free,
-        });
-      for (const o of obvody) number(o)(spot(coarseAreas.get(o.id), at(o.label), text(o), OBVOD_FONT, 12));
-      for (const o of obvody) inParts(o.parts, text(o), OBVOD_FONT, 12, number(o));
+      const number = (o) => (p) => l.number(text(o), p, OBVOD_FONT, COLOR[name], name, coarseAreas.get(o.id));
+      for (const o of obvody) number(o)(l.spot(coarseAreas.get(o.id), l.at(o.label), text(o), OBVOD_FONT, 12, o.parts));
+      for (const o of obvody) l.inParts(o.parts, text(o), OBVOD_FONT, 12, number(o));
     }
-    // Obce are named from the zoom their shards are drawn at, okresy before.
-    const obce = lodFor(view.zoom) !== null;
-    if (z < OKRES_ZOOM) {
-      for (const k of coarse.kraje) {
-        const area = coarseAreas.get(`kraj:${k.id}`);
-        // Where no whole spot is free, at its own, slid inwards.
-        const p = spot(area, at(k.label), k.name, KRAJ_FONT, 14) ?? at(k.label);
-        label(k.name, p, KRAJ_FONT, 14, COLOR.kraj, { kind: 'kraj', area, keepInside: true });
-      }
-      for (const k of coarse.kraje) {
-        const area = coarseAreas.get(`kraj:${k.id}`);
-        inParts(k.parts, k.name, KRAJ_FONT, 14, (p) => label(k.name, p, KRAJ_FONT, 14, COLOR.kraj, { kind: 'kraj', area }));
-      }
+  }
+
+  /* The names of the kraje (`labelling` *l*). */
+  function drawKrajNames(l) {
+    for (const k of coarse.kraje) {
+      const area = coarseAreas.get(`kraj:${k.id}`);
+      // Where no whole spot is free, at its own, slid inwards.
+      const p = l.spot(area, l.at(k.label), k.name, KRAJ_FONT, 14) ?? l.at(k.label);
+      l.label(k.name, p, KRAJ_FONT, 14, COLOR.kraj, { kind: 'kraj', area, keepInside: true });
     }
-    // The results of the regional obvody where no obec names carry them: all
-    // below the shards, else those known only as a whole. After the names of
-    // the kraje, before those of the okresy, both stacking with them.
-    for (const o of results ? coarse.obvody : []) {
+    for (const k of coarse.kraje) {
+      const area = coarseAreas.get(`kraj:${k.id}`);
+      l.inParts(k.parts, k.name, KRAJ_FONT, 14, (p) => l.label(k.name, p, KRAJ_FONT, 14, COLOR.kraj, { kind: 'kraj', area }));
+    }
+  }
+
+  /* The results of the regional obvody where no obec names carry them
+   * (`labelling` *l*): all below the shards, else, where *obce* are named,
+   * those known only as a whole. */
+  function drawZskResults(l, obce) {
+    if (!results) return;
+    for (const o of coarse.obvody) {
       const r = o.id.startsWith('zsk:') && results.zsk.get(o.id.slice('zsk:'.length));
       if (!r || (obce && !r[2])) continue;
       const area = coarseAreas.get(o.id);
-      const p = spot(area, at(o.label), r[1], OBVOD_FONT, 12);
-      if (p) drawText(ctx, placer, r[1], p.x, p.y, OBVOD_FONT, 12, COLOR.text, { kind: 'result', area, bounds: free });
+      const p = l.spot(area, l.at(o.label), r[1], OBVOD_FONT, 12);
+      if (p) l.value(r[1], p.x, p.y, area);
     }
-    if (z >= OKRES_ZOOM && !obce) {
-      const okresName = (o) => (p) =>
-        label(o.name, p, NAME_FONT, NAME_SIZE, COLOR.label, { kind: 'okres', area: coarseAreas.get(`okres:${o.id}`) });
-      for (const o of coarse.okresy) {
-        okresName(o)(spot(coarseAreas.get(`okres:${o.id}`), at(o.label), o.name, NAME_FONT, NAME_SIZE));
-      }
-      for (const o of coarse.okresy) inParts(o.parts, o.name, NAME_FONT, NAME_SIZE, okresName(o));
+  }
+
+  /* The names of the okresy (`labelling` *l*). */
+  function drawOkresNames(l) {
+    const name = (o) => (p) =>
+      l.label(o.name, p, NAME_FONT, NAME_SIZE, COLOR.label, { kind: 'okres', area: coarseAreas.get(`okres:${o.id}`) });
+    for (const o of coarse.okresy) {
+      name(o)(l.spot(coarseAreas.get(`okres:${o.id}`), l.at(o.label), o.name, NAME_FONT, NAME_SIZE, o.parts));
     }
-    if (obce) {
-      const scale = 4 ** view.zoom;
-      // The features in view ({feature, obec, piece}, see `areasOf`), and
-      // the obce they are of.
-      const features = [];
-      const inView = new Set();
-      for (const s of shown.values()) {
-        const areas = areasOf(s.file);
-        for (const f of s.file.features) {
-          if (!boxesIntersect(f.box, view.box)) continue;
-          const a = areas.get(f);
-          features.push(a);
-          if (a.obec.label) inView.add(a.obec);
-        }
+    for (const o of coarse.okresy) l.inParts(o.parts, o.name, NAME_FONT, NAME_SIZE, name(o));
+  }
+
+  // Whether an obec (or council obvod) with properties *props* is filled by
+  // its okrsky at zoom *z*, which then carry the values.
+  const byOkrsky = (props, z) =>
+    Boolean(results) && showsUnits('okrsky', z) && results.okrsokObce.has(props.id) && okrskyShown.has(props.okres);
+  // Whether a feature of the shards with properties *props* is filled at
+  // zoom *z* by its own value as a unit of *kind* ('obce', 'councils').
+  const valuedAs = (kind, props, z) => Boolean(results) && !byOkrsky(props, z) && shardUnit(props, z)?.[0] === kind;
+
+  /* The labels of the shards in view (`labelling` *l*): the numbers of the
+   * council obvody, the names of the obce, the numbers of the okrsky. */
+  function drawShardLabels(l) {
+    // The features in view ({feature, obec, piece}, see `areasOf`), and the
+    // obce they are of.
+    const features = [];
+    const inView = new Set();
+    for (const s of shown.values()) {
+      const areas = areasOf(s.file);
+      for (const f of s.file.features) {
+        if (!boxesIntersect(f.box, l.view.box)) continue;
+        const a = areas.get(f);
+        features.push(a);
+        if (a.obec.label) inView.add(a.obec);
       }
-      // Whether an obec (or council obvod) with properties *props* is
-      // filled by its okrsky at this zoom, which then carry the values.
-      const byOkrsky = (props) =>
-        Boolean(results) && showsUnits('okrsky', z) && results.okrsokObce.has(props.id) && okrskyShown.has(props.okres);
-      // Whether a council obvod drawn as such is filled by its own value.
-      const councilValued = (props) => Boolean(results) && !byOkrsky(props) && shardUnit(props, z)?.[0] === 'councils';
-      // The council obvody of the obce drawn as theirs, numbered where the
-      // overlay numbers them or they are filled by their own values, each
-      // value under its number.
-      const numbered = drawsOverlay('oz', z) && within(z, OVERLAYS.oz.numbers);
-      const pieces = features.filter((a) => a.piece && (numbered || councilValued(a.feature.properties)));
-      const text = (a) => obvodText(a.feature.properties.oz);
-      const number = (a) => (p) =>
-        p &&
-        drawText(ctx, placer, text(a), p.x, p.y, OBVOD_FONT, 12, COLOR.council, {
-          kind: 'oz',
-          area: a.piece,
-          bounds: free,
-        });
-      for (const a of pieces) {
-        const props = a.feature.properties;
-        const p = spot(a.piece, at(props.oz_label), text(a), OBVOD_FONT, 12);
-        const y = p && number(a)(p);
-        const r = typeof y === 'number' && councilValued(props) && results.councils.get(`${props.id}/${props.oz}`);
-        if (r) drawText(ctx, placer, r[1], p.x, y + VALUE_DROP, OBVOD_FONT, 12, COLOR.text, { kind: 'result', area: a.piece, bounds: free });
-      }
-      for (const a of pieces) inParts(a.feature.properties.oz_parts, text(a), OBVOD_FONT, 12, number(a));
-      // Larger obce first: they are the likelier landmarks. An obec cut into
-      // its council obvody is named once (at the label of the piece that
-      // has it), by the area of the whole obec; then its other parts, if it
-      // has several.
-      const named = [...inView].sort((a, b) => b.area - a.area);
-      // With the results, an obec's value goes under its name, where that is
-      // drawn, as a label of its own, so that the name stays where it was;
-      // not where finer units are filled with theirs.
-      const obecName = (a) => (p) =>
-        label(a.label.properties.name, p, NAME_FONT, NAME_SIZE, COLOR.label, { kind: 'obec', area: a, gap: OBEC_GAP });
-      const obecValued = (props) => Boolean(results) && !byOkrsky(props) && shardUnit(props, z)?.[0] === 'obce';
-      for (const a of named) {
-        const { lx, ly } = a.label;
-        const text = a.label.properties.name;
-        if (a.area * scale < OBEC_ROOM * textWidth(ctx, NAME_FONT, text) * NAME_SIZE) continue;
-        const p = spot(a, { x: Math.round(lx * view.k) - view.x, y: Math.round(ly * view.k) - view.y }, text, NAME_FONT, NAME_SIZE);
-        const y = obecName(a)(p);
-        const r = typeof y === 'number' && obecValued(a.label.properties) && results.obce.get(a.label.properties.id);
-        if (r) drawText(ctx, placer, r[1], p.x, y + VALUE_DROP, OBVOD_FONT, 12, COLOR.text, { kind: 'result', area: a, bounds: free });
-      }
-      for (const a of named) inParts(a.label.properties.parts, a.label.properties.name, NAME_FONT, NAME_SIZE, obecName(a));
-      drawOkrsokNumbers(ctx, placer, view, free, z, spot);
     }
-    if (neighbours) drawNeighbourNames(ctx, placer, view, free);
-    if (z >= ADDRESS_ZOOM) drawHouses(ctx, placer, view);
-    if (street) streetDots(ctx, street);
+    drawCouncilNumbers(l, features);
+    drawObecNames(l, inView);
+    drawOkrsokNumbers(l);
+  }
+
+  /* The council obvody among *features* (`drawShardLabels`) of the obce
+   * drawn as theirs, numbered where the overlay numbers them or they are
+   * filled by their own values, each value under its number: the main
+   * one, else the first of its other parts numbered. */
+  function drawCouncilNumbers(l, features) {
+    const { z } = l;
+    const numbered = drawsOverlay('oz', z) && within(z, OVERLAYS.oz.numbers);
+    const pieces = features.filter((a) => a.piece && (numbered || valuedAs('councils', a.feature.properties, z)));
+    const text = (a) => obvodText(a.feature.properties.oz);
+    const number = (a) => (p) => l.number(text(a), p, OBVOD_FONT, COLOR.council, 'oz', a.piece);
+    const resultOf = (a) => {
+      const props = a.feature.properties;
+      return valuedAs('councils', props, z) ? results.councils.get(`${props.id}/${props.oz}`)?.[1] : undefined;
+    };
+    const unvalued = new Set();
+    for (const a of pieces) {
+      const props = a.feature.properties;
+      const p = l.spot(a.piece, l.at(props.oz_label), text(a), OBVOD_FONT, 12, props.oz_parts);
+      if (!l.labelWithValue(number(a), p, resultOf(a), a.piece)) unvalued.add(a);
+    }
+    for (const a of pieces) {
+      let value = unvalued.has(a) ? resultOf(a) : undefined;
+      l.inParts(a.feature.properties.oz_parts, text(a), OBVOD_FONT, 12, (p) => {
+        if (l.labelWithValue(number(a), p, value, a.piece)) value = undefined;
+      });
+    }
+  }
+
+  /* The names of the obce *inView* (`drawShardLabels`) that have room for
+   * them (OBEC_ROOM), larger obce first: they are the likelier landmarks.
+   * An obec cut into its council obvody is named once (at the label of the
+   * piece that has it), by the area of the whole obec; then its other
+   * parts, if it has several. With the results, an obec's value goes under
+   * its name (else under that of the first of its other parts named), as a
+   * label of its own, so that the name stays where it was; not where finer
+   * units are filled with theirs. */
+  function drawObecNames(l, inView) {
+    const { ctx, view, z } = l;
+    const scale = 4 ** view.zoom;
+    const named = [...inView].sort((a, b) => b.area - a.area);
+    const name = (a) => (p) =>
+      l.label(a.label.properties.name, p, NAME_FONT, NAME_SIZE, COLOR.label, { kind: 'obec', area: a, gap: OBEC_GAP });
+    const resultOf = (a) => (valuedAs('obce', a.label.properties, z) ? results.obce.get(a.label.properties.id)?.[1] : undefined);
+    const unvalued = new Set();
+    for (const a of named) {
+      const props = a.label.properties;
+      if (a.area * scale < OBEC_ROOM * textWidth(ctx, NAME_FONT, props.name) * NAME_SIZE) continue;
+      const p = l.spot(a, pixelAt(view, a.label.lx, a.label.ly), props.name, NAME_FONT, NAME_SIZE, props.parts);
+      if (!l.labelWithValue(name(a), p, resultOf(a), a)) unvalued.add(a);
+    }
+    for (const a of named) {
+      let value = unvalued.has(a) ? resultOf(a) : undefined;
+      l.inParts(a.label.properties.parts, a.label.properties.name, NAME_FONT, NAME_SIZE, (p) => {
+        if (l.labelWithValue(name(a), p, value, a)) value = undefined;
+      });
+    }
   }
 
   /* Areas of the okrsky of okrsky file *file* for the labels (`Placer`),
@@ -1774,11 +2070,12 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
     return areas;
   }
 
-  /* The number of every okrsok in *view* where the okrsky are numbered,
-   * and from the zoom of their units (`showsUnits`) of those with a value
-   * of the results, with the value under it; larger okrsky first. *spot*
-   * as in `drawLabels`. */
-  function drawOkrsokNumbers(ctx, placer, view, free, z, spot) {
+  /* The number of every okrsok in view where the okrsky are numbered, and
+   * from the zoom of their units (`showsUnits`) of those with a value of
+   * the results, with the value under it; larger okrsky first
+   * (`labelling` *l*). */
+  function drawOkrsokNumbers(l) {
+    const { view, z } = l;
     const numbered = drawsOverlay('okrsky', z) && within(z, OVERLAYS.okrsky.numbers);
     const valued = Boolean(results?.okrsky.size) && showsUnits('okrsky', z);
     if (!numbered && !valued) return;
@@ -1792,19 +2089,16 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
       }
     }
     labels.sort((a, b) => b[0].area - a[0].area);
-    const style = (area) => ({ kind: 'okrsok', area, bounds: free });
     for (const [f, area, r] of labels) {
       const text = strings.okrsok.replace('{n}', f.properties.okrsok);
-      const at = { x: Math.round(f.lx * view.k) - view.x, y: Math.round(f.ly * view.k) - view.y };
-      const p = spot(area, at, text, OKRSOK_FONT, 12);
-      const y = p && drawText(ctx, placer, text, p.x, p.y, OKRSOK_FONT, 12, COLOR.okrsok, style(area));
-      if (r && typeof y === 'number') {
-        drawText(ctx, placer, r[1], p.x, y + VALUE_DROP, OBVOD_FONT, 12, COLOR.text, { ...style(area), kind: 'result' });
-      }
+      const p = l.spot(area, pixelAt(view, f.lx, f.ly), text, OKRSOK_FONT, 12);
+      const y = l.number(text, p, OKRSOK_FONT, COLOR.okrsok, 'okrsok', area);
+      if (r && typeof y === 'number') l.value(r[1], p.x, y + VALUE_DROP, area);
     }
   }
 
-  function drawHouses(ctx, placer, view) {
+  /* The houses in view, a dot and the number of each (`labelling` *l*). */
+  function drawHouses({ ctx, placer, view }) {
     const [x0, y0, x1, y1] = view.box;
     const dots = new Path2D();
     // Number, x, y of every house drawn.
@@ -1855,19 +2149,18 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
     return best;
   }
 
+  /* The properties of the obec at (lon, lat), from its shard drawn now,
+   * else from its coarsest one; null where there is none. */
   async function obecAt(lon, lat) {
+    // Degrees an okres's extent is widened by, for a point on its edge.
     const slack = 0.001;
     const x = mercX(lon);
     const y = mercY(lat);
-    for (const okres of Object.keys(geoIndex.okresy)) {
-      const b = geoIndex.okresy[okres];
-      if (!boxContains([b[0] - slack, b[1] - slack, b[2] + slack, b[3] + slack], lon, lat)) {
-        continue;
-      }
+    for (const [okres, b] of Object.entries(geoIndex.okresy)) {
+      if (!boxContains([b[0] - slack, b[1] - slack, b[2] + slack, b[3] + slack], lon, lat)) continue;
       const file = shown.get(okres)?.file ?? (await loadShard(okres, coarsestLod));
-      for (const f of file.features) {
-        if (boxContains(f.box, x, y) && contains(file, f, x, y)) return f.properties;
-      }
+      const f = featureAt(file, x, y);
+      if (f) return f.properties;
     }
     return null;
   }
@@ -1883,11 +2176,9 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
     // The okrsky at the level of the shard the obec was found in, or else
     // of the zoom: a coarser one may put a point near a border in the
     // wrong okrsok.
-    const lod = shown.get(p.okres)?.lod ?? okrsokLodFor(zoom) ?? okrsokBands[0].lod;
+    const lod = shown.get(p.okres)?.lod ?? lodAt(okrsokBands, zoom) ?? okrsokBands[0].lod;
     const file = okrskyShown.get(p.okres)?.file ?? (await loadOkrsky(p.okres, lod));
-    const f = file.features.find(
-      (g) => g.properties.obec === p.id && boxContains(g.box, x, y) && contains(file, g, x, y),
-    );
+    const f = featureAt(file, x, y, (q) => q.obec === p.id);
     return f?.properties ?? null;
   }
 
@@ -1900,8 +2191,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
     const z = level();
     const x = mercX(lon);
     const y = mercY(lat);
-    const at = (file, which = () => true) =>
-      file.features.find((f) => which(f.properties) && boxContains(f.box, x, y) && contains(file, f, x, y));
+    const at = (file, which) => featureAt(file, x, y, which);
     let f = null;
     for (const s of shown.values()) {
       f = at(s.file);
@@ -1921,18 +2211,6 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
     const unit = which(f) ? shardUnit(p, z) : null;
     return unit && { kind: unit[0], key: unit[1] };
   }
-
-  // The box around *features*.
-  const boxOf = (features) => {
-    const box = [Infinity, Infinity, -Infinity, -Infinity];
-    for (const f of features) {
-      box[0] = Math.min(box[0], f.box[0]);
-      box[1] = Math.min(box[1], f.box[1]);
-      box[2] = Math.max(box[2], f.box[2]);
-      box[3] = Math.max(box[3], f.box[3]);
-    }
-    return box;
-  };
 
   const featureOf = (file, info) => {
     const features = file.features.filter((f) => f.properties.id === info.code);
@@ -1961,7 +2239,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
           entry.obec = featureOf(file, info);
           redraw();
         })
-        .catch((e) => console.error(e));
+        .catch(logError);
     }
     return selectedObec.obec;
   }
@@ -2064,12 +2342,16 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
     },
 
     /* Switches the overlays on or off: *wanted* {zsk, city, oz, okrsky,
-     * base}, `base` the base map; *counts*, once the council overlay is on,
-     * the number of council obvody of every obec by code. */
+     * base, buildings}, `base` the roads, railways and waters of the base
+     * map; *counts*, once the council overlay is on, the number of council
+     * obvody of every obec by code. */
     setOverlays(wanted, counts) {
       overlays = wanted;
       councils = counts ?? councils;
-      if (current) refreshOkrsky(current.view);
+      if (current) {
+        refreshOkrsky(current.view);
+        loadBuildings();
+      }
       refreshBase();
       redraw();
     },

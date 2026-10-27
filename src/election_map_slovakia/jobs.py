@@ -47,7 +47,8 @@ README = "README.md"
 OUTPUT = "output.json"
 REPORT = "ingest-report.md"
 _RESERVED = frozenset({"kind", "job", "items"})
-_NUMBER = 3
+_DIGITS = 3
+"""Digits of a job's number, ``<kind>-NNN``."""
 _SCHEMA_DIALECT = "https://json-schema.org/draft/2020-12/schema"
 
 
@@ -390,7 +391,7 @@ def load_job(path: Path) -> Job:
 
 def existing(cfg: Config, kind: Kind) -> list[Job]:
     """Return the jobs of *kind* in ``data/jobs/``, oldest first."""
-    pattern = re.compile(rf"{re.escape(kind.name)}-\d{{{_NUMBER},}}")
+    pattern = re.compile(rf"{re.escape(kind.name)}-\d{{{_DIGITS},}}")
     root = jobs_dir(cfg)
     if not root.is_dir():
         return []
@@ -434,7 +435,7 @@ def make(
     for batch in batches:
         _check_batch(kind, batch)
         number += 1
-        path = jobs_dir(cfg) / f"{kind.name}-{number:0{_NUMBER}d}"
+        path = jobs_dir(cfg) / f"{kind.name}-{number:0{_DIGITS}d}"
         if path.exists():
             raise JobError(f"{path} exists")
         content = {"kind": kind.name, "job": path.name} | batch.context
@@ -450,8 +451,8 @@ def _check_batch(kind: Kind, batch: Batch) -> None:
     ids = [item.get("id") for item in batch.items]
     if not ids or not all(isinstance(i, str) for i in ids) or len(set(ids)) < len(ids):
         raise JobError(f"{kind.name}: a batch needs items with unique string ids")
-    if _RESERVED & set(batch.context):
-        raise JobError(f"{kind.name}: context uses {', '.join(_RESERVED)}")
+    if clash := _RESERVED & set(batch.context):
+        raise JobError(f"{kind.name}: context uses {', '.join(sorted(clash))}")
 
 
 def readme(kind: Kind, name: str, batch: Batch) -> str:
@@ -534,19 +535,15 @@ class Report:
     def markdown(self) -> str:
         """Return ``ingest-report.md``."""
         lines = [f"# Ingest report: {self.job}", "", self.summary(), ""]
-        sections: list[tuple[str, Iterable[str]]] = [
-            (
-                "Rejected",
-                (
-                    f"- `{key}`: {'; '.join(problems)}"
-                    for key, problems in self.rejected.items()
-                ),
-            ),
-            ("Missing", (f"- `{key}`" for key in self.missing)),
-            ("Curated", (f"- {line}" for line in self.curated)),
-        ]
-        for title, rows in sections:
-            rows = list(rows)
+        sections = {
+            "Rejected": [
+                f"- `{key}`: {'; '.join(problems)}"
+                for key, problems in self.rejected.items()
+            ],
+            "Missing": [f"- `{key}`" for key in self.missing],
+            "Curated": [f"- {line}" for line in self.curated],
+        }
+        for title, rows in sections.items():
             if rows:
                 lines += [f"## {title}", "", *rows, ""]
         return "\n".join(lines)
@@ -603,18 +600,19 @@ def _accepted(
     accepted = []
     for i, item in enumerate(content["items"]):
         key = item.get("id") if isinstance(item, dict) else None
-        label = key if isinstance(key, str) else f"#{i}"
-        problems = bad.get(i, [])
-        if not problems:
-            if key not in inputs:
-                problems = ["not an id of input.json"]
-            elif key in seen:
-                problems = ["id repeated; the first is used"]
-            else:
-                problems = kind.check(cfg, job, inputs[key], item)
-        if isinstance(key, str) and key in inputs:
+        known = isinstance(key, str) and key in inputs
+        if i in bad:
+            problems = bad[i]
+        elif not known:
+            problems = ["not an id of input.json"]
+        elif key in seen:
+            problems = ["id repeated; the first is used"]
+        else:
+            problems = kind.check(cfg, job, inputs[key], item)
+        if known:
             seen.add(key)
         if problems:
+            label = key if isinstance(key, str) else f"#{i}"
             report.rejected.setdefault(label, []).extend(problems)
         else:
             accepted.append((inputs[key], item))

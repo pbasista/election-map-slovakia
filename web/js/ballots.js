@@ -1,6 +1,6 @@
 /* The ballots of one place: every contest a voter there votes in, each with
- * its candidates in ballot order, or once the 2026 results come in (live.js)
- * by votes. Which contests apply is decided in data.js `ballots`. */
+ * its candidates in ballot order, or by votes once the 2026 results come
+ * in (live.js). data.js `ballots` decides which contests apply. */
 
 import { html, useEffect, useLayoutEffect, useRef, useState } from '../vendor/preact-htm.module.js';
 import { ballots, contestArea, dataIndex, displayName, inOffice, officeOf, useLoaded } from './data.js';
@@ -21,29 +21,30 @@ import {
   WarningIcon,
   WithdrawnIcon,
 } from './icons.js';
-import { decodeResults, NOT_COUNTED, placeResults, resultsVars, SCOPES, useLive } from './live.js';
+import { decodeResults, isSingle, NOT_COUNTED, placeResults, resultsVars, SCOPES, useLive } from './live.js';
 import { ContestMapButton, MapButton, WinnerMapButton } from './mapmode.js';
 import { Notice } from './pane.js';
 import { formatPicks, parsePicks, togglePick } from './picks.js';
 
-/* The candidate filter (app.js keeps it across places, and in the URL:
- * filterParams): `parties` chosen ({short, name, logo, mode}, INDEPENDENT
- * among them), each with whether its candidates are shown (`mode` 'only':
- * those of the parties shown are the only ones not muted) or hidden
- * ('hide'); `marks`, mark name (MARKS) → its mode likewise, for each mark
- * added; `crossed`, the candidacies the visitor has crossed out (ids as
- * picks.js), which it mutes one by one. Muted candidates stay on the list,
- * faded and after the others. */
+/* The candidate filter, which app.js keeps across places and in the URL
+ * (filterParams):
+ * - parties: those chosen, {short, name, logo, mode}, INDEPENDENT among
+ *   them; `mode` 'only' shows only the candidates of such parties, 'hide'
+ *   hides the party's;
+ * - marks: mark name (MARKS) → its mode likewise, for each mark added;
+ * - crossed: the candidacies the visitor has crossed out (ids as in
+ *   picks.js), each muted.
+ * Muted candidates stay on the list, faded and after the others. */
 export const NO_FILTER = { parties: [], marks: {}, crossed: [] };
 
-/* The independent candidates: a member of the party filter like a party,
+/* The independent candidates, a member of the party filter like a party,
  * named in the page's language where shown. No party's name is empty. */
 const INDEPENDENT = { short: '', name: '', logo: null };
 const partyName = (p) => p.name || t('candidate.independent');
 const partyShort = (p) => (p.name ? p.short : t('candidate.independent_short'));
 
-/* An element id of the component's own: a contest and its candidates may
- * show in the pane and in Favourites beside it at once. */
+/* An element id of the component's own: the same contest may show in the
+ * pane and in Favourites beside it at once. */
 let serial = 0;
 function useOwnId(prefix) {
   const id = useRef(null);
@@ -57,39 +58,43 @@ const standsFor = (c, name) =>
   name === INDEPENDENT.name ? !c.parties.length : c.parties.some((p) => p.name === name);
 
 /* The marks of a row that are filters too, in the bar's order, each with
- * whom it covers: elected in 2026 (officially, or called by this site on a
- * partial count: live.js `decodeResults`); research found serious
- * controversies; disputed or lesser ones; research done (whatever it
- * found); holds the office the contest elects (the chair). */
+ * whom it covers:
+ * - elected: elected in 2026, officially or called by this site on a
+ *   partial count (live.js `decodeResults`);
+ * - affairs: research found serious controversies;
+ * - disputes: research found disputed or lesser ones;
+ * - researched: research done, whatever it found;
+ * - office: holds the office the contest elects (the chair). */
 const MARKS = [
-  ['elected', (c) => Boolean(c.result?.elected || c.result?.called), MedalIcon],
-  ['affairs', (c) => Boolean(c.research?.affairs), WarningIcon],
-  ['disputes', (c) => Boolean(c.research?.disputes), DisputeIcon],
-  ['researched', (c) => Boolean(c.research), SearchIcon],
-  ['office', inOffice, ChairIcon],
+  { name: 'elected', covers: (c) => Boolean(c.result?.elected || c.result?.called), Icon: MedalIcon },
+  { name: 'affairs', covers: (c) => Boolean(c.research?.affairs), Icon: WarningIcon },
+  { name: 'disputes', covers: (c) => Boolean(c.research?.disputes), Icon: DisputeIcon },
+  { name: 'researched', covers: (c) => Boolean(c.research), Icon: SearchIcon },
+  { name: 'office', covers: inOffice, Icon: ChairIcon },
 ];
 
 const mutedBy = (mode, member) => (mode === 'hide' && member) || (mode === 'only' && !member);
 
 /* Whether *filter* mutes candidate *c*: crossed out, of none of the
- * parties shown where some are, of a party hidden, or any mark that does. */
+ * parties shown where some are, of a party hidden, or muted by a mark. */
 function isMuted(c, filter) {
   const shown = filter.parties.filter((p) => p.mode === 'only');
   return (
     filter.crossed.includes(c.id) ||
     (shown.length > 0 && !shown.some((p) => standsFor(c, p.name))) ||
     filter.parties.some((p) => p.mode === 'hide' && standsFor(c, p.name)) ||
-    MARKS.some(([name, covers]) => name in filter.marks && mutedBy(filter.marks[name], covers(c)))
+    MARKS.some(({ name, covers }) => name in filter.marks && mutedBy(filter.marks[name], covers(c)))
   );
 }
 
-/* The filter in the URL hash (app.js), as [key, value] pairs, none for a
- * group not used: `fp` the parties by their short forms (unique, see
- * config.py `load_parties`), "-" the independents, those shown first, then
- * the hidden ones, each after a "!" (so that a list starting with one hides
- * them all, as links did when the parties had one mode for all); `fm` the
- * marks added, each after a "!" when hidden; `x` the candidacies crossed
- * out, written as picks.js writes the circled ones. */
+/* The filter as [key, value] pairs of the URL hash (app.js), none for a
+ * group not used:
+ * - fp: the parties by their short forms (unique, see config.py
+ *   `load_parties`), "-" for the independents; those shown first, then
+ *   the hidden ones, each after a "!" (so that a list starting with one
+ *   hides them all, as links did when all parties had one mode);
+ * - fm: the marks added, each after a "!" when hidden;
+ * - x: the candidacies crossed out, written as picks.js writes circles. */
 export function filterParams(filter) {
   const params = [];
   const hide = (mode) => (mode === 'hide' ? '!' : '');
@@ -97,15 +102,15 @@ export function filterParams(filter) {
     const parties = [...filter.parties.filter((p) => p.mode === 'only'), ...filter.parties.filter((p) => p.mode === 'hide')];
     params.push(['fp', parties.map((p) => hide(p.mode) + (p.name ? p.short : '-')).join(',')]);
   }
-  const marks = MARKS.filter(([name]) => name in filter.marks).map(([name]) => hide(filter.marks[name]) + name);
+  const marks = MARKS.filter(({ name }) => name in filter.marks).map(({ name }) => hide(filter.marks[name]) + name);
   if (marks.length) params.push(['fm', marks.join(',')]);
   if (filter.crossed.length) params.push(['x', formatPicks(filter.crossed)]);
   return params;
 }
 
 /* The filter that hash values *fp*, *fm* and *x* (filterParams) name, the
- * parties looked up by short form in data/index.json's *parties*; what is
- * not known there is left out (a party gone since the link was made). */
+ * parties looked up by short form in data/index.json's *parties*. What is
+ * not known there (a party gone since the link was made) is dropped. */
 export function parseFilter({ fp, fm, x }, parties) {
   const known = new Map(Object.values(parties).map(([short, name, logo = null]) => [short, { short, name, logo }]));
   const allHidden = (fp ?? '').startsWith('!');
@@ -118,18 +123,21 @@ export function parseFilter({ fp, fm, x }, parties) {
   const marks = {};
   for (const token of (fm ?? '').split(',')) {
     const name = token.replace(/^!/, '');
-    if (MARKS.some(([mark]) => mark === name)) marks[name] = token.startsWith('!') ? 'hide' : 'only';
+    if (MARKS.some((mark) => mark.name === name)) marks[name] = token.startsWith('!') ? 'hide' : 'only';
   }
   return { parties: [...chosen.values()], marks, crossed: parsePicks(x) };
 }
 
-/* What the research on a candidate searched, the scope said before any
- * result: the source categories of its research languages ("Slovak media
- * and official sites"). */
+/* What the research on a candidate searched, said before any result: the
+ * source categories of its research languages ("Slovak media and official
+ * sites"). */
 export function researchScope(r) {
   const categories = new Set(r.languages.flatMap((code) => researchCategories[code] ?? []));
   return formatList([...categories].map((c) => t(`research.scope.${c}`)));
 }
+
+/* The research.* strings' variables for research *r*, *n* its count. */
+const researchVars = (r, n) => ({ scope: researchScope(r), date: formatDate(r.date), n: formatNumber(n) });
 
 /* A candidate's occupation; a machine translation names the Slovak
  * original in its tooltip (the card shows it in full). */
@@ -140,12 +148,12 @@ export function Occupation({ candidate: c }) {
 }
 
 /* A candidate's nominating parties as their short forms or logos (or the
- * independent tag), the official name in the tooltip (and for screen
- * readers); the candidate card spells them out. With *actions* (the
- * ballots), each is a button: pointing at it or focusing it highlights the
- * party's candidates; pressing it shows only the candidates of the parties
- * so chosen, the alternate press (useRowActions `tap`) hides the party's,
- * and either, pressed again, takes the party out of the filter. */
+ * independent tag), the official name in the tooltip and for screen
+ * readers; the candidate card spells them out. With *actions* (the
+ * ballots), each is a button: pointing at or focusing it highlights the
+ * party's candidates; a press shows only the candidates of the parties so
+ * chosen, the alternate press (useRowActions `tap`) hides the party's, and
+ * either, pressed again, takes the party out of the filter. */
 function Parties({ candidate: c, actions }) {
   return (c.parties.length ? c.parties : [INDEPENDENT]).map((p) => {
     const name = partyName(p);
@@ -171,12 +179,12 @@ function Parties({ candidate: c, actions }) {
 }
 
 /* The classes of a badge in the filter in *mode*: ringed, and struck
- * through where its candidates are hidden. */
+ * through while its candidates are hidden. */
 const activeClass = (mode) => (mode === 'hide' ? ' active excluded' : mode ? ' active' : '');
 
-/* A mark after the parties, explained by *label* in its tooltip (and for
- * screen readers). With *actions* (the ballots), a button that adds the
- * mark *name* (MARKS) to the filter as the party tags add a party. */
+/* A mark after the parties, explained by *label* in its tooltip and for
+ * screen readers. With *actions* (the ballots), a button that adds mark
+ * *name* (MARKS) to the filter as the party tags add a party. */
 function Mark({ name, cls, label, actions, children }) {
   if (!actions) return html`<span class=${cls} role="img" title=${label} aria-label=${label}>${children}</span>`;
   const mode = actions.markMode(name);
@@ -197,8 +205,8 @@ const resultVars = (r) => ({
 });
 
 /* The votes behind the shares of a result: of the valid ballots (for a
- * council of the voters with a valid ballot), and of all registered voters
- * with how many of them voted. */
+ * council: of the voters with a valid ballot), and of all registered
+ * voters with how many of them voted. */
 const resultCounts = (r) => [
   t(r.multi ? 'result.count_voters' : 'result.count_valid', resultVars(r)),
   t('result.count_eligible', resultVars(r)),
@@ -206,12 +214,12 @@ const resultCounts = (r) => [
 
 const width = (share) => `${(share * 100).toFixed(1)}%`;
 
-/* How an office was won, a meter a line: the share of the valid ballots
- * (for a council: of the voters with a valid ballot) beside the votes and
- * the ballots, and the share of all registered voters, with the turnout
- * shaded behind it, beside their number and the turnout. Narrow as the
- * pane is, the second line leaves the votes to the first. The tooltips say
- * the counts in full. */
+/* How an office was won, one meter per line: the share of the valid
+ * ballots (for a council: of the voters with a valid ballot) beside the
+ * votes and ballots; then the share of all registered voters, the turnout
+ * shaded behind it, beside their number and the turnout. The pane being
+ * narrow, the second line leaves the votes to the first. The tooltips
+ * give the counts in full. */
 export function OfficeResult({ result: r }) {
   const [ofValid, ofAll] = resultCounts(r);
   const vars = resultVars(r);
@@ -235,9 +243,9 @@ export function OfficeResult({ result: r }) {
   </div>`;
 }
 
-/* Marks a candidate who holds now the office the contest elects: a chair
- * with the share of the vote that won it, the votes in the tooltip (the
- * card charts them). */
+/* The candidate holds now the office the contest elects: a chair with the
+ * share of the vote that won it, the votes in the tooltip (the card charts
+ * them). */
 function InOffice({ candidate: c, actions }) {
   const office = c.offices.find((o) => o.body === officeOf(c.contest));
   const r = office.result;
@@ -248,9 +256,9 @@ function InOffice({ candidate: c, actions }) {
 }
 
 /* The state of the research on a candidate: the number of findings, a
- * faint magnifier where it found nothing, a dashed one while no research
- * has been done. The tooltip says what was searched before the result; the
- * card shows the findings. */
+ * faint magnifier where it found nothing, a dashed one while not done.
+ * The tooltip says what was searched before the result; the card shows
+ * the findings. */
 function Researched({ candidate: c, actions }) {
   const r = c.research;
   if (!r) {
@@ -258,7 +266,7 @@ function Researched({ candidate: c, actions }) {
       <${SearchIcon} />
     <//>`;
   }
-  const vars = { scope: researchScope(r), date: formatDate(r.date), n: formatNumber(r.findings) };
+  const vars = researchVars(r, r.findings);
   return html`<${Mark}
     name="researched"
     cls=${r.findings ? 'researched' : 'researched none'}
@@ -267,34 +275,27 @@ function Researched({ candidate: c, actions }) {
     ><${SearchIcon} />${r.findings ? formatNumber(r.findings) : null}<//>`;
 }
 
-/* Research found serious controversies about the candidate: a red warning
- * sign with their number, first of the marks, so that it is not passed
- * over among the findings. */
-function Controversies({ candidate: c, actions }) {
+/* Research found controversies (*name* 'affairs' or 'disputes', MARKS):
+ * the mark's icon with their number. The serious ones (a red warning
+ * sign) come first among the marks, so that they are not passed over;
+ * disputed or lesser ones (allegations not established) follow in amber,
+ * without flagging the row. */
+function Controversies({ candidate: c, name, actions }) {
   const r = c.research;
-  const n = formatNumber(r.affairs);
-  const label = t('research.affairs_badge', { scope: researchScope(r), date: formatDate(r.date), n });
-  return html`<${Mark} name="affairs" cls="affairs" label=${label} actions=${actions}><${WarningIcon} />${n}<//>`;
+  const { Icon } = MARKS.find((mark) => mark.name === name);
+  const vars = researchVars(r, r[name]);
+  return html`<${Mark} name=${name} cls=${name} label=${t(`research.${name}_badge`, vars)} actions=${actions}>
+    <${Icon} />${vars.n}
+  <//>`;
 }
 
-/* Research found disputed or lesser controversies: allegations not
- * established, in amber, after the serious ones, and without flagging the
- * row. */
-function Disputes({ candidate: c, actions }) {
-  const r = c.research;
-  const n = formatNumber(r.disputes);
-  const label = t('research.disputes_badge', { scope: researchScope(r), date: formatDate(r.date), n });
-  return html`<${Mark} name="disputes" cls="disputes" label=${label} actions=${actions}><${DisputeIcon} />${n}<//>`;
-}
-
-/* Elected in 2026: the medal alone in the results' green, without a ring,
- * unlike every other badge, as only winning earns it; right after the
- * name, before the parties: in these elections a person is elected, not a
- * party. Called by this site on a partial count, not officially yet, it is
- * drawn in outline, and its tooltip says what the call rests on (live.js
- * `GROWTH`). A mark of the filter. A council's substitutes go unmarked:
- * they are all its other candidates with a vote, in the order the list
- * shows already. */
+/* Elected in 2026: the medal alone in the results' green, without the
+ * ring every other badge has, as only winning earns it; right after the
+ * name, before the parties, as in these elections a person is elected,
+ * not a party. Called by this site on a partial count, not officially yet,
+ * it is drawn in outline, and its tooltip says what the call rests on
+ * (live.js `GROWTH`). A council's substitutes go unmarked: they are all
+ * its other candidates with a vote, in the order the list shows already. */
 function Elected({ candidate: c, actions }) {
   const r = c.result;
   if (!r.elected && !r.called) return null;
@@ -316,15 +317,15 @@ function Elected({ candidate: c, actions }) {
 }
 
 /* Withdrew from the election yet stayed on the ballot: a grey door with an
- * arrow out right after the name, where the medal would be, as such a
+ * arrow, right after the name where the medal would be, as such a
  * candidate cannot be elected. Not a filter mark. */
 function Withdrawn() {
   return html`<${Mark} cls="withdrawn-mark" label=${t('results.withdrawn_title')}><${WithdrawnIcon} /><//>`;
 }
 
 /* A candidate's 2026 votes: their share on a bar in the results' green,
- * then the number; a candidate who withdrew yet stayed on the ballot, whose
- * votes count, in grey and marked so after it. */
+ * then the number. A candidate who withdrew yet stayed on the ballot,
+ * whose votes count, in grey and tagged so. */
 function Votes({ candidate: c }) {
   const r = c.result;
   if (r.share === null) return null;
@@ -341,21 +342,23 @@ function Votes({ candidate: c }) {
   </span>`;
 }
 
-/* One candidacy: its ballot number is a button that circles it (or takes
- * the circle off), as a voter circles the numbers of their candidates on
- * the ballot, and with the alternate press (useRowActions `tap`) crosses it
- * out instead (or takes the cross off): the filter then mutes it. Its name
- * is the button that opens the card (a click elsewhere on the row does
- * too), then who nominated it, then apart from those its marks: what is
- * known about the candidate. Party tags and marks are buttons of their
- * own. Once counted, at the row's end like the pin of the contest's
- * header, a pin shows the candidate's votes on the map (mapmode.js).
- * *actions*: see useRowActions. *muted*: the filter fades the row. A row
- * of the party pointed at is highlighted by useRowActions. *seat*
- * ({place, seats, end}, `seatPlaces`): on a partial count of a council, a
- * place that would win a seat so far, the number in the results' green,
- * said to a screen reader; `end`, the last of them followed by a row
- * that is not, draws a dashed line under it, labelled. */
+/* One candidacy.
+ * - The ballot number is a button that circles it, as a voter circles
+ *   numbers on the ballot; the alternate press (useRowActions `tap`)
+ *   crosses it out instead, and the filter then mutes it. Pressed again,
+ *   either is undone.
+ * - The name is the button that opens the card (as does a click anywhere
+ *   else on the row), followed by the parties and, apart from those, the
+ *   marks: what is known about the candidate. Party tags and marks are
+ *   buttons of their own.
+ * - Once counted, a pin at the row's end, like the one in the contest's
+ *   header, shows the candidate's votes on the map (mapmode.js).
+ * *actions*: see useRowActions; the row of the party pointed at is
+ * highlighted there. *muted*: the filter fades the row. *seat* ({place,
+ * seats, end}, `seatPlaces`): on a partial count of a council, a place
+ * that would win a seat so far, its number in the results' green and said
+ * to screen readers; `end`, the last of them before a row that is not,
+ * draws a labelled dashed line under it. */
 export function CandidateRow({ candidate, onCandidate, current = false, actions, muted = false, seat = null }) {
   const c = candidate;
   const flagged = Boolean(c.research?.affairs);
@@ -408,8 +411,8 @@ export function CandidateRow({ candidate, onCandidate, current = false, actions,
           ${c.result?.withdrawn ? html`<${Withdrawn} />` : null}
           <${Parties} candidate=${c} actions=${actions} />
           <span class="marks">
-            ${flagged ? html`<${Controversies} candidate=${c} actions=${actions} />` : null}
-            ${c.research?.disputes ? html`<${Disputes} candidate=${c} actions=${actions} />` : null}
+            ${flagged ? html`<${Controversies} candidate=${c} name="affairs" actions=${actions} />` : null}
+            ${c.research?.disputes ? html`<${Controversies} candidate=${c} name="disputes" actions=${actions} />` : null}
             ${inOffice(c) ? html`<${InOffice} candidate=${c} actions=${actions} />` : null}
             <${Researched} candidate=${c} actions=${actions} />
           </span>
@@ -418,7 +421,7 @@ export function CandidateRow({ candidate, onCandidate, current = false, actions,
         ${seat ? html`<span class="sr-only">${t('results.in_seats', { place: seat.place, n: formatNumber(seat.seats) })}</span>` : null}
         <span class="meta" id=${metaId}>${t('candidate.age', { n: c.age })} · <${Occupation} candidate=${c} /></span>
       </span>
-      ${c.result && c.result.share !== null ? html`<${MapButton} candidate=${c} />` : null}
+      ${c.result && c.result.share !== null ? html`<${MapButton} candidate=${c} label=${c.result.contestLabel} />` : null}
       ${
         seat?.end
           ? html`<span class="seats-line" title=${t('results.seats_line_title', { n: formatNumber(seat.seats) })} aria-hidden="true">
@@ -430,7 +433,7 @@ export function CandidateRow({ candidate, onCandidate, current = false, actions,
   `;
 }
 
-/* The kinds of contest the visitor has closed: they stay closed on the
+/* The kinds of contest the visitor has closed. They stay closed on the
  * ballots of every other place, so that one can go through, say, council
  * candidates without the mayoral ones listed first. Bratislava's and
  * Košice's city contests are kinds of their own. */
@@ -441,21 +444,21 @@ function contestKind(id) {
   return /^(BA|KE)\b/.test(area) ? `${kind}:city` : kind;
 }
 
-/* What stands under a contest's name: how many are elected (one mayor or
- * president; a council's seats where known, from the decisions on the
- * obvody or else from the 2026 results once they give them, otherwise the
- * 2022 number, labelled so) and how many stand, with how many of them the
- * filter leaves shown (*unmuted*) where it mutes some; and how many of them
- * the visitor has circled (*picked*), if any. More circled than are
- * elected, both numbers are highlighted with a warning: on the ballot
- * itself that would make it invalid. Circling more is still allowed: the
- * visitor may circle whom they like best, to choose among them later. Once
- * the 2026 count reaches the contest, a line of its own says how far it has
- * got (ResultsLine). */
+/* What stands under a contest's name:
+ * - how many are elected: one mayor or president; a council's seats where
+ *   known (from the decisions on the obvody, else from the 2026 results
+ *   once they give them), otherwise the 2022 number, labelled so;
+ * - how many stand, and how many of them the filter leaves shown
+ *   (*unmuted*) where it mutes some;
+ * - how many the visitor has circled (*picked*), if any. With more
+ *   circled than are elected, which would make a real ballot invalid,
+ *   both numbers carry a warning. Circling more is still allowed: the
+ *   visitor may circle a shortlist to choose from later.
+ * Once the 2026 count reaches the contest, a line says how far it has got
+ * (ResultsLine). */
 function ContestHead({ contest, unmuted, picked, results, pending }) {
   const n = contest.candidates.length;
-  const kind = contestKind(contest.id);
-  const single = kind.startsWith('starosta') || kind === 'predseda';
+  const single = isSingle(contest.id);
   const seats = contest.seats ?? results?.reportedSeats ?? null;
   const elected = single
     ? t('contest.single')
@@ -484,13 +487,15 @@ function ContestHead({ contest, unmuted, picked, results, pending }) {
   `;
 }
 
-/* How far the 2026 count of a contest has got, in the results' green: not
- * counted yet; counting, with the share counted (of its registered voters,
- * live.js `countShare`; its okrsky in the tooltip) and the valid votes
- * counted, which tells how much a lead may still change; counted, with the
- * winners only so far (municipal contests on election night); final, the
- * valid votes alone, as final goes without saying once the elections are
- * over. */
+/* How far the 2026 count of a contest has got, in the results' green:
+ * - not counted yet;
+ * - counting: the share counted (of its registered voters, live.js
+ *   `countShare`; its okrsky in the tooltip) and the valid votes counted,
+ *   which tell how much a lead may still change;
+ * - counted with only the winners so far (municipal contests on election
+ *   night);
+ * - final: the valid votes alone, as final goes without saying once the
+ *   elections are over. */
 function ResultsLine({ results: r, single }) {
   if (!r) return html`<span class="contest-results pending">${t('results.pending')}</span>`;
   if (r.status === 'final' && !r.valid) return null;
@@ -522,22 +527,21 @@ function Holder({ contest }) {
   </div>`;
 }
 
-/* The election that *past* (data.js `contest`) is of, named with its day:
- * the regular ones of 2022, or a municipal by-election held since. */
+/* The election *past* (data.js `contest`) is of, named with its day: the
+ * regular ones of 2022, or a municipal by-election held since. */
 function pastElection(past) {
   const kind = { oso2022: 'municipal', osk2022: 'regional' }[past.election] ?? 'by';
   return t(`turnout.election_${kind}`, { date: formatDate(past.date) });
 }
 
 /* The turnout at the header's end, a short horizontal meter like the
- * votes' bars, its share above it at the start and the year at the end:
- * the last election's in grey (*past*); once counted, 2026's in the
- * results' green (*live*) over the same track, the last election's left
- * on it as a grey tick, its share and year under it, so that the two
- * compare at a glance. Each is `{share, year, label}`, the label (the
- * numbers) in the tooltip. It sits inside the header, so that a press
- * there still opens or closes the contest, and takes no height of its
- * own. */
+ * votes' bars, its share above its start and the year at its end: the
+ * last election's in grey (*past*); once counted, 2026's in the results'
+ * green (*live*) over the same track, with the last election's as a grey
+ * tick and its share and year under it, so that the two compare at a
+ * glance. Each is {share, year, label}, the label (the numbers) in the
+ * tooltip. It sits inside the header, so that a press on it still opens
+ * or closes the contest, and takes no height of its own. */
 function Turnout({ past, live }) {
   const main = live ?? past;
   const tick = live && past;
@@ -557,11 +561,10 @@ function Turnout({ past, live }) {
 }
 
 /* The turnout of the last election in a contest's area, for whoever
- * wonders how many vote there, and which election that was, not this
- * year's. A council's where it has several constituencies now is of the
- * okrsky that make up the constituency, where they are the same as then;
- * else of the whole municipality: those of the last election were drawn
- * otherwise. */
+ * wonders how many vote there, labelled with that election. A council now
+ * split into several obvody: that of the okrsky its obvod is made of,
+ * where they are the same as then; else that of the whole municipality,
+ * as the last election's obvody were drawn otherwise. */
 function pastTurnout(contest) {
   const p = contest.past;
   const share = p.voters / p.eligible;
@@ -590,8 +593,8 @@ function numberRanges(numbers) {
   return out.join(', ');
 }
 
-/* The 2026 turnout so far: of the districts counted while counting goes
- * on; with *unit* named, of that unit of the contest's area (`inUnit`). */
+/* The 2026 turnout so far (of the districts counted, while counting goes
+ * on); with *unit* named, of that unit of the contest's area (`inUnit`). */
 const liveTurnout = (r, unit = null) => ({
   share: r.voters / r.eligible,
   year: '2026',
@@ -600,8 +603,8 @@ const liveTurnout = (r, unit = null) => ({
     : t(r.status === 'partial' ? 'results.turnout_partial' : 'results.turnout', resultsVars(r)),
 });
 
-/* An okrsok's turnout at the 2022 municipal elections, *past* [eligible,
- * voters] (live.js `placeResults`), where it is the same okrsok as then. */
+/* An okrsok's turnout at the 2022 municipal elections, [eligible, voters]
+ * (live.js `placeResults` `past`), where it is the same okrsok as then. */
 const okrsokPast = ([eligible, voters]) => ({
   share: voters / eligible,
   year: '2022',
@@ -626,6 +629,21 @@ function inUnit(r, [eligible, voters, valid, votes]) {
   return { ...r, eligible, voters, valid, byNumber };
 }
 
+/* The results of *contest* from its live *entry*, as shown with *place*
+ * (as `Contest` takes it) and *level* (one of SCOPES):
+ * - whole: the whole contest's (live.js `decodeResults`), null until
+ *   counted;
+ * - units: the units of *place* with figures of their own (live.js
+ *   `placeResults`);
+ * - unit: the finest of them not finer than *level*, or null;
+ * - results: the whole narrowed to that unit (`inUnit`). */
+function scopedResults(contest, entry, place, level) {
+  const whole = entry && entry !== NOT_COUNTED ? decodeResults(contest, entry) : null;
+  const units = whole && place ? placeResults(contest.id, place) : [];
+  const unit = units.filter((u) => SCOPES.indexOf(u.scope) <= SCOPES.indexOf(level)).at(-1) ?? null;
+  return { whole, units, unit, results: unit ? inUnit(whole, unit.record) : whole };
+}
+
 /* The name of *scope* (one of SCOPES) of *place* (as `Contest` takes
  * it). */
 function scopeName(scope, place) {
@@ -634,10 +652,10 @@ function scopeName(scope, place) {
   return t(`scope.${scope}`, { n: place[scope] });
 }
 
-/* The choice of the scope of a contest's results, where the place shown
- * lies in units of its area with figures of their own (*units*, live.js
+/* The choice of scope for a contest's results, where the place shown lies
+ * in units of its area with figures of their own (*units*, live.js
  * `placeResults`): the whole contest or one of those units, *shown* (one
- * of SCOPES) pressed. A press chooses that scope for every contest on the
+ * of SCOPES) pressed. A press sets the scope for every contest on the
  * ballots (`onLevel`). *place*: as `Contest` takes it. */
 function ScopeChoice({ units, shown, place, onLevel }) {
   return html`<div class="contest-scope" role="group" aria-label=${t('scope.label')}>
@@ -654,16 +672,20 @@ function ScopeChoice({ units, shown, place, onLevel }) {
   </div>`;
 }
 
-/* *candidates* in list order: those the *filter* leaves shown, then those it
- * mutes, each group in ballot order or, *ranked* (the 2026 results are in),
- * by votes, those without any after the rest; within each, those who
- * withdrew last, so that they are seen apart. And which are muted. The
- * circled ones (*actions* `isPicked`) never are. */
+/* *list* with the items that satisfy *test* moved to its end, each part in
+ * its order. */
+const lastWhere = (list, test) => [...list.filter((x) => !test(x)), ...list.filter(test)];
+
+/* *candidates* in list order and which of them are muted: those the
+ * *filter* leaves shown, then those it mutes (never the circled ones,
+ * *actions* `isPicked`). Each group is in ballot order or, *ranked* (the
+ * 2026 results are in), by votes, those without any last; within it,
+ * those who withdrew come last, to be seen apart. */
 function byFilter(candidates, filter, actions, ranked) {
   const byVotes = ranked ? [...candidates].sort((a, b) => (b.result?.votes ?? -1) - (a.result?.votes ?? -1)) : candidates;
-  const sorted = [...byVotes.filter((c) => !c.result?.withdrawn), ...byVotes.filter((c) => c.result?.withdrawn)];
+  const sorted = lastWhere(byVotes, (c) => c.result?.withdrawn);
   const muted = new Map(sorted.map((c) => [c, !actions.isPicked(c.id) && isMuted(c, filter)]));
-  const order = [...sorted.filter((c) => !muted.get(c)), ...sorted.filter((c) => muted.get(c))];
+  const order = lastWhere(sorted, (c) => muted.get(c));
   return { order, muted, unmuted: order.length - [...muted.values()].filter(Boolean).length };
 }
 
@@ -672,13 +694,12 @@ function byFilter(candidates, filter, actions, ranked) {
  * `elected` mark reads, with what explains a call. */
 function withResults(contest, results) {
   if (!results) return contest.candidates;
-  const multi = !(contest.id.startsWith('starosta:') || contest.id.startsWith('predseda:'));
   const extra = {
     call: results.call,
     past: contest.past,
     valid: results.valid,
     eligible: results.eligible,
-    multi,
+    multi: !isSingle(contest.id),
     contestLabel: contest.label,
   };
   return contest.candidates.map((c) => {
@@ -690,24 +711,23 @@ function withResults(contest, results) {
 /* On a partial count of a contest of several seats (a municipal or
  * regional council obvod; *r* the whole contest's, live.js
  * `decodeResults`), the places that would win them so far: ballot number
- * → place for the first `seats` candidates by votes (with any, and not
- * withdrawn), while nobody is elected yet; null otherwise. The whole
+ * → place, for the first `seats` candidates by votes (with any, and not
+ * withdrawn), while nobody is elected yet; null otherwise. Always the whole
  * contest's, whatever unit the list shows. */
 function seatPlaces(contest, r) {
-  const kind = contest.id.split(':')[0];
-  if (r?.status !== 'partial' || !r.seats || kind === 'starosta' || kind === 'predseda') return null;
+  if (r?.status !== 'partial' || !r.seats || isSingle(contest.id)) return null;
   const all = [...r.byNumber];
   if (all.some(([, x]) => x.elected)) return null;
   const ranked = all.filter(([, x]) => x.votes > 0 && !x.withdrawn).sort((a, b) => b[1].votes - a[1].votes);
   return new Map(ranked.slice(0, r.seats).map(([n], i) => [n, i + 1]));
 }
 
-/* What a contest counted on election night does not have yet, said where
- * its rows would otherwise stand without votes and confuse (*r* the whole
- * contest's, live.js `decodeResults`): counting with no candidate's votes
- * yet; or counted with the turnout and at most the winners (status
- * `winner`): who they are where known, the candidates' votes not published
- * until the final results. Null where the votes are there. */
+/* What a contest counted on election night does not have yet (*r* the
+ * whole contest's, live.js `decodeResults`), said where its rows would
+ * otherwise stand puzzlingly without votes: counting, but no candidate's
+ * votes yet; or counted with the turnout and at most the winners (status
+ * `winner`), naming them where known, as the candidates' votes are not
+ * published until the final results. Null where the votes are there. */
 function nightNote(contest, r) {
   if (!r || r.status === 'final') return null;
   const all = [...r.byNumber.values()];
@@ -718,34 +738,34 @@ function nightNote(contest, r) {
   return t(r.eligible === null ? 'results.note_counted' : 'results.note_turnout');
 }
 
-/* A contest: its header, which opens and closes the list of its candidates
- * and shows whether it is open: open, it stands out from the candidates
- * under it; closed, it is muted, and a bar at its side marks it as one
- * that opens to more candidates; its tooltip says what a press does.
+/* A contest: a header that opens and closes the list of its candidates.
+ * Open, the header stands out from the candidates under it; closed, it is
+ * muted, with a bar at its side where it opens to more candidates. Its
+ * tooltip says what a press does.
  *
  * Open or closed, it lists first *current* (the candidate of a card,
  * highlighted), then the candidates circled while it is shown, so that a
- * circle taken off by mistake can be put back where it was. Open, it lists
- * the others too, those the filter mutes after the rest. With *pin* (My
- * candidates) the circled ones stay first when it opens; otherwise they
- * take their places among the others, in ballot order.
+ * circle taken off by mistake can be put back where it was. Open, it
+ * lists the others too, those the filter mutes last. With *pin* (My
+ * candidates) the circled stay first when it opens; otherwise they take
+ * their places among the others.
  *
- * *initiallyOpen*, and `onOpen(open)` when the visitor opens or closes it.
- * *map* ({label, onClick}), where the contest has a place on the map, is a
- * pin at the header's end that shows it there, and once counted its 2026
- * turnout (mapmode.js `ContestMapButton`); before it, once the
- * candidates' votes are in, a button that shows who got the most votes
- * where (`WinnerMapButton`). In the header, the turnout of the last
+ * *initiallyOpen*; `onOpen(open)` when the visitor opens or closes it.
+ * *map* ({label, onClick}), where the contest has a place on the map,
+ * makes a pin at the header's end that shows it there, and once counted
+ * its 2026 turnout (mapmode.js `ContestMapButton`); before the pin, once
+ * the candidates' votes are in, a button shows who got the most votes
+ * where (`WinnerMapButton`). The header shows the turnout of the last
  * election there and, once counted, of 2026 (Turnout).
  *
  * *place* ({obec, name, obvod, okrsok}: the obec or city district of the
- * ballots, named, and its council obvod and okrsok where known), once
- * counted: where it lies in units of the contest's area with figures of
- * their own (live.js `placeResults`), a choice of the scope of the results
- * (`ScopeChoice`); the candidates' votes and the 2026 turnout are then
- * those of the finest of those units not finer than *level* (one of
- * SCOPES, the ballots' choice for all their contests; `onLevel(next)`
- * changes it), with an okrsok's 2022 turnout where known. */
+ * ballots, named, and its council obvod and okrsok where known): once
+ * counted, where it lies in units of the contest's area with figures of
+ * their own (live.js `placeResults`), a choice of the results' scope
+ * (`ScopeChoice`). The candidates' votes and the 2026 turnout are then
+ * those of the finest unit not finer than *level* (one of SCOPES, one
+ * choice for all the ballots' contests, changed by `onLevel(next)`), with
+ * an okrsok's 2022 turnout where known. */
 export function Contest({
   contest,
   current = null,
@@ -763,10 +783,7 @@ export function Contest({
   const [open, setOpen] = useState(initiallyOpen);
   const live = useLive();
   const entry = live.of(contest.id);
-  const whole = entry && entry !== NOT_COUNTED ? decodeResults(contest, entry) : null;
-  const units = whole && place ? placeResults(contest.id, place) : [];
-  const unit = units.filter((u) => SCOPES.indexOf(u.scope) <= SCOPES.indexOf(level)).at(-1) ?? null;
-  const results = unit ? inUnit(whole, unit.record) : whole;
+  const { whole, units, unit, results } = scopedResults(contest, entry, place, level);
   const candidates = withResults(contest, results);
   const shown = current && (candidates.find((c) => c.id === current.id) ?? current);
   const kept = useRef(new Set());
@@ -783,9 +800,8 @@ export function Contest({
     ? t(open ? 'contest.hide_others' : 'contest.show_all')
     : t(open ? 'contest.hide_candidates' : 'contest.show_candidates');
   const picked = contest.candidates.filter((c) => actions.isPicked(c.id)).length;
-  let past = contest.past ? pastTurnout(contest) : null;
   // A unit's own 2022 turnout only: the contest's is of its whole area.
-  if (unit) past = unit.past ? okrsokPast(unit.past) : null;
+  const past = unit ? (unit.past ? okrsokPast(unit.past) : null) : contest.past ? pastTurnout(contest) : null;
   const now = results?.eligible && results.voters !== null ? liveTurnout(results, unit && scopeName(unit.scope, place)) : null;
   // Who got the most votes where, once the candidates' votes are in: on
   // election night a municipality's give the winners only.
@@ -862,8 +878,8 @@ export function Contest({
 
 /* A contest on the ballots, open unless the visitor has closed one of its
  * kind. *listed*: one of all the council obvody of an obec, listed at
- * once: closed, and how the visitor leaves it says nothing about the
- * kind. */
+ * once; it starts closed, and opening or closing it says nothing about
+ * the kind. */
 function BallotContest({ contest, listed = false, ...props }) {
   const kind = contestKind(contest.id);
   const onOpen = (open) => {
@@ -879,9 +895,9 @@ function BallotContest({ contest, listed = false, ...props }) {
   />`;
 }
 
-/* The visitor's work that the buttons on the rows change, as one value
- * {filter, picks}: crossing a candidate out takes off its circle, and
- * circling one takes off its cross. Each change is a function of it. */
+/* The changes the row buttons make to the visitor's work, {filter, picks}:
+ * each a function of it. Crossing a candidate out takes off its circle,
+ * and circling one takes off its cross. */
 const without = (list, id) => (list.includes(id) ? list.filter((x) => x !== id) : list);
 
 const pick = (id) => (s) => ({
@@ -894,8 +910,8 @@ const cross = (id) => (s) =>
     ? { picks: s.picks, filter: { ...s.filter, crossed: without(s.filter.crossed, id) } }
     : { picks: without(s.picks, id), filter: { ...s.filter, crossed: [...s.filter.crossed, id] } };
 
-/* Party *p*, or mark *name*, put in the filter in *mode*; already there
- * in it, taken out. */
+/* Party *p*, or mark *name*, put in the filter in *mode*; if already there
+ * in that mode, taken out. */
 const setParty = (p, mode) => (s) => {
   const current = s.filter.parties.find((f) => f.name === p.name);
   const rest = s.filter.parties.filter((f) => f !== current);
@@ -908,31 +924,30 @@ const setMark = (name, mode) => (s) => {
 };
 
 /* How soon and how near a second click or tap must follow the first to
- * make the two a double one: about what systems allow for a double-click,
- * and less than the height of a row, so that quick taps down a list of
- * numbers each count. */
+ * make a double one: about what systems allow for a double-click, and
+ * less than a row's height, so that quick taps down a list of numbers
+ * each count. */
 const DOUBLE_MS = 400;
 const DOUBLE_PX = 24;
 
-/* The handlers that the buttons on candidate rows use (*actions* of
- * CandidateRow), for the rows inside *section* (a ref) of *candidates*
- * (id → candidate): the filter's (*filter*, `onFilter(next)`) and the
- * circles' (*picks*, `onPicks(next)`, picks.js).
+/* The handlers of the buttons on candidate rows (CandidateRow *actions*),
+ * for the rows inside *section* (a ref) of *candidates* (id → candidate):
+ * the filter's (*filter*, `onFilter(next)`) and the circles' (*picks*,
+ * `onPicks(next)`, picks.js).
  *
- * Each of those buttons has a press and an alternate one, the same on
- * every button: a number circles, the alternate crosses out; a party tag
- * or a mark shows only its candidates, the alternate hides them; each,
- * repeated, undoes itself. The alternate press is a Shift+click, or a
- * double click or tap, the only one a phone has: its first press has
- * done the other thing by then, which the second undoes before doing its
- * own. That first press may have moved the row (circling a muted
- * candidate lists it with the others), so the second counts wherever it
- * lands near the first.
+ * Every such button has a press and an alternate one: a number circles,
+ * the alternate crosses out; a party tag or a mark shows only its
+ * candidates, the alternate hides them; each, repeated, undoes itself.
+ * The alternate press is a Shift+click, or a double click or tap, the only
+ * one a phone has. A double press's first press has done the plain change
+ * by then, which the second undoes before making its own. That first
+ * press may have moved the row (circling a muted candidate lists it with
+ * the others), so the second counts wherever it lands near the first.
  *
  * The party pointed at or focused has its candidates highlighted by a
- * class on their rows, not by rendering them again, which with a few
- * hundred candidates takes tens of milliseconds, while a pointer on its
- * way across the pane (dragging the map, say) passes many party tags. */
+ * class on their rows rather than by rendering again: with a few hundred
+ * candidates that takes tens of milliseconds, and a pointer crossing the
+ * pane (dragging the map, say) passes many party tags. */
 export function useRowActions(section, candidates, filter, onFilter, picks, onPicks) {
   const hovered = useRef(null);
   const highlight = () => {
@@ -960,8 +975,9 @@ export function useRowActions(section, candidates, filter, onFilter, picks, onPi
   const latest = useRef(apply);
   latest.current = apply;
   useEffect(() => {
-    // Before any button sees it, so that a second press on another (or on
-    // the row, which would open the card) does only the alternate change.
+    // Captured before any button sees it, so that a second press on another
+    // button (or on the row, which would open the card) makes only the
+    // alternate change.
     const onClick = (e) => {
       const f = first.current;
       if (!f || e.detail === 0 || !section.current?.contains(e.target)) return;
@@ -971,9 +987,10 @@ export function useRowActions(section, candidates, filter, onFilter, picks, onPi
       latest.current(f.alternate(f.before));
     };
     document.addEventListener('click', onClick, true);
-    // Shift held, a button under the pointer previews its alternate press
-    // (app.css `.shift`). The pointer's events catch a Shift pressed while
-    // the window was in the background, a blur one released there.
+    // While Shift is held, a button under the pointer previews its
+    // alternate press (app.css `.shift`). Pointer events catch a Shift
+    // pressed while the window was in the background; blur, one released
+    // there.
     const root = document.documentElement;
     const onShift = (e) => root.classList.toggle('shift', e.shiftKey);
     const onBlur = () => root.classList.remove('shift');
@@ -1022,7 +1039,7 @@ export function useRowActions(section, candidates, filter, onFilter, picks, onPi
   };
 }
 
-/* The official documents that set the obvody of a council: its links stay
+/* The official documents that set a council's obvody: their links stay
  * with the ballots rather than in About's list of every municipality. One
  * line each, the full title in the tooltip. */
 function Sources({ sources }) {
@@ -1041,9 +1058,9 @@ function Sources({ sources }) {
   `;
 }
 
-/* The mode of a filter group as one button that switches it: an open eye
- * while only the group's candidates are shown, struck through while they
- * are hidden; the tooltip says which, and what a press does. */
+/* A filter group's mode as one button that switches it: an open eye while
+ * only the group's candidates are shown, struck through while they are
+ * hidden; the tooltip says which, and what a press does. */
 function ModeToggle({ mode, onMode }) {
   const only = mode === 'only';
   const label = t(only ? 'filter.mode_only' : 'filter.mode_hide');
@@ -1058,16 +1075,19 @@ function ModeToggle({ mode, onMode }) {
   </button>`;
 }
 
-/* The filter, under the place's name, in as few lines as fit: each group
- * (the parties shown, those hidden, each mark added) its mode and its
- * chips, a party's highlighting its candidates like a party in the list,
- * each removable (*actions* as for CandidateRow); the candidates crossed
- * out, counted, all removable at once; and a button that clears them all.
- * Stuck to the top while the lists scroll, it is ruled off from the pane's
- * close button beside it, which must not pass for the clear button. */
+/* The filter, under the place's name, in as few lines as fit:
+ * - each group (the parties shown, those hidden, each mark added) with
+ *   its mode and its chips, each removable; a party's chip highlights its
+ *   candidates as a party tag on a row does (*actions* as for
+ *   CandidateRow);
+ * - the candidates crossed out, counted, removable all at once;
+ * - a button that clears it all.
+ * Stuck to the top while the lists scroll, it is ruled off from the
+ * pane's close button beside it, which must not pass for the clear
+ * button. */
 export function FilterBar({ filter, onFilter, actions }) {
   const { parties, marks, crossed } = filter;
-  const added = MARKS.filter(([name]) => name in marks);
+  const added = MARKS.filter(({ name }) => name in marks);
   const shown = parties.length > 0 || added.length > 0 || crossed.length > 0;
   const bar = useRef(null);
   const [stuck, setStuck] = useState(false);
@@ -1100,7 +1120,7 @@ export function FilterBar({ filter, onFilter, actions }) {
       <ul class="chips">${chips}</ul>
     </div>
   `;
-  // A party group's mode switched joins its parties to the other group.
+  // Switching a party group's mode joins its parties to the other group.
   const partyGroup = (mode) => {
     const members = parties.filter((p) => p.mode === mode);
     if (!members.length) return null;
@@ -1122,7 +1142,7 @@ export function FilterBar({ filter, onFilter, actions }) {
   return html`
     <div ref=${bar} class=${stuck ? 'filter-bar stuck' : 'filter-bar'} role="group" aria-label=${t('filter.label')}>
       ${partyGroup('only')} ${partyGroup('hide')}
-      ${added.map(([name, , Icon]) => {
+      ${added.map(({ name, Icon }) => {
         const label = t(`filter.${name}`);
         return group(
           name,
@@ -1163,25 +1183,28 @@ const MUNICIPAL = new Set(['starosta', 'oz']);
 export const isMunicipal = (id) => MUNICIPAL.has(id.split(':')[0]);
 
 /* The scope of the results on the ballots (live.js SCOPES) the visitor
- * chose last: kept from place to place, each with its own units, as one
- * looks through the okrsky of a town, say. */
+ * chose last. It carries over from place to place, each with its own
+ * units, as one looks through the okrsky of a town, say. */
 let keptLevel = 'all';
 
-/* The ballots of obec *code*; *label* names the address, street or part
- * chosen in it, if any. *scope* ({obvod, street, part}) narrows its council
- * obvod (data.js `ballots`); `approximate`: the obvod was taken from the
- * map's approximate boundary at a clicked point. *okrsok*: the place's
- * okrsok (polling district), where known, `okrsokApproximate` likewise;
- * of a street or part, its houses' okrsok where they share one, else
- * their okrsky and council obvody are named (data.js `ballots` `group`).
- * *focus*: the candidacy whose card was just left, whose row then takes
- * the focus. *filter* (see NO_FILTER) and `onFilter(next)` the candidate
- * filter; *picks* and `onPicks(next)` the circled candidates (picks.js).
- * `onArea(target)` fits the map to a contest's area (data.js
- * `contestArea`), the pin in its header, leaving the place and these
- * ballots as they are. The counted contests' results are of one scope for
- * all (`Contest` *level*): the whole contest, or the place's obec, council
- * obvod or okrsok. */
+/* The ballots of obec *code*.
+ * - label: names the address, street or part chosen in it, if any.
+ * - scope ({obvod, street, part}): narrows its council obvod (data.js
+ *   `ballots`); `approximate`: the obvod was taken from the map's
+ *   approximate boundary at a clicked point.
+ * - okrsok: the place's okrsok (polling district) where known,
+ *   `okrsokApproximate` likewise. A street's or part's is its houses'
+ *   okrsok where they share one; else their okrsky and council obvody are
+ *   named (data.js `ballots` `group`).
+ * - focus: the candidacy whose card was just left; its row takes the
+ *   focus.
+ * - filter (see NO_FILTER) and `onFilter(next)`: the candidate filter;
+ *   picks and `onPicks(next)`: the circled candidates (picks.js).
+ * - onArea(target): fits the map to a contest's area (data.js
+ *   `contestArea`), the pin in its header, leaving the place and these
+ *   ballots as they are.
+ * The counted contests' results all show one scope (`Contest` *level*):
+ * the whole contest, or the place's obec, council obvod or okrsok. */
 export function Ballots({
   code,
   label,
@@ -1234,7 +1257,7 @@ export function Ballots({
   const regional = contests.filter((c) => !isMunicipal(c.id));
   const firstCouncil = municipal.findIndex((c) => c.council);
   // A street's or part's okrsok where all its houses are in one; where they
-  // are in several, which (and its council obvody likewise).
+  // are in several, which (and likewise its council obvody).
   const placeOkrsok = okrsok ?? (group.okrsky.length === 1 ? group.okrsky[0] : null);
   const where = [
     label ? obec.name : null,
@@ -1263,28 +1286,30 @@ export function Ballots({
   const councilNote = note ? html`<${Notice}>${note}<//>` : null;
   const place = { obec: obec.code, name: obec.name, obvod: placeObvod, okrsok: placeOkrsok };
 
-  // The sources of a council's obvody follow the last of its contests.
-  const area = (c) => c?.id.split('/')[0];
   const pin = (c) => {
     if (!index || !onArea) return null;
     const target = contestArea(c.id, index);
     return { label: t(`card.map_${target.what}`), onClick: () => onArea(target) };
   };
-  const withSources = (list, c, i) => html`
-    <${BallotContest}
-      key=${c.id}
-      contest=${c}
-      listed=${c.council === 'pending' || c.council === 'choose'}
-      onCandidate=${onCandidate}
-      filter=${filter}
-      actions=${actions}
-      map=${pin(c)}
-      place=${place}
-      level=${level}
-      onLevel=${onLevel}
-    />
-    ${c.sources.length && area(list[i + 1]) !== area(c) ? html`<${Sources} sources=${c.sources} />` : null}
-  `;
+  // The sources of a council's obvody follow the last of its contests.
+  const withSources = (list, c, i) => {
+    const last = i + 1 === list.length || officeOf(list[i + 1].id) !== officeOf(c.id);
+    return html`
+      <${BallotContest}
+        key=${c.id}
+        contest=${c}
+        listed=${c.council === 'pending' || c.council === 'choose'}
+        onCandidate=${onCandidate}
+        filter=${filter}
+        actions=${actions}
+        map=${pin(c)}
+        place=${place}
+        level=${level}
+        onLevel=${onLevel}
+      />
+      ${c.sources.length && last ? html`<${Sources} sources=${c.sources} />` : null}
+    `;
+  };
 
   return html`
     <section class="ballots" aria-labelledby="km-place" ref=${section}>

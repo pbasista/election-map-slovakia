@@ -12,10 +12,10 @@ browser as they are (e.g. `-- --no-sandbox` where its sandbox cannot run).
 
 The scene: the English page in the dark theme, 1280×800 at twice the pixel
 density, Banská Bystrica clicked in its council constituency No. 1, so the
-pane lists the ballots there beside the map; as on the day before the
-elections whenever it is taken: the page's clock set to noon that day, so
-no voting line, and the results (/results/) blocked, so none even in a
-build that reads them at any time (EMS_RESULTS_ANYTIME).
+pane lists the ballots there beside the map. Whenever it is taken, it shows
+the day before the elections: the page's clock is set to noon that day, so
+there is no voting line, and the results (/results/) are blocked, so there
+are none even in a build that reads them at any time (EMS_RESULTS_ANYTIME).
 """
 
 import argparse
@@ -135,8 +135,8 @@ class DevTools:
     def call(self, method: str, **params) -> dict:
         """Send a command and return its result, skipping events meanwhile."""
         self.next_id += 1
-        data = json.dumps({"id": self.next_id, "method": method, "params": params})
-        body = data.encode()
+        request = {"id": self.next_id, "method": method, "params": params}
+        body = json.dumps(request).encode()
         mask = os.urandom(4)
         n = len(body)
         if n < LENGTH_16:

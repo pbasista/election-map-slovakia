@@ -237,7 +237,8 @@ def read(path: Path, admin: Admin, overrides: Mapping[str, str]) -> Addresses:
                 point = _point(x, y)
             except AddressesError as e:
                 raise AddressesError(f"{path}:{reader.line_num}: {e}") from None
-            part = parts.setdefault(part or obec, part or obec)
+            part = part or obec
+            part = parts.setdefault(part, part)
             group = (STREETS, street) if street else (PARTS, part)
             number = numbers.get((supisne, orientacne))
             if number is None:
@@ -528,10 +529,14 @@ def build(
         result.places = obec_places(addresses, council, okrsky, gpkg)
     rule_sets = obvody.load_rule_sets(election_dir)
     with progress.stage(f"assigning the council obvody of {len(rule_sets)} obce"):
-        result.assigned, result.rules = assign_obvody(rule_sets, council, result.places)
+        result.assigned, result.rules, units = assign_obvody(
+            rule_sets, council, result.places
+        )
     okrsok_sets = obvody.okrsok_rule_sets(election_dir)
     with progress.stage(f"assigning the okrsky of {len(okrsok_sets)} obce"):
-        result.okrsky, result.okrsok_lines = assign_okrsky(okrsok_sets, result.places)
+        result.okrsky, result.okrsok_lines = assign_okrsky(
+            okrsok_sets, result.places, units
+        )
     with progress.stage("making the search index and obec files"):
         result.files["index.json"] = index_file(addresses, admin)
         for code, groups in addresses.obce.items():
@@ -608,14 +613,16 @@ def assign_obvody(
     rule_sets: Mapping[str, obvody.RuleSet],
     council: Mapping[str, Sequence[int]],
     places: Mapping[str, obvody.ObecPlaces],
-) -> tuple[dict[str, ObvodMap], list[str]]:
+) -> tuple[dict[str, ObvodMap], list[str], dict[str, list[int]]]:
     """Return obec → the council obvod of each house, by the obec's rules.
 
-    Also returns lines for the report. Fails listing every rule set that
-    does not fit the candidate lists or leaves an address in no obvod or in
-    two (see :func:`check_assignment`).
+    Also returns lines for the report, and obec → the obvod of each of its
+    places. Fails listing every rule set that does not fit the candidate
+    lists or leaves an address in no obvod or in two (see
+    :func:`check_assignment`).
     """
     out: dict[str, ObvodMap] = {}
+    units: dict[str, list[int]] = {}
     lines: list[str] = []
     errors: list[str] = []
     for code, rules in rule_sets.items():
@@ -645,28 +652,29 @@ def assign_obvody(
                 p.ku_names,
             )
         ]
-        out[code] = {}
-        start = 0
-        for group, size in p.groups:
-            out[code][group] = a.units[start : start + size]
-            start += size
+        out[code] = _per_group(p.groups, a.units)
+        units[code] = a.units
     if errors:
         raise AddressesError(
             "the council obvody by address do not fit:\n  " + "\n  ".join(errors)
         )
-    return out, lines
+    return out, lines, units
 
 
 def assign_okrsky(
-    rule_sets: Mapping[str, obvody.RuleSet], places: Mapping[str, obvody.ObecPlaces]
+    rule_sets: Mapping[str, obvody.RuleSet],
+    places: Mapping[str, obvody.ObecPlaces],
+    council: Mapping[str, Sequence[int]] | None = None,
 ) -> tuple[dict[str, ObvodMap], list[str]]:
     """Return obec → the okrsok of each house, where its okrsky are drawn.
 
     That is where the obec's rule set (:func:`election_map_slovakia.obvody.okrsok_rule_sets`)
     places every address in one okrsok, as ``geo`` draws them
-    (:func:`election_map_slovakia.geo.okrsok_areas`). Also returns lines
+    (:func:`election_map_slovakia.geo.address_cuts`). Also returns lines
     for the report, among them the rule sets that do not: ``geo`` fails on
     those, but the addresses are still written, for the jobs that fix them.
+    *council* is obec → the obvod of each of its places where
+    :func:`assign_obvody` has them already.
     """
     out: dict[str, ObvodMap] = {}
     lines: list[str] = []
@@ -675,19 +683,29 @@ def assign_okrsky(
             continue
         p = places[code]
         planar = p.planar()
-        a = obvody.assign(rules, p.places, p.kus, planar)
-        k = obvody.assign_okrsky(rules, p.places, a.units, p.kus, planar)
+        a = (council or {}).get(code)
+        if a is None:
+            a = obvody.assign(rules, p.places, p.kus, planar).units
+        k = obvody.assign_okrsky(rules, p.places, a, p.kus, planar)
         problems = k.problems(p.places)
         if problems:
             lines.append(f"  {rules.name} ({code}), okrsky: " + "; ".join(problems))
             continue
-        out[code] = {}
-        start = 0
-        for group, size in p.groups:
-            out[code][group] = k.units[start : start + size]
-            start += size
+        out[code] = _per_group(p.groups, k.units)
     lines.append(f"  okrsok of every address in {len(out)} obce")
     return out, lines
+
+
+def _per_group(
+    groups: Iterable[tuple[tuple[str, str], int]], units: list[int]
+) -> ObvodMap:
+    """Split *units*, one per address in group order, by group."""
+    out: ObvodMap = {}
+    start = 0
+    for group, size in groups:
+        out[group] = units[start : start + size]
+        start += size
+    return out
 
 
 def check_assignment(
@@ -764,9 +782,9 @@ def locate(
     )
     order = sorted(polygons)
     tree = shapely.STRtree([polygons[c] for c in order])
-    within: dict[int, str] = {}
-    for p, t in tree.query(points, predicate="within").T:
-        within[int(p)] = order[int(t)]
+    within = {
+        int(p): order[int(t)] for p, t in tree.query(points, predicate="within").T
+    }
     for k, j in enumerate(far):
         i = rows[j]
         out[i] = Outside(refs[i], float(distances[k]), within.get(k))
@@ -862,9 +880,8 @@ def report(result: Result, sizes: Mapping[str, tuple[int, int]]) -> Iterator[str
     obce_by_status: Counter[str] = Counter()
     pending_by: Counter[str] = Counter()
     for code, n in houses.items():
-        status = council_fields(result.council.get(code, []), code in result.assigned)[
-            "council"
-        ]
+        council = result.council.get(code, [])
+        status = council_fields(council, code in result.assigned)["council"]
         by_status[status] += n
         obce_by_status[status] += 1
         if status == "pending":
@@ -896,16 +913,17 @@ def _report_outside(result: Result) -> Iterator[str]:
         for hs in g.values()
         for h in hs
     )
+    labels = [*(f"≤ {b:,} m" for b in OUTSIDE_BINS), "more"]
     bins = Counter(
-        next((f"≤ {b:,} m" for b in OUTSIDE_BINS if o.distance <= b), "more")
+        next(
+            (label for b, label in zip(OUTSIDE_BINS, labels) if o.distance <= b), "more"
+        )
         for o in result.outside
     )
     yield (
         f"points outside their obec polygon (ZBGIS level 0):"
         f" {len(result.outside):,} of {located:,}; "
-        + ", ".join(
-            f"{k} {bins[k]:,}" for k in (*(f"≤ {b:,} m" for b in OUTSIDE_BINS), "more")
-        )
+        + ", ".join(f"{k} {bins[k]:,}" for k in labels)
     )
     yield f"  not published (over {MAX_OUTSIDE:.0f} m): {result.dropped:,}"
     yield f"  farthest {TOP} (all in data/build/{OUTSIDE_FILE}):"
@@ -929,13 +947,12 @@ def _report_sample(result: Result) -> Iterator[str]:
     )
     for s in [s for s in result.sample if s not in ok] + ok[:SAMPLE_SHOWN]:
         r = s.ref
-        point = (
-            "no point"
-            if r.house.point is None
-            else "point inside"
-            if s.by_point == r.obec
-            else f"point in {_obec(admin, s.by_point)}"
-        )
+        if r.house.point is None:
+            point = "no point"
+        elif s.by_point == r.obec:
+            point = "point inside"
+        else:
+            point = f"point in {_obec(admin, s.by_point)}"
         missing = f"; no candidates: {', '.join(s.missing)}" if s.missing else ""
         yield (
             f"  {admin.obce[r.obec].name}, {r.place} {r.house.number} → {r.obec}"
@@ -950,7 +967,10 @@ def _report_sizes(
     yield "index.json by part:      bytes        gzip"
     for key in ("obce", STREETS, PARTS):
         raw = output.to_json(index[key])
-        yield f"  {key:<10} {len(index[key]):>6,} {format_size(len(raw)):>11} {format_size(output.gzip_size(raw)):>11}"
+        yield (
+            f"  {key:<10} {len(index[key]):>6,} {format_size(len(raw)):>11}"
+            f" {format_size(output.gzip_size(raw)):>11}"
+        )
     raw, gz = sizes["index.json"]
     yield f"  {'all':<17} {format_size(raw):>11} {format_size(gz):>11}"
     obce = {p: s for p, s in sizes.items() if p != "index.json"}
@@ -967,5 +987,5 @@ def _report_sizes(
         )
     yield "  largest:"
     for path, (raw, gz) in sorted(obce.items(), key=lambda kv: -kv[1][0])[:10]:
-        code = path.removesuffix(".json")
-        yield f"  {_obec(result.admin, code):<40} {format_size(raw):>11} {format_size(gz):>11}"
+        name = _obec(result.admin, path.removesuffix(".json"))
+        yield f"  {name:<40} {format_size(raw):>11} {format_size(gz):>11}"

@@ -1,8 +1,11 @@
 # Testing
 
-The checks that CI runs, and how to see a change in a real browser: the
-built site served locally, with its final results or dummy ones if the
-change concerns them, driven by a headless Chromium or Firefox.
+Two kinds of testing:
+
+- **the checks** that CI runs ([deploy.md](deploy.md#what-runs-when));
+- **a real browser**: the built site served locally,
+  with its final results or dummy ones if the change concerns them,
+  driven by a headless Chromium or Firefox.
 
 ## Checks
 
@@ -15,8 +18,9 @@ npx --yes @biomejs/biome@2.5.12 ci
 uv run ems build && uv run ems check
 ```
 
-Their output is long; to keep it, send it to a log and read the log only
-when a check fails, rather than running it again:
+Their output is long.
+To keep it, send it to a log and read the log only when a check fails,
+rather than running it again:
 
 ```sh
 uv run pytest -q > /tmp/ems-pytest.log 2>&1; echo rc=$?
@@ -30,11 +34,14 @@ EMS_RESULTS_ANYTIME=1 uv run ems build  # read them at any time
 uv run ems serve --port 8765 &          # dist/, the results in it
 ```
 
-The site reads its results from `dist/results/<election day>/` on the same
-server, so one server is all it takes. A plain build reads them once per
-page load (with `live` off in site.toml, or past the polls' closing plus
-`live_days`), which also works; `EMS_RESULTS_ANYTIME=1` polls at any
-time. For dummy results in place of the final ones:
+The site reads its results from `dist/results/<election day>/`
+on the same server, so one server is all it takes.
+A plain build reads them once per page load,
+which also works;
+`EMS_RESULTS_ANYTIME=1` polls at any time
+(when the app polls: [deploy.md](deploy.md#polling-live)).
+
+For dummy results in place of the final ones:
 
 ```sh
 uv run ems results fake mid             # none, early, mid, late or final
@@ -42,11 +49,13 @@ EMS_RESULTS_ANYTIME=1 uv run ems build
 ```
 
 The stages and what each holds are in
-[results.md](results.md#testing-the-app-with-dummy-results). Start
-`ems serve` after the build, since it reads `dist/_headers` once, at
-startup.
+[results.md](results.md#testing-the-app-with-dummy-results).
+Start `ems serve` after the build,
+since it reads `dist/_headers` once, at startup.
 
-Places worth opening (`/en/#…`):
+### Places worth opening
+
+Open them as `/en/#…`:
 
 | Hash | What |
 |---|---|
@@ -55,20 +64,25 @@ Places worth opening (`/en/#…`):
 | `o=520071` | a municipality in the regional constituency that `fake` decides by a landslide at `mid` |
 | `o=528595&f=1&k=oz:500011/3.1,starosta:500011.1` | the same district with Favourites open, two Nitra candidates circled |
 
-`k` lists circled candidates as `<contest>.<ballot numbers>`, contests
-comma-separated; `f=1` opens Favourites.
+`k` lists circled candidates as `<contest>.<ballot numbers>`,
+contests comma-separated; `f=1` opens Favourites.
 
 ## A headless browser
 
-Playwright for Python, as a one-off: `uv run --no-project --with` gives
-it to a single run, so the project gains no dependency. The first time,
-fetch its Chromium (into `~/.cache/ms-playwright/`):
+### Setup
+
+Use Playwright for Python as a one-off:
+`uv run --no-project --with` gives it to a single run,
+so the project gains no dependency.
+The first time, fetch its Chromium (into `~/.cache/ms-playwright/`):
 
 ```sh
 uv run --no-project --with playwright==1.56.0 python -m playwright install chromium
 ```
 
-Then a script such as this one, run with
+### A script
+
+Run a script such as this one with
 `uv run --no-project --with playwright==1.56.0 python check.py`:
 
 ```python
@@ -90,40 +104,88 @@ with sync_playwright() as p:
     browser.close()
 ```
 
-Notes:
+### Notes
 
-- `reduced_motion="reduce"` turns the page's own transitions off
-  (`prefers-reduced-motion` in `app.css`), so screenshots do not catch
-  them half-way. Injecting a style to the same end fails: the CSP allows
-  no inline style.
-- The width decides the layout (`js/pane.js`): up to 640 px the pane is a
-  bottom sheet; below 960 px one pane, which Favourites take over when
-  open; from 960 px Favourites stand in a pane of their own beside it.
-- The map fits with an animation and draws in a worker, off the DOM: wait
-  a moment after a press before a screenshot, and check the map on the
-  image, not in the DOM.
-- Useful selectors: `.ballots .contest-map` and
-  `.favourite-contests .contest-map` a contest's pin, `.votes-map` a
-  candidate's, `.map-legend` the legend of what the map colours by,
-  `.live-status` and `.voting-bar` the status line under the title.
-- A browser already running can be driven instead, e.g. Chromium started
-  with `--headless=new --remote-debugging-port=9222`, by
-  `p.chromium.connect_over_cdp("http://127.0.0.1:9222")` and pages from
-  `browser.new_context(viewport=…, reduced_motion="reduce")`.
+- **Motion.**
+  `reduced_motion="reduce"` turns the page's own transitions off
+  (`prefers-reduced-motion` in `app.css`),
+  so screenshots do not catch them half-way.
+  Injecting a style to the same end fails:
+  the CSP allows no inline style.
+- **Layout.**
+  The width decides the layout (`js/pane.js`):
+  up to 640 px the pane is a bottom sheet;
+  below 960 px one pane, which Favourites take over when open;
+  from 960 px Favourites stand in a pane of their own beside it.
+- **The map** fits with an animation and draws in a worker, off the DOM:
+  wait a moment after a press before a screenshot,
+  and check the map on the image, not in the DOM.
+- **Useful selectors:**
+
+  | Selector | Element |
+  |---|---|
+  | `.ballots .contest-map`, `.favourite-contests .contest-map` | a contest's pin |
+  | `.votes-map` | a candidate's pin |
+  | `.map-legend` | the legend of what the map colours by |
+  | `.live-status`, `.voting-bar` | the status line under the title |
+
+- **A running browser** can be driven instead,
+  e.g. Chromium started with `--headless=new --remote-debugging-port=9222`,
+  by `p.chromium.connect_over_cdp("http://127.0.0.1:9222")`
+  and pages from `browser.new_context(viewport=…, reduced_motion="reduce")`.
+
+### A phone
+
+A context such as
+`browser.new_context(viewport={"width": 390, "height": 844},
+is_mobile=True, has_touch=True, device_scale_factor=2,
+reduced_motion="reduce")`
+has the phone layout and a touch screen without hover, `(hover: none)`,
+which the tap on the map depends on.
+Its states and what to look for:
+
+- **The sheet:** `.side .pane` with `sheet-peek`, `sheet-half`
+  or `sheet-full`,
+  its height in `--sheet-height` on the root element.
+  A place opens at half; results put on the map from it lower it to peek.
+  `.pane-grip` is a button that steps through the heights (Enter works).
+  To drag it, send touches through a CDP session
+  (`ctx.new_cdp_session(page)`, `Input.dispatchTouchEvent`
+  with `touchStart`, a few `touchMove`s and `touchEnd`);
+  a quick stroke goes to the next height,
+  a drag down from peek closes the sheet.
+- **The legend:** without the sheet `.map-legend.pill`,
+  unfolded by `.map-legend-unfold` and folded again by `.map-legend-fold`;
+  with the sheet open, `.map-legend.bar` in `.pane-top`,
+  `.map-legend-fold` showing its units sentence.
+- **The map card:** with results on the map,
+  `page.touchscreen.tap(x, y)` on a coloured area shows `.map-card`,
+  whose `.map-card-ballots` picks the place.
+- **More controls:** with the sheet open,
+  `.controls-more` puts out the language, boundaries, theme
+  and Favourites buttons.
+- **The credits,** `.leaflet-control-attribution`,
+  show in full for five seconds or until the map is touched,
+  then fold to `.km-credits-button` (class `folded`);
+  the button unfolds them.
 
 ### Firefox
 
-The same script runs in Firefox with `p.firefox.launch()` in place of
-`p.chromium.launch()`, after fetching Playwright's Firefox once:
+The same script runs in Firefox with `p.firefox.launch()`
+in place of `p.chromium.launch()`,
+after fetching Playwright's Firefox once:
 
 ```sh
 uv run --no-project --with playwright==1.56.0 python -m playwright install firefox
 ```
 
-That is a Firefox built for Playwright (142 for 1.56), not the one
-installed on the system, which Playwright cannot drive and which may be
-newer; for a look at that one, open the local site in it by hand. To run
-one check in both engines, take the engine's name from the command line:
+That is a Firefox built for Playwright (142 for 1.56),
+not the one installed on the system,
+which Playwright cannot drive and which may be newer;
+for a look at that one, open the local site in it by hand.
+
+To run one check in both engines,
+take the engine's name from the command line:
 
 ```python
 import sys
@@ -141,8 +203,13 @@ for b in chromium firefox; do
 done
 ```
 
-The README's screenshot has a script of its own, with no dependency
-beyond a Chromium-family browser: `scripts/screenshot.py`.
+### The README's screenshot
+
+It has a script of its own,
+with no dependency beyond a Chromium-family browser:
+`python3 scripts/screenshot.py` after `uv run ems build`
+(`--browser PATH` where none is on `PATH`;
+arguments after `--` go to the browser).
 
 ## Afterwards
 

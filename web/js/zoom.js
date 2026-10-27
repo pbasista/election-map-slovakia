@@ -12,9 +12,9 @@
  * goal is reached and the input has paused, `_moveEnd` fires `zoomend` and
  * `moveend`.
  *
- * `_move`, `_moveStart`, `_moveEnd`, `_limitCenter`, `_limitZoom` and `_stop`
- * are Leaflet internals (those its TouchZoom handler uses); the vendored
- * Leaflet is pinned at 1.9.4.
+ * `_move`, `_moveStart`, `_moveEnd`, `_limitCenter`, `_limitZoom`, `_stop`
+ * and `_onZoomTransitionEnd` are Leaflet internals (those its TouchZoom
+ * handler uses); the vendored Leaflet is pinned at 1.9.4.
  */
 
 const L = globalThis.L;
@@ -31,6 +31,10 @@ const EASE = 70;
 // How long the input must pause before a reached goal ends the zoom, ms; a
 // wheel turned slowly sends a notch about every 100 ms.
 const SETTLE = 150;
+// How far a pinch's closing "animation" may go, in zoom levels and pixels,
+// and still be skipped (dragAfterPinch): about one touchmove's worth.
+const NEGLIGIBLE_ZOOM = 0.05;
+const NEGLIGIBLE_SHIFT = 4;
 
 /* Takes over wheel and double-click zoom of *map*; `zoomBy(delta, point?)`
  * zooms by *delta* levels around container *point* (default: the middle),
@@ -106,4 +110,23 @@ export function smoothZoom(map) {
   container.addEventListener('touchstart', stop, { passive: true });
 
   return { zoomBy, stop, running: () => frame !== 0 };
+}
+
+/* Lets a drag start right after a pinch.
+ *
+ * When a pinch ends, Leaflet's TouchZoom "animates" to where the pinch left
+ * the view, marking the map pane `leaflet-zoom-anim`, and its Draggable
+ * ignores every touch that starts while the pane has that class. With
+ * continuous zoom (zoomSnap 0) the view is already there, or a frame short
+ * of it, so the class stays for Leaflet's 250 ms fallback timer or the
+ * equally long CSS transition: a pan begun sooner did nothing at all. An
+ * animation that goes (almost) nowhere is ended as soon as it starts, at
+ * its goal (once `_animateZoom` has returned, hence the microtask); one
+ * that does move, back within the zoom limits, runs. */
+export function dragAfterPinch(map) {
+  map.on('zoomanim', ({ center, zoom }) => {
+    const shift = map.project(center, zoom).distanceTo(map.project(map.getCenter(), zoom));
+    if (Math.abs(zoom - map.getZoom()) > NEGLIGIBLE_ZOOM || shift > NEGLIGIBLE_SHIFT) return;
+    queueMicrotask(() => map._onZoomTransitionEnd());
+  });
 }

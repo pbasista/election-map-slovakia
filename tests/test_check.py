@@ -154,7 +154,16 @@ def site(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[Path, config.
     )
     base = {basemap.okres_path("106", lod): base_map() for lod in "210"}
     base[basemap.COARSE_FILE] = base_map()
-    base[basemap.INDEX_FILE] = {"bands": SHARD_BANDS, "okresy": ["106"]}
+    base[basemap.buildings_path("508063")] = {
+        "scale": basemap.BUILDINGS_SCALE,
+        "counts": [3],
+        "xy": [1705000, 4845000, 4, 0, 0, 3],
+    }
+    base[basemap.INDEX_FILE] = {
+        "bands": SHARD_BANDS,
+        "okresy": ["106"],
+        "buildings": {"zoom": basemap.BUILDINGS_ZOOM, "obce": ["508063"]},
+    }
     basemap.write(base, built / basemap.OUTPUT_DIR)
     write_json(
         built / "addr/index.json", {"obce": [["508063", "Jakubov", "106", "jakubov"]]}
@@ -343,6 +352,8 @@ def test_base_map(site):
     index = json.loads((dist / "base/index.json").read_bytes())
     index["okresy"].append("107")
     (dist / "base/index.json").write_text(json.dumps(index))
+    buildings = dist / "base/obec/508063.json"
+    buildings.write_text(buildings.read_text().replace("100000", "100001"))
     found = problems(dist, cfg)
     assert found["links"] == [
         "base/okres/106/1.json missing (needed by base/index.json)",
@@ -353,7 +364,8 @@ def test_base_map(site):
     ]
     assert found["base"] == [
         "base/index.json: okresy differ from the geo shards'",
-        "base/index.json: lists 4 files, not the 7 the app may request",
+        "base/index.json: lists 5 files, not the 8 the app may request",
+        "base/obec/508063.json: scale 100001, not 100000",
         "base/okres/106/1.json: not "
         f"{index['files']['okres/106/1.json']:,} bytes as listed",
     ]

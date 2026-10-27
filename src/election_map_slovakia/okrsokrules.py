@@ -51,7 +51,6 @@ named with ``--only``.
 from __future__ import annotations
 
 import dataclasses
-import datetime as dt
 import html
 import json
 import tomllib
@@ -78,8 +77,6 @@ NOT_FOUND_FILE = "not-found.json"
 :attr:`election_map_slovakia.config.Config.election_dir`."""
 _SEVERAL = 2
 """Okrsky of an obec that make it an item."""
-_OBVOD_TEXT = "#   obvod "
-"""How the header of a rule set quotes the document on an obvod."""
 _SEARCH_TITLES = (
     "utvorenie volebných okrskov a určenie volebných miestností",
     "zoznam volebných okrskov a volebných miestností",
@@ -229,7 +226,16 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
         a = obvody.assign(rules, p.places, p.kus, p.planar())
         split.append(
             _item(
-                cfg, names[code], okresy, kraje, rules, path, counts[code], p, a.units
+                cfg,
+                names[code],
+                okresy,
+                kraje,
+                rules,
+                path,
+                counts[code],
+                p,
+                a.units,
+                names,
             )
         )
     # An obec with several council obvody but no rule set yet gets its okrsky
@@ -250,29 +256,21 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
             continue
         if wanted(code, obvody.okrsky_path(cfg.election_dir, code).is_file()):
             p = obvody.load_places(places)
-            whole.append(_whole_item(names[code], okresy, kraje, count, p))
-    return _batches(split, PROMPT, options.size) + _batches(
-        whole, WHOLE_PROMPT, options.size
-    )
-
-
-def _batches(items: list[dict[str, Any]], prompt: str, size: int) -> list[jobs.Batch]:
-    """Return *items* in batches of *size*, the obce with the most addresses first."""
-    items = sorted(items, key=lambda i: (-i["address_count"], i["id"]))
-    batches = []
-    for start in range(0, len(items), size):
-        chunk = items[start : start + size]
-        title = "okrsky of " + ", ".join(f"{i['name']} ({i['id']})" for i in chunk)
-        batches.append(jobs.Batch(chunk, prompt, title))
-    return batches
+            whole.append(_whole_item(names[code], okresy, kraje, count, p, names))
+    return obvodrules.batches(
+        split, PROMPT, options.size, "okrsky"
+    ) + obvodrules.batches(whole, WHOLE_PROMPT, options.size, "okrsky")
 
 
 def obvod_texts(path: Path) -> dict[int, str]:
-    """Return obvod → the document's text on it, from the header of rule set *path*."""
+    """Return obvod → the document's text on it, from the header of rule set *path*.
+
+    The header :func:`election_map_slovakia.obvodrules.accept` wrote.
+    """
     out = {}
     for line in header(path):
-        if line.startswith(_OBVOD_TEXT[2:]):
-            number, _, text = line[len(_OBVOD_TEXT) - 2 :].partition(": ")
+        if line.startswith(obvodrules.OBVOD_TEXT):
+            number, _, text = line.removeprefix(obvodrules.OBVOD_TEXT).partition(": ")
             out[int(number)] = text
     return out
 
@@ -303,11 +301,12 @@ def _item(
     okrsky: int,
     p: obvody.ObecPlaces,
     assigned: Sequence[int],
+    obce: Mapping[str, Mapping[str, Any]],
 ) -> dict[str, Any]:
     """Return the input item of an obec with a rule set (at *path*)."""
     texts = obvod_texts(path)
     return (
-        _identity(obec, okresy, kraje, okrsky)
+        _identity(obec, okresy, kraje, okrsky, obce)
         | {
             "obvody": [
                 {"number": n, "seats": s, "text": texts.get(n, "")}
@@ -319,7 +318,7 @@ def _item(
             ],
             "note": rules.note or "",
         }
-        | _addresses(p, assigned)
+        | obvodrules.address_fields(p, assigned)
         | _search(obec)
     )
 
@@ -330,9 +329,14 @@ def _whole_item(
     kraje: Mapping[str, str],
     okrsky: int,
     p: obvody.ObecPlaces,
+    obce: Mapping[str, Mapping[str, Any]],
 ) -> dict[str, Any]:
     """Return the input item of an obec with one council obvod."""
-    return _identity(obec, okresy, kraje, okrsky) | _addresses(p, None) | _search(obec)
+    return (
+        _identity(obec, okresy, kraje, okrsky, obce)
+        | obvodrules.address_fields(p)
+        | _search(obec)
+    )
 
 
 def _identity(
@@ -340,58 +344,23 @@ def _identity(
     okresy: Mapping[str, str],
     kraje: Mapping[str, str],
     okrsky: int,
+    obce: Mapping[str, Mapping[str, Any]],
 ) -> dict[str, Any]:
-    """Return the fields of an item that name the obec, and its okrsok count."""
+    """Return the fields of an item that name the obec, and its okrsok count.
+
+    *obce* maps obec code → obec of the candidate data, for the name of the
+    city of a city district.
+    """
     out = {
         "id": obec["code"],
         "name": obec["name"],
         "okres": okresy.get(obec["okres"], obec["okres"]),
         "kraj": kraje.get(obec["kraj"], obec["kraj"]),
     }
-    if obec.get("city"):
-        out["city"] = obec["city"]
+    city = obce.get(obec.get("city") or "")
+    if city:
+        out["city"] = city["name"]
     return out | {"okrsky": okrsky}
-
-
-def _addresses(p: obvody.ObecPlaces, assigned: Sequence[int] | None) -> dict[str, Any]:
-    """Return the address fields of an item: streets, parts, k.ú.
-
-    With *assigned*, the obvod of each address, each street and part ends
-    with its obvody.
-    """
-    streets: dict[str, list[Any]] = {}
-    parts: dict[str, list[Any]] = {}
-    for i, x in enumerate(p.places):
-        part = parts.setdefault(x.part, [x.part, 0, set()])
-        part[1] += 1
-        if assigned is not None:
-            part[2].add(assigned[i])
-        if not x.street:
-            continue
-        entry = streets.setdefault(x.street, [x.street, 0, set(), [], set()])
-        entry[1] += 1
-        entry[2].add(x.part)
-        if (n := obvody.house(x.orientacne)) is not None:
-            entry[3].append(n[0])
-        if assigned is not None:
-            entry[4].add(assigned[i])
-    by_obvod = assigned is not None
-    return {
-        "address_count": len(p.places),
-        "without_street": sum(not x.street for x in p.places),
-        "streets": [
-            [s, n, sorted(ps), [min(h), max(h)] if h else None]
-            + ([sorted(o)] if by_obvod else [])
-            for s, n, ps, h, o in sorted(
-                streets.values(), key=lambda e: (search_key(e[0]), e[0])
-            )
-        ],
-        "parts": [
-            [part, n] + ([sorted(o)] if by_obvod else [])
-            for part, n, o in sorted(parts.values())
-        ],
-        "kus": p.ku_names,
-    }
 
 
 def _search(obec: Mapping[str, Any]) -> dict[str, list[str]]:
@@ -428,9 +397,7 @@ def rule_set(
         data["obvod"][str(o["number"])]["okrsky"] = o["okrsky"]
     known = {d["url"] for d in data["document"]}
     data["document"] += [
-        {"url": d["url"], "sha256": shas[d["url"]], "title": d["title"]}
-        for d in out["documents"]
-        if d["url"] not in known
+        d for d in obvodrules.document_tables(out, shas) if d["url"] not in known
     ]
     _set_okrsky(data, out)
     # Without rules an okrsok is known only by its obvod: no table.
@@ -449,10 +416,7 @@ def whole_rule_set(
     data: dict[str, Any] = {
         "obec": item["id"],
         "name": item["name"],
-        "document": [
-            {"url": d["url"], "sha256": shas[d["url"]], "title": d["title"]}
-            for d in out["documents"]
-        ],
+        "document": obvodrules.document_tables(out, shas),
     }
     _set_okrsky(data, out)
     return obvody.okrsky_set(data, f"okrsok-rules {item['id']}")
@@ -460,23 +424,22 @@ def whole_rule_set(
 
 def _set_okrsky(data: dict[str, Any], out: Mapping[str, Any]) -> None:
     """Set the okrsok tables and ``okrsky_*`` keys of rule set *data* from *out*."""
-    data["okrsok"] = {
-        str(k["number"]): {"addressless": True}
-        if k.get("addressless")
-        else {"rules": k["rules"]}
-        if k["rules"]
-        else {}
-        for k in out.get("okrsky", [])
-    }
-    if "date" in out:
-        try:
-            data["okrsky_date"] = dt.date.fromisoformat(out["date"])
-        except ValueError:
-            raise obvody.ObvodyError("date: not a date") from None
+    data["okrsok"] = {str(k["number"]): _okrsok_table(k) for k in out.get("okrsky", [])}
+    date = obvodrules.decision_date(out)
+    if date is not None:
+        data["okrsky_date"] = date
     if out.get("fill_nearest"):
         data["okrsky_fill"] = obvody.FILL_NEAREST
     if out.get("note"):
         data["okrsky_note"] = out["note"]
+
+
+def _okrsok_table(okrsok: Mapping[str, Any]) -> dict[str, Any]:
+    """Return the ``okrsok.<n>`` table of an okrsok of an output item."""
+    if okrsok.get("addressless"):
+        return {"addressless": True}
+    # An empty table: the okrsok alone in its obvod, or with every address.
+    return {"rules": okrsok["rules"]} if okrsok["rules"] else {}
 
 
 def check(
@@ -536,8 +499,10 @@ def _documents(
         return {}, problems
     urls = [d["url"] for d in out["documents"]]
     official = [u for u in urls if not obvodrules.official_problems(name, website, [u])]
+    linked = [u for u in urls if u not in official]
     shas: dict[str, str] = {}
-    for url in sorted(urls, key=lambda u: u not in official):
+    # The official documents first: those are the pages that may link the rest.
+    for url in [*official, *linked]:
         if url not in official and not _linked(job, official, url):
             problems += [
                 f"{p}, nor linked from one of the documents there: list the"
@@ -546,7 +511,7 @@ def _documents(
             ]
             continue
         try:
-            shas[url] = obvodrules.keep(cfg, job, url).split(".")[0]
+            shas[url] = obvodrules.sha256_of(obvodrules.keep(cfg, job, url))
         except jobs.JobError as e:
             problems.append(str(e))
     return shas, problems
@@ -577,13 +542,7 @@ def _okrsok_problems(
     """
     k = obvody.assign_okrsky(rules, p.places, obvody_of, p.kus, p.planar())
     counts = Counter(k.units)
-    problems = obvody.name_problems(
-        rules,
-        sorted({x.street for x in p.places if x.street}),
-        sorted({x.part for x in p.places}),
-        p.ku_names,
-    )
-    problems += k.problems(p.places)
+    problems = obvodrules.place_name_problems(rules, p) + k.problems(p.places)
     problems += [
         f"okrsok {n} has no address"
         for ks in rules.mapped.values()
@@ -680,43 +639,26 @@ def _page(
     texts = {k["number"]: k["text"] for k in out.get("okrsky", [])}
     rows = []
     for k, obvod in rules.okrsok_obvod.items():
-        listed = "".join(
-            f"<li>{e(r.describe().split(': ', 1)[1])}"
-            + (" <i>(inferred)</i>" if r.inferred else "")
-            + (f" — {e(r.note)}" if r.note else "")
-            + "</li>"
-            for r in rules.okrsok_rules
-            if r.unit == k
-        )
+        listed = obvodrules.rule_items(r for r in rules.okrsok_rules if r.unit == k)
         rows.append(
-            f'<tr><td><span class="key" style="background:{obvodrules.colour(k)}">'
-            f"</span> <b>{k}</b></td>"
+            f"<tr>{obvodrules.unit_cell(k)}"
             + ("" if rules.whole else f"<td>{obvod}</td>")
             + f"<td>{counts[k]:,}"
             + (f" ({filled[k]:,} by the nearest)" if filled[k] else "")
             + f'</td><td><ul>{listed}</ul></td><td class="text">{e(texts.get(k, ""))}</td></tr>'
         )
-    docs = "".join(
-        f'<li><a href="{e(d.url)}">{e(d.title)}</a> <code>{d.sha256[:12]}</code></li>'
-        for d in rules.documents
-    )
     unused = assignment.unused if assignment else []
-    issues = [*problems, *(f"unused rule: {r.describe()}" for r in unused)]
     return f"""<!doctype html>
 <html lang="sk"><head><meta charset="utf-8">
 <title>{e(rules.name)} ({rules.obec}): okrsky</title>
 <style>
-body {{ font: 14px/1.4 system-ui, sans-serif; margin: 1.5em; }}
-table {{ border-collapse: collapse; }} td, th {{ border: 1px solid #ccc; padding: .3em .5em; vertical-align: top; }}
-.key {{ display: inline-block; width: 1em; height: 1em; vertical-align: middle; }}
-.text {{ max-width: 40em; font-size: 12px; color: #444; }} .problems {{ color: #b00; }}
-ul {{ margin: 0; padding-left: 1.2em; }}
+{obvodrules.REVIEW_STYLE}
 </style></head><body>
 <h1>{e(rules.name)} ({rules.obec}): okrsky</h1>
 <p>{len(places.places):,} addresses; okrsky decided {rules.okrsky_date.isoformat() if rules.okrsky_date else "on an unstated date"}; documents:</p>
-<ul>{docs}</ul>
+<ul>{obvodrules.document_items(rules)}</ul>
 {f"<p>{e(rules.okrsky_note)}</p>" if rules.okrsky_note else ""}
-{'<ul class="problems">' + "".join(f"<li>{e(p)}</li>" for p in issues) + "</ul>" if issues else "<p>No problems.</p>"}
+{obvodrules.issues_html(problems, unused)}
 {drawing or "<p>(no drawing: no okrsok rules, the addresses are not all placed, or ZBGIS level 1 is not extracted)</p>"}
 <p>Polygons: the okrsky as drawn from the address points; thick lines: the {"obec" if rules.whole else "council obvody"}. Dots: addresses by okrsok; black inner dots: placed by the nearest address.</p>
 <table><tr><th>okrsok</th>{"" if rules.whole else "<th>obvod</th>"}<th>addresses</th><th>rules</th><th>document text</th></tr>
@@ -734,52 +676,35 @@ def accept(cfg: Config, job: jobs.Job, accepted: list[jobs.Accepted]) -> list[st
     lines = []
     index = obvodrules.documents_index(job)
     not_found = load_not_found(cfg)
-    cache = cfg.curated_dir / obvodrules.CACHE_DIR
     rule_sets = obvody.load_rule_sets(cfg.election_dir)
     for item, out in accepted:
         code = item["id"]
         if out["status"] == "not_found":
-            not_found[code] = {
-                "name": item["name"],
-                "job": job.name,
-                "tried": out["tried"],
-                "note": out.get("note", ""),
-            }
-            lines.append(
-                f"{item['name']} ({code}): not found, {len(out['tried'])} URLs tried"
-            )
+            lines.append(obvodrules.record_not_found(not_found, job, item, out))
             lines += _drop_okrsky(cfg, item, rule_sets.get(code))
             continue
         not_found.pop(code, None)
-        cache.mkdir(parents=True, exist_ok=True)
-        shas = {}
-        for d in out["documents"]:
-            name = index[d["url"]]
-            target = cache / name
-            if not target.is_file():
-                target.write_bytes(
-                    (job.path / obvodrules.DOCUMENTS_DIR / name).read_bytes()
-                )
-            shas[d["url"]] = name.split(".")[0]
+        shas = obvodrules.cache_documents(cfg, job, index, out)
         if "obvody" in item:
             rules = rule_set(rule_sets[code], out, shas)
             path = obvody.rules_path(cfg.election_dir, code)
-            lines_of = [*_obvod_header(path), _ADDED]
+            comments, by = _obvod_header(path), _ADDED
         else:
             rules = whole_rule_set(item, out, shas)
             path = obvody.okrsky_path(cfg.election_dir, code)
-            lines_of = [f"Okrsky of {item['name']}, transcribed by an AI agent in job"]
-        lines_of[-1] += f" {job.name} from the documents below;"
-        lines_of += [
+            comments = []
+            by = f"Okrsky of {item['name']}, transcribed by an AI agent in job"
+        comments += [
+            f"{by} {job.name} from the documents below;",
             "checked by `ems job ingest` against the address register. The document's",
             "text per okrsok, verbatim:",
-        ]
-        lines_of += [
-            f"  okrsok {k['number']}: " + " ".join(k["text"].split())
-            for k in sorted(out.get("okrsky", []), key=lambda k: k["number"])
+            *(
+                f"  okrsok {k['number']}: " + " ".join(k["text"].split())
+                for k in sorted(out.get("okrsky", []), key=lambda k: k["number"])
+            ),
         ]
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(obvody.dump(rules, lines_of), encoding="utf-8")
+        path.write_text(obvody.dump(rules, comments), encoding="utf-8")
         lines.append(f"{item['name']} ({code}): {path.relative_to(cfg.root)}")
     if not_found or not_found_path(cfg).is_file():
         jobs.write_json(not_found_path(cfg), dict(sorted(not_found.items())))

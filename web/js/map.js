@@ -31,12 +31,14 @@
  * as they change, which colours the land by them (`setResults`).
  */
 
+import { html, render } from '../vendor/preact-htm.module.js';
 import { dataIndex, obecInfo } from './data.js';
 import { dataUrl, fetchJSON } from './files.js';
 import { dataVersion, stringsUnder, t } from './i18n.js';
+import { InfoIcon } from './icons.js';
 import { SERIES, STEPS } from './mapmode.js';
 import { Z0 } from './topo.js';
-import { smoothZoom } from './zoom.js';
+import { dragAfterPinch, smoothZoom } from './zoom.js';
 
 const L = globalThis.L;
 
@@ -69,6 +71,11 @@ const DRAFT_RATIO = 1;
 const ZOOM_SLACK = 0.25;
 // Pixels kept clear around a place the map moves to, beyond the insets.
 const MARGIN = 24;
+// The least room, across and down, that a place the map moves to is fitted
+// into (`room`): any less, and it would be zoomed out to the country.
+const MIN_ROOM = 160;
+// The credits fold on a phone after this long (`foldCredits`).
+const CREDITS_MS = 5000;
 
 const COLORS = [
   'land',
@@ -95,9 +102,15 @@ const COLORS = [
   // whole of it is drawn at.
   'base-water',
   'base-waterway',
+  'base-building',
   'base-road',
+  'base-road-fill',
   'base-major',
+  'base-major-fill',
+  'base-motorway',
+  'base-motorway-fill',
   'base-rail',
+  'base-tram',
   'base-alpha',
   // The steps of a candidate's 2026 votes, lowest first (mapmode.js); a
   // turnout mixes its area's colour into the land (draw.js `TONE_STEPS`).
@@ -234,6 +247,61 @@ async function startRenderer(options, onFrame, onFail) {
   };
 }
 
+/* On a phone the credits of *map* take three lines over the map (app.css):
+ * there they show as the map loads, fold into an ⓘ button at the first
+ * touch of the map or after CREDITS_MS, and the button unfolds and folds
+ * them again. The OSMF's Attribution Guidelines
+ * (https://osmfoundation.org/wiki/Licence/Attribution_Guidelines,
+ * "Interactive maps") allow that of OpenStreetMap's credit: "You may use a
+ * mechanism to fade/collapse the attribution under certain conditions: …
+ * automatically on map interaction such as panning, clicking, or zooming;
+ * automatically after five seconds", provided that "If the attribution has
+ * been collapsed, the user must still be able to find the licence
+ * information if they look for it, for example from an '(i)' button in the
+ * corner of the map". Not one line as the map loads: OpenStreetMap's
+ * credit, the second, would be past the screen's edge, and "The
+ * attribution format should not require individuals to interact with the
+ * map or produced work to see the attribution." Wider screens show them in
+ * full throughout. Leaflet writes the credits once, at the start, so they
+ * can be wrapped. */
+function foldCredits(map) {
+  const box = map.attributionControl.getContainer();
+  const credits = document.createElement('span');
+  credits.className = 'km-credits';
+  credits.append(...box.childNodes);
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'km-credits-button';
+  button.title = t('map.credits');
+  button.setAttribute('aria-label', t('map.credits'));
+  render(html`<${InfoIcon} />`, button);
+  box.replaceChildren(button, credits);
+  const show = (folded) => {
+    box.classList.toggle('folded', folded);
+    button.setAttribute('aria-expanded', String(!folded));
+  };
+  const container = map.getContainer();
+  const touches = ['pointerdown', 'wheel', 'keydown'];
+  let timer = 0;
+  const stop = () => {
+    clearTimeout(timer);
+    for (const type of touches) container.removeEventListener(type, fold);
+  };
+  function fold(e) {
+    // The button's own press folds or unfolds them.
+    if (e && box.contains(e.target)) return;
+    stop();
+    show(true);
+  }
+  timer = setTimeout(fold, CREDITS_MS);
+  for (const type of touches) container.addEventListener(type, fold, { passive: true });
+  button.addEventListener('click', () => {
+    stop();
+    show(!box.classList.contains('folded'));
+  });
+  show(false);
+}
+
 /* *name* as data.js `contestArea` names an area ('BA', 'BA/3', 'kraj:1',
  * 'kraj:1/3') as the renderer takes it: {city, obvod} or {kraj, zsk}. */
 function parseArea(name) {
@@ -243,12 +311,58 @@ function parseArea(name) {
   return kraj ? { kraj: code, zsk: n } : { city: code, obvod: n };
 }
 
+/* The tooltip of what the pointer is over on *map*, where there is a
+ * pointer that hovers: while a handler is set, asked of *renderer* one
+ * question at a time, the latest position each, and not while the map
+ * moves. Returns the setter of the handler (`setHover`; null for none). */
+function hoverTooltip(map, renderer) {
+  let onHover = null;
+  // The pointer's last position on the map (a mousemove event), null once
+  // it left, and the one not asked about yet.
+  let latest = null;
+  let pointer = null;
+  let asking = false;
+  let moving = false;
+  const hovers = window.matchMedia('(hover: hover)');
+  async function ask() {
+    asking = true;
+    while (pointer && onHover) {
+      const e = pointer;
+      pointer = null;
+      const unit = await renderer.call('hover', e.latlng.lng, e.latlng.lat);
+      // Gone meanwhile: the pointer left the map, or it started to move.
+      if (e !== latest || moving) continue;
+      onHover?.(unit && { unit, x: e.containerPoint.x, y: e.containerPoint.y });
+    }
+    asking = false;
+  }
+  map.on('mousemove', (e) => {
+    if (!onHover || moving || !hovers.matches) return;
+    pointer = e;
+    latest = e;
+    if (!asking) ask();
+  });
+  map.on('mouseout movestart', (e) => {
+    if (e.type === 'movestart') moving = true;
+    latest = null;
+    onHover?.(null);
+  });
+  map.on('moveend', () => {
+    moving = false;
+  });
+  return (handler) => {
+    onHover = handler;
+    latest = null;
+  };
+}
+
 /* Creates the map in *element*. `onPick(p)` is called when the user clicks
  * a place (draw.js `pick`); `insets()` returns the pixels {top, right,
  * bottom, left} of the map that floating controls and panes cover, which
- * moves to a place keep it out of; `onZoom({canZoomIn, canZoomOut})` reports
- * the zoom limits whenever they change. Resolves once the country outline is
- * shown. */
+ * moves to a place keep it out of, and {legend} the part of `top` that the
+ * results' legend alone covers (`room`); `onZoom({canZoomIn, canZoomOut})`
+ * reports the zoom limits whenever they change. Resolves once the country
+ * outline is shown. */
 export async function createMap(element, { onPick, insets, onZoom }) {
   const map = L.map(element, {
     minZoom: MIN_ZOOM,
@@ -261,10 +375,29 @@ export async function createMap(element, { onPick, insets, onZoom }) {
     zoomControl: false,
   });
   const zoomer = smoothZoom(map);
+  dragAfterPinch(map);
   map.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
   map.attributionControl.addAttribution(t('map.attribution'));
-  const padding = () => {
+  foldCredits(map);
+  /* The insets (`insets()`) that a place the map moves to keeps out from
+   * under, giving way where they would leave it less than MIN_ROOM pixels
+   * down or across: the legend's part of the top first (`legend`), then the
+   * bottom (a phone's sheet); the left (the pane). */
+  function room() {
     const i = insets();
+    const size = map.getSize();
+    let short = MIN_ROOM - (size.y - i.top - i.bottom - 2 * MARGIN);
+    if (short > 0) {
+      const legend = Math.min(short, i.legend ?? 0);
+      i.top -= legend;
+      i.bottom = Math.max(0, i.bottom - (short - legend));
+    }
+    short = MIN_ROOM - (size.x - i.left - i.right - 2 * MARGIN);
+    if (short > 0) i.left = Math.max(0, i.left - short);
+    return i;
+  }
+  const padding = () => {
+    const i = room();
     return {
       paddingTopLeft: [i.left + MARGIN, i.top + MARGIN],
       paddingBottomRight: [i.right + MARGIN, i.bottom + MARGIN],
@@ -465,48 +598,26 @@ export async function createMap(element, { onPick, insets, onZoom }) {
     const box = L.latLngBounds(map.unproject(b.min, zoom), map.unproject(b.max, zoom)).pad(PAD);
     renderer.send('prefetch', zoom, [box.getWest(), box.getSouth(), box.getEast(), box.getNorth()]);
   });
+  // A tap where nothing hovers, while a handler is set (`setInspect`): it
+  // may take the tap, to show the figures of the unit there, and pick the
+  // place later; else the tap picks it, as a click does.
+  let onInspect = null;
+  const touch = window.matchMedia('(hover: none)');
   map.on('click', async (e) => {
     const { lat, lng } = e.latlng;
-    const picked = await renderer.call('pick', lng, lat, map.getZoom());
-    if (picked) onPick(picked);
-  });
-  // The tooltip of what the pointer is over (`setHover`), where there is a
-  // pointer that hovers: while a handler is set, asked of the renderer one
-  // question at a time, the latest position each, and not while the map
-  // moves. `latest`: the pointer's last position on the map (a mousemove
-  // event), null once it left; `pointer` the one not asked about yet.
-  let onHover = null;
-  let latest = null;
-  let pointer = null;
-  let asking = false;
-  let moving = false;
-  const hovers = window.matchMedia('(hover: hover)');
-  async function ask() {
-    asking = true;
-    while (pointer && onHover) {
-      const e = pointer;
-      pointer = null;
-      const unit = await renderer.call('hover', e.latlng.lng, e.latlng.lat);
-      // Gone meanwhile: the pointer left the map, or it started to move.
-      if (e !== latest || moving) continue;
-      onHover?.(unit && { unit, x: e.containerPoint.x, y: e.containerPoint.y });
+    const zoom = map.getZoom();
+    const pick = async () => {
+      const picked = await renderer.call('pick', lng, lat, zoom);
+      if (picked) onPick(picked);
+    };
+    if (onInspect && touch.matches) {
+      const unit = await renderer.call('hover', lng, lat);
+      if (onInspect?.({ unit, x: e.containerPoint.x, y: e.containerPoint.y, pick })) return;
     }
-    asking = false;
-  }
-  map.on('mousemove', (e) => {
-    if (!onHover || moving || !hovers.matches) return;
-    pointer = e;
-    latest = e;
-    if (!asking) ask();
+    pick();
   });
-  map.on('mouseout movestart', (e) => {
-    if (e.type === 'movestart') moving = true;
-    latest = null;
-    onHover?.(null);
-  });
-  map.on('moveend', () => {
-    moving = false;
-  });
+  map.on('movestart', () => onInspect?.(null));
+  const setHoverHandler = hoverTooltip(map, renderer);
   document.addEventListener('themechange', () => renderer.send('setColors', readColors()));
   sharp();
   await firstShown;
@@ -563,7 +674,7 @@ export async function createMap(element, { onPick, insets, onZoom }) {
       if (view === 'place' && point && place.label) {
         // The house in the middle of the part of the map left uncovered.
         const zoom = Math.max(map.getZoom(), 17);
-        const i = insets();
+        const i = room();
         const offset = L.point((i.left - i.right) / 2, (i.top - i.bottom) / 2);
         map.setView(map.unproject(map.project(point, zoom).subtract(offset), zoom), zoom);
       } else if (view === 'place' && street) {
@@ -580,7 +691,8 @@ export async function createMap(element, { onPick, insets, onZoom }) {
     },
 
     /* Switches the overlays on or off: *wanted* {zsk, city, oz, okrsky,
-     * base}, `base` the base map. */
+     * base, buildings}, `base` the roads, railways and waters of the base
+     * map. */
     async setOverlays(wanted) {
       overlays = wanted;
       if (wanted.oz && !councils) {
@@ -620,8 +732,23 @@ export async function createMap(element, { onPick, insets, onZoom }) {
      * pointer is over (draw.js `unitAt`) at (x, y) in the map's pixels, and
      * handler(null) when it is over none or the map moves; none for null. */
     setHover(handler) {
-      onHover = handler;
-      latest = null;
+      setHoverHandler(handler);
+    },
+
+    /* While *handler* is set, a tap on a device without hover (a touch
+     * screen) calls handler({unit, x, y, pick}) first: the unit of the
+     * results there (draw.js `unitAt`, null where none) at (x, y) in the
+     * map's pixels, and `pick()` that picks the place there as the tap would
+     * have; true if the handler took the tap, which then picks nothing. It
+     * is called with null when the map moves. None for null. */
+    setInspect(handler) {
+      onInspect = handler;
+    },
+
+    /* Draws the view again for what covers the map now (`insets`): the
+     * sheet has changed height, the legend has unfolded. */
+    redraw() {
+      sharp();
     },
 
     zoomIn() {

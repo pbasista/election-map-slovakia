@@ -16,22 +16,23 @@ import {
   useLoaded,
 } from './data.js';
 import { formatDate, formatNumber, formatPercent, t } from './i18n.js';
-import { BackIcon, DisputeIcon, MapPinIcon, WarningIcon } from './icons.js';
+import { BackIcon, DisputeIcon, WarningIcon } from './icons.js';
 import { NOT_COUNTED, useLive } from './live.js';
-import { candidateMode, setMapMode, useDrawnOkrsky, useMapMode } from './mapmode.js';
+import { MapButton, useDrawnOkrsky } from './mapmode.js';
 import { Notice } from './pane.js';
 
-/* Serious controversies first: they are what a voter must not miss; then
- * allegations and disputes, then the career. Each controversy kind with
- * its mark's icon and a line on what it holds. */
+/* The kinds of finding in the card's order: serious controversies first,
+ * as a voter must not miss them, then allegations and disputes, then the
+ * career. Each kind of controversy has its mark's icon and a note on what
+ * it holds. */
 const KINDS = ['affair', 'dispute', 'cv'];
 const KIND_ICON = { affair: WarningIcon, dispute: DisputeIcon };
 const AFFAIRS_ID = 'km-affairs';
 
-/* One finding: the AI's claim and where it comes from at a glance; the
- * quote it rests on in the page's own language (and a machine translation
- * where that is not the page's) and the cached copy the quote was checked
- * against behind a disclosure, open for a serious controversy. */
+/* One finding: the AI's claim and its source at a glance. Behind a
+ * disclosure, open for a serious controversy: the quote it rests on in its
+ * own language (with a machine translation where that is not the page's),
+ * and the cached copy the quote was checked against. */
 function Finding({ finding: f }) {
   const host = new URL(f.url).hostname.replace(/^www\./, '');
   return html`
@@ -66,21 +67,43 @@ function Finding({ finding: f }) {
   `;
 }
 
+/* The findings of the research on candidate *c*, by kind, loaded when
+ * shown: only for a person who has some. */
+function Findings({ candidate: c }) {
+  const [list, failed] = useLoaded(() => findings(c), [c.id]);
+  if (failed) return html`<p class="panel-body error">${t('error.load')}</p>`;
+  if (!list) return html`<p class="panel-body muted">${t('panel.loading')}</p>`;
+  return KINDS.map((kind) => {
+    const group = list.filter((f) => f.kind === kind);
+    if (!group.length) return null;
+    const Icon = KIND_ICON[kind];
+    return html`
+      <h4 class=${`finding-kind ${kind}`} id=${kind === 'affair' ? AFFAIRS_ID : undefined}>
+        ${Icon ? html`<${Icon} />` : null}${t(`research.kind.${kind}`)}${' '}<span class="count"
+          >${formatNumber(group.length)}</span
+        >
+      </h4>
+      ${Icon ? html`<p class="finding-kind-note">${t(`research.kind.${kind}_note`)}</p>` : null}
+      <ul class="findings">
+        ${group.map((f) => html`<${Finding} key=${f.url + f.quote} finding=${f} />`)}
+      </ul>
+    `;
+  });
+}
+
 /* The research on candidate *c*: not done yet (said as such, never as
- * "nothing found"), or what was searched and then the result: nothing
- * found, or its findings by kind, loaded only for a person who has some. */
+ * "nothing found"), or what was searched and the result: nothing found,
+ * or the findings. */
 function Research({ candidate: c }) {
   const r = c.research;
-  const [list, failed] = useLoaded(() => (r?.findings ? findings(c) : Promise.resolve([])), [c.id]);
-
-  let body;
+  let state;
   if (!r) {
-    body = html`<p class="panel-body research-state">
+    state = html`<p class="panel-body research-state">
       <strong>${t('research.none')}</strong> ${t('research.none_note')}
     </p>`;
   } else {
     const scope = t('research.scope', { scope: researchScope(r), date: formatDate(r.date) });
-    const state = html`<p class="panel-body research-state">
+    state = html`<p class="panel-body research-state">
       ${scope}${' '}
       ${
         r.findings
@@ -88,39 +111,17 @@ function Research({ candidate: c }) {
           : html`<strong>${t('research.nothing')}</strong> ${t('research.nothing_note')}`
       }
     </p>`;
-    let found = null;
-    if (r.findings && failed) found = html`<p class="panel-body error">${t('error.load')}</p>`;
-    else if (r.findings && !list) found = html`<p class="panel-body muted">${t('panel.loading')}</p>`;
-    else if (r.findings) {
-      found = KINDS.map((kind) => {
-        const group = list.filter((f) => f.kind === kind);
-        const Icon = KIND_ICON[kind];
-        return group.length
-          ? html`
-              <h4 class=${`finding-kind ${kind}`} id=${kind === 'affair' ? AFFAIRS_ID : undefined}>
-                ${Icon ? html`<${Icon} />` : null}${t(`research.kind.${kind}`)}${' '}<span class="count"
-                  >${formatNumber(group.length)}</span
-                >
-              </h4>
-              ${Icon ? html`<p class="finding-kind-note">${t(`research.kind.${kind}_note`)}</p>` : null}
-              <ul class="findings">
-                ${group.map((f) => html`<${Finding} key=${f.url + f.quote} finding=${f} />`)}
-              </ul>
-            `
-          : null;
-      });
-    }
-    body = html`${state}${found}`;
   }
   return html`
     <h3 class="group">${t('card.research')}</h3>
     <${Notice}>${t('research.notice', { list: t('about.allowlist.title') })}<//>
-    ${body}
+    ${state}
+    ${r?.findings ? html`<${Findings} candidate=${c} />` : null}
   `;
 }
 
-/* Research found controversies: said at the top of the card, with a jump
- * to them, rather than only far down among the findings. */
+/* Research found serious controversies: said at the top of the card, with
+ * a jump to them, rather than only far down among the findings. */
 function AffairsAlert({ candidate: c }) {
   const jump = () => document.getElementById(AFFAIRS_ID)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   return html`
@@ -135,19 +136,18 @@ function AffairsAlert({ candidate: c }) {
 // How many units the origins of the votes list each way.
 const ORIGINS = 5;
 // The share of a handful of ballots says little: the highest shares are
-// those of the units with at least this many valid ballots (of all, where
-// fewer than two have as many).
+// those of the units with at least this many valid ballots (of all units,
+// where fewer than two have as many).
 const ORIGIN_VALID = 30;
 
 /* Where candidate *c*'s votes in *contest* came from, once its results
  * give them by unit: by okrsok in the final results, else by obec or city
- * district (the contest's `areas`). The units with the most of the
- * candidate's votes and those where the candidate had the highest share,
- * and a pin that shows the candidate's votes on the map (by the units of
- * the zoom, mapmode.js). Nothing for a contest of one unit. */
+ * district (the contest's `areas`). Lists the units with the most of the
+ * candidate's votes and those with the highest shares, beside a pin that
+ * shows the votes on the map (by the units of the zoom, mapmode.js).
+ * Nothing for a contest of one unit. */
 function VoteOrigins({ candidate: c, contest, index }) {
   const live = useLive();
-  const current = useMapMode();
   const drawn = useDrawnOkrsky();
   const entry = live.of(contest.id);
   if (!entry || entry === NOT_COUNTED) return null;
@@ -156,8 +156,8 @@ function VoteOrigins({ candidate: c, contest, index }) {
   // By okrsok where the map draws them, as it shows them zoomed in.
   const keys = Object.keys(okrsky ?? {});
   const byOkrsky = keys.length > 1 && keys.some((key) => drawn?.keys.has(key));
-  // An okrsok key is '<obec>/<n>'; an area an obec code, or on election
-  // night a regional obvod, which is not one of the contest's units.
+  // An okrsok key is '<obec>/<n>'; an area key an obec code or, on election
+  // night, a regional obvod, which is not one of the contest's units.
   const records = byOkrsky ? Object.entries(okrsky) : Object.entries(entry.areas ?? {}).filter(([key]) => index.obce[key]);
   const rows = records
     .filter(([, [, , valid]]) => valid)
@@ -175,9 +175,6 @@ function VoteOrigins({ candidate: c, contest, index }) {
   const highest = [...(sizeable.length > 1 ? sizeable : rows)]
     .sort((a, b) => b.votes / b.valid - a.votes / a.valid)
     .slice(0, ORIGINS);
-  const by = byOkrsky ? 'okrsky' : 'obce';
-  const on = current?.kind === 'candidate' && current.id === c.id;
-  const label = t(on ? 'mapmode.candidate_hide' : 'mapmode.candidate_show');
   const list = (items) => html`<ol class="origins-list">
     ${items.map(
       (r) => html`<li key=${r.key}>
@@ -189,17 +186,8 @@ function VoteOrigins({ candidate: c, contest, index }) {
   return html`
     <div class="origins panel-body">
       <div class="origins-head">
-        <h4>${t(`card.origins_${by}`)}</h4>
-        <button
-          type="button"
-          class="votes-map"
-          aria-pressed=${on ? 'true' : 'false'}
-          title=${label}
-          aria-label=${label}
-          onClick=${() => setMapMode(on ? null : candidateMode(c, contest))}
-        >
-          <${MapPinIcon} />
-        </button>
+        <h4>${t(`card.origins_${byOkrsky ? 'okrsky' : 'obce'}`)}</h4>
+        <${MapButton} candidate=${c} label=${contest.label} />
       </div>
       <div class="origins-columns">
         <section>
@@ -215,9 +203,10 @@ function VoteOrigins({ candidate: c, contest, index }) {
   `;
 }
 
-/* *filter* and `onFilter(next)` as for the ballots (ballots.js): the other
- * candidates of each of the person's contests follow it; the person never.
- * *picks* and `onPicks(next)` the circled candidates (picks.js). */
+/* The card of candidacy *id*. *filter* and `onFilter(next)` as for the
+ * ballots (ballots.js): the other candidates of each of the person's
+ * contests follow it, the person never. *picks* and `onPicks(next)`: the
+ * circled candidates (picks.js). */
 export function CandidateCard({ id, onCandidate, onPlace, onClose, filter, onFilter, picks, onPicks }) {
   // Null for a candidacy that does not exist.
   const [result, failed] = useLoaded(

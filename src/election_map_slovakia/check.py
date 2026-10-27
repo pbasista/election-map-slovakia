@@ -60,7 +60,9 @@ base       the base map has the shards' levels of detail and okresy
            (``base/index.json`` against ``geo/index.json``), its index
            lists exactly the files the app may request, with their sizes,
            and each file has only the line classes of its level and water
-           areas whose rings are exactly the arcs coded as such
+           areas whose rings are exactly the arcs coded as such, each
+           buildings file its scale, as many vertices as its rings count,
+           rings of three or more with an area and an outer ring first
            (``basemap.verify``)
 i18n       every UI string is translated into every language (none taken
            from a fallback language) and each language's occupations file
@@ -78,6 +80,7 @@ from __future__ import annotations
 import datetime as dt
 import json
 import math
+import os
 import posixpath
 import re
 import urllib.parse
@@ -87,8 +90,6 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-import numpy as np
-
 from election_map_slovakia import (
     addresses,
     basemap,
@@ -97,6 +98,7 @@ from election_map_slovakia import (
     candidates,
     config,
     geo,
+    parallel,
     progress,
     results,
 )
@@ -187,6 +189,16 @@ def check_json(dist: Path, rels: Iterable[str]) -> Check:
     return result
 
 
+def _join(name: str, parts: Iterable[Check]) -> Check:
+    """Return the check *name* whose run on parts of the site gave *parts*."""
+    result = Check(name)
+    for part in parts:
+        result.checked += part.checked
+        result.problems += part.problems
+        result.notes += part.notes
+    return result
+
+
 def check_headers(dist: Path) -> Check:
     """Return the check of ``_headers`` against the Pages limits."""
     result = Check("headers")
@@ -213,6 +225,11 @@ def check_headers(dist: Path) -> Check:
 
 def _local_target(page: str, ref: str) -> str | None:
     """Return the ``dist/`` path *ref* in *page* requests, if it is local."""
+    # Most references are other sites' URLs, which urljoin returns as they
+    # are: splitting them, cheaper than joining, rules them out.
+    split = urllib.parse.urlsplit(ref)
+    if split.scheme or split.netloc:
+        return None
     parts = urllib.parse.urlsplit(urllib.parse.urljoin(f"/{page}", ref))
     if parts.scheme or parts.netloc:
         return None
@@ -220,8 +237,9 @@ def _local_target(page: str, ref: str) -> str | None:
     return (path + "index.html" if path.endswith("/") else path).lstrip("/")
 
 
-def _code_references(dist: Path, rels: Iterable[str]) -> Iterator[tuple[str, str]]:
-    """Yield (``dist/`` path, referring file) for the static references."""
+def _code_references(dist: Path, rels: Iterable[str]) -> list[tuple[str, str]]:
+    """Return (``dist/`` path, referring file) for the static references."""
+    references = []
     for rel in rels:
         if not rel.endswith(_CODE) or _LEAFLET_CSS.fullmatch(rel):
             continue
@@ -235,7 +253,8 @@ def _code_references(dist: Path, rels: Iterable[str]) -> Iterator[tuple[str, str
         for ref in refs:
             target = _local_target(rel, ref)
             if target is not None:
-                yield target, rel
+                references.append((target, rel))
+    return references
 
 
 def area_path(contest: str, obce: dict[str, list[Any]]) -> str | None:
@@ -271,7 +290,10 @@ class _Geo:
     """The obce whose okrsky the map draws (``okrsky.drawn`` of the index)."""
 
 
-def _geo(dist: Path, geo_index: Any) -> _Geo:
+def _geo(dist: Path, geo_index: Any) -> _Geo | None:
+    """Return what the shards of *geo_index* say; None if it is None."""
+    if geo_index is None:
+        return None
     out = _Geo()
     bands = geo_index["shards"]
     finest = next(b["lod"] for b in bands if b["zoom"][1] is None)
@@ -293,14 +315,11 @@ def _geo(dist: Path, geo_index: Any) -> _Geo:
                 _, geometries = geo.decode(shard)
                 for f, g in zip(shard["features"], geometries, strict=True):
                     # An obec cut into council obvody is several features.
-                    box = np.array(g.bounds) / shard["scale"]
                     code = f["properties"]["id"]
-                    if code in out.bounds:
-                        old = np.array(out.bounds[code])
-                        box = np.concatenate(
-                            [np.minimum(old[:2], box[:2]), np.maximum(old[2:], box[2:])]
-                        )
-                    west, south, east, north = (float(v) for v in box)
+                    west, south, east, north = (v / shard["scale"] for v in g.bounds)
+                    if (old := out.bounds.get(code)) is not None:
+                        west, south = min(old[0], west), min(old[1], south)
+                        east, north = max(old[2], east), max(old[3], north)
                     out.bounds[code] = (west, south, east, north)
     okrsky = geo_index["okrsky"]
     out.okrsky = set(okrsky["drawn"])
@@ -329,16 +348,15 @@ def _index_requests(
             (f"data/names/{prefix}.json", "data/index.json")
             for prefix in data_index["names"]
         )
-    if addr_index is not None:
-        yield from (
-            (f"addr/{row[0]}.json", "addr/index.json") for row in addr_index["obce"]
-        )
-    if data_index is not None:
         # A party is [short, name] or [short, name, logo].
         yield from (
             (logo.removeprefix("/"), "data/index.json")
             for _, _, *logos in data_index["parties"].values()
             for logo in logos
+        )
+    if addr_index is not None:
+        yield from (
+            (f"addr/{row[0]}.json", "addr/index.json") for row in addr_index["obce"]
         )
     if geo is None or data_index is None:
         return
@@ -352,24 +370,32 @@ def _index_requests(
             yield f"data/city/{props['city']}.json", by
 
 
-def _research_requests(dist: Path, rels: Iterable[str]) -> Iterator[tuple[str, str]]:
-    """Yield (``dist/`` path, why) for the cached pages research cites."""
-    for rel in rels:
-        if rel.startswith("data/research/") and (content := _load(dist, rel)):
-            for findings in content.values():
-                yield from ((f"{build.CACHE_DIR}/{f[7]}.html", rel) for f in findings)
+def _research_requests(dist: Path, rels: Iterable[str]) -> list[tuple[str, str]]:
+    """Return (``dist/`` path, why) for the cached pages research cites."""
+    return [
+        (f"{build.CACHE_DIR}/{f[7]}.html", rel)
+        for rel in rels
+        if rel.startswith("data/research/") and (content := _load(dist, rel))
+        for findings in content.values()
+        for f in findings
+    ]
 
 
 def check_links(
-    dist: Path,
     rels: set[str],
     languages: config.Languages,
     geo: _Geo | None,
     data_index: Any,
     addr_index: Any,
     base_index: Any,
+    references: Iterable[tuple[str, str]],
+    research: Iterable[tuple[str, str]],
 ) -> Check:
-    """Return the check that every file the frontend can request exists."""
+    """Return the check that every file the frontend can request exists.
+
+    *references* and *research* are the :func:`_code_references` and the
+    :func:`_research_requests` of all *rels*, in order.
+    """
     result = Check("links")
     indexes = {
         "geo/index.json": geo,
@@ -383,7 +409,7 @@ def check_links(
         if content is None
     ]
     requests = [
-        *_code_references(dist, sorted(rels)),
+        *references,
         *((f"{code}/index.html", "config/languages.toml") for code in languages.codes),
         *((f"i18n/{code}.json", "config/languages.toml") for code in languages.codes),
         *((name, "web/js") for name in indexes),
@@ -394,7 +420,7 @@ def check_links(
             (f"{basemap.OUTPUT_DIR}/{rel}", _BASE_INDEX)
             for rel in (basemap.requested(base_index) if base_index else ())
         ),
-        *_research_requests(dist, sorted(rels)),
+        *research,
         (cache.STYLESHEET.removeprefix("/"), "the cached copies (cache.py)"),
     ]
     wanted: dict[str, str] = {}
@@ -466,12 +492,11 @@ def check_contests(
         expected.add(contest)
         result.checked += 1
         files = found.get(contest, [])
-        path = area_path(contest, data_index["obce"])
         if not files:
             result.problems.append(f"{contest}: in no area file")
         elif len(files) > 1:
             result.problems.append(f"{contest}: in {', '.join(files)}")
-        elif path != files[0]:
+        elif (path := area_path(contest, data_index["obce"])) != files[0]:
             result.problems.append(
                 f"{contest}: in {files[0]}, the frontend looks in {path}"
             )
@@ -590,19 +615,19 @@ def _points(content: dict[str, Any]) -> Iterator[tuple[float, float]]:
     """Yield the (lon, lat) of every located address of an address file."""
     scale = addresses.SCALE
     x = y = 0
-    for kind in ("streets", "parts"):
-        for group in content[kind]:
-            points = group["points"]
-            for i in range(0, len(points), 2):
-                if points[i] is None:
-                    continue
-                x += points[i]
-                y += points[i + 1]
-                yield x / scale, y / scale
+    for group in _groups(content):
+        points = group["points"]
+        # Deltas from the previous located address; null for an unlocated one.
+        for dx, dy in zip(points[::2], points[1::2], strict=True):
+            if dx is None:
+                continue
+            x += dx
+            y += dy
+            yield x / scale, y / scale
 
 
 def check_addresses(
-    dist: Path, rels: Iterable[str], geo: _Geo | None, data_index: Any
+    dist: Path, rels: Iterable[str], geo_index: Any, data_index: Any
 ) -> Check:
     """Return the check that address points lie within their obec.
 
@@ -611,6 +636,7 @@ def check_addresses(
     every address has its okrsok exactly where the map draws the okrsky.
     """
     result = Check("addresses")
+    geo = _geo(dist, geo_index)
     if geo is None or data_index is None:
         result.problems.append("geo/index.json or data/index.json missing or broken")
         return result
@@ -669,20 +695,15 @@ def _council_problems(rel: str, content: Any, councils: int, cut: bool) -> list[
     if not by_address:
         return []
     problems = []
-    for kind in (addresses.STREETS, addresses.PARTS):
-        for group in content[kind]:
-            numbers = (
-                [group["obvod"]] * len(group["numbers"])
-                if "obvod" in group
-                else group.get("obvody", [])
+    for group in _groups(content):
+        numbers = _per_address(group, "obvod", "obvody")
+        if len(numbers) != len(group["numbers"]) or not all(
+            1 <= n <= councils for n in numbers
+        ):
+            problems.append(
+                f"{rel}: {group['name']}: council obvody {numbers[:5]} are not"
+                f" one of 1..{councils} per address"
             )
-            if len(numbers) != len(group["numbers"]) or not all(
-                1 <= n <= councils for n in numbers
-            ):
-                problems.append(
-                    f"{rel}: {group['name']}: council obvody {numbers[:5]} are not"
-                    f" one of 1..{councils} per address"
-                )
     return problems
 
 
@@ -692,67 +713,101 @@ def _okrsok_problems(rel: str, content: Any, drawn: bool) -> list[str]:
     *drawn*: the map draws the obec's okrsky.
     """
     problems = []
-    for kind in (addresses.STREETS, addresses.PARTS):
-        for group in content[kind]:
-            given = "okrsok" in group or "okrsky" in group
-            numbers = (
-                [group["okrsok"]] * len(group["numbers"])
-                if "okrsok" in group
-                else group.get("okrsky", [])
+    for group in _groups(content):
+        given = "okrsok" in group or "okrsky" in group
+        numbers = _per_address(group, "okrsok", "okrsky")
+        if given != drawn:
+            problems.append(
+                f"{rel}: {group['name']}: okrsky {'given' if given else 'missing'},"
+                f" but the map {'does not draw' if given else 'draws'} them"
             )
-            if given != drawn:
-                problems.append(
-                    f"{rel}: {group['name']}: okrsky {'given' if given else 'missing'},"
-                    f" but the map {'does not draw' if given else 'draws'} them"
-                )
-            elif given and (
-                len(numbers) != len(group["numbers"]) or min(numbers, default=1) < 1
-            ):
-                problems.append(
-                    f"{rel}: {group['name']}: okrsky {numbers[:5]} are not one per address"
-                )
+        elif given and (
+            len(numbers) != len(group["numbers"]) or min(numbers, default=1) < 1
+        ):
+            problems.append(
+                f"{rel}: {group['name']}: okrsky {numbers[:5]} are not one per address"
+            )
     return problems
 
 
-def check_geometry(dist: Path, geo_index: Any, languages: config.Languages) -> Check:
+def _groups(content: Any) -> Iterator[Any]:
+    """Yield the street and part groups of an address file."""
+    for kind in (addresses.STREETS, addresses.PARTS):
+        yield from content[kind]
+
+
+def _per_address(group: Any, one: str, each: str) -> list[int]:
+    """Return the numbers of *group*'s addresses: *one* for all, or *each*'s own."""
+    if one in group:
+        return [group[one]] * len(group["numbers"])
+    return group.get(each, [])
+
+
+def _verify_level(
+    dist: Path, name: str, rels: Iterable[str]
+) -> tuple[int, list[str], Any] | None:
+    """Return the number of features, problems and country outline of a level.
+
+    *rels* are its files below ``geo/``; None if one is missing or broken:
+    the links and json checks say so.
+    """
+    files = [_load(dist, f"geo/{rel}") for rel in rels]
+    if any(f is None for f in files):
+        return None
+    return (
+        sum(len(f["features"]) for f in files),
+        [f"geo/{name}: {p}" for p in geo.verify(files)],
+        geo.country_outline(files),
+    )
+
+
+def _verify_okrsky(dist: Path, lod: str, okrsky: Any) -> tuple[int, list[str]]:
+    """Return the number of features and problems of the okrsky at *lod*.
+
+    *okrsky* is ``okrsky`` of the geo index.
+    """
+    name = geo.okrsky_path("*", lod)
+    files = [
+        _load(dist, f"geo/{geo.okrsky_path(okres, lod)}") for okres in okrsky["okresy"]
+    ]
+    shards = [
+        _load(dist, f"geo/okres/{okres}/{lod}.json") for okres in okrsky["okresy"]
+    ]
+    if any(f is None for f in [*files, *shards]):
+        return 0, []  # missing or broken: the links and json checks say so
+    return sum(len(f["features"]) for f in files), [
+        f"geo/{name}: {p}" for p in geo.verify_okrsky(files, shards, okrsky["drawn"])
+    ]
+
+
+def check_geometry(
+    dist: Path,
+    geo_index: Any,
+    languages: config.Languages,
+    levels: Iterable[tuple[int, list[str], Any] | None],
+    okrsky: Iterable[tuple[int, list[str]]],
+) -> Check:
     """Return the check that each level draws its own obce's borders.
 
     And that the okrsky of every obec the index lists tile it at every
     level, and that the countries around Slovakia meet it at every level,
-    and are named in every language.
+    and are named in every language. *levels* are the :func:`_verify_level`
+    of each of ``geo.level_files``, *okrsky* the :func:`_verify_okrsky` of
+    each band of the okrsky.
     """
     result = Check("geometry")
     if geo_index is None:
         result.problems.append("geo/index.json missing or broken")
         return result
     outlines = {}
-    for name, rels in geo.level_files(geo_index).items():
-        with progress.stage(f"geo/{name}"):
-            files = [_load(dist, f"geo/{rel}") for rel in rels]
-            if any(f is None for f in files):
-                continue  # missing or broken: the links and json checks say so
-            result.checked += sum(len(f["features"]) for f in files)
-            result.problems += [f"geo/{name}: {p}" for p in geo.verify(files)]
-            outlines[name] = geo.country_outline(files)
-    okrsky = geo_index["okrsky"]
-    for band in okrsky["bands"]:
-        name = geo.okrsky_path("*", band["lod"])
-        with progress.stage(f"geo/{name}"):
-            files = [
-                _load(dist, f"geo/{geo.okrsky_path(okres, band['lod'])}")
-                for okres in okrsky["okresy"]
-            ]
-            shards = [
-                _load(dist, f"geo/okres/{okres}/{band['lod']}.json")
-                for okres in okrsky["okresy"]
-            ]
-            if any(f is None for f in [*files, *shards]):
-                continue  # missing or broken: the links and json checks say so
-            result.checked += sum(len(f["features"]) for f in files)
-            result.problems += [
-                f"geo/{name}: {p}"
-                for p in geo.verify_okrsky(files, shards, okrsky["drawn"])
-            ]
+    for name, level in zip(geo.level_files(geo_index), levels, strict=True):
+        if level is not None:
+            checked, problems, outlines[name] = level
+            result.checked += checked
+            result.problems += problems
+    for checked, problems in okrsky:
+        result.checked += checked
+        result.problems += problems
     strings = {code: _load(dist, f"i18n/{code}.json") or {} for code in languages.codes}
     for band in geo_index["neighbours"]:
         rel = geo.neighbours_path(band["lod"])
@@ -802,46 +857,114 @@ def check_translations(dist: Path, languages: config.Languages) -> Check:
     return result
 
 
+def _chunks(rels: list[str], sizes: dict[str, int], n: int) -> list[list[str]]:
+    """Split *rels*, in order, into at most *n* runs of about the same size."""
+    total = sum(sizes[rel] for rel in rels) or 1
+    runs: list[list[str]] = [[] for _ in range(n)]
+    done = 0
+    for rel in rels:
+        runs[min(n - 1, done * n // total)].append(rel)
+        done += sizes[rel]
+    return [run for run in runs if run]
+
+
 def run(
     dist: Path,
     site: config.Site,
     languages: config.Languages,
     contests: Iterable[str],
 ) -> list[Check]:
-    """Run every check on the site in *dist*; see the module doc."""
-    with progress.stage(f"reading the indexes and geo shards of {dist.name}/"):
+    """Run every check on the site in *dist*; see the module doc.
+
+    The checks run in worker processes, the slowest split into independent
+    parts; the results are put together as if they ran one by one.
+    """
+    with progress.stage(f"reading the indexes of {dist.name}/"):
         sizes = {
             p.relative_to(dist).as_posix(): p.stat().st_size
             for p in sorted(dist.rglob("*"))
             if p.is_file()
         }
         rels = set(sizes)
+        ordered = sorted(rels)
         geo_index = _load(dist, "geo/index.json")
-        geo = _geo(dist, geo_index) if geo_index is not None else None
         data_index = _load(dist, "data/index.json")
         addr_index = _load(dist, "addr/index.json")
         base_index = _load(dist, _BASE_INDEX)
-    checks = [*check_budget(sizes, site)]
-    for name, check in (
-        ("json", lambda: check_json(dist, sorted(rels))),
-        ("headers", lambda: check_headers(dist)),
-        (
-            "links",
-            lambda: check_links(
-                dist, rels, languages, geo, data_index, addr_index, base_index
-            ),
+    levels = geo.level_files(geo_index) if geo_index is not None else {}
+    okrsky = geo_index["okrsky"] if geo_index is not None else {"bands": []}
+    bands = [band["lod"] for band in okrsky["bands"]]
+    cpus = os.cpu_count() or 1
+    # The slowest first, so that none of them starts last: the finer the
+    # level of detail, the later in the index and the slower. The files to
+    # parse come last, in parts that keep every worker busy to the end.
+    tasks = {
+        **{
+            f"geo/{geo.okrsky_path('*', lod)}": (_verify_okrsky, dist, lod, okrsky)
+            for lod in reversed(bands)
+        },
+        **{
+            f"geo/{name}": (_verify_level, dist, name, files)
+            for name, files in reversed(levels.items())
+        },
+        "addresses": (check_addresses, dist, rels, geo_index, data_index),
+        "shards": (_geo, dist, geo_index),
+        "research": (_research_requests, dist, ordered),
+        "results": (check_results, dist),
+        "base": (check_basemap, dist, sizes, base_index, geo_index),
+        **{
+            f"json {i}": (check_json, dist, part)
+            for i, part in enumerate(
+                _chunks([rel for rel in ordered if rel.endswith(".json")], sizes, cpus)
+            )
+        },
+        **{
+            f"links {i}": (_code_references, dist, part)
+            for i, part in enumerate(
+                _chunks([rel for rel in ordered if rel.endswith(_CODE)], sizes, cpus)
+            )
+        },
+        "contests": (check_contests, dist, rels, list(contests), data_index),
+        "origins": (check_origins, dist, rels, site),
+        "headers": (check_headers, dist),
+        "i18n": (check_translations, dist, languages),
+    }
+    with progress.stage(f"checking in {len(tasks)} parts", len(tasks)) as s:
+        parts = parallel.each(parallel.call, tasks.values())
+        done = dict(zip(tasks, s.track(parts), strict=True))
+    return [
+        *check_budget(sizes, site),
+        _join("json", (c for key, c in done.items() if key.startswith("json "))),
+        done["headers"],
+        check_links(
+            rels,
+            languages,
+            done["shards"],
+            data_index,
+            addr_index,
+            base_index,
+            [
+                ref
+                for key, refs in done.items()
+                if key.startswith("links ")
+                for ref in refs
+            ],
+            done["research"],
         ),
-        ("contests", lambda: check_contests(dist, rels, contests, data_index)),
-        ("origins", lambda: check_origins(dist, rels, site)),
-        ("results", lambda: check_results(dist)),
-        ("addresses", lambda: check_addresses(dist, rels, geo, data_index)),
-        ("geometry", lambda: check_geometry(dist, geo_index, languages)),
-        ("base", lambda: check_basemap(dist, sizes, base_index, geo_index)),
-        ("i18n", lambda: check_translations(dist, languages)),
-    ):
-        with progress.stage(f"checking {name}"):
-            checks.append(check())
-    return checks
+        done["contests"],
+        done["origins"],
+        done["results"],
+        done["addresses"],
+        check_geometry(
+            dist,
+            geo_index,
+            languages,
+            [done[f"geo/{name}"] for name in levels],
+            [done[f"geo/{geo.okrsky_path('*', lod)}"] for lod in bands],
+        ),
+        done["base"],
+        done["i18n"],
+    ]
 
 
 def report(checks: Iterable[Check]) -> Iterator[str]:

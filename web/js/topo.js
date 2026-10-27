@@ -26,6 +26,9 @@ export const mercX = (lon) => ((lon + 180) / 360) * WORLD;
 export const mercY = (lat) =>
   (0.5 - Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360)) / (2 * Math.PI)) * WORLD;
 
+/* The arc a ref names: ~a for arc a reversed. */
+export const arcOf = (r) => (r < 0 ? ~r : r);
+
 /* Decodes *topo* (a geo file as parsed from JSON) into
  * {origin, xy, start, lines, features, bins, land?, kraje?, okresy?, obvody?}:
  * vertex i at (xy[2i], xy[2i+1]) + origin, arc a its vertices start[a] up to
@@ -75,7 +78,7 @@ export function decode(topo, binSize) {
     const box = [Infinity, Infinity, -Infinity, -Infinity];
     for (const polygon of f.arcs) {
       for (const r of polygon[0]) {
-        const a = 4 * (r < 0 ? ~r : r);
+        const a = 4 * arcOf(r);
         box[0] = Math.min(box[0], arcBox[a] + ox);
         box[1] = Math.min(box[1], arcBox[a + 1] + oy);
         box[2] = Math.max(box[2], arcBox[a + 2] + ox);
@@ -160,21 +163,14 @@ export function traceRing(file, refs, sink) {
   const { xy, start } = file;
   let first = true;
   for (const r of refs) {
-    const a = r < 0 ? ~r : r;
-    const s = start[a];
-    const e = start[a + 1];
-    if (r >= 0) {
-      for (let i = first ? s : s + 1; i < e; i++) {
-        if (first) sink.moveTo(xy[2 * i], xy[2 * i + 1]);
-        else sink.lineTo(xy[2 * i], xy[2 * i + 1]);
-        first = false;
-      }
-    } else {
-      for (let i = first ? e - 1 : e - 2; i >= s; i--) {
-        if (first) sink.moveTo(xy[2 * i], xy[2 * i + 1]);
-        else sink.lineTo(xy[2 * i], xy[2 * i + 1]);
-        first = false;
-      }
+    const a = arcOf(r);
+    const n = start[a + 1] - start[a];
+    // Every arc after the first begins where the one before ends.
+    for (let j = first ? 0 : 1; j < n; j++) {
+      const i = r >= 0 ? start[a] + j : start[a + 1] - 1 - j;
+      if (first) sink.moveTo(xy[2 * i], xy[2 * i + 1]);
+      else sink.lineTo(xy[2 * i], xy[2 * i + 1]);
+      first = false;
     }
   }
 }
@@ -189,25 +185,31 @@ export function addFeature(path, file, feature) {
   }
 }
 
-/* The area of *features* (of *file*) as one path to fill even-odd: only the
- * arcs on its border, joined into closed rings. An arc between two of the
- * features is in both of their rings and drops out; filling every ring
- * would cover the same pixels, at the cost of rasterizing all those inner
- * edges. Null if there are no features. */
-export function unionPath(file, features) {
-  // Arc → its ref in its last ring, for the arcs in an odd number of rings.
+/* The border of the union of *features*: arc → its ref in its last ring,
+ * for the arcs in an odd number of their rings. An arc between two of the
+ * features is in both of their rings and drops out. */
+export function borderArcs(features) {
   const border = new Map();
   for (const f of features) {
     for (const polygon of f.arcs) {
       for (const ring of polygon) {
         for (const r of ring) {
-          const a = r < 0 ? ~r : r;
+          const a = arcOf(r);
           if (border.has(a)) border.delete(a);
           else border.set(a, r);
         }
       }
     }
   }
+  return border;
+}
+
+/* The area of *features* (of *file*) as one path to fill even-odd: only
+ * their border (`borderArcs`), joined into closed rings. Filling every ring
+ * would cover the same pixels, at the cost of rasterizing all the inner
+ * edges. Null if there are no features. */
+export function unionPath(file, features) {
+  const border = borderArcs(features);
   if (!border.size) return null;
   const { xy, start } = file;
   const head = (r) => (r >= 0 ? start[r] : start[~r + 1] - 1);
@@ -223,7 +225,6 @@ export function unionPath(file, features) {
       else at.set(k, [r]);
     }
   }
-  const arcOf = (r) => (r < 0 ? ~r : r);
   const used = new Set();
   const path = new Path2D();
   for (const [a0, r0] of border) {
@@ -364,6 +365,42 @@ export function contains(file, feature, x, y) {
     }
   }
   return ray.inside;
+}
+
+/* The part of the union of *features* (of *file*) that holds the point (x,
+ * y) in Z0 pixels, as one feature {arcs, box} of its polygons, or null where
+ * none holds it. Polygons that share an arc are of one part. */
+export function partAt(file, features, x, y) {
+  const polygons = features.flatMap((f) => f.arcs);
+  const hit = polygons.findIndex((polygon) => contains(file, { arcs: [polygon] }, x, y));
+  if (hit < 0) return null;
+  const root = polygons.map((_, i) => i);
+  const find = (i) => {
+    while (root[i] !== i) i = root[i] = root[root[i]];
+    return i;
+  };
+  const owner = new Map();
+  polygons.forEach((polygon, i) => {
+    for (const ring of polygon) {
+      for (const r of ring) {
+        const j = owner.get(arcOf(r));
+        if (j === undefined) owner.set(arcOf(r), i);
+        else root[find(i)] = find(j);
+      }
+    }
+  });
+  const arcs = polygons.filter((_, i) => find(i) === find(hit));
+  // The outer rings bound the part, as `decode` boxes a feature.
+  const [ox, oy] = file.origin;
+  const box = [Infinity, Infinity, -Infinity, -Infinity];
+  const grow = (px, py) => {
+    box[0] = Math.min(box[0], px + ox);
+    box[1] = Math.min(box[1], py + oy);
+    box[2] = Math.max(box[2], px + ox);
+    box[3] = Math.max(box[3], py + oy);
+  };
+  for (const polygon of arcs) traceRing(file, polygon[0], { moveTo: grow, lineTo: grow });
+  return { arcs, box };
 }
 
 export const boxContains = (b, x, y) => x >= b[0] && x <= b[2] && y >= b[1] && y <= b[3];

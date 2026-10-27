@@ -11,6 +11,7 @@
   const MODES = ['system', 'light', 'dark'];
   const root = document.documentElement;
   const dark = matchMedia('(prefers-color-scheme: dark)');
+  const device = () => (dark.matches ? 'dark' : 'light');
   let mode = 'system';
   try {
     const stored = localStorage.getItem(KEY);
@@ -20,7 +21,7 @@
   }
 
   function apply() {
-    const theme = mode === 'system' ? (dark.matches ? 'dark' : 'light') : mode;
+    const theme = mode === 'system' ? device() : mode;
     if (root.dataset.theme === theme) return;
     root.dataset.theme = theme;
     document.dispatchEvent(new Event('themechange'));
@@ -51,9 +52,9 @@
      * a fixed light-then-dark order would do nothing visible on the first
      * click on a light device. Returns the new mode. */
     cycle() {
-      const opposite = dark.matches ? 'light' : 'dark';
-      const same = dark.matches ? 'dark' : 'light';
-      set(mode === 'system' ? opposite : mode === opposite ? same : 'system');
+      const own = device();
+      const opposite = own === 'dark' ? 'light' : 'dark';
+      set(mode === 'system' ? opposite : mode === opposite ? own : 'system');
       return mode;
     },
   };

@@ -13,7 +13,7 @@ from typing import cast
 
 import pytest
 
-from election_map_slovakia import cli, config, results
+from election_map_slovakia import candidates, cli, config, results
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -215,8 +215,6 @@ def test_code_mapping(ref):
 
 
 def person(number: int, name: str, parties=(), independent=False):
-    from election_map_slovakia import candidates
-
     return results.Candidate(
         number,
         candidates.search_key(name),
@@ -290,9 +288,13 @@ def ballots(*rows) -> bytes:
     )
 
 
+def villages(ref: results.Reference) -> list[str]:
+    """The codes of the municipalities outside Bratislava."""
+    return [p.code for p in ref.places.values() if not p.city and p.code != "BA"]
+
+
 def night_files(ref: results.Reference) -> dict[str, bytes]:
-    obce = [p.code for p in ref.places.values() if not p.city and p.code != "BA"]
-    first, second, third = obce[0], obce[1], obce[2]
+    first, second, third = villages(ref)[:3]
     return {
         "oso/json/tab01.json": j(
             [
@@ -371,7 +373,7 @@ def night_files(ref: results.Reference) -> dict[str, bytes]:
 
 def test_night_normalization(ref, tmp_path):
     files = night_files(ref)
-    obce = [p.code for p in ref.places.values() if not p.city and p.code != "BA"]
+    obce = villages(ref)
     logged: list[str] = []
     live = results.night(files, ref, logged.append)
     assert live.phase == "partial"
@@ -494,7 +496,7 @@ def test_night_areas_of_counted_municipalities(ref):
 
 def test_night_tolerates_bad_files(ref):
     files = night_files(ref)
-    obce = [p.code for p in ref.places.values() if not p.city and p.code != "BA"]
+    obce = villages(ref)
     files[f"oso/json/graph01/{obce[0]}.json"] = b"<html>404</html>"
     files["osk/json/tab06b/1.json"] = j({"not": "a list"})
     files["oso/json/graph01/582000.json"] = graph01(C17=[1], C03="?")
@@ -521,8 +523,7 @@ def test_night_candidates_of_a_counted_municipality(ref):
     """A municipality fully counted brings every candidate's votes at night,
     asked for until they have come; one still counting is asked for none."""
     files = night_files(ref)
-    obce = [p.code for p in ref.places.values() if not p.city and p.code != "BA"]
-    first, second = obce[0], obce[1]
+    first, second = villages(ref)[:2]
     councils = ref.municipal[first][1]
     files[f"oso/json/graph01/{second}.json"] = graph01(C03=40.0)
     paths = results.unit_paths(files, ref)
@@ -576,7 +577,7 @@ def test_poll_fetches_the_files_a_poll_makes_due(ref, tmp_path):
     """The candidates of a municipality found fully counted come in the same
     poll, not at the next change of the progress."""
     server = night_files(ref)
-    first = next(p.code for p in ref.places.values() if not p.city and p.code != "BA")
+    first = villages(ref)[0]
     server[f"oso/json/tab05/{first}.json"] = ballots(
         (2, "250", "zvolený"), (1, "190", "")
     )

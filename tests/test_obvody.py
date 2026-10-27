@@ -1,11 +1,12 @@
 import datetime as dt
 import tomllib
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 import pytest
 
-from election_map_slovakia import config, obvodrules, obvody
+from election_map_slovakia import config, obvodrules, obvody, okrsokrules
 from election_map_slovakia.candidates import Obec
 from election_map_slovakia.config import Obvod, ObvodList
 
@@ -107,10 +108,12 @@ def test_repository_files_are_well_formed():
     assert {f.stem for f in files} == {"BA", "KE", *(f"zsk-{k}" for k in range(1, 9))}
     for f in files:
         config.load_obvody(f)
+    rule_sets = obvody.load_rule_sets(CURATED.parent)
     for path in sorted((CURATED / obvody.RULES_DIRECTORY).glob("*.toml")):
-        assert obvody.load_rule_sets(CURATED.parent)[path.stem].obec == path.stem
+        assert rule_sets[path.stem].obec == path.stem
+    okrsok_sets = obvody.okrsok_rule_sets(ELECTION)
     for path in sorted((ELECTION / obvody.OKRSKY_DIRECTORY).glob("*.toml")):
-        assert obvody.okrsok_rule_sets(ELECTION)[path.stem].whole
+        assert okrsok_sets[path.stem].whole
 
 
 # --- rule sets -----------------------------------------------------------
@@ -372,20 +375,20 @@ def test_name_problems_and_dump_round_trip(tmp_path: Path):
 
 def okrsky_set(okrsky: dict[str, list[int]], tables: dict, **extra) -> dict:
     """Return a rule set of obvod 1 (Hlavná, Krátka) and 2 (the rest), with okrsky."""
-    data = {
+    obvod: dict[str, dict[str, Any]] = {
+        "1": {"seats": 3, "rules": [{"street": "Hlavná"}, {"street": "Krátka"}]},
+        "2": {"seats": 2, "rules": [{"rest": True}]},
+    }
+    for n, numbers in okrsky.items():
+        obvod[n]["okrsky"] = numbers
+    return {
         "obec": "500001",
         "name": "Alfa",
         "document": [DOCUMENT],
-        "obvod": {
-            "1": {"seats": 3, "rules": [{"street": "Hlavná"}, {"street": "Krátka"}]},
-            "2": {"seats": 2, "rules": [{"rest": True}]},
-        },
+        "obvod": obvod,
         "okrsok": tables,
         **extra,
     }
-    for n, numbers in okrsky.items():
-        data["obvod"][n]["okrsky"] = numbers
-    return data
 
 
 def test_okrsky_share_the_addresses_of_their_obvod(tmp_path: Path):
@@ -616,3 +619,19 @@ def test_okrsky_file_form(tables: dict, extra: dict, message: str):
 )
 def test_official_domain(name: str, website: str, url: str, ok: bool):
     assert (obvodrules.official_problems(name, website, [url]) == []) is ok
+
+
+def test_okrsok_item_names_the_city_of_a_district():
+    obce = {
+        "BA": {"code": "BA", "name": "Bratislava", "okres": "", "kraj": "1"},
+        "528595": {
+            "code": "528595",
+            "name": "Bratislava-Petržalka",
+            "okres": "105",
+            "kraj": "1",
+            "city": "BA",
+        },
+    }
+    item = okrsokrules._identity(obce["528595"], {}, {"1": "Bratislavský"}, 3, obce)
+    assert item["city"] == "Bratislava" and item["kraj"] == "Bratislavský"
+    assert "city" not in okrsokrules._identity(obce["BA"], {}, {}, 3, obce)

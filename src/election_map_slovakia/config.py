@@ -16,18 +16,18 @@ from typing import Any, TypeVar
 from zoneinfo import ZoneInfo
 
 SITE_FILE = "site.toml"
-# Set to 1 at build time, the app reads the results every minute at any
-# time instead of only from the polls' closing (site.toml live, live_days):
-# for testing with results of `ems results fake` or `poll` before an
-# election.
-RESULTS_ANYTIME_ENV = "EMS_RESULTS_ANYTIME"
-# The election's times (site.toml polls_open, polls_close) are Slovak time.
-_SLOVAK_TIME = ZoneInfo("Europe/Bratislava")
 LANGUAGES_FILE = "languages.toml"
 SOURCES_FILE = "sources.toml"
 INPUTS_FILE = "inputs.toml"
 OVERRIDES_FILE = "overrides.toml"
 PARTIES_FILE = "parties.toml"
+RESULTS_ANYTIME_ENV = "EMS_RESULTS_ANYTIME"
+"""Set to 1 at build time for testing with the output of ``ems results fake``
+or ``poll`` before an election: the app then reads the results every minute
+at any time, not only from the polls' closing (site.toml ``live``,
+``live_days``)."""
+# The election's times (site.toml polls_open, polls_close) are Slovak time.
+_SLOVAK_TIME = ZoneInfo("Europe/Bratislava")
 ELECTIONS_DIR = "elections"
 """Below ``data/curated/``: the data of each election (:attr:`Config.election_dir`)."""
 RESULTS_DIR = "results"
@@ -49,6 +49,7 @@ CANDIDACY_ID = re.compile(
     r"(?:starosta|oz):(?:\d{6}|BA|KE)(?:/\d+)?#\d+|(?:predseda|zsk):\d(?:/\d+)?#\d+"
 )
 OKRES_CODE = re.compile(r"\d{3}")
+_KRAJ_CODE = re.compile(r"\d")
 DISTRICT_CODE = re.compile(r"\d{6}")
 _OBVOD_NUMBER = re.compile(r"[1-9]\d*")
 
@@ -314,14 +315,12 @@ def load_site(path: Path) -> Site:
     """Load ``site.toml``."""
     t = _Table(path, _read_toml(path))
     base_url = t.string("base_url")
-    if base_url and not base_url.startswith(("https://", "http://")):
+    if base_url and not _is_http_url(base_url):
         raise t.error("base_url", "must be empty or an absolute http(s) URL")
     repository = t.string("repository").rstrip("/")
     if not repository.startswith("https://"):
         raise t.error("repository", "must be an absolute https URL")
-    election = t.get("election", dt.date)
-    if isinstance(election, dt.datetime):
-        raise t.error("election", "must be a date without a time")
+    election = t.date("election")
     open_time = t.get("polls_open", dt.time)
     close_time = t.get("polls_close", dt.time)
     if not open_time < close_time:
@@ -359,20 +358,14 @@ def _load_language(t: _Table, code: str, entry: object) -> Language:
     key = f"language.{code}"
     if not _LANG_CODE.fullmatch(code):
         raise t.error(key, "language code must be 2-3 lowercase letters")
-    if not isinstance(entry, dict):
-        raise t.error(key, "must be a table")
-    lt = _Table(t.path, entry, prefix=key + ".")
+    lt = t.entry(key, entry)
     lang = Language(
         code=code,
-        name=lt.string("name"),
-        site_name=lt.string("site_name"),
+        name=lt.nonempty("name"),
+        site_name=lt.nonempty("site_name"),
         script=lt.string("script"),
         direction=lt.string("direction"),
     )
-    if not lang.name:
-        raise lt.error("name", "must not be empty")
-    if not lang.site_name:
-        raise lt.error("site_name", "must not be empty")
     if not _SCRIPT.fullmatch(lang.script):
         raise lt.error("script", "must be an ISO 15924 code such as 'Latn'")
     if lang.direction not in _DIRECTIONS:
@@ -416,7 +409,7 @@ def load_sources(path: Path) -> Sources:
     t = _Table(path, _read_toml(path))
     categories: dict[str, tuple[str, ...]] = {}
     seen: dict[str, str] = {}
-    ct = _Table(path, t.get("categories", dict), prefix="categories.")
+    ct = t.table("categories")
     for name in list(ct.data):
         hosts = ct.str_list(name)
         for host in hosts:
@@ -429,7 +422,7 @@ def load_sources(path: Path) -> Sources:
     if not categories:
         raise t.error("categories", "must define at least one category")
 
-    et = _Table(path, t.get("exclude", dict), prefix="exclude.")
+    et = t.table("exclude")
     host_labels = tuple(et.str_list("host_labels"))
     path_segments = tuple(et.str_list("path_segments"))
     et.reject_unknown()
@@ -437,7 +430,7 @@ def load_sources(path: Path) -> Sources:
     blocklist_file = t.string("blocklist")
     references = tuple(t.str_list("references"))
     for url in references:
-        if not url.startswith(("https://", "http://")):
+        if not _is_http_url(url):
             raise t.error("references", f"{url!r} is not an absolute http(s) URL")
     blocklist_path = path.parent / blocklist_file
     blocklist = load_blocklist(blocklist_path)
@@ -446,9 +439,7 @@ def load_sources(path: Path) -> Sources:
         seen.setdefault(host, "official")
     _reject_blocked(path, seen, blocklist_path.name, blocklist)
 
-    research = _research_languages(
-        _Table(path, t.get("research", dict), "research."), categories
-    )
+    research = _research_languages(t.table("research"), categories)
     t.reject_unknown()
     return Sources(
         categories=categories,
@@ -492,20 +483,23 @@ def _research_languages(
 def load_official_sites(path: Path) -> tuple[dict[str, str], dict[str, str]]:
     """Load the official websites file: obec → host and kraj → host."""
     t = _Table(path, _read_toml(path))
-    tables = []
-    for key, code in (("obce", OBEC_CODE), ("kraje", re.compile(r"\d"))):
-        st = _Table(path, t.get(key, dict), prefix=f"{key}.")
-        sites = {}
-        for name in list(st.data):
-            host = st.string(name)
-            if not code.fullmatch(name):
-                raise st.error(name, "is not a code")
-            if not is_host(host):
-                raise st.error(name, f"{host!r} is not a lowercase host name")
-            sites[name] = host
-        tables.append(sites)
+    municipal = _host_table(t.table("obce"), OBEC_CODE)
+    regional = _host_table(t.table("kraje"), _KRAJ_CODE)
     t.reject_unknown()
-    return tables[0], tables[1]
+    return municipal, regional
+
+
+def _host_table(t: _Table, code: re.Pattern[str]) -> dict[str, str]:
+    """Return a table of *code* → host name."""
+    sites = {}
+    for name in list(t.data):
+        host = t.string(name)
+        if not code.fullmatch(name):
+            raise t.error(name, "is not a code")
+        if not is_host(host):
+            raise t.error(name, f"{host!r} is not a lowercase host name")
+        sites[name] = host
+    return sites
 
 
 def load_blocklist(path: Path) -> frozenset[str]:
@@ -531,12 +525,8 @@ def _load_input(t: _Table, name: str, entry: object) -> Input:
     key = f"input.{name}"
     if not _INPUT_NAME.fullmatch(name):
         raise t.error(key, "name must be lowercase letters, digits and dashes")
-    if not isinstance(entry, dict):
-        raise t.error(key, "must be a table")
-    it = _Table(t.path, entry, prefix=key + ".")
-    url = it.string("url")
-    if not url.startswith(("https://", "http://")):
-        raise it.error("url", "must be an absolute http(s) URL")
+    it = t.entry(key, entry)
+    url = it.http_url("url")
     file = it.string("file")
     if not file or "/" in file or "\\" in file or file.startswith("."):
         raise it.error("file", "must be a plain file name")
@@ -544,10 +534,10 @@ def _load_input(t: _Table, name: str, entry: object) -> Input:
     if kind not in INPUT_KINDS:
         raise it.error("kind", f"must be one of {', '.join(INPUT_KINDS)}")
     members, expect, volatile = _input_checks(it, kind)
-    sha256 = it.string("sha256") if "sha256" in it.data else ""
+    sha256 = it.optional("sha256", str, "")
     if "sha256" in it.data and not _SHA256.fullmatch(sha256):
         raise it.error("sha256", "must be 64 lowercase hex digits")
-    optional = it.get("optional", bool) if "optional" in it.data else False
+    optional = it.optional("optional", bool, False)
     # Keys that belong to another kind are reported as unknown here.
     it.reject_unknown()
     return Input(name, url, file, kind, members, expect, volatile, sha256, optional)
@@ -566,9 +556,7 @@ def _input_checks(
     # optional for csv.
     expect = ""
     if kind == "html" or (kind == "csv" and "expect" in it.data):
-        expect = it.string("expect")
-        if not expect:
-            raise it.error("expect", "must not be empty")
+        expect = it.nonempty("expect")
     volatile = None
     if kind == "html" and "volatile" in it.data:
         try:
@@ -581,9 +569,7 @@ def _input_checks(
 def load_inputs(path: Path) -> Inputs:
     """Load ``inputs.toml`` and check that its CA certificate files exist."""
     t = _Table(path, _read_toml(path))
-    contact = t.string("contact")
-    if not contact:
-        raise t.error("contact", "must not be empty")
+    contact = t.nonempty("contact")
     certs = tuple(path.parent / name for name in t.str_list("ca_certificates"))
     for cert in certs:
         if not cert.is_file():
@@ -614,17 +600,15 @@ def load_overrides(path: Path) -> Overrides:
     merge: tuple[tuple[str, ...], ...] = ()
     split: tuple[tuple[str, ...], ...] = ()
     if "person" in t.data:
-        pt = _Table(path, t.get("person", dict), prefix="person.")
+        pt = t.table("person")
         merge = _candidacy_groups(pt, "merge", 2)
         split = _candidacy_groups(pt, "split", 1)
         pt.reject_unknown()
         seen: set[str] = set()
         for group in split:
-            if seen & set(group):
-                raise pt.error(
-                    "split", f"{sorted(seen & set(group))[0]!r} is split twice"
-                )
-            seen |= set(group)
+            if twice := seen.intersection(group):
+                raise pt.error("split", f"{min(twice)!r} is split twice")
+            seen.update(group)
     t.reject_unknown()
     return Overrides(obec, residence, merge, split, address)
 
@@ -654,14 +638,9 @@ def load_parties(path: Path, logo_dir: Path) -> dict[str, Party]:
     parties = {}
     shorts: dict[str, str] = {}
     for name, entry in t.get("party", dict).items():
-        key = f"party.{name}"
-        if not isinstance(entry, dict):
-            raise t.error(key, "must be a table")
-        pt = _Table(path, entry, prefix=key + ".")
+        pt = t.entry(f"party.{name}", entry)
         short = _party_short(pt, name, shorts)
-        full = pt.string("name")
-        if not full:
-            raise pt.error("name", "must not be empty")
+        full = pt.nonempty("name")
         logo = source = license_ = ""
         if "logo" in pt.data:
             logo = pt.string("logo")
@@ -673,12 +652,8 @@ def load_parties(path: Path, logo_dir: Path) -> dict[str, Party]:
                 raise pt.error("logo", f"{logo_dir / logo} does not exist")
             # Logos are redistributed on a public site, so where each one
             # comes from and under which terms must stay on record.
-            source = pt.string("logo_source")
-            if not source.startswith(("https://", "http://")):
-                raise pt.error("logo_source", "must be an absolute http(s) URL")
-            license_ = pt.string("logo_license")
-            if not license_:
-                raise pt.error("logo_license", "must not be empty")
+            source = pt.http_url("logo_source")
+            license_ = pt.nonempty("logo_license")
         pt.reject_unknown()
         parties[name] = Party(short, full, logo, source, license_)
     t.reject_unknown()
@@ -692,21 +667,14 @@ def load_obvody(path: Path) -> ObvodList:
     exactly once needs the municipality table (see :mod:`election_map_slovakia.obvody`).
     """
     t = _Table(path, _read_toml(path))
-    source = t.string("source")
-    if not source.startswith(("https://", "http://")):
-        raise t.error("source", "must be an absolute http(s) URL")
-    date = t.get("date", dt.date)
-    if isinstance(date, dt.datetime):
-        raise t.error("date", "must be a date without a time")
-    table = t.get("obvod", dict)
+    source = t.http_url("source")
+    date = t.date("date")
     obvody = []
-    for key, entry in table.items():
+    for key, entry in t.get("obvod", dict).items():
         name = f"obvod.{key}"
         if not _OBVOD_NUMBER.fullmatch(key):
             raise t.error(name, "obvod number must be a positive integer")
-        if not isinstance(entry, dict):
-            raise t.error(name, "must be a table")
-        ot = _Table(path, entry, prefix=name + ".")
+        ot = t.entry(name, entry)
         seats = ot.positive_int("seats")
         okresy = _member_list(ot, "okresy", OKRES_CODE, "okres")
         obce = _member_list(ot, "obce", DISTRICT_CODE, "obec")
@@ -749,10 +717,7 @@ def _candidacy_groups(t: _Table, key: str, minimum: int) -> tuple[tuple[str, ...
         return ()
     groups = []
     for number, entry in enumerate(t.get(key, list), 1):
-        name = f"{key}[{number}]"
-        if not isinstance(entry, dict):
-            raise t.error(name, "must be a table")
-        gt = _Table(t.path, entry, prefix=f"{t.prefix}{name}.")
+        gt = t.entry(f"{key}[{number}]", entry)
         ids = gt.str_list("candidacies")
         gt.reject_unknown()
         if len(ids) < minimum:
@@ -779,6 +744,10 @@ def is_blocked(host: str, blocklist: frozenset[str]) -> bool:
     """Return whether *host* or any parent domain of it is in *blocklist*."""
     labels = host.split(".")
     return any(".".join(labels[i:]) in blocklist for i in range(len(labels)))
+
+
+def _is_http_url(value: str) -> bool:
+    return value.startswith(("https://", "http://"))
 
 
 def _read_toml(path: Path) -> dict[str, Any]:
@@ -815,8 +784,40 @@ class _Table:
         self.used.add(key)
         return value
 
+    def optional(self, key: str, kind: type[_T], default: _T) -> _T:
+        return self.get(key, kind) if key in self.data else default
+
     def string(self, key: str) -> str:
         return self.get(key, str)
+
+    def nonempty(self, key: str) -> str:
+        value = self.string(key)
+        if not value:
+            raise self.error(key, "must not be empty")
+        return value
+
+    def http_url(self, key: str) -> str:
+        value = self.string(key)
+        if not _is_http_url(value):
+            raise self.error(key, "must be an absolute http(s) URL")
+        return value
+
+    def date(self, key: str) -> dt.date:
+        value = self.get(key, dt.date)
+        # A TOML datetime is a dt.date too.
+        if isinstance(value, dt.datetime):
+            raise self.error(key, "must be a date without a time")
+        return value
+
+    def table(self, key: str) -> _Table:
+        """Return the subtable *key*."""
+        return self.entry(key, self.get(key, dict))
+
+    def entry(self, key: str, value: object) -> _Table:
+        """Return *value*, found under *key*, as a table; raise if it is none."""
+        if not isinstance(value, dict):
+            raise self.error(key, "must be a table")
+        return _Table(self.path, value, prefix=f"{self.prefix}{key}.")
 
     def positive_int(self, key: str) -> int:
         value = self.get(key, int)

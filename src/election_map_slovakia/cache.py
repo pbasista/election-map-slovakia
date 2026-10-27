@@ -185,16 +185,17 @@ def download(cfg: Config, url: str, limit: int) -> Response:
 
 
 def _uri(url: str) -> str:
-    """Return *url* with the characters HTTP does not allow percent-encoded.
+    """Return *url* as HTTP allows it: IDNA host, other characters percent-encoded.
 
     Pages link to files named "big_slávnostné zasadnutie.jpg".
     """
     parts = urllib.parse.urlsplit(url)
+    netloc = parts.netloc
+    if not netloc.isascii():
+        netloc = netloc.encode("idna").decode("ascii")
     return urllib.parse.urlunsplit(
         parts._replace(
-            netloc=parts.netloc.encode("idna").decode("ascii")
-            if not parts.netloc.isascii()
-            else parts.netloc,
+            netloc=netloc,
             path=urllib.parse.quote(parts.path, safe="/%:@!$&'()*+,;=~-._"),
             query=urllib.parse.quote(parts.query, safe="/%:@!$&'()*+,;=?~-._"),
         )
@@ -376,7 +377,23 @@ def _valid_date(text: str) -> bool:
     return True
 
 
+def _image_source(a: dict[str, str]) -> str:
+    """Return the URL of an ``<img>`` with attributes *a*, "" if it has none.
+
+    Lazy-loading pages keep the image in a ``data-*`` attribute and put a
+    placeholder, often a ``data:`` URI, in ``src``.
+    """
+    for key in _LAZY_SOURCES:
+        value = a.get(key, "").strip()
+        if value and not value.startswith("data:"):
+            return value
+    srcset = a.get("srcset")
+    return srcset.split(",")[0].strip().split(" ")[0] if srcset else ""
+
+
 class _Sanitizer(HTMLParser):
+    """Writes the sanitized body of a page and collects what it says of itself."""
+
     def __init__(
         self, base: str, image: Callable[[str], tuple[str, bytes] | None]
     ) -> None:
@@ -495,17 +512,7 @@ class _Sanitizer(HTMLParser):
         return absolute if scheme in ("http", "https", "mailto") else ""
 
     def _img(self, a: dict[str, str]) -> None:
-        src = next(
-            (
-                a[k].strip()
-                for k in _LAZY_SOURCES
-                if a.get(k, "").strip() and not a[k].strip().startswith("data:")
-            ),
-            "",
-        )
-        if not src and a.get("srcset"):
-            src = a["srcset"].split(",")[0].strip().split(" ")[0]
-        link = self._link(src) if src else ""
+        link = self._link(_image_source(a))
         if not link.startswith(("http://", "https://")):
             return
         alt = a.get("alt", "").strip()

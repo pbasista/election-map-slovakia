@@ -110,6 +110,9 @@ _TYPES = {
 }
 _ELECTED_2022 = "1"
 _ELECTED_BY = "zvolený"
+# Columns that identify a candidate in the mayor and council tables.
+_MAYOR_KEY = ("OBEC", "PC_HL")
+_MEMBER_KEY = ("OBEC", "VOOBEC", "PC_HL")
 _DAYS_PER_YEAR = 365.2425
 # Years of age difference tolerated beyond the elapsed time, tried in turn.
 AGE_SLACK = (0, 1)
@@ -199,9 +202,8 @@ class Holder:
         self, first_name: str, surname: str, age: int, day: dt.date
     ) -> bool:
         """Return whether a person of that name and age on *day* fits."""
-        return _name(self.first_name, self.surname) == _name(
-            first_name, surname
-        ) and age_fits(self.age, self.since, age, day)
+        same_name = _name(self.first_name, self.surname) == _name(first_name, surname)
+        return same_name and age_fits(self.age, self.since, age, day)
 
 
 def age_fits(
@@ -442,10 +444,8 @@ def _read_municipal_2022(path: Path) -> Election:
         mayors = _csv(z, path, "tab0ad")
         members = _csv(z, path, "tab0bd")
         # Votes and turnout are per okrsok, summed here.
-        won_mayor = _winners(_csv(z, path, "tab05f"), ("OBEC", "PC_HL"), _ELECTED_2022)
-        won_member = _winners(
-            _csv(z, path, "tab08f"), ("OBEC", "VOOBEC", "PC_HL"), _ELECTED_2022
-        )
+        won_mayor = _winners(_csv(z, path, "tab05f"), _MAYOR_KEY, _ELECTED_2022)
+        won_member = _winners(_csv(z, path, "tab08f"), _MEMBER_KEY, _ELECTED_2022)
         rows = _csv(z, path, "tab02bf")
         turnout = _turnout(rows, _municipal_units)
     okrsky: dict[str, dict[int, Turnout]] = defaultdict(dict)
@@ -455,8 +455,8 @@ def _read_municipal_2022(path: Path) -> Election:
         MUNICIPAL_2022,
         ELECTION_2022,
         _units(units),
-        _elected(mayors, ("OBEC", "PC_HL"), won_mayor),
-        _elected(members, ("OBEC", "VOOBEC", "PC_HL"), won_member),
+        _elected(mayors, _MAYOR_KEY, won_mayor),
+        _elected(members, _MEMBER_KEY, won_member),
         turnout,
         dict(okrsky),
     )
@@ -468,18 +468,16 @@ def _read_by_election(path: Path, name: str, day: dt.date) -> Election:
         mayors = _xlsx(z, path, "tab0ad")
         members = _xlsx(z, path, "tab0bd")
         won_mayor = _winners(
-            _xlsx(z, path, "tab05d"), ("OBEC", "PC_HL"), _ELECTED_BY, "POZNAMKA"
+            _xlsx(z, path, "tab05d"), _MAYOR_KEY, _ELECTED_BY, "POZNAMKA"
         )
-        won_member = _winners(
-            _xlsx(z, path, "tab08e"), ("OBEC", "VOOBEC", "PC_HL"), _ELECTED_BY
-        )
+        won_member = _winners(_xlsx(z, path, "tab08e"), _MEMBER_KEY, _ELECTED_BY)
         turnout = _turnout(_xlsx(z, path, "tab02be"), _municipal_units)
     return Election(
         name,
         day,
         _units(units),
-        _elected(mayors, ("OBEC", "PC_HL"), won_mayor),
-        _elected(members, ("OBEC", "VOOBEC", "PC_HL"), won_member),
+        _elected(mayors, _MAYOR_KEY, won_mayor),
+        _elected(members, _MEMBER_KEY, won_member),
         turnout,
     )
 
@@ -598,21 +596,18 @@ def _add_regional(holders: Holders, path: Path) -> None:
         elif unit == "obec":
             holders.regional[code] = past
     kraj_of_obvod = {r["VOBVOD"]: r["KRAJ"] for r in units}
+
+    def add(body: str, row: Mapping[str, str], result: Result) -> None:
+        holder = _holder(body, ELECTION_2022, row, result, row["TP_NOBEC"])
+        holders.bodies.setdefault(body, []).append(holder)
+
     for (kraj, number), votes in sorted(won_president.items()):
-        row = presidents[(kraj, number)]
-        body = f"predseda:{kraj}"
         result = Result(votes, turnout[("predseda", kraj)], None)
-        holders.bodies.setdefault(body, []).append(
-            _holder(body, ELECTION_2022, row, result, row["TP_NOBEC"])
-        )
+        add(f"predseda:{kraj}", presidents[(kraj, number)], result)
     for (obvod, number), votes in sorted(won_member.items()):
-        row = members[(obvod, number)]
-        body = f"zsk:{kraj_of_obvod[obvod]}"
         # The obvod code is the kraj code followed by the obvod's number.
         result = Result(votes, turnout[("zsk", obvod)], int(obvod[1:]))
-        holders.bodies.setdefault(body, []).append(
-            _holder(body, ELECTION_2022, row, result, row["TP_NOBEC"])
-        )
+        add(f"zsk:{kraj_of_obvod[obvod]}", members[(obvod, number)], result)
 
 
 def _open(path: Path) -> zipfile.ZipFile:
@@ -687,7 +682,8 @@ def match(
     by_name = _index_persons(persons, by_id, admin)
     residences: dict[tuple[str, str], set[str]] = defaultdict(set)
     for o in admin.obce.values():
-        residences[(o.kraj, candidates.name_key(o.name))].add(o.city or o.code)
+        key = (o.kraj, candidates.name_key(o.name))
+        residences[key].add(candidates.merge_area(admin, o.code))
 
     every = list(holders.all())
     # Position in *every* → person; namesake holders of one body are equal.
@@ -785,7 +781,7 @@ def _narrow(
 ) -> list[_Person]:
     """Return the persons of *options* in the holder's area; see the module doc."""
     if h.kind in candidates.MUNICIPAL:
-        merge = admin.obce[h.area].city or h.area
+        merge = candidates.merge_area(admin, h.area)
         options = [p for p in options if p.person.obec == merge]
         if len(options) > 1:
             options = [p for p in options if h.area in p.areas]
@@ -875,8 +871,7 @@ def report(inc: Incumbency) -> list[str]:
         + ", ".join(f"{k} {matched[k]:,}/{holders[k]:,}" for k in ROLES)
     ]
     if inc.holders.unknown:
-        lines.append(
-            f"  results municipalities not in ZBGIS: {', '.join(sorted(inc.holders.unknown))}"
-        )
+        unknown = ", ".join(sorted(inc.holders.unknown))
+        lines.append(f"  results municipalities not in ZBGIS: {unknown}")
     lines += [f"  ambiguous {a}" for a in inc.ambiguous]
     return lines

@@ -10,32 +10,33 @@
 import { dataUrl, setDataVersion } from './files.js';
 
 const config = JSON.parse(document.querySelector('meta[name="km-config"]').content);
+const dates = (isos) => isos?.map((iso) => new Date(iso)) ?? null;
 
 export const lang = document.documentElement.lang;
 export const languages = config.languages;
 export const election = config.election;
 // When the polls open and close, as Dates (config/site.toml).
-export const polls = config.polls?.map((iso) => new Date(iso)) ?? null;
+export const polls = dates(config.polls);
 // Research language → the source categories its research searches.
 export const researchCategories = config.research;
 // The project's source code repository, linked from the About dialog.
 export const repository = config.repository;
 // The site's version (__version__), named in the About dialog.
 export const version = config.version;
-// Asked for with every data file (files.js `dataUrl`), set here before
-// anything is fetched.
+// Asked for with every data file (files.js `dataUrl`), so it is set here,
+// before anything is fetched.
 export const dataVersion = config.dataVersion;
 setDataVersion(dataVersion);
 // The path of the election's results on this site (/results/<day>, from
-// the build's data/build/results/<day>/; nothing there before results).
+// the build's data/build/results/<day>/), named even before there are any.
 export const resultsPath = config.results;
-// Whether the app polls them (config/site.toml live); without, it reads
-// them once per page load.
+// Whether the app polls the results (config/site.toml live); if not, it
+// reads them once per page load.
 export const live = config.live;
-// When, polling, it reads them every minute, as Dates; null: any time (a
-// build with EMS_RESULTS_ANYTIME=1, for testing; config/site.toml
-// live_days).
-export const liveWindow = config.liveWindow?.map((iso) => new Date(iso)) ?? null;
+// The window, as Dates, in which the app polls the results every minute
+// (config/site.toml live_days); null: any time (a build with
+// EMS_RESULTS_ANYTIME=1, for testing).
+export const liveWindow = dates(config.liveWindow);
 
 let strings = {};
 // The language the strings are in: the page's, or for a language with no

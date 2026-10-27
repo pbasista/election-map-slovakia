@@ -76,14 +76,23 @@
   --map-neighbour-line: #a3abb5;
   --map-neighbour-label: #6e7681;
   --map-neighbour-halo: rgb(236 238 238 / 0.92);
-  /* The base map (roads, railways, waters): opaque colours a little darker
-     than the land, drawn at --map-base-alpha over the land and the results'
-     fills, so it stays faint and the fills read the same under it. */
+  /* The base map (waters, buildings, roads, railways): opaque colours, drawn
+     at --map-base-alpha over the land and the results' fills, so it stays
+     faint and the fills read the same under it. The roads warm, apart from
+     the cool grey borders: a wide one a light -fill in a casing of its
+     colour, the major ones in yellow and orange tints as on the web maps
+     people know; the railways dark, with ticks (draw.js `BASE_RAILS`). */
   --map-base-water: #8fb8e0;
   --map-base-waterway: #6fa3d6;
-  --map-base-road: #bab3a8;
-  --map-base-major: #a8977f;
-  --map-base-rail: #8f959e;
+  --map-base-building: #d3cabd;
+  --map-base-road: #b39f82;
+  --map-base-road-fill: #ffffff;
+  --map-base-major: #d4a53c;
+  --map-base-major-fill: #ffe7a0;
+  --map-base-motorway: #dd7a2a;
+  --map-base-motorway-fill: #f9a65a;
+  --map-base-rail: #4d535c;
+  --map-base-tram: #7d838c;
   --map-base-alpha: 0.5;
 
   --fs-xs: 12px;
@@ -148,9 +157,15 @@
   --map-neighbour-halo: rgb(17 22 29 / 0.92);
   --map-base-water: #2a5582;
   --map-base-waterway: #3a6ea3;
-  --map-base-road: #4a5567;
-  --map-base-major: #5e6b80;
-  --map-base-rail: #6a7485;
+  --map-base-building: #3f4651;
+  --map-base-road: #6e624f;
+  --map-base-road-fill: #a3967e;
+  --map-base-major: #8c7238;
+  --map-base-major-fill: #c9a656;
+  --map-base-motorway: #a0582a;
+  --map-base-motorway-fill: #e08a48;
+  --map-base-rail: #b9c0ca;
+  --map-base-tram: #8b94a3;
   --map-base-alpha: 0.6;
 }
 
@@ -341,13 +356,18 @@ h3 {
   color: var(--text-dim);
 }
 
+/* The button that folds them on a phone (map.js `foldCredits`). */
+.km-credits-button {
+  display: none;
+}
+
 /* ---------- floating things ---------- */
 
 /* Opaque: a backdrop filter (the map blurred behind them) made Firefox
    drop frames throughout a pan, however light the filter. */
 .float,
 .fab,
-.zoom,
+.fab-group,
 .popover {
   background: var(--surface);
   border: 1px solid var(--line);
@@ -411,6 +431,7 @@ h3 {
 }
 
 .search {
+  position: relative;
   animation-name: finder-search-in;
 }
 
@@ -544,12 +565,6 @@ h3 {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .live-dot {
-    animation: none;
-  }
-}
-
 /* The voting under way (live.js `VotingStatus`), before any results: in
    the primary colour rather than the results' green, a still bar of how
    much of the voting day has passed in place of the dot. */
@@ -581,10 +596,6 @@ h3 {
 }
 
 /* ---------- search ---------- */
-
-.search {
-  position: relative;
-}
 
 .search > .ico {
   position: absolute;
@@ -760,6 +771,17 @@ h3 {
   color: var(--line-strong);
 }
 
+/* Puts the buttons above it away on a phone with the sheet open, where
+   they would cover the little map left (app.js); elsewhere they are in
+   the column as they are. */
+.controls-more {
+  display: none;
+}
+
+.controls-stack {
+  display: contents;
+}
+
 /* The state on a button's icon (controls.js Popover `badge`): the language
    code. In the lower right, ringed in the surface colour so it stands off
    the icon's lines. Stays within the screen edge margin so it is never cut
@@ -777,30 +799,63 @@ h3 {
   letter-spacing: 0.02em;
 }
 
-/* The zoom buttons are one pill. */
-.zoom {
+/* What a button's popover sets is in effect (controls.js Popover `on`): a
+   turnout shown on the map. A dot in the upper right, ringed like the
+   badge, and the icon in the accent. */
+.fab.on {
+  color: var(--primary);
+}
+
+.fab-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--surface);
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+/* Buttons that go together are one pill, divided by hairlines: zoom in and
+   out, and the map's layers (controls.js LayerMenus), whose buttons are in
+   their popovers' anchors. */
+.fab-group {
   display: flex;
   flex-direction: column;
   border-radius: calc(var(--fab) / 2);
 }
 
-.zoom .fab {
+.fab-group .fab {
   border: 0;
+  border-radius: 0;
   background: none;
   box-shadow: none;
 }
 
-.zoom .fab:hover:not(:disabled) {
+.fab-group .fab:hover:not(:disabled),
+.fab-group .fab[aria-expanded="true"] {
   background: var(--surface-2);
 }
 
-.zoom .fab + .fab {
-  border-top: 1px solid var(--line);
-  border-radius: 0 0 50% 50%;
+/* Inside the pill, as an outline around one of its parts would cross the
+   others. */
+.fab-group .fab:focus-visible {
+  outline-offset: -2px;
 }
 
-.zoom .fab:first-child {
+.fab-group > :not(:first-child) {
+  border-top: 1px solid var(--line);
+}
+
+.fab-group > .fab:first-child,
+.fab-group > :first-child > .fab {
   border-radius: 50% 50% 0 0;
+}
+
+.fab-group > .fab:last-child,
+.fab-group > :last-child > .fab {
+  border-radius: 0 0 50% 50%;
 }
 
 .anchor {
@@ -808,7 +863,8 @@ h3 {
 }
 
 /* Popovers open to the left of their button: from its top in the upper
-   stack, from its bottom in the lower one. */
+   stack, from its bottom in the lower one; moved up or down to stay on the
+   screen (controls.js Popover), which they are never taller than. */
 .popover {
   position: absolute;
   top: 0;
@@ -818,6 +874,7 @@ h3 {
   max-width: min(340px, calc(100vw - var(--fab) - 3 * var(--edge) - 10px));
   max-height: calc(100dvh - 2 * var(--edge));
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 12px;
   border-radius: var(--radius);
   font-size: var(--fs-sm);
@@ -856,10 +913,6 @@ h3 {
 .popover .notice {
   margin: 0 0 10px;
   padding: 8px 10px 8px 6px;
-}
-
-.popover .options + .notice {
-  margin: 8px 0 0;
 }
 
 .popover .notice .ico {
@@ -947,16 +1000,55 @@ h3 {
   color: var(--map-zsk);
 }
 
-span.ico {
-  flex: none;
+/* The constituencies menu's fold-out (controls.js LayerMenus): when each
+   overlay appears and the legend of those on, closed so that the menu stays
+   short. Its summary is a row like an option's, its chevron turned up when
+   open. */
+.pop-more {
+  margin-top: 4px;
 }
 
-.pop-note {
-  margin: 8px 0 0;
-  padding: 0 2px;
+.pop-more summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  color: var(--text-dim);
+  font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+}
+
+.pop-more summary::-webkit-details-marker {
+  display: none;
+}
+
+.pop-more summary:hover {
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.pop-more summary .ico {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.12s ease;
+}
+
+.pop-more[open] summary .ico {
+  transform: rotate(180deg);
+}
+
+/* When each overlay appears, in line with the summary. */
+.pop-more .pop-note {
+  margin: 2px 0 0;
+  padding: 0 10px;
   color: var(--text-faint);
-  font-size: var(--fs-sm);
   line-height: 1.4;
+}
+
+.pop-more .notice {
+  margin: 10px 0 0;
 }
 
 /* The boundaries legend: a notice's box and accent without its icon, which
@@ -998,35 +1090,31 @@ span.ico {
   background: var(--map-none);
 }
 
-/* A council constituency border drawn from the addresses: dashed, as
-   js/map.js draws it. */
-.swatch.approximate {
-  border: 0;
-  border-radius: 0;
+/* Border swatches: a line rather than a patch. A council constituency
+   border is in its orange; an okrsok (polling district) border thinner, in
+   the okrsky's blue. Dashed where drawn from the addresses, as js/map.js
+   draws them. */
+.swatch.council,
+.swatch.approximate,
+.swatch.okrsok,
+.swatch.okrsok-approximate {
   height: 0;
   margin-top: calc(1lh / 2);
-  border-top: 2px dashed var(--map-council);
+  border: 0;
+  border-radius: 0;
 }
 
-.swatch.council {
-  border: 0;
-  border-radius: 0;
-  height: 0;
-  margin-top: calc(1lh / 2);
+.swatch.council,
+.swatch.approximate {
   border-top: 2px solid var(--map-council);
 }
 
-/* An okrsok (polling district) border, thinner, in the okrsky's blue;
-   dashed where drawn from the addresses. */
 .swatch.okrsok,
 .swatch.okrsok-approximate {
-  border: 0;
-  border-radius: 0;
-  height: 0;
-  margin-top: calc(1lh / 2);
   border-top: 1.5px solid var(--map-okrsok);
 }
 
+.swatch.approximate,
 .swatch.okrsok-approximate {
   border-top-style: dashed;
 }
@@ -1187,6 +1275,12 @@ span.ico {
   gap: 10px;
 }
 
+/* Favourites' count of the circled elected in 2026. */
+.favourites-elected {
+  color: var(--result);
+  font-weight: 600;
+}
+
 .share-button {
   display: grid;
   flex: none;
@@ -1243,14 +1337,6 @@ span.ico {
   color: var(--text);
   box-shadow: var(--shadow-lg);
   overflow-y: auto;
-}
-
-.qr-dialog::backdrop {
-  background: var(--scrim);
-}
-
-.qr-dialog[open] {
-  animation: dialog-in 0.16s ease-out;
 }
 
 .qr-head {
@@ -1437,23 +1523,30 @@ button.contest-head {
   font-weight: 500;
 }
 
-/* A contest's map pin (mapmode.js `ContestMapButton`), in the colour its
-   area is drawn in on the map (--tone: a municipality's red, a council
-   obvod's orange, the cities' green, a regional contest's violet), so
-   that it reads as the area it shows. */
-.contest-map {
+/* The round buttons that put something on the map (mapmode.js): a
+   contest's pin, the winner map's and a candidate's votes'. */
+.contest-map,
+.winner-map,
+.votes-map {
   display: grid;
   flex: none;
   place-items: center;
   width: 34px;
   height: 34px;
-  margin: 0 6px 0 -4px;
   padding: 0;
   border: 0;
   border-radius: 50%;
   background: none;
-  color: var(--tone, var(--primary));
   cursor: pointer;
+}
+
+/* A contest's map pin (`ContestMapButton`), in the colour its area is drawn
+   in on the map (--tone: a municipality's red, a council obvod's orange,
+   the cities' green, a regional contest's violet), so that it reads as the
+   area it shows. */
+.contest-map {
+  margin: 0 6px 0 -4px;
+  color: var(--tone, var(--primary));
 }
 
 .contest-map:hover {
@@ -1467,28 +1560,37 @@ button.contest-head {
   color: var(--surface);
 }
 
-/* Who leads where (mapmode.js `WinnerMapButton`), before the pin: in the
-   results' green, filled while the map shows it. */
-.winner-map {
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  margin: 0 -2px 0 -4px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: none;
+/* Who leads where (`WinnerMapButton`), before the pin, and the smaller pin
+   at the end of a counted candidate's row that shows their votes
+   (`MapButton`): in the results' green, filled while the map shows them. */
+.winner-map,
+.votes-map {
   color: var(--result);
-  cursor: pointer;
 }
 
-.winner-map:hover {
+.winner-map {
+  margin: 0 -2px 0 -4px;
+}
+
+.votes-map {
+  align-self: center;
+  width: 24px;
+  height: 24px;
+  margin: 0 -1px 0 auto;
+}
+
+.votes-map .ico {
+  width: 16px;
+  height: 16px;
+}
+
+.winner-map:hover,
+.votes-map:hover {
   background: color-mix(in srgb, var(--result) 14%, transparent);
 }
 
-.winner-map[aria-pressed="true"] {
+.winner-map[aria-pressed="true"],
+.votes-map[aria-pressed="true"] {
   background: var(--result);
   color: var(--surface);
 }
@@ -1887,7 +1989,6 @@ li:has(> .cand.seats-end) + li > .cand {
   align-items: center;
   justify-content: center;
   gap: 2px;
-  box-sizing: border-box;
   height: 18px;
   min-width: 18px;
   margin: 0 3px 0 0;
@@ -1909,7 +2010,6 @@ li:has(> .cand.seats-end) + li > .cand {
 .affairs .ico,
 .disputes .ico,
 .withdrawn-mark .ico {
-  flex: none;
   width: 12px;
   height: 12px;
   stroke-width: 2.5;
@@ -1921,7 +2021,6 @@ li:has(> .cand.seats-end) + li > .cand {
    site on a partial count, not officially yet, in outline. The filter's
    ring shows around it all the same (border-radius). */
 .elected .ico {
-  flex: none;
   width: 18px;
   height: 18px;
 }
@@ -2256,12 +2355,6 @@ button.active.excluded {
   color: var(--result);
 }
 
-/* Favourites' count of the circled elected in 2026. */
-.favourites-elected {
-  color: var(--result);
-  font-weight: 600;
-}
-
 /* The candidates crossed out: the red cross of their numbers, the count
    not struck through like a hidden group's names, as it names no one. */
 .crossed-chip > .ico {
@@ -2480,7 +2573,6 @@ button.active.excluded {
 }
 
 .affairs-alert .ico {
-  flex: none;
   color: var(--danger);
 }
 
@@ -2640,10 +2732,12 @@ button.active.excluded {
   overscroll-behavior: contain;
 }
 
+.qr-dialog::backdrop,
 .about-dialog::backdrop {
   background: var(--scrim);
 }
 
+.qr-dialog[open],
 .about-dialog[open] {
   animation: dialog-in 0.16s ease-out;
 }
@@ -2827,6 +2921,8 @@ button.active.excluded {
     top: calc(var(--edge) + env(safe-area-inset-top) + var(--finder-height, 60px) + 10px);
   }
 
+  /* At the height app.js and pane.js choose (pane.js SNAPS), which it moves
+     to; held where a finger drags it. */
   .pane {
     position: fixed;
     left: 0;
@@ -2842,10 +2938,18 @@ button.active.excluded {
     touch-action: manipulation;
     animation-name: sheet-in;
     animation-duration: 0.22s;
+    transition:
+      height 0.2s ease-out,
+      transform 0.2s ease-out;
   }
 
-  .pane.settling {
-    transition: transform 0.18s ease-out;
+  .pane.dragging {
+    transition: none;
+  }
+
+  /* Its first row only, which a tap raises the sheet from (pane.js). */
+  .pane.sheet-peek .pane-body {
+    overflow: hidden;
   }
 
   @keyframes sheet-in {
@@ -2857,7 +2961,12 @@ button.active.excluded {
   .pane-grip {
     display: block;
     flex: none;
+    width: 100%;
     height: 22px;
+    padding: 0;
+    border: 0;
+    border-radius: 16px 16px 0 0;
+    background: none;
     position: relative;
     cursor: grab;
   }
@@ -2874,26 +2983,62 @@ button.active.excluded {
     background: var(--line-strong);
   }
 
+  /* The legend of the results on the map (mapmode.js), its margins within. */
+  .pane-top {
+    display: flow-root;
+    flex: none;
+  }
+
   .pane > .close {
     top: 14px;
+  }
+
+  /* With the legend at its top, the close button is on the grip's row,
+     which grows to hold it, rather than over the legend or the content. */
+  .pane:has(.pane-top > .map-legend) .pane-grip {
+    height: 44px;
+  }
+
+  .pane:has(.pane-top > .map-legend) .pane-grip::before {
+    top: 20px;
+  }
+
+  .pane:has(.pane-top > .map-legend) > .close {
+    top: 5px;
   }
 
   .panel-head {
     padding-top: 2px;
   }
 
-  /* The sheet covers the lower half: the zoom and help buttons give way, the
-     attribution moves above it. */
-  .pane-open .controls.bottom {
+  /* The sheet covers the lower half: the zoom and help buttons give way
+     unless it is down at `peek`, where they go above it, as the attribution
+     does. */
+  .pane-open:not(:has(.pane.sheet-peek)) .controls.bottom {
     display: none;
+  }
+
+  .pane-open .controls.bottom {
+    bottom: calc(var(--sheet-height) + var(--edge));
   }
 
   .pane-open .leaflet-bottom {
     bottom: var(--sheet-height);
+    transition: bottom 0.2s ease-out;
+  }
+
+  /* The buttons on the right go under one, which puts them out in their
+     column (app.js). */
+  .pane-open .controls-more {
+    display: grid;
+  }
+
+  .pane-open .controls.top:not(.more-open) .controls-stack {
+    display: none;
   }
 
   /* The attribution goes bottom left, beside the buttons rather than under
-     them, and may wrap. */
+     them, and may wrap; folded to its button (map.js `foldCredits`). */
   .controls.bottom {
     bottom: calc(var(--edge) + env(safe-area-inset-bottom));
   }
@@ -2904,9 +3049,41 @@ button.active.excluded {
   }
 
   .leaflet-container .leaflet-control-attribution {
+    display: flex;
+    align-items: flex-start;
+    gap: 2px;
     margin-left: calc(var(--edge) + env(safe-area-inset-left));
     max-width: calc(100vw - var(--fab) - 3 * var(--edge));
+    padding-left: 2px;
     font-size: 10px;
+  }
+
+  .leaflet-container .leaflet-control-attribution.folded {
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  .leaflet-control-attribution.folded .km-credits {
+    display: none;
+  }
+
+  .km-credits-button {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    color: var(--text-dim);
+    cursor: pointer;
+  }
+
+  .km-credits-button .ico {
+    width: 16px;
+    height: 16px;
   }
 
   .about-dialog {
@@ -2926,6 +3103,7 @@ button.active.excluded {
 
 /* After the phone rules, so it wins over their sheet animation. */
 @media (prefers-reduced-motion: reduce) {
+  .live-dot,
   .title,
   .search,
   .pane,
@@ -2935,19 +3113,26 @@ button.active.excluded {
     animation: none;
   }
 
-  .pane.settling,
-  .fab {
+  .pane,
+  .pane-open .leaflet-bottom,
+  .fab,
+  .pop-more summary .ico {
     transition: none;
   }
 }
 
 /* ---------- the 2026 results on the map (js/mapmode.js) ---------- */
 
-/* The steps of a candidate's votes on the map, lowest first: the results'
-   green, like the medal, mixed into the land from a tint that still reads
-   as a patch on it to the green itself, under borders and labels that stay
-   readable on each. A turnout is mixed the same way from the colour its
-   area is drawn in (draw.js `TONE_STEPS`). */
+/* --map-result-<n>: the steps of a candidate's votes on the map, lowest
+   first: the results' green, like the medal, mixed into the land from a
+   tint that still reads as a patch on it to the green itself, under
+   borders and labels that stay readable on each. A turnout is mixed the
+   same way from the colour its area is drawn in (draw.js `TONE_STEPS`).
+
+   --map-series-<n>: a winner map's colours (mapmode.js `SERIES`), one for
+   each of the candidates with the most votes, the rest in a grey: hues far
+   apart, of about one lightness, so that none reads as more than another,
+   under labels that stay readable on each. */
 :root {
   --map-result-1: #deebe4;
   --map-result-2: #bddace;
@@ -2955,22 +3140,7 @@ button.active.excluded {
   --map-result-4: #72b39e;
   --map-result-5: #4c9f84;
   --map-result-6: #238a6a;
-}
 
-[data-theme="dark"] {
-  --map-result-1: #213a3c;
-  --map-result-2: #28514b;
-  --map-result-3: #30695b;
-  --map-result-4: #38846d;
-  --map-result-5: #409e7f;
-  --map-result-6: #48b890;
-}
-
-/* A winner map's colours (mapmode.js `SERIES`), one for each of the
-   candidates with the most votes, the rest in a grey: hues far apart, of
-   about one lightness, so that none reads as more than another, under
-   labels that stay readable on each. */
-:root {
   --map-series-1: #5b8fd0;
   --map-series-2: #f0a04b;
   --map-series-3: #6fb35f;
@@ -2983,6 +3153,13 @@ button.active.excluded {
 }
 
 [data-theme="dark"] {
+  --map-result-1: #213a3c;
+  --map-result-2: #28514b;
+  --map-result-3: #30695b;
+  --map-result-4: #38846d;
+  --map-result-5: #409e7f;
+  --map-result-6: #48b890;
+
   --map-series-1: #3d68a3;
   --map-series-2: #b07030;
   --map-series-3: #4b8640;
@@ -2992,46 +3169,6 @@ button.active.excluded {
   --map-series-7: #3f8a84;
   --map-series-8: #a65f7c;
   --map-series-other: #4b525c;
-}
-
-/* The base map and the turnout choices in the boundaries menu, after the
-   overlays. */
-.base-options,
-.results-options {
-  margin-top: 14px;
-}
-
-/* The pin at the end of a counted candidate's row that shows their votes
-   on the map, under the pin of the contest's header: in the results'
-   green their votes are drawn in; filled while it shows them. */
-.votes-map {
-  display: grid;
-  flex: none;
-  align-self: center;
-  place-items: center;
-  width: 24px;
-  height: 24px;
-  margin: 0 -1px 0 auto;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: none;
-  color: var(--result);
-  cursor: pointer;
-}
-
-.votes-map .ico {
-  width: 16px;
-  height: 16px;
-}
-
-.votes-map:hover {
-  background: color-mix(in srgb, var(--result) 14%, transparent);
-}
-
-.votes-map[aria-pressed="true"] {
-  background: var(--result);
-  color: var(--surface);
 }
 
 /* The legend: a chip at the foot of the map beside the zoom buttons, above
@@ -3073,7 +3210,8 @@ button.active.excluded {
   color: var(--text-dim);
 }
 
-.map-legend-close {
+.map-legend-close,
+.map-legend-fold {
   display: grid;
   flex: none;
   place-items: center;
@@ -3088,14 +3226,20 @@ button.active.excluded {
   cursor: pointer;
 }
 
-.map-legend-close:hover {
+.map-legend-close:hover,
+.map-legend-fold:hover {
   background: var(--surface-2);
   color: var(--text);
 }
 
-.map-legend-close .ico {
+.map-legend-close .ico,
+.map-legend-fold .ico {
   width: 16px;
   height: 16px;
+}
+
+.map-legend-fold[aria-expanded="true"] .ico {
+  transform: rotate(180deg);
 }
 
 .map-legend-scale {
@@ -3258,6 +3402,36 @@ button.active.excluded {
   color: var(--text);
 }
 
+/* The unit tapped on a touch screen (mapmode.js `TapCard`): the same, by
+   the tap, with a button that picks the place there. */
+.map-tip.map-card {
+  z-index: 999;
+  max-width: min(280px, calc(100vw - 2 * var(--edge)));
+  padding: 8px 10px;
+  pointer-events: auto;
+}
+
+.map-card-ballots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  padding: 6px 0 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  background: none;
+  color: var(--primary);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.map-card-ballots .ico {
+  width: 16px;
+  height: 16px;
+}
+
 /* Where a candidate's votes came from (candidate.js `VoteOrigins`), under
    their contest on the card: the units with the most votes and with the
    highest share side by side. */
@@ -3320,8 +3494,9 @@ button.active.excluded {
 }
 
 /* On a phone the foot of the map is the sheet's: the legend goes under the
-   search card, left of the buttons; with the sheet open, the map between
-   is narrow, and the pane names the contest. */
+   search card, left of the buttons, folded to a pill with the figure of
+   all counted, which unfolds it (mapmode.js); with the sheet open, it is a
+   bar at the top of the sheet. */
 @media (max-width: 640px) {
   .map-legend {
     top: calc(var(--edge) + env(safe-area-inset-top) + var(--finder-height, 60px) + 10px);
@@ -3333,11 +3508,120 @@ button.active.excluded {
     padding: 6px 4px 6px 10px;
   }
 
-  .pane-open .map-legend-title span {
-    display: none;
+  .map-legend.pill {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px 3px 3px 10px;
+    border-radius: 18px;
   }
 
-  .pane-open .map-legend-scale {
-    margin-top: 4px;
+  .map-legend-unfold {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    min-height: 28px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .map-legend-unfold strong {
+    overflow: hidden;
+    font-size: var(--fs-sm);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .map-legend-scale.mini {
+    flex: none;
+    width: 36px;
+    height: 9px;
+    margin: 0;
+  }
+
+  /* In the sheet (pane.js `.pane-top`), between the grip and the content. */
+  .map-legend.bar {
+    position: static;
+    width: auto;
+    max-width: none;
+    margin: 0 12px 8px;
+    padding: 4px 4px 6px 10px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+  }
+
+  .map-legend.bar .map-legend-head {
+    align-items: center;
+  }
+
+  .map-legend.bar .map-legend-title strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .map-legend.pill .map-legend-close,
+  .map-legend.bar .map-legend-close,
+  .map-legend.bar .map-legend-fold {
+    margin-top: 0;
+  }
+
+  .map-legend-key {
+    flex: none;
+    color: var(--result);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .map-legend.toned .map-legend-key {
+    color: var(--tone);
+  }
+
+  .map-legend-sub {
+    margin: 1px 4px 0 0;
+    color: var(--text-dim);
+  }
+
+  /* The scale between its ends. */
+  .map-legend-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 3px 6px 0 0;
+    color: var(--text-dim);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .map-legend-row .map-legend-scale {
+    flex: 1;
+    margin: 0;
+  }
+
+  .map-legend-chips {
+    display: flex;
+    gap: 6px;
+    margin: 4px 0 0;
+    padding: 0 6px 0 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    list-style: none;
+  }
+
+  .map-legend-chips li {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 5px;
+    padding: 1px 8px 1px 6px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
   }
 }
