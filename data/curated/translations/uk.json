@@ -11969,6 +11969,22 @@
    "src": "{name} elects its council in several constituencies ({n}). Which addresses belong to which constituency is not available here yet, so all of them are listed below. The municipality's announcement names yours.",
    "text": "{name} обирає раду в кількох виборчих округах ({n}). Відомостей про те, які адреси належать до якого округу, тут поки немає, тому нижче наведено всі округи. Ваш округ зазначено в оголошенні громади."
   },
+  "council.summary_approximate": {
+   "src": "Constituency boundaries are approximate",
+   "text": "Межі округів на мапі приблизні"
+  },
+  "council.summary_choose": {
+   "src": "{n} constituencies: find yours by your address",
+   "text": "Усі округи ({n}): свій знайдете за адресою"
+  },
+  "council.summary_estimated": {
+   "src": "The constituencies here are our estimate",
+   "text": "Округи тут лише наша оцінка"
+  },
+  "council.summary_pending": {
+   "src": "{n} constituencies: yours is not known here yet",
+   "text": "Усі округи ({n}): ваш тут ще невідомий"
+  },
   "country.AL": {
    "src": "Albania",
    "text": "Албанія"
@@ -12489,6 +12505,14 @@
    "src": "Show the ballots here",
    "text": "Показати бюлетені тут"
   },
+  "mapmode.tie": {
+   "src": "Tied",
+   "text": "Нічия"
+  },
+  "mapmode.tie_count": {
+   "src": "Tied for the most votes in {n} of the areas shown",
+   "text": "Порівну найбільше голосів на {n} з показаних територій"
+  },
   "mapmode.tip_obvod": {
    "src": "{name}, constituency No. {n}",
    "text": "{name}, виборчий округ № {n}"
@@ -12500,6 +12524,10 @@
   "mapmode.tip_past": {
    "src": "2022: {turnout} · {voters} of {eligible}",
    "text": "2022: {turnout} · {voters} з {eligible}"
+  },
+  "mapmode.tip_tie": {
+   "src": "Tied for the most votes: {names}, {share} each",
+   "text": "Порівну найбільше голосів: {names}, по {share}"
   },
   "mapmode.tip_turnout": {
    "src": "Turnout {turnout} · {voters} of {eligible} voted",
@@ -12577,6 +12605,10 @@
    "src": "The most votes in {n} of the areas shown",
    "text": "Найбільше голосів на {n} з показаних територій"
   },
+  "mapmode.winner_count_ties": {
+   "src": "The most votes in {n} of the areas shown, tied in {ties} of them",
+   "text": "Найбільше голосів на {n} з показаних територій, з них на {ties} порівну з іншими"
+  },
   "mapmode.winner_hide": {
    "src": "Take who got the most votes off the map",
    "text": "Прибрати з карти, хто де отримав найбільше голосів"
@@ -12600,6 +12632,10 @@
   "mapmode.winner_total": {
    "src": "Overall: {name}, {share}",
    "text": "Загалом: {name}, {share}"
+  },
+  "mapmode.winner_total_tie": {
+   "src": "Overall, tied for the most votes: {names}, {share} each",
+   "text": "Загалом порівну найбільше голосів: {names}, по {share}"
   },
   "nav.language": {
    "src": "Language",
@@ -12702,16 +12738,20 @@
    "text": "виборча дільниця № {n} (за приблизною межею)"
   },
   "research.affairs_alert": {
-   "src": "Searched only the sites on our list ({scope}); serious controversies found about this candidate: {n}",
-   "text": "Перевірено лише на сайтах з нашого списку ({scope}); знайдені серйозні скандали щодо цього кандидата: {n}"
+   "src": "Our research found serious controversies about this candidate ({n}), searching only the sites on our list ({scope}). They are listed under Research at the end of the card, each with its source.",
+   "text": "Наше дослідження знайшло серйозні скандали щодо цього кандидата ({n}), переглянувши лише сайти з нашого списку ({scope}). Їх наведено в розділі «Дослідження» наприкінці картки, кожен зі своїм джерелом."
   },
   "research.affairs_badge": {
    "src": "Searched only the sites on our list: {scope} (on {date}). Serious controversies found: {n}. Details on the candidate card.",
    "text": "Перевірено лише на сайтах з нашого списку: {scope} ({date}). Знайдені серйозні скандали: {n}. Подробиці — на картці кандидата."
   },
   "research.affairs_show": {
-   "src": "Show",
-   "text": "Показати"
+   "src": "Go to the serious controversies",
+   "text": "Перейти до серйозних скандалів"
+  },
+  "research.affairs_summary": {
+   "src": "Serious controversies found: {n}",
+   "text": "Знайдені серйозні скандали: {n}"
   },
   "research.badge": {
    "src": "Searched only the sites on our list: {scope} (on {date}). Findings: {n}. Details on the candidate card.",
@@ -12812,6 +12852,10 @@
   "research.notice": {
    "src": "Written by artificial intelligence: it may be wrong and is not exhaustive, so take it as indicative only. Only the sites listed in About under “{list}” were searched. Check every finding at its source.",
    "text": "Створено штучним інтелектом: може містити помилки й не є повним, тому сприймайте це лише як орієнтовну інформацію. Переглянуто лише сайти, перелічені в розділі «Про проєкт» під заголовком «{list}». Перевіряйте кожен факт у джерелі."
+  },
+  "research.notice_summary": {
+   "src": "Written by AI: it may be wrong",
+   "text": "Створено ШІ: можливі помилки"
   },
   "research.quote": {
    "src": "Quote from the source",

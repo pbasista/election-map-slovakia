@@ -349,6 +349,9 @@ def test_okrsok_missing_from_the_map_and_from_an_address(site):
 def test_base_map(site):
     dist, cfg = site
     (dist / "base/okres/106/1.json").unlink()
+    stray = dist / "base/okres/108/0.json"
+    stray.parent.mkdir()
+    stray.write_bytes((dist / "base/okres/106/0.json").read_bytes())
     index = json.loads((dist / "base/index.json").read_bytes())
     index["okresy"].append("107")
     (dist / "base/index.json").write_text(json.dumps(index))
@@ -364,8 +367,7 @@ def test_base_map(site):
     ]
     assert found["base"] == [
         "base/index.json: okresy differ from the geo shards'",
-        "base/index.json: lists 5 files, not the 8 the app may request",
+        "base/index.json: 1 files in base/ the app never requests,"
+        " such as base/okres/108/0.json",
         "base/obec/508063.json: scale 100001, not 100000",
-        "base/okres/106/1.json: not "
-        f"{index['files']['okres/106/1.json']:,} bytes as listed",
     ]

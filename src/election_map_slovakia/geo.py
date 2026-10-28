@@ -116,8 +116,7 @@ label only, see PART_ROOM)::
                                okrsky: {bands: [{lod, zoom}] as shards,
                                         okresy: {okres: [west, south, east,
                                                          north]},
-                                        drawn: {obec: [okrsok, …]}},
-                               files: {path: bytes}}
+                                        drawn: {obec: [okrsok, …]}}}
 
 A topology is ``{scale, arcs, lines, features}``. An arc is a list
 [x0, y0, dx1, dy1, …] of integer lon, lat in 1/scale degree, each point but
@@ -602,8 +601,11 @@ def address_cuts(
     ]
     splits: dict[str, Split] = {}
     areas: dict[str, list[Okrsok]] = {}
+    # An obec takes about as long as its addresses file is large: the cities
+    # take seconds, most villages a fraction of one.
+    size = {code: _places_path(places_dir, code).stat().st_size for code in codes}
     for code, (split, okrsky_drawn) in zip(
-        codes, parallel.each(_cut_obec, tasks), strict=True
+        codes, parallel.each(_cut_obec, tasks, cost=lambda t: size[t[0]]), strict=True
     ):
         if split is not None:
             splits[code] = split
@@ -649,11 +651,16 @@ def _cut_obec(
     return split, okrsky_split(okrsky, p, k.units, within, kus, to_wgs84)
 
 
-def _load_places(places_dir: Path, code: str) -> obvody.ObecPlaces:
+def _places_path(places_dir: Path, code: str) -> Path:
+    """Return the addresses file of obec *code*, which ``ems addresses`` wrote."""
     path = places_dir / f"{code}.json"
     if not path.is_file():
         raise GeoError(f"{path} missing; run `ems addresses` first")
-    return obvody.load_places(path)
+    return path
+
+
+def _load_places(places_dir: Path, code: str) -> obvody.ObecPlaces:
+    return obvody.load_places(_places_path(places_dir, code))
 
 
 def _obec_area(rules: obvody.RuleSet, kus: Sequence[Ku]) -> Any:
@@ -716,7 +723,10 @@ def _point_votes(
     votes: dict[int, Counter[int]] = {}
     homes: list[list[Home]] = [[] for _ in keys]
     for k, u, i in zip(inverse.ravel().tolist(), units.tolist(), rows, strict=True):
-        votes.setdefault(k, Counter())[u] += 1
+        vote = votes.get(k)
+        if vote is None:
+            vote = votes[k] = Counter()
+        vote[u] += 1
         # A house by its súpisné číslo alone: the register has some twice,
         # at one point, in two parts (Rykynčice).
         p = places.places[i]
@@ -820,7 +830,11 @@ def _faces(
     vertex (:func:`_borders`), the cell of each, and whether it holds the
     cell's point.
     """
-    lines = shapely.intersection(shapely.union_all(shapely.boundary(cells)), obec)
+    # The intersection nodes the cells' borders, each in two cells, as a
+    # union of them first would: the same lines, one overlay fewer.
+    lines = shapely.intersection(
+        shapely.multilinestrings(shapely.boundary(cells)), obec
+    )
     faces, inner = _faces_in(shapely.union_all([shapely.boundary(obec), lines]), obec)
     cell = _containing(cells, inner)
     return faces, cell, shapely.contains(faces, shapely.points(xy[cell]))
@@ -861,24 +875,29 @@ def _smoothed(
     for i, j, s in borders:
         around[i].append((j, s))
         around[j].append((i, s))
-    out = obvod.copy()
-    count = Counter(out.tolist())
+    # Python lists and ints: indexing a NumPy array element by element in
+    # these loops took most of their time.
+    out = obvod.tolist()
+    count = Counter(out)
     for _ in range(SMOOTH_ROUNDS):
         moved = False
         for i, near in enumerate(around):
-            shared: defaultdict[int, float] = defaultdict(float)
+            if not near:
+                continue
+            shared: dict[int, float] = {}
             for j, s in near:
-                shared[int(out[j])] += s
-            own = int(out[i])
-            to = min(shared, key=lambda o: (-shared[o], o), default=own)
-            if shared[to] > SMOOTH_MAJORITY * shared[own] and count[own] > 1:
+                o = out[j]
+                shared[o] = shared.get(o, 0.0) + s
+            own = out[i]
+            to = min(shared, key=lambda o: (-shared[o], o))
+            if shared[to] > SMOOTH_MAJORITY * shared.get(own, 0.0) and count[own] > 1:
                 count[own] -= 1
                 count[to] += 1
                 out[i] = to
                 moved = True
         if not moved:
             break
-    return out
+    return np.array(out, dtype=obvod.dtype)
 
 
 def _stray(points: Points) -> Callable[[_Piece], bool]:
@@ -970,6 +989,7 @@ def _pieces(
 ) -> dict[int, _Piece]:
     """Return the pieces of the faces of a cut (see :func:`_unstrayed`)."""
     root = list(range(len(obvod)))
+    units = obvod.tolist()  # not NumPy scalars, one by one
 
     def find(i: int) -> int:
         while root[i] != i:
@@ -978,11 +998,15 @@ def _pieces(
         return i
 
     for i, j, _ in borders:
-        if obvod[i] == obvod[j]:
+        if units[i] == units[j]:
             root[find(i)] = find(j)
     pieces: dict[int, _Piece] = {}
     for i, h in enumerate(homes):
-        pieces.setdefault(find(i), _Piece(int(obvod[i]))).add([i], h)
+        r = find(i)
+        piece = pieces.get(r)
+        if piece is None:
+            piece = pieces[r] = _Piece(units[i])
+        piece.add([i], h)
     for i, j, s in borders:
         a, b = find(i), find(j)
         if a != b:
@@ -1384,11 +1408,14 @@ def okrsky_levels(
             raise GeoError(f"obec {c}: okrsky in council obvody the map does not cut")
     several = [(key, rows) for key, rows in groups.items() if len(rows) > 1]
     reaching = parallel.each(
-        _reaching, [([features[r][1].area for r in rows],) for _, rows in several]
+        _reaching_cuts, [([features[r][1].area for r in rows],) for _, rows in several]
     )
-    regions = dict(zip([key for key, _ in several], reaching, strict=True))
-    lines = {key: shapely.union_all(shapely.boundary(g)) for key, g in regions.items()}
-    areas = {key: to_grid_float(g, to_wgs84, scale) for key, g in regions.items()}
+    areas: dict[tuple[str, int], np.ndarray] = {}
+    cuts: dict[int, dict[tuple[str, int], Any]] = {lod.level: {} for lod in SHARD_LODS}
+    for (key, _), (regions, by_level) in zip(several, reaching, strict=True):
+        areas[key] = to_grid_float(regions, to_wgs84, scale)
+        for level, cut in by_level.items():
+            cuts[level][key] = to_grid_float(cut, to_wgs84, scale)
     names = [(c, o.number) for c, o in features]
     tasks = []
     for lod in SHARD_LODS:
@@ -1397,13 +1424,7 @@ def okrsky_levels(
             (c, n): gridded[level][row[(c, n)] if (c, n) in row else row[(c, 0)]]
             for c, n in groups
         }
-        cuts = {
-            key: to_grid_float(
-                shapely.simplify(g, CUT_TOLERANCE[level]), to_wgs84, scale
-            )
-            for key, g in lines.items()
-        }
-        tasks.append((level, groups, pieces, areas, cuts, names))
+        tasks.append((level, groups, pieces, areas, cuts[level], names))
     levels = [lod.level for lod in SHARD_LODS]
     return features, dict(zip(levels, parallel.each(_okrsky_level, tasks), strict=True))
 
@@ -1451,6 +1472,22 @@ it among its okrsky, in metres."""
 
 _NODING_GRID = 0.01
 """Grid the okrsky are noded on to extend them (:func:`_reaching`), in metres."""
+
+
+def _reaching_cuts(areas: Sequence[Any]) -> tuple[np.ndarray, dict[int, Any]]:
+    """Return *areas* (the okrsky of an obvod) reaching beyond it, and cuts.
+
+    The cuts are their borders simplified for each level
+    (:data:`CUT_TOLERANCE`), EPSG:5514 as the areas (see :func:`_reaching`).
+    Run in a worker process per obvod: one obvod after another, merging and
+    simplifying the borders took seconds.
+    """
+    regions = _reaching(areas)
+    lines = shapely.union_all(shapely.boundary(regions))
+    return regions, {
+        lod.level: shapely.simplify(lines, CUT_TOLERANCE[lod.level])
+        for lod in SHARD_LODS
+    }
 
 
 def _reaching(areas: Sequence[Any]) -> np.ndarray:
@@ -2526,32 +2563,23 @@ def build(
         for (_, n), g in zip(units, gridded[0], strict=True)
         if n
     ]
-    bboxes: dict[str, list[float]] = {}
     by_okres: dict[str, list[int]] = defaultdict(list)
     for i, p in enumerate(properties):
         by_okres[p["okres"]].append(i)
     okres_rows = {okres: by_okres[okres] for okres in sorted(admin.okresy)}
-    for lod in SHARD_LODS:
-        with progress.stage(f"level of detail {lod.level}"):
-            features = [rings(g) for g in gridded[lod.level]]
-            with progress.stage("cutting the borders into arcs"):
-                topo = topology(features, scale)
-                for okres, rows in okres_rows.items():
-                    result.files[f"okres/{okres}/{lod.level}.json"] = topology_file(
-                        topo, scale, rows, properties, unit_code(okres)
-                    )
-                    if lod is SHARD_LODS[-1]:
-                        bboxes[okres] = _rows_bbox(features, rows, scale)
-            with progress.stage("measuring overlaps and gaps"):
-                result.coverage.append(
-                    coverage(
-                        f"okres/*/{lod.level}.json obce",
-                        features,
-                        topo,
-                        scale,
-                        to_wgs84,
-                    )
-                )
+    bboxes: dict[str, list[float]] = {}
+    with progress.stage("cutting the levels of detail into arcs"):
+        levels = parallel.each(
+            _shard_level,
+            [
+                (lod.level, gridded[lod.level], properties, okres_rows, scale)
+                for lod in SHARD_LODS
+            ],
+        )
+        # The okresy's boxes are of the finest level, the last.
+        for files, coverage_of, bboxes in levels:
+            result.files |= files
+            result.coverage.append(coverage_of)
     with progress.stage("okrsky"):
         okrsky_index = _add_okrsky(
             result.files, okrsky, units, gridded, admin, to_wgs84, scale
@@ -2603,6 +2631,35 @@ def _bands() -> list[dict[str, Any]]:
         {"lod": str(lod.level), "zoom": [lod.from_zoom, lod.until_zoom]}
         for lod in SHARD_LODS
     ]
+
+
+def _shard_level(
+    level: int,
+    gridded: np.ndarray,
+    properties: Sequence[Mapping[str, Any]],
+    okres_rows: Mapping[str, Sequence[int]],
+    scale: int,
+) -> tuple[dict[str, dict[str, Any]], Coverage, dict[str, list[float]]]:
+    """Return the shards of ZBGIS *level*, its coverage and the okresy's boxes.
+
+    *gridded* are its features in grid units, *properties* theirs, the shard
+    of each okres those of its *okres_rows*; the coverage its overlaps and
+    gaps (:func:`coverage`). Run in a worker process per level
+    (:func:`build`).
+    """
+    features = [rings(g) for g in gridded]
+    topo = topology(features, scale)
+    files = {
+        f"okres/{okres}/{level}.json": topology_file(
+            topo, scale, rows, properties, unit_code(okres)
+        )
+        for okres, rows in okres_rows.items()
+    }
+    bboxes = {
+        okres: _rows_bbox(features, rows, scale) for okres, rows in okres_rows.items()
+    }
+    name = f"okres/*/{level}.json obce"
+    return files, coverage(name, features, topo, scale, transformer()), bboxes
 
 
 def _rows_bbox(
@@ -2667,26 +2724,65 @@ def _add_okrsky(
         assert okres is not None  # okrsky are drawn in ZBGIS obce only
         by_okres[okres].append(i)
     okres_rows = sorted(by_okres.items())
-    codes = list(dict.fromkeys(c for c, _ in units))
-    problems = []
-    for lod in SHARD_LODS:
-        geometries = levels[lod.level]
-        obce = dict(zip(codes, merge_units(units, gridded[lod.level]), strict=True))
-        problems += [
-            f"level {lod.level}: {p}"
-            for p in okrsky_problems(properties, geometries, obce, scale)
-        ]
-        drawn = [rings(g) for g in geometries]
-        topo = topology(drawn, scale)
-        for okres, rows in okres_rows:
-            files[okrsky_path(okres, str(lod.level))] = topology_file(
-                topo, scale, rows, properties, okrsok_code
-            )
-            if lod is SHARD_LODS[-1]:
-                index["okresy"][okres] = _rows_bbox(drawn, rows, scale)
+    problems: list[str] = []
+    tasks = [
+        (
+            lod.level,
+            units,
+            gridded[lod.level],
+            levels[lod.level],
+            properties,
+            okres_rows,
+            scale,
+        )
+        for lod in SHARD_LODS
+    ]
+    # The okresy's boxes are of the finest level, the last.
+    for level_files, level_problems, index["okresy"] in parallel.each(
+        _okrsky_shard_level, tasks
+    ):
+        files |= level_files
+        problems += level_problems
     if problems:
         raise GeoError("\n  ".join(["the okrsky do not tile their obce:", *problems]))
     return index
+
+
+def _okrsky_shard_level(
+    level: int,
+    units: Sequence[Unit],
+    gridded: np.ndarray,
+    geometries: np.ndarray,
+    properties: Sequence[Mapping[str, Any]],
+    okres_rows: Sequence[tuple[str, Sequence[int]]],
+    scale: int,
+) -> tuple[dict[str, dict[str, Any]], list[str], dict[str, list[float]]]:
+    """Return the okrsky files of ZBGIS *level*, its problems, the okresy's boxes.
+
+    The problems are how the okrsky fail to tile their obce
+    (:func:`okrsky_problems`). *units* and *gridded* are the level's shard
+    features, *geometries* and *properties* the okrsky's
+    (:func:`_add_okrsky`). Run in a worker process per level.
+    """
+    codes = list(dict.fromkeys(c for c, _ in units))
+    obce = dict(zip(codes, merge_units(units, gridded), strict=True))
+    problems = [
+        f"level {level}: {p}"
+        for p in okrsky_problems(properties, geometries, obce, scale)
+    ]
+    drawn = [rings(g) for g in geometries]
+    topo = topology(drawn, scale)
+    files = {
+        okrsky_path(okres, str(level)): topology_file(
+            topo, scale, rows, properties, okrsok_code
+        )
+        for okres, rows in okres_rows
+    }
+    return (
+        files,
+        problems,
+        {okres: _rows_bbox(drawn, rows, scale) for okres, rows in okres_rows},
+    )
 
 
 def _add_neighbours(
@@ -3259,22 +3355,15 @@ def _name(p: Mapping[str, Any]) -> str:
 
 
 def write(result: Result, directory: Path) -> dict[str, int]:
-    """Replace *directory* with the files of *result*; return path → bytes.
-
-    ``index.json`` is written last and lists the sizes of all other files.
-    """
+    """Replace *directory* with the files of *result*; return path → bytes."""
     with (
         progress.stage(f"writing {directory.name}/", len(result.files)) as s,
         output.replacing(directory) as tmp,
     ):
-        sizes = {
+        return {
             path: _write_json(tmp / path, content)
             for path, content in s.track(sorted(result.files.items()))
-            if path != "index.json"
         }
-        index = result.files["index.json"] | {"files": sizes}
-        sizes["index.json"] = _write_json(tmp / "index.json", index)
-    return sizes
 
 
 def _write_json(path: Path, content: object) -> int:

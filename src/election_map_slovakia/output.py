@@ -8,6 +8,7 @@ never leaves a half-written directory where the next step reads.
 from __future__ import annotations
 
 import gzip
+import hashlib
 import json
 import shutil
 from collections.abc import Generator, Sequence
@@ -16,6 +17,10 @@ from contextlib import contextmanager
 from pathlib import Path
 
 from election_map_slovakia import progress
+
+GZIP_MEMO_DIR = "gzip-sizes"
+"""Below the build directory: the gzip sizes each step measured last
+(:func:`gzip_sizes`), one file per step."""
 
 
 def to_json(content: object, *, sort_keys: bool = False) -> bytes:
@@ -55,17 +60,32 @@ def gzip_size(data: bytes) -> int:
     return len(gzip.compress(data, compresslevel=9, mtime=0))
 
 
-def gzip_sizes(blobs: Sequence[bytes]) -> list[int]:
+def gzip_sizes(blobs: Sequence[bytes], memo: Path | None = None) -> list[int]:
     """Return :func:`gzip_size` of each of *blobs*, in order.
 
     zlib releases the GIL, so threads compress the files of a whole site
-    several times faster than one.
+    several times faster than one. *memo*, a JSON file, keeps the sizes of
+    the last call by the SHA-256 of each content, so that only contents not
+    seen then are compressed: from one build to the next nearly all of the
+    site's 630 MB are the same, and gzip -9 of them took 9 s of each build.
     """
-    with (
-        progress.stage("measuring the gzip sizes", len(blobs)) as s,
-        ThreadPoolExecutor() as pool,
-    ):
-        return list(s.track(pool.map(gzip_size, blobs)))
+    known: dict[str, int] = {}
+    if memo is not None:
+        try:
+            known = json.loads(memo.read_bytes())
+        except (OSError, ValueError):
+            pass  # none yet, or broken: everything is measured again
+    with ThreadPoolExecutor() as pool:
+        digests = list(pool.map(lambda b: hashlib.sha256(b).hexdigest(), blobs))
+        missing = sorted(
+            {d: i for i, d in enumerate(digests) if d not in known}.items()
+        )
+        with progress.stage("measuring the gzip sizes", len(missing)) as s:
+            measured = s.track(pool.map(gzip_size, (blobs[i] for _, i in missing)))
+            known |= dict(zip((d for d, _ in missing), measured, strict=True))
+    if memo is not None:
+        write_file(memo, to_json({d: known[d] for d in sorted(set(digests))}))
+    return [known[d] for d in digests]
 
 
 def format_size(size: int) -> str:

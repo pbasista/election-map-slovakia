@@ -93,6 +93,19 @@ export const isCity = (code) => code === 'BA' || code === 'KE';
  * (data/index.json *index*). */
 export const hasCouncilObvody = (index, code) => (index.obce[code]?.[4] ?? 0) > 1;
 
+/* Orders contest ids the most local first, as a place's ballots and a
+ * candidate's candidacies both list them: a municipality's or city
+ * district's own, then Bratislava's or Košice's, then the kraj's; of one
+ * area the council before the mayor or president. */
+function localFirst(a, b) {
+  const rank = (id) => {
+    const { kind, area } = parseContest(id);
+    const level = isRegional(kind) ? 2 : isCity(area) ? 1 : 0;
+    return 2 * level + (kind === 'oz' || kind === 'zsk' ? 0 : 1);
+  };
+  return rank(a) - rank(b);
+}
+
 /* What municipal *area* is: 'city' (Bratislava or Košice), 'district' (one
  * of their city districts: an index row naming its city) or 'obec'. */
 function placeKind(area, index) {
@@ -280,12 +293,13 @@ function councilContests(obec, obvod, byAddress) {
   return { council: 'none', ids: [] };
 }
 
-/* Every contest a voter in obec *code* votes in, the most local first, so
- * that what heads the list changes with the place clicked: municipal
- * council, mayor, in Bratislava and Košice the city council and mayor,
- * then regional council and president. *where* narrows the council where
- * the obec has several obvody: {obvod} of an address or a point, or
- * {street, part} chosen in the search, whose houses may all be in one.
+/* Every contest a voter in obec *code* votes in, the most local first
+ * (`localFirst`), so that what heads the list changes with the place
+ * clicked: municipal council, mayor, in Bratislava and Košice the city
+ * council and mayor, then regional council and president. *where* narrows
+ * the council where the obec has several obvody: {obvod} of an address or a
+ * point, or {street, part} chosen in the search, whose houses may all be in
+ * one.
  *
  * Null for an unknown obec, else {obec, council, obvod, estimated,
  * contests, group}:
@@ -329,9 +343,10 @@ async function groupUnits(code, { street, part }) {
   return { obvody: numbers(group?.obvody), okrsky: numbers(group?.okrsky) };
 }
 
-/* A candidacy and every candidacy of the same person, each with its whole
- * contest (as in `ballots`): {candidate, candidacies: [{candidate,
- * contest}]}, `candidate` there one of `contest.candidates`. */
+/* A candidacy and every candidacy of the same person, the most local first
+ * (`localFirst`), each with its whole contest (as in `ballots`):
+ * {candidate, candidacies: [{candidate, contest}]}, `candidate` there one of
+ * `contest.candidates`. */
 export async function person(candidacyId) {
   const index = await dataIndex();
   const contestId = contestOf(candidacyId);
@@ -340,7 +355,7 @@ export async function person(candidacyId) {
   const row = entry?.candidates.find((r) => `${contestId}#${r[0]}` === candidacyId);
   if (!row) return null;
   const candidate = decodeCandidate(contestId, entry, row, translated, index, file.research);
-  const ids = file.persons[candidate.person] ?? [candidacyId];
+  const ids = [...(file.persons[candidate.person] ?? [candidacyId])].sort((a, b) => localFirst(contestOf(a), contestOf(b)));
   const candidacies = await Promise.all(
     ids.map(async (id) => {
       const whole = await contest(contestOf(id), index);
@@ -377,21 +392,18 @@ export async function findings(c) {
   );
 }
 
-/* Where a contest is voted, for showing it on the map, with what it is
- * (the key of its card.map_* string): {obec, obvod} for a municipal contest
- * (`obvod` the council obvod where the obec has several), else {area}
- * (app.js `r`): for a Bratislava or Košice city contest 'BA' the city,
- * 'BA/3' a city council obvod; for a regional one 'kraj:1' the kraj (its
- * president), 'kraj:1/3' its regional council obvod. */
+/* Where a contest is voted, for fitting the map to it (map.js `fitArea`):
+ * {obec, obvod} for a municipal contest (`obvod` the council obvod where
+ * the obec has several), else {area}: for a Bratislava or Košice city
+ * contest 'BA' the city, 'BA/3' a city council obvod; for a regional one
+ * 'kraj:1' the kraj (its president), 'kraj:1/3' its regional council
+ * obvod. */
 export function contestArea(id, index) {
   const { kind, area, obvod } = parseContest(id);
-  if (kind === 'predseda') return { area: `kraj:${area}`, what: 'kraj' };
-  if (kind === 'zsk') return { area: `kraj:${area}/${obvod}`, what: 'obvod' };
-  if (isCity(area)) {
-    return kind === 'oz' ? { area: `${area}/${obvod}`, what: 'obvod' } : { area, what: 'city' };
-  }
-  const several = kind === 'oz' && hasCouncilObvody(index, area);
-  return { obec: area, obvod: several ? obvod : null, what: several ? 'obvod' : placeKind(area, index) };
+  if (kind === 'predseda') return { area: `kraj:${area}` };
+  if (kind === 'zsk') return { area: `kraj:${area}/${obvod}` };
+  if (isCity(area)) return { area: kind === 'oz' ? `${area}/${obvod}` : area };
+  return { obec: area, obvod: kind === 'oz' && hasCouncilObvody(index, area) ? obvod : null };
 }
 
 /* ---------- candidate-name search ---------- */

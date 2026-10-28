@@ -18,10 +18,6 @@ export const Logo = () => html`
 export const SearchIcon = () =>
   icon(html`<circle cx="11" cy="11" r="6.5" /><path d="m16 16 4.5 4.5" />`);
 
-/* A place on the map: shows a contest's area there (the candidate card). */
-export const MapPinIcon = () =>
-  icon(html`<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" /><circle cx="12" cy="10" r="2.3" />`);
-
 export const GlobeIcon = () =>
   icon(html`
     <circle cx="12" cy="12" r="9" />
@@ -38,9 +34,9 @@ export const LayersIcon = () =>
  * words so that they read in every language: a municipality cut into its
  * council constituencies, a larger region around municipalities (a regional
  * constituency), a city; the polling districts, a municipality's outline
- * cut by thin lines into many small parts; and the base map's layers, a
- * river and a road that crosses it, and buildings as a map draws them, in
- * plan. */
+ * cut by thin lines into many small parts; and the base map's layers, what
+ * they draw as the map draws it: a road (a band with a dashed middle), a
+ * railway (a line with ticks across it) and a river's wave, and houses. */
 export const LAYER_ICON = {
   oz: () =>
     icon(html`
@@ -65,21 +61,21 @@ export const LAYER_ICON = {
     `),
   base: () =>
     icon(html`
-      <path d="M3 16c3-3 6 2 9-1s6-6 9-3" />
-      <path class="thin" d="M8 3.5 16 20.5" />
+      <path d="M2.5 3.5h19M2.5 9h19M2.5 14h19" />
+      <path class="thin" d="M4.5 6.25h2.5M10.75 6.25h2.5M17 6.25h2.5M5 12.25v3.5M9.67 12.25v3.5M14.33 12.25v3.5M19 12.25v3.5" />
+      <path d="M2.5 19.5c1.6-1.6 3.2-1.6 4.75 0s3.2 1.6 4.75 0 3.2-1.6 4.75 0 3.15 1.6 4.75 0" />
     `),
   buildings: () =>
-    icon(html`
-      <path d="M3.5 6.5 9 4.5l2 5.5-5.5 2zM12.5 12.5l6.5-2.3 2.4 6.8-6.5 2.3zM4 15.5l4-1.4 1.4 4-4 1.4zM14 3.5l4-1.2 1.2 3.8-4 1.2z" />
-    `),
+    icon(html`<path d="M2 11.5 6.5 7l4.5 4.5M3.25 10.5v9h6.5v-9M13 11.5 17.5 7l4.5 4.5M14.25 10.5v9h6.5v-9" />`),
 };
 
-/* The base map's button: its river and road with a building beside them. */
+/* The base map's button: what is on the ground, a house and a tree beside
+ * a road, as a picture book draws it, so that it reads as the map under
+ * the constituencies rather than as a layer of its own. */
 export const BaseMapIcon = () =>
   icon(html`
-    <path d="M3 17c3-3 6 2 9-1s6-6 9-3" />
-    <path class="thin" d="M8 3.5 16 20.5" />
-    <path d="M14.5 4.5h5v5h-5z" />
+    <path d="M3.5 9.5 7.5 5.5l4 4M4.75 8.5V13h5.5V8.5M17 3.5l-3.5 6h7zM17 9.5V13M2.5 16h19M2.5 21h19" />
+    <path class="thin" d="M4.5 18.5h2.5M10.75 18.5h2.5M17 18.5h2.5" />
   `);
 
 /* A ballot going into the box: the turnout on the map. */
@@ -127,6 +123,11 @@ export const CheckIcon = () => icon(html`<path d="m5 12.5 4.5 4.5L19 7.5" />`);
 /* Points down: what it opens unfolds below (app.css turns it up when
  * open). */
 export const ExpandIcon = () => icon(html`<path d="m6 9.5 6 6 6-6" />`);
+
+/* Down to a part further on (a notice's jump to what it is about): an
+ * arrow in a circle, unlike the chevron that unfolds a notice, and with no
+ * bar under it, which would read as a download. */
+export const JumpIcon = () => icon(html`<circle cx="12" cy="12" r="9" /><path d="M12 7.5v9m-4-4 4 4 4-4" />`);
 
 /* The buttons put away on a phone with the sheet open (app.js). */
 export const MoreIcon = () =>
@@ -195,9 +196,11 @@ export const ChairIcon = () => icon(html`<path d="M7 3v18M7 12.5h11V21M7 16.5h11
 export const WithdrawnIcon = () =>
   icon(html`<path d="M10.5 4H5.5v16h5" /><path d="M10 12h10m-3.5-3.5L20 12l-3.5 3.5" />`);
 
-/* The winner map: a folded map whose panels are in colours of their own,
- * each area by who leads there. */
-export const WinnerMapIcon = () =>
+/* The results on the map: a folded map whose panels are shaded apart, as
+ * the map colours its areas by them (who got the most votes where, or a
+ * candidate's share). A pin would read as a place, as the selected one is
+ * drawn. */
+export const MapResultsIcon = () =>
   icon(html`
     <path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z" />
     <path class="fill" d="M9 4v13.5L3 20V6.5z" />

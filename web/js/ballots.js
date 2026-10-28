@@ -3,7 +3,7 @@
  * in (live.js). data.js `ballots` decides which contests apply. */
 
 import { html, useEffect, useLayoutEffect, useRef, useState } from '../vendor/preact-htm.module.js';
-import { ballots, contestArea, dataIndex, displayName, inOffice, officeOf, useLoaded } from './data.js';
+import { ballots, displayName, inOffice, officeOf, useLoaded } from './data.js';
 import { formatDate, formatList, formatNumber, formatPercent, researchCategories, t } from './i18n.js';
 import {
   ChairIcon,
@@ -22,7 +22,7 @@ import {
   WithdrawnIcon,
 } from './icons.js';
 import { decodeResults, isSingle, NOT_COUNTED, placeResults, resultsVars, SCOPES, useLive } from './live.js';
-import { ContestMapButton, MapButton, WinnerMapButton } from './mapmode.js';
+import { MapButton, TurnoutMapButton, WinnerMapButton } from './mapmode.js';
 import { Notice } from './pane.js';
 import { formatPicks, parsePicks, togglePick } from './picks.js';
 
@@ -351,8 +351,9 @@ function Votes({ candidate: c }) {
  *   else on the row), followed by the parties and, apart from those, the
  *   marks: what is known about the candidate. Party tags and marks are
  *   buttons of their own.
- * - Once counted, a pin at the row's end, like the one in the contest's
- *   header, shows the candidate's votes on the map (mapmode.js).
+ * - Once counted, a button at the row's end, with the folded map of the
+ *   winner map's in the header, shows the candidate's votes on the map
+ *   (mapmode.js `MapButton`).
  * *actions*: see useRowActions; the row of the party pointed at is
  * highlighted there. *muted*: the filter fades the row. *seat* ({place,
  * seats, end}, `seatPlaces`): on a partial count of a council, a place
@@ -455,8 +456,8 @@ function contestKind(id) {
  *   both numbers carry a warning. Circling more is still allowed: the
  *   visitor may circle a shortlist to choose from later.
  * Once the 2026 count reaches the contest, a line says how far it has got
- * (ResultsLine). */
-function ContestHead({ contest, unmuted, picked, results, pending }) {
+ * (ResultsLine). *id*: the element's, which the header's button refers to. */
+function ContestFacts({ id, contest, unmuted, picked, results, pending }) {
   const n = contest.candidates.length;
   const single = isSingle(contest.id);
   const seats = contest.seats ?? results?.reportedSeats ?? null;
@@ -474,17 +475,19 @@ function ContestHead({ contest, unmuted, picked, results, pending }) {
   const limit = single ? 1 : (seats ?? contest.seats2022);
   const over = limit !== null && picked > limit;
   const warning = over ? t('contest.too_many', { picked: formatNumber(picked), n: formatNumber(limit) }) : null;
-  const flag = (cls, text) =>
-    over ? html`<span class=${`${cls} over`} title=${warning}><${WarningIcon} />${text}</span>` : text;
-  return html`
-    <span class="contest-title">${contest.label}</span>
+  // Each fact a piece of its own, so that a line breaks between them only.
+  const fact = (cls, text) =>
+    over && cls
+      ? html`<span class=${`fact ${cls} over`} title=${warning}><${WarningIcon} />${text}</span>`
+      : html`<span class="fact">${text}</span>`;
+  return html`<span class="contest-text" id=${id}>
     <span class="contest-meta">
-      ${elected ? html`${flag('seats', elected)} · ` : null}${candidates}
-      ${picked ? html` · ${flag('picked', t('contest.picked', { n: formatNumber(picked) }))}` : null}
+      ${elected ? html`${fact('seats', elected)} · ` : null}${fact(null, candidates)}
+      ${picked ? html` · ${fact('picked', t('contest.picked', { n: formatNumber(picked) }))}` : null}
     </span>
     ${over ? html`<span class="sr-only">${warning}</span>` : null}
     ${results || pending ? html`<${ResultsLine} results=${results} single=${single} />` : null}
-  `;
+  </span>`;
 }
 
 /* How far the 2026 count of a contest has got, in the results' green:
@@ -540,24 +543,24 @@ function pastElection(past) {
  * green (*live*) over the same track, with the last election's as a grey
  * tick and its share and year under it, so that the two compare at a
  * glance. Each is {share, year, label}, the label (the numbers) in the
- * tooltip. It sits inside the header, so that a press on it still opens
- * or closes the contest, and takes no height of its own. */
-function Turnout({ past, live }) {
+ * tooltip. Once counted, the meter is the button that puts *contest*'s
+ * 2026 turnout on the map (mapmode.js `TurnoutMapButton`). */
+function Turnout({ contest, past, live }) {
   const main = live ?? past;
   const tick = live && past;
   const label = [past?.label, live?.label].filter(Boolean).join(' ');
-  return html`<span class=${live ? 'gauge live' : 'gauge'} role="img" aria-label=${label} title=${label}>
-    <span class="gauge-line" aria-hidden="true"><strong>${formatPercent(main.share, 0)}</strong>${main.year}</span>
-    <span class="gauge-bar" aria-hidden="true">
+  const lines = html`
+    <span class="gauge-line"><strong>${formatPercent(main.share, 0)}</strong>${main.year}</span>
+    <span class="gauge-bar">
       <span class="gauge-fill" style=${{ width: width(main.share) }}></span>
       ${tick ? html`<span class="gauge-tick" style=${{ left: width(past.share) }}></span>` : null}
     </span>
-    ${
-      tick
-        ? html`<span class="gauge-line past" aria-hidden="true"><span>${formatPercent(past.share, 0)}</span>${past.year}</span>`
-        : null
-    }
-  </span>`;
+    ${tick ? html`<span class="gauge-line past"><span>${formatPercent(past.share, 0)}</span>${past.year}</span>` : null}
+  `;
+  if (!live) return html`<span class="gauge" role="img" aria-label=${label} title=${label}>${lines}</span>`;
+  return html`<${TurnoutMapButton} contest=${contest} figures=${label}>
+    <span class="gauge live" aria-hidden="true">${lines}</span>
+  <//>`;
 }
 
 /* The turnout of the last election in a contest's area, for whoever
@@ -741,7 +744,10 @@ function nightNote(contest, r) {
 /* A contest: a header that opens and closes the list of its candidates.
  * Open, the header stands out from the candidates under it; closed, it is
  * muted, with a bar at its side where it opens to more candidates. Its
- * tooltip says what a press does.
+ * tooltip says what a press does. The contest's name is the button and
+ * takes the header's whole width, as a long name broken over lines would
+ * make the list ragged; a press anywhere else in the header but its other
+ * buttons does the same, as on a candidate's row.
  *
  * Open or closed, it lists first *current* (the candidate of a card,
  * highlighted), then the candidates circled while it is shown, so that a
@@ -751,12 +757,11 @@ function nightNote(contest, r) {
  * their places among the others.
  *
  * *initiallyOpen*; `onOpen(open)` when the visitor opens or closes it.
- * *map* ({label, onClick}), where the contest has a place on the map,
- * makes a pin at the header's end that shows it there, and once counted
- * its 2026 turnout (mapmode.js `ContestMapButton`); before the pin, once
- * the candidates' votes are in, a button shows who got the most votes
- * where (`WinnerMapButton`). The header shows the turnout of the last
- * election there and, once counted, of 2026 (Turnout).
+ * Under the name, beside the facts (`ContestFacts`), the header ends in
+ * the turnout of the last election there (Turnout); once counted, that of
+ * 2026, which is then the button that puts it on the map, and before it,
+ * once the candidates' votes are in, a button that shows who got the most
+ * votes where (mapmode.js `WinnerMapButton`).
  *
  * *place* ({obec, name, obvod, okrsok}: the obec or city district of the
  * ballots, named, and its council obvod and okrsok where known): once
@@ -775,7 +780,6 @@ export function Contest({
   onCandidate,
   filter,
   actions,
-  map,
   place = null,
   level = 'all',
   onLevel,
@@ -806,16 +810,7 @@ export function Contest({
   // Who got the most votes where, once the candidates' votes are in: on
   // election night a municipality's give the winners only.
   const winnerMap = Boolean(whole?.valid) && whole.status !== 'winner' && [...whole.byNumber.values()].some((r) => r.votes);
-  const head = html`<span class="contest-text">
-      <${ContestHead}
-        contest=${contest}
-        unmuted=${unmuted + (current ? 1 : 0)}
-        picked=${picked}
-        results=${whole}
-        pending=${entry === NOT_COUNTED}
-      />
-    </span>
-    ${past || now ? html`<${Turnout} past=${past} live=${now} />` : null}`;
+  const facts = useOwnId('km-facts');
   const list = useOwnId('km-list');
   const toggle = () => {
     setOpen(!open);
@@ -844,23 +839,44 @@ export function Contest({
   };
   return html`
     <section class=${open || !opens ? 'contest open' : 'contest'}>
-      <div class=${opens ? 'contest-bar opens' : 'contest-bar'}>
+      <div
+        class=${opens ? 'contest-bar opens' : 'contest-bar'}
+        title=${opens ? tooltip : undefined}
+        onClick=${(e) => {
+          // The header's own buttons do what they say; the rest opens or closes it.
+          if (opens && !e.target.closest('button')) toggle();
+        }}
+      >
         ${
           opens
             ? html`<button
                 type="button"
                 class="contest-head"
-                title=${tooltip}
                 aria-expanded=${open ? 'true' : 'false'}
                 aria-controls=${list}
+                aria-describedby=${facts}
                 onClick=${toggle}
               >
-                ${head}
+                ${contest.label}
               </button>`
-            : html`<div class="contest-head">${head}</div>`
+            : html`<span class="contest-head">${contest.label}</span>`
         }
-        ${map && winnerMap ? html`<${WinnerMapButton} contest=${contest} />` : null}
-        ${map ? html`<${ContestMapButton} contest=${contest} map=${map} counted=${Boolean(now)} />` : null}
+        <${ContestFacts}
+          id=${facts}
+          contest=${contest}
+          unmuted=${unmuted + (current ? 1 : 0)}
+          picked=${picked}
+          results=${whole}
+          pending=${entry === NOT_COUNTED}
+        />
+        ${
+          past || now
+            ? html`<span class="contest-tools">
+                ${winnerMap ? html`<${WinnerMapButton} contest=${contest} />` : null}
+                <${Turnout} contest=${contest} past=${past} live=${now} />
+              </span>`
+            : null
+        }
       </div>
       ${units.length ? html`<${ScopeChoice} units=${units} shown=${unit?.scope ?? 'all'} place=${place} onLevel=${onLevel} />` : null}
       ${open || !contest.candidates.length ? html`<${Holder} contest=${contest} />` : null}
@@ -1041,21 +1057,26 @@ export function useRowActions(section, candidates, filter, onFilter, picks, onPi
 
 /* The official documents that set a council's obvody: their links stay
  * with the ballots rather than in About's list of every municipality. One
- * line each, the full title in the tooltip. */
+ * line after the contests, so that the next contest follows close: a
+ * document's title, cut short, or several documents numbered; each one's
+ * full title in its tooltip and for screen readers. */
 function Sources({ sources }) {
-  return html`
-    <div class="sources">
-      <p>${t('contest.sources')}</p>
-      <ul>
-        ${sources.map(([title, url]) => {
-          const text = title || t('contest.source_document');
-          return html`<li key=${url}>
-            <a href=${url} title=${text} rel="noopener noreferrer" target="_blank">${text}</a>
-          </li>`;
-        })}
-      </ul>
-    </div>
-  `;
+  const numbered = sources.length > 1;
+  return html`<p class=${numbered ? 'sources numbered' : 'sources'}>
+    ${t('contest.sources')}
+    ${sources.map(
+      ([title, url], i) => html`<a
+        key=${url}
+        href=${url}
+        title=${title}
+        aria-label=${numbered ? title : undefined}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        ${numbered ? formatNumber(i + 1) : title}
+      </a>`,
+    )}
+  </p>`;
 }
 
 /* A filter group's mode as one button that switches it: an open eye while
@@ -1200,9 +1221,6 @@ let keptLevel = 'all';
  *   focus.
  * - filter (see NO_FILTER) and `onFilter(next)`: the candidate filter;
  *   picks and `onPicks(next)`: the circled candidates (picks.js).
- * - onArea(target): fits the map to a contest's area (data.js
- *   `contestArea`), the pin in its header, leaving the place and these
- *   ballots as they are.
  * The counted contests' results all show one scope (`Contest` *level*):
  * the whole contest, or the place's obec, council obvod or okrsok. */
 export function Ballots({
@@ -1218,14 +1236,12 @@ export function Ballots({
   onFilter,
   picks,
   onPicks,
-  onArea,
 }) {
   const { obvod = null, street = null, part = null } = scope;
   const [result, failed] = useLoaded(
     () => ballots(code, { obvod, street, part }),
     [code, obvod, street, part],
   );
-  const [index] = useLoaded(dataIndex, []);
   const [level, setLevel] = useState(keptLevel);
   const onLevel = (next) => {
     keptLevel = next;
@@ -1275,22 +1291,27 @@ export function Ballots({
     t('place.kraj', { name: obec.krajName }),
   ].filter(Boolean);
 
-  // Where the obvody are a guess, that matters more than how the obvod was found.
+  // Each a one-line summary and the whole note. Where the obvody are a
+  // guess, that matters more than how the obvod was found.
   const estimate = estimated ? t('council.estimated', { name: obec.name }) : null;
+  const estimateSummary = t('council.summary_estimated');
   const notes = {
-    pending: () => t('council.pending', { n: obec.councils, name: obec.name }),
-    choose: () => [t('council.choose', { n: obec.councils, name: obec.name }), estimate].filter(Boolean).join(' '),
-    address: () => estimate ?? (approximate ? t('council.approximate') : null),
+    pending: () => [t('council.summary_pending', { n: obec.councils }), t('council.pending', { n: obec.councils, name: obec.name })],
+    choose: () => [
+      estimate ? estimateSummary : t('council.summary_choose', { n: obec.councils }),
+      [t('council.choose', { n: obec.councils, name: obec.name }), estimate].filter(Boolean).join(' '),
+    ],
+    address: () =>
+      estimate
+        ? [estimateSummary, estimate]
+        : approximate
+          ? [t('council.summary_approximate'), t('council.approximate')]
+          : null,
   };
   const note = notes[council]?.();
-  const councilNote = note ? html`<${Notice}>${note}<//>` : null;
+  const councilNote = note ? html`<${Notice} summary=${note[0]}>${note[1]}<//>` : null;
   const place = { obec: obec.code, name: obec.name, obvod: placeObvod, okrsok: placeOkrsok };
 
-  const pin = (c) => {
-    if (!index || !onArea) return null;
-    const target = contestArea(c.id, index);
-    return { label: t(`card.map_${target.what}`), onClick: () => onArea(target) };
-  };
   // The sources of a council's obvody follow the last of its contests.
   const withSources = (list, c, i) => {
     const last = i + 1 === list.length || officeOf(list[i + 1].id) !== officeOf(c.id);
@@ -1302,7 +1323,6 @@ export function Ballots({
         onCandidate=${onCandidate}
         filter=${filter}
         actions=${actions}
-        map=${pin(c)}
         place=${place}
         level=${level}
         onLevel=${onLevel}

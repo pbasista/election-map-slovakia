@@ -57,10 +57,11 @@ geometry   at each level of detail the lines drawn are the borders of its
            each once, leave no gap at Slovakia's border at any level
            (``geo.verify_neighbours``) and have names in every language
 base       the base map has the shards' levels of detail and okresy
-           (``base/index.json`` against ``geo/index.json``), its index
-           lists exactly the files the app may request, with their sizes,
-           and each file has only the line classes of its level and water
-           areas whose rings are exactly the arcs coded as such, each
+           (``base/index.json`` against ``geo/index.json``), ``base/``
+           holds no file its index does not let the app request (``links``
+           reports those missing), and each file has only the line classes
+           of its level and water areas whose rings are exactly the arcs
+           coded as such, each
            buildings file its scale, as many vertices as its rings count,
            rings of three or more with an area and an outer ring first
            (``basemap.verify``)
@@ -453,18 +454,16 @@ def check_basemap(
         result.problems.append(f"{_BASE_INDEX}: bands differ from the geo shards'")
     if base_index["okresy"] != sorted(geo_index["okresy"]):
         result.problems.append(f"{_BASE_INDEX}: okresy differ from the geo shards'")
-    listed = base_index["files"]
-    wanted = basemap.requested(base_index)
-    if sorted(listed) != sorted(wanted):
-        result.problems.append(
-            f"{_BASE_INDEX}: lists {len(listed)} files, not the {len(wanted)} the app"
-            " may request"
-        )
     prefix = f"{basemap.OUTPUT_DIR}/"
-    for rel, size in sorted(listed.items()):
-        if sizes.get(prefix + rel) != size:
-            result.problems.append(f"{prefix}{rel}: not {size:,} bytes as listed")
-            continue
+    present = {rel.removeprefix(prefix) for rel in sizes if rel.startswith(prefix)}
+    present.discard(basemap.INDEX_FILE)
+    wanted = set(basemap.requested(base_index))
+    if extra := sorted(present - wanted):
+        result.problems.append(
+            f"{_BASE_INDEX}: {len(extra)} files in {prefix} the app never requests,"
+            f" such as {prefix}{extra[0]}"
+        )
+    for rel in sorted(present & wanted):
         content = _load(dist, prefix + rel)
         if content is None:
             continue  # `json` reports it
@@ -895,10 +894,12 @@ def run(
     okrsky = geo_index["okrsky"] if geo_index is not None else {"bands": []}
     bands = [band["lod"] for band in okrsky["bands"]]
     cpus = os.cpu_count() or 1
-    # The slowest first, so that none of them starts last: the finer the
-    # level of detail, the later in the index and the slower. The files to
-    # parse come last, in parts that keep every worker busy to the end.
+    # The slowest first, so that none of them starts last: the base map (its
+    # thousands of files), then the okrsky and levels of detail, the finer
+    # the later in the index and the slower. The files to parse come last,
+    # in parts that keep every worker busy to the end.
     tasks = {
+        "base": (check_basemap, dist, sizes, base_index, geo_index),
         **{
             f"geo/{geo.okrsky_path('*', lod)}": (_verify_okrsky, dist, lod, okrsky)
             for lod in reversed(bands)
@@ -911,7 +912,6 @@ def run(
         "shards": (_geo, dist, geo_index),
         "research": (_research_requests, dist, ordered),
         "results": (check_results, dist),
-        "base": (check_basemap, dist, sizes, base_index, geo_index),
         **{
             f"json {i}": (check_json, dist, part)
             for i, part in enumerate(

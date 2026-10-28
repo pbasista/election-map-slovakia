@@ -4,4 +4,4 @@ The package is the preprocessing pipeline; its output is the static site in
 ``dist/``.
 """
 
-__version__ = "0.6.0"
+__version__ = "0.7.0"

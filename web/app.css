@@ -78,10 +78,12 @@
   --map-neighbour-halo: rgb(236 238 238 / 0.92);
   /* The base map (waters, buildings, roads, railways): opaque colours, drawn
      at --map-base-alpha over the land and the results' fills, so it stays
-     faint and the fills read the same under it. The roads warm, apart from
-     the cool grey borders: a wide one a light -fill in a casing of its
-     colour, the major ones in yellow and orange tints as on the web maps
-     people know; the railways dark, with ticks (draw.js `BASE_RAILS`). */
+     faint and the fills read the same under it; the waters, though, are
+     opaque over the fills, which stop at the shore (draw.js `drawBase`).
+     The roads warm, apart from the cool grey borders: a wide one a light
+     -fill in a casing of its colour, the major ones in yellow and orange
+     tints as on the web maps people know; the railways dark, with ticks
+     (draw.js `BASE_RAILS`). */
   --map-base-water: #8fb8e0;
   --map-base-waterway: #6fa3d6;
   --map-base-building: #d3cabd;
@@ -294,6 +296,99 @@ h3 {
   color: var(--warning);
   /* Centred on the first line of text. */
   margin-top: calc((1lh - 20px) / 2);
+}
+
+/* A notice cut to its one-line summary (pane.js `Notice` *summary*): the
+   whole text in the tooltip, and unfolded under it on a press. */
+.notice.short {
+  display: block;
+  padding: 7px 10px 7px 12px;
+}
+
+.notice.short summary {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  list-style: none;
+  cursor: pointer;
+}
+
+.notice.short summary::-webkit-details-marker {
+  display: none;
+}
+
+.notice.short summary .ico {
+  margin-top: 0;
+}
+
+.notice-summary {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.notice.short summary:hover .notice-summary {
+  color: var(--text);
+}
+
+.notice.short summary .ico:last-child {
+  width: 16px;
+  height: 16px;
+  color: var(--text-faint);
+  transition: transform 0.12s ease;
+}
+
+.notice.short[open] summary .ico:last-child {
+  transform: rotate(180deg);
+}
+
+.notice.short p {
+  margin: 6px 0 2px 30px;
+}
+
+/* A notice with a jump (pane.js `Notice` *jump*): its button on the
+   summary's line, left of the chevron, and the summary kept clear of it.
+   The wrapper has the box's margins, so that the button sits in the box. */
+.notice-jump {
+  position: relative;
+  margin: 0 10px 8px;
+}
+
+.notice-jump > .notice {
+  margin: 0;
+}
+
+.notice-jump .notice-summary {
+  margin-right: 30px;
+}
+
+.notice-jump-button {
+  position: absolute;
+  /* Centred on the 20 px line of the summary, 1 + 7 px below the top. */
+  top: 4px;
+  /* 6 px left of the chevron, which is 1 + 10 px from the right edge. */
+  right: 33px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.notice-jump-button:hover {
+  background: var(--surface-2);
+}
+
+.notice-jump-button .ico {
+  width: 18px;
+  height: 18px;
 }
 
 .noscript {
@@ -1438,23 +1533,36 @@ h3 {
   background: var(--surface);
 }
 
-/* A contest's header: a button and, where the contest has a place on the
-   map, the pin that shows it there, side by side in one row (.contest-bar).
-   No arrow: open, the header stands out from the candidates under it,
-   tinted; closed, it is muted, and a grey bar at its side says that it
-   opens to more candidates. The whole row lights up under the pointer, the
-   pin a shade of its own. */
-.contest-head {
-  display: flex;
-  flex: 1;
+/* A contest's header (.contest-bar): its name across the whole width, the
+   button that opens and closes it; under it the facts, and at their end
+   the turnout and the buttons that put the results on the map
+   (.contest-tools), in one column down the list. No arrow: open, the
+   header stands out from the candidates under it, tinted; closed, it is
+   muted, and a grey bar at its side says that it opens to more
+   candidates. The whole header lights up under the pointer, and a press
+   anywhere in it but its other buttons opens or closes it (ballots.js
+   `Contest`). */
+.contest-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 10px;
-  min-width: 0;
-  padding: 10px 12px;
+  gap: 2px 10px;
+  padding: 9px 10px 9px 12px;
+  border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+}
+
+.contest-bar.opens {
+  cursor: pointer;
+}
+
+.contest-head {
+  grid-column: 1 / -1;
+  padding: 0;
   border: 0;
   background: none;
   color: inherit;
   font: inherit;
+  font-weight: 600;
   text-align: start;
 }
 
@@ -1462,10 +1570,10 @@ button.contest-head {
   cursor: pointer;
 }
 
-.contest-bar {
+.contest-tools {
   display: flex;
-  align-items: center;
-  border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+  align-items: stretch;
+  gap: 6px;
 }
 
 /* Closed with no candidate shown under it, the header is the whole box
@@ -1479,7 +1587,8 @@ button.contest-head {
 }
 
 .contest.open > .contest-bar,
-.contest-bar.opens:hover {
+.contest-bar.opens:hover,
+.contest-bar:has(> .contest-head:focus-visible) {
   background: var(--surface-2);
 }
 
@@ -1488,14 +1597,7 @@ button.contest-head {
 }
 
 .contest-text {
-  flex: 1;
   min-width: 0;
-}
-
-.contest-title {
-  font-weight: 600;
-  display: block;
-  margin: 0;
 }
 
 .contest-meta {
@@ -1503,7 +1605,13 @@ button.contest-head {
   color: var(--text-faint);
 }
 
-/* More circled than are elected (ballots.js `ContestHead`): the number of
+/* A line of the facts breaks between them, not within one (ballots.js
+   `ContestFacts`). */
+.contest-meta .fact {
+  white-space: nowrap;
+}
+
+/* More circled than are elected (ballots.js `ContestFacts`): the number of
    seats and of the circled, in the warning colour with its sign. */
 .contest-meta .over {
   color: var(--warning);
@@ -1518,65 +1626,72 @@ button.contest-head {
   stroke-width: 2.25;
 }
 
-.contest:not(.open) > .contest-bar .contest-title {
+.contest:not(.open) > .contest-bar .contest-head {
   color: var(--text-dim);
   font-weight: 500;
 }
 
-/* The round buttons that put something on the map (mapmode.js): a
-   contest's pin, the winner map's and a candidate's votes'. */
-.contest-map,
-.winner-map,
+/* The buttons of a contest's header that put its results on the map
+   (mapmode.js): who got the most votes where, and once counted its 2026
+   turnout, the meter in the button beside the ballot box of the turnout's
+   menu, in the colour the area is drawn in on the map (--tone: a
+   municipality's red, a council obvod's orange, the cities' green, a
+   regional contest's violet). Outlined, so that they read as buttons
+   beside the facts; while the map shows theirs, tinted and edged in their
+   colour. */
+.map-chip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 36px;
+  padding: 3px 7px 3px 5px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--chip);
+  font: inherit;
+  cursor: pointer;
+}
+
+.map-chip:hover {
+  border-color: color-mix(in srgb, var(--chip) 45%, var(--line));
+  background: color-mix(in srgb, var(--chip) 8%, var(--surface));
+}
+
+.map-chip[aria-pressed="true"] {
+  border-color: var(--chip);
+  background: color-mix(in srgb, var(--chip) 16%, var(--surface));
+  box-shadow: inset 0 0 0 1px var(--chip);
+}
+
+.winner-map {
+  --chip: var(--result);
+  justify-content: center;
+  width: 36px;
+  padding: 0;
+}
+
+.turnout-map {
+  --chip: var(--tone, var(--primary));
+}
+
+/* At the end of a counted candidate's row, the button that shows their
+   votes (`MapButton`), with the winner map's icon: round and small, in the
+   results' green, filled while the map shows them. */
 .votes-map {
   display: grid;
   flex: none;
   place-items: center;
-  width: 34px;
-  height: 34px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: none;
-  cursor: pointer;
-}
-
-/* A contest's map pin (`ContestMapButton`), in the colour its area is drawn
-   in on the map (--tone: a municipality's red, a council obvod's orange,
-   the cities' green, a regional contest's violet), so that it reads as the
-   area it shows. */
-.contest-map {
-  margin: 0 6px 0 -4px;
-  color: var(--tone, var(--primary));
-}
-
-.contest-map:hover {
-  background: color-mix(in srgb, var(--tone, var(--primary)) 14%, transparent);
-}
-
-/* Showing the contest's 2026 turnout on the map: filled in that colour, as
-   the votes' pin is in the results' green while it shows them. */
-.contest-map[aria-pressed="true"] {
-  background: var(--tone);
-  color: var(--surface);
-}
-
-/* Who leads where (`WinnerMapButton`), before the pin, and the smaller pin
-   at the end of a counted candidate's row that shows their votes
-   (`MapButton`): in the results' green, filled while the map shows them. */
-.winner-map,
-.votes-map {
-  color: var(--result);
-}
-
-.winner-map {
-  margin: 0 -2px 0 -4px;
-}
-
-.votes-map {
   align-self: center;
   width: 24px;
   height: 24px;
   margin: 0 -1px 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--result);
+  cursor: pointer;
 }
 
 .votes-map .ico {
@@ -1584,12 +1699,10 @@ button.contest-head {
   height: 16px;
 }
 
-.winner-map:hover,
 .votes-map:hover {
   background: color-mix(in srgb, var(--result) 14%, transparent);
 }
 
-.winner-map[aria-pressed="true"],
 .votes-map[aria-pressed="true"] {
   background: var(--result);
   color: var(--surface);
@@ -1597,9 +1710,10 @@ button.contest-head {
 
 /* The turnout in the header (ballots.js `Turnout`): a short track like the
    votes' bars, the share above it at its start and the year at its end, at
-   the end of the header so that it adds no height. Grey for the last
-   election; in the results' green for 2026, the last election then a grey
-   tick on the track, its figures under it led by the same tick. */
+   the end of the facts under the name. Grey for the last election; in the
+   results' green for 2026, the last election then a grey tick on the
+   track, its figures under it led by the same tick; the 2026 one is in the
+   button that puts it on the map (.turnout-map). */
 .gauge {
   display: grid;
   flex: none;
@@ -2514,24 +2628,25 @@ button.active.excluded {
   line-height: 1.25;
 }
 
-/* After the contests of a council: where its obvody come from. */
+/* After the contests of a council: where its obvody come from, on one
+   line (ballots.js `Sources`): one document's title cut short, or several
+   documents numbered. */
 .sources {
   margin: -2px 14px 10px;
-  font-size: var(--fs-sm);
-  color: var(--text-faint);
-}
-
-.sources p,
-.sources ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.sources li {
   overflow: hidden;
+  color: var(--text-faint);
+  font-size: var(--fs-sm);
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.sources a {
+  margin-left: 0.35em;
+}
+
+.sources.numbered a {
+  padding: 0 0.3em;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ---------- candidate card ---------- */
@@ -2556,34 +2671,23 @@ button.active.excluded {
   grid-column: 1 / -1;
 }
 
-/* The card's word on controversies, under the name: in the red of their
-   mark, with a jump to them. */
-.affairs-alert {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin: 10px 10px 4px;
-  padding: 10px 12px;
-  background: var(--danger-deep);
-  border: 1px solid var(--danger);
-  border-left-width: 4px;
-  border-radius: var(--radius-sm);
-  font-size: var(--fs-sm);
-  line-height: 1.4;
+/* The card's word on controversies, under the name: a notice (pane.js
+   `Notice`) in the red of their mark, its summary in bold. */
+.notice-jump.danger {
+  margin-top: 10px;
 }
 
-.affairs-alert .ico {
+.notice.danger {
+  background: var(--danger-deep);
+  border-color: var(--danger);
+}
+
+.notice.danger summary .ico:first-child {
   color: var(--danger);
 }
 
-.affairs-alert p {
-  flex: 1;
-  margin: 0;
-  font-weight: 650;
-}
-
-.affairs-alert .link {
-  flex: none;
+.notice.danger .notice-summary {
+  color: var(--text);
   font-weight: 650;
 }
 

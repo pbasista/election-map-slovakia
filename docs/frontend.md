@@ -100,17 +100,42 @@ and Favourites, zoom, and help
 
 ## Ballots
 
+### Contests and notices
+
+A place's ballots and a candidate's candidacies list contests
+in the same order, the most local first
+(data.js `localFirst`):
+the municipality's or city district's,
+then Bratislava's or Košice's, then the self-governing region's;
+of one area the council before the mayor or president.
+
+A note above the council contests
+(that all its constituencies are listed,
+that their boundaries are approximate or our estimate)
+is one line of summary, cut short where too long;
+its whole text is the tooltip and unfolds under it on a press
+(pane.js `Notice` *summary*).
+The documents that set a council's constituencies
+follow its contests on one line:
+one document's title cut short, or several numbered,
+each title in its tooltip (`Sources` in `js/ballots.js`).
+
 ### Contest header
 
 A contest's header shows whether it is open:
 tinted when open;
 muted, with a grey bar at its side for the candidates it hides, when closed.
 Its tooltip says what a press does.
+The contest's name, the button that opens and closes it,
+takes a line of its own across the header,
+so that long names do not break over lines unevenly;
+a press anywhere else in the header but its other buttons does the same.
 
-At its end a short horizontal meter (`Turnout` in `js/ballots.js`)
+Under the name, the seats, the candidates and the count of the votes,
+and beside them, in one column down the list,
+a short horizontal meter (`Turnout` in `js/ballots.js`)
 gives the turnout of the last election in the contest's area,
-the share and the year above it,
-without making the header taller; the tooltip gives the numbers.
+the share and the year above it; the tooltip gives the numbers.
 The last election is 2022, or a municipal by-election since:
 
 - a council's, where it now has several constituencies:
@@ -122,7 +147,9 @@ The last election is 2022, or a municipal by-election since:
 
 Once the contest is counted,
 the meter shows the 2026 turnout in the results' green,
-the last election's as a grey tick on the track with its figures under it.
+the last election's as a grey tick on the track with its figures under it,
+and is the button that puts the turnout on the map
+(see [Results on the map from the ballots](#results-on-the-map-from-the-ballots)).
 
 ### Results on the ballots
 
@@ -204,36 +231,34 @@ Its header opens it to the others,
 whom the filter applies to
 (never to the candidate, who stays first).
 
-Its pin, in the colour the area is drawn in on the map,
-shows the area on the map while the card stays open:
-the municipality, city district, constituency or,
-in Bratislava and Košice, the city or its council constituency,
-or for a regional contest
-the self-governing region or its regional constituency.
-
 Under each counted contest the card shows
 where the candidate's votes came from:
 the polling districts (else municipalities) with the most of them
 and those with the highest share
 (of the units with at least 30 valid ballots, where two or more have as many),
-and a pin that shows the votes on the map.
+and a button that shows the votes on the map.
 
-### Contest pins
+### Results on the map from the ballots
 
-On the ballots of a place and in Favourites,
-the same pin fits the map to the contest's area
-and highlights it in its colour beside the place.
-The place stays selected, its ballots and the list as they are,
-until another place is
-(`fitArea` in `js/map.js`, draw.js `showArea`).
+Every counted contest's header,
+on the ballots of a place, on a candidate card and in Favourites,
+has two outlined buttons that put its results on the map,
+each pressed again to take them off
+and tinted, edged in its colour, while the map shows them
+(`js/mapmode.js`):
 
-Once the contest is counted,
-the pin's next press colours that area by the contest's 2026 turnout,
-in the colour the area is drawn in
-(the pin filled with it while it does),
-and another takes it off (`ContestMapButton` in `js/mapmode.js`).
-While the map shows another of the contest's results,
-its first press does so at once.
+- `WinnerMapButton`, once the candidates' votes are in:
+  who got the most votes where,
+  with the folded map of results (icons.js `MapResultsIcon`),
+  in the results' green;
+- `TurnoutMapButton`, the turnout meter itself
+  beside the ballot box of the turnout menu (icons.js `TurnoutIcon`):
+  the contest's 2026 turnout over its area,
+  in the colour the area is drawn in.
+
+A counted candidate's row ends in a small round button
+with the same folded map, which shows the candidate's votes;
+a pin stands for a place only (the selected one on the map).
 
 The map is fitted to a contest's area
 when the results shown become that contest's
@@ -242,6 +267,7 @@ not when they switch between its candidates, its turnout
 and who got the most votes,
 nor as zooming changes their units:
 the view the visitor zoomed to stays.
+The place stays selected, its ballots and the list as they are.
 
 ## Favourites
 
@@ -258,7 +284,7 @@ It opens only with its button:
 - **From 960 px wide**, as a pane of its own beside the first,
   as the search results are, as wide as the page allows.
   A candidate chosen opens in the first pane,
-  and a map click or a contest's pin keeps the list open,
+  and a map click or a contest's results put on the map keep the list open,
   but a place found by the search closes it, as it would hide that place.
 - **Narrower**, it is what the pane shows,
   as wide as the page allows on a tablet;
@@ -281,6 +307,12 @@ and swaps in each finished drawing.
   and kept as typed arrays in a cache bounded by size (`js/topo.js`),
   with labels and, from zoom 16, house numbers,
   all in the theme's colours.
+  Each vertex has the zoom level from which it is drawn
+  (Douglas–Peucker per arc, at 0.3 px):
+  a file serves several levels,
+  and at the lower ones its vertices crowd closer than a pixel,
+  so a level's paths leave those out
+  (a drawing of the whole country takes a quarter less time, on a phone half).
 - **Neighbours.**
   The countries around Slovakia are drawn below it, duller,
   with dashed borders and their names where most of each shows.
@@ -289,9 +321,13 @@ and swaps in each finished drawing.
 - **Borders.**
   Areas are only filled;
   every border is stroked once from the topology,
-  in the style of the highest boundary it is part of.
+  in the style of the highest boundary it is part of:
+  an obec or okres border under a regional or city obvod border
+  drawn too is left to that wider stroke.
   A dashed one is cut into its dashes only where the drawing shows it
-  (the canvas would dash it whole, far beyond the view when zoomed in).
+  (the canvas would dash it whole, far beyond the view when zoomed in),
+  each dash with square ends, as long as round caps would make it:
+  thousands of round caps cost twice as much.
 - **Zoom** is continuous (`js/zoom.js`):
   wheel, trackpad, pinch, buttons and double-click
   scale the canvas every frame.
@@ -300,6 +336,8 @@ and swaps in each finished drawing.
   whenever the last drawing no longer covers it,
   and sharp once the gesture settles;
   what has not loaded yet is added as it comes.
+  A view asked for again unchanged (the end of a pan after its last move,
+  a resize told twice) is not drawn again (`js/map.js` `request`).
 
 ### Base map
 
@@ -337,6 +375,13 @@ and the buildings apart ("Buildings").
   (Drawn opaque on a canvas of its own and laid on at the alpha,
   a road's casing would not show faintly under its fill,
   but that cost 2.5 ms of a drawing of 30 and hardly shows.)
+  While the map shows results, the waters are opaque instead,
+  in the colour they have on the bare land,
+  so that the colours stop at the shore:
+  a faint lake would take on the colour of the unit under it,
+  a bluish shade that reads as another value or candidate.
+  The borders and labels still cross a lake,
+  and a click in one still picks the unit it is in.
 - **Roads and railways** are drawn as on the web maps people know,
   so that they never pass for a border
   (the borders are thin cool greys and colours):
@@ -397,7 +442,7 @@ The 2026 results can colour the map (`js/mapmode.js`).
 What it shows:
 
 - **A candidate's share** of the votes by area,
-  from a pin at the end of their row,
+  from the button at the end of their row,
   which also fits the map to the contest's area:
   across its areas where it spans several
   (a regional contest,
@@ -418,14 +463,24 @@ What it shows:
   - or of the regional elections.
 - **The leader.**
   Every contest, once its candidates' votes are in,
-  has a second button before its pin
+  has a button before its turnout
   that colours each unit by the candidate with the most votes there
   (for a council of several seats its top candidate, not those elected,
   as the legend says),
   in a colour of each candidate's own
   (`--map-series-*`, the eight with the most votes overall,
-  the others in grey; a tie is left uncoloured).
-  The legend lists them with the number of the finest units each leads.
+  the others in grey),
+  and labels it with their surname.
+  A tie for the most votes is striped diagonally
+  in the colours of all those tied,
+  stripes a few screen pixels wide at every zoom,
+  and labelled with their surnames joined by " / "
+  (the tooltip lists their full names).
+  The legend lists the candidates with the number of the finest units
+  each leads, a tie counting for each of those tied
+  (their colour is in its stripes; the count's tooltip says how many are ties),
+  and, where the map has stripes, a "Tied" entry
+  with a striped swatch and the number of the finest units tied.
 
 **Units by zoom.**
 The units follow the zoom, as the boundary overlays do,
@@ -488,7 +543,22 @@ with its 2022 one where the district is the same as then
 The selected place, candidate, Favourites and the About dialog
 are kept in the URL hash, so links can be shared.
 So are the circled candidates and the filter,
-though Back and Forward leave those as they are (`js/app.js`).
+and what the map shows, so that a link opens the same view
+(`js/app.js`):
+
+- `m=zoom/lat/lon`, the view, once it has moved from the first one
+  (written when the map has stood still for 0.4 s,
+  as browsers throttle history writes);
+- `h`, the layers switched off, comma-separated
+  (`zsk`, `city`, `oz`, `okrsky`, `base`, `buildings`);
+- `mr`, the results on the map (mapmode.js `formatMode`):
+  `turnout:municipal|city|regional`, `turnout:<contest>`,
+  `winner:<contest>` or `candidate:<candidacy>`.
+
+A link with a view opens on it,
+not on the place it selects nor on the area of the results it shows.
+Back and Forward leave all these as they are:
+only a link typed or pasted into the address bar brings its own.
 Examples are in [testing.md](testing.md#the-site-locally-with-results).
 
 ## About dialog

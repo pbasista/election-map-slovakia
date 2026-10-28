@@ -11686,7 +11686,7 @@
   },
   "app.features": {
    "src": "Enter your address or click the map to see every ballot voted on there – mayor, municipal council, regional president and regional council – with the candidates in ballot order, their parties and the results of the 2026 elections: each candidate's votes and share, the winners and the turnout, on the ballots and on the map, down to the polling districts. The map also marks who holds each office now and with what share of the vote they won it in 2022, and for the candidates researched it adds notes on their career and controversies, each linked to its source. It covers every municipality and constituency in Slovakia, with no ads and no tracking.",
-   "text": "Zadejte adresu nebo klikněte do mapy a uvidíte všechny hlasovací lístky, o kterých se tam hlasovalo – na starostu či primátora, do obecního nebo městského zastupitelstva, na předsedu kraje a do zastupitelstva kraje – s kandidáty v pořadí na lístku, jejich stranami a výsledky voleb 2026: hlasy a podíl každého kandidáta, zvolené a účast, na lístcích i na mapě, až po volební okrsky. Mapa také označuje, kdo funkci zastává nyní a s jakým podílem hlasů ji v roce 2022 získal, a u prověřených kandidátů přidává zjištění o jejich kariéře a kauzách, každé s odkazem na zdroj. Pokrývá všechny obce a volební obvody na Slovensku, bez reklam a bez sledování."
+   "text": "Zadejte adresu nebo klikněte do mapy a uvidíte všechny hlasovací lístky, o kterých se tam hlasovalo – na starostu či primátora, do obecního nebo městského zastupitelstva, na předsedu kraje a do zastupitelstva kraje – s kandidáty v pořadí na lístku, jejich stranami a výsledky voleb 2026: hlasy a podíl každého kandidáta, zvolené a účast, na lístcích i na mapě, až po volební okrsky. Mapa také označuje, kdo funkci zastává nyní a s jakým podílem hlasů ji v roce 2022 získal, a u prověřených kandidátů přidává zjištění o jejich kariéře a kontroverzích, každé s odkazem na zdroj. Pokrývá všechny obce a volební obvody na Slovensku, bez reklam a bez sledování."
   },
   "app.noscript": {
    "src": "{site} needs JavaScript.",
@@ -11971,6 +11971,22 @@
   "council.pending": {
    "src": "{name} elects its council in several constituencies ({n}). Which addresses belong to which constituency is not available here yet, so all of them are listed below. The municipality's announcement names yours.",
    "text": "{name} volí zastupitelstvo ve více obvodech ({n}). Které adresy patří do kterého obvodu, zde zatím není k dispozici, proto jsou níže uvedeny všechny. Váš obvod uvádí oznámení obce."
+  },
+  "council.summary_approximate": {
+   "src": "Constituency boundaries are approximate",
+   "text": "Hranice obvodů jsou na mapě přibližné"
+  },
+  "council.summary_choose": {
+   "src": "{n} constituencies: find yours by your address",
+   "text": "Všechny obvody ({n}): svůj najdete podle adresy"
+  },
+  "council.summary_estimated": {
+   "src": "The constituencies here are our estimate",
+   "text": "Obvody jsou zde jen náš odhad"
+  },
+  "council.summary_pending": {
+   "src": "{n} constituencies: yours is not known here yet",
+   "text": "Všechny obvody ({n}): váš tu zatím neznáme"
   },
   "country.AL": {
    "src": "Albania",
@@ -12492,6 +12508,14 @@
    "src": "Show the ballots here",
    "text": "Zobrazit hlasovací lístky zde"
   },
+  "mapmode.tie": {
+   "src": "Tied",
+   "text": "Rovnost hlasů"
+  },
+  "mapmode.tie_count": {
+   "src": "Tied for the most votes in {n} of the areas shown",
+   "text": "Shodně nejvíce hlasů v {n} ze zobrazených oblastí"
+  },
   "mapmode.tip_obvod": {
    "src": "{name}, constituency No. {n}",
    "text": "{name}, volební obvod č. {n}"
@@ -12503,6 +12527,10 @@
   "mapmode.tip_past": {
    "src": "2022: {turnout} · {voters} of {eligible}",
    "text": "2022: {turnout} · {voters} z {eligible}"
+  },
+  "mapmode.tip_tie": {
+   "src": "Tied for the most votes: {names}, {share} each",
+   "text": "Shodně nejvíce hlasů: {names}, každý {share}"
   },
   "mapmode.tip_turnout": {
    "src": "Turnout {turnout} · {voters} of {eligible} voted",
@@ -12580,6 +12608,10 @@
    "src": "The most votes in {n} of the areas shown",
    "text": "Nejvíce hlasů v {n} ze zobrazených oblastí"
   },
+  "mapmode.winner_count_ties": {
+   "src": "The most votes in {n} of the areas shown, tied in {ties} of them",
+   "text": "Nejvíce hlasů v {n} ze zobrazených oblastí, z toho v {ties} shodně s jinými"
+  },
   "mapmode.winner_hide": {
    "src": "Take who got the most votes off the map",
    "text": "Skrýt z mapy, kdo kde získal nejvíce hlasů"
@@ -12603,6 +12635,10 @@
   "mapmode.winner_total": {
    "src": "Overall: {name}, {share}",
    "text": "Celkem: {name}, {share}"
+  },
+  "mapmode.winner_total_tie": {
+   "src": "Overall, tied for the most votes: {names}, {share} each",
+   "text": "Celkem shodně nejvíce hlasů: {names}, každý {share}"
   },
   "nav.language": {
    "src": "Language",
@@ -12705,16 +12741,20 @@
    "text": "volební okrsek č. {n} (podle přibližné hranice)"
   },
   "research.affairs_alert": {
-   "src": "Searched only the sites on our list ({scope}); serious controversies found about this candidate: {n}",
-   "text": "Prověřeno jen na webech z našeho seznamu ({scope}); nalezené závažné kontroverze o tomto kandidátovi: {n}"
+   "src": "Our research found serious controversies about this candidate ({n}), searching only the sites on our list ({scope}). They are listed under Research at the end of the card, each with its source.",
+   "text": "Náš průzkum našel o tomto kandidátovi závažné kontroverze ({n}), přičemž prohledal jen weby z našeho seznamu ({scope}). Jsou uvedeny v části Průzkum na konci karty, každá se svým zdrojem."
   },
   "research.affairs_badge": {
    "src": "Searched only the sites on our list: {scope} (on {date}). Serious controversies found: {n}. Details on the candidate card.",
    "text": "Prověřeno jen na webech z našeho seznamu: {scope} ({date}). Nalezené závažné kontroverze: {n}. Podrobnosti na kartě kandidáta."
   },
   "research.affairs_show": {
-   "src": "Show",
-   "text": "Zobrazit"
+   "src": "Go to the serious controversies",
+   "text": "Přejít na závažné kontroverze"
+  },
+  "research.affairs_summary": {
+   "src": "Serious controversies found: {n}",
+   "text": "Nalezené závažné kontroverze: {n}"
   },
   "research.badge": {
    "src": "Searched only the sites on our list: {scope} (on {date}). Findings: {n}. Details on the candidate card.",
@@ -12815,6 +12855,10 @@
   "research.notice": {
    "src": "Written by artificial intelligence: it may be wrong and is not exhaustive, so take it as indicative only. Only the sites listed in About under “{list}” were searched. Check every finding at its source.",
    "text": "Vytvořila umělá inteligence: může se mýlit a není úplné, berte to proto pouze jako orientační informaci. Prohledány byly pouze weby uvedené v části O projektu pod nadpisem „{list}“. Každé zjištění si ověřte ve zdroji."
+  },
+  "research.notice_summary": {
+   "src": "Written by AI: it may be wrong",
+   "text": "Vytvořila umělá inteligence: může se mýlit"
   },
   "research.quote": {
    "src": "Quote from the source",

@@ -4,6 +4,130 @@ Notable changes, newest first. The version is set in
 `src/election_map_slovakia/__init__.py`; tagging `vX.Y.Z` builds and deploys
 it (see [docs/deploy.md](docs/deploy.md)).
 
+## 0.7.0 — 2026-10-28
+
+- **Candidate card notices in one line.**
+  The word on serious controversies under a candidate's name, and the
+  note that the research is written by AI, are each a line now, like the
+  notices of the council ballots: "Serious controversies found: 2" in
+  red, "Written by AI: it may be wrong" in amber, the whole text unfolded
+  under them on a press. The jump to the controversies is an icon button
+  on the red line, beside its summary rather than in it, as a summary is
+  itself a button. The controversies' text is reworded so that its last
+  line is not the number alone, as it was in Slovak and Czech. The
+  summaries are cut to what a 360 px phone shows in every language
+  (`translate.py` limits). The Slovak and Czech description of the site
+  speaks of the candidates' "kontroverzie" / "kontroverze", as the rest of
+  the site does, rather than "kauzy", which suggests a case on its way to
+  court.
+- **A faster map.**
+  A drawing of the whole country takes 23 ms instead of 31 (headless Chromium,
+  1440 × 900), and 13 ms instead of 30 on a phone; the results by
+  municipality over the country 23 ms instead of 32 to 37, Košice at
+  street level 18 instead of 22. Each vertex now has the zoom level from
+  which it is drawn, and the lower levels leave out those that would fall
+  within a third of a pixel of the line (`topo.js` `levels`); the dashed
+  borders are cut into square-ended dashes, which rasterize at half the
+  cost of round caps; an obec or okres border under a regional or city
+  obvod border is no longer stroked beneath it; and the end of a pan no
+  longer asks for a drawing of the view just drawn. Over a tour of the
+  map that made 15 % fewer drawings and 27 % less drawing time.
+- **Turning on a turnout map no longer holds up the page.**
+  Each of the some 230 results files the municipal turnout loads rendered
+  the page again and worked out the map's figures anew: two seconds of
+  the page not answering. The files that come together are now taken
+  together (`live.js`), and the figures look each okrsok's council obvod
+  up once: the page is busy for 0.1 s.
+- **Lighter map indexes.**
+  `geo/index.json` and `base/index.json`, which every visit loads first,
+  listed the size of every geometry and base map file for `ems check`
+  alone: 24 KB of the 37 KB they take gzipped. They no longer do;
+  `check` compares the base map files there are with those the index
+  lets the app request.
+- **A faster `make`.**
+  `ems make --force` takes 1 min 54 s instead of 2 min 39 s (8 CPUs),
+  and an up-to-date `make` 13 s instead of 25, its output byte for byte
+  the same.
+  The gzip sizes in the summaries are kept by content
+  (`data/build/gzip-sizes/`), so that only new files are compressed:
+  9 s of every build, 5 s of `basemap`.
+  The obce are cut the costliest first, so that no worker is left with a
+  city when the others are done, and with one overlay fewer each;
+  the levels of detail of the shards and of the okrsky are cut into arcs
+  and checked side by side, and the borders of the okrsky reaching beyond
+  their obvod are simplified in the workers; `addresses` assigns the
+  obvody and okrsky of the obce in workers too.
+  `build` reads the data files it hashes, and `dist/` for its summary, in
+  threads; `check` starts the base map, its longest part, first.
+- **Contests in one order.**
+  A candidate card listed a person's candidacies in the order of their ids,
+  so a regional president came before a mayor,
+  unlike a place's ballots.
+  Both now go from the most local:
+  the municipality's or city district's, then Bratislava's or Košice's,
+  then the region's, of one area the council before the mayor or president.
+- **Results on the map from a contest's header, one button each.**
+  The pin by a contest's name showed its area on the map,
+  and only pressed a second time its 2026 turnout,
+  which nobody would guess without reading its tooltip.
+  Now the turnout meter in the header is itself the button
+  that puts the contest's turnout on the map,
+  with the ballot box of the turnout menu beside the figure,
+  and before it a button with a folded map shows who got the most votes where;
+  both are outlined like buttons and tinted while the map shows theirs.
+  Showing a contest's area alone is gone, as either result shows it
+  (the map fits to the area), and with it the area links (`r=`).
+  A candidate's votes on the map have the folded map too:
+  a pin now stands only for a place.
+- **Contest headers without ragged breaks.**
+  The turnout and two buttons beside the contest's name
+  left it so little room that most names broke over two or three lines.
+  Now the name takes a line of its own across the header,
+  with the seats, candidates and votes under it
+  and the buttons beside those, in one column down the list:
+  a header is three lines, not four, and they line up.
+  A press anywhere in the header but its buttons opens or closes it.
+- **Ties on the winner map.**
+  A unit where several candidates tied for the most votes
+  was left blank, as if there were no figures
+  (in the final results 371 polling districts and 98 larger units).
+  Now it is striped in the colours of all those tied
+  and labelled with all their surnames;
+  its tooltip, the legend and the overall figure name the tie,
+  and the legend counts the tied units.
+- **Shorter notes on the ballots.**
+  The note above a council's contests
+  (all its constituencies listed, boundaries approximate or estimated)
+  is one line of summary, its whole text in the tooltip and a press away;
+  the documents that set the constituencies are one line too,
+  several of them numbered, each title in its tooltip.
+- **Base map icons that say what they show.**
+  The base map's button and its menu had a wave crossed by a line
+  and tilted squares.
+  Now the button is a house and a tree beside a road;
+  in the menu the roads, railways and water are a road, a railway
+  and a wave as the map draws them, and the buildings two houses.
+- **Links that open the same view.**
+  A link carried the place, the candidate and the circles,
+  but not what the map showed.
+  Now the address also keeps the map's view (`m=zoom/lat/lon`),
+  the layers switched off (`h`)
+  and the results on the map (`mr`: a turnout,
+  who got the most votes where, or a candidate's votes),
+  so that a shared link opens on the same map;
+  Back and Forward leave them as they are, as they do the circles.
+- **Lakes not coloured by the results.**
+  The faint lakes took on the colour of the results under them,
+  a bluish shade that read as another value or candidate.
+  While results are shown, the lakes are now opaque
+  in their usual colour, and the colours stop at the shore;
+  the borders still cross a lake, and a click in one still picks its unit.
+- **Every constituency document named.**
+  The documents of Bratislava's and Košice's councils
+  and of the eight regional councils were linked as "official document".
+  Each now has its title and designation (resolution and date),
+  and a constituency list without a title fails to load.
+
 ## 0.6.0 — 2026-10-27
 
 - **Buildings on the map.**

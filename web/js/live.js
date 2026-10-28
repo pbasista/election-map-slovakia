@@ -52,8 +52,23 @@ let index = null;
 const files = new Map();
 let timer = null;
 
+// The files that come within this long of the last telling are told of
+// together, at its end: the map's turnout alone fetches some 230 files, and
+// each telling renders the page again and works the map's figures out anew
+// (mapmode.js), which one by one held the page up for seconds.
+const NOTIFY_MS = 200;
+let notifying = 0;
+let notified = -Infinity;
+
 const notify = () => {
+  clearTimeout(notifying);
+  notifying = 0;
+  notified = performance.now();
   for (const listener of listeners) listener();
+};
+
+const notifySoon = () => {
+  notifying ||= setTimeout(notify, Math.max(0, notified + NOTIFY_MS - performance.now()));
 };
 
 // Whether counting has started: status.json read and naming a phase.
@@ -134,7 +149,7 @@ function load(name, hash) {
     .then((data) => {
       if (files.get(name) !== next) return;
       next.data = data;
-      notify();
+      notifySoon();
     })
     // Tried again with the next hash; the older data stays shown meanwhile.
     .catch((e) => console.error(e));

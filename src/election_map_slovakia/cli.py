@@ -469,7 +469,7 @@ def _run_basemap(args: argparse.Namespace) -> int:
     except (basemap.BaseMapError, geo.GeoError, gpkg.GpkgError) as e:
         _error(f"ems basemap: {e}")
         return 1
-    sizes = basemap.write(files, out)
+    sizes = basemap.write(files, out, _gzip_memo(cfg, "basemap"))
     record.record()
     _print(basemap.report(files, sizes))
     _print([f"wrote {out.relative_to(cfg.root)}/ ({len(sizes)} files)"])
@@ -515,7 +515,7 @@ def _run_addresses(args: argparse.Namespace) -> int:
     ) as e:
         _error(f"ems addresses: {e}")
         return 1
-    sizes = addresses.write(result, out)
+    sizes = addresses.write(result, out, _gzip_memo(cfg, "addresses"))
     addresses.write_outside(result, outside)
     obvody.write_places(result.places, places)
     record.record()
@@ -575,7 +575,7 @@ def _run_build(_args: argparse.Namespace) -> int:
     try:
         site = build.assemble(cfg)
         out = cfg.root / build.OUTPUT_DIR
-        sizes = build.write(site, out)
+        sizes = build.write(site, out, _gzip_memo(cfg, "build"))
     except build.BuildError as e:
         _error(f"ems build: {e}")
         return 1
@@ -595,6 +595,11 @@ def _run_check(_args: argparse.Namespace) -> int:
     checks = check.run(out, cfg.site, cfg.languages, contests)
     _print(check.report(checks))
     return 1 if any(c.problems for c in checks) else 0
+
+
+def _gzip_memo(cfg: config.Config, step: str) -> Path:
+    """Return where *step* keeps the gzip sizes it measured last."""
+    return cfg.build_dir / output.GZIP_MEMO_DIR / f"{step}.json"
 
 
 _MAKE_STEPS = {

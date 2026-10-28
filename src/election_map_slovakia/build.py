@@ -121,8 +121,8 @@ rule set; a council elected in one obvod without it has ``seats_2022``, the
 number its whole council elected in 2022, as a stand-in until the 2026
 number is known (councils of several obvody have neither: a 2022 total
 says nothing about one obvod). ``sources`` are the official
-documents that set a council's obvody, as ``[title, url]`` (title possibly
-empty; :func:`obvod_sources`). ``residence`` is the obec of residence of
+documents that set a council's obvody, as ``[title, url]``
+(:func:`obvod_sources`). ``residence`` is the obec of residence of
 regional candidates. ``holder`` is the mayor or regional president in
 office, ``[name, since, number, result]`` (``number`` the holder's ballot
 number in this contest, or null); ``incumbents`` maps the ballot number of
@@ -190,6 +190,7 @@ import shutil
 import urllib.parse
 from collections import Counter, defaultdict
 from collections.abc import Collection, Iterable, Iterator, Mapping
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -285,14 +286,18 @@ def tree(name: str, source: Path) -> Iterator[tuple[str, bytes]]:
 
     A path is *name* for a file, else *name*/<path below *source*>, in
     sorted order, so that :func:`content_version` sees a stable sequence.
+    Threads read the files of a directory side by side: one by one, the
+    thousands of data files took more than a second.
     """
     if not source.exists():
         raise BuildError(f"{source} missing")
     if source.is_file():
         yield name, source.read_bytes()
         return
-    for path in sorted(p for p in source.rglob("*") if p.is_file()):
-        yield f"{name}/{path.relative_to(source).as_posix()}", path.read_bytes()
+    paths = sorted(p for p in source.rglob("*") if p.is_file())
+    with ThreadPoolExecutor() as pool:
+        for path, content in zip(paths, pool.map(Path.read_bytes, paths), strict=True):
+            yield f"{name}/{path.relative_to(source).as_posix()}", content
 
 
 def content_version(files: Iterable[tuple[str, bytes]]) -> str:
@@ -673,13 +678,12 @@ def obvod_sources(
     Areas are an obec (council obvody by address), ``BA``/``KE`` (city
     council) or ``zsk-<kraj>`` (regional council), as named by the curated
     files in *election_dir* and *rule_sets* (its council rule sets);
-    documents are ``[title, url]``, the title empty where the curated file
-    records none.
+    documents are ``[title, url]``.
     """
-    out = {
-        path.stem: [["", config.load_obvody(path).source]]
-        for path in sorted((election_dir / obvody.DIRECTORY).glob("*.toml"))
-    }
+    out = {}
+    for path in sorted((election_dir / obvody.DIRECTORY).glob("*.toml")):
+        listed = config.load_obvody(path)
+        out[path.stem] = [[listed.title, listed.source]]
     for code, rules in rule_sets.items():
         out[code] = [[d.title, d.url] for d in rules.documents]
     return out
@@ -1257,10 +1261,13 @@ def _cached_pages(cfg: Config, records: Mapping[str, Any]) -> dict[str, Path]:
     }
 
 
-def write(site: Site, directory: Path) -> dict[str, tuple[int, int]]:
+def write(
+    site: Site, directory: Path, memo: Path | None = None
+) -> dict[str, tuple[int, int]]:
     """Replace *directory* with *site*.
 
-    Returns ``dist/`` path → (bytes, gzip -9 bytes) of every file.
+    Returns ``dist/`` path → (bytes, gzip -9 bytes) of every file, the gzip
+    sizes kept in *memo* (:func:`election_map_slovakia.output.gzip_sizes`).
     """
     with (
         progress.stage(f"writing {directory.name}/") as s,
@@ -1284,12 +1291,17 @@ def write(site: Site, directory: Path) -> dict[str, tuple[int, int]]:
                 raise BuildError(f"{path} is both generated and copied")
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_bytes(data)
-    with progress.stage(f"reading {directory.name}/ for the size report") as s:
+    with (
+        progress.stage(f"reading {directory.name}/ for the size report") as s,
+        ThreadPoolExecutor() as pool,
+    ):
         files = sorted(p for p in directory.rglob("*") if p.is_file())
-        blobs = [p.read_bytes() for p in s.track(files)]
+        blobs = list(s.track(pool.map(Path.read_bytes, files)))
     return {
         path.relative_to(directory).as_posix(): (len(data), gz)
-        for path, data, gz in zip(files, blobs, output.gzip_sizes(blobs), strict=True)
+        for path, data, gz in zip(
+            files, blobs, output.gzip_sizes(blobs, memo), strict=True
+        )
     }
 
 

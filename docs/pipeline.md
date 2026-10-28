@@ -64,20 +64,33 @@ A comment added to a TOML file reruns the steps
 that read the file as text (curated obvody)
 but not those that read its values (overrides).
 `geo --preview` always runs.
-`build` and `check` always run (10 and 5 s);
-an up-to-date `make` takes about 20 s instead of 2 minutes.
+`build` and `check` always run (5 s each);
+an up-to-date `make` takes about 15 s instead of 2 minutes.
 
 ### Worker processes
 
-`geo`, `basemap` and `check` split their work into pieces
+`addresses`, `geo`, `basemap` and `check` split their work into pieces
 that do not depend on each other
 (obce, levels of detail, okresy, parts of the site)
 and run them in worker processes, one per CPU
-(`parallel.py`).
+(`parallel.py`),
+the longest first where their length can be told beforehand
+(an obec's cut by the size of its addresses file),
+so that no worker is left with a long piece when the others are done.
 The results are put together in order,
 so the output is the same as if the pieces ran one by one.
 On 8 CPUs a full `make --force` takes about 2 minutes;
 `geo` needs up to 1.8 GB of memory, `basemap` 3.2 GB.
+
+### Gzip sizes
+
+`addresses`, `basemap` and `build` report the gzip -9 size of what they
+write.
+Each keeps the sizes it measured last by the SHA-256 of each file
+(`data/build/gzip-sizes/<step>.json`)
+and compresses only the contents it has not seen:
+of the site's 630 MB nearly all are the same from one build to the next,
+and compressing them took 9 s of every build.
 
 ### Progress and summaries
 
@@ -235,7 +248,7 @@ and writes to `data/build/geo/`:
   at two levels of detail, with places for their names;
 - `okrsky/<okres>/<lod>.json`: the okrsky, where known (below);
 - `index.json`: the zoom band of each level, okres bounding boxes,
-  file sizes, and the okrsky files (`okrsky`).
+  and the okrsky files (`okrsky`).
 
 Levels of detail and the output schema
 are described in `src/election_map_slovakia/geo.py`.
@@ -331,7 +344,7 @@ in `src/election_map_slovakia/basemap.py`.
   The files are topologies like the geo files
   (each line an arc coded with its class,
   each water ring an arc of a feature),
-  listed with their sizes in `index.json` with the shards' zoom bands.
+  their okresy and the shards' zoom bands in `index.json`.
 - **Buildings.**
   One file per obec (ZBGIS level 0, the shards' obce),
   `obec/<obec>.json`, which the app draws from zoom 16
@@ -361,11 +374,12 @@ in `src/election_map_slovakia/basemap.py`.
   then the same of the buildings:
   2.6 million in 2,927 files, 14.8 million vertices,
   81 MiB, 26 MiB gzipped, the largest 850 KiB (250 KiB gzipped).
-  It takes about 31 s:
+  It takes about 26 s:
   three workers read the extract side by side
   (the lines, the water and multipolygon areas, the buildings' ways),
   then the workers place the buildings in their obce, a share each
-  (gzip -9 of the 81 MiB, for the summary, takes another 5 s).
+  (gzip -9 of the 81 MiB, for the summary, takes another 5 s
+  for the files not measured before: see [Gzip sizes](#gzip-sizes)).
 
 ### `results`
 
@@ -467,7 +481,7 @@ The checks are described in `src/election_map_slovakia/check.py`:
   leave no gap at its border at any level
   and are named in every language.
 - **Base map:** it has the shards' levels of detail and okresy,
-  its index the files and sizes the app may request,
+  `base/` holds no file its index does not let the app request,
   and each file only the line classes of its level.
 
 ## Identifiers
@@ -504,8 +518,9 @@ Hand-curated inputs, committed:
   kept per election (the day of `config/site.toml` `election`),
   so that a later election adds a directory of its own
   instead of changing this one's.
-  The obvod files name their source document (`source`)
-  and decision date (`date`).
+  The obvod files name their source document (`source`),
+  its title as the ballots show it (`title`)
+  and the decision date (`date`).
   - `obvody/zsk-<kraj>.toml`: regional council obvody
     (seats and member okresy or obce),
     transcribed from each region's decision.

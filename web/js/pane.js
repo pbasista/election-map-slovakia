@@ -14,12 +14,32 @@
 import { html, useCallback, useEffect, useLayoutEffect, useRef } from '../vendor/preact-htm.module.js';
 import { About } from './about.js';
 import { t } from './i18n.js';
-import { CloseIcon, WarningIcon } from './icons.js';
+import { CloseIcon, ExpandIcon, JumpIcon, WarningIcon } from './icons.js';
 
-/* Something the visitor should heed before relying on what follows. */
-export const Notice = ({ children }) => html`
-  <div class="notice" role="note"><${WarningIcon} /><div>${children}</div></div>
-`;
+/* Something the visitor should heed before relying on what follows. With
+ * *summary*, that one line stands for it, so that what follows starts
+ * higher: the whole (*children*, a text) is its tooltip and unfolds under
+ * it on a press, as a touch screen shows no tooltips. *jump* ({label,
+ * onClick}): an icon button on the summary's line that goes to what the
+ * notice is about, beside the summary rather than in it, as a summary is
+ * itself a button. *danger*: in red, for what a voter must not miss
+ * (serious controversies), rather than the amber of a caveat. */
+export const Notice = ({ summary, children, jump = null, danger = false }) => {
+  if (!summary) return html`<div class="notice" role="note"><${WarningIcon} /><div>${children}</div></div>`;
+  const notice = html`<details class=${danger ? 'notice short danger' : 'notice short'} role="note">
+    <summary title=${children}>
+      <${WarningIcon} /><span class="notice-summary">${summary}</span><${ExpandIcon} />
+    </summary>
+    <p>${children}</p>
+  </details>`;
+  if (!jump) return notice;
+  return html`<div class=${danger ? 'notice-jump danger' : 'notice-jump'}>
+    ${notice}
+    <button type="button" class="notice-jump-button" aria-label=${jump.label} title=${jump.label} onClick=${jump.onClick}>
+      <${JumpIcon} />
+    </button>
+  </div>`;
+};
 
 export const PHONE = matchMedia('(max-width: 640px)');
 /* Wide enough for a second pane beside the first (Favourites, app.js), as

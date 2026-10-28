@@ -19,18 +19,20 @@
  *         likewise)
  *   s, p  the street or part of the obec chosen in the search (highlighted)
  *   c     an open candidacy
- *   r     a contest's area shown without a place: a Bratislava or Košice
- *         city contest's or a regional one's (data.js `contestArea`)
  *   f=1   Favourites shown (favourites.js)
  *   v     `about` the About dialog, `about-<section>` one of its sections
  *         (about.js)
  *
  * The visitor's own work is in the hash too, so a link shares it: `k` the
  * circled candidates (picks.js); `fp`, `fm` and `x` the filter, crossed-out
- * candidates included (ballots.js `filterParams`). It changes in place:
- * Back and Forward move between places and leave the circles and the
- * filter alone. Only a link typed or pasted into the address bar brings
- * its own.
+ * candidates included (ballots.js `filterParams`). So is what the map
+ * shows, so that a link opens the same view:
+ *   m     "zoom/lat/lon" of the view, once it has moved from the first one
+ *   h     the layers switched off, comma-separated (map.js `setOverlays`)
+ *   mr    the results on the map (mapmode.js `formatMode`)
+ * All these change in place: Back and Forward move between places and
+ * leave the circles, the filter and the map's layers and results alone.
+ * Only a link typed or pasted into the address bar brings its own.
  */
 
 import { html, render, useEffect, useRef, useState } from '../vendor/preact-htm.module.js';
@@ -44,7 +46,7 @@ import { election, formatDate, loadStrings, t, translationPending } from './i18n
 import { Logo, MoreIcon } from './icons.js';
 import { LiveStatus } from './live.js';
 import { createMap } from './map.js';
-import { MapResults, useMapMode } from './mapmode.js';
+import { formatMode, MapResults, parseMode, setMapMode, useMapMode } from './mapmode.js';
 import { AboutDialog, Pane, PHONE, WIDE } from './pane.js';
 import { formatPicks, parsePicks } from './picks.js';
 import { Search } from './search.js';
@@ -82,7 +84,6 @@ function readHash() {
     part: p.get('p'),
     candidate: p.get('c'),
     view: p.get('v'),
-    area: p.get('r'),
     favourites: p.get('f') === '1',
   };
 }
@@ -96,9 +97,29 @@ function readWork() {
   return { picks: parsePicks(p.get('k')), linked: fp || fm || x ? { fp, fm, x } : null };
 }
 
-/* The hash of selection *s* with the circled candidates *picks* and the
- * filter's hash values *filter* ([key, value] pairs). */
-function hashOf(s, picks, filter) {
+// The map's layers (map.js `setOverlays`), all on unless a link says.
+const LAYERS = ['zsk', 'city', 'oz', 'okrsky', 'base', 'buildings'];
+// Milliseconds the map stands still before its view goes in the address.
+const VIEW_DELAY = 400;
+
+/* What the map shows by a link: {view ({lat, lon, zoom}, or null for the
+ * first one), overlays (layer → on), mode (the results, as `formatMode`
+ * writes them, or null)}. */
+function readDisplay() {
+  const p = hashParams();
+  const [zoom, lat, lon] = (p.get('m') ?? '').split('/').map(Number.parseFloat);
+  const hidden = new Set((p.get('h') ?? '').split(','));
+  return {
+    view: [zoom, lat, lon].every(Number.isFinite) ? { zoom, lat, lon } : null,
+    overlays: Object.fromEntries(LAYERS.map((name) => [name, !hidden.has(name)])),
+    mode: p.get('mr'),
+  };
+}
+
+/* The hash of selection *s* with the circled candidates *picks*, the
+ * filter's hash values *filter* ([key, value] pairs) and what the map shows
+ * *display* (as `readDisplay` gives it). */
+function hashOf(s, picks, filter, display) {
   const p = new URLSearchParams();
   if (s.view) p.set('v', s.view);
   if (s.obec) {
@@ -111,10 +132,14 @@ function hashOf(s, picks, filter) {
     if (s.part) p.set('p', s.part);
   }
   if (s.candidate) p.set('c', s.candidate);
-  if (s.area && !s.obec) p.set('r', s.area);
   if (s.favourites) p.set('f', '1');
   if (picks.length) p.set('k', formatPicks(picks));
   for (const [key, value] of filter) p.set(key, value);
+  const { view, overlays, mode } = display;
+  if (view) p.set('m', `${view.zoom.toFixed(2)}/${view.lat.toFixed(5)}/${view.lon.toFixed(5)}`);
+  const hidden = LAYERS.filter((name) => !overlays[name]);
+  if (hidden.length) p.set('h', hidden.join(','));
+  if (mode) p.set('mr', mode);
   // Characters a fragment may hold as they are (RFC 3986) read better in a
   // link than percent-encoded; URLSearchParams reads them back either way.
   const hash = p.toString().replace(/%(3A|2F|2C|21|7E)/g, (_, hex) => String.fromCharCode(Number.parseInt(hex, 16)));
@@ -131,16 +156,14 @@ function writeHash(hash, push = false) {
 
 function App() {
   const [state, setState] = useState(readHash);
+  // What a link names of the map (`readDisplay`), as the page opened.
+  const [opened] = useState(readDisplay);
   // The constituency overlays and the base map's roads, railways and water
   // (`base`) and buildings switched on (map.js `setOverlays`).
-  const [overlays, setOverlays] = useState({
-    zsk: true,
-    city: true,
-    oz: true,
-    okrsky: true,
-    base: true,
-    buildings: true,
-  });
+  const [overlays, setOverlays] = useState(opened.overlays);
+  // The map's view since it last moved (map.js `onView`): a ref, as each
+  // move rendering the app again would hold up the next gesture.
+  const mapView = useRef(opened.view);
   const [mapFailed, setMapFailed] = useState(false);
   const mapElement = useRef(null);
   // The map.js handle, once the map is up.
@@ -153,8 +176,9 @@ function App() {
   const pane = useRef(null);
   const legend = useRef(null);
   // How the map should move for the next selection (map.js `select`); a page
-  // opened on a shared link goes to the place or area it names.
-  const pendingView = useRef(state.obec || state.area ? 'place' : null);
+  // opened on a shared link goes to the place it names, unless the link
+  // names the view too.
+  const pendingView = useRef(state.obec && !opened.view ? 'place' : null);
   // Counts requests to move the map, which may name the same place again.
   const [moves, setMoves] = useState(0);
   const ownHash = useRef(location.hash);
@@ -179,6 +203,9 @@ function App() {
   const [more, setMore] = useState(false);
   const topControls = useRef(null);
   const mode = useMapMode();
+  // The results a link names (`formatMode`), until their contest has loaded
+  // to make the mode of; the address keeps them till then.
+  const [linkedMode, setLinkedMode] = useState(opened.mode);
   // The candidates circled (picks.js) and the candidate filter (ballots.js
   // `NO_FILTER`): kept from place to place.
   const [picks, setPicks] = useState(() => readWork().picks);
@@ -187,10 +214,20 @@ function App() {
   // to look up its parties; the address keeps it till then.
   const [linked, setLinked] = useState(() => readWork().linked);
   const filterHash = linked ? Object.entries(linked).filter(([, value]) => value) : filterParams(filter);
-  const link = (s) => hashOf(s, picks, filterHash);
-  // The same for the history listener, which is set up once.
+  // What the map shows but its view, which `mapView` holds.
+  const display = { overlays, mode: linkedMode ?? formatMode(mode) };
+  const hashWith = (s, w) => hashOf(s, w.picks, w.filterHash, { ...w.display, view: mapView.current });
+  const link = (s) => hashWith(s, { picks, filterHash, display });
+  // The same for the history listener and the map, which are set up once.
   const work = useRef(null);
-  work.current = { picks, filterHash };
+  work.current = { picks, filterHash, display, state, map };
+
+  /* Puts *hash* in the address bar in place of the current entry. */
+  const replaceHash = (hash) => {
+    if (hash === location.hash) return;
+    ownHash.current = hash;
+    writeHash(hash);
+  };
 
   const changeFilter = (next) => {
     setLinked(null);
@@ -200,7 +237,7 @@ function App() {
   function navigate(next, view = null) {
     // Beside the pane, Favourites stay open whatever the pane goes to (a map
     // click, a card) unless *next* says: closed with their button, or for a
-    // place found by the search or shown by a pin, which they would hide.
+    // place found by the search, which they would hide.
     const hash = link(beside && !('favourites' in next) ? { ...next, favourites: true } : next);
     pendingView.current = view;
     setCardLeft(null);
@@ -256,15 +293,25 @@ function App() {
       setCardLeft(null);
       setState(readHash());
       if (history.state?.km) {
-        // The circles and the filter stay as they are, and the address
-        // with them.
-        const hash = hashOf(readHash(), work.current.picks, work.current.filterHash);
+        // The circles, the filter and what the map shows stay as they are,
+        // and the address with them.
+        const hash = hashWith(readHash(), work.current);
         if (hash !== location.hash) writeHash(hash);
       } else {
         const next = readWork();
         setPicks(next.picks);
         setFilter(NO_FILTER);
         setLinked(next.linked);
+        const shown = readDisplay();
+        setOverlays(shown.overlays);
+        if (shown.view) {
+          // The view the link names, not the place's.
+          pendingView.current = null;
+          mapView.current = shown.view;
+          work.current.map?.setView(shown.view);
+        }
+        if (!shown.mode) setMapMode(null);
+        setLinkedMode(shown.mode);
         history.replaceState(OWN, '', location.href);
       }
       ownHash.current = location.hash;
@@ -293,20 +340,40 @@ function App() {
     };
   }, [linked]);
 
-  // The circles and the filter change the address in place.
   useEffect(() => {
-    const hash = link(state);
-    if (hash === location.hash) return;
-    ownHash.current = hash;
-    writeHash(hash);
-  }, [picks, filter, linked]);
+    if (!linkedMode) return;
+    let live = true;
+    parseMode(linkedMode, Boolean(mapView.current)).then((m) => {
+      if (!live) return;
+      setMapMode(m);
+      setLinkedMode(null);
+    });
+    return () => {
+      live = false;
+    };
+  }, [linkedMode]);
+
+  // The circles, the filter and what the map shows change the address in
+  // place.
+  useEffect(() => {
+    replaceHash(link(state));
+  }, [picks, filter, linked, overlays, mode, linkedMode]);
 
   useEffect(() => {
+    // The view changes the address once the map has stood still a moment,
+    // as browsers throttle history writes (Safari: 100 in 30 s).
+    let timer = 0;
     createMap(mapElement.current, {
       onPick: ({ obec, lat, lon, label, obvod, approximate, okrsok, okrsokApproximate }) =>
         latestNavigate.current({ obec, lat, lon, label, obvod, approximate, okrsok, okrsokApproximate }),
       insets,
       onZoom: setZoomLimits,
+      view: opened.view,
+      onView: (view) => {
+        mapView.current = view;
+        clearTimeout(timer);
+        timer = setTimeout(() => replaceHash(hashWith(work.current.state, work.current)), VIEW_DELAY);
+      },
     })
       .then(setMap)
       .catch((e) => {
@@ -319,8 +386,8 @@ function App() {
     if (!map) return;
     const view = pendingView.current;
     pendingView.current = null;
-    map.select(state.obec ? state : state.area ? { area: state.area } : null, view);
-  }, [map, moves, state.obec, state.lat, state.lon, state.street, state.part, state.obvod, state.okrsok, state.area]);
+    map.select(state.obec ? state : null, view);
+  }, [map, moves, state.obec, state.lat, state.lon, state.street, state.part, state.obvod, state.okrsok]);
 
   useEffect(() => {
     map?.setOverlays(overlays);
@@ -414,7 +481,6 @@ function App() {
   });
 
   const toggle = (name) => (open) => setMenu(open ? name : null);
-  const fitArea = (target) => map?.fitArea(target, true);
   const openCandidate = (id, fromFavourites = false) => {
     openedFrom.current = fromFavourites;
     navigate({ ...state, candidate: id, view: null });
@@ -427,7 +493,6 @@ function App() {
     onFilter=${changeFilter}
     focus=${cardLeft?.favourites ? cardLeft.id : null}
     onCandidate=${(id) => openCandidate(id, true)}
-    onArea=${fitArea}
     onBack=${beside ? null : closeFavourites}
     link=${`${location.origin}${location.pathname}${link({ favourites: true })}`}
   />`;
@@ -441,9 +506,6 @@ function App() {
       onFilter=${changeFilter}
       picks=${picks}
       onPicks=${setPicks}
-      onPlace=${({ obec, obvod, area }) =>
-        // Beside the pane, Favourites would hide the place on the map.
-        navigate({ candidate: state.candidate, favourites: inPane, obec, obvod, area }, 'place')}
       onClose=${() => {
         const left = { id: state.candidate, favourites: openedFrom.current };
         if (!state.obec && !inPane) closePane();
@@ -467,7 +529,6 @@ function App() {
       onFilter=${changeFilter}
       picks=${picks}
       onPicks=${setPicks}
-      onArea=${fitArea}
     />`;
   }
 

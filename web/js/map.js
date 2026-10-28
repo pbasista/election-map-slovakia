@@ -311,6 +311,10 @@ function parseArea(name) {
   return kraj ? { kraj: code, zsk: n } : { city: code, obvod: n };
 }
 
+/* Whether views *a* and *b* (`viewAt` in `createMap`) draw alike. */
+const sameView = (a, b) =>
+  a.zoom === b.zoom && a.x === b.x && a.y === b.y && a.w === b.w && a.h === b.h && a.ratio === b.ratio;
+
 /* The tooltip of what the pointer is over on *map*, where there is a
  * pointer that hovers: while a handler is set, asked of *renderer* one
  * question at a time, the latest position each, and not while the map
@@ -361,9 +365,11 @@ function hoverTooltip(map, renderer) {
  * bottom, left} of the map that floating controls and panes cover, which
  * moves to a place keep it out of, and {legend} the part of `top` that the
  * results' legend alone covers (`room`); `onZoom({canZoomIn, canZoomOut})`
- * reports the zoom limits whenever they change. Resolves once the country
+ * reports the zoom limits whenever they change. *view* ({lat, lon, zoom},
+ * a link's) is the first view, else the whole country; `onView(view)`
+ * reports the view at the end of every move. Resolves once the country
  * outline is shown. */
-export async function createMap(element, { onPick, insets, onZoom }) {
+export async function createMap(element, { onPick, insets, onZoom, view, onView }) {
   const map = L.map(element, {
     minZoom: MIN_ZOOM,
     maxZoom: 19,
@@ -408,9 +414,17 @@ export async function createMap(element, { onPick, insets, onZoom }) {
   // narrower than Slovakia is wide, so there the country runs edge to edge
   // (the kraj names keep inside the map).
   const side = map.getSize().x < map.getSize().y ? 2 : MARGIN / 2;
-  map.fitBounds(SLOVAKIA, {
-    paddingTopLeft: [side, insets().top + MARGIN / 2],
-    paddingBottomRight: [side, MARGIN / 2],
+  if (view) {
+    map.setView([view.lat, view.lon], view.zoom);
+  } else {
+    map.fitBounds(SLOVAKIA, {
+      paddingTopLeft: [side, insets().top + MARGIN / 2],
+      paddingBottomRight: [side, MARGIN / 2],
+    });
+  }
+  map.on('moveend', () => {
+    const { lat, lng } = map.getCenter();
+    onView({ lat, lon: lng, zoom: map.getZoom() });
   });
   // Only a change is reported: each report renders the app again, pane and
   // all, which at the end of every zoom would hold up the next gesture.
@@ -504,9 +518,11 @@ export async function createMap(element, { onPick, insets, onZoom }) {
   const firstShown = new Promise((resolve, reject) => {
     shown = { resolve, reject };
   });
-  // Views sent, the one sent last, and the latest that has come back drawn.
+  // Views sent, the one sent last and the free part with it, and the latest
+  // that has come back drawn.
   let seq = 0;
   let sent = null;
+  let sentFree = null;
   let drawn = 0;
   // A move went on while the renderer was drawing: `follow` once it is done.
   let owed = false;
@@ -515,6 +531,8 @@ export async function createMap(element, { onPick, insets, onZoom }) {
     drawn = Math.max(drawn, s);
     if (map._animatingZoom) {
       bitmap.close();
+      // Asked for again, should the zoom end where it began.
+      if (s === seq) sentFree = null;
     } else {
       canvas.show(bitmap, view);
       shown.resolve();
@@ -544,12 +562,18 @@ export async function createMap(element, { onPick, insets, onZoom }) {
   );
 
   /* Has the view the map shows now drawn, at *ratio* canvas pixels per CSS
-   * pixel (`viewAt`). */
+   * pixel (`viewAt`), unless it is the one asked for last with the same
+   * free part (a pan's end after its last move, a resize reported twice):
+   * the renderer draws again by itself whatever else changes. */
   function request(ratio) {
     if (map._animatingZoom) return;
-    sent = viewAt(ratio);
+    const view = viewAt(ratio);
+    const free = freePart(view);
+    if (sentFree && sameView(view, sent) && free.every((v, i) => v === sentFree[i])) return;
+    sent = view;
+    sentFree = free;
     seq++;
-    renderer.send('show', sent, freePart(sent), seq);
+    renderer.send('show', sent, free, seq);
   }
   const sharp = () => request(Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO));
 
@@ -640,27 +664,14 @@ export async function createMap(element, { onPick, insets, onZoom }) {
   }
 
   return {
-    /* Shows *p* ({obec, lat?, lon?, label?, obvod?, okrsok?, street?, part?}, or
-     * {area} for a contest's area (data.js `contestArea`): 'BA' the city of
-     * Bratislava, 'BA/3' its council obvod, 'kraj:1' a kraj, 'kraj:1/3' its
-     * regional obvod) as the selected place, or nothing; a street or part
-     * is highlighted. *view*: 'place' zooms to the house of an address (one
-     * with a label), to the street or part, to the council obvod or area, or
-     * to the whole obec otherwise; 'obec' to the obec; null only pans a
-     * picked point out from under the insets. */
+    /* Shows *p* ({obec, lat?, lon?, label?, obvod?, okrsok?, street?, part?})
+     * as the selected place, or nothing; a street or part is highlighted.
+     * *view*: 'place' zooms to the house of an address (one with a label),
+     * to the street or part, to the council obvod, or to the whole obec
+     * otherwise; 'obec' to the obec; null only pans a picked point out from
+     * under the insets. */
     async select(p, view = null) {
       const gen = ++selection;
-      if (p?.area) {
-        const area = parseArea(p.area);
-        if ((await renderer.call('select', { area })) === undefined || gen !== selection) return;
-        // The pane that opens or closes with it changes the free part.
-        sharp();
-        if (view) {
-          zoomer.stop();
-          fit(await renderer.call('areaBox', area), 13, gen);
-        }
-        return;
-      }
       const info = p ? await obecInfo(p.obec) : null;
       if (gen !== selection) return;
       const place = info ? { ...p, info } : null;
@@ -680,7 +691,7 @@ export async function createMap(element, { onPick, insets, onZoom }) {
       } else if (view === 'place' && street) {
         map.fitBounds(L.latLngBounds(street), { ...padding(), maxZoom: 17 });
       } else if (place && (view === 'obec' || view === 'place')) {
-        // A council obvod picked by its contest (a click has a point): the obvod.
+        // A council obvod named without a point (by a link): the obvod.
         const obvod = view === 'place' && !point ? place.obvod : null;
         fit(await renderer.call('obecBox', info, obvod), 14, gen);
       } else if (point && !zoomer.running()) {
@@ -704,18 +715,15 @@ export async function createMap(element, { onPick, insets, onZoom }) {
     },
 
     /* Fits the map to *target* (data.js `contestArea`: {area} or {obec,
-     * obvod}) without selecting it: the area of a contest whose results it
-     * shows (mapmode.js), or with *highlight* of a contest whose pin was
-     * pressed on the ballots or in Favourites, which highlights it beside
-     * the selected place until the selection changes (draw.js `showArea`).
-     * A selection made meanwhile moves the map instead. */
-    async fitArea(target, highlight = false) {
+     * obvod}), the area of a contest whose results it shows (mapmode.js),
+     * without selecting it. A selection made meanwhile moves the map
+     * instead. */
+    async fitArea(target) {
       const gen = selection;
       const area = target.area ? parseArea(target.area) : null;
       const info = area ? null : await obecInfo(target.obec);
       const box = area ? await renderer.call('areaBox', area) : await renderer.call('obecBox', info, target.obvod);
       if (gen !== selection) return;
-      if (highlight) renderer.send('showArea', area ? { area } : { info, obvod: target.obvod });
       zoomer.stop();
       fit(box, area ? 13 : 14, gen);
     },
@@ -757,6 +765,12 @@ export async function createMap(element, { onPick, insets, onZoom }) {
 
     zoomOut() {
       zoomer.zoomBy(-1);
+    },
+
+    /* Moves to *view* ({lat, lon, zoom}, a link's) at once. */
+    setView({ lat, lon, zoom }) {
+      zoomer.stop();
+      map.setView([lat, lon], zoom, { animate: false });
     },
   };
 }

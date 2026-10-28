@@ -4,17 +4,7 @@
 
 import { html, useEffect, useRef } from '../vendor/preact-htm.module.js';
 import { Contest, FilterBar, OfficeResult, researchScope, useRowActions } from './ballots.js';
-import {
-  areaName,
-  contestArea,
-  dataIndex,
-  displayName,
-  displayParties,
-  findings,
-  officeLabel,
-  person,
-  useLoaded,
-} from './data.js';
+import { areaName, dataIndex, displayName, displayParties, findings, officeLabel, person, useLoaded } from './data.js';
 import { formatDate, formatNumber, formatPercent, t } from './i18n.js';
 import { BackIcon, DisputeIcon, WarningIcon } from './icons.js';
 import { NOT_COUNTED, useLive } from './live.js';
@@ -114,22 +104,24 @@ function Research({ candidate: c }) {
   }
   return html`
     <h3 class="group">${t('card.research')}</h3>
-    <${Notice}>${t('research.notice', { list: t('about.allowlist.title') })}<//>
+    <${Notice} summary=${t('research.notice_summary')}>${t('research.notice', { list: t('about.allowlist.title') })}<//>
     ${state}
     ${r?.findings ? html`<${Findings} candidate=${c} />` : null}
   `;
 }
 
 /* Research found serious controversies: said at the top of the card, with
- * a jump to them, rather than only far down among the findings. */
+ * a jump to them, rather than only far down among the findings. One line
+ * in red, like the notices of the ballots, with the whole unfolded. */
 function AffairsAlert({ candidate: c }) {
   const jump = () => document.getElementById(AFFAIRS_ID)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const n = formatNumber(c.research.affairs);
   return html`
-    <div class="affairs-alert" role="note">
-      <${WarningIcon} />
-      <p>${t('research.affairs_alert', { scope: researchScope(c.research), n: formatNumber(c.research.affairs) })}</p>
-      <button type="button" class="link" onClick=${jump}>${t('research.affairs_show')}</button>
-    </div>
+    <${Notice}
+      danger
+      summary=${t('research.affairs_summary', { n })}
+      jump=${{ label: t('research.affairs_show'), onClick: jump }}
+    >${t('research.affairs_alert', { scope: researchScope(c.research), n })}<//>
   `;
 }
 
@@ -143,8 +135,8 @@ const ORIGIN_VALID = 30;
 /* Where candidate *c*'s votes in *contest* came from, once its results
  * give them by unit: by okrsok in the final results, else by obec or city
  * district (the contest's `areas`). Lists the units with the most of the
- * candidate's votes and those with the highest shares, beside a pin that
- * shows the votes on the map (by the units of the zoom, mapmode.js).
+ * candidate's votes and those with the highest shares, beside the button
+ * that shows the votes on the map (by the units of the zoom, mapmode.js).
  * Nothing for a contest of one unit. */
 function VoteOrigins({ candidate: c, contest, index }) {
   const live = useLive();
@@ -207,7 +199,7 @@ function VoteOrigins({ candidate: c, contest, index }) {
  * ballots (ballots.js): the other candidates of each of the person's
  * contests follow it, the person never. *picks* and `onPicks(next)`: the
  * circled candidates (picks.js). */
-export function CandidateCard({ id, onCandidate, onPlace, onClose, filter, onFilter, picks, onPicks }) {
+export function CandidateCard({ id, onCandidate, onClose, filter, onFilter, picks, onPicks }) {
   // Null for a candidacy that does not exist.
   const [result, failed] = useLoaded(
     () => Promise.all([person(id), dataIndex()]).then(([p, index]) => p && { ...p, index }),
@@ -286,19 +278,17 @@ export function CandidateCard({ id, onCandidate, onPlace, onClose, filter, onFil
       </dl>
       <h3 class="group">${t('card.candidacies')}</h3>
       ${candidacies.length > 1 ? html`<p class="panel-body muted">${t('card.merged')}</p>` : null}
-      ${candidacies.map((x) => {
-        const target = contestArea(x.contest.id, index);
-        return html`<${Contest}
+      ${candidacies.map(
+        (x) => html`<${Contest}
             key=${x.candidate.id}
             contest=${x.contest}
             current=${x.candidate}
             onCandidate=${onCandidate}
             filter=${filter}
             actions=${actions}
-            map=${{ label: t(`card.map_${target.what}`), onClick: () => onPlace(target) }}
           />
-          <${VoteOrigins} key=${`${x.candidate.id} origins`} candidate=${x.candidate} contest=${x.contest} index=${index} />`;
-      })}
+          <${VoteOrigins} key=${`${x.candidate.id} origins`} candidate=${x.candidate} contest=${x.contest} index=${index} />`,
+      )}
       <${Research} candidate=${c} />
       <p class="panel-body muted small">${t('card.disclaimer')}</p>
     </section>

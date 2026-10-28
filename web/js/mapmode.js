@@ -4,11 +4,12 @@
  * elections across the country, or of one contest). The map colours the
  * land in STEPS intensities of a colour (draw.js `setResults`) on a scale
  * fitted to the values shown, or for a winner map in a colour per leading
- * candidate. A legend with the scale or the candidates and a close button
- * floats on the map.
+ * candidate (a tie for the lead in stripes of the leaders' colours). A
+ * legend with the scale or the candidates and a close button floats on the
+ * map.
  *
  * The mode is one for the page, chosen in a candidate's row
- * (`MapButton`), a contest's header (`ContestMapButton`,
+ * (`MapButton`), a contest's header (`TurnoutMapButton`,
  * `WinnerMapButton`), the candidate card or the boundaries menu
  * (controls.js), so it lives here rather than being passed down through
  * the panes. The values come from the live results (live.js) and follow
@@ -40,9 +41,20 @@
  * its 2022 municipal turnout where it is the same okrsok as then. */
 
 import { html, render, useEffect, useLayoutEffect, useMemo, useRef, useState } from '../vendor/preact-htm.module.js';
-import { areaName, contestArea, dataIndex, displayName, getJSON, hasCouncilObvody, isCity, useLoaded } from './data.js';
+import {
+  areaName,
+  contestArea,
+  contestOf,
+  contests,
+  dataIndex,
+  displayName,
+  getJSON,
+  hasCouncilObvody,
+  isCity,
+  useLoaded,
+} from './data.js';
 import { formatList, formatNumber, formatPercent, t } from './i18n.js';
-import { ArrowIcon, CloseIcon, ExpandIcon, MapPinIcon, WinnerMapIcon } from './icons.js';
+import { ArrowIcon, CloseIcon, ExpandIcon, MapResultsIcon, TurnoutIcon } from './icons.js';
 import { addRecord, isSingle, NOT_COUNTED, okrsokCouncils, useLive } from './live.js';
 
 /* The intensities of the colour: app.css `--map-result-<n>` for a
@@ -68,7 +80,8 @@ const TRIM_FROM = 20;
  *   top candidate is not all it elects;
  * - {kind: 'turnout', election: 'municipal' | 'city' | 'regional'}, 'city'
  *   for Bratislava's and Košice's own elections;
- * - {kind: 'turnout', contest, label}: one contest's (ContestMapButton). */
+ * - {kind: 'turnout', contest, label}: one contest's (TurnoutMapButton).
+ * A contest's mode from a link has `keepView` too (`parseMode`). */
 let mode = null;
 const listeners = new Set();
 
@@ -91,10 +104,11 @@ export function useMapMode() {
 
 /* A button that shows mode *next* on the map, or takes it off while it is
  * shown (*on*). */
-function ToggleButton({ cls, next, on, label, children }) {
+function ToggleButton({ cls, next, on, label, style, children }) {
   return html`<button
     type="button"
     class=${cls}
+    style=${style}
     aria-pressed=${on ? 'true' : 'false'}
     title=${label}
     aria-label=${label}
@@ -104,6 +118,64 @@ function ToggleButton({ cls, next, on, label, children }) {
   </button>`;
 }
 
+/* The modes of a contest's results (see `mode`): candidate *c*'s votes,
+ * *label* naming the contest; who got the most votes where; its turnout. */
+const candidateMode = (c, label) => ({
+  kind: 'candidate',
+  id: c.id,
+  contest: c.contest,
+  number: c.number,
+  name: displayName(c),
+  surname: c.surname,
+  label,
+  multi: !isSingle(c.contest),
+});
+
+const winnerMode = (contest) => ({
+  kind: 'winner',
+  contest: contest.id,
+  label: contest.label,
+  names: Object.fromEntries(contest.candidates.map((c) => [c.number, [displayName(c), c.surname]])),
+  multi: !isSingle(contest.id),
+});
+
+const turnoutMode = (contest) => ({ kind: 'turnout', contest: contest.id, label: contest.label });
+
+const ELECTIONS = ['municipal', 'city', 'regional'];
+
+/* Mode *m* as a link names it (app.js `mr`): 'candidate:<candidacy>',
+ * 'winner:<contest>', 'turnout:<contest>' or 'turnout:<election>'; null
+ * for none. */
+export function formatMode(m) {
+  if (!m) return null;
+  if (m.kind === 'candidate') return `candidate:${m.id}`;
+  return `${m.kind}:${m.contest ?? m.election}`;
+}
+
+/* The mode a link names (`formatMode`), with *keepView*: the link names
+ * the view as well, which fitting the map to the contest's area would
+ * undo (`MapResults`). Null for none, or for what is not known (a link
+ * made by hand, a contest gone). */
+export async function parseMode(value, keepView) {
+  const at = value?.indexOf(':') ?? -1;
+  if (at < 0) return null;
+  const kind = value.slice(0, at);
+  const id = value.slice(at + 1);
+  if (kind === 'turnout' && ELECTIONS.includes(id)) return { kind, election: id };
+  const make = {
+    candidate: (contest) => {
+      const c = contest.candidates.find((x) => x.id === id);
+      return c && candidateMode(c, contest.label);
+    },
+    winner: winnerMode,
+    turnout: turnoutMode,
+  }[kind];
+  if (!make) return null;
+  const [contest] = await contests([kind === 'candidate' ? contestOf(id) : id]).catch(() => []);
+  const m = contest?.candidates.length ? make(contest) : null;
+  return m ? { ...m, keepView } : null;
+}
+
 /* The button that shows counted candidate *c*'s votes on the map, across
  * the areas of their contest where it has several, else over its one
  * area; *label* names the contest. At the end of the candidate's row
@@ -111,23 +183,14 @@ function ToggleButton({ cls, next, on, label, children }) {
 export function MapButton({ candidate: c, label }) {
   const current = useMapMode();
   const on = current?.kind === 'candidate' && current.id === c.id;
-  const next = {
-    kind: 'candidate',
-    id: c.id,
-    contest: c.contest,
-    number: c.number,
-    name: displayName(c),
-    surname: c.surname,
-    label,
-    multi: !isSingle(c.contest),
-  };
+  const next = candidateMode(c, label);
   return html`<${ToggleButton}
     cls="votes-map"
     next=${next}
     on=${on}
     label=${t(on ? 'mapmode.candidate_hide' : 'mapmode.candidate_show')}
   >
-    <${MapPinIcon} />
+    <${MapResultsIcon} />
   <//>`;
 }
 
@@ -150,65 +213,46 @@ export function toneOf(m, index) {
   return kind === 'oz' && index && hasCouncilObvody(index, code) ? 'council' : 'accent';
 }
 
-/* The pin at the end of a contest's header (ballots.js `Contest`). Its
- * first press shows the contest's area on the map (*map* {label,
- * onClick}). Once the contest is counted (*counted*), the next press
- * colours the area by the 2026 turnout in the area's own colour
- * (`toneOf`), and the one after takes that off again; the pin is filled
- * in that colour meanwhile. While the map shows another of the contest's
- * results, the area is there already, so the first press shows its
- * turnout, in the view as it is. */
-export function ContestMapButton({ contest, map, counted }) {
+/* The 2026 turnout at the end of a counted contest's header (ballots.js
+ * `Turnout`, its meter the *children*) as the button that colours the
+ * contest's area by it on the map, in the area's own colour (`toneOf`), and
+ * takes that off again: the ballot box of the turnout's menu (controls.js)
+ * beside the figure it puts on the map. *figures*: the turnout in words,
+ * for the tooltip. */
+export function TurnoutMapButton({ contest, figures, children }) {
   const current = useMapMode();
   const [index] = useLoaded(dataIndex, []);
-  const [placed, setPlaced] = useState(false);
   const on = current?.kind === 'turnout' && current.contest === contest.id;
-  const turnout = !on && counted && (placed || current?.contest === contest.id);
-  const label = on ? t('mapmode.contest_turnout_hide') : turnout ? t('mapmode.contest_turnout_show') : map.label;
-  const mode = { kind: 'turnout', contest: contest.id, label: contest.label };
-  const press = () => {
-    if (on) setMapMode(null);
-    else if (turnout) setMapMode(mode);
-    else {
-      map.onClick();
-      setPlaced(true);
-    }
-  };
-  return html`<button
-    type="button"
-    class="contest-map"
-    style=${{ '--tone': `var(--map-${toneOf(mode, index)})` }}
-    aria-pressed=${counted ? String(on) : undefined}
-    title=${label}
-    aria-label=${label}
-    onClick=${press}
+  const next = turnoutMode(contest);
+  const action = t(on ? 'mapmode.contest_turnout_hide' : 'mapmode.contest_turnout_show');
+  return html`<${ToggleButton}
+    cls="map-chip turnout-map"
+    style=${{ '--tone': `var(--map-${toneOf(next, index)})` }}
+    next=${next}
+    on=${on}
+    label=${`${action}\n${figures}`}
   >
-    <${MapPinIcon} />
-  </button>`;
+    <${TurnoutIcon} />
+    ${children}
+  <//>`;
 }
 
-/* The button before the pin of a contest's header (ballots.js `Contest`)
- * once its candidates' votes are counted: it colours each unit of the
- * contest's area (as `MapResults` has them at the zoom) by the candidate
- * with the most votes there. In a council that is its top candidate there,
- * not all it elects, as the legend says. */
+/* The button before the turnout of a contest's header (ballots.js
+ * `Contest`) once its candidates' votes are counted: it colours each unit
+ * of the contest's area (as `MapResults` has them at the zoom) by the
+ * candidate with the most votes there. In a council that is its top
+ * candidate there, not all it elects, as the legend says. */
 export function WinnerMapButton({ contest }) {
   const current = useMapMode();
   const on = current?.kind === 'winner' && current.contest === contest.id;
-  const next = {
-    kind: 'winner',
-    contest: contest.id,
-    label: contest.label,
-    names: Object.fromEntries(contest.candidates.map((c) => [c.number, [displayName(c), c.surname]])),
-    multi: !isSingle(contest.id),
-  };
+  const next = winnerMode(contest);
   return html`<${ToggleButton}
-    cls="winner-map"
+    cls="map-chip winner-map"
     next=${next}
     on=${on}
     label=${t(on ? 'mapmode.winner_hide' : 'mapmode.winner_show')}
   >
-    <${WinnerMapIcon} />
+    <${MapResultsIcon} />
   <//>`;
 }
 
@@ -259,19 +303,21 @@ function sourcesOf(m, live, names, councilNames) {
   return { main, okrsky: byOkrsok(names), councils: byOkrsok(councilNames) };
 }
 
-/* The leader of an area's *votes* ({number: votes}) of *valid*: [their
- * votes, valid, number, votes]; null without votes, or on a tie for the
- * lead, which no colour could show. */
-function leader(votes, valid) {
-  let best = null;
-  let tie = false;
+/* The leaders of an area's *votes* ({number: votes}) of *valid*: [their
+ * votes (each), valid, their numbers in the order *order* (a compare
+ * function), votes], several on a tie for the lead, which a winner map
+ * stripes in all their colours rather than leave the area blank as if it
+ * had no votes; null without votes. */
+function leader(votes, valid, order) {
+  let best = 0;
+  let numbers = [];
   for (const [n, v] of Object.entries(votes)) {
-    if (!best || v > best[0]) {
-      best = [v, valid, Number(n), votes];
-      tie = false;
-    } else if (v === best[0]) tie = true;
+    if (v > best) {
+      best = v;
+      numbers = [Number(n)];
+    } else if (v === best && v > 0) numbers.push(Number(n));
   }
-  return best && best[0] > 0 && !tie ? best : null;
+  return numbers.length ? [best, valid, numbers.sort(order), votes] : null;
 }
 
 // An area's [eligible, voters, …] as a turnout figure, [voters, eligible].
@@ -293,7 +339,12 @@ class Records {
   constructor(index, drawn, councilFiles) {
     this.index = index;
     this.drawn = drawn;
-    this.councilMaps = councilFiles.map((file) => okrsokCouncils(file, index));
+    // Okrsok → its council obvod, of all the files: one lookup per okrsok
+    // rather than one per file.
+    this.councilOf = new Map();
+    for (const file of councilFiles) {
+      for (const [key, council] of okrsokCouncils(file, index)) this.councilOf.set(key, council);
+    }
     // Obec code → record.
     this.obce = new Map();
     // Regional obvod '<kraj>/<n>' known only as a whole → record.
@@ -333,14 +384,6 @@ class Records {
     for (const [, , k, n] of Object.values(this.index.obce)) if (k === kraj) this.whole.set(`${kraj}/${n}`, rec);
   }
 
-  councilOf(key) {
-    for (const map of this.councilMaps) {
-      const council = map.get(key);
-      if (council) return council;
-    }
-    return undefined;
-  }
-
   /* The okrsky among *records* ('<obec>/<n>' → record): each drawn one a
    * unit of its own, with its 2022 municipal turnout from *file* if
    * *withPast*; all of them summed by council obvod and by obec. (An
@@ -351,7 +394,7 @@ class Records {
         this.okrsky.set(key, rec);
         if (withPast && file.past?.[key]) this.past.set(key, file.past[key]);
       }
-      const council = this.councilOf(key);
+      const council = this.councilOf.get(key);
       if (council) addRecord(this.councilSums, council, rec);
       addRecord(this.obecSums, key.split('/')[0], rec);
     }
@@ -467,8 +510,8 @@ function gatherRegional(rs, sources) {
 
 /* The figures of mode *m* from *sources* (`sourcesOf`) by unit, each
  * [part, whole]: [votes, valid] of a candidate, [voters, eligible] of a
- * turnout, [the leader's votes, valid, the leader's number, votes] of a
- * winner map:
+ * turnout, [the leader's votes, valid, the leaders' numbers (several on a
+ * tie), votes] of a winner map (`leader`):
  * - obce: by obec code;
  * - councils: by council obvod '<obec>/<k>' of an obec split into several;
  * - okrsky: by okrsok '<obec>/<n>' of those drawn (*drawn* `keys`,
@@ -501,9 +544,12 @@ function figures(m, sources, index, drawn) {
     }
   }
   for (const [key, rec] of rs.whole) regional.set(key, rec);
+  // A tie's leaders in the order of their colours (`presentWinner`).
+  const place = new Map(rs.ranking.map((n, i) => [n, i]));
+  const byPlace = (a, b) => (place.get(a) ?? place.size) - (place.get(b) ?? place.size) || a - b;
   const of = {
     candidate: ([, , valid, votes]) => (valid ? [votes[m.number] ?? 0, valid] : null),
-    winner: ([, , valid, votes]) => (valid ? leader(votes, valid) : null),
+    winner: ([, , valid, votes]) => (valid ? leader(votes, valid, byPlace) : null),
     turnout: turnoutOf,
   }[m.kind];
   const figs = (records, as = of) => {
@@ -600,26 +646,63 @@ function present(figs) {
   };
 }
 
+/* The names of the candidates *numbers* of winner map *m*: their full
+ * names (*which* 0) or their surnames (1), or their numbers where unknown. */
+const namesOf = (m, numbers, which) => numbers.map((n) => m.names[n]?.[which] ?? String(n));
+
+// Those tied for the lead by surname, in the order of their stripes: a
+// label on the map, where a list in words would rarely fit.
+const surnames = (m, numbers) => namesOf(m, numbers, 1).join(' / ');
+
 /* The same for a winner map (mode *m*): each unit in the colour of its
  * leader (`PALETTE`, by the candidates' votes overall) with the leader's
- * surname; {leaders} [number, units led, colour] of every candidate who
- * leads one of the finest units (`finestFigures`), in the order of the
- * colours; null with no values. */
+ * surname; a tie for the lead in stripes of the leaders' colours (a
+ * palette entry of several, draw.js `stepFill`) with their surnames. The
+ * legend's:
+ * - leaders: [number, units led, colour, of those tied] of every candidate
+ *   who leads one of the finest units (`finestFigures`), in the order of
+ *   the colours; a tie counts for each of those tied, whose colours its
+ *   stripes are;
+ * - tie: {count, colours} where the map has stripes: the finest units
+ *   tied, and the colours striped anywhere, else null.
+ * Null with no values. */
 function presentWinner(figs, m) {
   if (!allFigures(figs).length) return null;
   const colour = new Map(figs.ranking.map((n, i) => [n, Math.min(i, SERIES)]));
+  const colourOf = (n) => colour.get(n) ?? SERIES;
+  // A tie's palette entry by its colours, once each (those beyond SERIES
+  // share one), in order as its leaders are; and all the colours striped.
+  const palette = [...PALETTE];
+  const striped = new Map();
+  const stripedColours = new Set();
+  const step = (numbers) => {
+    const colours = [...new Set(numbers.map(colourOf))];
+    if (colours.length === 1) return colours[0];
+    const key = colours.join();
+    if (!striped.has(key)) {
+      striped.set(key, palette.length);
+      palette.push(colours.map((c) => PALETTE[c]));
+      for (const c of colours) stripedColours.add(c);
+    }
+    return striped.get(key);
+  };
+  const cells = cellsOf(figs, (fig) => [step(fig[2]), surnames(m, fig[2])]);
   const led = new Map();
-  for (const fig of finestFigures(figs)) led.set(fig[2], (led.get(fig[2]) ?? 0) + 1);
+  const tiedIn = new Map();
+  let tied = 0;
+  for (const [, , numbers] of finestFigures(figs)) {
+    for (const n of numbers) led.set(n, (led.get(n) ?? 0) + 1);
+    if (numbers.length === 1) continue;
+    tied++;
+    for (const n of numbers) tiedIn.set(n, (tiedIn.get(n) ?? 0) + 1);
+  }
   const leaders = [...led]
-    .map(([n, count]) => [n, count, colour.get(n) ?? SERIES])
+    .map(([n, count]) => [n, count, colourOf(n), tiedIn.get(n) ?? 0])
     .sort((a, b) => a[2] - b[2] || b[1] - a[1]);
   return {
-    shown: {
-      steps: PALETTE.length,
-      palette: PALETTE,
-      ...cellsOf(figs, (fig) => [colour.get(fig[2]) ?? SERIES, m.names[fig[2]]?.[1] ?? String(fig[2])]),
-    },
+    shown: { steps: palette.length, palette, ...cells },
     leaders,
+    tie: stripedColours.size ? { count: tied, colours: [...stripedColours].sort((a, b) => a - b) } : null,
     digits: 0,
   };
 }
@@ -657,7 +740,7 @@ function tipLines(hit, figs, m, index) {
   if (m.kind === 'candidate') {
     value = t('mapmode.tip_votes', { share, votes: formatNumber(fig[0]), valid: formatNumber(fig[1]) });
   } else if (m.kind === 'winner') {
-    value = t('mapmode.tip_winner', { name: m.names[fig[2]]?.[0] ?? fig[2], share });
+    value = leadText(m, fig[2], share, 'mapmode.tip_winner', 'mapmode.tip_tie');
   } else {
     value = t('mapmode.tip_turnout', { turnout: share, voters: formatNumber(fig[0]), eligible: formatNumber(fig[1]) });
   }
@@ -672,53 +755,97 @@ function tipLines(hit, figs, m, index) {
   return [unit, value, then].filter(Boolean);
 }
 
+/* What winner map *m* says of the leaders *numbers* (a figure's, `leader`)
+ * with *share* each: by message *one* the leader's full name, or by *tie*
+ * those tied for the lead in a list. */
+const leadText = (m, numbers, share, one, tie) =>
+  numbers.length === 1
+    ? t(one, { name: namesOf(m, numbers, 0)[0], share })
+    : t(tie, { names: formatList(namesOf(m, numbers, 0)), share });
+
 /* *lines* (`tipLines`) as a tooltip's or a card's content: the unit's name
  * in bold, then its figures. */
 const tipContent = (lines) =>
   lines.map((line, i) => (i ? html`<span key=${i}>${line}</span>` : html`<strong key=${i}>${line}</strong>`));
 
+// Pixels of each colour across a legend's stripes.
+const SWATCH_STRIPE = 3;
+
+/* The style of a legend's swatch of *colours* (indexes of PALETTE): one
+ * plain, several in stripes as the map draws a tie (draw.js `stepFill`). */
+function swatchStyle(colours) {
+  const vars = colours.map((c) => `var(--map-${PALETTE[c]})`);
+  if (vars.length === 1) return { background: vars[0] };
+  const stops = vars.map((v, i) => `${v} ${i * SWATCH_STRIPE}px ${(i + 1) * SWATCH_STRIPE}px`);
+  return { background: `repeating-linear-gradient(45deg, ${stops.join(', ')})` };
+}
+
+// The title of a winner map's *count* of units led, *ties* of them tied.
+const ledTitle = (count, ties) =>
+  ties
+    ? t('mapmode.winner_count_ties', { n: formatNumber(count), ties: formatNumber(ties) })
+    : t('mapmode.winner_count', { n: formatNumber(count) });
+
+// The title of the finest units tied, *tie* as `presentWinner` has it.
+const tieTitle = (tie) => (tie.count ? t('mapmode.tie_count', { n: formatNumber(tie.count) }) : undefined);
+
 /* The candidates of a winner map who lead somewhere, each in their colour,
- * with how many of the units shown they lead. */
-function Leaders({ m, leaders }) {
+ * with how many of the units shown they lead (ties included, as their
+ * colour is in the stripes); then, where any unit is striped, the stripes
+ * of a tie (`presentWinner` *tie*) with the finest units tied. */
+function Leaders({ m, leaders, tie }) {
   return html`<ul class="map-legend-leaders">
     ${leaders.map(
-      ([n, count, colour]) => html`<li key=${n}>
-        <span class="map-legend-swatch" style=${{ background: `var(--map-${PALETTE[colour]})` }}></span>
+      ([n, count, colour, ties]) => html`<li key=${n}>
+        <span class="map-legend-swatch" style=${swatchStyle([colour])}></span>
         <span class="map-legend-name">${m.names[n]?.[0] ?? n}</span>
-        <span class="map-legend-count" title=${t('mapmode.winner_count', { n: formatNumber(count) })}
-          >${formatNumber(count)}</span
-        >
+        <span class="map-legend-count" title=${ledTitle(count, ties)}>${formatNumber(count)}</span>
       </li>`,
     )}
+    ${
+      tie &&
+      html`<li key="tie">
+        <span class="map-legend-swatch" style=${swatchStyle(tie.colours)}></span>
+        <span class="map-legend-name">${t('mapmode.tie')}</span>
+        <span class="map-legend-count" title=${tieTitle(tie)}>${tie.count ? formatNumber(tie.count) : ''}</span>
+      </li>`
+    }
   </ul>`;
 }
 
 /* The same as a row of chips, by surname as the map names them, scrolled
  * sideways where wider than the screen: the legend in a phone's sheet. */
-function Chips({ m, leaders }) {
+function Chips({ m, leaders, tie }) {
   return html`<ul class="map-legend-chips">
     ${leaders.map(
-      ([n, count, colour]) => html`<li key=${n} title=${t('mapmode.winner_count', { n: formatNumber(count) })}>
-        <span class="map-legend-swatch" style=${{ background: `var(--map-${PALETTE[colour]})` }}></span>
+      ([n, count, colour, ties]) => html`<li key=${n} title=${ledTitle(count, ties)}>
+        <span class="map-legend-swatch" style=${swatchStyle([colour])}></span>
         <span class="map-legend-name">${m.names[n]?.[1] ?? n}</span>
         <span class="map-legend-count">${formatNumber(count)}</span>
       </li>`,
     )}
+    ${
+      tie &&
+      html`<li key="tie" title=${tieTitle(tie)}>
+        <span class="map-legend-swatch" style=${swatchStyle(tie.colours)}></span>
+        <span class="map-legend-name">${t('mapmode.tie')}</span>
+        ${tie.count ? html`<span class="map-legend-count">${formatNumber(tie.count)}</span>` : null}
+      </li>`
+    }
   </ul>`;
 }
 
 /* The figure of all counted in mode *m* (*total* as `figures` has it) in
  * short: the turnout, or the share of the candidate shown or of the one
- * with the most votes after their surname. Beside the legend's title
- * (*titled*), which names the turnout or the candidate, without that.
- * Null where unknown. */
+ * with the most votes (each of those tied for them) after their surname.
+ * Beside the legend's title (*titled*), which names the turnout or the
+ * candidate, without that. Null where unknown. */
 function keyFigure(m, total, titled = false) {
   if (!total?.[1]) return null;
   const share = formatPercent(total[0] / total[1]);
   if (m.kind === 'turnout') return t(titled ? 'mapmode.turnout_total' : 'mapmode.key_turnout', { turnout: share });
   if (m.kind === 'candidate' && titled) return share;
-  const surname = m.kind === 'winner' ? m.names[total[2]]?.[1] : m.surname;
-  return `${surname ?? m.name ?? total[2]} ${share}`;
+  return `${m.kind === 'winner' ? surnames(m, total[2]) : (m.surname ?? m.name)} ${share}`;
 }
 
 /* The legend's title, subtitle and summary (the figure of all counted,
@@ -737,7 +864,7 @@ function legendText(m, total) {
       title: t('mapmode.winner_title'),
       subtitle: `${m.label} · ${t(m.multi ? 'mapmode.winner_of_council' : 'mapmode.winner_of')}`,
       summary: total
-        ? t('mapmode.winner_total', { name: m.names[total[2]]?.[0] ?? total[2], share: formatPercent(total[0] / total[1]) })
+        ? leadText(m, total[2], formatPercent(total[0] / total[1]), 'mapmode.winner_total', 'mapmode.winner_total_tie')
         : null,
     };
   }
@@ -885,10 +1012,13 @@ export function MapResults({ map, legendRef, phone, sheet, insets }) {
 
   // Fitted to a contest's area only when the contest shown changes (or
   // comes after none): another of its modes (a candidate, its turnout, who
-  // got the most votes) keeps the view the visitor has zoomed to.
+  // got the most votes) keeps the view the visitor has zoomed to, as does
+  // one from a link that names its view (`keepView`).
   const contest = m?.contest ?? null;
+  const keepView = useRef(false);
+  keepView.current = Boolean(m?.keepView);
   useEffect(() => {
-    if (map && index && contest) map.fitArea(contestArea(contest, index));
+    if (map && index && contest && !keepView.current) map.fitArea(contestArea(contest, index));
   }, [map, index, contest]);
 
   useEffect(() => {
@@ -929,7 +1059,7 @@ export function MapResults({ map, legendRef, phone, sheet, insets }) {
   let body;
   if (shown && m.kind === 'winner') {
     body = html`
-      <${Leaders} m=${m} leaders=${shown.leaders} />
+      <${Leaders} m=${m} leaders=${shown.leaders} tie=${shown.tie} />
       ${summary ? html`<p class="map-legend-ends"><span class="map-legend-total">${summary}</span></p>` : null}
     `;
   } else if (scale) {
@@ -976,7 +1106,7 @@ export function MapResults({ map, legendRef, phone, sheet, insets }) {
   let legend;
   if (sheet) {
     let row;
-    if (shown && m.kind === 'winner') row = html`<${Chips} m=${m} leaders=${shown.leaders} />`;
+    if (shown && m.kind === 'winner') row = html`<${Chips} m=${m} leaders=${shown.leaders} tie=${shown.tie} />`;
     else if (scale) row = html`<div class="map-legend-row"><span>${low}</span>${steps()}<span>${high}</span></div>`;
     else row = html`<p class="map-legend-none">${t('mapmode.none')}</p>`;
     legend = html`<${Portal} into=${sheet}>
@@ -991,10 +1121,14 @@ export function MapResults({ map, legendRef, phone, sheet, insets }) {
       </section>
     <//>`;
   } else if (phone && !unfolded) {
-    // The leader overall in their colour, the first (`presentWinner`).
+    // The leader overall in their colour, the first (`presentWinner`);
+    // those tied for the lead overall in stripes of the first colours.
     const mark =
       m.kind === 'winner'
-        ? html`<span class="map-legend-swatch" style=${{ background: `var(--map-${PALETTE[0]})` }}></span>`
+        ? html`<span
+            class="map-legend-swatch"
+            style=${swatchStyle(total ? total[2].map((_, i) => Math.min(i, SERIES)) : [0])}
+          ></span>`
         : steps(' mini');
     legend = html`<section
       class=${[...classes, 'float', 'pill'].filter(Boolean).join(' ')}

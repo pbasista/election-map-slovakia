@@ -83,7 +83,7 @@ import pyproj
 import shapely
 from pyproj.enums import TransformDirection
 
-from election_map_slovakia import geo, obvody, output, progress
+from election_map_slovakia import geo, obvody, output, parallel, progress
 from election_map_slovakia.candidates import (
     Admin,
     Obec,
@@ -619,46 +619,70 @@ def assign_obvody(
     Also returns lines for the report, and obec → the obvod of each of its
     places. Fails listing every rule set that does not fit the candidate
     lists or leaves an address in no obvod or in two (see
-    :func:`check_assignment`).
+    :func:`check_assignment`). Each obec is done in a worker process.
     """
     out: dict[str, ObvodMap] = {}
     units: dict[str, list[int]] = {}
     lines: list[str] = []
     errors: list[str] = []
+    codes = [code for code in rule_sets if code in places]
+    tasks = [(rule_sets[c], council.get(c, []), places[c]) for c in codes]
+    done = dict(
+        zip(codes, parallel.each(_assign_obvody, tasks, cost=_cost), strict=True)
+    )
     for code, rules in rule_sets.items():
-        name = f"{rules.name} ({code})"
-        if code not in places:
-            errors.append(f"{name}: has rules, but not several council obvody")
-            continue
-        p = places[code]
-        a = obvody.assign(rules, p.places, p.kus, p.planar())
-        problems = check_assignment(rules, council.get(code, []), p, a)
-        if problems:
-            errors += [f"{name}: {x}" for x in problems]
-            continue
-        counts = Counter(a.units)
-        lines.append(
-            f"  {name:<36} {len(p.places):>7,} addresses: "
-            + ", ".join(f"{n} {counts[n]:,}" for n in rules.seats)
-            + (f"; {len(a.filled):,} by the nearest" if a.filled else "")
-        )
-        lines += [f"    unused: {r.describe()}" for r in a.unused]
-        lines += [
-            f"    {x}"
-            for x in obvody.name_problems(
-                rules,
-                sorted({x.street for x in p.places if x.street}),
-                sorted({x.part for x in p.places}),
-                p.ku_names,
+        if code not in done:
+            errors.append(
+                f"{rules.name} ({code}): has rules, but not several council obvody"
             )
-        ]
-        out[code] = _per_group(p.groups, a.units)
-        units[code] = a.units
+            continue
+        problems, report, assigned = done[code]
+        errors += problems
+        lines += report
+        if assigned is not None:
+            out[code] = _per_group(places[code].groups, assigned)
+            units[code] = assigned
     if errors:
         raise AddressesError(
             "the council obvody by address do not fit:\n  " + "\n  ".join(errors)
         )
     return out, lines, units
+
+
+def _cost(task: tuple[Any, ...]) -> int:
+    """Return how long a task of one obec's places (its last item) takes."""
+    return len(task[-1].places)
+
+
+def _assign_obvody(
+    rules: obvody.RuleSet, seats: Sequence[int], p: obvody.ObecPlaces
+) -> tuple[list[str], list[str], list[int] | None]:
+    """Return the problems, report lines and obvod of each place of one obec.
+
+    See :func:`assign_obvody`; the obvody are None where there are problems.
+    """
+    name = f"{rules.name} ({rules.obec})"
+    a = obvody.assign(rules, p.places, p.kus, p.planar())
+    problems = check_assignment(rules, seats, p, a)
+    if problems:
+        return [f"{name}: {x}" for x in problems], [], None
+    counts = Counter(a.units)
+    lines = [
+        f"  {name:<36} {len(p.places):>7,} addresses: "
+        + ", ".join(f"{n} {counts[n]:,}" for n in rules.seats)
+        + (f"; {len(a.filled):,} by the nearest" if a.filled else "")
+    ]
+    lines += [f"    unused: {r.describe()}" for r in a.unused]
+    lines += [
+        f"    {x}"
+        for x in obvody.name_problems(
+            rules,
+            sorted({x.street for x in p.places if x.street}),
+            sorted({x.part for x in p.places}),
+            p.ku_names,
+        )
+    ]
+    return [], lines, a.units
 
 
 def assign_okrsky(
@@ -674,26 +698,40 @@ def assign_okrsky(
     for the report, among them the rule sets that do not: ``geo`` fails on
     those, but the addresses are still written, for the jobs that fix them.
     *council* is obec → the obvod of each of its places where
-    :func:`assign_obvody` has them already.
+    :func:`assign_obvody` has them already. Each obec is done in a worker
+    process.
     """
     out: dict[str, ObvodMap] = {}
     lines: list[str] = []
-    for code, rules in rule_sets.items():
-        if not rules.okrsok_areas or code not in places:
-            continue
-        p = places[code]
-        planar = p.planar()
-        a = (council or {}).get(code)
-        if a is None:
-            a = obvody.assign(rules, p.places, p.kus, planar).units
-        k = obvody.assign_okrsky(rules, p.places, a, p.kus, planar)
-        problems = k.problems(p.places)
-        if problems:
-            lines.append(f"  {rules.name} ({code}), okrsky: " + "; ".join(problems))
-            continue
-        out[code] = _per_group(p.groups, k.units)
+    codes = [c for c, r in rule_sets.items() if r.okrsok_areas and c in places]
+    tasks = [(rule_sets[c], (council or {}).get(c), places[c]) for c in codes]
+    for code, (problem, assigned) in zip(
+        codes, parallel.each(_assign_okrsky, tasks, cost=_cost), strict=True
+    ):
+        if problem:
+            lines.append(problem)
+        else:
+            out[code] = _per_group(places[code].groups, assigned)
     lines.append(f"  okrsok of every address in {len(out)} obce")
     return out, lines
+
+
+def _assign_okrsky(
+    rules: obvody.RuleSet, council: Sequence[int] | None, p: obvody.ObecPlaces
+) -> tuple[str | None, list[int]]:
+    """Return the problem line, or else the okrsok of each place, of one obec.
+
+    See :func:`assign_okrsky`; *council* is the obvod of each place, if known.
+    """
+    planar = p.planar()
+    a = council
+    if a is None:
+        a = obvody.assign(rules, p.places, p.kus, planar).units
+    k = obvody.assign_okrsky(rules, p.places, a, p.kus, planar)
+    problems = k.problems(p.places)
+    if problems:
+        return f"  {rules.name} ({rules.obec}), okrsky: " + "; ".join(problems), []
+    return None, k.units
 
 
 def _per_group(
@@ -791,10 +829,13 @@ def locate(
     return out
 
 
-def write(result: Result, directory: Path) -> dict[str, tuple[int, int]]:
+def write(
+    result: Result, directory: Path, memo: Path | None = None
+) -> dict[str, tuple[int, int]]:
     """Replace *directory* with the files of *result*.
 
-    Returns path → (bytes, gzip -9 bytes).
+    Returns path → (bytes, gzip -9 bytes), the gzip sizes kept in *memo*
+    (:func:`election_map_slovakia.output.gzip_sizes`).
     """
     encoded = {}
     with (
@@ -804,7 +845,7 @@ def write(result: Result, directory: Path) -> dict[str, tuple[int, int]]:
         for path, content in s.track(sorted(result.files.items())):
             data = encoded[path] = output.to_json(content)
             (tmp / path).write_bytes(data)
-    gzipped = output.gzip_sizes(list(encoded.values()))
+    gzipped = output.gzip_sizes(list(encoded.values()), memo)
     return {
         path: (len(data), gz)
         for (path, data), gz in zip(encoded.items(), gzipped, strict=True)

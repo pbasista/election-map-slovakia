@@ -78,8 +78,7 @@ stroked); each water area is a feature ``{properties: {}, arcs:
     obec/<obec>.json          the buildings of an obec, {scale, counts, xy}
     index.json                {bands: [{lod, zoom: [from, until | null]}],
                                the shards' bands; okresy: [okres, …];
-                               buildings: {zoom, obce: [obec, …]};
-                               files: {path: bytes}}
+                               buildings: {zoom, obce: [obec, …]}}
 
 In a buildings file ``counts`` holds the number of vertices of each ring
 and ``xy`` the vertices of all rings in turn, open (the first not repeated
@@ -1069,19 +1068,14 @@ def _is_buildings(path: str) -> bool:
 
 
 def write(
-    files: Mapping[str, Mapping[str, Any]], directory: Path
+    files: Mapping[str, Mapping[str, Any]], directory: Path, memo: Path | None = None
 ) -> dict[str, tuple[int, int]]:
     """Replace *directory* with *files*; return path → (bytes, gzip bytes).
 
-    ``index.json`` is written last and lists the sizes of all other files.
+    The gzip sizes are kept in *memo*
+    (:func:`election_map_slovakia.output.gzip_sizes`).
     """
-    blobs = {
-        path: output.to_json(content)
-        for path, content in sorted(files.items())
-        if path != INDEX_FILE
-    }
-    index = dict(files[INDEX_FILE]) | {"files": {p: len(b) for p, b in blobs.items()}}
-    blobs[INDEX_FILE] = output.to_json(index)
+    blobs = {path: output.to_json(content) for path, content in sorted(files.items())}
     with (
         progress.stage(f"writing {directory.name}/", len(blobs)) as s,
         output.replacing(directory) as tmp,
@@ -1089,7 +1083,7 @@ def write(
         for path, data in s.track(blobs.items()):
             (tmp / path).parent.mkdir(parents=True, exist_ok=True)
             (tmp / path).write_bytes(data)
-    gz = output.gzip_sizes(list(blobs.values()))
+    gz = output.gzip_sizes(list(blobs.values()), memo)
     return {p: (len(b), g) for (p, b), g in zip(blobs.items(), gz, strict=True)}
 
 

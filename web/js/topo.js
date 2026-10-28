@@ -3,15 +3,24 @@
  * A geo file is a topology: arcs, delta coded in 1/scale degree, each with a
  * line code, and features whose rings list arcs by index (~i: reversed). It
  * is decoded once into typed arrays, in Web Mercator pixels at the reference
- * zoom Z0 relative to an origin of the file's own: 8 bytes a vertex and no
- * object per point. Near the origin a float32 stays within a few hundredths
- * of a pixel even at zoom 19, where world pixels would be several off.
+ * zoom Z0 relative to an origin of the file's own: 9 bytes a vertex (with
+ * its level, below) and no object per point. Near the origin a float32
+ * stays within a few hundredths of a pixel even at zoom 19, where world
+ * pixels would be several off.
  *
  * The map draws Path2D objects made from those arrays once per shown file
- * and scales them to the zoom by the canvas transform, so a redraw runs no
- * JavaScript per vertex. Each file is cut into bins, squares about a view
- * wide at the lowest zoom it is drawn at, and only the bins in view are
- * drawn: zoomed in, a large file costs what is on screen.
+ * and zoom level and scales them to the zoom by the canvas transform, so a
+ * redraw runs no JavaScript per vertex. Each file is cut into bins, squares
+ * about a view wide at the lowest zoom it is drawn at, and only the bins in
+ * view are drawn: zoomed in, a large file costs what is on screen.
+ *
+ * A file serves several zoom levels, and at the lower ones its vertices
+ * crowd closer than a pixel: the coarse view's, a hundred metres apart,
+ * fall six to a pixel at zoom 7. Every vertex has the level from which it
+ * is drawn (`levels`, Douglas–Peucker per arc), and the paths of a level
+ * leave out the others: they move no line by more than LEVEL_TOLERANCE,
+ * and drawing them took a third less time in the coarse view. The arcs
+ * keep their ends, so neighbours still share their borders.
  *
  * Hit testing is even-odd ray casting over every ring of a feature, as the
  * fills are drawn: obce share their borders exactly, so a point on a border
@@ -20,6 +29,11 @@
 
 export const Z0 = 12;
 const WORLD = 256 * 2 ** Z0;
+// CSS pixels by which a path of a zoom level may stray from the arcs at the
+// start of the level, twice that at its end (`levels`).
+const LEVEL_TOLERANCE = 0.3;
+// The level of a vertex no level draws: it lies on the line without it.
+const NEVER = 255;
 
 /* Web Mercator pixels at zoom Z0, as Leaflet projects (EPSG:3857). */
 export const mercX = (lon) => ((lon + 180) / 360) * WORLD;
@@ -71,7 +85,10 @@ export function decode(topo, binSize) {
     }
     arcBox.set([x0, y0, x1, y1], 4 * a);
   }
-  const file = { origin: [ox, oy], xy, start, lines: Uint8Array.from(topo.lines) };
+  const file = { origin: [ox, oy], xy, start, levels: levels(xy, start), lines: Uint8Array.from(topo.lines) };
+  // The level from which every vertex is drawn: the paths of the levels
+  // above it are the same.
+  file.top = file.levels.reduce((top, level) => (level < NEVER && level > top ? level : top), 0);
   const features = topo.features.map((f) => {
     const feature = { properties: f.properties, arcs: f.arcs };
     // The outer rings bound the feature.
@@ -100,9 +117,56 @@ export function decode(topo, binSize) {
   return file;
 }
 
+/* The zoom level from which each vertex of the arcs *xy*, *start* (as
+ * `decode` has them) is drawn: one that stands further than LEVEL_TOLERANCE
+ * pixels of a level from the line that would replace it (Douglas–Peucker),
+ * and never before those it splits the line between. The ends of an arc
+ * are always drawn (0). */
+function levels(xy, start) {
+  const out = new Uint8Array(xy.length / 2);
+  // A distance d (Z0 pixels) is of the first level at which it exceeds
+  // LEVEL_TOLERANCE · 2^(Z0 - level).
+  const tolerance2 = LEVEL_TOLERANCE ** 2;
+  // Spans [first, last, the level of the vertex that split them off].
+  const spans = [];
+  for (let a = 0; a + 1 < start.length; a++) {
+    spans.push(start[a], start[a + 1] - 1, 0);
+    while (spans.length) {
+      const outer = spans.pop();
+      const j = spans.pop();
+      const i = spans.pop();
+      if (j - i < 2) continue;
+      const ax = xy[2 * i];
+      const ay = xy[2 * i + 1];
+      const dx = xy[2 * j] - ax;
+      const dy = xy[2 * j + 1] - ay;
+      const length2 = dx * dx + dy * dy;
+      let far = 0;
+      let k = i + 1;
+      for (let m = i + 1; m < j; m++) {
+        const px = xy[2 * m] - ax;
+        const py = xy[2 * m + 1] - ay;
+        const t = length2 ? Math.min(Math.max((px * dx + py * dy) / length2, 0), 1) : 0;
+        const d2 = (px - t * dx) ** 2 + (py - t * dy) ** 2;
+        if (d2 > far) {
+          far = d2;
+          k = m;
+        }
+      }
+      // Halved, the log2 of a squared distance: Infinity for a vertex on the
+      // line, which no level draws (NEVER).
+      const level = Math.max(outer, Math.floor(Z0 + 1 - Math.log2(far / tolerance2) / 2));
+      out[k] = Math.min(Math.max(level, 0), NEVER);
+      spans.push(i, k, out[k], k, j, out[k]);
+    }
+  }
+  return out;
+}
+
 /* Arcs and features grouped into squares of *size* by the middle of their
- * box: [{box, arcs, features, paths}], box (relative to the origin) around
- * all that is in the bin, `paths` the Path2D cache of `binPath`. */
+ * box: [{box, arcs, features, top, paths}], box (relative to the origin)
+ * around all that is in the bin, `top` the file's, `paths` the Path2D cache
+ * of `binPath`. */
 function bins(file, arcBox, size) {
   const [ox, oy] = file.origin;
   const grid = new Map();
@@ -110,7 +174,7 @@ function bins(file, arcBox, size) {
     const key = `${Math.floor((x0 + x1) / 2 / size)},${Math.floor((y0 + y1) / 2 / size)}`;
     let bin = grid.get(key);
     if (!bin) {
-      bin = { box: [Infinity, Infinity, -Infinity, -Infinity], arcs: [], features: [], paths: null };
+      bin = { box: [Infinity, Infinity, -Infinity, -Infinity], arcs: [], features: [], top: file.top, paths: null };
       grid.set(key, bin);
     }
     const b = bin.box;
@@ -140,9 +204,15 @@ export function binsIn(file, box) {
   return file.bins.filter((b) => b.box[0] <= x1 && b.box[2] >= x0 && b.box[1] <= y1 && b.box[3] >= y0);
 }
 
-/* The path *key* of *bin*, made by *make* (a Path2D or null) on first use. */
-export function binPath(bin, key, make) {
-  bin.paths ??= new Map();
+/* The path *key* of *bin* at zoom level *z*, made by *make* (a Path2D or
+ * null) on first use. The paths of another level are let go, but those of
+ * the levels from the file's `top` on are the same. */
+export function binPath(bin, key, z, make) {
+  const level = Math.min(z, bin.top);
+  if (bin.pathsLevel !== level) {
+    bin.paths = new Map();
+    bin.pathsLevel = level;
+  }
   let path = bin.paths.get(key);
   if (path === undefined) {
     path = make();
@@ -154,13 +224,17 @@ export function binPath(bin, key, make) {
 /* Frees the paths of *file*, which is no longer drawn; `binPath` makes them
  * again when it is. */
 export function releasePaths(file) {
-  for (const b of file.bins) b.paths = null;
+  for (const b of file.bins) {
+    b.paths = null;
+    b.pathsLevel = null;
+  }
 }
 
 /* Feeds the ring *refs* of *file* to *sink*: moveTo at the first vertex,
- * lineTo along the rest. */
-export function traceRing(file, refs, sink) {
-  const { xy, start } = file;
+ * lineTo along the rest; only the vertices drawn at zoom level *z*
+ * (`levels`), all by default. */
+export function traceRing(file, refs, sink, z = Infinity) {
+  const { xy, start, levels } = file;
   let first = true;
   for (const r of refs) {
     const a = arcOf(r);
@@ -168,6 +242,7 @@ export function traceRing(file, refs, sink) {
     // Every arc after the first begins where the one before ends.
     for (let j = first ? 0 : 1; j < n; j++) {
       const i = r >= 0 ? start[a] + j : start[a + 1] - 1 - j;
+      if (levels[i] > z) continue;
       if (first) sink.moveTo(xy[2 * i], xy[2 * i + 1]);
       else sink.lineTo(xy[2 * i], xy[2 * i + 1]);
       first = false;
@@ -175,11 +250,12 @@ export function traceRing(file, refs, sink) {
   }
 }
 
-/* Adds every ring of *feature* (of *file*) to *path*, closed. */
-export function addFeature(path, file, feature) {
+/* Adds every ring of *feature* (of *file*) to *path*, closed, as drawn at
+ * zoom level *z*. */
+export function addFeature(path, file, feature, z) {
   for (const polygon of feature.arcs) {
     for (const ring of polygon) {
-      traceRing(file, ring, path);
+      traceRing(file, ring, path, z);
       path.closePath();
     }
   }
@@ -204,11 +280,11 @@ export function borderArcs(features) {
   return border;
 }
 
-/* The area of *features* (of *file*) as one path to fill even-odd: only
- * their border (`borderArcs`), joined into closed rings. Filling every ring
- * would cover the same pixels, at the cost of rasterizing all the inner
- * edges. Null if there are no features. */
-export function unionPath(file, features) {
+/* The area of *features* (of *file*) as one path to fill even-odd, as drawn
+ * at zoom level *z*: only their border (`borderArcs`), joined into closed
+ * rings. Filling every ring would cover the same pixels, at the cost of
+ * rasterizing all the inner edges. Null if there are no features. */
+export function unionPath(file, features, z) {
   const border = borderArcs(features);
   if (!border.size) return null;
   const { xy, start } = file;
@@ -241,38 +317,42 @@ export function unionPath(file, features) {
       // Walked from this end.
       r = next === undefined || key(head(next)) === end ? next : ~next;
     }
-    traceRing(file, ring, path);
+    traceRing(file, ring, path, z);
     path.closePath();
   }
   return path;
 }
 
-/* Adds arc *a* of *file* to *path* as a line of its own. */
-export function addArc(path, file, a) {
-  const { xy, start } = file;
+/* Adds arc *a* of *file* to *path* as a line of its own, as drawn at zoom
+ * level *z*. */
+export function addArc(path, file, a, z) {
+  const { xy, start, levels } = file;
   path.moveTo(xy[2 * start[a]], xy[2 * start[a] + 1]);
-  for (let i = start[a] + 1; i < start[a + 1]; i++) path.lineTo(xy[2 * i], xy[2 * i + 1]);
+  for (let i = start[a] + 1; i < start[a + 1]; i++) if (levels[i] <= z) path.lineTo(xy[2 * i], xy[2 * i + 1]);
 }
 
-/* Adds to *path* the dashes of arc *a* of *file* that reach into *box* [x0,
- * y0, x1, y1] (relative to the file's origin), for a stroke without a dash
- * pattern: *dash* the lengths as setLineDash takes them (an even number),
- * starting at the arc's first vertex as the canvas starts each subpath. The
- * canvas dashes the whole of a path, and zoomed in the borders it dashes run
- * on for hundreds of views beyond the one drawn: that cost more than all
- * else in a drawing. */
-export function addDashedArc(path, file, a, box, dash) {
-  const { xy, start } = file;
+/* Adds to *path* the dashes of arc *a* of *file* as drawn at zoom level *z*
+ * that reach into *box* [x0, y0, x1, y1] (relative to the file's origin),
+ * for a stroke without a dash pattern: *dash* the lengths as setLineDash
+ * takes them (an even number), starting at the arc's first vertex as the
+ * canvas starts each subpath. The canvas dashes the whole of a path, and
+ * zoomed in the borders it dashes run on for hundreds of views beyond the
+ * one drawn: that cost more than all else in a drawing. */
+export function addDashedArc(path, file, a, box, dash, z) {
+  const { xy, start, levels } = file;
   const period = dash.reduce((sum, d) => sum + d, 0);
   // Distance along the arc, and whether the last point added ends a dash
   // that goes on.
   let along = 0;
   let down = false;
-  for (let i = start[a]; i + 1 < start[a + 1]; i++) {
+  for (let i = start[a], j = i; i + 1 < start[a + 1]; i = j) {
+    // The next vertex drawn: the arc's end always is.
+    j = i + 1;
+    while (levels[j] > z) j++;
     const x0 = xy[2 * i];
     const y0 = xy[2 * i + 1];
-    const x1 = xy[2 * i + 2];
-    const y1 = xy[2 * i + 3];
+    const x1 = xy[2 * j];
+    const y1 = xy[2 * j + 1];
     const length = Math.hypot(x1 - x0, y1 - y0);
     const out =
       Math.max(x0, x1) < box[0] || Math.min(x0, x1) > box[2] || Math.max(y0, y1) < box[1] || Math.min(y0, y1) > box[3];

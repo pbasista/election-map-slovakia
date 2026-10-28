@@ -13,7 +13,7 @@
 
 import { html, useEffect, useRef, useState } from '../vendor/preact-htm.module.js';
 import { Contest, FilterBar, isMunicipal, useRowActions } from './ballots.js';
-import { contestArea, contests, dataIndex, useLoaded } from './data.js';
+import { contests, useLoaded } from './data.js';
 import { formatNumber, t } from './i18n.js';
 import { BackIcon, CheckIcon, CloseIcon, LinkIcon, QrIcon } from './icons.js';
 import { decodeResults, NOT_COUNTED, useLive } from './live.js';
@@ -195,26 +195,23 @@ function QrDialog({ link, onClose }) {
  * - picks and `onPicks(next)`: the circled candidates (picks.js); filter
  *   and `onFilter(next)`: the candidate filter (ballots.js); link: the
  *   link to share them by.
- * - onArea(target): fits the map to a contest's area (data.js
- *   `contestArea`), the pin in its header, leaving the place selected,
- *   its ballots and this list as they are.
  * - onBack(): where given, goes back to what the pane showed before.
  * - focus: the candidacy whose card was just left; its row takes the
  *   focus, else the title does once the list is in. */
-export function Favourites({ picks, onPicks, filter, onFilter, onCandidate, onArea, onBack, focus, link }) {
+export function Favourites({ picks, onPicks, filter, onFilter, onCandidate, onBack, focus, link }) {
   // The contests listed since the list opened: one whose circles are all
   // taken off stays, so that they can be put back.
   const seen = useRef([]);
   for (const id of byContest(picks).keys()) if (!seen.current.includes(id)) seen.current.push(id);
   const ids = seen.current;
-  const [result, failed] = useLoaded(() => Promise.all([contests(ids), dataIndex()]), [ids.join(',')]);
+  const [result, failed] = useLoaded(() => contests(ids), [ids.join(',')]);
   const [copy, setCopy] = useState(null);
   const [qr, setQr] = useState(false);
   const heading = useRef(null);
   const section = useRef(null);
   const focused = useRef(false);
   const rowFocused = useRef(null);
-  const list = result?.[0] ?? [];
+  const list = result ?? [];
   const actions = useRowActions(
     section,
     new Map(list.flatMap((c) => c.candidates.map((x) => [x.id, x]))),
@@ -283,25 +280,22 @@ export function Favourites({ picks, onPicks, filter, onFilter, onCandidate, onAr
   else if (failed) body = html`<p class="panel-body error">${t('error.load')}</p>`;
   else if (!result) body = html`<p class="panel-body muted loading">${t('panel.loading')}</p>`;
   else {
-    const index = result[1];
     const byId = new Map(list.map((c) => [c.id, c]));
     const shown = ids.map((id) => byId.get(id)).filter((c) => c?.candidates.length);
     const group = (title, members) =>
       members.length
         ? html`<h3 class="group">${title}</h3>
             <div class="favourite-contests">
-              ${members.map((c) => {
-                const target = contestArea(c.id, index);
-                return html`<${Contest}
+              ${members.map(
+                (c) => html`<${Contest}
                   key=${c.id}
                   contest=${c}
                   pin
                   onCandidate=${onCandidate}
                   filter=${filter}
                   actions=${actions}
-                  map=${{ label: t(`card.map_${target.what}`), onClick: () => onArea(target) }}
-                />`;
-              })}
+                />`,
+              )}
             </div>`
         : null;
     body = html`

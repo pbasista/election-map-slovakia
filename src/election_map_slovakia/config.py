@@ -202,6 +202,8 @@ class ObvodList:
     path: Path
     source: str
     """URL of the official document the membership was transcribed from."""
+    title: str
+    """That document's title, as the ballots name it."""
     date: dt.date
     """Date of the decision that set the obvody."""
     obvody: tuple[Obvod, ...]
@@ -668,6 +670,7 @@ def load_obvody(path: Path) -> ObvodList:
     """
     t = _Table(path, _read_toml(path))
     source = t.http_url("source")
+    title = t.nonempty("title")
     date = t.date("date")
     obvody = []
     for key, entry in t.get("obvod", dict).items():
@@ -687,7 +690,7 @@ def load_obvody(path: Path) -> ObvodList:
     if numbers != list(range(1, len(numbers) + 1)):
         raise t.error("obvod", f"must be numbered 1..{len(numbers)} without gaps")
     t.reject_unknown()
-    return ObvodList(path, source, date, tuple(obvody))
+    return ObvodList(path, source, title, date, tuple(obvody))
 
 
 def _member_list(

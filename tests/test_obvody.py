@@ -26,7 +26,11 @@ AREA = {
 
 def listing(*obvody: Obvod) -> ObvodList:
     return ObvodList(
-        Path("zsk-1.toml"), "https://example.sk/", dt.date(2026, 7, 1), obvody
+        Path("zsk-1.toml"),
+        "https://example.sk/",
+        "Uznesenie č. 1/2026",
+        dt.date(2026, 7, 1),
+        obvody,
     )
 
 
@@ -71,10 +75,11 @@ def test_member_outside_area():
     assert "obvod 2: obec 600001 is not in the area" in str(e.value)
 
 
-def write_toml(tmp_path: Path, body: str) -> Path:
+def write_toml(tmp_path: Path, body: str, title: str = "Uznesenie č. 1/2026") -> Path:
     path = tmp_path / "BA.toml"
     path.write_text(
-        f'source = "https://example.sk/"\ndate = 2026-07-01\n{body}', encoding="utf-8"
+        f'source = "https://example.sk/"\ntitle = "{title}"\ndate = 2026-07-01\n{body}',
+        encoding="utf-8",
     )
     return path
 
@@ -100,6 +105,12 @@ def test_numbering_gap_rejected(tmp_path: Path):
 def test_seats_required_and_positive(tmp_path: Path, seats: str, message: str):
     path = write_toml(tmp_path, f'[obvod.1]\n{seats}obce = ["500001"]\n')
     with pytest.raises(config.ConfigError, match=message):
+        config.load_obvody(path)
+
+
+def test_empty_title_rejected(tmp_path: Path):
+    path = write_toml(tmp_path, '[obvod.1]\nseats = 1\nobce = ["500001"]\n', title="")
+    with pytest.raises(config.ConfigError, match=r"BA\.toml: title: must not be empty"):
         config.load_obvody(path)
 
 

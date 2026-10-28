@@ -64,7 +64,8 @@
  * selected place's okrsok, and a click picks the okrsok there too.
  *
  * The 2026 results (`setResults`, mapmode.js) colour the land in steps of
- * one colour, or a winner's in a colour of each candidate's, by the units
+ * one colour, or a winner's in a colour of each candidate's (a tie in
+ * stripes of the tied candidates' colours, `stepFill`), by the units
  * of the zoom, from the zoom each overlay draws its borders at (`OVERLAYS`
  * `lines`, whether the overlay is on or not): below the shards every
  * regional obvod by its own value or that of its obce together; in the
@@ -129,7 +130,7 @@ const OBEC_ROOM = 3;
 const OBEC_GAP = 10;
 const ADDRESS_ZOOM = 16;
 const MAX_ADDRESS_FILES = 8;
-// Shards kept loaded, in vertices (8 bytes each, with the paths of the ones
+// Shards kept loaded, in vertices (9 bytes each, with the paths of the ones
 // shown about 30 more): about the obce of 300 km × 200 km at the finest
 // level of detail.
 const SHARD_VERTICES = 300000;
@@ -277,6 +278,11 @@ const COLOR = {};
 // How much of a turnout's tone each step of the results has, the rest the
 // land's, lowest first (app.css `.map-legend.toned` mixes the same).
 const TONE_STEPS = [0.15, 0.32, 0.49, 0.66, 0.83, 1];
+
+// CSS pixels each colour of a tie's stripes takes along a row (some 4
+// across): broad enough to read at any zoom, as they keep to the screen
+// rather than scale with the map.
+const STRIPE = 6;
 
 /* Colour *b* mixed into *a* by *f* (both #rrggbb), as CSS color-mix(in
  * srgb) mixes them. */
@@ -665,28 +671,29 @@ function placeFile(ctx, file, view) {
   ctx.setTransform(s, 0, 0, s, view.ratio * (ox * view.k - view.x), view.ratio * (oy * view.k - view.y));
 }
 
-/* Fills each of *bins* with its path *key* (`binPath`), made by
- * *make(bin)*, even-odd. */
-function fillBins(ctx, bins, key, make) {
+/* Fills each of *bins* with its path *key* at zoom level *z* (`binPath`),
+ * made by *make(bin)*, even-odd. */
+function fillBins(ctx, bins, z, key, make) {
   for (const bin of bins) {
-    const path = binPath(bin, key, () => make(bin));
+    const path = binPath(bin, key, z, () => make(bin));
     if (path) ctx.fill(path, 'evenodd');
   }
 }
 
 /* Strokes the path *key* of each of *bins*, as `fillBins` fills. */
-function strokeBins(ctx, bins, key, make) {
+function strokeBins(ctx, bins, z, key, make) {
   for (const bin of bins) {
-    const path = binPath(bin, key, () => make(bin));
+    const path = binPath(bin, key, z, () => make(bin));
     if (path) ctx.stroke(path);
   }
 }
 
-/* The water areas of *bin* of base map *file* as one path, or null. */
-function waterPath(file, bin) {
+/* The water areas of *bin* of base map *file* as one path at zoom level
+ * *z*, or null. */
+function waterPath(file, bin, z) {
   if (!bin.features.length) return null;
   const path = new Path2D();
-  for (const f of bin.features) addFeature(path, file, f);
+  for (const f of bin.features) addFeature(path, file, f, z);
   return path;
 }
 
@@ -743,14 +750,14 @@ function decodeBuildings({ scale, counts, xy }) {
 }
 
 /* The arcs of *file* among *arcs* this file draws whose code passes
- * *pick*, as one path, or null if there are none. */
-function linesPath(file, arcs, pick) {
+ * *pick*, as one path at zoom level *z*, or null if there are none. */
+function linesPath(file, arcs, pick, z) {
   const path = new Path2D();
   let any = false;
   for (const a of arcs) {
     const code = file.lines[a];
     if (code & FOREIGN || !pick(code)) continue;
-    addArc(path, file, a);
+    addArc(path, file, a, z);
     any = true;
   }
   return any ? path : null;
@@ -766,13 +773,14 @@ function dashedPath(file, bins, view, dash, pick) {
   const m = 4 / view.k;
   const box = [view.box[0] - ox - m, view.box[1] - oy - m, view.box[2] - ox + m, view.box[3] - oy + m];
   const lengths = dash.map((d) => d / view.k);
+  const z = Math.floor(view.zoom);
   const path = new Path2D();
   let any = false;
   for (const bin of bins) {
     for (const a of bin.arcs) {
       const code = file.lines[a];
       if (code & FOREIGN || !pick(code)) continue;
-      addDashedArc(path, file, a, box, lengths);
+      addDashedArc(path, file, a, box, lengths, z);
       any = true;
     }
   }
@@ -992,11 +1000,12 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
   // zsk, councils, okrsky, okrsokObce}, `tone` 'result' (the colours
   // `result-<n>`) or the colour a turnout is mixed from ('accent',
   // 'council', 'city', 'zsk'); `palette`, where set, the colour of each step
-  // by name instead (a winner's, `series-<n>`); `obce` obec code → [step,
-  // text], `zsk` '<kraj>/<n>' → [step, text, whole], `whole` where the
-  // obvod is known only as a whole, `councils` '<obec>/<n>' → [step, text]
-  // a municipal council obvod's, `okrsky` '<obec>/<n>' → [step, text] an
-  // okrsok's, `okrsokObce` the obce those are of; null for none.
+  // by name instead (a winner's, `series-<n>`, or a tie's several names,
+  // in stripes: `stepFill`); `obce` obec code → [step, text], `zsk`
+  // '<kraj>/<n>' → [step, text, whole], `whole` where the obvod is known
+  // only as a whole, `councils` '<obec>/<n>' → [step, text] a municipal
+  // council obvod's, `okrsky` '<obec>/<n>' → [step, text] an okrsok's,
+  // `okrsokObce` the obce those are of; null for none.
   let results = null;
   const zskOf = (p) => `${p.kraj}/${p.zsk}`;
   const okrsokKey = (p) => `${p.obec}/${p.okrsok}`;
@@ -1008,13 +1017,6 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
   // The selected obec for when its shard is not drawn: {code, obec}, obec
   // from the coarsest shard (`featureOf`) once that has come.
   let selectedObec = null;
-  // A contest's area shown from its pin on the ballots or in Favourites
-  // (`showArea`), highlighted beside the selected place until the selection
-  // changes: {area} as `inArea` takes it, or {info, obvod, obec} an obec or
-  // its council obvod, with *obec* from its coarsest shard (`obecFeature`)
-  // for while its own is not drawn. `areaAsked`: the one last asked for.
-  let areaShown = null;
-  let areaAsked = null;
   // The page's latest view: {view, free, seq} (`show`).
   let current = null;
   const level = () => Math.floor(current.view.zoom);
@@ -1104,20 +1106,69 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
     return unit ? results[unit[0]].get(unit[1])[0] : undefined;
   };
 
-  /* The colour of step *s* of the results. */
-  function stepColor(s) {
-    if (results.palette) return COLOR[results.palette[s]];
+  // The ties' stripes (`stripes`) by pixel ratio and colours, let go with
+  // the results and the theme they are of.
+  const stripePatterns = new Map();
+
+  /* A pattern of diagonal stripes of the colours *names*, each STRIPE CSS
+   * pixels along a row at pixel ratio *ratio*: a tile of one turn of them,
+   * which repeats seamlessly, its side `size`. */
+  function stripes(names, ratio) {
+    const key = `${ratio} ${names}`;
+    let made = stripePatterns.get(key);
+    if (made) return made;
+    const w = Math.max(1, Math.round(STRIPE * ratio));
+    const n = names.length;
+    const size = w * n;
+    const t = surface(size, size).getContext('2d');
+    // The first colour under all, so that no seam of two stripes lets the
+    // land through.
+    t.fillStyle = COLOR[names[0]];
+    t.fillRect(0, 0, size, size);
+    // Each stripe runs down to the right; those from left of the tile
+    // cover its lower left.
+    for (let i = 1 - n; i < n; i++) {
+      if (i === 0) continue;
+      t.fillStyle = COLOR[names[(i + n) % n]];
+      t.beginPath();
+      t.moveTo(i * w, 0);
+      t.lineTo((i + 1) * w, 0);
+      t.lineTo((i + 1) * w + size, size);
+      t.lineTo(i * w + size, size);
+      t.fill();
+    }
+    made = { pattern: t.createPattern(t.canvas, 'repeat'), size };
+    stripePatterns.set(key, made);
+    return made;
+  }
+
+  /* The fill of step *s* of the results on *ctx*, placed for a file of
+   * *view* (`placeFile`): its colour, or a tie's stripes (a palette entry
+   * of several colours) in screen pixels from the map's corner, which keep
+   * their width at every zoom and move with the map as it pans. */
+  function stepFill(ctx, view, s) {
+    const name = results.palette?.[s];
+    if (Array.isArray(name)) {
+      const { pattern, size } = stripes(name, view.ratio);
+      const at = (d) => (-view.ratio * d) % size;
+      pattern.setTransform(ctx.getTransform().inverse().translate(at(view.x), at(view.y)));
+      return pattern;
+    }
+    if (name) return COLOR[name];
     if (results.tone === 'result') return COLOR[`result-${s + 1}`];
     return mix(COLOR.land, COLOR[results.tone], TONE_STEPS[s]);
   }
 
-  /* Fills the features of *file* in *bins* in the colour of their step of
-   * the results, *stepOf(feature)*, over the land: one path per step and
-   * bin, cached under *group* (`setResults` lets go of them). */
-  function fillResults(ctx, file, bins, group, stepOf) {
+  /* Fills the features of *file* in *bins* of *view* in the fill of their
+   * step of the results, *stepOf(feature)*, over the land: one path per
+   * step and bin, cached under *group* (`setResults` lets go of them). */
+  function fillResults(ctx, view, file, bins, group, stepOf) {
+    const z = Math.floor(view.zoom);
     for (let s = 0; s < results.steps; s++) {
-      ctx.fillStyle = stepColor(s);
-      fillBins(ctx, bins, `${group} result-${s}`, (bin) => unionPath(file, bin.features.filter((f) => stepOf(f) === s)));
+      ctx.fillStyle = stepFill(ctx, view, s);
+      fillBins(ctx, bins, z, `${group} result-${s}`, (bin) =>
+        unionPath(file, bin.features.filter((f) => stepOf(f) === s), z),
+      );
     }
   }
 
@@ -1146,29 +1197,50 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
     return out.map(([file, names]) => [file, names, binsIn(file, view.box)]).filter((d) => d[2].length);
   }
 
+  /* Strokes *dash* (CSS pixels, `dashedPath`) of the arcs that *pick*
+   * passes of *file* in *bins* at line width *w* (CSS pixels): butt
+   * capped, each dash longer by the width the round caps would add, the
+   * same marks for a stroke without a cap at either end of each of
+   * thousands of dashes (in Bratislava at zoom 15, the dashed okrsok
+   * borders cost half as much). */
+  function strokeDashes(ctx, view, file, bins, dash, w, pick) {
+    const path = dashedPath(
+      file,
+      bins,
+      view,
+      dash.map((d, i) => (i % 2 ? d - w : d + w)),
+      pick,
+    );
+    if (!path) return;
+    ctx.lineCap = 'butt';
+    ctx.lineWidth = w / view.k;
+    ctx.stroke(path);
+    ctx.lineCap = 'round';
+  }
+
   /* The countries around, below Slovakia: their land, then their borders,
    * dashed. What they have under Slovakia its fill covers. */
   function drawNeighbours(ctx, view) {
     if (!neighbours) return;
     const { file } = neighbours;
+    const z = Math.floor(view.zoom);
     const bins = binsIn(file, view.box);
     placeFile(ctx, file, view);
     ctx.fillStyle = COLOR.neighbour;
-    fillBins(ctx, bins, 'land', (bin) => unionPath(file, bin.features));
+    fillBins(ctx, bins, z, 'land', (bin) => unionPath(file, bin.features, z));
     ctx.strokeStyle = COLOR['neighbour-line'];
-    ctx.lineWidth = 1 / view.k;
-    const dashes = dashedPath(file, bins, view, NEIGHBOUR_DASH, () => true);
-    if (dashes) ctx.stroke(dashes);
+    strokeDashes(ctx, view, file, bins, NEIGHBOUR_DASH, 1, () => true);
   }
 
   /* The base map: waters, buildings, roads and railways, faint, over the
-   * land and the results' fills and under every border, highlight and
-   * label, at the theme's `base-alpha`. Each class is one path per bin in
-   * view, made once and scaled by the transform, and the buildings one per
-   * cell: the rasterizer works only on what is near the view, and nothing
-   * is built again for a pan or zoom but the railways' ticks. Each step
-   * goes over all the files, so that the casing of a road in one never
-   * cuts the fill of a road in the next. (Drawn opaque on a canvas of its
+   * land and the results' fills (the waters opaque over the fills) and
+   * under every border, highlight and label, at the theme's `base-alpha`.
+   * Each class is one path per bin in view, made once and scaled by the
+   * transform, and the buildings one per cell: the rasterizer works only on
+   * what is near the view, and nothing is built again for a pan or zoom but
+   * the railways' ticks. Each step goes over all the files, so that the
+   * casing of a road in one never cuts the fill of a road in the next.
+   * (Drawn opaque on a canvas of its
    * own and laid on at `base-alpha`, the casings would not show faintly
    * under the fills, but that took 2.5 ms more of a drawing of 30.) */
   function drawBase(ctx, view) {
@@ -1189,15 +1261,27 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
       ctx.lineWidth = hair ? Math.min(px / view.k, hairline) : px / view.k;
       for (const [file, bins] of drawnFiles) {
         placeFile(ctx, file, view);
-        strokeBins(ctx, bins, `base-${code}`, (bin) => linesPath(file, bin.arcs, (c) => c === code));
+        strokeBins(ctx, bins, z, `base-${code}`, (bin) => linesPath(file, bin.arcs, (c) => c === code, z));
       }
     };
-    ctx.globalAlpha = Number(COLOR['base-alpha']);
-    ctx.fillStyle = COLOR['base-water'];
+    const alpha = Number(COLOR['base-alpha']);
+    // Over the results' fills, the waters are opaque, in the colour they
+    // have on the bare land: faint, a lake would take on the colour of the
+    // unit under it, a blue-tinted shade that reads as another value or
+    // candidate. So the colours stop at the shore; the borders and the
+    // labels still cross it, and a click in a lake still picks its unit.
+    if (results) {
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = mix(COLOR.land, COLOR['base-water'], alpha);
+    } else {
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = COLOR['base-water'];
+    }
     for (const [file, bins] of drawnFiles) {
       placeFile(ctx, file, view);
-      fillBins(ctx, bins, 'base-water', (bin) => waterPath(file, bin));
+      fillBins(ctx, bins, z, 'base-water', (bin) => waterPath(file, bin, z));
     }
+    ctx.globalAlpha = alpha;
     if (overlays.buildings && z >= buildingsIndex?.zoom) {
       ctx.fillStyle = COLOR['base-building'];
       for (const file of buildingsShown.values()) {
@@ -1248,24 +1332,24 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
       if (file.okrsky) {
         // Each okrsok by its own figure, over its obec's, from their zoom.
         if (results?.okrsky.size && showsUnits('okrsky', z)) {
-          fillResults(ctx, file, bins, 'okrsky', (f) => results.okrsky.get(okrsokKey(f.properties))?.[0]);
+          fillResults(ctx, view, file, bins, 'okrsky', (f) => results.okrsky.get(okrsokKey(f.properties))?.[0]);
         }
         continue;
       }
       if (file === coarse) {
         // The land, not the coarse cells: one path, and no seam shows where
-        // two cells meet.
-        coarse.landPath ??= unionPath(coarse, [{ arcs: coarse.land }]);
+        // two cells meet. Made for each zoom level (topo.js `levels`).
+        if (coarse.landPath?.z !== z) coarse.landPath = { z, path: unionPath(coarse, [{ arcs: coarse.land }], z) };
         ctx.fillStyle = COLOR.land;
-        ctx.fill(coarse.landPath, 'evenodd');
+        ctx.fill(coarse.landPath.path, 'evenodd');
         // The results by regional obvod, cell by cell.
-        if (results) fillResults(ctx, coarse, bins, 'coarse', (f) => results.zsk.get(zskOf(f.properties))?.[0]);
+        if (results) fillResults(ctx, view, coarse, bins, 'coarse', (f) => results.zsk.get(zskOf(f.properties))?.[0]);
         continue;
       }
       const groups = fillGroups(z);
       for (const [name, color, which] of groups) {
         ctx.fillStyle = color;
-        fillBins(ctx, bins, name, (bin) => unionPath(file, bin.features.filter(which)));
+        fillBins(ctx, bins, z, name, (bin) => unionPath(file, bin.features.filter(which), z));
       }
       // Over the land only: the council overlay's obce of no known obvod or
       // no council keep their colours. Cached apart below and from the
@@ -1273,37 +1357,37 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
       if (results) {
         const [land, , which] = groups[0];
         const group = showsUnits('oz', z) ? `${land} by-oz` : land;
-        fillResults(ctx, file, bins, group, (f) => (which(f) ? obecStep(f.properties, z) : undefined));
+        fillResults(ctx, view, file, bins, group, (f) => (which(f) ? obecStep(f.properties, z) : undefined));
       }
     }
     drawBase(ctx, view);
+    // The obec and okres borders along a regional or city obvod border
+    // drawn too: its wider stroke covers them.
+    const covered = Object.keys(FLAG)
+      .filter((name) => drawsOverlay(name, z))
+      .reduce((bits, name) => bits | FLAG[name], 0);
     for (const name of LINES) {
       const style = lineStyle(name, z);
+      const under = name === 'rank0' || name === 'rank1' ? covered : 0;
+      const pick = (code) => inLayer(name, code) && !(code & under);
       ctx.strokeStyle = style.color;
       for (const [file, names, bins] of files) {
         if (!names.includes(name)) continue;
         placeFile(ctx, file, view);
-        ctx.lineWidth = style.weight / view.k;
-        const pick = (code) => inLayer(name, code);
         if (style.dash) {
-          const path = dashedPath(file, bins, view, style.dash, pick);
-          if (path) ctx.stroke(path);
+          strokeDashes(ctx, view, file, bins, style.dash, style.weight, pick);
           continue;
         }
-        strokeBins(ctx, bins, name, (bin) => linesPath(file, bin.arcs, pick));
+        ctx.lineWidth = style.weight / view.k;
+        strokeBins(ctx, bins, z, `${name} ${under}`, (bin) => linesPath(file, bin.arcs, pick, z));
       }
     }
     drawHighlight(ctx, view);
   }
 
   /* The overlay whose obvod of the selected place is highlighted at zoom
-   * *z*: the finest drawn there that cuts the place out of what is around.
-   * A selected area (a contest's without a place: a Bratislava or Košice
-   * city contest's, a regional one's) is its overlay's at every zoom,
-   * whether or not that is on: it is all there is to see of the
-   * selection. */
+   * *z*: the finest drawn there that cuts the place out of what is around. */
   function highlighted(z) {
-    if (place?.area) return 'kraj' in place.area ? 'zsk' : 'city';
     const info = place?.info;
     if (!info?.okres) return null;
     const can = (name) => drawsOverlay(name, z) && within(z, OVERLAYS[name].highlight);
@@ -1321,11 +1405,12 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
       : p.city === area.city && (area.obvod === null || p.city_obvod === area.obvod);
 
   /* Fills faintly and outlines in *color* the features that *member* picks
-   * of the files drawn now, the outline along the arcs *edge* picks around
-   * them (for *overlay* 'oz', a council obvod within one obec, its
-   * outline): an arc on an okres border is in both shards, and only one of
-   * the two copies has a member on its side. */
-  function drawArea(ctx, view, member, overlay, edge, color) {
+   * of the files drawn now, the outline along the arcs of *overlay* around
+   * them (for 'oz', a council obvod within one obec, its outline): an arc
+   * on an okres border is in both shards, and only one of the two copies
+   * has a member on its side. */
+  function drawArea(ctx, view, member, overlay, color) {
+    const z = Math.floor(view.zoom);
     const files = lodFor(view.zoom) === null ? [coarse] : [...shown.values()].map((s) => s.file);
     const units = [];
     for (const file of files) {
@@ -1334,12 +1419,12 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
       const around = new Set();
       const members = file.features.filter((f) => member(f.properties));
       for (const f of members) {
-        addFeature(fill, file, f);
+        addFeature(fill, file, f, z);
         for (const p of f.arcs) for (const ring of p) for (const r of ring) around.add(arcOf(r));
       }
       if (!around.size) continue;
-      if (overlay === 'oz') line = unionPath(file, members);
-      else for (const a of around) if (edge(file.lines[a])) addArc(line, file, a);
+      if (overlay === 'oz') line = unionPath(file, members, z);
+      else for (const a of around) if (file.lines[a] & FLAG[overlay]) addArc(line, file, a, z);
       units.push([file, fill, line]);
     }
     ctx.fillStyle = color;
@@ -1361,7 +1446,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
    * faint fill. */
   function drawObec(ctx, view, obec, color) {
     // An obec cut into council obvody is several features.
-    const path = unionPath(obec.file, obec.features);
+    const path = unionPath(obec.file, obec.features, Math.floor(view.zoom));
     placeFile(ctx, obec.file, view);
     ctx.fillStyle = color;
     ctx.globalAlpha = 0.08;
@@ -1372,29 +1457,17 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
     ctx.stroke(path);
   }
 
-  /* Its border: of a whole kraj the kraj (or state) border, else the
-   * overlay's. */
-  const areaEdge = (area, overlay) =>
-    area && 'kraj' in area && area.zsk === null ? (code) => (code & RANK) >= 2 : (code) => (code & FLAG[overlay]) !== 0;
-
-  /* The selected obvod or area (its border from the files drawn now, so it
-   * is theirs), the selected obec, a contest's area shown from its pin
-   * (`areaShown`, in its overlay's colour, instead of the selected place's
-   * obvod, which would read as part of it) and the selected point. */
+  /* The selected obvod (its border from the files drawn now, so it is
+   * theirs), the selected obec and the selected point. */
   function drawHighlight(ctx, view) {
     const info = place?.info;
     const overlay = highlighted(level());
-    const member = place?.area
-      ? (p) => inArea(place.area, p)
-      : {
-          zsk: (p) => p.kraj === info.kraj && p.zsk === info.zsk,
-          city: (p) => p.city === info.city && p.city_obvod === info.cityObvod,
-          oz: (p) => p.id === info.code && p.oz === place.obvod,
-        }[overlay];
-    if (member && !areaShown) {
-      const color = overlay === 'oz' ? COLOR.council : COLOR[overlay];
-      drawArea(ctx, view, member, overlay, areaEdge(place?.area, overlay), color);
-    }
+    const member = {
+      zsk: (p) => p.kraj === info.kraj && p.zsk === info.zsk,
+      city: (p) => p.city === info.city && p.city_obvod === info.cityObvod,
+      oz: (p) => p.id === info.code && p.oz === place.obvod,
+    }[overlay];
+    if (member) drawArea(ctx, view, member, overlay, overlay === 'oz' ? COLOR.council : COLOR[overlay]);
     const obec = info?.okres ? shownObec(info) : null;
     if (obec) drawObec(ctx, view, obec, COLOR.accent);
     // The selected place's okrsok, where its okrsky are drawn.
@@ -1402,20 +1475,6 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
     const okrsky = okrsokShown ? okrskyShown.get(info.okres)?.file : null;
     const okrsok = okrsky?.features.filter((f) => f.properties.obec === info.code && f.properties.okrsok === place.okrsok);
     if (okrsok?.length) drawObec(ctx, view, { file: okrsky, features: okrsok }, COLOR.okrsok);
-    if (areaShown?.area) {
-      const a = areaShown.area;
-      const kind = 'kraj' in a ? 'zsk' : 'city';
-      drawArea(ctx, view, (p) => inArea(a, p), kind, areaEdge(a, kind), COLOR[kind]);
-    } else if (areaShown) {
-      // An obec other than the selected one (which is outlined already),
-      // and its council obvod where it is drawn as its obvody.
-      const { info: shownInfo, obvod } = areaShown;
-      const own = shown.get(shownInfo.okres);
-      const o = own ? featureOf(own.file, shownInfo) : areaShown.obec;
-      if (o && shownInfo.code !== info?.code) drawObec(ctx, view, o, COLOR.accent);
-      const pieces = o && obvod !== null ? o.features.filter((f) => f.properties.oz === obvod) : [];
-      if (pieces.length) drawObec(ctx, view, { file: o.file, features: pieces }, COLOR.council);
-    }
     if (place && Number.isFinite(place.lat)) {
       const p = toPixel(view, place.lat, place.lon);
       ctx.setTransform(view.ratio, 0, 0, view.ratio, 0, 0);
@@ -2309,21 +2368,8 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
         : null;
       if (gen !== selection) return undefined;
       place = p ? { ...p, shape } : null;
-      areaShown = null;
-      areaAsked = null;
       redraw();
       return shape?.points ?? null;
-    },
-
-    /* Highlights a contest's area beside the selected place (`areaShown`):
-     * {area} as `inArea` takes it, or {info, obvod} an obec or its council
-     * obvod; null for none. The next selection lets go of it. */
-    async showArea(asked) {
-      areaAsked = asked;
-      const obec = asked?.info ? await obecFeature(asked.info) : null;
-      if (areaAsked !== asked) return;
-      areaShown = asked && { ...asked, obec };
-      redraw();
     },
 
     /* The box in Z0 pixels of obec *info* (data.js `obecInfo`), or of its
@@ -2362,7 +2408,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
      * {'<obec>/<n>': [step, text]}}, step 0 the lowest of *steps*, `tone`
      * and `palette` as `results` has them, `whole` where the obvod is known
      * only as a whole; null for none. The fills cached for the values
-     * before are let go. */
+     * before are let go, and the stripes of their ties. */
     setResults(next) {
       results = next && {
         steps: next.steps,
@@ -2374,6 +2420,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
         okrsky: new Map(Object.entries(next.okrsky)),
         okrsokObce: new Set(Object.keys(next.okrsky).map((key) => key.split('/')[0])),
       };
+      stripePatterns.clear();
       const drawnFiles = [...shown.values(), ...okrskyShown.values()].map((s) => s.file);
       for (const file of [coarse, ...drawnFiles]) {
         for (const bin of file.bins) {
@@ -2387,6 +2434,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, col
     /* Draws again in the theme's colours *colors* (`COLOR`). */
     setColors(colors) {
       Object.assign(COLOR, colors);
+      stripePatterns.clear();
       redraw();
     },
 

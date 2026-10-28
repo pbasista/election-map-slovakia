@@ -466,9 +466,12 @@ _CONTROVERSIES = (
     " authority established), marked in red, and 'allegations and disputes'"
     " (unproven or denied claims, cases that ended in the candidate's"
     " favour, lesser matters), marked in amber; keep the two names the same"
-    " wherever they appear, and never name the second with the word for"
-    " criminal charges (as Slovak 'obvinenie'), which belong to the first"
-    " (Slovak: 'Podozrenia a spory')"
+    " wherever they appear; name the first with the plain word for"
+    " controversies (Slovak: 'Závažné kontroverzie'), not one that suggests a"
+    " case on its way to court (as Slovak and Czech 'kauza'), as not all of"
+    " them are; and never name the second with the word for criminal charges"
+    " (as Slovak 'obvinenie'), which belong to the first (Slovak: 'Podozrenia"
+    " a spory')"
 )
 
 _NOTES = (
@@ -568,6 +571,11 @@ _NOTES = (
         "heading or details of one contest (ballot); {name} is a municipality"
         " or city name, {kraj} the Slovak adjective of the region, {n} a number",
     ),
+    (
+        "council.summary_",
+        "one-line summary of a notice above the council ballots, whose whole"
+        " text is its tooltip; cut short where the line is too narrow, so short",
+    ),
     ("council.", "notice above the council ballots of a municipality"),
     (
         "candidate.occupation_sk",
@@ -597,10 +605,22 @@ _NOTES = (
     ("card.", "candidate card"),
     ("research.kind.cv", "candidate card, research section"),
     ("research.kind.", _CONTROVERSIES),
+    (
+        "research.affairs_summary",
+        f"{_CONTROVERSIES}. This one is the one-line summary, in red at the top"
+        " of the candidate card, of the notice research.affairs_alert, which"
+        " unfolds under it; cut short where the line is too narrow, so short",
+    ),
     ("research.affairs_", _CONTROVERSIES),
     ("research.disputes_", _CONTROVERSIES),
     ("filter.affairs", _CONTROVERSIES),
     ("filter.disputes", _CONTROVERSIES),
+    (
+        "research.notice_summary",
+        "one-line summary of the notice research.notice, which unfolds under it"
+        " in the candidate card's research section; cut short where the line is"
+        " too narrow, so short",
+    ),
     ("research.", "candidate card, research section"),
     ("about.category.", "name of a group of news sources in the About dialog"),
     ("about.", "About dialog"),
@@ -623,6 +643,11 @@ _LIMITS = (
     ("search.placeholder", 34),
     ("disclaimer.more", 34),
     ("app.tagline", 60),
+    ("council.summary_", 52),
+    # What fits a 360 px phone in Latin script: the first in bold, beside the
+    # button that jumps to the controversies.
+    ("research.affairs_summary", 33),
+    ("research.notice_summary", 42),
 )
 
 

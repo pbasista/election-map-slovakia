@@ -104,9 +104,7 @@ def project(root: Path) -> config.Config:
     (built / "addr").mkdir(parents=True)
     (built / "addr" / "index.json").write_text("{}")
     (built / "base").mkdir()
-    (built / "base" / "index.json").write_text(
-        '{"bands": [], "okresy": [], "files": {}}'
-    )
+    (built / "base" / "index.json").write_text('{"bands": [], "okresy": []}')
     (built / "candidates.json").write_text(json.dumps(DATA, ensure_ascii=False))
     return config.load(root / "config")
 

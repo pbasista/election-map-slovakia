@@ -97,7 +97,7 @@ with sync_playwright() as p:
     page.on("pageerror", lambda e: errors.append(str(e)))
     page.on("console", lambda m: m.type == "error" and errors.append(m.text))
     page.goto("http://127.0.0.1:8765/en/#o=500011")
-    page.locator(".ballots .contest-map").nth(9).click()  # a contest's pin
+    page.locator(".ballots .turnout-map").nth(9).click()  # a contest's turnout
     page.wait_for_timeout(2500)  # the map's fit and redraw
     page.screenshot(path="/tmp/ems-check.png")
     print("errors:", errors)
@@ -124,8 +124,9 @@ with sync_playwright() as p:
 
   | Selector | Element |
   |---|---|
-  | `.ballots .contest-map`, `.favourite-contests .contest-map` | a contest's pin |
-  | `.votes-map` | a candidate's pin |
+  | `.ballots .turnout-map`, `.favourite-contests .turnout-map` | a contest's turnout on the map |
+  | `.winner-map` | who got the most votes where |
+  | `.votes-map` | a candidate's votes on the map |
   | `.map-legend` | the legend of what the map colours by |
   | `.live-status`, `.voting-bar` | the status line under the title |
 
