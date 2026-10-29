@@ -1,0 +1,24 @@
+# Okrsky of Veľké Lovce, transcribed by an AI agent in job okrsok-rules-911 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: vymedzený rodinnými domami od súp.čísla 1 do súp.čísla 390
+#   okrsok 2: vymedzený rodinnými domami od súp.čísla 391 do čísla 842
+obec = "503631"
+name = "Veľké Lovce"
+okrsky_date = 2022-08-05
+okrsky_note = "Scanned document; the boundary numbers 390/391 are handwritten. Okrsok 2 is \"do čísla 842\"; súpisné čísla above 842 (if any) are also given to okrsok 2 (\"391-\")."
+
+[[document]]
+url = "https://www.velkelovce.sk/e_download.php?file=data/editor/133sk_7.pdf&original=Ozn%C3%A1menie%20o%20vytvoren%C3%AD%20volebn%C3%BDch%20okrskov%201%2C2..pdf"
+sha256 = "7a03ff3df830ed99669c8ab91855cf11e9871456843e22fbdaa29103deae2630"
+title = "Oznámenie o vytvorení volebných okrskov"
+
+[okrsok.1]
+rules = [
+  {part = "Veľké Lovce", numbers = "1-390"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Veľké Lovce", numbers = "391-"},
+]

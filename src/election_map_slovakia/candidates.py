@@ -1,24 +1,29 @@
-"""Turn the MV SR candidate lists into contests, candidacies and persons.
+"""Turn an election's candidate lists into contests, candidacies and persons.
 
-The four lists (mayors, municipal councils, regional presidents, regional
-councils) carry municipality names but no codes, so every municipality is
-matched by name within its okres to a ZBGIS obec (the 6-digit ŠÚ SR code);
-the cities of Bratislava and Košice, which ZBGIS has only as districts, get
-the synthetic codes ``BA`` and ``KE``. Persons are not identified in the
-lists; candidacies are merged into persons by obec, name and age.
+The lists come in one of two formats (``elections.toml``): the four lists
+MV SR publishes before an election (mayors, municipal councils, regional
+presidents, regional councils; :func:`read_lists`), or ŠÚ SR's packages of
+the definitive results, which list every candidate too
+(:func:`election_map_slovakia.statoffice.read_candidates`). Both name
+municipalities but give no codes, so every municipality is matched by name
+within its okres to a ZBGIS obec (the 6-digit ŠÚ SR code); the cities of
+Bratislava and Košice, which ZBGIS has only as districts, get the synthetic
+codes ``BA`` and ``KE``. Persons are not identified in the lists;
+candidacies are merged into persons by obec, name and age.
 
-Output, ``data/build/candidates.json`` (UTF-8, compact, sorted; codes are
+Output, ``data/build/<election day>/candidates.json`` (UTF-8, compact, sorted; codes are
 strings; keys in parentheses are omitted where they do not apply)::
 
     kraje:       [{code, name}]                         code "1".."8" (ZBGIS IDN2)
     okresy:      [{code, name, kraj}]                   code "101".."813" (IDN3)
     obce:        [{code, name, (okres), kraj, (city),   city: BA/KE for districts
-                   (past), (okrsky_2022)}]
-    contests:    [{id, kind, area, (obvod), (incumbent),
-                   (seats_2022), (past)}]               id "oz:528595/2"
+                   (zsk), (past)}]
+    contests:    [{id, kind, area, (obvod), (seats),
+                   (incumbent), (seats_2022), (past)}]  id "oz:528595/2"
     candidacies: [{id, contest, number, person, title_before, title_after,
                    first_name, surname, age, occupation, parties, independent,
-                   (residence), (incumbent)}]           id "oz:528595/2#7"
+                   (residence), (withdrawn), (incumbent)}]
+                                                        id "oz:528595/2#7"
     persons:     [{id, obec, candidacies}]
 
 ``kind`` is ``starosta``, ``oz``, ``predseda`` or ``zsk``; ``area`` is an
@@ -28,13 +33,20 @@ independent candidate. ``residence`` is the obec of residence of regional
 candidates. A person's ``obec`` is the obec its candidacies were merged on,
 with Bratislava and Košice districts counted as their city.
 
-Current office holders (see :mod:`election_map_slovakia.incumbents`): a
-candidacy's ``incumbent`` lists every role its person holds now, in any
-body, as ``[{body, since, result}]`` (``body`` is a contest id without obvod,
-such as ``starosta:500011`` or ``zsk:4``; ``since`` the ISO day the role was
-won); a mayor or president contest's ``incumbent`` is ``{name, since,
-candidacy, result}``, the holder's name with titles, and its candidacy in
-that contest or null. ``result`` is how the role was won,
+What ŠÚ SR's packages say beside the candidates (:class:`Lists`), the MV SR
+lists do not: a council or regional council contest's ``seats``, the
+councillors elected in its obvod; a candidacy's ``withdrawn``, true for a
+candidate who withdrew yet stayed on the ballot; an obec's ``zsk``, the
+number of its regional obvod within its kraj.
+
+Office holders before the election, where ``elections.toml`` names where
+they come from (``incumbents``; see :mod:`election_map_slovakia.incumbents`): a
+candidacy's ``incumbent`` lists every role its person holds at the
+election, in any body, as ``[{body, since, result}]`` (``body`` is a contest
+id without obvod, such as ``starosta:500011`` or ``zsk:4``; ``since`` the ISO
+day the role was won); a mayor or president contest's ``incumbent`` is
+``{name, since, candidacy, result}``, the holder's name with titles, and its
+candidacy in that contest or null. ``result`` is how the role was won,
 ``{votes, valid, voters, eligible, (obvod)}`` (:func:`incumbents.result_json`).
 Both are omitted when empty or vacant. A council contest's ``seats_2022`` is
 the number of councillors the whole council of its area had elected in the
@@ -47,12 +59,8 @@ mayor and council contests the latest by-election that elected the mayor or
 the whole council, else the regular election of 2022; for president
 contests the regional election of 2022. Regional council contests have
 none, their 2026 obvody being unknown here; an obec's ``past`` is the
-regional election of 2022 in it, for ``build`` to sum over them. An obec's
-``okrsky_2022`` is the turnout of each of its okrsky in the regular
-municipal election of 2022, ``{election, day, okrsky: [[okrsok, eligible,
-voters], …]}`` (:func:`incumbents.okrsky_json`), where it had several: for
-``build`` to sum over the okrsky of each 2026 council obvod, where they are
-known and the same.
+regional election of 2022 in it, for ``build`` to sum over them. An
+election without office holders has none of these.
 """
 
 from __future__ import annotations
@@ -62,13 +70,13 @@ import re
 import unicodedata
 from collections import Counter, defaultdict
 from collections.abc import Iterable, Iterator, Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from itertools import pairwise
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from election_map_slovakia import incumbents, output, progress, xlsx
-from election_map_slovakia.config import Overrides
+from election_map_slovakia.config import Incumbents, Overrides
 from election_map_slovakia.gpkg import GeoPackage
 
 if TYPE_CHECKING:
@@ -78,15 +86,6 @@ KINDS = ("starosta", "oz", "predseda", "zsk")
 MUNICIPAL = ("starosta", "oz")
 _REGIONAL = ("predseda", "zsk")
 OUTPUT_FILE = "candidates.json"
-# Inputs in config/inputs.toml: the list of each contest kind, and the
-# boundaries level whose attribute tables name the municipalities.
-INPUTS = {
-    "starosta": "candidates-starosta",
-    "oz": "candidates-oz",
-    "predseda": "candidates-predseda",
-    "zsk": "candidates-zsk",
-}
-ZBGIS_INPUT = "zbgis-0"
 PERSON_ID_LENGTH = 12
 # Merge obec, normalized first name, normalized surname, age.
 PersonKey = tuple[str, str, str, int]
@@ -504,49 +503,95 @@ class Person:
 
 
 @dataclass
+class Lists:
+    """An election's candidate lists, read, and what they say beside them."""
+
+    entries: list[Entry]
+    """Every row, in list order."""
+    withdrawn: set[str] = field(default_factory=set)
+    """Candidacy ids of the candidates who withdrew, where the lists say."""
+    seats: dict[str, int] = field(default_factory=dict)
+    """Council and regional council contest id → seats, where they say."""
+    zsk: dict[str, int] = field(default_factory=dict)
+    """Obec → its regional obvod's number within its kraj, where they say."""
+
+
+@dataclass
 class Result:
     """Everything ``candidates.json`` holds, plus statistics for the report."""
 
     admin: Admin
+    lists: Lists
     candidacies: list[Candidacy]
     persons: list[Person]
     residence_by: Counter[str]
     """How the residence obce of regional candidates were matched."""
     unmerged: int
     """Candidacies left unmerged because their person key repeats in a body."""
-    incumbency: incumbents.Incumbency
+    incumbency: incumbents.Incumbency | None
+    """None for an election whose office holders before are not known."""
+
+
+def read_lists(paths: Mapping[str, Path]) -> Lists:
+    """Read the four MV SR lists, *paths* by contest kind (format ``mvsr``)."""
+    entries: list[Entry] = []
+    for kind in MUNICIPAL:
+        with progress.stage(f"reading {paths[kind].name}"):
+            entries += read_list(kind, paths[kind])
+    known = {p for e in entries for p in e.parties if "," in p}
+    for kind in _REGIONAL:
+        with progress.stage(f"reading {paths[kind].name}"):
+            entries += read_list(kind, paths[kind], known)
+    return Lists(entries)
 
 
 def build(
-    lists: dict[str, Path],
+    lists: Lists,
     gpkg: Path,
     overrides: Overrides,
-    results: Mapping[str, Path],
+    holders: tuple[Incumbents, Mapping[str, Path]] | None,
     election: dt.date,
 ) -> Result:
-    """Read the four lists and match them against ZBGIS; see the module doc.
+    """Match the *lists* against ZBGIS and merge persons; see the module doc.
 
-    *results* are the files of :data:`incumbents.INPUTS`; *election* is the
-    2026 election day, against which the ages of office holders are checked.
+    *gpkg* is ZBGIS level 0, whose attribute tables name the municipalities.
+    *holders* is where the office holders before the election come from,
+    with the files of its inputs, or None where they are not known;
+    *election* is the election day, against which their ages are checked.
     """
     admin = load_admin(gpkg)
-    entries: list[Entry] = []
-    for kind in MUNICIPAL:
-        with progress.stage(f"reading {lists[kind].name}"):
-            entries += read_list(kind, lists[kind])
-    known = {p for e in entries for p in e.parties if "," in p}
-    for kind in _REGIONAL:
-        with progress.stage(f"reading {lists[kind].name}"):
-            entries += read_list(kind, lists[kind], known)
     with progress.stage("matching municipalities and residences"):
-        candidacies, residence_by = match(entries, admin, overrides)
+        candidacies, residence_by = match(lists.entries, admin, overrides)
         check_numbers(candidacies)
+        _check_stated(lists, candidacies, admin)
     with progress.stage("merging candidacies into persons"):
         persons, unmerged = merge_persons(candidacies, admin, overrides)
-    with progress.stage("finding the current office holders"):
-        holders = incumbents.load(results, admin)
-        incumbency = incumbents.match(holders, candidacies, persons, admin, election)
-    return Result(admin, candidacies, persons, residence_by, unmerged, incumbency)
+    incumbency = None
+    if holders is not None:
+        with progress.stage("finding the current office holders"):
+            loaded = incumbents.load(*holders, admin)
+            incumbency = incumbents.match(loaded, candidacies, persons, admin, election)
+    return Result(
+        admin, lists, candidacies, persons, residence_by, unmerged, incumbency
+    )
+
+
+def _check_stated(lists: Lists, candidacies: Sequence[Candidacy], admin: Admin) -> None:
+    """Check that what *lists* say beside the rows names their contests."""
+    ids = {c.id for c in candidacies}
+    councils = {c.contest for c in candidacies if c.obvod is not None}
+    errors = [f"withdrawn: no candidacy {cid}" for cid in sorted(lists.withdrawn - ids)]
+    errors += [
+        f"seats: no council contest {c}" for c in sorted(lists.seats.keys() - councils)
+    ]
+    errors += [
+        f"regional obvod: no obec {o}"
+        for o in sorted(lists.zsk.keys() - admin.obce.keys())
+    ]
+    if errors:
+        raise CandidatesError(
+            "\n  ".join(["the lists do not fit their rows:", *errors])
+        )
 
 
 def match(
@@ -814,38 +859,49 @@ def _contest_json(c: Candidacy, result: Result) -> dict[str, object]:
     contest: dict[str, object] = {"id": c.contest, "kind": c.kind, "area": c.area}
     if c.obvod is not None:
         contest["obvod"] = c.obvod
+    if c.contest in result.lists.seats:
+        contest["seats"] = result.lists.seats[c.contest]
+    inc = result.incumbency
+    if inc is None:
+        return contest
     # Only mayor and president contests have one holder to name.
-    held = result.incumbency.contests.get(c.contest)
+    held = inc.contests.get(c.contest)
     if held is not None:
         contest["incumbent"] = incumbents.contest_json(*held)
     if c.kind == "oz":
-        seats_2022 = result.incumbency.holders.seats_2022.get(c.body)
+        seats_2022 = inc.holders.seats_2022.get(c.body)
         if seats_2022:
             contest["seats_2022"] = seats_2022
-    past = result.incumbency.holders.past.get(c.body)
+    past = inc.holders.past.get(c.body)
     if past is not None:
         contest["past"] = incumbents.past_json(past)
     return contest
 
 
-def to_json(result: Result) -> dict[str, list[dict[str, object]]]:
+def _obec_json(o: Obec, result: Result) -> dict[str, object]:
+    item: dict[str, object] = {"code": o.code, "name": o.name}
+    if o.okres is not None:
+        item["okres"] = o.okres
+    item["kraj"] = o.kraj
+    if o.city is not None:
+        item["city"] = o.city
+    if o.code in result.lists.zsk:
+        item["zsk"] = result.lists.zsk[o.code]
+    held = result.incumbency
+    if held is None:
+        return item
+    past = held.holders.regional.get(o.code)
+    if past is not None:
+        item["past"] = incumbents.past_json(past)
+    return item
+
+
+def to_json(result: Result) -> dict[str, list[Any]]:
     """Return the content of ``candidates.json``; see the module doc."""
     admin = result.admin
-    obce = []
-    for o in sorted(admin.obce.values(), key=lambda o: o.code):
-        item: dict[str, object] = {"code": o.code, "name": o.name}
-        if o.okres is not None:
-            item["okres"] = o.okres
-        item["kraj"] = o.kraj
-        if o.city is not None:
-            item["city"] = o.city
-        past = result.incumbency.holders.regional.get(o.code)
-        if past is not None:
-            item["past"] = incumbents.past_json(past)
-        okrsky = result.incumbency.holders.okrsky.get(o.code)
-        if okrsky is not None:
-            item["okrsky_2022"] = incumbents.okrsky_json(okrsky)
-        obce.append(item)
+    obce = [
+        _obec_json(o, result) for o in sorted(admin.obce.values(), key=lambda o: o.code)
+    ]
     contests: dict[str, dict[str, object]] = {}
     candidacies = []
     for c in result.candidacies:
@@ -868,7 +924,9 @@ def to_json(result: Result) -> dict[str, list[dict[str, object]]]:
         }
         if c.kind not in MUNICIPAL:
             item["residence"] = c.obec
-        roles = result.incumbency.roles.get(c.person)
+        if c.id in result.lists.withdrawn:
+            item["withdrawn"] = True
+        roles = result.incumbency.roles.get(c.person) if result.incumbency else None
         if roles:
             item["incumbent"] = incumbents.roles_json(roles)
         candidacies.append(item)
@@ -924,4 +982,7 @@ def report(result: Result) -> Iterator[str]:
     )
     for combo, n in combos.most_common():
         yield f"  {combo:<26} {n:>6,}"
-    yield from incumbents.report(result.incumbency)
+    if result.incumbency is not None:
+        yield from incumbents.report(result.incumbency)
+    else:
+        yield "office holders before: not known for this election"

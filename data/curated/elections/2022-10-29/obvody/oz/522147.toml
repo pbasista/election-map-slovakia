@@ -1,0 +1,58 @@
+# Council obvody of Veľká Ida (522147), Košice - okolie.
+# Transcribed by an AI agent in job obvod-rules-342 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 pre obec Veľká Ida - volí sa 8 poslancov
+#   obvod 2: Volebný obvod . 2 pre časť obce Gomboš – volí sa 1 poslanec.
+# Okrsky added by an AI agent in job okrsok-rules-1210 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov bývajúcich vo Veľkej Ide od č.d. 1-319 + všetci občania prihlásení na obec Veľká Ida
+#   okrsok 2: pre voličov bývajúcich vo Veľkej Ide od č. d. 320 – 788
+#   okrsok 3: pre voličov bývajúcich vo Veľkej Ide v časti obce Gomboš od č. 1-99
+obec = "522147"
+name = "Veľká Ida"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-09-24
+okrsky_date_basis = "The okrsky announcement states no date; the Internet Archive captured the 2022 elections page with it on 2022-09-24 (https://web.archive.org/web/20220924224100/https://www.velkaida.sk/volby-do-organov-samospravy-obci)."
+date = 2022-06-30
+okrsky_note = "Undated announcement on the 2022 elections page, given as the Internet Archive snapshot of 24.9.2022 (the same text is still live on the a73-808 page). House numbers are súpisné (no streets in the register). Okrsok 2 (320–788) is the rest of obvod 1. \"všetci občania prihlásení na obec\" (residents without an address) of okrsok 1 are not a rule."
+
+[[document]]
+url = "https://www.velkaida.sk/files/2022-07-12-102941-Ur__enie_volebn__ho_obvodu___poslancov.pdf"
+sha256 = "703be8874bed79d340c23bb2a52f71d4bffcabe1c608f4ac9a7db7ba7e37de27"
+title = "Oznámenie o utvorení volebného obvodu a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 29. októbra 2022 (uznesenie č. 69/2022 zo dňa 30.6.2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20220924224100/https://www.velkaida.sk/volby-do-organov-samospravy-obci"
+sha256 = "1cdb54f5620f6f075e352351b162c86003a6b9dc674555af965a7fe9e1de9c6d"
+title = "Voľby do orgánov samosprávy obcí – Oznámenie o určení počtu volebných okrskov a miestností (snapshot 24.9.2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20221022003238/https://www.velkaida.sk/files/2022-07-12-102941-Ur__enie_volebn__ho_obvodu___poslancov.pdf"
+sha256 = "703be8874bed79d340c23bb2a52f71d4bffcabe1c608f4ac9a7db7ba7e37de27"
+title = "Oznámenie o utvorení volebného obvodu a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 29. októbra 2022 (uznesenie č. 69/2022 zo dňa 30.6.2022)"
+
+[obvod.1]
+seats = 8
+okrsky = [1, 2]
+rules = [
+  {part = "Veľká Ida"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [3]
+rules = [
+  {part = "Gomboš"},
+]
+
+[okrsok.1]
+rules = [
+  {part = "Veľká Ida", numbers = "1-319"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

@@ -1,0 +1,36 @@
+# Council obvody of Súľov-Hradná (517992), Bytča.
+# Transcribed by an AI agent in job obvod-rules-374 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 Súľov ... Vo volebnom obvode č. 1 Súľov budú volení 4 /slovom štyria / poslanci
+#   obvod 2: volebný obvod č. 2 Hradná ... Vo volebnom obvode č. 2 Hradná budú volení 3 / slovom traja / poslanci
+# Okrsky added by an AI agent in job okrsok-rules-1235 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný obvod č. 1 Súľov ... Vo volebnom obvode č. 1 Súľov budú volení 4 /slovom štyria / poslanci
+#   okrsok 2: volebný obvod č. 2 Hradná ... Vo volebnom obvode č. 2 Hradná budú volení 3 / slovom traja / poslanci
+obec = "517992"
+name = "Súľov-Hradná"
+date = 2022-04-04
+note = "Resolution names the obvody only as 'Súľov' and 'Hradná'; transcribed as the parts Súľov and Hradná."
+okrsky_date = 2022-04-04
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+
+[[document]]
+url = "https://sulov-hradna.sk/wp-content/uploads/2022/04/uznesenia_04042022.pdf"
+sha256 = "f492efe4e3b4b82e0346cbcf8e7c568ccf5890a936574dcf3c9842b68778934f"
+title = "Výpis uznesení zo zasadnutia OZ obce Súľov-Hradná zo dňa 04. 04. 2022, uznesenie č. 22/2022"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Súľov"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Hradná"},
+]

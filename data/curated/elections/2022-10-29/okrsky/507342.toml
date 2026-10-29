@@ -1,0 +1,63 @@
+# Okrsky of Moravany nad Váhom, transcribed by an AI agent in job okrsok-rules-838 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: MORAVANY nad VÁHOM (bez ulice), CINTORÍNSKA, KAŠTIELSKA, KOSTOLECKÁ, LESNÁ, MORAVANY n/V, NA VÝHONE, NADBREŽNÁ, PÁLENICKÁ, PIEŠŤANSKÁ, POD LESOM, RADOVÁ, SEVERNÁ, SLADOVÁ, SLNEČNÁ, ŠKOLSKÁ, VENDELÍNKOVÁ, VINOHRAD, VRCHNÁ, VÝTOCKÁ – celá ulica
+#   okrsok 2: MORAVANY nad VÁHOM: DRUŽSTEVNÁ, HLBOKÁ, HLINÍKOVÁ, INOVECKÁ, JARNÁ, JUŽNÁ, KRÍŽNA, KÚPEĽNÁ, LÚČNA, NOVÁ, OKRUŽNÁ, OSUŠINY, PODHORSKÁ, PRÚDY, ŠPORTOVÁ, VÁŽSKA, ZÁPADNÁ – celá ulica
+obec = "507342"
+name = "Moravany nad Váhom"
+okrsky_date = 2022-10-17
+okrsky_fill = "nearest"
+okrsky_note = "The list of streets per okrsok (Obvod: OBEC MORAVANY NAD VÁHOM; okrsok 1 in the obecný úrad, Kostolecká 175/4; okrsok 2 in the požiarna zbrojnica, Kostolecká 179/3) is undated; it hangs on the notice board item 'Spojené voľby 2022', which states 'Vyvesené: 17. 10. 2022', so date is that publication date. Its title names the elections to the samosprávne kraje, held together with the municipal elections on 29.10.2022 in the same okrsky. Okrsok 1 also lists an entry without a street and 'MORAVANY n/V' (celá ulica): voters registered without a street/only to the obec, not the register's houses without a street; those 79 addresses (súpisné only) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.moravany.sk/e_download.php?file=data/uredni_deska/obsah486_4.pdf&original=Okrsky.pdf"
+sha256 = "59727d15ee8c3688d93df6b28d4041463fc947e631a16dac57bc2f06582c5d5c"
+title = "Zoznam ulíc a okrskov pre voľby do orgánov samosprávnych krajov 2022"
+
+[[document]]
+url = "https://www.moravany.sk/samosprava/zverejnovanie/uradna-tabula/spojene-volby-2022-502.html"
+sha256 = "a0a6a89d99b8efa155cd5bd6cd09bf43090ac9d31eb25d873169b7c49847c5dc"
+title = "Spojené voľby 2022 (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Kaštieľska", written = "KAŠTIELSKA", note = "the document leaves out the diacritic of Kaštieľska; the same street"},
+  {street = "Kostolecká"},
+  {street = "Lesná"},
+  {street = "Na Výhone"},
+  {street = "Nadbrežná"},
+  {street = "Pálenická"},
+  {street = "Piešťanská"},
+  {street = "Pod lesom"},
+  {street = "Radová"},
+  {street = "Severná"},
+  {street = "Sladová"},
+  {street = "Slnečná"},
+  {street = "Školská"},
+  {street = "Vendelínkova", written = "VENDELÍNKOVÁ", note = "the document writes the ending -ová; the register's Vendelínkova is the same street (the only one of that name)"},
+  {street = "Vinohrad"},
+  {street = "Vrchná"},
+  {street = "Výtocká"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Hlboká"},
+  {street = "Hliníková"},
+  {street = "Inovecká"},
+  {street = "Jarná"},
+  {street = "Južná"},
+  {street = "Krížna"},
+  {street = "Kúpeľná"},
+  {street = "Lúčna"},
+  {street = "Nová"},
+  {street = "Okružná"},
+  {street = "Osušiny"},
+  {street = "Podhorská"},
+  {street = "Prúdy"},
+  {street = "Športová"},
+  {street = "Vážska"},
+  {street = "Západná"},
+]

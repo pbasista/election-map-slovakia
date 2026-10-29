@@ -7,7 +7,7 @@
  * to say that the translation is incomplete.
  */
 
-import { dataUrl, setDataVersion } from './files.js';
+import { setDataSource, setStringsVersion, sharedUrl } from './files.js';
 
 const config = JSON.parse(document.querySelector('meta[name="km-config"]').content);
 const dates = (isos) => isos?.map((iso) => new Date(iso)) ?? null;
@@ -15,7 +15,10 @@ const dates = (isos) => isos?.map((iso) => new Date(iso)) ?? null;
 export const lang = document.documentElement.lang;
 export const languages = config.languages;
 export const election = config.election;
-// When the polls open and close, as Dates (config/site.toml).
+// Every election the site shows, [{day, slug}] newest first; each has its
+// pages at /<lang>/<slug>/ (search.js `Elections`).
+export const elections = config.elections;
+// When the polls open and close, as Dates (config/elections.toml).
 export const polls = dates(config.polls);
 // Research language → the source categories its research searches.
 export const researchCategories = config.research;
@@ -23,18 +26,41 @@ export const researchCategories = config.research;
 export const repository = config.repository;
 // The site's version (__version__), named in the About dialog.
 export const version = config.version;
-// Asked for with every data file (files.js `dataUrl`), so it is set here,
-// before anything is fetched.
-export const dataVersion = config.dataVersion;
-setDataVersion(dataVersion);
-// The path of the election's results on this site (/results/<day>, from
-// the build's data/build/results/<day>/), named even before there are any.
+// Where the page's election's files are, and their versions (files.js
+// `setDataSource`): its map bundle (/map/<slug> served by `ems serve`,
+// deployed at an address of its own: geo/, base/, addr/) and its data
+// bundle (likewise: data/, i18n/). Set here, before anything is fetched.
+export const dataSource = {
+  data: config.data,
+  dataVersion: config.dataVersion,
+  map: config.map,
+  mapVersion: config.mapVersion,
+};
+setDataSource(dataSource);
+// Asked for with the UI strings (files.js `sharedUrl`), which every
+// election's page shares.
+setStringsVersion(config.stringsVersion);
+// Day of the regular elections before the page's, of which the office
+// holders and the past turnouts are; null where they are not known.
+export const previous = config.previous;
+// On an earlier election's page, what the map's credits name: {boundaries:
+// [slug, n] where it is drawn on a later election's boundaries (n obce then
+// differed) or null, osm and addresses the date (YYYY-MM-DD or YYYY-MM)
+// their data are of}; null on the latest's.
+export const credits = config.credits;
+// Where the election's results are (/results/<day> served by `ems serve`,
+// deployed on a domain of their own), named even before there are any.
 export const resultsPath = config.results;
-// Whether the app polls the results (config/site.toml live); if not, it
-// reads them once per page load.
+// Where the cached copies of the pages research cites are, below cache/
+// (empty: this site's own origin).
+export const sourcesBase = config.sources;
+// The URL of a party logo, which data/index.json names by file.
+export const logoUrl = (file) => `${config.logos}/${file}`;
+// Whether the app polls the results (config/elections.toml live); if not,
+// it reads them once per page load.
 export const live = config.live;
 // The window, as Dates, in which the app polls the results every minute
-// (config/site.toml live_days); null: any time (a build with
+// (config/elections.toml live_days); null: any time (a build with
 // EMS_RESULTS_ANYTIME=1, for testing).
 export const liveWindow = dates(config.liveWindow);
 
@@ -44,7 +70,7 @@ let strings = {};
 let locale = lang;
 
 export async function loadStrings() {
-  const response = await fetch(dataUrl(`/i18n/${lang}.json`));
+  const response = await fetch(sharedUrl(`/i18n/${lang}.json`));
   if (!response.ok) throw new Error(`/i18n/${lang}.json: HTTP ${response.status}`);
   strings = await response.json();
   if (strings._locale) {
@@ -53,17 +79,25 @@ export async function loadStrings() {
   }
 }
 
-export const translationPending = () => Boolean(strings._pending);
+// A language other than Slovak, in which the occupations are written, has
+// them translated in the election's bundle (i18n/<lang>.json), all but
+// config.occupations[lang] of them.
+export const translationPending = () => Boolean(strings._pending) || config.occupations[lang] > 0;
 
-/* Whether /i18n/<lang>/occupations.json has occupations in this language. */
-export const hasOccupations = () => Boolean(strings._occupations);
+/* Whether the election's bundle has occupations in this language. */
+export const hasOccupations = () => lang in config.occupations;
 
-/* `t('contest.council', {name, n})`: {name} placeholders are replaced; a
- * missing key shows as itself, which is easier to spot than a blank. */
+// Placeholders every string may use: {year}, the page's election's, and
+// {previous}, that of the elections before it (none where `previous` is
+// null, and no string with it is shown then).
+const pageVars = { year: election.slice(0, 4), previous: previous?.slice(0, 4) };
+
+/* `t('contest.council', {name, n})`: {name} placeholders are replaced, and
+ * {year} and {previous} (`pageVars`) unless *vars* has them; a missing key
+ * shows as itself, which is easier to spot than a blank. */
 export function t(key, vars) {
-  const s = strings[key] ?? key;
-  if (!vars) return s;
-  return s.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m));
+  const all = { ...pageVars, ...vars };
+  return (strings[key] ?? key).replace(/\{(\w+)\}/g, (m, k) => (all[k] != null ? String(all[k]) : m));
 }
 
 /* The strings whose keys start with *prefix*, by the rest of the key. */
@@ -98,21 +132,32 @@ export const formatPercent = (share, digits = 1) =>
       }),
   ).format(share);
 
-export function formatDate(iso) {
+/* Date *iso* (YYYY-MM-DD) written out, with the year where *year*
+ * ("24. októbra 2026") or without it ("24. októbra"). */
+export function formatDate(iso, year = true) {
   const date = new Date(`${iso}T00:00:00Z`);
   // Browsers have no calendar data for some languages (rue, rmc) and would
   // write the date in English; their month names come with the strings.
-  const known = formatter('date', () =>
+  const known = formatter(year ? 'date' : 'day-month', () =>
     Intl.DateTimeFormat.supportedLocalesOf([locale]).length
-      ? new Intl.DateTimeFormat(locale, { dateStyle: 'long', timeZone: 'UTC' })
+      ? new Intl.DateTimeFormat(
+          locale,
+          year ? { dateStyle: 'long', timeZone: 'UTC' } : { day: 'numeric', month: 'long', timeZone: 'UTC' },
+        )
       : null,
   );
   if (known) return known.format(date);
-  return t('date.long', {
+  return t(year ? 'date.long' : 'date.day_month', {
     day: date.getUTCDate(),
     month: t('date.months').split('|')[date.getUTCMonth()],
     year: date.getUTCFullYear(),
   });
+}
+
+/* A date of data, *asOf* YYYY-MM-DD (written out) or YYYY-MM (MM/YYYY). */
+export function formatAsOf(asOf) {
+  const [year, month, day] = asOf.split('-');
+  return day ? formatDate(asOf) : `${month}/${year}`;
 }
 
 /* "a, b and c" in the page's language; plain commas where the browser does
@@ -124,6 +169,13 @@ export function formatList(items) {
   return known ? known.format(items) : items.join(', ');
 }
 
+/* The page in language *code* of the page's election: /<code>/ for the
+ * latest, which that path serves, else /<code>/<slug>/. */
+export function languagePage(code) {
+  const slug = election === elections[0].day ? '' : `${elections.find((e) => e.day === election).slug}/`;
+  return `/${code}/${slug}`;
+}
+
 /* The root page (/) sends visitors to the language they chose last time,
  * else to the first of navigator.languages that the site has. */
 export function switchLanguage(code) {
@@ -132,5 +184,5 @@ export function switchLanguage(code) {
   } catch {
     // Private mode or storage disabled: the switch still works for this visit.
   }
-  location.assign(`/${code}/${location.hash}`);
+  location.assign(`${languagePage(code)}${location.hash}`);
 }

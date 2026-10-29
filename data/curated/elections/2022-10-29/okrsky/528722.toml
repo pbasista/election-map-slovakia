@@ -1,0 +1,115 @@
+# Okrsky of Sečovce, transcribed by an AI agent in job okrsok-rules-678 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Obchodná od č. 1-7, od č. 171- 189, Kochanovská, Gorkého, Mostová, Dukelská, J.Horňáka, Sládkovičova, Bottova, Železničná, Krátka, Blatná, M.R.Štefánika od čísla 1202-do čísla 1242, Hviezdoslavova, Družstevná, Záhradná.
+#   okrsok 2: Obchodná – bytové jednotky č. 12/23, 12/25, 13/27, 13/29, 14/31, 14/33, č.23/45, 23/47, 23/49, 24/51, 24/53, 24/55, 25/57, 25/59, 25/61, 166, 168, 170, Kollárova, Kpt. Jána Nálepku, Štúrova, Nová Doba, Rybníková, Albinovská, Komenského.
+#   okrsok 3: Okružná, Bačkovská, Námestie sv. CaM, SNP – bytové jednotky číslo: 819/11, 819/13, 819/15, 819/17, 819/19, 819/21, 819/23, 820/25, 820/27, 820/29, 820/31, 820/33, 820/35.
+#   okrsok 4: Nová.
+#   okrsok 5: Dargovských hrdinov, Jarná, Poľná, Pribinova, Súdna, Čižmárska, Mlynská, Hodvábna, Široká, voličov s trvalým pobytom Sečovce.
+#   okrsok 6: Vysoká, Letná, SNP – rodinné domy od č. 828-956 a č. d. 1593, 1594, 1595, 1637, 1670 a 1671, Bitúnková, M.R. Štefánika od č. d. 975 – do č.d. 1019 a č.d. 1787 Plechotická, Partizánska, Potočná, Hrnčiarska, Sedlárska.
+#   okrsok 7: Obchodná číslo 28/67, 28/69, 29/71, 29/73, SNP 821/37, 821/39, 821/41, 822/43, 822/45, 822/47,Narcisová, Snežienková, Tulipánová, Ružová, Konvalinková, Orgovánová, Jazmínová, Muškátová, Fialková, Zvončeková, Klinčeková
+#   okrsok 8: pre voličov oprávnených hlasovať vo voľbách bývajúcich v Albínove.
+obec = "528722"
+name = "Sečovce"
+okrsky_date = 2022-11-10
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections found: the 2022 notice 'Určenie volebných okrskov' (published 10.8.2022, https://www.secovce.sk/urcenie-volebnych-okrskov-oznam/mid/486331/.html) is gone from the website and the Internet Archive has no snapshot of it (only its first lines in the list); the referendum's document. The numbers the document gives are súpisné (by: supisne). 'voličov s trvalým pobytom Sečovce' in okrsok 5 are voters registered without an address, not the register's houses without a street. Addresses whose súpisné číslo the document does not list (Obchodná 9, 10, 15, 20-22, 26, 27, 164, 165, 167, 169, 1780; SNP 807, 825, 827 and others) and the houses without a street are placed by fill_nearest."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://web.archive.org/web/20221115194500/http://www.secovce.sk/volebne-okrsky-a-miestnosti-oznam/mid/486331/.html"
+sha256 = "6c61191b9f72b344b6b0c00ef24e79fa5c72fa00719cc924acc8f24671ce66de"
+title = "Volebné okrsky a miestnosti (referendum 21. januára 2023), Sečovce 10.11.2022"
+
+[okrsok.1]
+rules = [
+  {street = "Obchodná", numbers = "1-7, 171-189", by = "supisne"},
+  {street = "Kochanovská"},
+  {street = "Gorkého"},
+  {street = "Mostová"},
+  {street = "Dukelská"},
+  {street = "J. Horňáka", written = "J.Horňáka"},
+  {street = "Sládkovičova"},
+  {street = "Bottova"},
+  {street = "Železničná"},
+  {street = "Krátka"},
+  {street = "Blatná"},
+  {street = "M.R.Štefánika", numbers = "1202-1242", by = "supisne"},
+  {street = "Hviezdoslavova"},
+  {street = "Družstevná"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Obchodná", numbers = "12-14, 23-25, 166, 168, 170", by = "supisne", note = "the document lists the flats by súpisné/orientačné číslo (12/23 … 25/61); all addresses of these súpisné čísla"},
+  {street = "Kollárova"},
+  {street = "Kpt. Jána Nálepku"},
+  {street = "Štúrova"},
+  {street = "Nová Doba"},
+  {street = "Rybníková"},
+  {street = "Albinovská"},
+  {street = "Komenského"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Okružná"},
+  {street = "Bačkovská"},
+  {street = "Námestie sv. Cyrila a Metoda", written = "Námestie sv. CaM", note = "CaM abbreviates Cyrila a Metoda"},
+  {street = "SNP", numbers = "819, 820", by = "supisne", note = "the document lists 819/11 … 820/35, all addresses of these súpisné čísla"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Nová"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Dargovských hrdinov"},
+  {street = "Jarná"},
+  {street = "Poľná"},
+  {street = "Pribinova"},
+  {street = "Súdna"},
+  {street = "Čižmárska"},
+  {street = "Mlynská"},
+  {street = "Hodvábna"},
+  {street = "Široká"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Vysoká"},
+  {street = "Letná"},
+  {street = "SNP", numbers = "828-956, 1593, 1594, 1595, 1637, 1670, 1671", by = "supisne"},
+  {street = "Bitúnková"},
+  {street = "M.R.Štefánika", numbers = "975-1019, 1787", by = "supisne", written = "M.R. Štefánika"},
+  {street = "Plechotická"},
+  {street = "Partizánska"},
+  {street = "Potočná"},
+  {street = "Hrnčiarska"},
+  {street = "Sedlárska"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Obchodná", numbers = "28, 29", by = "supisne"},
+  {street = "SNP", numbers = "821, 822", by = "supisne"},
+  {street = "Narcisová"},
+  {street = "Snežienková"},
+  {street = "Tulipánová"},
+  {street = "Ružová"},
+  {street = "Konvalinková"},
+  {street = "Orgovánová"},
+  {street = "Jazmínová"},
+  {street = "Muškátová"},
+  {street = "Fialková"},
+  {street = "Zvončeková"},
+  {street = "Klinčeková"},
+]
+
+[okrsok.8]
+rules = [
+  {part = "Albínov"},
+]

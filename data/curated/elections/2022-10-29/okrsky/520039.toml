@@ -1,0 +1,42 @@
+# Okrsky of Belá nad Cirochou, transcribed by an AI agent in job okrsok-rules-825 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ul. Cintorínska, ul. Riečna, ul. Komenského, ul. Štúrova, ul. Partizánska, ul. SNP, ul. Švermova, ul. Vihorlatská od súpisného čísla 167-204, 251-318, 445-471, 925, 927, 948 974, 1029, 1042, 1044, 1046, 1047, 1065, 1075
+#   okrsok 2: ul. Mlynská, ul. Osloboditeľov, ul. Kukučínova, ul. Budovateľská, ul. Brusná, ul. Tajch, ul. Sládkovičova, ul. Staničná, ul. Drieňova, ul. Hviezdoslavova, ul. Vihorlatská od súpisného čísla 472-515 a súpisné číslo 930.
+obec = "520039"
+name = "Belá nad Cirochou"
+okrsky_date = 2022-08-04
+okrsky_fill = "nearest"
+okrsky_note = "Vihorlatská is split by súpisné čísla; its houses whose súpisné číslo the document lists in neither okrsok, and the register's addresses without a street (súpisné only), are placed by fill_nearest."
+
+[[document]]
+url = "https://www.belanadcirochou.sk/files/obsahy-stranok/volby/2022-08-04-121918-Ozn__menie_o_utvoren___volebn__ch_okrskov_a_ur__enie_volebn__ch_miestnost__.pdf"
+sha256 = "b8d4fae810afeb829d959c97632aa8fd993526068c2833305632ac036ed05483"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov, ktoré sa uskutočnia 29.10.2022"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Riečna"},
+  {street = "Komenského"},
+  {street = "Štúrova"},
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Švermova"},
+  {street = "Vihorlatská", numbers = "167-204, 251-318, 445-471, 925, 927, 948, 974, 1029, 1042, 1044, 1046, 1047, 1065, 1075", by = "supisne", note = "The document writes '948 974' without a separator; read as the two numbers 948 and 974."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mlynská"},
+  {street = "Osloboditeľov"},
+  {street = "Kukučínova"},
+  {street = "Budovateľská"},
+  {street = "Brusná"},
+  {street = "Tajch"},
+  {street = "Sládkovičova"},
+  {street = "Staničná"},
+  {street = "Drieňová", written = "Drieňova", note = "Missing accent on the ending; the register's Drieňová."},
+  {street = "Hviezdoslavova"},
+  {street = "Vihorlatská", numbers = "472-515, 930", by = "supisne"},
+]

@@ -4,25 +4,74 @@ A Python pipeline turns official open data into the static site in `dist/`.
 Its command is `ems` (**E**lection **M**ap **S**lovakia).
 `fetch` downloads the inputs into `data/raw/`;
 the steps after it write `data/build/`,
-and `build` assembles the site from that, `web/` and `config/`.
+and `build` assembles the site from that, `web/` and `config/`,
+in parts that are deployed separately
+([deploy.md](deploy.md)).
+
+## Elections
+
+The site shows several elections,
+each listed in `config/elections.toml` under its slug,
+its name in URLs (the year of its day, `2026`).
+An election's table gives its day, the polls' hours,
+whether the app polls its results (`live`, `live_days`),
+and the inputs of `config/inputs.toml` its steps read:
+the candidate lists (`candidates`, with the `format` they are read in;
+`mvsr` names the four MV SR lists by contest kind),
+the results the office holders are rebuilt from (`incumbents`, optional),
+the territorial division (`units`), the final results once published
+(`results`), the address register (`addresses`), the ZBGIS levels 0 to 2
+(`zbgis`), the OpenStreetMap extract (`osm`) and the records of sources
+no step reads, such as its regional obvod documents (`records`).
+Adding an election is adding a table there and its inputs.
+The newest election is the latest, the one `/<lang>/` shows.
+
+Each election has
+
+- its curated data in `data/curated/elections/<day>/`
+  (obvody, okrsky, documents, not-found lists);
+- what the steps make of it in `data/build/<day>/`:
+  `candidates.json`, `links/`, `addr/`, `obvod-addresses/`,
+  `addresses-outside.tsv`, `geo/`, `base/`, `results/`, `crosswalk/`,
+  and the steps' stamps and gzip memos;
+- its pages `/<lang>/<slug>/` in the app
+  and its bundles `dist/map/<slug>/` (`geo/`, `addr/`, `base/`)
+  and `dist/data/<slug>/` (`data/`, `i18n/`),
+  its results in `dist/results/<day>/` ([`build`](#build)).
+
+The steps from `candidates` to `results` run for every election,
+or with `--election DAY` (its day or slug) for one;
+`build` and `check` for the whole site.
+The GeoPackages unpacked from the ZBGIS inputs
+stay in `data/build/`:
+they are the inputs', shared by the elections that read them.
 
 ## Commands
 
 ```sh
-uv run ems fetch                     # download every input
+uv run ems fetch                     # get every input
 uv run ems fetch --only addresses    # just the named inputs
 uv run ems fetch --force             # ignore server validators
-uv run ems candidates                # data/build/candidates.json
-uv run ems addresses                 # data/build/addr/, data/build/obvod-addresses/
-uv run ems geo                       # data/build/geo/
-uv run ems geo --preview 806         # plus SVG previews in data/build/preview/
-uv run ems basemap                   # data/build/base/
-uv run ems build                     # dist/
+uv run ems inputs update addresses   # pin what the source serves now
+uv run ems inputs publish            # upload new pinned files to the input store
+uv run ems candidates                # data/build/<day>/candidates.json
+uv run ems links                     # data/build/<day>/links/<earlier slug>.json
+uv run ems addresses                 # data/build/<day>/addr/, …/obvod-addresses/
+uv run ems geo                       # data/build/<day>/geo/
+uv run ems geo --preview 806         # plus SVG previews in data/build/<day>/preview/
+uv run ems basemap                   # data/build/<day>/base/
+uv run ems build                     # dist/, in parts
+uv run ems build --deployed          # dist/app/ for the deployed data parts
 uv run ems check                     # verify dist/ before deploying
-uv run ems make                      # candidates, addresses, geo, basemap, results, build, check
+uv run ems make                      # candidates, links, addresses, geo, basemap, results, build, check
+uv run ems make --election 2026      # the steps up to results for that election only
 uv run ems make --force              # also redo the steps that are up to date
 uv run ems serve --port 8000         # http://127.0.0.1:8000/
-uv run ems results poll --deploy     # election night: volbysr.sk → results → site → Pages
+uv run ems data lock                 # data/published.toml, the data parts' keys
+uv run ems data lock --check         # fail if data/published.toml is stale
+uv run ems data status               # which data parts are not deployed
+uv run ems data deploy               # deploy those from dist/
+uv run ems results poll --deploy     # election night: volbysr.sk → results → Pages
 uv run ems results fake mid          # dummy results for testing the app
 ```
 
@@ -37,22 +86,23 @@ To rebuild the site after `fetch`
 (or after changing `config/`, `data/curated/` or `web/`),
 run `uv run ems make` and then `uv run ems serve`.
 
-`make` runs `candidates`, `addresses`, `geo`, `basemap`, `results`, `build`
-and `check` in this order, each as if run on its own.
+`make` runs `candidates`, `links`, `addresses`, `geo`, `basemap`, `results`,
+`build` and `check` in this order, each as if run on its own.
 It stops at the first that fails,
 naming it and the steps it did not run.
 `results` is a step of `make` only ([below](#results)).
 
 ### Skipping what is up to date
 
-`candidates`, `addresses`, `geo`, `basemap` and `results`
+`candidates`, `links`, `addresses`, `geo`, `basemap` and `results`
 skip their work when nothing they depend on
 has changed since they last succeeded.
-They record in `data/build/<step>.stamp.json` the sha256 of:
+They record in `data/build/<day>/<step>.stamp.json` the sha256 of:
 
 - their input files
-  (downloads, the election's `obvody/`, `data/build/candidates.json`);
-- the configuration they use (`config/inputs.toml` entries, overrides);
+  (downloads, the election's `obvody/`, its `candidates.json`);
+- the configuration they use (`config/inputs.toml` entries, the
+  election's entries in `config/elections.toml`, overrides);
 - their code: their modules and the package modules these import, the CLI,
   and the Python, NumPy, Shapely/GEOS and pyproj/PROJ versions
   (for `basemap` also pyosmium's and libosmium's).
@@ -87,7 +137,8 @@ On 8 CPUs a full `make --force` takes about 2 minutes;
 `addresses`, `basemap` and `build` report the gzip -9 size of what they
 write.
 Each keeps the sizes it measured last by the SHA-256 of each file
-(`data/build/gzip-sizes/<step>.json`)
+(`data/build/<day>/gzip-sizes/<step>.json`, for `build`
+`data/build/gzip-sizes/build.json`)
 and compresses only the contents it has not seen:
 of the site's 630 MB nearly all are the same from one build to the next,
 and compressing them took 9 s of every build.
@@ -107,16 +158,38 @@ so `uv run ems geo > geo.txt` keeps just the summary.
 
 ### `fetch`
 
-Downloads the files declared in `config/inputs.toml`
+Gets the files declared in `config/inputs.toml`
 (the official election and boundary files, Natural Earth's countries
 and the OpenStreetMap extract of Slovakia)
 into `data/raw/<name>/`,
 and records URL, sha256, size and retrieval time
 in `data/raw/manifest.json`.
 It prints one line per input:
-`new`, `updated`, `unchanged`, `fallback` or `failed`.
+`new`, `updated`, `unchanged` or `failed`,
+with where the file came from.
 
-- **Unchanged files** are detected by conditional request
+- **Pinned inputs.**
+  Every input pins its file by `sha256`
+  and the day it was downloaded (`retrieved`,
+  which the About dialog shows).
+  A pinned input is taken from the disk
+  where `data/raw/manifest.json` records it with the pinned digest
+  (`unchanged … on disk`, no network)
+  or, where the manifest does not, where the file there has the pinned
+  digest (`found on disk`: a file copied into `data/raw/<name>/` by hand),
+  else from the [input store](#the-input-store) (`from the store`),
+  else from its source (`from the source`);
+  the digest is checked in every case.
+  An input whose page changes on every request
+  (an ASP.NET page's hidden `__VIEWSTATE`) never matches its pin
+  from the source: only the disk and the store have it.
+  So a release, which starts with an empty `data/raw/`,
+  gets the same files though a server has since changed
+  or removed them
+  (in October 2026, two days before the elections,
+  volby.statistics.sk answered 404 for all the past results).
+- **Unpinned inputs** are downloaded from their source;
+  unchanged files are detected by conditional request
   where the server supports it, otherwise by content,
   and are left untouched.
 - **Each download is checked** before it replaces the previous copy:
@@ -125,30 +198,46 @@ It prints one line per input:
   and the sha256 where an input pins it.
   An address CSV with more than 1 % fewer rows than the previous one
   is rejected unless `--force` is given.
-- **Fallback.** When the server of a pinned input fails,
-  the input is taken from a copy with the pinned sha256
-  (`fallback`, with a warning):
-  the one on disk, else the one committed in `data/fallback/`.
-  That directory is laid out like `data/raw/`
-  with its own `manifest.json`,
-  whose entry (and so the retrieval date in the About dialog) it keeps.
-  The OSM extract (311 MiB) is not committed there.
-  The past election results are:
-  in October 2026, two days before the elections,
-  volby.statistics.sk answered 404 for all of them,
-  and a release starts with an empty `data/raw/`.
 - **Exit code** 1 if any input failed,
   except an input marked `optional`, whose failure is only a warning.
   Optional inputs are read by no step:
   the regional constituency announcements,
   records of the sources of the curated regional obvody.
 
+#### The input store
+
+The pinned files are kept in a release of the project's own repository,
+`store` in `config/inputs.toml`
+(`pbasista/election-map-slovakia`, the pre-release `inputs`):
+each file is an asset `<sha256>-<file>` of that one release,
+downloaded without a login from
+`https://github.com/<repository>/releases/download/inputs/<sha256>-<file>`.
+An asset is never replaced; a new pin adds one.
+Input file names are therefore limited to `[A-Za-z0-9][A-Za-z0-9._-]*`,
+what GitHub allows in asset names.
+
+To take a newer file of an input:
+
+1. `ems inputs update NAME...` downloads each named input from its source
+   whatever its pin, checks it as `fetch` does
+   (`--force` accepts the drop in address rows),
+   and, where its sha256 differs, writes the new `sha256`
+   and `retrieved` into `config/inputs.toml`, keeping its comments;
+2. `ems inputs publish` uploads, with the GitHub CLI
+   (`gh`, logged in as a user who may write to the repository's releases),
+   every pinned file the release lacks, from `data/raw/`;
+   files already there are left as they are.
+   Where the release does not exist yet, it creates it first,
+   as a pre-release (a draft is refused: its assets are not public);
+3. `ems make`, `ems data lock` ([Keys](#keys)), and commit.
+
 ### `candidates`
 
-Reads the four MV SR candidate lists
+Reads each election's candidate lists
+(`candidates` in `config/elections.toml`; `mvsr`: the four MV SR lists)
 and the municipality table of ZBGIS
 (level 0, unpacked once into `data/build/`),
-and writes `data/build/candidates.json`,
+and writes `data/build/<day>/candidates.json`,
 with a summary of counts, merges and incumbents on stdout.
 Its schema is described in `src/election_map_slovakia/candidates.py`,
 the incumbent rules in `src/election_map_slovakia/incumbents.py`.
@@ -165,8 +254,10 @@ the incumbent rules in `src/election_map_slovakia/incumbents.py`.
   are merged by municipality, name and age.
 - **Current office holders**
   (mayors, municipal councillors, regional presidents and councillors)
-  are rebuilt from the ŠÚ SR final results of the 2022 elections
+  are rebuilt from the ŠÚ SR final results the election's `incumbents`
+  names: those of the 2022 elections
   and of every municipal by-election since.
+  (The step needs `incumbents` for `mvsr` lists.)
   They are marked on the 2026 candidacies of the same person
   (same area, name and an age that fits);
   a holder who fits several persons is marked on none.
@@ -181,6 +272,27 @@ the incumbent rules in `src/election_map_slovakia/incumbents.py`.
   `build` sums it over the okrsky of each 2026 council obvod
   where they are known and numbered as then.
 
+### `links`
+
+Links the persons of each election
+to the same persons standing in every earlier one
+(both as their `candidates.json` has them)
+and writes `data/build/<day>/links/<earlier slug>.json`,
+with counts of linked, overridden and ambiguous persons on stdout.
+A person is linked by the rule the incumbents are found with:
+the same name (diacritics ignored),
+an age that fits the years between the election days,
+and the same obec (a Bratislava or Košice district counting as its city)
+or regional candidacies in the same kraj;
+a person fitting several the tie-breaks do not tell apart stays unlinked.
+`config/links.toml` corrects the rule per pair of elections
+(`link` and `unlink` pairs of candidacies).
+The output lists, per later candidacy,
+the person's earlier candidacies for the same office,
+which `results` (the crosswalk's votes then)
+and `build` (the "ran last time" mark, research reused for 2022) read.
+The rule and the format are described in `src/election_map_slovakia/links.py`.
+
 ### `addresses`
 
 Reads the MV SR address register
@@ -191,7 +303,7 @@ in `config/overrides.toml`).
 It needs the contests from `candidates`, so that must have run first.
 The output schema is described in `src/election_map_slovakia/addresses.py`.
 
-It writes to `data/build/addr/`:
+It writes to `data/build/<day>/addr/`:
 
 - `index.json`: the search index of municipalities,
   street names and parts of municipalities;
@@ -218,15 +330,15 @@ Further:
   and its municipality written without okrsky.
 - **Job input.**
   The addresses of every municipality
-  with several council obvody or several okrsky (`units-oso2026`)
-  also go to `data/build/obvod-addresses/`,
+  with several council obvody or several okrsky (the election's `units`)
+  also go to `data/build/<day>/obvod-addresses/`,
   the input of the `obvod-rules` and `okrsok-rules` jobs.
 - **Points.**
   Addresses without coordinates stay searchable without a point.
   Every point is checked against the municipality polygon (ZBGIS level 0):
   points more than 100 m outside are published without a point,
   and all points outside are listed with their distance
-  in `data/build/addresses-outside.tsv`.
+  in `data/build/<day>/addresses-outside.tsv`.
 
 It prints the counts, the municipalities pending street rules,
 the farthest outliers,
@@ -237,7 +349,7 @@ and the file sizes (raw and gzip).
 
 Reads ZBGIS boundary levels 0–2,
 reprojects them from S-JTSK (EPSG:5514) to WGS84,
-and writes to `data/build/geo/`:
+and writes to `data/build/<day>/geo/`:
 
 - `okres/<okres>/<lod>.json`: the obce of each okres
   at three levels of detail;
@@ -311,7 +423,7 @@ of the country, Bratislava and that okres for a visual check.
 Reads the OpenStreetMap extract of Slovakia with pyosmium
 and writes the faint base map
 that the app draws under the election colours
-to `data/build/base/`.
+to `data/build/<day>/base/`.
 The classes and levels are described
 in `src/election_map_slovakia/basemap.py`.
 
@@ -384,11 +496,11 @@ in `src/election_map_slovakia/basemap.py`.
 ### `results`
 
 A step of `make` only.
-It writes the election's results,
-`data/build/results/<election day>/`,
+It writes each election's results,
+`data/build/<day>/results/`,
 from the definitive results packages
-pinned as the inputs `results-oso<year>` and `results-osk<year>`
-(the year of the election day),
+pinned as the inputs the election's `results` names
+(`results-oso<year>` and `results-osk<year>`),
 as of their data, so that the same inputs give the same files.
 Without them it leaves the directory as `ems results` left it.
 
@@ -396,7 +508,8 @@ Without them it leaves the directory as `ems results` left it.
 from volbysr.sk as the votes are counted (`poll`),
 from the definitive CSV tables (`final`)
 or as dummy data (`fake`);
-`results deploy` builds the site with them and uploads it.
+`results deploy` writes `dist/results/` with them
+and deploys it ([results.md](results.md)).
 `build` copies the directory to `dist/results/<election day>/`,
 where the app reads it; each election has its own.
 The file format, the sources and the night's steps
@@ -405,32 +518,131 @@ are in [results.md](results.md).
 ### `build`
 
 Wipes `dist/` and writes the site from `web/`,
-the outputs of the steps above,
-the election's results (if there) and the configuration;
+the outputs of the steps above for every election,
+their results (if there) and the configuration;
 the same inputs give the same bytes.
-It prints file counts and sizes (raw and gzip) per group.
-The layout is described in `src/election_map_slovakia/build.py`.
+It prints file counts and sizes (raw and gzip) per group,
+the elections together,
+and notes when `data/published.toml` is stale ([Keys](#keys)).
+The layout is described in `src/election_map_slovakia/build.py`
+and `bundle.py`.
 
-Besides the geometry, base map (`base/`) and address files it writes:
+The site is written in parts,
+each deployed to a Cloudflare Pages project of its own
+(`config/site.toml`; [deploy.md](deploy.md)):
+
+- `dist/app/`: the app (shells, language picker, 404 page, assets,
+  UI strings, `_headers`, `sitemap.xml`), project `pages_project`;
+- `dist/map/<slug>/`: each election's map bundle, project `map_project`
+  (`ems-map-{slug}`);
+- `dist/data/<slug>/`: each election's data bundle, project `data_project`
+  (`ems-data-{slug}`);
+- `dist/sources/`: the cached copies of the pages research cites
+  (`cache/<sha256>.html`, `assets/cache.css`),
+  project `sources_project`, at `sources_url`;
+- `dist/results/`: every election's results, `<day>/`,
+  project `results_project`, at `results_url`.
+
+Each data part has its own `_headers` (from `web/_headers-<part>`:
+cross-origin reads allowed),
+a `404.html` (`web/part-404.html`)
+and a `manifest.json` with its key;
+a bundle's manifest also lists its version and its files,
+a data bundle's also, per language, the occupations still untranslated.
+The app's shells name, in their `km-config`,
+where the election's bundles, results and cached copies are:
+`/map/<slug>`, `/data/<slug>`, `/results/<day>` and the root
+when built plainly,
+the deployed origins with `--deployed`;
+a shell whose map bundle is on another origin preconnects to it.
+The app's CSP lets it fetch from its own origin
+and those of the bundles and results.
+
+An election's files are split in two bundles by what they depend on
+([Keys](#keys)):
+its map bundle holds
+the geometry (`geo/`), base map (`base/`) and address files (`addr/`),
+which depend on that election alone;
+its data bundle holds
+the occupations of its candidates translated
+(`i18n/<lang>.json`, every language but Slovak),
+and in `data/`
 
 - the candidates, split so that a place needs at most three small files:
   municipal contests per okres,
   Bratislava and Košice city contests,
-  regional contests per kraj;
+  regional contests per kraj.
+  A candidate linked to a person of another election
+  (`data/build/<day>/links/`) comes with every candidacy of that person
+  there and, where that election's results are final,
+  how it went: votes, valid ballots, rank by votes among the contest's
+  candidates, and elected or not
+  (the app's "ran last time" mark and the card's list of other elections);
+- the research summaries and findings
+  (`research/<lang>/`, per area file as the candidates):
+  the latest election's own,
+  and for an earlier election, for each person linked to a researched one,
+  that research cut to the findings whose source was published
+  before the earlier election's day;
+  undated findings are left out and counted,
+  and no new research is done for it;
 - a candidate-name search index, sharded by two-letter prefix;
+- the About dialog's sources and decisions (`about.json`):
+  the inputs the election names and those no election names,
+  and for an earlier election what it takes from the latest
+  and what it lacks, with counts (`substitutes`);
+- in `index.json`, besides the names, what the ballots and the map
+  say of an obec whose units are not the election's own:
+  council obvody drawn with another election's rules (`reused`),
+  or with a later election's though the layout is not proven to match
+  (`adopted`, `okrsky_adopted`; `adopt.toml` of the election),
+  not drawn for want of a document (`not_found`),
+  okrsky of another election or a referendum,
+  obvody or okrsky from a document dated only approximately
+  (`date_approximate`, `okrsky_date_approximate`),
+  or partly from a later source where the document does not place
+  every address (`supplemented`, `okrsky_supplemented`),
+  okrsky not drawn though it voted in several (`okrsky_unknown`),
+  and a boundary that moved since (`boundaries`, from `boundaries.toml`).
+  An earlier election's shells name the dates of its base map and
+  addresses (`as_of` of their inputs in `inputs.toml`, required there)
+  and the later boundaries it is drawn on, for the map's credits.
+
+The app, shared by the elections, holds
+
 - the UI strings per language;
-- an app shell per language under `/<lang>/`;
+- an app shell per language and election under `/<lang>/<slug>/`,
+  the latest election's also under `/<lang>/`,
+  the page both name as canonical;
+- `sitemap.xml` of the canonical pages;
 - a root page that picks the language:
   the stored choice, the browser languages
   with the aliases from `config/languages.toml`,
   then the first fallback.
+
+**`--deployed`.**
+Builds the app alone, for the data parts deployed with the keys
+of `data/published.toml`:
+it finds through the Pages API
+(with the login of `npx wrangler login`,
+or `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` where set)
+the production deployment of each bundle's project
+that carries the bundle's key,
+reads its `manifest.json` there,
+and writes `dist/app/`
+and, for `check`, each `dist/map/<slug>/manifest.json`
+and `dist/data/<slug>/manifest.json` alone.
+It needs nothing of `data/build/`.
 
 **Versioned paths.**
 The code goes to `/assets/<v>/`,
 the vendored libraries to `/assets/vendor/<vv>/`
 and the images to `/assets/img/<iv>/`,
 each version a hash of its files.
-The app fetches its JSON with `?v=<data version>`, a hash of the data.
+The app fetches its election's files with `?v=` the version
+of their bundle's manifest, the map's or the data's,
+and the UI strings with `?v=<strings version>`, a hash of them alone,
+the same on every election's page.
 So a release replaces browsers' copies of what changed
 and keeps the rest
 (see "Cache busting" in the module doc,
@@ -438,34 +650,51 @@ and [Caching in deploy.md](deploy.md#caching)).
 
 ### `serve`
 
-Serves `dist/` with Python's HTTP server for local testing
-(`--host`, `--port`; default <http://127.0.0.1:8000/>).
-It adds the response headers of `dist/_headers`
-and answers missing paths with `dist/404.html` and status 404,
+Serves the parts of `dist/` as one site
+with Python's HTTP server for local testing
+(`--host`, `--port`; default <http://127.0.0.1:8000/>):
+the app at `/`, each bundle at `/map/<slug>/` or `/data/<slug>/`,
+the results at `/results/`,
+and the cached copies at the root, where the app has no such path.
+Each part's responses carry the headers of its own `_headers`,
+read once at startup,
+and a missing path is answered with the part's `404.html`
+and status 404,
 as Cloudflare Pages does
 (without a `404.html`, Pages would answer them
 with the root page and status 200).
 
 ### `check`
 
-Verifies `dist/` and prints a table of its checks.
-It lists the problems and exits with 1 if there are any.
+Verifies `dist/`, part by part, and prints a table of its checks.
+It lists the problems, by their path in `dist/`
+(`map/2026/geo/…`, `app/i18n/cs.json`),
+and exits with 1 if there are any.
 The checks are described in `src/election_map_slovakia/check.py`:
 
-- **Budgets:** at most `file_budget` files
+- **Budgets:** at most `file_budget` files in each part
+  (each is a Pages project of its own)
   and no file above `max_file_bytes` (`config/site.toml`;
   Cloudflare Pages allows 20,000 files and 25 MiB per file).
-- **Formats:** valid JSON; `_headers` within the Pages limits.
-- **Completeness:** every file the frontend can request is present:
-  assets, shells and UI strings of every language,
-  geometry shards and polling district files,
-  the base map files of `base/index.json`,
+- **Formats:** valid JSON; each part's `_headers` within the Pages limits;
+  every data part with its `404.html` and `manifest.json`,
+  a bundle's manifest listing exactly its files.
+- **Completeness:** every file the frontend can request is present,
+  where `serve` maps it:
+  assets, shells and UI strings of every language and election,
+  and for every election
+  its geometry shards and polling district files,
+  the base map files of its `base/index.json`,
   the address and candidate files of every municipality, name shards.
-- **Contests:** every contest in exactly the area file
-  the frontend looks in.
-- **Origin:** no HTML, JS or CSS refers to another origin
-  except as a link target
-  (the CSP's connect-src is `'self'` alone).
+  An app built with `--deployed` is checked
+  against the files the deployed bundles' manifests list;
+  their content was checked where they were built.
+- **Contests:** every contest of every election
+  in exactly the area file the frontend looks in.
+- **Origin:** no HTML, JS or CSS of the app refers to another origin
+  except as a link target or the data parts' origins its shells name,
+  and the CSP's connect-src is `'self'`
+  and the origins of the bundles and results.
 - **Results:** the results of every election day in `results/`
   keep their format
   and list exactly their files with their hashes.
@@ -484,6 +713,47 @@ The checks are described in `src/election_map_slovakia/check.py`:
   `base/` holds no file its index does not let the app request,
   and each file only the line classes of its level.
 
+## Keys
+
+Each data part has a key, 16 hex digits,
+computed from the repository alone, without building
+(`src/election_map_slovakia/lock.py`).
+An election's map bundle is keyed by that election alone:
+the inputs of `candidates`, `geo`, `basemap` and `addresses`
+with their pins,
+what those steps read of its `elections.toml` table and of `overrides.toml`,
+its curated data (`data/curated/elections/<day>/`),
+the code of those steps and its libraries' versions,
+and the part's own web files.
+The data bundles and the results are keyed by
+the code that makes the data and its libraries' versions,
+the elections' configuration (but `live`),
+every input's configuration with its pin,
+the rest of `config/` but `site.toml`,
+the curated elections, research and their translations,
+and the part's own web files.
+The elections are entwined
+(links, reused research, results compared with the election before),
+so a change to any election's candidates, results or curated data
+changes every data bundle's key;
+research, links and translations change no map key,
+and a new base map extract of one election changes that map's key alone.
+Code counts by its syntax tree:
+comments, docstrings and the command line's help texts change no key.
+Changes to the app alone (`web/`, UI strings, `site.toml`)
+change no key.
+
+`ems data lock` writes the keys to `data/published.toml`
+(`sources`, `results`, `[map] <slug> = key`, `[data] <slug> = key`),
+which is committed with every change to them;
+`ems data lock --check`, run by CI, fails when it is stale.
+Every input must be pinned for the keys to exist.
+`ems data status [--github-output]` says which parts
+are not deployed with their locked key,
+and `ems data deploy` deploys those from `dist/`,
+each carrying its key;
+a release runs them ([deploy.md](deploy.md)).
+
 ## Identifiers
 
 | Identifier | Form | Examples |
@@ -499,15 +769,17 @@ The checks are described in `src/election_map_slovakia/check.py`:
 
 | File | What it holds |
 |---|---|
-| `config/site.toml` | The site's own domain (`base_url`, empty until it has one), source repository, Cloudflare Pages project, election date, the polls' hours, whether the app polls the results (`live`) and for how many days after the polls close (`live_days`; at any time in a build with `EMS_RESULTS_ANYTIME=1` in the environment), output budgets |
+| `config/site.toml` | The site's own domain (`base_url`, empty until it has one), source repository, the Cloudflare Pages projects of the parts and the addresses of the sources and results, output budgets |
+| `config/elections.toml` | The elections the site shows, by slug: day, the polls' hours, whether the app polls the results (`live`) and for how many days after the polls close (`live_days`; at any time in a build with `EMS_RESULTS_ANYTIME=1` in the environment), and the inputs each step reads ([Elections](#elections)) |
 | `config/languages.toml` | UI languages with the site's name in each, fallback chain, browser aliases |
 | `config/sources.toml` | Allowlist of sources for research, by category; the reports the media were selected from; which categories each research language searches |
 | `config/municipal-domains.toml` | Official websites of municipalities and regions, which research may cite (category `official`) |
 | `config/blocklist-konspiratori.txt` | Dated snapshot of konspiratori.sk |
-| `config/inputs.toml` | Official input files, their URLs and checks |
+| `config/inputs.toml` | Official input files, their URLs, checks and pins (`sha256`, `retrieved`), and the input store (`store`) |
 | `config/certs/` | Intermediate CA certificates some input servers omit |
 | `config/overrides.toml` | Municipality-name fixes (candidate lists and address register) and person-merge corrections |
-| `config/parties.toml` | Every party of the candidate lists: short form, official name (Ministry of Interior register), optional logo in `web/img/parties/` with its source and licence; `build` rejects 2026 candidacies of parties missing here |
+| `config/parties.toml` | Every party of the candidate lists: short form, official name (Ministry of Interior register), and per election the logo it used then, a file in `web/img/parties/` with its source and licence; `build` rejects candidacies of parties missing here |
+| `config/links.toml` | Corrections to the links between the persons of two elections ([`links`](#links)): `link` and `unlink` pairs of candidacies, per pair of elections |
 
 ## Curated data
 
@@ -515,7 +787,7 @@ Hand-curated inputs, committed:
 
 - `data/curated/elections/<election day>/`:
   what the state sets anew for each election,
-  kept per election (the day of `config/site.toml` `election`),
+  kept per election (`day` in `config/elections.toml`),
   so that a later election adds a directory of its own
   instead of changing this one's.
   The obvod files name their source document (`source`),
@@ -534,6 +806,12 @@ Hand-curated inputs, committed:
     by address, transcribed by an `okrsok-rules` job;
     `okrsky/not-found.json` lists the municipalities
     whose okrsky document was not found.
+  - `boundaries.toml`, for an election drawn on a later election's
+    ZBGIS boundaries (the same `zbgis` inputs):
+    the date its own boundaries are of (`compared`)
+    and each obec whose land moved since by more than redrawing
+    (`[[change]]`, `state_border` where along the state border);
+    the ballots, the map's credits and About say so.
 - `data/curated/translations/<lang>.json`:
   machine translations from the `translation` jobs:
   `ui` (key → the English `src` translated and its `text`),
@@ -544,6 +822,5 @@ Hand-curated inputs, committed:
   by sha256, and the cached copies of the pages research cites.
 - `data/curated/research/`:
   what the `research` jobs found per candidate.
-- `data/fallback/`:
-  copies of pinned inputs, for when their server fails
-  (see [`fetch`](#fetch)).
+- `data/published.toml`:
+  the keys of the data parts ([Keys](#keys)).

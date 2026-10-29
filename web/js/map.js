@@ -34,7 +34,7 @@
 import { html, render } from '../vendor/preact-htm.module.js';
 import { dataIndex, obecInfo } from './data.js';
 import { dataUrl, fetchJSON } from './files.js';
-import { dataVersion, stringsUnder, t } from './i18n.js';
+import { credits, dataSource, formatAsOf, stringsUnder, t } from './i18n.js';
 import { InfoIcon } from './icons.js';
 import { SERIES, STEPS } from './mapmode.js';
 import { Z0 } from './topo.js';
@@ -119,6 +119,9 @@ const COLORS = [
   // last in one colour (mapmode.js `SERIES`).
   ...Array.from({ length: SERIES }, (_, i) => `series-${i + 1}`),
   'series-other',
+  // A candidate's map of the election before: an okrsok whose figures then
+  // are not known (mapmode.js `PREVIOUS_PALETTE`).
+  'past-unknown',
 ];
 
 /* The theme's map colours by name (draw.js `COLOR`). */
@@ -245,6 +248,20 @@ async function startRenderer(options, onFrame, onFail) {
     },
     call,
   };
+}
+
+/* The map's credits; on an earlier election's page (i18n.js `credits`)
+ * with the dates its base map and addresses are of, and the later
+ * boundaries it is drawn on. Its own boundaries are credited by name and
+ * licence alone, the same in every language. */
+function attribution() {
+  if (!credits) return t('map.attribution');
+  const [on, n] = credits.boundaries ?? [];
+  return t('map.attribution_past', {
+    boundaries: on ? t('map.credit_boundaries_other', { on, n }) : 'ZBGIS © ÚGKK SR, CC BY 4.0',
+    osm: formatAsOf(credits.osm),
+    addresses: formatAsOf(credits.addresses),
+  });
 }
 
 /* On a phone the credits of *map* take three lines over the map (app.css):
@@ -383,7 +400,7 @@ export async function createMap(element, { onPick, insets, onZoom, view, onView 
   const zoomer = smoothZoom(map);
   dragAfterPinch(map);
   map.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
-  map.attributionControl.addAttribution(t('map.attribution'));
+  map.attributionControl.addAttribution(attribution());
   foldCredits(map);
   /* The insets (`insets()`) that a place the map moves to keeps out from
    * under, giving way where they would leave it less than MIN_ROOM pixels
@@ -549,7 +566,7 @@ export async function createMap(element, { onPick, insets, onZoom, view, onView 
     {
       geoIndex,
       coarse,
-      dataVersion,
+      dataSource,
       colors: readColors(),
       strings: {
         obvod: t('map.obvod', { n: '{n}' }),

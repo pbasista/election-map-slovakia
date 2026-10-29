@@ -1,0 +1,256 @@
+# Council obvody of Detva (518263), Detva.
+# Transcribed by an AI agent in job obvod-rules-235 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Piešť I, Piešť II, Krné
+#   obvod 2: Skliarovo, Kostolná
+#   obvod 3: ulice: Námestie SNP, Kukučínova, Orlova, B. Němcovej, Nová Ves, Sládkovičova, Partizánska, Chalupkova, Kamenná, Lúčna štvrť, Zapriechody, Kúpalisko, Cintorínska, Požiarnická, Jesenského, Kpt. Nálepku, Hviezdoslavova, J. Kráľa, Družstevná, Fučíkova, Hollého, Kollárova, P. Jilemnického, S. Stračinu, J. Thurzu, Ľ. Zeljenku, M. Benku, Jožka Rybára, Slnečná ulica, Priemyselná ulica, Detva súpisné číslo 534, 537, 538, 539, 540, 544, 546, 548, 549, 587, 624,627, 628, 629, 630, 633, 635, 638, 639, 640, 642, 669, 695, 704, 742, 760, 762, 774, 775, 776, 797, 798, 808, 1148, 1565, 1626, 1633,1685, 1719, 3120, 3229, 3291, 3293, 3340, 3254, 3317, 3410, 3424, 3437, 3443, 3446, 3477, 3524, 3591, 3614; (tzv. Chvostiná, Ježová, Bukovina, Studienec)
+#   obvod 4: Detva – Sídlisko -ulice: Námestie mieru, M. R. Štefánika č. 4-72 (párne), J. G. Tajovského, Vimperská, A. Bernoláka, Novosady, A. Hlinku, Detva súpisné číslo 612, 613, 615, 1421, 1701
+#   obvod 5: Detva – Sídlisko-ulice: Dolinky, Okružná, Obrancov mieru, M. R. Štefánika č. 5-57 (nepárne), Krpelná, Záhradná, Pionierska, Štúrova, Ostravská, Strojárska, Agátová, E. M. Šoltésovej, T. Vansovej, Jána Pavla II., Jánošíkova, Detva súpisné číslo 584, 598, 761, 1118, 1172, 1197
+# Okrsky added by an AI agent in job okrsok-rules-1114 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Piešť I
+#   okrsok 2: Piešť II
+#   okrsok 3: Krné
+#   okrsok 4: Skliarovo
+#   okrsok 5: Kostolná
+#   okrsok 6: Námestie SNP, Kukučínova, Orlova, B. Němcovej, Nová Ves, Sládkovičova, Partizánska, Chalupkova, Kamenná, Lúčna štvrť, Zapriechody, Kúpalisko, Cintorínska, Detva súpisné číslo 546, 548, 549, 587, 808, 1565, 1719, 3317, 3443;
+#   okrsok 7: Požiarnická, Jesenského, Kpt. Nálepku, Hviezdoslavova, J. Kráľa, Družstevná, Fučíkova, Hollého, Kollárova, P. Jilemnického, S. Stračinu, J. Thurzu, Ľ. Zeljenku, M. Benku, Jožka Rybára, Slnečná ulica, Priemyselná ulica, Detva súpisné číslo 534, 537, 538, 539, 540, 544, 624,627, 628, 629, 630, 633, 635, 638, 639, 640, 642, 669, 695,704, 742, 760, 762, 774, 775, 776, 797, 798, 1148, 1626, 1633, 1685, 3120, 3229, 3291, 3293, 3340, 3254, 3410, 3424, 3437, 3446, 3477,3524, 3591,3614; (tzv. Chvostiná, Ježová, Bukovina, Studienec)
+#   okrsok 8: Námestie mieru
+#   okrsok 9: M. R. Štefánika č. 4-72 (párne)
+#   okrsok 10: J. G. Tajovského, Vimperská, A. Bernoláka
+#   okrsok 11: Novosady; Detva súpisné číslo 612, 613, 615, 1421, 1701
+#   okrsok 12: A. Hlinku, Detva
+#   okrsok 13: Dolinky, Okružná, Jána Pavla II., Jánošíkova, Detva súpisné číslo 584, 598, 761, 1118, 1172, 1197
+#   okrsok 14: Obrancov mieru, M. R. Štefánika č. 5-57 (nepárne)
+#   okrsok 15: Krpelná, Pionierska, Záhradná, Agátová, Štúrova, Ostravská, E. M. Šoltésovej, Strojárska, T. Vansovej
+obec = "518263"
+name = "Detva"
+date = 2022-06-16
+fill = "nearest"
+note = "Parts Piešť I, Piešť II, Krné (1), Skliarovo, Kostolná (2) and Zapriechody (3) are taken whole; houses without street in part Detva by the listed súpisné numbers. Other addresses without street in part Detva (hamlets) and street Bottova (not listed) placed by fill_nearest. \"A. Hlinku, Detva\" in okrsok 12 read as voters registered only to the town."
+okrsky_date = 2022-07-21
+okrsky_fill = "nearest"
+okrsky_note = "The town's information on the okrsky for 29.10.2022 is dated 21.07.2022 (no separate decision date). Okrsky 1-5 are the parts Piešť I, Piešť II, Krné, Skliarovo, Kostolná; Zapriechody taken as the part. 'Detva súpisné číslo …' = houses without street in part Detva by súpisné číslo. 'A. Hlinku, Detva' in okrsok 12: 'Detva' read as voters registered only to the town (no address), not mapped. Not listed and placed by fill_nearest: street Bottova, the other houses without street in parts Detva and Detva-sídlisko (hamlets Chvostiná, Ježová, Bukovina, Studienec beyond the listed numbers), M. R. Štefánika numbers outside 4-72 even / 5-57 odd, and J. Kráľa addresses the obvod rules put in obvod 5."
+
+[[document]]
+url = "https://www.detva.sk/download_file_f.php?id=1712831"
+sha256 = "0237df314adbbcd824de0b4727f9d07536f8d92acbd651f066d9f78868247b40"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov (uznesenie MsZ č. 528/22 zo dňa 16. júna 2022), Detva 15. júla 2022"
+
+[[document]]
+url = "https://www.detva.sk/download_file_f.php?id=1720598"
+sha256 = "36f22fcf5628b2337991f71ddbdbee9bcfcf75000d31670f5251372426f06dc8"
+title = "Informácia o utvorení volebných okrskov s vymedzením ich územného obvodu, Detva 21. 07. 2022"
+
+[obvod.1]
+seats = 2
+okrsky = [1, 2, 3]
+rules = [
+  {part = "Piešť I"},
+  {part = "Piešť II"},
+  {part = "Krné"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [4, 5]
+rules = [
+  {part = "Skliarovo"},
+  {part = "Kostolná"},
+]
+
+[obvod.3]
+seats = 4
+okrsky = [6, 7]
+rules = [
+  {street = "Námestie SNP"},
+  {street = "Kukučínova"},
+  {street = "Orlova"},
+  {street = "B. Němcovej"},
+  {street = "Nová Ves"},
+  {street = "Sládkovičova"},
+  {street = "Partizánska"},
+  {street = "Chalupkova"},
+  {street = "Kamenná"},
+  {street = "Lúčna štvrť"},
+  {street = "Kúpalisko"},
+  {street = "Cintorínska"},
+  {street = "Požiarnická"},
+  {street = "Jesenského"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Hviezdoslavova"},
+  {street = "J. Kráľa"},
+  {street = "Družstevná"},
+  {street = "Fučíkova"},
+  {street = "Hollého"},
+  {street = "Kollárova"},
+  {street = "P. Jilemnického"},
+  {street = "S. Stračinu"},
+  {street = "J. Thurzu"},
+  {street = "Ľ. Zeljenku"},
+  {street = "M. Benku"},
+  {street = "Jožka Rybára"},
+  {street = "Slnečná ulica"},
+  {street = "Priemyselná ulica"},
+  {part = "Zapriechody", note = "listed among the streets; in the register Zapriechody is a part without streets"},
+  {part = "Detva", numbers = "534, 537, 538, 539, 540, 544, 546, 548, 549, 587, 624, 627, 628, 629, 630, 633, 635, 638, 639, 640, 642, 669, 695, 704, 742, 760, 762, 774, 775, 776, 797, 798, 808, 1148, 1565, 1626, 1633, 1685, 1719, 3120, 3229, 3291, 3293, 3340, 3254, 3317, 3410, 3424, 3437, 3443, 3446, 3477, 3524, 3591, 3614", by = "supisne", note = "\"Detva súpisné číslo ...\" = houses without a street in part Detva"},
+]
+
+[obvod.4]
+seats = 5
+okrsky = [8, 9, 10, 11, 12]
+rules = [
+  {street = "Námestie mieru"},
+  {street = "M. R. Štefánika", numbers = "4-72", parity = "even"},
+  {street = "J. G. Tajovského"},
+  {street = "Vimperská"},
+  {street = "A. Bernoláka"},
+  {street = "Novosady"},
+  {street = "A. Hlinku"},
+  {part = "Detva", numbers = "612, 613, 615, 1421, 1701", by = "supisne", note = "\"Detva súpisné číslo ...\" = houses without a street in part Detva"},
+]
+
+[obvod.5]
+seats = 4
+okrsky = [13, 14, 15]
+rules = [
+  {street = "Dolinky"},
+  {street = "Okružná"},
+  {street = "Obrancov mieru"},
+  {street = "M. R. Štefánika", numbers = "5-57", parity = "odd"},
+  {street = "Krpelná"},
+  {street = "Záhradná"},
+  {street = "Pionierska"},
+  {street = "Štúrova"},
+  {street = "Ostravská"},
+  {street = "Strojárska"},
+  {street = "Agátová"},
+  {street = "E. M. Šoltésovej"},
+  {street = "T. Vansovej"},
+  {street = "Jána Pavla II."},
+  {street = "Jánošíkova"},
+  {part = "Detva", numbers = "584, 598, 761, 1118, 1172, 1197", by = "supisne", note = "\"Detva súpisné číslo ...\" = houses without a street in part Detva"},
+]
+
+[okrsok.1]
+rules = [
+  {part = "Piešť I"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Piešť II"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Krné"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Skliarovo"},
+]
+
+[okrsok.5]
+rules = [
+  {part = "Kostolná"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Námestie SNP"},
+  {street = "Kukučínova"},
+  {street = "Orlova"},
+  {street = "B. Němcovej"},
+  {street = "Nová Ves"},
+  {street = "Sládkovičova"},
+  {street = "Partizánska"},
+  {street = "Chalupkova"},
+  {street = "Kamenná"},
+  {street = "Lúčna štvrť"},
+  {street = "Kúpalisko"},
+  {street = "Cintorínska"},
+  {part = "Zapriechody"},
+  {part = "Detva", numbers = "546, 548, 549, 587, 808, 1565, 1719, 3317, 3443"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Požiarnická"},
+  {street = "Jesenského"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Hviezdoslavova"},
+  {street = "J. Kráľa"},
+  {street = "Družstevná"},
+  {street = "Fučíkova"},
+  {street = "Hollého"},
+  {street = "Kollárova"},
+  {street = "P. Jilemnického"},
+  {street = "S. Stračinu"},
+  {street = "J. Thurzu"},
+  {street = "Ľ. Zeljenku"},
+  {street = "M. Benku"},
+  {street = "Jožka Rybára"},
+  {street = "Slnečná ulica"},
+  {street = "Priemyselná ulica"},
+  {part = "Detva", numbers = "534, 537-540, 544, 624, 627-630, 633, 635, 638-640, 642, 669, 695, 704, 742, 760, 762, 774-776, 797, 798, 1148, 1626, 1633, 1685, 3120, 3229, 3254, 3291, 3293, 3340, 3410, 3424, 3437, 3446, 3477, 3524, 3591, 3614"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Námestie mieru"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "M. R. Štefánika", numbers = "4-72", parity = "even"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "J. G. Tajovského"},
+  {street = "Vimperská"},
+  {street = "A. Bernoláka"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Novosady"},
+  {part = "Detva", numbers = "612, 613, 615, 1421, 1701"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "A. Hlinku"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Dolinky"},
+  {street = "Okružná"},
+  {street = "Jána Pavla II."},
+  {street = "Jánošíkova"},
+  {part = "Detva", numbers = "584, 598, 761, 1118, 1172, 1197"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Obrancov mieru"},
+  {street = "M. R. Štefánika", numbers = "5-57", parity = "odd"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Krpelná"},
+  {street = "Pionierska"},
+  {street = "Záhradná"},
+  {street = "Agátová"},
+  {street = "Štúrova"},
+  {street = "Ostravská"},
+  {street = "E. M. Šoltésovej"},
+  {street = "Strojárska"},
+  {street = "T. Vansovej"},
+]

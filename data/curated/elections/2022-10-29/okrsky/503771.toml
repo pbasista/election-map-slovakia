@@ -1,0 +1,30 @@
+# Okrsky of Horné Saliby, transcribed by an AI agent in job okrsok-rules-754 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: s.č. 1 - 545; s.č. 1151 – 1201, 1212, 1214 - 1216, 1225, 1256, 1260 - 1318, 1321, 1324, 1330, 1331, 1336
+#   okrsok 2: s.č. 546 – 1100; s.č. 1202 – 1211, 1213, 1242 – 1244, 1246 – 1247, 1250 – 1255, 1257 – 1258, 1325-1327, 1342-1345, 1353, 1361; s.č. 1101 - 1150 (Hrušov)
+obec = "503771"
+name = "Horné Saliby"
+okrsky_date = 2022-08-08
+okrsky_fill = "nearest"
+okrsky_note = "The document assigns okrsky by súpisné čísla (the village has no streets). '1225,1 256' in the text layer read as 1225, 1256. Súpisné čísla the document does not list (e.g. 1217-1241 except those named, 1319-1320, 1322-1323, 1328-1329, 1332-1335, 1337-1341, 1346-1352, 1354-1360, 1362-) take the okrsok of the nearest address (fill_nearest). Hrušov (s.č. 1101-1150) is a settlement not in the register's parts; it is covered by the number range."
+
+[[document]]
+url = "https://www.hornesaliby.sk/e_download.php?file=data/uredni_deska/obsah5_1.pdf&original=Utvorenie-volebn%C3%BDch-okrskov-a-ur%C4%8Denie-volebn%C3%BDch-miestnost%C3%AD.pdf"
+sha256 = "ecafadf4d9583c05f946efdd7fd1cdeec21c0199a494fc1ad3cc54321ac000f8"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre Voľby do orgánov samosprávy obcí a pre Voľby do orgánov samosprávnych krajov, konané dňa 29.10.2022"
+
+[[document]]
+url = "https://www.hornesaliby.sk/samosprava/volby/volby-archiv/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-5.html"
+sha256 = "2de96e6d675e7958fab79c17476740eacdb00b036adda099b35648547ed33456"
+title = "Voľby archív: Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Horné Saliby", numbers = "1-545, 1151-1201, 1212, 1214-1216, 1225, 1256, 1260-1318, 1321, 1324, 1330, 1331, 1336"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Horné Saliby", numbers = "546-1150, 1202-1211, 1213, 1242-1244, 1246-1247, 1250-1255, 1257-1258, 1325-1327, 1342-1345, 1353, 1361"},
+]

@@ -1,0 +1,35 @@
+# Council obvody of Sebedín-Bečov (508977), Banská Bystrica.
+# Transcribed by an AI agent in job obvod-rules-394 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: viacmandátový volebný obvod č.1 pre voľby poslancov v časti obce Sebedín, v ktorom sa budú voliť 3 (traja) poslanci
+#   obvod 2: viacmandátový volebný obvod č.2 pre voľby poslancov v časti obce Bečov, v ktorom sa budú voliť 2 (dvaja) poslanci
+# Okrsky added by an AI agent in job okrsok-rules-1253 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: viacmandátový volebný obvod č.1 pre voľby poslancov v časti obce Sebedín, v ktorom sa budú voliť 3 (traja) poslanci
+#   okrsok 2: viacmandátový volebný obvod č.2 pre voľby poslancov v časti obce Bečov, v ktorom sa budú voliť 2 (dvaja) poslanci
+obec = "508977"
+name = "Sebedín-Bečov"
+date = 2022-06-23
+okrsky_date = 2022-06-23
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+
+[[document]]
+url = "https://www.sebedinbecov.sk/download_file_f.php?id=1713612"
+sha256 = "ef8ee1791affc94f0565e851d937b19279453d43250cf800b55421a70467b9cd"
+title = "Určenie volebných obvodov obecného zastupiteľstva, počtu poslancov… (uznesenie OZ č. 19/2022 zo dňa 23.06.2022)"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {part = "Sebedín"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Bečov"},
+]

@@ -1,0 +1,52 @@
+# Okrsky of Selice, transcribed by an AI agent in job okrsok-rules-852 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Jilemnického, Poľná, A.Moyzesea, Pionierska, G.Steinera, Poľovnícka, J.A. Komenského, Družstevná, Vážska, Orechová, Budovateľská, 9. mája, Hviezdoslavova, časť Čsl.armády.
+#   okrsok 2: ulice: Školská, Mlynská, Hollého, Agátová, Perjés, Revolučná, Malá, Záhradnícka, Mierová, Športová, Jatovská, Jazerná, Kováčska, Sov. Armády, časť Čsl.armády.
+obec = "503991"
+name = "Selice"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-10-04
+okrsky_date_basis = "The notice states no date; the Internet Archive captured it on 2022-10-04 (https://web.archive.org/web/20221004042657/http://www.selice.eu/ZV22/volby%2008.pdf)."
+okrsky_fill = "nearest"
+okrsky_note = "Undated mayor's notice (scan, read from the image), listed on the 2022 elections page of selice.eu (the municipality's former website; now obecselice.eu, which only keeps a 2017 document); archived 2022-10-04, no decision date, so date left out. Both okrsky have 'časť Čsl.armády' without saying which part: Čsl. Armády has no rule and its addresses, like the few without a street, are placed by fill_nearest (nearest placed address)."
+
+[[document]]
+url = "https://web.archive.org/web/20221004042657/http://www.selice.eu/ZV22/volby%2008.pdf"
+sha256 = "f18026e27a9e2f8ad973e724c72e3d21b79858b253473a10765d7b95c0bbc30f"
+title = "Obec Selice určuje pre voľby do orgánov samosprávy obcí a samosprávnych krajov 29. októbra 2022 volebné okrsky a volebné miestnosti"
+
+[okrsok.1]
+rules = [
+  {street = "Jilemnického"},
+  {street = "Poľná"},
+  {street = "A. Moyzesa", written = "A.Moyzesea", note = "The document's 'A.Moyzesea' is a typo for A. Moyzesa (Alexander Moyzes); no other such street."},
+  {street = "Pionierska"},
+  {street = "G. Steinera", written = "G.Steinera"},
+  {street = "Poľovnícka"},
+  {street = "J. A. Komenského"},
+  {street = "Družstevná"},
+  {street = "Vážska"},
+  {street = "Orechová"},
+  {street = "Budovateľská"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Hviezdoslavova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Školská"},
+  {street = "Mlynská"},
+  {street = "Hollého"},
+  {street = "Agátová"},
+  {street = "Perjéš", written = "Perjés", note = "The document writes 'Perjés' with é for the register's Perjéš: the same street, a spelling variant."},
+  {street = "Revolučná"},
+  {street = "Malá"},
+  {street = "Záhradnícka"},
+  {street = "Mierová"},
+  {street = "Športová"},
+  {street = "Jatovská"},
+  {street = "Jazerná"},
+  {street = "Kováčska"},
+  {street = "Sovietskej Armády", written = "Sov. Armády"},
+]

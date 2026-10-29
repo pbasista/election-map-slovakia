@@ -1,0 +1,27 @@
+# The okrsky of Kotešová of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/517691.toml, reused by `ems job reuse`.
+obec = "517691"
+name = "Kotešová"
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Scanned table read from the image. Okrsky are given by súpisné čísla: Oblazov (1–100), dolná Kotešová (101–369, 813, 975–1150), horná Kotešová + Buková (370–800, 866–974). The parts Oblazov and Buková are taken whole; within the part Kotešová the ranges are applied; súpisné čísla outside them (801–865 except 813, over 1150) take the nearest placed address. The document states no decision date (published 29. 7. 2026)."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.kotesova.info/pages/attachments/fm3f6UgYreSbDGAutdVDoJ.pdf"
+sha256 = "07fa68d262a3c0bba2a371057539ba5b66f1932cb00498d23c3ca7780c6f1f3c"
+title = "Utvorenie volebných okrskov, určenie volebných miestností a vymenovanie zapisovateliek okrskových volebných komisií"
+
+[okrsok.1]
+rules = [
+  {part = "Oblazov"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kotešová", numbers = "101-369, 813, 975-1150"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Kotešová", numbers = "370-800, 866-974"},
+  {part = "Buková"},
+]

@@ -1,0 +1,31 @@
+# Okrsky of Imeľ, transcribed by an AI agent in job okrsok-rules-845 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Čísla domov od : 1 - 450
+#   okrsok 2: Čísla domov od:451 - 960
+obec = "501166"
+name = "Imeľ"
+okrsky_date = 2022-11-10
+okrsky_fill = "nearest"
+okrsky_note = "no document of the elections found (the 2022 elections page, live and archived, lists no okrsky document); the referendum's document 'Volebné okrsky v obci Imeľ' (undated DOCX; the referendum page states 'Zverejnené 10.11.2022', used as date). Okrsky by house numbers (čísla domov, read as súpisné): 1–450 and 451–960; fill_nearest places any house numbered above 960."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.obecimel.sk/e_download.php?file=data/editor/196sk_1.docx&original=Volebn%C3%A9%20okrsky%20v.docx"
+sha256 = "559b12a2252de69c83be2cb3657305fee2c3a71f672e99153854735365066622"
+title = "Volebné okrsky v obci Imeľ (referendum 21.01.2023)"
+
+[[document]]
+url = "https://www.obecimel.sk/samosprava/referendum-21012023/"
+sha256 = "bbc60aecac50daacf9d0ddab31f409e5e429e4e393076542511b95fbbc59b56f"
+title = "Referendum 21.01.2023"
+
+[okrsok.1]
+rules = [
+  {part = "Imeľ", numbers = "1-450"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Imeľ", numbers = "451-960"},
+]

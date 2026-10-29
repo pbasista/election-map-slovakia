@@ -47,6 +47,10 @@ jobs:
       - run: uv run ruff check .
       - run: uv run ty check
       - run: uv run pytest
+      # data/published.toml must hold the keys of the data of this commit:
+      # a release deploys a data part only when its locked key is not
+      # deployed yet, so a stale lock would leave changed data unpublished.
+      - run: uv run ems data lock --check
 
   # Biome is one native binary and needs no Node; it lints the browser half
   # once, not once per Python version.

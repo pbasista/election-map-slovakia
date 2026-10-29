@@ -24,7 +24,7 @@ their obec are published as missing: drawn there, a house number would
 sit in a neighbouring obec and a click on it would yield that obec's
 contests. All points outside their obec are reported.
 
-Output, ``data/build/addr/`` (JSON, compact, sorted)::
+Output, ``data/build/<election day>/addr/`` (JSON, compact, sorted)::
 
     index.json   {scale: 100000,
                   okresy:  {okres: name},
@@ -62,7 +62,7 @@ neither either. A rule set that leaves an address in no okrsok or in two
 is reported, its obec written without okrsky (``geo`` fails on it).
 
 The addresses of every obec with several council obvody or several okrsky
-also go to ``data/build/obvod-addresses/<obec>.json``
+also go to ``data/build/<election day>/obvod-addresses/<obec>.json``
 (:func:`election_map_slovakia.obvody.write_places`): the input of the
 ``obvod-rules`` and ``okrsok-rules`` jobs, their checks and the okrsky.
 """
@@ -73,7 +73,7 @@ import csv
 import io
 import random
 from collections import Counter, defaultdict
-from collections.abc import Iterable, Iterator, Mapping, Sequence
+from collections.abc import Collection, Iterable, Iterator, Mapping, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, NamedTuple
@@ -94,7 +94,6 @@ from election_map_slovakia.candidates import (
 )
 from election_map_slovakia.output import format_size
 
-INPUT = "addresses"
 OUTPUT_DIR = "addr"
 OUTSIDE_FILE = "addresses-outside.tsv"
 COLUMNS = (
@@ -124,8 +123,8 @@ SAMPLE_SEED = 20261024
 ADDRESS = "address"
 """``council`` of an obec whose rule set gives each address its obvod."""
 OBVOD_DIR = "obvod-addresses"
-"""Below ``data/build/``: the addresses of the obce with several council
-obvody or okrsky, as their rules see them (see
+"""Below an election's build directory: the addresses of the obce with
+several council obvody or okrsky, as their rules see them (see
 :func:`election_map_slovakia.obvody.write_places`)."""
 _SEVERAL = 2
 TOP = 20
@@ -191,27 +190,55 @@ def _natural(number: str) -> tuple[int, str]:
     return int(number[:digits]) if digits else -1, number[digits:]
 
 
-def read(path: Path, admin: Admin, overrides: Mapping[str, str]) -> Addresses:
-    """Read the register; fail listing every unmatched municipality.
+class Row(NamedTuple):
+    """A row of the register, matched to its obec."""
+
+    identifikator: str
+    """The address's id, which a later register keeps for the same address."""
+    obec: str
+    """Its obec code; "" for a place of ``address_skip``."""
+    part: str
+    """Part of the obec (the obec's name where the register gives none)."""
+    street: str
+    supisne: str
+    orientacne: str
+    x: str
+    y: str
+    line: int
+    """Line number in the file, for messages."""
+
+    @property
+    def group(self) -> tuple[str, str]:
+        """Return the street, or without one the part, the address is listed under."""
+        return (STREETS, self.street) if self.street else (PARTS, self.part)
+
+
+def register_rows(
+    path: Path,
+    admin: Admin,
+    overrides: Mapping[str, str],
+    skip: Collection[str] = (),
+) -> Iterator[Row]:
+    """Yield every row of the register; fail listing every unmatched municipality.
 
     *overrides* maps ``"<okres>/<obec>"`` as the register writes them to
-    obec codes (``[address]`` in ``overrides.toml``).
+    obec codes (``[address]`` in ``overrides.toml``); the rows of the places
+    in *skip* (``address_skip``), no obec of ZBGIS, come with obec "". The
+    file may start with a byte order mark (the register of 09/2022 does).
+    The failure comes after the last row.
     """
     okresy = {name_key(name): code for code, (name, _) in admin.okresy.items()}
     index = municipal_index(admin)
     matched: dict[tuple[str, str], str | None] = {}
     unmatched: Counter[str] = Counter()
-    obce: dict[str, Groups] = defaultdict(lambda: defaultdict(list))
-    # Most house numbers repeat across streets, and part names within an
-    # obec; one shared display form, sort key and string per number and
-    # part saves their parsing and their memory.
-    numbers: dict[tuple[str, str], tuple[str, tuple[int, str, int, str], str, str]] = {}
+    # Part names repeat within an obec; one shared string per name saves
+    # memory where the rows are kept.
     parts: dict[str, str] = {}
     rows = 0
     with (
         progress.stage(f"reading {path.name}", path.stat().st_size, format_size) as s,
         path.open("rb") as raw,
-        io.TextIOWrapper(raw, encoding="utf-8", newline="") as f,
+        io.TextIOWrapper(raw, encoding="utf-8-sig", newline="") as f,
     ):
         reader = csv.reader(f, delimiter=";")
         if tuple(next(reader, ())) != COLUMNS:
@@ -222,44 +249,84 @@ def read(path: Path, admin: Admin, overrides: Mapping[str, str]) -> Addresses:
                 s.update(raw.tell())
             if len(row) != len(COLUMNS):
                 raise AddressesError(f"{path}:{reader.line_num}: {len(row)} fields")
-            _, _, okres, obec, part, street, supisne, orientacne, _, x, y = row
+            ident, _, okres, obec, part, street, supisne, orientacne, _, x, y = row
             place = (okres, obec)
             if place not in matched:
-                code = overrides.get(f"{okres}/{obec}")
-                if code is None:
-                    code = index.get((okresy.get(name_key(okres), ""), name_key(obec)))
-                matched[place] = code
+                matched[place] = _match_place(place, overrides, skip, okresy, index)
             code = matched[place]
             if code is None:
                 unmatched[f"obec {obec!r} in okres {okres!r}"] += 1
                 continue
-            try:
-                point = _point(x, y)
-            except AddressesError as e:
-                raise AddressesError(f"{path}:{reader.line_num}: {e}") from None
             part = part or obec
             part = parts.setdefault(part, part)
-            group = (STREETS, street) if street else (PARTS, part)
-            number = numbers.get((supisne, orientacne))
-            if number is None:
-                number = numbers[(supisne, orientacne)] = (
-                    house_number(supisne, orientacne),
-                    number_order(supisne, orientacne),
-                    supisne,
-                    orientacne,
-                )
-            display, order, sup, ori = number
-            obce[code][group].append(House(display, order, point, part, sup, ori))
-    _check_matched(unmatched, matched, overrides)
+            yield Row(
+                ident, code, part, street, supisne, orientacne, x, y, reader.line_num
+            )
+    _check_matched(unmatched, matched, overrides, skip)
+
+
+def read(
+    path: Path,
+    admin: Admin,
+    overrides: Mapping[str, str],
+    skip: Collection[str] = (),
+) -> Addresses:
+    """Read the register (:func:`register_rows`), grouped by obec and street or part."""
+    obce: dict[str, Groups] = defaultdict(lambda: defaultdict(list))
+    # Most house numbers repeat across streets; one shared display form,
+    # sort key and string per number saves their parsing and their memory.
+    numbers: dict[tuple[str, str], tuple[str, tuple[int, str, int, str], str, str]] = {}
+    rows = 0
+    for r in register_rows(path, admin, overrides, skip):
+        rows += 1
+        if not r.obec:
+            # A place of address_skip, left out.
+            continue
+        try:
+            point = _point(r.x, r.y)
+        except AddressesError as e:
+            raise AddressesError(f"{path}:{r.line}: {e}") from None
+        number = numbers.get((r.supisne, r.orientacne))
+        if number is None:
+            number = numbers[(r.supisne, r.orientacne)] = (
+                house_number(r.supisne, r.orientacne),
+                number_order(r.supisne, r.orientacne),
+                r.supisne,
+                r.orientacne,
+            )
+        display, order, sup, ori = number
+        obce[r.obec][r.group].append(House(display, order, point, r.part, sup, ori))
     with progress.stage("sorting the house numbers"):
         duplicates = _sort_unique(obce.values())
     return Addresses({c: dict(g) for c, g in sorted(obce.items())}, rows, duplicates)
+
+
+def _match_place(
+    place: tuple[str, str],
+    overrides: Mapping[str, str],
+    skip: Collection[str],
+    okresy: Mapping[str, str],
+    index: Mapping[tuple[str, str], str],
+) -> str | None:
+    """Return the obec of the register's (okres, obec) *place*.
+
+    By override, else by name within the okres; "" for a place of *skip*,
+    None for one of no obec.
+    """
+    okres, obec = place
+    key = f"{okres}/{obec}"
+    if key in overrides:
+        return overrides[key]
+    if key in skip:
+        return ""
+    return index.get((okresy.get(name_key(okres), ""), name_key(obec)))
 
 
 def _check_matched(
     unmatched: Mapping[str, int],
     matched: Iterable[tuple[str, str]],
     overrides: Mapping[str, str],
+    skip: Collection[str],
 ) -> None:
     """Fail listing the *unmatched* places and the overrides of no place."""
     errors = [f"{n:,} rows: {where}" for where, n in sorted(unmatched.items())]
@@ -267,6 +334,7 @@ def _check_matched(
     errors += [
         f"unused override address {k!r}" for k in sorted(overrides.keys() - known)
     ]
+    errors += [f"unused address_skip {k!r}" for k in sorted(set(skip) - known)]
     if errors:
         raise AddressesError(
             f"{len(errors)} unmatched (add them to overrides.toml [address]):\n  "
@@ -496,18 +564,20 @@ def build(
     election_dir: Path,
     contest_list: Sequence[Mapping[str, Any]],
     overrides: Mapping[str, str],
+    skip: Collection[str],
     okrsky: Mapping[str, int],
 ) -> Result:
     """Read and check the register and build the output files.
 
     *gpkg* is ZBGIS level 0; *election_dir* the election's curated data
-    (:attr:`election_map_slovakia.config.Config.election_dir`);
-    *contest_list* the contests of ``candidates.json``; *overrides* the
-    ``[address]`` table of ``overrides.toml``; *okrsky* obec → its number
-    of okrsky in the election.
+    (:meth:`election_map_slovakia.config.Config.election_dir`);
+    *contest_list* the contests of ``candidates.json``; *overrides* and
+    *skip* the election's ``[address]`` and ``address_skip`` of
+    ``overrides.toml`` (:func:`read`); *okrsky* obec → its number of okrsky
+    in the election.
     """
     admin = load_admin(gpkg)
-    addresses = read(path, admin, overrides)
+    addresses = read(path, admin, overrides, skip)
     council = council_obvody(contest_list)
     result = Result(admin, addresses, {}, council)
     refs, positions = [], []
@@ -967,7 +1037,7 @@ def _report_outside(result: Result) -> Iterator[str]:
         + ", ".join(f"{k} {bins[k]:,}" for k in labels)
     )
     yield f"  not published (over {MAX_OUTSIDE:.0f} m): {result.dropped:,}"
-    yield f"  farthest {TOP} (all in data/build/{OUTSIDE_FILE}):"
+    yield f"  farthest {TOP} (all in data/build/<election day>/{OUTSIDE_FILE}):"
     for o in result.outside[:TOP]:
         yield (
             f"  {o.distance:>9,.0f} m  {_obec(admin, o.ref.obec)}, {o.ref.place}"

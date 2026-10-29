@@ -1,0 +1,30 @@
+# Okrsky of Krásnohorské Podhradie, transcribed by an AI agent in job okrsok-rules-949 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: občania prihlásení na trvalý pobyt od súpisného čísla 1 -412
+#   okrsok 2: občania prihlásení na trvalý pobyt od súpisného čísla 413 -745
+obec = "525871"
+name = "Krásnohorské Podhradie"
+okrsky_date = 2022-08-04
+okrsky_fill = "nearest"
+okrsky_note = "The document is undated; date is its publication date 04.08.2022 as the municipality's elections page lists it. Okrsky split by súpisné číslo (1-412, 413-745), applied to all addresses; any address outside both ranges is placed by fill_nearest."
+
+[[document]]
+url = "https://www.obeckrasnohorskepodhradie.sk/files/2022-08-04-185900-Ozn__menie_o___ase_a_mieste_konania_volieb.pdf"
+sha256 = "d385f6a58c3e9cb3deadf2f125f3de3dfa541c511cdf0cdb71ad151546030cad"
+title = "Oznámenie o čase a mieste konania volieb do orgánov samosprávy obcí a do orgánov samosprávnych krajov"
+
+[[document]]
+url = "https://www.obeckrasnohorskepodhradie.sk/volby-do-organov-samospravy-obci-2022-a73-693"
+sha256 = "f7149f734c15ed4d0c5c77373dcd0fefe3e0a29011b850452e041494c2265519"
+title = "Voľby do orgánov samosprávy obcí 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Krásnohorské Podhradie", numbers = "1-412"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Krásnohorské Podhradie", numbers = "413-745"},
+]

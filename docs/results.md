@@ -4,14 +4,16 @@ The app shows the results of the elections:
 on election night (24–25 October 2026) as they are counted,
 then the definitive ones.
 
-They are part of the site, one directory per election, keyed by its day:
+They are a part of the site of their own, one directory per election,
+keyed by its day:
 
-- `data/build/results/<election day>/` is written by `ems results`
+- `data/build/<election day>/results/` is written by `ems results`
   and by the `results` step of `ems make`;
-- `ems build` copies it to `dist/results/<election day>/`;
+- `ems build` copies it to `dist/results/<election day>/`,
+  the results part, deployed to the Pages project `results_project`
+  and served at `results_url` (`config/site.toml`);
 - the app reads `status.json` there and the files it names
-  from the site's own origin
-  (`web/js/live.js`; the path is `results` in the app shells' config).
+  (`web/js/live.js`; the address is `results` in the app shells' config).
 
 A later election gets a directory of its own and leaves this one as it is.
 The code is `src/election_map_slovakia/results.py`.
@@ -20,32 +22,40 @@ The code is `src/election_map_slovakia/results.py`.
 
 ```sh
 uv run ems results poll                 # every 60 s: volbysr.sk → the results
-uv run ems results poll --deploy        # … and build and deploy the site after every change
+uv run ems results poll --deploy        # … and deploy the results after every change
 uv run ems results poll --once          # one poll, e.g. to try it
 uv run ems results final                # the definitive CSV zips → the results
 uv run ems results fake mid             # dummy results: none, early, mid, late, final
-uv run ems results deploy               # build the site, upload it to Cloudflare Pages, asks first
+uv run ems results deploy               # upload the results to Cloudflare Pages, asks first
 ```
 
-- `poll`, `final` and `fake` write the election's results directory,
+- `poll`, `final` and `fake` write the results directory of the election
+  `--election DAY` names (its day or slug; default: the latest),
   or the directory given with `--dir`,
-  and read `data/build/` (`ems make` first).
+  and read its `data/build/<election day>/` (`ems make` first).
   `poll --interval` sets the seconds between polls (default 60);
   `fake --seed` the random seed (default 0).
-- `deploy` shows what the results hold (phase, version, counts),
-  checks them against the [format](#files), runs `ems build` and then
-  `npx --yes wrangler pages deploy dist --project-name=election-map-slovakia --branch=main`
-  after asking (`--yes`: without).
+- `deploy` shows what the results hold (phase, version, counts;
+  `--election` as above),
+  checks them against the [format](#files),
+  writes the results part, `dist/results/` (every election's),
+  and deploys it alone to `results_project`
+  as a production deployment after asking (`--yes`: without).
+  The deployment carries the results key of `data/published.toml`
+  marked live (`<key> live`),
+  so that a release with that key leaves it in place;
+  the app and the bundles stay as they are.
   It does not run `ems check`, which takes longer; a release does.
-- `ems serve` serves the results with the rest of the site.
+- `ems serve` serves the results with the rest of the site, at `/results/`.
 
 ## Final results as inputs
 
 Once published, the definitive packages are pinned in `config/inputs.toml`
 like every other input,
 as `results-oso<year>` and `results-osk<year>`,
-the year of the election day (`election` in `site.toml`),
-with committed copies in `data/fallback/`.
+the year of the election day,
+named as the election's `results` in `config/elections.toml`,
+stored in the input store like every other pinned input.
 For 2026 both are pinned: the site shows the definitive results.
 
 - **The `results` step of `ems make`** writes the election's results
@@ -76,7 +86,7 @@ uv run ems serve
 
 A build with `EMS_RESULTS_ANYTIME=1` reads the results every minute
 at any time;
-otherwise the app polls them only as `live` in site.toml allows
+otherwise the app polls them only as `live` in elections.toml allows
 ([deploy.md](deploy.md#results)).
 Driving it in a headless browser is in [testing.md](testing.md).
 
@@ -118,38 +128,45 @@ It reads the 2026 list of okrsky (`units-oso2026`) from `data/raw/`
   The figures are split at random so that they add up to the contest's
   and keep to the [check](#the-votes-add-up)
   (a mayor's or president's votes are each unit's valid ballots);
-  most municipalities of several okrsky have a made-up `past`.
+  most municipalities of several okrsky have a made-up `past`
+  in the shape below.
 
 ### On Cloudflare
 
-Fake results must never reach the deployed site.
-To try them on Cloudflare, deploy a build to a preview branch,
+Fake results must never reach the results' production deployment.
+To try them on Cloudflare, deploy the results part to a preview branch,
 which Pages serves at an address of its own:
 
 ```sh
 uv run ems results fake mid
 EMS_RESULTS_ANYTIME=1 uv run ems build
-npx wrangler pages deploy dist --project-name=election-map-slovakia --branch=test
+npx wrangler pages deploy dist/results --project-name=ems-results --branch=test
 uv run ems make                         # the results back to those of the inputs
 ```
 
 ## A future election night
 
-The results are deployed with the site:
-each change is a production deployment of the main Pages project
-(`pages_project`), built locally,
-as a release (a version tag) makes one through CI.
-Set up Wrangler once: `npx wrangler login`,
+The results are deployed on their own:
+each change is a production deployment of the results part
+(`results_project`), built locally,
+while the app and the bundles stay as the last release left them.
+Results deployed so carry the locked results key marked live;
+a release with the same results key leaves them in place,
+and only once the final packages are pinned (a new key)
+does a release build and deploy the final results.
+The deployment needs Wrangler set up once: `npx wrangler login`,
 or `CLOUDFLARE_API_TOKEN` (permission "Cloudflare Pages: Edit")
 and `CLOUDFLARE_ACCOUNT_ID`.
-Turn `live` on in `config/site.toml` before the night
-([deploy.md](deploy.md#results)).
+The app must have been released with `live = true` for the election
+in `config/elections.toml` before the night
+([deploy.md](deploy.md#results)):
+the night's deployments change only the results, not the app that polls them.
 
 1. **Before the polls close:** `uv run ems results poll --once`;
    it should end with phase `none`,
    and the election's results directory has `status.json`.
    Run `uv run ems results deploy` once,
-   so that the site answers `results/<day>/status.json`.
+   so that `results_url` answers `<day>/status.json`.
 2. **The first real files.**
    The meanings of the night files' columns are inferred
    from the 2026 site's scripts and the samples of earlier elections
@@ -162,8 +179,7 @@ Turn `live` on in `config/site.toml` before the night
    It fetches the progress files every interval
    and the rest only when they changed,
    rewrites the results only when their content changed,
-   and then builds the site (`ems build`, without the slower steps of `make`)
-   and deploys it.
+   and then writes the results part and deploys it.
    - Keep the machine awake and online.
    - Every file it fetched is kept under `data/raw/results/<UTC time>/`,
      so a problem found later can be replayed.
@@ -186,9 +202,13 @@ Turn `live` on in `config/site.toml` before the night
    and `uv run ems results deploy`.
 6. **Pin the packages:**
    add `results-oso<year>` and `results-osk<year>` to `config/inputs.toml`
-   with their sha256 and copies in `data/fallback/` (as for 2026),
-   `uv run ems fetch`, `uv run ems make`, and release:
-   from then on every release carries the final results.
+   and name them as the election's `results` in `config/elections.toml`,
+   `uv run ems inputs update results-oso<year> results-osk<year>`
+   to pin them (sha256, retrieved),
+   `uv run ems inputs publish` to put them in the input store,
+   `uv run ems make`, `uv run ems data lock`, commit and release:
+   the new results key makes the release deploy the final results,
+   and from then on every release carries them.
    Turn `live` off in that release.
 
 ## Files
@@ -334,13 +354,24 @@ All JSON, UTF-8, compact.
     "starosta:500011": {"500011/1": [805, 363, 360, {"1": 4, "2": 356}]},
     "zsk:1/1": {"528595/12": [1210, 402, 380, {"5": 101}]}
   },
-  "past": {"500011/1": [805, 363]}
+  "past": {
+    "day": "2022-10-29",
+    "okrsky": {"501204/1": 2, "500933/1": 0},
+    "contests": {
+      "starosta:501204": {
+        "501204": [8848, 3847, 3766, {"1": 1548}],
+        "501204/1": [214, 83, 77, {"1": 23}]
+      }
+    },
+    "totals": {"starosta:501204": [8848, 3847, 3766, {"1": 1548}]}
+  }
 }
 ```
 
 Only in the final phase (the night's files have nothing per okrsok).
-With the 2026 tables the okrsok files take 3.8 MB (1.0 MB gzipped),
-the largest, `okrsky/kraj/7`, 0.48 MB (0.12 MB gzipped).
+With the 2026 tables and `past` the okrsok files take 5.3 MB
+(1.5 MB gzipped),
+the largest, `okrsky/kraj/7`, 0.66 MB (0.18 MB gzipped).
 
 - `contests`: the contests of the area file beside it,
   each per okrsok → `[eligible, voters, valid, {number: votes}]` as `areas`.
@@ -357,15 +388,80 @@ the largest, `okrsky/kraj/7`, 0.48 MB (0.12 MB gzipped).
     and so is one whose votes cannot be told apart
     from those of the city's other okrsky of its number
     (see [Sources](#sources)).
-- `past`: `[eligible, voters]` of the okrsok
-  in the regular municipal election of 2022,
-  for the okrsky of the contests above,
-  only where the obec has the same okrsok numbers as in 2022
-  and each okrsok's registered voters are within 10 % of 2022's;
-  absent elsewhere.
-  `{}` when none, and always in the regional files (`okrsky/kraj/*`):
-  a municipal turnout, it goes with the municipal contests
-  (`okrsky/okres/*`, `okrsky/city/*`).
+- `past`: the regular elections before (2022 for 2026)
+  on this election's okrsky,
+  from the [crosswalk](#the-crosswalk-of-okrsky);
+  `{}` where there is nothing to compare
+  (the first election the site has, or no figures then).
+  - `day`: their election day.
+  - `okrsky`: okrsok → how its figures then were found,
+    for the okrsky of the obce with several okrsky then or now:
+    `0` unknown, `1` same (the same area), `2` identity
+    (the same number and registered voters within 10 %),
+    `3` approximate (estimated from addresses).
+    An okrsok not listed is of an obec with one okrsok then and now:
+    the same, its figures the obec's.
+  - `contests`: per contest of `contests` above (the 2026 id),
+    okrsok or obec → `[eligible, voters, valid, {number: votes}]` then,
+    the votes those of the contest's candidates
+    who stood for the same office then, under their 2026 ballot numbers
+    (from `links/<previous>.json`), whole numbers.
+    An obec has an exact record wherever the contest covers all of it
+    (a mayor's, a council of one obvod, a regional contest);
+    an okrsok one unless its method is `0`.
+    A unit one of whose okrsky then has no figures of the contest's body
+    (an okrsok left out above) has none: never a sum short of it.
+  - `totals`: per contest of a whole body of `contests` above
+    (a mayor's, a regional president's: no obvod),
+    the same contest's own `[eligible, voters, valid, {number: votes}]`
+    then, the votes as in `contests`:
+    the whole contest, whatever of its units is known.
+  The app reads them with live.js `pastOf`
+  and labels them by method (`pastLabel`, `pastTitle`, strings `past.*`);
+  a candidate's map of the election before takes its total
+  from `totals`, else from its units only where all are known
+  (mapmode.js `gatherPrevious`).
+
+### The crosswalk of okrsky
+
+`crosswalk.py`, run by the `results` step of the later election,
+maps each of its okrsky onto the okrsky of the election before,
+with weights, obec by obec, the first that applies:
+
+1. **Whole obec:** an obec with one okrsok now
+   takes all of its okrsky then (same).
+2. **Addresses:** where both elections place every address of the obec
+   in an okrsok (the `addr/` outputs of both),
+   the two address registers are paired by IDENTIFIKATOR,
+   then by street and house number where unique on each side.
+   An okrsok whose addresses lie ≥ 95 % in one okrsok then
+   and make up ≥ 95 % of it is the same and takes its exact figures;
+   otherwise approximate, its figures then
+   the okrsky then weighted by the share of its addresses in each;
+   one without a paired address is unknown.
+3. **Identity:** the same okrsok numbers
+   with registered voters within 10 % of then.
+4. Otherwise **unknown**.
+
+A council obvod is counted by how its okrsky were mapped:
+whole (of whole obce), or the least certain method of its okrsky;
+the area files' contest `past` of an obvod of a council of several
+is its okrsky's then summed,
+`[method]` with the least certain method,
+or `1` (the whole municipality) where one of them is unknown.
+The crosswalk is written to `data/build/<day>/crosswalk/<previous>.json`
+with its counts; for 2026 → 2022:
+
+| | whole | same | identity | approximate | unknown |
+|---|--:|--:|--:|--:|--:|
+| okrsky of obce with several okrsky then or now | | 1,997 | 419 | 1,066 | 274 |
+| obce, by their least certain okrsok | | 254 | 158 | 173 | 68 |
+| council obvody | 2,746 | 287 | 50 | 259 | 40 |
+
+Addresses paired: 807,967 by id, 292 by street, 45,387 unpaired.
+An obec still unknown has okrsky changed since 2022
+whose rules for one of the elections are not transcribed,
+or not drawn, so its addresses cannot be paired.
 
 ### The votes add up
 
@@ -457,9 +553,8 @@ and the archived raw files can be normalized again.
 `final` reads the CSV zips of both elections,
 `https://volbysr.sk/oso/files/OSO<year>_SK_csv.zip`
 and `osk/files/OSK<year>_SK_csv.zip`
-(the year of `election` in `site.toml`):
-the inputs `results-oso<year>` and `results-osk<year>`
-where `config/inputs.toml` has them,
+(the year of the election's day):
+the inputs the election's `results` names in `config/elections.toml`,
 else downloaded and kept like the night's files
 under `data/raw/results/<UTC time>/`;
 zips or directories given are read instead.
@@ -487,16 +582,15 @@ Their flags are `zvolený` (elected),
 `X` (withdrew: their votes kept, flag `-1`).
 A council obvod's seats are not in the tables, but a whole council's:
 where the municipality has several obvody
-they come from the candidate lists (`data/build/`).
+they come from the candidate lists (`data/build/<election day>/`).
 
 **Okrsok files.**
 They come from the tables per okrsok:
 the municipal turnout and votes (`tab02f`, `tab05f`, `tab08f`; `Okrsok`)
 and the regional (`tab02d`, `tab06d`, `tab09d`; `Volebný okrsok`),
 keyed by municipality and okrsok.
-`past` per okrsok comes from `okrsky_2022` of `data/build/candidates.json`;
-`final` reports how many obce matched
-(2026: 417 of the 630 with several okrsky in 2022).
+`past` comes from the [crosswalk](#the-crosswalk-of-okrsky)
+and the final results of the election before.
 `final` replaces the contests of the results it has, with their okrsky;
 with both elections the phase becomes `final`.
 

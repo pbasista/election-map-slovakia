@@ -1,0 +1,23 @@
+# Okrsky of Orlov, transcribed by an AI agent in job okrsok-rules-1049 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre obyvateľov obce Orlov
+#   okrsok 2: pre obyvateľov obce Orlov, miestnej časti Andrejovka
+obec = "526941"
+name = "Orlov"
+okrsky_date = 2022-07-20
+
+[[document]]
+url = "https://www.obecorlov.sk/resources/File/utvorenie-volebny-ch-okrskov-a-urc-enie-volebny-ch-miestnosti-pre-vol-by-do-orga-nov-samospra-vy-obci-ktore-platia-aj-pre-vol-by-do-orga-nov-samospra-vnych-krajov.pdf"
+sha256 = "99e0eaca516a27c45d7cd2fa3a9b12540f37f32dbb2cd4550043fa0a098c6427"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí, ktoré platia aj pre voľby do orgánov samosprávnych krajov konaných dňa 29. októbra 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Orlov"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Andrejovka"},
+]

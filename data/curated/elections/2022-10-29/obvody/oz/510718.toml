@@ -1,0 +1,45 @@
+# Council obvody of Liptovské Revúce (510718), Ružomberok.
+# Transcribed by an AI agent in job obvod-rules-347 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: časť obce Nižná Revúca sa volí 3 poslancov.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: časť obce Stredná Revúca sa volí 3 poslancov.
+#   obvod 3: Vo volebnom obvode číslo 3, ktorý zahŕňa: časť obce Vyšná Revúca sa volí 3 poslancov.
+# Okrsky added by an AI agent in job okrsok-rules-1214 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: časť obce Nižná Revúca sa volí 3 poslancov.
+#   okrsok 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: časť obce Stredná Revúca sa volí 3 poslancov.
+#   okrsok 3: Vo volebnom obvode číslo 3, ktorý zahŕňa: časť obce Vyšná Revúca sa volí 3 poslancov.
+obec = "510718"
+name = "Liptovské Revúce"
+date = 2022-06-29
+note = "Scanned announcement read visually. Obvody = parts of the municipality."
+okrsky_date = 2022-06-29
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office okrsky per obvod), so each okrsok is its whole obvod; the obvody document is the source and date is that resolution's date (no separate okrsky announcement used)."
+
+[[document]]
+url = "https://www.liptovskerevuce.sk/e_download.php?file=data/editor/239sk_2.pdf&original=ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20obvodov%20a%20ur%C4%8Denie%20po%C4%8Dtu%20poslancov%20pre%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vy%20obce%20Liptovsk%C3%A9%20Rev%C3%BAce.pdf"
+sha256 = "794568056c1adea561e96e9af3f4e92cee424c467f583a07179b6dcb4c28a573"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 48/2022 zo dňa 29.6.2022), 19.7.2022"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {part = "Nižná Revúca"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Stredná Revúca"},
+]
+
+[obvod.3]
+seats = 3
+okrsky = [3]
+rules = [
+  {part = "Vyšná Revúca"},
+]

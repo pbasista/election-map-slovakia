@@ -99,7 +99,7 @@
  * below (`level`).
  */
 
-import { addressFile, Cache, fetchJSON, setDataVersion, shownNumber } from './files.js';
+import { addressFile, Cache, fetchJSON, setDataSource, shownNumber } from './files.js';
 import {
   addArc,
   addDashedArc,
@@ -901,16 +901,16 @@ function spanningTree(points) {
 
 /* The renderer of the map, once geo/coarse.json is decoded (an error if it
  * cannot be). *geoIndex* is geo/index.json, *coarse* the bytes of
- * geo/coarse.json, *dataVersion* the build's (files.js `setDataVersion`),
- * *colors* the theme's (`COLOR`), *strings* the labels'
+ * geo/coarse.json, *dataSource* the page's (files.js
+ * `setDataSource`), *colors* the theme's (`COLOR`), *strings* the labels'
  * {obvod: 'No. {n}', countries: {AT: 'Austria', …}} in the page's language,
  * *surface(w, h)* makes a canvas and *present(canvas, view, seq)* hands a
  * drawing of *view* over (the page's latest view: its *seq*). The methods
  * are what render.js passes the page's messages to. */
-export async function createRenderer({ geoIndex, coarse: bytes, dataVersion, colors, strings, surface, present }) {
+export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colors, strings, surface, present }) {
   // In a worker this module has its own files.js, which the page's config
   // did not reach.
-  setDataVersion(dataVersion);
+  setDataSource(dataSource);
   Object.assign(COLOR, colors);
   const coarse = decode(JSON.parse(new TextDecoder().decode(bytes)), Infinity);
   // The regional obvody that hold a part of Bratislava or Košice.

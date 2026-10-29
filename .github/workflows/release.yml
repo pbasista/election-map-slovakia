@@ -3,12 +3,24 @@
 # src/election_map_slovakia/__init__.py, the one place the version is
 # written down.
 #
-# The checks run first (ci.yml); then the site is built from the official
-# inputs and checked, deployed to Cloudflare Pages once that succeeds, and
-# attached to a GitHub release. Deploying needs the repository secrets
-# CLOUDFLARE_API_TOKEN (Account › Cloudflare Pages › Edit) and
-# CLOUDFLARE_ACCOUNT_ID; the project is `pages_project` in config/site.toml.
-# See docs/deploy.md.
+# The site is deployed in parts, each a Cloudflare Pages project of its own
+# (config/site.toml, docs/deploy.md): the app, each election's map and
+# data bundles, the cached sources and the results. The checks run first
+# (ci.yml, which also makes sure data/published.toml holds the keys of the
+# data parts of this commit). Then:
+#
+#   plan  asks the Pages API which data parts are not deployed with their
+#         key;
+#   data  only if any: downloads the pinned inputs (from the input store),
+#         builds and checks the whole site, and deploys the data parts not
+#         deployed yet, each carrying its key;
+#   app   builds the app for the deployed data parts, checks it against
+#         their manifests and deploys it;
+#
+# and the app's files are attached to a GitHub release. A release that
+# changes no data builds and deploys the app alone, in a few minutes.
+# Deploying needs the repository secrets CLOUDFLARE_API_TOKEN (Account ›
+# Cloudflare Pages › Edit) and CLOUDFLARE_ACCOUNT_ID.
 name: Release
 
 on:
@@ -24,22 +36,31 @@ concurrency:
   group: release
   cancel-in-progress: false
 
+env:
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
 jobs:
   # The tag push does not itself trigger CI (its trigger is branches), so the
   # checks run here. Nothing below starts until they are green.
   ci:
     uses: ./.github/workflows/ci.yml
 
-  build:
+  plan:
     needs: ci
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 10
     outputs:
-      project: ${{ steps.site.outputs.project }}
-      url: ${{ steps.site.outputs.url }}
-      archive: ${{ steps.archive.outputs.name }}
+      stale: ${{ steps.status.outputs.stale }}
     steps:
+      # Everything but the cached copies of cited pages (data/curated/cache/,
+      # nearly 1 GB), which only the data job deploys.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/data/curated/cache/
       - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
         with:
           python-version: "3.14"
@@ -57,32 +78,77 @@ jobs:
           fi
 
       - run: uv sync --locked
+      - id: status
+        run: uv run ems data status --github-output
 
-      # `fetch` revalidates every input with the server anyway; the cache only
-      # spares the downloads. The day in the key starts a fresh entry daily,
-      # since an entry cannot be updated once saved.
-      - id: day
-        run: echo "day=$(date -u +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+  data:
+    needs: plan
+    if: needs.plan.outputs.stale == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with:
+          python-version: "3.14"
+          enable-cache: true
+      - run: uv sync --locked
+
+      # Every input is pinned (config/inputs.toml), so the same pins are the
+      # same files: the cache spares even the downloads from the store.
       - id: raw
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: data/raw/
-          key: raw-${{ hashFiles('config/inputs.toml') }}-${{ steps.day.outputs.day }}
-          restore-keys: |
-            raw-${{ hashFiles('config/inputs.toml') }}-
-            raw-
+          key: raw-${{ hashFiles('config/inputs.toml') }}
+          restore-keys: raw-
+      # fetch unpacks the RAR inputs (addresses of 2022) with bsdtar.
+      - run: sudo apt-get update && sudo apt-get install -y libarchive-tools
       - run: uv run ems fetch
       # Saved right after `fetch`, so a later failure does not lose it.
       - if: steps.raw.outputs.cache-hit != 'true'
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: data/raw/
-          key: raw-${{ hashFiles('config/inputs.toml') }}-${{ steps.day.outputs.day }}
+          key: raw-${{ hashFiles('config/inputs.toml') }}
 
-      # candidates, addresses, geo, basemap, results (the final results of
+      # candidates, links, addresses, geo, basemap, results (the final results of
       # their pinned inputs), build and check, stopping at the first that
-      # fails: a site that does not pass `check` is never deployed.
+      # fails: data that do not pass `check` are never deployed.
       - run: uv run ems make
+      # Each data part whose key is not deployed yet, with Wrangler.
+      - run: uv run ems data deploy
+
+  app:
+    needs: [plan, data]
+    # After the data job, or without it where no data part was stale.
+    if: >-
+      always() && needs.plan.result == 'success' &&
+      (needs.data.result == 'success' || needs.data.result == 'skipped')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: production
+      url: ${{ steps.site.outputs.url }}
+    outputs:
+      archive: ${{ steps.archive.outputs.name }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/data/curated/cache/
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with:
+          python-version: "3.14"
+          enable-cache: true
+      - run: uv sync --locked
+
+      # The app alone, naming each election's bundle by the deployment that
+      # carries its key, checked against the files their manifests list.
+      - run: uv run ems build --deployed
+      - run: uv run ems check
 
       - id: site
         run: |
@@ -96,33 +162,8 @@ jobs:
       - id: archive
         run: |
           name="election-map-slovakia-${GITHUB_REF_NAME#v}.tar.gz"
-          tar -czf "$name" -C dist .
+          tar -czf "$name" -C dist/app .
           echo "name=$name" >> "$GITHUB_OUTPUT"
-      - uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist/
-          retention-days: 7
-      - uses: actions/upload-artifact@v4
-        with:
-          name: archive
-          path: ${{ steps.archive.outputs.name }}
-          # Already compressed.
-          compression-level: 0
-          retention-days: 7
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    environment:
-      name: production
-      url: ${{ needs.build.outputs.url }}
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/
       # --branch: the production branch of the Pages project. A tag is
       # checked out on no branch, and an upload without one would become a
       # preview deployment instead of the site.
@@ -132,14 +173,21 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           wranglerVersion: "4.151.1"
           command: >-
-            pages deploy dist
-            --project-name=${{ needs.build.outputs.project }}
+            pages deploy dist/app
+            --project-name=${{ steps.site.outputs.project }}
             --branch=main
             --commit-hash=${{ github.sha }}
             --commit-message=${{ github.ref_name }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: archive
+          path: ${{ steps.archive.outputs.name }}
+          # Already compressed.
+          compression-level: 0
+          retention-days: 7
 
   github-release:
-    needs: [build, deploy]
+    needs: app
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -147,8 +195,16 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: archive
+      # The notes start from the version before, the latest release that is
+      # no pre-release: the input store, the pre-release `inputs` of this
+      # repository (docs/deploy.md), is no version to count from.
       - name: Create the GitHub release
-        run: gh release create "$GITHUB_REF_NAME" --generate-notes "${{ needs.build.outputs.archive }}"
+        run: |
+          previous="$(gh release list --exclude-drafts --exclude-pre-releases \
+            --limit 1 --json tagName --jq '.[0].tagName // empty')"
+          gh release create "$GITHUB_REF_NAME" --generate-notes \
+            ${previous:+--notes-start-tag "$previous"} \
+            "${{ needs.app.outputs.archive }}"
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}

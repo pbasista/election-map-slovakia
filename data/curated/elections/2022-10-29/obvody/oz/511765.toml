@@ -1,0 +1,107 @@
+# Council obvody of Poltár (511765), Poltár.
+# Transcribed by an AI agent in job obvod-rules-295 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: obvod Poltár 11 poslancov (okrsky 1-5: ulice mesta Poltár, Prievrana, Hájiky-Maky)
+#   obvod 2: obvod Zelené 1 poslanec (okrsok 6: obyvatelia z časti Zelené)
+#   obvod 3: obvod Slaná Lehota 1 poslanec (okrsok 7: obyvatelia z časti Slaná Lehota)
+# Okrsky added by an AI agent in job okrsok-rules-1170 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Družby, Jarmočná, Kanadská, Kvetná, Lúčna, Nová, Obrancov mieru, Partizánska, Pionierska, Poľná, Revolučná
+#   okrsok 2: 9. mája: rodinné domy, 588/38 6 b.j., 589/39 6 b.j.; Továrenská, Záhradná, Sklárska: 580/25-33 bl. P; Podhorská: rodinné domy; Podhorská: 512/46, 597/47, 607/48, 629/50, 635/52, 639/53, 650/55; Železničná: rodinné domy; Železničná: 694/37,39,41 bl. V, 711/44,45 bl. W; Prievrana, Hájiky-Maky, obyvatelia s trvalým pobytom: Poltár - mesto
+#   okrsok 3: Školská, Fučíkova: 612/1-5 bl. J, 618/11-12 bl. L, 619/9-10 bl. M, 620/7-8 bl. N, 626/13-18 bl. R, 628/19-21 bl. S, 636/22-24 bl. T, 649/25-27 bl. U
+#   okrsok 4: 13. januára, Sklárska: 503/13-15 bl. A, 504/16-18 bl. B, 505/19-21 bl. C, 506/22-24 bl. D, 507/12, 508/10,11 20 b.j., 574/1-9 bl. E, 579/36-40 bl. O, 593/41-49 bl. K
+#   okrsok 5: Sklárska: 576/52 bl. G, 577/54 bl. H, 592/53 bl. F, 594/56-62 bl. I, 608/55 bl. Z; Slobody: 296/5,6, 297/7,8, 298/11,12,13,14,15, 299/16,17, 300/18, 301/19,20, 302/21,22, 303/25,26, 720/127-130, 730/131-133, 450/9,10; Slobody: rodinné domy 11 - 135
+#   okrsok 6: obyvatelia z časti Zelené
+#   okrsok 7: obyvatelia z časti Slaná Lehota
+obec = "511765"
+name = "Poltár"
+date = 2022-06-20
+note = "Uznesenie 23/2022 names the obvody Poltár (11), Zelené (1), Slaná Lehota (1); the 2022 okrsky document numbers them I (okrsky 1-5, incl. Prievrana and Hájiky-Maky), II Zelené (okrsok 6), III Slaná Lehota (okrsok 7). 'obyvatelia s trvalým pobytom: Poltár - mesto' means voters without an address, not a rule."
+okrsky_date = 2022-08-09
+okrsky_fill = "nearest"
+okrsky_note = "Numbers after the slash (súpisné/orientačné) are the orientačné numbers used in the rules. 9. mája, Podhorská, Železničná (rodinné domy and the listed blocks), Školská, Fučíkova, 13. januára and Slobody each lie in a single okrsok, so they are whole-street rules. 'obyvatelia s trvalým pobytom: Poltár - mesto' (okrsok 2) means voters registered without an address, not a rule. Placed by fill_nearest: Sklárska numbers the document does not list (e.g. 34-35, 50-51, 63-86) and the register's many houses without a street in the part Poltár. Date = the page's 'Dátum vloženia: 9. 8. 2022' (the PDF is undated)."
+
+[[document]]
+url = "https://www.poltar.sk/evt_file.php?file=28425"
+sha256 = "8c9116839a3908590f3cf180e143e561bf1c01b635b1f06b49b9a7dfb796bd42"
+title = "Uznesenie MsZ č. 23/2022 zo dňa 20.06.2022 (určenie volebných obvodov a počtu poslancov)"
+
+[[document]]
+url = "https://www.poltar.sk/evt_file.php?file=28515"
+sha256 = "bd04c96c5f5fed816806c0883cbb76d2c044e5c75f13191e494e34b6e7d4995e"
+title = "Volebné obvody, okrsky a volebné miestnosti mesta Poltár 2022"
+
+[[document]]
+url = "https://www.poltar.sk/pre-obcanov/volby/volby-do-organov-samospravy-obci-a-vuc-2022/volebne-obvody-okrsky-a-miestnosti-2592sk.html"
+sha256 = "f52fee14a917f8b7c6ee3c39f920be5a2e3df35801e96642138f90bb53feab7f"
+title = "Volebné obvody, okrsky a miestnosti (page linking the document, dátum vloženia 9. 8. 2022)"
+
+[obvod.1]
+seats = 11
+okrsky = [1, 2, 3, 4, 5]
+rules = [
+  {part = "Poltár"},
+  {part = "Prievrana"},
+  {part = "Hájiky-Maky"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [6]
+rules = [
+  {part = "Zelené"},
+]
+
+[obvod.3]
+seats = 1
+okrsky = [7]
+rules = [
+  {part = "Slaná Lehota"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Družby"},
+  {street = "Jarmočná"},
+  {street = "Kanadská"},
+  {street = "Kvetná"},
+  {street = "Lúčna"},
+  {street = "Nová"},
+  {street = "Obrancov Mieru", written = "Obrancov mieru"},
+  {street = "Partizánska"},
+  {street = "Pionierska"},
+  {street = "Poľná"},
+  {street = "Revolučná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "9.mája", written = "9. mája"},
+  {street = "Továrenská"},
+  {street = "Záhradná"},
+  {street = "Sklárska", numbers = "25-33"},
+  {street = "Podhorská"},
+  {street = "Železničná"},
+  {part = "Prievrana"},
+  {part = "Hájiky-Maky"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Školská"},
+  {street = "Fučíkova"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "13.januára", written = "13. januára"},
+  {street = "Sklárska", numbers = "1-24, 36-49"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Sklárska", numbers = "52-62"},
+  {street = "Slobody"},
+]

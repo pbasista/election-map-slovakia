@@ -1,0 +1,58 @@
+# Okrsky of Zemianska Olča, transcribed by an AI agent in job okrsok-rules-806 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice patriace do volebného okrsku - Kvetná, Jarná, Dunajská, Hlavná, Kapitánska, Kúpeľná, Malá cesta, Mierová, Mlynský rad, Námestie Hrdinov, Školská, Záhradnícky Rad, Železničná
+#   okrsok 2: ulice patriace do volebného okrsku - Dlhý dvor, Jókaiho, Kolárovská, Komárňanská, Kostolná, Krátka, Lipová, Mládeže, Námestie Slobody, Nová, Pekárska, Petöfiho, Piesočná, Poľovnícky rad, Ružová, Úzka, Vinohradnícky rad
+obec = "501417"
+name = "Zemianska Olča"
+okrsky_date = 2022-08-05
+okrsky_fill = "nearest"
+okrsky_note = "Scanned letter of the mayor to the district office dated 5 August 2022 listing the streets of each okrsok. The register's houses without a street (súpisné only) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.zemianskaolca.sk/e_download.php?file=data/uredni_deska/obsah1083_5.pdf&original=Hl%C3%A1senie%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "01930480f79ebda180572028906ce2ad250dc0e3138544bde26a873649db9754"
+title = "Voľby do orgánov samosprávy obcí v roku 2022 / Voľby do orgánov samosprávnych krajov v roku 2022 – hlásenie volebných miestností"
+
+[[document]]
+url = "https://www.zemianskaolca.sk/zverejnovanie/uradna-tabula/volby-2022-hlasenie-volebnych-miestnosti-1172.html"
+sha256 = "29204ab67a0de867068589ec5ae7b5730f1333fe18a71402cae9b1963a87a267"
+title = "Voľby 2022 - Hlásenie volebných miestností (úradná tabuľa, vyvesené 9. 8. 2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Kvetná"},
+  {street = "Jarná"},
+  {street = "Dunajská"},
+  {street = "Hlavná"},
+  {street = "Kapitánska"},
+  {street = "Kúpeľná"},
+  {street = "Malá cesta"},
+  {street = "Mierová"},
+  {street = "Mlynský Rad", written = "Mlynský rad", note = "Same street; the document writes it with a lower-case/upper-case difference only."},
+  {street = "Námestie Hrdinov"},
+  {street = "Školská"},
+  {street = "Záhradnický Rad"},
+  {street = "Železničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dlhý Dvor", written = "Dlhý dvor", note = "Same street; the document writes it with a lower-case/upper-case difference only."},
+  {street = "Jókaiho"},
+  {street = "Kolárovská"},
+  {street = "Komárňanská"},
+  {street = "Kostolná"},
+  {street = "Krátka"},
+  {street = "Lipová"},
+  {street = "Mládeže"},
+  {street = "Námestie Slobody"},
+  {street = "Nová"},
+  {street = "Pekárska"},
+  {street = "Petöfiho"},
+  {street = "Piesočná"},
+  {street = "Poľovnícky rad"},
+  {street = "Ružová"},
+  {street = "Úzka"},
+  {street = "Vinohradnícky Rad", written = "Vinohradnícky rad", note = "Same street; the document writes it with a lower-case/upper-case difference only."},
+]

@@ -1,0 +1,38 @@
+# Council obvody of Dolná Strehová (515965), Veľký Krtíš.
+# Transcribed by an AI agent in job obvod-rules-358 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: viacmandátový volebný obvod č. 1 pre voľby poslancov v samotnej obci Dolná Strehová, v ktorom sa budú voliť 7 (siedmi) poslanci
+#   obvod 2: viacmandátový volebný obvod č. 2 pre voľby poslancov v časti obce Horný a Dolný Bukovec, Dúbrava a Prieloh, v ktorom sa budú voliť 2 (dvaja) poslanci
+# Okrsky added by an AI agent in job okrsok-rules-1221 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: viacmandátový volebný obvod č. 1 pre voľby poslancov v samotnej obci Dolná Strehová, v ktorom sa budú voliť 7 (siedmi) poslanci
+#   okrsok 2: viacmandátový volebný obvod č. 2 pre voľby poslancov v časti obce Horný a Dolný Bukovec, Dúbrava a Prieloh, v ktorom sa budú voliť 2 (dvaja) poslanci
+obec = "515965"
+name = "Dolná Strehová"
+date = 2022-06-17
+note = "Obvod 1 = the village Dolná Strehová itself (part Dolná Strehová incl. all its streets); obvod 2 = parts Horný a Dolný Bukovec (register part 'Bukovec'), Dúbrava and Prieloh."
+okrsky_date = 2022-06-17
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+
+[[document]]
+url = "https://dolnastrehova.sk/wp-content/uploads/dokumenty/komunalne-volby/V-O-L-B-Y-urcenie-obvodov.pdf"
+sha256 = "f01a31fb2e31845ca556bff199ff230d3290af87aa6e40c56308a7714d7a44d3"
+title = "Voľby – uznesenie OZ č. 5/2022 zo dňa 17.6.2022 o určení volebných obvodov (zverejnené 19.7.2022)"
+
+[obvod.1]
+seats = 7
+okrsky = [1]
+rules = [
+  {part = "Dolná Strehová"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Bukovec", note = "document: 'Horný a Dolný Bukovec' = register part Bukovec"},
+  {part = "Dúbrava"},
+  {part = "Prieloh"},
+]

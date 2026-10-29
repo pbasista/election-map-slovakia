@@ -1,0 +1,73 @@
+# Council obvody of Hruštín (509680), Námestovo.
+# Transcribed by an AI agent in job obvod-rules-326 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: okrsok č. 1: Hruštín: Ulice: Lán, Radzovka, Včielok, Kút, Hrnčiarka, Výhon, Kultúrna, Potok, Črchľa, Zavoda okrsok č. 2: Hruštín: Ulice: Dielnice, Dedina, Kutina, Pod brehom, Školská, Hlavná, Zamost, Pod Príslopom, Baraniarky, Ku pekárni, Slnečná, Veterná, Pod Uhliskom, Ulica Dlhá, Ulica Krátka, Ulica Lúčna, Ulica Poľná
+#   obvod 2: okrsok č. 3: Vaňovka: Ulice: Dolný koniec, Horný koniec, Klinok, Kostolná, Kúty, Podsádok, Hredy
+# Okrsky added by an AI agent in job okrsok-rules-1196 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hruštín: Ulice: Lán, Radzovka, Včielok, Kút, Hrnčiarka, Výhon, Kultúrna, Potok, Črchľa, Zavoda
+#   okrsok 2: Hruštín: Ulice: Dielnice, Dedina, Kutina, Pod brehom, Školská, Hlavná, Zamost, Pod Príslopom, Baraniarky, Ku pekárni, Slnečná, Veterná, Pod Uhliskom, Ulica Dlhá, Ulica Krátka, Ulica Lúčna, Ulica Poľná
+#   okrsok 3: Vaňovka: Ulice: Dolný koniec, Horný koniec, Klinok, Kostolná, Kúty, Podsádok, Hredy
+obec = "509680"
+name = "Hruštín"
+date = 2022-07-15
+note = "Scanned announcement (read visually). Obvod 1 = part Hruštín (all its streets listed), obvod 2 = part Vaňovka (all its streets listed); transcribed as part rules, which also place addresses without a street by their part."
+okrsky_date = 2022-07-15
+okrsky_fill = "nearest"
+okrsky_note = "Scanned announcement (read visually) of the council's resolution 43/2022 of 15.07.2022, which names the okrsky of each obvod with their streets. Addresses without a street in obvod 1 (part Hruštín) are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20221001074227/https://www.hrustin.sk/files/2022-07-19-085641-Ozn__menie_o_utvoren___volebn__ch_obvodov.pdf"
+sha256 = "2f219382f3585237df73e2651afedfb3f2d3ea700a96a5effe86753b8d2900fe"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 43/2022 zo dňa 15.07.2022), 18.07.2022"
+
+[obvod.1]
+seats = 9
+okrsky = [1, 2]
+rules = [
+  {part = "Hruštín"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Vaňovka"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Lán"},
+  {street = "Radzovka"},
+  {street = "Včielok"},
+  {street = "Kút"},
+  {street = "Hrnčiarka"},
+  {street = "Výhon"},
+  {street = "Kultúrna"},
+  {street = "Potok"},
+  {street = "Črchľa"},
+  {street = "Zavoda"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dielnice"},
+  {street = "Dedina"},
+  {street = "Kutina"},
+  {street = "Pod brehom"},
+  {street = "Školská"},
+  {street = "Hlavná"},
+  {street = "Zamost"},
+  {street = "Pod Príslopom"},
+  {street = "Baraniarky"},
+  {street = "Ku pekárni"},
+  {street = "Slnečná"},
+  {street = "Veterná"},
+  {street = "Pod Uhliskom"},
+  {street = "Ulica Dlhá"},
+  {street = "Ulica Krátka"},
+  {street = "Ulica Lúčna"},
+  {street = "Ulica Poľná"},
+]

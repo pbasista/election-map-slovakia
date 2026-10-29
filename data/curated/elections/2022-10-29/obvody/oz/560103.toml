@@ -1,0 +1,90 @@
+# Council obvody of Vysoké Tatry (560103), Poprad.
+# Transcribed by an AI agent in job obvod-rules-296 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: a/ volebný obvod č. 1 /tvoria časti mesta Podbanské, Štrbské Pleso, Vyšné Hágy / - počet poslancov: 1.
+#   obvod 2: b/ volebný obvod č. 2 /tvoria časti mesta Nová Polianka, Tatranská Polianka/ - počet poslancov: 1.
+#   obvod 3: c/ volebný obvod č. 3 /tvoria časti mesta Tatranské Zruby, Nový Smokovec, Starý Smokovec, Horný Smokovec - počet poslancov: 2.
+#   obvod 4: d/ volebný obvod č. 4 /tvorí časť mesta Dolný Smokovec/ - počet poslancov: 2.
+#   obvod 5: e/ volebný obvod č. 5 /tvoria časti mesta Tatranská Lesná, Tatranská Lomnica, Tatranské Matliare, Kežmarské Žľaby - počet poslancov: 3.
+#   obvod 6: f/ volebný obvod č. 6 /tvorí časť mesta Tatranská Kotlina/ - počet poslancov: 1.
+# Okrsky added by an AI agent in job okrsok-rules-1171 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 – Pre voličov časti mesta Podbanské, Štrbské Pleso, Vyšné Hágy
+#   okrsok 2: Volebný okrsok č. 2 – Pre voličov časti mesta Nová Polianka, Tatranská Polianka
+#   okrsok 3: Volebný okrsok č. 3 – Pre voličov časti mesta Tatranské Zruby, Nový Smokovec, Starý Smokovec, Dolný Smokovec
+#   okrsok 4: Volebný okrsok č. 4 – Pre voličov časti mesta Dolný Smokovec
+#   okrsok 5: Volebný okrsok č. 5 – Pre voličov časti mesta Tatranská Lesná, Tatranská Lomnica, Tatranské Matliare a Kežmarské Žľaby
+#   okrsok 6: Volebný okrsok č. 6 – Pre voličov časti mesta Tatranská Kotlina
+obec = "560103"
+name = "Vysoké Tatry"
+date = 2022-06-23
+okrsky_date = 2022-08-02
+okrsky_note = "Each okrsok is alone in its obvod (okrsok n = obvod n). The document lists Dolný Smokovec under okrsok 3 as well as okrsok 4; the obvod resolution puts Horný Smokovec (not named in the okrsky document) in obvod 3 and Dolný Smokovec alone in obvod 4, so okrsok 3 follows obvod 3 (Dolný Smokovec there read as a slip for Horný Smokovec). The page snapshot of 2022-08-03 (mid 488601) links an earlier file id=1719704 not kept by the archive; another snapshot links id=1719875, used here."
+
+[[document]]
+url = "https://web.archive.org/web/20220803150403/https://www.vysoketatry.sk/download_file_f.php?id=1714238"
+sha256 = "33340a7cdfc0cef720caacdc9141e2d1eff3724ac42b9d270923a953a30a6643"
+title = "Oznámenie o určení volebných obvodov a počtu poslancov pre voľby do orgánov samosprávy obcí v roku 2022 (uznesenie MsZ č. 100/2022 z 23. 06. 2022), zo dňa 12. júla 2022"
+
+[[document]]
+url = "https://web.archive.org/web/20220803150259/https://www.vysoketatry.sk/download_file_f.php?id=1719875"
+sha256 = "ae5739eebac0c0742c3b7809fa5fe2eeab5055dbae830e97acd626cc4fa60509"
+title = "Určenie volebných okrskov a volebných miestností v nich v Meste Vysoké Tatry pre voľby do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov v roku 2022 (Volby_2022_urcenie_okrskov_a_miestnosti.pdf)"
+
+[[document]]
+url = "https://web.archive.org/web/20220803135803/https://www.vysoketatry.sk/urcenie-volebnych-okrskov-a-volebnych-miestnosti-v-nich-v-meste-vysoke-tatry-pre-volby-do-organov-samospravy-obci-a-volieb-do-organov-samospravnych-k/mid/413600/ma0/all/.html"
+sha256 = "40152223c44f8b61c8ca7b5cc198b616d3f2ac4fbc624282e34b9f1664b18031"
+title = "Určenie volebných okrskov a volebných miestností v nich v meste Vysoké Tatry … (page linking the PDF)"
+
+[obvod.1]
+seats = 1
+okrsky = [1]
+rules = [
+  {part = "Podbanské"},
+  {part = "Štrbské Pleso"},
+  {part = "Vyšné Hágy"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [2]
+rules = [
+  {part = "Nová Polianka"},
+  {part = "Tatranská Polianka"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Tatranské Zruby"},
+  {part = "Nový Smokovec"},
+  {part = "Starý Smokovec"},
+  {part = "Horný Smokovec"},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [4]
+rules = [
+  {part = "Dolný Smokovec"},
+]
+
+[obvod.5]
+seats = 3
+okrsky = [5]
+rules = [
+  {part = "Tatranská Lesná"},
+  {part = "Tatranská Lomnica"},
+  {part = "Tatranské Matliare"},
+  {part = "Kežmarské Žľaby"},
+]
+
+[obvod.6]
+seats = 1
+okrsky = [6]
+rules = [
+  {part = "Tatranská Kotlina"},
+]

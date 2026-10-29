@@ -1,0 +1,36 @@
+# Okrsky of Udiča, transcribed by an AI agent in job okrsok-rules-813 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Udiča
+#   okrsok 2: Prosné
+#   okrsok 3: Upohlav
+obec = "513741"
+name = "Udiča"
+okrsky_date = 2022-11-08
+okrsky_note = "No document of the elections found (the live elections list reaches back only to 30. 9. 2022; the archived list of 29. 9. 2022 has no okrsky announcement); the referendum's document. It is undated; date is the posting date on the official page ('Vyvesené: 8. 11. 2022'). Okrsky named after the parts: 1 Udiča, 2 Prosné, 3 Upohlav, matching the voters (1319/377/120)."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.obecudica.sk/e_download.php?file=data/uredni_deska/obsah2337_3.pdf&original=Urcenie_volebnych_okrskov_a_miestnosti.pdf"
+sha256 = "908421e8fb6da97418b0218f89020058bca50f7caf4ab3a2b76d1ad113a2b60a"
+title = "Určenie volebných okrskov a miestností pre referendum, konané dňa 21. januára 2023"
+
+[[document]]
+url = "https://www.obecudica.sk/zverejnovanie/volby-a-referendum/referendum-21-01-2023-2361.html"
+sha256 = "abea12402aa2fa7302145adf1b5565f4dacad2eb0abc3a7f01e01b94a9316c59"
+title = "REFERENDUM 21. 01. 2023 (vyvesené 8. 11. 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Udiča"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Prosné"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Upohlav"},
+]

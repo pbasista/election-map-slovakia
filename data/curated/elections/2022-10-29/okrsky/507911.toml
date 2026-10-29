@@ -1,0 +1,126 @@
+# Okrsky of Chorvátsky Grob, transcribed by an AI agent in job okrsok-rules-649 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hlavná, Hlboká cesta, Hoštáky, Chorvátska, Južná, Lúčna, Námestie Josipa Andriča, Poľná, Športová, Toskánska, Ul. Antona Bernoláka, Výhon, Záhradná
+#   okrsok 2: Dlhá, Karpatská, Krátka, Malé Vinice, Na Kŕčoch, Pod vinicami, Severná, Svätoplukova, Školská, Ul. Antona Václavíka, Ul. Mila Urbana
+#   okrsok 3: Agátová, Bazová, Blahútova, Borovicová, Brusnicová, Buková, Černicová, Dubová, Golfová, Hlavný dvor, Hlohová, Hrušková, Jarabinová, Jaseňová, Jazdecká, Jazmínová, Jedľová, Jelšová, Lipová, Osiková, Platanová, Suché Miesto, Šalviová, Šípková, Vajnorská, Vavrínová
+#   okrsok 4: Bottova, Čerešňová, Hviezdoslavova, Chalupkova, Janka Kráľa, Javorová alej, Kukučínova, Na Pasienku, Nevädzová, Pezinská, Púpavová, Štúrova, Triblavinská
+#   okrsok 5: Brezová, Drozdia, Hájska, Hornodvorská, Hrudky, Jantárová, Jastrabia, Kolibríková, Konopná, Ľanová, Monarská alej, Oblúková, Pálffyho, Rubínová, Rybáriková, Slávičia, Slnečná, Smaragdová, Sokolia, Šúrska, Topoľová, Zafírová, Žilinská, Žitná
+obec = "507911"
+name = "Chorvátsky Grob"
+okrsky_date = 2022-08-01
+okrsky_fill = "nearest"
+okrsky_note = "The document names streets missing from the register (left out): Hlavná (okrsok 1), Lipová (okrsok 3), Oblúková, Rybáriková (okrsok 5). The 74 register addresses without a street are placed by fill_nearest. The file link (download_file_f.php) is not on the live site any more; snapshot of 2022-12-21 of the notice page and its attachment."
+
+[[document]]
+url = "https://web.archive.org/web/20221221060908/https://www.chorvatskygrob.sk/download_file_f.php?id=1720102"
+sha256 = "869df32683590a48d2db2c3b37fc4625750300458d1a2c27918cd21ba9780c77"
+title = "Rozhodnutie starostky obce Chorvátsky Grob o utvorení volebných okrskov a určení volebných miestností (Urcenie volebnych okrskov v Chorvatskom Grobe_komunalne volby 2022.pdf)"
+
+[[document]]
+url = "https://web.archive.org/web/20221220223653/https://www.chorvatskygrob.sk/oznamy/urcenie-poctu-okrskov-a-volebnych-miestnosti-pre-komunalne-volby-v-chorvatskom-grobe.html"
+sha256 = "dd5e39901da88778e33eebf08d0e31cf8bd472623b9c8c7b39cd3e1b277d046d"
+title = "Určenie počtu okrskov a volebných miestností pre komunálne voľby v Chorvátskom Grobe"
+
+[okrsok.1]
+rules = [
+  {street = "Hlboká cesta"},
+  {street = "Hoštáky"},
+  {street = "Chorvátska"},
+  {street = "Južná"},
+  {street = "Lúčna"},
+  {street = "Námestie Josipa Andriča"},
+  {street = "Poľná"},
+  {street = "Športová"},
+  {street = "Toskánska"},
+  {street = "Antona Bernoláka", written = "Ul. Antona Bernoláka"},
+  {street = "Výhon"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dlhá"},
+  {street = "Karpatská"},
+  {street = "Krátka"},
+  {street = "Malé Vinice"},
+  {street = "Na Kŕčoch"},
+  {street = "Pod vinicami"},
+  {street = "Severná"},
+  {street = "Svätoplukova"},
+  {street = "Školská"},
+  {street = "Antona Václavíka", written = "Ul. Antona Václavíka"},
+  {street = "Mila Urbana", written = "Ul. Mila Urbana"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová"},
+  {street = "Bazová"},
+  {street = "Blahútova"},
+  {street = "Borovicová"},
+  {street = "Brusnicová"},
+  {street = "Buková"},
+  {street = "Černicová"},
+  {street = "Dubová"},
+  {street = "Golfová"},
+  {street = "Hlavný Dvor", written = "Hlavný dvor"},
+  {street = "Hlohová"},
+  {street = "Hrušková"},
+  {street = "Jarabinová"},
+  {street = "Jaseňová"},
+  {street = "Jazdecká"},
+  {street = "Jazmínová"},
+  {street = "Jedľová"},
+  {street = "Jelšová"},
+  {street = "Osiková"},
+  {street = "Platanová"},
+  {street = "Suché Miesto"},
+  {street = "Šalviová"},
+  {street = "Šípková"},
+  {street = "Vajnorská"},
+  {street = "Vavrínová"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bottova"},
+  {street = "Čerešňová"},
+  {street = "Hviezdoslavova"},
+  {street = "Chalupkova"},
+  {street = "Janka Kráľa"},
+  {street = "Javorová alej"},
+  {street = "Kukučínova"},
+  {street = "Na Pasienku"},
+  {street = "Nevädzová"},
+  {street = "Pezinská"},
+  {street = "Púpavová"},
+  {street = "Štúrova"},
+  {street = "Triblavinská"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Brezová"},
+  {street = "Drozdia"},
+  {street = "Hájska"},
+  {street = "Hornodvorská"},
+  {street = "Hrudky"},
+  {street = "Jantárová"},
+  {street = "Jastrabia"},
+  {street = "Kolibríková"},
+  {street = "Konopná"},
+  {street = "Ľanová"},
+  {street = "Monarská alej"},
+  {street = "Pálffyho"},
+  {street = "Rubínová"},
+  {street = "Slávičia"},
+  {street = "Slnečná"},
+  {street = "Smaragdová"},
+  {street = "Sokolia"},
+  {street = "Šúrska"},
+  {street = "Topoľová"},
+  {street = "Zafírová"},
+  {street = "Žilinská"},
+  {street = "Žitná"},
+]

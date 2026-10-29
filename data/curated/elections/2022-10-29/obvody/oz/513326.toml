@@ -1,0 +1,127 @@
+# Council obvody of Lednické Rovne (513326), Púchov.
+# Transcribed by an AI agent in job obvod-rules-307 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Okrsok č. 1 (KD Lednické Rovne, Uhrovecká 33, 020 61 LR): Námestie slobody, Jilemnického, Uhrovecká, Sokolská, Pod Skalkou, Medňanská, Hlotka, Staré dvory, Záhradná, Sklárska, Sv. Anny
+#   obvod 2: Okrsok č. 2: (ZŠ Lednické Rovne, Schreiberova 372, 020 61 LR): Rovňanská, Schreiberova, Športová, Majerská, Medová, Na Kopánke, Háj; Okrsok č. 3: (ZŠ Lednické Rovne, Schreiberova 372, 020 61 LR): Súhradka, Májová
+#   obvod 3: Okrsok č. 4 (KD Horenická Hôrka, Pod brehom 43, 020 61 LR): Púchovská cesta, Cintorínska, Horeniská, Hôrčanska, Pod brehom, Na Barinách, Družstevná, U duba, Agátová, Javorová, Medňanská; Okrsok č. 5 (KD Medné, Medňanská 218, 020 61 LR): Medňanská, Potočná, Sadová, Kaštielska
+# Okrsky added by an AI agent in job okrsok-rules-1180 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Námestie slobody, Jilemnického, Uhrovecká, Sokolská, Pod Skalkou, Medňanská, Hlotka, Staré dvory, Záhradná, Sklárska, Sv. Anny
+#   okrsok 2: Rovňanská, Schreiberova, Športová, Majerská, Medová, Na Kopánke, Háj
+#   okrsok 3: Súhradka, Májová
+#   okrsok 4: Púchovská cesta, Cintorínska, Horenická, Hôrčanska, Pod brehom, Na Barinách, Družstevná, U duba, Agátová, Javorová, Medňanská
+#   okrsok 5: Medňanská, Potočná, Sadová, Kaštielska
+obec = "513326"
+name = "Lednické Rovne"
+date = 2022-07-14
+fill = "nearest"
+note = "Obvody are defined by okrsky with their streets. Addresses without a street (súpisné only, 721) are placed by fill_nearest."
+okrsky_date = 2022-08-04
+okrsky_fill = "nearest"
+okrsky_note = "Medňanská, named in okrsky 4 and 5, is split by part (Horenická Hôrka → 4, Medné → 5); within obvod 1 it is okrsok 1. The register's houses without a street (súpisné only) in Medné go to okrsok 5; the others in Lednické Rovne and Horenická Hôrka are placed by fill_nearest."
+
+[[document]]
+url = "https://www.lednickerovne.sk/modules/file_storage/download.php?file=79168992%7C525"
+sha256 = "f20170a253d14f3aa56862dd86d746c00280b4c5f7f408cf4b596685595bb9a6"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby 29. októbra 2022 (uznesenie č. 579/2022-7 zo dňa 14.07.2022), 18.07.2022"
+
+[[document]]
+url = "https://www.lednickerovne.sk/modules/file_storage/download.php?file=4c4ca55d%7C531"
+sha256 = "e1bf608df84bf4256de390ff05545a262b23cbe7ed157ba169946d4218e0cd91"
+title = "Oznámenie o vytvorení volebných okrskov a určení volebných miestností, 04.08.2022"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {street = "Námestie slobody"},
+  {street = "Jilemnického"},
+  {street = "Uhrovecká"},
+  {street = "Sokolská"},
+  {street = "Pod Skalkou"},
+  {street = "Hlotka"},
+  {street = "Staré dvory"},
+  {street = "Záhradná"},
+  {street = "Sklárska"},
+  {street = "Sv. Anny"},
+  {street = "Medňanská", part = "Lednické Rovne", note = "Medňanská is named in okrsky 1, 4 and 5; it runs through the parts Lednické Rovne (okrsok 1, obvod 1), Horenická Hôrka (okrsok 4) and Medné (okrsok 5), both obvod 3."},
+]
+
+[obvod.2]
+seats = 6
+okrsky = [2, 3]
+rules = [
+  {street = "Rovňanská"},
+  {street = "Schreiberova"},
+  {street = "Športová"},
+  {street = "Majerská"},
+  {street = "Medová"},
+  {street = "Na Kopánke"},
+  {street = "Háj"},
+  {street = "Súhradka"},
+  {street = "Májová"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [4, 5]
+rules = [
+  {street = "Púchovská cesta"},
+  {street = "Cintorínska"},
+  {street = "Horenická", written = "Horeniská", note = "typo \"Horeniská\" in the announcement (the okrsky announcement writes Horenická)"},
+  {street = "Hôrčanská", written = "Hôrčanska"},
+  {street = "Pod brehom"},
+  {street = "Na Barinách"},
+  {street = "Družstevná"},
+  {street = "U duba"},
+  {street = "Agátová"},
+  {street = "Javorová"},
+  {street = "Potočná"},
+  {street = "Sadová"},
+  {street = "Kaštieľska", written = "Kaštielska"},
+  {street = "Medňanská", part = "Horenická Hôrka"},
+  {street = "Medňanská", part = "Medné"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Rovňanská"},
+  {street = "Schreiberova"},
+  {street = "Športová"},
+  {street = "Majerská"},
+  {street = "Medová"},
+  {street = "Na Kopánke"},
+  {street = "Háj"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Súhradka"},
+  {street = "Májová"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Púchovská cesta"},
+  {street = "Cintorínska"},
+  {street = "Horenická"},
+  {street = "Hôrčanská", written = "Hôrčanska"},
+  {street = "Pod brehom"},
+  {street = "Na Barinách"},
+  {street = "Družstevná"},
+  {street = "U duba"},
+  {street = "Agátová"},
+  {street = "Javorová"},
+  {street = "Medňanská", part = "Horenická Hôrka", note = "Medňanská runs through Horenická Hôrka (okrsok 4) and Medné (okrsok 5); split by part"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Medňanská", part = "Medné"},
+  {street = "Potočná"},
+  {street = "Sadová"},
+  {street = "Kaštieľska", written = "Kaštielska"},
+  {part = "Medné", note = "the houses without a street (súpisné only) of Medné go to okrsok 5, the okrsok of Medné (polling station KD Medné)", inferred = true},
+]

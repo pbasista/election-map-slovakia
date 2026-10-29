@@ -1,0 +1,38 @@
+# Okrsky of Cinobaňa, transcribed by an AI agent in job okrsok-rules-953 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: CINOBAŇA – občania s trvalým pobytom v Cinobani
+#   okrsok 2: KATARÍNSKA HUTA – občania s trvalým pobytom v časti Maša, Katarínska Huta, Hrnčiarky a Žihľava
+#   okrsok 3: TURIČKY – občania s trvalým pobytom v časti Turičky
+obec = "511315"
+name = "Cinobaňa"
+okrsky_date = 2022-08-05
+okrsky_note = "The document names the okrsky CINOBAŇA, KATARÍNSKA HUTA, TURIČKY and their voters by part: okrsok 1 residents of Cinobaňa, okrsok 2 the parts Maša, Katarínska Huta, Hrnčiarky and Žihľava, okrsok 3 the part Turičky (register Turíčky)."
+
+[[document]]
+url = "https://www.cinobana.sk/e_download.php?file=/data/uredni_deska/obsah9_4.pdf&original=Zoznam_volebnych_okrskov_a_miestnosti_2022.pdf"
+sha256 = "a158e2bc1e5bd62d15e52f0f22208676b3f6bc4c38743b7af0fce6ded9be8cfb"
+title = "Volebné okrsky a volebné miestnosti pre voľby do orgánov samosprávy obce a samosprávnych krajov 29.10.2022"
+
+[[document]]
+url = "https://www.cinobana.sk/samosprava/volby-a-referendum/komunalne-volby-a-volby-do-vuc-2022-14.html"
+sha256 = "1251cc1b506c046eaa48f63b0d5d905eede819b74fd8682ec2cc5eb338c97b7a"
+title = "Komunálne voľby a voľby do VÚC 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Cinobaňa"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Maša"},
+  {part = "Katarínska Huta"},
+  {part = "Hrnčiarky"},
+  {part = "Žihľava"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Turíčky"},
+]

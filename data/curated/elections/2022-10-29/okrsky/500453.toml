@@ -1,0 +1,29 @@
+# Okrsky of Lehota, transcribed by an AI agent in job okrsok-rules-890 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: oprávnení voliči s trvalým pobytom v obci Lehota od čísla domu 1 po číslo domu 390
+#   okrsok 2: oprávnení voliči s trvalým pobytom v obci Lehota od čísla domu 391 po číslo domu 999
+obec = "500453"
+name = "Lehota"
+okrsky_date = 2022-06-10
+okrsky_note = "The mayor's decision of 10.6.2022 splits the obec by house number (číslo domu = súpisné číslo; Lehota has no streets): okrsok 1 = 1–390, okrsok 2 = 391–999 (rest covers any higher). Live file returns HTML (rate limit/redirect), so the Internet Archive copy is listed."
+
+[[document]]
+url = "https://web.archive.org/web/20221204193439/https://www.lehota.sk/download_file_f.php?id=1727064"
+sha256 = "d864f30c58ac1cc221f2772532345713f53ddec993929efe523a6372b46af005"
+title = "Volebné okrsky (zriadenie volebných okrskov a určenie volebnej miestnosti, voľby 29. októbra 2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20221204193431/https://www.lehota.sk/volby-2022.html"
+sha256 = "d0717b87ded3c68644bfa3f9c70906576c511e9e7c66afef776098438af37db3"
+title = "Voľby 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Lehota", numbers = "1-390"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

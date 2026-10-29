@@ -1,0 +1,30 @@
+# Okrsky of Veľké Revištia, transcribed by an AI agent in job okrsok-rules-1060 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1: Kultúrny dom, Vyšné Revištia 31, Veľké Revištia
+#   okrsok 2: Volebný okrsok č. 2: Kultúrny dom, Gajdoš 230, Veľké Revištia
+obec = "523232"
+name = "Veľké Revištia"
+okrsky_date = 2022-11-10
+okrsky_note = "No document of the elections found (the archived 2022 elections page lists no okrsky document); the referendum's document. It gives only the polling stations: okrsok 1 Kultúrny dom, Vyšné Revištia 31; okrsok 2 Kultúrny dom, Gajdoš 230. 2 okrsky = 2 parts, each station in another part, so each okrsok is given the part of its station (inferred); fits voters 345/65."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://web.archive.org/web/20221221004925/https://www.velkerevistia.sk/download_file_f.php?id=1764907"
+sha256 = "ef5d6c63a8bd2a4f0955b50ae7f9bf3d4a40d63536d0b5639e00c8ebca6fdb96"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre referendum v roku 2023"
+
+[[document]]
+url = "https://web.archive.org/web/20221204083644/https://www.velkerevistia.sk/volby-a-referenda.html"
+sha256 = "b0bfc0f977022518876e8aaa758f3d59390b9470b584507fb82aef06f74ef777"
+title = "Voľby a referendá (page linking the document)"
+
+[okrsok.1]
+rules = [
+  {part = "Vyšné Revištia", note = "the document gives only the polling station; this okrsok is given the part where its station lies", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Gajdoš", note = "the document gives only the polling station; this okrsok is given the part where its station lies", inferred = true},
+]

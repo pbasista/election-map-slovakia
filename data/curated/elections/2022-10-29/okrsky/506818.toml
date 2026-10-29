@@ -1,0 +1,30 @@
+# Okrsky of Boleráz, transcribed by an AI agent in job okrsok-rules-896 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: č.d. 1-400 a občania s trvalým pobytom prihlásení na obec
+#   okrsok 2: od č.d. 401
+obec = "506818"
+name = "Boleráz"
+okrsky_date = 2022-07-19
+okrsky_note = "Scanned document; split by súpisné (house) numbers: č.d. 1-400 and citizens registered only to the obec in okrsok 1, from č.d. 401 in okrsok 2. The document does not name Klčovany; its houses are split by the same number ranges as the document gives them for the whole obec. \"Občania s trvalým pobytom prihlásení na obec\" are voters without an address, not register houses."
+
+[[document]]
+url = "https://www.boleraz.sk/e_download.php?file=data/uredni_deska/obsah5574_2.pdf&original=Ur%C4%8Denie%20okrskov%20a%20vol.%20miestnost%C3%AD%20.pdf"
+sha256 = "83aa39ada2d9159f38871c057214569e4cf26891fb3778b3b8fe321b5050c46c"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov"
+
+[[document]]
+url = "https://www.boleraz.sk/zverejnovanie/uradna-tabula-1/urcenie-volebnych-okrskov-a-volebnych-miestnosti-pre-volby-do-organov-samospravy-obci-a-do-organov-samospravnych-krajov-5588.html"
+sha256 = "822005103a8b77fd242a1142e38022844b715de843b260e70f04f8d535d10f2a"
+title = "Určenie volebných okrskov a volebných miestností (úradná tabuľa, vyvesené 19. 7. 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Boleráz", numbers = "1-400"},
+  {part = "Klčovany", numbers = "1-400"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

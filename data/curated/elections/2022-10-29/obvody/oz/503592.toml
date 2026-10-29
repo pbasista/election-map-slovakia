@@ -1,0 +1,232 @@
+# Council obvody of Šurany (503592), Nové Zámky.
+# Transcribed by an AI agent in job obvod-rules-262 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: 1 ŠURANY MESTO, počet poslancov 9: okrsok 1: Družstevná, Duklianska, Hollého, Hradná, Chalúpkova, J. Kráľa, Komenského, Kukučínova, Lesná, M.R. Štefánika, Malá, Markusova, Mierová, Námestie hrdinov, Pri Tone, Sládkovičova, SNP (16-153), Štrková, Švermova, Zámocká okrsok 2: Bottova, Hasičská, Jánošíkova, Kollárova, Kútiky, Levická, Májová, Matunákova, Rázusova, Suvorovova, T. Vansovej okrsok 3: Mlynská, Nitrianska (1-50), Slovenská, Staničná, Školská, Štúrova okrsok 4: Hledíkova, M. Kokošovej, Mostná, Mudrochova, Nábrežie, SNP (1-15) okrsok 5: MDŽ (párne 2-40) okrsok 6: Krížna, Lúčna, MDŽ (nepárne), MDŽ (párne 42-56), Pri vodárni okrsok 7: Bernolákova, Cintorínska, Gorkého, Hviezdoslavova, Jesenského, Jiráskova, Kpt. Nálepku, Krátka, Partizánska, Poľná, Priekopy, Puškinova, Stará tehelňa, Tyršova, Ž. Bosniakovej
+#   obvod 2: 2 ŠURANY časť Kostolný Sek, počet poslancov 2: okrsok 8: KOSTOLNÝ SEK – celá miestna časť
+#   obvod 3: 3 ŠURANY časť Nitriansky Hrádok, počet poslancov 1: okrsok 9: NITRIANSKY HRÁDOK – celá miestna časť
+#   obvod 4: 4 ŠURANY Argentína, počet poslancov 1: okrsok 10: Albertov dvor, Karolská, Kopec, Ľ. Podjavorinskej, Nitrianska (51,53), Nová, Novozámocká, Nový Dvor, Nový Svet, Pribinova, SPTŠ, Továrenská, Vajanského, Za múrom, Železničná
+# Okrsky added by an AI agent in job okrsok-rules-1139 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Družstevná, Duklianska, Hollého, Hradná, Chalúpkova, J. Kráľa, Komenského, Kukučínova, Lesná, M.R. Štefánika, Malá, Markusova, Mierová, Námestie hrdinov, Pri Tone, Sládkovičova, SNP (16-153), Štrková, Švermova, Zámocká
+#   okrsok 2: Bottova, Hasičská, Jánošíkova, Kollárova, Kútiky, Levická, Májová, Matunákova, Rázusova, Suvorovova, T. Vansovej
+#   okrsok 3: Mlynská, Nitrianska (1-50), Slovenská, Staničná, Školská, Štúrova
+#   okrsok 4: Hledíkova, M. Kokošovej, Mostná, Mudrochova, Nábrežie, SNP (1-15)
+#   okrsok 5: MDŽ (párne 2-40)
+#   okrsok 6: Krížna, Lúčna, MDŽ (nepárne), MDŽ (párne 42-56), Pri vodárni
+#   okrsok 7: Bernolákova, Cintorínska, Gorkého, Hviezdoslavova, Jesenského, Jiráskova, Kpt. Nálepku, Krátka, Partizánska, Poľná, Priekopy, Puškinova, Stará tehelňa, Tyršova, Ž. Bosniakovej
+#   okrsok 8: KOSTOLNÝ SEK – celá miestna časť
+#   okrsok 9: NITRIANSKY HRÁDOK – celá miestna časť
+#   okrsok 10: Albertov dvor, Karolská, Kopec, Ľ. Podjavorinskej, Nitrianska (51,53), Nová, Novozámocká, Nový Dvor, Nový Svet, Pribinova, SPTŠ, Továrenská, Vajanského, Za múrom, Železničná
+obec = "503592"
+name = "Šurany"
+date = 2022-06-23
+fill = "nearest"
+note = "The resolution itself is not published; its content and date (XXVIII. zasadnutie 23.06.2022, bod XXXI: obvody 1 Šurany 9, 2 Kostolný Sek 2, 3 Nitriansky Hrádok 1, 4 Argentína 1) come from the city's report on fulfilment of resolutions; the streets from the city's 2022 table of obvody and okrsky. Obvody 2 and 3 are whole parts ('celá miestna časť'). Placed by fill_nearest: addresses without a street in the part Šurany (305), Nitrianska numbers the document does not list (52, 54 and up), and Kaparáš, Okomáň (not in the document)."
+okrsky_date = 2022-08-01
+okrsky_fill = "nearest"
+okrsky_note = "The table states no decision date; date is its publication date on the city's website (01/08/2022, as recorded with the obvody; uploaded 2022/08). Okrsky 1-7 are in the table's order in obvod 1. SNP 1-15 in okrsok 4, the rest (16-153) in 1; MDŽ even 2-40 in okrsok 5, the rest (odd, even 42-56) in 6. Kaparáš and Okomáň (not in the document) and the addresses without a street of the part Šurany (súpisné only) are placed by fill_nearest. Okrsky 8-10 are each a whole obvod."
+
+[[document]]
+url = "https://surany.sk/wp-content/uploads/2022/08/Volebne-obvody-a-okrsky-pre-volby-do-organov-samospravy-obci-a-organov-samospravnych-krajov-2022.pdf"
+sha256 = "9d5eb3207e4fd60fefcb618f7ef9fbc0a3b59c508bba371c33534ffcfb6edf39"
+title = "Volebné obvody a okrsky pre voľby do orgánov samosprávy obcí a orgánov samosprávnych krajov, ktoré sa budú konať dňa 29. októbra 2022 v Šuranoch (zverejnené 01/08/2022)"
+
+[[document]]
+url = "https://surany.sk/wp-content/uploads/2022/09/A-1-30-2022-Plnenie-uznesenia.pdf"
+sha256 = "fc8c2a01515d4b2bc01d6ebe5f5a3a055ae4abd53d8deabf3c7f30f69d7a527f"
+title = "Plnenie uznesenia z XXVIII. riadneho zasadnutia MsZ Šurany konaného dňa 23.06.2022 (materiál A/1/30/2022): bod XXXI. – vytvorenie volebných obvodov a určenie počtu poslancov v nich pre komunálne voľby 2022"
+
+[obvod.1]
+seats = 9
+okrsky = [1, 2, 3, 4, 5, 6, 7]
+rules = [
+  {street = "Družstevná"},
+  {street = "Duklianska"},
+  {street = "Hollého"},
+  {street = "Hradná"},
+  {street = "Chalúpkova"},
+  {street = "J. Kráľa"},
+  {street = "Komenského"},
+  {street = "Kukučínova"},
+  {street = "Lesná"},
+  {street = "M. R. Štefánika", written = "M.R. Štefánika"},
+  {street = "Malá"},
+  {street = "Markusova"},
+  {street = "Mierová"},
+  {street = "Námestie hrdinov"},
+  {street = "Pri Tone"},
+  {street = "Sládkovičova"},
+  {street = "Štrková"},
+  {street = "Švermova"},
+  {street = "Zámocká"},
+  {street = "Bottova"},
+  {street = "Hasičská"},
+  {street = "Jánošíkova"},
+  {street = "Kollárova"},
+  {street = "Kútiky"},
+  {street = "Levická"},
+  {street = "Májová"},
+  {street = "Matunákova"},
+  {street = "Rázusova"},
+  {street = "Suvorovova"},
+  {street = "T. Vansovej"},
+  {street = "Mlynská"},
+  {street = "Slovenská"},
+  {street = "Staničná"},
+  {street = "Školská"},
+  {street = "Štúrova"},
+  {street = "Hledíkova"},
+  {street = "M. Kokošovej"},
+  {street = "Mostná"},
+  {street = "Mudrochova"},
+  {street = "Nábrežie"},
+  {street = "Krížna"},
+  {street = "Lúčna"},
+  {street = "Pri vodárni"},
+  {street = "Bernolákova"},
+  {street = "Cintorínska"},
+  {street = "Gorkého"},
+  {street = "Hviezdoslavova"},
+  {street = "Jesenského"},
+  {street = "Jiráskova"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku", note = "Kpt. Nálepku in the document, Kpt.Nálepku in the register"},
+  {street = "Krátka"},
+  {street = "Partizánska"},
+  {street = "Poľná"},
+  {street = "Priekopy"},
+  {street = "Puškinova"},
+  {street = "Stará tehelňa"},
+  {street = "Tyršova"},
+  {street = "Ž. Bosniakovej"},
+  {street = "SNP", note = "okrsky 1 (SNP 16-153) and 4 (SNP 1-15), both obvod 1"},
+  {street = "MDŽ", note = "okrsky 5 (párne 2-40) and 6 (nepárne, párne 42-56), both obvod 1"},
+  {street = "Nitrianska", numbers = "1-50", note = "okrsok 3: Nitrianska (1-50)"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [8]
+rules = [
+  {part = "Kostolný Sek"},
+]
+
+[obvod.3]
+seats = 1
+okrsky = [9]
+rules = [
+  {part = "Nitriansky Hrádok"},
+]
+
+[obvod.4]
+seats = 1
+okrsky = [10]
+rules = [
+  {street = "Albertov Dvor", written = "Albertov dvor"},
+  {street = "Karolská"},
+  {street = "Kopec"},
+  {street = "Ľ. Podjavorinskej"},
+  {street = "Nová"},
+  {street = "Novozámocká"},
+  {street = "Nový Dvor"},
+  {street = "Nový Svet"},
+  {street = "Pribinova"},
+  {street = "SPTŠ"},
+  {street = "Továrenská"},
+  {street = "Vajanského"},
+  {street = "Za múrom"},
+  {street = "Železničná"},
+  {street = "Nitrianska", numbers = "51, 53", note = "okrsok 10: Nitrianska (51,53)"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Družstevná"},
+  {street = "Duklianska"},
+  {street = "Hollého"},
+  {street = "Hradná"},
+  {street = "Chalúpkova"},
+  {street = "J. Kráľa"},
+  {street = "Komenského"},
+  {street = "Kukučínova"},
+  {street = "Lesná"},
+  {street = "M. R. Štefánika"},
+  {street = "Malá"},
+  {street = "Markusova"},
+  {street = "Mierová"},
+  {street = "Námestie hrdinov"},
+  {street = "Pri Tone"},
+  {street = "Sládkovičova"},
+  {street = "SNP"},
+  {street = "Štrková"},
+  {street = "Švermova"},
+  {street = "Zámocká"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bottova"},
+  {street = "Hasičská"},
+  {street = "Jánošíkova"},
+  {street = "Kollárova"},
+  {street = "Kútiky"},
+  {street = "Levická"},
+  {street = "Májová"},
+  {street = "Matunákova"},
+  {street = "Rázusova"},
+  {street = "Suvorovova"},
+  {street = "T. Vansovej"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Mlynská"},
+  {street = "Nitrianska"},
+  {street = "Slovenská"},
+  {street = "Staničná"},
+  {street = "Školská"},
+  {street = "Štúrova"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Hledíkova"},
+  {street = "M. Kokošovej"},
+  {street = "Mostná"},
+  {street = "Mudrochova"},
+  {street = "Nábrežie"},
+  {street = "SNP", numbers = "1-15"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "MDŽ", numbers = "2-40", parity = "even"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Krížna"},
+  {street = "Lúčna"},
+  {street = "MDŽ"},
+  {street = "Pri vodárni"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Cintorínska"},
+  {street = "Gorkého"},
+  {street = "Hviezdoslavova"},
+  {street = "Jesenského"},
+  {street = "Jiráskova"},
+  {street = "Krátka"},
+  {street = "Partizánska"},
+  {street = "Poľná"},
+  {street = "Priekopy"},
+  {street = "Puškinova"},
+  {street = "Stará tehelňa"},
+  {street = "Tyršova"},
+  {street = "Ž. Bosniakovej"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+]

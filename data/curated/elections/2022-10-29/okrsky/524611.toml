@@ -1,0 +1,22 @@
+# The okrsky of Kamenica of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/524611.toml, reused by `ems job reuse`.
+obec = "524611"
+name = "Kamenica"
+okrsky_date = 2026-07-14
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). A scanned document, read from the page image. The okrsky are given by súpisné číslo ranges (1–380 and 381–722). Any address above 722 takes the okrsok of the nearest placed address (fill_nearest)."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://kamenica.sk/clients/kamenica.sk/uploads/kniznica/1784121591utvor-voleb-okrskov-a-urcenie-vol-miestnosti-kom-volby-2026.pdf"
+sha256 = "a6623a445b5878cbf7b40a1dfb5c9826e9e8e8ecb58fe724a1f78d23a7fb45b0"
+title = "Utvorenie volebných okrskov a určenie volebných miestností - Kom. voľby 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Kamenica", numbers = "1-380"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kamenica", numbers = "381-722"},
+]

@@ -1,0 +1,81 @@
+# Okrsky of Hamuliakovo, transcribed by an AI agent in job okrsok-rules-1019 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Záhradkárska osada, Horná Vrbina, Cintorínska, Dlhá, Dunajská, Hlavná, Kaštieľska, Kormoránia, Korytárska, Kostolná, Labutia, Lipová, Nová, Pastierska, Pod záhradami, Poľná, Pri hrádzi, Pri pšeničnej bráne, Rybárska, Rybáričia, Sadová, Sýkorčia, Šamorínska, Tesná, Úzka, Židovská, Hamuliakovo 0
+#   okrsok 2: Astrová, Bazová, Bleduľová, Borievková, Borievková, Brestová, Brezová, Buková, Družstevná, Dubová, Fialková, Gaštanová, Hrabová, Javorová, Jaseňová, Jelšová, Konvalinková, Kosatcová, Kruštíková, Leknová, Liesková, Lipnicová, Malogútorska Mlynárska, Nezábudková, Ostricová, Ostružinová, Prasličková, Pri píle, Rezavková, Scilová, Snežienková, Topoľová, Višňová, Vrbová
+obec = "507903"
+name = "Hamuliakovo"
+okrsky_note = "The document names 'Sýkorčia', which the register lacks (left out). 'Hamuliakovo 0' (voters registered on the obec without an address) is in okrsok 1. 'Borievková' is listed twice in okrsok 2."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The text itself names these elections: 'V obci Hamuliakovo sa bude vo voľbách do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov voliť v dvoch volebných okrskoch', on the Voľby 2022 page under 'Voľby do orgánov samosprávy obcí a orgánov samosprávnych krajov sa budú konať v jeden deň 29.10.2022'. The only capture with the text is of 2022-12-01 (after the vote; the captures up to 2022-08-15 do not yet have it); it is re-posted live on the new website (16.1.2024). No decision date is stated."
+
+[[document]]
+url = "https://web.archive.org/web/20221201192606/https://obechamuliakovo.sk/volby-2022/"
+sha256 = "545f5f77d0461a56c984e2b2f6cf142ce100f63b8379785592ca7be00a40e5c1"
+title = "Voľby 2022 (obec's 2022 elections page: the two volebné okrsky and their streets)"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Dlhá"},
+  {street = "Dunajská"},
+  {street = "Hlavná"},
+  {street = "Kaštieľska"},
+  {street = "Kormoránia"},
+  {street = "Korytárska"},
+  {street = "Kostolná"},
+  {street = "Labutia"},
+  {street = "Lipová"},
+  {street = "Nová"},
+  {street = "Pastierska"},
+  {street = "Pod záhradami"},
+  {street = "Poľná"},
+  {street = "Pri hrádzi"},
+  {street = "Pri pšeničnej bráne"},
+  {street = "Rybárska"},
+  {street = "Rybáričia"},
+  {street = "Sadová"},
+  {street = "Šamorínska"},
+  {street = "Tesná"},
+  {street = "Úzka"},
+  {street = "Židovská"},
+  {rest = true, note = "The register's houses without a street (súpisné čísla only: the document's Záhradkárska osada and Horná Vrbina, which have no street of their own in the register) and the two streets the document leaves out, Kania and Volavčia (new streets named after birds like Kormoránia, Labutia and Rybáričia of okrsok 1), fall to okrsok 1: okrsok 2 is the closed list of its streets."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Astrová"},
+  {street = "Bazová"},
+  {street = "Bleduľová"},
+  {street = "Borievková"},
+  {street = "Brestová"},
+  {street = "Brezová"},
+  {street = "Buková"},
+  {street = "Družstevná"},
+  {street = "Dubová"},
+  {street = "Fialková"},
+  {street = "Gaštanová"},
+  {street = "Hrabová"},
+  {street = "Javorová ulica", written = "Javorová"},
+  {street = "Jaseňová"},
+  {street = "Jelšová"},
+  {street = "Konvalinková"},
+  {street = "Kosatcová"},
+  {street = "Kruštíková"},
+  {street = "Leknová"},
+  {street = "Liesková"},
+  {street = "Lipnicová"},
+  {street = "Malogútorská", written = "Malogútorska", note = "The document writes 'Malogútorska' (short a, and run together with Mlynárska without a comma): the register's Malogútorská, the only such street."},
+  {street = "Mlynárska ulica", written = "Mlynárska"},
+  {street = "Nezábudková"},
+  {street = "Ostricová"},
+  {street = "Ostružinová"},
+  {street = "Prasličková"},
+  {street = "Pri píle"},
+  {street = "Rezavková"},
+  {street = "Scilová ulica", written = "Scilová"},
+  {street = "Snežienková"},
+  {street = "Topoľová"},
+  {street = "Višňová"},
+  {street = "Vrbová"},
+]

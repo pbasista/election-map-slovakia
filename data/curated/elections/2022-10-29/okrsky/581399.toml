@@ -1,0 +1,54 @@
+# Okrsky of Banka, transcribed by an AI agent in job okrsok-rules-868 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Arménska ulica, Bananská, Bazovského, Červená veža, Dominova cesta, Hudobná, Inovecká, Karpatská, Moravanská ulica, Pokojná, Spojovacia, Športová, Žiacka
+#   okrsok 2: Banka, Cesta Janka Alexyho, Horný majer, Kamenná, Krátka, Lesná, Lyžiarska, Námestie Martina Benku, Odborárska, Podhorská, Poľná, Ratnovská ulica, Tehelná, Topoľčianska
+obec = "581399"
+name = "Banka"
+okrsky_date = 2022-09-11
+okrsky_fill = "nearest"
+okrsky_note = "The document (scan) is undated; date is the notice-board posting date of the 2022 elections item that links it ('Vyvesené: 11. 9. 2022'). Okrsok 2's bare 'Banka' is the voters registered without a street address (only on the obec), not the register's houses without a street; those (súpisné only) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.obecbanka.sk/e_download.php?file=data/uredni_deska/obsah135_9.pdf&original=Informacia-o-utvoreni-volebnych-okrskov-v-obci-Banka.pdf"
+sha256 = "689004670a097bf4a92f08bb5d4de0a4ec8eb2a0d70ef2a2aad7fbdf7bc30e0c"
+title = "Informácia o utvorení volebných okrskov pre voľby do orgánov samosprávy obcí, ktoré platia aj pre voľby do orgánov samosprávnych krajov"
+
+[[document]]
+url = "https://www.obecbanka.sk/samosprava/uradna-tabula/volby-do-samospravy-miest-a-obci-2022-volby-do-samospravy-vyssich-uzemnych-celkov-2022-135.html"
+sha256 = "bda8f2ca92f8e19b97347b5b38816e08c65eb8a8018635ada1837ff88fa51f71"
+title = "Voľby do samosprávy miest a obcí 2022 (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {street = "Arménska ulica"},
+  {street = "Bananská"},
+  {street = "M.Bazovského", written = "Bazovského", note = "The document leaves out the initial M. (Miloš); the only street of that name in Banka."},
+  {street = "Červená Veža", written = "Červená veža", note = "Same street; only capitalization differs."},
+  {street = "Dominova cesta"},
+  {street = "Hudobná"},
+  {street = "Inovecká"},
+  {street = "Karpatská"},
+  {street = "Moravanská ulica"},
+  {street = "Pokojná"},
+  {street = "Spojovacia"},
+  {street = "Športová"},
+  {street = "Žiacka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cesta J.Alexyho", written = "Cesta Janka Alexyho"},
+  {street = "Horný majer"},
+  {street = "Kamenná"},
+  {street = "Krátka"},
+  {street = "Lesná"},
+  {street = "Lyžiarska"},
+  {street = "Nám. Martina Benku", written = "Námestie Martina Benku"},
+  {street = "Odborárska"},
+  {street = "Podhorská"},
+  {street = "Poľná"},
+  {street = "Ratnovská ulica"},
+  {street = "Tehelná"},
+  {street = "Topoľčianska"},
+]

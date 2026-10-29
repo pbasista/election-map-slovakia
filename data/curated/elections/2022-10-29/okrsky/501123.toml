@@ -1,0 +1,43 @@
+# Okrsky of Dulovce, transcribed by an AI agent in job okrsok-rules-1022 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cintorínska, Družstevná, Dvorská, Hlavná, Hurbanovská, Mierová, Mudroňovská, Nová, Robotnícka, Záhradná. Obyvatelia s trvalým pobytom na adrese Obec Dulovce (bez udania súpisného a orientačného čísla) volia v okrsku č. 1 – Spoločenský dom.
+#   okrsok 2: Kamenica, Krivá, Novozámocká, Podháj, Poľná, Podbrežná, Rovná, Starohorská, Urbárska, Úzka
+obec = "501123"
+name = "Dulovce"
+okrsky_fill = "nearest"
+okrsky_note = "A scan; read from the rendered page. Kamenica and Podháj (okrsok 2) are not streets of the register and are left out. Residents registered at 'Obec Dulovce' without a house number vote in okrsok 1 (an okrsok with addresses; left out of its rules). The register's addresses without a street (súpisné only) are placed by fill_nearest."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-10-21
+okrsky_date_basis = "The Internet Archive captured the official page 'Voľby do orgánov samosprávy obcí 2022' linking the PDF (download_file_f.php?id=1724584, 'Utvorenie volebných okrskov a volebných miestností.pdf', 254.2 kB, the same size as the live file) on 2022-10-21, before the vote. The PDF itself, a scan signed by the mayor Andrej Hamran, states no date of its own but names the elections: it creates the okrsky 'pre voľby do orgánov samosprávy obcí, ktoré platia aj pre voľby do orgánov samosprávnych krajov, ktoré sa budú konať dňa 29. októbra 2022' (also 'named'). The page states no posting date; PDF metadata 2022-08-16. (https://web.archive.org/web/20221021223946/https://www.dulovce.sk/volby-do-organov-samospravy-obci-2022.phtml?id3=175763)"
+
+[[document]]
+url = "https://www.dulovce.sk/download_file_f.php?id=1724584"
+sha256 = "46aa4244ecf5b6aae6a0306f59d52dd245ac1f9e31e5660eb9213879d20e8110"
+title = "Vytvorenie volebných okrskov (linked as 'Utvorenie volebných okrskov a volebných miestností.pdf')"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Dvorská"},
+  {street = "Hlavná"},
+  {street = "Hurbanovská"},
+  {street = "Mierová"},
+  {street = "Mudroňovská"},
+  {street = "Nová"},
+  {street = "Robotnícka"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krivá"},
+  {street = "Novozámocká"},
+  {street = "Poľná"},
+  {street = "Podbrežná"},
+  {street = "Rovná"},
+  {street = "Starohorská"},
+  {street = "Urbárska"},
+  {street = "Úzka"},
+]

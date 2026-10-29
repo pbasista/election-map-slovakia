@@ -1,0 +1,91 @@
+# Council obvody of Trenčianska Teplá (506559), Trenčín.
+# Transcribed by an AI agent in job obvod-rules-301 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č. 1 Trenčianska Teplá, … Trenčianska Teplá —9 poslancov
+#   obvod 2: volebný obvod č. 2 m. č. Dobrá. … m. č. Dobrá —2 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-1016 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Mayerova, M. R. Štefánika, A. Hlinku, Revolučná, A. Bernoláka, Podhájska, občania prihlásení na Obec Trenčianska Teplá
+#   okrsok 2: ulice: Žilinská, Teplická, Hasičská, SNP, Krížová, Ľ. Podjavorinskej, Partizánska, Dubovecká, M. Kukučína, J. M. Hurbana, Príles
+#   okrsok 3: ulice: Š. Straku, P. O. Hviezdoslava, M. Rázusa, J. Braneckého, Školská, Ľ. Štúra, Hrádky, Športovcov, Železničná, Cukrovarská, Vážska
+#   okrsok 4: miestna časť Dobrá
+obec = "506559"
+name = "Trenčianska Teplá"
+date = 2022-06-30
+note = "Uznesenie č. 44/2022 (scanned, text layer readable): obvod 1 Trenčianska Teplá (9), obvod 2 m. č. Dobrá (2); transcribed as the two parts of the obec."
+okrsky_fill = "nearest"
+okrsky_note = "Scanned announcement read from the rendered page. 'občania prihlásení na Obec Trenčianska Teplá' (okrsok 1) are voters registered without an address, no rule. Every register street of obvod 1 is named; fill_nearest places the part Trenčianska Teplá's addresses without a street. The obvody come from uznesenie č. 44/2022 (input)."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-09-29
+okrsky_date_basis = "The Internet Archive captured the obec's page 'Spojené voľby do orgánov územnej samosprávy 2022' on 2022-09-29, listing item '11 Oznámenie o utvorení volebných okrskov a určení volebných miestností … 29.októbra 2022' linking the PDF (file 201368a0|278); the PDF (a scan, captured 2022-12-21, now 404 live) states no decision date but its heading names the elections of 29. októbra 2022. (https://web.archive.org/web/20220929135929/https://www.trencianskatepla.sk/samosprava/volby/spojene-volby-do-organov-uzemnej-samospravy-2022/)"
+
+[[document]]
+url = "https://www.trencianskatepla.sk/e_download.php?file=data/uredni_deska/obsah1039_12.pdf&original=DOC_20220708141436%20%281%29.pdf"
+sha256 = "75dd0cbe03569dc7419f99e9aee6af9951b788438178a0def77b32d7756e2f40"
+title = "Uznesenia OZ č. 34 - 52/2022 zo dňa 30.06.2022 (uznesenie č. 44/2022, s. 12)"
+
+[[document]]
+url = "https://web.archive.org/web/20221221002452/https://www.trencianskatepla.sk/modules/file_storage/download.php?file=201368a0%7C278&inline=1"
+sha256 = "c39913fd7b0f6df53a90cc11f9a19b419079fc8157a614f695ea5f6a5f17b9d6"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov 29. októbra 2022"
+
+[[document]]
+url = "https://web.archive.org/web/20220929135929/https://www.trencianskatepla.sk/samosprava/volby/spojene-volby-do-organov-uzemnej-samospravy-2022/"
+sha256 = "bee58d43ad81022cb00642f2adc0a122711555438b0f7a6b349914199edf66d9"
+title = "Spojené voľby do orgánov územnej samosprávy 2022 (item 11 links the okrsky announcement)"
+
+[obvod.1]
+seats = 9
+okrsky = [1, 2, 3]
+rules = [
+  {part = "Trenčianska Teplá"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [4]
+rules = [
+  {part = "Dobrá"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Mayerova"},
+  {street = "M. R. Štefánika"},
+  {street = "A. Hlinku"},
+  {street = "Revolučná"},
+  {street = "A. Bernoláka"},
+  {street = "Podhájska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Žilinská"},
+  {street = "Teplická"},
+  {street = "Hasičská"},
+  {street = "SNP"},
+  {street = "Krížová"},
+  {street = "Ľ. Podjavorinskej"},
+  {street = "Partizánska"},
+  {street = "Dubovecká"},
+  {street = "M. Kukučína"},
+  {street = "J. M. Hurbana"},
+  {street = "Príles"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Š. Straku"},
+  {street = "P. O. Hviezdoslava"},
+  {street = "M. Rázusa"},
+  {street = "J. Braneckého"},
+  {street = "Školská"},
+  {street = "Ľ. Štúra"},
+  {street = "Hrádky"},
+  {street = "Športovcov"},
+  {street = "Železničná"},
+  {street = "Cukrovarská"},
+  {street = "Vážska"},
+]

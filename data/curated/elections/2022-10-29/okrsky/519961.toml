@@ -1,0 +1,46 @@
+# Okrsky of Zborov, transcribed by an AI agent in job okrsok-rules-1024 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Budovateľská, Duklianska, Mlynská, Na Stebníčku, Nám. Čsl. Armády, Obrancov mieru, Osloboditeľov, Pod 100 lipami, SNP, Sokolovská, Šarišská, Štúrova, Úzka, Zákutie od č. 1 – 42
+#   okrsok 2: Bardejovská, Hlavná, Krátky rad, Lesná, Podhradie, Školská, Tehelná, Zákutie od č. 43 - 100
+obec = "519961"
+name = "Zborov"
+okrsky_fill = "nearest"
+okrsky_note = "Zákutie is split by orientačné čísla (1–42 / 43–100). The 29 houses with only a súpisné číslo take the okrsok of the nearest address (fill_nearest)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names these elections: 'Utvorenie volebných okrskov … počas konania volieb do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov dňa 29. októbra 2022'. It states no date of its own; the website lists it under the placeholder date 1. 1. 2022, and the Internet Archive holds no 2022 capture of it or of its page."
+
+[[document]]
+url = "https://www.zborov.sk/modules/file_storage/download.php?file=5d05067d%7C127&inline=1"
+sha256 = "99be6c1599a7e7ccc6a088cf4c2cad1eea06e4cb30a61826870f68790798930b"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Zborov počas konania volieb do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov dňa 29. októbra 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Duklianska"},
+  {street = "Mlynská"},
+  {street = "Na Stebníčku"},
+  {street = "Nám. Čsl. Arm.", written = "Nám. Čsl. Armády", note = "The register abbreviates it 'Nám. Čsl. Arm.' (Námestie Československej armády); the same square."},
+  {street = "Obrancov Mieru", written = "Obrancov mieru"},
+  {street = "Osloboditeľov"},
+  {street = "Pod 100 Lipami", written = "Pod 100 lipami"},
+  {street = "SNP"},
+  {street = "Sokolovská"},
+  {street = "Šarišská"},
+  {street = "Štúrova"},
+  {street = "Úzka"},
+  {street = "Zákutie", numbers = "1-42"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bardejovská"},
+  {street = "Hlavná"},
+  {street = "Krátky rad"},
+  {street = "Lesná"},
+  {street = "Podhradie"},
+  {street = "Školská"},
+  {street = "Tehelná"},
+  {street = "Zákutie", numbers = "43-100"},
+]

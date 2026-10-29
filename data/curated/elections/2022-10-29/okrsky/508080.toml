@@ -1,0 +1,71 @@
+# Okrsky of Marianka, transcribed by an AI agent in job okrsok-rules-784 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: obec Marianka, Agátová, Borinská, Budovateľská, Bystrická, Čerešňová, Javorová, Jelšová, Kamenná, Krátka, Lesná, Lipová, Lúčna, Stromová, Stupavská, Štúrova, Topoľová, Višňová, Vŕbová, Záhradná
+#   okrsok 2: Družstevná, Karpatská, Na Kracinách, Na Ovsisku, Na Tálkoch, Na Vinohradoch, Bad Bednárovým, Námestie 4.apríla, Partizánska, Pod Mlynom, Podhájska, Poľná, Potočná, Púpavová, Sedmokrásková, Slnečná, Školská, Športová, Veterná
+obec = "508080"
+name = "Marianka"
+okrsky_date = 2022-10-19
+okrsky_fill = "nearest"
+okrsky_note = "The documents are undated; date is the posting date ('Vyvesené: 19. 10. 2022') stated on the municipality's 2022 elections page that lists them. 'obec Marianka' in okrsok 1 = voters registered without an address. Register addresses without a street (súpisné only, 37) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.marianka.sk/e_download.php?file=/data/uredni_deska/obsah534_4.pdf&original=rozdelenie-okrskov.pdf"
+sha256 = "b9903c95eda9d806ae2769ba0a49b19ab955256369b27e5967f0ad31c2562254"
+title = "Rozdelenie okrskov"
+
+[[document]]
+url = "https://www.marianka.sk/e_download.php?file=/data/uredni_deska/obsah534_8.pdf&original=volebne-okrsky.pdf"
+sha256 = "b2d4515c6860b250c23ba6cf6ea1472ea72567608ca4749a7cc5dee21763a195"
+title = "Volebné okrsky"
+
+[[document]]
+url = "https://www.marianka.sk/sk/zverejnovanie/volby/volby-do-organov-samospravy-obci-2022-535.html"
+sha256 = "0e4c91c50f2b2b5391b420ff34076677c811480260e15da0ce463782663030ec"
+title = "Voľby do orgánov samosprávy obcí 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Agátová"},
+  {street = "Borinská"},
+  {street = "Budovateľská"},
+  {street = "Bystrická"},
+  {street = "Čerešňová"},
+  {street = "Javorová"},
+  {street = "Jelšová"},
+  {street = "Kamenná"},
+  {street = "Krátka"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+  {street = "Lúčna"},
+  {street = "Stromová"},
+  {street = "Stupavská"},
+  {street = "Štúrova"},
+  {street = "Topoľová"},
+  {street = "Višňová"},
+  {street = "Vŕbová"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Karpatská"},
+  {street = "Na Kracinách"},
+  {street = "Na Ovsisku"},
+  {street = "Na Tálkoch"},
+  {street = "Na Vinohradoch"},
+  {street = "Nad Bednárovým", written = "Bad Bednárovým", note = "typo in the document: 'Bad' for 'Nad'"},
+  {street = "Námestie 4.apríla"},
+  {street = "Partizánska"},
+  {street = "Pod Mlynom"},
+  {street = "Podhájska"},
+  {street = "Poľná"},
+  {street = "Potočná"},
+  {street = "Púpavová"},
+  {street = "Sedmokrásková"},
+  {street = "Slnečná"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Veterná"},
+]

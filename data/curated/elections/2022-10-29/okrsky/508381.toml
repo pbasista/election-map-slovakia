@@ -1,0 +1,80 @@
+# Okrsky of Zohor, transcribed by an AI agent in job okrsok-rules-763 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov s trvalým pobytom na uliciach (všetky súpisné a orientačné čísla) Bratislavská ulica Cintorínska ulica Dolná ulica Konvalinková ulica Kostolná ulica Košiarska ulica Muškátová ulica Na riadkoch Na trávnikoch Na záhumní Nad potokom Námestie 1. mája Nevädzová ulica Nový rad Stupavská ulica Tichá ulica Ulica Alberta Hubeka
+#   okrsok 2: pre voličov s trvalým pobytom na uliciach (všetky súpisné a orientačné čísla) Borovicová ulica Brezová ulica Gaštanová ulica Domkárska ulica Jedľová ulica Jelšová ulica Kováčska ulica Krátka ulica Krivá ulica Lábska ulica Lipová ulica Mlynská ulica Na Pasienkoch Námestie mládeže Obchodná ulica Orechová ulica Poľná ulica Požiarnická ulica Struhárova ulica Smreková ulica Školská ulica Štúrova ulica
+#   okrsok 3: pre voličov s trvalým pobytom na uliciach (všetky súpisné a orientačné čísla) Hviezdoslavova ulica Kvetná ulica Lozornianska ulica Na Dieloch Sadová ulica Staničná ulica Záhradná ulica Železničiarska ulica
+obec = "508381"
+name = "Zohor"
+okrsky_date = 2022-08-02
+okrsky_fill = "nearest"
+okrsky_note = "The document does not name the register's Borinská ulica (12 addresses), Dubová ulica (2), Fialková ulica (12) and Marianska ulica (9), nor the 3 addresses without a street; these are placed by fill_nearest."
+
+[[document]]
+url = "https://data.moderneobce.sk/data/uploads/obeczohor.sk/URENIE-VOLEBNCH-OKRSKOV-A.pdf"
+sha256 = "44351b3bb4f8348001859cd3ad32775283901daacb3827d1395d866aed2ae779"
+title = "Určenie volebných okrskov a volebných miestností podľa ulíc"
+
+[[document]]
+url = "https://www.obeczohor.sk/21438/volby-do-organov-samospravy-obci-2022"
+sha256 = "033ab77884778ea3f53abc2151ae5f6d95ec92c354e0ec727ae2a67b29e2f338"
+title = "Voľby do orgánov samosprávy obcí 2022 (page linking the document)"
+
+[okrsok.1]
+rules = [
+  {street = "Bratislavská ulica"},
+  {street = "Cintorínska ulica"},
+  {street = "Dolná ulica"},
+  {street = "Konvalinková ulica"},
+  {street = "Kostolná ulica"},
+  {street = "Košiarska ulica"},
+  {street = "Muškátová ulica"},
+  {street = "Na riadkoch"},
+  {street = "Na trávnikoch"},
+  {street = "Na záhumní"},
+  {street = "Nad potokom"},
+  {street = "Námestie 1. mája"},
+  {street = "Nevädzová ulica"},
+  {street = "Nový rad"},
+  {street = "Stupavská ulica"},
+  {street = "Tichá ulica"},
+  {street = "Ulica Alberta Hubeka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Borovicová ulica"},
+  {street = "Brezová ulica"},
+  {street = "Gaštanová ulica"},
+  {street = "Domkárska ulica"},
+  {street = "Jedľová ulica"},
+  {street = "Jelšová ulica"},
+  {street = "Kováčska ulica"},
+  {street = "Krátka ulica"},
+  {street = "Krivá ulica"},
+  {street = "Lábska ulica"},
+  {street = "Lipová ulica"},
+  {street = "Mlynská ulica"},
+  {street = "Na Pasienkoch"},
+  {street = "Námestie mládeže"},
+  {street = "Obchodná ulica"},
+  {street = "Orechová ulica"},
+  {street = "Poľná ulica"},
+  {street = "Požiarnická ulica"},
+  {street = "Struhárova ulica"},
+  {street = "Smreková ulica"},
+  {street = "Školská ulica"},
+  {street = "Štúrova ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hviezdoslavova ulica"},
+  {street = "Kvetná ulica"},
+  {street = "Lozornianska ulica"},
+  {street = "Na Dieloch"},
+  {street = "Sadová ulica"},
+  {street = "Staničná ulica"},
+  {street = "Záhradná ulica"},
+  {street = "Železničiarska ulica"},
+]

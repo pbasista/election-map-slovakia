@@ -11,7 +11,7 @@
  */
 
 import { html, useEffect, useRef, useState } from '../vendor/preact-htm.module.js';
-import { formatNumber, lang, languages, switchLanguage, t } from './i18n.js';
+import { formatNumber, lang, languagePage, languages, polls, switchLanguage, t } from './i18n.js';
 import {
   ArrowIcon,
   BaseMapIcon,
@@ -40,7 +40,8 @@ const OVERLAY_KEYS = {
   oz: [
     ['council', 'layers.oz_council'],
     ['approximate', 'layers.oz_approximate'],
-    ['pending', 'layers.oz_pending'],
+    // Once the polls have closed, the boundaries not known are not "yet".
+    ['pending', Date.now() > polls[1] ? 'layers.oz_pending_past' : 'layers.oz_pending'],
     ['none', 'layers.oz_none'],
   ],
   okrsky: [
@@ -224,8 +225,9 @@ export function FavouritesButton({ count, open, onPress }) {
 }
 
 /* The button opens the menu of every language, each by its own name, the
- * page's marked; choosing one keeps the hash, so the same place stays
- * selected. ArrowUp and ArrowDown move between the languages. */
+ * page's marked; choosing one keeps the election (i18n.js `languagePage`)
+ * and the hash, so the same place stays selected. ArrowUp and ArrowDown
+ * move between the languages. */
 export function LanguageMenu({ open, onToggle, hash }) {
   const current = languages.find(([code]) => code === lang)[1];
   const onKeyDown = (e) => {
@@ -252,7 +254,7 @@ export function LanguageMenu({ open, onToggle, hash }) {
             <li key=${code}>
               <a
                 class="option"
-                href=${`/${code}/${hash}`}
+                href=${`${languagePage(code)}${hash}`}
                 hreflang=${code}
                 lang=${code}
                 aria-current=${code === lang ? 'true' : undefined}

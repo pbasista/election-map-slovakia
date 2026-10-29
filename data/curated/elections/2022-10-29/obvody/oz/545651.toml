@@ -1,0 +1,55 @@
+# Council obvody of Veľké Držkovce (545651), Bánovce nad Bebravou.
+# Transcribed by an AI agent in job obvod-rules-190 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1, okrsok č. 1 – miestna časť obce – Čuklasovce; Volebný obvod č. 1 – miestna časť obce – Čuklasovce...............počet volených poslancov – 2
+#   obvod 2: Volebný obvod č. 2, okrsok č. 2 – miestna časť obce – Horné Držkovce; Volebný obvod č. 2 – miestna časť obce – Horné Držkovce.........počet volených poslancov – 2
+#   obvod 3: Volebný obvod č. 3, okrsok č. 3 – miestna časť obce – Dolné Držkovce; Volebný obvod č. 3 – miestna časť obce – Dolné Držkovce.........počet volených poslancov – 3
+# Okrsky added by an AI agent in job okrsok-rules-646 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný obvod č. 1, volebný okrsok č. 1 – miestna časť obce Čuklasovce - sídlo volebnej miestnosti: Kultúrny dom Čuklasovce č. 88
+#   okrsok 2: Volebný obvod č. 2, volebný okrsok č. 2 – miestna časť obce Horné Držkovce - sídlo volebnej miestnosti: Kultúrny dom Horné Držkovce č. 159
+#   okrsok 3: Volebný obvod č. 3, volebný okrsok č. 3 – miestna časť obce Dolné Držkovce - sídlo volebnej miestnosti: Notársky dom Dolné Držkovce č. 310
+obec = "545651"
+name = "Veľké Držkovce"
+date = 2022-06-22
+note = "Official site in 2022 was velkedrzkovce.php5.sk: every 2021–2022 capture of the obec's domain velkedrzkovce.sk is a 301 redirect to https://velkedrzkovce.php5.sk/ (e.g. https://web.archive.org/web/20211229052351/http://velkedrzkovce.sk/, https://web.archive.org/web/20220601131404/https://velkedrzkovce.sk/, https://web.archive.org/web/20221022011627/https://velkedrzkovce.sk/); its Kontakt page (https://web.archive.org/web/20220615043520/http://velkedrzkovce.php5.sk/?page=kontakt) names 'Obec Veľké Držkovce, Obecný úrad Veľké Držkovce, miestna časť Dolné Držkovce 212, IČO: 00310417', the obec's IČO per the register (RPO: Obec Veľké Držkovce) and the current velkedrzkovce.sk/kontakty; the site's pages embed images from velkedrzkovce.sk/upload. The home page's notices (snapshot 2022-08-12) link the Google Drive PDF of announcement 312/2022 (posted 19.07.2022), which cites OZ resolution č. 21/2022 of 22.06.2022: obvod 1 = Čuklasovce (2), 2 = Horné Držkovce (2), 3 = Dolné Držkovce (3); text quotes both its sections 1 and 2 per obvod. Okrsky announcement 326/2022 (03.08.2022): okrsok 1 = Čuklasovce (KD Čuklasovce č. 88), 2 = Horné Držkovce (KD č. 159), 3 = Dolné Držkovce (Notársky dom č. 310), matching ŠÚ SR's okrsky."
+okrsky_date = 2022-08-03
+okrsky_note = "Announcement no. 326/2022 of 03.08.2022 (posted 04.08.2022 on the obec's site of 2022, velkedrzkovce.php5.sk): okrsok 1 = Čuklasovce (Kultúrny dom Čuklasovce č. 88), okrsok 2 = Horné Držkovce (Kultúrny dom č. 159), okrsok 3 = Dolné Držkovce (Notársky dom č. 310); announcement 312/2022 pairs obvod 1, 2, 3 with okrsok 1, 2, 3. Each okrsok is its obvod."
+
+[[document]]
+url = "https://web.archive.org/web/20220812081452/http://velkedrzkovce.php5.sk/"
+sha256 = "c8c4c18d87dc3efa36d93ba0a04b10a29322a0c8ddbb13a640dd194014ca71ff"
+title = "Obec Veľké Držkovce – oznamy na úvodnej stránke (archív 2022-08-12), príloha 'Voľby do orgánov samosprávy obcí v roku 2022 - určenie volebných obvodov, počtu poslancov OZ, zapisovateľa MVK', zverejnené 19.07.2022"
+
+[[document]]
+url = "https://drive.google.com/file/d/11zkLR7h53ntAdv-y3WnijQXq59lFH1Um/view?usp=sharing"
+sha256 = "8ec45a1e7d1e12ce687b04d47f4adf6629549a074bb5b76648cd55b2d5f6af91"
+title = "Oznámenie č. 312/2022 zo dňa 19. 07. 2022 – určenie volebných obvodov, počtu poslancov OZ, zapisovateľa MVK (uznesenie OZ č. 21/2022 zo dňa 22.06.2022)"
+
+[[document]]
+url = "https://drive.google.com/file/d/1UjsofdmDVDHL4VUtpTfmSvHnTpfjIdt3/view?usp=sharing"
+sha256 = "e333a5d171a1f1495c4f0b4b229affda579f53bfebb20f8e21ee362daed86469"
+title = "Oznámenie č. 326/2022 zo dňa 03. 08. 2022 – utvorenie volebných okrskov a určenie volebných miestností pre voľby v roku 2022"
+
+[obvod.1]
+seats = 2
+okrsky = [1]
+rules = [
+  {part = "Čuklasovce"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Horné Držkovce"},
+]
+
+[obvod.3]
+seats = 3
+okrsky = [3]
+rules = [
+  {part = "Dolné Držkovce"},
+]

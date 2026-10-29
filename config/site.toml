@@ -6,29 +6,26 @@
 base_url = "https://volebnamapa.sk"
 # The source code repository, linked from the About dialog.
 repository = "https://github.com/pbasista/election-map-slovakia"
-# Cloudflare Pages project that `release.yml` uploads dist/ to, and `ems
-# results deploy` on an election night (docs/results.md).
+# Cloudflare Pages project of the app, which `release.yml` deploys
+# (docs/deploy.md).
 pages_project = "election-map-slovakia"
-# Election day of the 2026 municipal and regional elections.
-election = 2026-10-24
-# The polls' opening hours that day, Slovak time (decision of the Speaker of
-# the National Council no. 145/2026 Coll.;
-# https://www.minv.sk/?volby-samosprava26). The search card shows the voting
-# under way between them.
-polls_open = 07:00:00
-polls_close = 20:00:00
-# Whether the app polls the results, i.e. reads them every minute for
-# live_days: on for an election night and the days after, off once the
-# final results are built into the site and nothing changes any more. Off,
-# the app reads them once per page load. Built with EMS_RESULTS_ANYTIME=1
-# (for testing), it polls at any time either way.
-live = false
-# Days after the polls close that the app reads the results every minute
-# (dist/results/<election>/status.json, written by `ems results` and the
-# results step of `ems make`; docs/results.md). Before the polls close it
-# reads nothing; after these days, once per page load, so that a copy of
-# the site left open or cached stops polling.
-live_days = 7
+# The projects of the data parts (src/election_map_slovakia/bundle.py):
+# each election's map (geometry, base map, addresses) and its data
+# (candidates, research, occupations, About) in projects of their own,
+# {slug} its slug; the cached copies of the pages research cites; the
+# results, which `ems results deploy` updates on an election night
+# (docs/results.md). A release deploys a data part only when its key
+# (data/published.toml) is not deployed yet.
+map_project = "ems-map-{slug}"
+data_project = "ems-data-{slug}"
+sources_project = "ems-sources"
+results_project = "ems-results"
+# The own domains of the sources and results projects: the app links the
+# cached copies there and fetches the results from there. A bundle is
+# known by the address of the deployment that carries its key instead
+# (docs/deploy.md).
+sources_url = "https://sources.volebnamapa.sk"
+results_url = "https://results.volebnamapa.sk"
 # Cloudflare Pages allows 20,000 files per deployment on the Free plan
 # (https://developers.cloudflare.com/pages/platform/limits/, checked
 # 2026-10-18); `check` fails above this, leaving headroom for files added

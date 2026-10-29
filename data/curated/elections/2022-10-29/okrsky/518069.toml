@@ -1,0 +1,77 @@
+# Okrsky of Varín, transcribed by an AI agent in job okrsok-rules-728 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: patria sem ulice: Alexandra Trizuljaka, Farská, Hlboké, Jozefa Martinčeka, Koňhorská, Kpt. Ladislava Pfliegla, Krivánska, Ku železnej studničke, Májová, Na Rybníkoch, Námestie sv. Floriána, Obec Varín, Ondreja Meszárosa, Pltnícka, Pod Vajánkom, Priemyselná, Sama Chalupku, Starohradská, Športová
+#   okrsok 2: patria sem ulice: Antona Bernoláka, Hájik, Jána Bottu, M. R. Štefánika, Martina Kukučína, Námestie na Záhumní, P. O. Hviezdoslava (č. domov 453, 455, 456, 501, 502, 503, 504, 511, 512, 513, 514, 515, 516, 517, 518, 519, 521, 522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 532, 533, 534, 562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574, 575, 576, 577, 578, 580, 581, 582, 583, 584, 585, 586, 587, 809, 860, 861, 862, 2083, 2085, 2086), Školská, Záhumnie I., Záhumnie II., Záhumnie III., Záhumnie IV., Železničná
+#   okrsok 3: patria sem ulice: Andreja Hlinku, Antona Horeckého, Dr. Jozefa Tisu, Dubenec, Fatranská, Hrnčiarska, J. G. Tajovského, Juraja Jánošíka, Kamence, Ľudovíta Štúra, Októbrová, P. O. Hviezdoslava, (č. domov 524, 525, 526, 527, 528, 529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559, 560, 561, 562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574, 575, 576, 809, 861, 986, 998, 2057), Záhrady
+obec = "518069"
+name = "Varín"
+okrsky_date = 2022-08-30
+okrsky_fill = "nearest"
+okrsky_note = "The notice is undated; its notice-board page says 'Zverejnené 4.8.2022, Aktualizované 30.8.2022', so date is the last publication (30.8.2022). The live site (varin.sk) answered HTTP 429 throughout, so the archived copies (snapshots of 30.10.2022, the day after the elections) are listed. P. O. Hviezdoslava is split by house (súpisné) numbers; the document lists 524-534, 562-576, 809 and 861 in both okrsok 2 and 3 (a contradiction), so those, unlisted Hviezdoslava houses and the register's addresses without a street are placed by fill_nearest. 'Obec Varín' in okrsok 1 means voters registered without an address."
+
+[[document]]
+url = "https://web.archive.org/web/20221030183903/https://www.varin.sk/download_file_f.php?id=1720558"
+sha256 = "3539b191e2da65499737011877e96d5c46f22d770e64dfbcd35b0eb17af5a500"
+title = "Oznámenie o utvorení volebných okrskov a o určení volebných miestností pre voľby do orgánov samosprávy obcí ... 29. októbra 2022"
+
+[[document]]
+url = "https://web.archive.org/web/20221030113736/https://www.varin.sk/71-2022-oznamenie-o-utvoreni-volebnych-okrskov-a-o-urceni-volebnych-miestnosti-oznam/mid/494443/.html"
+sha256 = "cfb406485a238a1d23c972d751b07a1d62d65156c19847d6baa30ad8d9b7a1f7"
+title = "(71/2022) Oznámenie o utvorení volebných okrskov a o určení volebných miestností (zverejnené 4.8.2022, aktualizované 30.8.2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Alexandra Trizuljaka"},
+  {street = "Farská"},
+  {street = "Hlboké"},
+  {street = "Jozefa Martinčeka"},
+  {street = "Koňhorská"},
+  {street = "Kpt.Ladislava Pfliegla", written = "Kpt. Ladislava Pfliegla"},
+  {street = "Krivánska"},
+  {street = "Ku Železnej Studničke", written = "Ku železnej studničke"},
+  {street = "Májová"},
+  {street = "Na Rybníkoch"},
+  {street = "Námestie sv. Floriána"},
+  {street = "Ondreja Meszarosa", written = "Ondreja Meszárosa", note = "The document writes the name with á (Meszáros); the register has Meszarosa: the same street."},
+  {street = "Pltnícka"},
+  {street = "Pod Vajánkom"},
+  {street = "Priemyselná"},
+  {street = "Sama Chalupku"},
+  {street = "Starohradská"},
+  {street = "Športová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Antona Bernoláka"},
+  {street = "Hájik"},
+  {street = "Jána Bottu"},
+  {street = "M.R.Štefánika", written = "M. R. Štefánika"},
+  {street = "Martina Kukučína"},
+  {street = "Námestie Na Záhumní", written = "Námestie na Záhumní"},
+  {street = "P. O. Hviezdoslava", numbers = "453, 455, 456, 501-504, 511-523, 577, 578, 580-587, 860, 862, 2083, 2085, 2086", by = "supisne", note = "Only the houses the document lists for okrsok 2 alone; 524-534, 562-576, 809 and 861 are listed for both okrsok 2 and 3 and are left to fill_nearest."},
+  {street = "Školská"},
+  {street = "Záhumnie I."},
+  {street = "Záhumnie II."},
+  {street = "Záhumnie III."},
+  {street = "Záhumnie IV."},
+  {street = "Železničná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Andreja Hlinku"},
+  {street = "Antona Horeckého"},
+  {street = "Dr. Jozefa Tisu"},
+  {street = "Dubenec"},
+  {street = "Fatranská"},
+  {street = "Hrnčiarska"},
+  {street = "J. G. Tajovského"},
+  {street = "Juraja Jánošíka"},
+  {street = "Kamence"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Októbrová"},
+  {street = "P. O. Hviezdoslava", numbers = "535-546, 550-561, 986, 998, 2057", by = "supisne", note = "Only the houses the document lists for okrsok 3 alone; those listed for both okrsky are left to fill_nearest."},
+  {street = "Záhrady"},
+]

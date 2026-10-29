@@ -1,0 +1,47 @@
+# Okrsky of Šarišské Michaľany, transcribed by an AI agent in job okrsok-rules-989 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Čerešňová, Hviezdoslavova, Jarková, Komenského, Kpt. Nálepku, Melichara Zeleného, Mlynská, Požiarnická, Ružová, Sabinovská, SNP, Štúrova, Záhradná, Železničiarska
+#   okrsok 2: ulice: Družstevná, Michalská, M.R. Štefánika, Pod lesíkom, Prešovská
+obec = "525235"
+name = "Šarišské Michaľany"
+okrsky_date = 2022-08-03
+okrsky_fill = "nearest"
+okrsky_note = "The document is undated; date is its publication on the official page (\"Dátum vloženia: 3. 8. 2022\"). Register houses without a street placed by nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.sarisskemichalany.sk/evt_file.php?file=1532"
+sha256 = "4fd2e08150acb571cfa28c4d518521be2c375471511fa363606787796b827469"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Šarišské Michaľany pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov v roku 2022"
+
+[[document]]
+url = "https://www.sarisskemichalany.sk/obec-2/volby/volby-2022/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-obci-sarisske-michalany-pre-volby-do-organov-samospravy-obci-a-do-organov-samospravnych-krajov-395sk.html"
+sha256 = "d4440e84f9618d704cd8548b4d95f7e019882192985d898a5256ec8167e093b2"
+title = "Utvorenie volebných okrskov a určenie volebných miestnosti (Voľby 2022, dátum vloženia 3. 8. 2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Čerešňová"},
+  {street = "Hviezdoslavova"},
+  {street = "Jarková"},
+  {street = "J. A. Komenského", written = "Komenského", note = "initials of the first names left out"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "M.Zeleného", written = "Melichara Zeleného"},
+  {street = "Mlynská"},
+  {street = "Požiarnická"},
+  {street = "Ružová"},
+  {street = "Sabinovská"},
+  {street = "SNP"},
+  {street = "Štúrova"},
+  {street = "Záhradná"},
+  {street = "Železničiarska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Michalská"},
+  {street = "M. R. Štefánika", written = "M.R. Štefánika"},
+  {street = "Pod Lesíkom", written = "Pod lesíkom"},
+  {street = "Prešovská"},
+]

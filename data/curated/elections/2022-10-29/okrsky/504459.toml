@@ -1,0 +1,35 @@
+# Okrsky of Kopčany, transcribed by an AI agent in job okrsok-rules-818 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bratislavská, Kollárova, Sasinkova, Priečna, Slnečná, Športová, Kopčany(občania s trvalým pobytom na adrese obec Kopčany).
+#   okrsok 2: Masarykova, Štefánikovo námestie, Hurbanova, Moravská, Marxova, Damborského, Vrbovské
+obec = "504459"
+name = "Kopčany"
+okrsky_date = 2022-07-29
+okrsky_fill = "nearest"
+okrsky_note = "\"Kopčany (občania s trvalým pobytom na adrese obec Kopčany)\" are voters registered without an address, not houses without a street; the register's houses without a street (incl. the settlement Vrbovské, which okrsok 2 names but the register has no street of) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.kopcany.sk/e_download.php?file=data/uredni_deska/obsah743_5.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebnej%20miestnosti.pdf"
+sha256 = "2d0441f0db9049291a08471d3a97fe0dc793ec5a24a6931fa830589cb798049e"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov v roku 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Bratislavská"},
+  {street = "Kollárova"},
+  {street = "Sasinkova"},
+  {street = "Priečna"},
+  {street = "Slnečná"},
+  {street = "Športová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Masarykova"},
+  {street = "Štefánikovo Námestie", written = "Štefánikovo námestie"},
+  {street = "Hurbanova"},
+  {street = "Moravská"},
+  {street = "Marxova"},
+  {street = "Damborského"},
+]

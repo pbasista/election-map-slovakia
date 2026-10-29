@@ -1,0 +1,111 @@
+# Council obvody of Sobrance (523089), Sobrance.
+# Transcribed by an AI agent in job obvod-rules-312 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Ulica Bernolákova, Gagarinova, Gen. Svobodu, Kúpeľska, Michalovská, Nová
+#   obvod 2: Ulica Gorkého, Prof. Hlaváča, Pavla Horova, Hviezdoslavova, Mieru, Kpt. Nálepku, Námestie slobody č. 582/3, č. 582/4, č. 582/5, č. 583/6, č. 583/7, č. 584/8, č. 584/9, č. 585/10, č. 585/11, Pri parku, Sama Chalúpku, SNP, Štefánikova, Štúrova, Švermova, Tibavská
+#   obvod 3: Ulica Hollého, Kollárova, Komenského, Námestie slobody č. 587/13, č. 588/14, č. 589/15, Odbojárov, 1. mája, Vajanského
+#   obvod 4: Ulica Školská od č. 288/2 po č. 288/4, Školská – rodinné domy, Tyršova od č. 304/47 po 304/51, od č. 305/52 po č. 305/55, od č. 945/2 po č. 945/4, od č. 946/5 po č. 946/7, od č. 286/38 po č. 286/41, od č. 287/42 po č. 287/47, Tyršova – rodinné domy, mestská časť Komárovce
+# Okrsky added by an AI agent in job okrsok-rules-1184 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bernolákova, Gagarinova, Gen. Svobodu, Kúpeľska, Michalovská, Nová
+#   okrsok 2: Gorkého, Prof. Hlaváča, Pavla Horova, Hviezdoslavova, Mieru, Kpt. Nálepku, Námestie slobody č. 582/3, č. 582/4, č. 582/5, č. 583/6,č. 583/7, č. 584/8, č. 584/9, č. 585/10, č. 585/11, Pri parku, Sama Chalúpku, SNP, Štefánikova, Štúrova, Švermova, Tibavská
+#   okrsok 3: Hollého, Kollárova, Komenského, Námestie slobody č. 587/13, č. 588/14, č. 589/15, Odbojárov, 1. mája, Vajanského
+#   okrsok 4: Školská od č. 288/2 po č. 288/4, Školská – rodinné domy, Tyršova od č. 304/47 po 304/51, od č. 305/52 po č. 305/55, od č. 945/2 po č. 945/4, od č. 946/5 po č. 946/7, od č. 286/38 po č. 286/41, od č. 287/42 po č. 287/47,
+#   okrsok 5: Tyršova – rodinné domy, Mestská časť Komárovce
+obec = "523089"
+name = "Sobrance"
+date = 2022-06-14
+fill = "nearest"
+note = "Tyršova and Školská: the document lists blocks of flats by súpisné/orientačné numbers plus 'rodinné domy' (family houses), i.e. the whole streets, all in obvod 4, so whole-street rules. Námestie slobody is split by the listed buildings (orientačné 3-11 obvod 2, 13-15 obvod 3); its other numbers (e.g. 1, the town hall/culture house) and the register's addresses without a street in part Sobrance are placed by fill_nearest. Part Sobranecké Kúpele (2 addresses, not named) is put in obvod 1 with Kúpeľská, the street leading to the spa."
+okrsky_date = 2022-07-21
+okrsky_fill = "nearest"
+okrsky_note = "Tyršova: the blocks of flats listed for okrsok 4 are selected by their súpisné čísla (the document's 304/47 is the register's 304/47B; orientačné 47 is also 287/47), the family houses (rest of the street) go to okrsok 5. Školská (blocks 288/2-4 and the family houses) is wholly okrsok 4. The register's houses without a street in part Sobrance within obvod 4 are placed by fill_nearest. The documents are cited by their Internet Archive copies (identical files) because the website now answers HTTP 429/hCaptcha."
+
+[[document]]
+url = "https://www.sobrance.sk/download_file_f.php?id=1708602"
+sha256 = "4ec0e1b58417e905cf105048c1f3dfbf00f34abb57f653e12745db20a76d8802"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 29. októbra 2022 (uznesenie MsZ č. 39 zo dňa 14.06.2022)"
+
+[[document]]
+url = "https://www.sobrance.sk/download_file_f.php?id=1719710"
+sha256 = "91dbf5712a103dadea5f147bfd4f8459dea2609b431f3e2a2a864f06c759f03b"
+title = "Utvorenie volebných okrskov a určenie volebných miestností, 21.07.2022"
+
+[[document]]
+url = "https://web.archive.org/web/20251126191435/https://www.sobrance.sk/download_file_f.php?id=1719710"
+sha256 = "91dbf5712a103dadea5f147bfd4f8459dea2609b431f3e2a2a864f06c759f03b"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (primátor mesta Sobrance, 21.07.2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20250402044335/https://www.sobrance.sk/download_file_f.php?id=1708602"
+sha256 = "4ec0e1b58417e905cf105048c1f3dfbf00f34abb57f653e12745db20a76d8802"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie MsZ č. 39 zo dňa 14.06.2022)"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Gagarinova"},
+  {street = "Gen. Svobodu"},
+  {street = "Kúpeľská", written = "Kúpeľska"},
+  {street = "Michalovská"},
+  {street = "Nová"},
+  {part = "Sobranecké Kúpele", note = "Spa area not named in the document; reached by Kúpeľská (obvod 1).", inferred = true},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {street = "Gorkého"},
+  {street = "Prof. Hlaváča"},
+  {street = "P. Horova", written = "Pavla Horova"},
+  {street = "Hviezdoslavova"},
+  {street = "Mieru"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Nám. Slobody", numbers = "3-11", written = "Námestie slobody"},
+  {street = "Pri Parku", written = "Pri parku"},
+  {street = "Sama Chalúpku"},
+  {street = "SNP"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Švermova"},
+  {street = "Tibavská"},
+]
+
+[obvod.3]
+seats = 3
+okrsky = [3]
+rules = [
+  {street = "Hollého"},
+  {street = "Kollárova"},
+  {street = "Komenského"},
+  {street = "Nám. Slobody", numbers = "13-15", written = "Námestie slobody"},
+  {street = "Odbojárov"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "Vajanského"},
+]
+
+[obvod.4]
+seats = 4
+okrsky = [4, 5]
+rules = [
+  {street = "Školská", note = "Blocks 288/2-4 plus 'rodinné domy' = whole street."},
+  {street = "Tyršova", note = "Listed blocks plus 'rodinné domy' = whole street."},
+  {part = "Komárovce"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Školská"},
+  {street = "Tyršova", numbers = "286-287, 304-305, 945-946", by = "supisne", note = "the listed blocks of flats by their súpisné čísla (286/38-41, 287/42-47, 304/47-51, 305/52-55, 945/2-4, 946/5-7)"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Tyršova"},
+  {part = "Komárovce"},
+]

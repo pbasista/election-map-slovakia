@@ -1,0 +1,47 @@
+# Okrsky of Badín, transcribed by an AI agent in job okrsok-rules-934 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: SNP, Hliny, L. Svobodu, Laurínska, Pod vŕškom, Pod Hrádkom, Na Dielnici
+#   okrsok 2: Krčméryho, Banská, Borovicová ulica, Družstevná, Kriedovnica, Nová, Osloboditeľov, Sládkovičova, Tajovského, Záhradná, Lipová, súp.č. 373, bezdomovci
+obec = "508454"
+name = "Badín"
+okrsky_date = 2022-08-04
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document read from the rendered page. 'bezdomovci' (homeless, no address) in okrsok 2 selects no address. 'súp.č. 373' is a rule on súpisné číslo 373 in the part Badín. The other 37 addresses without a street (súpisné only) take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.obecbadin.sk/download_file_f.php?id=1720901"
+sha256 = "96dfef12debc092fc3ef7188262740cfd68c1d85061644c1387cc5e18e3fdc37"
+title = "Starosta obce Badín určuje 2 volebné okrsky pre voľby do orgánov samosprávy obcí ... 29. októbra 2022 (urcenie-okrskov.pdf)"
+
+[[document]]
+url = "https://www.obecbadin.sk/volby-do-organov-samospravy-obci-a-do-organov-samospravnych-krajov-v-roku-2022.html"
+sha256 = "4123b6c791ee39e16b81c5c8e407a51125271b6c594782e8fbea9a0babe09c48"
+title = "Voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov v roku 2022"
+
+[okrsok.1]
+rules = [
+  {street = "SNP"},
+  {street = "Hliny"},
+  {street = "L. Svobodu"},
+  {street = "Laurínska"},
+  {street = "Pod vŕškom"},
+  {street = "Pod Hrádkom"},
+  {street = "Na Dielnici"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krčméryho"},
+  {street = "Banská"},
+  {street = "Borovicová ulica"},
+  {street = "Družstevná"},
+  {street = "Kriedovnica"},
+  {street = "Nová"},
+  {street = "Osloboditeľov"},
+  {street = "Sládkovičova"},
+  {street = "Tajovského"},
+  {street = "Záhradná"},
+  {street = "Lipová ulica", written = "Lipová"},
+  {part = "Badín", numbers = "373"},
+]

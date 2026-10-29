@@ -1,0 +1,43 @@
+# Okrsky of Závadka nad Hronom, transcribed by an AI agent in job okrsok-rules-920 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Clementisova ul., Hronská ul., Hviezdoslavova ul., Kukučínová ul., Osloboditeľov, Partizánska, Rázusová, Slatvinska, Športová, Štúrová, Záhradná
+#   okrsok 2: Fučíkova, Hrbok, Mierova, Paseka
+obec = "509124"
+name = "Závadka nad Hronom"
+okrsky_date = 2022-07-19
+okrsky_fill = "nearest"
+okrsky_note = "Scanned notice of the mayor of 19.07.2022 (posted 19.7.2022), as archived; the live page and file are gone. The one address without a street is placed by fill_nearest. Okrsok 2 has far fewer addresses (160 vs 623) than okrsok 1 but nearly as many voters; the document is explicit, presumably blocks of flats on its streets."
+
+[[document]]
+url = "https://web.archive.org/web/20221202102522/https://www.zavadkanadhronom.sk/volby/utvorenie-volebnych-okrskov-pre-volby-29-10-2022-2167.html"
+sha256 = "8dab051f485f3ae90d764de17b62ad2b25feb55fa5878a5aeaebaa430d6aec4e"
+title = "Utvorenie volebných okrskov pre Voľby 29. 10. 2022"
+
+[[document]]
+url = "https://web.archive.org/web/20221007194502/https://www.zavadkanadhronom.sk/e_download.php?file=data/uredni_deska/obsah1851_13.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20-%20Vo%C4%BEby%2029.%2010.%202022.pdf"
+sha256 = "9cdde6f982239919d58925b1514f9737f417b4dea5dc4467eef046eee0c5e667"
+title = "Utvorenie volebných okrskov - oznámenie"
+
+[okrsok.1]
+rules = [
+  {street = "Clementisova", written = "Clementisova ul."},
+  {street = "Hronská", written = "Hronská ul."},
+  {street = "Hviezdoslavova", written = "Hviezdoslavova ul."},
+  {street = "Kukučínova", written = "Kukučínová ul.", note = "a misspelt ending of the same street (the register has no other street of this name)"},
+  {street = "Osloboditeľov"},
+  {street = "Partizánska"},
+  {street = "Rázusova", written = "Rázusová", note = "a misspelt ending of the same street (the register has no other street of this name)"},
+  {street = "Slatvinská", written = "Slatvinska", note = "a misspelt ending of the same street (the register has no other street of this name)"},
+  {street = "Športová"},
+  {street = "Štúrova", written = "Štúrová", note = "a misspelt ending of the same street (the register has no other street of this name)"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Fučíkova"},
+  {street = "Hrbok"},
+  {street = "Mierová", written = "Mierova", note = "a misspelt ending of the same street (the register has no other street of this name)"},
+  {street = "Paseka"},
+]

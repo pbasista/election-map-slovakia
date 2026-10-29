@@ -1,0 +1,46 @@
+# Okrsky of Hrabušice, transcribed by an AI agent in job okrsok-rules-970 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre oprávnených občanov bývajúcich na uliciach: Bernolákova, Jarná, Letná, Majer, Podlesok, Slovenského raja, Zimná a oprávnených voličov prihlásených na Obec Hrabušice
+#   okrsok 2: pre oprávnených občanov bývajúcich na uliciach: E. Makovického, Gaštanová, Hlavná, Píla, Hviezdoslavova, Lúčna, Nová, Obchodná, Partizánska, Tomášovská, Zelená.
+obec = "526592"
+name = "Hrabušice"
+okrsky_date = 2022-07-11
+okrsky_fill = "nearest"
+okrsky_note = "Mayor's decision of 11.7.2022 (scan). 'oprávnených voličov prihlásených na Obec Hrabušice' in okrsok 1 = voters registered without an address. Hágy and Sokol (register streets the document does not name) and register addresses without a street (33) are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20230611012210/https://www.hrabusice.sk/e_download.php?file=data/editor/108sk_1.pdf&original=Ur%C4%8Denie%20okrskovej%2C%20volebnej%20miestnosti%2C%20po%C4%8Dtu%20poslancov%2C%20%20volebn%C3%BDch%20obvodov%2C%20rozsahu%20v%C3%BDkonu%20funkcie%20starostu%2C%20zverejnenie%20po%C4%8Dtu%20obyvate%C4%BEov%2C%20Vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vy%20obc%C3%AD%2C%20samospr%C3%A1vnych%20krajov%202022.pdf"
+sha256 = "d7d24d8854f860cbd2147640e5eb3223227d5389bdc9d49288b613e6bcc1501b"
+title = "Určenie okrskov a volebnej miestnosti pre Voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov konané dňa 29. októbra 2022"
+
+[[document]]
+url = "https://web.archive.org/web/20220811153448/https://www.hrabusice.sk/obec/zverejnovanie/uradna-tabula/urcenie-okrskovej-volebnej-miestnosti-poctu-poslancov-volebnych-obvodov-rozsahu-vykonu-funkcie-starostu-zverejnenie-poctu-obyvatelov-volby-do-organov-samospravy-obci-samospravnych-krajov-2022-464.html"
+sha256 = "fcf1718cfef5a2bd485232d26bd11724b62556b0a6dc631bf802fb0c4ce657a4"
+title = "Úradná tabuľa: Určenie okrskovej, volebnej miestnosti, počtu poslancov, ... 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Bernoláková", written = "Bernolákova", note = "the register spells the name Bernoláková; same street"},
+  {street = "Jarná"},
+  {street = "Letná"},
+  {street = "Majer"},
+  {street = "Podlesok"},
+  {street = "Slov. Raja", written = "Slovenského raja", note = "the register abbreviates Slovenského raja as 'Slov. Raja'"},
+  {street = "Zimná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "E.Makovického", written = "E. Makovického"},
+  {street = "Gaštanová"},
+  {street = "Hlavná"},
+  {street = "Píla"},
+  {street = "Hviezdoslavova"},
+  {street = "Lúčna"},
+  {street = "Nová"},
+  {street = "Obchodná"},
+  {street = "Partizánska"},
+  {street = "Tomášovská"},
+  {street = "Zelená"},
+]

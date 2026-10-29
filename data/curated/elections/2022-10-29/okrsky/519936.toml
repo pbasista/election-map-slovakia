@@ -1,0 +1,26 @@
+# Okrsky of Raslavice, transcribed by an AI agent in job okrsok-rules-955 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Voliči s trvalým pobytom v časti obce Vyšné Raslavice, voliči s TP na Sekčovskej ulici a voliči prihlásení na TP na OBEC RASLAVICE
+#   okrsok 2: Voliči s trvalým pobytom v časti obce Nižné Raslavice – bez voličov s TP na Sekčovskej ulici
+obec = "519936"
+name = "Raslavice"
+okrsky_date = 2022-08-03
+okrsky_fill = "nearest"
+okrsky_note = "Voters registered only on 'OBEC RASLAVICE' (no address) are in okrsok 1; that is not the register's part Raslavice (1 address on Čergovská) nor the addresses without a street, which are placed by fill_nearest."
+
+[[document]]
+url = "https://www.raslavice.sk/data/page/raslavice/24710/urc-enie-volebny-ch-okrskov-a-volebny-ch-miestnosti-pre-spojene-vol-by-do-orga-nov-samospra-vy-2022.pdf"
+sha256 = "356c1daa251f169da480435ac8ad5e7c5b95f1c4199305b21afbfc0d52612828"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov v roku 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Vyšné Raslavice"},
+  {street = "Sekčovská", written = "Sekčovskej ulici", note = "the document declines the name (locative)"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Nižné Raslavice"},
+]

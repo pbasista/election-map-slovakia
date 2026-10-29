@@ -1,0 +1,35 @@
+# Okrsky of Spišský Štiavnik, transcribed by an AI agent in job okrsok-rules-1032 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice Hornádska, Kláštorná, Lúčna, Mlynská, Železničná stanica, Mariánske námestie, Kaštieľ, Priečna súp.číslo 1 – 274, Kvetná, Slnečná
+#   okrsok 2: ulice Hlavná, Priečna od súp.čísla 275
+obec = "523879"
+name = "Spišský Štiavnik"
+okrsky_date = 2022-08-02
+okrsky_fill = "nearest"
+okrsky_note = "The announcement states no decision date; date is the page's posting date ('Dátum vloženia: 2. 8. 2022'). Priečna is split by súpisné čísla as the document gives them. Register addresses without a street (11) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.spisskystiavnik.sk/samosprava/volby/urcenie-volebnych-okrskov-30sk.html"
+sha256 = "513f3414d383e66c9090f472dfeb19a8bd122fe976d71501bbb6b03b4ca07385"
+title = "Určenie volebných okrskov v obci volieb do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov v roku 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Hornádska"},
+  {street = "Kláštorná"},
+  {street = "Lúčna"},
+  {street = "Mlynská"},
+  {street = "Železničná Stanica"},
+  {street = "Mariánske námestie"},
+  {street = "Kaštieľ"},
+  {street = "Kvetná"},
+  {street = "Slnečná"},
+  {street = "Priečna", numbers = "1-274", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná"},
+  {street = "Priečna", numbers = "275-", by = "supisne"},
+]

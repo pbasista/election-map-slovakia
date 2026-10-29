@@ -1,0 +1,42 @@
+# Okrsky of Šúrovce, transcribed by an AI agent in job okrsok-rules-881 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Krakovská, Horná, Nedárska, Hlavná, Krátka, Valtašúrska, Hájska, Seredská, Južná
+#   okrsok 2: Ulice: Staničná, Ružová, Školská, Nová, Slnečná, Hlohovská, Varašúrska, Varavská, Vážska, Michalská
+obec = "507636"
+name = "Šúrovce"
+okrsky_date = 2022-07-12
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document, read from the rendered page. The register's 15 addresses without a street are not named by the document and take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20221125234521/https://www.surovce.sk/e_download.php?file=data/dvousl_editor/253skleft_5.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD%20v%20obci%20%C5%A0%C3%BArovce%20pre%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vy%20obc%C3%AD%20d%C5%88a%2029.10.2022.pdf"
+sha256 = "a17189b7ad93493472a34a81d6da3ca70c1c6a1546aa214796bdc41bcb80cbfc"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Šúrovce pre voľby do orgánov samosprávy obcí"
+
+[okrsok.1]
+rules = [
+  {street = "Krakovská"},
+  {street = "Horná"},
+  {street = "Nedárska"},
+  {street = "Hlavná"},
+  {street = "Krátka"},
+  {street = "Valtašúrska"},
+  {street = "Hájska"},
+  {street = "Seredská"},
+  {street = "Južná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Staničná"},
+  {street = "Ružová"},
+  {street = "Školská"},
+  {street = "Nová"},
+  {street = "Slnečná"},
+  {street = "Hlohovská"},
+  {street = "Varašúrska"},
+  {street = "Varavská"},
+  {street = "Vážská", written = "Vážska", note = "Same street: the register spells it Vážská, the document Vážska (ending differs only in the accent); no other similar street."},
+  {street = "Michalská"},
+]

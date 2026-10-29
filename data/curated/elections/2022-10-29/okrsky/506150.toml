@@ -1,0 +1,27 @@
+# The okrsky of Krajné of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/506150.toml, reused by `ems job reuse`.
+obec = "506150"
+name = "Krajné"
+okrsky_date = 2026-07-28
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). The document assigns súpisné čísla of the whole obec (one k.ú.); since a k.ú. rule takes no numbers, the same number ranges are applied in each part (keeping only the parts where they select addresses). 930 and 940 (listed separately) fall within 901-968. Súpisné čísla the document does not list (e.g. 696, 874, 876-900, 969-1005, …) placed by fill_nearest."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.krajne.sk/modules/file_storage/download.php?file=4d889e5f%7C3900&inline=1"
+sha256 = "538a430af36dab00e95bbb4b535c24f41c7c8e5017cd3a26c203d7ea682088a0"
+title = "Vytvorenie okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Krajné", numbers = "1-451, 697-857, 860-873, 901-968, 1006, 1028, 1029, 1040, 1058, 1061, 1066, 1070, 1072"},
+  {part = "Luskovica", numbers = "1-451, 697-857, 860-873, 901-968, 1006, 1028, 1029, 1040, 1058, 1061, 1066, 1070, 1072"},
+  {part = "Podvrch", numbers = "1-451, 697-857, 860-873, 901-968, 1006, 1028, 1029, 1040, 1058, 1061, 1066, 1070, 1072"},
+  {part = "Zbehy", numbers = "1-451, 697-857, 860-873, 901-968, 1006, 1028, 1029, 1040, 1058, 1061, 1066, 1070, 1072"},
+  {part = "Žadovica", numbers = "1-451, 697-857, 860-873, 901-968, 1006, 1028, 1029, 1040, 1058, 1061, 1066, 1070, 1072"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Krajné", numbers = "452-695, 858, 859, 875, 880, 890, 1045, 1047, 1050, 1063, 1067, 1073, 1074"},
+  {part = "Matejovec", numbers = "452-695, 858, 859, 875, 880, 890, 1045, 1047, 1050, 1063, 1067, 1073, 1074"},
+]

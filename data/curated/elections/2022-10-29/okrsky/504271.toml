@@ -1,0 +1,46 @@
+# Okrsky of Brodské, transcribed by an AI agent in job okrsok-rules-824 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1.mája, Hamre, Komenského, Kradlov, Letná, Martina Čulena, Nábrežná, Nám. SNP, Záhumenská, Brodské (občania s trvalým pobytom na adrese obec Brodské)
+#   okrsok 2: Drahy, Dukelská, Hviezdoslavova, Kukučínova, Krátka, Mierová, Nádražná, Nálepkova, Nová, Školská, Športová, Štefánikova, Štúrova, Vajanského
+obec = "504271"
+name = "Brodské"
+okrsky_date = 2022-08-01
+okrsky_fill = "nearest"
+okrsky_note = "Okrsok 1 also lists \"Brodské (občania s trvalým pobytom na adrese obec Brodské)\": voters registered without an address, not the register's house without a street, which is placed by fill_nearest."
+
+[[document]]
+url = "https://brodske.sk/wp-content/uploads/dokumenty/komunalne-volby/Utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-do-organov-samospravy-obci-a-pre-volby-do-organov-samospravnych-krajov.pdf"
+sha256 = "b009298dd983a6f5fa83f21d181fe3e54d5e8f30f633b33793f541824c1d7f63"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov v roku 2022"
+
+[okrsok.1]
+rules = [
+  {street = "1.mája"},
+  {street = "Hamre"},
+  {street = "Komenského"},
+  {street = "Kradlov"},
+  {street = "Letná"},
+  {street = "Martina Čulena"},
+  {street = "Nábrežná"},
+  {street = "Nám. SNP"},
+  {street = "Záhumenská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Drahy"},
+  {street = "Dukelská"},
+  {street = "Hviezdoslavova"},
+  {street = "Kukučínova"},
+  {street = "Krátka"},
+  {street = "Mierová"},
+  {street = "Nádražná"},
+  {street = "Nálepkova"},
+  {street = "Nová"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Vajanského"},
+]

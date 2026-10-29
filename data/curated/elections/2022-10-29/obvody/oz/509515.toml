@@ -1,0 +1,64 @@
+# Council obvody of Vysoká nad Kysucou (509515), Čadca.
+# Transcribed by an AI agent in job obvod-rules-191 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č.1 – (miestna časť Semeteš a Vrch rieka, Nižný koniec, Ústredie po cesta „ Furmanec“) – volí sa 5 poslancov
+#   obvod 2: Volebný obvod č.2 – (Vyšný koniec, miestna časť Jedľovník, Nižný Kelčov) – volia sa 2 poslanci
+#   obvod 3: Volebný obvod č.3 – (miestna časť Zlámaná, Zátoka a Vyšný Kelčov) – volia sa 2 poslanci
+# Okrsky added by an AI agent in job okrsok-rules-647 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 – Ústredie; Volebná miestnosť: Vestibul Obecného úradu - Vysoká nad Kysucou č. 215
+#   okrsok 2: Volebný okrsok č. 2 – Nižný Kelčov; Volebná miestnosť: Požiarna zbrojnica Vysoká nad Kysucou časť Nižný Kelčov č. 524
+#   okrsok 3: Volebný okrsok č. 3 – Vyšný Kelčov; Volebná miestnosť: Materská škola - Vysoká nad Kysucou časť Vyšný Kelčov č.
+obec = "509515"
+name = "Vysoká nad Kysucou"
+date = 2022-06-29
+note = "Scanned resolution read visually. The register part 'Vysoká nad Kysucou' (576 addresses, no streets, súpisné čísla only) is split by the document into Nižný koniec + Ústredie up to the road to Furmanec (obvod 1) and Vyšný koniec (obvod 2), with no house numbers; these localities are not register parts. The 2026 resolution gives the same obvody in the same words, and its rule set (2026-10-24) splits the part by súpisné čísla at the Furmanec road (385-473 and the newer numbers west of it are Vyšný koniec); that split is taken over, instead of the earlier nearest-neighbour filling."
+supplemented = 2026-10-24
+supplemented_from = "election"
+supplement_basis = "The 2022 resolution splits the part Vysoká nad Kysucou (no streets) into Nižný koniec + Ústredie up to the Furmanec road (obvod 1) and Vyšný koniec (obvod 2) without house numbers. The 2026 resolution words the same obvody identically; its rule set places the split by súpisné čísla at the Furmanec road (Vyšný koniec: 385-473, 498, 1097, 1133, 1135, 1168, 1191, 1316, 1318, 1322, 1343, 1356, 1358). Both rules of the part are taken from it, for the 576 addresses of the part."
+okrsky_date = 2022-07-11
+okrsky_note = "No formal 'utvorenie volebných okrskov' for 2022 is published; the 2022 document naming the okrsky is the mayor's appointment of the okrsok commissions' clerks (scan, read visually), which gives okrsky 1 Ústredie, 2 Nižný Kelčov, 3 Vyšný Kelčov with their polling stations. It is undated; the elections page states it was posted 11. 7. 2022, used as date. Each obvod has exactly one okrsok (ŠÚ SR), and the names match the obvody, so okrsok n is the whole obvod n."
+
+[[document]]
+url = "https://www.vysokanadkysucou.sk/images/stories/dokumenty/Volby/2022/uznesenie_pocet_volebnych_obvodov.pdf"
+sha256 = "2d592fd1524aacf181fc68f7bff965995f218e11db3c4b11247c22a83044e9f5"
+title = "Uznesenie OZ vo Vysokej nad Kysucou č. 4/2022-16 zo dňa 29. 06. 2022 o počte volebných obvodov, počte poslancov a úväzku starostu obce"
+
+[[document]]
+url = "https://www.vysokanadkysucou.sk/images/stories/dokumenty/Volby/2022/zapisovatelia-_okrskova_volebna_komisia.pdf"
+sha256 = "fe18573c7f95a63d2972623fb9fb129e6275ddf68b27dee7eac07df22e240d6a"
+title = "Vymenovanie zapisovateľov okrskových volebných komisií (volebné okrsky č. 1-3 a volebné miestnosti, 2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20221006213426/https://www.vysokanadkysucou.sk/sk/uradna-tabula/uradne-oznamy/4305-volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-v-roku-2022"
+sha256 = "ef55e9e09beb93bbaaae71859ed9ca0f0078e08bcb3f6d40d56d4e1b644d58a5"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov v roku 2022 (page, Aktualizácia 11. 7. 2022: the document posted 11/07/2022)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Semeteš"},
+  {part = "Vrchrieka", note = "document writes 'Vrchrieka' / 'Vrch rieka'"},
+  {part = "Vysoká nad Kysucou", note = "Nižný koniec and Ústredie up to the Furmanec road: all of the časť Vysoká nad Kysucou except the Vyšný koniec numbers assigned to obvod 2 (as the rule set of 2026)", supplemented = true},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Vysoká nad Kysucou", numbers = "385-473, 498, 1097, 1133, 1135, 1168, 1191, 1316, 1318, 1322, 1343, 1356, 1358", note = "Vyšný koniec = the western (upstream) end of the časť Vysoká nad Kysucou, west of the road to Furmanec; súpisné čísla as in the rule set of 2026 (by address coordinates west of that road; old numbers 385-473 run continuously west of it, 1-384 east of it)", inferred = true, supplemented = true},
+  {part = "Jedľovník"},
+  {part = "Nižný Kelčov"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Zlámaná"},
+  {part = "Zátoka"},
+  {part = "Vyšný Kelčov"},
+]

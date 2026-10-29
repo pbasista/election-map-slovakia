@@ -1,0 +1,199 @@
+# Council obvody of Moldava nad Bodvou (521698), Košice - okolie.
+# Transcribed by an AI agent in job obvod-rules-283 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Debraďská, Hlavná, Janka Kráľa, Jiskrova, Kováčska, Letná, Nová 1, 3, 9, Obrancov mieru, Poľovnícka, Vodná, Záhradná, občan s TP mesto Moldava nad Bodvou, súp. č. 3010, 3054, 3060 Budulovská, Dukelských hrdinov, Hviezdoslavova, Jesenského, Kalvínska, Mlynská, Okružná, Rožňavská 3 - 26, Tehelná, Železničná – volia sa 3 poslanci
+#   obvod 2: mestská časť Budulov - volí sa 1 poslanec
+#   obvod 3: Cesta Sv. Ladislava, Fábryho, Horská, Jókaiho, Komenského, Lesná, Obchodná, Podhorská, Povstanie Českého ľudu, Rožňavská 32 - 74, SNP, Viničná, Žižkova, Bartalosova, Československej armády, Krátka, Oslobodenia, Školská – volia sa 3 poslanci
+#   obvod 4: Jána Hunyadiho, Nám. budovateľov, Nám. Ľ. Štúra 1 - 8, Námestie Mieru, Nová 20 - 38 – volia sa 3 poslanci
+#   obvod 5: Svätého Rócha, Nám. Ľ. Štúra 9 - 16, Severná 1 - 8, Severná 9 - 25 – volia sa 3 poslanci
+# Okrsky added by an AI agent in job okrsok-rules-1160 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Moldava nad Bodvou (bez ulice), súp. č. 3010, 3054, 3060, Debraďská, Hlavná, Janka Kráľa, Jiskrova, Kováčska, Letná, Nová 1 - 9, Obrancov Mieru, Poľovnícka, Vodná, Záhradná
+#   okrsok 2: Budulovská, Dukelských hrdinov, Hviezdoslavova, Jesenského, Kalvínska, Mlynská, Okružná, Rožňavská 3 - 26, Tehelná, Železničná
+#   okrsok 3: miestna časť Budulov
+#   okrsok 4: Cesta Sv. Ladislava, Fábryho, Horská, Jókaiho, Komenského, Lesná, Obchodná, Podhorská, Povstanie Českého ľudu, Rožňavská 32 - 74, SNP, Viničná, Žižkova
+#   okrsok 5: Bartalosova, Čs. armády, Krátka, Oslobodenia, Školská
+#   okrsok 6: Jána Hunyadiho, Nám. budovateľov, Nám. Ľ. Štúra 1 - 8
+#   okrsok 7: Námestie Mieru, Nová 20 - 38
+#   okrsok 8: Nám. Ľ. Štúra 9 - 16, Severná 1 - 8, Svätého Rócha
+#   okrsok 9: Severná 9 - 25
+obec = "521698"
+name = "Moldava nad Bodvou"
+date = 2022-07-14
+fill = "nearest"
+note = "Not covered by the document and placed by fill_nearest: Košická (not named), Rožňavská 29, 31, 76-82, Námestie Ľ. Štúra 17, 17A, 17B, 18, 18A, 18B, Severná 26, and the register's addresses without a street in part Moldava nad Bodvou other than súp. č. 3010, 3054, 3060 (the document's \"občan s TP mesto\" are voters without an address, not these houses). The okrsky list (okrsok 1) writes Nová 1 - 9, the announcement Nová 1, 3, 9; the register has only 1, 3, 9."
+okrsky_date = 2022-07-14
+okrsky_fill = "nearest"
+okrsky_note = "'Moldava nad Bodvou (bez ulice)' (okrsok 1) = voters registered without an address; súp. č. 3010, 3054, 3060 are the part's houses without a street (part rule by súpisné). Streets wholly in one okrsok of their obvod are whole-street rules (Nová 1-9 in obvod 1, Nová 20-38 in obvod 4; Rožňavská 3-26/32-74; Nám. Ľ. Štúra 1-8/9-16). Not named and placed by fill_nearest: Košická, Severná 26, and the other houses without a street in part Moldava nad Bodvou. Date = the document's date (resolution 582/2022 of 14. 7. 2022)."
+
+[[document]]
+url = "https://www.moldava.sk/e_download.php?file=data/editor/511sk_33.pdf&original=ozn-pocet-poslancov-220715.pdf"
+sha256 = "7c6ad19d8af238ac9239e4e6d7c32d7fd63f91d977be02092abbc1a6249cd393"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov (uznesenie č. 582/2022 zo dňa 14. 7. 2022)"
+
+[[document]]
+url = "https://www.moldava.sk/e_download.php?file=data/editor/511sk_35.pdf&original=volby22-volebne-okrsky-a-miestnosti.pdf"
+sha256 = "d60ef59b5f643aadae9dace572a8cf0b579d9ea83e318ff7974ffaa4b1d2d43c"
+title = "Informácia o vytvorení volebných okrskov a určení volebných miestností, 14. 7. 2022"
+
+[obvod.1]
+seats = 3
+okrsky = [1, 2]
+rules = [
+  {street = "Debraďská"},
+  {street = "Hlavná"},
+  {street = "Janka Kráľa"},
+  {street = "Jiskrova"},
+  {street = "Kováčska"},
+  {street = "Letná"},
+  {street = "Nová", numbers = "1, 3, 9"},
+  {street = "Obrancov mieru"},
+  {street = "Poľovnícka"},
+  {street = "Vodná"},
+  {street = "Záhradná"},
+  {part = "Moldava nad Bodvou", numbers = "3010, 3054, 3060", by = "supisne"},
+  {street = "Budulovská"},
+  {street = "Dukelských hrdinov"},
+  {street = "Hviezdoslavova"},
+  {street = "Jesenského"},
+  {street = "Kalvínska"},
+  {street = "Mlynská"},
+  {street = "Okružná"},
+  {street = "Rožňavská", numbers = "3-26"},
+  {street = "Tehelná"},
+  {street = "Železničná"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [3]
+rules = [
+  {part = "Budulov"},
+]
+
+[obvod.3]
+seats = 3
+okrsky = [4, 5]
+rules = [
+  {street = "Cesta Sv. Ladislava"},
+  {street = "Fábryho"},
+  {street = "Horská"},
+  {street = "Jókaiho"},
+  {street = "Komenského"},
+  {street = "Lesná"},
+  {street = "Obchodná"},
+  {street = "Podhorská"},
+  {street = "Povstania čes.ľudu", written = "Povstanie Českého ľudu", note = "Register abbreviates the same street name (Povstania českého ľudu)."},
+  {street = "Rožňavská", numbers = "32-74"},
+  {street = "SNP"},
+  {street = "Viničná"},
+  {street = "Žižkova"},
+  {street = "Bartalosova"},
+  {street = "Československej armády"},
+  {street = "Krátka"},
+  {street = "Oslobodenia"},
+  {street = "Školská"},
+]
+
+[obvod.4]
+seats = 3
+okrsky = [6, 7]
+rules = [
+  {street = "Jána Hunyadiho"},
+  {street = "Námestie budovateľov", written = "Nám. budovateľov"},
+  {street = "Námestie Ľ. Štúra", numbers = "1-8", written = "Nám. Ľ. Štúra"},
+  {street = "Námestie mieru", written = "Námestie Mieru"},
+  {street = "Nová", numbers = "20-38"},
+]
+
+[obvod.5]
+seats = 3
+okrsky = [8, 9]
+rules = [
+  {street = "Svätého Rócha"},
+  {street = "Námestie Ľ. Štúra", numbers = "9-16", written = "Nám. Ľ. Štúra"},
+  {street = "Severná", numbers = "1-25"},
+]
+
+[okrsok.1]
+rules = [
+  {part = "Moldava nad Bodvou", numbers = "3010, 3054, 3060"},
+  {street = "Debraďská"},
+  {street = "Hlavná"},
+  {street = "Janka Kráľa"},
+  {street = "Jiskrova"},
+  {street = "Kováčska"},
+  {street = "Letná"},
+  {street = "Nová"},
+  {street = "Obrancov mieru"},
+  {street = "Poľovnícka"},
+  {street = "Vodná"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Budulovská"},
+  {street = "Dukelských hrdinov"},
+  {street = "Hviezdoslavova"},
+  {street = "Jesenského"},
+  {street = "Kalvínska"},
+  {street = "Mlynská"},
+  {street = "Okružná"},
+  {street = "Rožňavská"},
+  {street = "Tehelná"},
+  {street = "Železničná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Cesta Sv. Ladislava"},
+  {street = "Fábryho"},
+  {street = "Horská"},
+  {street = "Jókaiho"},
+  {street = "Komenského"},
+  {street = "Lesná"},
+  {street = "Obchodná"},
+  {street = "Podhorská"},
+  {street = "Povstania čes.ľudu", written = "Povstanie Českého ľudu", note = "register abbreviation of the same street (Povstania českého ľudu)"},
+  {street = "Rožňavská"},
+  {street = "SNP"},
+  {street = "Viničná"},
+  {street = "Žižkova"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Bartalosova"},
+  {street = "Československej armády", written = "Čs. armády"},
+  {street = "Krátka"},
+  {street = "Oslobodenia"},
+  {street = "Školská"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Jána Hunyadiho"},
+  {street = "Námestie budovateľov"},
+  {street = "Námestie Ľ. Štúra"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Námestie mieru"},
+  {street = "Nová"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Námestie Ľ. Štúra"},
+  {street = "Severná", numbers = "1-8"},
+  {street = "Svätého Rócha"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Severná", numbers = "9-25"},
+]

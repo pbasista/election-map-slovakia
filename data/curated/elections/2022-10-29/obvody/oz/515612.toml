@@ -1,0 +1,145 @@
+# Council obvody of Tornaľa (515612), Revúca.
+# Transcribed by an AI agent in job obvod-rules-294 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: mestskú časť Behynce sa volí jeden poslanec. [okrsky: 1. Behynce – mestská časť Behynce]
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: mestskú časť Starňa sa volí jeden poslanec. [okrsky: 2. Starňa – mestská časť Starňa - Dlhá, Družby, Košická, Lipová, Mládežnícka, Nemocničná, Rožňavská, Višňová]
+#   obvod 3: Vo volebnom obvode číslo 3, ktorý zahŕňa: mestskú časť Králik sa volí jeden poslanec. [okrsky: 9. Králik – A. Pénteka, Mierová 222-288 párne čísla, Mierová 223-259 nepárne čísla, Nová, Poľná, Pri Majeri, Tichá, Úzka]
+#   obvod 4: Vo volebnom obvode číslo 4, ktorý zahŕňa: mestskú časť Tornaľa sa volí desať poslancov. [okrsky 3–8: Sever I, Sever II, Stred I, Stred II, Juh I, Juh II – zvyšok Mierovej (2-220 párne, 1-221 nepárne, 261-271 nepárne, 290, 292-298 párne) a ostatné ulice mestskej časti Tornaľa vrátane Osady Železné]
+# Okrsky added by an AI agent in job okrsok-rules-1169 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: mestská časť Behynce
+#   okrsok 2: mestská časť Starňa - Dlhá, Družby, Košická, Lipová, Mládežnícka, Nemocničná, Rožňavská, Višňová
+#   okrsok 3: Bakulinyho, B. Němcovej, Bottova, Cintorínska, Dr. J. Töröka, Krížna, Mlynská, Mliekarenská, Osada Železné, Priemyselná, Puškinova, Roľnícka, Šafárikova, Tulipánová, Záhradnícka
+#   okrsok 4: Cesta Gemerských žriediel, Daxnerova, Francisciho, Hlavné námestie, Kollárova, Mierová 2-16 párne čísla, Mierová 1-47 nepárne čísla, Mierová 290, Odborárska, Sládkovičova, Štúrova, Tomášikova
+#   okrsok 5: Mierová 18-114 párne čísla, Mierová 49-129 nepárne čísla, Škultétyho
+#   okrsok 6: I. Mája, Hurbanova, Hviezdoslavova, Komenského, Kostolné námestie, Letná, Poštová 1-71
+#   okrsok 7: Južná, Poštová 87-107, Školská – nepárne čísla
+#   okrsok 8: Dobšinského, Družstevná, Mierová 116-220 párne čísla, Mierová 131-221 nepárne čísla, Mierová 261-271 nepárne čísla, Mierová 292-298 párne čísla, Pri Slanej, Školská – párne čísla, Tabaková, Závodná
+#   okrsok 9: A. Pénteka, Mierová 222-288 párne čísla, Mierová 223-259 nepárne čísla, Nová, Poľná, Pri Majeri, Tichá, Úzka
+obec = "515612"
+name = "Tornaľa"
+date = 2022-06-23
+note = "The announcement defines obvody by mestské časti; the okrsky list (same date) gives the streets of each obvod/okrsok, used to split Mierová and Pri Majeri, which the register puts partly in Králik and partly in Tornaľa. Addresses without a street follow their part."
+okrsky_date = 2022-07-04
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky list is approved by the mayor 'V Tornali 04.07.2022'. Obvody 1–3 are one okrsok each (1 Behynce, 2 Starňa, 9 Králik). In obvod 4, fill_nearest places what the list leaves out: Drevosklad (3 addresses), Poštová 73–85, Mierová numbers of obvod 4 outside the listed ranges, and the houses without a street."
+
+[[document]]
+url = "https://www.mestotornala.sk/download_file_f.php?id=1706027"
+sha256 = "388c766a3e076233e96d520a24930af107f66b37b27f8f30e687c9b44de142d8"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov (uznesenie MsZ č. 122/2022 zo dňa 23.06.2022), 04.07.2022"
+
+[[document]]
+url = "https://www.mestotornala.sk/download_file_f.php?id=1705857"
+sha256 = "d5e839f6ed78d9995c907b51a8533105ba33eca8ac8f8dbfacd42f8d23b56544"
+title = "Zoznam volebných okrskov mesta Tornaľa pre voľby do orgánov samosprávy obcí 2022, 04.07.2022"
+
+[obvod.1]
+seats = 1
+okrsky = [1]
+rules = [
+  {part = "Behynce"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [2]
+rules = [
+  {part = "Starňa"},
+]
+
+[obvod.3]
+seats = 1
+okrsky = [9]
+rules = [
+  {part = "Králik"},
+  {street = "Alexandra Pénteka", written = "A. Pénteka"},
+  {street = "Alex. Pénteka", written = "A. Pénteka", note = "Register variant of the same street (one address, part Tornaľa)."},
+  {street = "Mierová", numbers = "222-288", parity = "even"},
+  {street = "Mierová", numbers = "223-259", parity = "odd"},
+  {street = "Pri Majeri"},
+]
+
+[obvod.4]
+seats = 10
+okrsky = [3, 4, 5, 6, 7, 8]
+rules = [
+  {part = "Tornaľa"},
+  {street = "Mierová", note = "All Mierová numbers not in obvod 3 (okrsky 4, 5, 8: 2-220 even, 1-221 odd, 261-271 odd, 290, 292-298 even)."},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bakulínyho", written = "Bakulinyho", note = "the same street without the accent"},
+  {street = "Boženy Nemcovej", written = "B. Němcovej", note = "Božena Němcová: the register writes Nemcovej without the háček"},
+  {street = "Bottova"},
+  {street = "Cintorínska"},
+  {street = "Dr. Töröka", written = "Dr. J. Töröka", note = "the same street; the document adds the first name's initial"},
+  {street = "Krížna"},
+  {street = "Mlynská"},
+  {street = "Mliekárenská", written = "Mliekarenská", note = "the same street without the accent"},
+  {street = "Osada Železné"},
+  {street = "Priemyselná"},
+  {street = "Puškinova"},
+  {street = "Roľnícka"},
+  {street = "Šafárikova"},
+  {street = "Tulipánová"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Cesta Gemerských Žriediel", written = "Cesta Gemerských žriediel"},
+  {street = "Daxnerova"},
+  {street = "Francisciho"},
+  {street = "Hlavné Námestie", written = "Hlavné námestie"},
+  {street = "Kollárova"},
+  {street = "Mierová", numbers = "2-16", parity = "even"},
+  {street = "Mierová", numbers = "1-47", parity = "odd"},
+  {street = "Mierová", numbers = "290"},
+  {street = "Odborárska"},
+  {street = "Sládkovičova"},
+  {street = "Štúrova"},
+  {street = "Tomašíkova", written = "Tomášikova", note = "the same street (Tomášik); the document and the register place the accent differently"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Mierová", numbers = "18-114", parity = "even"},
+  {street = "Mierová", numbers = "49-129", parity = "odd"},
+  {street = "Škultétyho"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "1. mája", written = "I. Mája", note = "1. mája with the digit 1 typed as a capital I; no other such street"},
+  {street = "Hurbanova"},
+  {street = "Hviezdoslavova"},
+  {street = "Komenského"},
+  {street = "Kostolné námestie"},
+  {street = "Letná"},
+  {street = "Poštová", numbers = "1-71"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Južná"},
+  {street = "Poštová", numbers = "87-107"},
+  {street = "Školská", parity = "odd"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Dobšinského"},
+  {street = "Družstevná"},
+  {street = "Mierová", numbers = "116-220", parity = "even"},
+  {street = "Mierová", numbers = "131-221", parity = "odd"},
+  {street = "Mierová", numbers = "261-271", parity = "odd"},
+  {street = "Mierová", numbers = "292-298", parity = "even"},
+  {street = "Pri Slanej"},
+  {street = "Školská", parity = "even"},
+  {street = "Tabaková"},
+  {street = "Závodná"},
+]

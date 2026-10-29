@@ -3,8 +3,19 @@
  * in (live.js). data.js `ballots` decides which contests apply. */
 
 import { html, useEffect, useLayoutEffect, useRef, useState } from '../vendor/preact-htm.module.js';
-import { ballots, displayName, inOffice, officeOf, useLoaded } from './data.js';
-import { formatDate, formatList, formatNumber, formatPercent, researchCategories, t } from './i18n.js';
+import { ballots, candidacyUrl, displayName, inOffice, latestElection, officeOf, ranBefore, useLoaded } from './data.js';
+import {
+  election,
+  formatDate,
+  formatList,
+  formatNumber,
+  formatPercent,
+  logoUrl,
+  polls,
+  previous,
+  researchCategories,
+  t,
+} from './i18n.js';
 import {
   ChairIcon,
   CloseIcon,
@@ -13,6 +24,7 @@ import {
   EyeIcon,
   EyeOffIcon,
   FilterOffIcon,
+  HistoryIcon,
   InkCircle,
   InkCross,
   MedalIcon,
@@ -21,7 +33,18 @@ import {
   WarningIcon,
   WithdrawnIcon,
 } from './icons.js';
-import { decodeResults, isSingle, NOT_COUNTED, placeResults, resultsVars, SCOPES, useLive } from './live.js';
+import {
+  decodeResults,
+  isSingle,
+  NOT_COUNTED,
+  PAST,
+  pastLabel,
+  pastTitle,
+  placeResults,
+  resultsVars,
+  SCOPES,
+  useLive,
+} from './live.js';
 import { MapButton, TurnoutMapButton, WinnerMapButton } from './mapmode.js';
 import { Notice } from './pane.js';
 import { formatPicks, parsePicks, togglePick } from './picks.js';
@@ -59,18 +82,20 @@ const standsFor = (c, name) =>
 
 /* The marks of a row that are filters too, in the bar's order, each with
  * whom it covers:
- * - elected: elected in 2026, officially or called by this site on a
- *   partial count (live.js `decodeResults`);
+ * - elected: elected at the page's election, officially or called by this
+ *   site on a partial count (live.js `decodeResults`);
  * - affairs: research found serious controversies;
  * - disputes: research found disputed or lesser ones;
  * - researched: research done, whatever it found;
- * - office: holds the office the contest elects (the chair). */
+ * - office: held the office the contest elects at the time of the
+ *   election (the chair); not for an election whose office holders are
+ *   not known (i18n.js `previous` null), so no link can filter by it. */
 const MARKS = [
   { name: 'elected', covers: (c) => Boolean(c.result?.elected || c.result?.called), Icon: MedalIcon },
   { name: 'affairs', covers: (c) => Boolean(c.research?.affairs), Icon: WarningIcon },
   { name: 'disputes', covers: (c) => Boolean(c.research?.disputes), Icon: DisputeIcon },
   { name: 'researched', covers: (c) => Boolean(c.research), Icon: SearchIcon },
-  { name: 'office', covers: inOffice, Icon: ChairIcon },
+  ...(previous ? [{ name: 'office', covers: inOffice, Icon: ChairIcon }] : []),
 ];
 
 const mutedBy = (mode, member) => (mode === 'hide' && member) || (mode === 'only' && !member);
@@ -112,7 +137,9 @@ export function filterParams(filter) {
  * parties looked up by short form in data/index.json's *parties*. What is
  * not known there (a party gone since the link was made) is dropped. */
 export function parseFilter({ fp, fm, x }, parties) {
-  const known = new Map(Object.values(parties).map(([short, name, logo = null]) => [short, { short, name, logo }]));
+  const known = new Map(
+    Object.values(parties).map(([short, name, logo = null]) => [short, { short, name, logo: logo && logoUrl(logo) }]),
+  );
   const allHidden = (fp ?? '').startsWith('!');
   const chosen = new Map();
   for (const token of (fp ?? '').split(',')) {
@@ -138,6 +165,41 @@ export function researchScope(r) {
 
 /* The research.* strings' variables for research *r*, *n* its count. */
 const researchVars = (r, n) => ({ scope: researchScope(r), date: formatDate(r.date), n: formatNumber(n) });
+
+/* Why candidate *c* is not researched. Research is done on the latest
+ * election's candidates: there, not yet; on an earlier election's page, a
+ * person not linked to one of them gets none, nor one whose linked
+ * candidate is not researched yet. */
+export function notResearched(c) {
+  if (election === latestElection.day) return t('research.none');
+  const key = c.elsewhere[latestElection.slug] ? 'research.none_later' : 'research.not_linked';
+  return t(key, { later: latestElection.slug });
+}
+
+/* For research reused from the latest election (data.js `decodeResearch`
+ * `reused`), what it counts of it: *label* followed by that, else *label*. */
+const withReuse = (r, label) =>
+  r.reused ? `${label} ${t('research.reused_badge', { later: latestElection.slug, day: formatDate(election) })}` : label;
+
+/* The note on documents that state no date (data.js `ballots` `origin`
+ * `dating`, `okrskyDating`): *lead* followed by what dates them. A capture
+ * or posting before the vote bounds them only from above. */
+const DATED = {
+  archived: 'notice.dated_archived',
+  posted: 'notice.dated_posted',
+  named: 'notice.dated_named',
+};
+const dated = (lead, { by, seen }) => `${lead} ${t(DATED[by], { date: seen ? formatDate(seen) : '' })}`;
+
+/* The note on rules a later source fills in (data.js `ballots` `origin`
+ * `supplemented`, `okrskySupplemented`): *lead* followed by which source
+ * and that the election's state may have differed. */
+const SUPPLEMENTED = {
+  election: 'notice.supplemented_election',
+  referendum: 'notice.supplemented_referendum',
+  document: 'notice.supplemented_document',
+};
+const supplemented = (lead, { from, day }) => `${lead} ${t(SUPPLEMENTED[from], { later: day.slice(0, 4) })}`;
 
 /* A candidate's occupation; a machine translation names the Slovak
  * original in its tooltip (the card shows it in full). */
@@ -243,7 +305,8 @@ export function OfficeResult({ result: r }) {
   </div>`;
 }
 
-/* The candidate holds now the office the contest elects: a chair with the
+/* The candidate held the office the contest elects at the time of the
+ * election (later changes are not known): a chair with the
  * share of the vote that won it, the votes in the tooltip (the card charts
  * them). */
 function InOffice({ candidate: c, actions }) {
@@ -255,6 +318,54 @@ function InOffice({ candidate: c, actions }) {
   <//>`;
 }
 
+/* How a candidacy in another election went (data.js `decodeElsewhere`
+ * *run*, in the election of *slug*): the year and contest, elected or not,
+ * the votes with their share of the valid ballots (for a council: of the
+ * voters with a valid ballot) and the place among the contest's
+ * candidates; a link opens its card on that election's page. */
+export function OtherCandidacy({ slug, run }) {
+  const outcome =
+    run.votes === null
+      ? t('ran.no_result')
+      : t(run.elected ? 'ran.elected' : run.withdrew ? 'ran.withdrew' : 'ran.not_elected');
+  const result =
+    run.votes === null
+      ? null
+      : t(run.multi ? 'ran.result_multi' : 'ran.result', {
+          votes: formatNumber(run.votes),
+          share: formatPercent(run.votes / run.valid),
+          rank: formatNumber(run.rank),
+          of: formatNumber(run.of),
+        });
+  return html`<span class="other-run">
+    <span><strong>${slug}</strong> · ${run.label}</span>
+    <span class=${run.elected ? 'other-outcome elected-then' : 'other-outcome'}>${outcome}</span>${
+      result ? html` · <span>${result}</span>` : null
+    }
+    <a class="other-open" href=${candidacyUrl(slug, run.id)}>${t('ran.open', { when: slug })}</a>
+  </span>`;
+}
+
+/* The candidate stood for the same office at the election before (data.js
+ * `ranBefore`): a clock turned back beside the chair, in the grey of past
+ * figures. Not a filter like the other marks: a press shows how it went
+ * then on a line under the name (*detail* the id of that line), pressed
+ * again hides it. */
+function RanBefore({ run, open, onToggle, detail }) {
+  const label = t('ran.label', { when: run.election.slug });
+  return html`<button
+    type="button"
+    class=${open ? 'ran-before active' : 'ran-before'}
+    title=${label}
+    aria-label=${label}
+    aria-expanded=${open ? 'true' : 'false'}
+    aria-controls=${detail}
+    onClick=${onToggle}
+  >
+    <${HistoryIcon} />
+  </button>`;
+}
+
 /* The state of the research on a candidate: the number of findings, a
  * faint magnifier where it found nothing, a dashed one while not done.
  * The tooltip says what was searched before the result; the card shows
@@ -262,7 +373,7 @@ function InOffice({ candidate: c, actions }) {
 function Researched({ candidate: c, actions }) {
   const r = c.research;
   if (!r) {
-    return html`<${Mark} name="researched" cls="researched not" label=${t('research.none')} actions=${actions}>
+    return html`<${Mark} name="researched" cls="researched not" label=${notResearched(c)} actions=${actions}>
       <${SearchIcon} />
     <//>`;
   }
@@ -270,7 +381,7 @@ function Researched({ candidate: c, actions }) {
   return html`<${Mark}
     name="researched"
     cls=${r.findings ? 'researched' : 'researched none'}
-    label=${r.findings ? t('research.badge', vars) : t('research.badge_none', vars)}
+    label=${withReuse(r, r.findings ? t('research.badge', vars) : t('research.badge_none', vars))}
     actions=${actions}
     ><${SearchIcon} />${r.findings ? formatNumber(r.findings) : null}<//>`;
 }
@@ -284,7 +395,7 @@ function Controversies({ candidate: c, name, actions }) {
   const r = c.research;
   const { Icon } = MARKS.find((mark) => mark.name === name);
   const vars = researchVars(r, r[name]);
-  return html`<${Mark} name=${name} cls=${name} label=${t(`research.${name}_badge`, vars)} actions=${actions}>
+  return html`<${Mark} name=${name} cls=${name} label=${withReuse(r, t(`research.${name}_badge`, vars))} actions=${actions}>
     <${Icon} />${vars.n}
   <//>`;
 }
@@ -354,6 +465,9 @@ function Votes({ candidate: c }) {
  * - Once counted, a button at the row's end, with the folded map of the
  *   winner map's in the header, shows the candidate's votes on the map
  *   (mapmode.js `MapButton`).
+ * - Where the candidate stood for the same office at the election before,
+ *   a mark beside the chair unfolds how that went on a line of the row's
+ *   own (RanBefore, OtherCandidacy).
  * *actions*: see useRowActions; the row of the party pointed at is
  * highlighted there. *muted*: the filter fades the row. *seat* ({place,
  * seats, end}, `seatPlaces`): on a partial count of a council, a place
@@ -366,6 +480,9 @@ export function CandidateRow({ candidate, onCandidate, current = false, actions,
   const picked = actions.isPicked(c.id);
   const crossed = !picked && actions.isCrossed(c.id);
   const metaId = useOwnId('km-meta');
+  const before = ranBefore(c);
+  const beforeId = useOwnId('km-before');
+  const [showBefore, setShowBefore] = useState(false);
   const classes = [
     'cand',
     current && 'current',
@@ -380,8 +497,9 @@ export function CandidateRow({ candidate, onCandidate, current = false, actions,
     <div
       class=${classes.filter(Boolean).join(' ')}
       onClick=${(e) => {
-        // The row's own buttons do what they say; the rest opens the card.
-        if (!e.target.closest('button')) onCandidate(c.id);
+        // The row's own buttons and links do what they say, and the line of
+        // the election before is read; the rest opens the card.
+        if (!e.target.closest('button, a, .ran-detail')) onCandidate(c.id);
       }}
     >
       <button
@@ -415,12 +533,27 @@ export function CandidateRow({ candidate, onCandidate, current = false, actions,
             ${flagged ? html`<${Controversies} candidate=${c} name="affairs" actions=${actions} />` : null}
             ${c.research?.disputes ? html`<${Controversies} candidate=${c} name="disputes" actions=${actions} />` : null}
             ${inOffice(c) ? html`<${InOffice} candidate=${c} actions=${actions} />` : null}
+            ${
+              before
+                ? html`<${RanBefore}
+                    run=${before}
+                    open=${showBefore}
+                    onToggle=${() => setShowBefore(!showBefore)}
+                    detail=${beforeId}
+                  />`
+                : null
+            }
             <${Researched} candidate=${c} actions=${actions} />
           </span>
         </span>
         ${c.result ? html`<${Votes} candidate=${c} />` : null}
         ${seat ? html`<span class="sr-only">${t('results.in_seats', { place: seat.place, n: formatNumber(seat.seats) })}</span>` : null}
         <span class="meta" id=${metaId}>${t('candidate.age', { n: c.age })} · <${Occupation} candidate=${c} /></span>
+        ${
+          before && showBefore
+            ? html`<span class="ran-detail" id=${beforeId}><${OtherCandidacy} slug=${before.election.slug} run=${before} /></span>`
+            : null
+        }
       </span>
       ${c.result && c.result.share !== null ? html`<${MapButton} candidate=${c} label=${c.result.contestLabel} />` : null}
       ${
@@ -455,8 +588,10 @@ function contestKind(id) {
  *   circled than are elected, which would make a real ballot invalid,
  *   both numbers carry a warning. Circling more is still allowed: the
  *   visitor may circle a shortlist to choose from later.
- * Once the 2026 count reaches the contest, a line says how far it has got
- * (ResultsLine). *id*: the element's, which the header's button refers to. */
+ * Once the count reaches the contest, a line says how far it has got
+ * (ResultsLine); a contest without a final result (data.js `noResult`)
+ * says so instead. *id*: the element's, which the header's button refers
+ * to. */
 function ContestFacts({ id, contest, unmuted, picked, results, pending }) {
   const n = contest.candidates.length;
   const single = isSingle(contest.id);
@@ -466,7 +601,7 @@ function ContestFacts({ id, contest, unmuted, picked, results, pending }) {
     : seats
       ? t('contest.seats', { n: formatNumber(seats) })
       : contest.seats2022
-        ? t('contest.seats_2022', { n: formatNumber(contest.seats2022) })
+        ? t('contest.seats_previous', { n: formatNumber(contest.seats2022) })
         : null;
   const candidates =
     unmuted < n
@@ -486,7 +621,13 @@ function ContestFacts({ id, contest, unmuted, picked, results, pending }) {
       ${picked ? html` · ${fact('picked', t('contest.picked', { n: formatNumber(picked) }))}` : null}
     </span>
     ${over ? html`<span class="sr-only">${warning}</span>` : null}
-    ${results || pending ? html`<${ResultsLine} results=${results} single=${single} />` : null}
+    ${
+      contest.noResult
+        ? html`<span class="contest-results pending">${t('results.no_result')}</span>`
+        : results || pending
+          ? html`<${ResultsLine} results=${results} single=${single} />`
+          : null
+    }
   </span>`;
 }
 
@@ -531,9 +672,11 @@ function Holder({ contest }) {
 }
 
 /* The election *past* (data.js `contest`) is of, named with its day: the
- * regular ones of 2022, or a municipal by-election held since. */
+ * regular municipal or regional ones before (results named oso<year>,
+ * osk<year>), or a municipal by-election held since (oso<year><month>). */
 function pastElection(past) {
-  const kind = { oso2022: 'municipal', osk2022: 'regional' }[past.election] ?? 'by';
+  const regular = /^os[ok]\d{4}$/.test(past.election);
+  const kind = regular ? (past.election.startsWith('osk') ? 'regional' : 'municipal') : 'by';
   return t(`turnout.election_${kind}`, { date: formatDate(past.date) });
 }
 
@@ -542,20 +685,24 @@ function pastElection(past) {
  * last election's in grey (*past*); once counted, 2026's in the results'
  * green (*live*) over the same track, with the last election's as a grey
  * tick and its share and year under it, so that the two compare at a
- * glance. Each is {share, year, label}, the label (the numbers) in the
- * tooltip. Once counted, the meter is the button that puts *contest*'s
- * 2026 turnout on the map (mapmode.js `TurnoutMapButton`). */
+ * glance. Each is {share, year, label, approx}, the label (the numbers)
+ * in the tooltip, `approx` where the last election's figures are not
+ * exactly of this area (live.js `PAST`): its share then reads "≈". Once
+ * counted, the meter is the button that puts *contest*'s 2026 turnout on
+ * the map (mapmode.js `TurnoutMapButton`). */
 function Turnout({ contest, past, live }) {
   const main = live ?? past;
   const tick = live && past;
   const label = [past?.label, live?.label].filter(Boolean).join(' ');
+  // No space after the mark: the narrow meter would break the line there.
+  const percent = (x) => `${x.approx ? '≈' : ''}${formatPercent(x.share, 0)}`;
   const lines = html`
-    <span class="gauge-line"><strong>${formatPercent(main.share, 0)}</strong>${main.year}</span>
+    <span class="gauge-line"><strong>${percent(main)}</strong>${main.year}</span>
     <span class="gauge-bar">
       <span class="gauge-fill" style=${{ width: width(main.share) }}></span>
       ${tick ? html`<span class="gauge-tick" style=${{ left: width(past.share) }}></span>` : null}
     </span>
-    ${tick ? html`<span class="gauge-line past"><span>${formatPercent(past.share, 0)}</span>${past.year}</span>` : null}
+    ${tick ? html`<span class="gauge-line past"><span>${percent(past)}</span>${past.year}</span>` : null}
   `;
   if (!live) return html`<span class="gauge" role="img" aria-label=${label} title=${label}>${lines}</span>`;
   return html`<${TurnoutMapButton} contest=${contest} figures=${label}>
@@ -565,9 +712,9 @@ function Turnout({ contest, past, live }) {
 
 /* The turnout of the last election in a contest's area, for whoever
  * wonders how many vote there, labelled with that election. A council now
- * split into several obvody: that of the okrsky its obvod is made of,
- * where they are the same as then; else that of the whole municipality,
- * as the last election's obvody were drawn otherwise. */
+ * split into several obvody: that of the okrsky its obvod is made of, with
+ * how they were found (live.js `pastLabel`, `pastTitle`); else, where one
+ * of those is not known, that of the whole municipality. */
 function pastTurnout(contest) {
   const p = contest.past;
   const share = p.voters / p.eligible;
@@ -577,10 +724,15 @@ function pastTurnout(contest) {
     eligible: formatNumber(p.eligible),
     turnout: formatPercent(share),
   });
-  const whole = p.whole ? t(contestKind(contest.id) === 'oz:city' ? 'turnout.whole_city' : 'turnout.whole') : null;
-  const okrsky = p.okrsky ? t('turnout.okrsky', { okrsky: numberRanges(p.okrsky) }) : null;
-  const note = whole ?? okrsky;
-  return { share, year: p.date.slice(0, 4), label: note ? `${text} ${note}` : text };
+  let note = null;
+  if (p.whole) note = t(contestKind(contest.id) === 'oz:city' ? 'turnout.whole_city' : 'turnout.whole');
+  else if (p.method !== null) note = `${t('turnout.obvod', { method: pastLabel(p.method) })} ${pastTitle(p.method)}`;
+  return {
+    share,
+    year: p.date.slice(0, 4),
+    label: note ? `${text} ${note}` : text,
+    approx: p.method !== null && p.method !== PAST.same,
+  };
 }
 
 /* *numbers* in order, as ranges: [7, 1, 2, 3] → "1–3, 7". */
@@ -600,23 +752,31 @@ function numberRanges(numbers) {
  * on); with *unit* named, of that unit of the contest's area (`inUnit`). */
 const liveTurnout = (r, unit = null) => ({
   share: r.voters / r.eligible,
-  year: '2026',
+  year: election.slice(0, 4),
   label: unit
     ? t('results.turnout_unit', { ...resultsVars(r), unit })
     : t(r.status === 'partial' ? 'results.turnout_partial' : 'results.turnout', resultsVars(r)),
 });
 
-/* An okrsok's turnout at the 2022 municipal elections, [eligible, voters]
- * (live.js `placeResults` `past`), where it is the same okrsok as then. */
-const okrsokPast = ([eligible, voters]) => ({
-  share: voters / eligible,
-  year: '2022',
-  label: t('turnout.okrsok_2022', {
-    voters: formatNumber(voters),
-    eligible: formatNumber(eligible),
+/* An okrsok's turnout in the election before (live.js `pastOf`: {day,
+ * method, record}), labelled with how its figures were found; where they
+ * are not known, null. */
+const okrsokPast = ({ day, method, record }) => {
+  if (!record) return null;
+  const [eligible, voters] = record;
+  const text = t('turnout.okrsok', {
+    voters: formatNumber(Math.round(voters)),
+    eligible: formatNumber(Math.round(eligible)),
     turnout: formatPercent(voters / eligible),
-  }),
-});
+    method: pastLabel(method),
+  });
+  return {
+    share: voters / eligible,
+    year: day.slice(0, 4),
+    label: method === PAST.same ? text : `${text} ${pastTitle(method)}`,
+    approx: method !== PAST.same,
+  };
+};
 
 /* Results *r* (live.js `decodeResults`) narrowed to a unit of the contest's
  * area, *record* [eligible, voters, valid, {number: votes}] (live.js
@@ -804,9 +964,12 @@ export function Contest({
     ? t(open ? 'contest.hide_others' : 'contest.show_all')
     : t(open ? 'contest.hide_candidates' : 'contest.show_candidates');
   const picked = contest.candidates.filter((c) => actions.isPicked(c.id)).length;
-  // A unit's own 2022 turnout only: the contest's is of its whole area.
+  // A unit's own turnout then only: the contest's is of its whole area. An
+  // okrsok whose figures then are not known says so beside 2026's.
   const past = unit ? (unit.past ? okrsokPast(unit.past) : null) : contest.past ? pastTurnout(contest) : null;
-  const now = results?.eligible && results.voters !== null ? liveTurnout(results, unit && scopeName(unit.scope, place)) : null;
+  const unknown = unit?.past && !unit.past.record ? ` ${pastTitle(PAST.unknown)}` : '';
+  const turnout = results?.eligible && results.voters !== null ? liveTurnout(results, unit && scopeName(unit.scope, place)) : null;
+  const now = turnout && { ...turnout, label: turnout.label + unknown };
   // Who got the most votes where, once the candidates' votes are in: on
   // election night a municipality's give the winners only.
   const winnerMap = Boolean(whole?.valid) && whole.status !== 'winner' && [...whole.byNumber.values()].some((r) => r.votes);
@@ -1268,7 +1431,7 @@ export function Ballots({
   if (failed) return html`<p class="panel-body error">${t('error.load')}</p>`;
   if (result === null) return html`<p class="panel-body error">${t('place.missing')}</p>`;
   if (!result) return html`<p class="panel-body muted loading">${t('panel.loading')}</p>`;
-  const { obec, council, obvod: placeObvod, estimated, contests, group } = result;
+  const { obec, council, obvod: placeObvod, estimated, origin, contests, group } = result;
   const municipal = contests.filter((c) => isMunicipal(c.id));
   const regional = contests.filter((c) => !isMunicipal(c.id));
   const firstCouncil = municipal.findIndex((c) => c.council);
@@ -1291,25 +1454,84 @@ export function Ballots({
     t('place.kraj', { name: obec.krajName }),
   ].filter(Boolean);
 
-  // Each a one-line summary and the whole note. Where the obvody are a
-  // guess, that matters more than how the obvod was found.
-  const estimate = estimated ? t('council.estimated', { name: obec.name }) : null;
-  const estimateSummary = t('council.summary_estimated');
+  // Each a one-line summary and the whole note. Where the obvody are the
+  // later election's without proof that they match, that matters most, then
+  // where they are a guess, more than how the obvod was found; where
+  // another election's rules stand in, that comes next, then documents
+  // dated only approximately or filled in from a later source: every one
+  // that applies is said, the first summarises.
+  // Once the polls have closed the notes speak of the election as past.
+  const past = Date.now() > polls[1];
+  const n = obec.councils;
+  const name = obec.name;
+  const other = origin.reused?.slice(0, 4);
+  const adopted = origin.adopted?.slice(0, 4);
+  const caveats = [
+    adopted && [t('council.summary_adopted', { later: adopted }), t('council.adopted', { name, later: adopted })],
+    estimated && [t('council.summary_estimated'), t('council.estimated', { name })],
+    other && [t('council.summary_reused', { other }), t('council.reused', { name, other })],
+    origin.dating && [t('council.summary_dated'), dated(t('council.dated', { name }), origin.dating)],
+    origin.supplemented && [
+      t('council.summary_supplemented'),
+      supplemented(t('council.supplemented', { name }), origin.supplemented),
+    ],
+  ].filter(Boolean);
+  const caveat = caveats.length ? [caveats[0][0], caveats.map((c) => c[1]).join(' ')] : null;
+  // An estimate is approximate anyway.
+  const approximateNote = approximate && !estimated ? t('council.approximate') : null;
   const notes = {
-    pending: () => [t('council.summary_pending', { n: obec.councils }), t('council.pending', { n: obec.councils, name: obec.name })],
+    pending: () =>
+      origin.notFound
+        ? [t('council.summary_not_found', { n }), t('council.not_found', { n, name })]
+        : past
+          ? [t('council.summary_pending_past', { n }), t('council.pending_past', { n, name })]
+          : [t('council.summary_pending', { n }), t('council.pending', { n, name })],
     choose: () => [
-      estimate ? estimateSummary : t('council.summary_choose', { n: obec.councils }),
-      [t('council.choose', { n: obec.councils, name: obec.name }), estimate].filter(Boolean).join(' '),
+      caveat ? caveat[0] : t(past ? 'council.summary_choose_past' : 'council.summary_choose', { n }),
+      [t(past ? 'council.choose_past' : 'council.choose', { n, name }), caveat?.[1]].filter(Boolean).join(' '),
     ],
     address: () =>
-      estimate
-        ? [estimateSummary, estimate]
-        : approximate
-          ? [t('council.summary_approximate'), t('council.approximate')]
+      caveat
+        ? [caveat[0], [caveat[1], approximateNote].filter(Boolean).join(' ')]
+        : approximateNote
+          ? [t('council.summary_approximate'), approximateNote]
           : null,
   };
   const note = notes[council]?.();
   const councilNote = note ? html`<${Notice} summary=${note[0]}>${note[1]}<//>` : null;
+  // What the map draws of the obec when it is not this election's own:
+  // its boundary, its okrsky (the polling districts its results are by).
+  const boundary = origin.boundary;
+  const okrskyFrom = origin.okrskyReused ?? origin.okrskyReferendum;
+  const placeNotes = [
+    boundary && [
+      t('notice.summary_boundary', { on: boundary.on }),
+      boundary.obce.length
+        ? t('notice.boundary', { name, on: boundary.on, date: formatDate(boundary.day), others: formatList(boundary.obce) })
+        : t('notice.boundary_state', { name, on: boundary.on, date: formatDate(boundary.day) }),
+    ],
+    origin.okrskyReused && [
+      t('notice.summary_okrsky_reused', { other: okrskyFrom.slice(0, 4) }),
+      t('notice.okrsky_reused', { name, other: okrskyFrom.slice(0, 4) }),
+    ],
+    origin.okrskyAdopted && [
+      t('notice.summary_okrsky_adopted', { later: origin.okrskyAdopted.slice(0, 4) }),
+      t('notice.okrsky_adopted', { name, later: origin.okrskyAdopted.slice(0, 4) }),
+    ],
+    origin.okrskyReferendum && [
+      t('notice.summary_okrsky_referendum', { date: formatDate(okrskyFrom) }),
+      t('notice.okrsky_referendum', { name, date: formatDate(okrskyFrom) }),
+    ],
+    origin.okrskyDating && [
+      t('notice.summary_okrsky_dated'),
+      dated(t('notice.okrsky_dated', { name }), origin.okrskyDating),
+    ],
+    origin.okrskySupplemented && [
+      t('notice.summary_okrsky_supplemented'),
+      supplemented(t('notice.okrsky_supplemented', { name }), origin.okrskySupplemented),
+    ],
+    origin.okrskyUnknown && [t('notice.summary_okrsky_unknown'), t('notice.okrsky_unknown', { name })],
+  ].filter(Boolean);
   const place = { obec: obec.code, name: obec.name, obvod: placeObvod, okrsok: placeOkrsok };
 
   // The sources of a council's obvody follow the last of its contests.
@@ -1338,7 +1560,9 @@ export function Ballots({
         <p class="muted">${where.join(' · ')}</p>
       </header>
       <${FilterBar} filter=${filter} onFilter=${onFilter} actions=${actions} />
+      ${previous ? null : html`<p class="panel-body intro">${t('ballots.no_incumbents')}</p>`}
       <p class="panel-body intro">${t('ballots.intro')}</p>
+      ${placeNotes.map(([summary, text]) => html`<${Notice} summary=${summary}>${text}<//>`)}
       <h3 class="group">${t('ballots.municipal')}</h3>
       ${municipal.map(
         (c, i) => html`

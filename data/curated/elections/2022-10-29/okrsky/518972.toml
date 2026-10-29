@@ -1,0 +1,55 @@
+# Okrsky of Zvolenská Slatina, transcribed by an AI agent in job okrsok-rules-725 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Borovinská cesta, Boroviny-Krvavník, Komenského, Kráľová, Malá strana, Maloslatinská, Nový dvor, Očovská cesta, Pod Dielom, Pod Hájom, Poľovnícka, Slov. nár. povstania, Stred, Školská, Športová, Úhrady
+#   okrsok 2: Budovateľská, Cintorínska cesta, Čsl. Armády, Družstevná, Hviezdoslavova, Mierová, Sebechov, Sládkovičova, T. Vansovej, Slatinka
+obec = "518972"
+name = "Zvolenská Slatina"
+okrsky_date = 2022-11-10
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections found (the 2022 elections page names only the polling rooms, not archived with streets); the referendum's document, dated 10 Nov 2022. Houses without a street in part Zvolenská Slatina are placed by fill_nearest; \"Slatinka\" is the part Slatinka."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.zvolenskaslatina.sk/e_download.php?file=data/editor/98sk_1.pdf&original=inform%C3%A1ciat.pdf"
+sha256 = "a7eb4afa78d88f88cedffed354202c17e350ef8ec8079aa40d70e1603f1270b0"
+title = "Informácia o čase a mieste konania referenda"
+
+[[document]]
+url = "https://web.archive.org/web/20221127062906/https://www.zvolenskaslatina.sk/urad/volby/referendum/"
+sha256 = "4bb9ed430b9dcc03ebdcf9a23a47bc1bb8e4d53b7c42992e56ea65be00d76c09"
+title = "Referendum (page linking the document)"
+
+[okrsok.1]
+rules = [
+  {street = "Borovinská cesta"},
+  {street = "Boroviny-Krvavník"},
+  {street = "Komenského"},
+  {street = "Kráľová"},
+  {street = "Malá Strana", written = "Malá strana"},
+  {street = "Maloslatinská"},
+  {street = "Nový dvor"},
+  {street = "Očovská cesta"},
+  {street = "Pod Dielom"},
+  {street = "Pod Hájom"},
+  {street = "Poľovnícka"},
+  {street = "Slov.nár.povstania", written = "Slov. nár. povstania"},
+  {street = "Stred"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Úhrady"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Cintorínska cesta"},
+  {street = "Čsl. armády", written = "Čsl. Armády"},
+  {street = "Družstevná"},
+  {street = "Hviezdoslavova"},
+  {street = "Mierová"},
+  {street = "Sebechov"},
+  {street = "Sládkovičova"},
+  {street = "Terézie Vansovej", written = "T. Vansovej"},
+  {part = "Slatinka"},
+]

@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="VÁDIUM-IT, s.r.o.">
+        <meta name="generator" content="Nette Framework">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+        <meta name="google-translate-customization" content="e5685647068fc4d9-328e798308ab04e0-g794157e6d9eff3be-10"></meta>
+        <meta name="description" content="15.7.2022 | Utvorenie volebných okrskov a určenie volebných miestností - ">
+        <meta name="keywords" content="">
+        <title>Krompachy - Utvorenie volebných okrskov a určenie volebných miestností</title>
+        <link rel="shortcut icon" href="/favicon.ico">
+        
+        <script src="https://kit.fontawesome.com/fd58bdb62f.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" media="print" href="/css/print.css">
+        <link rel="stylesheet" href="/css/smoothness/jquery-ui-1.10.4.custom.min.css">
+        <link rel="stylesheet" href="/css/colorbox.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        
+	    <link rel="stylesheet" type="text/css" media="screen" href="/css/screen.css">
+        
+            <script src="/js/jquery.js"></script>
+            <script src="/js/bootstrap.js"></script>
+            <script src="/js/netteForms.js"></script>
+            <script src="/js/nette.ajax.js"></script>
+            <script src="/js/jquery.colorbox-min.js"></script>
+            <script src="/js/jquery.colorbox-sk.js"></script>
+            <script src="/js/main.js?v=1.00"></script>
+            
+            <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-2848785-14', 'auto');
+                ga('send', 'pageview');
+            </script>
+            <!--<script src='https://www.google.com/recaptcha/api.js'></script>-->
+	    <script src="https://www.google.com/recaptcha/api.js?onload=g_onRecaptchaLoad&amp;render=explicit" async defer></script>
+
+
+        
+
+        <script>
+                (function (window, $) {
+                        // map of <htmlID>: <widget/client ID>
+                        var clientIDs = {};
+                        window['g_onRecaptchaLoad'] = function () {
+                                $('.g-recaptcha').each(function () {
+                                        var el = $(this);
+                                        clientIDs[this.id] = grecaptcha.render(this, {
+                                                size: 'invisible',
+                                                badge: 'inline',
+                                                callback: function (token) {
+                                                        el.closest('form').off('submit.recaptcha').trigger('submit');
+                                                }
+                                        }, true);
+                                });
+                                $(function () {
+                                        $('form').on('submit.recaptcha', function (event) {
+						if ($(this).find('.g-recaptcha').length === 0) {
+                                                        return;
+                                                }
+                                                event.preventDefault();
+                                                var form = $(this);
+                                                //if (Nette.validateForm(this, true)) {
+                                                        // execute only reCAPTCHAs in submitted form
+                                                        $('.g-recaptcha', form).each(function () {
+                                                                grecaptcha.execute(clientIDs[this.id]);
+                                                        });
+                                                //}
+                                        });
+                                });
+                        };
+                })(window, window.jQuery);
+        </script>
+    </head>
+
+    <body>
+        <div class="background"></div>
+
+        <div class="container">
+            <div id="header" class="center">
+            <!--<a href="http://www.krompachy.sk/4042/portal/pozvanka-na-pankuskove-fasiangy/" id="fade"></a>-->
+            <!-- <div id="fade"></div> -->
+            <!--<p align="right" style="margin-right:150px;"> Stránka v testovacom režime</p>-->
+            <a href="//www.krompachy.sk" id="logo"></a>
+        </div>
+        
+                <div class="row" id="main_menu">
+                    <div class="col-md-12">
+                        <ul class="topmenu">
+                            <li class="grand_menu">
+                                <span class="titlelink">Mesto</span>
+                                <div class="grand_submenu sub_yellow" id="submenu">
+                                    <ul>
+                                                <li>
+                                                    <a title="Matričný úrad" href="/kategoria/90/matricny-urad/">
+                                                        Matričný úrad
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a title="Stavebný úrad" href="/kategoria/93/stavebny-urad/">
+                                                        Stavebný úrad
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a title="Mestská polícia" href="/kategoria/91/mestska-policia/">
+                                                        Mestská polícia
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a title="Projekty mesta" href="/kategoria/137/projekty-mesta/">
+                                                        Projekty mesta
+                                                    </a>
+                                                </li>
+                                    </ul>
+                                    <a class="viac" href="/kategoria/3/mesto/">viac &#187</a>
+                                </div>
+                            </li>
+                            <li class="grand_menu">
+                                <span class="titlelink">Občan</span>
+                                <div class="grand_submenu  sub_green" id="submenu">
+                                    <ul>
+                                                <li>
+                                                    <a title="Všeobecne záväzné nariadenia" href="/kategoria/17/vseobecne-zavazne-opatrenie/">
+                                                        Všeobecne záväzné nariadenia
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a title="Tlačivá a žiadosti" href="/kategoria/221/tlaciva-a-ziadosti/">
+                                                        Tlačivá a žiadosti
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a title="Ako vybaviť" href="/kategoria/28/ako-vybavit/">
+                                                        Ako vybaviť
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a title="Životné prostredie" href="/kategoria/172/zivotne-prostredie/">
+                                                        Životné prostredie
+                                                    </a>
+                                                </li>
+                                    </ul>
+                                    <a class="viac" href="/kategoria/4/obcan/">viac &#187</a>
+                                </div>
+                            </li>
+                            <li class="grand_menu">
+                                <span class="titlelink">Podnikateľ</span>
+                                <div class="grand_submenu sub_blue" id="submenu">
+                                    <ul>
+                                                <li>
+                                                    <a title="Verejné obstarávanie" href="/kategoria/32/verejne-obstaravanie/">
+                                                        Verejné obstarávanie
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a title="Investičné príležitosti" href="/kategoria/18/investicne-prilezitosti/">
+                                                        Investičné príležitosti
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a title="Ponuka majetku" href="/kategoria/31/ponuka-majetku/">
+                                                        Ponuka majetku
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a title="Firmy a služby" href="/kategoria/86/firmy-a-sluzby/">
+                                                        Firmy a služby
+                                                    </a>
+                                                </li>
+                                    </ul>
+                                    <a class="viac" href="/kategoria/5/podnikatel/">viac &#187</a>
+                                </div>
+                            </li>
+                            <li class="grand_menu">
+                                <span class="titlelink">Návštevník</span>
+                                <div class="grand_submenu sub_red" id="submenu">
+                                    <ul>
+                                                <li>
+                                                    <a title="Galéria mesta" href="/kategoria/147/galeria-mesta/">
+                                                        Galéria mesta
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a title="Služby pre turistov" href="/kategoria/35/sluzby-pre-turistov/">
+                                                        Služby pre turistov
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a title="Akcie v meste" href="/kategoria/97/akcie-v-meste/">
+                                                        Akcie v meste
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a title="Pamätihodnosti" href="/kategoria/284/pamatihodnosti/">
+                                                        Pamätihodnosti
+                                                    </a>
+                                                </li>
+                                    </ul>
+                                    <a class="viac" href="/kategoria/6/navstevnik/">viac &#187</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>    
+                </div>
+            <div id="info">
+            <div class="col-md-9 col-xs-12">
+                <ul class="ctgpath">
+                    <li class="path">
+                        <a href="/"><i class="fas fa-home"></i></a>
+                    </li>
+                                <li class="path small">
+                                    <i class="fas fa-chevron-right" style="margin-left: 5px;"></i>
+                                    <a title="Hlavná ponuka" href="/kategoria/1/hlavna-ponuka/">Hlavná ponuka</a>
+                                </li>
+                                <li class="path small">
+                                    <i class="fas fa-chevron-right" style="margin-left: 5px;"></i>
+                                    <a title="Občan" href="/kategoria/4/obcan/">Občan</a>
+                                </li>
+                                <li class="path small">
+                                    <i class="fas fa-chevron-right" style="margin-left: 5px;"></i>
+                                    <a title="Voľby" href="/kategoria/85/volby/">Voľby</a>
+                                </li>
+                                <li class="path small">
+                                    <i class="fas fa-chevron-right" style="margin-left: 5px;"></i>
+                                    <a title="Voľby do územnej samosprávy 2022" href="/kategoria/605/volby-do-uzemnej-samospravy-2022/">Voľby do územnej samosprávy 2022</a>
+                                </li>
+
+                </ul>
+            </div>
+            
+            <div class="col-md-3 col-xs-12 fixpadding">
+                <form action="/homepage/read?articleId=6536" method="post" class="form form-horizontal" role="form" id="frm-searchForm">
+                    <div class="input-group input-group-sm">
+                        <input type="text" name="searchtext" class="form-control search-input" aria-describedby="basic-addon2" id="frm-searchForm-searchtext" required data-nette-rules='[{"op":":filled","msg":"Prosím vyplňte pole."},{"op":":minLength","msg":"Hľadaný výraz musí mať aspoň 3 znaky","arg":3}]'>
+                        <div class="input-group-btn">
+                            <input type="submit" name="search" class="btn btn-danger" value="HĽADAŤ">
+                        </div>
+                    </div>
+                <input type="hidden" name="_do" value="searchForm-submit"><!--[if IE]><input type=IEbug disabled style="display:none"><![endif]-->
+</form>
+
+            </div>
+        </div>
+        
+            
+            <div id="container" class="center">
+                <div class="row">
+                
+                        <div class="col-md-3" id="leftside"> <!-- leftside-->
+                            <div class="block link">
+                                <a title="Voľby do územnej samosprávy 2022" href="/kategoria/605/volby-do-uzemnej-samospravy-2022/">
+                                    <img src ="/images/volby_2022.jpg" style="max-width:100%;">
+                                </a>
+                            </div>  
+                            
+                            <div class="block link">
+                                <a title="Pomoc Ukrajine" href="/kategoria/589/pomoc-ukrajine/">
+                                    <img src ="/images/ukrajina.jpg" style="max-width:100%;">
+                                </a>
+                            </div>  
+                            
+                            <div class="block">
+                                <div class="sborder3">
+
+                                                <div id="prnt10" class="pointer list-group-item prnta ">
+                                                    <small>
+                                                        <a title="Samospráva">
+                                                            Samospráva
+                                                        </a>
+                                                    </small>    
+                                                    <span class="fas fa-chevron-down subdraw"></span>
+                                                </div>
+
+                                            <div class="lvl lvla" id="lvla10">
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Primátorka mesta">Primátorka mesta</a>-->
+                                                            <a title="Primátorka mesta" href="/kategoria/373/primatorka-mesta/">Primátorka mesta</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb373">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Zástupca primátora mesta">Zástupca primátora mesta</a>-->
+                                                            <a title="Zástupca primátora mesta" href="/kategoria/374/zastupca-primatora-mesta/">Zástupca primátora mesta</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb374">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Mestské zastupiteľstvo">Mestské zastupiteľstvo</a>-->
+                                                            <a title="Mestské zastupiteľstvo" href="/kategoria/20/mestske-zastupitelstvo/">Mestské zastupiteľstvo</a>
+                                                        </small>
+                                                            <span id="prnt20" class="fas fa-chevron-down subdraw"></span>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb20">
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="Poslanci MsZ"-->
+                                                                    <a title="Poslanci MsZ" href="/kategoria/469/poslanci-msz/">    
+                                                                        Poslanci MsZ
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc469">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="Komisie MsZ"-->
+                                                                    <a title="Komisie MsZ" href="/kategoria/488/komisie-msz/">    
+                                                                        Komisie MsZ
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc488">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="Plán zasadnutí MsZ"-->
+                                                                    <a title="Plán zasadnutí MsZ" href="/kategoria/470/plan-zasadnuti-msz/">    
+                                                                        Plán zasadnutí MsZ
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc470">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="Zasadania MsZ"-->
+                                                                    <a title="Zasadania MsZ" href="/kategoria/471/zasadania-msz/">    
+                                                                        Zasadania MsZ
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc471">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="Zasadania komisií"-->
+                                                                    <a title="Zasadania komisií" href="/kategoria/472/zasadania-komisii/">    
+                                                                        Zasadania komisií
+                                                                    </a>
+                                                                </small>
+                                                                    <span id="prnt472" class="fas fa-chevron-down subdraw"></span>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc472">
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Komisia finančná a majetková</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=480">Komisia finančná a majetková</a>
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Komisia výstavby, územného plánu, životného prostredia  a ochrany prírody</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=481">Komisia výstavby, územného plánu, životného prostredia  a ochrany prírody</a>
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Komisia sociálna, zdravotná, bytová a pre rómsku komunitu</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=482">Komisia sociálna, zdravotná, bytová a pre rómsku komunitu</a>
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Komisia školstva a športu</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=483">Komisia školstva a športu</a>
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Komisia kultúry a mládeže</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=484">Komisia kultúry a mládeže</a>
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Komisia podnikateľská, regionálneho rozvoja  a verejného poriadku</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=485">Komisia podnikateľská, regionálneho rozvoja  a verejného poriadku</a>
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Komisia cestovného ruchu a regionálneho rozvoja</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=486">Komisia cestovného ruchu a regionálneho rozvoja</a>
+                                                                        </small>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="Rokovací poriadok"-->
+                                                                    <a title="Rokovací poriadok" href="/kategoria/497/rokovaci-poriadok/">    
+                                                                        Rokovací poriadok
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc497">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="Zásady odmeňovania"-->
+                                                                    <a title="Zásady odmeňovania" href="/kategoria/498/zasady-odmenovania/">    
+                                                                        Zásady odmeňovania
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc498">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="Volebné obdobie 2014 - 2018"-->
+                                                                    <a title="Volebné obdobie 2014 - 2018" href="/kategoria/468/volebne-obdobie-2014-2018/">    
+                                                                        Volebné obdobie 2014 - 2018
+                                                                    </a>
+                                                                </small>
+                                                                    <span id="prnt468" class="fas fa-chevron-down subdraw"></span>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc468">
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Poslanci MsZ</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=99">Poslanci MsZ</a>
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Komisie MsZ</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=100">Komisie MsZ</a>
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Plán zasadnutí MsZ</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=101">Plán zasadnutí MsZ</a>
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Uznesenia MsZ</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=133">Uznesenia MsZ</a>
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Zasadania komisií</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=134">Zasadania komisií</a>
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Zápisnice MsZ</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=135">Zápisnice MsZ</a>
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Videozáznamy z MsZ</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=324">Videozáznamy z MsZ</a>
+                                                                        </small>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="Volebné obdobie 2010 - 2014"-->
+                                                                    <a title="Volebné obdobie 2010 - 2014" href="/kategoria/476/volebne-obdobie-2010-2014/">    
+                                                                        Volebné obdobie 2010 - 2014
+                                                                    </a>
+                                                                </small>
+                                                                    <span id="prnt476" class="fas fa-chevron-down subdraw"></span>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc476">
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Zasadania MsZ</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=478">Zasadania MsZ</a>
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Uznesenia MsZ</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=479">Uznesenia MsZ</a>
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Zasadania komisií</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=477">Zasadania komisií</a>
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Zápisnice MsZ</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=514">Zápisnice MsZ</a>
+                                                                        </small>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="Volebné obdobie 2006 - 2010"-->
+                                                                    <a title="Volebné obdobie 2006 - 2010" href="/kategoria/516/volebne-obdobie-2006-2010/">    
+                                                                        Volebné obdobie 2006 - 2010
+                                                                    </a>
+                                                                </small>
+                                                                    <span id="prnt516" class="fas fa-chevron-down subdraw"></span>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc516">
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Uznesenia MsZ</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=517">Uznesenia MsZ</a>
+                                                                        </small>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="Volebné obdobie 2002 - 2006"-->
+                                                                    <a title="Volebné obdobie 2002 - 2006" href="/kategoria/518/volebne-obdobie-2002-2006/">    
+                                                                        Volebné obdobie 2002 - 2006
+                                                                    </a>
+                                                                </small>
+                                                                    <span id="prnt518" class="fas fa-chevron-down subdraw"></span>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc518">
+                                                                    <div class="list-group-item ">
+                                                                        <small>
+                                                                            <!--a n:href="Homepage:default $c4['item']->id">Uznesenia MsZ</a>-->
+                                                                            <a href="/homepage/submenu?ctgId=519">Uznesenia MsZ</a>
+                                                                        </small>
+                                                                    </div>
+                                                            </div>
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Hlavný kontrolór mesta">Hlavný kontrolór mesta</a>-->
+                                                            <a title="Hlavný kontrolór mesta" href="/kategoria/383/hlavny-kontrolor-mesta/">Hlavný kontrolór mesta</a>
+                                                        </small>
+                                                            <span id="prnt383" class="fas fa-chevron-down subdraw"></span>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb383">
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="Hlavný kontrolór mesta"-->
+                                                                    <a title="Hlavný kontrolór mesta" href="/kategoria/375/hlavny-kontrolor-mesta/">    
+                                                                        Hlavný kontrolór mesta
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc375">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="Návrh plánu kontrolnej činnosti"-->
+                                                                    <a title="Návrh plánu kontrolnej činnosti" href="/kategoria/376/navrh-planu-kontrolnej-cinnosti/">    
+                                                                        Návrh plánu kontrolnej činnosti
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc376">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="Správy o kontrolnej činnosti"-->
+                                                                    <a title="Správy o kontrolnej činnosti" href="/kategoria/377/spravo-o-kontrolnej-cinnosti/">    
+                                                                        Správy o kontrolnej činnosti
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc377">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="Stanoviská hlavného kontrolóra"-->
+                                                                    <a title="Stanoviská hlavného kontrolóra" href="/kategoria/378/stanoviska-hlavneho-kontrolora/">    
+                                                                        Stanoviská hlavného kontrolóra
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc378">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="Správy o výsledku kontrol"-->
+                                                                    <a title="Správy o výsledku kontrol" href="/kategoria/379/spravy-o-vysledku-kontrol/">    
+                                                                        Správy o výsledku kontrol
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc379">
+                                                            </div>
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Rozpočet mesta">Rozpočet mesta</a>-->
+                                                            <a title="Rozpočet mesta" href="/kategoria/64/rozpocet-mesta/">Rozpočet mesta</a>
+                                                        </small>
+                                                            <span id="prnt64" class="fas fa-chevron-down subdraw"></span>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb64">
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="2020"-->
+                                                                    <a title="2020" href="/kategoria/548/2020/">    
+                                                                        2020
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc548">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="2019"-->
+                                                                    <a title="2019" href="/kategoria/487/2019/">    
+                                                                        2019
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc487">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="2018"-->
+                                                                    <a title="2018" href="/kategoria/370/2018/">    
+                                                                        2018
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc370">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="2017"-->
+                                                                    <a title="2017" href="/kategoria/319/2017/">    
+                                                                        2017
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc319">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="2016"-->
+                                                                    <a title="2016" href="/kategoria/264/2016/">    
+                                                                        2016
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc264">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="2015"-->
+                                                                    <a title="2015" href="/kategoria/254/2015/">    
+                                                                        2015
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc254">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="2014"-->
+                                                                    <a title="2014" href="/kategoria/253/2014/">    
+                                                                        2014
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc253">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="2013"-->
+                                                                    <a title="2013" href="/kategoria/252/2013/">    
+                                                                        2013
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc252">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="2012"-->
+                                                                    <a title="2012" href="/kategoria/251/2012/">    
+                                                                        2012
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc251">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="2011"-->
+                                                                    <a title="2011" href="/kategoria/250/2011/">    
+                                                                        2011
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc250">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="2010"-->
+                                                                    <a title="2010" href="/kategoria/249/2010/">    
+                                                                        2010
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc249">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="2009"-->
+                                                                    <a title="2009" href="/kategoria/248/2009/">    
+                                                                        2009
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc248">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="2008"-->
+                                                                    <a title="2008" href="/kategoria/247/2008/">    
+                                                                        2008
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc247">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="2007"-->
+                                                                    <a title="2007" href="/kategoria/246/2007/">    
+                                                                        2007
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc246">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="2021"-->
+                                                                    <a title="2021" href="/kategoria/567/2021/">    
+                                                                        2021
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc567">
+                                                            </div>
+                                                            <div class="list-group-item prntc ">
+                                                                <small>
+                                                                    <!--a n:href="Homepage:default ctgId=>$c3['item']->id, slug=>$c3['item']->slug" title="2022"-->
+                                                                    <a title="2022" href="/kategoria/581/2022/">    
+                                                                        2022
+                                                                    </a>
+                                                                </small>
+                                                            </div>
+
+                                                            <div class="lvl lvlc" id="lvlc581">
+                                                            </div>
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Dokumenty mesta">Dokumenty mesta</a>-->
+                                                            <a title="Dokumenty mesta" href="/kategoria/489/dokumenty-mesta/">Dokumenty mesta</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb489">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Oznamovanie protispoločenskej činnosti">Oznamovanie protispoločenskej činnosti</a>-->
+                                                            <a title="Oznamovanie protispoločenskej činnosti" href="/kategoria/522/oznamovanie-protispolocenskej-cinnosti/">Oznamovanie protispoločenskej činnosti</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb522">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Oznámenie funkcií, zamestnaní, činností a majetkových pomerov">Oznámenie funkcií, zamestnaní, činností a majetkových pomerov</a>-->
+                                                            <a title="Oznámenie funkcií, zamestnaní, činností a majetkových pomerov" href="/kategoria/530/oznamenie-funkcii-zamestnani-cinnosti-a-majetkovych-pomerov/">Oznámenie funkcií, zamestnaní, činností a majetkových pomerov</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb530">
+                                                    </div>
+                                            </div>
+                                                <div id="prnt499" class="pointer list-group-item prnta ">
+                                                    <small>
+                                                        <a title="Mestský úrad">
+                                                            Mestský úrad
+                                                        </a>
+                                                    </small>    
+                                                    <span class="fas fa-chevron-down subdraw"></span>
+                                                </div>
+
+                                            <div class="lvl lvla" id="lvla499">
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Prednostka mestského úradu">Prednostka mestského úradu</a>-->
+                                                            <a title="Prednostka mestského úradu" href="/kategoria/500/prednostka-mestskeho-uradu/">Prednostka mestského úradu</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb500">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Organizačná štruktúra">Organizačná štruktúra</a>-->
+                                                            <a title="Organizačná štruktúra" href="/kategoria/501/organizacna-struktura/">Organizačná štruktúra</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb501">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Základné dokumenty">Základné dokumenty</a>-->
+                                                            <a title="Základné dokumenty" href="/kategoria/502/zakladne-dokumenty/">Základné dokumenty</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb502">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Úradné hodiny">Úradné hodiny</a>-->
+                                                            <a title="Úradné hodiny" href="/kategoria/503/uradne-hodiny/">Úradné hodiny</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb503">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Kontaktné údaje">Kontaktné údaje</a>-->
+                                                            <a title="Kontaktné údaje" href="/kategoria/512/kontaktne-udaje/">Kontaktné údaje</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb512">
+                                                    </div>
+                                            </div>
+                                                <div id="prnt7" class="pointer list-group-item">
+                                                    <small>
+                                                        <!--a n:href="Homepage:default ctgId=>$c1['item']->id, slug=>$c1['item']->slug" title="Kontakty"-->
+                                                        <a title="Kontakty" href="/kategoria/7/kontakty/">
+                                                            Kontakty
+                                                        </a>
+                                                    </small>
+                                                </div>
+
+                                            <div class="lvl lvla" id="lvla7">
+                                            </div>
+                                                <div id="prnt9" class="pointer list-group-item prnta ">
+                                                    <small>
+                                                        <a title="Všeobecné informácie">
+                                                            Všeobecné informácie
+                                                        </a>
+                                                    </small>    
+                                                    <span class="fas fa-chevron-down subdraw"></span>
+                                                </div>
+
+                                            <div class="lvl lvla" id="lvla9">
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Spôsob zriadenia mesta, právomoci, kompetencie a organizačná štruktúra">Spôsob zriadenia mesta, právomoci, kompetencie a organizačná štruktúra</a>-->
+                                                            <a title="Spôsob zriadenia mesta, právomoci, kompetencie a organizačná štruktúra" href="/kategoria/52/sposob-zriadenia-mesta-pravomoci-kompetencie-a-organizacna-struktura/">Spôsob zriadenia mesta, právomoci, kompetencie a organizačná štruktúra</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb52">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Žiadosti o informácie">Žiadosti o informácie</a>-->
+                                                            <a title="Žiadosti o informácie" href="/kategoria/53/ziadosti-o-informacie/">Žiadosti o informácie</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb53">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Žiadosti a ich vybavovanie">Žiadosti a ich vybavovanie</a>-->
+                                                            <a title="Žiadosti a ich vybavovanie" href="/kategoria/54/ziadosti-a-ich-vybavovanie/">Žiadosti a ich vybavovanie</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb54">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Opravné prostriedky voči rozhodnutiam mesta">Opravné prostriedky voči rozhodnutiam mesta</a>-->
+                                                            <a title="Opravné prostriedky voči rozhodnutiam mesta" href="/kategoria/55/opravne-prostriedky-voci-rozhodnutiam-mesta/">Opravné prostriedky voči rozhodnutiam mesta</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb55">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Sadzobníky poplatkov">Sadzobníky poplatkov</a>-->
+                                                            <a title="Sadzobníky poplatkov" href="/kategoria/56/sadzobniky-poplatkov/">Sadzobníky poplatkov</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb56">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Pokyny, inštrukcie, výkladové stanoviská">Pokyny, inštrukcie, výkladové stanoviská</a>-->
+                                                            <a title="Pokyny, inštrukcie, výkladové stanoviská" href="/kategoria/57/pokyny-instrukcie-vykladove-stanoviska/">Pokyny, inštrukcie, výkladové stanoviská</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb57">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Prevod nehnuteľnosti a hnuteľných vecí">Prevod nehnuteľnosti a hnuteľných vecí</a>-->
+                                                            <a title="Prevod nehnuteľnosti a hnuteľných vecí" href="/kategoria/58/prevod-nehnutelnosti-a-hnutelnych-veci/">Prevod nehnuteľnosti a hnuteľných vecí</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb58">
+                                                    </div>
+                                            </div>
+                                                <div id="prnt333" class="pointer list-group-item prnta ">
+                                                    <small>
+                                                        <a title="Spoločnosti s majetkovou účasťou mesta">
+                                                            Spoločnosti s majetkovou účasťou mesta
+                                                        </a>
+                                                    </small>    
+                                                    <span class="fas fa-chevron-down subdraw"></span>
+                                                </div>
+
+                                            <div class="lvl lvla" id="lvla333">
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Bytové hospodárstvo mesta Krompachy s.r.o.">Bytové hospodárstvo mesta Krompachy s.r.o.</a>-->
+                                                            <a title="Bytové hospodárstvo mesta Krompachy s.r.o." href="/kategoria/335/bytove_hospodarstvo_mesta_krompachy/">Bytové hospodárstvo mesta Krompachy s.r.o.</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb335">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Mestské lesy s.r.o">Mestské lesy s.r.o</a>-->
+                                                            <a title="Mestské lesy s.r.o" href="/kategoria/336/mestske_lesy_krompachy/">Mestské lesy s.r.o</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb336">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="PO WOPAX  s.r.o. ">PO WOPAX  s.r.o. </a>-->
+                                                            <a title="PO WOPAX  s.r.o. " href="/kategoria/337/po_wopax/">PO WOPAX  s.r.o. </a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb337">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Krom-sat, s.r.o">Krom-sat, s.r.o</a>-->
+                                                            <a title="Krom-sat, s.r.o" href="/kategoria/338/kromsat/">Krom-sat, s.r.o</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb338">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Termokomplex  s.r.o.">Termokomplex  s.r.o.</a>-->
+                                                            <a title="Termokomplex  s.r.o." href="/kategoria/339/termikomplex/">Termokomplex  s.r.o.</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb339">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Ekover s.r.o.">Ekover s.r.o.</a>-->
+                                                            <a title="Ekover s.r.o." href="/kategoria/340/ekover/">Ekover s.r.o.</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb340">
+                                                    </div>
+                                            </div>
+                                                <div id="prnt12" class="pointer list-group-item prnta ">
+                                                    <small>
+                                                        <a title="Zmluvy, faktúry, objednávky">
+                                                            Zmluvy, faktúry, objednávky
+                                                        </a>
+                                                    </small>    
+                                                    <span class="fas fa-chevron-down subdraw"></span>
+                                                </div>
+
+                                            <div class="lvl lvla" id="lvla12">
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Do 31.3.2012">Do 31.3.2012</a>-->
+                                                            <a title="Do 31.3.2012" href="/kategoria/69/do-31-3-2012/">Do 31.3.2012</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb69">
+                                                    </div>
+
+                                                    <div class="list-group-item prntb ">
+                                                        <small>
+                                                            <!--a n:href="Homepage:default ctgId=>$c2['item']->id, slug=>$c2['item']->slug" title="Od 1.4.2012">Od 1.4.2012</a>-->
+                                                            <a title="Od 1.4.2012" href="/kategoria/70/od-1-4-2012/">Od 1.4.2012</a>
+                                                        </small>
+                                                    </div>
+
+
+                                                    <div class="lvl lvlb" id="lvlb70">
+                                                    </div>
+                                            </div>
+                                                <div id="prnt281" class="pointer list-group-item">
+                                                    <small>
+                                                        <!--a n:href="Homepage:default ctgId=>$c1['item']->id, slug=>$c1['item']->slug" title="Dianie v meste v obrazoch"-->
+                                                        <a title="Dianie v meste v obrazoch" href="/kategoria/281/dianie-v-meste-v-obrazoch/">
+                                                            Dianie v meste v obrazoch
+                                                        </a>
+                                                    </small>
+                                                </div>
+
+                                            <div class="lvl lvla" id="lvla281">
+                                            </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="block links">
+                                <div class="row">
+                                    <!--
+                                    <div class="col-md-12 link">
+                                        <a n:href="Homepage:submenu2 80" title="Šport"><span class="glyphicon glyphicon-adjust glyphicon-large"></span></a>
+                                        <a n:href="Homepage:submenu2 80" title="Šport">šport</a>
+                                    </div>
+                                    -->
+                                    <div class="col-md-12 link">
+                                        <a title="Školy" href="/clanky/81/skoly/"><i class="fas fa-graduation-cap link-icon pull-left fa-2x"></i></a>
+                                        <a title="Školy" href="/clanky/81/skoly/">školy</a>
+                                    </div>
+                                    <div class="col-md-12 link">
+                                        <a title="Užitočné informácie" href="/clanky/256/uzitocne-informacie/"><i class="fas fa-info-circle link-icon pull-left fa-2x"></i></a>
+                                        <a title="Užitočné informácie" href="/clanky/256/uzitocne-informacie/">užitočné informácie</a>
+                                    </div>
+				    <div class="col-md-12 link">
+                                        <a title="Odpady" href="/kategoria/510/odpady/"><i class="fas fa-recycle link-icon pull-left fa-2x"></i></a>
+                                        <a title="Odpady" href="/kategoria/510/odpady/">odpady</a>
+                                    </div>
+<!--
+                                    <div class="col-md-12 link">
+                                        <a n:href="Homepage:read articleId => 5408, slug=>'kalendar-podujati-2020'" title="Kalendár kultúrnych podujatí pre rok 2020"><i class="fas fa-calendar-alt link-icon pull-left fa-2x"></i></a>
+                                        <a n:href="Homepage:read articleId => 5408, slug=>'kalendar-podujati-2020'" title="Kalendár kultúrnych podujatí pre rok 2020">kalendár podujatí 2020</a>
+                                    </div>
+-->
+                                </div>
+                            </div>
+
+                            
+                            <div class="block links">
+                                <div class="row">
+                                    <div class="col-md-12">
+					<a href="/images/fond.png" target="_blank"><img src="/images/fond.png" style="width:100%;" title="Príspevok"></a>
+				    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="block links">
+                                <div class="row">
+                                    <div class="col-md-12">
+					<a href="/images/projekt.jpg" target="_blank"><img src="/images/projekt.jpg" style="width:100%;" title="Príspevok"></a>
+				    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="block link">
+                                <a title="Stanoviská a reakcie mesta" href="/clanky/504/stanoviska-a-reakcie-mesta/">
+                                    <i class="fas fa-building white fa-2x pull-left link-icon"></i>
+                                    <span class="white">Stanoviská a reakcie mesta</span>
+                                </a>
+                            </div>    
+                            
+                            <div class="block link" style="background:#3b5998;">
+                                <a href="https://www.facebook.com/mesto.krompachy/" target="_blank">
+                                    <i class="fab fa-facebook white fa-2x pull-left link-icon"></i>
+                                    <span class="white">Krompachy na facebooku</span>
+                                    <!-- <img src ="/images/fb.png" class="fulllenght" height="100px;"> -->
+                                </a>
+                            </div>
+
+                            <div class="block link">
+                                <a title="Voľné pracovné miesta" href="/clanky/395/volne-pracovne-miesta/">
+                                    <i class="fas fa-user-tie white fa-2x pull-left link-icon"></i>
+                                    <span class="white">Voľné pracovné miesta</span>
+                                </a>
+                            </div>
+
+                            <div class="block link">
+                                <a title="CYKLO - HORNÁD, združenie obcí" href="/clanky/554/cyklo-hornad-zdruzenie-obci/">
+                                    <i class="fas fa-biking fa-2x pull-left link-icon"></i>
+                                    <span class="white">CYKLO - HORNÁD, združenie obcí</span>
+                                </a>
+                            </div>    
+
+                            <div class="block link">
+                                <a title="Smútočné oznamy" href="/clanky/314/smutocne-oznamy/">
+                                    <i class="fas fa-cross white fa-2x pull-left link-icon"></i>
+                                    <span class="white">Smútočné oznamy</span>
+                                  <!-- <img src ="/images/smutocne.png" class="fulllenght" height="35px;"> -->
+                                </a>
+                            </div>
+                                
+                            <div class="block">
+                                <span class="block-title">Kalendár podujatí</span>
+                                <div class="sborder2">
+                                    <div id="kalendar">
+<div id="snippet--calendar">                                            <div class="monthTitle">
+                                                <div class="calarr pull-left">
+                                                        <a class="ajax" rel="nofollow" title="Kliknite pre zobraznie predchádzajúceho mesiaca 7/2022" ref="nofollow" href="/homepage/read?reqMonth=2022-07&amp;articleId=6536&amp;do=ChangeMonth"><img alt="" src="/images/cal_arr_left.png"></a>
+                                                </div>
+                                                august 2022
+                                                <div class="calarr pull-right">
+                                                        <a class="ajax" rel="nofollow" title="Kliknite pre zobraznie nasledujúceho mesiaca 9/2022" ref="nofollow" href="/homepage/read?reqMonth=2022-09&amp;articleId=6536&amp;do=ChangeMonth"><img alt="" src="/images/cal_arr_right.png"></a>
+                                                </div>
+                                            </div>
+                                            <table class="calendarTable">
+                                                <tr>
+                                                        <th>po</th>
+                                                        <th>ut</th>
+                                                        <th>st</th>
+                                                        <th>št</th>
+                                                        <th>pi</th>
+                                                        <th>so</th>
+                                                        <th>ne</th>
+                                                </tr>
+                                                <tr>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">1</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">2</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">3</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">4</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">5</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">6</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">7</span>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">8</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">9</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">10</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">11</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">12</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">13</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">14</span>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">15</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">16</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">17</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">18</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">19</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">20</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">21</span>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">22</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">23</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">24</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">25</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">26</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">27</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">28</span>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">29</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">30</span>
+                                                        </td>
+                                                        <td>
+
+                                                                        <span class="calendarnolink">31</span>
+                                                        </td>
+                                                        <td>
+                                                                    &nbsp;
+                                                        </td>
+                                                        <td>
+                                                                    &nbsp;
+                                                        </td>
+                                                        <td>
+                                                                    &nbsp;
+                                                        </td>
+                                                        <td>
+                                                                    &nbsp;
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>
+                                                                    &nbsp;
+                                                        </td>
+                                                        <td>
+                                                                    &nbsp;
+                                                        </td>
+                                                        <td>
+                                                                    &nbsp;
+                                                        </td>
+                                                        <td>
+                                                                    &nbsp;
+                                                        </td>
+                                                        <td>
+                                                                    &nbsp;
+                                                        </td>
+                                                        <td>
+                                                                    &nbsp;
+                                                        </td>
+                                                        <td>
+                                                                    &nbsp;
+                                                        </td>
+                                                </tr>
+                                            </table>
+</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- # POCASIE
+                            <div class="pocasie">
+                                <center>
+                                    <a href="https://www.svieti.com/mista/krompachy-79"><img width="100%" src="https://www.svieti.com/predpoved-na-web.php?m=79&amp;p1=CD0029&amp;t1=F7F7F7&amp;v=2" alt="Počasie Krompachy - Svieti.com" style="border: 0px;" /></a>
+
+                                    <br /><br />
+                                    <iframe src="https://www.profesia.sk/partner/export.php?auth=ee47fa778a8645465c40b4490ab82cd2&amp;items=4" width="200" height="280" marginheight="0" marginwidth="0" frameborder="0" scrolling="no"></iframe>
+                                    <br />
+
+                                </center>
+                            </div>
+                            -->    
+                            
+                            
+                            <div class="block">
+                                <span class="block-title">Mapa</span>
+                                <div class="sborder2">
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12046.308419752375!2d20.86468325529737!3d48.91482755961694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473e57b8a817dfb9%3A0x400f7d1c6977770!2s053+42+Krompachy!5e1!3m2!1ssk!2ssk!4v1551882062477" width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                    <!--<iframe src="https://vlozit.podmevon.sk/embed.php?latlng=48.915439,20.873710&levers=castle,musee,monument,church,panoramic,signpost,geocaching,skiing,trip&background=E2001A&lang=sk&zoom=13" width="100%" height="500" frameborder="0" style="border:0" allowfullscreen></iframe>-->
+                                </div>
+                            </div>
+                        </div>
+                
+    <div class="col-md-6" id="content">
+        <div id="articleRead">
+                <h1>Utvorenie volebných okrskov a určenie volebných miestností</h1>
+                <div class="article-body">
+                    <p style="text-align: center;"><strong>Utvorenie volebn&yacute;ch okrskov a určenie volebn&yacute;ch miestnost&iacute;</strong><br /><strong>pre voľby do org&aacute;nov samospr&aacute;vy obc&iacute; a volieb do org&aacute;nov samospr&aacute;vnych krajov&nbsp;</strong><strong>v roku 2022</strong></p>
+<p style="text-align: justify;">V s&uacute;lade s &sect; 8 z&aacute;kona č. 180/2014 Z. z. o podmienkach v&yacute;konu volebn&eacute;ho pr&aacute;va a o zmene a doplnen&iacute; niektor&yacute;ch z&aacute;konov v znen&iacute; neskor&scaron;&iacute;ch predpisov v spojen&iacute; s Rozhodnut&iacute;m predsedu N&aacute;rodnej rady Slovenskej republiky č. 209/2022 Z. z. o vyhl&aacute;sen&iacute; volieb do org&aacute;nov samospr&aacute;vy obc&iacute; a o vyhl&aacute;sen&iacute; volieb do org&aacute;nov samospr&aacute;vnych krajov, ktor&eacute; sa vykonaj&uacute; dňa 29.okt&oacute;bra 2022, utv&aacute;ram na &uacute;zem&iacute; mesta Krompachy na odovzd&aacute;vanie hlasovac&iacute;ch l&iacute;stkov a na sč&iacute;tanie hlasov voličov <strong>6 volebn&yacute;ch okrskov</strong> pre voľby do org&aacute;nov samospr&aacute;vy obc&iacute; a z&aacute;roveň aj pre voľby do org&aacute;nov samospr&aacute;vnych krajov, a určujem volebn&eacute; miestnosti takto:&nbsp;</p>
+<p style="text-align: justify;">&nbsp;</p>
+<ol>
+<li style="text-align: justify;">Z&aacute;kladn&aacute; &scaron;kola Krompachy, Zemansk&aacute; ulica č. 2</li>
+<li style="text-align: justify;">Z&aacute;kladn&aacute; &scaron;kola Krompachy, Zemansk&aacute; ulica č. 2</li>
+<li style="text-align: justify;">Z&aacute;kladn&aacute; umeleck&aacute; &scaron;kola Krompachy, Ulica Mikul&aacute;&scaron;a &Scaron;princa č. 5</li>
+<li style="text-align: justify;">Matersk&aacute; &scaron;kola Krompachy, Hlavn&aacute; ulica č. 3</li>
+<li style="text-align: justify;">Hasičsk&aacute; stanica Krompachy, Maurerova ulica č. 29</li>
+<li style="text-align: justify;">Centrum voľn&eacute;ho času Prima Krompachy, Ulica SNP č. 39</li>
+</ol>
+<p style="text-align: right;">&nbsp;</p>
+<p style="text-align: right;">Ing. Iveta Ru&scaron;inov&aacute; v. r.<br />prim&aacute;torka mesta</p>
+<p>&nbsp;Volebn&eacute; miestnosti a prisl&uacute;chaj&uacute;ce časti mesta s&uacute; uveden&eacute; v pr&iacute;lohe.</p>
+                </div>
+
+                <div class="article-gallery row center">
+                </div>
+                <div id="article-files" class="center additions">
+                    
+                                <h4><b>Súbory na stiahnutie:</b></h4>
+                                <ul class="file-list">
+                            <li>
+                                <a href="/files/00006536/1657886627.pdf" target="_blank" id = "1512371" title="Stiahnuť súbor">
+                                    Utvorenie okrskov a určenie miestností
+                                </a>
+                                <span class="file-info pull-right">
+                                    (
+                                    <strong class="small">typ: </strong><font class="small">pdf,</font> <strong class="small">veľkosť: </strong><font class="small">540 kB</font>
+                                    )
+                                </span>
+                                    <hr>
+                            </li>
+                </div>
+                <div class="article-foot small">
+                    <div class="article-foot_create pull-left">
+                            <span title="Dátum zverejnenia">15.7.2022</span> ~ 
+                            <span class="author" title="Publikoval">
+                                
+                            </span>
+                    </div>
+                    <div class="article-foot_details pull-right">
+                        <span><i class="far fa-eye" title ="Čítanosť"></i> 187 </span>
+                        <span><i class="fas fa-print pointer" title="Tlač článku" onClick="window.print();"></i></span>
+                        <!--<span><br></span>-->
+                    </div>
+                </div>
+<div id="snippet--pollContainer-article">                    
+</div>
+                    
+                    
+        </div>
+    </div>
+
+                    <div class="col-md-3" id="rightside"> 
+                        <div class="login">
+                            <div class="block">
+                                    <form action="/homepage/read?articleId=6536" method="post" class="form-inline" role="form" id="frm-signInForm">
+                                        <div class="block-title">Prihlásenie</div>
+                                        <div class="sborder2">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="far fa-user" aria-hidden="true" title="Prihlasovacie meno"></i>
+                                                </span>	
+                                                <input type="text" name="username" class="form-control input-sm" id="frm-signInForm-username">
+                                            </div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="fas fa-lock" aria-hidden="true" title="Prihlasovacie heslo"></i>
+                                                </span>	
+                                                <input type="password" name="password" class="form-control input-sm" id="frm-signInForm-password">
+                                            </div>
+                                            <div class="row">
+						    <div class="col-md-12" style="display: none"><div class="g-recaptcha" data-sitekey="6LdbIScdAAAAAB_dLUbQ0PBagZCbfUhtzin6LLAP" id="frm-signInForm-captcha"></div></div>
+                                                    <div class="col-md-6 text-left" style="line-height: 16px;margin-top:5px;">
+                                                        <a title="Registrácia užívateľa" class="small" href="/user/registrationform">Registrácia</a><br>
+                                                        <a title="Kliknite pre obnovu prihlasovacieho hesla" class="small" rel="nofollow" href="/user/resendpass">Zabudnuté heslo</a>
+                                                    </div>
+                                                    <div class="col-md-6 text-right" style="margin-top:5px;"><input type="submit" name="login" class="form-control btn btn-danger btn-sm pull-right" value="PRIHLÁSIŤ SA"></div>
+
+                                            </div>			
+                                        </div>         
+                                    <input type="hidden" name="_do" value="signInForm-submit"></form>
+
+                            </div>
+
+                            <div id="google_translate_element"></div>
+                            <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>        
+                            <div class="block">
+                                <a class="title" title="Úradná tabuľa" href="/clanky/14/uradna-tabula/">
+                                    <div class="block-title">
+                                        Úradná tabuľa
+                                        <i class="fas fa-clipboard fa-2x pull-right"></i>
+                                    </div>
+                                </a>
+                                <div class="sborder2">
+                                    <small>
+                                            <strong>27.7.2022</strong>
+                                            <a class="title redlink" title="Verejná vyhláška" href="/clanok/6549/verejna-vyhlaska.html">Verejná vyhláška</a>
+                                            <hr>
+                                            <strong>26.7.2022</strong>
+                                            <a class="title redlink" title="Verejná vyhláška" href="/clanok/6547/verejna-vyhlaska.html">Verejná vyhláška</a>
+                                            <hr>
+                                            <strong>19.7.2022</strong>
+                                            <a class="title redlink" title="OZNÁMENIE o určení rozsahu výkonu funkcie primátora mesta" href="/clanok/6542/oznamenie-o-urceni-rozsahu-vykonu-funkcie-primatora-mesta.html">OZNÁMENIE o určení rozsahu výkonu funkcie primátora mesta</a>
+                                            <hr>
+                                            <strong>19.7.2022</strong>
+                                            <a class="title redlink" title="Elektronická adresa na doručenie Oznámenia o delegovaní člena a náhradníka do volebných komisií" href="/clanok/6541/elektronicka-adresa-na-dorucenie-oznamenia-o-delegovani-clena-a-nahradnika-do-volebnych-komisii.html">Elektronická adresa na doručenie Oznámenia o delegovaní člena a náhradníka do volebných komisií</a>
+                                            <hr>
+                                            <strong>15.7.2022</strong>
+                                            <a class="title redlink" title="MENOVANIE zapisovateľa miestnej volebnej komisie" href="/clanok/6537/menovanie-zapisovatela-miestnej-volebnej-komisie.html">MENOVANIE zapisovateľa miestnej volebnej komisie</a>
+                                            <hr>
+                                    </small>
+                                </div>
+                                <ul class="subblock" style="">
+                                            <li>
+                                                <strong>
+                                                    <a class="title" title="Oznámenia o dražbe" href="/clanky/390/oznamenia-o-drazbe/">
+                                                        Oznámenia o dražbe
+                                                    </a>
+                                                </strong>
+                                            </li>
+                                            <li>
+                                                <strong>
+                                                    <a class="title" title="Oznámenia o uložení zásielky" href="/clanky/75/oznamenia-o-ulozeni-zasielky/">
+                                                        Oznámenia o uložení zásielky
+                                                    </a>
+                                                </strong>
+                                            </li>
+                                            <li>
+                                                <strong>
+                                                    <a class="title" title="Oznámenia o zrušení trvalého pobytu" href="/clanky/74/oznamenia-o-zruseni-trvaleho-pobytu/">
+                                                        Oznámenia o zrušení trvalého pobytu
+                                                    </a>
+                                                </strong>
+                                            </li>
+                                            <li>
+                                                <strong>
+                                                    <a class="title" title="Návrhy všeobecne záväzných nariadení" href="/clanky/568/navrhy-vseobecne-zavaznych-nariadeni/">
+                                                        Návrhy všeobecne záväzných nariadení
+                                                    </a>
+                                                </strong>
+                                            </li>
+                                </ul>        
+                                <a class="title" title="Úradná tabuľa" href="/clanky/14/uradna-tabula/"><span class="block-title text-right"> ... viac >> </span></a>
+                            </div>
+
+                            <div class="block">
+                                <a class="title" title="Oznamy MsÚ" href="/clanky/15/oznamy-msu/">
+                                    <div class="block-title">
+                                        Oznamy MsÚ
+                                        <i class="fas fa-exclamation-circle fa-2x pull-right"></i>
+                                    </div>
+
+                                </a>
+                                <div class="sborder2">
+                                    <small>
+                                            <strong>
+                                                26.7.2022
+                                            </strong>
+                                            <a class="title redlink" title="OZNAM pre občanov -  dlžníkov" href="/clanok/6500/oznam-pre-obcanov-dlznikov.html">OZNAM pre občanov -  dlžníkov</a>
+                                            <hr>
+                                            <strong>
+                                                1.7.2022
+                                            </strong>
+                                            <a class="title redlink" title="Územný plán mesta Spišské Vlachy, Zmeny a doplnky č. 4/2021 – oznámenie o strategickom dokumente" href="/clanok/6504/uzemny-plan-mesta-spisske-vlachy-zmeny-a-doplnky-c-4-2021-oznamenie-o-strategickom-dokumente.html">Územný plán mesta Spišské Vlachy, Zmeny a doplnky č. 4/2021 – oznámenie o strategickom dokumente</a>
+                                            <hr>
+                                            <strong>
+                                                22.6.2022
+                                            </strong>
+                                            <a class="title redlink" title="Štatistické zisťovanie o domácom a výjazdovom cestovnom ruchu" href="/clanok/6486/statisticke-zistovanie-o-domacom-a-vyjazdovom-cestovnom-ruchu.html">Štatistické zisťovanie o domácom a výjazdovom cestovnom ruchu</a>
+                                            <hr>
+                                            <strong>
+                                                24.12.2021
+                                            </strong>
+                                            <a class="title redlink" title="Oznam pre občanov – dlžníkov" href="/clanok/6278/oznam-pre-obcanov-dlznikov.html">Oznam pre občanov – dlžníkov</a>
+                                            <hr>
+                                            <strong>
+                                                7.12.2021
+                                            </strong>
+                                            <a class="title redlink" title="Oslobodenie od poplatkov v čase pandémie Covid-19" href="/clanok/6252/oslobodenie-od-poplatkov-v-case-pandemie-covid-19.html">Oslobodenie od poplatkov v čase pandémie Covid-19</a>
+                                            <hr>
+                                    </small>
+                                </div>
+                                <a class="title" title="Oznamy MsÚ" href="/clanky/15/oznamy-msu/"><span class="block-title text-right"> ... viac >> </span></a>
+                            </div>
+                            <div class="block">
+                                <a class="title" href="/kategoria/82/krompassky-spravodajca/">
+                                    <span class="block-title">Krompašský spravodajca</span>
+                                </a>
+                                <div class="sborder2">
+                                        <a title="Aktuálne vydanie" href="/clanok/6483/krompassky-spravodajca.html">
+                                             
+                                            <img style="max-width: 100%; max-height: 100%;" src="/files/00006483/1655801244.jpg">
+                                        </a>
+                                </div>
+                                <a class="title" href="/kategoria/82/krompassky-spravodajca/"><span class="block-title text-right">archív >></span></a>
+                            </div>                
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+            <div id="banners">
+                <div class="container text-center" id="qid1">
+                    <!--<a target="_blank" href="http://www.plejsy.com/" id="greyBan"><img src="/banners/plejsy.jpg" /></a>-->
+                    <a target="_blank" href="https://www.krompachy.sk/clanok/5333/iomo-integrovane-obsluzne-miesto-obcana.html#articleRead" id="greyBan"><img src="/banners/IOMO.png"></a>
+                    <a target="_blank" href="http://www.cvckrompachy.eu/" id="greyBan"><img src="/banners/prima.jpg"></a>
+                    <a target="_blank" href="http://kniznicakrompachy.webnode.sk/" id="greyBan"><img src="/banners/kniznica.jpg"></a>
+                    <a target="_blank" href="http://fkpokrok.kromsat.sk/" id="greyBan"><img src="/banners/pokrok.jpg"></a>
+                    <a target="_blank" href="http://www.terraincognita.sk/" id="greyBan"><img src="/banners/terra.jpg"></a>
+                    <a target="_blank" href="http://www.navstevalekara.sk/" id="greyBan"><img src="/banners/1461765926.jpg" height="120px"></a>
+                    <br>
+                    <a target="_blank" href="http://krompachy.digitalnemesto.sk/zverejnovanie/#krompachy" id="greyBan"><img src="/banners/datalan.jpg"></a>
+                    <a target="_blank" href="http://www.spis-region.sk/" id="greyBan"><img src="/banners/spis.jpg"></a>
+                    <a id="greyBan" href="/clanok/6096/Komunitny-plan.html"><img src="/banners/komunitny_plan.jpg"></a>
+                    <!--<a target="_blank" href="http://www.epi.sk/Main/Default.aspx?Template=~/Main/TArticles.ascx&LngID=0&phContent=~/ZzSR/ChronologicalRegister.ascx" id="greyBan"><img src="/banners/epi.jpg" /></a>-->
+                    <a target="_blank" href="https://www.slov-lex.sk/domov" id="greyBan"><img src="/banners/slovlex.jpg"></a>
+                    <a target="_blank" href="http://www.zodpovedne.sk/" id="greyBan"><img src="/banners/zodpovedne.jpg"></a>
+                    <a target="_blank" href="http://www.triedime.sk/" id="greyBan"><img src="/banners/triedime.jpg"></a>
+                </div>
+            </div>
+        <div id="footer">
+            <div class="container center" id="erby">
+            <div class="col-md-6">
+                <h4>
+                    <a style="color: #fff;" href="/map"><strong>[ mapa webu ]</strong></a>&nbsp;&nbsp;
+                    <a style="color: #fff;" href="/kategoria/89/archiv/"><strong>[ archív ]</strong></a>&nbsp;&nbsp;
+                    <a style="color: #fff;" href="/clanok/3299/pristupnost.html"><strong>[ vyhlásenie o prístupnosti ]</strong></a>&nbsp;&nbsp;
+                    <a href="https://www.osobnyudaj.sk/informovanie/00329282" style="color: #fff;" target="_blank"><strong>[ ochrana osobných údajov ]</strong></a>
+                </h4>
+                <br><br>
+                <div class="copyright">
+                    <strong>Copyright &copy; 2014-2022 Mesto Krompachy: </strong>
+                    <br>
+                    Všetky práva vyhradené. Akékoľvek použitie častí alebo celku,
+                    najmä rozmnožovanie a šírenie textov, grafov, obrázkov a fotografií
+                    akýmkoľvek spôsobom bez písomného povolenia vydavateľa (mesta Krompachy)
+                    je zakázané.
+                    <br><br>
+                    <!--<a href="http://old.krompachy.sk" target="_blank" style="color:#FFF;"> STARÁ VERZIA STRÁNOK </a>-->
+                    <span style="color:#FFF;"> Posledná aktualizácia: 1.8.2022 08:11</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h4><strong>PARTNERSKÉ MESTÁ</strong></h4>
+                <div class="erb">
+                  <a href="/clanok/3291/ozimek-polsko.html">
+                        <img src = "/images/Ozimek.png" alt=""><br></a>
+                    Ozimek<br>
+                    Poľsko
+                </div>
+                <div class="erb">
+                     <a href="/clanok/3298/gaszowice-polsko.html">
+                        <img src = "/images/Gaszowice.png" alt=""><br></a>
+                    Gaszowice<br>
+                    Poľsko
+                </div>
+                <div class="erb">
+                  <a href="/clanok/3297/bekescsaba-madarsko.html">
+                        <img src = "/images/Bekescsaba.png" alt=""><br></a>
+                    Bekescsaba<br>
+                    Maďarsko
+                </div>
+                <div class="erb">
+                    <a href="/clanok/3295/nadlak-rumunsko.html">
+                        <img src = "/images/Nadlac.png" alt=""><br></a>
+                    Nadlak<br>
+                    Rumunsko
+                </div>
+                <div class="erb">
+                    <a href="/clanok/3296/rymarov-ceska-republika.html">
+                        <img src = "/images/Rymarov.png" alt=""><br></a>
+                    Rýmařov<br>
+                    Česká republika
+                </div>
+            </div>
+        </div>
+        </div>
+        
+        <div id="top">
+            <div class="row">
+                <div class="col-md-3 strong">
+                    <a href class="dropdown-toggle underlineless" data-toggle="dropdown">
+                        <i class="fas fa-list" title="Rýchle menu"></i>
+                        <i class="fas fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" style="z-index: 99999;">
+                        <li><a title="Mesto" href="/kategoria/3/mesto/">Mesto</a></li>
+                        <li><a title="Občan" href="/kategoria/4/obcan/">Občan</a></li>
+                        <li><a title="Podnikateľ" href="/kategoria/5/podnikatel/">Podnikateľ</a></li>
+                        <li><a title="Návštevník" href="/kategoria/6/navstevnik/">Návštevník</a></li>
+                    </ul>
+                    &nbsp;&nbsp;&nbsp;
+                    <a style="color: white !important;" title="Návrat na úvodnú stránku" href="/">
+                        <b>Mesto KROMPACHY</b>
+                    </a>
+                </div>
+                <div class="col-md-6 text-center">
+                    <div class="meniny">
+                        Meniny má Jerguš, zajtra Dominik/Dominika 
+                         - 3.8.2022
+                        <span id="txt"></span>
+                        <script>
+                            today = new Date(1659493773 * 1000);
+                            function startTime() 
+                            {
+                                today = new Date(+today + 1000);
+                                var h = today.getHours();
+                                var m = today.getMinutes();
+                                var s = today.getSeconds();
+                                m = checkTime(m);
+                                s = checkTime(s);
+
+                                document.getElementById('txt').innerHTML = h + ":" + m ;
+                                var t = setTimeout(function() { startTime() }, 995);
+                            }
+
+                            function checkTime(i) 
+                            {
+                                if (i < 10) { i = "0" + i } // add zero in front of numbers < 10
+                                return i;
+                            }
+
+                            startTime();
+                        </script>
+                    </div>
+                </div>
+                <div class="col-md-3 text-right">
+                    <a title="Textová verzia"  rel="nofollow" href="/homepage/read?articleId=6536&amp;do=Contrast">
+                        textová verzia
+                    </a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fas fa-minus-circle fontminus" title="Zmenšenie veľkosti písma"></i>    
+                    &nbsp;
+                    <i class="fas fa-font"></i>
+                    &nbsp;
+                    <i class="fas fa-plus-circle fontplus" title="Zväčšenie veľkosti písma"></i>
+                </div>
+            </div>
+        </div>
+        <div class="center" id="cookie_accept">
+            Tieto stránky využívajú Cookies. Prečítajte si 
+            <a href="https://www.osobnyudaj.sk/informovanie/00329282/sk/zasady-pouzivania-suborov-cookies" target="_none" title="Zásady používania cookies">
+                <u>informácie</u></a> 
+            o tom, ako používame cookies a ako ich môžete odmietnuť nastavením svojho prehliadača.
+            <button class="btn btn-primary btn-sm" onClick="setCookie('cookie_accept', 'OK', 30);">ROZUMIEM</button>
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#cookiesFormModal">PRISPÔSOBIŤ</button>
+        </div>    
+                            
+        <!-- Popup Modal -->
+        <!--                    
+        <div id="popupModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    
+                    <div class="modal-body">
+                        <div data-dismiss="modal" >
+                            <img src="/images/scitanie.jpg" title="scitanie.sk" class="pointer" style="max-width:100%;" onClick="setCookie('popup_close', 'OK', 1);"/>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>                    
+        -->                    
+        <div class="modal fade" id="cookiesFormModal" tabindex="-1" role="dialog" aria-labelledby="mediaModal" aria-hidden="true">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content text-left">
+                    <form method="POST">
+                        <div class="modal-header" style="background: #D10231 !important;"><strong>Tento web používa cookies</strong></div>
+                        <div class="modal-body" >
+                            <p>
+                                Tieto webové stránky ukladajú v súlade so zákonmi na vaše zariadenie súbory, 
+                                všeobecne nazývané cookies. Používaním týchto stránok s tým vyjadrujete súhlas.
+                            </p>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="cookies-necessary" checked disabled>
+                                <label class="custom-control-label" for="cookies-necessary">Nevyhnutné súbory cookies</label>
+                            </div>
+                            <p>
+                                Tieto súbory cookie sú nevyhnutné pre prevádzku našich služieb a nemožno ich vypnúť. 
+                                Zvyčajne sa nastavujú iba v reakcii na naše akcie, ako je napríklad vytvorenie účtu alebo prihlásenie do konta.
+                            </p>
+
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="cookies-analytics" name="cookies-analytics">
+                                <label class="custom-control-label" for="cookies-analytics">Analytické súbory cookies</label>
+                            </div>
+                            <p>
+                                Tieto súbory cookie nám umožňujú počítať návštevy a prevádzku, aby sme mali prehľad o tom, ktoré stránky sú najobľúbenejšie a ako sa na našom webe návštevníci pohybujú. 
+                                Všetky informácie, ktoré tieto súbory cookies zhromažďujú sú agregované, a teda anonymné.
+                            </p>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="cookies-market" name="cookies-market">
+                                <label class="custom-control-label" for="cookies-market">Marketingové súbory cookies</label>
+                            </div>
+                            <p>
+                                Ak príjmete marketingové súbory cookie, dávate nám súhlas umiestniť do vášho zariadenia cookies, ktoré vám poskytnú relevantný obsah zodpovedajúci vašim záujmom.
+                                Tieto súbory môžu byť nastavené nami alebo treťou stranou prostredníctvom našich stránok. 
+                                Ich účelom je vytvoriť profil vašich záujmov a zobrazovať vám relevantný obsah na našich webových stránkach aj na webových stránkach tretích strán.
+                            </p>
+                        </div>
+                        <div class="modal-footer"  style="background: #D10231 !important;">
+                            <button class="btn btn-outline-secondary btn-sm" id="cookies-button" onClick="setCookie('cookie_accept', 'OK', 30);">ULOŽIŤ NASTAVENIE</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>                    
+                            
+        <a href="" data-toggle="modal" data-target="#popupModal">.</a>
+        <!--<script src="/js/countdown.js"></script>-->
+    </body>
+</html>

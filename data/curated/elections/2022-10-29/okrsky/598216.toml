@@ -1,0 +1,57 @@
+# Okrsky of Košice-Myslava, transcribed by an AI agent in job okrsok-rules-647 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Myslava, Ku Bangortu, Na Kope, Na Kope I, Na Kope II, Na Kope III, Na Kope IV, Na Kope V, Na Kope VI, Na Kope VII, Na Kope VIII, Na Kope IX, Na Kope X, Nižné Chmeľníky, Pod Hrabinou, Povrazová, Ulica na Grunte, Vrchná, Za Dolným mlynom, Za priekopou
+#   okrsok 2: Chmeľníky, Ku hájovni, Ku potoku, Myslavská, Pod Gruntom, Pod horou, Ulica nad Bangortami
+obec = "598216"
+name = "Košice-Myslava"
+okrsky_date = 2022-07-14
+okrsky_note = "Scanned list signed by starostka Ing. Iveta Šimková, undated; the district's 2022 elections page lists it as published 14.7.2022, used as date. Page 2 of the scan continues okrsok 2's alphabetical list (Pod horou, Ulica nad Bangortami) before the signature, so both stay in okrsok 2 (the 2026 okrsky are a different split altogether and do not bear on 2022). Okrsok 1 also names 'Myslava': the addresses without a street, as the 2026 document spells out ('Myslava (Girbeš, Kamenný potok, Maša)'); they are okrsok 1's rest rule, taken from the 2026 rule set, instead of the nearest okrsok as before (which put most of them in okrsok 2). Street names differing only in capitalisation or the left-out 'Ulica' are the register's streets."
+okrsky_supplemented = 2026-10-24
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The 2022 document puts 'Myslava' (no street) in okrsok 1 without saying what it covers; the 2026 document writes the same entry as 'Myslava (Girbeš, Kamenný potok, Maša)', i.e. the houses without a street in those settlements, and the 2026 rule set gives them to okrsok 1 as its rest. Taken from it for the 276 addresses without a street, which the earlier transcription left to the nearest okrsok."
+
+[[document]]
+url = "https://www.myslava.eu/download_file_f.php?id=1756976"
+sha256 = "4cea1455e17a488c362d58e41ad086e809a8096d4116e42267a2cb262a37854f"
+title = "Volebný obvod a okrsky (Obvod-okrsky.pdf), voľby 2022"
+
+[[document]]
+url = "https://www.myslava.eu/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-2022-0.html"
+sha256 = "f9fb56812b07e084bbf33edc2a1cac5bbaa37aabfbf86e39a5074fa0eaf020cb"
+title = "Voľby do orgánov samosprávy obcí a Voľby do orgánov samosprávnych krajov 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Ku Bangortu"},
+  {street = "Na Kope"},
+  {street = "Na Kope I"},
+  {street = "Na Kope II"},
+  {street = "Na Kope III"},
+  {street = "Na Kope IV"},
+  {street = "Na Kope V"},
+  {street = "Na Kope VI"},
+  {street = "Na Kope VII"},
+  {street = "Na Kope VIII"},
+  {street = "Na Kope IX"},
+  {street = "Na Kope X"},
+  {street = "Nižné Chmeľníky"},
+  {street = "Pod Hrabinou"},
+  {street = "Povrazová"},
+  {street = "Ulica na Grunte"},
+  {street = "Vrchná"},
+  {street = "Za Dolným Mlynom", written = "Za Dolným mlynom"},
+  {street = "Za Priekopou", written = "Za priekopou"},
+  {rest = true, note = "'Myslava' in the 2022 list of okrsok 1 is the town district's name without a street: the addresses without a street (súpisné čísla only). The 2026 document writes the same entry as 'Myslava (Girbeš, Kamenný potok, Maša)', the settlements of houses without a street, and its rule set gives okrsok 1 the rest; taken from it.", supplemented = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Chmeľníky"},
+  {street = "Ku Hájovni", written = "Ku hájovni"},
+  {street = "Ku Potoku", written = "Ku potoku"},
+  {street = "Myslavská"},
+  {street = "Pod Gruntom"},
+  {street = "Pod Horou", written = "Pod horou", note = "on page 2 of the scan, the continuation of okrsok 2's alphabetical list (Chmeľníky … Pod Gruntom, Pod horou, Ulica nad Bangortami) before the signature"},
+  {street = "Nad Bangortami", written = "Ulica nad Bangortami", note = "on page 2 of the scan, the continuation of okrsok 2's alphabetical list (Chmeľníky … Pod Gruntom, Pod horou, Ulica nad Bangortami) before the signature"},
+]

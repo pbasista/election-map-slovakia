@@ -1,0 +1,25 @@
+# Okrsky of Suchá nad Parnou, transcribed by an AI agent in job okrsok-rules-859 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: občania Suchej nad Parnou, ktorí bývajú na čísle domu: 0-380
+#   okrsok 2: 382 a vyššie
+obec = "507571"
+name = "Suchá nad Parnou"
+okrsky_date = 2022-10-26
+okrsky_note = "No mayor's decision found (2022 elections pages gone, not archived). The municipality's notice-board page for the 29.10.2022 elections (posted 'Vyvesené: 26. 10. 2022', date used) says voters living at house numbers (súpisné) 0–380 vote in okrsok 1, 382 and higher in okrsok 2. Applied to both parts (Suchá nad Parnou, Ružová Dolina) by súpisné číslo; number 381, not mentioned, falls to okrsok 2 (rest)."
+
+[[document]]
+url = "https://www.suchanadparnou.sk/samosprava/uradna-tabula/ako-budeme-volit-v-spojenych-volbach-29102022-v-skratke-1155.html"
+sha256 = "b1056b7cbb712e697275db9c426d3cfd49a1dea073606347aef7c3665ba13b6a"
+title = "Ako budeme voliť v spojených voľbách 29.10.2022 v skratke (úradná tabuľa, vyvesené 26. 10. 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Suchá nad Parnou", numbers = "0-380"},
+  {part = "Ružová Dolina", numbers = "0-380"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

@@ -1,0 +1,26 @@
+# Okrsky of Veľký Klíž, transcribed by an AI agent in job okrsok-rules-1026 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: zasadačka obecného úradu, Klíž č. 156, Veľký Klíž
+#   okrsok 2: veľká sála kultúrneho domu, Klížske Hradište č. 1, Veľký Klíž
+obec = "505731"
+name = "Veľký Klíž"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-10-04
+okrsky_date_basis = "The decision states no date; the Internet Archive captured it on 2022-10-04 (https://web.archive.org/web/20221004225439/https://www.velky-kliz.sk/e_download.php?file=data/uredni_deska/obsah156_3.pdf&original=U%C4%8Drenie%20okrskov%20a%20volebnych%20miestnost%C3%AD.pdf)."
+okrsky_note = "Undated scanned decision (snapshot 2022-10-04) giving each okrsok only its polling station (Klíž 156; Klížske Hradište 1); 2 okrsky = 2 parts, each station in another part, so each okrsok gets the part of its station (inferred). The live URL now serves another file, so the archived snapshot is listed."
+
+[[document]]
+url = "https://web.archive.org/web/20221004225439/https://www.velky-kliz.sk/e_download.php?file=data/uredni_deska/obsah156_3.pdf&original=U%C4%8Drenie%20okrskov%20a%20volebnych%20miestnost%C3%AD.pdf"
+sha256 = "1dd32348edd38175a2ea043c613c1a3289c939868cf6df10141cea3bee313505"
+title = "Určenie okrskov a volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Klíž", note = "the document gives only the polling station; the okrsok is the part of its station", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Klížske Hradište", note = "the document gives only the polling station; the okrsok is the part of its station", inferred = true},
+]

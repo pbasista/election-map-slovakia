@@ -10,8 +10,8 @@ per target language:
   the English text (more reliable for machine translation than Slovak), with
   the Slovak one for reference, a note where the string appears and, for
   strings in tight places, a maximum length.
-- ``occupations``: the occupations of ``data/build/candidates.json`` not
-  translated yet, from Slovak, most frequent first, in jobs of about
+- ``occupations``: the occupations of every election's ``candidates.json``
+  not translated yet, from Slovak, most frequent first, in jobs of about
   ``--size`` items (evenly split).
 - ``research``: the claims of the curated research (:mod:`research`), from
   English, into every language but English and Slovak (the research agents
@@ -246,9 +246,9 @@ _COMMON = """\
 
 You translate {what} for "Election Map Slovakia" (in Slovak "Volebná mapa
 Slovenska"), a non-commercial website that shows the constituencies and
-candidates of the Slovak municipal and regional elections of 24 October 2026.
-Readers are voters in Slovakia whose language is {language}. The site
-discloses that these translations are machine-made.
+candidates of the Slovak municipal and regional elections. Readers are
+voters in Slovakia whose language is {language}. The site discloses that
+these translations are machine-made.
 
 ## Rules for every item
 
@@ -546,6 +546,19 @@ _NOTES = (
         "attribution line at the bottom of the map; keep the names, © and"
         " licence identifiers",
     ),
+    (
+        "map.attribution_past",
+        "attribution line at the bottom of the map of an earlier election;"
+        " {boundaries} is map.credit_boundaries_other or the plain ZBGIS credit,"
+        " {osm} a date (the state of the base map), {addresses} a month"
+        " (MM/YYYY); keep the names, © and licence identifiers",
+    ),
+    (
+        "map.credit_",
+        "the boundaries' part of map.attribution_past; {on} is the year of the"
+        " boundaries drawn, {n} how many municipalities differed in {year};"
+        " keep the names, © and licence identifiers",
+    ),
     ("map.obvod", "label on the map of the constituency number {n}; very short"),
     ("map.", "map: accessible label and zoom buttons"),
     ("country.", "name of a country, a label on the map: the usual short name"),
@@ -577,6 +590,18 @@ _NOTES = (
         " text is its tooltip; cut short where the line is too narrow, so short",
     ),
     ("council.", "notice above the council ballots of a municipality"),
+    (
+        "notice.summary_",
+        "one-line summary of a notice at the top of a municipality's ballots,"
+        " whose whole text unfolds under it; cut short where the line is too"
+        " narrow, so short",
+    ),
+    (
+        "notice.",
+        "notice at the top of a municipality's ballots on what the map draws"
+        " there that is not the election's own: {on} and {other} are years,"
+        " {date} a date, {others} names of municipalities",
+    ),
     (
         "candidate.occupation_sk",
         "tooltip of a translated occupation, and a line on the candidate card;"
@@ -644,6 +669,7 @@ _LIMITS = (
     ("disclaimer.more", 34),
     ("app.tagline", 60),
     ("council.summary_", 52),
+    ("notice.summary_", 52),
     # What fits a 360 px phone in Latin script: the first in bold, beside the
     # button that jumps to the controversies.
     ("research.affairs_summary", 33),
@@ -751,11 +777,17 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
 
 
 def _occupations(cfg: Config) -> list[str]:
-    """Return the occupations of ``candidates.json``, most frequent first."""
-    built = cfg.build_dir / candidates.OUTPUT_FILE
-    if not built.is_file():
-        raise jobs.JobError(f"{built} missing; run `ems candidates` first")
-    counts = occupation_counts(json.loads(built.read_bytes()))
+    """Return the occupations of every election, most frequent first.
+
+    The site ships one translation of them per language, whichever election
+    a page shows.
+    """
+    counts: Counter[str] = Counter()
+    for election in cfg.elections:
+        built = cfg.election_build_dir(election) / candidates.OUTPUT_FILE
+        if not built.is_file():
+            raise jobs.JobError(f"{built} missing; run `ems candidates` first")
+        counts += occupation_counts(json.loads(built.read_bytes()))
     return sorted(counts, key=lambda text: (-counts[text], text))
 
 

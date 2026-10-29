@@ -1,0 +1,26 @@
+# The okrsky of Nový Život of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/501808.toml, reused by `ems job reuse`.
+obec = "501808"
+name = "Nový Život"
+okrsky_date = 2026-07-13
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). The document lists only each okrsok's polling station (Eliášovce 55, Tonkovce 330, Vojtechovce 607); each okrsok is given the part of the municipality of its station (inferred)."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.novyzivot.sk/evt_file.php?file=2382&original=Utvorenie%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "edf0446ff996918652038d9fbf5257411379d75285c7b7b5b078bac10efee5a0"
+title = "Utvorenie volebných okrskov s vymedzením ich územného obvodu a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Eliášovce", note = "The document gives only the polling station, which lies in the part Eliášovce; 3 okrsky for 3 parts, each station in another part.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Tonkovce", note = "The document gives only the polling station, which lies in the part Tonkovce; 3 okrsky for 3 parts, each station in another part.", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Vojtechovce", note = "The document gives only the polling station, which lies in the part Vojtechovce; 3 okrsky for 3 parts, each station in another part.", inferred = true},
+]

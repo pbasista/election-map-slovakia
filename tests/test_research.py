@@ -92,12 +92,12 @@ def test_named_persons_keep_their_order_and_unknown_ones_fail():
         "contests": [],
     }
     only = ["person:bbbbbbbbbbbb", "person:aaaaaaaaaaaa", "person:bbbbbbbbbbbb"]
-    assert research.selected_persons(cfg, data, only) == [
+    assert research.selected_persons(cfg, cfg.latest, data, only) == [
         "bbbbbbbbbbbb",
         "aaaaaaaaaaaa",
     ]
     with pytest.raises(research.jobs.JobError, match="cccccccccccc"):
-        research.selected_persons(cfg, data, ["person:cccccccccccc"])
+        research.selected_persons(cfg, cfg.latest, data, ["person:cccccccccccc"])
 
 
 def test_sanitized_copy_runs_nothing_and_loads_nothing_remote():

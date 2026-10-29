@@ -1,0 +1,120 @@
+# Okrsky of Svätý Jur, transcribed by an AI agent in job okrsok-rules-682 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Biely Kríž, Dlhé, Gaštanová, Hamrovská cesta, Horné predmestie, Hradištná, Jozefkovo údolie, Konečné, Malokarpatská, Mariánska cesta, Peredzké, Pitvory, Podhradie, Pri hornej skalke, Pri Peci, Prostredná, Prostredné, Rebrá, Zámočnica, Ulica Sauberg
+#   okrsok 2: Dr. Kautza, Bratislavská, Cibická cesta, Družstevná, Hájniky, Hanzlíčková, Letohradská, Mikovíniho, Pezinská, Pezinské záhumenice, Staromlynská, Vinohradnícka
+#   okrsok 3: 1. Mája, Krajinská cesta, Muškátová, Nová Pezinská, Olšavská, Pálavová, Pannónska, Rulandská, Silvánska, Šúrska, Tramínová, Veltlínska
+#   okrsok 4: Alexandra Dubčeka, Bernolákova, Dukelská, Fraňa Kráľa, Háj, Hrúšťova, Jelenie, Kollárova, Kúpeľné, Martina Kukučína, Mierová, Na Pažiti, Osúchy, Panciere, P.O. Hviezdoslava, Partizánska, Polkoráby, Pri ČOV, Pri kaplnke, Sasinkova, Slnečná, SNP, Staničná, Strapáky, Svätojánska, Športová, Zuby, Žabky
+#   okrsok 5: Bratislavské záhumenice, Felcánova, Hergottova, Karola Drexlera, J. Cubínka, Kozmonautov, Mateja Bela, Michala Dočolomanského, Mórica Beňovského, Pri štadióne, Štúrova
+obec = "507989"
+name = "Svätý Jur"
+okrsky_date = 2022-07-25
+okrsky_fill = "nearest"
+okrsky_note = "Scanned letter of the mayor dated 25.07.2022, read from the image. Streets the document names but the register lacks: Olšavská, Pálavová (okrsok 3), Karola Drexlera, Mateja Bela, Michala Dočolomanského, Mórica Beňovského (okrsok 5); left out. Register streets the document does not name (Bujačky, Hajná Hora, Kukly, Malý Javorník, Nové Hory, Trenčianka, Tri Bresty, Ulica Priemyselná, Veľký Javorník, Žebráky) and addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.svatyjur.sk/data/advertisement/svatyjur.sk/206376/86968_urcenie-okrskov-a-volebnych-miestnosti-pre-volby-organov-obci-a-do-volieb-organov-samospravnych-krajov-2022-v-meste-svaty-jur.pdf"
+sha256 = "30ec1ee6631106976484f74744b0f9e91f8292e68917e3167967e342c1f5bcf0"
+title = "Určenie okrskov a volebných miestností pre voľby orgánov obcí a do volieb orgánov samosprávnych krajov 2022 v meste Svätý Jur"
+
+[[document]]
+url = "https://www.svatyjur.sk/advertisement/detail/206376"
+sha256 = "b1bf474de4d2232c8279489269090785d2566b88479ff392090c150bcf55fe73"
+title = "Zverejňovanie - Určenie okrskov a volebných miestností … 2022 v meste Svätý Jur"
+
+[okrsok.1]
+rules = [
+  {street = "Biely Kríž"},
+  {street = "Dlhé"},
+  {street = "Gaštanová"},
+  {street = "Hamrovská cesta"},
+  {street = "Horné Predmestie", written = "Horné predmestie", note = "Capitalisation only; same street."},
+  {street = "Hradištná"},
+  {street = "Jozefkovo Údolie", written = "Jozefkovo údolie", note = "Capitalisation only; same street."},
+  {street = "Konečné"},
+  {street = "Malokarpatská"},
+  {street = "Mariánska cesta"},
+  {street = "Peredzké"},
+  {street = "Pitvory"},
+  {street = "Podhradie"},
+  {street = "Pri Hornej Skalke", written = "Pri hornej skalke", note = "Capitalisation only; same street."},
+  {street = "Pri Peci"},
+  {street = "Prostredná"},
+  {street = "Prostredné"},
+  {street = "Rebrá"},
+  {street = "Zámočnica"},
+  {street = "Ulica Sauberg"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dr. Kautza"},
+  {street = "Bratislavská"},
+  {street = "Cibická cesta"},
+  {street = "Družstevná"},
+  {street = "Hájniky"},
+  {street = "Hanzlíčkova", written = "Hanzlíčková", note = "Ending -ová for the register's Hanzlíčkova; same street."},
+  {street = "Letohradská"},
+  {street = "Mikovíniho"},
+  {street = "Pezinská"},
+  {street = "Pezinské Záhumenice", written = "Pezinské záhumenice", note = "Capitalisation only; same street."},
+  {street = "Staromlynská"},
+  {street = "Vinohradnícka"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "1.mája", written = "1. Mája", note = "Spacing/capitalisation only; same street."},
+  {street = "Krajinská cesta"},
+  {street = "Muškátová"},
+  {street = "Nová pezinská", written = "Nová Pezinská", note = "Capitalisation only; same street."},
+  {street = "Pannónska"},
+  {street = "Rulandská"},
+  {street = "Silvánska"},
+  {street = "Šúrska"},
+  {street = "Tramínová"},
+  {street = "Veltlínska"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Alexandra Dubčeka"},
+  {street = "Bernolákova"},
+  {street = "Dukelská"},
+  {street = "Fraňa Kráľa"},
+  {street = "Háj"},
+  {street = "Hrúšťová", written = "Hrúšťova", note = "Short a for the register's Hrúšťová; same street."},
+  {street = "Jelenie"},
+  {street = "Kollárova"},
+  {street = "Kúpeľné"},
+  {street = "Martina Kukučína"},
+  {street = "Mierová"},
+  {street = "Na Pažiti"},
+  {street = "Osúchy"},
+  {street = "Panciere"},
+  {street = "P. O. Hviezdoslava", written = "P.O. Hviezdoslava", note = "Initials without space; same street."},
+  {street = "Partizánska"},
+  {street = "Polkoráby"},
+  {street = "Pri ČOV"},
+  {street = "Pri Kaplnke", written = "Pri kaplnke", note = "Capitalisation only; same street."},
+  {street = "Sasinkova"},
+  {street = "Slnečná"},
+  {street = "SNP"},
+  {street = "Staničná"},
+  {street = "Strapáky"},
+  {street = "Svätojánska"},
+  {street = "Športová"},
+  {street = "Zuby"},
+  {street = "Žabky"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Bratislavské Záhumenice", written = "Bratislavské záhumenice", note = "Capitalisation only; same street."},
+  {street = "Felcánova"},
+  {street = "Hergottova"},
+  {street = "Ulica J.Cubínka", written = "J. Cubínka", note = "The register names it 'Ulica J.Cubínka'; same street."},
+  {street = "Kozmonautov"},
+  {street = "Pri Štadióne", written = "Pri štadióne", note = "Capitalisation only; same street."},
+  {street = "Štúrova"},
+]

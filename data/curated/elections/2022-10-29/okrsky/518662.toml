@@ -1,0 +1,59 @@
+# Okrsky of Očová, transcribed by an AI agent in job okrsok-rules-685 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: občania bývajúci na uliciach: SNP, ČSA, J.R.Poničana, Mieru, Kalinovce, Bugárovo, Trnavy, Breziny, bez označenia ulíc
+#   okrsok 2: občania bývajúci na uliciach: Letecká, Medzinárodného dňa detí, Mateja Bela Funtíka, Sadovnícka, Partizánska, Lesná, Pri vleku, Dvoriská, Vodárenská, Športová, Jána Palárika, Budovateľská, Červeného kríža, Medzinárodného dňa žien, Februárového víťazstva, Jána Ťavodu, 1.mája, Gagarinova, Slnečná, Nábrežná, Dolná, Komenského, Družstevná, Štefana Pilárika
+#   okrsok 3: občania bývajúci na Holcovom Majeri a Obchoditej
+obec = "518662"
+name = "Očová"
+okrsky_date = 2022-11-11
+okrsky_note = "No usable document of the elections found: the 2022 elections page (komunalne-volby-2022.html, 5.8.2022) gives only the three polling stations; the referendum's document (on the referendum 2023 page, published 11.11.2022, updated 6.12.2022) lists the streets. Okrsok 3 (Holcov Majer, Obchoditá) fits its 124 voters. Okrsok 1 includes 'Kalinovce, Bugárovo, Trnavy, Breziny' (settlements, not streets in the register) and 'bez označenia ulíc' (houses without street): the register's addresses without a street are given to okrsok 1 by its rest rule, as the document places these unnamed-street settlements there."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.ocova.sk/referendum-2023.html"
+sha256 = "1d284671298218d46b3e07d62467eaa348ce4adbf29367465e9375e2e93f6c2c"
+title = "Referendum 2023 – Vytvorenie volebných okrskov, určenie volebných miestností pre referendum"
+
+[okrsok.1]
+rules = [
+  {rest = true},
+  {street = "SNP"},
+  {street = "ČSA"},
+  {street = "J. R. Poničana", written = "J.R.Poničana"},
+  {street = "Mieru"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Letecká"},
+  {street = "Medzinárodného dňa detí"},
+  {street = "Mateja Bela Funtíka"},
+  {street = "Sadovnícka"},
+  {street = "Partizánska"},
+  {street = "Lesná"},
+  {street = "Pri vleku"},
+  {street = "Dvoriská"},
+  {street = "Vodárenská"},
+  {street = "Športová"},
+  {street = "Jána Palárika"},
+  {street = "Budovateľská"},
+  {street = "Červeného kríža"},
+  {street = "Medzinárodného dňa žien"},
+  {street = "Februárového víťazstva"},
+  {street = "Jána Ťavodu"},
+  {street = "1.mája"},
+  {street = "Gagarinova"},
+  {street = "Slnečná"},
+  {street = "Nábrežná"},
+  {street = "Dolná"},
+  {street = "Komenského"},
+  {street = "Družstevná"},
+  {street = "Štefana Pilárika"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Holcov Majer", written = "Holcovom Majeri", note = "Locative case of Holcov Majer."},
+  {street = "Obchoditá", written = "Obchoditej", note = "Locative case of Obchoditá."},
+]

@@ -1,0 +1,100 @@
+# Okrsky of Teplička nad Váhom, transcribed by an AI agent in job okrsok-rules-736 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: bez ulice, A. Hlinku, A. Sládkoviča, Alojza Mrázika, Fatranská, J. Kráľa, Jána Kalinku, Jána Stražana, Jozefa Kostelného, Ľ. Štúra, Ľudovíta Fullu, M.A. Bazovského, Márie Medveckej, Martina Benku, Mikuláša Galandu, Na Nivy, Na Prosnisko, Na Sihoti, Na Španicu, Nám. M. R. Štefánika, P.M. Bohúňa, Pod Horou, Vincenta Hložníka, Záhradkárska
+#   okrsok 2: Cintorínska, Cyrila Talapku, Donátova, Dr. Karola Kmeťku, Františka Vešeléniho, Juraja Poljaka, Kostolná, Na jame, Na Močiar, Na Straník, Na Trojak, P.O. Hviezdoslava, Pri Kríži, Pribinova, Sv. Cyrila a Metoda, Sv. Gorazda, Školská, Štefana Kúseka, Za Jarkom, Za Kanálom, Zámostie, Ž. Bošniakovej, Železničná
+#   okrsok 3: bez ulice, Bystrina, Do Ulice, Južná, Na Papánke, Na Rybník, Na Skotňu, Na Záhumní, Nám. sv. Floriána, Na Majer, Placová, Pod Kozínom, Pod Vršky, Poľnohospodárska, Pri bráne, Sklárska, Stará Cesta, Štipce, Turáková, Za Kaštieľom
+obec = "518034"
+name = "Teplička nad Váhom"
+okrsky_date = 2022-08-05
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document read from image. \"bez ulice\" in okrsky 1 and 3 means voters registered without an address, not the register's houses without a street; those (súpisné only), plus Na Kúty and Sv.Jána Nepomuckého (not in the document), are placed by fill_nearest."
+
+[[document]]
+url = "https://www.teplickanadvahom.sk/evt_file.php?file=16459"
+sha256 = "8a3c78aceb07b443a323d9b355d409d2142a82446abddb8b2223ff8c3aab7dd6"
+title = "Volebné okrsky v obci Teplička nad Váhom pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 29.10.2022"
+
+[[document]]
+url = "https://www.teplickanadvahom.sk/samosprava/volby-a-referendum/volby-doorganov-samospravy-obci-2022-a-volby-do-organov-samospravnych-krajov-2022-2425sk.html"
+sha256 = "df1064a8cd555d96efeeafb5e309e88e852d9f9b1175dd026942dbf00d88cf91"
+title = "Voľby do orgánov samosprávy obcí 2022 a voľby do orgánov samosprávnych krajov 2022"
+
+[okrsok.1]
+rules = [
+  {street = "A. Hlinku"},
+  {street = "A. Sladkoviča", written = "A. Sládkoviča", note = "register spells it without the accent; same street (A. Sládkoviča)"},
+  {street = "Alojza Mrázika"},
+  {street = "Fatranská"},
+  {street = "J. Kráľa"},
+  {street = "Jána Kalinku"},
+  {street = "Jána Stražana"},
+  {street = "Jozefa Kostelného"},
+  {street = "Ľ. Štúra"},
+  {street = "Ľudovíta Fullu"},
+  {street = "M.A.Bazovského", written = "M.A. Bazovského"},
+  {street = "Márie Medveckej"},
+  {street = "Martina Benku"},
+  {street = "Mikuláša Galandu"},
+  {street = "Na Nivy"},
+  {street = "Na Prosnisko"},
+  {street = "Na Sihoti"},
+  {street = "Na Španicu"},
+  {street = "Nám. M. R. Štefánika"},
+  {street = "P.M.Bohúňa", written = "P.M. Bohúňa"},
+  {street = "Pod Horou"},
+  {street = "Vincenta Hložníka"},
+  {street = "Záhradkárska"},
+  {street = "Andreja Sládkoviča", note = "register name variant of A. Sládkoviča (okrsok 1), not listed separately in the document", inferred = true},
+  {street = "Ulica Jána Kalinku", note = "register variant of Jána Kalinku (okrsok 1), not listed separately in the document", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Cyrila Talapku"},
+  {street = "Donátová", written = "Donátova", note = "register Donátová, document Donátova: the same street, ending spelled differently"},
+  {street = "Dr. Karola Kmeťku"},
+  {street = "Františka Vešeléniho"},
+  {street = "Juraja Poljaka"},
+  {street = "Kostolná"},
+  {street = "Na jame"},
+  {street = "Na Močiar"},
+  {street = "Na Straník"},
+  {street = "Na Trojak"},
+  {street = "P. O. Hviezdoslava", written = "P.O. Hviezdoslava"},
+  {street = "Pri Kríži"},
+  {street = "Pribinova"},
+  {street = "Sv. Cyrila a Metoda"},
+  {street = "Sv. Gorazda"},
+  {street = "Školská"},
+  {street = "Štefana Kúseka"},
+  {street = "Za Jarkom"},
+  {street = "Za Kanálom"},
+  {street = "Zámostie"},
+  {street = "Ž. Bošniakovej"},
+  {street = "Železničná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bystrina"},
+  {street = "Do Ulice"},
+  {street = "Južná"},
+  {street = "Na Papánke"},
+  {street = "Na Rybník"},
+  {street = "Na Skotňu"},
+  {street = "Na Záhumní"},
+  {street = "Nám. Sv. Floriána", written = "Nám. sv. Floriána"},
+  {street = "Na Majer"},
+  {street = "Placová"},
+  {street = "Pod Kozínom"},
+  {street = "Pod Vršky"},
+  {street = "Poľnohospodárska"},
+  {street = "Pri bráne"},
+  {street = "Sklárska"},
+  {street = "Stará cesta", written = "Stará Cesta"},
+  {street = "Štipce"},
+  {street = "Turáková"},
+  {street = "Za Kaštieľom"},
+]

@@ -1,0 +1,128 @@
+# Okrsky of Bojnice, transcribed by an AI agent in job okrsok-rules-676 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cintorínska, Zámok a okolie, Podzámocká, Hurbanovo námestie, Sládkovičova, Hviezdoslavova, Bernolákova, Záhradná, Športová, Kvetová, Okrajová, Rybníčky, Prievidzská, Kúpele, Kúpeľná, Hlboké a obývané chaty v priľahlej oblasti, Na Chmeľnici, Opatovská cesta, Ulica podskalné, Ulica parková
+#   okrsok 2: Školská (od križovatky ulíc Školská-Rekreačná-Prievidzská po križovatku Školská-Jánošíkova {párne orientačné čísla od 2 po 62; nepárne orientačné čísla od 1 po 43}), Janka Kráľa, Krátka, Mierová, Dukelská, Nemocničná (okrem orientačného čísla 2, 4, 4A, 4B), A. Hlinku, Jesenského, Pribinova, Hornoulická, Svätoplukova, Sama Chalupku, Mojmírova, Rekreačná, Stráne, Jánošíkova
+#   okrsok 3: SNP, Lúčky
+#   okrsok 4: Školská (od križovatky ulíc Školská-Jánošíkova po križovatku ulíc Školská-Bottova {párne orientačné čísla od 64 po 88; nepárne orientačné čísla od 45 po 105}), Martina Rázusa, Nemocničná (orientačného čísla 2, 4, 4A, 4B), Komenského, Štúrova, Kukučínova, Banícka, Lesná a obývané chaty v priľahlej chatovej oblasti Vendiny, Tále, 1.mája, Hečkova (párne orientačné čísla od 2 po 28, 50, 52 a 54; nepárne orientačné čísla od 31 po 47, a čísla 5, 7, 23 a 27), Bajzova, Bottova, Tatarkova, Lány (párne orientačné čísla od 2 po 34; nepárne orientačné čísla od 1 po 55)
+#   okrsok 5: Školská (od križovatky ulíc Školská – Bottova {párne orientačné čísla od 90; nepárne orientačné čísla od 107}), Velvarská, Tehelná, J. Hollého, Hečkova (párne orientačné čísla od 32 po 48; nepárne orientačné čísla od 9 po 21), Lány (párne orientačné čísla od 36 po 70; nepárne orientačné čísla od 57 po 71), Tajovského, Dubnická, Moyzesova, Kpt. Nálepku, Samoty, Kúty, Sadová, Slnečná, Ulica kanianska, Ulica horská
+obec = "513903"
+name = "Bojnice"
+okrsky_date = 2022-08-08
+okrsky_fill = "nearest"
+okrsky_note = "Citizens with trvalý pobyt without an address (registered at the town office) vote in okrsok 1 (separate decision); that concerns voters, not the register's houses without a street. 'Vendiny' (chaty area, okrsok 4) and 'Ulica horská' (okrsok 5) are not streets of the register and are left out. Houses without a street and the Hečkova numbers the document omits (e.g. even 30, odd 1, 3, 25, 29, 49-) take the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.bojnice.sk/download_file_f.php?id=1721570"
+sha256 = "71ea9cc4f0457d6ef6059096352ff5143187b5bedfa1bfdc776521917805f2cc"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (vrátane príslušných ulíc) v meste Bojnice"
+
+[[document]]
+url = "https://www.bojnice.sk/download_file_f.php?id=1721569"
+sha256 = "d88cbe6cae81fdd3f42f159016325df4711bc20e2ef506d99e6a4ca40e3b6584"
+title = "Utvorenie volebných okrskov a určenie volebných miestností mesta Bojnice"
+
+[[document]]
+url = "https://www.bojnice.sk/download_file_f.php?id=1721571"
+sha256 = "446b2dba6654a10484e12fc42152255d9e1c8261e0afbfc00d8aafd037513619"
+title = "Určenie volebného okrsku pre občanov mesta Bojnice s trvalým pobytom bez udania adresy"
+
+[[document]]
+url = "https://www.bojnice.sk/volby-do-organov-samospravy-obci-v-roku-2022-a-volby-do-organov-samospravnych-krajov-2022.html"
+sha256 = "4bb149a4a883881be4c85da7ae884cbebcb2e123f35e7d2523586af936429bc3"
+title = "Voľby do orgánov samosprávy obcí v roku 2022 a voľby do orgánov samosprávnych krajov 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Zámok a Okolie", written = "Zámok a okolie"},
+  {street = "Podzámocká"},
+  {street = "Hurbanovo Námestie", written = "Hurbanovo námestie"},
+  {street = "Sládkovičova"},
+  {street = "Hviezdoslavova"},
+  {street = "Bernolákova"},
+  {street = "Záhradná"},
+  {street = "Športová"},
+  {street = "Kvetová"},
+  {street = "Okrajová"},
+  {street = "Rybníčky"},
+  {street = "Prievidzská"},
+  {street = "Kúpele"},
+  {street = "Kúpeľná"},
+  {street = "Hlboké"},
+  {street = "Na Chmeľnici"},
+  {street = "Opatovská cesta"},
+  {street = "Ulica Podskalné", written = "Ulica podskalné"},
+  {street = "Parková", written = "Ulica parková"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Školská", numbers = "2-62", parity = "even"},
+  {street = "Školská", numbers = "1-43", parity = "odd"},
+  {street = "Janka Kráľa"},
+  {street = "Krátka"},
+  {street = "Mierová"},
+  {street = "Dukelská"},
+  {street = "Nemocničná", except = "2, 4, 4A, 4B"},
+  {street = "A. Hlinku"},
+  {street = "Jesenského"},
+  {street = "Pribinova"},
+  {street = "Hornoulická"},
+  {street = "Svätoplukova"},
+  {street = "Sama Chalupku"},
+  {street = "Mojmírova"},
+  {street = "Rekreačná"},
+  {street = "Stráne"},
+  {street = "Jánošíkova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "SNP"},
+  {street = "Lúčky"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Školská", numbers = "64-88", parity = "even"},
+  {street = "Školská", numbers = "45-105", parity = "odd"},
+  {street = "Martina Rázusa"},
+  {street = "Nemocničná", numbers = "2, 4, 4A, 4B"},
+  {street = "Komenského"},
+  {street = "Štúrova"},
+  {street = "Kukučínova"},
+  {street = "Banícka"},
+  {street = "Lesná"},
+  {street = "Tále"},
+  {street = "1.mája"},
+  {street = "Hečkova", numbers = "2-28, 50, 52, 54", parity = "even"},
+  {street = "Hečkova", numbers = "31-47, 5, 7, 23, 27", parity = "odd"},
+  {street = "Bajzova"},
+  {street = "Bottova"},
+  {street = "Tatarkova"},
+  {street = "Lány", numbers = "2-34", parity = "even"},
+  {street = "Lány", numbers = "1-55", parity = "odd"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Školská", numbers = "90-", parity = "even"},
+  {street = "Školská", numbers = "107-", parity = "odd"},
+  {street = "Velvarská"},
+  {street = "Tehelná"},
+  {street = "J. Hollého"},
+  {street = "Hečkova", numbers = "32-48", parity = "even"},
+  {street = "Hečkova", numbers = "9-21", parity = "odd"},
+  {street = "Lány", numbers = "36-70", parity = "even"},
+  {street = "Lány", numbers = "57-71", parity = "odd"},
+  {street = "Tajovského"},
+  {street = "Dubnická"},
+  {street = "Moyzesova"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Samoty"},
+  {street = "Kúty"},
+  {street = "Sadová"},
+  {street = "Slnečná"},
+  {street = "Ulica kanianska"},
+]

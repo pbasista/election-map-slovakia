@@ -1,0 +1,30 @@
+# Okrsky of Nová Ľubovňa, transcribed by an AI agent in job okrsok-rules-901 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Čísla domov 0 – 269 + voliči bez súpisného čísla
+#   okrsok 2: Čísla domov 270-515
+#   okrsok 3: Čísla domov 516 – 1005 + voliči – cudzinci s TP v obci
+obec = "526924"
+name = "Nová Ľubovňa"
+okrsky_date = 2022-07-11
+okrsky_note = "Scanned document; okrsky by súpisné (house) numbers 0–269, 270–515, 516–1005. Voters without súpisné číslo (okrsok 1) and foreigners with permanent residence (okrsok 3) are not register addresses."
+
+[[document]]
+url = "https://web.archive.org/web/20220925173746/https://www.novalubovna.sk/resources/File/oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-volby-do-uzemnej-samospravy-29-10-2022.pdf"
+sha256 = "ae81fa75f4b532337db13071192a7231514c7f5fc1086b71842aebd2d2504701"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností (Voľby do územnej samosprávy 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Nová Ľubovňa", numbers = "0-269"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Nová Ľubovňa", numbers = "270-515"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Nová Ľubovňa", numbers = "516-"},
+]

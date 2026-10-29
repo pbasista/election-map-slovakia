@@ -1,0 +1,44 @@
+# Okrsky of Nemecká, transcribed by an AI agent in job okrsok-rules-941 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Andreja Sládkoviča, Hronská, Jána Švermu, Janka Kráľa (od č.1 po číslo 44), Jozefa Gregora Tajovského, Mládežnícka, Partizánska, Pod Hrbkom, Podskalie, Sama Chalupku, Slovenského nár. povstania, Školská, Tehelná, Zábrežná
+#   okrsok 2: ulice: 1. mája, Krátka, Odbojárov, Sviniarka, Štvrť Kapitána Nálepku, Za Štadiónom, Zámostského, Janka Kráľa - od č. 45
+obec = "508829"
+name = "Nemecká"
+okrsky_date = 2022-08-03
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky are given as text on the notice-board page (archived 2022-10-22), section \"Utvorenie volebných okrskov a určenie volebných miestností\", zverejnené 3.8.2022; no decision date is stated, so date is that publication date. \"Sviniarka\" (okrsok 2) is not a street of the register and is left out. Houses without a street (súpisné only, in parts Dubová, Nemecká, Zámostie) are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20221022000015/https://www.nemecka.info/zverejnovanie-1/uradna-tabula/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-2022-395.html"
+sha256 = "c7ab781c972cb456e880915a4931701d4803d87900e3077abe7c65b8a3e6dc07"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 2022 – Utvorenie volebných okrskov a určenie volebných miestností (zverejnené 3.8.2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Andreja Sládkoviča"},
+  {street = "Hronská"},
+  {street = "Jána Švermu"},
+  {street = "Janka Kráľa", numbers = "1-44"},
+  {street = "Jozefa Gregora Tajovského"},
+  {street = "Mládežnícka"},
+  {street = "Partizánska"},
+  {street = "Pod Hrbkom"},
+  {street = "Podskalie"},
+  {street = "Sama Chalupku"},
+  {street = "Slovenského Nár. Povstania", written = "Slovenského nár. povstania"},
+  {street = "Školská"},
+  {street = "Tehelná"},
+  {street = "Zábrežná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Krátka"},
+  {street = "Odbojárov"},
+  {street = "Štvrť Kapitána Nálepku"},
+  {street = "Za Štadiónom"},
+  {street = "Zámostského"},
+  {street = "Janka Kráľa", numbers = "45-"},
+]

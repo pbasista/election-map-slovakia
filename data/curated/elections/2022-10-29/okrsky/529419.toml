@@ -1,0 +1,78 @@
+# Okrsky of Bratislava-Lamač, transcribed by an AI agent in job okrsok-rules-793 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Bakošova 1-36, Na barine
+#   okrsok 2: Ulice: Borinská, Cesta na Klanec, Hany Ponickej, Malokarpatské námestie, Podháj, Segnáre, Stanekova, Vrančovičova
+#   okrsok 3: Ulice: Havelkova, Heyrovského, Podlesná
+#   okrsok 4: Ulice: Furmanská, Hodonínska, Kuneradská, Lediny, Pod násypom, Povoznícka, Skerličova, Studenohorská 1-24, Zlatohorská
+#   okrsok 5: Ulice: Studenohorská 25-71
+#   okrsok 6: Ulice: Bakošova 38-46, Lamačská cesta, Pod Zečákom, Rácova, Rajtákova, Rozálska, Studenohorská 72-91, Vysokohorská, Záhrady, Zelenohorská, Zhorínska, Zidiny
+obec = "529419"
+name = "Bratislava-Lamač"
+okrsky_date = 2022-08-05
+okrsky_fill = "nearest"
+okrsky_note = "The document is the file 06_Volebné_okrsky_OSO_OSK_2022.pdf inside the ZIP archive of the 2022 municipal elections published on the district's elections page (signed by mayor Ing. Lukáš Baňacký, Bratislava 05.08.2022). The register streets Pridánky, Ulica Milana Šimečku and Vysoká Hora are not named in the document; they are placed by fill_nearest."
+
+[[document]]
+url = "https://www.lamac.sk/files/documents/zverejnovanie/volby/komunalne/komunalne_volby_2022.zip"
+sha256 = "809643d2ff923d0f88386557ad5b4855b82574dca66cf430629057fb43fdb51e"
+title = "Komunálne voľby 2022 (ZIP): 06_Volebné_okrsky_OSO_OSK_2022.pdf – Oznámenie o určení volebných okrskov a o určení volebných miestností pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {street = "Bakošova", numbers = "1-36"},
+  {street = "Na barine"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Borinská"},
+  {street = "Cesta na Klanec"},
+  {street = "Hany Ponickej"},
+  {street = "Malokarpatské námestie"},
+  {street = "Podháj"},
+  {street = "Segnáre"},
+  {street = "Stanekova"},
+  {street = "Vrančovičova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Havelkova"},
+  {street = "Heyrovského"},
+  {street = "Podlesná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Furmanská"},
+  {street = "Hodonínska"},
+  {street = "Kuneradská"},
+  {street = "Lediny"},
+  {street = "Pod násypom"},
+  {street = "Povoznícka"},
+  {street = "Skerličova"},
+  {street = "Studenohorská", numbers = "1-24"},
+  {street = "Zlatohorská"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Studenohorská", numbers = "25-71"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bakošova", numbers = "38-46"},
+  {street = "Lamačská cesta"},
+  {street = "Pod Zečákom"},
+  {street = "Rácova"},
+  {street = "Rajtákova"},
+  {street = "Rozálska"},
+  {street = "Studenohorská", numbers = "72-91"},
+  {street = "Vysokohorská"},
+  {street = "Záhrady"},
+  {street = "Zelenohorská"},
+  {street = "Zhorínska"},
+  {street = "Zidiny"},
+]

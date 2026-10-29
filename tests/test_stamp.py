@@ -1,3 +1,5 @@
+import ast
+
 from election_map_slovakia import stamp
 
 
@@ -43,3 +45,36 @@ def test_code_of_a_step_includes_every_package_module_it_uses():
         "xlsx",
         "config",
     }
+
+
+def test_each_step_stamps_the_code_its_cli_function_calls():
+    """A package module a step's function in the CLI uses is in the step's
+    code (its module's imports) or digested into its stamp's values
+    (`stamp.code_digest`): else a fix to it would leave the step skipped.
+    Its constants (paths, names) are not code that computes."""
+    package = {p.stem for p in stamp.PACKAGE.glob("*.py")}
+    tree = ast.parse((stamp.PACKAGE / "cli.py").read_bytes())
+    functions = {f.name: f for f in tree.body if isinstance(f, ast.FunctionDef)}
+    # The run's glue and the errors it catches compute no output.
+    glue = {"config", "jobs", "output", "progress", "stamp"}
+    for step in ("candidates", "links", "geo", "basemap", "addresses", "results"):
+        nodes = list(ast.walk(functions[f"_{step}"]))
+        used = {
+            n.value.id
+            for n in nodes
+            if isinstance(n, ast.Attribute)
+            and isinstance(n.value, ast.Name)
+            and n.value.id in package
+            and not n.attr.isupper()
+        }
+        digested = set().union(
+            *(
+                stamp.modules(n.args[0].value)
+                for n in nodes
+                if isinstance(n, ast.Call)
+                and isinstance(n.func, ast.Attribute)
+                and n.func.attr == "code_digest"
+                and isinstance(n.args[0], ast.Constant)
+            )
+        )
+        assert used - glue - stamp.modules(step) - digested == set(), step

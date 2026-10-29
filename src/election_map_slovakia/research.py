@@ -12,7 +12,12 @@ disputed or lesser one (``dispute``), and what in the source ties it to
 the candidate. A person with no finding is reported with an empty list:
 "researched, nothing found" is a result too.
 
-Research runs per language and constituency: ``--only`` takes research
+Research is of the latest election's candidates only (its
+``candidates.json``): its findings are kept by person in one store, of
+which an earlier election gets those of its persons linked to researched
+ones, published before its day, never researched anew
+(``reused_research`` of :mod:`election_map_slovakia.bundle`). It runs per
+language and constituency: ``--only`` takes research
 languages (``sk``, ``hu``, …; none: all) and places, which select every
 candidate a resident of the place can vote for: ``okres:<code>``,
 ``kraj:<code>``, an obec code, or a contest id (``oz:522279/2``,
@@ -64,7 +69,7 @@ from pathlib import Path
 from typing import Any
 
 from election_map_slovakia import cache, candidates, jobs, sources
-from election_map_slovakia.config import OBEC_CODE, OKRES_CODE, Config
+from election_map_slovakia.config import OBEC_CODE, OKRES_CODE, Config, Election
 
 NAME = "research"
 CURATED_DIR = "research"
@@ -133,9 +138,9 @@ ITEM_SCHEMA: dict[str, Any] = {
 # --- selection --------------------------------------------------------------
 
 
-def candidate_data(cfg: Config) -> dict[str, Any]:
-    """Return ``data/build/candidates.json``; raise JobError if missing."""
-    path = cfg.build_dir / candidates.OUTPUT_FILE
+def candidate_data(cfg: Config, election: Election) -> dict[str, Any]:
+    """Return *election*'s ``candidates.json``; raise JobError if missing."""
+    path = cfg.election_build_dir(election) / candidates.OUTPUT_FILE
     if not path.is_file():
         raise jobs.JobError(f"{path} missing; run `ems candidates` first")
     return json.loads(path.read_bytes())
@@ -149,7 +154,7 @@ def ballots(
     Every council obvod of the obec counts: who lives where within it is the
     address's business.
 
-    *props* is :func:`build.obec_props` (regional and city council obvod).
+    *props* is :func:`bundle.obec_props` (regional and city council obvod).
     """
     contests: dict[str, list[str]] = defaultdict(list)
     for c in data["contests"]:
@@ -169,14 +174,19 @@ def ballots(
     return out
 
 
-def _places(cfg: Config, data: Mapping[str, Any], places: Sequence[str]) -> set[str]:
+def _places(
+    cfg: Config,
+    election: Election,
+    data: Mapping[str, Any],
+    places: Sequence[str],
+) -> set[str]:
     """Return the contest ids *places* select (all contests for none)."""
     known = {c["id"] for c in data["contests"]}
     if not places:
         return known
-    from election_map_slovakia import build  # build imports this module
+    from election_map_slovakia import bundle, geo  # bundle imports this module
 
-    props = build.obec_props(cfg.build_dir / "geo")
+    props = bundle.obec_props(cfg.election_build_dir(election) / geo.OUTPUT_DIR)
     by_obec = ballots(data, props)
     selected: set[str] = set()
     for place in places:
@@ -209,15 +219,22 @@ def split_only(cfg: Config, only: Iterable[str]) -> tuple[list[str], list[str]]:
 
 
 def selected_persons(
-    cfg: Config, data: Mapping[str, Any], places: Sequence[str]
+    cfg: Config, election: Election, data: Mapping[str, Any], places: Sequence[str]
 ) -> list[str]:
-    """Return the persons *places* select: by priority, then the named ones."""
+    """Return the persons *places* select: by priority, then the named ones.
+
+    *data* is *election*'s ``candidates.json``.
+    """
     named = [p.removeprefix(PERSON) for p in places if p.startswith(PERSON)]
     unknown = sorted(set(named) - {p["id"] for p in data["persons"]})
     if unknown:
         raise jobs.JobError(f"{NAME}: no person {', '.join(unknown)}")
     places = [p for p in places if not p.startswith(PERSON)]
-    ranked = _by_office(data, _places(cfg, data, places)) if places or not named else []
+    ranked = (
+        _by_office(data, _places(cfg, election, data, places))
+        if places or not named
+        else []
+    )
     seen = set(ranked)
     return ranked + [p for p in dict.fromkeys(named) if p not in seen]
 
@@ -351,8 +368,8 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
     """Return the research jobs still to do; see the module doc."""
     languages, places = split_only(cfg, options.only)
     again = AGAIN in options.only
-    data = candidate_data(cfg)
-    persons = selected_persons(cfg, data, places)
+    data = candidate_data(cfg, cfg.latest)
+    persons = selected_persons(cfg, cfg.latest, data, places)
     batches = []
     for lang in languages:
         categories = cfg.sources.research[lang]
@@ -373,7 +390,7 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
             "categories": list(categories),
             "hosts": sources.hosts(cfg.sources, categories),
         }
-        prompt = _prompt(language, categories)
+        prompt = _prompt(cfg.latest, language, categories)
         for start in range(0, len(todo), options.size):
             chunk = person_items(cfg, data, todo[start : start + options.size])
             title = (
@@ -384,8 +401,9 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
     return batches
 
 
-def _prompt(language: str, categories: Sequence[str]) -> str:
+def _prompt(election: Election, language: str, categories: Sequence[str]) -> str:
     return PROMPT.format(
+        day=jobs.long_date(election.day),
         language=language,
         categories=", ".join(categories),
         official=_OFFICIAL if sources.OFFICIAL in categories else "",
@@ -698,11 +716,11 @@ def submit(cfg: Config, job: jobs.Job, out: dict[str, Any]) -> list[str]:
 def coverage(cfg: Config, only: Iterable[str]) -> Iterator[str]:
     """Yield, per research language, the coverage of the selected persons.
 
-    Researched, with findings, in pending jobs, to do.
+    Of the latest election: researched, with findings, in pending jobs, to do.
     """
     languages, places = split_only(cfg, only)
-    data = candidate_data(cfg)
-    persons = selected_persons(cfg, data, places)
+    data = candidate_data(cfg, cfg.latest)
+    persons = selected_persons(cfg, cfg.latest, data, places)
     records = {p: researched(cfg, p) for p in persons}
     pending: dict[str, set[str]] = defaultdict(set)
     for job in jobs.existing(cfg, jobs.kinds()[NAME]):
@@ -734,7 +752,7 @@ PROMPT = """\
 # Candidate research in {language} sources
 
 Each item of `input.json` is one candidate of the Slovak municipal and
-regional elections of 24 October 2026: name with academic titles, first
+regional elections of {day}: name with academic titles, first
 name, surname, age, stated occupation, municipality of residence, every
 candidacy (contest, ballot number, nominating parties) and every office the
 person holds now. Your task: find what the allowlisted sites say about this

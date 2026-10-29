@@ -43,7 +43,7 @@ import { FavouritesButton, HelpMenu, LanguageMenu, LayerMenus, ThemeMenu, ZoomBu
 import { dataIndex } from './data.js';
 import { Favourites } from './favourites.js';
 import { election, formatDate, loadStrings, t, translationPending } from './i18n.js';
-import { Logo, MoreIcon } from './icons.js';
+import { MoreIcon } from './icons.js';
 import { LiveStatus } from './live.js';
 import { createMap } from './map.js';
 import { formatMode, MapResults, parseMode, setMapMode, useMapMode } from './mapmode.js';
@@ -546,7 +546,6 @@ function App() {
               navigate({ ...p, candidate: null, view: null, favourites: false }, view)}
             onCandidate=${openCandidate}
           >
-            <${Logo} />
             <span class="brand-text">
               <span class="brand-name">${t('app.name')}</span>
               <span class="brand-tagline">${t('app.tagline', { date: formatDate(election) })}</span>

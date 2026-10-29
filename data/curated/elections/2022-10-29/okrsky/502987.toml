@@ -1,0 +1,115 @@
+# Okrsky of Želiezovce, transcribed by an AI agent in job okrsok-rules-660 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Želiezovce časť Svodov
+#   okrsok 2: Želiezovce časť Mikula ul. Mikulská ul. Nábrežná ul. Sadová ul. SNP č. 52 – 195 časť Veľký Dvor časť Rozina časť Albert časť Karolina
+#   okrsok 3: Želiezovce-Mierová osada ul. Školská ul. Vrbová ul. Ľ.Štúra 1-10 ul. Jesenského ul. Potočná ul. Sacherova ul. Hurbanova ul. Kosúthova ul. Záhradná ul. Orgovánová ul. Krátka ul. Gorkého ul. Tichá ul. Fr. Kráľa ul. Pionierska ul. Kherndlova ul. Poľná
+#   okrsok 4: Želiezovce-Staré Želiezovce ul. SNP č. 3 – 51 ul. Jarmočná ul. Cintorínska ul. Zlatnícka ul. Hronská ul. Jókaiho ul. Jilemnického ul. Sládkovičova ul. Poštová ul. Petöfiho ul. Agátová ul. Nezábudková ul. Tržná ul. Lipová ul. Tulipánová ul. Brezová ul. Narcisová ul. Rozmarínova Želiezovce 0
+#   okrsok 5: Želiezovce – Sídlisko Stred I. Mierová Rákócziho
+#   okrsok 6: Želiezovce – Sídlisko Stred II. časť Jarok ul. Komenského č.1 - 8 a 43-44 ul. Slnečná ul. Ľ.Štúra č. 11 - 14 ul. Schubertova ul. Úzka ul. Nová časť Jarok
+#   okrsok 7: Želiezovce – Nové Želiezovce ul. Kpt. nálepku ul. Fučíkova ul. Komenského ul. Dóžova ul. Hviezdoslavova ul. Železničná ul. Adyho ul. Ružová
+obec = "502987"
+name = "Želiezovce"
+okrsky_date = 2022-11-10
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections found (the city's 2022 elections section lists no okrsky notice; the Internet Archive has no 2022 snapshots); the referendum's document, dated 10.11.2022, with 7 okrsky as the Statistical Office counts. \"Želiezovce 0\" in okrsok 4 means voters registered without an address (only to the town), not the register's houses without a street; those (súpisné only) and streets the document omits (Námestie Svätého Jakuba, SNP 2 and 196-197, Ľ.Štúra 15-16) are placed by fill_nearest. Komenského is in okrsok 7 except nos. 1-8, 43-44 (okrsok 6)."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.zeliezovce.sk/e_download.php?file=data/editor/44sk_39.pdf&original=volebn%C3%A9%20miestnosti%20Referendum%202023.pdf"
+sha256 = "6271895381f93ee0c7f091a32871413a2313a5bc61d4358521c9934675782f98"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre referendum 21. januára 2023"
+
+[[document]]
+url = "https://www.zeliezovce.sk/volby/"
+sha256 = "c4b6b2d2ceee4f46be376bd2e59cf43d9f38eb56d9e09c6626e217725dbecec9"
+title = "Voľby"
+
+[okrsok.1]
+rules = [
+  {part = "Svodov"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Mikula"},
+  {street = "Mikulská"},
+  {street = "Nábrežná"},
+  {street = "Sadová"},
+  {street = "SNP", numbers = "52-195"},
+  {part = "Veľký Dvor"},
+  {part = "Rozina"},
+  {part = "Karolína", note = "The document writes \"časť Karolina\"; it also names \"časť Albert\", which is not a part in the register (left out)."},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Ľ.Štúra", numbers = "1-10"},
+  {street = "Kosúthová", written = "Kosúthova", note = "Same street; the document leaves out the accent on the ending."},
+  {street = "F.Kráľa", written = "Fr. Kráľa"},
+  {street = "Školská"},
+  {street = "Vrbová"},
+  {street = "Jesenského"},
+  {street = "Potočná"},
+  {street = "Sacherova"},
+  {street = "Hurbanova"},
+  {street = "Záhradná"},
+  {street = "Orgovánová"},
+  {street = "Krátka"},
+  {street = "Gorkého"},
+  {street = "Tichá"},
+  {street = "Pionierska"},
+  {street = "Kherndlova"},
+  {street = "Poľná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "SNP", numbers = "3-51"},
+  {street = "Petőfiho", written = "Petöfiho", note = "Same street (ö for ő)."},
+  {street = "Rozmarínová", written = "Rozmarínova", note = "Same street; different vowel length in the ending."},
+  {street = "Jarmočná"},
+  {street = "Cintorínska"},
+  {street = "Zlatnícka"},
+  {street = "Hronská"},
+  {street = "Jókaiho"},
+  {street = "Jilemnického"},
+  {street = "Sládkovičova"},
+  {street = "Poštová"},
+  {street = "Agátová"},
+  {street = "Nezábudková"},
+  {street = "Tržná"},
+  {street = "Lipová"},
+  {street = "Tulipánová"},
+  {street = "Brezová"},
+  {street = "Narcisová"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Mierová"},
+  {street = "Rákócziho"},
+]
+
+[okrsok.6]
+rules = [
+  {part = "Jarok"},
+  {street = "Komenského", numbers = "1-8, 43, 44"},
+  {street = "Ľ.Štúra", numbers = "11-14"},
+  {street = "Slnečná"},
+  {street = "Schubertova"},
+  {street = "Úzka"},
+  {street = "Nová"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Kpt.Nálepku", written = "Kpt. nálepku"},
+  {street = "Fučíkova"},
+  {street = "Komenského"},
+  {street = "Dóžova"},
+  {street = "Hviezdoslavova"},
+  {street = "Železničná"},
+  {street = "Adyho"},
+  {street = "Ružová"},
+]

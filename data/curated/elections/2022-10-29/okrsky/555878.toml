@@ -1,0 +1,38 @@
+# The okrsky of Horná Kráľová of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/555878.toml, reused by `ems job reuse`.
+obec = "555878"
+name = "Horná Kráľová"
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Sereďská and Nad Humnami split by súpisné čísla as the document lists them. The document puts Nad Humnami s.č. 425 and 426 in okrsok 1 and also within the range 400-453 of okrsok 2; they are kept in okrsok 1 (listed individually) and cut from the okrsok 2 range. Lackov dvor (not named) and súpisné čísla of Sereďská/Nad Humnami outside the listed ranges placed by fill_nearest. No decision date on the document."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.hornakralova.sk/wp-content/uploads/2026/07/Volby-do-samospravy-obci-a-samospravy-krajov-utvorenie-volebnych-okrskov.pdf"
+sha256 = "69e7682a69ba8d110d5f61fc60b5c3b5b013562e42ad70dce7a6e2765dfcbfe9"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná"},
+  {street = "Cintorínska"},
+  {street = "Športová"},
+  {street = "Pod Tópartom"},
+  {street = "Pri potoku"},
+  {street = "Topoľová"},
+  {street = "Malá Kráľová"},
+  {street = "Nad Potokom", written = "Nad potokom"},
+  {street = "Domoviny"},
+  {street = "Sereďská", numbers = "421-424, 507, 510, 751, 752", by = "supisne"},
+  {street = "Nad Humnami", numbers = "425, 426, 532-697", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlohovecká"},
+  {street = "Sliváš I."},
+  {street = "Sliváš II."},
+  {street = "Školská"},
+  {street = "Školská II."},
+  {street = "Vinohradnícka"},
+  {street = "Sereďská", numbers = "546-569, 630-674, 775", by = "supisne"},
+  {street = "Nad Humnami", numbers = "400-424, 427-453, 750", by = "supisne"},
+]

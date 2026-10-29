@@ -1,0 +1,56 @@
+# Council obvody of Šuňava (524107), Poprad.
+# Transcribed by an AI agent in job obvod-rules-357 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: miestnu časť Nižná Šuňava Ulice: SNP, Družstevná, Záhradná, Jagrova, Mieru, Š. Šmálika, Športová, Hŕbky, Tatranská, Tichá
+#   obvod 2: miestnu časť Vyšná Šuňava Ulice: SNP, Lúčna, Cintorínska, Pod vodojemom, Poľnohospodárska, Štrbská, Liptovská, Krátka, Podhorská, Okružná
+# Okrsky added by an AI agent in job okrsok-rules-1220 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: miestnu časť Nižná Šuňava Ulice: SNP, Družstevná, Záhradná, Jagrova, Mieru, Š. Šmálika, Športová, Hŕbky, Tatranská, Tichá
+#   okrsok 2: miestnu časť Vyšná Šuňava Ulice: SNP, Lúčna, Cintorínska, Pod vodojemom, Poľnohospodárska, Štrbská, Liptovská, Krátka, Podhorská, Okružná
+obec = "524107"
+name = "Šuňava"
+date = 2022-06-30
+note = "Obvody are the two parts; SNP and Š. Šmálika run through both parts and are split by part. Trojičné námestie (Vyšná Šuňava) is not listed and falls to its part, Vyšná Šuňava; Š. Šmálika addresses in Vyšná Šuňava likewise follow the part rule (the street is listed only under obvod 1)."
+okrsky_date = 2022-06-30
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+
+[[document]]
+url = "https://www.sunava.sk/e_download.php?file=data/uredni_deska/obsah364_2.pdf&original=ozn%C3%A1menie%20pre%20vo%C4%BEby%20do%20MS%20obc%C3%AD%202022.pdf"
+sha256 = "3582bde0a9b1e7fa726a37eb280d67c91c19a48070108fd145134b6980bd0b2a"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 29. októbra 2022 (uznesenie č. 256/2022 zo dňa 30.6.2022)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Nižná Šuňava"},
+  {street = "SNP", part = "Nižná Šuňava"},
+  {street = "Družstevná"},
+  {street = "Záhradná"},
+  {street = "Jagrova"},
+  {street = "Mieru"},
+  {street = "Š. Šmálika", part = "Nižná Šuňava"},
+  {street = "Športová"},
+  {street = "Hŕbky"},
+  {street = "Tatranská"},
+  {street = "Tichá"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [2]
+rules = [
+  {part = "Vyšná Šuňava"},
+  {street = "SNP", part = "Vyšná Šuňava"},
+  {street = "Lúčna"},
+  {street = "Cintorínska"},
+  {street = "Pod vodojemom"},
+  {street = "Poľnohospodárska"},
+  {street = "Štrbská"},
+  {street = "Liptovská"},
+  {street = "Krátka"},
+  {street = "Podhorská"},
+  {street = "Okružná"},
+]

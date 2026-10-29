@@ -1,0 +1,61 @@
+# Okrsky of Lužianky, transcribed by an AI agent in job okrsok-rules-1018 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok I. tvoria Egrešová ulica, Horákova, Jahodová ulica, Kaplanova, Malinová ulica, Mesačná, Obežná, Pri trati,, Rastislavova, Smreková ulica, Topoľová ulica a občania s pobytom len obec Lužianky.
+#   okrsok 2: Okrsok II tvoria ulice: Ciolkovského, Dunajského, Edisonova, Hlohovecká, Hronského, Kajsa, Kajsa II., Korytovská, Na Holotke, Na ihrisko, Nejedlého, Počašie, Pod Hliníkom, Prúdova, Radošinská, Sasinkova, Slivková ulica, Športová, Švantnerova, Tatranská, Teslova, Urbanova, Venušina, Vinárska, Vodárenská a Závodníkova.
+obec = "580899"
+name = "Lužianky"
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's 2022 announcement is not published; the okrsky come from the obec's newsletter (read from the rendered page, the text layer mixes the columns). 'občania s pobytom len obec Lužianky' (okrsok I) are voters registered without an address, no rule. The newsletter leaves out Čerešňová ulica, Cez panské, Dolné Hony, Golfová, Lipová ulica, Višňová ulica (new streets) and the addresses without a street: fill_nearest places them."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The okrsky are in the article 'Voľby do orgánov samosprávneho kraja a do orgánov samosprávy obce' of the obec's newsletter Lužianske novinky 2-3/2022 (October 2022), which says 'Voľby sa budú konať 29. 10. 2022 … V obci máme vytvorené dva okrsky' and lists the 2022 candidates. No decision date; the newsletter's page states no publication date of this issue and the earliest Internet Archive capture of the PDF is 2024-02-09 (after the vote)."
+
+[[document]]
+url = "https://www.luzianky.sk/data/advertisement/luzianky.sk/167302/90515_luzianske-novinky-2-3-2022.pdf"
+sha256 = "5bb0ccad1c655ebb50b8380117afe4e052cc42e0cc153c699e9aa2e7b1c23011"
+title = "Lužianske novinky, ročník XXV, číslo 2-3, október 2022 – Voľby do orgánov samosprávneho kraja a do orgánov samosprávy obce (s. 3)"
+
+[okrsok.1]
+rules = [
+  {street = "Egrešová ulica"},
+  {street = "Horákova"},
+  {street = "Jahodová ulica"},
+  {street = "Kaplanova"},
+  {street = "Malinová ulica"},
+  {street = "Mesačná"},
+  {street = "Obežná"},
+  {street = "Pri trati"},
+  {street = "Rastislavova"},
+  {street = "Smreková ulica"},
+  {street = "Topoľová ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ciolkovského"},
+  {street = "Dunajského"},
+  {street = "Edisonova"},
+  {street = "Hlohovecká"},
+  {street = "Hronského"},
+  {street = "Kajsa"},
+  {street = "Kajsa II", written = "Kajsa II."},
+  {street = "Korytovská"},
+  {street = "Na Holotke"},
+  {street = "Na Ihrisko", written = "Na ihrisko"},
+  {street = "Nejedlého"},
+  {street = "Počašie"},
+  {street = "Pod Hliníkom"},
+  {street = "Prúdová", written = "Prúdova", note = "the newsletter's spelling (vowel length)"},
+  {street = "Radošinská"},
+  {street = "Sasinkova"},
+  {street = "Slivková ulica"},
+  {street = "Športová"},
+  {street = "Švantnerova"},
+  {street = "Tatranská"},
+  {street = "Teslova"},
+  {street = "Urbanova"},
+  {street = "Venušina"},
+  {street = "Vinárska"},
+  {street = "Vodárenská"},
+  {street = "Závodníkova"},
+]

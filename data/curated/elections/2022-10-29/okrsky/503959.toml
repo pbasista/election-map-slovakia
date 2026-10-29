@@ -1,0 +1,24 @@
+# Okrsky of Pata, transcribed by an AI agent in job okrsok-rules-778 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Do volebného okrsku č. 1 patria domy od s. č 1 po s. č. 590 a občania s trvalým pobytom „Obec Pata“ (bez adresy)
+#   okrsok 2: Do volebného okrsku č. 2 patria domy od s. č. 591 po s. č. 1242
+obec = "503959"
+name = "Pata"
+okrsky_date = 2022-08-04
+okrsky_note = "The okrsky are split by súpisné číslo: 1–590 and 591–1242 (the rule for okrsok 2 is open-ended). Okrsok 1 also holds the voters registered only to 'Obec Pata' (bez adresy), who have no address in the register."
+
+[[document]]
+url = "https://web.archive.org/web/20220928232252/https://www.obecpata.sk/volby-2022.html"
+sha256 = "50fb29d6991eedfde14e7c7d6078ddb5bfdd546545f499463072607044b01fcb"
+title = "Voľby 2022 – Oznámenie o vytvorení volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Pata", numbers = "1-590"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Pata", numbers = "591-"},
+]

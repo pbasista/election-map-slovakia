@@ -1,0 +1,54 @@
+# The okrsky of Strekov of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/503550.toml, reused by `ems job reuse`.
+obec = "503550"
+name = "Strekov"
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). XLSX table listing streets with súpisné čísla per okrsok. Every street except Hlavná ulica lies wholly in one okrsok, so whole-street rules; Hlavná ulica is split by the súpisné numbers given (okrsok 2 as 'Hlavná ulica II'), its other numbers take the nearest placed address. 'Stará cinotírnska' is a typo for Stará cintorínska ulica; 'Topoľova' = Topoľová ulica. Ulica za potokom (1 address) is not named; it and addresses without a street take the nearest placed address (fill_nearest). No decision date stated."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.strekov.sk/e_download.php?file=/data/editor/208sk_1.xlsx&original=Tla%C4%8Divo%20Volebn%C3%A9%20okrsky_miestnosti_s%C3%ADdlo_%20vyplnen%C3%A9.xlsx"
+sha256 = "9063166d2929faa1e987f5ebbaaa1012fb903ab609ea5548f398883db544805a"
+title = "Informácia o utvorení volebných okrskov s vymedzením ich územného obvodu"
+
+[[document]]
+url = "https://www.strekov.sk/zverejnovanie/volby/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-2026/"
+sha256 = "7696bcc53e241e12fa1cc5cfa963985943d26c9360fec60f46518982cbf79933"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Ulica pod vinicami"},
+  {street = "Stará cintorínska ulica", written = "Stará cinotírnska ulica", note = "typo for Stará cintorínska ulica (letters transposed); the register has no other such street"},
+  {street = "Rúbaňská cesta"},
+  {street = "Býčia medza"},
+  {street = "Nová cintorínska ulica"},
+  {street = "Veľká krivá ulica"},
+  {street = "Malá krivá ulica"},
+  {street = "Ciglédska ulica"},
+  {street = "Csillagova ulica"},
+  {street = "Jarmočné námestie"},
+  {street = "Lesná cesta"},
+  {street = "Ružová ulica"},
+  {street = "Brezová ulica"},
+  {street = "Ploché námestie"},
+  {street = "Orgovánová ulica"},
+  {street = "Nová ulica"},
+  {street = "Hlavná ulica", numbers = "47-100, 300-302, 356-393, 401-424, 1333", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krivá ulica"},
+  {street = "Topoľová ulica", written = "Topoľova ulica", note = "missing accent on Topoľová ulica"},
+  {street = "Orechový rad"},
+  {street = "Dolná ulica"},
+  {street = "Zabratá ulica"},
+  {street = "Školská ulica"},
+  {street = "Lipová ulica"},
+  {street = "Železničný rad"},
+  {street = "Obchodná ulica"},
+  {street = "Úzka ulica"},
+  {street = "Blatná ulica"},
+  {street = "Cesta slobody"},
+  {street = "Hlavná ulica", numbers = "625-657, 941-951, 1388, 1406", by = "supisne", written = "Hlavná ulica II", note = "the second section of Hlavná ulica (súpisné 625-657 etc.); the register has only one Hlavná ulica"},
+]

@@ -1,0 +1,35 @@
+# Council obvody of Záhorce (516546), Veľký Krtíš.
+# Transcribed by an AI agent in job obvod-rules-376 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: viacmandátový volebný obvod č. 1 pre voľby poslancov v časti obce Záhorce, v ktorom sa budú voliť piati poslanci
+#   obvod 2: viacmandátový volebný obvod č. 2 pre voľby poslancov v časti obce Selešťany, v ktorom sa budú voliť dvaja poslanci
+# Okrsky added by an AI agent in job okrsok-rules-1237 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: viacmandátový volebný obvod č. 1 pre voľby poslancov v časti obce Záhorce, v ktorom sa budú voliť piati poslanci
+#   okrsok 2: viacmandátový volebný obvod č. 2 pre voľby poslancov v časti obce Selešťany, v ktorom sa budú voliť dvaja poslanci
+obec = "516546"
+name = "Záhorce"
+date = 2022-06-27
+okrsky_date = 2022-06-27
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+
+[[document]]
+url = "https://www.zahorce.sk/e_download.php?file=data/uredni_deska/obsah210_4.pdf&original=Uznesenie%20UZN%2027.6.2022_final.pdf"
+sha256 = "7c298ed76dc12cbbd085890b6a1fe473ccb7a72d3a526300396ee371e13930bc"
+title = "Uznesenia OZ Záhorce z 27.6.2022, uznesenie č. 07-02/2022"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Záhorce"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Selešťany"},
+]

@@ -1,0 +1,41 @@
+# The okrsky of Dolné Vestenice of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/513989.toml, reused by `ems job reuse`.
+obec = "513989"
+name = "Dolné Vestenice"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Okrsok 2 includes voters with 'adresa pobytu obec Dolné Vestenice', so it takes the rest. Page published 13.7.2026; the decision itself is undated."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.dolnevestenice.sk/download_file_f.php?id=2441801"
+sha256 = "46a6050ef822e4da8c8ede97ccb2140d6880c51d8618a767f5c793c539ef6e1e"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.dolnevestenice.sk/volebne-okrsky-oznam/mid/525853/.html"
+sha256 = "0aca970f0db931c4ba1a0d9d6d4870e65a93108b1305231b48a9bb56b82a17f3"
+title = "Volebné okrsky"
+
+[okrsok.1]
+rules = [
+  {street = "Komenského"},
+  {street = "Gumárenská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Rudolfa Jašíka"},
+  {street = "Záhumenská"},
+  {street = "Krátka"},
+  {street = "Družstevná"},
+  {street = "Záhradná"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Ladislava Môcika"},
+  {street = "Kopanice"},
+  {street = "Cintorínska"},
+  {street = "Molvičky"},
+  {street = "Námestie Andreja Hlinku"},
+  {street = "Nižovecká"},
+  {street = "Obrancov Mieru", written = "Obrancov mieru"},
+  {street = "M.R.Štefánika", written = "M. R. Štefánika"},
+  {street = "Jozefa Málika", written = "Jozefa Malíka", note = "accent misplaced in the document; the register's only such street"},
+  {rest = true},
+]

@@ -1,0 +1,140 @@
+# Okrsky of Vrútky, transcribed by an AI agent in job okrsok-rules-664 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Dielenská Kružná, celá ulica, Judíkova, celá ulica, Kmeťova, celá ulica, Komorova, celá ulica, Ľubochnianska, celá ulica, M. R. Štefánika, or. č. (párne č. 8 – 14, nepárne č. 13 – 21) Republikánska, celá ulica, S. H. Vajanského, celá ulica, Sv. Cyrila a Metoda, celá ulica, Vrútky, súp. č. (5638) Železničná, celá ulica
+#   okrsok 2: Ulice: 1. čs. brigády, celá ulica,
+#   okrsok 3: Ulice: Nábrežná, or. č. (párne č. 4 – 6, nepárne č. 1 – 17)
+#   okrsok 4: Ulice: A. Sládkoviča, celá ulica, Gen. A. Kordu, celá ulica, Chotárna, or. č. (párne č. 2 – 10, nepárne č. 1), J. G. Tajovského, celá ulica, J. Kalinčiaka, celá ulica, Kafendova, celá ulica, M. R. Štefánika, or. č. (párne č. 2 – 6, nepárne č. 1 – 11), Mierová, celá ulica, Palackého, or. č.( č. 1 – 10, párne č. 12, nepárne č. 29), Podjavorinskej, celá ulica,
+#   okrsok 5: Ulice: Čachovský rad, celá ulica, Hradská, celá ulica, Južná, celá ulica, K. Kalocsaya, celá ulica, Langov dvor, celá ulica, Martinská, celá ulica, Matušovičovský rad, celá ulica, Mlynská, celá ulica, Nábrežná , or. č. (párne č. 8 – 24), Nová, celá ulica, Švermova, celá ulica, Ulica za mostom, celá ulica, Vrútky, súp. č. (1000) OBČANIA S TRVALÝM POBYTOM VRÚTKY 0
+#   okrsok 6: Ulice: Bazová, celá ulica, Bystrá, celá ulica, Dlhá, celá ulica, Dolná Kružná, celá ulica, Dolný dvor, celá ulica, Dubná skala, celá ulica, Francúzskych partizánov, celá ulica, Hájska, celá ulica, Hlboká cesta, celá ulica, Horná Kružná, celá ulica, Horská ulica, celá ulica, Jánošovská, celá ulica, Jedľová ulica, celá ulica, Jonášovská, celá ulica, Karvaša a Bláhovca, celá ulica, Krátka, celá ulica, Lesná, celá ulica, Lipová ulica, celá ulica, Mokraď, celá ulica, Odbojárska, celá ulica, P. O. Hviezdoslava, celá ulica, Potočná, celá ulica, Ruttkayovská, celá ulica, Ružová, celá ulica, Smreková ulica, celá ulica, Sucháčovská, celá ulica, Turcová, celá ulica, Ulica Ľ. Štúra, celá ulica, Ulica na Kopanice, celá ulica, Ulica poľná, celá ulica, Úzka, celá ulica, Váhová, celá ulica, Vrútky, súp. č. (728, 485, 1213, 831, 873, 887, 2204, 2439, 4081, 4115, 5411, 5457, 5590, 2059, 2046, 2233, 5450, 839, 705)
+#   okrsok 7: Ulice: A. Hlinku, celá ulica, Fatranská, celá ulica, Fínska (párne čísla), celá ulica, Horná, celá ulica, J. Bodeneka, celá ulica, Lúčna, celá ulica, Magurská, celá ulica, M. Rázusa, celá ulica, Minčolská, celá ulica, Močiarna, celá ulica, Partizánska, celá ulica, Radlinského, celá ulica, Šafáriková, celá ulica, Šťastného, celá ulica, Vrútky, súp. č. (2054, 2025) Záhradnícka, celá ulica.
+obec = "557358"
+name = "Vrútky"
+okrsky_date = 2022-07-20
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's 2022 decision (20.07.2022). Houses without a street are numbered by súpisné číslo in part Vrútky; those the document lists (Vrútky, súp. č. …) have rules, all others (most of the 849) are placed by fill_nearest, as are the numbers of M.R.Štefánika and Nábrežná the document leaves out (e.g. even 16–20 of Štefánika, odd 19–23 and 2 of Nábrežná). 'OBČANIA S TRVALÝM POBYTOM VRÚTKY 0' (registered without an address) vote in okrsok 5, which also has streets: no addressless okrsok. Bazová (okrsok 6) is not in the register: left out. Námestie S.Zachara and Rybárska ulica are not in the document: placed by fill_nearest."
+
+[[document]]
+url = "https://www.vrutky.sk/download_file_f.php?id=1731101"
+sha256 = "9ced99c4f37ed0bc6d1d9c05a9a0fa154adf1541fcf093b23813e840be79e707"
+title = "Oznámenie - volebné okrsky a volebné miestnosti (Informácia o čase a mieste konania volieb, 20.07.2022)"
+
+[[document]]
+url = "https://www.vrutky.sk/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-konane-v-rovnaky-den-a-v-rovnakom-case-v-roku-2022-oznam/mid/491151/.html"
+sha256 = "ffed417f242ca986e33350ccd0ccc9f22f821e66a66c336c46d3400e2c9d34cd"
+title = "Voľby 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Dielenská Kružná"},
+  {street = "Judíkova"},
+  {street = "Kmeťova"},
+  {street = "Komorova"},
+  {street = "Ľubochnianska"},
+  {street = "M.R.Štefánika", numbers = "8-14", parity = "even", written = "M. R. Štefánika"},
+  {street = "M.R.Štefánika", numbers = "13-21", parity = "odd", written = "M. R. Štefánika"},
+  {street = "Republikánska"},
+  {street = "S.H.Vajanského", written = "S. H. Vajanského"},
+  {street = "Sv.Cyrila a Metoda", written = "Sv. Cyrila a Metoda"},
+  {part = "Vrútky", numbers = "5638", by = "supisne"},
+  {street = "Železničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "I.československej brigády", written = "1. čs. brigády", note = "the register's I.československej brigády (1. čs. = I. československej, Roman numeral); same street, the polling station's 'Ul. 1. čsl. brigády'"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Nábrežná", numbers = "4-6", parity = "even"},
+  {street = "Nábrežná", numbers = "1-17", parity = "odd"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "A.Sládkoviča", written = "A. Sládkoviča"},
+  {street = "Gen. Alexandra Kordu", written = "Gen. A. Kordu"},
+  {street = "J.G.Tajovského", written = "J. G. Tajovského"},
+  {street = "J.Kalinčiaka", written = "J. Kalinčiaka"},
+  {street = "Kafendova"},
+  {street = "Mierová"},
+  {street = "Podjavorinskej"},
+  {street = "Chotárna", note = "the document lists Chotárna only here (even 2–10, odd 1): the whole street"},
+  {street = "M.R.Štefánika", numbers = "2-6", parity = "even", written = "M. R. Štefánika"},
+  {street = "M.R.Štefánika", numbers = "1-11", parity = "odd", written = "M. R. Štefánika"},
+  {street = "Palackého", note = "the document lists Palackého only here (1–10, even 12, odd 29): the whole street"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Čachovský rad"},
+  {street = "Hradská"},
+  {street = "Južná"},
+  {street = "K. Kalocsaya"},
+  {street = "Langov dvor"},
+  {street = "Martinská"},
+  {street = "Matušovičovský rad"},
+  {street = "Mlynská"},
+  {street = "Nová"},
+  {street = "Švermova"},
+  {street = "Ulica za mostom"},
+  {street = "Nábrežná", numbers = "8-24", parity = "even"},
+  {part = "Vrútky", numbers = "1000", by = "supisne"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bystrá"},
+  {street = "Dlhá"},
+  {street = "Dolná Kružná"},
+  {street = "Dolný dvor"},
+  {street = "Dubná Skala", written = "Dubná skala", note = "only the capital S differs"},
+  {street = "Francúzskych partizánov"},
+  {street = "Hájska"},
+  {street = "Hlboká cesta"},
+  {street = "Horná Kružná"},
+  {street = "Horská ulica"},
+  {street = "Jánošovská"},
+  {street = "Jedľová ulica"},
+  {street = "Jonášovská"},
+  {street = "Karvaša a Bláhovca"},
+  {street = "Krátka"},
+  {street = "Lesná"},
+  {street = "Lipová ulica"},
+  {street = "Mokraď"},
+  {street = "Odbojárska"},
+  {street = "P.O.Hviezdoslava", written = "P. O. Hviezdoslava"},
+  {street = "Potočná"},
+  {street = "Ruttkayovská"},
+  {street = "Ružová"},
+  {street = "Smreková ulica"},
+  {street = "Sucháčovská"},
+  {street = "Turcová"},
+  {street = "Ulica Ľudovíta Štúra", written = "Ulica Ľ. Štúra"},
+  {street = "Ulica na Kopanice"},
+  {street = "Ulica poľná"},
+  {street = "Úzka"},
+  {street = "Váhová"},
+  {part = "Vrútky", numbers = "728, 485, 1213, 831, 873, 887, 2204, 2439, 4081, 4115, 5411, 5457, 5590, 2059, 2046, 2233, 5450, 839, 705", by = "supisne"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "A.Hlinku", written = "A. Hlinku"},
+  {street = "Fatranská"},
+  {street = "Fínska", written = "Fínska (párne čísla)", note = "the document gives 'Fínska (párne čísla), celá ulica' and places no odd number of Fínska elsewhere: the whole street"},
+  {street = "Horná"},
+  {street = "Jána Bodeneka", written = "J. Bodeneka"},
+  {street = "Lúčna"},
+  {street = "Magurská"},
+  {street = "M.Rázusa", written = "M. Rázusa"},
+  {street = "Minčolská"},
+  {street = "Močiarna"},
+  {street = "Partizánska"},
+  {street = "Radlinského"},
+  {street = "Šafárikova", written = "Šafáriková", note = "the register's Šafárikova; the document's ending is a typo"},
+  {street = "Šťastného"},
+  {part = "Vrútky", numbers = "2054, 2025", by = "supisne"},
+  {street = "Záhradnícka"},
+]

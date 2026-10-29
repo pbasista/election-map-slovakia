@@ -1,0 +1,432 @@
+# Council obvody of Ružomberok (510998), Ružomberok.
+# Transcribed by an AI agent in job obvod-rules-213 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Do Uhliska – 120, Družstevná - 30, Hlavná - 14, Jazierce - 3, Korytnická - 89, Ku Revúcej - 27, Lepenkáreň - 14, Luhy - 37, Nad vŕškom - 15 , Nižné Matejkovo -15, Pod Dielcom - 38, Pod Hlinisko - 146, Pod Ostré - 66, Pod Sidorovo - 21, Raveň – 243, Skalná - 35, Smrekovica - 0, SNP - 69, Stredná - 10, Šípová - 13, Školská - 45, Škutovky - 0, Trlenská - 45, Trlenská dolina – 4, Vápenka - 5, Vyšné Matejkovo – 59, Záhumnie - 17, Pod vŕškom - 37, Vlkolínec - 23
+#   obvod 2: A. Hlinku – 122, B. Björnsona - 37, Černovských Martýrov - 70, Čremošná – 57, Čutkovská - 154, Dolná - 4, Jánošíkova - 41, Ku ihrisku - 49, Milkov - 11, Nová – 151, Na Hôrky - 46, Pri Váhu - 264, Priehradka - 74, Račkov - 31, Slnečná – 34, Strmá -10, Včelárska -20, Za járočkom – 25
+#   obvod 3: Mlynská - 114, Na Pruty - 26, Ostrá - 54, Potočná - 143, Priehrada – 117, Príjazdová - 15, Sadová - 59, Záskalie - 19
+#   obvod 4: Horská - 78, Malé domky - 29, Malé Tatry - 166, Nová Hrboltová – 128, Pod Čebraťom -12, Rybárpoľská - 268, Textilná - 186, Ž.Silbigera - 339
+#   obvod 5: Klačno - 573, Lesná - 540, Liptovská - 804, Smreková - 284, Veterná - 938, Klačník - 1
+#   obvod 6: Hrabovská cesta - 145, Hrabovská dolina - 9, Malino Brdo - 0, Jarná - 35, Kukučínova – 52, Športová – 56, Vajanského - 71, Veľký Polík - 12, Žilinská cesta - 549, D Makovického - 222, Š Moyzesa – 680, Hviezdoslavova - 141, R.Dúbravca - 94, Scota Viatora - 98, V.Šrobára – 194
+#   obvod 7: K.Salvu - 279, M.Madačova - 215, Nám. Slobody - 156, Ľ.Fullu - 44, K.A.Medveckého - 18, A.Bernoláka - 168, Dončova – 75, Hlavná stanica - 0, Hurbanova - 6, Mostová - 41, Nábr. M.R.Štefánika - 316, Nám. Š.N.Hýroša - 24, Panská - 0, Podhora – 28, Považská - 198, Š.Náhalku - 34, ÚVVaÚVTOS, ÚVN
+#   obvod 8: Brezová - 25, Cintorínska - 13, Fatranská - 38, J.Hanulu - 116, J.Páričku - 35, J.Sladkého - 87, K.F.Palmu - 127, Obvodová cesta - 56, Ružová - 10, Na vyhliadke - 32, Nad štadiónom – 44, Pod cintorínom - 32, Pod Kalváriou - 48, Za kláštorom - 72, Záhradná - 57, Do Dielca - 126, Jelence - 171, Nad skalkou - 121, Tichá – 88, Zelená - 56, Nám.A.Hlinku - 96, Kalvárska - 60, Veľký Závoz - 0, trvalý pobyt Ružomberok (bez ulice) - 663
+#   obvod 9: Bottova - 68, Hriadky - 65, Komenského - 29, Ľ.Štúra - 17, Laziny - 85, Majere - 11, Mariánska - 9, Malý Závoz - 5, Murgašova - 28, Pivovarská - 69, Radlinského - 17, Riadok – 342, Plavisko - 748, K.Sidora - 317, Sihoť - 0
+#   obvod 10: I.Houdeka - 1349, Baničné - 177, E.Bohúňa - 160, Cesta na Vlkolínec - 279, Do Žlebín - 8, Papiernícka - 461, Mičinô - 4, Cesta do tehelne - 0, Kosovo - 10, Pod skalami - 38, Sládkovičova - 157, Šoltésovej - 92, Hollého - 180, K.Krčméryho - 99, Do Baničného - 134, Bystrická cesta (od ul. Cesta do tehelne) – 162
+#   obvod 11: Gen. Miloša Vesela - 143, J.Jančeka - 73, Kuzmányho - 29, Poľná - 385, Priehradka – 0, Sv.Anny - 44, Zarevúca - 249, Za starým cintorínom - 2, ÚVN, VÚ, Za dráhou - 1127, Bystrická cesta (po ul. Cesta do tehelne) - 1430, Štiavnická – 197, Tatranská cesta – 256, Za celulózkou - 1
+# Okrsky added by an AI agent in job okrsok-rules-1093 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Do Uhliska, Družstevná, Hlavná, Jazierce, Korytnická, Ku Revúcej, Lepenkáreň, Luhy, Nad vŕškom, Nižné Matejkovo, Pod Dielcom, Pod Hlinisko, Pod Ostré, Pod Sidorovo, Pod vŕškom, Raveň, Skalná, Smrekovica, SNP, Stredná, Šípová, Školská, Škutovky, Trlenská, Trlenská dolina, Vápenka, Vyšné Matejkovo, Záhumnie, Vlkolínec
+#   okrsok 2: A. Hlinku, B. Björnsona, Černovských martýrov, Čremošná, Čutkovská, Dolná, Jánošíkova, Ku ihrisku, Milkov, Na Hôrky, Nová, Pri Váhu, Priehradka, Račkov, Slnečná, Strmá, Včelárska, Za járočkom
+#   okrsok 3: Mlynská, Na Pruty, Ostrá, Potočná, Priehrada, Príjazdová, Sadová, Záskalie
+#   okrsok 4: Horská, Malé domky, Malé Tatry, Nová Hrboltová, Pod Čebraťom, Rybárpoľská, Textilná, Ž. Silbigera
+#   okrsok 5: Klačno, Lesná
+#   okrsok 6: Liptovská, Smreková
+#   okrsok 7: Klačník, Veterná
+#   okrsok 8: Hrabovská cesta, Hrabovská dolina, Malino Brdo, Jarná, Kukučínova, Športová, Veľký Polík, Vajanského, Žilinská cesta 7,8,9,12,13,14,15,16,17,18,24,26, 27,28,29,30,31
+#   okrsok 9: D. Makovického, Š. Moyzesa 1,2,3,4,5,6,7,8,9,10,12,13,14,15,17,19,21,23,24,25,26,27,28,29,31,33,35,37,39,41,43,45,47
+#   okrsok 10: Hviezdoslavova, R. Dúbravca, Scota Viatora, Š. Moyzesa 16,18,20,22, V. Šrobára, Žilinská cesta 1,2,3,4,5,6,10,11
+#   okrsok 11: K.A.Medveckého, K. Salvu, Ľ. Fullu, M. Madačova, Nám. slobody
+#   okrsok 12: A.Bernoláka, Dončova, Hlavná stanica, Hurbanova, Mostová, Nábr. M. R. Štefánika, Nám. Š.N.Hýroša, Panská, Podhora, Považská, Š. Náhalku, ÚVVaÚVTOS, ÚVN
+#   okrsok 13: Brezová, Cintorínska, Fatranská, J. Hanulu, J. Páričku, J. Sladkého, K.F.Palmu, Na vyhliadke, Nad štadiónom, Obvodová cesta, Pod cintorínom, Pod Kalváriou, Ružová, Za kláštorom, Záhradná
+#   okrsok 14: Do Dielca, Jelence, Kalvárska, Nad skalkou, Nám.A.Hlinku, Tichá, Zelená, Veľký Závoz, trvalý pobyt Ružomberok (bez ulice)
+#   okrsok 15: Bottova, Hriadky, Komenského, Ľ.Štúra, Laziny, Majere, Mariánska, Malý Závoz, Murgašova, Pivovarská, Radlinského, Plavisko 4,6,8,9,10,11,12,13,15,16,18,20,22, Riadok, Sihoť
+#   okrsok 16: K. Sidora, Plavisko (mimo 4,6,8,9,10,11,12,13,15,16,18,20,22)
+#   okrsok 17: I. Houdeka 20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62
+#   okrsok 18: Baničné, E.Bohúňa, I. Houdeka 41,43,45,47,49,51,53,55,57
+#   okrsok 19: Cesta na Vlkolínec, Do Žlebín, Papiernícka, ZO Mičinô, Jánova dolina, Skalnatá
+#   okrsok 20: Bystrická cesta 72,74,76,78,80,90,94,100,104,106,108,112, Cesta do tehelne, Do Baničného, Hollého, I.Houdeka 1,2,3,4,5,6,7,8,9,10,11,12,13,14,17,18,19,23,27,29,31,35,33,37, K.Krčméryho, Kosovo, Pod skalami, Sládkovičova, Šoltésovej
+#   okrsok 21: Gen. Miloša Vesela, J. Jančeka, Kuzmányho, Poľná, Za celulózkou, Sv. Anny, Zarevúca, Za starým cintorínom, ÚVN, VÚ.
+#   okrsok 22: Za dráhou 1,2,3,4,5,6,6A,6B,6C,6D,7,8,9,10,11,12,13,14,15,16,17,18,19A,21,22,23,24,25,26
+#   okrsok 23: Bystrická cesta 1,2A,2B,3,4,6,7,18,20,21,22,24,46,48,50,52,54,56,57,58,60,114,116,118,120.
+#   okrsok 24: Bystrická cesta 26,28,30,32,34,36,38,40,42,44,122,124,126, Štiavnická, Tatranská cesta, Za dráhou 27,28,29.
+obec = "510998"
+name = "Ružomberok"
+date = 2022-06-29
+fill = "nearest"
+note = "Resolution 91/2022 keeps the 11 existing obvody (names and seats); their streets are in the council material of the same item. Material counts of voters per street omitted from rules. Obvody 1–4 are the parts Biely Potok (+Vlkolínec), Černová, Hrboltová, Rybárpole, transcribed as part rules. Priehradka is listed in both VO 2 and VO 11 (VO 11 with 0 voters); the register has it only in Černová, so it is in VO 2. Not named by the document, placed by fill_nearest: Janka Jesenského (1 address), Štiavnička (4), and addresses without a street in part Ružomberok (the document puts \"trvalý pobyt Ružomberok (bez ulice)\" – voters registered at the city office – in VO 8). Malino Brdo, ÚVVaÚVTOS, ÚVN, VÚ have no register street."
+okrsky_date = 2022-07-12
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's 2022 document (12.7.2022, DOCX linked from the Voľby 2022 page, archived snapshot) lists the streets per okrsok; the 9.8.2022 document assigns the okrsky to the obvody. Streets split by house numbers: one okrsok gets the listed numbers, the other the rest of the street (Moyzesa 9/10, Žilinská cesta 8/10, Plavisko 15/16, Houdeka 17/18/20, Za dráhou 22/24, Bystrická cesta 23/24 in obvod 11 and 20 in obvod 10). \"trvalý pobyt Ružomberok (bez ulice)\" in okrsok 14 means voters registered without an address at the city office, not register houses without a street; those (part Ružomberok) and Janka Jesenského, Štiavnička (not named by the document) are placed by fill_nearest. Not in the register, left out: Malino Brdo, ÚVVaÚVTOS, ÚVN, VÚ, Jánova dolina, Skalnatá. Spelling: B. Björnsona = Björnsterna Björnsona."
+
+[[document]]
+url = "https://www.ruzomberok.sk/wp-content/uploads/2025/11/Uznesenia-MsZ-20220629-Bod-11-202291.pdf"
+sha256 = "16e0ee98caebe0caf2846cec3694d7ee754de344a2103e8c71d2dc1336230282"
+title = "Uznesenie MsZ v Ružomberku č. 91/2022 zo dňa 29.06.2022 (obvody a počet poslancov)"
+
+[[document]]
+url = "https://www.ruzomberok.sk/wp-content/uploads/2025/11/MsZ-20220629-Bod-11-Urcenie-poctu-poslancov-VO-a-rozsahu-vykonu-funkcie-primatora-na-volebne-obdobie-2022-2026.pdf"
+sha256 = "373cc90be890eb98839ba867c318e2aa3e462de0a9a9089b460fd4fdd9d51de0"
+title = "Materiál MsZ 29.06.2022, bod 11: Určenie počtu poslancov MsZ, volebných obvodov (ulice obvodov)"
+
+[[document]]
+url = "https://web.archive.org/web/20221221021542/https://www.ruzomberok.sk/download_file_f.php?id=1722287"
+sha256 = "c18d6dd1d6f7321a0751f61e4d88c090909137299b66663848f16a0a8fb3354e"
+title = "Určenie volebných okrskov, miestností a zapisovateľov v Ružomberku pre voľby 29.10.2022 (12.7.2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20221221014612/https://www.ruzomberok.sk/download_file_f.php?id=1722285"
+sha256 = "b1209ca009f440c8d010a33d6e599486f79ddb5b54b1b901d9cb7557178a40b7"
+title = "Zaradenie jednotlivých volebných okrskov do volebných obvodov – voľby 2022 (9.8.2022)"
+
+[obvod.1]
+seats = 1
+okrsky = [1]
+rules = [
+  {part = "Biely Potok"},
+  {part = "Vlkolínec"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [2]
+rules = [
+  {part = "Černová"},
+]
+
+[obvod.3]
+seats = 1
+okrsky = [3]
+rules = [
+  {part = "Hrboltová"},
+]
+
+[obvod.4]
+seats = 1
+okrsky = [4]
+rules = [
+  {part = "Rybárpole"},
+]
+
+[obvod.5]
+seats = 4
+okrsky = [5, 6, 7]
+rules = [
+  {street = "Klačno"},
+  {street = "Lesná"},
+  {street = "Liptovská"},
+  {street = "Smreková"},
+  {street = "Veterná"},
+  {street = "Klačník"},
+]
+
+[obvod.6]
+seats = 3
+okrsky = [8, 9, 10]
+rules = [
+  {street = "Hrabovská cesta"},
+  {street = "Hrabovská dolina"},
+  {street = "Jarná"},
+  {street = "Kukučínova"},
+  {street = "Športová"},
+  {street = "Vajanského"},
+  {street = "Veľký Polík"},
+  {street = "Žilinská cesta"},
+  {street = "D. Makovického", written = "D Makovického"},
+  {street = "Štefana Moyzesa", written = "Š Moyzesa", note = "same street, register spells it Štefana Moyzesa"},
+  {street = "Hviezdoslavova"},
+  {street = "R.Dúbravca"},
+  {street = "Scota Viatora"},
+  {street = "Vavra Šrobára", written = "V.Šrobára", note = "same street, register spells it Vavra Šrobára"},
+]
+
+[obvod.7]
+seats = 2
+okrsky = [11, 12]
+rules = [
+  {street = "Karola Salvu", written = "K.Salvu", note = "same street, register spells it Karola Salvu"},
+  {street = "Maroša Madačova", written = "M.Madačova", note = "same street, register spells it Maroša Madačova"},
+  {street = "Námestie Slobody", written = "Nám. Slobody"},
+  {street = "Ľudovíta Fullu", written = "Ľ.Fullu", note = "same street, register spells it Ľudovíta Fullu"},
+  {street = "K. Medveckého", written = "K.A.Medveckého", note = "same street, register spells it K. Medveckého"},
+  {street = "Antona Bernoláka", written = "A.Bernoláka", note = "same street, register spells it Antona Bernoláka"},
+  {street = "Dončova"},
+  {street = "Hlavná stanica"},
+  {street = "Hurbanova"},
+  {street = "Mostová"},
+  {street = "Nábrežie M.R. Štefánika", written = "Nábr. M.R.Štefánika", note = "same street, register spells it Nábrežie M.R. Štefánika"},
+  {street = "Námestie Š. N. Hýroša", written = "Nám. Š.N.Hýroša"},
+  {street = "Panská"},
+  {street = "Podhora"},
+  {street = "Považská"},
+  {street = "Š. Náhalku", written = "Š.Náhalku"},
+]
+
+[obvod.8]
+seats = 2
+okrsky = [13, 14]
+rules = [
+  {street = "Brezová"},
+  {street = "Cintorínska"},
+  {street = "Fatranská"},
+  {street = "J. Hanulu", written = "J.Hanulu"},
+  {street = "Jána Páričku", written = "J.Páričku", note = "same street, register spells it Jána Páričku"},
+  {street = "Jána Sladkého", written = "J.Sladkého", note = "same street, register spells it Jána Sladkého"},
+  {street = "Karola Františka Palmu", written = "K.F.Palmu", note = "same street, register spells it Karola Františka Palmu"},
+  {street = "Obvodová cesta"},
+  {street = "Ružová"},
+  {street = "Na vyhliadke"},
+  {street = "Nad štadiónom"},
+  {street = "Pod cintorínom"},
+  {street = "Pod Kalváriou"},
+  {street = "Za kláštorom"},
+  {street = "Záhradná"},
+  {street = "Do Dielca"},
+  {street = "Jelence"},
+  {street = "Nad Skalkou", written = "Nad skalkou"},
+  {street = "Tichá"},
+  {street = "Zelená"},
+  {street = "Nám. A. Hlinku", written = "Nám.A.Hlinku"},
+  {street = "Kalvárska"},
+  {street = "Veľký Závoz"},
+]
+
+[obvod.9]
+seats = 2
+okrsky = [15, 16]
+rules = [
+  {street = "Bottova"},
+  {street = "Hriadky"},
+  {street = "Komenského"},
+  {street = "Ľudovíta Štúra", written = "Ľ.Štúra", note = "same street, register spells it Ľudovíta Štúra"},
+  {street = "Laziny"},
+  {street = "Majere"},
+  {street = "Mariánska"},
+  {street = "Malý Závoz"},
+  {street = "Murgašova"},
+  {street = "Pivovarská"},
+  {street = "Radlinského"},
+  {street = "Riadok"},
+  {street = "Plavisko"},
+  {street = "K. Sidora", written = "K.Sidora"},
+  {street = "Sihoť"},
+]
+
+[obvod.10]
+seats = 4
+okrsky = [17, 18, 19, 20]
+rules = [
+  {street = "Ivana Houdeka", written = "I.Houdeka", note = "same street, register spells it Ivana Houdeka"},
+  {street = "Baničné"},
+  {street = "E. Bohúňa", written = "E.Bohúňa"},
+  {street = "Cesta na Vlkolínec"},
+  {street = "Do Žlebín"},
+  {street = "Papiernická", written = "Papiernícka"},
+  {street = "Mičinô"},
+  {street = "Cesta do tehelne"},
+  {street = "Kosovo"},
+  {street = "Pod Skalami", written = "Pod skalami"},
+  {street = "Sládkovičova"},
+  {street = "Šoltésovej"},
+  {street = "Hollého"},
+  {street = "Karola Krčméryho", written = "K.Krčméryho", note = "same street, register spells it Karola Krčméryho"},
+  {street = "Do Baničného"},
+  {street = "Bystrická cesta", numbers = "72, 74, 76, 78, 80, 90, 94, 100, 104, 106, 108, 112", written = "Bystrická cesta", note = "the document says \"Bystrická cesta (od ul. Cesta do tehelne)\" without numbers; the numbers are those of okrsok 20 (part of VO 10) in the 2022 list of okrsky (as republished by Ružomberský hlas, 28.10.2022)", inferred = true},
+]
+
+[obvod.11]
+seats = 4
+okrsky = [21, 22, 23, 24]
+rules = [
+  {street = "Gen. Miloša Vesela"},
+  {street = "Jána Jančeka", written = "J.Jančeka", note = "same street, register spells it Jána Jančeka"},
+  {street = "Kuzmányho"},
+  {street = "Poľná"},
+  {street = "Sv. Anny", written = "Sv.Anny"},
+  {street = "Zarevúca"},
+  {street = "Za starým cintorínom"},
+  {street = "Za dráhou"},
+  {street = "Bystrická cesta", written = "Bystrická cesta", note = "\"Bystrická cesta (po ul. Cesta do tehelne)\": all of Bystrická cesta except the numbers placed in VO 10"},
+  {street = "Štiavnická"},
+  {street = "Tatranská cesta"},
+  {street = "Za celulózkou"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Klačno"},
+  {street = "Lesná"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Liptovská"},
+  {street = "Smreková"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Klačník"},
+  {street = "Veterná"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Hrabovská cesta"},
+  {street = "Hrabovská dolina"},
+  {street = "Jarná"},
+  {street = "Kukučínova"},
+  {street = "Športová"},
+  {street = "Veľký Polík"},
+  {street = "Vajanského"},
+  {street = "Žilinská cesta"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "D. Makovického"},
+  {street = "Štefana Moyzesa", written = "Š. Moyzesa"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "R.Dúbravca"},
+  {street = "Scota Viatora"},
+  {street = "Štefana Moyzesa", numbers = "16, 18, 20, 22", written = "Š. Moyzesa"},
+  {street = "Vavra Šrobára", written = "V. Šrobára"},
+  {street = "Žilinská cesta", numbers = "1-6, 10, 11"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "K. Medveckého", written = "K.A.Medveckého", note = "Karol Anton Medvecký; the register gives only the first initial"},
+  {street = "Karola Salvu", written = "K. Salvu"},
+  {street = "Ľudovíta Fullu", written = "Ľ. Fullu"},
+  {street = "Maroša Madačova", written = "M. Madačova"},
+  {street = "Námestie Slobody", written = "Nám. slobody"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Antona Bernoláka", written = "A. Bernoláka"},
+  {street = "Dončova"},
+  {street = "Hlavná stanica"},
+  {street = "Hurbanova"},
+  {street = "Mostová"},
+  {street = "Nábrežie M.R. Štefánika", written = "Nábr. M. R. Štefánika"},
+  {street = "Námestie Š. N. Hýroša", written = "Nám. Š. N. Hýroša"},
+  {street = "Panská"},
+  {street = "Podhora"},
+  {street = "Považská"},
+  {street = "Š. Náhalku"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Brezová"},
+  {street = "Cintorínska"},
+  {street = "Fatranská"},
+  {street = "J. Hanulu"},
+  {street = "Jána Páričku", written = "J. Páričku"},
+  {street = "Jána Sladkého", written = "J. Sladkého"},
+  {street = "Karola Františka Palmu", written = "K. F. Palmu"},
+  {street = "Na vyhliadke"},
+  {street = "Nad štadiónom"},
+  {street = "Obvodová cesta"},
+  {street = "Pod cintorínom"},
+  {street = "Pod Kalváriou"},
+  {street = "Ružová"},
+  {street = "Za kláštorom"},
+  {street = "Záhradná"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Do Dielca"},
+  {street = "Jelence"},
+  {street = "Kalvárska"},
+  {street = "Nad Skalkou"},
+  {street = "Nám. A. Hlinku"},
+  {street = "Tichá"},
+  {street = "Zelená"},
+  {street = "Veľký Závoz"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Bottova"},
+  {street = "Hriadky"},
+  {street = "Komenského"},
+  {street = "Ľudovíta Štúra", written = "Ľ. Štúra"},
+  {street = "Laziny"},
+  {street = "Majere"},
+  {street = "Mariánska"},
+  {street = "Malý Závoz"},
+  {street = "Murgašova"},
+  {street = "Pivovarská"},
+  {street = "Radlinského"},
+  {street = "Riadok"},
+  {street = "Sihoť"},
+  {street = "Plavisko", numbers = "4, 6, 8-13, 15, 16, 18, 20, 22"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "K. Sidora"},
+  {street = "Plavisko"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Ivana Houdeka", numbers = "20-62", parity = "even", written = "I. Houdeka"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Baničné"},
+  {street = "E. Bohúňa"},
+  {street = "Ivana Houdeka", numbers = "41-57", parity = "odd", written = "I. Houdeka"},
+]
+
+[okrsok.19]
+rules = [
+  {street = "Cesta na Vlkolínec"},
+  {street = "Do Žlebín"},
+  {street = "Papiernická", written = "Papiernícka", note = "spelling variant of the same street"},
+  {street = "Mičinô", written = "ZO Mičinô", note = "ZO = záhradkárska osada Mičinô"},
+]
+
+[okrsok.20]
+rules = [
+  {street = "Bystrická cesta"},
+  {street = "Cesta do tehelne"},
+  {street = "Do Baničného"},
+  {street = "Hollého"},
+  {street = "Ivana Houdeka", written = "I. Houdeka"},
+  {street = "Karola Krčméryho", written = "K. Krčméryho"},
+  {street = "Kosovo"},
+  {street = "Pod Skalami"},
+  {street = "Sládkovičova"},
+  {street = "Šoltésovej"},
+]
+
+[okrsok.21]
+rules = [
+  {street = "Gen. Miloša Vesela"},
+  {street = "Jána Jančeka", written = "J. Jančeka"},
+  {street = "Kuzmányho"},
+  {street = "Poľná"},
+  {street = "Za celulózkou"},
+  {street = "Sv. Anny"},
+  {street = "Zarevúca"},
+  {street = "Za starým cintorínom"},
+]
+
+[okrsok.22]
+rules = [
+  {street = "Za dráhou"},
+]
+
+[okrsok.23]
+rules = [
+  {street = "Bystrická cesta"},
+]
+
+[okrsok.24]
+rules = [
+  {street = "Bystrická cesta", numbers = "26-44, 122-126", parity = "even"},
+  {street = "Štiavnická"},
+  {street = "Tatranská cesta"},
+  {street = "Za dráhou", numbers = "27-29"},
+]

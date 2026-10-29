@@ -1,0 +1,30 @@
+# Okrsky of Žitavany, transcribed by an AI agent in job okrsok-rules-931 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1: Kultúrno – spoločenské zariadenie, Opatovecká ulica č. 847/32, Žitavany
+#   okrsok 2: Volebný okrsok č. 2: Športová hala Žitavany, Športová ulica č. 791/26, Žitavany
+obec = "582816"
+name = "Žitavany"
+okrsky_date = 2022-11-09
+okrsky_note = "No document of the elections found (the 2022 elections pages, live and archived, hold no okrsky document); the referendum's document, signed 'V Žitavanoch 09.11.2022' (its header misprints 09.11.2023). It gives each okrsok only its polling station: okrsok 1 in the Kultúrno-spoločenské zariadenie, Opatovecká 847/32 (k.ú. Opatovce), okrsok 2 in the Športová hala, Športová 791/26 (k.ú. Kňažice). Žitavany has one part but two k.ú., the former villages Opatovce and Kňažice, each holding one station, so each okrsok is given the k.ú. of its station (inferred, by analogy with one part per station). Doubtful: voters 802/763 against 336/432 addresses."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.zitavany.sk/modules/file_storage/download.php?file=b003a00b%7C878&inline=1"
+sha256 = "80cc9cf3d55e2bbe1191f8273cbe28664a9a91349f1ac42c85bc701afecff843"
+title = "Vytvorenie volebného okrsku a určenie volebnej miestnosti pre Referendum 2023, konané dňa 21. januára 2023"
+
+[[document]]
+url = "https://www.zitavany.sk/zverejnovanie/volby-referendum-1/referendum-2023/"
+sha256 = "36670ded635849962fa6dae6788db26111f20fcd7dd3d4530a0db9dce015635b"
+title = "Referendum 2023"
+
+[okrsok.1]
+rules = [
+  {ku = "Opatovce", note = "k.ú. of the polling station Opatovecká 847/32", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {ku = "Kňažice", note = "k.ú. of the polling station Športová 791/26", inferred = true},
+]

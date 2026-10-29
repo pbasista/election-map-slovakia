@@ -1,0 +1,29 @@
+# Okrsky of Zliechov, transcribed by an AI agent in job okrsok-rules-1006 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 Zasadačka obecného úradu 018 32 Zliechov č. 233
+#   okrsok 2: Okrsok č.2 Urbársky dom Košecké Rovné č. 71, 018 32 Zliechov
+obec = "513865"
+name = "Zliechov"
+okrsky_date = 2022-07-12
+okrsky_note = "The document gives each okrsok only its polling station; the okrsky are as many as the parts and each station lies in another part (okrsok 1: obecný úrad Zliechov č. 233; okrsok 2: Urbársky dom Košecké Rovné č. 71), so each okrsok is given the part of its station (inferred). Voters 363/89 fit Zliechov and the small Košecké Rovné."
+
+[[document]]
+url = "https://zliechov.sk/wp-content/uploads/dokumenty/volby/Okrsky.pdf"
+sha256 = "16068cc4d1d37667acd8a6dd26c7355865f4b01812020b9cee869152fabc522f"
+title = "Oznámenie o počte volebných obvodov obce a počte mandátov (dva okrsky), 12.07.2022"
+
+[[document]]
+url = "https://zliechov.sk/dokument/volebne-okrsky-a-pocet-poslancov-obecneho-zastupitelstva-ktory-sa-v-nich-ma-zvolit-vo-volbach-do-samospravy-obce/"
+sha256 = "cc51a9b12662459c449f50ea2ee8735d9f505a82e8d2f2c1d06fcc54c2e58e4c"
+title = "Volebné okrsky a počet poslancov obecného zastupiteľstva ... (zverejnené 13. júla 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Zliechov", note = "part of the polling station", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Košecké Rovné", note = "part of the polling station", inferred = true},
+]

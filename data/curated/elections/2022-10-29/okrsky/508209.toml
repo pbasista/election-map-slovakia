@@ -1,0 +1,103 @@
+# Okrsky of Rovinka, transcribed by an AI agent in job okrsok-rules-651 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hlavná, Krajná, Krásna, Levanduľová ulica, Medovková ulica, Okružná, Platanová ulica, Rovinka, Topoľová ulica, Záhradná, Železničná
+#   okrsok 2: Agátová, Astrová, Brezová, Broskyňová ulica, Čerešňová, Dunajská, Jabloňová, Kvetná, Ľanová ulica, Lekárenská, Majerská, Orechová, Pšeničná ulica, Sadová, Slivková, Slnečnicová ulica, Športová, Úzka, Višňová, Žitná ulica
+#   okrsok 3: Družstevná, Gazdovská, Hrádzna, Jazdecká, Jazerná, Lipová ulica, Lúčna, Maková ulica, Narcisová, Nechtíková ulica, Obilná, Orgovánová, Pasienková, Pivonková, Pluhová, Podbeľová ulica, Potočná, Púpavová, Repková, Riečna, Rozmarínová ulica, Za hrádzou
+#   okrsok 4: Belasá, Bronzová, Cínová, Dúhová, Farebná, Jarná, Jasná, Krátka, Medená, Nová, Poľná, Rovná, Slnečná, Súmračná, Školská, Veterná, Vojenská, Zelená
+obec = "508209"
+name = "Rovinka"
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-08-10
+okrsky_date_basis = "The okrsky state no date; the municipality's post with them says it was published on 10 August 2022, as the Internet Archive captured it on 2022-10-01 (https://web.archive.org/web/20221001040359/https://obecrovinka.sk/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-rozdelenie-do-okrskov/)."
+okrsky_fill = "nearest"
+okrsky_note = "Okrsok 1's bare 'Rovinka' means voters registered without a street address (only on the obec), not the register's súpisné-only houses, which are placed by fill_nearest. Levanduľová ulica and Medovková ulica (okrsok 1) are not in the register and left out. Post published 10 August 2022, snapshot 2022-10-01."
+
+[[document]]
+url = "https://web.archive.org/web/20221001040359/https://obecrovinka.sk/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-rozdelenie-do-okrskov/"
+sha256 = "9a43da72615f5636f89cc495f8264df001586b0ade3ff8aa19457ec4ce84a9cd"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov – rozdelenie do okrskov"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná"},
+  {street = "Krajná"},
+  {street = "Krásna"},
+  {street = "Okružná"},
+  {street = "Platanová ulica"},
+  {street = "Topoľová ulica"},
+  {street = "Záhradná"},
+  {street = "Železničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Astrová"},
+  {street = "Brezová"},
+  {street = "Broskyňová ulica"},
+  {street = "Čerešňová"},
+  {street = "Dunajská"},
+  {street = "Jabloňová"},
+  {street = "Kvetná"},
+  {street = "Ľanová ulica"},
+  {street = "Lekárenská"},
+  {street = "Majerská"},
+  {street = "Orechová"},
+  {street = "Pšeničná ulica"},
+  {street = "Sadová"},
+  {street = "Slivková"},
+  {street = "Slnečnicová ulica"},
+  {street = "Športová"},
+  {street = "Úzka"},
+  {street = "Višňová"},
+  {street = "Žitná ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Družstevná"},
+  {street = "Gazdovská"},
+  {street = "Hrádzna"},
+  {street = "Jazdecká"},
+  {street = "Jazerná"},
+  {street = "Lipová ulica"},
+  {street = "Lúčna"},
+  {street = "Maková ulica"},
+  {street = "Narcisová"},
+  {street = "Nechtíková ulica"},
+  {street = "Obilná"},
+  {street = "Orgovánová"},
+  {street = "Pasienková"},
+  {street = "Pivonková"},
+  {street = "Pluhová"},
+  {street = "Podbeľová ulica"},
+  {street = "Potočná"},
+  {street = "Púpavová"},
+  {street = "Repková"},
+  {street = "Riečna"},
+  {street = "Rozmarínová ulica"},
+  {street = "Za hrádzou"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Belasá"},
+  {street = "Bronzová"},
+  {street = "Cínová ulica", written = "Cínová"},
+  {street = "Dúhová"},
+  {street = "Farebná"},
+  {street = "Jarná"},
+  {street = "Jasná"},
+  {street = "Krátka"},
+  {street = "Medená"},
+  {street = "Nová"},
+  {street = "Poľná"},
+  {street = "Rovná"},
+  {street = "Slnečná"},
+  {street = "Súmračná"},
+  {street = "Školská"},
+  {street = "Veterná"},
+  {street = "Vojenská"},
+  {street = "Zelená"},
+]

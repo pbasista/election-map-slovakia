@@ -1,0 +1,41 @@
+# Council obvody of Divinka (517496), Žilina.
+# Transcribed by an AI agent in job obvod-rules-383 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Divinka
+#   obvod 2: Lalinok
+# Okrsky added by an AI agent in job okrsok-rules-1244 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Divinka
+#   okrsok 2: Lalinok
+obec = "517496"
+name = "Divinka"
+date = 2022-06-24
+note = "Scanned announcement read by OCR; obvod 1 = časť Divinka, obvod 2 = časť Lalinok."
+okrsky_date = 2022-06-24
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+
+[[document]]
+url = "https://www.divinka-lalinok.sk/download_file_f.php?id=1712462"
+sha256 = "2d7035d1651b45f19cc4353cbc9eca296a6626441952271c8eeea4818c51ec68"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 29. októbra 2022 (uznesenie č. 10./17.22 zo dňa 24.06.2022)"
+
+[[document]]
+url = "https://www.divinka-lalinok.sk/download_file_f.php?id=1722542"
+sha256 = "09feac8dcd65035d71bfe78e9bcf62b3d4bf85b53a9d7ec2575e9bcb16ab57cd"
+title = "Utvorenie volebných okrskov, určenie volebných miestností (09.08.2022)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Divinka"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [2]
+rules = [
+  {part = "Lalinok"},
+]

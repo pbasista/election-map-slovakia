@@ -1,0 +1,42 @@
+# Council obvody of Zbehy (500950), Nitra.
+# Transcribed by an AI agent in job obvod-rules-332 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa Zbehy sa volí 7 poslancov.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa Andač sa volia 2 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-1200 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č.1 /Zbehy/
+#   okrsok 2: Volebný okrsok č.2 /Andač/
+obec = "500950"
+name = "Zbehy"
+date = 2022-06-30
+note = "Obvod 1 'Zbehy' and obvod 2 'Andač' are transcribed as the register parts Zbehy and Andač; the part Holotka, contiguous with Zbehy in k.ú. Zbehy, is placed in obvod 1 (inferred)."
+okrsky_date = 2022-08-01
+okrsky_note = "Scanned document read visually: okrsok 1 /Zbehy/, okrsok 2 /Andač/; each okrsok is its own obvod."
+
+[[document]]
+url = "https://www.zbehy.sk/data/page/zbehy.sk/14802/oznamenie-o-utvoreni-volebnych-obvodov-a-o-urceni-poctu-poslancov-pre-volby-do-organov-samospravy-obci-29-10-2022.pdf"
+sha256 = "528e982a7953f5c389a1ba1af5ad260f3d12e7a2c4609f2adb0509526b3f86d2"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 22/2022 z 30.6.2022), 15.7.2022"
+
+[[document]]
+url = "https://www.zbehy.sk/data/page/zbehy.sk/14802/volebne-okrsky-a-volebne-miestnosti-pre-volby-2022.pdf"
+sha256 = "68c55b70e457461b84db2081b59af3d73b273829a191c93b77edfae28518236e"
+title = "Volebné okrsky a volebné miestnosti pre voľby 2022, 01.08.2022"
+
+[obvod.1]
+seats = 7
+okrsky = [1]
+rules = [
+  {part = "Zbehy"},
+  {part = "Holotka", note = "Holotka is the southern part of the built-up area of Zbehy, in k.ú. Zbehy (územný plán: 'Zbehy a Holotka sú územne previazané časti'); the document names only Zbehy and Andač", inferred = true},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Andač"},
+]

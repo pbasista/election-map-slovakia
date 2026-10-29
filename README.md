@@ -1,11 +1,12 @@
 # Election Map Slovakia
 
 A zoomable map of every constituency
-of the Slovak municipal and regional elections of 24 October 2026,
+of the Slovak municipal and regional elections of 24 October 2026
+and of 29 October 2022,
 with the candidates standing in each and their results.
 It is at **<https://volebnamapa.sk>**.
 
-![The map around Banská Bystrica, its council constituency No. 1 highlighted where the visitor clicked, and beside the map the ballots voted on there with the candidates in ballot order, their parties and marks](docs/img/main.png)
+![The map around Banská Bystrica, its council constituency No. 1 highlighted where the visitor clicked, and beside the map the ballots voted on there with the candidates in ballot order, their parties and marks, among them who held the office at the time and who ran for it in 2022](docs/img/main.png)
 
 ## Features
 
@@ -22,11 +23,20 @@ It is at **<https://volebnamapa.sk>**.
   Each candidate's votes, the turnout and the winners,
   on the ballots and on the map, down to the polling districts;
   shown live as they were counted on election night.
+- **Several elections.**
+  The logo opens the list of elections, grouped by kind;
+  each has its own pages, its own boundaries, addresses,
+  constituencies and polling districts, candidates and results.
+  A candidate who ran last time shows that result,
+  and the 2026 results compare with 2022's where the polling districts allow.
+  Where an earlier election's data are missing, uncertain
+  or taken from a later source, the page says so.
 - **Nine languages,** a light and a dark theme, phones and desktops.
 - **Static and self-contained.**
   A Python pipeline turns official open data into plain files,
   served as they are by Cloudflare Pages.
-  The browser loads nothing from other servers, the results included.
+  The browser loads nothing from servers but the site's own,
+  the results included.
 
 ## Quick start
 
@@ -39,15 +49,22 @@ git clone https://github.com/pbasista/election-map-slovakia.git
 cd election-map-slovakia
 uv sync
 
-uv run ems fetch     # download the official inputs into data/raw/ (about 230 MB)
+uv run ems fetch     # get the pinned inputs into data/raw/ (about 1 GB)
 uv run ems make      # build the site into dist/ and check it
 uv run ems serve     # serve it at http://127.0.0.1:8000/
 ```
 
 Then open <http://127.0.0.1:8000/>.
+`fetch` takes each input from the project's input store,
+a GitHub release holding the exact files the site is built from
+([docs/pipeline.md](docs/pipeline.md#fetch)).
 After changing `config/`, `data/curated/` or `web/`,
 run `uv run ems make` again:
 it redoes only the steps whose inputs changed.
+A change to the data (inputs, `config/` but `site.toml`,
+`data/curated/`, the code that makes the data)
+also needs `uv run ems data lock`,
+whose `data/published.toml` is committed with it.
 
 ## Documentation
 
@@ -72,7 +89,8 @@ npx --yes @biomejs/biome@2.5.12 ci
 ```
 
 A push to any branch runs these checks;
-a version tag builds the site and deploys it
+a version tag builds the site and deploys it in parts:
+the data whose key changed, then the app
 ([docs/deploy.md](docs/deploy.md)).
 To see a change in a browser, see [docs/testing.md](docs/testing.md).
 

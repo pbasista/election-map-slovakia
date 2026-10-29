@@ -6,16 +6,18 @@ and https://volbysr.sk/osk/ as JSON files, which its own pages read and
 which it overwrites as the commissions' records come in. A day or two
 later the definitive results follow as CSV tables in a zip.
 ``ems results`` turns either into the results of the election in
-``data/build/results/<election day>/`` (:attr:`Config.results_dir`);
-``build`` copies them to ``dist/results/<election day>/``, where the app
-reads them from the site's own origin (``web/js/live.js``)::
+``data/build/<election day>/results/`` (:meth:`Config.results_dir`);
+``build`` copies them to ``dist/results/<election day>/``, the results part
+of the site, where the app reads them (``web/js/live.js``)::
 
     status.json        {version, updated, phase, source: {osk, oso}, files}
     <area>.json        {contests: {contest: {status, counted, eligible,
                         voters, valid, seats, filled, candidates, (areas)}}}
     okrsky/<area>.json {contests: {contest: {okrsok: [eligible, voters,
-                        valid, {number: votes}]}}, past: {okrsok: [eligible,
-                        voters]}}                     okrsok "500011/3"
+                        valid, {number: votes}]}}, past: {} | {day,
+                        okrsky: {okrsok: method}, contests: {contest:
+                        {okrsok | obec: [eligible, voters, valid,
+                        {number: votes}]}}}}         okrsok "500011/3"
 
 The format is the shared contract of docs/results.md.
 
@@ -34,9 +36,10 @@ The format is the shared contract of docs/results.md.
 - The okrsok files (final results only) hold the area file's contests per
   okrsok (polling district), keyed ``<obec>/<okrsok>`` (:func:`okrsok_key`)
   in the obec's own numbering; Bratislava's and Košice's own contests in
-  their districts'. ``past`` is the 2022 municipal turnout of an okrsok
-  where safely matched (:func:`okrsok_past`), ``{}`` in the regional
-  (``kraj``) files.
+  their districts'. ``past`` holds the figures of the election before
+  (``day``) on these okrsky and their obce, as far as they are known
+  (:class:`Past`, made by :mod:`election_map_slovakia.crosswalk`), ``{}``
+  where there is none.
 
 :func:`check` holds the files to the format and to what the votes must add
 up to in every unit counted (the contest, each of its ``areas`` and
@@ -71,9 +74,9 @@ Sources:
   file is kept under ``data/raw/results/<UTC time>/``.
 - ``final`` (:func:`read_final`): the definitive CSV tables, the zips
   ``oso/files/OSO<year>_SK_csv.zip`` and ``osk/files/OSK<year>_SK_csv.zip``
-  of volbysr.sk. Once pinned, they are the inputs ``results-oso<year>``
-  and ``results-osk<year>`` of ``config/inputs.toml``
-  (:func:`final_inputs`), which the results step of ``ems make`` reads, so
+  of volbysr.sk. Once pinned, they are inputs of ``config/inputs.toml``
+  that ``config/elections.toml`` names as the election's ``results``,
+  which the results step of ``ems make`` reads, so
   a release's results are a pure function of its inputs like every other
   file; before, they are downloaded (:func:`fetch_final`) and kept like
   the night's files, or given. The tables summed per municipality, council
@@ -110,7 +113,6 @@ import math
 import random
 import re
 import ssl
-import subprocess
 import threading
 import urllib.parse
 import zipfile
@@ -131,7 +133,7 @@ from pathlib import Path
 from typing import Any, NamedTuple, TypeVar
 from zoneinfo import ZoneInfo
 
-from election_map_slovakia import build, candidates, fetch, geo, output, progress
+from election_map_slovakia import bundle, candidates, fetch, geo, output, progress
 
 RAW_DIR = "results"
 """Below ``data/raw/``: every file ``poll`` fetched, per poll."""
@@ -220,9 +222,23 @@ _AREA_KEY = re.compile(r"\d{6}|obvod:[1-9]\d*")
 _OKRSOK_KEY = re.compile(r"\d{6}/[1-9]\d*")
 OKRSKY_DIR = "okrsky"
 """The okrsok files: ``okrsky/<area>``, beside the area files."""
-PAST_TOLERANCE = 0.1
-"""How far an okrsok's registered voters may be from those of the same
-okrsok number in 2022, as a share of 2022's, for ``past`` to be shown."""
+_OBEC_KEY = re.compile(r"\d{6}")
+UNKNOWN = 0
+"""``past`` method of an okrsok whose earlier figures are not known: the
+okrsky changed, and neither their addresses nor their numbers tell how."""
+SAME = 1
+"""``past`` method of an okrsok of the same area as one of the earlier
+election, by the okrsky of their addresses then and now."""
+IDENTITY = 2
+"""``past`` method of an okrsok taken for the earlier one of its number:
+the obec's okrsky have the same numbers and registered voters as then."""
+APPROXIMATE = 3
+"""``past`` method of an okrsok whose earlier figures are estimated from
+the earlier okrsky its addresses were in."""
+PAST_METHODS = (UNKNOWN, SAME, IDENTITY, APPROXIMATE)
+PAST_DOUBT = (SAME, IDENTITY, APPROXIMATE, UNKNOWN)
+"""The methods from the most certain: several okrsky together are as
+certain as the least certain of them."""
 _RECORD_KEYS = frozenset(
     {"status", "counted", "eligible", "voters", "valid", "seats", "filled"}
     | {"candidates"}
@@ -360,11 +376,11 @@ class Reference:
 def live_path(contest: Mapping[str, Any], okres_of: Mapping[str, str]) -> str:
     """Return the results area file of *contest*: the site's area file, bare.
 
-    That is :func:`build.area_file` without ``data/`` and ``.json``, as the
+    That is :func:`bundle.area_file` without ``data/`` and ``.json``, as the
     app's ``areaPath`` names it.
     """
     return (
-        build.area_file(contest, okres_of).removeprefix("data/").removesuffix(".json")
+        bundle.area_file(contest, okres_of).removeprefix("data/").removesuffix(".json")
     )
 
 
@@ -375,11 +391,11 @@ def reference(
 ) -> Reference:
     """Return the :class:`Reference` of ``candidates.json`` *data*.
 
-    *props* are the municipalities' :func:`build.obec_props`, *seats* the
-    known seats per obvod contest (:func:`build.obvod_seats`).
+    *props* are the municipalities' :func:`bundle.obec_props`, *seats* the
+    known seats per obvod contest (:func:`bundle.obvod_seats`).
     """
     okres_of = {o["code"]: o.get("okres", "") for o in data["obce"]}
-    regional_past = build.regional_past(data, props)
+    regional_past = bundle.regional_past(data, props)
     contests = {}
     for c in data["contests"]:
         past = c.get("past") or regional_past.get(c["id"])
@@ -449,7 +465,10 @@ def _bodies(
 def load_reference(build_dir: Path, election_dir: Path) -> Reference:
     """Return the :class:`Reference` of the built candidates and geometry.
 
-    *election_dir* is :attr:`election_map_slovakia.config.Config.election_dir`.
+    *build_dir* is the election's build directory
+    (:meth:`election_map_slovakia.config.Config.election_build_dir`),
+    *election_dir* its curated data
+    (:meth:`election_map_slovakia.config.Config.election_dir`).
     """
     data_path = build_dir / candidates.OUTPUT_FILE
     geo_dir = build_dir / geo.OUTPUT_DIR
@@ -458,8 +477,8 @@ def load_reference(build_dir: Path, election_dir: Path) -> Reference:
             raise ResultsError(f"{path} missing; run `ems make` first")
     return reference(
         json.loads(data_path.read_bytes()),
-        build.obec_props(geo_dir),
-        build.obvod_seats(geo_dir, election_dir),
+        bundle.obec_props(geo_dir),
+        bundle.obvod_seats(geo_dir, election_dir),
     )
 
 
@@ -563,6 +582,18 @@ def area_of_json(entry: Sequence[Any]) -> Area:
     return (e, v, valid, {int(n): x for n, x in votes.items()})
 
 
+def sum_areas(areas: Iterable[Area]) -> Area:
+    """Return the figures of *areas* added up, a missing figure as 0."""
+    eligible = voters = valid = 0
+    votes: Counter[int] = Counter()
+    for e, v, b, x in areas:
+        eligible += e or 0
+        voters += v or 0
+        valid += b or 0
+        votes.update(x)
+    return (eligible, voters, valid, dict(votes))
+
+
 def okrsok_key(obec: str, okrsok: str | int) -> str:
     """Return the key of okrsok *okrsok* of *obec* in the okrsok files: ``obec/n``."""
     return f"{obec}/{int(okrsok)}"
@@ -588,6 +619,32 @@ def _no_source() -> dict[str, dict[str, Any]]:
 
 
 @dataclass
+class Past:
+    """The election before on this one's okrsky and obce (``past``).
+
+    Made by :mod:`election_map_slovakia.crosswalk`; empty (``day`` "") where
+    there is no election before or nothing of it is known.
+    """
+
+    day: str = ""
+    """ISO day of the election before."""
+    methods: dict[str, int] = field(default_factory=dict)
+    """:func:`okrsok_key` → how its figures were found (:data:`PAST_METHODS`),
+    for every okrsok of an obec of several okrsky then or now; the okrsok
+    of an obec of one both times is that obec."""
+    contests: dict[str, dict[str, Area]] = field(default_factory=dict)
+    """Contest → :func:`okrsok_key` (an okrsok whose method is not
+    :data:`UNKNOWN`) or obec code (a whole obec of the contest's area) → the
+    figures of the election before there, the votes by this election's
+    ballot numbers of the candidates who stood for the same office then."""
+    totals: dict[str, Area] = field(default_factory=dict)
+    """Contest of a whole body (no obvod, whose area is the same in both
+    elections) → the figures of the same contest then, the votes as in
+    :attr:`contests`: the contest as a whole, which its units then need not
+    add up to where some are not known."""
+
+
+@dataclass
 class Live:
     """Everything the results hold: phase, sources, area and okrsok files."""
 
@@ -597,8 +654,7 @@ class Live:
     """Area file → contest → record."""
     okrsky: dict[str, dict[str, dict[str, Area]]] = field(default_factory=dict)
     """Area file → contest → :func:`okrsok_key` → its figures (final only)."""
-    past: dict[str, tuple[int, int]] = field(default_factory=dict)
-    """:func:`okrsok_key` → eligible and voters in 2022, where matched."""
+    past: Past = field(default_factory=Past)
 
     def add(self, path: str, contest: str, record: Record) -> None:
         """Put *record* of *contest* into area file *path*."""
@@ -616,30 +672,42 @@ class Live:
 def render(live: Live) -> dict[str, bytes]:
     """Return file → content, of the area and okrsok files with a contest.
 
-    An okrsok file has the ``past`` of the okrsky in its contests, a
-    municipal turnout: none in the regional (kraj) files.
+    An okrsok file has the ``past`` of its contests and of the okrsky in them.
     """
     out = {
-        path: build.encode({"contests": {c: r.to_json() for c, r in contests.items()}})
+        path: bundle.encode({"contests": {c: r.to_json() for c, r in contests.items()}})
         for path, contests in sorted(live.files.items())
         if contests
     }
     for path, contests in sorted(live.okrsky.items()):
         keys = {k for areas in contests.values() for k in areas}
         if keys:
-            regional = path.startswith("kraj/")
-            out[f"{OKRSKY_DIR}/{path}"] = build.encode(
+            out[f"{OKRSKY_DIR}/{path}"] = bundle.encode(
                 {
                     "contests": {
                         c: {k: area_json(a) for k, a in areas.items()}
                         for c, areas in contests.items()
                     },
-                    "past": {}
-                    if regional
-                    else {k: list(live.past[k]) for k in keys if k in live.past},
+                    "past": _past_json(live.past, contests, keys),
                 }
             )
     return out
+
+
+def _past_json(
+    past: Past, contests: Collection[str], keys: Collection[str]
+) -> dict[str, Any]:
+    """Return the ``past`` of an okrsok file of *contests* and okrsky *keys*."""
+    methods = {k: past.methods[k] for k in keys if k in past.methods}
+    records = {
+        c: {unit: area_json(a) for unit, a in past.contests[c].items()}
+        for c in contests
+        if past.contests.get(c)
+    }
+    totals = {c: area_json(past.totals[c]) for c in contests if c in past.totals}
+    if not (methods or records or totals):
+        return {}
+    return {"day": past.day, "okrsky": methods, "contests": records, "totals": totals}
 
 
 def _digest(data: bytes) -> str:
@@ -665,7 +733,7 @@ def status(
     ) == (live.phase, live.source, files)
     if same:
         return None
-    fingerprint = _digest(build.encode([live.phase, live.source, files]))
+    fingerprint = _digest(bundle.encode([live.phase, live.source, files]))
     return {
         "version": f"{now:%Y%m%dT%H%M%S}-{fingerprint[:_VERSION_HASH]}",
         "updated": now.isoformat(timespec="seconds"),
@@ -708,7 +776,7 @@ def write(
             out = tmp / f"{path}.json"
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_bytes(data)
-        (tmp / STATUS_FILE).write_bytes(build.encode(new))
+        (tmp / STATUS_FILE).write_bytes(bundle.encode(new))
         problems = check(tmp) if checked else []
         if problems:
             raise ResultsError(
@@ -732,7 +800,16 @@ def read_live(directory: Path) -> Live | None:
                 live.add_okrsky(
                     area, contest, {k: area_of_json(a) for k, a in okrsky.items()}
                 )
-            live.past |= {k: (e, v) for k, (e, v) in content["past"].items()}
+            past = content["past"]
+            if past:
+                live.past.day = past["day"]
+                live.past.methods |= past["okrsky"]
+                for contest, units in past["contests"].items():
+                    live.past.contests[contest] = {
+                        u: area_of_json(a) for u, a in units.items()
+                    }
+                for contest, total in past["totals"].items():
+                    live.past.totals[contest] = area_of_json(total)
             continue
         for contest, entry in content["contests"].items():
             live.add(path, contest, Record.from_json(entry))
@@ -744,8 +821,8 @@ def merge(old: Live | None, new: Live, elections: Collection[str]) -> Live:
 
     *elections* are those *new* has in full (``oso``, ``osk``): with both,
     the phase is final; otherwise the old phase stays, at least partial.
-    The okrsky of a contest go with it; ``past`` is that of *new* where it
-    has one.
+    The okrsky of a contest go with it; ``past`` is that of *new* if it has
+    one (the final results'), else *old*'s.
     """
     base = old or Live("none")
     merged = Live(
@@ -753,7 +830,7 @@ def merge(old: Live | None, new: Live, elections: Collection[str]) -> Live:
         {**base.source, **{e: new.source[e] for e in elections}},
         {path: dict(contests) for path, contests in base.files.items()},
         {path: dict(contests) for path, contests in base.okrsky.items()},
-        {**base.past, **new.past},
+        new.past if new.past.day else base.past,
     )
     for path, contests in new.files.items():
         for contest, record in contests.items():
@@ -891,18 +968,97 @@ def _check_okrsok_file(content: Any, area: Any) -> list[str]:
         for contest, okrsky in sorted(contests.items())
         for p in _check_okrsky(contest, okrsky, records.get(contest))
     ]
-    keys = {
-        k for okrsky in contests.values() if isinstance(okrsky, dict) for k in okrsky
-    }
-    if not isinstance(past, dict) or not all(
-        _OKRSOK_KEY.fullmatch(k) and _is_pair(v) for k, v in past.items()
+    if problems:
+        return problems
+    return _check_past(past, contests, records)
+
+
+def _check_past(
+    past: Any, contests: Mapping[str, Any], records: Mapping[str, Any]
+) -> list[str]:
+    """Check an okrsok file's ``past`` against its well-formed *contests*.
+
+    *records* are the contests' entries of their area file.
+    """
+    if past == {}:
+        return []
+    if not isinstance(past, dict) or set(past) != {
+        "day",
+        "okrsky",
+        "contests",
+        "totals",
+    }:
+        return ["past malformed"]
+    problems = []
+    try:
+        dt.date.fromisoformat(past["day"])
+    except (TypeError, ValueError):
+        problems.append(f"past day {past['day']!r}")
+    methods, units = past["okrsky"], past["contests"]
+    keys = {k for okrsky in contests.values() for k in okrsky}
+    if not isinstance(methods, dict) or not all(
+        k in keys and v in PAST_METHODS for k, v in methods.items()
     ):
-        problems.append("past malformed")
-    elif set(past) - keys:
-        problems.append(
-            f"past of okrsky not in its contests: {sorted(set(past) - keys)}"
-        )
+        return [*problems, "past okrsky malformed or not in its contests"]
+    if not isinstance(units, dict) or not isinstance(past["totals"], dict):
+        return [*problems, "past contests or totals malformed"]
+    for contest, figures in sorted(units.items()):
+        if contest not in contests:
+            problems.append(f"{contest}: past of a contest not in the file")
+        # A malformed record is reported with its area file.
+        elif not _check_record(contest, records[contest]):
+            found = _check_past_units(
+                figures, contests[contest], methods, records[contest]
+            )
+            problems += [f"{contest}: past {p}" for p in found]
+    return problems + _check_past_totals(past["totals"], contests, records)
+
+
+def _check_past_totals(
+    totals: Mapping[str, Any], contests: Mapping[str, Any], records: Mapping[str, Any]
+) -> list[str]:
+    """Check an okrsok file's ``past`` ``totals``: whole contests of the file."""
+    problems = []
+    for contest, total in sorted(totals.items()):
+        if contest not in contests or "/" in contest:
+            problems.append(f"{contest}: past total of no whole contest of the file")
+        # A malformed record is reported with its area file.
+        elif not _check_record(contest, records[contest]):
+            numbers = {str(c[0]) for c in records[contest]["candidates"]}
+            if not _is_area(total, complete=True) or set(total[3]) - numbers:
+                problems.append(
+                    f"{contest}: past total malformed, or votes of no candidate"
+                )
     return problems
+
+
+def _check_past_units(
+    figures: Any,
+    okrsky: Mapping[str, Any],
+    methods: Mapping[str, int],
+    record: Mapping[str, Any],
+) -> list[str]:
+    """Check a contest's ``past`` figures against its *okrsky* and *record*.
+
+    Each of an okrsok of the contest whose method is known, or of an obec it
+    has okrsky in; the votes of its candidates only.
+    """
+    if not isinstance(figures, dict) or not figures:
+        return ["malformed"]
+    obce = {k.partition("/")[0] for k in okrsky}
+    numbers = {str(c[0]) for c in record["candidates"]}
+    wrong = []
+    for unit, figure in sorted(figures.items()):
+        known = (
+            unit in okrsky and methods.get(unit, UNKNOWN) != UNKNOWN
+            if _OKRSOK_KEY.fullmatch(unit)
+            else bool(_OBEC_KEY.fullmatch(unit)) and unit in obce
+        )
+        if not known:
+            wrong.append(f"{unit} (no okrsok of known method or obec of the contest)")
+        elif not _is_area(figure, complete=True) or set(figure[3]) - numbers:
+            wrong.append(f"{unit} (malformed, or votes of no candidate)")
+    return wrong
 
 
 def _check_okrsky(contest: str, okrsky: Any, record: Any) -> list[str]:
@@ -1963,15 +2119,6 @@ def fetch_final(client: Client, year: int) -> list[Path]:
     return [client.download(final_path(e, year), stamp) for e in FINAL_ELECTIONS]
 
 
-def final_inputs(year: int) -> list[str]:
-    """Return the names of an election's pinned final results inputs.
-
-    ``results-oso<year>`` and ``results-osk<year>`` in ``config/inputs.toml``,
-    *year* that of the election day: the rule every election's are named by.
-    """
-    return [f"results-{e}{year}" for e in FINAL_ELECTIONS]
-
-
 def data_time(live: Live) -> dt.datetime | None:
     """Return the time of the newest data of *live*'s sources, or None.
 
@@ -2086,64 +2233,6 @@ def read_final(
                 _final_regional(tables, live)
         elections.append(tables.election)
     return live, elections
-
-
-Turnout = tuple[int, int]
-"""Eligible and voters."""
-
-
-def okrsky_then(data: Mapping[str, Any]) -> dict[str, dict[int, Turnout]]:
-    """Return obec → okrsok → its 2022 municipal turnout, of ``candidates.json``.
-
-    From ``okrsky_2022`` (:func:`election_map_slovakia.incumbents.okrsky_json`),
-    which only obce of several okrsky have.
-    """
-    return {
-        o["code"]: {n: (e, v) for n, e, v in o["okrsky_2022"]["okrsky"]}
-        for o in data["obce"]
-        if "okrsky_2022" in o
-    }
-
-
-def okrsok_past(
-    live: Live, then: Mapping[str, Mapping[int, Turnout]], log: Log = progress.note
-) -> dict[str, Turnout]:
-    """Return okrsok → its 2022 turnout (``past``), where safely matched.
-
-    Okrsky are matched by number, which a change of an obec's okrsky can
-    shift to other streets. So only an obec whose okrsky in *live* have the
-    same numbers as in 2022 (*then*, :func:`okrsky_then`), each with
-    registered voters within :data:`PAST_TOLERANCE` of its 2022 ones, gets
-    them. *log* is told how many obce matched.
-    """
-    now: dict[str, dict[int, int]] = defaultdict(dict)
-    for contests in live.okrsky.values():
-        for areas in contests.values():
-            for key, (eligible, *_) in areas.items():
-                obec, _, n = key.partition("/")
-                if eligible is not None:
-                    now[obec].setdefault(int(n), eligible)
-    out: dict[str, Turnout] = {}
-    renumbered = moved = 0
-    for obec, eligible in sorted(now.items()):
-        old = then.get(obec)
-        if old is None:
-            continue
-        if set(old) != set(eligible):
-            renumbered += 1
-        elif any(
-            abs(e - old[n][0]) > PAST_TOLERANCE * old[n][0] for n, e in eligible.items()
-        ):
-            moved += 1
-        else:
-            out |= {okrsok_key(obec, n): old[n] for n in sorted(eligible)}
-    known = sum(1 for obec in now if obec in then)
-    log(
-        f"okrsok past: {known - renumbered - moved} of {known} obce with okrsky"
-        f" in 2022 matched; {renumbered} with other okrsok numbers, {moved} with"
-        " registered voters of an okrsok changed too much"
-    )
-    return out
 
 
 def _group(rows: Iterable[_T], key: Callable[[_T], Any]) -> dict[Any, list[_T]]:
@@ -2498,7 +2587,7 @@ def city_districts(
     return out
 
 
-def _city_areas(
+def city_areas(
     turnout: Sequence[Mapping[str, str]],
     indices: Iterable[int],
     votes: CityVotes,
@@ -2708,9 +2797,7 @@ def _final_cities(
         """Set a city contest's ``areas`` by district; return its okrsky."""
         kind = contest.partition(":")[0]
         by_row = city_votes(turnout, indices, votes, kind, record.seats)
-        record.areas, gone = _city_areas(
-            turnout, indices, by_row, kind, district_of.get
-        )
+        record.areas, gone = city_areas(turnout, indices, by_row, kind, district_of.get)
         if by_row.unresolved:
             numbers = ", ".join(
                 f"{turnout[u.okrsky[0]][_C_OBVOD]}/{turnout[u.okrsky[0]][_C_OKRSOK]}"
@@ -2722,7 +2809,7 @@ def _final_cities(
                 f"number ×okrsky: {numbers}); left out of the okrsok file"
                 + (f" and of the areas of {', '.join(sorted(gone))}" if gone else "")
             )
-        okrsky, _ = _city_areas(turnout, indices, by_row, kind, okrsok_of)
+        okrsky, _ = city_areas(turnout, indices, by_row, kind, okrsok_of)
         return okrsky
 
     rows_of = _group(range(len(turnout)), lambda i: turnout[i][_C_CITY])
@@ -2849,7 +2936,12 @@ _COUNCIL_MARKS = 0.5
 they make at most."""
 _COUNCIL_SEATS = (3, 9)
 _PAST_LEFT_OUT = 0.25
-"""Share of the fake obce of several okrsky without ``past`` per okrsok."""
+"""Share of the fake obce of several okrsky whose earlier okrsky are not
+known (:data:`UNKNOWN`)."""
+_PAST_DAY = "2022-10-29"
+"""The day of the made-up election before."""
+_PAST_RAN = 0.5
+"""Share of the fake candidates who stood for the same office before."""
 
 
 @dataclass(frozen=True)
@@ -3035,23 +3127,82 @@ class _Fake:
             for i, k in enumerate(numbers)
         }
 
-    def past(self, live: Live) -> dict[str, tuple[int, int]]:
-        """Return a made-up 2022 turnout of the okrsky of most obce of several."""
-        now: dict[str, tuple[int, int]] = {}
+    def past(self, live: Live) -> Past:
+        """Return a made-up :class:`Past` of *live*'s okrsky.
+
+        Each obec of several okrsky gets a method drawn for all of them, some
+        :data:`UNKNOWN`; each okrsok of a known one and each obec wholly in
+        a contest its figures, near this election's, with the votes of some
+        of the candidates.
+        """
+        okrsky: dict[str, set[str]] = defaultdict(set)
         for contests in live.okrsky.values():
             for areas in contests.values():
-                for key, (e, v, *_) in areas.items():
-                    now.setdefault(key, (e or 0, v or 0))
-        out = {}
-        for obec, keys in _group(sorted(now), lambda k: k.partition("/")[0]).items():
-            r = _rng(self.seed, "past", obec)
-            # As the real one, only for the obce of several okrsky.
-            if len(keys) == 1 or r.random() < _PAST_LEFT_OUT:
-                continue
-            for k in keys:
-                e = round(now[k][0] * r.uniform(0.95, 1.05))
-                out[k] = (e, min(e, round(now[k][1] * r.uniform(0.8, 1.1))))
-        return out
+                for key in areas:
+                    okrsky[key.partition("/")[0]].add(key)
+        past = Past(_PAST_DAY, self._methods(okrsky))
+        for contests in live.okrsky.values():
+            for contest, areas in contests.items():
+                units = self._units(contest, areas, past.methods, okrsky)
+                if units:
+                    past.contests[contest] = units
+        return past
+
+    def _units(
+        self,
+        contest: str,
+        areas: Mapping[str, Area],
+        methods: Mapping[str, int],
+        okrsky: Mapping[str, Collection[str]],
+    ) -> dict[str, Area]:
+        """Return made-up earlier figures of *contest*'s okrsky and whole obce."""
+        ran = {
+            n
+            for n in self._numbers(self.ref.contests[contest])
+            if _rng(self.seed, "ran", contest, n).random() < _PAST_RAN
+        }
+        units: dict[str, Area] = {}
+        by_obec: dict[str, list[Area]] = defaultdict(list)
+        for key, area in areas.items():
+            then = self._then(contest, key, area, ran)
+            by_obec[key.partition("/")[0]].append(then)
+            if methods.get(key, UNKNOWN) != UNKNOWN:
+                units[key] = then
+        for obec, thens in by_obec.items():
+            if len(thens) == len(okrsky[obec]):
+                units[obec] = sum_areas(thens)
+        return units
+
+    def _methods(self, okrsky: Mapping[str, Collection[str]]) -> dict[str, int]:
+        """Return a method drawn per obec of several *okrsky* for all of them."""
+        methods: dict[str, int] = {}
+        for obec, keys in sorted(okrsky.items()):
+            if len(keys) > 1:
+                r = _rng(self.seed, "past", obec)
+                left_out = r.random() < _PAST_LEFT_OUT
+                method = UNKNOWN if left_out else r.choice(PAST_METHODS[1:])
+                methods |= dict.fromkeys(keys, method)
+        return methods
+
+    def _then(self, contest: str, key: str, area: Area, ran: Collection[int]) -> Area:
+        """Return made-up earlier figures of okrsok *key* of *contest*."""
+        e, v, valid, votes = area
+        r = _rng(self.seed, "then", key)
+        eligible = round((e or 0) * r.uniform(0.95, 1.05))
+        share = r.uniform(0.8, 1.1)
+        voters = min(eligible, round((v or 0) * share))
+        valid_then = min(voters, round((valid or 0) * share))
+        jitter = _rng(self.seed, "then", contest, key)
+        return (
+            eligible,
+            voters,
+            valid_then,
+            {
+                n: min(valid_then, round(x * share * jitter.uniform(0.7, 1.3)))
+                for n, x in votes.items()
+                if n in ran
+            },
+        )
 
     def _places(self, c: Contest) -> list[str]:
         """Return the municipalities of a regional or city contest."""
@@ -3291,32 +3442,6 @@ def fake(
         live.past = model.past(live)
     _count_voters(live, ref)
     return live
-
-
-# Deploying.
-
-
-def deploy_command(project: str) -> list[str]:
-    """Return the command that uploads ``dist/`` to Pages project *project*.
-
-    As a production deployment (``--branch=main``), as the release workflow
-    makes one; it runs in the project root.
-    """
-    return [
-        "npx",
-        "--yes",
-        "wrangler",
-        "pages",
-        "deploy",
-        build.OUTPUT_DIR,
-        f"--project-name={project}",
-        "--branch=main",
-    ]
-
-
-def deploy(root: Path, project: str) -> int:
-    """Upload *root*'s ``dist/`` to Pages project *project*; return Wrangler's code."""
-    return subprocess.run(deploy_command(project), cwd=root, check=False).returncode
 
 
 def describe(directory: Path) -> list[str]:

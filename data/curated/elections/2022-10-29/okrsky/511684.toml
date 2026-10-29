@@ -1,0 +1,24 @@
+# Okrsky of Ozdín, transcribed by an AI agent in job okrsok-rules-1061 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kultúrna miestnosť Ozdín
+#   okrsok 2: Kultúrny dom Bystrička
+obec = "511684"
+name = "Ozdín"
+okrsky_date = 2022-08-01
+okrsky_note = "The list (dated 'V Ozdíne 1.8.2022', posted 03.08.2022; the live page has lost its content, so the archived page is used) gives each okrsok only its polling station: no. 1 Kultúrna miestnosť Ozdín, no. 2 Kultúrny dom Bystrička. The okrsky are as many as the parts and each station lies in another part, so each okrsok is given the part of its station (inferred)."
+
+[[document]]
+url = "https://web.archive.org/web/20221202054102/https://www.ozdin.sk/--2-131-volebne-okrsky-a-miestnosti---volby-2022"
+sha256 = "53d9a291deee903e16b19246e95832de254ddb4d1d102ee7aae85c07bfd6ad22"
+title = "Volebné okrsky a miestnosti - Voľby 2022 (Zoznam volebných okrskov pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov v roku 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Ozdín", note = "the document names only the polling station, the Kultúrna miestnosť in Ozdín", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Bystrička", note = "the document names only the polling station, the Kultúrny dom in Bystrička", inferred = true},
+]

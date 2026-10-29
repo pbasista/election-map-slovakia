@@ -1,0 +1,57 @@
+# Okrsky of Hliník nad Hronom, transcribed by an AI agent in job okrsok-rules-837 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Československej armády, Jána Švermu, Kamenárska, Kopaničná, Lesná, Mlynská, Námestie SNP, Pekárenská, Pivovarská, Potočná, Priehradka, Priemyselná, Sovietskej armády, Tehelná a Železničná
+#   okrsok 2: na uliciach: 1. mája, 9. mája, Dukelských hrdinov, Kpt. Nálepku, Ladislava Majerského, Lúčna, Ľudovíta Štúra, Mierová, Na záhradky, Opatovská, Partizánska, Pionierov, Poľná, Strojárska a Školská; ktorým bol zrušený trvalý pobyt, tzv. „bez adresy“
+obec = "516767"
+name = "Hliník nad Hronom"
+okrsky_date = 2022-08-01
+okrsky_fill = "nearest"
+okrsky_note = "Okrsok 2 also holds the voters 'bez adresy' (residence cancelled), who have no address in the register. The street 'Na záhradky' (okrsok 2) is not in the register and is left out. The register's houses without a street (súpisné only) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.hliniknadhronom.sk/download_file_f.php?id=1719441"
+sha256 = "14404cd8c355ac6593361d26c719bf258cae4fc3ebe06e2f3c489fb592e1210d"
+title = "Určenie volebných okrskov a volebných miestností"
+
+[[document]]
+url = "https://www.hliniknadhronom.sk/volebne-okrsky-a-miestnosti-clanok/mid/485029/.html"
+sha256 = "1cf8fbb783d395cc77d7487f1b15650315a16e414494cecba5fbb07ce50929b0"
+title = "Volebné okrsky a miestnosti (Voľby 2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Československej Armády", written = "Československej armády", note = "Same street; only capitalization differs."},
+  {street = "Jána Švermu"},
+  {street = "Kamenárska"},
+  {street = "Kopaničná"},
+  {street = "Lesná"},
+  {street = "Mlynská"},
+  {street = "Námestie SNP"},
+  {street = "Pekárenská"},
+  {street = "Pivovarská"},
+  {street = "Potočná"},
+  {street = "Priehradka"},
+  {street = "Priemyselná"},
+  {street = "Sovietskej Armády", written = "Sovietskej armády", note = "Same street; only capitalization differs."},
+  {street = "Tehelná"},
+  {street = "Železničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Dukelských Hrdinov", written = "Dukelských hrdinov", note = "Same street; only capitalization differs."},
+  {street = "Kapitána Nálepku", written = "Kpt. Nálepku", note = "'Kpt.' abbreviates 'Kapitána'; the same street."},
+  {street = "Ladislava Majerského"},
+  {street = "Lúčna"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Mierová"},
+  {street = "Opatovská"},
+  {street = "Partizánska"},
+  {street = "Pionierov"},
+  {street = "Poľná"},
+  {street = "Strojárska"},
+  {street = "Školská"},
+]

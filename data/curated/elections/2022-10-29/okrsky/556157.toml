@@ -1,0 +1,41 @@
+# Okrsky of Jacovce, transcribed by an AI agent in job okrsok-rules-974 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: HLBOKÁ, MÁJOVÁ, PEKÁRENSKÁ, POTOČNÁ, ŠKOLSKÁ, ZÁHRADKÁRSKA, ZEMIANSKÁ a obyvatelia, ktorí majú trvalý pobyt Obec Jacovce
+#   okrsok 2: BEDZIANSKÁ, BREZOVÁ, BOČNÁ, FARSKÁ, JAVOROVÁ, KUZMICKÁ, POD HÔRKOU, POĽNÁ, PRI MAJERI, SLOBODY a ZÁPLOTIE
+obec = "556157"
+name = "Jacovce"
+okrsky_date = 2022-08-03
+okrsky_fill = "nearest"
+okrsky_note = "Residents registered only on the obec ('obyvatelia, ktorí majú trvalý pobyt Obec Jacovce') vote in okrsok 1; they are not the register's addresses without a street. The register's 26 addresses without a street are not named by the document and take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20220810052649/https://www.obecjacovce.sk/docs/aktuality/2022/016-8.pdf"
+sha256 = "852cf841c6c5cbaa44c71e92172e9a5b38c213f969aa979844996e3791c8f0c5"
+title = "Utvorenie volebných okrskov a určenie volebnej miestnosti pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {street = "Hlboká"},
+  {street = "Májová"},
+  {street = "Pekárenská"},
+  {street = "Potočná"},
+  {street = "Školská"},
+  {street = "Záhradkárska"},
+  {street = "Zemianská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bedzianska", written = "BEDZIANSKÁ", note = "Same street; the document writes the ending with a long á (the register: Bedzianska); no other similar street."},
+  {street = "Brezová"},
+  {street = "Bočná"},
+  {street = "Farská"},
+  {street = "Javorová"},
+  {street = "Kuzmická"},
+  {street = "Pod Hôrkou"},
+  {street = "Poľná"},
+  {street = "Pri Majeri"},
+  {street = "Slobody"},
+  {street = "Záplotie"},
+]

@@ -1,0 +1,64 @@
+# Okrsky of Leopoldov, transcribed by an AI agent in job okrsok-rules-692 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Jozefa Murgaša, Štúrova, Gojdičova, Nádražná, Sládkovičova, Trnavská cesta, Moyzesova, Šulekovská cesta
+#   okrsok 2: Emila Pauloviča, Jána Simonidesa, Emila Skákalu, Hlohovská cesta, Bernolákova, Hurbanova, M.R.Štefánika, 1.mája, Nám.sv.Ignáca, Rázusova, ZO ŠTRKOVKA, Občania bez trvalého pobytu
+#   okrsok 3: Hollého, Piešťanská cesta, Strečanského, Holubyho, Gucmanova, Záhradnícka, Kukučínova, Janka Kráľa, Hviezdoslavova, Jilemnického, I. Krasku, Dlhá
+obec = "507253"
+name = "Leopoldov"
+okrsky_date = 2022-08-02
+okrsky_fill = "nearest"
+okrsky_note = "Scanned, dated 02.08.2022, read from the image. 'Občania bez trvalého pobytu' (okrsok 2) are voters registered without an address, not addresses. Cintorinská (1 address) is not named; it and addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.leopoldov.sk/files/documents/oznamy/utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "205e780f84802b085eefc1f1680d314d9f95a2199bb7f99ee5d4a0edb73fd63b"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí, ktoré platia aj pre voľby do orgánov samosprávnych krajov"
+
+[[document]]
+url = "https://www.leopoldov.sk/sk/samosprava/zverejnovanie-dokumentov/volby/volby-do-organov-samospravy-obci-a-samospravnych-krajov-2022.html"
+sha256 = "3ce755b24c2eda8d5aeb1dc6295ce68b5998bb14cb0fe5b000f18db8d910f6be"
+title = "Voľby do orgánov samosprávy obcí a samosprávnych krajov 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Jozefa Murgaša"},
+  {street = "Štúrova"},
+  {street = "Gojdičova"},
+  {street = "Nádražná"},
+  {street = "Sládkovičova"},
+  {street = "Trnavská cesta"},
+  {street = "Moyzesova"},
+  {street = "Šulekovská cesta"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Emila Pauloviča"},
+  {street = "Jána Simonidesa"},
+  {street = "Emila Skákalu"},
+  {street = "Hlohovská cesta"},
+  {street = "Bernolákova"},
+  {street = "Hurbanova"},
+  {street = "M.R.Štefánika"},
+  {street = "1.mája"},
+  {street = "Nám.sv.Ignáca"},
+  {street = "Rázusova"},
+  {street = "ZO ŠTRKOVKA"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hollého"},
+  {street = "Piešťanská cesta"},
+  {street = "Strečanského"},
+  {street = "Holubyho"},
+  {street = "Gucmanova"},
+  {street = "Záhradnícka"},
+  {street = "Kukučínova"},
+  {street = "Janka Kráľa"},
+  {street = "Hviezdoslavova"},
+  {street = "Jilemnického"},
+  {street = "I. Krasku"},
+  {street = "Dlhá"},
+]

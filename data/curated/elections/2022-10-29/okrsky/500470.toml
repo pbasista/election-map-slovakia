@@ -1,0 +1,34 @@
+# Okrsky of Lúčnica nad Žitavou, transcribed by an AI agent in job okrsok-rules-1014 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Lúčnica nad Žitavou, Vajka nad Žitavou
+#   okrsok 2: Lúčnica nad Žitavou, Martinová
+obec = "500470"
+name = "Lúčnica nad Žitavou"
+okrsky_date = 2022-08-01
+okrsky_note = "Undated scanned notice (Oznam) for the elections of 29.10.2022; no decision date stated, so date = its notice-board posting date 'Vyvesené: 1. 8. 2022' (archived úradná tabuľa page). Okrsok 1 = part Vajka nad Žitavou, okrsok 2 = part Martinová (voters 635/167 fit)."
+
+[[document]]
+url = "https://www.obeclucnica.sk/e_download.php?file=data/editor/108sk_3.pdf&original=Oznam%20volebn%C3%A9%20okrsky%20a%20miestnosti%20pre%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vy%20obc%C3%AD%202022.pdf"
+sha256 = "073e3e0cdf5c436064a81215ed2acb51552d022c297293cd9a9267c15edc923c"
+title = "Oznam volebné okrsky a miestnosti pre voľby do orgánov samosprávy obcí 2022"
+
+[[document]]
+url = "https://www.obeclucnica.sk/sk/volby/volby-do-organov-samospravy-obci-2022/"
+sha256 = "6ab3380930c13bfd0229fd5d762ffbac144fbdba83b25cd5eee9289db8152793"
+title = "Voľby do orgánov samosprávy obcí 2022"
+
+[[document]]
+url = "https://web.archive.org/web/20220814151045/https://www.obeclucnica.sk/zverejnovanie/uradna-tabula/oznam-o-utvoreni-volebnych-okrskov-a-volebnych-miestnosti-pre-volby-do-organov-samospravy-obci-a-do-organov-samospravnych-krajov-2022-308.html"
+sha256 = "ab6d5d313b7a32266bc6670ed30d4d79cc3de2e087ac7d33ed87e465f23164cc"
+title = "Úradná tabuľa - Oznam o utvorení volebných okrskov a volebných miestností ... 2022 (vyvesené 1. 8. 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Vajka nad Žitavou"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Martinová"},
+]

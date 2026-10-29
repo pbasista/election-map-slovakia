@@ -1,0 +1,26 @@
+# Okrsky of Drženice, transcribed by an AI agent in job okrsok-rules-1057 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kultúrny dom, Drženice č. 82 – pre časť Drženice súpisné čísla Drženice 1 až 148
+#   okrsok 2: Viacúčelová budova č. 34 – pre časť Kmeťovce, súpisné čísla Kmeťovce 1 až 86
+obec = "502219"
+name = "Drženice"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-08-10
+okrsky_date_basis = "The spreadsheet states no date; the Internet Archive captured it on 2022-08-10 (https://web.archive.org/web/20220810172446/http://www.drzenice.sk/download_file_f.php?id=1722729)."
+okrsky_note = "Undated spreadsheet 'vol. okrsky Drženice 2022.xlsx', archived 2022-08-10 from the municipality's site (no date stated; snapshot before the elections). Okrsok 1: časť Drženice, súpisné čísla 1–148; okrsok 2: časť Kmeťovce, súpisné čísla 1–86; 'Obec Drženice nemá členenie podľa ulíc'."
+
+[[document]]
+url = "https://web.archive.org/web/20220810172446/http://www.drzenice.sk/download_file_f.php?id=1722729"
+sha256 = "810d4f09c71e2d2c4778683b4963ecc0aaaf0f0b25f6491d20435d7b0ff37dad"
+title = "vol. okrsky Drženice 2022 (xlsx)"
+
+[okrsok.1]
+rules = [
+  {part = "Drženice"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kmeťovce"},
+]

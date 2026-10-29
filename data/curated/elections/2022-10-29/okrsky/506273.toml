@@ -1,0 +1,38 @@
+# Okrsky of Motešice, transcribed by an AI agent in job okrsok-rules-1026 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Horné Motešice
+#   okrsok 2: Dolné Motešice
+#   okrsok 3: Peťovka
+obec = "506273"
+name = "Motešice"
+okrsky_note = "No document of the elections found (the 2022 elections page, archived 2023-02-02, has only the obvod/poslanci notice, the MVK clerk and the candidates); the referendum's document. It names one part per okrsok (with the polling station there), matching the Statistical Office's 3 okrsky and their voters (475/134/51)."
+okrsky_referendum = 2023-01-21
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-11-30
+okrsky_date_basis = "The Internet Archive captured the obec's referendum page linking the document ('Utvorenie volebných okrskov', wp-content/uploads/2022/11/) on 2022-11-30, before the referendum of 21 January 2023; the PDF itself is undated and captured only on 2023-10-04, but its text names the referendum ('Pre referendum 2023 boli v Obci Motešice utvorené 3 volebné okrsky'). (https://web.archive.org/web/20221130150112/https://www.motesice.sk/referendum/)"
+
+[[document]]
+url = "https://web.archive.org/web/20231004225321/https://www.motesice.sk/wp-content/uploads/2022/11/Utvorenie-volebny%CC%81ch-okrskov.pdf"
+sha256 = "cb7522089d6aba6907fe07f4a0c5b231c7109573d2ce508fbbc5be4593110e51"
+title = "Utvorenie volebných okrskov (pre referendum 2023)"
+
+[[document]]
+url = "https://web.archive.org/web/20221130150112/https://www.motesice.sk/referendum/"
+sha256 = "9237bdcc454d37749a10ede4aed60eb5464c0cc103acdf6e15efad717d4fc302"
+title = "Referendum (obec's page linking the document)"
+
+[okrsok.1]
+rules = [
+  {part = "Horné Motešice"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dolné Motešice"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Peťovka"},
+]

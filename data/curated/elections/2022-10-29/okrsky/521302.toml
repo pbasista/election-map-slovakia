@@ -1,0 +1,52 @@
+# Okrsky of Čečejovce, transcribed by an AI agent in job okrsok-rules-945 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: voliči s trvalým pobytom na uliciach: Mlynská, Košická, Paňovská, Krátka, Severná, Majerská, Hlavná, Južná, Buzická, Staničná, Školská, Východná, Kvetná
+#   okrsok 2: voliči s trvalým pobytom na uliciach: Kostolná, Pešia, Západná, Úzka, Dúhová, Agátová, Slnečná, Muškátová, Orgovánová, Letná, Časť SELEŠKA, Družstevná, Jarková, Viničná, Záhradná, Lúčna
+obec = "521302"
+name = "Čečejovce"
+okrsky_date = 2022-08-17
+okrsky_fill = "nearest"
+okrsky_note = "The notice board page is undated beyond its posting date ('Vyvesené: 17. 8. 2022'), used as date. Okrsok 2 also has 'Časť SELEŠKA' (part rule). Addresses without a street in the part Čečejovce are placed by fill_nearest."
+
+[[document]]
+url = "https://www.cecejovce.sk/uradna-tabula-1/volby-do-organov-samospravy-obci-volebne-okrsky-382.html"
+sha256 = "d8fae88f24cb92bed3e80df8175932f0f67c7139c8b6318ebae8bccb6a4d1217"
+title = "Voľby do orgánov samosprávy obcí - volebné okrsky (vyvesené 17. 8. 2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Mlynská"},
+  {street = "Košická"},
+  {street = "Paňovská"},
+  {street = "Krátka"},
+  {street = "Severná"},
+  {street = "Majerská"},
+  {street = "Hlavná"},
+  {street = "Južná"},
+  {street = "Buzická"},
+  {street = "Staničná"},
+  {street = "Školská"},
+  {street = "Východná"},
+  {street = "Kvetná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kostolná"},
+  {street = "Pešia"},
+  {street = "Západná"},
+  {street = "Úzka"},
+  {street = "Dúhová"},
+  {street = "Agátová"},
+  {street = "Slnečná"},
+  {street = "Muškátová"},
+  {street = "Orgovánová"},
+  {street = "Letná"},
+  {part = "Seleška"},
+  {street = "Družstevná"},
+  {street = "Jarková"},
+  {street = "Viničná"},
+  {street = "Záhradná"},
+  {street = "Lúčna"},
+]

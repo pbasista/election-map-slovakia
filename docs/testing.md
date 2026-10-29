@@ -31,12 +31,16 @@ uv run pytest -q > /tmp/ems-pytest.log 2>&1; echo rc=$?
 ```sh
 uv run ems make                         # the final results of the inputs
 EMS_RESULTS_ANYTIME=1 uv run ems build  # read them at any time
-uv run ems serve --port 8765 &          # dist/, the results in it
+uv run ems serve --port 8765 &          # the parts of dist/ as one site
 ```
 
-The site reads its results from `dist/results/<election day>/`
-on the same server, so one server is all it takes.
-A plain build reads them once per page load,
+`ems serve` serves the parts of `dist/` as one site
+([pipeline.md](pipeline.md#serve)):
+the app at `/`, each election's bundles at `/map/<slug>/` and `/data/<slug>/`,
+the results at `/results/` (the site reads `/results/<election day>/`)
+and the cached copies of sources at the root,
+so one server is all it takes.
+A plain build reads the results once per page load,
 which also works;
 `EMS_RESULTS_ANYTIME=1` polls at any time
 (when the app polls: [deploy.md](deploy.md#polling-live)).
@@ -51,7 +55,7 @@ EMS_RESULTS_ANYTIME=1 uv run ems build
 The stages and what each holds are in
 [results.md](results.md#testing-the-app-with-dummy-results).
 Start `ems serve` after the build,
-since it reads `dist/_headers` once, at startup.
+since it reads each part's `_headers` once, at startup.
 
 ### Places worth opening
 

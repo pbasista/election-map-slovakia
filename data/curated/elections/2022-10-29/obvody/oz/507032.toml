@@ -1,0 +1,418 @@
+# Council obvody of Hlohovec (507032), Hlohovec.
+# Transcribed by an AI agent in job obvod-rules-221 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Bezručova, Františkánske námestie, Fraštacká, Hlohová, Hlohovec 0 (Mesto Hlohovec), Kamenná, Komenského, M. R. Štefánika Nábrežie A. Hlinku 1-23 nepár., Nám. sv. Michala, R. Dilonga, Tolstého, Vajanského, Zábranie,
+#   obvod 2: Bernolákova, Drevená, Družstevná, Fándlyho, Hurbanova, Jarmočná, Jesenského, Kalinčiakova, Krátka, Kukučínova, Mladý háj, Nitrianska, Palackého, Palárikova, Pri cintoríne, Pribinova, Puškinova, Radlinského, Rázusova, Rozmarínova, Starý rínok, Šafárikova, Štúrova, Šumperská ulica, Tehelná, Teplá izba, Továrenska, Zajačky, Železničná,
+#   obvod 3: Balatón, Balatónska, Bottova, Koperníkova, Kpt. Nálepku, Lipiny, Nerudova, Pri hvezdárni, Rad mjr. Pavloviča, Sládkovičova, Slov. nár. povstania, Šomodská, Tajovského, Tokajka, Vinohradská, Vodárenská, Zámok, lokalita Balatón (súp. č. 3401), lokalita Svinná hora (súp. č. 4208) a lokalita Obora (súp. č. 4213, 4245, 4287), lokalita Tomášov vrch (súp. č. 3676)
+#   obvod 4: Michalská, Podzámska, Za poštou, Závalie,
+#   obvod 5: Gaštanová, Hollého, M. Bela, Manckovičova, Nábrežie A. Hlinku 2 -12 párne, 25 -39 nepárne, Pod Beranom, Pod Šomod, Sihotská,
+#   obvod 6: 9. mája, Arpáda Felcána, Cisárka, Čsl. armády, Čulenova, Dukelská, Františka Lipku, Fraňa Kráľa, Gáborská, Gorkého, Hošták, Hviezdoslavova, Inovecká, J. A. Gagarina, Kamenohorská, Karpatská, Kruhová, Ľ. Zúbka, M. Benku, Mierová, Pánska niva, Petra Jilemnického, Poniklecová, Rovná, Ružová, Slnečná, Stará hora, Svätopeterská, Šoltésova, Timravy, Vansovej, Vážska, Veterná, lokalita Ivarnoky (súp.č. 3859) a lokalita Štrkovka (súp.č. 3867)
+#   obvod 7: D. Jurkoviča, Hájska, Holubyho, Janka Kráľa, L. Novomeského, Ľ. Podjavorinskej, Mlynská, Okrúhla, Osloboditeľov, Pltnícka, Priemyselná, Rybárska, Seredská, Školská, Šulekova, Terezov, Za Váhom, Záhradnícka.
+# Okrsky added by an AI agent in job okrsok-rules-1101 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Fraštacká, Hlohová, Kamenná, M. R. Štefánika, Tolstého a pre voličov, ktorí majú evidovaný trvalý pobyt na adrese: Mesto Hlohovec (t.j. občania, ktorým bol zrušený trvalý pobyt podľa § 7 ods. 1 zákona č. 253/1998 Z. z. ...)
+#   okrsok 2: Bezručova, Františkánske námestie, Komenského, Nábrežie A. Hlinku (č. 1 – 23 nepárne), Nám. Sv. Michala, R. Dilonga, Vajanského, Zábranie
+#   okrsok 3: Fándlyho, Hurbanova, Jesenského, Palackého, Pribinova, Puškinova, Radlinského, Rozmarínova, Starý rínok, Štúrova, Železničná
+#   okrsok 4: Bernolákova, Drevená, Družstevná, Jarmočná, Kalinčiakova, Krátka, Mladý háj, Palárikova, Pri cintoríne, Rázusova, Šafárikova, Továrenska, Zajačky, Teplá izba
+#   okrsok 5: Kukučínova, Nitrianska, Tehelná, Šumperská
+#   okrsok 6: Koperníkova (okrem č. 1, 2, 3), Lipiny, Pri hvezdárni, Slov. nár. povstania, Tokajka, Vinohradská (č. 1, 2, 3, 4, 9, 10)
+#   okrsok 7: Balatón, Balatónska, Bottova, Koperníkova (č. 1, 2, 3), Kpt. Nálepku, Nerudova, Rad mjr. Pavloviča, Sládkovičova, Šomodská, Tajovského, Vinohradská (č. 6, 8, 11, 13), Vodárenská, Zámok, lokalita Balatón (súp.č. 3401), lokalita Svinná hora (súp.č. 4208) a lokalita Obora (súp.č. 4213, 4245, 4287), lokalita Tomášov vrch (súp.č. 3676)
+#   okrsok 8: Za poštou, Závalie (č. 1, 2, 3, 5, 7, 9)
+#   okrsok 9: Michalská, Podzámska (č. 2 – 21, 37, 41)
+#   okrsok 10: Podzámska (č. 23 – 35), Závalie (č. 6, 8, 10, 11, 13, 15, 19A, 19B)
+#   okrsok 11: Hollého, M. Bela (č. 10, 12, 14), Pod Beranom
+#   okrsok 12: M. Bela (č. 1, 2, 4, 6, 8), Manckovičova
+#   okrsok 13: Gaštanová, Nábrežie A. Hlinku (č. 2 – 12 párne, č. 25 – 39 nepárne), Pod Šomod, Sihotská
+#   okrsok 14: 9. mája, Arpáda Felcána, Cisárka, Čsl. armády, Hviezdoslavova, Ľ. Zúbka, M. Benku, Petra Jilemnického, Vansovej
+#   okrsok 15: Fraňa Kráľa, Františka Lipku, Gáborská, Gorkého, Inovecká, J. A. Gagarina, Kamenohorská, Karpatská, Mierová, Ružová, Stará hora, Veterná
+#   okrsok 16: Čulenova, Dukelská, Hošták, Kruhová, Pánska niva, Poniklecová, Rovná, Slnečná, Svätopeterská, Šoltésova, Timravy, Vážska, lokalita Ivarnoky (súp.č. 3859) a lokalita Štrkovka (súp.č. 3867)
+#   okrsok 17: D. Jurkoviča, Mlynská, Okrúhla, Pltnícka, Priemyselná, Školská, Šulekova, Za Váhom, Záhradnícka
+#   okrsok 18: Hájska, Holubyho, Janka Kráľa, L. Novomeského, Ľ. Podjavorinskej, Osloboditeľov, Rybárska, Seredská, Terezov
+obec = "507032"
+name = "Hlohovec"
+date = 2022-06-16
+fill = "nearest"
+note = "Vajanského (obvod 1) is not in the register. The document also lists \"Hlohovec 0 (Mesto Hlohovec)\" in obvod 1 and lokality by súpisné číslo (obvod 3: Balatón 3401, Svinná hora 4208, Obora 4213, 4245, 4287, Tomášov vrch 3676; obvod 6: Ivarnoky 3859, Štrkovka 3867); these and the other ~1,000 register addresses without a street (parts Hlohovec, Šulekovo) are placed by fill_nearest, since a part+súpisné rule would also catch street houses with the same súpisné číslo."
+okrsky_date = 2022-11-09
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections found (the Spojené voľby 2022 page lists no okrsky document; the Internet Archive has no 2022 okrsky document); the referendum's document of 09.11.2022, whose 18 okrsky match the obvody of resolution 140/2022 and the Statistical Office's okrsky. \"Mesto Hlohovec\" in okrsok 1 means voters whose permanent residence was cancelled (registered without an address), not register houses without a street. The lokality by súpisné číslo (okrsok 7: Balatón 3401, Svinná hora 4208, Obora 4213, 4245, 4287, Tomášov vrch 3676; okrsok 16: Ivarnoky 3859, Štrkovka 3867) and the other register addresses without a street (parts Hlohovec, Šulekovo) are placed by fill_nearest, as are numbers of split streets the document does not name. Vajanského (okrsok 2) is not in the register and is left out. Nábrežie A. Hlinku: okrsok 2 (obvod 1) and okrsok 13 (obvod 5), whole street within each obvod."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.hlohovec.sk/download_file_f.php?id=1706474"
+sha256 = "57d67cb714272b06b15e248b6f0268de125909380646a17c860c97e0c85a5959"
+title = "Určenie volebných obvodov a počtu poslancov MsZ pre voľby 2022–2026 v meste Hlohovec (uznesenie MsZ č. 140/2022 zo dňa 16.06.2022)"
+
+[[document]]
+url = "https://www.hlohovec.sk/download_file_f.php?id=1762902"
+sha256 = "4cbb271ea4aa843714beb6c7bf0ca16bc8be24459ed48d5c9b39f4247f7cfb7d"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre referendum v meste Hlohovec v roku 2023 (09.11.2022)"
+
+[[document]]
+url = "https://www.hlohovec.sk/referendum-2023.html"
+sha256 = "0b98981c58d1356a71b236b3b40fa2f11fd24340a5cdff5fdbde70baaf6b9d04"
+title = "Referendum 2023 | Hlohovec"
+
+[obvod.1]
+seats = 2
+okrsky = [1, 2]
+rules = [
+  {street = "Bezručova"},
+  {street = "Františkánske námestie"},
+  {street = "Fraštacká"},
+  {street = "Hlohová"},
+  {street = "Kamenná"},
+  {street = "Komenského"},
+  {street = "M.R.Štefánika", written = "M. R. Štefánika"},
+  {street = "Nábrežie A.Hlinku", numbers = "1-23", parity = "odd", written = "Nábrežie A. Hlinku"},
+  {street = "Nám.sv.Michala", written = "Nám. sv. Michala"},
+  {street = "R.Dilonga", written = "R. Dilonga"},
+  {street = "Tolstého"},
+  {street = "Zábranie"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [3, 4, 5]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Drevená"},
+  {street = "Družstevná"},
+  {street = "Fándlyho"},
+  {street = "Hurbanova"},
+  {street = "Jarmočná"},
+  {street = "Jesenského"},
+  {street = "Kalinčiakova"},
+  {street = "Krátka"},
+  {street = "Kukučínova"},
+  {street = "Mladý háj"},
+  {street = "Nitrianska"},
+  {street = "Palackého"},
+  {street = "Palárikova"},
+  {street = "Pri cintoríne"},
+  {street = "Pribinova"},
+  {street = "Puškinova"},
+  {street = "Radlinského"},
+  {street = "Rázusova"},
+  {street = "Rozmarínova"},
+  {street = "Starý rínok"},
+  {street = "Šafárikova"},
+  {street = "Štúrova"},
+  {street = "Šumperská ulica"},
+  {street = "Tehelná"},
+  {street = "Teplá izba"},
+  {street = "Továrenska"},
+  {street = "Zajačky"},
+  {street = "Železničná"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [6, 7]
+rules = [
+  {street = "Balatón"},
+  {street = "Balatónska"},
+  {street = "Bottova"},
+  {street = "Koperníkova"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Lipiny"},
+  {street = "Nerudova"},
+  {street = "Pri hvezdárni"},
+  {street = "Rad mjr.Pavloviča", written = "Rad mjr. Pavloviča"},
+  {street = "Sládkovičova"},
+  {street = "Slov.nár.povstania", written = "Slov. nár. povstania"},
+  {street = "Šomodská"},
+  {street = "Tajovského"},
+  {street = "Tokajka"},
+  {street = "Vinohradská"},
+  {street = "Vodárenská"},
+  {street = "Zámok"},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [8, 9, 10]
+rules = [
+  {street = "Michalská"},
+  {street = "Podzámska"},
+  {street = "Za poštou"},
+  {street = "Závalie"},
+]
+
+[obvod.5]
+seats = 3
+okrsky = [11, 12, 13]
+rules = [
+  {street = "Gaštanová"},
+  {street = "Hollého"},
+  {street = "M.Bela", written = "M. Bela"},
+  {street = "Manckovičova"},
+  {street = "Nábrežie A.Hlinku", numbers = "2-12", parity = "even", written = "Nábrežie A. Hlinku"},
+  {street = "Nábrežie A.Hlinku", numbers = "25-39", parity = "odd", written = "Nábrežie A. Hlinku"},
+  {street = "Pod Beranom"},
+  {street = "Pod Šomod"},
+  {street = "Sihotská"},
+]
+
+[obvod.6]
+seats = 3
+okrsky = [14, 15, 16]
+rules = [
+  {street = "9.mája", written = "9. mája"},
+  {street = "Arpáda Felcána"},
+  {street = "Cisárka"},
+  {street = "Čsl.armády", written = "Čsl. armády"},
+  {street = "Čulenova"},
+  {street = "Dukelská"},
+  {street = "Františka Lipku"},
+  {street = "Fraňa Kráľa"},
+  {street = "Gáborská"},
+  {street = "Gorkého"},
+  {street = "Hošták"},
+  {street = "Hviezdoslavova"},
+  {street = "Inovecká"},
+  {street = "J.A.Gagarina", written = "J. A. Gagarina"},
+  {street = "Kamenohorská"},
+  {street = "Karpatská"},
+  {street = "Kruhová"},
+  {street = "Ľ.Zúbka", written = "Ľ. Zúbka"},
+  {street = "M.Benku", written = "M. Benku"},
+  {street = "Mierová"},
+  {street = "Pánska niva"},
+  {street = "Petra Jilemnického"},
+  {street = "Poniklecová"},
+  {street = "Rovná"},
+  {street = "Ružová"},
+  {street = "Slnečná"},
+  {street = "Stará hora"},
+  {street = "Svätopeterská"},
+  {street = "Šoltésova"},
+  {street = "Timravy"},
+  {street = "Vansovej"},
+  {street = "Vážska"},
+  {street = "Veterná"},
+]
+
+[obvod.7]
+seats = 2
+okrsky = [17, 18]
+rules = [
+  {street = "D.Jurkoviča", written = "D. Jurkoviča"},
+  {street = "Hájska"},
+  {street = "Holubyho"},
+  {street = "Janka Kráľa"},
+  {street = "Ladislava Novomeského", written = "L. Novomeského", note = "same street, register spells it Ladislava Novomeského"},
+  {street = "Ľ.Podjavorinskej", written = "Ľ. Podjavorinskej"},
+  {street = "Mlynská"},
+  {street = "Okrúhla"},
+  {street = "Osloboditeľov"},
+  {street = "Pltnícka"},
+  {street = "Priemyselná"},
+  {street = "Rybárska"},
+  {street = "Seredská"},
+  {street = "Školská"},
+  {street = "Šulekova"},
+  {street = "Terezov"},
+  {street = "Za Váhom"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Fraštacká"},
+  {street = "Hlohová"},
+  {street = "Kamenná"},
+  {street = "M.R.Štefánika"},
+  {street = "Tolstého"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bezručova"},
+  {street = "Františkánske námestie"},
+  {street = "Komenského"},
+  {street = "Nábrežie A.Hlinku"},
+  {street = "Nám.sv.Michala"},
+  {street = "R.Dilonga"},
+  {street = "Zábranie"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Fándlyho"},
+  {street = "Hurbanova"},
+  {street = "Jesenského"},
+  {street = "Palackého"},
+  {street = "Pribinova"},
+  {street = "Puškinova"},
+  {street = "Radlinského"},
+  {street = "Rozmarínova"},
+  {street = "Starý rínok"},
+  {street = "Štúrova"},
+  {street = "Železničná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Drevená"},
+  {street = "Družstevná"},
+  {street = "Jarmočná"},
+  {street = "Kalinčiakova"},
+  {street = "Krátka"},
+  {street = "Mladý háj"},
+  {street = "Palárikova"},
+  {street = "Pri cintoríne"},
+  {street = "Rázusova"},
+  {street = "Šafárikova"},
+  {street = "Továrenska"},
+  {street = "Zajačky"},
+  {street = "Teplá izba"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Kukučínova"},
+  {street = "Nitrianska"},
+  {street = "Tehelná"},
+  {street = "Šumperská ulica"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Koperníkova"},
+  {street = "Lipiny"},
+  {street = "Pri hvezdárni"},
+  {street = "Slov.nár.povstania"},
+  {street = "Tokajka"},
+  {street = "Vinohradská"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Balatón"},
+  {street = "Balatónska"},
+  {street = "Bottova"},
+  {street = "Kpt.Nálepku"},
+  {street = "Nerudova"},
+  {street = "Rad mjr.Pavloviča"},
+  {street = "Sládkovičova"},
+  {street = "Šomodská"},
+  {street = "Tajovského"},
+  {street = "Vodárenská"},
+  {street = "Zámok"},
+  {street = "Koperníkova", numbers = "1-3"},
+  {street = "Vinohradská", numbers = "6, 8, 11, 13"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Za poštou"},
+  {street = "Závalie", numbers = "1, 2, 3, 5, 7, 9"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Michalská"},
+  {street = "Podzámska", numbers = "2-21, 37, 41"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Podzámska"},
+  {street = "Závalie"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Hollého"},
+  {street = "M.Bela"},
+  {street = "Pod Beranom"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "M.Bela", numbers = "1, 2, 4, 6, 8"},
+  {street = "Manckovičova"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Gaštanová"},
+  {street = "Nábrežie A.Hlinku"},
+  {street = "Pod Šomod"},
+  {street = "Sihotská"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "9.mája"},
+  {street = "Arpáda Felcána"},
+  {street = "Cisárka"},
+  {street = "Čsl.armády"},
+  {street = "Hviezdoslavova"},
+  {street = "Ľ.Zúbka"},
+  {street = "M.Benku"},
+  {street = "Petra Jilemnického"},
+  {street = "Vansovej"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Fraňa Kráľa"},
+  {street = "Františka Lipku"},
+  {street = "Gáborská"},
+  {street = "Gorkého"},
+  {street = "Inovecká"},
+  {street = "J.A.Gagarina"},
+  {street = "Kamenohorská"},
+  {street = "Karpatská"},
+  {street = "Mierová"},
+  {street = "Ružová"},
+  {street = "Stará hora"},
+  {street = "Veterná"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Čulenova"},
+  {street = "Dukelská"},
+  {street = "Hošták"},
+  {street = "Kruhová"},
+  {street = "Pánska niva"},
+  {street = "Poniklecová"},
+  {street = "Rovná"},
+  {street = "Slnečná"},
+  {street = "Svätopeterská"},
+  {street = "Šoltésova"},
+  {street = "Timravy"},
+  {street = "Vážska"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "D.Jurkoviča"},
+  {street = "Mlynská"},
+  {street = "Okrúhla"},
+  {street = "Pltnícka"},
+  {street = "Priemyselná"},
+  {street = "Školská"},
+  {street = "Šulekova"},
+  {street = "Za Váhom"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Hájska"},
+  {street = "Holubyho"},
+  {street = "Janka Kráľa"},
+  {street = "Ľ.Podjavorinskej"},
+  {street = "Osloboditeľov"},
+  {street = "Rybárska"},
+  {street = "Seredská"},
+  {street = "Terezov"},
+  {street = "Ladislava Novomeského", written = "L. Novomeského"},
+]

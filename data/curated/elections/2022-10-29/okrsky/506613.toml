@@ -1,0 +1,57 @@
+# Okrsky of Trenčianske Teplice, transcribed by an AI agent in job okrsok-rules-796 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Gen. M. R. Štefánika, Gogolova, Ľ. Podjavorinskej, Sady pod Dedovcom, Teheľňa, Štvrť SNP č.: 7, 8, 15, 16, 17, 18, 19, 20, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89
+#   okrsok 2: Nádražná, Šrobárova, Štvrť SNP č.: 1, 2, 3, 4, 5, 9, 10, 11, 12, 13, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32.
+#   okrsok 3: Štvrť SNP č.: 14, 34, 35, 36, 37, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 65, 70, 100, Samota Skalica
+#   okrsok 4: 17. novembra, Baračka, Bagarova, Červené Kopanice, Hurbanova, Hviezdoslavova, Jesenského, Kúpeľná, Ľ. Štúra, Partizánska, Pod Klepáčom, Poštová, Sinaova, T.G. Masaryka, občania prihlásení na Mesto Trenčianske Teplice a kúpeľní hostia.
+obec = "506613"
+name = "Trenčianske Teplice"
+okrsky_date = 2022-11-10
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections found; the referendum's document. The elections 2022 page (spojene-volby-do-organov-uzemnej-samospravy-2022.html) now shows only the results and was never archived; the archive holds no 2022 okrsky document. The referendum 2023 page (archived 2022-11-17; the page says 'Zverejnené 10.11.2022, Aktualizované 14.11.2022', live now 404) gives the okrsky table, undated: date is the page's publication date. Its 4 okrsky match the Statistical Office count, and okrsok 4 holds 'občania prihlásení na Mesto Trenčianske Teplice a kúpeľní hostia' (voters registered without an address). Štvrť SNP is split by house numbers as the document lists them (read as orientačné čísla, matching the register's range 1–100); its numbers the document does not list, Samota Arpád (not named in the document) and the addresses without a street are placed by fill_nearest. 'Jesenského' and 'Sinaova' (okrsok 4) are not in the register and are left out."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://web.archive.org/web/20221117083243/https://www.teplice.sk/referendum-2023.html"
+sha256 = "bf8dc821a6c5fad2db5090c75245a0e05926e7ffcd91d403184d76f25ca0777a"
+title = "Referendum 2023 – Volebné okrsky a volebné miestnosti pre hlasovanie v referende v meste Trenčianske Teplice"
+
+[okrsok.1]
+rules = [
+  {street = "Gen. M. R. Štefánika"},
+  {street = "Gogolova"},
+  {street = "Ľ. Podjavorinskej"},
+  {street = "Sady Pod Dedovcom", written = "Sady pod Dedovcom"},
+  {street = "Teheľňa"},
+  {street = "Štvrť SNP", numbers = "7-8, 15-20, 77-89"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Nádražná"},
+  {street = "Šrobárova"},
+  {street = "Štvrť SNP", numbers = "1-5, 9-13, 21-32"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Štvrť SNP", numbers = "14, 34-37, 39-62, 65, 70, 100"},
+  {street = "Samota Skalica"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "17.novembra", written = "17. novembra"},
+  {street = "Baračka"},
+  {street = "Bagarova"},
+  {street = "Červené Kopanice"},
+  {street = "Hurbanova"},
+  {street = "Hviezdoslavova"},
+  {street = "Kúpeľná"},
+  {street = "Ľ. Štúra"},
+  {street = "Partizánska"},
+  {street = "Pod Klepáčom"},
+  {street = "Poštová"},
+  {street = "T. G. Masaryka", written = "T.G. Masaryka"},
+]

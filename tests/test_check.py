@@ -9,7 +9,7 @@ import numpy as np
 import pytest
 import shapely
 
-from election_map_slovakia import basemap, build, check, config, geo, results
+from election_map_slovakia import basemap, build, bundle, check, config, geo, results
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -121,7 +121,26 @@ def site(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[Path, config.
     root = tmp_path / "project"
     shutil.copytree(REPO / "config", root / "config")
     shutil.copytree(REPO / "web", root / "web")
-    built = root / "data" / "build"
+    # A site of the latest election alone.
+    for name, start in (
+        ("elections.toml", "\n# Without incumbents"),
+        ("overrides.toml", "\n[election.2022]"),
+    ):
+        path = root / "config" / name
+        text = path.read_text(encoding="utf-8")
+        path.write_text(text[: text.index(start)], encoding="utf-8")
+    # Its parties' logos of 2022 with it.
+    parties = root / "config" / "parties.toml"
+    parties.write_text(
+        re.sub(
+            r'\[party\."[^\n]*"\.logo\.2022\]\n(?:[a-z]+ = [^\n]*\n)*',
+            "",
+            parties.read_text(encoding="utf-8"),
+        ),
+        encoding="utf-8",
+    )
+    cfg = config.load(root / "config")
+    built = cfg.election_build_dir(cfg.latest)
     obec = {"id": "508063", "name": "Jakubov", "okres": "106", "kraj": "1", "zsk": 1}
     for lod in "210":
         write_json(built / f"geo/okres/106/{lod}.json", topology(obec))
@@ -185,6 +204,7 @@ def site(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[Path, config.
         },
     )
     write_json(built / "candidates.json", DATA)
+    (built / bundle.LINKS_DIR).mkdir()
     # Every UI string translated, as the deployed site must have them; the
     # English text stands in for the translations.
     en = json.loads((REPO / "web/i18n/en.json").read_bytes())
@@ -199,14 +219,18 @@ def site(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[Path, config.
         "starosta:508063",
         results.Record("final", (1, 1), 500, 200, 195, 1, 1, [(1, 195, 1)]),
     )
-    results.write(cfg.results_dir, final, dt.datetime(2026, 10, 25, tzinfo=dt.UTC))
+    results.write(
+        cfg.results_dir(cfg.latest), final, dt.datetime(2026, 10, 25, tzinfo=dt.UTC)
+    )
     dist = tmp_path / "dist"
-    build.write(build.assemble(cfg), dist)
+    build.write(build.assemble(cfg, None), dist)
     return dist, cfg
 
 
 def problems(dist: Path, cfg: config.Config, site: config.Site | None = None) -> dict:
-    checks = check.run(dist, site or cfg.site, cfg.languages, CONTESTS)
+    if site is not None:
+        cfg = dataclasses.replace(cfg, site=site)
+    checks = check.run(dist, cfg, {cfg.latest.slug: CONTESTS})
     return {c.name: c.problems for c in checks if c.problems}
 
 
@@ -217,57 +241,100 @@ def test_built_site_passes(site):
 
 def test_untranslated_ui_string(site):
     dist, cfg = site
-    strings = json.loads((dist / "i18n/cs.json").read_bytes())
-    strings["_missing"] = {"ui": 1, "occupations": 0}
+    strings = json.loads((dist / "app/i18n/cs.json").read_bytes())
+    strings["_missing"] = 1
     strings["_pending"] = "en"
-    (dist / "i18n/cs.json").write_text(json.dumps(strings))
+    (dist / "app/i18n/cs.json").write_text(json.dumps(strings))
     assert problems(dist, cfg) == {
-        "i18n": ["i18n/cs.json: 1 UI strings untranslated (shown in en)"]
+        "i18n": ["app/i18n/cs.json: 1 UI strings untranslated (shown in en)"]
     }
 
 
 def test_over_budget(site):
+    """Each part is a Pages project of its own: the budget is per part."""
     dist, cfg = site
-    n = sum(1 for p in dist.rglob("*") if p.is_file())
+    n = sum(1 for p in (dist / "app").rglob("*") if p.is_file())
+    assert n > sum(1 for p in (dist / "data/2026").rglob("*") if p.is_file())
     small = dataclasses.replace(cfg.site, file_budget=n - 1, max_file_bytes=1000)
     found = problems(dist, cfg, small)
-    assert found["files"] == [f"{n:,} files, budget {n - 1:,}"]
+    assert found["files"] == [f"app/: {n:,} files, budget {n - 1:,}"]
     assert any(
-        re.match(r"assets/vendor/\w+/leaflet/leaflet\.js:", p) for p in found["sizes"]
+        re.match(r"app/assets/vendor/\w+/leaflet/leaflet\.js:", p)
+        for p in found["sizes"]
     )
 
 
 def test_broken_json(site):
     dist, cfg = site
-    (dist / "data/kraj/1.json").write_text('{"contests": {')
+    (dist / "data/2026/data/kraj/1.json").write_text('{"contests": {')
     found = problems(dist, cfg)
-    assert [p.split(":")[0] for p in found["json"]] == ["data/kraj/1.json"]
+    assert [p.split(":")[0] for p in found["json"]] == ["data/2026/data/kraj/1.json"]
     # Its contests are then in no file the frontend can read.
-    assert "predseda:1: in no area file" in found["contests"]
+    assert "data/2026 predseda:1: in no area file" in found["contests"]
 
 
 def test_missing_files(site):
     dist, cfg = site
-    (dist / "addr/508063.json").unlink()
-    (dist / "geo/okres/106/1.json").unlink()
-    shutil.rmtree(dist / "uk")
-    (dist / "404.html").unlink()
+    (dist / "map/2026/addr/508063.json").unlink()
+    (dist / "map/2026/geo/okres/106/1.json").unlink()
+    (dist / "data/2026/i18n/de.json").unlink()
+    shutil.rmtree(dist / "app/uk")
+    (dist / "app/404.html").unlink()
     # Only the modules' rewritten imports name the libraries.
-    [qrcode] = dist.glob("assets/vendor/*/qrcode-generator.module.js")
+    [qrcode] = dist.glob("app/assets/vendor/*/qrcode-generator.module.js")
     qrcode.unlink()
     missing = {p.split()[0] for p in problems(dist, cfg)["links"]}
     assert missing == {
-        "404.html",
-        "addr/508063.json",
-        "geo/okres/106/1.json",
-        "uk/index.html",
+        "app/404.html",
+        "map/2026/addr/508063.json",
+        "map/2026/geo/okres/106/1.json",
+        "data/2026/i18n/de.json",
+        "app/uk/index.html",
+        "app/uk/2026/index.html",
         qrcode.relative_to(dist).as_posix(),
     }
 
 
+def test_a_bundle_lists_its_files(site):
+    dist, cfg = site
+    (dist / "data/2026/data/stray.json").write_text("{}")
+    (dist / "map/2026/geo/stray.json").write_text("{}")
+    (dist / "sources/404.html").unlink()
+    assert problems(dist, cfg)["headers"] == [
+        "data/2026/manifest.json: lists not exactly the bundle's files",
+        "map/2026/manifest.json: lists not exactly the bundle's files",
+        "sources/404.html missing",
+    ]
+
+
+def test_the_app_for_deployed_bundles(site, tmp_path: Path):
+    """An app built for deployed bundles is checked against their manifests."""
+    dist, cfg = site
+    manifest = json.loads((dist / "data/2026/manifest.json").read_bytes())
+    manifest["files"].remove("data/about.json")
+    map_manifest = json.loads((dist / "map/2026/manifest.json").read_bytes())
+    map_manifest["files"].remove("geo/coarse.json")
+    locations = build.Locations(
+        {"2026": build.Located("https://0a1b.ems-map-2026.pages.dev", map_manifest)},
+        {"2026": build.Located("https://0a1b.ems-data-2026.pages.dev", manifest)},
+        cfg.site.results_url,
+        cfg.site.sources_url,
+    )
+    deployed = tmp_path / "deployed"
+    build.write(build.assemble_deployed(cfg, locations), deployed)
+    found = problems(deployed, cfg)
+    # Its shells name the data parts' origins, which the CSP lets it
+    # fetch from; the bundles' own checks passed where they were built.
+    assert list(found) == ["links"]
+    assert [re.sub(r"assets/\w+/", "assets/<v>/", p) for p in found["links"]] == [
+        "data/2026/data/about.json missing (needed by app/assets/<v>/js/about.js)",
+        "map/2026/geo/coarse.json missing (needed by app/assets/<v>/js/map.js)",
+    ]
+
+
 def test_third_party_resource(site):
     dist, cfg = site
-    shell = dist / "sk/index.html"
+    shell = dist / "app/sk/index.html"
     html = shell.read_text()
     shell.write_text(
         html.replace(
@@ -276,11 +343,11 @@ def test_third_party_resource(site):
             '<a href="https://example.org/about">about</a>\n</head>',
         )
     )
-    [css] = dist.glob("assets/*/app.css")
+    [css] = dist.glob("app/assets/*/app.css")
     css.write_text(
         css.read_text() + "\nbody { background: url(//cdn.example.net/x.png); }\n"
     )
-    [js] = dist.glob("assets/*/js/data.js")
+    [js] = dist.glob("app/assets/*/js/data.js")
     js.write_text(js.read_text() + "\nfetch('https://api.example.com/v1');\n")
     found = [p.split(": ", 1)[1] for p in problems(dist, cfg)["origins"]]
     # The plain link is fine; the three fetched resources are not.
@@ -291,16 +358,17 @@ def test_third_party_resource(site):
     ]
 
 
-def test_connect_src_only_self(site):
+def test_connect_src_only_the_data_parts(site):
     dist, cfg = site
-    headers = dist / build.HEADERS
+    headers = dist / "app" / bundle.HEADERS
     headers.write_text(
         headers.read_text().replace(
             "connect-src 'self';", "connect-src 'self' https://live.example.sk;"
         )
     )
     assert problems(dist, cfg)["origins"] == [
-        "_headers: CSP connect-src is 'self' https://live.example.sk, expected 'self'"
+        "app/_headers: CSP connect-src is 'self' https://live.example.sk,"
+        " expected 'self'"
     ]
 
 
@@ -321,7 +389,7 @@ def test_results(site):
 
 def test_address_outside_its_obec(site):
     dist, cfg = site
-    path = dist / "addr/508063.json"
+    path = dist / "map/2026/addr/508063.json"
     content = json.loads(path.read_text())
     content["parts"][0]["points"] = [1805000, 4845000]
     path.write_text(json.dumps(content))
@@ -330,8 +398,8 @@ def test_address_outside_its_obec(site):
 
 def test_okrsok_missing_from_the_map_and_from_an_address(site):
     dist, cfg = site
-    write_json(dist / "geo/okrsky/106/1.json", okrsky((1,)))
-    path = dist / "addr/508063.json"
+    write_json(dist / "map/2026/geo/okrsky/106/1.json", okrsky((1,)))
+    path = dist / "map/2026/addr/508063.json"
     content = json.loads(path.read_text())
     del content["parts"][0]["okrsok"]
     path.write_text(json.dumps(content))
@@ -342,32 +410,34 @@ def test_okrsok_missing_from_the_map_and_from_an_address(site):
         " on average",
     ]
     assert found["addresses"] == [
-        "addr/508063.json: Jakubov: okrsky missing, but the map draws them"
+        "map/2026/addr/508063.json: Jakubov: okrsky missing, but the map draws them"
     ]
 
 
 def test_base_map(site):
     dist, cfg = site
-    (dist / "base/okres/106/1.json").unlink()
-    stray = dist / "base/okres/108/0.json"
+    base = dist / "map/2026/base"
+    (base / "okres/106/1.json").unlink()
+    stray = base / "okres/108/0.json"
     stray.parent.mkdir()
-    stray.write_bytes((dist / "base/okres/106/0.json").read_bytes())
-    index = json.loads((dist / "base/index.json").read_bytes())
+    stray.write_bytes((base / "okres/106/0.json").read_bytes())
+    index = json.loads((base / "index.json").read_bytes())
     index["okresy"].append("107")
-    (dist / "base/index.json").write_text(json.dumps(index))
-    buildings = dist / "base/obec/508063.json"
+    (base / "index.json").write_text(json.dumps(index))
+    buildings = base / "obec/508063.json"
     buildings.write_text(buildings.read_text().replace("100000", "100001"))
     found = problems(dist, cfg)
+    by = "map/2026/base/index.json"
     assert found["links"] == [
-        "base/okres/106/1.json missing (needed by base/index.json)",
+        f"map/2026/base/okres/106/1.json missing (needed by {by})",
         *(
-            f"base/okres/107/{lod}.json missing (needed by base/index.json)"
+            f"map/2026/base/okres/107/{lod}.json missing (needed by {by})"
             for lod in "012"
         ),
     ]
     assert found["base"] == [
-        "base/index.json: okresy differ from the geo shards'",
-        "base/index.json: 1 files in base/ the app never requests,"
-        " such as base/okres/108/0.json",
-        "base/obec/508063.json: scale 100001, not 100000",
+        f"{by}: okresy differ from the geo shards'",
+        f"{by}: 1 files in map/2026/base/ the app never requests,"
+        " such as map/2026/base/okres/108/0.json",
+        "map/2026/base/obec/508063.json: scale 100001, not 100000",
     ]

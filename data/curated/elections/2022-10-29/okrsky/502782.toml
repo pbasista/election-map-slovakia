@@ -1,0 +1,121 @@
+# Okrsky of Šahy, transcribed by an AI agent in job okrsok-rules-652 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hontianska cesta, Bitúnková, I. Madácha, L. Pongrácza, Nemocničná, Kuzmányho, A. Sipossa, Záhradnícka, Lesná, Bernecká, Železničná
+#   okrsok 2: Hlavné námestie, Tabánska, J. Kráľa, Mlynská, Ružová, Sládkovičová, J. Jesenského, Petöfiho, 1. mája
+#   okrsok 3: Tešmacká cesta, Hviezdoslavova, SNP, Kapitulská, Školská, F. Rákócziho II., Podzámocká, E. B. Lukáča, J. Rotaridesa, kpt. Nálepku, Kalvarenská, Parková, Námestie B. Bartóka, Priemyselná, Námestie kráľa svätého Štefana.
+#   okrsok 4: A. Gyürkyho, gr. I. Széchenyiho, Gy. Szondyho, J. Thuróczyho (č. 25,27,29,31,33), K. Mikszátha (1-14)
+#   okrsok 5: Námestie M. R. Štefánika, K. Mikszátha (č. 15 a 16), Ľ. Štúra, Severná, Mládežnícka, Cintorínska, Obrancov mieru, Zs. Móricza
+#   okrsok 6: M. M. Hodžu, Fegyvernekiho, J. Smreka, Vinárska, Hangyás, Vajanského, Agátová, A. Kmeťa, A. Szokolyiho, Pivničná, Olvárska cesta, J. Thuróczyho (okrem 25,27,29,31,33), B.Němcovej, Gy. Thúryho
+#   okrsok 7: Šahy časť Tešmák
+#   okrsok 8: Šahy časť Preseľany
+obec = "502782"
+name = "Šahy"
+okrsky_date = 2022-07-21
+okrsky_fill = "nearest"
+okrsky_note = "Olvárska cesta (okrsok 6) is not in the register; left out. Addresses without a street in the part Šahy are placed by fill_nearest; parts Tešmák and Preseľany nad Ipľom are okrsky 7 and 8."
+
+[[document]]
+url = "https://www.sahy.sk/download_file_f.php?id=1715018"
+sha256 = "ce46e609a9603b46c0ca695432fe00bda8c6b72ba6a7c32fd655b3729037c02d"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby do orgánov samosprávy mesta Šahy a do orgánov samosprávnych krajov dňa 29. októbra 2022"
+
+[[document]]
+url = "https://www.sahy.sk/volby-do-organov-samospravy-mesta.phtml?id_menu=175536"
+sha256 = "3f7f6052d3f3b10ccbf904e4713c2165b8ed1e685fe8a6ff9ad186d56ecf8526"
+title = "Voľby do orgánov samosprávy mesta (ROK 2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Hontianska cesta"},
+  {street = "Bitúnková"},
+  {street = "I. Madácha"},
+  {street = "L. Pongrácza"},
+  {street = "Nemocničná"},
+  {street = "Kuzmányho"},
+  {street = "A. Sipossa"},
+  {street = "Záhradnícka"},
+  {street = "Lesná"},
+  {street = "Bernecká"},
+  {street = "Železničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavné námestie"},
+  {street = "Tabánska"},
+  {street = "J. Kráľa"},
+  {street = "Mlynská"},
+  {street = "Ružová"},
+  {street = "J. Jesenského"},
+  {street = "1. mája"},
+  {street = "Sládkovičova", written = "Sládkovičová", note = "Typo of the ending in the document; the register's Sládkovičova."},
+  {street = "Petőfiho", written = "Petöfiho", note = "ö for ő; same street."},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Tešmácka cesta", written = "Tešmacká cesta", note = "Missing accent; same street."},
+  {street = "Hviezdoslavova"},
+  {street = "SNP"},
+  {street = "Kapitulská"},
+  {street = "Školská"},
+  {street = "F. Rákócziho II."},
+  {street = "Podzámocká"},
+  {street = "E. B. Lukáča"},
+  {street = "J. Rotaridesa"},
+  {street = "Kpt. Nálepku", written = "kpt. Nálepku"},
+  {street = "Kalvárenská", written = "Kalvarenská", note = "Missing accent; same street."},
+  {street = "Parková"},
+  {street = "Námestie B. Bartóka"},
+  {street = "Priemyselná"},
+  {street = "Námestie kráľa svätého Štefana"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "A. Gyürkyho"},
+  {street = "Gr. I. Széchenyiho", written = "gr. I. Széchenyiho"},
+  {street = "Gy. Szondyho"},
+  {street = "J. Thuróczyho", numbers = "25, 27, 29, 31, 33"},
+  {street = "K. Mikszátha", numbers = "1-14"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Námestie M. R. Štefánika"},
+  {street = "K. Mikszátha", note = "Document: č. 15 a 16; whole street here so that no. 17 (not named) also falls here, okrsok 4 takes 1-14."},
+  {street = "Ľ. Štúra"},
+  {street = "Severná"},
+  {street = "Mládežnícka"},
+  {street = "Cintorínska"},
+  {street = "Obrancov mieru"},
+  {street = "Zs. Móricza"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "M. M. Hodžu"},
+  {street = "F. Fegyvernekiho", written = "Fegyvernekiho"},
+  {street = "J. Smreka"},
+  {street = "Vinárska"},
+  {street = "Hangyás"},
+  {street = "Vajanského"},
+  {street = "Agátová"},
+  {street = "A. Kmeťa"},
+  {street = "A. Szokolyiho"},
+  {street = "Pivničná"},
+  {street = "J. Thuróczyho"},
+  {street = "B. Němcovej", written = "B.Němcovej"},
+  {street = "Gy. Thúryho"},
+]
+
+[okrsok.7]
+rules = [
+  {part = "Tešmák"},
+]
+
+[okrsok.8]
+rules = [
+  {part = "Preseľany nad Ipľom"},
+]

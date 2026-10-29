@@ -1,0 +1,54 @@
+# The okrsky of Lokca of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/509809.toml, reused by `ems job reuse`.
+obec = "509809"
+name = "Lokca"
+okrsky_date = 2026-07-28
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Komárnik, Hradská and Pri zdravotnom stredisku are listed in both okrsky as 'časť ulice' without saying which numbers; they get no rule and each of their addresses takes the okrsok of the nearest placed address (fill_nearest), as do the addresses without a street. Šípková (okrsok 1) and Jedľová (okrsok 2) are not in the address register and are left out."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.lokca.sk/e_download.php?file=/data/uredni_deska/obsah1230_1.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti.pdf"
+sha256 = "cab3d8c1e0bf79acd985d4d8b2f82f16f0a35ae7b7f23ba62369916c13cf6785"
+title = "Volebné okrsky a volebné miestnosti"
+
+[okrsok.1]
+rules = [
+  {street = "Trojičné námestie"},
+  {street = "Vyšný koniec"},
+  {street = "Magurská"},
+  {street = "Budínska"},
+  {street = "Bazová"},
+  {street = "Rínok"},
+  {street = "Lán"},
+  {street = "Trnková"},
+  {street = "Limbová"},
+  {street = "Južná"},
+  {street = "Slnečná"},
+  {street = "Kolónia"},
+  {street = "Gaštanová"},
+  {street = "Podkošariská"},
+  {street = "Školská"},
+  {street = "Bandiková"},
+  {street = "Západná"},
+  {street = "Pustina"},
+  {street = "Lipová"},
+  {street = "Pod kostolom"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Záhumnica"},
+  {street = "Veterná"},
+  {street = "Hliník"},
+  {street = "Mlynská"},
+  {street = "Urbárska"},
+  {street = "Polianka"},
+  {street = "Brezová"},
+  {street = "Východná"},
+  {street = "Javorová"},
+  {street = "Grúnik"},
+  {street = "Smreková"},
+  {street = "Krátka"},
+  {street = "Severná"},
+  {street = "Jabloňová"},
+]

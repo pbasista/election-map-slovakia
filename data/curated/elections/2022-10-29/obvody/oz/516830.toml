@@ -1,0 +1,36 @@
+# Council obvody of Hronský Beňadik (516830), Žarnovica.
+# Transcribed by an AI agent in job obvod-rules-334 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č.1 časť obce Hronský Beňadik ... Volebný obvod č. 1 – počet poslancov 7
+#   obvod 2: Volebný obvod č. 2 časť obce Psiare ... Volebný obvod č. 2 – počet poslancov 2
+# Okrsky added by an AI agent in job okrsok-rules-1202 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný obvod č.1 časť obce Hronský Beňadik ... Volebný obvod č. 1 – počet poslancov 7
+#   okrsok 2: Volebný obvod č. 2 časť obce Psiare ... Volebný obvod č. 2 – počet poslancov 2
+obec = "516830"
+name = "Hronský Beňadik"
+date = 2022-06-29
+note = "Resolution 266/2022 found in the council minutes of 29.6.2022 (published 11.8.2022). Obvody = parts of the municipality."
+okrsky_date = 2022-06-29
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office okrsky per obvod), so each okrsok is its whole obvod; the obvody document is the source and date is that resolution's date (no separate okrsky announcement used)."
+
+[[document]]
+url = "https://www.hronskybenadik.sk/download_file_f.php?id=1722968"
+sha256 = "e4fdc3755ce113bd267ba45c226f96e6553837e0b63d9e996c68d7588c7c9ac6"
+title = "Zápisnica z 23. zasadnutia OZ Hronský Beňadik dňa 29. júna 2022, uznesenie č. 266/2022"
+
+[obvod.1]
+seats = 7
+okrsky = [1]
+rules = [
+  {part = "Hronský Beňadik"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Psiare"},
+]

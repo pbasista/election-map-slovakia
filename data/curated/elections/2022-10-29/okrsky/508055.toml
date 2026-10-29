@@ -1,0 +1,29 @@
+# Okrsky of Lozorno, transcribed by an AI agent in job okrsok-rules-755 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súpisné č. 1 – 600
+#   okrsok 2: súpisné č. 601 – 1345
+obec = "508055"
+name = "Lozorno"
+okrsky_date = 2022-08-09
+okrsky_note = "Okrsky split by súpisné číslo of the house: 1–600 and 601–1345 (scanned PDF, read from image). Okrsok 2 takes every súpisné číslo above 600 (rest)."
+
+[[document]]
+url = "https://www.lozorno.sk/e_download.php?file=data/uredni_deska/obsah5661_24.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20vol.%20miestn..pdf"
+sha256 = "0ca587e8239b4101d5079dc248be7f565d89b8e6c28a107a78a1a09f507e0d07"
+title = "Utvorenie volebných okrskov a určenie volebnej miestnosti pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov 2022 v obci Lozorno"
+
+[[document]]
+url = "https://www.lozorno.sk/seniori/samosprava/volby/utvorenie-volebnych-okrskov-a-urcenie-volebnejmiestnostipre-volby-do-organov-samospravy-obci-a-pre-volby-do-organov-samospravnych-krajov-2022-v-obci-lozorno-5886.html?kshow=78"
+sha256 = "570abbe6388a6851a62872a290ae1a2da50dc564be29583967a1d8bf8f0f58d9"
+title = "Utvorenie volebných okrskov ... 2022 v obci Lozorno (notice board page, vyvesené 10. 8. 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Lozorno", numbers = "1-600"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

@@ -1,0 +1,67 @@
+# Okrsky of Kremnica, transcribed by an AI agent in job okrsok-rules-801 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Zámocké námestie, Zlatá ulica, Továrenská ulica, Ulica Jurka Langsfelda, Ulica Ľudovíta Štúra, Ulica Rumunskej armády, Kutnohorská ulica, Banská cesta, Nová dolina, Ulica Jula Horvátha (čísla domov 860, 861, 862, 863, 865, 871, 872, 878, 887, 888, 892, 893, 894, 896, 897, 898, 899, 900, 901, 912, 913, 916, 917, 918, 919, 920 a 922), Revolta
+#   okrsok 2: Ulica Sama Chalupku, Ulica Československej armády, Zechenterova ulica (čísla domov 327, 328, 329, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340, 341, 342, 343, 344, 345, 346, 349, 350, 352, 362, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372, 373, 374 a 1179)
+#   okrsok 3: Štefánikovo námestie, Námestie SNP, Angyalova ulica, Bystrická ulica, Partizánska dolina, Ulica Pavla Križku, Ulica Jána Kollára, Mesto Kremnica(bez určenia ulice a čísla domu)
+#   okrsok 4: Matunákova ulica, Dolná ulica (čísla domov 39, 40, 41, 42, 43, 44, 45, 46, 1362, 47, 48, 49, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78,79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93 a 96), Ulica Jula Horvátha (čísla domov 902, 903, 904, 905, 924, 954, 955, 956 a 957)
+#   okrsok 5: Veternícka ulica, Dolná ulica (čísla domov 50, 51, 52, 53, 54, 55, 56, 62, 63, 65, 66, 100, 102 a 108) Zechenterova ulica (čísla domov 353, 354, 355, 356, 357, 358, 359 a 360) Ulica Jula Horvátha (čísla domov 879, 881, 883, 884, 925, 926, 927, 928 a 929), Galandov majer
+obec = "516970"
+name = "Kremnica"
+okrsky_date = 2022-10-20
+okrsky_fill = "nearest"
+okrsky_note = "Source is the city's newsletter Kremnické noviny 5/2022 of 20.10.2022 (published on kremnica.sk), page 2, listing the five okrsky for the elections of 29 October 2022; no decision date is given, so date is the issue's date. 'Čísla domov' of Ulica Jula Horvátha, Dolná ulica and Zechenterova ulica are súpisné numbers (by: supisne); addresses of these streets with súpisné numbers the newsletter does not list, and the register's addresses without a street, are placed by fill_nearest. 'Mesto Kremnica (bez určenia ulice a čísla domu)' (okrsok 3) are voters registered without an address."
+
+[[document]]
+url = "https://www.kremnica.sk/download_file_f.php?id=1753871"
+sha256 = "e108d5580ee972ed6e37da9bedf0716f6178e3e5d2fae26383485a9d695938c7"
+title = "Kremnické noviny, Informačník samosprávy 5/2022 (20.10.2022), str. 2: V Kremnici bude pre hlasovanie v spojených voľbách zriadených päť volebných okrskov"
+
+[okrsok.1]
+rules = [
+  {street = "Zámocké námestie"},
+  {street = "Zlatá ulica"},
+  {street = "Továrenská ulica"},
+  {street = "Ulica Jurka Langsfelda"},
+  {street = "Ulica Ľudovíta Štúra"},
+  {street = "Ulica Rumunskej armády"},
+  {street = "Kutnohorská ulica"},
+  {street = "Banská cesta"},
+  {street = "Nová dolina"},
+  {street = "Revolta"},
+  {street = "Ulica Jula Horvátha", numbers = "860, 861, 862, 863, 865, 871, 872, 878, 887, 888, 892, 893, 894, 896, 897, 898, 899, 900, 901, 912, 913, 916, 917, 918, 919, 920, 922", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ulica Sama Chalupku"},
+  {street = "Ulica Československej armády"},
+  {street = "Zechenterova ulica", numbers = "327, 328, 329, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340, 341, 342, 343, 344, 345, 346, 349, 350, 352, 362, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 1179", by = "supisne"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Štefánikovo námestie"},
+  {street = "Námestie SNP"},
+  {street = "Angyalova ulica"},
+  {street = "Bystrická ulica"},
+  {street = "Partizánska dolina"},
+  {street = "Ulica Pavla Križku"},
+  {street = "Ulica Jána Kollára"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Matunákova ulica"},
+  {street = "Dolná ulica", numbers = "39, 40, 41, 42, 43, 44, 45, 46, 1362, 47, 48, 49, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 96", by = "supisne"},
+  {street = "Ulica Jula Horvátha", numbers = "902, 903, 904, 905, 924, 954, 955, 956, 957", by = "supisne"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Veternícka ulica"},
+  {street = "Galandov majer"},
+  {street = "Dolná ulica", numbers = "50, 51, 52, 53, 54, 55, 56, 62, 63, 65, 66, 100, 102, 108", by = "supisne"},
+  {street = "Zechenterova ulica", numbers = "353, 354, 355, 356, 357, 358, 359, 360", by = "supisne"},
+  {street = "Ulica Jula Horvátha", numbers = "879, 881, 883, 884, 925, 926, 927, 928, 929", by = "supisne"},
+]

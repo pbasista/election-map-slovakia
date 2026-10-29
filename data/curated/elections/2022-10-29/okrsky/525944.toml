@@ -1,0 +1,25 @@
+# Okrsky of Magnezitovce, transcribed by an AI agent in job okrsok-rules-1063 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: časť Mníšany
+#   okrsok 2: časť Kopráš
+obec = "525944"
+name = "Magnezitovce"
+okrsky_date = 2022-11-11
+okrsky_note = "No document of the elections found (the 2022 notice-board list has no okrsky notice); the referendum's document. It is undated; date is its notice-board posting date (11.11.2022) shown on the page. Okrsky match the ŠÚ SR count and voters (Mníšany larger)."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://web.archive.org/web/20221205144904/https://www.magnezitovce.sk/oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-pre-referendum-a21-252"
+sha256 = "9c74b95dcd047ca1116a6e26686085c2053bc9708cdf4cd81a21b0b37ed16c53"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre Referendum"
+
+[okrsok.1]
+rules = [
+  {part = "Mníšany"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kopráš"},
+]

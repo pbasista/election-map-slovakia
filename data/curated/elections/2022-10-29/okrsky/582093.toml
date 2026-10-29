@@ -1,0 +1,30 @@
+# Okrsky of Vyšný Medzev, transcribed by an AI agent in job okrsok-rules-1042 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: banícka ulica
+#   okrsok 2: ulica Hrdinov SNP
+obec = "582093"
+name = "Vyšný Medzev"
+okrsky_date = 2022-07-20
+okrsky_fill = "nearest"
+okrsky_note = "The register's addresses without a street (súpisné only) are placed by fill_nearest. Okrsok 1 (Banícka) has few voters for its addresses (59 voters, 114 addresses), presumably many recreational houses; the document is explicit."
+
+[[document]]
+url = "https://www.vysnymedzev.sk/files/2022-07-27-145236-volebn___okrsky_volebn___miestnosti.pdf"
+sha256 = "c4ab6f3c84d67a48152e14dcd59e22e048d68a0272e40f3d59df72314648bb0e"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov"
+
+[[document]]
+url = "https://www.vysnymedzev.sk/volby-do-organov-samospravy-obci-2022-a73-806"
+sha256 = "7c953156f3293b8e72dfb1c3030f5c5016c0d860d56cb975cd56dfaa7a66f01f"
+title = "Voľby do orgánov samosprávy obcí 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Banícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hrdinov SNP"},
+]

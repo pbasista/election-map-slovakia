@@ -491,7 +491,8 @@ h3 {
 
 /* Over the pane, which the search results drop over. The title and the
    search box take turns in it, both 42px high (unless the tagline wraps on a
-   narrow phone), so the pane under it stays put. */
+   narrow phone), so the pane under it stays put; the list of elections takes
+   its turn too, as high as it is long. */
 .finder {
   --finder-pad: 10px;
   position: relative;
@@ -510,12 +511,14 @@ h3 {
 }
 
 .title[hidden],
-.search[hidden] {
+.search[hidden],
+.elections[hidden] {
   display: none;
 }
 
 .title,
-.search {
+.search,
+.elections {
   animation: finder-swap 0.16s ease-out;
 }
 
@@ -538,14 +541,25 @@ h3 {
   }
 }
 
+.elections {
+  position: relative;
+  animation-name: finder-elections-in;
+}
+
+/* The list grows out of the logo at the left end of the title. */
+@keyframes finder-elections-in {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+}
+
 .brand {
   flex: 1 1 auto;
   display: flex;
   align-items: center;
-  gap: 9px;
   min-width: 0;
   margin: 0;
-  padding-left: 4px;
   font: inherit;
 }
 
@@ -625,6 +639,122 @@ h3 {
   stroke-width: 2.2;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+/* 9px from the name, like the logo's own button below. */
+.title > .logo {
+  margin: 0 1px 0 4px;
+}
+
+/* The logo where it opens the list of elections: above the search button's
+   cover of the whole title, with the logo where it would be without it. */
+.election-open {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  display: grid;
+  place-items: center;
+  margin: -4px -3px -4px 0;
+  padding: 4px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+}
+
+.election-open:hover {
+  background: var(--surface-2);
+}
+
+.election-open:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 0;
+}
+
+/* The list of elections (search.js), in groups by kind of election, each
+   under its heading; the first heading level with the close button, which
+   stays at the top as the search box's does, every later one set off by a
+   rule, so that another kind of election reads as another group. Each
+   election is one short line, its year large and its day beside it, the
+   one shown tinted and ticked. A heading keeps clear of the button and,
+   where long (Hungarian on a phone), takes a second line rather than lose
+   its end. */
+.elections-kind {
+  margin: 0;
+  padding: 12px 44px 12px 12px;
+  font-size: var(--fs-xs);
+  font-weight: 650;
+  line-height: 18px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.elections ul + .elections-kind {
+  margin-top: 8px;
+  padding-right: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.elections ul {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.elections a {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.election-year {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.election-day {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+.elections a .ico {
+  align-self: center;
+  width: 18px;
+  height: 18px;
+  color: var(--primary);
+}
+
+.elections a[aria-current] {
+  background: var(--surface-2);
+}
+
+.elections a:hover {
+  background: var(--surface-2);
+}
+
+.elections a[aria-current]:hover {
+  background: var(--surface-3);
+}
+
+.elections a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
 }
 
 .translation-pending {
@@ -1719,7 +1849,11 @@ button.contest-head {
   flex: none;
   align-content: center;
   gap: 3px;
-  width: 64px;
+  /* At least the track's 64 px, wider where a line needs it: the last
+     election's share led by its tick and "≈" ("≈44 %" in Slovak) did not
+     fit beside the year and broke onto a second line. */
+  width: max-content;
+  min-width: 64px;
   color: var(--text-faint);
   font-size: var(--fs-xs);
   line-height: 1.15;
@@ -1728,8 +1862,10 @@ button.contest-head {
 
 .gauge-line {
   display: flex;
+  gap: 4px;
   align-items: baseline;
   justify-content: space-between;
+  white-space: nowrap;
 }
 
 .gauge-line strong {
@@ -2094,6 +2230,7 @@ li:has(> .cand.seats-end) + li > .cand {
 .party,
 .party-logo,
 .in-office,
+.ran-before,
 .researched,
 .affairs,
 .disputes,
@@ -2120,6 +2257,7 @@ li:has(> .cand.seats-end) + li > .cand {
 }
 
 .in-office .ico,
+.ran-before .ico,
 .researched .ico,
 .affairs .ico,
 .disputes .ico,
@@ -2265,6 +2403,83 @@ li:has(> .cand.seats-end) + li > .cand {
   border-color: var(--office);
   background: color-mix(in srgb, var(--office) 12%, transparent);
   color: var(--office);
+}
+
+/* The candidate stood for the same office at the election before
+   (ballots.js `RanBefore`): a clock turned back, round like the marks, in
+   the grey of past figures. Not a filter: pressed, it rings itself as the
+   filter's marks do and unfolds a line under the name. */
+.ran-before {
+  padding: 0 3px;
+  border-color: var(--text-dim);
+  border-radius: 999px;
+  background: var(--surface-3);
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+.ran-before:hover {
+  outline: 2px solid color-mix(in srgb, var(--primary) 45%, transparent);
+  outline-offset: 1px;
+}
+
+.ran-before.active {
+  outline: 2px solid var(--text-dim);
+  outline-offset: 1px;
+}
+
+/* How that went, a line of the row's own under the age and occupation;
+   read rather than pressed, so a click on it does not open the card. */
+.ran-detail {
+  display: block;
+  margin: 4px 0 2px;
+  padding: 4px 8px;
+  border-left: 2px solid var(--text-dim);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--surface-3);
+  color: var(--text-dim);
+  font-size: var(--fs-sm);
+  cursor: auto;
+}
+
+/* A candidacy in another election (ballots.js `OtherCandidacy`): the
+   contest, how it went, and a link to its card there, wrapping as
+   needed. */
+.other-run > span:first-child,
+.other-open {
+  display: block;
+}
+
+.other-run strong {
+  color: var(--text);
+}
+
+.other-outcome.elected-then {
+  color: var(--text);
+  font-weight: 650;
+}
+
+.other-run,
+.other-run * {
+  overflow-wrap: anywhere;
+}
+
+/* The card's list of the person's candidacies in the other elections. */
+.elsewhere {
+  margin: 0;
+  list-style: none;
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+.elsewhere li + li {
+  margin-top: 8px;
+}
+
+/* Research reused from the latest election on an earlier one's card: what
+   it is said before the result. */
+.research-reused {
+  color: var(--text-dim);
 }
 
 /* Research found something on the candidate: the count beside a
@@ -3236,7 +3451,12 @@ button.active.excluded {
    --map-series-<n>: a winner map's colours (mapmode.js `SERIES`), one for
    each of the candidates with the most votes, the rest in a grey: hues far
    apart, of about one lightness, so that none reads as more than another,
-   under labels that stay readable on each. */
+   under labels that stay readable on each.
+
+   --map-past-unknown: on a candidate's map of the election before, an
+   okrsok whose figures then are not known: a grey darker than the land's
+   "no result" (--map-none) and the series' grey, so that it reads as a
+   fact of its own rather than as missing. */
 :root {
   --map-result-1: #deebe4;
   --map-result-2: #bddace;
@@ -3254,6 +3474,7 @@ button.active.excluded {
   --map-series-7: #5fb8b0;
   --map-series-8: #e796b4;
   --map-series-other: #c3c6cb;
+  --map-past-unknown: #a3a8b0;
 }
 
 [data-theme="dark"] {
@@ -3273,6 +3494,7 @@ button.active.excluded {
   --map-series-7: #3f8a84;
   --map-series-8: #a65f7c;
   --map-series-other: #4b525c;
+  --map-past-unknown: #5e6672;
 }
 
 /* The legend: a chip at the foot of the map beside the zoom buttons, above
@@ -3483,9 +3705,59 @@ button.active.excluded {
   margin-top: 6px;
 }
 
+/* On a candidate's map of the election before (mapmode.js `PastKey`):
+   the okrsky estimated from addresses, hatched as the map hatches them
+   (draw.js `stripes`, 3 px each), and those not known, grey; their
+   explanations wrap rather than being cut short. */
+.map-legend-swatch.hatched {
+  background: repeating-linear-gradient(45deg, var(--map-result-4) 0 3px, var(--map-land) 3px 6px);
+}
+
+.map-legend-swatch.past-unknown {
+  background: var(--map-past-unknown);
+}
+
+.map-legend-past .map-legend-name {
+  white-space: normal;
+}
+
+.map-legend-past {
+  margin-top: 6px;
+}
+
+/* The choice of a candidate's 2026 votes or those at the election before
+   (mapmode.js `YearChoice`): two small buttons, the one shown pressed. */
+.map-legend-years {
+  display: flex;
+  gap: 4px;
+  margin: 6px 4px 0 0;
+}
+
+.map-legend-years button {
+  padding: 2px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: none;
+  color: var(--text-dim);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.map-legend-years button:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.map-legend-years button[aria-pressed="true"] {
+  border-color: var(--result);
+  background: var(--result);
+  color: var(--bg);
+}
+
 /* The unit under the pointer while the map shows results: its name, its
-   figures and an okrsok's 2022 turnout, beside the pointer, which it never
-   takes from the map. */
+   figures and those of the election before, beside the pointer, which it
+   never takes from the map. */
 .map-tip {
   position: fixed;
   z-index: 998;

@@ -1,0 +1,94 @@
+# Council obvody of Štiavnik (518018), Bytča.
+# Transcribed by an AI agent in job obvod-rules-309 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: Súpisné číslo 1 - 87, 920 - 1055 a novostavby v tom obvode sa volia 2 poslanci.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: Súpisné číslo 88 - 165, 853 - 919 a novostavby v tom obvode sa volia 2 poslanci.
+#   obvod 3: Vo volebnom obvode číslo 3, ktorý zahŕňa: Súpisné číslo 0, 166 - 232, 792 - 852 a novostavby v tom obvode sa volia 2 poslanci.
+#   obvod 4: Vo volebnom obvode číslo 4, ktorý zahŕňa: Súpisné číslo 233 - 424, 660 - 791 a novostavby v tom obvode sa volia 3 poslanci.
+#   obvod 5: Vo volebnom obvode číslo 5, ktorý zahŕňa: Súpisné číslo 425 - 659 a novostavby v tom obvode sa volia 2 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-1181 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný obvod číslo 1, okrsok č.1
+#   okrsok 2: Volebný obvod číslo 2, okrsok č.2
+#   okrsok 3: Volebný obvod číslo 3, okrsok č.3
+#   okrsok 4: Volebný obvod číslo 4, okrsok č.4
+#   okrsok 5: Volebný obvod číslo 5, okrsok č.5
+obec = "518018"
+name = "Štiavnik"
+date = 2022-06-29
+fill = "nearest"
+note = "Obvody are defined by súpisné číslo ranges valid across the whole obec (all parts share one numbering), so each range is applied in every part. The document adds 'a novostavby v tom obvode' (new houses in that obvod): the register's houses with súpisné above 1055 (461 addresses, numbers 1056–1553 in Štiavnik, Višňové, Predjastrabie, Čierne) are placed by fill_nearest. Scanned JPEG announcement read visually."
+okrsky_date = 2022-07-04
+okrsky_note = "The mayor's announcement (scan, read visually) gives one okrsok per obvod: okrsok n is obvod n (obvody by súpisné čísla per the obvody announcement), so each okrsok is its whole obvod."
+
+[[document]]
+url = "https://www.stiavnik.sk/data/page/stiavnik.sk/14872/volebne-obvody-a-pocet-poslancov-1.pdf"
+sha256 = "09571de834f4dbcffd10a610e49440f2e267f28d27fd49fa5d7da0fd396cdf8d"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov 29. októbra 2022 (uznesenie č. 615 a 616/2022 zo dňa 29.06.2022), s. 1"
+
+[[document]]
+url = "https://www.stiavnik.sk/data/page/stiavnik.sk/14872/volebne-obvody-a-pocet-poslancov-stiavnik-2.pdf"
+sha256 = "27920282067ec95b8141987ec3abeeb070ec1cbc3d4b368c842d719b00063caf"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov 29. októbra 2022, s. 2 (zo dňa 04.07.2022)"
+
+[[document]]
+url = "https://www.stiavnik.sk/data/page/stiavnik.sk/14872/okrsky-a-volebn-miestn-stiavnik.pdf"
+sha256 = "91311ce5a4392a16c61893df58c2d27f2599f22ea6eef4678f1d6b7581f01b10"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre spojené voľby 29. októbra 2022 (Štiavnik, 04.07.2022)"
+
+[[document]]
+url = "https://www.stiavnik.sk/14872/volby-2022"
+sha256 = "18a956fbb1e7c7c2c69dc0837b48e5977f21f85e8107fb9d179491197b676b10"
+title = "Voľby 2022 (page linking the documents)"
+
+[obvod.1]
+seats = 2
+okrsky = [1]
+rules = [
+  {part = "Štiavnik", numbers = "1-87, 920-1055"},
+  {part = "Višňové", numbers = "1-87, 920-1055"},
+  {part = "Predjastrabie", numbers = "1-87, 920-1055"},
+  {part = "Čierne", numbers = "1-87, 920-1055"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Štiavnik", numbers = "88-165, 853-919"},
+  {part = "Višňové", numbers = "88-165, 853-919"},
+  {part = "Predjastrabie", numbers = "88-165, 853-919"},
+  {part = "Čierne", numbers = "88-165, 853-919"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Štiavnik", numbers = "166-232, 792-852", note = "'Súpisné číslo 0' means voters registered without a house number; no register address has súpisné 0, so it is left out."},
+  {part = "Višňové", numbers = "166-232, 792-852"},
+  {part = "Predjastrabie", numbers = "166-232, 792-852"},
+  {part = "Čierne", numbers = "166-232, 792-852"},
+]
+
+[obvod.4]
+seats = 3
+okrsky = [4]
+rules = [
+  {part = "Štiavnik", numbers = "233-424, 660-791"},
+  {part = "Višňové", numbers = "233-424, 660-791"},
+  {part = "Predjastrabie", numbers = "233-424, 660-791"},
+  {part = "Čierne", numbers = "233-424, 660-791"},
+]
+
+[obvod.5]
+seats = 2
+okrsky = [5]
+rules = [
+  {part = "Štiavnik", numbers = "425-659"},
+  {part = "Višňové", numbers = "425-659"},
+  {part = "Predjastrabie", numbers = "425-659"},
+  {part = "Čierne", numbers = "425-659"},
+]

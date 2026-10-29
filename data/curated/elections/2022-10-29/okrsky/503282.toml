@@ -1,0 +1,68 @@
+# Okrsky of Komjatice, transcribed by an AI agent in job okrsok-rules-700 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cintorínska, Dolná, Horná, Nádražná, Nám. A. Cabana, Novozámocká, Partizánska, Šurianska, občania s trvalým pobytom Komjatice
+#   okrsok 2: Fraňa Kráľa, Fučíkova, Hradská, Kollárova, Nitrianska, Rázusova, Školská, Vinohradská
+#   okrsok 3: 1. mája, 28. marca, Andreja Hlinku, Bernolákova, Družstevná, Gen. Svobodu, Havla Husára, Hollého, Hurbanova, Hviezdoslavova, Kornilcevova, M. R. Štefánika, Nábrežie, Poštová, Sládkovičova, Slovenská, SNP, Štúrova, Vinodolská
+obec = "503282"
+name = "Komjatice"
+okrsky_date = 2022-07-14
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document read from the rendered image. \"občania s trvalým pobytom Komjatice\" in okrsok 1 means voters registered only to the obec (without an address), not the register's houses without a street; those (súpisné only, 109 addresses) are placed by fill_nearest."
+
+[[document]]
+url = "https://komjatice.sk/wp-content/uploads/dokumenty/volby-do-samosprav/Utvorenie-volebnych-okrskov-pre-volby-do-OSO-a-pre-volby-do-OSK.pdf"
+sha256 = "9e7064447959f2c55ba5a5d26562c526bdc8e0da3076622ef51e825c822b60b8"
+title = "Utvorenie volebných okrskov pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov"
+
+[[document]]
+url = "https://komjatice.sk/dokument/utvorenie-volebnych-okrskov-pre-volby-do-oso-a-pre-volby-do-osk/"
+sha256 = "72dc953abd06a5e5663b910532ee9bca13b5349f1aed82aeddacc08bec347385"
+title = "Utvorenie volebných okrskov pre voľby do OSO a pre voľby do OSK"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Dolná"},
+  {street = "Horná"},
+  {street = "Nádražná"},
+  {street = "Nám. Andreja Cabana", written = "Nám. A. Cabana"},
+  {street = "Novozámocká"},
+  {street = "Partizánska"},
+  {street = "Šurianska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Fraňa Kráľa"},
+  {street = "Fučíkova"},
+  {street = "Hradská"},
+  {street = "Kollárova"},
+  {street = "Nitrianska"},
+  {street = "Rázusova"},
+  {street = "Školská"},
+  {street = "Vinohradská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "1.mája"},
+  {street = "28.marca"},
+  {street = "Andreja Hlinku"},
+  {street = "Bernolákova"},
+  {street = "Družstevná"},
+  {street = "Gen. Svobodu"},
+  {street = "Havla Husára"},
+  {street = "Hollého"},
+  {street = "Hurbanova"},
+  {street = "Hviezdoslavova"},
+  {street = "Kornilcevova"},
+  {street = "M. R. Štefánika"},
+  {street = "Nábrežie"},
+  {street = "Poštová"},
+  {street = "Sládkovičova"},
+  {street = "Slovenská"},
+  {street = "SNP"},
+  {street = "Štúrova"},
+  {street = "Vinodolská"},
+]

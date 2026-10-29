@@ -1,0 +1,152 @@
+# Council obvody of Nová Baňa (517097), Žarnovica.
+# Transcribed by an AI agent in job obvod-rules-259 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Kmeťa, Bernolákova, Borošova, Cintorínska, Dodekova, Hviezdoslavova, Kalvárska, Kollárova, Krátka, Námestie slobody, Nemocničná, Osvety, Spojná, Šibeničný vrch, Švantnerova, Záhrbská
+#   obvod 2: Banícka, Brezová, Čierny lúh, Hájles, Hájska, Kamenárska, Májová, Mariánska, Moyzesova, Nálepkova, Odbojárska, Partizánska, Pod Gupňou, Pod Zvoničkou, Sládkovičova, Štúrova, Švermova, Vodárenská, Vršky
+#   obvod 3: Bôrina, Dlhá lúka, Horná, Hornozemská cesta, Hrádza, Kútovská cesta, Laznícka cesta, Legionárska, Mieru, M.R. Štefánika, Nad Hrázou, Podhorská, Pod Hrádzou, Pod sekvojou, Poľná cesta, Robotnícka, Sedlova cesta, Slnečná, Spodná, Starohutská, Štefankova cesta, Viničná cesta, Záhradná
+#   obvod 4: Nábrežná, Školská, Železničný rad
+#   obvod 5: Bukovina, Chotár, Stará Huta
+#   obvod 6: Bačova cesta, Bexápel, Feriancov rígeľ, Hrabcova cesta, Kolibská cesta, Kozákova dolina, Lietajova cesta, Matiašova cesta, Pelúchova cesta, Poliačikova cesta, Potočná cesta, Prírodná, Rekreačná cesta, Sadovnícka cesta, Slameníkova cesta, Tajch
+# Okrsky added by an AI agent in job okrsok-rules-1136 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kmeťa, Bernolákova, Borošova, Cintorínska, Dodekova, Hviezdoslavova, Kalvárska, Kollárova, Krátka, Námestie slobody, Nemocničná, Osvety, Spojná, Šibeničný vrch, Švantnerova, Záhrbská
+#   okrsok 2: Banícka, Brezová, Čierny lúh, Hájles, Hájska, Kamenárska, Májová, Mariánska, Moyzesova, Nálepkova, Odbojárska, Partizánska, Pod Gupňou, Pod Zvoničkou, Sládkovičova, Štúrova, Švermova, Vodárenská, Vršky
+#   okrsok 3: Bôrina, Dlhá lúka, Horná, Hornozemská cesta, Hrádza, Kútovská cesta, Laznícka cesta, Legionárska, Mieru, M.R. Štefánika, Nad Hrázou, Podhorská, Pod Hrádzou, Pod sekvojou, Poľná cesta, Robotnícka, Sedlova cesta, Slnečná, Spodná, Starohutská, Štefankova cesta, Viničná cesta, Záhradná
+#   okrsok 4: Nábrežná, Školská, Železničný rad
+#   okrsok 5: Bukovina, Chotár, Stará Huta
+#   okrsok 6: Bačova cesta, Bexápel, Feriancov rígeľ, Hrabcova cesta, Kolibská cesta, Kozákova dolina, Lietajova cesta, Matiašova cesta, Pelúchova cesta, Poliačikova cesta, Potočná cesta, Prírodná, Rekreačná cesta, Sadovnícka cesta, Slameníkova cesta, Tajch
+obec = "517097"
+name = "Nová Baňa"
+date = 2022-06-22
+fill = "nearest"
+note = "Scanned resolution, read from the page images. Obvod 5 = the parts Bukovina, Chotár, Stará Huta (časti obce without streets). Date: the date the resolutions bear (V Novej Bani, dňa 22.06.2022). Placed by fill_nearest: Banícke námestie and Námestie sv. Alžbety (not in the document) and addresses without a street in the parts Nová Baňa and Štále."
+okrsky_date = 2022-06-22
+okrsky_note = "No separate 2022 okrsky document is published (KV 2022 page and 2022 archive list only the obvody resolution). Each of the 6 obvody holds exactly one okrsok (per ŠÚ and the resolution No. 122/2022 of 22.06.2022), so every okrsok is its whole obvod; texts are the resolution's streets per obvod. The city's later list 'Vytvorené volebné okrsky v meste Nová Baňa počas konania REFERENDUM 2023' (undated, first archived 2023-09-30, not used as a source) gives the identical streets for okrsky 1-6."
+
+[[document]]
+url = "https://www.novabana.sk/storage/app/media/uploaded-files/Volebn%C3%A9%20obvody%20KV%202022.pdf"
+sha256 = "1e72338ed1a8bc0bf12e22523e0c41d4144620b89c86af500a867a0416ff924f"
+title = "Uznesenie MsZ Nová Baňa č. 122/2022 (volebné obvody), V Novej Bani dňa 22.06.2022"
+
+[[document]]
+url = "https://www.novabana.sk/storage/app/media/uploaded-files/Ur%C4%8Denie%20po%C4%8Dtu%20poslancov%20MsZ%20KV%202022.pdf"
+sha256 = "1b5b7d7e87db9f2bd1178e69addb85b7b42decd908ab598773e810964419a7c9"
+title = "Uznesenie MsZ Nová Baňa č. 121/2022 (počet poslancov 13), V Novej Bani dňa 22.06.2022"
+
+[obvod.1]
+seats = 2
+okrsky = [1]
+rules = [
+  {street = "Andreja Kmeťa", written = "Kmeťa", note = "\"Kmeťa\" in the document is the register's Andreja Kmeťa (the only such street)"},
+  {street = "Bernolákova"},
+  {street = "Borošova"},
+  {street = "Cintorínska"},
+  {street = "Dodekova"},
+  {street = "Hviezdoslavova"},
+  {street = "Kalvárska"},
+  {street = "Kollárova"},
+  {street = "Krátka"},
+  {street = "Námestie slobody"},
+  {street = "Nemocničná"},
+  {street = "Osvety"},
+  {street = "Spojná"},
+  {street = "Šibeničný vrch"},
+  {street = "Švantnerova"},
+  {street = "Záhrbská"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {street = "Banícka"},
+  {street = "Brezová"},
+  {street = "Čierny lúh"},
+  {street = "Hájles"},
+  {street = "Hájska"},
+  {street = "Kamenárska"},
+  {street = "Májová"},
+  {street = "Mariánska"},
+  {street = "Moyzesova"},
+  {street = "Nálepkova"},
+  {street = "Odbojárska"},
+  {street = "Partizánska"},
+  {street = "Pod Gupňou"},
+  {street = "Pod Zvoničkou"},
+  {street = "Sládkovičova"},
+  {street = "Štúrova"},
+  {street = "Švermova"},
+  {street = "Vodárenská"},
+  {street = "Vršky"},
+]
+
+[obvod.3]
+seats = 3
+okrsky = [3]
+rules = [
+  {street = "Bôrina"},
+  {street = "Dlhá lúka"},
+  {street = "Horná"},
+  {street = "Hornozemská cesta"},
+  {street = "Hrádza"},
+  {street = "Kútovská cesta"},
+  {street = "Laznícka cesta"},
+  {street = "Legionárska"},
+  {street = "Mieru"},
+  {street = "M.R.Štefánika", written = "M.R. Štefánika"},
+  {street = "Nad Hrádzou", written = "Nad Hrázou", note = "\"Nad Hrázou\" in the scanned resolution is the register's Nad Hrádzou (spelling variant)"},
+  {street = "Podhorská"},
+  {street = "Pod Hrádzou"},
+  {street = "Pod sekvojou"},
+  {street = "Poľná cesta"},
+  {street = "Robotnícka"},
+  {street = "Sedlová cesta", written = "Sedlova cesta"},
+  {street = "Slnečná"},
+  {street = "Spodná"},
+  {street = "Starohutská"},
+  {street = "Štefankova cesta"},
+  {street = "Viničná cesta"},
+  {street = "Záhradná"},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [4]
+rules = [
+  {street = "Nábrežná"},
+  {street = "Školská"},
+  {street = "Železničný rad"},
+]
+
+[obvod.5]
+seats = 1
+okrsky = [5]
+rules = [
+  {part = "Bukovina"},
+  {part = "Chotár"},
+  {part = "Stará Huta"},
+]
+
+[obvod.6]
+seats = 2
+okrsky = [6]
+rules = [
+  {street = "Bačova cesta"},
+  {street = "Bexápel"},
+  {street = "Feriancov rígeľ"},
+  {street = "Hrabcova cesta"},
+  {street = "Kolibská cesta"},
+  {street = "Kozákova dolina"},
+  {street = "Lietajova cesta"},
+  {street = "Matiašova cesta"},
+  {street = "Pelúchova cesta"},
+  {street = "Poliačikova cesta"},
+  {street = "Potočná cesta"},
+  {street = "Prírodná"},
+  {street = "Rekreačná cesta"},
+  {street = "Sadovnícka cesta"},
+  {street = "Slameníkova cesta"},
+  {street = "Tajch"},
+]

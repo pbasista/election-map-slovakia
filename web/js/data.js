@@ -1,13 +1,13 @@
 /* Loading the site's data files and answering questions about them.
  *
- * File layouts are described in src/election_map_slovakia/build.py (data/).
+ * File layouts are described in src/election_map_slovakia/bundle.py.
  * Everything is fetched on demand and kept in small LRU caches (files.js),
  * so a long session does not accumulate the whole country in memory.
  */
 
 import { useEffect, useState } from '../vendor/preact-htm.module.js';
 import { addressFile, Cache, fetchJSON } from './files.js';
-import { hasOccupations, lang, t } from './i18n.js';
+import { election, elections, hasOccupations, lang, logoUrl, t } from './i18n.js';
 
 const files = new Cache(24);
 export const getJSON = (path) => files.get(path, fetchJSON);
@@ -130,16 +130,19 @@ export function areaName(contest, index) {
 
 const areaPath = (contest, index) => `/data/${areaName(contest, index)}.json`;
 
-/* Slovak occupation → its translation into the page's language, from
- * /i18n/<lang>/occupations.json, fetched once with the first candidates;
- * empty where there is none (Slovak, or nothing translated yet). */
+/* Slovak occupation → its translation into the page's language, from the
+ * election's bundle, i18n/<lang>.json, fetched once with the first
+ * candidates; empty where there is none (Slovak). */
 let occupationMap = null;
 function occupations() {
   if (!hasOccupations()) return Promise.resolve({});
-  occupationMap ??= fetchJSON(`/i18n/${lang}/occupations.json`).catch((e) => {
-    occupationMap = null;
-    throw e;
-  });
+  occupationMap ??= fetchJSON(`/i18n/${lang}.json`).then(
+    (file) => file.occupations,
+    (e) => {
+      occupationMap = null;
+      throw e;
+    },
+  );
   return occupationMap;
 }
 
@@ -153,20 +156,24 @@ function decodeResult(body, [votes, valid, voters, eligible, obvod = null]) {
   return { votes, valid, voters, eligible, obvod, multi: kind === 'oz' || kind === 'zsk' };
 }
 
-/* A candidate from their row in the contest's *entry* of an area file.
+/* A candidate from their row in the contest's *entry* of area file *file*.
  * `occupation` is in the page's language where translated, the Slovak
  * original then in `occupationSk`; `parties` are {short, name, logo} from
- * the index's party table; `offices` the offices the person holds now,
+ * the index's party table; `offices` the offices the person held at the
+ * time of the election,
  * [{body, since, result}]; `research` {date, findings, languages,
- * affairs, disputes} (affairs: how many findings are serious
- * controversies; disputes: how many are disputed or lesser) from the area
- * file's *researched* summaries, null while the person is not researched
- * yet. */
-function decodeCandidate(contest, entry, row, translated, index, researched) {
+ * affairs, disputes, reused, undated} (affairs: how many findings are
+ * serious controversies; disputes: how many are disputed or lesser;
+ * reused: the research of the latest election's person linked to them, cut
+ * to the findings published before this election's day, undated then how
+ * many were left out for want of a date) from the file's summaries, null
+ * while the person is not researched yet; `elsewhere` the person's
+ * candidacies in other elections, by slug (`decodeElsewhere`). */
+function decodeCandidate(contest, entry, row, translated, index, file) {
   const [number, titleBefore, firstName, surname, titleAfter, age, occupation, parties, person, residence = null] =
     row;
   const known = Object.hasOwn(translated, occupation);
-  const research = researched?.[person];
+  const research = file.research?.[person];
   return {
     id: `${contest}#${number}`,
     contest,
@@ -180,7 +187,7 @@ function decodeCandidate(contest, entry, row, translated, index, researched) {
     occupationSk: known ? occupation : null,
     parties: parties.map((p) => {
       const [short, name, logo = null] = index.parties[p];
-      return { short, name, logo };
+      return { short, name, logo: logo && logoUrl(logo) };
     }),
     person,
     residence,
@@ -190,17 +197,82 @@ function decodeCandidate(contest, entry, row, translated, index, researched) {
       result: decodeResult(body, result),
     })),
     research: research ? decodeResearch(research) : null,
+    elsewhere: decodeElsewhere(file.elsewhere?.[person] ?? {}, index),
   };
 }
 
-function decodeResearch([date, findings, languages, affairs, disputes]) {
-  return { date, findings, languages, affairs, disputes };
+function decodeResearch([date, findings, languages, affairs, disputes, undated]) {
+  return { date, findings, languages, affairs, disputes, reused: undated !== undefined, undated: undated ?? 0 };
+}
+
+/* The candidacies of a person in other elections, from the area file's
+ * `elsewhere` entry: slug → [{id, contest, label, votes, valid, rank, of,
+ * elected, withdrew, multi}], the numbers null where that election's
+ * results are not final or the contest has none. `label` names the contest
+ * as this election's index does (the municipalities and kraje are the same
+ * then). */
+function decodeElsewhere(bySlug, index) {
+  return Object.fromEntries(
+    Object.entries(bySlug).map(([slug, rows]) => [
+      slug,
+      rows.map(([id, votes = null, valid = null, rank = null, of = null, flag = null]) => {
+        const contest = contestOf(id);
+        const { kind } = parseContest(contest);
+        return {
+          id,
+          contest,
+          label: contestLabel(contest, index),
+          votes,
+          valid,
+          rank,
+          of,
+          elected: flag === 1,
+          withdrew: flag === -1,
+          multi: kind === 'oz' || kind === 'zsk',
+        };
+      }),
+    ]),
+  );
+}
+
+/* Every election other than the page's, newest first, as {day, slug}. */
+export const otherElections = elections.filter((e) => e.day !== election);
+
+/* The newest election, whose candidates the research is done on; an
+ * earlier one's are given that of the person linked to them (`reused`). */
+export const latestElection = elections[0];
+
+/* The election before the page's (the next older the site shows), or null. */
+export const electionBefore = elections[elections.findIndex((e) => e.day === election) + 1] ?? null;
+
+/* The page of candidacy *id* in the election of *slug*, opening its card. */
+export const candidacyUrl = (slug, id) => `/${lang}/${slug}/#c=${id.replace('#', '%23')}`;
+
+/* The candidacy of candidate *c*'s person in the election of *slug* that
+ * stands for theirs: the one for the same office (body) if there is one,
+ * else their first there; null where the person is not linked to anyone
+ * there. */
+export function linkedCandidacy(c, slug) {
+  const there = c.elsewhere[slug];
+  if (!there) return null;
+  return there.find((x) => officeOf(x.contest) === officeOf(c.contest)) ?? there[0];
+}
+
+/* How candidate *c* fared for the same office at the election before
+ * (`electionBefore`): their candidacy there (`decodeElsewhere`) with
+ * `election` {day, slug}; null where they did not stand for it then (as
+ * far as the persons are linked). */
+export function ranBefore(c) {
+  if (!electionBefore) return null;
+  const there = linkedCandidacy(c, electionBefore.slug);
+  return there && officeOf(there.contest) === officeOf(c.contest) ? { ...there, election: electionBefore } : null;
 }
 
 /* The office a contest elects: its id without the obvod. */
 export const officeOf = (contestId) => contestId.split('/')[0];
 
-/* Whether candidate *c* holds now the office their contest elects. */
+/* Whether candidate *c* held the office their contest elects at the time
+ * of the election. */
 export const inOffice = (c) => c.offices.some((o) => o.body === officeOf(c.contest));
 
 export function officeLabel(body, index) {
@@ -234,7 +306,8 @@ export function contestLabel(id, index) {
   }
 }
 
-/* The mayor or president in office, from the entry's `holder`: {name,
+/* The mayor or president in office at the time of the election, from the
+ * entry's `holder`: {name,
  * since, number, result}, `number` their ballot number, null when not
  * standing. */
 function decodeHolder(office, [name, since, number, result]) {
@@ -242,17 +315,20 @@ function decodeHolder(office, [name, since, number, result]) {
 }
 
 /* The turnout of the last election of the contest's body, from the entry's
- * `past`: {election, date, eligible, voters, whole, okrsky}, `election` the
- * results name (oso2022, osk2022, oso202303, …), `whole` set when the
+ * `past`: {election, date, eligible, voters, whole, method}, `election`
+ * the results name (oso2022, osk2022, oso202303, …), `whole` set when the
  * figures are of the whole municipality or city rather than this council
- * obvod, `okrsky` the numbers of the okrsky they are summed over where they
- * are this obvod's (else null). */
+ * obvod; for an obvod of a council of several now whose figures are its
+ * own okrsky's then, `method` the least certain way they were found
+ * (live.js `PAST`; else null). */
 function decodePast([election, date, eligible, voters, scope]) {
-  return { election, date, eligible, voters, whole: scope === 1, okrsky: Array.isArray(scope) ? scope : null };
+  const method = Array.isArray(scope) ? scope[0] : null;
+  return { election, date, eligible, voters, whole: scope === 1, method };
 }
 
 /* Contest *id* from its area file; `holder` and `past` (see above) are null
- * where not known. */
+ * where not known; `noResult` set for a contest that had candidates but has
+ * no final result (the vote could not be completed). */
 async function contest(id, index) {
   const [file, translated] = await Promise.all([getJSON(areaPath(id, index)), occupations()]);
   const entry = file.contests[id] ?? { candidates: [] };
@@ -264,7 +340,8 @@ async function contest(id, index) {
     sources: entry.sources ?? [],
     holder: entry.holder ? decodeHolder(officeOf(id), entry.holder) : null,
     past: entry.past ? decodePast(entry.past) : null,
-    candidates: entry.candidates.map((row) => decodeCandidate(id, entry, row, translated, index, file.research)),
+    noResult: Boolean(entry.no_result),
+    candidates: entry.candidates.map((row) => decodeCandidate(id, entry, row, translated, index, file)),
   };
 }
 
@@ -302,7 +379,7 @@ function councilContests(obec, obvod, byAddress) {
  * one.
  *
  * Null for an unknown obec, else {obec, council, obvod, estimated,
- * contests, group}:
+ * origin, contests, group}:
  * - `contests`: as `contests` gives them, the council ones with `council`;
  * - `council`: 'single' (one obvod), 'address' (several, the place's known:
  *   `obvod`), 'choose' (several, known by address, but no address chosen),
@@ -310,6 +387,25 @@ function councilContests(obec, obvod, byAddress) {
  *   obvod every council obvod is listed;
  * - `estimated`: the obec has not published which addresses are in which
  *   obvod, so they are a guess;
+ * - `origin`: where its units come from when not from this election's own
+ *   documents, from data/index.json: `reused` the day of the election whose
+ *   council obvod rules stand in, `adopted` that of the later election
+ *   whose rules stand in though the layout is not proven to match (the
+ *   borders indicative only), `dating` {by, seen} where the documents
+ *   of its obvody state no date and are dated approximately ('archived'
+ *   or 'posted' on the day `seen`, or 'named': they name the election),
+ *   `supplemented` {from, day} where those documents do not place every
+ *   address and rules from a later source ('election', 'referendum' or
+ *   'document' of the day `day`) fill them in,
+ *   `notFound` whether no document setting its obvody was found,
+ *   `okrskyReused`, `okrskyAdopted` and `okrskyReferendum` the day of the
+ *   election or referendum whose okrsky are drawn, `okrskyDating` and
+ *   `okrskySupplemented` as `dating` and `supplemented` of the okrsky's
+ *   document, `okrskyUnknown`
+ *   whether it voted in several okrsky that are not drawn, `boundary`
+ *   {day, on, obce} where its boundary on `day` differed from that of the
+ *   election `on` drawn (`obce` the names of the neighbours the land moved
+ *   between, none for the state border), each null or false where not;
  * - `group`: the council obvody and okrsky of the houses of the street or
  *   part chosen (`groupUnits`). */
 export async function ballots(code, where = {}) {
@@ -326,7 +422,24 @@ export async function ballots(code, where = {}) {
   ids.push(`zsk:${obec.kraj}/${obec.zsk}`, `predseda:${obec.kraj}`);
   const contests = await Promise.all(ids.map((id) => contest(id, index)));
   for (const c of contests) if (councilIds.includes(c.id)) c.council = council;
-  return { obec, council, obvod, estimated: index.estimated.includes(obec.code), contests, group };
+  const own = index.boundaries?.obce[obec.code];
+  const origin = {
+    reused: index.reused[obec.code] ?? null,
+    adopted: index.adopted[obec.code] ?? null,
+    dating: index.date_approximate[obec.code] ?? null,
+    supplemented: index.supplemented[obec.code] ?? null,
+    notFound: index.not_found.includes(obec.code),
+    okrskyReused: index.okrsky_reused[obec.code] ?? null,
+    okrskyAdopted: index.okrsky_adopted[obec.code] ?? null,
+    okrskyReferendum: index.okrsky_referendum[obec.code] ?? null,
+    okrskyDating: index.okrsky_date_approximate[obec.code] ?? null,
+    okrskySupplemented: index.okrsky_supplemented[obec.code] ?? null,
+    okrskyUnknown: index.okrsky_unknown.includes(obec.code),
+    boundary: own
+      ? { day: index.boundaries.day, on: index.boundaries.on, obce: own.map((c) => index.obce[c][0]) }
+      : null,
+  };
+  return { obec, council, obvod, estimated: index.estimated.includes(obec.code), origin, contests, group };
 }
 
 /* The council obvody and the okrsky of the houses of the street or part
@@ -354,7 +467,7 @@ export async function person(candidacyId) {
   const entry = file.contests[contestId];
   const row = entry?.candidates.find((r) => `${contestId}#${r[0]}` === candidacyId);
   if (!row) return null;
-  const candidate = decodeCandidate(contestId, entry, row, translated, index, file.research);
+  const candidate = decodeCandidate(contestId, entry, row, translated, index, file);
   const ids = [...(file.persons[candidate.person] ?? [candidacyId])].sort((a, b) => localFirst(contestOf(a), contestOf(b)));
   const candidacies = await Promise.all(
     ids.map(async (id) => {
@@ -363,6 +476,21 @@ export async function person(candidacyId) {
     }),
   );
   return { candidate, candidacies };
+}
+
+/* For candidacy *candidacyId*, the candidacy that stands for it in each
+ * other election (`linkedCandidacy`): slug → candidacy id, none where the
+ * person is not linked there; empty for a candidacy not found. The card of
+ * the candidacy is open, so its file is loaded already. */
+export async function candidacyLinks(candidacyId) {
+  const found = await person(candidacyId).catch(() => null);
+  if (!found) return {};
+  return Object.fromEntries(
+    otherElections.flatMap(({ slug }) => {
+      const there = linkedCandidacy(found.candidate, slug);
+      return there ? [[slug, there.id]] : [];
+    }),
+  );
 }
 
 /* What research found on candidate *c*, from data/research/<lang>/<area>.json

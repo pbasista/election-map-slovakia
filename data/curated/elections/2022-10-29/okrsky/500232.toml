@@ -1,0 +1,22 @@
+# The okrsky of Golianovo of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/500232.toml, reused by `ems job reuse`.
+obec = "500232"
+name = "Golianovo"
+okrsky_date = 2026-07-29
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). The okrsky are given by súpisné číslo ranges (2–376 and 377–867). Any address outside them (e.g. č. 1 or above 867) takes the okrsok of the nearest placed address (fill_nearest)."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.golianovo.sk/files/2026-07-29-140951-Ozn__menie_o___ase_a_mieste_konania_volieb.pdf"
+sha256 = "b344b98328ea3e2245c902ce366b6ed7a47a50371fe261f952b1d0e229442418"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Golianovo", numbers = "2-376"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Golianovo", numbers = "377-867"},
+]

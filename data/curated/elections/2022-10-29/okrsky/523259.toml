@@ -1,0 +1,29 @@
+# Okrsky of Vinné, transcribed by an AI agent in job okrsok-rules-713 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od č. domu 1 až po č. domu 377
+#   okrsok 2: od č. domu 378 až po č. domu 9 149
+obec = "523259"
+name = "Vinné"
+okrsky_date = 2022-08-02
+okrsky_note = "The document splits the village by house numbers (súpisné čísla): 1–377 and 378–9149; okrsok 2 also takes the 2 register addresses numbered above 9149."
+
+[[document]]
+url = "https://www.vinne.sk/download_file_f.php?id=1721757"
+sha256 = "1e93869ca1b2255fd18dc74ff3becf10cbc7b6681792e2be50c164143f35511a"
+title = "Oznámenie o utvorení volebných okrskov"
+
+[[document]]
+url = "https://www.vinne.sk/volby-2022.html"
+sha256 = "9dda3b848453df2c70aa68427e4c9618b33e832d79a8cba3bb7d1ea40e90c6ee"
+title = "Voľby 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Vinné", numbers = "1-377"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vinné", numbers = "378-"},
+]

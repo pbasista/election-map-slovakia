@@ -1,0 +1,90 @@
+# Council obvody of Ladce (513296), Ilava.
+# Transcribed by an AI agent in job obvod-rules-329 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Hviezdoslavova ulica Ladce, Záhradná ulica, Farská ulica, Cementárska ulica, Ulica Ľudovíta Štúra, Za Kaštieľom, Ulica Pavla Koyša, Ulica Jána Kollára, Kukučínova ulica, Vážska ulica
+#   obvod 2: Hviezdoslavova ulica Tunežice, Podjavorinskej ulica, Tajovského ulica, Kalinčiakova ulica, Bottova ulica
+#   obvod 3: Ulica Janka Kráľa, Podhorká ulica, Pod Skalkou, Pod hájom, Lúčkovská ulica, Pod rotbánom, Kopanice
+# Okrsky added by an AI agent in job okrsok-rules-1198 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cementárska ulica, Záhradná ulica, Farská ulica, Obec Ladce
+#   okrsok 2: Hviezdoslavova ulica, Ulica Ľudovíta Štúra, Za Kaštieľom, Ulica Pavla Koyša, Ulica Jána Kollára, Kukučínova ulica, Vážska ulica
+#   okrsok 3: Hviezdoslavova ulica Tunežice, Podjavorinskej ulica, Tajovského ulica, Kalinčiakova ulica, Bottova ulica
+#   okrsok 4: Ulica Janka Kráľa, Podhorská ulica, Pod Skalkou, Pod hájom, Lúčkovská ulica, Pod rotbánom, Kopanice
+obec = "513296"
+name = "Ladce"
+date = 2022-06-29
+fill = "nearest"
+note = "Hviezdoslavova ulica is split by part (Ladce / Tunežice) as the document says. The 279 register addresses without a street (súpisné only, in both parts) are placed by fill_nearest. 'Obec Ladce' in the okrsky document's okrsok 1 means voters registered without an address and is not a rule."
+okrsky_date = 2022-07-14
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky document is undated (its title names the elections of 29.10.2022) and the elections page gives no posting date; date is the file's upload date on the official server (HTTP Last-Modified 14 Jul 2022 08:11 GMT; the PDF's creation date is 2022-07-14). The Internet Archive has the elections page only on 30.6.2022 (before the document) and 5.12.2022. 'Obec Ladce' in okrsok 1 means voters registered without an address and is not a rule. Hviezdoslavova ulica: okrsok 2 takes it in part Ladce, okrsok 3 ('Hviezdoslavova ulica Tunežice') in part Tunežice. The register's addresses without a street (súpisné only) are placed by fill_nearest in obvod 1."
+
+[[document]]
+url = "https://www.ladce.sk/_public/files/Ozn%C3%A1menie-_obvody_a_poslanci%281%29.pdf"
+sha256 = "d50195deb60651310bb9f6ed7b8b2af1753248cc3858317ec2ae21bcb634afd0"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov, 12.07.2022 (uznesenie č. 82/2022 zo dňa 29.06.2022)"
+
+[[document]]
+url = "https://www.ladce.sk/_public/files/Vytvoren%C3%A9_volebn%C3%A9_okrsky_a.pdf"
+sha256 = "5c2e6bececf3d3db26bc4b5d4f2d9c3ac3618baae3a4599ff62e6a38242759c5"
+title = "Vytvorené volebné okrsky a určené volebné miestnosti 2022"
+
+[obvod.1]
+seats = 5
+okrsky = [1, 2]
+rules = [
+  {street = "Hviezdoslavova ulica", part = "Ladce"},
+  {street = "Záhradná ulica"},
+  {street = "Farská ulica"},
+  {street = "Cementárska ulica"},
+  {street = "Ulica Ľudovíta Štúra"},
+  {street = "Za kaštieľom", written = "Za Kaštieľom"},
+  {street = "Ulica Pavla Koyša"},
+  {street = "Ulica Jána Kollára"},
+  {street = "Kukučínova ulica"},
+  {street = "Vážska ulica"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [3]
+rules = [
+  {street = "Hviezdoslavova ulica", part = "Tunežice"},
+  {street = "Podjavorinskej ulica"},
+  {street = "Tajovského ulica"},
+  {street = "Kalinčiakova ulica"},
+  {street = "Bottova ulica"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [4]
+rules = [
+  {street = "Ulica Janka Kráľa"},
+  {street = "Podhorská ulica", written = "Podhorká ulica", note = "typo in the announcement; the okrsky document writes Podhorská ulica"},
+  {street = "Pod Skalkou"},
+  {street = "Pod hájom"},
+  {street = "Lúčkovská ulica"},
+  {street = "Pod rotbánom"},
+  {street = "Kopanice"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Cementárska ulica"},
+  {street = "Záhradná ulica"},
+  {street = "Farská ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hviezdoslavova ulica"},
+  {street = "Ulica Ľudovíta Štúra"},
+  {street = "Za kaštieľom", written = "Za Kaštieľom"},
+  {street = "Ulica Pavla Koyša"},
+  {street = "Ulica Jána Kollára"},
+  {street = "Kukučínova ulica"},
+  {street = "Vážska ulica"},
+]

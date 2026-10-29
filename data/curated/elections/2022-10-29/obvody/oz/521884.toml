@@ -1,0 +1,36 @@
+# Council obvody of Ploské (521884), Košice - okolie.
+# Transcribed by an AI agent in job obvod-rules-382 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod číslo 1 zahŕňa okrsok č. 1 Ploské - 4 poslanci
+#   obvod 2: Volebný obvod číslo 2 zahŕňa okrsok č. 1 Ploské Ortáše - 3 poslanci
+# Okrsky added by an AI agent in job okrsok-rules-1243 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný obvod číslo 1 zahŕňa okrsok č. 1 Ploské - 4 poslanci
+#   okrsok 2: Volebný obvod číslo 2 zahŕňa okrsok č. 1 Ploské Ortáše - 3 poslanci
+obec = "521884"
+name = "Ploské"
+date = 2022-07-06
+note = "Scanned one-page announcement, read visually. Obvod 1 = okrsok Ploské, obvod 2 = Ploské Ortáše (the document says 'okrsok č. 1' for both, evidently a typo for okrsok 2 in obvod 2); transcribed as the parts Ploské and Ortáše."
+okrsky_date = 2022-07-06
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+
+[[document]]
+url = "https://www.ploske.sk/e_download.php?file=data/uredni_deska/obsah631_10.pdf&original=2022-07-15-105352-ozn._o_obvodoch_a_pocet_poslan.pdf"
+sha256 = "bc777299e3116a52c22be94379cb7927c1723e384ef342fee036dcc71277b30a"
+title = "Oznámenie o utvorení volebných obvodov a určení počtu poslancov pre voľby do orgánov samosprávy obcí 29. októbra 2022 (uznesenie č. 4/5/2022 zo dňa 6.7.2022)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Ploské"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Ortáše"},
+]

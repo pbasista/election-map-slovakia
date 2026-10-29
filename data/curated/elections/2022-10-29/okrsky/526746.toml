@@ -1,0 +1,24 @@
+# Okrsky of Hromoš, transcribed by an AI agent in job okrsok-rules-1059 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 Hromoš
+#   okrsok 2: Okrsok č. 2 Kozelec
+obec = "526746"
+name = "Hromoš"
+okrsky_date = 2022-08-01
+okrsky_note = "Scanned notice of the obec dated 01.08.2022 (HRS2022/00090-OCÚ); the okrsky are named by the parts Hromoš and Kozelec (both polling rooms at Hromoš 114)."
+
+[[document]]
+url = "https://web.archive.org/web/20220814191041/http://www.hromos.sk/resources/File/oznamenie-okrsky.pdf"
+sha256 = "9ab020a615044d8fdd39663e84026dae1a85dca0274e52851037619f55d7c117"
+title = "Oznámenie (utvorenie volebných okrskov a určenie volebných miestností pre voľby 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Hromoš"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kozelec"},
+]

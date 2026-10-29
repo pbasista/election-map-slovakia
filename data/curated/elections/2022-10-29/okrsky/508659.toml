@@ -1,0 +1,46 @@
+# The okrsky of Hrochoť of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/508659.toml, reused by `ems job reuse`.
+obec = "508659"
+name = "Hrochoť"
+okrsky_date = 2026-07-09
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). The document is an image on the obec's OZNAM page. It lists 'Hlavná ulica' in both okrsky without house numbers, so Hlavná ulica has no rule: its houses take the okrsok of the nearest placed address (fill_nearest), as do Stará voda (not in the document) and addresses without a street. Okrsok 1 also holds 'pobyt bezdomovca'."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.hrochot.sk/evt_image.php?img=17935"
+sha256 = "5f07edbf2a549db38548b357e8de47e95155762ac73dcad6ad05f5c70061c75e"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (image)"
+
+[[document]]
+url = "https://www.hrochot.sk/obcan/aktuality/oznam-1547sk.html"
+sha256 = "fa6433a1383e3d6d328e63cdf06973d5cee4631cd53e0e074b00abd4bb1ec3c6"
+title = "OZNAM – Voľby do orgánov samosprávy obcí v roku 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Námestie Andreja Sládkoviča"},
+  {street = "Pod kostolom"},
+  {street = "Na Teplici"},
+  {street = "Ľuda Ondrejova"},
+  {street = "Dubiny"},
+  {street = "Na Hanišovú"},
+  {street = "Močare"},
+  {street = "Za Brezinku"},
+  {street = "Družstevná"},
+  {street = "Na Záhumnie"},
+  {street = "Na Hlinky"},
+  {street = "Na Kopec"},
+  {street = "Do Trávnika"},
+  {street = "Na Dúbravu"},
+  {street = "Pod Lipie"},
+  {street = "Kyslinky"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Pod Dubovým dielom"},
+  {street = "Vranní lúžok"},
+  {street = "Pod Horou"},
+  {street = "Súdenica"},
+  {street = "Pod Skalicu"},
+]

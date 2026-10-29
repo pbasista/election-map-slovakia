@@ -1,0 +1,36 @@
+# Council obvody of Lietavská Svinná-Babkov (517755), Žilina.
+# Transcribed by an AI agent in job obvod-rules-359 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č.1 - 5 poslancov ... VOLEBNÝ OBVOD č. 1 - Lietavská Svinná ... Volebný okrsok č. 1 - v tomto okrsku budú voliť obyvatelia časti obce Lietavská Svinná
+#   obvod 2: volebný obvod č.2 - 4 poslanci ... VOLEBNÝ OBVOD č. 2 - Babkov ... Volebný okrsok č. 2 - v tomto okrsku budú voliť obyvatelia časti obce Babkov
+# Okrsky added by an AI agent in job okrsok-rules-1222 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volebný obvod č.1 - 5 poslancov ... VOLEBNÝ OBVOD č. 1 - Lietavská Svinná ... Volebný okrsok č. 1 - v tomto okrsku budú voliť obyvatelia časti obce Lietavská Svinná
+#   okrsok 2: volebný obvod č.2 - 4 poslanci ... VOLEBNÝ OBVOD č. 2 - Babkov ... Volebný okrsok č. 2 - v tomto okrsku budú voliť obyvatelia časti obce Babkov
+obec = "517755"
+name = "Lietavská Svinná-Babkov"
+date = 2022-06-27
+note = "The 2022 announcement itself is not archived. The document used is the announcement for the 2023 supplementary elections (scan, OCR), which restates the obvody of OZ resolution č. 170/2022 of 27.6.2022 (obvod 1 Lietavská Svinná 5 seats, obvod 2 Babkov 4 seats) that applied to the 2022 elections."
+okrsky_date = 2022-06-27
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+
+[[document]]
+url = "https://web.archive.org/web/20221221014122/https://www.obeclietsvinnababkov.info/e_download.php?file=data/uredni_deska/obsah163_17.pdf&original=Ozn%C3%A1menie%20volebn%C3%BDch%20obvodov%20a%20po%C4%8Dte%20poslancov.pdf"
+sha256 = "e9e5e28ce335e668a6b600d404badbcb5672fec28875305191d85260e522126f"
+title = "Oznámenie o určení volebných obvodov a volebných okrskov (cituje uznesenie OZ č. 170/2022 zo dňa 27.6.2022)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Lietavská Svinná"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [2]
+rules = [
+  {part = "Babkov"},
+]

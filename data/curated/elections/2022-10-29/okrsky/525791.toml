@@ -1,0 +1,45 @@
+# Okrsky of Jelšava, transcribed by an AI agent in job okrsok-rules-978 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Muránska ulica, Námestie republiky, Námestie SNP, Tomášikova ulica, Mníšanská ulica, Jesenského, Teplá Voda, Medzník, Obyvatelia bez adresy
+#   okrsok 2: Ševcovská, Štefánikova, Kúpeľná, Teplická, Pri štadióne, Železničná, Armádna, 9. mája, Kejďák
+obec = "525791"
+name = "Jelšava"
+okrsky_date = 2022-10-21
+okrsky_fill = "nearest"
+okrsky_note = "The undated file 'Okrsky' (Okrsky-003-__.pdf) is linked on the city's live page for the elections of 29 October 2022 (not in the Internet Archive). The document states no decision date; the page states 'Zverejnené 28.6.2022, Aktualizované 21.10.2022', so the file was posted between those dates, before the vote; date is the page's last update (upper bound of the posting). In the page's file list it sits between 'Miesto a lehota na podávanie kandidátnych listín' and 'Delegovanie do OVK' of 2022. 'Obyvatelia bez adresy' (okrsok 1) are voters registered without an address, not the register's houses without a street. Hrádok (3 addresses) is not named in the document: placed by fill_nearest, as are the houses without a street."
+
+[[document]]
+url = "https://www.jelsava.sk/download_file_f.php?id=1714938"
+sha256 = "2d037442abc73da01ef05d7a3e02a3890de6f67fce8b49d18c62f43fd2b53a61"
+title = "Okrsky (Volebný okrsok č. 1 a č. 2)"
+
+[[document]]
+url = "https://www.jelsava.sk/oznamy/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-2022.html"
+sha256 = "64ecc6e94b040a764e472cd06a6c5c6d871f0d65d2d0c1b05ba72247caa86b31"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Muránska"},
+  {street = "Námestie Republiky", written = "Námestie republiky"},
+  {street = "Námestie SNP"},
+  {street = "Tomášikova"},
+  {street = "Mníšanská"},
+  {street = "Jesenského"},
+  {street = "Teplá Voda"},
+  {street = "Medzník"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ševcovská"},
+  {street = "Štefánikova"},
+  {street = "Kúpelná", written = "Kúpeľná", note = "Kúpeľná with soft l in the document; the register's Kúpelná, the same street"},
+  {street = "Teplická"},
+  {street = "Pri Štadióne", written = "Pri štadióne"},
+  {street = "Železničná"},
+  {street = "Armádna"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Kejďák"},
+]

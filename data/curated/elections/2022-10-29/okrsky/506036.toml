@@ -1,0 +1,30 @@
+# Okrsky of Horné Srnie, transcribed by an AI agent in job okrsok-rules-853 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov zo súpisných čísel 1 - 460 + voličov s trvalým pobytom Obec Horné Srnie
+#   okrsok 2: pre voličov zo súpisných čísel 461 - 1080
+obec = "506036"
+name = "Horné Srnie"
+okrsky_date = 2022-08-12
+okrsky_fill = "nearest"
+okrsky_note = "The document is undated; date is its posting date on the municipality's 2022 elections page (\"Vložené: 12. 8. 2022\"). Okrsky by súpisné čísla: 1-460 and 461-1080. Voters with permanent residence only on the obec (\"s trvalým pobytom Obec Horné Srnie\") vote in okrsok 1 (addressless voters, no rule). Súpisné numbers above 1080 are placed by fill_nearest."
+
+[[document]]
+url = "https://www.hornesrnie.sk/modules/file_storage/download.php?file=0e8221d0%7C1833&inline=1"
+sha256 = "5361de3f9e9c6760b5c76022136eef81b0808df02a8dbc0c6cd5f0096c9fe7d4"
+title = "Zverejnenie informácií o utvorení volebných okrskov a o určení volebných miestností"
+
+[[document]]
+url = "https://www.hornesrnie.sk/zverejnovanie/volby/spojene-volby-do-organov-uzemnej-samospravy-2022/"
+sha256 = "e1da8e684f751013370cffd386c7a6b734e26111e418d10e8268b13cf3143b44"
+title = "Spojené voľby do orgánov územnej samosprávy 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Horné Srnie", numbers = "1-460"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Horné Srnie", numbers = "461-1080"},
+]

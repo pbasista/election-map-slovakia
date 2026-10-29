@@ -1,0 +1,58 @@
+# Okrsky of Klin, transcribed by an AI agent in job okrsok-rules-979 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Červený potok I, Gromadova, Grúň I, Hlavná ( od s. č. 1/2 po s. č. 251/154 vrátane), Chotárna, Južná, K Boru, Kliňanská cesta, Plátennícka, Roveň, Roveň I, Slnečná, Školská, Za Orlovňou, Za školou, Zápotočná, Záruby.
+#   okrsok 2: Ulice: Hlavná (od s. č. 257), Cesta k soche, Hlboká, Kohútova, Kunova, Odumarky, Pod Grapou, Ťaskovka, Vyšný koniec, Za mostami, Západná.
+obec = "509728"
+name = "Klin"
+okrsky_date = 2022-08-10
+okrsky_fill = "nearest"
+okrsky_note = "Hlavná is split by súpisné čísla: okrsok 1 \"od s. č. 1/2 po s. č. 251/154 vrátane\", okrsok 2 \"od s. č. 257\"; Hlavná houses with súpisné 252–256 (not covered by either range) are placed by fill_nearest. The register streets Červený potok and Roveň II are not named in the document; they are put in okrsok 1 beside Červený potok I and Roveň / Roveň I (inferred)."
+
+[[document]]
+url = "https://www.klin.sk/e_download.php?file=data/uredni_deska/obsah1057_4.pdf&original=Ozn%C3%A1menie%20o%20ur%C4%8Den%C3%AD%20volebn%C3%BDch%20okrskov%20pre%20vo%C4%BEby%202022.pdf"
+sha256 = "952077fb172f04ccc20a98b5b9de5424196f9039e0817275b9396e4eaa505b7b"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov 2022 v obci Klin"
+
+[[document]]
+url = "https://www.klin.sk/samosprava/zverejnovanie/uradna-tabula-1/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-oso-a-osk-2022-1077.html"
+sha256 = "58157030ace869edc5b7c30ec2b622069d4eb2a3812e6f84940bd8e7556ab662"
+title = "Utvorenie volebných okrskov a určenie volebných miestnosti pre voľby OSO a OSK 2022 (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {street = "Červený potok I"},
+  {street = "Gromadova"},
+  {street = "Grúň I"},
+  {street = "Hlavná", numbers = "1-251", by = "supisne"},
+  {street = "Chotárna"},
+  {street = "Južná"},
+  {street = "K Boru"},
+  {street = "Kliňanská cesta"},
+  {street = "Plátennícka"},
+  {street = "Roveň"},
+  {street = "Roveň I"},
+  {street = "Slnečná"},
+  {street = "Školská"},
+  {street = "Za Orlovňou"},
+  {street = "Za školou"},
+  {street = "Zápotočná"},
+  {street = "Záruby"},
+  {street = "Červený potok", note = "not in the document; placed with Červený potok I", inferred = true},
+  {street = "Roveň II", note = "not in the document; placed with Roveň and Roveň I", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná", numbers = "257-", by = "supisne"},
+  {street = "Cesta k soche"},
+  {street = "Hlboká"},
+  {street = "Kohútova"},
+  {street = "Kunova"},
+  {street = "Odumarky"},
+  {street = "Pod Grapou"},
+  {street = "Ťaskovka"},
+  {street = "Vyšný koniec"},
+  {street = "Za mostami"},
+  {street = "Západná"},
+]

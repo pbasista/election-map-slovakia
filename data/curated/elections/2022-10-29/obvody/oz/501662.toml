@@ -1,0 +1,37 @@
+# Council obvody of Janíky (501662), Dunajská Streda.
+# Transcribed by an AI agent in job obvod-rules-372 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Horné Janíky, Búštelek
+#   obvod 2: Dolné Janíky
+# Okrsky added by an AI agent in job okrsok-rules-1234 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Horné Janíky, Búštelek
+#   okrsok 2: Dolné Janíky
+obec = "501662"
+name = "Janíky"
+date = 2022-06-14
+note = "Scanned announcement, read by OCR; resolution number illegible."
+okrsky_date = 2022-06-14
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+
+[[document]]
+url = "https://www.janiky.sk/evt_file.php?file=3183"
+sha256 = "6a72452b92844ba52e223dad3bd36c2dc888642f03012933a29127edc1c2ded1"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov, 04.07.2022 (uznesenie OZ zo dňa 14.06.2022)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Horné Janíky"},
+  {part = "Búštelek"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Dolné Janíky"},
+]

@@ -1,0 +1,30 @@
+# Okrsky of Dolný Ohaj, transcribed by an AI agent in job okrsok-rules-954 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: čísla domov: O – 122, 328 – 485, 494 – 495, 497, 499 – 501, 507 – 508, 510, 575 – 576, 584 – 588, 630, 667, 667, 711, 719
+#   okrsok 2: čísla domov: 125 – 323, 486 – 493, 496, 498, 502 – 506, 509, 511 – 573, 593 – 595, 650 – 652, 657 - 666, 669 - 670, 676, 679, 691, 695, 696, 703, 704, 709, 710, 713, 716, 718, 720, 722, 730
+obec = "503151"
+name = "Dolný Ohaj"
+okrsky_date = 2022-08-31
+okrsky_fill = "nearest"
+okrsky_note = "The notice is undated; date is its publication date on the official page (zverejnené 31. augusta 2022). It lists house numbers (čísla domov, read as súpisné čísla) for the whole village; 'O – 122' read as 0–122. House numbers it does not list take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://obecdolnyohaj.sk/wp-content/uploads/dokumenty/volby-do-samosprav/Oznamenie-o-vytvorenych-okrskoch-v-obci-Dolny-Ohaj.pdf"
+sha256 = "9dc1191296b0f4565d5ec63cf409a779e8c91fe74814d269d04f6bb8385ba212"
+title = "Oznam o vytvorených okrskoch v obci Dolný Ohaj"
+
+[[document]]
+url = "https://obecdolnyohaj.sk/dokument/oznamenie-o-vytvorenych-okrskoch-v-obci-dolny-ohaj/"
+sha256 = "56c35d042de7c0cdc233bddccdc4b2c0a37c52a54103efc569ceaafe25302ef4"
+title = "Oznámenie o vytvorených okrskoch v obci Dolný Ohaj (stránka, zverejnené 31. augusta 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Dolný Ohaj", numbers = "1-122, 328-485, 494-495, 497, 499-501, 507-508, 510, 575-576, 584-588, 630, 667, 711, 719"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dolný Ohaj", numbers = "125-323, 486-493, 496, 498, 502-506, 509, 511-573, 593-595, 650-652, 657-666, 669-670, 676, 679, 691, 695, 696, 703, 704, 709, 710, 713, 716, 718, 720, 722, 730"},
+]

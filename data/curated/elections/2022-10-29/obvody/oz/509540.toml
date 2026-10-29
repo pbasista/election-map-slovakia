@@ -1,0 +1,346 @@
+# Council obvody of Dolný Kubín (509540), Dolný Kubín.
+# Transcribed by an AI agent in job obvod-rules-240 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod číslo 1: Kňažia, Mokraď, Záskalie volia sa 2 poslanci. Okrsok 1 (mestská časť MOKRAĎ): Kocmál, Kubínska, Mokraďská, Nábrežie Oravy (súp.č. 3441, 499, 533, 610, 613, 626), Priemyselná Okrsok 2 (mestská časť KŇAŽIA): 9. mája, 28. októbra, Vodárenská, Pod Dúbravou, Nábrežie Oravy (súp.č. 220 - 252, , 3396, 3433), J. A. Komenského, Na Záhumní, Jelšavská, Kalinova, Kpt. Jaroša, Kňažská, Mládežnícka, Pod Čereňou, Podzámocká, 1. mája, Kpt. Nálepku Okrsok 3 (mestská časť ZÁSKALIE): Andreja Halašu, 29. augusta, Jilemnického, Pltisko, Rybárska, Severná, Timravina, Záskalická, Na lánoch, Hôrky
+#   obvod 2: Volebný obvod číslo 2: Staré mesto volia sa 2 poslanci. Okrsok 4 (STARÉ MESTO I.): M. R. Štefánika, Československej armády, Staničná, Železničiarov, Bernolákova, Aleja Slobody, J. Ťatliaka, A. Sládkoviča, Obrancov mieru, Radlinského Okrsok 5 (STARÉ MESTO II.): Samuela Nováka, Gäceľská cesta, Hviezdoslavovo námestie, Kohútov Sad, Jána Hollého, Matúškova, Jánoškova, voliči bez adresy trvalého pobytu
+#   obvod 3: Volebný obvod číslo 3: Medzihradné, Banisko, Srňacie volia sa 2 poslanci. Okrsok 6 (MEDZIHRADNÉ): Medzihradská, E. Hroboňovej, Martina Hamuljaka, Šmidkeho, Jána Bottu, Mila Urbana, Na Kopanici, Partizánska cesta (Srňacie) Okrsok 7 (sídlisko BANISKO): Chočská, Slnečná
+#   obvod 4: Volebný obvod číslo 4: Brezovec volia sa 6 poslanci. Okrsok 8 (sídlisko BREZOVEC I.): Nemocničná, Námestie Jána Vojtaššáka, Nemocnica s poliklinikou Okrsok 9 (sídlisko BREZOVEC II.): Ľudovíta Štúra, Dukelských Hrdinov, Na Ožnici Okrsok 10 (sídlisko BREZOVEC III.): Martina Hattalu, M. M. Hodžu Okrsok 11 (sídlisko BREZOVEC IV.): Odbojárov, Mierová, Tulská, J. Gagarina, Družby, M. Gaceka
+#   obvod 5: Volebný obvod číslo 5: Veľký Bysterec, Malý Bysterec, Beňova Lehota volia sa 7 poslanci. Okrsok 12 (sídlisko BYSTEREC I.): Na Sihoti Okrsok 13 (sídlisko BYSTEREC II.): Bysterecká, Lucenkova, Nad brehmi Okrsok 14 (sídlisko BYSTEREC III.): Hurbanova, SNP, Námestie Slobody Okrsok 15 (sídlisko BYSTEREC IV.): Športovcov, Pelhřimovská Okrsok 16 (Sídlisko BYSTEREC V.): Okružná Okrsok 17 (mestská časť MALÝ BYSTEREC): Zochova, Bohúňova, MDD, MDŽ, Generála Svobodu, Fučíkova, Miloša Uhra, Lopušná, Veterná Okrsok 18 (mestská časť BEŇOVÁ LEHOTA): Beňovolehotská
+# Okrsky added by an AI agent in job okrsok-rules-1119 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: (mestská časť MOKRAĎ): Kocmál, Kubínska, Mokraďská, Nábrežie Oravy (súp.č. 3441, 499, 533, 610, 613, 626), Priemyselná
+#   okrsok 2: (mestská časť KŇAŽIA): 9. mája, 28. októbra, Vodárenská, Pod Dúbravou, Nábrežie Oravy (súp.č. 220 - 252, , 3396, 3433), J. A. Komenského, Na Záhumní, Jelšavská, Kalinova, Kpt. Jaroša, Kňažská, Mládežnícka, Pod Čereňou, Podzámocká, 1. mája, Kpt. Nálepku
+#   okrsok 3: (mestská časť ZÁSKALIE): Andreja Halašu, 29. augusta, Jilemnického, Pltisko, Rybárska, Severná, Timravina, Záskalická, Na lánoch, Hôrky
+#   okrsok 4: (STARÉ MESTO I.): M. R. Štefánika, Československej armády, Staničná, Železničiarov, Bernolákova, Aleja Slobody, J. Ťatliaka, A. Sládkoviča, Obrancov mieru, Radlinského
+#   okrsok 5: (STARÉ MESTO II.): Samuela Nováka, Gäceľská cesta, Hviezdoslavovo námestie, Kohútov Sad, Jána Hollého, Matúškova, Jánoškova, voliči bez adresy trvalého pobytu
+#   okrsok 6: (MEDZIHRADNÉ): Medzihradská, E. Hroboňovej, Martina Hamuljaka, Šmidkeho, Jána Bottu, Mila Urbana, Na Kopanici, Partizánska cesta (Srňacie)
+#   okrsok 7: (sídlisko BANISKO): Chočská, Slnečná
+#   okrsok 8: (sídlisko BREZOVEC I.): Nemocničná, Námestie Jána Vojtaššáka, Nemocnica s poliklinikou
+#   okrsok 9: (sídlisko BREZOVEC II.): Ľudovíta Štúra, Dukelských Hrdinov, Na Ožnici
+#   okrsok 10: (sídlisko BREZOVEC III.): Martina Hattalu, M. M. Hodžu
+#   okrsok 11: (sídlisko BREZOVEC IV.): Odbojárov, Mierová, Tulská, J. Gagarina, Družby, M. Gaceka
+#   okrsok 12: (sídlisko BYSTEREC I.): Na Sihoti
+#   okrsok 13: (sídlisko BYSTEREC II.): Bysterecká, Lucenkova, Nad brehmi
+#   okrsok 14: (sídlisko BYSTEREC III.): Hurbanova, SNP, Námestie Slobody
+#   okrsok 15: (sídlisko BYSTEREC IV.): Športovcov, Pelhřimovská
+#   okrsok 16: (Sídlisko BYSTEREC V.): Okružná
+#   okrsok 17: (mestská časť MALÝ BYSTEREC): Zochova, Bohúňova, MDD, MDŽ, Generála Svobodu, Fučíkova, Miloša Uhra, Lopušná, Veterná
+#   okrsok 18: (mestská časť BEŇOVÁ LEHOTA): Beňovolehotská
+obec = "509540"
+name = "Dolný Kubín"
+date = 2022-07-18
+fill = "nearest"
+note = "The resolution names the obvody by city quarters (Kňažia, Mokraď, Záskalie / Staré mesto / Medzihradné, Banisko, Srňacie / Brezovec / Veľký Bysterec, Malý Bysterec, Beňova Lehota); the 2022 okrsky document gives the streets of each okrsok, and ŠÚ SR's okrsky per obvod (1-3, 4-5, 6-7, 8-11, 12-18) match these quarters. The quarters that are register parts are part rules; the Dolný Kubín part (Staré mesto, Banisko, Brezovec) is split by streets, and its addresses without a street (and Kubínska Hoľa etc.) are placed by fill_nearest. 'Voliči bez adresy trvalého pobytu' (okrsok 5) are voters without an address, not transcribed."
+okrsky_date = 2022-08-04
+okrsky_fill = "nearest"
+okrsky_note = "Streets per okrsok from the mayor's 'Utvorenie volebných okrskov a určenie volebných miestností' of 4.8.2022. Okrsky 1-3, 6, 17, 18 also take their whole mestská časť (register part). Nábrežie Oravy is split by part (Mokraď: okrsok 1, Kňažia: okrsok 2) as the document's súpisné lists follow the parts. Podzámocká and 'Nemocnica s poliklinikou' are not register streets, left out. 'Voliči bez adresy trvalého pobytu' (okrsok 5) are voters registered without an address, not the register's houses without a street; those (part Dolný Kubín, Veľký Bysterec) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.dolnykubin.sk/download_file_f.php?id=1720884"
+sha256 = "5550d43a0e4734b659e54f58be19871321e9ef7cefa54f0be98f1496e537df64"
+title = "Oznámenie o určení počtu poslancov MsZ a o utvorení volebných obvodov (uznesenie č. 50/2022 zo dňa 18.7.2022), 19.07.2022"
+
+[[document]]
+url = "https://www.dolnykubin.sk/download_file_f.php?id=1721104"
+sha256 = "4edd96fa254684de8206ce18dd40f46faa12f05b0cc8688acadd136cb1e4571d"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v Meste Dolný Kubín, 04.08.2022"
+
+[obvod.1]
+seats = 2
+okrsky = [1, 2, 3]
+rules = [
+  {part = "Kňažia"},
+  {part = "Mokraď"},
+  {part = "Záskalie"},
+  {street = "Kocmál"},
+  {street = "Kubínska"},
+  {street = "Mokraďská"},
+  {street = "Nábrežie Oravy", note = "split by súpisné čísla between okrsky 1 and 2, both in obvod 1: whole street"},
+  {street = "Priemyselná"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "28.októbra", written = "28. októbra"},
+  {street = "Vodárenská"},
+  {street = "Pod Dúbravou"},
+  {street = "J. A. Komenského"},
+  {street = "Na Záhumní"},
+  {street = "Jelšavská"},
+  {street = "Kalinova"},
+  {street = "Kpt. Jaroša"},
+  {street = "Kňažská"},
+  {street = "Mládežnícka"},
+  {street = "Pod Čereňou"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Andreja Halašu"},
+  {street = "29.augusta", written = "29. augusta"},
+  {street = "Jilemnického"},
+  {street = "P. Jilemnického", written = "Jilemnického", note = "register has both 'Jilemnického' and 'P. Jilemnického' (Pavla Jilemnického) in Záskalie; the same street"},
+  {street = "Pltisko"},
+  {street = "Rybárska"},
+  {street = "Severná"},
+  {street = "Timravina"},
+  {street = "Záskalická"},
+  {street = "Na Lánoch", written = "Na lánoch"},
+  {street = "Hôrky"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [4, 5]
+rules = [
+  {street = "M. R. Štefánika"},
+  {street = "Československej armády"},
+  {street = "Staničná"},
+  {street = "Železničiarov"},
+  {street = "Bernolákova"},
+  {street = "Aleja Slobody"},
+  {street = "J. Ťatliaka"},
+  {street = "A. Sládkoviča"},
+  {street = "Obrancov mieru"},
+  {street = "Radlinského"},
+  {street = "Samuela Nováka"},
+  {street = "Gäceľská cesta"},
+  {street = "Hviezdoslavovo Námestie", written = "Hviezdoslavovo námestie"},
+  {street = "Kohútov Sad"},
+  {street = "Jána Hollého"},
+  {street = "Matúškova"},
+  {street = "Jánoškova"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [6, 7]
+rules = [
+  {part = "Medzihradné"},
+  {part = "Srňacie"},
+  {street = "Medzihradská"},
+  {street = "E. Hroboňovej"},
+  {street = "Martina Hamuljaka"},
+  {street = "Šmidkeho"},
+  {street = "Jána Bottu"},
+  {street = "Mila Urbana"},
+  {street = "Na Kopanici"},
+  {street = "Partizánska cesta"},
+  {street = "Chočská"},
+  {street = "Slnečná"},
+]
+
+[obvod.4]
+seats = 6
+okrsky = [8, 9, 10, 11]
+rules = [
+  {street = "Nemocničná"},
+  {street = "Námestie Jána Vojtaššáka"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Dukelských hrdinov", written = "Dukelských Hrdinov"},
+  {street = "Na Ožnici"},
+  {street = "Martina Hattalu"},
+  {street = "M. M. Hodžu"},
+  {street = "Odbojárov"},
+  {street = "Mierová"},
+  {street = "Tulská"},
+  {street = "J. Gagarina"},
+  {street = "Družby"},
+  {street = "M. Gaceka"},
+]
+
+[obvod.5]
+seats = 7
+okrsky = [12, 13, 14, 15, 16, 17, 18]
+rules = [
+  {part = "Veľký Bysterec"},
+  {part = "Malý Bysterec"},
+  {part = "Beňova Lehota"},
+  {street = "Na Sihoti"},
+  {street = "Bysterecká"},
+  {street = "Lucenkova"},
+  {street = "Nad brehmi"},
+  {street = "Hurbanova"},
+  {street = "SNP"},
+  {street = "Námestie Slobody"},
+  {street = "Športovcov"},
+  {street = "Pelhřimovská"},
+  {street = "Okružná"},
+  {street = "Zochova"},
+  {street = "Bohúňova"},
+  {street = "MDD"},
+  {street = "MDŽ"},
+  {street = "Generála Svobodu"},
+  {street = "Fučíkova"},
+  {street = "Miloša Uhra"},
+  {street = "Lopušná"},
+  {street = "Veterná"},
+  {street = "Beňovolehotská"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Kocmál"},
+  {street = "Kubínska"},
+  {street = "Mokraďská"},
+  {street = "Priemyselná"},
+  {street = "Nábrežie Oravy", part = "Mokraď"},
+  {part = "Mokraď"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "9.mája"},
+  {street = "28.októbra"},
+  {street = "Vodárenská"},
+  {street = "Pod Dúbravou"},
+  {street = "J. A. Komenského"},
+  {street = "Na Záhumní"},
+  {street = "Jelšavská"},
+  {street = "Kalinova"},
+  {street = "Kpt. Jaroša"},
+  {street = "Kňažská"},
+  {street = "Mládežnícka"},
+  {street = "Pod Čereňou"},
+  {street = "1.mája"},
+  {street = "Kpt.Nálepku"},
+  {street = "Nábrežie Oravy", part = "Kňažia"},
+  {part = "Kňažia"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Andreja Halašu"},
+  {street = "29.augusta"},
+  {street = "Jilemnického"},
+  {street = "Pltisko"},
+  {street = "Rybárska"},
+  {street = "Severná"},
+  {street = "Timravina"},
+  {street = "Záskalická"},
+  {street = "Na Lánoch"},
+  {street = "Hôrky"},
+  {street = "P. Jilemnického", written = "Jilemnického", note = "the register has both Jilemnického and P. Jilemnického in Záskalie; the document names Jilemnického (Pavol Jilemnický), the same street"},
+  {part = "Záskalie"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "M. R. Štefánika"},
+  {street = "Československej armády"},
+  {street = "Staničná"},
+  {street = "Železničiarov"},
+  {street = "Bernolákova"},
+  {street = "Aleja Slobody"},
+  {street = "J. Ťatliaka"},
+  {street = "A. Sládkoviča"},
+  {street = "Obrancov mieru"},
+  {street = "Radlinského"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Samuela Nováka"},
+  {street = "Gäceľská cesta"},
+  {street = "Hviezdoslavovo Námestie"},
+  {street = "Kohútov Sad"},
+  {street = "Jána Hollého"},
+  {street = "Matúškova"},
+  {street = "Jánoškova"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Medzihradská"},
+  {street = "E. Hroboňovej"},
+  {street = "Martina Hamuljaka"},
+  {street = "Šmidkeho"},
+  {street = "Jána Bottu"},
+  {street = "Mila Urbana"},
+  {street = "Na Kopanici"},
+  {street = "Partizánska cesta"},
+  {part = "Medzihradné"},
+  {part = "Srňacie"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Chočská"},
+  {street = "Slnečná"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Nemocničná"},
+  {street = "Námestie Jána Vojtaššáka"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Ľudovíta Štúra"},
+  {street = "Dukelských hrdinov", written = "Dukelských Hrdinov"},
+  {street = "Na Ožnici"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Martina Hattalu"},
+  {street = "M. M. Hodžu"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Odbojárov"},
+  {street = "Mierová"},
+  {street = "Tulská"},
+  {street = "J. Gagarina"},
+  {street = "Družby"},
+  {street = "M. Gaceka"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Na Sihoti"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Bysterecká"},
+  {street = "Lucenkova"},
+  {street = "Nad brehmi"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Hurbanova"},
+  {street = "SNP"},
+  {street = "Námestie Slobody"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Športovcov"},
+  {street = "Pelhřimovská"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Okružná"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Zochova"},
+  {street = "Bohúňova"},
+  {street = "MDD"},
+  {street = "MDŽ"},
+  {street = "Generála Svobodu"},
+  {street = "Fučíkova"},
+  {street = "Miloša Uhra"},
+  {street = "Lopušná"},
+  {street = "Veterná"},
+  {part = "Malý Bysterec"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Beňovolehotská"},
+  {part = "Beňova Lehota"},
+]

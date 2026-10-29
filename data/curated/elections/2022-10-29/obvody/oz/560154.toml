@@ -1,0 +1,86 @@
+# Council obvody of Smižany (560154), Spišská Nová Ves.
+# Transcribed by an AI agent in job obvod-rules-276 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: okrsky č. 1, 2, 4, 5, 6; ulice: Agatová, Brezová, Brusník, Dezidera Štraucha, Hollého, Hviezdoslavova, Iliašovská, J. Majkuta, Jabloňová, Jahodová, Javorová, Jesenského, Komenského, Košiarny briežok, Krátka, Kukučínova, Ľ. Podjavorinskej, Lipová, Maša, Mlynská, Mojmírova, Nábrežná, Nálepkova, Námestie M. Pajdušáka, Nová, Okružná, Pavla Suržina, Pribinova, Rázusova, Ružová, Sládkovičova, Slovenského Raja, Smreková, Staničná, Štefana Hozu, Štefánikova, Štúrova, Tatranská, Tomášovská, Topoľová, Za Kaštieľom, Záhradky
+#   obvod 2: okrsok č. 3; ulice: Bystrá, Hornádska, Lúčna, Poľná, Rybníky, Stredná, Štrkovec, Veterná, Vrbová, Za Mostom, Zelená
+# Okrsky added by an AI agent in job okrsok-rules-1153 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+obec = "560154"
+name = "Smižany"
+date = 2022-07-20
+fill = "nearest"
+note = "Addresses without a street (súpisné only, 829 in the register) are placed by fill_nearest."
+okrsky_date = 2022-07-20
+okrsky_note = "Obvody only: the obvody announcement (resolution 554/36/2022 of 20.07.2022, the date given) says which okrsky make up each obvod (obvod 1: okrsky 1, 2, 4, 5, 6 with their polling stations; obvod 2: okrsok 3), but no published document lists the streets of each 2022 okrsok: the municipality's page 'Spojené voľby, 29. október 2022' (live; the Internet Archive has no pre-vote copy) has no okrsky document, nor do the Smižiansky hlásnik issues of September and October 2022. The referendum of 21.01.2023 had only 4 okrsky (document of 09.11.2022, download_file_f.php?id=1763839), not the 6 of the elections, so it cannot stand in."
+
+[[document]]
+url = "https://www.smizany.sk/download_file_f.php?id=1714605"
+sha256 = "700d80eb7aec735f58be33804ac4ea90057abb4f381c3e067ca8d4ac5c4db793"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov, 20.07.2022 (uznesenie č. 554/36/2022 zo dňa 20.07.2022)"
+
+[obvod.1]
+seats = 10
+okrsky = [1, 2, 4, 5, 6]
+rules = [
+  {street = "Agatová"},
+  {street = "Brezová"},
+  {street = "Brusník"},
+  {street = "Dezidera Štraucha"},
+  {street = "Hollého"},
+  {street = "Hviezdoslavova"},
+  {street = "Iliašovská"},
+  {street = "J. Majkuta"},
+  {street = "Jabloňová"},
+  {street = "Jahodová"},
+  {street = "Javorová"},
+  {street = "Jesenského"},
+  {street = "Komenského"},
+  {street = "Košiarny briežok"},
+  {street = "Krátka"},
+  {street = "Kukučínova"},
+  {street = "Ľ. Podjavorinskej"},
+  {street = "Lipová"},
+  {street = "Maša"},
+  {street = "Mlynská"},
+  {street = "Mojmírova"},
+  {street = "Nábrežná"},
+  {street = "Nálepkova"},
+  {street = "Námestie M. Pajdušáka"},
+  {street = "Nová"},
+  {street = "Okružná"},
+  {street = "Pavla Suržina"},
+  {street = "Pribinova"},
+  {street = "Rázusova"},
+  {street = "Ružová"},
+  {street = "Sládkovičova"},
+  {street = "Slovenského Raja"},
+  {street = "Smreková"},
+  {street = "Staničná"},
+  {street = "Štefana Hozu"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Tatranská"},
+  {street = "Tomášovská"},
+  {street = "Topoľová"},
+  {street = "Za Kaštieľom"},
+  {street = "Záhradky"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [3]
+rules = [
+  {street = "Bystrá"},
+  {street = "Hornádska"},
+  {street = "Lúčna"},
+  {street = "Poľná"},
+  {street = "Rybníky"},
+  {street = "Stredná"},
+  {street = "Štrkovec"},
+  {street = "Veterná"},
+  {street = "Vrbová"},
+  {street = "Za Mostom"},
+  {street = "Zelená"},
+]

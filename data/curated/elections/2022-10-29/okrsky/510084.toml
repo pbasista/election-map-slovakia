@@ -1,0 +1,29 @@
+# Okrsky of Štefanov nad Oravou, transcribed by an AI agent in job okrsok-rules-1054 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: časť obce Dolný Štefanov
+#   okrsok 2: časť obce Horný Štefanov
+obec = "510084"
+name = "Štefanov nad Oravou"
+okrsky_date = 2022-10-24
+okrsky_note = "The scanned decision is undated. Date is the publication date its official page states: the 'Voľby 2022' page lists it under 'Informácie obec', a block 'Zverejnené 30.6.2022, Aktualizované 24.10.2022'; the document (file id 1721394, of early August 2022 by the site's numbering) was on it by 24.10.2022 at the latest. Internet Archive was offline, so no snapshot could be checked."
+
+[[document]]
+url = "https://www.stefanovnadoravou.sk/download_file_f.php?id=1721394"
+sha256 = "e1b07fbd5a695402c02dc5b438bf1d5bfd3aaa2c3aa9ba356275db0c059228ad"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.stefanovnadoravou.sk/volby-2022.html"
+sha256 = "2bc3e3b6e3502dbedbc1077db8ba4084b35f32e5595f271c94288b123bcb48ff"
+title = "Voľby 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Dolný Štefanov"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Horný Štefanov"},
+]

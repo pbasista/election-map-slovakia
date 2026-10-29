@@ -1,9 +1,16 @@
 import datetime as dt
+from pathlib import Path
 
-from election_map_slovakia import candidates as cand, incumbents as inc
+from election_map_slovakia import candidates as cand, config, incumbents as inc
 from election_map_slovakia.candidates import Admin, Candidacy, Entry, Obec
 from election_map_slovakia.config import Overrides
 from election_map_slovakia.incumbents import Election, Holders, Unit
+
+# The results the holders at the 2026 elections are rebuilt from.
+SOURCE = config.load(
+    Path(__file__).resolve().parent.parent / "config"
+).latest.incumbents
+assert SOURCE is not None
 
 ADMIN = Admin(
     kraje={"1": "Bratislavský", "4": "Nitriansky"},
@@ -15,7 +22,7 @@ ADMIN = Admin(
         "500411": Obec("500411", "Kolíňany", "403", "4"),
     },
 )
-DAY_2022 = inc.ELECTION_2022
+DAY_2022 = SOURCE.day
 DAY_2026 = dt.date(2026, 10, 24)
 
 
@@ -39,7 +46,8 @@ def election(day, units, mayors=None, members=None) -> Election:
     turnout: dict[tuple[str, ...], inc.Turnout] = {
         (u.obec, obvod): TURNOUT for u in units for obvod in ("", "1", "3")
     }
-    name = {d: n for n, d in inc.BY_ELECTIONS.items()}.get(day, inc.MUNICIPAL_2022)
+    by = {b.day: b.input for b in SOURCE.by_elections}
+    name = by.get(day, SOURCE.municipal)
     return Election(name, day, units, mayors or {}, members or {}, turnout)
 
 
@@ -48,7 +56,7 @@ def names(holders: Holders, body: str) -> list[str]:
 
 
 def start() -> Holders:
-    holders = Holders()
+    holders = Holders(SOURCE)
     inc.apply(
         holders,
         election(
@@ -147,7 +155,7 @@ def past(holders: Holders, body: str) -> tuple[str, dt.date]:
 
 def test_past_election_is_the_latest_that_elected_the_whole_body():
     holders = start()
-    regular = (inc.MUNICIPAL_2022, DAY_2022)
+    regular = (SOURCE.municipal, DAY_2022)
     assert past(holders, "starosta:BA") == past(holders, "oz:BA") == regular
     assert past(holders, "starosta:500011") == past(holders, "oz:500011") == regular
     for name, units in (
@@ -156,7 +164,8 @@ def test_past_election_is_the_latest_that_elected_the_whole_body():
         # Declared but not held for lack of candidates: no vote took place.
         ("results-oso202402", [Unit("500011", "403", 0, "Nekonajú sa", 1)]),
     ):
-        inc.apply(holders, election(inc.BY_ELECTIONS[name], units), ADMIN)
+        day = next(b.day for b in SOURCE.by_elections if b.input == name)
+        inc.apply(holders, election(day, units), ADMIN)
     mayor = ("results-oso202309", dt.date(2023, 9, 9))
     # Two of three seats is no new council: its last full election is 2022.
     assert past(holders, "starosta:500011") == mayor

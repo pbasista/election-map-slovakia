@@ -1,0 +1,187 @@
+# Council obvody of Hriňová (518468), Detva.
+# Transcribed by an AI agent in job obvod-rules-191 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: miestne časti: Krivec, Blato, Zánemecká, Pivnička, Riečka, Priehalina
+#   obvod 2: miestne časti: Slanec, Mangútovo, Jaseňovo, Štoliansko, Horná Hriňová, Biele Vody, Vrch Slatina, Snohy; ulice: Pod Grapou, J. Kráľa, Hutianska cesta, Pod cintorínom, Kpt. Nálepku, Potočná, B. S. Timravy, Strojárska, Vajanského, Horná, Tršovky, Pod Kalváriou, Gondova, Do Rakov, Pod priehradou, Skalisko; Jarabová, Šuľkovci, Skalisko
+#   obvod 3: bytové domy: 1566, 1567, 1568, 1569, 1570, 1571, 1572, 1573, 1574, 1601, 1602, 1603, 1604, 1608, 1609, 1610; domy: 2000, 2514, 3425
+#   obvod 4: ulice: Jarmočná, Lúčna, Parková, Murínka, Partizánska - okrem stavieb z obvodu č. 3; Sujovci, Luptákovci, Paprčkovci, Lievajovci
+# Okrsky added by an AI agent in job okrsok-rules-647 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Blato, Zánemecká, Krivec, Medzikopec, Krnáčovci, zástavka Jaseňovo
+#   okrsok 2: Krivec: sídlisko Bystrô, ul. Vrchárska
+#   okrsok 3: Priehalina, Riečka, Pivnička, Raticov Vrch, Krížne cesty
+#   okrsok 4: Slanec, Mangútovo, Štoliansko, Jaseňovo, ul. Slanecká, ul. Pod Grapou, ul. J. Kráľa, Hutianska cesta, Jarabová
+#   okrsok 5: Horná Hriňová, Snohy, Biele Vody, Vrchslatina, Skalisko, ul. Horná, Vajanského, Tršovky, Strojárska, B. S. Timravy, Pod cintorínom, Potočná, Kpt. Nálepku, Pod Kalváriou, Ulica Gondova, Do Rakov, Pod priehradou, Ulica Skalisko
+#   okrsok 6: ul. Školská 1566, 1567, 1568, 1569, 1570, 1571, 1572, 1573, 3425
+#   okrsok 7: ul. Partizánska-bytové domy 1574, 1601, 1602, 1603, 1609, 1610, ul. Školská 1604, 1608, 2000, 2514
+#   okrsok 8: ul. Lúčna-bytové domy 1764, 1765, 1766, 3360
+#   okrsok 9: ul. Parková, Jarmočná, Partizánska-rodinné domy, Lúčna-rodinné domy, Sujovci, Paprčkovci, Lievajovci, Ľuptákovci, Murínka
+obec = "518468"
+name = "Hriňová"
+date = 2022-06-14
+fill = "nearest"
+note = "Obvod 3 is a closed list of buildings (bytové domy, domy) by súpisné číslo; the houses of Školská that are not among them, and the houses without a street in the centre that nearest-address filling put in obvod 3, are placed with their nearest houses outside obvod 3 (inferred rules). Hamlets named in the document (Jarabová, Šuľkovci, Skalisko in obvod 2; Sujovci, Luptákovci, Paprčkovci, Lievajovci in obvod 4) are not register parts and cannot be located (no map or register name for them; the 2026 decision puts several of them in other obvody, so it does not help): the other houses without a street in part Hriňová take the obvod of the nearest placed address (fill_nearest)."
+okrsky_date = 2022-11-08
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections listing the okrsky's territory found: the 2022 elections page only gives the 9 okrsky per obvod (1-3, 4-5, 6-7, 8-9) with their polling stations; the referendum's document (\"Zaradenie stavieb do okrskov\", 08.11.2022) is used, its 9 okrsky have the same polling stations as the 2022 list (the later documents of 2024 repeat it word for word). Numbers of bytové domy are súpisné. Okrsok 7 is the rest of obvod 3 (Partizánska 1574, 1601-1603, 1609, 1610, Školská 1604, 1608, 2000, 2514), okrsok 9 the rest of obvod 4 (rodinné domy). Jaseňovo = register part Jasenovo. 'Krivec: sídlisko Bystrô' (okrsok 2) is placed by location: Vrchárska and the houses without a street of part Krivec in the residential area around the blocks of flats by II. ZŠ Krivec (OpenStreetMap landuse way 31887857); the blocks alone (7 small houses of flats) could not hold its ~744 voters. Raticov Vrch and Krížne cesty (okrsok 3), settlements the register keeps in part Krivec (and a house each in part Hriňová), are placed by location: the clusters of houses around their bus stops. Hamlets that cannot be located (Medzikopec, zástavka Jaseňovo, Jarabová, Sujovci, Paprčkovci, Lievajovci, Ľuptákovci; Krnáčovci is in the neighbouring Korytárky) and the other houses without a street in part Hriňová take the okrsok of the nearest placed address within their obvod (fill_nearest)."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.hrinova.sk/e_download.php?file=data/uredni_deska/obsah687_9.pdf&original=Pr%C3%ADloha%20k%20uzneseniu%20MsZ%20v%20Hri%C5%88ovej%20%C4%8D.%2064_A_2022.pdf"
+sha256 = "ad7dad07124ae394ffe8a0c71bf55038ceb8f4e7d8b1b64b0300ec9d10c1ef0b"
+title = "Príloha k uzneseniu MsZ v Hriňovej č. 64/A/2022 zo dňa 14.06.2022 – Určenie volebných obvodov a počtu poslancov"
+
+[[document]]
+url = "https://www.hrinova.sk/e_download.php?file=data/editor/424sk_4.pdf&original=Zaradenie%20stavieb%20do%20okrskov.pdf"
+sha256 = "732329c63d951571fd1e39c8e4aa89821a28319520f4a17c0f76962dadfb265c"
+title = "Referendum 2023 – Zaradenie stavieb do okrskov (08. 11. 2022)"
+
+[[document]]
+url = "https://www.hrinova.sk/e_download.php?file=data/editor/425sk_5.pdf&original=Obvody_okrsky_obce_OSO%20-%20%C3%BAradn%C3%A1%20tabu%C4%BEa.pdf"
+sha256 = "39c544c26c46830ca1e2c48b6f81c16fb91491784c271810e0003a8af1e94cb9"
+title = "Voľby do orgánov samosprávy obcí 2022 – zverejnenie počtu obyvateľov a utvorené volebné okrsky (obvody, okrsky, sídla okrskových komisií)"
+
+[[document]]
+url = "https://www.hrinova.sk/samosprava/volby-a-referendum/referendum-2112023/"
+sha256 = "085336ba718c37c22402341ecab4e8df1bab10b113c8ea05e3a888782b7dcaa1"
+title = "Referendum 21.1.2023 (stránka mesta Hriňová)"
+
+[obvod.1]
+seats = 5
+okrsky = [1, 2, 3]
+rules = [
+  {part = "Krivec"},
+  {part = "Blato"},
+  {part = "Zánemecká"},
+  {part = "Pivnička"},
+  {part = "Riečka"},
+  {part = "Priehalina"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [4, 5]
+rules = [
+  {part = "Slanec"},
+  {part = "Mangútovo"},
+  {part = "Jasenovo"},
+  {part = "Štoliansko"},
+  {part = "Horná Hriňová"},
+  {part = "Biele Vody"},
+  {part = "Vrchslatina"},
+  {part = "Snohy"},
+  {street = "Pod Grapou"},
+  {street = "J. Kráľa"},
+  {street = "Hutianska cesta"},
+  {street = "Pod cintorínom"},
+  {street = "Kpt. Nálepku"},
+  {street = "Potočná"},
+  {street = "B.S.Timravy", written = "B. S. Timravy"},
+  {street = "Strojárska"},
+  {street = "Vajanského"},
+  {street = "Horná"},
+  {street = "Tršovky"},
+  {street = "Pod Kalváriou"},
+  {street = "Ulica Gondova", written = "Gondova"},
+  {street = "Ulica Do Rakov", written = "Do Rakov"},
+  {street = "Ulica Pod priehradou", written = "Pod priehradou"},
+  {street = "Ulica Skalisko", written = "Skalisko"},
+  {street = "Školská", note = "the document names Školská only by the bytové domy and domy of obvod 3 (by súpisné číslo, a more specific rule); its other houses (family houses 4-26 even, 29) lie 30-140 m from Hutianska cesta and Kpt. Nálepku (obvod 2), their nearest houses outside obvod 3", inferred = true},
+  {part = "Hriňová", numbers = "1577, 1606, 1907, 2100, 2109, 2192, 2211, 2217, 2301, 2302, 2304, 2306, 2564, 3095, 3287, 3333, 3565, 3639", note = "houses without a street in the town centre around the obvod 3 buildings, which the document lists as a closed set of bytové domy and domy; each goes with its nearest house outside obvod 3, in obvod 2", inferred = true},
+]
+
+[obvod.3]
+seats = 3
+okrsky = [6, 7]
+rules = [
+  {part = "Hriňová", numbers = "1566-1574, 1601-1604, 1608-1610, 2000, 2514, 3425", note = "buildings named by súpisné číslo (bytové domy and domy) wherever they stand in part Hriňová; the document lists obvod 3 as these buildings only"},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [8, 9]
+rules = [
+  {street = "Jarmočná"},
+  {street = "Lúčna"},
+  {street = "Parková"},
+  {street = "Murínka"},
+  {street = "Partizánska"},
+  {part = "Hriňová", numbers = "1605, 2070, 2071, 2142, 2176, 2213, 2216, 2219, 2308, 2309, 3260", note = "houses without a street in the town centre around the obvod 3 buildings, which the document lists as a closed set of bytové domy and domy; each goes with its nearest house outside obvod 3, in obvod 4", inferred = true},
+]
+
+[okrsok.1]
+rules = [
+  {part = "Blato"},
+  {part = "Zánemecká"},
+  {part = "Krivec"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Vrchárska"},
+  {part = "Krivec", numbers = "161, 164, 165, 166, 167, 168, 169, 764, 765, 766, 767, 768, 769, 770, 771, 774, 775, 776, 777, 778, 779, 780, 781, 782, 783, 784, 785, 786, 787, 788, 789, 793, 794, 801, 802, 805, 806, 807, 810, 812, 813, 814, 815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828, 836, 840, 842, 883, 1355, 1626, 1627, 1642, 1663, 1673, 1674, 1695, 1697, 1725, 1730, 1860, 1861, 1882, 1883, 1915, 1916, 1939, 1962, 2019, 2020, 2063, 2068, 2075, 2205, 2420, 2439, 2440, 2449, 2477, 2503, 2508, 2522, 2552, 2571, 2572, 2575, 2602, 2656, 2690, 2799, 2845, 2880, 2881, 2893, 2922, 2937, 2971, 2981, 3013, 3014, 3043, 3060, 3069, 3114, 3147, 3155, 3165, 3297, 3306, 3329, 3331, 3403, 3408, 3435, 3443, 3468, 3469, 3501, 3502, 3503, 3509, 3518, 3545, 3548, 3570, 3583, 3584, 3585, 3597, 3608, 3611, 3624, 3636, 3644", note = "'Krivec: sídlisko Bystrô': the houses without a street of part Krivec inside the residential area around the blocks of flats 778-783 and 3297 by II. ZŠ Krivec 1355 (OpenStreetMap landuse=residential way 31887857, which also holds Vrchárska); the register has no name for it", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Priehalina"},
+  {part = "Riečka"},
+  {part = "Pivnička"},
+  {part = "Krivec", numbers = "189, 199, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 296, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398, 400, 401, 402, 403, 404, 405, 406, 407, 412, 1851, 1852, 1853, 1854, 1866, 1910, 1917, 1928, 1936, 1937, 1941, 2024, 2025, 2026, 2104, 2382, 2411, 2412, 2433, 2436, 2454, 2455, 2456, 2498, 2499, 2513, 2535, 2593, 2637, 2694, 2797, 2873, 2874, 2882, 2933, 3023, 3157, 3162, 3186, 3187, 3188, 3206, 3207, 3208, 3209, 3255, 3256, 3295, 3296, 3310, 3345, 3346, 3350, 3351, 3354, 3355, 3356, 3382, 3399, 3422, 3438, 3439, 3476, 3489, 3523, 3524, 3562, 3571, 3572, 3648, 3649, 3693, 3694, 3704", note = "'Raticov Vrch, Krížne cesty': settlements the register keeps in part Krivec; their houses are the clusters of register points (houses within 120 m of each other) centred within 400 m of the bus stops 'Hriňová, Raticov vrch' and 'Hriňová, Krížne cesty' (OpenStreetMap)", inferred = true},
+  {part = "Hriňová", numbers = "327, 1467", note = "houses without a street of part Hriňová in obvod 1 at Raticov Vrch / Krížne cesty (within 400 m of their bus stops)", inferred = true},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Slanec"},
+  {part = "Mangútovo"},
+  {part = "Štoliansko"},
+  {part = "Jasenovo"},
+  {street = "Slanecká"},
+  {street = "Pod Grapou"},
+  {street = "J. Kráľa"},
+  {street = "Hutianska cesta"},
+]
+
+[okrsok.5]
+rules = [
+  {part = "Horná Hriňová"},
+  {part = "Snohy"},
+  {part = "Biele Vody"},
+  {part = "Vrchslatina"},
+  {street = "Horná"},
+  {street = "Vajanského"},
+  {street = "Tršovky"},
+  {street = "Strojárska"},
+  {street = "Pod cintorínom"},
+  {street = "Potočná"},
+  {street = "Kpt. Nálepku"},
+  {street = "Pod Kalváriou"},
+  {street = "Ulica Gondova"},
+  {street = "Ulica Do Rakov"},
+  {street = "Ulica Pod priehradou"},
+  {street = "Ulica Skalisko"},
+  {street = "B.S.Timravy", written = "B. S. Timravy"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Školská", numbers = "1566-1573, 3425", by = "supisne"},
+]
+
+[okrsok.7]
+rules = [
+  {rest = true},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Lúčna", numbers = "1764, 1765, 1766, 3360", by = "supisne"},
+]
+
+[okrsok.9]
+rules = [
+  {rest = true},
+]

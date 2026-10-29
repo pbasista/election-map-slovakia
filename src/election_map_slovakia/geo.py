@@ -79,7 +79,7 @@ map draws beyond each side where they can pan; a larger view keeps lod 1.
 Neither moves the edge under Slovakia by :data:`UNDER`, so its fill keeps
 hiding it.
 
-Output, ``data/build/geo/`` (JSON, compact; codes are strings, obvod numbers
+Output, ``data/build/<election day>/geo/`` (JSON, compact; codes are strings, obvod numbers
 integers; ``label`` = [lon, lat] is the centre of a unit's largest inscribed
 circle; ``parts`` = [[lon, lat, room], …] the same of each other polygon of a
 unit of several, room the circle's radius in metres, those with room for a
@@ -141,7 +141,7 @@ is several features in the shards, one per obvod (``oz``; ``oz_label`` and
 ``oz_parts`` are its own, and the obec's ``label`` and ``parts`` are on the
 one that holds its label). Where
 the rules name k.ú., the obvody are unions of k.ú.; otherwise they are drawn
-from the obvod of every address (``data/build/obvod-addresses/``, the rules
+from the obvod of every address (``obvod-addresses/`` of the build, the rules
 applied): unions of k.ú. where each k.ú. holds addresses of one obvod
 (villages whose parts are their k.ú.), else the Voronoi cells of the address
 points merged per obvod, within the obec. Both are ``approx``: the true
@@ -246,8 +246,6 @@ from election_map_slovakia.candidates import (
 from election_map_slovakia.gpkg import GeoPackage, geometry, srs_id
 from election_map_slovakia.output import format_size
 
-# Inputs in config/inputs.toml, by ZBGIS level of detail.
-INPUTS = {level: f"zbgis-{level}" for level in range(3)}
 NEIGHBOURS_INPUT = "natural-earth-countries"
 OUTPUT_DIR = "geo"
 OKRSKY_DIR = "okrsky"
@@ -584,7 +582,7 @@ def address_cuts(
     That is obec → its cut into council obvody, for every obec with a rule
     set; obec → its okrsky, where its rule set places every address in one;
     and the obce whose rule sets give their okrsky only by obvod.
-    *election_dir* is :attr:`election_map_slovakia.config.Config.election_dir`;
+    *election_dir* is :meth:`election_map_slovakia.config.Config.election_dir`;
     *places_dir* holds the addresses ``ems addresses`` wrote
     (:func:`election_map_slovakia.obvody.write_places`); *kus* is
     :func:`read_kus` of level 0. Each obec is done in a worker process
@@ -694,7 +692,7 @@ def council_split(
             estimated=rules.estimated,
         )
     keys, chosen, homes = _point_votes(
-        places, np.flatnonzero(located).tolist(), xy, obvod
+        places, np.flatnonzero(located).tolist(), xy, obvod, keep_all=True
     )
     obec = _obec_area(rules, kus)
     split = _voronoi_split(numbers, keys, chosen, homes, obec)
@@ -702,13 +700,20 @@ def council_split(
 
 
 def _point_votes(
-    places: obvody.ObecPlaces, rows: Sequence[int], xy: np.ndarray, units: np.ndarray
+    places: obvody.ObecPlaces,
+    rows: Sequence[int],
+    xy: np.ndarray,
+    units: np.ndarray,
+    keep_all: bool = False,
 ) -> tuple[np.ndarray, np.ndarray, list[list[Home]]]:
     """Return the distinct points of addresses *rows*, their unit and addresses.
 
     *xy* are the points of the rows (EPSG:5514), *units* their obvod or
     okrsok. One point per place: entrances of a block can share it, rarely
-    across units, where the more frequent one takes it.
+    across units, where the more frequent one takes it. With *keep_all*, a
+    unit outvoted at every point it has keeps the one where it has the most
+    addresses, so that it is drawn (a council obvod must be: Veľká Ida 2022,
+    whose Gomboš houses share their points with the village's).
     """
     # As np.unique(axis=0, return_inverse=True), which sorts rows as records,
     # several times slower.
@@ -734,6 +739,9 @@ def _point_votes(
     chosen = np.array(
         [min(v, key=lambda o: (-v[o], o)) for _, v in sorted(votes.items())]
     )
+    if keep_all:
+        for u in sorted(set(units.tolist()) - set(chosen.tolist())):
+            chosen[max(votes, key=lambda k: (votes[k][u], -k))] = u
     return keys, chosen, homes
 
 
@@ -813,6 +821,11 @@ def _voronoi_split(
     first = np.flatnonzero(~seeded)
     cell_obvod[cell[first]] = drawn[first]
     cell_obvod[cell[seeded]] = drawn[seeded]
+    # Smoothing can take every face from a tiny obvod whose points lie by the
+    # obec's edge (Veľká Ida 2022, Gomboš): it keeps the cells of its points.
+    for n in present:
+        if not (cell_obvod == n).any():
+            cell_obvod[obvod == n] = n
     regions = shapely.coverage_simplify(
         np.array([shapely.coverage_union_all(cells[cell_obvod == n]) for n in present]),
         SMOOTH_TOLERANCE,
@@ -2025,10 +2038,15 @@ def memberships(
 ) -> dict[str, Membership]:
     """Return file name → membership for every kraj and for BA / KE.
 
-    All membership files are checked before failing, so one run lists every
-    problem.
+    Where a contest has ``seats`` of its own (``candidates.json``), its
+    obvod must have as many. All membership files are checked before
+    failing, so one run lists every problem.
     """
-    expected = Counter(str(c["area"]) for c in contests if _is_obvod_contest(c))
+    councils = [c for c in contests if _is_obvod_contest(c)]
+    expected = Counter(str(c["area"]) for c in councils)
+    stated = {
+        (str(c["area"]), c["obvod"]): c["seats"] for c in councils if "seats" in c
+    }
     areas = {
         f"zsk-{kraj}": (
             kraj,
@@ -2049,6 +2067,12 @@ def memberships(
             result[name] = (listed, obvody.resolve(listed, obce, expected[area]))
         except obvody.ObvodyError as e:
             errors.append(str(e))
+        errors += [
+            f"{listed.path}: obvod {o.number} has {o.seats} seats, the candidate"
+            f" lists {stated[(area, o.number)]}"
+            for o in listed.obvody
+            if stated.get((area, o.number), o.seats) != o.seats
+        ]
     if errors:
         raise obvody.ObvodyError("\n".join(errors))
     return result
@@ -2522,9 +2546,9 @@ def build(
 
     *paths* maps each ZBGIS level to its GeoPackage, *countries* is the
     Natural Earth GeoJSON; *election_dir* the election's curated data
-    (:attr:`election_map_slovakia.config.Config.election_dir`); *places*
+    (:meth:`election_map_slovakia.config.Config.election_dir`); *places*
     the addresses of the obce with several council obvody
-    (``data/build/obvod-addresses/``); *contests* are those of
+    (``data/build/<election day>/obvod-addresses/``); *contests* are those of
     ``candidates.json``, *candidates* the number of candidacies per contest.
     """
     admin = load_admin(paths[0])

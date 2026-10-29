@@ -1,0 +1,139 @@
+# Okrsky of Krupina, transcribed by an AI agent in job okrsok-rules-648 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 29. augusta, Bernolákova, Bočkayho nám., Čsl. armády, E. M. Šoltésovej, Ficberg, Gliarska, Gubáň, Hajdúsky rad, J. C. Hronského, J. G. Tajovského, J. Špitzera, J. Vacholda, Kmeťova, Koháryho rad, Krupina – mesto, Kuzmányho, Nám. SNP, Obchodná, Partizánska, Poloma, Sládkovičova, Stará Hora, Starohorská cesta, Starý Háj, Svätotrojičné nám., Šváb, Tepličky, Tvoľ, Vajsov, Vĺčok, Zvolenská cesta
+#   okrsok 2: Bebrava, Bebravská, Čierne Blato, Fraňa Kráľa, Havran, Hviezdoslavova, J. Mikulku, Kalinčiakova, Líška, Molkňa, Peter, Pijavice, Šibeničná, Školská, Záhradná, Žobrák
+#   okrsok 3: Agátová ulica, Gaštanová ulica, M. R. Štefánika, Malinovského, Ulica P. M. Hnilicu
+#   okrsok 4: Majerský rad
+#   okrsok 5: Dráhy, Holý Vrch, Horná, I. Krasku, J. Bottu, Jilemnického, Kamenný kríž, Kňazova dolina, Kopanice, Krupinica, Kukučka, Lipová, Nad mestom, Nová, Nová Hora, Odrobinovo Pole, Palánkova, Plavárenská, Pribinova, Prostredná, S. Hruškovica, Saská, Slnečná, Široké lúky, Vinohradnícka, Za Baštou
+#   okrsok 6: Biely Kameň, Briač, Červená Hora, Dionýza Štúra, Hozník, Husársky most, Jesenského, Mlynská, Nad Kotlom, Okrúhla Hora, Osloboditeľov, Priemyselná, Rudolfa Geschwinda, Sencovka, Tanistravár, Tehelná, Železničná
+obec = "518557"
+name = "Krupina"
+okrsky_date = 2022-07-14
+okrsky_fill = "nearest"
+okrsky_note = "'Krupina – mesto' in okrsok 1 means voters registered only on the town (no address), not houses without a street; the register's addresses without a street (súpisné only) are placed by fill_nearest."
+
+[[document]]
+url = "https://krupina.sk/data/web_files/2022/8/8834.pdf"
+sha256 = "05150435b9819519856dd51494c800df27d63c6f59a7f30e0afab685abb4c5e4"
+title = "Určenie volebných miestností a volebných okrskov"
+
+[okrsok.1]
+rules = [
+  {street = "29. augusta"},
+  {street = "Bernolákova"},
+  {street = "Bočkayho nám."},
+  {street = "Čsl.armády", written = "Čsl. armády"},
+  {street = "E. M. Šoltésovej"},
+  {street = "Ficberg"},
+  {street = "Gliarska"},
+  {street = "Gubáň"},
+  {street = "Hajdúsky rad"},
+  {street = "J. C. Hronského"},
+  {street = "J. G. Tajovského"},
+  {street = "J. Špitzera"},
+  {street = "J. Vacholda"},
+  {street = "Kmeťova"},
+  {street = "Koháryho rad"},
+  {street = "Kuzmányho"},
+  {street = "Nám.SNP", written = "Nám. SNP"},
+  {street = "Obchodná"},
+  {street = "Partizánska"},
+  {street = "Poloma"},
+  {street = "Sládkovičova"},
+  {street = "Stará Hora"},
+  {street = "Starohorská cesta"},
+  {street = "Starý Háj"},
+  {street = "Svätotrojičné nám."},
+  {street = "Šváb"},
+  {street = "Tepličky"},
+  {street = "Tvoľ"},
+  {street = "Vajsov"},
+  {street = "Vĺčok"},
+  {street = "Zvolenská cesta"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bebrava"},
+  {street = "Bebravská"},
+  {street = "Čierne Blato"},
+  {street = "Fraňa Kráľa"},
+  {street = "Havran"},
+  {street = "Hviezdoslavova"},
+  {street = "J. Mikulku"},
+  {street = "Kalinčiakova"},
+  {street = "Líška"},
+  {street = "Molkňa"},
+  {street = "Peter"},
+  {street = "Pijavice"},
+  {street = "Šibeničná"},
+  {street = "Školská"},
+  {street = "Záhradná"},
+  {street = "Žobrák"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová ulica"},
+  {street = "Gaštanová ulica"},
+  {street = "M. R. Štefánika"},
+  {street = "Malinovského"},
+  {street = "Ulica P. M. Hnilicu"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Majerský rad"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Dráhy"},
+  {street = "Holý Vrch"},
+  {street = "Horná"},
+  {street = "I. Krasku"},
+  {street = "J. Bottu"},
+  {street = "Jilemnického"},
+  {street = "Kamenný kríž"},
+  {street = "Kňazova dolina"},
+  {street = "Kopanice"},
+  {street = "Krupinica"},
+  {street = "Kukučka"},
+  {street = "Lipová"},
+  {street = "Nad mestom"},
+  {street = "Nová"},
+  {street = "Nová Hora"},
+  {street = "Odrobinovo pole", written = "Odrobinovo Pole"},
+  {street = "Palánkova"},
+  {street = "Plavárenská"},
+  {street = "Pribinova"},
+  {street = "Prostredná"},
+  {street = "S. Hruškovica"},
+  {street = "Saská"},
+  {street = "Slnečná"},
+  {street = "Široké Lúky", written = "Široké lúky"},
+  {street = "Vinohradnícka"},
+  {street = "Za Baštou"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Biely Kameň"},
+  {street = "Briač"},
+  {street = "Červená Hora"},
+  {street = "Dionýza Štúra"},
+  {street = "Hozník"},
+  {street = "Husársky most"},
+  {street = "Jesenského"},
+  {street = "Mlynská"},
+  {street = "Nad Kotlom"},
+  {street = "Okrúhla Hora"},
+  {street = "Osloboditeľov"},
+  {street = "Priemyselná"},
+  {street = "Rudolfa Geschwinda"},
+  {street = "Sencovka"},
+  {street = "Tanistravár"},
+  {street = "Tehelná"},
+  {street = "Železničná"},
+]

@@ -1,0 +1,22 @@
+# The okrsky of Sečovská Polianka of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/529133.toml, reused by `ems job reuse`.
+obec = "529133"
+name = "Sečovská Polianka"
+okrsky_date = 2026-07-22
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Okrsky split by súpisné číslo: 0-377 and 378-801. Any súpisné number above 801 takes the nearest placed address."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://secovskapolianka.sk/wp-content/uploads/dokumenty/komunalne-volby/utvorenie_volebnych_okrskov_a_urcenie_volebnych_miestnosti_2026-6b9je7.pdf"
+sha256 = "814ac3fbb14153aad28cce08cac7028e2c27812d8174803808a7181b6274ee4e"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby 24. októbra 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Sečovská Polianka", numbers = "0-377"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Sečovská Polianka", numbers = "378-801"},
+]

@@ -1,0 +1,30 @@
+# Okrsky of Váhovce, transcribed by an AI agent in job okrsok-rules-898 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od s.č. 0 - 430
+#   okrsok 2: od s.č. 431 - 875
+obec = "504114"
+name = "Váhovce"
+okrsky_date = 2022-08-04
+okrsky_fill = "nearest"
+okrsky_note = "The decision of 4.8.2022 is titled for the elections to the self-governing regions only; these were held jointly on 29.10.2022 with the municipal elections in the same okrsky. Okrsky by súpisné číslo: 0–430 and 431–875; addresses above 875 (if any) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.obecvahovce.sk/e_download.php?file=data/uredni_deska/obsah274_1.pdf&original=Ur%C4%8Denie-volebn%C3%BDch-okrskov-a-volebn%C3%BDch-miestnost%C3%AD.pdf"
+sha256 = "29f6a9dc2be9717e239a7a7aeb92c91db6790e12cd9346203b78a92872ba399b"
+title = "Určenie volebných okrskov a volebných miestností"
+
+[[document]]
+url = "https://www.obecvahovce.sk/urad/uradna-tabula-obce/urcenie-volebnych-okrskov-a-volebnych-miestnosti-275.html"
+sha256 = "aa24fd5f68c00e39ed4a5c8f88749e6bf0d997e1f2f31723f180e73ecaa1c94a"
+title = "Určenie volebných okrskov a volebných miestností (úradná tabuľa, vyvesené 4. 8. 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Váhovce", numbers = "1-430"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Váhovce", numbers = "431-875"},
+]

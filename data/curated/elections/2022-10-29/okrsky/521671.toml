@@ -1,0 +1,43 @@
+# Okrsky of Medzev, transcribed by an AI agent in job okrsok-rules-762 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Mariánske námestie, Mierová, Miroslavská, Prochotská, Robotnícka, Sídlisko Mladosť
+#   okrsok 2: Aljašská, Hámornícka, Grunt, Jarná, Partizánska, Štóska
+#   okrsok 3: Kováčska, Revolučná, Šugovská dolina
+obec = "521671"
+name = "Medzev"
+okrsky_date = 2022-07-18
+okrsky_fill = "nearest"
+okrsky_note = "The 2022 page is gone from the live site (which shows only the 2026 referendum's okrsky); the archived page of 16.08.2022 (posted 18.7.2022) is used; a second copy (item 4148, archived 07.10.2022) has the same text. The register's houses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20220816221034/https://www.medzev.sk/obcan/volby-a-referenda/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-4147.html"
+sha256 = "b8322be2c8f9ba585fa71fd1d77e6155fe1f3283a80f1a027a3d29e2a4e97a19"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov (č. sp. ME/2022/001224)"
+
+[okrsok.1]
+rules = [
+  {street = "Mariánske Námestie", written = "Mariánske námestie"},
+  {street = "Mierová"},
+  {street = "Miroslavská"},
+  {street = "Prochotská"},
+  {street = "Robotnícka"},
+  {street = "Sídlisko Mladosť"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Aljašská"},
+  {street = "Hámornícka"},
+  {street = "Grunt"},
+  {street = "Jarná"},
+  {street = "Partizánska"},
+  {street = "Štóska"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Kováčska"},
+  {street = "Revolučná"},
+  {street = "Šugovská Dolina", written = "Šugovská dolina"},
+]

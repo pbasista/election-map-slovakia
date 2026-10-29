@@ -1,0 +1,48 @@
+# Council obvody of Valaliky (522139), Košice - okolie.
+# Transcribed by an AI agent in job obvod-rules-316 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: Buzice sa volia 4 poslanci.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: Bernátovce sa volia 3 poslanci.
+#   obvod 3: Vo volebnom obvode číslo 3, ktorý zahŕňa: Všechsvätých sa volia 2 poslanci.
+#   obvod 4: Vo volebnom obvode číslo 4, ktorý zahŕňa: Košťany sa volia 2 poslanci.
+# Okrsky added by `ems job reuse`: those of the elections of 2026-10-24, data/curated/elections/2026-10-24/obvody/oz/522139.toml, reused by `ems job reuse`.
+obec = "522139"
+name = "Valaliky"
+date = 2022-06-22
+okrsky_date = 2026-07-10
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Mayor's decision of 10.07.2026 creates 4 okrsky, one per part of the municipality, each coinciding with the obvod of that part."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.valaliky.sk/e_download.php?file=data/uredni_deska/obsah1704_1.pdf&original=oznamenie_o_urceni_poctu_poslancov_2022.pdf"
+sha256 = "1eb4aeccfd83801a787211b7a3b8457380c01d912f32527c52b8857f5d30b829"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 29. októbra 2022 (uznesenie č. 51/2022 zo dňa 22.06.2022)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Buzice"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Bernátovce"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Všechsvätých"},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [4]
+rules = [
+  {part = "Košťany"},
+]

@@ -1,0 +1,55 @@
+# Okrsky of Pukanec, transcribed by an AI agent in job okrsok-rules-772 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre obyvateľov bývajúcich na ulici: Nová, Pažiť, Štiavnická cesta, Za Školou, Záhradná, pre obyvateľov časti Majere a Obec Pukanec
+#   okrsok 2: pre obyvateľov bývajúcich na ulici: Breznická cesta, Červená cesta, Čierne Blato, Dlhá, Hrnčiarska, Krátka, Krížna, Kúty, Námestie Mieru, Na Žliabku, Partizánska cesta, Pod Hradbami, Potočná cesta, Prieložná cesta, Sľúkova Brána, SNP, Viničná cesta, Vodná, Za Múrom, Závoz.
+obec = "502693"
+name = "Pukanec"
+okrsky_date = 2022-11-09
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections found: the 2022 elections page (archived 2022-09-04) links \"Oznamenie_o_utvoreni_voblebnych_okrskov_a_urceni_volebnych_miestnosti.pdf\" (id=1720116), which is not live nor archived; the referendum's document (9.11.2022). \"Obec Pukanec\" in okrsok 1 means voters registered only to the obec, not the register's houses without a street, which are placed by nearest address (fill_nearest); part Majere in okrsok 1."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://web.archive.org/web/20221220070336/https://www.pukanec.sk/download_file_f.php?id=1763564"
+sha256 = "c0bbf192c56538f83b9ec076b00ab665a7d30dbc70eb2ba00c2b48a2ad686163"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností (referendum 21. 1. 2023)"
+
+[[document]]
+url = "https://web.archive.org/web/20221220070316/https://www.pukanec.sk/referendum-2023-oznam/mid/440108/.html"
+sha256 = "5d0c5f41702e5f0eab59c682bd2887d87bfca730ff0785646715ab71424f4c4e"
+title = "Referendum 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Nová"},
+  {street = "Pažiť"},
+  {street = "Štiavnická cesta"},
+  {street = "Za Školou"},
+  {street = "Záhradná"},
+  {part = "Majere"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Breznická cesta"},
+  {street = "Červená cesta"},
+  {street = "Čierne Blato"},
+  {street = "Dlhá"},
+  {street = "Hrnčiarska"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Kúty"},
+  {street = "Námestie Mieru"},
+  {street = "Na Žliabku"},
+  {street = "Partizánska cesta"},
+  {street = "Pod Hradbami"},
+  {street = "Potočná cesta"},
+  {street = "Prieložná cesta"},
+  {street = "Sľúkova Brána"},
+  {street = "SNP"},
+  {street = "Viničná cesta"},
+  {street = "Vodná"},
+  {street = "Za Múrom"},
+  {street = "Závoz"},
+]

@@ -1,0 +1,43 @@
+# Okrsky of Spišské Bystré, transcribed by an AI agent in job okrsok-rules-913 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Partizánska, SNP, Hornádska, Michalská, Jána Lačeka, Vodárenska, Pod lesom
+#   okrsok 2: Cintorínska, Hviezdoslavova, Kukučínova, Školská, Slnečná, Krátka, Kamenec, Družstevná
+obec = "523852"
+name = "Spišské Bystré"
+okrsky_date = 2022-07-21
+okrsky_fill = "nearest"
+okrsky_note = "The 51 register addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.spisskebystre.sk/evt_file.php?file=9430&original=Okrsky.pdf"
+sha256 = "e59e4a1abb67f6025eda068376555fbb55600ba7fa409ef49dc079a9ee161fd2"
+title = "Oznámenie o určení volebných okrskov a volebných miestností (21.7.2022)"
+
+[[document]]
+url = "https://www.spisskebystre.sk/urad/volby-referendum/volby-referendum-archiv/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-29102022/"
+sha256 = "c93ff7a71a14485419bdcdd2d1423fc0f8270802cc7a26da5789de98174dd960"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov - 29.10.2022"
+
+[okrsok.1]
+rules = [
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Hornádska"},
+  {street = "Michalská"},
+  {street = "Jána Lačeka"},
+  {street = "Vodárenska"},
+  {street = "Pod lesom"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Hviezdoslavova"},
+  {street = "Kukučínova"},
+  {street = "Školská"},
+  {street = "Slnečná"},
+  {street = "Krátka"},
+  {street = "Kamenec"},
+  {street = "Družstevná"},
+]

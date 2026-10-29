@@ -1,0 +1,92 @@
+# Council obvody of Nižná (509876), Tvrdošín.
+# Transcribed by an AI agent in job obvod-rules-323 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č. 1 - Malá Orava, volia sa v ňom traja poslanci a zahŕňa ulice Družstevná, Sama Chalupku, Za mostom, Orličie, Na Skalke, Jána Hollého, Záhradnícka, Gen. Štefánika, Tajovského, Kollárova, Jesenského, Za Vŕškom, Na Ostrvke, Šoltésovej, Podjavorinskej, Vansovej, Pri rybníkoch, Svrčková, Uhliská, Sihoť
+#   obvod 2: volebný obvod č. 2 - Dom Kultúry, volia sa v ňom traja poslanci a zahŕňa ulice Radlinského, Mila Urbana, Partizánska, Vintiška, Štúrova, Hviezdoslavova, Železničná, Tomanoczyho, Kukučínova, Kolejákova, Mieru, Bernolákova, Hamuljakova
+#   obvod 3: volebný obvod č. 3 - ZŠ s MŠ Nižná, volia sa v ňom traja poslanci a zahŕňa ulice Závodná, Matúškova, Hattalova, Nová doba, Lesná, Farkašovského
+#   obvod 4: Zemianska Dedina – 1 poslanec
+# Okrsky added by an AI agent in job okrsok-rules-1194 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+obec = "509876"
+name = "Nižná"
+date = 2022-07-12
+fill = "nearest"
+note = "Obvody per resolution of OcZ of 12 July 2022 (minutes, item 8). Streets Samota Hldočín and Samota-mlyn (1 address each) are not named by the 2022 document; placed by fill_nearest, as are addresses without a street in part Nižná. Part Zemianská Dedina (register spelling) = obvod 4."
+okrsky_date = 2022-07-12
+okrsky_note = "No 2022 (or January 2023 referendum) okrsky document found: the 2022 elections page (snapshot 21.10.2022) and the minutes of 12.7.2022 give only the 4 obvody with their streets; the archived 'Oznámenie o utvorení volebných okrskov' files are those of the 2019 presidential and EP elections (okrsky differing from the 2022 obvody, e.g. Uhliská and Nová doba), so they are not used; the live elections page now shows 2026 documents. Each obvod has one okrsok in the ŠÚ SR results (1-1, 2-2, 3-3, 4-4), so obvody are given without okrsky rules."
+
+[[document]]
+url = "https://web.archive.org/web/20221021231953/https://www.nizna.sk/zverejnovanie/volby-do-organov-samospravy-obci/"
+sha256 = "e5bdea8a5040235b78f7d02d23faaef44f1c1bdf3466723754cc6a1b72907cde"
+title = "Voľby do orgánov samosprávy obcí – Volebné obvody v Obci Nižná (stránka obce, 2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20221206070803/https://www.nizna.sk/e_download.php?file=data/uredni_deska/obsah1149_14.pdf&original=Zapisnica_2022_07_12_web.pdf"
+sha256 = "c4b38ffae1b3843c23dfa613a9d00c6f69c8c42d160d28b2d8963f82da5b50db"
+title = "Zápisnica z III. zasadnutia OcZ v Nižnej konaného dňa 12. júla 2022 (bod 8 – voľby, uznesenie o obvodoch)"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {street = "Družstevná"},
+  {street = "Sama Chalupku"},
+  {street = "Za Mostom", written = "Za mostom"},
+  {street = "Orličie"},
+  {street = "Na Skalke"},
+  {street = "Jána Hollého"},
+  {street = "Záhradnícka"},
+  {street = "Gen. Štefánika"},
+  {street = "Tajovského"},
+  {street = "Kollárova"},
+  {street = "Jesenského"},
+  {street = "Za Vrškom", written = "Za Vŕškom", note = "register spelling Za Vrškom"},
+  {street = "Na Ostrvke"},
+  {street = "Šoltesovej", written = "Šoltésovej", note = "register spelling Šoltesovej"},
+  {street = "Podjavorinskej"},
+  {street = "Vansovej"},
+  {street = "Pri rybníkoch"},
+  {street = "Svrčkova", written = "Svrčková", note = "register spelling Svrčkova"},
+  {street = "Uhliská"},
+  {street = "Sihoť"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {street = "Radlinského"},
+  {street = "Mila Urbana"},
+  {street = "Partizánska"},
+  {street = "Vintiška"},
+  {street = "Štúrova"},
+  {street = "Hviezdoslavova"},
+  {street = "Železničná"},
+  {street = "Tomanoczyho"},
+  {street = "Kukučínova"},
+  {street = "Kolejákova"},
+  {street = "Mieru"},
+  {street = "Bernolákova"},
+  {street = "Hamuliakova", written = "Hamuljakova", note = "register spelling Hamuliakova (same street, Hamuljak/Hamuliak)"},
+]
+
+[obvod.3]
+seats = 3
+okrsky = [3]
+rules = [
+  {street = "Závodná"},
+  {street = "Matúškova"},
+  {street = "Hattalova"},
+  {street = "Nová Doba", written = "Nová doba"},
+  {street = "Lesná"},
+  {street = "Farkašovského"},
+]
+
+[obvod.4]
+seats = 1
+okrsky = [4]
+rules = [
+  {part = "Zemianská Dedina", note = "document: Zemianska Dedina; register part name Zemianská Dedina"},
+]

@@ -1,0 +1,54 @@
+# Council obvody of Fiľakovské Kováče (511404), Lučenec.
+# Transcribed by an AI agent in job obvod-rules-384 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: viacmandátový volebný obvod č. 1 pre voľby poslancov v časti obce Fiľakovské Kováče, v ktorom sa budú voliť 4 (štyria) poslanci
+#   obvod 2: viacmandátový volebný obvod č. 2 pre voľby poslancov v časti obce Kurtáň, v ktorom sa budú voliť 2 (dvaja) poslanci
+#   obvod 3: jednomandátový volebný obvod č. 3 pre voľby poslanca v časti obce F Fiľakovské Kľačany, v ktorom sa bude voliť 1 (jeden) poslanec
+# Okrsky added by an AI agent in job okrsok-rules-1245 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: viacmandátový volebný obvod č. 1 pre voľby poslancov v časti obce Fiľakovské Kováče, v ktorom sa budú voliť 4 (štyria) poslanci
+#   okrsok 2: viacmandátový volebný obvod č. 2 pre voľby poslancov v časti obce Kurtáň, v ktorom sa budú voliť 2 (dvaja) poslanci
+#   okrsok 3: jednomandátový volebný obvod č. 3 pre voľby poslanca v časti obce F Fiľakovské Kľačany, v ktorom sa bude voliť 1 (jeden) poslanec
+obec = "511404"
+name = "Fiľakovské Kováče"
+date_approximate = "archived"
+date_seen = 2022-08-12
+date_basis = "The documents state no date; the Internet Archive captured them on 2022-08-12 (https://web.archive.org/web/20220812051023/https://filakovskekovace.sk/wp-content/uploads/dokumenty/volby/BRWDCA2662D7F55_0000013019.pdf)."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-08-12
+okrsky_date_basis = "The documents state no date; the Internet Archive captured them on 2022-08-12 (https://web.archive.org/web/20220812051023/https://filakovskekovace.sk/wp-content/uploads/dokumenty/volby/BRWDCA2662D7F55_0000013019.pdf)."
+note = "Both scanned documents (Internet Archive snapshots of 12.8.2022) read visually. Neither states the date of the council's resolution and no 2022 resolution/minutes are published, so date is omitted."
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts); the 2022 obvody document listed in the input defines each okrsok as its whole obvod, so no okrsok rules are needed. Text is the obvod document's words. No separate okrsky decision date taken."
+
+[[document]]
+url = "https://web.archive.org/web/20220812051023/https://filakovskekovace.sk/wp-content/uploads/dokumenty/volby/BRWDCA2662D7F55_0000013019.pdf"
+sha256 = "e9639fb4500cae2a2c52c1af622dca720a2959acf81f2b9c2e766e0a4545aff7"
+title = "Oznámenie k voľbám 2022 (volebné obvody a počet poslancov na volebné obdobie 2022-2026)"
+
+[[document]]
+url = "https://web.archive.org/web/20220812051730/https://filakovskekovace.sk/wp-content/uploads/dokumenty/volby/Volby-2022-zapisovatel-MVK-volebne-obvody-a-pocet-poslancov.pdf"
+sha256 = "9c5e110dab8f5e735b41249b35ab6086ec842f2caecb96b63d14400fde736d5a"
+title = "Voľby 2022 – nahlásenie zapisovateľky MVK a volebných obvodov v obci (OcUFK/177/2022, 07.07.2022)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Fiľakovské Kováče"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Kurtáň"},
+]
+
+[obvod.3]
+seats = 1
+okrsky = [3]
+rules = [
+  {part = "Fiľakovské Kľačany"},
+]

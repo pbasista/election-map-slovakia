@@ -1,0 +1,64 @@
+# Okrsky of Topoľčianky, transcribed by an AI agent in job okrsok-rules-765 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Obec Topoľčianky, Cintorínska, Dlhovského, Hlavná od 124 – 289, Holešovská, Hostianska, Hrádza, Lipová od 53-124, Machulinská, Parková, Pažiťská, Pod Hájom, Športová, Tekovská, Vígľašská, Záhradnícka
+#   okrsok 2: Hlavná od 1-123, Kopaničky, Lipová od 1-52, Litoměřická, Mlynská, Moravecká, Partizánska, SNP, Železničná, Žikavecká, Žitavanská
+obec = "500828"
+name = "Topoľčianky"
+okrsky_date = 2022-08-08
+okrsky_fill = "nearest"
+okrsky_note = "Street lists of the two okrsky from the 2022 municipal elections page (undated); date is the mayor's determination of the polling stations (08.08.2022) per the companion 'Zverejnenie' document. 'Obec Topoľčianky' in okrsok 1 means voters registered only on the municipality (no address); houses without a street (súpisné only) are placed by fill_nearest. Hlavná 124 is ranged in okrsok 1 (124–289) and Lipová 124 in okrsok 1 as the document writes."
+
+[[document]]
+url = "https://www.topolcianky.sk/obec-1/volby-a-referenda/volby-2022/volby-do-organov-samospravy-obci-2022/"
+sha256 = "df1a1e0e54b23103d1874213862c6e04abab51709ad841c2f10279d4a61c9b25"
+title = "Voľby do orgánov samosprávy obcí 2022"
+
+[[document]]
+url = "https://www.topolcianky.sk/e_download.php?file=data/editor/540sk_6.pdf&original=Zoznam%20ul%C3%ADc%20pod%C4%BEa%20okrskov%2C%20okrsok%20%C4%8D.%201.pdf"
+sha256 = "ea6b631d8b4222852068f0d714963651bf98e2fae3bb4b4634404ee2b3bcfbeb"
+title = "Zoznam ulíc podľa okrskov, okrsok č. 1"
+
+[[document]]
+url = "https://www.topolcianky.sk/e_download.php?file=data/editor/540sk_7.pdf&original=Zoznam%20ul%C3%ADc%20pod%C4%BEa%20okrskov%2C%20okrsok%20%C4%8D.%202.pdf"
+sha256 = "c1e7411a519bcf619d97699f5944efc51ed5efb35ab251acb693e57f65b526b8"
+title = "Zoznam ulíc podľa okrskov, okrsok č. 2"
+
+[[document]]
+url = "https://www.topolcianky.sk/e_download.php?file=data/editor/540sk_8.pdf&original=Zverejnenie%20-%20zapisovate%C4%BEka%2C%20miesto%20okrskovej%20%20volebnej%20komisie%20%C4%8D.%201.pdf"
+sha256 = "8365df322180badeca68027d5f9cc3f99b8ca37bb7315ef3edb32b36f20b567c"
+title = "Zverejnenie - zapisovateľka, miesto okrskovej volebnej komisie č. 1"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Dlhovského"},
+  {street = "Holešovská"},
+  {street = "Hostianska"},
+  {street = "Hrádza"},
+  {street = "Machulinská"},
+  {street = "Parková"},
+  {street = "Pažiťská"},
+  {street = "Pod Hájom"},
+  {street = "Športová"},
+  {street = "Tekovská"},
+  {street = "Vígľašská"},
+  {street = "Záhradnícka"},
+  {street = "Hlavná", numbers = "124-289"},
+  {street = "Lipová", numbers = "53-124"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná", numbers = "1-123"},
+  {street = "Lipová", numbers = "1-52"},
+  {street = "Kopaničky"},
+  {street = "Litoměřická"},
+  {street = "Mlynská"},
+  {street = "Moravecká"},
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Železničná"},
+  {street = "Žikavecká"},
+  {street = "Žitavanská"},
+]

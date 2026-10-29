@@ -1,0 +1,29 @@
+# Okrsky of Moravany, transcribed by an AI agent in job okrsok-rules-1046 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 01 – volebná miestnosť – Dom kultúry Moravany č.98
+#   okrsok 2: Okrsok č. 02 – volebná miestnosť – Dom kultúry Moravany časť Lučkovce č.1059
+obec = "522791"
+name = "Moravany"
+okrsky_date = 2022-08-05
+okrsky_note = "The document is undated; date is its posting date on the official page (\"Dátum vyvesenia: 05.08.2022\") gives each okrsok only its polling station: okrsok 1 Dom kultúry Moravany č. 98, okrsok 2 Dom kultúry in the part Lučkovce č. 1059. The okrsky are as many as the parts, so each okrsok is given the part of its station (inferred)."
+
+[[document]]
+url = "https://www.obecmoravany.sk/files/2022-08-05-134212-ozn__menie-utvorenie_volebn__ch_okrskov.pdf"
+sha256 = "c40eda26ffb855a6797ddff730dbf0c455b4a1d1e14455b55380baadfc4fcf38"
+title = "Oznam – utvorenie volebných okrskov (voľby do orgánov samosprávy obcí a samosprávnych krajov 2022)"
+
+[[document]]
+url = "https://www.obecmoravany.sk/volby-do-organov-samospravy-obci-v-roku-2022-a73-1365"
+sha256 = "08624385e1dc2b6c4b8bc246d9d09ef0003d4b2507ee45c0b67f495ab5e148a3"
+title = "Voľby do orgánov samosprávy obcí v roku 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Moravany", note = "part of the polling station (Moravany č. 98)", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lučkovce", note = "part of the polling station (časť Lučkovce č. 1059)", inferred = true},
+]

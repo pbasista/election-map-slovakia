@@ -1,0 +1,55 @@
+# Okrsky of Poproč, transcribed by an AI agent in job okrsok-rules-815 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov bývajúcich vo východnej časti obce + Partizánska ul. - ulice Banícka, Brezová, Horská, Jarná, Lesná, Letná, Mieru, Oľšavská, Poľná, Slnečná, Športová, Východná, Záhradná, Partizánska
+#   okrsok 2: pre voličov bývajúcich v západnej časti obce - ulice Družstevná, Kostolná, Krátka, Kultúrna, Lipová, Nová, Obchodná, Potočná, Požiarna, Sadová, Školská, Západná
+obec = "521892"
+name = "Poproč"
+okrsky_date = 2022-11-09
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections found (the 2022 file 2022_07_11_oznamenie_okrsky.pdf linked from the archived elections page is neither live nor archived; the migrated 'volby-do-samosprav' copy is the 2018 one); the referendum's document of 09.11.2022, whose okrsky (east part + Partizánska / west part) are those described in the 2018 document and match the ŠÚ SR count and voters. Register addresses without a street (82) are placed by fill_nearest."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://poproc.sk/wp-content/uploads/dokumenty/referendum/Oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti.pdf"
+sha256 = "1f479471533b0e195268d131b045663e1520a89fc2eed5c1b73491981b271dba"
+title = "Oznámenie o utvorení volebných okrskov a určenie volebných miestností pre hlasovanie v referende vyhláseného na 21. januára 2023"
+
+[[document]]
+url = "https://poproc.sk/dokument/oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti/"
+sha256 = "303d056cb2ef924aead2e65c4cd2795f8fc4dda37d78610a417da88b40b50210"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Banícka"},
+  {street = "Brezová"},
+  {street = "Horská"},
+  {street = "Jarná"},
+  {street = "Lesná"},
+  {street = "Letná"},
+  {street = "Mieru"},
+  {street = "Oľšavská"},
+  {street = "Poľná"},
+  {street = "Slnečná"},
+  {street = "Športová"},
+  {street = "Východná"},
+  {street = "Záhradná"},
+  {street = "Partizánska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Kostolná"},
+  {street = "Krátka"},
+  {street = "Kultúrna"},
+  {street = "Lipová"},
+  {street = "Nová"},
+  {street = "Obchodná"},
+  {street = "Potočná"},
+  {street = "Požiarna"},
+  {street = "Sadová"},
+  {street = "Školská"},
+  {street = "Západná"},
+]

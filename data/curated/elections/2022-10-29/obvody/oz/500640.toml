@@ -1,0 +1,37 @@
+# Council obvody of Nové Sady (500640), Nitra.
+# Transcribed by an AI agent in job obvod-rules-362 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Nové Sady, Kotrbál, Ceroviny
+#   obvod 2: Sila
+# Okrsky added by an AI agent in job okrsok-rules-1224 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Nové Sady, Kotrbál, Ceroviny
+#   okrsok 2: Sila
+obec = "500640"
+name = "Nové Sady"
+date = 2022-06-27
+note = "Scanned announcement, read visually. Kotrbál is a settlement without its own part in the register (its addresses lie in part Nové Sady), so obvod 1 = parts Nové Sady + Ceroviny."
+okrsky_date = 2022-06-27
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+
+[[document]]
+url = "https://novesady.sk/wp-content/uploads/dokumenty/volby-do-samosprav/oznamenie-o-utvoreni-volebnych-obvodov-a-urceni-poctu-poslancov.pdf"
+sha256 = "ff70762ac0a1d3b13711c3703f52dfa5606ab424047d23da8d3a59255cfbb45e"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby 29. októbra 2022 (uznesenie OZ č. 20/2022 zo dňa 27.6.2022)"
+
+[obvod.1]
+seats = 6
+okrsky = [1]
+rules = [
+  {part = "Nové Sady"},
+  {part = "Ceroviny"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Sila"},
+]

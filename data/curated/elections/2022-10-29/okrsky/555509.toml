@@ -1,0 +1,61 @@
+# Okrsky of Zálesie, transcribed by an AI agent in job okrsok-rules-804 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulica Bazová, Cintorínska, Dolnomajerská, Domky,Družstevná,Dunajská,Hornozelenická, Ivanská,Jaseňova,Jazerná,Konečná,Kugaštanu, Lesná,Lipová,Malinovská,Muškátová,Obilná, Okružná,Pri kríži,Siladická,Slnečná,Topoľová, Trojičné námestie,Turčianska,Záhumenná
+#   okrsok 2: Ulica Dlhá,Fülova, Ignáca Gešaja,Krajná, Krátka, Krížna, Lúčna, Poľná, Starobystrická, Stredná,Terchovská,Tichá,Veselá,Za záhradami
+obec = "555509"
+name = "Zálesie"
+okrsky_date = 2022-08-08
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document, read from the rendered page. 'Trojičné námestie' (okrsok 1) is not in the register and is left out. The register's streets Jágerňa and U Rusa, which the document does not name, and the houses without a street (súpisné only) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.obeczalesie.sk/modules/file_storage/download.php?file=fb3d56d9%7C560&inline=1"
+sha256 = "7d6e26aca71d69497b36867c9ec27325a9f153915d43e8214967fd0ec580738f"
+title = "Rozhodnutie starostu obce Zálesie (Volebné okrsky), voľby 29. októbra 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Bazová"},
+  {street = "Cintorínska"},
+  {street = "Dolnomajerská"},
+  {street = "Domky"},
+  {street = "Družstevná"},
+  {street = "Dunajská"},
+  {street = "Hornozelenická"},
+  {street = "Ivanská"},
+  {street = "Jazerná"},
+  {street = "Konečná"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+  {street = "Malinovská"},
+  {street = "Muškátová"},
+  {street = "Obilná"},
+  {street = "Okružná"},
+  {street = "Pri kríži"},
+  {street = "Siladická"},
+  {street = "Slnečná"},
+  {street = "Topoľová"},
+  {street = "Turčianska"},
+  {street = "Záhumenná"},
+  {street = "Jaseňová", written = "Jaseňova", note = "misspelt ending (ova for ová); the register's only such street"},
+  {street = "Ku gaštanu", written = "Kugaštanu", note = "words run together in the document"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dlhá"},
+  {street = "Ignáca Gešaja"},
+  {street = "Krajná"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Lúčna"},
+  {street = "Poľná"},
+  {street = "Starobystrická"},
+  {street = "Stredná"},
+  {street = "Terchovská"},
+  {street = "Tichá"},
+  {street = "Veselá"},
+  {street = "Za záhradami"},
+  {street = "Fülova ulica", written = "Fülova"},
+]

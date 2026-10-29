@@ -1,0 +1,49 @@
+# Council obvody of Dolný Hričov (517526), Žilina.
+# Transcribed by an AI agent in job obvod-rules-370 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č. 1 tvoria ulice : Bratislavská, Na Šefranicu, Na Imranovec, Dolné Záhumnie, Osloboditeľov, Mládeže, Športová, Májová, Školská, Staničná, Na Plzák, Majora Antona Matúška, Na Štvrte
+#   obvod 2: volebný obvod č. 2 – časť Peklina
+# Okrsky added by an AI agent in job okrsok-rules-1232 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volebný obvod č. 1 tvoria ulice : Bratislavská, Na Šefranicu, Na Imranovec, Dolné Záhumnie, Osloboditeľov, Mládeže, Športová, Májová, Školská, Staničná, Na Plzák, Majora Antona Matúška, Na Štvrte
+#   okrsok 2: volebný obvod č. 2 – časť Peklina
+obec = "517526"
+name = "Dolný Hričov"
+date = 2022-06-22
+note = "Streets Letisko and Na Skalu (not named) and addresses without street in part Dolný Hričov placed in obvod 1 via the part rule, since obvod 2 is only the part Peklina."
+okrsky_date = 2022-06-22
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+
+[[document]]
+url = "https://www.dolnyhricov.sk/modules/file_storage/download.php?file=66cb9c36%7C486"
+sha256 = "58dd5e93734896d86bcd5d2be6bbf2cebb102fe0145e1fe1552d9bda5280eddd"
+title = "Uznesenia č. 62-88/2022 zo dňa 22.06.2022 (uznesenie č. 86/2022)"
+
+[obvod.1]
+seats = 7
+okrsky = [1]
+rules = [
+  {street = "Bratislavská"},
+  {street = "Na Šefranicu"},
+  {street = "Na Imranovec"},
+  {street = "Dolné Záhumnie"},
+  {street = "Osloboditeľov"},
+  {street = "Mládeže"},
+  {street = "Športová"},
+  {street = "Májová"},
+  {street = "Školská"},
+  {street = "Staničná"},
+  {street = "Na Plzák"},
+  {street = "Majora Antona Matúška"},
+  {street = "Na Štvrte"},
+  {part = "Dolný Hričov", note = "rest of the part Dolný Hričov (Letisko, Na Skalu, addresses without street); obvod 2 is only Peklina", inferred = true},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Peklina"},
+]

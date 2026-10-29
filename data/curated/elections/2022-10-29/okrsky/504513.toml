@@ -1,0 +1,53 @@
+# Okrsky of Kúty, transcribed by an AI agent in job okrsok-rules-726 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bratislavská Konečná Hollého Športová Na Hliníku Za zbrojnicou Štúrova Brnenská Hlboká cesta Hurbanova
+#   okrsok 2: Za školou Školská Kozia Sasinkova Dr. Š. Heska Gorazdova Kollárova Továrenská Na cihlách Zelnická
+#   okrsok 3: Nám. Radlinského + voliči prihlásení k trvalému pobytu na Obec Kúty Štefánikova Nová Železničiarska Textilná
+obec = "504513"
+name = "Kúty"
+okrsky_date = 2022-07-20
+okrsky_fill = "nearest"
+okrsky_note = "Voters registered only on the obec ('voliči prihlásení k trvalému pobytu na Obec Kúty') vote in okrsok 3; they are not the register's addresses without a street. The register's street Štátny Les (1 address) and the 18 addresses without a street are not named by the document and take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20220802125955/https://www.kuty.sk/e_download.php?file=data/uredni_deska/obsah115_17.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti.pdf"
+sha256 = "5f3b8683d832c47e3dfc7d48f58b6ba573a078f97ce1bae04c2b51a7486ff333"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Bratislavská"},
+  {street = "Konečná"},
+  {street = "Hollého"},
+  {street = "Športová"},
+  {street = "Na Hliníku"},
+  {street = "Za zbrojnicou"},
+  {street = "Štúrova"},
+  {street = "Brnenská"},
+  {street = "Hlboká cesta"},
+  {street = "Hurbanova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Za školou"},
+  {street = "Školská"},
+  {street = "Kozia"},
+  {street = "Sasinkova"},
+  {street = "Dr. Štefana Heska", written = "Dr. Š. Heska"},
+  {street = "Gorazdova"},
+  {street = "Kollárova"},
+  {street = "Továrenská"},
+  {street = "Na Cihlách", written = "Na cihlách"},
+  {street = "Zelnická"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Radlinského Námestie", written = "Nám. Radlinského", note = "Same square, words in another order (Námestie abbreviated); the register's only Radlinského street."},
+  {street = "Štefánikova"},
+  {street = "Nová"},
+  {street = "Železničiarska"},
+  {street = "Textilná"},
+]

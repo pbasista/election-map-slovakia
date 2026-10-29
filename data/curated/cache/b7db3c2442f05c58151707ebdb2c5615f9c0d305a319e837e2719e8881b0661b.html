@@ -1,0 +1,880 @@
+﻿<!DOCTYPE html>
+<html lang="sk">
+  <head>
+  <meta  charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Určenie volebných okrskov a elektronická adresa k voľbám do OSO a OSK | Pribeta | Oficiálne stránky obce</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/design/css/style.min.css?v=3" rel="stylesheet" />
+    <link href="rse/app/app.css" rel="stylesheet" />
+    <link href="/design/css/cookies.css" rel="stylesheet" />
+        <meta name="description" content="Vitajte na oficiálnych internetových stránkach obce Pribeta." />
+    <meta name="keywords" content="Pribeta, obec, mesto, obecný úrad, slovensko, turizmus, samospráva" />
+        <meta name="robots" content="index, follow" />
+    <meta name="author" content="webex.digital" />
+    <link rel="shortcut icon" href="/design/images/erb.png" />
+        <meta property="og:title" content="Určenie volebných okrskov a elektronická adresa k voľbám do OSO a OSK | Pribeta | Oficiálne stránky obce" />
+    <meta property="og:site_name" content="Pribeta" />
+    <meta property="og:description" content="Vitajte na oficiálnych internetových stránkach obce Pribeta." />
+        <meta property="og:image" content="https://www.pribeta.sk/design/images/erb.png" />
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="rse/jscripts/jquery.form.js"></script>
+    <script type="text/javascript" src="rse/jscripts/fancybox-3/dist/jquery.fancybox.min.js"></script>
+    <script type="text/javascript" src="rse/jscripts/md5.js"></script>
+    <link rel="stylesheet" href="rse/jscripts/fancybox-3/dist/jquery.fancybox.min.css" type="text/css" media="screen" />
+    <script src="design/js/bootstrap.min.js"></script>
+	<script src="rse/jscripts/rslider/responsiveslides.js"></script>
+    <!--<script type="text/javascript" src="rse/jscripts/nivo-slider/jquery.nivo.slider.pack.js"></script>-->
+    <!--<link rel="stylesheet" href="rse/jscripts/nivo-slider/nivo-slider.css" type="text/css" media="screen" />-->
+    <script type="text/javascript" src="/design/js/jquery.jfontsize-1.0.js"></script>
+    <script type="text/javascript" src="/design/js/persistentFontSize.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            restoreSize();
+        });
+    </script>
+    <script type="text/javascript" src="rse/jscripts/init.js"></script>
+    <script src="rse/jscripts/bxslider/jquery.bxslider.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>  <script src="//code.responsivevoice.org/responsivevoice.js"></script>
+<script>
+    function stringToBoolean(string) {
+        switch(string.toLowerCase().trim()){
+            case "true": case "yes": case "1": return true;
+            case "false": case "no": case "0": case null: return false;
+            default: return Boolean(string);
+        }
+    }
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1);
+            if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+        }
+        return "";
+    }
+    function isTextToSpeechEnabled() {
+        if(typeof(Storage) !== "undefined") {
+            if(localStorage.getItem('textToSpeechEnabled')) {
+                return stringToBoolean(localStorage.getItem('textToSpeechEnabled'));
+            }
+        } else if(getCookie('textToSpeechEnabled')) {
+            return stringToBoolean(getCookie('textToSpeechEnabled'));
+        }
+        return false;
+    }
+    function setTextToSpeechEnabled(isEnabled) {
+        if(typeof isEnabled == "string") {
+            isEnabled = stringToBoolean(isEnabled);
+        }
+        if(isEnabled) {
+//            if(!responsiveVoice.voiceSupport()) {
+//                alert('Váš prehliadač nepodporuje čítačku textu.');
+//                return;
+//            }
+        }
+        if(typeof(Storage) !== "undefined") {
+            localStorage.setItem('textToSpeechEnabled', isEnabled);
+        } else {
+            setCookie('textToSpeechEnabled', isEnabled, 3000);
+        }
+        if(isEnabled) {
+            removeVolumeControls();
+            appendVolumeControls();
+            $('a').mouseenter(function () { // Attach this function to all mouseenter events for 'a' tags
+                responsiveVoice.cancel(); // Cancel anything else that may currently be speaking
+                speak($(this).text()); // Speak the text contents of all nodes within the current 'a' tag
+            });
+            refreshReadbales();
+        }
+        if(!isEnabled) {
+          $(".textToSpeechHandler").each(function() {
+              $(this).remove();
+          });
+        }
+    }
+    function setContentAsReadable(selector) {
+        var str = selector.html();
+        str = str.replace(/<\/?[^>]+(>|$)/g, ".");
+        str = str.replace(/[\t\n]/g, "");
+        str = str.replace(/\.+/g, '.');
+        str = str.replace(/^\./, '');
+        str = str.toLowerCase();
+        selector.attr('data-textToSpeech', str);
+        selector.append('<div class="textToSpeechHandler"><i class="fa fa1 fa-volume-up"></i></div>');
+        refreshReadbales();
+    }
+    function speak(text) {
+        if(!isTextToSpeechEnabled()) {
+            return;
+        }
+//        if (!responsiveVoice.voiceSupport()) {
+//            alert('Váš prehliadač nepodporuje čítačku textu.');
+//            return;
+//        }
+        responsiveVoice.cancel();
+        // treba skusit ktore ide a to nechat - zoradene je to od najlepsieho po najhorsie podla pouzitelnosti
+        // responsiveVoice.speak(text, "Slovak Female", {volume: 2});
+        responsiveVoice.speak(text, "Slovak Female", {volume: 2, rate: 1, pitch: 1});
+        // responsiveVoice.speak(text, "Czech Female", {volume: 2});
+        // responsiveVoice.speak(text, "UK English Female", {volume: 2});
+    }
+    function refreshReadbales() {
+        $(".textToSpeechHandler").on('click', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            var text = $(this).parents('[data-textToSpeech]').attr('data-textToSpeech');
+            speak(text);
+        });
+    }
+    function setSwitcherIcon(isSet) {
+        if(isSet) {
+            $('.textToSpeechSwitcher').find('.fa1').removeClass('fa-volume-off').addClass('fa-volume-up');
+            $('.textToSpeechSwitcher').find('.fa2').removeClass('fa-times').addClass('fa-nothing');
+            $('a').mouseenter(function () { // Attach this function to all mouseenter events for 'a' tags
+                responsiveVoice.cancel(); // Cancel anything else that may currently be speaking
+                speak($(this).text()); // Speak the text contents of all nodes within the current 'a' tag
+            });
+            $('.main_content_right_in').find('.textToSpeechSwitcher').addClass('textToSpeechSwitcher_active');
+            $('.main_content_right_in').find('.textToSpeechSwitcherBlock').addClass('textToSpeechSwitcherBlock_active');
+        } else {
+            $('.textToSpeechSwitcher').find('.fa1').removeClass('fa-volume-up').addClass('fa-volume-off');
+            $('.textToSpeechSwitcher').find('.fa2').removeClass('fa-nothing').addClass('fa-times');
+            $('.main_content_right_in').find('.textToSpeechSwitcher').removeClass('textToSpeechSwitcher_active');
+            $('.main_content_right_in').find('.textToSpeechSwitcherBlock').removeClass('textToSpeechSwitcherBlock_active');
+        }
+    }
+    function appendVolumeControls() {
+        $("[data-textToSpeech]").each(function () {
+            $(this).append('<div class="textToSpeechHandler"><i class="fa fa1 fa-volume-up"></i></div>');
+        });
+    }
+    function removeVolumeControls() {
+        $(".textToSpeechHandler").each(function() {
+            $(this).remove();
+        });
+    }
+    $(function () {
+        $(".textToSpeechSwitcher").click(function() {
+            var setVal = !isTextToSpeechEnabled();
+            setTextToSpeechEnabled(setVal);
+            setSwitcherIcon(setVal);
+            if(setVal) {
+                refreshReadbales();
+            }
+        });
+        if(isTextToSpeechEnabled()) {
+            setSwitcherIcon(true);
+            appendVolumeControls();
+            refreshReadbales();
+        }
+    });
+</script>
+  </head>
+<body>
+  <div class="mainBg" style="background-image:url('imgcache/e-img-1518-5-1680-850-0-ffffff.jpg?v=1609596948');"><div class="mainBgGradient">&nbsp;</div></div>
+<!-- /MAIN-BG-->
+<div class="content">
+<header class="header hidden-print">
+<div class="container">
+<div class="row">
+<div class="col-sm-0 visible-xs mainLogo"><a href="/" title="Pribeta"><img src="/design/images/erb.png" class="img-responsive" alt="Pribeta" /> <p>Pribeta <small>Oficiálne stránky obce</small></p></a></div>
+<div class="col-sm-9 header_middle">
+<div class="input-group" id="searchInput">
+<form action="/" style="display:inherit;" id="searchbox_008285927291506622991:rcxstx32fx4">
+  <input class="input_hidden" type="hidden" name="cx" value="008285927291506622991:rcxstx32fx4">
+  <input class="input_hidden" type="hidden" name="page" value="google" />
+  <input class="input_hidden" type="hidden" name="cof" value="FORID:11" />
+  <input class="input_hidden" type="hidden" name="id" value="36" />
+    <input type="text" class="form-control searchInputWidth" name="q" placeholder="Vyhľadávanie">
+  <span class="input-group-btn">
+    <button class="btn btn-default" name="sa" type="submit"><i class="fa fa-search"></i></button>
+  </span>
+</form>
+</div>
+<nav class="navigation hidden-xs">
+<div class="navbar-header navbar-default" role="navigation">
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+</div>
+<div class="collapse navbar-collapse navbar-ex1-collapse">
+<ul>
+        <li class=""><a href="nasa-obec"   class="nav_header01 ">Naša obec  </a>
+                </li>
+        <li class=""><a href="samosprava"   class="nav_header02 ">Samospráva  </a>
+                </li>
+        <li class=""><a href="aktuality"   class="nav_header03 hj">Aktuality  </a>
+                </li>
+        <li class=""><a href="kontakty"   class="nav_header04 ">Kontakt  </a>
+                </li>
+        </ul>
+</div>
+</nav>
+</div>
+<div class="col-sm-3 text-right header_right">
+<a href="#" id="toggleSearch" class="search_button"><i class="fa fa-search"></i></a>
+<ul class="header_font_size">
+<li><a href="#" title="Zmenšiť" class="jfontsize-d2">A</a></li>
+<li><a href="#" title="Zväčšiť" class="jfontsize-p2">A</a></li>
+</ul>
+<span class="hidden-xs"><a href="#" title="Zmenšiť" class="jfontsize-d2">Zmenšiť</a> / <a href="#" title="Zväčšiť" class="jfontsize-p2">Zväčšiť</a></span>
+<ul class="header_lang"><li class="text-uppercase"><a href="language.php?lang=sk&href=aktuality">sk</a></li>&nbsp;<li class="text-uppercase"><a href="language.php?lang=hu&href=aktualitasok">hu</a></li>&nbsp;<li class="text-uppercase"><a href="contact">EN</a></li></ul></div>
+</div>
+</div>
+</header><!-- /HEADER-->
+<div class="container top_box top_box_in hidden-xs hidden-print">
+<div class="row">
+<div class="col-sm-6 top_box_title">
+<a href="/" title="Pribeta"><img src="/design/images/erb.png" class="img-responsive" alt="Pribeta" /> <p>Pribeta <small>Oficiálne stránky obce</small></p></a>
+</div>
+<div class="col-sm-6 text-right slider-right">
+</div>
+</div>
+</div><!-- /TOP-BOX-->
+<div class="main_content">
+<div class="container">
+<div class="row row-eq-height">
+<aside class="col-sm-3 main_content_left hidden-print">
+  <nav class="navVertical">
+      <div class="navbar-header navbar-header-lave-menu">
+        <button type="button" class="navbar-toggle navbar-togle-lave-menu btn btn-refresh btn-block collapsed" data-toggle="collapse" data-target="#lave-menu" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="text-uppercase"><i class="fa fa-bars fa-lg"></i> Hlavné menu</span>
+        </button>
+        <!--span class="navbar-brand lave-menu-brand">Hlavné menu</span-->
+      </div>
+      <div class="collapse navbar-collapse" id="lave-menu">
+        <ul class="navigation-left-box">
+                        <li><span class="nlb_title">Samospráva</span></li>
+                </li>
+                        <li class=""><a href="nasa-obec"   class="">Naša obec  </a>
+                </li>
+                        <li class=""><a href="starosta-obce"   class="">Starosta obce  </a>
+                </li>
+                        <li class="dropdown"><a href="#"  data-toggle="dropdown" class="nav_imp rozklik ">Obecné zastupiteľstvo  <span class="caret"></span></a>
+                    <ul class="dropdown-menu2">
+                <li class=""><a href="poslanci-oz" ><i class="fa fa-caret-right"></i> Poslanci OZ </a></li>
+                <li class=""><a href="komisie-pri-oz" ><i class="fa fa-caret-right"></i> Komisie pri OZ </a></li>
+                <li class=""><a href="zapisnice-oz" ><i class="fa fa-caret-right"></i> Zápisnice OZ </a></li>
+                <li class=""><a href="uznesenia-oz" ><i class="fa fa-caret-right"></i> Uznesenia OZ </a></li>
+                    </ul>
+                    </li>
+                        <li class=""><a href="hlavny-kontrolor"   class="">Hlavný kontrolór  </a>
+                </li>
+                        <li class="dropdown"><a href="skolstvo"  data-toggle="dropdown" class="nav_imp rozklik ">Školstvo  <span class="caret"></span></a>
+                    <ul class="dropdown-menu2">
+                <li class=""><a href="zakladna-skola" ><i class="fa fa-caret-right"></i> Základná škola </a></li>
+                <li class=""><a href="materska-skola" ><i class="fa fa-caret-right"></i> Materská škola </a></li>
+                <li class=""><a href="materska-skola-s-vjm-" ><i class="fa fa-caret-right"></i> Materská škola s VJM  </a></li>
+                <li class=""><a href="zakladna-skola-s-vjm" ><i class="fa fa-caret-right"></i> Základná škola s VJM </a></li>
+                    </ul>
+                    </li>
+                        <li class="dropdown"><a href="#"  data-toggle="dropdown" class="nav_imp rozklik ">Dokumenty  <span class="caret"></span></a>
+                    <ul class="dropdown-menu2">
+                <li class=""><a href="vseobecne-zavazne-nariadenia" ><i class="fa fa-caret-right"></i> Všeobecné záväzné nariadenia </a></li>
+                <li class=""><a href="tlaciva" ><i class="fa fa-caret-right"></i> Tlačivá na stiahnutie </a></li>
+                <li class=""><a href="ostatne-dokumenty" ><i class="fa fa-caret-right"></i> Ostatné dokumenty </a></li>
+                    </ul>
+                    </li>
+                        <li class=""><a href="miestny-rozhlas"   class="">Miestny rozhlas  </a>
+                </li>
+                        <li class=""><a href="symboly-obce"   class="">Symboly obce  </a>
+                </li>
+                        <li class=""><a href="volby"   class="">Voľby  </a>
+                </li>
+                        <li class=""><a href="kontakty"   class="">Kontakty  </a>
+                </li>
+                        <li><span class="nlb_title">Život v obci</span></li>
+                </li>
+                        <li class=""><a href="uradna-tabula"   class="">Úradná tabuľa  </a>
+                </li>
+                        <li class=""><a href="uradna-tabula-do-8-2021"   class="">Úradná tabuľa do 8/2021  </a>
+                </li>
+                        <li class=""><a href="aktuality"   class="hj">Aktuality  </a>
+                </li>
+                        <li class=""><a href="druzobne-obce"   class="">Družobné obce  </a>
+                </li>
+                        <li class=""><a href="historia"   class="">História obce  </a>
+                </li>
+                        <li class="dropdown"><a href="kultura"  data-toggle="dropdown" class="nav_imp rozklik ">Kultúra  <span class="caret"></span></a>
+                    <ul class="dropdown-menu2">
+                <li class=""><a href="csemadok" ><i class="fa fa-caret-right"></i> Kultúrny spolok Csemadok </a></li>
+                <li class=""><a href="folklorna-skupina-napraforgo" ><i class="fa fa-caret-right"></i> Folklórna skupina Napraforgó </a></li>
+                <li class=""><a href="mazoretkovy-atanecny-klub-margaret" ><i class="fa fa-caret-right"></i> Mažoretkový a tanečný klub Margaret </a></li>
+                <li class=""><a href="narodopisna-zbierka" ><i class="fa fa-caret-right"></i> Národopisná zbierka  </a></li>
+                    </ul>
+                    </li>
+                        <li class=""><a href="fotogaleria"   class="">Fotogaléria  </a>
+                </li>
+                        <li class=""><a href="videogaleria"   class="">Videogaléria  </a>
+                </li>
+                        <li class=""><a href="krasy-nasej-obce"   class="">Krásy našej obce  </a>
+                </li>
+                        <li class="dropdown"><a href="cirkev"  data-toggle="dropdown" class="nav_imp rozklik ">Cirkev  <span class="caret"></span></a>
+                    <ul class="dropdown-menu2">
+                <li class=""><a href="evanjelicka-cirkev-augsburskeho-vyznania" ><i class="fa fa-caret-right"></i> Evanjelická cirkev augsburského vyznania </a></li>
+                <li class=""><a href="reformovana-krestanska-cirkev" ><i class="fa fa-caret-right"></i> Reformovaná kresťanská cirkev </a></li>
+                <li class=""><a href="rimskokatolicka-cirkev" ><i class="fa fa-caret-right"></i> Rímskokatolícka cirkev </a></li>
+                    </ul>
+                    </li>
+                        <li class="dropdown"><a href="sport"  data-toggle="dropdown" class="nav_imp rozklik ">Šport  <span class="caret"></span></a>
+                    <ul class="dropdown-menu2">
+                <li class=""><a href="futbal" ><i class="fa fa-caret-right"></i> Futbal </a></li>
+                <li class=""><a href="lukostrelba" ><i class="fa fa-caret-right"></i> Lukostrelba </a></li>
+                <li class=""><a href="stolny-tenis" ><i class="fa fa-caret-right"></i> Stolný tenis </a></li>
+                <li class=""><a href="sachy" ><i class="fa fa-caret-right"></i> Šachy </a></li>
+                <li class=""><a href="volejbal" ><i class="fa fa-caret-right"></i> Volejbal </a></li>
+                    </ul>
+                    </li>
+                        <li class=""><a href="komunitne-centrum"   class="">Komunitné centrum  </a>
+                </li>
+                        <li class=""><a href="firmy-v-obci"   class="">Firmy v obci  </a>
+                </li>
+                        <li class=""><a href="pribetsky-spravodaj"   class="">Pribetský spravodaj  </a>
+                </li>
+                        <li class="dropdown"><a href="organizacie"  data-toggle="dropdown" class="nav_imp rozklik ">Organizácie  <span class="caret"></span></a>
+                    <ul class="dropdown-menu2">
+                <li class=""><a href="dobrovolny-hasicsky-zbor" ><i class="fa fa-caret-right"></i> Dobrovoľný hasičský zbor </a></li>
+                <li class=""><a href="slovensky-erveny-kriz" ><i class="fa fa-caret-right"></i> Slovenský Ćervený kríž </a></li>
+                <li class=""><a href="jednota-dochodcov" ><i class="fa fa-caret-right"></i> Jednota dôchodcov </a></li>
+                    </ul>
+                    </li>
+                        <li><span class="nlb_title">Povinné zverejňovanie</span></li>
+                </li>
+                        <li class=""><a href="zmluvy"   class="">Zmluvy  </a>
+                </li>
+                        <li class=""><a href="faktury"   class="">Faktúry  </a>
+                </li>
+                        <li class=""><a href="objednavky"   class="">Objednávky  </a>
+                </li>
+                        <li class=""><a href="verejne-obstaravanie"   class="">Verejné obstarávanie  </a>
+                </li>
+                        <li class=""><a href="archiv"   class="">Archív  </a>
+                </li>
+                        <li class=""><a href="ochrana-osobnych-udajov"   class="">Ochrana osobných údajov  </a>
+                </li>
+                        <li class=""><a href="subory-cookies"   class="">Pravidlá cookies  </a>
+                </li>
+                </ul>
+        <script type="text/javascript">
+        if($(".hj").parent().hasClass("dropdown-menu2")) {
+            $(".hj").parents(".dropdown-menu2").addClass("visible");
+            $(".hj").parents(".dropdown-menu2").attr("style", "display:block");
+        }
+        </script>
+              </div>
+  </nav>
+<!--nav class="navVertical">
+</nav-->
+</aside><!-- /MAIN-CONTENT-LEFT-->
+<div class="col-sm-6 main_content_center">
+<section class="main_content_center_in">
+<ul class="breadcrumb"><li><a href="/"><i class="fa fa-home"></i></a></li>	<li><a href="aktuality">Aktuality</a></li>
+	<li><a href="">Určenie volebných okrskov a elektronická adresa k voľbám do OSO a OSK</a></li>
+	</ul><div class="title_box box_margin"><h1 data-texttospeech="Určenie volebných okrskov a elektronická adresa k voľbám do OSO a OSK">Určenie volebných okrskov a elektronická adresa k voľbám do OSO a OSK</h1></div>
+<p><i class="fa fa-calendar"></i>&nbsp;10.08.2022</p><div class="e2_htmlcontent"><p align="center">
+</p>
+<p align="center">
+	<strong><em>Vytvorenie volebn&yacute;ch okrskov</em></strong></p>
+<p>
+</p>
+<p>
+	Podľa &sect; 8 ods. 1 a &sect;195a ods. 4 p&iacute;sm. a) z&aacute;kona č. 180/2014 Z. z. o podmienkach v&yacute;konu volebn&eacute;ho pr&aacute;va a o zmene a doplnen&iacute; niektor&yacute;ch z&aacute;konov v znen&iacute; neskor&scaron;&iacute;ch predpisov vytv&aacute;ram volebn&eacute; okrsky a&nbsp;určujem volebn&eacute; miestnosti pre obec Pribeta pre voľby do org&aacute;nov samospr&aacute;vy obc&iacute; a voľby do org&aacute;nov samospr&aacute;vnych krajov, konan&yacute;ch dňa 29. okt&oacute;bra 2022 nasledovne:</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp; <strong><u>okrsok č. 1</u></strong></p>
+<p>
+</p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp; <strong>S&iacute;dlo volebnej miestnosti: </strong></p>
+<p>
+	<strong>&nbsp;&nbsp;&nbsp;&nbsp; Kult&uacute;rny dom, Hlavn&aacute; ulica č. 127, Pribeta </strong></p>
+<p>
+	Pre voličov opr&aacute;vnen&yacute;ch voliť b&yacute;vaj&uacute;cich v&nbsp;obci Pribeta na nasledovn&yacute;ch uliciach:</p>
+<p>
+	N&aacute;dražn&aacute; ulica, Novoz&aacute;mock&aacute; ulica, Nov&yacute; rad, Revolučn&aacute; ulica, Dlh&aacute; ulica, R&uacute;baňsk&aacute; ulica, Mierov&aacute; ulica, Hlavn&aacute; ulica, Kr&aacute;tka ulica, Pri stanici, Pribeta.</p>
+<p>
+</p>
+<p>
+	<strong>&nbsp;&nbsp;&nbsp;&nbsp; <u>okrsok č. 2</u></strong></p>
+<p>
+</p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp; <strong>S&iacute;dlo volebnej miestnosti:</strong></p>
+<p>
+	<strong>&nbsp;&nbsp;&nbsp;&nbsp; &Scaron;portov&aacute; hala, &Scaron;kolsk&aacute; ulica č. 15, Pribeta </strong></p>
+<p>
+	Pre voličov opr&aacute;vnen&yacute;ch voliť b&yacute;vaj&uacute;cich v&nbsp;obci Pribeta na nasledovn&yacute;ch uliciach:</p>
+<p>
+	Vojnick&aacute; ulica, Družstevn&aacute; ulica, Modransk&aacute; ulica, Ružov&aacute; ulica, Robotn&iacute;cka ulica, Kvetn&aacute; ulica, &Scaron;kolsk&aacute; ulica, Obchodn&aacute; ulica, Kom&aacute;rňansk&aacute; ulica, Jarkov&aacute; ulica, L&uacute;čna ulica, Jarmočn&aacute; ulica, &Scaron;portov&aacute; ulica, Cintor&iacute;nska ulica, Ml&aacute;dežn&iacute;cka ulica, Podz&aacute;hradn&aacute; ulica, N&aacute;mestie J&aacute;na Kalv&iacute;na.</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+	<strong>Elektronick&aacute; adresa na doručenie ozn&aacute;menia o delegovan&iacute; členov a n&aacute;hradn&iacute;kov do miestnej volebnej komisie a okrskovej komisie k voľb&aacute;m do org&aacute;nov samospr&aacute;vy obc&iacute; v roku 2022 a k voľb&aacute;m do org&aacute;nov samospr&aacute;vnych krajov v roku 2022, konan&yacute;ch dňa 29.10.2022 </strong></p>
+<p>
+</p>
+<p>
+	Ozn&aacute;menia o delegovan&iacute; členov a n&aacute;hradn&iacute;kov do miestnej volebnej komisie a okrskovej komisie k voľb&aacute;m do org&aacute;nov samospr&aacute;vy obc&iacute; v roku 2022 a k voľb&aacute;m do org&aacute;nov samospr&aacute;vnych krajov v roku 2022 v obci Pribeta je možn&eacute; posielať na elektronick&uacute; adresu: <a href="mailto:obec@pribeta.sk">obec@pribeta.sk</a></p>
+<p>
+</p>
+<p>
+	Ozn&aacute;menie o delegovan&iacute; člena a n&aacute;hradn&iacute;ka do miestnej volebnej komisie možno doručiť v listinnej forme alebo elektronicky ( e-mailom) v lehote uvedenej v rozhodnut&iacute; o vyhl&aacute;sen&iacute; volieb (do 30.08.2022). Na ozn&aacute;menia doručen&eacute; po uplynut&iacute; tejto lehoty sa neprihliada.</p>
+<p>
+</p>
+<p>
+	Ozn&aacute;menie o delegovan&iacute; člena a n&aacute;hradn&iacute;ka do okrskovej volebnej komisie možno doručiť v listinnej forme alebo elektronicky ( e-mailom) v lehote uvedenej v rozhodnut&iacute; o vyhl&aacute;sen&iacute; volieb (do 22.09.2022). Na ozn&aacute;menia doručen&eacute; po uplynut&iacute; tejto lehoty sa neprihliada.</p>
+<br />
+</div><hr /><h2>Zoznam aktualít:</h2><div class="row box_imp02_wrapper no_extern_icon">
+                    <div class="col-xs-6 box_imp02 box_margin matchHeight">
+                    <a href="zoznam-zaregistrovanych-kandidatov-pre-volby-do-zastupitelstva-nsk-a22-171"  title="Zoznam zaregistrovaných kandidátov pre voľby do zastupiteľstva NSK" class="novinka_img">
+                                            <img src="/design/images/default.jpg" class="img-responsive hvr-grow" alt="Zoznam zaregistrovaných kandidátov pre voľby do zastupiteľstva NSK" />
+                                        </a>
+                    <ul class="box_imp02_nav">
+                    <li><a href="zoznam-zaregistrovanych-kandidatov-pre-volby-do-zastupitelstva-nsk-a22-171"  title="Zoznam zaregistrovaných kandidátov pre voľby do zastupiteľstva NSK">26.09.2022</a></li>
+                    </ul>
+                    <a href="zoznam-zaregistrovanych-kandidatov-pre-volby-do-zastupitelstva-nsk-a22-171"  title="Zoznam zaregistrovaných kandidátov pre voľby do zastupiteľstva NSK" class="box_imp02_content">
+                    <h3>Zoznam zaregistrovaných kandidátov pre voľby do zastupiteľstva NSK </h3>
+                    <p></p>
+                    </a>
+                    </div>
+                    <div class="col-xs-6 box_imp02 box_margin matchHeight">
+                    <a href="zoznam-zaregistrovanych-kandidatov-pre-volby-predsedu-samospravneho-kraja-a22-170"  title="Zoznam zaregistrovaných kandidátov pre voľby predsedu samosprávneho kraja" class="novinka_img">
+                                            <img src="/design/images/default.jpg" class="img-responsive hvr-grow" alt="Zoznam zaregistrovaných kandidátov pre voľby predsedu samosprávneho kraja" />
+                                        </a>
+                    <ul class="box_imp02_nav">
+                    <li><a href="zoznam-zaregistrovanych-kandidatov-pre-volby-predsedu-samospravneho-kraja-a22-170"  title="Zoznam zaregistrovaných kandidátov pre voľby predsedu samosprávneho kraja">26.09.2022</a></li>
+                    </ul>
+                    <a href="zoznam-zaregistrovanych-kandidatov-pre-volby-predsedu-samospravneho-kraja-a22-170"  title="Zoznam zaregistrovaných kandidátov pre voľby predsedu samosprávneho kraja" class="box_imp02_content">
+                    <h3>Zoznam zaregistrovaných kandidátov pre voľby predsedu samosprávneho kraja </h3>
+                    <p></p>
+                    </a>
+                    </div>
+                    <div class="col-xs-6 box_imp02 box_margin matchHeight">
+                    <a href="oberackova-veselica-2022-a22-169"  title="Oberačková veselica 2022" class="novinka_img">
+                                            <img src="imgcache/e-news-169-5-720-420-0-ffffff.jpg?v=1663946942" class="img-responsive hvr-grow" alt="Oberačková veselica 2022" />
+                                        </a>
+                    <ul class="box_imp02_nav">
+                    <li><a href="oberackova-veselica-2022-a22-169"  title="Oberačková veselica 2022">23.09.2022</a></li>
+                    </ul>
+                    <a href="oberackova-veselica-2022-a22-169"  title="Oberačková veselica 2022" class="box_imp02_content">
+                    <h3>Oberačková veselica 2022 </h3>
+                    <p></p>
+                    </a>
+                    </div>
+                    <div class="col-xs-6 box_imp02 box_margin matchHeight">
+                    <a href="zoznam-zaregistrovanych-kandidatov-pre-volby-starostu-obce-pribeta-a22-166"  title="Zoznam zaregistrovaných kandidátov pre voľby starostu obce Pribeta" class="novinka_img">
+                                            <img src="/design/images/default.jpg" class="img-responsive hvr-grow" alt="Zoznam zaregistrovaných kandidátov pre voľby starostu obce Pribeta" />
+                                        </a>
+                    <ul class="box_imp02_nav">
+                    <li><a href="zoznam-zaregistrovanych-kandidatov-pre-volby-starostu-obce-pribeta-a22-166"  title="Zoznam zaregistrovaných kandidátov pre voľby starostu obce Pribeta">14.09.2022</a></li>
+                    </ul>
+                    <a href="zoznam-zaregistrovanych-kandidatov-pre-volby-starostu-obce-pribeta-a22-166"  title="Zoznam zaregistrovaných kandidátov pre voľby starostu obce Pribeta" class="box_imp02_content">
+                    <h3>Zoznam zaregistrovaných kandidátov pre voľby starostu obce Pribeta </h3>
+                    <p></p>
+                    </a>
+                    </div>
+                    <div class="col-xs-6 box_imp02 box_margin matchHeight">
+                    <a href="zoznam-zaregistrovanych-kandidatov-pre-volby-do-obecneho-zastupitelstva-v-obci-pribeta-a22-167"  title="Zoznam zaregistrovaných kandidátov pre voľby do Obecného zastupiteľstva v obci Pribeta" class="novinka_img">
+                                            <img src="/design/images/default.jpg" class="img-responsive hvr-grow" alt="Zoznam zaregistrovaných kandidátov pre voľby do Obecného zastupiteľstva v obci Pribeta" />
+                                        </a>
+                    <ul class="box_imp02_nav">
+                    <li><a href="zoznam-zaregistrovanych-kandidatov-pre-volby-do-obecneho-zastupitelstva-v-obci-pribeta-a22-167"  title="Zoznam zaregistrovaných kandidátov pre voľby do Obecného zastupiteľstva v obci Pribeta">14.09.2022</a></li>
+                    </ul>
+                    <a href="zoznam-zaregistrovanych-kandidatov-pre-volby-do-obecneho-zastupitelstva-v-obci-pribeta-a22-167"  title="Zoznam zaregistrovaných kandidátov pre voľby do Obecného zastupiteľstva v obci Pribeta" class="box_imp02_content">
+                    <h3>Zoznam zaregistrovaných kandidátov pre voľby do Obecného zastupiteľstva v obci Pribeta </h3>
+                    <p></p>
+                    </a>
+                    </div>
+                    <div class="col-xs-6 box_imp02 box_margin matchHeight">
+                    <a href="pozvanka-na-zasadnutie-obecneho-zastupitelstva-a22-140"  title="Pozvánka na zasadnutie obecného zastupiteľstva" class="novinka_img">
+                                            <img src="imgcache/e-news-140-5-720-420-0-ffffff.jpg?v=1640030046" class="img-responsive hvr-grow" alt="Pozvánka na zasadnutie obecného zastupiteľstva" />
+                                        </a>
+                    <ul class="box_imp02_nav">
+                    <li><a href="pozvanka-na-zasadnutie-obecneho-zastupitelstva-a22-140"  title="Pozvánka na zasadnutie obecného zastupiteľstva">07.04.2022</a></li>
+                    </ul>
+                    <a href="pozvanka-na-zasadnutie-obecneho-zastupitelstva-a22-140"  title="Pozvánka na zasadnutie obecného zastupiteľstva" class="box_imp02_content">
+                    <h3>Pozvánka na zasadnutie obecného zastupiteľstva </h3>
+                    <p></p>
+                    </a>
+                    </div>
+                    </div><div class="pager"><span class="p_page p_page_active"> <a rel="nofollow" href="sub.php?action=pager&box=22/5/35&page=1&href=/urcenie-volebnych-okrskov-a-elektronicka-adresa-k-volbam-do-oso-a-osk-a22-157">1</a> </span><span class="p_page "> <a rel="nofollow" href="sub.php?action=pager&box=22/5/35&page=2&href=/urcenie-volebnych-okrskov-a-elektronicka-adresa-k-volbam-do-oso-a-osk-a22-157">2</a> </span><span class="p_page "> <a rel="nofollow" href="sub.php?action=pager&box=22/5/35&page=3&href=/urcenie-volebnych-okrskov-a-elektronicka-adresa-k-volbam-do-oso-a-osk-a22-157">3</a> </span><span class="p_page "> <a rel="nofollow" href="sub.php?action=pager&box=22/5/35&page=4&href=/urcenie-volebnych-okrskov-a-elektronicka-adresa-k-volbam-do-oso-a-osk-a22-157">4</a> </span><span class="p_page "> <a rel="nofollow" href="sub.php?action=pager&box=22/5/35&page=5&href=/urcenie-volebnych-okrskov-a-elektronicka-adresa-k-volbam-do-oso-a-osk-a22-157">5</a> </span><span class="p_page "> <a rel="nofollow" href="sub.php?action=pager&box=22/5/35&page=6&href=/urcenie-volebnych-okrskov-a-elektronicka-adresa-k-volbam-do-oso-a-osk-a22-157">6</a> </span><span class="p_page "> <a rel="nofollow" href="sub.php?action=pager&box=22/5/35&page=7&href=/urcenie-volebnych-okrskov-a-elektronicka-adresa-k-volbam-do-oso-a-osk-a22-157">7</a> </span><span class="p_prev"><a rel="nofollow" href="sub.php?action=pager&box=22/5/35&page=2&href=/urcenie-volebnych-okrskov-a-elektronicka-adresa-k-volbam-do-oso-a-osk-a22-157" title="nasledujúca strana">&gt;</a></span></div></section>
+</div><!-- /MAIN-CONTENT-CENTER-->
+<aside class="col-sm-3 main_content_right hidden-print">
+<div class="main_content_right_in">
+<div class="text-right nlb_title">Úradné hodiny</div><div class="mclBox"><div class="e2_htmlcontent" data-textToSpeech="
+				pondelok
+				7:30 - 12:00   13:00 - 16:00
+				utorok
+				7:30 - 12:00   13:00 - 16:00
+				streda
+				8:00 - 12:00   13:00 - 17:00
+				Štvrtok
+				------------------------------
+				piatok
+				7:30 - 13:00
+	tel. číslo: +421 35 769 31 01
+	e-mail: obec@pribeta.sk
+	iban: sk27 7500 0000 0040 2966 6680
+"><p style="text-align: center;">
+</p>
+<table>
+	<tbody>
+		<tr>
+			<td>
+				Pondelok</td>
+			<td>
+				7:30 - 12:00&nbsp;&nbsp; 13:00 - 16:00</td>
+		</tr>
+		<tr>
+			<td>
+				Utorok</td>
+			<td>
+				7:30 - 12:00 &nbsp; 13:00 - 16:00</td>
+		</tr>
+		<tr>
+			<td>
+				Streda</td>
+			<td>
+				8:00 - 12:00 &nbsp; 13:00 - 17:00</td>
+		</tr>
+		<tr>
+			<td>
+				&Scaron;tvrtok</td>
+			<td>
+				------------------------------</td>
+		</tr>
+		<tr>
+			<td>
+				Piatok</td>
+			<td>
+				7:30 - 13:00</td>
+		</tr>
+	</tbody>
+</table>
+<p style="text-align: center;">
+	Tel. č&iacute;slo:&nbsp;<strong><a href="tel:+421 35 769 31 01">+421 35 769 31 01</a></strong><br />
+	E-mail:&nbsp;<strong><a href="mailto:obec@pribeta.sk">obec@pribeta.sk</a></strong></p>
+<p style="text-align: center;">
+	<span style="font-weight: bold; color: rgb(95, 99, 104); font-family: arial, sans-serif; font-size: 14px;">IBAN</span><span style="color: rgb(77, 81, 86); font-family: arial, sans-serif; font-size: 14px;">:&nbsp;</span><span style="background-color: rgb(235, 235, 235); color: rgb(77, 81, 86); font-family: arial, sans-serif; font-size: 14px;">SK27 7500 0000 0040 2966 6680</span></p>
+</div></div><div class="text-right nlb_title title_white"><a href="aktuality">Aktuality</a></div><div class="row mcr_news_box bottom15">        <div class="col-xs-12">
+            <a href="zoznam-zaregistrovanych-kandidatov-pre-volby-do-zastupitelstva-nsk-a22-171"  title="Zoznam zaregistrovaných kandidátov pre voľby do zastupiteľstva NSK">
+            <strong>Zoznam zaregistrovaných kandidátov pre voľby do zastupiteľstva NSK </strong>
+            <br />
+            <small class="text-muted"><i class="fa fa-calendar"></i> 26.09.2022</small>
+            </a>
+        </div>
+            <div class="col-xs-12">
+            <a href="zoznam-zaregistrovanych-kandidatov-pre-volby-predsedu-samospravneho-kraja-a22-170"  title="Zoznam zaregistrovaných kandidátov pre voľby predsedu samosprávneho kraja">
+            <strong>Zoznam zaregistrovaných kandidátov pre voľby predsedu samosprávneho kraja </strong>
+            <br />
+            <small class="text-muted"><i class="fa fa-calendar"></i> 26.09.2022</small>
+            </a>
+        </div>
+            <div class="col-xs-12">
+            <a href="oberackova-veselica-2022-a22-169"  title="Oberačková veselica 2022">
+            <strong>Oberačková veselica 2022 </strong>
+            <br />
+            <small class="text-muted"><i class="fa fa-calendar"></i> 23.09.2022</small>
+            </a>
+        </div>
+    </div><div class="text-right nlb_title title_white"><a href="krasy-nasej-obce">Krásy našej obce</a></div>    <div class="galleryBox"><a href="hniezdne-nory-vcelarika-zlateho-merops-apiaster-v-okoli-pribety-a33-89">
+    <img src="imgcache/e-news-89-5-720-475-0-ffffff.jpg?v=1600611381" class="img-responsive" alt="" />
+    <div class="galleryBox_in hidden-xs hidden-sm"><h2>Hniezdne nory včelárika zlatého (Merops apiaster) v okolí Pribety</h2></div>
+    <div class="galleryBox_in visible-xs visible-sm"><h2>Hniezdne nory...</h2></div>
+    </a>
+    </div>
+    <div class="text-right nlb_title title_white"><a href="fotogaleria">Fotogaléria</a></div>
+            <div class="galleryBox "><a href="otvorenie-pamatneho-roka-lajosa-pandyho---april-2022-g28-96">
+            <img src="imgcache/e-img-1691-5-720-475-0-ffffff.jpg?v=1663770017" class="img-responsive" alt="Otvorenie Pamätného roka Lajosa Pándyho - apríl 2022" />
+            <div class="galleryBox_in"><h2>Otvorenie Pamätného roka Lajosa Pándyho - apríl 2022</h2></div>
+            </a></div>
+    <div class="mclBox"> <div class="boxWhiteBg"><a href="kalendar-odvozu-odpadu"><img src="/design/images/img-calendar.jpg" class="img-responsive center-block" alt="Kalendár odvozu odpadu" /></a></div></div><div class="boxWhiteBg">
+<div id="kalendar_22_18__21"></div><script type="text/javascript">$("#kalendar_22_18__21").load("sub.php?action=kalendar_content&params=a%3A5%3A%7Bs%3A2%3A%22id%22%3Bs%3A1%3A%221%22%3Bs%3A6%3A%22is_top%22%3Bs%3A1%3A%221%22%3Bs%3A3%3A%22tag%22%3Bs%3A0%3A%22%22%3Bs%3A5%3A%22class%22%3Bs%3A20%3A%22kalendar+dnes+meniny%22%3Bs%3A6%3A%22render%22%3Bs%3A2%3A%2234%22%3B%7D&date=2022.10&boxid=22_18__21");</script></div></div>
+</aside><!-- /MAIN-CONTENT-RIGHT-->
+</div>
+</div>
+</div><!-- ........................../MAIN-CONTENT.......................... -->
+<footer class="footer hidden-print">
+<div class="container">
+<div class="row">
+<div class="col-sm-8 footer_wrapper">
+<div class="row">
+<div class="col-sm-6 col-sm-push-6">
+<script>
+                function validateEmail(email) {
+                    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    return re.test(String(email).toLowerCase());
+                }
+                function checkform_2() {
+                    var $form = $("form.form_2");
+                    if(
+                        $form.find("[name=meno]").val()=="" || $form.find("[name=email]").val()==""                    ) {
+                        alert('Prosím vyplňte všetky povinné údaje.');
+                        return false;
+                        } else if($form.find("[name=e2_consent_approval]").prop('checked') == false) {
+                            alert('Oboznámte sa so spracúvaním osobných údajov!');
+                            return false;
+                    } else if(validateEmail($form.find("[name=email]").val()) == false) {
+                        alert('Zadajte správny formát emailovej adresy! (meno@domena.sk)');
+                        return false;
+                    } else {
+                        return true;
+                    };
+                };
+            </script>
+<form method="POST" action="sub.php" class="form-horizontal form-signin form_2" onsubmit="return checkform_2();">
+    <input type="hidden" name="action" value="form">
+    <input type="hidden" name="formid" value="2">
+    <input type="hidden" name="formclass" value="formular">
+    <input type="hidden" name="e2_ident" value="">
+    <input style="display:none;" type="text" name="nick" value="">
+    <div class="footer_title box_margin2"><h2>Napíšte nám</h2></div>
+    <div class="e2_htmlcontent" data-textToSpeech="
+		  meno a priezvisko *  
+		  e-mail * 
+text správy  "><div class="row">
+	<div class="col-md-6">
+		<span class="input input--fumi"><input class="input__field input__field--fumi" id="meno" name="meno" required="" type="text" /> <label class="input__label input__label--fumi" for="meno"> <span class="input__label-content input__label-content--fumi">Meno a priezvisko <span class="text-danger">*</span></span> </label> </span></div>
+	<div class="col-md-6">
+		<span class="input input--fumi"><input class="input__field input__field--fumi" id="email" name="email" required="" type="email" /> <label class="input__label input__label--fumi" for="email"> <span class="input__label-content input__label-content--fumi">E-mail <span class="text-danger">*</span></span></label> </span></div>
+</div>
+<span class="input input--fumi"><textarea class="input__field input__field--fumi" cols="18" id="text" name="text" rows="3"></textarea><label class="input__label input__label--fumi" for="text"><span class="input__label-content input__label-content--fumi">Text spr&aacute;vy</span> </label> </span></div>
+            <div class="checkbox">
+            <label for="ec_consent_approval">
+                <input type="checkbox" id="ec_consent_approval" name="e2_consent_approval" value="1" />&nbsp;*&nbsp;Oboznámil som sa so
+                                    <a target="_blank" href="ochrana-osobnych-udajov">spracúvaním osobných údajov</a>
+                            </label>
+        </div>
+    <div id='g-recaptcha_3419' class="g-recaptcha" data-sitekey="6LcIn8cUAAAAAL7ND16jqtF7zevmPeMraDZ-CUEV" data-callback="onSubmit" data-size="invisible"></div>
+<div class="row"><div class="col-md-6 col-sm-12 col-xs-12 pull-right">
+<div class="text-center"><button id="g-recaptcha-submit_3419" class="formular_button" type="submit" >ODOSLAŤ SPRÁVU</button></div>
+</div></div>
+<script>
+function onSubmit(token) {
+    $("[name=g-recaptcha-response]").val(token);
+    $("#g-recaptcha-submit_3419").parents('form').submit();
+}
+function validate(event) {
+    event.preventDefault();
+    if(checkform_2() == true) {
+        grecaptcha.execute();
+    }
+}
+function onload() {
+    var element = document.getElementById('g-recaptcha-submit_3419');
+    element.onclick = validate;
+}
+onload();
+</script>
+</form>
+</div>
+<div class="col-sm-6 col-sm-pull-6">
+<div class="footer_title uzitocne_linky box_margin2"><h2>Užitočné linky</h2></div>    <div class="footerContent">
+        <div class="row"><div class="col-xs-12">
+    <div class="margin2"><a href="kontakty" >
+    <div class="img-circle box_margin2 footerContentImg"><img src="/design/images/footer_1.png" class="img-responsive" alt="Kontakty" /></div>
+    <h2>Kontakty</h2>
+    <p>Telefónne kontakty, poštové adresy, mailové adresy na obecný úrad.</p>
+    </a></div>
+    </div></div>
+        <div class="row"><div class="col-xs-12">
+    <div class="margin2"><a href="dolezite-tel-cisla" >
+    <div class="img-circle box_margin2 footerContentImg"><img src="/design/images/footer_2.png" class="img-responsive" alt="Dôležité telefónne čísla" /></div>
+    <h2>Dôležité telefónne čísla</h2>
+    <p>Hasiči, polícia, záchranka...</p>
+    </a></div>
+    </div></div>
+        <div class="row"><div class="col-xs-12">
+    <div class="margin2"><a href="https://www.dcom.sk/obyvatel" target="_blank" title="Stránka sa otvorí v novom okne">
+    <div class="img-circle box_margin2 footerContentImg"><img src="/design/images/footer_3.png" class="img-responsive" alt="E-služby" /></div>
+    <h2>E-služby</h2>
+    <p>Elektronické služby pre občanov a podnikateľov</p>
+    </a></div>
+    </div></div>
+        </div>
+    </div>
+</div>
+<div class="row footerNav">
+<div class="col-sm-5 col-sm-push-7 text-right">
+<a href="#"><a title="Posledná aktualizácia"><div>Posledná aktualizácia: <strong>15.03.2022</strong></div></a></a>
+<a href="rss.rss" target="_blank" title="využite možnosť získavania aktuálnych informácií s využitím RSS"><i class="fa fa-lg fa-rss" aria-hidden="true"></i> získavania aktuálnych informácií s využitím RSS</a>
+</div>
+<div class="col-sm-7 col-sm-pull-5">
+<a href="mapa-stranok" title="Mapa stránok">Mapa stránok</a> | <a href="#" title="Vytlačiť stránku" onClick="window.print();">Vytlačiť stránku <i class="fa fa-print"></i></a><br />
+<a href="vyhlasenie-o-pristupnosti" title="Vyhlásenie o prístupnosti">Vyhlásenie o prístupnosti</a> | <a href="autorske-prava" title="Autorské práva">Autorské práva</a><br />
+<a href="ochrana-osobnych-udajov" title="Ochrana osobných údajov">Ochrana osobných údajov</a>
+</div>
+</div>
+<div class="row footerNav footerNav2">
+<div class="col-sm-5 col-sm-push-7 text-right">
+<a href="http://www.webex.digital/" target="_blank">technický prevádzkovateľ</a><br />
+<a href="http://www.webex.digital/" target="_blank">webdesign</a> | <a href="http://www.webex.digital/" target="_blank">webex.digital</a>
+</div>
+<div class="col-sm-7 col-sm-pull-5">
+<a href="http://www.webex.digital/" target="_blank" title="CMS systém (redakčný) systém ECHELON 2">CMS systém (redakčný) systém ECHELON 2</a>, <a href="http://www.webex.digital/" target="_blank" title="web portál">web portál</a>,<br />
+<a href="http://www.webex.digital/" target="_blank" title="webhosting">webhosting</a>, <a href="http://www.webex.digital/" target="_blank" title="webex.digital">webex.digital</a>, <a href="http://www.webex.digital/" target="_blank" title="domény">domény</a>, <a href="http://www.webex.digital/" target="_blank" title="registrácia domény">registrácia domény</a>,<br />
+<a href="http://www.webex.digital/" target="_blank" title="spoločnosť webex.digital">spoločnosť webex.digital</a>
+</div>
+</div>
+</div>
+<div class="col-sm-4 map_wrapper">
+<div id="canvas1"><div class="map_canvas1" id="map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d42799.10201822491!2d18.277228384148295!3d47.898771576397564!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476aff42cc024411%3A0x1b36d4f0f35d32b3!2s946%2055%20Pribeta!5e0!3m2!1ssk!2ssk!4v1576246471877!5m2!1ssk!2ssk" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe></div></div>
+</div>
+</div>
+</div>
+</footer><!-- /FOOTER-->
+</div><!-- /CONTENT-->
+<!--div id="fb-root"></div-->
+<script>
+/*
+  (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/sk_SK/sdk.js#xfbml=1&version=v2.4";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+*/
+</script>
+    <script>
+      $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+      });
+    </script>
+    <!-- Wow -->
+      <script src="/design/js/wow.min.js"></script>
+      <script>
+       new WOW().init();
+    </script>
+        <!-- Dropdown -->
+        <script>
+        $(function(){
+            $('.dropdown').on('show.bs.dropdown', function(e){
+            $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
+        });
+      $('.dropdown').on('hide.bs.dropdown', function(e){
+          e.preventDefault();
+          $(this).find('.dropdown-menu').first().stop(true, true).slideUp(400, function(){
+      $('.dropdown').removeClass('open');
+        $('.dropdown').find('.dropdown-toggle').attr('aria-expanded','false');
+          });
+        });
+      });
+        </script>
+        <!-- Navigation Vertical -->
+        <script>
+        $(document).ready(function(){
+            $(".rozklik").click(function(){
+              $(this).parent().find('.dropdown-menu2').slideToggle();
+         });
+        });
+        </script>
+        <script>
+        $(document).ready(function(){
+            $(".srozklik").click(function(){
+              $(this).parent().find('.dropdown-menu3').slideToggle(0);
+              $('.dropdown-menu3').addClass("dropdown-menu3-display");
+              event.stopPropagation();
+            });
+        });
+        </script>
+                <script>
+    $(document).ready(function () {
+        $('.map_canvas1').addClass('scrolloff');
+        $('#canvas1').on('click', function () {
+            $('.map_canvas1').removeClass('scrolloff');
+        });
+        $(".map_canvas1").mouseleave(function () {
+            $('.map_canvas1').addClass('scrolloff');
+        });
+    });
+    </script>
+        <!-- Formular -->
+        <script src="/design/js/classie.js"></script>
+        <script>
+      (function() {
+        if (!String.prototype.trim) {
+          (function() {
+            // Make sure we trim BOM and NBSP
+            var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+            String.prototype.trim = function() {
+              return this.replace(rtrim, '');
+            };
+          })();
+        }
+        [].slice.call( document.querySelectorAll( 'input.input__field' ) ).forEach( function( inputEl ) {
+          // in case the input is already filled..
+          if( inputEl.value.trim() !== '' ) {
+            classie.add( inputEl.parentNode, 'input--filled' );
+          }
+          // events:
+          inputEl.addEventListener( 'focus', onInputFocus );
+          inputEl.addEventListener( 'blur', onInputBlur );
+        } );
+        [].slice.call( document.querySelectorAll( 'textarea.input__field' ) ).forEach( function( inputEl ) {
+          // in case the input is already filled..
+          if( inputEl.value.trim() !== '' ) {
+            classie.add( inputEl.parentNode, 'input--filled' );
+          }
+          // events:
+          inputEl.addEventListener( 'focus', onInputFocus );
+          inputEl.addEventListener( 'blur', onInputBlur );
+        } );
+        function onInputFocus( ev ) {
+          classie.add( ev.target.parentNode, 'input--filled' );
+        }
+        function onInputBlur( ev ) {
+          if( ev.target.value.trim() === '' ) {
+            classie.remove( ev.target.parentNode, 'input--filled' );
+          }
+        }
+      })();
+</script>
+<script src="/design/js/matchHeight.min.js" type="text/javascript"></script>
+<script>
+$(function() {
+  $('.matchHeight').matchHeight();
+});
+</script>
+<!-- Cookie Consent by TermsFeed (https://www.TermsFeed.com) -->
+<script type="text/javascript" src="https://www.termsfeed.com/public/cookie-consent/4.0.0/cookie-consent.js" charset="UTF-8"></script>
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({"notice_banner_type":"simple","consent_type":"express","palette":"light","language":"sk","page_load_consent_levels":["strictly-necessary"],"notice_banner_reject_button_hide":false,"preferences_center_close_button_hide":false,"page_refresh_confirmation_buttons":false,"website_name":"pribeta.sk","open_preferences_center_selector":"#change-cookies","website_privacy_policy_url":"https://www.pribeta.sk/subory-cookies"});
+});
+</script>
+<!-- Google Analytics -->
+  <script type="text/plain" cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=XXXXXXXXXXXXXXXX"></script>
+  <script type="text/plain" cookie-consent="tracking">
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    /* admin21 */
+    gtag('config', 'UA-154564985-1', { 'anonymize_ip': true });
+  </script>
+<!-- end of Google Analytics-->
+<noscript>ePrivacy and GPDR Cookie Consent by <a href="https://www.TermsFeed.com/" rel="nofollow">TermsFeed Generator</a></noscript>
+<!-- End Cookie Consent by TermsFeed (https://www.TermsFeed.com) -->
+</body></html>

@@ -1,0 +1,25 @@
+# Okrsky of Likavka, transcribed by an AI agent in job okrsok-rules-798 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1: pre súpisné čísla: 0, 2, 10, 12 až 114, 132, 664 až 1044, 1090 až 1111, 1114.
+#   okrsok 2: Volebný okrsok č. 2: pre súpisné čísla: 9, 117 až 131, 133 až 660, 1058.
+obec = "510599"
+name = "Likavka"
+okrsky_date = 2022-08-04
+okrsky_fill = "nearest"
+okrsky_note = "The document splits by súpisné čísla (all addresses lack streets). Súpisné číslo 0 in okrsok 1 is taken as voters registered without a house number (no such address exists) and left out of the rules. Súpisné numbers the document does not list (e.g. 1, 3-8, 11, 115-116, 661-663, 1045-1057, 1059-1089, 1112-1113, above 1114) take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20220808194546/https://www.likavka.sk/e_download.php?file=data/uredni_deska/obsah668_5.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Den%C3%AD%20volebn%C3%BDch%20miestnost%C3%AD%20pre%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vy%20obc%C3%AD%20a%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vnych%20krajov.pdf"
+sha256 = "2b9797ba6d70ac87b7c0576ccd476964cf141e14565c042eed6e001a0ab46b29"
+title = "Volebné okrsky a volebné miestnosti v obci Likavka pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {part = "Likavka", numbers = "2, 10, 12-114, 132, 664-1044, 1090-1111, 1114"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Likavka", numbers = "9, 117-131, 133-660, 1058"},
+]

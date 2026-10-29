@@ -1,0 +1,40 @@
+# Okrsky of Vinodol, transcribed by an AI agent in job okrsok-rules-975 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Kostolná, Na sihoti, Na výhone, Pesecká, Pod hájom, Školská, Športová, Úzka a Vinodol – bez adresy
+#   okrsok 2: Ulice: Agátová, Donátová, Hlavná, Hlboká, K vodárni, Novohorská, Obecná, Telepy, Tichá
+obec = "500917"
+name = "Vinodol"
+okrsky_date = 2022-08-02
+okrsky_fill = "nearest"
+okrsky_note = "The document's 'Vinodol – bez adresy' (okrsok 1) means voters registered without an address, not the register's 101 houses without a street; those, and Farská ulica (2 addresses, not named in the document), are placed by fill_nearest."
+
+[[document]]
+url = "https://obec-vinodol.sk/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-obci-vinodol-pre-volby-do-organov-samospravy-obci-a-volieb-do-organov-samospravnych-krajov-ktore-sa-konaju-dna-29-10-2022/"
+sha256 = "6ef6025b7aec45918378a3fe7e08f9f990118a4abc1ce345db6fbac846c583f9"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Vinodol ... 29.10.2022"
+
+[okrsok.1]
+rules = [
+  {street = "Kostolná ulica", written = "Kostolná"},
+  {street = "Na sihoti"},
+  {street = "Na výhone"},
+  {street = "Pesecká ulica", written = "Pesecká"},
+  {street = "Pod hájom"},
+  {street = "Školská ulica", written = "Školská"},
+  {street = "Športová Ulica", written = "Športová"},
+  {street = "Úzka ulica", written = "Úzka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová ulica", written = "Agátová"},
+  {street = "Donátova ulica", written = "Donátová", note = "the register's Donátova ulica; the document writes a long á, the only such street"},
+  {street = "Hlavná ulica", written = "Hlavná"},
+  {street = "Hlboká ulica", written = "Hlboká"},
+  {street = "K vodárni"},
+  {street = "Novohorská ulica", written = "Novohorská"},
+  {street = "Obecná ulica", written = "Obecná"},
+  {street = "Telepy"},
+  {street = "Tichá ulica", written = "Tichá"},
+]

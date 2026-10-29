@@ -1,0 +1,83 @@
+# The okrsky of Vrbové of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/507750.toml, reused by `ems job reuse`.
+obec = "507750"
+name = "Vrbové"
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Scanned street list (printed 7.10.2026) read from page images. Okrsok 1 also lists addresses without a street with súpisné čísla 1317-1384; the other addresses without a street (706 in the register) are not covered by the document and take the okrsok of the nearest placed address (fill_nearest). No decision date stated (the 21.7.2026 notice only lists polling stations)."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.vrbove.sk/wp-content/uploads/2026/10/Okrsky-ulice.pdf"
+sha256 = "22891e1b5f4399a272920172ace5c9ed3bf3c3532261246571602d4ff8cfda9f"
+title = "Voľby do orgánov samosprávy obcí 2026 – Obvod, Okrsok, Ulica (Komunálne voľby spojené s voľbami do orgánov samosprávy TTSK: volebné okrsky-ulice)"
+
+[[document]]
+url = "https://www.vrbove.sk/wp-content/uploads/2026/07/zverejnenie-okrskov.pdf"
+sha256 = "3c20046a2b31989cd5f1ecbdc04aa3273b228dd98de36b9d7cf5dee951820b04"
+title = "Hlásenie obvodu a okrskov do volieb do orgánov územnej samosprávy 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Vrbové", numbers = "1317-1384"},
+  {street = "Barcíkova ulica"},
+  {street = "Hrabinská ulica"},
+  {street = "Mikulášska ulica"},
+  {street = "Námestie sv. Cyrila a Metoda"},
+  {street = "Priehradná ulica"},
+  {street = "Rekreačná ulica"},
+  {street = "Sadová ulica"},
+  {street = "Sasinkova ulica"},
+  {street = "Sietna ulica"},
+  {street = "Slnečná ulica"},
+  {street = "Školská ulica"},
+  {street = "Ulica 1. mája"},
+  {street = "Ulica gen. M. R. Štefánika", written = "Ulica Gen. M. R. Štefánika"},
+  {street = "Ulica Kopaničky"},
+  {street = "Ulica oslobodenia"},
+  {street = "Ulica Záhumenice"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bočná ulica"},
+  {street = "Cintorínska ulica"},
+  {street = "Hollého ulica"},
+  {street = "Hviezdoslavova ulica"},
+  {street = "Námestie slobody"},
+  {street = "Pribinova ulica"},
+  {street = "Sídlisko SNP"},
+  {street = "Súkennícka ulica"},
+  {street = "Športová ulica"},
+  {street = "Šteruská cesta"},
+  {street = "Ulica Hoštáky"},
+  {street = "Ulica Jána Zigmundíka"},
+  {street = "Ulica Šípkovec"},
+  {street = "Vinohradnícka ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Komenského ulica"},
+  {street = "Krátka ulica"},
+  {street = "Krížna ulica"},
+  {street = "Námestie Jozefa Emanuela"},
+  {street = "Sídlisko 6. apríla"},
+  {street = "Ulica 8. marca"},
+  {street = "Ulica Fraňa Kráľa"},
+  {street = "Ulica mieru"},
+  {street = "Ulica Pavla Jantauscha"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bernolákova ulica"},
+  {street = "Družstevná ulica"},
+  {street = "Novoutvorená ulica"},
+  {street = "Piešťanská cesta"},
+  {street = "Poľná ulica"},
+  {street = "Semenárska ulica"},
+  {street = "Sídlisko 9. mája"},
+  {street = "Slovanská ulica"},
+  {street = "Strážovská ulica"},
+  {street = "Ulica M. A. Beňovského"},
+  {street = "Záhradná ulica"},
+]

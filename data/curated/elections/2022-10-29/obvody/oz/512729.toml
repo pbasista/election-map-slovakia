@@ -1,0 +1,110 @@
+# Council obvody of Turčianske Teplice (512729), Turčianske Teplice.
+# Transcribed by an AI agent in job obvod-rules-300 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Mestskú časť Dolná Štubňa, sa volí 1 poslanec.
+#   obvod 2: Mestskú časť Turčiansky Michal, sa volí 1 poslanec.
+#   obvod 3: Mestskú časť Diviaky, sa volia 2 poslanci.
+#   obvod 4: Horné Rakovce a Dolné Rakovce, časť Ulice SNP (od budovy MsÚ po vyústenie na štátnu cestu I/65), Banskú ulicu (okrem Centra sociálnych služieb Horný Turiec) a Hájsku ulicu, sa volia 4 poslanci.
+#   obvod 5: ulice Kuzmányho, Slobody, Partizánsku, 9. Mája, Školskú, 29. augusta, Mládeže, Pod Bôrom a SNP (od liečebného domu Veľká Fatra po začiatok Dolnej Štubne) a Centrum sociálnych služieb Horný Turiec, sa volia 3 poslanci.
+#   obvod 6: ulice Kollárovu, Somolického, Družstevnú, Železničnú, J. Lettricha, Robotnícku, Kúpeľnú, Odbojárov, Slnečnú, Záhradnú, Pod Stráňou, a M. Galandu, sa volia 2 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-1015 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: vymedzený územím mestskej časti Dolná Štubňa pre voličov bývajúcich v Turčianskych Tepliciach – časti Dolná Štubňa
+#   okrsok 2: vymedzený územím mestskej časti Turčiansky Michal pre voličov bývajúcich v Turčianskych Tepliciach – časti Turčiansky Michal
+#   okrsok 3: vymedzený územím mestskej časti Diviaky pre voličov bývajúcich v Turčianskych Tepliciach – časti Diviaky
+#   okrsok 4: tvorí Centrum sociálnych služieb Horný Turiec (bývalé Zariadenie pre seniorov, domov sociálnych služieb a špecializované zariadenie) na ulici Banská 533/19 pre voličov bývajúcich v tomto zariadení a pre voličov s trvalým pobytom na adrese Turčianske Teplice, 039 01 Turčianske Teplice
+#   okrsok 5: vymedzený územím Horných Rakoviec a Dolných Rakoviec, časťou Ulice SNP (od budovy MsÚ po vyústenie na štátnu cestu I/65), Ulicou Banskou a Ulicou Hájskou pre voličov bývajúcich v Turčianskych Tepliciach v častiach Horné Rakovce, Dolné Rakovce, na uliciach Banská, Hájska a na časti Ulice SNP
+#   okrsok 6: vymedzený ulicami Kuzmányho, Slobody, Partizánskou, 9. mája, Školskou, 29. augusta, Mládeže, Pod Bôrom a SNP (od liečebného domu Veľká Fatra po začiatok Dolnej Štubne) pre voličov bývajúcich na týchto uliciach
+#   okrsok 7: vymedzený ulicami Kollárovou, Somolického, Družstevnou, Železničnou, J. Lettricha, Robotníckou, Kúpeľnou, Odbojárov, Slnečnou, Záhradnou, Pod Stráňou, a M. Galandu pre voličov bývajúcich na týchto uliciach
+obec = "512729"
+name = "Turčianske Teplice"
+date = 2022-06-23
+fill = "nearest"
+note = "Mestské časti Dolná Štubňa, Turčiansky Michal and Diviaky are register parts. The SNP split (obvody 4/5) is placed by register coordinates around the town hall (Partizánska 1). Not named in the document and placed by fill_nearest: in the part Turčianske Teplice the streets Teplická, Tehelná, Poľnohospodárska, Prievidzská (their other addresses lie in the part Diviaky) and the 21 addresses without a street."
+okrsky_note = "Okrsky 1, 2, 3, 5 and 7 are each alone in their obvod (1, 2, 3, 4, 6). Obvod 5 holds okrsok 4 (Centrum sociálnych služieb Horný Turiec, Banská 533/19, which the obvod rules place in obvod 5, and the voters registered only at 'Turčianske Teplice, 039 01', who have no address and are left out of its rules) and okrsok 6 (the rest of obvod 5: Kuzmányho, Slobody, Partizánska, 9. mája, Školská, 29. augusta, Mládeže, Pod Bôrom and the southern part of SNP)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The section 'Utvorenie volebných okrskov a určenie volebných miestností' on the city's page of the 2022 elections creates the okrsky 'pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov' under the decision of the Speaker of the National Council No. 209 of 8.6.2022 (the one calling the elections of 29 October 2022, which the same page names). The section states no date or posting date of its own: the page item says 'Zverejnené 14.6.2022, Aktualizované 30.10.2022', and in its reverse-chronological sections the okrsky sit above the delegation notice dated 4. 8. 2022. The Internet Archive has no snapshot of the page (the homepage snapshot of 2022-10-01 only links it)."
+
+[[document]]
+url = "https://www.turciansketeplice.sk/mid/472216/volby-do-organov-samospravy-obci-a-organov-samospravnych-krajov-oznam.html"
+sha256 = "9f7ff6c0e1ac41562f674d3bfa888cd00471a3882b41e11633c324e1f4a43ddd"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie MsZ č. 51/2022 zo dňa 23. 6. 2022), zverejnené 30. 6. 2022"
+
+[obvod.1]
+seats = 1
+okrsky = [1]
+rules = [
+  {part = "Dolná Štubňa"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [2]
+rules = [
+  {part = "Turčiansky Michal"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Diviaky"},
+]
+
+[obvod.4]
+seats = 4
+okrsky = [5]
+rules = [
+  {street = "Horné Rakovce"},
+  {street = "Dolné Rakovce"},
+  {street = "SNP", part = "Turčianske Teplice", note = "the part of SNP from the town hall north to the I/65: all numbers of SNP in the part Turčianske Teplice not in obvod 5 (by register coordinates; 99, 101, 127, 129, 131 have no coordinates, placed by their neighbours)."},
+  {street = "Banská", note = "Banská except no. 19 (Centrum sociálnych služieb Horný Turiec, obvod 5)."},
+  {street = "Hájska"},
+]
+
+[obvod.5]
+seats = 3
+okrsky = [4, 6]
+rules = [
+  {street = "Kuzmányho"},
+  {street = "Slobody"},
+  {street = "Partizánska"},
+  {street = "9.mája", written = "9. Mája"},
+  {street = "Školská"},
+  {street = "29.augusta", written = "29. augusta"},
+  {street = "Mládeže"},
+  {street = "Pod Bôrom"},
+  {street = "SNP", part = "Turčianske Teplice", numbers = "76-122, 126-134", parity = "even", note = "SNP from the spa house Veľká Fatra south to Dolná Štubňa: the even numbers 76-134 south of the town hall (Partizánska 1), except 124 which lies north (by register coordinates); 110 has no coordinates, placed between 108 and 112."},
+  {street = "SNP", part = "Turčianske Teplice", numbers = "83, 85, 89, 201", note = "odd numbers of SNP south of the town hall (by register coordinates)."},
+  {street = "Banská", numbers = "19", note = "Banská 533/19 is Centrum sociálnych služieb Horný Turiec, which the document puts in obvod 5."},
+]
+
+[obvod.6]
+seats = 2
+okrsky = [7]
+rules = [
+  {street = "Kollárova"},
+  {street = "Somolického"},
+  {street = "Družstevná"},
+  {street = "Železničná"},
+  {street = "Jozefa Lettricha", written = "J. Lettricha"},
+  {street = "Robotnícka"},
+  {street = "Kúpelná", written = "Kúpeľnú", note = "register spells Kúpelná, the document Kúpeľnú: the same street"},
+  {street = "Odbojárov"},
+  {street = "Slnečná"},
+  {street = "Záhradná"},
+  {street = "Pod Stráňou"},
+  {street = "M. Galandu"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Banská", numbers = "19"},
+]
+
+[okrsok.6]
+rules = [
+  {rest = true},
+]

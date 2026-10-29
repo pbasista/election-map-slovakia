@@ -1,0 +1,36 @@
+# Council obvody of Dolný Lieskov (546640), Považská Bystrica.
+# Transcribed by an AI agent in job obvod-rules-378 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č. 1 Dolný Lieskov s jedným volebným okrskom; volebný obvod č. 1 Dolný Lieskov : 4 poslanci
+#   obvod 2: volebný obvod č. 2 Tŕstie s jedným volebným okrskom; volebný obvod č. 2 Tŕstie : 2 poslanci
+# Okrsky added by an AI agent in job okrsok-rules-1239 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volebný obvod č. 1 Dolný Lieskov s jedným volebným okrskom; volebný obvod č. 1 Dolný Lieskov : 4 poslanci
+#   okrsok 2: volebný obvod č. 2 Tŕstie s jedným volebným okrskom; volebný obvod č. 2 Tŕstie : 2 poslanci
+obec = "546640"
+name = "Dolný Lieskov"
+date = 2022-06-22
+note = "Scanned resolutions, read visually (page 4 of the attached PDF https://obec.dobraobec.sk/files/7/dokumenty/af874_scan0304.pdf, the file host of the municipality's CMS, linked from the listed dolnylieskov.sk document page). Obvod 1 = part Dolný Lieskov, obvod 2 = part Tŕstie."
+okrsky_date = 2022-06-22
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+
+[[document]]
+url = "https://dolnylieskov.sk/dokumenty?kat=381&id=4144"
+sha256 = "b636c6ab5d4dbc543ebeda986fa50989928ef7de384756b8bb1503e2330208d9"
+title = "Uznesenia prijaté na zasadnutí Obecného zastupiteľstva Obce Dolný Lieskov dňa 22.6.2022, uznesenie č. 29/2022 b), c) (attachment https://obec.dobraobec.sk/files/7/dokumenty/af874_scan0304.pdf)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Dolný Lieskov"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Tŕstie"},
+]

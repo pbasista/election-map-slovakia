@@ -1,0 +1,117 @@
+# Okrsky of Košice-Krásna, transcribed by an AI agent in job okrsok-rules-679 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1. mája, Benkova, Bernatovská, Čechovova, Goetheho, Golianova, Horná, Keldišová, Kertésová, Križinova, Ku štrkovisku, Na banisegu, Nábrežná, Nová, Opátska, Pri Hornáde, Pri Krásnej, Pri sídlisku, Rehoľná, Rybárska, sv. Gorazda, Traťová, Valalická, Za mostom, Žiacka
+#   okrsok 2: Adamova, Bogoľ, Feketeova pažiť, Krajná, Goldírova, K Hutke, K majeru, Kladenská, Lackova, Minská, Na Polianku, Na prednom záhumní, Na zadnom záhumní, Ortoviská, Prašná, Pri studničke, Rešov Majer, Sajkov, Smutná, Šuhajova, Východná, Vyšný dvor, Zelená
+#   okrsok 3: Benediktínska, Harmincova, K lesu, Malokarpatská, Meškova, Modranská, Na brehu, Nad Belogradom, Pezinská, Polesná, Pri Teleku, Račianska, Rulandská, Skalická, Staroslovanská, Svätovavrinecká, Tibavská, Tokajská, Tramínová, Vínna, obč. s TP v MČ Košice-Krásna v zmysle § 5 zák. č. 253/1998 Z. z.
+#   okrsok 4: Baničova, Beniakova, Bezručova, Edisonova, Harčarova, Konopná, Mozartova, Na močidlách, Na pažiti, Orná, Pasienková, Piesočná, Pollova, Štrková, Tatarkova, Ukrajinská, Urbárska
+obec = "599794"
+name = "Košice-Krásna"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-10-21
+okrsky_date_basis = "The signed scan states no date (its time line still reads 2018, a leftover); the Internet Archive captured it on 2022-10-21 (https://web.archive.org/web/20221021234403/https://www.kosicekrasna.sk/files/2022-07-07-123148-Ozn__menie_o_zr__en___miesta_a___asu_konania_volieb.pdf)."
+okrsky_fill = "nearest"
+okrsky_note = "The document names streets missing from the register (left out): Na banisegu, Pri Krásnej (okrsok 1), K Hutke, Sajkov (okrsok 2). Okrsok 3 also holds 'obč. s TP v MČ Košice-Krásna v zmysle § 5 zák. č. 253/1998' (residents registered without an address, not the register's houses without a street). The 124 register addresses without a street are placed by fill_nearest. The signed scan is undated (and its time line still reads '10. novembra 2018', a leftover); snapshot of 2022-10-21. Text read from the scan."
+
+[[document]]
+url = "https://web.archive.org/web/20221021234403/https://www.kosicekrasna.sk/files/2022-07-07-123148-Ozn__menie_o_zr__en___miesta_a___asu_konania_volieb.pdf"
+sha256 = "2b600ed6fe7a0c22d984a096f3dd927e8985583fd6b6d3c326ce650a1263161a"
+title = "Oznámenie o určení času a miesta konania volieb do orgánov samosprávy obcí a orgánov samosprávnych krajov v Mestskej časti Košice - Krásna dňa 29. októbra 2022 (signed scan)"
+
+[okrsok.1]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Benkova"},
+  {street = "Bernatovská"},
+  {street = "Čechovova"},
+  {street = "Goetheho"},
+  {street = "Golianova"},
+  {street = "Horná"},
+  {street = "Križinova"},
+  {street = "Ku štrkovisku"},
+  {street = "Nábrežná"},
+  {street = "Nová"},
+  {street = "Opátska"},
+  {street = "Pri Hornáde"},
+  {street = "Pri Sídlisku", written = "Pri sídlisku"},
+  {street = "Rehoľná"},
+  {street = "Rybárska"},
+  {street = "Sv. Gorazda", written = "sv. Gorazda"},
+  {street = "Traťová"},
+  {street = "Valalická"},
+  {street = "Za Mostom", written = "Za mostom"},
+  {street = "Žiacka"},
+  {street = "Keldišova", written = "Keldišová", note = "the document writes \"-ová\"; the register street ending \"-ova\" is the same street"},
+  {street = "Kertésova", written = "Kertésová", note = "the document writes \"-ová\"; the register street ending \"-ova\" is the same street"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Adamova"},
+  {street = "Bogoľ"},
+  {street = "Feketeova Pažiť", written = "Feketeova pažiť"},
+  {street = "Krajná"},
+  {street = "Goldírova"},
+  {street = "K Majeru", written = "K majeru"},
+  {street = "Kladenská"},
+  {street = "Lackova"},
+  {street = "Minská"},
+  {street = "Ulica na Polianku", written = "Na Polianku"},
+  {street = "Ulica na prednom Záhumní", written = "Na prednom záhumní"},
+  {street = "Ulica na zadnom Záhumní", written = "Na zadnom záhumní"},
+  {street = "Ortoviská"},
+  {street = "Prašná"},
+  {street = "Ulica pri Studničke", written = "Pri studničke"},
+  {street = "Rešov Majer"},
+  {street = "Smutná"},
+  {street = "Šuhajova"},
+  {street = "Východná"},
+  {street = "Vyšný Dvor", written = "Vyšný dvor"},
+  {street = "Zelená"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Benediktínska"},
+  {street = "Harmincova"},
+  {street = "K lesu"},
+  {street = "Malokarpatská"},
+  {street = "Meškova"},
+  {street = "Modranská"},
+  {street = "Na Brehu", written = "Na brehu"},
+  {street = "Nad Belogradom"},
+  {street = "Pezinská"},
+  {street = "Polesná"},
+  {street = "Pri Teleku"},
+  {street = "Račianska"},
+  {street = "Rulandská"},
+  {street = "Skalická"},
+  {street = "Staroslovanská"},
+  {street = "Svätovavrinecká"},
+  {street = "Tibavská"},
+  {street = "Tokajská"},
+  {street = "Tramínová"},
+  {street = "Vínna"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Ulica Alexandra Dubčeka", note = "missing in the signed scan; the unsigned text version of the same notice on the website (files/2022-07-07-075343-…pdf) lists Alexandra Dubčeka in okrsok 4", inferred = true},
+  {street = "Baničova"},
+  {street = "Beniakova"},
+  {street = "Bezručova"},
+  {street = "Edisonova"},
+  {street = "Harčarova"},
+  {street = "Konopná"},
+  {street = "Mozartova"},
+  {street = "Na močidlách"},
+  {street = "Na Pažiti", written = "Na pažiti"},
+  {street = "Orná"},
+  {street = "Pasienková"},
+  {street = "Piesočná"},
+  {street = "Pollova"},
+  {street = "Štrková"},
+  {street = "Tatarkova"},
+  {street = "Ukrajinská"},
+  {street = "Urbárska"},
+]

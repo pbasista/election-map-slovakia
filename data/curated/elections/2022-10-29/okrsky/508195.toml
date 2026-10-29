@@ -1,0 +1,29 @@
+# Okrsky of Plavecký Štvrtok, transcribed by an AI agent in job okrsok-rules-787 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: občania bývajúci na čísle 0 až 450
+#   okrsok 2: občania bývajúci na čísle 451 a vyššie
+obec = "508195"
+name = "Plavecký Štvrtok"
+okrsky_date = 2022-08-09
+okrsky_note = "The okrsky are split by house number (\"na čísle 0 až 450\" / \"451 a vyššie\"), read as súpisné číslo (the village has no streets); \"0\" is taken as voters without a house number."
+
+[[document]]
+url = "https://web.archive.org/web/20221222064129/https://www.obecplaveckystvrtok.sk/download_file_f.php?id=1750636"
+sha256 = "1b243d4c604dfcf55d30068ca5f2e662e4cdfd9920517801b2896c8646159996"
+title = "Určenie volebných okrskov a volebných miestností"
+
+[[document]]
+url = "https://web.archive.org/web/20221222064115/https://www.obecplaveckystvrtok.sk/spojene-volby-2022-1.html"
+sha256 = "c13f0a119083e817faf409a2adea6e6c028e984312ea09896dd2a6dfac035de7"
+title = "Spojené voľby 2022 (page linking the document)"
+
+[okrsok.1]
+rules = [
+  {part = "Plavecký Štvrtok", numbers = "1-450"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Plavecký Štvrtok", numbers = "451-"},
+]

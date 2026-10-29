@@ -1,0 +1,30 @@
+# Okrsky of Východná, transcribed by an AI agent in job okrsok-rules-857 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od čísla domu 1 po číslo domu 433
+#   okrsok 2: od čísla domu 434 po číslo domu 1900 - Svarín a Čierny Váh
+obec = "511170"
+name = "Východná"
+okrsky_date = 2022-11-10
+okrsky_note = "No document of the elections giving the okrsky found: the elections notice of 2022 (Volebné okrsky.pdf, vyvesené 14. 7. 2022) only says there are two okrsky (malá and veľká zasadačka obecného úradu) without their extent; this is the referendum's document. It is undated; date is its posting on the notice board (vyvesené 10. 11. 2022). House numbers (súpisné, no streets in the register): okrsok 1 houses 1-433, okrsok 2 houses 434-1900 and the settlements Svarín and Čierny Váh (not parts in the register, numbered within Východná), given as the rest."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.vychodna.eu/e_download.php?file=data/uredni_deska/obsah1938_2.pdf&original=Vytvoren%C3%A9%20volebn%C3%A9%20okrsky%20a.pdf"
+sha256 = "121f7a2233e4c8bb942a8ec4a3b2f6ae8e58b334487d90e5c34f90eb291eb561"
+title = "Vytvorené volebné okrsky a určené volebné miestnosti v obci Východná pre konanie referenda 21. januára 2023"
+
+[[document]]
+url = "https://web.archive.org/web/20221203070717/https://www.vychodna.eu/zverejnovanie/uradna-tabula-1/referendum-2112023-2499.html"
+sha256 = "c698a8f94288bbccba06bcf95a0a74dc2b2e5b83793607d21f701ecbc3484c06"
+title = "Referendum 21.1.2023 (úradná tabuľa, vyvesené 10. 11. 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Východná", numbers = "1-433"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

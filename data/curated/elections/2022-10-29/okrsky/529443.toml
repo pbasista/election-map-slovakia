@@ -1,0 +1,73 @@
+# Okrsky of Bratislava-Jarovce, transcribed by an AI agent in job okrsok-rules-811 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: BYLINKOVÁ FIGOVÁ KOŽUŠNÍCKA KÔSTKOVÁ MANDĽOVÁ MORUŠOVÁ OLEANDROVÁ OSIJECKÁ OVOCNÁ PÍLOVÁ PLITVICKÁ RASTLINNÁ REPKOVÁ SEMENÁRSKA SLAVÓNSKA TRNKOVÁ URBÁRSKÁ ZADARSKÁ ZELENINOVÁ OBČANIA S TRVALÝM POBYTOM NA OBCI – - MESTSKÁ ČASŤ
+#   okrsok 2: BAŽANTNICOVÁ DIAMANTOVÁ FIKUSOVÁ FRANTIŠKA SCHMUCKERA GRANITOVÁ CHOTÁRNA JANTÁROVÁ JAZERNÁ JOZEFA MIKISITSA KOREŇOVÁ KRIŠTÁĽOVÁ LADISLAVA BATTHYÁNYHO NEFRITOVÁ OPÁLOVÁ PALMOVÁ PAVE VUKOVIČA PETARA PASICHA PRI TEHELNI SMARAGDOVÁ TOPÁSOVÁ TYRKYSOVÁ ZAFÍROVÁ ZAMATOVÁ
+obec = "529443"
+name = "Bratislava-Jarovce"
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The starosta's decision states no date but sets the okrsky for the elections of 29. 10. 2022 (https://web.archive.org/web/20220926083601/http://jarovce.sk/dokumenty/volby/URCENIE%20OKRSKOV.pdf, captured 2022-09-26)."
+okrsky_fill = "nearest"
+okrsky_note = "The starosta's decision (2 okrsky for 29. 10. 2022) and the list of streets are undated; both are Internet Archive snapshots of 26 Sep 2022. 'Občania s trvalým pobytom na obci – mestská časť' (okrsok 1) are residents registered without an address. JAZERNÁ (okrsok 2) is not in the address register and is left out. Aragonitová, Jaspisová and Ónyxová, missing from the list, are inferred to okrsok 2. The houses without a street take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20220926083601/http://jarovce.sk/dokumenty/volby/URCENIE%20OKRSKOV.pdf"
+sha256 = "51e4cd7742ee9c98715c2c39d181b1dfbe0660cfa93819b4dd0b8fb95f777843"
+title = "Určenie volebných okrskov"
+
+[[document]]
+url = "https://web.archive.org/web/20220926083510/http://jarovce.sk/dokumenty/volby/VOLEBNE%20OKRSKY.pdf"
+sha256 = "a8ec178e8b7a2e378d1cc3ae17cd18074669ecdc7f12c1724ee04685702206f4"
+title = "Volebné okrsky (zoznam ulíc)"
+
+[okrsok.1]
+rules = [
+  {street = "Bylinková"},
+  {street = "Figová"},
+  {street = "Kožušnícka"},
+  {street = "Kôstková"},
+  {street = "Mandľová"},
+  {street = "Morušová"},
+  {street = "Oleandrová"},
+  {street = "Osijecká"},
+  {street = "Ovocná"},
+  {street = "Pílová"},
+  {street = "Plitvická"},
+  {street = "Rastlinná"},
+  {street = "Repková"},
+  {street = "Semenárska"},
+  {street = "Slavónska"},
+  {street = "Trnková"},
+  {street = "Urbárska", written = "URBÁRSKÁ", note = "the document's 'URBÁRSKÁ' is a typo of Urbárska, the only such street"},
+  {street = "Zadarská"},
+  {street = "Zeleninová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bažantnicová"},
+  {street = "Diamantová"},
+  {street = "Fikusová"},
+  {street = "Františka Schmuckera"},
+  {street = "Granitová"},
+  {street = "Chotárna"},
+  {street = "Jantárová"},
+  {street = "Jozefa Mikisitsa"},
+  {street = "Koreňová"},
+  {street = "Krištáľová"},
+  {street = "Ladislava Batthyányho"},
+  {street = "Nefritová"},
+  {street = "Opálová"},
+  {street = "Palmová"},
+  {street = "Pave Vukoviča"},
+  {street = "Petara Pasicha"},
+  {street = "Pri tehelni"},
+  {street = "Smaragdová"},
+  {street = "Topásová"},
+  {street = "Tyrkysová"},
+  {street = "Zafírová"},
+  {street = "Zamatová"},
+  {street = "Aragonitová", note = "not in the document; a street of the same gemstone-named new development as Granitová, Opálová, Smaragdová, Topásová (okrsok 2)", inferred = true},
+  {street = "Jaspisová", note = "not in the document; a street of the same gemstone-named new development as Granitová, Opálová, Smaragdová, Topásová (okrsok 2)", inferred = true},
+  {street = "Ónyxová", note = "not in the document; a street of the same gemstone-named new development as Granitová, Opálová, Smaragdová, Topásová (okrsok 2)", inferred = true},
+]

@@ -1,0 +1,74 @@
+# Okrsky of Kanianka, transcribed by an AI agent in job okrsok-rules-888 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Banícka, Bojnická cesta – orientačné čísla 3 až 24, ČSĽA – orientačné čísla 19 až 25 a 32 až 44, Hviezdoslavova, Košovská, Krátka, Kukučínova, Lazianska cesta, Lesná, Lipová, Lúčna, Mierová, Mlynská, Pionierov, Pod Vinicou – orientačné čísla 1 až 13 a 2 až 12, Poľovnícka, Porubská cesta, Sládkovičova, Stará cesta, Športová, Štúrova, Tehelná, Veterná, Záhradná, Pánsky háj, Za Lančekom a Zlatná.
+#   okrsok 2: ulice: Bojnická cesta – obytné domy súpisné číslo 593 a 594, Nová - obytné domy súpisné číslo 595, 596, 597 a 598.
+#   okrsok 3: ulice: Agátova, Bojnická cesta - obytné domy súpisné číslo 590 a 591, ČSĽA – orientačné čísla 1 až 9 a 2 až 30, Lyžiarska, Májová, Nová – obytný dom súpisné číslo 600, Pod vinicou – orientačné čísla 14 až 48 a 15 až 67, SNP, Šípkova, Školská – obytný dom súpisné číslo 589.
+obec = "514071"
+name = "Kanianka"
+okrsky_date = 2022-08-05
+okrsky_fill = "nearest"
+okrsky_note = "Scanned decision of the mayor (5.8.2022), read from the image. Okrsky 2 and 3 name some blocks by súpisné číslo (Bojnická cesta 593, 594 / 590, 591; Nová 595-598 / 600; Školská 589). The document does not name Ružová, nor the other addresses of Nová, Školská and Bojnická cesta (outside orientačné 3-24), nor ČSĽA odd 11-17 and above 25: these, and the one address without a street, are placed by fill_nearest. Pod Vinicou: okrsok 1 has odd 1-13 and even 2-12, okrsok 3 odd 15-67 and even 14-48, written here as 1-13 and 14-."
+
+[[document]]
+url = "https://web.archive.org/web/20220808160353/http://www.kanianka.sk/wp-content/uploads/2022/07/SKM_C224e22080808410.pdf"
+sha256 = "0f073cab47b090323756997535099993f96f7a77df5edd6616c8c5d7988a16ec"
+title = "Určenie volebných okrskov pre voľby do orgánov samosprávy obcí a voľby do samosprávnych krajov v roku 2022"
+
+[[document]]
+url = "https://web.archive.org/web/20220803005631/http://www.kanianka.sk/2022/07/21/volby-2022/"
+sha256 = "77f940d5a69996bd7158cb4e61634c528fdbaf5cb71c1093a631c4a0897b4443"
+title = "Voľby 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Bojnická cesta", numbers = "3-24"},
+  {street = "Čsľa", numbers = "19-25", parity = "odd", written = "ČSĽA"},
+  {street = "Čsľa", numbers = "32-44", parity = "even", written = "ČSĽA"},
+  {street = "Pod Vinicou", numbers = "1-13"},
+  {street = "Banícka"},
+  {street = "Hviezdoslavova"},
+  {street = "Košovská"},
+  {street = "Krátka"},
+  {street = "Kukučínova"},
+  {street = "Lazianska cesta"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+  {street = "Lúčna"},
+  {street = "Mierová"},
+  {street = "Mlynská"},
+  {street = "Pionierov"},
+  {street = "Poľovnícka"},
+  {street = "Porubská cesta"},
+  {street = "Sládkovičova"},
+  {street = "Stará cesta"},
+  {street = "Športová"},
+  {street = "Štúrova"},
+  {street = "Tehelná"},
+  {street = "Veterná"},
+  {street = "Záhradná"},
+  {street = "Za Lančekom"},
+  {street = "Zlatná"},
+  {street = "Pánsky Háj", written = "Pánsky háj"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bojnická cesta", numbers = "593, 594", by = "supisne"},
+  {street = "Nová", numbers = "595-598", by = "supisne"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová", written = "Agátova"},
+  {street = "Bojnická cesta", numbers = "590, 591", by = "supisne"},
+  {street = "Čsľa", numbers = "1-9", parity = "odd", written = "ČSĽA"},
+  {street = "Čsľa", numbers = "2-30", parity = "even", written = "ČSĽA"},
+  {street = "Lyžiarska"},
+  {street = "Májová"},
+  {street = "Nová", numbers = "600", by = "supisne"},
+  {street = "Pod Vinicou", numbers = "14-", written = "Pod vinicou"},
+  {street = "SNP"},
+  {street = "Šípková", written = "Šípkova"},
+  {street = "Školská", numbers = "589", by = "supisne"},
+]

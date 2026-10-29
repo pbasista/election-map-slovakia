@@ -1,0 +1,29 @@
+# Okrsky of Gemerský Sad, transcribed by an AI agent in job okrsok-rules-1068 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: okrsok č. 1 Mikolčany
+#   okrsok 2: okrsok č. 2 Nováčany
+obec = "525685"
+name = "Gemerský Sad"
+okrsky_date = 2022-06-24
+okrsky_note = "The okrsky were set by the council's resolution č. 61/2022 of 24.6.2022 as published by the mayor on 19.7.2022: okrsok č. 1 Mikolčany, okrsok č. 2 Nováčany (the two parts of the municipality)."
+
+[[document]]
+url = "https://www.gemerskysad.sk/files/2022-07-21-141820-Zoznam_volebn__ch_obvodov_Obec_Gemersk___Sad.pdf"
+sha256 = "6494c3eed77e8f32dfacd93f2d3a153ed2a3b18cc83572b48dfd36e028ddcab9"
+title = "Zoznam volebných obvodov Obec Gemerský Sad (19.7.2022; uznesenie OZ č. 61/2022 z 24.6.2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20220819023243/https://www.gemerskysad.sk/--23-141-volby-do-organov-samospravy-obci-a-volieb-do-organov-v-samospravnych-krajov-zoznam-volebnych-obvodov"
+sha256 = "c4829d7218ca900f0cb22c518c322b19014b0c3e3de284b1528a562d201000d2"
+title = "Voľby do orgánov samosprávy obcí a volieb do orgánov v samosprávnych krajov - Zoznam volebných obvodov (notice board, 21.07.2022, archived)"
+
+[okrsok.1]
+rules = [
+  {part = "Mikolčany"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Nováčany"},
+]

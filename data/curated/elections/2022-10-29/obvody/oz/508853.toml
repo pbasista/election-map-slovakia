@@ -1,0 +1,59 @@
+# Council obvody of Podbrezová (508853), Brezno.
+# Transcribed by an AI agent in job obvod-rules-320 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Lopej (ulica Belohrad, Čelno, Dolná, Družby, Hámor, Jozefa Murgaša, Partizánska, Pod Grapľom) Vajsková Skalica
+#   obvod 2: Podbrezová (ulica Sládkovičova, Šupkova, Kolkáreň, Bendíčka, Smreková, Švermov rad, Štúrov rad, Hviezdoslavova, Chalupkova)
+#   obvod 3: Štiavnička Chvatimech
+# Okrsky added by an AI agent in job okrsok-rules-1191 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Lopej – ulice Belohrad, Čelno, Dolná, Družby, Hámor, Jozefa Murgaša, Partizánska, Pod Grapľom; Vajsková; Skalica
+#   okrsok 2: Podbrezová – ulice Sládkovičova, Šupkova, Kolkáreň, Bendíčka, Smreková, Švermov rad, Štúrov rad, Hviezdoslavova, Chalupkova.
+#   okrsok 3: Štiavnička; Chvatimech.
+obec = "508853"
+name = "Podbrezová"
+date = 2022-07-19
+note = "Obvody defined by parts (miestne časti); the streets in parentheses only illustrate the parts and are covered by the part rules. The 2022 elections page and document are gone from the live site; Internet Archive snapshot (2025) of the 2022 document used, its date stated in it."
+okrsky_date = 2022-11-08
+okrsky_note = "No document of the elections found (the 2022 elections page is gone from the live site and the Internet Archive has no 2022 snapshot of it or of an okrsky document); the referendum's document of 08.11.2022. Its 3 okrsky are the 3 obvody of 2022 (okrsok 1 Lopej, Vajsková, Skalica; 2 Podbrezová; 3 Štiavnička, Chvatimech), each alone in its obvod."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://web.archive.org/web/20250830101526/https://www.podbrezova.sk/download_file_f.php?id=1714347"
+sha256 = "91b1faa024cd9192ae31ed9f88dbb95f939643a470855345879175f845498f6d"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 29. októbra 2022 (uznesenie č. 518/2022 zo dňa 19.07.2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20250827134529/https://www.podbrezova.sk/download_file_f.php?id=1761854"
+sha256 = "81cdd0e6ac2a13829f3ab8f93cd60f59d8b1bd7755b7b2b1057e4040f6aeb2d3"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (referendum 21.01.2023), 08.11.2022"
+
+[[document]]
+url = "https://web.archive.org/web/20250516153847/https://www.podbrezova.sk/referendum-2023.html"
+sha256 = "ea315b86005efe2920175551c15b458ec6074410f3a371a96aaf4f608849a2db"
+title = "Referendum 2023 (stránka obce; 'Utvorenie volebných okrskov… Zverejnené 8.11.2022')"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {part = "Lopej"},
+  {part = "Vajsková"},
+  {part = "Skalica"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [2]
+rules = [
+  {part = "Podbrezová"},
+]
+
+[obvod.3]
+seats = 4
+okrsky = [3]
+rules = [
+  {part = "Štiavnička"},
+  {part = "Chvatimech"},
+]

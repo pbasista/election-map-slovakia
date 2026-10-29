@@ -1,0 +1,30 @@
+# Okrsky of Horné Orešany, transcribed by an AI agent in job okrsok-rules-887 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od s. č. 0 – 450
+#   okrsok 2: od s. č. 451 – 1000
+obec = "507067"
+name = "Horné Orešany"
+okrsky_date = 2022-11-10
+okrsky_note = "No document of the elections found (the 2022 elections page and the archived site carry none); the referendum's document. Okrsky split by súpisné číslo: 0-450 and 451-1000, applied to all addresses of the village."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.horneoresany.sk/sub/scan_20221114125931_0000.pdf"
+sha256 = "cf7693778c2d95ddc5ae6b3e591592a90e6df1710360f5fff4f04e9d6746bca8"
+title = "Určenie volebných okrskov a volebných miestností pre vykonanie referenda, ktoré sa koná dňa 21. januára 2023"
+
+[[document]]
+url = "https://web.archive.org/web/20221125225132/https://www.horneoresany.sk/referendum"
+sha256 = "5442ede0e5c638fea2d2ef130f60376c8dad3604256bac4d920202586b372e12"
+title = "Referendum (page linking the document)"
+
+[okrsok.1]
+rules = [
+  {part = "Horné Orešany", numbers = "0-450"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

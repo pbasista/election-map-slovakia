@@ -1,0 +1,30 @@
+# Okrsky of Klenovec, transcribed by an AI agent in job okrsok-rules-771 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: č. domov od 1 – 224
+#   okrsok 2: č. domov 225 – 600
+#   okrsok 3: č. domov nad 600
+obec = "515043"
+name = "Klenovec"
+okrsky_date = 2022-10-04
+okrsky_note = "The notice (no decision date; posted on the notice board 'Vyvesené: 4. 10. 2022', used as date) assigns the okrsky by house number (číslo domu = súpisné číslo): 1–224, 225–600, over 600."
+
+[[document]]
+url = "https://www.klenovec.sk/samosprava/zverejnovanie/uradna-tabula/volby-2022-715.html"
+sha256 = "83f1f30739bdb1061fe3bc6ef20fc06c83417a4ec4fc26e71ea0b361cb5fe593"
+title = "Voľby 2022 – Oznámenie o čase a mieste konania volieb do orgánov samosprávnych krajov a volieb do orgánov samosprávy obcí 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Klenovec", numbers = "1-224"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Klenovec", numbers = "225-600"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Klenovec", numbers = "601-"},
+]

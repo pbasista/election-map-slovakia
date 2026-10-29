@@ -1,0 +1,21 @@
+# Response headers of the cached copies of the pages research cites, which
+# `ems build` writes to dist/sources/_headers
+# (src/election_map_slovakia/bundle.py), for the Cloudflare Pages project
+# of the sources (docs/deploy.md). Syntax and limits as in web/_headers.
+
+# Search engines should index the originals, not the copies.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  X-Robots-Tag: noindex
+
+# A copy's name is the hash of its content, so it never changes. They are
+# sanitized when cached (no scripts, frames or remote loads); the sandbox
+# makes sure nothing in them runs or reaches any storage.
+/cache/*
+  Content-Security-Policy: sandbox allow-popups allow-popups-to-escape-sandbox
+  Cache-Control: public, max-age=86400
+
+# The stylesheet the copies link keeps its name.
+/assets/cache.css
+  Cache-Control: public, max-age=86400

@@ -1,0 +1,105 @@
+# Okrsky of Veľké Kapušany, transcribed by an AI agent in job okrsok-rules-710 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Agátová, Čepeľ, Družstevná, Kúpeľná, Mlynská, Muškátová, Nezábudková, Orgovánová, Ružová, Staničná, Tulipánová, Zelená.
+#   okrsok 2: Centrum I. 925, Čičarovská, Hadabuda, J.A.Komenského, J. Dózsu, Ľ. Štúra, Petőfiho
+#   okrsok 3: Centrum I. 921, 922, 923, 924, Centrum II., Malokapušianska
+#   okrsok 4: L.N. Tolstého č. 80, 81, 82, 84, 85, 914, 915, 916, 917.
+#   okrsok 5: P.O.H. 21, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33.
+#   okrsok 6: P.O.H. 34, 35, 36, 37, 38, 39, 40, 41, 42, 44, 48, 49, 50, 51.
+#   okrsok 7: P.O.H. 52, 53, 54, 55, 56, 57, 58, 60, 61, 63, 64, 67, 68, 72, 73, 74.
+#   okrsok 8: J. Kráľa, P.O.H. 16, 17, 18, 19, 20, 45, 46, 47, Vinohradská, Vojanská.
+#   okrsok 9: Veškovská
+#   okrsok 10: Bratislavská, Hlavná, J. Erdélyiho, Z. Fábryho, Záhradná,
+obec = "543853"
+name = "Veľké Kapušany"
+okrsky_date = 2022-08-02
+okrsky_fill = "nearest"
+okrsky_note = "Centrum I. split by súpisné čísla (921-925). P.O.H. numbers taken as orientačné. Námestie Istvána Dobóa, Námestie Lászlóa Mécsa and P.O.H. numbers not listed, plus houses without a street, placed by nearest address (fill_nearest). L. N. Tolstého listed with house numbers but lies wholly in okrsok 4."
+
+[[document]]
+url = "https://www.vkapusany.sk/download_file_f.php?id=1720037"
+sha256 = "46fd720808acb0aff5ffac66ac4abba945efe0fb26bc77583ef43430fad95a9d"
+title = "Určenie volebných okrskov pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov konané dňa 29.10.2022 v meste Veľké Kapušany"
+
+[[document]]
+url = "https://www.vkapusany.sk/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-konane-v-roku-2022.html"
+sha256 = "2cbd52d1268125e0de3bbe426eff6665e94105a8a99456a2737673e745a1d76a"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov konané v roku 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Agátová"},
+  {street = "Čepeľ"},
+  {street = "Družstevná"},
+  {street = "Kúpeľná"},
+  {street = "Mlynská"},
+  {street = "Muškátová"},
+  {street = "Nezábudková"},
+  {street = "Orgovánová"},
+  {street = "Ružová"},
+  {street = "Staničná"},
+  {street = "Tulipánová"},
+  {street = "Zelená"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Centrum I.", numbers = "925", by = "supisne"},
+  {street = "Čičarovská"},
+  {street = "Hadabuda"},
+  {street = "J. A. Komenského", written = "J.A.Komenského"},
+  {street = "Juraja Dózsu", written = "J. Dózsu"},
+  {street = "Ľudovíta Štúra", written = "Ľ. Štúra"},
+  {street = "Sándora Petőfiho", written = "Petőfiho", note = "first name left out"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Centrum I.", numbers = "921-924", by = "supisne"},
+  {street = "Centrum II", written = "Centrum II."},
+  {street = "Malokapušianská", written = "Malokapušianska", note = "spelling variant of the same street"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "L. N. Tolstého", written = "L.N. Tolstého"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "P. O. Hviezdoslava", numbers = "21, 23-29, 31-33", written = "P.O.H.", note = "P.O.H. abbreviates P. O. Hviezdoslava"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "P. O. Hviezdoslava", numbers = "34-42, 44, 48-51", written = "P.O.H.", note = "P.O.H. abbreviates P. O. Hviezdoslava"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "P. O. Hviezdoslava", numbers = "52-58, 60, 61, 63, 64, 67, 68, 72-74", written = "P.O.H.", note = "P.O.H. abbreviates P. O. Hviezdoslava"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Janka Kráľa", written = "J. Kráľa"},
+  {street = "P. O. Hviezdoslava", numbers = "16-20, 45-47", written = "P.O.H.", note = "P.O.H. abbreviates P. O. Hviezdoslava"},
+  {street = "Vinohradská"},
+  {street = "Vojanská"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Veškovská"},
+  {part = "Veškovce", note = "houses of Veškovce without a street with Veškovská", inferred = true},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Bratislavská"},
+  {street = "Hlavná"},
+  {street = "Jána Erdélyiho", written = "J. Erdélyiho"},
+  {street = "Zoltána Fábryho", written = "Z. Fábryho"},
+  {street = "Záhradná"},
+]

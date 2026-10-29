@@ -1,0 +1,20 @@
+# Corrections to the links between the candidates of two elections
+# (src/election_map_slovakia/links.py). A person of the later election is
+# linked to one of the earlier election when exactly one each way has the
+# same name (diacritics ignored), an age that fits the years between the
+# election days (a year off either way if nobody fits exactly) and the same
+# obec, Bratislava and Košice districts counting as their city, or regional
+# candidacies in the same kraj in both; ties go to the same obec, then to
+# the same office, then to the same spelling.
+#
+# One table per pair of elections, named by their slugs (elections.toml),
+# the later first: [<later>.<earlier>], e.g. [2026.2022]. In it, pairs of
+# candidacy ids `[later, earlier]` (`<contest>#<ballot number>`, e.g.
+# `oz:528595/2#7` or `zsk:7/2#9`; see docs/pipeline.md, Identifiers):
+#
+#   link    the persons of the two candidacies are one, whatever the rule
+#           says; each person at most once
+#   unlink  they are not; the rule then runs as if they did not fit, so
+#           another fitting person may be linked instead
+#
+# Give the reason in a comment above each pair.

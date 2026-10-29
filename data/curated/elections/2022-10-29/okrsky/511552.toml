@@ -1,0 +1,65 @@
+# Okrsky of Lovinobaňa, transcribed by an AI agent in job okrsok-rules-964 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cintorínska, Dolné Fafáky, Farská, Hviezdoslavova, Janka Kráľa, Janka Slobodu, Komenského, Mlynská, Partizánska, Podhájska, Poľná, SNP, Štefánikova, Štúrova, Továrenská, Včelárska, Záhradkárska, Železničná
+#   okrsok 2: B.Nemcovej, B.S.Timravy, Fučíkova, Hôrna, Mierova, Sadova, Školská, Štvrť 1. mája
+#   okrsok 3: Uderiná
+obec = "511552"
+name = "Lovinobaňa"
+okrsky_date = 2022-07-04
+okrsky_fill = "nearest"
+okrsky_note = "The decision of 4.7.2022 names the stations; the companion table (same posting 7.7.2022) lists the streets. The register's Malinovského (1 address) is not in the table, and the Lovinobaňa addresses without a street (súpisné only) are placed by fill_nearest; the part Uderiná is okrsok 3."
+
+[[document]]
+url = "https://www.lovinobana.sk/files/2022-07-07-093927-Okrsky_pod__a_ul__c.pdf"
+sha256 = "69527a969c18b45ecfc4232ab84e91442cbd3de4237d9198684fbb9c318dbc92"
+title = "Volebné okrsky - podľa začlenených ulíc"
+
+[[document]]
+url = "https://www.lovinobana.sk/files/2022-07-07-084538-Volebn___okrsky_a_miestnosti.pdf"
+sha256 = "fbd83adb3abb50c6f66ea2d5a6d78a6edfe1a7ff361ee239b10125c42564f9ff"
+title = "Vytvorené volebné okrsky a určené volebné miestnosti"
+
+[[document]]
+url = "https://www.lovinobana.sk/volby-2022-a73-747"
+sha256 = "caa143a958a655d7e717e989a1e102d07371d63378867efc3e72242dcf4aa73d"
+title = "VOĽBY 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Dolné Fafáky"},
+  {street = "Farská"},
+  {street = "Hviezdoslavova"},
+  {street = "Janka Kráľa"},
+  {street = "Janka Slobodu"},
+  {street = "Komenského"},
+  {street = "Mlynská"},
+  {street = "Partizánska"},
+  {street = "Podhájska"},
+  {street = "Poľná"},
+  {street = "SNP"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Továrenska", written = "Továrenská", note = "the register misspells the ending; same street"},
+  {street = "Záhradkárska"},
+  {street = "Železničná"},
+  {street = "Včelárska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "B. Nemcovej", written = "B.Nemcovej"},
+  {street = "B. S. Timravy", written = "B.S.Timravy"},
+  {street = "Fučíkova"},
+  {street = "Hôrna"},
+  {street = "Mierova"},
+  {street = "Sadova"},
+  {street = "Školská"},
+  {street = "Štvrť 1.mája", written = "Štvrť 1. mája"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Uderiná"},
+]

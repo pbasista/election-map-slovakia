@@ -1,0 +1,27 @@
+# The okrsky of Jakubany of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/526762.toml, reused by `ems job reuse`.
+obec = "526762"
+name = "Jakubany"
+okrsky_date = 2026-07-20
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Split by súpisné číslo: okrsok 1 1–495, okrsok 2 496–730 plus voters with 'pobyt na obci' (text only). The PDF is hosted by the obec's úradná tabuľa provider uradne.sk, linked from the obec's notice-board page. Two register addresses have súpisné čísla outside 1–730; they are placed by fill_nearest."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.uradne.sk/user/tablenews/file/1590943"
+sha256 = "b6e49f27f58e4d01a60d727eba0d4bde716e0c91735b51e52630f7f03dd0e5a4"
+title = "Oznámenie o utvorení volebných okrskov a určenie volebných miestností v obci Jakubany"
+
+[[document]]
+url = "https://www.jakubany.sk/samosprava/uradna-tabula?p=1&detail=74484&count=10&tagSelect=&subcategory="
+sha256 = "48d537ada30411144eef9e02318d8851b37c52b41385914b2c33ff360ade913a"
+title = "Úradná tabuľa: Spojené voľby 2026 - Oznámenie o utvorení volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Jakubany", numbers = "1-495"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Jakubany", numbers = "496-730"},
+]

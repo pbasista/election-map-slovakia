@@ -1,0 +1,79 @@
+# Council obvody of Veľké Ripňany (505714), Topoľčany.
+# Transcribed by an AI agent in job obvod-rules-333 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č.1 Veľké Ripňany – 7 poslancov
+#   obvod 2: Volebný obvod č.2 Veľké Ripňany časť Behynce- 2 poslanci
+# Okrsky added by an AI agent in job okrsok-rules-1201 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Topoľčianska, Piešťanská, Obsolovská, Nitrianska, Školská, Malinová, Muškátová, Nábrežná, Mlynská, Obec
+#   okrsok 2: Ulice: Hlohovecká, Kút, Majerská, Mládežnícka, Nová, Poštová, Vieska, Vinohradská, Studená dolina, Orechová
+#   okrsok 3: Ulice: Hlavná, Okružná, Staničná, Družstevná, Pri zvonici
+obec = "505714"
+name = "Veľké Ripňany"
+date = 2022-07-01
+okrsky_date = 2022-08-08
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky document is undated; date is its publication date on the municipality's 2022 elections page ('Dátum: 8.8.2022'). 'Obec' in okrsok 1 means voters registered without an address and is not a rule. Lúčna ulica (not named) and the addresses without a street in obvod 1 are placed by fill_nearest."
+
+[[document]]
+url = "https://www.velkeripnany.sk/data/advertisement/velkeripnany.sk/203796/86380_uznesenie-c-26-37-01-07-2022.pdf"
+sha256 = "6c13a0e2a71cbb1b027c665501b303544c1f9e23bd0f73daee08c32593451b93"
+title = "Uznesenia č. 26-37 zo dňa 01.07.2022 (uznesenia č. 30 a 31)"
+
+[[document]]
+url = "https://www.velkeripnany.sk/data/advertisement/velkeripnany.sk/203796/86265_obvody-a-poslanci-2022.pdf"
+sha256 = "c89a1e2fbf37ef15ac5161e4614f9a3bbb5ecfb94d5e397d0025cce6a6bab9a4"
+title = "Návrh na určenie volebných obvodov a počtu poslancov 2022-2026"
+
+[[document]]
+url = "https://web.archive.org/web/20221127085052/https://www.velkeripnany.sk/data/news_files/velkeripnany.sk/32268/urcenie-okrskov.pdf"
+sha256 = "4615feb96003470588662059c5d5c667d7236e2a73c74239bd57a3110f6d93a4"
+title = "Určenie okrskov s vymedzením ich územného obvodu, určenie volebných miestností (zverejnené 8.8.2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20221005192130/https://www.velkeripnany.sk/novinka/32268/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov"
+sha256 = "4debea1115b058ceeadd2cfa65908bb84f123b9e28edb5b98180cc3dddbcf7fe"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov (stránka obce 2022, links 'Určenie okrskov', Dátum: 8.8.2022)"
+
+[obvod.1]
+seats = 7
+okrsky = [1, 2]
+rules = [
+  {part = "Veľké Ripňany"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Behynce"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Topoľčianska"},
+  {street = "Piešťanská"},
+  {street = "Obsolovská"},
+  {street = "Nitrianska"},
+  {street = "Školská"},
+  {street = "Malinová"},
+  {street = "Muškátová"},
+  {street = "Nábrežná"},
+  {street = "Mlynská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlohovecká"},
+  {street = "Kút"},
+  {street = "Majerská"},
+  {street = "Mládežnícka"},
+  {street = "Nová"},
+  {street = "Poštová"},
+  {street = "Vieska"},
+  {street = "Vinohradská"},
+  {street = "Studená dolina"},
+  {street = "Orechová"},
+]

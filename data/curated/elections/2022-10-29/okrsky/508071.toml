@@ -1,0 +1,72 @@
+# Okrsky of Malinovo, transcribed by an AI agent in job okrsok-rules-695 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Adyho, Agátová, Bratislavská, Cintorínska, Družstevná, Dunajská, Ivanská, L. Svobodu, Lipová, Mostecká, Námestie 1. mája, Petöfiho, Revolucionárov, Školská, Športová, Tomášovská, Vrbová, Záleská cesta, Zátôňská
+#   okrsok 2: Bazová, Broskyňová, Drieňová, Fialková, Hviezdna, Jahodová, Krátka, Lotosová, Okružná, Poľovnícka, Púpavová, Sadová, Slnečná, Súbežná, Tri Vody I., II., III., IV., V., VI., Veterná, Viničná, Višňová, Záhradná, Zelená
+obec = "508071"
+name = "Malinovo"
+okrsky_date = 2022-08-02
+okrsky_fill = "nearest"
+okrsky_note = "The register's houses without a street (súpisné only) are not named by the document; they take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.malinovo.sk/e_download.php?file=data/editor/277sk_5.pdf&original=Oznam-%20utvorenie%20volebn%C3%BDch%20okrskov_.pdf"
+sha256 = "215cffd5754cbb6b084bf19c539028cd526e78eeb6a6732cb86f07b72cf389f0"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.malinovo.sk/samosprava/volby/volby-doorganov-samospravy-obci-a-volby-doorganov-samospravnych-krajov-2022/"
+sha256 = "77124e9e0e5a632cfc12c26111533b98734169aa351ca4ec680fbcf74d4ec7b6"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Adyho"},
+  {street = "Agátová"},
+  {street = "Bratislavská"},
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Dunajská"},
+  {street = "Ivanská"},
+  {street = "Ludvíka Svobodu", written = "L. Svobodu"},
+  {street = "Lipová"},
+  {street = "Mostecká"},
+  {street = "Námestie 1. mája"},
+  {street = "Petőfiho", written = "Petöfiho", note = "Same street; the document writes ö for ő."},
+  {street = "Revolucionárov"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Tomášovská"},
+  {street = "Vŕbová", written = "Vrbová", note = "Same street; the document leaves out the diacritic on ŕ."},
+  {street = "Záleská cesta"},
+  {street = "Zátôňská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Tri vody I", written = "Tri Vody I."},
+  {street = "Tri vody II", written = "Tri Vody II."},
+  {street = "Tri vody III", written = "Tri Vody III."},
+  {street = "Tri vody IV", written = "Tri Vody IV."},
+  {street = "Tri vody V", written = "Tri Vody V."},
+  {street = "Tri vody VI", written = "Tri Vody VI."},
+  {street = "Bazová"},
+  {street = "Broskyňová"},
+  {street = "Drieňová"},
+  {street = "Fialková"},
+  {street = "Hviezdna"},
+  {street = "Jahodová"},
+  {street = "Krátka"},
+  {street = "Lotosová"},
+  {street = "Okružná"},
+  {street = "Poľovnícka"},
+  {street = "Púpavová"},
+  {street = "Sadová"},
+  {street = "Slnečná"},
+  {street = "Súbežná"},
+  {street = "Veterná"},
+  {street = "Viničná"},
+  {street = "Višňová"},
+  {street = "Záhradná"},
+  {street = "Zelená"},
+]

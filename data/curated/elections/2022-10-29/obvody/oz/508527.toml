@@ -1,0 +1,70 @@
+# Council obvody of Čierny Balog (508527), Brezno.
+# Transcribed by an AI agent in job obvod-rules-288 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: 1. Volebný obvod 1 Čierny Balog – miestna časť Čierny Balog Vo volebnom obvode č. 1 budú zvolení 2 poslanci.
+#   obvod 2: 2. Volebný obvod 2 Jánošovka - miestna časť Jánošovka Vo volebnom obvode č. 2 budú zvolení 2 poslanci.
+#   obvod 3: 3. Volebný obvod 3 Pusté, Dobroč – miestne časti Pusté a Dobroč Vo volebnom obvode č. 3 budú zvolení 4 poslanci.
+#   obvod 4: 4. Volebný obvod 4 Komov a Fajtov– miestne časti Komov a Fajtov Vo volebnom obvode č. 4 budú zvolení 2 poslanci.
+#   obvod 5: 5. Volebný obvod 5 Krám, Medveďov – miestne časti Krám a Medveďov Vo volebnom obvode č. 5 budú zvolení 3 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-1164 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Čierny Balog
+#   okrsok 2: Jánošovka
+#   okrsok 3: Dobroč, Pusté
+#   okrsok 4: Fajtov, Komov
+#   okrsok 5: Krám, Medveďov
+obec = "508527"
+name = "Čierny Balog"
+date = 2022-06-23
+okrsky_date = 2022-06-23
+okrsky_note = "The municipality's Komunálne voľby 2022 page (archived 13.3.2023; live site answers HTTP 429) states that resolution 68/2022 of 23 June 2022 set 5 volebné obvody that are also the volebné okrsky, and lists okrsky 1-5 by miestne časti; one okrsok per obvod, so no rules. Date = that resolution."
+
+[[document]]
+url = "https://www.ciernybalog.sk/download_file_f.php?id=1727907"
+sha256 = "528fa3da22b7e14ab967848db92b140dc62984cd1cc6bdbed561d151de7f1b95"
+title = "Zápisnica zo zasadnutia OcZ Čierny Balog dňa 23.6.2022, uznesenie číslo 68/2022 (s. 30)"
+
+[[document]]
+url = "https://web.archive.org/web/20230313143055/http://www.ciernybalog.sk/komunalne-volby-2022.phtml?id3=176143"
+sha256 = "410e2f30d41c97951f20d5fa670c140801fdf42af6f60656ba93f0c4a6f9cc2f"
+title = "KOMUNÁLNE VOĽBY 2022 – Oznámenie o určení volebných okrskov pre komunálne voľby 2022 (uznesenie OcZ č. 68/2022 z 23. júna 2022: 5 volebných obvodov, ktoré budú tvoriť zároveň volebné okrsky) a Volebné okrsky a miestnosti"
+
+[obvod.1]
+seats = 2
+okrsky = [1]
+rules = [
+  {part = "Čierny Balog"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Jánošovka"},
+]
+
+[obvod.3]
+seats = 4
+okrsky = [3]
+rules = [
+  {part = "Pusté"},
+  {part = "Dobroč"},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [4]
+rules = [
+  {part = "Komov"},
+  {part = "Fajtov"},
+]
+
+[obvod.5]
+seats = 3
+okrsky = [5]
+rules = [
+  {part = "Krám"},
+  {part = "Medveďov"},
+]

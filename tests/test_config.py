@@ -44,15 +44,18 @@ def test_missing_party_logo_file(cfg: Path):
 
 
 def test_party_logo_needs_license(cfg: Path):
-    edit(cfg / "parties.toml", 'logo_license = "CC0"\n', "")
-    with pytest.raises(config.ConfigError, match=r"logo_license: missing"):
+    edit(cfg / "parties.toml", 'license = "CC0"\n', "")
+    with pytest.raises(config.ConfigError, match=r"logo\.2026\.license: missing"):
         config.load(cfg)
 
 
-def test_party_short_form_used_twice(cfg: Path):
-    # A shared link's filter names its parties by short form.
-    edit(cfg / "parties.toml", 'short = "Alternatíva"', 'short = "Bratia Slovenska"')
-    with pytest.raises(config.ConfigError, match=r"short: is also the short form"):
+def test_party_logo_is_of_an_election(cfg: Path):
+    edit(
+        cfg / "parties.toml",
+        '[party."Bratia Slovenska".logo.2026]',
+        '[party."Bratia Slovenska".logo.2018]',
+    )
+    with pytest.raises(config.ConfigError, match=r"logo\.2018: not an election"):
         config.load(cfg)
 
 
@@ -102,46 +105,93 @@ def test_boolean_is_not_a_number(cfg: Path):
 
 
 def test_unknown_key_rejected(cfg: Path):
-    edit(cfg / "site.toml", "election = ", "result_mode = false\nelection = ")
+    edit(cfg / "site.toml", "file_budget = ", "result_mode = false\nfile_budget = ")
     with pytest.raises(config.ConfigError, match="site.toml: result"):
         config.load(cfg)
 
 
-def test_results_dir_per_election(cfg: Path):
+def test_paths_per_election(cfg: Path):
     loaded = config.load(cfg)
-    assert loaded.results_dir == loaded.root / "data/build/results/2026-10-24"
+    election = loaded.election("2026-10-24")
+    assert loaded.election("2026") == election == loaded.latest
+    assert loaded.election(None) == election
+    assert loaded.election_dir(election) == (
+        loaded.root / "data/curated/elections/2026-10-24"
+    )
+    assert loaded.election_build_dir(election) == loaded.root / "data/build/2026-10-24"
+    assert loaded.results_dir(election) == (
+        loaded.root / "data/build/2026-10-24/results"
+    )
+    with pytest.raises(config.ConfigError, match="no election '2018'"):
+        loaded.election("2018")
+
+
+def test_elections_newest_first(cfg: Path):
+    # A second election, older: listed after the latest, whatever the order
+    # in the file.
+    text = (cfg / "elections.toml").read_text(encoding="utf-8")
+    block = text[text.index("[election.2026]") :]
+    older = block.replace("election.2026", "election.2025").replace(
+        "day = 2026-10-24", "day = 2025-10-24"
+    )
+    older = older.replace("day = 2022-10-29", "day = 2021-10-29", 1)
+    older = older[: older.index("by_elections")] + "by_elections = []\n"
+    (cfg / "elections.toml").write_text(older + "\n" + block, encoding="utf-8")
+    loaded = config.load(cfg)
+    assert [e.slug for e in loaded.elections] == ["2026", "2025", "2022"]
+    assert loaded.latest.slug == "2026"
+
+
+def test_election_input_must_exist(cfg: Path):
+    edit(cfg / "elections.toml", 'input = "units-oso2026"', 'input = "units-oso2030"')
+    with pytest.raises(config.ConfigError, match=r"election\.2026\.units\.input: no"):
+        config.load(cfg)
+
+
+def test_election_input_must_not_be_optional(cfg: Path):
+    edit(cfg / "elections.toml", 'input = "units-oso2026"', 'input = "zsk-obvody-ba"')
+    with pytest.raises(config.ConfigError, match="is optional, so no step may read"):
+        config.load(cfg)
+
+
+def test_election_slug_starts_with_a_digit(cfg: Path):
+    edit(cfg / "elections.toml", "[election.2026]", "[election.sk]")
+    edit(cfg / "elections.toml", "[election.2026.", "[election.sk.")
+    edit(cfg / "elections.toml", "[election.2026.", "[election.sk.")
+    with pytest.raises(config.ConfigError, match="slug must be a digit"):
+        config.load(cfg)
 
 
 def test_live_window_from_polls_close(cfg: Path, monkeypatch: pytest.MonkeyPatch):
     # The released site polls from the polls' closing for live_days; a build
     # for testing (EMS_RESULTS_ANYTIME=1) at any time.
     monkeypatch.delenv(config.RESULTS_ANYTIME_ENV, raising=False)
-    edit(cfg / "site.toml", "live_days = 7", "live_days = 3")
-    site = config.load(cfg).site
-    assert site.live_window is not None
-    start, end = site.live_window
-    assert start == site.polls_close
+    edit(cfg / "elections.toml", "live_days = 7", "live_days = 3")
+    election = config.load(cfg).latest
+    assert election.live_window is not None
+    start, end = election.live_window
+    assert start == election.polls_close
     assert end.isoformat() == "2026-10-27T20:00:00+01:00"
     monkeypatch.setenv(config.RESULTS_ANYTIME_ENV, "0")
-    assert config.load(cfg).site.live_window == site.live_window
+    assert config.load(cfg).latest.live_window == election.live_window
     monkeypatch.setenv(config.RESULTS_ANYTIME_ENV, "1")
-    assert config.load(cfg).site.live_window is None
+    assert config.load(cfg).latest.live_window is None
     monkeypatch.setenv(config.RESULTS_ANYTIME_ENV, "yes")
     with pytest.raises(config.ConfigError, match="EMS_RESULTS_ANYTIME: must be"):
         config.load(cfg)
 
 
 def test_live_toggle(cfg: Path, monkeypatch: pytest.MonkeyPatch):
-    # site.toml `live` turns polling on or off; a build for testing
+    # elections.toml `live` turns polling on or off; a build for testing
     # (EMS_RESULTS_ANYTIME=1) polls even with it off.
     monkeypatch.delenv(config.RESULTS_ANYTIME_ENV, raising=False)
-    edit(cfg / "site.toml", "live = false", "live = true")
-    assert config.load(cfg).site.live
-    edit(cfg / "site.toml", "live = true", "live = false")
-    assert not config.load(cfg).site.live
+    edit(cfg / "elections.toml", "live = false", "live = true")
+    assert config.load(cfg).latest.live
+    edit(cfg / "elections.toml", "live = true", "live = false")
+    assert not config.load(cfg).latest.live
     monkeypatch.setenv(config.RESULTS_ANYTIME_ENV, "1")
-    assert config.load(cfg).site.live
-    edit(cfg / "site.toml", "live = false", 'live = "no"')
+    assert config.load(cfg).latest.live
+    edit(cfg / "elections.toml", "live = false", 'live = "no"')
     with pytest.raises(config.ConfigError, match="live: expected bool"):
         config.load(cfg)
 

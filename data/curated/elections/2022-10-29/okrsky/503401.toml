@@ -1,0 +1,59 @@
+# Okrsky of Mužla, transcribed by an AI agent in job okrsok-rules-807 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 (budova obecného úradu – prízemie), kam sú zaradené nasledovné ulice: Bánomská ulica Dlhý rad Dobráňska ulica Dolná záhradná ulica Horná záhradná ulica K studni Pána Komárňanská cesta Krajcárova ulička Malá Dolnosecká ulica Medená cesta Surdícka ulica Školská ulica Špitálska ulička Trhová hradská Ulica svätého Tomáša Ulička svätého Jána Župná ulička
+#   okrsok 2: Okrsok č. 2 (budova Domu služieb – prízemie), kam sú zaradené nasledovné ulice a ostatné časti obce ako aj obyvatelia bez súpisného čísla: Obyvatelia bez súpisného čísla Časť obce Čenkov Časť obce Jurský Chlm Časť obce Malá Mužla Obyvatelia s trvalým pobytom na Železničnej stanici Mužla Bagotova ulička Cintorínska ulica Dallošova ulica Dolnosecká ulica Hlavné námestie Horná ulica Hornosecká ulica Jarková ulica K farskej pivnici Malá ulica Orechový rad Poľná ulica Poľovnícka ulica Pri starej pošte Vinohradnícka cesta
+obec = "503401"
+name = "Mužla"
+okrsky_date = 2022-11-09
+okrsky_fill = "nearest"
+okrsky_note = "No dated document of the 2022 elections found: the website was rebuilt and the 2022 files are gone; the archive keeps an undated bilingual list 'okrsky-valasztasi-korzetek.pdf' uploaded in October 2022 but archived only on 2023-01-30, with exactly the same okrsky. So the referendum's document (no document of the elections found; the referendum's document), dated 9.11.2022, is used. Okrsok 2 also holds 'Obyvatelia bez súpisného čísla' and 'Obyvatelia s trvalým pobytom na Železničnej stanici Mužla' (voters registered without a house address, not the register's houses without a street). The register's houses without a street in the part Mužla (súpisné only) and Kostolná ulička (1 address, not in the document) are placed by fill_nearest."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://web.archive.org/web/20230130141616/https://muzla.sk/wp-content/uploads/2022/11/volebne-okrsky.pdf"
+sha256 = "3aa711186f5cb7866eb1aa419667544190aacf73a20f06e47d0c18035cd62d46"
+title = "Oznámenie o určení volebných miestností a volebných okrskov pre Referendum, ktoré sa bude konať 21. januára 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Bánomská ulica"},
+  {street = "Dlhý rad"},
+  {street = "Dobráňska ulica"},
+  {street = "Dolná záhradná ulica"},
+  {street = "Horná záhradná ulica"},
+  {street = "K studni Pána"},
+  {street = "Komárňanská cesta"},
+  {street = "Krajcárova ulička"},
+  {street = "Malá Dolnosecká ulica"},
+  {street = "Medená cesta"},
+  {street = "Surdícka ulica"},
+  {street = "Školská ulica"},
+  {street = "Špitálska ulička"},
+  {street = "Trhová hradská"},
+  {street = "Ulica svätého Tomáša"},
+  {street = "Ulička svätého Jána"},
+  {street = "Župná ulička"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Čenkov"},
+  {part = "Jurský Chlm"},
+  {part = "Malá Mužla"},
+  {street = "Bagotova ulička"},
+  {street = "Cintorínska ulica"},
+  {street = "Dallošova ulica"},
+  {street = "Dolnosecká ulica"},
+  {street = "Hlavné námestie"},
+  {street = "Horná ulica"},
+  {street = "Hornosecká ulica"},
+  {street = "Jarková ulica"},
+  {street = "K farskej pivnici"},
+  {street = "Malá ulica"},
+  {street = "Orechový rad"},
+  {street = "Poľná ulica"},
+  {street = "Poľovnícka ulica"},
+  {street = "Pri starej pošte"},
+  {street = "Vinohradnícka cesta"},
+]

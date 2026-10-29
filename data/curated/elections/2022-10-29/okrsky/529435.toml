@@ -1,0 +1,60 @@
+# Okrsky of Bratislava-Čunovo, transcribed by an AI agent in job okrsok-rules-1023 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: HRANIČIARSKA, NA HRÁDZI, OVSENÁ, PETRŽALSKÁ, RAŽNÁ, SCHENGENSKÁ, SKÝCOVSKÁ, SOCHOROVA, TURISTICKÁ, ZÁHRADKÁRSKA OSADA A OBČANIA PRIHLÁSENÍ NA OBEC
+#   okrsok 2: BORIEVKOVÁ ULICA, CEZMÍNOVÁ, CÉDROVÁ ULICA, CIROKOVÁ ULICA, DLHÁ, CHRENOVÁ ULICA, IBERKOVÁ, IBIŠTEKOVÁ, KONOPISKÁ, KRUŠPÁNOVÁ, LIPNICOVÁ ULICA, NOVOSADNÁ, PLAMIENKOVÁ ULICA, PROSOVÁ ULICA, RAKYTNÍKOVÁ, REBRÍČKOVÁ, ROZCHODNÍKOVÁ ULICA, ZÁHUMENNÁ, ZOBOVÁ.
+obec = "529435"
+name = "Bratislava-Čunovo"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned documents, read from the page images; the street list writes names in capitals (the heading's year '202' is cut short, the decision gives 29. 10. 2022). The street list names PROSOVÁ ULICA and ROZCHODNÍKOVÁ ULICA (okrsok 2), which the register lacks: left out. 'Záhradkárska osada' (okrsok 1) has no street in the register; its houses and the other houses with only a súpisné číslo (152 with a map point) take the okrsok of the nearest address (fill_nearest), most of them by Schengenská, Hraničiarska and Na hrádzi in okrsok 1. 'Občania prihlásení na obec' (registered without an address) vote in okrsok 1."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "Both documents name these elections: the starostka's 'Určenie volebných okrskov' sets 'dva (2) volebné okrsky pre vykonanie volieb do orgánov samosprávy obcí dňa 29. 10. 2022', and the street list is headed 'Voľby do orgánov samosprávy obcí 29. 10. 202[2]'. Neither states a date; the live copies were re-posted on 30.04.2025 and the Internet Archive holds the street list (byte-identical file, http://www.cunovo.eu/wp-content/uploads/Volebné-okrsky-so-zoznamom-ulíc.pdf) only from 2022-12-07, after the vote."
+
+[[document]]
+url = "https://www.cunovo.eu/files/2025-04-30-161955-ur__enie_volebn__ch_okrskov-vo__by_2022.pdf"
+sha256 = "a7405494ccd00a5354efd0cccbf55175fffb5c2ca5d489726449b0bf26f34828"
+title = "Určenie volebných okrskov (starostka: dva volebné okrsky pre voľby do orgánov samosprávy obcí dňa 29. 10. 2022)"
+
+[[document]]
+url = "https://www.cunovo.eu/files/2025-04-30-161955-Volebn___okrsky_so_zoznamom_ul__c.pdf"
+sha256 = "9a734f43e3c377c5aaca9b05345647e58f80a5f112f87f6a14bc527024b05ef5"
+title = "Voľby do orgánov samosprávy obcí 29. 10. 202[2] – Volebné okrsky v MČ Bratislava-Čunovo (zoznam ulíc)"
+
+[[document]]
+url = "https://www.cunovo.eu/volby-do-organov-samospravy-obci-2022-a73-917"
+sha256 = "9869b57a82c9824e9290f205f2b01d79773d2c97bfe55419e4ad94bdb2ca025a"
+title = "Voľby do orgánov samosprávy obcí 2022 (page linking both)"
+
+[okrsok.1]
+rules = [
+  {street = "Hraničiarska", written = "HRANIČIARSKA"},
+  {street = "Na hrádzi", written = "NA HRÁDZI"},
+  {street = "Ovsená", written = "OVSENÁ"},
+  {street = "Petržalská", written = "PETRŽALSKÁ"},
+  {street = "Ražná", written = "RAŽNÁ"},
+  {street = "Schengenská", written = "SCHENGENSKÁ"},
+  {street = "Skýcovská", written = "SKÝCOVSKÁ"},
+  {street = "Sochorova", written = "SOCHOROVA"},
+  {street = "Turistická", written = "TURISTICKÁ"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Borievková ulica", written = "BORIEVKOVÁ ULICA"},
+  {street = "Cezmínová", written = "CEZMÍNOVÁ"},
+  {street = "Cédrová ulica", written = "CÉDROVÁ ULICA"},
+  {street = "Ciroková ulica", written = "CIROKOVÁ ULICA"},
+  {street = "Dlhá", written = "DLHÁ"},
+  {street = "Chrenová ulica", written = "CHRENOVÁ ULICA"},
+  {street = "Iberková", written = "IBERKOVÁ"},
+  {street = "Ibišteková", written = "IBIŠTEKOVÁ"},
+  {street = "Konopiská", written = "KONOPISKÁ"},
+  {street = "Krušpánová", written = "KRUŠPÁNOVÁ"},
+  {street = "Lipnicová ulica", written = "LIPNICOVÁ ULICA"},
+  {street = "Novosadná", written = "NOVOSADNÁ"},
+  {street = "Plamienková ulica", written = "PLAMIENKOVÁ ULICA"},
+  {street = "Rakytníková", written = "RAKYTNÍKOVÁ"},
+  {street = "Rebríčková", written = "REBRÍČKOVÁ"},
+  {street = "Záhumenná", written = "ZÁHUMENNÁ"},
+  {street = "Zobová", written = "ZOBOVÁ"},
+]

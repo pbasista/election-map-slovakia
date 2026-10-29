@@ -1,0 +1,48 @@
+# The okrsky of Svodín of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/503568.toml, reused by `ems job reuse`.
+obec = "503568"
+name = "Svodín"
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). The document is undated (published on the obec's Voľby 2026 page with the 2026 election documents). \"Novovieska\" is the register's Novovieska cesta (the only street of that name). Hlavné námestie and Krivá cesta, which the document does not name, and the addresses without a street take the okrsok of the nearest placed address."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.svodin.sk/e_download.php?file=/data/multipage/editor/editor-82-310-sk_7.pdf&original=Tla%C4%8Divo%20Volebn%C3%A9%20okrsky_miestnosti_s%C3%ADdlo.pdf"
+sha256 = "ed07c36fe3c69161ce96da33da72cf93e5a4989ce846875bcab376f98bd87eee"
+title = "Volebné okrsky, miestnosti, sídlo"
+
+[okrsok.1]
+rules = [
+  {street = "Maďarskosvodínska cesta"},
+  {street = "Dolná mlynská ulica"},
+  {street = "Horná mlynská ulica", written = "Horná mlynská"},
+  {street = "Krížna ulica", written = "Krížna"},
+  {street = "Malokostolná ulica", written = "Malokostolná"},
+  {street = "Morušová ulica", written = "Morušová"},
+  {street = "Novovieska cesta", written = "Novovieska", note = "the document leaves out \"cesta\"; the register has no other Novovieska street"},
+  {street = "Školská ulica", written = "Školská"},
+  {street = "Ulica Bieleho kríža", written = "Bieleho kríža"},
+  {street = "Ulica Pála Pathóa", written = "Pála Pathóa"},
+  {street = "Ulica sv. Floriána", written = "sv.Floriána"},
+  {street = "Ulica svätého Urbána", written = "svätého Urbána"},
+  {street = "Veľkolesná ulica", written = "Veľkolesná"},
+  {street = "Hlavnosecká ulica", written = "Hlavnosecká"},
+  {street = "Krátka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Nemeckosvodínska cesta"},
+  {street = "Dlhý rad"},
+  {street = "Dolná jablčná ulica", written = "Dolná jablčná"},
+  {street = "Dolný koniec"},
+  {street = "Horná jablčná ulica", written = "Horná jablčná"},
+  {street = "Kamenárska ulica", written = "Kamenárska"},
+  {street = "Kopcová ulica", written = "Kopcová"},
+  {street = "Kostolná ulica", written = "Kostolná"},
+  {street = "Lipová ulica", written = "Lipová"},
+  {street = "Malá škovránková ulica", written = "Malá škovránková"},
+  {street = "Škovránková ulica", written = "Škovránková"},
+  {street = "Ulica kopca Tenkesa", written = "kopca Tenkesa"},
+  {street = "Veterná ulica", written = "Veterná"},
+  {street = "Hlavná ulica", written = "Hlavná"},
+]

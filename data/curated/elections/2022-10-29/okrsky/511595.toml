@@ -1,0 +1,29 @@
+# Okrsky of Málinec, transcribed by an AI agent in job okrsok-rules-1004 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre občanov obce Málinec od súpisného čísla 1 – 350 + časti Dobrý Potok, Ipeľ, Vlčovo
+#   okrsok 2: pre občanov obce Málinec od súpisného čísla 351 - 520
+obec = "511595"
+name = "Málinec"
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The notice states no date but names the elections of 29 October 2022 (https://web.archive.org/web/20220802083759/https://malinec.sk/wp-content/uploads/2022/06/utvorenie-volebnych-okrskov.pdf, captured 2022-08-02)."
+okrsky_fill = "nearest"
+okrsky_note = "Undated notice for the elections of 29 Oct 2022 (uploaded 26 Jul 2022; listed by its Internet Archive snapshot of 2 Aug 2022). Okrsok 2 is \"od súpisného čísla 351 - 520\"; higher súpisné čísla, if any, are also given to it (\"351-\"). Part Chladná Studňa (2 addresses) is not named; placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20220802083759/https://malinec.sk/wp-content/uploads/2022/06/utvorenie-volebnych-okrskov.pdf"
+sha256 = "d06360ac08c599def40bf41fcad554675e7914f90b6d93851cd161d89b9b9c9b"
+title = "Oznam – Utvorenie volebných okrskov pre voľby do orgánov samosprávy obce Málinec a voľby do samosprávnych krajov, ktoré sa budú konať dňa 29. októbra 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Málinec", numbers = "1-350"},
+  {part = "Dobrý Potok"},
+  {part = "Ipeľ"},
+  {part = "Vlčovo"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Málinec", numbers = "351-"},
+]

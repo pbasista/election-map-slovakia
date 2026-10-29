@@ -1,0 +1,58 @@
+# Council obvody of Dohňany (512940), Púchov.
+# Transcribed by an AI agent in job obvod-rules-331 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1 , ktorý zahŕňa Dohňany budú zvolení 5 poslanci.
+#   obvod 2: Vo volebnom obvode číslo 2 , ktorý zahŕňa miestne časti Mostište a Zbora budú zvolení 2 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-1199 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 – Dom kultúrnych tradícií, Dohňany 76
+#   okrsok 2: Volebný okrsok č. 2 – Kultúrny do Mostište, Mostište 91
+#   okrsok 3: Volebný okrsok č. 3 – Kultúrny dom Zbora, Zbora 14
+obec = "512940"
+name = "Dohňany"
+date = 2022-07-13
+note = "Obvod 1 = part Dohňany (okrsok 1), obvod 2 = parts Mostište and Zbora (okrsky 2, 3), as the announcement and the okrsky document of 2022 state."
+okrsky_date = 2022-08-03
+okrsky_note = "The okrsky document is undated; date is its publication date on the municipality's elections page ('Zverejnené 3.8.2022'). It names only the polling stations: obvod 1 = okrsok 1 (Dohňany); obvod 2 = okrsok 2 (Kultúrny dom Mostište) and okrsok 3 (Kultúrny dom Zbora). Okrsky 2 and 3 are taken as the parts Mostište and Zbora where their polling stations are (inferred; the counts fit: Mostište 98 addresses / 161 voters, Zbora 192 / 243)."
+
+[[document]]
+url = "https://www.dohnany.sk/download_file_f.php?id=1713221"
+sha256 = "10435cf63ba05b8cedb8d141142b817cf6ff3fb6940d2b67b652b350f5a26182"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 29. októbra 2022 (uznesenie OZ č. 2022/25/278 zo dňa 13. júla 2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20221221004351/https://www.dohnany.sk/download_file_f.php?id=1720152"
+sha256 = "021e0bb78929661baf13b1668af108a301d4eacc36fbdc37b73ddf12a111c987"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (zverejnené 3.8.2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20221205094212/https://www.dohnany.sk/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov.html"
+sha256 = "a39c8b43910ffd18c42fdb1725352fe9500b13e0f8080c116858a1dd5699d5d7"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov (stránka obce; 'Utvorenie volebných okrskov… Zverejnené 3.8.2022')"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Dohňany"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2, 3]
+rules = [
+  {part = "Mostište"},
+  {part = "Zbora"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Mostište", note = "the document names only the polling station in Mostište; the part's address count fits the okrsok's voters", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Zbora", note = "the document names only the polling station in Zbora; the part's address count fits the okrsok's voters", inferred = true},
+]

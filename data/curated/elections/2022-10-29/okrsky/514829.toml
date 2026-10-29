@@ -1,0 +1,109 @@
+# Okrsky of Hnúšťa, transcribed by an AI agent in job okrsok-rules-688 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hnúšťa – mestská časť Hačava.
+#   okrsok 2: Ulice: SNP 438, 439, 440, 441; M. R. Štefánika 443; Hlavná 12 – 43, 437; Železničná; Ždiar; Troska; Brandzová; Brezina; Križanova; Mútnik; mestská časť Polom; mestská časť Brádno.
+#   okrsok 3: Ulice: Hnúšťa-Maša; Kotlišská; Kotlište; 1. mája 523 – 551, 620 – 623, 727, 728; Jilemnického; Francisciho; Rad; Skalica; Kraskova; Fučíkova; Iváčka; Partizánska; Hrebendova; Rum. armády; Nám. Janka Francisciho.
+#   okrsok 4: IBV – Budovateľov; Sinecká; Hurbanova; Mládeže; Š. M. Daxnera; Vansovej; Mierová; Banícka; Poľná; Pokroku; Hlavná 374 – 386, 405 – 428, 431 – 434; 1. mája 907, 908, 909; 513 – 520, 624 – 645.
+#   okrsok 5: Ulice: sídlisko – Nábrežie Rimavy; Hlavná 435, 436; M. R. Štefánika 444, 445; Športová.
+#   okrsok 6: Celá ulica Klokočova – sídlisko.
+#   okrsok 7: Hnúšťa – Kolónia: Švermova; Školská; Bottova; Vl. Clementisa; J. Kráľa; Sládkovičova; Zápotockého; Bakulíniho; Kpt. Nálepku; Jesenského; Štúrova.
+#   okrsok 8: Hnúšťa – mestská časť Likier: ulica Dolná a Horná.
+obec = "514829"
+name = "Hnúšťa"
+okrsky_date = 2022-07-18
+okrsky_fill = "nearest"
+okrsky_note = "All house numbers in the document are súpisné (by: supisne). Addresses of SNP, M. R. Štefánika, Hlavná and 1. mája whose súpisné číslo the document does not list (e.g. Hlavná 133, 390-404, 429, 430, 919+; M. R. Štefánika 442, 932, 961; 1. mája 424, 552 and others), Záhrada 1.mája and Skálie (in part Hačava, so okrsok 1 by part), and the houses without a street (incl. the settlements Troska and Brezina the document names in okrsok 2, which are not streets of the register) are placed by fill_nearest. Voters registered with the address 'Hnúšťa' only vote in okrsok 2 (separate notice of 22. 9. 2022); these are not the register's houses without a street."
+
+[[document]]
+url = "https://mesto.hnusta.sk/samosprava/volby-a-referenda/volby-do-organov-samospravy-obci-2022/"
+sha256 = "ac396096d9c00e0e899b7123549e2e79f1b9260fa3a4ee3881f46dab40bebb05"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností v meste Hnúšťa (Voľby do orgánov samosprávy obcí 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Hačava"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "SNP", numbers = "438-441", by = "supisne"},
+  {street = "Milana Rastislava Štefánika", numbers = "443", by = "supisne", written = "M. R. Štefánika"},
+  {street = "Hlavná", numbers = "12-43, 437", by = "supisne"},
+  {street = "Železničná"},
+  {street = "Ždiar"},
+  {street = "Brandzová"},
+  {street = "Križanova"},
+  {street = "Mútnik"},
+  {part = "Polom"},
+  {part = "Brádno"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Maša", written = "Hnúšťa-Maša"},
+  {street = "Kotlištská", written = "Kotlišská", note = "a letter left out; the same street"},
+  {street = "Kotlište"},
+  {street = "1.mája", numbers = "523-551, 620-623, 727, 728", by = "supisne", written = "1. mája"},
+  {street = "Jilemnického"},
+  {street = "Francisciho"},
+  {street = "Rad"},
+  {street = "Skalica"},
+  {street = "Kraskova"},
+  {street = "Fučíkova"},
+  {street = "Iváčka"},
+  {street = "Partizánska"},
+  {street = "Hrebendova"},
+  {street = "Rumunskej armády", written = "Rum. armády", note = "abbreviation of Rumunskej"},
+  {street = "Námestie Janka Francisciho", written = "Nám. Janka Francisciho"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Budovateľov"},
+  {street = "Sinecká"},
+  {street = "Hurbanova"},
+  {street = "Mládeže"},
+  {street = "Štefana Marka Daxnera", written = "Š. M. Daxnera"},
+  {street = "Vansovej"},
+  {street = "Mierová"},
+  {street = "Banícka"},
+  {street = "Poľná"},
+  {street = "Pokroku"},
+  {street = "Hlavná", numbers = "374-386, 405-428, 431-434", by = "supisne"},
+  {street = "1.mája", numbers = "907-909, 513-520, 624-645", by = "supisne", written = "1. mája"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Nábrežie Rimavy"},
+  {street = "Hlavná", numbers = "435, 436", by = "supisne"},
+  {street = "Milana Rastislava Štefánika", numbers = "444, 445", by = "supisne", written = "M. R. Štefánika"},
+  {street = "Športová"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Klokočova"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Švermova"},
+  {street = "Školská"},
+  {street = "Bottova"},
+  {street = "Vladimíra Clementisa", written = "Vl. Clementisa"},
+  {street = "Janka Kráľa", written = "J. Kráľa"},
+  {street = "Sládkovičova"},
+  {street = "Zápotockého"},
+  {street = "Bakulíniho"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Jesenského"},
+  {street = "Štúrova"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Dolná"},
+  {street = "Horná"},
+]

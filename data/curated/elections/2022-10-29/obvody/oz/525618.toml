@@ -1,0 +1,36 @@
+# Council obvody of Dedinky (525618), Rožňava.
+# Transcribed by an AI agent in job obvod-rules-387 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod 1 – Dedinky. ... Volebný obvod 1 – Dedinky 3 poslanci.
+#   obvod 2: Volebný obvod 2 – Dobšinská Maša. ... Volebný obvod 2 – Dobšinská Maša 2 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-1247 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný obvod 1 – Dedinky. ... Volebný obvod 1 – Dedinky 3 poslanci.
+#   okrsok 2: Volebný obvod 2 – Dobšinská Maša. ... Volebný obvod 2 – Dobšinská Maša 2 poslanci.
+obec = "525618"
+name = "Dedinky"
+date = 2022-06-30
+note = "Obvody = parts of the municipality (Dedinky, Dobšinská Maša)."
+okrsky_date = 2022-06-30
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+
+[[document]]
+url = "https://www.dedinky.eu/e_download.php?file=data/uredni_deska/obsah130_3.pdf&original=07%20-%20Zverenenie%20poctu%20volebnych%20obvodov%20a%20poslancov.pdf"
+sha256 = "7d82fcf69324411021431dd54728201fbd8e03f76a4909de9d0ba1650b658221"
+title = "Oznámenie o určení počtu poslancov a utvorení volebných obvodov (uznesenia č. 174 a 175 z 30. júna 2022), 20.07.2022"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {part = "Dedinky"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Dobšinská Maša"},
+]

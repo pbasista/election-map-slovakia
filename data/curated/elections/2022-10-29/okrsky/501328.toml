@@ -1,0 +1,50 @@
+# Okrsky of Pribeta, transcribed by an AI agent in job okrsok-rules-719 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Nádražná ulica, Novozámocká ulica, Nový rad, Revolučná ulica, Dlhá ulica, Rúbaňská ulica, Mierová ulica, Hlavná ulica, Krátka ulica, Pri stanici, Pribeta.
+#   okrsok 2: Vojnická ulica, Družstevná ulica, Modranská ulica, Ružová ulica, Robotnícka ulica, Kvetná ulica, Školská ulica, Obchodná ulica, Komárňanská ulica, Jarková ulica, Lúčna ulica, Jarmočná ulica, Športová ulica, Cintorínska ulica, Mládežnícka ulica, Podzáhradná ulica, Námestie Jána Kalvína.
+obec = "501328"
+name = "Pribeta"
+okrsky_date = 2022-08-10
+okrsky_fill = "nearest"
+okrsky_note = "Undated mayor's announcement; date is its publication date on the official page (10.08.2022). The bare 'Pribeta' in okrsok 1 means voters registered without an address (no rule). The register's houses without a street (súpisné only) are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20221002063757/https://www.pribeta.sk/urcenie-volebnych-okrskov-a-elektronicka-adresa-k-volbam-do-oso-a-osk-a22-157"
+sha256 = "b7db3c2442f05c58151707ebdb2c5615f9c0d305a319e837e2719e8881b0661b"
+title = "Určenie volebných okrskov a elektronická adresa k voľbám do OSO a OSK"
+
+[okrsok.1]
+rules = [
+  {street = "Nádražná ulica"},
+  {street = "Novozámocká ulica"},
+  {street = "Nový rad"},
+  {street = "Revolučná ulica"},
+  {street = "Dlhá ulica"},
+  {street = "Rúbaňská ulica"},
+  {street = "Mierová ulica"},
+  {street = "Hlavná ulica"},
+  {street = "Krátka ulica"},
+  {street = "Pri stanici"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Vojnická ulica"},
+  {street = "Družstevná ulica"},
+  {street = "Modranská ulica"},
+  {street = "Ružová ulica"},
+  {street = "Robotnícka ulica"},
+  {street = "Kvetná ulica"},
+  {street = "Školská ulica"},
+  {street = "Obchodná ulica"},
+  {street = "Komárňanská ulica"},
+  {street = "Jarková ulica"},
+  {street = "Lúčna ulica"},
+  {street = "Jarmočná ulica"},
+  {street = "Športová ulica"},
+  {street = "Cintorínska ulica"},
+  {street = "Mládežnícka ulica"},
+  {street = "Podzáhradná ulica"},
+  {street = "Námestie Jána Kalvína"},
+]

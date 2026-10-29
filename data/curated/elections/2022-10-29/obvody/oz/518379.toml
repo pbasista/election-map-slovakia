@@ -1,0 +1,63 @@
+# Council obvody of Dúbravy (518379), Detva.
+# Transcribed by an AI agent in job obvod-rules-192 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: 1 Dúbravy 5
+#   obvod 2: 2 Dúbravy – Hradná, Želobudza, Iviny 2
+# Okrsky added by an AI agent in job okrsok-rules-648 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dúbravy
+#   okrsok 2: Hradná, Želobudza
+#   okrsok 3: Iviny
+obec = "518379"
+name = "Dúbravy"
+date = 2022-07-18
+note = "Obvod 1 = part Dúbravy, obvod 2 = 'Dúbravy – Hradná, Želobudza, Iviny'. Hradná is a hamlet that the register keeps in part Dúbravy (no street names; parts are only Dúbravy, Iviny, Želobudza); the document gives no house numbers for it and no later document does (the 2026 announcement repeats 'Hradná, Želobudza, Iviny'). Hradná's houses are therefore taken by location: the compact cluster of part Dúbravy houses at the OSM hamlet Hradná (48.585 N, 19.334 E, about 2.5 km west of the village and 0.6 km south of Želobudza): súpisné 202-232 (one numbering run between the village's ...-200 and Želobudza's 233-250) and the later houses in the same cluster. The other houses of part Dúbravy (the village around 19.37 E and its outlying houses, all at least 1.2 km from the cluster) stay in obvod 1. With Hradná, okrsok 2 (Hradná + Želobudza) has 88 addresses for 150 voters, in line with the obec's 1.5 voters per address; without it 44."
+okrsky_note = "No document of the elections found (the 2022 elections page lists only the obvody announcement; nothing archived); the referendum's document. Okrsok 1 Dúbravy, 2 Hradná + Želobudza, 3 Iviny, matching the Statistical Office's okrsky per obvod. Hradná is a hamlet that the register keeps in part Dúbravy; as in the obvody, its houses are the part-Dúbravy cluster at the OSM hamlet Hradná (súpisné 202-232 and later houses there), which the obvod rules already put in obvod 2. Okrsok 2 then has 88 addresses for 150 voters, okrsok 3 (Iviny, many cottages) 127 for 88."
+okrsky_referendum = 2023-01-21
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-08
+okrsky_date_basis = "The referendum's okrsky announcement states no date; the municipality's referendum page says it was posted (vyvesené) on 8. 11. 2022. (https://www.dubravy.sk/urad/volby/referendum-2023-3571.html?kshow=10)"
+
+[[document]]
+url = "https://www.dubravy.sk/e_download.php?file=data/uredni_deska/obsah3506_4.pdf&original=Ozn%C3%A1menie%20o%20ur%C4%8Den%C3%AD%20po%C4%8Dtu%20poslancov%20a%20utvoren%C3%AD%20volebn%C3%BDch%20obvodov.pdf"
+sha256 = "a8c5ef46e00493015499d608ffc149fc3521daeb9901ba6645a9249fce6468db"
+title = "Oznámenie o určení počtu poslancov a utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 29. októbra 2022 (uznesenie č. 114/2022 zo dňa 18.07.2022)"
+
+[[document]]
+url = "https://www.dubravy.sk/e_download.php?file=data/uredni_deska/obsah3541_1.pdf&original=Ozn%C3%A1menie%20o%20vytvoren%C3%AD%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "764c562d5f0984d9938b32f488dc8fbc6e4f99a495f372cbcb424f31c959304e"
+title = "Oznámenie o vytvorení volebných okrskov (referendum 21.1.2023), vyvesené 8.11.2022"
+
+[[document]]
+url = "https://www.dubravy.sk/urad/volby/referendum-2023-3571.html?kshow=10"
+sha256 = "edf63539f8f1b78913fe09861761e7e9c02360055e0357024462f6ca80aa6c7e"
+title = "Referendum 2023 (page listing the okrsky document, vyvesené 8. 11. 2022)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Dúbravy"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2, 3]
+rules = [
+  {part = "Dúbravy", numbers = "202-232, 361, 375, 397-398, 419-420, 485-487, 493, 500, 568, 573", by = "supisne", note = "Hradná: the register keeps the hamlet in part Dúbravy; these are all part-Dúbravy houses of the cluster at the OSM hamlet Hradná (48.583-48.587 N, 19.331-19.337 E)", inferred = true},
+  {part = "Želobudza"},
+  {part = "Iviny"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dúbravy", numbers = "202-232, 361, 375, 397-398, 419-420, 485-487, 493, 500, 568, 573", by = "supisne", note = "Hradná: the register keeps the hamlet in part Dúbravy; these are all part-Dúbravy houses of the cluster at the OSM hamlet Hradná (48.583-48.587 N, 19.331-19.337 E)", inferred = true},
+  {part = "Želobudza"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Iviny"},
+]

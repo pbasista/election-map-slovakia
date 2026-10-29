@@ -1,0 +1,22 @@
+# The okrsky of Stará Bystrica of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/509477.toml, reused by `ems job reuse`.
+obec = "509477"
+name = "Stará Bystrica"
+okrsky_date = 2026-07-20
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). The document splits by súpisné číslo across the whole obec (1-431 / 432 and higher) without naming parts; applied to both parts Stará Bystrica and Lány. (All of Lány's súpisné čísla are 432 or higher.)"
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.starabystrica.sk/images/aktuality/2026/j%C3%BAl/5_Utvorenie_volebn%C3%BDch_okrskov_v_obci.pdf"
+sha256 = "c55e325e4bf5dee4ca8bbbf967f2a2ee83646e5dd1b564a79ee976be78b8411b"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Stará Bystrica", numbers = "1-431"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Stará Bystrica", numbers = "432-"},
+  {part = "Lány", numbers = "432-"},
+]

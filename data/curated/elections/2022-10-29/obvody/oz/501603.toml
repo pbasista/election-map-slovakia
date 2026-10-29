@@ -1,0 +1,41 @@
+# Council obvody of Horný Bar (501603), Dunajská Streda.
+# Transcribed by an AI agent in job obvod-rules-337 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa obec Horný Bar sa volí 5 poslancov.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa obec Šuľany sa volí 4 poslancov.
+# Okrsky added by an AI agent in job okrsok-rules-1205 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Vo volebnom obvode číslo 1, ktorý zahŕňa obec Horný Bar sa volí 5 poslancov.
+#   okrsok 2: Vo volebnom obvode číslo 2, ktorý zahŕňa obec Šuľany sa volí 4 poslancov.
+obec = "501603"
+name = "Horný Bar"
+date = 2022-06-16
+note = "Scanned announcement read visually: obvod 1 = obec (part) Horný Bar, obvod 2 = obec (part) Šuľany."
+okrsky_date = 2022-06-16
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office okrsky per obvod), so each okrsok is its whole obvod; the obvody document is the source and date is that resolution's date (no separate okrsky announcement used)."
+
+[[document]]
+url = "https://www.hornybar.sk/e_download.php?file=data/uredni_deska/obsah185_1.pdf&original=Ozn%C3%A1menie%20o%20ur%C4%8Den%C3%AD%20po%C4%8Dtu%20poslancov.pdf"
+sha256 = "88b59edb9b21357c352b51105820e58cc7bcb8a9ffb54c84d81c4af7f91267e2"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov - opravné (uznesenie č. 53/h/2022 zo dňa 16. júna 2022), vyvesené 12. 8. 2022"
+
+[[document]]
+url = "https://www.hornybar.sk/e_download.php?file=data/uredni_deska/obsah182_2.pdf&original=Ozn%C3%A1menie%20o%20ur%C4%8Den%C3%AD%20po%C4%8Dtu%20poslancov%20a%20o%20utvoren%C3%AD%20voebn%C3%BDch%20obvodov.pdf"
+sha256 = "7a135d221895df12a52d28f75ddad9ed2fbdc43a545e62fc14190a03210f9357"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov, vyvesené 18. 7. 2022 (with wrong election date 29. novembra 2022, corrected by the opravné)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Horný Bar"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [2]
+rules = [
+  {part = "Šuľany"},
+]

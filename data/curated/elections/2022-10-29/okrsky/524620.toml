@@ -1,0 +1,52 @@
+# The okrsky of Kapušany of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/524620.toml, reused by `ems job reuse`.
+obec = "524620"
+name = "Kapušany"
+okrsky_date = 2026-07-21
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Addresses without a street other than súpisné čísla 686, 749 and 762 (okrsok 1) are not named; fill_nearest places them. Okrsok 2 also takes voters registered at 'adresa: Obec Kapušany'."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.kapusany.sk/files/2026-07-23-093147-zverejnenie_-_Rozhodnutie_starostu_o_utvoren___volebn__ch_okrskov.pdf"
+sha256 = "79f9020265072793a370ac132e29c6c7ea09a63edb1d6f6532ada91d211f8651"
+title = "Rozhodnutie starostu obce Kapušany o utvorení volebných okrskov a určení volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Ardova"},
+  {street = "Kováčska"},
+  {street = "Kráľovská"},
+  {street = "Krátka"},
+  {street = "Nám.sv.Martina", written = "Nám. sv. Martina"},
+  {street = "Na rínku"},
+  {street = "Požiarnická"},
+  {street = "Prešovská"},
+  {street = "Sadová"},
+  {street = "Slánska"},
+  {street = "Slovenská"},
+  {street = "Tehelná"},
+  {street = "Vranovská"},
+  {street = "Záhradná"},
+  {part = "Kapušany", numbers = "686, 749, 762"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bardejovská"},
+  {street = "Cintorínska"},
+  {street = "Dubová"},
+  {street = "Gabriela Kapyho"},
+  {street = "Hlavná"},
+  {street = "Lesná"},
+  {street = "Mlynská"},
+  {street = "Nová štvrť"},
+  {street = "Pod hradom"},
+  {street = "Poštová"},
+  {street = "Puchovská"},
+  {street = "Sekčovská"},
+  {street = "Severná"},
+  {street = "Topoľová"},
+  {street = "Urbárska"},
+  {street = "Železničná"},
+  {street = "Pri trati", note = "not in the document; a small street by the railway, placed with Železničná", inferred = true},
+]

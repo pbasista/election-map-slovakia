@@ -1,0 +1,27 @@
+# Okrsky of Papradno, transcribed by an AI agent in job okrsok-rules-672 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov z čísla domu 0 – 599
+#   okrsok 2: pre voličov z čísla domu 600 a viac
+obec = "513466"
+name = "Papradno"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-08-07
+okrsky_date_basis = "The notice states no date; the Internet Archive captured it on 2022-08-07 (https://web.archive.org/web/20220807221618/https://www.papradno.sk/uradna-tabula/utvorenie-okrskov-a-urcenie-volebnych-miestnosti-volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-konane-v-rovnaky-den-a-v-rovnakom-case-v-roku-2022)."
+okrsky_note = "Undated notice of the mayor (page snapshotted 2022-08-07; no longer live). It splits by house number (súpisné): okrsok 1 numbers 0–599, okrsok 2 numbers 600 and more, in both parts of the municipality (Papradno and Podjavorník)."
+
+[[document]]
+url = "https://web.archive.org/web/20220807221618/https://www.papradno.sk/uradna-tabula/utvorenie-okrskov-a-urcenie-volebnych-miestnosti-volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-konane-v-rovnaky-den-a-v-rovnakom-case-v-roku-2022"
+sha256 = "52dbe6710ef3294298126daafc41e1e2473a2b88805b109f0970c43f59e240d4"
+title = "Utvorenie okrskov a určenie volebných miestností voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov konané v rovnaký deň a v rovnakom čase v roku 2022"
+
+[okrsok.1]
+rules = [
+  {rest = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Papradno", numbers = "600-"},
+  {part = "Podjavorník", numbers = "600-"},
+]

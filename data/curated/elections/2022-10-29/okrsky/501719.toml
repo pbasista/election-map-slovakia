@@ -1,0 +1,29 @@
+# Okrsky of Kútniky, transcribed by an AI agent in job okrsok-rules-878 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: časť Kolónia, časť Blažov, časť Töböréte do súp.č.260
+#   okrsok 2: časť obce Heďbeneéte, časť obce Töböréte súp.č. od 261 do 1110
+obec = "501719"
+name = "Kútniky"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-08-05
+okrsky_date_basis = "The document states no date; the Internet Archive captured it on 2022-08-05 (https://web.archive.org/web/20220805085304/https://kutniky.sk/images/files/pdf/oznamy-2022/volby2022/Oznamenie_o_vytvoreni_a_mieste_volebnch_okrskov_-_Komunalne_voby.pdf)."
+okrsky_note = "The document is undated; it is an Internet Archive snapshot of 5 August 2022 of the official website. Okrsky by parts of the municipality; Töböréte split by súpisné číslo (up to 260 / 261–1110)."
+
+[[document]]
+url = "https://web.archive.org/web/20220805085304/https://kutniky.sk/images/files/pdf/oznamy-2022/volby2022/Oznamenie_o_vytvoreni_a_mieste_volebnch_okrskov_-_Komunalne_voby.pdf"
+sha256 = "3d3103136a65b55552d4d3553563045dbf4b1a7674e13032aed57bc3cfc9b061"
+title = "OZNÁMENIE o vytvorení a mieste volebných okrskov – Voľby do orgánov samosprávy obcí 29. 10. 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Kolónia"},
+  {part = "Blažov"},
+  {part = "Töböréte", numbers = "0-260"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Heďbeneéte"},
+  {part = "Töböréte", numbers = "261-"},
+]

@@ -1,0 +1,42 @@
+# Council obvody of Hontianske Nemce (518417), Krupina.
+# Transcribed by an AI agent in job obvod-rules-335 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: obvod č. 1 - 5 poslancov pre Hontianske Nemce
+#   obvod 2: obvod č. 2 - 2 poslanci pre Rakovec Majer Sitnianska Lehôtka
+# Okrsky added by an AI agent in job okrsok-rules-1203 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: obvod č. 1 - 5 poslancov pre Hontianske Nemce
+#   okrsok 2: obvod č. 2 - 2 poslanci pre Rakovec Majer Sitnianska Lehôtka
+obec = "518417"
+name = "Hontianske Nemce"
+date_approximate = "archived"
+date_seen = 2022-10-21
+date_basis = "The announcement states no date; the Internet Archive captured it on 2022-10-21 (https://web.archive.org/web/20221021225318/https://www.hontianskenemce.sk/e_download.php?file=data/uredni_deska/obsah32_1.pdf&original=2123.pdf)."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-10-21
+okrsky_date_basis = "The announcement states no date; the Internet Archive captured it on 2022-10-21 (https://web.archive.org/web/20221021225318/https://www.hontianskenemce.sk/e_download.php?file=data/uredni_deska/obsah32_1.pdf&original=2123.pdf)."
+note = "Scanned one-page announcement signed by the starostka (OCR checked against the image); it states no decision date or resolution number, and no 2022 council minutes are on the website, so date is left out; the document is given as an Internet Archive snapshot of 21 Oct 2022 (the same file is still live on the site)."
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office okrsky per obvod), so each okrsok is its whole obvod; the obvody document is the source and date is that resolution's date (no separate okrsky announcement used). Undated scanned announcement; given as an Internet Archive snapshot of 21 Oct 2022, so no date."
+
+[[document]]
+url = "https://web.archive.org/web/20221021225318/https://www.hontianskenemce.sk/e_download.php?file=data/uredni_deska/obsah32_1.pdf&original=2123.pdf"
+sha256 = "5a6331ea816e9e5cc71418985b35501d9c9e11713c1792233024f7145a2f917e"
+title = "Oznámenie – voľby do orgánov samosprávy obcí 29.10.2022 (počet poslancov a obvody)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Hontianske Nemce"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Rakovec"},
+  {part = "Sitnianska Lehôtka"},
+  {part = "Hontianske Nemce", numbers = "371-397, 549-550, 566-567, 1500-1516", by = "supisne", note = "Majer (hamlet ~2 km east of the village, OSM hamlet near 48.283 N, 19.019 E) has no part in the register; its houses are súpisné numbers of part Hontianske Nemce. Taken: all 48 addresses of the part east of 19.005 E (2022 register coordinates): the Majer cluster plus the smaller cluster ~0.6 km SW of it (48.278 N, 19.013 E) and the isolated No. 371 (48.267 N, 19.010 E), which is nearer these clusters than the village.", inferred = true},
+]

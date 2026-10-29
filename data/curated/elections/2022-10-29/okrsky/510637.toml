@@ -1,0 +1,27 @@
+# Okrsky of Liptovská Osada, transcribed by an AI agent in job okrsok-rules-940 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: vytvorený pre voličov súpisné číslo 0 – 300
+#   okrsok 2: vytvorený pre voličov súpisné číslo 301 – 785
+obec = "510637"
+name = "Liptovská Osada"
+okrsky_date = 2022-08-10
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document (read from the rendered page). Okrsky by súpisné číslo over the whole municipality (0–300 / 301–785), applied to both parts (Liptovská Osada and Korytnica-kúpele); any number above 785 takes the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.liptovskaosada.com/images/novinky/volby2022/urcenie_volebnych_okrskov.pdf"
+sha256 = "da83a76a51303fdbf8fa5afb7fe527338d7691434fba40e7d69b6a276e3e5d81"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov, ktoré sa budú konať 29.10.2022"
+
+[okrsok.1]
+rules = [
+  {part = "Liptovská Osada", numbers = "0-300"},
+  {part = "Korytnica-kúpele", numbers = "0-300"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Liptovská Osada", numbers = "301-785"},
+  {part = "Korytnica-kúpele", numbers = "301-785"},
+]

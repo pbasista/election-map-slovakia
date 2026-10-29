@@ -1,0 +1,474 @@
+# Council obvody of Rimavská Sobota (514462), Rimavská Sobota.
+# Transcribed by an AI agent in job obvod-rules-212 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode č. 1 Staré mesto – Chrenovisko – Vyšná Pokoradz, ktorý zahŕňa ulice: bez ulice, Tomášikova, Svätoplukova, Škultétyho, Hlavné námestie, Povstania, Hviezdoslavova, Nám. Š. M. Daxnera, Čerenčianska, Záhradnícka, Pivovarská, Cukrovarská, I. Hatvaniho , K. Mikszátha, A. Markuša, Jarná, Gorkého, Daxnerova, Dostojevského, Kubányho, Podjavorinskej, Jesenského, Kraskova, Tolstého, Stavbárov, Valachova pustatina, Tormáš, Na Chrenovisku, Slnečná, Narcisová, Orgovánová, Pokoradzká, Púpavová, Tulipánová, Konvalinková, Železničná, Nám. M.Tompu, Kuzmányho, J. Fábryho, Francisciho, B. Bartóka, Šrobárova, Hurbanova, Bakulínyho, Tompova, Fučíkova, Bottova, Trhové námestie, Jánošíkova 4,6,8,10,12,14,16,18, Košická cesta, Vyšná Pokoradz sa budú voliť 4 poslanci.
+#   obvod 2: Vo volebnom obvode č. 2 Rožňavská – Šibeničný vrch – Sabová – Vinice – Bakta – Nižná Pokoradz, ktorý zahŕňa ulice: Rožňavská, Družstevná, Školská, Kúpeľná, Tržná, Dukel. hrdinov, Nová, Mládeže, Mlynská, Potravinárska, Sabová, Šamarianka, Vinice, Šibeničný vrch, Veterná, Liesková, Agátová, Jabloňová, Gaštanová, Ružová, Cintorínska, Železničiarska, Javorová, Cestárska, Malinová, Čerešňová, Nižná Pokoradz, Bakta, Šári pustatina, Sütő pustatina sa budú voliť 4 poslanci.
+#   obvod 3: Vo volebnom obvode č. 3 Sídlisko Rimava - Malohontská, ktorý zahŕňa ulice: Sídlisko Rimava, P. Hostinského 2-18, Malohontská, Jánošíkova 20,22,24,26, Športová, Kvetná, Štadión, Mestská záhrada, Amfiteáter sa budú voliť 4 poslanci.
+#   obvod 4: Vo volebnom obvode č. 4 Sídlisko Západ – Sobôtka - Kľačany, ktorý zahŕňa ulice: Česká, Kirejevská 25-41, T. Vansovej, S. Kollára, Dr. V. Clementisa, Por. Ušiaka, L. Novomeského, L.Svobodu, J. Bodona, Rimavská, Rybárska, Sobôtka, M. R. Štefánika, P. J. Šafárika, Žánovská, Lesná, Kľačany sa budú voliť 6 poslanci.
+#   obvod 5: Vo volebnom obvode č. 5 Tomašová – Včelinec – Dúžavská cesta – Kurinec – Dúžava - Mojín, ktorý zahŕňa ulice: Novosadská, Krajná, E. Putru, J. Kráľa, Letná, Lipová, Odborárska, Tomašovská, Kpt. Šmála, Malá, Kolínska, Kirejevská 1-23, Sedliacka, Okružná, Tehlová, P. Dobšinského, P .Hostinského 20-36, Včelinec, Dúžavská cesta, Kurinec, Dúžava, Mojín sa budú voliť 3 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-1092 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: bez ulice, Hlavné námestie, Hviezdoslavova, Nám. Š. M. Daxnera, Povstania, Svätoplukova, Škultétyho, Tomášikova
+#   okrsok 2: B. Bartóka, Bakulínyho, Bottova, Francisciho, Fučíkova, Hurbanova, J. Fábryho, Kuzmányho, Nám. M. Tompu, Šrobárova, Tompova, Trhové námestie, Železničná
+#   okrsok 3: Čerenčianska, Daxnerova, Dostojevského, Gorkého, Jarná, Jesenského, Košická cesta, Kraskova, Kubányho, Podjavorinskej, časť obce Rimavská Sobota 585, 587, 623, 651, 2544, 4312, 4428, Stavbárov, Tolstého
+#   okrsok 4: A. Markuša, K. Mikszátha, Konvalinková, Na Chrenovisku, Narcisová, Orgovánová, Pokoradzká, Púpavová, Slnečná, Tulipánová
+#   okrsok 5: časť obce Vyšná Pokoradz
+#   okrsok 6: Cukrovarská, I. Hatvaniho, Jánošíkova 4, 6, 8, 10, 12, 14, 16, 18, Pivovarská, Záhradnícka
+#   okrsok 7: Rožňavská 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 20, 21, 22, 23, 24, 25, 26, 28, 30, 32, 34, 36, 38, časť obce Vinice
+#   okrsok 8: Agátová, Cestárska, Čerešňová, Družstevná, Gaštanová, Jabloňová, Javorová, Liesková, Malinová, Ružová, Šibeničný vrch, Veterná, Železničiarska
+#   okrsok 9: Dukel. hrdinov, Kúpeľná, Mládeže, Mlynská, Nová, Rožňavská 2, 4, 6, 8, 10, 12, 14, 16, 18, 31, 33, časť obce Sabová, Školská, Tržná
+#   okrsok 10: časť obce Nižná Pokoradz
+#   okrsok 11: časť obce Bakta
+#   okrsok 12: P. Hostinského 2, 4, 6, 8, 10, 12, 14, 16, 18, Sídlisko Rimava 1, 3, 4, 5, 6, 7, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26
+#   okrsok 13: Malohontská 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 19, 21
+#   okrsok 14: Sídlisko Rimava 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 32, 36
+#   okrsok 15: Jánošíkova 20, 22, 24, 26, Kvetná, Malohontská 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, Sídlisko Rimava 35, 37, 39, 41, 43, 45, Športová
+#   okrsok 16: Malohontská 18, 20, 22, 24, 26, 49, 51, 53, Sídlisko Rimava 34, Štadion
+#   okrsok 17: J. Bodona 2, 4, 6, 8, 10, L. Svobodu 1, 2, 3, 4, 5, 6, Rimavská, Rybárska 1, 3, 5, 7, 9
+#   okrsok 18: L. Svobodu 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, Rybárska 4, 6, 8, 10, 12, 14, 16, 18
+#   okrsok 19: J. Bodona 1, 3, 5, 12, 14, 16, 18, 20, 22, 24, L. Novomeského 13, 15, 17, 19, 21, L. Svobodu 21, 22, 23, 24, 25, 26, 27, Por. Ušiaka
+#   okrsok 20: Kľačany, Lesná, Milana Rastislava Štefánika, Pavla Jozefa Šafárika, časť obce Sobôtka, Žánovská
+#   okrsok 21: Dr. V. Clementisa 2, 4, 6, L. Novomeského 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, L. Svobodu 28, 29, 30, 31, 32, 33, 34, 35, T. Vansovej
+#   okrsok 22: Česká, Dr. V. Clementisa 1, 3, 5, 7, 9, 11, Kirejevská 25, 27, 29, 31, 33, 35, 37, 39, 41, S. Kollára
+#   okrsok 23: časť obce Kurinec, P. Dobšinského, P. Hostinského 20, 22, 24, 26, 28, 30, 32, 34, 36, časť obce Včelinec
+#   okrsok 24: E. Putru, J. Kráľa, Kirejevská 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 23, Kolínska, Kpt. Šmála, Krajná, Letná, Lipová, Malá, Novosadská, Odborárska, Okružná, Sedliacka, Tehlová, Tomašovská
+#   okrsok 25: Dúžavská cesta
+#   okrsok 26: časť obce Dúžava
+#   okrsok 27: časť obce Mojín
+obec = "514462"
+name = "Rimavská Sobota"
+date = 2022-05-31
+fill = "nearest"
+note = "Transcribed from the announcement (oznámenie) of 17.06.2022 of resolution 56/2022 of 31.05.2022; the okrsky lists of 03.08.2022 agree. \"bez ulice\" in obvod 1 means voters with permanent residence registered only to the town (no address), so it has no rule; the register addresses without a street name in the part Rimavská Sobota (spread over the town) are placed by fill_nearest. The other parts are placed by the parts the document names. Names without addresses in the register (Valachova pustatina, Šamarianka, Šári pustatina, Sütő pustatina, Mestská záhrada, Amfiteáter) are left out."
+okrsky_date = 2022-08-03
+okrsky_fill = "nearest"
+okrsky_note = "The city's \"Zoznam ulíc a okrskov\" per obvod, dated 03.08.2022 (no separate decision date; date is the lists' date), give the streets, house numbers and parts of each okrsok. \"bez ulice\" in okrsok 1 means voters registered only to the town, no rule. The súpisné numbers of the part Rimavská Sobota listed in okrsok 3 (585, 587, 623, 651, 2544, 4312, 4428) are not given as a rule (a part+numbers rule would override street addresses); only Tormáš (its single address numbered 4428) is placed there as inferred; the rest of the streetless addresses go by fill_nearest. Streets split between obvody (Jánošíkova, Kirejevská, P. Hostinského) are whole within each obvod. fill_nearest also places Salvova (obvod 1), Potravinárska, Cintorínska (obvod 2) and house numbers of split streets the lists leave out."
+
+[[document]]
+url = "https://www.rimavskasobota.sk/download_file_f.php?id=1714373"
+sha256 = "75a737b38ec0f73ce8b84a323aec185767d991b81f16d2d2ce2d78579847896c"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 29. októbra 2022 (uznesenie MsZ č. 56/2022 zo dňa 31.05.2022), 17.06.2022"
+
+[[document]]
+url = "https://www.rimavskasobota.sk/download_file_f.php?id=1719995"
+sha256 = "df4773985c1a9da3ef6a01cda0e7d87933c9e8ace7c3901ece8b33e09a2f2412"
+title = "Zoznam ulíc a okrskov pre voľby do orgánov samosprávy obcí 29.10.2022, obvod č. 1 (03.08.2022)"
+
+[[document]]
+url = "https://www.rimavskasobota.sk/download_file_f.php?id=1719994"
+sha256 = "c19d5193fca83780fc0c249662ffcd09e18ce94dce47526e4f2353297177c8a9"
+title = "Zoznam ulíc a okrskov pre voľby do orgánov samosprávy obcí 29.10.2022, obvod č. 2 (03.08.2022)"
+
+[[document]]
+url = "https://www.rimavskasobota.sk/download_file_f.php?id=1719993"
+sha256 = "00ff8d2eb8b5a6a2ea011bc9db9906488f52f9407c20f4f3161bbe035e55851d"
+title = "Zoznam ulíc a okrskov pre voľby do orgánov samosprávy obcí 29.10.2022, obvod č. 3 (03.08.2022)"
+
+[[document]]
+url = "https://www.rimavskasobota.sk/download_file_f.php?id=1719992"
+sha256 = "3789c935f6f74930ef3ed496c8b6c08cb6265b1f4174f252853029a8578b51ab"
+title = "Zoznam ulíc a okrskov pre voľby do orgánov samosprávy obcí 29.10.2022, obvod č. 4 (03.08.2022)"
+
+[[document]]
+url = "https://www.rimavskasobota.sk/download_file_f.php?id=1719991"
+sha256 = "452d4db255f17c8991749e4b9119cc0c777cc51f62954c1112a5213301f3cf34"
+title = "Zoznam ulíc a okrskov pre voľby do orgánov samosprávy obcí 29.10.2022, obvod č. 5 (03.08.2022)"
+
+[obvod.1]
+seats = 4
+okrsky = [1, 2, 3, 4, 5, 6]
+rules = [
+  {street = "Tomášikova"},
+  {street = "Svätoplukova"},
+  {street = "Škultétyho"},
+  {street = "Hlavné námestie"},
+  {street = "Povstania"},
+  {street = "Hviezdoslavova"},
+  {street = "Nám. Š. M. Daxnera"},
+  {street = "Čerenčianska"},
+  {street = "Záhradnícka"},
+  {street = "Pivovarská"},
+  {street = "Cukrovarská"},
+  {street = "I. Hatvaniho"},
+  {street = "K. Mikszátha"},
+  {street = "A. Markuša"},
+  {street = "Jarná"},
+  {street = "Gorkého"},
+  {street = "Daxnerova"},
+  {street = "Dostojevského"},
+  {street = "Kubányho"},
+  {street = "Podjavorinskej"},
+  {street = "Jesenského"},
+  {street = "Kraskova"},
+  {street = "Tolstého"},
+  {street = "Stavbárov"},
+  {street = "Tormáš"},
+  {street = "Na Chrenovisku"},
+  {street = "Slnečná"},
+  {street = "Narcisová"},
+  {street = "Orgovánová"},
+  {street = "Pokoradzká"},
+  {street = "Púpavová"},
+  {street = "Tulipánová"},
+  {street = "Konvalinková"},
+  {street = "Železničná"},
+  {street = "Nám. M. Tompu", written = "Nám. M.Tompu"},
+  {street = "Kuzmányho"},
+  {street = "J. Fábryho"},
+  {street = "Francisciho"},
+  {street = "B. Bartóka"},
+  {street = "Šrobárova"},
+  {street = "Hurbanova"},
+  {street = "Bakulínyho"},
+  {street = "Tompova"},
+  {street = "Fučíkova"},
+  {street = "Bottova"},
+  {street = "Trhové námestie"},
+  {street = "Jánošíkova", numbers = "4, 6, 8, 10, 12, 14, 16, 18"},
+  {street = "Košická cesta"},
+  {part = "Vyšná Pokoradz"},
+  {street = "Jánošíkova", numbers = "1-3", note = "Jánošíkova 1, 2, 3 are named by neither document; they lie at the start of the street beside Jánošíkova 4-12 and Hlavné námestie (obvod 1)", inferred = true},
+  {street = "Salvova", note = "street not named in the documents (single address Salvova 1); it lies beside Hlavné námestie and Svätoplukova (obvod 1)", inferred = true},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [7, 8, 9, 10, 11]
+rules = [
+  {street = "Rožňavská"},
+  {street = "Družstevná"},
+  {street = "Školská"},
+  {street = "Kúpeľná"},
+  {street = "Tržná"},
+  {street = "Dukel. hrdinov"},
+  {street = "Nová"},
+  {street = "Mládeže"},
+  {street = "Mlynská"},
+  {street = "Potravinárska"},
+  {part = "Sabová"},
+  {part = "Vinice"},
+  {street = "Šibeničný vrch"},
+  {street = "Veterná"},
+  {street = "Liesková"},
+  {street = "Agátová"},
+  {street = "Jabloňová"},
+  {street = "Gaštanová"},
+  {street = "Ružová"},
+  {street = "Cintorínska"},
+  {street = "Železničiarska"},
+  {street = "Javorová"},
+  {street = "Cestárska"},
+  {street = "Malinová"},
+  {street = "Čerešňová"},
+  {part = "Nižná Pokoradz"},
+  {part = "Bakta"},
+]
+
+[obvod.3]
+seats = 4
+okrsky = [12, 13, 14, 15, 16]
+rules = [
+  {street = "Sídlisko Rimava"},
+  {street = "P. Hostinského", numbers = "2-18"},
+  {street = "Malohontská"},
+  {street = "Jánošíkova", numbers = "20, 22, 24, 26"},
+  {street = "Športová"},
+  {street = "Kvetná"},
+  {street = "Štadion", written = "Štadión"},
+  {street = "P. Hostinského", numbers = "1", note = "P. Hostinského 1 is in neither range of the document; it lies between P. Hostinského 2 and 4 (obvod 3)", inferred = true},
+]
+
+[obvod.4]
+seats = 6
+okrsky = [17, 18, 19, 20, 21, 22]
+rules = [
+  {street = "Česká"},
+  {street = "Kirejevská", numbers = "25-41"},
+  {street = "T. Vansovej"},
+  {street = "S. Kollára"},
+  {street = "Dr. V. Clementisa"},
+  {street = "Por. Ušiaka"},
+  {street = "L. Novomeského"},
+  {street = "L. Svobodu", written = "L.Svobodu"},
+  {street = "J. Bodona"},
+  {street = "Rimavská"},
+  {street = "Rybárska"},
+  {part = "Sobôtka"},
+  {street = "Milana Rastislava Štefánika", written = "M. R. Štefánika", note = "register writes the initials in full"},
+  {street = "Pavla Jozefa Šafárika", written = "P. J. Šafárika", note = "register writes the initials in full"},
+  {street = "Žánovská"},
+  {street = "Lesná"},
+  {street = "Kľačany"},
+]
+
+[obvod.5]
+seats = 3
+okrsky = [23, 24, 25, 26, 27]
+rules = [
+  {street = "Novosadská"},
+  {street = "Krajná"},
+  {street = "E. Putru"},
+  {street = "J. Kráľa"},
+  {street = "Letná"},
+  {street = "Lipová"},
+  {street = "Odborárska"},
+  {street = "Tomašovská"},
+  {street = "Kpt. Šmála"},
+  {street = "Malá"},
+  {street = "Kolínska"},
+  {street = "Kirejevská", numbers = "1-23"},
+  {street = "Sedliacka"},
+  {street = "Okružná"},
+  {street = "Tehlová"},
+  {street = "P. Dobšinského"},
+  {street = "P. Hostinského", numbers = "20-36", written = "P .Hostinského"},
+  {part = "Včelinec"},
+  {street = "Dúžavská cesta"},
+  {part = "Kurinec"},
+  {part = "Dúžava"},
+  {part = "Mojín"},
+  {street = "P. Hostinského", numbers = "38", note = "P. Hostinského 38 is in neither range of the document; it continues P. Hostinského 20-36 (obvod 5)", inferred = true},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Hlavné námestie"},
+  {street = "Hviezdoslavova"},
+  {street = "Nám. Š. M. Daxnera"},
+  {street = "Povstania"},
+  {street = "Svätoplukova"},
+  {street = "Škultétyho"},
+  {street = "Tomášikova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "B. Bartóka"},
+  {street = "Bakulínyho"},
+  {street = "Bottova"},
+  {street = "Francisciho"},
+  {street = "Fučíkova"},
+  {street = "Hurbanova"},
+  {street = "J. Fábryho"},
+  {street = "Kuzmányho"},
+  {street = "Nám. M. Tompu"},
+  {street = "Šrobárova"},
+  {street = "Tompova"},
+  {street = "Trhové námestie"},
+  {street = "Železničná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Čerenčianska"},
+  {street = "Daxnerova"},
+  {street = "Dostojevského"},
+  {street = "Gorkého"},
+  {street = "Jarná"},
+  {street = "Jesenského"},
+  {street = "Košická cesta"},
+  {street = "Kraskova"},
+  {street = "Kubányho"},
+  {street = "Podjavorinskej"},
+  {street = "Stavbárov"},
+  {street = "Tolstého"},
+  {street = "Tormáš", note = "the document lists \"časť obce Rimavská Sobota … 4428\" in okrsok 3; Tormáš's only address is number 4428", inferred = true},
+]
+
+[okrsok.4]
+rules = [
+  {street = "A. Markuša"},
+  {street = "K. Mikszátha"},
+  {street = "Konvalinková"},
+  {street = "Na Chrenovisku"},
+  {street = "Narcisová"},
+  {street = "Orgovánová"},
+  {street = "Pokoradzká"},
+  {street = "Púpavová"},
+  {street = "Slnečná"},
+  {street = "Tulipánová"},
+]
+
+[okrsok.5]
+rules = [
+  {part = "Vyšná Pokoradz"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Cukrovarská"},
+  {street = "I. Hatvaniho"},
+  {street = "Jánošíkova"},
+  {street = "Pivovarská"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Rožňavská", numbers = "1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 20, 21, 22, 23, 24, 25, 26, 28, 30, 32, 34, 36, 38"},
+  {part = "Vinice"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Agátová"},
+  {street = "Cestárska"},
+  {street = "Čerešňová"},
+  {street = "Družstevná"},
+  {street = "Gaštanová"},
+  {street = "Jabloňová"},
+  {street = "Javorová"},
+  {street = "Liesková"},
+  {street = "Malinová"},
+  {street = "Ružová"},
+  {street = "Šibeničný vrch"},
+  {street = "Veterná"},
+  {street = "Železničiarska"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Dukel. hrdinov"},
+  {street = "Kúpeľná"},
+  {street = "Mládeže"},
+  {street = "Mlynská"},
+  {street = "Nová"},
+  {street = "Rožňavská", numbers = "2, 4, 6, 8, 10, 12, 14, 16, 18, 31, 33"},
+  {part = "Sabová"},
+  {street = "Školská"},
+  {street = "Tržná"},
+]
+
+[okrsok.10]
+rules = [
+  {part = "Nižná Pokoradz"},
+]
+
+[okrsok.11]
+rules = [
+  {part = "Bakta"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "P. Hostinského"},
+  {street = "Sídlisko Rimava", numbers = "1, 3, 4, 5, 6, 7, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Malohontská", numbers = "1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 19, 21"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Sídlisko Rimava", numbers = "9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 32, 36"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Jánošíkova"},
+  {street = "Kvetná"},
+  {street = "Malohontská", numbers = "23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47"},
+  {street = "Sídlisko Rimava", numbers = "35, 37, 39, 41, 43, 45"},
+  {street = "Športová"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Malohontská", numbers = "18, 20, 22, 24, 26, 49, 51, 53"},
+  {street = "Sídlisko Rimava", numbers = "34"},
+  {street = "Štadion"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "J. Bodona", numbers = "2, 4, 6, 8, 10"},
+  {street = "L. Svobodu", numbers = "1, 2, 3, 4, 5, 6"},
+  {street = "Rimavská"},
+  {street = "Rybárska", numbers = "1, 3, 5, 7, 9"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "L. Svobodu", numbers = "7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20"},
+  {street = "Rybárska", numbers = "4, 6, 8, 10, 12, 14, 16, 18"},
+]
+
+[okrsok.19]
+rules = [
+  {street = "J. Bodona", numbers = "1, 3, 5, 12, 14, 16, 18, 20, 22, 24"},
+  {street = "L. Novomeského", numbers = "13, 15, 17, 19, 21"},
+  {street = "L. Svobodu", numbers = "21, 22, 23, 24, 25, 26, 27"},
+  {street = "Por. Ušiaka"},
+]
+
+[okrsok.20]
+rules = [
+  {street = "Kľačany"},
+  {street = "Lesná"},
+  {street = "Milana Rastislava Štefánika"},
+  {street = "Pavla Jozefa Šafárika"},
+  {part = "Sobôtka"},
+  {street = "Žánovská"},
+]
+
+[okrsok.21]
+rules = [
+  {street = "Dr. V. Clementisa", numbers = "2, 4, 6"},
+  {street = "L. Novomeského", numbers = "1, 2, 3, 4, 5, 6, 7, 8, 9, 11"},
+  {street = "L. Svobodu", numbers = "28, 29, 30, 31, 32, 33, 34, 35"},
+  {street = "T. Vansovej"},
+]
+
+[okrsok.22]
+rules = [
+  {street = "Česká"},
+  {street = "Dr. V. Clementisa", numbers = "1, 3, 5, 7, 9, 11"},
+  {street = "Kirejevská"},
+  {street = "S. Kollára"},
+]
+
+[okrsok.23]
+rules = [
+  {part = "Kurinec"},
+  {street = "P. Dobšinského"},
+  {street = "P. Hostinského"},
+  {part = "Včelinec"},
+]
+
+[okrsok.24]
+rules = [
+  {street = "E. Putru"},
+  {street = "J. Kráľa"},
+  {street = "Kirejevská"},
+  {street = "Kolínska"},
+  {street = "Kpt. Šmála"},
+  {street = "Krajná"},
+  {street = "Letná"},
+  {street = "Lipová"},
+  {street = "Malá"},
+  {street = "Novosadská"},
+  {street = "Odborárska"},
+  {street = "Okružná"},
+  {street = "Sedliacka"},
+  {street = "Tehlová"},
+  {street = "Tomašovská"},
+]
+
+[okrsok.25]
+rules = [
+  {street = "Dúžavská cesta"},
+]
+
+[okrsok.26]
+rules = [
+  {part = "Dúžava"},
+]
+
+[okrsok.27]
+rules = [
+  {part = "Mojín"},
+]

@@ -29,16 +29,33 @@ uv run ems job ingest data/jobs/translation-001 # check and merge output.json
 
 | Option | Effect |
 |---|---|
+| `--election DAY` | the election whose work to make (ISO day or slug; default: the latest), for the kinds that work per election |
 | `--only NAME …` | restrict to these; their meaning is the kind's |
 | `--size N` | items per job (default: the kind's) |
 | `--priority ORDER` | order of the items, if the kind has several |
 | `--limit N` | write at most N jobs, the first ones |
 
+`obvod-rules` and `okrsok-rules` work per election:
+they read that election's candidate lists and build output
+(`data/build/<election day>/`)
+and write into its curated data.
+Their jobs record it in `input.json` as `election`, its day,
+and ingest uses that election, not the latest;
+a job made before jobs recorded their election cannot be ingested
+and must be made again.
+A job not ingested yet keeps its items out of its own election's jobs only.
+`research` is of the latest election only
+(`--election` is refused):
+an earlier election gets the findings of its candidates
+linked to researched ones, published before its day,
+and is never researched anew.
+`translation` serves every election at once.
+
 ### A job directory
 
 `make` writes `data/jobs/<kind>-NNN/` with:
 
-- `input.json`: the items;
+- `input.json`: the items, and context such as the election;
 - `schema.json`: the JSON Schema of the expected `output.json`;
 - `prompt.md`: the instructions;
 - `README.md`: how to run it.
@@ -72,7 +89,7 @@ Translates:
 
 - the UI strings, from English with the Slovak for reference,
   one job per language;
-- the candidates' occupations, from Slovak,
+- the candidates' occupations of every election, from Slovak,
   most frequent first, about 900 per job,
   into every enabled language but Slovak;
 - the research claims (from English)
@@ -106,9 +123,10 @@ part of the municipality or cadastral area
 or reports it not found with the URLs tried.
 
 ```sh
-uv run ems addresses                          # data/build/obvod-addresses/
+uv run ems addresses                          # data/build/<day>/obvod-addresses/
 uv run ems job make obvod-rules               # every municipality still to do
 uv run ems job make obvod-rules --only Pezinok 545651   # by name or code
+uv run ems job make obvod-rules --election 2026         # by slug or day
 uv run ems job ingest data/jobs/obvod-rules-*
 uv run ems make                               # addresses, geo, build, check
 ```
@@ -118,12 +136,30 @@ Ingest accepts a rule set only if:
 
 - its documents are on the municipality's own website
   (a domain carrying its name,
-  or the state's central notice board `cuet.slovensko.sk`)
+  or the state's central notice board `cuet.slovensko.sk`),
+  directly or as an Internet Archive snapshot of such a page
+  (`https://web.archive.org/web/<timestamp>/<original URL>`,
+  fetched as archived, of the day the URL names),
+  or linked from such a page among the documents
+  (a file store such as Google Drive, a CMS host
+  that does not name the municipality),
   and can be fetched;
+- its `date`, where given, is before the election day
+  (older than two years only gets a note:
+  a council may keep the obvody of an earlier term);
 - every street, part and cadastral area it names
   exists in the address register;
-- it has the candidate lists' obvody;
+- it has the candidate lists' obvody,
+  with the seats the Statistical Office's results give
+  where the candidate data has them (2022);
 - every address of the municipality lands in exactly one obvod.
+
+Ingest also notes, without rejecting,
+an obvod whose share of the addresses is more than three times
+its share of the voters on the roll (of its okrsky in the results),
+or less than a third:
+the review sheet and the ingest report list such notes
+(`review/<obec>.notes.json`).
 
 Each checked item gets a review sheet,
 `data/jobs/obvod-rules-NNN/review/<obec>.html`:
@@ -131,7 +167,7 @@ the obvody as the map will draw them,
 every address point coloured by obvod,
 the rules and the document's text.
 
-**Output,** in the election's data,
+**Output,** in the data of the job's election,
 `data/curated/elections/<election day>/`:
 
 - accepted rule sets go to `obvody/oz/`,
@@ -171,8 +207,8 @@ the agent finds the decision that set them on the municipality's website.
 The rules take the form of the obvod rules.
 
 ```sh
-uv run ems fetch --only units-oso2026         # okrsky per municipality, ŠÚ SR
-uv run ems addresses                          # data/build/obvod-addresses/
+uv run ems fetch --only units-oso2026         # okrsky per municipality, ŠÚ SR (2026's units)
+uv run ems addresses                          # data/build/<day>/obvod-addresses/
 uv run ems job make okrsok-rules              # every municipality still to do
 uv run ems job ingest data/jobs/okrsok-rules-*
 uv run ems make                               # geo draws them, build uses them
@@ -181,13 +217,11 @@ uv run ems make                               # geo draws them, build uses them
 **Checks.**
 Ingest accepts the okrsky only if:
 
-- their documents are official (as for `obvod-rules`;
-  a file on a CMS host that does not name the municipality,
-  such as `obec.dobraobec.sk/files/<n>/…`, also
-  when an official page among the documents links to it);
+- their documents are official and dated as for `obvod-rules`;
 - they are numbered 1..N
   for the N okrsky the Statistical Office lists for the municipality,
-  each in one obvod;
+  each in one obvod,
+  and each obvod has the okrsky the results count in it, where known;
 - every address of an obvod with several okrsky
   (of the municipality, with one obvod)
   lands in exactly one of them,
@@ -195,10 +229,13 @@ Ingest accepts the okrsky only if:
 - no okrsok rule selects only addresses of another obvod;
 - the okrsky can be drawn within their obvod.
 
+Okrsky whose share of the addresses is far off their share of the voters
+are noted, as for the obvody.
+
 The review sheet, `data/jobs/okrsok-rules-NNN/review/<obec>.html`,
 draws the okrsky within the obvody.
 
-**Output,** in the election's data:
+**Output,** in the data of the job's election:
 
 - accepted okrsky are added to the rule set,
   or, for a municipality with one obvod,
@@ -213,13 +250,196 @@ and the ballots give a council obvod the 2022 turnout of its okrsky,
 where the municipality has the same okrsky as then
 (`build.council_past`).
 
+## An earlier election
+
+`obvod-rules` and `okrsok-rules` work for an election other than the
+latest too (`--election 2022`).
+The municipalities' websites may show a later election's obvody and
+okrsky by now, so the prompts add a section on that election:
+
+- only documents valid for it count
+  (for 2022: the council's decision on the obvody and seats of mid-2022,
+  the okrsky set for the 2022 elections),
+  live or in the Internet Archive,
+  never a later election's;
+- the items carry what the Statistical Office counted:
+  each obvod's `seats` and `okrsky`, and each okrsok's `voters`;
+- the okrsky of the referendum held within a year after the election
+  (`okrsokrules.REFERENDA`: 21 January 2023 for 2022)
+  may stand in where its document says they are unchanged,
+  or where no document of the election is found:
+  the output sets `referendum` (its day) and says which in `note`,
+  and the okrsky are marked `okrsky_referendum`.
+
+Ingest then also requires:
+
+- every document dated before the election day
+  (for a referendum's okrsky, before the referendum):
+  by `date`, the decision's date as a document states it,
+  or, where no document states it, approximately (below);
+- the okrsky of each obvod those of the Statistical Office's results
+  (2022: `tab02bf`), and their numbers those of its territorial division;
+
+and notes okrsky whose share of their obvod's addresses
+is far off their share of its voters,
+as for the obvody.
+
+**Approximate dating.**
+An undated document may still be the best source,
+so the output may date it approximately instead of by `date`:
+`date_approximate` says how, `date_basis` says it in words,
+and the ingest checks that it ties the document to the election:
+
+- `archived`: the Internet Archive captured the document,
+  or the official page linking it, before the vote;
+  `date_source` is that snapshot, `date_seen` its day;
+- `posted`: the official page (live or archived), `date_source`,
+  says it was posted ("vyvesené", "zverejnené") on `date_seen`,
+  before the vote;
+- `named`: the document names the election.
+
+A capture or posting only after the vote is rejected:
+it may be of a later vote's document (2023's referendum, 2026's),
+so only a document naming the election may rest on later evidence.
+The checks on the content still apply
+(the Statistical Office's okrsky, seats and grouping),
+which also bear out that the document is the election's,
+and a capture or posting more than two years before the vote gets a note.
+The rule set records it as `date_approximate`, `date_seen` and
+`date_basis` (`okrsky_date_*` for the okrsky;
+`src/election_map_slovakia/obvody.py`),
+and the ballots and the map say that the document's date is uncertain
+and what dates it: it may be older than the election.
+A municipality reported not found whose note holds a transcription
+and such evidence is made again with `--only` and ingested;
+`--only` also brings back one whose council rule set is reused,
+which its own document then replaces.
+
+**Supplements from a later source.**
+Where the earlier election's document does not place every address
+(houses or hamlets it leaves out, hamlets the register keeps
+under another part, a split it leaves unclear or plainly gets wrong:
+addresses far off the voters on the roll),
+a later source may fill it in rather than a guess
+(`fill_nearest`, inferred rules):
+the output marks each rule taken from it `"supplemented": true`
+and names the source in `supplement`
+(`from`: `election`, the later election's rule set in the repository,
+each marked rule being one of its rules;
+`document`, a later document of the municipality, listed among the
+documents and so on its website;
+for okrsky also `referendum`, the referendum's document;
+`day`, that vote's day or the document's date;
+`basis`, what was taken for which addresses).
+The ingest accepts it only for an earlier election,
+from a source after it,
+beside rules of the election's own document (never all rules),
+and the checks on the content still apply.
+The rule set records it as `supplemented`, `supplemented_from`,
+`supplement_basis` (`okrsky_supplemented`, … for the okrsky;
+`src/election_map_slovakia/obvody.py`),
+and the ballots and the map say that part of the borders
+comes from that source, so the election's state may have differed.
+A transcribed rule set is redone by removing its file
+(`obvody/oz/<obec>.toml`; its okrsky then need their job again)
+and making the job with `--only`;
+okrsky are made again with `--only` alone.
+
+**Reuse.**
+Where no document of the earlier election is found
+(the not-found lists),
+`ems job reuse --election 2022` copies the latest election's rules,
+but only where the layout provably stayed the same
+(`src/election_map_slovakia/reuse.py`):
+
+- council obvody: the same obvod numbers with the same seats,
+  the same okrsky in each obvod
+  (the earlier results against the latest rule set's okrsky),
+  each okrsok's voters on the roll within 10 % of the earlier count
+  (the earlier election's results against the latest's);
+  the okrsky come along;
+- okrsky alone (a municipality with one obvod in both elections,
+  or whose earlier obvody were transcribed):
+  the same okrsky per obvod, the voters within 10 %;
+- and the copy must pass the jobs' checks on the earlier addresses:
+  every address in one obvod and okrsok, each with addresses,
+  the okrsky drawable.
+
+The copy is marked `reused` (the council rule set)
+or `okrsky_reused` with the latest election's day and a note;
+the municipality stays in the not-found list, which records the search.
+
+**Adoption.**
+Reuse claims that the layout is the same;
+a supplement fills in what the election's own document leaves out.
+Adoption claims neither:
+where no usable document of the earlier election places the addresses
+at all (it names the obvody but not their houses,
+or gives the okrsky only by obvod),
+the owner may choose to draw the units with the latest election's rules
+rather than leave them unknown.
+Only the municipalities listed in the election's `adopt.toml`
+(`data/curated/elections/2022-10-29/adopt.toml`: `obec`, `name`,
+`units` = `obvody` or `okrsky`, and `basis`:
+why there are no rules of its own and what is known to differ)
+are adopted, by the same `ems job reuse`, never others.
+The latest rules are taken as they stand,
+and only where the earlier results land on the units drawn:
+
+- obvody, for a municipality without a rule set of its own:
+  the same obvod numbers and seats, each obvod's voters on the roll
+  within 25 % of the earlier count;
+  the okrsky come along where the latest rule set gives each obvod
+  the okrsky the Statistical Office counted in it then,
+  else each obvod gets the earlier okrsky without rules
+  (drawn where it has one, the okrsok then being the obvod);
+- okrsky, for a municipality whose earlier okrsky are known only by obvod:
+  latest okrsky that place every address,
+  the same okrsky in each obvod as the Statistical Office counted then,
+  each okrsok's voters within 25 %;
+- and the copy must pass the same checks on the earlier addresses.
+
+Okrsky numbered otherwise
+(Bratislava-Nové Mesto had 45 in 2022 and 32 in 2026)
+are refused, not mapped onto each other.
+The report says what was adopted and why anything was refused.
+The copy is marked `adopted` with `adopted_basis`
+(the council rule set; `okrsky_adopted` and `okrsky_adopted_basis`
+for its okrsky where they are drawn)
+or `okrsky_adopted` with `okrsky_adopted_basis`,
+the basis followed by the voters of both elections;
+an adopted rule set is never reused or supplemented.
+`--only` on the obvod-rules job brings an adopted municipality back,
+whose own document then replaces the rule set.
+
+The flags reach the app in `data/index.json`
+(`reused`, `adopted`, `okrsky_reused`, `okrsky_adopted`,
+`okrsky_referendum`, `date_approximate`, `okrsky_date_approximate`,
+`supplemented`, `okrsky_supplemented`),
+so that it can say the borders are another vote's
+(for adopted ones, that they are only indicative),
+from a document whose date is uncertain,
+or partly from a later source.
+
+```sh
+uv run ems addresses --election 2022
+uv run ems job make obvod-rules --election 2022
+uv run ems job ingest data/jobs/obvod-rules-*
+uv run ems addresses --election 2022          # the okrsok jobs need the obvody
+uv run ems job make okrsok-rules --election 2022
+uv run ems job ingest data/jobs/okrsok-rules-*
+uv run ems job reuse --election 2022
+uv run ems make
+```
+
 ## `research`
 
 An agent searches the allowlisted sites (`config/sources.toml`)
 for what they say about each candidate.
 
 **Selection.**
-Jobs run per research language
+Jobs are of the latest election's candidates,
+per research language
 (the `[research]` table:
 Slovak agents search Slovak media and official sites,
 Hungarian ones the Hungarian-language media, …)
@@ -252,7 +472,7 @@ uv run ems job ingest data/jobs/research-*
 
 | Helper | What it does |
 |---|---|
-| `ems research status` | counts the candidates `--only` selects: researched with the current allowlist, with findings, in pending jobs, still to do |
+| `ems research status` | counts the latest election's candidates that `--only` selects: researched with the current allowlist, with findings, in pending jobs, still to do |
 | `ems research read JOB URL` | prints as JSON whether the page may be cited for the job, its title, date, language and the passages naming the person (`--person`); caches the copy in the job |
 | `ems research submit JOB` | checks output items from stdin as ingest does and puts those that pass into the job's `output.json` |
 

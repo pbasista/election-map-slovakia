@@ -3,7 +3,8 @@
 `web/` holds the frontend:
 ES modules with no build step, Preact + htm for the components
 and Leaflet for the map view.
-`ems build` copies it into `dist/` under versioned paths
+`ems build` copies it into `dist/app/`, the app's part of the site,
+under versioned paths
 ([pipeline.md](pipeline.md#build)).
 The whole page is the map;
 a pane beside it (a bottom sheet on phones) shows the ballots of a place.
@@ -15,11 +16,11 @@ a pane beside it (a bottom sheet on phones) shows the ballots of a place.
 | `app.css`, `js/` | `/assets/<v>/` | the styles and the ES modules |
 | `vendor/` | `/assets/vendor/<vv>/` | Leaflet 1.9.4, Preact + htm, the QR code generator |
 | `img/` | `/assets/img/<iv>/` | party logos |
-| `cache.css` | `/assets/` | the stylesheet of the cached copies |
-| `index.html` | `/<lang>/` | the app shell, a template |
+| `cache.css` | `/assets/` of the sources part | the stylesheet of the cached copies |
+| `index.html` | `/<lang>/<slug>/`, `/<lang>/` | the app shell, a template: one page per language and election, the latest election's also at `/<lang>/` |
 | `picker.html` | `/` | the root page that picks the language, a template |
-| `i18n/<lang>.json` | | the hand-written UI strings, Slovak and English |
-| `_headers` | `/_headers` | the base of the response headers |
+| `i18n/<lang>.json` | `/i18n/` | the hand-written UI strings, Slovak and English |
+| `_headers` | `/_headers` | the base of the app's response headers |
 
 Each version (`<v>`, `<vv>`, `<iv>`) is a hash of its tree.
 
@@ -31,8 +32,11 @@ Each version (`<v>`, `<vv>`, `<iv>`) is a hash of its tree.
   the build rewrites that prefix to `/assets/vendor/<vv>/`
   in the modules directly in `js/`, where it means `web/vendor/`.
 - **UI strings.**
-  The build adds the other languages' and the occupations' translations
+  The build adds the other languages' UI strings
   ([agent-jobs.md](agent-jobs.md#translation)).
+  The occupations' translations are in each election's data bundle,
+  `i18n/<lang>.json` there (none for Slovak, in which they are written),
+  fetched with `fetchJSON` like its other files (`js/data.js` `occupations`).
   The card and the tooltip of a translated occupation give the Slovak original;
   party names stay as the official lists write them.
 - **Search engines.**
@@ -41,6 +45,82 @@ Each version (`<v>`, `<vv>`, `<iv>`) is a hash of its tree.
   is on the root page in each fallback language
   and in an app shell's `<noscript>`,
   for search engines that do not run the page's scripts.
+
+## Elections
+
+Each election (`config/elections.toml`) has its own pages,
+`/<lang>/<slug>/` (`/sk/2026/`),
+and `/<lang>/` shows the latest, whose `/<lang>/<slug>/` page
+names it as canonical.
+A page shows one election and loads only its files,
+those of the election's two bundles, each a part of the site of its own:
+its map (`geo/`, `addr/`, `base/`), which depends on that election alone,
+and its data (`data/`, `i18n/`)
+([pipeline.md](pipeline.md#build)).
+The shell's config (the `km-config` meta) gives
+
+- `election`, its day, and `elections`, every election as `{day, slug, kind}`,
+  newest first (`js/i18n.js` `election`, `elections`);
+- `map` and `data`, the addresses of its bundles
+  (`/map/2026` and `/data/2026` under `ems serve`,
+  deployed the addresses of the bundles' deployments, each on an origin of its own);
+  `js/files.js` `dataUrl` and `fetchJSON` put the map's before every path
+  below `geo/`, `addr/` and `base/` and the data's before any other path
+  of the election's files,
+  and the map's renderer gets both with its options
+  (`js/map.js`, `js/draw.js`);
+- `mapVersion` and `dataVersion`, the bundles' versions,
+  which their files are fetched with (`?v=`),
+  and `stringsVersion`, the hash of the UI strings,
+  the same on every election's page so that switching keeps them
+  (`js/files.js` `dataUrl`, `sharedUrl`);
+- `sources`, the address of the cached copies of the pages research cites
+  (empty under `ems serve`: the site's own origin);
+  a card links a copy as `<sources>/cache/<sha256>.html`
+  (`js/i18n.js` `sourcesBase`);
+- `logos`, the directory of the party logos,
+  which data/index.json names by file (`js/i18n.js` `logoUrl`);
+- `occupations`, for each language but Slovak,
+  how many of the election's occupations its data bundle has not translated:
+  the app says the translation is incomplete
+  where that is more than none or UI strings are pending
+  (`js/i18n.js` `translationPending`);
+- `previous`, the day of the regular elections before,
+  of which the office holders and past turnouts are (null if unknown);
+- `results`, the address of the election's results
+  (`/results/<day>` under `ems serve`), `polls`, `live`, `liveWindow`:
+  the election's;
+- `credits`, on an earlier election's page, what the map's credits name
+  (null on the latest's): the later boundaries it is drawn on
+  and how many municipalities then differed,
+  and the dates of its base map and addresses
+  (`inputs.toml` `as_of`; build.py `_credits`).
+  The credits there read, say,
+  "Boundaries: ZBGIS 2026 … (2022 boundaries differ in 16 municipalities)
+  · Base map: … as of 1 January 2022 · … Addresses: MV SR, 09/2022"
+  (`js/map.js` `attribution`).
+
+**Switcher.**
+Where the site has several elections,
+the logo in the search card is a button (`js/search.js`)
+that turns the card into the list of elections, like the search does:
+a group per kind of election (`kind` in `config/elections.toml`)
+under its heading (`elections.kind.<kind>`),
+the kind of the newest election first,
+so that another kind of election reads as another group;
+in each, one line per election, newest first:
+its year, large, and its day,
+a link to its page `/<lang>/<slug>/`,
+the current one tinted and checked.
+A screen reader hears the whole name (`elections.item`).
+A link keeps the map view and the place (`m`, `o`, `ll`, `a`;
+`carriedHash`) and drops the rest of the hash,
+which names contests and candidates of one election,
+but for the open candidate (`c`):
+where the person is linked to a candidate of that election,
+the link opens theirs, the candidacy for the same office if there is one
+(data.js `candidacyLinks`).
+With one election the logo is just the logo.
 
 ## Layout
 
@@ -78,7 +158,7 @@ and Favourites, zoom, and help
   With the sheet open, the buttons above the zoom
   go under one ⋮ button that puts them out in their column.
 - **Status line.**
-  While the polls are open (site.toml `polls_open`, `polls_close`),
+  While the polls are open (elections.toml `polls_open`, `polls_close`),
   a line under the site name says the voting is under way,
   with a still bar of how much of the voting day has passed.
   After they close, while nothing is counted yet
@@ -111,10 +191,55 @@ of one area the council before the mayor or president.
 
 A note above the council contests
 (that all its constituencies are listed,
-that their boundaries are approximate or our estimate)
+that they are drawn with a later election's borders
+without proof that they match, so only indicative,
+`council.adopted`, which comes first,
+that their boundaries are approximate or our estimate,
+drawn with another election's rules, `council.reused`,
+from a document that states no date, `council.dated`,
+or partly from a later source where the election's document
+does not place every address, `council.supplemented`;
+every one that applies is said, the first summarising)
 is one line of summary, cut short where too long;
 its whole text is the tooltip and unfolds under it on a press
 (pane.js `Notice` *summary*).
+Once the polls have closed it speaks of the election as past:
+where the obvody are not known it says they are not known,
+and where no document setting them was found (data/index.json
+`not_found`), that it was not found (`council.not_found`),
+rather than "not known yet".
+
+Notes of the same kind under the introduction
+say what the map draws of the municipality that is not its own
+(data.js `ballots` `origin`, from data/index.json):
+its polling districts drawn from another election's
+or a referendum's documents (`notice.okrsky_reused`,
+`notice.okrsky_referendum`),
+or with a later election's borders without proof that they match,
+so only indicative (`notice.okrsky_adopted`),
+or from a document that states no date (`notice.okrsky_dated`),
+each such document with what dates it approximately:
+an Internet Archive capture or a posting on that day,
+so it is no newer, though perhaps older than the election
+(`notice.dated_archived`, `notice.dated_posted`),
+or its naming the election (`notice.dated_named`),
+polling districts partly from a later source
+where the election's document does not place every address
+(`notice.okrsky_supplemented`),
+each such note, as the council's `council.supplemented`, followed by
+the source: a later election's documents, a referendum's,
+or another later document of the municipality, of that year,
+so the election's borders may have differed there
+(`notice.supplemented_election`, `_referendum`, `_document`),
+polling districts not drawn though it voted in several, so its results by
+polling district cannot be placed on the map (`notice.okrsky_unknown`),
+and a boundary drawn as of a later election
+that then ran slightly differently, naming the neighbour
+the land moved between or the state border (`notice.boundary`,
+`boundaries.toml` of the election).
+The map's tooltips add the same in a short line
+(`mapmode.js` `originLines`).
+
 The documents that set a council's constituencies
 follow its contests on one line:
 one document's title cut short, or several numbered,
@@ -139,12 +264,17 @@ the share and the year above it; the tooltip gives the numbers.
 The last election is 2022, or a municipal by-election since:
 
 - a council's, where it now has several constituencies:
-  of the polling districts that make up the constituency
-  where they are known and the same as then,
-  else of the whole municipality,
+  of the polling districts that make up the constituency,
+  their figures then found as for the map
+  (see [The election before](#the-election-before)),
+  else (where one of them is not known) of the whole municipality,
   the 2022 constituencies being drawn otherwise;
 - a regional constituency's: summed over its municipalities.
 
+Where those figures are not exactly of the constituency
+(the polling districts matched by number and voters, or estimated),
+the share reads "≈41 %"
+and the tooltip names how they were found and explains it.
 Once the contest is counted,
 the meter shows the 2026 turnout in the results' green,
 the last election's as a grey tick on the track with its figures under it,
@@ -188,14 +318,37 @@ and is the button that puts the turnout on the map
     for any contest but that constituency's own council;
   - the polling district of an address or a map pick.
 
-  The turnout meter of a unit shows its 2022 municipal turnout
-  in a municipal contest where the polling district is the same as then;
-  none for the other units.
+  The turnout meter of a polling district shows its 2022 turnout
+  where its figures then are known,
+  "≈" and the method in the tooltip where not exactly the same district;
+  where they are not known, the 2026 turnout's tooltip says so.
+  None for the other units.
   The choice is one for every contest of the ballots,
   kept while browsing places:
   a contest without the unit chosen shows the finest it has
   that is not finer.
   It starts at the whole contest.
+
+### Ran last time
+
+Where the election before the page's (the next older the site shows)
+is built, a candidate linked to a candidacy of it for the same office
+(the same municipality's mayor or council in any constituency,
+the same kraj's president or council)
+has a grey clock turned back beside the chair (`RanBefore` in `js/ballots.js`;
+data.js `ranBefore`).
+It is not a filter, unlike the other marks:
+a press unfolds a line under the name
+with the year and contest then, elected or not,
+the votes and their share of the valid ballots
+(of the voters with a valid ballot for a council),
+the place among that contest's candidates,
+and a link to its card on that election's page (`/<lang>/<slug>/#c=…`);
+pressed again, it folds it.
+It is a button with `aria-expanded`,
+the line a part of the row that does not open the card.
+The data come with the area files (`elsewhere`, see build.py),
+so nothing of the other election is fetched.
 
 ### Circling and crossing out
 
@@ -216,7 +369,8 @@ Shift+click, or a double click or tap
   (the filter bar counts them, and clearing it clears them).
 - On a party tag or a mark it adds the party or mark to the filter
   with its candidates hidden,
-  where a plain press shows only them.
+  where a plain press shows only them
+  (not the clock of [Ran last time](#ran-last-time), which only unfolds).
 - Each press, repeated, undoes itself.
 
 With Shift held, the button under the pointer previews the alternate press:
@@ -237,6 +391,24 @@ the polling districts (else municipalities) with the most of them
 and those with the highest share
 (of the units with at least 30 valid ballots, where two or more have as many),
 and a button that shows the votes on the map.
+
+Where the person is linked to persons of other elections,
+"Candidacies in other elections" lists their candidacies there,
+newest election first, each as the line of [Ran last time](#ran-last-time),
+with the note that the match is by name, age and municipality or region,
+no proof of identity.
+
+Research is done on the latest election's candidates.
+On an earlier election's card, a person linked to a researched one
+is shown that research, cut by the build to the findings
+whose source was published before this election's day;
+a paragraph says when and for which election it was done,
+that none was done for this one,
+and how many undated findings are left out.
+The marks, their filters and the serious-controversies alert
+count only those findings.
+A candidate not linked to one of the latest election is
+"not researched", with that reason.
 
 ### Results on the map from the ballots
 
@@ -451,6 +623,11 @@ What it shows:
   (a mayor's municipality,
   a council's municipality or council constituency,
   in the strongest step, there being nothing to compare it with).
+  A candidate who stood for the same office in 2022
+  has a choice of years in the legend ("2026 | 2022",
+  `YearChoice` in `js/mapmode.js`):
+  2022 colours their share then on the 2026 units
+  (see [The election before](#the-election-before)).
 - **The turnout**, from the turnout menu once counting has started:
   - of the municipal elections
     (every okres file of the results: each municipality,
@@ -528,15 +705,54 @@ names what is shown and the units it is shown by
 finer as you zoom in"),
 gives the scale and the overall figure, and turns it off;
 it all follows the results as they change.
+For a candidate who stood in 2022 it has the choice of years,
+on a phone's sheet always in view.
 
 **Pointing.**
 With a mouse, pointing at the coloured map names the unit
 whose colour is under the pointer
 (a regional constituency, municipality, council constituency
-or polling district) with its figures,
-and a polling district's turnout in the municipal elections
-with its 2022 one where the district is the same as then
-(not in the regional ones: a different election).
+or polling district) with its figures;
+a polling district or municipality also with those of 2022
+where anything is known of them:
+"2022 (same area)" or another method label,
+the turnout then,
+and on a candidate's map their votes then,
+on a leader's map the leader's
+("Name: 38 % · 120 of 316").
+Where the polling districts changed beyond matching,
+one line: "2022 (not known: polling districts changed)".
+On a touch screen a tap shows the same in a card.
+
+### The election before
+
+The figures of 2022 on the 2026 polling districts
+come from the okrsok files' `past`
+([results.md](results.md#okrskyareajson)),
+each okrsok's labelled by how they were found
+(live.js `PAST`, `pastLabel` and `pastTitle`, strings `past.*`):
+
+| Method | Label | Meaning (`past.how_*`) |
+|---|---|---|
+| same | same area | the same addresses, or the whole municipality as its only district |
+| identity | same polling district number, about as many voters | number unchanged, registered voters within 10 % |
+| approximate | estimated: polling districts changed | weighted by the share of its addresses in each district then |
+| unknown | not known: polling districts changed | no figures are shown |
+
+A candidate's 2022 map (`gatherPrevious`) colours
+each municipality by its own 2022 figures where the contest covers all of it,
+each drawn polling district by its own,
+a council constituency of a municipality split into several
+by its polling districts summed (none where one is not known),
+and a regional constituency by its municipalities summed;
+a candidate absent from a unit's ballot then has no figure there.
+The steps are the 2026 map's green;
+a polling district estimated from addresses
+is hatched with the land (`PREVIOUS_PALETTE`, draw.js `stepFill` stripes),
+one not known is grey (`--map-past-unknown`) and labelled "?".
+Below the scale, the legend lists both with a swatch
+and how many drawn polling districts each is,
+each with its explanation as the tooltip.
 
 ## The URL hash
 
@@ -553,7 +769,8 @@ and what the map shows, so that a link opens the same view
   (`zsk`, `city`, `oz`, `okrsky`, `base`, `buildings`);
 - `mr`, the results on the map (mapmode.js `formatMode`):
   `turnout:municipal|city|regional`, `turnout:<contest>`,
-  `winner:<contest>` or `candidate:<candidacy>`.
+  `winner:<contest>`, `candidate:<candidacy>`
+  or `previous:<candidacy>` (their 2022 votes).
 
 A link with a view opens on it,
 not on the place it selects nor on the area of the results it shows.
@@ -568,22 +785,50 @@ with the project's purpose, the source code,
 the version (a link to its GitHub release) and the licence,
 and links to its sections
 (`#v=about-method`, `-sources`, `-research`, `-disclaimers`).
+Its lists come from the election's data/about.json:
+the sources are those the page's election reads, and those no
+election names (the countries around).
+On an earlier election's page a section `#v=about-latest`,
+"What comes from 2026",
+lists each datum taken from the latest election and each one missing,
+with counts (data/about.json `substitutes`):
+the boundaries and the municipalities whose boundary differed,
+the council constituencies drawn from the election's own documents,
+with the latest's rules (proven to match, or adopted without proof,
+naming those municipalities), or not known,
+the polling districts drawn, taken from elsewhere (adopted ones named)
+or not known,
+and of either those from documents dated only approximately
+or partly from a later source,
+the candidates linked, the research reused and the findings left out,
+and that the base map and the addresses are the election's own.
 
 ## Results and caching
 
-The site makes no requests to other servers, the election results included:
-they are files of the site, `/results/<election day>/`
-(the shell's config `results`;
+The site makes requests only to its own parts, the election results included:
+the app fetches the election's bundles (the shell's config `map` and `data`)
+and its results, the directory of the election's day
+in the results part (the shell's config `results`;
 `js/live.js` reads its `status.json` and the files it names,
 [results.md](results.md)).
-`web/_headers` (the base of `dist/_headers`)
-sets a Content-Security-Policy whose connect-src is `'self'` alone,
+The app's `_headers`, from `web/_headers`,
+sets a Content-Security-Policy whose connect-src is `'self'`
+and the origins of the deployed bundles and results alone
+(build.py `headers`),
 so the browser enforces this.
+`ems serve` serves the parts as one site:
+the app at `/`, the bundles at `/map/<slug>/` and `/data/<slug>/`,
+the results at `/results/`
+and the cached copies at `/cache/`,
+each with the headers of its own part.
 
 Code, libraries and images are under their versioned directories,
 kept by browsers for good.
-Every JSON file is fetched with `?v=` and the build's data version
-(`dataVersion` in the shell's config; `dataUrl` in `js/files.js`),
+Every JSON file of the election is fetched with `?v=` and its bundle's version
+(`mapVersion` or `dataVersion` in the shell's config;
+`dataUrl` in `js/files.js`), the UI strings with the strings version
+(`stringsVersion`, a hash of them alone, shared by every election;
+`sharedUrl`),
 the results' files with the hash `status.json` gives them, kept a day,
 and `status.json` revalidated on every load.
 So a release reaches visitors on their next page load

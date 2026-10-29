@@ -1,0 +1,97 @@
+# Council obvody of Tlmače (502863), Levice.
+# Transcribed by an AI agent in job obvod-rules-339 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný okrsok č. 1 tvorí: Lipová ulica, Kotlárska ulica, Mládežnícka ulica, Ulica Na Festúnku, Záhradná ulica. Volebný okrsok č. 2 tvorí: Dlhá ulica, Námestie odborárov, Kozmálovská cesta, Francúzska ulica, Viničná ulica. Volebný okrsok č. 3 tvorí: Námestie 1. mája, Topoľová ulica, Slovanská ulica, Školská ulica, Ružová ulica, ulica Československej Armády
+#   obvod 2: Volebný okrsok č. 4 tvorí: Cintorínska ulica, Cintorínska, Krátka ulica, Levická cesta, Mlynská ulica, Mlynská, Nám. Slov. Národného Povstania, Nová ulica, Potočná ulica, Stará ulica, Stará, Tekovská cesta, Tekovská ulica, Továrenská cesta, Továrenská ulica ... sa volia 2 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-1207 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Lipová ulica, Kotlárska ulica, Mládežnícka ulica, Ulica Na Festúnku, Záhradná ulica
+#   okrsok 2: Dlhá ulica, Námestie odborárov, Kozmálovská cesta, Francúzska ulica, Viničná ulica
+#   okrsok 3: Námestie 1. mája, Topoľová ulica, Slovanská ulica, Školská ulica, Ružová ulica, ulica Československej Armády
+#   okrsok 4: Volebný okrsok č. 4 tvorí: Cintorínska ulica, Cintorínska, Krátka ulica, Levická cesta, Mlynská ulica, Mlynská, Nám. Slov. Národného Povstania, Nová ulica, Potočná ulica, Stará ulica, Stará, Tekovská cesta, Tekovská ulica, Továrenská cesta, Továrenská ulica
+obec = "502863"
+name = "Tlmače"
+date = 2022-06-23
+fill = "nearest"
+note = "The announcement of 28.7.2022 restates resolution 25/230622 (11 poslancov, 2 obvody) and lists the streets of each okrsok by obvod; it states 2 seats for obvod 2 only, so obvod 1 has the remaining 9 (matches ŠÚ SR). The register's addresses without a street (76, súpisné only) are placed by fill_nearest."
+okrsky_date = 2022-07-28
+okrsky_fill = "nearest"
+okrsky_note = "Mayor's announcement of 28.7.2022. \"Ulica Na Festúnku\" is the register's \"Ulica Na Festunku\" (missing accent). The 76 register addresses without a street (súpisné only) in obvod 1 are placed by fill_nearest."
+
+[[document]]
+url = "https://www.mestotlmace.sk/modules/file_storage/download.php?file=c4246953%7C420&inline=1"
+sha256 = "6e31fb443c9d24a816babbe4820ce688a53932c1c53ed5dd0445ccb1939c1d5f"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby 29. októbra 2022 v meste Tlmače (uznesenie MsZ č. 25/230622 zo dňa 23.06.2022), 28.7.2022"
+
+[obvod.1]
+seats = 9
+okrsky = [1, 2, 3]
+rules = [
+  {street = "Lipová ulica"},
+  {street = "Kotlárska ulica"},
+  {street = "Mládežnícka", written = "Mládežnícka ulica"},
+  {street = "Ulica Na Festunku", written = "Ulica Na Festúnku"},
+  {street = "Záhradná ulica"},
+  {street = "Dlhá ulica"},
+  {street = "Námestie Odborárov", written = "Námestie odborárov"},
+  {street = "Kozmálovská cesta"},
+  {street = "Francúzska", written = "Francúzska ulica"},
+  {street = "Viničná ulica"},
+  {street = "Námestie 1.mája", written = "Námestie 1. mája"},
+  {street = "Topoľová ulica"},
+  {street = "Slovanská ulica"},
+  {street = "Školská ulica"},
+  {street = "Ružová ulica"},
+  {street = "Československej Armády", written = "ulica Československej Armády"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [4]
+rules = [
+  {street = "Cintorínska ulica"},
+  {street = "Cintorínska"},
+  {street = "Krátka ulica"},
+  {street = "Levická cesta"},
+  {street = "Mlynská ulica"},
+  {street = "Mlynská"},
+  {street = "Nám. Slov. Národného Povstania"},
+  {street = "Nová ulica"},
+  {street = "Potočná ulica"},
+  {street = "Stará ulica"},
+  {street = "Stará"},
+  {street = "Tekovská cesta"},
+  {street = "Tekovská ulica"},
+  {street = "Továrenská cesta"},
+  {street = "Továrenská ulica"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Lipová ulica"},
+  {street = "Kotlárska ulica"},
+  {street = "Mládežnícka", written = "Mládežnícka ulica"},
+  {street = "Ulica Na Festunku", written = "Ulica Na Festúnku"},
+  {street = "Záhradná ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dlhá ulica"},
+  {street = "Námestie Odborárov", written = "Námestie odborárov"},
+  {street = "Kozmálovská cesta"},
+  {street = "Francúzska", written = "Francúzska ulica"},
+  {street = "Viničná ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Námestie 1.mája", written = "Námestie 1. mája"},
+  {street = "Topoľová ulica"},
+  {street = "Slovanská ulica"},
+  {street = "Školská ulica"},
+  {street = "Ružová ulica"},
+  {street = "Československej Armády", written = "ulica Československej Armády"},
+]

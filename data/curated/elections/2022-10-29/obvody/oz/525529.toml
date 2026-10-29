@@ -1,0 +1,317 @@
+# Council obvody of Rožňava (525529), Rožňava.
+# Transcribed by an AI agent in job obvod-rules-251 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Okrsok 001: Dovčíkova, Kozmonautov, Krásnohorská, Ružová, Sama Tomášika, Slnečná, Vitéz kert; Okrsok 002: Banícka, Cintorínska, Hornocintorínska, Hrnčiarska, Huta, Jána Brocku, Jasná, Juraja Marikovszkého, Klobučnícka, Krátka, Kúpeľná, Majerská, Martina Kukučína, Podrákošská, Splavná, Strmá, Útulná; Okrsok 003: Čučmianska dlhá, J.A. Komenského, Lesná; Okrsok 004: Čučmianska, Sama Czabána; Okrsok 005: Akademika Hronca, Alej Antona Kissa, Betliarska, Cyrila a Metoda, Janka Kráľa, Kósu–Schoppera, Kvetná, Lipová, Námestie 1. mája, Námestie baníkov, Normová, Pod Kalváriou, Šafárikova od č. 1 do č. 15 nepárne a od č. 2 do č. 22 párne, Špitálska, Tichá, Tlačiarenská, Záhradnícka, Zeleného stromu; Okrsok 006: Mierová, Zlatá; Okrsok 007: Hviezdoslavova, Jarná, Letná, Strelnica, Štítnická, Vajanského, Železničná; Okrsok 009: Malá, Šafárikova od č. 17 nepárne a od č. 50 párne až do konca ulice, občania s trvalým pobytom „mesto Rožňava“; Okrsok 017: v časti mesta Rožňavská Baňa; Okrsok 018: v mestskej časti Nadabula
+#   obvod 2: Okrsok 008: Budovateľská, Chalupkova, Jozefa Mikulíka, Pionierov, Šípková; Okrsok 010: Kolomana Tichyho, Košická, Páterová, Pavla Dobšinského, Rumunská; Okrsok 011: 29. augusta, 9. mája, Alej Jána Pavla II., Bočná, Ernesta Rótha, Františky Andrássyovej, Garbiarska, Gemerská, Južná, Kasárenská, Laca Novomeského, Szilvássyho, Tehelná; Okrsok 012: Andreja Cházára, Jovická, M.R. Štefánika, Okružná, Východná, Zoltána Fábryho; Okrsok 013: Kyjevská (okrem č. 1, 3, 5, 7); Okrsok 014: Dúhová, Edelényska č. 1 – 16 a č. 46 – 56; Okrsok 015: Zakarpatská; Okrsok 016: Edelényska č. 18 – 44 párne a č. 29 – 31 nepárne, Kyjevská 1, 3, 5, 7
+# Okrsky added by an AI agent in job okrsok-rules-1129 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dovčíkova, Kozmonautov, Krásnohorská, Ružová, Sama Tomášika, Slnečná, Vitéz kert
+#   okrsok 2: Banícka, Cintorínska, Hornocintorínska, Hrnčiarska, Huta, Jána Brocku, Jasná, Juraja Marikovszkého, Klobučnícka, Krátka, Kúpeľná, Majerská, Martina Kukučína, Podrákošská, Splavná, Strmá, Útulná
+#   okrsok 3: Čučmianska dlhá, J.A. Komenského, Lesná
+#   okrsok 4: Čučmianska, Sama Czabána
+#   okrsok 5: Akademika Hronca, Alej Antona Kissa, Betliarska, Cyrila a Metoda, Janka Kráľa, Kósu–Schoppera, Kvetná, Lipová, Námestie 1. mája, Námestie baníkov, Normová, Pod Kalváriou, Šafárikova od č. 1 do č. 15 nepárne a od č. 2 do č. 22 párne, Špitálska, Tichá, Tlačiarenská, Záhradnícka, Zeleného stromu
+#   okrsok 6: Mierová, Zlatá
+#   okrsok 7: Hviezdoslavova, Jarná, Letná, Strelnica, Štítnická, Vajanského, Železničná
+#   okrsok 8: Budovateľská, Chalupkova, Jozefa Mikulíka, Pionierov, Šípková
+#   okrsok 9: Malá, Šafárikova od č. 17 nepárne a od č. 50 párne až do konca ulice, občania s trvalým pobytom „mesto Rožňava“
+#   okrsok 10: Kolomana Tichyho, Košická, Páterová, Pavla Dobšinského, Rumunská
+#   okrsok 11: 29. augusta, 9. mája, Alej Jána Pavla II., Bočná, Ernesta Rótha, Františky Andrássyovej, Garbiarska, Gemerská, Južná, Kasárenská, Laca Novomeského, Szilvássyho, Tehelná
+#   okrsok 12: Andreja Cházára, Jovická, M.R. Štefánika, Okružná, Východná, Zoltána Fábryho
+#   okrsok 13: Kyjevská (okrem č. 1, 3, 5, 7)
+#   okrsok 14: Dúhová, Edelényska č. 1 – 16 a č. 46 – 56
+#   okrsok 15: Zakarpatská
+#   okrsok 16: Edelényska č. 18 – 44 párne a č. 29 – 31 nepárne, Kyjevská 1, 3, 5, 7
+#   okrsok 17: v časti mesta Rožňavská Baňa
+#   okrsok 18: v mestskej časti Nadabula
+obec = "525529"
+name = "Rožňava"
+date = 2021-07-01
+fill = "nearest"
+note = "Resolution 67/2021 of 1 July 2021 kept the 2 obvody (boundaries unchanged) with 7 and 6 seats for 2022-2026; the mayor's okrsky document of 20 July 2022 lists the streets of each okrsok and assigns okrsky 1-7, 9, 17, 18 to VO 1 and 8, 10-16 to VO 2 (matching ŠÚ SR). \"Vitéz kert\" is not in the register; \"mesto Rožňava\" = voters without address. Register addresses without a street in part Rožňava placed by fill_nearest. Resolution 67/2021 of 2021-07-01 was still in force for the 2022 elections; no later decision on obvody was found (June 2022 resolutions checked)."
+okrsky_date = 2022-07-20
+okrsky_fill = "nearest"
+okrsky_note = "Mayor's document of 20.07.2022 (page headings of okrsky 7 and 17 lack the number; they follow in sequence). \"Vitéz kert\" (okrsok 1) is not in the register, left out. \"Páterová\" is the register's Páterova (same street, different ending of the name). \"občania s trvalým pobytom mesto Rožňava\" (okrsok 9) are voters without an address, not a rule. Not listed by the document, placed by fill_nearest: Šafárikova even 24-48, Edelényska odd 17-27 and 33-45, and the register houses without a street in part Rožňava (súpisné only)."
+
+[[document]]
+url = "https://www.roznava.sk/files/2022-09-04-184244-Volebn___okrsky_a_volebn___miestnosti.pdf"
+sha256 = "971fd80959abe7f43decfc400447e58b91b18e1fbd74a6c82db41e13b754ed1a"
+title = "Určenie volebných okrskov a volebných miestností, č. MsÚ/RV-4004/2022-35094, 20. 07. 2022 (okrsky zaradené do volebných obvodov)"
+
+[[document]]
+url = "https://www.roznava.sk/uploads/files/U-1.pdf"
+sha256 = "d4c09e3ea8bebf7cb4e118649c4b45d7bd9e3dd539933ed6d0bb25dae525a893"
+title = "Uznesenia MZ v Rožňave z 01. 07. 2021, uznesenie č. 67/2021 (2 VO, VO 1 – 7, VO 2 – 6 poslancov, 2022–2026)"
+
+[obvod.1]
+seats = 7
+okrsky = [1, 2, 3, 4, 5, 6, 7, 9, 17, 18]
+rules = [
+  {street = "Dovčíkova"},
+  {street = "Kozmonautov"},
+  {street = "Krásnohorská"},
+  {street = "Ružová"},
+  {street = "Sama Tomášika"},
+  {street = "Slnečná"},
+  {street = "Banícka"},
+  {street = "Cintorínska"},
+  {street = "Hornocintorínska"},
+  {street = "Hrnčiarska"},
+  {street = "Huta"},
+  {street = "Jána Brocku"},
+  {street = "Jasná"},
+  {street = "Juraja Marikovszkého"},
+  {street = "Klobučnícka"},
+  {street = "Krátka"},
+  {street = "Kúpeľná"},
+  {street = "Majerská"},
+  {street = "Martina Kukučína"},
+  {street = "Podrákošská"},
+  {street = "Splavná"},
+  {street = "Strmá"},
+  {street = "Útulná"},
+  {street = "Čučmianska dlhá"},
+  {street = "J. A. Komenského", written = "J.A. Komenského"},
+  {street = "Lesná"},
+  {street = "Čučmianska"},
+  {street = "Sama Czabána"},
+  {street = "Akademika Hronca"},
+  {street = "Alej Antona Kissa"},
+  {street = "Betliarska"},
+  {street = "Cyrila a Metoda"},
+  {street = "Janka Kráľa"},
+  {street = "Kósu-Schoppera", written = "Kósu–Schoppera"},
+  {street = "Kvetná"},
+  {street = "Lipová"},
+  {street = "Námestie 1. mája"},
+  {street = "Námestie baníkov"},
+  {street = "Normová"},
+  {street = "Pod Kalváriou"},
+  {street = "Šafárikova", note = "okrsky 5 and 9 split Šafárikova by numbers, both in obvod 1: whole street"},
+  {street = "Špitálska"},
+  {street = "Tichá"},
+  {street = "Tlačiarenská"},
+  {street = "Záhradnícka"},
+  {street = "Zeleného stromu"},
+  {street = "Mierová"},
+  {street = "Zlatá"},
+  {street = "Hviezdoslavova"},
+  {street = "Jarná"},
+  {street = "Letná"},
+  {street = "Strelnica"},
+  {street = "Štítnická"},
+  {street = "Vajanského"},
+  {street = "Železničná"},
+  {street = "Malá"},
+  {part = "Rožňavská Baňa"},
+  {part = "Nadabula"},
+]
+
+[obvod.2]
+seats = 6
+okrsky = [8, 10, 11, 12, 13, 14, 15, 16]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Chalupkova"},
+  {street = "Jozefa Mikulíka"},
+  {street = "Pionierov"},
+  {street = "Šípková"},
+  {street = "Kolomana Tichyho"},
+  {street = "Košická"},
+  {street = "Páterova", written = "Páterová"},
+  {street = "Pavla Dobšinského"},
+  {street = "Rumunská"},
+  {street = "29. augusta"},
+  {street = "9. mája"},
+  {street = "Alej Jána Pavla II."},
+  {street = "Bočná"},
+  {street = "Ernesta Rótha"},
+  {street = "Františky Andrássyovej"},
+  {street = "Garbiarska"},
+  {street = "Gemerská"},
+  {street = "Južná"},
+  {street = "Kasárenská"},
+  {street = "Laca Novomeského"},
+  {street = "Szilvássyho"},
+  {street = "Tehelná"},
+  {street = "Andreja Cházára"},
+  {street = "Jovická"},
+  {street = "M. R. Štefánika", written = "M.R. Štefánika"},
+  {street = "Okružná"},
+  {street = "Východná"},
+  {street = "Zoltána Fábryho"},
+  {street = "Kyjevská"},
+  {street = "Dúhová"},
+  {street = "Edelényska"},
+  {street = "Zakarpatská"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Dovčíkova"},
+  {street = "Kozmonautov"},
+  {street = "Krásnohorská"},
+  {street = "Ružová"},
+  {street = "Sama Tomášika"},
+  {street = "Slnečná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Banícka"},
+  {street = "Cintorínska"},
+  {street = "Hornocintorínska"},
+  {street = "Hrnčiarska"},
+  {street = "Huta"},
+  {street = "Jána Brocku"},
+  {street = "Jasná"},
+  {street = "Juraja Marikovszkého"},
+  {street = "Klobučnícka"},
+  {street = "Krátka"},
+  {street = "Kúpeľná"},
+  {street = "Majerská"},
+  {street = "Martina Kukučína"},
+  {street = "Podrákošská"},
+  {street = "Splavná"},
+  {street = "Strmá"},
+  {street = "Útulná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Čučmianska dlhá"},
+  {street = "J. A. Komenského"},
+  {street = "Lesná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Čučmianska"},
+  {street = "Sama Czabána"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Akademika Hronca"},
+  {street = "Alej Antona Kissa"},
+  {street = "Betliarska"},
+  {street = "Cyrila a Metoda"},
+  {street = "Janka Kráľa"},
+  {street = "Kósu-Schoppera"},
+  {street = "Kvetná"},
+  {street = "Lipová"},
+  {street = "Námestie 1. mája"},
+  {street = "Námestie baníkov"},
+  {street = "Normová"},
+  {street = "Pod Kalváriou"},
+  {street = "Špitálska"},
+  {street = "Tichá"},
+  {street = "Tlačiarenská"},
+  {street = "Záhradnícka"},
+  {street = "Zeleného stromu"},
+  {street = "Šafárikova", numbers = "1-15", parity = "odd"},
+  {street = "Šafárikova", numbers = "2-22", parity = "even"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Mierová"},
+  {street = "Zlatá"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "Jarná"},
+  {street = "Letná"},
+  {street = "Strelnica"},
+  {street = "Štítnická"},
+  {street = "Vajanského"},
+  {street = "Železničná"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Chalupkova"},
+  {street = "Jozefa Mikulíka"},
+  {street = "Pionierov"},
+  {street = "Šípková"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Malá"},
+  {street = "Šafárikova", numbers = "17-", parity = "odd"},
+  {street = "Šafárikova", numbers = "50-", parity = "even"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Kolomana Tichyho"},
+  {street = "Košická"},
+  {street = "Pavla Dobšinského"},
+  {street = "Rumunská"},
+  {street = "Páterova", written = "Páterová"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "29. augusta"},
+  {street = "9. mája"},
+  {street = "Alej Jána Pavla II."},
+  {street = "Bočná"},
+  {street = "Ernesta Rótha"},
+  {street = "Františky Andrássyovej"},
+  {street = "Garbiarska"},
+  {street = "Gemerská"},
+  {street = "Južná"},
+  {street = "Kasárenská"},
+  {street = "Laca Novomeského"},
+  {street = "Szilvássyho"},
+  {street = "Tehelná"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Andreja Cházára"},
+  {street = "Jovická"},
+  {street = "M. R. Štefánika"},
+  {street = "Okružná"},
+  {street = "Východná"},
+  {street = "Zoltána Fábryho"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Kyjevská", except = "1, 3, 5, 7"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Dúhová"},
+  {street = "Edelényska", numbers = "1-16, 46-56"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Zakarpatská"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Edelényska", numbers = "18-44", parity = "even"},
+  {street = "Edelényska", numbers = "29-31", parity = "odd"},
+  {street = "Kyjevská", numbers = "1, 3, 5, 7"},
+]
+
+[okrsok.17]
+rules = [
+  {part = "Rožňavská Baňa"},
+]
+
+[okrsok.18]
+rules = [
+  {part = "Nadabula"},
+]

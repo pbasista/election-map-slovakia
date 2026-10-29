@@ -1,0 +1,162 @@
+# Council obvody of Vráble (500933), Nitra.
+# Transcribed by an AI agent in job obvod-rules-266 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: 1. volebný obvod zahŕňa ulice: Sídl. Lúky, Sídl. Žitava, Žitavská, Staničná, Vinohrady, Vráble; 1. volebný obvod ..... 7 poslancov
+#   obvod 2: 2. volebný obvod zahŕňa ulice: 1. mája, Krátka, Levická, Moravská, Partizánska, Poštová, Šafárikova, Sídl. Kaška, Školská, Záhradná, Cintorínska, Družstevná, Hlavná, Hliníková, Hviezdoslavova, Kostolná, Ul. Martina Benku, Nám. kpt. Nálepku, Štúrova, Bernolákova, Chalupkova, Dukelská, Hurbanova, Kollárova, Kukučínova, Podmájska, Sládkovičova, Za Humnami, Orechová, Okružná, Horný Ohaj, Dyčka. 2. volebný obvod ..... 6 poslancov
+# Okrsky added by an AI agent in job okrsok-rules-1013 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Sídl. Žitava; Ulica: Žitavská
+#   okrsok 2: Sídl. Lúky - od orientačného čísla 7, 8, … 36; časť obce Vráble; Ulice Staničná, Vinohrady
+#   okrsok 3: Sídl. Lúky - od orientačného čísla 38A, 40, 41, … 59, 64, 65, 66, 67
+#   okrsok 4: Sídl. Lúky - od orientačného čísla 60, 61, 62, 63, 68, 69, … 92
+#   okrsok 5: Ulice Bernolákova Hurbanova Chalúpkova Kollárova Kukučinova Levická - ľavá strana Sládkovičova
+#   okrsok 6: Ulice Dukelská Levická – pravá strana Partizánska Podmájska Poštová Sídl. Kaška Šafárikova Školská Záhradná
+#   okrsok 7: Ulice 1. mája Cintorínska Družstevná Hlavná Hliníkova Hviezdoslavova Kostolná Krátka Martina Benku Moravská Nám. kpt. Nálepku Okružná Orechová Štúrova Za humnami
+#   okrsok 8: Vráble – časť Horný Ohaj
+#   okrsok 9: Vráble – časť Dyčka
+obec = "500933"
+name = "Vráble"
+date = 2022-07-14
+fill = "nearest"
+note = "Obvod 1's entry 'Vráble' means voters registered with the town only (no address); not turned into a part rule. The part Vráble's addresses without a street (súpisné only) and Čerešňové námestie (1 address, not named in the resolution) are placed by fill_nearest. Okrsky list on the 2022 page confirms: Levická both sides in okrsky 5–6 (obvod 2)."
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky from the 'Volebné okrsky' section of the 'Spojené voľby 2022' page; no mayor's decision published. Okrsok 2's 'časť obce Vráble' (as the obvod resolution's 'Vráble') means voters registered with the town only, no part rule. Levická 'ľavá strana' (okrsok 5) / 'pravá strana' (okrsok 6): going out of the town towards Levice (east), the left side is the northern, odd-numbered one, where okrsok 5's Bernolákova, Hurbanova, Chalupkova, Kollárova, Sládkovičova lie; the even side (ZŠ Levická 64; Partizánska, Školská, Šafárikova south of it) is okrsok 6. fill_nearest places Sídl. Lúky 1-6, 1A, 37, 38, 39 and 93 (not listed), Čerešňové námestie 6 and the part Vráble's addresses without a street."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The okrsky are the section 'Volebné okrsky' of the city's page headed 'Spojené voľby 2022', listed by 'Volebný obvod číslo: 1/2' of the obvody the MsZ set by uznesenie č. 427a/2022 of 14. 7. 2022 'pre voľby do orgánov samosprávy obcí konané 29. októbra 2022'; the page also holds the 2022 candidates and results. The okrsky section states no decision or posting date, and the Internet Archive has no capture of the page before the vote (the CDX index lists no capture of spojene-volby-2022*; earlier research: first snapshot of the site's okrsky pages 2025-10-30)."
+
+[[document]]
+url = "https://www.vrable.sk/download_file_f.php?id=1054293"
+sha256 = "b8a1a4ded6775978070f845948f4e6d0198dadc1c30e7ebf5d28d17ef502bb4e"
+title = "Uznesenia MsZ vo Vrábľoch 2018–2022, uznesenia č. 427a/2022 a 427b/2022 zo dňa 14. 7. 2022 (s. 201)"
+
+[[document]]
+url = "https://www.vrable.sk/spojene-volby-2022.html"
+sha256 = "01ecd7aca964e813fe7464deeb3c37398ca12f04361aa850d892fd8a5b33fb81"
+title = "Spojené voľby 2022 – Informácia o rozdelení volebných obvodov a o počtoch poslancov"
+
+[obvod.1]
+seats = 7
+okrsky = [1, 2, 3, 4]
+rules = [
+  {street = "Sídl. Lúky"},
+  {street = "Sídl. Žitava"},
+  {street = "Žitavská"},
+  {street = "Staničná"},
+  {street = "Vinohrady"},
+]
+
+[obvod.2]
+seats = 6
+okrsky = [5, 6, 7, 8, 9]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Krátka"},
+  {street = "Levická"},
+  {street = "Moravská"},
+  {street = "Partizánska"},
+  {street = "Poštová"},
+  {street = "Šafárikova"},
+  {street = "Sídl. Kaška"},
+  {street = "Školská"},
+  {street = "Záhradná"},
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Hlavná"},
+  {street = "Hliníková"},
+  {street = "Hviezdoslavova"},
+  {street = "Kostolná"},
+  {street = "Martina Benku", written = "Ul. Martina Benku"},
+  {street = "Nám. Kpt. Nálepku", written = "Nám. kpt. Nálepku"},
+  {street = "Štúrova"},
+  {street = "Bernolákova"},
+  {street = "Chalupkova"},
+  {street = "Dukelská"},
+  {street = "Hurbanova"},
+  {street = "Kollárova"},
+  {street = "Kukučínova"},
+  {street = "Podmájska"},
+  {street = "Sládkovičova"},
+  {street = "Za Humnami"},
+  {street = "Orechová"},
+  {street = "Okružná"},
+  {part = "Horný Ohaj"},
+  {part = "Dyčka"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Sídl. Žitava"},
+  {street = "Žitavská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Sídl. Lúky", numbers = "7-36"},
+  {street = "Staničná"},
+  {street = "Vinohrady"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Sídl. Lúky", numbers = "38A, 40-59, 64-67"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Sídl. Lúky", numbers = "60-63, 68-92"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Hurbanova"},
+  {street = "Chalupkova", written = "Chalúpkova", note = "the page's spelling (vowel length) of the register's Chalupkova"},
+  {street = "Kollárova"},
+  {street = "Kukučínova", written = "Kukučinova", note = "the page's spelling (vowel length) of the register's Kukučínova"},
+  {street = "Levická", parity = "odd", note = "ľavá strana: the northern, odd side (see note)"},
+  {street = "Sládkovičova"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Dukelská"},
+  {street = "Levická", parity = "even", note = "pravá strana: the southern, even side (see note)"},
+  {street = "Partizánska"},
+  {street = "Podmájska"},
+  {street = "Poštová"},
+  {street = "Sídl. Kaška"},
+  {street = "Šafárikova"},
+  {street = "Školská"},
+  {street = "Záhradná"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Hlavná"},
+  {street = "Hliníková", written = "Hliníkova", note = "the page's spelling (vowel length) of the register's Hliníková"},
+  {street = "Hviezdoslavova"},
+  {street = "Kostolná"},
+  {street = "Krátka"},
+  {street = "Martina Benku"},
+  {street = "Moravská"},
+  {street = "Nám. Kpt. Nálepku", written = "Nám. kpt. Nálepku"},
+  {street = "Okružná"},
+  {street = "Orechová"},
+  {street = "Štúrova"},
+  {street = "Za Humnami", written = "Za humnami"},
+]
+
+[okrsok.8]
+rules = [
+  {part = "Horný Ohaj"},
+]
+
+[okrsok.9]
+rules = [
+  {part = "Dyčka"},
+]

@@ -1,0 +1,89 @@
+# Okrsky of Ľubotice, transcribed by an AI agent in job okrsok-rules-721 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice patriace do okrsku: Bardejovská, Domašská, Chmeľová, Jána Kostru, Kapušianska, Korabinského, Ľubochnianska, Rampová, Strážnická, Strojnícka
+#   okrsok 2: Ulice patriace do okrsku: Cintorínska, Čsl. letcov, Hájnova, Hviezdna, Jarková, Kalinčiakova, Krátka, Ku Bánovcu, Ku ihrisku, Kvetná, Makarenkova, Mesačná, Nižňanská, Platanová, Pod Hájom, Polárna, Prešovská, Slnečná, Šebastovská, Za potokom, Záhradná
+#   okrsok 3: Ulice patriace do okrsku: Bazová, Bánovecká, Brezová, Fialková, Gagarinova, Hapáková, Jedľová, Južná, Krížna, Letná, Lipová, Medovková, Orgovánová, Pri vodojeme, Púpavová, Repíková, Roľnícka, Sekčovská, Severná, Šalgovická, Šípková, Tekeľova, Vodárenská, Vrchná, Východná, Západná, Zimná
+obec = "518590"
+name = "Ľubotice"
+okrsky_date = 2022-08-03
+okrsky_fill = "nearest"
+okrsky_note = "Scanned decision of 3.8.2022 (2022 elections page, files re-uploaded 2024). Streets Letná, Orgovánová, Roľnícka (okrsok 3) and Zimná (okrsok 3) are named by the document but missing from the register: left out. Houses without a street in the part Ľubotice (súpisné only) are placed by fill_nearest; Šarišské Lúky's are put in okrsok 1 (inferred)."
+
+[[document]]
+url = "https://www.obeclubotice.sk/data/page/lubotice.eu/26262/utvorenie_volebnych_okrskov.pdf"
+sha256 = "c5053abc912170da6caa86ea8f1800136aeb1eef1cf91b99caa7727da2f77401"
+title = "Rozhodnutie starostu obce Ľubotice o utvorení volebných okrskov a určení volebných miestností … 29. októbra 2022"
+
+[[document]]
+url = "https://www.obeclubotice.sk/26262/volby-2022"
+sha256 = "526aac619cce4bc9a8b6909c6ef4725f2893a11b0dc2e6766e747c4fbd25ff22"
+title = "Voľby - 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Bardejovská"},
+  {street = "Domašská"},
+  {street = "Chmeľová"},
+  {street = "Jána Kostru"},
+  {street = "Kapušianska"},
+  {street = "Korabinského"},
+  {street = "Ľubochnianska"},
+  {street = "Rampová"},
+  {street = "Strážnická"},
+  {street = "Strojnícka"},
+  {street = "Obchodná", note = "not in the document; a street of Šarišské Lúky, whose other streets are all in okrsok 1", inferred = true},
+  {part = "Šarišské Lúky", note = "the document names streets only; Šarišské Lúky's streets (Bardejovská, Ľubochnianska, Rampová, Strojnícka) are all in okrsok 1, so its addresses without a street go there too", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Československých letcov", written = "Čsl. letcov"},
+  {street = "Hájnova"},
+  {street = "Hviezdna"},
+  {street = "Jarková"},
+  {street = "Kalinčiakova"},
+  {street = "Krátka"},
+  {street = "Ku Bánovcu"},
+  {street = "Ku ihrisku"},
+  {street = "Kvetná"},
+  {street = "Makarenkova"},
+  {street = "Mesačná"},
+  {street = "Nižňanská"},
+  {street = "Platanova", written = "Platanová", note = "the register's Platanova; the document writes it with a long á, same street"},
+  {street = "Pod Hájom"},
+  {street = "Polárna"},
+  {street = "Prešovská"},
+  {street = "Slnečná"},
+  {street = "Šebastovská"},
+  {street = "Za potokom"},
+  {street = "Záhradná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bazová"},
+  {street = "Bánovecká"},
+  {street = "Brezová"},
+  {street = "Fialková"},
+  {street = "Gagarinova"},
+  {street = "Hapákova", written = "Hapáková", note = "the register's Hapákova; the document writes it with a long á in the ending, same street"},
+  {street = "Jedľová"},
+  {street = "Južná"},
+  {street = "Krížna"},
+  {street = "Lipová"},
+  {street = "Medovková"},
+  {street = "Pri vodojeme"},
+  {street = "Púpavová"},
+  {street = "Repíková"},
+  {street = "Sekčovská"},
+  {street = "Severná"},
+  {street = "Šalgovická"},
+  {street = "Šípková"},
+  {street = "Tekeľova"},
+  {street = "Vodárenská"},
+  {street = "Vrchná"},
+  {street = "Východná"},
+  {street = "Západná"},
+]

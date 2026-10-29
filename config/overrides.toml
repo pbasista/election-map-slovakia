@@ -1,40 +1,74 @@
-# Manual fixes that `ems candidates` applies to the MV SR candidate
-# lists, and `ems addresses` to the address register. Codes are ZBGIS
-# municipality codes (ŠÚ SR, 6 digits) or BA / KE for the cities of
-# Bratislava and Košice. Candidacy ids are `<contest>#<ballot number>`, e.g.
-# `oz:528595/2#7` or `zsk:7/2#9` (see docs/pipeline.md, Identifiers).
+# Manual fixes that `ems candidates` applies to an election's candidate
+# lists, and `ems addresses` to its address register: one table per
+# election of elections.toml, [election.<slug>], whose subtables are all
+# optional. Codes are ZBGIS municipality codes (ŠÚ SR, 6 digits) or BA / KE
+# for the cities of Bratislava and Košice. Candidacy ids are
+# `<contest>#<ballot number>`, e.g. `oz:528595/2#7` or `zsk:7/2#9` (see
+# docs/pipeline.md, Identifiers), and belong to the election of their table.
+#
+#   [election.<slug>.obec]
+#       Municipality names in the candidate lists that do not match ZBGIS by
+#       normalized name within their okres:
+#       "<okres>/<obec>" as written in the list = "<code>"
+#   [election.<slug>.address]
+#       Municipality names in the address register that do not match ZBGIS
+#       by normalized name within their okres:
+#       "<okres>/<obec>" as written in the register = "<code>"
+#   address_skip (in [election.<slug>])
+#       Places of the address register that are no obec of ZBGIS at all,
+#       whose rows are left out: ["<okres>/<obec>", …]
+#   [election.<slug>.residence]
+#       Residence of regional candidates whose obec name is ambiguous within
+#       the kraj and is not resolved by a municipal candidacy of the same
+#       person: "<candidacy id>" = "<code>"
+#   [[election.<slug>.person.merge]], [[election.<slug>.person.split]]
+#       Person merge corrections. Candidacies are merged automatically when
+#       obec, first name, surname and age agree, except where that key
+#       repeats within one elected body: then none of them merge. A merge
+#       makes the listed candidacies one person, a split makes them a person
+#       of their own.
 
-# Municipality names in the candidate lists that do not match ZBGIS by
-# normalized name within their okres:
-#   "<okres>/<obec>" as written in the list = "<code>"
-# Currently every name matches once spaces and dashes are normalized.
-[obec]
+[election.2026]
 
-# Municipality names in the address register that do not match ZBGIS by
-# normalized name within their okres:
-#   "<okres>/<obec>" as written in the register = "<code>"
+# Every name of the candidate lists matches once spaces and dashes are
+# normalized.
+[election.2026.obec]
+
 # ZBGIS names the two military districts "<name> (vojenský obvod)".
-[address]
+[election.2026.address]
 "Malacky/Záhorie" = "500267"
 "Humenné/Valaškovce" = "518638"
 
-# Residence of regional candidates whose obec name is ambiguous within the
-# kraj and is not resolved by a municipal candidacy of the same person:
-#   "<candidacy id>" = "<code>"
-[residence]
+[election.2026.residence]
 # Tibor Focko, Kamienka: PSK obvod 2 is okres Humenné (PSK resolution
 # 1007/2026), so Kamienka (Humenné), not Kamienka (Stará Ľubovňa).
 "zsk:7/2#9" = "520349"
 
-# Person merge corrections. Candidacies are merged automatically when obec,
-# first name, surname and age agree, except where that key repeats within
-# one elected body: then none of them merge.
-#
-# [[person.merge]] makes the listed candidacies one person;
-# [[person.split]] makes them a person of their own.
-
 # Two Igor Oračko, 49, on the council ballot of Stráne pod Tatrami; the
 # mayoral candidate is the school caretaker (same occupation), not the
 # unemployed one.
-[[person.merge]]
+[[election.2026.person.merge]]
 candidacies = ["starosta:523909#3", "oz:523909/1#38"]
+
+[election.2022]
+# The register of 09/2022 still has a row of the former military district
+# Javorina (abolished in 2011, now part of the obce around it), without a
+# point; ZBGIS has no such obec.
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2022.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+# Each in the candidate's own regional obvod (ŠÚ SR tab0dc), where the
+# other namesakes of the kraj are not.
+[election.2022.residence]
+# Radoslav Brehuv, Kochanovce: PSK obvod 1 is okres Bardejov; the other
+# Kochanovce is in okres Humenné (obvod 2).
+"zsk:7/1#3" = "519359"
+# Ján Paľa, Nemcovce: obvod 1, okres Bardejov; the other is in okres
+# Prešov (obvod 7).
+"zsk:7/1#30" = "519626"
+# Michal Rusko, Selce: BBSK obvod 1, okres Banská Bystrica; the others are
+# in okresy Krupina (obvod 5) and Poltár (obvod 7).
+"zsk:6/1#64" = "508985"

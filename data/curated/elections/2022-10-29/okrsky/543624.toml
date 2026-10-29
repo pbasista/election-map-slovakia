@@ -1,0 +1,53 @@
+# Okrsky of Spišský Štvrtok, transcribed by an AI agent in job okrsok-rules-971 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulica: ČSĽA, Jarná, Javorová, Kováčska, Krátka, Mečedeľovce, Mlynská, Námestie slobody, Osloboditeľov, Partizánska, Potočná, Školská, Tehelná, Vysoká, Záhradná
+#   okrsok 2: Ulica: Agátová, Alejová, Cintorínska, Družstevná, Ku Kremni, Lipová, Lúčna, Majerická ulica, Nová, Obrancov mieru, Poľná, Sadová, Stavbárska, Tatranská, Zelená
+obec = "543624"
+name = "Spišský Štvrtok"
+okrsky_date = 2022-08-10
+okrsky_fill = "nearest"
+okrsky_note = "Undated notice-board item; date is its posting date as the page states ('Vyvesené: 10. 8. 2022', taken down 29. 10. 2022). Archived 10 August 2022. 'Mečedeľovce' in the list is the part Mečedelovce. Addresses without a street in the part Spišský Štvrtok take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20220810221452/https://www.spisskystvrtok.sk/zverejnovanie/uradna-tabula/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-do-organov-samospravy-obci-ktore-patria-aj-pre-volby-do-organov-samospravnych-krajov-703.html"
+sha256 = "24b3f497f52f0a335ae72cde5a96e6480a62aa94879faf7fbceec014c83c17a4"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí, ktoré patria aj pre voľby do orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {street = "ČSĽA"},
+  {street = "Jarná"},
+  {street = "Javorová"},
+  {street = "Kováčska"},
+  {street = "Krátka"},
+  {street = "Mlynská"},
+  {street = "Námestie slobody"},
+  {street = "Osloboditeľov"},
+  {street = "Partizánska"},
+  {street = "Potočná"},
+  {street = "Školská"},
+  {street = "Tehelná"},
+  {street = "Vysoká"},
+  {street = "Záhradná"},
+  {part = "Mečedelovce"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Alejová"},
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Ku Kremni"},
+  {street = "Lipová"},
+  {street = "Lúčna"},
+  {street = "Majerická ulica"},
+  {street = "Nová"},
+  {street = "Obrancov mieru"},
+  {street = "Poľná"},
+  {street = "Sadová"},
+  {street = "Stavbárska"},
+  {street = "Tatranská"},
+  {street = "Zelená"},
+]

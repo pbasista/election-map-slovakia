@@ -188,8 +188,14 @@ export const QrIcon = () =>
     <path d="M14 14h2.5v2.5M20.5 14v.01M14 20.5h.01M17.5 20.5h3v-3" />
   `);
 
-/* A chair seen from the side: the candidate holds the office now. */
+/* A chair seen from the side: the candidate held the office at the time of
+ * the election. */
 export const ChairIcon = () => icon(html`<path d="M7 3v18M7 12.5h11V21M7 16.5h11" />`);
+
+/* A clock with its hand turned back: the candidate stood for the same
+ * office at the election before. */
+export const HistoryIcon = () =>
+  icon(html`<path d="M4.6 13.5A7.6 7.6 0 1 0 6.8 6.5L4.2 9" /><path d="M4 4.6V9h4.4" /><path d="M12 8.2v4l2.7 1.7" />`);
 
 /* A door with an arrow out of it: the candidate withdrew from the election
  * (yet stayed on the ballot). */

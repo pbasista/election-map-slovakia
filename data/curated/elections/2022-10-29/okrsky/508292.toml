@@ -1,0 +1,54 @@
+# Okrsky of Veľký Biel, transcribed by an AI agent in job okrsok-rules-705 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bratislavská, Mierová, Obchodná, Poštová, Robotnícka, Školská, Športová, Železničná, Kaštieľska, Slnečná, Pri jazere, Farská, Slivková
+#   okrsok 2: Cintorínska, Kostolná, Krátka, Malobielska, Nová, Poľovnícka, Senecká, Lúčna, Poľná, Záhradná, Orechová, Vinohradnícka, Kvetná, Potočná, Trnková, Javorová, Brezová, Lipová
+obec = "508292"
+name = "Veľký Biel"
+okrsky_date = 2022-08-02
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document, read from the page image. The register's houses without a street (súpisné only, incl. part Malý Biel) are not named by the document; they take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20220808182814/https://www.velkybiel.eu/e_download.php?file=data/uredni_deska/obsah191_7.pdf&original=ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "c676ee63dae35a0cb64f009ba5455952cadea4d05c1dbd2b1c60d1f608797d4f"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Veľký Biel"
+
+[okrsok.1]
+rules = [
+  {street = "Bratislavská"},
+  {street = "Mierová"},
+  {street = "Obchodná"},
+  {street = "Poštová"},
+  {street = "Robotnícka"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Železničná"},
+  {street = "Kaštieľska"},
+  {street = "Slnečná"},
+  {street = "Pri jazere"},
+  {street = "Farská"},
+  {street = "Slivková"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Kostolná"},
+  {street = "Krátka"},
+  {street = "Malobielska"},
+  {street = "Nová"},
+  {street = "Poľovnícka"},
+  {street = "Senecká"},
+  {street = "Lúčna"},
+  {street = "Poľná"},
+  {street = "Záhradná"},
+  {street = "Orechová"},
+  {street = "Vinohradnícka"},
+  {street = "Kvetná"},
+  {street = "Potočná"},
+  {street = "Trnková"},
+  {street = "Javorová"},
+  {street = "Brezová"},
+  {street = "Lipová ulica", written = "Lipová"},
+]

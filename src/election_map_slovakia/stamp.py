@@ -1,12 +1,13 @@
 """Skip a pipeline step whose inputs are unchanged since it last succeeded.
 
-A step records in ``data/build/<step>.stamp.json``, once its output is
-written, a digest of everything that output depends on: the content of its
-input files and directories, the configuration values it is given, and its
-code (:func:`code_digest`). It runs again when any digest differs, when an
-output is missing, or when asked to (``--force``). The stamp is removed
-before the step runs, so a step that fails halfway is never taken as done.
-Output changed by hand is not noticed; ``--force`` rewrites it.
+A step records in ``data/build/<election day>/<step>.stamp.json``, once its
+output is written, a digest of everything that output depends on: the
+content of its input files and directories, the configuration values it is
+given, and its code (:func:`code_digest`). It runs again when any digest
+differs, when an output is missing, or when asked to (``--force``). The
+stamp is removed before the step runs, so a step that fails halfway is
+never taken as done. Output changed by hand is not noticed; ``--force``
+rewrites it.
 """
 
 from __future__ import annotations

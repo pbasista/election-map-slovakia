@@ -1,0 +1,35 @@
+# Council obvody of Prestavlky (517186), Žiar nad Hronom.
+# Transcribed by an AI agent in job obvod-rules-379 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č. 1, časť Prestavlky 4 poslanci
+#   obvod 2: volebný obvod č. 2, časť Horná Trnávka 3 poslanci
+# Okrsky added by an AI agent in job okrsok-rules-1240 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volebný obvod č. 1, časť Prestavlky 4 poslanci
+#   okrsok 2: volebný obvod č. 2, časť Horná Trnávka 3 poslanci
+obec = "517186"
+name = "Prestavlky"
+date = 2022-06-14
+okrsky_date = 2022-06-14
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+
+[[document]]
+url = "https://www.prestavlky.sk/download_file_f.php?id=1703576"
+sha256 = "0758bc841764047a616a55c827e5aa8c332f4ca838d701ed0597ede8033a17f5"
+title = "Uznesenia zo zasadnutia OZ dňa 14.06.2022 (uznesenie č. 22/2022)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Prestavlky"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Horná Trnávka"},
+]

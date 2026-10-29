@@ -1,0 +1,25 @@
+# Okrsky of Oravský Podzámok, transcribed by an AI agent in job okrsok-rules-1001 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: občania v katastrálnom území Oravský Podzámok s týmito súpisnými číslami: 1 až 288, 363 až 395 a 770
+#   okrsok 2: občania v katastrálnom území Dolná Lehota s týmito súpisnými číslami: 290 až 358, 402 až 711
+obec = "509957"
+name = "Oravský Podzámok"
+okrsky_date = 2022-08-03
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's announcement is undated; date is its publication date stated on the notice-board page ('Zverejnené 3.8.2022', updated 10.8.2022). Each okrsok is a cadastral area with the súpisné čísla it lists (k.ú. Oravský Podzámok: 1–288, 363–395, 770; k.ú. Dolná Lehota: 290–358, 402–711); rules take the whole k.ú.; 3 register addresses the k.ú. rules do not catch are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20220811070154/http://www.oravskypodzamok.sk/oznamy/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-do-organov-samospravy-obci-a-do-organov-samospravnych-krajov.html"
+sha256 = "f5604c358bce0678a2faab19d42cbf456844367c6285ba488d8f1b26d5c03c8d"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {ku = "Oravský Podzámok"},
+]
+
+[okrsok.2]
+rules = [
+  {ku = "Dolná Lehota"},
+]

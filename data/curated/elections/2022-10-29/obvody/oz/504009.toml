@@ -1,0 +1,301 @@
+# Council obvody of Sereď (504009), Galanta.
+# Transcribed by an AI agent in job obvod-rules-238 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 - okrsky 1- 5 - 8 poslancov. Volebný okrsok č. 1: Dolnostredská, Kostolná, Mládežnícka, Mlynárska, Novomestská, Považský breh Volebný okrsok č. 2: Cukrovarská, Kukučínová, Školská Volebný okrsok č. 3: D. Štúra, Fándlyho Volebný okrsok č. 4: Amazonská, Bratislavská, Jarná, Južná, Kasárenská, Letná, Malý Háj, Nový Majer, Pažitná, Poľná, Pribinova, Trnavská cesta, Vonkajší rad Volebný okrsok č. 5: Garbiarska, Nám. Slobody, Parková, Starý Most, Šintavská
+#   obvod 2: Volebný obvod č. 2 - okrsky 6 -9 - 6 poslancov. Volebný okrsok č. 6: Dolnomajerská, Legionárska, M. R. Štefánika, občania, ktorí majú trvalý pobyt mesto Sereď bez určenia ulice Volebný okrsok č. 7: A. Hlinku, Čepenská 1211 - 1214, Kúpeľné námestie, Pekárska, Poštová, SNP, Spádová, Vinárska, Záhradná Volebný okrsok č. 8: Jesenského, Komenského, Železničná Volebný okrsok č. 9: Hornomajerská, Hviezdoslavova, Čepenská-rodinné domy, Čepenská - 3047,3081,3735,4305, F. Kráľa, Jilemnického, Krásna, Nová, Orechová, Priečna, Rovná, Slnečná, Slnečná II, Šulekovská, Vysoká
+#   obvod 3: Volebný obvod č. 3 - okrsky 10 – 13 - 5 poslancov. Volebný okrsok č. 10: Dlhá, Hrnčiarska, Ivana Krasku, Lipová, Ľ. Podjavorinskej, Malá ulička, Obežná, Pivovarská, Pod hrádzou, Podzámska, Športová, Topoľová, Vojanská Volebný okrsok č. 11: 8. mája, Dolnočepenská, Družstevná, Kuzmányho, Matičná, Murgašova, Sládkovičova, Stromová, Svätoplukova, Štefana Moyzesa Volebný okrsok č. 12: Jasná, Jelšova, Konvalinková, Krátka, Krížna, Lúčna, Mierová, Nezábudková, Pionierska, Severná, Strednočepenská, Tehelná, Tulipánová, Vážska, Veterná Volebný okrsok č. 13: Hornočepenská
+# Okrsky added by an AI agent in job okrsok-rules-1117 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dolnostredská, Kostolná, Mládežnícka, Mlynárska, Novomestská, Považský breh
+#   okrsok 2: Cukrovarská, Kukučínová, Školská
+#   okrsok 3: D. Štúra, Fándlyho
+#   okrsok 4: Amazonská, Bratislavská, Jarná, Južná, Kasárenská, Letná, Malý Háj, Nový Majer, Pažitná, Poľná, Pribinova, Trnavská cesta, Vonkajší rad
+#   okrsok 5: Garbiarska, Nám. Slobody, Parková, Starý Most, Šintavská
+#   okrsok 6: Dolnomajerská, Legionárska, M. R. Štefánika, občania, ktorí majú trvalý pobyt mesto Sereď bez určenia ulice
+#   okrsok 7: A. Hlinku, Čepenská 1211 - 1214, Kúpeľné námestie, Pekárska, Poštová, SNP, Spádová, Vinárska, Záhradná
+#   okrsok 8: Jesenského, Komenského, Železničná
+#   okrsok 9: Hornomajerská, Hviezdoslavova, Čepenská-rodinné domy, Čepenská - 3047,3081,3735,4305, F. Kráľa, Jilemnického, Krásna, Nová, Orechová, Priečna, Rovná, Slnečná, Slnečná II, Šulekovská, Vysoká
+#   okrsok 10: Dlhá, Hrnčiarska, Ivana Krasku, Lipová, Ľ. Podjavorinskej, Malá ulička, Obežná, Pivovarská, Pod hrádzou, Podzámska, Športová, Topoľová, Vojanská
+#   okrsok 11: 8. mája, Dolnočepenská, Družstevná, Kuzmányho, Matičná, Murgašova, Sládkovičova, Stromová, Svätoplukova, Štefana Moyzesa
+#   okrsok 12: Jasná, Jelšova, Konvalinková, Krátka, Krížna, Lúčna, Mierová, Nezábudková, Pionierska, Severná, Strednočepenská, Tehelná, Tulipánová, Vážska, Veterná
+#   okrsok 13: Hornočepenská
+obec = "504009"
+name = "Sereď"
+date = 2022-06-16
+fill = "nearest"
+note = "Uznesenie 132/2022 defines the obvody by okrsky (1-5, 6-9, 10-13), 133/2022 the seats. The 2022 oznámenie is not archived and the archived 2022 okrsky PDF is truncated, so the streets of each okrsok are taken from the council material 17A of the same meeting (population per street and okrsok as of 31.5.2022). Okrsok 6 includes voters 'bez určenia ulice' (registered without address), not the register's addresses without a street; those and Niklová, Priemyselná (not in the material, industrial/new streets) are placed by fill_nearest. Námestie republiky inferred to obvod 1."
+okrsky_date = 2022-06-16
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's 2022 list 'Volebné okrsky a volebné miestnosti' (file dated 22.7.2022) is gone from the website and archived only truncated (1 MB of 1.2 MB, unreadable, snapshot of 28.11.2022). The streets of each okrsok come from the council material 17A for the meeting of 16.6.2022 (population per street and okrsok as of 31.5.2022), which set the 2022 obvody by these okrsky (uznesenie 132/2022); date = that meeting. Okrsok 6's 'občania … bez určenia ulice' = voters without address, not the register's houses without a street. Čepenská 1211-1214 read as súpisné čísla (blocks) for okrsok 7, the rest of Čepeňská okrsok 9. Written -cepenská for register -čepeňská streets, Jelšova for Jelšová. Južná and Tulipánová (0 inhabitants) are not in the register. Not in the material and placed by fill_nearest: Niklová, Priemyselná, Námestie republiky and the houses without street."
+
+[[document]]
+url = "https://web.archive.org/web/20240627172306/https://www.sered.sk/materialy_msz/uznesenie/2022-06-16_120_uznesenie_msz.pdf"
+sha256 = "8f9ae84c0a9a87a463e011da890f3b48e4c6da2337617a817b74c7132e793724"
+title = "Uznesenia MsZ v Seredi zo dňa 16.6.2022 (č. 132/2022 a 133/2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20240808112439/https://www.sered.sk/materialy_msz/materialy/20220616/20220616_17A.pdf"
+sha256 = "c0ccf2758cce5711e771901fdb0d4b65cfc38f7380b9c914eaf5fbc513e2098a"
+title = "Materiál č. 17 A na MsZ 16.6.2022: Určenie volebných obvodov a počtu poslancov (okrsky a ulice k 31.5.2022)"
+
+[obvod.1]
+seats = 8
+okrsky = [1, 2, 3, 4, 5]
+rules = [
+  {street = "Dolnostredská"},
+  {street = "Kostolná"},
+  {street = "Mládežnícka"},
+  {street = "Mlynárska"},
+  {street = "Novomestská"},
+  {street = "Považský breh"},
+  {street = "Cukrovarská"},
+  {street = "Kukučínova", written = "Kukučínová"},
+  {street = "Školská"},
+  {street = "D. Štúra"},
+  {street = "Fándlyho"},
+  {street = "Amazonská"},
+  {street = "Bratislavská"},
+  {street = "Jarná"},
+  {street = "Kasárenská"},
+  {street = "Letná"},
+  {street = "Malý háj", written = "Malý Háj"},
+  {street = "Nový majer", written = "Nový Majer"},
+  {street = "Pažitná"},
+  {street = "Poľná"},
+  {street = "Pribinova"},
+  {street = "Trnavská cesta"},
+  {street = "Vonkajší rad"},
+  {street = "Garbiarska"},
+  {street = "Námestie slobody", written = "Nám. Slobody"},
+  {street = "Parková"},
+  {street = "Starý most", written = "Starý Most"},
+  {street = "Šintavská"},
+  {street = "Námestie republiky", note = "not in the okrsky list of material 17A; town centre square next to Námestie slobody (okrsok 5, obvod 1)", inferred = true},
+]
+
+[obvod.2]
+seats = 6
+okrsky = [6, 7, 8, 9]
+rules = [
+  {street = "Dolnomajerská"},
+  {street = "Legionárska"},
+  {street = "M.R.Štefánika", written = "M. R. Štefánika"},
+  {street = "A.Hlinku", written = "A. Hlinku"},
+  {street = "Čepeňská", written = "Čepenská", note = "Čepenská is split between okrsky 7 (1211-1214) and 9 (rodinné domy, 3047, 3081, 3735, 4305), both in obvod 2: whole street"},
+  {street = "Kúpeľné námestie"},
+  {street = "Pekárska"},
+  {street = "Poštová"},
+  {street = "SNP"},
+  {street = "Spádová"},
+  {street = "Vinárska"},
+  {street = "Záhradná"},
+  {street = "Jesenského"},
+  {street = "Komenského"},
+  {street = "Železničná"},
+  {street = "Hornomajerská"},
+  {street = "Hviezdoslavova"},
+  {street = "Fraňa Kráľa", written = "F. Kráľa", note = "F. = Fraňa"},
+  {street = "Jilemnického"},
+  {street = "Krásna"},
+  {street = "Nová"},
+  {street = "Orechová"},
+  {street = "Priečna"},
+  {street = "Rovná"},
+  {street = "Slnečná"},
+  {street = "Slnečná II"},
+  {street = "Šulekovská"},
+  {street = "Vysoká"},
+]
+
+[obvod.3]
+seats = 5
+okrsky = [10, 11, 12, 13]
+rules = [
+  {street = "Dlhá"},
+  {street = "Hrnčiarska"},
+  {street = "Ivana Krasku"},
+  {street = "Lipová"},
+  {street = "Ľ. Podjavorinskej"},
+  {street = "Malá ulička"},
+  {street = "Obežná"},
+  {street = "Pivovarská"},
+  {street = "Pod hrádzou"},
+  {street = "Podzámska"},
+  {street = "Športová"},
+  {street = "Topoľová"},
+  {street = "Vojanská"},
+  {street = "8.mája", written = "8. mája"},
+  {street = "Dolnočepeňská", written = "Dolnočepenská"},
+  {street = "Družstevná"},
+  {street = "Kuzmányho"},
+  {street = "Matičná"},
+  {street = "Murgašova"},
+  {street = "Sládkovičova"},
+  {street = "Stromová"},
+  {street = "Svätoplukova"},
+  {street = "Štefana Moyzesa"},
+  {street = "Jasná"},
+  {street = "Jelšová", written = "Jelšova", note = "spelling Jelšova/Jelšová"},
+  {street = "Konvalinková"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Lúčna"},
+  {street = "Mierová"},
+  {street = "Nezábudková"},
+  {street = "Pionierska"},
+  {street = "Severná"},
+  {street = "Strednočepeňská", written = "Strednočepenská"},
+  {street = "Tehelná"},
+  {street = "Vážska"},
+  {street = "Veterná"},
+  {street = "Hornočepeňská", written = "Hornočepenská"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Dolnostredská"},
+  {street = "Kostolná"},
+  {street = "Mládežnícka"},
+  {street = "Mlynárska"},
+  {street = "Novomestská"},
+  {street = "Považský breh"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cukrovarská"},
+  {street = "Kukučínova", written = "Kukučínová"},
+  {street = "Školská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "D. Štúra"},
+  {street = "Fándlyho"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Amazonská"},
+  {street = "Bratislavská"},
+  {street = "Jarná"},
+  {street = "Kasárenská"},
+  {street = "Letná"},
+  {street = "Malý háj", written = "Malý Háj"},
+  {street = "Nový majer", written = "Nový Majer"},
+  {street = "Pažitná"},
+  {street = "Poľná"},
+  {street = "Pribinova"},
+  {street = "Trnavská cesta"},
+  {street = "Vonkajší rad"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Garbiarska"},
+  {street = "Námestie slobody", written = "Nám. Slobody"},
+  {street = "Parková"},
+  {street = "Starý most", written = "Starý Most"},
+  {street = "Šintavská"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Dolnomajerská"},
+  {street = "Legionárska"},
+  {street = "M.R.Štefánika", written = "M. R. Štefánika"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "A.Hlinku", written = "A. Hlinku"},
+  {street = "Čepeňská", numbers = "1211-1214", by = "supisne", written = "Čepenská", note = "the blocks of flats súp. č. 1211-1214; the rest of the street (rodinné domy, 3047, 3081, 3735, 4305) is okrsok 9"},
+  {street = "Kúpeľné námestie"},
+  {street = "Pekárska"},
+  {street = "Poštová"},
+  {street = "SNP"},
+  {street = "Spádová"},
+  {street = "Vinárska"},
+  {street = "Záhradná"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Jesenského"},
+  {street = "Komenského"},
+  {street = "Železničná"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Hornomajerská"},
+  {street = "Hviezdoslavova"},
+  {street = "Čepeňská", written = "Čepenská"},
+  {street = "Fraňa Kráľa", written = "F. Kráľa"},
+  {street = "Jilemnického"},
+  {street = "Krásna"},
+  {street = "Nová"},
+  {street = "Orechová"},
+  {street = "Priečna"},
+  {street = "Rovná"},
+  {street = "Slnečná"},
+  {street = "Slnečná II"},
+  {street = "Šulekovská"},
+  {street = "Vysoká"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Dlhá"},
+  {street = "Hrnčiarska"},
+  {street = "Ivana Krasku"},
+  {street = "Lipová"},
+  {street = "Ľ. Podjavorinskej"},
+  {street = "Malá ulička"},
+  {street = "Obežná"},
+  {street = "Pivovarská"},
+  {street = "Pod hrádzou"},
+  {street = "Podzámska"},
+  {street = "Športová"},
+  {street = "Topoľová"},
+  {street = "Vojanská"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "8.mája", written = "8. mája"},
+  {street = "Dolnočepeňská", written = "Dolnočepenská"},
+  {street = "Družstevná"},
+  {street = "Kuzmányho"},
+  {street = "Matičná"},
+  {street = "Murgašova"},
+  {street = "Sládkovičova"},
+  {street = "Stromová"},
+  {street = "Svätoplukova"},
+  {street = "Štefana Moyzesa"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Jasná"},
+  {street = "Jelšová", written = "Jelšova", note = "same street, the material's ending typo"},
+  {street = "Konvalinková"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Lúčna"},
+  {street = "Mierová"},
+  {street = "Nezábudková"},
+  {street = "Pionierska"},
+  {street = "Severná"},
+  {street = "Strednočepeňská", written = "Strednočepenská"},
+  {street = "Tehelná"},
+  {street = "Vážska"},
+  {street = "Veterná"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Hornočepeňská", written = "Hornočepenská"},
+]

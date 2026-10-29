@@ -1,0 +1,25 @@
+# Okrsky of Podhorany, transcribed by an AI agent in job okrsok-rules-1015 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 – Obecný úrad, Mechenice 51, 951 46 Podhorany
+#   okrsok 2: Okrsok č. 2 – Kultúrny dom, Sokolníky 191, 951 46 Podhorany
+obec = "500674"
+name = "Podhorany"
+okrsky_date = 2022-11-08
+okrsky_note = "No document of the elections found (the 2022 elections page, archived 2022-07-07, holds no okrsky document); the referendum's document. It gives each okrsok only its polling station: okrsok 1 Obecný úrad, Mechenice 51; okrsok 2 Kultúrny dom, Sokolníky 191. The okrsky are as many as the parts, so each okrsok is given the part of its station (inferred)."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.podhorany.sk/files/2022-11-10-121031-volebn___okrsky.pdf"
+sha256 = "ee88bc205249bc18acfbab82fc3863c10ac912b09b414c37bed816cf723c9677"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre hlasovanie v referende (21. 1. 2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Mechenice", note = "part of the polling station (Mechenice 51)", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Sokolníky", note = "part of the polling station (Sokolníky 191)", inferred = true},
+]

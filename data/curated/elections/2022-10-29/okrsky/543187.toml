@@ -1,0 +1,42 @@
+# Okrsky of Jaklovce, transcribed by an AI agent in job okrsok-rules-870 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Jarčeková, Kopaná, Kostolná, Nová, Okružná, Poľná, Potočná, Požiarnická, Priehradná, Rybničná, Stará – dolná časť, Záhradná a pre voličov, ktorí majú evidovaný trvalý pobyt na adrese Jaklovce 0 – Obec Jaklovce
+#   okrsok 2: Nábrežná, Obchodná, Skaličná, Stará – horná časť, Školská, Úvozná, Vodárenská, Benátska
+obec = "543187"
+name = "Jaklovce"
+okrsky_date = 2022-11-10
+okrsky_fill = "nearest"
+okrsky_note = "The referendum's document: the 2022 elections' document (19. 7. 2022) names only the polling stations (okrsok 1 obecný úrad, okrsok 2 základná škola), the same as the referendum's, which lists the streets. Stará is split into \"dolná časť\" (okrsok 1) and \"horná časť\" (okrsok 2) without numbers, so Stará is placed by fill_nearest, as are Pekárenská (not named) and the houses without a street. Voters registered only on the obec (\"Jaklovce 0\") vote in okrsok 1; they have no register address."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://web.archive.org/web/20221207210159/https://www.jaklovce.sk/e_download.php?file=data/editor/122sk_3.pdf&original=urcenie-volebnych-okrskov-a-miestnosti.pdf"
+sha256 = "6a617d375119bcede7483a63b2683cf57d57ca1fd04670a24c17d8029053ddef"
+title = "Určenie volebných okrskov a volebných miestností pre referendum 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Jarčeková"},
+  {street = "Kopaná"},
+  {street = "Kostolná"},
+  {street = "Nová"},
+  {street = "Okružná"},
+  {street = "Poľná"},
+  {street = "Potočná"},
+  {street = "Požiarnická"},
+  {street = "Priehradná"},
+  {street = "Rybničná"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Nábrežná"},
+  {street = "Obchodná"},
+  {street = "Skaličná"},
+  {street = "Školská"},
+  {street = "Úvozná"},
+  {street = "Vodárenská"},
+  {street = "Benátska"},
+]

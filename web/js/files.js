@@ -49,26 +49,50 @@ export class Cache {
   }
 }
 
-/* The build's data version (km-config `dataVersion`), asked for with every
- * data file (`?v=`) so that a release with other data replaces the
- * browser's copies (build.py, Cache busting). The page sets it from its
- * config (i18n.js); the map's renderer, which may run in a worker without
- * the page, from its options (draw.js). */
-let dataVersion = '';
-export function setDataVersion(version) {
-  dataVersion = version;
+/* Where the page's election's files are and their versions: its map
+ * (km-config `map`, `mapVersion`: geo/, base/, addr/) and its data
+ * (`data`, `dataVersion`: data/, i18n/), each a bundle of its own (served
+ * by `ems serve` at /map/2026 and /data/2026, deployed at the addresses of
+ * their deployments). A file is asked for with its bundle's version
+ * (`?v=`), so that other files replace the browser's copies (build.py,
+ * Cache busting). The page sets them from its config (i18n.js); the map's
+ * renderer, which may run in a worker without the page, from its options
+ * (draw.js). */
+let source = { data: '', dataVersion: '', map: '', mapVersion: '' };
+export function setDataSource(next) {
+  source = next;
 }
 
-/* The URL to fetch the site's data file *path* (/geo/index.json) by. */
-export const dataUrl = (path) => `${path}?v=${dataVersion}`;
+// The directories of the map's bundle; any other file is the data's.
+const MAP_ROOT = /^\/(?:geo|base|addr)\//;
 
-/* *missing*, if given, stands for a file that does not exist (HTTP 404). */
-export async function fetchJSON(path, missing) {
-  const response = await fetch(dataUrl(path));
+/* The UI strings' version (km-config `stringsVersion`), asked for with
+ * the site's shared files (/i18n/): the same on every election's page, so
+ * that switching keeps the browser's copies. Set by the page (i18n.js). */
+let stringsVersion = '';
+export function setStringsVersion(version) {
+  stringsVersion = version;
+}
+
+/* The URL to fetch the app's UI strings *path* (/i18n/sk.json) by, the
+ * same for every election. */
+export const sharedUrl = (path) => `${path}?v=${stringsVersion}`;
+
+/* The URL to fetch the page's election's file *path* (/geo/index.json,
+ * /data/index.json) by: in its map or its data bundle. */
+export const dataUrl = (path) =>
+  MAP_ROOT.test(path) ? `${source.map}${path}?v=${source.mapVersion}` : `${source.data}${path}?v=${source.dataVersion}`;
+
+async function fetchFrom(url, path, missing) {
+  const response = await fetch(url);
   if (response.status === 404 && missing !== undefined) return missing;
   if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
   return response.json();
 }
+
+/* The page's election's data file *path* (`dataUrl`); *missing*, if given,
+ * stands for a file that does not exist (HTTP 404). */
+export const fetchJSON = (path, missing) => fetchFrom(dataUrl(path), path, missing);
 
 // Coordinates in addr/<obec>.json are integers in 1/SCALE degree.
 const SCALE = 100000;

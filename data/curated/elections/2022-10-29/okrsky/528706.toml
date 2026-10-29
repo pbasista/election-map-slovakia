@@ -1,0 +1,24 @@
+# Okrsky of Rad, transcribed by an AI agent in job okrsok-rules-1058 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č.1 so sídlom Kultúrny dom, Hlavná 94/4, Rad, 076 37, Rad
+#   okrsok 2: Volevný okrsok č.2 so sídlom Budová MŠ, Chlmecká 167, 07637, Rad-Hrušov
+obec = "528706"
+name = "Rad"
+okrsky_date = 2022-08-05
+okrsky_note = "Scanned document (05.08.2022) naming only the polling stations; the obec has two parts and each station lies in another part, so each okrsok takes the part of its station (inferred). Voters 228/196 fit the parts' 120/86 addresses."
+
+[[document]]
+url = "https://www.obecrad.sk/files/2022-08-08-115645-Utvorenie_volebn__ch_okrskov_a_ur__enie_volebn__ch_miestnosti.pdf"
+sha256 = "f851d73f6dd3f3578d3df1ec7884ed6bd4f8b86138872dbabd4b64a00383af7a"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Rad", note = "The document gives only the polling station (Kultúrny dom, Hlavná 94/4, in the part Rad).", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Hrušov", note = "The document gives only the polling station (MŠ, Chlmecká 167, Rad-Hrušov, in the part Hrušov).", inferred = true},
+]

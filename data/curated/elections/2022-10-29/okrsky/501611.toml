@@ -1,0 +1,54 @@
+# Okrsky of Dolný Štál, transcribed by an AI agent in job okrsok-rules-758 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: V okrsku volia voliči s trvalým pobytom na ul: Mostová, Gárdonyská, Záhradnícka, Lycejná, Pri škôlke, Lesná, Hlavná, Smotanová, Kengyelská, Stará a Hasičská.
+#   okrsok 2: V okrsku volia voliči s trvalým pobytom na ul.: Tôňska cesta, K vinohradom, Slnečná, Zelená, Mateja Korvína, Ku kamennému stľpu, Tichá, Hornoštálska cesta, Vŕbová, Krátka, Orechová, Marhuľová, Pri jazere, Komárňanská cesta, Topoľnianska cesta a voliči s trvalým pobytom obce Dolný Štál bez adresy.
+obec = "501611"
+name = "Dolný Štál"
+okrsky_date = 2022-08-08
+okrsky_fill = "nearest"
+okrsky_note = "The decision post (published 8 August 2022, no decision date stated; date is that publication date) gives only the 2 polling stations; the municipality's notice of 25 October 2022 gives the streets of each okrsok. Its 'voliči s trvalým pobytom obce Dolný Štál bez adresy' (okrsok 2) are voters registered without an address, not the register's 466 houses without a street; those, and Cintorínska and Okočská cesta (not named in the document), are placed by fill_nearest."
+
+[[document]]
+url = "https://dolnystal.eu/2022/10/25/informacia-o-case-a-mieste-konania-volieb/"
+sha256 = "97935ef1d2305f4165dd7af0cf660751a5472ac010c92fbba447a5364e486bb7"
+title = "Informácia o čase a mieste konania volieb – spojené voľby 2022 (25. októbra 2022)"
+
+[[document]]
+url = "https://dolnystal.eu/2022/08/08/utvorenie-volebnych-okrskov/"
+sha256 = "1bf73e35f4d2294df0c5755a0e602a772c8017beb21434a21f3767eda2abdb87"
+title = "Utvorenie volebných okrskov (8. 8. 2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Mostová"},
+  {street = "Gárdonyská"},
+  {street = "Záhradnícka"},
+  {street = "Lycejná"},
+  {street = "Pri škôlke"},
+  {street = "Lesná"},
+  {street = "Hlavná"},
+  {street = "Smotanová"},
+  {street = "Kengyelská"},
+  {street = "Stará"},
+  {street = "Hasičská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Tôňska cesta"},
+  {street = "K vinohradom"},
+  {street = "Slnečná"},
+  {street = "Zelená"},
+  {street = "Mateja Korvína"},
+  {street = "Ku kamennému stľpu"},
+  {street = "Tichá"},
+  {street = "Hornoštálska cesta"},
+  {street = "Vŕbová"},
+  {street = "Krátka"},
+  {street = "Orechová"},
+  {street = "Marhuľová"},
+  {street = "Pri jazere"},
+  {street = "Komárňanská cesta"},
+  {street = "Topoľnianska cesta"},
+]

@@ -1,0 +1,143 @@
+# The elections the site shows, one table each, named by the election's
+# slug: its name in URLs, the year of its day. Each election has its own
+# pages, /<lang>/<slug>/, its data bundle (the Pages project
+# ems-data-<slug>, see site.toml) and results, /<day>/ of the results;
+# its curated data in data/curated/elections/<day>/ and
+# what the steps make of it in data/build/<day>/. The newest is also shown
+# at /<lang>/. Adding an election is adding a table here and the inputs it
+# names to inputs.toml.
+#
+#   kind           the kind of election, as the list of elections groups
+#                  them: "municipal-regional", the municipal and regional
+#                  elections held together (the only kind so far)
+#   day            the election day
+#   polls_open, polls_close
+#                  the polls' opening hours that day, Slovak time; the
+#                  search card shows the voting under way between them
+#   live           whether the app polls the results, i.e. reads them every
+#                  minute for live_days: on for an election night and the
+#                  days after, off once the final results are built into
+#                  the site and nothing changes any more. Off, the app reads
+#                  them once per page load. Built with EMS_RESULTS_ANYTIME=1
+#                  (for testing), it polls at any time either way.
+#   live_days      days after the polls close that the app reads the results
+#                  every minute (dist/results/<day>/status.json, written by
+#                  `ems results` and the results step of `ems make`;
+#                  docs/results.md). Before the polls close it reads nothing;
+#                  after these days, once per page load, so that a copy of
+#                  the site left open or cached stops polling.
+#
+# and the inputs (inputs.toml) its steps read:
+#
+#   candidates     the candidate lists: `format` says which and how they are
+#                  read; "mvsr" names the four lists of MV SR by contest
+#                  kind: starosta, oz, predseda, zsk; "susr" the packages of
+#                  ŠÚ SR's definitive results of the municipal (oso) and
+#                  regional (osk) elections, whose tables list every
+#                  candidate (src/election_map_slovakia/statoffice.py)
+#   incumbents     (optional) the final results the office holders at the
+#                  election are rebuilt from: those of the regular elections
+#                  of `day` before (`municipal`, `regional`) and of every
+#                  municipal by-election since (`by_elections`, in date
+#                  order); see src/election_map_slovakia/incumbents.py.
+#                  Without it the election is shown without office holders
+#                  and without the turnout of the elections before.
+#   units          the territorial division (ŠÚ SR tab0dd), okrsky per obec:
+#                  `input`, read as `format` says: "xlsx" the table alone,
+#                  "susr" the table in the municipal package of ŠÚ SR
+#   results        the definitive results: `inputs`, read as `format` says:
+#                  "volbysr" the CSV tables of volbysr.sk (2026 on), none
+#                  until they are published (the results step of `ems make`
+#                  reads them; until then the results stay as `ems results`
+#                  left them); "susr" the packages of 2022, oso then osk
+#   addresses      the address register
+#   zbgis          the administrative boundaries, levels of detail 0 to 2
+#   osm            the OpenStreetMap extract of the base map
+#   records        records of sources no step reads (optional inputs): the
+#                  documents the regional obvody in
+#                  data/curated/elections/<day>/obvody/ are transcribed
+#                  from, the originals of data that stand in for the
+#                  election's own
+
+[election.2026]
+day = 2026-10-24
+kind = "municipal-regional"
+# Decision of the Speaker of the National Council no. 145/2026 Coll.;
+# https://www.minv.sk/?volby-samosprava26
+polls_open = 07:00:00
+polls_close = 20:00:00
+live = false
+live_days = 7
+addresses = "addresses"
+zbgis = ["zbgis-0", "zbgis-1", "zbgis-2"]
+osm = "osm-slovakia"
+units = { format = "xlsx", input = "units-oso2026" }
+results = { format = "volbysr", inputs = ["results-oso2026", "results-osk2026"] }
+records = [
+    "zsk-obvody-ba",
+    "zsk-obvody-tt",
+    "zsk-obvody-tn",
+    "zsk-obvody-nr",
+    "zsk-obvody-za",
+    "zsk-obvody-bb",
+    "zsk-obvody-po",
+    "zsk-obvody-ke",
+]
+
+[election.2026.candidates]
+format = "mvsr"
+starosta = "candidates-starosta"
+oz = "candidates-oz"
+predseda = "candidates-predseda"
+zsk = "candidates-zsk"
+
+# By-elections as listed on
+# https://volby.statistics.sk/oso/doplnkove2022/sk/index.html; there were
+# no regional ones in the 2022–2026 term.
+[election.2026.incumbents]
+day = 2022-10-29
+municipal = "results-oso2022"
+regional = "results-osk2022"
+by_elections = [
+    { input = "results-oso202303", day = 2023-03-25 },
+    { input = "results-oso202309", day = 2023-09-09 },
+    { input = "results-oso202402", day = 2024-02-10 },
+    { input = "results-oso202410", day = 2024-10-05 },
+    { input = "results-oso202503", day = 2025-03-15 },
+    { input = "results-oso202509", day = 2025-09-06 },
+    { input = "results-oso202603", day = 2026-03-21 },
+]
+
+# Without incumbents: the office holders before (from 2018 and 2017) are not
+# in the inputs. The boundaries and the basis of the base map's area are
+# those of 2026 (see data/curated/elections/2022-10-29/boundaries.toml); the
+# address register and the OpenStreetMap extract are of 2022.
+[election.2022]
+day = 2022-10-29
+kind = "municipal-regional"
+# https://web.archive.org/web/20221022022734/https://www.minv.sk/?selfgov22-info10
+polls_open = 07:00:00
+polls_close = 20:00:00
+live = false
+live_days = 7
+addresses = "addresses-2022"
+zbgis = ["zbgis-0", "zbgis-1", "zbgis-2"]
+osm = "osm-slovakia-2022"
+units = { format = "susr", input = "results-oso2022" }
+results = { format = "susr", inputs = ["results-oso2022", "results-osk2022"] }
+records = [
+    "zbgis-2022",
+    "zsk-obvody-ba-2022",
+    "zsk-obvody-tt-2022",
+    "zsk-obvody-tn-2022",
+    "zsk-obvody-nr-2022",
+    "zsk-obvody-za-2022",
+    "zsk-obvody-bb-2022",
+    "zsk-obvody-po-2022",
+    "zsk-obvody-ke-2022",
+]
+
+[election.2022.candidates]
+format = "susr"
+oso = "results-oso2022"
+osk = "results-osk2022"

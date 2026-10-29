@@ -1,0 +1,70 @@
+# Okrsky of Močenok, transcribed by an AI agent in job okrsok-rules-697 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Biskupa Klucha, Dekana Dubravického, Dekana Sčasného, Chalupy, Mlynská, Párovce, Pod kalváriou, Rokošova I., Rokošova II., Rokošova III., Sv. Gorazda súp. č. (512 – 572).
+#   okrsok 2: Borzagoš, Cintorínska, Čingov, Gorazdov, Hájska, Kakava, Lipová, Lúčky, Malá Kakava, Pri kamennom moste, Pri kúpalisku, Sv. Cyrila a Metoda, Sv. Gorazda, súp. č. (573 – 696, 1894, 1912), Úzka a občania, ktorým bol zrušený trvalý pobyt.
+#   okrsok 3: Andreja Hlinku, Balajka, Biskupa Majera, Družstevná, Krátka, Ľudovíta Štúra, M. R. Štefánika, Nad ihriskom, Nitrianska, Pribinova, Školská, Športová, Švábska, Topoľová, Vinohradská.
+obec = "500739"
+name = "Močenok"
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-07-26
+okrsky_date_basis = "The decision states no date; the municipality's article with it says it was published on 26 July 2022, as the Internet Archive captured it on 2022-08-02 (https://web.archive.org/web/20220802173752/https://mocenok.sk/clanok/5145-utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti)."
+okrsky_fill = "nearest"
+okrsky_note = "Article published 26.07.2022 (undated decision; snapshot 2022-08-02). Duslianska (28 addresses) is not named in the document; it takes the okrsok of the nearest placed addresses (fill_nearest). 'Občania, ktorým bol zrušený trvalý pobyt' vote in okrsok 2."
+
+[[document]]
+url = "https://web.archive.org/web/20220802173752/https://mocenok.sk/clanok/5145-utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti"
+sha256 = "84917717e085f6bbd629998519137438b7aa61126aa48ff8d21cea75497fbda2"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (voľby 29. októbra 2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Biskupa Klucha"},
+  {street = "Dekana Dúbravického", written = "Dekana Dubravického", note = "missing accent in the document; same street"},
+  {street = "Dekana Sčasného"},
+  {street = "Chalupy"},
+  {street = "Mlynská"},
+  {street = "Párovce"},
+  {street = "Pod Kalváriou"},
+  {street = "Rokošova I."},
+  {street = "Rokošova II."},
+  {street = "Rokošova III."},
+  {street = "Sv. Gorazda", numbers = "512-572", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Borzagoš"},
+  {street = "Cintorínska"},
+  {street = "Čingov"},
+  {street = "Gorazdov"},
+  {street = "Hájska"},
+  {street = "Kakava"},
+  {street = "Lipová"},
+  {street = "Lúčky"},
+  {street = "Malá Kakava"},
+  {street = "Pri kamennom moste"},
+  {street = "Pri kúpalisku"},
+  {street = "Sv. Cyrila a Metoda"},
+  {street = "Sv. Gorazda", note = "the document gives Sv. Gorazda súp. č. 573–696, 1894, 1912 here and 512–572 in okrsok 1; the rest of the street is put here"},
+  {street = "Úzka"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Andreja Hlinku"},
+  {street = "Balajka"},
+  {street = "Biskupa Majera"},
+  {street = "Družstevná"},
+  {street = "Krátka"},
+  {street = "Ľudovíta Štúra"},
+  {street = "M.R.Štefánika", written = "M. R. Štefánika"},
+  {street = "Nad Ihriskom"},
+  {street = "Nitrianska"},
+  {street = "Pribinova"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Švábska"},
+  {street = "Topoľová"},
+  {street = "Vinohradská"},
+]

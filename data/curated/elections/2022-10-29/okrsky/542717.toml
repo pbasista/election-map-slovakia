@@ -1,0 +1,23 @@
+# The okrsky of Bojná of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/542717.toml, reused by `ems job reuse`.
+obec = "542717"
+name = "Bojná"
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Scanned PDF read from the rendered image; okrsky defined by súpisné čísla. Okrsok 1's '100-1025' read as 1000-1025 (100-394 is already in 1-394 and would swallow okrsok 2). Okrsok 1's single numbers 854, 865, 886, 918-921, 945 lie inside okrsok 2's ranges and are excepted there. Numbers in no range (778-784, 800-803, 814-831, 849-851, 891-899, 952-999, 1501-1527) take the nearest placed address (fill_nearest). Both parts (Bojná, Malé Dvorany) share one súpisné numbering, so the ranges apply in both."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.bojna.sk/download_file_f.php?id=2455192"
+sha256 = "00ea0c4675b2345b235e34a6795af0275fc296d97eb299e2bc5b7ff6ec8ad681"
+title = "Určenie volebných okrskov a volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Bojná", numbers = "1-394, 804-813, 848, 854, 865, 886, 895, 918-921, 945, 1000-1025"},
+  {part = "Malé Dvorany", numbers = "1-394, 804-813, 848, 854, 865, 886, 895, 918-921, 945, 1000-1025"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Bojná", numbers = "395-777, 785-799, 832-847, 852-890, 900-951", except = "854, 865, 886, 918-921, 945"},
+  {part = "Malé Dvorany", numbers = "395-777, 785-799, 832-847, 852-890, 900-951", except = "854, 865, 886, 918-921, 945"},
+]

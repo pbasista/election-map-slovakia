@@ -1,0 +1,28 @@
+# Okrsky of Hruboňovo, transcribed by an AI agent in job okrsok-rules-1053 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hruboňovo, časť Suľany
+#   okrsok 2: Hruboňovo, časť Výčapky
+obec = "500313"
+name = "Hruboňovo"
+okrsky_date = 2022-08-04
+
+[[document]]
+url = "https://web.archive.org/web/20221005075254/https://www.hrubonovo.sk/files/2022-08-04-134054-DX-2500N_20220804_123308.pdf"
+sha256 = "f0ab1a02ab73398293f5f22690892ab54da50e88a965a058d988ca38443a568e"
+title = "Volebné obvody a okrsky pre voľby do orgánov samosprávy obcí a orgánov samosprávnych krajov 2022"
+
+[[document]]
+url = "https://web.archive.org/web/20220808142208/https://www.hrubonovo.sk/-volby"
+sha256 = "ac52032d26a4aa658e11d115dbce74722b2a660abf83ceccaac71dbc63bfe934"
+title = "Voľby (2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Suľany"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Výčapky"},
+]

@@ -6,10 +6,10 @@
  * release afterwards carries the final results.
  *
  * status.json is read from the polls' closing and then every minute while
- * the page is in view, for a week (config `liveWindow`, site.toml
+ * the page is in view, for a week (config `liveWindow`, elections.toml
  * `live_days`); after that once per page load, so that a page left open,
  * or an old copy of the site, stops polling. A site built not to poll
- * (config `live`, site.toml `live`: off once the final results are in)
+ * (config `live`, elections.toml `live`: off once the final results are in)
  * reads it once per page load.
  *
  * status.json lists a content hash per area file; each file is fetched
@@ -192,9 +192,8 @@ const live = {
   /* The figures by okrsok of area file *name* (`okrsky/<name>` in
    * `status.files`, docs/results.md), only in the final results:
    * {contests: {id: {'<obec>/<n>': [eligible, voters, valid, {number:
-   * votes}]}}, past: {'<obec>/<n>': [eligible, voters]}}, `past` the 2022
-   * turnout where the okrsok is the same as then. Null where there are
-   * none; undefined where not known. */
+   * votes}]}}, past}, `past` the election before's on the same okrsky
+   * (`pastOf`). Null where there are none; undefined where not known. */
   okrsky(name) {
     if (!counting()) return undefined;
     const hash = status.files?.[`okrsky/${name}`];
@@ -220,6 +219,38 @@ export function useLive() {
   }, []);
   return live;
 }
+
+/* How the figures of the election before were found for an okrsok
+ * (docs/results.md `past`): the same area (by the addresses, or the obec's
+ * one okrsok), the same number with about as many registered voters, an
+ * estimate from the okrsky its addresses were in then, or not at all. */
+export const PAST = { unknown: 0, same: 1, identity: 2, approximate: 3 };
+
+/* The election before in okrsok *key* of contest *id*, from okrsok file
+ * *file* (`live.okrsky`): {day, method (`PAST`), record}, `record` [eligible,
+ * voters, valid, {number: votes}] (the votes of the contest's candidates
+ * who stood for the same office then, by their numbers now), null where
+ * the method is unknown. An okrsok of an obec of one okrsok then and now
+ * is that obec. Null where nothing is known of it: no election before, or
+ * no figures there. */
+export function pastOf(file, id, key) {
+  const past = file?.past;
+  if (!past?.day) return null;
+  const figures = past.contests[id] ?? {};
+  const method = past.okrsky[key] ?? PAST.same;
+  if (method === PAST.unknown) return { day: past.day, method, record: null };
+  const record = figures[key] ?? (key in past.okrsky ? null : figures[key.split('/')[0]]);
+  return record ? { day: past.day, method, record } : null;
+}
+
+/* What the figures of the election before are, by *method* (`PAST`): of the
+ * same area, of the okrsok of the same number and about as many voters,
+ * estimated, or not known; and (`pastTitle`) how they were found. */
+export const pastLabel = (method) => t(`past.${pastName(method)}`);
+
+export const pastTitle = (method) => t(`past.how_${pastName(method)}`);
+
+const pastName = (method) => Object.keys(PAST).find((name) => PAST[name] === method) ?? 'unknown';
 
 /* Adds *record* [eligible, voters, valid, {number: votes}] (an area's or
  * an okrsok's, docs/results.md) to the sum under *key* in *sums*. */
@@ -265,8 +296,8 @@ export const SCOPES = ['all', 'obec', 'obvod', 'okrsok'];
  * and okrsok where known), coarsest first, each unit only where it has
  * figures of its own that differ from the whole contest's and from the
  * coarser units': [{scope, record, past}], `scope` one of SCOPES, `record`
- * as in the okrsok files, `past` an okrsok's 2022 municipal turnout
- * [eligible, voters] in a municipal contest where known. The units:
+ * as in the okrsok files, `past` an okrsok's in the election before
+ * (`pastOf`) where anything is known of it. The units:
  * - obec: of a regional or a city contest (its `areas` entry, else its
  *   okrsky summed);
  * - obvod: the council obvod of an obec split into several, for any
@@ -311,8 +342,7 @@ export function placeResults(id, place) {
   }
   if (place.okrsok) {
     const key = `${place.obec}/${place.okrsok}`;
-    const municipal = kind === 'starosta' || kind === 'oz';
-    push('okrsok', records[key], municipal ? (file?.past?.[key] ?? null) : null);
+    push('okrsok', records[key], pastOf(file, id, key));
   }
   return out;
 }

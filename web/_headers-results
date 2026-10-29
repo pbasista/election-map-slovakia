@@ -1,0 +1,24 @@
+# Response headers of the results, which `ems build` writes to
+# dist/results/_headers (src/election_map_slovakia/bundle.py), for the
+# Cloudflare Pages project of the results (docs/deploy.md). Syntax and
+# limits as in web/_headers: the Cache-Control rules must not overlap.
+
+# The app on the site's own domain fetches the results from here, so every
+# origin may read them. Search engines should index the site instead.
+/*
+  Access-Control-Allow-Origin: *
+  X-Content-Type-Options: nosniff
+  X-Robots-Tag: noindex
+
+# The results of the election of a day (/<day>/, docs/results.md).
+# status.json changes with every deployment of new results, so it is always
+# revalidated; the app asks for every other file with ?v=<the hash of its
+# content that status.json lists>, kept for a day: a rollback would bring
+# an older content back under the same hash. The second rule needs a
+# directory below the day (okres/, okrsky/, ...), so it never matches
+# status.json and the two do not overlap.
+/:day/status.json
+  Cache-Control: no-cache
+
+/:day/:kind/*
+  Cache-Control: public, max-age=86400

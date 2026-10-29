@@ -1,0 +1,47 @@
+# Okrsky of Hanušovce nad Topľou, transcribed by an AI agent in job okrsok-rules-952 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice Bukovské, Dukelská, Garbiarska, Jarmočná, Kláštorná, Komenského, Kukorelliho, Počekanec, Pod Šibenou, Prešovská, Slovenská, Šarišská, Štúrova od č. 342 – 343, Zámocká, Železničiarska
+#   okrsok 2: ulice Budovateľská, Mierová, Sadová, SNP, Širiava, Štúrova od č. 335 – 340, Tehelná, Záhradná
+obec = "544213"
+name = "Hanušovce nad Topľou"
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The mayor's decision states no date but names the 2022 elections (page 2; https://web.archive.org/web/20220928010334/https://www.hanusovce.sk/e_download.php?file=data/editor/228sk_4.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%2C%20menovanie%20zapisovateliek%20okrskov%C3%BDch%20komisi%C3%AD.pdf, captured 2022-09-28)."
+okrsky_fill = "nearest"
+okrsky_note = "Undated scanned decision of the mayor for the 2022 elections (page 2 names the 2022 elections), listed by an Internet Archive snapshot of 2022-09-28. Štúrova is split by súpisné číslo (342–343 okrsok 1, 335–340 okrsok 2); other Štúrova houses (e.g. the school 341) and the 1 address without a street take the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20220928010334/https://www.hanusovce.sk/e_download.php?file=data/editor/228sk_4.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%2C%20menovanie%20zapisovateliek%20okrskov%C3%BDch%20komisi%C3%AD.pdf"
+sha256 = "d613f27257ad18d5612b485472465fbeca81f1d152499ac02437673f3437bc57"
+title = "Utvorenie volebných okrskov, menovanie zapisovateliek okrskových komisií"
+
+[okrsok.1]
+rules = [
+  {street = "Bukovské"},
+  {street = "Dukelská"},
+  {street = "Garbiarska"},
+  {street = "Jarmočná"},
+  {street = "Kláštorná"},
+  {street = "Komenského"},
+  {street = "Kukorelliho"},
+  {street = "Počekanec"},
+  {street = "Pod Šibenou"},
+  {street = "Prešovská"},
+  {street = "Slovenská"},
+  {street = "Šarišská"},
+  {street = "Štúrova", numbers = "342-343", by = "supisne"},
+  {street = "Zámocká"},
+  {street = "Železničiarska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Mierová"},
+  {street = "Sadová"},
+  {street = "SNP"},
+  {street = "Širiava"},
+  {street = "Štúrova", numbers = "335-340", by = "supisne"},
+  {street = "Tehelná"},
+  {street = "Záhradná"},
+]

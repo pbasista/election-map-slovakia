@@ -1,36 +1,52 @@
 """Verify the site in ``dist/`` before it is deployed.
 
 Every check runs and lists all its problems, so one run shows everything
-that is wrong:
+that is wrong. The site is in parts (``build``): the app in ``app/``, per
+election a map bundle in ``map/<slug>/`` and a data bundle in
+``data/<slug>/``, ``sources/`` and ``results/``. Problems name the files
+by their path in ``dist/``. The app requests its files as ``serve`` serves
+the parts (``build.mounts``): a path of the app's ``/x`` is ``app/x`` (or,
+for the cached copies, ``sources/x``), and an election's ``/x`` is
+``map/<slug>/x`` below ``geo/``, ``base/`` and ``addr/``, else
+``data/<slug>/x`` (:func:`election_path`). Built with ``--deployed``,
+``dist/`` holds the app and each bundle's manifest only: the checks of a
+bundle's content are then those it passed where it was built, and the app
+is checked against the files its manifest lists.
 
 =========  ==============================================================
-files      at most ``file_budget`` files (``config/site.toml``)
+files      at most ``file_budget`` files (``config/site.toml``) in each
+           part, which a Pages project of its own serves
 sizes      no file larger than ``max_file_bytes``
 json       every ``.json`` file parses
-headers    ``_headers`` parses and stays within the Cloudflare Pages
-           limits (100 rules, 2,000 characters per line)
+headers    each part's ``_headers`` parses and stays within the
+           Cloudflare Pages limits (100 rules, 2,000 characters per line);
+           each data part has its ``404.html`` and ``manifest.json``, and
+           a bundle's manifest lists exactly its files
 links      every file the frontend can request exists: the files HTML
            pages, scripts and app.css refer to (the code below
            ``assets/<v>/``, the libraries below ``assets/vendor/<vv>/``,
            which the build points the modules' imports at; see ``build``),
            the literal paths in the
-           scripts, the 404 page, the shell and UI strings of every
-           language, every geo shard of every okres, every okrsky file the
-           geo index lists and every level of the
-           countries around Slovakia, and for every obec in the geo shards
-           its address file and candidate files; every address file, name
-           shard and party logo the indexes list, and every base map file
-           of the base index; the cached copy of every
-           page a research finding cites and the stylesheet they link
-contests   every contest of ``candidates.json`` is in exactly one candidate
-           area file, the one the frontend looks in (``areaPath`` in
-           ``web/js/data.js``)
-origins    no HTML, JS or CSS refers to another origin, except as the
-           target of a link (``href``, not on ``<link>``), as an XML
-           namespace or in a comment; cached copies of cited pages
-           (``cache/``) are documents, not code, and are not checked: what
-           they refer to is only links (``cache.py`` sanitizes them). The
-           CSP's connect-src in ``_headers`` is ``'self'`` alone
+           scripts (those of an election's files in every election's
+           bundle, whose address the app puts before them), the 404 page,
+           the shells of every language and election and the UI strings
+           of every language; of every election its indexes, About data,
+           occupations and coarse geometry, every geo shard of every
+           okres, every okrsky file the geo index lists and every level of
+           the countries around Slovakia, and for every obec in the geo
+           shards its address file and candidate files; every address
+           file, name shard and party logo the indexes list, and every
+           base map file of the base index; the cached copy of every page
+           a research finding cites and the stylesheet they link
+contests   every contest of an election's ``candidates.json`` is in
+           exactly one of its candidate area files, the one the frontend
+           looks in (``areaPath`` in ``web/js/data.js``)
+origins    no HTML, JS or CSS of the app refers to another origin than
+           the data parts' its shells name (km-config ``map``, ``data``,
+           ``results``, ``sources``), except as the target of a link
+           (``href``, not on ``<link>``), as an XML namespace or in a
+           comment; the CSP's connect-src in the app's ``_headers`` is
+           ``'self'`` and the origins of the bundles and the results
 results    every directory of ``results/`` is an election day's and holds
            results that keep the contract of docs/results.md
            (``results.check``): its ``status.json`` well-formed, every
@@ -58,16 +74,14 @@ geometry   at each level of detail the lines drawn are the borders of its
            (``geo.verify_neighbours``) and have names in every language
 base       the base map has the shards' levels of detail and okresy
            (``base/index.json`` against ``geo/index.json``), ``base/``
-           holds no file its index does not let the app request (``links``
-           reports those missing), and each file has only the line classes
-           of its level and water areas whose rings are exactly the arcs
-           coded as such, each
-           buildings file its scale, as many vertices as its rings count,
-           rings of three or more with an area and an outer ring first
-           (``basemap.verify``)
+           holds no file its index does not let the app request
+           (``links`` reports those missing), and each file has only the
+           line classes of its level and water areas whose rings are
+           exactly the arcs coded as such, each buildings file its scale,
+           as many vertices as its rings count, rings of three or more
+           with an area and an outer ring first (``basemap.verify``)
 i18n       every UI string is translated into every language (none taken
-           from a fallback language) and each language's occupations file
-           holds as many as its UI strings say; notes the share of
+           from a fallback language); notes the share of each bundle's
            occupations translated per language
 =========  ==============================================================
 
@@ -79,6 +93,7 @@ images are not vendored.
 from __future__ import annotations
 
 import datetime as dt
+import html
 import json
 import math
 import os
@@ -86,7 +101,7 @@ import posixpath
 import re
 import urllib.parse
 from collections import defaultdict
-from collections.abc import Iterable, Iterator
+from collections.abc import Iterable, Iterator, Mapping
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -95,6 +110,7 @@ from election_map_slovakia import (
     addresses,
     basemap,
     build,
+    bundle,
     cache,
     candidates,
     config,
@@ -102,8 +118,16 @@ from election_map_slovakia import (
     parallel,
     progress,
     results,
+    translate,
 )
 from election_map_slovakia.output import format_size
+
+APP = f"{build.APP_PART}/"
+SOURCES = f"{bundle.SOURCES_PART}/"
+RESULTS = f"{bundle.RESULTS_PART}/"
+MAP = f"{bundle.MAP_PART}/"
+DATA = f"{bundle.DATA_PART}/"
+BUNDLES = (MAP, DATA)
 
 # https://developers.cloudflare.com/pages/platform/limits/
 MAX_HEADER_RULES = 100
@@ -112,7 +136,7 @@ SHOWN_PROBLEMS = 20
 
 _CODE = (".html", ".js", ".mjs", ".css")
 _LEAFLET_CSS = re.compile(
-    rf"{build.ASSETS_DIR}/{build.VENDOR_DIR}/[^/]+/leaflet/leaflet\.css"
+    rf"{build.APP_PART}/{build.ASSETS_DIR}/{build.VENDOR_DIR}/[^/]+/leaflet/leaflet\.css"
 )
 _HTML_REF = re.compile(r"""\b(?:src|href)\s*=\s*["']([^"']*)["']""")
 # Relative imports, and the absolute ones of the libraries the build writes.
@@ -138,6 +162,7 @@ _NAMESPACES = frozenset(
 )
 # Tags whose href loads or redirects resources rather than linking.
 _RESOURCE_TAGS = frozenset({"link", "base"})
+# Below an election's bundle.
 _AREA_DIRS = ("data/okres/", "data/city/", "data/kraj/")
 _METRES_PER_DEGREE = 111_320
 # Address points and geometry are both rounded to 1e-5 degree.
@@ -162,11 +187,54 @@ def _load(dist: Path, rel: str) -> Any:
         return None
 
 
+def part_of(rel: str) -> str:
+    """Return the part of ``dist/`` path *rel*: ``app``, ``data/<slug>``, ..."""
+    first, _, rest = rel.partition("/")
+    if first in (bundle.MAP_PART, bundle.DATA_PART):
+        return f"{first}/{rest.partition('/')[0]}"
+    return first
+
+
+def election_path(slug: str, rel: str) -> str:
+    """Return the ``dist/`` path of election *slug*'s file *rel* (``geo/…``).
+
+    In its map bundle if below one of its directories, else in its data
+    bundle: where the app fetches it (``dataUrl`` in ``web/js/files.js``).
+    """
+    part = (
+        bundle.MAP_PART
+        if rel.split("/", 1)[0] in bundle.MAP_ROOTS
+        else bundle.DATA_PART
+    )
+    return f"{part}/{slug}/{rel}"
+
+
+def to_dist(path: str) -> str:
+    """Return the ``dist/`` path of the app's request for URL path *path*.
+
+    As ``serve`` serves it (``build.mounts``): the bundles' and the results'
+    paths are theirs; at the root, the cached copies are the sources' and
+    everything else the app's.
+    """
+    if path.startswith((*BUNDLES, RESULTS)):
+        return path
+    if path.startswith(f"{bundle.CACHE_DIR}/") or path == cache.STYLESHEET[1:]:
+        return SOURCES + path
+    return APP + path
+
+
 def check_budget(sizes: dict[str, int], site: config.Site) -> tuple[Check, Check]:
-    """Return the file count and file size checks."""
+    """Return the file count (per part) and file size checks."""
+    counts: dict[str, int] = defaultdict(int)
+    for rel in sizes:
+        counts[part_of(rel)] += 1
     files = Check("files", len(sizes))
-    if len(sizes) > site.file_budget:
-        files.problems.append(f"{len(sizes):,} files, budget {site.file_budget:,}")
+    files.problems += [
+        f"{part}/: {n:,} files, budget {site.file_budget:,}"
+        for part, n in sorted(counts.items())
+        if n > site.file_budget
+    ]
+    files.notes += [f"{part}/: {n:,} files" for part, n in sorted(counts.items())]
     big = Check("sizes", len(sizes))
     big.problems += [
         f"{rel}: {format_size(size)}, limit {format_size(site.max_file_bytes)}"
@@ -200,32 +268,61 @@ def _join(name: str, parts: Iterable[Check]) -> Check:
     return result
 
 
-def check_headers(dist: Path) -> Check:
-    """Return the check of ``_headers`` against the Pages limits."""
+def check_headers(dist: Path, parts: Iterable[str], rels: set[str]) -> Check:
+    """Return the check of each part's ``_headers`` and data part's files.
+
+    *parts* are the parts of ``dist/`` built here, *rels* all files.
+    """
     result = Check("headers")
-    path = dist / build.HEADERS
-    if not path.is_file():
-        result.problems.append(f"{build.HEADERS} missing")
-        return result
-    text = path.read_text(encoding="utf-8")
-    try:
-        rules = build.header_rules(text)
-    except build.BuildError as e:
-        result.problems.append(str(e))
-        return result
-    result.checked = len(rules)
-    if len(rules) > MAX_HEADER_RULES:
-        result.problems.append(f"{len(rules)} rules, limit {MAX_HEADER_RULES}")
-    result.problems += [
-        f"{build.HEADERS}:{n}: {len(line):,} characters, limit {MAX_HEADER_LINE:,}"
-        for n, line in enumerate(text.splitlines(), 1)
-        if len(line) > MAX_HEADER_LINE
-    ]
+    for part in parts:
+        result.checked += 1
+        result.problems += _headers_problems(dist, part)
+        if part == build.APP_PART:
+            continue
+        result.problems += [
+            f"{part}/{name} missing"
+            for name in (bundle.NOT_FOUND, bundle.MANIFEST)
+            if f"{part}/{name}" not in rels
+        ]
+        manifest = _load(dist, f"{part}/{bundle.MANIFEST}")
+        if part.startswith(BUNDLES) and manifest is not None:
+            own = (bundle.HEADERS, bundle.NOT_FOUND, bundle.MANIFEST)
+            present = {
+                rel.removeprefix(f"{part}/")
+                for rel in rels
+                if rel.startswith(f"{part}/")
+            } - set(own)
+            if present != set(manifest["files"]):
+                result.problems.append(
+                    f"{part}/{bundle.MANIFEST}: lists not exactly the bundle's files"
+                )
     return result
 
 
+def _headers_problems(dist: Path, part: str) -> list[str]:
+    """Return the problems of *part*'s ``_headers`` against the Pages limits."""
+    rel = f"{part}/{bundle.HEADERS}"
+    path = dist / rel
+    if not path.is_file():
+        return [f"{rel} missing"]
+    text = path.read_text(encoding="utf-8")
+    try:
+        rules = build.header_rules(text)
+    except bundle.BuildError as e:
+        return [f"{part}/{e}"]
+    problems = []
+    if len(rules) > MAX_HEADER_RULES:
+        problems.append(f"{rel}: {len(rules)} rules, limit {MAX_HEADER_RULES}")
+    problems += [
+        f"{rel}:{n}: {len(line):,} characters, limit {MAX_HEADER_LINE:,}"
+        for n, line in enumerate(text.splitlines(), 1)
+        if len(line) > MAX_HEADER_LINE
+    ]
+    return problems
+
+
 def _local_target(page: str, ref: str) -> str | None:
-    """Return the ``dist/`` path *ref* in *page* requests, if it is local."""
+    """Return the URL path *ref* in *page* requests, if it is local."""
     # Most references are other sites' URLs, which urljoin returns as they
     # are: splitting them, cheaper than joining, rules them out.
     split = urllib.parse.urlsplit(ref)
@@ -238,41 +335,58 @@ def _local_target(page: str, ref: str) -> str | None:
     return (path + "index.html" if path.endswith("/") else path).lstrip("/")
 
 
-def _code_references(dist: Path, rels: Iterable[str]) -> list[tuple[str, str]]:
-    """Return (``dist/`` path, referring file) for the static references."""
+def _code_references(
+    dist: Path, rels: Iterable[str], slugs: Iterable[str]
+) -> list[tuple[str, str]]:
+    """Return (``dist/`` path, referring file) for the static references.
+
+    Of the app's code among *rels*. A script's literal path to an
+    election's files is requested of every election of *slugs*, as the app
+    puts the page's election's bundle before it (:func:`election_path`).
+    """
+    slugs = tuple(slugs)
+    roots = (*bundle.MAP_ROOTS, *bundle.DATA_ROOTS)
     references = []
     for rel in rels:
         if not rel.endswith(_CODE) or _LEAFLET_CSS.fullmatch(rel):
             continue
+        page = rel.removeprefix(APP)
         text = (dist / rel).read_text(encoding="utf-8")
+        script = False
         if rel.endswith(".html"):
             refs = _HTML_REF.findall(text)
         elif rel.endswith(".css"):
             refs = _CSS_URL.findall(text)
         else:
+            script = True
             refs = [*_JS_IMPORT.findall(text), *(m[1] for m in _JS_PATH.findall(text))]
         for ref in refs:
-            target = _local_target(rel, ref)
-            if target is not None:
-                references.append((target, rel))
+            target = _local_target(page, ref)
+            if target is None:
+                continue
+            if script and target.split("/", 1)[0] in roots:
+                references += [(election_path(slug, target), rel) for slug in slugs]
+            else:
+                references.append((to_dist(target), rel))
     return references
 
 
-def area_path(contest: str, obce: dict[str, list[Any]]) -> str | None:
+def area_path(contest: str, obce: dict[str, list[Any]], root: str) -> str | None:
     """Return the area file the frontend loads for *contest*.
 
-    Mirrors ``areaPath`` in ``web/js/data.js``; None if the obec of a
-    municipal contest is not in ``data/index.json``.
+    Mirrors ``areaPath`` in ``web/js/data.js``; *root* is the election's
+    data bundle, ``data/<slug>/``, *obce* those of its ``data/index.json``.
+    None if the obec of a municipal contest is not there.
     """
     kind, area = contest.split(":")
     area = area.split("/")[0]
     if kind in ("predseda", "zsk"):
-        return f"data/kraj/{area}.json"
+        return f"{root}data/kraj/{area}.json"
     if area in candidates.CITY_CODES:
-        return f"data/city/{area}.json"
+        return f"{root}data/city/{area}.json"
     if area not in obce:
         return None
-    return f"data/okres/{obce[area][1]}.json"
+    return f"{root}data/okres/{obce[area][1]}.json"
 
 
 @dataclass
@@ -284,15 +398,16 @@ class _Geo:
     bounds: dict[str, tuple[float, float, float, float]] = field(default_factory=dict)
     """obec → (west, south, east, north) at the finest level of detail."""
     shards: list[str] = field(default_factory=list)
-    """Every file of ``okres/``, ``okrsky/`` and ``neighbours/`` the index lists."""
+    """The ``dist/`` path of every file of ``okres/``, ``okrsky/`` and
+    ``neighbours/`` the index lists."""
     council: dict[str, dict[str, set[int]]] = field(default_factory=dict)
     """obec cut into council obvody → shard → its obvody (``oz``) there."""
     okrsky: set[str] = field(default_factory=set)
     """The obce whose okrsky the map draws (``okrsky.drawn`` of the index)."""
 
 
-def _geo(dist: Path, geo_index: Any) -> _Geo | None:
-    """Return what the shards of *geo_index* say; None if it is None."""
+def _geo(dist: Path, root: str, geo_index: Any) -> _Geo | None:
+    """Return what the shards of *geo_index* below *root* say; None if it is None."""
     if geo_index is None:
         return None
     out = _Geo()
@@ -300,7 +415,7 @@ def _geo(dist: Path, geo_index: Any) -> _Geo | None:
     finest = next(b["lod"] for b in bands if b["zoom"][1] is None)
     for okres in geo_index["okresy"]:
         for band in bands:
-            rel = f"geo/okres/{okres}/{band['lod']}.json"
+            rel = f"{root}geo/okres/{okres}/{band['lod']}.json"
             out.shards.append(rel)
             shard = _load(dist, rel)
             if shard is None:
@@ -325,114 +440,209 @@ def _geo(dist: Path, geo_index: Any) -> _Geo | None:
     okrsky = geo_index["okrsky"]
     out.okrsky = set(okrsky["drawn"])
     out.shards += [
-        f"geo/{geo.okrsky_path(okres, band['lod'])}"
+        f"{root}geo/{geo.okrsky_path(okres, band['lod'])}"
         for okres in okrsky["okresy"]
         for band in okrsky["bands"]
     ]
     out.shards += [
-        f"geo/{geo.neighbours_path(n['lod'])}" for n in geo_index["neighbours"]
+        f"{root}geo/{geo.neighbours_path(n['lod'])}" for n in geo_index["neighbours"]
     ]
     return out
 
 
 _BASE_INDEX = f"{basemap.OUTPUT_DIR}/{basemap.INDEX_FILE}"
+_INDEXES = ("geo/index.json", "data/index.json", "addr/index.json", _BASE_INDEX)
+"""Of an election: its indexes, in :class:`_Election` order."""
+
+
+@dataclass
+class _Election:
+    """An election, with the indexes of its bundles.
+
+    An index is None if it is missing or broken.
+    """
+
+    slug: str
+    contests: list[str]
+    """The contests of its ``candidates.json``."""
+    geo: Any
+    data: Any
+    addr: Any
+    base: Any
+
+    @property
+    def map_root(self) -> str:
+        """``map/<slug>/``, which the paths of its map bundle start with."""
+        return f"{MAP}{self.slug}/"
+
+    @property
+    def data_root(self) -> str:
+        """``data/<slug>/``, which those of its data bundle start with."""
+        return f"{DATA}{self.slug}/"
+
+    def at(self, rel: str) -> str:
+        """Return the ``dist/`` path of its file *rel* (:func:`election_path`)."""
+        return election_path(self.slug, rel)
+
+    @property
+    def indexes(self) -> dict[str, Any]:
+        """Each of :data:`_INDEXES` → its content."""
+        contents = (self.geo, self.data, self.addr, self.base)
+        return dict(zip(_INDEXES, contents, strict=True))
+
+    @classmethod
+    def load(cls, dist: Path, slug: str, contests: Iterable[str]) -> _Election:
+        """Return the election *slug* of the site in *dist*."""
+        indexes = (_load(dist, election_path(slug, rel)) for rel in _INDEXES)
+        return cls(slug, list(contests), *indexes)
 
 
 def _index_requests(
-    geo: _Geo | None, data_index: Any, addr_index: Any
+    e: _Election, geo: _Geo | None, logos: str
 ) -> Iterator[tuple[str, str]]:
-    """Yield (``dist/`` path, why) for the files the indexes point to."""
+    """Yield (``dist/`` path, why) for the files the indexes point to.
+
+    The indexes of election *e*, *geo* the :func:`_geo` of its geo index;
+    *logos* is the URL path of the app's party logos (km-config ``logos``).
+    """
+    data_index, addr_index = e.data, e.addr
     if geo is not None:
-        yield from ((rel, "geo/index.json") for rel in geo.shards)
+        yield from ((rel, e.at("geo/index.json")) for rel in geo.shards)
     if data_index is not None:
         yield from (
-            (f"data/names/{prefix}.json", "data/index.json")
+            (e.at(f"data/names/{prefix}.json"), e.at("data/index.json"))
             for prefix in data_index["names"]
         )
-        # A party is [short, name] or [short, name, logo].
+        # A party is [short, name] or [short, name, logo]; the logos, the
+        # app's, serve every election.
         yield from (
-            (logo.removeprefix("/"), "data/index.json")
-            for _, _, *logos in data_index["parties"].values()
-            for logo in logos
+            (to_dist(f"{logos}/{logo}"), e.at("data/index.json"))
+            for _, _, *files in data_index["parties"].values()
+            for logo in files
         )
     if addr_index is not None:
         yield from (
-            (f"addr/{row[0]}.json", "addr/index.json") for row in addr_index["obce"]
+            (e.at(f"addr/{row[0]}.json"), e.at("addr/index.json"))
+            for row in addr_index["obce"]
         )
     if geo is None or data_index is None:
         return
     for code, props in sorted(geo.features.items()):
-        by = f"obec {code} in geo/okres/"
-        yield f"addr/{code}.json", by
-        path = area_path(f"starosta:{code}", data_index["obce"])
+        by = f"obec {code} in {e.at('geo/okres/')}"
+        yield e.at(f"addr/{code}.json"), by
+        path = area_path(f"starosta:{code}", data_index["obce"], e.data_root)
         if path is not None:
             yield path, by
         if "city" in props:
-            yield f"data/city/{props['city']}.json", by
+            yield e.at(f"data/city/{props['city']}.json"), by
 
 
-def _research_requests(dist: Path, rels: Iterable[str]) -> list[tuple[str, str]]:
-    """Return (``dist/`` path, why) for the cached pages research cites."""
+def _research_requests(
+    dist: Path, rels: Iterable[str], root: str
+) -> list[tuple[str, str]]:
+    """Return (``dist/`` path, why) for the cached pages research cites.
+
+    The research of the election whose data bundle is below *root*.
+    """
     return [
-        (f"{build.CACHE_DIR}/{f[7]}.html", rel)
+        (f"{SOURCES}{bundle.CACHE_DIR}/{f[7]}.html", rel)
         for rel in rels
-        if rel.startswith("data/research/") and (content := _load(dist, rel))
+        if rel.startswith(f"{root}data/research/") and (content := _load(dist, rel))
         for findings in content.values()
         for f in findings
     ]
 
 
+def _election_requests(
+    election: _Election,
+    shards: _Geo | None,
+    languages: config.Languages,
+    logos: str,
+) -> Iterator[tuple[str, str]]:
+    """Yield (``dist/`` path, why) for the files of *election* the app requests.
+
+    Besides the scripts' literal paths and the research's.
+
+    *shards* is the :func:`_geo` of its geo index, *logos* the URL path of
+    the party logos.
+    """
+    # The app requests these, whatever form the scripts give their paths
+    # in.
+    for rel in _INDEXES:
+        yield election.at(rel), "web/js"
+    yield election.at("data/about.json"), "web/js/about.js"
+    yield election.at(f"geo/{geo.COARSE_FILE}"), "web/js/map.js"
+    # Occupations are written in Slovak, which has no file of them.
+    yield from (
+        (election.at(f"{bundle.I18N_DIR}/{code}.json"), "web/js/data.js")
+        for code in languages.codes
+        if code != translate.REFERENCE
+    )
+    yield from _index_requests(election, shards, logos)
+    yield from (
+        (election.at(f"{basemap.OUTPUT_DIR}/{rel}"), election.at(_BASE_INDEX))
+        for rel in (basemap.requested(election.base) if election.base else ())
+    )
+
+
 def check_links(
     rels: set[str],
     languages: config.Languages,
-    geo: _Geo | None,
-    data_index: Any,
-    addr_index: Any,
-    base_index: Any,
+    slugs: Iterable[str],
+    elections: Iterable[tuple[_Election, _Geo | None]],
     references: Iterable[tuple[str, str]],
     research: Iterable[tuple[str, str]],
+    logos: str,
 ) -> Check:
     """Return the check that every file the frontend can request exists.
 
-    *references* and *research* are the :func:`_code_references` and the
-    :func:`_research_requests` of all *rels*, in order.
+    *rels* are the files of ``dist/`` and those the manifests of deployed
+    bundles list; *slugs* every election's, *elections* each whose bundle
+    is here with the :func:`_geo` of its geo index; *references* and
+    *research* the :func:`_code_references` and the
+    :func:`_research_requests` of all *rels*, in order; *logos* the URL path
+    of the party logos.
     """
     result = Check("links")
-    indexes = {
-        "geo/index.json": geo,
-        "data/index.json": data_index,
-        "addr/index.json": addr_index,
-        _BASE_INDEX: base_index,
-    }
-    result.problems += [
-        f"{name} missing or broken"
-        for name, content in indexes.items()
-        if content is None
-    ]
+    slugs = list(slugs)
+    elections = list(elections)
+    research = list(research)
+    codes = languages.codes
     requests = [
         *references,
-        *((f"{code}/index.html", "config/languages.toml") for code in languages.codes),
-        *((f"i18n/{code}.json", "config/languages.toml") for code in languages.codes),
-        *((name, "web/js") for name in indexes),
-        # Without it Pages answers a missing file with the root page and 200.
-        (build.NOT_FOUND, "Cloudflare Pages"),
-        *_index_requests(geo, data_index, addr_index),
+        *((f"{APP}{code}/index.html", "config/languages.toml") for code in codes),
         *(
-            (f"{basemap.OUTPUT_DIR}/{rel}", _BASE_INDEX)
-            for rel in (basemap.requested(base_index) if base_index else ())
+            (f"{APP}{code}/{slug}/index.html", "config/elections.toml")
+            for code in codes
+            for slug in slugs
+        ),
+        *((f"{APP}i18n/{code}.json", "config/languages.toml") for code in codes),
+        # Without it Pages answers a missing file with the root page and 200.
+        (f"{APP}{bundle.NOT_FOUND}", "Cloudflare Pages"),
+        *(
+            r
+            for e, shards in elections
+            for r in _election_requests(e, shards, languages, logos)
         ),
         *research,
-        (cache.STYLESHEET.removeprefix("/"), "the cached copies (cache.py)"),
     ]
+    if research:
+        requests.append((to_dist(cache.STYLESHEET[1:]), "the cached copies (cache.py)"))
     wanted: dict[str, str] = {}
     for target, by in requests:
         wanted.setdefault(target, by)
-    if geo is not None and data_index is not None:
+    for e, shards in elections:
         result.problems += [
-            f"obec {code} in geo/okres/: not in data/index.json"
-            for code in sorted(geo.features)
-            if code not in data_index["obce"]
+            f"{e.at(name)} missing or broken"
+            for name, content in e.indexes.items()
+            if content is None
         ]
+        if shards is not None and e.data is not None:
+            result.problems += [
+                f"obec {code} in {e.at('geo/okres/')}: not in {e.at('data/index.json')}"
+                for code in sorted(shards.features)
+                if code not in e.data["obce"]
+            ]
     result.checked = len(wanted)
     result.problems += [
         f"{target} missing (needed by {by})"
@@ -443,24 +653,28 @@ def check_links(
 
 
 def check_basemap(
-    dist: Path, sizes: dict[str, int], base_index: Any, geo_index: Any
+    dist: Path, sizes: dict[str, int], root: str, base_index: Any, geo_index: Any
 ) -> Check:
-    """Return the check of the base map against the shards and its index."""
+    """Return the check of the base map below *root*.
+
+    Against the shards and its index.
+    """
     result = Check("base")
+    index = f"{root}{_BASE_INDEX}"
     if base_index is None or geo_index is None:
-        result.problems.append(f"{_BASE_INDEX} or geo/index.json missing or broken")
+        result.problems.append(f"{index} or {root}geo/index.json missing or broken")
         return result
     if base_index["bands"] != geo_index["shards"]:
-        result.problems.append(f"{_BASE_INDEX}: bands differ from the geo shards'")
+        result.problems.append(f"{index}: bands differ from the geo shards'")
     if base_index["okresy"] != sorted(geo_index["okresy"]):
-        result.problems.append(f"{_BASE_INDEX}: okresy differ from the geo shards'")
-    prefix = f"{basemap.OUTPUT_DIR}/"
+        result.problems.append(f"{index}: okresy differ from the geo shards'")
+    prefix = f"{root}{basemap.OUTPUT_DIR}/"
     present = {rel.removeprefix(prefix) for rel in sizes if rel.startswith(prefix)}
     present.discard(basemap.INDEX_FILE)
     wanted = set(basemap.requested(base_index))
     if extra := sorted(present - wanted):
         result.problems.append(
-            f"{_BASE_INDEX}: {len(extra)} files in {prefix} the app never requests,"
+            f"{index}: {len(extra)} files in {prefix} the app never requests,"
             f" such as {prefix}{extra[0]}"
         )
     for rel in sorted(present & wanted):
@@ -473,34 +687,44 @@ def check_basemap(
 
 
 def check_contests(
-    dist: Path, rels: Iterable[str], contests: Iterable[str], data_index: Any
+    dist: Path,
+    rels: Iterable[str],
+    root: str,
+    contests: Iterable[str],
+    data_index: Any,
 ) -> Check:
-    """Return the check that each contest is where the frontend looks."""
+    """Return the check that each contest is where the frontend looks.
+
+    The contests of the election below *root*.
+    """
     result = Check("contests")
     found: dict[str, list[str]] = defaultdict(list)
+    area_dirs = tuple(root + d for d in _AREA_DIRS)
     for rel in sorted(rels):
-        if rel.startswith(_AREA_DIRS):
+        if rel.startswith(area_dirs):
             content = _load(dist, rel)
             for contest in content["contests"] if content else ():
                 found[contest].append(rel)
     if data_index is None:
-        result.problems.append("data/index.json missing or broken")
+        result.problems.append(f"{root}data/index.json missing or broken")
         return result
     expected = set()
+    # Contest ids recur from election to election.
+    election = root.removesuffix("/")
     for contest in contests:
         expected.add(contest)
         result.checked += 1
         files = found.get(contest, [])
         if not files:
-            result.problems.append(f"{contest}: in no area file")
+            result.problems.append(f"{election} {contest}: in no area file")
         elif len(files) > 1:
-            result.problems.append(f"{contest}: in {', '.join(files)}")
-        elif (path := area_path(contest, data_index["obce"])) != files[0]:
+            result.problems.append(f"{election} {contest}: in {', '.join(files)}")
+        elif (path := area_path(contest, data_index["obce"], root)) != files[0]:
             result.problems.append(
-                f"{contest}: in {files[0]}, the frontend looks in {path}"
+                f"{election} {contest}: in {files[0]}, the frontend looks in {path}"
             )
     result.problems += [
-        f"{contest}: in {', '.join(files)} but not in candidates.json"
+        f"{election} {contest}: in {', '.join(files)} but not in candidates.json"
         for contest, files in sorted(found.items())
         if contest not in expected
     ]
@@ -528,8 +752,9 @@ def _connect_sources(dist: Path) -> list[str] | None:
     None if ``_headers`` is missing or broken (``check_headers`` says so).
     """
     try:
-        rules = build.header_rules((dist / build.HEADERS).read_text(encoding="utf-8"))
-    except (OSError, build.BuildError):
+        text = (dist / APP / bundle.HEADERS).read_text(encoding="utf-8")
+        rules = build.header_rules(text)
+    except (OSError, bundle.BuildError):
         return None
     policy = next(
         (
@@ -546,19 +771,60 @@ def _connect_sources(dist: Path) -> list[str] | None:
     return directives.get("connect-src", directives.get("default-src", ["*"]))
 
 
-def check_origins(dist: Path, rels: Iterable[str], site: config.Site) -> Check:
-    """Return the check that no code refers to another origin."""
+_KM_CONFIG = re.compile(r'<meta name="km-config" content="([^"]*)"')
+
+
+def app_configs(dist: Path, code: str, slugs: Iterable[str]) -> dict[str, Any]:
+    """Return slug → the km-config of the election's shell in language *code*.
+
+    Each names where the app finds the election's data parts (``build``);
+    an election whose shell is missing or broken is left out (``links``
+    says so).
+    """
+    out = {}
+    for slug in slugs:
+        try:
+            text = (dist / APP / code / slug / "index.html").read_text(encoding="utf-8")
+        except OSError:
+            continue
+        match = _KM_CONFIG.search(text)
+        if match is not None:
+            out[slug] = json.loads(html.unescape(match.group(1)))
+    return out
+
+
+def check_origins(
+    dist: Path, rels: Iterable[str], site: config.Site, configs: Mapping[str, Any]
+) -> Check:
+    """Return the check that no code of the app refers to another origin.
+
+    Than those of the data parts the shells name (*configs*,
+    :func:`app_configs`), which the CSP must let the app fetch from.
+    """
     result = Check("origins")
+    fetched = {
+        build.origin(url)
+        for c in configs.values()
+        for url in (c["map"], c["data"], c["results"])
+        if build.origin(url)
+    }
+    linked = {build.origin(c["sources"]) for c in configs.values()} - {""}
     own = urllib.parse.urlsplit(site.base_url).netloc if site.base_url else None
+    # The shells' config names the data parts' addresses; a match can run on
+    # into the escaped config there (_netloc), so they are told by prefix.
+    data_parts = re.compile(
+        "|".join(re.escape(o) + r"(?![\w.-])" for o in sorted(fetched | linked))
+        or r"(?!)"
+    )
     for rel in sorted(rels):
-        if not rel.endswith(_CODE) or rel.startswith(f"{build.CACHE_DIR}/"):
+        if not rel.startswith(APP) or not rel.endswith(_CODE):
             continue
         result.checked += 1
         text = (dist / rel).read_text(encoding="utf-8")
         comments = _comment_spans(text) if not rel.endswith(".html") else []
         for m in _URL.finditer(text):
             url = m.group()
-            if _netloc(url) == own:
+            if _netloc(url) == own or data_parts.match(url):
                 continue
             # A link target the About dialog builds from the shell's config.
             if url.startswith(site.repository):
@@ -567,9 +833,11 @@ def check_origins(dist: Path, rels: Iterable[str], site: config.Site) -> Check:
                 line = text.count("\n", 0, m.start()) + 1
                 result.problems.append(f"{rel}:{line}: {url}")
     connect = _connect_sources(dist)
-    if connect is not None and connect != ["'self'"]:
+    expected = ["'self'", *sorted(fetched)]
+    if connect is not None and connect != expected:
         result.problems.append(
-            f"{build.HEADERS}: CSP connect-src is {' '.join(connect)}, expected 'self'"
+            f"{APP}{bundle.HEADERS}: CSP connect-src is {' '.join(connect)},"
+            f" expected {' '.join(expected)}"
         )
     return result
 
@@ -577,8 +845,9 @@ def check_origins(dist: Path, rels: Iterable[str], site: config.Site) -> Check:
 def check_results(dist: Path) -> Check:
     """Return the check of the results of each election in ``results/``."""
     result = Check("results")
-    root = dist / config.RESULTS_DIR
-    days = sorted(root.iterdir()) if root.is_dir() else []
+    root = dist / bundle.RESULTS_PART
+    own = {bundle.HEADERS, bundle.NOT_FOUND, bundle.MANIFEST}
+    days = sorted(p for p in root.iterdir() if p.name not in own)
     for directory in days:
         result.checked += 1
         rel = directory.relative_to(dist).as_posix()
@@ -626,18 +895,22 @@ def _points(content: dict[str, Any]) -> Iterator[tuple[float, float]]:
 
 
 def check_addresses(
-    dist: Path, rels: Iterable[str], geo_index: Any, data_index: Any
+    dist: Path, rels: Iterable[str], root: str, geo_index: Any, data_index: Any
 ) -> Check:
     """Return the check that address points lie within their obec.
 
     And that in the obce whose council obvod goes by address every address
     has one of the obec's obvody, and the map draws all of them; and that
     every address has its okrsok exactly where the map draws the okrsky.
+
+    Of the election below *root*.
     """
     result = Check("addresses")
-    geo = _geo(dist, geo_index)
+    geo = _geo(dist, root, geo_index)
     if geo is None or data_index is None:
-        result.problems.append("geo/index.json or data/index.json missing or broken")
+        result.problems.append(
+            f"{root}geo/index.json or its election's data/index.json missing or broken"
+        )
         return result
     for code, shards in sorted(geo.council.items()):
         want = set(range(1, data_index["obce"][code][4] + 1))
@@ -647,7 +920,7 @@ def check_addresses(
             if got != want
         ]
     for rel in sorted(rels):
-        if not rel.startswith("addr/") or rel == "addr/index.json":
+        if not rel.startswith(f"{root}addr/") or rel == f"{root}addr/index.json":
             continue
         code = posixpath.splitext(posixpath.basename(rel))[0]
         content = _load(dist, rel)
@@ -743,44 +1016,49 @@ def _per_address(group: Any, one: str, each: str) -> list[int]:
 
 
 def _verify_level(
-    dist: Path, name: str, rels: Iterable[str]
+    dist: Path, root: str, name: str, rels: Iterable[str]
 ) -> tuple[int, list[str], Any] | None:
     """Return the number of features, problems and country outline of a level.
 
-    *rels* are its files below ``geo/``; None if one is missing or broken:
-    the links and json checks say so.
+    *rels* are its files below *root*``geo/``; None if one is missing or
+    broken: the links and json checks say so.
     """
-    files = [_load(dist, f"geo/{rel}") for rel in rels]
+    files = [_load(dist, f"{root}geo/{rel}") for rel in rels]
     if any(f is None for f in files):
         return None
     return (
         sum(len(f["features"]) for f in files),
-        [f"geo/{name}: {p}" for p in geo.verify(files)],
+        [f"{root}geo/{name}: {p}" for p in geo.verify(files)],
         geo.country_outline(files),
     )
 
 
-def _verify_okrsky(dist: Path, lod: str, okrsky: Any) -> tuple[int, list[str]]:
+def _verify_okrsky(
+    dist: Path, root: str, lod: str, okrsky: Any
+) -> tuple[int, list[str]]:
     """Return the number of features and problems of the okrsky at *lod*.
 
-    *okrsky* is ``okrsky`` of the geo index.
+    *okrsky* is ``okrsky`` of the geo index below *root*.
     """
     name = geo.okrsky_path("*", lod)
     files = [
-        _load(dist, f"geo/{geo.okrsky_path(okres, lod)}") for okres in okrsky["okresy"]
+        _load(dist, f"{root}geo/{geo.okrsky_path(okres, lod)}")
+        for okres in okrsky["okresy"]
     ]
     shards = [
-        _load(dist, f"geo/okres/{okres}/{lod}.json") for okres in okrsky["okresy"]
+        _load(dist, f"{root}geo/okres/{okres}/{lod}.json") for okres in okrsky["okresy"]
     ]
     if any(f is None for f in [*files, *shards]):
         return 0, []  # missing or broken: the links and json checks say so
     return sum(len(f["features"]) for f in files), [
-        f"geo/{name}: {p}" for p in geo.verify_okrsky(files, shards, okrsky["drawn"])
+        f"{root}geo/{name}: {p}"
+        for p in geo.verify_okrsky(files, shards, okrsky["drawn"])
     ]
 
 
 def check_geometry(
     dist: Path,
+    root: str,
     geo_index: Any,
     languages: config.Languages,
     levels: Iterable[tuple[int, list[str], Any] | None],
@@ -792,11 +1070,11 @@ def check_geometry(
     level, and that the countries around Slovakia meet it at every level,
     and are named in every language. *levels* are the :func:`_verify_level`
     of each of ``geo.level_files``, *okrsky* the :func:`_verify_okrsky` of
-    each band of the okrsky.
+    each band of the okrsky, of the election below *root*.
     """
     result = Check("geometry")
     if geo_index is None:
-        result.problems.append("geo/index.json missing or broken")
+        result.problems.append(f"{root}geo/index.json missing or broken")
         return result
     outlines = {}
     for name, level in zip(geo.level_files(geo_index), levels, strict=True):
@@ -807,18 +1085,21 @@ def check_geometry(
     for checked, problems in okrsky:
         result.checked += checked
         result.problems += problems
-    strings = {code: _load(dist, f"i18n/{code}.json") or {} for code in languages.codes}
+    strings = {
+        code: _load(dist, f"{APP}{build.I18N_DIR}/{code}.json") or {}
+        for code in languages.codes
+    }
     for band in geo_index["neighbours"]:
-        rel = geo.neighbours_path(band["lod"])
-        content = _load(dist, f"geo/{rel}")
+        rel = f"{root}geo/{geo.neighbours_path(band['lod'])}"
+        content = _load(dist, rel)
         if content is None:
             continue
         result.checked += len(content["features"])
         result.problems += [
-            f"geo/{rel}: {p}" for p in geo.verify_neighbours(content, outlines)
+            f"{rel}: {p}" for p in geo.verify_neighbours(content, outlines)
         ]
         result.problems += [
-            f"geo/{rel}: {f['properties']['id']} has no name in i18n/{code}.json"
+            f"{rel}: {f['properties']['id']} has no name in {APP}i18n/{code}.json"
             for f in content["features"]
             for code, s in strings.items()
             if f"country.{f['properties']['id']}" not in s
@@ -826,33 +1107,38 @@ def check_geometry(
     return result
 
 
-def check_translations(dist: Path, languages: config.Languages) -> Check:
+def check_translations(
+    dist: Path, languages: config.Languages, roots: Iterable[str]
+) -> Check:
     """Return the check that every UI string is translated everywhere.
 
-    Notes per language how many occupations are translated.
+    Notes per language how many of the occupations of each bundle below
+    *roots* are translated.
     """
     result = Check("i18n")
     for code in languages.codes:
-        strings = _load(dist, f"i18n/{code}.json")
+        rel = f"{APP}{build.I18N_DIR}/{code}.json"
+        strings = _load(dist, rel)
         if strings is None:
             continue  # missing or broken: the links and json checks say so
         result.checked += sum(not k.startswith("_") for k in strings)
-        missing = strings.get("_missing", {})
-        if missing.get("ui"):
+        if strings.get("_missing"):
             result.problems.append(
-                f"i18n/{code}.json: {missing['ui']:,} UI strings untranslated"
+                f"{rel}: {strings['_missing']:,} UI strings untranslated"
                 f" (shown in {strings['_pending']})"
             )
-        count = strings.get("_occupations", 0)
-        total = count + missing.get("occupations", 0)
-        if total:
-            result.notes.append(
-                f"{code}: {count:,} of {total:,} occupations translated"
-                f" ({count / total:.0%})"
-            )
-        rel = f"i18n/{code}/occupations.json"
-        if count and len(_load(dist, rel) or {}) != count:
-            result.problems.append(f"{rel}: missing, or not {count:,} occupations")
+    for root in roots:
+        for code in languages.codes:
+            occupations = _load(dist, f"{root}{bundle.I18N_DIR}/{code}.json")
+            if occupations is None:
+                continue  # Slovak, or missing: the links check says so
+            count = len(occupations["occupations"])
+            total = count + occupations["missing"]
+            if total:
+                result.notes.append(
+                    f"{root}: {code} {count:,} of {total:,} occupations translated"
+                    f" ({count / total:.0%})"
+                )
     return result
 
 
@@ -868,16 +1154,18 @@ def _chunks(rels: list[str], sizes: dict[str, int], n: int) -> list[list[str]]:
 
 
 def run(
-    dist: Path,
-    site: config.Site,
-    languages: config.Languages,
-    contests: Iterable[str],
+    dist: Path, cfg: config.Config, contests: Mapping[str, Iterable[str]]
 ) -> list[Check]:
     """Run every check on the site in *dist*; see the module doc.
 
-    The checks run in worker processes, the slowest split into independent
-    parts; the results are put together as if they ran one by one.
+    *contests* maps the slug of an election to the contests of its
+    ``candidates.json``, where its bundle is built here. The checks run in
+    worker processes, the slowest split into independent parts, those of
+    a bundle's files once for each; the results are put together as if
+    they ran one by one.
     """
+    site, languages = cfg.site, cfg.languages
+    slugs = [e.slug for e in cfg.elections]
     with progress.stage(f"reading the indexes of {dist.name}/"):
         sizes = {
             p.relative_to(dist).as_posix(): p.stat().st_size
@@ -886,32 +1174,73 @@ def run(
         }
         rels = set(sizes)
         ordered = sorted(rels)
-        geo_index = _load(dist, "geo/index.json")
-        data_index = _load(dist, "data/index.json")
-        addr_index = _load(dist, "addr/index.json")
-        base_index = _load(dist, _BASE_INDEX)
-    levels = geo.level_files(geo_index) if geo_index is not None else {}
-    okrsky = geo_index["okrsky"] if geo_index is not None else {"bands": []}
-    bands = [band["lod"] for band in okrsky["bands"]]
+        bundle_dirs = [f"{part}{slug}" for part in BUNDLES for slug in slugs]
+        manifests = {d: _load(dist, f"{d}/{bundle.MANIFEST}") for d in bundle_dirs}
+        # Deployed bundles, of which dist/ holds the manifest only.
+        deployed = {d for d, m in manifests.items() if m is not None and "url" in m}
+        present = rels | {
+            f"{d}/{rel}" for d in deployed for rel in manifests[d]["files"]
+        }
+        # Those whose bundles are built here; ``build --deployed`` builds
+        # neither of an election's.
+        loaded = [
+            _Election.load(dist, slug, contests.get(slug, ()))
+            for slug in slugs
+            if not {f"{MAP}{slug}", f"{DATA}{slug}"} & deployed
+        ]
+        configs = app_configs(dist, languages.codes[0], slugs)
+    parts = sorted({part_of(rel) for rel in rels} - deployed)
+    logos = next(iter(configs.values()))["logos"].lstrip("/") if configs else ""
+    levels = {
+        e.slug: geo.level_files(e.geo) if e.geo is not None else {} for e in loaded
+    }
+    okrsky = {
+        e.slug: e.geo["okrsky"] if e.geo is not None else {"bands": []} for e in loaded
+    }
+    bands = {slug: [band["lod"] for band in o["bands"]] for slug, o in okrsky.items()}
     cpus = os.cpu_count() or 1
-    # The slowest first, so that none of them starts last: the base map (its
+    # The slowest first, so that none of them starts last: the base maps (their
     # thousands of files), then the okrsky and levels of detail, the finer
     # the later in the index and the slower. The files to parse come last,
-    # in parts that keep every worker busy to the end.
+    # in parts that keep every worker busy to the end. An election's tasks
+    # are named by its slug.
     tasks = {
-        "base": (check_basemap, dist, sizes, base_index, geo_index),
         **{
-            f"geo/{geo.okrsky_path('*', lod)}": (_verify_okrsky, dist, lod, okrsky)
-            for lod in reversed(bands)
+            f"{e.slug} base": (check_basemap, dist, sizes, e.map_root, e.base, e.geo)
+            for e in loaded
         },
         **{
-            f"geo/{name}": (_verify_level, dist, name, files)
-            for name, files in reversed(levels.items())
+            f"{e.slug} geo/{geo.okrsky_path('*', lod)}": (
+                _verify_okrsky,
+                dist,
+                e.map_root,
+                lod,
+                okrsky[e.slug],
+            )
+            for e in loaded
+            for lod in reversed(bands[e.slug])
         },
-        "addresses": (check_addresses, dist, rels, geo_index, data_index),
-        "shards": (_geo, dist, geo_index),
-        "research": (_research_requests, dist, ordered),
-        "results": (check_results, dist),
+        **{
+            f"{e.slug} geo/{name}": (_verify_level, dist, e.map_root, name, files)
+            for e in loaded
+            for name, files in reversed(levels[e.slug].items())
+        },
+        **{
+            f"{e.slug} addresses": (
+                check_addresses,
+                dist,
+                rels,
+                e.map_root,
+                e.geo,
+                e.data,
+            )
+            for e in loaded
+        },
+        **{f"{e.slug} shards": (_geo, dist, e.map_root, e.geo) for e in loaded},
+        **{
+            f"{e.slug} research": (_research_requests, dist, ordered, e.data_root)
+            for e in loaded
+        },
         **{
             f"json {i}": (check_json, dist, part)
             for i, part in enumerate(
@@ -919,50 +1248,91 @@ def run(
             )
         },
         **{
-            f"links {i}": (_code_references, dist, part)
+            f"links {i}": (
+                _code_references,
+                dist,
+                part,
+                slugs,
+            )
             for i, part in enumerate(
-                _chunks([rel for rel in ordered if rel.endswith(_CODE)], sizes, cpus)
+                _chunks(
+                    [r for r in ordered if r.startswith(APP) and r.endswith(_CODE)],
+                    sizes,
+                    cpus,
+                )
             )
         },
-        "contests": (check_contests, dist, rels, list(contests), data_index),
-        "origins": (check_origins, dist, rels, site),
-        "headers": (check_headers, dist),
-        "i18n": (check_translations, dist, languages),
+        **{
+            f"{e.slug} contests": (
+                check_contests,
+                dist,
+                rels,
+                e.data_root,
+                e.contests,
+                e.data,
+            )
+            for e in loaded
+        },
+        "origins": (check_origins, dist, rels, site, configs),
+        "headers": (check_headers, dist, parts, rels),
+        "i18n": (check_translations, dist, languages, [e.data_root for e in loaded]),
     }
+    if (dist / bundle.RESULTS_PART).is_dir():
+        tasks["results"] = (check_results, dist)
     with progress.stage(f"checking in {len(tasks)} parts", len(tasks)) as s:
-        parts = parallel.each(parallel.call, tasks.values())
-        done = dict(zip(tasks, s.track(parts), strict=True))
+        done = dict(
+            zip(
+                tasks,
+                s.track(parallel.each(parallel.call, tasks.values())),
+                strict=True,
+            )
+        )
+
+    def each(task: str) -> list[Any]:
+        """Return the outcome of *task* for every election built here."""
+        return [done[f"{e.slug} {task}"] for e in loaded]
+
     return [
-        *check_budget(sizes, site),
+        # A deployed bundle's manifest stands for files deployed elsewhere.
+        *check_budget({r: s for r, s in sizes.items() if part_of(r) in parts}, site),
         _join("json", (c for key, c in done.items() if key.startswith("json "))),
         done["headers"],
         check_links(
-            rels,
+            present,
             languages,
-            done["shards"],
-            data_index,
-            addr_index,
-            base_index,
+            slugs,
+            zip(loaded, each("shards"), strict=True),
             [
                 ref
                 for key, refs in done.items()
                 if key.startswith("links ")
                 for ref in refs
             ],
-            done["research"],
+            [request for requests in each("research") for request in requests],
+            logos,
         ),
-        done["contests"],
+        _join("contests", each("contests")),
         done["origins"],
-        done["results"],
-        done["addresses"],
-        check_geometry(
-            dist,
-            geo_index,
-            languages,
-            [done[f"geo/{name}"] for name in levels],
-            [done[f"geo/{geo.okrsky_path('*', lod)}"] for lod in bands],
+        done.get("results", Check("results")),
+        _join("addresses", each("addresses")),
+        _join(
+            "geometry",
+            (
+                check_geometry(
+                    dist,
+                    e.map_root,
+                    e.geo,
+                    languages,
+                    [done[f"{e.slug} geo/{name}"] for name in levels[e.slug]],
+                    [
+                        done[f"{e.slug} geo/{geo.okrsky_path('*', lod)}"]
+                        for lod in bands[e.slug]
+                    ],
+                )
+                for e in loaded
+            ),
         ),
-        done["base"],
+        _join("base", each("base")),
         done["i18n"],
     ]
 

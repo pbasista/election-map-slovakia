@@ -1,0 +1,52 @@
+# The okrsky of Viničné of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/508306.toml, reused by `ems job reuse`.
+obec = "508306"
+name = "Viničné"
+okrsky_date = 2026-07-20
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Scanned PDF, read from the image. \"Obec Viničné\" in okrsok 1 (residents registered only to the obec / addresses without a street) is given as the rest rule."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.vinicne.sk/download_file_f.php?id=2445735"
+sha256 = "93e65c48c71515efb4d72af673a1c5fc930a0c61c3c8f0c527126127ca7a494a"
+title = "určenie volebných okrskoch a miestností"
+
+[[document]]
+url = "https://www.vinicne.sk/urcenie-volebnych-miestnosti-a-volebnych-okrskov-1-2--oznam/mid/405782/.html"
+sha256 = "113bbf638eb9000ddb4a84a284adaff4fbe16a87099c712f683d6012847ebcd3"
+title = "určenie volebných miestností a volebných okrskov 1,2."
+
+[okrsok.1]
+rules = [
+  {street = "Agátová"},
+  {street = "Brezová"},
+  {street = "Cerová"},
+  {street = "Cintorínska"},
+  {street = "Dubová"},
+  {street = "Hlavná"},
+  {street = "Hlboká"},
+  {street = "Javorová"},
+  {street = "Kozia"},
+  {street = "Lipová"},
+  {street = "Šípková"},
+  {rest = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Grobská"},
+  {street = "Hájska"},
+  {street = "Kvetná"},
+  {street = "Lúčna"},
+  {street = "Nová"},
+  {street = "Orechová"},
+  {street = "Pod Lesom", written = "Pod lesom"},
+  {street = "Poľná"},
+  {street = "Pri Mlyne", written = "Pri mlyne"},
+  {street = "Slnečná"},
+  {street = "Športová"},
+  {street = "Tichá"},
+  {street = "Vinohradnícka"},
+  {street = "Vojenská"},
+  {street = "Záhradná"},
+]

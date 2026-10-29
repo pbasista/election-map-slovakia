@@ -1,0 +1,46 @@
+# Okrsky of Strečno, transcribed by an AI agent in job okrsok-rules-880 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: 1. mája, 28. októbra, Hradná, Kamenná, Kováčska, Lesná, Partizánska, SNP, Za záhradami, Lipová, M. Ilovského, 26. apríla, Cintorínska, Francúzskych Partizánov, Zlatné
+#   okrsok 2: ulice: Mládeže, Sokolská, Záhradná, Čsl. Brigády, Školská, Športová, Nábrežná
+obec = "517984"
+name = "Strečno"
+okrsky_date = 2022-11-07
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections found: the 2022 page (archived 16 Aug 2022) links \"Volebné okrsky a volebné miestonosti\" PDF, which is gone from the website and not in the Internet Archive; the referendum's document (7 Nov 2022) is used. Its two okrsky with 1075/1069 voters fit the Statistical Office counts. The register's 15 houses without a street are placed by fill_nearest."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://web.archive.org/web/20221221013810/https://www.strecno.sk/wp-content/uploads/2022/11/referendum-1.pdf"
+sha256 = "4871c7c8bb923728bb43d4105327f21d6d78ce4f9c717443bd2e46ab76c86f41"
+title = "Informácia o utvorení volebných okrskov a určení volebných miestností pre referendum, ktoré sa bude konať 21. januára 2023"
+
+[okrsok.1]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "28.októbra", written = "28. októbra"},
+  {street = "Hradná"},
+  {street = "Kamenná"},
+  {street = "Kováčska"},
+  {street = "Lesná"},
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Za záhradami"},
+  {street = "Lipová"},
+  {street = "M.Ilovského", written = "M. Ilovského"},
+  {street = "26.apríla", written = "26. apríla"},
+  {street = "Cintorínska"},
+  {street = "Francúzskych Partizánov"},
+  {street = "Zlatné"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mládeže"},
+  {street = "Sokolská"},
+  {street = "Záhradná"},
+  {street = "Čsl. Brigády"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Nábrežná"},
+]

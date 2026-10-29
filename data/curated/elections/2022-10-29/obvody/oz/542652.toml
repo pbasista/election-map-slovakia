@@ -1,0 +1,310 @@
+# Council obvody of Bánovce nad Bebravou (542652), Bánovce nad Bebravou.
+# Transcribed by an AI agent in job obvod-rules-275 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1: 9. mája, Bernolákova, Družstevná, F. Urbánka, Farská, J. Bottu, J. Kačku, K štadiónu, Podjavorinskej, Sasinkova, Vajanského nábrežie, Za valy, A. Kmeťa, Hviezdoslavova, J. Jesenského, J. Kráľa, Mila Urbana, Mlynská, Moyzesova, Murgašova, Nám. Ľ. Štúra, Palkovičova, Radlinského, Rokošská, SNP, Trenčianska cesta, Záfortňa; počet volených poslancov: 2
+#   obvod 2: Volebný obvod č. 2: A. Hlinku, Clementisova, Partizánska, Pribinova, Rumunská, J. G. Tajovského, K Zornici, Na vŕštek, Textilná, Vystrkov; počet volených poslancov: 3
+#   obvod 3: Volebný obvod č. 3: Hollého, Sládkovičova, J. Matušku, M. R. Štefánika, Strážovská, Školská; počet volených poslancov: 2
+#   obvod 4: Volebný obvod č. 4: K nemocnici, K priehrade, Pažiť, Vodná nádrž, 5. apríla, Cibislávska; počet volených poslancov: 2
+#   obvod 5: Volebný obvod č. 5: Cyrila a Metoda, Gorazdova, Husitská, Lúčna, Rastislavova, Slatinská, Žitná, Komenského, Mojmírova, Kukučínova, Matice slovenskej, Svätoplukova, Alexandra Dubčeka, J. C. Hronského, Novomeského; počet volených poslancov: 6
+#   obvod 6: Volebný obvod č. 6: Biskupice; počet volených poslancov: 1
+#   obvod 7: Volebný obvod č. 7: Hečkova, Hrežďovská, I. Krasku, Jahodová, Lipová, Malé Chlievany, Radová, Topoľová; počet volených poslancov: 1
+#   obvod 8: Volebný obvod č. 8: Hrežďovská, Inovecká, K cintorínu, Kpt. Jaroša, Ku splavu, Ozorovská hlavná, Ozorovská nová, Potočná, Za kaštieľom; počet volených poslancov: 1
+#   obvod 9: Volebný obvod č. 9: Horné Ozorovce; počet volených poslancov: 1
+# Okrsky added by an AI agent in job okrsok-rules-1152 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 9. mája, Bernolákova, Družstevná, F. Urbánka, Farská, J. Bottu, J. Kačku, K štadiónu, Ľ. Podjavorinskej, Sasinkova, Vajanského nábrežie, Za Valy + občania, ktorí majú trvalý pobyt „Bánovce nad Bebravou“ bez uvedenia ulice alebo súpisného čísla
+#   okrsok 2: A.Kmeťa, Hviezdoslavova, J. Jesenského, J. Kráľa, Mila Urbana, Mlynská, Moyzesova, Murgašova, Nám. Ľ. Štúra, Palkovičova, Radlinského, Rokošská, SNP, Trenčianska cesta, Záfortňa
+#   okrsok 3: A.Hlinku, Clementisova, Partizánska, Pribinova, Rumunská
+#   okrsok 4: J. G. Tajovského, K zornici, Na vŕštek, Textilná, Vystrkov
+#   okrsok 5: Hollého, Sládkovičova
+#   okrsok 6: J. Matušku, M. R. Štefánika, Strážovská, Školská
+#   okrsok 7: K nemocnici, K priehrade, Pažiť, Vodná nádrž
+#   okrsok 8: 5. apríla, Cibislávska
+#   okrsok 9: Cyrila a Metoda, Gorazdova
+#   okrsok 10: Husitská
+#   okrsok 11: Lúčna, Rastislavova, Slatinská, Žitná
+#   okrsok 12: J. A. Komenského, Mojmírova
+#   okrsok 13: Kukučínova, Matice slovenskej, Svätoplukova
+#   okrsok 14: Alexandra Dubčeka, J. C. Hronského, Novomeského
+#   okrsok 15: Biskupice
+#   okrsok 16: Hečkova, Hrežďovská, I. Krasku, Jahodová, Lipová, Malé Chlievany, Radová, Topoľová
+#   okrsok 17: Hrežďovská, Inovecká, K cintorínu, Kpt. Jaroša, Ku splavu, Ozorovská hlavná, Ozorovská nová, Potočná, Za kaštielom
+#   okrsok 18: Horné Ozorovce
+obec = "542652"
+name = "Bánovce nad Bebravou"
+date = 2022-06-22
+fill = "nearest"
+note = "Hrežďovská (part Dolné Ozorovce) is listed in both obvod 7 and obvod 8 (okrsky 16 and 17) without saying which houses belong where; it is left to fill_nearest, so each house takes the obvod of its nearest neighbours (Hečkova/Jahodová/I. Krasku in 7, Inovecká etc. in 8). Also by fill_nearest: Duklianska (1 address, not named in the document) and the part Bánovce nad Bebravou's addresses without a street. 'Vodná nádrž' (obvod 4) is not in the register. Biskupice, Malé Chlievany, Horné Ozorovce are whole parts."
+okrsky_date = 2022-08-09
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky document states no decision date; date is its posting date on the city's page VOĽBY 2022 ('Zverejnené 9.8.2022', updated 24.10.2022, before the vote). Okrsok 1 also takes the residents registered at 'Bánovce nad Bebravou' without a street or number (not placed). Okrsky 15–18 are each a whole obvod. Left to fill_nearest within their obvod: Duklianska (1 address, named in no okrsok), the Hrežďovská addresses the obvod rules put outside obvody 7 and 8, and the houses without a street. 'Vodná nádrž' (okrsok 7) is not in the register."
+
+[[document]]
+url = "https://www.banovce.sk/download_file_f.php?id=1711276"
+sha256 = "bccca3c2bb8a312aacbcfa9ada87a101d90d037ed6201e3edf5cd03563df12e5"
+title = "OZNÁMENIE o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 29. októbra 2022 (uznesenie MsZ č. 765 zo dňa 22.06.2022), 14.07.2022"
+
+[[document]]
+url = "https://www.banovce.sk/download_file_f.php?id=1722003"
+sha256 = "fa9d8a416f2dd74612ea50d8a449093872466a57e7ca92f1a0fe7d94e80ba8fe"
+title = "Volebné okrsky a volebné miestnosti pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov 29. októbra 2022"
+
+[[document]]
+url = "https://www.banovce.sk/volby-2022-0.html"
+sha256 = "08f584bc03d2cfde3744061e2b48361889c8fac465f0928813e52245b74ed2b0"
+title = "VOĽBY 2022 (the city's elections page: 'Volebné okrsky a volebné miestnosti … Zverejnené 9.8.2022, Aktualizované 24.10.2022')"
+
+[obvod.1]
+seats = 2
+okrsky = [1, 2]
+rules = [
+  {street = "9. mája"},
+  {street = "Bernolákova"},
+  {street = "Družstevná"},
+  {street = "Ferka Urbánka", written = "F. Urbánka"},
+  {street = "Farská"},
+  {street = "Jána Bottu", written = "J. Bottu"},
+  {street = "J. Kačku"},
+  {street = "K štadiónu"},
+  {street = "Ľudmily Podjavorinskej", written = "Podjavorinskej"},
+  {street = "Sasinkova"},
+  {street = "Vajanského nábr.", written = "Vajanského nábrežie", note = "register abbreviates nábrežie as nábr."},
+  {street = "Za Valy", written = "Za valy"},
+  {street = "A.Kmeťa", written = "A. Kmeťa", note = "register writes A.Kmeťa without a space"},
+  {street = "Hviezdoslavova"},
+  {street = "Janka Jesenského", written = "J. Jesenského"},
+  {street = "Janka Kráľa", written = "J. Kráľa"},
+  {street = "Mila Urbana"},
+  {street = "Mlynská"},
+  {street = "Moyzesova"},
+  {street = "Murgašova"},
+  {street = "Nám. Ľ. Štúra"},
+  {street = "Palkovičova"},
+  {street = "Radlinského"},
+  {street = "Rokošská"},
+  {street = "SNP"},
+  {street = "Trenčianska cesta"},
+  {street = "Záfortňa"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [3, 4]
+rules = [
+  {street = "A. Hlinku"},
+  {street = "Clementisova"},
+  {street = "Partizánska"},
+  {street = "Pribinova"},
+  {street = "Rumunská"},
+  {street = "J. G. Tajovského"},
+  {street = "K Zornici"},
+  {street = "Na Vrštek", written = "Na vŕštek", note = "register spells Na Vrštek (without the long ŕ)"},
+  {street = "Textilná"},
+  {street = "Vystrkov"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [5, 6]
+rules = [
+  {street = "Hollého"},
+  {street = "Sládkovičova"},
+  {street = "J. Matušku"},
+  {street = "M. R. Štefánika"},
+  {street = "Strážovská"},
+  {street = "Školská"},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [7, 8]
+rules = [
+  {street = "K nemocnici"},
+  {street = "K priehrade"},
+  {street = "Pažiť"},
+  {street = "5. apríla"},
+  {street = "Cibislávska"},
+]
+
+[obvod.5]
+seats = 6
+okrsky = [9, 10, 11, 12, 13, 14]
+rules = [
+  {street = "Cyrila a Metoda"},
+  {street = "Gorazdova"},
+  {street = "Husitská"},
+  {street = "Lúčna"},
+  {street = "Rastislavova"},
+  {street = "Slatinská"},
+  {street = "Žitná"},
+  {street = "Komenského"},
+  {street = "Mojmírova"},
+  {street = "Kukučínova"},
+  {street = "Matice  slovenskej", written = "Matice slovenskej", note = "register has a double space in the name"},
+  {street = "Svätoplukova"},
+  {street = "Alexandra Dubčeka"},
+  {street = "J. C. Hronského"},
+  {street = "Novomeského"},
+]
+
+[obvod.6]
+seats = 1
+okrsky = [15]
+rules = [
+  {part = "Biskupice"},
+]
+
+[obvod.7]
+seats = 1
+okrsky = [16]
+rules = [
+  {street = "Hečkova"},
+  {street = "I. Krasku"},
+  {street = "Jahodová"},
+  {street = "Lipová"},
+  {part = "Malé Chlievany"},
+  {street = "Radová"},
+  {street = "Topoľová"},
+]
+
+[obvod.8]
+seats = 1
+okrsky = [17]
+rules = [
+  {street = "Inovecká"},
+  {street = "K cintorínu"},
+  {street = "Kpt. Jaroša"},
+  {street = "Ku splavu"},
+  {street = "Ozorovská hlavná"},
+  {street = "Ozorovská nová"},
+  {street = "Potočná"},
+  {street = "Za kaštieľom"},
+]
+
+[obvod.9]
+seats = 1
+okrsky = [18]
+rules = [
+  {part = "Horné Ozorovce"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "9. mája"},
+  {street = "Bernolákova"},
+  {street = "Družstevná"},
+  {street = "Ferka Urbánka", written = "F. Urbánka"},
+  {street = "Farská"},
+  {street = "Jána Bottu", written = "J. Bottu"},
+  {street = "J. Kačku"},
+  {street = "K štadiónu"},
+  {street = "Ľudmily Podjavorinskej", written = "Ľ. Podjavorinskej"},
+  {street = "Sasinkova"},
+  {street = "Vajanského nábr.", written = "Vajanského nábrežie"},
+  {street = "Za Valy"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "A.Kmeťa"},
+  {street = "Hviezdoslavova"},
+  {street = "Janka Jesenského", written = "J. Jesenského"},
+  {street = "Janka Kráľa", written = "J. Kráľa"},
+  {street = "Mila Urbana"},
+  {street = "Mlynská"},
+  {street = "Moyzesova"},
+  {street = "Murgašova"},
+  {street = "Nám. Ľ. Štúra"},
+  {street = "Palkovičova"},
+  {street = "Radlinského"},
+  {street = "Rokošská"},
+  {street = "SNP"},
+  {street = "Trenčianska cesta"},
+  {street = "Záfortňa"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "A. Hlinku", written = "A.Hlinku"},
+  {street = "Clementisova"},
+  {street = "Partizánska"},
+  {street = "Pribinova"},
+  {street = "Rumunská"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "J. G. Tajovského"},
+  {street = "K Zornici", written = "K zornici"},
+  {street = "Na Vrštek", written = "Na vŕštek", note = "the same street (vŕšok, a hill); the register writes it without the accent, the obvod resolution as 'Na vŕštek' too"},
+  {street = "Textilná"},
+  {street = "Vystrkov"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Hollého"},
+  {street = "Sládkovičova"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "J. Matušku"},
+  {street = "M. R. Štefánika"},
+  {street = "Strážovská"},
+  {street = "Školská"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "K nemocnici"},
+  {street = "K priehrade"},
+  {street = "Pažiť"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "5. apríla"},
+  {street = "Cibislávska"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Cyrila a Metoda"},
+  {street = "Gorazdova"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Husitská"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Lúčna"},
+  {street = "Rastislavova"},
+  {street = "Slatinská"},
+  {street = "Žitná"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Komenského", written = "J. A. Komenského"},
+  {street = "Mojmírova"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Kukučínova"},
+  {street = "Matice  slovenskej", written = "Matice slovenskej"},
+  {street = "Svätoplukova"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Alexandra Dubčeka"},
+  {street = "J. C. Hronského"},
+  {street = "Novomeského"},
+]

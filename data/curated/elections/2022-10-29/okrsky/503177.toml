@@ -1,0 +1,102 @@
+# Okrsky of Dvory nad Žitavou, transcribed by an AI agent in job okrsok-rules-658 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Agátová, J.Aranya, Branovská cesta, cesta Družby, J.Dózsu, nám.J.Dózsu, Fajková, Hlavná ulica, Janka Kráľa, P.Jilemnického, Jókaiho, J.A.Komenského, Kováčska, Krivá, Krížna, Lastovičia, Malá komárňanská, Mostná, Spojová cesta, Pekárska, Za pekárňou
+#   okrsok 2: Bešeňovská cesta, Bešeňovská ulica, Furmanská, Hviezdoslavova, Jána Szabóa, Krajná, Krivánska, Kukučínova, Ľ.Štúra, Malá, Okružná, Pod záhradami, Sklenný vrch, Sládkovičova, Slávičia, Sokolská, Stará, Železničná stanica, Žitavská
+#   okrsok 3: Družstevná, Hlavné námestie, Hlboká cesta, Krátka, K.Mikszátha, Mlynské námestie, Skautov, Športová, Štadionová, Tabaková, Trstená, Tyršová, Veľká komárňanská, Záhradná, Žombék a ďalší občania s trvalým pobytom v obci Dvory nad Žitavou bez adresy!
+#   okrsok 4: Attilu Józsefa, Brezová, Dubová cesta, J.G.Tajovského, Kolťanská cesta, I.Nový svet, II.Nový svet, Petőfiho, Ružová
+obec = "503177"
+name = "Dvory nad Žitavou"
+okrsky_date = 2022-11-10
+okrsky_fill = "nearest"
+okrsky_note = "No document of the 2022 elections found (the current website's notice board starts in late 2022, the Internet Archive was offline); the referendum's document (posted 10. 11. 2022, undated). Its 'občania s trvalým pobytom v obci bez adresy' in okrsok 3 are voters registered without an address, not the register's houses without a street; those (súpisné only) are placed by fill_nearest. 'Železničná stanica' (okrsok 2) is not a street of the register and is left out. Nám. Sv. Vendelína (1 address), which the document does not name, is placed by fill_nearest. The document itself is undated; date is the day it was posted on the notice board (vyvesené 10. 11. 2022, as the board page states)."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.dvory.sk/e_download.php?file=data/uredni_deska/obsah368_7.pdf&original=Volebn%C3%A9%20okrsky%20a%20ur%C4%8Den%C3%A9%20volebn%C3%A9%20miestnosti.pdf"
+sha256 = "4c8283f1854afc61a77c00f136892cccaf534a4493726e8c21e48032812b520b"
+title = "Volebné okrsky a určené volebné miestnosti (referendum 21. 1. 2023)"
+
+[[document]]
+url = "https://www.dvory.sk/obecny-urad/uradna-tabula/referendum-2023-380.html"
+sha256 = "8d216eb813826f2928086c4e025d049e71c968ab0860bea74bd3782c47aa4409"
+title = "Referendum 2023 (úradná tabuľa, vyvesené 10. 11. 2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Agátová"},
+  {street = "J. Aranya", written = "J.Aranya"},
+  {street = "Branovská cesta"},
+  {street = "Cesta družby", written = "cesta Družby"},
+  {street = "J. Dózsu", written = "J.Dózsu"},
+  {street = "Nám. J. Dózsu", written = "nám.J.Dózsu"},
+  {street = "Fajková"},
+  {street = "Hlavná", written = "Hlavná ulica"},
+  {street = "J. Kráľa", written = "Janka Kráľa"},
+  {street = "P. Jilemnického", written = "P.Jilemnického"},
+  {street = "Jókaiho"},
+  {street = "J. A. Komenského", written = "J.A.Komenského"},
+  {street = "Kováčska"},
+  {street = "Krivá"},
+  {street = "Krížna"},
+  {street = "Lastovičia"},
+  {street = "Malá komárňanská"},
+  {street = "Mostná"},
+  {street = "Spojová cesta"},
+  {street = "Pekárska"},
+  {street = "Za pekárňou"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bešeňovská cesta"},
+  {street = "Bešeňovská", written = "Bešeňovská ulica"},
+  {street = "Furmanská"},
+  {street = "Hviezdoslavova"},
+  {street = "Jána Szabóa"},
+  {street = "Krajná"},
+  {street = "Krivánska"},
+  {street = "Kukučínova"},
+  {street = "Ľ. Štúra", written = "Ľ.Štúra"},
+  {street = "Malá"},
+  {street = "Okružná"},
+  {street = "Pod záhradami"},
+  {street = "Sklenný vrch"},
+  {street = "Sládkovičova"},
+  {street = "Slávičia"},
+  {street = "Sokolská"},
+  {street = "Stará"},
+  {street = "Žitavská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Družstevná"},
+  {street = "Hlavné námestie"},
+  {street = "Hlboká cesta"},
+  {street = "Krátka"},
+  {street = "K. Mikszátha", written = "K.Mikszátha"},
+  {street = "Mlynské Nám.", written = "Mlynské námestie"},
+  {street = "Skautov"},
+  {street = "Športová"},
+  {street = "Štadiónová", written = "Štadionová", note = "the document leaves out the accent; the same street"},
+  {street = "Tabaková"},
+  {street = "Trstená"},
+  {street = "Tyršova", written = "Tyršová", note = "the document writes a long 'á'; the same street"},
+  {street = "Veľká komárňanská"},
+  {street = "Záhradná"},
+  {street = "Žombék"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Attilu Józsefa"},
+  {street = "Brezová"},
+  {street = "Dubová cesta"},
+  {street = "J. G. Tajovského", written = "J.G.Tajovského"},
+  {street = "Kolťanská cesta"},
+  {street = "1. Nový svet", written = "I.Nový svet", note = "Roman I for 1."},
+  {street = "2. Nový svet", written = "II.Nový svet", note = "Roman II for 2."},
+  {street = "Petőfiho"},
+  {street = "Ružová"},
+]

@@ -1,0 +1,354 @@
+# Council obvody of Brezno (508497), Brezno.
+# Transcribed by an AI agent in job obvod-rules-236 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Okrsok č. 1: bez ulice Jarmočisko Lesná Nám. gen. M. R. Štefánika Predné Halny | Okrsok č. 2: Cintorínska Československej armády 6, 13A, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38 Hradby Chalupkova Stromová Školská Záhradná | Okrsok č. 3: Banisko Československej armády 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62 Kozmonautov Moyzesova Sekurisova Vránskeho | Okrsok č. 4: Brezenská Kiepka Klepuš Kukučínova Kuzmányho Lichardova Nábrežie Jána Čipku Pod Hôrkou Staničná Šrámkova Štúrova Tisovská cesta Židlovo | Okrsok č. 5: Boženy Němcovej Československej armády 17, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51 Fučíkova Laskomerského | Okrsok č. 6: Malinovského | Okrsok č. 7: Krčulova | Okrsok č. 8: Dr. Clementisa Ladislava Sáru
+#   obvod 2: Okrsok č. 9: Bottova Eleny Maróthy Šoltésovej Hronská Hviezdoslavova Jesenského Jilemnického Pionierska Rázusova Švermova | Okrsok č. 10: Nálepkova | Okrsok č. 11: Černákova Fraňa Kráľa Nábrežie Dukelských hrdinov Sládkovičova Železničná | Okrsok č. 12: Štvrť Ladislava Novomeského 1, 2, 3, 4, 5, 6, 7, 8, 8A, 9, 10, 11, 12, 13, 14, 15, 36 | Okrsok č. 13: Štvrť Ladislava Novomeského 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33 | Okrsok č. 14: Dvoriská Hliník Kozlovo Kriváň Kubická Rohozná Slnečná ulica | Okrsok č. 15: Kôšikovo Podkoreňová Zúbrik
+#   obvod 3: Okrsok č. 16: Dolná Horná Jelšová Krátka Lúčky Martina Benku Mládežnícka Mliekárenská Mostárenská Nová Pestovateľská Potočná Šiašovo Vrbová | Okrsok č. 17: Cesta osloboditeľov Hlboká Lúčna Máj. povstania českého ľudu 2, 3, 3A, 3B, 3C, 3D, 4, 5, 6, 7, 8, 9, 10, 12, 13, 30, 31, 32 Rovne | Okrsok č. 18: Máj. povstania českého ľudu 14, 15, 16, 17, 18, 19, 20, 21, 26, 27, 28, 29, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 55 | Okrsok č. 19: 9. mája 1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14, 43, 44, 45, 46, 47, 48, 49, 50, 51, 57A, 58, 60 Budovateľská Poľná | Okrsok č. 20: 9. mája 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42
+#   obvod 4: Okrsok č. 21: Baštova Glianska Hlavina Tehelňa Vagnárska Zadné Halny | Okrsok č. 22: Okružná Padličkovo Slovenského národ. povstania
+# Okrsky added by an AI agent in job okrsok-rules-1115 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: bez ulice Jarmočisko Lesná Nám. gen. M. R. Štefánika Predné Halny
+#   okrsok 2: Cintorínska Československej armády 6, 13A, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38 Hradby Chalupkova Stromová Školská Záhradná
+#   okrsok 3: Banisko Československej armády 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62 Kozmonautov Moyzesova Sekurisova Vránskeho
+#   okrsok 4: Brezenská Kiepka Klepuš Kukučínova Kuzmányho Lichardova Nábrežie Jána Čipku Pod Hôrkou Staničná Šrámkova Štúrova Tisovská cesta Židlovo
+#   okrsok 5: Boženy Němcovej Československej armády 17, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51 Fučíkova Laskomerského
+#   okrsok 6: Malinovského
+#   okrsok 7: Krčulova
+#   okrsok 8: Dr. Clementisa Ladislava Sáru
+#   okrsok 9: Bottova Eleny Maróthy Šoltésovej Hronská Hviezdoslavova Jesenského Jilemnického Pionierska Rázusova Švermova
+#   okrsok 10: Nálepkova
+#   okrsok 11: Černákova Fraňa Kráľa Nábrežie Dukelských hrdinov Sládkovičova Železničná
+#   okrsok 12: Štvrť Ladislava Novomeského 1, 2, 3, 4, 5, 6, 7, 8, 8A, 9, 10, 11, 12, 13, 14, 15, 36
+#   okrsok 13: Štvrť Ladislava Novomeského 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33
+#   okrsok 14: Dvoriská Hliník Kozlovo Kriváň Kubická Rohozná Slnečná ulica
+#   okrsok 15: Kôšikovo Podkoreňová Zúbrik
+#   okrsok 16: Dolná Horná Jelšová Krátka Lúčky Martina Benku Mládežnícka Mliekárenská Mostárenská Nová Pestovateľská Potočná Šiašovo Vrbová
+#   okrsok 17: Cesta osloboditeľov Hlboká Lúčna Máj. povstania českého ľudu 2, 3, 3A, 3B, 3C, 3D, 4, 5, 6, 7, 8, 9, 10, 12, 13, 30, 31, 32 Rovne
+#   okrsok 18: Máj. povstania českého ľudu 14, 15, 16, 17, 18, 19, 20, 21, 26, 27, 28, 29, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 55
+#   okrsok 19: 9. mája 1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14, 43, 44, 45, 46, 47, 48, 49, 50, 51, 57A, 58, 60 Budovateľská Poľná
+#   okrsok 20: 9. mája 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42
+#   okrsok 21: Baštova Glianska Hlavina Tehelňa Vagnárska Zadné Halny
+#   okrsok 22: Okružná Padličkovo Slovenského národ. povstania
+obec = "508497"
+name = "Brezno"
+date = 2022-06-22
+fill = "nearest"
+note = "Resolution 96/2022 of 22.6.2022 fixes 4 obvody and seats only; the streets per obvod (by okrsky) come from the town's list of 14.07.2022. \"bez ulice\" (okrsok 1) = voters without address, not mapped. Not listed: street Za Brezinkou and the addresses without street (parts Brezno, Mazorníkovo, Bujakovo, Halny) — placed by fill_nearest."
+okrsky_date = 2022-07-14
+okrsky_fill = "nearest"
+okrsky_note = "The town's list of streets per okrsok for the 29.10.2022 elections is dated 14.07.2022 (date of the list; no decision date stated). 'bez ulice' (okrsok 1) = voters registered without an address, not the register's houses without a street. Parts Predné Halny (okrsok 1), Zadné Halny (21) taken whole; part Bujakovo (streets of okrsok 22) inferred whole for 22. Čsl. armády, Štvrť L. Novomeského, Májového povstania českého ľudu and 9. mája split by the listed numbers; their unlisted numbers, street Za Brezinkou (not listed) and houses without street in parts Brezno and Mazorníkovo placed by fill_nearest."
+
+[[document]]
+url = "https://www.brezno.sk/data-files/brezno/download/zoznam-volebnych-obvodov-a-volebnych-okrskov.pdf"
+sha256 = "87d241b6de263a3c0b7226af84846219adbcae90a72c5f444e1e88751b681b3b"
+title = "Mesto Brezno: Zoznam ulíc a okrskov pre voľby do orgánov samosprávy obcí 29.10.2022 (dátum 14.07.2022), po obvodoch"
+
+[[document]]
+url = "https://mesto.brezno.sk/download.php?action=download&FileID=4401"
+sha256 = "39489570b4fb8a1e83c12bd3bee9e1d3330e67192038db468d84cb6fcba556fc"
+title = "Uznesenia MsZ mesta Brezna z 22. júna 2022 (ZIP), uznesenie č. 96/2022: 4 volebné obvody, 18 poslancov (7, 5, 5, 1)"
+
+[obvod.1]
+seats = 7
+okrsky = [1, 2, 3, 4, 5, 6, 7, 8]
+rules = [
+  {street = "Jarmočisko"},
+  {street = "Lesná"},
+  {street = "Námestie gen. M.R.Štefánika", written = "Nám. gen. M. R. Štefánika"},
+  {street = "Predné Halny"},
+  {street = "Cintorínska"},
+  {street = "Československej armády", note = "the list splits this street by house numbers among okrsky that all belong to this obvod: whole street"},
+  {street = "Hradby"},
+  {street = "Chalupkova"},
+  {street = "Stromová"},
+  {street = "Školská"},
+  {street = "Záhradná"},
+  {street = "Banisko"},
+  {street = "Kozmonautov"},
+  {street = "Moyzesova"},
+  {street = "Sekurisova"},
+  {street = "Vránskeho"},
+  {street = "Brezenská"},
+  {street = "Kiepka"},
+  {street = "Klepuš"},
+  {street = "Kukučínova"},
+  {street = "Kuzmányho"},
+  {street = "Lichardova"},
+  {street = "Nábrežie Jána Čipku"},
+  {street = "Pod Hôrkou"},
+  {street = "Staničná"},
+  {street = "Šrámkova"},
+  {street = "Štúrova"},
+  {street = "Tisovská cesta"},
+  {street = "Židlovo"},
+  {street = "Boženy Němcovej"},
+  {street = "Fučíkova"},
+  {street = "Laskomerského"},
+  {street = "Malinovského"},
+  {street = "Krčulova"},
+  {street = "Dr. Clementisa"},
+  {street = "Ladislava Sáru"},
+]
+
+[obvod.2]
+seats = 5
+okrsky = [9, 10, 11, 12, 13, 14, 15]
+rules = [
+  {street = "Bottova"},
+  {street = "Eleny Maróthy Šoltésovej"},
+  {street = "Hronská"},
+  {street = "Hviezdoslavova"},
+  {street = "Jesenského"},
+  {street = "Jilemnického"},
+  {street = "Pionierska"},
+  {street = "Rázusova"},
+  {street = "Švermova"},
+  {street = "Nálepkova"},
+  {street = "Černákova"},
+  {street = "Fraňa Kráľa"},
+  {street = "Nábrežie Dukelských hrdinov"},
+  {street = "Sládkovičova"},
+  {street = "Železničná"},
+  {street = "Štvrť Ladislava Novomeského", note = "the list splits this street by house numbers among okrsky that all belong to this obvod: whole street"},
+  {street = "Dvoriská"},
+  {street = "Hliník"},
+  {street = "Kozlovo"},
+  {street = "Kriváň"},
+  {street = "Kubická"},
+  {street = "Rohozná"},
+  {street = "Slnečná ulica"},
+  {street = "Kôšikovo"},
+  {street = "Podkoreňová"},
+  {street = "Zúbrik"},
+]
+
+[obvod.3]
+seats = 5
+okrsky = [16, 17, 18, 19, 20]
+rules = [
+  {street = "Dolná"},
+  {street = "Horná"},
+  {street = "Jelšová"},
+  {street = "Krátka"},
+  {street = "Lúčky"},
+  {street = "Martina Benku"},
+  {street = "Mládežnícka"},
+  {street = "Mliekárenská"},
+  {street = "Mostárenská"},
+  {street = "Nová"},
+  {street = "Pestovateľská"},
+  {street = "Potočná"},
+  {street = "Šiašovo"},
+  {street = "Vrbová"},
+  {street = "Cesta osloboditeľov"},
+  {street = "Hlboká"},
+  {street = "Lúčna"},
+  {street = "Májového povstania českého ľudu", written = "Máj. povstania českého ľudu", note = "the list splits this street by house numbers among okrsky that all belong to this obvod: whole street"},
+  {street = "Rovne"},
+  {street = "9.mája", written = "9. mája", note = "the list splits this street by house numbers among okrsky that all belong to this obvod: whole street"},
+  {street = "Budovateľská"},
+  {street = "Poľná"},
+]
+
+[obvod.4]
+seats = 1
+okrsky = [21, 22]
+rules = [
+  {street = "Baštova"},
+  {street = "Glianska"},
+  {street = "Hlavina"},
+  {street = "Tehelňa"},
+  {street = "Vagnárska"},
+  {street = "Zadné Halny"},
+  {street = "Okružná"},
+  {street = "Padličkovo"},
+  {street = "Slovenského národného povstania", written = "Slovenského národ. povstania"},
+]
+
+[okrsok.1]
+rules = [
+  {part = "Predné Halny"},
+  {street = "Námestie gen. M.R.Štefánika", written = "Nám. gen. M. R. Štefánika"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Československej armády", numbers = "6, 18-38", parity = "even"},
+  {street = "Československej armády", numbers = "13A"},
+  {street = "Hradby"},
+  {street = "Chalupkova"},
+  {street = "Stromová"},
+  {street = "Školská"},
+  {street = "Záhradná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Banisko"},
+  {street = "Československej armády", numbers = "40-62", parity = "even"},
+  {street = "Kozmonautov"},
+  {street = "Moyzesova"},
+  {street = "Sekurisova"},
+  {street = "Vránskeho"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Brezenská"},
+  {street = "Kiepka"},
+  {street = "Klepuš"},
+  {street = "Kukučínova"},
+  {street = "Kuzmányho"},
+  {street = "Lichardova"},
+  {street = "Nábrežie Jána Čipku"},
+  {street = "Pod Hôrkou"},
+  {street = "Staničná"},
+  {street = "Šrámkova"},
+  {street = "Štúrova"},
+  {street = "Tisovská cesta"},
+  {street = "Židlovo"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Boženy Němcovej"},
+  {street = "Československej armády", numbers = "17-51", parity = "odd"},
+  {street = "Fučíkova"},
+  {street = "Laskomerského"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Malinovského"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Krčulova"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Dr. Clementisa"},
+  {street = "Ladislava Sáru"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Bottova"},
+  {street = "Eleny Maróthy Šoltésovej"},
+  {street = "Hronská"},
+  {street = "Hviezdoslavova"},
+  {street = "Jesenského"},
+  {street = "Jilemnického"},
+  {street = "Pionierska"},
+  {street = "Rázusova"},
+  {street = "Švermova"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Nálepkova"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Černákova"},
+  {street = "Fraňa Kráľa"},
+  {street = "Nábrežie Dukelských hrdinov"},
+  {street = "Sládkovičova"},
+  {street = "Železničná"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Štvrť Ladislava Novomeského", numbers = "1-8, 8A, 9-15, 36"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Štvrť Ladislava Novomeského", numbers = "18-33"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Dvoriská"},
+  {street = "Hliník"},
+  {street = "Kozlovo"},
+  {street = "Kriváň"},
+  {street = "Kubická"},
+  {street = "Rohozná"},
+  {street = "Slnečná ulica"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Kôšikovo"},
+  {street = "Podkoreňová"},
+  {street = "Zúbrik"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Dolná"},
+  {street = "Horná"},
+  {street = "Jelšová"},
+  {street = "Krátka"},
+  {street = "Lúčky"},
+  {street = "Martina Benku"},
+  {street = "Mládežnícka"},
+  {street = "Mliekárenská"},
+  {street = "Mostárenská"},
+  {street = "Nová"},
+  {street = "Pestovateľská"},
+  {street = "Potočná"},
+  {street = "Šiašovo"},
+  {street = "Vrbová"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Cesta osloboditeľov"},
+  {street = "Hlboká"},
+  {street = "Lúčna"},
+  {street = "Májového povstania českého ľudu", numbers = "2, 3, 3A, 3B, 3C, 3D, 4-10, 12, 13, 30-32", written = "Máj. povstania českého ľudu"},
+  {street = "Rovne"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Májového povstania českého ľudu", numbers = "14-21, 26-29, 36-53, 55", written = "Máj. povstania českého ľudu"},
+]
+
+[okrsok.19]
+rules = [
+  {street = "9.mája", numbers = "1-8, 11-14, 43-51, 57A, 58, 60", written = "9. mája"},
+  {street = "Budovateľská"},
+  {street = "Poľná"},
+]
+
+[okrsok.20]
+rules = [
+  {street = "9.mája", numbers = "15-42", written = "9. mája"},
+]
+
+[okrsok.21]
+rules = [
+  {part = "Zadné Halny"},
+  {street = "Baštova"},
+  {street = "Glianska"},
+  {street = "Hlavina"},
+  {street = "Tehelňa"},
+  {street = "Vagnárska"},
+]
+
+[okrsok.22]
+rules = [
+  {part = "Bujakovo", note = "Okružná, Padličkovo and Slovenského národného povstania are the streets of part Bujakovo; its houses without a street go with them", inferred = true},
+  {street = "Okružná"},
+  {street = "Padličkovo"},
+  {street = "Slovenského národného povstania", written = "Slovenského národ. povstania"},
+]

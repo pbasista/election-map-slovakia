@@ -1,0 +1,49 @@
+# Okrsky of Podolínec, transcribed by an AI agent in job okrsok-rules-874 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Baštová, Bernolákova, Gen. Štefánika, Hliník, Janka Hollého, Jozefa Smreka, Kláštorná, Letná, Námestie Mariánske, Tatranská, Terézie Vansovej, Zimná
+#   okrsok 2: Družstevná, Hviezdoslavova, Kukučínova, Lesná, Moyzesova, Sládkovičova, Sv. Anny, Školská, Štúrova
+obec = "526975"
+name = "Podolínec"
+okrsky_date = 2022-07-18
+okrsky_fill = "nearest"
+okrsky_note = "The live page now shows the 2026 document; the 2022 one is taken from the Internet Archive. Houses without a street (súpisné only) are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20220802210151/https://www.podolinec.eu/resources/File/ooznamenie-volebne-okrsky-a-volebne-miestnosti.docx"
+sha256 = "8294539f99aad1cc36789858710da161fbb236691fac656d1bbaad125a39e930"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre Voľby do územnej samosprávy 2022"
+
+[[document]]
+url = "https://web.archive.org/web/20220802203322/https://www.podolinec.eu/clanky-detail/oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti/"
+sha256 = "415ea1c1becabd7853777ddfc92d237eb5624ecba05149cd228c3af8cc29d2bc"
+title = "OZNÁMENIE o utvorení volebných okrskov a určení volebných miestností (page linking the document)"
+
+[okrsok.1]
+rules = [
+  {street = "Baštová"},
+  {street = "Bernolákova"},
+  {street = "Gen. Štefánika"},
+  {street = "Hliník"},
+  {street = "Janka Hollého"},
+  {street = "Jozefa Smreka"},
+  {street = "Kláštorná"},
+  {street = "Letná"},
+  {street = "Námestie Mariánske"},
+  {street = "Tatranská"},
+  {street = "Terézie Vansovej"},
+  {street = "Zimná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Hviezdoslavova"},
+  {street = "Kukučínova"},
+  {street = "Lesná"},
+  {street = "Moyzesova"},
+  {street = "Sládkovičova"},
+  {street = "Sv. Anny"},
+  {street = "Školská"},
+  {street = "Štúrova"},
+]

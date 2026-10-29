@@ -1,0 +1,51 @@
+# Okrsky of Kamenec pod Vtáčnikom, transcribed by an AI agent in job okrsok-rules-925 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Cesta na Brús, Cesta na Hájik, Cesta na Jandovú, Cesta na Vinohrady, Na Záhumnie, Hornokamenčianska, Koncová, Krátka, Na Kopanicu, Na Papiereň – orientačné čísla 75-83 = bytovky, Školská, Športová, Za Besedou
+#   okrsok 2: ulice: Bočná, Bystričianska cesta, Dolnokamenčianska, Fialková, Klinčeková, Konvalinková, Kvetová, Na Kopaničky, Na Lúčky, Na Papiereň – okrem bytoviek, Na Pažite, Na Žmúrov, Púpavová, Ružičková, Tichá
+obec = "514063"
+name = "Kamenec pod Vtáčnikom"
+okrsky_date = 2022-07-26
+okrsky_fill = "nearest"
+okrsky_note = "The page has no decision date; date is the publication date of the post ('Published 26. júla 2022'). Na Papiereň is split: orientačné 75-83 (bytovky) okrsok 1, the rest okrsok 2. The register's addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20220803015819/http://www.kamenec.sk/index.php/2022/07/26/urcenie-volebnych-okrskov/"
+sha256 = "4dc46ac89b64e8f817807bed413f22af3efe4e14c57b6364d62a110de9f3ecc3"
+title = "Voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov – určenie volebných okrskov"
+
+[okrsok.1]
+rules = [
+  {street = "Cesta na Brús"},
+  {street = "Cesta na Hájik"},
+  {street = "Cesta na Jandovú"},
+  {street = "Cesta na Vinohrady"},
+  {street = "Na Záhumnie"},
+  {street = "Hornokamenčianska"},
+  {street = "Koncová"},
+  {street = "Krátka"},
+  {street = "Na Kopanicu"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Za Besedou"},
+  {street = "Na Papiereň", numbers = "75-83"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bočná"},
+  {street = "Bystričianska cesta"},
+  {street = "Dolnokamenčianska"},
+  {street = "Fialková"},
+  {street = "Klinčeková"},
+  {street = "Konvalinková"},
+  {street = "Kvetová"},
+  {street = "Na Kopaničky"},
+  {street = "Na Lúčky"},
+  {street = "Na Pažite"},
+  {street = "Na Žmurov", written = "Na Žmúrov"},
+  {street = "Púpavová"},
+  {street = "Ružičková"},
+  {street = "Tichá"},
+  {street = "Na Papiereň"},
+]

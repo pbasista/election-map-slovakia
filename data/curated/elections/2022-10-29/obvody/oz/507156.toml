@@ -1,0 +1,75 @@
+# Council obvody of Jaslovské Bohunice (507156), Trnava.
+# Transcribed by an AI agent in job obvod-rules-345 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č. 1 tvorí časť obce Jaslovce a Bohunice a volí sa 8 poslancov obecného zastupiteľstva
+#   obvod 2: volebný obvod č. 2 tvorí časť obce Paderovce, volí sa 1 poslanec obecného zastupiteľstva
+# Okrsky added by an AI agent in job okrsok-rules-1212 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Blavská, Cintorínska, Hlavná Bohunice, Hlavná Jaslovce, Na mlyne, Na rybníku, Námestie sv. Michala, Nová, Záhradná, Záhumenická a obyvatelia s trvalým pobytom na obec Jaslovské Bohunice
+#   okrsok 2: Agátova, Čerešňová, Dubová, Gaštanová, Jabloňová, Javorová, Krátka, Krížna, Lipová, Orechová, Sídlisko, Šidúnky, Školská, Športová, Trnavská
+#   okrsok 3: Hlavná Paderovce, Lúčna, Poľná
+obec = "507156"
+name = "Jaslovské Bohunice"
+date = 2022-06-23
+okrsky_date = 2022-08-03
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky page states no decision date; date is its publication date on the official page (\"Dátum vloženia: 3. 8. 2022\"). \"Agátova\" is the register's Agátová (accent typo). \"Športová\" is not in the register, left out. \"obyvatelia s trvalým pobytom na obec\" (residents without an address) of okrsok 1 are not a rule; the register's addresses without a street in obvod 1 (súpisné only) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.jaslovske-bohunice.sk/obec-2/volby/samosprava-a-samospravne-kraje/2022/zverejnenie-volebnych-obvodov-a-poctu-poslancov-1527sk.html"
+sha256 = "b388c5e6cd3ca50f3c57c54ec5be875553ea683b607ba008447df19ed6dd3f8b"
+title = "Zverejnenie volebných obvodov a počtu poslancov (OZ 23.6.2022, uzn. 809/VIII a 811/VIII)"
+
+[[document]]
+url = "https://www.jaslovske-bohunice.sk/obec-2/volby/samosprava-a-samospravne-kraje/2022/zverejnenie-okrskov-a-sidla-volebnych-miestnosti-1534sk.html"
+sha256 = "962f9bd60fd503daba72a2bdd9083b33150d09955a5c734a27c2c92eb1891b95"
+title = "Zverejnenie okrskov a sídla volebných miestností (3. 8. 2022)"
+
+[obvod.1]
+seats = 8
+okrsky = [1, 2]
+rules = [
+  {part = "Jaslovce"},
+  {part = "Bohunice"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [3]
+rules = [
+  {part = "Paderovce"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Blavská"},
+  {street = "Cintorínska"},
+  {street = "Hlavná Bohunice"},
+  {street = "Hlavná Jaslovce"},
+  {street = "Na Mlyne", written = "Na mlyne"},
+  {street = "Na rybníku"},
+  {street = "Námestie sv. Michala"},
+  {street = "Nová"},
+  {street = "Záhradná"},
+  {street = "Záhumenická"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová", written = "Agátova"},
+  {street = "Čerešňová"},
+  {street = "Dubová"},
+  {street = "Gaštanová"},
+  {street = "Jabloňová"},
+  {street = "Javorová"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Lipová"},
+  {street = "Orechová"},
+  {street = "Sídlisko"},
+  {street = "Šidúnky"},
+  {street = "Školská"},
+  {street = "Trnavská"},
+]

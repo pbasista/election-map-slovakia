@@ -4,6 +4,115 @@ Notable changes, newest first. The version is set in
 `src/election_map_slovakia/__init__.py`; tagging `vX.Y.Z` builds and deploys
 it (see [docs/deploy.md](docs/deploy.md)).
 
+## 0.8.0 — 2026-10-29
+
+- **Party logos of each election's own time.**
+  A party's logo in `config/parties.toml` is now given per election
+  (`[party."…".logo.<slug>]`), as it was at that election, and each
+  election's pages and About credit their own. The 2022 pages no longer
+  show the 2026 logos: their logos were checked against the parties'
+  sites as the Internet Archive kept them in autumn 2022 and the version
+  histories of the Commons files. SaS shows its green and blue letters of
+  2022 instead of the navy logo of 2024; SPOLU, Dobrá voľba, NOVA,
+  Kresťanská únia, Národná koalícia, PRINCÍP and Team Bratislava get the
+  logos they used then; KDH and the Aliancia, under their 2022 names, the
+  logos they still use; the others whose design is unchanged keep it.
+  Parties without a freely licensed copy of their 2022 logo (SNS, Sme
+  rodina, SHO and others), or whose 2022 logo is not known, are shown by
+  their short form.
+- **The site deployed in parts; data only when it changes.**
+  The app (page shells, code, styles, UI strings) is now one Cloudflare
+  Pages project, and each election's map another (`ems-map-<slug>`: map,
+  base map, addresses) and its data a third (`ems-data-<slug>`:
+  candidates, research and the occupations' translations), as are the
+  cached copies of cited pages (`ems-sources`, at
+  `sources.volebnamapa.sk`) and the results (`ems-results`, at
+  `results.volebnamapa.sk`). `ems build` writes them to `dist/app/`,
+  `dist/map/<slug>/`, `dist/data/<slug>/`, `dist/sources/` and
+  `dist/results/`, each with its own `_headers`, `404.html` and file
+  budget; `ems serve` serves them as one site. Every data part has a key,
+  a digest of everything in the repository its content depends on
+  (pinned inputs, configuration, curated data, the code that makes the
+  data and its libraries), computed without building; `ems data lock`
+  writes the keys to `data/published.toml`, which CI checks on every
+  push. An election's map depends on that election alone, so new
+  research, corrected links or translations leave the maps, by far the
+  largest part, deployed and in visitors' browsers. A release deploys a
+  data part only when its key is not deployed yet (`ems data status`,
+  `ems data deploy`), and otherwise builds and deploys the app alone, in a
+  few minutes, for the data deployed (`ems build --deployed`): the app
+  names each election's bundles by the addresses of the deployments that
+  carry their keys, so data never change under an open page and a rolled
+  back app brings back its data. On an election night `ems results
+  deploy` deploys the results part alone, which a release with the same
+  key leaves in place. The GitHub release carries the app's files only.
+  `scripts/pages_trial.py` tries out on a throwaway project what this
+  relies on (docs/deploy.md). Locally these commands use the login of
+  `npx wrangler login`, or `CLOUDFLARE_API_TOKEN` and
+  `CLOUDFLARE_ACCOUNT_ID` where set, as CI does.
+- **Every input pinned and kept in the input store.**
+  Every input of `config/inputs.toml` is pinned by its sha256 and the day
+  the pinned file was retrieved, which About now shows. The pinned files
+  are kept, unchanged, as assets `<sha256>-<file>` of the pre-release
+  `inputs` of the project's repository: `ems fetch` takes a pinned
+  file from `data/raw/` where it is there (recorded in its manifest, or
+  with the pinned digest), else from the store, else from
+  its source. `ems inputs update` pins what a source serves now and `ems
+  inputs publish` uploads the files the store lacks; `data/fallback/` is
+  gone.
+- **Several elections: 2022 beside 2026.**
+  The site shows the municipal and regional elections of 29 October 2022
+  beside those of 24 October 2026, each on pages of its own
+  (`/<lang>/2022/`; `/<lang>/` stays the latest). The logo in the search
+  card opens the list of elections, grouped under a heading per kind of
+  election, one line each; switching keeps the language, the map view,
+  the place and, where the person is linked, the open candidate.
+  The 2022 pages have their own candidates and final results (Statistical
+  Office packages), down to the polling district; Krušovce, which has no
+  2022 result, says so, and the office holders before 2022 are not shown,
+  which the ballots and About say. Their map is drawn on the 2026
+  boundaries, naming the 16 municipalities whose boundary moved since
+  January 2022 on their ballots, in the map's credits and in About, with
+  the address register of 09/2022 and an OpenStreetMap base map of
+  1 January 2022. Council constituencies and polling districts are
+  transcribed from the 2022 municipal documents; a document that states
+  no date is used where an Internet Archive capture or a posting before
+  the elections bounds it, or it names them, and the ballots and the map
+  say its date is uncertain; where a 2022 document does not place every
+  address (hamlets it names that the register keeps elsewhere, houses it
+  leaves out, a split it leaves unclear), a later source fills it in (the
+  2026 rules, the 2023 referendum's or another later document), and the
+  ballots and the map say part of the borders comes from it; where none
+  was found, the 2026 rules stand in only if the layout provably matches,
+  and the ballots say so; where no 2022 document places the addresses at
+  all, Divina's constituencies and Veľký Meder's polling districts are
+  drawn with the 2026 borders, which the ballots, the map and About call
+  indicative only; otherwise every constituency is listed with the notice
+  that the 2022 borders are not known, and where polling districts are
+  not drawn, that the results by polling district cannot be placed on the
+  map. On a 2022 page About has a section "What comes from 2026" listing
+  every substitution and gap with counts, and lists only that election's
+  sources. Candidates of both elections are linked by municipality or
+  region, name and age: a 2026 candidate who stood for the same office in
+  2022 has a grey clock beside the chair that unfolds the 2022 result,
+  the card lists a person's candidacies in the other election, and a 2022
+  candidate is shown the 2026 research cut to the findings published
+  before 29 October 2022 (undated ones left out and counted). The 2026
+  pages show the 2022 figures on the 2026 polling districts, constituencies
+  and municipalities, saying how each was found (same district, same
+  number with about as many voters, estimated from addresses, not known),
+  in tooltips, contest headers and a 2022 option on candidate maps. Office
+  holders are those "at the time of the election; later changes are not
+  known", and the texts name the page's year. The occupations the 2022
+  lists add are translated into every language like 2026's. Behind it,
+  the elections are listed in `config/elections.toml` with the inputs
+  their steps read;
+  the steps run per election (`--election`), writing `data/build/<day>/`,
+  and `ems check` checks each election's files.
+  Research jobs, `ems results poll` and `ems results fake` are of the
+  latest election only; the UI strings are fetched once for every
+  election's page.
+
 ## 0.7.0 — 2026-10-28
 
 - **Candidate card notices in one line.**

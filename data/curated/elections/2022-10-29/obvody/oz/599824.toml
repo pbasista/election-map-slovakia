@@ -1,0 +1,156 @@
+# Council obvody of Košice-Juh (599824), Košice IV.
+# Transcribed by an AI agent in job obvod-rules-223 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Južná trieda 2, 10-90 párne, 31-125 nepárne, Mudroňova 1 – 23 nepárne, 2 –26 párne, Perlová, Franckova, Staničná, Domčeková, Holubyho, Krasinského, Omská, Mongolská, Rímska, Rumunská, Tranovského, Vrabčia, Jantárová 91 - a 93, Nižné Kapustníky, Požiarnická, Rosná, Košťova, Oštepová, Ludmanská, Hollého, Jantárova 2, 4, 8–12, Partizánska, Palárikova, Londýnska, Krivá Zlatá, Palackého nepárne, Fibichova, Pri bitúnku, Jarmočná vol. okrsky č. 1-7; počet poslancov 5
+#   obvod 2: Južná trieda 3-15, 19-27 nepárne, Vojvodská, Šoltésovej 1-5, 7-13 nepárne, a 2-38 párne, Tichá, Brezová, Rastislavova 2-110 párne a 43-93 nepárne, Milosrdenstva 1-13 párne i nepárne, Pasteurovo námestie, Skladná 1 A- C, 2,4,6, Pasteurova, Smetanova, Mudroňova 25, 27, 28-40 páre i nepárne, Panelová, Srbská, Pekná, Bulharská, Kórejská, Gemerská, Školská, Paulínyho, Skalná, Poľská, Štúrova 2-36 párne, Fejova, Zborovská, Mlynárska vol. okrsky č. 8-12; počet poslancov 3
+#   obvod 3: Žižkova, Jánošíkova, Rastislavova 1- 41 nepárne, Nerudova, Rázusova 1-63 párne i nepárne, Veterná, Táborská, Werferova, Kukučínova, Kalinčiakova, Gaštanová, Pri nemocnici, Milosrdenstva 14-48 párne a 15-41 nepárne Topoľová, Platanová, Lipová, Javorová, Slnečná, Blesková, Kupeckého, Dúhová, Vajanského, Riznerova, Lichardova, Skladná 1-7 nepárne a 8-64 párne i nepárne, Turgenevova, Lomonosovova, Alejová, Ostrovského, Dunajská, Moldavská cesta párne, Štúrova 38 - 52 vol. okrsky č. 13-16; počet poslancov 3
+#   obvod 4: Červený rak, Ostravská, Miškovecká, Užhorodská, Krakovská, Rozvojová, Galgovecká, Pri prachárni vol. okrsky č. 17-20; počet poslancov 2
+# Okrsky added by an AI agent in job okrsok-rules-1103 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+obec = "599824"
+name = "Košice-Juh"
+date = 2022-06-14
+fill = "nearest"
+note = "The obvody document (no date in it) was listed on the archived 2022 elections page https://web.archive.org/web/20220813090133/https://www.kosicejuh.sk/samospravy-obci/ as 'Volebné obvody, volebné okrsky a počty poslancov'; the file is gone from the live site and archived only on 5.12.2022. The decision's date comes from the minutes of the constituent session of 28.11.2022: uznesenie č. 201 of the 21st session on 14 June 2022 (13 seats in 4 obvody). Streets the document does not name (Barčianska, Cintorínska, Gavlovičova, Hraničná, Jazerná, Námestie osloboditeľov, Teplárenská, Teslova, Vozárova, Zeleninárska), house numbers its ranges leave out (e.g. on Jantárová, Južná trieda) and addresses without a street take the nearest obvod (fill_nearest). The 2022 okrsky document (download/32553) was not archived."
+okrsky_date = 2022-06-14
+okrsky_note = "Only the obvody are known: the council's obvody document (uznesenie č. 201 of 14.6.2022) names the okrsky of each obvod (1: 1-7, 2: 8-12, 3: 13-16, 4: 17-20). The mayor's okrsky document 'Určenie volebných okrskov a miestností na odovzdávanie hlasovacích lístkov' (kosicejuh.sk/download/32553/, linked from the 2022 elections pages archived 13.8.2022 and 5.12.2022) and the referendum's 'Volebné okrsky, vymedzenie ich územného obvodu a volebné miestnosti' (download/33319/) are gone from the live site and not in the Internet Archive, so no published document listing the streets of each okrsok was found; okrsky are not given."
+
+[[document]]
+url = "https://web.archive.org/web/20221205190352/https://www.kosicejuh.sk/download/32403/"
+sha256 = "ffcb330675159544a9ab4d985d9acb3df57628a9468b8fe28f58cefbed73cff5"
+title = "Volebné obvody, volebné okrsky a počty poslancov vo volebných obvodoch pre voľby do Miestneho zastupiteľstva Mestskej časti Košice - Juh na volebné obdobie 2022 - 2026"
+
+[[document]]
+url = "https://www.kosicejuh.sk/download/34165/"
+sha256 = "979082f26c95946ebbfd17e913b95d7d2111807c5f49f360e3cfee265e73185a"
+title = "Zápisnica z ustanovujúceho zasadnutia MZ MČ Košice – Juh 28.11.2022 (uznesenie č. 201 z 21. rokovania 14. júna 2022)"
+
+[obvod.1]
+seats = 5
+okrsky = [1, 2, 3, 4, 5, 6, 7]
+rules = [
+  {street = "Južná trieda", numbers = "2, 10-90", parity = "even"},
+  {street = "Južná trieda", numbers = "31-125", parity = "odd"},
+  {street = "Mudroňova", numbers = "1-23", parity = "odd"},
+  {street = "Mudroňova", numbers = "2-26", parity = "even"},
+  {street = "Perlová"},
+  {street = "Franckova"},
+  {street = "Staničná"},
+  {street = "Domčeková"},
+  {street = "Holubyho"},
+  {street = "Krasinského"},
+  {street = "Omská"},
+  {street = "Mongolská"},
+  {street = "Rímska"},
+  {street = "Rumunská"},
+  {street = "Tranovského"},
+  {street = "Vrabčia"},
+  {street = "Jantárová", numbers = "91, 93", note = "document: 'Jantárová 91 - a 93' (the seat count 5 printed inside the line); read as 91 and 93"},
+  {street = "Jantárová", numbers = "2, 4, 8-12", written = "Jantárova"},
+  {street = "Nižné Kapustníky"},
+  {street = "Požiarnická"},
+  {street = "Rosná"},
+  {street = "Košťova"},
+  {street = "Oštepová"},
+  {street = "Ludmanská"},
+  {street = "Hollého"},
+  {street = "Partizánska"},
+  {street = "Palárikova"},
+  {street = "Londýnska"},
+  {street = "Krivá", note = "document 'Krivá Zlatá' without comma: the two streets Krivá and Zlatá"},
+  {street = "Zlatá", note = "document 'Krivá Zlatá' without comma: the two streets Krivá and Zlatá"},
+  {street = "Palackého", parity = "odd"},
+  {street = "Fibichova"},
+  {street = "Pri bitúnku"},
+  {street = "Jarmočná"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [8, 9, 10, 11, 12]
+rules = [
+  {street = "Južná trieda", numbers = "3-15, 19-27", parity = "odd"},
+  {street = "Vojvodská"},
+  {street = "Šoltésovej", numbers = "1-5, 7-13", parity = "odd"},
+  {street = "Šoltésovej", numbers = "2-38", parity = "even"},
+  {street = "Tichá"},
+  {street = "Brezová"},
+  {street = "Rastislavova", numbers = "2-110", parity = "even"},
+  {street = "Rastislavova", numbers = "43-93", parity = "odd"},
+  {street = "Milosrdenstva", numbers = "1-13"},
+  {street = "Pasteurovo námestie"},
+  {street = "Skladná", numbers = "1A, 1B, 1C, 2, 4, 6"},
+  {street = "Pasteurova"},
+  {street = "Smetanova"},
+  {street = "Mudroňova", numbers = "25, 27, 28-40"},
+  {street = "Panelová"},
+  {street = "Srbská"},
+  {street = "Pekná"},
+  {street = "Bulharská"},
+  {street = "Kórejská"},
+  {street = "Gemerská"},
+  {street = "Školská"},
+  {street = "Paulínyho"},
+  {street = "Skalná"},
+  {street = "Poľská"},
+  {street = "Štúrova", numbers = "2-36", parity = "even"},
+  {street = "Fejova"},
+  {street = "Zborovská"},
+  {street = "Mlynárska"},
+]
+
+[obvod.3]
+seats = 3
+okrsky = [13, 14, 15, 16]
+rules = [
+  {street = "Žižkova"},
+  {street = "Jánošíkova"},
+  {street = "Rastislavova", numbers = "1-41", parity = "odd"},
+  {street = "Nerudova"},
+  {street = "Rázusova", numbers = "1-63"},
+  {street = "Veterná"},
+  {street = "Táborská"},
+  {street = "Werferova"},
+  {street = "Kukučínova"},
+  {street = "Kalinčiakova"},
+  {street = "Gaštanová"},
+  {street = "Pri nemocnici"},
+  {street = "Milosrdenstva", numbers = "14-48", parity = "even"},
+  {street = "Milosrdenstva", numbers = "15-41", parity = "odd"},
+  {street = "Topoľová"},
+  {street = "Platanová"},
+  {street = "Lipová"},
+  {street = "Javorová"},
+  {street = "Slnečná"},
+  {street = "Blesková"},
+  {street = "Kupeckého"},
+  {street = "Dúhová"},
+  {street = "Vajanského"},
+  {street = "Riznerova"},
+  {street = "Lichardova"},
+  {street = "Skladná", numbers = "1-7", parity = "odd"},
+  {street = "Skladná", numbers = "8-64"},
+  {street = "Turgenevova"},
+  {street = "Lomonosovova"},
+  {street = "Alejová"},
+  {street = "Ostrovského"},
+  {street = "Dunajská"},
+  {street = "Moldavská cesta", parity = "even"},
+  {street = "Štúrova", numbers = "38-52"},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [17, 18, 19, 20]
+rules = [
+  {street = "Červený rak"},
+  {street = "Ostravská"},
+  {street = "Miškovecká"},
+  {street = "Užhorodská"},
+  {street = "Krakovská"},
+  {street = "Rozvojová"},
+  {street = "Galgovecká"},
+  {street = "Pri prachárni"},
+]

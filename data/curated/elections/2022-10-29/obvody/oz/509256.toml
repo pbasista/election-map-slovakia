@@ -1,0 +1,217 @@
+# Council obvody of Kysucké Nové Mesto (509256), Kysucké Nové Mesto.
+# Transcribed by an AI agent in job obvod-rules-249 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Jesenského, M. Nešporu, Benkova, Kysucká, Sládkovičova, Viliama Galvánka, Karola Andela sa volia 4 poslanci.
+#   obvod 2: 9. mája, Horná Skotňa, Pod Lipkou, Štúrova, Revolučná, SNP, ČSA, Pod Hájom, Tŕstie sa volia 4 poslanci.
+#   obvod 3: Belanského, Námestie slobody, Pivovarská, 1. mája, Nábrežná, Komenského, Hviezdoslavova. Do volebného obvodu patria aj voliči s trvalým pobytom vedeným na obci Kysucké Nové Mesto, sa volia 2 poslanci.
+#   obvod 4: Matice slovenskej, Kollárova, Litovelská, Družstevná, Lipová, Vajanského, Cesta do Rudiny, Murgašova, sa volia 3 poslanci.
+#   obvod 5: Clementisova, Dlhomíra Poľského sa volia 2 poslanci.
+#   obvod 6: Bottova, Hurbanova, Jarošova, Hálkova, Novomestského, Dubská cesta, Neslušská cesta, Dolinský potok, Dubie, Na Podstráni, Športová, Kukučínova, Štefánikova štvrť, Ulica Jánska, sa volia 2 poslanci.
+#   obvod 7: Mestská časť Budatínska Lehota, sa volí 1 poslanec.
+#   obvod 8: Mestská časť Oškerda, sa volí 1 poslanec.
+# Okrsky added by an AI agent in job okrsok-rules-1127 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Jesenského, M. Nešporu, Benkova, Kysucká, Viliama Galvánka, Karola Andela
+#   okrsok 2: Sládkovičova
+#   okrsok 3: 9. mája, Horná Skotňa, Pod Lipkou, Tŕstie, Pod Hájom, Štúrova bytové domy súp. č. 1210, 1211, 2591
+#   okrsok 4: Revolučná, ČSA bytové domy súp. č. 1300, 1301, 1302, 1190, 2822, 2823
+#   okrsok 5: Štúrova rodinné domy, Štúrova bytové domy súp. č. 1303, 1304, 1305, SNP, ČSA rodinné domy, ČSA bytový dom súp. č. 1306
+#   okrsok 6: Hviezdoslavova, 1. mája, Belanského, Nám. slobody, Pivovarská, Komenského, Nábrežná + občania KNM bez bližšie určenej adresy trvalého pobytu
+#   okrsok 7: Vajanského, Murgašova, Družstevná, Litovelská
+#   okrsok 8: Matice slovenskej, Kollárova, Lipová, Cesta do Rudiny
+#   okrsok 9: Clementisova, Dlhomíra Poľského
+#   okrsok 10: Bottova, Jarošova, Hálkova, Novomeského, Dolinský potok, Na Podstráni, Kukučinova
+#   okrsok 11: Hurbanova, Dubská cesta, Neslušská cesta, Dubie, Športová, Štefánikova štvrť, Ulica Jánska
+#   okrsok 12: Budatínska Lehota
+#   okrsok 13: Oškerda
+obec = "509256"
+name = "Kysucké Nové Mesto"
+date = 2022-06-09
+fill = "nearest"
+note = "\"voliči s trvalým pobytom vedeným na obci Kysucké Nové Mesto\" in obvod 3 are voters registered without an address. The register streets Dr.G.Schaefflera and Škorčie (not named by the document) and the addresses without a street in part Kysucké Nové Mesto (numbered by súpisné only; most of them have no coordinates) are placed by fill_nearest. Dubie, named in obvod 6, is a part of the town; Budatínska Lehota and Oškerda are whole parts."
+okrsky_date = 2022-07-13
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky document of 13.07.2022 (mayor). Okrsok 5 (Štúrova family houses and bytové domy 1303-1305, SNP, ČSA family houses and bytový dom 1306) is the rest of obvod 2: Štúrova and ČSA houses other than the súpisné numbers listed for okrsky 3 and 4, plus Škorčie (register street not named; obvod 2). \"občania KNM bez bližšie určenej adresy trvalého pobytu\" in okrsok 6 are voters registered without an address. Not named, placed by fill_nearest: Dr.G.Schaefflera (obvod 4) and the register houses without a street in part Kysucké Nové Mesto (súpisné only)."
+
+[[document]]
+url = "https://www.kysuckenovemesto.sk/download_file_f.php?id=1699436"
+sha256 = "08cf102a139e0db4b0612057c32890251ea6874cef8ab667bc9a1cc71ea779c3"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 29. októbra 2022 (uznesenie č. 117 zo dňa 09.06.2022), 15. júna 2022"
+
+[[document]]
+url = "https://www.kysuckenovemesto.sk/download_file_f.php?id=1712405"
+sha256 = "aed747bbd442187fb85c3a8ba51be2e11cdc66cc7cd22c18102122b070d75012"
+title = "Utvorenie volebných okrskov a určenie volebných miestností, 13.07.2022"
+
+[obvod.1]
+seats = 4
+okrsky = [1, 2]
+rules = [
+  {street = "Jesenského"},
+  {street = "M. Nešporu"},
+  {street = "Benkova"},
+  {street = "Kysucká"},
+  {street = "Sládkovičova"},
+  {street = "Viliama Galvánka"},
+  {street = "Karola Andela"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [3, 4, 5]
+rules = [
+  {street = "9.mája", written = "9. mája"},
+  {street = "Horná Skotňa"},
+  {street = "Pod Lipkou"},
+  {street = "Štúrova"},
+  {street = "Revolučná"},
+  {street = "SNP"},
+  {street = "ČSA"},
+  {street = "Pod Hájom"},
+  {street = "Tŕstie"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [6]
+rules = [
+  {street = "Belanského"},
+  {street = "Námestie slobody"},
+  {street = "Pivovarská"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "Nábrežná"},
+  {street = "Komenského"},
+  {street = "Hviezdoslavova"},
+]
+
+[obvod.4]
+seats = 3
+okrsky = [7, 8]
+rules = [
+  {street = "Matice slovenskej"},
+  {street = "Kollárova"},
+  {street = "Litovelská"},
+  {street = "Družstevná"},
+  {street = "Lipová"},
+  {street = "Vajanského"},
+  {street = "Cesta do Rudiny"},
+  {street = "Murgašova"},
+]
+
+[obvod.5]
+seats = 2
+okrsky = [9]
+rules = [
+  {street = "Clementisova"},
+  {street = "Dlhomíra Poľského"},
+]
+
+[obvod.6]
+seats = 2
+okrsky = [10, 11]
+rules = [
+  {street = "Bottova"},
+  {street = "Hurbanova"},
+  {street = "Jarošova"},
+  {street = "Hálkova"},
+  {street = "Novomeského", written = "Novomestského", note = "document misspells Novomeského (\"Novomestského\"); the okrsky document of 13.07.2022 writes \"Novomeského\""},
+  {street = "Dubská cesta"},
+  {street = "Neslušská cesta"},
+  {street = "Dolinský potok"},
+  {part = "Dubie"},
+  {street = "Na Podstráni"},
+  {street = "Športová"},
+  {street = "Kukučinova", written = "Kukučínova"},
+  {street = "Štefánikova štvrť"},
+  {street = "Ulica Jánska"},
+]
+
+[obvod.7]
+seats = 1
+okrsky = [12]
+rules = [
+  {part = "Budatínska Lehota"},
+]
+
+[obvod.8]
+seats = 1
+okrsky = [13]
+rules = [
+  {part = "Oškerda"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Jesenského"},
+  {street = "M. Nešporu"},
+  {street = "Benkova"},
+  {street = "Kysucká"},
+  {street = "Viliama Galvánka"},
+  {street = "Karola Andela"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Sládkovičova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "9.mája"},
+  {street = "Horná Skotňa"},
+  {street = "Pod Lipkou"},
+  {street = "Tŕstie"},
+  {street = "Pod Hájom"},
+  {street = "Štúrova", numbers = "1210, 1211, 2591", by = "supisne"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Revolučná"},
+  {street = "ČSA", numbers = "1190, 1300, 1301, 1302, 2822, 2823", by = "supisne"},
+]
+
+[okrsok.5]
+rules = [
+  {rest = true},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Vajanského"},
+  {street = "Murgašova"},
+  {street = "Družstevná"},
+  {street = "Litovelská"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Matice slovenskej"},
+  {street = "Kollárova"},
+  {street = "Lipová"},
+  {street = "Cesta do Rudiny"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Bottova"},
+  {street = "Jarošova"},
+  {street = "Hálkova"},
+  {street = "Novomeského"},
+  {street = "Dolinský potok"},
+  {street = "Na Podstráni"},
+  {street = "Kukučinova"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Hurbanova"},
+  {street = "Dubská cesta"},
+  {street = "Neslušská cesta"},
+  {street = "Športová"},
+  {street = "Štefánikova štvrť"},
+  {street = "Ulica Jánska"},
+  {part = "Dubie"},
+]

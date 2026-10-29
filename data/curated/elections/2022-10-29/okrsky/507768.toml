@@ -1,0 +1,47 @@
+# Okrsky of Zavar, transcribed by an AI agent in job okrsok-rules-918 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Blavská, Budovateľská, Diaľničná, Hlinícka, Košárska, Majerská, Mlynská, Muškátová, Pažitná, Vetrová, Viktorínova, Záhrady, Záhumenská, Zdravotnícka,
+#   okrsok 2: Ulice: Hlavná, Krátka, Poronda, Športová, Tichá, Na vŕšku, Vinohradská, Výhon, Prílohy
+obec = "507768"
+name = "Zavar"
+okrsky_date = 2022-07-28
+okrsky_fill = "nearest"
+okrsky_note = "The register's 2 addresses without a street (súpisné only) are placed by fill_nearest; the document names streets only."
+
+[[document]]
+url = "https://web.archive.org/web/20220930201932/https://www.zavar.sk/wp-content/uploads/2022/07/Utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti.pdf"
+sha256 = "0efc96e1c93b7319108d46f37da614280e60c62f7bb5717880d6a47a028e8342"
+title = "Rozhodnutie starostu Obce Zavar zo dňa 28. júla 2022 o utvorení volebných okrskov a určení volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Blavská"},
+  {street = "Budovateľská"},
+  {street = "Diaľničná"},
+  {street = "Hlinícka"},
+  {street = "Košárska"},
+  {street = "Majerská"},
+  {street = "Mlynská"},
+  {street = "Muškátová"},
+  {street = "Pažitná"},
+  {street = "Vetrová"},
+  {street = "Viktorínova"},
+  {street = "Záhrady"},
+  {street = "Záhumenská"},
+  {street = "Zdravotnícka"},
+  {street = "Logistická", note = "Logistická (industrial zone by the motorway, 2 addresses) not named in the document; placed with the adjoining Diaľničná.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná"},
+  {street = "Krátka"},
+  {street = "Poronda"},
+  {street = "Športová"},
+  {street = "Tichá"},
+  {street = "Ulica Na vŕšku", written = "Na vŕšku"},
+  {street = "Vinohradská"},
+  {street = "Výhon"},
+  {street = "Prílohy"},
+]

@@ -1,0 +1,30 @@
+# Okrsky of Nová Bystrica, transcribed by an AI agent in job okrsok-rules-766 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 – Nová Bystrica
+#   okrsok 2: Okrsok č. 2 – Vychylovka
+obec = "509311"
+name = "Nová Bystrica"
+okrsky_date = 2022-07-19
+okrsky_note = "Council resolution 4/2022 of 19.07.2022 (and the 2022 elections page) set Okrsok č. 1 – Nová Bystrica and Okrsok č. 2 – Vychylovka (polling station ZŠ s MŠ Vychylovka), i.e. the parts of those names. The part Riečnica (1 address) is not named; it is placed in okrsok 1 (inferred: Riečnica k.ú. lies on the Nová Bystrica side, not at Vychylovka)."
+
+[[document]]
+url = "https://www.novabystrica.sk/images/stories/2022/Komunalne_volby/uznesenie.pdf"
+sha256 = "4e1b7fd2cb737eb923c1a5388b7d09d70cef8c841faae916b755b7313c1e317c"
+title = "Uznesenie č. 4/2022 OZ Nová Bystrica z 19. 07. 2022"
+
+[[document]]
+url = "https://web.archive.org/web/20220812204251/https://www.novabystrica.sk/uradne-dokumenty/informacie-ou/1964-komunalne-volby-2022"
+sha256 = "56b6ceedccd6dfa32a794159ba55af407ce982f5c6a7b76b6c714bad606f4b8a"
+title = "Komunálne voľby 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Nová Bystrica"},
+  {part = "Riečnica", note = "part not named in the document; placed with Nová Bystrica", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vychylovka"},
+]

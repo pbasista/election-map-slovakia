@@ -1,0 +1,99 @@
+# Council obvody of Valaská (509086), Brezno.
+# Transcribed by an AI agent in job obvod-rules-324 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 - počet poslancov 8. Volebný okrsok č. 1 - Valaská, sídlisko-východ ... ulice: bez ulice, Budovateľská, Chalupkova, Kpt. Jána Nálepku, Kukučínova, Námestie 1. mája, Októbrová, Partizánska cesta, Pod Hrbom, Štúrova, Trieda Dukelských hrdinov 455, 456, 457, 458, 462, 463, 464, Tehelná, Pod Lipovou. Volebný okrsok č. 2 - Valaská - sídlisko-západ ... ulice: Hronská, Švermova, Trieda Dukelských hrdinov 439, 440, 441, 442, 443, 444, 445, 453, 454, Školská
+#   obvod 2: Volebný obvod č. 2 - počet poslancov 3. Volebný okrsok č. 3 - Valaská - materská časť obce ... ulice: Cesta Osloboditeľov, Javorová, Na Studničke, Potôčky, Tatranská, Vladislava Valacha, Záhradná. Volebný okrsok č. 4 - Valaská, časť Piesok ... ulice: Mierová, Pod Dielom, Robotnícka, Strojárenská
+# Okrsky added by an AI agent in job okrsok-rules-1195 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Valaská, sídlisko – východ, ulice: bez ulice, Budovateľská, Chalupkova, Kpt. Jána Nálepku, Kukučínova, Námestie 1. mája, Októbrová, Partizánska cesta, Pod Hrbom, Štúrova, Trieda Dukelských hrdinov 455, 456, 457, 458, 462, 463, 464, Tehelná, Pod Lipovou
+#   okrsok 2: Valaská – sídlisko – západ, ulice: Hronská, Švermova, Trieda Dukelských hrdinov 439, 440, 441, 442, 443, 444, 445, 453, 454, Školská
+#   okrsok 3: Valaská – materská časť obce, ulice: Cesta Osloboditeľov, Javorová, Na Studničke, Potôčky, Tatranská, Vladislava Valacha, Záhradná
+#   okrsok 4: Valaská, časť Piesok, ulice: Mierová, Pod Dielom, Robotnícka, Strojárenská
+obec = "509086"
+name = "Valaská"
+date = 2022-06-22
+fill = "nearest"
+note = "Scanned announcement, read by OCR. 'bez ulice' in okrsok 1 means voters registered without an address, not a rule. The register's addresses without a street in part Valaská and the street Hnusno (not named; a hamlet) take the obvod of the nearest address; part Piesok is wholly okrsok 4 ('časť Piesok') of obvod 2. Trieda Dukelských hrdinov is listed by súpisné čísla split across okrsky 1 and 2, both in obvod 1, so the whole street is in obvod 1."
+okrsky_date = 2022-07-11
+okrsky_fill = "nearest"
+okrsky_note = "Scanned announcement of 11.07.2022, read visually; it gives the obvody, the okrsky and their streets. 'bez ulice' in okrsok 1 means voters registered without an address, not a rule. Trieda Dukelských hrdinov is split by súpisné čísla between okrsky 1 and 2; its other addresses, the street Hnusno (not named; a hamlet) and the addresses without a street in obvod 1 are placed by fill_nearest. Okrsok 4 'Valaská, časť Piesok' is the part Piesok (all its streets: Mierová, Pod Dielom, Robotnícka, Strojárenská); okrsok 3 takes the rest of obvod 2."
+
+[[document]]
+url = "https://web.archive.org/web/20230128143456/https://www.valaska.sk/wp-content/uploads/2022/07/oznamenie.pdf"
+sha256 = "85562b037fd4c5ad7bbf973032dac745e3ea61c767b3b80098b7bdc259b77100"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov, volebných okrskov a volebných miestností (uznesenie OcZ č. 112/2022 zo dňa 22.06.2022), 11.07.2022"
+
+[obvod.1]
+seats = 8
+okrsky = [1, 2]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Chalupkova"},
+  {street = "Kpt. Jána Nálepku"},
+  {street = "Kukučínova"},
+  {street = "Námestie 1.mája", written = "Námestie 1. mája"},
+  {street = "Októbrová"},
+  {street = "Partizánska cesta"},
+  {street = "Pod Hrbom"},
+  {street = "Štúrova"},
+  {street = "Trieda Dukelských Hrdinov", written = "Trieda Dukelských hrdinov"},
+  {street = "Tehelná"},
+  {street = "Pod Lipovou"},
+  {street = "Hronská"},
+  {street = "Švermova"},
+  {street = "Školská"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [3, 4]
+rules = [
+  {street = "Cesta Osloboditeľov"},
+  {street = "Javorová"},
+  {street = "Na Studničke"},
+  {street = "Potôčky"},
+  {street = "Tatranská"},
+  {street = "Vladislava Valacha"},
+  {street = "Záhradná"},
+  {part = "Piesok"},
+  {street = "Mierová"},
+  {street = "Pod Dielom"},
+  {street = "Robotnícka"},
+  {street = "Strojárenská"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Chalupkova"},
+  {street = "Kpt. Jána Nálepku"},
+  {street = "Kukučínova"},
+  {street = "Námestie 1.mája", written = "Námestie 1. mája"},
+  {street = "Októbrová"},
+  {street = "Partizánska cesta"},
+  {street = "Pod Hrbom"},
+  {street = "Štúrova"},
+  {street = "Trieda Dukelských Hrdinov", numbers = "455, 456, 457, 458, 462, 463, 464", by = "supisne", written = "Trieda Dukelských hrdinov"},
+  {street = "Tehelná"},
+  {street = "Pod Lipovou"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hronská"},
+  {street = "Švermova"},
+  {street = "Trieda Dukelských Hrdinov", numbers = "439, 440, 441, 442, 443, 444, 445, 453, 454", by = "supisne", written = "Trieda Dukelských hrdinov"},
+  {street = "Školská"},
+]
+
+[okrsok.3]
+rules = [
+  {rest = true},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Piesok"},
+]

@@ -1,0 +1,36 @@
+# Council obvody of Veľký Ďur (502936), Levice.
+# Transcribed by an AI agent in job obvod-rules-351 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 (Dolný Ďur, Horný Ďur) 7 poslancov
+#   obvod 2: Volebný obvod č. 2 (Rohožnica) 2 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-1216 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný obvod č. 1 (Dolný Ďur, Horný Ďur) 7 poslancov
+#   okrsok 2: Volebný obvod č. 2 (Rohožnica) 2 poslanci.
+obec = "502936"
+name = "Veľký Ďur"
+date = 2022-06-08
+okrsky_date = 2022-06-08
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+
+[[document]]
+url = "https://www.velkydur.sk/download_file_f.php?id=1708975"
+sha256 = "9d1ec2035860b9dc7e369cb4460a4376bfd3c8ab3b783c7960efd843d65552e0"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 288/28/2022 zo dňa 08.06.2022)"
+
+[obvod.1]
+seats = 7
+okrsky = [1]
+rules = [
+  {part = "Dolný Ďur"},
+  {part = "Horný Ďur"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Rohožnica"},
+]

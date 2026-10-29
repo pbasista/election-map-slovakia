@@ -1,0 +1,107 @@
+# Council obvody of Ilava (513156), Ilava.
+# Transcribed by an AI agent in job obvod-rules-277 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Mierové námestie, Ružová ulica, Farská, Moyzesova, Košecká, SNP, Záhumenská, Kukučínova, občania s trvalým pobytom Ilava
+#   obvod 2: Medňanská, Skala, Jesenského, Kalinčiakova, Hollého, Slnečná, Lašteky I
+#   obvod 3: Pivovarská, Ľ. Štúra, Hviezdoslavova, Sládkovičova, Štefánikova
+#   obvod 4: Kpt. Nálepku, Sihoť, Záhradnícka, J.L.Bellu, Nádražná, Hurbanova, Mládežnícka, Za kanálom
+#   obvod 5: mestská časť Klobušice
+#   obvod 6: mestská časť lliavka a Iliavčanská dolina a Záštepy
+# Okrsky added by an AI agent in job okrsok-rules-1154 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Mierové námestie, ulice Ružová, Farská, Moyzesova, Košecká, SNP, Záhumenská, Kukučínova, občania s trvalým pobytom Ilava
+#   okrsok 2: ulice Medňanská, Skala, Jesenského, Kalinčiakova, Hollého, Slnečná a Lašteky I
+#   okrsok 3: ulice Pivovarská, Ľ. Štúra, Hviezdoslavova, Sládkovičova, Štefánikova
+#   okrsok 4: ulice Kpt. Nálepku, Sihoť, Záhradnícka, J. L .Bellu, Nádražná, Hurbanova, Mládežnícka, Za kanálom
+#   okrsok 5: mestská časť Klobušice
+#   okrsok 6: mestská časť lliavka, Iliavčanská dolina a Záštepy
+obec = "513156"
+name = "Ilava"
+date = 2022-07-12
+fill = "nearest"
+note = "Streets Lašteky I (obvod 2), Mládežnícka and Za kanálom (obvod 4) have no addresses in the register and are left out. 'občania s trvalým pobytom Ilava' (obvod 1) means voters registered without an address, not a rule. Addresses without a street in part Ilava (súpisné only) are placed by fill_nearest; parts Klobušice and Iliavka are whole obvody 5 and 6."
+okrsky_date = 2022-08-03
+okrsky_note = "Mayor's okrsky notice of 3.8.2022: each of the 6 obvody is one okrsok with the same territory (okrsok n = obvod n), so no rules are needed."
+
+[[document]]
+url = "https://www.ilava.sk/e_download.php?file=data/editor/512skabove_3.pdf&original=OSO22_V501%20Mesto%20Ilava%20GDPR.pdf"
+sha256 = "3988bb4ac2933636eae11b044420007d584c40f6ed270dd645f41ff830e08f33"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 29. októbra 2022 (uznesenie č. 4/2022 zo dňa 12.7.2022)"
+
+[[document]]
+url = "https://www.ilava.sk/e_download.php?file=data/uredni_deska/obsah2621_1.pdf&original=Mesto_Ilava_utvorenie_voleb_okrskov_voleb_miestnost%C3%AD_GDPR.pdf"
+sha256 = "edbf3be584ab282cdf6663f4c1204f3195ab9b960e8273caaedf084f9fd124df"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov 2022, Ilava, 3.8.2022"
+
+[[document]]
+url = "https://www.ilava.sk/mesto/volby-2022/volby-2022/"
+sha256 = "df7d82f6aa1ccf033f1f2e120028237a82c38b844c8a5e81103263fe432269f3"
+title = "Voľby 2022 (stránka mesta Ilava s odkazom na dokument)"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {street = "Mierové námestie"},
+  {street = "Ružová", written = "Ružová ulica"},
+  {street = "Farská"},
+  {street = "Moyzesova"},
+  {street = "Košecká"},
+  {street = "SNP"},
+  {street = "Záhumenská"},
+  {street = "Kukučínova"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {street = "Medňanská"},
+  {street = "Skala"},
+  {street = "Jesenského"},
+  {street = "Kalinčiakova"},
+  {street = "Hollého"},
+  {street = "Slnečná"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {street = "Pivovarská"},
+  {street = "Ľ. Štúra"},
+  {street = "Hviezdoslavova"},
+  {street = "Sládkovičova"},
+  {street = "Štefánikova"},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [4]
+rules = [
+  {street = "Kpt. Nálepku"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku", note = "the register spells the same street both 'Kpt. Nálepku' and 'Kpt.Nálepku'"},
+  {street = "Sihoť"},
+  {street = "Záhradnícka"},
+  {street = "J. L. Bellu", written = "J.L.Bellu"},
+  {street = "Nádražná"},
+  {street = "Hurbanova"},
+]
+
+[obvod.5]
+seats = 2
+okrsky = [5]
+rules = [
+  {part = "Klobušice"},
+]
+
+[obvod.6]
+seats = 1
+okrsky = [6]
+rules = [
+  {part = "Iliavka"},
+  {street = "Iliavčanská dolina"},
+  {street = "Záštepy"},
+]

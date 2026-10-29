@@ -1,0 +1,99 @@
+# Council obvody of Turzovka (509507), Čadca.
+# Transcribed by an AI agent in job obvod-rules-286 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: (Mestská časť Stred) ktorý zahŕňa: bytové domy č. súpisné : 4, 13, 43, 216, 219,257, 300, 303, 311, 312, 313, 314, 315, 316, 317, 335, 373, 374, 375, 392, 396, 398, 405, 406, 410, 411, 420, 421, 422, 423, 424, 425, 426, 471, 472, 487, 540, 546, 566 , 157, 158 159, 196 a rodinné domy mestskej časti Stred sa volí 5 poslancov
+#   obvod 2: (Mestská časť Vyšný koniec) ktorý zahŕňa: rodinné domy mestskej časti Vyšný koniec sa volia 2 poslanci
+#   obvod 3: (Mestská časť Predmier) ktorý zahŕňa: rodinné domy mestskej časti Predmier a bytové domy č. súpisné 272, 331, 332 sa volia 2 poslanci
+#   obvod 4: (Mestská časť Hlinené) ktorý zahŕňa: rodinné domy mestskej časti Hlinené sa volia 2 poslanci
+#   obvod 5: (Mestská časť Turkov) ktorý zahŕňa: rodinné domy mestskej časti Turkov sa volí 1 poslanec
+#   obvod 6: (Mestská časť Závodie) ktorý zahŕňa: rodinné domy mestskej časti Závodie sa volí 1 poslanec
+# Okrsky added by an AI agent in job okrsok-rules-1162 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre občanov mestskej časti Stred bytové domy – blok č. súp. 311, 312, 313, 314, 315, 316 a 317 405, 406, 410, 411, 392, 396 a 398
+#   okrsok 2: pre občanov mestskej časti Stred bytové domy – blok č. súp. 373, 374, 375, 420, 421, 422, 423, 424, 425 a 426, 471, 472, 487, 196, rodinné domy č. 203 a 209
+#   okrsok 3: pre občanov mestskej časti Stred – rodinné domy a bytové domy č. súp. 13 a 43, 303, 540, 566, 157, 158, 159
+#   okrsok 4: pre občanov mestskej časti Vyšný koniec
+#   okrsok 5: pre občanov mestskej časti Predmier
+#   okrsok 6: pre občanov mestskej časti Hlinené
+#   okrsok 7: pre občanov mestskej časti Turkov a Turkov u Valčuhov
+#   okrsok 8: pre občanov mestskej časti Závodie
+obec = "509507"
+name = "Turzovka"
+date = 2022-06-30
+note = "Scanned announcement, read visually. Date from the resolution number 65-30/6-2022 (session of 30 June 2022). Each obvod is a mestská časť; the register numbers houses by súpisné číslo within each part, so the listed bytové domy are read as the part's own houses: obvod 1's listed súpisné numbers all exist in Turzovka-Stred, and obvod 3's bytové domy 272, 331, 332 are taken as Predmier's (Predmier 331 and 332 stand side by side, as a pair of blocks would). Hence every obvod is its whole part."
+okrsky_date = 2022-07-15
+okrsky_note = "Scanned document, read visually. It bears no date; it was posted on the town's elections page (Komunálne voľby 2022) on 15. 7. 2022 ('Vložené: 15. 7. 2022'), used as date. Obvod 1 (part Turzovka-Stred) is split by súpisné čísla: okrsky 1 and 2 take the listed blocks/houses, okrsok 3 the rest of Stred (its rodinné domy and the listed blocks 13, 43, 303, 540, 566, 157-159). Obvody 2-6 are one okrsok each."
+
+[[document]]
+url = "https://www.turzovka.sk/modules/file_storage/download.php?file=59df361b%7C1915"
+sha256 = "68863d4928afbc60290ace012ab4f8367a81e11dbfd2a93bab274b5567d29602"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 29. októbra 2022 (uznesenie č. 65-30/6-2022), V Turzovke 07.07.2022"
+
+[[document]]
+url = "https://www.turzovka.sk/modules/file_storage/download.php?file=8818c6db%7C1919"
+sha256 = "bf75339793b3a8c641bed6b93990ad34bcfaf8c25118be6284ebafcac4ea7c8c"
+title = "Sídla okrskových volebných komisií a mestskej volebnej komisie v meste Turzovka pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov - v sobotu 29. októbra 2022"
+
+[[document]]
+url = "https://www.turzovka.sk/mesto/volby-a-referenda/?page=all"
+sha256 = "fc686ce0dbe9ea5160c8ddced8bc93145c9ef7070ac4212138cf0326a38d6904"
+title = "Voľby a referendá – Komunálne voľby 2022 (vložené 15. 7. 2022)"
+
+[obvod.1]
+seats = 5
+okrsky = [1, 2, 3]
+rules = [
+  {part = "Turzovka-Stred", note = "Bytové domy listed and family houses of Stred: the whole part."},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [4]
+rules = [
+  {part = "Vyšný Koniec"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [5]
+rules = [
+  {part = "Predmier", note = "Bytové domy 272, 331, 332 taken as Predmier's own súpisné numbers."},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [6]
+rules = [
+  {part = "Hlinené"},
+]
+
+[obvod.5]
+seats = 1
+okrsky = [7]
+rules = [
+  {part = "Turkov"},
+]
+
+[obvod.6]
+seats = 1
+okrsky = [8]
+rules = [
+  {part = "Závodie"},
+]
+
+[okrsok.1]
+rules = [
+  {part = "Turzovka-Stred", numbers = "311-317, 392, 396, 398, 405, 406, 410, 411"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Turzovka-Stred", numbers = "196, 203, 209, 373-375, 420-426, 471, 472, 487"},
+]
+
+[okrsok.3]
+rules = [
+  {rest = true},
+]

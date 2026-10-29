@@ -1,0 +1,32 @@
+# Okrsky of Hnilčík, transcribed by an AI agent in job okrsok-rules-1037 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok zahŕňa voličov od súp. čísla 92, miestnu časť Zimná dolina, Cechy, Štolvek, Grétla.
+#   okrsok 2: Volebný okrsok zahŕňa voličov Dolnej časti obce, miestnu časť Ráztoky, Bindt a voličov, ktorí majú trvalý pobyt hlásený len na obci.
+obec = "526576"
+name = "Hnilčík"
+okrsky_date = 2022-11-09
+okrsky_note = "No document of the elections found; the referendum's document (the municipality's 2022 elections page keeps only candidate and results files; the notice board archive has no okrsky document; web.archive.org was offline when tried). 'Od súp. čísla 92' is read as súpisné čísla 92 and up in the part Hnilčík, the 'Dolná časť obce' as the lower numbers; the settlements Zimná dolina, Cechy, Štolvek, Grétla are not parts or streets in the register and are taken to lie within those numbers. Voters registered only on the municipality (okrsok 2) have no address."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.obechnilcik.sk/files/2022-11-29-101348-Utvorenie_volebn__ch_okrskov_a_ur__enie_volebn__ch_miestnost__.pdf"
+sha256 = "86ce0ad52667525174a8081c60e6235a7ff07dc4fa5478b0ffb839d8f38e7982"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (referendum 2023), 9. 11. 2022"
+
+[[document]]
+url = "https://www.obechnilcik.sk/samosprava/volby-v-obci/referendum-2023"
+sha256 = "b35a1edbce09c192bb8147252e3860da20c11b3f1b7d9945ec8f3d8c921a9f93"
+title = "Voľby v obci - Referendum 2023"
+
+[okrsok.1]
+rules = [
+  {part = "Hnilčík", numbers = "92-"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Hnilčík", numbers = "1-91"},
+  {part = "Ráztoky"},
+  {part = "Bindt"},
+]

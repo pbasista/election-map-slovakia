@@ -1,0 +1,42 @@
+# Council obvody of Horné Obdokovce (542938), Topoľčany.
+# Transcribed by an AI agent in job obvod-rules-360 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č.1 Horné Obdokovce 5 poslancov
+#   obvod 2: volebný obvod č. 2 Obsolovce 2 poslancov
+# Okrsky added by an AI agent in job okrsok-rules-1223 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volebný obvod č.1 Horné Obdokovce 5 poslancov
+#   okrsok 2: volebný obvod č. 2 Obsolovce 2 poslancov
+obec = "542938"
+name = "Horné Obdokovce"
+date = 2022-06-24
+note = "Uznesenie 295/2022 (which replaced 285/2022) names obvod 1 Horné Obdokovce and obvod 2 Obsolovce. The part Bodok is placed with Horné Obdokovce: the 2022 okrsky decision puts Bodok and Horné Obdokovce in okrsok 1, which is obvod 1 per ŠÚ SR."
+okrsky_date = 2022-06-24
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+
+[[document]]
+url = "https://www.hobdokovce.sk/download_file_f.php?id=1705483"
+sha256 = "11075590f6674d5054da5b19b042bf3be914606f8923de72e164b887934c989f"
+title = "Uznesenia z 25. zasadnutia OZ 24.06.2022 (uznesenie č. 295/2022, určenie počtu poslancov)"
+
+[[document]]
+url = "https://www.hobdokovce.sk/download_file_f.php?id=1734793"
+sha256 = "abf295973e366e0d360841e1df25b0c112a695926b36f0ee19f6bffd08dcf793"
+title = "Utvorenie volebných okrskov a určenie volebných miestností 2022"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Horné Obdokovce"},
+  {part = "Bodok", note = "Bodok votes in okrsok 1 with Horné Obdokovce (okrsky decision 2022)"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Obsolovce"},
+]

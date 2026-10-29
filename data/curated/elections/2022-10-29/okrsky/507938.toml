@@ -1,0 +1,114 @@
+# Okrsky of Ivanka pri Dunaji, transcribed by an AI agent in job okrsok-rules-655 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice Farnianska, Hlboká, Hollého, Hurbanova, Muškátová, Nová, Partizánska, Pekná, Pluhová, Pri pálenici, Slnečná, Štefánikova, Štúrova, Veterná, Zelená
+#   okrsok 2: ulice Dobšinského, Dlhá, Družstevná, Hlinkova, Hviezdoslavova, Jesenského, Komenského, Kvetná, Lesná, Malinová, Marhuľová, Pri jazere, Rázusova, SNP, Školská, Šúrska, Višňová, Záhradnícka, Za školou
+#   okrsok 3: ulice Bernolákovská, Bobuľová, Gaštanová, Grasalkovičova, Hroznová, Jabloňová, Matičná, Moyzesova, Muštová, Na vŕšku, Nádražná, Nám. sv. Rozálie, Nám. padlých hrdinov, Olšinová, Orechová, Pod záhradami, Poľovnícka, Pri trati, Pri vrbine, Révová, Stromová, Šustová, Trenčianska, Vajnorská, Vinohradská, Za kostolom, Železničiarska
+#   okrsok 4: ulice Agátová, Cintorínska, Dunajská, Jahodová, Kalinčiakova, Kmeťova, Lipová, Na výslní, Okružná, Palárikova, Poľná, Potocká, Puškinova, Ružová, Sadová, Sládkovičova, Sovia, Škultétyho, Záleská, Želiarska
+obec = "507938"
+name = "Ivanka pri Dunaji"
+okrsky_date = 2022-08-01
+okrsky_fill = "nearest"
+okrsky_note = "The document omits Senecká cesta (5 addresses) and the register's houses without a street (súpisné only); these take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.ivankapridunaji.sk/download_file_f.php?id=1720362"
+sha256 = "0876a5a9087baf51bc1c896e39569d7fd7a9de4f3f172ae9f544ea60109ccbcf"
+title = "Informácia o utvorení volebných okrskov s vymedzením ich územného obvodu a informácia o určení volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Farnianska"},
+  {street = "Hlboká"},
+  {street = "Hollého"},
+  {street = "Hurbanova"},
+  {street = "Muškátová"},
+  {street = "Nová"},
+  {street = "Partizánska"},
+  {street = "Pekná"},
+  {street = "Pluhová"},
+  {street = "Pri pálenici"},
+  {street = "Slnečná"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Veterná"},
+  {street = "Zelená"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dobšinského"},
+  {street = "Dlhá"},
+  {street = "Družstevná"},
+  {street = "Hlinkova"},
+  {street = "Hviezdoslavova"},
+  {street = "Jesenského"},
+  {street = "Komenského"},
+  {street = "Kvetná"},
+  {street = "Lesná"},
+  {street = "Malinová"},
+  {street = "Marhuľová ulica", written = "Marhuľová"},
+  {street = "Pri jazere"},
+  {street = "Rázusova"},
+  {street = "SNP"},
+  {street = "Školská"},
+  {street = "Šúrska ulica", written = "Šúrska"},
+  {street = "Višňová"},
+  {street = "Záhradnícka"},
+  {street = "Za školou"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bernolákovská"},
+  {street = "Bobuľová"},
+  {street = "Gaštanová"},
+  {street = "Grasalkovičova"},
+  {street = "Hroznová"},
+  {street = "Jabloňová"},
+  {street = "Matičná"},
+  {street = "Moyzesova"},
+  {street = "Muštová"},
+  {street = "Na vŕšku"},
+  {street = "Nádražná"},
+  {street = "Nám. sv. Rozálie"},
+  {street = "Námestie padlých hrdinov", written = "Nám. padlých hrdinov"},
+  {street = "Olšinová"},
+  {street = "Orechová"},
+  {street = "Pod záhradami"},
+  {street = "Poľovnícka"},
+  {street = "Pri trati"},
+  {street = "Pri vrbine"},
+  {street = "Révová"},
+  {street = "Stromová"},
+  {street = "Šustová"},
+  {street = "Trenčianska"},
+  {street = "Vajnorská"},
+  {street = "Vinohradská"},
+  {street = "Za kostolom"},
+  {street = "Železničiarska"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Agátová"},
+  {street = "Cintorínska"},
+  {street = "Dunajská"},
+  {street = "Jahodová ulica", written = "Jahodová"},
+  {street = "Kalinčiakova"},
+  {street = "Kmeťova"},
+  {street = "Lipová"},
+  {street = "Na výslní"},
+  {street = "Okružná"},
+  {street = "Palárikova"},
+  {street = "Poľná"},
+  {street = "Potocká"},
+  {street = "Puškinova"},
+  {street = "Ružová"},
+  {street = "Sadová"},
+  {street = "Sládkovičova"},
+  {street = "Sovia"},
+  {street = "Škultétyho"},
+  {street = "Záleská"},
+  {street = "Želiarska"},
+]

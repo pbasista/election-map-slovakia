@@ -1,0 +1,34 @@
+# Okrsky of Mútne, transcribed by an AI agent in job okrsok-rules-884 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Územný obvod od čísla domu 1 - 420
+#   okrsok 2: Územný obvod od čísla domu 421- 890
+obec = "509850"
+name = "Mútne"
+okrsky_date = 2022-08-10
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by house (súpisné) numbers across the whole obec: 1-420 and 421-890; applied in every part (Mútne, Duľov, Mútňanská Píla). Numbers above 890 are placed by fill_nearest."
+
+[[document]]
+url = "https://www.mutne.sk/evt_file.php?file=1706"
+sha256 = "47b955da6a69b301f899821686a59aff5c7940f10f11c7d6ed24e4514def3271"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov v roku 2022"
+
+[[document]]
+url = "https://web.archive.org/web/20220925230201/https://www.mutne.sk/organizacie/aktuality/urcenie-volebnych-okrskov-a-volebnych-miestnosti-98sk.html"
+sha256 = "db6db960b00627a5544492769d5e5274090f250347c42a7f929fd28a8c491050"
+title = "Určenie volebných okrskov a volebných miestností (page linking the PDF, archived 2022-09-25)"
+
+[okrsok.1]
+rules = [
+  {part = "Mútne", numbers = "1-420"},
+  {part = "Duľov", numbers = "1-420"},
+  {part = "Mútňanská Píla", numbers = "1-420"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Mútne", numbers = "421-890"},
+  {part = "Duľov", numbers = "421-890"},
+  {part = "Mútňanská Píla", numbers = "421-890"},
+]

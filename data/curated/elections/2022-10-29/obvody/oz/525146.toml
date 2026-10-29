@@ -1,0 +1,203 @@
+# Council obvody of Sabinov (525146), Sabinov.
+# Transcribed by an AI agent in job obvod-rules-267 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č. 1 (zahŕňa ulice - Bernolákova, J. Záborského, Jarková, Kvetná, Mudroňova, Prídavková, S. Chalúpku, Višňová, Kukučínova, Komenského, Medzi vodami, 9. mája, Hviezdoslavova, Mieru, Prešovská, Štúrova, Matice slovenskej) - 5 poslancov;
+#   obvod 2: volebný obvod č. 2 (zahŕňa ulice - Švermova, Janka Borodáča, Hliník, Levočská, Jilemnického, Mlynská, Šancová, Ružová, Námestie slobody, Kpt. Nálepku, Murgašova, 17. novembra, Jakubovanská) - 5 poslancov;
+#   obvod 3: volebný obvod č. 3 (zahŕňa ulice – Záhradná, Sládkovičova, Nezabudova, J. Cirbusovej, SNP, Severná, Pavla Gojdiča, Puškinova, Janka Jesenského, Moyzesova, Novomeského, S. Fábryho, Fraňa Kráľa, Gen. Svobodu, Sadová, Sabinov 0, Ovocinárska, Hollého, Priemyselná štvrť, Pod Švabľovkou, Karpatská, Čergovská, Tehelná) - 5 poslancov.
+# Okrsky added by an AI agent in job okrsok-rules-1144 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: miestna časť Orkucany-Bernolákova, J. Záborského, Jarková, Kvetná, Mudroňova, Prídavková, S. Chalúpku, Višňová
+#   okrsok 2: Komenského, Kukučínova, Medzi vodami
+#   okrsok 3: 9. mája, Hviezdoslavova, Mieru, Prešovská, Štúrova, Matice slovenskej
+#   okrsok 4: Hliník, Janka Borodáča, Jilemnického, Levočská, Mlynská, Šancová, Švermova, Ružová
+#   okrsok 5: Námestie Slobody, Kpt. Nálepku, Murgašova
+#   okrsok 6: 17.novembra č. 1-77
+#   okrsok 7: 17. novembra č. 78 - 83, Jakubovanská
+#   okrsok 8: Jolany Cirbusovej, Nezabudova, Pavla Gojdiča, Severná, Záhradná, Sládkovičova, SNP
+#   okrsok 9: Puškinova, Janka Jesenského, Moyzesova
+#   okrsok 10: Novomeského, Fraňa Kráľa, Čergovská, Gen. Svobodu, Hollého, Karpatská, Ovocinárska, Pod Švabľovkou, Priemyselná štvrť, Samuela Fábryho, Sadová, Tehelná, obyvatelia s trvalým pobytom Sabinov – 0
+obec = "525146"
+name = "Sabinov"
+date = 2022-06-29
+fill = "nearest"
+note = "'Medzi vodami' (garden area) is not in the register and is left out. 'Sabinov 0' = voters registered without an address, not the register's houses without a street; the 1152 register addresses without a street (súpisné only), and street Lazy (not named in the document), are placed by fill_nearest. Baluvka inferred to obvod 1 (part Orkucany)."
+okrsky_date = 2022-08-02
+okrsky_fill = "nearest"
+okrsky_note = "Okrsok 1 is the part Orkucany within obvod 1 (whole part, incl. Baluvka, not named). 'obyvatelia s trvalým pobytom Sabinov – 0' (okrsok 10) means voters registered without an address; the register's addresses without a street (súpisné only) and Lazy (not named) are placed by fill_nearest. 'Medzi vodami' (garden area) is not in the register and is left out. The register lists Janka Jesenského also as 'J. Jesenského' (initial form, same street), placed with it in okrsok 9. 17. novembra 1-77 in okrsok 6, 78- in 7. Name forms: Jolany Cirbusovej = J. Cirbusovej, Samuela Fábryho = S. Fábryho (initials), Prídavková = Prídavkova, S. Chalúpku = S. Chalupku (accent only), Matice slovenskej, Priemyselná štvrť (case only)."
+
+[[document]]
+url = "https://web.archive.org/web/20220809191818/https://www.sabinov.sk/attachments/article/818/Zverejnenie%20volebn%C3%BDch%20obvodov%20a%20po%C4%8Dtu%20poslancov.pdf"
+sha256 = "2cd6787a4ae3139f948899b91aa6f35b0f84f8785beafed368b790a36c026d3f"
+title = "Zverejnenie volebných obvodov a počtu poslancov (Uznesenie MsZ č. 308 zo dňa 29.6.2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20220809192237/https://www.sabinov.sk/attachments/article/818/8_ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Den%C3%AD%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "75c1d6970c6e01dd9030e463cd0507f3959bec3671fc4da0855725431c98d1ae"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností (voľby do orgánov samosprávy obcí 29. októbra 2022), V Sabinove 2. augusta 2022"
+
+[obvod.1]
+seats = 5
+okrsky = [1, 2, 3]
+rules = [
+  {street = "Bernolákova"},
+  {street = "J. Záborského"},
+  {street = "Jarková"},
+  {street = "Kvetná"},
+  {street = "Mudroňova"},
+  {street = "Prídavkova", written = "Prídavková"},
+  {street = "S. Chalupku", written = "S. Chalúpku"},
+  {street = "Višňová"},
+  {street = "Kukučínova"},
+  {street = "Komenského"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Hviezdoslavova"},
+  {street = "Mieru"},
+  {street = "Prešovská"},
+  {street = "Štúrova"},
+  {street = "Matice Slovenskej", written = "Matice slovenskej"},
+  {street = "Baluvka", note = "Not in the document; lies in part Orkucany, whose streets are all in obvod 1 (okrsok 1 = miestna časť Orkucany).", inferred = true},
+]
+
+[obvod.2]
+seats = 5
+okrsky = [4, 5, 6, 7]
+rules = [
+  {street = "Švermova"},
+  {street = "Janka Borodáča"},
+  {street = "Hliník"},
+  {street = "Levočská"},
+  {street = "Jilemnického"},
+  {street = "Mlynská"},
+  {street = "Šancová"},
+  {street = "Ružová"},
+  {street = "Námestie Slobody", written = "Námestie slobody"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Murgašova"},
+  {street = "17.novembra", written = "17. novembra"},
+  {street = "Jakubovanská"},
+]
+
+[obvod.3]
+seats = 5
+okrsky = [8, 9, 10]
+rules = [
+  {street = "Záhradná"},
+  {street = "Sládkovičova"},
+  {street = "Nezabudova"},
+  {street = "J. Cirbusovej"},
+  {street = "SNP"},
+  {street = "Severná"},
+  {street = "Pavla Gojdiča"},
+  {street = "Puškinova"},
+  {street = "Janka Jesenského"},
+  {street = "J. Jesenského", written = "Janka Jesenského", note = "Register has both 'Janka Jesenského' and the abbreviated 'J. Jesenského' (same street, J. = Janka); the document names Janka Jesenského in obvod 3."},
+  {street = "Moyzesova"},
+  {street = "Novomeského"},
+  {street = "S. Fábryho"},
+  {street = "Fraňa Kráľa"},
+  {street = "Gen. Svobodu"},
+  {street = "Sadová"},
+  {street = "Ovocinárska"},
+  {street = "Hollého"},
+  {street = "Priemyselná Štvrť", written = "Priemyselná štvrť"},
+  {street = "Pod Švabľovkou"},
+  {street = "Karpatská"},
+  {street = "Čergovská"},
+  {street = "Tehelná"},
+]
+
+[okrsok.1]
+rules = [
+  {part = "Orkucany"},
+  {street = "Bernolákova"},
+  {street = "J. Záborského"},
+  {street = "Jarková"},
+  {street = "Kvetná"},
+  {street = "Mudroňova"},
+  {street = "Višňová"},
+  {street = "Prídavkova", written = "Prídavková"},
+  {street = "S. Chalupku", written = "S. Chalúpku"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Komenského"},
+  {street = "Kukučínova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "9.mája", written = "9. mája"},
+  {street = "Hviezdoslavova"},
+  {street = "Mieru"},
+  {street = "Prešovská"},
+  {street = "Štúrova"},
+  {street = "Matice Slovenskej", written = "Matice slovenskej"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Hliník"},
+  {street = "Janka Borodáča"},
+  {street = "Jilemnického"},
+  {street = "Levočská"},
+  {street = "Mlynská"},
+  {street = "Šancová"},
+  {street = "Švermova"},
+  {street = "Ružová"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Námestie Slobody"},
+  {street = "Murgašova"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "17.novembra", numbers = "1-77"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "17.novembra", numbers = "78-", written = "17. novembra"},
+  {street = "Jakubovanská"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "J. Cirbusovej", written = "Jolany Cirbusovej"},
+  {street = "Nezabudova"},
+  {street = "Pavla Gojdiča"},
+  {street = "Severná"},
+  {street = "Záhradná"},
+  {street = "Sládkovičova"},
+  {street = "SNP"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Puškinova"},
+  {street = "Janka Jesenského"},
+  {street = "Moyzesova"},
+  {street = "J. Jesenského", written = "Janka Jesenského"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Novomeského"},
+  {street = "Fraňa Kráľa"},
+  {street = "Čergovská"},
+  {street = "Gen. Svobodu"},
+  {street = "Hollého"},
+  {street = "Karpatská"},
+  {street = "Ovocinárska"},
+  {street = "Pod Švabľovkou"},
+  {street = "Sadová"},
+  {street = "Tehelná"},
+  {street = "Priemyselná Štvrť", written = "Priemyselná štvrť"},
+  {street = "S. Fábryho", written = "Samuela Fábryho"},
+]

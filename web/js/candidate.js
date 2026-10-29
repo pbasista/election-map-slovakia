@@ -3,9 +3,20 @@
  * candidates.py), and the state of the research on them. */
 
 import { html, useEffect, useRef } from '../vendor/preact-htm.module.js';
-import { Contest, FilterBar, OfficeResult, researchScope, useRowActions } from './ballots.js';
-import { areaName, dataIndex, displayName, displayParties, findings, officeLabel, person, useLoaded } from './data.js';
-import { formatDate, formatNumber, formatPercent, t } from './i18n.js';
+import { Contest, FilterBar, notResearched, OfficeResult, OtherCandidacy, researchScope, useRowActions } from './ballots.js';
+import {
+  areaName,
+  dataIndex,
+  displayName,
+  displayParties,
+  findings,
+  latestElection,
+  officeLabel,
+  otherElections,
+  person,
+  useLoaded,
+} from './data.js';
+import { election, formatDate, formatNumber, formatPercent, sourcesBase, t } from './i18n.js';
 import { BackIcon, DisputeIcon, WarningIcon } from './icons.js';
 import { NOT_COUNTED, useLive } from './live.js';
 import { MapButton, useDrawnOkrsky } from './mapmode.js';
@@ -45,7 +56,7 @@ function Finding({ finding: f }) {
         }
         <p class="evidence-links">
           ${f.title ? html`<span class="page-title">${f.title}</span> · ` : null}<a
-            href=${`/cache/${f.cache}.html`}
+            href=${`${sourcesBase}/cache/${f.cache}.html`}
             title=${t('research.cached_note')}
             rel="noopener noreferrer"
             target="_blank"
@@ -82,14 +93,19 @@ function Findings({ candidate: c }) {
 }
 
 /* The research on candidate *c*: not done yet (said as such, never as
- * "nothing found"), or what was searched and the result: nothing found,
- * or the findings. */
+ * "nothing found"; on an earlier election's page, with why: research is
+ * done on the latest election's candidates), or what was searched and the
+ * result: nothing found, or the findings. Research reused from the latest
+ * election (data.js `decodeResearch`) says so first: when it was done and
+ * for which election, that no new research was done for this one, that
+ * only findings published before its day are shown and how many undated
+ * ones are left out. */
 function Research({ candidate: c }) {
   const r = c.research;
   let state;
   if (!r) {
     state = html`<p class="panel-body research-state">
-      <strong>${t('research.none')}</strong> ${t('research.none_note')}
+      <strong>${notResearched(c)}</strong> ${t('research.none_note')}
     </p>`;
   } else {
     const scope = t('research.scope', { scope: researchScope(r), date: formatDate(r.date) });
@@ -105,8 +121,32 @@ function Research({ candidate: c }) {
   return html`
     <h3 class="group">${t('card.research')}</h3>
     <${Notice} summary=${t('research.notice_summary')}>${t('research.notice', { list: t('about.allowlist.title') })}<//>
+    ${
+      r?.reused
+        ? html`<p class="panel-body research-reused">
+            ${t('research.reused', { later: latestElection.slug, date: formatDate(r.date), day: formatDate(election) })}
+            ${r.undated ? html`${' '}${t('research.reused_undated', { n: formatNumber(r.undated) })}` : null}
+          </p>`
+        : null
+    }
     ${state}
     ${r?.findings ? html`<${Findings} candidate=${c} />` : null}
+  `;
+}
+
+/* The person's candidacies in the other elections (data.js
+ * `decodeElsewhere`), newest election first, each with how it went and a
+ * link to its card there; persons are linked across elections by name,
+ * age and place, which the note says is no proof. */
+function Elsewhere({ candidate: c }) {
+  const runs = otherElections.flatMap(({ slug }) => (c.elsewhere[slug] ?? []).map((run) => ({ slug, run })));
+  if (!runs.length) return null;
+  return html`
+    <h3 class="group">${t('card.elsewhere')}</h3>
+    <p class="panel-body muted">${t('card.elsewhere_note')}</p>
+    <ul class="panel-body elsewhere">
+      ${runs.map(({ slug, run }) => html`<li key=${run.id}><${OtherCandidacy} slug=${slug} run=${run} /></li>`)}
+    </ul>
   `;
 }
 
@@ -289,6 +329,7 @@ export function CandidateCard({ id, onCandidate, onClose, filter, onFilter, pick
           />
           <${VoteOrigins} key=${`${x.candidate.id} origins`} candidate=${x.candidate} contest=${x.contest} index=${index} />`,
       )}
+      <${Elsewhere} candidate=${c} />
       <${Research} candidate=${c} />
       <p class="panel-body muted small">${t('card.disclaimer')}</p>
     </section>

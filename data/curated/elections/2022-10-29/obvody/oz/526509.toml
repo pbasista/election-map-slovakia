@@ -1,0 +1,128 @@
+# Council obvody of Gelnica (526509), Gelnica.
+# Transcribed by an AI agent in job obvod-rules-293 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod zahŕňa ulice: Banícka, Banícke námestie, Cintorínska, Háj, Hlavná, Krížna, Lutherovo námestie, Požiarnicka, Slovenská, Slovenské Cechy, Turzovská, Zámková
+#   obvod 2: Volebný obvod zahŕňa ulice: Agátová, Dubová, Hnilecká, Jarná, Javorová, Jesenná, Lesná, Letná, Lipová, Lyžiarska, Partizánska, Plynárenská, Potočná, Vodárenská, Zimná
+#   obvod 3: Volebný obvod zahŕňa ulice : SNP, Hviezdoslavova, Kukučínova, Nemocničná, Vajanského
+#   obvod 4: Volebný obvod zahŕňa ulicu Športovú
+#   obvod 5: Volebný obvod zahŕňa ulice : Tehelná, Záhradná
+#   obvod 6: Volebný obvod zahŕňa ulice: Banská, Geologická, Hutná, Kováčska, Medená, Perlová, Pod brehom, Poľná, Strojárenská, Žakarovská, Železničná
+# Okrsky added by an AI agent in job okrsok-rules-1168 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný obvod zahŕňa ulice: Banícka, Banícke námestie, Cintorínska, Háj, Hlavná, Krížna, Lutherovo námestie, Požiarnicka, Slovenská, Slovenské Cechy, Turzovská, Zámková
+#   okrsok 2: Volebný obvod zahŕňa ulice: Agátová, Dubová, Hnilecká, Jarná, Javorová, Jesenná, Lesná, Letná, Lipová, Lyžiarska, Partizánska, Plynárenská, Potočná, Vodárenská, Zimná
+#   okrsok 3: Volebný obvod zahŕňa ulice : SNP, Hviezdoslavova, Kukučínova, Nemocničná, Vajanského
+#   okrsok 4: Volebný obvod zahŕňa ulicu Športovú
+#   okrsok 5: Volebný obvod zahŕňa ulice : Tehelná, Záhradná
+#   okrsok 6: Volebný obvod zahŕňa ulice: Banská, Geologická, Hutná, Kováčska, Medená, Perlová, Pod brehom, Poľná, Strojárenská, Žakarovská, Železničná
+obec = "526509"
+name = "Gelnica"
+date = 2022-06-20
+fill = "nearest"
+note = "Live documents are gone; Internet Archive snapshots used. Placed by fill_nearest: the register street \"Febr. Víť.\" (7 addresses, not named in the document) and the 633 addresses without a street."
+okrsky_date = 2022-08-05
+okrsky_note = "The mayor's scanned decision of 05.08.2022 forms okrsky 1 to 6 and names only their polling stations (1 Mestský úrad, 2 základná škola, 3 CVČ, 4 futbalový štadión, 5 zimný štadión, 6 Klub dôchodcov Mária-Huta), no streets. Each obvod of the council resolution has exactly one okrsok (Statistical Office counts okrsok n in obvod n), so each okrsok is its whole obvod; the okrsok texts are the obvod resolution's street lists. Read from the rendered scan."
+
+[[document]]
+url = "https://web.archive.org/web/20220802234757/https://www.gelnica.sk/download_file_f.php?id=1712200"
+sha256 = "af2bc74f51bb21e3741f4c58255bfc419b38d04d7764e83664194d6f1d42b463"
+title = "Opis uznesenia č. 144 zo zasadnutia MsZ v Gelnici konaného dňa 20.06.2022"
+
+[[document]]
+url = "https://web.archive.org/web/20220802230915/https://www.gelnica.sk/download_file_f.php?id=1712199"
+sha256 = "85a82848aff1f87010b48fd0ee5eaa57e8493c349f9feaf458f596a0836970ce"
+title = "Teritoriálne vymedzenie volebných obvodov a určenie počtu poslancov pre voľby do orgánov samosprávy obcí dňa 29. októbra 2022"
+
+[[document]]
+url = "https://web.archive.org/web/20220806003550/https://www.gelnica.sk/download_file_f.php?id=1721114"
+sha256 = "d59b5fd682c17e49a0e2f4f1982015d2ed5dd40df1f14af84fa4cf647596704a"
+title = "Utvorenie volebných okrskov č. 1 až č. 6 a určenie volebných miestností (Utvorenie_volebnych_okrskov.pdf)"
+
+[[document]]
+url = "https://web.archive.org/web/20220809005427/https://www.gelnica.sk/volby-do-organov-samospravy-obci.html"
+sha256 = "2a5558792ca399c9cf9fd2e6816bbe4245b88cb06bf348bec269775ee45c8505"
+title = "Voľby do orgánov samosprávy obcí (page linking Utvorenie_volebnych_okrskov.pdf)"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {street = "Banícka"},
+  {street = "Banícke námestie"},
+  {street = "Cintorínska"},
+  {street = "Háj"},
+  {street = "Hlavná"},
+  {street = "Krížna"},
+  {street = "Lutherovo Námestie", written = "Lutherovo námestie"},
+  {street = "Požiarnická", written = "Požiarnicka"},
+  {street = "Slovenská"},
+  {street = "Slovenské Cechy"},
+  {street = "Turzovská"},
+  {street = "Zámková"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [2]
+rules = [
+  {street = "Agátová"},
+  {street = "Dubová"},
+  {street = "Hnilecká"},
+  {street = "Jarná"},
+  {street = "Javorová"},
+  {street = "Jesenná"},
+  {street = "Lesná"},
+  {street = "Letná"},
+  {street = "Lipová"},
+  {street = "Lyžiarska"},
+  {street = "Partizánska"},
+  {street = "Plynárenská"},
+  {street = "Potočná"},
+  {street = "Vodárenská"},
+  {street = "Zimná"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {street = "Sídlisko SNP", written = "SNP", note = "The register's only SNP street is Sídlisko SNP."},
+  {street = "Hviezdoslavova"},
+  {street = "Kukučínova"},
+  {street = "Nemocničná"},
+  {street = "Vajanského"},
+]
+
+[obvod.4]
+seats = 3
+okrsky = [4]
+rules = [
+  {street = "Športová"},
+]
+
+[obvod.5]
+seats = 3
+okrsky = [5]
+rules = [
+  {street = "Tehelná"},
+  {street = "Záhradná"},
+]
+
+[obvod.6]
+seats = 1
+okrsky = [6]
+rules = [
+  {street = "Banská"},
+  {street = "Geologická"},
+  {street = "Hutná"},
+  {street = "Kováčska"},
+  {street = "Medená"},
+  {street = "Perlová"},
+  {street = "Pod Brehom", written = "Pod brehom"},
+  {street = "Poľná"},
+  {street = "Strojárenská"},
+  {street = "Žakarovská"},
+  {street = "Železničná"},
+]

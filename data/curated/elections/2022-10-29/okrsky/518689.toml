@@ -1,0 +1,65 @@
+# Okrsky of Pliešovce, transcribed by an AI agent in job okrsok-rules-702 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: bez pobytu, Cesta armády, Cintorínska, Hviezdoslavova, Ku Rybníku, Lesnícka, Námestie padlých hrdinov, Obrancov mieru, Pod Hálikom, Školská, Vlkanovská, Zvolenská cesta
+#   okrsok 2: Časti obce: Lonec, Pliešovce (bez ulíc), Podjavorie, Boženy Němcovej, Červenákova, Družstevná, Fraňa Kráľa, Hrádocká, Janka Jesenského, Jilemnického, Kollárova, Kostolná, Kukučínova, Ku Pieskam, Námestie SNP, Sitnícka, Sládkovičova, Štúrova, Tajovského
+#   okrsok 3: Časti obce: Dolinky, Polomy, Zaježová
+obec = "518689"
+name = "Pliešovce"
+okrsky_date = 2022-11-08
+okrsky_note = "No document of the elections found; the referendum's document. date = its publication date as stated on the page Referendum 2023 ('Zverejnené 8.11.2022'); the PDF itself is undated. Its 3 okrsky match the Statistical Office's count and voters (okrsok 3 = Zaježová, Dolinky, Polomy: 199 voters). 'bez pobytu' (okrsok 1) means voters registered without an address. 'Pliešovce (bez ulíc)' in okrsok 2 = the addresses of the part Pliešovce without a street. Ku Pieskam (okrsok 2) is not in the register; left out."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.pliesovce.sk/download_file_f.php?id=1764100"
+sha256 = "5b7576824d63e231af713c305282c9e1249e622579f46ffbe03e48c0804b4bf3"
+title = "Zoznam ulíc a okrskov pre Referendum konané 21.1.2023"
+
+[[document]]
+url = "https://www.pliesovce.sk/referendum-2023.html"
+sha256 = "94b156620193f18ceef265c01af8872af55c803fd9d71cc43e44dba4c1e86001"
+title = "Referendum 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Cesta armády"},
+  {street = "Cintorínska"},
+  {street = "Hviezdoslavova"},
+  {street = "Ku Rybníku"},
+  {street = "Lesnícka"},
+  {street = "Námestie padlých hrdinov"},
+  {street = "Obrancov mieru"},
+  {street = "Pod Hálikom"},
+  {street = "Školská"},
+  {street = "Vlkanovská"},
+  {street = "Zvolenská cesta"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lonec"},
+  {part = "Pliešovce"},
+  {part = "Podjavorie"},
+  {street = "Boženy Němcovej"},
+  {street = "Červenákova"},
+  {street = "Družstevná"},
+  {street = "Fraňa Kráľa"},
+  {street = "Hrádocká"},
+  {street = "Janka Jesenského"},
+  {street = "Jilemnického"},
+  {street = "Kollárova"},
+  {street = "Kostolná"},
+  {street = "Kukučínova"},
+  {street = "Námestie SNP"},
+  {street = "Sitnícka"},
+  {street = "Sládkovičova"},
+  {street = "Štúrova"},
+  {street = "Tajovského"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Dolinky"},
+  {part = "Polomy"},
+  {part = "Zaježová"},
+]

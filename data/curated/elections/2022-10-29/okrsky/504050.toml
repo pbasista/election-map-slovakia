@@ -1,0 +1,33 @@
+# Okrsky of Šoporňa, transcribed by an AI agent in job okrsok-rules-699 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súp. č. 1-640
+#   okrsok 2: súp. č. 641-1175
+#   okrsok 3: súp. č. 1176-1680 a časť Štrkovec
+obec = "504050"
+name = "Šoporňa"
+okrsky_date = 2022-11-09
+okrsky_fill = "nearest"
+okrsky_note = "The referendum's document (dated 2022-11-09). The elections' own document (Utvorenie volebných okrskov ... v roku 2022, https://www.soporna.sk/e_download.php?file=data/editor/147sk_8.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD.pdf, linked from the 2022-09-30 snapshot https://web.archive.org/web/20220930094654/https://www.soporna.sk/obec-samosprava/samosprava/volby/volby-do-organov-samospravy-obci-a-samospravnych-krajov/) is undated and not archived, so it cannot be dated; it sets the very same okrsky word for word: súp. č. 1-640, 641-1175, 1176-1680 a časť Štrkovec. Súpisné numbers above 1680, if any, are placed by fill_nearest."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.soporna.sk/e_download.php?file=data/editor/150sk_1.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a.pdf"
+sha256 = "2b23541103d3853bd29a00e242202bec3ffe187fe360c235c588c1f6a81e587d"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre hlasovanie v referende"
+
+[okrsok.1]
+rules = [
+  {part = "Šoporňa", numbers = "1-640"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Šoporňa", numbers = "641-1175"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Šoporňa", numbers = "1176-1680"},
+  {part = "Štrkovec"},
+]

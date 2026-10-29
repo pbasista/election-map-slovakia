@@ -1,0 +1,70 @@
+# Okrsky of Lipany, transcribed by an AI agent in job okrsok-rules-748 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Štúrova, Komenského, Tehelná, Jarková, Jána Bottu, Moyzesova
+#   okrsok 2: Kpt. Nálepku, Kuzmányho, Dubovická roveň, Železničná, Krivianska, Záhradná, Námestie sv. Martina (od orientačného čísla 43 do 85), Sabinovská, Mlynská, Za kúpaliskom, Za traťou, Sládkovičova
+#   okrsok 3: Janka Kráľa, Námestie sv. Martina (ľavá strana 1-35 a 87- 99), Odbojárska, Jánošíkova, Námestie sv. Martina (pravá strana 2- 82), Poľná, Kollárova, Voliči s pobytom: Lipany
+#   okrsok 4: Ovocinárska, Tajovského, Pod kopaninou, Kukučínova, Sama Chalupku, Hviezdoslavova, Rovinky, Pod Hájom
+obec = "524778"
+name = "Lipany"
+okrsky_date = 2022-07-29
+okrsky_fill = "nearest"
+okrsky_note = "The document is undated; date is its publication date on the city's elections 2022 page ('Dátum: 29.7.2022'). 'Pod Hájom' (okrsok 4) is not in the address register and is left out. 'Voliči s pobytom: Lipany' (okrsok 3) are residents registered without an address, not the register's addresses without a street. fill_nearest places the 248 addresses without a street (súpisné only) and the Námestie sv. Martina numbers the document leaves out (odd 37-41, 101, even above 82)."
+
+[[document]]
+url = "https://www.lipany.sk/data/page/lipany.sk/14678/volebne-okrsky-a-volebne-miestnosti-1.pdf"
+sha256 = "74a1d91d9936f41c8e5f172b61f5d3605a9f0e76fc8c65569653b0a6ef39f215"
+title = "Určenie volebných okrskov a volebných miestností v meste Lipany pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov konaných 29. októbra 2022"
+
+[[document]]
+url = "https://www.lipany.sk/14678/volby-do-organov-samospravy-obci-2022"
+sha256 = "cbf70b7a4b269be34103b94cdfd312bd20f58ea3c999a2ebc587f2c8a3a92ad6"
+title = "Voľby do orgánov samosprávy obcí 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Štúrova"},
+  {street = "Komenského"},
+  {street = "Tehelná"},
+  {street = "Jarková"},
+  {street = "Jána Bottu"},
+  {street = "Moyzesova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Kuzmányho"},
+  {street = "Dubovická roveň"},
+  {street = "Železničná"},
+  {street = "Krivianska"},
+  {street = "Záhradná"},
+  {street = "Námestie sv. Martina", numbers = "43-85", parity = "odd", note = "The document gives okrsok 3 the left side 1-35 and 87-99 and the right side 2-82; 43-85 is read as the odd numbers between them."},
+  {street = "Sabinovská"},
+  {street = "Mlynská"},
+  {street = "Za kúpaliskom"},
+  {street = "Za traťou"},
+  {street = "Sládkovičova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Janka Kráľa"},
+  {street = "Námestie sv. Martina", numbers = "1-35, 87-99", parity = "odd"},
+  {street = "Námestie sv. Martina", numbers = "2-82", parity = "even"},
+  {street = "Odbojárska"},
+  {street = "Jánošíkova"},
+  {street = "Poľná"},
+  {street = "Kollárova"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Ovocinárska"},
+  {street = "Tajovského"},
+  {street = "Pod kopaninou"},
+  {street = "Kukučínova"},
+  {street = "Sama Chalupku"},
+  {street = "Hviezdoslavova"},
+  {street = "Rovinky"},
+]

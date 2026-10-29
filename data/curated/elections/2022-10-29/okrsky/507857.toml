@@ -1,0 +1,53 @@
+# Okrsky of Častá, transcribed by an AI agent in job okrsok-rules-865 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Andreja Hlinku, Družstevná, Fándlyho, Hlavná, Karpatská, Mesačná, Mraznická, Pastierska, Podzámocká, Záhradnícka, Zámocká, bez ulice, len Častá
+#   okrsok 2: ulice: Cintorínska, Červený Kameň, Kíperská, Na vŕšku, Nová, Píla–rázcestie, Podhorská, Poľná, Ružová, Slnečná, Sokolská, Štefanovská, Veterná
+obec = "507857"
+name = "Častá"
+okrsky_date = 2022-11-09
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections found (neither the website's 2022 posts nor the Internet Archive's 2022 captures hold one); the referendum's document (9.11.2022). Its okrsky: 2, as the Statistical Office counts. \"bez ulice, len Častá\" means voters registered without an address (in okrsok 1); the register's houses without a street are placed by nearest address (fill_nearest), Červený Kameň as a part in okrsok 2."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.casta.sk/www/wp-content/uploads/2022/11/Urcenie-okrskov-a-miesta-konania-referenda-1.pdf"
+sha256 = "9a21ea61bae01c441996e81aeb02202c25567b6158626ff66335a8c8b2ef78c9"
+title = "Referendum 21. január 2023 – určenie volebných okrskov a volebných miestností"
+
+[[document]]
+url = "https://www.casta.sk/urcenie-volebnych-okrskov-a-volebnej-miestnosti/"
+sha256 = "912643a5e78fa831194b374bdcbe4358cf2bf21f74d633953e0cee3dea487f65"
+title = "Určenie volebných okrskov a volebnej miestnosti (2022-11-10)"
+
+[okrsok.1]
+rules = [
+  {street = "Andreja Hlinku"},
+  {street = "Družstevná"},
+  {street = "Fándlyho"},
+  {street = "Hlavná"},
+  {street = "Karpatská"},
+  {street = "Mesačná"},
+  {street = "Mraznická"},
+  {street = "Pastierska"},
+  {street = "Podzámocká"},
+  {street = "Záhradnícka"},
+  {street = "Zámocká"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Červený Kameň"},
+  {street = "Cintorínska"},
+  {street = "Kíperská"},
+  {street = "Na vŕšku"},
+  {street = "Nová"},
+  {street = "Píla-rázcestie", written = "Píla–rázcestie"},
+  {street = "Podhorská"},
+  {street = "Poľná"},
+  {street = "Ružová"},
+  {street = "Slnečná"},
+  {street = "Sokolská"},
+  {street = "Štefanovská"},
+  {street = "Veterná"},
+]

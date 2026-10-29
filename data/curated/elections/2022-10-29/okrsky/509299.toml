@@ -1,0 +1,32 @@
+# Okrsky of Makov, transcribed by an AI agent in job okrsok-rules-790 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: občania s trvalým pobytom v časti Makov (ústredie)
+#   okrsok 2: občania s trvalým pobytom v častiach Čierne, Potok, Trojačka, Kopanice
+obec = "509299"
+name = "Makov"
+okrsky_date = 2022-10-21
+okrsky_note = "No decision on the okrsky found on the Voľby 2022 page; the municipality's 2022 notice 'Informácie o spôsobe hlasovania' names the parts of each okrsok. It is undated; date is its posting date on the notice board ('Vyvesené: 21. 10. 2022')."
+
+[[document]]
+url = "https://www.makov.sk/e_download.php?file=data/uredni_deska/obsah350_9.pdf&original=Inform%C3%A1cie%20o%20sp%C3%B4sobe%20hlasovania.pdf"
+sha256 = "41790ebe5935e44b91ed403ddef7206059c32ebd82b8fa92df3d261b6098e377"
+title = "Informácie o spôsobe hlasovania (spojené voľby 29. októbra 2022)"
+
+[[document]]
+url = "https://www.makov.sk/samosprava/volby-2022/informacie-o-sposobe-hlasovania-360.html?kshow=6"
+sha256 = "5e85822d8fea70623f33d42a250748a2c8d7ca0fba53290b6d6fa40a71f47751"
+title = "Voľby 2022 – Informácie o spôsobe hlasovania (vyvesené 21. 10. 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Makov"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Čierne"},
+  {part = "Potok"},
+  {part = "Trojačka"},
+  {part = "Kopanice"},
+]

@@ -1,0 +1,45 @@
+# Council obvody of Perín-Chym (521876), Košice - okolie.
+# Transcribed by an AI agent in job obvod-rules-365 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: za Perín „päť“ poslancov
+#   obvod 2: za Chym „dvoch“ poslancov
+#   obvod 3: za Vyšný Lánec „dvoch“ poslancov
+# Okrsky added by an AI agent in job okrsok-rules-1227 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: za Perín „päť“ poslancov
+#   okrsok 2: za Chym „dvoch“ poslancov
+#   okrsok 3: za Vyšný Lánec „dvoch“ poslancov
+obec = "521876"
+name = "Perín-Chym"
+date = 2022-06-22
+note = "Uznesenie č. 204 determines 9 seats: Perín 5, Chym 2, Vyšný Lánec 2, and three obvody/okrsky, but does not number the obvody. Obvod 1 = Perín follows from its 5 seats; obvod 2 = Chym and 3 = Vyšný Lánec follow the order in the resolution (both 2 seats) — an assumption."
+okrsky_date = 2022-06-22
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+
+[[document]]
+url = "https://www.perin-chym.sk/files/2023-05-18-151142-z__pisnica_a_uznesenia_z_20._riadneho_zasadnutia_OZ.pdf"
+sha256 = "2f889d0024f29e04d82b97174a1ce3a9051c90756b2a0af408c55e2353d591b5"
+title = "Zápisnica a uznesenia z 20. riadneho zasadnutia OZ zo dňa 22. 06. 2022 (uznesenie č. 204)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Perín"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Chym", note = "obvod number by order in the resolution"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Vyšný Lánec", note = "obvod number by order in the resolution"},
+]

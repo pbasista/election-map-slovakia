@@ -1,0 +1,24 @@
+# Okrsky of Kvetoslavov, transcribed by an AI agent in job okrsok-rules-797 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Súpisné čísla od 1 do 400
+#   okrsok 2: Súpisné čísla od 401 do 1500
+obec = "501727"
+name = "Kvetoslavov"
+okrsky_date = 2022-08-05
+okrsky_note = "The document splits the obec by súpisné číslo only: okrsok 1 = súpisné čísla 1–400, okrsok 2 = 401–1500 (rest covers any higher). Both okrsky vote at the Obecný úrad."
+
+[[document]]
+url = "https://www.obeckvetoslavov.sk/data/news_files/kvetoslavov.sk/34177/utvorenie-volebnych-okrskov-zverejnenie.pdf"
+sha256 = "fea152663106573a0835a11713b10167ac2b8958c6d5e40ef5ad6d9859524e67"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov v roku 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Kvetoslavov", numbers = "1-400"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

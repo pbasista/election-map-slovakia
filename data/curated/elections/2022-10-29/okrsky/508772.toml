@@ -1,0 +1,30 @@
+# Okrsky of Michalová, transcribed by an AI agent in job okrsok-rules-1028 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice Trosky, Hrable, Horný rad, Dolný rad
+#   okrsok 2: ulice Hrádza, Potočná, Ulička
+obec = "508772"
+name = "Michalová"
+okrsky_date = 2022-08-09
+okrsky_fill = "nearest"
+okrsky_note = "The starosta's decision as a notice-board page; it is undated, so date is its posting date on the notice board (\"Vyvesené: 9. 8. 2022\"). The same text is on the obec's 2022 elections page. The 24 addresses without a street take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20220929145939/https://www.michalova.sk/zverejnovanie/uradna-tabula/urcenie-okrskov-246.html"
+sha256 = "febf08d95f84ad12157393c0adf29ab179f28419b98f995e3b11a5b34bc6456b"
+title = "Určenie okrskov (úradná tabuľa; starosta určuje pre voľby konané dňa 29. októbra 2022 v obci Michalová volebné okrsky a volebné miestnosti)"
+
+[okrsok.1]
+rules = [
+  {street = "Trosky"},
+  {street = "Hrable"},
+  {street = "Horný rad"},
+  {street = "Dolný rad"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hrádza"},
+  {street = "Potočná"},
+  {street = "Ulička"},
+]

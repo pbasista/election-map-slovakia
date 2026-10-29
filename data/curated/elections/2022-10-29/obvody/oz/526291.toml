@@ -1,0 +1,41 @@
+# Council obvody of Stratená (526291), Rožňava.
+# Transcribed by an AI agent in job obvod-rules-395 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Obec Stratená
+#   obvod 2: Obec Stratená časť Dobšinská Ľadová Jaskyňa
+# Okrsky added by an AI agent in job okrsok-rules-1254 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Obec Stratená
+#   okrsok 2: Obec Stratená časť Dobšinská Ľadová Jaskyňa
+obec = "526291"
+name = "Stratená"
+date = 2022-06-30
+note = "Obvod 1 'Obec Stratená' read as the part Stratená (obvod 2 is the part Dobšinská Ľadová Jaskyňa)."
+okrsky_date = 2022-06-30
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+
+[[document]]
+url = "https://www.obecstratena.sk/samosprava/uradna-tabula/oznamenie-o-utvoreni-volebneho-obvodu-a-o-urceni-poctu-poslancov-pre-volby-do-organov-samospravy-obci-29102022-174.html"
+sha256 = "affef6eb20044f1cd12aeebe002a6d7c8a93b3b868f3a265e58ca9ce5216f065"
+title = "Úradná tabuľa: Oznámenie o utvorení volebného obvodu a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 29.10.2022 (vyvesené 19.7.2022)"
+
+[[document]]
+url = "https://www.obecstratena.sk/e_download.php?file=data/uredni_deska/obsah160_2.odt&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%A9ho%20obvodu%20a%20o%20ur%C4%8Den%C3%AD%20po%C4%8Dtu%20poslancov%20pre%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vy%20obc%C3%AD%2029.10.2022.odt"
+sha256 = "4f9b49feb9c6a9ef2f7ba5c640d8c4bc8c3968254dfa3bd9c5058f7295eaa113"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 171 zo dňa 30.6.2022)"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {part = "Stratená", note = "'Obec Stratená' as opposed to obvod 2 'časť Dobšinská Ľadová Jaskyňa' = part Stratená"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Dobšinská Ľadová Jaskyňa"},
+]

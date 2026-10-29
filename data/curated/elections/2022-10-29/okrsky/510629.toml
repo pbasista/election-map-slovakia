@@ -1,0 +1,35 @@
+# Okrsky of Liptovská Lúžna, transcribed by an AI agent in job okrsok-rules-752 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od súpisného čísla 1 do 400 + nové domy v tomto okrsku
+#   okrsok 2: od súpisného čísla 401 do 800 + nové domy v tomto okrsku
+#   okrsok 3: od súpisného čísla 801 - nahor
+obec = "510629"
+name = "Liptovská Lúžna"
+okrsky_date = 2022-08-08
+okrsky_note = "Decision č.j. 1184/2022 of 08.08.2022 (2022 elections page and file gone live; archived). Okrsky by súpisné čísla: 1–400, 401–800, 801 and up; okrsky 1 and 2 also get 'nové domy v tomto okrsku' (new houses located there), which cannot be told apart by number, so every house from 801 up is put in okrsok 3."
+
+[[document]]
+url = "https://web.archive.org/web/20221220233552/https://www.liptovskaluzna.sk/e_download.php?file=data/editor/300sk_7.pdf&original=2743_001.pdf"
+sha256 = "dae998f6404029a1bc29bf4c6e91e21ade30b4a1f173a85ba6db160aa48d30bf"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre Voľby do orgánov samosprávy obcí a pre Voľby do orgánov samosprávnych krajov, ktoré sa budú konať dňa 29.10.2022"
+
+[[document]]
+url = "https://web.archive.org/web/20220925195248/https://www.liptovskaluzna.sk/aktualne/volby-do-organov-samospravy-obci-a-volieb-do-organov-samospravnych-krajov-2022/"
+sha256 = "c40c14eb287d39bc965b5bd8cded45ac3422a42e55d5b7b5651b5d8ce918569c"
+title = "Voľby do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Liptovská Lúžna", numbers = "1-400"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Liptovská Lúžna", numbers = "401-800"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Liptovská Lúžna", numbers = "801-"},
+]

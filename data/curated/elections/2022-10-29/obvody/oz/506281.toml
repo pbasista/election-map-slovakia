@@ -1,0 +1,128 @@
+# Council obvody of Nemšová (506281), Trenčín.
+# Transcribed by an AI agent in job obvod-rules-303 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 Nemšová č. Nemšová 7 poslancov
+#   obvod 2: Volebný obvod č. 2 Nemšová č. Ľuborča 3 poslancov
+#   obvod 3: Volebný obvod č. 3 Nemšová č. Kľúčové 2 poslancov
+#   obvod 4: Volebný obvod č. 4 Nemšová č. Trenčianska Závada 1 poslanec
+# Okrsky added by an AI agent in job okrsok-rules-1177 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Janka Palu, Sklárska, Odbojárov, Hornov, Sládkovičova, „Nemšová“
+#   okrsok 2: Agátová, Bernolákova, Brezová, Jaseňová, Javorová, Jesenského, Kamenec, Lipová, Mierové námestie, Mlynská, Moravská, Nová Nemšová, Osloboditeľov, Rybárska, SNP, Šidlíkové, Šmidkeho, Štúrova, Topoľová, Vlárska
+#   okrsok 3: 9. mája, A. Kropáčiho, Duklianska, Fraňa Madvu, Jozefa Hanku, Karpatská, Mládežnícka, Obrancov mieru, Ohrádky, Pavla Kyrmezera, Pionierska, Považská, Púchovská, Revolučná, Slovenskej armády, Školská, Športovcov, Urbárska, Vážska, Za Soľnou, Záhumnie, Železničná
+#   okrsok 4: Antonstál, Bottova, Čerešňová, Družstevná, Dvorecká, Fučíkova, Hradná, J. Borovského, J. Lacu, Kukučínova, Ľuborčianska, M. Gorkého, Višňová, Závadská
+#   okrsok 5: Holubyho, Sadová, Slnečná, Stromová, Trenčianska, Záhradná
+#   okrsok 6: Kúty, Podhorská, Potôčky
+obec = "506281"
+name = "Nemšová"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-09-28
+okrsky_date_basis = "The okrsky documents state no date; the Internet Archive captured them on 2022-09-28 (https://web.archive.org/web/20220928035019/https://www.nemsova.sk/na-stiahnutie/subory/2/volebne-okrsky-a-volebne-miestnosti---spojene-volby-29-10-2022-web.pdf)."
+date = 2022-06-23
+note = "Resolution defines obvody by parts of the town ('Nemšová č. X' = časť X)."
+okrsky_fill = "nearest"
+okrsky_note = "Both documents are undated; both are Internet Archive snapshots of 2022-09-28 (before the vote), so no date is given. The 'Určenie volebných okrskov' gives okrsky 1-3 to the part Nemšová (obvod 1) and one okrsok each to Ľuborča (4, obvod 2), Kľúčové (5, obvod 3) and Trenčianska Závada (6, obvod 4); the street list splits obvod 1. '„Nemšová“' in okrsok 1 means voters registered without an address. Záhradná is listed only in okrsok 5 (Kľúčové); the register's Záhradná addresses in the part Nemšová (obvod 1) are not named for okrsky 1-3 and are left to fill_nearest, as are obvod 1's addresses without a street."
+
+[[document]]
+url = "https://www.nemsova.sk/content/05/web---uznesenia-z-38-msz-23-06-2022.pdf"
+sha256 = "6d150f603ed09f66616f37cf958af64009b8d0fe84f3d77ea4484b7c3ff105be"
+title = "Uznesenia z 38. zasadnutia MsZ Nemšová dňa 23.06.2022 (uznesenie č. 445)"
+
+[[document]]
+url = "https://web.archive.org/web/20220928035019/https://www.nemsova.sk/na-stiahnutie/subory/2/volebne-okrsky-a-volebne-miestnosti---spojene-volby-29-10-2022-web.pdf"
+sha256 = "d96984b3325d0875a7b40167b225b1ec02780b0021770f8a6135a6ce1809032f"
+title = "Volebné okrsky a volebné miestnosti pre voľby do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov, ktoré sa uskutočnia dňa 29. októbra 2022"
+
+[[document]]
+url = "https://web.archive.org/web/20220928022621/https://www.nemsova.sk/na-stiahnutie/subory/0/urcenie-volebnych-okrskov---spojene-volby-r-2022.pdf"
+sha256 = "fa78edefb2ef7aa228451de965a959dc602a156f0a5e40c8fc9a584f5916fe76"
+title = "Určenie volebných okrskov (spojené voľby 29. októbra 2022)"
+
+[obvod.1]
+seats = 7
+okrsky = [1, 2, 3]
+rules = [
+  {part = "Nemšová"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [4]
+rules = [
+  {part = "Ľuborča"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [5]
+rules = [
+  {part = "Kľúčové"},
+]
+
+[obvod.4]
+seats = 1
+okrsky = [6]
+rules = [
+  {part = "Trenčianska Závada"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Janka Palu"},
+  {street = "Sklárska"},
+  {street = "Odbojárov"},
+  {street = "Hornov"},
+  {street = "Sládkovičova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Bernolákova"},
+  {street = "Brezová"},
+  {street = "Jaseňová"},
+  {street = "Javorová"},
+  {street = "Jesenského"},
+  {street = "Kamenec"},
+  {street = "Lipová"},
+  {street = "Mierové námestie"},
+  {street = "Mlynská"},
+  {street = "Moravská"},
+  {street = "Nová Nemšová"},
+  {street = "Osloboditeľov"},
+  {street = "Rybárska"},
+  {street = "SNP"},
+  {street = "Šidlíkové"},
+  {street = "Šmidkeho"},
+  {street = "Štúrova"},
+  {street = "Topoľová"},
+  {street = "Vlárska"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "9.mája", written = "9. mája"},
+  {street = "Antona Kropáčiho", written = "A. Kropáčiho"},
+  {street = "Duklianska"},
+  {street = "Fraňa Madvu"},
+  {street = "Jozefa Hanku"},
+  {street = "Karpatská"},
+  {street = "Mládežnícka"},
+  {street = "Obrancov Mieru", written = "Obrancov mieru"},
+  {street = "Ohrádky"},
+  {street = "Pavla Kyrmezera"},
+  {street = "Pionierska"},
+  {street = "Považská"},
+  {street = "Púchovská"},
+  {street = "Revolučná"},
+  {street = "Slovenskej armády"},
+  {street = "Školská"},
+  {street = "Športovcov"},
+  {street = "Urbárska"},
+  {street = "Vážska"},
+  {street = "Za Soľnou"},
+  {street = "Záhumnie"},
+  {street = "Železničná"},
+]

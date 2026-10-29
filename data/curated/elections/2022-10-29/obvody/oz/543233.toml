@@ -1,0 +1,41 @@
+# Council obvody of Kluknava (543233), Gelnica.
+# Transcribed by an AI agent in job obvod-rules-352 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1 - Kluknava sa volí 7 poslancov
+#   obvod 2: Vo volebnom obvode číslo 2- Štefanská Huta sa volia 2 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-1217 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Vo volebnom obvode číslo 1 - Kluknava sa volí 7 poslancov
+#   okrsok 2: Vo volebnom obvode číslo 2- Štefanská Huta sa volia 2 poslanci.
+obec = "543233"
+name = "Kluknava"
+date = 2022-06-21
+note = "The documents name obvod 1 Kluknava and obvod 2 Štefanská Huta without listing houses; the register has no streets and one part, so Štefanská Huta is delimited by location (see rule note). Everything else, including 3 addresses without coordinates (súp. č. 1003, 1009, 1011), is obvod 1."
+okrsky_date = 2022-06-21
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+
+[[document]]
+url = "https://www.kluknava.sk/e_download.php?file=data/editor/223sk_3.pdf&original=Ur%C4%8Denie%20volebn%C3%BDch%20obvodov%20a%20okrskov%20pre%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vy%20obc%C3%AD%2C%20po%C4%8Dtu%20poslancov%20v%20nich%20a%20s%C3%ADdla%20volebn%C3%BDch%20okrskov%20_.pdf"
+sha256 = "c151efea07453f03e2fc20461b203bd022f10e7d34cf75d48c9a0a574b228a3a"
+title = "Výpis uznesení č. 319-21/6-2022, 320-21/6-2022, 321-21/6-2022 zo dňa 21.06.2022"
+
+[[document]]
+url = "https://www.kluknava.sk/e_download.php?file=data/editor/223sk_5.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20obvodov%20a%20o%20ur%C4%8Den%C3%AD%20po%C4%8Dtu%20poslancov%20pre%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vy%20obc%C3%AD%20na%20de%C5%88%2029.10.2022.pdf"
+sha256 = "d794f1df3538aa64f8d6f16ca602cf7673e63791542cbd9ce1cf5c8da08ae584"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (18.07.2022)"
+
+[obvod.1]
+seats = 7
+okrsky = [1]
+rules = [
+  {rest = true},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Kluknava", numbers = "589-593, 595-622, 627-643, 645-668, 682, 692, 696-700, 716-717, 729, 731, 737, 1017, 1023-1024, 1028, 1032, 1034", by = "supisne", note = "Štefanská Huta is a settlement inside the single part Kluknava. Its houses were taken by location from the 2022 address register: the cluster of addresses around súpisné číslo 599 (the Štefanská Huta polling room named in the documents), separated from the rest of Kluknava by more than 300 m.", inferred = true},
+]

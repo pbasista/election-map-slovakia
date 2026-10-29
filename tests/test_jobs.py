@@ -1,31 +1,39 @@
+import dataclasses
+import datetime as dt
 import json
 import shutil
 from pathlib import Path
 
 import pytest
 
-from election_map_slovakia import config, jobs, translate
+from election_map_slovakia import candidates, config, jobs, translate
 
 REPO = Path(__file__).resolve().parent.parent
 
 OCCUPATIONS = ["učiteľka", "učiteľka", "SZČO", "vodič"]
 
 
+def write_candidates(
+    cfg: config.Config, e: config.Election, occupations: list[str]
+) -> None:
+    path = cfg.election_build_dir(e) / candidates.OUTPUT_FILE
+    path.parent.mkdir(parents=True, exist_ok=True)
+    candidacies = [{"occupation": o} for o in occupations]
+    path.write_text(json.dumps({"candidacies": candidacies}, ensure_ascii=False))
+
+
 def project(root: Path) -> config.Config:
     shutil.copytree(REPO / "config", root / "config")
     shutil.copytree(REPO / "web" / "i18n", root / "web" / "i18n")
     shutil.copytree(REPO / config.PARTY_LOGO_DIR, root / config.PARTY_LOGO_DIR)
-    built = root / "data" / "build"
-    built.mkdir(parents=True)
-    candidacies = [{"occupation": o} for o in OCCUPATIONS]
-    (built / "candidates.json").write_text(
-        json.dumps({"candidacies": candidacies}, ensure_ascii=False)
-    )
-    return config.load(root / "config")
+    cfg = config.load(root / "config")
+    for e in cfg.elections:
+        write_candidates(cfg, e, OCCUPATIONS)
+    return cfg
 
 
 def make(cfg: config.Config, *only: str) -> list[jobs.Job]:
-    return jobs.make(cfg, jobs.kinds()["translation"], only=only)
+    return jobs.make(cfg, jobs.kinds()["translation"], election=cfg.latest, only=only)
 
 
 def write_output(job: jobs.Job, items: object) -> None:
@@ -111,6 +119,59 @@ def test_stale_ui_translation_is_made_again(tmp_path: Path):
     (again,) = make(cfg, "cs", "ui")
     assert again.items == [translate.ui_item("card.back", "Go back", "Späť")]
     assert "card.back" not in translate.load(cfg, "cs").ui_strings(en)
+
+
+def test_occupations_are_those_of_every_election(tmp_path: Path):
+    cfg = project(tmp_path)
+    earlier = dataclasses.replace(cfg.latest, day=dt.date(2022, 10, 29), slug="2022")
+    cfg = dataclasses.replace(cfg, elections=(cfg.latest, earlier))
+    write_candidates(cfg, earlier, ["vodič", "vodič", "kuchár"])
+    (job,) = make(cfg, "cs", "occupations")
+    # Counts summed: vodič 3, učiteľka 2, then the rest by name.
+    assert [i["source"] for i in job.items] == ["vodič", "učiteľka", "SZČO", "kuchár"]
+    (cfg.election_build_dir(earlier) / candidates.OUTPUT_FILE).unlink()
+    with pytest.raises(jobs.JobError, match="2022-10-29"):
+        make(cfg, "cs", "occupations")
+
+
+def per_election_kind() -> jobs.Kind:
+    def make_one(cfg: config.Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
+        batch = jobs.Batch([{"id": "a"}], "prompt", "title")
+        return [] if options.pending else [batch]
+
+    return jobs.Kind(
+        name="example",
+        summary="an example",
+        item_schema={
+            "type": "object",
+            "required": ["id"],
+            "properties": {"id": {"type": "string"}},
+        },
+        default_size=1,
+        make=make_one,
+        check=lambda cfg, job, item, out: [],
+        accept=lambda cfg, job, accepted: [],
+        per_election=True,
+    )
+
+
+def test_per_election_jobs_record_their_election(tmp_path: Path):
+    cfg = project(tmp_path)
+    (job,) = jobs.make(cfg, per_election_kind(), election=cfg.latest)
+    day = cfg.latest.day.isoformat()
+    assert json.loads((job.path / jobs.INPUT).read_text())[jobs.ELECTION] == day
+    assert jobs.election(cfg, jobs.load_job(job.path)) == cfg.latest
+    # The pending job leaves its items out of its own election's jobs only.
+    assert jobs.make(cfg, per_election_kind(), election=cfg.latest) == []
+    earlier = dataclasses.replace(cfg.latest, day=dt.date(2022, 10, 29), slug="2022")
+    assert len(jobs.make(cfg, per_election_kind(), election=earlier)) == 1
+
+
+def test_a_job_without_its_election_must_be_made_again(tmp_path: Path):
+    cfg = project(tmp_path)
+    job = jobs.Job(tmp_path / "example-001", "example", {}, [{"id": "a"}])
+    with pytest.raises(jobs.JobError, match="make it again"):
+        jobs.election(cfg, job)
 
 
 def check(source: str, text: str, lang: str = "cs", **kwargs) -> list[str]:

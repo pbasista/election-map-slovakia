@@ -1,0 +1,50 @@
+# Okrsky of Batizovce, transcribed by an AI agent in job okrsok-rules-968 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: obec Batizovce a ulice Družstevná, Horská, Hviezdoslavova, Jurkovičova, K potoku, Kvetná, Lesná, Osloboditeľov, Školská, Športová, Štúrova, Tatranská, Záhradná
+#   okrsok 2: ulice Cintorínska, Komenského, Krátka, Kukučínova, Lúčna, Nálepkova, Partizánska, Poľná, Sládkovičova
+obec = "523402"
+name = "Batizovce"
+okrsky_date = 2022-07-15
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF read from the rendered image. Okrsok 1 also names 'obec Batizovce' (voters registered without a street address); the register's 15 houses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.obecbatizovce.sk/e_download.php?file=data/uredni_deska/obsah371_8.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Den%C3%AD%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "0df5a193b87d6792104e7b58807e12bd7024d278ecd5716607aba371621956fb"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností (29. októbra 2022)"
+
+[[document]]
+url = "https://www.obecbatizovce.sk/domov-1/uradna-tabula/oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-394.html"
+sha256 = "9cf6a7bcec364dbea609261de842f9d1df1d7fa434336758e05f9413b8f99c94"
+title = "Úradná tabuľa: Oznámenie o utvorení volebných okrskov a určení volebných miestností (vyvesené 20. 7. 2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Družstevná"},
+  {street = "Horská"},
+  {street = "Hviezdoslavova"},
+  {street = "Jurkovičova"},
+  {street = "K potoku"},
+  {street = "Kvetná"},
+  {street = "Lesná"},
+  {street = "Osloboditeľov"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Štúrova"},
+  {street = "Tatranská"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Komenského"},
+  {street = "Krátka"},
+  {street = "Kukučínova"},
+  {street = "Lúčna"},
+  {street = "Nálepkova"},
+  {street = "Partizánska"},
+  {street = "Poľná"},
+  {street = "Sládkovičova"},
+]

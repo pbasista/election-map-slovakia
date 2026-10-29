@@ -1,0 +1,38 @@
+# Council obvody of Petrovice (517861), Bytča.
+# Transcribed by an AI agent in job obvod-rules-356 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Uznesenie č. 219/2022 … volebný obvod č. 1 Petrovice … Uznesenie č. 220/2022 … volebný obvod č. 1 Petrovice 6 poslancov
+#   obvod 2: Uznesenie č. 219/2022 … volebný obvod č. 2 Stechov. Uznesenie č. 220/2022 … volebný obvod č. 2 Setechov 3 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-1219 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Uznesenie č. 219/2022 … volebný obvod č. 1 Petrovice … Uznesenie č. 220/2022 … volebný obvod č. 1 Petrovice 6 poslancov
+#   okrsok 2: Uznesenie č. 219/2022 … volebný obvod č. 2 Stechov. Uznesenie č. 220/2022 … volebný obvod č. 2 Setechov 3 poslanci.
+obec = "517861"
+name = "Petrovice"
+date = 2022-06-08
+note = "Resolution 219/2022 writes 'Stechov' (typo for Setechov, as resolution 220/2022 and the minutes write). No separate published announcement found; the 2022 elections page only has results."
+okrsky_date = 2022-06-08
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+
+[[document]]
+url = "https://www.obecpetrovice.sk/blocks/files/0193bb67-b239-74fb-b53b-0efa47c9a5df.pdf"
+sha256 = "a1d5199d6d8d46c8d9de8fd824886612751308e5b42176be3c24c0cc804352f7"
+title = "Zápisnica a uznesenie OZ Petrovice 8.6.2022 (uznesenia č. 219/2022 a 220/2022)"
+
+[obvod.1]
+seats = 6
+okrsky = [1]
+rules = [
+  {part = "Petrovice"},
+  {part = "Magale", note = "Settlement in k.ú. Petrovice."},
+  {part = "Pláne", note = "Settlement in k.ú. Petrovice."},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Setechov"},
+]

@@ -1,0 +1,37 @@
+# Council obvody of Boľkovce (511251), Lučenec.
+# Transcribed by an AI agent in job obvod-rules-381 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1 , ktorý zahŕňa s.č.: 1,2,3,6,7,13,17,22,24,25,26,27,30,31,32,33,34,36,37,39,40,41,42,43,46,47,48,49,50,53,54,57,58,59,65,67,70,71,76,78,83,84,85,86,87,89,90,91,94,96,97,98,99,100,104,105,106,107,108,109,110,111,112,113,114,220,222,224,230,237,238,243,249,250,287,288,292,335,336,348,352 sa volia 3 poslanci.
+#   obvod 2: Vo volebnom obvode číslo 2 , ktorý zahŕňa s.č.: 125,128,131,133,134,135,136,147,149,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,170,171,172,173,174,176,177,178,179,180,181,183,184,185,186,190,191,193,194,197,198,199,200,206,207,208,209,210,212,213,214,215,216,217,218,231,232,233,234,235,239,240,241,242,254,262,270,277,280,281,282,321,322,323,325,326,327,328,329,330,347,350,351,354,358,374 sa volia 3 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-1242 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Vo volebnom obvode číslo 1 , ktorý zahŕňa s.č.: 1,2,3,6,7,13,17,22,24,25,26,27,30,31,32,33,34,36,37,39,40,41,42,43,46,47,48,49,50,53,54,57,58,59,65,67,70,71,76,78,83,84,85,86,87,89,90,91,94,96,97,98,99,100,104,105,106,107,108,109,110,111,112,113,114,220,222,224,230,237,238,243,249,250,287,288,292,335,336,348,352 sa volia 3 poslanci.
+#   okrsok 2: Vo volebnom obvode číslo 2 , ktorý zahŕňa s.č.: 125,128,131,133,134,135,136,147,149,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,170,171,172,173,174,176,177,178,179,180,181,183,184,185,186,190,191,193,194,197,198,199,200,206,207,208,209,210,212,213,214,215,216,217,218,231,232,233,234,235,239,240,241,242,254,262,270,277,280,281,282,321,322,323,325,326,327,328,329,330,347,350,351,354,358,374 sa volia 3 poslanci.
+obec = "511251"
+name = "Boľkovce"
+date = 2022-06-15
+fill = "nearest"
+note = "Obvody are defined by lists of súpisné čísla (identical to okrsky 1 'dedina' and 2 'osada'). Register houses whose súpisné číslo the lists do not name take the obvod of the nearest listed house."
+okrsky_date = 2022-06-15
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+
+[[document]]
+url = "https://www.bolkovce.sk/download_file_f.php?id=1698116"
+sha256 = "a345797a87be065ab9ea8430135af9c855cf9ddc06fd383cc90f13c689cb643a"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 358/2022 zo dňa 15.06.2022), 16.06.2022"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {part = "Boľkovce", numbers = "1, 2, 3, 6, 7, 13, 17, 22, 24, 25, 26, 27, 30, 31, 32, 33, 34, 36, 37, 39, 40, 41, 42, 43, 46, 47, 48, 49, 50, 53, 54, 57, 58, 59, 65, 67, 70, 71, 76, 78, 83, 84, 85, 86, 87, 89, 90, 91, 94, 96, 97, 98, 99, 100, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 220, 222, 224, 230, 237, 238, 243, 249, 250, 287, 288, 292, 335, 336, 348, 352"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Boľkovce", numbers = "125, 128, 131, 133, 134, 135, 136, 147, 149, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 170, 171, 172, 173, 174, 176, 177, 178, 179, 180, 181, 183, 184, 185, 186, 190, 191, 193, 194, 197, 198, 199, 200, 206, 207, 208, 209, 210, 212, 213, 214, 215, 216, 217, 218, 231, 232, 233, 234, 235, 239, 240, 241, 242, 254, 262, 270, 277, 280, 281, 282, 321, 322, 323, 325, 326, 327, 328, 329, 330, 347, 350, 351, 354, 358, 374"},
+]

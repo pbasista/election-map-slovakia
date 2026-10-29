@@ -1,0 +1,44 @@
+# The rule set of the elections of 2026-10-24, data/curated/elections/2026-10-24/obvody/oz/517488.toml, adopted by `ems job reuse`. Its header
+# there:
+#   Council obvody of Divina (517488), Žilina.
+#   Estimated by hand: the documents below give the obvody's names and seats
+#   but not which addresses are in which (see the note).
+#     obvod 1: Divina – dolný koniec
+#     obvod 2: Divina – horný koniec
+#     obvod 3: Divina – Lúky
+obec = "517488"
+name = "Divina"
+date = 2026-06-15
+fill = "nearest"
+note = "Estimated: uznesenie č. 50/2026 and the Oznámenie name obvod 1 'Divina – dolný koniec' (3 seats), 2 'Divina – horný koniec' (4) and 3 'Divina – Lúky' (2) without listing houses. Obvod 3 is the part Lúky. The Divina stream flows south towards the Váh (367 m at the village centre, 531 m up the valley), so the lower end is the south around the centre and the upper end the valley to the north; the part Divina is split at the nearer of two points, in the only gap between the built-up stretches, at the junction with the road to Lúky (291 and 321 addresses with a point; the seats would give about 262 and 350). Addresses without a point take the obvod most of their part got."
+estimated = true
+adopted = 2026-10-24
+adopted_basis = "No usable 2022 document places the addresses: resolution 40/2022 of 10 June 2022 and the announcement of 13 June 2022 name obvod 1 'Divina – dolná' (3 seats), 2 'Divina – horná' (4) and 3 'Divina – Lúky' (2), but do not say where the lower end stops and the upper end begins, both in the part Divina, whose houses have súpisné čísla only; no other 2022 document does (obvod-rules-343, not found). The 2026 rule set has the same obvod numbers, seats and names (dolný koniec, horný koniec, Lúky) and is itself an estimate of that split, so the 2022 borders may differ from it. Voters on the roll per obvod (ŠÚ SR), 2022 → 2026: 1: 762 → 743, 2: 855 → 849, 3: 350 → 357."
+okrsky_adopted = 2026-10-24
+okrsky_adopted_basis = "ŠÚ SR counted one okrsok per obvod in 2022, so each is drawn as its adopted obvod. Voters on the roll per okrsok (ŠÚ SR), 2022 → 2026: 1: 762 → 743, 2: 855 → 849, 3: 350 → 357."
+
+[[document]]
+url = "https://www.divina.sk/evt_file.php?file=5879&original=Volebn%C3%A9%20obvody.pdf"
+sha256 = "90270eef1c71d8f80febfda63af04a05ecf88c2847ee0ddff371f89183ad806f"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 24. 10. 2026"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {near = [18.69572, 49.27146], part = "Divina", note = "village centre, the lower (southern) end of the valley"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [2]
+rules = [
+  {near = [18.69, 49.3015], part = "Divina", note = "the upper valley to the north"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Lúky"},
+]

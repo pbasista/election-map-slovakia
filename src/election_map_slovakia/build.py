@@ -1,26 +1,51 @@
 """Assemble the static site in ``dist/`` and serve it for local testing.
 
-``build`` wipes ``dist/`` and writes it from ``web/`` (the frontend source),
-``data/build/`` (output of ``candidates``, ``geo``, ``basemap``,
-``addresses`` and ``results``) and the configuration. Every file is a pure
-function of those inputs, so two builds from the same inputs are byte for
-byte identical.
+``build`` wipes ``dist/`` and writes the site in parts, each deployed to a
+Cloudflare Pages project of its own (docs/deploy.md): the app, written
+here from ``web/`` (the frontend source) and the configuration, and the
+data parts, which :mod:`election_map_slovakia.bundle` assembles from each
+election's ``data/build/<day>/`` and the curated data. Every file is a
+pure function of those inputs, so two builds from the same inputs are byte
+for byte identical.
 
 Output (paths relative to ``dist/``; JSON is compact UTF-8 with sorted
 keys)::
+
+    app/                     the app (below)
+    map/<slug>/              each election's map bundle (bundle.py)
+    data/<slug>/             each election's data bundle (bundle.py)
+    sources/                 the cached copies of the pages research cites
+                             (bundle.py)
+    results/                 the results of every election (bundle.py)
+
+Built with ``--deployed``, ``dist/`` holds the app alone, whose shells
+name the deployed data (:class:`Locations`), and of each election the
+``manifest.json`` of the deployments of its bundles, which ``check``
+checks the app against. ``serve`` serves the parts as one site, where the
+app finds them without ``--deployed`` (:func:`mounts`): each bundle at
+``/map/<slug>`` or ``/data/<slug>``, the results at ``/results``, the
+sources at the root.
+
+The app, below ``app/``. Every election of ``config/elections.toml`` has
+its own pages, named by its slug (``2026``); the newest, the latest, is
+also the one ``/<lang>/`` shows::
 
     index.html               language picker: stored choice, then
                              navigator.languages (aliases applied), then the
                              first fallback language
     404.html                 what Pages (and ``serve``) answers a missing path
                              with, status 404; from web/404.html
-    <lang>/index.html        app shell per enabled language, from
-                             web/index.html
+    <lang>/<slug>/index.html app shell per enabled language and election,
+                             from web/index.html
+    <lang>/index.html        the latest election's, whose canonical URL it
+                             is (:func:`shells`)
     _headers                 Cloudflare Pages response headers, from
-                             web/_headers (see :func:`header_rules`), plus
-                             a noindex rule for the pages.dev hosts once the
-                             site has a domain of its own (:func:`headers`)
-    sitemap.xml              the root page and every language's app shell,
+                             web/_headers (see :func:`header_rules`) with
+                             the data parts' origins the app fetches from,
+                             plus a noindex rule for the pages.dev hosts
+                             once the site has a domain of its own
+                             (:func:`headers`)
+    sitemap.xml              the root page and every language's app shells,
                              absolute under ``base_url``; none without it
                              (:func:`sitemap`)
     assets/<v>/              web/app.css and web/js/; <v> is the code
@@ -30,166 +55,57 @@ keys)::
     assets/vendor/<vv>/      web/vendor/, verbatim; <vv> its version
     assets/img/<iv>/         web/img/ (party logos), verbatim; <iv> its
                              version
-    assets/cache.css         web/cache.css, unversioned: the cached copies
-                             link it by this path (cache.py STYLESHEET)
     i18n/<lang>.json         UI strings: web/i18n/<lang>.json, or for other
                              languages the curated translations of the
                              current strings of the first fallback language
                              (translate.py), the rest taken from it. If a
-                             UI string or an occupation is untranslated,
-                             "_pending" is that language's code (the app
-                             shows a notice) and "_missing" {ui,
-                             occupations} the counts; "_locale" is it too if
+                             UI string is untranslated, "_pending" is that
+                             language's code (the app shows a notice) and
+                             "_missing" the count; "_locale" is it too if
                              no UI string is translated (the app formats
-                             dates and numbers in it); "_occupations" is the
-                             number of translated occupations, if any.
-                             `{site}` in a string becomes the site name of the
-                             language the string is written in; "app.name" is
-                             the page language's own site name (languages.toml)
-    i18n/<lang>/occupations.json
-                             {Slovak occupation: translation} for the
-                             occupations of the candidate files translated
-                             into <lang> (one file per language, ~0.5 MB,
-                             ~0.15 MB gzip when complete; the app fetches it
-                             once with the first candidates it shows)
-    geo/                     data/build/geo/, verbatim (see geo)
-    base/                    data/build/base/, verbatim: the base map (see
-                             basemap)
-    addr/                    data/build/addr/, verbatim (see addresses)
-    data/index.json          names and facts every view needs (below)
-    data/about.json          source allowlist, inputs, obvod decisions
-    data/okres/<okres>.json  candidates of the municipal contests of the
-                             obce (and Bratislava/Košice districts) of an
-                             okres
-    data/city/<BA|KE>.json   candidates for mayor and city council
-    data/kraj/<kraj>.json    candidates for regional president and council
-    data/names/<xx>.json     candidate-name search shard
-    data/research/<lang>/<area>.json
-                             the research findings of the persons of the
-                             area file data/<area>.json, in <lang>
-                             (:func:`research_files`)
-    cache/<sha256>.html      the cached copy of every page a finding cites,
-                             from data/curated/cache/ (see cache.py)
-    results/<day>/           data/build/results/<day>/, verbatim, if there:
-                             the results of the election of that day
-                             (``Config.results_dir``; see results.py and
-                             docs/results.md)
+                             dates and numbers in it). `{site}` in a string
+                             becomes the site name of the language the
+                             string is written in; "app.name" is the page
+                             language's own site name (languages.toml)
 
 Cache busting. The code, the vendored libraries and the images each live
 under a directory named by a short hash of their files
-(:func:`content_version`): ``/assets/<v>/``, ``/assets/vendor/<vv>/`` and
-``/assets/img/<iv>/``. A release that changes a file of one moves that
-tree to new URLs, which browsers may keep for good (``immutable`` in
-web/_headers), and a release that changes none of a tree keeps its URLs
-and the browsers' copies: the libraries, which change only with a
-deliberate upgrade, and the logos outlast changes to the app's code. The
-app's modules import each other by relative paths, so they need not know
-``<v>``; their imports of the libraries (``'../vendor/…'`` in web/js, which
-keeps web/ runnable as it is) are rewritten to ``/assets/vendor/<vv>/``,
-and ``<v>`` is the hash of the rewritten files, so a library upgrade is new
-code too. The JSON the app fetches at runtime (``data/``, ``i18n/``,
-``geo/``, ``addr/``) keeps its paths and is requested with ``?v=<dv>``,
-the data version: a short hash of all of those files and the results. A
-browser's copy then belongs to the version it was fetched for and a release
-with other data makes the app ask for new URLs. ``data/index.json`` names
-the party logos under ``/assets/img/<iv>/``, so new images are a new data
-version too, and new code is not. The results files are requested with
-``?v=`` the hash of each that their ``status.json`` lists, and
-``status.json`` itself is revalidated on every load (web/_headers). The
-app shells carry the data version in the ``km-config`` meta JSON
-(:func:`shells`) as ``dataVersion``, and ``results``, the path of the
-election's results (``/results/<day>``), named even before there are any:
-a page loaded then finds them there once a deployment brings them.
-
-Each contest is in exactly one area file, so a click loads the okres, kraj
-and (in Bratislava and Košice) city file of one place and nothing twice::
-
-    data/<area>.json  {contests: {contest: {(seats), (sources), (holder),
-                          (incumbents), (past), candidates: [
-                          [number, title_before, first_name, surname,
-                           title_after, age, occupation, [party, ...],
-                           person, (residence)]]}},
-                       persons: {person: [candidacy, ...]},
-                       (research): {person: [date, findings,
-                                             [language, ...], affairs,
-                                             disputes]}}
-
-``persons`` lists, for every person with a candidacy in the file who stands
-in more than one contest, all their candidacies (in any file). ``seats`` is
-known for regional and city council obvody and the obvody of obce with a
-rule set; a council elected in one obvod without it has ``seats_2022``, the
-number its whole council elected in 2022, as a stand-in until the 2026
-number is known (councils of several obvody have neither: a 2022 total
-says nothing about one obvod). ``sources`` are the official
-documents that set a council's obvody, as ``[title, url]``
-(:func:`obvod_sources`). ``residence`` is the obec of residence of
-regional candidates. ``holder`` is the mayor or regional president in
-office, ``[name, since, number, result]`` (``number`` the holder's ballot
-number in this contest, or null); ``incumbents`` maps the ballot number of
-every candidate in office now to their offices, ``[[body, since, result],
-...]``, a body being a contest id without the obvod (see
-:mod:`election_map_slovakia.incumbents`). ``result`` is how the office was
-won, ``[votes, valid, voters, eligible, (obvod)]``: the holder's votes, the
-valid ballots for that office (for a council: the voters with a valid
-ballot, each of whom could vote for several), the voters who took part and
-those on the roll, in the unit it was won in, the municipality, kraj or
-``obvod`` (its number in that election) of the body's area.
-``past`` is the turnout of the last election of the contest's body,
-``[election, day, eligible, voters, (whole)]``: the results input without
-``results-`` (``oso2022``, ``osk2022``, ``oso202303``, …), its ISO day, the
-voters on the roll and those who took part, in the whole municipality,
-city or kraj, or for a regional council contest in the obce that make up
-its 2026 obvod (:func:`regional_past`); see
-:mod:`election_map_slovakia.candidates` for which election. A council of
-several obvody in 2026 has ``whole``: the 2022 obvody were drawn
-otherwise, so either ``1``, the figures being of the whole municipality or
-city, or the numbers of the okrsky that make up the obvod, the figures
-being of those okrsky in 2022, where the obec has as many okrsky as then
-(:func:`council_past`).
-``research`` summarizes, for each researched person of the file, when (the
-latest date) and in which research languages they were researched and how
-many findings there are (:func:`research_summary`); a person without an
-entry is not researched yet.
-
-::
-
-    data/index.json  {kraje: {kraj: name},
-                      okresy: {okres: [name, kraj]},
-                      obce: {obec: [name, okres, kraj, zsk, councils,
-                                    (city, city_obvod)]},
-                      by_address: [obec, ...],
-                      estimated: [obec, ...],
-                      names: {prefix: persons},
-                      parties: {party: [short, name, (logo)]}}
-
-``councils`` is the number of municipal council obvody (0: no council
-election); ``by_address`` lists the obce whose council obvod goes by
-address (``addresses``: ``council`` ``"address"``) and whose shard
-features are their obvody (``geo``); ``estimated`` those of them whose
-rule set is a guess (``geo``: ``estimated``);
-``okres`` is ``""`` and ``zsk`` 0 for Bratislava and Košice
-themselves. A name shard holds every person with a name word (first name or
-surname, :func:`election_map_slovakia.candidates.search_key`) starting with its two-letter
-prefix, as ``[name, age, [candidacy, ...]]`` sorted by surname, the name and
-age being those of the person's first candidacy; ``names`` maps each prefix
-to its person count, so the search picks the smallest shard among the words
-of a query. ``parties`` gives every party named in a candidacy its short
-form, official name and logo (``config/parties.toml``; the logo a path under
-``/assets/img/<iv>/``).
+(:func:`bundle.content_version`): ``/assets/<v>/``,
+``/assets/vendor/<vv>/`` and ``/assets/img/<iv>/``. A release that changes
+a file of one moves that tree to new URLs, which browsers may keep for
+good (``immutable`` in web/_headers), and a release that changes none of a
+tree keeps its URLs and the browsers' copies: the libraries, which change
+only with a deliberate upgrade, and the logos outlast changes to the app's
+code. The app's modules import each other by relative paths, so they need
+not know ``<v>``; their imports of the libraries (``'../vendor/…'`` in
+web/js, which keeps web/ runnable as it is) are rewritten to
+``/assets/vendor/<vv>/``, and ``<v>`` is the hash of the rewritten files,
+so a library upgrade is new code too. The UI strings (``i18n/``), the same
+for every election, are requested with ``?v=<sv>``, a hash of them alone,
+so that switching elections keeps the browser's copies; an election's
+files with ``?v=`` its bundle's version (its ``manifest.json``), so that a
+browser's copy belongs to the version it was fetched for. The results
+files are requested with ``?v=`` the hash of each that their
+``status.json`` lists, and ``status.json`` itself is revalidated on every
+load (web/_headers-results). The app shells carry, in the ``km-config``
+meta JSON (:func:`shells`), the versions as ``mapVersion``,
+``dataVersion`` and ``stringsVersion``, the addresses of the election's
+bundles (``map``, ``data``), of its results (``results``, named even
+before there are any: a page loaded then finds them there once a
+deployment brings them), of the cached sources (``sources``) and of the
+party logos (``logos``). A shell whose map bundle is on another origin
+preconnects to it, as the map's first files are what it fetches first.
 """
 
 from __future__ import annotations
 
 import functools
-import hashlib
 import html
-import itertools
 import json
 import re
 import shutil
 import urllib.parse
-from collections import Counter, defaultdict
-from collections.abc import Collection, Iterable, Iterator, Mapping
+from collections.abc import Iterator, Mapping
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from http import HTTPStatus
@@ -199,26 +115,34 @@ from typing import Any
 
 from election_map_slovakia import (
     __version__,
-    addresses,
     basemap,
-    cache,
-    candidates,
+    bundle,
     config,
     geo,
-    obvody,
+    lock,
     output,
     progress,
-    research,
     translate,
+)
+from election_map_slovakia.bundle import (
+    HEADERS,
+    MANIFEST,
+    NOT_FOUND,
+    WEB_DIR,
+    BuildError,
+    Part,
+    content_version,
+    encode,
+    tree,
 )
 from election_map_slovakia.config import Config
 from election_map_slovakia.output import format_size
 
 OUTPUT_DIR = "dist"
-WEB_DIR = "web"
+APP_PART = "app"
+"""Below ``dist/``: the app."""
 SHELL = "index.html"
 PICKER = "picker.html"
-NOT_FOUND = "404.html"
 I18N_DIR = "i18n"
 ASSETS_DIR = "assets"
 # In web/ and, each below a version of its own, in ASSETS_DIR: the app's
@@ -231,35 +155,86 @@ IMAGES_DIR = "img"
 # How the modules directly in web/js import the vendored libraries; the
 # build points it at the libraries' versioned directory (code_files).
 _VENDOR_IMPORT = re.compile(rb"""(["'])\.\./vendor/""")
-# In web/; copied unversioned to cache.STYLESHEET, the path the cached
-# copies link, fixed in each copy when it was cached.
-CACHE_STYLESHEET = "cache.css"
-# Hex digits of the asset and data versions: 40 bits, so two releases
-# sharing a version by chance is not a concern.
-VERSION_DIGITS = 10
-CACHE_DIR = "cache"
-"""Below ``dist/``: the cached copies of the pages research cites."""
 PARTY_LOGOS = config.PARTY_LOGO_DIR.relative_to(Path(WEB_DIR) / IMAGES_DIR).as_posix()
-HEADERS = "_headers"
 SITEMAP = "sitemap.xml"
-PREFIX = 2
-MANIFEST = "manifest.json"
 # Also in web/js/i18n.js: the language the visitor last chose.
 STORAGE_KEY = "election-map-slovakia.lang"
 _PLACEHOLDER = re.compile(r"\{\{(\w+)\}\}")
 # Comments in the templates are for their maintainers, not for the site.
 _COMMENT = re.compile(r"[ \t]*<!--.*?-->\n", re.DOTALL)
-_BLOCKLIST_DATE = re.compile(r"retrieved (\d{4}-\d{2}-\d{2})")
 _PENDING = "_pending"
 _MISSING = "_missing"
 _LOCALE = "_locale"
-_OCCUPATIONS = "_occupations"
 _SITE_NAME_KEY = "app.name"
 _SITE = "{site}"
 
 
-class BuildError(Exception):
-    """An input of the site is missing or inconsistent."""
+@dataclass(frozen=True)
+class Located:
+    """An election's bundle, map or data, as the app finds it."""
+
+    url: str
+    """Its address: ``/map/<slug>`` or ``/data/<slug>`` served by ``serve``,
+    else that of the deployment that carries its key."""
+    manifest: dict[str, Any]
+    """Its ``manifest.json`` (:mod:`election_map_slovakia.bundle`)."""
+
+
+@dataclass(frozen=True)
+class Locations:
+    """Where the app finds the data parts."""
+
+    maps: dict[str, Located]
+    """Election slug → its map bundle."""
+    data: dict[str, Located]
+    """Election slug → its data bundle."""
+    results: str
+    """The address of the results part, the days below it."""
+    sources: str
+    """The address of the sources part, ``cache/`` below it (empty: the
+    app's own origin)."""
+
+    @property
+    def origins(self) -> list[str]:
+        """Return the other origins the app fetches from, sorted."""
+        urls = [
+            *(d.url for d in self.maps.values()),
+            *(d.url for d in self.data.values()),
+            self.results,
+        ]
+        return sorted({origin(url) for url in urls if origin(url)})
+
+    def bundles(self) -> Iterator[tuple[str, Located]]:
+        """Yield (directory below ``dist/``, bundle) of every bundle."""
+        for part, located in (
+            (bundle.MAP_PART, self.maps),
+            (bundle.DATA_PART, self.data),
+        ):
+            for slug, one in located.items():
+                yield f"{part}/{slug}", one
+
+
+def origin(url: str) -> str:
+    """Return the origin of absolute *url*, empty for a path."""
+    parts = urllib.parse.urlsplit(url)
+    return f"{parts.scheme}://{parts.netloc}" if parts.netloc else ""
+
+
+def local_locations(maps: Mapping[str, Part], data: Mapping[str, Part]) -> Locations:
+    """Return where ``serve`` serves the parts built with *maps* and *data*."""
+
+    def located(part: str, bundles: Mapping[str, Part]) -> dict[str, Located]:
+        return {
+            slug: Located(f"/{part}/{slug}", json.loads(b.files[MANIFEST]))
+            for slug, b in bundles.items()
+        }
+
+    return Locations(
+        located(bundle.MAP_PART, maps),
+        located(bundle.DATA_PART, data),
+        f"/{bundle.RESULTS_PART}",
+        "",
+    )
 
 
 @dataclass(frozen=True)
@@ -275,41 +250,22 @@ class Site:
     log: list[str]
     """What ``build`` reports besides the files, e.g. untranslated strings."""
 
-
-def encode(content: object) -> bytes:
-    """Return *content* as compact, key-sorted UTF-8 JSON."""
-    return output.to_json(content, sort_keys=True)
-
-
-def tree(name: str, source: Path) -> Iterator[tuple[str, bytes]]:
-    """Yield (path, content) of the file or directory tree *source*.
-
-    A path is *name* for a file, else *name*/<path below *source*>, in
-    sorted order, so that :func:`content_version` sees a stable sequence.
-    Threads read the files of a directory side by side: one by one, the
-    thousands of data files took more than a second.
-    """
-    if not source.exists():
-        raise BuildError(f"{source} missing")
-    if source.is_file():
-        yield name, source.read_bytes()
-        return
-    paths = sorted(p for p in source.rglob("*") if p.is_file())
-    with ThreadPoolExecutor() as pool:
-        for path, content in zip(paths, pool.map(Path.read_bytes, paths), strict=True):
-            yield f"{name}/{path.relative_to(source).as_posix()}", content
-
-
-def content_version(files: Iterable[tuple[str, bytes]]) -> str:
-    """Return a short hash of the (path, content) pairs *files*, in order.
-
-    Paths count as well as contents: a file renamed is a new version.
-    """
-    digest = hashlib.sha256()
-    for path, content in files:
-        digest.update(f"{path}\0{len(content)}\0".encode())
-        digest.update(content)
-    return digest.hexdigest()[:VERSION_DIGITS]
+    @classmethod
+    def of(cls, parts: Mapping[str, Part], log: list[str]) -> Site:
+        """Return the site of *parts*, each by its directory below ``dist/``."""
+        return cls(
+            {
+                f"{d}/{path}": blob
+                for d, p in parts.items()
+                for path, blob in p.files.items()
+            },
+            {
+                f"{d}/{path}": src
+                for d, p in parts.items()
+                for path, src in p.copies.items()
+            },
+            log,
+        )
 
 
 def code_files(web: Path, vendor: str) -> dict[str, bytes]:
@@ -332,541 +288,12 @@ def code_files(web: Path, vendor: str) -> dict[str, bytes]:
     return out
 
 
-def area_file(contest: Mapping[str, Any], okres_of: Mapping[str, str]) -> str:
-    """Return the ``dist/`` path of the area file holding *contest*.
-
-    *okres_of* maps obec codes to their okres.
-    """
-    area = str(contest["area"])
-    if contest["kind"] in ("predseda", "zsk"):
-        return f"data/kraj/{area}.json"
-    if area in candidates.CITY_CODES:
-        return f"data/city/{area}.json"
-    return f"data/okres/{okres_of[area]}.json"
-
-
-def _okres_of(data: Mapping[str, Any]) -> dict[str, str]:
-    """Return obec → its okres ("" for Bratislava and Košice) of *data*."""
-    return {o["code"]: o.get("okres", "") for o in data["obce"]}
-
-
-def _result_row(r: Mapping[str, int]) -> list[int]:
-    row = [r["votes"], r["valid"], r["voters"], r["eligible"]]
-    if "obvod" in r:
-        row.append(r["obvod"])
-    return row
-
-
-# A candidate row of an area file, before the optional residence.
-_CANDIDATE_FIELDS = (
-    "number",
-    "title_before",
-    "first_name",
-    "surname",
-    "title_after",
-    "age",
-    "occupation",
-    "parties",
-    "person",
-)
-
-
-def _candidate_row(c: Mapping[str, Any]) -> list[Any]:
-    row = [c[field] for field in _CANDIDATE_FIELDS]
-    if "residence" in c:
-        row.append(c["residence"])
-    return row
-
-
-def area_files(
-    data: Mapping[str, Any],
-    seats: Mapping[str, int],
-    sources: Mapping[str, list[list[str]]] | None = None,
-    researched: Mapping[str, list[Any]] | None = None,
-    pasts: Mapping[str, Mapping[str, Any]] | None = None,
-) -> dict[str, dict[str, Any]]:
-    """Return the candidate area files; see the module doc.
-
-    *data* is ``candidates.json``; *seats* maps obvod contests to their seat
-    count where known; *sources* is :func:`obvod_sources`; *researched* maps
-    persons to their research summary (:func:`research_summary`); *pasts*
-    maps contests to the ``past`` made here (:func:`regional_past`,
-    :func:`council_past`), which replaces theirs.
-    """
-    sources = sources or {}
-    researched = researched or {}
-    pasts = pasts or {}
-    okres_of = _okres_of(data)
-    files: dict[str, dict[str, Any]] = defaultdict(
-        lambda: {"contests": {}, "persons": {}}
-    )
-    path_of: dict[str, str] = {}
-    council_obvody = Counter(c["area"] for c in data["contests"] if c["kind"] == "oz")
-    for contest in data["contests"]:
-        path = path_of[contest["id"]] = area_file(contest, okres_of)
-        files[path]["contests"][contest["id"]] = _contest_entry(
-            contest,
-            seats,
-            sources,
-            pasts.get(contest["id"]),
-            single=council_obvody[contest["area"]] == 1,
-        )
-    by_person: dict[str, list[str]] = defaultdict(list)
-    for c in data["candidacies"]:
-        by_person[c["person"]].append(c["id"])
-    for c in sorted(data["candidacies"], key=lambda c: (c["contest"], c["number"])):
-        person = c["person"]
-        file = files[path_of[c["contest"]]]
-        entry = file["contests"][c["contest"]]
-        entry["candidates"].append(_candidate_row(c))
-        if "incumbent" in c:
-            entry.setdefault("incumbents", {})[str(c["number"])] = [
-                [office["body"], office["since"], _result_row(office["result"])]
-                for office in c["incumbent"]
-            ]
-        if len(by_person[person]) > 1:
-            file["persons"][person] = by_person[person]
-        if person in researched:
-            file.setdefault("research", {})[person] = researched[person]
-    return dict(files)
-
-
-def _contest_entry(
-    contest: Mapping[str, Any],
-    seats: Mapping[str, int],
-    sources: Mapping[str, list[list[str]]],
-    computed: Mapping[str, Any] | None,
-    *,
-    single: bool,
-) -> dict[str, Any]:
-    """Return a contest's entry of an area file, without its candidates.
-
-    *computed* is the contest's ``past`` made here (:func:`area_files`), if
-    any; *single*: the contest's council (if it is one) is elected in one obvod.
-    """
-    entry: dict[str, Any] = {"candidates": []}
-    if contest["id"] in seats:
-        entry["seats"] = seats[contest["id"]]
-    elif "seats_2022" in contest and single:
-        # 2022 counts are per whole council: comparable only to a single obvod.
-        entry["seats_2022"] = contest["seats_2022"]
-    documents = sources.get(_sources_key(contest))
-    if documents:
-        entry["sources"] = documents
-    if "incumbent" in contest:
-        holder = contest["incumbent"]
-        number = holder["candidacy"] and int(holder["candidacy"].split("#")[1])
-        entry["holder"] = [
-            holder["name"],
-            holder["since"],
-            number,
-            _result_row(holder["result"]),
-        ]
-    past = computed or contest.get("past")
-    if past is not None:
-        entry["past"] = [
-            past["election"],
-            past["day"],
-            past["eligible"],
-            past["voters"],
-        ]
-        if contest["kind"] == "oz" and not single:
-            entry["past"].append(past.get("okrsky", 1))
-    return entry
-
-
-def research_summary(cfg: Config, records: Mapping[str, Any]) -> dict[str, list[Any]]:
-    """Return person → ``[date, findings, [language, ...], affairs, disputes]``.
-
-    *records* maps persons to their curated research (:mod:`research`). The
-    date is the latest a category was researched, the languages those of
-    ``[research]`` in ``sources.toml`` whose every category is researched,
-    *affairs* how many of the findings are serious controversies, which the
-    ballots flag, and *disputes* how many are disputed or lesser ones.
-    """
-    out = {}
-    for person, record in records.items():
-        languages = [
-            lang
-            for lang, categories in cfg.sources.research.items()
-            if research.done(record, categories)
-        ]
-        if not languages:
-            continue
-        kinds = Counter(f["kind"] for f in record["findings"])
-        out[person] = [
-            max(s["date"] for s in record["researched"].values()),
-            len(record["findings"]),
-            languages,
-            kinds["affair"],
-            kinds["dispute"],
-        ]
-    return out
-
-
-def research_files(
-    cfg: Config,
-    data: Mapping[str, Any],
-    records: Mapping[str, Any],
-    translations: Mapping[str, Mapping[str, str]],
-) -> dict[str, dict[str, list[list[Any]]]]:
-    """Return the findings files, ``data/research/<lang>/<area>.json``.
-
-    Each holds, for the persons with findings who stand in a contest of the
-    area file ``data/<area>.json``, their findings as ``[kind, claim, quote,
-    quote translated or null, url, title, published, cache, category,
-    language]``: the claim in the file's language (English where it is not
-    translated yet), the quote as written plus its translation into the
-    file's language where the page is in another one. *translations* maps
-    language → its curated research translations (:mod:`translate`).
-    """
-    okres_of = _okres_of(data)
-    contest_of = {c["id"]: c for c in data["contests"]}
-    areas: dict[str, set[str]] = defaultdict(set)
-    for c in data["candidacies"]:
-        if records.get(c["person"], {}).get("findings"):
-            path = area_file(contest_of[c["contest"]], okres_of)
-            areas[path.removeprefix("data/")].add(c["person"])
-    files: dict[str, dict[str, list[list[Any]]]] = {}
-    for lang in cfg.languages.codes:
-        own = translations.get(lang, {})
-        for area, persons in sorted(areas.items()):
-            files[f"data/research/{lang}/{area}"] = {
-                person: [
-                    _finding_row(f, lang, own) for f in records[person]["findings"]
-                ]
-                for person in sorted(persons)
-            }
-    return files
-
-
-def _finding_row(
-    finding: Mapping[str, Any], lang: str, translated: Mapping[str, str]
-) -> list[Any]:
-    """Return *finding* as a row of a *lang* findings file (:func:`research_files`).
-
-    *translated* maps English claims and foreign quotes to *lang*.
-    """
-    claim = finding["claim"]
-    return [
-        finding["kind"],
-        claim.get(lang) or translated.get(claim["en"]) or claim["en"],
-        finding["quote"],
-        None if finding["language"] == lang else translated.get(finding["quote"]),
-        finding["url"],
-        finding["title"],
-        finding["published"],
-        finding["cache"],
-        finding["category"],
-        finding["language"],
-    ]
-
-
-def research_records(cfg: Config) -> dict[str, Any]:
-    """Return person → curated research record, of every researched person."""
-    root = cfg.curated_dir / research.CURATED_DIR
-    return {
-        path.stem: json.loads(path.read_bytes())
-        for path in sorted(root.glob("*/*.json"))
-    }
-
-
-def obec_props(geo_dir: Path) -> dict[str, dict[str, Any]]:
-    """Return obec → its properties in the coarsest ``geo`` shard."""
-    coarsest = geo.SHARD_LODS[0].level
-    props = {}
-    for path in sorted((geo_dir / "okres").glob(f"*/{coarsest}.json")):
-        for feature in json.loads(path.read_bytes())["features"]:
-            props[feature["properties"]["id"]] = feature["properties"]
-    return props
-
-
-def regional_past(
-    data: Mapping[str, Any], props: Mapping[str, Mapping[str, Any]]
-) -> dict[str, dict[str, Any]]:
-    """Return regional council contest → its ``past``, as in ``candidates.json``.
-
-    The obce's 2022 figures (``candidates.json``) summed over the 2026 obvod
-    each is in (*props*, :func:`obec_props`): the 2022 obvody were different.
-    """
-    out: dict[str, dict[str, Any]] = {}
-    for o in data["obce"]:
-        if "past" in o:
-            past = o["past"]
-            contest = f"zsk:{o['kraj']}/{props[o['code']]['zsk']}"
-            total = out.setdefault(contest, {**past, "eligible": 0, "voters": 0})
-            total["eligible"] += past["eligible"]
-            total["voters"] += past["voters"]
-    return out
-
-
-def council_past(
-    data: Mapping[str, Any], rule_sets: Mapping[str, obvody.RuleSet]
-) -> dict[str, dict[str, Any]]:
-    """Return council obvod contest → its ``past``, summed from okrsky.
-
-    For an obec whose rule set gives the okrsky of each obvod (*rule_sets*,
-    :func:`election_map_slovakia.obvody.load_rule_sets`), each obvod's
-    ``past`` is that of the same okrsky in the regular municipal election of
-    2022 (``okrsky_2022`` in *data*, ``candidates.json``), with ``okrsky``,
-    their numbers. Only where the council's latest whole election is that
-    one and the obec has the same okrsok numbers as then: the okrsky are
-    matched by number, which a change of their count would shift. Its obvody
-    then have the turnout of their own area, not of the whole municipality.
-    """
-    past_of = {
-        c["area"]: c["past"]
-        for c in data["contests"]
-        if c["kind"] == "oz" and "past" in c
-    }
-    out: dict[str, dict[str, Any]] = {}
-    for o in data["obce"]:
-        rules = rule_sets.get(o["code"])
-        then = o.get("okrsky_2022")
-        if rules is None or not rules.okrsky or then is None:
-            continue
-        whole = past_of.get(o["code"])
-        turnout = {n: (eligible, voters) for n, eligible, voters in then["okrsky"]}
-        if (
-            whole is None
-            or whole["election"] != then["election"]
-            or set(turnout) != set(rules.okrsok_obvod)
-        ):
-            continue
-        for obvod, numbers in rules.okrsky.items():
-            out[f"oz:{o['code']}/{obvod}"] = {
-                "election": then["election"],
-                "day": then["day"],
-                "eligible": sum(turnout[n][0] for n in numbers),
-                "voters": sum(turnout[n][1] for n in numbers),
-                "okrsky": list(numbers),
-            }
-    return out
-
-
-def obvod_seats(geo_dir: Path, election_dir: Path) -> dict[str, int]:
-    """Return obvod contest → seats, where known.
-
-    Regional and city council obvody from ``geo``; the council obvody of the
-    obce with a rule set from it (in *election_dir*, :attr:`Config.election_dir`).
-    """
-    return _obvod_seats(geo_dir, obvody.load_rule_sets(election_dir))
-
-
-def _obvod_seats(
-    geo_dir: Path, rule_sets: Mapping[str, obvody.RuleSet]
-) -> dict[str, int]:
-    coarse = json.loads((geo_dir / geo.COARSE_FILE).read_bytes())
-    seats = {o["id"]: o["seats"] for o in coarse["obvody"]}
-    for code, rules in rule_sets.items():
-        seats |= {f"oz:{code}/{n}": s for n, s in rules.seats.items()}
-    return seats
-
-
-def _sources_key(contest: Mapping[str, Any]) -> str:
-    """Return the :func:`obvod_sources` area of *contest* ("" for none)."""
-    if contest["kind"] == "zsk":
-        return f"zsk-{contest['area']}"
-    return str(contest["area"]) if contest["kind"] == "oz" else ""
-
-
-def obvod_sources(
-    election_dir: Path, rule_sets: Mapping[str, obvody.RuleSet]
-) -> dict[str, list[list[str]]]:
-    """Return area → the official documents that set its obvody.
-
-    Areas are an obec (council obvody by address), ``BA``/``KE`` (city
-    council) or ``zsk-<kraj>`` (regional council), as named by the curated
-    files in *election_dir* and *rule_sets* (its council rule sets);
-    documents are ``[title, url]``.
-    """
-    out = {}
-    for path in sorted((election_dir / obvody.DIRECTORY).glob("*.toml")):
-        listed = config.load_obvody(path)
-        out[path.stem] = [[listed.title, listed.source]]
-    for code, rules in rule_sets.items():
-        out[code] = [[d.title, d.url] for d in rules.documents]
-    return out
-
-
-def site_index(
-    data: Mapping[str, Any],
-    props: Mapping[str, Mapping[str, Any]],
-    shards: Mapping[str, list[Any]],
-    parties: Mapping[str, config.Party],
-    images: str,
-) -> dict[str, Any]:
-    """Return ``data/index.json``; see the module doc.
-
-    *images* is the URL of the versioned image directory,
-    ``/assets/img/<iv>``.
-    """
-    named = {p for c in data["candidacies"] for p in c["parties"]}
-    if missing := sorted(named - parties.keys()):
-        raise BuildError(
-            f"config/{config.PARTIES_FILE}: no entry for {', '.join(missing)}"
-        )
-    councils = addresses.council_obvody(data["contests"])
-    obce = {}
-    for o in data["obce"]:
-        code = o["code"]
-        n = len(councils.get(code, ()))
-        if code in candidates.CITY_CODES:
-            obce[code] = [o["name"], "", o["kraj"], 0, n]
-            continue
-        if code not in props:
-            raise BuildError(f"obec {code} {o['name']} has no geometry")
-        p = props[code]
-        row = [o["name"], o["okres"], o["kraj"], p["zsk"], n]
-        if "city" in p:
-            row += [p["city"], p["city_obvod"]]
-        obce[code] = row
-    return {
-        "kraje": {k["code"]: k["name"] for k in data["kraje"]},
-        "okresy": {o["code"]: [o["name"], o["kraj"]] for o in data["okresy"]},
-        "obce": obce,
-        "by_address": sorted({c for c, p in props.items() if "oz" in p}),
-        "estimated": sorted({c for c, p in props.items() if "estimated" in p}),
-        "names": {prefix: len(rows) for prefix, rows in shards.items()},
-        "parties": {
-            name: [p.short, p.name]
-            + ([f"{images}/{PARTY_LOGOS}/{p.logo}"] if p.logo else [])
-            for name, p in sorted(parties.items())
-            if name in named
-        },
-    }
-
-
-def name_shards(data: Mapping[str, Any]) -> dict[str, list[Any]]:
-    """Return name prefix → its shard; see the module doc."""
-    persons: dict[str, list[Mapping[str, Any]]] = defaultdict(list)
-    for c in data["candidacies"]:
-        persons[c["person"]].append(c)
-    shards: dict[str, list[tuple[str, list[Any]]]] = defaultdict(list)
-    for cs in persons.values():
-        first = cs[0]
-        name = f"{first['first_name']} {first['surname']}"
-        key = candidates.search_key(name)
-        order = f"{candidates.search_key(first['surname'])} {key}"
-        entry = [name, first["age"], [c["id"] for c in cs]]
-        prefixes = {w[:PREFIX] for w in key.split() if len(w) >= PREFIX}
-        # A word that is not plain ASCII after search_key cannot be typed on
-        # a Latin keyboard anyway (one surname in the 2026 lists is spelled
-        # with Cyrillic ӧ); the person stays findable by their other words.
-        for prefix in sorted(p for p in prefixes if p.isascii() and p.isalnum()):
-            shards[prefix].append((order, entry))
-    return {
-        p: [entry for _, entry in sorted(rows)] for p, rows in sorted(shards.items())
-    }
-
-
-def blocklist_date(path: Path) -> str:
-    """Return the retrieval date written in the header of the blocklist."""
-    match = _BLOCKLIST_DATE.search(path.read_text(encoding="utf-8"))
-    if match is None:
-        raise BuildError(f"{path}: no 'retrieved YYYY-MM-DD' in the header")
-    return match.group(1)
-
-
-def about(
-    cfg: Config,
-    manifest: Mapping[str, Any],
-    data: Mapping[str, Any],
-    records: Mapping[str, Any],
-    rule_sets: Mapping[str, obvody.RuleSet],
-) -> dict[str, Any]:
-    """Return ``data/about.json``: what the About dialog lists from the config.
-
-    *manifest* is ``data/raw/manifest.json`` (empty if missing); inputs it
-    records carry their retrieval date. *data* is ``candidates.json``, for
-    the names of the areas of the curated obvod files. *records* is the
-    curated research (:func:`research_records`), counted per research
-    language: candidates researched and those with findings. *rule_sets*
-    are the council rule sets (:func:`obvody.load_rule_sets`).
-    """
-    recorded = manifest.get("inputs", {})
-    inputs = []
-    for i in cfg.inputs.inputs:
-        entry = {"name": i.name, "url": i.url}
-        if i.name in recorded:
-            entry["retrieved"] = recorded[i.name]["retrieved_at"][:10]
-        inputs.append(entry)
-    names = {f"zsk-{k['code']}": k["name"] for k in data["kraje"]}
-    names |= {
-        o["code"]: o["name"] for o in data["obce"] if o["code"] in candidates.CITY_CODES
-    }
-    membership = []
-    for path in sorted((cfg.election_dir / obvody.DIRECTORY).glob("*.toml")):
-        listed = config.load_obvody(path)
-        if path.stem not in names:
-            raise BuildError(f"{path}: no kraj or city named {path.stem!r}")
-        membership.append(
-            {
-                "kind": "zsk" if path.stem.startswith("zsk-") else "city",
-                "name": names[path.stem],
-                "source": listed.source,
-                "date": str(listed.date),
-            }
-        )
-    council = [
-        {
-            "name": rules.name,
-            "sources": [d.url for d in rules.documents],
-            "date": str(rules.date) if rules.date else None,
-        }
-        for rules in sorted(
-            rule_sets.values(), key=lambda r: (candidates.search_key(r.name), r.obec)
-        )
-    ]
-    sources = cfg.sources
-    return {
-        "sources": {
-            # Pairs, not an object: the keys of encode() are sorted, and the
-            # categories keep the order of sources.toml.
-            "categories": list(sources.categories.items()),
-            "references": sources.references,
-            "exclude": {
-                "host_labels": sources.exclude_host_labels,
-                "path_segments": sources.exclude_path_segments,
-            },
-            "blocklist": {
-                "date": blocklist_date(cfg.root / "config" / sources.blocklist_file),
-                "hosts": len(sources.blocklist),
-            },
-        },
-        "inputs": inputs,
-        # Some logos are licensed CC BY(-SA), which requires naming the
-        # author and license wherever they are shown.
-        "logos": [
-            {"name": p.short, "source": p.logo_source, "license": p.logo_license}
-            for p in sorted(cfg.parties.values(), key=lambda p: p.short.casefold())
-            if p.logo
-        ],
-        "obvody": membership,
-        "council": council,
-        "research": [
-            [
-                lang,
-                list(categories),
-                sum(research.done(r, categories) for r in records.values()),
-                sum(
-                    any(f["category"] in categories for f in r["findings"])
-                    for r in records.values()
-                ),
-            ]
-            for lang, categories in sources.research.items()
-        ],
-    }
-
-
 @dataclass(frozen=True)
 class Strings:
-    """The texts of every language: what :func:`i18n_files` returns."""
+    """The UI strings of every language: what :func:`i18n_files` returns."""
 
     ui: dict[str, dict[str, Any]]
     """Language → ``i18n/<lang>.json``."""
-    occupations: dict[str, dict[str, str]]
-    """Language → ``i18n/<lang>/occupations.json``, where it has any."""
     log: list[str]
     """Per language, how much of it is translated."""
 
@@ -905,15 +332,15 @@ def _site_names(langs: config.Languages) -> dict[str, str]:
     return {lang.code: lang.site_name for lang in langs.languages}
 
 
-def i18n_files(cfg: Config, web: Path, occupations: Collection[str]) -> Strings:
-    """Return the UI strings and occupations of every language.
+def i18n_files(cfg: Config, web: Path) -> Strings:
+    """Return the UI strings of every language.
 
     Languages with their own ``web/i18n/<lang>.json`` (:func:`hand_written`)
     must define exactly the keys of the first fallback language; the others
     get the curated translations of its current strings (:mod:`translate`)
-    and the rest from it. *occupations* are those of the candidate files, in
-    Slovak, which every other language gets where translated. See the module
-    doc for the ``_`` fields.
+    and the rest from it. See the module doc for the ``_`` fields. (The
+    occupations of the candidates are translated in each election's bundle,
+    :func:`bundle.occupation_files`.)
 
     The site's name comes from ``languages.toml``: ``{site}`` in a string is
     replaced by the name in the language the string is written in, and
@@ -924,43 +351,27 @@ def i18n_files(cfg: Config, web: Path, occupations: Collection[str]) -> Strings:
     own = hand_written(cfg, web)
     base = own[base_code]
     site_names = _site_names(langs)
-    out = Strings({}, {}, [])
+    out = Strings({}, [])
     for code in langs.codes:
-        curated = translate.load(cfg, code)
-        texts = own.get(code) or curated.ui_strings(base)
+        texts = own.get(code) or translate.load(cfg, code).ui_strings(base)
         strings: dict[str, Any] = {
             k: texts[k].replace(_SITE, site_names[code])
             if k in texts
             else v.replace(_SITE, site_names[base_code])
             for k, v in base.items()
         }
-        # Occupations are written in Slovak.
-        needed = () if code == translate.REFERENCE else occupations
-        translated = {
-            o: curated.occupations[o] for o in needed if o in curated.occupations
-        }
-        missing = {
-            "ui": len(base) - len(texts),
-            "occupations": len(needed) - len(translated),
-        }
-        if any(missing.values()):
-            strings |= {_PENDING: base_code, _MISSING: missing}
+        if len(texts) < len(base):
+            strings |= {_PENDING: base_code, _MISSING: len(base) - len(texts)}
         if not texts:
             strings[_LOCALE] = base_code
-        if translated:
-            strings[_OCCUPATIONS] = len(translated)
-            out.occupations[code] = translated
         out.ui[code] = strings | {_SITE_NAME_KEY: site_names[code]}
-        if needed:
+        if code in own:
+            ui = "hand-written"
+        else:
             ui = f"{len(texts):,}/{len(base):,}"
-            if code in own:
-                ui = "hand-written"
-            elif len(texts) < len(base):
+            if len(texts) < len(base):
                 ui += f" (the rest in {base_code})"
-            coverage = f"{len(translated):,}/{len(needed):,}"
-            if len(translated) < len(needed):
-                coverage += " (the rest in Slovak)"
-            out.log.append(f"{code}: UI strings {ui}, occupations {coverage}")
+        out.log.append(f"{code}: UI strings {ui}")
     return out
 
 
@@ -977,15 +388,20 @@ def _attribute_json(content: object) -> str:
     return html.escape(encode(content).decode())
 
 
-def headers(cfg: Config, web: Path) -> bytes:
-    """Return ``_headers``: web/_headers, plus a noindex rule for pages.dev.
+def headers(cfg: Config, web: Path, locations: Locations) -> bytes:
+    """Return the app's ``_headers``: web/_headers for these *locations*.
 
-    The noindex rule is added once the site has a domain of its own
+    Its CSP lets the app fetch from its own origin and the other origins of
+    the data parts (:attr:`Locations.origins`). A noindex rule for
+    pages.dev is added once the site has a domain of its own
     (``base_url``): Pages keeps serving every deployment at
     <project>.pages.dev and at <hash>.<project>.pages.dev, and a search
     engine should know the site only by its domain.
     """
-    text = (web / HEADERS).read_text(encoding="utf-8")
+    connect = " ".join(["'self'", *locations.origins])
+    text = _fill(
+        (web / HEADERS).read_text(encoding="utf-8"), {"connect_src": connect}, HEADERS
+    )
     base = cfg.site.base_url
     pages = f"{cfg.site.pages_project}.pages.dev"
     if not base or urllib.parse.urlsplit(base).hostname == pages:
@@ -998,16 +414,35 @@ def headers(cfg: Config, web: Path) -> bytes:
     ).encode()
 
 
+def page(cfg: Config, lang: str, election: config.Election) -> str:
+    """Return the path of *election*'s page in *lang*, as linked and canonical.
+
+    ``<lang>/`` for the latest election, else ``<lang>/<slug>/``.
+    """
+    if election.slug == cfg.latest.slug:
+        return f"{lang}/"
+    return f"{lang}/{election.slug}/"
+
+
 def sitemap(cfg: Config) -> bytes | None:
-    """Return ``sitemap.xml``: the root page and every language's app shell.
+    """Return ``sitemap.xml``: the root page and every app shell's page.
 
     A sitemap lists absolute URLs only, so without ``base_url`` there is
     none. The pages name their other languages themselves (:func:`shells`).
+    Each page is listed by its canonical URL (:func:`page`): the latest
+    election's ``<lang>/<slug>/`` copy is the same page as ``<lang>/``.
     """
     base = cfg.site.base_url
     if not base:
         return None
-    urls = [f"{base}/", *(f"{base}/{code}/" for code in cfg.languages.codes)]
+    urls = [
+        f"{base}/",
+        *(
+            f"{base}/{page(cfg, code, election)}"
+            for election in cfg.elections
+            for code in cfg.languages.codes
+        ),
+    ]
     entries = "".join(f"  <url><loc>{html.escape(u)}</loc></url>\n" for u in urls)
     return (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -1016,55 +451,86 @@ def sitemap(cfg: Config) -> bytes | None:
     ).encode()
 
 
+@dataclass(frozen=True)
+class _Assets:
+    """The URLs of the app's versioned directories (module doc)."""
+
+    code: str
+    """``/assets/<v>``."""
+    vendor: str
+    """``/assets/vendor/<vv>``."""
+    images: str
+    """``/assets/img/<iv>``."""
+    strings: str
+    """The version of the UI strings, their ``?v=``."""
+
+
 def shells(
     cfg: Config,
     web: Path,
     strings: Mapping[str, Mapping[str, Any]],
-    assets: str,
-    vendor: str,
-    data_version: str,
-    results_path: str,
+    assets: _Assets,
+    locations: Locations,
 ) -> dict[str, bytes]:
     """Return the app shells, the root language picker and the 404 page.
 
-    *assets* and *vendor* are the URLs of the versioned code and library
-    directories (``/assets/<v>``, ``/assets/vendor/<vv>``), *data_version*
-    what the app appends to the JSON it fetches (``?v=``), *results_path*
-    the URL of the election's results directory.
+    One shell per language and election, ``<lang>/<slug>/index.html``, the
+    latest election's also as ``<lang>/index.html``, which both name as
+    canonical (:func:`page`); each fetches the election's files from its
+    bundle in *locations*, with ``?v=`` its version.
     """
     langs = cfg.languages
     site_names = _site_names(langs)
     base = cfg.site.base_url or ""
-    alternates = "\n".join(
-        f'    <link rel="alternate" hreflang="{code}" href="{base}/{code}/" />'
-        for code in langs.codes
-    )
+
+    def alternates(election: config.Election) -> str:
+        return "\n".join(
+            f'    <link rel="alternate" hreflang="{code}"'
+            f' href="{base}/{page(cfg, code, election)}" />'
+            for code in langs.codes
+        )
 
     # Only an absolute URL is a canonical one: with the site's own domain
     # set, search engines file every copy of a page under that domain.
     def canonical(path: str) -> str:
         return f'\n    <link rel="canonical" href="{base}/{path}" />' if base else ""
 
-    config_json = _attribute_json(_app_config(cfg, data_version, results_path))
     template = (web / SHELL).read_text(encoding="utf-8")
     out = {}
-    for lang in langs.languages:
-        s = strings[lang.code]
-        values = {
-            "lang": lang.code,
-            "dir": lang.direction,
-            "title": html.escape(s["app.title"]),
-            "description": html.escape(s["app.description"]),
-            "noscript": html.escape(s["app.noscript"]),
-            "features": html.escape(s["app.features"]),
-            "alternates": alternates,
-            "canonical": canonical(f"{lang.code}/"),
-            "assets": assets,
-            "vendor": vendor,
-            "data_version": data_version,
-            "config": config_json,
-        }
-        out[f"{lang.code}/index.html"] = _fill(template, values, SHELL).encode()
+    for election in cfg.elections:
+        mapped = locations.maps[election.slug]
+        # The map's files are what the page fetches first (index.html).
+        preconnect = (
+            f'\n    <link rel="preconnect" href="{html.escape(origin(mapped.url))}"'
+            ' crossorigin="anonymous" />'
+            if origin(mapped.url)
+            else ""
+        )
+        config_json = _attribute_json(_app_config(cfg, election, assets, locations))
+        links = alternates(election)
+        for lang in langs.languages:
+            s = strings[lang.code]
+            values = {
+                "lang": lang.code,
+                "dir": lang.direction,
+                "title": html.escape(_year(s["app.title"], election)),
+                "description": html.escape(_year(s["app.description"], election)),
+                "noscript": html.escape(s["app.noscript"]),
+                "features": html.escape(_year(s["app.features"], election)),
+                "alternates": links,
+                "canonical": canonical(page(cfg, lang.code, election)),
+                "assets": assets.code,
+                "vendor": assets.vendor,
+                "map": html.escape(mapped.url),
+                "map_version": mapped.manifest["version"],
+                "preconnect": preconnect,
+                "strings_version": assets.strings,
+                "config": config_json,
+            }
+            shell = _fill(template, values, SHELL).encode()
+            out[f"{lang.code}/{election.slug}/index.html"] = shell
+            if election.slug == cfg.latest.slug:
+                out[f"{lang.code}/index.html"] = shell
     picker_config = {
         "codes": list(langs.codes),
         "aliases": langs.aliases,
@@ -1080,17 +546,20 @@ def shells(
         # Shown before a language is known: the names in the fallback languages.
         "title": html.escape(" · ".join(site_names[code] for code in langs.fallback)),
         # The page is in the first fallback language (web/picker.html).
-        "description": html.escape(strings[langs.fallback[0]]["app.description"]),
+        "description": html.escape(
+            _year(strings[langs.fallback[0]]["app.description"], cfg.latest)
+        ),
         # What the site offers, in each fallback language.
         "features": "\n".join(
-            f'    <p lang="{code}">{html.escape(strings[code]["app.features"])}</p>'
+            f'    <p lang="{code}">'
+            f"{html.escape(_year(strings[code]['app.features'], cfg.latest))}</p>"
             for code in langs.fallback
         ),
-        "alternates": alternates,
+        "alternates": alternates(cfg.latest),
         "canonical": canonical(""),
         "config": _attribute_json(picker_config),
         "links": links,
-        "assets": assets,
+        "assets": assets.code,
     }
     picker = (web / PICKER).read_text(encoding="utf-8")
     out["index.html"] = _fill(picker, values, PICKER).encode()
@@ -1099,166 +568,179 @@ def shells(
     return out
 
 
-def _app_config(cfg: Config, data_version: str, results_path: str) -> dict[str, Any]:
-    """Return the ``km-config`` of the app shells; see :func:`shells`."""
-    site = cfg.site
+def _year(text: str, election: config.Election) -> str:
+    """Return a UI string with ``{year}`` filled in: *election*'s year, its slug."""
+    return text.replace("{year}", election.slug)
+
+
+def _credits(cfg: Config, election: config.Election) -> dict[str, Any] | None:
+    """Return what an earlier election's map credits name, None for the latest.
+
+    ``boundaries``: ``[slug, n]`` where it is drawn on a later election's
+    boundaries, *n* obce of its own differing
+    (:func:`bundle.boundary_changes`), else null; ``osm`` and ``addresses``
+    the dates their data are of (``inputs.toml`` ``as_of``), which the
+    credits must name.
+    """
+    if election == cfg.latest:
+        return None
+    inputs = {i.name: i for i in cfg.inputs.inputs}
+    for name in (election.osm, election.addresses):
+        if not inputs[name].as_of:
+            raise BuildError(
+                f"config/inputs.toml: input {name} of the {election.slug} election"
+                " needs `as_of`, which its map credits name"
+            )
+    on = bundle.drawn_on(cfg, election)
+    changes = bundle.boundary_changes(cfg.election_dir(election))
+    if on != election and changes is None:
+        raise BuildError(
+            f"{cfg.election_dir(election) / bundle.BOUNDARIES_FILE} missing: the"
+            f" {election.slug} election is drawn on the boundaries of {on.slug}"
+        )
+    return {
+        "boundaries": None if changes is None else [on.slug, len(changes["obce"])],
+        "osm": inputs[election.osm].as_of,
+        "addresses": inputs[election.addresses].as_of,
+    }
+
+
+def _app_config(
+    cfg: Config, election: config.Election, assets: _Assets, locations: Locations
+) -> dict[str, Any]:
+    """Return the ``km-config`` of *election*'s app shells; see :func:`shells`."""
+    located = locations.data[election.slug]
+    mapped = locations.maps[election.slug]
     return {
         "languages": [[lang.code, lang.name] for lang in cfg.languages.languages],
         "storage": STORAGE_KEY,
-        "election": str(site.election),
+        "election": str(election.day),
+        # Every election the site shows, newest first, with its kind: the
+        # search card lists them under a heading per kind and links to each
+        # one's page, /<lang>/<slug>/.
+        "elections": [
+            {"day": str(e.day), "slug": e.slug, "kind": e.kind} for e in cfg.elections
+        ],
+        # Where the app fetches the election's files: its map bundle, below
+        # which are geo/…, base/…, addr/…, and its data bundle, below which
+        # are data/…, i18n/… (bundle.py).
+        "map": mapped.url,
+        "data": located.url,
+        # Day of the regular elections before, of which the office holders
+        # and the past turnouts are; null where they are not known.
+        "previous": str(election.incumbents.day) if election.incumbents else None,
+        # For an election before the latest, the dates and boundaries the
+        # map's credits name (:func:`_credits`); null for the latest.
+        "credits": _credits(cfg, election),
         # When the polls open and close (ISO 8601 with the offset): the search
         # card shows the voting under way between them.
-        "polls": [site.polls_open.isoformat(), site.polls_close.isoformat()],
+        "polls": [election.polls_open.isoformat(), election.polls_close.isoformat()],
         # Research language → the source categories it searches: the scope
         # the app states before every research result.
         "research": {
             lang: list(categories) for lang, categories in cfg.sources.research.items()
         },
-        "repository": site.repository,
+        "repository": cfg.site.repository,
         # The About dialog names the version, linked to its release.
         "version": __version__,
-        # Appended to every JSON file the app fetches (``?v=``; module doc).
-        "dataVersion": data_version,
+        # Appended to every file of the election the app fetches (``?v=``):
+        # its bundle's version, the map's or the data's.
+        "mapVersion": mapped.manifest["version"],
+        "dataVersion": located.manifest["version"],
+        # Appended to the UI strings (``/i18n/``), which every election
+        # shares: switching keeps the browser's copies.
+        "stringsVersion": assets.strings,
         # The election's results directory (status.json and the files it
         # names, docs/results.md); nothing there before there are results.
-        "results": results_path,
-        # Whether the app polls them (site.toml live); without, it reads them
-        # once per page load.
-        "live": site.live,
+        "results": f"{locations.results}/{election.day.isoformat()}",
+        # The cached copies of the pages research cites: <sources>/cache/….
+        "sources": locations.sources,
+        # The party logos, which data/index.json names by file.
+        "logos": f"{assets.images}/{PARTY_LOGOS}",
+        # Language → how many of the election's occupations its bundle has
+        # not translated into it (i18n/<lang>.json there; none for Slovak,
+        # in which they are written): the app says the translation is
+        # incomplete where any are not.
+        "occupations": located.manifest["occupations"],
+        # Whether the app polls them (elections.toml live); without, it reads
+        # them once per page load.
+        "live": election.live,
         # When, polling, it reads them every minute (ISO 8601); null: any time.
-        "liveWindow": [when.isoformat() for when in site.live_window]
-        if site.live_window
+        "liveWindow": [when.isoformat() for when in election.live_window]
+        if election.live_window
         else None,
     }
 
 
-def assemble(cfg: Config) -> Site:
-    """Return the site built from *cfg*'s inputs; see the module doc."""
+def app(cfg: Config, locations: Locations) -> tuple[Part, list[str]]:
+    """Return the app, which finds the data parts at *locations*, and its log.
+
+    The log says how much of each language is translated.
+    """
     web = cfg.root / WEB_DIR
-    built = cfg.build_dir
-    paths = {
-        "candidates": built / candidates.OUTPUT_FILE,
-        "geo": built / geo.OUTPUT_DIR,
-        "basemap": built / basemap.OUTPUT_DIR,
-        "addr": built / addresses.OUTPUT_DIR,
-    }
-    for step, path in paths.items():
-        if not path.exists():
-            raise BuildError(f"{path} missing; run `ems {step}` first")
-    # The libraries are hashed before the code that names their directory,
-    # the images before data/index.json, which names the party logos.
+    # The libraries are hashed before the code that names their directory.
     vendor, images = (
         f"{ASSETS_DIR}/{name}/{content_version(tree(name, web / name))}"
         for name in (VENDOR_DIR, IMAGES_DIR)
     )
     code = code_files(web, f"/{vendor}")
-    assets = f"{ASSETS_DIR}/{content_version(sorted(code.items()))}"
-    with progress.stage("making the candidate, name search and UI string files"):
-        data = json.loads(paths["candidates"].read_bytes())
-        records = research_records(cfg)
-        content, strings = _data_files(
-            cfg, web, data, records, paths["geo"], f"/{images}"
-        )
-        files = {path: encode(value) for path, value in content.items()}
-    # Besides the generated JSON (so far only data/ and i18n/), the app
-    # fetches with ?v= these copies: geo/, base/, addr/ and the election's
-    # results, as `ems results` or the results step left them.
-    fetched = {
-        "geo": paths["geo"],
-        basemap.OUTPUT_DIR: paths["basemap"],
-        "addr": paths["addr"],
-    }
-    results_target = f"{config.RESULTS_DIR}/{cfg.site.election.isoformat()}"
-    if cfg.results_dir.is_dir():
-        fetched[results_target] = cfg.results_dir
-    with progress.stage("hashing the data files"):
-        data_version = content_version(
-            itertools.chain(
-                sorted(files.items()),
-                *(tree(target, source) for target, source in fetched.items()),
-            )
-        )
-    files.update(
-        shells(
-            cfg,
-            web,
-            strings.ui,
-            f"/{assets}",
-            f"/{vendor}",
-            data_version,
-            f"/{results_target}",
-        )
+    strings = i18n_files(cfg, web)
+    files = {f"{I18N_DIR}/{code}.json": encode(s) for code, s in strings.ui.items()}
+    assets = _Assets(
+        f"/{ASSETS_DIR}/{content_version(sorted(code.items()))}",
+        f"/{vendor}",
+        f"/{images}",
+        content_version(sorted(files.items())),
     )
-    files.update({f"{assets}/{path}": blob for path, blob in code.items()})
-    files[HEADERS] = headers(cfg, web)
+    files |= shells(cfg, web, strings.ui, assets, locations)
+    files |= {f"{assets.code[1:]}/{path}": blob for path, blob in code.items()}
+    files[HEADERS] = headers(cfg, web, locations)
     site_map = sitemap(cfg)
     if site_map is not None:
         files[SITEMAP] = site_map
+    copies = {vendor: web / VENDOR_DIR, images: web / IMAGES_DIR}
+    return Part(files, copies), strings.log
 
-    copies = {
-        vendor: web / VENDOR_DIR,
-        images: web / IMAGES_DIR,
-        cache.STYLESHEET.removeprefix("/"): web / CACHE_STYLESHEET,
-        **fetched,
-        **_cached_pages(cfg, records),
-    }
-    for source in copies.values():
+
+def assemble(cfg: Config, keys: lock.Keys | None) -> Site:
+    """Return the whole site built from *cfg*'s inputs; see the module doc.
+
+    *keys* are the keys of the data parts (:func:`lock.keys`), which their
+    manifests name; None where the repository does not determine them (an
+    input not pinned yet).
+    """
+    maps, data = bundle.bundles(
+        cfg, keys.maps if keys else {}, keys.data if keys else {}
+    )
+    parts = {f"{bundle.MAP_PART}/{slug}": part for slug, part in maps.items()}
+    parts |= {f"{bundle.DATA_PART}/{slug}": part for slug, part in data.items()}
+    parts[bundle.SOURCES_PART] = bundle.sources_part(
+        cfg, keys.sources if keys else None
+    )
+    parts[bundle.RESULTS_PART] = bundle.results_part(
+        cfg, keys.results if keys else None
+    )
+    parts[APP_PART], log = app(cfg, local_locations(maps, data))
+    site = Site.of(parts, log)
+    for source in site.copies.values():
         if not source.exists():
             raise BuildError(f"{source} missing")
-    return Site(files, copies, strings.log)
+    return site
 
 
-def _data_files(
-    cfg: Config,
-    web: Path,
-    data: Mapping[str, Any],
-    records: Mapping[str, Any],
-    geo_dir: Path,
-    images: str,
-) -> tuple[dict[str, object], Strings]:
-    """Return the generated JSON, ``dist/`` path → content, and the UI strings.
+def assemble_deployed(cfg: Config, locations: Locations) -> Site:
+    """Return the app alone, for the data parts deployed at *locations*.
 
-    *data* is ``candidates.json``, *records* the curated research
-    (:func:`research_records`), *images* the URL of the versioned image
-    directory.
+    With the manifest of each election's bundles, which ``check`` checks
+    the app against: ``dist/map/<slug>/manifest.json`` and
+    ``dist/data/<slug>/manifest.json`` (module doc).
     """
-    manifest_path = cfg.raw_dir / MANIFEST
-    manifest = json.loads(manifest_path.read_bytes()) if manifest_path.is_file() else {}
-    rule_sets = obvody.load_rule_sets(cfg.election_dir)
-    props = obec_props(geo_dir)
-    content: dict[str, object] = {}
-    content |= area_files(
-        data,
-        _obvod_seats(geo_dir, rule_sets),
-        obvod_sources(cfg.election_dir, rule_sets),
-        research_summary(cfg, records),
-        regional_past(data, props) | council_past(data, rule_sets),
-    )
-    translations = {
-        code: translate.load(cfg, code).research for code in cfg.languages.codes
+    part, log = app(cfg, locations)
+    parts = {APP_PART: part} | {
+        directory: Part({MANIFEST: encode(located.manifest | {"url": located.url})}, {})
+        for directory, located in locations.bundles()
     }
-    content |= research_files(cfg, data, records, translations)
-    shards = name_shards(data)
-    content |= {f"data/names/{p}.json": rows for p, rows in shards.items()}
-    content["data/index.json"] = site_index(data, props, shards, cfg.parties, images)
-    content["data/about.json"] = about(cfg, manifest, data, records, rule_sets)
-    occupations = sorted({c["occupation"] for c in data["candidacies"]} - {""})
-    strings = i18n_files(cfg, web, occupations)
-    content |= {f"i18n/{code}.json": s for code, s in strings.ui.items()}
-    content |= {
-        f"i18n/{code}/occupations.json": o for code, o in strings.occupations.items()
-    }
-    return content, strings
-
-
-def _cached_pages(cfg: Config, records: Mapping[str, Any]) -> dict[str, Path]:
-    """Return ``dist/`` path → source of the cached copy of each page research cites."""
-    cached = cfg.curated_dir / research.CACHE_DIR
-    return {
-        f"{CACHE_DIR}/{f['cache']}.html": cached / f"{f['cache']}.html"
-        for record in records.values()
-        for f in record["findings"]
-    }
+    return Site.of(parts, log)
 
 
 def write(
@@ -1311,23 +793,42 @@ _GROUPS = (
     ("data/city/", "candidates per city"),
     ("data/names/", "name search shards"),
     ("data/research/", "research findings"),
-    ("cache/", "cached pages"),
     ("data/index.json", "data/index.json"),
     ("geo/", "geometry"),
     (f"geo/{geo.OKRSKY_DIR}/", "  of it okrsky"),
     (f"{basemap.OUTPUT_DIR}/", "base map"),
     ("addr/", "addresses"),
-    (f"{config.RESULTS_DIR}/", "results"),
-    ("i18n/", "UI strings and occupations"),
-    ("assets/", "assets"),
+    (f"{bundle.I18N_DIR}/", "occupations"),
+    (f"{bundle.SOURCES_PART}/{bundle.CACHE_DIR}/", "cached pages"),
+    (f"{bundle.RESULTS_PART}/", "results"),
+    (f"{APP_PART}/{I18N_DIR}/", "UI strings"),
+    (f"{APP_PART}/{ASSETS_DIR}/", "assets"),
 )
 
 
 def report(sizes: Mapping[str, tuple[int, int]]) -> Iterator[str]:
-    """Yield a summary of the written files: count, bytes, gzip per group."""
+    """Yield a summary of the written files: count, bytes, gzip per group.
+
+    The bundles' files are counted together, without their ``map/<slug>/``
+    or ``data/<slug>/``; then each part's, which a Pages project limits.
+    """
+    prefixes = (f"{bundle.MAP_PART}/", f"{bundle.DATA_PART}/")
+    files = [
+        (p.split("/", 2)[2] if p.startswith(prefixes) else p, s)
+        for p, s in sizes.items()
+    ]
+    bundles = sorted(
+        {"/".join(p.split("/")[:2]) for p in sizes if p.startswith(prefixes)}
+    )
+    parts = [*bundles, APP_PART, bundle.SOURCES_PART, bundle.RESULTS_PART]
+    rows = [
+        *((prefix, label, files) for prefix, label in _GROUPS),
+        *((f"{d}/", f"part {d}", sizes.items()) for d in parts),
+        ("", "total", files),
+    ]
     yield f"{'':<22} {'files':>6} {'bytes':>11} {'gzip':>11} {'max gzip':>11}"
-    for prefix, label in (*_GROUPS, ("", "total")):
-        group = [s for p, s in sizes.items() if p.startswith(prefix)]
+    for prefix, label, within in rows:
+        group = [s for p, s in within if p.startswith(prefix)]
         if not group:
             continue
         yield (
@@ -1409,6 +910,52 @@ def response_headers(rules: list[HeaderRule], path: str) -> dict[str, str]:
     return dict(out.values())
 
 
+def mounts(dist: Path) -> list[tuple[str, Path]]:
+    """Return (URL path prefix, directory) of each part of *dist* as one site.
+
+    As ``serve`` serves them, and as the app built without ``--deployed``
+    finds them (:func:`local_locations`): each bundle at ``/map/<slug>/`` or
+    ``/data/<slug>/``, the results at ``/results/``, the app at the root and
+    the sources there too, below it (its ``cache/`` and
+    ``assets/cache.css`` are no paths of the app's). Parts not built,
+    without their ``_headers``, are left out.
+    """
+    candidates = [
+        (f"/{part}/{d.name}/", d)
+        for part in (bundle.MAP_PART, bundle.DATA_PART)
+        if (dist / part).is_dir()
+        for d in sorted((dist / part).iterdir())
+    ]
+    candidates += [
+        (f"/{bundle.RESULTS_PART}/", dist / bundle.RESULTS_PART),
+        ("/", dist / APP_PART),
+        ("/", dist / bundle.SOURCES_PART),
+    ]
+    return [(prefix, d) for prefix, d in candidates if (d / HEADERS).is_file()]
+
+
+def locate(parts: list[tuple[str, Path]], path: str) -> tuple[int, str] | None:
+    """Return which of *parts* (:func:`mounts`) URL *path* is in, and its path there.
+
+    The first part whose prefix it starts with and which has the file; a
+    part of its own prefix has it or nothing does; at the root, the first
+    part (the app) where none has it. None if no prefix matches.
+    """
+    first = None
+    for i, (prefix, directory) in enumerate(parts):
+        if not path.startswith(prefix):
+            continue
+        sub = "/" + path[len(prefix) :]
+        first = first or (i, sub)
+        target = directory / sub.lstrip("/")
+        if sub.endswith("/"):
+            target /= "index.html"
+        # Pages reads _headers but does not serve it.
+        if (sub != f"/{HEADERS}" and target.is_file()) or prefix != "/":
+            return i, sub
+    return first
+
+
 class _Handler(SimpleHTTPRequestHandler):
     extensions_map = {
         **SimpleHTTPRequestHandler.extensions_map,
@@ -1420,20 +967,35 @@ class _Handler(SimpleHTTPRequestHandler):
         ".svg": "image/svg+xml",
     }
 
-    def __init__(self, *args: Any, rules: list[HeaderRule], **kwargs: Any) -> None:
-        # The base class handles the request inside __init__.
+    def __init__(
+        self,
+        *args: Any,
+        parts: list[tuple[str, Path]],
+        rules: list[list[HeaderRule]],
+        **kwargs: Any,
+    ) -> None:
+        # The base class handles the request inside __init__; until it
+        # locates the path, the root part (the app) answers.
+        self.parts = parts
         self.rules = rules
+        self.part = next(i for i, (prefix, _) in enumerate(parts) if prefix == "/")
+        self.sub = "/"
         super().__init__(*args, **kwargs)
 
-    def _path(self) -> str:
-        return urllib.parse.unquote(urllib.parse.urlsplit(self.path).path)
-
     def send_head(self) -> Any:
-        # Pages reads _headers but does not serve it.
-        if self._path() == f"/{HEADERS}":
+        path = urllib.parse.unquote(urllib.parse.urlsplit(self.path).path)
+        located = locate(self.parts, path)
+        if located is None:
+            self.send_error(HTTPStatus.NOT_FOUND)
+            return None
+        self.part, self.sub = located
+        if self.sub == f"/{HEADERS}":
             self.send_error(HTTPStatus.NOT_FOUND)
             return None
         return super().send_head()
+
+    def translate_path(self, path: str) -> str:
+        return str(self.parts[self.part][1] / self.sub.lstrip("/"))
 
     def list_directory(self, path: Any) -> None:
         # Pages lists no directories; a directory without index.html is
@@ -1443,11 +1005,11 @@ class _Handler(SimpleHTTPRequestHandler):
     def send_error(
         self, code: int, message: str | None = None, explain: str | None = None
     ) -> None:
-        # Pages answers a missing path with 404.html and status 404.
+        # Pages answers a missing path with the part's 404.html and status 404.
         if code != HTTPStatus.NOT_FOUND:
             super().send_error(code, message, explain)
             return
-        body = (Path(self.directory) / NOT_FOUND).read_bytes()
+        body = (self.parts[self.part][1] / NOT_FOUND).read_bytes()
         self.send_response(code, message)
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
@@ -1456,19 +1018,24 @@ class _Handler(SimpleHTTPRequestHandler):
             self.wfile.write(body)
 
     def end_headers(self) -> None:
-        for name, value in response_headers(self.rules, self._path()).items():
+        for name, value in response_headers(self.rules[self.part], self.sub).items():
             self.send_header(name, value)
         super().end_headers()
 
 
-def serve(directory: Path, host: str, port: int) -> None:
-    """Serve *directory* over HTTP until interrupted.
+def serve(dist: Path, host: str, port: int) -> None:
+    """Serve the parts in *dist* as one site over HTTP until interrupted.
 
-    Responses carry the headers of ``<directory>/_headers``, so local tests
-    see the same Content-Security-Policy as the deployed site.
+    Where :func:`mounts` puts them; each part's responses carry the headers
+    of its ``_headers``, so local tests see the same Content-Security-Policy
+    and caching as the deployed site.
     """
-    rules = header_rules((directory / HEADERS).read_text(encoding="utf-8"))
-    handler = functools.partial(_Handler, directory=str(directory), rules=rules)
+    parts = mounts(dist)
+    rules = [
+        header_rules((directory / HEADERS).read_text(encoding="utf-8"))
+        for _, directory in parts
+    ]
+    handler = functools.partial(_Handler, parts=parts, rules=rules)
     with ThreadingHTTPServer((host, port), handler) as httpd:
-        print(f"serving {directory} at http://{host}:{httpd.server_port}/")
+        print(f"serving {dist} at http://{host}:{httpd.server_port}/")
         httpd.serve_forever()

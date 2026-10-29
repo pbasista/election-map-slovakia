@@ -1,0 +1,36 @@
+# Council obvody of Pôtor (516295), Veľký Krtíš.
+# Transcribed by an AI agent in job obvod-rules-377 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Obec Pôtor, osady Slatinka, Elektráreň, Háj, Nový Salaš
+#   obvod 2: Miestnu časť Žihľava, osady Horné Vátovce, Dolné Vátovce
+# Okrsky added by an AI agent in job okrsok-rules-1238 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Obec Pôtor, osady Slatinka, Elektráreň, Háj, Nový Salaš
+#   okrsok 2: Miestnu časť Žihľava, osady Horné Vátovce, Dolné Vátovce
+obec = "516295"
+name = "Pôtor"
+date = 2022-07-13
+note = "Scanned announcement (Internet Archive snapshot), read visually. Obvod 1 = obec Pôtor with its hamlets, obvod 2 = miestna časť Žihľava with its hamlets; transcribed as the register's parts Pôtor and Žihľava (hamlets assumed to lie in their part)."
+okrsky_date = 2022-07-13
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+
+[[document]]
+url = "https://web.archive.org/web/20220812085936/https://www.obecpotor.sk/files/2022-07-18-072323-Ozn__menie.pdf"
+sha256 = "56f7a094cd4f8dba6d79ac38f83263334d3452c7c89dac4a2b418ec55b10cc4f"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby 29.10.2022 (uznesenie OcZ č. 70/2022 bod 2 zo dňa 13.07.2022), 14.07.2022"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Pôtor"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Žihľava"},
+]

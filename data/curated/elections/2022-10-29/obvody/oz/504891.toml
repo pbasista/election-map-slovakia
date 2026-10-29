@@ -1,0 +1,81 @@
+# Council obvody of Šaštín-Stráže (504891), Senica.
+# Transcribed by an AI agent in job obvod-rules-298 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode č. 1, ktorý zahŕňa k. ú. časti mesta Stráže, sa volia štyria poslanci.
+#   obvod 2: Vo volebnom obvode č. 2, ktorý zahŕňa ul. Alej, Do Gazárky, RO Gazárka, J. Kollára, Jesenského, Kláštorné námestie, M. Nešpora, Nádražná, Pri bitúnku, Pri Kadúbku, Pri rybníku, Slnečná, Štúrova, Železničiarska a Lúčna sa volia štyria poslanci.
+#   obvod 3: Vo volebnom obvode č. 3, ktorý zahŕňa ul. Borová, J. Hollého, Komenského, Metodova, Na pažiti, Námestie Slobody, Novoveská, Piesočná, U Vulgana, Zákostolie, Zápotočná, Záhumenice sa volia traja poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-1173 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 - Šaštín-Stráže, Hviezdoslavova 1462/40, Základná škola elokované pracovisko
+#   okrsok 2: Volebný okrsok č. 2 – Šaštín-Stráže, Alej 549/36, Mestský úrad, prízemie, sobášna sieň
+#   okrsok 3: Volebný okrsok č. 3 – Šaštín-Stráže, Alej 549/36, Mestský úrad, prvé poschodie, zasadacia miestnosť
+obec = "504891"
+name = "Šaštín-Stráže"
+date = 2022-07-21
+fill = "nearest"
+note = "The obvody and seats were set by the prednosta of Okresný úrad Senica (§ 166 with § 38(2) of Act 180/2014), not by the council; the decision is published on the city's notice board. Scanned PDF read by OCR. Obvod 1 is the k.ú. (časť mesta) Stráže; obvody 2 and 3 list all 27 streets of Šaštín. The 17 addresses without a street in the part Šaštín are placed by fill_nearest."
+okrsky_date = 2022-07-08
+okrsky_note = "The okrsky document names only the polling stations (no streets); each obvod has exactly one okrsok (obvod n = okrsok n per the Statistical Office), so each okrsok is its whole obvod (station 1 in Stráže for obvod 1 = k.ú. Stráže). The document is undated; date = its posting on the notice board ('Vyvesené: 8. 7. 2022') as the archived elections page of 10 Aug 2022 states."
+
+[[document]]
+url = "https://www.mestosastinstraze.sk/e_download.php?file=data/uredni_deska/obsah11826_4.pdf&original=Rozhodnutie-volby%20do%20OSO_u%C4%8Drenie%20po%C4%8Dtu%20poslancov%20mestsk%C3%A9ho%20zastupite%C4%BEsva%20a%20volobn%C3%BDch%20obvodov%20v%20meste%20%C5%A0a%C5%A1t%C3%ADn-Str%C3%A1%C5%BEe.sk.pdf"
+sha256 = "7b4c5997a71cf4dc6323e979221c1e702a1e432997e0656da70e008cb4885c5b"
+title = "Rozhodnutie prednostu Okresného úradu Senica č. OU-SE-OO-2022/010505-002 zo dňa 21. júla 2022 o určení počtu poslancov a o utvorení volebných obvodov"
+
+[[document]]
+url = "https://www.mestosastinstraze.sk/e_download.php?file=data/uredni_deska/obsah11826_7.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20volebn%C3%BDch%20miestnost%C3%AD%20pre%20vo%C4%BEby%20do%20samospr%C3%A1vy%20obc%C3%AD%20a%20krajov%202022.pdf"
+sha256 = "c82307c61df436ce6e5d56d7ea5f89b8f37be162b92b1151f84a2307fd86ae99"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov 29. 10. 2022 v meste Šaštín-Stráže"
+
+[[document]]
+url = "https://web.archive.org/web/20220810060359/https://www.mestosastinstraze.sk/mestsky-urad/volby/komunalne-volby-2022-11861.html?kshow=2"
+sha256 = "11b0784918c953f2d52594fdd354445bb34eb5b538b109b7d249b50f955ee86e"
+title = "Komunálne voľby 2022 (elections page listing the okrsky document, vyvesené 8. 7. 2022)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {ku = "Stráže nad Myjavou", note = "'k. ú. časti mesta Stráže' is the k.ú. Stráže nad Myjavou"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [2]
+rules = [
+  {street = "Alej"},
+  {street = "Do Gazárky"},
+  {street = "Ro Gazárka"},
+  {street = "J. Kollára"},
+  {street = "Jesenského"},
+  {street = "Kláštorné nám.", written = "Kláštorné námestie", note = "the register abbreviates námestie"},
+  {street = "M. Nešpora"},
+  {street = "Nádražná"},
+  {street = "Pri Bitúnku"},
+  {street = "Pri Kadúbku"},
+  {street = "Pri Rybníku"},
+  {street = "Slnečná"},
+  {street = "Štúrova"},
+  {street = "Železničiarska"},
+  {street = "Lúčna"},
+]
+
+[obvod.3]
+seats = 3
+okrsky = [3]
+rules = [
+  {street = "Borová"},
+  {street = "J. Hollého"},
+  {street = "Komenského"},
+  {street = "Metodova"},
+  {street = "Na pažiti"},
+  {street = "Nám. Slobody", written = "Námestie Slobody", note = "the register abbreviates námestie"},
+  {street = "Novoveská"},
+  {street = "Piesočná"},
+  {street = "U Vulgana"},
+  {street = "Zákostolie"},
+  {street = "Zápotočná"},
+  {street = "Záhumenice"},
+]

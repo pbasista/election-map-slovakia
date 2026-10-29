@@ -1,0 +1,18 @@
+# Response headers of an election's bundles, its map and its data, which
+# `ems build` writes to dist/map/<slug>/_headers and dist/data/<slug>/_headers
+# (src/election_map_slovakia/bundle.py), for the Cloudflare Pages project
+# of each bundle (docs/deploy.md). Syntax and limits as in web/_headers.
+
+# The app on the site's own domain fetches the files from here, so every
+# origin may read them: they are public data. Search engines should index
+# the site, not its data files.
+#
+# The app names the bundle by the address of the deployment that carries
+# its key, which never serves other files, and asks for every file with
+# ?v=<the bundle's version> (served locally by `ems serve`, the same path
+# serves each new build): a copy is good for ever.
+/*
+  Access-Control-Allow-Origin: *
+  X-Content-Type-Options: nosniff
+  X-Robots-Tag: noindex
+  Cache-Control: public, max-age=31536000, immutable

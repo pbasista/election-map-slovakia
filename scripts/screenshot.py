@@ -4,9 +4,10 @@
     python3 scripts/screenshot.py [--browser PATH] [-- BROWSER-ARGS...]
 
 It needs only the standard library and a Chromium-family browser (Chromium,
-Google Chrome, Chrome's headless shell): it serves dist/ on a free port,
-starts the browser headless and drives it over the DevTools protocol, so
-the project gains no dependency for an image regenerated once a release.
+Google Chrome, Chrome's headless shell): it serves the parts in dist/ on a
+free port as `ems serve` does, starts the browser headless and drives it
+over the DevTools protocol, so the project gains no dependency for an image
+regenerated once a release.
 Without --browser it looks for one on PATH. Arguments after `--` go to the
 browser as they are (e.g. `-- --no-sandbox` where its sandbox cannot run).
 
@@ -21,7 +22,6 @@ are none even in a build that reads them at any time (EMS_RESULTS_ANYTIME).
 import argparse
 import base64
 import datetime as dt
-import functools
 import http.server
 import json
 import os
@@ -34,6 +34,7 @@ import tempfile
 import threading
 import time
 import tomllib
+import urllib.parse
 import urllib.request
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -41,7 +42,7 @@ from zoneinfo import ZoneInfo
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
 OUT = ROOT / "docs/img/main.png"
-SITE = ROOT / "config/site.toml"
+ELECTIONS = ROOT / "config/elections.toml"
 # The results' files, as the shells' config names them (build.py).
 RESULTS = "*/results/*"
 WIDTH, HEIGHT, SCALE = 1280, 800, 2
@@ -156,14 +157,28 @@ class DevTools:
 
 
 class _QuietHandler(http.server.SimpleHTTPRequestHandler):
+    """Serves the parts of dist/ as one site, as `ems serve` does.
+
+    Where `ems build` points the app (src/election_map_slovakia/build.py,
+    `mounts`): the bundles below /map/ and /data/, the results below /results/, the
+    cached sources' files where the app has none, the app everywhere else.
+    """
+
+    def translate_path(self, path: str) -> str:
+        rel = urllib.parse.unquote(urllib.parse.urlsplit(path).path).lstrip("/")
+        if rel.startswith(("map/", "data/", "results/")):
+            return str(DIST / rel)
+        app = DIST / "app" / rel
+        sources = DIST / "sources" / rel
+        return str(app if app.exists() or not sources.exists() else sources)
+
     def log_message(self, *_args) -> None:
         """Log nothing: the base class logs every request to stderr."""
 
 
-def serve(directory: Path) -> http.server.ThreadingHTTPServer:
-    """Serve *directory* on a free local port, in a background thread."""
-    handler = functools.partial(_QuietHandler, directory=str(directory))
-    server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), handler)
+def serve() -> http.server.ThreadingHTTPServer:
+    """Serve dist/ on a free local port, in a background thread."""
+    server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), _QuietHandler)
     threading.Thread(target=server.serve_forever, daemon=True).start()
     return server
 
@@ -205,10 +220,13 @@ def wait_until_ready(tools: DevTools, deadline: float) -> None:
 
 
 def day_before() -> int:
-    """Return noon of the day before the elections, in ms since the epoch."""
-    site = tomllib.loads(SITE.read_text())
+    """Return noon of the day before the latest elections, in ms since the epoch.
+
+    The latest election is the one /en/ shows.
+    """
+    elections = tomllib.loads(ELECTIONS.read_text())["election"].values()
     noon = dt.datetime.combine(
-        site["election"] - dt.timedelta(days=1),
+        max(e["day"] for e in elections) - dt.timedelta(days=1),
         dt.time(12),
         ZoneInfo("Europe/Bratislava"),
     )
@@ -221,9 +239,9 @@ def main() -> None:
     parser.add_argument("--browser", help="Chromium-family browser executable")
     parser.add_argument("browser_args", nargs="*", help="extra browser arguments")
     args = parser.parse_args()
-    if not (DIST / "en/index.html").exists():
-        sys.exit("screenshot: no dist/en/index.html; run `uv run ems build` first")
-    server = serve(DIST)
+    if not (DIST / "app/en/index.html").exists():
+        sys.exit("screenshot: no dist/app/en/index.html; run `uv run ems build` first")
+    server = serve()
     noon = day_before()
     url = f"http://127.0.0.1:{server.server_port}/en/{HASH}"
     deadline = time.monotonic() + TIMEOUT

@@ -1,0 +1,49 @@
+# Council obvody of Ludanice (505048), Topoľčany.
+# Transcribed by an AI agent in job obvod-rules-340 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: vo volebnom obvode číslo 1 - Ludanice, ktorý zahŕňa ulice 1. mája, Cintorínska, Družstevná, Nádražná, Pivovarská, SNP, Topoľčianska, 9. mája, Štúrova, Slobody, Kpt. Nálepku, Hviezdoslavova, Trojičné námestie bude zvolených 7 poslancov.
+#   obvod 2: vo volebnom obvode číslo 2 - Mýtna Nová Ves, ktorý tvorí miestna časť obce Mýtna Nová Ves budú zvolení 2 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-1208 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: vo volebnom obvode číslo 1 - Ludanice, ktorý zahŕňa ulice 1. mája, Cintorínska, Družstevná, Nádražná, Pivovarská, SNP, Topoľčianska, 9. mája, Štúrova, Slobody, Kpt. Nálepku, Hviezdoslavova, Trojičné námestie bude zvolených 7 poslancov.
+#   okrsok 2: vo volebnom obvode číslo 2 - Mýtna Nová Ves, ktorý tvorí miestna časť obce Mýtna Nová Ves budú zvolení 2 poslanci.
+obec = "505048"
+name = "Ludanice"
+date = 2022-07-19
+note = "Scanned resolution, read by OCR. Obvod 1 'Ludanice' lists the streets of the part Ludanice; the few addresses of part Ludanice without a street are put in obvod 1 by a part rule (the obvod is named Ludanice, obvod 2 is the other part)."
+okrsky_date = 2022-07-19
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office okrsky per obvod), so each okrsok is its whole obvod; the obvody document is the source and date is that resolution's date (no separate okrsky announcement used)."
+
+[[document]]
+url = "https://data.moderneobce.sk/data/uploads/obecludanice.sk/Uznesenia_zo_4._mimoriadneho_obecn%C3%A9ho_zastupite%C4%BEstva_v_Ludaniciach.pdf"
+sha256 = "38388682b7aafe68e6b48a806f09cb05fa6f1973c2df7b99775ee40d9e386a01"
+title = "Uznesenia č. 288-296/2022 zo zasadnutia 4. mimoriadneho OZ v Ludaniciach dňa 19. júla 2022 (uznesenie č. 289/2022)"
+
+[obvod.1]
+seats = 7
+okrsky = [1]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Nádražná"},
+  {street = "Pivovarská"},
+  {street = "SNP"},
+  {street = "Topoľčianska"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Štúrova"},
+  {street = "Slobody"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Hviezdoslavova"},
+  {street = "Trojičné Námestie", written = "Trojičné námestie"},
+  {part = "Ludanice", note = "Obvod named Ludanice; covers addresses of part Ludanice without a street (súpisné only).", inferred = true},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Mýtna Nová Ves"},
+]

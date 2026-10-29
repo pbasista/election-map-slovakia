@@ -1,0 +1,53 @@
+# Council obvody of Horná Potôň (501590), Dunajská Streda.
+# Transcribed by an AI agent in job obvod-rules-191 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný okrsok č. 1 – volebná miestnosť Kultúrny dom Horná Potôň
+#   obvod 2: Volebný okrsok č. 2 – Obecný dom – Horná Potôň, Benkova Potôň č.16
+#   obvod 3: Volebný okrsok č. 3 – Pohostinstvo LANBA – Horná Potôň, Čečínska Potôň č. 9
+# Okrsky added by an AI agent in job okrsok-rules-647 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebná miestnosť pre volebný okrsok č. 1 bude v budove Kultúrny dom – Horná Potôň č. 1
+#   okrsok 2: Volebná miestnosť pre volebný okrsok č. 2 bude v budove Obecný dom – Horná Potôň, Benkova Potôň č.16
+#   okrsok 3: Volebná miestnosť pre volebný okrsok č. 3 bude v budove Pohostinstvo LANBA – Horná Potôň, Čečínska Potôň č. 9
+obec = "501590"
+name = "Horná Potôň"
+date = 2022-06-21
+note = "The 2022 announcement gives only 9 seats in 3 obvody (3 each), not their composition; the minutes of the session of 21.06.2022 (resolutions 06-03/2022 and 07-03/2022) say no more ('tri volebné obvody a 3 okrsky'). Each obvod has exactly one okrsok (ŠÚ SR); the 2022 okrsky document puts the polling rooms of okrsok 1 in Horná Potôň (Kultúrny dom), okrsok 2 in Benkova Potôň č. 16 and okrsok 3 in Čečínska Potôň č. 9, and the page 'Vedenie obce' (councillors 2022-2026) names obvod č. 1 Horná Potôň, č. 2 Benkova Potôň, č. 3 Čečínska Potôň. Obvody 2 and 3 are taken from the 2026 rule set, which rests on the decision of 23.06.2026 naming them so; obvod 1 is the remaining part Horná Potôň."
+supplemented = 2026-10-24
+supplemented_from = "election"
+supplement_basis = "No 2022 document states what each obvod covers (the announcement and the minutes of 21.06.2022 give only 3 obvody of 3 seats); the council's decision of 23.06.2026, in the 2026 rule set, names the three units Horná Potôň, Benkova Potôň and Čečínska Potôň with 3 seats each, matching the 2022 polling rooms and the 2022-2026 councillors' obvody. Obvod 2 = part Benkova Potôň (525 addresses) and obvod 3 = part Čečínska Potôň (290) are taken from it; obvod 1 is the remaining part Horná Potôň."
+okrsky_date = 2022-08-03
+okrsky_note = "The 2022 document gives only the 3 okrsky with their polling stations, no streets; each obvod has exactly one okrsok (ŠÚ SR), so okrsok n is the whole obvod n (Horná Potôň, Benkova Potôň, Čečínska Potôň, matching the polling stations)."
+
+[[document]]
+url = "https://www.hornapoton.sk/e_download.php?file=data/uredni_deska/obsah200_7.pdf&original=OZNAMENIE-o-utvoreni-volebnych-obvodov-a-o-urceni-poctu-poslancov.pdf"
+sha256 = "07380553123771fda306d3b5bee04adbad90a927ac48459327f890bd0f738bda"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenia OZ č. 06-03/2022 a 07-03/2022 z 21.06.2022), 20.07.2022"
+
+[[document]]
+url = "https://www.hornapoton.sk/e_download.php?file=data/uredni_deska/obsah204_1.doc&original=N-9-volebn%C3%A9%20okrsky.doc"
+sha256 = "d2b789867f6df5e0a25faa0cd7d42a09bcf53b9c82cc4a02e5097914af50569e"
+title = "Určenie volebných okrskov a volebných miestností 2022, 03.08.2022"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {part = "Horná Potôň", note = "obvod 1 = okrsok 1, whose polling room is the Kultúrny dom in Horná Potôň (2022 okrsky document); the page 'Vedenie obce' lists the councillors of 2022-2026 as 'volebný obvod č. 1 – Horná Potôň'; with obvody 2 and 3 the parts Benkova Potôň and Čečínska Potôň (as the 2026 decision sets them), the part Horná Potôň is what remains", inferred = true},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Benkova Potôň", note = "the 2026 decision (minutes of 23.06.2026) names obvod 2 Benkova Potôň; the 2022 documents give only its polling room in Benkova Potôň č. 16", supplemented = true},
+]
+
+[obvod.3]
+seats = 3
+okrsky = [3]
+rules = [
+  {part = "Čečínska Potôň", note = "the 2026 decision (minutes of 23.06.2026) names obvod 3 Čečínska Potôň; the 2022 documents give only its polling room in Čečínska Potôň č. 9", supplemented = true},
+]

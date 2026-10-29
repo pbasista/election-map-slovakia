@@ -34,9 +34,7 @@ Mayors, councils and presidents also have their past election
 by-election that elected the mayor, or the whole council, again, else the
 regular election of 2022; for a president, the regional election of 2022.
 The 2022 regional turnout is kept per obec too, for the 2026 regional
-obvody (unknown here) to be summed from, and the 2022 municipal turnout per
-okrsok of every obec of several, for the 2026 council obvody whose okrsky
-are known to be summed from (``build``).
+obvody (unknown here) to be summed from (``build``).
 
 Bodies are named like the 2026 contests without obvod: ``starosta:<obec>``,
 ``oz:<obec>``, ``predseda:<kraj>``, ``zsk:<kraj>``, with ``BA``/``KE`` for the
@@ -55,22 +53,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from election_map_slovakia import candidates, xlsx
+from election_map_slovakia.config import Incumbents
 
-MUNICIPAL_2022 = "results-oso2022"
-REGIONAL_2022 = "results-osk2022"
-ELECTION_2022 = dt.date(2022, 10, 29)
-# Inputs in config/inputs.toml with the day of each by-election, in date order,
-# as listed on https://volby.statistics.sk/oso/doplnkove2022/sk/index.html
-BY_ELECTIONS = {
-    "results-oso202303": dt.date(2023, 3, 25),
-    "results-oso202309": dt.date(2023, 9, 9),
-    "results-oso202402": dt.date(2024, 2, 10),
-    "results-oso202410": dt.date(2024, 10, 5),
-    "results-oso202503": dt.date(2025, 3, 15),
-    "results-oso202509": dt.date(2025, 9, 6),
-    "results-oso202603": dt.date(2026, 3, 21),
-}
-INPUTS = (MUNICIPAL_2022, REGIONAL_2022, *BY_ELECTIONS)
 ROLES = ("starosta", "oz", "predseda", "zsk")
 # The XLSX tables of the by-elections name their columns in words; they are
 # renamed to the column names of the 2022 CSV tables.
@@ -159,7 +143,7 @@ class Past:
     """The last election of a body before 2026: its turnout in the body's area."""
 
     election: str
-    """The results input it comes from, one of :data:`INPUTS`."""
+    """The results input it comes from (:class:`Incumbents`)."""
     day: dt.date
     turnout: Turnout
 
@@ -240,7 +224,7 @@ class Election:
     """The municipal election of one day, reduced to what changes holders."""
 
     name: str
-    """The results input it comes from, one of :data:`INPUTS`."""
+    """The results input it comes from (:class:`Incumbents`)."""
     day: dt.date
     units: list[Unit]
     mayors: dict[str, list[dict[str, str]]]
@@ -251,15 +235,14 @@ class Election:
     turnout: dict[tuple[str, ...], Turnout]
     """``(obec, obvod)`` → turnout of a council obvod, ``(obec, "")`` →
     turnout of the municipality with the valid ballots for mayor."""
-    okrsky: dict[str, dict[int, Turnout]] = field(default_factory=dict)
-    """Obec code → okrsok → its turnout, with the valid ballots for the
-    council; where the tables are per okrsok (the regular election)."""
 
 
 @dataclass
 class Holders:
     """The current holders of every body, and what could not be placed."""
 
+    source: Incumbents
+    """The results the holders are rebuilt from (``elections.toml``)."""
     bodies: dict[str, list[Holder]] = field(default_factory=dict)
     """Body → holders; a mayor or president body has at most one."""
     seats_2022: dict[str, int] = field(default_factory=dict)
@@ -273,10 +256,6 @@ class Holders:
     """Obec code (Bratislava and Košice districts as such) → the 2022
     regional election in it, to be summed over the 2026 regional obvody,
     which are not known here."""
-    okrsky: dict[str, dict[int, Turnout]] = field(default_factory=dict)
-    """Obec code → okrsok → its turnout in the regular municipal election of
-    2022, for the obce of several okrsky: the 2026 council obvody that are
-    unions of the same okrsky have it summed (``build``)."""
 
     def all(self) -> Iterable[Holder]:
         """Yield every holder, in body order."""
@@ -289,13 +268,19 @@ def _body_order(body: str) -> tuple[int, str]:
     return ROLES.index(kind), area
 
 
-def load(paths: Mapping[str, Path], admin: candidates.Admin) -> Holders:
-    """Return the current holders from the result files of :data:`INPUTS`."""
-    holders = Holders()
-    apply(holders, _read_municipal_2022(paths[MUNICIPAL_2022]), admin)
-    for name, day in BY_ELECTIONS.items():
-        apply(holders, _read_by_election(paths[name], name, day), admin)
-    _add_regional(holders, paths[REGIONAL_2022])
+def load(
+    source: Incumbents, paths: Mapping[str, Path], admin: candidates.Admin
+) -> Holders:
+    """Return the current holders from the result files of *source*.
+
+    *paths* maps each input of *source* to its file.
+    """
+    holders = Holders(source)
+    regular = _read_municipal_2022(paths[source.municipal], source)
+    apply(holders, regular, admin)
+    for by in source.by_elections:
+        apply(holders, _read_by_election(paths[by.input], by.input, by.day), admin)
+    _add_regional(holders, paths[source.regional])
     return holders
 
 
@@ -320,13 +305,8 @@ def apply(holders: Holders, election: Election, admin: candidates.Admin) -> None
             continue
         mayor, council = _offices(election, unit)
         oz = f"oz:{code}"
-        if election.day == ELECTION_2022:
+        if election.name == holders.source.municipal:
             holders.seats_2022[oz] = unit.seats
-            # The city-wide tables of Bratislava and Košice number the okrsky
-            # of each district anew: only the districts' own are kept.
-            okrsky = election.okrsky.get(unit.obec, {})
-            if code in admin.obce and len(okrsky) > 1:
-                holders.okrsky[code] = okrsky
         whole = unit.seats >= holders.seats_2022.get(oz, 0)
         if council:
             elected = [
@@ -388,7 +368,7 @@ def _add_past(
     if turnout is None:
         return
     past = Past(election.name, election.day, turnout)
-    regular = election.day == ELECTION_2022
+    regular = election.name == holders.source.municipal
     if regular or mayor:
         holders.past[f"starosta:{code}"] = past
     if regular or council:
@@ -438,7 +418,7 @@ def _holder(
     )
 
 
-def _read_municipal_2022(path: Path) -> Election:
+def _read_municipal_2022(path: Path, source: Incumbents) -> Election:
     with _open(path) as z:
         units = _csv(z, path, "tab0dd")
         mayors = _csv(z, path, "tab0ad")
@@ -446,19 +426,14 @@ def _read_municipal_2022(path: Path) -> Election:
         # Votes and turnout are per okrsok, summed here.
         won_mayor = _winners(_csv(z, path, "tab05f"), _MAYOR_KEY, _ELECTED_2022)
         won_member = _winners(_csv(z, path, "tab08f"), _MEMBER_KEY, _ELECTED_2022)
-        rows = _csv(z, path, "tab02bf")
-        turnout = _turnout(rows, _municipal_units)
-    okrsky: dict[str, dict[int, Turnout]] = defaultdict(dict)
-    for (obec, okrsok), t in _turnout(rows, _okrsok_units).items():
-        okrsky[obec][int(okrsok)] = t
+        turnout = _turnout(_csv(z, path, "tab02bf"), _municipal_units)
     return Election(
-        MUNICIPAL_2022,
-        ELECTION_2022,
+        source.municipal,
+        source.day,
         _units(units),
         _elected(mayors, _MAYOR_KEY, won_mayor),
         _elected(members, _MEMBER_KEY, won_member),
         turnout,
-        dict(okrsky),
     )
 
 
@@ -519,10 +494,6 @@ def _municipal_units(r: Mapping[str, str]) -> Iterable[tuple[tuple[str, ...], st
     return (((r["OBEC"], r["VOOBEC"]), "P_HL_ZAS"), ((r["OBEC"], ""), "P_HL_STA"))
 
 
-def _okrsok_units(r: Mapping[str, str]) -> Iterable[tuple[tuple[str, ...], str]]:
-    return (((r["OBEC"], r["OKRSOK"]), "P_HL_ZAS"),)
-
-
 def _turnout(
     rows: Iterable[Mapping[str, str]],
     units: Callable[[Mapping[str, str]], Iterable[tuple[tuple[str, ...], str]]],
@@ -563,7 +534,8 @@ def _by_obec(rows: Iterable[dict[str, str]]) -> dict[str, list[dict[str, str]]]:
 
 
 def _add_regional(holders: Holders, path: Path) -> None:
-    """Add the 2022 regional election: its winners, and turnout per kraj and obec."""
+    """Add the regional election: its winners, and turnout per kraj and obec."""
+    source = holders.source
     with _open(path) as z:
         units = _csv(z, path, "tab0dc")
         presidents = {(r["KRAJ"], r["PC_HL"]): r for r in _csv(z, path, "tab0a")}
@@ -590,7 +562,7 @@ def _add_regional(holders: Holders, path: Path) -> None:
             ),
         )
     for (unit, code), t in turnout.items():
-        past = Past(REGIONAL_2022, ELECTION_2022, t)
+        past = Past(source.regional, source.day, t)
         if unit == "predseda":
             holders.past[f"predseda:{code}"] = past
         elif unit == "obec":
@@ -598,7 +570,7 @@ def _add_regional(holders: Holders, path: Path) -> None:
     kraj_of_obvod = {r["VOBVOD"]: r["KRAJ"] for r in units}
 
     def add(body: str, row: Mapping[str, str], result: Result) -> None:
-        holder = _holder(body, ELECTION_2022, row, result, row["TP_NOBEC"])
+        holder = _holder(body, source.day, row, result, row["TP_NOBEC"])
         holders.bodies.setdefault(body, []).append(holder)
 
     for (kraj, number), votes in sorted(won_president.items()):
@@ -845,19 +817,6 @@ def past_json(p: Past) -> dict[str, object]:
         "day": p.day.isoformat(),
         "eligible": p.turnout.eligible,
         "voters": p.turnout.voters,
-    }
-
-
-def okrsky_json(okrsky: Mapping[int, Turnout]) -> dict[str, object]:
-    """Return ``{election, day, okrsky: [[okrsok, eligible, voters], …]}``.
-
-    The turnout of each okrsok of an obec in the regular municipal election
-    of 2022 (:attr:`Holders.okrsky`), named like :func:`past_json`.
-    """
-    return {
-        "election": MUNICIPAL_2022.removeprefix("results-"),
-        "day": ELECTION_2022.isoformat(),
-        "okrsky": [[n, t.eligible, t.voters] for n, t in sorted(okrsky.items())],
     }
 
 

@@ -1,0 +1,29 @@
+# Okrsky of Hviezdoslavov, transcribed by an AI agent in job okrsok-rules-698 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Súpisné čísla od 1 do 800
+#   okrsok 2: Súpisné čísla od 801 do 1782
+obec = "501638"
+name = "Hviezdoslavov"
+okrsky_date = 2022-08-25
+okrsky_note = "The okrsky are split by súpisné číslo over the whole village (part rules with numbers). The document is undated; date is the date the elections page gives for the file (25.8.2022)."
+
+[[document]]
+url = "https://www.hviezdoslavov.sk/data/page/hviezdoslavov.sk/14684/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti.pdf"
+sha256 = "ecf79e08cbf7335527d6ad9e6da56b3634b33171045af949ade9e1a0e7eee2ad"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.hviezdoslavov.sk/14684/spojene-volby-2022"
+sha256 = "f40a7c807002c80d4f3f20cd7c413ec717d7788b3d59858bd328984aa9182cc3"
+title = "Spojené voľby 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Hviezdoslavov", numbers = "1-800"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Hviezdoslavov", numbers = "801-", note = "the document's range ends at 1782; any higher súpisné číslo (newer houses) is taken to belong here too"},
+]

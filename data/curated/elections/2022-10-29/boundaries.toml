@@ -1,0 +1,64 @@
+# The boundaries the 2022 election is drawn on, and how they differ from its
+# own. The site draws it on the ZBGIS boundaries of 2026 (inputs zbgis-0..2):
+# the boundaries of January 2022 survive only as full-detail shapefiles
+# (input zbgis-2022, a record), with the same 8 kraje, 79 okresy and 2,927
+# obce, codes and names as 2026. Compared obec by obec (symmetric difference
+# over the 2026 area), 2,913 obce differ by at most 0.1 % of their area, by
+# redrawing at the scale of centimetres to metres; the changes below are
+# the larger ones, all land moved between neighbours or along the state
+# border. Okresy and kraje follow: only Bratislava IV moved more than 0.1 %
+# (0.13 %, the border of Karlova Ves and Devín).
+#
+# The address register is matched to obce by name, so an address of 2022
+# keeps its obec on the 2026 boundaries, only nearer its edge.
+#
+#   [[change]]
+#   obce       the obce whose land moved, ŠÚ SR codes; `area` the land moved
+#              (ha, each way for a swap; per obec, at most, along the
+#              border), `addresses` the 2022 address points in it, `note`
+#              what happened; `state_border = true` where the land moved
+#              along the state border, not between the obce listed
+#
+# The app states on the ballots of these obce, in the map's credits and in
+# About that the 2026 boundaries are drawn (build.py `boundary_changes`).
+
+compared = 2022-01-18  # the data date (DOW) of the 2022 shapefiles
+used = "zbgis-0"
+
+[[change]]
+obce = ["523585", "523682"]  # Kežmarok 1.37 %, Ľubica 0.44 %
+area = 17
+addresses = 80
+note = "land swapped between the two"
+
+[[change]]
+obce = ["527858", "527238"]  # Svidnička 1.64 %, Dlhoňa 1.03 %
+area = 9.2
+addresses = 0
+note = "from Svidnička to Dlhoňa"
+
+[[change]]
+obce = ["518921", "518794"]  # Vígľaš 0.21 %, Slatinské Lazy 0.90 %
+area = 6.6
+addresses = 7
+note = "from Vígľaš to Slatinské Lazy"
+
+[[change]]
+obce = ["501158", "501115"]  # Chotín 0.28 %, Svätý Peter 0.17 %
+area = 2.8
+addresses = 21
+note = "land swapped between the two"
+
+[[change]]
+obce = ["518468", "508730"]  # Hriňová 0.03 %, Lom nad Rimavicou 0.21 %
+area = 3.7
+addresses = 9
+note = "from Hriňová to Lom nad Rimavicou"
+
+[[change]]
+# Leľa 2.26 %, Salka, Malé Kosihy, Šahy (k.ú. Tešmák),
+# Bratislava-Karlova Ves, Bratislava-Devín
+obce = ["503312", "503525", "503355", "502782", "529397", "529401"]
+area = 19  # 3 to 19 per obec
+note = "the state border redrawn"
+state_border = true

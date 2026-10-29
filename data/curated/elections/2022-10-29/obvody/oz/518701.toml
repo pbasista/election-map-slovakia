@@ -1,0 +1,36 @@
+# Council obvody of Rykynčice (518701), Krupina.
+# Transcribed by an AI agent in job obvod-rules-375 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: dva volebné obvody – jeden v hornej časti obce (Horné Rykynčice) ... počet poslancov 5 - 1 za hornú časť obce (Horné Rykynčice)
+#   obvod 2: ... a jeden v dolnej časti obce (Dolné Rykynčice) ... 4 za dolnú časť obce (Dolné Rykynčice)
+# Okrsky added by an AI agent in job okrsok-rules-1236 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: dva volebné obvody – jeden v hornej časti obce (Horné Rykynčice) ... počet poslancov 5 - 1 za hornú časť obce (Horné Rykynčice)
+#   okrsok 2: ... a jeden v dolnej časti obce (Dolné Rykynčice) ... 4 za dolnú časť obce (Dolné Rykynčice)
+obec = "518701"
+name = "Rykynčice"
+date = 2022-06-06
+note = "The resolutions do not number the obvody; numbering taken from the seats (input obvod 1 has 1 seat = Horné Rykynčice, obvod 2 has 4 seats = Dolné Rykynčice), which match the resolution exactly."
+okrsky_date = 2022-06-06
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+
+[[document]]
+url = "https://www.rykyncice.sk/files/2022-06-07-111412-Z__pisnica_zo_zasadnutia_OZ_6.6.2022.pdf"
+sha256 = "bd19eb4b28b9e6c26c69f15bf195b11542c73ae96045a76325dcd5780a53c7f0"
+title = "Zápisnica zo zasadnutia OZ Rykynčice dňa 6.6.2022, uznesenia č. 32/06-2022 a 33/06-2022"
+
+[obvod.1]
+seats = 1
+okrsky = [1]
+rules = [
+  {part = "Horné Rykynčice"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [2]
+rules = [
+  {part = "Dolné Rykynčice"},
+]

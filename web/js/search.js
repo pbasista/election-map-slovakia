@@ -13,10 +13,10 @@
  */
 
 import { html, useEffect, useRef, useState } from '../vendor/preact-htm.module.js';
-import { contestLabel, contestOf, dataIndex, findPersons, searchKey } from './data.js';
+import { candidacyLinks, contestLabel, contestOf, dataIndex, findPersons, searchKey } from './data.js';
 import { addressFile, fetchJSON } from './files.js';
-import { t } from './i18n.js';
-import { CloseIcon, SearchIcon } from './icons.js';
+import { election, elections, formatDate, lang, t } from './i18n.js';
+import { CheckIcon, CloseIcon, Logo, SearchIcon } from './icons.js';
 
 const LIMITS = { obec: 5, street: 8, part: 4, person: 6, number: 40 };
 // With at most this many streets, parts and obce matching a query with a
@@ -220,15 +220,53 @@ async function search(raw, scope) {
   return options;
 }
 
-/* The search card: the site's title (*children*) with a search button, which
- * turns the card into the search box in place; `/`, Ctrl+K and ⌘K open it
- * from anywhere. The box stays while it holds text; empty and left, or on
- * Esc or its close button, it turns back into the title.
+/* The hash parameters that go along to another election's page: the map's
+ * view (`m`) and the place (`o`, `ll`, `a`), which mean the same in every
+ * election, and the open candidate (`c`) where the person is linked to
+ * one there, as the candidacy that stands for theirs (data.js
+ * `candidacyLinks`). The others name one election's constituencies,
+ * polling districts, contests, candidacies, parties or results (app.js),
+ * so they stay behind; this is the one place that decides what crosses
+ * over. */
+const CARRIED = new Set(['m', 'o', 'll', 'a']);
+
+/* *hash* for the page of the election of *slug*; *linked* is {c, links}:
+ * the candidacy open when the list of elections opened and its
+ * `candidacyLinks`. */
+function carriedHash(hash, slug, linked) {
+  // Taken as written: decoding and encoding again would percent-encode what
+  // app.js `hashOf` leaves readable.
+  const kept = hash
+    .slice(1)
+    .split('&')
+    .filter((part) => CARRIED.has(part.split('=', 1)[0]));
+  const c = new URLSearchParams(hash.slice(1)).get('c');
+  const there = c && c === linked.c ? linked.links[slug] : null;
+  if (there) kept.push(`c=${there.replace('#', '%23')}`);
+  return kept.length ? `#${kept.join('&')}` : '';
+}
+
+// Every election's page by its slug, the latest's too (rather than
+// /<lang>/), so that the link names the election it goes to.
+const electionUrl = (slug, linked) => `/${lang}/${slug}/${carriedHash(location.hash, slug, linked)}`;
+
+// The kinds of election, each a group of the list under its own heading
+// (`elections.kind.<kind>`), the kind of the newest election first; within
+// a group, newest first, as km-config lists them.
+const kinds = [...new Set(elections.map((e) => e.kind))];
+
+/* The search card: the site's logo and title (*children*) with a search
+ * button, which turns the card into the search box in place; `/`, Ctrl+K
+ * and ⌘K open it from anywhere. The box stays while it holds text; empty and
+ * left, or on Esc or its close button, it turns back into the title. Where
+ * the site has several elections, the logo is a button that turns the card
+ * into the list of them likewise, links to their pages.
  *
  * `onPlace(place, view)` selects a place (see map.js `select` for *view*);
  * `onCandidate(id)` opens a candidate. */
 export function Search({ onPlace, onCandidate, children }) {
   const [shown, setShown] = useState(false);
+  const [choosing, setChoosing] = useState(false);
   const [query, setQuery] = useState('');
   const [options, setOptions] = useState([]);
   const [active, setActive] = useState(-1);
@@ -240,6 +278,12 @@ export function Search({ onPlace, onCandidate, children }) {
   const box = useRef(null);
   const opener = useRef(null);
   const refocus = useRef(false);
+  const chooser = useRef(null);
+  const list = useRef(null);
+  const rechoose = useRef(false);
+  // The open candidate and their candidacies in the other elections, which
+  // the links to those carry (`carriedHash`).
+  const [linked, setLinked] = useState({ c: null, links: {} });
 
   function show() {
     // Shown and focused right here rather than after the re-render: phones
@@ -247,6 +291,7 @@ export function Search({ onPlace, onCandidate, children }) {
     box.current.hidden = false;
     input.current.focus();
     setShown(true);
+    setChoosing(false);
   }
 
   /* Back to the title; with *focusTitle*, focus goes to its button rather
@@ -267,6 +312,56 @@ export function Search({ onPlace, onCandidate, children }) {
     refocus.current = false;
     opener.current.focus();
   }, [shown]);
+
+  /* Back from the elections to the title; with *focusLogo*, focus goes to
+   * the logo's button rather than being lost with the list. */
+  function stopChoosing(focusLogo) {
+    rechoose.current = focusLogo;
+    setChoosing(false);
+  }
+
+  useEffect(() => {
+    if (choosing) {
+      list.current.querySelector('a').focus();
+      // A tap or click anywhere else puts the list away, as it does the box.
+      const away = (e) => {
+        if (!list.current.contains(e.target)) stopChoosing(false);
+      };
+      // Caught on the way down: the map stops the pointer's events.
+      document.addEventListener('pointerdown', away, true);
+      return () => document.removeEventListener('pointerdown', away, true);
+    }
+    if (rechoose.current) {
+      rechoose.current = false;
+      chooser.current.focus();
+    }
+  }, [choosing]);
+
+  useEffect(() => {
+    const c = choosing && new URLSearchParams(location.hash.slice(1)).get('c');
+    if (!c) return;
+    let current = true;
+    candidacyLinks(c).then((links) => {
+      if (current) setLinked({ c, links });
+    });
+    return () => {
+      current = false;
+    };
+  }, [choosing]);
+
+  function onListKey(e) {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      stopChoosing(true);
+      return;
+    }
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    const links = [...list.current.querySelectorAll('a')];
+    const i = links.indexOf(document.activeElement);
+    if (i < 0) return;
+    e.preventDefault();
+    links[(i + (e.key === 'ArrowDown' ? 1 : -1) + links.length) % links.length].focus();
+  }
 
   useEffect(() => {
     const onKey = (e) => {
@@ -370,7 +465,23 @@ export function Search({ onPlace, onCandidate, children }) {
   }, [active]);
 
   return html`
-    <div class="title" hidden=${shown}>
+    <div class="title" hidden=${shown || choosing}>
+      ${
+        elections.length > 1
+          ? html`<button
+              type="button"
+              class="election-open"
+              ref=${chooser}
+              aria-label=${t('elections.open')}
+              title=${t('elections.open')}
+              aria-expanded=${choosing}
+              aria-controls="km-elections"
+              onClick=${() => setChoosing(true)}
+            >
+              <${Logo} />
+            </button>`
+          : html`<${Logo} />`
+      }
       <h1 class="brand">${children}</h1>
       <button
         type="button"
@@ -386,6 +497,60 @@ export function Search({ onPlace, onCandidate, children }) {
         <${SearchIcon} />
       </button>
     </div>
+    ${
+      elections.length > 1
+        ? html`<nav class="elections" id="km-elections" ref=${list} hidden=${!choosing} aria-label=${t('elections.label')} onKeyDown=${onListKey}>
+            ${kinds.map(
+              (kind) => html`
+                <p class="elections-kind" id=${`km-elections-${kind}`} key=${`${kind} head`}>${t(`elections.kind.${kind}`)}</p>
+                <ul aria-labelledby=${`km-elections-${kind}`} key=${kind}>
+                  ${elections
+                    .filter((e) => e.kind === kind)
+                    .map(({ day, slug }) => {
+                      const current = day === election;
+                      // Its kind heads the group; each entry is its year
+                      // and day, one short line, and says it all only to a
+                      // screen reader.
+                      return html`
+                        <li key=${slug}>
+                          <a
+                            href=${electionUrl(slug, linked)}
+                            aria-current=${current ? 'page' : undefined}
+                            aria-label=${t('elections.item', { kind: t(`elections.kind.${kind}`), date: formatDate(day) })}
+                            onClick=${(e) => {
+                              if (current) {
+                                e.preventDefault();
+                                stopChoosing(true);
+                              } else {
+                                // The map may have moved since the list
+                                // opened: the view and place go along as
+                                // they are now.
+                                e.currentTarget.href = electionUrl(slug, linked);
+                              }
+                            }}
+                          >
+                            <span class="election-year">${day.slice(0, 4)}</span>
+                            <span class="election-day">${formatDate(day, false)}</span>
+                            ${current ? html`<${CheckIcon} />` : null}
+                          </a>
+                        </li>
+                      `;
+                    })}
+                </ul>
+              `,
+            )}
+            <button
+              type="button"
+              class="search-close"
+              aria-label=${t('elections.close')}
+              title=${t('elections.close')}
+              onClick=${() => stopChoosing(true)}
+            >
+              <${CloseIcon} />
+            </button>
+          </nav>`
+        : null
+    }
     <div class="search" id="km-search-box" ref=${box} hidden=${!shown}>
       <${SearchIcon} />
       <input

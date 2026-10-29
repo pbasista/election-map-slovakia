@@ -1,0 +1,130 @@
+# Council obvody of Beluša (512851), Púchov.
+# Transcribed by an AI agent in job obvod-rules-274 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: I. volebný obvod - volia sa 2 poslanci. Poslanecký obvod 1, okrsok 1: Ľ. Štúra 7, 8, 9, 10, 16, 1883, 1884, 1895, 2452, 2453, 2454 RD - 1679, 1683; poslanecký obvod 2, okrsok 1: Ľ. Štúra 11, 12, 14, 15
+#   obvod 2: II. volebný obvod - volia sa 2 poslanci. Poslanecký obvod 3, okrsok 2: Trenčianska; poslanecký obvod 4, okrsok 2: Továrenská Kpt. Nálepku Mlynská P. O. Hviezdoslava Staničná
+#   obvod 3: III. volebný obvod - volia sa 2 poslanci. Poslanecký obvod 5, okrsok 3: Farská Partizánska Žilinská Dr. Clementisa M. R. Štefánika J. Kráľa; poslanecký obvod 6, okrsok 3: J. A. Komenského Krížna Dr. Adámyho Rybníky
+#   obvod 4: IV. volebný obvod - volia sa 2 poslanci. Poslanecký obvod 7, okrsok 4: A. Sládkoviča; poslanecký obvod 8, okrsok 4: M. Kukučína
+#   obvod 5: V. volebný obvod - volia sa 2 poslanci. Poslanecký obvod 9, okrsok 5: Slatinská 20-44, 186-224, 2491, 2492 Ľ. Štúra 17; poslanecký obvod 10, okrsok 6: Belušské Slatiny Pod Malenicou Slatinská 47-85, 140-183, 1600-2488, 2702-2764
+#   obvod 6: VI. volebný obvod - volia sa 3 poslanci. Poslanecký obvod 11, okrsok 7: J. Kollára časť Hloža 1164-1310; poslanecký obvod 12, okrsok 7: časť Hloža 1311-1391, 1570-1597, 2074-3110; poslanecký obvod 13, okrsok 8: časť Podhorie
+# Okrsky added by an AI agent in job okrsok-rules-1151 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Poslanecký obvod 1, okrsok 1: Ľ. Štúra 7, 8, 9, 10, 16, 1883, 1884, 1895, 2452, 2453, 2454 RD - 1679, 1683; poslanecký obvod 2, okrsok 1: Ľ. Štúra 11, 12, 14, 15
+#   okrsok 2: Poslanecký obvod 3, okrsok 2: Trenčianska; poslanecký obvod 4, okrsok 2: Továrenská Kpt. Nálepku Mlynská P. O. Hviezdoslava Staničná
+#   okrsok 3: Poslanecký obvod 5, okrsok 3: Farská Partizánska Žilinská Dr. Clementisa M. R. Štefánika J. Kráľa; poslanecký obvod 6, okrsok 3: J. A. Komenského Krížna Dr. Adámyho Rybníky
+#   okrsok 4: Poslanecký obvod 7, okrsok 4: A. Sládkoviča; poslanecký obvod 8, okrsok 4: M. Kukučína
+#   okrsok 5: Poslanecký obvod 9, okrsok 5: Slatinská 20-44, 186-224, 2491, 2492 Ľ. Štúra 17
+#   okrsok 6: Poslanecký obvod 10, okrsok 6: Belušské Slatiny Pod Malenicou Slatinská 47-85, 140-183, 1600-2488, 2702-2764
+#   okrsok 7: Poslanecký obvod 11, okrsok 7: J. Kollára časť Hloža 1164-1310; poslanecký obvod 12, okrsok 7: časť Hloža 1311-1391, 1570-1597, 2074-3110
+#   okrsok 8: Poslanecký obvod 13, okrsok 8: časť Podhorie
+obec = "512851"
+name = "Beluša"
+date = 2022-06-27
+fill = "nearest"
+note = "Uznesenie č. 92/22.06 was adopted at the council session of 27.06.2022 (the komuniké of that session reports the six obvody and 13 seats; posted 28.6.2022). Numbers in the document are súpisné. fill_nearest places: the Ľ. Štúra houses the document does not list (súpisné 1, 5, 6, 18, 1678, 1680, 1682, 3154) and the 416 addresses without a street in part Beluša (scattered houses), which the document does not mention."
+okrsky_date = 2022-06-27
+okrsky_fill = "nearest"
+okrsky_note = "The streets of each okrsok come from the council's resolution č. 92/22.06 (session of 27.06.2022), which lists per obvod and poslanecký obvod the okrsok and its streets; the mayor's 2022 okrsky notice (posted 22.7.2022, an image) lists only the polling stations of okrsky I–VIII (VII = časť Hloža, VIII = časť Podhorie), consistent with it. Numbers are súpisné. Obvod 5: Slatinská split by the listed súpisné numbers; its unlisted numbers and the addresses without a street in part Beluša are placed by fill_nearest. 'Pod Malenicou' = register's Podmalenica."
+
+[[document]]
+url = "https://www.belusa.sk/samosprava/volby/urcenie-volebnych-obvodov-a-pocet-volenych-poslancov-2643.html"
+sha256 = "428bd387e1dabc926f077ecec86324980781556d02ffdf7177f6c6652c1281fe"
+title = "Určenie volebných obvodov a počet volených poslancov – Uznesenie č. 92/22.06 (vyvesené 28. 6. 2022)"
+
+[[document]]
+url = "https://www.belusa.sk/e_download.php?file=data/editor/274sk_5.pdf&original=komunik%C3%A9%2027_06.pdf"
+sha256 = "b7f2249364d1e4541f2ef2d5f7897f85bdaecf1723d2d4ee1384324be7d95d62"
+title = "Komuniké zo zasadnutia Obecného zastupiteľstva konaného 27.06.2022"
+
+[[document]]
+url = "https://www.belusa.sk/samosprava/volby/volebne-okrsky-a-volebne-miestnosti-pre-volby-2022-2741.html"
+sha256 = "1907926f9a882251ef1ac973164b2560dd73e1dc2eb521d78b0f7b20b21516ea"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby 29. 10. 2022 (vyvesené 22. 7. 2022)"
+
+[obvod.1]
+seats = 2
+okrsky = [1]
+rules = [
+  {street = "Ľ. Štúra", numbers = "7, 8, 9, 10, 16, 1883, 1884, 1895, 2452, 2453, 2454, 1679, 1683, 11, 12, 14, 15", by = "supisne", note = "the document's numbers on Ľ. Štúra are súpisné (e.g. 1883, 2452; 'RD - 1679, 1683' = family houses 1679, 1683), as the register shows"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {street = "Trenčianska"},
+  {street = "Továrenská"},
+  {street = "Kpt. Nálepku"},
+  {street = "Mlynská"},
+  {street = "P. O. Hviezdoslava"},
+  {street = "Staničná"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {street = "Farská"},
+  {street = "Partizánska"},
+  {street = "Žilinská"},
+  {street = "Dr. Clementisa"},
+  {street = "M. R. Štefánika"},
+  {street = "J. Kráľa"},
+  {street = "J. A. Komenského"},
+  {street = "Krížna"},
+  {street = "Dr. Adámyho"},
+  {street = "Rybníky"},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [4]
+rules = [
+  {street = "A. Sládkoviča"},
+  {street = "M. Kukučína"},
+]
+
+[obvod.5]
+seats = 2
+okrsky = [5, 6]
+rules = [
+  {street = "Slatinská", note = "the document lists Slatinská by súpisné ranges (20-44, 186-224, 2491, 2492 in okrsok 5; 47-85, 140-183, 1600-2488, 2702-2764 in okrsok 6), all in obvod V; the whole street is obvod V, including the few súpisné outside the ranges (e.g. 45, 46, 2597, 2810-3121)"},
+  {street = "Ľ. Štúra", numbers = "17", by = "supisne"},
+  {street = "Belušské Slatiny"},
+  {street = "Podmalenica", written = "Pod Malenicou", note = "'Pod Malenicou' is the register's street Podmalenica (same name, written as two words)"},
+]
+
+[obvod.6]
+seats = 3
+okrsky = [7, 8]
+rules = [
+  {street = "J. Kollára"},
+  {part = "Hloža", note = "the document gives časť Hloža by súpisné ranges 1164-1310 and 1311-1391, 1570-1597, 2074-3110, all in obvod VI: the whole part"},
+  {part = "Podhorie"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Slatinská", numbers = "20-44, 186-224, 2491, 2492", by = "supisne"},
+  {street = "Ľ. Štúra", numbers = "17", by = "supisne"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Belušské Slatiny"},
+  {street = "Podmalenica", written = "Pod Malenicou", note = "the register writes the street as one word, Podmalenica; same street"},
+  {street = "Slatinská", numbers = "47-85, 140-183, 1600-2488, 2702-2764", by = "supisne"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "J. Kollára"},
+  {part = "Hloža"},
+]
+
+[okrsok.8]
+rules = [
+  {part = "Podhorie"},
+]

@@ -1,0 +1,46 @@
+# Okrsky of Biely Kostol, transcribed by an AI agent in job okrsok-rules-851 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: OKRSOK č.1 Ulice: Cintorínska Ľadová Lomená Pionierske námestie Poľná Poľovnícka Rekreačná Rybná Stromová Viničná Vysoká
+#   okrsok 2: OKRSOK č.2 Ulice: Hlavná Jabloňová Krátka Malá Okružná Potočná Sadová Slnečná Stredná Športová Záhradná Atletická
+obec = "580473"
+name = "Biely Kostol"
+okrsky_date = 2022-10-21
+okrsky_fill = "nearest"
+okrsky_note = "The municipality's announcement of the 2022 okrsky (the decision itself is no longer on the website; its 2022 elections page now shows the 2026 elections). No decision date stated; date is the page's stated publication date ('Dátum vloženia: 21. 10. 2022'). The 107 register addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.bielykostol.sk/zivot-v-obci/aktuality/volby-29102022-v-kulturnom-dome-od-700-2000-hod-926sk.html"
+sha256 = "dc108d502b9f158c1e501115c4e159d105f1deea1f024fefcf38706d6a031d53"
+title = "Voľby 29.10.2022 - v KULTÚRNOM DOME od 7:00 - 20:00 hod (rozdelenie ulíc do okrskov)"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Ľadová"},
+  {street = "Lomená"},
+  {street = "Pionierske Námestie", written = "Pionierske námestie"},
+  {street = "Poľná"},
+  {street = "Poľovnícka"},
+  {street = "Rekreačná"},
+  {street = "Rybná"},
+  {street = "Stromová"},
+  {street = "Viničná"},
+  {street = "Vysoká"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná"},
+  {street = "Jabloňová"},
+  {street = "Krátka"},
+  {street = "Malá"},
+  {street = "Okružná"},
+  {street = "Potočná"},
+  {street = "Sadová"},
+  {street = "Slnečná"},
+  {street = "Stredná"},
+  {street = "Športová"},
+  {street = "Záhradná"},
+  {street = "Atletická"},
+]

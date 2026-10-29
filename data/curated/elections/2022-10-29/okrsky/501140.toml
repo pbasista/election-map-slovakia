@@ -1,0 +1,160 @@
+# Okrsky of Hurbanovo, transcribed by an AI agent in job okrsok-rules-647 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Holanovo, celá ulica; Zelený Háj, celá ulica
+#   okrsok 2: Gamota, celá ulica; Konkoľ, celá ulica; Vék, celá ulica
+#   okrsok 3: Aba, celá ulica; Bronzová, celá ulica; Javorová, celá ulica; Jiráskova, celá ulica; Komárňanská, or.č. (1-92); Piesková osada, celá ulica; Poľná, celá ulica; Práce, celá ulica; Rybárska, celá ulica; Sesíleš, celá ulica; Sesílešská, celá ulica; Slnečná, celá ulica; Stará, celá ulica; Strieborná, celá ulica; Šáradská, celá ulica; Športová, celá ulica; Úzka, celá ulica; Vodná, celá ulica; Východná, celá ulica; Výskumnícka, celá ulica; Západná, celá ulica; Zlatá, celá ulica
+#   okrsok 4: 28. októbra, celá ulica; 8. mája, celá ulica; Čsl. armády, celá ulica; Družstevná, celá ulica; Gy. Klapku, celá ulica; Chotínska, celá ulica; Jesenského, celá ulica; Jilemnického, celá ulica; Komárňanská, or.č. (93-143); Konkolyho, celá ulica; Kostolná, celá ulica; Kováč pusta, celá ulica; Krivá, celá ulica; Kvetná, celá ulica; Lipová, celá ulica; Malinová, celá ulica; Nálepkova, celá ulica; Nám. Dr. M. Thege Konkolyho, celá ulica; Orgovánová, celá ulica; Podzáhradná, or.č. (1-129); Slobody, celá ulica; SNP, celá ulica; Súdna, celá ulica; Turček Majer, celá ulica
+#   okrsok 5: 1. mája, celá ulica; A. Fesztyho, celá ulica; Agátová, celá ulica; Cintorínska, celá ulica; Dolnopeterská, celá ulica; Gaštanová, celá ulica; Jókaiho, celá ulica; Komárňanská, or.č. (144-203); Komenského, celá ulica; Krátka, celá ulica; Lúčna, celá ulica; Malá, celá ulica; Nejedlého, celá ulica; Nová, celá ulica; Podzáhradná, or.č. (130-166); Štúrova, celá ulica; Železničná, celá ulica
+#   okrsok 6: Brezová, celá ulica; Fialková, celá ulica; Novozámocká, or.č. (1-105); Nový diel, celá ulica; Pivovarská, celá ulica; Robotnícka, celá ulica; Severná, celá ulica; Sládkovičova, celá ulica; Smreková, celá ulica; Tichá, celá ulica; Tulipánová, celá ulica; Zelená, celá ulica; Žitavská, celá ulica
+#   okrsok 7: Dunajská, celá ulica; E. Adyho, celá ulica; Hroznová, celá ulica; Hviezdoslavova, celá ulica; Imeľská, celá ulica; Jahodová, celá ulica; Kollárova, celá ulica; Mierová, celá ulica; Novozámocká, or.č. (107-147); Ordódyho, celá ulica; Orechová, celá ulica; Pavlov Dvor, celá ulica; Petöfiho, celá ulica; Piesková, celá ulica; Pribetská, celá ulica; Šípová, celá ulica; Školská, celá ulica; Veterná, celá ulica; Vinohradnícka, celá ulica; Záhradnícka, celá ulica
+#   okrsok 8: Nová Trstená, celá ulica
+obec = "501140"
+name = "Hurbanovo"
+okrsky_date = 2022-08-04
+okrsky_fill = "nearest"
+okrsky_note = "The town published its documents on Google Drive, linked from its Voľby 2022 page (archived 2022-09-26, published 04.08.2022). The PDF is a scan with a poor OCR text layer (read from the page images) (printout of 13.6.2022 listing okrsky and streets); text written as read with misread letters fixed. Holanovo, Zelený Háj, Konkoľ, Vék and Nová Trstená are given as 'celá ulica' but are parts of the town without streets: part rules. 'Aba' (okrsok 3) is not in the register; left out. Balážtag, Družstevná Osada, Komárňanská above no. 203 and the many houses without a street in the parts Hurbanovo and Bohatá take the okrsok of the nearest placed address (fill_nearest). The decision itself is undated: date is its publication date on the town's archived Voľby 2022 page ('Zverejnené: 04.08.2022'); the list was printed 13.6.2022 by the registry system."
+
+[[document]]
+url = "https://drive.google.com/file/d/1BwD9_rJ5n8o8QKc9Ua7802oq4396OIP3/view"
+sha256 = "a5d552c960236acbfa7406a1c6fd08454b5c5e74b38833c27e12d7bf757ea741"
+title = "Určenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí (okrsky a ulice, voľby 29.10.2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20220926070105/https://www.hurbanovo.sk/obcan/volby-2022/"
+sha256 = "587d8ee415864ef9d79374d12fb2d37a103c9afddb46132eccaa0975f610a18c"
+title = "Voľby 2022 (the town's page linking the document, 'Zverejnené: 04.08.2022')"
+
+[okrsok.1]
+rules = [
+  {part = "Holanovo"},
+  {part = "Zelený Háj"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Gamota"},
+  {part = "Konkoľ"},
+  {part = "Vék"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bronzová"},
+  {street = "Javorová"},
+  {street = "Jiráskova"},
+  {street = "Komárňanská", numbers = "1-92"},
+  {street = "Piesková Osada"},
+  {street = "Poľná cesta", written = "Poľná", note = "the register's Poľná cesta; the only Poľná street of Hurbanovo"},
+  {street = "Práce"},
+  {street = "Rybárska"},
+  {street = "Sesíleš"},
+  {street = "Sesílešská"},
+  {street = "Slnečná"},
+  {street = "Stará"},
+  {street = "Strieborná"},
+  {street = "Šáradská"},
+  {street = "Športová"},
+  {street = "Úzka"},
+  {street = "Vodná"},
+  {street = "Východná"},
+  {street = "Výskumnícka"},
+  {street = "Západná"},
+  {street = "Zlatá"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "28.októbra"},
+  {street = "8.mája"},
+  {street = "Čsl. Armády", written = "Čsl. armády"},
+  {street = "Družstevná"},
+  {street = "Gy. Klapku"},
+  {street = "Chotínska"},
+  {street = "Jesenského"},
+  {street = "Jilemnického"},
+  {street = "Komárňanská", numbers = "93-143"},
+  {street = "Konkolyho"},
+  {street = "Kostolná"},
+  {street = "Kováč Pusta", written = "Kováč pusta"},
+  {street = "Krivá"},
+  {street = "Kvetná"},
+  {street = "Lipová"},
+  {street = "Malinová"},
+  {street = "Nálepkova"},
+  {street = "Nám. Dr. M. Thege Konkolyho"},
+  {street = "Orgovánová"},
+  {street = "Podzáhradná", numbers = "1-129"},
+  {street = "Slobody"},
+  {street = "SNP"},
+  {street = "Súdna"},
+  {street = "Turček Majer"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "1.mája"},
+  {street = "Á. Fesztyho", written = "A. Fesztyho", note = "the document writes A. without the accent; same street (Árpád Feszty)"},
+  {street = "Agátová"},
+  {street = "Cintorínska"},
+  {street = "Dolnopeterská"},
+  {street = "Gaštanová"},
+  {street = "Jókaiho"},
+  {street = "Komárňanská", numbers = "144-203"},
+  {street = "Komenského"},
+  {street = "Krátka"},
+  {street = "Lúčna"},
+  {street = "Malá"},
+  {street = "Nejedlého"},
+  {street = "Nová"},
+  {street = "Podzáhradná", numbers = "130-166"},
+  {street = "Štúrova"},
+  {street = "Železničná"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Brezová"},
+  {street = "Fialková"},
+  {street = "Novozámocká", numbers = "1-105"},
+  {street = "Nový Diel", written = "Nový diel"},
+  {street = "Pivovarská"},
+  {street = "Robotnícka"},
+  {street = "Severná"},
+  {street = "Sládkovičova"},
+  {street = "Smreková"},
+  {street = "Tichá"},
+  {street = "Tulipánová"},
+  {street = "Zelená"},
+  {street = "Žitavská"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Dunajská"},
+  {street = "E. Adyho"},
+  {street = "Hroznová"},
+  {street = "Hviezdoslavova"},
+  {street = "Imeľská"},
+  {street = "Jahodová"},
+  {street = "Kollárova"},
+  {street = "Mierová"},
+  {street = "Novozámocká", numbers = "107-147"},
+  {street = "Novozámocka", written = "Novozámocká", note = "register variant (one address, no. 119) of Novozámocká; 119 lies in the range 107-147"},
+  {street = "Ordódyho"},
+  {street = "Orechová"},
+  {street = "Pavlov Dvor"},
+  {street = "Petöfiho"},
+  {street = "Piesková"},
+  {street = "Pribetská"},
+  {street = "Šípová"},
+  {street = "Školská"},
+  {street = "Veterná"},
+  {street = "Vinohradnícka"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.8]
+rules = [
+  {part = "Nová Trstená"},
+]

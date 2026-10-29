@@ -1,0 +1,29 @@
+# Okrsky of Dvorníky, transcribed by an AI agent in job okrsok-rules-937 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dvorníky súp. č. od 1 – do 417
+#   okrsok 2: Dvorníky súp. č. od 418 – do 873 a voliči, ktorý majú evidovaný trvalý pobyt na adrese: Obec Dvorníky
+obec = "507024"
+name = "Dvorníky"
+okrsky_date = 2022-08-10
+okrsky_note = "The document splits the obec by súpisné číslo (1–417 / 418–873); all houses of the part Posádka have súpisné numbers above 417 and fall in okrsok 2. Okrsok 2 also holds voters registered at 'Obec Dvorníky' (no address); it is given as the rest."
+
+[[document]]
+url = "https://dvorniky.sk/wp-content/uploads/2022/08/volby-2022-volebne-okrsky-volebne-miestnosti.pdf"
+sha256 = "fe0b73bff2297e0816cea4f210f5106cce5a6bd06f285282412e54e00cf1d12c"
+title = "Oznámenie o počte utvorených volebných okrskov a určenie volebných miestností pre voľby 29. 10. 2022"
+
+[[document]]
+url = "https://dvorniky.sk/2022/08/10/volby-2022-utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti/"
+sha256 = "637ede46ee4cbbf5a715f82db6383a5916d1aafa9cb3acdd7f9afeb0289ac183"
+title = "Voľby 2022 – utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Dvorníky", numbers = "1-417"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

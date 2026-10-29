@@ -1,0 +1,25 @@
+# Okrsky of Kostolné, transcribed by an AI agent in job okrsok-rules-647 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Voliči: Kostolné
+#   okrsok 2: Voliči: Babulicov Vrch, U Tížikov, U Mihálikov, U Hajtúnov, U Medveďov, U Hučkov.
+obec = "506141"
+name = "Kostolné"
+okrsky_date = 2022-07-26
+okrsky_note = "obeckostolne.estranky.sk was the obec's official website in 2022: its archived 'Kontaky' page (https://web.archive.org/web/20220927231519/https://obeckostolne.estranky.sk/clanky/kontaky/) names Obecný úrad Kostolné, IČO 00311707, starosta Miroslav Cibulka and e-mail obec@kostolne.sk, and the obec's domain kostolne.sk redirected to it in the archive's captures of 2021-12-10 and 2022-03-17. The page's date (26. 7. 2022) is the date of the mayor's announcement (no other decision date stated); the linked .doc is not archived, the page gives the full text. Okrsok 1: Kostolné; okrsok 2: Babulicov Vrch and the kopanice U Tížikov, U Mihálikov, U Hajtúnov, U Medveďov, U Hučkov. Those settlements are not parts, streets or k.ú. in the register: all their houses are súpisné numbers of part Kostolné, and neither this document nor the 2026 one gives house numbers. They are taken by location: OSM places the five (bus stops 'u Mihálikov', 'u Hajtúnov', 'u Medveďov', locality 'U Hučkov', residential 'U Tížikov', the area 'Mihalíkovci') in the kopanice west of the village between Babulicov Vrch and the village (17.664-17.692 E); the part-Kostolné houses there are súpisné 278-331 in one run plus six later ones, all 0.5 km or more west of the village's westmost house (17.699 E). With them okrsok 2 has 120 addresses for 158 voters and okrsok 1 267 for 340 (without them 60 and 327)."
+
+[[document]]
+url = "https://web.archive.org/web/20220927234051/https://obeckostolne.estranky.sk/clanky/vo--by/volby-2022/oznamy-k-volbam-2022/vytvorenie-okrskov-2022.html"
+sha256 = "58a80a5e525817ecc30a5b850cd12a608f3f6388ae564c4ee82d6f4e22789951"
+title = "Vytvorenie okrskov 2022 (Oznam starostu obce o utvorení volebných okrskov), 26. 7. 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Kostolné"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Babulicov Vrch"},
+  {part = "Kostolné", numbers = "278-331, 390, 397, 402, 404, 407, 425", by = "supisne", note = "U Tížikov, U Mihálikov, U Hajtúnov, U Medveďov, U Hučkov: the register keeps these kopanice in part Kostolné; these are all part-Kostolné houses west of 17.695 E, around the OSM places of these names (48.721-48.742 N, 17.673-17.692 E)", inferred = true},
+]

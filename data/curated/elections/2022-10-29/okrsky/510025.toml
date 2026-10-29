@@ -1,0 +1,34 @@
+# Okrsky of Rabča, transcribed by an AI agent in job okrsok-rules-723 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od č. d. 1 po č. d. 375 + nové čísla domov
+#   okrsok 2: od č. d. 376 po č. d. 677 + Ul. Mokrá a Pod Magurou + nové čísla domov
+#   okrsok 3: od č. d. 678 po č. d. 1035 + nové čísla domov
+obec = "510025"
+name = "Rabča"
+okrsky_date = 2023-01-17
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections found (the 2022 elections pages, live and archived, hold no okrsky document; the 2022 article 'Ako voliť v spojených voľbách' gives only the polling stations, the same as for the referendum: okrsky 1 and 2 in the Kultúrny dom, okrsok 3 in the school); the referendum's document: the official article of 17 January 2023 (date is its posting date, 'Dátum vloženia'), which splits the okrsky by house numbers (č. d., read as súpisné čísla) plus the streets Mokrá and Pod Magurou in okrsok 2. 'Nové čísla domov' (new house numbers) of each okrsok cannot be placed from the text; numbers above 1035 take the okrsok of the nearest address (fill_nearest)."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.rabca.sk/aktuality/aktuality/informacie-o-referende-dna-21012023-780sk.html"
+sha256 = "e2feb4e4cb9df9d4fb8deab33d04a6d7ed2f2b819af0c0c4e0c7aa4dd682e3b5"
+title = "Informácie o REFERENDE dňa 21.01.2023"
+
+[okrsok.1]
+rules = [
+  {part = "Rabča", numbers = "1-375"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Rabča", numbers = "376-677"},
+  {street = "Mokrá"},
+  {street = "Pod Magurou"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Rabča", numbers = "678-1035"},
+]

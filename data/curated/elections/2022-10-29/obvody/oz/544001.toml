@@ -1,0 +1,35 @@
+# Council obvody of Zemplínska Nová Ves (544001), Trebišov.
+# Transcribed by an AI agent in job obvod-rules-385 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: časť obce Úpor
+#   obvod 2: časť obce Zemplínsky Klečenov
+# Okrsky added by an AI agent in job okrsok-rules-1246 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: časť obce Úpor
+#   okrsok 2: časť obce Zemplínsky Klečenov
+obec = "544001"
+name = "Zemplínska Nová Ves"
+date = 2022-06-22
+okrsky_date = 2022-06-22
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+
+[[document]]
+url = "https://www.znves.sk/files/2022-07-16-221452-1._Ur__enie_volebn__ch_obvodov_a_po__tu_poslancov.docx"
+sha256 = "27c225f9debf65ad107c8f24d50b32274e68cc33de4ed6b4e555f9f52b1bea7e"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OcZ č. 14/2022 zo dňa 22.6.2022)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Úpor"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Zemplínsky Klečenov"},
+]

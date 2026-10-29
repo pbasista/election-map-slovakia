@@ -1,0 +1,34 @@
+# Okrsky of Lysá pod Makytou, transcribed by an AI agent in job okrsok-rules-836 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súpisné čísla 1 - 427
+#   okrsok 2: súpisné čísla 428 - 1400
+obec = "513342"
+name = "Lysá pod Makytou"
+okrsky_date = 2022-08-05
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky are set by súpisné čísla numbered across the whole municipality (one k.ú.): 1–427 and 428–1400; given as part rules for each of the three parts. Addresses with súpisné above 1400 (if any) are placed by fill_nearest. The page's second attachment (id=1722931) is the same decision without the number ranges."
+
+[[document]]
+url = "https://www.lysapodmakytou.sk/download_file_f.php?id=1722919"
+sha256 = "6ad607a0f41ef68b8a8db28ae5f153747fa284d591c1350a92ea9b1e8276b4b9"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre Voľby do orgánov samosprávy obcí a Voľby do orgánov samosprávnych krajov, konané 29.októbra 2022"
+
+[[document]]
+url = "https://www.lysapodmakytou.sk/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-konane-29-okt/mid/535876/.html"
+sha256 = "38eb4d2a6de5b12e5aaed4561b9449ee5fe8d4e5cfda963f8fa42a304634bcb3"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (oznam, zverejnené 9.8.2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Dešná", numbers = "1-427"},
+  {part = "Lysá pod Makytou", numbers = "1-427"},
+  {part = "Strelenka", numbers = "1-427"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dešná", numbers = "428-1400"},
+  {part = "Lysá pod Makytou", numbers = "428-1400"},
+  {part = "Strelenka", numbers = "428-1400"},
+]

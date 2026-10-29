@@ -1,0 +1,24 @@
+# Okrsky of Brezovica, transcribed by an AI agent in job okrsok-rules-1003 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: do súp. č. 320
+#   okrsok 2: od súp. č. 321
+obec = "524239"
+name = "Brezovica"
+okrsky_date = 2022-07-28
+okrsky_note = "Scanned PDF (archived 2022-08-03) read from image. Okrsky split by súpisné číslo: 1 = up to 320, 2 = from 321."
+
+[[document]]
+url = "https://web.archive.org/web/20220803234047/http://brezovicanadtorysou.sk/images/dokumenty/aktuality/vol_okrsky_vol_miestnosti.pdf"
+sha256 = "535aec69ab78f2d151cfa78300c8271bea481f46ff8a059ce6f5794a61ad8bde"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre spojené voľby do orgánov samosprávy obcí a orgánov samosprávnych krajov – 29. októbra 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Brezovica", numbers = "1-320"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Brezovica", numbers = "321-"},
+]

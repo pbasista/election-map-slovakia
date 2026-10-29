@@ -1,0 +1,45 @@
+# Okrsky of Liptovská Teplička, transcribed by an AI agent in job okrsok-rules-960 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Teplická, Pilisko, Ráztocka, Kufajka, Záhrady, Horárne, Zaglinka
+#   okrsok 2: Pod úbočou, Potočná, Na jarku, Bory, Úzka, Ul.Š.Garaja, Kobyliarky, Ul.Š.Nahalku, Uhlárová, Drevárska, Koliesko, č. 535, 683, 689, 725, 730
+obec = "523631"
+name = "Liptovská Teplička"
+okrsky_date = 2022-08-03
+okrsky_fill = "nearest"
+okrsky_note = "Undated notice by starosta Mgr. Slavomír Kopáč; date is its posting date on the notice board (Vyvesené: 3. 8. 2022). Horárne and Zaglinka (okrsok 1) are not streets in the register and are left out. Okrsok 2's houses č. 535, 683, 689, 725, 730 are given as súpisné numbers in the part. Other addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.liptovskateplicka.sk/e_download.php?file=data/uredni_deska/obsah626_1.pdf&original=Vo%C4%BEby%202022%20-%20ozn%C3%A1menie.pdf"
+sha256 = "8beba6069b73fdb42239b833c146077861075cb2928c2d8dcd636d06e302e54f"
+title = "Oznámenie o čase a mieste konania volieb do orgánov samosprávy obcí a orgánov samosprávnych krajov"
+
+[[document]]
+url = "https://www.liptovskateplicka.sk/obecny-urad-1/zverejnovanie/uradna-tabula/volby-do-organov-samospravy-obci-2022-734.html"
+sha256 = "a994ab0a4c11d18b6fd8c802d7d7dfe06c92bde8a052c8ec94865ea23cb6a34c"
+title = "Voľby do orgánov samosprávy obcí 2022 (úradná tabuľa, vyvesené 3. 8. 2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Teplická"},
+  {street = "Pilisko"},
+  {street = "Ráztocka"},
+  {street = "Kufajka"},
+  {street = "Záhrady"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Pod úbočou"},
+  {street = "Potočná"},
+  {street = "Na jarku"},
+  {street = "Bory"},
+  {street = "Úzka"},
+  {street = "Ul. Štefana Garaja", written = "Ul.Š.Garaja"},
+  {street = "Kobyliarky"},
+  {street = "Ul. Štefana Nahalku", written = "Ul.Š.Nahalku"},
+  {street = "Uhlárová"},
+  {street = "Drevárska"},
+  {street = "Koliesko"},
+  {part = "Liptovská Teplička", numbers = "535, 683, 689, 725, 730"},
+]

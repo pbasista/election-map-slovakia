@@ -1,0 +1,36 @@
+# Council obvody of Brestovec (504254), Myjava.
+# Transcribed by an AI agent in job obvod-rules-367 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: Štemberek, Kadlecia, Dúbravčíkov vršek, Kržle, Brestovec, Majtánovia – Vdoviaci, Pánici, u Kavických – Žabkovia sa volí 4 poslancov.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: Poľana, u Pekníkov, Brunov – u Hôždalov, Ticháčky, Svítkovia, u Pagáčov, Svinárky, Lieštie sa volí 3 poslancov.
+# Okrsky added by an AI agent in job okrsok-rules-1229 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: Štemberek, Kadlecia, Dúbravčíkov vršek, Kržle, Brestovec, Majtánovia – Vdoviaci, Pánici, u Kavických – Žabkovia sa volí 4 poslancov.
+#   okrsok 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: Poľana, u Pekníkov, Brunov – u Hôždalov, Ticháčky, Svítkovia, u Pagáčov, Svinárky, Lieštie sa volí 3 poslancov.
+obec = "504254"
+name = "Brestovec"
+date = 2022-06-30
+note = "Obvody defined only by osady (kopanice) names; all rules inferred geographically from 2022 register coordinates and ZBGIS geographic names (see rule notes)."
+okrsky_date = 2022-06-30
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+
+[[document]]
+url = "https://www.brestovec.sk/evt_file.php?file=872"
+sha256 = "fbcedb6bd2b8fff7bd97bf42135558019c3e877ca805431ec3d23a7988d14903"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov (uznesenie OZ č. 40/2022 zo dňa 30.6.2022)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Brestovec", note = "Every address not in obvod 2's súpisné list: the village centre (Brestovec) and the osady the document lists for obvod 1, located by ZBGIS geographic names (inspirews.skgeodesy.sk GN): Štemberek, Kadlecovci (Kadlecia), Na Dúbravčíkovom vŕšku, Kržle, Majtánovci and Vdoviakovci, Pánikovci (Pánici), Kavickovci (u Kavických – Žabkovia); centre taken at the obecný úrad Brestovec 273.", inferred = true},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Brestovec", numbers = "314-545, 1003, 1007-1008, 1020", by = "supisne", note = "The document names only osady; Brestovec has no streets and one part. These súpisné čísla are the 2022 register addresses lying nearer to a ZBGIS geographic-name point of an obvod-2 osada (Poľana, Pekníkovci, Hvožďálovci = u Hôždalov, Ticháčkovci = Ticháčky, Svítkovci, Pagáčovci, Sviniarky = Svinárky, Lieštie) than to any obvod-1 osada or the centre (205 addresses), plus No. 421 (geometrically ambiguous, 0.57 km from Kržle vs 0.84 km from Ticháčkovci), taken to obvod 2 because the obvod-2 houses form the unbroken súpisné series 314-545. 'Brunov' has no ZBGIS point. Split 206:336 addresses vs ŠÚ SR's 271:558 voters in okrsky 2:1. Addresses near the boundary may be wrong.", inferred = true},
+]

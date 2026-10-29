@@ -1,0 +1,424 @@
+# Council obvody of Nové Mesto nad Váhom (506338), Nové Mesto nad Váhom.
+# Transcribed by an AI agent in job obvod-rules-220 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Obvod 1, počet mandátov 3: okrsok 1: Ctiborova, Fándlyho, Južná, Kočovská, Krátka, Krčméryho, Piešťanská, Tichá, Vysoká, Zelená; okrsok 2: Banská, Bočná, Brigádnická, Budovateľská, Dolná, Jarná, Krajná, Letná, Lipová, Malá, Priemyselná, Slnečná, Stredná, kpt. Nálepku, Martina Rázusa, Samuela Jurkoviča, Vinohradnícka, Železničná
+#   obvod 2: Obvod 2, počet mandátov 2: okrsok 3: Čerešňová, Hroznová, Marhuľová, Orechová, Tematínska, Viktora Bilčíka; okrsok 4: Bajzova, Bernolákova, Bratislavská, Langsfeldova, Považská, Sasinkova, Svätoplukova, Šoltésovej, Fraňa Kráľa
+#   obvod 3: Obvod 3, počet mandátov 4: okrsok 5: Cádrova, Dubčekova, Hrušovského, Jánošíkova, Kamenná, Kuzmányho, Lesnícka, Medňanského, Moyzesova, Poľovnícka, Pyšného, Riznerova, Stromová, Šafárikova, Športová, Vichtova; okrsok 6: Jasná, Karpatská, Gen. Ivana Institorisa, J. Kollára, Juraja Kréna; okrsok 7: Javorinská, SNP
+#   obvod 4: Obvod 4, počet mandátov 2: okrsok 8: Čachtická, Jesenského, Jilemnického, Nová, Škultétyho, Štúrova, M. R. Štefánika, Michala Chrásteka; okrsok 9: Hurbanova, Komenského, Námestie slobody, Palkovičova, Partizánska, 1. mája, Čsl. armády, D. Štubňu, J. Hašku, J. Weisseho, Júliusa Gábriša, Obrancov mieru, Petra Matejku
+#   obvod 5: Obvod 5, počet mandátov 2: okrsok 10: Benkova, Dibrovova, Dukelská; okrsok 11: Hollého, Hviezdoslavova, Inovecká, Kmeťova, Kpt. Uhra, Železničný uzol
+#   obvod 6: Obvod 6, počet mandátov 3: okrsok 12: Bzinská, Hečkova, Klčové, Kukučínova, Royova, Severná, Tajovského, Jána Bernovského, Jána Durdíka, Miroslava Ďuržu, Ondreja Plachého; okrsok 13: Holubyho, A. Sládkoviča, Dr. I. Markoviča, Vajanského, Záhradnícka
+#   obvod 7: Obvod 7, počet mandátov 3: okrsok 14: Košikárska, Malinovského, Mesto Nové Mesto nad Váhom, Odborárska, Robotnícka, Rybárska, Trenčianska, Zelená voda I., Zelená voda II.; okrsok 15: Beckovská, Bohuslavická, Bošácka, Čulenova, Haluzická, Izbická, Kvetinová, Lieskovská, Mlynská, Mnešická, Mostová, Pod zvonicou, Poľná, Pri Klanečnici, Pri vode, Pri záhradách, Riečna, Ružová, Sadová, Slovanská, Srnianska, Tehelná, Turecká, Tušková, Ľ. Podjavorinskej, Záhradná
+# Okrsky added by an AI agent in job okrsok-rules-1100 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ctiborova, Fándlyho, Južná, Kočovská, Krátka, Krčméryho, Piešťanská, Tichá, Vysoká, Zelená
+#   okrsok 2: Banská, Bočná, Brigádnická, Budovateľská, Dolná, Jarná, Krajná, Letná, Lipová, Malá, Priemyselná, Slnečná, Stredná, kpt. Nálepku, Martina Rázusa, Samuela Jurkoviča, Vinohradnícka, Železničná
+#   okrsok 3: Čerešňová, Hroznová, Marhuľová, Orechová, Tematínska, Viktora Bilčíka
+#   okrsok 4: Bajzova, Bernolákova, Bratislavská, Langsfeldova, Považská, Sasinkova, Svätoplukova, Šoltésovej, Fraňa Kráľa
+#   okrsok 5: Cádrova, Dubčekova, Hrušovského, Jánošíkova, Kamenná, Kuzmányho, Lesnícka, Medňanského, Moyzesova, Poľovnícka, Pyšného, Riznerova, Stromová, Šafárikova, Športová, Vichtova
+#   okrsok 6: Jasná, Karpatská, Gen. Ivana Institorisa, J. Kollára, Juraja Kréna
+#   okrsok 7: Javorinská, SNP
+#   okrsok 8: Čachtická, Jesenského, Jilemnického, Nová, Škultétyho, Štúrova, M. R. Štefánika, Michala Chrásteka
+#   okrsok 9: Hurbanova, Komenského, Námestie slobody, Palkovičova, Partizánska, 1. mája, Čsl. armády, D. Štubňu, J. Hašku, J. Weisseho, Júliusa Gábriša, Obrancov mieru, Petra Matejku
+#   okrsok 10: Benkova, Dibrovova, Dukelská
+#   okrsok 11: Hollého, Hviezdoslavova, Inovecká, Kmeťova, Kpt. Uhra, Železničný uzol
+#   okrsok 12: Bzinská, Hečkova, Klčové, Kukučínova, Royova, Severná, Tajovského, Jána Bernovského, Jána Durdíka, Miroslava Ďuržu, Ondreja Plachého
+#   okrsok 13: Holubyho, A. Sládkoviča, Dr. I. Markoviča, Vajanského, Záhradnícka
+#   okrsok 14: Košikárska, Malinovského, Mesto Nové Mesto nad Váhom, Odborárska, Robotnícka, Rybárska, Trenčianska, Zelená voda I., Zelená voda II.
+#   okrsok 15: Beckovská, Bohuslavická, Bošácka, Čulenova, Haluzická, Izbická, Kvetinová, Lieskovská, Mlynská, Mnešická, Mostová, Pod zvonicou, Poľná, Pri Klanečnici, Pri vode, Pri záhradách, Riečna, Ružová, Sadová, Slovanská, Srnianska, Tehelná, Turecká, Tušková, Ľ. Podjavorinskej, Záhradná
+obec = "506338"
+name = "Nové Mesto nad Váhom"
+date = 2022-06-28
+fill = "nearest"
+note = "Resolution 508/2022-MsZ of 28.06.2022 gives a table of obvody, okrsky and their streets (the text is that table, by okrsok). The cell \"Mesto Nové Mesto nad Váhom\" in okrsok 14 (obvod 7) means voters with permanent residence registered only to the town (no address), so it has no rule; the register addresses without a street name are placed by fill_nearest. Streets of the table without addresses in the register (Orechová, Cádrova, Medňanského, Moyzesova, Vichtova, Záhradnícka) are left out."
+okrsky_date = 2022-06-28
+okrsky_fill = "nearest"
+okrsky_note = "Resolution 508/2022-MsZ of 28.06.2022 sets the obvody with their okrsky and the streets of each okrsok (the input document). \"Mesto Nové Mesto nad Váhom\" in okrsok 14 means voters with permanent residence registered only to the town (no address), not the register addresses without a street; it has no rule. Register addresses without a street name are placed by fill_nearest. Streets of the table not in the register (Orechová, Cádrova, Medňanského, Moyzesova, Vichtova, Záhradnícka) are left out."
+
+[[document]]
+url = "https://www.nove-mesto.sk/resources/File/uzn22-2022.pdf"
+sha256 = "b9d05512445ca9178a30971bd6e4270af434367217c3fd48d325b99ad379caae"
+title = "Uznesenia z 22. zasadnutia MsZ konaného dňa 28. júna 2022, uznesenie č. 508/2022-MsZ"
+
+[obvod.1]
+seats = 3
+okrsky = [1, 2]
+rules = [
+  {street = "Ctiborova ulica", written = "Ctiborova"},
+  {street = "Fándlyho ulica", written = "Fándlyho"},
+  {street = "Južná ulica", written = "Južná"},
+  {street = "Kočovská ulica", written = "Kočovská"},
+  {street = "Krátka ulica", written = "Krátka"},
+  {street = "Krčméryho ulica", written = "Krčméryho"},
+  {street = "Piešťanská ulica", written = "Piešťanská"},
+  {street = "Tichá ulica", written = "Tichá"},
+  {street = "Vysoká ulica", written = "Vysoká"},
+  {street = "Zelená ulica", written = "Zelená"},
+  {street = "Banská ulica", written = "Banská"},
+  {street = "Bočná ulica", written = "Bočná"},
+  {street = "Brigádnická ulica", written = "Brigádnická"},
+  {street = "Budovateľská ulica", written = "Budovateľská"},
+  {street = "Dolná ulica", written = "Dolná"},
+  {street = "Jarná ulica", written = "Jarná"},
+  {street = "Krajná ulica", written = "Krajná"},
+  {street = "Letná ulica", written = "Letná"},
+  {street = "Lipová ulica", written = "Lipová"},
+  {street = "Malá ulica", written = "Malá"},
+  {street = "Priemyselná ulica", written = "Priemyselná"},
+  {street = "Slnečná ulica", written = "Slnečná"},
+  {street = "Stredná ulica", written = "Stredná"},
+  {street = "Ulica kpt. Nálepku", written = "kpt. Nálepku"},
+  {street = "Ulica Martina Rázusa", written = "Martina Rázusa"},
+  {street = "Ulica Samuela Jurkoviča", written = "Samuela Jurkoviča"},
+  {street = "Vinohradnícka ulica", written = "Vinohradnícka"},
+  {street = "Železničná ulica", written = "Železničná"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [3, 4]
+rules = [
+  {street = "Čerešňová ulica", written = "Čerešňová"},
+  {street = "Hroznová ulica", written = "Hroznová"},
+  {street = "Marhuľová ulica", written = "Marhuľová"},
+  {street = "Tematínska ulica", written = "Tematínska"},
+  {street = "Ulica Viktora Bilčíka", written = "Viktora Bilčíka"},
+  {street = "Bajzova ulica", written = "Bajzova"},
+  {street = "Bernolákova ulica", written = "Bernolákova"},
+  {street = "Bratislavská ulica", written = "Bratislavská"},
+  {street = "Langsfeldova ulica", written = "Langsfeldova"},
+  {street = "Považská ulica", written = "Považská"},
+  {street = "Sasinkova ulica", written = "Sasinkova"},
+  {street = "Svätoplukova ulica", written = "Svätoplukova"},
+  {street = "Šoltésovej ulica", written = "Šoltésovej"},
+  {street = "Ulica Fraňa Kráľa", written = "Fraňa Kráľa"},
+]
+
+[obvod.3]
+seats = 4
+okrsky = [5, 6, 7]
+rules = [
+  {street = "Dubčekova ulica", written = "Dubčekova"},
+  {street = "Hrušovského ulica", written = "Hrušovského"},
+  {street = "Jánošíkova ulica", written = "Jánošíkova"},
+  {street = "Kamenná ulica", written = "Kamenná"},
+  {street = "Kuzmányho ulica", written = "Kuzmányho"},
+  {street = "Lesnícka ulica", written = "Lesnícka"},
+  {street = "Poľovnícka ulica", written = "Poľovnícka"},
+  {street = "Pyšného ulica", written = "Pyšného"},
+  {street = "Riznerova ulica", written = "Riznerova"},
+  {street = "Stromová ulica", written = "Stromová"},
+  {street = "Šafárikova ulica", written = "Šafárikova"},
+  {street = "Športová ulica", written = "Športová"},
+  {street = "Jasná ulica", written = "Jasná"},
+  {street = "Karpatská ulica", written = "Karpatská"},
+  {street = "Ulica gen. Ivana Institorisa", written = "Gen. Ivana Institorisa"},
+  {street = "Ulica J. Kollára", written = "J. Kollára"},
+  {street = "Ulica Juraja Kréna", written = "Juraja Kréna"},
+  {street = "Javorinská ulica", written = "Javorinská"},
+  {street = "Ulica SNP", written = "SNP"},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [8, 9]
+rules = [
+  {street = "Čachtická ulica", written = "Čachtická"},
+  {street = "Jesenského ulica", written = "Jesenského"},
+  {street = "Jilemnického ulica", written = "Jilemnického"},
+  {street = "Nová ulica", written = "Nová"},
+  {street = "Škultétyho ulica", written = "Škultétyho"},
+  {street = "Štúrova ulica", written = "Štúrova"},
+  {street = "Ulica M. R. Štefánika", written = "M. R. Štefánika"},
+  {street = "Ulica Michala Chrásteka", written = "Michala Chrásteka"},
+  {street = "Hurbanova ulica", written = "Hurbanova"},
+  {street = "Komenského ulica", written = "Komenského"},
+  {street = "Námestie Slobody", written = "Námestie slobody"},
+  {street = "Palkovičova ulica", written = "Palkovičova"},
+  {street = "Partizánska ulica", written = "Partizánska"},
+  {street = "Ulica 1.mája", written = "1. mája"},
+  {street = "Ulica čsl. armády", written = "Čsl. armády"},
+  {street = "Ulica D. Štubňu", written = "D. Štubňu"},
+  {street = "Ulica J. Hašku", written = "J. Hašku"},
+  {street = "Ulica J. Weisseho", written = "J. Weisseho"},
+  {street = "Ulica Júliusa Gábriša", written = "Júliusa Gábriša"},
+  {street = "Ulica Obrancov mieru", written = "Obrancov mieru"},
+  {street = "Ulica Petra Matejku", written = "Petra Matejku"},
+]
+
+[obvod.5]
+seats = 2
+okrsky = [10, 11]
+rules = [
+  {street = "Benkova ulica", written = "Benkova"},
+  {street = "Dibrovova ulica", written = "Dibrovova"},
+  {street = "Dukelská ulica", written = "Dukelská"},
+  {street = "Hollého ulica", written = "Hollého"},
+  {street = "Hviezdoslavova ulica", written = "Hviezdoslavova"},
+  {street = "Inovecká ulica", written = "Inovecká"},
+  {street = "Kmeťova ulica", written = "Kmeťova"},
+  {street = "Ulica kpt. Uhra", written = "Kpt. Uhra"},
+  {street = "Železničný uzol"},
+]
+
+[obvod.6]
+seats = 3
+okrsky = [12, 13]
+rules = [
+  {street = "Bzinská ulica", written = "Bzinská"},
+  {street = "Hečkova ulica", written = "Hečkova"},
+  {street = "Klčové"},
+  {street = "Kukučínova ulica", written = "Kukučínova"},
+  {street = "Royova ulica", written = "Royova"},
+  {street = "Severná ulica", written = "Severná"},
+  {street = "Tajovského ulica", written = "Tajovského"},
+  {street = "Ulica Janka Bernovského", written = "Jána Bernovského", note = "the register names the street after Janko (Ján) Bernovský; no other Bernovského street exists"},
+  {street = "Ulica Jána Durdíka", written = "Jána Durdíka"},
+  {street = "Ulica Miroslava Ďuržu", written = "Miroslava Ďuržu"},
+  {street = "Ulica Ondreja Plachého", written = "Ondreja Plachého"},
+  {street = "Holubyho ulica", written = "Holubyho"},
+  {street = "Ulica A. Sládkoviča", written = "A. Sládkoviča"},
+  {street = "Ulica Dr. I. Markoviča", written = "Dr. I. Markoviča"},
+  {street = "Vajanského ulica", written = "Vajanského"},
+]
+
+[obvod.7]
+seats = 3
+okrsky = [14, 15]
+rules = [
+  {street = "Košikárska ulica", written = "Košikárska"},
+  {street = "Malinovského ulica", written = "Malinovského"},
+  {street = "Odborárska ulica", written = "Odborárska"},
+  {street = "Robotnícka ulica", written = "Robotnícka"},
+  {street = "Rybárska ulica", written = "Rybárska"},
+  {street = "Trenčianska ulica", written = "Trenčianska"},
+  {street = "Zelená voda I."},
+  {street = "Zelená voda II."},
+  {street = "Beckovská ulica", written = "Beckovská"},
+  {street = "Bohuslavická ulica", written = "Bohuslavická"},
+  {street = "Bošácka ulica", written = "Bošácka"},
+  {street = "Čulenova ulica", written = "Čulenova"},
+  {street = "Haluzická ulica", written = "Haluzická"},
+  {street = "Izbická ulica", written = "Izbická"},
+  {street = "Kvetinová ulica", written = "Kvetinová"},
+  {street = "Lieskovská ulica", written = "Lieskovská"},
+  {street = "Mlynská ulica", written = "Mlynská"},
+  {street = "Mnešická ulica", written = "Mnešická"},
+  {street = "Mostová ulica", written = "Mostová"},
+  {street = "Pod zvonicou"},
+  {street = "Poľná ulica", written = "Poľná"},
+  {street = "Pri Klanečnici"},
+  {street = "Pri vode"},
+  {street = "Pri záhradách"},
+  {street = "Riečna ulica", written = "Riečna"},
+  {street = "Ružová ulica", written = "Ružová"},
+  {street = "Sadová ulica", written = "Sadová"},
+  {street = "Slovanská ulica", written = "Slovanská"},
+  {street = "Srnianska ulica", written = "Srnianska"},
+  {street = "Tehelná ulica", written = "Tehelná"},
+  {street = "Turecká ulica", written = "Turecká"},
+  {street = "Tušková ulica", written = "Tušková"},
+  {street = "Ulica Ľ. Podjavorinskej", written = "Ľ. Podjavorinskej"},
+  {street = "Záhradná ulica", written = "Záhradná"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Ctiborova ulica"},
+  {street = "Fándlyho ulica"},
+  {street = "Južná ulica"},
+  {street = "Kočovská ulica"},
+  {street = "Krátka ulica"},
+  {street = "Krčméryho ulica"},
+  {street = "Piešťanská ulica"},
+  {street = "Tichá ulica"},
+  {street = "Vysoká ulica"},
+  {street = "Zelená ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Banská ulica"},
+  {street = "Bočná ulica"},
+  {street = "Brigádnická ulica"},
+  {street = "Budovateľská ulica"},
+  {street = "Dolná ulica"},
+  {street = "Jarná ulica"},
+  {street = "Krajná ulica"},
+  {street = "Letná ulica"},
+  {street = "Lipová ulica"},
+  {street = "Malá ulica"},
+  {street = "Priemyselná ulica"},
+  {street = "Slnečná ulica"},
+  {street = "Stredná ulica"},
+  {street = "Ulica kpt. Nálepku"},
+  {street = "Ulica Martina Rázusa"},
+  {street = "Ulica Samuela Jurkoviča"},
+  {street = "Vinohradnícka ulica"},
+  {street = "Železničná ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Čerešňová ulica"},
+  {street = "Hroznová ulica"},
+  {street = "Marhuľová ulica"},
+  {street = "Tematínska ulica"},
+  {street = "Ulica Viktora Bilčíka"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bajzova ulica"},
+  {street = "Bernolákova ulica"},
+  {street = "Bratislavská ulica"},
+  {street = "Langsfeldova ulica"},
+  {street = "Považská ulica"},
+  {street = "Sasinkova ulica"},
+  {street = "Svätoplukova ulica"},
+  {street = "Šoltésovej ulica"},
+  {street = "Ulica Fraňa Kráľa"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Dubčekova ulica"},
+  {street = "Hrušovského ulica"},
+  {street = "Jánošíkova ulica"},
+  {street = "Kamenná ulica"},
+  {street = "Kuzmányho ulica"},
+  {street = "Lesnícka ulica"},
+  {street = "Poľovnícka ulica"},
+  {street = "Pyšného ulica"},
+  {street = "Riznerova ulica"},
+  {street = "Stromová ulica"},
+  {street = "Šafárikova ulica"},
+  {street = "Športová ulica"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Jasná ulica"},
+  {street = "Karpatská ulica"},
+  {street = "Ulica gen. Ivana Institorisa"},
+  {street = "Ulica J. Kollára"},
+  {street = "Ulica Juraja Kréna"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Javorinská ulica"},
+  {street = "Ulica SNP"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Čachtická ulica"},
+  {street = "Jesenského ulica"},
+  {street = "Jilemnického ulica"},
+  {street = "Nová ulica"},
+  {street = "Škultétyho ulica"},
+  {street = "Štúrova ulica"},
+  {street = "Ulica M. R. Štefánika"},
+  {street = "Ulica Michala Chrásteka"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Hurbanova ulica"},
+  {street = "Komenského ulica"},
+  {street = "Námestie Slobody"},
+  {street = "Palkovičova ulica"},
+  {street = "Partizánska ulica"},
+  {street = "Ulica 1.mája"},
+  {street = "Ulica čsl. armády"},
+  {street = "Ulica D. Štubňu"},
+  {street = "Ulica J. Hašku"},
+  {street = "Ulica J. Weisseho"},
+  {street = "Ulica Júliusa Gábriša"},
+  {street = "Ulica Obrancov mieru"},
+  {street = "Ulica Petra Matejku"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Benkova ulica"},
+  {street = "Dibrovova ulica"},
+  {street = "Dukelská ulica"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Hollého ulica"},
+  {street = "Hviezdoslavova ulica"},
+  {street = "Inovecká ulica"},
+  {street = "Kmeťova ulica"},
+  {street = "Ulica kpt. Uhra"},
+  {street = "Železničný uzol"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Bzinská ulica"},
+  {street = "Hečkova ulica"},
+  {street = "Klčové"},
+  {street = "Kukučínova ulica"},
+  {street = "Royova ulica"},
+  {street = "Severná ulica"},
+  {street = "Tajovského ulica"},
+  {street = "Ulica Jána Durdíka"},
+  {street = "Ulica Miroslava Ďuržu"},
+  {street = "Ulica Ondreja Plachého"},
+  {street = "Ulica Janka Bernovského", written = "Jána Bernovského", note = "the register names the street after Janko (Ján) Bernovský; the same street"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Holubyho ulica"},
+  {street = "Ulica A. Sládkoviča"},
+  {street = "Ulica Dr. I. Markoviča"},
+  {street = "Vajanského ulica"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Košikárska ulica"},
+  {street = "Malinovského ulica"},
+  {street = "Odborárska ulica"},
+  {street = "Robotnícka ulica"},
+  {street = "Rybárska ulica"},
+  {street = "Trenčianska ulica"},
+  {street = "Zelená voda I."},
+  {street = "Zelená voda II."},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Beckovská ulica"},
+  {street = "Bohuslavická ulica"},
+  {street = "Bošácka ulica"},
+  {street = "Čulenova ulica"},
+  {street = "Haluzická ulica"},
+  {street = "Izbická ulica"},
+  {street = "Kvetinová ulica"},
+  {street = "Lieskovská ulica"},
+  {street = "Mlynská ulica"},
+  {street = "Mnešická ulica"},
+  {street = "Mostová ulica"},
+  {street = "Pod zvonicou"},
+  {street = "Poľná ulica"},
+  {street = "Pri Klanečnici"},
+  {street = "Pri vode"},
+  {street = "Pri záhradách"},
+  {street = "Riečna ulica"},
+  {street = "Ružová ulica"},
+  {street = "Sadová ulica"},
+  {street = "Slovanská ulica"},
+  {street = "Srnianska ulica"},
+  {street = "Tehelná ulica"},
+  {street = "Turecká ulica"},
+  {street = "Tušková ulica"},
+  {street = "Ulica Ľ. Podjavorinskej"},
+  {street = "Záhradná ulica"},
+]

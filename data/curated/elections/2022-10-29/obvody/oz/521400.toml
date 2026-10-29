@@ -1,0 +1,40 @@
+# Council obvody of Haniska (521400), Košice - okolie.
+# Transcribed by an AI agent in job obvod-rules-191 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1, okrsok č. 1 Volebná miestnosť: Kultúrny dom, Haniska 248 – sála Do volebného okrsku č. 1, patria voliči obce Haniska
+#   obvod 2: Volebný obvod č. 2, okrsok č. 2 Volebná miestnosť: AGRO TECHNIK s. r. o., Grajciar 2018 - kancelária Do volebného okrsku č. 2, patria voliči obce Grajciar
+# Okrsky added by an AI agent in job okrsok-rules-1021 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný obvod č. 1, okrsok č. 1 Volebná miestnosť: Kultúrny dom, Haniska 248 – sála Do volebného okrsku č. 1, patria voliči obce Haniska
+#   okrsok 2: Volebný obvod č. 2, okrsok č. 2 Volebná miestnosť: AGRO TECHNIK s. r. o., Grajciar 2018 - kancelária Do volebného okrsku č. 2, patria voliči obce Grajciar
+obec = "521400"
+name = "Haniska"
+date_approximate = "posted"
+date_seen = 2022-08-10
+date_basis = "The obec's page with the starosta's decision states 'Zverejnené 10.8.2022'; the decision itself names the elections of 29 October 2022 ('Rozhodnutím predsedu NR SR č. 209/2022 Z. z. … na sobotu 29. októbra 2022') but states no date of its own. No council resolution on the obvody was found. (https://www.haniska.sk/oznamy/urcenie-volebnych-miestnosti-a-volebnych-okrskov.html)"
+note = "No 2022 announcement of the obvody and their seats was found; the starosta's okrsky decision names the two volebné obvody with one okrsok each ('Volebný obvod č. 1, okrsok č. 1 … patria voliči obce Haniska'; 'Volebný obvod č. 2, okrsok č. 2 … patria voliči obce Grajciar'), read as the parts Haniska and Grajciar. The document gives no seats: the seats (8 and 1) are the Statistical Office's."
+okrsky_note = "The starosta's decision gives one okrsok per volebný obvod: okrsok 1 is obvod 1 (part Haniska), okrsok 2 is obvod 2 (part Grajciar), the document the obvody were transcribed from."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-08-10
+okrsky_date_basis = "The obec's page with the starosta's decision states 'Zverejnené 10.8.2022'; the decision names the elections of 29 October 2022 but states no date of its own. (https://www.haniska.sk/oznamy/urcenie-volebnych-miestnosti-a-volebnych-okrskov.html)"
+
+[[document]]
+url = "https://www.haniska.sk/oznamy/urcenie-volebnych-miestnosti-a-volebnych-okrskov.html"
+sha256 = "32cbb3f054dc807b5a9a4b260110728172e99d79d90e566b98285867ae4e115e"
+title = "Určenie volebných miestnosti a volebných okrskov (starosta obce Haniska)"
+
+[obvod.1]
+seats = 8
+okrsky = [1]
+rules = [
+  {part = "Haniska"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [2]
+rules = [
+  {part = "Grajciar"},
+]

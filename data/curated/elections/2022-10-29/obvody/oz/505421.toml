@@ -1,0 +1,62 @@
+# Council obvody of Radošina (505421), Topoľčany.
+# Transcribed by an AI agent in job obvod-rules-338 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: obec Radošina sa volí 8 poslancov. (Okrsky: 1 Hečkova, kpt.J.Nálepku, Piešťanská, Školská, bezdomovci; 2 Družstevná, Kamenná, Mierová, Nádražná, Nitrianska)
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: Radošina časť Bzince sa volí 1 poslancov.
+# Okrsky added by an AI agent in job okrsok-rules-1206 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hečkova, kpt.J.Nálepku, Piešťanská, Školská, bezdomovci
+#   okrsok 2: Družstevná, Kamenná, Mierová, Nádražná, Nitrianska
+#   okrsok 3: Radošina časť Bzince
+obec = "505421"
+name = "Radošina"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-10-05
+okrsky_date_basis = "The okrsky documents state no date; the Internet Archive captured them on 2022-10-05 (https://web.archive.org/web/20221005213933/https://www.radosina.sk/fileadmin/user_upload/oznamenie_o_utvoreni_volebnych_obvodov.pdf)."
+date = 2022-06-30
+note = "Scanned documents read visually. Obvod 1 = obec Radošina (part Radošina), obvod 2 = časť Bzince."
+okrsky_fill = "nearest"
+okrsky_note = "Scanned documents (Internet Archive snapshots of 5 Oct 2022) read visually; undated okrsky list, so no date. \"bezdomovci\" (homeless, no address) in okrsok 1 are not a rule. The register addresses of part Radošina without a street (súpisné only) are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20221005213933/https://www.radosina.sk/fileadmin/user_upload/oznamenie_o_utvoreni_volebnych_obvodov.pdf"
+sha256 = "10bcb6ed84078daf17a15e9baa2d54c0f5d4ecd5ef76a05cc89e5ae982dbaae1"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby 29. októbra 2022 (uznesenie č. 25 zo dňa 30.6.2022), 11.7.2022"
+
+[[document]]
+url = "https://web.archive.org/web/20221005204317/https://www.radosina.sk/fileadmin/user_upload/volebne_obvody_a_okrsky.pdf"
+sha256 = "d5784673a29b08b6159627bd76f4c62220ae264bc28bdfb429a7787c075005f7"
+title = "Volebné obvody a okrsky, voľby 29.10.2022, 13.7.2022"
+
+[obvod.1]
+seats = 8
+okrsky = [1, 2]
+rules = [
+  {part = "Radošina"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [3]
+rules = [
+  {part = "Bzince"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Hečkova"},
+  {street = "kpt. J. Nálepku"},
+  {street = "Piešťanská"},
+  {street = "Školská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Kamenná"},
+  {street = "Mierová"},
+  {street = "Nádražná"},
+  {street = "Nitrianska"},
+]

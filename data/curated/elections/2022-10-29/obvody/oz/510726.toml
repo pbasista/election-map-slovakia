@@ -1,0 +1,117 @@
+# Council obvody of Liptovský Hrádok (510726), Liptovský Mikuláš.
+# Transcribed by an AI agent in job obvod-rules-310 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č. 1: vymedzený katastrálnym územím Dovalovo počet volených poslancov: 2 tvorí: mestská časť Dovalovo
+#   obvod 2: volebný obvod č. 2: vymedzený katastrálnym územím Liptovský Hrádok počet volených poslancov: 11 tvoria ulice: Maša, Vyšné fabriky, Nižné fabriky, Pálenica, Sady M. R. Štefánika, Pod lipami, Pri úpuste, Juraja Martinku, Záhradná, Hviezdoslavova, Moyzesova, SNP, Hurbanova, Partizánska, Pri železnici, Lúžnica, ČSA, Matúškova, Duklianska, Hradná, Fraňa Kráľa, Martina Rázusa, K Belej, Magdalény Zai, Komenského, J. D. Matejovie, Belanská, Kpt. Nálepku, Lichardova, Športová, Zdravotnícka, Celiny, Dr. J. Gašperíka, Dr. A. Škarvana, Jána Nepomuka Bobulu, J. Kollára, Pri tehelni, Janka Silana, Mariána Blahu, Štúrova, Jakuba Grajchmana, Prekážka, Námestie Františka Wisnera
+# Okrsky added by an AI agent in job okrsok-rules-1182 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: m. č. Dovalovo
+#   okrsok 2: Maša, Vyšné fabriky, Nižné fabriky, Pálenica, Sady M. R. Štefánika, Pod lipami, Pri úpuste, Juraja Martinku, Záhradná, Hviezdoslavova, Moyzesova, SNP, Hurbanova, Partizánska s.č. 95, 186, 241, 242, 244, 268, 269, 270, Pri železnici, Lužnica, Námestie F. Wisnera
+#   okrsok 3: ČSA, Matúškova, Duklianska, Hradná, Fraňa Kráľa, Martina Rázusa, K Belej, Magdalény Zai
+#   okrsok 4: Komenského, J. D. Matejovie, Belanská s.č. 537, 538, 559, 574, 1755
+#   okrsok 5: Kpt. Nálepku, Lichardova, Belanská s.č. 550, 551, 552, 560, 561, 575, 576, 577, 578, 579, 580, Športová, Zdravotnícka
+#   okrsok 6: Celiny – ulice: Dr. J. Gašperíka, Dr. A. Škarvana, Jána Nepomuka Bobulu, J. Kollára, Pri tehelni
+#   okrsok 7: Janka Silana, Mariána Blahu, Štúrova, Jakuba Grajchmana, Prekážka s.č. 257, 275, 722, 723, 724, 725, 726
+obec = "510726"
+name = "Liptovský Hrádok"
+date = 2022-06-17
+note = "Obvody are defined by k.ú.; parts Dovalovo and Liptovský Hrádok coincide with those k.ú. (part rules used because some register addresses lack a k.ú.). Obvod 2's street list enumerates the streets of Liptovský Hrádok."
+okrsky_date = 2022-08-08
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision 'Určenie volebných okrskov a miestností.pdf' (download id=1721431) is behind an hCaptcha/HTTP 429 block and not in the Internet Archive; its full text (with streets per okrsok) is reproduced in the official town newspaper Hrádocký spravodajca 10/2022 on the town's website, used here. The decision is undated; the elections page first lists it in the snapshot of 8.8.2022 (not in that of 6.8.2022), used as date. Partizánska (s.č. listed only for okrsok 2) and Prekážka (s.č. listed only for okrsok 7) are each named in one okrsok only, so whole-street rules (Partizánska 91, 153, 185 and Prekážka 254 are not listed; the document's Prekážka 257 is not in the register). Belanská is split by the listed súpisné čísla (4: 537, 538, 559, 574, 1755; 5: 550-552, 560, 561, 575-580); its unlisted 593, 1786, 1787 are placed by fill_nearest. Námestie F. Wisnera and Zdravotnícka are not in the register. Výroška (1 address, not named) and the houses without a street in part Liptovský Hrádok are placed by fill_nearest."
+
+[[document]]
+url = "https://www.liptovskyhradok.sk/download_file_f.php?id=1703101"
+sha256 = "abb04a942dbcab865c3bea0197a446023773fd3739f0fd123a75c37492b25cd7"
+title = "Uznesenie MsZ č. 38/2022 zo dňa 17. júna 2022 – Určenie volebných obvodov a počtu poslancov"
+
+[[document]]
+url = "https://web.archive.org/web/20231011095646/https://www.liptovskyhradok.sk/download_file_f.php?id=1744118"
+sha256 = "fa5c12d7667f880a12dbe325bd62d16c8697ed072e7ab805be5136a16dd0d55a"
+title = "Hrádocký spravodajca 10/2022 (official town newspaper): Komunálne voľby 2022 – primátor mesta utvára volebné okrsky a určuje volebné miestnosti (full text of the decision with streets per okrsok)"
+
+[[document]]
+url = "https://web.archive.org/web/20220808193556/https://www.liptovskyhradok.sk/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-konane-v-rovnaky-den-a-v-rovnakom-case-v-roku-2022-oznam/mid/470313/.html"
+sha256 = "456504fde8560e532fcff9f5a00cda4b288c9c1ad1be3356101161b5b6bd1285"
+title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 2022 (page with 'Určenie volebných okrskov a miestností.pdf', first archived 8.8.2022; absent on 6.8.2022)"
+
+[obvod.1]
+seats = 2
+okrsky = [1]
+rules = [
+  {part = "Dovalovo"},
+]
+
+[obvod.2]
+seats = 11
+okrsky = [2, 3, 4, 5, 6, 7]
+rules = [
+  {part = "Liptovský Hrádok"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Maša"},
+  {street = "Vyšné fabriky"},
+  {street = "Nižné fabriky"},
+  {street = "Pálenica"},
+  {street = "Sady M. R. Štefánika"},
+  {street = "Pod lipami"},
+  {street = "Pri úpuste"},
+  {street = "Juraja Martinku"},
+  {street = "Záhradná"},
+  {street = "Hviezdoslavova"},
+  {street = "Moyzesova"},
+  {street = "SNP"},
+  {street = "Hurbanova"},
+  {street = "Partizánska"},
+  {street = "Pri železnici"},
+  {street = "Lúžnica", written = "Lužnica", note = "Lužnica is the register's Lúžnica (accent)"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "ČSA"},
+  {street = "Matúškova"},
+  {street = "Duklianska"},
+  {street = "Hradná"},
+  {street = "Fraňa Kráľa"},
+  {street = "Martina Rázusa"},
+  {street = "K Belej"},
+  {street = "Magdalény Zai"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Komenského"},
+  {street = "J. D. Matejovie"},
+  {street = "Belanská", numbers = "537-538, 559, 574, 1755", by = "supisne"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Kpt. Nálepku"},
+  {street = "Lichardova"},
+  {street = "Belanská", numbers = "550-552, 560-561, 575-580", by = "supisne"},
+  {street = "Športová"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Dr. J. Gašperíka"},
+  {street = "Dr. A. Škarvana"},
+  {street = "Jána Nepomuka Bobulu"},
+  {street = "J. Kollára"},
+  {street = "Pri tehelni"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Janka Silana"},
+  {street = "Mariána Blahu"},
+  {street = "Štúrova"},
+  {street = "Jakuba Grajchmana"},
+  {street = "Prekážka"},
+]

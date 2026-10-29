@@ -1,0 +1,27 @@
+# Okrsky of Diakovce, transcribed by an AI agent in job okrsok-rules-810 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre obyvateľov od súp.č. 1 po súp.č. 483 a veľké súpisné čísla spadajúce do tohto okrsku
+#   okrsok 2: pre obyvateľov od súp.č. 484 po súp.č. 843 a veľké súpisné čísla spadajúce do tohto okrsku
+obec = "503711"
+name = "Diakovce"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-08-08
+okrsky_date_basis = "The notice states no date; the Internet Archive captured it on 2022-08-08 (https://web.archive.org/web/20220808174523/http://www.diakovce.sk/files/2022/Volby2022-03.pdf)."
+okrsky_fill = "nearest"
+okrsky_note = "The oznam is undated (the file is no longer live; snapshot of 8.8.2022). Okrsky by súpisné číslo: 1-483 and 484-843; the 'large súpisné numbers' falling into each okrsok (above 843) are not listed, so they take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20220808174523/http://www.diakovce.sk/files/2022/Volby2022-03.pdf"
+sha256 = "b372388f763118d392fbecf4f556a28e0eb2c1fb67d1f79d933dc562726f3184"
+title = "Oznam o voľbách do orgánov samosprávy obcí a do orgánov samosprávnych krajov (volebné okrsky a volebné miestnosti)"
+
+[okrsok.1]
+rules = [
+  {part = "Diakovce", numbers = "1-483"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Diakovce", numbers = "484-843"},
+]

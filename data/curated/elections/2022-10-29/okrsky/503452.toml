@@ -1,0 +1,81 @@
+# Okrsky of Palárikovo, transcribed by an AI agent in job okrsok-rules-661 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Slovenská, Jánošíkova, Budovateľská, Hlavná, Poštová, Mierová, Pod lipami, Hlboká, Námestie Padlých hrdinov, 1. mája, Mirka Nešpora, Partizánska, Andreja Bagara, Mederská, Orechová, Námestie Slobody, Krížna, Školská a Terézie Vansovej
+#   okrsok 2: Štefánikova ulica (od Cergáta po Konopnice), Lesná, Bažantnica, Žofia, Petra Jilemnického, Jána Amosa Komenského, Mládežnícka, Pavla Jozefa Šafárika, Jána Palárika, Dukelská, Československej armády, Jána Kalinčiaka, Cergátova, Slnečná, Zápoveď, Remeselnícka
+#   okrsok 3: Štefánikova (od železničnej stanice po Cergát), Železničná, Čiky, Pivničná, Sládkovičova, Hviezdoslavova, Záhradnícka, 29. augusta, kpt. Jána Nálepku, Janka Kráľa, Janka Matušku, Kukučínova, Štúrova, Bernolákova, 9. mája, Obrancov mieru, Boženy Nemcovej, Jur, Šopy
+obec = "503452"
+name = "Palárikovo"
+okrsky_date = 2022-08-01
+okrsky_fill = "nearest"
+okrsky_note = "Štefánikova is split between okrsok 2 (od Cergáta po Konopnice) and okrsok 3 (od železničnej stanice po Cergát) without house numbers, so it has no rule and is placed by fill_nearest (its neighbours Cergátova in 2, Železničná in 3). Konopnice and Osada Pikova (not named) and addresses without a street are also placed by fill_nearest."
+
+[[document]]
+url = "https://www.obecpalarikovo.sk/e_download.php?file=data/uredni_deska/obsah1070_7.pdf&original=ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20miestnost%C3%AD.pdf"
+sha256 = "55047cfc3ae748331033d4902384d8536be5ac12a6a927311f81cc73891c3743"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Palárikovo pre voľby do orgánov samosprávy obcí"
+
+[okrsok.1]
+rules = [
+  {street = "Slovenská"},
+  {street = "Jánošíkova"},
+  {street = "Budovateľská"},
+  {street = "Hlavná"},
+  {street = "Poštová"},
+  {street = "Mierová"},
+  {street = "Pod lipami"},
+  {street = "Hlboká"},
+  {street = "Námestie Padlých hrdinov"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "Mirka Nešporu", written = "Mirka Nešpora", note = "typo of the register's Mirka Nešporu (Mirko Nešpor)"},
+  {street = "Partizánska"},
+  {street = "Andreja Bagara"},
+  {street = "Mederská"},
+  {street = "Orechová"},
+  {street = "Námestie Slobody"},
+  {street = "Krížna"},
+  {street = "Školská"},
+  {street = "Terézie Vansovej"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Lesná"},
+  {street = "Bažantnica"},
+  {street = "Žofia"},
+  {street = "Osada Žofia", written = "Žofia", note = "the settlement Žofia; the register has both Žofia and Osada Žofia"},
+  {street = "Petra Jilemnického"},
+  {street = "Jána Amosa Komenského"},
+  {street = "Mládežnícka"},
+  {street = "Pavla Jozefa Šafárika"},
+  {street = "Jána Palárika"},
+  {street = "Dukelská"},
+  {street = "Československej armády"},
+  {street = "Jána Kalinčiaka"},
+  {street = "Cergátova"},
+  {street = "Slnečná"},
+  {street = "Zápoveď"},
+  {street = "Remeselnícka"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Železničná"},
+  {street = "Osada Čiky", written = "Čiky", note = "the settlement Čiky, register street Osada Čiky"},
+  {street = "Pivničná"},
+  {street = "Sládkovičova"},
+  {street = "Hviezdoslavova"},
+  {street = "Záhradnícka"},
+  {street = "29.augusta", written = "29. augusta"},
+  {street = "Kpt. Jána Nálepku", written = "kpt. Jána Nálepku"},
+  {street = "Janka Kráľa"},
+  {street = "Janka Matušku"},
+  {street = "Kukučínova"},
+  {street = "Štúrova"},
+  {street = "Bernolákova"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Obrancov mieru"},
+  {street = "Boženy Nemcovej"},
+  {street = "Osada Jur", written = "Jur", note = "the settlement Jur, register street Osada Jur"},
+  {street = "Osada Šopy", written = "Šopy", note = "the settlement Šopy, register street Osada Šopy"},
+]

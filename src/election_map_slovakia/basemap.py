@@ -66,7 +66,7 @@ ring left with fewer than three vertices, or no area, is dropped (a
 building with its outer ring). The buildings of a file follow a Hilbert
 curve, so the steps between them stay short.
 
-Output, ``data/build/base/`` (JSON, compact), topologies as in :mod:`geo`
+Output, ``data/build/<election day>/base/`` (JSON, compact), topologies as in :mod:`geo`
 (``{scale, arcs, lines, features}``, read by web/js/topo.js), where an arc
 is a line of the base map or a ring of a water area, and ``lines`` gives
 its class (:data:`CLASSES`; :data:`WATER` for a ring, which is filled, not
@@ -123,7 +123,6 @@ from pyproj.enums import TransformDirection
 from election_map_slovakia import geo, output, parallel, progress
 from election_map_slovakia.output import format_size
 
-INPUT = "osm-slovakia"
 OUTPUT_DIR = "base"
 INDEX_FILE = "index.json"
 COARSE_FILE = "coarse.json"

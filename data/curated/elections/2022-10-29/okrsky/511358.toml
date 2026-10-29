@@ -1,0 +1,62 @@
+# Okrsky of Divín, transcribed by an AI agent in job okrsok-rules-847 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: B. S. Timravy Družstevná Fučíkova Hrnčiarska Hurbanova Lazná Lazy Lúčna Nálepkova Partizánska Potočná Sládkovičova Športová Štúrova Švermova Divín
+#   okrsok 2: Cintorínska Hradná J. Kráľa Jánskeho Jilemnického Mlynská Mons. Konštantína Loju Moyzesova Nám. mieru Novohradská SNP Štefánikova Záhradná Zelená
+obec = "511358"
+name = "Divín"
+okrsky_date = 2022-07-20
+okrsky_fill = "nearest"
+okrsky_note = "The street list names the 29 October 2022 elections; its companion announcement of the okrsky and polling stations is dated 20 July 2022 (both snapshotted Dec 2022, the originals are gone from the site). 'Lazy' is the part Divínske Lazy. The bare 'Divín' at the end of okrsok 1 means voters registered without an address (only on the municipality), not the register's houses without a street; those houses in the part Divín take the okrsok of the nearest address (fill_nearest). Note: okrsok 1 has more addresses but fewer voters than okrsok 2 per the Statistical Office; the document is followed as written."
+
+[[document]]
+url = "https://web.archive.org/web/20221221084844/http://www.divin.sk/download_file_f.php?id=1714633"
+sha256 = "0ba43faf6d5b621222b804d209e3e7e3359d1da6a2d6be50d117855e316ce114"
+title = "Vytvorené volebné okrsky a určené volebné miestnosti pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov, ktoré sa budú konať 29. októbra 2022 (vytvorené volebné okrsky a zoznam ulíc v okrskoch)"
+
+[[document]]
+url = "https://web.archive.org/web/20221221080525/http://www.divin.sk/download_file_f.php?id=1714632"
+sha256 = "9b26bbb9ca06772f3e810d0f47c9d8079139445c13e1c4072822ffdc234aaad1"
+title = "Obec Divín: vytvorila 2 volebné okrsky a určila volebné miestnosti (V Divíne, dňa 20. júla 2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20221207033912/https://www.divin.sk/volby-do-organov-samospravy-obci-2022.html"
+sha256 = "2df1d170f7d712425b9bc8dcfb9f6f070987d2057ae23669424038744dea5222"
+title = "Voľby do orgánov samosprávy obcí 2022 (archived page linking both documents)"
+
+[okrsok.1]
+rules = [
+  {street = "B. S. Timravy"},
+  {street = "Družstevná"},
+  {street = "Fučíkova"},
+  {street = "Hrnčiarska"},
+  {street = "Hurbanova"},
+  {street = "Lazná"},
+  {street = "Lúčna"},
+  {street = "Nálepkova"},
+  {street = "Partizánska"},
+  {street = "Potočná"},
+  {street = "Sládkovičova"},
+  {street = "Športová"},
+  {street = "Štúrova"},
+  {street = "Švermova"},
+  {part = "Divínske Lazy", note = "written 'Lazy'"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Hradná"},
+  {street = "J. Kráľa"},
+  {street = "Jánskeho"},
+  {street = "Jilemnického"},
+  {street = "Mlynská"},
+  {street = "Ul. Mons. Konštantína Loju", written = "Mons. Konštantína Loju"},
+  {street = "Moyzesova"},
+  {street = "Námestie Mieru", written = "Nám. mieru"},
+  {street = "Novohradská"},
+  {street = "SNP"},
+  {street = "Štefánikova"},
+  {street = "Záhradná"},
+  {street = "Zelená"},
+]

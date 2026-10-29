@@ -758,21 +758,30 @@ def test_fake_final_okrsky_add_up(big_ref, tmp_path):
             assert len(okrsky) == record.counted[1], contest
             assert sum(a[0] for a in okrsky.values()) == record.eligible, contest
             assert sum(a[2] for a in okrsky.values()) == record.valid, contest
-    assert live.past
+    past = live.past
+    assert past.day and past.methods and past.contests
     keys = {
         k for contests in live.okrsky.values() for c in contests.values() for k in c
     }
     several = {k.partition("/")[0] for k in keys if k.endswith("/2")}
-    assert {k.partition("/")[0] for k in live.past} <= several
+    assert {k.partition("/")[0] for k in past.methods} <= several
+    # An okrsok's figures only where its method is known; a whole obec's
+    # wherever all its okrsky are in the contest.
+    for units in past.contests.values():
+        for unit in units:
+            assert "/" not in unit or past.methods.get(unit, results.UNKNOWN)
+    assert "528595" in past.contests["starosta:BA"]
+    assert "528595" not in past.contests["oz:528595/1"]
     assert results.write(tmp_path / "good", live, NOW) is not None
     assert results.check(tmp_path / "good") == []
-    # 2022 municipal turnout: only beside the municipal contests.
+    # The regional contests too: the regional okrsky are the municipal ones.
+    okrsky_dir = tmp_path / "good" / results.OKRSKY_DIR
     written = {
-        p.relative_to(tmp_path / "good").as_posix(): json.loads(p.read_bytes())
-        for p in (tmp_path / "good" / results.OKRSKY_DIR).rglob("*.json")
+        p.relative_to(okrsky_dir).as_posix(): json.loads(p.read_bytes())
+        for p in okrsky_dir.rglob("*.json")
     }
-    assert all(not f["past"] for p, f in written.items() if p.startswith("kraj/"))
-    assert any(f["past"] for p, f in written.items() if not p.startswith("kraj/"))
+    assert any(f["past"] for p, f in written.items() if p.startswith("kraj/"))
+    assert results.read_live(tmp_path / "good").past == past
     e, v, valid, votes = district["oz:528595/1"]["528595/2"]
     district["oz:528595/1"]["528595/2"] = (e, v, valid, {**votes, 1: votes[1] + 1})
     assert results.write(tmp_path / "bad", live, NOW) is not None
@@ -797,43 +806,6 @@ def test_fake_final_no_okrsky_of_unknown_obvody():
     assert "oz:529320/1" not in okrsky and "oz:529320/2" not in okrsky
     assert len(okrsky["starosta:529320"]) == 4
     assert live.files["okres/102"]["oz:529320/1"].status == "final"
-
-
-def test_okrsok_past_only_where_safely_matched():
-    """2022 turnout per okrsok only for an obec of the same okrsok numbers,
-    each okrsok's registered voters within 10 % of 2022's."""
-    live = results.Live("final")
-    live.add_okrsky(
-        "okres/101",
-        "starosta:500011",
-        {
-            "500011/1": (110, 50, 49, {}),  # +10 %: still the same okrsok
-            "500011/2": (90, 40, 39, {}),  # −10 %
-            "500012/1": (111, 50, 49, {}),  # +11 %
-            "500012/2": (100, 40, 39, {}),
-            "500013/1": (100, 50, 49, {}),
-            "500013/2": (100, 40, 39, {}),
-        },
-    )
-    then = {
-        "500011": {1: (100, 60), 2: (100, 50)},
-        "500012": {1: (100, 60), 2: (100, 50)},
-        "500013": {1: (100, 60), 2: (100, 50), 3: (80, 30)},  # okrsky merged
-    }
-    logged: list[str] = []
-    past = results.okrsok_past(live, then, logged.append)
-    assert past == {"500011/1": (100, 60), "500011/2": (100, 50)}
-    assert logged == [
-        "okrsok past: 1 of 3 obce with okrsky in 2022 matched; 1 with other"
-        " okrsok numbers, 1 with registered voters of an okrsok changed too much"
-    ]
-    data = {
-        "obce": [
-            {"code": "500011", "okrsky_2022": {"okrsky": [[1, 100, 60], [2, 100, 50]]}},
-            {"code": "500014"},
-        ]
-    }
-    assert results.okrsky_then(data) == {"500011": {1: (100, 60), 2: (100, 50)}}
 
 
 # The 2026 packages' column names, as their header rows give them.
@@ -1321,7 +1293,16 @@ def test_final_written_and_merged(final_2026, tmp_path):
     assert "predseda:9" in only_oso.records()
     merged = results.merge(None, live, elections)
     assert merged.phase == "final"
-    merged.past = {"500011/1": (300, 130)}
+    merged.past = results.Past(
+        "2022-10-29",
+        {"528595/1": results.SAME, "528595/2": results.UNKNOWN},
+        {
+            "starosta:BA": {
+                "528595/1": (90, 40, 39, {1: 20}),
+                "529320": (180, 70, 69, {1: 30, 3: 5}),
+            }
+        },
+    )
     out = tmp_path / "results"
     assert results.write(out, merged, NOW) is not None
     assert results.check(out) == []
@@ -1331,6 +1312,22 @@ def test_final_written_and_merged(final_2026, tmp_path):
     }
     assert again.okrsky == merged.okrsky
     assert again.past == merged.past
+    # Figures of an okrsok of unknown method, of a number not on the
+    # ballot, of an obec outside the contest are caught.
+    merged.past.contests["starosta:BA"] |= {
+        "528595/2": (1, 1, 1, {}),
+        "529320": (1, 1, 1, {9: 1}),
+        "500011": (1, 1, 1, {}),
+    }
+    assert results.write(tmp_path / "bad", merged, NOW) is not None
+    assert results.check(tmp_path / "bad") == [
+        "okrsky/city/BA: starosta:BA: past 500011 (no okrsok of known method or"
+        " obec of the contest)",
+        "okrsky/city/BA: starosta:BA: past 528595/2 (no okrsok of known method or"
+        " obec of the contest)",
+        "okrsky/city/BA: starosta:BA: past 529320 (malformed, or votes of no"
+        " candidate)",
+    ]
 
 
 def test_check_catches_votes_beyond_the_valid_ballots(final_2026, tmp_path):
@@ -1389,10 +1386,9 @@ def files_of(directory: Path) -> dict[str, bytes]:
 
 def test_make_writes_the_final_results_of_the_inputs(ref, tmp_path, monkeypatch):
     """The results step of `ems make` reads the election's pinned final
-    results inputs, results-oso<year> and results-osk<year>, into its results
-    directory, the same files from the same packages; what `ems results`
-    writes there makes it run again."""
-    assert results.final_inputs(2026) == ["results-oso2026", "results-osk2026"]
+    results inputs (elections.toml `results`) into its results directory,
+    the same files from the same packages; what `ems results` writes there
+    makes it run again."""
     root = tmp_path / "project"
     shutil.copytree(REPO / "config", root / "config")
     shutil.copytree(REPO / config.PARTY_LOGO_DIR, root / config.PARTY_LOGO_DIR)
@@ -1401,14 +1397,18 @@ def test_make_writes_the_final_results_of_the_inputs(ref, tmp_path, monkeypatch)
         name = f"results-{prefix.lower()}"
         (raw / name).mkdir(parents=True)
         package(raw / name / f"{prefix}_SK_csv.zip", prefix, tables)
-    build_dir = root / "data" / "build"
+    build_dir = root / "data" / "build" / "2026-10-24"
     (build_dir / "geo").mkdir(parents=True)
     (build_dir / "candidates.json").write_text(json.dumps({"obce": []}))
     monkeypatch.setattr(results, "load_reference", lambda *_: ref)
+    # Without the 2022 addresses and results: no comparison (test_crosswalk).
+    monkeypatch.setattr(cli, "_compare", lambda *_: None)
     monkeypatch.chdir(root)
-    out = config.load().results_dir
-    assert out == build_dir / "results" / "2026-10-24"
-    make = argparse.Namespace(force=False)
+    cfg = config.load()
+    assert cfg.latest.results.inputs == ("results-oso2026", "results-osk2026")
+    out = cfg.results_dir(cfg.latest)
+    assert out == build_dir / "results"
+    make = argparse.Namespace(force=False, election="2026")
 
     assert cli._run_results(make) == 0
     status = results.read_status(out)
@@ -1437,3 +1437,17 @@ def test_make_writes_the_final_results_of_the_inputs(ref, tmp_path, monkeypatch)
     broken = package(tmp_path / "broken.zip", "OSO2026", tables)
     assert cli.main(["results", "final", str(broken)]) == 1
     assert files_of(out) == first
+
+
+def test_poll_and_fake_only_the_elections_they_serve(tmp_path, monkeypatch, capsys):
+    """Polling reads volbysr.sk, which has the latest election's results
+    only; faking makes a night of the latest election."""
+    root = tmp_path / "project"
+    shutil.copytree(REPO / "config", root / "config")
+    shutil.copytree(REPO / config.PARTY_LOGO_DIR, root / config.PARTY_LOGO_DIR)
+    monkeypatch.chdir(root)
+    assert cli.main(["results", "poll", "--once", "--election", "2022"]) == 1
+    assert "not on volbysr.sk (susr)" in capsys.readouterr().err
+    stage = next(iter(results.STAGES))
+    assert cli.main(["results", "fake", stage, "--election", "2022"]) == 1
+    assert "only the latest election (2026)" in capsys.readouterr().err

@@ -1,3 +1,4 @@
+import dataclasses
 import datetime as dt
 import tomllib
 from pathlib import Path
@@ -6,11 +7,12 @@ from typing import Any
 import numpy as np
 import pytest
 
-from election_map_slovakia import config, obvodrules, obvody, okrsokrules
+from election_map_slovakia import config, obvodrules, obvody, okrsokrules, reuse
 from election_map_slovakia.candidates import Obec
 from election_map_slovakia.config import Obvod, ObvodList
 
-ELECTION = config.load(Path(__file__).resolve().parent.parent / "config").election_dir
+_CFG = config.load(Path(__file__).resolve().parent.parent / "config")
+ELECTION = _CFG.election_dir(_CFG.latest)
 CURATED = ELECTION / obvody.DIRECTORY
 
 AREA = {
@@ -119,12 +121,15 @@ def test_repository_files_are_well_formed():
     assert {f.stem for f in files} == {"BA", "KE", *(f"zsk-{k}" for k in range(1, 9))}
     for f in files:
         config.load_obvody(f)
-    rule_sets = obvody.load_rule_sets(CURATED.parent)
-    for path in sorted((CURATED / obvody.RULES_DIRECTORY).glob("*.toml")):
-        assert rule_sets[path.stem].obec == path.stem
-    okrsok_sets = obvody.okrsok_rule_sets(ELECTION)
-    for path in sorted((ELECTION / obvody.OKRSKY_DIRECTORY).glob("*.toml")):
-        assert okrsok_sets[path.stem].whole
+    for election in _CFG.elections:
+        directory = _CFG.election_dir(election)
+        rule_sets = obvody.load_rule_sets(directory)
+        rules_dir = directory / obvody.DIRECTORY / obvody.RULES_DIRECTORY
+        for path in sorted(rules_dir.glob("*.toml")):
+            assert rule_sets[path.stem].obec == path.stem
+        okrsok_sets = obvody.okrsok_rule_sets(directory)
+        for path in sorted((directory / obvody.OKRSKY_DIRECTORY).glob("*.toml")):
+            assert okrsok_sets[path.stem].whole
 
 
 # --- rule sets -----------------------------------------------------------
@@ -626,6 +631,24 @@ def test_okrsky_file_form(tables: dict, extra: dict, message: str):
             True,
         ),
         ("Pezinok", "https://banm.sk/", "https://banm.sk/a.pdf", False),
+        (
+            "Kostolné",
+            "https://obeckostolne.estranky.sk/",
+            "https://obeckostolne.estranky.sk/file/1/okrsky.pdf",
+            True,
+        ),
+        (
+            "Kostolné",
+            "https://obeckostolne.estranky.sk/",
+            "https://inaobec.estranky.sk/file/1/okrsky.pdf",
+            False,
+        ),
+        (
+            "Kostolné",
+            "https://inaobec.estranky.sk/",
+            "https://inaobec.estranky.sk/a",
+            False,
+        ),
     ],
 )
 def test_official_domain(name: str, website: str, url: str, ok: bool):
@@ -646,3 +669,392 @@ def test_okrsok_item_names_the_city_of_a_district():
     item = okrsokrules._identity(obce["528595"], {}, {"1": "Bratislavský"}, 3, obce)
     assert item["city"] == "Bratislava" and item["kraj"] == "Bratislavský"
     assert "city" not in okrsokrules._identity(obce["BA"], {}, {}, 3, obce)
+
+
+# --- an earlier election ---------------------------------------------------
+
+EARLIER = _CFG.election("2022")
+
+
+def test_origin_keys_round_trip_and_need_notes():
+    data = okrsky_set(
+        {"1": [1, 2], "2": [3]},
+        {},
+        reused=dt.date(2026, 10, 24),
+        note="no 2022 document",
+        okrsky_reused=dt.date(2026, 10, 24),
+        okrsky_note="the 2026 okrsky",
+    )
+    rules = obvody.rule_set(data, "test")
+    assert obvody.council_origin(rules) == {"reused": "2026-10-24"}
+    assert obvody.okrsky_origin(rules) == {"okrsky_reused": "2026-10-24"}
+    assert obvody.rule_set(tomllib.loads(obvody.dump(rules)), "test") == rules
+    with pytest.raises(obvody.ObvodyError, match="needs a note"):
+        obvody.rule_set({k: v for k, v in data.items() if k != "note"}, "test")
+    with pytest.raises(obvody.ObvodyError, match="only one of them"):
+        obvody.rule_set(data | {"okrsky_referendum": dt.date(2023, 1, 21)}, "test")
+    whole = whole_set(
+        {"1": {"rules": [{"part": "Beta"}]}, "2": {"rules": [{"rest": True}]}},
+        okrsky_referendum=dt.date(2023, 1, 21),
+    )
+    with pytest.raises(obvody.ObvodyError, match="need a note"):
+        obvody.okrsky_set(whole, "test")
+    rules = obvody.okrsky_set(whole | {"okrsky_note": "the referendum's"}, "test")
+    assert obvody.okrsky_origin(rules) == {"okrsky_referendum": "2023-01-21"}
+
+
+_ADOPTED = {
+    "adopted": dt.date(2026, 10, 24),
+    "adopted_basis": "no usable 2022 document",
+}
+
+
+def test_adopted_keys_round_trip_and_stand_alone():
+    """A later election's rules, unproven: a basis, and no other origin beside."""
+    data = okrsky_set(
+        {"1": [1], "2": [2]},
+        {},
+        **_ADOPTED,
+        okrsky_adopted=dt.date(2026, 10, 24),
+        okrsky_adopted_basis="one okrsok per obvod",
+    )
+    rules = obvody.rule_set(data, "test")
+    assert rules.adoption == obvody.Adoption(
+        dt.date(2026, 10, 24), "no usable 2022 document"
+    )
+    assert obvody.council_origin(rules) == {"adopted": "2026-10-24"}
+    assert obvody.okrsky_origin(rules) == {"okrsky_adopted": "2026-10-24"}
+    assert obvody.rule_set(tomllib.loads(obvody.dump(rules)), "test") == rules
+    with pytest.raises(obvody.ObvodyError, match="adopted_basis"):
+        obvody.rule_set({k: v for k, v in data.items() if k != "adopted_basis"}, "test")
+    with pytest.raises(obvody.ObvodyError, match="needs it"):
+        obvody.rule_set({k: v for k, v in data.items() if k != "adopted"}, "test")
+    reused = data | {"reused": dt.date(2026, 10, 24), "note": "n"}
+    with pytest.raises(obvody.ObvodyError, match="reused or adopted"):
+        obvody.rule_set(reused, "test")
+    both = data | {"okrsky_reused": dt.date(2026, 10, 24), "okrsky_note": "n"}
+    with pytest.raises(obvody.ObvodyError, match="only one of them"):
+        obvody.rule_set(both, "test")
+    whole = whole_set(
+        {"1": {"rules": [{"part": "Beta"}]}, "2": {"rules": [{"rest": True}]}},
+        okrsky_adopted=dt.date(2026, 10, 24),
+        okrsky_adopted_basis="the 2026 okrsky",
+    )
+    rules = obvody.okrsky_set(whole, "test")
+    assert obvody.okrsky_origin(rules) == {"okrsky_adopted": "2026-10-24"}
+
+
+@pytest.mark.parametrize(
+    ("url", "day", "original"),
+    [
+        (
+            "https://web.archive.org/web/20220815103000/https://www.obec.sk/u.pdf",
+            dt.date(2022, 8, 15),
+            "https://www.obec.sk/u.pdf",
+        ),
+        (
+            "http://web.archive.org/web/20220815103000id_/http://obec.sk/a b.pdf",
+            dt.date(2022, 8, 15),
+            "http://obec.sk/a b.pdf",
+        ),
+        (
+            "https://web.archive.org/web/20220815/https:/obec.sk/",
+            dt.date(2022, 8, 15),
+            "https://obec.sk/",
+        ),
+        ("https://www.obec.sk/u.pdf", None, "https://www.obec.sk/u.pdf"),
+        ("https://web.archive.org/web/20221340/https://obec.sk/", None, None),
+    ],
+)
+def test_snapshot(url: str, day: dt.date | None, original: str | None):
+    s = obvodrules.snapshot(url)
+    assert (s.day if s else None) == day
+    if original is not None:
+        assert obvodrules.original_url(url) == original
+
+
+def test_snapshot_of_the_official_website_is_official():
+    site = "https://www.pezinok.sk/"
+    archived = "https://web.archive.org/web/20220801000000/https://www.pezinok.sk/u.pdf"
+    assert obvodrules.official_problems("Pezinok", site, [archived]) == []
+    other = "https://web.archive.org/web/20220801000000/https://www.sme.sk/u.pdf"
+    assert obvodrules.official_problems("Pezinok", site, [other])
+
+
+def _out(date: str | None, *urls: str) -> dict[str, Any]:
+    out: dict[str, Any] = {"documents": [{"url": u, "title": "t"} for u in urls]}
+    if date:
+        out["date"] = date
+    return out
+
+
+def test_date_problems():
+    live = "https://obec.sk/u.pdf"
+    before = "https://web.archive.org/web/20220901000000/https://obec.sk/u.pdf"
+    assert obvodrules.date_problems(_CFG, EARLIER, _out("2022-07-01", live)) == []
+    # Undated, even a snapshot from before the vote needs its dating marked.
+    assert obvodrules.date_problems(_CFG, EARLIER, _out(None, before))
+    assert obvodrules.date_problems(_CFG, EARLIER, _out(None, live))
+    # The decision of a later vote.
+    assert obvodrules.date_problems(_CFG, EARLIER, _out("2022-11-30", live))
+    # A council may keep obvody set earlier: only a note where it is old.
+    old = _out("2020-07-01", live)
+    assert obvodrules.date_problems(_CFG, EARLIER, old) == []
+    assert obvodrules.date_notes(old, EARLIER.day)
+    assert obvodrules.date_notes(_out("2021-07-01", live), EARLIER.day) == []
+    # A referendum's document, dated between the election and the referendum.
+    referendum = dt.date(2023, 1, 21)
+    assert not obvodrules.date_problems(
+        _CFG, EARLIER, _out("2022-11-30", live), referendum
+    )
+    # The latest election's live documents need no date.
+    assert obvodrules.date_problems(_CFG, _CFG.latest, _out(None, live)) == []
+
+
+def _dated(by: str, *urls: str, **fields: str) -> dict[str, Any]:
+    return _out(None, *urls) | {"date_approximate": by, "date_basis": "b"} | fields
+
+
+def test_undated_documents_dated_approximately():
+    live = "https://obec.sk/u.pdf"
+    page = "https://obec.sk/volby-2022"
+    captured = "https://web.archive.org/web/20220928101500/https://obec.sk/volby-2022"
+    late = "https://web.archive.org/web/20230301000000/https://obec.sk/volby-2022"
+
+    def problems(out: dict[str, Any]) -> list[str]:
+        return obvodrules.date_problems(_CFG, EARLIER, out)
+
+    # A capture before the vote of the page linking a live document.
+    archived = _dated("archived", live, date_seen="2022-09-28", date_source=captured)
+    assert problems(archived) == []
+    # A capture only after the vote may be of a later vote's document.
+    assert problems(archived | {"date_seen": "2023-03-01", "date_source": late})
+    # The day must be the capture's.
+    assert problems(archived | {"date_seen": "2022-09-27"})
+    assert problems(archived | {"date_source": page})
+    # A posting day before the vote on the official page.
+    assert (
+        problems(_dated("posted", live, date_seen="2022-08-30", date_source=page)) == []
+    )
+    assert problems(_dated("posted", live, date_seen="2022-11-02", date_source=page))
+    # A document naming the election needs no day, whatever the captures.
+    assert problems(_dated("named", live)) == []
+    assert problems(_dated("named", live, date_seen="2022-09-28"))
+    # It is for undated documents of an earlier election, with a basis.
+    assert problems(_dated("named", live) | {"date": "2022-07-01"})
+    assert problems(
+        {k: v for k, v in _dated("named", live).items() if k != "date_basis"}
+    )
+    assert obvodrules.date_problems(_CFG, _CFG.latest, _dated("named", live))
+    # The page that dates them must be the obec's.
+    assert obvodrules.dating_urls(archived) == [captured]
+    # An old capture only gets a note.
+    old = archived | {"date_seen": "2020-05-01"}
+    old["date_source"] = captured.replace("20220928101500", "20200501000000")
+    assert problems(old) == []
+    assert obvodrules.date_notes(old, EARLIER.day)
+    assert obvodrules.date_notes(archived, EARLIER.day) == []
+
+
+def test_approximate_dating_reaches_the_rule_set():
+    out = _dated(
+        "archived",
+        "https://obec.sk/u.pdf",
+        date_seen="2022-09-28",
+        date_source="https://web.archive.org/web/20220928000000/https://obec.sk/",
+    )
+    fields = obvodrules.dating_fields(out)
+    assert fields == {
+        "date_approximate": "archived",
+        "date_seen": dt.date(2022, 9, 28),
+        "date_basis": "b (https://web.archive.org/web/20220928000000/https://obec.sk/)",
+    }
+    data = okrsky_set({"1": [1, 2], "2": [3]}, {}) | fields
+    data |= obvodrules.dating_fields(_dated("named"), "okrsky_")
+    rules = obvody.rule_set(data, "test")
+    assert rules.dating == obvody.Dating(
+        "archived", dt.date(2022, 9, 28), fields["date_basis"]
+    )
+    assert obvody.council_origin(rules) == {
+        "date_approximate": {"by": "archived", "seen": "2022-09-28"}
+    }
+    assert obvody.okrsky_origin(rules) == {"okrsky_date_approximate": {"by": "named"}}
+    assert obvody.rule_set(tomllib.loads(obvody.dump(rules)), "test") == rules
+    # Not beside a stated date; a kind with a day needs it, the other has none.
+    with pytest.raises(obvody.ObvodyError, match="state no date"):
+        obvody.rule_set(data | {"date": dt.date(2022, 7, 1)}, "test")
+    with pytest.raises(obvody.ObvodyError, match="needs the day"):
+        obvody.rule_set({k: v for k, v in data.items() if k != "date_seen"}, "test")
+    with pytest.raises(obvody.ObvodyError, match="names no day"):
+        obvody.rule_set(data | {"okrsky_date_seen": dt.date(2022, 9, 1)}, "test")
+    with pytest.raises(obvody.ObvodyError, match="date_basis"):
+        obvody.rule_set({k: v for k, v in data.items() if k != "date_basis"}, "test")
+    whole = whole_set(
+        {"1": {"rules": [{"part": "Beta"}]}, "2": {"rules": [{"rest": True}]}},
+        okrsky_date_approximate="named",
+        okrsky_date_basis="it names the elections of 29 October 2022",
+    )
+    rules = obvody.okrsky_set(whole, "test")
+    assert obvody.okrsky_origin(rules) == {"okrsky_date_approximate": {"by": "named"}}
+    assert obvody.okrsky_set(tomllib.loads(obvody.dump(rules)), "test") == rules
+
+
+_LATER = {
+    "supplemented": dt.date(2026, 10, 24),
+    "supplemented_from": "election",
+    "supplement_basis": "Krátka as in 2026",
+}
+
+
+def _supplemented(*marked: int, **extra) -> dict:
+    """Return :func:`okrsky_set` without okrsky, its obvod 1 rules *marked*."""
+    data = okrsky_set({}, {}, **(_LATER | extra))
+    for i in marked:
+        data["obvod"]["1"]["rules"][i]["supplemented"] = True
+    return data
+
+
+def test_supplement_marks_rules_beside_the_documents_own():
+    rules = obvody.rule_set(_supplemented(1), "test")
+    assert rules.supplement == obvody.Supplement(
+        dt.date(2026, 10, 24), "election", "Krátka as in 2026"
+    )
+    assert [r.supplemented for r in rules.rules] == [False, True, False]
+    assert obvody.council_origin(rules) == {
+        "supplemented": {"from": "election", "day": "2026-10-24"}
+    }
+    assert obvody.rule_set(tomllib.loads(obvody.dump(rules)), "test") == rules
+    # It fills the documents in: some rules its, some theirs.
+    with pytest.raises(obvody.ObvodyError, match="mark the rules"):
+        obvody.rule_set(_supplemented(), "test")
+    every = _supplemented(0, 1)
+    every["obvod"]["2"]["rules"][0]["supplemented"] = True
+    with pytest.raises(obvody.ObvodyError, match="mark the rules"):
+        obvody.rule_set(every, "test")
+    without = {k: v for k, v in _supplemented(1).items() if k not in _LATER}
+    with pytest.raises(obvody.ObvodyError, match="rules are marked"):
+        obvody.rule_set(without, "test")
+    reused = _supplemented(1, reused=dt.date(2026, 10, 24), note="n")
+    with pytest.raises(obvody.ObvodyError, match="not rules of another vote"):
+        obvody.rule_set(reused, "test")
+    with pytest.raises(obvody.ObvodyError, match="not rules of another vote"):
+        obvody.rule_set(_supplemented(1, **_ADOPTED), "test")
+    with pytest.raises(obvody.ObvodyError, match="no council obvody"):
+        obvody.rule_set(_supplemented(1, supplemented_from="referendum"), "test")
+    unbased = {k: v for k, v in _supplemented(1).items() if k != "supplement_basis"}
+    with pytest.raises(obvody.ObvodyError, match="supplement_basis"):
+        obvody.rule_set(unbased, "test")
+
+
+def test_supplement_problems():
+    """Rules from a later election are its rule set's; a later document is listed."""
+    seats = {"1": 2, "2": 2, "3": 3}
+    parts = {"1": "Čuklasovce", "2": "Horné Držkovce", "3": "Dolné Držkovce"}
+
+    def rules(marked: str) -> obvody.RuleSet:
+        obvod = {n: {"seats": seats[n], "rules": [{"part": parts[n]}]} for n in seats}
+        obvod[marked]["rules"][0]["supplemented"] = True
+        if marked == "3":
+            obvod["3"]["rules"] = [{"rest": True, "supplemented": True}]
+        data = {"obec": "545651", "name": "Veľké Držkovce", "document": [DOCUMENT]}
+        return obvody.rule_set(data | {"obvod": obvod} | _LATER, "test")
+
+    url = "https://www.velkedrzkovce.sk/u.pdf"
+    out = {
+        "documents": [{"url": url, "title": "t"}],
+        "supplement": {"from": "election", "day": "2026-10-24", "basis": "b"},
+    }
+
+    def problems(o: dict, marked: str = "1", election=EARLIER) -> list[str]:
+        return obvodrules.supplement_problems(
+            _CFG, election, o, rules(marked), obvody.OBVOD
+        )
+
+    assert problems(out) == []
+    # A rule the rule set of 2026 lacks.
+    assert problems(out, "3") == [
+        "obvod 3: the rest: marked supplemented, but the rule set of 2026-10-24"
+        " has no such rule"
+    ]
+    # Only for an earlier election, from a later source.
+    assert problems(out, election=_CFG.latest)
+    early = out | {"supplement": out["supplement"] | {"day": "2022-10-01"}}
+    assert problems(early)
+    nothing = out | {"supplement": out["supplement"] | {"day": "2025-05-05"}}
+    assert "no rule set" in problems(nothing)[0]
+    # A later document, among the documents.
+    later = {"from": "document", "day": "2024-03-01", "basis": "b"}
+    assert problems(out | {"supplement": later})
+    assert problems(out | {"supplement": later | {"documents": [url]}}) == []
+    assert problems(out | {"supplement": later | {"documents": [url + "x"]}})
+    data = obvodrules.supplement_fields(
+        out | {"supplement": later | {"documents": [url]}}, "okrsky_"
+    )
+    assert data == {
+        "okrsky_supplemented": dt.date(2024, 3, 1),
+        "okrsky_supplemented_from": "document",
+        "okrsky_supplement_basis": f"b ({url})",
+    }
+
+
+def test_seats_and_okrsky_against_the_statistical_office():
+    item = {"obvody": [{"number": 1, "seats": 3}, {"number": 2, "seats": 2}]}
+    out = {"obvody": [{"number": 1, "seats": 3}, {"number": 2, "seats": 3}]}
+    assert obvodrules.seat_problems(item, out) == [
+        "obvod 2 elects 3, the Statistical Office's results say 2"
+    ]
+    rules = obvody.rule_set(okrsky_set({"1": [1, 2], "2": [3]}, {}), "test")
+    assert okrsokrules.grouping_problems(rules, {}) == []
+    assert okrsokrules.grouping_problems(rules, {1: {1: 5, 2: 5}, 2: {3: 5}}) == []
+    assert okrsokrules.grouping_problems(rules, {1: {1: 5}, 2: {2: 5, 3: 5}}) == [
+        "obvod 1: okrsky 1, 2 given, the Statistical Office's results count 1",
+        "obvod 2: okrsky 3 given, the Statistical Office's results count 2, 3",
+    ]
+
+
+def test_plausibility_notes_far_off_shares():
+    assert obvodrules.plausibility("okrsok", {1: 100, 2: 100}, {1: 500, 2: 450}) == []
+    assert obvodrules.plausibility("okrsok", {1: 190, 2: 10}, {1: 500, 2: 500}) == [
+        "plausibility: okrsok 2 has 5% of the addresses (10) but 50% of the voters"
+        " (500)"
+    ]
+    # Too small to judge.
+    assert obvodrules.plausibility("okrsok", {1: 40, 2: 2}, {1: 20, 2: 30}) == []
+
+
+def test_a_referendum_may_stand_in_for_an_earlier_election():
+    assert okrsokrules.referendum_after(EARLIER.day) == dt.date(2023, 1, 21)
+    assert okrsokrules.referendum_after(_CFG.latest.day) is None
+    out = _out("2022-12-01", "https://obec.sk/u.pdf") | {"referendum": "2023-01-21"}
+    assert okrsokrules._vote_problems(_CFG, EARLIER, out) == [
+        "the okrsky of a referendum need a note saying why"
+    ]
+    assert okrsokrules._vote_problems(_CFG, EARLIER, out | {"note": "unchanged"}) == []
+    assert okrsokrules._vote_problems(
+        _CFG, EARLIER, out | {"note": "n", "referendum": "2023-01-22"}
+    )
+
+
+def test_reuse_needs_the_same_okrsky_and_voters():
+    c = reuse._Context(
+        _CFG,
+        EARLIER,
+        _CFG.latest,
+        {},
+        {"500001": {1: {1: 1000, 2: 500}, 2: {3: 800}}},
+        {"500001": {1: {1: 1080, 2: 460}, 2: {3: 800}}},
+    )
+    rules = obvody.rule_set(okrsky_set({"1": [1, 2], "2": [3]}, {}), "test")
+    tolerance = reuse.TOLERANCE
+    assert reuse._layout_problem(c, "500001", rules, tolerance) is None
+    other = obvody.rule_set(okrsky_set({"1": [1], "2": [2, 3]}, {}), "test")
+    problem = reuse._layout_problem(c, "500001", other, tolerance)
+    assert "okrsky per obvod" in (problem or "")
+    c = dataclasses.replace(
+        c, later_units={"500001": {1: {1: 1120, 2: 500}, 2: {3: 800}}}
+    )
+    assert reuse._layout_problem(c, "500001", rules, tolerance) == (
+        "okrsok 1: 1,000 voters then, 1,120 in 2026"
+    )
+    # Within what adoption takes as plausible.
+    assert reuse._layout_problem(c, "500001", rules, reuse.PLAUSIBLE) is None

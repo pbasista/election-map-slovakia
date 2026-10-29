@@ -1,0 +1,250 @@
+# Council obvody of Kežmarok (523585), Kežmarok.
+# Transcribed by an AI agent in job obvod-rules-252 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Biela voda, Fraňa Kráľa, Garbiarska, Hradská cesta, Hradné námestie, Hradný vrch, Jakuba Kraya, Kostolné námestie, Michalská, Možiarska, Nad traťou, Nižná brána, Nová, Pod lesom, Pod traťou, Poľná, Pradiareň, Pri zastávke, Priekopa, Severná, Slavkovská, Starý trh, Strelnica, Tehelňa, Továrenská, Trhovište
+#   obvod 2: Baštová, Cintorínska, Dávida Frölicha, Dr. Alexandra, Dr. Daniela Fischera, Gaštanová, Gen. Štefánika, Hlavné námestie, Huncovská, Hviezdoslavova, Jána Chalupku, J. Jesenského, J. Záborského, Kamenná baňa, mesto Kežmarok, Kláštorná, Komenského, Krvavé pole, Kukučínova, Kušnierska brána, Ľubická cesta, Martina Lányiho, Mučeníkov, Nábrežná, P. J. Šafárika, Rázusova, S. Tomášika, Sihoť, Štúrova, Tatranská, Toporcerova, Tvarožnianska, Vyšný mlyn, Záhradná, Zochova
+#   obvod 3: Bardejovská, Ivana Stodolu, Južná, Karola Kuzmányho, Košická, Lanškrounská, Levočská, Obrancov mieru, Petržalská, Suchá hora, Weilburská
+# Okrsky added by an AI agent in job okrsok-rules-1130 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Biela voda, Hradská cesta, Michalská, Nad traťou, Pod traťou, Poľná, Pri zastávke, Tehelňa, Továrenská, Pradiareň, Strelnica
+#   okrsok 2: Pod lesom, Severná, Hradný vrch
+#   okrsok 3: Garbiarska, Možiarska, Nižná brána
+#   okrsok 4: J. Kraya, Priekopa, Trhovište, Fraňa Kráľa, Kostolné námestie, Nová, Slavkovská, Starý trh, Hradné námestie
+#   okrsok 5: Baštová, Dr. Alexandra, Hlavné námestie, Hviezdoslavova, Toporcerova, Kušnierska brána, Mesto Kežmarok, Tvarožnianska
+#   okrsok 6: J. Jesenského, J. Záborského, Kamenná baňa, Kláštorná, Komenského, Dávida Frölicha, Kukučínova, P.J. Šafárika, Rázusova, S. Tomášika, Štúrova, Ľubická cesta, Zochova
+#   okrsok 7: M. Lányiho, Nábrežná, Sihoť, Vyšný mlyn, Záhradná, Cintorínska, Huncovská
+#   okrsok 8: Gen. Štefánika, Dr. D. Fischera, Krvavé pole, Mučeníkov, Tatranská, Gaštanová, J. Chalupku
+#   okrsok 9: Bardejovská, Košická, Levočská, Weilburská
+#   okrsok 10: Lanškrounská
+#   okrsok 11: Karola Kuzmányho, Obrancov mieru, Suchá hora, Ivana Stodolu
+#   okrsok 12: Petržalská, Južná
+obec = "523585"
+name = "Kežmarok"
+date = 2022-06-23
+fill = "nearest"
+note = "Image-only scan, read from the page image. \"mesto Kežmarok\" in obvod 2 means voters registered only to the town, not a rule; register addresses without a street are placed by fill_nearest."
+okrsky_date = 2022-08-01
+okrsky_fill = "nearest"
+okrsky_note = "Image-only scan of the mayor's announcement of 01.08.2022, read from the page image. Abbreviated first names in the document (J. Kraya, M. Lányiho, J. Chalupku, Dr. D. Fischera, J. Jesenského, S. Tomášika) are the register's streets; \"Mučeníkov\" = register \"Ul. Mučeníkov\"; P.J. Šafárika covers both register spellings (P. J. Šafárika, P.J.Šafárika). \"Mesto Kežmarok\" (okrsok 5) means voters registered only to the town, not a rule. Weinova (register street, not named) and register addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.kezmarok.sk/wp-content/uploads/2022/07/Oznamenie-o-utvoreni-volebnych-obvodov-a-o-urceni-poctu-poslancov-pre-volby-do-organov-samospravy-obci-2022.pdf"
+sha256 = "4658dabc23bbcad2ece9fbfe0279aa2f5e4e384d3aff65c18e1c01160d337415"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie č. 67/2022 z 23. 06. 2022), 12. 07. 2022"
+
+[[document]]
+url = "https://www.kezmarok.sk/wp-content/uploads/2022/08/Oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-pre-volby-do-organov-samospravy-obci-2022-a-pre-volby-do-organov-samospravnych-krajov-2022.pdf"
+sha256 = "8a3afdf354681811cc1cd226adb6cd5e95c7d4b2d0f1fab03d85c5faf9ddfd87"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby do orgánov samosprávy obcí 2022 a pre voľby do orgánov samosprávnych krajov 2022 (01.08.2022)"
+
+[obvod.1]
+seats = 5
+okrsky = [1, 2, 3, 4]
+rules = [
+  {street = "Biela voda"},
+  {street = "Fraňa Kráľa"},
+  {street = "Garbiarska"},
+  {street = "Hradská cesta"},
+  {street = "Hradné námestie"},
+  {street = "Hradný vrch"},
+  {street = "Jakuba Kraya"},
+  {street = "Kostolné námestie"},
+  {street = "Michalská"},
+  {street = "Možiarska"},
+  {street = "Nad traťou"},
+  {street = "Nižná brána"},
+  {street = "Nová"},
+  {street = "Pod lesom"},
+  {street = "Pod traťou"},
+  {street = "Poľná"},
+  {street = "Pradiareň"},
+  {street = "Pri zastávke"},
+  {street = "Priekopa"},
+  {street = "Severná"},
+  {street = "Slavkovská"},
+  {street = "Starý trh"},
+  {street = "Strelnica"},
+  {street = "Tehelňa"},
+  {street = "Továrenská"},
+  {street = "Trhovište"},
+]
+
+[obvod.2]
+seats = 6
+okrsky = [5, 6, 7, 8]
+rules = [
+  {street = "Baštová"},
+  {street = "Cintorínska"},
+  {street = "Dávida Frölicha"},
+  {street = "Dr. Alexandra"},
+  {street = "Dr.Daniela Fischera", written = "Dr. Daniela Fischera"},
+  {street = "Gaštanová"},
+  {street = "Gen. Štefánika"},
+  {street = "Hlavné námestie"},
+  {street = "Huncovská"},
+  {street = "Hviezdoslavova"},
+  {street = "Jána Chalupku"},
+  {street = "J.Jesenského", written = "J. Jesenského"},
+  {street = "J. Záborského"},
+  {street = "Kamenná baňa"},
+  {street = "Kláštorná"},
+  {street = "Komenského"},
+  {street = "Krvavé pole"},
+  {street = "Kukučínova"},
+  {street = "Kušnierska brána"},
+  {street = "Ľubická cesta"},
+  {street = "Martina Lányiho"},
+  {street = "Ul. Mučeníkov", written = "Mučeníkov"},
+  {street = "Nábrežná"},
+  {street = "P. J. Šafárika"},
+  {street = "Rázusova"},
+  {street = "S.Tomášika", written = "S. Tomášika"},
+  {street = "Sihoť"},
+  {street = "Štúrova"},
+  {street = "Tatranská"},
+  {street = "Toporcerova"},
+  {street = "Tvarožnianska"},
+  {street = "Vyšný mlyn"},
+  {street = "Záhradná"},
+  {street = "Zochova"},
+  {street = "P.J.Šafárika", written = "P. J. Šafárika", note = "the register has the street twice, \"P. J. Šafárika\" and \"P.J.Šafárika\""},
+]
+
+[obvod.3]
+seats = 7
+okrsky = [9, 10, 11, 12]
+rules = [
+  {street = "Bardejovská"},
+  {street = "Ivana Stodolu"},
+  {street = "Južná"},
+  {street = "Karola Kuzmányho"},
+  {street = "Košická"},
+  {street = "Lanškrounská"},
+  {street = "Levočská"},
+  {street = "Obrancov mieru"},
+  {street = "Petržalská"},
+  {street = "Suchá hora"},
+  {street = "Weilburská"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Biela voda"},
+  {street = "Hradská cesta"},
+  {street = "Michalská"},
+  {street = "Nad traťou"},
+  {street = "Pod traťou"},
+  {street = "Poľná"},
+  {street = "Pri zastávke"},
+  {street = "Tehelňa"},
+  {street = "Továrenská"},
+  {street = "Pradiareň"},
+  {street = "Strelnica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Pod lesom"},
+  {street = "Severná"},
+  {street = "Hradný vrch"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Garbiarska"},
+  {street = "Možiarska"},
+  {street = "Nižná brána"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Jakuba Kraya", written = "J. Kraya"},
+  {street = "Priekopa"},
+  {street = "Trhovište"},
+  {street = "Fraňa Kráľa"},
+  {street = "Kostolné námestie"},
+  {street = "Nová"},
+  {street = "Slavkovská"},
+  {street = "Starý trh"},
+  {street = "Hradné námestie"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Baštová"},
+  {street = "Dr. Alexandra"},
+  {street = "Hlavné námestie"},
+  {street = "Hviezdoslavova"},
+  {street = "Toporcerova"},
+  {street = "Kušnierska brána"},
+  {street = "Tvarožnianska"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "J.Jesenského", written = "J. Jesenského"},
+  {street = "S.Tomášika", written = "S. Tomášika"},
+  {street = "P. J. Šafárika", written = "P.J. Šafárika"},
+  {street = "P.J.Šafárika", written = "P.J. Šafárika"},
+  {street = "J. Záborského"},
+  {street = "Kamenná baňa"},
+  {street = "Kláštorná"},
+  {street = "Komenského"},
+  {street = "Dávida Frölicha"},
+  {street = "Kukučínova"},
+  {street = "Rázusova"},
+  {street = "Štúrova"},
+  {street = "Ľubická cesta"},
+  {street = "Zochova"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Martina Lányiho", written = "M. Lányiho"},
+  {street = "Nábrežná"},
+  {street = "Sihoť"},
+  {street = "Vyšný mlyn"},
+  {street = "Záhradná"},
+  {street = "Cintorínska"},
+  {street = "Huncovská"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Dr.Daniela Fischera", written = "Dr. D. Fischera"},
+  {street = "Ul. Mučeníkov", written = "Mučeníkov"},
+  {street = "Jána Chalupku", written = "J. Chalupku"},
+  {street = "Gen. Štefánika"},
+  {street = "Krvavé pole"},
+  {street = "Tatranská"},
+  {street = "Gaštanová"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Bardejovská"},
+  {street = "Košická"},
+  {street = "Levočská"},
+  {street = "Weilburská"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Lanškrounská"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Karola Kuzmányho"},
+  {street = "Obrancov mieru"},
+  {street = "Suchá hora"},
+  {street = "Ivana Stodolu"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Petržalská"},
+  {street = "Južná"},
+]

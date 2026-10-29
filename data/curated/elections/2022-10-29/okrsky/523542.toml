@@ -1,0 +1,32 @@
+# Okrsky of Jánovce, transcribed by an AI agent in job okrsok-rules-1052 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov oprávnených voliť vo voľbách do orgánov samosprávy obcí a do orgánov samosprávnych krajov s trvalým pobytom v obci od súpisného čísla 0 – 204
+#   okrsok 2: pre voličov oprávnených voliť vo voľbách do orgánov samosprávy obcí a do orgánov samosprávnych krajov s trvalým pobytom v obci od súpisného čísla 205 – 403
+obec = "523542"
+name = "Jánovce"
+okrsky_date = 2022-08-08
+okrsky_fill = "nearest"
+okrsky_note = "The document (Word file, same as the 2022 notice-board attachment 'Zverejnenie volebných okrskov.doc', file metadata 4.8.2022, now re-hosted on the new website) is undated; date is its notice-board posting date 'Vyvesené: 8. 8. 2022' on the archived official page. Okrsky split by súpisné číslo for the whole obec (0–204, 205–403), applied to both parts Jánovce and Machalovce since the obec has one súpisné series. Houses with súpisné čísla above 403 (newer than the document's ranges, 16 in the register) are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20220808181932/https://www.obec-janovce.sk/uradna-tabula/volebne-okrsky-a-volebne-miestnosti-pre-volby-do-organov-samospravy-obci-ktore-platia-aj-pre-volby-do-organov-samospravnych-krajov-356.html"
+sha256 = "f045c0ec558b3a9bd2deb307105f6b9b6e57455ddcc893840078e3fd645dcb79"
+title = "Úradná tabuľa: Volebné okrsky a volebné miestnosti pre voľby do orgánov samosprávy obcí, ktoré platia aj pre voľby do orgánov samosprávnych krajov (vyvesené 8. 8. 2022)"
+
+[[document]]
+url = "https://obec-janovce.sk/wp-content/uploads/dokumenty/volby-do-samosprav/Zverejnenie-volebnych-okrskov.doc"
+sha256 = "b93a62ed59db51c6c8d866b0b3ce522fd2db2c3157556438f59f500eaa357360"
+title = "Volebné okrsky a volebné miestnosti pre voľby do orgánov samosprávy obcí, ktoré platia aj pre voľby do orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {part = "Jánovce", numbers = "0-204"},
+  {part = "Machalovce", numbers = "0-204"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Jánovce", numbers = "205-403"},
+  {part = "Machalovce", numbers = "205-403"},
+]

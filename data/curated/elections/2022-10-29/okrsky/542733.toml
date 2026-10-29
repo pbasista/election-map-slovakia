@@ -1,0 +1,66 @@
+# Okrsky of Bošany, transcribed by an AI agent in job okrsok-rules-808 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Sládkovičova, Staničná, Jesenského, Jilemnického, Družstevná, Komenského, Nábr. Ľ. Štúra, Park Garbiarov, SNP, Športovcov, ČSA od 551 do 623 a 1367a 1438
+#   okrsok 2: Janka Kráľa, Malobošianska, Mlynská, Vajanského, Bernolákova, Záhradná, Školská, Slnečná, ČSA od 624
+#   okrsok 3: M. R. Štefánika, Dukelská, Moyzesova, Pribinova, Fándlyho, B. Němcovej, Krátka, Hviezdoslavova, Remenárska, Podjavorinskej, Škultétyho, Továrenská, Mládeže, Jána Bottu, Garbiarska, Partizánska, Časť BAŠTÍN, ČSA od 343 do 550 a 1181 a 1412 a 1427
+obec = "542733"
+name = "Bošany"
+okrsky_date = 2022-07-19
+okrsky_fill = "nearest"
+okrsky_note = "Live notice on the official website, undated; date is its publication date (\"Zverejnené 19.7.2022\", updated 20.7.2022). ČSA is split by súpisné čísla (od 551 do 623 …; od 624; od 343 do 550 …); okrsok 2 \"ČSA od 624\" excludes the single numbers given to okrsky 1 and 3. fill_nearest places ČSA houses below súpisné 343 and the houses without a street in Bošany."
+
+[[document]]
+url = "https://www.bosany.sk/volby-do-organov-samospravy-obci-utvorenie-volebnych-okrskov-a-volebnych-miestnosti-pre-volby-do-organov-samospravy-obci-a-pre-volby-do-organov-samos/mid/554143/.html"
+sha256 = "e418b86722396ff29ac8ffc187d2ed5a17cc182db249d0bce3c52fb43469b3cc"
+title = "Voľby do orgánov samosprávy obcí - Utvorenie volebných okrskov a volebných miestnosti pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov, konané dňa 29.10.2022"
+
+[okrsok.1]
+rules = [
+  {street = "Sládkovičova"},
+  {street = "Staničná"},
+  {street = "Jesenského"},
+  {street = "Jilemnického"},
+  {street = "Družstevná"},
+  {street = "Komenského"},
+  {street = "Nábr. Ľ. Štúra"},
+  {street = "Park garbiarov", written = "Park Garbiarov"},
+  {street = "SNP"},
+  {street = "Športovcov"},
+  {street = "ČSA", numbers = "551-623, 1367, 1438", by = "supisne", note = "\"1367a 1438\" read as 1367 and 1438"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Janka Kráľa"},
+  {street = "Malobošianska"},
+  {street = "Mlynská"},
+  {street = "Vajanského"},
+  {street = "Bernolákova"},
+  {street = "Záhradná"},
+  {street = "Školská"},
+  {street = "Slnečná"},
+  {street = "ČSA", numbers = "624-1180, 1182-1366, 1368-1411, 1413-1426, 1428-1437, 1439-", by = "supisne"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "M. R. Štefánika"},
+  {street = "Dukelská"},
+  {street = "Moyzesova"},
+  {street = "Pribinova"},
+  {street = "Fándlyho"},
+  {street = "B. Němcovej"},
+  {street = "Krátka"},
+  {street = "Hviezdoslavova"},
+  {street = "Remenárska"},
+  {street = "Podjavorinskej"},
+  {street = "Škultétyho"},
+  {street = "Továrenská"},
+  {street = "Mládeže"},
+  {street = "Jána Bottu"},
+  {street = "Garbiarska"},
+  {street = "Partizánska"},
+  {part = "Baštín"},
+  {street = "ČSA", numbers = "343-550, 1181, 1412, 1427", by = "supisne"},
+]

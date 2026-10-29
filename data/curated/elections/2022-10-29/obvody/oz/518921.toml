@@ -1,0 +1,59 @@
+# Council obvody of Vígľaš (518921), Detva.
+# Transcribed by an AI agent in job obvod-rules-341 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: územie starého Vígľaša (ulice Podhorská, Zámocká, Pod Baštou, Lesnícka, Zvolenská, Riečna, Železničná, Partizánska Slov. národného povstania, Káplnská, Malinovského, Poľná) a časti Hájniková a Malý Sliač
+#   obvod 2: územie Pstruše, Doliniek, Kocane, Podrohy a Podboky
+#   obvod 3: územie pri Základnej škole Vígľaš
+# Okrsky added by an AI agent in job okrsok-rules-1209 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: územie starého Vígľaša (ulice Podhorská, Zámocká, Pod Baštou, Lesnícka, Zvolenská, Riečna, Železničná, Partizánska Slov. národného povstania, Káplnská, Malinovského, Poľná) a časti Hájniková a Malý Sliač
+#   okrsok 2: územie Pstruše, Doliniek, Kocane, Podrohy a Podboky
+#   okrsok 3: územie pri Základnej škole Vígľaš
+obec = "518921"
+name = "Vígľaš"
+date = 2022-06-30
+fill = "nearest"
+note = "Obvody are described by areas, not addresses. Obvod 1 = all 12 register streets (old Vígľaš) plus the hamlets Hájniková and Malý Sliač; obvod 2 = Pstruša and its hamlets (Dolinky, Kocaňa, Podrohy, Podboky); obvod 3 = \"územie pri Základnej škole\" (the housing without street names around ZŠ J. Drdoša, Vígľaš 436). Located from the register points and OSM: the dense no-street cluster around súpisné 436 = obvod 3 (inferred list of súpisné numbers); the no-street cluster at OSM \"Malý Sliač\" (súp. 302-312, 732) = obvod 1; the part-Pstruša houses at OSM \"Hájniková\" (north of Pstruša) = obvod 1; the rest of part Pstruša = obvod 2. The other addresses without a street are placed by fill_nearest (west ones by the old-Vígľaš streets → 1; 489, 764 south of the school cluster → 3; 585, 588, 749 by Pstruša → 2; the small group súp. 314-316, 600, 601 east near the Detva border, hamlet unidentified, goes by nearest to obvod 2 — doubtful)."
+okrsky_date = 2022-06-30
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office okrsky per obvod), so each okrsok is its whole obvod; the obvody document is the source and date is that resolution's date (no separate okrsky announcement used)."
+
+[[document]]
+url = "https://www.viglas.net/download_file_f.php?id=2020255"
+sha256 = "f5bd4d2beecff1690f65834ca7b64aafa95553a424c8a059fa1ce08cb8bf573c"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OcZ č. 131/2022 zo dňa 30.06.2022)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {street = "Podhorská"},
+  {street = "Zámocká"},
+  {street = "Pod Baštou"},
+  {street = "Lesnícka"},
+  {street = "Zvolenská"},
+  {street = "Riečna"},
+  {street = "Železničná"},
+  {street = "Partizánska"},
+  {street = "Slov. národného povstania"},
+  {street = "Káplnská"},
+  {street = "Malinovského"},
+  {street = "Poľná"},
+  {part = "Vígľaš", numbers = "302-312, 732", by = "supisne", note = "Malý Sliač: the houses without street at the OSM place \"Malý sliač\" east of Vígľaš", inferred = true},
+  {part = "Pstruša", numbers = "282-286, 288-291, 293-294, 296, 299-301, 581-583, 674, 679, 692-695, 827, 835-836", by = "supisne", note = "Hájniková: the register lists these houses in part Pstruša; they lie at the OSM hamlet Hájniková north of Pstruša, which the document puts in obvod 1", inferred = true},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Pstruša"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Vígľaš", numbers = "436-463, 480-488, 490-506, 516-566, 605, 736, 776, 816, 818-819, 832", by = "supisne", note = "the compact settlement of houses without a street around the school (ZŠ J. Drdoša, súp. 436), taken from the register points", inferred = true},
+]

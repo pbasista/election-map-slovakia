@@ -1,0 +1,22 @@
+# The okrsky of Pruské of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/513598.toml, reused by `ems job reuse`.
+obec = "513598"
+name = "Pruské"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Published on the obec's elections page on 20.7.2026 (no decision date stated). Okrsok 2 covers parts Podvažie (č. 1–130) and Savčina (č. 1–110) as whole parts. Voliči with trvalý pobyt only 'obec Pruské' belong to okrsok 1 (text only)."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.obecpruske.sk/volby-do-organov-uzemnej-samospravy-2026.html"
+sha256 = "88e47e6511419a1d86df3d7c3c1bcf0b85d5ed8f314efbf746afd465f0382a9b"
+title = "Voľby do orgánov územnej samosprávy 2026 – Volebné okrsky a volebné miestnosti (zverejnené 20.7.2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Pruské", numbers = "1-336"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Pruské", numbers = "337-870"},
+  {part = "Podvažie"},
+  {part = "Savčina"},
+]

@@ -1,0 +1,45 @@
+# Okrsky of Pohorelá, transcribed by an AI agent in job okrsok-rules-849 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulica Kpt. Nálepku, po súpisné číslo 259; ulica Hviezdoslavova (celá ulica), ulica Jesenského (celá ulica), ulica Za Vŕšok (celá ulica), ulica Clementisova (celá ulica), ulica Za Hronom (celá ulica)
+#   okrsok 2: ulica Kpt. Nálepku, od súpisného čísla 260, ulica Nová (celá ulica), ulica Školská (celá ulica), ulica Športová (celá ulica), ulica Jánošíkova (celá ulica), ulica Pod Brezinou (celá ulica), ulica Partizánska (celá ulica), ulica Orlová (celá ulica), ulica M. R. Štefánika (celá ulica), ulica Za potokom (celá ulica)
+#   okrsok 3: miestna časť Pohorelská Maša
+obec = "508870"
+name = "Pohorelá"
+okrsky_date = 2022-06-23
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky set by council resolution 28/2022 of 23 June 2022, published by the mayor 10 Aug 2022. Ulica 1. mája is not named in the document; its addresses and those without a street in part Pohorelá are placed by fill_nearest. Kpt. Nálepku is split by súpisné číslo (up to 259 / from 260)."
+
+[[document]]
+url = "https://web.archive.org/web/20220925023909/https://www.pohorela.sk/samosprava/volby-a-referenda/volby-2022/zoznam-volebnych-obvodov-okrskov-a-utvorenie-volebnych-miestnosti-1694sk.html"
+sha256 = "ad15ab36f16822c786a4c34e0c2c3cc16f04fae385d924db4fd8e97a6790624f"
+title = "Zoznam volebných obvodov, okrskov a utvorenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Kpt. Nálepku", numbers = "1-259", by = "supisne"},
+  {street = "Hviezdoslavova"},
+  {street = "Jesenského"},
+  {street = "Za Vŕšok"},
+  {street = "Clementisova"},
+  {street = "Za Hronom"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kpt. Nálepku", numbers = "260-", by = "supisne"},
+  {street = "Nová"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Jánošíkova"},
+  {street = "Pod Brezinou"},
+  {street = "Partizánska"},
+  {street = "Orlová"},
+  {street = "M. R. Štefánika"},
+  {street = "Za Potokom", written = "Za potokom"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Pohorelská Maša"},
+]

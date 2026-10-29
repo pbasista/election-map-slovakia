@@ -1,0 +1,46 @@
+# Council obvody of Liptovské Sliače (511005), Ružomberok.
+# Transcribed by an AI agent in job obvod-rules-314 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č. 1 – pre voľby poslancov v časti obce Nižný Sliač, v ktorom sa budú voliť traja poslanci
+#   obvod 2: volebný obvod č. 2 – pre voľby poslancov v časti obce Stredný Sliač, v ktorom sa budú voliť piati poslanci
+#   obvod 3: volebný obvod č. 3 – pre voľby poslancov v časti obce Vyšný Sliač, v ktorom sa budú voliť traja poslanci
+# Okrsky added by an AI agent in job okrsok-rules-1186 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+obec = "511005"
+name = "Liptovské Sliače"
+date = 2022-06-23
+okrsky_date = 2022-07-18
+okrsky_note = "The mayor's 2022 decision (scan, read visually) gives obvod 1: okrsok 1 Nižný Sliač; obvod 2: okrsok 2 Stredný Sliač and okrsok 3 Stredný Sliač, both voting in the same room (Kultúrny dom, Seč 635/2); obvod 3: okrsok 4 Vyšný Sliač. No published document says which streets or houses of Stredný Sliač belong to okrsok 2 and which to okrsok 3 (two okrsky in one room are often split by voters' names, not by address), so the okrsky of obvod 2 are given without rules. The ŽSK version of the decision (same date) numbers them 1, 1, 2, 3; the referendum of 2023 had only 3 okrsky."
+
+[[document]]
+url = "https://www.liptovskesliace.sk/e_download.php?file=data/editor/200sk_6.pdf&original=Ur%C4%8Denie%20po%C4%8Dtu%20poslancov%20a%20po%C4%8Dtu%20obvodov.pdf"
+sha256 = "e34b65c07d83729f886219e6804eb493f4531f5d41c5161b87a6e1a92a196be9"
+title = "Uznesenie č. 45/24/2022 zo dňa 23.06.2022 – Určenie počtu poslancov OZ a počtu obvodov"
+
+[[document]]
+url = "https://www.liptovskesliace.sk/e_download.php?file=data/editor/200sk_8.pdf&original=Ur%C4%8Denie%20okrskov%2C%20obvodov%20a%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "cd1d9f648b4ed725b4eaa1ee4cb17296a3863db409f7ee40f2598993c7f5b36e"
+title = "Určenie volebných okrskov a volebných miestností, 18.07.2022"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {part = "Nižný Sliač"},
+]
+
+[obvod.2]
+seats = 5
+okrsky = [2, 3]
+rules = [
+  {part = "Stredný Sliač"},
+]
+
+[obvod.3]
+seats = 3
+okrsky = [4]
+rules = [
+  {part = "Vyšný Sliač"},
+]

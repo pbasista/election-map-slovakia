@@ -1,0 +1,37 @@
+# Okrsky of Veľké Leváre, transcribed by an AI agent in job okrsok-rules-732 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Súp. č. 1-378,737-758,995,1001- 1003,1005,1013,1015,1017,1018,1020,1044-1046,1048-1056, 1062, 1067,1072,1074,1100,1126,1141 - 1152, 1183,1184,1191, 1197,1200,1201, 1209, 1215, 1216,1226,1230,1235, 1236, 1260,1261,1262,1276,1287 - 1299,1305,1310-1312,1320-1325, 1362, 1365, - 1367,1372,1373,1386-1403, 1405 – 1409, 1416, 1418, 1466, 1469 – 1473, 1485, 1511 – 1514, 1520, 1529 – 1532, 1550, 1551
+#   okrsok 2: Súp. č. 379-664,988,989,996,999,1004,1007-1012,1014,1016,1021,1022,1057-1061,1063, 1064,1070,1071,1073, 1124,1128,1129,1133, 1171-1176, 1178 – 1180, 1186, 1194, 1196, 1198, 1199,1210, 1211,1232,1237- 1256, 1277-1286,1300,1315,1327-1340,1368,1375-1383,1385, 1417,1419,1420, 1463, 1468, 1518, 1524, 1526, 1543, 1544
+#   okrsok 3: Súp. č. Bez súp. čísla, 665-736, 759 – 987, 990 - 994,998,1000,1006,1019,1023- 1043,1047,1066,1068,1069,1075-1099,1102-1120,1116,1157-1170, 1177,1182,1185,1190,1192, 1193, 1195, 1205-1208,1213,1214,1227 - 1229,1231, 1234, 1258,1301-1303,1308, 1313, 1341- 1359,1363,1371,1384,1404, 1411 - 1415,1421- 1447, 1464, 1465, 1467, 1474--1483,1509,1515,1517, 1521 – 1523, 1525, 1527, 1528, 1541, 1542, 1547
+obec = "504947"
+name = "Veľké Leváre"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-08-16
+okrsky_date_basis = "The documents state no date; the Internet Archive captured them on 2022-08-16 (https://web.archive.org/web/20220816073542/https://www.levare.sk/files/documents/uradna-tabula/2022/volebne%20okrsky.pdf)."
+okrsky_note = "Both documents undated; snapshots of 2022-08-16 (before the elections). Okrsky defined by súpisné čísla (the village has no streets in the register). Okrsok 3 holds 'bez súp. čísla' and all listed numbers of okrsok 3 plus any number not listed (rest); numbers absent from all lists thus fall to okrsok 3."
+
+[[document]]
+url = "https://web.archive.org/web/20220816073542/https://www.levare.sk/files/documents/uradna-tabula/2022/volebne%20okrsky.pdf"
+sha256 = "f8b85dd0017e2c800b3213cd6213755dc92ae8985d0491bddc03b275674bc288"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://web.archive.org/web/20220816065433/https://www.levare.sk/files/documents/uradna-tabula/2022/sup.%20cisla%20v%20okrsku%20(002).pdf"
+sha256 = "b7eec040f2be2db85efea8b4297d56a77986d180fd71b195d22c8476b231b9bb"
+title = "Volebné okrsky s vymedzením ich územného obvodu"
+
+[okrsok.1]
+rules = [
+  {part = "Veľké Leváre", numbers = "1-378, 737-758, 995, 1001-1003, 1005, 1013, 1015, 1017, 1018, 1020, 1044-1046, 1048-1056, 1062, 1067, 1072, 1074, 1100, 1126, 1141-1152, 1183, 1184, 1191, 1197, 1200, 1201, 1209, 1215, 1216, 1226, 1230, 1235, 1236, 1260, 1261, 1262, 1276, 1287-1299, 1305, 1310-1312, 1320-1325, 1362, 1365-1367, 1372, 1373, 1386-1403, 1405-1409, 1416, 1418, 1466, 1469-1473, 1485, 1511-1514, 1520, 1529-1532, 1550, 1551"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Veľké Leváre", numbers = "379-664, 988, 989, 996, 999, 1004, 1007-1012, 1014, 1016, 1021, 1022, 1057-1061, 1063, 1064, 1070, 1071, 1073, 1124, 1128, 1129, 1133, 1171-1176, 1178-1180, 1186, 1194, 1196, 1198, 1199, 1210, 1211, 1232, 1237-1256, 1277-1286, 1300, 1315, 1327-1340, 1368, 1375-1383, 1385, 1417, 1419, 1420, 1463, 1468, 1518, 1524, 1526, 1543, 1544"},
+]
+
+[okrsok.3]
+rules = [
+  {rest = true},
+]

@@ -1,0 +1,95 @@
+# Council obvody of Rajecké Teplice (517933), Žilina.
+# Transcribed by an AI agent in job obvod-rules-319 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod číslo 1- Rajecké Teplice: počet poslancov 7.
+#   obvod 2: Volebný obvod číslo 2: mestská časť Poluvsie: počet poslancov 2.
+# Okrsky added by an AI agent in job okrsok-rules-1190 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 30. apríla, Farská, Karola Kašjaka, Kvetná, Kuneradská cesta, Kúpeľný park, Lesná, Ľudovíta Štúra, Námestie SNP, Pionierska, Pri Bystričke, Rudolfa Súľovského, Slnečná, Školská, Veterná, Rajecká cesta- rodinné domy so súpisným číslom: 1,2,4,5,7,14,132, 156,170,179,192,281,334,338,396, 397.
+#   okrsok 2: 1.mája, Dielnice, Dolná, Jozefa Gabčíka, Lúčky, Lúčna, M.R.Štefánika, Horná, Osloboditeľov, Partizánska cesta, Poľná cesta, Riečna, Stredná, Za Dielom, Zábrežná, Záhradnícka cesta, Zátočná, Žliabková dolina, Rajecká cesta-rodinné domy so súpisným číslom:231,232,245,246, 247,248,249,250,251,252,253,254, 255,656, K Lipovej aleji, Jozefa Pekaru, Jozefa Cincíka.
+#   okrsok 3: mestská časť Poluvsie
+obec = "517933"
+name = "Rajecké Teplice"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-11-28
+okrsky_date_basis = "The referendum's okrsky documents state no date; the Internet Archive captured them on 2022-11-28, before the referendum (https://web.archive.org/web/20221128053144/https://www.rajecke-teplice.info/pages/attachments/bsUx6qViL9YpxxS33vVQVE.pdf)."
+date = 2022-06-30
+note = "Uznesenie č. 27/2022: obvod 1 = Rajecké Teplice (part Rajecké Teplice), obvod 2 = mestská časť Poluvsie (part Poluvsie)."
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections found (the 2022 elections pages, live and archived, list no okrsky document; the live page shows only 2026 documents); the referendum's document (undated; Internet Archive snapshot of 28.11.2022). Its 3 okrsky fit the ŠÚ SR counts: okrsky 1-2 town Rajecké Teplice (obvod 1), okrsok 3 = mestská časť Poluvsie (obvod 2). 'Ľudovíta Štúra' = register 'Ľ.Štúra'; 'K Lipovej aleji', 'Jozefa Pekaru', 'Jozefa Cincíka' = register 'Ulica k lipovej aleji', 'Ulica Jozefa Pekaru', 'Ulica Jozefa Cincíka' (left-out 'Ulica'); 'Poľná cesta' = register 'Poľna cesta' (register typo); 'Záhradnícka cesta' = register 'Zahradnícka cesta' (spelling). 'Dielnice' and 'Žliabková dolina' are not in the register and are left out. Rajecká cesta is split by súpisné čísla of family houses as the document lists them; its other addresses, the street Pri Rajčanke (not named) and the addresses without a street in obvod 1 are placed by fill_nearest."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.rajecke-teplice.info/pages/attachments/JF7f5YqMGUbH26x3yiGhra.pdf"
+sha256 = "1027cb6acd00a147fa990303bb179d04da15860752373ac082723bbce909acc2"
+title = "Uznesenia z XXI. zasadnutia Mestského zastupiteľstva v Rajeckých Tepliciach 30. 6. 2022 (uznesenie č. 27/2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20221128053144/https://www.rajecke-teplice.info/pages/attachments/bsUx6qViL9YpxxS33vVQVE.pdf"
+sha256 = "2dd3ea9f15eb152b380df06e8fca71b34eeecd586aefc9ae33c375c1de73041a"
+title = "Oznámenie o určení volebných okrskov a volebných miestností pre hlasovanie v referende 21. januára 2023"
+
+[[document]]
+url = "https://web.archive.org/web/20221128035413/https://www.rajecke-teplice.info/pages/referendum-21-01-2023"
+sha256 = "c7570747a0e3bf292a8abe101e9a14397fe37f25b1820c2d43bcab25d9de9944"
+title = "Referendum 21. 01. 2023 (stránka mesta, linking the okrsky document)"
+
+[obvod.1]
+seats = 7
+okrsky = [1, 2]
+rules = [
+  {part = "Rajecké Teplice"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Poluvsie"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "30.apríla", written = "30. apríla"},
+  {street = "Farská"},
+  {street = "Karola Kašjaka"},
+  {street = "Kvetná"},
+  {street = "Kuneradská cesta"},
+  {street = "Kúpeľný Park", written = "Kúpeľný park"},
+  {street = "Lesná"},
+  {street = "Ľ.Štúra", written = "Ľudovíta Štúra"},
+  {street = "Námestie SNP"},
+  {street = "Pionierska"},
+  {street = "Pri Bystričke"},
+  {street = "Rudolfa Súľovského"},
+  {street = "Slnečná"},
+  {street = "Školská"},
+  {street = "Veterná"},
+  {street = "Rajecká cesta", numbers = "1, 2, 4, 5, 7, 14, 132, 156, 170, 179, 192, 281, 334, 338, 396, 397", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája"},
+  {street = "Dolná"},
+  {street = "Jozefa Gabčíka"},
+  {street = "Lúčky"},
+  {street = "Lúčna"},
+  {street = "M.R.Štefánika"},
+  {street = "Horná"},
+  {street = "Osloboditeľov"},
+  {street = "Partizánska cesta"},
+  {street = "Poľna cesta", written = "Poľná cesta"},
+  {street = "Riečna"},
+  {street = "Stredná"},
+  {street = "Za Dielom"},
+  {street = "Zábrežná"},
+  {street = "Zahradnícka cesta", written = "Záhradnícka cesta"},
+  {street = "Zátočná"},
+  {street = "Rajecká cesta", numbers = "231, 232, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 656", by = "supisne"},
+  {street = "Ulica k lipovej aleji", written = "K Lipovej aleji"},
+  {street = "Ulica Jozefa Pekaru", written = "Jozefa Pekaru"},
+  {street = "Ulica Jozefa Cincíka", written = "Jozefa Cincíka"},
+]

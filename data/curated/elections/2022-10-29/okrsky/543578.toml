@@ -1,0 +1,58 @@
+# Okrsky of Spišské Podhradie, transcribed by an AI agent in job okrsok-rules-809 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice – Galova, Hviezdoslavova, Jarmočná, Mariánske námestie, Školská, Štúrova, Trhovisko
+#   okrsok 2: Ulice – Bielidla, Komenského, Levočská cesta, Májová, Robotnícka, Spišská Kapitula, Starý jarok
+#   okrsok 3: Ulice – Bezdomovci, Dr. Špirka, Kúpeľná, Palešovo námestie, Podzámková, Prešovská, Sídlisko Hrad, Štefánikova, Ulica sv. Jána Pavla II., Vodný rad
+#   okrsok 4: Samostatný volebný okrsok, Volebná miestnosť: Kultúrny dom Katúň 15
+obec = "543578"
+name = "Spišské Podhradie"
+okrsky_date = 2022-07-19
+okrsky_fill = "nearest"
+okrsky_note = "The 'Samostatný volebný okrsok' (Kultúrny dom Katúň 15) is numbered 4 (the ŠÚ SR okrsok 4 has 76 voters, Katúň). 'Bezdomovci' in okrsok 3 are voters without an address. The register's streets 1.čsl. Armadného Zboru, Februárového Víťazstva and Kpt. Nálepku (6 addresses, old names) are not in the document and the addresses without a street in Spišské Podhradie (súpisné only) are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20220928130604/https://www.spisskepodhradie.sk/e_download.php?file=data/editor/250sk_7.pdf&original=Vytvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "f8e0373481fdb1f5df8fd80867db9f7b557c27c1b4e76e6fb0b545ce976e6bd6"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Galova"},
+  {street = "Hviezdoslavova"},
+  {street = "Jarmočná"},
+  {street = "Mariánske námestie"},
+  {street = "Školská"},
+  {street = "Štúrova"},
+  {street = "Trhovisko"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bielidla"},
+  {street = "Komenského"},
+  {street = "Levočská cesta"},
+  {street = "Májová"},
+  {street = "Robotnícka"},
+  {street = "Spišská Kapitula"},
+  {street = "Starý jarok"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Dr. Špirka"},
+  {street = "Kúpeľná"},
+  {street = "Palešovo námestie"},
+  {street = "Podzámková"},
+  {street = "Prešovská"},
+  {street = "Sídlisko Hrad"},
+  {street = "Štefánikova"},
+  {street = "Ulica sv. Jána Pavla II."},
+  {street = "Vodný Rad", written = "Vodný rad"},
+  {street = "Palešovo Nám", note = "the register's duplicate spelling of Palešovo námestie (1 address); the document lists Palešovo námestie in okrsok 3", inferred = true},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Katúň", note = "the document gives this okrsok only its polling station in Katúň, the separate part", inferred = true},
+]

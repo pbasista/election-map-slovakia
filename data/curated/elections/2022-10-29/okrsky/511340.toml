@@ -1,0 +1,30 @@
+# Okrsky of České Brezovo, transcribed by an AI agent in job okrsok-rules-1055 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Sála kultúrneho domu České Brezovo
+#   okrsok 2: Zasadačka Kultúrneho domu Váľkovo
+obec = "511340"
+name = "České Brezovo"
+okrsky_date = 2022-11-10
+okrsky_note = "No document of the elections found (the 2022 elections page, live and archived, lists no okrsky); the referendum's document, dated 10.11.2022. It gives each okrsok only its polling station: okrsok 1 the hall of the kultúrny dom České Brezovo, okrsok 2 the meeting room of the kultúrny dom Váľkovo. The obec has two k.ú. (České Brezovo, Vaľkovo), each holding one station, so each okrsok is given the k.ú. of its station (inferred); the part Salajka lies in k.ú. České Brezovo. Voters 322/60 fit 205/55 addresses."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.ceskebrezovo.sk/e_download.php?file=data/editor/105sk_3.pdf&original=Volebn%C3%A9%20okrsky%20pre%20REFERENDUM%202023.pdf"
+sha256 = "026dfe168ac3274d5e675b2c0e567fefdf5a948b1b6ed9e510bf6ada9809c96d"
+title = "Volebné okrsky pre Referendum 2023"
+
+[[document]]
+url = "https://www.ceskebrezovo.sk/referendum-2023/"
+sha256 = "1aec2065512778310554bd818a1156428ce72226dff5d30d79537c6a1897b7aa"
+title = "Referendum 2023"
+
+[okrsok.1]
+rules = [
+  {ku = "České Brezovo", note = "k.ú. of the polling station (kultúrny dom České Brezovo)", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {ku = "Vaľkovo", note = "k.ú. of the polling station (kultúrny dom Vaľkovo)", inferred = true},
+]

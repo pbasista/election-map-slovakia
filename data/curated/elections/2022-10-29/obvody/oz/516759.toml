@@ -1,0 +1,42 @@
+# Council obvody of Hodruša-Hámre (516759), Žarnovica.
+# Transcribed by an AI agent in job obvod-rules-321 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod Banská Hodruša počet poslancov - 3
+#   obvod 2: volebný obvod Dolné Hámre počet poslancov - 5
+#   obvod 3: volebný obvod Kopanice počet poslancov - 1
+# Okrsky added by an AI agent in job okrsok-rules-1192 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+obec = "516759"
+name = "Hodruša-Hámre"
+date = 2022-06-29
+note = "The resolution names the three obvody (Banská Hodruša 3, Dolné Hámre 5, Kopanice 1) without numbers; numbered 1–3 in the order listed, which matches the seats of ŠÚ SR obvody 1–3 (3, 5, 1)."
+okrsky_date = 2022-06-29
+okrsky_note = "No 2022 (or January 2023 referendum) okrsky document found: the live site shows only 2026 election documents (the site was rebuilt), and the Internet Archive has no snapshot of hodrusa-hamre.sk between July 2022 and January 2023. The council's resolution of 29.6.2022 gives the three obvody (Banská Hodruša, Dolné Hámre, Kopanice); each has one okrsok in the ŠÚ SR results (1-1, 2-2, 3-3), so obvody are given without okrsky rules."
+
+[[document]]
+url = "https://www.hodrusa-hamre.sk/download_file_f.php?id=1729740"
+sha256 = "bfae157fd6278551dc77e00a02edcb50bfd4579f32de5b24262c5db2510b72a3"
+title = "Zápisnica z 3. zasadnutia OZ Hodruša-Hámre dňa 29.6.2022 (uznesenie č. 3/14/2022/OZ)"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {part = "Banská Hodruša"},
+]
+
+[obvod.2]
+seats = 5
+okrsky = [2]
+rules = [
+  {part = "Dolné Hámre"},
+]
+
+[obvod.3]
+seats = 1
+okrsky = [3]
+rules = [
+  {part = "Kopanice"},
+]

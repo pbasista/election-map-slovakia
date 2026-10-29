@@ -1,0 +1,38 @@
+# Council obvody of Lovčica-Trubín (517038), Žiar nad Hronom.
+# Transcribed by an AI agent in job obvod-rules-190 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: vo volebnom obvode číslo 1, ktorý zahŕňa časť obce Lovčica, budú volení 4 poslanci
+#   obvod 2: vo volebnom obvode číslo 2, ktorý zahŕňa časť obce Trubín, budú volení 4 poslanci
+# Okrsky added by an AI agent in job okrsok-rules-1013 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: vo volebnom obvode číslo 1, ktorý zahŕňa časť obce Lovčica, budú volení 4 poslanci
+#   okrsok 2: vo volebnom obvode číslo 2, ktorý zahŕňa časť obce Trubín, budú volení 4 poslanci
+obec = "517038"
+name = "Lovčica-Trubín"
+date_approximate = "named"
+date_basis = "The obvody are stated on the obec's page headed 'Voľby do orgánov samosprávnych krajov a do orgánov samosprávy obcí 2022', which names the elections of 29. októbra 2022 (rozhodnutie č. 209/2022) and holds the 2022 candidate lists per obvod. It names no resolution or decision date; the 2022 council session pages publish no resolutions, and the only Internet Archive capture of the page is of 2023-06-12 (after the vote)."
+note = "The council's resolution on the obvody is not published; the elections page's announcement states them (and the okrsky: OKRSOK č. 1 – územný obvod Lovčica, OKRSOK č. 2 – územný obvod Trubín). Seats match ŠÚ SR."
+okrsky_note = "Each obvod has exactly one okrsok (the Statistical Office counts okrsok 1 in obvod 1 and okrsok 2 in obvod 2), so each okrsok is its whole obvod, as the 2022 page that sets the obvody (časť Lovčica, časť Trubín) gives them; no separate okrsky document was used."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The obec's page headed 'Voľby do orgánov samosprávnych krajov a do orgánov samosprávy obcí 2022' names the elections of 29. októbra 2022; it states no date of its own."
+
+[[document]]
+url = "https://www.lovcica-trubin.sk/volby-do-organov-samospravnych-krajov-a-do-organov-samospravy-obci-2022.html"
+sha256 = "1c2a5b0b9eed4bc10a861ed039a55a3c406684028cef5a515f89d178f8c5cfa4"
+title = "Voľby do orgánov samosprávnych krajov a do orgánov samosprávy obcí 2022 – Informácie pre voliča (volebné obvody a počet poslancov)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Lovčica"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [2]
+rules = [
+  {part = "Trubín"},
+]

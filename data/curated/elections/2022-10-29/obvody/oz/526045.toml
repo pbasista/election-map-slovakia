@@ -1,0 +1,36 @@
+# Council obvody of Nižná Slaná (526045), Rožňava.
+# Transcribed by an AI agent in job obvod-rules-380 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 01 obec Nižná Slaná 5 mandáty
+#   obvod 2: Volebný obvod č. 02 časť Nižnoslanská Baňa 4 mandáty
+# Okrsky added by an AI agent in job okrsok-rules-1241 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný obvod č. 01 obec Nižná Slaná 5 mandáty
+#   okrsok 2: Volebný obvod č. 02 časť Nižnoslanská Baňa 4 mandáty
+obec = "526045"
+name = "Nižná Slaná"
+date = 2022-06-16
+note = "Resolution 4/4/2022 (item 4, adopted at the 16 June 2022 sitting; the session was resumed on 29 June only from item 10) names obvod 1 'obec Nižná Slaná' and obvod 2 'časť Nižnoslanská Baňa'; transcribed as the two parts of the municipality."
+okrsky_date = 2022-06-16
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+
+[[document]]
+url = "https://www.niznaslana.sk/modules/file_storage/download.php?file=47acbef8%7C34&inline=1"
+sha256 = "bbad7a54b72a66af887ec45a9b31529d6d3f66952d1f1f257032b53e8efad3e8"
+title = "Zápisnica zo 4. zasadnutia obecného zastupiteľstva dňa 16. júna 2022 a 29. júna 2022, uznesenie č. 4/4/2022"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Nižná Slaná"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [2]
+rules = [
+  {part = "Nižnoslanská Baňa"},
+]

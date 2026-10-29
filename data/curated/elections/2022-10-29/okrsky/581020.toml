@@ -1,0 +1,49 @@
+# The okrsky of Hrnčiarovce nad Parnou of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/581020.toml, reused by `ems job reuse`.
+obec = "581020"
+name = "Hrnčiarovce nad Parnou"
+okrsky_date = 2026-07-16
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Dlhé Lúky (8 addresses) is not in the document and the 4 addresses without a street are placed by the nearest address (fill_nearest). 'Obec Hrnčiarovce nad Parnou' in okrsok 2 means residents registered only to the obec (no register street)."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.hrnciarovce.sk/e_download.php?file=/data/multipage/editor/editor-12-103-sk_4.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20docx.pdf"
+sha256 = "2922f49e23d5fb513fd1234f19343554cd49ff809557ed4631881022ac074dbc"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.hrnciarovce.sk/volby-2026/"
+sha256 = "98f150787be67ea98016f7deaf5c3e340151e7a7dd647840eb80d12bfb3f2a02"
+title = "Voľby do orgánov samosprávy obcí a orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {street = "Alejová"},
+  {street = "Bajkalská"},
+  {street = "Brodná"},
+  {street = "Cíferská"},
+  {street = "Františka Hečku", written = "Fr. Hečku"},
+  {street = "Hliníky"},
+  {street = "Sv.Martina", written = "Sv. Martina"},
+  {street = "Športová"},
+  {street = "Vinohradnícka"},
+  {street = "Voderadská"},
+  {street = "Východná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Alexyho"},
+  {street = "Cintorínska"},
+  {street = "Drobná"},
+  {street = "Facková ulica", written = "Facková"},
+  {street = "Farská ulica", written = "Farská"},
+  {street = "Hrnčiarska"},
+  {street = "Kostolná ulica", written = "Kostolná"},
+  {street = "Krátka"},
+  {street = "Lávková"},
+  {street = "Mlynárska"},
+  {street = "Mostová"},
+  {street = "Nová"},
+  {street = "Poľná"},
+]

@@ -37,8 +37,16 @@
  * An obec without finer figures keeps its own at every zoom. One scale
  * spans the units of every level, so that a colour means the same at each
  * zoom. Pointing at the map (on a touch screen, tapping it) names the unit
- * there with its figures; in the municipal elections an okrsok also with
- * its 2022 municipal turnout where it is the same okrsok as then. */
+ * there with its figures, and an okrsok or an obec with those of the
+ * election before as live.js `pastOf` finds them (the turnout, and the
+ * candidate's or the leader's votes), labelled with how they were found
+ * (live.js `pastLabel`).
+ *
+ * A candidate who stood for the same office then has a second map: their
+ * share at the election before on the 2026 units (`gatherPrevious`), an
+ * okrsok estimated from addresses hatched and one of okrsky changed beyond
+ * matching grey (`PREVIOUS_PALETTE`), chosen by year in the legend
+ * (`YearChoice`). */
 
 import { html, render, useEffect, useLayoutEffect, useMemo, useRef, useState } from '../vendor/preact-htm.module.js';
 import {
@@ -53,9 +61,9 @@ import {
   isCity,
   useLoaded,
 } from './data.js';
-import { formatList, formatNumber, formatPercent, t } from './i18n.js';
+import { election, formatDate, formatList, formatNumber, formatPercent, previous, t } from './i18n.js';
 import { ArrowIcon, CloseIcon, ExpandIcon, MapResultsIcon, TurnoutIcon } from './icons.js';
-import { addRecord, isSingle, NOT_COUNTED, okrsokCouncils, useLive } from './live.js';
+import { addRecord, isSingle, NOT_COUNTED, okrsokCouncils, PAST, pastLabel, pastOf, pastTitle, useLive } from './live.js';
 
 /* The intensities of the colour: app.css `--map-result-<n>` for a
  * candidate's votes, a turnout's tone mixed into the land (draw.js
@@ -66,6 +74,17 @@ export const STEPS = 6;
  * `--map-series-other`. */
 export const SERIES = 8;
 const PALETTE = [...Array.from({ length: SERIES }, (_, i) => `series-${i + 1}`), 'series-other'];
+/* The colours of a candidate's map of the election before: the steps of
+ * the votes; the same steps hatched with the land (draw.js `stepFill`
+ * stripes) for an okrsok whose figures are estimated from addresses
+ * (`PAST.approximate`); app.css `--map-past-unknown`, a grey, for one
+ * whose figures are not known (`PAST.unknown`). */
+const PREVIOUS_PALETTE = [
+  ...Array.from({ length: STEPS }, (_, i) => `result-${i + 1}`),
+  ...Array.from({ length: STEPS }, (_, i) => [`result-${i + 1}`, 'land']),
+  'past-unknown',
+];
+const UNKNOWN_STEP = 2 * STEPS;
 // Values beyond these quantiles (where there are enough to tell) take the
 // end steps, so that a hamlet of a dozen voters does not stretch the scale.
 const TRIM = 0.05;
@@ -73,8 +92,10 @@ const TRIM_FROM = 20;
 
 /* What the map shows, one of:
  * - null;
- * - {kind: 'candidate', id, contest, number, name, surname, label, multi}:
- *   a candidacy, its contest's id and label, `multi` for a council;
+ * - {kind: 'candidate', id, contest, number, name, surname, label, multi,
+ *   previous}: a candidacy, its contest's id and label, `multi` for a
+ *   council, `previous` for their votes at the election before rather
+ *   than 2026's;
  * - {kind: 'winner', contest, label, names, multi}: who got the most votes
  *   where, `names` number → [name, surname], `multi` for a council, whose
  *   top candidate is not all it elects;
@@ -144,11 +165,11 @@ const turnoutMode = (contest) => ({ kind: 'turnout', contest: contest.id, label:
 const ELECTIONS = ['municipal', 'city', 'regional'];
 
 /* Mode *m* as a link names it (app.js `mr`): 'candidate:<candidacy>',
- * 'winner:<contest>', 'turnout:<contest>' or 'turnout:<election>'; null
- * for none. */
+ * 'previous:<candidacy>' (the election before's), 'winner:<contest>',
+ * 'turnout:<contest>' or 'turnout:<election>'; null for none. */
 export function formatMode(m) {
   if (!m) return null;
-  if (m.kind === 'candidate') return `candidate:${m.id}`;
+  if (m.kind === 'candidate') return `${m.previous ? 'previous' : 'candidate'}:${m.id}`;
   return `${m.kind}:${m.contest ?? m.election}`;
 }
 
@@ -162,16 +183,19 @@ export async function parseMode(value, keepView) {
   const kind = value.slice(0, at);
   const id = value.slice(at + 1);
   if (kind === 'turnout' && ELECTIONS.includes(id)) return { kind, election: id };
+  const candidate = (then) => (contest) => {
+    const c = contest.candidates.find((x) => x.id === id);
+    return c && { ...candidateMode(c, contest.label), previous: then };
+  };
   const make = {
-    candidate: (contest) => {
-      const c = contest.candidates.find((x) => x.id === id);
-      return c && candidateMode(c, contest.label);
-    },
+    candidate: candidate(false),
+    // Only where there was an election before (km-config `previous`).
+    previous: previous ? candidate(true) : undefined,
     winner: winnerMode,
     turnout: turnoutMode,
   }[kind];
   if (!make) return null;
-  const [contest] = await contests([kind === 'candidate' ? contestOf(id) : id]).catch(() => []);
+  const [contest] = await contests([make === winnerMode || make === turnoutMode ? id : contestOf(id)]).catch(() => []);
   const m = contest?.candidates.length ? make(contest) : null;
   return m ? { ...m, keepView } : null;
 }
@@ -351,9 +375,13 @@ class Records {
     this.whole = new Map();
     // Council obvod '<obec>/<k>' → its own record.
     this.councils = new Map();
-    // Drawn okrsok '<obec>/<n>' → record, and its 2022 municipal turnout.
+    // Drawn okrsok '<obec>/<n>' → record; the election before (live.js
+    // `pastOf`, {day, method, record}) of the okrsky, obce and (on a map
+    // of the election before) council obvody where anything is known of
+    // it; on that map, the drawn okrsky whose figures are not known.
     this.okrsky = new Map();
-    this.past = new Map();
+    this.past = { okrsky: new Map(), obce: new Map(), councils: new Map() };
+    this.unknown = new Set();
     // All okrsky summed by council obvod and by obec.
     this.councilSums = new Map();
     this.obecSums = new Map();
@@ -384,19 +412,25 @@ class Records {
     for (const [, , k, n] of Object.values(this.index.obce)) if (k === kraj) this.whole.set(`${kraj}/${n}`, rec);
   }
 
-  /* The okrsky among *records* ('<obec>/<n>' → record): each drawn one a
-   * unit of its own, with its 2022 municipal turnout from *file* if
-   * *withPast*; all of them summed by council obvod and by obec. (An
-   * okrsok without an area, addressless, is not drawn.) */
-  addOkrsky(records, file, withPast) {
+  /* The okrsky among *records* ('<obec>/<n>' → record) of contest *id* in
+   * okrsok file *file*: each drawn one a unit of its own, with the
+   * election before there, and its obec's; all of them summed by council
+   * obvod and by obec. (An okrsok without an area, addressless, is not
+   * drawn.) */
+  addOkrsky(records, file, id) {
+    const day = file.past?.day;
+    const obce = day ? (file.past.contests[id] ?? {}) : {};
     for (const [key, rec] of Object.entries(records ?? {})) {
+      const code = key.split('/')[0];
       if (this.drawn.keys.has(key)) {
         this.okrsky.set(key, rec);
-        if (withPast && file.past?.[key]) this.past.set(key, file.past[key]);
+        const past = pastOf(file, id, key);
+        if (past) this.past.okrsky.set(key, past);
       }
+      if (obce[code]) this.past.obce.set(code, { day, method: PAST.same, record: obce[code] });
       const council = this.councilOf.get(key);
       if (council) addRecord(this.councilSums, council, rec);
-      addRecord(this.obecSums, key.split('/')[0], rec);
+      addRecord(this.obecSums, code, rec);
     }
   }
 }
@@ -433,10 +467,81 @@ function gatherContest(rs, m, sources) {
     } else if (rs.piece) rs.councils.set(area, total);
     else if (rs.local) rs.obce.set(code, total);
   }
-  // `past` is of the 2022 municipal elections: a municipal contest's.
-  const withPast = m.kind === 'turnout' && (kind === 'starosta' || kind === 'oz');
-  for (const file of sources.okrsky) rs.addOkrsky(file.contests[m.contest], file, withPast);
+  for (const file of sources.okrsky) rs.addOkrsky(file.contests[m.contest], file, m.contest);
 }
+
+/* A candidate's votes at the election before (mode *m* with `previous`),
+ * from the okrsok files' `past` (live.js `pastOf`), on the 2026 units: an
+ * obec by its own figures then where the contest covers all of it; a
+ * drawn okrsok by its, unless not known (`unknown`); a council obvod of
+ * an obec split into several by its okrsky summed, the least certain
+ * method theirs, unless one of them is not known. The total is the
+ * contest's own then (`totals`, a mayor's or a president's), else its
+ * units' only where every one is known: a sum short of some would tell a
+ * share the candidate never had. */
+function gatherPrevious(rs, m, sources) {
+  const { index } = rs;
+  const [kind, area] = m.contest.split(':');
+  const code = area.split('/')[0];
+  rs.local = (kind === 'starosta' || kind === 'oz') && !isCity(code) && Boolean(index.obce[code]);
+  rs.piece = rs.local && kind === 'oz' && hasCouncilObvody(index, code);
+  // Council obvod → {method, sums}, null once one of its okrsky is not
+  // known.
+  const councils = new Map();
+  // The obce the contest has okrsky in now.
+  const codes = new Set();
+  let day = null;
+  let total = null;
+  for (const file of sources.okrsky) {
+    if (!file.past?.day) continue;
+    day = file.past.day;
+    total = file.past.totals[m.contest] ?? total;
+    for (const [key, rec] of Object.entries(file.past.contests[m.contest] ?? {})) {
+      if (key.includes('/') || !index.obce[key]) continue;
+      rs.obce.set(key, rec);
+      rs.past.obce.set(key, { day, method: PAST.same, record: rec });
+    }
+    for (const key of Object.keys(file.contests[m.contest] ?? {})) {
+      codes.add(key.split('/')[0]);
+      const past = pastOf(file, m.contest, key);
+      if (!past) continue;
+      const council = rs.councilOf.get(key);
+      if (council && councils.get(council) !== null) {
+        const sum = past.record ? (councils.get(council) ?? { method: PAST.same, sums: new Map() }) : null;
+        if (sum) {
+          // The codes of the known methods grow as they get less certain.
+          sum.method = Math.max(sum.method, past.method);
+          addRecord(sum.sums, 0, past.record);
+        }
+        councils.set(council, sum);
+      }
+      if (!rs.drawn.keys.has(key)) continue;
+      if (past.record) {
+        rs.okrsky.set(key, past.record);
+        rs.past.okrsky.set(key, past);
+      } else rs.unknown.add(key);
+    }
+  }
+  for (const [council, sum] of councils) {
+    if (!sum) continue;
+    const record = sum.sums.get(0);
+    rs.councils.set(council, record);
+    rs.past.councils.set(council, { day, method: sum.method, record });
+    if (rs.piece && council === area) total = record;
+  }
+  if (total) rs.addTotal(total);
+  else if (!rs.piece && codes.size && [...codes].every((c) => rs.obce.has(c))) {
+    for (const c of codes) rs.addTotal(rs.obce.get(c));
+  }
+}
+
+/* Whether candidate *m* (a candidate mode) stood for the same office at
+ * the election before: their number among the votes then anywhere in
+ * the okrsok files' `past` of *sources* (`sourcesOf`). */
+const ranThen = (m, sources) =>
+  sources.okrsky.some((file) =>
+    Object.values(file.past?.contests?.[m.contest] ?? {}).some((record) => record[3][m.number] != null),
+  );
 
 /* The municipal turnout (mode *m*, election 'municipal' or 'city'). A
  * municipality's turnout is its mayor's contest's; where that has none (a
@@ -484,7 +589,7 @@ function gatherMunicipal(rs, m, sources) {
     const withMayor = new Set(contests.filter(([id]) => id.startsWith('starosta:')).map(([id]) => id.split(':')[1]));
     for (const [id, records] of contests) {
       const [kind, area] = id.split(':');
-      if (kind === 'starosta' || (kind === 'oz' && !withMayor.has(area.split('/')[0]))) rs.addOkrsky(records, file, true);
+      if (kind === 'starosta' || (kind === 'oz' && !withMayor.has(area.split('/')[0]))) rs.addOkrsky(records, file, id);
     }
   }
 }
@@ -503,7 +608,7 @@ function gatherRegional(rs, sources) {
   }
   for (const file of sources.okrsky) {
     for (const [id, records] of Object.entries(file.contests)) {
-      if (id.startsWith('predseda:')) rs.addOkrsky(records, file, false);
+      if (id.startsWith('predseda:')) rs.addOkrsky(records, file, id);
     }
   }
 }
@@ -515,16 +620,21 @@ function gatherRegional(rs, sources) {
  * - obce: by obec code;
  * - councils: by council obvod '<obec>/<k>' of an obec split into several;
  * - okrsky: by okrsok '<obec>/<n>' of those drawn (*drawn* `keys`,
- *   `useDrawnOkrsky`), with `past` an okrsok's 2022 municipal turnout as
- *   [voters, eligible];
+ *   `useDrawnOkrsky`);
+ * - past: the election before by kind of unit (okrsky, obce, councils) and
+ *   key, as `Records` has it; unknown: the drawn okrsky whose figures then
+ *   are not known, on a map of the election before;
  * - regional: by regional obvod '<kraj>/<n>', its obce summed, or as a
  *   whole where only that is known (those in the Set `whole`);
  * - total: of all counted, null if unknown;
  * - local: whether the contest is of one obec;
- * - ranking: a winner map's candidates' numbers, most votes first. */
+ * - ranking: a winner map's candidates' numbers, most votes first;
+ * - ran: for a candidate, whether they stood for the office then too
+ *   (`ranThen`). */
 function figures(m, sources, index, drawn) {
   const rs = new Records(index, drawn, sources.councils);
-  if (m.contest) gatherContest(rs, m, sources);
+  if (m.previous) gatherPrevious(rs, m, sources);
+  else if (m.contest) gatherContest(rs, m, sources);
   else if (m.election === 'municipal' || m.election === 'city') gatherMunicipal(rs, m, sources);
   else gatherRegional(rs, sources);
 
@@ -548,7 +658,11 @@ function figures(m, sources, index, drawn) {
   const place = new Map(rs.ranking.map((n, i) => [n, i]));
   const byPlace = (a, b) => (place.get(a) ?? place.size) - (place.get(b) ?? place.size) || a - b;
   const of = {
-    candidate: ([, , valid, votes]) => (valid ? [votes[m.number] ?? 0, valid] : null),
+    // A candidate not on the ballot then in a unit has no figure there.
+    candidate: ([, , valid, votes]) => {
+      const v = m.previous ? votes[m.number] : (votes[m.number] ?? 0);
+      return valid && v != null ? [v, valid] : null;
+    },
     winner: ([, , valid, votes]) => (valid ? leader(votes, valid, byPlace) : null),
     turnout: turnoutOf,
   }[m.kind];
@@ -567,10 +681,12 @@ function figures(m, sources, index, drawn) {
     okrsky: figs(rs.okrsky),
     regional: figs(regional),
     whole: new Set(rs.whole.keys()),
-    past: figs(rs.past, turnoutOf),
+    past: rs.past,
+    unknown: rs.unknown,
     total: total ? of(total) : null,
     local: rs.local,
     ranking: rs.ranking,
+    ran: m.kind === 'candidate' && (m.previous || ranThen(m, sources)),
   };
 }
 
@@ -599,24 +715,32 @@ function finestFigures(figs) {
 }
 
 /* The cells draw.js `setResults` takes of *figs* (`figures`), each unit's
- * *cell(fig)*; a regional obvod known only as a whole marked so. */
+ * *cell(fig, level, key)*, *level* one of `past`'s or 'zsk'; a regional
+ * obvod known only as a whole marked so. */
 function cellsOf(figs, cell) {
-  const cells = (map) => Object.fromEntries([...map].map(([key, fig]) => [key, cell(fig)]));
-  const zsk = cells(figs.regional);
+  const cells = (map, level) => Object.fromEntries([...map].map(([key, fig]) => [key, cell(fig, level, key)]));
+  const zsk = cells(figs.regional, 'zsk');
   for (const key of figs.whole) zsk[key]?.push(1);
-  return { obce: cells(figs.obce), zsk, councils: cells(figs.councils), okrsky: cells(figs.okrsky) };
+  return {
+    obce: cells(figs.obce, 'obce'),
+    zsk,
+    councils: cells(figs.councils, 'councils'),
+    okrsky: cells(figs.okrsky, 'okrsky'),
+  };
 }
 
-/* What the map and the legend show of *figs* (`figures`); null with no
- * values:
+/* What the map and the legend show of *figs* (`figures`) of mode *m*; null
+ * with no values:
  * - shown: as draw.js `setResults` takes it;
  * - scale: [low, high], the shares of the lowest and the highest step;
  * - below, above: whether values lie beyond them;
- * - digits: of the percentages.
+ * - digits: of the percentages;
+ * - estimated, unknown: on a map of the election before, the okrsky
+ *   hatched (figures estimated from addresses) and grey (not known).
  * The scale spans the values of the units of every level (`allFigures`),
  * not from zero: areas not counted yet have no value and stay uncoloured,
  * so they do not widen it. */
-function present(figs) {
+function present(figs, m) {
   const share = ([part, all]) => part / all;
   const values = allFigures(figs)
     .map(share)
@@ -637,12 +761,23 @@ function present(figs) {
   const alike = values[0] === values.at(-1);
   const step = (v) =>
     alike ? STEPS - 1 : Math.min(STEPS - 1, Math.max(0, Math.floor(((v - low) / (high - low)) * STEPS)));
+  const estimated = (level, key) => figs.past[level]?.get(key)?.method === PAST.approximate;
+  const cells = cellsOf(figs, (fig, level, key) => [
+    step(share(fig)) + (m.previous && estimated(level, key) ? STEPS : 0),
+    formatPercent(share(fig), digits),
+  ]);
+  if (m.previous) for (const key of figs.unknown) cells.okrsky[key] = [UNKNOWN_STEP, '?'];
+  const shown = m.previous
+    ? { steps: PREVIOUS_PALETTE.length, palette: PREVIOUS_PALETTE, ...cells }
+    : { steps: STEPS, ...cells };
   return {
-    shown: { steps: STEPS, ...cellsOf(figs, (fig) => [step(share(fig)), formatPercent(share(fig), digits)]) },
+    shown,
     scale: [low, high],
     below: values[0] < low,
     above: values.at(-1) > high,
     digits,
+    estimated: m.previous ? [...figs.okrsky.keys()].filter((key) => estimated('okrsky', key)).length : 0,
+    unknown: m.previous ? figs.unknown.size : 0,
   };
 }
 
@@ -708,25 +843,101 @@ function presentWinner(figs, m) {
 }
 
 /* The kinds of unit that *figs* (`figures`) have figures of, coarsest
- * first, as the legend names them. */
+ * first, as the legend names them; on a map of the election before, the
+ * okrsky whose figures then are not known count, being drawn grey. */
 const levelsOf = (figs) =>
   [
-    ['zsk', figs.regional],
-    ['obce', figs.obce],
-    ['councils', figs.councils],
-    ['okrsky', figs.okrsky],
+    ['zsk', figs.regional.size],
+    ['obce', figs.obce.size],
+    ['councils', figs.councils.size],
+    ['okrsky', figs.okrsky.size + figs.unknown.size],
   ]
-    .filter(([, units]) => units.size)
+    .filter(([, size]) => size)
     .map(([level]) => t(`mapmode.level_${level}`));
+
+/* The tooltip's lines of the election before in a unit, *past* (live.js
+ * `pastOf`, {method, record}), on a map of mode *m* whose figure there is
+ * *fig*: the year with how the figures were found, then (where known) the
+ * turnout, and a candidate's or the leader's votes where they stood. */
+function pastLines(past, m, fig) {
+  const lines = [t('mapmode.tip_previous', { method: pastLabel(past.method) })];
+  if (!past.record) return lines;
+  const [eligible, voters, valid, votes] = past.record;
+  if (eligible && voters != null) {
+    lines.push(
+      t('mapmode.tip_turnout', {
+        turnout: formatPercent(voters / eligible),
+        voters: formatNumber(Math.round(voters)),
+        eligible: formatNumber(Math.round(eligible)),
+      }),
+    );
+  }
+  const numbers = { candidate: [m.number], winner: fig?.[2] ?? [] }[m.kind] ?? [];
+  for (const n of numbers) {
+    if (votes[n] == null || !valid) continue;
+    const vars = {
+      share: formatPercent(votes[n] / valid),
+      votes: formatNumber(Math.round(votes[n])),
+      valid: formatNumber(Math.round(valid)),
+    };
+    lines.push(
+      m.kind === 'winner'
+        ? t('mapmode.tip_previous_leader', { ...vars, name: namesOf(m, [n], 0)[0] })
+        : t('mapmode.tip_votes', vars),
+    );
+  }
+  return lines;
+}
 
 /* The tooltip's lines for the unit at the pointer, *hit* {kind, key}
  * (draw.js `unitAt`: the unit whose fill is drawn there), by figures *figs*
- * (`figures`) of mode *m*: the unit's name, its figures, and an okrsok's
- * 2022 turnout where known; null where it has none. */
+ * (`figures`) of mode *m*: those of `figureLines`, then where the map draws
+ * the unit otherwise than this election had it (`originLines`). Null where
+ * it has no figures. */
 function tipLines(hit, figs, m, index) {
+  const lines = figureLines(hit, figs, m, index);
+  return lines && [...lines, ...originLines(hit, index)];
+}
+
+/* What the map draws of unit *hit* that is not this election's own
+ * (data/index.json, data.js `ballots` `origin`): okrsky from another
+ * election's or a referendum's documents, council obvody drawn with
+ * another election's rules, okrsky or obvody drawn with a later
+ * election's without proof that they match, either from documents dated
+ * only approximately or filled in from a later source, an obec whose
+ * okrsky are not drawn (its figures by okrsok cannot be placed), or whose
+ * boundary then differed. */
+function originLines({ kind, key }, index) {
+  const code = key.split('/')[0];
+  if (kind === 'zsk') return [];
+  const lines = [];
+  const okrsky = index.okrsky_reused[code];
+  const referendum = index.okrsky_referendum[code];
+  if (kind === 'okrsky' && okrsky) lines.push(t('mapmode.tip_okrsky_reused', { other: okrsky.slice(0, 4) }));
+  const okrskyAdopted = index.okrsky_adopted[code];
+  if (kind === 'okrsky' && okrskyAdopted) lines.push(t('notice.summary_okrsky_adopted', { later: okrskyAdopted.slice(0, 4) }));
+  if (kind === 'okrsky' && referendum) lines.push(t('mapmode.tip_okrsky_referendum', { date: formatDate(referendum) }));
+  if (kind === 'okrsky' && index.okrsky_date_approximate[code]) lines.push(t('notice.summary_okrsky_dated'));
+  if (kind === 'okrsky' && index.okrsky_supplemented[code]) lines.push(t('notice.summary_okrsky_supplemented'));
+  if (kind === 'councils' && index.reused[code]) lines.push(t('mapmode.tip_oz_reused', { other: index.reused[code].slice(0, 4) }));
+  const adopted = index.adopted[code];
+  if (kind === 'councils' && adopted) lines.push(t('council.summary_adopted', { later: adopted.slice(0, 4) }));
+  if (kind === 'councils' && index.date_approximate[code]) lines.push(t('council.summary_dated'));
+  if (kind === 'councils' && index.supplemented[code]) lines.push(t('council.summary_supplemented'));
+  if (kind === 'obce' && index.okrsky_unknown.includes(code)) lines.push(t('mapmode.tip_okrsky_unknown'));
+  if (index.boundaries?.obce[code]) lines.push(t('mapmode.tip_boundary', { on: index.boundaries.on }));
+  return lines;
+}
+
+/* The figure lines of `tipLines`: the unit's name, its figures, and an
+ * okrsok's or an obec's at the election before where anything is known of
+ * it (`pastLines`); on a map of the election before, those alone. Null
+ * where it has none. */
+function figureLines(hit, figs, m, index) {
   const { kind, key } = hit;
   const fig = (kind === 'zsk' ? figs.regional : figs[kind]).get(key);
-  if (!fig) return null;
+  const unknown = Boolean(m.previous) && kind === 'okrsky' && figs.unknown.has(key);
+  if (!fig && !unknown) return null;
   const [code, n] = key.split('/');
   const name = index.obce[code]?.[0];
   const unit = {
@@ -735,6 +946,13 @@ function tipLines(hit, figs, m, index) {
     obce: () => name,
     zsk: () => t('mapmode.tip_zsk', { n, kraj: index.kraje[code] }),
   }[kind]();
+  const past = unknown ? { method: PAST.unknown, record: null } : figs.past[kind]?.get(key);
+  if (m.previous) {
+    // A regional obvod: its obce's own figures then, summed.
+    if (past) return [unit, ...pastLines(past, m, fig)];
+    const vars = { share: formatPercent(fig[0] / fig[1]), votes: formatNumber(fig[0]), valid: formatNumber(fig[1]) };
+    return [unit, t('mapmode.tip_previous', { method: pastLabel(PAST.same) }), t('mapmode.tip_votes', vars)];
+  }
   const share = formatPercent(fig[0] / fig[1]);
   let value;
   if (m.kind === 'candidate') {
@@ -744,15 +962,7 @@ function tipLines(hit, figs, m, index) {
   } else {
     value = t('mapmode.tip_turnout', { turnout: share, voters: formatNumber(fig[0]), eligible: formatNumber(fig[1]) });
   }
-  const past = kind === 'okrsky' ? figs.past.get(key) : null;
-  const then = past
-    ? t('mapmode.tip_past', {
-        turnout: formatPercent(past[0] / past[1]),
-        voters: formatNumber(past[0]),
-        eligible: formatNumber(past[1]),
-      })
-    : null;
-  return [unit, value, then].filter(Boolean);
+  return [unit, value, ...(past ? pastLines(past, m, fig) : [])];
 }
 
 /* What winner map *m* says of the leaders *numbers* (a figure's, `leader`)
@@ -835,6 +1045,49 @@ function Chips({ m, leaders, tie }) {
   </ul>`;
 }
 
+/* On a map of the election before, what the okrsky hatched and grey are
+ * (`present` *estimated*, *unknown*), each with its swatch and how many of
+ * the drawn okrsky it is; nothing where there are none. */
+function PastKey({ estimated, unknown }) {
+  const rows = [
+    ['approximate', estimated, 'map-legend-swatch hatched'],
+    ['unknown', unknown, 'map-legend-swatch past-unknown'],
+  ].filter(([, count]) => count);
+  if (!rows.length) return null;
+  return html`<ul class="map-legend-leaders map-legend-past">
+    ${rows.map(
+      ([method, count, cls]) => html`<li key=${method} title=${pastTitle(PAST[method])}>
+        <span class=${cls}></span>
+        <span class="map-legend-name">${t(`mapmode.legend_${method}`)}</span>
+        <span class="map-legend-count">${formatNumber(count)}</span>
+      </li>`,
+    )}
+  </ul>`;
+}
+
+/* The choice between a candidate's 2026 votes and those at the election
+ * before (mode *m*'s `previous`), for one who stood for the same office
+ * then (`ranThen`): two buttons named by the years. */
+function YearChoice({ m }) {
+  const years = [
+    [false, election.slice(0, 4), 'mapmode.current_show'],
+    [true, previous.slice(0, 4), 'mapmode.previous_show'],
+  ];
+  return html`<div class="map-legend-years" role="group" aria-label=${t('mapmode.years')}>
+    ${years.map(
+      ([past, year, title]) => html`<button
+        type="button"
+        key=${year}
+        title=${t(title)}
+        aria-pressed=${Boolean(m.previous) === past ? 'true' : 'false'}
+        onClick=${() => setMapMode({ ...m, previous: past })}
+      >
+        ${year}
+      </button>`,
+    )}
+  </div>`;
+}
+
 /* The figure of all counted in mode *m* (*total* as `figures` has it) in
  * short: the turnout, or the share of the candidate shown or of the one
  * with the most votes (each of those tied for them) after their surname.
@@ -844,8 +1097,9 @@ function keyFigure(m, total, titled = false) {
   if (!total?.[1]) return null;
   const share = formatPercent(total[0] / total[1]);
   if (m.kind === 'turnout') return t(titled ? 'mapmode.turnout_total' : 'mapmode.key_turnout', { turnout: share });
-  if (m.kind === 'candidate' && titled) return share;
-  return `${m.kind === 'winner' ? surnames(m, total[2]) : (m.surname ?? m.name)} ${share}`;
+  const year = m.previous ? ` · ${previous.slice(0, 4)}` : '';
+  if (m.kind === 'candidate' && titled) return `${share}${year}`;
+  return `${m.kind === 'winner' ? surnames(m, total[2]) : (m.surname ?? m.name)} ${share}${year}`;
 }
 
 /* The legend's title, subtitle and summary (the figure of all counted,
@@ -853,9 +1107,10 @@ function keyFigure(m, total, titled = false) {
 function legendText(m, total) {
   const share = total?.[1] ? formatPercent(total[0] / total[1]) : null;
   if (m.kind === 'candidate') {
+    const of = t(m.multi ? 'mapmode.share_voters' : 'mapmode.share_valid');
     return {
       title: m.name,
-      subtitle: `${m.label} · ${t(m.multi ? 'mapmode.share_voters' : 'mapmode.share_valid')}`,
+      subtitle: `${m.label} · ${m.previous ? t('mapmode.previous_of', { share: of }) : of}`,
       summary: total ? `${formatPercent(total[0] / total[1])} · ${t('results.votes', { n: formatNumber(total[0]) })}` : null,
     };
   }
@@ -997,7 +1252,7 @@ export function MapResults({ map, legendRef, phone, sheet, insets }) {
   const result = useMemo(() => {
     if (!ready) return null;
     const figs = figures(m, sources, index, drawn);
-    const p = m.kind === 'winner' ? presentWinner(figs, m) : present(figs);
+    const p = m.kind === 'winner' ? presentWinner(figs, m) : present(figs, m);
     return { figs, p: p && { ...p, shown: { ...p.shown, tone } } };
   }, [m, index, drawn, ...sources.main, ...sources.okrsky, ...sources.councils]);
   const shown = result?.p ?? null;
@@ -1040,8 +1295,9 @@ export function MapResults({ map, legendRef, phone, sheet, insets }) {
     };
   }, [map, m]);
 
-  // Each mode's legend starts folded.
-  useEffect(() => setUnfolded(false), [m]);
+  // Each mode's legend starts folded; the other year of a candidate's
+  // keeps it as it is.
+  useEffect(() => setUnfolded(false), [m?.kind, m?.contest, m?.id, m?.election]);
   // The legend unfolded or folded covers more or less of the map.
   useEffect(() => {
     map?.redraw();
@@ -1070,10 +1326,12 @@ export function MapResults({ map, legendRef, phone, sheet, insets }) {
         ${summary ? html`<span class="map-legend-total">${summary}</span>` : null}
         <span>${high}</span>
       </p>
+      <${PastKey} estimated=${shown.estimated} unknown=${shown.unknown} />
     `;
   } else {
     body = html`<p class="map-legend-none">${t('mapmode.none')}</p>`;
   }
+  const years = result?.figs.ran ? html`<${YearChoice} m=${m} />` : null;
   const classes = ['map-legend', tone && tone !== 'result' && 'toned', m.kind === 'winner' && 'winner'];
   const style = tone ? { '--tone': `var(--map-${tone})` } : undefined;
   const lines = tip && shown && index ? tipLines(tip.unit, result.figs, m, index) : null;
@@ -1116,8 +1374,10 @@ export function MapResults({ map, legendRef, phone, sheet, insets }) {
           ${key ? html`<span class="map-legend-key">${key}</span>` : null}
           ${fold}${close}
         </div>
+        ${years}
         ${unfolded ? html`<p class="map-legend-sub">${subtitle}</p>${levelsLine}` : null}
         ${row}
+        ${unfolded && shown ? html`<${PastKey} estimated=${shown.estimated} unknown=${shown.unknown} />` : null}
       </section>
     <//>`;
   } else if (phone && !unfolded) {
@@ -1159,6 +1419,7 @@ export function MapResults({ map, legendRef, phone, sheet, insets }) {
         <p class="map-legend-title"><strong>${title}</strong><span>${subtitle}</span></p>
         ${phone ? fold : null}${close}
       </div>
+      ${years}
       ${levelsLine}
       ${body}
     </section>`;

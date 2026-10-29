@@ -1,0 +1,97 @@
+# Council obvody of Spišská Belá (523828), Kežmarok.
+# Transcribed by an AI agent in job obvod-rules-287 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: mesto Spišská Belá (okrem mestskej časti Strážky)
+#   obvod 2: celú mestskú časť Strážky
+# Okrsky added by an AI agent in job okrsok-rules-1163 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1.mája Agátová Greisigerova Kallsteinova Krátka Kúpeľná Lipová Moskovská Nová Okružná SNP Športová Vojtasova Weberova Záhradná
+#   okrsok 2: Ladislava Novomeského Letná Osloboditeľov Štefánikova Tatranská Továrenská
+#   okrsok 3: Hviezdoslavova Mierová Partizánska Petzvalova Slnečná
+#   okrsok 4: Družstevná Generála Ludvíka Svobodu Kpt. Jána Nálepku Šarpanec Zimná
+#   okrsok 5: Ladislava Medňanského Margity Czobleovej Nad kaštieľom Popradská
+obec = "523828"
+name = "Spišská Belá"
+date = 2022-07-14
+okrsky_date = 2022-07-19
+okrsky_fill = "nearest"
+okrsky_note = "Mayor's 2022 decision (19.7.2022; the live 2026 page has 6 okrsky and is not used). Register spellings: Kallsteinova = Kaltsteinova, SNP = Slov. Nár. Povstania, Generála Ludvíka Svobodu also as Gen. Ludvíka Svobodu. The register's 657 addresses without a street in part Spišská Belá (súpisné only) take the nearest okrsok (fill_nearest). Margity Czobleovej (okrsok 5) is not in the register; okrsok 5 is the whole obvod 2 (Strážky)."
+
+[[document]]
+url = "https://spisskabela.sk/wp-content/uploads/2022/07/oznamenie-vytvorenie-obvodov.pdf"
+sha256 = "cbf846ed663f72f81fce102304bae9fd604d327f9213d358a18ee1309316738c"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie č. 83/2022 zo dňa 14.7.2022), 18.7.2022"
+
+[[document]]
+url = "https://spisskabela.sk/wp-content/uploads/2022/07/Zverejnenie-poctu-obyvatelov-mesta-Spisska-Bela-pocet-obvodov-v-meste-a-tiez-pocet-poslancov-ktory-ssa-ma-v-nich-zvolit.-2022.pdf"
+sha256 = "967e4493ea115ce7c8a25c1d1566c0daa7eef03ab39062acb733c6d06c1141a5"
+title = "Zverejnenie počtu obyvateľov mesta Spišská Belá a počet volebných obvodov a poslancov (2022)"
+
+[[document]]
+url = "https://spisskabela.sk/wp-content/uploads/2022/07/utvorenie-volebnych-okrskov-a-volebnych-miestnosti.pdf"
+sha256 = "af0cd07fd09157d8b6ba7e7f865ef7af65dbb741d54a30180592509fb85db7eb"
+title = "Utváram volebné okrsky a určujem volebné miestnosti pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 29.10.2022 (primátor, 19.7.2022)"
+
+[obvod.1]
+seats = 10
+okrsky = [1, 2, 3, 4]
+rules = [
+  {part = "Spišská Belá"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [5]
+rules = [
+  {part = "Strážky"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "1.mája"},
+  {street = "Agátová"},
+  {street = "Greisigerova"},
+  {street = "Kaltsteinova", written = "Kallsteinova", note = "one letter differs (ll/lt); the register's only similar street"},
+  {street = "Krátka"},
+  {street = "Kúpeľná"},
+  {street = "Lipová"},
+  {street = "Moskovská"},
+  {street = "Nová"},
+  {street = "Okružná"},
+  {street = "Slov. Nár. Povstania", written = "SNP", note = "SNP = Slovenského národného povstania, register abbreviation"},
+  {street = "Športová"},
+  {street = "Vojtasova"},
+  {street = "Weberova"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ladislava Novomeského"},
+  {street = "Letná"},
+  {street = "Osloboditeľov"},
+  {street = "Štefánikova"},
+  {street = "Tatranská"},
+  {street = "Továrenská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "Mierová"},
+  {street = "Partizánska"},
+  {street = "Petzvalova"},
+  {street = "Slnečná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Družstevná"},
+  {street = "Generála Ludvíka Svobodu"},
+  {street = "Gen. Ludvíka Svobodu", written = "Generála Ludvíka Svobodu"},
+  {street = "Kpt. Jána Nálepku"},
+  {street = "Šarpanec"},
+  {street = "Zimná"},
+]

@@ -1,0 +1,40 @@
+# Okrsky of Michaľany, transcribed by an AI agent in job okrsok-rules-1038 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Do okrsku patria ulice: Hlavná ulica, Cintorínska ulica, Majerská ulica, Športová ulica, Luhyňská ulica, Dolná ulica, Školská ulica, Ulica za potokom
+#   okrsok 2: Do okrsku patria ulice: Ulica na sídlisku, Železničná ulica, Staničná ulica, Nová ulica
+obec = "528587"
+name = "Michaľany"
+okrsky_date = 2022-07-21
+okrsky_fill = "nearest"
+okrsky_note = "The register's addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://michalany.eu/wp-content/uploads/2022/07/Utvorenie-volebnych-okrskov-1.docx"
+sha256 = "4c3fccb3e973feecba3f17a517f571690f2c115c204d2e50b44641bfc0589a22"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov v roku 2022"
+
+[[document]]
+url = "https://michalany.eu/aktuality/oznam/volby-2022/"
+sha256 = "771b67d724597df588cac90ec765f0ff53c7813298e0049b624b71e314823f13"
+title = "VOĽBY 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná ulica"},
+  {street = "Cintorínska ulica"},
+  {street = "Majerská ulica"},
+  {street = "Športová ulica"},
+  {street = "Luhyňská ulica"},
+  {street = "Dolná ulica"},
+  {street = "Školská ulica"},
+  {street = "Ulica za potokom"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ulica na sídlisku"},
+  {street = "Železničná ulica"},
+  {street = "Staničná ulica"},
+  {street = "Nová ulica"},
+]

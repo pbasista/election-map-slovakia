@@ -1,0 +1,79 @@
+# Okrsky of Sládkovičovo, transcribed by an AI agent in job okrsok-rules-691 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Fučíkova /celá ulica/, Galantská, Jesenského, Seredská, SNP, Veľkoúľanská, Z. Kodálya, Zátišie, Železničná. Do tohto okrsku boli zaradení i občania, ktorým boli zrušené trvalé pobyty.
+#   okrsok 2: Devátova, J. Dalloša, Košútska, Mlynská a Školská
+#   okrsok 3: Budovateľská, F.Kazinczyho, Janka Kráľa, Kapitána Nálepku, Krátka, Lipová, Mierová, Muškátová, Poľná, Richterova, Sadová ulica, Slnečná ulica, Veterná ulica a Záhradnícka
+#   okrsok 4: Abrahámska, Cintorínska, Cukrovar, Cukrovarská, Dánoš, Hviezdoslavova, Pionierska, Sigetská
+#   okrsok 5: pre voličov s trvalým pobytom na Novom Dvore
+obec = "504017"
+name = "Sládkovičovo"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-08-03
+okrsky_date_basis = "The document states no date; the Internet Archive captured it on 2022-08-03 (https://web.archive.org/web/20220803233119/https://www.sladkovicovo.sk/e_download.php?file=data/editor/57sk_5.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20v%20Sl%C3%A1dkovi%C4%8Dove%20pre%20vo%C4%BEby.pdf)."
+okrsky_fill = "nearest"
+okrsky_note = "Scanned undated document (snapshot of 2022-08-03). The register has both Devátova and Devátová, and J. Dalloša and J.Dalloša: both variants put in okrsok 2. Okrsok 1 also holds voters with cancelled permanent residence (no address). Addresses without a street (súpisné only) are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20220803233119/https://www.sladkovicovo.sk/e_download.php?file=data/editor/57sk_5.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20v%20Sl%C3%A1dkovi%C4%8Dove%20pre%20vo%C4%BEby.pdf"
+sha256 = "57dc994414954463346188a9284103981483635991c1d84c5ccfbea4f8ac21d0"
+title = "Utvorenie volebných okrskov v Sládkovičove pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov dňa 29. 10. 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Fučíkova"},
+  {street = "Galantská"},
+  {street = "Jesenského"},
+  {street = "Seredská"},
+  {street = "SNP"},
+  {street = "Veľkoúľanská"},
+  {street = "Z.Kodálya", written = "Z. Kodálya"},
+  {street = "Zátišie"},
+  {street = "Železničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Devátova"},
+  {street = "Devátová", written = "Devátova", note = "register spelling variant of the same street"},
+  {street = "J. Dalloša"},
+  {street = "J.Dalloša", written = "J. Dalloša"},
+  {street = "Košútska"},
+  {street = "Mlynská"},
+  {street = "Školská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Budovateľská"},
+  {street = "F.Kazinczyho"},
+  {street = "Janka Kráľa"},
+  {street = "Kapitána Nálepku"},
+  {street = "Krátka"},
+  {street = "Lipová"},
+  {street = "Mierová"},
+  {street = "Muškátová"},
+  {street = "Poľná"},
+  {street = "Richterova"},
+  {street = "Sadová ulica"},
+  {street = "Slnečná ulica"},
+  {street = "Veterná ulica"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Abrahámska"},
+  {street = "Cintorínska"},
+  {street = "Cukrovar"},
+  {street = "Cukrovarská"},
+  {street = "Dánoš"},
+  {street = "Hviezdoslavova"},
+  {street = "Pionierska"},
+  {street = "Sigetská"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Nový Dvor", written = "Novom Dvore", note = "locative of Nový Dvor"},
+]

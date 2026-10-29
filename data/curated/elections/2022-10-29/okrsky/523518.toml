@@ -1,0 +1,50 @@
+# Okrsky of Hranovnica, transcribed by an AI agent in job okrsok-rules-792 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: SNP, Dubina, Rovná
+#   okrsok 2: Ulice: Budovateľská, Lipová, Topoľová, Víťazstva, Družstevná, Slnečná, Hviezdoslavova, M.R. Štefánika, Bezdomovci- občania bez trvalého pobytu, nahlásení na obec Hranovnica
+#   okrsok 3: Ulice: Mlynská, Hranovnické Pleso, Sládkovičova, Štúrova, Školská, Lúčna
+obec = "523518"
+name = "Hranovnica"
+okrsky_date = 2022-07-29
+okrsky_fill = "nearest"
+okrsky_note = "Document dated 29. 07. 2022 (the PDF's archive snapshot is from 2023, linked from the 2022 elections page archived 2022-10-06). Homeless voters registered on the obec ('Bezdomovci- občania bez trvalého pobytu, nahlásení na obec') vote in okrsok 2, addressless. The register's 550 addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20230131135312/https://hranovnica.sk/wp-content/uploads/2022/08/volby22_volebne_okrsky.pdf"
+sha256 = "09b09649557cd404cf3700a74745de2d3cb2639add8206cfd8ede2dc4d22d446"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností"
+
+[[document]]
+url = "https://web.archive.org/web/20221006005949/https://hranovnica.sk/volby-do-organov-samospravy-obci-29-10-2022/"
+sha256 = "58290427b2dc603d7061dd6fb8cff73c36de033245a2cf29247a7e5f25ff3f89"
+title = "Voľby do orgánov samosprávy obcí 29.10.2022"
+
+[okrsok.1]
+rules = [
+  {street = "SNP"},
+  {street = "Dubina"},
+  {street = "Rovná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Lipová"},
+  {street = "Topoľová"},
+  {street = "Víťazstva"},
+  {street = "Družstevná"},
+  {street = "Slnečná"},
+  {street = "Hviezdoslavova"},
+  {street = "M. R. Štefánika", written = "M.R. Štefánika"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Mlynská"},
+  {street = "Hranovnické Pleso"},
+  {street = "Sládkovičova"},
+  {street = "Štúrova"},
+  {street = "Školská"},
+  {street = "Lúčna"},
+]

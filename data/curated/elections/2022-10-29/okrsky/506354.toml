@@ -1,0 +1,29 @@
+# Okrsky of Omšenie, transcribed by an AI agent in job okrsok-rules-892 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Voliči s trvalým pobytom v domoch so súp.č. 1 – 330
+#   okrsok 2: Voliči s trvalým pobytom v domoch so súp.č. 331 - 999
+obec = "506354"
+name = "Omšenie"
+okrsky_date = 2022-07-12
+okrsky_note = "The document splits the village by súpisné čísla (1–330, 331–999)."
+
+[[document]]
+url = "https://www.omsenie.sk/modules/file_storage/download.php?file=b300da18%7C350&inline=1"
+sha256 = "90e4f44bfbb01a7788cd9f0fba453fb6d7e5c75d5c575b64a33eae7d81c6b9f5"
+title = "Hlásenie o utvorení a počte volebných okrskov (2022-03 Určenie a nahlásenie volebných okrskov)"
+
+[[document]]
+url = "https://www.omsenie.sk/zverejnovanie/volby/volby-do-organov-samospravy-obci/"
+sha256 = "c42368e2874787656f1719eadeb9e9e53b484162f926fcd298397d8eb9e6e8fe"
+title = "Voľby do orgánov samosprávy obcí (2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Omšenie", numbers = "1-330"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Omšenie", numbers = "331-999"},
+]

@@ -1,0 +1,30 @@
+# Okrsky of Veľké Uherce, transcribed by an AI agent in job okrsok-rules-842 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súpisné čísla 4 - 299
+#   okrsok 2: súpisné čísla 300 -1130
+obec = "505722"
+name = "Veľké Uherce"
+okrsky_date = 2022-08-08
+okrsky_fill = "nearest"
+okrsky_note = "The document is undated; date is its publication date on the obec's 2022 elections page (\"Zverejnené 8.8.2022\"). Okrsky split by súpisné čísla: 1: 4–299, 2: 300–1130; any address outside these ranges takes the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.velkeuherce.sk/download_file_f.php?id=1721603"
+sha256 = "0eea13eacb8f22cfea8cdced940e3317a8a9e04129295fcbc696efc182ccd2cf"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a pre voľby do samosprávnych krajov, ktoré sa budú konať 29. októbra 2022"
+
+[[document]]
+url = "https://www.velkeuherce.sk/volby-do-organov-samospravy-obci-2022.html"
+sha256 = "5c7532aabf690524dcb604c223f43ffd82094541fcbbdef0f6505bc580c9c5e8"
+title = "Voľby do orgánov samosprávy obcí 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Veľké Uherce", numbers = "4-299"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Veľké Uherce", numbers = "300-1130"},
+]

@@ -1,22 +1,28 @@
 /* The About text, shown in a dialog (pane.js): a short main page with the
  * project's purpose, links to its sections, the source code and the
  * license, and one section per topic: how it works, the data sources and
- * their licenses, the sources of the candidate research, the disclaimers.
+ * their licenses, the sources of the candidate research, the disclaimers;
+ * on an earlier election's page also what it takes from the latest one.
  * The lists come from data/about.json, which the build renders from config/
  * and the curated research (see build.py `about`). */
 
 import { html, useEffect, useRef } from '../vendor/preact-htm.module.js';
-import { getJSON, useLoaded } from './data.js';
-import { formatDate, formatNumber, repository, t, version } from './i18n.js';
+import { getJSON, latestElection, useLoaded } from './data.js';
+import { election, formatAsOf, formatDate, formatList, formatNumber, previous, repository, t, version } from './i18n.js';
 import { ArrowIcon, BackIcon, CloseIcon } from './icons.js';
 
-// Section → the keys of its title and of its line on the main page.
+// Section → the keys of its title and of its line on the main page; on an
+// earlier election's page, what comes from the latest (`Substitutes`). The
+// method's line names the office holders only where they are known.
 const SECTIONS = {
-  method: ['about.method.title', 'about.method.summary'],
+  method: ['about.method.title', previous ? 'about.method.summary' : 'about.method.summary_no_incumbents'],
+  ...(election === latestElection.day ? {} : { latest: ['about.latest.title', 'about.latest.summary'] }),
   sources: ['about.sources.title', 'about.sources.summary'],
   research: ['about.allowlist.title', 'about.allowlist.summary'],
   disclaimers: ['about.disclaimer.title', 'about.disclaimer.summary'],
 };
+// The section titles name the latest election (`about.latest.*`).
+const LATEST = { latest: latestElection.slug };
 
 /* The section a `v` hash value shows: '' for the main page (`about`), a
  * section name for `about-<section>`, null if it is not the About dialog. */
@@ -28,8 +34,10 @@ export function aboutSection(view) {
 
 export const aboutView = (section) => (section ? `about-${section}` : 'about');
 
-// The data sources (data/about.json `inputs`) by name prefix, each group
-// under its own line.
+// The data sources (data/about.json `inputs`: the election's and those
+// shared) by name prefix, each group under its own line; a group without
+// any is left out. Where the candidate lists come with the results (ŠÚ
+// SR's packages, build `candidates` "susr"), their line says so.
 const INPUT_GROUPS = [
   ['candidates-', 'about.inputs.candidates'],
   ['zbgis-', 'about.inputs.zbgis'],
@@ -40,13 +48,16 @@ const INPUT_GROUPS = [
   ['results-', 'about.inputs.results'],
 ];
 
-const METHOD = [
-  'about.method.candidates',
+// How the office holders were found, or for an election whose office
+// holders are not known (i18n.js `previous` null) that they are not shown;
+// the first, by how the candidate lists are read (about.json `candidates`).
+const methodKeys = (about) => [
+  about.candidates === 'susr' ? 'about.method.candidates_susr' : 'about.method.candidates',
   'about.method.map',
   'about.method.addresses',
   'about.method.obvody',
   'about.method.approximate',
-  'about.method.incumbents',
+  previous ? 'about.method.incumbents' : 'ballots.no_incumbents',
 ];
 
 const DISCLAIMERS = [
@@ -102,7 +113,7 @@ function repositoryLine() {
 
 function Main({ sectionHash, onSection }) {
   return html`
-    <p>${t('about.purpose')}</p>
+    <p>${t('about.purpose', { date: formatDate(election) })}</p>
     <ul class="about-sections">
       ${Object.entries(SECTIONS).map(
         ([name, [title, summary]]) => html`
@@ -115,8 +126,8 @@ function Main({ sectionHash, onSection }) {
               }}
             >
               <span>
-                <strong>${t(title)}</strong>
-                <span>${t(summary)}</span>
+                <strong>${t(title, LATEST)}</strong>
+                <span>${t(summary, LATEST)}</span>
               </span>
               <${ArrowIcon} />
             </a>
@@ -132,7 +143,7 @@ function Main({ sectionHash, onSection }) {
   `;
 }
 
-const Method = () => METHOD.map((key) => html`<p>${t(key)}</p>`);
+const Method = ({ about }) => methodKeys(about).map((key) => html`<p>${t(key)}</p>`);
 
 const Disclaimers = () => html`<ul>${DISCLAIMERS.map((key) => html`<li>${t(key)}</li>`)}</ul>`;
 
@@ -143,14 +154,15 @@ function Loaded({ render }) {
   return about ? render(about) : html`<p>${t('panel.loading')}</p>`;
 }
 
-function Inputs({ inputs }) {
+function Inputs({ inputs, lists }) {
   return html`
     <ul>
       ${INPUT_GROUPS.map(([prefix, key]) => {
         const group = inputs.filter((i) => i.name.startsWith(prefix));
+        if (!group.length) return null;
         return html`
           <li>
-            ${t(key)}
+            ${t(key === 'about.inputs.results' && lists === 'susr' ? 'about.inputs.results_lists' : key)}
             <ul class="links">
               ${group.map(
                 (i) => html`<li>
@@ -166,9 +178,62 @@ function Inputs({ inputs }) {
   `;
 }
 
+/* On an earlier election's page, each datum taken from the latest election
+ * and each one missing, with counts (data/about.json `substitutes`, build.py
+ * `substitutes`); the ballots and the map say so at each place too. */
+function Substitutes({ about }) {
+  const s = about.substitutes;
+  const latest = s.latest;
+  const n = formatNumber;
+  const { obvody: o, okrsky: k, research: r } = s;
+  const items = [
+    s.boundaries &&
+      t('about.latest.boundaries', {
+        zbgis: s.boundaries.zbgis,
+        date: formatDate(s.boundaries.day),
+        n: n(s.boundaries.obce.length),
+        list: formatList(s.boundaries.obce),
+      }),
+    t('about.latest.obvody', { several: n(o.several), own: n(o.own) }),
+    o.approximate && t('about.latest.obvody_dated', { n: n(o.approximate) }),
+    o.supplemented && t('about.latest.obvody_supplemented', { n: n(o.supplemented) }),
+    o.reused.length && t('about.latest.obvody_reused', { latest, n: n(o.reused.length), list: formatList(o.reused) }),
+    o.adopted.length &&
+      t('about.latest.obvody_adopted', { latest, n: n(o.adopted.length), list: formatList(o.adopted) }),
+    o.unknown &&
+      t(o.unknown === o.not_found ? 'about.latest.obvody_unknown' : 'about.latest.obvody_unknown_partly', {
+        n: n(o.unknown),
+        not_found: n(o.not_found),
+      }),
+    t('about.latest.okrsky', { several: n(k.several), drawn: n(k.several - k.unknown), unknown: n(k.unknown) }),
+    k.reused && t('about.latest.okrsky_reused', { latest, n: n(k.reused) }),
+    k.referendum && t('about.latest.okrsky_referendum', { n: n(k.referendum) }),
+    k.adopted.length &&
+      t('about.latest.okrsky_adopted', { latest, n: n(k.adopted.length), list: formatList(k.adopted) }),
+    k.approximate && t('about.latest.okrsky_dated', { n: n(k.approximate) }),
+    k.supplemented && t('about.latest.okrsky_supplemented', { n: n(k.supplemented) }),
+    t('about.latest.persons', { latest, linked: n(s.persons[0]), total: n(s.persons[1]) }),
+    t('about.latest.research', {
+      latest,
+      date: formatDate(election),
+      persons: n(r[0]),
+      found: n(r[1]),
+      findings: n(r[2]),
+      undated: n(r[3]),
+    }),
+    t('about.latest.base', { latest, date: formatAsOf(s.osm) }),
+    t('about.latest.addresses', { latest, date: formatAsOf(s.addresses) }),
+    t('about.latest.own', { latest }),
+  ].filter(Boolean);
+  return html`
+    <p>${t('about.latest.intro', { latest })}</p>
+    <ul>${items.map((item) => html`<li>${item}</li>`)}</ul>
+  `;
+}
+
 function Sources({ about }) {
   return html`
-    <${Inputs} inputs=${about.inputs} />
+    <${Inputs} inputs=${about.inputs} lists=${about.candidates} />
     <p>${t('about.licenses')}</p>
     <h3>${t('about.obvody.title')}</h3>
     <ul class="links">
@@ -278,7 +343,9 @@ function Research({ about }) {
 function Body({ section, sectionHash, onSection }) {
   switch (section) {
     case 'method':
-      return html`<${Method} />`;
+      return html`<${Loaded} render=${(about) => html`<${Method} about=${about} />`} />`;
+    case 'latest':
+      return html`<${Loaded} render=${(about) => html`<${Substitutes} about=${about} />`} />`;
     case 'disclaimers':
       return html`<${Disclaimers} />`;
     case 'sources':
@@ -322,7 +389,7 @@ export function About({ section, sectionHash, onSection, onClose }) {
             : null
         }
         <h2 id="km-about" tabindex="-1" ref=${heading}>
-          ${section ? t(SECTIONS[section][0]) : t('about.title')}
+          ${section ? t(SECTIONS[section][0], LATEST) : t('about.title')}
         </h2>
         <button
           type="button"

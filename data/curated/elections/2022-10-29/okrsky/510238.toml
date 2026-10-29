@@ -1,0 +1,29 @@
+# Okrsky of Zuberec, transcribed by an AI agent in job okrsok-rules-912 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: obyvatelia obce od súpisného čísla 1 – 300
+#   okrsok 2: obyvatelia obce od súpisného čísla 301
+obec = "510238"
+name = "Zuberec"
+okrsky_date = 2022-08-10
+okrsky_note = "The starosta's document is undated; date is its notice-board posting date ('Vyvesené: 10. 8. 2022'). The okrsky are split by súpisné číslo over the whole obec (1–300 / from 301), applied to every address, streets included."
+
+[[document]]
+url = "https://www.zuberec.sk/e_download.php?file=data/uredni_deska/obsah7373_1.pdf&original=Vytvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD%20pre%20vo%C4%BEby%202022.pdf"
+sha256 = "3b89c4b04b4a86aa97decdd9768e22e5adf8cc95555329ba5fcf7e0767228929"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností pre voľby 2022"
+
+[[document]]
+url = "https://www.zuberec.sk/volby/spojene-regionalne-volby-2022/vytvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-2022-7397.html"
+sha256 = "a47b1c3437cd2c59fb8a6bdd0f0d13adb4b36959c5ed4446868012477a29e81e"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností pre voľby 2022 (notice board entry, vyvesené 10. 8. 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Zuberec", numbers = "1-300"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Zuberec", numbers = "301-"},
+]

@@ -1,0 +1,112 @@
+# Okrsky of Nesvady, transcribed by an AI agent in job okrsok-rules-659 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bajčská, Brezová, Gaštanový rad, Hviezdoslavova, Jánošíkova, Lipová, Máchova, Obchodná, Orechový rad, Petőfiho, Piesková 17-49, Puškinova, Ružová, Parková, Piesková 1-16, Slnečná, Športová, Tulipánová, Turecká, Úzka, Vápenná, Vinohradnícka, Potočná, Sady, Sládkovičova, Studená, Taránska, Vodná, Záhradná, Tatranská
+#   okrsok 2: Bélu Bartóka, Družstevná, Farské pole, Fraňa Kráľa, Jarková, Jarmočná, Jazmínová, Jókaiho, Komenského, Mlynská, Na kopci, Nám. Slobody, Novozámocká cesta 48-75, Kvetná, Lúčna, Malá, nám. 1. mája, Nitriansky rad, Palárikova, Pekárenská, Pettemská, Poľná
+#   okrsok 3: Aňalské záhrady, Blatná, Dlhá, Gútska cesta, Hodžova, Hollého, Horná, Hradná, Hurbanova, Jazerná, Kalinčiakova, Konopné pole, Krátka
+#   okrsok 4: Agátová, Aňala, Budovateľská, Komárňanská, Mierová, Nová, Novozámocká 1-47, Opletalova, Rozmarínová, Timoňská
+obec = "501280"
+name = "Nesvady"
+okrsky_date = 2022-08-08
+okrsky_fill = "nearest"
+okrsky_note = "The primátor's decision of 8. 8. 2022 sets the 4 okrsky; the attached table gives their streets. Aňala, Aňalské záhrady and Sady are parts of the town (part rules). Novozámocká cesta 76-91 and the register streets the table lacks (Fialková, Konvalinková, Nezábudková, Orgovánová, Kúpeľná, Priemyselná ulica) and the addresses without a street in the part Nesvady are placed by fill_nearest."
+
+[[document]]
+url = "https://www.nesvady.sk/e_download.php?file=data/editor/302sk_6.pdf&original=Urcenie%20volebnych%20okrskov%20a%20vol%20miestnosti%202022.pdf"
+sha256 = "1f5fd8a9219aa396d7fb9ac42fe88b2873014b9505121db38c12a6e896584bfc"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí"
+
+[[document]]
+url = "https://www.nesvady.sk/e_download.php?file=data/editor/302sk_7.pdf&original=K%C3%B3pia%20-%20Volebn%C3%A9%20okrsky%20-%20%C3%BAzemn%C3%BD%20obvod%202022%20FIN.pdf"
+sha256 = "3e52f60bae866835b2026636e8a1d690116f883beb7ebf6cd1c36d2bf602df1f"
+title = "Volebné okrsky s vymedzením ich územného obvodu (Mesto Nesvady - Voľby 2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Bajčská"},
+  {street = "Brezová"},
+  {street = "Gaštanový rad"},
+  {street = "Hviezdoslavova"},
+  {street = "Jánošíkova"},
+  {street = "Lipová"},
+  {street = "Máchova"},
+  {street = "Obchodná"},
+  {street = "Orechový rad"},
+  {street = "Puškinova"},
+  {street = "Ružová"},
+  {street = "Parková"},
+  {street = "Slnečná"},
+  {street = "Športová"},
+  {street = "Tulipánová"},
+  {street = "Turecká"},
+  {street = "Úzka"},
+  {street = "Vápenná"},
+  {street = "Vinohradnícka"},
+  {street = "Potočná"},
+  {street = "Sládkovičova"},
+  {street = "Studená"},
+  {street = "Taránska"},
+  {street = "Vodná"},
+  {street = "Záhradná"},
+  {street = "Tatranská"},
+  {street = "Petöfiho", written = "Petőfiho"},
+  {street = "Piesková", note = "the document lists Piesková 1-16 and 17-49, both in okrsok 1: the whole street"},
+  {part = "Sady"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bélu Bartóka"},
+  {street = "Družstevná"},
+  {street = "Farské pole"},
+  {street = "Jarková"},
+  {street = "Jarmočná"},
+  {street = "Jazmínová"},
+  {street = "Jókaiho"},
+  {street = "Komenského"},
+  {street = "Mlynská"},
+  {street = "Na kopci"},
+  {street = "Nám. slobody", written = "Nám. Slobody"},
+  {street = "Kvetná"},
+  {street = "Lúčna"},
+  {street = "Malá"},
+  {street = "Nám. 1. mája", written = "nám. 1. mája"},
+  {street = "Nitriansky rad"},
+  {street = "Palárikova"},
+  {street = "Pekárenská"},
+  {street = "Pettemská"},
+  {street = "Poľná"},
+  {street = "F. Kráľa", written = "Fraňa Kráľa"},
+  {street = "Novozámocká cesta", numbers = "48-75"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Blatná"},
+  {street = "Dlhá"},
+  {street = "Gútska cesta"},
+  {street = "Hodžova"},
+  {street = "Hollého"},
+  {street = "Horná"},
+  {street = "Hradná"},
+  {street = "Hurbanova"},
+  {street = "Jazerná"},
+  {street = "Kalinčiakova"},
+  {street = "Konopné pole"},
+  {street = "Krátka"},
+  {part = "Aňalské Záhrady"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Agátová"},
+  {street = "Budovateľská"},
+  {street = "Komárňanská"},
+  {street = "Mierová"},
+  {street = "Nová"},
+  {street = "Opletalova"},
+  {street = "Rozmarínová ulica", written = "Rozmarínová"},
+  {street = "Timoňská ulica", written = "Timoňská"},
+  {part = "Aňala"},
+  {street = "Novozámocká cesta", numbers = "1-47", written = "Novozámocká", note = "\"Novozámocká 1-47\" is Novozámocká cesta, whose 48-75 the document puts in okrsok 2"},
+]

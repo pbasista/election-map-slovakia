@@ -1,0 +1,29 @@
+# Okrsky of Gemerské Teplice, transcribed by an AI agent in job okrsok-rules-1067 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Adresa (trvalý pobyt): Gemerské Teplice, Jelšavská Teplica
+#   okrsok 2: Adresa (trvalý pobyt): Gemerské Teplice, Gemerský Milhosť
+obec = "525677"
+name = "Gemerské Teplice"
+okrsky_date = 2022-09-29
+okrsky_note = "No 'utvorenie volebných okrskov' decision was found; the obec's 2022 notices to voters (Oznámenie o čase a mieste konania volieb, dated 29.09.2022, one per okrsok) state the address (trvalý pobyt) each okrsok covers: okrsok 1 'Gemerské Teplice, Jelšavská Teplica' (sála OcÚ v Jelšavskej Teplici), okrsok 2 'Gemerské Teplice, Gemerský Milhosť' (sála OcÚ v Gemerskom Milhosti). date is the notices' date. The January 2023 referendum's list (Okrsky.pdf) has the same two okrsky and stations."
+
+[[document]]
+url = "https://web.archive.org/web/20230325013604/http://www.gemerske-teplice.sk/wp-content/uploads/2022/07/Oznamenie-o-case-a-mieste-konania-volieb-okrsok-c.-1-Jelsavska-Teplica-Volby-do-organov-samospravy-obci.pdf"
+sha256 = "132e8839f865db0fa0ecd691462531db207545f313ca00be26115704cbcb8c7d"
+title = "Voľby do orgánov samosprávy obcí – Oznámenie o čase a mieste konania volieb, volebný okrsok č. 1 (Jelšavská Teplica)"
+
+[[document]]
+url = "https://web.archive.org/web/20230325023717/http://www.gemerske-teplice.sk/wp-content/uploads/2022/07/Oznamenie-o-case-a-mieste-konania-volieb-okrsok-c.-2-Gemersky-Milhost-Volby-do-organov-samospravy-obci.pdf"
+sha256 = "4393d71838797ed4885548b612695fa004e9a73abc1990125e1d2a762ced9b64"
+title = "Voľby do orgánov samosprávy obcí – Oznámenie o čase a mieste konania volieb, volebný okrsok č. 2 (Gemerský Milhosť)"
+
+[okrsok.1]
+rules = [
+  {part = "Jelšavská Teplica"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Gemerský Milhosť"},
+]

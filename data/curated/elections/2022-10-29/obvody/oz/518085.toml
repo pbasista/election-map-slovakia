@@ -1,0 +1,44 @@
+# Council obvody of Veľké Rovné (518085), Bytča.
+# Transcribed by an AI agent in job obvod-rules-299 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: volebné okrsky č. 1 a 2 - časti obce Rimanovice, ústredie, sídlisko a Horevsie sa volí 7 poslancov.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: volebný okrsok č. 3 - časti obce Potoky, Žarnov, Soľné, Madzín, Dolinky a Ráztoky sa volia 4 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-1174 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+obec = "518085"
+name = "Veľké Rovné"
+date = 2022-05-26
+note = "Obvod 1 names local areas Rimanovice, ústredie, sídlisko and Horevsie, which are not separate parts in the register; they make up the register part Veľké Rovné. Obvod 2 lists the six other register parts."
+okrsky_date = 2022-05-26
+okrsky_note = "The 2022 okrsky document (vk2022_10) names only the polling stations (okrsok 1 Obecný dom Veľké Rovné 1621, okrsok 2 ZŠ s MŠ Veľké Rovné 302, okrsok 3 Kultúrny dom Ivor 1525), no streets or parts; the obvody announcement puts okrsky 1 and 2 in obvod 1 (local areas Rimanovice, ústredie, sídlisko, Horevsie = register part Veľké Rovné, no streets) and okrsok 3 in obvod 2. No published document splits obvod 1 between okrsky 1 and 2, so the okrsky are given without rules. Date: council resolution 222/10/8 of 26.05.2022 (announcement of 11.7.2022), which assigns okrsky 1–2 to obvod 1 and okrsok 3 to obvod 2; the okrsky list itself is undated."
+
+[[document]]
+url = "https://www.velkerovne.sk/wp-content/uploads/docs/vk2022_8.pdf"
+sha256 = "933dcd9eb0c466112a402da55bfaf2abd229fbd522f18c34d76e97cd37acada4"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 29. októbra 2022 (uznesenie č. 222/10/8 zo dňa 26.05.2022)"
+
+[[document]]
+url = "https://www.velkerovne.sk/wp-content/uploads/docs/vk2022_10.pdf"
+sha256 = "1ac81d33340b67472fb7058f8822e480a78442c8acdb5cd29cbe1f6a1a617ea7"
+title = "Informácia o utvorení volebných okrskov a určení volebných miestností pre voľby do orgánov samosprávy obcí 2022"
+
+[obvod.1]
+seats = 7
+okrsky = [1, 2]
+rules = [
+  {part = "Veľké Rovné", note = "Rimanovice, ústredie (centre), sídlisko and Horevsie are areas of the register part Veľké Rovné; all other register parts are named in obvod 2."},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [3]
+rules = [
+  {part = "Potoky"},
+  {part = "Žarnov"},
+  {part = "Soľné"},
+  {part = "Madzín"},
+  {part = "Dolinky"},
+  {part = "Ráztoky"},
+]

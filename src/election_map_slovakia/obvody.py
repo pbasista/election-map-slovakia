@@ -3,7 +3,7 @@
 Regional council obvody, and the city council obvody of Bratislava and
 Košice, consist of whole obce or city districts. Their membership is
 transcribed from the official decisions into ``obvody/<area>.toml`` in the
-election's curated data (:attr:`election_map_slovakia.config.Config.election_dir`;
+election's curated data (:meth:`election_map_slovakia.config.Config.election_dir`;
 form: :func:`election_map_slovakia.config.load_obvody`); :func:`resolve`
 checks it against the municipalities of the area.
 
@@ -61,7 +61,8 @@ number a rule counts is not selected by it.
 
 ``inferred = true`` marks a rule the document does not state (a street it
 does not name, placed by the streets around it); its ``note`` says so. Any
-rule may have a ``note``.
+rule may have a ``note``. ``supplemented = true`` marks a rule taken from a
+later source (below).
 
 The most specific rule that selects an address decides, by level: a number
 with a letter (12A), other numbers, a whole street, a whole part, a k.ú.,
@@ -77,6 +78,60 @@ the railway``, named hamlets), so the rules are a guess from the geography,
 mostly by ``near`` points, which its ``note`` (then required) explains. The
 map and the ballots say so.
 
+``reused = 2026-10-24`` marks a rule set of an earlier election copied from
+the rule set of the election of that day, its documents and date being
+that election's: no document of its own election was found, and the
+layout provably matches (the same obvody, seats and okrsky per obvod, each
+okrsok with nearly as many voters; see :mod:`election_map_slovakia.reuse`).
+Its ``note`` (then required) says so; the map says the borders are that
+election's.
+
+``adopted = 2026-10-24`` marks a rule set of an earlier election that is
+the rule set of the election of that day as it stands, its documents and
+date being that election's, though the layout is not proven to match: no
+usable document of its own election places the addresses, and drawing
+them so was chosen over leaving them unknown (the obec is listed for it,
+see :mod:`election_map_slovakia.reuse`). Only its obvod numbers and seats
+are known to be the election's. ``adopted_basis`` (then required) says
+why there are no rules of its own and what is known to differ; the map
+says the borders are the later election's, indicative only. Its okrsky,
+where it gives them, are adopted with it (``okrsky_adopted``). Neither
+``reused`` nor a supplement goes with it.
+
+``date_approximate`` marks documents that state no date, which an earlier
+election's rule set may still use where something else bounds their date
+to that election (:mod:`election_map_slovakia.obvodrules` checks it), and
+says what does: ``"archived"``, the Internet Archive captured the document,
+or the official page linking it, on ``date_seen``, before the vote;
+``"posted"``, the official page says it was posted (vyvesené,
+zverejnené) on ``date_seen``, before the vote; ``"named"``, the document
+names the election (no ``date_seen``). ``date_basis`` (then required)
+says it in words: which capture or page, which wording. Such a rule set
+has no ``date``; the ballots say its dating is approximate, the document
+possibly older than the election::
+
+    date_approximate = "archived"
+    date_seen = 2022-09-28
+    date_basis = "the Internet Archive captured the document on 2022-09-28"
+
+``supplemented`` marks an earlier election's rule set whose documents do
+not place every address (houses they leave out, hamlets the register has
+no part for, a split they leave unclear), where a later source does: the
+rules it gave are marked ``supplemented = true``, the others are the
+documents'. ``supplemented`` is the day of that source: the later
+election whose rule set (in this repository) has those rules
+(``supplemented_from = "election"``), or the date of a later document of
+the obec, listed among the documents (``"document"``; for okrsky also
+``"referendum"``, the document of the referendum of that day).
+``supplement_basis`` (then required) says what was taken from which source,
+for which addresses. It fills in or fixes what the documents leave; it
+never stands in for them, so some rules stay the documents' own. The
+ballots say part of the borders comes from a later source::
+
+    supplemented = 2026 - 10 - 24
+    supplemented_from = "election"
+    supplement_basis = "the hamlets U Tížikov, … as in the rule set of 2026 (…)"
+
 The okrsky (volebné okrsky: the polling districts, each with its polling
 station and its roll of voters) are set by the mayor for each election, and
 each lies within one council obvod. A rule set may give each obvod its
@@ -88,6 +143,14 @@ only (:func:`assign_okrsky`; added by an ``okrsok-rules`` job, see
     okrsky_date = 2026-07-23         # of the decision on them; optional
     okrsky_fill = "nearest"          # optional, as fill, within an obvod
     okrsky_note = "…"                # optional
+    okrsky_reused = 2026-10-24       # optional, see below
+    okrsky_referendum = 2023-01-21   # optional, see below
+    okrsky_adopted = 2026-10-24      # optional, see below, with
+    okrsky_adopted_basis = "…"       # okrsky_adopted_basis
+    okrsky_date_approximate = "named"  # optional, see below, with
+    okrsky_date_basis = "…"            # okrsky_date_seen where it needs one
+    okrsky_supplemented = 2026-10-24   # optional, see below, with
+    okrsky_supplemented_from = "election"  # and okrsky_supplement_basis
 
     [obvod.1]
     seats = 7
@@ -111,6 +174,20 @@ trvalý pobyt len na obec) has ``addressless = true`` instead of rules: no
 address is in it, and the other okrsky of its obvod share the addresses as
 if it were not there.
 
+``okrsky_reused`` marks okrsky copied, like ``reused``, from the election
+of that day; ``okrsky_referendum`` okrsky transcribed from the document of
+the referendum of that day, which said they stay as they were, or where
+no document of the election itself was found. Either needs
+``okrsky_note`` saying so. ``okrsky_date_approximate``,
+``okrsky_date_seen`` and ``okrsky_date_basis`` date the okrsky document
+approximately, as ``date_approximate`` and its keys do the rule set's;
+``okrsky_supplemented``, ``okrsky_supplemented_from`` and
+``okrsky_supplement_basis`` mark okrsok rules from a later source, as
+``supplemented`` and its keys do the obvod rules. ``okrsky_adopted`` and
+``okrsky_adopted_basis`` mark okrsky that are those of the later election
+of that day as they stand, as ``adopted`` and its key do a rule set; they
+go with neither ``okrsky_reused``, ``okrsky_referendum`` nor a supplement.
+
 An obec that elects its council in one obvod but votes in several okrsky
 has no rule set; its okrsky are in ``okrsky/<obec>.toml`` in the
 election's data (:func:`okrsky_path`; written by ``ems job ingest`` from an
@@ -121,6 +198,16 @@ election's data (:func:`okrsky_path`; written by ``ems job ingest`` from an
     okrsky_date = 2026-07-20         # optional, as above
     okrsky_fill = "nearest"          # optional
     okrsky_note = "…"                # optional
+    okrsky_reused = 2026-10-24       # optional, as above
+    okrsky_referendum = 2023-01-21   # optional, as above
+    okrsky_adopted = 2026-10-24      # optional, as above, with
+    okrsky_adopted_basis = "…"       # okrsky_adopted_basis
+    okrsky_date_approximate = "…"    # optional, as above, with
+    okrsky_date_seen = 2022-09-28    # okrsky_date_seen and
+    okrsky_date_basis = "…"          # okrsky_date_basis
+    okrsky_supplemented = 2026-10-24 # optional, as above, with
+    okrsky_supplemented_from = "…"   # okrsky_supplemented_from and
+    okrsky_supplement_basis = "…"    # okrsky_supplement_basis
 
     [[document]]
     url = "https://…"
@@ -172,6 +259,16 @@ ORIENTACNE = "orientacne"
 SUPISNE = "supisne"
 PARITIES = ("odd", "even")
 FILL_NEAREST = "nearest"
+APPROXIMATE = ("archived", "posted", "named")
+"""What dates the documents of a rule set that state no date
+(``date_approximate``): a capture or posting day, or naming the election."""
+SEEN = ("archived", "posted")
+"""The kinds of :data:`APPROXIMATE` that give a day (``date_seen``)."""
+LATER_ELECTION, LATER_REFERENDUM, LATER_DOCUMENT = "election", "referendum", "document"
+SUPPLEMENT_FROM = (LATER_ELECTION, LATER_REFERENDUM, LATER_DOCUMENT)
+"""The later sources of rules that fill in an earlier election's documents
+(``supplemented_from``): a later election's rule set, a referendum's
+document, another later document of the obec."""
 OBVOD = "obvod"
 OKRSOK = "okrsok"
 """The units a rule places an address in."""
@@ -283,6 +380,48 @@ class Document:
 
 
 @dataclass(frozen=True)
+class Dating:
+    """What dates documents that state no date (``date_approximate``)."""
+
+    by: str
+    """One of :data:`APPROXIMATE`."""
+    seen: dt.date | None
+    """The capture or posting day, for the kinds of :data:`SEEN`."""
+    basis: str
+    """The same in words."""
+
+    def flag(self) -> dict[str, str]:
+        """Return the per-obec flag of ``data/index.json``: ``{by, (seen)}``."""
+        return {"by": self.by} | ({"seen": self.seen.isoformat()} if self.seen else {})
+
+
+@dataclass(frozen=True)
+class Supplement:
+    """The later source of rules the documents leave out (``supplemented``)."""
+
+    day: dt.date
+    """The later vote's day, or the later document's date."""
+    source: str
+    """One of :data:`SUPPLEMENT_FROM` (``supplemented_from``)."""
+    basis: str
+    """What was taken from it, for which addresses, in words."""
+
+    def flag(self) -> dict[str, str]:
+        """Return the per-obec flag of ``data/index.json``: ``{from, day}``."""
+        return {"from": self.source, "day": self.day.isoformat()}
+
+
+@dataclass(frozen=True)
+class Adoption:
+    """The later election whose rules stand in, unproven (``adopted``)."""
+
+    day: dt.date
+    """That election's day."""
+    basis: str
+    """Why the election has no rules of its own, and what is known to differ."""
+
+
+@dataclass(frozen=True)
 class Rule:
     """One rule of a rule set; see the module doc."""
 
@@ -302,6 +441,8 @@ class Rule:
     written: str | None = None
     inferred: bool = False
     note: str | None = None
+    supplemented: bool = False
+    """Whether it is from a later source (:class:`Supplement`), not the documents."""
     level: str = OBVOD
     """:data:`OBVOD` or :data:`OKRSOK`: what :attr:`unit` numbers."""
 
@@ -314,6 +455,17 @@ class Rule:
     def kind(self) -> str:
         """Return which number of a house the rule counts."""
         return self.by or (ORIENTACNE if self.street else SUPISNE)
+
+    @property
+    def selects(self) -> tuple[object, ...]:
+        """Return what the rule selects, numbers included, whatever its unit.
+
+        Equal for the rules of two rule sets that select the same addresses
+        (names compared as :func:`same_name` does).
+        """
+        names = tuple(_key(x) if x else None for x in (self.street, self.part, self.ku))
+        numbers = (self.numbers, self.parity, self.excluded)
+        return (*names, self.rest, self.near, *numbers, self.numbered and self.kind)
 
     def describe(self) -> str:
         """Return the rule as one line, for reports."""
@@ -359,6 +511,17 @@ class RuleSet:
     note: str | None = None
     estimated: bool = False
     """Whether the rules are a guess that no document states."""
+    reused: dt.date | None = None
+    """The day of the election whose rule set this is a copy of, if one."""
+    adoption: Adoption | None = None
+    """The later election whose rule set this is, unproven to match, if one
+    (``adopted``)."""
+    dating: Dating | None = None
+    """What dates the documents, where they state no date and are dated
+    approximately (``date_approximate``)."""
+    supplement: Supplement | None = None
+    """The later source of the obvod rules the documents leave out, if one
+    (``supplemented``)."""
     okrsky: dict[int, tuple[int, ...]] = field(default_factory=dict)
     """Obvod → its okrsky; empty where they are not known."""
     okrsok_rules: tuple[Rule, ...] = ()
@@ -368,6 +531,16 @@ class RuleSet:
     okrsky_date: dt.date | None = None
     """The decision that set the okrsky (the mayor's, or the council's), where known."""
     okrsky_note: str | None = None
+    okrsky_reused: dt.date | None = None
+    """The day of the election whose okrsky these are a copy of, if one."""
+    okrsky_referendum: dt.date | None = None
+    """The day of the referendum whose okrsky document these are from, if one."""
+    okrsky_dating: Dating | None = None
+    """As :attr:`dating`, of the okrsky's documents (``okrsky_date_approximate``)."""
+    okrsky_supplement: Supplement | None = None
+    """As :attr:`supplement`, of the okrsok rules (``okrsky_supplemented``)."""
+    okrsky_adoption: Adoption | None = None
+    """As :attr:`adoption`, of the okrsky (``okrsky_adopted``)."""
     addressless: tuple[int, ...] = ()
     """Okrsky of residents registered without an address, which no address
     is in (``addressless = true`` in their table)."""
@@ -408,7 +581,7 @@ class RuleSet:
 def rules_path(election_dir: Path, obec: str) -> Path:
     """Return the path of the rule set of *obec* in the election's data.
 
-    *election_dir* is :attr:`election_map_slovakia.config.Config.election_dir`.
+    *election_dir* is :meth:`election_map_slovakia.config.Config.election_dir`.
     """
     return election_dir / DIRECTORY / RULES_DIRECTORY / f"{obec}.toml"
 
@@ -439,6 +612,67 @@ def okrsok_rule_sets(election_dir: Path) -> dict[str, RuleSet]:
         )
     out = {c: r for c, r in rule_sets.items() if r.okrsky} | whole
     return dict(sorted(out.items()))
+
+
+def load_obec(election_dir: Path, obec: str) -> RuleSet | None:
+    """Return the rule set of *obec* in the election's data, else its okrsky, else None.
+
+    The rule set of its council obvody (:func:`rules_path`), or, for an obec
+    with one obvod, its okrsky (:func:`okrsky_path`, :attr:`RuleSet.whole`).
+    """
+    for path, whole in (
+        (rules_path(election_dir, obec), False),
+        (okrsky_path(election_dir, obec), True),
+    ):
+        if path.is_file():
+            return _load([path], whole)[obec]
+    return None
+
+
+def council_origin(rules: RuleSet) -> dict[str, Any]:
+    """Return the per-obec flags of council obvody not from a dated document.
+
+    ``reused``, the ISO day of the election whose rule set *rules* is a
+    copy of, ``adopted``, that of the later election whose rule set it is
+    without proof that it matches, ``date_approximate``, the
+    :meth:`Dating.flag` of documents dated approximately, and
+    ``supplemented``, the :meth:`Supplement.flag` of rules from a later
+    source; ``data/index.json`` carries them.
+    """
+    out: dict[str, Any] = {}
+    if rules.reused:
+        out["reused"] = rules.reused.isoformat()
+    if rules.adoption:
+        out["adopted"] = rules.adoption.day.isoformat()
+    if rules.dating:
+        out["date_approximate"] = rules.dating.flag()
+    if rules.supplement:
+        out["supplemented"] = rules.supplement.flag()
+    return out
+
+
+def okrsky_origin(rules: RuleSet) -> dict[str, Any]:
+    """Return the per-obec flags of okrsky that are another vote's, or approximately dated.
+
+    ``okrsky_reused`` (another election's okrsky), ``okrsky_adopted`` (a
+    later election's, unproven) or ``okrsky_referendum`` (a referendum's
+    document), each the ISO day of that vote, ``okrsky_date_approximate``,
+    the :meth:`Dating.flag` of documents dated approximately, and
+    ``okrsky_supplemented``, the :meth:`Supplement.flag` of okrsok rules
+    from a later source; ``data/index.json`` carries them.
+    """
+    out: dict[str, Any] = {}
+    if rules.okrsky_reused:
+        out["okrsky_reused"] = rules.okrsky_reused.isoformat()
+    if rules.okrsky_adoption:
+        out["okrsky_adopted"] = rules.okrsky_adoption.day.isoformat()
+    if rules.okrsky_referendum:
+        out["okrsky_referendum"] = rules.okrsky_referendum.isoformat()
+    if rules.okrsky_dating:
+        out["okrsky_date_approximate"] = rules.okrsky_dating.flag()
+    if rules.okrsky_supplement:
+        out["okrsky_supplemented"] = rules.okrsky_supplement.flag()
+    return out
 
 
 def _load(paths: Sequence[Path], whole: bool = False) -> dict[str, RuleSet]:
@@ -508,14 +742,28 @@ def rule_set(data: Mapping[str, Any], where: str) -> RuleSet:
     t = _Fields(data, where)
     obec, documents = _source(t, where)
     date = _date(t, "date")
+    dating = _dating(t, "", date)
     seats, rules, okrsky = _obvod_tables(t, where)
     fill = _nearest_fill(t, "fill")
     okrsok_rules, addressless = _okrsok_rules(t, where, seats, okrsky)
     okrsky_date = _date(t, "okrsky_date")
     okrsky_fill = _nearest_fill(t, "okrsky_fill")
     okrsky_note = t.text("okrsky_note")
-    if not okrsky and (okrsky_date or okrsky_note):
-        raise t.error("okrsky_date", "okrsky_date and okrsky_note need the okrsky")
+    okrsky_reused = _date(t, "okrsky_reused")
+    okrsky_referendum = _date(t, "okrsky_referendum")
+    okrsky_dating = _dating(t, "okrsky_", okrsky_date)
+    okrsky_supplement = _supplement(t, "okrsky_")
+    okrsky_adoption = _adoption(t, "okrsky_")
+    if not okrsky and (
+        okrsky_date
+        or okrsky_note
+        or okrsky_reused
+        or okrsky_referendum
+        or okrsky_dating
+        or okrsky_supplement
+        or okrsky_adoption
+    ):
+        raise t.error("okrsky_date", "the okrsky_* keys need the okrsky")
     if okrsky_fill and not okrsok_rules:
         raise t.error("okrsky_fill", "is for okrsok rules")
     out = RuleSet(
@@ -528,15 +776,26 @@ def rule_set(data: Mapping[str, Any], where: str) -> RuleSet:
         fill=fill,
         note=t.text("note"),
         estimated=bool(t.get("estimated", bool)),
+        reused=_date(t, "reused"),
+        adoption=_adoption(t, ""),
+        dating=dating,
+        supplement=_supplement(t, ""),
         okrsky=okrsky,
         okrsok_rules=okrsok_rules,
         okrsky_fill=okrsky_fill,
         okrsky_date=okrsky_date,
         okrsky_note=okrsky_note,
+        okrsky_reused=okrsky_reused,
+        okrsky_referendum=okrsky_referendum,
+        okrsky_dating=okrsky_dating,
+        okrsky_supplement=okrsky_supplement,
+        okrsky_adoption=okrsky_adoption,
         addressless=addressless,
     )
     t.done()
     _check_estimated(out, t)
+    _check_origin(out, t)
+    _check_supplement(out, t)
     return out
 
 
@@ -554,6 +813,7 @@ def okrsky_set(data: Mapping[str, Any], where: str) -> RuleSet:
         raise t.error("okrsok", "the okrsky must be numbered 1..N, N at least 2")
     okrsky = {1: tuple(numbers)}
     okrsok_rules, addressless = _okrsok_rules(t, where, {1: 0}, okrsky)
+    okrsky_date = _date(t, "okrsky_date")
     out = RuleSet(
         obec=obec,
         name=t.text("name", required=True) or "",
@@ -564,8 +824,13 @@ def okrsky_set(data: Mapping[str, Any], where: str) -> RuleSet:
         okrsky=okrsky,
         okrsok_rules=okrsok_rules,
         okrsky_fill=_nearest_fill(t, "okrsky_fill"),
-        okrsky_date=_date(t, "okrsky_date"),
+        okrsky_date=okrsky_date,
         okrsky_note=t.text("okrsky_note"),
+        okrsky_reused=_date(t, "okrsky_reused"),
+        okrsky_referendum=_date(t, "okrsky_referendum"),
+        okrsky_dating=_dating(t, "okrsky_", okrsky_date),
+        okrsky_supplement=_supplement(t, "okrsky_"),
+        okrsky_adoption=_adoption(t, "okrsky_"),
         addressless=addressless,
         whole=True,
     )
@@ -573,6 +838,8 @@ def okrsky_set(data: Mapping[str, Any], where: str) -> RuleSet:
     if not out.okrsok_areas:
         raise t.error("okrsok", "the okrsky that share the obec need their rules")
     _check_estimated(out, t)
+    _check_origin(out, t)
+    _check_supplement(out, t)
     return out
 
 
@@ -595,6 +862,68 @@ def _date(t: _Fields, key: str) -> dt.date | None:
     if isinstance(value, dt.datetime):
         raise t.error(key, "must be a date without a time")
     return value
+
+
+def _dating(t: _Fields, prefix: str, date: dt.date | None) -> Dating | None:
+    """Return the ``<prefix>date_approximate`` of *t* and its keys, if given.
+
+    *date* is the ``<prefix>date`` stated beside it; see the module doc.
+    """
+    key = f"{prefix}date_approximate"
+    by = t.choice(key, APPROXIMATE)
+    seen = _date(t, f"{prefix}date_seen")
+    basis = t.text(f"{prefix}date_basis")
+    if by is None:
+        if seen or basis:
+            raise t.error(key, f"{prefix}date_seen and {prefix}date_basis need it")
+        return None
+    if date is not None:
+        raise t.error(
+            key, f"is for documents that state no date, not with {prefix}date"
+        )
+    if basis is None:
+        raise t.error(f"{prefix}date_basis", "missing: what dates the documents")
+    if (seen is None) == (by in SEEN):
+        need = "needs the day it was seen" if by in SEEN else "names no day"
+        raise t.error(f"{prefix}date_seen", f"{by!r} {need}")
+    return Dating(by, seen, basis)
+
+
+def _supplement(t: _Fields, prefix: str) -> Supplement | None:
+    """Return the ``<prefix>supplemented`` of *t* and its keys, if given."""
+    key = f"{prefix}supplemented"
+    day = _date(t, key)
+    source = t.choice(f"{prefix}supplemented_from", SUPPLEMENT_FROM)
+    basis = t.text(f"{prefix}supplement_basis")
+    if day is None:
+        if source or basis:
+            raise t.error(
+                key, f"{prefix}supplemented_from and {prefix}supplement_basis need it"
+            )
+        return None
+    if source is None:
+        raise t.error(f"{prefix}supplemented_from", "missing: what the later source is")
+    if basis is None:
+        raise t.error(
+            f"{prefix}supplement_basis", "missing: what was taken from the later source"
+        )
+    return Supplement(day, source, basis)
+
+
+def _adoption(t: _Fields, prefix: str) -> Adoption | None:
+    """Return the ``<prefix>adopted`` of *t* and its basis, if given."""
+    key = f"{prefix}adopted"
+    day = _date(t, key)
+    basis = t.text(f"{prefix}adopted_basis")
+    if day is None:
+        if basis:
+            raise t.error(key, f"missing: {prefix}adopted_basis needs it")
+        return None
+    if basis is None:
+        raise t.error(
+            f"{prefix}adopted_basis", "missing: why no rules of its own, what differs"
+        )
+    return Adoption(day, basis)
 
 
 def _nearest_fill(t: _Fields, key: str) -> bool:
@@ -726,6 +1055,58 @@ def _check_estimated(rules: RuleSet, t: _Fields) -> None:
         raise t.error("obvod", "near rules are only for an estimated rule set")
 
 
+def _check_origin(rules: RuleSet, t: _Fields) -> None:
+    """Fail unless rules or okrsky of another vote say so, and come from one."""
+    if rules.reused and not rules.note:
+        raise t.error("reused", "a reused rule set needs a note saying why")
+    if (rules.okrsky_reused or rules.okrsky_referendum) and not rules.okrsky_note:
+        raise t.error("okrsky_note", "okrsky of another vote need a note saying why")
+    if rules.reused and rules.adoption:
+        raise t.error("adopted", "a rule set is reused or adopted, not both")
+    others = [rules.okrsky_reused, rules.okrsky_referendum, rules.okrsky_adoption]
+    if sum(x is not None for x in others) > 1:
+        raise t.error(
+            "okrsky_referendum",
+            "okrsky are reused, adopted or a referendum's, only one of them",
+        )
+
+
+def _check_supplement(rules: RuleSet, t: _Fields) -> None:
+    """Fail unless rules from a later source are marked, beside the documents' own.
+
+    Marked rules need their level's supplement, and a supplement needs both
+    the rules it gave and rules of the documents: it fills them in, it does
+    not stand in for them (as a reused or adopted rule set, which has no
+    document of its own, does).
+    """
+    levels = (
+        ("", rules.supplement, rules.rules, rules.reused or rules.adoption),
+        (
+            "okrsky_",
+            rules.okrsky_supplement,
+            rules.okrsok_rules,
+            rules.okrsky_reused or rules.okrsky_adoption,
+        ),
+    )
+    for prefix, supplement, listed, reused in levels:
+        key = f"{prefix}supplemented"
+        marked = sum(r.supplemented for r in listed)
+        if supplement is None:
+            if marked:
+                raise t.error(key, "missing: rules are marked supplemented")
+            continue
+        if reused:
+            raise t.error(key, "is for documents of its own, not rules of another vote")
+        if not marked or marked == len(listed):
+            raise t.error(
+                key,
+                "mark the rules from the later source and keep the documents'"
+                " own: it fills them in, it does not stand in for them",
+            )
+    if rules.supplement and rules.supplement.source == LATER_REFERENDUM:
+        raise t.error("supplemented_from", "a referendum sets no council obvody")
+
+
 def _document(data: object, where: str) -> Document:
     t = _Fields(data, where)
     url = t.text("url", required=True) or ""
@@ -758,6 +1139,7 @@ def _rule(unit: int, data: object, where: str, level: str = OBVOD) -> Rule:
         written=t.text("written"),
         inferred=bool(t.get("inferred", bool)),
         note=t.text("note"),
+        supplemented=bool(t.get("supplemented", bool)),
         level=level,
     )
     t.done()
@@ -932,7 +1314,7 @@ def write_places(places: Mapping[str, ObecPlaces], directory: Path) -> None:
     ``street`` is ``""`` where the address has none; ``lon``, ``lat`` in
     1/100,000 degree, null without a point; ``ku`` is null where the point
     is in none of the obec's k.ú. Written by ``ems addresses`` into
-    ``data/build/obvod-addresses/``.
+    ``data/build/<election day>/obvod-addresses/``.
     """
     with output.replacing(directory) as tmp:
         for code, p in places.items():
@@ -1335,12 +1717,48 @@ def _toml_rule(r: Rule) -> str:
     ]
     if r.inferred:
         fields.append("inferred = true")
+    if r.supplemented:
+        fields.append("supplemented = true")
     return f"{{{', '.join(fields)}}}"
 
 
 def _toml_rules(rules: Iterable[Rule]) -> list[str]:
     """Return the lines of a ``rules`` array of *rules*."""
     return ["rules = [", *(f"  {_toml_rule(r)}," for r in rules), "]"]
+
+
+def _toml_dating(prefix: str, dating: Dating | None) -> list[tuple[str, str | None]]:
+    """Return the ``<prefix>date_approximate`` keys of *dating*, if one."""
+    if dating is None:
+        return []
+    return [
+        (f"{prefix}date_approximate", _toml_string(dating.by)),
+        (f"{prefix}date_seen", dating.seen.isoformat() if dating.seen else None),
+        (f"{prefix}date_basis", _toml_string(dating.basis)),
+    ]
+
+
+def _toml_supplement(
+    prefix: str, supplement: Supplement | None
+) -> list[tuple[str, str | None]]:
+    """Return the ``<prefix>supplemented`` keys of *supplement*, if one."""
+    if supplement is None:
+        return []
+    return [
+        (f"{prefix}supplemented", supplement.day.isoformat()),
+        (f"{prefix}supplemented_from", _toml_string(supplement.source)),
+        (f"{prefix}supplement_basis", _toml_string(supplement.basis)),
+    ]
+
+
+def _toml_adoption(prefix: str, adoption: Adoption | None) -> list[tuple[str, str]]:
+    """Return the ``<prefix>adopted`` keys of *adoption*, if one."""
+    if adoption is None:
+        return []
+    return [
+        (f"{prefix}adopted", adoption.day.isoformat()),
+        (f"{prefix}adopted_basis", _toml_string(adoption.basis)),
+    ]
 
 
 def dump(rules: RuleSet, header: Sequence[str] = ()) -> str:
@@ -1354,12 +1772,24 @@ def dump(rules: RuleSet, header: Sequence[str] = ()) -> str:
     lines += [f"obec = {s(rules.obec)}", f"name = {s(rules.name)}"]
     keys = (
         ("date", rules.date and rules.date.isoformat()),
+        *_toml_dating("", rules.dating),
         ("fill", rules.fill and s(FILL_NEAREST)),
         ("note", rules.note and s(rules.note)),
         ("estimated", rules.estimated and "true"),
+        ("reused", rules.reused and rules.reused.isoformat()),
+        *_toml_adoption("", rules.adoption),
+        *_toml_supplement("", rules.supplement),
         ("okrsky_date", rules.okrsky_date and rules.okrsky_date.isoformat()),
         ("okrsky_fill", rules.okrsky_fill and s(FILL_NEAREST)),
         ("okrsky_note", rules.okrsky_note and s(rules.okrsky_note)),
+        ("okrsky_reused", rules.okrsky_reused and rules.okrsky_reused.isoformat()),
+        *_toml_adoption("okrsky_", rules.okrsky_adoption),
+        (
+            "okrsky_referendum",
+            rules.okrsky_referendum and rules.okrsky_referendum.isoformat(),
+        ),
+        *_toml_dating("okrsky_", rules.okrsky_dating),
+        *_toml_supplement("okrsky_", rules.okrsky_supplement),
     )
     lines += [f"{key} = {value}" for key, value in keys if value]
     for d in rules.documents:

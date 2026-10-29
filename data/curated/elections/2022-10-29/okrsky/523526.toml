@@ -1,0 +1,49 @@
+# Okrsky of Huncovce, transcribed by an AI agent in job okrsok-rules-1007 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Pre voličov oprávnených voliť bývajúcich na uliciach - ulica Jarná, Mlynská, Krátka, Pri rybníku, Farská, Záhradná, Úzka, Športová, Alejová, Železničná, Hlavná súp.č. od 24 po 180, od súp.č. 391 po 414 a od súp.č. 415 po 550, a občania s TP Huncovce
+#   okrsok 2: Pre voličov oprávnených voliť bývajúcich na uliciach - ulica Cintorínska, Riečna, Lomnická, Nová, Vrbovská, Školská, Tatranská, Poľná, S. Rosenberga, Hlavná od súp.č. 1 po 23, a od súp.č. 181 po 202, Hlavná súp. č. 232.
+obec = "523526"
+name = "Huncovce"
+okrsky_date = 2022-07-11
+okrsky_fill = "nearest"
+okrsky_note = "Document of 11.7.2022 (a scan, read from the image). Hlavná is split by súpisné čísla; Hlavná houses outside the listed ranges and the register's addresses without a street are placed by fill_nearest. 'občania s TP Huncovce' (okrsok 1) are voters registered without an address, not the register's houses without a street."
+
+[[document]]
+url = "https://www.huncovce.sk/modules/file_storage/download.php?file=6c9d6299%7C593"
+sha256 = "df6a596d4966a21e24fe465fa6ed254db9f31aad8358ce0c9c77cd9fc519490a"
+title = "Oznámenie o utvorení volebných okrskov a volebných miestností pre Voľby do samosprávy obcí a Voľby do orgánov samosprávnych krajov (podľa ulíc)"
+
+[[document]]
+url = "https://www.huncovce.sk/volby/volby-2022-1/"
+sha256 = "34ea07ccb7ca0821a3ab1931076799ac073b24f9d554e9857a5898f52890833f"
+title = "Voľby 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Jarná"},
+  {street = "Mlynská"},
+  {street = "Krátka"},
+  {street = "Pri Rybníku", written = "Pri rybníku"},
+  {street = "Farská"},
+  {street = "Záhradná"},
+  {street = "Úzka"},
+  {street = "Športová"},
+  {street = "Alejová"},
+  {street = "Železničná"},
+  {street = "Hlavná", numbers = "24-180, 391-550", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Riečna"},
+  {street = "Lomnická"},
+  {street = "Nová"},
+  {street = "Vrbovská"},
+  {street = "Školská"},
+  {street = "Tatranská"},
+  {street = "Poľná"},
+  {street = "Samuela Rosenberga", written = "S. Rosenberga"},
+  {street = "Hlavná", numbers = "1-23, 181-202, 232", by = "supisne"},
+]

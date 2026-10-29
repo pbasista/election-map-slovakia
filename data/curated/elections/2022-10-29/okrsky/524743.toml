@@ -1,0 +1,32 @@
+# Okrsky of Lemešany, transcribed by an AI agent in job okrsok-rules-1008 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: v tomto okrsku budú hlasovať občania z domov súp. čísla od 0 do 300
+#   okrsok 2: v tomto okrsku budú hlasovať občania z domov súp. čísla 301 - 620
+obec = "524743"
+name = "Lemešany"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-10-21
+okrsky_date_basis = "The document states no date; the Internet Archive captured the documents on 2022-09-02 and 2022-10-21 (https://web.archive.org/web/20221021231921/https://www.lemesany.sk/evt_file.php?file=2801&original=SKM_C250i22081014550.pdf)."
+okrsky_fill = "nearest"
+okrsky_note = "The document is undated; both documents are Internet Archive snapshots taken before 29 October 2022 (the scan's file name suggests 10.08.2022). Okrsky by súpisné čísla: 0-300 and 301-620. Numbers above 620 are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20221021231921/https://www.lemesany.sk/evt_file.php?file=2801&original=SKM_C250i22081014550.pdf"
+sha256 = "addc1d70d31453f7173f7d514f1bb22b7aa53bbce8e2f28e5d509b10b1ca1fd5"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (voľby 29. októbra 2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20220902084123/https://www.lemesany.sk/obec-1/volby-1/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-294sk.html"
+sha256 = "e6cbded1f30f09835d55ed7d64b802414f771af7b270ecffb443c5bdd32bf02b"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (page linking the PDF)"
+
+[okrsok.1]
+rules = [
+  {part = "Lemešany", numbers = "0-300"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lemešany", numbers = "301-620"},
+]

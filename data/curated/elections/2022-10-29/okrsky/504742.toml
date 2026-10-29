@@ -1,0 +1,21 @@
+# The okrsky of Radošovce of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/504742.toml, reused by `ems job reuse`.
+obec = "504742"
+name = "Radošovce"
+okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Vieska taken whole (document: súp. č. 1–202, i.e. all of it); Radošovce súp. č. 317–475 given as open range 317- so newer higher numbers also fall into okrsok 2."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://radosovce.sk/wp-content/uploads/dokumenty/komunalne-volby/volebne-okrsky-vytvorenie-b1ra31.pdf"
+sha256 = "c7b7fe7dddeb8d54e548deed42344d8160ecddd5b64acb91f1e3d2b7e0003cb6"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obce a pre voľby do orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {part = "Radošovce", numbers = "1-316"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vieska"},
+  {part = "Radošovce", numbers = "317-"},
+]

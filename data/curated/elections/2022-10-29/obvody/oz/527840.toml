@@ -1,0 +1,157 @@
+# Council obvody of Stropkov (527840), Stropkov.
+# Transcribed by an AI agent in job obvod-rules-273 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa ulice Budovateľská, Družstevná, Rovná, Sitnická, Sokolovská, Strečkova, Vojtovská, Vranovská, sa volí 1 poslanec.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa ulice Akad.Pavlova, Hlinky, Hviezdoslavova, J.Gagarina, Ciolkovského, Jarková, Jilemnického, Letná, Zimná, Nový riadok, sa volia 2 poslanci.
+#   obvod 3: Vo volebnom obvode číslo 3, ktorý zahŕňa ulice Kukučínova, Mlynská, Gen.Sázavského, sa volia 2 poslanci.
+#   obvod 4: Vo volebnom obvode číslo 4, ktorý zahŕňa ulice Hrnčiarska 742/18, 743/20, 786/66, 1566/2,4,6,8, 1597/22,24,26,28, 1601/30,32,34, 1604/9,11, 1605/13,15, 1606/17,19, Za jarkom, Orgovánová, sa volia 2 poslanci.
+#   obvod 5: Vo volebnom obvode číslo 5, ktorý zahŕňa ulice A.Kmeťa, Bernolákova, Cintorínska, Kvetná, Ľ.Štúra, Pod Laščikom, Ružová, Mládeže, Nám.SNP, Záhradná, Zámocká, Za dubami, Hlavná 38/2, 44/1,3,5,7,9, 45/14, 47/20, 49/11,13,15,17, 50/19,21,23, 60/30, 72/42, sa volia 2 poslanci.
+#   obvod 6: Vo volebnom obvode číslo 6, ktorý zahŕňa ulice Konštantínova, Puškinova, Metodova, Andreja Hlinku, Sládkovičova, Bankovská, Majerská, J.Kráľa, P.Horova, Kalinčiakova, sa volia 2 poslanci.
+#   obvod 7: Vo volebnom obvode číslo 7, ktorý zahŕňa ulice Krátka, Hlavná 80/50, 1649/31,33, 1650/37,39, 1651/43,45, 1652/49, Hrnčiarska 1618/36,38,40, 1619/42,44,50, 1627/21,23,25, 1654/72, 2180/34B, sa volia 2 poslanci.
+#   obvod 8: Vo volebnom obvode číslo 8, ktorý zahŕňa ulice Šarišská, Školská, Pri rybníku, Samuela Jurkoviča, Chotčanská, Nábrežná, Matice slovenskej 920/48,50, 924/56,58, Hrnčiarska 796/63,65, 797/76,78, 798/80, 799/82, 800/84, 802/86, Ondavská, Petejovská, sa volia 2 poslanci.
+#   obvod 9: Vo volebnom obvode číslo 9, ktorý zahŕňa ulice Športová, Štefánikova, Matice slovenskej 901/2, 902/4,6,8, 903/16,18,20, 904/22, 906/24,26,28, 907/30,32, 908/7, 909/9, 910/11, 911/13, 912/15, 913/34,36, 914/40,42, 915/44,46, 916/17, 917/19, 918/21, 919/23, 921/25, 922/27, 923/52,54, 1552/10,12,14, 1774/38. Hrnčiarska 787/68,70, 788/88, 789/51,53, 790/90, 791/55, 792/57, 793/59, 1620/41, sa volia 2 poslanci.
+#   obvod 10: Vo volebnom obvode číslo 10, ktorý zahŕňa ulice Čerlinská, Šandalská, Bokšanská, sa volí 1 poslanec.
+# Okrsky added by an AI agent in job okrsok-rules-1150 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+obec = "527840"
+name = "Stropkov"
+date = 2022-06-29
+fill = "nearest"
+note = "House numbers are given as súpisné/orientačné; rules use the orientačné number after the slash (Hrnčiarska 2180/34B -> 34B). Hlavná, Hrnčiarska and Matice slovenskej are split by listed numbers only; their unlisted numbers, Požiarnická (not named by the document) and the addresses without a street (súpisné only, in Stropkov, Sitník and Bokša) are placed by fill_nearest. Pod vlekom (Bokša) inferred into obvod 10."
+okrsky_date = 2022-06-29
+okrsky_note = "Obvody only. No document listing the okrsky with their streets was found: the city's 'Voľby do orgánov územnej samosprávy 2022' page as archived on 2022-10-21 lists every 2022 election document (obvody announcement, zapisovateľ, e-mail address, population, candidate lists, a sample 'Oznámenie o čase a mieste konania volieb' for okrsok 5 only, the special commission) but no okrsky announcement, and the archived notice board pages of August 2022 and the referendum 2023 page have none either. Each of the 10 obvody holds exactly one okrsok in the Statistical Office's results (okrsok n = obvod n), so the obvody, set by council resolution 391/2022 of 29 June 2022 (announcement of 15 July 2022), give the okrsky; okrsky are left out because no published document gives their own wording."
+
+[[document]]
+url = "https://www.stropkov.sk/download_file_f.php?id=1714317"
+sha256 = "7d95f3177419f1ef7804cb388684cdfb3ee9882a2a1fd4494e4ac040939776a3"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie MsZ č. 391/2022 zo dňa 29.6.2022), 15.7.2022"
+
+[obvod.1]
+seats = 1
+okrsky = [1]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Družstevná"},
+  {street = "Rovná"},
+  {street = "Sitnícka", written = "Sitnická", note = "Document writes \"Sitnická\"; the register's Sitnícka in Sitník is the same street (spelling variant)."},
+  {street = "Sokolovská"},
+  {street = "Strečková", written = "Strečkova", note = "Document writes \"Strečkova\"; the register's Strečková in Sitník is the same street (spelling variant)."},
+  {street = "Vojtovská"},
+  {street = "Vranovská"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {street = "Akad. Pavlova", written = "Akad.Pavlova"},
+  {street = "Hlinky"},
+  {street = "Hviezdoslavova"},
+  {street = "J. Gagarina", written = "J.Gagarina"},
+  {street = "Ciolkovského"},
+  {street = "Jarková"},
+  {street = "Jilemnického"},
+  {street = "Letná"},
+  {street = "Zimná"},
+  {street = "Nový riadok"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {street = "Kukučínova"},
+  {street = "Mlynská"},
+  {street = "Gen. Sázavského", written = "Gen.Sázavského"},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [4]
+rules = [
+  {street = "Hrnčiarska", numbers = "18, 20, 66, 2, 4, 6, 8, 22, 24, 26, 28, 30, 32, 34, 9, 11, 13, 15, 17, 19"},
+  {street = "Za jarkom"},
+  {street = "Orgovánová"},
+]
+
+[obvod.5]
+seats = 2
+okrsky = [5]
+rules = [
+  {street = "A. Kmeťa", written = "A.Kmeťa"},
+  {street = "Bernolákova"},
+  {street = "Cintorínska"},
+  {street = "Kvetná"},
+  {street = "Ľ. Štúra", written = "Ľ.Štúra"},
+  {street = "Pod Laščíkom", written = "Pod Laščikom"},
+  {street = "Ružová"},
+  {street = "Mládeže"},
+  {street = "Nám. SNP", written = "Nám.SNP"},
+  {street = "Záhradná"},
+  {street = "Zámocká"},
+  {street = "Za dubami"},
+  {street = "Hlavná", numbers = "2, 1, 3, 5, 7, 9, 14, 20, 11, 13, 15, 17, 19, 21, 23, 30, 42"},
+]
+
+[obvod.6]
+seats = 2
+okrsky = [6]
+rules = [
+  {street = "Konštantínova"},
+  {street = "Puškinova"},
+  {street = "Metodova"},
+  {street = "Andreja Hlinku"},
+  {street = "Sládkovičova"},
+  {street = "Bankovská"},
+  {street = "Majerská"},
+  {street = "J. Kráľa", written = "J.Kráľa"},
+  {street = "P. Horova", written = "P.Horova"},
+  {street = "Kalinčiakova"},
+]
+
+[obvod.7]
+seats = 2
+okrsky = [7]
+rules = [
+  {street = "Krátka"},
+  {street = "Hlavná", numbers = "50, 31, 33, 37, 39, 43, 45, 49"},
+  {street = "Hrnčiarska", numbers = "36, 38, 40, 42, 44, 50, 21, 23, 25, 72, 34B"},
+]
+
+[obvod.8]
+seats = 2
+okrsky = [8]
+rules = [
+  {street = "Šarišská"},
+  {street = "Školská"},
+  {street = "Pri rybníku"},
+  {street = "Samuela Jurkoviča"},
+  {street = "Chotčanská"},
+  {street = "Nábrežná"},
+  {street = "Matice slovenskej", numbers = "48, 50, 56, 58"},
+  {street = "Hrnčiarska", numbers = "63, 65, 76, 78, 80, 82, 84, 86"},
+  {street = "Ondavská"},
+  {street = "Petejovská"},
+]
+
+[obvod.9]
+seats = 2
+okrsky = [9]
+rules = [
+  {street = "Športová"},
+  {street = "Štefánikova"},
+  {street = "Matice slovenskej", numbers = "2, 4, 6, 8, 16, 18, 20, 22, 24, 26, 28, 30, 32, 7, 9, 11, 13, 15, 34, 36, 40, 42, 44, 46, 17, 19, 21, 23, 25, 27, 52, 54, 10, 12, 14, 38"},
+  {street = "Hrnčiarska", numbers = "68, 70, 88, 51, 53, 90, 55, 57, 59, 41"},
+]
+
+[obvod.10]
+seats = 1
+okrsky = [10]
+rules = [
+  {street = "Čerlinská"},
+  {street = "Šandalská"},
+  {street = "Bokšanská"},
+  {street = "Pod vlekom", note = "Street in the part Bokša not named by the document; all other Bokša streets (Čerlinská, Šandalská, Bokšanská) form obvod 10.", inferred = true},
+]

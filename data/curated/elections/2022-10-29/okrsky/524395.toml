@@ -1,0 +1,32 @@
+# Okrsky of Fintice, transcribed by an AI agent in job okrsok-rules-948 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od súp. č. 1 do súp. č. 340
+#   okrsok 2: od súp. č. 341 do súp. č. 785
+obec = "524395"
+name = "Fintice"
+okrsky_date = 2022-08-01
+okrsky_fill = "nearest"
+okrsky_note = "The document splits the municipality by súpisné čísla only: okrsok 1 \"od súp. č. 1 do súp. č. 340\", okrsok 2 \"od súp. č. 341 do súp. č. 785\"; the rules apply these ranges in both parts (Fintice, Gribľovec). Houses with a súpisné číslo above 785 (built later) are placed by fill_nearest. The file was re-uploaded to the notice-board archive item of 17.06.2022 (file name dated 2026-03-31); the document itself is dated 01.08.2022 and names the elections of 29.10.2022."
+
+[[document]]
+url = "https://www.fintice.sk/files/2026-03-31-103543-Utvorenie_volebn__ch_okrskov.pdf"
+sha256 = "b9c0892e5b565f7f6df2ce3ac731192e6caa5eb60e0fa91d07745efd9eb434f3"
+title = "Utvorenie volebných okrskov (voľby do orgánov samosprávy obcí a orgánov samosprávnych krajov 29.10.2022)"
+
+[[document]]
+url = "https://www.fintice.sk/samosprava/uradna-tabula-archiv/volby-do-organov-samospravy-obci-2022-a406-966"
+sha256 = "cebba80fafdf322f98ddeabc21aaf35b2203c108ff32b945e29333f10f4b2608"
+title = "Voľby do orgánov samosprávy obcí 2022 (úradná tabuľa – archív)"
+
+[okrsok.1]
+rules = [
+  {part = "Fintice", numbers = "1-340"},
+  {part = "Gribľovec", numbers = "1-340"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Fintice", numbers = "341-785"},
+  {part = "Gribľovec", numbers = "341-785"},
+]

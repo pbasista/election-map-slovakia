@@ -1,0 +1,37 @@
+# Okrsky of Pohronská Polhora, transcribed by an AI agent in job okrsok-rules-992 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: HLAVNÁ, HRAŠKUĽA, KÚT, PÍLA, ROHOZNÁ, STANIČNÁ, ŠPORTOVÁ, ZBOJSKÁ, POHRONSKÁ POLHORA
+#   okrsok 2: BÁNY, BÁNIKY, LIPIANKA, NAD IHRISKOM, POD POĽANOU, VARGUĽA, ŽELEZNIČNÁ
+obec = "508888"
+name = "Pohronská Polhora"
+okrsky_date = 2022-10-26
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky's streets are given in a notice on the municipality's 'Voľby 2022' page ('Starosta obce Ing. Dušan Nepšinský určil pre uskutočnenie volieb 2022 ... dva volebné okrsky'), undated; date is its publication date on that page ('Zverejnené 26.10.2022'); the decision creating the two okrsky was published there on 10.8.2022 (polling stations only). 'ZBOJSKÁ' is not in the register and is left out. 'POHRONSKÁ POLHORA' in okrsok 1 is the voters registered only on the obec, without an address. Predkopačno (1 address), not named, and the register's houses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.ppolhora.sk/volby-2022.html"
+sha256 = "0f4e86fac3fca45812f11bb8aadaaf18fd1a0c1d4c85e5f7420a311f2c51d6fa"
+title = "Voľby 2022 (Vytvorenie volebných okrskov a určenie volebných miestností - voľby 2022; okrsky a ulice)"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná", written = "HLAVNÁ"},
+  {street = "Hraškuľa", written = "HRAŠKUĽA"},
+  {street = "Kút", written = "KÚT"},
+  {street = "Píla", written = "PÍLA"},
+  {street = "Rohozná", written = "ROHOZNÁ"},
+  {street = "Staničná", written = "STANIČNÁ"},
+  {street = "Športová", written = "ŠPORTOVÁ"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bány", written = "BÁNY"},
+  {street = "Bániky", written = "BÁNIKY"},
+  {street = "Lipianka", written = "LIPIANKA"},
+  {street = "Nad Ihriskom", written = "NAD IHRISKOM"},
+  {street = "Pod Poľanou", written = "POD POĽANOU"},
+  {street = "Varguľa", written = "VARGUĽA"},
+  {street = "Železničná", written = "ŽELEZNIČNÁ"},
+]

@@ -26,19 +26,25 @@ without problems go to the kind's ``accept``, which merges them into the
 curated data. Ingesting the same output again changes nothing, so a job can
 be re-ingested after its output is fixed. A job without a report is pending:
 ``make`` leaves its items to it (see :class:`Kind`).
+
+The kinds whose work is one election's (:attr:`Kind.per_election`) record
+it in ``input.json`` as ``election``, its day; ``check`` and ``accept`` read
+that election's data (:func:`election`), not the latest election's.
 """
 
 from __future__ import annotations
 
+import datetime as dt
 import json
 import re
+import string
 from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
 from election_map_slovakia import output
-from election_map_slovakia.config import Config
+from election_map_slovakia.config import Config, ConfigError, Election
 
 INPUT = "input.json"
 SCHEMA = "schema.json"
@@ -47,6 +53,8 @@ README = "README.md"
 OUTPUT = "output.json"
 REPORT = "ingest-report.md"
 _RESERVED = frozenset({"kind", "job", "items"})
+ELECTION = "election"
+"""The ``input.json`` field of a per-election job: its election's day."""
 _DIGITS = 3
 """Digits of a job's number, ``<kind>-NNN``."""
 _SCHEMA_DIALECT = "https://json-schema.org/draft/2020-12/schema"
@@ -72,6 +80,21 @@ def write_json(path: Path, content: object) -> None:
     """
     text = json.dumps(content, ensure_ascii=False, indent=1, sort_keys=True)
     output.write_file(path, (text + "\n").encode())
+
+
+def long_date(day: dt.date) -> str:
+    """Return *day* as prompts write it, ``24 October 2026``."""
+    return f"{day.day} {day:%B %Y}"
+
+
+def election_prompt(template: str, election: Election) -> str:
+    """Return *template* with *election*'s ``$day`` and ``$year`` filled in.
+
+    The day as :func:`long_date` writes it.
+    """
+    return string.Template(template).substitute(
+        day=long_date(election.day), year=election.day.year
+    )
 
 
 @dataclass(frozen=True)
@@ -120,6 +143,8 @@ class MakeOptions:
     """Restrict to these; their meaning (codes, names) is the kind's."""
     pending: tuple[Job, ...]
     """Jobs of the kind not ingested yet, whose items not to make again."""
+    election: Election
+    """The election whose work to make (where the kind is per election)."""
 
 
 Accepted = tuple[dict[str, Any], dict[str, Any]]
@@ -148,6 +173,23 @@ class Kind:
     accept: Callable[[Config, Job, list[Accepted]], list[str]]
     priorities: tuple[str, ...] = ()
     """Orders ``make`` can put the items in, the default first."""
+    per_election: bool = False
+    """Whether its work is one election's: ``make`` records the election in
+    every job (:data:`ELECTION`), ingest reads it back (:func:`election`)."""
+
+
+def election(cfg: Config, job: Job) -> Election:
+    """Return the election a per-election *job* was made for."""
+    day = job.context.get(ELECTION)
+    if not isinstance(day, str):
+        raise JobError(
+            f"{job.path / INPUT}: no {ELECTION}; the job was made before jobs"
+            f" recorded their election: make it again"
+        )
+    try:
+        return cfg.election(day)
+    except ConfigError as e:
+        raise JobError(f"{job.path / INPUT}: {e}") from None
 
 
 def kinds() -> dict[str, Kind]:
@@ -406,6 +448,7 @@ def make(
     cfg: Config,
     kind: Kind,
     *,
+    election: Election,
     size: int | None = None,
     priority: str | None = None,
     only: Sequence[str] = (),
@@ -413,7 +456,8 @@ def make(
 ) -> list[Job]:
     """Write the jobs of *kind* still to do, at most *limit*; return them.
 
-    Numbering continues after the highest existing job of the kind.
+    Numbering continues after the highest existing job of the kind. A
+    per-election kind makes *election*'s work.
     """
     if priority is not None and priority not in kind.priorities:
         choices = ", ".join(kind.priorities) or "none"
@@ -423,35 +467,43 @@ def make(
     schema = output_schema(kind)
     check_schema(schema)
     jobs = existing(cfg, kind)
+    recorded = {ELECTION: election.day.isoformat()} if kind.per_election else {}
     options = MakeOptions(
         size=size or kind.default_size,
         priority=priority or (kind.priorities[0] if kind.priorities else None),
         only=tuple(only),
-        pending=tuple(j for j in jobs if j.pending),
+        # Another election's pending jobs hold other work: not left out.
+        pending=tuple(
+            j
+            for j in jobs
+            if j.pending and all(j.context.get(k) == v for k, v in recorded.items())
+        ),
+        election=election,
     )
     batches = kind.make(cfg, options)[:limit]
     number = max((int(j.name.rsplit("-", 1)[1]) for j in jobs), default=0)
     written = []
     for batch in batches:
-        _check_batch(kind, batch)
+        _check_batch(kind, batch, recorded)
         number += 1
         path = jobs_dir(cfg) / f"{kind.name}-{number:0{_DIGITS}d}"
         if path.exists():
             raise JobError(f"{path} exists")
-        content = {"kind": kind.name, "job": path.name} | batch.context
+        context = batch.context | recorded
+        content = {"kind": kind.name, "job": path.name} | context
         write_json(path / INPUT, content | {"items": batch.items})
         write_json(path / SCHEMA, schema)
         output.write_file(path / PROMPT, batch.prompt.encode())
         output.write_file(path / README, readme(kind, path.name, batch).encode())
-        written.append(Job(path, kind.name, batch.context, batch.items))
+        written.append(Job(path, kind.name, context, batch.items))
     return written
 
 
-def _check_batch(kind: Kind, batch: Batch) -> None:
+def _check_batch(kind: Kind, batch: Batch, recorded: Mapping[str, str]) -> None:
     ids = [item.get("id") for item in batch.items]
     if not ids or not all(isinstance(i, str) for i in ids) or len(set(ids)) < len(ids):
         raise JobError(f"{kind.name}: a batch needs items with unique string ids")
-    if clash := _RESERVED & set(batch.context):
+    if clash := (_RESERVED | set(recorded)) & set(batch.context):
         raise JobError(f"{kind.name}: context uses {', '.join(sorted(clash))}")
 
 

@@ -1,0 +1,29 @@
+# Okrsky of Nacina Ves, transcribed by an AI agent in job okrsok-rules-1035 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kultúrny dom Nacina Ves - časť Nacina Ves, SČ 229
+#   okrsok 2: Kultúrny Dom Nacina Ves – časť Vybúchanec, SČ 1057
+obec = "522805"
+name = "Nacina Ves"
+okrsky_date = 2022-08-10
+okrsky_note = "The document gives each okrsok only its polling station (Kultúrny dom, časť Nacina Ves, s.č. 229; Kultúrny dom, časť Vybúchanec, s.č. 1057); two okrsky, two parts, each station in another part: each okrsok is given the part of its station (inferred)."
+
+[[document]]
+url = "https://www.nacinaves.sk/files/2022-08-10-160723-Ozn__menie_o_po__te_vytvoren__ch_okrskov.pdf"
+sha256 = "608fe019bf8498832355b74f7a47a651ef40e0d875c7556a3c3ea0875b05917c"
+title = "Oznámenie o počte utvorených okrskov"
+
+[[document]]
+url = "https://www.nacinaves.sk/volby-do-samospravy-obci-2022-a73-919"
+sha256 = "3131350ae2fd41f7386db4da69565235701d903a57db625357255aafc2d98bad"
+title = "Voľby do samosprávy obcí 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Nacina Ves", note = "part of the polling station", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vybúchanec", note = "part of the polling station", inferred = true},
+]

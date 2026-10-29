@@ -1,0 +1,38 @@
+# Okrsky of Jarovnice, transcribed by an AI agent in job okrsok-rules-1016 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre oprávnených voličov bývajúcich na súpisných číslach: 0 - 315
+#   okrsok 2: pre oprávnených voličov bývajúcich na súpisných číslach: 316 – 422
+#   okrsok 3: pre oprávnených voličov bývajúcich na súpisných číslach: 423 - 600
+obec = "524603"
+name = "Jarovnice"
+okrsky_date = 2022-08-02
+okrsky_note = "The mayor's decision of 2 August 2022 (posted 15 August 2022; the old /files/ link is gone, the same file is live on the municipality's new site under 'Voľby do orgánov samosprávy obcí 2022') splits the obec by súpisné čísla only: 0-315, 316-422, 423-600, without naming the parts; the same ranges are applied in both parts Jarovnice and Močidľany."
+
+[[document]]
+url = "https://www.jarovnice.sk/e_download.php?file=data/uredni_deska/obsah9_8.pdf&original=2022-08-15-084455-Vytvorenie_volebn__ch_okrskov_a_ur__enie_volebn__ch_miestnost___v_obci_Jarovnice.pdf"
+sha256 = "41362ab55d74fced176a387e700ccd494491d0288ed661104ef7de261936f7ff"
+title = "Vytvorenie volebných okrskov (Jarovnice, 2. augusta 2022)"
+
+[[document]]
+url = "https://www.jarovnice.sk/samosprava/volby/volby-do-organov-samospravy-obci-2022-9.html"
+sha256 = "6e3eb2e14fef4369b1fa1e6eabe50bd9ae2ce6c999cab6cf6b68be90afdfba65"
+title = "Voľby do orgánov samosprávy obcí 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Jarovnice", numbers = "0-315"},
+  {part = "Močidľany", numbers = "0-315"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Jarovnice", numbers = "316-422"},
+  {part = "Močidľany", numbers = "316-422"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Jarovnice", numbers = "423-600"},
+  {part = "Močidľany", numbers = "423-600"},
+]
