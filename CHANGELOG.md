@@ -4,6 +4,16 @@ Notable changes, newest first. The version is set in
 `src/election_map_slovakia/__init__.py`; tagging `vX.Y.Z` builds and deploys
 it (see [docs/deploy.md](docs/deploy.md)).
 
+## 0.8.2 — 2026-10-29
+
+- **The same data keys on every Python.** The keys counted the code by
+  the text `ast.dump` gives of its syntax tree, which differs between
+  Python versions (3.12 adds an empty `type_params` to every function
+  and class, 3.13 leaves out fields at their defaults): the lock written
+  with Python 3.11 failed `ems data lock --check` on 3.12 and 3.14, so
+  0.8.1 was not released. The tree is now written out field by field,
+  unset fields left out, giving the same keys on 3.11 to 3.14.
+
 ## 0.8.1 — 2026-10-29
 
 - **The checks pass on Python 3.11.** With Python 3.11's numpy, ty took

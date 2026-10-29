@@ -234,10 +234,11 @@ def code_digest(modules: Sequence[str], glue: Sequence[str] | None = None) -> st
 
     With the CLI that runs them: the functions of it named *glue*, or all
     of it (None). Each by its syntax tree without docstrings and the help
-    texts of the command line, so that rewording them changes no key; not
-    the package version, which every release changes, nor the versions of
-    Python and the libraries, which differ between machines
-    (:func:`libraries` names those of ``uv.lock``).
+    texts of the command line, so that rewording them changes no key, and
+    written out the same on every Python the project runs on
+    (:func:`_plain`); not the package version, which every release
+    changes, nor the versions of Python and the libraries, which differ
+    between machines (:func:`libraries` names those of ``uv.lock``).
     """
     names = set().union(*(stamp.modules(m) for m in modules)) - {"cli"}
     trees = {name: _tree(name) for name in sorted(names)}
@@ -251,7 +252,29 @@ def code_digest(modules: Sequence[str], glue: Sequence[str] | None = None) -> st
         if missing := [name for name in glue if name not in functions]:
             raise LockError(f"cli.py: no function {missing[0]} (lock.MAP_GLUE)")
         trees["cli"] = ast.Module([functions[name] for name in glue], [])
-    return _digest({name: ast.dump(tree) for name, tree in trees.items()})
+    return _digest({name: _plain(tree) for name, tree in trees.items()})
+
+
+def _plain(node: object) -> Any:
+    """Return syntax tree *node* as plain JSON values, the same on every Python.
+
+    Not ``ast.dump``, whose text differs between versions: 3.12 adds an
+    empty ``type_params`` to every function and class, 3.13 leaves out
+    fields at their defaults. A node is its type and its fields, those
+    unset (None, an empty list) left out, as no version tells them apart.
+    """
+    if isinstance(node, ast.AST):
+        fields = {}
+        for name in node._fields:
+            value = getattr(node, name, None)
+            if value is not None and value != []:
+                fields[name] = _plain(value)
+        return [type(node).__name__, fields]
+    if isinstance(node, list):
+        return [_plain(item) for item in node]
+    if isinstance(node, (bytes, complex)) or node is Ellipsis:
+        return repr(node)
+    return node
 
 
 def _tree(module: str) -> ast.Module:
