@@ -19,8 +19,10 @@
 #
 # and the app's files are attached to a GitHub release. A release that
 # changes no data builds and deploys the app alone, in a few minutes.
-# Deploying needs the repository secrets CLOUDFLARE_API_TOKEN (Account ›
-# Cloudflare Pages › Edit) and CLOUDFLARE_ACCOUNT_ID.
+# Deploying needs the secrets CLOUDFLARE_API_TOKEN (Account › Cloudflare
+# Pages › Edit) and CLOUDFLARE_ACCOUNT_ID, of the repository or of its
+# environment `production`: every job that reads them names that
+# environment, without which its secrets would be empty there.
 name: Release
 
 on:
@@ -50,6 +52,8 @@ jobs:
     needs: ci
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    # Only for its secrets: it reads the Pages API, deploying nothing.
+    environment: production
     outputs:
       stale: ${{ steps.status.outputs.stale }}
     steps:
@@ -86,6 +90,7 @@ jobs:
     if: needs.plan.outputs.stale == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    environment: production
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0

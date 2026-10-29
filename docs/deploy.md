@@ -206,8 +206,11 @@ not from `inputs` (`release.yml`).
 3. **API token.**
    Cloudflare dashboard › My Profile › API Tokens › Create Token ›
    Custom token, permission *Account › Cloudflare Pages › Edit*.
-4. **Repository secrets**
-   (Settings › Secrets and variables › Actions):
+4. **Secrets**, of the repository
+   (Settings › Secrets and variables › Actions)
+   or of its environment `production`
+   (Settings › Environments › production),
+   which the release jobs that read them name:
    `CLOUDFLARE_API_TOKEN` (the token)
    and `CLOUDFLARE_ACCOUNT_ID`
    (shown on the account's Workers & Pages overview).

@@ -4,6 +4,15 @@ Notable changes, newest first. The version is set in
 `src/election_map_slovakia/__init__.py`; tagging `vX.Y.Z` builds and deploys
 it (see [docs/deploy.md](docs/deploy.md)).
 
+## 0.8.4 — 2026-10-29
+
+- **The release reads the secrets of the `production` environment.**
+  The Cloudflare token and account are secrets of that environment,
+  which reach only the jobs that name it: the app's did, the new jobs
+  that ask which data parts are deployed and deploy them did not, so
+  0.8.3's release stopped at the first with no credentials. Both name
+  `production` now.
+
 ## 0.8.3 — 2026-10-29
 
 - **Data keys from the code's source text.** 0.8.2 still counted the
