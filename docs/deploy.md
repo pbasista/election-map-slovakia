@@ -36,8 +36,7 @@ computed without building anything (`src/election_map_slovakia/lock.py`).
     (not the polls' hours nor `live`, which only the app reads);
   - the other configuration files but `site.toml`;
   - the curated data and their translations;
-  - the code that makes the data, by its syntax tree
-    (comments, docstrings and the command line's help texts do not count),
+  - the source of the code that makes the data, comments included,
     and the versions in `uv.lock` of the libraries it runs on;
   - the part's own files of `web/` (`_headers-<part>`, `part-404.html`).
 - **What does not:** the app's code, styles and UI strings,

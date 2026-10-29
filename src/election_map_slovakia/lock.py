@@ -41,8 +41,8 @@ finding, a corrected link or a new translation thus changes every data
 key and no map key. The cached sources depend only on which pages the
 research cites, the stylesheet they link and their response headers.
 
-Code counts by its syntax tree (:func:`code_digest`): comments,
-docstrings and the help texts of the command line change no key.
+Code counts by its source text (:func:`code_digest`), comments included,
+so that its key is the same whichever Python computes it.
 
 ``ems data lock`` writes the keys to :data:`LOCK_FILE`, committed like
 ``uv.lock``; CI fails when the lock is not that of the commit
@@ -233,77 +233,41 @@ def code_digest(modules: Sequence[str], glue: Sequence[str] | None = None) -> st
     """Return a digest of the code of *modules* and the package modules they import.
 
     With the CLI that runs them: the functions of it named *glue*, or all
-    of it (None). Each by its syntax tree without docstrings and the help
-    texts of the command line, so that rewording them changes no key, and
-    written out the same on every Python the project runs on
-    (:func:`_plain`); not the package version, which every release
+    of it (None). Each by its source text as it is (:func:`_code`), a
+    comment as much as code; nothing that differs between machines.
+    Not the package version, which every release
     changes, nor the versions of Python and the libraries, which differ
     between machines (:func:`libraries` names those of ``uv.lock``).
     """
     names = set().union(*(stamp.modules(m) for m in modules)) - {"cli"}
-    trees = {name: _tree(name) for name in sorted(names)}
-    cli = _tree("cli")
-    if glue is None:
-        trees["cli"] = cli
-    else:
-        functions = {
-            node.name: node for node in cli.body if isinstance(node, ast.FunctionDef)
-        }
-        if missing := [name for name in glue if name not in functions]:
-            raise LockError(f"cli.py: no function {missing[0]} (lock.MAP_GLUE)")
-        trees["cli"] = ast.Module([functions[name] for name in glue], [])
-    return _digest({name: _plain(tree) for name, tree in trees.items()})
+    code = {name: _code(name) for name in sorted(names)}
+    code["cli"] = _code("cli", glue)
+    return _digest(code)
 
 
-def _plain(node: object) -> Any:
-    """Return syntax tree *node* as plain JSON values, the same on every Python.
+def _code(module: str, functions: Sequence[str] | None = None) -> str:
+    """Return the source of package module *module*.
 
-    Not ``ast.dump``, whose text differs between versions: 3.12 adds an
-    empty ``type_params`` to every function and class, 3.13 leaves out
-    fields at their defaults. A node is its type and its fields, those
-    unset (None, an empty list) left out, as no version tells them apart.
+    Or the lines of its top-level *functions* alone (decorators to the
+    last line), in that order, which the parser only finds: the text is
+    hashed, not the syntax tree, which Python writes out differently from
+    version to version, even from one 3.12 release to the next.
     """
-    if isinstance(node, ast.AST):
-        fields = {}
-        for name in node._fields:
-            value = getattr(node, name, None)
-            if value is not None and value != []:
-                fields[name] = _plain(value)
-        return [type(node).__name__, fields]
-    if isinstance(node, list):
-        return [_plain(item) for item in node]
-    if isinstance(node, (bytes, complex)) or node is Ellipsis:
-        return repr(node)
-    return node
-
-
-def _tree(module: str) -> ast.Module:
-    """Return the syntax tree of package module *module*, without its prose."""
-    tree = ast.parse((stamp.PACKAGE / f"{module}.py").read_bytes())
-    return _Prose().visit(tree)
-
-
-class _Prose(ast.NodeTransformer):
-    """Drops docstrings and blanks the help texts of argparse calls."""
-
-    _HELP = frozenset({"help", "description"})
-
-    def generic_visit(self, node: ast.AST) -> ast.AST:
-        body = getattr(node, "body", None)
-        if (
-            isinstance(node, (ast.Module, ast.ClassDef, ast.FunctionDef))
-            and body
-            and isinstance(body[0], ast.Expr)
-            and isinstance(body[0].value, ast.Constant)
-            and isinstance(body[0].value.value, str)
-        ):
-            node.body = body[1:] or [ast.Pass()]
-        return super().generic_visit(node)
-
-    def visit_keyword(self, node: ast.keyword) -> ast.AST:
-        if node.arg in self._HELP:
-            node.value = ast.Constant("")
-        return self.generic_visit(node)
+    text = (stamp.PACKAGE / f"{module}.py").read_text(encoding="utf-8")
+    if functions is None:
+        return text
+    defined = {
+        node.name: node
+        for node in ast.parse(text).body
+        if isinstance(node, ast.FunctionDef)
+    }
+    if missing := [name for name in functions if name not in defined]:
+        raise LockError(f"{module}.py: no function {missing[0]} (lock.MAP_GLUE)")
+    lines = text.splitlines(keepends=True)
+    return "".join(
+        "".join(lines[min(n.lineno for n in [f, *f.decorator_list]) - 1 : f.end_lineno])
+        for f in (defined[name] for name in functions)
+    )
 
 
 def libraries(lock: Path) -> dict[str, str]:

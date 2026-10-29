@@ -111,7 +111,7 @@ def test_research_changes_the_data_keys_and_no_map_key(root: Path):
     assert after.maps == before.maps
 
 
-def test_code_counts_without_its_prose(
+def test_code_reaches_the_keys_of_what_it_makes(
     root: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ):
     package = tmp_path / stamp.PACKAGE.name
@@ -126,23 +126,23 @@ def test_code_counts_without_its_prose(
 
     try:
         before = fresh()
-        # Help texts, docstrings and comments.
+        # The CLI outside the map steps: the data's, not the maps'.
         edit(package / "cli.py", 'help="serve dist/', 'help="Serve dist/')
-        edit(package / "links.py", '"""', '"""Reworded. ')
-        edit(package / "geo.py", "\n# ", "\n# Reworded. ")
-        assert fresh() == before
-        # Code that makes the data but not the maps.
-        edit(package / "links.py", "\ndef ", "\nUNUSED = 1\n\n\ndef ")
         after = fresh()
         assert after.maps == before.maps
         assert after.data["2026"] != before.data["2026"]
-        # The CLI's part of the map steps.
+        # Code that makes the data but not the maps.
+        edit(package / "links.py", "\ndef ", "\nUNUSED = 1\n\n\ndef ")
+        again = fresh()
+        assert again.maps == before.maps
+        assert again.data["2026"] != after.data["2026"]
+        # The CLI's part of the map steps, even a comment of it.
         text = (package / "cli.py").read_text(encoding="utf-8")
         body = text.index(":\n", text.index("\ndef _geo(")) + 2
         (package / "cli.py").write_text(
-            text[:body] + "    UNUSED = 1\n" + text[body:], encoding="utf-8"
+            text[:body] + "    # Reworded.\n" + text[body:], encoding="utf-8"
         )
-        assert fresh().maps["2026"] != after.maps["2026"]
+        assert fresh().maps["2026"] != before.maps["2026"]
     finally:
         lock.code_digest.cache_clear()
 

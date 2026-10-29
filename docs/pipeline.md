@@ -738,8 +738,8 @@ so a change to any election's candidates, results or curated data
 changes every data bundle's key;
 research, links and translations change no map key,
 and a new base map extract of one election changes that map's key alone.
-Code counts by its syntax tree:
-comments, docstrings and the command line's help texts change no key.
+Code counts by its source text, comments included,
+so that every Python computes the same keys.
 Changes to the app alone (`web/`, UI strings, `site.toml`)
 change no key.
 

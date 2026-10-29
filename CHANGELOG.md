@@ -4,6 +4,17 @@ Notable changes, newest first. The version is set in
 `src/election_map_slovakia/__init__.py`; tagging `vX.Y.Z` builds and deploys
 it (see [docs/deploy.md](docs/deploy.md)).
 
+## 0.8.3 — 2026-10-29
+
+- **Data keys from the code's source text.** 0.8.2 still counted the
+  code by its syntax tree, and the tree differs even between releases of
+  one Python: 3.12.3, which GitHub's runners have, writes an f-string's
+  format spec with an empty piece more than 3.12.12, so the lock failed
+  `ems data lock --check` on the 3.12 runner and 0.8.2 was not released.
+  The keys now count the code's text as it is, comments included, which
+  no Python reads differently; only the CLI's part of the map steps is
+  found by the parser, its lines then taken as they are.
+
 ## 0.8.2 — 2026-10-29
 
 - **The same data keys on every Python.** The keys counted the code by
