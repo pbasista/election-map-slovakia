@@ -741,7 +741,10 @@ def _point_votes(
     )
     if keep_all:
         for u in sorted(set(units.tolist()) - set(chosen.tolist())):
-            chosen[max(votes, key=lambda k: (votes[k][u], -k))] = u
+            # Chosen apart from the assignment: as its index, ty would take
+            # the points for numpy's SupportsIndex, not the ints they are.
+            point = max(votes, key=lambda k: (votes[k][u], -k))
+            chosen[point] = u
     return keys, chosen, homes
 
 

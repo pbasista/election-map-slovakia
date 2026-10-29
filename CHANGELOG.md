@@ -4,6 +4,14 @@ Notable changes, newest first. The version is set in
 `src/election_map_slovakia/__init__.py`; tagging `vX.Y.Z` builds and deploys
 it (see [docs/deploy.md](docs/deploy.md)).
 
+## 0.8.1 — 2026-10-29
+
+- **The checks pass on Python 3.11.** With Python 3.11's numpy, ty took
+  the address points of a unit kept on the map (`geo.py`) for numpy's
+  `SupportsIndex`, so the 0.8.0 commit failed the Python 3.11 checks and
+  0.8.0 was not released; 0.8.1 is that release with the point chosen
+  before the assignment. The map is the same.
+
 ## 0.8.0 — 2026-10-29
 
 - **Party logos of each election's own time.**
