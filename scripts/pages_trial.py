@@ -33,7 +33,7 @@ import urllib.request
 from http import HTTPStatus
 from pathlib import Path
 
-from election_map_slovakia import pages
+from election_map_slovakia import config, fetch, pages
 
 # A new project's addresses may take a while to resolve.
 PATIENCE = 180
@@ -61,9 +61,13 @@ def deployment(directory: Path, content: str, key: str, project: str) -> None:
 
 def get(url: str, headers: dict[str, str] | None = None) -> tuple[int, dict, bytes]:
     """Return status, headers and body of a GET of *url*, waiting for DNS."""
+    # *.pages.dev turns Python's own User-Agent away (403, error 1010).
+    agent = fetch.user_agent(config.load().inputs.contact)
     deadline = time.monotonic() + PATIENCE
     while True:
-        request = urllib.request.Request(url, headers=headers or {})
+        request = urllib.request.Request(
+            url, headers={"User-Agent": agent} | (headers or {})
+        )
         try:
             with urllib.request.urlopen(request, timeout=30) as response:
                 return response.status, dict(response.headers), response.read()

@@ -34,7 +34,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from election_map_slovakia import build, bundle, lock
+from election_map_slovakia import build, bundle, fetch, lock
 from election_map_slovakia.config import Config
 
 API = "https://api.cloudflare.com/client/v4"
@@ -124,6 +124,8 @@ def locations(cfg: Config, keys: lock.Keys) -> build.Locations:
     domains (``site.toml``). Raises :class:`PagesError` where a bundle of
     its key is not deployed.
     """
+    # *.pages.dev turns Python's own User-Agent away (403, error 1010).
+    agent = {"User-Agent": fetch.user_agent(cfg.inputs.contact)}
     located: dict[str, dict[str, build.Located]] = {
         bundle.MAP_PART: {},
         bundle.DATA_PART: {},
@@ -135,7 +137,7 @@ def locations(cfg: Config, keys: lock.Keys) -> build.Locations:
                 f"no deployment of {project} carries the key {key}; build and"
                 " deploy the data first (`ems make`, `ems data deploy`)"
             )
-        manifest = _read(f"{deployment.url}/{bundle.MANIFEST}")
+        manifest = _read(f"{deployment.url}/{bundle.MANIFEST}", agent)
         if manifest.get("key") != key:
             raise PagesError(
                 f"{deployment.url}/{bundle.MANIFEST}: key {manifest.get('key')},"

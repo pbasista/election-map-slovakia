@@ -4,6 +4,14 @@ Notable changes, newest first. The version is set in
 `src/election_map_slovakia/__init__.py`; tagging `vX.Y.Z` builds and deploys
 it (see [docs/deploy.md](docs/deploy.md)).
 
+## 0.8.5 — 2026-10-30
+
+- **The app reads the deployed manifests with the project's User-Agent.**
+  `*.pages.dev` turns Python's own away (403, Cloudflare's error 1010),
+  so `ems build --deployed` stopped at the first manifest and 0.8.4's
+  release deployed the data parts but not the app.
+  `scripts/pages_trial.py` sends it as well.
+
 ## 0.8.4 — 2026-10-29
 
 - **The release reads the secrets of the `production` environment.**
