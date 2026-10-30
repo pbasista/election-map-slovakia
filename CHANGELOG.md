@@ -4,6 +4,14 @@ Notable changes, newest first. The version is set in
 `src/election_map_slovakia/__init__.py`; tagging `vX.Y.Z` builds and deploys
 it (see [docs/deploy.md](docs/deploy.md)).
 
+## 0.8.6 — 2026-10-30
+
+- **A release without data to deploy is a GitHub release as well.**
+  The job that creates it had no condition of its own, so it ran only
+  where every job before it had succeeded; the data job is skipped where
+  no data part is stale, so 0.8.5 deployed the app and created no GitHub
+  release. It now runs whenever the app is deployed.
+
 ## 0.8.5 — 2026-10-30
 
 - **The app reads the deployed manifests with the project's User-Agent.**

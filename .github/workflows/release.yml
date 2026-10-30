@@ -193,6 +193,9 @@ jobs:
 
   github-release:
     needs: app
+    # Without its own condition a job runs only where every job before it,
+    # not just the app, succeeded, and so never where no data part was stale.
+    if: always() && needs.app.result == 'success'
     runs-on: ubuntu-latest
     permissions:
       contents: write
