@@ -1,0 +1,28 @@
+# Okrsky of Divinka, transcribed by an AI agent in job okrsok-rules-5192 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Divinka
+#   okrsok 2: Lalinok
+obec = "517496"
+name = "Divinka"
+okrsky_date = 2024-02-27
+
+[[document]]
+url = "https://www.divinka-lalinok.sk/download_file_f.php?id=2005816"
+sha256 = "e4421411296a0dd545f373f8cc18d528888657b2e374909264010de0aa8baf1d"
+title = "Utvorenie volebných okrskov, určenie volebných miestností a vymenovanie zapisovateliek (EP 2024), č. 314/2024"
+
+[[document]]
+url = "https://www.divinka-lalinok.sk/volby-do-europskeho-parlamentu-2024.html"
+sha256 = "10f54bf77b0785e3f54714dc24551bb55466f4d2b27f76813b6a3d10239a2059"
+title = "Voting page listing the document"
+
+[okrsok.1]
+rules = [
+  {part = "Divinka"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lalinok"},
+]

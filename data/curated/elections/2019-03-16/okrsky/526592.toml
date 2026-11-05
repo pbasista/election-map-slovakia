@@ -1,0 +1,46 @@
+# Okrsky of Hrabušice, transcribed by an AI agent in job okrsok-rules-1458 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre oprávnených občanov bývajúcich na uliciach: Bernolákova, Jarná, Letná, Majer, Podlesok, Slovenského raja, Zimná a oprávnených voličov prihlásených na Obec Hrabušice
+#   okrsok 2: pre oprávnených občanov bývajúcich na uliciach: E. Makovického, Gaštanová, Hlavná, Píla, Hviezdoslavova, Lúčna, Nová, Obchodná, Partizánska, Tomášovská, Zelená.
+obec = "526592"
+name = "Hrabušice"
+okrsky_date = 2019-01-25
+okrsky_fill = "nearest"
+okrsky_note = "'oprávnených voličov prihlásených na Obec Hrabušice' (okrsok 1) are voters registered without an address. The register streets Hágy and Sokol, which the document does not name, and the addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.hrabusice.sk/e_download.php?file=data/uredni_deska/obsah109_1.pdf&original=Okrsky%5B209%5D.pdf"
+sha256 = "77370a5d2dee20dbfdf976eed33a19daeee1ce1fdb0a0d8f578abf0261ff1c0a"
+title = "Určenie okrskov a volebnej miestnosti pre Voľby prezidenta SR v roku 2019 (V Hrabušiciach, 25.01.2019)"
+
+[[document]]
+url = "https://www.hrabusice.sk/obec/zverejnovanie/uradna-tabula/oznamenie-o-konani-volieb-na-prezidenta-sr-114.html"
+sha256 = "3d9aea6452558bb63a6f4bc07c87dfdb767e97bed871774c326899f36157de85"
+title = "Úradná tabuľa: Oznamenie o konaní volieb na prezidenta SR (vyvesené 19. 1. 2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Bernoláková", written = "Bernolákova", note = "the register spells the name Bernoláková; same street"},
+  {street = "Jarná"},
+  {street = "Letná"},
+  {street = "Majer"},
+  {street = "Podlesok"},
+  {street = "Slov. Raja", written = "Slovenského raja", note = "the register abbreviates Slovenského raja as 'Slov. Raja'"},
+  {street = "Zimná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "E.Makovického", written = "E. Makovického"},
+  {street = "Gaštanová"},
+  {street = "Hlavná"},
+  {street = "Píla"},
+  {street = "Hviezdoslavova"},
+  {street = "Lúčna"},
+  {street = "Nová"},
+  {street = "Obchodná"},
+  {street = "Partizánska"},
+  {street = "Tomášovská"},
+  {street = "Zelená"},
+]

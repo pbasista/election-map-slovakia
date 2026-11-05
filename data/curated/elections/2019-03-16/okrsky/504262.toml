@@ -1,0 +1,67 @@
+# Okrsky of Brezová pod Bradlom, transcribed by an AI agent in job okrsok-rules-1177 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Baranecká, Bradlianska, Budovateľská, Bukovská, Cesta SNP, Čierne blato, Dolina, Dolné lúky, Dolný Štverník, Družstevná, Garbiarska, Hoštáky, J.M.Hurbana, Janka Kráľa, Minárčiných ulica, Myjavská, Námestie 7.apríla, Námestie gen.M.R.Štefánika, Odbojárov, Partizánska, Piešťanská, Pod Vŕškami, Prielohy, Staničná, Športová, Štúrova, Ulica Danov vrch, Ulica Prostrený Štverník, Ulica Horný Štverník, Ulica Hurbanova dolina, Ulica Jána Závodného, Ulica U Držkovcov, Ulica U Dzurákovcov, Ulica U Kravárikovcov, Ulica U Vaškovcov, Ulica Žriedlova dolina, Vajanského, Záhumnie, bez adresy, cudzinci. 2146 voličov
+#   okrsok 2: Dr.Št.Osuského, Horný rad, Sídlisko Dušana Jurkoviča, V jarku. 2156 voličov
+obec = "504262"
+name = "Brezová pod Bradlom"
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky are published as text on the elections page itself. 'bez adresy, cudzinci' (okrsok 1) are voters registered without an address and foreigners. The register's addresses without a street (súpisné čísla only) are placed by fill_nearest. Danov Vrch (2 addresses), which the page does not name, is inferred to okrsok 1 with Ulica Danov vrch."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The okrsky list stands on the city's page 'Voľby prezidenta SR 2019', with the decision calling the presidential election of 16 March 2019 and its candidates; it states no date. The Internet Archive's first capture (2019-04-03) is after the vote."
+
+[[document]]
+url = "https://web.archive.org/web/20190403203054/https://www.brezova.sk/stlpec/volby-prezidenta-sr-2019/"
+sha256 = "745330c1997cf246c8a24d37a9e324025c6359c1a5f0e862bdc1a0cd96a69a0e"
+title = "Voľby prezidenta SR 2019 (elections page listing the two okrsky)"
+
+[okrsok.1]
+rules = [
+  {street = "Baranecká"},
+  {street = "Bradlianska"},
+  {street = "Budovateľská"},
+  {street = "Bukovská cesta", written = "Bukovská", note = "same street: the register's Bukovská cesta; the document leaves out 'cesta'"},
+  {street = "Cesta SNP"},
+  {street = "Čierne blato"},
+  {street = "Dolina"},
+  {street = "Dolné lúky"},
+  {street = "Dolný Štverník"},
+  {street = "Družstevná"},
+  {street = "Garbiarska"},
+  {street = "Hoštáky"},
+  {street = "J.M.Hurbana"},
+  {street = "Janka Kráľa"},
+  {street = "Minárčiných ulica"},
+  {street = "Myjavská"},
+  {street = "Námestie 7.apríla"},
+  {street = "Námestie gen.M.R.Štefánika"},
+  {street = "Odbojárov"},
+  {street = "Partizánska"},
+  {street = "Piešťanská"},
+  {street = "Pod Vŕškami"},
+  {street = "Prielohy"},
+  {street = "Staničná"},
+  {street = "Športová"},
+  {street = "Štúrova"},
+  {street = "Ulica Danov vrch"},
+  {street = "Ulica Prostredný Štverník", written = "Ulica Prostrený Štverník", note = "same street: a typo for Prostredný (the register has no other Štverník street of that name)"},
+  {street = "Ulica Horný Štverník"},
+  {street = "Ulica Hurbanova dolina"},
+  {street = "Ulica Jána Závodného"},
+  {street = "Ulica u Držkovcov", written = "Ulica U Držkovcov", note = "same street: the document capitalises the preposition 'u'"},
+  {street = "Ulica u Dzurákovcov", written = "Ulica U Dzurákovcov", note = "same street: the document capitalises the preposition 'u'"},
+  {street = "Ulica u Kravárikovcov", written = "Ulica U Kravárikovcov", note = "same street: the document capitalises the preposition 'u'"},
+  {street = "Ulica u Vaškovcov", written = "Ulica U Vaškovcov", note = "same street: the document capitalises the preposition 'u'"},
+  {street = "Ulica Žriedlová dolina", written = "Ulica Žriedlova dolina", note = "same street: the document drops the accent of Žriedlová"},
+  {street = "Vajanského"},
+  {street = "Záhumnie"},
+  {street = "Danov Vrch", note = "register street the document does not name; the same locality as Ulica Danov vrch, which the document puts in okrsok 1", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dr.Št.Osuského"},
+  {street = "Horný rad"},
+  {street = "Sídlisko Dušana Jurkoviča"},
+  {street = "V jarku"},
+]

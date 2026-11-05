@@ -1,0 +1,35 @@
+# Okrsky of Svederník, transcribed by an AI agent in job okrsok-rules-867 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Svederník
+#   okrsok 2: Zarieč - Keblov
+#   okrsok 3: Marček
+obec = "518000"
+name = "Svederník"
+okrsky_date = 2018-09-07
+okrsky_note = "Scanned determination read from the rendered page: okrsky by part of the obec (voliči s trvalým pobytom z časti obce)."
+
+[[document]]
+url = "https://www.svedernik.info/pages/attachments/rcrSUAJJUyRz4DbfVLaoS3.pdf"
+sha256 = "64d952558afa054255c391d9753b4b063c8c27c8fc8271d2bde5ab4076dc334d"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do orgánov samosprávy obcí dňa 10.11.2018 (Vo Svederníku, dňa 07.09.2018)"
+
+[[document]]
+url = "https://www.svedernik.info/pages/volby-do-organov-samospravy-obci"
+sha256 = "1b4c9ca104930b78402affc766bc9ac27492fa37e20bc1283b7084d2d9a9c14f"
+title = "Voľby do orgánov samosprávy obcí (2018), page linking the determination, zverejnené 7. 9. 2018"
+
+[okrsok.1]
+rules = [
+  {part = "Svederník"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Zárieč-Keblov"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Marček"},
+]

@@ -1,0 +1,52 @@
+# Okrsky of Markušovce, transcribed by an AI agent in job okrsok-rules-5080 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Jareček
+#   okrsok 2: Banícka, Brezová, Krátka, Matejovská cesta, Pod horou, Pod Stožkami, Poľná, Slovenská, Sv.J.Nepomuckého — or.č.50 — 125, Za tehelňou, Železničná, rodinný dom súp. č. 668
+#   okrsok 3: Brunské, Bystrá, Hornádska, Komenského, Michalská, Odorínska cesta, Podhradová, SNP, Sv. J. Nepomuckého — or.č. 1 - 49, Školská; voliči s trvalým pobytom Markušovce (bez ulice, súpisného a orientačného čísla)
+obec = "543331"
+name = "Markušovce"
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's undated decision for this vote. Voters registered without an address are in okrsok 3 (no rule). Houses without a street other than súp. č. 668, and Sv. J. Nepomuckého numbers above 125, take the okrsok of the nearest address (fill_nearest)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names the vote ('voľby do Európskeho parlamentu konané 8.júna 2024'); it states no date of its own."
+
+[[document]]
+url = "https://www.markusovce.sk/data/page/markusovce.sk/24751/utvorenie-volebnych-okrskov-pre-volby-do-europskeho-parlamentu.pdf"
+sha256 = "1c39870d1b446fc605a831b7f77063118e5cf2b2e65eb2c4edc14dff7f030548"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu konané 8. júna 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Jareček"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Banícka"},
+  {street = "Brezová"},
+  {street = "Krátka"},
+  {street = "Matejovská cesta"},
+  {street = "Pod Horou", written = "Pod horou"},
+  {street = "Pod Stožkami"},
+  {street = "Poľná"},
+  {street = "Slovenská"},
+  {street = "Sv.J.Nepomuckého", numbers = "50-125", written = "Sv. J. Nepomuckého"},
+  {street = "Za Tehelňou", written = "Za tehelňou"},
+  {street = "Železničná"},
+  {part = "Markušovce", numbers = "668", note = "'rodinný dom súp. č. 668', a house without a street."},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Brunské"},
+  {street = "Bystrá"},
+  {street = "Hornádska"},
+  {street = "Komenského"},
+  {street = "Michalská"},
+  {street = "Odorínska cesta"},
+  {street = "Podhradová"},
+  {street = "SNP"},
+  {street = "Sv.J.Nepomuckého", numbers = "1-49", written = "Sv. J. Nepomuckého"},
+  {street = "Školská"},
+]

@@ -12,11 +12,12 @@
  * the active option with aria-activedescendant; focus stays in the input.
  */
 
-import { html, useEffect, useRef, useState } from '../vendor/preact-htm.module.js';
-import { candidacyLinks, contestLabel, contestOf, dataIndex, findPersons, searchKey } from './data.js';
+import { html, useEffect, useLayoutEffect, useRef, useState } from '../vendor/preact-htm.module.js';
+import { candidacyLinks, contestLabel, dataIndex, findPersons, listParty, searchKey } from './data.js';
 import { addressFile, fetchJSON } from './files.js';
-import { election, elections, formatDate, lang, t } from './i18n.js';
-import { CheckIcon, CloseIcon, Logo, SearchIcon } from './icons.js';
+import { election, electionName, electionParts, elections, formatDate, lang, t } from './i18n.js';
+import { CalendarIcon, CheckIcon, CloseIcon, ExpandIcon, ListIcon, Logo, SearchIcon } from './icons.js';
+import { contestOf, electionLabel, isList, kindIcon, kindStyle, officeOf } from './kinds.js';
 
 const LIMITS = { obec: 5, street: 8, part: 4, person: 6, number: 40 };
 // With at most this many streets, parts and obce matching a query with a
@@ -164,19 +165,31 @@ async function directHouses(ix, q, places, obce) {
   return lists.flat().slice(0, LIMITS.number);
 }
 
+/* What a search option says of the contest of candidacy *id*: its name; of
+ * a party's list, the party-list ballot's and the party's short form. */
+async function candidacyDetail(id, index) {
+  const contest = contestOf(id);
+  if (!isList(contest)) return contestLabel(contest, index);
+  const party = await listParty(contest, index);
+  return [contestLabel(officeOf(contest), index), party?.short].filter(Boolean).join(' · ');
+}
+
 /* The candidates whose names match search key *name*. */
 async function personOptions(name) {
   const [persons, index] = await Promise.all([findPersons(name, LIMITS.person), dataIndex()]);
-  return persons.map((p) => {
-    const [first] = p.candidacies;
-    const more = p.candidacies.length > 1 ? ` +${p.candidacies.length - 1}` : '';
-    return {
-      type: 'person',
-      candidacy: first,
-      label: t('search.person', { name: p.name, age: p.age }),
-      detail: `${contestLabel(contestOf(first), index)}${more}`,
-    };
-  });
+  return Promise.all(
+    persons.map(async (p) => {
+      const [first] = p.candidacies;
+      const more = p.candidacies.length > 1 ? ` +${p.candidacies.length - 1}` : '';
+      return {
+        type: 'person',
+        candidacy: first,
+        // The age where the lists give it (the by-elections of 2019–2022 do not).
+        label: p.age === null ? p.name : t('search.person', { name: p.name, age: p.age }),
+        detail: `${await candidacyDetail(first, index)}${more}`,
+      };
+    }),
+  );
 }
 
 /* The options for the text *raw*: within *scope* (the street or part the
@@ -255,16 +268,173 @@ const electionUrl = (slug, linked) => `/${lang}/${slug}/${carriedHash(location.h
 // a group, newest first, as km-config lists them.
 const kinds = [...new Set(elections.map((e) => e.kind))];
 
-/* The search card: the site's logo and title (*children*) with a search
- * button, which turns the card into the search box in place; `/`, Ctrl+K
- * and ⌘K open it from anywhere. The box stays while it holds text; empty and
- * left, or on Esc or its close button, it turns back into the title. Where
- * the site has several elections, the logo is a button that turns the card
- * into the list of them likewise, links to their pages.
+// Which groups of the list are unfolded, by kind: the visitor's choice,
+// kept across visits and elections, else all but the by-elections, which
+// are many and of a few places each.
+const FOLDS_KEY = 'election-map-slovakia.elections';
+
+function storedFolds() {
+  let stored = null;
+  try {
+    stored = JSON.parse(localStorage.getItem(FOLDS_KEY));
+  } catch {
+    // Storage disabled or its value not ours: the defaults it is.
+  }
+  return Object.fromEntries(
+    kinds.map((kind) => [kind, typeof stored?.[kind] === 'boolean' ? stored[kind] : kind !== 'by-election']),
+  );
+}
+
+function storeFolds(unfolded) {
+  try {
+    localStorage.setItem(FOLDS_KEY, JSON.stringify(unfolded));
+  } catch {
+    // Storage disabled: the choice holds for this visit.
+  }
+}
+
+// How the list shows the elections: a timeline of them all, newest first,
+// or groups by kind; the visitor's choice, kept across visits and
+// elections, else the timeline.
+const VIEW_KEY = 'election-map-slovakia.elections-view';
+const VIEWS = ['timeline', 'kinds'];
+const VIEW_ICON = { timeline: CalendarIcon, kinds: ListIcon };
+
+function storedView() {
+  try {
+    const stored = localStorage.getItem(VIEW_KEY);
+    if (VIEWS.includes(stored)) return stored;
+  } catch {
+    // Storage disabled: the default it is.
+  }
+  return 'timeline';
+}
+
+function storeView(view) {
+  try {
+    localStorage.setItem(VIEW_KEY, view);
+  } catch {
+    // Storage disabled: the choice holds for this visit.
+  }
+}
+
+// What arrow keys move through in the list: the groups' headings and the
+// elections shown (a folded group hides its entries, `hidden`).
+const LIST_STOPS = '.elections-kind button, li:not([hidden]) a';
+
+/* An election of the list: the link to its page, in its kind's colour
+ * (`kindStyle`), the *children* its text, checked where it is the page's
+ * own election, which `onCurrent` closes the list for instead. *entry* is
+ * the election's km-config entry, *linked* the open candidate's candidacies
+ * (`carriedHash`). A screen reader hears the whole name (`electionName`),
+ * whatever the text shows. */
+function ElectionLink({ entry: { day, slug, label }, linked, onCurrent, children }) {
+  const current = day === election;
+  return html`
+    <a
+      href=${electionUrl(slug, linked)}
+      style=${kindStyle(label)}
+      aria-current=${current ? 'page' : undefined}
+      aria-label=${electionName(day)}
+      onClick=${(e) => {
+        if (current) {
+          e.preventDefault();
+          onCurrent();
+        } else {
+          // The map may have moved since the list opened: the view and
+          // place go along as they are now.
+          e.currentTarget.href = electionUrl(slug, linked);
+        }
+      }}
+    >
+      ${children}
+      ${current ? html`<${CheckIcon} />` : null}
+    </a>
+  `;
+}
+
+/* The elections of *kind* under its heading (`elections.kind.<kind>`, with
+ * the kind's icon), the button that folds and unfolds them (`onToggle`;
+ * *open*). Each entry is its date, written out; a regular
+ * election of one half (before 2022) names the half under the date. A
+ * folded group still shows the page's own election, so that the list
+ * always says where the visitor is. */
+function KindGroup({ kind, open, linked, onToggle, onCurrent }) {
+  const entries = elections.filter((e) => e.kind === kind);
+  const holdsCurrent = entries.some((e) => e.day === election);
+  return html`
+    <h3 class="elections-kind" id=${`km-elections-${kind}`}>
+      <button
+        type="button"
+        style=${kindStyle(kind)}
+        aria-expanded=${open}
+        aria-controls=${`km-elections-${kind}-list`}
+        onClick=${onToggle}
+      >
+        <span class="kind-mark"><${kindIcon(kind)} /></span>
+        <span class="grow">${t(`elections.kind.${kind}`)}</span>
+        <${ExpandIcon} />
+      </button>
+    </h3>
+    <ul id=${`km-elections-${kind}-list`} aria-labelledby=${`km-elections-${kind}`} hidden=${!open && !holdsCurrent}>
+      ${entries.map((entry) => {
+        const part = entry.label === kind ? null : t(`elections.part.${entry.label}`);
+        return html`
+          <li key=${entry.slug} hidden=${!open && entry.day !== election}>
+            <${ElectionLink} entry=${entry} linked=${linked} onCurrent=${onCurrent}>
+              <span class="election-text">
+                <span class="election-day">${formatDate(entry.day)}</span>
+                ${part ? html`<span class="election-part">${part}</span>` : null}
+              </span>
+            <//>
+          </li>
+        `;
+      })}
+    </ul>
+  `;
+}
+
+// The tagline's type size at most (app.css `.brand-tagline`, 12 px) and at
+// least, in px: `fitTagline` sets it in between, in steps of TAGLINE_STEP.
+const TAGLINE_MIN = 10;
+const TAGLINE_STEP = 0.25;
+
+/* Sets *element*'s type small enough for its text to fit on its one line
+ * (app.css `.brand-tagline`), from its stylesheet's size down to
+ * TAGLINE_MIN. What does not fit even then (the longest names on a phone,
+ * where the card cannot grow) takes two lines of that size (`.wraps`)
+ * rather than lose its end. Nothing while it is hidden. */
+function fitTagline(element) {
+  element.style.fontSize = '';
+  element.classList.remove('wraps');
+  if (!element.clientWidth) return;
+  let size = Number.parseFloat(getComputedStyle(element).fontSize);
+  while (element.scrollWidth > element.clientWidth && size > TAGLINE_MIN) {
+    size = Math.max(TAGLINE_MIN, size - TAGLINE_STEP);
+    element.style.fontSize = `${size}px`;
+  }
+  if (element.scrollWidth > element.clientWidth) element.classList.add('wraps');
+}
+
+/* The search card: its title is the site's logo, a map pin, beside two
+ * lines, the site's name over the tagline, the page's election's name and
+ * its date written out (`electionParts`, as everywhere else; the date set
+ * apart from the name, app.css `.tagline-name`), and a search button at
+ * its end, which turns the card into the search box in place; `/`, Ctrl+K
+ * and ⌘K open it from anywhere. The box stays while it holds text; empty
+ * and left, or on Esc or its close button, it turns back into the title.
+ * The tagline keeps to one line: the card grows wider than the pane where
+ * the screen has room, and where it has not, its type shrinks to fit
+ * (`fitTagline`). Where the site has several elections, the
+ * pin is the button that turns the card into the list of them likewise,
+ * the kind's icon in a badge at its corner; its cover takes the name too,
+ * so that the title's left part chooses the election and its right end
+ * searches (app.css `.election-open`). The list links to their pages: a
+ * timeline of them or groups by kind (`ElectionLink`, `KindGroup`).
  *
  * `onPlace(place, view)` selects a place (see map.js `select` for *view*);
  * `onCandidate(id)` opens a candidate. */
-export function Search({ onPlace, onCandidate, children }) {
+export function Search({ onPlace, onCandidate }) {
   const [shown, setShown] = useState(false);
   const [choosing, setChoosing] = useState(false);
   const [query, setQuery] = useState('');
@@ -279,11 +449,26 @@ export function Search({ onPlace, onCandidate, children }) {
   const opener = useRef(null);
   const refocus = useRef(false);
   const chooser = useRef(null);
+  const brand = useRef(null);
+  const tagline = useRef(null);
   const list = useRef(null);
   const rechoose = useRef(false);
   // The open candidate and their candidacies in the other elections, which
   // the links to those carry (`carriedHash`).
   const [linked, setLinked] = useState({ c: null, links: {} });
+  const [unfolded, setUnfolded] = useState(storedFolds);
+  const [view, setView] = useState(storedView);
+
+  function toggleFold(kind) {
+    const next = { ...unfolded, [kind]: !unfolded[kind] };
+    setUnfolded(next);
+    storeFolds(next);
+  }
+
+  function chooseView(next) {
+    setView(next);
+    storeView(next);
+  }
 
   function show() {
     // Shown and focused right here rather than after the re-render: phones
@@ -313,16 +498,18 @@ export function Search({ onPlace, onCandidate, children }) {
     opener.current.focus();
   }, [shown]);
 
-  /* Back from the elections to the title; with *focusLogo*, focus goes to
-   * the logo's button rather than being lost with the list. */
-  function stopChoosing(focusLogo) {
-    rechoose.current = focusLogo;
+  /* Back from the elections to the title; with *focusChooser*, focus goes
+   * to the button that opened them rather than being lost with the list. */
+  function stopChoosing(focusChooser) {
+    rechoose.current = focusChooser;
     setChoosing(false);
   }
 
   useEffect(() => {
     if (choosing) {
-      list.current.querySelector('a').focus();
+      // The page's own election, shown in a folded group too, scrolled into
+      // view if the list is long.
+      (list.current.querySelector('a[aria-current]') ?? list.current.querySelector(LIST_STOPS)).focus();
       // A tap or click anywhere else puts the list away, as it does the box.
       const away = (e) => {
         if (!list.current.contains(e.target)) stopChoosing(false);
@@ -356,11 +543,11 @@ export function Search({ onPlace, onCandidate, children }) {
       return;
     }
     if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
-    const links = [...list.current.querySelectorAll('a')];
-    const i = links.indexOf(document.activeElement);
+    const stops = [...list.current.querySelectorAll(LIST_STOPS)];
+    const i = stops.indexOf(document.activeElement);
     if (i < 0) return;
     e.preventDefault();
-    links[(i + (e.key === 'ArrowDown' ? 1 : -1) + links.length) % links.length].focus();
+    stops[(i + (e.key === 'ArrowDown' ? 1 : -1) + stops.length) % stops.length].focus();
   }
 
   useEffect(() => {
@@ -464,6 +651,20 @@ export function Search({ onPlace, onCandidate, children }) {
     if (active >= 0) document.getElementById(`km-opt-${active}`)?.scrollIntoView({ block: 'nearest' });
   }, [active]);
 
+  // Before paint, so that the tagline never shows cut; again whenever the
+  // card's width changes (the window, the title shown again after the
+  // search or the list, the web font come).
+  useLayoutEffect(() => {
+    const fit = () => fitTagline(tagline.current);
+    fit();
+    const resize = new ResizeObserver(fit);
+    resize.observe(brand.current);
+    document.fonts?.ready.then(fit);
+    return () => resize.disconnect();
+  }, []);
+
+  const fullName = electionName(election);
+  const KindIcon = kindIcon(electionLabel);
   return html`
     <div class="title" hidden=${shown || choosing}>
       ${
@@ -473,16 +674,22 @@ export function Search({ onPlace, onCandidate, children }) {
               class="election-open"
               ref=${chooser}
               aria-label=${t('elections.open')}
-              title=${t('elections.open')}
+              title=${`${t('elections.open')}\n${fullName}`}
               aria-expanded=${choosing}
               aria-controls="km-elections"
               onClick=${() => setChoosing(true)}
             >
               <${Logo} />
+              <span class="election-badge" style=${kindStyle(electionLabel)}><${KindIcon} /></span>
             </button>`
           : html`<${Logo} />`
       }
-      <h1 class="brand">${children}</h1>
+      <h1 class="brand" ref=${brand}>
+        <span class="brand-name">${t('app.name')}</span>
+        <span class="brand-tagline" ref=${tagline}>
+          ${electionParts(election).map(([part, text]) => (part ? html`<span class=${`tagline-${part}`}>${text}</span>` : text))}
+        </span>
+      </h1>
       <button
         type="button"
         class="search-open"
@@ -500,54 +707,66 @@ export function Search({ onPlace, onCandidate, children }) {
     ${
       elections.length > 1
         ? html`<nav class="elections" id="km-elections" ref=${list} hidden=${!choosing} aria-label=${t('elections.label')} onKeyDown=${onListKey}>
-            ${kinds.map(
-              (kind) => html`
-                <p class="elections-kind" id=${`km-elections-${kind}`} key=${`${kind} head`}>${t(`elections.kind.${kind}`)}</p>
-                <ul aria-labelledby=${`km-elections-${kind}`} key=${kind}>
-                  ${elections
-                    .filter((e) => e.kind === kind)
-                    .map(({ day, slug }) => {
-                      const current = day === election;
-                      // Its kind heads the group; each entry is its year
-                      // and day, one short line, and says it all only to a
-                      // screen reader.
-                      return html`
-                        <li key=${slug}>
-                          <a
-                            href=${electionUrl(slug, linked)}
-                            aria-current=${current ? 'page' : undefined}
-                            aria-label=${t('elections.item', { kind: t(`elections.kind.${kind}`), date: formatDate(day) })}
-                            onClick=${(e) => {
-                              if (current) {
-                                e.preventDefault();
-                                stopChoosing(true);
-                              } else {
-                                // The map may have moved since the list
-                                // opened: the view and place go along as
-                                // they are now.
-                                e.currentTarget.href = electionUrl(slug, linked);
-                              }
-                            }}
-                          >
-                            <span class="election-year">${day.slice(0, 4)}</span>
-                            <span class="election-day">${formatDate(day, false)}</span>
-                            ${current ? html`<${CheckIcon} />` : null}
-                          </a>
-                        </li>
-                      `;
-                    })}
-                </ul>
-              `,
-            )}
-            <button
-              type="button"
-              class="search-close"
-              aria-label=${t('elections.close')}
-              title=${t('elections.close')}
-              onClick=${() => stopChoosing(true)}
-            >
-              <${CloseIcon} />
-            </button>
+            <div class="elections-head">
+              <h2 class="elections-title">${t('elections.label')}</h2>
+              <div class="elections-views" role="group" aria-label=${t('elections.view')}>
+                ${VIEWS.map(
+                  (which) => html`
+                    <button
+                      type="button"
+                      key=${which}
+                      aria-pressed=${view === which ? 'true' : 'false'}
+                      aria-label=${t(`elections.view.${which}`)}
+                      title=${t(`elections.view.${which}`)}
+                      onClick=${() => chooseView(which)}
+                    >
+                      <${VIEW_ICON[which]} />
+                    </button>
+                  `,
+                )}
+              </div>
+              <button
+                type="button"
+                class="search-close"
+                aria-label=${t('elections.close')}
+                title=${t('elections.close')}
+                onClick=${() => stopChoosing(true)}
+              >
+                <${CloseIcon} />
+              </button>
+            </div>
+            <div class="elections-scroll">
+              ${
+                view === 'timeline'
+                  ? html`<ol class="elections-timeline">
+                      ${elections.map(
+                        (entry) => html`
+                          <li key=${entry.slug}>
+                            <${ElectionLink} entry=${entry} linked=${linked} onCurrent=${() => stopChoosing(true)}>
+                              <span class="kind-mark"><${kindIcon(entry.label)} /></span>
+                              <span class="election-text">
+                                <span class="election-day">${formatDate(entry.day)}</span>
+                                <span class="election-name">${t(`elections.name.${entry.label}`)}</span>
+                              </span>
+                            <//>
+                          </li>
+                        `,
+                      )}
+                    </ol>`
+                  : kinds.map(
+                      (kind) => html`
+                        <${KindGroup}
+                          key=${kind}
+                          kind=${kind}
+                          open=${unfolded[kind]}
+                          linked=${linked}
+                          onToggle=${() => toggleFold(kind)}
+                          onCurrent=${() => stopChoosing(true)}
+                        />
+                      `,
+                    )
+              }
+            </div>
           </nav>`
         : null
     }

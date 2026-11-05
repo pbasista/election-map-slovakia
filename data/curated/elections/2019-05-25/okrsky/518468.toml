@@ -1,0 +1,108 @@
+# Okrsky of Hriňová, transcribed by an AI agent in job okrsok-rules-1655 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Krivec, Medzikopec, Krnáčovci, zástavka Jaseňovo
+#   okrsok 2: Krivec: sídlisko Bystrô, ul. Vrchárska
+#   okrsok 3: Raticov Vrch, Krížne cesty
+#   okrsok 4: Blato, Zánemecká
+#   okrsok 5: Priehalina, Riečka, Pivnička
+#   okrsok 6: Slanec, Mangútovo, Štoliansko, Jaseňovo, ul. Pod Grapou, ul. J. Kráľa, Hutianska cesta, Jarabová
+#   okrsok 7: Horná Hriňová, Snohy, Biele Vody, Vrchslatina, Skalisko, ul. Horná, Vajanského, Tršovky, Strojárska, B. S. Timravy, Pod cintorínom, Potočná, Kpt. Nálepku, Pod Kalváriou, Ulica Gondova, Do Rakov, Pod priehradou, Ulica Skalisko
+#   okrsok 8: ul. Školská 1566, 1567, 1568, 1569, 1570, 1571, 1572, 1573, 3425
+#   okrsok 9: ul. Partizánska 1574, 1601, 1602, 1603, 1610, ul. Školská 1604, 1608, 1609, 2000, 2514
+#   okrsok 10: ul. Parková, Jarmočná, Partizánska okrem stavieb z obvodu č. 3, Lúčna, Sujovci, Paprčkovci, Lievajovci, Ľuptákovci, Murínka
+obec = "518468"
+name = "Hriňová"
+okrsky_date = 2019-02-22
+okrsky_fill = "nearest"
+okrsky_note = "Numbers of the bytové domy are súpisné. 'Jaseňovo' is the register part Jasenovo. Hamlets the document names that are neither register parts nor streets (Medzikopec, Krnáčovci, zástavka Jaseňovo, Skalisko, Jarabová, Sujovci, Paprčkovci, Lievajovci, Ľuptákovci) cannot be located by name: the houses without a street of part Hriňová (and the rest of part Krivec outside the areas below) take the okrsok of the nearest placed address (fill_nearest). The rest of Školská (family houses) is placed by location (inferred)."
+okrsky_supplemented = 2022-10-29
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The document names 'Krivec: sídlisko Bystrô' and the settlements 'Raticov Vrch, Krížne cesty', which the register keeps in part Krivec without names; their houses (part Krivec by súpisné číslo, and Hriňová 327, 1467) are copied from the okrsky of the elections of 2022-10-29 in this repository (okrsky 2 and 3), which name the same areas."
+
+[[document]]
+url = "https://www.hrinova.sk/e_download.php?file=data/editor/352sk_1.pdf&original=Okrsky.pdf"
+sha256 = "19ae58086ebff3edb6b021b057266c8c0f32f64ecef0a96d00491b6fd450e044"
+title = "Okrsky pre voľby do Európskeho parlamentu 25.5.2019 (22.2.2019)"
+
+[okrsok.1]
+rules = [
+  {part = "Krivec"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Vrchárska"},
+  {part = "Krivec", numbers = "161, 164, 165, 166, 167, 168, 169, 764, 765, 766, 767, 768, 769, 770, 771, 774, 775, 776, 777, 778, 779, 780, 781, 782, 783, 784, 785, 786, 787, 788, 789, 793, 794, 801, 802, 805, 806, 807, 810, 812, 813, 814, 815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828, 836, 840, 842, 883, 1355, 1626, 1627, 1642, 1663, 1673, 1674, 1695, 1697, 1725, 1730, 1860, 1861, 1882, 1883, 1915, 1916, 1939, 1962, 2019, 2020, 2063, 2068, 2075, 2205, 2420, 2439, 2440, 2449, 2477, 2503, 2508, 2522, 2552, 2571, 2572, 2575, 2602, 2656, 2690, 2799, 2845, 2880, 2881, 2893, 2922, 2937, 2971, 2981, 3013, 3014, 3043, 3060, 3069, 3114, 3147, 3155, 3165, 3297, 3306, 3329, 3331, 3403, 3408, 3435, 3443, 3468, 3469, 3501, 3502, 3503, 3509, 3518, 3545, 3548, 3570, 3583, 3584, 3585, 3597, 3608, 3611, 3624, 3636, 3644", note = "'Krivec: sídlisko Bystrô': the houses without a street of part Krivec inside the residential area around the blocks of flats 778-783 and 3297 by II. ZŠ Krivec 1355 (OpenStreetMap landuse=residential way 31887857, which also holds Vrchárska); the register has no name for it", supplemented = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Krivec", numbers = "189, 199, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 296, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398, 400, 401, 402, 403, 404, 405, 406, 407, 412, 1851, 1852, 1853, 1854, 1866, 1910, 1917, 1928, 1936, 1937, 1941, 2024, 2025, 2026, 2104, 2382, 2411, 2412, 2433, 2436, 2454, 2455, 2456, 2498, 2499, 2513, 2535, 2593, 2637, 2694, 2797, 2873, 2874, 2882, 2933, 3023, 3157, 3162, 3186, 3187, 3188, 3206, 3207, 3208, 3209, 3255, 3256, 3295, 3296, 3310, 3345, 3346, 3350, 3351, 3354, 3355, 3356, 3382, 3399, 3422, 3438, 3439, 3476, 3489, 3523, 3524, 3562, 3571, 3572, 3648, 3649, 3693, 3694, 3704", note = "'Raticov Vrch, Krížne cesty': settlements the register keeps in part Krivec; their houses are the clusters of register points (houses within 120 m of each other) centred within 400 m of the bus stops 'Hriňová, Raticov vrch' and 'Hriňová, Krížne cesty' (OpenStreetMap)", supplemented = true},
+  {part = "Hriňová", numbers = "327, 1467", note = "houses without a street of part Hriňová at Raticov Vrch / Krížne cesty (within 400 m of their bus stops)", supplemented = true},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Blato"},
+  {part = "Zánemecká"},
+]
+
+[okrsok.5]
+rules = [
+  {part = "Priehalina"},
+  {part = "Riečka"},
+  {part = "Pivnička"},
+]
+
+[okrsok.6]
+rules = [
+  {part = "Slanec"},
+  {part = "Mangútovo"},
+  {part = "Štoliansko"},
+  {part = "Jasenovo"},
+  {street = "Pod Grapou"},
+  {street = "J. Kráľa"},
+  {street = "Hutianska cesta"},
+]
+
+[okrsok.7]
+rules = [
+  {part = "Horná Hriňová"},
+  {part = "Snohy"},
+  {part = "Biele Vody"},
+  {part = "Vrchslatina"},
+  {street = "Horná"},
+  {street = "Vajanského"},
+  {street = "Tršovky"},
+  {street = "Strojárska"},
+  {street = "B.S.Timravy", written = "B. S. Timravy"},
+  {street = "Pod cintorínom"},
+  {street = "Potočná"},
+  {street = "Kpt. Nálepku"},
+  {street = "Pod Kalváriou"},
+  {street = "Ulica Gondova"},
+  {street = "Ulica Do Rakov", written = "Do Rakov"},
+  {street = "Ulica Pod priehradou", written = "Pod priehradou"},
+  {street = "Ulica Skalisko"},
+  {street = "Školská", note = "the document names Školská only by its bytové domy (súpisné čísla); its other houses (family houses) lie 30-140 m from Hutianska cesta and Kpt. Nálepku, the nearest streets outside the town-centre blocks, and go with the okrsok of Horná Hriňová / Kpt. Nálepku", inferred = true},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Školská", numbers = "1566-1573, 3425", by = "supisne"},
+]
+
+[okrsok.9]
+rules = [
+  {part = "Hriňová", numbers = "1574, 1601, 1602, 1603, 1604, 1608, 1609, 1610, 2000, 2514", note = "buildings named by súpisné číslo (Partizánska 1574, 1601-1603, 1609, 1610; Školská 1604, 1608, 2000, 2514) wherever they stand in part Hriňová"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Parková"},
+  {street = "Jarmočná"},
+  {street = "Partizánska"},
+  {street = "Lúčna"},
+  {street = "Murínka"},
+]

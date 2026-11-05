@@ -1,0 +1,46 @@
+# Okrsky of Jelšava, transcribed by an AI agent in job okrsok-rules-5706 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Námestie republiky, Námestie SNP, Muránska, Mníšanská, Tomášikova, Jesenského, Teplá Voda, Medzník, Obyvatelia bez adresy
+#   okrsok 2: Štefánikova, Armádna, 9. mája, Teplická, Železničná, Pri štadióne, Ševcovská, Kúpelná, Kejďák
+obec = "525791"
+name = "Jelšava"
+okrsky_fill = "nearest"
+okrsky_note = "The list of streets per okrsok for the referendum of 4 July 2026, linked on the city's page 'Referendum'; the same okrsky as the copied ones of the elections of 24 October 2026. 'Obyvatelia bez adresy' (okrsok 1) are voters registered without an address, not the register's houses without a street. Hrádok (3 addresses) is not named in the document: placed by fill_nearest, as are the houses without a street. The Internet Archive stayed offline throughout (web.archive.org refused connections or answered 'Temporarily Offline' on repeated tries with pauses), so no archived capture was checked."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document is undated; its heading names the referendum of 04. 07. 2026."
+
+[[document]]
+url = "https://www.jelsava.sk/download_file_f.php?id=2404984"
+sha256 = "e4407c6a563a8786c0ef2b1fc9d2b157848aa37ea28a7d7ef4f240b2eac672d2"
+title = "Rozdelenie ulíc do okrskov Referendum 04.07.2026"
+
+[[document]]
+url = "https://www.jelsava.sk/oznamy/referendum.html"
+sha256 = "b555a635711eb7e990aa55f27b786f30852f3a3319af2e78994e68bf06aabaa7"
+title = "Referendum"
+
+[okrsok.1]
+rules = [
+  {street = "Muránska"},
+  {street = "Námestie Republiky", written = "Námestie republiky"},
+  {street = "Námestie SNP"},
+  {street = "Tomášikova"},
+  {street = "Mníšanská"},
+  {street = "Jesenského"},
+  {street = "Teplá Voda"},
+  {street = "Medzník"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ševcovská"},
+  {street = "Štefánikova"},
+  {street = "Kúpelná"},
+  {street = "Teplická"},
+  {street = "Pri Štadióne", written = "Pri štadióne"},
+  {street = "Železničná"},
+  {street = "Armádna"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Kejďák"},
+]

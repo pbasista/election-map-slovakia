@@ -1,0 +1,145 @@
+# Okrsky of Detva, transcribed by an AI agent in job okrsok-rules-1634 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Piešť I.
+#   okrsok 2: Piešť II.
+#   okrsok 3: Skliarovo
+#   okrsok 4: Kostolná
+#   okrsok 5: Námestie SNP, Kukučínova, Orlova, B. Němcovej, Nová Ves, Sládkovičova, Partizánska, Chalupkova, Kamenná, Lúčna štvrť, Zapriechody, Kúpalisko, Cintorínska, Detva súpisné číslo 546, 548, 549, 587, 808, 1719, 3317, 3443;
+#   okrsok 6: Požiarnická, Jesenského, Kpt. Nálepku, Hviezdoslavova, J. Kráľa, Družstevná, Fučíkova, Hollého, Kollárova, P. Jilemnického, S. Stračinu, J. Thurzu, Ľ. Zeljenku, M. Benku, Jožka Rybára, Detva súpisné číslo 534, 537, 538, 539, 540, 544, 624,627, 628, 629, 630, 633, 635, 638, 639, 640, 642, 669, 695,704, 742, 760, 762, 774, 775, 776, 797, 798, 1148, 1626, 1633, 1685, 3120, 3229, 3291, 3293, 3340, 3254, 3410, 3437, 3446; (tzv. Chvostiná, Ježová, Bukovina, Studienec)
+#   okrsok 7: Námestie mieru
+#   okrsok 8: Dolinky, Okružná, Jána Pavla II., Jánošíkova, Detva súpisné číslo 584, 598, 761, 1118, 1172, 1197;
+#   okrsok 9: Obrancov mieru
+#   okrsok 10: M. R. Štefánika
+#   okrsok 11: Krpelná, Pionierska, Záhradná, Agátová, Štúrova, Ostravská, E. M. Šoltésovej, Strojárska, T. Vansovej
+#   okrsok 12: J. G. Tajovského, Vimperská, A. Bernoláka
+#   okrsok 13: Novosady; Detva súpisné číslo 612, 613, 615, 1421, 1701;
+#   okrsok 14: A. Hlinku, Detva /bez ulice a čísla/
+#   okrsok 15: Krné
+obec = "518263"
+name = "Detva"
+okrsky_date = 2019-02-27
+okrsky_fill = "nearest"
+okrsky_note = "'Detva súpisné číslo …' = houses without a street in part Detva by súpisné číslo. 'A. Hlinku, Detva' (/bez ulice a čísla/): 'Detva' is the voters registered only to the town, not mapped. Addresses no rule selects (street Bottova, the other houses without a street in parts Detva and Detva-sídlisko) are placed by fill_nearest. Named but not in the address register, left out: Jána Pavla II. Slnečná ulica and Priemyselná ulica are not named in this document; placed by fill_nearest."
+
+[[document]]
+url = "https://www.detva.sk/download_file_f.php?id=1099246"
+sha256 = "3ba568c91b6cb1a7f35c414bae6f7237c9ba41752210fbb6a4434dea95870aa3"
+title = "Oznam o utvorení volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu 2019"
+
+[okrsok.1]
+rules = [
+  {part = "Piešť I"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Piešť II"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Skliarovo"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Kostolná"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Námestie SNP"},
+  {street = "Kukučínova"},
+  {street = "Orlova"},
+  {street = "B. Němcovej"},
+  {street = "Nová Ves"},
+  {street = "Sládkovičova"},
+  {street = "Partizánska"},
+  {street = "Chalupkova"},
+  {street = "Kamenná"},
+  {street = "Lúčna štvrť"},
+  {part = "Zapriechody"},
+  {street = "Kúpalisko"},
+  {street = "Cintorínska"},
+  {part = "Detva", numbers = "546, 548, 549, 587, 808, 1719, 3317, 3443"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Požiarnická"},
+  {street = "Jesenského"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Hviezdoslavova"},
+  {street = "J. Kráľa"},
+  {street = "Družstevná"},
+  {street = "Fučíkova"},
+  {street = "Hollého"},
+  {street = "Kollárova"},
+  {street = "P. Jilemnického"},
+  {street = "S. Stračinu"},
+  {street = "J. Thurzu"},
+  {street = "Ľ. Zeljenku"},
+  {street = "M. Benku"},
+  {street = "Jožka Rybára"},
+  {part = "Detva", numbers = "534, 537, 538, 539, 540, 544, 624, 627, 628, 629, 630, 633, 635, 638, 639, 640, 642, 669, 695, 704, 742, 760, 762, 774, 775, 776, 797, 798, 1148, 1626, 1633, 1685, 3120, 3229, 3254, 3291, 3293, 3340, 3410, 3437, 3446"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Námestie mieru"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Dolinky"},
+  {street = "Okružná"},
+  {street = "Jánošíkova"},
+  {part = "Detva", numbers = "584, 598, 761, 1118, 1172, 1197"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Obrancov mieru"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "M. R. Štefánika"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Krpelná"},
+  {street = "Pionierska"},
+  {street = "Záhradná"},
+  {street = "Agátová"},
+  {street = "Štúrova"},
+  {street = "Ostravská"},
+  {street = "E. M. Šoltésovej"},
+  {street = "Strojárska"},
+  {street = "T. Vansovej"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "J. G. Tajovského"},
+  {street = "Vimperská"},
+  {street = "A. Bernoláka"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Novosady"},
+  {part = "Detva", numbers = "612, 613, 615, 1421, 1701"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "A. Hlinku"},
+]
+
+[okrsok.15]
+rules = [
+  {part = "Krné"},
+]

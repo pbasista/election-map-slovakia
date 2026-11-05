@@ -1,0 +1,47 @@
+# Council obvody of Hodruša-Hámre (516759), Žarnovica.
+# Transcribed by an AI agent in job obvod-rules-134 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 Banská Hodruša; počet poslancov - 3
+#   obvod 2: Volebný obvod č. 2 Dolné Hámre; počet poslancov - 5
+#   obvod 3: Volebný obvod č. 3 Kopanice; počet poslancov - 1
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/516759.toml, standing in.
+obec = "516759"
+name = "Hodruša-Hámre"
+date = 2018-08-09
+note = "Resolution 4/10/2018/OZ creates obvody č. 1 Banská Hodruša, č. 2 Dolné Hámre, č. 3 Kopanice; resolution 4/11/2018/OZ gives their seats (3, 5, 1)."
+okrsky_date = 2022-06-29
+okrsky_note = "No 2022 (or January 2023 referendum) okrsky document found: the live site shows only 2026 election documents (the site was rebuilt), and the Internet Archive has no snapshot of hodrusa-hamre.sk between July 2022 and January 2023. The council's resolution of 29.6.2022 gives the three obvody (Banská Hodruša, Dolné Hámre, Kopanice); each has one okrsok in the ŠÚ SR results (1-1, 2-2, 3-3), so obvody are given without okrsky rules."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-5890): No okrsky document of 2018 found. The village's front page as archived on 2018-10-06 lists the 2018 election notices (informácie pre voliča, the obvody notice of 16.8.2018, the population notice, the candidate lists), none of them on okrsky; the obvody notice and the council minutes of 9.8.2018 name the obvody (parts Banská Hodruša, Dolné Hámre, Kopanice) but no okrsky. The live site (rebuilt) has no 2018 elections section, and the Internet Archive's 2018–2019 captures hold no other 2018 election document. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 3 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://www.hodrusa-hamre.sk/download_file_f.php?id=1027407"
+sha256 = "b899cefcd1eefc9e5fce110ff3e8a4925864f1b3ca6d68ef116ed3f20e3b7cff"
+title = "Zápisnica zo 4. zasadnutia OZ Hodruša-Hámre dňa 9.8.2018 (uznesenia č. 4/10/2018/OZ a 4/11/2018/OZ)"
+
+[[document]]
+url = "https://www.hodrusa-hamre.sk/zasadnutia-oz.phtml?id3=205913"
+sha256 = "a1806fcbd85b7d60cf3b114b8fb2f03f1435818dd1d5109b709ebdbebf4f477f"
+title = "Zasadnutia OZ (page listing the minutes)"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {part = "Banská Hodruša"},
+]
+
+[obvod.2]
+seats = 5
+okrsky = [2]
+rules = [
+  {part = "Dolné Hámre"},
+]
+
+[obvod.3]
+seats = 1
+okrsky = [3]
+rules = [
+  {part = "Kopanice"},
+]

@@ -1,0 +1,26 @@
+# Okrsky of Nová Bystrica, transcribed by an AI agent in job okrsok-rules-4862 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: VOLEBNÝ OKRSOK č. 1 - Nová Bystrica
+#   okrsok 2: VOLEBNÝ OKRSOK č. 2 - Vychylovka
+obec = "509311"
+name = "Nová Bystrica"
+okrsky_note = "VOLEBNÝ OKRSOK č. 1 - Nová Bystrica and č. 2 - Vychylovka are the parts of those names; the part Riečnica (1 address) is not named and is placed in okrsok 1 (inferred)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the page's section 'Utvorenie volebných okrskov a určenie volebných miestností' belongs to the page of the vote (voľby do Európskeho parlamentu 2024); no decision date stated"
+
+[[document]]
+url = "https://www.novabystrica.sk/sk/informacie-ou/2317-volby-do-europskeho-parlamentu"
+sha256 = "816e7ec7d5ee6a2a069aceb35a873a1483a12f88f70388d3a8c36a2fdc844e01"
+title = "Utvorenie volebných okrskov a určenie volebných miestností – voľby do Európskeho parlamentu 2024 (stránka obce)"
+
+[okrsok.1]
+rules = [
+  {part = "Nová Bystrica"},
+  {part = "Riečnica", note = "part not named in the document (1 address); placed with Nová Bystrica, on whose side its k.ú. lies", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vychylovka"},
+]

@@ -1,0 +1,38 @@
+# Okrsky of Závadka nad Hronom, transcribed by an AI agent in job okrsok-rules-3779 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Clementisova ul.,Hronská ul.,Hviezdoslavova ul.,Kukučínová ul., Osloboditeľov, Partizánska, Rázusová, Slatvinska, Športová, Štúrová ,Záhradná
+#   okrsok 2: Fučíkova, Hrbok, Mierova, Paseka
+obec = "509124"
+name = "Závadka nad Hronom"
+okrsky_date = 2023-06-20
+okrsky_fill = "nearest"
+okrsky_note = "Scanned notice of the mayor of 20.06.2023 (archived); the same okrsky as 2022. The one address without a street is placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20230926182121/https://www.zavadkanadhronom.sk/evt_file.php?file=1992&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20-%20Vo%C4%BEby%20do%20N%C3%A1rodnej%20rady%20Slovenskej%20republiky%20-%2030.%2009.%202023.pdf"
+sha256 = "89ec3d32b355c672a7dce67a84671a4a9e1e81d2bb24333f5200aa1c2f7abfbc"
+title = "Oznámenie o utvorení volebných okrskov - Voľby do Národnej rady Slovenskej republiky - 30. 09. 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Clementisova", written = "Clementisova ul."},
+  {street = "Hronská", written = "Hronská ul."},
+  {street = "Hviezdoslavova", written = "Hviezdoslavova ul."},
+  {street = "Kukučínova", written = "Kukučínová ul.", note = "a misspelt ending of the same street (the register has no other street of this name)"},
+  {street = "Osloboditeľov"},
+  {street = "Partizánska"},
+  {street = "Rázusova", written = "Rázusová", note = "a misspelt ending of the same street (the register has no other street of this name)"},
+  {street = "Slatvinská", written = "Slatvinska", note = "a misspelt ending of the same street (the register has no other street of this name)"},
+  {street = "Športová"},
+  {street = "Štúrova", written = "Štúrová", note = "a misspelt ending of the same street (the register has no other street of this name)"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Fučíkova"},
+  {street = "Hrbok"},
+  {street = "Mierová", written = "Mierova", note = "a misspelt ending of the same street (the register has no other street of this name)"},
+  {street = "Paseka"},
+]

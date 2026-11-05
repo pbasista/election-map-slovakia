@@ -1,0 +1,29 @@
+# Okrsky of Drženice, transcribed by an AI agent in job okrsok-rules-5791 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebného okrsku č. 1: Kultúrny dom Drženice č. 100
+#   okrsok 2: Volebného okrsku č. 2: Viacúčelová budova Kmeťovce č. 34
+obec = "502219"
+name = "Drženice"
+okrsky_date = 2026-04-24
+okrsky_note = "Scanned document read via OCR without diacritics (diacritics restored in text). It names only the polling stations; 2 okrsky and 2 parts, each station in another part, so each okrsok takes the part of its station."
+
+[[document]]
+url = "https://www.drzenice.sk/download_file_f.php?id=2397630"
+sha256 = "225c12de3527385de6b7e7d3e7105786e242ecf8ee1d9047ea2ffc755deee732"
+title = "Oznámenie o utvorenom volebnom okrsku a určenej volebnej miestnosti (referendum 4. júla 2026)"
+
+[[document]]
+url = "https://www.drzenice.sk/oznamenie-o-utvorenom-volebnom-okrsku-a-urcenej-volebnej-miestnosti-oznam/mid/563173/.html"
+sha256 = "ae8076badb3cf24dc1f895afe5a4f6863037e5a3329591f5002f6986fde600d2"
+title = "Oznámenie o utvorenom volebnom okrsku a určenej volebnej miestnosti (úradná tabuľa, zverejnené 24.4.2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Drženice", note = "Polling station Kultúrny dom Drženice č. 100 lies in part Drženice.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kmeťovce", note = "Polling station Viacúčelová budova Kmeťovce č. 34 lies in part Kmeťovce.", inferred = true},
+]

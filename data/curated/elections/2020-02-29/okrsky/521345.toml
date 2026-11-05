@@ -1,0 +1,24 @@
+# Okrsky of Družstevná pri Hornáde, transcribed by an AI agent in job okrsok-rules-2649 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre časť obce Malá Vieska – 1
+#   okrsok 2: pre časť obce Tepličany - 2
+obec = "521345"
+name = "Družstevná pri Hornáde"
+okrsky_date = 2019-11-29
+okrsky_note = "The file is labelled 'Určenie okrskov 2019 EP.pdf' on the page, but its content is the mayor's Určenie for the NR SR elections 2020 of 29.11.2019."
+
+[[document]]
+url = "https://www.druzstevna.sk/file/page1_file5164.pdf"
+sha256 = "f919a23bfb2561f45905e345ea1094931f875d473661ca567817a09dfd1c2643"
+title = "Určenie volebných okrskov pre voľby do NR SR v roku 2020 (file named \"Určenie okrskov 2019 EP.pdf\")"
+
+[okrsok.1]
+rules = [
+  {part = "Malá Vieska"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Tepličany"},
+]

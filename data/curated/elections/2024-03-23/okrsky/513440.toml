@@ -1,0 +1,105 @@
+# Okrsky of Nová Dubnica, transcribed by an AI agent in job okrsok-rules-4064 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 16- P.O.Hviezdoslava 1,3,5,7 Petra Jilemnického 6,7 Sady Cyr. a Met. 11,13 17- P.O.Hviezdoslava 9,11,13,15 SNP 45,47 Sady Cyrila a Metoda 1,5,9 18- Sady Cyrila a Metoda 7 19- SNP 49,51 Sady Cyrila a Metoda 2,6 20- Sady Cyrila a Met. 8,10,12,28 21- Sady Cyrila a Met. 14,16,18,20 23- Sady Cyrila a Metoda 22 Petra Jilemnického 8,9,10 28- Petra Jilemnického 11,12,13 Pribinove sady 25 29- Pribinove sady 17,19,21,23 30- Pribinove sady 9,11,13 31- SNP 53,55 Pribinove sady 1,5 32- Pribinove sady 7,29 34- Pribinove sady 10,12 Petra Jilemnického 14,15 Janka Kráľa 2,4,6,8 35- Janka Kráľa 10,12,14,16 Pribinove sady 2,6,8 SNP 57,59 26- Topoľová 2
+#   okrsok 2: 36- Janka Kráľa 18,20,22,24,26 37- Janka Kráľa 28,30,32,34,36 46- Sad kpt.Nálepku 7,9,11,13 47- Sad kpt.Nálepku 1,3,5 48- Sad kpt.Nálepku 2,4,6 49- Sad kpt.Nálepku 8,10,12,14 50- Sad kpt.Nálepku 18,20,22,24 55- Komenského sady 13,15,17,19 56- SNP 54,56 57- Komenského sady 1,3,5 58- Komenského sady 7,9,11 60- Komenského sady 8,10,12 61- Komenského sady 2,4,6 62- SNP 50,52 990- Petra Jilemnického 24 991- Petra Jilemnického 25
+#   okrsok 3: Okružná nep.čísla 1-55, pár.čísla 2-62 A.Sládkoviča nep.čísla 1-43, párne č. 2 – 68 Gagarinova, Pod Dubovcom, Puškinova, Krátka, Ľudmily Podjavorinskej, Ľ.Štúra, Janka Jesenského, Partizánska J.G.Tajovského 1,3,5,7,9,11 63- P.O.Hviezdoslava 17,19,21 64- P.O.Hviezdoslava 27,29,31 65- Trenčianska 24,25 53- Trenčianska 26,27 54- Komenského sady 21,23,25,27 869- Trenčianska 70, 72, 74 873- Trenčianska 78, 80
+#   okrsok 4: Okružná nep.č. 57-127, pár.č. 64-142, A.Sládkoviča nep.č. 45-85, pár.č. 70-110, Pod Bôrikom, Boženy Nemcovej, J.Kollára, Jána Nerudu, Svätoplukova, L.Svobodu, M.Gorkého, Svoradova, Kvetná, Martina Benku, Martina Kukučína, Májová, Strážovská, J.G.Tajovského 2, 4, 6, 13, 15,17,19,21 51- Sad kpt.Nálepku 26,28,30,32 52- Trenčianska 29
+#   okrsok 5: 3- SNP 5,7 4- Petra Jilemnického 1,2 5- Petra Jilemnického 3,4 6- SNP 9,11 7- SNP 13,15,17 9- SNP 21,23,25 11- SNP 37,39,41, 838- Petra Jilemnického 17,18 4629- Rodinný dom
+#   okrsok 6: 362- Janka Kráľa 3,5,7,9 363- Janka Kráľa 11,13,15,17 364- SNP 64,66,68,70 365- SNP 72,74,76,78 533- SNP 80,82,84,86 534- SNP 88,90,92,94 724- Trenčianska 44,46,48,50 725- Trenčianska 52,54,56,58 726- Trenčianska 60,62,64,66 727- Trenčianska 45 730- Janka Kráľa 19,21,23,25,27,29,31,33
+#   okrsok 7: 70- SNP 28,30,32,34 71- SNP 20,22,24,26 72- SNP 12,14,16,18 73- SNP 4,6,8,10 74- SNP 2 75- Sad dukl.hrdinov 1,2,3,4 76- Sad dukl.hrdinov 5,6,7,8 874 SNP 100 Dlhé diely, Dubová, Javorová, Lipová, Slnečná, Ulica na Hlinách
+#   okrsok 8: 67- P.O.Hviezdoslava 14,16,18 68- P.O.Hviezdoslava 6,8,10 77- Trenčianska 1,2,3,4,5,6,7,8,9 78- Trenčianska 10, 11, 12, 13, 14, 15, 16, 17 81- Trenčianska 20 82- Trenčianska 21 83- Trenčianska 22 84- Trenčianska 23 85- P.O.Hviezdoslava 12
+#   okrsok 9: Časť Veľký a Malý Kolačín ulice: Družobná, Družstevná, Farská Hrušková ulica, Jabloňová ulica, Levanduľová ulica, Nová, Odbojárska, Pod Húštikom, Slobody, Šípková ulica, Višňová ulica
+obec = "513440"
+name = "Nová Dubnica"
+okrsky_date = 2024-01-30
+okrsky_fill = "nearest"
+okrsky_note = "The vyhláška lists each okrsok's houses by súpisné číslo followed by street and orientačné numbers; those houses are given by súpisné číslo (part Nová Dubnica). Streets it names without súpisné numbers are street rules (Okružná and A. Sládkoviča split by the listed odd/even ranges, J. G. Tajovského by its listed numbers). Okrsok 9 is the parts Malý and Veľký Kolačín ('Časť Veľký a Malý Kolačín'). Placed by fill_nearest: streets the document does not name (Mierové námestie, Priemyselná ulica, Topoľová other than 2, which is súpisné 26), numbers of the split streets outside the listed ranges, and addresses without a street. Scan; text as read from the page image. Súpisné 728 (Trenčianska 49) is not listed; by fill_nearest."
+
+[[document]]
+url = "https://novadubnica.eu/data/uploads/files/Volby/Vyhlaska_Volby_Prezident_2024.pdf"
+sha256 = "2fca86b0b4fe7c9cfb4cf24474951c0b477802ee070c5f421f98e755e464f07b"
+title = "Vyhláška primátora o okrskoch a miestnostiach, voľby prezidenta SR 2024, 30.01.2024"
+
+[okrsok.1]
+rules = [
+  {part = "Nová Dubnica", numbers = "16, 17, 18, 19, 20, 21, 23, 26, 28, 29, 30, 31, 32, 34, 35", by = "supisne", note = "the document lists the okrsok's houses by súpisné číslo (each followed by its street and orientačné numbers)"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Nová Dubnica", numbers = "36, 37, 46, 47, 48, 49, 50, 55, 56, 57, 58, 60, 61, 62, 990, 991", by = "supisne", note = "the document lists the okrsok's houses by súpisné číslo (each followed by its street and orientačné numbers)"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Nová Dubnica", numbers = "53, 54, 63, 64, 65, 869, 873", by = "supisne", note = "the document lists the okrsok's houses by súpisné číslo (each followed by its street and orientačné numbers)"},
+  {street = "Okružná", numbers = "1-55", parity = "odd"},
+  {street = "Okružná", numbers = "2-62", parity = "even"},
+  {street = "A. Sládkoviča", numbers = "1-43", parity = "odd", written = "A.Sládkoviča"},
+  {street = "A. Sládkoviča", numbers = "2-68", parity = "even", written = "A.Sládkoviča"},
+  {street = "Gagarinova"},
+  {street = "Pod Dubovcom"},
+  {street = "Puškinova"},
+  {street = "Krátka"},
+  {street = "Ľudmily Podjavorinskej", written = "Ľudmily Podjavorinskej"},
+  {street = "Ľ. Štúra", written = "Ľ.Štúra"},
+  {street = "Janka Jesenského", written = "Janka Jesenského"},
+  {street = "Partizánska"},
+  {street = "J. G. Tajovského", numbers = "1, 3, 5, 7, 9, 11", written = "J.G.Tajovského"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Nová Dubnica", numbers = "51, 52", by = "supisne", note = "the document lists the okrsok's houses by súpisné číslo (each followed by its street and orientačné numbers)"},
+  {street = "Okružná", numbers = "57-127", parity = "odd"},
+  {street = "Okružná", numbers = "64-142", parity = "even"},
+  {street = "A. Sládkoviča", numbers = "45-85", parity = "odd", written = "A.Sládkoviča"},
+  {street = "A. Sládkoviča", numbers = "70-110", parity = "even", written = "A.Sládkoviča"},
+  {street = "Pod Bôrikom"},
+  {street = "Boženy Nemcovej", written = "Boženy Nemcovej"},
+  {street = "J. Kollára", written = "J.Kollára"},
+  {street = "Jána Nerudu", written = "Jána Nerudu"},
+  {street = "Svätoplukova"},
+  {street = "L. Svobodu", written = "L.Svobodu"},
+  {street = "M. Gorkého", written = "M.Gorkého"},
+  {street = "Svoradova"},
+  {street = "Martina Benku", written = "Martina Benku"},
+  {street = "Martina Kukučína", written = "Martina Kukučína"},
+  {street = "Májová"},
+  {street = "Strážovská"},
+  {street = "J. G. Tajovského", numbers = "2, 4, 6, 13, 15, 17, 19, 21", written = "J.G.Tajovského"},
+  {street = "Kvetná"},
+]
+
+[okrsok.5]
+rules = [
+  {part = "Nová Dubnica", numbers = "3, 4, 5, 6, 7, 9, 11, 838, 4629", by = "supisne", note = "the document lists the okrsok's houses by súpisné číslo (each followed by its street and orientačné numbers)"},
+]
+
+[okrsok.6]
+rules = [
+  {part = "Nová Dubnica", numbers = "362, 363, 364, 365, 533, 534, 724, 725, 726, 727, 730", by = "supisne", note = "the document lists the okrsok's houses by súpisné číslo (each followed by its street and orientačné numbers)"},
+]
+
+[okrsok.7]
+rules = [
+  {part = "Nová Dubnica", numbers = "70, 71, 72, 73, 74, 75, 76, 874", by = "supisne", note = "the document lists the okrsok's houses by súpisné číslo (each followed by its street and orientačné numbers)"},
+  {street = "Dubová"},
+  {street = "Dlhé diely"},
+  {street = "Slnečná"},
+  {street = "Lipová"},
+  {street = "Javorová"},
+  {street = "Ulica na Hlinách"},
+]
+
+[okrsok.8]
+rules = [
+  {part = "Nová Dubnica", numbers = "67, 68, 77, 78, 81, 82, 83, 84, 85", by = "supisne", note = "the document lists the okrsok's houses by súpisné číslo (each followed by its street and orientačné numbers)"},
+]
+
+[okrsok.9]
+rules = [
+  {part = "Malý Kolačín"},
+  {part = "Veľký Kolačín"},
+]

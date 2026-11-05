@@ -1,0 +1,70 @@
+# Okrsky of Sobrance, transcribed by an AI agent in job okrsok-rules-1216 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bernoláková, Gagarinova, Gen. Svobodu, Kúpeľská, Michalovská, Nová
+#   okrsok 2: Gorkého, Prof. Hlaváča, Pavla Horova, Hviezdoslavova, Mieru, Kpt. Nálepku, Námestie slobody č. 582/3, č. 582/4, č. 582/5, č. 583/6, č. 583/7, č. 584/8, č. 584/9, č. 585/10, č. 585/11, Pri parku, Sama Chalúpku, SNP, Štefánikova, Štúrova, Švermova, Tibavská
+#   okrsok 3: Hollého, Kollárova, Komenského, Námestie slobody č. 587/13, č. 588/14, č. 589/15, Odbojárov, 1. mája, Vajanského
+#   okrsok 4: Školská od č. 288/2 po č. 288/4, Školská- rodinné domy, Tyršova od č. 304/47 po č. 304/51, od č. 305/52 po č. 305/55, od č. 945/2 po č. 945/4, od č. 946/5 po č. 946/7, od č. 286/38 po č. 286/41, od č. 287/42 po č. 287/47,
+#   okrsok 5: Tyršova - rodinné domy, mestská časť Komárovce
+obec = "523089"
+name = "Sobrance"
+okrsky_date = 2019-01-16
+okrsky_fill = "nearest"
+okrsky_note = "Námestie slobody is split by the listed buildings (orientačné 3-11 okrsok 2, 13-15 okrsok 3); its other numbers (1, 2, 12, 16, 17) and the register's houses without a street in part Sobrance are placed by fill_nearest. Part Sobranecké Kúpele (2 addresses, not named) is put in okrsok 1 with Kúpeľská. The same okrsky as the 2022 document used for the copy."
+
+[[document]]
+url = "https://www.sobrance.sk/download_file_f.php?id=1089705"
+sha256 = "6afec9785f5140d316c04e7b89dc1796d438461f99151203d10d6ccaf6219b1f"
+title = "Určenie volebných okrskov pre Voľby prezidenta Slovenskej republiky 2019 v meste Sobrance"
+
+[okrsok.1]
+rules = [
+  {street = "Bernolákova", written = "Bernoláková"},
+  {street = "Gagarinova"},
+  {street = "Gen. Svobodu"},
+  {street = "Kúpeľská"},
+  {street = "Michalovská"},
+  {street = "Nová"},
+  {part = "Sobranecké Kúpele", note = "the spa (2 addresses) is not named; it lies at the end of Kúpeľská (obvod 1), 30-150 m from its nearest houses", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Gorkého"},
+  {street = "Prof. Hlaváča"},
+  {street = "P. Horova", written = "Pavla Horova"},
+  {street = "Hviezdoslavova"},
+  {street = "Mieru"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Nám. Slobody", numbers = "3-11", written = "Námestie slobody", note = "the buildings 582/3-585/11 listed by súpisné/orientačné číslo: orientačné 3 to 11"},
+  {street = "Pri Parku", written = "Pri parku"},
+  {street = "Sama Chalúpku"},
+  {street = "SNP"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Švermova"},
+  {street = "Tibavská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hollého"},
+  {street = "Kollárova"},
+  {street = "Komenského"},
+  {street = "Nám. Slobody", numbers = "13-15", written = "Námestie slobody", note = "the buildings 587/13, 588/14, 589/15: orientačné 13 to 15"},
+  {street = "Odbojárov"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "Vajanského"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Školská", note = "blocks 288/2-4 plus 'rodinné domy' (family houses): the whole street"},
+  {street = "Tyršova", numbers = "286-287, 304-305, 945-946", by = "supisne", note = "the listed blocks of flats by their súpisné čísla (286/38-41, 287/42-47, 304/47-51, 305/52-55, 945/2-4, 946/5-7); the document's 304/47 is the register's 304/47B"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Tyršova", note = "'Tyršova - rodinné domy': the family houses, i.e. the street's addresses outside the listed blocks"},
+  {part = "Komárovce"},
+]

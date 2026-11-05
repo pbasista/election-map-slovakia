@@ -1,0 +1,82 @@
+# The okrsky of Ilava of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/513156.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Ilava, transcribed by an AI agent in job okrsok-rules-1695 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Kukučínova, SNP, Záhumenská, Mierové námestie, Košecká, Farská, Moyzesova, Ružová, Slnečná, ÚZVJS, občania s trvalým pobytom : Ilava
+#     okrsok 2: Medňanská, Skala, Jesenského, Hollého, Kalinčiakova
+#     okrsok 3: Ľ.Štúra, Štefánikova, Hviezdoslavova, Pivovarská, Sládkovičova
+#     okrsok 4: Sihoť, kpt. Nálepku, Záhradnícka, J.L.Bellu, Hurbanova , Nádražná
+#     okrsok 5: celé Klobušice
+#     okrsok 6: celá Iliavka
+obec = "513156"
+name = "Ilava"
+okrsky_fill = "nearest"
+okrsky_note = "ÚZVJS (the prison, okrsok 1) has no street of its own in the register and is left out; 'občania s trvalým pobytom: Ilava' are the voters registered without an address. Unlike 2022+, Slnečná is in okrsok 1. Addresses of part Ilava without a street are placed by fill_nearest."
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-107): No okrsky document of 2017 found: the notice board item 'Voľby do VÚC 2017' (posted 4.7.2017) has only the 'Informácie pre voliča' PDF; the archived aktualita 'Voľby do VÚC 2017' (2017-11-02) only links the candidates. No 2017 okrsky notice on the live notice board (searched 'okrskov', 'miestnosti') or in the Internet Archive. These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 6 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2019-05-25: 1: 1,157 → 1,177, 2: 1,004 → 974, 3: 740 → 725, 4: 931 → 935, 5: 697 → 701, 6: 98 → 103."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2019-05-22
+okrsky_date_basis = "The Internet Archive captured the city's EP 2019 elections page listing the okrsky on 2019-05-22 (the page is dated 13.05.2019); no decision date is stated. (https://web.archive.org/web/20190522134350/http://www.ilava.sk:80/aktuality/volby-do-europskeho-parlamentu)"
+
+[[document]]
+url = "https://web.archive.org/web/20190522134350/http://www.ilava.sk:80/aktuality/volby-do-europskeho-parlamentu"
+sha256 = "9bb70438beb6496009b7f346ffd3ba1175a2dcc7250b9a30b90813f01d5c295d"
+title = "Voľby do Európskeho parlamentu (aktualita na úradnej tabuli, 13.05.2019) – Volebné okrsky"
+
+[[document]]
+url = "https://www.ilava.sk/e_download.php?file=data/editor/596sk_1.pdf&original=Mesto%20Ilava%20-%20utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "ee24c236973c07f87b57ac3fc83b0b4eac65ca80d320bd66795bbedad2ad93fd"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby do NR SR 2023 (supplement)"
+
+[okrsok.1]
+rules = [
+  {street = "Kukučínova"},
+  {street = "SNP"},
+  {street = "Záhumenská"},
+  {street = "Mierové námestie"},
+  {street = "Košecká"},
+  {street = "Farská"},
+  {street = "Moyzesova"},
+  {street = "Ružová"},
+  {street = "Slnečná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Medňanská"},
+  {street = "Skala"},
+  {street = "Jesenského"},
+  {street = "Hollého"},
+  {street = "Kalinčiakova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Ľ. Štúra", written = "Ľ.Štúra"},
+  {street = "Štefánikova"},
+  {street = "Hviezdoslavova"},
+  {street = "Pivovarská"},
+  {street = "Sládkovičova"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Sihoť"},
+  {street = "Kpt. Nálepku", written = "kpt. Nálepku"},
+  {street = "Kpt.Nálepku", written = "kpt. Nálepku", note = "The register has the street twice, as 'Kpt. Nálepku' and 'Kpt.Nálepku'; both are the document's kpt. Nálepku."},
+  {street = "Záhradnícka"},
+  {street = "J. L. Bellu", written = "J.L.Bellu"},
+  {street = "Hurbanova"},
+  {street = "Nádražná"},
+]
+
+[okrsok.5]
+rules = [
+  {part = "Klobušice"},
+]
+
+[okrsok.6]
+rules = [
+  {part = "Iliavka"},
+  {street = "Iliavčanská dolina", note = "The register keeps Iliavčanská dolina (the Iliavka valley) in part Ilava; the 2023 document puts it in okrsok 6 with Iliavka."},
+]

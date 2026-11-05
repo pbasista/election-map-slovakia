@@ -1,0 +1,55 @@
+# Okrsky of Lovinobaňa, transcribed by an AI agent in job okrsok-rules-884 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cintorínska, Dolné Fafáky, Farská, Hviezdoslavova, Janka Kráľa, Janka Slobodu, Komenského, Mlynská, Partizánska, Podhájska, Poľná, SNP, Štefánikova, Štúrova, Továrenská, Včelárska, Záhradkárska, Železničná
+#   okrsok 2: B.Nemcovej, B.S.Timravy, Fučíkova, Hôrna, Mierova, Sadova, Školská, Štvrť 1. mája
+#   okrsok 3: Uderiná
+obec = "511552"
+name = "Lovinobaňa"
+okrsky_date = 2018-08-27
+okrsky_fill = "nearest"
+okrsky_note = "Malinovského (one address), which the document does not name, and the addresses of part Lovinobaňa without a street take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20200925073752/https://www.lovinobana.sk/data/5b84fb5421dcc_okrsky_volebn__mietnos_.pdf"
+sha256 = "ea3d289afeadda7d9d7cb996a7c8a9480dab0542a95386f107d297b093b11df4"
+title = "Voľby do orgánov samosprávy obcí 10. 11. 2018 – Vytvorené volebné okrsky a určené volebné miestnosti v obci Lovinobaňa (27. 08. 2018)"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Dolné Fafáky"},
+  {street = "Farská"},
+  {street = "Hviezdoslavova"},
+  {street = "Janka Kráľa"},
+  {street = "Janka Slobodu"},
+  {street = "Komenského"},
+  {street = "Mlynská"},
+  {street = "Partizánska"},
+  {street = "Podhájska"},
+  {street = "Poľná"},
+  {street = "SNP"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Továrenska", written = "Továrenská", note = "the register spells it 'Továrenska' without the accent"},
+  {street = "Včelárska"},
+  {street = "Záhradkárska"},
+  {street = "Železničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "B. Nemcovej", written = "B.Nemcovej"},
+  {street = "B. S. Timravy", written = "B.S.Timravy"},
+  {street = "Fučíkova"},
+  {street = "Hôrna"},
+  {street = "Mierova"},
+  {street = "Sadova"},
+  {street = "Školská"},
+  {street = "Štvrť 1.mája", written = "Štvrť 1. mája"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Uderiná"},
+]

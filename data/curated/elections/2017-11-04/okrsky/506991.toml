@@ -1,0 +1,51 @@
+# The okrsky of Drahovce of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/506991.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Drahovce, transcribed by an AI agent in job okrsok-rules-4873 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Hlavná, Poštová, Bratislavská, Šálkova, Južná, Tichá, Dedinská, Važina, Lazy, Záhradná ulica
+#     okrsok 2: Majer, Staničná, Pod Bystercom, Štefánikova, Kostolná, Kalvária, Lipová, Hviezdoslavova, Cintorínska, Vážska, Školská, A. Hlinku, Riadok, Voderady
+obec = "506991"
+name = "Drahovce"
+okrsky_fill = "nearest"
+okrsky_note = "The page lists each okrsok's streets; 'Voderady' is the part Voderady. Addresses without a street in part Drahovce are placed by fill_nearest."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-264): The Internet Archive keeps only the 2017 delegation-address notice of the old website; no okrsky document of 2017 found. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2024-06-08: 1: 1,024 → 1,045, 2: 1,130 → 1,111."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The page states the okrsky under the heading 'Voľby do Európskeho parlamentu sa uskutočnia 8. júna 2024'; it is dated (Vyvesené) 8. 6. 2024, the day of the vote, and states no decision date."
+
+[[document]]
+url = "https://www.obecdrahovce.sk/samosprava/volby-a-referendum/volby-do-europskeho-parlamentu-sa-uskutocnia-8-juna-2024-550.html"
+sha256 = "d1521d20bf6f4d019b7f9f2d61beef39f41597bc031355af3334a98d2c6a63ab"
+title = "Voľby do Európskeho parlamentu sa uskutočnia 8. júna 2024 (Volebné okrsky a určenie volebných miestností)"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná"},
+  {street = "Poštová"},
+  {street = "Bratislavská"},
+  {street = "Šálkova"},
+  {street = "Južná"},
+  {street = "Tichá"},
+  {street = "Dedinská"},
+  {street = "Važina"},
+  {street = "Lazy"},
+  {street = "Záhradná ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Majer"},
+  {street = "Staničná"},
+  {street = "Pod Bystercom"},
+  {street = "Štefánikova"},
+  {street = "Kostolná"},
+  {street = "Kalvária"},
+  {street = "Lipová"},
+  {street = "Hviezdoslavova"},
+  {street = "Cintorínska"},
+  {street = "Vážska"},
+  {street = "Školská"},
+  {street = "A.Hlinku", written = "A. Hlinku"},
+  {street = "Riadok"},
+  {part = "Voderady", note = "'Voderady' is the part Voderady"},
+]

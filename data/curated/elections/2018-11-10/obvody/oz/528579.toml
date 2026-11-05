@@ -1,0 +1,38 @@
+# Council obvody of Maťovské Vojkovce (528579), Michalovce.
+# Transcribed by an AI agent in job obvod-rules-205 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa obecnú časť Maťovce budú zvolení 5 poslanci.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa obecnú časť Vojkovce budú zvolení 2 poslanci.
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/528579.toml, standing in.
+obec = "528579"
+name = "Maťovské Vojkovce"
+date = 2018-08-16
+okrsky_date = 2022-06-28
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-5921): The website is unreachable today (connection refused). As archived in 2018–2019, the 2018 elections page and the Dokumenty/Iné list give only the obvod announcements (obvod 1 = part Maťovce, obvod 2 = part Vojkovce), the population notice, voter information and the commission's clerk; no 'utvorenie volebných okrskov' for 10 November 2018 was published, and the obvod announcements do not name the okrsky, so which okrsok number covers which part is not documented for 2018. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://www.matovskevojkovce.sk/files/2018-08-28-000428-Ozn__menie_o_ur__en___po__tu_poslancov_pre_volebn___obvod___.1_.pdf"
+sha256 = "adf8c4637cd9be8210e2c479458f3918c6c1acd9ad352eb45331085e2d465821"
+title = "Oznámenie o určení počtu poslancov a utvorení volebného obvodu (obvod č. 1)"
+
+[[document]]
+url = "https://www.matovskevojkovce.sk/files/2018-08-28-000647-Ozn__menie_o_ur__en___po__tu_poslancov_pre_volebn___obvod___.2.pdf"
+sha256 = "0e25a2ad8770dddfeec273d7b70e4f3b041e78811aa51833e4189efefb63445a"
+title = "Oznámenie o určení počtu poslancov a utvorení volebného obvodu (obvod č. 2)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Maťovce"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Kapušianske Vojkovce", note = "The document calls the part Kapušianske Vojkovce simply \"Vojkovce\"; the municipality has only the two parts Maťovce and Kapušianske Vojkovce."},
+]

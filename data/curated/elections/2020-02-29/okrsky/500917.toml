@@ -1,0 +1,39 @@
+# Okrsky of Vinodol, transcribed by an AI agent in job okrsok-rules-2660 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Kostolná, Na sihoti, Na výhone, Pesecká, Pod hájom, Školská, Športová a Úzka
+#   okrsok 2: Ulice: Agátová, Donátová, Hlavná, Hlboká, K vodárni, Obecná, Telepy a Tichá
+obec = "500917"
+name = "Vinodol"
+okrsky_date = 2019-11-29
+okrsky_fill = "nearest"
+okrsky_note = "'Vinodol - bez adresy' (okrsok 1) means voters registered without an address, not the register's houses without a street; those, and Farská ulica (not named), are placed by fill_nearest. Scanned document, read from the page image. Novohorská ulica is not named in this document; placed by fill_nearest."
+
+[[document]]
+url = "https://obec-vinodol.sk/wp-content/uploads/2019/11/utvorenie-volebnych-okrskov.pdf"
+sha256 = "f4da33cea7ff15ef3b81e9382dd56bcbbf3fdeb2f580bb64223717fae807aa70"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Vinodol pre voľby do NR SR 29.02.2020"
+
+[okrsok.1]
+rules = [
+  {street = "Kostolná ulica", written = "Kostolná"},
+  {street = "Na sihoti"},
+  {street = "Na výhone"},
+  {street = "Pesecká ulica", written = "Pesecká"},
+  {street = "Pod hájom"},
+  {street = "Školská ulica", written = "Školská"},
+  {street = "Športová Ulica", written = "Športová"},
+  {street = "Úzka ulica", written = "Úzka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová ulica", written = "Agátová"},
+  {street = "Donátova ulica", written = "Donátová", note = "the register's Donátova ulica; the document writes a long á, the only such street"},
+  {street = "Hlavná ulica", written = "Hlavná"},
+  {street = "Hlboká ulica", written = "Hlboká"},
+  {street = "K vodárni"},
+  {street = "Obecná ulica", written = "Obecná"},
+  {street = "Telepy"},
+  {street = "Tichá ulica", written = "Tichá"},
+]

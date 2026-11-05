@@ -1,0 +1,96 @@
+# Okrsky of Rajec, transcribed by an AI agent in job okrsok-rules-4184 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Lipová, Hollého (č. 1 - 49), Javorová, Smreková, Ružová, Jabloňová, Orgovánová
+#   okrsok 2: 1.mája, Fučíkova, Hurbanova (č. 1 – 4, 6 – 11), Jánošíkova, Krivín, Moyzesova, Nádražná (č. 25 – 37, 64), Obr. mieru, S.Chalupku, Záhradnícka
+#   okrsok 3: Bystrická, Hollého (rod.domy č. 60 - 117), Hurbanova (č. 5), Kmeťova, Kollárova, Komenského, Kostolná, M.R.Štefánika, Nádražná (č. 1 - 23, 38 – 63, 65), Nám.A.Škrábika, Nám. SNP, Partizánska (č. 1 - 10, 134 – 143), Sládkovičova, Vojtová, Zakamenica, Šafárikova, Športová, Švermova, Lúčna, Bielisko, Hviezdoslavova, Štúrova a mestskú časť Rajec-Charubina
+#   okrsok 4: Alexyho, Benkova, Frivaldského, Fullova, Haškova, Janka Kráľa, Jilemnického, Mudrochova, Nerudova, Partizánska (č.d. 11 – 133, 144 - 147), Plávkova, Pri Rajčanke, Slottova
+obec = "517917"
+name = "Rajec"
+okrsky_fill = "nearest"
+okrsky_note = "Hollého 50-59 and 118-120, Nádražná 24 and Kukučínova are named by no okrsok: inferred rules (see rule notes); Hurbanova 12 supplemented from the rule set of the referendum of 4 July 2026. Addresses without a street (part Rajec, súpisné čísla) are not placed by the document; fill_nearest gives them the okrsok of the nearest placed address. Same okrsky as the copied 2026 ones except Hurbanova 12 (not named), no Rajec 5042/5177, Dubová ulica (not in this register) or Hollého 117A."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2024-02-03
+okrsky_date_basis = "The Internet Archive captured the PDF on 2024-02-03; the document itself is undated (it cites the decision of 8 January 2024 calling the presidential election). (https://web.archive.org/web/20240203105827/http://www.rajec.info/files/86517-Volby-prezidenta-SR-2024-urcenie-volebnych-okrskov.pdf)"
+okrsky_supplemented = 2026-07-04
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The document puts Hurbanova 1-4 and 6-11 in okrsok 2 and 5 in okrsok 3, leaving Hurbanova 12 out (the register has Hurbanova 1-12); the okrsky of the referendum of 4 July 2026 (rule set in this repository, from the mayor's document of 4 May 2026) have Hurbanova 1-4, 6-12 in okrsok 2 (as did the documents of 2018-2022), so that rule is copied into okrsok 2."
+
+[[document]]
+url = "https://web.archive.org/web/20240203105827/http://www.rajec.info/files/86517-Volby-prezidenta-SR-2024-urcenie-volebnych-okrskov.pdf"
+sha256 = "aca7c526da26a6787ab10d9aa88a52cbe4e82e61cd6733a9a08bb175c6b83e40"
+title = "Voľby prezidenta SR 2024 - určenie volebných okrskov"
+
+[okrsok.1]
+rules = [
+  {street = "Lipová"},
+  {street = "Hollého", numbers = "1-49"},
+  {street = "Javorová"},
+  {street = "Smreková"},
+  {street = "Ružová"},
+  {street = "Jabloňová"},
+  {street = "Orgovánová"},
+  {street = "Hollého", numbers = "50-59", note = "Hollého 50-59 is named by no okrsok (okrsok 1 has 1-49, okrsok 3 the family houses from 60); placed with 1-49 by numeric continuity; most of these houses lie nearest to okrsok 1 addresses", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája"},
+  {street = "Fučíkova"},
+  {street = "Hurbanova", numbers = "1-4, 6-11"},
+  {street = "Jánošíkova"},
+  {street = "Krivín"},
+  {street = "Moyzesova"},
+  {street = "Nádražná", numbers = "25-37, 64"},
+  {street = "Obrancov Mieru", written = "Obr. mieru", note = "'Obr. mieru' abbreviates Obrancov mieru (register: Obrancov Mieru), the same street"},
+  {street = "S. Chalupku", written = "S.Chalupku"},
+  {street = "Záhradnícka"},
+  {street = "Nádražná", numbers = "24", note = "Nádražná 24 is named by no okrsok (okrsok 3 has 1-23, okrsok 2 has 25-37); placed with its neighbour Nádražná 25 in okrsok 2", inferred = true},
+  {street = "Hurbanova", numbers = "1-4, 6-12", supplemented = true},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bystrická"},
+  {street = "Hollého", numbers = "60-117"},
+  {street = "Hurbanova", numbers = "5"},
+  {street = "Kmeťova"},
+  {street = "Kollárova"},
+  {street = "Komenského"},
+  {street = "Kostolná"},
+  {street = "M. R. Štefánika", written = "M.R.Štefánika"},
+  {street = "Nádražná", numbers = "1-23, 38-63, 65"},
+  {street = "Námestie Andreja Škrábika", written = "Nám.A.Škrábika"},
+  {street = "Námestie SNP", written = "Nám. SNP"},
+  {street = "Partizánska", numbers = "1-10, 134-143"},
+  {street = "Sládkovičova"},
+  {street = "Vojtova", written = "Vojtová", note = "'Vojtová' with a long á is the street Vojtova (the only such street in Rajec)"},
+  {street = "Zakamenica"},
+  {street = "Šafárikova"},
+  {street = "Športová"},
+  {street = "Švermova"},
+  {street = "Lúčna"},
+  {street = "Bielisko"},
+  {street = "Hviezdoslavova"},
+  {street = "Štúrova"},
+  {part = "Charubina", note = "'mestskú časť Rajec-Charubina' is the part Charubina"},
+  {street = "Hollého", numbers = "118-", note = "Hollého 118 and up is named by no okrsok (okrsok 3 has the family houses 60-117); placed with them in okrsok 3 by numeric continuity, as the houses lie nearest to okrsok 3 addresses", inferred = true},
+  {street = "Kukučínova", note = "Kukučínova (1 address) is not named by the document; its nearest addresses are all in okrsok 3", inferred = true},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Alexyho"},
+  {street = "Benkova"},
+  {street = "Frívaldského", written = "Frivaldského", note = "'Frivaldského' without the accent is the street Frívaldského"},
+  {street = "Fullova"},
+  {street = "Haškova"},
+  {street = "Janka Kráľa"},
+  {street = "Jilemnického"},
+  {street = "Mudrochova"},
+  {street = "Nerudova"},
+  {street = "Partizánska", numbers = "11-133, 144-147"},
+  {street = "Plávkova"},
+  {street = "Pri Rajčanke"},
+  {street = "Slottova"},
+]

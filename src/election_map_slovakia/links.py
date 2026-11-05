@@ -8,11 +8,14 @@ earlier election (both as ``candidates.json`` has them) by the rule
 - the same name: :func:`candidates.search_key` of first name and surname;
 - an age that fits the time between the election days
   (:func:`incumbents.age_fits`), a year off either way only if nobody fits
-  exactly (the lists have a few wrong ages);
+  exactly (the lists have a few wrong ages); a person whose age the lists
+  do not give (ŠÚ SR's municipal package of 2018, a by-election's of
+  2019–2022) fits nobody, so is linked only by ``config/links.toml``;
 - the same area: the same obec persons are merged on (a Bratislava or
-  Košice district counts as its city; for regional candidates the obec of
-  residence), or regional candidacies in the same kraj in both elections,
-  a candidate having moved within it.
+  Košice district counts as its city; for regional and country-wide
+  candidates the obec of residence, which a country-wide candidate whose
+  residence is not known lacks), or regional candidacies in the same kraj
+  in both elections, a candidate having moved within it.
 
 Several fitting persons are narrowed, in turn, to those of the same obec,
 to those standing for one same office (body) in both elections, and to
@@ -28,6 +31,11 @@ better, stays unlinked. Persons are linked, not candidacies; a person
 standing for several offices has all of them linked at once. A link is
 evidence, not proof: a namesake of the same age in the same place, or a
 changed surname, defeats it.
+
+Each election's persons are indexed by name once (:class:`Candidates`;
+:func:`read` keeps them for the process), so that linking every election
+to every earlier one reads and indexes each once, and only persons of one
+name are compared.
 
 ``config/links.toml`` corrects the rule per pair of elections
 (:func:`load_overrides`): ``link`` pairs make the persons of a later and an
@@ -46,8 +54,11 @@ Output (:func:`to_json`), for the later election::
 ``candidacies`` holds, for every later candidacy of a linked person, the
 earlier candidacies of that person for the same office: the same obec's
 mayor or council (any obvod), the same kraj's president or council (any
-obvod); contests are named by the same codes in every election, so that is
-the same body (``<kind>:<area>``). ``counts``: the persons of each election,
+obvod), the President (either round), the National Council or the
+European Parliament (any party's list); contests are named by the same
+codes in every election, so that is the same body
+(:func:`election_map_slovakia.contests.body`: ``starosta:500011``,
+``zsk:4``, ``prezident:SK``, ``nrsr:SK``). ``counts``: the persons of each election,
 the links (``overridden`` of them from ``links.toml``), the later persons
 fitting someone but left unlinked as ambiguous, and the later candidacies in
 ``candidacies``.
@@ -56,14 +67,17 @@ fitting someone but left unlinked as ambiguous, and the later candidacies in
 from __future__ import annotations
 
 import datetime as dt
+import functools
 import tomllib
 from collections import Counter, defaultdict
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
-from election_map_slovakia import candidates, incumbents
-from election_map_slovakia.config import CANDIDACY_ID, ConfigError
+import orjson
+
+from election_map_slovakia import candidates, contests, incumbents
+from election_map_slovakia.config import ConfigError
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -80,10 +94,41 @@ class LinksError(Exception):
 
 @dataclass(frozen=True)
 class Candidates:
-    """The candidates of one election: its day and its ``candidates.json``."""
+    """The persons of one election, indexed for matching, and its day."""
 
     day: dt.date
-    data: Mapping[str, Any]
+    persons: Mapping[str, _Person]
+    """Person id → the person."""
+    by_name: Mapping[tuple[str, str], Sequence[_Person]]
+    """:attr:`_Person.name` → its persons, in the order of ``persons``."""
+    person_of: Mapping[str, str]
+    """Candidacy id → its person's id."""
+
+    @classmethod
+    def of(cls, day: dt.date, data: Mapping[str, Any]) -> Candidates:
+        """Return the candidates of *day*'s ``candidates.json`` *data*."""
+        persons = _persons(data)
+        by_name: dict[tuple[str, str], list[_Person]] = defaultdict(list)
+        for p in persons.values():
+            by_name[p.name].append(p)
+        person_of = {c["id"]: c["person"] for c in data["candidacies"]}
+        return cls(day, persons, dict(by_name), person_of)
+
+
+def read(path: Path, day: dt.date) -> Candidates:
+    """Return the candidates of ``candidates.json`` *path*, of the election of *day*.
+
+    Remembered while the file stays the same one (inode, size and time), so
+    that linking every election to every earlier one in a process reads each
+    election once; the step writing the file replaces it.
+    """
+    st = path.stat()
+    return _read(path, day, (st.st_ino, st.st_size, st.st_mtime_ns))
+
+
+@functools.cache
+def _read(path: Path, day: dt.date, _identity: tuple[int, int, int]) -> Candidates:
+    return Candidates.of(day, orjson.loads(path.read_bytes()))
 
 
 @dataclass(frozen=True)
@@ -120,7 +165,7 @@ class _Person:
     """:func:`candidates.search_key` of first name and surname."""
     spelling: tuple[str, str]
     """:func:`candidates.person_name_key` of first name and surname."""
-    age: int
+    age: int | None
     obec: str
     """The obec its candidacies were merged on."""
     kraje: frozenset[str]
@@ -175,7 +220,9 @@ def _pairs(table: Mapping[str, object], key: str, where: str) -> tuple[_Pair, ..
         if not (
             isinstance(pair, list)
             and len(pair) == 2  # noqa: PLR2004 - later and earlier
-            and all(isinstance(c, str) and CANDIDACY_ID.fullmatch(c) for c in pair)
+            and all(
+                isinstance(c, str) and contests.CANDIDACY_ID.fullmatch(c) for c in pair
+            )
         ):
             raise ConfigError(f"{where}.{key}: {pair!r} is not a pair of candidacy ids")
         out.append((pair[0], pair[1]))
@@ -187,42 +234,44 @@ def match(
 ) -> Links:
     """Link the persons of *later* to those of *earlier*; see the module doc."""
     overrides = overrides or Overrides()
-    lp, ep = _persons(later.data), _persons(earlier.data)
-    forced = _person_pairs(overrides.link, later.data, earlier.data, "link")
-    forbidden = set(_person_pairs(overrides.unlink, later.data, earlier.data, "unlink"))
+    lp, ep = later.persons, earlier.persons
+    forced = _person_pairs(overrides.link, later, earlier, "link")
+    forbidden = set(_person_pairs(overrides.unlink, later, earlier, "unlink"))
     _check(forced, forbidden, overrides)
     taken_l = {lid for lid, _ in forced}
     taken_e = {eid for _, eid in forced}
 
-    by_name_l = _by_name(p for p in lp.values() if p.id not in taken_l)
-    by_name_e = _by_name(p for p in ep.values() if p.id not in taken_e)
-
     def fits(lat: _Person, ear: _Person, slack: int) -> bool:
         return (
             (lat.id, ear.id) not in forbidden
+            and lat.age is not None
+            and ear.age is not None
             and incumbents.age_fits(ear.age, earlier.day, lat.age, later.day, slack)
-            and (lat.obec == ear.obec or bool(lat.kraje & ear.kraje))
+            and (lat.obec == ear.obec != "" or bool(lat.kraje & ear.kraje))
         )
 
-    forward = {
-        p.id: _options(p, by_name_e.get(p.name, []), fits)
-        for ps in by_name_l.values()
-        for p in ps
-    }
-    backward = {
-        p.id: _options(p, by_name_l.get(p.name, []), lambda e, lat, s: fits(lat, e, s))
-        for ps in by_name_e.values()
-        for p in ps
-    }
+    def back(ear: _Person, lat: _Person, slack: int) -> bool:
+        return fits(lat, ear, slack)
+
     pairs = dict(forced)
     ambiguous = []
-    for lid, options in forward.items():
-        if not options:
+    # Only persons of one name may fit: the names of both elections.
+    for name, named_l in later.by_name.items():
+        named_e = earlier.by_name.get(name)
+        if named_e is None:
             continue
-        if len(options) == 1 and [o.id for o in backward[options[0].id]] == [lid]:
-            pairs[lid] = options[0].id
-        else:
-            ambiguous.append(_describe(lp[lid], options))
+        ls = [p for p in named_l if p.id not in taken_l]
+        es = [p for p in named_e if p.id not in taken_e]
+        for p in ls:
+            options = _options(p, es, fits)
+            if not options:
+                continue
+            if len(options) == 1 and [o.id for o in _options(options[0], ls, back)] == [
+                p.id
+            ]:
+                pairs[p.id] = options[0].id
+            else:
+                ambiguous.append(_describe(p, options))
     return Links(
         earlier.day,
         dict(sorted(pairs.items())),
@@ -245,42 +294,43 @@ def _persons(data: Mapping[str, Any]) -> dict[str, _Person]:
         bodies: dict[str, list[str]] = defaultdict(list)
         kraje = set()
         for c in cs:
-            body = c["contest"].partition("/")[0]
+            body = contests.body(c["contest"])
             bodies[body].append(c["id"])
-            if kinds[c["contest"]] not in candidates.MUNICIPAL:
+            if contests.KINDS[kinds[c["contest"]]].scope == "kraj":
                 kraje.add(body.partition(":")[2])
         first_name, surname = first["first_name"], first["surname"]
         out[p["id"]] = _Person(
             p["id"],
-            (candidates.search_key(first_name), candidates.search_key(surname)),
-            (
-                candidates.person_name_key(first_name),
-                candidates.person_name_key(surname),
-            ),
+            (_search_key(first_name), _search_key(surname)),
+            (_spelling(first_name), _spelling(surname)),
             first["age"],
             p["obec"],
             frozenset(kraje),
             dict(bodies),
-            f"{first_name} {surname} ({first['age']}, {first['id']})",
+            f"{first_name} {surname} ({first['age'] or 'age unknown'}, {first['id']})",
         )
     return out
 
 
+# Names repeat across persons and elections (first names most): each is
+# keyed once per process.
+_search_key = functools.cache(candidates.search_key)
+_spelling = functools.cache(candidates.person_name_key)
+
+
 def _person_pairs(
-    pairs: Iterable[_Pair],
-    later: Mapping[str, Any],
-    earlier: Mapping[str, Any],
-    key: str,
+    pairs: Iterable[_Pair], later: Candidates, earlier: Candidates, key: str
 ) -> list[_Pair]:
     """Return the (later, earlier) persons of candidacy *pairs*."""
-    lp = {c["id"]: c["person"] for c in later["candidacies"]}
-    ep = {c["id"]: c["person"] for c in earlier["candidacies"]}
     out = []
     for lc, ec in pairs:
-        for cid, persons, which in ((lc, lp, "later"), (ec, ep, "earlier")):
+        for cid, persons, which in (
+            (lc, later.person_of, "later"),
+            (ec, earlier.person_of, "earlier"),
+        ):
             if cid not in persons:
                 raise LinksError(f"{LINKS_FILE} {key}: no {which} candidacy {cid!r}")
-        out.append((lp[lc], ep[ec]))
+        out.append((later.person_of[lc], earlier.person_of[ec]))
     return out
 
 
@@ -296,15 +346,8 @@ def _check(forced: Sequence[_Pair], forbidden: set[_Pair], ov: Overrides) -> Non
             raise LinksError(f"{LINKS_FILE}: {list(ov.link[i])} is linked and unlinked")
 
 
-def _by_name(persons: Iterable[_Person]) -> dict[tuple[str, str], list[_Person]]:
-    out: dict[tuple[str, str], list[_Person]] = defaultdict(list)
-    for p in persons:
-        out[p.name].append(p)
-    return out
-
-
 def _same_obec(one: _Person, other: _Person) -> bool:
-    return one.obec == other.obec
+    return one.obec == other.obec != ""
 
 
 def _shared_office(one: _Person, other: _Person) -> bool:
@@ -382,7 +425,7 @@ def report(links: Links) -> list[str]:
         f"links to {links.earlier}: {len(links.persons):,} of"
         f" {links.later_persons:,} persons ({links.overridden} by {LINKS_FILE}),"
         f" {len(links.ambiguous)} ambiguous; candidacies for the same office: "
-        + ", ".join(f"{k} {kinds[k]:,}" for k in candidates.KINDS)
+        + ", ".join(f"{k} {kinds[k]:,}" for k in contests.KINDS if kinds[k])
     ]
     lines += [f"  ambiguous {a}" for a in links.ambiguous]
     return lines

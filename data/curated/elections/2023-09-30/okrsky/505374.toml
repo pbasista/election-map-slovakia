@@ -1,0 +1,44 @@
+# Okrsky of Prašice, transcribed by an AI agent in job okrsok-rules-3565 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: 1.mája, Nemečkovská cesta, Cintorínska, Partizánska, Krátka, Lipová, Okšovská, Pri majeri, Duchonka, Obec Prašice
+#   okrsok 2: Ulice: Slnečná, Družstevná, Mládežnícka, Mlynská, Budovateľská, Studničná, Žalmanova, Novosvetská
+obec = "505374"
+name = "Prašice"
+okrsky_date = 2023-06-22
+okrsky_note = "The document is on archiv.prasice.sk, the municipality's archive of its former website (linked from the footer of www.prasice.sk). Same okrsky as the copied 2026 document; this one also names Duchonka (recreational area without streets) in okrsok 1."
+
+[[document]]
+url = "http://archiv.prasice.sk/web/pdf/040d.pdf"
+sha256 = "a9eb855fcc0e562001f73b0944393dcb4e42d0d677f2b7bcd7ab2696daeb4510"
+title = "Utvorenie volebných okrskov a určenie volebnej miestnosti pre Voľby do Národnej rady Slovenskej republiky, ktoré sa budú konať dňa 30. septembra 2023"
+
+[[document]]
+url = "http://archiv.prasice.sk/web/html/895-volby-do-narodnej-rady-slovenskej-republiky-2023.html"
+sha256 = "62960025bab231d7057abe1bfaee7b8fd002cf71a0d62efce67bb8a7a6db4624"
+title = "Voľby do Národnej rady Slovenskej republiky 2023 (page of the municipality's former website, kept at archiv.prasice.sk, linking the document)"
+
+[okrsok.1]
+rules = [
+  {street = "1.mája"},
+  {street = "Nemečkovská cesta"},
+  {street = "Cintorínska"},
+  {street = "Partizánska"},
+  {street = "Krátka"},
+  {street = "Lipová"},
+  {street = "Okšovská"},
+  {street = "Pri Majeri", written = "Pri majeri"},
+  {part = "Prašice", note = "\"Obec Prašice\" and \"Duchonka\" (the recreational area) are the addresses without a street, all numbered by súpisné číslo within part Prašice; the part rule gives okrsok 1 every address the street rules do not."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Slnečná"},
+  {street = "Družstevná"},
+  {street = "Mládežnícka"},
+  {street = "Mlynská"},
+  {street = "Budovateľská"},
+  {street = "Studničná"},
+  {street = "Žalmanová", written = "Žalmanova", note = "The document writes Žalmanova without the long á of the register's Žalmanová; the same street, Prašice has no other like it."},
+  {street = "Novosvetská"},
+]

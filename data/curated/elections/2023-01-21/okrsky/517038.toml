@@ -1,0 +1,25 @@
+# Okrsky of Lovčica-Trubín, transcribed by an AI agent in job okrsok-rules-3243 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volebný okrsok č. 1 – časť obce Lovčica
+#   okrsok 2: volebný okrsok č. 2 – časť obce Trubín
+obec = "517038"
+name = "Lovčica-Trubín"
+okrsky_note = "The decision is published as text on the page of the vote; each okrsok is a whole part of the municipality."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated text on the referendum page names the referendum of 21 January 2023."
+
+[[document]]
+url = "https://www.lovcica-trubin.sk/referendum-2023.html"
+sha256 = "5ddcda1cfe7585bc53641a38b44fdfd71b90bc423efd2140223e3fdba6f71bf2"
+title = "Utvorenie volebných okrskov, vymedzenie ich územného obvodu a určenie volebnej miestnosti pre referendum 21. januára 2023 (page text)"
+
+[okrsok.1]
+rules = [
+  {part = "Lovčica"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Trubín"},
+]

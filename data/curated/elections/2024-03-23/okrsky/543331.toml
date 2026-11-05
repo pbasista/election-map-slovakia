@@ -1,0 +1,51 @@
+# Okrsky of Markušovce, transcribed by an AI agent in job okrsok-rules-4459 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Jareček
+#   okrsok 2: Banícka, Brezová, Krátka, Matejovská cesta, Pod horou, Pod Stožkami, Poľná, Slovenská, Sv. J. Nepomuckého - or. č. 50 — 125, Za tehelňou, Železničná, rodinný dom súp. č. 668
+#   okrsok 3: Brunské, Bystrá, Hornádska, Komenského, Michalská, Odorínska cesta, Podhradová, SNP, Sv. J. Nepomuckého - or.č. 1 — 49, Školská; voliči s trvalým pobytom Markušovce (bez ulice, súpisného a orientačného čísla)
+obec = "543331"
+name = "Markušovce"
+okrsky_date = 2024-01-30
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 30 January 2024. Voters registered without an address are in okrsok 3 (no rule). Houses without a street other than súp. č. 668, and Sv. J. Nepomuckého numbers above 125, take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.markusovce.sk/data/page/markusovce.sk/24283/volba-prezidenta-utvorenie-okrskov.pdf"
+sha256 = "6998b40e5ddb9c687af4811c87375f9df1ebc21858ca09fa733e850056522f1b"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta Slovenskej republiky v roku 2024 (30. januára 2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Jareček"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Banícka"},
+  {street = "Brezová"},
+  {street = "Krátka"},
+  {street = "Matejovská cesta"},
+  {street = "Pod Horou", written = "Pod horou"},
+  {street = "Pod Stožkami"},
+  {street = "Poľná"},
+  {street = "Slovenská"},
+  {street = "Sv.J.Nepomuckého", numbers = "50-125", written = "Sv. J. Nepomuckého"},
+  {street = "Za Tehelňou", written = "Za tehelňou"},
+  {street = "Železničná"},
+  {part = "Markušovce", numbers = "668", note = "'rodinný dom súp. č. 668', a house without a street."},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Brunské"},
+  {street = "Bystrá"},
+  {street = "Hornádska"},
+  {street = "Komenského"},
+  {street = "Michalská"},
+  {street = "Odorínska cesta"},
+  {street = "Podhradová"},
+  {street = "SNP"},
+  {street = "Sv.J.Nepomuckého", numbers = "1-49", written = "Sv. J. Nepomuckého"},
+  {street = "Školská"},
+]

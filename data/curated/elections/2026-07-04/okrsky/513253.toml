@@ -1,0 +1,60 @@
+# Okrsky of Košeca, transcribed by an AI agent in job okrsok-rules-5532 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Hlavná, Zliechovská, Rudnianska, Pod Hôrkou
+#   okrsok 2: ulice: Školská, Bálentova, Pekárska, Prúdy, Sadová, Pri tehelni, Športovcov, Slnečná, Poľná
+#   okrsok 3: ulice: Dolný majer, V slatinách, Želiarska, Úzka, Železničná, Továrenská, Krúžok, Bytovky, Nad brehom
+#   okrsok 4: ulice: Za Barborkou, Horniacka, Za parkom, Na vyhni, Mojtinárska
+obec = "513253"
+name = "Košeca"
+okrsky_date = 2026-04-28
+okrsky_fill = "nearest"
+okrsky_note = "The document is a scan read from its page image. Addresses without a street name take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.koseca.sk/files/attachments/utvorenie-a-pocet-okrskov-3.pdf"
+sha256 = "bebacb5155fb6fa6734fd2cd9ee97040fda7544e5035aa91966ffa0d6cfb2509"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre referendum 4. júla 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná ulica", written = "Hlavná"},
+  {street = "Zliechovská ulica", written = "Zliechovská"},
+  {street = "Rudnianska ulica", written = "Rudnianska"},
+  {street = "Pod Hôrkou"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Školská ulica", written = "Školská"},
+  {street = "Bálentova ulica", written = "Bálentova"},
+  {street = "Pekárska ulica", written = "Pekárska"},
+  {street = "Prúdy"},
+  {street = "Sadová ulica", written = "Sadová"},
+  {street = "Pri tehelni"},
+  {street = "Ulica športovcov", written = "Športovcov"},
+  {street = "Slnečná ulica", written = "Slnečná"},
+  {street = "Poľná ulica", written = "Poľná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Dolný majer"},
+  {street = "V slatinách"},
+  {street = "Želiarska ulica", written = "Želiarska"},
+  {street = "Úzka ulica", written = "Úzka"},
+  {street = "Železničná ulica", written = "Železničná"},
+  {street = "Továrenská ulica", written = "Továrenská"},
+  {street = "Krúžok"},
+  {street = "Bytovky"},
+  {street = "Nad brehom"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Za Barborkou"},
+  {street = "Horniacka ulica", written = "Horniacka"},
+  {street = "Za parkom"},
+  {street = "Na vyhni"},
+  {street = "Mojtinárska ulica", written = "Mojtinárska"},
+]

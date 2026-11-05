@@ -1,0 +1,24 @@
+# Okrsky of Dedinky, transcribed by an AI agent in job okrsok-rules-3323 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č.1 - Dedinky
+#   okrsok 2: Volebný okrsok č.2 – Dobšinská Maša
+obec = "525618"
+name = "Dedinky"
+okrsky_date = 2022-11-08
+okrsky_note = "The mayor's decision, dated 'V Dedinkách, dňa 08.11.202' (the year cut short; read as 2022, posted with the referendum notices of November 2022): okrsok 1 – Dedinky, okrsok 2 – Dobšinská Maša, the two parts of the municipality."
+
+[[document]]
+url = "https://www.dedinky.eu/e_download.php?file=data/uredni_deska/obsah137_2.pdf&original=Vytvorenie%20volebnych%20okrskov%20a%20miestnosti.pdf"
+sha256 = "ca2cb3d7539101b4b9ba7a111eee3d3deb5583ffbf0658dada286c8b7959dbf4"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností pre referendum SR 2023"
+
+[okrsok.1]
+rules = [
+  {part = "Dedinky"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dobšinská Maša"},
+]

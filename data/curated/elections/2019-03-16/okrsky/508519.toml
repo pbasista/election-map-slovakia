@@ -1,0 +1,31 @@
+# The okrsky of Čerín of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/508519.toml, reused by `ems job reuse`. Its header there:
+#   Okrsky of Čerín, transcribed by an AI agent in job okrsok-rules-1056 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Čerín
+#     okrsok 2: Čačín
+obec = "508519"
+name = "Čerín"
+okrsky_date = 2022-08-08
+okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-03-16 the obec had as many, each with voters on the roll within 10% of its count then. No document of 2019-03-16 was searched for."
+okrsky_reused = 2022-10-29
+
+[[document]]
+url = "https://web.archive.org/web/20221128192032/https://www.cerin.sk/e_download.php?file=data/uredni_deska/obsah296_5.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti.pdf"
+sha256 = "1c7bd6f966fa6095bbac07d393efe8d92ef4d242c67854d52d2d674bb6fd01d2"
+title = "Volebné okrsky a volebné miestnosti (OcU 1158/2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20221006100621/https://www.cerin.sk/uradna-tabula/volebne-okrsky-a-volebne-miestnosti-336.html"
+sha256 = "77f641fe047bb02d46b2dae6c1fc6c94483f0f498e8047c0c938d85f4ac3a3b2"
+title = "Úradná tabuľa - Volebné okrsky a volebné miestnosti"
+
+[okrsok.1]
+rules = [
+  {part = "Čerín"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Čačín"},
+]

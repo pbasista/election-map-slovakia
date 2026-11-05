@@ -1,0 +1,60 @@
+# Okrsky of Kúty, transcribed by an AI agent in job okrsok-rules-4182 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bratislavská, Konečná, Hollého, Športová, Na Hliníku, Za zbrojnicou, Štúrova, Brnenská, Hlboká cesta, Hurbanova
+#   okrsok 2: Za školou, Školská, Kozia, Sasinkova, Dr. Š. Heska, Gorazdova, Kollárova, Továrenská, Na cihlách, Zelnická
+#   okrsok 3: Nám. Radlinského + voliči prihlásení k trvalému pobytu na Obec Kúty, Štefánikova, Nová, Železničiarska, Textilná
+obec = "504513"
+name = "Kúty"
+okrsky_fill = "nearest"
+okrsky_note = "The document lists streets only; street Štátny Les (one address, no. 219) and the addresses without a street are not named and go by fill_nearest. 'Nám. Radlinského' is the register's Radlinského Námestie (word order only); voters registered only to the municipality are listed with okrsok 3."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-12
+okrsky_date_basis = "The notice board entry states 'Vyvesené: 12. 1. 2024'; the document itself is undated. (https://www.kuty.sk/zverejnovanie/uradna-tabula-2/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-obci-kuty-volby-prezidenta-sr-724.html)"
+
+[[document]]
+url = "https://www.kuty.sk/e_download.php?file=data/editor/174sk_3.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD%20v%20obci%20K%C3%BAty%20Vo%C4%BEby%20prezidenta%20SR.pdf"
+sha256 = "4fd41924645cd88fbd6fa7eee490ede4721752b0f8b2f7a151c67fed9a1c99e2"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Kúty Voľby prezidenta SR"
+
+[[document]]
+url = "https://www.kuty.sk/zverejnovanie/uradna-tabula-2/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-obci-kuty-volby-prezidenta-sr-724.html"
+sha256 = "53334816a152cba148b3d5733f2521303f387cbcda106df404dd15f71996d428"
+title = "Úradná tabuľa: Utvorenie volebných okrskov ... Voľby prezidenta SR (vyvesené 12. 1. 2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Bratislavská"},
+  {street = "Konečná"},
+  {street = "Hollého"},
+  {street = "Športová"},
+  {street = "Na Hliníku"},
+  {street = "Za zbrojnicou"},
+  {street = "Štúrova"},
+  {street = "Brnenská"},
+  {street = "Hlboká cesta"},
+  {street = "Hurbanova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Za školou"},
+  {street = "Školská"},
+  {street = "Kozia"},
+  {street = "Sasinkova"},
+  {street = "Dr. Štefana Heska", written = "Dr. Š. Heska"},
+  {street = "Gorazdova"},
+  {street = "Kollárova"},
+  {street = "Továrenská"},
+  {street = "Na Cihlách", written = "Na cihlách"},
+  {street = "Zelnická"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Radlinského Námestie", written = "Nám. Radlinského", note = "'Nám. Radlinského' is the register's Radlinského Námestie, the only square of Kúty; only the word order differs."},
+  {street = "Štefánikova"},
+  {street = "Nová"},
+  {street = "Železničiarska"},
+  {street = "Textilná"},
+]

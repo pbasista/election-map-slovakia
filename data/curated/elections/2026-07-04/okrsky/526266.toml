@@ -1,0 +1,29 @@
+# Okrsky of Slavec, transcribed by an AI agent in job okrsok-rules-5797 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Obcania bývajúci v obci Slavec, v časti obce Gombasek a v časti obce Hamor
+#   okrsok 2: Obcania bývajúci v časti obce Vidová
+obec = "526266"
+name = "Slavec"
+okrsky_date = 2026-04-21
+okrsky_note = "The document is a scan, read by OCR without diacritics and checked against the page image."
+
+[[document]]
+url = "https://www.slavec.sk/e_download.php?file=/data/editor/109sk_4.pdf&original=urcenie_volebnych_okrskov.pdf"
+sha256 = "a357f55e0b5927fd50ae6a578bb19be888e9bf57756099fd0fb877ca1f836be2"
+title = "Určenie volebných okrskov a volebných miestností (referendum 04.07.2026)"
+
+[[document]]
+url = "https://www.slavec.sk/samosprava/volby-a-referenda/referendum-2026/"
+sha256 = "8748015499a72551726954f087aa89b1f1c206362e0889b24465b67b66842a82"
+title = "Stránka volieb obce Slavec"
+
+[okrsok.1]
+rules = [
+  {part = "Slavec", note = "Gombasek and Hamor are settlements within the part Slavec in the register"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vidová"},
+]

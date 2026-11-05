@@ -1,0 +1,63 @@
+# The okrsky of Lendak of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/523623.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Lendak, transcribed by an AI agent in job okrsok-rules-1843 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Kostolná, Na Kosorku, Partizánska, Revolučná, Jána Pavla II, Potočná
+#     okrsok 2: Hlavná, Zadná, Poľná, Sv. Rodiny, Školská
+#     okrsok 3: Jarná, Letná, Slnečná, Nová, Mlynská
+#     okrsok 4: Jána Vojtaššáka, Lemeje, Na úbočí, Pod Kicorou, Rovinky, Sv. Mikuláša, Športová, Vysoká hora, Tatranská, Zadná hora
+obec = "523623"
+name = "Lendak"
+okrsky_fill = "nearest"
+okrsky_note = "Streets the page does not list (Biela, Farské lúky, Goralská, Jána Stilla, Krátka, Lesná, Záhradná) and the addresses without a street take the nearest okrsok (fill_nearest)."
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-703): No okrsky document for this vote on lendak.sk, live or in the Internet Archive: the vote's pages (live notice-board posts for 2023 referendum and 2024 votes; archived pages of the 2018 municipal and 2019 presidential elections) carry only e-mail addresses, the announcement and voter information. Okrsky lists exist only for the EP elections 2019, the NR SR elections 2023, 2022 and 2026; another vote's list is not this vote's. These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2018-11-10 → 2019-05-25: 1: 926 → 916, 2: 933 → 931, 3: 892 → 894, 4: 937 → 948."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The page of the elections to the European Parliament of 25 May 2019 (archived 2019-09-18) lists the okrsky; it states no decision date."
+
+[[document]]
+url = "https://web.archive.org/web/20190918221927/https://lendak.sk/samosprava/volby/eurovolby-2019/25-maj-od-07-00-hod-do-22-00-hod"
+sha256 = "e3d14eb39319fb23e0b9d679e5f92dbcac932404d78b71cc0548a9945856aea8"
+title = "Eurovoľby 2019 – 25. máj od 07:00 hod do 22:00 hod: Obec Lendak vytvorila 4 volebné okrsky"
+
+[okrsok.1]
+rules = [
+  {street = "Kostolná"},
+  {street = "Na Kosorku"},
+  {street = "Partizánska"},
+  {street = "Revolučná"},
+  {street = "Jána Pavla II.", written = "Jána Pavla II"},
+  {street = "Potočná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná"},
+  {street = "Zadná"},
+  {street = "Poľná"},
+  {street = "Sv. Rodiny"},
+  {street = "Školská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Jarná"},
+  {street = "Letná"},
+  {street = "Slnečná"},
+  {street = "Nová"},
+  {street = "Mlynská"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Jána Vojtaššáka"},
+  {street = "Lemeje"},
+  {street = "Na úbočí"},
+  {street = "Pod Kicorou"},
+  {street = "Rovinky"},
+  {street = "Sv. Mikuláša"},
+  {street = "Športová"},
+  {street = "Vysoká hora"},
+  {street = "Tatranská"},
+  {street = "Zadná hora"},
+]

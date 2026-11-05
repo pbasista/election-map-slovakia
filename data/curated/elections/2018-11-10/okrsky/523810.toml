@@ -1,0 +1,30 @@
+# Okrsky of Slovenská Ves, transcribed by an AI agent in job okrsok-rules-912 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: časť územia obce Slovenská Ves od č.d. 1 - 262
+#   okrsok 2: časť územia obce Slovenská Ves od č.d. 263 – 462
+obec = "523810"
+name = "Slovenská Ves"
+okrsky_date = 2018-08-28
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document read from the image. Okrsky by súpisné (house) numbers; fill_nearest places any house numbered above 462."
+
+[[document]]
+url = "https://www.slovenskaves.info/e_download.php?file=data/uredni_deska/obsah3707_1.jpg&original=volebne-okrsky.jpg"
+sha256 = "3e4bf31de299c292f9070ef0a6c10296ba66727da16040621cce59360c0546af"
+title = "Utvorenie volebných okrskov a určenie volebných miestností – voľby do orgánov samosprávy obcí 10. novembra 2018"
+
+[[document]]
+url = "https://www.slovenskaves.info/zverejnovanie/elektronicka-uradna-tabula/volby-do-organov-samospravy-obci-3710.html"
+sha256 = "486e670839c0bbf67dd5fc90ce4025990bbb1073f305bd7462906fd9ec136baa"
+title = "Úradná tabuľa (page linking the document)"
+
+[okrsok.1]
+rules = [
+  {part = "Slovenská Ves", numbers = "1-262"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Slovenská Ves", numbers = "263-462"},
+]

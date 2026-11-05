@@ -1,0 +1,49 @@
+# Okrsky of Poproč, transcribed by an AI agent in job okrsok-rules-3661 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Banícka, Brezová, Horská, Jarná, Lesná, Letná, Mieru, Oľšavská, Poľná, Slnečná, Športová, Východná, Záhradná, Partizánska
+#   okrsok 2: Družstevná, Kostolná, Krátka, Kultúrna, Lipová, Nová, Obchodná, Potočná, Požiarna, Sadová, Školská, Západná
+obec = "521892"
+name = "Poproč"
+okrsky_date = 2023-06-27
+okrsky_fill = "nearest"
+okrsky_note = "Every register street is listed; the addresses without a street go by fill_nearest."
+
+[[document]]
+url = "https://poproc.sk/wp-content/uploads/dokumenty/volby-do-nrsr/Informacia-o-utvoreni-volebnych-okrskov-s-vymedzenim-ich-uzemneho-obvodu-a-urcenie-volebnych-miestnosti.pdf"
+sha256 = "0688039c6cd9c1730badce7c79aaf6adc8bf08ea6e050fcf73e37848eab4316a"
+title = "Informácia o utvorení volebných okrskov a určení volebných miestností pre voľby do NR SR 30. septembra 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Banícka"},
+  {street = "Brezová"},
+  {street = "Horská"},
+  {street = "Jarná"},
+  {street = "Lesná"},
+  {street = "Letná"},
+  {street = "Mieru"},
+  {street = "Oľšavská"},
+  {street = "Poľná"},
+  {street = "Slnečná"},
+  {street = "Športová"},
+  {street = "Východná"},
+  {street = "Záhradná"},
+  {street = "Partizánska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Kostolná"},
+  {street = "Krátka"},
+  {street = "Kultúrna"},
+  {street = "Lipová"},
+  {street = "Nová"},
+  {street = "Obchodná"},
+  {street = "Potočná"},
+  {street = "Požiarna"},
+  {street = "Sadová"},
+  {street = "Školská"},
+  {street = "Západná"},
+]

@@ -1,0 +1,144 @@
+# Council obvody of Stará Turá (506524), Nové Mesto nad Váhom.
+# Transcribed by an AI agent in job obvod-rules-081 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: 1. Stará Turá; vo volebnom obvode č. 1 11 poslancov
+#   obvod 2: 2. Černochov vrch + Papraď; vo volebnom obvode č. 2 1 poslanec
+#   obvod 3: 3. Topolecká + Súš; vo volebnom obvode č. 3 1 poslanec
+# Okrsky added by an AI agent in job okrsok-rules-5858 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Mesto, Družstevná 430-451, 454, 456-481, 483-485, 487-501, 507-512, 677,680, 689-690, 692-693, 740, 745, Hurbanova 156-157, 3157, Podjavorinskej 284, 516, 519, 524-535, SNP 3, 265-266, 3265, 291, Športová 503, 506, 675
+#   okrsok 2: Hurbanova 91, 97, 103,120, 125, 138-139, 3138, 143, 152, 154, 3154, Námestie Slobody 76, SNP 73-74, 83, 149
+#   okrsok 3: Dubník I. a II. 1031, 1111, 1144, 1157, 1162, 1175, 1176, 1184, 1190, 1320, Hurbanova 130-133, 136-137, 3130, Hviezdoslavova 612-652, 712-723, 741, 2707, Lúčna 3024-3026, 3028-3030, Mýtna 290, 537, 539, 541, 544-553, 555-557, 595, Němcovej 654-659, Sadová 3000-3011, 3012-3022, Sasinkova 722-729, 751-753, 755-762, Slnečná 3031-3033, 3037, Štúrova 108, 127, 559-594, 596-611, 653, 683-687,738, 739,750, Uhrova 660-673, 701-711
+#   okrsok 4: Dibrovova 220-229, 232-238, 242, 243-245, Dr.D.Úradníčka 189-190, 193, Nám.Dr.A.Schweitzera 195, 196, Husitská cesta 250, 252, Jiráskova 165, 188, Lipová 372, Mýtna 144, 8.apríla 201-217, 764-771, SNP 151
+#   okrsok 5: Gen.M.R.Štefánika 363-368, 383-385, Lipová 369-371, SNP 261, 270, 273, 276
+#   okrsok 6: Gen.M.R.Štefánika 356-362, 373-382, 386-388, Hlubockého 304, 306, 308-317, 676, Holubyho 114, 283, 289, 318, 335, 349-353, 682, Komenského 264, Kozmonautov 119, 323, 389-428, 691, 694-772, Mierova 5, SNP 263
+#   okrsok 7: Černochov vrch 1256-1296, 1321, 1329-1330, 1341, Drgoňova dolina 1203-1254, 1316, 1324, 1327, Durcova dolina 1297-1315, 1323, 1328, 1332-1333
+#   okrsok 8: Jazviny 1726-1757, 1799, Papraď 1505-1724, 1728, 1791-1798, 1800-1804, 1809, 1811, 1813, 1817-1818, 1820-1821, 1823, 1825, 1829, 1835, 1837, U Mikulcov 1759-1789
+#   okrsok 9: Hlavina 2001-2034, Topolecká 2038-2255, 2258, 2260, 2265-2266, 2269, 2274-2276, 2281, 2282, 2284, 2285, 2289, 2291, 2293-2295
+#   okrsok 10: Lazy 2406-2428, 2618, Súš 2432-2526, 2600, 2605, 2608, 2617, 2626, 2637, 2638, 2644, U Samkov 2527-2548, 2609, 2612. Trávniky 2551-2599, 2576, 2601-2604, 2607, 2613-2614, 2621, 2630, 2635, 2642
+obec = "506524"
+name = "Stará Turá"
+date = 2018-04-19
+note = "Resolution (scan, read from the rendered page) names obvod 1 Stará Turá (11 poslancov), 2 Černochov vrch + Papraď (1), 3 Topolecká + Súš (1). The mayor's okrsky document of 3.8.2018 places okrsok 7 (Černochov vrch, Drgoňova dolina, Durcova dolina) and okrsok 8 (Jazviny, Papraď, U Mikulcov) in obvod 2 and okrsky 9 (Hlavina, Topolecká) and 10 (Lazy, Súš, U Samkov, Trávniky) in obvod 3, so register part Jazviny goes to obvod 2."
+okrsky_date = 2018-08-03
+okrsky_fill = "nearest"
+okrsky_note = "The PDF is a scan (read from rendered pages; its text layer matches). Okrsky list streets with súpisné čísla (č.d.). Streets named in one okrsok only are taken whole; streets split among okrsky (Gen. M. R. Štefánika, Hurbanova, Lipová, Mýtna, SNP) are split by the listed súpisné čísla. 'Mesto' heading okrsok 1's list (voters registered only to the town) is not a rule. Dubník I. a II. (okrsok 3) is selected by súpisné číslo among addresses without a street of part Stará Turá; its house 1320 the register keeps in part Černochov Vrch (obvod 2), a contradiction with the obvody: it follows the obvod (okrsok 7). Okrsok 7 is the whole register part Černochov Vrch (Černochov vrch, Drgoňova and Durcova dolina), okrsok 8 parts Jazviny (Jazviny, U Mikulcov) and Paprad; okrsok 9 is the whole part Topolecká (Hlavina, Topolecká) and okrsok 10 the whole part Súš (Lazy, Súš, U Samkov, Trávniky), each alone in its part. Stará tehelňa (not named) and the other addresses without a street in part Stará Turá are placed by fill_nearest within obvod 1."
+
+[[document]]
+url = "https://www.staratura.sk/resources/File/schvalene-volebne-obvody-a-urcenie-poctu-poslancov-vo-volbach-do-organov-samospravy-obci.pdf"
+sha256 = "b7e09695a29a91f119e1d450454a00040ce4d8d436437f811135448a9502a0c8"
+title = "Uznesenie MsZ Stará Turá č. 22-XXXV/2018 z 19. 4. 2018 – volebné obvody a počet poslancov"
+
+[[document]]
+url = "https://www.staratura.sk/resources/File/volebne-obvody-a-okrsky.pdf"
+sha256 = "4b912331195f3cc9b2d33b8ae675bac94ee3282f9e9af41737c75b5b857de1ec"
+title = "Miesto konania volieb – volebné obvody a okrsky, voľby do orgánov samosprávy obcí 10. 11. 2018 (primátorka, 3. 8. 2018)"
+
+[obvod.1]
+seats = 11
+okrsky = [1, 2, 3, 4, 5, 6]
+rules = [
+  {part = "Stará Turá"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [7, 8]
+rules = [
+  {part = "Černochov Vrch"},
+  {part = "Paprad", note = "Papraď of the document is register part Paprad"},
+  {part = "Jazviny", note = "not named in the resolution; the okrsky document of 3.8.2018 lists Jazviny in okrsok 8 (Papraď) of volebný obvod č. 2"},
+]
+
+[obvod.3]
+seats = 1
+okrsky = [9, 10]
+rules = [
+  {part = "Topolecká"},
+  {part = "Súš"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Družstevná"},
+  {street = "Hurbanova", numbers = "156, 157, 3157", by = "supisne"},
+  {street = "Podjavorinskej"},
+  {street = "SNP", numbers = "3, 265, 266, 291, 3265", by = "supisne"},
+  {street = "Športová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hurbanova", numbers = "91, 97, 103, 120, 125, 138, 139, 143, 152, 154, 3138, 3154", by = "supisne"},
+  {street = "Nám. Slobody", written = "Námestie Slobody"},
+  {street = "SNP", numbers = "73, 74, 83, 149", by = "supisne"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Stará Turá", numbers = "1031, 1111, 1144, 1157, 1162, 1175, 1176, 1184, 1190", note = "Dubník I. a II. is not a street of the register; its houses are addresses without a street in part Stará Turá, selected by súpisné číslo"},
+  {street = "Hurbanova", numbers = "130-133, 136, 137, 3130", by = "supisne"},
+  {street = "Hviezdoslavova"},
+  {street = "Lúčna"},
+  {street = "Mýtna", numbers = "290, 537, 539, 541, 544-553, 555-557, 595", by = "supisne"},
+  {street = "Němcovej"},
+  {street = "Sadová"},
+  {street = "Sasinkova"},
+  {street = "Slnečná"},
+  {street = "Štúrova"},
+  {street = "Uhrova"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Dibrovova"},
+  {street = "Dr. D. Úradníčka", written = "Dr.D.Úradníčka"},
+  {street = "Námestie Dr. A. Schweitzera", written = "Nám.Dr.A.Schweitzera"},
+  {street = "Husitská cesta"},
+  {street = "Jiráskova"},
+  {street = "Lipová", numbers = "372", by = "supisne"},
+  {street = "Mýtna", numbers = "144", by = "supisne"},
+  {street = "8.apríla"},
+  {street = "SNP", numbers = "151", by = "supisne"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Gen. M. R. Štefánika", numbers = "363-368, 383-385", by = "supisne", written = "Gen.M.R.Štefánika"},
+  {street = "Lipová", numbers = "369-371", by = "supisne"},
+  {street = "SNP", numbers = "261, 270, 273, 276", by = "supisne"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Gen. M. R. Štefánika", numbers = "356-362, 373-382, 386-388", by = "supisne", written = "Gen.M.R.Štefánika"},
+  {street = "Hlubockého"},
+  {street = "Holubyho"},
+  {street = "Komenského"},
+  {street = "Kozmonautov"},
+  {street = "Mierova"},
+  {street = "SNP", numbers = "263", by = "supisne"},
+]
+
+[okrsok.7]
+rules = [
+  {part = "Černochov Vrch", note = "Černochov vrch, Drgoňova dolina and Durcova dolina (súpisné 1203-1341) are register part Černochov Vrch"},
+]
+
+[okrsok.8]
+rules = [
+  {part = "Jazviny", note = "Jazviny and U Mikulcov (súpisné 1726-1789, 1799) are register part Jazviny"},
+  {part = "Paprad", note = "Papraď of the document is register part Paprad"},
+]
+
+[okrsok.9]
+rules = [
+  {part = "Topolecká", note = "Hlavina (2001-2034) and Topolecká are register part Topolecká"},
+]
+
+[okrsok.10]
+rules = [
+  {part = "Súš", note = "Lazy, Súš, U Samkov and Trávniky (súpisné 2406-2644) are register part Súš"},
+]

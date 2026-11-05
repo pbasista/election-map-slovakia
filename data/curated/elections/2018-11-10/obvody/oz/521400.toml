@@ -1,0 +1,45 @@
+# The council obvody of Haniska of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/521400.toml, standing in, by `ems job reuse`. Its header there:
+#   Council obvody of Haniska (521400), Košice - okolie.
+#   Transcribed by an AI agent in job obvod-rules-191 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: Volebný obvod č. 1, okrsok č. 1 Volebná miestnosť: Kultúrny dom, Haniska 248 – sála Do volebného okrsku č. 1, patria voliči obce Haniska
+#     obvod 2: Volebný obvod č. 2, okrsok č. 2 Volebná miestnosť: AGRO TECHNIK s. r. o., Grajciar 2018 - kancelária Do volebného okrsku č. 2, patria voliči obce Grajciar
+#   Okrsky added by an AI agent in job okrsok-rules-1021 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Volebný obvod č. 1, okrsok č. 1 Volebná miestnosť: Kultúrny dom, Haniska 248 – sála Do volebného okrsku č. 1, patria voliči obce Haniska
+#     okrsok 2: Volebný obvod č. 2, okrsok č. 2 Volebná miestnosť: AGRO TECHNIK s. r. o., Grajciar 2018 - kancelária Do volebného okrsku č. 2, patria voliči obce Grajciar
+obec = "521400"
+name = "Haniska"
+date_approximate = "posted"
+date_seen = 2022-08-10
+date_basis = "The obec's page with the starosta's decision states 'Zverejnené 10.8.2022'; the decision itself names the elections of 29 October 2022 ('Rozhodnutím predsedu NR SR č. 209/2022 Z. z. … na sobotu 29. októbra 2022') but states no date of its own. No council resolution on the obvody was found. (https://www.haniska.sk/oznamy/urcenie-volebnych-miestnosti-a-volebnych-okrskov.html)"
+note = "No 2022 announcement of the obvody and their seats was found; the starosta's okrsky decision names the two volebné obvody with one okrsok each ('Volebný obvod č. 1, okrsok č. 1 … patria voliči obce Haniska'; 'Volebný obvod č. 2, okrsok č. 2 … patria voliči obce Grajciar'), read as the parts Haniska and Grajciar. The document gives no seats: the seats (8 and 1) are the Statistical Office's."
+adopted = 2022-10-29
+adopted_basis = "No document of 2018-11-10 setting the obvody was found (obvod-rules-175): The old website has an undated notice (http://archiv.haniska.sk/news/1287.html, between notices of 21.6.2018 and 5.9.2018): \"Obec Haniska má 2 volebné obvody v ktorých sa volí 9 poslancov. Volebný obvod č. 1 – Haniska – 8 poslancov; Volebný obvod č. 2 – Haniska, časť Grajciar – 1 poslanec\". It would give obvod 1 = part Haniska, obvod 2 = part Grajciar, but it neither names the 2018 elections nor carries a date, the Internet Archive has no capture of it before the vote, and the council sessions of 2018 publish no resolution text; so it cannot be dated as the prompt requires. These are the council obvody of the vote of 2022-10-29 (2022), the nearest in time with a rule set of its own of the same obvody and seats. Voters on the roll per obvod (ŠÚ SR), 2018-11-10 → 2022-10-29: 1: 1,084 → 1,139, 2: 93 → 77."
+okrsky_note = "The starosta's decision gives one okrsok per volebný obvod: okrsok 1 is obvod 1 (part Haniska), okrsok 2 is obvod 2 (part Grajciar), the document the obvody were transcribed from."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "The okrsky of the same rule set: 2 okrsky, those ŠÚ SR counted in each obvod. Voters on the roll per okrsok (ŠÚ SR), 2018-11-10 → 2022-10-29: 1: 1,084 → 1,139, 2: 93 → 77."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-08-10
+okrsky_date_basis = "The obec's page with the starosta's decision states 'Zverejnené 10.8.2022'; the decision names the elections of 29 October 2022 but states no date of its own. (https://www.haniska.sk/oznamy/urcenie-volebnych-miestnosti-a-volebnych-okrskov.html)"
+
+[[document]]
+url = "https://www.haniska.sk/oznamy/urcenie-volebnych-miestnosti-a-volebnych-okrskov.html"
+sha256 = "32cbb3f054dc807b5a9a4b260110728172e99d79d90e566b98285867ae4e115e"
+title = "Určenie volebných miestnosti a volebných okrskov (starosta obce Haniska)"
+
+[obvod.1]
+seats = 8
+okrsky = [1]
+rules = [
+  {part = "Haniska"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [2]
+rules = [
+  {part = "Grajciar"},
+]

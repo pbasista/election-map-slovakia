@@ -1,0 +1,50 @@
+# Okrsky of Dolná Krupá, transcribed by an AI agent in job okrsok-rules-4348 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Hlavná, Krátka, Horná, Dolný Chríb, Nám. L. van Beethovena, Nová, Družstevná, Školská
+#   okrsok 2: Ulice: Podhájska, Na Doline, Hoštáky, Jána Dopjeru, Trnavská cesta, Nám. Sv. Vendelína, M.H. Chotekovej, Horný Chríb, Potočná, Andreja Kubinu, Jozefa Brunsvika, Parková, Rybníčky, Potôčky
+obec = "506923"
+name = "Dolná Krupá"
+okrsky_date = 2024-01-12
+okrsky_fill = "nearest"
+okrsky_note = "The 5 register addresses without a street take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.dolnakrupa.sk/zverejnovanie/uradna-tabula/urcenie-volebnych-okrskov-a-miestnosti-prezidentske-volby-2024-5569.html"
+sha256 = "e1a16a0376a9eca22b6e3f518ee043902aea409a64cd767e71efbed745aec4ee"
+title = "Určenie volebných okrskov a miestností - PREZIDENTSKÉ VOĽBY 2024 (úradná tabuľa)"
+
+[[document]]
+url = "https://www.dolnakrupa.sk/modules/file_storage/download.php?file=6585bf7c%7C741&inline=1"
+sha256 = "c34bc4d32fa36b2f7a35508af32cc65a24d11dadc1e5b3604d5c6cb0468cf69c"
+title = "Určenie volebných okrskov a volebných miestností pre voľby prezidenta SR (12.1.2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná"},
+  {street = "Krátka"},
+  {street = "Horná"},
+  {street = "Dolný Chríb"},
+  {street = "Nám.L.van Beethovena", written = "Nám. L. van Beethovena"},
+  {street = "Nová"},
+  {street = "Družstevná"},
+  {street = "Školská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Podhájska"},
+  {street = "Na Doline"},
+  {street = "Hoštáky"},
+  {street = "Jána Dopjeru"},
+  {street = "Trnavská cesta"},
+  {street = "Námestie Sv.Vendelína", written = "Nám. Sv. Vendelína"},
+  {street = "M.H.Chotekovej", written = "M.H. Chotekovej"},
+  {street = "Horný Chríb"},
+  {street = "Potočná"},
+  {street = "Andreja Kubinu"},
+  {street = "Jozefa Brunsvika"},
+  {street = "Parková"},
+  {street = "Rybníčky"},
+  {street = "Potôčky"},
+]

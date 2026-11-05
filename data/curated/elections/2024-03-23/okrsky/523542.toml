@@ -1,0 +1,33 @@
+# Okrsky of Jánovce, transcribed by an AI agent in job okrsok-rules-4581 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov s trvalým pobytom v obci od súpisného čísla 0 – 205
+#   okrsok 2: pre voličov s trvalým pobytom v obci od súpisného čísla 206 – 403
+obec = "523542"
+name = "Jánovce"
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by súpisné číslo for the whole obec (one súpisné series), applied to both parts Jánovce and Machalovce. Houses with súpisné čísla above 403 are placed by fill_nearest."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The mayor's notice is undated; its heading names the vote (voľby prezidenta Slovenskej republiky v roku 2024)."
+
+[[document]]
+url = "https://obec-janovce.sk/wp-content/uploads/dokumenty/volby-prezidenta/Volebne-okrsky-a-volebne-miestnosti.pdf"
+sha256 = "bcb8b309713fde96e39ae2b736feb62324b8ad6d50f0e5ca31900318361ba000"
+title = "Volebné okrsky a volebné miestnosti pre voľby prezidenta Slovenskej republiky v roku 2024"
+
+[[document]]
+url = "https://obec-janovce.sk/dokument/volebne-okrsky-a-volebne-miestnosti-4/"
+sha256 = "882e396881f3ae15d01a3b12e954c842473ffb042ac56230eaa8435430fd93e0"
+title = "document page"
+
+[okrsok.1]
+rules = [
+  {part = "Jánovce", numbers = "0-205"},
+  {part = "Machalovce", numbers = "0-205"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Jánovce", numbers = "206-403"},
+  {part = "Machalovce", numbers = "206-403"},
+]

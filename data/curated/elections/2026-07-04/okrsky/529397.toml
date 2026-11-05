@@ -1,0 +1,187 @@
+# Okrsky of Bratislava-Karlova Ves, transcribed by an AI agent in job okrsok-rules-5323 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Borská všetky; Brodská všetky; Čavojského všetky; Čárskeho všetky; Karloveská 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 61, 64, 73; Lackova všetky; Nám. sv. Františka všetky; Pernecká všetky; Silvánska 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13; Suchohradská všetky; Špieszova všetky; Zohorská všetky
+#   okrsok 2: Kuklovská všetky; Levárska všetky; Sekulská všetky; Silvánska 14, 15, 16, 17, 18, 19, 20, 21, 23, 25, 27, 29; Sološnická všetky
+#   okrsok 3: Púpavová všetky; Pustá všetky; Šaštínska všetky
+#   okrsok 4: Bedľová všetky; Belániková všetky; Cesta na Č. most všetky; Dubáková všetky; Dúbravská cesta všetky; Gabčíkova všetky; Hlivová všetky; Hodálova všetky; Hudecova všetky; Ilkovičova všetky; Konvalinková všetky; Litovská všetky; Mlyny všetky; Mlynská dolina všetky; Mokrohájska cesta všetky; Na Sitine všetky; Plávková všetky; Pod lesom všetky; Pôvabnicová všetky; Rýdziková všetky; Staré Grunty všetky; Suchohríbová všetky; Stuhová všetky; Vretenová všetky; Zlatohríbová všetky; súpisné číslo 5578
+#   okrsok 5: Botanická všetky; Devínska cesta všetky; Janotova všetky; Karloveské rameno všetky; Líščie údolie všetky; Lykovcová všetky; Nábělkova všetky; Na Riviére všetky; Nad Dunajom všetky; Nad ostrovom všetky; Nad Sihoťou všetky; Novackého všetky; Pod Brehmi všetky; Svrčia všetky
+#   okrsok 6: Adámiho všetky; Jurigovo nám. všetky; Karloveská 1C, 1D, 1E, 1F, 1H, 3; Ladislava Sáru všetky; Molecova všetky
+#   okrsok 7: Donnerova všetky; Segnerova všetky; Sumbalova všetky; Tilgnerova všetky
+#   okrsok 8: Baníkova všetky; Fadruszova všetky; Karloveská 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34; Kempelenova všetky; Pod Rovnicami všetky
+#   okrsok 9: Dlhé Diely I. všetky; Dlhé Diely II. všetky; Dlhé Diely III. všetky; Hany Meličkovej všetky
+#   okrsok 10: Albína Brunovského všetky; Cikkerova všetky; Iskerníková všetky; Komonicová všetky; Majerníkova všetky; Na Kampárke všetky; Vincenta Hložníka všetky; Vyhliadka všetky
+#   okrsok 11: Jamnického všetky; Kresánkova všetky; Matejkova všetky
+#   okrsok 12: Kolískova všetky; Pribišova všetky; Tománkova všetky
+#   okrsok 13: Ferdiša Kostku všetky; Ľudovíta Fullu všetky; Nad lúčkami všetky
+#   okrsok 14: Beniakova všetky; Hlaváčiková všetky
+#   okrsok 15: Blyskáčová všetky; Jána Stanislava všetky; Stoklasová všetky; Veternicová všetky
+obec = "529397"
+name = "Bratislava-Karlova Ves"
+okrsky_date = 2026-04-24
+okrsky_fill = "nearest"
+okrsky_note = "The annex lists the streets of each okrsok, with orientačné numbers where a street is split; split streets are transcribed with the listed numbers. Streets the document names that the register lacks are left out: Mlyny, Suchohríbová. fill_nearest places register streets the document does not name (Lamačská cesta, Tienistá, Ulica Rudolfa Mocka), house numbers of split streets the annex does not list, and the addresses without a street. \"súpisné číslo 5578\" is a rule on that súpisné number. Two versions of the decision were posted (…referendum_2026-AKTUALNE.pdf on 29.04.2026 and …referendum_2026.pdf on 30.04.2026); they assign the same streets to the same okrsky and differ only in the order of lines; the later one is used."
+
+[[document]]
+url = "https://www.karlovaves.sk/wp-content/uploads/2026/04/Urcenie_volebnych_okrskov_referendum_2026.pdf"
+sha256 = "68429af9d3194446da73f06a04cb1bfabeef3fa35733753a8275f8cce87dcd31"
+title = "Rozhodnutie starostky MČ Bratislava-Karlova Ves o určení volebných okrskov a volebných miestností pre hlasovanie v referende 4. júla 2026 (24.04.2026) s prílohou"
+
+[okrsok.1]
+rules = [
+  {street = "Borská"},
+  {street = "Brodská"},
+  {street = "Čavojského"},
+  {street = "Čárskeho"},
+  {street = "Karloveská", numbers = "5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 61, 64, 73"},
+  {street = "Lackova"},
+  {street = "Nám. Sv. Františka", written = "Nám. sv. Františka"},
+  {street = "Pernecká"},
+  {street = "Silvánska", numbers = "1-13"},
+  {street = "Suchohradská"},
+  {street = "Špieszova"},
+  {street = "Zohorská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kuklovská"},
+  {street = "Levárska"},
+  {street = "Sekulská"},
+  {street = "Silvánska", numbers = "14-21, 23, 25, 27, 29"},
+  {street = "Sološnická"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Púpavová"},
+  {street = "Pustá"},
+  {street = "Šaštínska"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bedľová"},
+  {street = "Belániková"},
+  {street = "Cesta na Červený Most", written = "Cesta na Č. most"},
+  {street = "Dubáková"},
+  {street = "Dúbravská cesta"},
+  {street = "Gabčíkova"},
+  {street = "Hlivová"},
+  {street = "Hodálova"},
+  {street = "Hudecova"},
+  {street = "Ilkovičova"},
+  {street = "Konvalinková"},
+  {street = "Litovská"},
+  {street = "Mlynská Dolina", written = "Mlynská dolina"},
+  {street = "Mokrohájska cesta"},
+  {street = "Na Sitine"},
+  {street = "Plávková"},
+  {street = "Pod lesom"},
+  {street = "Pôvabnicová"},
+  {street = "Rýdziková"},
+  {street = "Staré Grunty"},
+  {street = "Stuhová"},
+  {street = "Vretenová"},
+  {street = "Zlatohríbová"},
+  {part = "Bratislava-Karlova Ves", numbers = "5578", note = "the document lists \"súpisné číslo 5578\" in this okrsok: the address with that súpisné číslo"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Botanická"},
+  {street = "Devínska cesta"},
+  {street = "Janotova"},
+  {street = "Karloveské rameno"},
+  {street = "Líščie údolie"},
+  {street = "Lykovcová"},
+  {street = "Nábělkova"},
+  {street = "Na Riviére"},
+  {street = "Nad Dunajom"},
+  {street = "Nad ostrovom"},
+  {street = "Nad Sihoťou"},
+  {street = "Novackého"},
+  {street = "Pod brehmi", written = "Pod Brehmi"},
+  {street = "Svrčia"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Adámiho"},
+  {street = "Jurigovo nám."},
+  {street = "Karloveská", numbers = "1C, 1D, 1E, 1F, 1H, 3"},
+  {street = "Ladislava Sáru"},
+  {street = "Molecova"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Donnerova"},
+  {street = "Segnerova"},
+  {street = "Sumbalova"},
+  {street = "Tilgnerova"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Baníkova"},
+  {street = "Fadruszova"},
+  {street = "Karloveská", numbers = "4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34"},
+  {street = "Kempelenova"},
+  {street = "Pod Rovnicami"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Dlhé diely I", written = "Dlhé Diely I."},
+  {street = "Dlhé diely II", written = "Dlhé Diely II."},
+  {street = "Dlhé diely III", written = "Dlhé Diely III."},
+  {street = "Hany Meličkovej"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Albína Brunovského"},
+  {street = "Cikkerova"},
+  {street = "Iskerníková"},
+  {street = "Komonicová"},
+  {street = "Majerníkova"},
+  {street = "Na Kampárke"},
+  {street = "Vincenta Hložníka"},
+  {street = "Vyhliadka"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Jamnického"},
+  {street = "Kresánkova"},
+  {street = "Matejkova"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Kolískova"},
+  {street = "Pribišova"},
+  {street = "Tománkova"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "F. Kostku", written = "Ferdiša Kostku"},
+  {street = "Ľudovíta Fullu"},
+  {street = "Nad lúčkami"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Beniakova"},
+  {street = "Hlaváčiková"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Blyskáčová"},
+  {street = "Jána Stanislava"},
+  {street = "Stoklasová"},
+  {street = "Veternicová"},
+]

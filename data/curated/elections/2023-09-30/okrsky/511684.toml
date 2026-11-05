@@ -1,0 +1,29 @@
+# Okrsky of Ozdín, transcribed by an AI agent in job okrsok-rules-3973 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kultúrna miestnosť Ozdín
+#   okrsok 2: Kultúrny dom Bystrička
+obec = "511684"
+name = "Ozdín"
+okrsky_date = 2023-06-22
+okrsky_note = "The list 'Zoznam volebných okrskov pre voľby do NR SR v roku 2023' (dated 'V Ozdíne 22.6.2023', approved by the mayor; an image on the notice-board page posted 23.06.2023) gives each okrsok only its polling station: no. 1 Kultúrna miestnosť Ozdín, Ozdín 52; no. 2 Kultúrny dom Bystrička, Bystrička 1. Each okrsok is given the part of its station (inferred). Same okrsky as the 2022 elections' list."
+
+[[document]]
+url = "https://www.ozdin.sk/samosprava/uradna-tabula-archiv/volebne-okrsky-a-miestnosti-volby-do-nr-sr-2023-a402-973"
+sha256 = "ac7540f9894f6204e6509782e883727f6c911de0405718bf0c9f9178ccc745f0"
+title = "Volebné okrsky a miestnosti - Voľby do NR SR 2023 (Zoznam volebných okrskov pre voľby do NR SR v roku 2023)"
+
+[[document]]
+url = "https://www.ozdin.sk/imgcache/e-img-3168.jpg"
+sha256 = "0858f24fdb1ba9815de0acfea0adb57400e216610c373a51b77139b453654e50"
+title = "Zoznam volebných okrskov pre voľby do NR SR v roku 2023 (scan, image on the notice-board page)"
+
+[okrsok.1]
+rules = [
+  {part = "Ozdín", note = "the list names only the polling station, the Kultúrna miestnosť in Ozdín; the okrsky are as many as the parts and each station lies in another part", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Bystrička", note = "the list names only the polling station, the Kultúrny dom in Bystrička; the okrsky are as many as the parts and each station lies in another part", inferred = true},
+]

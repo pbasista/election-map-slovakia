@@ -1,0 +1,32 @@
+# The okrsky of Horné Orešany of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/507067.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Horné Orešany, transcribed by an AI agent in job okrsok-rules-4370 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: od s. č. 0 – 400
+#     okrsok 2: od s. č. 401 –
+obec = "507067"
+name = "Horné Orešany"
+okrsky_date = 2024-01-29
+okrsky_note = "Okrsky by súpisné číslo for the whole village: okrsok 1 '0 – 400', okrsok 2 'od s. č. 401 –' (everything else, rest)."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3741): No NRSR 2023 page or okrsky document on the website (the NRSR page holds 2020 voter information only). These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2024-03-23: 1: 834 → 690, 2: 775 → 925."
+
+[[document]]
+url = "https://www.horneoresany.sk/sub/urcenie-volebnych-okrskov-a-miestnosti-2024.pdf"
+sha256 = "3cc8ac8c29217584fe026d8f824641f5dce14d5113c6e2ab1b8cd1402f4372c5"
+title = "Určenie volebných okrskov a volebných miestností pre voľbu prezidenta SR 2024"
+
+[[document]]
+url = "https://www.horneoresany.sk/volby-prezidenta-sr-2024"
+sha256 = "07f6c777ce59c30008a84e6689ad19cab49f8a068ece0da98a12f4934c059681"
+title = "elections page"
+
+[okrsok.1]
+rules = [
+  {part = "Horné Orešany", numbers = "0-400"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

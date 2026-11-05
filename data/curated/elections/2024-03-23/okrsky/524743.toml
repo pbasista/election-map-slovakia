@@ -1,0 +1,32 @@
+# Okrsky of Lemešany, transcribed by an AI agent in job okrsok-rules-4519 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: v tomto okrsku budú hlasovať občania z domov súp. čísla od 0 do 300
+#   okrsok 2: v tomto okrsku budú hlasovať občania z domov súp. čísla 301 - 620
+obec = "524743"
+name = "Lemešany"
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision for the presidential election of 23 March 2024: okrsky by súpisné čísla 0–300 and 301–620 (both vote in Denný stacionár, Lemešany 80). Addresses numbered above 620 are placed by fill_nearest."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-29
+okrsky_date_basis = "The mayor's decision (an image on the page) states no date; the page gives 'Dátum vloženia: 29. 1. 2024'. (https://www.lemesany.sk/obec-1/volby-1/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-392sk.html)"
+
+[[document]]
+url = "https://www.lemesany.sk/evt_image.php?img=4277"
+sha256 = "58e725797d2d433840a76a1ba22de96e0dfefe5773661530a934ba2f6103a5f8"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.lemesany.sk/obec-1/volby-1/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-392sk.html"
+sha256 = "1330fa6245c8428254f63ab4aa9fbb6da67f4a0121bce3ab26d08bb13821f5d5"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (page)"
+
+[okrsok.1]
+rules = [
+  {part = "Lemešany", numbers = "0-300"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lemešany", numbers = "301-620"},
+]

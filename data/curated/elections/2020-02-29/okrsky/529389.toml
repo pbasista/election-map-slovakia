@@ -1,0 +1,253 @@
+# Okrsky of Bratislava-Dúbravka, transcribed by an AI agent in job okrsok-rules-2272 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hanulova
+#   okrsok 2: Považanova, Sokolíkova, Švantnerova, Talichova, Tavarikova osada, Záhradkárska
+#   okrsok 3: Bezekova, Klimkovičova, M. Schneidera-Trnavského, Tulipánová
+#   okrsok 4: Bujnákova, Galbavého Kudlákova, Chrobáková
+#   okrsok 5: J. V. Dolinského, J. Hronca, Koprivnická, Plachého, Strmé sady, Strmý bok, Vendelínska
+#   okrsok 6: Pekníkova, Repašského
+#   okrsok 7: Brižitská, Čiernohorská, Jadranská, Kajerka, K Horánskej studni, Novodvorská, Oskorušová, Pod záhradami, Popovova, Štepná
+#   okrsok 8: Moyšova, Tranovského, Kristy Bendovej
+#   okrsok 9: Karola Adlera
+#   okrsok 10: Cabanova
+#   okrsok 11: Fedákova
+#   okrsok 12: Homolova
+#   okrsok 13: Gallayova
+#   okrsok 14: Pri kríži
+#   okrsok 15: Ožvoldíkova
+#   okrsok 16: Žatevná, M.Granca
+#   okrsok 17: Saratovská 1 až 7, Trhová
+#   okrsok 18: Saratovská 8 až 28, Pri Hrubej lúke
+#   okrsok 19: Nejedlého 1 až 16, 18, 20
+#   okrsok 20: Nejedlého 17 až 73
+#   okrsok 21: Agátová, Dúbravčická, Sekurisova
+#   okrsok 22: Drobného 2 až 22 párne, Ušiakova
+#   okrsok 23: Dražická, Drobného 1 až 27 nepárne a 24, Lysákova, Na vrátkach
+#   okrsok 24: Kpt. Rašu
+#   okrsok 25: Bilíkova
+#   okrsok 26: J. Alexyho, V. Valachovej
+#   okrsok 27: Batkova, Landauova
+#   okrsok 28: Bazovského, Červeňákova
+#   okrsok 29: Bagarova, Beňovského
+#   okrsok 30: Bošániho, Damborského, Nemčíkova, Polianky
+#   okrsok 31: Bullova, Lipského
+#   okrsok 32: Harmincova, Húščavova, Ľ. Zúbka
+obec = "529389"
+name = "Bratislava-Dúbravka"
+okrsky_date = 2019-11-18
+okrsky_fill = "nearest"
+okrsky_note = "Streets the document names but the register lacks (no addresses) are left out: Strmý bok. Nejedlého: okrsok 19 '1 až 16, 18, 20', okrsok 20 '17 až 73'; 18 and 20 are excepted from okrsok 20. Addresses without a street name (súpisné čísla only) and house numbers the document leaves out (Saratovská 29-30, Drobného 26, 28, 29) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.dubravka.sk/files/documents/samosprava/volby/2020%20nrsr/rozhodnutie-voavm2020.pdf"
+sha256 = "ee8c3c68b3b538d0df3b8d1179614e609c3762e0929e31e92e366a690c6ae61d"
+title = "Rozhodnutie starostu o utvorení volebných okrskov a určení volebných miestností pre voľby do NR SR (18. novembra 2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Hanulova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Považanova"},
+  {street = "Sokolíkova"},
+  {street = "Švantnerova"},
+  {street = "Talichova"},
+  {street = "Tavaríkova osada", written = "Tavarikova osada", note = "the document drops the accent of Tavaríkova; same street"},
+  {street = "Záhradkárska"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bezekova"},
+  {street = "Klimkovičova"},
+  {street = "M. Schneidra Trnavského", written = "M. Schneidera-Trnavského", note = "the register spells the name Schneidra without hyphen; same street"},
+  {street = "Tulipánová"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bujnákova"},
+  {street = "Galbavého"},
+  {street = "Kudlákova"},
+  {street = "Chrobákova", written = "Chrobáková", note = "another ending of the same street (Chrobákova)"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "J.Valašťana Dolinského", written = "J. V. Dolinského", note = "initials of the register name J. Valašťana Dolinského; same street"},
+  {street = "Jura Hronca", written = "J. Hronca"},
+  {street = "Koprivnická"},
+  {street = "Plachého"},
+  {street = "Strmé sady"},
+  {street = "Vendelínska"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Pekníkova"},
+  {street = "Repašského"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Brižitská"},
+  {street = "Čiernohorská"},
+  {street = "Jadranská"},
+  {street = "Kajerka"},
+  {street = "K Horánskej Studni", written = "K Horánskej studni"},
+  {street = "Novodvorská"},
+  {street = "Oskorušová"},
+  {street = "Pod záhradami"},
+  {street = "Popovova"},
+  {street = "Štepná"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Moyšova"},
+  {street = "Tranovského"},
+  {street = "Kristy Bendovej"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Karola Adlera"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Cabanova"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Fedákova"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Homolova"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Gallayova"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Pri kríži"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Ožvoldíkova"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Žatevná"},
+  {street = "Martina Granca", written = "M.Granca"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Saratovská", numbers = "1-7"},
+  {street = "Trhová"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Saratovská", numbers = "8-28"},
+  {street = "Pri Hrubej lúke"},
+]
+
+[okrsok.19]
+rules = [
+  {street = "Nejedlého", numbers = "1-16, 18, 20"},
+]
+
+[okrsok.20]
+rules = [
+  {street = "Nejedlého", numbers = "17-73", except = "18, 20"},
+]
+
+[okrsok.21]
+rules = [
+  {street = "Agátová"},
+  {street = "Dúbravčická"},
+  {street = "Sekurisova"},
+]
+
+[okrsok.22]
+rules = [
+  {street = "Drobného", numbers = "2-22", parity = "even"},
+  {street = "Ušiakova"},
+]
+
+[okrsok.23]
+rules = [
+  {street = "Dražická"},
+  {street = "Drobného", numbers = "1-27", parity = "odd"},
+  {street = "Drobného", numbers = "24"},
+  {street = "Lysákova"},
+  {street = "Na vrátkach"},
+]
+
+[okrsok.24]
+rules = [
+  {street = "Kpt. Jána Rašu", written = "Kpt. Rašu", note = "the document leaves out the first name Jána; same street"},
+]
+
+[okrsok.25]
+rules = [
+  {street = "Bilíkova"},
+]
+
+[okrsok.26]
+rules = [
+  {street = "Janka Alexyho", written = "J. Alexyho"},
+  {street = "Valachovej", written = "V. Valachovej", note = "the register omits the first name Violy; same street"},
+]
+
+[okrsok.27]
+rules = [
+  {street = "Batkova"},
+  {street = "Landauova"},
+]
+
+[okrsok.28]
+rules = [
+  {street = "Bazovského"},
+  {street = "Červeňákova"},
+]
+
+[okrsok.29]
+rules = [
+  {street = "Bagarova"},
+  {street = "Beňovského"},
+]
+
+[okrsok.30]
+rules = [
+  {street = "Bošániho"},
+  {street = "Damborského"},
+  {street = "Nemčíkova"},
+  {street = "Polianky"},
+]
+
+[okrsok.31]
+rules = [
+  {street = "Bullova"},
+  {street = "Lipského"},
+]
+
+[okrsok.32]
+rules = [
+  {street = "Harmincova"},
+  {street = "Húščavova"},
+  {street = "Ľuda Zúbka", written = "Ľ. Zúbka"},
+]

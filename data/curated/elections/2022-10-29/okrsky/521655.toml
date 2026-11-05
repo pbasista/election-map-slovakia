@@ -1,0 +1,66 @@
+# The okrsky of Malá Ida of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/521655.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Malá Ida, transcribed by an AI agent in job okrsok-rules-4458 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Pažitná, Skladná, Letná, Idanská, Pri splave, Bočná, Tichá, Zlaté pole, K ihrisku, Mlynská, Školská, Svetlá, Vodná, Obec Malá Ida, Pod Dúbravou
+#     okrsok 2: Konvalinková, Slnečnicová, Ružová, Tulipánová, Orgovánová, Narcisová, Brezová, Lipová, Zvončeková, Smreková, s.č. 701, Kvetná, Šalviová, Borovicová, Kamilková, Levanduľová, Medovková, Prvosienková, Púpavová, Jahodová, Malinová, Bukovecká, Pri hati, Hlavná, Zimná, Pod lesom
+obec = "521655"
+name = "Malá Ida"
+okrsky_fill = "nearest"
+okrsky_note = "'Obec Malá Ida' in okrsok 1 means voters registered without an address (no rule). Streets the document names but the register lacks: Pod lesom. Register streets the document does not name (Nevädzová) and the houses without a street are placed by fill_nearest."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2022-10-29 setting the okrsky was found (okrsok-rules-962): The 2022 document (19.07.2022) only says the obec forms 2 okrsky, both voting in the Kultúrny dom, Letná 7, without streets; the referendum's (8.11.2022) says the same. The only list of streets per okrsok found is the document for the elections to the NR SR 2020 (Volebné-okrsky.docx), not valid for 2022 and not stated to be unchanged. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2022-10-29 → 2024-03-23: 1: 760 → 745, 2: 727 → 757."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the document's text names the vote: 'utvorila volebné okrsky a určila volebné miestnosti pre voľby prezidenta Slovenskej republiky 2024'; it states no date"
+
+[[document]]
+url = "https://www.malaida.sk/modules/file_storage/download.php?file=57a84135%7C131&inline=1"
+sha256 = "54502e63770c70add276f40ac139e1dbaabad5b589f41ae833921373bbb608a3"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby prezidenta SR 2024 (scan)"
+
+[okrsok.1]
+rules = [
+  {street = "Pažitná"},
+  {street = "Skladná"},
+  {street = "Letná"},
+  {street = "Idanská"},
+  {street = "Pri Splave", written = "Pri splave"},
+  {street = "Bočná"},
+  {street = "Tichá"},
+  {street = "Zlaté Pole", written = "Zlaté pole"},
+  {street = "K ihrisku"},
+  {street = "Mlynská"},
+  {street = "Školská"},
+  {street = "Svetlá"},
+  {street = "Vodná"},
+  {street = "Pod Dúbravou"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Konvalinková"},
+  {street = "Slnečnicová"},
+  {street = "Ružová"},
+  {street = "Tulipánová"},
+  {street = "Orgovánová"},
+  {street = "Narcisová"},
+  {street = "Brezová"},
+  {street = "Lipová"},
+  {street = "Zvončeková"},
+  {street = "Smreková"},
+  {part = "Malá Ida", numbers = "701", note = "a house without a street, by súpisné číslo"},
+  {street = "Kvetná"},
+  {street = "Šalviová"},
+  {street = "Borovicová"},
+  {street = "Kamilková"},
+  {street = "Levanduľová"},
+  {street = "Medovková"},
+  {street = "Prvosienková"},
+  {street = "Púpavová"},
+  {street = "Jahodová"},
+  {street = "Malinová"},
+  {street = "Bukovecká"},
+  {street = "Pri Hati", written = "Pri hati"},
+  {street = "Hlavná"},
+  {street = "Zimná"},
+]

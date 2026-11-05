@@ -1,0 +1,52 @@
+# Okrsky of Hliník nad Hronom, transcribed by an AI agent in job okrsok-rules-4940 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Československej armády, Jána Švermu, Kamenárska, Kopaničná, Lesná, Mlynská, Námestie SNP, Pekárenská, Pivovarská, Potočná, Priehradka, Priemyselná, Sovietskej armády, Tehelná, Železničná
+#   okrsok 2: ulice: 1. mája, 9. mája, Dukelských hrdinov, Kpt. Nálepku, Ladislava Majerského, Lúčna, Ľudovíta Štúra, Mierová, Na záhradky, Opatovská, Partizánska, Pionierov, Poľná, Strojárska, Školská; občania, ktorým bol zrušený trvalý pobyt (bez adresy)
+obec = "516767"
+name = "Hliník nad Hronom"
+okrsky_date = 2024-03-04
+okrsky_fill = "nearest"
+okrsky_note = "Streets the document names but the register lacks, left out: Na záhradky. The 240 addresses without a street (súpisné čísla only) take the okrsok of the nearest address (fill_nearest). Okrsok 2 also holds voters without an address (bez adresy)."
+
+[[document]]
+url = "https://www.hliniknadhronom.sk/download_file_f.php?id=2010436"
+sha256 = "3d163a92f37e0d8d511a61d01a2c9da60b889016ea38bd6a572174c5a506d383"
+title = "Určenie volebných okrskov a volebných miestností (voľby do Európskeho parlamentu 8. júna 2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Československej Armády", written = "Československej armády", note = "the same name; the register capitalises the second word"},
+  {street = "Jána Švermu"},
+  {street = "Kamenárska"},
+  {street = "Kopaničná"},
+  {street = "Lesná"},
+  {street = "Mlynská"},
+  {street = "Námestie SNP"},
+  {street = "Pekárenská"},
+  {street = "Pivovarská"},
+  {street = "Potočná"},
+  {street = "Priehradka"},
+  {street = "Priemyselná"},
+  {street = "Sovietskej Armády", written = "Sovietskej armády", note = "the same name; the register capitalises the second word"},
+  {street = "Tehelná"},
+  {street = "Železničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Dukelských Hrdinov", written = "Dukelských hrdinov", note = "the same name; the register capitalises the second word"},
+  {street = "Kapitána Nálepku", written = "Kpt. Nálepku", note = "Kpt. is the abbreviation of Kapitána (captain)"},
+  {street = "Ladislava Majerského"},
+  {street = "Lúčna"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Mierová"},
+  {street = "Opatovská"},
+  {street = "Partizánska"},
+  {street = "Pionierov"},
+  {street = "Poľná"},
+  {street = "Strojárska"},
+  {street = "Školská"},
+]

@@ -1,0 +1,32 @@
+# Okrsky of Krásnohorské Podhradie, transcribed by an AI agent in job okrsok-rules-4444 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: občania prihlásení na trvalý pobyt od súpisného čísla 1 -412
+#   okrsok 2: občania prihlásení na trvalý pobyt od súpisného čísla 413 -747
+obec = "525871"
+name = "Krásnohorské Podhradie"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned notice read from the page image. The okrsky are ranges of súpisné čísla; okrsok 2 takes all numbers from 413 up. Addresses outside both ranges, if any, go by fill_nearest."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-02-01
+okrsky_date_basis = "The undated notice is linked from the municipality's page of the vote; its file name on the website carries the upload time (2024-02-01). (https://www.obeckrasnohorskepodhradie.sk/volby-prezidenta-slovenskej-republiky-2024-a73-745)"
+
+[[document]]
+url = "https://www.obeckrasnohorskepodhradie.sk/files/2024-02-01-160152-Ozn__menie_o___ase_a_mieste_konania_volieb__.pdf"
+sha256 = "2e1234a4e4ff66a46338a2043165f4141e158a01461a23d72538f42a759b9009"
+title = "Oznámenie o čase a mieste konania volieb 23.3.2024 a 6.4.2024"
+
+[[document]]
+url = "https://www.obeckrasnohorskepodhradie.sk/volby-prezidenta-slovenskej-republiky-2024-a73-745"
+sha256 = "b910fb62f6ba3541332a09f55fe5a8d4d6b680917323c6abfec4cb3a37fad369"
+title = "Stránka volieb obce"
+
+[okrsok.1]
+rules = [
+  {part = "Krásnohorské Podhradie", numbers = "1-412"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Krásnohorské Podhradie", numbers = "413-"},
+]

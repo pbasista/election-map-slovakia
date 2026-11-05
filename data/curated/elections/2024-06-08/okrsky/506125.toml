@@ -1,0 +1,35 @@
+# Okrsky of Kočovce, transcribed by an AI agent in job okrsok-rules-5090 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: územný obvod časť Kočovce
+#   okrsok 2: územný obvod časť Beckovská Vieska
+#   okrsok 3: územný obvod časť Rakoľuby
+obec = "506125"
+name = "Kočovce"
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the mayor's decision names the European Parliament election 2024; it states no date"
+
+[[document]]
+url = "https://www.kocovce.sk/download_file_f.php?id=2018926"
+sha256 = "c5a7b8487a82df88634f9c4b8fc8d55029afb22b795ceaa98a406485af56c903"
+title = "Utvorenie okrskov pre voľby do Európskeho parlamentu v r. 2024"
+
+[[document]]
+url = "https://www.kocovce.sk/oznamy/volby-do-europskeho-parlamentu-2024-informacie-pre-volica.html"
+sha256 = "b4c2194433d1e9e7bb6a9204fc94884dc2a26fbabef30ab616c6ac50c352a770"
+title = "Voľby do Európskeho parlamentu 2024 - informácie pre voliča"
+
+[okrsok.1]
+rules = [
+  {part = "Kočovce"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Beckovská Vieska"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Rakoľuby"},
+]

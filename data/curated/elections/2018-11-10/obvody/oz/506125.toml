@@ -1,0 +1,41 @@
+# Council obvody of Kočovce (506125), Nové Mesto nad Váhom.
+# Transcribed by an AI agent in job obvod-rules-167 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: miestnu časť Kočovce
+#   obvod 2: miestnu časť Beckovská Vieska
+#   obvod 3: miestnu časť Rakoľuby
+# Okrsky added by `ems job reuse`: those of the vote of 2026-10-24, data/curated/elections/2026-10-24/obvody/oz/506125.toml, standing in.
+obec = "506125"
+name = "Kočovce"
+date = 2018-08-06
+okrsky_date = 2026-07-14
+okrsky_note = "Scanned announcement of the mayor (14.7.2026), read visually: 3 okrsky, one per part, each coinciding with the obvod of the same part."
+okrsky_adopted = 2026-10-24
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-5903): The archived 2018 elections page (captured 13.11.2018) lists the obvody announcement, the voters' information, the clerk's appointment, the candidate lists, poster areas and the results, but no okrsky document; the archived notice board of August–November 2018 has none either, and the live site keeps only current notices. The obvody announcement (one obvod per part: Kočovce, Beckovská Vieska, Rakoľuby) does not mention okrsky, and the results record (3 obvody, 3 okrsky) does not say which okrsok is which, so the numbering of the okrsky is not documented. These are the okrsky of the vote of 2026-10-24 (2026), the nearest in time with okrsky of its own that fit: 3 okrsky (nearer, not taken: 2019-05-25: okrsky of the whole obec, the council then elected in several obvody; 2023-09-30: okrsky of the whole obec, the council then elected in several obvody; 2024-03-23: okrsky of the whole obec, the council then elected in several obvody; 2024-06-08: okrsky of the whole obec, the council then elected in several obvody; 2026-07-04: okrsky of the whole obec, the council then elected in several obvody). The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://web.archive.org/web/20181115153012/http://www.kocovce.sk/download_file_f.php?id=1004655"
+sha256 = "63aee073dcb2a90a7f8e9f57e5add19117fe9308334dc554cf25427731fda26d"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 10. novembra 2018"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {part = "Kočovce"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Beckovská Vieska"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Rakoľuby"},
+]

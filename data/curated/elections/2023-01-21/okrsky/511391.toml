@@ -1,0 +1,105 @@
+# Okrsky of Fiľakovo, transcribed by an AI agent in job okrsok-rules-2912 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Gorkého, Jánošíkova, Poľná, Partizánska, Tajovského, Hviezdoslavova, Športová, Kalajova, B. Němcovej, Biskupická, Ulica Viliama Hulitu, Obrancov mieru, Malocintorínska, Železničná, žel. stanica, Jána Bottu, Záhradnícka, Školská
+#   okrsok 2: Sládkovičova, Mocsáryho, 1. mája, Vajanského, Čajkovského, 29. augusta, Kukučínova, Mládežnícka, Československej armády, Družstevná, Ružová, Tulipánová, Kvetná, Fialková, B. Bartóka, Jókaiho, Smetanova
+#   okrsok 3: Parková , Štúrova , Námestie slobody, ul. SNP, Malá, Koháryho nám., Nám. padlých hrdinov, Rázusova, Hlavná, Podhradská, Trhová, Radničná, Baštová, Jilemnického, Hollého, Tehelná, Šávoľská cesta, Továrenská, kpt. Nálepku, Lučenská, I. Madácha, Egreš, Moyzesova, B. S. Timravy, Bernolákova, Jesenského
+#   okrsok 4: Mlynská, Úzka, Gemerská, Tichá, Viničná, Daxnerova, Puškinova, Švermova, J. Kalinčiaka, J.Kráľa, Odborárska, L.N.Tolstého, Ulica Cebriánova, Sídlisko /bytové domy/ a rodinné domy na ul. Farská lúka
+obec = "511391"
+name = "Fiľakovo"
+okrsky_date = 2022-11-07
+okrsky_fill = "nearest"
+okrsky_note = "'Ulica Viliama Hulitu' and 'Ulica Cebriánova' are not in the register and are left out; 'žel. stanica' is the station, no street. Houses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.filakovo.sk/download_file_f.php?id=2065618"
+sha256 = "e2f472d5ab453118a2fba8b1130832f84800e27be20464646aecd6baa39dc9ec"
+title = "Okrsky na hlasovanie v referende dňa 21. januára 2023 (07.11.2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Gorkého"},
+  {street = "Jánošíkova"},
+  {street = "Poľná"},
+  {street = "Partizánska"},
+  {street = "Tajovského"},
+  {street = "Hviezdoslavova"},
+  {street = "Športová"},
+  {street = "Kalajová", written = "Kalajova"},
+  {street = "B. Němcovej"},
+  {street = "Obrancov mieru"},
+  {street = "Malocintorínska"},
+  {street = "Železničná"},
+  {street = "Jána Bottu"},
+  {street = "Záhradnícka"},
+  {street = "Biskupická"},
+  {street = "Školská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Sládkovičova"},
+  {street = "Mocsáryho"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "Vajanského"},
+  {street = "Čajkovského"},
+  {street = "29.augusta"},
+  {street = "Kukučínova"},
+  {street = "Mládežnícka"},
+  {street = "Československej armády"},
+  {street = "Družstevná"},
+  {street = "Ružová"},
+  {street = "Tulipánová"},
+  {street = "Kvetná"},
+  {street = "Fialková"},
+  {street = "B. Bartóka"},
+  {street = "Jókaiho"},
+  {street = "Smetanova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Parková"},
+  {street = "Štúrova"},
+  {street = "Námestie slobody"},
+  {street = "SNP"},
+  {street = "Malá"},
+  {street = "Koháryho námestie", written = "Koháryho nám."},
+  {street = "Námestie padlých hrdinov", written = "Nám. padlých hrdinov"},
+  {street = "Rázusova"},
+  {street = "Hlavná"},
+  {street = "Podhradská"},
+  {street = "Trhová"},
+  {street = "Radničná"},
+  {street = "Baštová"},
+  {street = "Jilemnického"},
+  {street = "Hollého"},
+  {street = "Tehelná"},
+  {street = "Šávoľská cesta"},
+  {street = "Továrenská"},
+  {street = "Kpt. Nálepku", written = "kpt. Nálepku"},
+  {street = "Lučenská"},
+  {street = "I. Madácha"},
+  {street = "Egreš"},
+  {street = "Moyzesova"},
+  {street = "B. S. Timravy"},
+  {street = "Bernolákova"},
+  {street = "Jesenského"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Mlynská"},
+  {street = "Úzka"},
+  {street = "Gemerská"},
+  {street = "Tichá"},
+  {street = "Viničná"},
+  {street = "Daxnerova"},
+  {street = "Puškinova"},
+  {street = "Švermova"},
+  {street = "J. Kalinčiaka"},
+  {street = "J. Kráľa", written = "J.Kráľa"},
+  {street = "Odborárska"},
+  {street = "L.N. Tolstého", written = "L.N.Tolstého"},
+  {street = "Farská lúka"},
+]

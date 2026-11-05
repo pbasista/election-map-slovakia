@@ -1,0 +1,26 @@
+# Okrsky of Východná, transcribed by an AI agent in job okrsok-rules-4963 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1. okrsok - čísla domov 1 až 433
+#   okrsok 2: 2. okrsok - čísla domov 434 až 2000, Železničná stanica, Svarín, Čierny Váh
+obec = "511170"
+name = "Východná"
+okrsky_note = "The okrsky are defined by house (súpisné) numbers: okrsok 1 numbers 1–433, okrsok 2 numbers 434–2000 with Železničná stanica, Svarín and Čierny Váh; okrsok 2 is written as the rest of the part."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-03-15
+okrsky_date_basis = "The notice on the official notice board states \"Vyvesené: 15. 3. 2024\"; it names the vote but no decision date. (https://www.vychodna.eu/zverejnovanie/uradna-tabula-1/volby-do-europskeho-parlamentu-2669.html)"
+
+[[document]]
+url = "https://www.vychodna.eu/zverejnovanie/uradna-tabula-1/volby-do-europskeho-parlamentu-2669.html"
+sha256 = "2007010e15bbdb1133503c273ed3d69955b134ba6cf622295c3c97b2d2f2c8f2"
+title = "Voľby do Európskeho parlamentu (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {part = "Východná", numbers = "1-433", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Východná"},
+]

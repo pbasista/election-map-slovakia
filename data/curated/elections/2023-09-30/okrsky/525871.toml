@@ -1,0 +1,32 @@
+# Okrsky of Krásnohorské Podhradie, transcribed by an AI agent in job okrsok-rules-3817 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: občania prihlásení na trvalý pobyt od súpisného čísla 1 -412
+#   okrsok 2: občania prihlásení na trvalý pobyt od súpisného čísla 413 – 745
+obec = "525871"
+name = "Krásnohorské Podhradie"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned notice read from the page image. The okrsky are ranges of súpisné čísla; okrsok 2 takes all numbers from 413 up. Addresses outside both ranges, if any, go by fill_nearest."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-08-16
+okrsky_date_basis = "The undated notice is linked from the municipality's page of the vote; its file name on the website carries the upload time (2023-08-16). (https://www.obeckrasnohorskepodhradie.sk/volby-do-nr-sr-2023-a73-699)"
+
+[[document]]
+url = "https://www.obeckrasnohorskepodhradie.sk/files/2023-08-16-200508-Okrsky_ozn__menie_.pdf"
+sha256 = "0178b31e89ea33fa702b6768159c73a05212070b001b681998003c033a008698"
+title = "Volebné miestnosti v Krásnohorskom Podhradí - oznámenie (voľby do NR SR 30. 9. 2023)"
+
+[[document]]
+url = "https://www.obeckrasnohorskepodhradie.sk/volby-do-nr-sr-2023-a73-699"
+sha256 = "61b8c98c4706522b1dcc0b266c7257a5dd03b529d7ff5e5285ef327ba814d2ad"
+title = "Stránka volieb obce"
+
+[okrsok.1]
+rules = [
+  {part = "Krásnohorské Podhradie", numbers = "1-412"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Krásnohorské Podhradie", numbers = "413-"},
+]

@@ -1,0 +1,435 @@
+# Okrsky of Nové Zámky, transcribed by an AI agent in job okrsok-rules-009 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Andovská, Cintorínska, G. Czuczora, Holubičia, Holubyho, Jeruzalemská, J. Simora, Kmeťova, Levanduľová, Pažitná, Poľná, Sitnianska, Svornosti, Školská, Západná, Zemiansky priechod
+#   okrsok 2: Cisárska bašta, Drozdia, Labutia, Nám. slobody, Petőfiho, Pod baštou, Šafárikova
+#   okrsok 3: Čižmárska, Fajková, Gúgska, Gúgsky priechod, Komočská cesta, Michalská bašta, Nám. hrdinov, Nový Gúg, Okružná, Tabaková, Toskánska
+#   okrsok 4: J. Kráľa, Tatranská
+#   okrsok 5: Hliníková, Jarková, Jarná, Mederská, Moyzesova, Nevädzová, Nitrianska cesta, Platanová, Pod záhradami, Rozmarínová, Slovenská, Šulekova, Tichá, Tvrdošovská cesta, Včelárska, Zelená alej, Zdravotnícka
+#   okrsok 6: Hradná, Nová, Orechový sad, Orgovánová, Pod kopcom 1 - 59, 2 - 48, S. H. Vajanského č. 75 – 81
+#   okrsok 7: Bočná, S. H. Vajanského č. 2 – 88
+#   okrsok 8: Čerešňová, Dostihová, Dubová, Hájová, Jazerná, Jelenia, Krížna, Riečna, Robotnícka, Rovná, Strelecká, Štrková, Trávna, Zálesná
+#   okrsok 9: S. H. Vajanského č. 23-73
+#   okrsok 10: T. Vansovej
+#   okrsok 11: A. Jedlika, Agátová, Brezová, Hlboká, Krajná, Lúčna, M. Matunáka, Mýtna, Podhájska, Pod kopcom 61 – 75, 50 – 66, Poľovnícka, Pri hrádzi, Slávičia, Slnečná, Tatranský priechod, Topoľová
+#   okrsok 12: Šoltésovej ulici
+#   okrsok 13: Jazdecká
+#   okrsok 14: Jánošíkova, Kasárenská, Kvetná, Lesná, Ružová dolina
+#   okrsok 15: G. Bethlena č. 17 – 71
+#   okrsok 16: G. Bethlena č. 1 – 15, G. Bethlena č. 2E – 50
+#   okrsok 17: Nábrežná č. 3 – 51
+#   okrsok 18: Nábrežná č. 53 – 93
+#   okrsok 19: Boženy Němcovej, Nábrežnej ul. č. 2 – 10 (párne), Tureckej ul.
+#   okrsok 20: Nábrežná č. 26 – 48, Nábrežná č. 95 – 99
+#   okrsok 21: Bitúnková, Nábrežná č. 12, 14, 16, Tajovského
+#   okrsok 22: Banskobystrická, Bernolákovo námestie, Björnsonova, Bratov Baldigarovcov, Česká bašta, Forgáchova bašta, F. Rákócziho, M. Flengera, Hlavné námestie, Hollého, L. Kassáka, Kostolná, Kraskova, Kukučínova, Majzonovo námestie, M. Oláha, Nám. františkánov, P. Várdayho, Pod kalváriou, Radničná, Tolstého, Žerotínova bašta a občania s trvalým pobytom Mesto Nové Zámky
+#   okrsok 23: Bajčská cesta, Bešeňovská cesta, Budovateľská, Dolná, Dvorská cesta, Ďumbierska, Jantárová, Janov dvor, J. Murgaša, Komárňanská cesta, Konopná, Koralová, Ľanová, Nábrežná 18-22A, Pri skladoch, Továrenská, Viničná, Zelená, Veľká Ragoňa
+#   okrsok 24: Komárňanská, F. Kapisztóryho
+#   okrsok 25: Mostná, Novomestská, Sihoť
+#   okrsok 26: T. G. Masaryka
+#   okrsok 27: SNP
+#   okrsok 28: Gogoľova, M. R. Štefánika 1 – 45, 2 – 52, Nám. Gy. Széchényiho, Pri gymnáziu
+#   okrsok 29: P. Blahu, Roľnícka, S. H. Vajanského č. 1 – 21
+#   okrsok 30: Ernestova bašta, Lastovičia, Letomostie, Podzámska, Pribinova
+#   okrsok 31: Ďorocká, Lécka
+#   okrsok 32: Devínska, Dostojevského, Javorová, Jesenského, Jiráskova, J. M. Hurbana, Krátka, Komjatická, Magnóliová, M. M. Hodžu, Nám. P. O. Hviezdoslava, Pod lipami, Rázusova, Sládkovičova, Svätoplukova, Výpalisko, Železná, Žofijská
+#   okrsok 33: Medzimlynie, M. R. Štefánika č. 47 – 81, M. R. Štefánika č. 54 – 80, Nám. republiky, Tyršova
+#   okrsok 34: Cyrilometódska č. 2 – 14, Ľ. Štúra
+#   okrsok 35: Cyrilometódska č. 15 – 35, Cyrilometódska č. 16 – 48
+#   okrsok 36: Bezručova, Heydukova, Hviezdoslavova, Kollárova, Komenského, Nitrianske nábrežie, Pri ramene, Pri Zúgove, Šurianska, Wolkerova, Železničiarska, Zúgov
+#   okrsok 37: Detvianska, Husova, Húlska, Hrebíčková, Oravská, Nový svet, Palackého, Piesočná, Pohronská, Považská, Strečnianska, Trhová, Vinohrady
+obec = "503011"
+name = "Nové Zámky"
+okrsky_date = 2017-07-18
+okrsky_fill = "nearest"
+okrsky_note = "Streets the document names but the address register lacks, left out: Sihoť, Veľká Ragoňa, Zemiansky priechod. fill_nearest places streets the document does not name: Bratislavská cesta, Ulica Piritovská alej; house numbers outside the document's ranges: Cyrilometódska 1, 3, 13; G. Bethlena 2, 2A, 2B, 2C, 2D, 54, 56, 58, 73, 79; M. R. Štefánika 82; Nábrežná 1, 24, 50, 52, 54, 107 (G. Bethlena \"2E–50\" is read as 2E and 4–50, so 2–2D are left to the nearest address); the addresses without a street name (súpisné čísla of part Nové Zámky). Okrsok 22 also takes \"občania s trvalým pobytom Nové Zámky\" (voters registered without an address), which needs no rule. The document gives the split house-number ranges without párne/nepárne; each is read by its side of the street (odd/even, as the ranges of the 2018–2019 documents state), see the rule notes."
+okrsky_supplemented = 2022-10-29
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The document does not name the newer streets Bazová ulica (okrsok 3), Mesačná ulica (okrsok 1), Medová ulica (okrsok 5), Ulica pod hviezdami (okrsok 5), Ulica západ slnka (okrsok 5), Nesvadská cesta (okrsok 23), Športová (okrsok 23); they are placed as the rule set of the municipal elections of 29 October 2022 (same 37 okrsky, same numbering) places them, copied exactly. The register now has addresses on these streets (mostly new houses) that the document predates."
+
+[[document]]
+url = "https://www.novezamky.sk/assets/File.ashx?id_org=700036&id_dokumenty=23791"
+sha256 = "03525c7981a396838fbcfd8bba45afa07341d27274af6494cc430a33caf622d9"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v meste Nové Zámky počas konania volieb do orgánov samosprávnych krajov dňa 4. novembra 2017 (Nové Zámky, 18.07.2017)"
+
+[okrsok.1]
+rules = [
+  {street = "Andovská"},
+  {street = "Cintorínska"},
+  {street = "G. Czuczora"},
+  {street = "Holubičia"},
+  {street = "Holubyho"},
+  {street = "Jeruzalemská"},
+  {street = "J. Simora"},
+  {street = "Kmeťova"},
+  {street = "Levanduľová"},
+  {street = "Pažitná"},
+  {street = "Poľná"},
+  {street = "Sitnianska"},
+  {street = "Svornosti"},
+  {street = "Školská"},
+  {street = "Západná ulica", written = "Západná"},
+  {street = "Mesačná ulica", supplemented = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cisárska bašta"},
+  {street = "Drozdia"},
+  {street = "Labutia"},
+  {street = "Nám. slobody"},
+  {street = "Petőfiho"},
+  {street = "Pod baštou"},
+  {street = "Šafárikova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Čižmárska"},
+  {street = "Fajková"},
+  {street = "Gúgska"},
+  {street = "Gúgsky priechod"},
+  {street = "Komočská cesta"},
+  {street = "Michalská bašta"},
+  {street = "Nám. hrdinov"},
+  {street = "Nový Gúg"},
+  {street = "Okružná"},
+  {street = "Tabaková"},
+  {street = "Toskánska"},
+  {street = "Bazová ulica", supplemented = true},
+]
+
+[okrsok.4]
+rules = [
+  {street = "J. Kráľa"},
+  {street = "Tatranská"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Hliníková"},
+  {street = "Jarková"},
+  {street = "Jarná ulica", written = "Jarná"},
+  {street = "Mederská"},
+  {street = "Moyzesova"},
+  {street = "Nevädzová"},
+  {street = "Nitrianska cesta"},
+  {street = "Platanová"},
+  {street = "Pod záhradami"},
+  {street = "Rozmarínová ulica", written = "Rozmarínová"},
+  {street = "Slovenská"},
+  {street = "Šulekova"},
+  {street = "Tichá"},
+  {street = "Tvrdošovská cesta"},
+  {street = "Včelárska"},
+  {street = "Zelená alej"},
+  {street = "Zdravotnícka"},
+  {street = "Medová ulica", supplemented = true},
+  {street = "Ulica pod hviezdami", supplemented = true},
+  {street = "Ulica západ slnka", supplemented = true},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Hradná"},
+  {street = "Nová"},
+  {street = "Orechový sad"},
+  {street = "Orgovánová"},
+  {street = "Pod kopcom", numbers = "1-59", parity = "odd", note = "the document gives \"1–59\" without párne/nepárne; read as odd numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+  {street = "Pod kopcom", numbers = "2-48", parity = "even", note = "the document gives \"2–48\" without párne/nepárne; read as even numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+  {street = "S. H. Vajanského", numbers = "75-81", parity = "odd", note = "the document gives \"75–81\" without párne/nepárne; read as odd numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Bočná"},
+  {street = "S. H. Vajanského", numbers = "2-88", parity = "even", note = "the document gives \"2–88\" without párne/nepárne; read as even numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Čerešňová"},
+  {street = "Dostihová"},
+  {street = "Dubová"},
+  {street = "Hájová"},
+  {street = "Jazerná"},
+  {street = "Jelenia"},
+  {street = "Krížna"},
+  {street = "Riečna"},
+  {street = "Robotnícka"},
+  {street = "Rovná"},
+  {street = "Strelecká"},
+  {street = "Štrková"},
+  {street = "Trávna"},
+  {street = "Zálesná"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "S. H. Vajanského", numbers = "23-73", parity = "odd", note = "the document gives \"23-73\" without párne/nepárne; read as odd numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "T. Vansovej"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "A. Jedlika"},
+  {street = "Agátová"},
+  {street = "Brezová"},
+  {street = "Hlboká"},
+  {street = "Krajná"},
+  {street = "Lúčna"},
+  {street = "M. Matunáka"},
+  {street = "Mýtna"},
+  {street = "Podhájska"},
+  {street = "Pod kopcom", numbers = "61-75", parity = "odd", note = "the document gives \"61–75\" without párne/nepárne; read as odd numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+  {street = "Pod kopcom", numbers = "50-66", parity = "even", note = "the document gives \"50–66\" without párne/nepárne; read as even numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+  {street = "Poľovnícka"},
+  {street = "Pri hrádzi"},
+  {street = "Slávičia"},
+  {street = "Slnečná"},
+  {street = "Tatranský priechod"},
+  {street = "Topoľová"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Šoltésovej", written = "Šoltésovej ulici", note = "the document writes \"Šoltésovej ulici\" for the register's \"Šoltésovej\": the same street (spelling differs)"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Jazdecká"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Jánošíkova"},
+  {street = "Kasárenská"},
+  {street = "Kvetná"},
+  {street = "Lesná"},
+  {street = "Ružová dolina"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "G. Bethlena", numbers = "17-71", parity = "odd", note = "the document gives \"17–71\" without párne/nepárne; read as odd numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "G. Bethlena", numbers = "1-15", parity = "odd", note = "the document gives \"1–15\" without párne/nepárne; read as odd numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+  {street = "G. Bethlena", numbers = "2E, 4-50", parity = "even", note = "the document gives \"2E–50\" without párne/nepárne; read as even numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Nábrežná", numbers = "3-51", parity = "odd", note = "the document gives \"3–51\" without párne/nepárne; read as odd numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Nábrežná", numbers = "53-93", parity = "odd", note = "the document gives \"53–93\" without párne/nepárne; read as odd numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+]
+
+[okrsok.19]
+rules = [
+  {street = "Boženy Němcovej"},
+  {street = "Nábrežná", numbers = "2-10", parity = "even", written = "Nábrežnej", note = "the document writes \"Nábrežnej\" for the register's \"Nábrežná\": the same street (grammatical case form)"},
+  {street = "Turecká", written = "Tureckej", note = "the document writes \"Tureckej\" for the register's \"Turecká\": the same street (grammatical case form)"},
+]
+
+[okrsok.20]
+rules = [
+  {street = "Nábrežná", numbers = "26-48", parity = "even", note = "the document gives \"26–48\" without párne/nepárne; read as even numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+  {street = "Nábrežná", numbers = "95-99", parity = "odd", note = "the document gives \"95–99\" without párne/nepárne; read as odd numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+]
+
+[okrsok.21]
+rules = [
+  {street = "Bitúnková"},
+  {street = "Nábrežná", numbers = "12, 14, 16"},
+  {street = "Tajovského"},
+]
+
+[okrsok.22]
+rules = [
+  {street = "Banskobystrická"},
+  {street = "Bernolákovo námestie"},
+  {street = "Bjőrnsonova", written = "Björnsonova", note = "the document writes \"Björnsonova\" for the register's \"Bjőrnsonova\": the same street (spelling differs)"},
+  {street = "bratov Baldigarovcov", written = "Bratov Baldigarovcov"},
+  {street = "Česká bašta"},
+  {street = "Forgáchova bašta"},
+  {street = "F. Rákócziho"},
+  {street = "M. Flengera"},
+  {street = "Hlavné námestie"},
+  {street = "Hollého"},
+  {street = "L. Kassáka"},
+  {street = "Kostolná"},
+  {street = "Kraskova"},
+  {street = "Kukučínova"},
+  {street = "Majzonovo námestie"},
+  {street = "M. Oláha"},
+  {street = "Nám. františkánov"},
+  {street = "P. Várdayho"},
+  {street = "Pod kalváriou"},
+  {street = "Radničná"},
+  {street = "Tolstého"},
+  {street = "Žerotínova bašta"},
+]
+
+[okrsok.23]
+rules = [
+  {street = "Bajčská cesta"},
+  {street = "Bešeňovská cesta"},
+  {street = "Budovateľská"},
+  {street = "Dolná"},
+  {street = "Dvorská cesta"},
+  {street = "Ďumbierska"},
+  {street = "Jantárová"},
+  {street = "Janov dvor"},
+  {street = "J. Murgaša"},
+  {street = "Komárňanská cesta"},
+  {street = "Konopná"},
+  {street = "Koralová"},
+  {street = "Ľanová"},
+  {street = "Nábrežná", numbers = "18-22, 22A", parity = "even", note = "the document gives \"18-22A\" without párne/nepárne; read as even numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+  {street = "Pri skladoch"},
+  {street = "Továrenská"},
+  {street = "Viničná"},
+  {street = "Zelená"},
+  {street = "Nesvadská cesta", supplemented = true},
+  {street = "Športová", supplemented = true},
+]
+
+[okrsok.24]
+rules = [
+  {street = "Komárňanská"},
+  {street = "F. Kapisztóryho"},
+]
+
+[okrsok.25]
+rules = [
+  {street = "Mostná"},
+  {street = "Novomestská"},
+]
+
+[okrsok.26]
+rules = [
+  {street = "T. G. Masaryka"},
+]
+
+[okrsok.27]
+rules = [
+  {street = "SNP"},
+]
+
+[okrsok.28]
+rules = [
+  {street = "Gogoľova"},
+  {street = "M. R. Štefánika", numbers = "1-45", parity = "odd", note = "the document gives \"1–45\" without párne/nepárne; read as odd numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+  {street = "M. R. Štefánika", numbers = "2-52", parity = "even", note = "the document gives \"2–52\" without párne/nepárne; read as even numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+  {street = "Nám. Gy. Széchényiho"},
+  {street = "Pri gymnáziu"},
+]
+
+[okrsok.29]
+rules = [
+  {street = "P. Blahu"},
+  {street = "Roľnícka"},
+  {street = "S. H. Vajanského", numbers = "1-21", parity = "odd", note = "the document gives \"1–21\" without párne/nepárne; read as odd numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+]
+
+[okrsok.30]
+rules = [
+  {street = "Ernestova bašta"},
+  {street = "Lastovičia"},
+  {street = "Letomostie"},
+  {street = "Podzámska"},
+  {street = "Pribinova"},
+]
+
+[okrsok.31]
+rules = [
+  {street = "Ďorocká"},
+  {street = "Lécka"},
+]
+
+[okrsok.32]
+rules = [
+  {street = "Devínska"},
+  {street = "Dostojevského"},
+  {street = "Javorová"},
+  {street = "Jesenského"},
+  {street = "Jiráskova"},
+  {street = "J. M. Hurbana"},
+  {street = "Krátka"},
+  {street = "Komjatická"},
+  {street = "Magnóliová"},
+  {street = "M. M. Hodžu"},
+  {street = "Nám. P.O. Hviezdoslava", written = "Nám. P. O. Hviezdoslava"},
+  {street = "Pod lipami"},
+  {street = "Rázusova"},
+  {street = "Sládkovičova"},
+  {street = "Svätoplukova"},
+  {street = "Výpalisko"},
+  {street = "Železná"},
+  {street = "Žofijská"},
+]
+
+[okrsok.33]
+rules = [
+  {street = "Medzimlynie"},
+  {street = "M. R. Štefánika", numbers = "47-81", parity = "odd", note = "the document gives \"47–81\" without párne/nepárne; read as odd numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+  {street = "M. R. Štefánika", numbers = "54-80", parity = "even", note = "the document gives \"54–80\" without párne/nepárne; read as even numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+  {street = "Nám. republiky"},
+  {street = "Tyršova"},
+]
+
+[okrsok.34]
+rules = [
+  {street = "Cyrilometódska", numbers = "2-14", parity = "even", note = "the document gives \"2–14\" without párne/nepárne; read as even numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+  {street = "Ľ. Štúra"},
+]
+
+[okrsok.35]
+rules = [
+  {street = "Cyrilometódska", numbers = "15-35", parity = "odd", note = "the document gives \"15–35\" without párne/nepárne; read as odd numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+  {street = "Cyrilometódska", numbers = "16-48", parity = "even", note = "the document gives \"16–48\" without párne/nepárne; read as even numbers, as the street's ranges split by side (the documents of 2018–2019 state this parity)"},
+]
+
+[okrsok.36]
+rules = [
+  {street = "Bezručova"},
+  {street = "Heydukova"},
+  {street = "Hviezdoslavova"},
+  {street = "Kollárova"},
+  {street = "Komenského"},
+  {street = "Nitrianske nábrežie"},
+  {street = "Pri ramene"},
+  {street = "Pri Zúgove"},
+  {street = "Šurianska"},
+  {street = "Wolkerova"},
+  {street = "Železničiarska"},
+  {street = "Zúgov"},
+]
+
+[okrsok.37]
+rules = [
+  {street = "Detvianska"},
+  {street = "Husova"},
+  {street = "Húlska"},
+  {street = "Hrebíčková"},
+  {street = "Oravská"},
+  {street = "Nový svet"},
+  {street = "Palackého"},
+  {street = "Piesočná"},
+  {street = "Pohronská"},
+  {street = "Považská"},
+  {street = "Strečnianska"},
+  {street = "Trhová"},
+  {street = "Vinohrady"},
+]

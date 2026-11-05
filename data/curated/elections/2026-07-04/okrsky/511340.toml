@@ -1,0 +1,29 @@
+# Okrsky of České Brezovo, transcribed by an AI agent in job okrsok-rules-5787 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Sála kultúrneho domu České Brezovo
+#   okrsok 2: Zasadačka Kultúrneho domu Váľkovo
+obec = "511340"
+name = "České Brezovo"
+okrsky_date = 2026-05-04
+okrsky_note = "The document lists only the two polling stations (okrsok 1 kultúrny dom České Brezovo, okrsok 2 kultúrny dom Vaľkovo). The obec has three parts but two k.ú., each with one station, so each okrsok is the k.ú. of its station, inferred, as in the rule set of 2022."
+
+[[document]]
+url = "https://www.ceskebrezovo.sk/evt_file.php?file=4101"
+sha256 = "8dd755cdebcfd4f8e199d3c66290827e3b3318d3d441e6beb4ce4a92a5384264"
+title = "Volebné okrsky pre Referendum 2026"
+
+[[document]]
+url = "https://www.ceskebrezovo.sk/aktuality/referendum-2026-350sk.html"
+sha256 = "a85fed4bedfae48aac9e79d8be5d7dd5ba9073059c5624147d284639c2606b12"
+title = "Referendum 2026"
+
+[okrsok.1]
+rules = [
+  {ku = "České Brezovo", note = "The document gives okrsok 1 only its polling station, the kultúrny dom in České Brezovo; the obec has two k.ú., each holding one station, so okrsok 1 is the k.ú. of its station (part Salajka lies in k.ú. České Brezovo).", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {ku = "Vaľkovo", note = "The document gives okrsok 2 only its polling station, the kultúrny dom in Vaľkovo (written Váľkovo); okrsok 2 is the k.ú. of its station.", inferred = true},
+]

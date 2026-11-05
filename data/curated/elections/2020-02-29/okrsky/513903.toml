@@ -1,0 +1,126 @@
+# Okrsky of Bojnice, transcribed by an AI agent in job okrsok-rules-2307 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cintorínska, Zámok a okolie, Podzámocká, Hurbanovo námestie, Sládkovičova, Hviezdoslavova, Bernolákova, Záhradná, Športová, Kvetová, Okrajová, Rybníčky, Prievidzská, Rekreačná
+#   okrsok 2: Školská (od križovatky ulíc Školská-Rekreačná-Prievidzská po križovatku Školská - Jánošíkova {párne orientačné čísla od 2 po 62; nepárne orientačné čísla od 1 po 43}), Janka Kráľa, Krátka, Mierová, Dukelská, Nemocničná (okrem orientačného čísla 2, 4, 4A, 4B), A. Hlinku, Jesenského, Pribinova, Hornoulická, Svätoplukova, Sama Chalupku, Mojmírova, Jánošíkova, Stráne
+#   okrsok 3: SNP, Lúčky
+#   okrsok 4: Školská (od križovatky ulíc Školská - Jánošíkova po križovatku ulíc Školská - Bottova {párne orientačné čísla od 64 po 88; nepárne orientačné čísla od 45 po 105}), Martina Rázusa, Nemocničná (orientačného čísla 2, 4, 4A, 4B), Komenského, Štúrova, Kukučínova, Banícka, Lesná a obývané chaty v priľahlej chatovej oblasti Vendiny, Tále, 1.mája, Hečkova (párne orientačné čísla od 2 po 28, 50,52 a 54; nepárne orientačné čísla od 31 po 47, a čísla 5, 7, 23 a 27), Bajzova, Bottova, Tatarkova, Lány (párne orientačné čísla od 2 po 34; nepárne orientačné čísla od 1 po 55)
+#   okrsok 5: Školská (od križovatky ulíc Školská – Bottova {párne orientačné čísla od 90; nepárne orientačné čísla od 107}), Velvarská, Tehelná, J. Hollého, Hečkova (párne orientačné čísla od 32 po 48; nepárne orientačné čísla od 9 po 21), Lány (párne orientačné čísla od 36 po 70; nepárne orientačné čísla od 57 po 71), Tajovského, Dubnická, Moyzesova, Kpt. Nálepku, Samoty, Kúty, Sadová, Slnečná, Ulica kanianska
+#   okrsok 6: Kúpele, Kúpeľná, Hlboké a obývané chaty v priľahlej chatovej oblasti, Na Chmeľnici, Opatovská cesta
+obec = "513903"
+name = "Bojnice"
+okrsky_date = 2019-11-25
+okrsky_fill = "nearest"
+okrsky_note = "Parková and Ulica Podskalné (register streets) are not named in the document; 'Vendiny' (chaty area beside Lesná) is not a register street. Hečkova numbers the document does not list (even 30, odd 1, 3, 25, 29, 49+), Parková, Ulica Podskalné, lettered Školská numbers (7A, 38A, 38B, 47A, 125A) and the addresses without a street take the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.bojnice.sk/download_file_f.php?id=1239754"
+sha256 = "8fdb8efafe3d0c4de98ce1428ba23861d8e2e70af8eabf3de51a444f50d51ca4"
+title = "Volebné okrsky a volebné miestnosti mesta Bojnice pre voľby do Národnej rady Slovenskej republiky, deň konania volieb: 29. februára 2020 (vrátane príslušných ulíc)"
+
+[[document]]
+url = "https://www.bojnice.sk/download_file_f.php?id=1239750"
+sha256 = "2426c4affc19a833717846bded322e2eb42bc3edb600ef5333ca52e4fcf1d6a2"
+title = "Volebné okrsky a volebné miestnosti mesta Bojnice pre voľby do Národnej rady Slovenskej republiky, deň konania volieb: 29. februára 2020"
+
+[[document]]
+url = "https://www.bojnice.sk/volby-do-narodnej-rady-slovenskej-republiky-2020.html"
+sha256 = "1b5286c589ae5f8148a1432bd4f57f25a8ff8d42ec4439cbd54f1e71a3c9421e"
+title = "Voľby do Národnej rady Slovenskej republiky 2020"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Zámok a Okolie", written = "Zámok a okolie", note = "differs only in capitalization"},
+  {street = "Podzámocká"},
+  {street = "Hurbanovo Námestie", written = "Hurbanovo námestie", note = "differs only in capitalization"},
+  {street = "Sládkovičova"},
+  {street = "Hviezdoslavova"},
+  {street = "Bernolákova"},
+  {street = "Záhradná"},
+  {street = "Športová"},
+  {street = "Kvetová"},
+  {street = "Okrajová"},
+  {street = "Rybníčky"},
+  {street = "Prievidzská"},
+  {street = "Rekreačná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Školská", numbers = "2-62", parity = "even"},
+  {street = "Školská", numbers = "1-43", parity = "odd"},
+  {street = "Janka Kráľa"},
+  {street = "Krátka"},
+  {street = "Mierová"},
+  {street = "Dukelská"},
+  {street = "Nemocničná", except = "2, 4, 4A, 4B"},
+  {street = "A. Hlinku"},
+  {street = "Jesenského"},
+  {street = "Pribinova"},
+  {street = "Hornoulická"},
+  {street = "Svätoplukova"},
+  {street = "Sama Chalupku"},
+  {street = "Mojmírova"},
+  {street = "Jánošíkova"},
+  {street = "Stráne"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "SNP"},
+  {street = "Lúčky"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Školská", numbers = "64-88", parity = "even"},
+  {street = "Školská", numbers = "45-105", parity = "odd"},
+  {street = "Martina Rázusa"},
+  {street = "Nemocničná", numbers = "2, 4, 4A, 4B"},
+  {street = "Komenského"},
+  {street = "Štúrova"},
+  {street = "Kukučínova"},
+  {street = "Banícka"},
+  {street = "Lesná"},
+  {street = "Tále"},
+  {street = "1.mája"},
+  {street = "Hečkova", numbers = "2-28, 50, 52, 54", parity = "even"},
+  {street = "Hečkova", numbers = "5, 7, 23, 27, 31-47", parity = "odd"},
+  {street = "Bajzova"},
+  {street = "Bottova"},
+  {street = "Tatarkova"},
+  {street = "Lány", numbers = "2-34", parity = "even"},
+  {street = "Lány", numbers = "1-55", parity = "odd"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Školská", numbers = "90-", parity = "even"},
+  {street = "Školská", numbers = "107-", parity = "odd"},
+  {street = "Velvarská"},
+  {street = "Tehelná"},
+  {street = "J. Hollého"},
+  {street = "Hečkova", numbers = "32-48", parity = "even"},
+  {street = "Hečkova", numbers = "9-21", parity = "odd"},
+  {street = "Lány", numbers = "36-70", parity = "even"},
+  {street = "Lány", numbers = "57-71", parity = "odd"},
+  {street = "Tajovského"},
+  {street = "Dubnická"},
+  {street = "Moyzesova"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Samoty"},
+  {street = "Kúty"},
+  {street = "Sadová"},
+  {street = "Slnečná"},
+  {street = "Ulica kanianska"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Kúpele"},
+  {street = "Kúpeľná"},
+  {street = "Hlboké"},
+  {street = "Na Chmeľnici"},
+  {street = "Opatovská cesta"},
+]

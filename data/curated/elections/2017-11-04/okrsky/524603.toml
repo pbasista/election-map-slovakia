@@ -1,0 +1,41 @@
+# The okrsky of Jarovnice of the vote of 2020-02-29, data/curated/elections/2020-02-29/okrsky/524603.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Jarovnice, transcribed by an AI agent in job okrsok-rules-2713 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: súpisné čísla: 0 - 309
+#     okrsok 2: súpisné čísla: 310 – 419
+#     okrsok 3: súpisné čísla: 420 - 600
+obec = "524603"
+name = "Jarovnice"
+okrsky_date = 2019-11-19
+okrsky_note = "Okrsky are súpisné-číslo ranges for the whole obec; the document does not name the parts, so each range is applied in both parts (Jarovnice, Močidľany), the súpisné čísla being numbered across the obec. The last okrsok is open-ended so that higher numbers also fall there."
+okrsky_adopted = 2020-02-29
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-509): The current elections page starts with the 2024 presidential election; in the Internet Archive the 2017 regional, 2019 presidential and 2019 EP pages carry only the call of the elections, voter information and candidate lists, and no okrsky decision for the 2023 referendum or the NR SR 2023 election is archived. These are the okrsky of the vote of 2020-02-29 (2020-nrsr), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2020-02-29: 1: 1,110 → 1,113, 2: 1,112 → 1,216, 3: 1,118 → 1,212."
+
+[[document]]
+url = "https://web.archive.org/web/20220125105725/https://www.jarovnice.sk/files/2019-11-19-093208-1576868302vytvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-obci-jarovnice.pdf"
+sha256 = "c571c59f5aa1388efe6f3c1004b7cc7a1a2338d5f182864c852a9a0e4a97a414"
+title = "Vytvorenie volebných okrskov (voľby do NR SR 29. februára 2020), 19. novembra 2019"
+
+[[document]]
+url = "https://web.archive.org/web/20200924062405/https://jarovnice.sk/obsah/volby-do-nr-sr-2020"
+sha256 = "230103c6511f450c3261ea9d6a325b34272115f8037eb0c8297d9ab1935d9ca8"
+title = "Election page posting the document"
+
+[okrsok.1]
+rules = [
+  {part = "Jarovnice", numbers = "0-309"},
+  {part = "Močidľany", numbers = "0-309"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Jarovnice", numbers = "310-419"},
+  {part = "Močidľany", numbers = "310-419"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Jarovnice", numbers = "420-"},
+  {part = "Močidľany", numbers = "420-"},
+]

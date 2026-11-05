@@ -1,0 +1,49 @@
+# Council obvody of Dúbravy (518379), Detva.
+# Transcribed by an AI agent in job obvod-rules-182 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Dúbravy
+#   obvod 2: Dúbravy - Hradná, Želobudza, Iviny
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/518379.toml, standing in.
+obec = "518379"
+name = "Dúbravy"
+date = 2018-08-02
+note = "Obvod 1 = part Dúbravy; obvod 2 = 'Dúbravy - Hradná, Želobudza, Iviny'. Hradná is a hamlet the register keeps in part Dúbravy; its houses are placed by location (inferred rule)."
+okrsky_note = "No document of the elections found (the 2022 elections page lists only the obvody announcement; nothing archived); the referendum's document. Okrsok 1 Dúbravy, 2 Hradná + Želobudza, 3 Iviny, matching the Statistical Office's okrsky per obvod. Hradná is a hamlet that the register keeps in part Dúbravy; as in the obvody, its houses are the part-Dúbravy cluster at the OSM hamlet Hradná (súpisné 202-232 and later houses there), which the obvod rules already put in obvod 2. Okrsok 2 then has 88 addresses for 150 voters, okrsok 3 (Iviny, many cottages) 127 for 88."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-5911): No okrsky document for the municipal elections of 10 November 2018 found. The municipality's live 'Komunálne voľby 2018' page lists all its 2018 election documents (announcement of the vote, obvody notice of 3.8.2018, population, delegation address, candidates, results, Informácie pre voliča) but no 'utvorenie volebných okrskov'; the obvody notice names no okrsky. The site's full-text search finds okrsky notices only for later votes (2022-2026). The Internet Archive stayed offline (HTTP 503 'Temporarily Offline' / connection failures) for over 15 minutes of retries, so archived 2018 pages of dubravy.sk could not be checked. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 3 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-08
+okrsky_date_basis = "The referendum's okrsky announcement states no date; the municipality's referendum page says it was posted (vyvesené) on 8. 11. 2022. (https://www.dubravy.sk/urad/volby/referendum-2023-3571.html?kshow=10)"
+
+[[document]]
+url = "https://www.dubravy.sk/e_download.php?file=data/uredni_deska/obsah3287_11.pdf&original=1533820320.pdf"
+sha256 = "b6e5cabf433cc8d2eae9da2143133cb0a369e8e838e0189b3c0cd2941fe28096"
+title = "Oznámenie o určení počtu poslancov a utvorení volebných obvodov (uznesenie č. 92/2018 zo dňa 2.8.2018)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Dúbravy"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2, 3]
+rules = [
+  {part = "Dúbravy", numbers = "202-232, 361, 375, 397-398, 419-420, 485-487, 493, 500, 568, 573", by = "supisne", note = "Hradná: a hamlet the register keeps in part Dúbravy; the document gives no house numbers, so its houses are taken by location: all part-Dúbravy houses of the cluster at the OSM hamlet Hradná (48.583-48.587 N, 19.331-19.337 E), as in the rule set of 2022", inferred = true},
+  {part = "Želobudza"},
+  {part = "Iviny"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dúbravy", numbers = "202-232, 361, 375, 397-398, 419-420, 485-487, 493, 500, 568, 573", by = "supisne", note = "Hradná: the register keeps the hamlet in part Dúbravy; these are all part-Dúbravy houses of the cluster at the OSM hamlet Hradná (48.583-48.587 N, 19.331-19.337 E)", inferred = true},
+  {part = "Želobudza"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Iviny"},
+]

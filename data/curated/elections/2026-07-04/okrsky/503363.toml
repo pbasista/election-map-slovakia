@@ -1,0 +1,30 @@
+# Okrsky of Maňa, transcribed by an AI agent in job okrsok-rules-5540 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Vo volebnom okrsku č. 1 sú zapísaní voliči z časti obce Veľká Maňa, z ulíc: A. Bernoláka, A.Hlinku, A.Sládkoviča, Dlhá, Dolná Gedra, Dolinská, Domovina, F.Jurigu, Hamarka, Hliník, I. Ďungela, J. Kováča, Legionárska, Ľ.Štúra, Ľ. Podjavorinskej, M.Kukučína, Mlynská, Nám.M.R.Štefánika, P.O.Hviezdoslava, Pri parku, Školská, T.Vansovej, Ulička, V.J.Gajdoša, Zakostolská, Železničná, Žitavská.
+#   okrsok 2: Vo volebnom okrsku č. 3 sú zapísaní voliči z časti obce Malá Maňa.
+obec = "503363"
+name = "Maňa"
+okrsky_date = 2026-05-04
+okrsky_fill = "nearest"
+okrsky_note = "For the referendum the mayor formed 2 okrsky: okrsok 1 all of Veľká Maňa (its streets listed), okrsok 2 Malá Maňa (the document's second paragraph says 'okrsku č. 3', a slip for č. 2). Okrsok 1 is written as the whole part Veľká Maňa, which its streets cover, so houses without a street go with it."
+
+[[document]]
+url = "https://obecmana.sk/wp-content/uploads/dokumenty/referendum-2026/urcenie-volebnych-okrskov-a-volebnych-miestnosti-djjgv4.pdf"
+sha256 = "d860513a7f85dc610a1dab980967a97ec97e82f87987e9ef170cda65f6fe0f4e"
+title = "Určenie okrskov a volebných miestností (referendum 4. júla 2026)"
+
+[[document]]
+url = "https://obecmana.sk/dokument/urcenie-okrskov-a-volebnych-miestnosti/"
+sha256 = "0f310ff5113e9cfd83a9d2fb1bd56dd07381dd89781ba69328ed514b5c478116"
+title = "document page"
+
+[okrsok.1]
+rules = [
+  {part = "Veľká Maňa"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Malá Maňa"},
+]

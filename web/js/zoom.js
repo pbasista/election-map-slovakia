@@ -21,8 +21,18 @@ const L = globalThis.L;
 
 // Zoom levels per pixel of wheel travel; a mouse wheel notch is about 100 px.
 const WHEEL_RATE = 1 / 150;
-// A trackpad pinch arrives as ctrl + wheel, in small steps.
-const PINCH_RATE = 1 / 50;
+// A trackpad pinch arrives as ctrl + wheel. Chromium makes its deltaY
+// -100 ln(the scale change) (components/input/touchpad_pinch_event_queue.cc).
+// Firefox, except on macOS, makes it 100 × (the last - the current scale),
+// both relative to the pinch's start (widget/InputData.cpp
+// PinchGestureInput::ComputeDeltaY, widget/gtk/nsWindow.cpp): taken as
+// Chromium's, fingers spread to twice their distance zoomed in twice as far
+// as fingers brought to half of it zoomed out. Its pinch starts with a
+// deltaY of 100 × (0.999 - 1) and ends with 0, so the scale can be followed.
+const LINEAR_PINCH = L.Browser.gecko && !L.Browser.mac;
+const LINEAR_PINCH_START = -0.1;
+// Leeway for a page zoom or a fractional device pixel ratio in that start.
+const LINEAR_PINCH_LEEWAY = 0.02;
 // The most one wheel event moves the goal: a page-sized delta is a step,
 // not a jump to the zoom limit.
 const MAX_STEP = 1;
@@ -47,6 +57,8 @@ export function smoothZoom(map) {
   let anchorLatLng = null;
   let lastInput = 0;
   let lastFrame = 0;
+  // The scale of the Firefox pinch under way (LINEAR_PINCH), 0 outside one.
+  let pinchScale = 0;
 
   function step(now) {
     const zoom = map.getZoom();
@@ -85,6 +97,26 @@ export function smoothZoom(map) {
     return map._limitCenter(center, zoom, map.options.maxBounds);
   }
 
+  // The zoom levels a ctrl + wheel event asks for: those that keep the map's
+  // scale with the fingers' spread, as Leaflet's touch pinch does.
+  function pinchLevels(deltaY) {
+    if (LINEAR_PINCH) {
+      if (Math.abs(deltaY - LINEAR_PINCH_START) < LINEAR_PINCH_LEEWAY) pinchScale = 0.999;
+      else if (!deltaY) pinchScale = 0;
+      if (pinchScale) {
+        const scale = pinchScale - deltaY / 100;
+        if (scale > 0) {
+          const levels = Math.log2(scale / pinchScale);
+          pinchScale = scale;
+          return levels;
+        }
+        // No pinch's after all (ctrl and a mouse wheel, its end unseen).
+        pinchScale = 0;
+      }
+    }
+    return -deltaY / (100 * Math.LN2);
+  }
+
   function stop() {
     if (!frame) return;
     cancelAnimationFrame(frame);
@@ -98,8 +130,8 @@ export function smoothZoom(map) {
     'wheel',
     (e) => {
       e.preventDefault();
-      const rate = e.ctrlKey ? PINCH_RATE : WHEEL_RATE;
-      const delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, L.DomEvent.getWheelDelta(e) * rate));
+      const levels = e.ctrlKey ? pinchLevels(e.deltaY) : L.DomEvent.getWheelDelta(e) * WHEEL_RATE;
+      const delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, levels));
       if (delta) zoomBy(delta, map.mouseEventToContainerPoint(e));
     },
     { passive: false },

@@ -1,0 +1,32 @@
+# Okrsky of Dolný Ohaj, transcribed by an AI agent in job okrsok-rules-3823 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: čísla domov: O – 122, 328 – 485, 494 – 495, 497, 499 – 501, 507 – 508, 510, 575 – 576, 584 – 588, 630, 667,667, 711, 719, 736, 738
+#   okrsok 2: čísla domov: 125 – 323, 486 – 493, 496, 498, 502 – 506, 509, 511 – 573, 593 – 595, 650 – 652, 657 - 666, 669 - 670, 676, 679, 691, 695, 696, 703, 704, 709, 710, 713, 716, 718, 720, 722, 730, 735, 742
+obec = "503151"
+name = "Dolný Ohaj"
+okrsky_fill = "nearest"
+okrsky_note = "The notice lists house numbers (čísla domov, read as súpisné čísla) for the whole village; 'O – 122' read as 0–122; duplicate numbers dropped. Unlisted house numbers take the nearest okrsok (fill_nearest). Compared with the 2022 copy it adds houses 736, 738 (okrsok 1) and 735, 742 (okrsok 2)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-06-30
+okrsky_date_basis = "The notice names the elections to the National Council of 30 September 2023 but states no decision date; the municipality's page linking it says 'Zverejnené' 2023-06-30. (https://obecdolnyohaj.sk/dokument/oznamenie-o-vytvorenych-volebnych-okrskoch-2/)"
+
+[[document]]
+url = "https://obecdolnyohaj.sk/wp-content/uploads/dokumenty/volby-do-nrsr/Oznamenie-o-vytvorenych-volebnych-okrskoch.pdf"
+sha256 = "ae7422f5d2a719a909fbdc05cc26351077d8a49ec02663305628545be6c31f6d"
+title = "Oznámenie o vytvorených volebných okrskoch (voľby do NR SR 2023)"
+
+[[document]]
+url = "https://obecdolnyohaj.sk/dokument/oznamenie-o-vytvorenych-volebnych-okrskoch-2/"
+sha256 = "8977575641109798dc1b6097d74aca9a33af3f62aeea299212a6fa6a8d54f646"
+title = "Oznámenie o vytvorených volebných okrskoch (voľby do NR SR 2023) (stránka)"
+
+[okrsok.1]
+rules = [
+  {part = "Dolný Ohaj", numbers = "1-122, 328-485, 494-495, 497, 499-501, 507-508, 510, 575-576, 584-588, 630, 667, 711, 719, 736, 738"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dolný Ohaj", numbers = "125-323, 486-493, 496, 498, 502-506, 509, 511-573, 593-595, 650-652, 657-666, 669-670, 676, 679, 691, 695, 696, 703, 704, 709, 710, 713, 716, 718, 720, 722, 730, 735, 742"},
+]

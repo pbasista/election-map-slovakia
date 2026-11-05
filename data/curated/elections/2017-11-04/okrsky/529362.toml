@@ -1,0 +1,98 @@
+# Okrsky of Bratislava-Vajnory, transcribed by an AI agent in job okrsok-rules-113 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Alviano, Dorastenecká, Pri starom letisku, Regrútska, Rybničná, Šutráková, Tuhovská
+#   okrsok 2: Buzalkova, Nové Šuty, Pod krížom, Pračanská, Pri mlyne, Pri nadjazde, Pri pasienku, Pri potoku, Pri šanci, Príjazdná, Šachorová, Šinkovské, Široká, Tibenského, Za mlynom
+#   okrsok 3: Čierny chodník, Šuty, Tomanova, Uhliská, Zbrody
+#   okrsok 4: Hospodárska, Jačmenná, Kataríny Brúderovej, Kúkoľová, Na jarku, Ochotnícka, Pod lipami, Pri pastierni, Roľnícka, Veľké Štepnice, Za humnami, lokalita Vajnorské jazerá
+#   okrsok 5: Baničova, Koncová, Koniarkova, Kratiny, Na doline, Nad jazierkom, Nad Válkom, Nemecká dolina, Osloboditeľská, Pod Válkom, Pri Struhe, Skuteckého, Šaldova, Za farou, Zátureckého
+obec = "529362"
+name = "Bratislava-Vajnory"
+okrsky_fill = "nearest"
+okrsky_note = "'Pri potoku' is not a street of the address register and is left out. 'lokalita Vajnorské jazerá' (okrsok 4) is a locality, not a street. Námestie Titusa Zemana (1 address, not named) and the addresses without a street (súpisné only, incl. those at Vajnorské jazerá) are placed by fill_nearest."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2017-10-23
+okrsky_date_basis = "The Internet Archive captured the elections page (Voľby do orgánov samosprávnych krajov) linking the PDF on 2017-10-23; the PDF, which names the elections of 4 November 2017, is undated. (https://web.archive.org/web/20171023090146/http://www.vajnory.sk:80/volby-do-vuc)"
+okrsky_supplemented = 2022-10-29
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The document does not name the streets Pri majeri, Pri pekárni, Pri rybníku (small streets by Pri starom letisku / Dorastenecká and Rybničná in the south-west, which the document puts in okrsok 1); they are placed in okrsok 1 as in the rule set of the elections of 29 October 2022."
+
+[[document]]
+url = "http://www.vajnory.sk/sites/default/files/files/oznamenie_-_okrsky_c_1-5_novsie.pdf"
+sha256 = "e8d36082ce58bf684ac3126d7dd471c739a060db43a6b67ef4f081582f636443"
+title = "OZNÁMENIE o čase a mieste konania volieb do orgánov samosprávnych krajov (okrsky č. 1-5)"
+
+[okrsok.1]
+rules = [
+  {street = "Alviano"},
+  {street = "Dorastenecká"},
+  {street = "Pri starom letisku"},
+  {street = "Regrútska"},
+  {street = "Rybničná"},
+  {street = "Šutráková"},
+  {street = "Tuhovská"},
+  {street = "Pri majeri", supplemented = true},
+  {street = "Pri pekárni", supplemented = true},
+  {street = "Pri rybníku", supplemented = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Buzalkova"},
+  {street = "Nové Šuty"},
+  {street = "Pod krížom"},
+  {street = "Pračanská"},
+  {street = "Pri mlyne"},
+  {street = "Pri nadjazde"},
+  {street = "Pri pasienku"},
+  {street = "Pri šanci"},
+  {street = "Príjazdná"},
+  {street = "Šachorová"},
+  {street = "Šinkovské"},
+  {street = "Široká"},
+  {street = "Tibenského"},
+  {street = "Za mlynom"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Čierny chodník"},
+  {street = "Šuty"},
+  {street = "Tomanova"},
+  {street = "Uhliská"},
+  {street = "Zbrody"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Hospodárska"},
+  {street = "Jačmenná"},
+  {street = "Kataríny Brúderovej"},
+  {street = "Kúkoľová"},
+  {street = "Na jarku"},
+  {street = "Ochotnícka"},
+  {street = "Pod lipami"},
+  {street = "Pri pastierni"},
+  {street = "Roľnícka"},
+  {street = "Veľké Štepnice"},
+  {street = "Za humnami"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Baničova"},
+  {street = "Koncová"},
+  {street = "Koniarkova"},
+  {street = "Kratiny"},
+  {street = "Na doline"},
+  {street = "Nad jazierkom"},
+  {street = "Nad Válkom"},
+  {street = "Nemecká dolina"},
+  {street = "Osloboditeľská"},
+  {street = "Pod Válkom"},
+  {street = "Pri Struhe"},
+  {street = "Skuteckého"},
+  {street = "Šaldova"},
+  {street = "Za farou"},
+  {street = "Zátureckého"},
+]

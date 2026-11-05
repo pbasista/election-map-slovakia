@@ -1,0 +1,48 @@
+# Okrsky of Oslany, transcribed by an AI agent in job okrsok-rules-4935 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Družstevná, Hviezdoslavova, Jarmočná, Mierová, Mlynská, Námestie slobody, Potočná, Športová, Ulička, Záhradná, miestna časť Ľubianka, občania s trvalým pobytom obec Oslany
+#   okrsok 2: ulice: A.Bernoláka, Obuvnícka, Pekárenská, Slnečná, SNP, Staničná, Školská, Východná, Žarnovská
+obec = "514292"
+name = "Oslany"
+okrsky_date = 2024-02-04
+okrsky_fill = "nearest"
+okrsky_note = "\"Občania s trvalým pobytom obec Oslany\" (residents registered only to the obec) are voters without an address. The houses without a street in part Oslany are placed by fill_nearest."
+
+[[document]]
+url = "https://www.oslany.sk/download_file_f.php?id=2015920"
+sha256 = "41a2edce230678dff14a92d9db8ddd426e5b51378c697af19c00aaf91aa466b6"
+title = "Určenie volebných okrskov – voľby do Európskeho parlamentu 8. júna 2024 (Č.j 1/2024-EU)"
+
+[[document]]
+url = "https://www.oslany.sk/volby-do-europskeho-parlamentu-2024.html"
+sha256 = "43e5d346f4dab8e99ded08a8c98bff58b737c19d481a92ef2322b64cb01d0e05"
+title = "page of the vote"
+
+[okrsok.1]
+rules = [
+  {street = "Družstevná"},
+  {street = "Hviezdoslavova"},
+  {street = "Jarmočná"},
+  {street = "Mierová"},
+  {street = "Mlynská"},
+  {street = "Námestie Slobody", written = "Námestie slobody"},
+  {street = "Potočná"},
+  {street = "Športová"},
+  {street = "Ulička"},
+  {street = "Záhradná"},
+  {part = "Ľubianka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "A. Bernoláka", written = "A.Bernoláka"},
+  {street = "Obuvnícka"},
+  {street = "Pekárenská"},
+  {street = "Slnečná"},
+  {street = "SNP"},
+  {street = "Staničná"},
+  {street = "Školská"},
+  {street = "Východná"},
+  {street = "Žarnovská"},
+]

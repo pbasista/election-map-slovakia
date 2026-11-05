@@ -28,11 +28,13 @@
  * OffscreenCanvas (Safari before 16.4) it runs on the page the same way,
  * on a canvas element. Colours come from the theme (app.css `--map-*`); a
  * theme change redraws. The 2026 results (mapmode.js) go to the renderer
- * as they change, which colours the land by them (`setResults`).
+ * as they change, which colours the land by them (`setResults`), and so
+ * does the level the ballots show them at, whose unit of the selected
+ * place it outlines (`setLevel`).
  */
 
 import { html, render } from '../vendor/preact-htm.module.js';
-import { dataIndex, obecInfo } from './data.js';
+import { dataIndex, electsAnywhere, getJSON, hasCouncilObvody, heldObce, obecInfo } from './data.js';
 import { dataUrl, fetchJSON } from './files.js';
 import { credits, dataSource, formatAsOf, stringsUnder, t } from './i18n.js';
 import { InfoIcon } from './icons.js';
@@ -74,6 +76,9 @@ const MARGIN = 24;
 // The least room, across and down, that a place the map moves to is fitted
 // into (`room`): any less, and it would be zoomed out to the country.
 const MIN_ROOM = 160;
+// The highest zoom the map fits a unit of the ballots' level at (`fitUnit`),
+// as the selection fits an obec: an okrsok of a few blocks closer.
+const UNIT_ZOOM = { kraj: 13, okres: 13, zsk: 13, obec: 14, obvod: 14, okrsok: 16 };
 // The credits fold on a phone after this long (`foldCredits`).
 const CREDITS_MS = 5000;
 
@@ -89,6 +94,12 @@ const COLORS = [
   'council',
   'okrsok',
   'accent',
+  // A country-wide contest's turnout (mapmode.js `toneOf`).
+  'turnout',
+  // The ballots' level (draw.js `setLevel`): its unit's outline, and the
+  // veil over the rest.
+  'level',
+  'level-veil',
   'pin',
   'house',
   'text',
@@ -377,6 +388,31 @@ function hoverTooltip(map, renderer) {
   };
 }
 
+/* The constituency overlays, broadest first (draw.js `OVERLAYS`). */
+export const CONSTITUENCIES = ['zsk', 'city', 'oz', 'okrsky'];
+
+/* The constituency overlays of the page's election, of zsk, city, oz and
+ * okrsky, as a Set: those it has units of (data/index.json: obce electing
+ * a regional or a city's council, data.js `electsAnywhere`, obce split
+ * into council obvody; geo/index.json: okrsky drawn). A country-wide
+ * contest has none of the first three, a by-election seldom any, the
+ * regional or municipal elections held apart (2017, 2018) only their own.
+ * The menu (controls.js) offers only these, a link (app.js `h`) names
+ * only these, and the map draws only these (`setOverlays`). Fetched once. */
+let here = null;
+export function overlaysHere() {
+  here ??= Promise.all([dataIndex(), getJSON('/geo/index.json')]).then(([index, geo]) => {
+    const has = {
+      zsk: electsAnywhere(index, 'regional'),
+      city: electsAnywhere(index, 'city'),
+      oz: Object.keys(index.obce).some((code) => hasCouncilObvody(index, code)),
+      okrsky: Object.keys(geo.okrsky.drawn).length > 0,
+    };
+    return new Set(Object.keys(has).filter((name) => has[name]));
+  });
+  return here;
+}
+
 /* Creates the map in *element*. `onPick(p)` is called when the user clicks
  * a place (draw.js `pick`); `insets()` returns the pixels {top, right,
  * bottom, left} of the map that floating controls and panes cover, which
@@ -429,16 +465,18 @@ export async function createMap(element, { onPick, insets, onZoom, view, onView 
   // The country as wide as the map allows; only the search card above (on
   // phones as wide as the screen) must not cover it. A portrait phone is
   // narrower than Slovakia is wide, so there the country runs edge to edge
-  // (the kraj names keep inside the map).
-  const side = map.getSize().x < map.getSize().y ? 2 : MARGIN / 2;
-  if (view) {
-    map.setView([view.lat, view.lon], view.zoom);
-  } else {
+  // (the kraj names keep inside the map). The first view, and that of a
+  // country-wide contest's results (`fitCountry`): the pane beside it
+  // cannot make it smaller, as the map zooms out no further.
+  const showCountry = () => {
+    const side = map.getSize().x < map.getSize().y ? 2 : MARGIN / 2;
     map.fitBounds(SLOVAKIA, {
       paddingTopLeft: [side, insets().top + MARGIN / 2],
       paddingBottomRight: [side, MARGIN / 2],
     });
-  }
+  };
+  if (view) map.setView([view.lat, view.lon], view.zoom);
+  else showCountry();
   map.on('moveend', () => {
     const { lat, lng } = map.getCenter();
     onView({ lat, lon: lng, zoom: map.getZoom() });
@@ -670,14 +708,15 @@ export async function createMap(element, { onPick, insets, onZoom, view, onView 
   // Counts calls of `select`: a slower one that comes back late is dropped.
   let selection = 0;
 
+  /* The bounds of *box* (Z0 pixels, from the renderer). */
+  const boundsOf = ([x0, y0, x1, y1]) => L.latLngBounds(map.unproject([x0, y1], Z0), map.unproject([x1, y0], Z0));
+
   /* Fits the map to *box* (Z0 pixels, from the renderer) at most at
    * *maxZoom*, unless there is none or selection *gen* is no longer the
    * latest. */
   function fit(box, maxZoom, gen) {
     if (!box || gen !== selection) return;
-    const [x0, y0, x1, y1] = box;
-    const bounds = L.latLngBounds(map.unproject([x0, y1], Z0), map.unproject([x1, y0], Z0));
-    map.fitBounds(bounds, { ...padding(), maxZoom });
+    map.fitBounds(boundsOf(box), { ...padding(), maxZoom });
   }
 
   return {
@@ -720,15 +759,26 @@ export async function createMap(element, { onPick, insets, onZoom, view, onView 
 
     /* Switches the overlays on or off: *wanted* {zsk, city, oz, okrsky,
      * base, buildings}, `base` the roads, railways and waters of the base
-     * map. */
+     * map. A constituency overlay the election has no units of stays off
+     * (`overlaysHere`): the council overlay would grey every obec as one
+     * without a council. Its counts are of the obce of the election, of a
+     * by-election those where it is held (data.js `heldObce`): the others
+     * are no part of it, and drawn as land, not as obce without a council
+     * election. */
     async setOverlays(wanted) {
       overlays = wanted;
-      if (wanted.oz && !councils) {
+      const exist = await overlaysHere();
+      const drawn = Object.fromEntries(
+        Object.entries(wanted).map(([name, on]) => [name, on && (!CONSTITUENCIES.includes(name) || exist.has(name))]),
+      );
+      if (drawn.oz && !councils) {
         const index = await dataIndex();
-        councils = Object.fromEntries(Object.entries(index.obce).map(([code, row]) => [code, row[4] ?? 0]));
+        const held = heldObce(index);
+        const rows = Object.entries(index.obce).filter(([code]) => !held || held.has(code));
+        councils = Object.fromEntries(rows.map(([code, row]) => [code, row[4] ?? 0]));
       }
       if (overlays !== wanted) return;
-      renderer.send('setOverlays', wanted, councils);
+      renderer.send('setOverlays', drawn, councils);
     },
 
     /* Fits the map to *target* (data.js `contestArea`: {area} or {obec,
@@ -743,6 +793,36 @@ export async function createMap(element, { onPick, insets, onZoom, view, onView 
       if (gen !== selection) return;
       zoomer.stop();
       fit(box, area ? 13 : 14, gen);
+    },
+
+    /* Shows the whole country as the first view does, as the area of a
+     * country-wide contest whose results the map shows (mapmode.js). */
+    fitCountry() {
+      zoomer.stop();
+      showCountry();
+    },
+
+    /* Outlines the unit at *level* (one of live.js SCOPES; 'all' for none)
+     * of the selected place, the rest of the map veiled (draw.js
+     * `setLevel`): the level the ballots show the results at (mapmode.js
+     * `MapResults`). */
+    setLevel(level) {
+      renderer.send('setLevel', level);
+    },
+
+    /* Fits the map to the unit at *level* (one of live.js SCOPES but 'all')
+     * of place *p* ({obec, obvod, okrsok}) as draw.js `unitBox` finds it,
+     * zooming in or out, without selecting it: the level chosen on the
+     * ballots, or that of a contest's results put on the map there
+     * (mapmode.js `MapResults`). A selection made meanwhile moves the map
+     * instead. */
+    async fitUnit(level, p) {
+      const gen = selection;
+      const info = await obecInfo(p.obec);
+      const unit = info && (await renderer.call('unitBox', level, { info, obvod: p.obvod, okrsok: p.okrsok }));
+      if (gen !== selection || !unit) return;
+      zoomer.stop();
+      fit(unit.box, UNIT_ZOOM[unit.level], gen);
     },
 
     /* Colours the land by the 2026 results *shown* (draw.js `setResults`),

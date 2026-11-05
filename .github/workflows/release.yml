@@ -5,17 +5,25 @@
 #
 # The site is deployed in parts, each a Cloudflare Pages project of its own
 # (config/site.toml, docs/deploy.md): the app, each election's map and
-# data bundles, the cached sources and the results. The checks run first
-# (ci.yml, which also makes sure data/published.toml holds the keys of the
-# data parts of this commit). Then:
+# data bundles, the base map of each OpenStreetMap extract, the cached
+# sources and the results. The checks run first (ci.yml, which also makes
+# sure data/published.toml holds the keys of the data parts of this
+# commit). Then:
 #
-#   plan  asks the Pages API which data parts are not deployed with their
-#         key;
-#   data  only if any: downloads the pinned inputs (from the input store),
-#         builds and checks the whole site, and deploys the data parts not
-#         deployed yet, each carrying its key;
-#   app   builds the app for the deployed data parts, checks it against
-#         their manifests and deploys it;
+#   plan     asks the Pages API which data parts are not deployed with
+#            their key;
+#   inputs   only if any: downloads the pinned inputs (from the input
+#            store) into the Actions cache, once for the jobs below;
+#   steps    one job per election, side by side: the steps that make it
+#            alone (candidates, addresses, geo);
+#   basemaps one job per extract, beside them: its base map, which every
+#            election on it shares (basemap);
+#   site     the steps that read every election (links, results), builds
+#            and checks the whole site, warns where an output is not the
+#            one data/outputs.toml records, and deploys the data parts not
+#            deployed yet, each carrying its key;
+#   app      builds the app for the deployed data parts, checks it against
+#            their manifests and deploys it;
 #
 # and the app's files are attached to a GitHub release. A release that
 # changes no data builds and deploys the app alone, in a few minutes.
@@ -23,6 +31,10 @@
 # Pages › Edit) and CLOUDFLARE_ACCOUNT_ID, of the repository or of its
 # environment `production`: every job that reads them names that
 # environment, without which its secrets would be empty there.
+#
+# Every job has a timeout well above what it was estimated to take on a
+# runner of ubuntu-latest (4 CPUs) with every data part stale, far below
+# the 360 minutes a hosted runner allows (docs/deploy.md, What runs when).
 name: Release
 
 on:
@@ -56,18 +68,21 @@ jobs:
     environment: production
     outputs:
       stale: ${{ steps.status.outputs.stale }}
+      elections: ${{ steps.status.outputs.elections }}
+      extracts: ${{ steps.status.outputs.extracts }}
     steps:
       # Everything but the cached copies of cited pages (data/curated/cache/,
-      # nearly 1 GB), which only the data job deploys.
+      # nearly 1 GB), which only the site job deploys.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /*
             !/data/curated/cache/
-      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
-          python-version: "3.14"
+          version: "0.13.6"
+          python-version: "3.15"
           enable-cache: true
 
       # A tag that disagrees with the version would publish a site under a
@@ -82,25 +97,37 @@ jobs:
           fi
 
       - run: uv sync --locked
+      # stale; elections, the days of every election, for the matrix of the
+      # steps job; extracts, those of every base map, for the basemaps job.
+      # Any data part needs them all: each data bundle reads every
+      # election's candidates and results, and its own election's geo,
+      # which the map bundle is made of as well; the build makes every part.
       - id: status
         run: uv run ems data status --github-output
 
-  data:
+  inputs:
     needs: plan
     if: needs.plan.outputs.stale == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 90
-    environment: production
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
         with:
-          python-version: "3.14"
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/data/curated/cache/
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.13.6"
+          python-version: "3.15"
           enable-cache: true
       - run: uv sync --locked
 
       # Every input is pinned (config/inputs.toml), so the same pins are the
-      # same files: the cache spares even the downloads from the store.
+      # same files. A cache belongs to the tag it was saved for: it carries
+      # the inputs to the jobs below and to a re-run of this release, not to
+      # the next release, which downloads them from the store again.
       - id: raw
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
@@ -110,26 +137,186 @@ jobs:
       # fetch unpacks the RAR inputs (addresses of 2022) with bsdtar.
       - run: sudo apt-get update && sudo apt-get install -y libarchive-tools
       - run: uv run ems fetch
-      # Saved right after `fetch`, so a later failure does not lose it.
       - if: steps.raw.outputs.cache-hit != 'true'
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: data/raw/
           key: raw-${{ hashFiles('config/inputs.toml') }}
 
-      # candidates, links, addresses, geo, basemap, results (the final results of
-      # their pinned inputs), build and check, stopping at the first that
-      # fails: data that do not pass `check` are never deployed.
+  # What a cold `ems make` spends most of its time on, geo above all, one
+  # job per election instead of all in one. Each starts from nothing: the
+  # caches the elections share in one build (data/build/shared/: blocks
+  # cut by streets, barriers and register per input) are made again in
+  # each, which costs CPU time but no wall time. max-parallel leaves half of
+  # the 20 jobs a Free plan runs at once to other workflows.
+  steps:
+    name: steps ${{ matrix.election }}
+    needs: [plan, inputs]
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      max-parallel: 10
+      matrix:
+        election: ${{ fromJSON(needs.plan.outputs.elections) }}
+    env:
+      ELECTION: ${{ matrix.election }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/data/curated/cache/
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.13.6"
+          python-version: "3.15"
+          enable-cache: true
+      - run: uv sync --locked
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: data/raw/
+          key: raw-${{ hashFiles('config/inputs.toml') }}
+          fail-on-cache-miss: true
+
+      # The steps of `ems make` that read nothing of another election, in
+      # its order; links and results read the others' and run in the site
+      # job.
+      - run: uv run ems candidates --election "$ELECTION"
+      - run: uv run ems addresses --election "$ELECTION"
+      - run: uv run ems geo --election "$ELECTION"
+      # Their output with their stamps, which tell the site job's `make`
+      # that it is up to date. A tar keeps the empty directories an artifact
+      # would drop (an election without council obvody has an empty
+      # obvod-addresses/), whose absence would run a step again; zstd makes
+      # it about a quarter.
+      - run: tar --zstd -cf "build-$ELECTION.tar.zst" -C data/build "$ELECTION"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: build-${{ matrix.election }}
+          path: build-${{ matrix.election }}.tar.zst
+          if-no-files-found: error
+          # Already compressed.
+          compression-level: 0
+          retention-days: 1
+
+  # The base map of each extract, once for every election on it.
+  basemaps:
+    name: basemap ${{ matrix.extract }}
+    needs: [plan, inputs]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        extract: ${{ fromJSON(needs.plan.outputs.extracts) }}
+    env:
+      EXTRACT: ${{ matrix.extract }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/data/curated/cache/
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.13.6"
+          python-version: "3.15"
+          enable-cache: true
+      - run: uv sync --locked
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: data/raw/
+          key: raw-${{ hashFiles('config/inputs.toml') }}
+          fail-on-cache-miss: true
+
+      # The first election on the extract names it (config/elections.toml).
+      - name: The base map of the extract
+        run: |
+          election="$(uv run python -c '
+          import sys
+          from election_map_slovakia import config
+          print(next(e.slug for e in config.load().elections if e.osm == sys.argv[1]))
+          ' "$EXTRACT")"
+          uv run ems basemap --election "$election"
+      # With its stamp, as the steps job's output (data/build/base/<extract>/).
+      - run: tar --zstd -cf "base-$EXTRACT.tar.zst" -C data/build "base/$EXTRACT"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: base-${{ matrix.extract }}
+          path: base-${{ matrix.extract }}.tar.zst
+          if-no-files-found: error
+          # Already compressed.
+          compression-level: 0
+          retention-days: 1
+
+  site:
+    needs: [steps, basemaps]
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    environment: production
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.13.6"
+          python-version: "3.15"
+          enable-cache: true
+      - run: uv sync --locked
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: data/raw/
+          key: raw-${{ hashFiles('config/inputs.toml') }}
+          fail-on-cache-miss: true
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: build-*
+          path: build-artifacts
+          merge-multiple: true
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: base-*
+          path: build-artifacts
+          merge-multiple: true
+      # Each removed once unpacked: the runner's disk holds the inputs, the
+      # outputs and the cached sources, but not twice the outputs.
+      - name: Unpack the steps of every election and the base maps
+        run: |
+          mkdir -p data/build
+          for archive in build-artifacts/*.tar.zst; do
+            tar --zstd -xf "$archive" -C data/build
+            rm "$archive"
+          done
+
+      # candidates, links, addresses, geo, basemap, results, build and
+      # check, stopping at the first that fails: data that do not pass
+      # `check` are never deployed. The steps of the steps and basemaps jobs
+      # find their output up to date.
       - run: uv run ems make
-      # Each data part whose key is not deployed yet, with Wrangler.
+      # Every step's output, built here from nothing, against
+      # data/outputs.toml as committed (`make` writes there the entries of
+      # the steps it ran with other inputs). A warning and a job summary,
+      # not a failure: the runner is x86-64, the record is written where
+      # `ems make` ran, mostly aarch64, and output alike byte for byte on
+      # both is not verified; the deployed parts are keyed by the
+      # repository (data/published.toml), not by the record, so a
+      # difference only means it does not let a machine like this one skip
+      # the step.
+      - name: Compare the outputs with data/outputs.toml
+        run: |
+          git restore data/outputs.toml
+          uv run ems record compare --github
+      # Each data part whose key is not deployed yet, with Wrangler. A re-run
+      # of this job leaves those deployed before it stopped as they are.
       - run: uv run ems data deploy
 
   app:
-    needs: [plan, data]
-    # After the data job, or without it where no data part was stale.
+    needs: [plan, site]
+    # After the site job, or without it where no data part was stale; not
+    # where it, or a job before it, failed.
     if: >-
       always() && needs.plan.result == 'success' &&
-      (needs.data.result == 'success' || needs.data.result == 'skipped')
+      (needs.site.result == 'success' || needs.plan.outputs.stale == 'false')
     runs-on: ubuntu-latest
     timeout-minutes: 30
     environment:
@@ -144,9 +331,10 @@ jobs:
           sparse-checkout: |
             /*
             !/data/curated/cache/
-      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
-          python-version: "3.14"
+          version: "0.13.6"
+          python-version: "3.15"
           enable-cache: true
       - run: uv sync --locked
 
@@ -176,14 +364,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          wranglerVersion: "4.151.1"
+          wranglerVersion: "4.156.1"
           command: >-
             pages deploy dist/app
             --project-name=${{ steps.site.outputs.project }}
             --branch=main
             --commit-hash=${{ github.sha }}
             --commit-message=${{ github.ref_name }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: archive
           path: ${{ steps.archive.outputs.name }}
@@ -197,10 +385,11 @@ jobs:
     # not just the app, succeeded, and so never where no data part was stale.
     if: always() && needs.app.result == 'success'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: archive
       # The notes start from the version before, the latest release that is

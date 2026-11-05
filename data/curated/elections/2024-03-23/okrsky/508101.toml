@@ -1,0 +1,102 @@
+# Okrsky of Modra, transcribed by an AI agent in job okrsok-rules-4049 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dukelská, Kalinčiakova, Kukučínova, Podhorská, Nám. Slobody, Kuzmányho, Ulica za Štadiónom
+#   okrsok 2: Hviezdoslavova, Bratislavská, Zochova, Cpinova, Dr. Bodického, Fr. Kráľa, Hečkova, Jesenského, Kollárova, Kellenbergerova, Sládkovičova, Bernolákova, Štefánikova, Vinárska, Sokolská, Ulica Ferdinanda Píseckého, Ulica Jána Bakoša
+#   okrsok 3: Štúrova, Horná, Baštová, Dolná, Kostolná, Moyzesova, Súkenícka, Komenského č. 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, mesto Modra
+#   okrsok 4: Družstevná, Komenského č. 1, 2, 4, 6
+#   okrsok 5: 1. mája, Čsl. armády, Erneyho, Hrnčiarska, Krátka, Šúrska, SNP, Vajanského, Komenského č. 8, 10, 12, 14, 16, 18, 20, 22, 24,26, 28
+#   okrsok 6: Partizánska, Trnavská, Karpatská, Národná, Puškinova, Pod vinicami
+#   okrsok 7: Lúčna, Potočná, Muškátová ulica, Leánková ulica, Tramínová ulica, Strapáková ulica, Malagová ulica, Šípková ulica, Veštíkova ulica, časť Harmónia, časť Piesok
+obec = "508101"
+name = "Modra"
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's undated decision for this vote. Streets the document names that the register lacks (left out): Muškátová ulica, Leánková ulica, Tramínová ulica, Strapáková ulica, Malagová ulica, Šípková ulica, Veštíkova ulica. 'mesto Modra' are voters without an address (no rule). Addresses the document leaves out (e.g. Komenského numbers not listed, streets of Kráľová it does not name) and those without a street take the okrsok of the nearest address (fill_nearest)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names the vote ('voľby prezidenta Slovenskej republiky 2024, 23. marca 2024'); it states no date of its own."
+
+[[document]]
+url = "https://www.modra.sk/wp-content/uploads/2024/01/Urcenie-volebnych-okrskov-v-Modre-2024.pdf"
+sha256 = "f1cbb0be63e8e5dd5527b0b4c2492f6c8a2564532e300dedef6e55fda8f7985b"
+title = "Určenie volebných okrskov a miestností pre voľby prezidenta Slovenskej republiky 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Dukelská"},
+  {street = "Kalinčiakova"},
+  {street = "Kukučínova"},
+  {street = "Podhorská"},
+  {street = "Nám. slobody", written = "Nám. Slobody"},
+  {street = "Kuzmányho"},
+  {street = "Za štadiónom", written = "Ulica za Štadiónom"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "Bratislavská"},
+  {street = "Zochova"},
+  {street = "Cpinova"},
+  {street = "Dr.Bodického", written = "Dr. Bodického"},
+  {street = "Fraňa Kráľa", written = "Fr. Kráľa"},
+  {street = "Hečkova"},
+  {street = "Jesenského"},
+  {street = "Kollárova"},
+  {street = "Kellenbergerova"},
+  {street = "Sládkovičova"},
+  {street = "Bernolákova"},
+  {street = "Štefánikova"},
+  {street = "Vinárska"},
+  {street = "Sokolská"},
+  {street = "Ulica Ferdinanda Píseckého"},
+  {street = "Ulica Jána Bakoša"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Štúrova"},
+  {street = "Horná"},
+  {street = "Baštová"},
+  {street = "Dolná"},
+  {street = "Kostolná"},
+  {street = "Moyzesova"},
+  {street = "Súkenícka"},
+  {street = "Komenského", numbers = "3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Družstevná"},
+  {street = "Komenského", numbers = "1, 2, 4, 6"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Čsl. armády"},
+  {street = "Erneyho"},
+  {street = "Hrnčiarska"},
+  {street = "Krátka"},
+  {street = "Šúrska"},
+  {street = "SNP"},
+  {street = "Vajanského"},
+  {street = "Komenského", numbers = "8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Partizánska"},
+  {street = "Trnavská"},
+  {street = "Karpatská"},
+  {street = "Národná"},
+  {street = "Puškinova"},
+  {street = "Pod Vinicami", written = "Pod vinicami"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Lúčna"},
+  {street = "Potočná"},
+  {part = "Harmónia"},
+  {part = "Piesok"},
+]

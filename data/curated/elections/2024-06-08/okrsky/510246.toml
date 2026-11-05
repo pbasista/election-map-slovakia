@@ -1,0 +1,61 @@
+# Okrsky of Zubrohlava, transcribed by an AI agent in job okrsok-rules-5042 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Slanická, Tehliarska, Nová bobrovská, Stará bobrovská, Hlavná, Skladanova, Školská, Chotárna, Klinec I., Klinec II., Klinec III., Nad školou, Kotelnicova I., Kotelnicova II.
+#   okrsok 2: Hlavná od kostola, Kostolná, Svätojánska, Zlatnicová, Zlatnicová I., Zlatnicová II., Raková, Lazová, Krátka, Jevjakova, Kunstova, Potočná, Plátennícka, Lánová, Výhonová, Vyšná, Krivý Kút, Kuňaky, Pod Grapou, Mlynská, Rabčianska
+obec = "510246"
+name = "Zubrohlava"
+okrsky_date = 2024-03-05
+okrsky_fill = "nearest"
+okrsky_note = "Hlavná is split: okrsok 1 has \"Hlavná\", okrsok 2 \"Hlavná od kostola\" (from the church on), with no house numbers given. Hlavná therefore has no rule; each of its addresses takes the okrsok of the nearest placed address (fill_nearest), as do the addresses without a street."
+
+[[document]]
+url = "https://www.zubrohlava.eu/modules/file_storage/download.php?file=620045b0%7C3841&inline=1"
+sha256 = "d16e444b9b7b5613abe6a0b5a519310cd11370e1a59ecc44073c9dcd28e90a18"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do Európskeho parlamentu 8. júna 2024"
+
+[[document]]
+url = "https://www.zubrohlava.eu/zverejnovanie/volby/"
+sha256 = "f83c4a7eba4943ba94a95c9d7af966b450e3425dfe3f73277ef0a8c5cdeb9e5f"
+title = "page linking the document"
+
+[okrsok.1]
+rules = [
+  {street = "Slanická"},
+  {street = "Tehliarska"},
+  {street = "Nová bobrovská"},
+  {street = "Stará bobrovská"},
+  {street = "Skladanová", written = "Skladanova", note = "missing accent; the register has only Skladanová"},
+  {street = "Školská"},
+  {street = "Chotárna"},
+  {street = "Klinec I."},
+  {street = "Klinec II."},
+  {street = "Klinec III."},
+  {street = "Nad školou"},
+  {street = "Kotelnicova I."},
+  {street = "Kotelnicova II."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kostolná"},
+  {street = "Svätojánska"},
+  {street = "Zlatnicová"},
+  {street = "Zlatnicová I."},
+  {street = "Zlatnicová II."},
+  {street = "Raková"},
+  {street = "Lazová"},
+  {street = "Krátka"},
+  {street = "Jevjakova"},
+  {street = "Kunstova"},
+  {street = "Potočná"},
+  {street = "Plátennícka"},
+  {street = "Lánová"},
+  {street = "Výhonová"},
+  {street = "Vyšná"},
+  {street = "Krivý Kút"},
+  {street = "Kuňaky"},
+  {street = "Pod Grapou"},
+  {street = "Mlynská"},
+  {street = "Rabčianska"},
+]

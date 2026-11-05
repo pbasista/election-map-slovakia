@@ -1,0 +1,26 @@
+# Okrsky of Oborín, transcribed by an AI agent in job okrsok-rules-3967 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kultúrny dom Oborín 125
+#   okrsok 2: Obecný dom Kucany 26
+obec = "528633"
+name = "Oborín"
+okrsky_note = "The notice gives 2 okrsky with their polling stations only (Kultúrny dom Oborín 125; Obecný dom Kucany 26); each okrsok is given the part of its station."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-08-18
+okrsky_date_basis = "the article is dated 18.08.2023 on the obec's website; it states no decision date (https://www.oborin.sk/oznamenie-o-mieste-a-case-konania-volieb-do-nr-sr-2023-a22-774)"
+
+[[document]]
+url = "https://www.oborin.sk/oznamenie-o-mieste-a-case-konania-volieb-do-nr-sr-2023-a22-774"
+sha256 = "c12434a5f5a8459189606378ab846188be86b0f43af1100a98d4c54685ed9af8"
+title = "Oznámenie o mieste a čase konania volieb do NR SR 2023 (18.08.2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Oborín", note = "the okrsok's polling station, Kultúrny dom Oborín 125, lies in part Oborín; the obec has 2 okrsky and 2 parts", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kucany", note = "the okrsok's polling station, Obecný dom Kucany 26, lies in part Kucany", inferred = true},
+]

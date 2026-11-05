@@ -1,0 +1,82 @@
+# Okrsky of Beluša, transcribed by an AI agent in job okrsok-rules-103 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ul. Ľ. Štúra (súp.č.: 7,8,9,10,11,12,14,15,16) Ul. Ľ. Štúra (súp.č.: 1677-1683,1883,1884,1895, 2452, 2453, 2454)
+#   okrsok 2: Ul. Trenčianska, Ul. Staničná, Ul. P.O. Hviezdoslava Ul. Továrenská, Ul. Kpt. Nálepku, Ul. Mlynská
+#   okrsok 3: Ul. J. Kráľa, Ul. Žilinská, Ul. Dr. Adamyho Ul. Krížna, Rybníky, Ul. J. A. Komenského Ul. Partizánska, Ul. Farská, Ul. M. R. Štefánika Ul. Dr. Clementisa
+#   okrsok 4: Ul. A. Sládkoviča, Ul. M. Kukučína
+#   okrsok 5: Ul. Slatinská (súp.č.: 20,21,25,26,27,28,29,30,31-44) Ul. Slatinská (súp. č. 186 – 224, 2429,2491, 2492) Ul. Ľ. Štúra (17/28,17/29,17/30)
+#   okrsok 6: Ul. Slatinská (súp.č.: 47 - 85) Ul. Slatinská (súp.č.: 140 -183,1618 – 2473, 2475, 2477, 2476, 2488, 2483, 2709, 2719, 2721) Belušské Slatiny, Podmalenica
+#   okrsok 7: Časť obce Hloža VII. Hloža Beluša - Ul. J. Kollára
+#   okrsok 8: Časť obce Podhorie VIII. Podhorie
+obec = "512851"
+name = "Beluša"
+okrsky_fill = "nearest"
+okrsky_note = "Numbers in the document are súpisné. fill_nearest places the Ľ. Štúra and Slatinská houses outside the listed numbers and the addresses without a street in part Beluša (scattered houses), which the document does not mention."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2017-09-11
+okrsky_date_basis = "The page states no decision date; it says it was posted (Vyvesené) on 11. 9. 2017. (https://www.belusa.sk/samosprava/volby/volebne-okrsky-a-volebne-miestnosti-pre-volby-do-trencianskeho-samosravneho-kraja-2017-1847.html)"
+
+[[document]]
+url = "https://www.belusa.sk/samosprava/volby/volebne-okrsky-a-volebne-miestnosti-pre-volby-do-trencianskeho-samosravneho-kraja-2017-1847.html"
+sha256 = "699dc29a798d120514e306cd3c5b0529e48f4df2e320041c396175161e633982"
+title = "Volebné okrsky a volebné miestnosti pre voľby do Trenčianskeho samosprávneho kraja 2017 (vyvesené 11. 9. 2017)"
+
+[okrsok.1]
+rules = [
+  {street = "Ľ. Štúra", numbers = "7, 8, 9, 10, 11, 12, 14, 15, 16, 1677-1683, 1883, 1884, 1895, 2452, 2453, 2454", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Trenčianska"},
+  {street = "Staničná"},
+  {street = "P. O. Hviezdoslava", written = "P.O. Hviezdoslava"},
+  {street = "Továrenská"},
+  {street = "Kpt. Nálepku"},
+  {street = "Mlynská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "J. Kráľa"},
+  {street = "Žilinská"},
+  {street = "Dr. Adámyho", written = "Dr. Adamyho", note = "Adamyho without the accent: the same street"},
+  {street = "Krížna"},
+  {street = "Rybníky"},
+  {street = "J. A. Komenského"},
+  {street = "Partizánska"},
+  {street = "Farská"},
+  {street = "M. R. Štefánika"},
+  {street = "Dr. Clementisa"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "A. Sládkoviča"},
+  {street = "M. Kukučína"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Slatinská", numbers = "20, 21, 25-44, 186-224, 2429, 2491, 2492", by = "supisne"},
+  {street = "Ľ. Štúra", numbers = "17", by = "supisne", note = "17/28, 17/29, 17/30: súpisné 17 with its orientačné numbers"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Slatinská", numbers = "47-85, 140-183, 1618-2473, 2475, 2476, 2477, 2483, 2488, 2709, 2719, 2721", except = "2429", by = "supisne", note = "2429 lies in the range 1618-2473 but the document lists it explicitly in okrsok V"},
+  {street = "Belušské Slatiny"},
+  {street = "Podmalenica"},
+]
+
+[okrsok.7]
+rules = [
+  {part = "Hloža"},
+  {street = "J. Kollára"},
+]
+
+[okrsok.8]
+rules = [
+  {part = "Podhorie"},
+]

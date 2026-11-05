@@ -1,0 +1,43 @@
+# Okrsky of Radošina, transcribed by an AI agent in job okrsok-rules-4998 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Hečkova, kpt. J. Nálepku, Piešťanská, Školská, bezdomovci
+#   okrsok 2: Ulice: Družstevná, Kamenná, Mierová, Nádražná, Nitrianska
+#   okrsok 3: Volebná miestnosť: Kultúrny dom Bzince 30
+obec = "505421"
+name = "Radošina"
+okrsky_date = 2024-02-22
+okrsky_fill = "nearest"
+okrsky_note = "'bezdomovci' (homeless, no address) in okrsok 1 are not a rule. The register's addresses of part Radošina without a street (súpisné only) take the nearest okrsok (fill_nearest). The body text repeats 'volieb prezidenta Slovenskej republiky' from the previous document; the heading names the European Parliament election of 8 June 2024."
+
+[[document]]
+url = "https://www.radosina.sk/download_file_f.php?id=2003053"
+sha256 = "7dea91ddc6b5f0573cd5bad673884d89f5f33f5775c64fe6e338b3162ec4676a"
+title = "Utvorenie volebných okrskov a určenie volebných miestností na konanie volieb do Európskeho parlamentu 8. júna 2024 (22.2.2024)"
+
+[[document]]
+url = "https://www.radosina.sk/volby-do-europskeho-parlamentu-8-6-2024-oznam/mid/506316/.html"
+sha256 = "a301bb6f53f21b683ab48197894fa178d71bf3be73c0b3a2fb0fc40680159b91"
+title = "VOĽBY do Európskeho parlamentu 8.6.2024 (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {street = "Hečkova"},
+  {street = "kpt. J. Nálepku"},
+  {street = "Piešťanská"},
+  {street = "Školská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Kamenná"},
+  {street = "Mierová"},
+  {street = "Nádražná"},
+  {street = "Nitrianska"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Bzince", note = "the document gives okrsok 3 only its polling station, the cultural house in Bzince (Bzince 30); okrsok 3 is the part Bzince, the only part not covered by the streets of okrsky 1 and 2", inferred = true},
+]

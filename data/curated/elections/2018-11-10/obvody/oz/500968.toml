@@ -1,0 +1,310 @@
+# Council obvody of Zlaté Moravce (500968), Zlaté Moravce.
+# Transcribed by an AI agent in job obvod-rules-056 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Beňadická cesta, Bernolákova, Dlhá, J. Jesenského, Kollárova, Lúčna, M. Urbana, Štefánikova, Štúrova, Tekovská, Tolstého, Vajanského, 1. mája 2 - 22 (párne čísla), A. Kmeťa, Janka Kráľa, Ľ. Podjavorinskej, Migazziho, Mlynská, Nábrežie za majerom, Nám. A. Hlinku, Nám. hrdinov, Poštová, Prílepská, Robotnícka, Sama Chalupku, SNP, Spojovacia, Svätoplukova, Železničiarska, Župná, Gorazdova, J. C. Hronského, Kukučínova, Moyzesova, Pod dielami, Poľná, Pribinova, Sládkovičova, Slavianska, Slnečná, Smetanova, Tajovského, Tríbečská, T. Vansovej, Záhradnícka, Čajkovského, Dobšinského, E. M. Šoltésovej, Hečkova, Hollého, Hoňovecká, Hviezdoslavova 2-30, Inovecká, Krátka, Krížna, Murgašova, Odbojárov, Potočná, Rázusova, Slovenskej armády, Tichá, Továrenská, Zelená, Žitavské nábrežie sa volí 6 poslancov.
+#   obvod 2: Hviezdoslavova 32-86/D, Nitrianska, 1. mája 1-51 (nepárne čísla), 1. mája 26-76 (párne čísla), Radlinského, Duklianska, Mládeže, Mojmírova, Brezová, Kalinčiakova, Školská, Do kratín, Dolné vinice, Do remanancií, Hájová, Martinský breh, M. Benku, Obrancov mieru, Pod hájom, Priemyselná, Rovňanova, Staničná, Šafranická, Tehelná, Viničná sa volí 9 poslancov.
+#   obvod 3: (Mesto Zlaté Moravce - mestská časť Chyzerovce) Baničova, Bottova, B. S. Timravy, Družstevná, Hurbanova, Chyzerovecká, Janka Matúšku, Karola Kuzmányho, Kraskova, M. M. Hodžu, M. Pružinského, Palárikova sa volí 1 poslanec.
+#   obvod 4: (Mesto Zlaté Moravce - mestská časť Prílepy) Čierna dolina, Hlavná, Horný majer, Nová, Obecná, Parková sa volí 1 poslanec.
+# Okrsky added by an AI agent in job okrsok-rules-5842 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Beňadická cesta, Bernolákova, Dlhá, J. Jesenského, Kollárova, Lúčna, M. Urbana, Štefánikova, Štúrova, Tekovská, Tolstého, Vajanského
+#   okrsok 2: 1.mája 2-22 (párne čísla), A. Kmeťa, Janka Kráľa, Ľ. Podjavorinskej, Migazziho, Mlynská, Nábrežie za majerom, Nám. A. Hlinku, Nám. hrdinov, Poštová, Prílepská, Robotnícka, Sama Chalupku, SNP, Spojovacia, Svätoplukova, Železničiarska, Župná
+#   okrsok 3: Gorazdova, J.C. Hronského, Kukučínova, Moyzesova, Pod dielami, Poľná, Pribinova, Sládkovičova, Slavianska, Slnečná, Smetanova, Tajovského, Tribečská, T. Vansovej, Záhradnícka
+#   okrsok 4: Čajkovského, Dobšinského, E. M. Šoltésovej, Hečkova, Hollého, Hoňovecká, Hviezdoslavova 2-30, Inovecká, Krátka, Krížna, Murgašova, Odbojárov, Potočná, Rázusova, Slovenskej armády, Tichá, Továrenská, Zelená, Žitavské nábrežie
+#   okrsok 5: Hviezdoslavova 32-86D, Nitrianska
+#   okrsok 6: 1.mája 1-51 (nepárne čísla), 1. mája 26-76 (párne čísla), Radlinského
+#   okrsok 7: Duklianska, Mládeže, Mojmírova
+#   okrsok 8: Brezová, Kalinčiakova, Školská
+#   okrsok 9: Do kratín, Dolné vinice, Do remanancií, Hájová, Martinský breh, M. Benku, Obrancov mieru, Pod hájom, Priemyselná, Rovňanova, Staničná, Šafranická, Tehelná, Viničná
+#   okrsok 10: Baničova, Bottova, B. S.Timravy, Družstevná, Hurbanova, Chyzerovecká, Janka Matúšku, Karola Kuzmányho, Kraskova, M. M. Hodžu, M. Pružinského, Palárikova
+#   okrsok 11: Čierna Dolina, Hlavná, Horný majer, Nová, Obecná, Parková
+obec = "500968"
+name = "Zlaté Moravce"
+date = 2018-06-20
+fill = "nearest"
+note = "Krížna and Poštová are named but not in the register, left out. Hviezdoslavova (2-30 / 32-86/D) and 1. mája are split as written; their other numbers and the houses without a street in part Zlaté Moravce are placed by fill_nearest."
+supplemented = 2022-10-29
+supplemented_from = "election"
+supplement_basis = "The 2018 announcement does not name Metodova ulica, Vionská ulica and Športová ulica (register streets, probably newer); they are placed in obvod 1 as the 2022 rule set has them."
+okrsky_date = 2018-09-06
+okrsky_fill = "nearest"
+okrsky_note = "The document (mayor's notice of 06.09.2018, linked from the city's 'Komunálne voľby 2018' page) groups the okrsky under obvody I–IV: 1–4, 5–9, 10, 11. Krížna and Poštová are named but not in the register, left out. 'Voliči s trvalým pobytom Zlaté Moravce sú zapísaní vo volebnom okrsku č. 2' are voters registered without an address (not placed). 1.mája and Hviezdoslavova are split between obvody by house numbers; within each obvod each lies in a single okrsok, so whole-street rules (the obvod limits them). Houses without a street in part Zlaté Moravce are placed by fill_nearest. The PDF text layer garbles a few letters (Cajkovského, Soltésovej); text given as the document reads."
+okrsky_supplemented = 2022-10-29
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The 2018 document does not name Metodova ulica, Vionská ulica and Športová ulica (register streets, probably newer); they are placed as the 2022 rule set has them (Metodova in okrsok 3, Vionská and Športová in okrsok 4), all within obvod 1 as the 2018 obvod rules put them."
+
+[[document]]
+url = "https://www.zlatemoravce.eu/download_file_f.php?id=1005433"
+sha256 = "b5030d6fecad29fae3188eba887ffd2f4aa783af160c74287c0a47885d183b09"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 10. novembra 2018 (uznesenie MsZ č. 885/2018 zo dňa 20.06.2018)"
+
+[[document]]
+url = "https://www.zlatemoravce.eu/komunalne-volby-2018.html"
+sha256 = "95e662f6e79b3c10dbbacdebd45fa4f3856a0b92463007a4d985d28f08d17013"
+title = "Komunálne voľby 2018"
+
+[[document]]
+url = "https://www.zlatemoravce.eu/download_file_f.php?id=1014860"
+sha256 = "f23b16f97cde589c989bc78e7b8c25e04712cacdb38bc7d47ab94b5f3aee1079"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností (voľby do orgánov samosprávy obcí 2018; Zlaté Moravce, 06.09.2018)"
+
+[obvod.1]
+seats = 6
+okrsky = [1, 2, 3, 4]
+rules = [
+  {street = "Beňadická cesta"},
+  {street = "Bernolákova"},
+  {street = "Dlhá"},
+  {street = "J. Jesenského"},
+  {street = "Kollárova"},
+  {street = "Lúčna"},
+  {street = "M. Urbana"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Tekovská"},
+  {street = "Tolstého"},
+  {street = "Vajanského"},
+  {street = "A. Kmeťa"},
+  {street = "Janka Kráľa"},
+  {street = "Ľ. Podjavorinskej"},
+  {street = "Migazziho"},
+  {street = "Mlynská"},
+  {street = "Nábrežie Za Majerom", written = "Nábrežie za majerom"},
+  {street = "Nám. A. Hlinku"},
+  {street = "Nám. hrdinov"},
+  {street = "Prílepská"},
+  {street = "Robotnícka"},
+  {street = "Sama Chalupku"},
+  {street = "SNP"},
+  {street = "Spojovacia"},
+  {street = "Svätoplukova"},
+  {street = "Železničiarska"},
+  {street = "Župná"},
+  {street = "Gorazdova"},
+  {street = "J. C. Hronského"},
+  {street = "Kukučínova"},
+  {street = "Moyzesova"},
+  {street = "Pod Dielami", written = "Pod dielami"},
+  {street = "Poľná"},
+  {street = "Pribinova"},
+  {street = "Sládkovičova"},
+  {street = "Slavianska"},
+  {street = "Slnečná"},
+  {street = "Smetanova"},
+  {street = "Tajovského"},
+  {street = "Tribečská", written = "Tríbečská"},
+  {street = "T. Vansovej"},
+  {street = "Záhradnícka"},
+  {street = "Čajkovského"},
+  {street = "Dobšinského"},
+  {street = "E. M. Šoltésovej"},
+  {street = "Hečkova"},
+  {street = "Hollého"},
+  {street = "Hoňovecká"},
+  {street = "Inovecká"},
+  {street = "Krátka"},
+  {street = "Murgašova"},
+  {street = "Odbojárov"},
+  {street = "Potočná"},
+  {street = "Rázusova"},
+  {street = "Slovenskej armády"},
+  {street = "Tichá"},
+  {street = "Továrenská"},
+  {street = "Zelená"},
+  {street = "Žitavské Nábrežie", written = "Žitavské nábrežie"},
+  {street = "Metodova ulica", supplemented = true},
+  {street = "Vionská ulica", supplemented = true},
+  {street = "Športová ulica", supplemented = true},
+  {street = "1.mája", numbers = "2-22", parity = "even", written = "1. mája"},
+  {street = "Hviezdoslavova", numbers = "2-30"},
+]
+
+[obvod.2]
+seats = 9
+okrsky = [5, 6, 7, 8, 9]
+rules = [
+  {street = "Nitrianska"},
+  {street = "Radlinského"},
+  {street = "Duklianska"},
+  {street = "Mládeže"},
+  {street = "Mojmírova"},
+  {street = "Brezová"},
+  {street = "Kalinčiakova"},
+  {street = "Školská"},
+  {street = "Do Kratín", written = "Do kratín"},
+  {street = "Dolné Vinice", written = "Dolné vinice"},
+  {street = "Do Remanancií", written = "Do remanancií"},
+  {street = "Hájová"},
+  {street = "Martinský Breh", written = "Martinský breh"},
+  {street = "M. Benku"},
+  {street = "Obrancov Mieru", written = "Obrancov mieru"},
+  {street = "Pod Hájom", written = "Pod hájom"},
+  {street = "Priemyselná"},
+  {street = "Rovňanova"},
+  {street = "Staničná"},
+  {street = "Šafranická"},
+  {street = "Tehelná"},
+  {street = "Viničná"},
+  {street = "1.mája", numbers = "1-51", parity = "odd", written = "1. mája"},
+  {street = "1.mája", numbers = "26-76", parity = "even", written = "1. mája"},
+  {street = "Hviezdoslavova", numbers = "32-86", except = "86E", note = "\"32-86/D\": up to 86D, so 86E is left out"},
+]
+
+[obvod.3]
+seats = 1
+okrsky = [10]
+rules = [
+  {street = "Baničova"},
+  {street = "Bottova"},
+  {street = "B. S. Timravy"},
+  {street = "Družstevná"},
+  {street = "Hurbanova"},
+  {street = "Chyzerovecká"},
+  {street = "Janka Matúšku"},
+  {street = "Karola Kuzmányho"},
+  {street = "Kraskova"},
+  {street = "M.M.Hodžu", written = "M. M. Hodžu"},
+  {street = "M.Pružinského", written = "M. Pružinského"},
+  {street = "Palárikova"},
+  {part = "Chyzerovce", note = "the announcement for obvod 3 is headed \"Mesto Zlaté Moravce - mestská časť Chyzerovce\"; the part rule places its houses without a street"},
+]
+
+[obvod.4]
+seats = 1
+okrsky = [11]
+rules = [
+  {street = "Čierna Dolina", written = "Čierna dolina"},
+  {street = "Hlavná"},
+  {street = "Horný Majer", written = "Horný majer"},
+  {street = "Nová"},
+  {street = "Obecná"},
+  {street = "Parková"},
+  {part = "Prílepy", note = "the announcement for obvod 4 is headed \"Mesto Zlaté Moravce - mestská časť Prílepy\"; the part rule places its houses without a street. Beňadická cesta, which the register puts in part Prílepy, is in obvod 1 by the document."},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Beňadická cesta"},
+  {street = "Bernolákova"},
+  {street = "Dlhá"},
+  {street = "J. Jesenského"},
+  {street = "Kollárova"},
+  {street = "Lúčna"},
+  {street = "M. Urbana"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Tekovská"},
+  {street = "Tolstého"},
+  {street = "Vajanského"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája", written = "1.mája 2-22 (párne čísla)", note = "the obvod holds only 1.mája 2-22 even; the street's only okrsok in obvod 1"},
+  {street = "A. Kmeťa"},
+  {street = "Janka Kráľa"},
+  {street = "Ľ. Podjavorinskej"},
+  {street = "Migazziho"},
+  {street = "Mlynská"},
+  {street = "Nábrežie Za Majerom", written = "Nábrežie za majerom"},
+  {street = "Nám. A. Hlinku"},
+  {street = "Nám. hrdinov"},
+  {street = "Prílepská"},
+  {street = "Robotnícka"},
+  {street = "Sama Chalupku"},
+  {street = "SNP"},
+  {street = "Spojovacia"},
+  {street = "Svätoplukova"},
+  {street = "Železničiarska"},
+  {street = "Župná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Gorazdova"},
+  {street = "J. C. Hronského", written = "J.C. Hronského"},
+  {street = "Kukučínova"},
+  {street = "Metodova ulica", supplemented = true},
+  {street = "Moyzesova"},
+  {street = "Pod Dielami", written = "Pod dielami"},
+  {street = "Poľná"},
+  {street = "Pribinova"},
+  {street = "Sládkovičova"},
+  {street = "Slavianska"},
+  {street = "Slnečná"},
+  {street = "Smetanova"},
+  {street = "Tajovského"},
+  {street = "Tribečská"},
+  {street = "T. Vansovej"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Čajkovského"},
+  {street = "Dobšinského"},
+  {street = "E. M. Šoltésovej"},
+  {street = "Hečkova"},
+  {street = "Hollého"},
+  {street = "Hoňovecká"},
+  {street = "Hviezdoslavova", written = "Hviezdoslavova 2-30", note = "the obvod holds Hviezdoslavova 2-30; the street's only okrsok in obvod 1"},
+  {street = "Inovecká"},
+  {street = "Krátka"},
+  {street = "Murgašova"},
+  {street = "Odbojárov"},
+  {street = "Potočná"},
+  {street = "Rázusova"},
+  {street = "Slovenskej armády"},
+  {street = "Športová ulica", supplemented = true},
+  {street = "Tichá"},
+  {street = "Továrenská"},
+  {street = "Zelená"},
+  {street = "Vionská ulica", supplemented = true},
+  {street = "Žitavské Nábrežie", written = "Žitavské nábrežie"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Hviezdoslavova", written = "Hviezdoslavova 32-86D", note = "the obvod holds Hviezdoslavova 32-86D; the street's only okrsok in obvod 2"},
+  {street = "Nitrianska"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "1.mája", written = "1.mája 1-51 (nepárne čísla), 1. mája 26-76 (párne čísla)", note = "the obvod holds these numbers of 1.mája; the street's only okrsok in obvod 2"},
+  {street = "Radlinského"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Duklianska"},
+  {street = "Mládeže"},
+  {street = "Mojmírova"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Brezová"},
+  {street = "Kalinčiakova"},
+  {street = "Školská"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Do Kratín", written = "Do kratín"},
+  {street = "Dolné Vinice", written = "Dolné vinice"},
+  {street = "Do Remanancií", written = "Do remanancií"},
+  {street = "Hájová"},
+  {street = "Martinský Breh", written = "Martinský breh"},
+  {street = "M. Benku"},
+  {street = "Obrancov Mieru", written = "Obrancov mieru"},
+  {street = "Pod Hájom", written = "Pod hájom"},
+  {street = "Priemyselná"},
+  {street = "Rovňanova"},
+  {street = "Staničná"},
+  {street = "Šafranická"},
+  {street = "Tehelná"},
+  {street = "Viničná"},
+]

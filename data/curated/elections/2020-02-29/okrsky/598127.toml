@@ -1,0 +1,33 @@
+# Okrsky of Košice-Ťahanovce, transcribed by an AI agent in job okrsok-rules-2529 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Brusnicová Jazvečia Na hájiku Ťahanovská Bez adresy
+#   okrsok 2: Na sihoti Madridská Magnezitárska Pri hrušove Repná Želiarska
+obec = "598127"
+name = "Košice-Ťahanovce"
+okrsky_date = 2019-11-29
+okrsky_fill = "nearest"
+okrsky_note = "Mayor's announcement dated 29.11.2019 on the archived 2020 elections page. 'občania s TP v MČ bez adresy' / 'bez adresy' (okrsok 1) are voters registered without an address. The register's street Pri hati (one address) is not named by the document; it and the houses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20200607205108/https://www.tahanovce.eu/volby-do-nr-sr-2020.phtml?id5=35034"
+sha256 = "cb3bf910f3fe78d0e935e251cc14a41df5f618a270b5defd78f59aa87e87a0ed"
+title = "OZNÁMENIE o určení volebných okrskov a volebných miestností, čase a mieste konania volieb do Národnej rady Slovenskej republiky (Košice, 29.11.2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Brusnicová"},
+  {street = "Jazvečia"},
+  {street = "Na Hájiku", written = "Na hájiku"},
+  {street = "Ťahanovská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Madridská"},
+  {street = "Magnezitárska"},
+  {street = "Na Sihoti", written = "Na sihoti"},
+  {street = "Pri Hrušove", written = "Pri hrušove"},
+  {street = "Repná"},
+  {street = "Želiarska"},
+]

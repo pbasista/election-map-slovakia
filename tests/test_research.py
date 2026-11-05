@@ -1,9 +1,14 @@
+import dataclasses
 import datetime as dt
+import gzip
+import http.server
+import json
+import threading
 from pathlib import Path
 
 import pytest
 
-from election_map_slovakia import cache, config, research, sources
+from election_map_slovakia import cache, config, jobs, research, sources
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -96,7 +101,7 @@ def test_named_persons_keep_their_order_and_unknown_ones_fail():
         "bbbbbbbbbbbb",
         "aaaaaaaaaaaa",
     ]
-    with pytest.raises(research.jobs.JobError, match="cccccccccccc"):
+    with pytest.raises(jobs.JobError, match="cccccccccccc"):
         research.selected_persons(cfg, cfg.latest, data, ["person:cccccccccccc"])
 
 
@@ -165,3 +170,115 @@ def test_page_turned_away_comes_from_the_archive(
     else:
         with pytest.raises(cache.CacheError, match=outcome):
             cache.archive(cfg, url, fetched)
+
+
+@pytest.mark.parametrize("layers", [0, 1, 2])
+def test_download_takes_off_the_gzip_layers_of_a_snapshot(layers: int):
+    """The archive's raw snapshot of a page its site served gzipped is the
+    stored gzip, sent gzipped once more: the copy is the page, not its
+    compressed bytes."""
+    page = "<html><body><p>Ján Novák z Michaloviec</p></body></html>".encode()
+    body = page
+    for _ in range(layers):
+        body = gzip.compress(body)
+
+    class Handler(http.server.BaseHTTPRequestHandler):
+        def do_GET(self) -> None:
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.end_headers()
+            self.wfile.write(body)
+
+        def log_message(self, *_args: object) -> None:
+            pass
+
+    server = http.server.HTTPServer(("127.0.0.1", 0), Handler)
+    thread = threading.Thread(target=server.handle_request)
+    thread.start()
+    try:
+        cfg = config.load(REPO / "config")
+        got = cache.download(cfg, f"http://127.0.0.1:{server.server_port}/c/1", 1 << 20)
+    finally:
+        thread.join()
+        server.server_close()
+    assert got.data == page
+
+
+def research_job(root: Path, day: str) -> jobs.Job:
+    """A research job of the election of *day* whose one page, on the
+    allowlist and naming Jana Biela, is cached already (no fetching)."""
+    job = jobs.Job(
+        root / "research-001",
+        "research",
+        {"categories": ["media-sk"], "language": "sk", jobs.ELECTION: day},
+        [{"id": "p1", "name": "Jana Biela", "first_name": "Jana", "surname": "Biela"}],
+    )
+    documents = job.path / research.DOCUMENTS_DIR
+    documents.mkdir(parents=True)
+    page = {
+        "cache": "abc",
+        "title": "Kandidátka",
+        "language": "sk",
+        "published": "",
+        "fetched": "2026-10-30",
+        "via": "direct",
+    }
+    (documents / "index.json").write_text(json.dumps({URL: page}))
+    (documents / "abc.txt").write_text("Jana Biela kandiduje za primátorku.", "utf-8")
+    (documents / "abc.html").write_text("<p>Jana Biela</p>", "utf-8")
+    return job
+
+
+URL = "https://korzar.sme.sk/c/123/clanok.html"
+FINDING = {
+    "url": URL,
+    "quote": "Jana Biela kandiduje",
+    "kind": "career",
+    "claim_en": "She stands.",
+    "claim_sk": "Kandiduje.",
+    "identity": "named",
+}
+
+
+def test_an_earlier_election_counts_only_pages_from_before_its_last_round(
+    tmp_path: Path,
+):
+    """Its voters could know only what was published before its last round:
+    a finding of no date, or of that day or later, does not count; one of
+    the campaign between a presidential election's rounds does."""
+    cfg = dataclasses.replace(config.load(REPO / "config"), root=tmp_path)
+    job = research_job(tmp_path, "2024-03-23")
+    item = job.items[0]
+    # Neither the finding nor the page dated.
+    assert research.finding_problems(cfg, job, item, FINDING) == [
+        "published when, not known: the election of 2024-03-23 counts only"
+        " pages published before 2024-04-06, the day of its last round"
+    ]
+    on_the_day = FINDING | {"published": "2024-04-06"}
+    assert research.finding_problems(cfg, job, item, on_the_day) == [
+        "published 2024-04-06: the election of 2024-03-23 counts only pages"
+        " published before 2024-04-06, the day of its last round"
+    ]
+    between_rounds = FINDING | {"published": "2024-04-05"}
+    assert research.finding_problems(cfg, job, item, between_rounds) == []
+    # The latest election's research takes pages of any date.
+    latest = research_job(tmp_path / "latest", cfg.latest.day.isoformat())
+    assert research.finding_problems(cfg, latest, item, FINDING) == []
+
+
+def test_accept_keeps_each_election_to_its_own_persons(tmp_path: Path):
+    """Accepted research records its election; a record of the same id from
+    another election is not overwritten."""
+    cfg = dataclasses.replace(config.load(REPO / "config"), root=tmp_path)
+    job = research_job(tmp_path, "2024-03-23")
+    finding = FINDING | {"published": "2024-03-01"}
+    research.accept(cfg, job, [(job.items[0], {"id": "p1", "findings": [finding]})])
+    path = research.curated_path(cfg, "p1")
+    record = json.loads(path.read_bytes())
+    assert record["election"] == "2024-03-23"
+    assert research.researched(cfg, "p1", cfg.election("2024-prezident")) == record
+    assert research.researched(cfg, "p1", cfg.latest) == {}
+    other = research_job(tmp_path / "latest", cfg.latest.day.isoformat())
+    with pytest.raises(jobs.JobError, match="another election"):
+        research.accept(cfg, other, [(other.items[0], {"id": "p1", "findings": []})])
+    assert json.loads(path.read_bytes()) == record

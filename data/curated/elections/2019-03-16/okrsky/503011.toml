@@ -1,0 +1,436 @@
+# Okrsky of Nové Zámky, transcribed by an AI agent in job okrsok-rules-1007 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Andovská, Cintorínska, G. Czuczora, Holubičia, Holubyho, Jeruzalemská, J. Simora, Kmeťova, Levanduľová, Pažitná, Poľná, Sitnianska, Svornosti, Školská, Západná ulica, Zemiansky priechod
+#   okrsok 2: Cisárska bašta, Drozdia, Labutia, Nám. slobody, Petőfiho, Pod baštou, Šafárikova
+#   okrsok 3: Čižmárska, Fajková, Gúgska, Gúgsky priechod, Komočská cesta, Michalská bašta, Nám. hrdinov, Nový Gúg, Okružná, Tabaková, Toskánska
+#   okrsok 4: J. Kráľa, Tatranská
+#   okrsok 5: Hliníková, Jarková, Jarná ulica, Mederská, Moyzesova, Nevädzová, Nitrianska cesta, Platanová, Pod záhradami, Rozmarínová ulica, Slovenská, Šulekova, Tichá, Tvrdošovská cesta, Ulica Piritovská alej, Včelárska, Zelená alej, Zdravotnícka
+#   okrsok 6: Hradná, Nová, Orechový sad, Orgovánová, Pod kopcom 1 – 59 (nepárne), č. 2 – 48 (párne), S. H. Vajanského č. 75 – 81 (nepárne)
+#   okrsok 7: Bočná, S. H. Vajanského č. 2 – 88 (párne)
+#   okrsok 8: Čerešňová, Dostihová, Dubová, Hájová, Jazerná, Jelenia, Krížna, Riečna, Robotnícka, Rovná, Strelecká, Štrková, Trávna, Zálesná
+#   okrsok 9: S. H. Vajanského č. 23-73 (nepárne)
+#   okrsok 10: T. Vansovej
+#   okrsok 11: A. Jedlika, Agátová, Brezová, Hlboká, Krajná, Lúčna, M. Matunáka, Mýtna, Podhájska, Pod kopcom 50 – 66 (párne), Pod kopcom č. 61 – 75 (nepárne), Poľovnícka, Pri hrádzi, Slávičia, Slnečná, Tatranský priechod, Topoľová
+#   okrsok 12: Šoltésovej ulici
+#   okrsok 13: Jazdecká
+#   okrsok 14: Jánošíkova, Kasárenská, Kvetná, Lesná, Ružová dolina
+#   okrsok 15: G. Bethlena č. 17 – 71 (nepárne)
+#   okrsok 16: G. Bethlena č. 1 – 15 (nepárne), G. Bethlena č. 2E – 50 (párne)
+#   okrsok 17: Nábrežná č. 3 – 51 (nepárne)
+#   okrsok 18: Nábrežná č. 53 – 93 (nepárne)
+#   okrsok 19: Boženy Němcovej, Nábrežnej ul. č. 2 – 10 (párne), Tureckej ul.
+#   okrsok 20: Nábrežná č. 26 – 48 (párne), Nábrežná č. 95 – 99 (nepárne)
+#   okrsok 21: Bitúnková, Nábrežná č. 12, 14, 16, Tajovského
+#   okrsok 22: Banskobystrická, Bernolákovo námestie, Björnsonova, bratov Baldigarovcov, Česká bašta, Forgáchova bašta, F. Rákócziho, Hlavné námestie, Hollého, Kostolná, Kraskova, Kukučínova, L. Kassáka, M. Flengera, M. Oláha, Majzonovo námestie, Nám. františkánov, P. Várdayho, Pod kalváriou, Radničná, Tolstého, Žerotínova bašta a občania s trvalým pobytom Mesto Nové Zámky
+#   okrsok 23: Bajčská cesta, Bešeňovská cesta, Budovateľská, Dolná, Dvorská cesta, Ďumbierska, J. Murgaša, Janov dvor, Jantárová, Komárňanská cesta, Konopná, Koralová, Ľanová, Nábrežná 18 - 22A (párne), Nesvadská cesta, Pri skladoch, Továrenská, Veľká Ragoňa, Viničná, Zelená
+#   okrsok 24: F. Kapisztóryho, Komárňanská
+#   okrsok 25: Mostná, Novomestská, Sihoť sv. Alžbety
+#   okrsok 26: T. G. Masaryka
+#   okrsok 27: SNP
+#   okrsok 28: Gogoľova, M. R. Štefánika 1 – 45 (nepárne), 2 – 52 (párne), Nám. Gy. Széchényiho, Pri gymnáziu
+#   okrsok 29: P. Blahu, Roľnícka, S. H. Vajanského č. 1 – 21 (nepárne)
+#   okrsok 30: Ernestova bašta, Lastovičia, Letomostie, Podzámska, Pribinova
+#   okrsok 31: Ďorocká, Lécka
+#   okrsok 32: Devínska, Dostojevského, J. M. Hurbana, Javorová, Jesenského, Jiráskova, Komjatická, Krátka, M. M. Hodžu, Magnóliová, Nám. P. O. Hviezdoslava, Pod lipami, Rázusova, Sládkovičova, Svätoplukova, Výpalisko, Železná, Žofijská
+#   okrsok 33: M. R. Štefánika č. 47 – 81 (nepárne), M. R. Štefánika č. 54 – 80 (párne), Medzimlynie, Nám. republiky, Tyršova
+#   okrsok 34: Cyrilometódska č. 2 – 14 (párne), Ľ. Štúra
+#   okrsok 35: Cyrilometódska č. 15 – 35 (nepárne), Cyrilometódska č. 16 – 48 (párne)
+#   okrsok 36: Bezručova, Heydukova, Hviezdoslavova, Kollárova, Komenského, Nitrianske nábrežie, Pri ramene, Pri Zúgove, Šurianska, Wolkerova, Zúgov , Železničiarska
+#   okrsok 37: Detvianska, Hrebíčková, Húlska, Husova, Nový svet, Oravská, Palackého, Piesočná, Pohronská, Považská, Strečnianska, Trhová, Vinohrady
+obec = "503011"
+name = "Nové Zámky"
+okrsky_date = 2019-01-11
+okrsky_fill = "nearest"
+okrsky_note = "Streets the document names but the address register lacks, left out: Sihoť sv. Alžbety, Veľká Ragoňa, Zemiansky priechod. fill_nearest places streets the document does not name: Bratislavská cesta; house numbers outside the document's ranges: Cyrilometódska 1, 3, 13; G. Bethlena 2, 2A, 2B, 2C, 2D, 54, 56, 58, 73, 79; M. R. Štefánika 82; Nábrežná 1, 24, 50, 52, 54, 107 (G. Bethlena \"2E–50 (párne)\" is read as 2E and 4–50, so 2–2D are left to the nearest address); the addresses without a street name (súpisné čísla of part Nové Zámky). Okrsok 22 also takes \"občania s trvalým pobytom Nové Zámky\" (voters registered without an address), which needs no rule."
+okrsky_supplemented = 2022-10-29
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The document does not name the newer streets Bazová ulica (okrsok 3), Mesačná ulica (okrsok 1), Medová ulica (okrsok 5), Ulica pod hviezdami (okrsok 5), Ulica západ slnka (okrsok 5), Športová (okrsok 23); they are placed as the rule set of the municipal elections of 29 October 2022 (same 37 okrsky, same numbering) places them, copied exactly. The register now has addresses on these streets (mostly new houses) that the document predates."
+
+[[document]]
+url = "https://www.novezamky.sk/assets/File.ashx?id_org=700036&id_dokumenty=30749"
+sha256 = "2ed2f74971b43db98ded93cc23415d892b43bddb37e45c8cc7b1e43ad2c0411f"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v meste Nové Zámky počas konania volieb prezidenta (Nové Zámky, 11.01.2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Andovská"},
+  {street = "Cintorínska"},
+  {street = "G. Czuczora"},
+  {street = "Holubičia"},
+  {street = "Holubyho"},
+  {street = "Jeruzalemská"},
+  {street = "J. Simora"},
+  {street = "Kmeťova"},
+  {street = "Levanduľová"},
+  {street = "Pažitná"},
+  {street = "Poľná"},
+  {street = "Sitnianska"},
+  {street = "Svornosti"},
+  {street = "Školská"},
+  {street = "Západná ulica"},
+  {street = "Mesačná ulica", supplemented = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cisárska bašta"},
+  {street = "Drozdia"},
+  {street = "Labutia"},
+  {street = "Nám. slobody"},
+  {street = "Petőfiho"},
+  {street = "Pod baštou"},
+  {street = "Šafárikova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Čižmárska"},
+  {street = "Fajková"},
+  {street = "Gúgska"},
+  {street = "Gúgsky priechod"},
+  {street = "Komočská cesta"},
+  {street = "Michalská bašta"},
+  {street = "Nám. hrdinov"},
+  {street = "Nový Gúg"},
+  {street = "Okružná"},
+  {street = "Tabaková"},
+  {street = "Toskánska"},
+  {street = "Bazová ulica", supplemented = true},
+]
+
+[okrsok.4]
+rules = [
+  {street = "J. Kráľa"},
+  {street = "Tatranská"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Hliníková"},
+  {street = "Jarková"},
+  {street = "Jarná ulica"},
+  {street = "Mederská"},
+  {street = "Moyzesova"},
+  {street = "Nevädzová"},
+  {street = "Nitrianska cesta"},
+  {street = "Platanová"},
+  {street = "Pod záhradami"},
+  {street = "Rozmarínová ulica"},
+  {street = "Slovenská"},
+  {street = "Šulekova"},
+  {street = "Tichá"},
+  {street = "Tvrdošovská cesta"},
+  {street = "Ulica Piritovská alej"},
+  {street = "Včelárska"},
+  {street = "Zelená alej"},
+  {street = "Zdravotnícka"},
+  {street = "Medová ulica", supplemented = true},
+  {street = "Ulica pod hviezdami", supplemented = true},
+  {street = "Ulica západ slnka", supplemented = true},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Hradná"},
+  {street = "Nová"},
+  {street = "Orechový sad"},
+  {street = "Orgovánová"},
+  {street = "Pod kopcom", numbers = "1-59", parity = "odd"},
+  {street = "Pod kopcom", numbers = "2-48", parity = "even"},
+  {street = "S. H. Vajanského", numbers = "75-81", parity = "odd"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Bočná"},
+  {street = "S. H. Vajanského", numbers = "2-88", parity = "even"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Čerešňová"},
+  {street = "Dostihová"},
+  {street = "Dubová"},
+  {street = "Hájová"},
+  {street = "Jazerná"},
+  {street = "Jelenia"},
+  {street = "Krížna"},
+  {street = "Riečna"},
+  {street = "Robotnícka"},
+  {street = "Rovná"},
+  {street = "Strelecká"},
+  {street = "Štrková"},
+  {street = "Trávna"},
+  {street = "Zálesná"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "S. H. Vajanského", numbers = "23-73", parity = "odd"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "T. Vansovej"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "A. Jedlika"},
+  {street = "Agátová"},
+  {street = "Brezová"},
+  {street = "Hlboká"},
+  {street = "Krajná"},
+  {street = "Lúčna"},
+  {street = "M. Matunáka"},
+  {street = "Mýtna"},
+  {street = "Podhájska"},
+  {street = "Pod kopcom", numbers = "50-66", parity = "even"},
+  {street = "Pod kopcom", numbers = "61-75", parity = "odd"},
+  {street = "Poľovnícka"},
+  {street = "Pri hrádzi"},
+  {street = "Slávičia"},
+  {street = "Slnečná"},
+  {street = "Tatranský priechod"},
+  {street = "Topoľová"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Šoltésovej", written = "Šoltésovej ulici", note = "the document writes \"Šoltésovej ulici\" for the register's \"Šoltésovej\": the same street (spelling differs)"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Jazdecká"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Jánošíkova"},
+  {street = "Kasárenská"},
+  {street = "Kvetná"},
+  {street = "Lesná"},
+  {street = "Ružová dolina"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "G. Bethlena", numbers = "17-71", parity = "odd"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "G. Bethlena", numbers = "1-15", parity = "odd"},
+  {street = "G. Bethlena", numbers = "2E, 4-50", parity = "even"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Nábrežná", numbers = "3-51", parity = "odd"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Nábrežná", numbers = "53-93", parity = "odd"},
+]
+
+[okrsok.19]
+rules = [
+  {street = "Boženy Němcovej"},
+  {street = "Nábrežná", numbers = "2-10", parity = "even", written = "Nábrežnej", note = "the document writes \"Nábrežnej\" for the register's \"Nábrežná\": the same street (grammatical case form)"},
+  {street = "Turecká", written = "Tureckej", note = "the document writes \"Tureckej\" for the register's \"Turecká\": the same street (grammatical case form)"},
+]
+
+[okrsok.20]
+rules = [
+  {street = "Nábrežná", numbers = "26-48", parity = "even"},
+  {street = "Nábrežná", numbers = "95-99", parity = "odd"},
+]
+
+[okrsok.21]
+rules = [
+  {street = "Bitúnková"},
+  {street = "Nábrežná", numbers = "12, 14, 16"},
+  {street = "Tajovského"},
+]
+
+[okrsok.22]
+rules = [
+  {street = "Banskobystrická"},
+  {street = "Bernolákovo námestie"},
+  {street = "Bjőrnsonova", written = "Björnsonova", note = "the document writes \"Björnsonova\" for the register's \"Bjőrnsonova\": the same street (spelling differs)"},
+  {street = "bratov Baldigarovcov"},
+  {street = "Česká bašta"},
+  {street = "Forgáchova bašta"},
+  {street = "F. Rákócziho"},
+  {street = "Hlavné námestie"},
+  {street = "Hollého"},
+  {street = "Kostolná"},
+  {street = "Kraskova"},
+  {street = "Kukučínova"},
+  {street = "L. Kassáka"},
+  {street = "M. Flengera"},
+  {street = "M. Oláha"},
+  {street = "Majzonovo námestie"},
+  {street = "Nám. františkánov"},
+  {street = "P. Várdayho"},
+  {street = "Pod kalváriou"},
+  {street = "Radničná"},
+  {street = "Tolstého"},
+  {street = "Žerotínova bašta"},
+]
+
+[okrsok.23]
+rules = [
+  {street = "Bajčská cesta"},
+  {street = "Bešeňovská cesta"},
+  {street = "Budovateľská"},
+  {street = "Dolná"},
+  {street = "Dvorská cesta"},
+  {street = "Ďumbierska"},
+  {street = "J. Murgaša"},
+  {street = "Janov dvor"},
+  {street = "Jantárová"},
+  {street = "Komárňanská cesta"},
+  {street = "Konopná"},
+  {street = "Koralová"},
+  {street = "Ľanová"},
+  {street = "Nábrežná", numbers = "18-22, 22A", parity = "even"},
+  {street = "Nesvadská cesta"},
+  {street = "Pri skladoch"},
+  {street = "Továrenská"},
+  {street = "Viničná"},
+  {street = "Zelená"},
+  {street = "Športová", supplemented = true},
+]
+
+[okrsok.24]
+rules = [
+  {street = "F. Kapisztóryho"},
+  {street = "Komárňanská"},
+]
+
+[okrsok.25]
+rules = [
+  {street = "Mostná"},
+  {street = "Novomestská"},
+]
+
+[okrsok.26]
+rules = [
+  {street = "T. G. Masaryka"},
+]
+
+[okrsok.27]
+rules = [
+  {street = "SNP"},
+]
+
+[okrsok.28]
+rules = [
+  {street = "Gogoľova"},
+  {street = "M. R. Štefánika", numbers = "1-45", parity = "odd"},
+  {street = "M. R. Štefánika", numbers = "2-52", parity = "even"},
+  {street = "Nám. Gy. Széchényiho"},
+  {street = "Pri gymnáziu"},
+]
+
+[okrsok.29]
+rules = [
+  {street = "P. Blahu"},
+  {street = "Roľnícka"},
+  {street = "S. H. Vajanského", numbers = "1-21", parity = "odd"},
+]
+
+[okrsok.30]
+rules = [
+  {street = "Ernestova bašta"},
+  {street = "Lastovičia"},
+  {street = "Letomostie"},
+  {street = "Podzámska"},
+  {street = "Pribinova"},
+]
+
+[okrsok.31]
+rules = [
+  {street = "Ďorocká"},
+  {street = "Lécka"},
+]
+
+[okrsok.32]
+rules = [
+  {street = "Devínska"},
+  {street = "Dostojevského"},
+  {street = "J. M. Hurbana"},
+  {street = "Javorová"},
+  {street = "Jesenského"},
+  {street = "Jiráskova"},
+  {street = "Komjatická"},
+  {street = "Krátka"},
+  {street = "M. M. Hodžu"},
+  {street = "Magnóliová"},
+  {street = "Nám. P.O. Hviezdoslava", written = "Nám. P. O. Hviezdoslava"},
+  {street = "Pod lipami"},
+  {street = "Rázusova"},
+  {street = "Sládkovičova"},
+  {street = "Svätoplukova"},
+  {street = "Výpalisko"},
+  {street = "Železná"},
+  {street = "Žofijská"},
+]
+
+[okrsok.33]
+rules = [
+  {street = "M. R. Štefánika", numbers = "47-81", parity = "odd"},
+  {street = "M. R. Štefánika", numbers = "54-80", parity = "even"},
+  {street = "Medzimlynie"},
+  {street = "Nám. republiky"},
+  {street = "Tyršova"},
+]
+
+[okrsok.34]
+rules = [
+  {street = "Cyrilometódska", numbers = "2-14", parity = "even"},
+  {street = "Ľ. Štúra"},
+]
+
+[okrsok.35]
+rules = [
+  {street = "Cyrilometódska", numbers = "15-35", parity = "odd"},
+  {street = "Cyrilometódska", numbers = "16-48", parity = "even"},
+]
+
+[okrsok.36]
+rules = [
+  {street = "Bezručova"},
+  {street = "Heydukova"},
+  {street = "Hviezdoslavova"},
+  {street = "Kollárova"},
+  {street = "Komenského"},
+  {street = "Nitrianske nábrežie"},
+  {street = "Pri ramene"},
+  {street = "Pri Zúgove"},
+  {street = "Šurianska"},
+  {street = "Wolkerova"},
+  {street = "Zúgov"},
+  {street = "Železničiarska"},
+]
+
+[okrsok.37]
+rules = [
+  {street = "Detvianska"},
+  {street = "Hrebíčková"},
+  {street = "Húlska"},
+  {street = "Husova"},
+  {street = "Nový svet"},
+  {street = "Oravská"},
+  {street = "Palackého"},
+  {street = "Piesočná"},
+  {street = "Pohronská"},
+  {street = "Považská"},
+  {street = "Strečnianska"},
+  {street = "Trhová"},
+  {street = "Vinohrady"},
+]

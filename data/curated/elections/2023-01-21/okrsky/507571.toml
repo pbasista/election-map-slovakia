@@ -1,0 +1,32 @@
+# Okrsky of Suchá nad Parnou, transcribed by an AI agent in job okrsok-rules-3137 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1: od č. domu 0 – 380
+#   okrsok 2: Okrsok č. 2: od č. domu 382 a vyššie
+obec = "507571"
+name = "Suchá nad Parnou"
+okrsky_note = "House numbers are súpisné (the municipality has no streets); applied in both parts (Suchá nad Parnou, Ružová Dolina). Number 381, not mentioned, falls to okrsok 2 (rest)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-09
+okrsky_date_basis = "The notice-board page says Vyvesené: 9. 11. 2022; the decision names the referendum of 21 January 2023. (https://www.suchanadparnou.sk/samosprava/uradna-tabula/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-referendum-2023-v-obci-sucha-nad-parnou-1172.html)"
+
+[[document]]
+url = "https://www.suchanadparnou.sk/e_download.php?file=data/uredni_deska/obsah1101_6.pdf&original=Utvorenie%20okrskov.pdf"
+sha256 = "e952a0e82b0be9d9d33227da873279fa0fae4fa25b95f13c18e883fa80ba90db"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre referendum 21. januára 2023"
+
+[[document]]
+url = "https://www.suchanadparnou.sk/samosprava/uradna-tabula/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-referendum-2023-v-obci-sucha-nad-parnou-1172.html"
+sha256 = "483c5817ee08eea458ca820c0b10c3e532a4b3193b8183a1369b089ba22f2255"
+title = "úradná tabuľa, vyvesené 9. 11. 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Suchá nad Parnou", numbers = "0-380"},
+  {part = "Ružová Dolina", numbers = "0-380"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

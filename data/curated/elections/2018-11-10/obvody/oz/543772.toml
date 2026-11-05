@@ -1,0 +1,41 @@
+# Council obvody of Somotor (543772), Trebišov.
+# Transcribed by an AI agent in job obvod-rules-179 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: časť obce Somotor
+#   obvod 2: časť obce Véč
+#   obvod 3: časť obce Nová Vieska pri Bodrogu
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/543772.toml, standing in.
+obec = "543772"
+name = "Somotor"
+date = 2018-06-22
+okrsky_date = 2022-06-21
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-5909): No document of the 2018 okrsky found. The municipality's 'Voľby 2018' documents (re-posted 29.01.2025) hold the obvody announcement (one obvod per part: Somotor, Véč, Nová Vieska pri Bodrogu), voter information, the appointment of the MVK recorder, candidates and results, but no decision on the okrsky and polling stations; none numbers the okrsky. The okrsky decision found for the presidential election of 2019 (25.1.2019) is another vote's. The Internet Archive's CDX stayed offline (503/504, 'Temporarily Offline') for obecsomotor.sk and somotor.sk on repeated tries over about 15 minutes. Web searches found nothing. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 3 okrsky (nearer, not taken: 2019-03-16: okrsky of the whole obec, the council then elected in several obvody; 2019-05-25: okrsky of the whole obec, the council then elected in several obvody; 2020-02-29: okrsky of the whole obec, the council then elected in several obvody). The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://obecsomotor.sk/dokumenty?kat=1839"
+sha256 = "2f3c7dd1a4fae7f69fa9e07073e6a0ea7270806576ce5415e9fa7aefa083631d"
+title = "Voľby 2018: Oznámenie o určení počtu poslancov a o utvorení volebných obvodov (uznesenie č. 447/2018 zo dňa 22.6.2018; zverejnené 15.8.2018) – file 4e28e_scan0066.pdf"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Somotor"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Véč"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Nová Vieska pri Bodrogu"},
+]

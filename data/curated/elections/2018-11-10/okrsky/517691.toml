@@ -1,0 +1,38 @@
+# Okrsky of Kotešová, transcribed by an AI agent in job okrsok-rules-797 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1 - 100
+#   okrsok 2: 101 - 369, 1000 - 1114
+#   okrsok 3: 370 - 910
+obec = "517691"
+name = "Kotešová"
+okrsky_fill = "nearest"
+okrsky_note = "The document gives the okrsky only by súpisné čísla (od – do): 1. 1 - 100, 2. 101 - 369, 1000 - 1114, 3. 370 - 910. Súpisné čísla are unique in the obec: 1–100 are the houses of the part Oblazov (polling station Oblazov 75); the part Kotešová has 101–1150, the part Buková 624–810 (all within 370–910). The ranges are applied within the parts Kotešová and Buková. Kotešová's súpisné čísla outside them (911–999, 1115–1150) take the nearest placed address."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2018-09-04
+okrsky_date_basis = "The municipal elections 2018 page of the obec's website lists the PDF with 'Dátum zverejnenia' 4. 9. 2018; the PDF itself is undated. (https://www.kotesova.info/pages/volby-do-organov-samospravy-obci)"
+okrsky_supplemented = 2026-10-24
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The document gives okrsok 1 only as súpisné čísla 1–100, the houses of the part Oblazov with its polling station (Požiarna zbrojnica, Oblazov 75); Oblazov's later-numbered houses (súpisné 714–850, 52 addresses in Oblazov, 2.5 km east of Kotešová) fall only within the document's range 370–910 of upper Kotešová, plainly by oversight. The rule set of 2026-10-24 (its document names okrsok 1 'miestna časť Oblazov (1 – 100)') takes the part Oblazov whole; that rule is copied into okrsok 1."
+
+[[document]]
+url = "https://www.kotesova.info/pages/attachments/FxdaigcFUFuM4fPFbZuV8X.pdf"
+sha256 = "9de2cf1508df7ae7fa5e81a7ad254c30bc41829e1ffc64bc74ed9f5bb7187f53"
+title = "Utvorenie volebných okrskov, určenie volebných miestností a vymenovanie zapisovateliek okrskových volebných komisií"
+
+[okrsok.1]
+rules = [
+  {part = "Oblazov", numbers = "1-100"},
+  {part = "Oblazov", supplemented = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kotešová", numbers = "101-369, 1000-1114"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Kotešová", numbers = "370-910"},
+  {part = "Buková", numbers = "370-910"},
+]

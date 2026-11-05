@@ -1,0 +1,32 @@
+# Okrsky of Kostolné, transcribed by an AI agent in job okrsok-rules-3302 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Voliči: Kostolné s.č. 2 – 276, Kostolné s.č. 414
+#   okrsok 2: Voliči: Babulicov Vrch, U Tížikov, U Mihálikov, U Hajtúnov, U Medveďov, U Hučkov; s.č. 278 - 413
+obec = "506141"
+name = "Kostolné"
+okrsky_fill = "nearest"
+okrsky_note = "Okrsok 1: Kostolné s.č. 2–276 and 414; okrsok 2: Babulicov Vrch, the hamlets U Tížikov, U Mihálikov, U Hajtúnov, U Medveďov, U Hučkov and s.č. 278–413 (the hamlets are no parts or streets in the register; their houses are the part Kostolné's súpisné čísla 278–413). Kostolné súpisné čísla the document leaves out (1, 277, above 414) are placed by fill_nearest."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document names the referendum of 21 January 2023 (declared on the petition of 24 August 2022); it states no date of the mayor's decision."
+
+[[document]]
+url = "https://obeckostolne.estranky.sk/file/221/referendum-oznam-okrsky-2022.pdf"
+sha256 = "f48197c2350f8bcd139ff51195472fb045623a5982e19232ab29b182663ded98"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre referendum"
+
+[[document]]
+url = "https://web.archive.org/web/20230605235120/https://obeckostolne.estranky.sk/clanky/vo--by/referendum-2023/utvorenie-volebnych-okrskov-a-volebnych-miestnosti-pre-referendum-2023.html"
+sha256 = "24b54fefa8358b84e1870d0f88cd42ac56d408ee8362eb33b724bcf05aa9590d"
+title = "Utvorenie volebných okrskov a volebných miestností pre referendum 2023 (Voľby – Referendum 2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Kostolné", numbers = "2-276, 414"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Babulicov Vrch"},
+  {part = "Kostolné", numbers = "278-413"},
+]

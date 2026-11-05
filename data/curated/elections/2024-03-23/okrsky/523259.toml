@@ -1,0 +1,29 @@
+# Okrsky of Vinné, transcribed by an AI agent in job okrsok-rules-4167 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: VOLEBNÝ OKRSOK 1 - od č. domu 1 po č. domu 377
+#   okrsok 2: VOLEBNÝ OKRSOK 2 - od č. domu 378 po č. domu 9149
+obec = "523259"
+name = "Vinné"
+okrsky_date = 2024-01-22
+okrsky_note = "The okrsky are split by house number (súpisné číslo) within the one part Vinné; okrsok 2 is open-ended above 378. The 2024 notice is a scan read by OCR without diacritics; the text is given with the diacritics restored."
+
+[[document]]
+url = "https://www.vinne.sk/download_file_f.php?id=1989353"
+sha256 = "f86ba9d4a4d6525b132eb7e5a66f1346f631a05693779ce8981990547550d0f8"
+title = "OZNÁMENIE – utvorenie dvoch volebných okrskov a určenie volebnej miestnosti (voľby prezidenta SR 2024), Vinné 22.01.2024"
+
+[[document]]
+url = "https://www.vinne.sk/volby-2024.html"
+sha256 = "4d9d7875a3758f2d4e2d1993392842db0eb3a3b6817805c730b458922d44cdce"
+title = "Voľby 2024 (archived page linking the notice)"
+
+[okrsok.1]
+rules = [
+  {part = "Vinné", numbers = "1-377"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vinné", numbers = "378-"},
+]

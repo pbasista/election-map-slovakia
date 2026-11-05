@@ -1,0 +1,58 @@
+# Okrsky of Zemianska Olča, transcribed by an AI agent in job okrsok-rules-4904 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kvetná, Jarná, Dunajská, Hlavná, Kapitánska, Kúpeľná, Malá cesta, Mierová, Mlynský rad, Námestie Hrdinov, Školská, Záhradnícky Rad, Železničná
+#   okrsok 2: Dlhý dvor, Jókaiho, Kolárovská, Komárňanská, Kostolná, Krátka, Lipová, Mládeže, Námestie Slobody, Nová, Pekárska, Petőfiho, Piesočná, Poľovnícky rad, Ružová, Úzka, Vinohradnícky rad
+obec = "501417"
+name = "Zemianska Olča"
+okrsky_date = 2024-02-28
+okrsky_fill = "nearest"
+okrsky_note = "Scanned letter to the Okresný úrad, read from the page image. Addresses without a street name go by fill_nearest."
+
+[[document]]
+url = "https://www.zemianskaolca.sk/e_download.php?file=data/uredni_deska/obsah1404_18.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "5a03b57db78725635ea29ab7e657eeb73f7ab3d3463506e952201d7266e99e51"
+title = "Voľby do Európskeho parlamentu – utvorenie volebných okrskov a určenie volebných miestností (28. 02. 2024)"
+
+[[document]]
+url = "https://www.zemianskaolca.sk/zverejnovanie/uradna-tabula/volby-do-europskeho-parlamentu-utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-1517.html"
+sha256 = "6a542b7e8ba6f72a2b556ed48f8fe3697bf277d16bfb59d885c08daf894ee35d"
+title = "Úradná tabuľa"
+
+[okrsok.1]
+rules = [
+  {street = "Kvetná"},
+  {street = "Jarná"},
+  {street = "Dunajská"},
+  {street = "Hlavná"},
+  {street = "Kapitánska"},
+  {street = "Kúpeľná"},
+  {street = "Malá cesta"},
+  {street = "Mierová"},
+  {street = "Mlynský Rad", written = "Mlynský rad"},
+  {street = "Námestie Hrdinov"},
+  {street = "Školská"},
+  {street = "Záhradnícky Rad"},
+  {street = "Železničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dlhý Dvor", written = "Dlhý dvor"},
+  {street = "Jókaiho"},
+  {street = "Kolárovská"},
+  {street = "Komárňanská"},
+  {street = "Kostolná"},
+  {street = "Krátka"},
+  {street = "Lipová"},
+  {street = "Mládeže"},
+  {street = "Námestie Slobody"},
+  {street = "Nová"},
+  {street = "Pekárska"},
+  {street = "Petöfiho", written = "Petőfiho", note = "The document writes Petőfiho (ő), the register Petöfiho (ö): the same street."},
+  {street = "Piesočná"},
+  {street = "Poľovnícky rad"},
+  {street = "Ružová"},
+  {street = "Úzka"},
+  {street = "Vinohradnícky Rad", written = "Vinohradnícky rad"},
+]

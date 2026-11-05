@@ -1,0 +1,24 @@
+# Okrsky of Sebedín-Bečov, transcribed by an AI agent in job okrsok-rules-4603 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Sebedín – Bečov časť Sebedín
+#   okrsok 2: Sebedín-Bečov časť Bečov
+obec = "508977"
+name = "Sebedín-Bečov"
+okrsky_date = 2024-01-24
+okrsky_note = "Same okrsky as the 2022 copy."
+
+[[document]]
+url = "https://www.sebedinbecov.sk/download_file_f.php?id=1986564"
+sha256 = "6058564dd52300d763451120486c075424aa7231dddb888b2444bdc13fda5e9f"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (voľby prezidenta SR 2024), Oznam-vytvorenie-voleb-okrskov.docx"
+
+[okrsok.1]
+rules = [
+  {part = "Sebedín"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Bečov"},
+]

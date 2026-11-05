@@ -1,0 +1,224 @@
+# Okrsky of Nové Mesto nad Váhom, transcribed by an AI agent in job okrsok-rules-2205 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ctiborova, Fándlyho, Južná, Kočovská, Krátka, Krčméryho, Piešťanská, Tichá, Vysoká, Zelená
+#   okrsok 2: Banská, Bočná, Brigádnická, Budovateľská, Dolná, Jarná, Kpt. Nálepku, Krajná, Letná, Lipová, Malá, Martina Rázusa, Priemyselná, Samuela Jurkoviča, Slnečná, Stredná, Vinohradnícka, Železničná
+#   okrsok 3: Tematínska, Ulica Viktora Bilčíka
+#   okrsok 4: Bajzova, Bernolákova, Bratislavská, Fraňa Kráľa, Langsfeldova, Považská, Sasinkova, Svätoplukova, Šoltésovej
+#   okrsok 5: Dubčekova, Poľovnícka, Hrušovského, Pyšného, Jánošíkova, Riznerova, Kamenná, Stromová, Kuzmányho, Šafárikova, Lesnícka, Športová
+#   okrsok 6: J. Kollára, Jasná, Juraja Kréna, Karpatská, Ulica gen. Ivana Institorisa
+#   okrsok 7: Javorinská, SNP
+#   okrsok 8: Čachtická, Jesenského, Jilemnického, M. R. Štefánika, Michala Chrásteka, Nová, Škultétyho, Štúrova
+#   okrsok 9: 1. mája, Čsl. armády, D. Štubňu, Hurbanova, J. Hašku, J. Weisseho, Júliusa Gábriša, Komenského, Námestie slobody, Obrancov mieru, Palkovičova, Partizánska, Petra Matejku
+#   okrsok 10: Benkova, Dibrovova, Dukelská
+#   okrsok 11: Hollého, Hviezdoslavova, Inovecká, Kmeťova, Kpt. Uhra, Železničný uzol
+#   okrsok 12: Bzinská, Hečkova, Klčové, Kukučínova, Ondreja Plachého, Royova, Severná, Tajovského, Ulica Miroslava Ďuržu, Ulica Janka Bernovského
+#   okrsok 13: A. Sládkoviča, Dr. I. Markoviča, Holubyho, Vajanského
+#   okrsok 14: Košikárska, Malinovského, Odborárska, Robotnícka, Rybárska, Trenčianska, Zelená voda I a II
+#   okrsok 15: Beckovská, Bohuslavická, Bošácka, Čulenova, Haluzická, Izbická, Kvetinová, Lieskovská, Ľ. Podjavorinskej, Mlynská, Mnešická, Mostová, Pod zvonicou, Poľná, Pri Klanečnici, Pri vode, Pri záhradách, Riečna, Ružová, Sadová, Slovanská, Srnianska, Tehelná, Turecká, Tušková, Záhradná
+obec = "506338"
+name = "Nové Mesto nad Váhom"
+okrsky_date = 2019-11-22
+okrsky_fill = "nearest"
+okrsky_note = "Two-column list read column by column; the register names streets with \"ulica\" (e.g. \"Bajzova ulica\"), the document without. Streets the document names that the register lacks (no addresses) are left out: Cádrova, Medňanského, Moyzesova, Vichtova, Záhradnícka. Register streets the document does not list (newer streets), placed by fill_nearest: Čerešňová ulica, Hroznová ulica, Marhuľová ulica, Ulica Jána Durdíka; also addresses without a street."
+
+[[document]]
+url = "https://www.nove-mesto.sk/resources/File/vytvorenie-okrskov-nr-sr-20.pdf"
+sha256 = "e935b4eb65021b6be5c18b11bd5770efdd933abc0440fa09cf5877362c1016a0"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do NR SR 29.2.2020"
+
+[okrsok.1]
+rules = [
+  {street = "Ctiborova ulica"},
+  {street = "Fándlyho ulica"},
+  {street = "Južná ulica"},
+  {street = "Kočovská ulica"},
+  {street = "Krátka ulica"},
+  {street = "Krčméryho ulica"},
+  {street = "Piešťanská ulica"},
+  {street = "Tichá ulica"},
+  {street = "Vysoká ulica"},
+  {street = "Zelená ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Banská ulica"},
+  {street = "Bočná ulica"},
+  {street = "Brigádnická ulica"},
+  {street = "Budovateľská ulica"},
+  {street = "Dolná ulica"},
+  {street = "Jarná ulica"},
+  {street = "Ulica kpt. Nálepku"},
+  {street = "Krajná ulica"},
+  {street = "Letná ulica"},
+  {street = "Lipová ulica"},
+  {street = "Malá ulica"},
+  {street = "Ulica Martina Rázusa"},
+  {street = "Priemyselná ulica"},
+  {street = "Ulica Samuela Jurkoviča"},
+  {street = "Slnečná ulica"},
+  {street = "Stredná ulica"},
+  {street = "Vinohradnícka ulica"},
+  {street = "Železničná ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Tematínska ulica"},
+  {street = "Ulica Viktora Bilčíka", written = "Ulica Viktora Bilčíka"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bajzova ulica"},
+  {street = "Bernolákova ulica"},
+  {street = "Bratislavská ulica"},
+  {street = "Ulica Fraňa Kráľa"},
+  {street = "Langsfeldova ulica"},
+  {street = "Považská ulica"},
+  {street = "Sasinkova ulica"},
+  {street = "Svätoplukova ulica"},
+  {street = "Šoltésovej ulica"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Dubčekova ulica"},
+  {street = "Poľovnícka ulica"},
+  {street = "Hrušovského ulica"},
+  {street = "Pyšného ulica"},
+  {street = "Jánošíkova ulica"},
+  {street = "Riznerova ulica"},
+  {street = "Kamenná ulica"},
+  {street = "Stromová ulica"},
+  {street = "Kuzmányho ulica"},
+  {street = "Šafárikova ulica"},
+  {street = "Lesnícka ulica"},
+  {street = "Športová ulica"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Ulica J. Kollára"},
+  {street = "Jasná ulica"},
+  {street = "Ulica Juraja Kréna"},
+  {street = "Karpatská ulica"},
+  {street = "Ulica gen. Ivana Institorisa", written = "Ulica gen. Ivana Institorisa"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Javorinská ulica"},
+  {street = "Ulica SNP"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Čachtická ulica"},
+  {street = "Jesenského ulica"},
+  {street = "Jilemnického ulica"},
+  {street = "Ulica M. R. Štefánika"},
+  {street = "Ulica Michala Chrásteka"},
+  {street = "Nová ulica"},
+  {street = "Škultétyho ulica"},
+  {street = "Štúrova ulica"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Ulica 1.mája", written = "1. mája"},
+  {street = "Ulica čsl. armády"},
+  {street = "Ulica D. Štubňu"},
+  {street = "Hurbanova ulica"},
+  {street = "Ulica J. Hašku"},
+  {street = "Ulica J. Weisseho"},
+  {street = "Ulica Júliusa Gábriša"},
+  {street = "Komenského ulica"},
+  {street = "Námestie Slobody"},
+  {street = "Ulica Obrancov mieru"},
+  {street = "Palkovičova ulica"},
+  {street = "Partizánska ulica"},
+  {street = "Ulica Petra Matejku"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Benkova ulica"},
+  {street = "Dibrovova ulica"},
+  {street = "Dukelská ulica"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Hollého ulica"},
+  {street = "Hviezdoslavova ulica"},
+  {street = "Inovecká ulica"},
+  {street = "Kmeťova ulica"},
+  {street = "Ulica kpt. Uhra"},
+  {street = "Železničný uzol"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Bzinská ulica"},
+  {street = "Hečkova ulica"},
+  {street = "Klčové"},
+  {street = "Kukučínova ulica"},
+  {street = "Ulica Ondreja Plachého"},
+  {street = "Royova ulica"},
+  {street = "Severná ulica"},
+  {street = "Tajovského ulica"},
+  {street = "Ulica Miroslava Ďuržu", written = "Ulica Miroslava Ďuržu"},
+  {street = "Ulica Janka Bernovského", written = "Ulica Janka Bernovského"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Ulica A. Sládkoviča"},
+  {street = "Ulica Dr. I. Markoviča"},
+  {street = "Holubyho ulica"},
+  {street = "Vajanského ulica"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Košikárska ulica"},
+  {street = "Malinovského ulica"},
+  {street = "Odborárska ulica"},
+  {street = "Robotnícka ulica"},
+  {street = "Rybárska ulica"},
+  {street = "Trenčianska ulica"},
+  {street = "Zelená voda I.", written = "Zelená voda I a II", note = "\"Zelená voda 1 a 2\" / \"I a II\": the register's Zelená voda I. and II."},
+  {street = "Zelená voda II.", written = "Zelená voda I a II", note = "\"Zelená voda 1 a 2\" / \"I a II\": the register's Zelená voda I. and II."},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Beckovská ulica"},
+  {street = "Bohuslavická ulica"},
+  {street = "Bošácka ulica"},
+  {street = "Čulenova ulica"},
+  {street = "Haluzická ulica"},
+  {street = "Izbická ulica"},
+  {street = "Kvetinová ulica"},
+  {street = "Lieskovská ulica"},
+  {street = "Ulica Ľ. Podjavorinskej"},
+  {street = "Mlynská ulica"},
+  {street = "Mnešická ulica"},
+  {street = "Mostová ulica"},
+  {street = "Pod zvonicou"},
+  {street = "Poľná ulica"},
+  {street = "Pri Klanečnici"},
+  {street = "Pri vode"},
+  {street = "Pri záhradách"},
+  {street = "Riečna ulica"},
+  {street = "Ružová ulica"},
+  {street = "Sadová ulica"},
+  {street = "Slovanská ulica"},
+  {street = "Srnianska ulica"},
+  {street = "Tehelná ulica"},
+  {street = "Turecká ulica"},
+  {street = "Tušková ulica"},
+  {street = "Záhradná ulica"},
+]

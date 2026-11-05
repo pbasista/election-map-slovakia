@@ -1,0 +1,28 @@
+# The okrsky of Vígľaš of the vote of 2017-11-04, data/curated/elections/2017-11-04/okrsky/518921.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Vígľaš, transcribed by an AI agent in job okrsok-rules-390 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: V okrsku č. 1 volia voliči bývajúci v starej časti Vígľaša a v časti za školou a podhájom.
+#     okrsok 2: V okrsku č. 2 – Pstruša volia voliči bývajúci v Hájnikovej, Malom Sliači, Pod rohy, Pstruša, Dolinky, Kocaň
+obec = "518921"
+name = "Vígľaš"
+okrsky_note = "The page puts the old village with the area 'za školou a podhájom' in okrsok 1 and Hájniková, Malý Sliač, Pod rohy, Pstruša, Dolinky, Kocaň in okrsok 2. These hamlets are no parts or streets of the register; okrsok 1 is given part Vígľaš and okrsok 2 part Pstruša (voters 969 / 346 match the parts' size). Hájniková and Malý Sliač may lie in register part Vígľaš and so be drawn in okrsok 1."
+okrsky_adopted = 2017-11-04
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1393): The website's page for the presidential election of 16 March 2019 (https://www.viglas.net/volby-prezidenta-sr-2019.html, reposted 22.3.2024 after a site migration) lists only the announcement, voter information and results, no okrsky. The Internet Archive's CDX was offline (temporarily offline / empty) during the search, so old copies could not be checked. These are the okrsky of the vote of 2017-11-04 (2017), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2017-11-04: 1: 1,018 → 969, 2: 296 → 346."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The page for the elections to the samosprávne kraje of 4 November 2017 lists the 2 okrsky; no decision date is stated."
+
+[[document]]
+url = "https://www.viglas.net/volby-do-vuc-2017.html"
+sha256 = "cc6ca6255aed9adf488eea1005bce4dd47f68700fb67674c692e9c6c78491221"
+title = "Obec Vígľaš – Voľby do VÚC 2017: volebné okrsky vytvorené v obci Vígľaš"
+
+[okrsok.1]
+rules = [
+  {part = "Vígľaš"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Pstruša"},
+]

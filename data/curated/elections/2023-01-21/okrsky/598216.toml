@@ -1,0 +1,56 @@
+# Okrsky of Košice-Myslava, transcribed by an AI agent in job okrsok-rules-3056 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Myslava (vrátane Girbeš, Kamenný potok, Maša), Ku Bangortu, Na Kope, Na Kope I, Na Kope II, Na Kope III, Na Kope IV, Na Kope V, Na Kope VI, Na Kope VII, Na Kope VIII, Na Kope IX, Na Kope X, Nižné Chmeľníky, Pod Hrabinou, Povrazová, Ulica na Grunte, Vrchná, Za Dolným mlynom, Za priekopou
+#   okrsok 2: Chmeľníky, Ku hájovni, Ku potoku, Myslavská, Pod Gruntom, Ulica nad Bangortami, Pod horou
+obec = "598216"
+name = "Košice-Myslava"
+okrsky_note = "Scanned list signed by starostka Ing. Iveta Šimková, posted for the referendum of 2023; same okrsky as the 2022 elections. Names differing only in capitalisation are the register's streets."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-10
+okrsky_date_basis = "The notice 'Okrsky - Referendum 2023' on the district's website, linking the scanned list, states 'Zverejnené 10.11.2022'; the scan itself is undated. (https://www.myslava.eu/oznamy/okrsky-referendum-2023.html)"
+
+[[document]]
+url = "https://www.myslava.eu/download_file_f.php?id=1764211"
+sha256 = "ef0a8dd0e3f52318c9c544cb0d21c474f63247bf8af5c3f77d449e4ab4973cd0"
+title = "Volebny-obvod-volebne-okrsky-Myslava.pdf (Okrsky - Referendum 2023)"
+
+[[document]]
+url = "https://www.myslava.eu/oznamy/okrsky-referendum-2023.html"
+sha256 = "4387ff4379b2e8be3c96b22d220e0f4c9915b0f44b18c72ef15361d3a35ce084"
+title = "Okrsky - Referendum 2023 (zverejnené 10.11.2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Ku Bangortu"},
+  {street = "Na Kope"},
+  {street = "Na Kope I"},
+  {street = "Na Kope II"},
+  {street = "Na Kope III"},
+  {street = "Na Kope IV"},
+  {street = "Na Kope V"},
+  {street = "Na Kope VI"},
+  {street = "Na Kope VII"},
+  {street = "Na Kope VIII"},
+  {street = "Na Kope IX"},
+  {street = "Na Kope X"},
+  {street = "Nižné Chmeľníky"},
+  {street = "Pod Hrabinou"},
+  {street = "Povrazová"},
+  {street = "Ulica na Grunte"},
+  {street = "Vrchná"},
+  {street = "Za Dolným Mlynom", written = "Za Dolným mlynom"},
+  {street = "Za Priekopou", written = "Za priekopou"},
+  {rest = true, note = "'Myslava (vrátane Girbeš, Kamenný potok, Maša)': the addresses without a street"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Chmeľníky"},
+  {street = "Ku Hájovni"},
+  {street = "Ku Potoku"},
+  {street = "Myslavská"},
+  {street = "Pod Gruntom"},
+  {street = "Nad Bangortami", written = "Ulica nad Bangortami", note = "left-out 'Ulica'; same street"},
+  {street = "Pod Horou"},
+]

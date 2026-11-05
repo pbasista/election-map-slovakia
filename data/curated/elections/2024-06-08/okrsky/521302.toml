@@ -1,0 +1,59 @@
+# Okrsky of Čečejovce, transcribed by an AI agent in job okrsok-rules-5060 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: voliči s trvalým pobytom na uliciach: Mlynská, Košická, Paňovská, Krátka, Severná, Majerská, Hlavná, Južná, Buzická, Staničná, Školská, Východná, Kvetná
+#   okrsok 2: voliči s trvalým pobytom na uliciach: Kostolná, Pešia, Západná, Úzka, Dúhová, Agátová, Slnečná, Muškátová, Orgovánová, Letná, Časť SELEŠKA, Družstevná, Jarková, Viničná, Záhradná, Lúčna
+obec = "521302"
+name = "Čečejovce"
+okrsky_fill = "nearest"
+okrsky_note = "Addresses without a street in the part Čečejovce are placed by fill_nearest."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-02-12
+okrsky_date_basis = "The notice board item linking the PDF states 'Vyvesené: 2024-02-12'; the document names the vote but bears no date. (https://www.cecejovce.sk/uradna-tabula-1/volby-do-europskeho-parlamentu-europai-parlamenti-valasztasok-461.html)"
+
+[[document]]
+url = "https://www.cecejovce.sk/e_download.php?file=data/uredni_deska/obsah395_2.pdf&original=Volebn%C3%A9%20okrsky.pdf"
+sha256 = "f6b4601b64f61243a20c5e10ee64a83bfa22debbda264e3cb043993ddd0c0635"
+title = "Volebné okrsky (Voľby do Európskeho parlamentu 2024)"
+
+[[document]]
+url = "https://www.cecejovce.sk/uradna-tabula-1/volby-do-europskeho-parlamentu-europai-parlamenti-valasztasok-461.html"
+sha256 = "cc13ed26b165b0f67031ed03d923cf4e6994d408e7571c33772ee699fb6d5051"
+title = "Voľby do Európskeho parlamentu - Európai parlamenti választások"
+
+[okrsok.1]
+rules = [
+  {street = "Mlynská"},
+  {street = "Košická"},
+  {street = "Paňovská"},
+  {street = "Krátka"},
+  {street = "Severná"},
+  {street = "Majerská"},
+  {street = "Hlavná"},
+  {street = "Južná"},
+  {street = "Buzická"},
+  {street = "Staničná"},
+  {street = "Školská"},
+  {street = "Východná"},
+  {street = "Kvetná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kostolná"},
+  {street = "Pešia"},
+  {street = "Západná"},
+  {street = "Úzka"},
+  {street = "Dúhová"},
+  {street = "Agátová"},
+  {street = "Slnečná"},
+  {street = "Muškátová"},
+  {street = "Orgovánová"},
+  {street = "Letná"},
+  {street = "Družstevná"},
+  {street = "Jarková"},
+  {street = "Viničná"},
+  {street = "Záhradná"},
+  {street = "Lúčna"},
+  {part = "Seleška"},
+]

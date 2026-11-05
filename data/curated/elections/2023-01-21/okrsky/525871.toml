@@ -1,0 +1,32 @@
+# Okrsky of Krásnohorské Podhradie, transcribed by an AI agent in job okrsok-rules-3214 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: občania prihlásení na trvalý pobyt od súpisného čísla 1 -412
+#   okrsok 2: občania prihlásení na trvalý pobyt od súpisného čísla 413 -745
+obec = "525871"
+name = "Krásnohorské Podhradie"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned notice read from the page image. The okrsky are ranges of súpisné čísla; okrsok 2 takes all numbers from 413 up. Addresses outside both ranges, if any, go by fill_nearest."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-11
+okrsky_date_basis = "The undated notice is linked from the municipality's page of the vote; its file name on the website carries the upload time (2022-11-11). (https://www.obeckrasnohorskepodhradie.sk/referendum-2023-a73-691)"
+
+[[document]]
+url = "https://www.obeckrasnohorskepodhradie.sk/files/2022-11-11-134056-Ozn__menie_o___ase_a_mieste_konania_referenda.pdf"
+sha256 = "55911f2bc14a5b752849ef65443d32098cefb51eb0873073108f638f37e918e0"
+title = "Oznámenie o čase a mieste konania referenda 21.1.2023"
+
+[[document]]
+url = "https://www.obeckrasnohorskepodhradie.sk/referendum-2023-a73-691"
+sha256 = "809165d4febdedefe4d1261e1bfbdf729fe3dba9476b8a8e7fb9e11236e8ed43"
+title = "Stránka volieb obce"
+
+[okrsok.1]
+rules = [
+  {part = "Krásnohorské Podhradie", numbers = "1-412"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Krásnohorské Podhradie", numbers = "413-"},
+]

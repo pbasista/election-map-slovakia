@@ -1,0 +1,37 @@
+# Okrsky of Zázrivá, transcribed by an AI agent in job okrsok-rules-657 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Zázrivá-Stred, Biela
+#   okrsok 2: Petrová, Demkovská, Dolina, Ráztoky, Grúne, Končitá, Havrania, Kozinská, Plešivá
+obec = "510211"
+name = "Zázrivá"
+okrsky_date = 2018-08-23
+
+[[document]]
+url = "https://zazriva.com/wp-content/uploads/2018/08/utvor_voleb_okrs_vol_miest.pdf"
+sha256 = "010c1835b9b2d9bc2b3b7002b04ee3f5e7a5a8d42777ee656a992895a46c9f85"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Zázrivá (voľby do orgánov samosprávy obcí 10. 11. 2018, č. 2018/00350)"
+
+[[document]]
+url = "https://zazriva.com/podujatie/volby-do-organov-samospravy-obci-2018/"
+sha256 = "37d80c18cb942d42a33f2586fbcb2b99965c0828d74de7bfbb957c3f08c782de"
+title = "Voľby do orgánov samosprávy obcí 2018"
+
+[okrsok.1]
+rules = [
+  {part = "Zázrivá-Stred"},
+  {part = "Biela"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Petrová"},
+  {part = "Demkovská"},
+  {part = "Dolina"},
+  {part = "Ráztoky"},
+  {part = "Grúne"},
+  {part = "Končitá"},
+  {part = "Havrania"},
+  {part = "Kozinská"},
+  {part = "Plešivá"},
+]

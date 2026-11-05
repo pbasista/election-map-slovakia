@@ -1,0 +1,205 @@
+# Okrsky of Bratislava-Rača, transcribed by an AI agent in job okrsok-rules-1058 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Karpatské námestie, Na pántoch, Pri vinohradoch od 209 do 340
+#   okrsok 2: ulice: Kamilková, Lisovňa, Podbrezovská, Rustaveliho, Tbiliská
+#   okrsok 3: ulice: Pri vinohradoch 267, Závadská
+#   okrsok 4: ulice: Cígeľská, Chladná, Na medzi, Podkarpatská, Popolná, Rudnícka, Zvončeková, Žarnovická
+#   okrsok 5: ulice: Drozdová, Fongová, Gelnická, Olšová, Piesková, Potočná, Pri vinohradoch
+#   okrsok 6: ulice: Alstrova, Červená, Kaplinská, Knižkova dolina, Modrý chodník, Nad Kúriou, Námestie Andreja Hlinku, Pri kolíske, Stará Stupavská, Stupavská, Vtáčikova cesta, Zlatá, Žulová
+#   okrsok 7: ulice: Detvianska, Jurkovičova, Kubačova, Mudrochova
+#   okrsok 8: ulice: Kafendova, Novohorská, Plickova
+#   okrsok 9: ulice: Barónka, Kadnárova od 83 do 108, Sadmelijská, Úžiny
+#   okrsok 10: ulice: Albánska, Čachtická, Demänovská, Ihrisková, Koľajná, Oblačná, Oráčska, Púchovská, Remeselnícka, Rostovská, Stolárska, Trávna, Víťazná, Výhonská, Žitná od 17 do 66
+#   okrsok 11: ulice: Bojnická 18, Bukovinská, Hečkova, Hrušková, Hybešova, Jakubská, Mrázová, Ondrejská, Rumunská, Stratená, Strelkova, Žitná od 1 do 40
+#   okrsok 12: ulice: Hagarova od 11 do 21, Hubeného 23 a 25, Kadnárova od 27 do 88 (Kadnárova 27, 29, 31, 33, 35, 37, 39, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 51A, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 76, 78, 80, 82, 84, 86, 88)
+#   okrsok 13: ulice: Cyprichova od 20 do 92, Černockého, Hubeného od 4 do 62 párne, Račianska 184 a 190
+#   okrsok 14: ulice: Hagarova od 1 do 9, Horná, Hubeného od 1 do 19 nepárne, Kadnárova od 1 do 40, Vrbenského 1
+#   okrsok 15: ulice: Cyprichova od 1 do 18, Hlinícka, Malokrasňanská, Nový záhon, Pekná cesta od 2 do 23, Račianska od 98 do 178
+#   okrsok 16: ulice: Pri šajbách, Pribylinská, Staviteľská
+#   okrsok 17: ulice: Na pasekách, Sklabinská, Šúrska, Východná
+#   okrsok 18: ulice: Dopravná, „Východné“ súp. č. 7578
+obec = "529354"
+name = "Bratislava-Rača"
+okrsky_date = 2019-01-30
+okrsky_fill = "nearest"
+okrsky_note = "The document is a scan, read by OCR without diacritics and checked; the text is given with diacritics. Streets the document does not list (Kopaničiarska ulica, Pastierska, Strapcová ulica, Ulica pod Vajspetrom) and addresses without a street take the okrsok of the nearest listed address (fill_nearest). Žitná: the document gives 17–66 to okrsok 10 and 1–40 to okrsok 11; the overlap is resolved as in the 2019 address list (odd 17–29 and 41–66 in 10). Kadnárova 84, 86, 88 are listed by number in okrsok 12, so left out of okrsok 9's range 83–108."
+
+[[document]]
+url = "https://staryweb.raca.sk/data/att/7640.pdf"
+sha256 = "9b7b7a6a496607cb362569543096f76ec0226ab83a2fa405e06e91091f4cd57b"
+title = "Oznámenie o utvorení volebných okrskov a o určení volebných miestností pre Voľby prezidenta SR 16. marca 2019 a pre druhé kolo 30. marca 2019"
+
+[okrsok.1]
+rules = [
+  {street = "Karpatské námestie"},
+  {street = "Na pántoch"},
+  {street = "Pri vinohradoch", numbers = "209-340", except = "267", note = "Pri vinohradoch 267 has its own okrsok, so it is left out of the range 209–340"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kamilková"},
+  {street = "Lisovňa"},
+  {street = "Podbrezovská"},
+  {street = "Rustaveliho"},
+  {street = "Tbiliská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Pri vinohradoch", numbers = "267"},
+  {street = "Závadská"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Cígeľská"},
+  {street = "Chladná"},
+  {street = "Na medzi"},
+  {street = "Podkarpatská"},
+  {street = "Popolná"},
+  {street = "Rudnícka"},
+  {street = "Zvončeková"},
+  {street = "Žarnovická"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Drozdová"},
+  {street = "Fongová"},
+  {street = "Gelnická"},
+  {street = "Olšová"},
+  {street = "Piesková"},
+  {street = "Potočná"},
+  {street = "Pri vinohradoch"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Alstrova"},
+  {street = "Červená"},
+  {street = "Kaplinská"},
+  {street = "Knižkova dolina"},
+  {street = "Modrý chodník"},
+  {street = "Nad Kúriou"},
+  {street = "Námestie Andreja Hlinku"},
+  {street = "Pri Kolíske", written = "Pri kolíske"},
+  {street = "Stará Stupavská"},
+  {street = "Stupavská"},
+  {street = "Vtáčiková cesta", written = "Vtáčikova cesta", note = "the document writes Vtáčikova cesta, the register Vtáčiková cesta (accent on the a); the same street"},
+  {street = "Zlatá"},
+  {street = "Žulová"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Detvianska"},
+  {street = "Jurkovičova"},
+  {street = "Kubačova"},
+  {street = "Mudrochova"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Kafendova"},
+  {street = "Novohorská"},
+  {street = "Plickova"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Barónka"},
+  {street = "Kadnárova", numbers = "83-108", except = "84, 86, 88", note = "Kadnárova 84, 86 and 88 are listed by number in the okrsok of Kadnárova 27–88, so they are left out of the range 83–108"},
+  {street = "Sadmelijská"},
+  {street = "Úžiny"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Albánska"},
+  {street = "Čachtická"},
+  {street = "Demänovská"},
+  {street = "Ihrisková"},
+  {street = "Koľajná"},
+  {street = "Oblačná"},
+  {street = "Oráčska"},
+  {street = "Púchovská"},
+  {street = "Remeselnícka"},
+  {street = "Rostovská"},
+  {street = "Stolárska"},
+  {street = "Trávna"},
+  {street = "Víťazná"},
+  {street = "Výhonská"},
+  {street = "Žitná", numbers = "17, 19, 21, 23, 25, 27, 29, 41-66", note = "Žitná: the document gives 17–66 to one okrsok and 1–40 to another; the overlap is resolved as in the municipality's 2019/2020 address lists (odd 17–29 and 41–66 here, the rest of the street in the 1–40 okrsok)"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Bojnická"},
+  {street = "Bukovinská"},
+  {street = "Hečkova"},
+  {street = "Hrušková"},
+  {street = "Hybešova"},
+  {street = "Jakubská"},
+  {street = "Mrazová", written = "Mrázová", note = "the document writes Mrázová, the register Mrazová; the same street"},
+  {street = "Ondrejská"},
+  {street = "Rumunská"},
+  {street = "Stratená"},
+  {street = "Strelkova"},
+  {street = "Žitná"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Hagarova", numbers = "11-21"},
+  {street = "Hubeného", numbers = "23, 25"},
+  {street = "Kadnárova", numbers = "27, 29, 31, 33, 35, 37, 39, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 51A, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 76, 78, 80, 82, 84, 86, 88"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Cyprichova", numbers = "20-92"},
+  {street = "Černockého"},
+  {street = "Hubeného", numbers = "4-62", parity = "even"},
+  {street = "Račianska", numbers = "184, 190"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Hagarova"},
+  {street = "Horná"},
+  {street = "Hubeného"},
+  {street = "Kadnárova"},
+  {street = "Vrbenského"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Cyprichova"},
+  {street = "Hlinícka"},
+  {street = "Malokrasňanská"},
+  {street = "Nový záhon"},
+  {street = "Pekná cesta"},
+  {street = "Račianska"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Pri Šajbách", written = "Pri šajbách"},
+  {street = "Pribylinská"},
+  {street = "Staviteľská"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Na pasekách"},
+  {street = "Sklabinská"},
+  {street = "Šúrska"},
+  {street = "Východná"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Dopravná"},
+]

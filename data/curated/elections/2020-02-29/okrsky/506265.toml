@@ -1,0 +1,28 @@
+# The okrsky of Moravské Lieskové of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/506265.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Moravské Lieskové, transcribed by an AI agent in job okrsok-rules-3570 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: pre voličov časť obce Moravské Lieskové
+#     okrsok 2: pre voličov časť obce Brestové, Bučkovec, Šance
+obec = "506265"
+name = "Moravské Lieskové"
+okrsky_date = 2023-06-27
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2391): No okrsky notice for this vote: the website's elections documents start with the NR SR elections 2023; the Internet Archive keeps of 2017–2022 only notices of e-mail addresses and results (the 2018 and 2019 notices could not be retrieved or hold no okrsky). Another vote's notice is not this vote's. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2023-09-30: 1: 1,479 → 1,462, 2: 666 → 650."
+
+[[document]]
+url = "https://moravskelieskove.sk/wp-content/uploads/dokumenty/volby-do-nrsr/Utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti.pdf"
+sha256 = "76a782cc2da9a0c3fbacfdc830c504e4867f2b05ba4858a02811859124d2f2a4"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (voľby do NR SR 2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Moravské Lieskové"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Brestové"},
+  {part = "Bučkovec"},
+  {part = "Šance"},
+]

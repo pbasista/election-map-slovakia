@@ -66,9 +66,11 @@ ring left with fewer than three vertices, or no area, is dropped (a
 building with its outer ring). The buildings of a file follow a Hilbert
 curve, so the steps between them stay short.
 
-Output, ``data/build/<election day>/base/`` (JSON, compact), topologies as in :mod:`geo`
-(``{scale, arcs, lines, features}``, read by web/js/topo.js), where an arc
-is a line of the base map or a ring of a water area, and ``lines`` gives
+Output, ``data/build/base/<extract>/base/`` (JSON, compact), one per
+OpenStreetMap extract, which every election on it shares: topologies as
+in :mod:`geo` (``{scale, arcs, lines, features}``, read by
+web/js/topo.js), where an arc is a line of the base map or a ring of a
+water area, and ``lines`` gives
 its class (:data:`CLASSES`; :data:`WATER` for a ring, which is filled, not
 stroked); each water area is a feature ``{properties: {}, arcs:
 [[ring, …]]}``, a ring one arc::
@@ -92,8 +94,10 @@ from __future__ import annotations
 
 import itertools
 import os
+import tempfile
 from collections import Counter
-from collections.abc import Collection, Iterator, Mapping, Sequence
+from collections.abc import Callable, Collection, Iterator, Mapping, Sequence
+from concurrent.futures import Executor, Future
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -120,7 +124,7 @@ from osmium.osm import (
 from osmium.version import libosmium_version, pyosmium_release
 from pyproj.enums import TransformDirection
 
-from election_map_slovakia import geo, output, parallel, progress
+from election_map_slovakia import geo, output, parallel, progress, stamp
 from election_map_slovakia.output import format_size
 
 OUTPUT_DIR = "base"
@@ -223,11 +227,25 @@ class BaseMapError(Exception):
     """The OpenStreetMap extract cannot be read or misses what the map needs."""
 
 
+@dataclass(frozen=True)
+class File:
+    """A file of the base map, encoded, and what :func:`report` counts of it."""
+
+    data: bytes
+    """The content, compact JSON."""
+    vertices: int = 0
+    lines: Counter[int] = field(default_factory=Counter)
+    """Of a base file, its arcs of each class (:data:`WATER`: rings)."""
+    holes: int = 0
+    """Of a base file its water areas, of a buildings file the holes."""
+    buildings: int = 0
+
+
 def _pack(geometries: np.ndarray) -> Any:
     """Return *geometries*, all of one type, as a few flat arrays to pickle.
 
     Shapely pickles each geometry on its own, which takes over a second for
-    the lines of the extract; they go to the worker processes.
+    the lines of a level; they go to the worker processes.
     """
     return shapely.to_ragged_array(geometries) if len(geometries) else None
 
@@ -250,14 +268,6 @@ class Ways:
     """Whether each line is a ramp."""
     course: np.ndarray
     """The length of the named course of each line, in metres."""
-
-    def __getstate__(self) -> dict[str, Any]:
-        """Return the state to pickle, :attr:`lines` packed (:func:`_pack`)."""
-        return vars(self) | {"lines": _pack(self.lines)}
-
-    def __setstate__(self, state: dict[str, Any]) -> None:
-        """Restore the state :meth:`__getstate__` returned."""
-        vars(self).update(state, lines=_unpack(state["lines"]))
 
 
 def _line_class(tags: TagList) -> tuple[int | None, bool]:
@@ -286,9 +296,11 @@ class _Lines:
     links: list[bool] = field(default_factory=list)
     names: list[str] = field(default_factory=list)
     factory: osmium.geom.WKBFactory = field(default_factory=osmium.geom.WKBFactory)
+    classify: Callable[[TagList], tuple[int | None, bool]] = _line_class
+    """The class of a way and whether a ramp, as :func:`_line_class`."""
 
     def way(self, o: Way) -> None:
-        kind, link = _line_class(o.tags)
+        kind, link = self.classify(o.tags)
         if kind is None or len(o.nodes) < _MIN_POINTS:
             return
         try:
@@ -312,19 +324,21 @@ _CHUNK = 1 << 16
 class _Outlines:
     """What :func:`read_building_ways` takes from the extract, in WGS84.
 
-    Their WKB (as :attr:`_Lines.wkb`) is turned into coordinates every
-    :data:`_CHUNK` outlines, by NumPy rather than shapely: the strings and
-    geometries of all of them would take gigabytes.
+    Their WKB (as :attr:`_Lines.wkb`) is put on the grid every
+    :data:`_CHUNK` outlines (:func:`_chunk_on_grid`), by NumPy rather than
+    shapely: the strings and geometries of all of them would take gigabytes,
+    and their coordinates, all on the grid at once, another gigabyte.
     """
 
     wkb: list[str] = field(default_factory=list)
     ids: list[int] = field(default_factory=list)
-    lonlat: list[np.ndarray] = field(default_factory=list)
-    counts: list[np.ndarray] = field(default_factory=list)
-    """The number of points of each outline, closed."""
+    chunks: list[tuple[Buildings, np.ndarray]] = field(default_factory=list)
     factory: osmium.geom.WKBFactory = field(default_factory=osmium.geom.WKBFactory)
 
     def way(self, o: Way) -> None:
+        # Not len(o.nodes): making the list takes a sixth of the time.
+        if not o.is_closed():
+            return
         try:
             self.wkb.append(
                 self.factory.create_linestring(o, use_nodes=osmium.geom.ALL)
@@ -335,25 +349,38 @@ class _Outlines:
             return  # a way of one node
         self.ids.append(o.id)
         if len(self.wkb) == _CHUNK:
-            self.decode()
+            self.flush()
 
-    def decode(self) -> None:
-        """Turn the WKB read since the last time into coordinates."""
-        self.counts.append(
-            (np.array([len(w) for w in self.wkb]) - _WKB_HEADER) // _WKB_POINT
-        )
-        points = bytes.fromhex("".join([w[_WKB_HEADER:] for w in self.wkb]))
-        self.lonlat.append(np.frombuffer(points, dtype="<f8").reshape(-1, 2))
-        self.wkb.clear()
+    def flush(self) -> None:
+        """Put the outlines read since the last time on the grid."""
+        if self.wkb:
+            self.chunks.append(_chunk_on_grid(self.wkb, self.ids))
+            self.wkb, self.ids = [], []
 
     def on_grid(self) -> tuple[Buildings, np.ndarray]:
         """Return the outlines as :class:`Buildings`, and their ids."""
-        self.decode()
-        counts = np.concatenate(self.counts)
-        ring = np.repeat(np.arange(len(counts)), counts)
-        lonlat = np.concatenate(self.lonlat)
-        buildings, kept = _on_grid(lonlat, ring, np.ones(len(counts), dtype=np.int64))
-        return buildings, np.array(self.ids, dtype=np.int64)[kept]
+        self.flush()
+        if not self.chunks:
+            none = np.zeros(0, dtype=np.int64)
+            return Buildings(np.zeros((0, 2), dtype=np.int64), none, none), none
+        return (
+            _concat([buildings for buildings, _ in self.chunks]),
+            np.concatenate([ids for _, ids in self.chunks]),
+        )
+
+
+def _chunk_on_grid(wkb: list[str], ids: list[int]) -> tuple[Buildings, np.ndarray]:
+    """Return closed outlines in WKB, of *ids*, as :class:`Buildings` and their ids.
+
+    Each outline is a building of one ring, so that a chunk of them is put on
+    the grid (:func:`_on_grid`) as it would be among all of them.
+    """
+    counts = (np.array([len(w) for w in wkb]) - _WKB_HEADER) // _WKB_POINT
+    points = bytes.fromhex("".join([w[_WKB_HEADER:] for w in wkb]))
+    lonlat = np.frombuffer(points, dtype="<f8").reshape(-1, 2)
+    ring = np.repeat(np.arange(len(counts)), counts)
+    buildings, kept = _on_grid(lonlat, ring, np.ones(len(counts), dtype=np.int64))
+    return buildings, np.array(ids, dtype=np.int64)[kept]
 
 
 @dataclass
@@ -419,66 +446,183 @@ def _tagged(
     return keys, exact
 
 
-def read_lines(path: Path) -> Ways:
-    """Return the lines of the OSM extract *path*, in EPSG:5514.
+_WAY_KEYS = ("building", "highway", "railway", "waterway")
+"""The keys of the ways :func:`read_lines` and :func:`read_building_ways`
+read (:func:`locate_ways`)."""
 
-    Read apart from :func:`read_areas` and :func:`read_building_ways`, in
-    other processes.
+
+def locate_ways(path: Path, out: Path, keys: Sequence[str] = _WAY_KEYS) -> None:
+    """Write the ways of the OSM extract *path* with *keys* to *out*.
+
+    With the location of each node on the way, so that the ways' readers
+    need no index of the nodes (a gigabyte each) and can read *out* in
+    pieces side by side (:func:`way_blocks`). The extract is read once, in
+    C++ only; *out* is uncompressed, without metadata, as it is read at once.
     """
-    got = _Lines()
-    keys, tags = _tagged(_LINE_TAGS, WAY)  # the nodes pass, to be located
-    processor = (
-        osmium.FileProcessor(path, NODE | WAY)
-        .with_filter(keys)
-        .with_filter(tags)
-        .with_filter(_locations())
-        .with_filter(EntityFilter(WAY))
-    )
+    filtered = KeyFilter(*keys)
+    filtered.enable_for(WAY)  # the nodes pass, to be located
+    options = "pbf,add_metadata=false,locations_on_ways=true,pbf_compression=none"
+    writer = osmium.SimpleWriter(osmium.io.File(str(out), options))
     try:
-        for o in processor:
-            if isinstance(o, Way):
-                got.way(o)
+        with osmium.io.Reader(path, NODE | WAY) as reader:
+            osmium.apply(reader, filtered, _locations(), EntityFilter(WAY), writer)
     except RuntimeError as e:
         raise BaseMapError(f"{path}: {e}") from e
-    if not got.wkb:
-        raise BaseMapError(f"{path}: no roads, railways or waterways")
+    finally:
+        writer.close()
+
+
+Block = tuple[int, int, int]
+"""A piece of a PBF file: the end of its header blocks, then where its run of
+data blocks starts and ends."""
+
+
+def way_blocks(path: Path, pieces: int) -> list[Block]:
+    """Return up to *pieces* runs of about as many data blocks of the PBF *path*.
+
+    Each a file of its own with the header blocks before it (:func:`_piece`).
+    """
+    header_end = 0
+    starts = []
+    with path.open("rb") as f:
+        while length := f.read(4):
+            start = f.tell() - 4
+            kind, size = _blob_header(f.read(int.from_bytes(length)))
+            f.seek(size, os.SEEK_CUR)
+            if kind == b"OSMHeader":
+                header_end = f.tell()
+            else:
+                starts.append(start)
+        end = f.tell()
+    cuts = [starts[i] for i in np.linspace(0, len(starts), pieces + 1)[:-1].astype(int)]
+    bounds = sorted({*cuts, end})
+    return [(header_end, a, b) for a, b in itertools.pairwise(bounds)]
+
+
+_TYPE, _DATASIZE = 1, 3
+"""The fields of a PBF BlobHeader this reads (``fileformat.proto``)."""
+_LENGTH_DELIMITED = 2
+"""The wire type of a string or bytes field; the others here are varints."""
+_MORE = 0x80
+"""The bit of a varint's byte that says another byte follows."""
+
+
+def _blob_header(data: bytes) -> tuple[bytes, int]:
+    """Return the type and data size of a PBF BlobHeader (protocol buffers)."""
+    kind, size, i = b"", 0, 0
+    while i < len(data):
+        key, i = _varint(data, i)
+        if key & 7 == _LENGTH_DELIMITED:  # the type, or the index data
+            length, i = _varint(data, i)
+            if key >> 3 == _TYPE:
+                kind = data[i : i + length]
+            i += length
+        else:
+            value, i = _varint(data, i)
+            if key >> 3 == _DATASIZE:
+                size = value
+    return kind, size
+
+
+def _varint(data: bytes, i: int) -> tuple[int, int]:
+    """Return the protocol buffers varint at *i* of *data*, and the index after it."""
+    value = shift = 0
+    while True:
+        byte = data[i]
+        i += 1
+        value |= (byte & ~_MORE) << shift
+        shift += 7
+        if not byte & _MORE:
+            return value, i
+
+
+def _piece(path: Path, block: Block) -> osmium.io.FileBuffer:
+    """Return the *block* of the PBF *path* as a file of its own."""
+    header_end, start, end = block
+    with path.open("rb") as f:
+        header = f.read(header_end)
+        f.seek(start)
+        return osmium.io.FileBuffer(header + f.read(end - start), "pbf")
+
+
+def read_lines(
+    path: Path,
+    block: Block,
+    tags: Collection[tuple[str, str]] = _LINE_TAGS,
+    classify: Callable[[TagList], tuple[int | None, bool]] = _line_class,
+) -> _Read:
+    """Return the lines of *block* of the located ways *path*, in EPSG:5514.
+
+    (:func:`locate_ways`); :func:`_ways` makes those of every block :class:`Ways`.
+    The ways with any of *tags* are read, of the class *classify* gives them.
+    """
+    got = _Lines(classify=classify)
+    keys, exact = _tagged(tags, WAY)
+    try:
+        with osmium.io.Reader(_piece(path, block), WAY) as reader:
+            osmium.apply(reader, keys, exact, got)
+    except RuntimeError as e:
+        raise BaseMapError(f"{path}: {e}") from e
     wgs84 = shapely.from_wkb([bytes.fromhex(line) for line in got.wkb])
     lonlat, index = shapely.get_coordinates(wgs84, return_index=True)
-    # PROJ takes seconds for the millions of points: a share per worker.
-    shares = np.array_split(lonlat, os.cpu_count() or 1)
-    xy = np.concatenate(
-        list(parallel.each(_to_metres, ((s[:, 0], s[:, 1]) for s in shares)))
+    return _Read(
+        _to_metres(lonlat[:, 0], lonlat[:, 1]),
+        index,
+        np.array(got.kinds, dtype=np.uint8),
+        np.array(got.links, dtype=bool),
+        np.array(got.names, dtype=object),
     )
-    lines = shapely.linestrings(xy, indices=index)
-    kind = np.array(got.kinds, dtype=np.uint8)
-    course = _course_lengths(lines, kind, np.array(got.names, dtype=object))
-    return Ways(lines, kind, np.array(got.links), course)
 
 
-def read_building_ways(path: Path) -> tuple[Buildings, np.ndarray]:
-    """Return the buildings that are closed ways of the OSM extract *path*.
+@dataclass
+class _Read:
+    """The lines :func:`read_lines` takes from a block of the located ways."""
 
-    And their ids. Read apart from :func:`read_lines`, in another process,
-    though both decode the whole extract and locate all its nodes: making
-    the outlines one by one takes longer than reading the extract.
+    xy: np.ndarray
+    """The vertices of every line in turn, EPSG:5514."""
+    index: np.ndarray
+    """The line of each vertex."""
+    kind: np.ndarray
+    link: np.ndarray
+    names: np.ndarray
+
+
+def _ways(reads: Sequence[_Read]) -> Ways:
+    """Return the lines of all *reads*, in turn, as :class:`Ways`."""
+    kind = np.concatenate([r.kind for r in reads])
+    if not len(kind):
+        raise BaseMapError("the extract has no roads, railways or waterways")
+    lines = _lines_of(reads)
+    names = np.concatenate([r.names for r in reads])
+    course = _course_lengths(lines, kind, names)
+    return Ways(lines, kind, np.concatenate([r.link for r in reads]), course)
+
+
+def _lines_of(reads: Sequence[_Read]) -> np.ndarray:
+    """Return the lines of all *reads*, in turn, EPSG:5514."""
+    lines_before = np.cumsum([0, *(len(r.kind) for r in reads[:-1])])
+    index = np.concatenate(
+        [r.index + n for r, n in zip(reads, lines_before, strict=True)]
+    )
+    return shapely.linestrings(np.concatenate([r.xy for r in reads]), indices=index)
+
+
+def read_building_ways(path: Path, block: Block) -> tuple[Buildings, np.ndarray]:
+    """Return the buildings that are closed ways of *block* of the located ways *path*.
+
+    And their ids (:func:`locate_ways`). Making the outlines one by one takes
+    far longer than reading them: the blocks are read side by side.
+    libosmium hands the ways to :class:`_Outlines` itself (``apply``), a
+    tenth faster than a loop over them here.
     """
-    outlines = _Outlines()
     keys = KeyFilter("building")
-    keys.enable_for(WAY)  # the nodes pass, to be located
-    processor = (
-        osmium.FileProcessor(path, NODE | WAY)
-        .with_filter(keys)
-        .with_filter(_locations())
-        .with_filter(EntityFilter(WAY))
-    )
+    keys.enable_for(WAY)
+    outlines = _Outlines()
     try:
-        for o in processor:
-            # Not len(o.nodes): making the list takes a sixth of the time.
-            if isinstance(o, Way) and o.is_closed():
-                outlines.way(o)
+        with osmium.io.Reader(_piece(path, block), WAY) as reader:
+            osmium.apply(reader, keys, outlines)
     except RuntimeError as e:
         raise BaseMapError(f"{path}: {e}") from e
-    del processor  # and the locations of the nodes, a gigabyte
     return outlines.on_grid()
 
 
@@ -687,8 +831,11 @@ def _owners(points: np.ndarray, obce: np.ndarray) -> np.ndarray:
 
     That which holds the point, else the nearest within
     :data:`BUILDINGS_REACH`. *points* are on the grid of the buildings
-    (:meth:`Buildings.points`), *obce* in EPSG:5514.
+    (:meth:`Buildings.points`), *obce* in EPSG:5514 as WKB: shapely pickles
+    each geometry on its own, which took most of a second for the obce sent
+    to every worker.
     """
+    obce = shapely.from_wkb(obce)
     owner = np.full(len(points), -1)
     lonlat = points / BUILDINGS_SCALE
     geometries = shapely.points(_to_metres(lonlat[:, 0], lonlat[:, 1]))
@@ -704,41 +851,40 @@ def _owners(points: np.ndarray, obce: np.ndarray) -> np.ndarray:
     return owner
 
 
-def _buildings(
-    multipolygons: Buildings, outer: np.ndarray, ways: Buildings, ids: np.ndarray
-) -> Buildings:
-    """Return the buildings of :func:`read_areas` and :func:`read_building_ways`.
+def building_order(points: np.ndarray, owner: np.ndarray) -> np.ndarray:
+    """Return the indexes of the buildings in the order of their files.
 
-    *multipolygons* and the ids of their *outer* ways come from the former,
-    the *ways* and their *ids* from the latter, which may repeat the former.
+    By obec, then along a Hilbert curve; those of no obec (*owner* -1) left
+    out. *points* are :meth:`Buildings.points`, and *owner* the index of the
+    obec of each building.
     """
-    return _concat([multipolygons, ways.take(np.flatnonzero(~np.isin(ids, outer)))])
-
-
-def building_files(
-    buildings: Buildings, points: np.ndarray, owner: np.ndarray, codes: Sequence[str]
-) -> dict[str, dict[str, Any]]:
-    """Return the buildings file of each obec: path below ``base/`` → content.
-
-    *points* are :meth:`Buildings.points`, and *owner* the index in *codes*
-    of the obec of each building (-1: none).
-    """
-    if not len(buildings.rings):
-        return {}
+    if not len(points):
+        return np.array([], dtype=np.int64)
     low = points.min(axis=0)
     span = max(float(np.max(points - low)), 1.0)
     grid = ((points - low) * (((1 << _CURVE_BITS) - 1) / span)).astype(np.int64)
     curve = _hilbert(grid[:, 0], grid[:, 1], _CURVE_BITS)
     order = np.lexsort((curve, owner))
-    order = order[owner[order] >= 0]
-    ordered = buildings.take(order)
+    return order[owner[order] >= 0]
+
+
+def building_files(
+    buildings: Buildings, owner: np.ndarray, codes: Sequence[str]
+) -> dict[str, dict[str, Any]]:
+    """Return the buildings file of each obec: path below ``base/`` → content.
+
+    *buildings* are in :func:`building_order`, and *owner* the index in
+    *codes* of the obec of each.
+    """
+    if not len(buildings.rings):
+        return {}
     # Where the rings and vertices of each obec end, after those before.
-    obec, per_obec = np.unique(owner[order], return_counts=True)
-    ring_ends = np.cumsum(ordered.rings)[np.cumsum(per_obec) - 1]
-    vertex_ends = np.cumsum(ordered.counts)[ring_ends - 1]
+    obec, per_obec = np.unique(owner, return_counts=True)
+    ring_ends = np.cumsum(buildings.rings)[np.cumsum(per_obec) - 1]
+    vertex_ends = np.cumsum(buildings.counts)[ring_ends - 1]
     ring_starts = np.r_[0, ring_ends[:-1]]
     vertex_starts = np.r_[0, vertex_ends[:-1]]
-    xy = ordered.xy
+    xy = buildings.xy
     steps = np.diff(xy, axis=0, prepend=xy[:1])
     steps[vertex_starts] = xy[vertex_starts]
     files = {}
@@ -752,10 +898,39 @@ def building_files(
     ):
         files[buildings_path(codes[i])] = {
             "scale": BUILDINGS_SCALE,
-            "counts": ordered.counts[r0:r1].tolist(),
+            "counts": buildings.counts[r0:r1].tolist(),
             "xy": steps[v0:v1].ravel().tolist(),
         }
     return files
+
+
+def _obec_files(
+    buildings: Buildings, owner: np.ndarray, codes: Sequence[str]
+) -> dict[str, File]:
+    """Return the files of :func:`building_files`, encoded, and their counts."""
+    area = _areas(buildings.xy, buildings.counts)
+    ring_owner = np.repeat(owner, buildings.rings)
+    outer = np.bincount(ring_owner[area > 0], minlength=len(codes)).tolist()
+    holes = np.bincount(ring_owner[area < 0], minlength=len(codes)).tolist()
+    index = {buildings_path(code): i for i, code in enumerate(codes)}
+    return {
+        path: File(
+            output.to_json(content),
+            vertices=len(content["xy"]) // 2,
+            holes=holes[index[path]],
+            buildings=outer[index[path]],
+        )
+        for path, content in building_files(buildings, owner, codes).items()
+    }
+
+
+def _shares(owner: np.ndarray, n: int) -> list[tuple[int, int]]:
+    """Return up to *n* ranges of *owner*, sorted, of whole obce, about as long."""
+    starts = np.flatnonzero(np.r_[True, owner[1:] != owner[:-1]])
+    wanted = np.linspace(0, len(owner), n + 1)[1:-1]
+    cuts = starts[np.minimum(np.searchsorted(starts, wanted), len(starts) - 1)]
+    bounds = sorted({0, *cuts.tolist(), len(owner)})
+    return list(itertools.pairwise(bounds))
 
 
 def _to_metres(lon: np.ndarray, lat: np.ndarray) -> np.ndarray:
@@ -802,16 +977,25 @@ class _Drawn:
 
     lines: dict[int, np.ndarray]
     water: np.ndarray
+    _packed: Any = field(default=None, init=False, repr=False, compare=False)
+    """The state :meth:`__getstate__` returned: a level goes to a task per
+    share of the okresy, and packing it took a second for them all."""
 
     def __getstate__(self) -> tuple[dict[int, Any], Any]:
         """Return the state to pickle, the geometries packed (:func:`_pack`)."""
-        return {k: _pack(g) for k, g in self.lines.items()}, _pack(self.water)
+        if self._packed is None:
+            self._packed = (
+                {k: _pack(g) for k, g in self.lines.items()},
+                _pack(self.water),
+            )
+        return self._packed
 
     def __setstate__(self, state: tuple[dict[int, Any], Any]) -> None:
         """Restore the state :meth:`__getstate__` returned."""
         lines, water = state
         self.lines = {k: _unpack(g) for k, g in lines.items()}
         self.water = _unpack(water)
+        self._packed = None
 
 
 def _pieces(ways: Ways, water: Any, level: Level) -> list[_Drawn]:
@@ -951,9 +1135,7 @@ def _joined(pieces: Sequence[_Drawn]) -> _Drawn:
     return _Drawn(lines, np.concatenate([piece.water for piece in pieces]))
 
 
-def _level_files(
-    drawn: _Drawn, where: Sequence[_Area], level: Level
-) -> list[dict[str, Any]]:
+def _level_files(drawn: _Drawn, where: Sequence[_Area], level: Level) -> list[File]:
     """Return the file of *level* for each of *where*: *drawn* clipped to it."""
     to_wgs84 = geo.transformer()
     lines = {kind: _Layer(g, _LINESTRING) for kind, g in drawn.lines.items()}
@@ -964,20 +1146,35 @@ def _level_files(
             kind: layer.within(area.waters if kind in _COURSES else area.land)
             for kind, layer in lines.items()
         }
+        content = base_file(
+            clipped, water.within(area.waters), to_wgs84, 10**level.decimals
+        )
         files.append(
-            base_file(clipped, water.within(area.waters), to_wgs84, 10**level.decimals)
+            File(
+                output.to_json(content),
+                vertices=sum(len(a) for a in content["arcs"]) // 2,
+                lines=Counter(content["lines"]),
+                holes=len(content["features"]),
+            )
         )
     return files
 
 
-def build(path: Path, okres_gpkg: Path, obec_gpkg: Path) -> dict[str, dict[str, Any]]:
-    """Return the files of the base map: path below ``base/`` → content.
+def build(
+    path: Path, okres_gpkg: Path, obec_gpkg: Path, scratch: Path
+) -> dict[str, File]:
+    """Return the files of the base map: path below ``base/`` → file.
 
     *path* is the OSM extract, *okres_gpkg* the ZBGIS GeoPackage whose okresy
     the files are clipped to, *obec_gpkg* that whose obce get the buildings
-    (level 0, the shards' obce). Worker processes read the lines, the water
-    and the buildings side by side, then simplify each level's lines of a
-    class and its water apart, then clip each level to a share of the okresy.
+    (level 0, the shards' obce). A worker writes the ways with their nodes'
+    locations to a file in *scratch* (:func:`locate_ways`) while others read
+    the water and the multipolygon buildings; then the workers read the
+    lines and the buildings of that file, a run of its blocks each, simplify
+    each level's lines of a class and its water apart, clip each level to a
+    share of the okresy as soon as it is simplified, place the buildings in
+    the obce and make the files of a share of the obce each. The workers
+    encode the files they make, which took seconds here.
     """
     if set(LEVELS) != {lod.level for lod in geo.SHARD_LODS}:
         raise BaseMapError("LEVELS must name the levels of detail of geo.SHARD_LODS")
@@ -986,62 +1183,72 @@ def build(path: Path, okres_gpkg: Path, obec_gpkg: Path) -> dict[str, dict[str, 
         for code, (_, g) in geo.read_layer(okres_gpkg, "okres", "IDN3", "NM3").items()
     }
     obce = geo.read_layer(obec_gpkg, "obec", "IDN4", "NM4")
-    with progress.stage(f"reading {path.name}, the strip around Slovakia"):
-        # The longest tasks first.
-        (outlines, ids), (water, multipolygons, outer), ways, (by_okres, slovakia) = (
-            parallel.each(
-                parallel.call,
-                [
-                    (read_building_ways, path),
-                    (read_areas, path),
-                    (read_lines, path),
-                    (areas, okresy),
-                ],
-            )
-        )
-    with progress.stage("placing the buildings in the obce"):
-        buildings = _buildings(multipolygons, outer, outlines, ids)
-        if not len(buildings.rings):
-            raise BaseMapError(f"{path}: no buildings")
-        points = buildings.points()
-        obec_codes = sorted(obce)
-        polygons = np.array([obce[c][1] for c in obec_codes])
-        # PROJ and the tests of the points take seconds: a share per worker.
-        shares = np.array_split(points, os.cpu_count() or 1)
-        owner = np.concatenate(
-            list(parallel.each(_owners, ((s, polygons) for s in shares)))
-        )
-        files = building_files(buildings, points, owner, obec_codes)
-    built = sorted(Path(p).stem for p in files)
-    # The most detailed level first, so that no worker is left with a long
-    # task at the end.
-    levels = [*(LEVELS[lod.level] for lod in reversed(geo.SHARD_LODS)), COARSE]
-    split = [_pieces(ways, water, level) for level in levels]
-    tasks = [
-        (p, level) for level, pieces in zip(levels, split, strict=True) for p in pieces
-    ]
-    with progress.stage("simplifying the levels of detail", len(tasks)) as s:
-        done = s.track(parallel.each(_simplify, tasks))
-        simplified = [_joined(list(itertools.islice(done, len(p)))) for p in split]
-    # A task per worker and level, each a share of the okresy.
-    shares = os.cpu_count() or 1
-    codes = sorted(by_okres)
-    paths: list[list[str]] = []
-    clips: list[tuple[_Drawn, list[_Area], Level]] = []
-    for level, drawn in zip(levels, simplified, strict=True):
-        if level is COARSE:
-            paths.append([COARSE_FILE])
-            clips.append((drawn, [slovakia], level))
-            continue
-        for share in (codes[i::shares] for i in range(min(shares, len(codes)))):
-            paths.append([okres_path(code, level.name) for code in share])
-            clips.append((drawn, [by_okres[code] for code in share], level))
-    with progress.stage("clipping them to the okresy", len(clips)) as s:
-        for names, contents in zip(
-            paths, s.track(parallel.each(_level_files, clips)), strict=True
+    obec_codes = sorted(obce)
+    polygons = shapely.to_wkb(np.array([obce[c][1] for c in obec_codes]))
+    with (
+        parallel.pool() as pool,
+        tempfile.TemporaryDirectory(dir=scratch, prefix="basemap-") as tmp,
+    ):
+        located = Path(tmp) / "ways.osm.pbf"
+        # The longest task first.
+        locating = pool.submit(locate_ways, path, located)
+        water_areas = pool.submit(read_areas, path)
+        strip = pool.submit(areas, okresy)
+        with progress.stage(f"locating the nodes of the ways of {path.name}"):
+            locating.result()
+        # More blocks than workers, so that none is left with a long one.
+        blocks = way_blocks(located, 2 * (os.cpu_count() or 1))
+        lines = [pool.submit(read_lines, located, block) for block in blocks]
+        building_ways = [
+            pool.submit(read_building_ways, located, block) for block in blocks
+        ]
+        with progress.stage(f"reading the lines of {path.name}"):
+            ways = _ways([read.result() for read in lines])
+        with progress.stage(
+            f"reading the waters of {path.name}, the strip around Slovakia"
         ):
-            files.update(zip(names, contents, strict=True))
-    files[INDEX_FILE] = {
+            water, multipolygons, outer = water_areas.result()
+            by_okres, slovakia = strip.result()
+        simplifying = _simplifying(pool, ways, water)
+        del ways, water
+        with progress.stage(f"reading the buildings of {path.name}"):
+            read = [block.result() for block in building_ways]
+            outlines = _concat([buildings for buildings, _ in read])
+            ids = np.concatenate([way_ids for _, way_ids in read])
+            del read
+        # The multipolygons, then the closed ways but their outer ways, which
+        # may be tagged as the building too.
+        kept = np.flatnonzero(~np.isin(ids, outer))
+        points = np.concatenate([multipolygons.points(), outlines.points()[kept]])
+        if not len(points):
+            raise BaseMapError(f"{path}: no buildings")
+        # PROJ and the tests of the points take seconds: a share per worker,
+        # while the other workers make the base files.
+        owners = [
+            pool.submit(_owners, share, polygons)
+            for share in np.array_split(points, os.cpu_count() or 1)
+        ]
+        buildings = _concat([multipolygons, outlines.take(kept)])
+        del outlines
+        base = _base_files(pool, simplifying, by_okres, slovakia)
+        with progress.stage("placing the buildings in the obce"):
+            owner = np.concatenate([f.result() for f in owners])
+            order = building_order(points, owner)
+            owner = owner[order]
+        shares = _shares(owner, os.cpu_count() or 1)
+        with progress.stage("making the buildings files", len(shares)) as s:
+            making = [
+                pool.submit(
+                    _obec_files, buildings.take(order[a:b]), owner[a:b], obec_codes
+                )
+                for a, b in shares
+            ]
+            files = {}
+            for share in s.track(making):
+                files |= share.result()
+    built = sorted(Path(p).stem for p in files)
+    files |= base
+    index = {
         "bands": [
             {"lod": str(lod.level), "zoom": [lod.from_zoom, lod.until_zoom]}
             for lod in geo.SHARD_LODS
@@ -1049,7 +1256,146 @@ def build(path: Path, okres_gpkg: Path, obec_gpkg: Path) -> dict[str, dict[str, 
         "okresy": sorted(okresy),
         "buildings": {"zoom": BUILDINGS_ZOOM, "obce": built},
     }
+    files[INDEX_FILE] = File(output.to_json(index))
     return files
+
+
+Simplifying = list[tuple[Level, list[Future[_Drawn]]]]
+"""Each level, and the pieces of it being simplified (:func:`_simplifying`)."""
+
+
+def _simplifying(pool: Executor, ways: Ways, water: Any) -> Simplifying:
+    """Start simplifying the pieces of each level (:func:`_pieces`) in *pool*.
+
+    The most detailed level first, so that no worker is left with a long
+    task at the end.
+    """
+    levels = [*(LEVELS[lod.level] for lod in reversed(geo.SHARD_LODS)), COARSE]
+    return [
+        (
+            level,
+            [pool.submit(_simplify, p, level) for p in _pieces(ways, water, level)],
+        )
+        for level in levels
+    ]
+
+
+def _base_files(
+    pool: Executor,
+    simplifying: Simplifying,
+    by_okres: Mapping[str, _Area],
+    slovakia: _Area,
+) -> dict[str, File]:
+    """Return the base files of every level: path → file.
+
+    Each level, once *simplifying* is done with it, clipped by a task per
+    worker of *pool*, each a share of *by_okres*, or for the coarse view to
+    *slovakia*.
+    """
+    shares = os.cpu_count() or 1
+    codes = sorted(by_okres)
+    clips: list[tuple[list[str], Future[list[File]]]] = []
+    with progress.stage("simplifying the levels of detail", len(simplifying)) as s:
+        for level, pieces in simplifying:
+            drawn = _joined([piece.result() for piece in pieces])
+            s.advance()
+            if level is COARSE:
+                clip = pool.submit(_level_files, drawn, [slovakia], level)
+                clips.append(([COARSE_FILE], clip))
+                continue
+            for share in (codes[i::shares] for i in range(min(shares, len(codes)))):
+                where = [by_okres[code] for code in share]
+                clip = pool.submit(_level_files, drawn, where, level)
+                clips.append(([okres_path(code, level.name) for code in share], clip))
+    files: dict[str, File] = {}
+    with progress.stage("clipping them to the okresy", len(clips)) as s:
+        for names, clip in s.track(clips):
+            files.update(zip(names, clip.result(), strict=True))
+    return files
+
+
+# --- the lines geo cuts street blocks by ------------------------------------------
+
+BARRIERS_DIR = "barriers"
+"""Below ``data/build/shared/``: the lines of :func:`barriers` per extract."""
+_BARRIER_KEYS = ("highway", "railway", "waterway")
+_BARRIER_TAGS = (
+    *(("highway", v) for road in _ROADS for v in (road, f"{road}_link")),
+    *(
+        ("highway", v)
+        for v in ("road", "service", "track", "footway", "path", "cycleway", "steps")
+    ),
+    *(("railway", v) for v in _RAILWAYS),
+    *(("waterway", v) for v in _WATERWAYS),
+)
+_DOUBLING = ("sidewalk", "crossing")
+"""The footways (``footway=*``) that only double a street."""
+_UNDERNEATH = ("tunnel", "covered", "indoor")
+
+
+def _barrier_class(tags: TagList) -> tuple[int | None, bool]:
+    """Return 0 for a way that bounds street blocks, else None; never a ramp.
+
+    As :func:`_line_class` for :func:`read_lines`; see :func:`barriers`.
+    """
+    if (
+        any(tags.get(key, "no") != "no" for key in _UNDERNEATH)
+        or tags.get("area") == "yes"
+        or tags.get("footway") in _DOUBLING
+        or ("railway" in tags and "service" in tags)
+    ):
+        return None, False
+    return 0, False
+
+
+def barriers(path: Path, scratch: Path, shared: Path) -> geo.Barriers:
+    """Return the lines of the OSM extract *path* that bound street blocks.
+
+    In EPSG:5514. ``geo`` cuts council obvody and okrsky by the blocks
+    these lines and the k.ú. borders make
+    (:func:`election_map_slovakia.geo.address_cuts`): the roads, service
+    roads, tracks, footways, paths and steps, but sidewalks and crossings,
+    which double a street; the railways and tram lines, but sidings and
+    yards; the rivers, canals and streams; none in a tunnel or culvert,
+    covered or indoors, or mapped as an area. Tried on the cities and
+    villages cut into several obvody, each class takes a share of the
+    borders between them off the Voronoi lines between houses and onto a
+    line on the ground: footways and service roads in the housing estates
+    and garage rows, tracks and streams in the villages and between them.
+    Read only once asked for (a run with every obec's cut cached needs
+    none), and once per extract and version of the code that reads them,
+    kept below *shared* (a :class:`geo.Cache`): the ways are located into a
+    file in *scratch* (:func:`locate_ways`), then read in blocks side by
+    side. That code is this module's and the transformation to EPSG:5514
+    (:func:`election_map_slovakia.stamp.source_digest`), not all of
+    ``geo``'s, whose every change would else read them again.
+    """
+    code = stamp.source_digest("basemap", LIBRARY, geo.transformer().definition)
+    digest = stamp.file_digest(path)
+    cache = geo.Cache(shared, code, digest)
+    entry = cache.entry("lines")
+
+    def lines() -> np.ndarray:
+        packed = cache.get(entry)
+        if packed is None:
+            with (
+                progress.stage(f"reading the street block lines of {path.name}"),
+                parallel.pool() as pool,
+                tempfile.TemporaryDirectory(dir=scratch, prefix="barriers-") as tmp,
+            ):
+                located = Path(tmp) / "ways.osm.pbf"
+                locate_ways(path, located, _BARRIER_KEYS)
+                reads = [
+                    pool.submit(
+                        read_lines, located, block, _BARRIER_TAGS, _barrier_class
+                    )
+                    for block in way_blocks(located, 2 * (os.cpu_count() or 1))
+                ]
+                packed = _pack(_lines_of([read.result() for read in reads]))
+            cache.put(entry, packed)
+        return _unpack(packed)
+
+    return geo.Barriers(lines, f"{code} {digest}")
 
 
 def okres_path(okres: str, lod: str) -> str:
@@ -1067,21 +1413,25 @@ def _is_buildings(path: str) -> bool:
 
 
 def write(
-    files: Mapping[str, Mapping[str, Any]], directory: Path, memo: Path | None = None
+    files: Mapping[str, bytes], directory: Path, memo: Path | None = None
 ) -> dict[str, tuple[int, int]]:
-    """Replace *directory* with *files*; return path → (bytes, gzip bytes).
+    """Replace *directory* with *files*, path → JSON.
 
-    The gzip sizes are kept in *memo*
+    Return path → (bytes, gzip bytes), the gzip sizes kept in *memo*
     (:func:`election_map_slovakia.output.gzip_sizes`).
     """
-    blobs = {path: output.to_json(content) for path, content in sorted(files.items())}
+    blobs = dict(sorted(files.items()))
     with (
         progress.stage(f"writing {directory.name}/", len(blobs)) as s,
         output.replacing(directory) as tmp,
     ):
+        made: set[Path] = set()
         for path, data in s.track(blobs.items()):
-            (tmp / path).parent.mkdir(parents=True, exist_ok=True)
-            (tmp / path).write_bytes(data)
+            target = tmp / path
+            if target.parent not in made:
+                target.parent.mkdir(parents=True, exist_ok=True)
+                made.add(target.parent)
+            target.write_bytes(data)
     gz = output.gzip_sizes(list(blobs.values()), memo)
     return {p: (len(b), g) for (p, b), g in zip(blobs.items(), gz, strict=True)}
 
@@ -1176,7 +1526,7 @@ def _level_of(path: str) -> Level:
 
 
 def report(
-    files: Mapping[str, Mapping[str, Any]], sizes: Mapping[str, tuple[int, int]]
+    files: Mapping[str, File], sizes: Mapping[str, tuple[int, int]]
 ) -> Iterator[str]:
     """Yield per level of detail its lines per class, water areas and sizes.
 
@@ -1197,9 +1547,9 @@ def report(
         counts: Counter[int] = Counter()
         vertices = water = 0
         for path in paths:
-            counts.update(files[path]["lines"])
-            vertices += sum(len(a) for a in files[path]["arcs"]) // 2
-            water += len(files[path]["features"])
+            counts.update(files[path].lines)
+            vertices += files[path].vertices
+            water += files[path].holes
         per_class = ", ".join(
             f"{CLASSES[k]} {n:,}" for k, n in sorted(counts.items()) if k in CLASSES
         )
@@ -1214,10 +1564,9 @@ def report(
         return
     vertices = buildings = holes = 0
     for path in paths:
-        area = _areas(*_decoded(files[path]))
-        vertices += len(files[path]["xy"]) // 2
-        buildings += int(np.sum(area > 0))
-        holes += int(np.sum(area < 0))
+        vertices += files[path].vertices
+        buildings += files[path].buildings
+        holes += files[path].holes
     largest = max(paths, key=lambda p: sizes[p][0])
     yield (
         f"{BUILDINGS_DIR:<7} {len(paths):>5} {vertices:>10,} {holes:>7,}"

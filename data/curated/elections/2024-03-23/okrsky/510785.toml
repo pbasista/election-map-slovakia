@@ -1,0 +1,25 @@
+# Okrsky of Lisková, transcribed by an AI agent in job okrsok-rules-4345 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre súpisné čísla: 0-112, 368-432, 590-817, 906-908, 1024-1025.
+#   okrsok 2: pre súpisné čísla: 114-364, 433-587, 818-893, 900-902, 904, 910-940, 1002-1023, 1027-1029.
+obec = "510785"
+name = "Lisková"
+okrsky_date = 2024-01-29
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky are split by súpisné číslo within the one part Lisková; súpisné čísla in neither list (e.g. 113, 365-367, 588-589, 894-899, 941-1001, 1026, above 1029) take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20240129104757/https://www.liskova.sk/download_file_f.php?id=1988774"
+sha256 = "4ee875a186129c8d807a48dbd0665aca541ab3ca8dd45d51d74514f1458222ae"
+title = "Volebné okrsky a volebné miestnosti v obci Lisková pre voľby prezidenta SR (23. marca 2024), 29.01.2024"
+
+[okrsok.1]
+rules = [
+  {part = "Lisková", numbers = "0-112, 368-432, 590-817, 906-908, 1024-1025"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lisková", numbers = "114-364, 433-587, 818-893, 900-902, 904, 910-940, 1002-1023, 1027-1029"},
+]

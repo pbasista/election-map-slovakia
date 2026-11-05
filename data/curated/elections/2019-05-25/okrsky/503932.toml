@@ -1,0 +1,39 @@
+# The okrsky of Neded of the vote of 2023-01-21, data/curated/elections/2023-01-21/okrsky/503932.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Neded, transcribed by an AI agent in job okrsok-rules-3055 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Volebný okrsok č.1 ... tvorí časť obce od súp.č. 1 do súp.č. 352 a č.1274,1279,1289,1290,1291, 1295-1299,1300,1303,1314,1315,1317 1319,1325,1327,1341-1346,1501,1502.
+#     okrsok 2: Volebný okrsok č.2 ... tvorí časť obce od súp.č. 353 do súp.č. 844 a č.,1281,1301,1302,1311,1322.
+#     okrsok 3: Volebný okrsok č.3 ... tvorí časť obce od súp.č. 845 do súp.č. 1269 a súp.č. 1276,1277,1280,1282-1288,1292,1294,1305-1308,1312,1321,1331,1492,1521.
+obec = "503932"
+name = "Neded"
+okrsky_date = 2022-11-09
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by súpisné číslo of the single part Neded. '1317 1319' (okrsok 1) is read as the two numbers 1317 and 1319. Numbers not listed take the nearest address (fill_nearest)."
+okrsky_adopted = 2023-01-21
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1848): The website's elections page starts with 2022; no 2019 EP okrsky document (the Internet Archive was offline during the search). These are the okrsky of the vote of 2023-01-21 (2023-referendum), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2023-01-21: 1: 887 → 863, 2: 933 → 903, 3: 930 → 824."
+
+[[document]]
+url = "https://www.neded.sk/modules/file_storage/download.php?file=d308ca73%7C823&inline=1"
+sha256 = "5cb80918689837e7298c7a55b718342f3aee361a7deffa3f67f79927992eddac"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre referendum v roku 2023"
+
+[[document]]
+url = "https://www.neded.sk/obecny-urad/volby/"
+sha256 = "23cbde0cf38bf0d8dfd7347485f4ac8ac80cf48b64ffc144f400c5af9dcc52f2"
+title = "Voľby (elections page)"
+
+[okrsok.1]
+rules = [
+  {part = "Neded", numbers = "1-352, 1274, 1279, 1289-1291, 1295-1300, 1303, 1314, 1315, 1317, 1319, 1325, 1327, 1341-1346, 1501, 1502"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Neded", numbers = "353-844, 1281, 1301, 1302, 1311, 1322"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Neded", numbers = "845-1269, 1276, 1277, 1280, 1282-1288, 1292, 1294, 1305-1308, 1312, 1321, 1331, 1492, 1521"},
+]

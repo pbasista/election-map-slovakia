@@ -1,0 +1,184 @@
+# The okrsky of Trstená of the vote of 2018-11-10, data/curated/elections/2018-11-10/obvody/oz/510106.toml, standing in, by `ems job reuse`. Its header there:
+#   Council obvody of Trstená (510106), Tvrdošín.
+#   Transcribed by an AI agent in job obvod-rules-102 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: Obvod č. I. ZÁPAD: Bytový dom č.1053, 1054, 1056, 1057,1058, 1139, 1140, 1141, 1142, 1143, 1144, 1145, 1241, 1317, 1869.
+#     obvod 2: Obvod č. II. STRED – HRADY - VÝCHOD: Zápotočná, Malý Rad, Puškinova, P. Jilemnického, Pod Vápenicou, J. Kráľa, J. Kollára, H. Gavloviča, Družstevníkov, Na Diele, Požiarníkov, Poddielová, Krátka, Partizánov, Kukučínova, Dukelských hrdinov, Námestie M. R. Štefánika, Nábrežie Ľ. Štúra, Mieru, Hattalova, Bernolákova, Hviezdoslavova, ČSA, Š. Furdeka, 1. mája, SNP, Železničiarov, J. Hertela, Oravická, Nová, Trstená 0.
+#     obvod 3: Obvod č. III. VYŠNÝ BREH – ĎURDINOVÁ – ÚSTIE n/PRIEHRADOU: Hraničiarov, Kvetná, Msgr. V. Trstenského, Pod Stráňou, Hýbeľ, Lesná, Obrancov mieru, Pri Kovalinci, I. Olbrachta, Lúčna, Odbojárov, R. Dilonga, Kpt. Nálepku, M. Jankolu, Osadská, Ústianska, Krakovská cesta, Mládežnícka, Oslobodenia, Ústie nad Priehradou.
+#   Okrsky added by an AI agent in job okrsok-rules-5872 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Bytové domy: 1053, 1054, 1056, 1057, 1058, 1139, 1140, 1141, 1142, 1143, 1144, 1145, 1241, 1317, 1869
+#     okrsok 2: Zápotočná, Malý Rad, Puškinova, P. Jilemnického, Pod Vápenicou, J. Kráľa, J. Kollára, H. Gavloviča, Družstevníkov, Na Diele, Požiarnikov, Poddielová, Krátka, Partizánov, Kukučínova, Dukelských hrdinov, Námestie M.R. Štefánika, Nábrežie Ľ. Štúra, Mieru, Hornooravská nemocnica s poliklinikou
+#     okrsok 3: Hattalova, Bernolákova, Trstená 0, Hviezdoslavova, Československej armády
+#     okrsok 4: Š. Furdeka, 1. mája, SNP, Železničiarov, J. Hertela, Oravická, Nová
+#     okrsok 5: Hraničiarov, Kvetná, Msgr. V. Trstenského, Pod Stráňou, Hýbeľ, Lesná, Obrancov mieru, Pri Kovalinci, I. Obrachta, Lúčna, Odbojárov, R. Dilonga, Kpt. Nálepku, M. Jankolu, Osadská, Ústianska, Krakovská cesta, Mládežnícka, Oslobodenia
+#     okrsok 6: Ústie nad Priehradou, Oravská priehrada - Prístav
+obec = "510106"
+name = "Trstená"
+date = 2018-07-31
+fill = "nearest"
+note = "The council obvody of the vote of 2018-11-10: they only place the okrsky. Obvod I lists only the apartment blocks by súpisné číslo (rule on part Trstená); the other houses of the street Západ, Brezovická cesta (named nowhere) and the houses without a street are placed by fill_nearest. Left out: \"Pri Kovalinci\" (not in the address register). Oravská Priehrada and Prístav are taken from the okrsky decision of 2018 (okrsok 6, obvod III)."
+reused = 2018-11-10
+okrsky_date = 2018-08-02
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 02.08.2018 (Komunálne voľby 2018, určenie volebných okrskov a volebných miestností) gives obvod I = okrsok 1, obvod II = okrsky 2-4, obvod III = okrsky 5-6, with the streets of each okrsok. Left out: \"Hornooravská nemocnica s poliklinikou\" (a hospital, not a street), \"Trstená 0\" (voters registered without an address), \"Pri Kovalinci\" (not in the address register). Placed by fill_nearest: the houses of Západ other than the listed apartment blocks and Brezovická cesta (in obvod II, named in no okrsok) and the houses without a street. \"I. Obrachta\" is the register's I. Olbrachta (a typo dropping the l)."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-130): Trstená's pages 'Voľby do VÚC 2017' and 'Voľby do Európskeho parlamentu 2024' (trstena.sk) link no okrsky document (the other votes' pages do). The host rate-limits (HTTP 429); the Internet Archive refused connections (offline) during the search. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 6 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://www.trstena.sk/download_file_f.php?id=1000433"
+sha256 = "ff84addb3d4ed816352acba06115545058573dd2d56c7eba044c08d360def2dc"
+title = "Výpis z uznesenia MsZ č. 199/VII/2018 zo dňa 31. júla 2018 (volebné obvody a počet poslancov)"
+
+[[document]]
+url = "https://www.trstena.sk/download_file_f.php?id=1000343"
+sha256 = "a07cb5f709e44fcff18c76d10cba2bb837ab6fd95169ef8f2523202f725cfd8a"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v Meste Trstená pre voľby do orgánov samosprávy obcí 2018 (02.08.2018)"
+
+[[document]]
+url = "https://www.trstena.sk/volby-do-organov-samospravy-obci-2018.html"
+sha256 = "371432a48e43fe134c13429e101909818c4d7357e309421df5ee89832f4a50b1"
+title = "Voľby do orgánov samosprávy obcí 2018"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Trstená", numbers = "1053, 1054, 1056, 1057, 1058, 1139, 1140, 1141, 1142, 1143, 1144, 1145, 1241, 1317, 1869", note = "apartment blocks listed by súpisné číslo"},
+]
+
+[obvod.2]
+seats = 5
+okrsky = [2, 3, 4]
+rules = [
+  {street = "Zápotočná"},
+  {street = "Malý rad", written = "Malý Rad"},
+  {street = "Puškinova"},
+  {street = "P. Jilemnického"},
+  {street = "Pod Vápenicou"},
+  {street = "J. Kráľa"},
+  {street = "J. Kollára"},
+  {street = "H. Gavloviča"},
+  {street = "Družstevníkov"},
+  {street = "Na Diele"},
+  {street = "Požiarnikov", written = "Požiarníkov"},
+  {street = "Poddielová"},
+  {street = "Krátka"},
+  {street = "Partizánov"},
+  {street = "Kukučínova"},
+  {street = "Dukelských hrdinov"},
+  {street = "Námestie M.R.Štefánika", written = "Námestie M. R. Štefánika"},
+  {street = "Nábrežie Ľ. Štúra"},
+  {street = "Mieru"},
+  {street = "Hattalova"},
+  {street = "Bernolákova"},
+  {street = "Hviezdoslavova"},
+  {street = "Čsl. armády", written = "ČSA", note = "ČSA is the initials of Československej armády, the register's Čsl. armády"},
+  {street = "Š. Furdeka"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "SNP"},
+  {street = "Železničiarov"},
+  {street = "J. Hertela"},
+  {street = "Oravická"},
+  {street = "Nová"},
+]
+
+[obvod.3]
+seats = 4
+okrsky = [5, 6]
+rules = [
+  {street = "Hraničiarov"},
+  {street = "Kvetná"},
+  {street = "Msgr. V. Trstenského"},
+  {street = "Pod Stráňou"},
+  {street = "Hýbeľ"},
+  {street = "Lesná"},
+  {street = "Obrancov mieru"},
+  {street = "I. Olbrachta"},
+  {street = "Lúčna"},
+  {street = "Odbojárov"},
+  {street = "R. Dilonga"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "M. Jankoľu", written = "M. Jankolu", note = "the document drops the soft sign: the register's M. Jankoľu"},
+  {street = "Osadská"},
+  {street = "Ústianska"},
+  {street = "Krakovská cesta"},
+  {street = "Mládežnícka"},
+  {street = "Oslobodenia"},
+  {part = "Ústie nad Priehradou"},
+  {part = "Oravská Priehrada", note = "not named in the resolution; the okrsky decision of 02.08.2018 puts \"Oravská priehrada - Prístav\" in okrsok 6 with Ústie nad Priehradou, in obvod III"},
+  {part = "Prístav", note = "as Oravská Priehrada: okrsok 6 of the okrsky decision, obvod III"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Zápotočná"},
+  {street = "Malý rad", written = "Malý Rad"},
+  {street = "Puškinova"},
+  {street = "P. Jilemnického"},
+  {street = "Pod Vápenicou"},
+  {street = "J. Kráľa"},
+  {street = "J. Kollára"},
+  {street = "H. Gavloviča"},
+  {street = "Družstevníkov"},
+  {street = "Na Diele"},
+  {street = "Požiarnikov"},
+  {street = "Poddielová"},
+  {street = "Krátka"},
+  {street = "Partizánov"},
+  {street = "Kukučínova"},
+  {street = "Dukelských hrdinov"},
+  {street = "Námestie M.R.Štefánika", written = "Námestie M.R. Štefánika"},
+  {street = "Nábrežie Ľ. Štúra"},
+  {street = "Mieru"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hattalova"},
+  {street = "Bernolákova"},
+  {street = "Hviezdoslavova"},
+  {street = "Čsl. armády", written = "Československej armády"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Š. Furdeka"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "SNP"},
+  {street = "Železničiarov"},
+  {street = "J. Hertela"},
+  {street = "Oravická"},
+  {street = "Nová"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Hraničiarov"},
+  {street = "Kvetná"},
+  {street = "Msgr. V. Trstenského"},
+  {street = "Pod Stráňou"},
+  {street = "Hýbeľ"},
+  {street = "Lesná"},
+  {street = "Obrancov mieru"},
+  {street = "I. Olbrachta", written = "I. Obrachta", note = "a typo dropping the l: the register's I. Olbrachta, the only such street in Trstená"},
+  {street = "Lúčna"},
+  {street = "Odbojárov"},
+  {street = "R. Dilonga"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "M. Jankoľu", written = "M. Jankolu", note = "the document drops the soft sign: the register's M. Jankoľu"},
+  {street = "Osadská"},
+  {street = "Ústianska"},
+  {street = "Krakovská cesta"},
+  {street = "Mládežnícka"},
+  {street = "Oslobodenia"},
+]
+
+[okrsok.6]
+rules = [
+  {part = "Ústie nad Priehradou"},
+  {part = "Oravská Priehrada", note = "the document's \"Oravská priehrada - Prístav\": the register's parts Oravská Priehrada and Prístav"},
+  {part = "Prístav"},
+]

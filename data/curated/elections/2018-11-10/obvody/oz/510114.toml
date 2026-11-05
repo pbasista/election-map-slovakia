@@ -1,0 +1,111 @@
+# Council obvody of Tvrdošín (510114), Tvrdošín.
+# Transcribed by an AI agent in job obvod-rules-097 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: mesto Tvrdošín I., kde patria ulice: Farská, A. Škarvana, Múčna, Hviezdoslavova, Radničná, Oravské nábrežie, Trojičné námestie, Nové Hrádky, Kukučínova, Bernolákova, A. Hlinku, Cintorínska, SNP, Vojtaššákova, Spiežová, Hlísno . Vo volebnom obvode sa volia 3 poslanci.
+#   obvod 2: mesto Tvrdošín II., kde patria ulice: Vladina, Školská, Ústianska, Pod Žiarcom Vo volebnom obvode sa volia 2 poslanci.
+#   obvod 3: sídlisko Medvedzie I., kde patria bytovky číslo: 127/2, 130/3, 129/4, 128/5, 126/7, 125/8, 124/9, 141/19, 140/20, 143/23, 137, 254, 264/53. Vo volebnom obvode sa volia 2 poslanci
+#   obvod 4: sídlisko Medvedzie II., kde patria bytovky číslo: 123/10, 122/13, 168/38, 158/40, 159/41, 161/43, 163/45, 165/48, 166/49, 164/46, 162/44, 160/42, 167/37,155 – byt v ZŠ, 256/50, 262/52. Vo volebnom obvode sa volia 2 poslanci.
+#   obvod 5: sídlisko Medvedzie III., kde patria bytovky číslo : 145/21, 142/24, 144/26, 146/27, 147/28, 148/29, 149/30, 150/32, 151/33, 154/34, 152/35, 153/36, 259/51. Vo volebnom obvode sa volia 2 poslanci.
+#   obvod 6: mestská časť Krásna Hôrka, kde patria ulice: M.R.Štefánika, Staničná, Hrdinov, Zvoničná, J. Matušku, Železničná, Nová, Breziny. Vo volebnom obvode sa volí 1 poslanec.
+#   obvod 7: mestská časť Medvedzie, kde patria ulice: Pod Velingom, Konopná, Družstevná, Hríbiky. Vo volebnom obvode sa volí 1 poslanec.
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/510114.toml, standing in.
+obec = "510114"
+name = "Tvrdošín"
+date = 2018-06-21
+fill = "nearest"
+note = "The resolution lists bytovky 137 and 254 by súpisné number and leaves out CSS Orava (súpisné 136) and SPŠ (133/17), which later documents place in obvod 3; those addresses and the addresses without street are left to fill_nearest."
+okrsky_date = 2022-11-09
+okrsky_note = "No document of the elections found (the Voľby 2022 page keeps only results; the archive has no 2022 okrsky file; the 337sk_3 file is the 2020 NR SR one); the referendum's document (9.11.2022): its 7 okrsky have exactly the streets/bytovky of the 7 obvody of the council resolution of 29.6.2022, one okrsok per obvod, so no rules are needed."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-5868): No okrsky document of the 2018 municipal elections survives. The resolution of 21.06.2018 sets only the 7 obvody (the same names and streets as the later okrsky documents, one okrsok per obvod). The live Voľby page lists for 2018 only the results and the Constitutional Court finding; the Internet Archive has the Voľby page only as of April 2018 and the notice board only as of May and December 2018 (no capture in between). The live notice board's 2018 items 161-186 (probed by id) hold no elections notice (the missing ids 161, 167, 168, 173, 177, 184, 185 are deleted), and the city's news items 400-476 of 2018 include none on okrsky. Web search found nothing. The Internet Archive's CDX was offline for much of the search (replay worked). These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 7 okrsky, those ŠÚ SR counted in each council obvod (nearer, not taken: 2020-02-29: okrsky of the whole obec, the council then elected in several obvody). Voters on the roll per okrsok (ŠÚ SR), 2018-11-10 → 2022-10-29: 1: 1,495 → 1,517, 2: 742 → 731, 3: 1,184 → 1,110, 4: 1,470 → 1,410, 5: 1,126 → 1,056, 6: 797 → 828, 7: 555 → 577."
+
+[[document]]
+url = "https://www.tvrdosin.sk/modules/file_storage/download.php?file=e8246f09%7C486"
+sha256 = "7f69ed91a7e8970f3ae361b541c51539af606e6e64e80658f999b00488842308"
+title = "Uznesenie z mestského zastupiteľstva - 21.06.2018"
+
+[[document]]
+url = "https://www.tvrdosin.sk/samosprava/mestske-zastupitelstvo/obdobie-2014-2018/uznesenia/?page=2"
+sha256 = "b4125afea983cdab29e4bbb9999b8a21eec05cc7b7e5665398a656c7778d57b4"
+title = "Uznesenia 2014-2018 (page listing the resolution)"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {street = "Farská"},
+  {street = "A. Škarvana"},
+  {street = "Múčna"},
+  {street = "Hviezdoslavova"},
+  {street = "Radničná"},
+  {street = "Oravské Nábrežie", written = "Oravské nábrežie"},
+  {street = "Trojičné námestie"},
+  {street = "Nové Hrádky"},
+  {street = "Kukučínova"},
+  {street = "Bernolákova"},
+  {street = "A. Hlinku"},
+  {street = "Cintorínska"},
+  {street = "SNP"},
+  {street = "Vojtaššákova"},
+  {street = "Spiežová"},
+  {street = "Hlísno"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {street = "Vladina"},
+  {street = "Školská"},
+  {street = "Ústianská", written = "Ústianska"},
+  {street = "Pod Žiarcom"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {street = "Sídlisko", numbers = "2, 3, 4, 5, 7, 8, 9, 19, 20, 23, 53", note = "bytovky listed as súpisné/orientačné (127/2 …); orientačné numbers of street Sídlisko used"},
+  {street = "Sídlisko", numbers = "137", by = "supisne", note = "bytovka 137 written by its súpisné number"},
+  {street = "Michalské námestie", note = "bytovka 254 (súpisné); orientačné 126 is the only address of Michalské námestie"},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [4]
+rules = [
+  {street = "Sídlisko", numbers = "10, 13, 37, 38, 40, 41, 42, 43, 44, 45, 46, 48, 49, 50, 52", note = "bytovky listed as súpisné/orientačné; orientačné numbers used"},
+  {street = "Sídlisko", numbers = "155", by = "supisne", note = "155 – byt v ZŠ (súpisné)"},
+]
+
+[obvod.5]
+seats = 2
+okrsky = [5]
+rules = [
+  {street = "Sídlisko", numbers = "21, 24, 26, 27, 28, 29, 30, 32, 33, 34, 35, 36, 51", note = "bytovky listed as súpisné/orientačné; orientačné numbers of street Sídlisko used"},
+]
+
+[obvod.6]
+seats = 1
+okrsky = [6]
+rules = [
+  {street = "M. R. Štefánika", written = "M.R.Štefánika"},
+  {street = "Staničná"},
+  {street = "Hrdinov"},
+  {street = "Zvoničná"},
+  {street = "J.Matušku", written = "J. Matušku"},
+  {street = "Železničná"},
+  {street = "Nová"},
+  {street = "Breziny"},
+]
+
+[obvod.7]
+seats = 1
+okrsky = [7]
+rules = [
+  {street = "Pod Velingom"},
+  {street = "Konopná"},
+  {street = "Družstevná"},
+  {street = "Hríbiky"},
+]

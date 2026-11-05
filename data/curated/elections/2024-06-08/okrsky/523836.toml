@@ -1,0 +1,33 @@
+# Okrsky of Spišská Stará Ves, transcribed by an AI agent in job okrsok-rules-5075 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre časť územia mesta Spišská Stará Ves, ulica Štúrova
+#   okrsok 2: pre časť územia mesta Spišská Stará Ves, ulice: Slov. nár. povstania, Mlynská, Kukučínova, Tatranská, Jesenského, 1. mája, Športová, Za Riekou a miestnu časť Lysá nad Dunajcom
+obec = "523836"
+name = "Spišská Stará Ves"
+okrsky_date = 2024-02-13
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document, read via OCR without diacritics; text given with diacritics restored. Addresses of Spišská Stará Ves without a street (numbered by súpisné číslo), which the document does not name, take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.spisskastaraves.sk/resources/File/1_scan0019.pdf"
+sha256 = "2821a559c2275dae1513437a8e872fc47d976f9f56623698ebae0d2937fe64e7"
+title = "Určenie volebných okrskov pre voľby do Európskeho parlamentu 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Štúrova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Slov. nár. povstania"},
+  {street = "Mlynská"},
+  {street = "Kukučínova"},
+  {street = "Tatranská"},
+  {street = "Jesenského"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "Športová"},
+  {street = "Za Riekou"},
+  {part = "Lysá nad Dunajcom"},
+]

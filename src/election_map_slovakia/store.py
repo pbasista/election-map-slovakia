@@ -4,13 +4,15 @@ The release is named by ``inputs.toml`` ``store``. Each pinned file is an
 asset named ``<sha256>-<file>``
 (:meth:`config.Store.asset`), uploaded once and never replaced: a new
 version of an input is a new asset beside the old one, so every commit
-that pins either can still be built. ``ems fetch`` downloads them by their
-public URL, without logging in (:mod:`election_map_slovakia.fetch`);
-:func:`publish` uploads those the release lacks with the GitHub CLI
-(``gh``), as its logged-in user, creating the release first where there
-is none. :func:`write_pin` records a new pin in
-``inputs.toml``, as ``ems inputs update`` does after downloading an input
-from its source.
+that pins either can still be built, until :func:`prune` deletes the
+assets that neither the current pins nor those of ``HEAD`` or of any
+version tag (``v*``, what release.yml deploys) name. ``ems fetch``
+downloads them by their public URL, without logging in
+(:mod:`election_map_slovakia.fetch`); :func:`publish` uploads those the
+release lacks with the GitHub CLI (``gh``), as its logged-in user,
+creating the release first where there is none. :func:`write_pin` records
+a new pin in ``inputs.toml``, as ``ems inputs update`` does after
+downloading an input from its source.
 """
 
 from __future__ import annotations
@@ -21,11 +23,12 @@ import os
 import re
 import subprocess
 import tempfile
-from collections.abc import Iterator, Sequence
+import tomllib
+from collections.abc import Iterable, Iterator, Sequence
 from pathlib import Path
 
 from election_map_slovakia import stamp
-from election_map_slovakia.config import Input, Inputs, Store
+from election_map_slovakia.config import INPUTS_FILE, Input, Inputs, Store
 
 GH = "gh"
 """The GitHub CLI, which uploads the assets."""
@@ -85,7 +88,7 @@ def missing(store: Store, inputs: Sequence[Input], present: set[str]) -> list[In
     return [inp for inp in inputs if inp.sha256 and store.asset(inp) not in present]
 
 
-def publish(inputs: Inputs, raw_dir: Path) -> Iterator[Input]:
+def publish(inputs: Inputs, raw_dir: Path, dry_run: bool = False) -> Iterator[Input]:
     """Upload every pinned file the store lacks; yield each input once done.
 
     The file is ``data/raw/<name>/<file>``, which must have the pinned
@@ -95,7 +98,8 @@ def publish(inputs: Inputs, raw_dir: Path) -> Iterator[Input]:
     is found to be the pinned one: a pre-release, so that it never shows
     as the repository's latest release, published, so that anyone may
     download its assets. Its tag (``inputs``) is no version, so creating it
-    deploys nothing (release.yml runs on ``v*``).
+    deploys nothing (release.yml runs on ``v*``). With *dry_run*, yield
+    what would be uploaded, checked as above, and change nothing.
     """
     store = inputs.store
     if store is None:
@@ -115,6 +119,9 @@ def publish(inputs: Inputs, raw_dir: Path) -> Iterator[Input]:
             raise StoreError(
                 f"{path} is not the pinned file; run `ems fetch --only {inp.name}`"
             )
+    if dry_run:
+        yield from todo
+        return
     if published is None:
         _gh(
             "release",
@@ -142,6 +149,57 @@ def publish(inputs: Inputs, raw_dir: Path) -> Iterator[Input]:
                 store.repository,
             )
         yield inp
+
+
+def kept(root: Path, inputs: Inputs) -> set[str]:
+    """Return the assets a build may still need.
+
+    Those *inputs* pin, and those ``config/inputs.toml`` pins at ``HEAD``
+    and at every version tag (``v*``) of the git repository at *root*, so
+    that a release's build can be run again.
+    """
+    store = inputs.store
+    if store is None:
+        raise StoreError("config/inputs.toml names no store")
+    names = {store.asset(inp) for inp in inputs.inputs if inp.sha256}
+    tags = _git(root, "tag", "--list", "v*").split()
+    for ref in ["HEAD", *tags]:
+        text = _git(root, "show", f"{ref}:config/{INPUTS_FILE}")
+        try:
+            pins = tomllib.loads(text).get("input", {})
+        except tomllib.TOMLDecodeError as e:
+            raise StoreError(f"{ref}:config/{INPUTS_FILE}: {e}") from None
+        names |= {
+            Store.asset_name(p["sha256"], p["file"])
+            for p in pins.values()
+            if p.get("sha256") and p.get("file")
+        }
+    return names
+
+
+def prune(inputs: Inputs, keep: Iterable[str], dry_run: bool = False) -> Iterator[str]:
+    """Delete every asset of the store's release not in *keep*; yield each name.
+
+    With *dry_run*, yield them and delete nothing. A release that does not
+    exist (or is a draft, never taken for the store) has nothing to delete.
+    """
+    store = inputs.store
+    if store is None:
+        raise StoreError("config/inputs.toml names no store")
+    if not release(store):
+        return
+    for name in sorted(assets(store) - set(keep)):
+        if not dry_run:
+            _gh(
+                "release",
+                "delete-asset",
+                store.release,
+                name,
+                "--repo",
+                store.repository,
+                "--yes",
+            )
+        yield name
 
 
 def write_pin(path: Path, name: str, sha256: str, retrieved: dt.date) -> None:
@@ -197,4 +255,17 @@ def _gh(*args: str) -> str:
         ) from None
     if done.returncode:
         raise StoreError(f"{GH} {' '.join(args[:2])}: {done.stderr.strip()}")
+    return done.stdout
+
+
+def _git(root: Path, *args: str) -> str:
+    """Run git in the repository at *root* with *args*; return its output."""
+    try:
+        done = subprocess.run(
+            ["git", "-C", str(root), *args], capture_output=True, text=True, check=False
+        )
+    except FileNotFoundError:
+        raise StoreError("git not found: it tells which pins releases need") from None
+    if done.returncode:
+        raise StoreError(f"git {' '.join(args[:2])}: {done.stderr.strip()}")
     return done.stdout

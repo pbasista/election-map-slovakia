@@ -1,0 +1,29 @@
+# The okrsky of Raslavice of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/519936.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Raslavice, transcribed by an AI agent in job okrsok-rules-876 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Voliči s trvalým pobytom v časti obce Vyšné Raslavice a na ul. Sekčovskej
+#     okrsok 2: Voliči s trvalým pobytom v časti obce Nižné Raslavice / okrem voličov s trvalým pobytom na Sekčovskej ul. /
+obec = "519936"
+name = "Raslavice"
+okrsky_date = 2018-08-28
+okrsky_fill = "nearest"
+okrsky_note = "Archived copy of the municipality's PDF (e_download.php on raslavice.sk). Part 'Raslavice' (1 address) is not named in the document; placed by fill_nearest."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-2032): The archived European Parliament 2019 page (raslavice.sk/obecny-urad/volby) links 'Volebné okrsky a volebné miestnosti' (https://www.raslavice.sk/e_download.php?file=data/editor/227sk_4.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti%20EU.pdf), but the Internet Archive never captured that PDF (404) and the live site no longer serves it; no other copy found. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://web.archive.org/web/20210228092608/https://www.raslavice.sk/e_download.php?file=data/editor/226sk_2.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti.pdf"
+sha256 = "4713639d2589dd6c266eceef99effcbdbd32ac6a56514bb873dbc18754d8e9b3"
+title = "Oznámenie o čase a mieste konania volieb do orgánov samosprávy obcí v roku 2018 a o utvorení volebných okrskov a určení volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Vyšné Raslavice"},
+  {street = "Sekčovská"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Nižné Raslavice"},
+]

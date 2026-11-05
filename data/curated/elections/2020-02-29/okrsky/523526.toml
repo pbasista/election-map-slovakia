@@ -1,0 +1,44 @@
+# Okrsky of Huncovce, transcribed by an AI agent in job okrsok-rules-2701 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulica Jarná, Mlynská, Krátka, Pri rybníku, Farská, Záhradná, Úzka, Športová, Alejová, Železničná, Hlavná súp.č. od 24 po 180, od súp.č. 391 po 414 a od súp.č. 415 po 550, a občania s TP Huncovce
+#   okrsok 2: ulica Cintorínska, Riečna, Lomnická, Nová, Vrbovská, Školská, Tatranská, Poľná, S. Rosenberga, Hlavná od súp.č. 1 po 23, a od súp.č. 181 po 202, Hlavná súp. č. 232
+obec = "523526"
+name = "Huncovce"
+okrsky_date = 2019-11-08
+okrsky_fill = "nearest"
+okrsky_note = "Hlavná is split by súpisné čísla as the document gives them; Hlavná houses whose súpisné číslo falls in none of the listed ranges, and the 47 addresses without a street, take the okrsok of the nearest address (fill_nearest). Okrsok 1 also holds citizens registered only to the municipality (občania s TP Huncovce)."
+
+[[document]]
+url = "https://www.huncovce.sk/e_download.php?file=data/editor/217sk_4.pdf&original=Ozn%C3%A1menie%20o%20vytvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Den%C3%AD%20miestnost%C3%AD.pdf"
+sha256 = "dfa3e40945a389dde083975df5e81f31e432f5cdc9a54547e3258813a2f37c56"
+title = "Oznámenie o utvorení volebných okrskov a volebných miestností pre Voľby do Národnej rady SR"
+
+[okrsok.1]
+rules = [
+  {street = "Jarná"},
+  {street = "Mlynská"},
+  {street = "Krátka"},
+  {street = "Pri Rybníku", written = "Pri rybníku"},
+  {street = "Farská"},
+  {street = "Záhradná"},
+  {street = "Úzka"},
+  {street = "Športová"},
+  {street = "Alejová"},
+  {street = "Železničná"},
+  {street = "Hlavná", numbers = "24-180, 391-550", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Riečna"},
+  {street = "Lomnická"},
+  {street = "Nová"},
+  {street = "Vrbovská"},
+  {street = "Školská"},
+  {street = "Tatranská"},
+  {street = "Poľná"},
+  {street = "Samuela Rosenberga", written = "S. Rosenberga"},
+  {street = "Hlavná", numbers = "1-23, 181-202, 232", by = "supisne"},
+]

@@ -1,0 +1,33 @@
+# The okrsky of Cerová of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/504297.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Cerová, transcribed by an AI agent in job okrsok-rules-874 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Okrsok č. 1 - Cerová
+#     okrsok 2: Okrsok č. 2 - Rozbehy
+obec = "504297"
+name = "Cerová"
+okrsky_date = 2018-09-04
+okrsky_note = "Scanned decision read from the image: okrsok 1 \"Cerová\" (polling station in the obecný úrad in Cerová), okrsok 2 \"Rozbehy\" (kultúrny dom v časti Rozbehy). The part Lieskové is not named; it forms one village and one k.ú. (Cerová-Lieskové) with Cerová, so it is placed in okrsok 1 (inferred)."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-436): Cerová's page 'Voľby do VÚC 2017' (obeccerova.sk) links the candidate lists, information for voters and notices, but no document on the okrsky. The Internet Archive refused connections (offline) during the search. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://www.obeccerova.sk/wp-content/uploads/Utvorenie-volebn%C3%BDch-okrskov-a-ur%C4%8Denie-volebn%C3%BDch-miestnost%C3%AD.pdf"
+sha256 = "1c0343e96ead3f111457e2358b6315360f32d38c3d436a94a7a96ce1f8839fe1"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí dňa 10. novembra 2018 (04.09.2018)"
+
+[[document]]
+url = "https://www.obeccerova.sk/volby-do-organov-samospravy-obci-2018-a73-442"
+sha256 = "ab36471ce9dbd44332303270a43f74d3558a33005a5c99d4f61273235ff91336"
+title = "Voľby do orgánov samosprávy obcí 2018"
+
+[okrsok.1]
+rules = [
+  {part = "Cerová"},
+  {part = "Lieskové", note = "Lieskové is not named; it shares the k.ú. Cerová-Lieskové with Cerová and lies beside it, while Rozbehy is a separate k.ú. with its own okrsok", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Rozbehy"},
+]

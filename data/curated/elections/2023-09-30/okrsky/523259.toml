@@ -1,0 +1,29 @@
+# Okrsky of Vinné, transcribed by an AI agent in job okrsok-rules-3537 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: VOLEBNÝ OKRSOK 1 - od č. domu 1 po č. domu 377 (počet voličov 859)
+#   okrsok 2: VOLEBNÝ OKRSOK 2 - od č. domu 378 po č. domu 9 (počet voličov 849)
+obec = "523259"
+name = "Vinné"
+okrsky_date = 2023-06-26
+okrsky_note = "The okrsky are split by house number (súpisné číslo) within the one part Vinné; okrsok 2 is open-ended above 378."
+
+[[document]]
+url = "https://www.vinne.sk/download_file_f.php?id=1879983"
+sha256 = "8772b26714942361cf134f783fe3ab95b9d053d01efbdfc5894ba0dda4877163"
+title = "OZNÁMENIE – utvorenie dvoch volebných okrskov (voľby do NR SR 30. septembra 2023), Vinné 26.06.2023"
+
+[[document]]
+url = "https://www.vinne.sk/volby-2023-0.html"
+sha256 = "07b57d9458996d035de688cbec5d69351dc5cf2aa49a584177922ee332427a50"
+title = "Voľby 2023 (archived page linking the notice)"
+
+[okrsok.1]
+rules = [
+  {part = "Vinné", numbers = "1-377"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vinné", numbers = "378-"},
+]

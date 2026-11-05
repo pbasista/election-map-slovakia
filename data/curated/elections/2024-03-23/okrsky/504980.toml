@@ -1,0 +1,30 @@
+# Okrsky of Závod, transcribed by an AI agent in job okrsok-rules-4258 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súp. č. 0 – 600
+#   okrsok 2: súp. č. 601 – 1202
+obec = "504980"
+name = "Závod"
+okrsky_date = 2024-01-24
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by súpisné čísla (Závod has no streets in the register); any súpisné číslo outside the ranges takes the okrsok of the nearest address (fill_nearest). The PDF is a scan with an OCR layer; read from the page image."
+
+[[document]]
+url = "https://obeczavod.sk/wp-content/uploads/dokumenty/volby-prezidenta/Oznamenie-o-utvoreni-volebnych-okrskov.pdf"
+sha256 = "c6e4efea301967aa4e0523f93c17e0351db41fb53edef2d18f1f8ea8834c3537"
+title = "Oznámenie o utvorení volebných okrskov, určenie volebných miestností a vymedzenie územného obvodu volebných okrskov (voľby prezidenta SR 2024; V Závode, 24. 1. 2024)"
+
+[[document]]
+url = "https://obeczavod.sk/dokument/oznamenie-o-utvoreni-volebnych-okrskov-2/"
+sha256 = "cf7711b08e57b3eba66b649688257855b53e2a58c5af746cb9a4e3107cfad5f1"
+title = "Oznámenie o utvorení volebných okrskov (Zverejnené 31. januára 2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Závod", numbers = "0-600"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Závod", numbers = "601-1202"},
+]

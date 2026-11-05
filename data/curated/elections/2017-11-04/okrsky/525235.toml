@@ -1,0 +1,49 @@
+# Okrsky of Šarišské Michaľany, transcribed by an AI agent in job okrsok-rules-474 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Čerešňová, Hviezdoslavova, Jarková, Komenského, Kpt. Nálepku, Melichara Zeleného, Mlynská, Požiarnická, Ružová, Sabinovská, SNP, Štúrova, Záhradná, Železničiarska
+#   okrsok 2: ulice: Družstevná, Michalská, M.R.Štefánika, Pod lesíkom, Prešovská
+obec = "525235"
+name = "Šarišské Michaľany"
+okrsky_fill = "nearest"
+okrsky_note = "Register houses without a street are placed by the nearest address (fill_nearest). The document's operative sentence mistakenly says 'pre voľby do Národnej rady' but its heading and date (4 November 2017) are the regional elections."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2017-08-23
+okrsky_date_basis = "The notice board item linking the PDF states 'Vyvesené: 23. 8. 2017'; the PDF names the regional elections of 4 November 2017 but is undated. (https://www.sarisskemichalany.sk/obec-2/volby/volby-od-2015-2020/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-37.html)"
+
+[[document]]
+url = "https://www.sarisskemichalany.sk/obec-2/volby/volby-od-2015-2020/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-37.html"
+sha256 = "436fa56d51d3ec8e9b6b8b88865433cb9cef9f9cd7b479ab7619d9ebfd279dce"
+title = "Utvorenie volebných okrskov a určenie volebných miestnosti (úradná tabuľa, vyvesené 23. 8. 2017)"
+
+[[document]]
+url = "https://www.sarisskemichalany.sk/e_download.php?file=data/uredni_deska/obsah37_1.pdf&original=Utvorenie%20volebnych%20okrskov%20a%20urcenie%20volebnych%20miestnosti.pdf"
+sha256 = "354011977ea016551eb5fe993a22557b166801521fa6112b37d248f560257dc6"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávnych krajov v roku 2017"
+
+[okrsok.1]
+rules = [
+  {street = "Čerešňová"},
+  {street = "Hviezdoslavova"},
+  {street = "Jarková"},
+  {street = "J. A. Komenského", written = "Komenského", note = "initials of the first names left out"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "M.Zeleného", written = "Melichara Zeleného"},
+  {street = "Mlynská"},
+  {street = "Požiarnická"},
+  {street = "Ružová"},
+  {street = "Sabinovská"},
+  {street = "SNP"},
+  {street = "Štúrova"},
+  {street = "Záhradná"},
+  {street = "Železničiarska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Michalská"},
+  {street = "M. R. Štefánika", written = "M.R.Štefánika"},
+  {street = "Pod Lesíkom", written = "Pod lesíkom"},
+  {street = "Prešovská"},
+]

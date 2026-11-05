@@ -1,0 +1,28 @@
+# The okrsky of Hviezdoslavov of the vote of 2024-10-05, data/curated/elections/2024-10-05/okrsky/501638.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Hviezdoslavov, transcribed by an AI agent in job okrsok-rules-5226 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Súpisné čísla 1 – 900
+#     okrsok 2: Súpisné čísla od 901
+obec = "501638"
+name = "Hviezdoslavov"
+okrsky_note = "The document splits the village by súpisné čísla (the obec has a single part), written as part rules with súpisné number ranges."
+okrsky_adopted = 2024-10-05
+okrsky_adopted_basis = "No document of 2026-07-04 setting the okrsky was found (okrsok-rules-5369): The referendum 2026 document 'Vytvorenie okrskov' gives only okrsok 1 and 2 with polling rooms (both in the same school), no addresses or súpisné čísla; one part only, so okrsky cannot be drawn. Internet Archive (CDX API) refused connections / 503 on retries, so archived pages could not be checked. These are the okrsky of the vote of 2024-10-05 (2024-10), the nearest in time with okrsky of its own that fit: 2 okrsky (nearer, not taken: 2026-10-24: okrsky 1–3, then 1, 2). Voters on the roll per okrsok (ŠÚ SR), 2026-07-04 → 2024-10-05: 1: 1,455 → 1,311, 2: 1,514 → 1,280."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The mayor's document names the vote (Voľby do orgánov samosprávy obcí v roku 2024 (05.10.2024)); it bears no date of its own."
+
+[[document]]
+url = "https://www.hviezdoslavov.sk/data/page/hviezdoslavov.sk/24963/utvorenie-volebnych-okrskov-oso-2024.pdf"
+sha256 = "977aab14ed76c9700aa445a4df28c137afae574521e13e4ed8c6b8113080d924"
+title = "Utvorenie volebných okrskov OSO 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Hviezdoslavov", numbers = "1-900"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Hviezdoslavov", numbers = "901-"},
+]

@@ -1,0 +1,26 @@
+# Okrsky of Pružina, transcribed by an AI agent in job okrsok-rules-5526 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súpisné čísla 0 – 380
+#   okrsok 2: súpisné čísla 381 – 1225
+obec = "513601"
+name = "Pružina"
+okrsky_date = 2026-04-22
+okrsky_note = "Okrsok 1: súpisné čísla 0–380, okrsok 2: 381–1225, both voting in Kultúrny dom Pružina 412. The obec has no streets; the ranges are applied to súpisné čísla in both parts (Pružina and Briestenné); okrsok 2 is taken open-ended above 1225. Scanned notice read from the rendered image."
+
+[[document]]
+url = "https://pruzina.eu/wp-content/uploads/dokumenty/referendum/urcenie_volebnych_okrskov_a_miestnosti_pre_ref26-omyvn7.pdf"
+sha256 = "2079c3f8167c0099924d7b7bf54dacd624f3aff3909cc1c05849e95516c52892"
+title = "Určenie volebných okrskov a volebných miestností pre REFERENDUM 04.07.2026 (22.04.2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Pružina", numbers = "1-380"},
+  {part = "Briestenné", numbers = "1-380"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Pružina", numbers = "381-"},
+  {part = "Briestenné", numbers = "381-"},
+]

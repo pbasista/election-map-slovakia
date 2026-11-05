@@ -1,0 +1,52 @@
+# Okrsky of Hranovnica, transcribed by an AI agent in job okrsok-rules-3074 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Vo volebnom okrsku č. 1 budú voliť občania bývajúci na ulici: SNP, Sládkovičova, Štúrova, Rovná, Školská, Lúčna
+#   okrsok 2: Vo volebnom okrsku č. 2 budú voliť občania bývajúci na ulici: Budovateľská, Družstevná, Dubina, Hranovnické Pleso, Hviezdoslavova, M. R. Štefánika, Mlynská, Víťazstva, Slnečná, Topoľová, Lipová, občania nahlásení na obec Hranovnica - bezdomovci
+obec = "523518"
+name = "Hranovnica"
+okrsky_fill = "nearest"
+okrsky_note = "The document lists streets only; the addresses without a street and Pod Babkou (not named in the document) take the okrsok of the nearest placed address (fill_nearest). The homeless voters registered on the obec ('občania nahlásení na obec Hranovnica - bezdomovci') vote in okrsok 2, which also has addresses. The street list is a scan, transcribed from the page image."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-11-28
+okrsky_date_basis = "The Internet Archive captured the referendum page linking the mayor's announcement (wp-content/uploads/2022/11/referendum23_utvorenie_orkskov.pdf) on 2022-11-28; both documents are undated, the street list's heading names 'Referendum 2023, 21. januára 2023'. (https://web.archive.org/web/20221128040101/https://hranovnica.sk/referendum-21-1-2023/)"
+
+[[document]]
+url = "https://www.hranovnica.sk/modules/file_storage/download.php?file=b0ae34cc%7C1717"
+sha256 = "eea477efc198940df8169449f58c0824119d8f541f7106e49e45f9f919976bf9"
+title = "Určenie volebných okrskov a volebných miestností v obci Hranovnica (Referendum 2023)"
+
+[[document]]
+url = "https://www.hranovnica.sk/modules/file_storage/download.php?file=9a7d5f40%7C247"
+sha256 = "eaf1524d3e4dd06562f5a277719129888e25db6d1548b41524c999f791eb2b24"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre konanie referenda vyhláseného na 21. januára 2023"
+
+[[document]]
+url = "https://web.archive.org/web/20221128040101/https://hranovnica.sk/referendum-21-1-2023/"
+sha256 = "a28c6bb6a13103031391ecf4dd247c31f6ae3f92575892a2299188c1a2fdf1ce"
+title = "Referendum 21. 1. 2023 (page linking the announcement)"
+
+[okrsok.1]
+rules = [
+  {street = "SNP"},
+  {street = "Sládkovičova"},
+  {street = "Štúrova"},
+  {street = "Rovná"},
+  {street = "Školská"},
+  {street = "Lúčna"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Družstevná"},
+  {street = "Dubina"},
+  {street = "Hranovnické Pleso"},
+  {street = "Hviezdoslavova"},
+  {street = "M. R. Štefánika"},
+  {street = "Mlynská"},
+  {street = "Víťazstva"},
+  {street = "Slnečná"},
+  {street = "Topoľová"},
+  {street = "Lipová"},
+]

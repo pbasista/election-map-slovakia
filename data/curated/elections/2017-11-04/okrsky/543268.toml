@@ -1,0 +1,78 @@
+# Okrsky of Krompachy, transcribed by an AI agent in job okrsok-rules-128 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Banícka štvrť, Banská, Cintorínska, Dolina, Horská, Júliusa Barča Ivana, Kúpeľná, Lesnícka, Mikuláša Šprinca, Námestie slobody, Partizánska, Sadová, Turistická, Zemanská, Krompachy bez udania ulice
+#   okrsok 2: Mlynská, Slovinská
+#   okrsok 3: Lorencova
+#   okrsok 4: Hlavná, Stará Maša, Štúrova, Trangusova
+#   okrsok 5: Maurerova, Poštová, Robotnícka, Veterná
+#   okrsok 6: 29. augusta, Družstevná, Hornádska, Janka Jesenského, kpt. Nálepku, Rázusova, SNP, Stará cesta
+obec = "543268"
+name = "Krompachy"
+okrsky_date = 2017-08-24
+okrsky_note = "Okrsok 1 ends with 'Krompachy bez udania ulice': every address of Krompachy without a street (súpisné číslo only, spread over the town) belongs to okrsok 1, hence the part rule there; the street rules of the other okrsky take precedence. The register streets Podskalka and RO Plejsy are not in the document and are placed by their nearest streets (inferred). Decision of the mayor (primátorka) of 24 August 2017, č. 3699/2017. The document writes the street names without 'ulica'/'Ulica'. Its article (clanok 4328, 25.8.2017) is deactivated on the live site; the Internet Archive has a capture of it (2017-09-18) but was unreachable (connection refused) during this search; the PDF in that article's file folder is still live."
+
+[[document]]
+url = "https://www.krompachy.sk/files/00004328/1503646527.pdf"
+sha256 = "655111327abc6f744721b4f065beec949cd19efe21e7de9fa4e6622cb8ae1a7f"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávnych krajov v roku 2017"
+
+[okrsok.1]
+rules = [
+  {street = "Banícka Štvrť", written = "Banícka štvrť", note = "only the capital letter differs from the register's name"},
+  {street = "Banská ulica", written = "Banská"},
+  {street = "Cintorínska ulica", written = "Cintorínska"},
+  {street = "Dolina"},
+  {street = "Horská ulica", written = "Horská"},
+  {street = "Ulica Júliusa Barča Ivana", written = "Júliusa Barča Ivana"},
+  {street = "Kúpeľná ulica", written = "Kúpeľná"},
+  {street = "Lesnícka ulica", written = "Lesnícka"},
+  {street = "Ulica Mikuláša Šprinca", written = "Mikuláša Šprinca"},
+  {street = "Námestie Slobody", written = "Námestie slobody", note = "only the capital letter differs from the register's name"},
+  {street = "Partizánska ulica", written = "Partizánska"},
+  {street = "Sadová ulica", written = "Sadová"},
+  {street = "Turistická ulica", written = "Turistická"},
+  {street = "Zemanská ulica", written = "Zemanská"},
+  {street = "RO Plejsy", note = "The register street RO Plejsy (the Plejsy recreation area, 3 addresses) is not in the document; placed by its nearest streets, Cintorínska ulica and Sadová ulica, both in okrsok 1.", inferred = true},
+  {part = "Krompachy", note = "'Krompachy bez udania ulice': the addresses of Krompachy without a street (súpisné číslo only)."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mlynská ulica", written = "Mlynská"},
+  {street = "Slovinská ulica", written = "Slovinská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Lorencova ulica", written = "Lorencova"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Hlavná ulica", written = "Hlavná"},
+  {street = "Stará Maša"},
+  {street = "Štúrova ulica", written = "Štúrova"},
+  {street = "Trangusova ulica", written = "Trangusova"},
+  {street = "Podskalka", note = "The register street Podskalka (1 address) is not in the document; placed by its nearest streets, Trangusova ulica and Hlavná ulica, both in okrsok 4.", inferred = true},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Maurerova ulica", written = "Maurerova"},
+  {street = "Poštová ulica", written = "Poštová"},
+  {street = "Robotnícka ulica", written = "Robotnícka"},
+  {street = "Veterná ulica", written = "Veterná"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Ulica 29. augusta", written = "29. augusta"},
+  {street = "Družstevná ulica", written = "Družstevná"},
+  {street = "Hornádska ulica", written = "Hornádska"},
+  {street = "Ulica Janka Jesenského", written = "Janka Jesenského"},
+  {street = "Ulica kpt. Nálepku", written = "kpt. Nálepku"},
+  {street = "Rázusova ulica", written = "Rázusova"},
+  {street = "Ulica SNP", written = "SNP"},
+  {street = "Stará cesta"},
+]

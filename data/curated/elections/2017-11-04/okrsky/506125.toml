@@ -1,0 +1,33 @@
+# The okrsky of Kočovce of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/506125.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Kočovce, transcribed by an AI agent in job okrsok-rules-2048 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Kočovce
+#     okrsok 2: Beckovská Vieska
+#     okrsok 3: Rakoľuby
+obec = "506125"
+name = "Kočovce"
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-455): The notice board archived 2017-10-09 links \"Voľby.pdf\" (id 847434) and an OVK e-mail notice for VÚC 2017 (id 864566); neither file was archived by the Internet Archive and both answer 404 live, so no 2017 okrsky document could be read. These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2019-05-25: 1: 427 → 425, 2: 478 → 491, 3: 341 → 354."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the notice states the okrsky \"pre voľby do Európskeho parlamentu 2019\"; it is undated and archived only after the vote (2019-07-18)"
+
+[[document]]
+url = "https://web.archive.org/web/20190718232148/https://www.kocovce.sk/download_file_f.php?id=1110205"
+sha256 = "f79463e2eee1fd89139136f3b0c8042196447c590e7675919a81470e9c2081db"
+title = "Oznam o počte okrskov v obci (voľby do Európskeho parlamentu 2019)"
+
+[okrsok.1]
+rules = [
+  {part = "Kočovce", note = "the document gives okrsok 1 only the name \"Kočovce\" and its polling station in that part; the part of the same name", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Beckovská Vieska", note = "the document gives okrsok 2 only the name \"Beckovská Vieska\" and its polling station in that part; the part of the same name", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Rakoľuby", note = "the document gives okrsok 3 only the name \"Rakoľuby\" and its polling station in that part; the part of the same name", inferred = true},
+]

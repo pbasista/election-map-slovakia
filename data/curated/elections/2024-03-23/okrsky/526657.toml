@@ -1,0 +1,37 @@
+# Okrsky of Žehra, transcribed by an AI agent in job okrsok-rules-4596 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Žehra časť Hodkovce od s. č. 1 po s. č. 27, Žehra od s. č. 0 po s. č. 113
+#   okrsok 2: Žehra od s. č. 162 po s. č. 187
+#   okrsok 3: Žehra od s. č. 114 po s. č. 161
+obec = "526657"
+name = "Žehra"
+okrsky_date = 2024-01-30
+okrsky_fill = "nearest"
+okrsky_note = "The document is a scan, read by OCR without diacritics and checked against the page image; the text is given with diacritics. Houses numbered outside the ranges the document gives and addresses it does not place take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.obeczehra.sk/e_download.php?file=data/editor/113sk_3.pdf&original=Rozhodnutie.pdf"
+sha256 = "8cb23299557d5ed21ef749eb0cdcc609635a59961b6236b6b4fe23b0a506c561"
+title = "Rozhodnutie starostu obce z 30. januára 2024 o utvorení volebných okrskov a určení volebných miestností pre voľby prezidenta SR v roku 2024"
+
+[[document]]
+url = "https://www.obeczehra.sk/zverejnovanie/volby-a-referendum/volby-prezidenta-sr-2024/"
+sha256 = "e184dd2dc7e26131a7a1cbb891777b3951e166d566008c6ebcd0c4eac32ab9d2"
+title = "Voľby prezidenta SR 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Hodkovce", numbers = "1-27", by = "supisne"},
+  {part = "Žehra", numbers = "0-113", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Žehra", numbers = "162-187", by = "supisne"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Žehra", numbers = "114-161", by = "supisne"},
+]

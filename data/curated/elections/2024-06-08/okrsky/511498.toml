@@ -1,0 +1,80 @@
+# Okrsky of Kokava nad Rimavicou, transcribed by an AI agent in job okrsok-rules-4769 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: zahŕňa ulice: Chorepa, Huta, Hámor, I.Krasku, Nám. Požiarnikov, Nám. 1. mája, Požarina, Sinec, Červenej armády, Bakulíniho, Mateja Hrebendu, Kyseľovo Sládkovičova ,F.S.Figuliho. Línia
+#   okrsok 2: zahŕňa ulice: Hviezdoslavova, J.Kráľa, Štúrova, Komenského, Kotoška , SNP, Partizánska, Kukučínova, Ďurovka, Vyšná Chorepa, Diel, Kokavka, Čertove Potočky, Farkaška, Lipovo, Močiar, Háj, Belá , Potočky, Liešnica, Vlkovo, Záklično
+#   okrsok 3: zahŕňa ulice: Dobšinského, Jánošíkova, Daxnerova, Francisciho, Sídlisko Rovienka, Lúčna, Riečna, Rovienka
+obec = "511498"
+name = "Kokava nad Rimavicou"
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's list of okrsky and streets for the European Parliament election of 8 June 2024. Slopovo (not in the document) and the houses without a street are placed by fill_nearest."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-03-01
+okrsky_date_basis = "The document states no date; the elections page lists it as 'Zverejnené 1.3.2024'. (https://www.kokava.sk/volby-do-europskeho-parlamentu-2024.html)"
+
+[[document]]
+url = "https://www.kokava.sk/download_file_f.php?id=2008279"
+sha256 = "672606421b46696e70f661f8498b07d8d98ebfa1607d694eea17185f148c9e9a"
+title = "Zoznam okrskov a ulíc (Utvorenie okrskov)"
+
+[[document]]
+url = "https://www.kokava.sk/volby-do-europskeho-parlamentu-2024.html"
+sha256 = "78ffa9a473f966683a0329633e0191d75fd16468c45af4cae6309a96d6e36a70"
+title = "Elections page"
+
+[okrsok.1]
+rules = [
+  {street = "Chorepa"},
+  {street = "Huta"},
+  {street = "Hámor"},
+  {street = "Ivana Krasku", written = "I.Krasku"},
+  {street = "Námestie Požiarnikov", written = "Nám. Požiarnikov"},
+  {street = "Námestie 1.mája", written = "Nám. 1. mája"},
+  {street = "Požarina"},
+  {street = "Sinec"},
+  {street = "Červenej Armády", written = "Červenej armády", note = "only the capital A differs"},
+  {street = "Bakulíniho"},
+  {street = "Mateja Hrebendu"},
+  {street = "Kyseľovo"},
+  {street = "Sládkovičova"},
+  {street = "F.S.Figuliho"},
+  {street = "Línia"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "Janka Kráľa", written = "J.Kráľa"},
+  {street = "Štúrova"},
+  {street = "Komenského"},
+  {street = "Kotoška"},
+  {street = "SNP"},
+  {street = "Partizánska"},
+  {street = "Kukučínova"},
+  {street = "Ďurovka"},
+  {street = "Vyšná Chorepa"},
+  {street = "Diel"},
+  {street = "Kokavka"},
+  {street = "Čertove Potočky"},
+  {street = "Farkaška"},
+  {street = "Lipovo"},
+  {street = "Močiar"},
+  {street = "Háj"},
+  {street = "Belá"},
+  {street = "Potočky"},
+  {street = "Liešnica"},
+  {street = "Vlkovo"},
+  {street = "Záklično"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Dobšinského"},
+  {street = "Jánošíkova"},
+  {street = "Daxnerova"},
+  {street = "Francisciho"},
+  {street = "Sídlisko Rovienka"},
+  {street = "Lúčna"},
+  {street = "Riečna"},
+  {street = "Rovienka"},
+]

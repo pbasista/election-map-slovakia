@@ -1,0 +1,32 @@
+# Okrsky of Imeľ, transcribed by an AI agent in job okrsok-rules-3696 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Čísla domov od : 1 - 450
+#   okrsok 2: Čísla domov od: 451 - 960
+obec = "501166"
+name = "Imeľ"
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by house numbers (čísla domov, read as súpisné) across the single part Imeľ: 1–450 and 451–960, as in the referendum 2023 document. fill_nearest places any house numbered above 960."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-06-22
+okrsky_date_basis = "the elections page states the okrsky document was posted (\"Zverejnené 22.06.2023\"); the document itself is undated (https://www.obecimel.sk/samosprava/volby-do-narodnej-rady-sr-v-roku-2023/)"
+
+[[document]]
+url = "https://www.obecimel.sk/e_download.php?file=data/editor/201sk_4.pdf&original=Volebn%C3%A9%20okrsky%20v%20obci%20Ime%C4%BE.pdf"
+sha256 = "d302f35acc00cd1f816454616d535f235ba618e93ad7a59e30337464ce2025b1"
+title = "Volebné okrsky v obci Imeľ (voľby do NR SR 2023)"
+
+[[document]]
+url = "https://www.obecimel.sk/samosprava/volby-do-narodnej-rady-sr-v-roku-2023/"
+sha256 = "6186a5a66298e4cf8e59abeb4ddce07a6bfae42e5b457532f524f78c140a38dc"
+title = "elections page linking it (\"Zverejnené 22.06.2023 - Volebné okrsky v obci Imeľ\")"
+
+[okrsok.1]
+rules = [
+  {part = "Imeľ", numbers = "1-450"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Imeľ", numbers = "451-960"},
+]

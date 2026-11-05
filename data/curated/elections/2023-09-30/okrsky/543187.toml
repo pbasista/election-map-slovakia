@@ -1,0 +1,41 @@
+# Okrsky of Jaklovce, transcribed by an AI agent in job okrsok-rules-3725 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Jarčeková, Kopaná, Kostolná, Nová, Okružná, Poľná, Potočná, Požiarnická, Priehradná, Rybničná, Stará – dolná časť, Záhradná a pre voličov, ktorí majú evidovaný trvalý pobyt na adrese Jaklovce 0 – Obec Jaklovce /t.j. občania, ktorým bol zrušený trvalý pobyt podľa § 7 ods. 1 zák. Č. 253/1998 Z.z. o hlásení pobytu občanov Slovenskej republiky a registri obyvateľov Slovenskej republiky v znení neskorších predpisov/
+#   okrsok 2: Nábrežná, Obchodná, Skaličná, Stará – horná časť, Školská, Úvozná, Vodárenská, Benátska
+obec = "543187"
+name = "Jaklovce"
+okrsky_date = 2023-06-23
+okrsky_fill = "nearest"
+okrsky_note = "Stará is split into \"dolná časť\" (okrsok 1) and \"horná časť\" (okrsok 2) without house numbers, so Stará is placed by fill_nearest, as are Pekárenská (not named in the document) and the houses without a street. Voters registered only on the obec (\"Jaklovce 0\") vote in okrsok 1; they have no register address."
+
+[[document]]
+url = "https://www.jaklovce.sk/e_download.php?file=data/editor/128sk_3.pdf&original=03-Urcenie.volebnych.okrskov.a.volebnych.miestnosti.pre.volby.do.NR.SR.2023.pdf"
+sha256 = "b90e33fe3291dd9d5b7a6db9d3853dcfb56590ca628f7e6460a7d5273e04d1c0"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do Národnej rady Slovenskej republiky 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Jarčeková"},
+  {street = "Kopaná"},
+  {street = "Kostolná"},
+  {street = "Nová"},
+  {street = "Okružná"},
+  {street = "Poľná"},
+  {street = "Potočná"},
+  {street = "Požiarnická"},
+  {street = "Priehradná"},
+  {street = "Rybničná"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Nábrežná"},
+  {street = "Obchodná"},
+  {street = "Skaličná"},
+  {street = "Školská"},
+  {street = "Úvozná"},
+  {street = "Vodárenská"},
+  {street = "Benátska"},
+]

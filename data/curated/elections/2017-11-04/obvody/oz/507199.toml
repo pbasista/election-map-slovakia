@@ -1,0 +1,42 @@
+# The okrsky of Kočín-Lančár of the vote of 2018-11-10, data/curated/elections/2018-11-10/obvody/oz/507199.toml, standing in, by `ems job reuse`. Its header there:
+#   Council obvody of Kočín-Lančár (507199), Piešťany.
+#   Transcribed by an AI agent in job obvod-rules-203 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: Obvod č. 1 – Kočín; Okrsok č. 1 – Kočín : 3 poslanci
+#     obvod 2: Obvod č. 2 – Lančár; Okrsok č. 2 – Lančár : 3 poslanci
+#   Okrsky added by an AI agent in job okrsok-rules-5919 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Okrsok č. 1 – Kočín
+#     okrsok 2: Okrsok č. 2 – Lančár
+obec = "507199"
+name = "Kočín-Lančár"
+date_approximate = "named"
+date_basis = "the document's heading names the vote ('pre voľby do orgánov samosprávy obcí konané dňa 10.11.2018'); it states no date of the council's decision"
+note = "The council obvody of the vote of 2018-11-10: they only place the okrsky. Scanned notice: Obvod č. 1 – Kočín, Obvod č. 2 – Lančár; 3 seats each (as okrsok 1 Kočín, okrsok 2 Lančár). The obvody are the register parts."
+reused = 2018-11-10
+okrsky_note = "The 2018 elections page has no separate okrsky notice; the scanned notice on obvody names Okrsok č. 1 – Kočín and Okrsok č. 2 – Lančár (obvod 1 Kočín, obvod 2 Lančár), so each okrsok is its whole obvod."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-566): No document on the okrsky of this vote: 2017 regional elections: the website's elections section starts with 2018; no document found.. (The okrsky are presumably Kočín and Lančár as in the council obvody, but no document of this vote says so.). These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2018-11-10: 1: 236 → 227, 2: 211 → 211."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the scanned notice's heading names the vote ('pre voľby do orgánov samosprávy obcí konané dňa 10.11.2018'); it states no date of the decision"
+
+[[document]]
+url = "https://www.kocinlancar.sk/e_download.php?file=data/editor/55sk_7.pdf&original=SCN_0065.pdf"
+sha256 = "c65e3611557c00b71f189d3504cdb4bc50e2ab5841dd0d5512cd15250779dcbd"
+title = "Obec Kočín - Lančár zverejňuje pre voľby do orgánov samosprávy obcí konané dňa 10.11.2018: počet volebných obvodov a poslancov (scan)"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {part = "Kočín"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Lančár"},
+]

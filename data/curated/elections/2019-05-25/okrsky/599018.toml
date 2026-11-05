@@ -1,0 +1,40 @@
+# Okrsky of Košice-Košická Nová Ves, transcribed by an AI agent in job okrsok-rules-1828 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Agátová, Brestová, Buková, Mliečna, Na Doline, Poľná, Sv. Ladislava, Vínová, občania s trvalým pobytom na obci
+#   okrsok 2: Ulice: Furčianska, Herlianska, Jaseňová, Ortvaňová, Trnková, Ulica Zelená stráň, Vyšná Úvrať, Čerešňová
+obec = "599018"
+name = "Košice-Košická Nová Ves"
+okrsky_date = 2019-02-20
+okrsky_fill = "nearest"
+okrsky_note = "The heading cites decision č. 8/2019 Z. z. (the presidential election's) but the document is titled and published for the European Parliament election. The document names no garden localities; the register's houses without a street are placed by fill_nearest ('občania s trvalým pobytom na obci' are voters without an address). Arm. Gen. Ľ. Svobodu (not named) is placed in okrsok 2 (inferred)."
+
+[[document]]
+url = "https://web.archive.org/web/20230927051954/https://www.kosickanovaves.sk/file/1661/Vop%C4%BEby+EP+2019.pdf"
+sha256 = "470a6bbfe41390bf0407620f1572e65ccbe5559b23c0138ce9d9bea8233ae467"
+title = "Určenie volebných okrskov pre voľby do Európskeho parlamentu (starosta MČ, Košice 20.02.2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Agátová"},
+  {street = "Brestová"},
+  {street = "Buková"},
+  {street = "Mliečna"},
+  {street = "Na Doline"},
+  {street = "Poľná"},
+  {street = "Sv.Ladislava", written = "Sv. Ladislava"},
+  {street = "Vínová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Čerešňová"},
+  {street = "Furčianska"},
+  {street = "Herlianska"},
+  {street = "Jaseňová"},
+  {street = "Ortvaňová"},
+  {street = "Trnková"},
+  {street = "Vyšná Úvrať"},
+  {street = "Ulica Zelená stráň"},
+  {street = "Arm. Gen. Ľ. Svobodu", note = "not named in the document (2 addresses); placed with Furčianska, the street it adjoins at the Furča edge of the district", inferred = true},
+]

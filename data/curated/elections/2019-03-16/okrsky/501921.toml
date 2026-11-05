@@ -1,0 +1,62 @@
+# The okrsky of Topoľníky of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/501921.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Topoľníky, transcribed by an AI agent in job okrsok-rules-3494 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Akácfa utca, Bári utca, Duna utca, Fő utca 2 – 104, 106 – 116, 242, 243, 245, 253, 255, Görbe utca, Templom utca, Béke utca, Híd utca, Kertész utca, Nyárasd
+#     okrsok 2: Bakonyi út, Fő utca 105, 107, 109, 111, 113, 117 – 241, 244, 246 – 250, 251, 252, 254, 257, Sas utca, Pionír utca, Mező utca, Rózsa utca, Vásártér utca, Jánostelek – 638, 639, 640, 641, Fenyvesi híd – 642, 643, 725, 726, 727
+#     okrsok 3: Csillag utca, Hüvösvölgy utca, Cseresznye sor, Kereszt utca, Nyárfa utca, Pálffy Ferenc utca, Könyves Kálmán utca, Szent Flórián utca, Szent János utca, Szent Vendel utca, Vasút utca
+obec = "501921"
+name = "Topoľníky"
+okrsky_fill = "nearest"
+okrsky_note = "Transcribed from the Hungarian text of the announcement (street names in Hungarian, mapped to the register's Slovak names). 'Nyárasd' at the end of okrsok 1 means voters registered only to the municipality and gets no rule. fill_nearest covers the register's many addresses without a street (other than Jánostelek and Fenyvesi híd) and Fő utca (Hlavná) numbers the notice does not list (e.g. 115, 256, 258, 259)."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1139): No okrsky document of this vote found. The current website (topolniky.sk, new CMS) shows on its notice board only the okrsky of the elections of 24 October 2026; the old WordPress site's pages for this vote, as far as the Internet Archive kept them (2019-2020 NRSR voter information, the 2023 referendum page, 2022 candidate lists), carry no okrsky notice; the only okrsky announcement found is that of the National Council election of 2023. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2023-09-30: 1: 852 → 869, 2: 869 → 862, 3: 857 → 871."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-09-12
+okrsky_date_basis = "The municipality's page with the okrsky announcement is dated 12 September 2023 (archived 2023-09-24); the announcement states no date of its own, and its Slovak DOCX was not archived. (https://web.archive.org/web/20230924002702/https://topolniky.sk/hu/parlamenti-valasztasok-a-szavazokorok-kialakitasa-es-a-szavazohelyisegek-meghatarozasa/)"
+
+[[document]]
+url = "https://web.archive.org/web/20230924002702/https://topolniky.sk/hu/parlamenti-valasztasok-a-szavazokorok-kialakitasa-es-a-szavazohelyisegek-meghatarozasa/"
+sha256 = "41ba302e610206fd410c5df7104f74aab851841c3d95280d5801870038605f9e"
+title = "A Szlovák Köztársaság Nemzeti Tanácsába való választások 2023 – A szavazókörök kialakítása és a szavazóhelyiségek meghatározása (Hungarian version of the okrsky announcement)"
+
+[okrsok.1]
+rules = [
+  {street = "Agátová", written = "Akácfa utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Akácfa utca is the register's Agátová."},
+  {street = "Bárska", written = "Bári utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Bári utca is the register's Bárska."},
+  {street = "Dunajská", written = "Duna utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Duna utca is the register's Dunajská."},
+  {street = "Hlavná", numbers = "2-104, 242, 243, 245, 253, 255", written = "Fő utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Fő utca is the register's Hlavná."},
+  {street = "Hlavná", numbers = "106-116", parity = "even", written = "Fő utca", note = "The notice puts Fő utca 106 – 116 in okrsok 1 and the odd numbers 105–113 in okrsok 2, so 106 – 116 is read as the even numbers."},
+  {street = "Krivá", written = "Görbe utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Görbe utca is the register's Krivá."},
+  {street = "Kostolná", written = "Templom utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Templom utca is the register's Kostolná."},
+  {street = "Mierová", written = "Béke utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Béke utca is the register's Mierová."},
+  {street = "Mostová", written = "Híd utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Híd utca is the register's Mostová."},
+  {street = "Záhradnícka", written = "Kertész utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Kertész utca is the register's Záhradnícka."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bakoňská Cesta", written = "Bakonyi út", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Bakonyi út is the register's Bakoňská Cesta."},
+  {street = "Hlavná", numbers = "105, 107, 109, 111, 113, 117-241, 244, 246-250, 251, 252, 254, 257", written = "Fő utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Fő utca is the register's Hlavná."},
+  {street = "Orlová", written = "Sas utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Sas utca is the register's Orlová."},
+  {street = "Pionierska", written = "Pionír utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Pionír utca is the register's Pionierska."},
+  {street = "Poľná", written = "Mező utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Mező utca is the register's Poľná."},
+  {street = "Ružová", written = "Rózsa utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Rózsa utca is the register's Ružová."},
+  {street = "Trhová", written = "Vásártér utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Vásártér utca is the register's Trhová."},
+  {part = "Topoľníky", numbers = "638-643, 725-727", by = "supisne", note = "The settlements Jánostelek (súpisné 638–641) and Fenyvesi híd (642, 643, 725–727) have no street in the register; their houses by súpisné číslo."},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hviezdna", written = "Csillag utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Csillag utca is the register's Hviezdna."},
+  {street = "Chladná", written = "Hüvösvölgy utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Hüvösvölgy utca is the register's Chladná."},
+  {street = "Čerešňový Rad", written = "Cseresznye sor", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Cseresznye sor is the register's Čerešňový Rad."},
+  {street = "Krížna ulica", written = "Kereszt utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Kereszt utca is the register's Krížna ulica."},
+  {street = "Topoľová ulica", written = "Nyárfa utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Nyárfa utca is the register's Topoľová ulica."},
+  {street = "Ulica Ferenca Pálffyho", written = "Pálffy Ferenc utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Pálffy Ferenc utca is the register's Ulica Ferenca Pálffyho."},
+  {street = "Ulica Kráľa Kolomana", written = "Könyves Kálmán utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Könyves Kálmán utca is the register's Ulica Kráľa Kolomana."},
+  {street = "Ulica Svätého Floriána", written = "Szent Flórián utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Szent Flórián utca is the register's Ulica Svätého Floriána."},
+  {street = "Ulica Svätého Jána", written = "Szent János utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Szent János utca is the register's Ulica Svätého Jána."},
+  {street = "Ulica Svätého Vendelína", written = "Szent Vendel utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Szent Vendel utca is the register's Ulica Svätého Vendelína."},
+  {street = "Železničná", written = "Vasút utca", note = "Hungarian name of the street (the notice is the Hungarian version of the municipality's announcement): Vasút utca is the register's Železničná."},
+]

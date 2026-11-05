@@ -1,0 +1,51 @@
+# Okrsky of Jaslovské Bohunice, transcribed by an AI agent in job okrsok-rules-3200 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre ulice: Blavská, Cintorínska, Hlavná Bohunice, Hlavná Jaslovce, Na mlyne, Na rybníku, Námestie sv. Michala, Nová, Záhradná, Záhumenická a obyvatelia s trvalým pobytom na obec Jaslovské Bohunice
+#   okrsok 2: pre ulice: Agátova, Čerešňová, Dubová, Gaštanová, Jabloňová, Javorová, Krátka, Krížna, Lipová, Orechová, Sídlisko, Šidúnky, Školská, Športová, Trnavská, Hlavná Paderovce, Lúčna, Poľná
+obec = "507156"
+name = "Jaslovské Bohunice"
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky are given on the referendum page itself. \"Športová\" is not in the address register, left out. \"obyvatelia s trvalým pobytom na obec\" are residents without an address, not a rule; the register's addresses without a street go by fill_nearest."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The referendum page states \"Referendum sa bude konať v sobotu 21.1.2023\" and, below it, that the mayor formed the okrsky for it; the page gives no decision or posting date, and the Internet Archive has no capture of it."
+
+[[document]]
+url = "https://www.jaslovske-bohunice.sk/obec-2/volby/referendum/rok-2023-o-moznosti-skratit-volebne-obdobie/"
+sha256 = "a545da4debef14f6bca61c38fd65b32758b3cec1360e67b602dddd52e4805b4d"
+title = "Rok 2023 - o možnosti skrátiť volebné obdobie (referendum 21.1.2023): volebné okrsky a volebné miestnosti"
+
+[okrsok.1]
+rules = [
+  {street = "Blavská"},
+  {street = "Cintorínska"},
+  {street = "Hlavná Bohunice"},
+  {street = "Hlavná Jaslovce"},
+  {street = "Na Mlyne", written = "Na mlyne"},
+  {street = "Na rybníku"},
+  {street = "Námestie sv. Michala"},
+  {street = "Nová"},
+  {street = "Záhradná"},
+  {street = "Záhumenická"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová", written = "Agátova", note = "\"Agátova\" is the register's Agátová (accent typo)."},
+  {street = "Čerešňová"},
+  {street = "Dubová"},
+  {street = "Gaštanová"},
+  {street = "Jabloňová"},
+  {street = "Javorová"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Lipová"},
+  {street = "Orechová"},
+  {street = "Sídlisko"},
+  {street = "Šidúnky"},
+  {street = "Školská"},
+  {street = "Trnavská"},
+  {street = "Hlavná Paderovce"},
+  {street = "Lúčna"},
+  {street = "Poľná"},
+]

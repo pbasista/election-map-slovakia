@@ -1,0 +1,46 @@
+# Okrsky of Zborov, transcribed by an AI agent in job okrsok-rules-3813 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Budovateľská, Duklianska, Mlynská, Na Stebníčku, Nám. Čsl. Armády, Obrancov mieru, Osloboditeľov, Pod 100 lipami, SNP, Sokolovská, Šarišská, Štúrova, Úzka, Zákutie od č. 1 – 42
+#   okrsok 2: Bardejovská, Hlavná, Krátky rad, Lesná, Podhradie, Školská, Tehelná, Zákutie od č. 43 - 100
+obec = "519961"
+name = "Zborov"
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's document for this vote, listed on the elections page (Voľby). Zákutie is split by orientačné čísla (1–42 / 43–100). The 29 houses with only a súpisné číslo take the okrsok of the nearest address (fill_nearest). Same okrsky as the copied 2022/2026 document; only the polling stations' rooms differ."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names this vote: 'Utvorenie volebných okrskov a určenie volebných miestností v obci ZBOROV počas konania volieb do Národnej rady Slovenskej republiky dňa 30. septembra 2023'. It states no date of its own (the mayor's signature is undated) and the website lists every file under a placeholder date (1. 1. 2023 / 1. 1. 2022), so no posting day is given."
+
+[[document]]
+url = "https://www.zborov.sk/modules/file_storage/download.php?file=39f19cb4%7C113&inline=1"
+sha256 = "fcd021bdc67809301fdff47c1c37031bd808455936a5f699a3e8c5bcd6eb92e6"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci ZBOROV počas konania volieb do Národnej rady Slovenskej republiky dňa 30. septembra 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Duklianska"},
+  {street = "Mlynská"},
+  {street = "Na Stebníčku"},
+  {street = "Nám. Čsl. Arm.", written = "Nám. Čsl. Armády", note = "The register abbreviates it 'Nám. Čsl. Arm.' (Námestie Československej armády); the same square."},
+  {street = "Obrancov Mieru", written = "Obrancov mieru"},
+  {street = "Osloboditeľov"},
+  {street = "Pod 100 Lipami", written = "Pod 100 lipami"},
+  {street = "SNP"},
+  {street = "Sokolovská"},
+  {street = "Šarišská"},
+  {street = "Štúrova"},
+  {street = "Úzka"},
+  {street = "Zákutie", numbers = "1-42"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bardejovská"},
+  {street = "Hlavná"},
+  {street = "Krátky rad"},
+  {street = "Lesná"},
+  {street = "Podhradie"},
+  {street = "Školská"},
+  {street = "Tehelná"},
+  {street = "Zákutie", numbers = "43-100"},
+]

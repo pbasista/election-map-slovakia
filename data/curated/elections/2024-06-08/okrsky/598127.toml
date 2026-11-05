@@ -1,0 +1,35 @@
+# Okrsky of Košice-Ťahanovce, transcribed by an AI agent in job okrsok-rules-4965 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Brusnicová Jazvečia Na hájiku Ťahanovská občania s TP v MČ bez adresy
+#   okrsok 2: Madridská Magnezitárska Na sihoti Pri Hrušove Repná Želiarska
+obec = "598127"
+name = "Košice-Ťahanovce"
+okrsky_fill = "nearest"
+okrsky_note = "'občania s TP v MČ bez adresy' / 'bez adresy' (okrsok 1) are voters registered without an address. The register's street Pri hati (one address) is not named by the document; it and the houses without a street are placed by fill_nearest. The page writes 'Želiarská Želiarska' (a doubled entry); read as Želiarska."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-03-05
+okrsky_date_basis = "The announcement sits in the elections-page entry posted 15.2.2024 and updated (Aktualizované) 5.3.2024, the deadline for setting the okrsky; the announcement itself is undated. (https://www.tahanovce.eu/volby-do-europarlamentu-2024.html)"
+
+[[document]]
+url = "https://www.tahanovce.eu/volby-do-europarlamentu-2024.html"
+sha256 = "6340d47ba2ebe978d5c22f1830d6a2f8ecf2899a55b9cda5fe3a641da9f2b15e"
+title = "Voľby do Europarlamentu 2024: OZNÁMENIE o určení volebných okrskov a volebných miestnosti pre voľby do Európskeho parlamentu v roku 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Brusnicová"},
+  {street = "Jazvečia"},
+  {street = "Na Hájiku", written = "Na hájiku"},
+  {street = "Ťahanovská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Madridská"},
+  {street = "Magnezitárska"},
+  {street = "Na Sihoti", written = "Na sihoti"},
+  {street = "Pri Hrušove"},
+  {street = "Repná"},
+  {street = "Želiarska"},
+]

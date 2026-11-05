@@ -1,0 +1,46 @@
+# Okrsky of Selce, transcribed by an AI agent in job okrsok-rules-3739 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice patriace do okrsku č. 1: Dolná, Družstevná, Horná, Husádok, Ku strelnici, Selčianska cesta, Školská, Vyšovec
+#   okrsok 2: Ulice patriace do okrsku č. 2: Mlynská, Nemčianska, Nová, Partizánska, Poľná, Potočná, Športová
+obec = "508985"
+name = "Selce"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF, read from the rendered image. Streets written without 'ulica'. Both okrsky vote in the veľká sála of the Kultúrny dom, Selčianska cesta 132. The register's 214 addresses without a street are placed by fill_nearest (the document names streets only). The Internet Archive was offline (CDX returned 'Temporarily Offline' after retries)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-06-23
+okrsky_date_basis = "The notice-board page linking the PDF states 'Vyvesené: 23. 6. 2023'; the PDF itself is undated and its heading names the NR SR elections of 2023. (https://www.selce.sk/zverejnovanie/uradna-tabula/volebne-okrsky-v-obci-selce-596.html)"
+
+[[document]]
+url = "https://www.selce.sk/e_download.php?file=data/uredni_deska/obsah518_6.pdf&original=volebn%C3%A9%20okrsky.pdf"
+sha256 = "5e5cf1e3883b6d56607714e1bacd9d8755ab1fc0ba4f493e0beda80081d054b7"
+title = "Volebné okrsky v obci Selce pre voľby do Národnej rady Slovenskej republiky v roku 2023"
+
+[[document]]
+url = "https://www.selce.sk/zverejnovanie/uradna-tabula/volebne-okrsky-v-obci-selce-596.html"
+sha256 = "492d3e76a72b8c7b3affdec37e563956f890a309e9ebb9878b3a269df5ad8f56"
+title = "Úradná tabuľa: Volebné okrsky v obci Selce (vyvesené 23. 6. 2023)"
+
+[okrsok.1]
+rules = [
+  {street = "Dolná ulica", written = "Dolná"},
+  {street = "Družstevná ulica", written = "Družstevná"},
+  {street = "Horná ulica", written = "Horná"},
+  {street = "Husádok"},
+  {street = "Ku Strelnici", written = "Ku strelnici", note = "Same street; only the capitalisation differs."},
+  {street = "Selčianska cesta"},
+  {street = "Školská ulica", written = "Školská"},
+  {street = "Vyšovec"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mlynská ulica", written = "Mlynská"},
+  {street = "Nemčianska ulica", written = "Nemčianska"},
+  {street = "Nová", note = "The document's 'Nová' covers both register streets 'Nová' and 'Nová ulica'."},
+  {street = "Nová ulica", written = "Nová"},
+  {street = "Partizánska ulica", written = "Partizánska"},
+  {street = "Poľná ulica", written = "Poľná"},
+  {street = "Potočná ulica", written = "Potočná"},
+  {street = "Športová ulica", written = "Športová"},
+]

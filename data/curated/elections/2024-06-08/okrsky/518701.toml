@@ -1,0 +1,31 @@
+# Okrsky of Rykynčice, transcribed by an AI agent in job okrsok-rules-5166 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: okrsok č. 1 – Horné Rykynčice
+#   okrsok 2: okrsok č. 2 – Dolné Rykynčice
+obec = "518701"
+name = "Rykynčice"
+okrsky_note = "Each okrsok is the part it is named after: okrsok 1 Horné Rykynčice, okrsok 2 Dolné Rykynčice."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-03-21
+okrsky_date_basis = "The page of the EP elections 2024 lists the notice as posted on 21.03.2024; the notice names the EP elections but states no date. (https://www.rykyncice.sk/volby-do-europskeho-parlamentu-2024-a73-416)"
+
+[[document]]
+url = "https://www.rykyncice.sk/files/2024-03-21-090123-Oznamenie_Oc__.docx"
+sha256 = "a793b83a0ae7f2e7e8f629c7f27d38ca48137daafdbb1c02760f512be848160f"
+title = "Oznam k voľbám do Európskeho parlamentu – V obci Rykynčice sú vytvorené dva volebné okrsky"
+
+[[document]]
+url = "https://www.rykyncice.sk/volby-do-europskeho-parlamentu-2024-a73-416"
+sha256 = "6a7944f8c9860721ec42395153d379aa9a747a0a9ad97d322a93722ad2a7adc9"
+title = "Rykynčice – Voľby: Oznam k voľbám do Európskeho parlamentu"
+
+[okrsok.1]
+rules = [
+  {part = "Horné Rykynčice"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dolné Rykynčice"},
+]

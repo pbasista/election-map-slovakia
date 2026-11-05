@@ -1,0 +1,31 @@
+# Okrsky of Selice, transcribed by an AI agent in job okrsok-rules-341 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov bývajúcich v obci v kat. úz. Šók
+#   okrsok 2: pre voličov bývajúcich v obci v kat. úz. Selice
+obec = "503991"
+name = "Selice"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF, read from the rendered image. 5 addresses the register gives no k.ú. (4 without street, 1 on Sovietskej Armády) take the okrsok of the nearest placed address (fill_nearest)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names the elections to the organs of the self-governing regions of 4 November 2017; it states no decision date."
+
+[[document]]
+url = "https://www.obecselice.eu/modules/file_storage/download.php?file=bbd2eb6b%7C47&inline=1"
+sha256 = "ab5f33f2962ec280be06337ccabac25cbb85f7214ff8b8a0fbd4bce235f3c846"
+title = "Informácia o utvorení volebných okrskov a určenie volebných miestností k voľbám do orgánov samosprávnych krajov, ktoré sa budú konať 4. novembra 2017"
+
+[[document]]
+url = "https://www.obecselice.eu/urad/volby/"
+sha256 = "f01f9d80efd173a54be770c3d4b483bc58ff932bd8664240b61bbf1fe4c96f82"
+title = "Voľby – Informácie k voľbám do orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {ku = "Šók"},
+]
+
+[okrsok.2]
+rules = [
+  {ku = "Selice"},
+]

@@ -1,0 +1,59 @@
+# Okrsky of Košice-Šaca, transcribed by an AI agent in job okrsok-rules-4073 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Mierová, Šemšianská, Jarková, Kvetná, Lúčna, Smreková, Dúbravská, Borovicová, Maloidanská, Buzinská, Kamenná, Ku mlynu, Kaštieľná, Jabloňová, Na záhumní, Nemessányiho, Pod stavencom, Nemocnica AGEL Košice-Šaca a.s. /Lúčna ulica/, Kardiocentrum AGEL a.s. /Lúčna ulica/, Ľudvíkov Dvor
+#   okrsok 2: Námestie oceliarov, Železiarenská párne čísla od 2 do 54, Fyziatricko-rehabilitačné oddelenie Nemocnice /Železiarenská ul./
+#   okrsok 3: Ranná, Mládežnícka, Učňovská, Železiarenská párne čísla 56 až 76, Železiarenská nepárne čísla od 1 do 43, ÚVTOS /Budovateľská ul./
+obec = "599841"
+name = "Košice-Šaca"
+okrsky_date = 2024-01-17
+okrsky_fill = "nearest"
+okrsky_note = "Houses without a street (súpisné only, most in k.ú. Železiarne) and Železiarenská numbers the document leaves out (even above 76, odd above 43) go by fill_nearest. The hospital entries are covered by the street rules (Lúčna, Železiarenská)."
+
+[[document]]
+url = "https://www.saca.sk/download_file_f.php?id=1986180"
+sha256 = "ebc223ca98f1446946197b5a6c6f59ea618d7c0fc4d89ad4c7738b0273cd8aed"
+title = "Oznámenie o vytvorení volebných okrskov … voľby prezidenta SR 2024 (17.01.2024)"
+
+[[document]]
+url = "https://www.saca.sk/volby-prezidenta-sr-2024.html"
+sha256 = "0bf2ebd8517a5e066cfd3e125f62c92e0b3eb68ff7afe5aad546273c6ab36711"
+title = "Stránka volieb mestskej časti"
+
+[okrsok.1]
+rules = [
+  {street = "Mierová"},
+  {street = "Šemšianska", written = "Šemšianská", note = "the document's long á is a typo of the same street"},
+  {street = "Jarková"},
+  {street = "Kvetná"},
+  {street = "Lúčna"},
+  {street = "Smreková"},
+  {street = "Dúbravská"},
+  {street = "Borovicová"},
+  {street = "Maloidanská"},
+  {street = "Buzinská"},
+  {street = "Kamenná"},
+  {street = "Ku Mlynu", written = "Ku mlynu"},
+  {street = "Kaštieľna", written = "Kaštieľná", note = "the document's long á is a typo of the same street"},
+  {street = "Jabloňová"},
+  {street = "Na Záhumní", written = "Na záhumní"},
+  {street = "Nemessányiho"},
+  {street = "Pod Stavencom", written = "Pod stavencom"},
+  {street = "Ľudvíkov Dvor"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Nám. Oceliarov", written = "Námestie oceliarov"},
+  {street = "Železiarenská", numbers = "2-54", parity = "even"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Ranná"},
+  {street = "Mládežnícka"},
+  {street = "Učňovská"},
+  {street = "Železiarenská", numbers = "56-76", parity = "even"},
+  {street = "Železiarenská", numbers = "1-43", parity = "odd"},
+  {street = "Budovateľská", written = "ÚVTOS /Budovateľská ul./", note = "the ÚVTOS institution on Budovateľská, the register's only address there"},
+]

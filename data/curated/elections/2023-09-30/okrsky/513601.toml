@@ -1,0 +1,29 @@
+# The okrsky of Pružina of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/513601.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Pružina, transcribed by an AI agent in job okrsok-rules-4268 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: súpisné čísla 0 – 375
+#     okrsok 2: súpisné čísla 376 – 1203
+obec = "513601"
+name = "Pružina"
+okrsky_date = 2024-01-26
+okrsky_note = "Okrsok 1: súpisné čísla 0–375, okrsok 2: 376–1203, both voting in Kultúrny dom Pružina 412. The obec has no streets; the ranges are applied to súpisné čísla in both parts (Pružina and Briestenné); okrsok 2 is taken open-ended above 1203. Scanned notice read from the rendered image."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3638): The mayor's decision of 26.06.2023 for the NR SR election creates okrsky 1 and 2 but gives only their polling station (both Kultúrny dom Pružina 412), not which houses vote in each; the okrsky cannot be placed from it. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2024-03-23: 1: 774 → 827, 2: 772 → 813."
+
+[[document]]
+url = "https://pruzina.eu/wp-content/uploads/dokumenty/volby-prezidenta/Urcenie-volebnych-okrskov-a-volebnych-miestnosti-pre-volby-prezidenta-SR.pdf"
+sha256 = "c797314a2e412e50bde430836e4e0198bc349c3fbd309af1fc1d9b6f48b8b421"
+title = "Určenie volebných okrskov a volebných miestností pre voľby prezidenta Slovenskej republiky (26.01.2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Pružina", numbers = "1-375"},
+  {part = "Briestenné", numbers = "1-375"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Pružina", numbers = "376-"},
+  {part = "Briestenné", numbers = "376-"},
+]

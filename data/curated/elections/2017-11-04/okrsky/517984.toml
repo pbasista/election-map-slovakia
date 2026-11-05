@@ -1,0 +1,48 @@
+# The okrsky of Strečno of the vote of 2022-10-29, data/curated/elections/2022-10-29/okrsky/517984.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Strečno, transcribed by an AI agent in job okrsok-rules-880 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: ulice: 1. mája, 28. októbra, Hradná, Kamenná, Kováčska, Lesná, Partizánska, SNP, Za záhradami, Lipová, M. Ilovského, 26. apríla, Cintorínska, Francúzskych Partizánov, Zlatné
+#     okrsok 2: ulice: Mládeže, Sokolská, Záhradná, Čsl. Brigády, Školská, Športová, Nábrežná
+obec = "517984"
+name = "Strečno"
+okrsky_date = 2022-11-07
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections found: the 2022 page (archived 16 Aug 2022) links \"Volebné okrsky a volebné miestonosti\" PDF, which is gone from the website and not in the Internet Archive; the referendum's document (7 Nov 2022) is used. Its two okrsky with 1075/1069 voters fit the Statistical Office counts. The register's 15 houses without a street are placed by fill_nearest."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-367): The municipality's old WordPress site (www.strecno.sk, replaced in 2024) is gone; the new site's \"Voľby a referendá\" page starts with the 2022 elections. In the Internet Archive the 2017 post \"Voľby – informácie pre voliča\" (listed in the notices of 18 Aug 2017: e-mail address for delegating okrsok commission members) is captured only from 23 Dec 2017, when it held the results of the regional elections; \"Oznámenie VÚC\" is a strategic-document notice. The CDX list of the domain holds no okrsky document of 2017. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2022-10-29: 1: 1,111 → 1,075, 2: 1,048 → 1,069."
+
+[[document]]
+url = "https://web.archive.org/web/20221221013810/https://www.strecno.sk/wp-content/uploads/2022/11/referendum-1.pdf"
+sha256 = "4871c7c8bb923728bb43d4105327f21d6d78ce4f9c717443bd2e46ab76c86f41"
+title = "Informácia o utvorení volebných okrskov a určení volebných miestností pre referendum, ktoré sa bude konať 21. januára 2023"
+
+[okrsok.1]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "28.októbra", written = "28. októbra"},
+  {street = "Hradná"},
+  {street = "Kamenná"},
+  {street = "Kováčska"},
+  {street = "Lesná"},
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Za záhradami"},
+  {street = "Lipová"},
+  {street = "M.Ilovského", written = "M. Ilovského"},
+  {street = "26.apríla", written = "26. apríla"},
+  {street = "Cintorínska"},
+  {street = "Francúzskych Partizánov"},
+  {street = "Zlatné"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mládeže"},
+  {street = "Sokolská"},
+  {street = "Záhradná"},
+  {street = "Čsl. Brigády"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Nábrežná"},
+]

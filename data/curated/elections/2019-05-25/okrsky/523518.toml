@@ -1,0 +1,41 @@
+# Okrsky of Hranovnica, transcribed by an AI agent in job okrsok-rules-1867 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Vo volebnom okrsku č. 1 budú voliť občania bývajúci na ulici: SNP, Sládkovičova, Štúrova, Rovná, Školská, Lúčna
+#   okrsok 2: Vo volebnom okrsku č. 2 budú voliť občania bývajúci na ulici: Budovateľská, Družstevná, Dubina, Hranovnické Pleso, Hviezdoslavova, M. R. Štefánika, Mlynská, Víťazstva, Slnečná, Topoľová, Lipová, občania nahlásení na obec Hranovnica - bezdomovci
+obec = "523518"
+name = "Hranovnica"
+okrsky_fill = "nearest"
+okrsky_note = "The document lists streets only; the addresses without a street and Pod Babkou (not named in the document) take the okrsok of the nearest placed address (fill_nearest). The homeless voters registered on the obec ('občania nahlásení na obec Hranovnica - bezdomovci') vote in okrsok 2, which also has addresses."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated document's heading names 'VOĽBY DO EURÓPSKEHO PARLAMENTU V ROKU 2019, 25. mája 2019' (uploaded to the old site as wp-content/uploads/2019/04/vep_volebne_okrsky_19.pdf)."
+
+[[document]]
+url = "https://www.hranovnica.sk/modules/file_storage/download.php?file=45ff0e06%7C818"
+sha256 = "543f1e110a457c1af0c3ad8766b6f0745a5351632c00964addcee9b03cd6aef2"
+title = "Určenie volebných okrskov a volebných miestností v obci Hranovnica (Voľby do Európskeho parlamentu v roku 2019)"
+
+[okrsok.1]
+rules = [
+  {street = "SNP"},
+  {street = "Sládkovičova"},
+  {street = "Štúrova"},
+  {street = "Rovná"},
+  {street = "Školská"},
+  {street = "Lúčna"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Družstevná"},
+  {street = "Dubina"},
+  {street = "Hranovnické Pleso"},
+  {street = "Hviezdoslavova"},
+  {street = "M. R. Štefánika"},
+  {street = "Mlynská"},
+  {street = "Víťazstva"},
+  {street = "Slnečná"},
+  {street = "Topoľová"},
+  {street = "Lipová"},
+]

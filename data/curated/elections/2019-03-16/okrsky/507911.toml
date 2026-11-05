@@ -1,0 +1,116 @@
+# The okrsky of Chorvátsky Grob of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/507911.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Chorvátsky Grob, transcribed by an AI agent in job okrsok-rules-1667 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Ulice: Antona Bernoláka, Hlboká cesta, Hoštáky, Chorvátska, Južná, Lúčna, Námestie Josipa Andriča, Poľná, Športová, Výhon, Záhradná, Antona Václavíka, Dlhá, Karpatská, Krátka, Malé Vinice, Mila Urbana, Na Kŕčoch, Pod vinicami, Severná, Svätoplukova, Školská
+#     okrsok 2: Ulice: Agátová, Bazová, Blahútova, Borovicová, Brusnicová, Buková, Černicová, Dubová, Golfová, Hlavný dvor, Hlohová, Hrušková, Jarabinová, Jaseňová, Jazdecká, Jazmínová, Jedľová, Jelšová, Osiková, Platanová, Suché Miesto, Šalviová, Šípková, Vajnorská, Vavrínová
+#     okrsok 3: Ulice: Bottova, Čerešňová, Hviezdoslavova, Chalupkova, Janka Kráľa, Javorová alej, Kukučínova, Na Pasienku, Nevädzová, Pezinská (okrem č. 20, 24, 28), Púpavová, Štúrová, Triblavinská
+#     okrsok 4: Ulice: Brezová, Drozdia, Hájska, Hornodvorská, Hrudky, Jantárová, Konopná, Ľanová, Monarská alej, Pálffyho, Pezinská (iba č. 20, 24, 28), Rubínová, Slávičia, Slnečná, Smaragdová, Šúrska, Topoľová, Zafírová, Žilinská, Žitná
+obec = "507911"
+name = "Chorvátsky Grob"
+okrsky_date = 2019-02-22
+okrsky_fill = "nearest"
+okrsky_note = "Document linked as 'Určenie volebných okrskov' from the archived elections page (volby.html, 2019-05-10). Its heading cites the EP election decision 28/2019 Z. z. (the annex wrongly says 'voľby do orgánov samosprávy obcí'). Streets in the register the document does not name (newer streets): Jastrabia, Kolibríková, Sokolia, Toskánska, and addresses without a street take the okrsok of the nearest placed address (fill_nearest)."
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1077): The archived elections page (2019-03-10) links 'Volebné okrsky a volebné miestnosti' (urcenie_volebnych_okrskov_volby_prezidenta_2019.pdf, id=1087166), but the PDF was never archived and the old site is gone (live 404). These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2019-05-25: 1: 1,543 → 1,522, 2: 954 → 955, 3: 989 → 1,006, 4: 1,066 → 1,048."
+
+[[document]]
+url = "https://web.archive.org/web/20190923003546/https://www.chorvatskygrob.sk/download_file_f.php?id=1112152"
+sha256 = "7261a2659aa915f0e4d3c43115b8a1303e3c86cf4dd0c1b420bdf5a84fd021d0"
+title = "Rozhodnutie starostu obce Chorvátsky Grob o utvorení volebných okrskov a určení volebných miestností (voľby do Európskeho parlamentu 2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Antona Bernoláka"},
+  {street = "Hlboká cesta"},
+  {street = "Hoštáky"},
+  {street = "Chorvátska"},
+  {street = "Južná"},
+  {street = "Lúčna"},
+  {street = "Námestie Josipa Andriča"},
+  {street = "Poľná"},
+  {street = "Športová"},
+  {street = "Výhon"},
+  {street = "Záhradná"},
+  {street = "Antona Václavíka"},
+  {street = "Dlhá"},
+  {street = "Karpatská"},
+  {street = "Krátka"},
+  {street = "Malé Vinice"},
+  {street = "Mila Urbana"},
+  {street = "Na Kŕčoch"},
+  {street = "Pod vinicami"},
+  {street = "Severná"},
+  {street = "Svätoplukova"},
+  {street = "Školská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Bazová"},
+  {street = "Blahútova"},
+  {street = "Borovicová"},
+  {street = "Brusnicová"},
+  {street = "Buková"},
+  {street = "Černicová"},
+  {street = "Dubová"},
+  {street = "Golfová"},
+  {street = "Hlavný Dvor", written = "Hlavný dvor"},
+  {street = "Hlohová"},
+  {street = "Hrušková"},
+  {street = "Jarabinová"},
+  {street = "Jaseňová"},
+  {street = "Jazdecká"},
+  {street = "Jazmínová"},
+  {street = "Jedľová"},
+  {street = "Jelšová"},
+  {street = "Osiková"},
+  {street = "Platanová"},
+  {street = "Suché Miesto"},
+  {street = "Šalviová"},
+  {street = "Šípková"},
+  {street = "Vajnorská"},
+  {street = "Vavrínová"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bottova"},
+  {street = "Čerešňová"},
+  {street = "Hviezdoslavova"},
+  {street = "Chalupkova"},
+  {street = "Janka Kráľa"},
+  {street = "Javorová alej"},
+  {street = "Kukučínova"},
+  {street = "Na Pasienku"},
+  {street = "Nevädzová"},
+  {street = "Pezinská", except = "20, 24, 28"},
+  {street = "Púpavová"},
+  {street = "Triblavinská"},
+  {street = "Štúrova", written = "Štúrová", note = "The document's 'Štúrová' is the register's Štúrova (typo of the ending); the only such street."},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Brezová"},
+  {street = "Drozdia"},
+  {street = "Hájska"},
+  {street = "Hornodvorská"},
+  {street = "Hrudky"},
+  {street = "Jantárová"},
+  {street = "Konopná"},
+  {street = "Ľanová"},
+  {street = "Monarská alej"},
+  {street = "Pálffyho"},
+  {street = "Pezinská", numbers = "20, 24, 28"},
+  {street = "Rubínová"},
+  {street = "Slávičia"},
+  {street = "Slnečná"},
+  {street = "Smaragdová"},
+  {street = "Šúrska"},
+  {street = "Topoľová"},
+  {street = "Zafírová"},
+  {street = "Žilinská"},
+  {street = "Žitná"},
+]

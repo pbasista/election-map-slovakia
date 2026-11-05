@@ -1,0 +1,36 @@
+# The okrsky of Makov of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/509299.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Makov, transcribed by an AI agent in job okrsok-rules-4263 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: volebný okrsok číslo 1 – pre občanov časti Makov (ústredie)
+#     okrsok 2: volebný okrsok číslo 2 – pre občanov častí Čierne, Potok, Kopanice, Trojačka
+obec = "509299"
+name = "Makov"
+okrsky_note = "The document names the parts of each okrsok: okrsok 1 the part Makov, okrsok 2 the parts Čierne, Potok, Kopanice, Trojačka."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3633): The page of this vote on the website lists no document on the okrsky (only delegation, voter information, results). These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2024-03-23: 1: 858 → 880, 2: 693 → 639."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document is undated; its heading names the presidential election of 23 March / 6 April 2024."
+
+[[document]]
+url = "https://www.makov.sk/evt_file.php?file=4440&original=Ur%C4%8Denie%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "5d6b1fbb7765279637676d66e7e8aa746e517f2ed61d3bf98ed5a06d86ed6b7c"
+title = "Určenie volebných okrskov pre voľby prezidenta SR v obci Makov (I. kolo 23.03.2024, II. kolo 06.04.2024)"
+
+[[document]]
+url = "https://www.makov.sk/samosprava/volby-prezidenta-sr-2024/urcenie-volebnych-okrskov-905sk.html"
+sha256 = "dcfe46ad3eaf6f7a05808e3b43679b8c200954debc9c55052bae7ba4c686c509"
+title = "Určenie volebných okrskov (page linking the document)"
+
+[okrsok.1]
+rules = [
+  {part = "Makov"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Čierne"},
+  {part = "Potok"},
+  {part = "Kopanice"},
+  {part = "Trojačka"},
+]

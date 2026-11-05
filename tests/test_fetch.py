@@ -3,6 +3,7 @@ import hashlib
 import io
 import json
 import re
+import subprocess
 import threading
 import zipfile
 from collections.abc import Iterator
@@ -378,6 +379,10 @@ class FakeGitHub:
             assert "--prerelease" in args
             self.releases[args[2]] = {"draft": False, "assets": {}}
             return ""
+        if args[:2] == ("release", "delete-asset"):
+            assert "--yes" in args
+            del self.releases[args[2]]["assets"][args[3]]
+            return ""
         assert args[:2] == ("release", "upload")
         path = Path(args[3])
         self.releases[args[2]]["assets"][path.name] = path.read_bytes()
@@ -429,3 +434,64 @@ def test_publish_creates_the_release_where_there_is_none(monkeypatch, tmp_path: 
     github.releases["inputs"] = {"draft": True, "assets": {}}
     with pytest.raises(store.StoreError, match="is a draft"):
         list(store.publish(cfg, tmp_path))
+
+
+def git(root: Path, *args: str) -> None:
+    subprocess.run(
+        ["git", "-C", str(root), "-c", "user.name=t", "-c", "user.email=t@t", *args],
+        check=True,
+        capture_output=True,
+    )
+
+
+def test_prune_keeps_what_any_release_pins(monkeypatch, tmp_path: Path):
+    """Pruning deletes only the assets that neither the current pins nor
+    those of HEAD or of a version tag name: a release's build can be run
+    again; a dry run deletes nothing."""
+    config_dir = tmp_path / "config"
+    config_dir.mkdir()
+    pins = tmp_path / "config" / "inputs.toml"
+
+    def pin(sha: str) -> None:
+        pins.write_text(
+            f'[input.a]\nurl = "https://example.org/a"\nfile = "a.pdf"\n'
+            f'kind = "pdf"\nsha256 = "{sha}"\n'
+        )
+
+    git(tmp_path, "init", "-q")
+    pin("1" * 64)
+    git(tmp_path, "add", ".")
+    git(tmp_path, "commit", "-qm", "v1")
+    git(tmp_path, "tag", "v0.1.0")
+    pin("2" * 64)
+    git(tmp_path, "commit", "-qam", "unreleased")
+    git(tmp_path, "tag", "inputs")  # no version: pins nothing to keep
+    pin("3" * 64)
+    git(tmp_path, "commit", "-qam", "head")
+    (tmp_path / "raw").mkdir()
+    (current,) = pinned_files(tmp_path / "raw", {"a": b"%PDF-1.7 now"})
+    stored = Store("o/inputs", "inputs")
+    released, head = (Store.asset_name(c * 64, "a.pdf") for c in "13")
+    unreleased = Store.asset_name("2" * 64, "a.pdf")
+    github = FakeGitHub(
+        {
+            "inputs": {
+                "draft": False,
+                "assets": dict.fromkeys(
+                    [released, unreleased, head, stored.asset(current)], b""
+                ),
+            }
+        }
+    )
+    monkeypatch.setattr(store, "_gh", github)
+    cfg = Inputs("test@example.org", (), (current,), stored)
+    keep = store.kept(tmp_path, cfg)
+    assert list(store.prune(cfg, keep, dry_run=True)) == [unreleased]
+    assert unreleased in github.releases["inputs"]["assets"]
+    assert list(store.prune(cfg, keep)) == [unreleased]
+    assert set(github.releases["inputs"]["assets"]) == {
+        released,
+        head,
+        stored.asset(current),
+    }
+    assert list(store.prune(cfg, keep)) == []

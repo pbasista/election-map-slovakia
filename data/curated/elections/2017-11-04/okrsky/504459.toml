@@ -1,0 +1,44 @@
+# The okrsky of Kopčany of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/504459.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Kopčany, transcribed by an AI agent in job okrsok-rules-751 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Bratislavská, Kollárova, Sasinkova, Priečna, Slnečná, Športová, Kopčany (občania s trvalým pobytom na adrese obec Kopčany)
+#     okrsok 2: Masarykova, Štefánikovo námestie, Hurbanova, Moravská, Marxova, Damborského, Vrbovské
+obec = "504459"
+name = "Kopčany"
+okrsky_fill = "nearest"
+okrsky_note = "'Kopčany (občania s trvalým pobytom na adrese obec Kopčany)' are voters registered without an address, not houses without a street; the register's houses without a street (incl. the settlement Vrbovské, which okrsok 2 names but the register has no street of) are placed by fill_nearest."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-304): The current elections page starts with 2018 (and lacks 2019); the archived old 2019 pages link 'Volebné okrsky a volebná miestnosť' files for the presidential and EP elections, but those files are gone (404) and were not captured by the Internet Archive; nothing for the 2017 regional elections was found. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document names the municipal elections of 10 November 2018; it states no decision date."
+
+[[document]]
+url = "https://www.kopcany.sk/e_download.php?file=data/uredni_deska/obsah612_8.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A1%20miestnos%C5%A5.pdf"
+sha256 = "b55885f7e7576207cecaebba595538ebd4f4b6577b9e5c581edbd1d4836ce751"
+title = "Volebné okrsky a volebná miestnosť (voľby do orgánov samosprávy obcí 10. novembra 2018)"
+
+[[document]]
+url = "https://www.kopcany.sk/obcan/volby-a-referendum/volby-do-organov-samospravy-obci-2018-612.html?kshow=3"
+sha256 = "f4bc7bc08e98257b2803d54fb3421aa75252651aa450fb7c05c55d4bc1589787"
+title = "Election page linking the document"
+
+[okrsok.1]
+rules = [
+  {street = "Bratislavská"},
+  {street = "Kollárova"},
+  {street = "Sasinkova"},
+  {street = "Priečna"},
+  {street = "Slnečná"},
+  {street = "Športová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Masarykova"},
+  {street = "Štefánikovo Námestie", written = "Štefánikovo námestie"},
+  {street = "Hurbanova"},
+  {street = "Moravská"},
+  {street = "Marxova"},
+  {street = "Damborského"},
+]

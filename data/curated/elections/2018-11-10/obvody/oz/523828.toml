@@ -1,0 +1,96 @@
+# Council obvody of Spišská Belá (523828), Kežmarok.
+# Transcribed by an AI agent in job obvod-rules-099 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: vo volebnom obvode č. 1 bude volených 10 poslancov a tento obvod zahŕňa mesto Spišská Belá (okrem mestskej časti Strážky)
+#   obvod 2: vo volebnom obvode č. 2 bude volený 1 poslanec a tento obvod zahŕňa celú mestskú časť Strážky
+# Okrsky added by an AI agent in job okrsok-rules-5870 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1. Mája, Agátová, Greisigerova, Kallsteinova, Krátka, Kúpeľná, Lipová, Moskovská, Nová, SNP, Športová, Vojtasová, Weberová, Záhradná
+#   okrsok 2: Ladislava Novomeského, Letná, Osloboditeľov, Štefánikova, Tatranská, Továrenská
+#   okrsok 3: Hviezdoslavova, Mierová, Partizánska, Petzvalova, Slnečná
+#   okrsok 4: Družstevná, Generála Ludvíka Svobodu, Kpt. Jána Nálepku, Šarpanec, Zimná
+#   okrsok 5: Ladislava Medňanského, Margity Czobelovej, Nad kaštieľom, Popradská
+obec = "523828"
+name = "Spišská Belá"
+date = 2018-06-28
+note = "Published on the page 'Voľby do orgánov samosprávy obcí 2018 – prehľad termínov' (2.8.2018): the council's resolution no. 106/2018 of 28.6.2018 set two obvody."
+okrsky_date = 2018-09-07
+okrsky_fill = "nearest"
+okrsky_note = "Mayor's decision of 7.9.2018 (scan without text layer, read from the page images), in the town's media library uploaded 7.9.2018. Same okrsky as the 2017 and 2019 decisions. Register spellings: Kallsteinova = Kaltsteinova, SNP = Slov. Nár. Povstania; Generála Ludvíka Svobodu is in the register under both Generála Ludvíka Svobodu and Gen. Ludvíka Svobodu. Margity Czobelovej (okrsok 5) is not in the register. Okružná is not named; supplemented in okrsok 1 from the 2022 rule set. Obvod 1 = okrsky 1–4, obvod 2 (Strážky) = okrsok 5 alone. Addresses without a street in part Spišská Belá (súpisné numbers only) take the okrsok of the nearest address (fill_nearest). Internet Archive was offline during the search."
+okrsky_supplemented = 2022-10-29
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The 2018 document does not name Okružná (22 addresses in the register, between Nová and Krátka in okrsok 1's area); the rule set of the elections of 29 October 2022 (data/curated/elections/2022-10-29/obvody/oz/523828.toml) has it in okrsok 1, as every later document of the town lists it."
+
+[[document]]
+url = "https://spisskabela.sk/wp-content/uploads/2018/08/Zverejnenie-počtu-obyvateľov-mesta-Spišská-Belá-počet-obvodov-v-meste-a-tiež-počet-poslancov-ktorý-ssa-má-v-nich-zvoliť..doc"
+sha256 = "a4d74db72a14b28f657bb48312f93f685e935ca5f006160a9efe4530789d4515"
+title = "Zverejnenie počtu obyvateľov mesta Spišská Belá a počet volebných obvodov a poslancov, ktorý sa má v nich zvoliť (uznesenie MsZ č. 106/2018 zo dňa 28.6.2018)"
+
+[[document]]
+url = "https://spisskabela.sk/wp-content/uploads/2018/09/Volebné-okrsky-a-volebné-komisie.pdf"
+sha256 = "73c7a8d73d552e532be6964d4e1f707de59c23053b6bbb6e60ebf151dc56afbf"
+title = "Utváram volebné okrsky a určujem volebné miestnosti pre voľby do orgánov samosprávy obcí konané 10. novembra 2018 (primátor, Spišská Belá 7.9.2018)"
+
+[obvod.1]
+seats = 10
+okrsky = [1, 2, 3, 4]
+rules = [
+  {part = "Spišská Belá"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [5]
+rules = [
+  {part = "Strážky"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "1.mája", written = "1. Mája", note = "the register's 1.mája; the document capitalises Mája and spaces after the dot"},
+  {street = "Agátová"},
+  {street = "Greisigerova"},
+  {street = "Kaltsteinova", written = "Kallsteinova", note = "one letter differs (ll/lt); the register's only similar street, in okrsok 1's area"},
+  {street = "Krátka"},
+  {street = "Kúpeľná"},
+  {street = "Lipová"},
+  {street = "Moskovská"},
+  {street = "Nová"},
+  {street = "Slov. Nár. Povstania", written = "SNP", note = "SNP = Slovenského národného povstania; the register writes Slov. Nár. Povstania"},
+  {street = "Športová"},
+  {street = "Vojtasova", written = "Vojtasová", note = "only the length of the last vowel differs from the register's Vojtasova"},
+  {street = "Weberova", written = "Weberová", note = "only the length of the last vowel differs from the register's Weberova"},
+  {street = "Záhradná"},
+  {street = "Okružná", supplemented = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ladislava Novomeského"},
+  {street = "Letná"},
+  {street = "Osloboditeľov"},
+  {street = "Štefánikova"},
+  {street = "Tatranská"},
+  {street = "Továrenská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "Mierová"},
+  {street = "Partizánska"},
+  {street = "Petzvalova"},
+  {street = "Slnečná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Družstevná"},
+  {street = "Generála Ludvíka Svobodu"},
+  {street = "Gen. Ludvíka Svobodu", written = "Generála Ludvíka Svobodu"},
+  {street = "Kpt. Jána Nálepku"},
+  {street = "Šarpanec"},
+  {street = "Zimná"},
+]

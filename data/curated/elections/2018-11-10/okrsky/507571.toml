@@ -1,0 +1,32 @@
+# Okrsky of Suchá nad Parnou, transcribed by an AI agent in job okrsok-rules-789 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. l – je pre voličov od č. 0 – 380 v sále kultúrneho domu
+#   okrsok 2: Okrsok č.2 – je pre voličov od č. 382 – 1300 v zasadačke obecného úradu v kultúrnom dome.
+obec = "507571"
+name = "Suchá nad Parnou"
+okrsky_note = "House numbers are súpisné (the municipality has no streets); applied in both parts (Suchá nad Parnou, Ružová Dolina). Number 381, not mentioned, falls to okrsok 2 (rest)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2018-11-06
+okrsky_date_basis = "The notice-board page says Vyvesené: 6. 11. 2018; the notice names the elections of 10 November 2018. (https://www.suchanadparnou.sk/samosprava/uradna-tabula/oznam-ku-komunalnym-volbam-do-samospravy-obci-v-roku-2018-232.html)"
+
+[[document]]
+url = "https://www.suchanadparnou.sk/e_download.php?file=data/uredni_deska/obsah220_9.pdf&original=2018_Oznam%20%20k%20vo%C4%BEb%C3%A1m%20r.%202018.pdf"
+sha256 = "8ad84ef1befab574ce7a62023de36e87b692d30c3e9ecd849de0f1dacd186081"
+title = "Oznam ku komunálnym voľbám do samosprávy obcí v roku 2018"
+
+[[document]]
+url = "https://www.suchanadparnou.sk/samosprava/uradna-tabula/oznam-ku-komunalnym-volbam-do-samospravy-obci-v-roku-2018-232.html"
+sha256 = "4506ec5ea942a22e947761627cc23ee6128be7982d5a8c78cd0cd467ea3f9ee1"
+title = "úradná tabuľa, vyvesené 6. 11. 2018"
+
+[okrsok.1]
+rules = [
+  {part = "Suchá nad Parnou", numbers = "0-380"},
+  {part = "Ružová Dolina", numbers = "0-380"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

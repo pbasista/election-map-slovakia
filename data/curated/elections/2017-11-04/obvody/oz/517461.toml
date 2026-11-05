@@ -1,0 +1,175 @@
+# The okrsky of Bytča of the vote of 2018-11-10, data/curated/elections/2018-11-10/obvody/oz/517461.toml, standing in, by `ems job reuse`. Its header there:
+#   Council obvody of Bytča (517461), Bytča.
+#   Transcribed by an AI agent in job obvod-rules-067 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: Volebný obvod č. 1 – m.č. Veľká Bytča, počet poslancov 12
+#     obvod 2: Volebný obvod č. 2 – m.č. Hliník nad Váhom, počet poslancov 1
+#     obvod 3: Volebný obvod č. 3 – m.č. Hrabové, počet poslancov 1
+#     obvod 4: Volebný obvod č. 4 – m.č. Pšurnovice, počet poslancov 1
+#     obvod 5: Volebný obvod č. 5 – m.č. Malá Bytča, počet poslancov 1
+#     obvod 6: Volebný obvod č. 6 – m.č. Mikšová-Beňov, počet poslancov 1
+#   Okrsky added by an AI agent in job okrsok-rules-5848 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: ul. Bottova, Kukučínova, Dukelská, Sládkovičova, Miksova, E.Lániho, Hurbanova, Lombardiniho, Hviezdoslavova, Škorvánkova, Štúrova, Hlavná, Sidónie Sakalovej, Zámocká, Zámok, 1.Mája, Hollého, Kilianova, Mičurova, Radlinského, Štefánikova
+#     okrsok 2: ul.Hlinícka, Na Sahare, Švecova, Červeňanského, Hlinkova, Kollárova, S.Bíroša, Kolárovská, Moyzesova, Janka Kráľa od č. domu 1-9, Na Tehelňu, Pod Hájom
+#     okrsok 3: ul. Rázusova, Komenského, Popoliška, Fr.Kráľa, Kvetná, Dostojevského, SNP, Družstevná, Pšurnovická, Na Salaš, J.Kráľa od č. domu 11-17, Záhradná
+#     okrsok 4: ul. Mieru, Thurzova, E.Geromettu, Treskoňova, Námestie SR, Krag.Martýrov
+#     okrsok 5: ul. Brezová, Gaštanová
+#     okrsok 6: ul. Okružná, Lúčna, Javorová, Malobytčianska
+#     okrsok 7: Hliník nad Váhom
+#     okrsok 8: Hrabové
+#     okrsok 9: Pšurnovice
+#     okrsok 10: Malá Bytča
+#     okrsok 11: Mikšová, Beňov
+obec = "517461"
+name = "Bytča"
+date = 2018-06-22
+note = "The council obvody of the vote of 2018-11-10: they only place the okrsky. Uznesenie MsZ č. 103/2018 of 22.6.2018 (archived 13.7.2018; the old website is gone) defines the obvody by mestské časti; all register streets lie in part Veľká Bytča. The PDF's text layer drops the letter Š in \"Pšurnovice\". The draft resolution on the 2018 elections board (Urcenie_poctu_poslancov.pdf) names the same obvody by katastrálne územia (obvod 6: k.ú. Mikšová)."
+reused = 2018-11-10
+okrsky_date = 2018-07-12
+okrsky_fill = "nearest"
+okrsky_note = "Written differently from the register: Dukelská = Dukelska, Hlinícka = Hlinická, Kvetná = Kvetna (spelling variants); E.Lániho, S.Bíroša, Fr.Kráľa, E.Geromettu, Krag.Martýrov, Námestie SR are abbreviations. Janka Kráľa numbers outside 1–9 and 11–17 (e.g. 10) and the register's addresses without a street in part Veľká Bytča are placed by fill_nearest. The PDF was captured by the Internet Archive on 2018-11-23; it is dated 12.7.2018 and names the 2018 municipal elections."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-068): The old website (www.bytca.sk/materials/…, replaced by WordPress in 2023) is gone; the live site has no pages for this vote. The notice board archived 5.9.2017 links 'Určenie volebných okrskov a volebných miestností' (/materials/files/uradnatabula/vuc_volby2017/VUC2017_okrsky.pdf), but the Internet Archive holds no 2017 capture of that PDF (only 2024 captures answering 301/404); only the info leaflet VVUC_info2.pdf (no okrsky) is archived. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 11 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://web.archive.org/web/20180713005548/http://www.bytca.sk:80/materials/files/mz/nove/2018/uznesenia201806.pdf"
+sha256 = "d1356951cb31213c44a96b16d2a1443a23137e6bd283afc61e9e1ffff29b42a5"
+title = "Uznesenia z Mestského zastupiteľstva v Bytči, konaného dňa 22. 6. 2018 (uznesenie č. 103/2018)"
+
+[[document]]
+url = "https://web.archive.org/web/20181123151453/http://www.bytca.sk:80/materials/files/uradnatabula/k_volby2018/volokrsky.pdf"
+sha256 = "7d232dcd5f0cef7bf95eda9b2c05a81f94ce4f9e97e0443c7dc3a5be234efc78"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí v roku 2018 (č.s. 2018/238, 12.7.2018)"
+
+[obvod.1]
+seats = 12
+okrsky = [1, 2, 3, 4, 5, 6]
+rules = [
+  {part = "Veľká Bytča"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [7]
+rules = [
+  {part = "Hliník nad Váhom"},
+]
+
+[obvod.3]
+seats = 1
+okrsky = [8]
+rules = [
+  {part = "Hrabové"},
+]
+
+[obvod.4]
+seats = 1
+okrsky = [9]
+rules = [
+  {part = "Pšurnovice"},
+]
+
+[obvod.5]
+seats = 1
+okrsky = [10]
+rules = [
+  {part = "Malá Bytča"},
+]
+
+[obvod.6]
+seats = 1
+okrsky = [11]
+rules = [
+  {part = "Mikšová"},
+  {part = "Beňov"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "1.mája", written = "1.Mája"},
+  {street = "Bottova"},
+  {street = "Kukučínova"},
+  {street = "Dukelska", written = "Dukelská", note = "\"Dukelská\" is the register's Dukelska (the register drops the accent); the only such street in Bytča."},
+  {street = "Sládkovičova"},
+  {street = "Miksova"},
+  {street = "Eliáša Lániho", written = "E.Lániho"},
+  {street = "Hurbanova"},
+  {street = "Lombardiniho"},
+  {street = "Hviezdoslavova"},
+  {street = "Škorvánkova"},
+  {street = "Štúrova"},
+  {street = "Hlavná"},
+  {street = "Sidónie Sakalovej"},
+  {street = "Zámocká"},
+  {street = "Zámok"},
+  {street = "Hollého"},
+  {street = "Kilianova"},
+  {street = "Mičurova"},
+  {street = "Radlinského"},
+  {street = "Štefánikova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlinická", written = "Hlinícka", note = "\"Hlinícka\" is the register's Hlinická (spelling variant of the same street)."},
+  {street = "Na Sahare"},
+  {street = "Švecova"},
+  {street = "Červeňanského"},
+  {street = "Hlinkova"},
+  {street = "Kollárova"},
+  {street = "Stanislava Bíroša", written = "S.Bíroša"},
+  {street = "Kolárovská"},
+  {street = "Moyzesova"},
+  {street = "Janka Kráľa", numbers = "1-9"},
+  {street = "Na Tehelňu"},
+  {street = "Pod Hájom"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Rázusova"},
+  {street = "Komenského"},
+  {street = "Popoliška"},
+  {street = "Fraňa Kráľa", written = "Fr.Kráľa"},
+  {street = "Kvetna", written = "Kvetná", note = "\"Kvetná\" is the register's Kvetna (the register drops the accent)."},
+  {street = "Dostojevského"},
+  {street = "SNP"},
+  {street = "Družstevná"},
+  {street = "Pšurnovická"},
+  {street = "Na Salaš"},
+  {street = "Janka Kráľa", numbers = "11-17"},
+  {street = "Záhradná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Mieru"},
+  {street = "Thurzova"},
+  {street = "Eugena Geromettu", written = "E.Geromettu"},
+  {street = "Treskoňova"},
+  {street = "Nám. Slovenskej Republiky", written = "Námestie SR", note = "\"Námestie SR\" abbreviates Námestie Slovenskej republiky, the register's Nám. Slovenskej Republiky."},
+  {street = "Kragujevackých Martýrov", written = "Krag.Martýrov", note = "\"Krag.Martýrov\" abbreviates Kragujevackých Martýrov, the register's only such street."},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Brezová"},
+  {street = "Gaštanová"},
+  {street = "Broskyňová ulica"},
+  {street = "Čerešňová ulica"},
+  {street = "Jabloňová ulica"},
+  {street = "Marhuľová ulica"},
+  {street = "Morušová ulica"},
+  {street = "Višňová ulica"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Okružná"},
+  {street = "Lúčna"},
+  {street = "Javorová"},
+  {street = "Malobytčianska"},
+]

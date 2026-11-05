@@ -1,0 +1,78 @@
+# Okrsky of Hamuliakovo, transcribed by an AI agent in job okrsok-rules-705 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cintorínska, Dlhá, Dunajská, Hlavná, Kaštieľska, Kormoránia, Kostolná, Labutia, Lipová, Nová, Pod záhradami, Poľná, Pri hrádzi, Pri pšeničnej bráne, Rybáričia, Sadová, Šamorínska, Tesná, Úzka, Židovská Súpisné čísla: 342, 391, 1001, 1102, 1036, 1041, 1062, 1068, 1114, 1135, 1157, 1178, 1193, 2021, 2023, 2025, 2035, 2036, 2041, 2043, 2044, 2045, 2047, 2061
+#   okrsok 2: Astrová, Bazová, Bleduľová, Borievková, Brestová, Brezová, Buková, Družstevná, Dubová, Fialková, Gaštanová, Hrabová, Jaseňová, Jelšová, Konvalinková, Korytárska, Kosatcová, Kruštíková, Leknová, Liesková, Lipnicová, Malogútorská, Nezábudková, Ostricová, Ostružinová, Pastierska, Prasličková, Pri píle, Rezavková, Rybárska, Snežienková, Topoľová, Višňová, Vrbová
+obec = "507903"
+name = "Hamuliakovo"
+okrsky_date = 2018-09-17
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document (with the CMS's OCR layer), read visually. The document names streets and, for okrsok 1, the súpisné čísla of houses without a street. Streets of the register it does not name (Javorová ulica, Kania, Mlynárska ulica, Volavčia, Scilová ulica) and houses without a street not in its list are placed by fill_nearest."
+
+[[document]]
+url = "https://www.obechamuliakovo.sk/data/page/obechamuliakovo.sk/24312/informa-cia-o-utvoreni-volebny-ch-okrskov-a-urc-enie-volebny-ch-miestnosti-v-obci-hamuliakovo-k-vol-ba-m-do-orga-nov-samospra-vy-obci-ktore-sa-budu-konat-dn-a-10-11-2018.pdf"
+sha256 = "0adc392a6d8a153ef5bb0931884f7377c48dfdd8c7c7798c1ea24e528d0e2fac"
+title = "Informácia o utvorení volebných okrskov a určenie volebných miestností v obci Hamuliakovo k voľbám do orgánov samosprávy obcí 10.11.2018 (V Hamuliakove, dňa 17.09.2018)"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Dlhá"},
+  {street = "Dunajská"},
+  {street = "Hlavná"},
+  {street = "Kaštieľska"},
+  {street = "Kormoránia"},
+  {street = "Kostolná"},
+  {street = "Labutia"},
+  {street = "Lipová"},
+  {street = "Nová"},
+  {street = "Pod záhradami"},
+  {street = "Poľná"},
+  {street = "Pri hrádzi"},
+  {street = "Pri pšeničnej bráne"},
+  {street = "Rybáričia"},
+  {street = "Sadová"},
+  {street = "Šamorínska"},
+  {street = "Tesná"},
+  {street = "Úzka"},
+  {street = "Židovská"},
+  {part = "Hamuliakovo", numbers = "342, 391, 1001, 1102, 1036, 1041, 1062, 1068, 1114, 1135, 1157, 1178, 1193, 2021, 2023, 2025, 2035, 2036, 2041, 2043, 2044, 2045, 2047, 2061", by = "supisne", note = "the document's 'Súpisné čísla' of okrsok 1: houses without a street, by súpisné číslo"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Astrová"},
+  {street = "Bazová"},
+  {street = "Bleduľová"},
+  {street = "Borievková"},
+  {street = "Brestová"},
+  {street = "Brezová"},
+  {street = "Buková"},
+  {street = "Družstevná"},
+  {street = "Dubová"},
+  {street = "Fialková"},
+  {street = "Gaštanová"},
+  {street = "Hrabová"},
+  {street = "Jaseňová"},
+  {street = "Jelšová"},
+  {street = "Konvalinková"},
+  {street = "Korytárska"},
+  {street = "Kosatcová"},
+  {street = "Kruštíková"},
+  {street = "Leknová"},
+  {street = "Liesková"},
+  {street = "Lipnicová"},
+  {street = "Malogútorská"},
+  {street = "Nezábudková"},
+  {street = "Ostricová"},
+  {street = "Ostružinová"},
+  {street = "Pastierska"},
+  {street = "Prasličková"},
+  {street = "Pri píle"},
+  {street = "Rezavková"},
+  {street = "Rybárska"},
+  {street = "Snežienková"},
+  {street = "Topoľová"},
+  {street = "Višňová"},
+  {street = "Vrbová"},
+]

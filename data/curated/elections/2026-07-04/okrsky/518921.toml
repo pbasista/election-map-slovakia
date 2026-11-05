@@ -1,0 +1,25 @@
+# Okrsky of Vígľaš, transcribed by an AI agent in job okrsok-rules-5624 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: V okrsku č. 1 volia voliči bývajúci v starej časti Vígľaša t.j ulica Zvolenská, Podhorská, Zámocká, Pod Baštou, Lesnícka, Železničná, Riečna, Partizánska, Slovenského národného povstania, Káplnská, Malinovského, Poľná, časti Hájniková, Malý Sliač a voliči bývajúci v miestnej časti za školou
+#   okrsok 2: V okrsku č. 2 volia voliči bývajúci na Pstruši, Dolinkách, Podrohy a Kocaň
+obec = "518921"
+name = "Vígľaš"
+okrsky_note = "Okrsok 1 is the old village (part Vígľaš: all its streets, the hamlets Hájniková and Malý Sliač and the area 'za školou'), okrsok 2 Pstruša with Dolinky, Podrohy and Kocaň (part Pstruša). The hamlets have no street in the register and are not separate parts; they are taken with the part they belong to in the register (okrsok 1 holds part Vígľaš, okrsok 2 part Pstruša)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The okrsky are listed on the municipality's page dedicated to the referendum of 4 July 2026; no decision date is stated."
+
+[[document]]
+url = "https://www.viglas.net/referendum-2026.html"
+sha256 = "97051814e0f3c39e3106ce5a868eb646a6fb71277bfcb41cbfe1e5a027c2c91f"
+title = "Obec Vígľaš – page of the referendum of 4 July 2026: Volebné okrsky vytvorené v obci Vígľaš"
+
+[okrsok.1]
+rules = [
+  {part = "Vígľaš"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Pstruša"},
+]

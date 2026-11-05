@@ -1,0 +1,28 @@
+# The okrsky of Zalužice of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/523241.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Zalužice, transcribed by an AI agent in job okrsok-rules-1536 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Volebný okrsok č.1 sa bude nachádzať v kultúrnom dome v Zalužiciach, Zalužice 207
+#     okrsok 2: Volebný okrsok č.2 sa bude nachádzať v komunitnom centre v Zalužiciach, Zalužice 66
+obec = "523241"
+name = "Zalužice"
+okrsky_note = "Two okrsky and two parts, each polling station in another part: each okrsok is given the part of its station (inferred)."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-531): No okrsky document or notice naming the okrsky of the regional elections 2017 was found on the website or in the Internet Archive (the archived 2018 and EP 2019 notices are post-election reports). Only the 2019 presidential notice names the two polling stations. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2019-03-16: 1: 452 → 449, 2: 530 → 537."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The notice names the presidential election of 16 and 30 March 2019; it states no decision date (the Internet Archive captured it only on 2019-07-20)."
+
+[[document]]
+url = "https://web.archive.org/web/20190720174718/https://www.zaluzice.sk/oznamy/volby-2019-prezidentske-volby.html"
+sha256 = "7fd00b5918092f63a74ff312c01e7a4400796d6c45cce16e97f79f9a9eefc9e0"
+title = "Voľby 2019 - prezidentské voľby (oznam obce)"
+
+[okrsok.1]
+rules = [
+  {part = "Malé Zalužice", note = "The notice gives only the polling stations; the station of okrsok 1 (kultúrny dom, Zalužice 207) is house 207 of part Malé Zalužice in the address register.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Veľké Zalužice", note = "The station of okrsok 2 (komunitné centrum, Zalužice 66) is house 66 of part Veľké Zalužice in the address register.", inferred = true},
+]

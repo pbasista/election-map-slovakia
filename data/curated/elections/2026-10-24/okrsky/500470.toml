@@ -1,0 +1,33 @@
+# The okrsky of Lúčnica nad Žitavou of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/500470.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Lúčnica nad Žitavou, transcribed by an AI agent in job okrsok-rules-5146 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Okrsok č. 1 – Volebná miestnosť – zasadačka obecného úradu Lúčnica nad Žitavou 230
+#     okrsok 2: Okrsok č. 2 – Volebná miestnosť – obecný dom Martinová 374
+obec = "500470"
+name = "Lúčnica nad Žitavou"
+okrsky_note = "The notice gives each okrsok only its polling station; the municipality has two parts (Vajka nad Žitavou, Martinová) and two okrsky, the stations in different parts, so each okrsok is given the part of its station (inferred); same split as the 2022 document (Lúčnica nad Žitavou, Vajka nad Žitavou / Martinová)."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-588): The 2026 election pages and the úradná tabuľa have no okrsky/polling-station notice for 24.10.2026 (only the 2022 \"Oznam volebné okrsky a miestnosti\" exists, which is not for these elections). These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2024-06-08: 1: 656 → 645, 2: 174 → 176."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The scanned notice is headed 'Utvorenie volebných okrskov a určenie volebných miestností … počas konania volieb do Európskeho parlamentu v roku 2024'; it is undated."
+
+[[document]]
+url = "https://www.obeclucnica.sk/e_download.php?file=data/editor/122sk_2.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20v%20L%C3%BA%C4%8Dnici%20nad%20%C5%BDitavou.pdf"
+sha256 = "f9847208ec8d7ede03bf9fdfd013b6cea2d2f92dacc7e4acb92c746bc1a5eeb2"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Lúčnica nad Žitavou počas konania volieb do Európskeho parlamentu v roku 2024"
+
+[[document]]
+url = "https://www.obeclucnica.sk/sk/volby/volby-do-europskeho-parlamentu-2024/"
+sha256 = "1b6bd8c48ee818c46ac62d489c38d24b7c1d551e71f26ae5af0f54520157c814"
+title = "Voľby do Európskeho parlamentu 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Vajka nad Žitavou", note = "polling station in the municipal office (Lúčnica nad Žitavou 230) in Vajka nad Žitavou; okrsky as many as parts, each station in another part", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Martinová", note = "polling station in the obecný dom Martinová 374; okrsky as many as parts, each station in another part", inferred = true},
+]

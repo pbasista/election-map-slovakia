@@ -1,0 +1,26 @@
+# Okrsky of Víťaz, transcribed by an AI agent in job okrsok-rules-4498 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: do súp. č. 336, + časť obce Dolina
+#   okrsok 2: od súp. č. 346
+obec = "525413"
+name = "Víťaz"
+okrsky_date = 2024-01-22
+okrsky_fill = "nearest"
+okrsky_note = "The document splits the village by súpisné číslo: okrsok 1 up to No. 336 plus part Dolina, okrsok 2 from No. 346. Houses with súpisné čísla 337–345 in part Víťaz (if any), which the document places in neither okrsok, take the okrsok of the nearest address."
+
+[[document]]
+url = "https://www.obecvitaz.sk/files/2025-12-08-095514-Utvorenie_volebn__ch_okrskov_a_ur__enie_volebn__ch_miestnost__.pdf"
+sha256 = "1be489bfff43e5e9c2d50132ebd5210195350481ec11e6da8a80c3ff798579ff"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta SR v roku 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Víťaz", numbers = "1-336"},
+  {part = "Dolina"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Víťaz", numbers = "346-"},
+]

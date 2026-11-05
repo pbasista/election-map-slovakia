@@ -1,0 +1,28 @@
+# The okrsky of Magnezitovce of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/525944.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Magnezitovce, transcribed by an AI agent in job okrsok-rules-1580 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Mníšany – okrsok č. 1
+#     okrsok 2: Kopráš – okrsok č. 2
+obec = "525944"
+name = "Magnezitovce"
+okrsky_note = "No 'utvorenie volebných okrskov' decision of this vote is on the website; the municipality's notice for this vote (address for delegating members of the okrsok commissions) states the okrsky: Mníšany – okrsok č. 1, Kopráš – okrsok č. 2. The okrsky are the two parts."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-980): No okrsky document for the municipal elections of 2018 found: the 2018 election files on the website (population, seats/obvod, the e-mail notice for delegating members, the commission's clerk) name no okrsky. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The municipality's notice names the presidential election, 1st round of 16 March 2019; it is undated (its file name on the website carries 2019-02-01)."
+
+[[document]]
+url = "https://www.magnezitovce.sk/files/2019-02-01-131718-Folder_2019-2-1_0001.PDF"
+sha256 = "3090222831a09ff918206004781b76dfd9a2931246c74a6b6880a1527af491c9"
+title = "Oznámenie – elektronická adresa na doručenie oznámenia o delegovaní člena a náhradníka do okrskovej volebnej komisie (Mníšany – okrsok č. 1, Kopráš – okrsok č. 2)"
+
+[okrsok.1]
+rules = [
+  {part = "Mníšany"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kopráš"},
+]

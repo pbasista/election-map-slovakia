@@ -1,0 +1,31 @@
+# The okrsky of Čerín of the vote of 2022-10-29, data/curated/elections/2022-10-29/okrsky/508519.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Čerín, transcribed by an AI agent in job okrsok-rules-1056 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Čerín
+#     okrsok 2: Čačín
+obec = "508519"
+name = "Čerín"
+okrsky_date = 2022-08-08
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-564): The live úradná tabuľa of cerin.sk reaches back only to about 2024; its only okrsky notices are for the 2024 presidential election (25.01.2024), the 2024 EP election (07.03.2024) and the municipal/regional elections of 24.10.2026 (29.07.2026), each listing okrsok 1 Čerín and okrsok 2 Čačín. The Internet Archive CDX API returned some results once, then stayed offline (504 / connection failures) over several retries with pauses, so archived pages of this vote could not be checked. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2022-10-29: 1: 262 → 263, 2: 119 → 119."
+
+[[document]]
+url = "https://web.archive.org/web/20221128192032/https://www.cerin.sk/e_download.php?file=data/uredni_deska/obsah296_5.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti.pdf"
+sha256 = "1c7bd6f966fa6095bbac07d393efe8d92ef4d242c67854d52d2d674bb6fd01d2"
+title = "Volebné okrsky a volebné miestnosti (OcU 1158/2022)"
+
+[[document]]
+url = "https://web.archive.org/web/20221006100621/https://www.cerin.sk/uradna-tabula/volebne-okrsky-a-volebne-miestnosti-336.html"
+sha256 = "77f641fe047bb02d46b2dae6c1fc6c94483f0f498e8047c0c938d85f4ac3a3b2"
+title = "Úradná tabuľa - Volebné okrsky a volebné miestnosti"
+
+[okrsok.1]
+rules = [
+  {part = "Čerín"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Čačín"},
+]

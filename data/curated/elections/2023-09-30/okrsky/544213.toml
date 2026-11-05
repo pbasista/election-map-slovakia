@@ -1,0 +1,51 @@
+# Okrsky of Hanušovce nad Topľou, transcribed by an AI agent in job okrsok-rules-3821 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice Bukovské, Dukelská, Garbiarska, Jarmočná, Kláštorná, Komenského, Kukorelliho, Počekanec, Pod Šibenou, Prešovská, Slovenská, Šarišská, Štúrova od č. 342-343, Zámocká, Železničiarska
+#   okrsok 2: ulice Budovateľská, Mierová, Sadová, SNP, Širiava, Štúrova od č. 335- 340, Tehelná, Záhradná
+obec = "544213"
+name = "Hanušovce nad Topľou"
+okrsky_date = 2023-06-12
+okrsky_fill = "nearest"
+okrsky_note = "Štúrova is split by súpisné číslo (342–343 okrsok 1, 335–340 okrsok 2); other Štúrova houses (e.g. the school 341) and the address without a street take the nearest placed address (fill_nearest). Scanned PDF, read from the rendered image."
+
+[[document]]
+url = "https://www.hanusovce.sk/modules/file_storage/download.php?file=fcb51c97%7C88&inline=1"
+sha256 = "36616a152edf8db2029f408685ad266f40c2d205df57f19bce32c328e6935875"
+title = "Utvorenie volebných okrskov"
+
+[[document]]
+url = "https://www.hanusovce.sk/zverejnovanie/uradna-tabula/volby/volby-do-nrsr-2023/"
+sha256 = "f576ae39a60bfb3898b289c96fd38cfb706f5192a7916f9f0dfb20983c686fb3"
+title = "Úradná tabuľa – voľby"
+
+[okrsok.1]
+rules = [
+  {street = "Bukovské"},
+  {street = "Dukelská"},
+  {street = "Garbiarska"},
+  {street = "Jarmočná"},
+  {street = "Kláštorná"},
+  {street = "Komenského"},
+  {street = "Kukorelliho"},
+  {street = "Počekanec"},
+  {street = "Pod Šibenou"},
+  {street = "Prešovská"},
+  {street = "Slovenská"},
+  {street = "Šarišská"},
+  {street = "Zámocká"},
+  {street = "Železničiarska"},
+  {street = "Štúrova", numbers = "342-343", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Mierová"},
+  {street = "Sadová"},
+  {street = "SNP"},
+  {street = "Širiava"},
+  {street = "Tehelná"},
+  {street = "Záhradná"},
+  {street = "Štúrova", numbers = "335-340", by = "supisne"},
+]

@@ -1,0 +1,43 @@
+# Okrsky of Zázrivá, transcribed by an AI agent in job okrsok-rules-5440 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Zázrivá-Stred, Biela
+#   okrsok 2: Petrová, Demkovská, Dolina, Ráztoky, Grúne, Končitá, Havrania, Kozinská, Plešivá
+obec = "510211"
+name = "Zázrivá"
+okrsky_date = 2026-04-21
+okrsky_note = "The mayor's decision of 21 April 2026 (č. 2026/00455) forms the okrsky 'pre Referendum konané dňa 04.apríla 2026': a slip for 4 July 2026, since the decision postdates 4 April; it is linked on the municipality's Referendum 2026 page beside the information for voters of the same upload month, which gives the referendum's day as 4. 7. 2026."
+
+[[document]]
+url = "https://zazriva.com/wp-content/uploads/2026/04/utvorenie-okrskov.pdf"
+sha256 = "8d89245f0fd93786b53b6d1c24348e38a49ac044266c3d184cf5ba475bd378d4"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Zázrivá (referendum 2026, č. 2026/00455)"
+
+[[document]]
+url = "https://zazriva.com/podujatie/referendum-2026/"
+sha256 = "751adaec9a1fa9f803df88c4fde7a5f199515cd26f2de976e4630ab1867e16e2"
+title = "Referendum 2026"
+
+[[document]]
+url = "https://zazriva.com/wp-content/uploads/2026/04/Informacie-o-podmienkach-prava-hlasovat-v-referende.pdf"
+sha256 = "a726c54d13f89906dda6872adb43bb47857cc6b140703137eacbe816d1c303ca"
+title = "Informácia o podmienkach práva hlasovať v referende (referendum 4. 7. 2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Zázrivá-Stred"},
+  {part = "Biela"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Petrová"},
+  {part = "Demkovská"},
+  {part = "Dolina"},
+  {part = "Ráztoky"},
+  {part = "Grúne"},
+  {part = "Končitá"},
+  {part = "Havrania"},
+  {part = "Kozinská"},
+  {part = "Plešivá"},
+]

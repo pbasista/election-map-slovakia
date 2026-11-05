@@ -1,0 +1,35 @@
+# Okrsky of Kočovce, transcribed by an AI agent in job okrsok-rules-5668 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: územný obvod časť Kočovce
+#   okrsok 2: územný obvod časť Beckovská Vieska
+#   okrsok 3: územný obvod časť Rakoľuby
+obec = "506125"
+name = "Kočovce"
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the document is headed \"Referendum 4.7.2026\"; it states no decision date"
+
+[[document]]
+url = "https://www.kocovce.sk/download_file_f.php?id=2405274"
+sha256 = "b045555ed2773115c9894da14f782b9a909bb096ce11a531402752e9ca6f62cc"
+title = "Referendum 4.7.2026 - Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.kocovce.sk/oznamy/referendum-2026-informacie-pre-volica.html"
+sha256 = "fcfe4e5461085a0a93af71f48bd8b4a359852da6803a8210bed4f5b64ec98f5c"
+title = "Referendum 2026 - informácie pre voliča"
+
+[okrsok.1]
+rules = [
+  {part = "Kočovce"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Beckovská Vieska"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Rakoľuby"},
+]

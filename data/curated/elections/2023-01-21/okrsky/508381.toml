@@ -1,0 +1,84 @@
+# Okrsky of Zohor, transcribed by an AI agent in job okrsok-rules-3043 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bratislavská ulica, Borinská ulica, Cintorínska ulica, Dolná ulica, Konvalinková ulica, Fialková ulica, Kostolná ulica, Košiarska ulica, Marianska ulica, Muškátová ulica, Na riadkoch, Na trávnikoch, Na záhumní, Nad potokom, Námestie 1. mája, Nevädzová ulica, Nový rad, Stupavská ulica, Tichá ulica, Tulipánová ulica, Ulica Alberta Hubeka
+#   okrsok 2: Bazová ulica, Brezová ulica, Borovicová ulica, Buková ulica, Domkárska ulica, Dubová ulica, Gaštanová ulica, Javorová ulica, Jedľová ulica, Jelšová ulica, Kováčska ulica, Krátka ulica, Krivá ulica, Lábska ulica, Lipová ulica, Mlynská ulica, Na Pasienkoch, Námestie mládeže, Obchodná ulica, Orechová ulica, Poľná ulica, Požiarnická ulica, Struhárova ulca, Smreková ulica, Školská ulica, Štúrova ulica, Topoľová ulica
+#   okrsok 3: Hviezdoslavova ulica, Kvetná ulica, Lozornianska ulica, Na Dieloch, Sadová ulica, Staničná ulica, Záhradná ulica, Železničiarska ulica
+obec = "508381"
+name = "Zohor"
+okrsky_date = 2022-11-10
+okrsky_fill = "nearest"
+okrsky_note = "Streets the document names but the register lacks (left out): Tulipánová ulica, Bazová ulica, Buková ulica, Javorová ulica, Topoľová ulica. The register's few addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://data.moderneobce.sk/data/uploads/obeczohor.sk/URENIE-VOLEBNCH-OKRSKOV--Referendum.pdf"
+sha256 = "233218b3f31a6282f1dd7afa1e48db2cd1b0de71cc3c7e6a25d1aa368be491be"
+title = "Určenie volebných okrskov a volebných miestností – referendum 2023"
+
+[[document]]
+url = "https://www.obeczohor.sk/21439/referendum-2023"
+sha256 = "879781d299975f012066f939600328e7ebde518f82d1b564b5421c04730facc3"
+title = "elections page"
+
+[okrsok.1]
+rules = [
+  {street = "Bratislavská ulica"},
+  {street = "Borinská ulica"},
+  {street = "Cintorínska ulica"},
+  {street = "Dolná ulica"},
+  {street = "Konvalinková ulica"},
+  {street = "Fialková ulica"},
+  {street = "Kostolná ulica"},
+  {street = "Košiarska ulica"},
+  {street = "Marianska ulica"},
+  {street = "Muškátová ulica"},
+  {street = "Na riadkoch"},
+  {street = "Na trávnikoch"},
+  {street = "Na záhumní"},
+  {street = "Nad potokom"},
+  {street = "Námestie 1. mája"},
+  {street = "Nevädzová ulica"},
+  {street = "Nový rad"},
+  {street = "Stupavská ulica"},
+  {street = "Tichá ulica"},
+  {street = "Ulica Alberta Hubeka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Brezová ulica"},
+  {street = "Borovicová ulica"},
+  {street = "Domkárska ulica"},
+  {street = "Dubová ulica"},
+  {street = "Gaštanová ulica"},
+  {street = "Jedľová ulica"},
+  {street = "Jelšová ulica"},
+  {street = "Kováčska ulica"},
+  {street = "Krátka ulica"},
+  {street = "Krivá ulica"},
+  {street = "Lábska ulica"},
+  {street = "Lipová ulica"},
+  {street = "Mlynská ulica"},
+  {street = "Na Pasienkoch"},
+  {street = "Námestie mládeže"},
+  {street = "Obchodná ulica"},
+  {street = "Orechová ulica"},
+  {street = "Poľná ulica"},
+  {street = "Požiarnická ulica"},
+  {street = "Struhárova ulica", written = "Struhárova ulca", note = "a typo ('ulca') for the register's Struhárova ulica"},
+  {street = "Smreková ulica"},
+  {street = "Školská ulica"},
+  {street = "Štúrova ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hviezdoslavova ulica"},
+  {street = "Kvetná ulica"},
+  {street = "Lozornianska ulica"},
+  {street = "Na Dieloch"},
+  {street = "Sadová ulica"},
+  {street = "Staničná ulica"},
+  {street = "Záhradná ulica"},
+  {street = "Železničiarska ulica"},
+]

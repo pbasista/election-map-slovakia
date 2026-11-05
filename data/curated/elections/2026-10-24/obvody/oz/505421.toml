@@ -4,10 +4,18 @@
 # text per obvod, verbatim:
 #   obvod 1: Volebný obvod č. 1 Radošina v ktorom bude 8 poslancov
 #   obvod 2: Volebný obvod č. 2 Radošina -Bzince v ktorom bude 1 poslanec
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/505421.toml, standing in.
 obec = "505421"
 name = "Radošina"
 date = 2026-06-17
 note = "Uznesenie č. 27/2026 of 17.6.2026: two obvody, 9 councillors in total. The PDF's table layout jumbles the text order; the obvod texts are reassembled from its phrases. Obvod 2 'Radošina-Bzince' is the part Bzince, obvod 1 'Radošina' the part Radošina."
+okrsky_fill = "nearest"
+okrsky_note = "Scanned documents (Internet Archive snapshots of 5 Oct 2022) read visually; undated okrsky list, so no date. \"bezdomovci\" (homeless, no address) in okrsok 1 are not a rule. The register addresses of part Radošina without a street (súpisné only) are placed by fill_nearest."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-137): radosina.sk has no elections page; its notice board (all pages) lists only candidate lists, referendum minutes and council invitations; no okrsky announcement for 24.10.2026. Web searches found nothing. The obvody resolution 27/2026 does not name okrsky; with 3 okrsky and 2 obvody, the split of obvod 1 (Radošina) into okrsky is unknown. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 3 okrsky, those ŠÚ SR counted in each council obvod (nearer, not taken: 2026-07-04: okrsky of the whole obec, the council then elected in several obvody; 2024-06-08: okrsky of the whole obec, the council then elected in several obvody; 2024-03-23: okrsky of the whole obec, the council then elected in several obvody; 2023-01-21: okrsky of the whole obec, the council then elected in several obvody). Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2022-10-29: 1: 731 → 727, 2: 678 → 663, 3: 182 → 174."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-10-05
+okrsky_date_basis = "The okrsky documents state no date; the Internet Archive captured them on 2022-10-05 (https://web.archive.org/web/20221005213933/https://www.radosina.sk/fileadmin/user_upload/oznamenie_o_utvoreni_volebnych_obvodov.pdf)."
 
 [[document]]
 url = "https://www.radosina.sk/download_file_f.php?id=2426922"
@@ -16,12 +24,31 @@ title = "Uznesenia Obecného zastupiteľstva obce Radošina zo dňa 17.6.2026, �
 
 [obvod.1]
 seats = 8
+okrsky = [1, 2]
 rules = [
   {part = "Radošina"},
 ]
 
 [obvod.2]
 seats = 1
+okrsky = [3]
 rules = [
   {part = "Bzince", note = "The document's 'Radošina-Bzince' is the part of the municipality Bzince."},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Hečkova"},
+  {street = "kpt. J. Nálepku"},
+  {street = "Piešťanská"},
+  {street = "Školská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Kamenná"},
+  {street = "Mierová"},
+  {street = "Nádražná"},
+  {street = "Nitrianska"},
 ]

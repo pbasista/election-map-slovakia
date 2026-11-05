@@ -1,0 +1,30 @@
+# Okrsky of Kolárovice, transcribed by an AI agent in job okrsok-rules-5571 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kolárovice - centrum
+#   okrsok 2: miestne časti obce - Škoruby, Slopkov, Bršlica, Čiakov, Korytné, Babiše
+obec = "517674"
+name = "Kolárovice"
+okrsky_note = "'Kolárovice - centrum' is the register's part Kolárovice (the village centre, as opposed to the six outlying parts named for okrsok 2). Same okrsky as the copied 2026-10-24 document."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names the referendum of 4 July 2026; it carries no date."
+
+[[document]]
+url = "https://www.kolarovice.eu/modules/file_storage/download.php?file=e49d483e%7C508&inline=1"
+sha256 = "a8f6b21fd3a8fc28caf3226ff080bbdaa51b81ccd9405c8da3c9df126b7f7327"
+title = "Oznam: Utvorenie volebných okrskov a určenie volebných miestností pre Referendum konané dňa 04. júla 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Kolárovice", note = "'Kolárovice - centrum': the main part Kolárovice, the other six parts being okrsok 2"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Škoruby"},
+  {part = "Slopkov"},
+  {part = "Bršlica"},
+  {part = "Čiakov"},
+  {part = "Korytné"},
+  {part = "Babiše"},
+]

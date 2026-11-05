@@ -3,6 +3,10 @@
 # Which steps read them for which election is in elections.toml: a future
 # election adds its inputs here and names them there.
 #
+# An input's name ends in the year its data are of (for an election's own
+# files, the election's year: candidates-oz-2026, zbgis-0-2026), so a later
+# election adds inputs beside them without renaming any.
+#
 # kind decides the integrity check:
 #   xlsx  a zip with xl/worksheets/; rows per worksheet are reported
 #   zip   a zip containing every name in `members`
@@ -29,7 +33,8 @@
 #
 # `as_of` (YYYY-MM-DD or YYYY-MM) is the date the data are of, for an input
 # of an earlier election shown on its pages (the map's credits and About):
-# the base map's extract and the address register of 2022.
+# the base maps' extracts of 2019, 2022 and 2024, and the address register
+# of 2022.
 
 # Named in the User-Agent so server operators can reach us: the repository,
 # where they can open an issue.
@@ -57,28 +62,28 @@ release = "inputs"
 
 # Candidate lists, MV SR: https://www.minv.sk/?samosprava26-info10
 
-[input.candidates-starosta]
+[input.candidates-starosta-2026]
 url = "https://www.minv.sk/swift_data/source/verejna_sprava/volby_a_referendum/150_oso/OSO26_ZZK-Starosta.xlsx"
 file = "OSO26_ZZK-Starosta.xlsx"
 kind = "xlsx"
 sha256 = "3720a89a1c188dc7eb9cf9556d585055c49a0c4264f724c32fe3351571e859b4"
 retrieved = 2026-10-19
 
-[input.candidates-oz]
+[input.candidates-oz-2026]
 url = "https://www.minv.sk/swift_data/source/verejna_sprava/volby_a_referendum/150_oso/OSO26_ZZK-Poslanci.xlsx"
 file = "OSO26_ZZK-Poslanci.xlsx"
 kind = "xlsx"
 sha256 = "b0ccb2832faa540af739a089ee719794beed8a1fbe449e89e5c09c216275b310"
 retrieved = 2026-10-18
 
-[input.candidates-predseda]
+[input.candidates-predseda-2026]
 url = "https://www.minv.sk/swift_data/source/verejna_sprava/volby_a_referendum/140_vuc/VUC26_ZZK-Predseda.xlsx"
 file = "VUC26_ZZK-Predseda.xlsx"
 kind = "xlsx"
 sha256 = "9f262d60f400ce22b637b33335964c473b3969d9030a2eed3dfce0cebf31cf3e"
 retrieved = 2026-10-18
 
-[input.candidates-zsk]
+[input.candidates-zsk-2026]
 url = "https://www.minv.sk/swift_data/source/verejna_sprava/volby_a_referendum/140_vuc/VUC26_ZZK-Poslanci.xlsx"
 file = "VUC26_ZZK-Poslanci.xlsx"
 kind = "xlsx"
@@ -89,7 +94,7 @@ retrieved = 2026-10-18
 # Level 0 is full detail; 1 and 2 are official simplified versions. (Level 3
 # is not used: see src/election_map_slovakia/geo.py.)
 
-[input.zbgis-0]
+[input.zbgis-0-2026]
 url = "https://opendata.skgeodesy.sk/static/ZBGIS/usj/ah_gpkg_0.zip"
 file = "ah_gpkg_0.zip"
 kind = "zip"
@@ -97,7 +102,7 @@ members = ["USJ_hranice_0.gpkg"]
 sha256 = "ff8efeb4c314a60e9448a37953717a7d69a73fcfb4ce2dbecd531ad371a52457"
 retrieved = 2026-10-18
 
-[input.zbgis-1]
+[input.zbgis-1-2026]
 url = "https://opendata.skgeodesy.sk/static/ZBGIS/usj/ah_gpkg_1.zip"
 file = "ah_gpkg_1.zip"
 kind = "zip"
@@ -105,7 +110,7 @@ members = ["USJ_hranice_1.gpkg"]
 sha256 = "b743663aa366bd709e5dbd4105b184d5e4f6ad6447e84f9f5a9d9663ff4eb172"
 retrieved = 2026-10-18
 
-[input.zbgis-2]
+[input.zbgis-2-2026]
 url = "https://opendata.skgeodesy.sk/static/ZBGIS/usj/ah_gpkg_2.zip"
 file = "ah_gpkg_2.zip"
 kind = "zip"
@@ -127,6 +132,22 @@ sha256 = "45f7a57965a32f5c437b7b8740bad67e6a442f093174ba503f376f1a8307b5e2"
 retrieved = 2026-10-28
 optional = true
 
+# The boundaries as of January 2024 (full detail, shapefiles), which
+# web.archive.org kept from geoportal.sk (captured 2024-02-27). A record
+# only: the 2024 presidential election is drawn on the levels above, since
+# no obec, okres or kraj changed code or name and only 8 obce moved more
+# than 0.1 % of their area (data/curated/elections/2024-03-23/boundaries.toml).
+# The 2019 boundaries survive nowhere: the 2019 election is compared with
+# those of 2022 above.
+[input.zbgis-2024]
+url = "http://web.archive.org/web/20240227223300id_/https://www.geoportal.sk/files/zbgis/na_stiahnutie/shp/ah_shp_0.zip"
+file = "ah_shp_0.zip"
+kind = "zip"
+sha256 = "33b7ed44bf78d47cae4145b5e487aefdbe75ac0c4c3940b9eea19316e22331c2"
+retrieved = 2026-10-31
+members = ["obec_0.shp", "okres_0.shp", "kraj_0.shp"]
+optional = true
+
 # Countries around Slovakia, Natural Earth admin 0 at 1:10m, public domain.
 # Release v5.1.2, pinned. See src/election_map_slovakia/geo.py for why 1:10m.
 [input.natural-earth-countries]
@@ -142,12 +163,15 @@ retrieved = 2026-10-19
 # the extract of 1 January of every year for good (the daily ones only for
 # a while), so that one is the one used: a base map for orientation needs
 # no fresher roads.
-[input.osm-slovakia]
+[input.osm-slovakia-2026]
 url = "https://download.geofabrik.de/europe/slovakia-260101.osm.pbf"
 file = "slovakia-260101.osm.pbf"
 kind = "pbf"
 sha256 = "694a009cfa6f0a27e164d91247fbdfb5b0c32d2c9421c5bbf570b56560c71644"
 retrieved = 2026-10-25
+# For the earlier elections of 2026 (by-elections, the referendum) drawn on
+# the boundaries of the regular one.
+as_of = "2026-01-01"
 
 # The extract of 1 January 2022, for the base map of the 2022 election, as
 # its roads and buildings were then.
@@ -159,20 +183,75 @@ sha256 = "b868894ac0af66a0d1f11effbc67b56a5903d6ce8c5de7a2509a3aa290445f96"
 retrieved = 2026-10-28
 as_of = "2022-01-01"
 
+# The extracts of 1 January of the other years since 2019, for the base
+# maps of the elections of those years.
+[input.osm-slovakia-2019]
+url = "https://download.geofabrik.de/europe/slovakia-190101.osm.pbf"
+file = "slovakia-190101.osm.pbf"
+kind = "pbf"
+sha256 = "efda547076f764a5010041a169aab393aef4f7fee40e356c17046677a32b20e6"
+retrieved = 2026-10-31
+as_of = "2019-01-01"
+
+[input.osm-slovakia-2024]
+url = "https://download.geofabrik.de/europe/slovakia-240101.osm.pbf"
+file = "slovakia-240101.osm.pbf"
+kind = "pbf"
+sha256 = "410a5e0e645f3c8b2fd0a185ba028bdfc8c24e3d7fc2ad83ed694b7a9c587c3e"
+retrieved = 2026-10-31
+as_of = "2024-01-01"
+
+[input.osm-slovakia-2020]
+url = "https://download.geofabrik.de/europe/slovakia-200101.osm.pbf"
+file = "slovakia-200101.osm.pbf"
+kind = "pbf"
+sha256 = "37f271f57989ab3bcd702bf14314da2104e5a5a18cfb51f17a82165d5661a39a"
+retrieved = 2026-10-31
+as_of = "2020-01-01"
+
+[input.osm-slovakia-2021]
+url = "https://download.geofabrik.de/europe/slovakia-210101.osm.pbf"
+file = "slovakia-210101.osm.pbf"
+kind = "pbf"
+sha256 = "c5386ed9987fb6eafde908bcadf60263c4aa319555f529be8e69c1f6522eebbf"
+retrieved = 2026-10-31
+as_of = "2021-01-01"
+
+[input.osm-slovakia-2023]
+url = "https://download.geofabrik.de/europe/slovakia-230101.osm.pbf"
+file = "slovakia-230101.osm.pbf"
+kind = "pbf"
+sha256 = "39db8901c360a35c0cda4ddd16cf20dbc4ac1a55c78d473ca5aa487245ec30f9"
+retrieved = 2026-10-31
+as_of = "2023-01-01"
+
+[input.osm-slovakia-2025]
+url = "https://download.geofabrik.de/europe/slovakia-250101.osm.pbf"
+file = "slovakia-250101.osm.pbf"
+kind = "pbf"
+sha256 = "e1c6118a75c5ab223de708a0c20d015d7f1063a6f7a092260cf55b4f38530fec"
+retrieved = 2026-10-31
+as_of = "2025-01-01"
+
 # Addresses with coordinates, MV SR, CC0: the "všetky kraje" distribution of
-# https://data.slovensko.sk/datasety/adresy-podla-krajov
-[input.addresses]
+# https://data.slovensko.sk/datasety/adresy-podla-krajov, as downloaded in
+# October 2026, also for the elections since 2024-10 (nearer it than the
+# register of 09/2022).
+[input.addresses-2026]
 url = "https://data.slovensko.sk/download?id=d22c42f3-82b5-450d-b8fb-4245d50a31ec"
 file = "adresy.csv"
 kind = "csv"
 expect = "IDENTIFIKATOR;KRAJ;OKRES;OBEC;CAST_OBCE;ULICA;SUPISNE_CISLO;ORIENTACNE_CISLO_CELE;PSC;ADRBOD_X;ADRBOD_Y"
 sha256 = "312b38f506ee2f635fca0dd9c3a413d0e789506713919b5c3d78a5780a6fdbd3"
 retrieved = 2026-10-18
+as_of = "2026-10"
 
 # The same register as of 09/2022 ("platné k 09/2022"), for the 2022
-# election: data.gov.sk served it as a RAR of one CSV (with a UTF-8 byte
-# order mark), kept by web.archive.org (captured 2022-11-02); fetch unpacks
-# the CSV beside it with bsdtar (libarchive). An archived file, so pinned.
+# election and the presidential ones of 2019 and 2024 (the earliest copy
+# kept: none of 2019 or 2024 survives): data.gov.sk served it as a RAR of
+# one CSV (with a UTF-8 byte order mark), kept by web.archive.org (captured
+# 2022-11-02); fetch unpacks the CSV beside it with bsdtar (libarchive). An
+# archived file, so pinned.
 [input.addresses-2022]
 url = "http://web.archive.org/web/20221102101600id_/https://data.gov.sk/dataset/b27f57f1-7e76-45e0-8968-631f9176b2e9/resource/5322f6c6-1b09-47fc-bb47-83dd35b4e404/download/adresykraje092022utf8.rar"
 file = "adresykraje092022utf8.rar"
@@ -189,7 +268,7 @@ as_of = "2022-09"
 # by hand: optional, since some regional servers time out or turn CI runners
 # away.
 
-[input.zsk-obvody-ba]
+[input.zsk-obvody-ba-2026]
 url = "https://bratislavskykraj.sk/wp-content/uploads/2026/07/Urcenie-volebnych-obvodov-1.pdf"
 file = "Urcenie-volebnych-obvodov-1.pdf"
 kind = "pdf"
@@ -197,7 +276,7 @@ sha256 = "18cdd172b0131daf78fbb8a54217589d4808790217ff886234bbf8dc10302121"
 retrieved = 2026-10-18
 optional = true
 
-[input.zsk-obvody-tt]
+[input.zsk-obvody-tt-2026]
 url = "https://osam.trnava-vuc.sk/OSamApi/fileDownloadEUT/0bb77b1c-ef04-4389-9592-92284c054c64"
 file = "urcenie-volebnych-obvodov.pdf"
 kind = "pdf"
@@ -205,7 +284,7 @@ sha256 = "bee5c536acfd0e11917094a0953f8a2cfb6d815dc8b533b422533dc448a9d2a1"
 retrieved = 2026-10-18
 optional = true
 
-[input.zsk-obvody-tn]
+[input.zsk-obvody-tn-2026]
 url = "https://www.tsk.sk/buxus/docs/Oznamenie_o_volebnych_obvodoch_volby_2026.pdf"
 file = "Oznamenie_o_volebnych_obvodoch_volby_2026.pdf"
 kind = "pdf"
@@ -215,7 +294,7 @@ optional = true
 
 # Nitra publishes its constituencies as a web page, not a PDF. The footer
 # names the load-balancer node that served it: "(HA1)", "(HA2)".
-[input.zsk-obvody-nr]
+[input.zsk-obvody-nr-2026]
 url = "https://www.unsk.sk/zobraz/sekciu/volebne-obvody"
 file = "volebne-obvody.html"
 kind = "html"
@@ -225,7 +304,7 @@ sha256 = "bb8e77eaf9c4f14fdeeb7f6a2058652087bb2a768b4bdf4568f60d2019dbed37"
 retrieved = 2026-10-25
 optional = true
 
-[input.zsk-obvody-za]
+[input.zsk-obvody-za-2026]
 url = "https://www.zilinskazupa.sk/wp-content/uploads/2026/07/ZSK_OZNAMENIE-o-VO-o-pocte-poslancov-a-sidlach-VK_2026-2030.pdf"
 file = "ZSK_OZNAMENIE-o-VO-o-pocte-poslancov-a-sidlach-VK_2026-2030.pdf"
 kind = "pdf"
@@ -233,7 +312,7 @@ sha256 = "04e71c4f6762d6c99143de40dd1d194898faa87074989c3bf6ce8e897bc5889f"
 retrieved = 2026-10-18
 optional = true
 
-[input.zsk-obvody-bb]
+[input.zsk-obvody-bb-2026]
 url = "https://www.bbsk.sk/storage/app/media/dokumenty/volby-2026/volebn-obvody-oznamenie-s-obcami.pdf"
 file = "volebn-obvody-oznamenie-s-obcami.pdf"
 kind = "pdf"
@@ -241,7 +320,7 @@ sha256 = "649fc782a142eefc93d9a202d41eaf97016fb0cce2a53c4a302b41dd0b10117d"
 retrieved = 2026-10-18
 optional = true
 
-[input.zsk-obvody-po]
+[input.zsk-obvody-po-2026]
 url = "https://psk.sk/dokument/e32a53cc-1f51-4f16-97a8-37435434f175/stiahnut?force=false"
 file = "30_zpsk_uznesenia_1007-2026.pdf"
 kind = "pdf"
@@ -249,7 +328,7 @@ sha256 = "b418c1f208194284f7f9c9202bc2ff08355ae460e9cceb2beab77647b49afc7d"
 retrieved = 2026-10-18
 optional = true
 
-[input.zsk-obvody-ke]
+[input.zsk-obvody-ke-2026]
 url = "https://www.kosickazupa.sk/files/2026-07-10-080956-Uznesenie_567_2026.pdf"
 file = "Uznesenie_567_2026.pdf"
 kind = "pdf"
@@ -451,3 +530,274 @@ kind = "zip"
 members = ["OSO202603_SK_tab0dd.xlsx", "OSO202603_SK_tab0ad.xlsx", "OSO202603_SK_tab0bd.xlsx", "OSO202603_SK_tab02be.xlsx", "OSO202603_SK_tab05d.xlsx", "OSO202603_SK_tab08e.xlsx"]
 sha256 = "7abde4461e2e0b879a0d60c8f99262a346226b972f5ab77ebb6fe3308d9948b4"
 retrieved = 2026-10-19
+
+# The presidential elections of 2019 and 2024, ŠÚ SR: the package of each
+# round, from https://volby.statistics.sk/prez/prez2019/sk/download.html
+# (XLSX only) and /prez/prez2024/sk/subory_na_stiahnutie.html (CSV, UTF-8).
+# Each holds the round's candidates (tab0a), the territorial division
+# (tab0c in 2019, tab0b in 2024) and the results
+# (src/election_map_slovakia/lists.py, national.py). Final releases, so
+# pinned.
+
+[input.results-prez2019-1]
+url = "https://volby.statistics.sk/prez/prez2019/files/PRE_2019_KOLO1_xlsx.zip"
+file = "PRE_2019_KOLO1_xlsx.zip"
+kind = "zip"
+sha256 = "d2ba40956746d3237ff91360e674ce136544292809cf078268852c24b3b4de5f"
+retrieved = 2026-10-31
+members = ["PRE_2019_KOLO1_tab0a.xlsx", "PRE_2019_tab0c.xlsx", "PRE_2019_KOLO1_tab01.xlsx", "PRE_2019_KOLO1_tab02d.xlsx", "PRE_2019_KOLO1_tab02e.xlsx", "PRE_2019_KOLO1_tab03a.xlsx", "PRE_2019_KOLO1_tab03e.xlsx", "PRE_2019_KOLO1_tab03f.xlsx"]
+
+[input.results-prez2019-2]
+url = "https://volby.statistics.sk/prez/prez2019/files/PRE_2019_KOLO2_xlsx.zip"
+file = "PRE_2019_KOLO2_xlsx.zip"
+kind = "zip"
+sha256 = "e0c7f65b6045a903dd6dbbd1de2510546473a4f75dce592e9a31a23a1fdc375a"
+retrieved = 2026-10-31
+members = ["PRE_2019_KOLO2_tab0a.xlsx", "PRE_2019_KOLO2_tab01.xlsx", "PRE_2019_KOLO2_tab02d.xlsx", "PRE_2019_KOLO2_tab02e.xlsx", "PRE_2019_KOLO2_tab03a.xlsx", "PRE_2019_KOLO2_tab03e.xlsx", "PRE_2019_KOLO2_tab03f.xlsx"]
+
+[input.results-prez2024-1]
+url = "https://volby.statistics.sk/prez/prez2024/files/kolo1/PREZ2024_kolo1_SK_csv.zip"
+file = "PREZ2024_kolo1_SK_csv.zip"
+kind = "zip"
+sha256 = "b63784cd11c07f65408ec8543218e4dc08aa3ca9b3f35cc649695e619071e5b7"
+retrieved = 2026-10-31
+members = ["PREZ2024_kolo1_SK_tab0a.csv", "PREZ2024_kolo1_SK_tab0b.csv", "PREZ2024_kolo1_SK_tab01.csv", "PREZ2024_kolo1_SK_tab02d.csv", "PREZ2024_kolo1_SK_tab02e.csv", "PREZ2024_kolo1_SK_tab03a.csv", "PREZ2024_kolo1_SK_tab03e.csv", "PREZ2024_kolo1_SK_tab03f.csv"]
+
+[input.results-prez2024-2]
+url = "https://volby.statistics.sk/prez/prez2024/files/kolo2/PREZ2024_kolo2_SK_csv.zip"
+file = "PREZ2024_kolo2_SK_csv.zip"
+kind = "zip"
+sha256 = "4b20907cff3c80271c2688987b288c0b1247d0ab66267a2547124a7f36e05c4d"
+retrieved = 2026-10-31
+members = ["PREZ2024_kolo2_SK_tab0a.csv", "PREZ2024_kolo2_SK_tab01.csv", "PREZ2024_kolo2_SK_tab02d.csv", "PREZ2024_kolo2_SK_tab02e.csv", "PREZ2024_kolo2_SK_tab03a.csv", "PREZ2024_kolo2_SK_tab03e.csv", "PREZ2024_kolo2_SK_tab03f.csv"]
+
+# The referendums of 21 January 2023 and 4 July 2026, ŠÚ SR: the question
+# (tab0a), the territorial division (tab0b) and the results, from
+# https://volby.statistics.sk/ref/ref2023/sk/subory_na_stiahnutie.html and
+# /ref/ref2026/: the XLSX tables, as the CSV ones of 2023 have coded headers
+# and those of 2026 lose the quotes of `Počet hlasov "ÁNO"`. Final
+# releases, so pinned.
+
+[input.results-ref2023]
+url = "https://volby.statistics.sk/ref/ref2023/files/REF2023_SK_xlsx.zip"
+file = "REF2023_SK_xlsx.zip"
+kind = "zip"
+sha256 = "7f8c02d3e55c4021f122e15b8caa90b2edd7cc6930e3cee880f060c7d991f1c5"
+retrieved = 2026-10-31
+members = ["REF2023_SK_tab0a.xlsx", "REF2023_SK_tab0b.xlsx", "REF2023_SK_tab01.xlsx", "REF2023_SK_tab02d.xlsx", "REF2023_SK_tab02e.xlsx", "REF2023_SK_tab03a.xlsx", "REF2023_SK_tab03e.xlsx", "REF2023_SK_tab03f.xlsx"]
+
+[input.results-ref2026]
+url = "https://volby.statistics.sk/ref/ref2026/files/REF2026_SK_xlsx.zip"
+file = "REF2026_SK_xlsx.zip"
+kind = "zip"
+sha256 = "cc610f84fea022202a965bf5ef3961ccbf10f328f396266f46d6dfc5c29de962"
+retrieved = 2026-10-31
+members = ["REF2026_SK_tab0a.xlsx", "REF2026_SK_tab0b.xlsx", "REF2026_SK_tab01.xlsx", "REF2026_SK_tab02d.xlsx", "REF2026_SK_tab02e.xlsx", "REF2026_SK_tab03a.xlsx", "REF2026_SK_tab03e.xlsx", "REF2026_SK_tab03f.xlsx"]
+
+# The municipal by-elections ("nové voľby") of the 2018–2022 term, ŠÚ SR: a
+# package per day from
+# https://volby.statistics.sk/oso/doplnkove2018/sk/download.html (XLSX), of
+# an older layout than the 2022 term's (src/election_map_slovakia/lists.py,
+# results.py): the mayoral candidates without age or occupation, only the
+# councillors elected, results per obec. Final releases, so pinned.
+
+[input.results-oso201904]
+url = "https://volby.statistics.sk/oso/doplnkove2018/files/OSO_201904_xlsx.zip"
+file = "OSO_201904_xlsx.zip"
+kind = "zip"
+sha256 = "ec1f59abfe000b98675f092fa37ce1a95df3662f629c3a4393878738ec4d89c2"
+retrieved = 2026-10-31
+members = ["OSO_201904_tab0a.xlsx", "OSO_201904_tab0b.xlsx", "OSO_201904_tab0c.xlsx", "OSO_201904_tab02ad.xlsx", "OSO_201904_tab02bd.xlsx", "OSO_201904_tab05.xlsx", "OSO_201904_tab06.xlsx"]
+
+[input.results-oso201909]
+url = "https://volby.statistics.sk/oso/doplnkove2018/files/OSO_201909_xlsx.zip"
+file = "OSO_201909_xlsx.zip"
+kind = "zip"
+sha256 = "4e27fd7ca6dc8c0315b6489b9ab554e67845e395048043e495ea8dbbf5013e88"
+retrieved = 2026-10-31
+members = ["OSO_201909_tab0a.xlsx", "OSO_201909_tab0b.xlsx", "OSO_201909_tab0c.xlsx", "OSO_201909_tab02ad.xlsx", "OSO_201909_tab02bd.xlsx", "OSO_201909_tab05.xlsx", "OSO_201909_tab06.xlsx"]
+
+[input.results-oso202010]
+url = "https://volby.statistics.sk/oso/doplnkove2018/files/OSO_202010_xlsx.zip"
+file = "OSO_202010_xlsx.zip"
+kind = "zip"
+sha256 = "7b661c33c9b29a04a317b076f0cd5a012f8470bf8e7319c919456ac38da909de"
+retrieved = 2026-10-31
+members = ["OSO_202010_tab0a.xlsx", "OSO_202010_tab0b.xlsx", "OSO_202010_tab0c.xlsx", "OSO_202010_tab02ad.xlsx", "OSO_202010_tab02bd.xlsx", "OSO_202010_tab05.xlsx", "OSO_202010_tab06.xlsx"]
+
+[input.results-oso202105]
+url = "https://volby.statistics.sk/oso/doplnkove2018/files/OSO_202105_xlsx.zip"
+file = "OSO_202105_xlsx.zip"
+kind = "zip"
+sha256 = "459034eccb2d66bd56acc5df74afe3e334988adca1258f40f4d4bbdbbcefe4d8"
+retrieved = 2026-10-31
+members = ["OSO_202105_tab0a.xlsx", "OSO_202105_tab0b.xlsx", "OSO_202105_tab0c.xlsx", "OSO_202105_tab02ad.xlsx", "OSO_202105_tab02bd.xlsx", "OSO_202105_tab05.xlsx", "OSO_202105_tab06.xlsx"]
+
+[input.results-oso202110]
+url = "https://volby.statistics.sk/oso/doplnkove2018/files/OSO_202110_xlsx.zip"
+file = "OSO_202110_xlsx.zip"
+kind = "zip"
+sha256 = "b583def05f79dec06380ee5369e70709f223ac6fe91d3015ab373c54eb4b721b"
+retrieved = 2026-10-31
+members = ["OSO_202110_tab0a.xlsx", "OSO_202110_tab0b.xlsx", "OSO_202110_tab0c.xlsx", "OSO_202110_tab02ad.xlsx", "OSO_202110_tab02bd.xlsx", "OSO_202110_tab05.xlsx", "OSO_202110_tab06.xlsx"]
+
+[input.results-oso202203]
+url = "https://volby.statistics.sk/oso/doplnkove2018/files/OSO_202203_xlsx.zip"
+file = "OSO_202203_xlsx.zip"
+kind = "zip"
+sha256 = "741654c7c886dd31f4f93da60b740c3f1d94db7cacb179d8e6ad0cf73b1a5d2d"
+retrieved = 2026-10-31
+members = ["OSO_202203_tab0a.xlsx", "OSO_202203_tab0b.xlsx", "OSO_202203_tab0c.xlsx", "OSO_202203_tab02ad.xlsx", "OSO_202203_tab02bd.xlsx", "OSO_202203_tab05.xlsx", "OSO_202203_tab06.xlsx"]
+
+# The elections to the European Parliament of 2019 and 2024 and to the
+# National Council of 2020 and 2023, ŠÚ SR: one package each, from
+# https://volby.statistics.sk/ep/ep<year>/ and /nrsr/nrsr<year>/, with the
+# ballot subjects (tab0a), their lists (tab0b), the territorial division
+# (tab0c) and the results (src/election_map_slovakia/lists.py, national.py).
+# NR SR 2020's XLSX package, as its CSV one lacks tab07e. Final releases,
+# so pinned.
+
+[input.results-ep2019]
+url = "https://volby.statistics.sk/ep/ep2019/files/EP_2019_SK_xlsx.zip"
+file = "EP_2019_SK_xlsx.zip"
+kind = "zip"
+sha256 = "98f70cd3a714a98a0e85d7e1ec5eb6bb2ef0bd627da6e5806eccb7a5351a29a5"
+retrieved = 2026-10-31
+members = ["EP_2019_SK_tab0a.xlsx", "EP_2019_SK_tab0b.xlsx", "EP_2019_SK_tab0c.xlsx", "EP_2019_SK_tab01.xlsx", "EP_2019_SK_tab02d.xlsx", "EP_2019_SK_tab02e.xlsx", "EP_2019_SK_tab03a.xlsx", "EP_2019_SK_tab03e.xlsx", "EP_2019_SK_tab03f.xlsx", "EP_2019_SK_tab04.xlsx", "EP_2019_SK_tab06.xlsx", "EP_2019_SK_tab07a.xlsx", "EP_2019_SK_tab07e.xlsx"]
+
+[input.results-nrsr2020]
+url = "https://volby.statistics.sk/nrsr/nrsr2020/files/NRSR_2020_SK_xlsx.zip"
+file = "NRSR_2020_SK_xlsx.zip"
+kind = "zip"
+sha256 = "7b0ad187663af48490cfb4b477e410272ecd69a5ab3e446edd2c904482829c52"
+retrieved = 2026-10-31
+members = ["NRSR_2020_SK_tab0a.xlsx", "NRSR_2020_SK_tab0b.xlsx", "NRSR_2020_SK_tab0c.xlsx", "NRSR_2020_SK_tab01.xlsx", "NRSR_2020_SK_tab02d.xlsx", "NRSR_2020_SK_tab02e.xlsx", "NRSR_2020_SK_tab03a.xlsx", "NRSR_2020_SK_tab03e.xlsx", "NRSR_2020_SK_tab03f.xlsx", "NRSR_2020_SK_tab04.xlsx", "NRSR_2020_SK_tab06.xlsx", "NRSR_2020_SK_tab07a.xlsx", "NRSR_2020_SK_tab07e.xlsx"]
+
+[input.results-nrsr2023]
+url = "https://volby.statistics.sk/nrsr/nrsr2023/files/NRSR2023_SK_csv.zip"
+file = "NRSR2023_SK_csv.zip"
+kind = "zip"
+sha256 = "c1188fa9ae3117fa608b028d2bbc1838369917fe17551863c83aaf366c98ff74"
+retrieved = 2026-10-31
+members = ["NRSR2023_SK_tab0a.csv", "NRSR2023_SK_tab0b.csv", "NRSR2023_SK_tab0c.csv", "NRSR2023_SK_tab01.csv", "NRSR2023_SK_tab02d.csv", "NRSR2023_SK_tab02e.csv", "NRSR2023_SK_tab03a.csv", "NRSR2023_SK_tab03e.csv", "NRSR2023_SK_tab03f.csv", "NRSR2023_SK_tab04.csv", "NRSR2023_SK_tab06.csv", "NRSR2023_SK_tab07a.csv", "NRSR2023_SK_tab07e.csv"]
+
+[input.results-ep2024]
+url = "https://volby.statistics.sk/ep/ep2024/files/EP2024_SK_csv.zip"
+file = "EP2024_SK_csv.zip"
+kind = "zip"
+sha256 = "95f3303d22857a9b23f313d85ecd14fbb4e2a6f9a87c20cb9af975a57fd6b325"
+retrieved = 2026-10-31
+members = ["EP2024_SK_tab0a.csv", "EP2024_SK_tab0b.csv", "EP2024_SK_tab0c.csv", "EP2024_SK_tab01.csv", "EP2024_SK_tab02d.csv", "EP2024_SK_tab02e.csv", "EP2024_SK_tab03a.csv", "EP2024_SK_tab03e.csv", "EP2024_SK_tab03f.csv", "EP2024_SK_tab04.csv", "EP2024_SK_tab06.csv", "EP2024_SK_tab07a.csv", "EP2024_SK_tab07e.csv"]
+
+# The municipal elections of 10 November 2018 and the regional ones of
+# 4 November 2017 (held apart until 2022), ŠÚ SR: the packages of
+# https://volby.statistics.sk/oso/oso2018/sk/download.html and
+# /osk/osk2017/sk/download.html (XLSX), read by
+# src/election_map_slovakia/statoffice.py. The 2018 package counts okrsky
+# and lists every council candidate only for the obce ŠÚ SR counted by
+# okrsok (the okrsky package); elsewhere only the councillors elected.
+# Final releases, so pinned.
+
+[input.results-oso2018]
+url = "https://volby.statistics.sk/oso/oso2018/files/OSO_2018_xlsx.zip"
+file = "OSO_2018_xlsx.zip"
+kind = "zip"
+sha256 = "403f7a1bb3d4e4397b8307d951b70c3aae573723a0a4fc5df1eb369811a281e5"
+retrieved = 2026-10-31
+members = ["OSO_2018_tab01.xlsx", "OSO_2018_tab02aa.xlsx", "OSO_2018_tab02ab.xlsx", "OSO_2018_tab02ac.xlsx", "OSO_2018_tab02ad.xlsx", "OSO_2018_tab02ax.xlsx", "OSO_2018_tab02ba.xlsx", "OSO_2018_tab02bb.xlsx", "OSO_2018_tab02bc.xlsx", "OSO_2018_tab02bd.xlsx", "OSO_2018_tab02bx.xlsx", "OSO_2018_tab02ca.xlsx", "OSO_2018_tab02cb.xlsx", "OSO_2018_tab02cx.xlsx", "OSO_2018_tab03a1.xlsx", "OSO_2018_tab03a2.xlsx", "OSO_2018_tab03b1.xlsx", "OSO_2018_tab03b2.xlsx", "OSO_2018_tab03c1.xlsx", "OSO_2018_tab03c2.xlsx", "OSO_2018_tab03d1.xlsx", "OSO_2018_tab03d2.xlsx", "OSO_2018_tab04.xlsx", "OSO_2018_tab05.xlsx", "OSO_2018_tab06.xlsx", "OSO_2018_tab06d.xlsx", "OSO_2018_tab07.xlsx", "OSO_2018_tab0a.xlsx", "OSO_2018_tab0b.xlsx", "OSO_2018_tab0c.xlsx", "OSO_2018_tab_info.xlsx"]
+
+[input.results-oso2018-okrsky]
+url = "https://volby.statistics.sk/oso/oso2018/files/OSO_2018_okrsky-xlsx.zip"
+file = "OSO_2018_okrsky-xlsx.zip"
+kind = "zip"
+sha256 = "da964107a22133fe47cd2ad9b5a09d9ea4bd4f0a04c8e8173851e00b57b71786"
+retrieved = 2026-10-31
+members = ["OSO_2018_tab02be.xlsx", "OSO_2018_tab02bf.xlsx", "OSO_2018_tab05e.xlsx", "OSO_2018_tab05f.xlsx", "OSO_2018_tab08e.xlsx", "OSO_2018_tab08f.xlsx", "OSO_2018_tab0d.xlsx", "OSO_2018_tab0e.xlsx", "OSO_2018_tab_okrsky_info.xlsx"]
+
+[input.results-osk2017]
+url = "https://volby.statistics.sk/osk/osk2017/files/OSK_2017_xlsx.zip"
+file = "OSK_2017_xlsx.zip"
+kind = "zip"
+sha256 = "ceba1309a562aaa99910d54d7dfeaa8777412842cc3f7bdab15a5a89e70fc5f0"
+retrieved = 2026-10-31
+members = ["OSK_2017_tab01.xlsx", "OSK_2017_tab02a.xlsx", "OSK_2017_tab02b.xlsx", "OSK_2017_tab02c.xlsx", "OSK_2017_tab02d.xlsx", "OSK_2017_tab03.xlsx", "OSK_2017_tab04a.xlsx", "OSK_2017_tab04b.xlsx", "OSK_2017_tab04c.xlsx", "OSK_2017_tab06b.xlsx", "OSK_2017_tab06c.xlsx", "OSK_2017_tab06d.xlsx", "OSK_2017_tab06e.xlsx", "OSK_2017_tab09c.xlsx", "OSK_2017_tab09d.xlsx", "OSK_2017_tab09e.xlsx", "OSK_2017_tab0ab.xlsx", "OSK_2017_tab0bc.xlsx", "OSK_2017_tab0ca.xlsx", "OSK_2017_tab0da.xlsx", "OSK_2017_tab0db.xlsx", "OSK_2017_tab0dc.xlsx", "OSK_2017_tab0e1.xlsx", "OSK_2017_tab0e2.xlsx", "OSK_2017_tab12.xlsx", "OSK_2017_tab15.xlsx"]
+
+# Regional council constituencies of 2017, one announcement per kraj, the
+# sources of data/curated/elections/2017-11-04/obvody/zsk-*.toml (whose
+# membership and seats are ŠÚ SR's tab0dc and tab0db). Records only, so
+# optional. Žilina's was a Word document, of no kind here: its file header
+# names it.
+
+[input.zsk-obvody-ba-2017]
+url = "https://web.archive.org/web/20170909191513id_/http://www.region-bsk.sk:80/ViewFile.aspx?docid=10067980"
+file = "zsk-obvody-ba-2017.pdf"
+kind = "pdf"
+sha256 = "fb8486f57c50f64495fc84cbc7e238cdc996c41dddbafe730b7bf9b5a70bacbc"
+retrieved = 2026-10-31
+optional = true
+
+[input.zsk-obvody-tt-2017]
+url = "https://osam.trnava-vuc.sk/OSamApi/fileDownloadDZ/e1d8972b-92d2-4ae5-a26f-e8911762187d"
+file = "zsk-obvody-tt-2017.zip"
+kind = "zip"
+sha256 = "9b7a527d62aedd39624e0e2469a987fb4d0704fa92f219a4425bd69124e2e0b0"
+retrieved = 2026-10-31
+members = ["Uznesenia/24. riadne - uznesenia.pdf", "Uznesenia/Príloha k Uzneseniu - volebné obvody.pdf"]
+optional = true
+
+[input.zsk-obvody-tn-2017]
+url = "https://www.tsk.sk/trenciansky-samospravny-kraj/zastupitelstvo-trencianskeho-samospravneho-kraja/volby-do-organov-samospravneho-kraja-2017/oznamenie-o-volebnych-obvodoch-pocte-poslancov-a-sidlach-volebnych-komisii.html?page_id=422823"
+file = "zsk-obvody-tn-2017.html"
+kind = "html"
+sha256 = "a02d790a43b422145efbd864f31d7b5e839ae723e4eab4e74925912fd423f921"
+retrieved = 2026-10-31
+expect = "volebn"
+optional = true
+
+[input.zsk-obvody-nr-2017]
+url = "https://www.unsk.sk/Files/ShowFile/29685"
+file = "zsk-obvody-nr-2017.pdf"
+kind = "pdf"
+sha256 = "9ccf19d101b47649e5bb7acdae0a04b725a74f639fa078037cbf685a80d78221"
+retrieved = 2026-10-31
+optional = true
+
+[input.zsk-obvody-bb-2017]
+url = "https://web.archive.org/web/20220401084108id_/https://www.vucbb.sk/Portals/0/VOLBY%202017/363_2017_uznesenie.pdf"
+file = "363_2017_uznesenie.pdf"
+kind = "pdf"
+sha256 = "258bee05716c65ec9e29e54d7d7b3e26922b4c5d9e97e978f92fa967096199f2"
+retrieved = 2026-10-31
+optional = true
+
+[input.zsk-obvody-po-2017]
+url = "https://psk.sk/files/samosprava/volby/volby_2017/volby-2017_uzn-547-2017_volebne-obvody.pdf"
+file = "volby-2017_uzn-547-2017_volebne-obvody.pdf"
+kind = "pdf"
+sha256 = "11fba2f1915bde4d029f82a6b2e75cde00d3d95fbd0e07ae2337439737a6bc9e"
+retrieved = 2026-10-31
+optional = true
+
+[input.zsk-obvody-ke-2017]
+url = "https://web.archive.org/web/20230325223622id_/https://web.vucke.sk/files/dokumenty/zastupitelstvo/volby-2017/uznesenie-c-511.pdf"
+file = "uznesenie-c-511.pdf"
+kind = "pdf"
+sha256 = "b7342680f2627e6b48e1436a58d2d6577387623aa7971372a3394b366d0c6094"
+retrieved = 2026-10-31
+optional = true
+
+[input.osm-slovakia-2017]
+url = "https://download.geofabrik.de/europe/slovakia-170101.osm.pbf"
+file = "slovakia-170101.osm.pbf"
+kind = "pbf"
+sha256 = "d60ba35bfa609bf2cf2e0525f563c730c430de4693984d62a2e4ed5a5094a92a"
+retrieved = 2026-10-31
+as_of = "2017-01-01"
+
+[input.osm-slovakia-2018]
+url = "https://download.geofabrik.de/europe/slovakia-180101.osm.pbf"
+file = "slovakia-180101.osm.pbf"
+kind = "pbf"
+sha256 = "2bc7d39f6b153a14ca6de36969aa29074649c612d5d98062c160f76e8cf16127"
+retrieved = 2026-10-31
+as_of = "2018-01-01"

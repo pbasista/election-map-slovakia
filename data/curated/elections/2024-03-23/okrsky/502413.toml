@@ -1,0 +1,51 @@
+# Okrsky of Kalná nad Hronom, transcribed by an AI agent in job okrsok-rules-4336 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov bývajúcich na ulici: 29.augusta, Dlhá, Krátka, Mieru, Mlynská, Ružová, Úzka, Školská, Viničná.
+#   okrsok 2: pre voličov bývajúcich na ulici: Červenej armády, Nitrianska, Nová, Komenského, Tekovská, SNP, Hronská, Júliusa Fučíka, Mochovská, Záhradná, Holubia, Kpt. Nálepku, Slnečná.
+obec = "502413"
+name = "Kalná nad Hronom"
+okrsky_date = 2024-01-26
+okrsky_fill = "nearest"
+okrsky_note = "The document omits the register street Nádražná (1 address) and the addresses without a street in the parts Kalná and Kalnica (numbered by súpisné číslo); these take the okrsok of the nearest placed address (fill_nearest). The part Mochovce is inferred into okrsok 2 (see its rule). Both polling stations are at Nitrianska 6."
+
+[[document]]
+url = "https://www.kalna.eu/modules/file_storage/download.php?file=0c19bf22%7C5006&inline=1"
+sha256 = "28007224f1af730e2135409b60282b0ae0057668aec35271245534f7dd5e8ef7"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností"
+
+[[document]]
+url = "https://www.kalna.eu/volby-prezidenta-slovenskej-republiky-2024/oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti/"
+sha256 = "b2e8c97fb8f5a1940e202b6d4dc039a1c7cbb6de2f9bb89294cb29828ef8b2c0"
+title = "Voľby prezidenta Slovenskej republiky 2024 – Oznámenie o utvorení volebných okrskov a určení volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "29.augusta"},
+  {street = "Dlhá"},
+  {street = "Krátka"},
+  {street = "Mieru"},
+  {street = "Mlynská"},
+  {street = "Ružová"},
+  {street = "Úzka"},
+  {street = "Školská"},
+  {street = "Viničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Červenej Armády", written = "Červenej armády"},
+  {street = "Nitrianska"},
+  {street = "Nová"},
+  {street = "Komenského"},
+  {street = "Tekovská"},
+  {street = "SNP"},
+  {street = "Hronská"},
+  {street = "Júliusa Fučíka"},
+  {street = "Mochovská cesta", written = "Mochovská", note = "The register names the street Mochovská cesta; the document leaves out 'cesta'; no other street of the obec is called Mochovská."},
+  {street = "Záhradná"},
+  {street = "Holubia"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Slnečná"},
+  {part = "Mochovce", note = "The document names no settlement; the part Mochovce (addresses without a street) lies beyond Kalnica, reached by Mochovská cesta, which the document puts in okrsok 2.", inferred = true},
+]

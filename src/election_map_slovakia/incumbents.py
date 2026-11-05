@@ -43,16 +43,14 @@ cities of Bratislava and Košice.
 
 from __future__ import annotations
 
-import csv
 import datetime as dt
-import io
 import zipfile
 from collections import Counter, defaultdict
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from election_map_slovakia import candidates, xlsx
+from election_map_slovakia import candidates, contests, tables
 from election_map_slovakia.config import Incumbents
 
 ROLES = ("starosta", "oz", "predseda", "zsk")
@@ -599,24 +597,21 @@ def _member(z: zipfile.ZipFile, path: Path, table: str, suffix: str) -> bytes:
 def _csv(z: zipfile.ZipFile, path: Path, table: str) -> list[dict[str, str]]:
     """Return the rows of a CSV table (UTF-8, ``|``-separated, with header)."""
     text = _member(z, path, table, ".csv").decode("utf-8-sig")
-    return list(csv.DictReader(io.StringIO(text), delimiter="|"))
+    return tables.dict_rows(text, "|")
 
 
 def _xlsx(z: zipfile.ZipFile, path: Path, table: str) -> list[dict[str, str]]:
     """Return the rows of an XLSX table, columns renamed by :data:`_COLUMNS`.
 
-    Each table has title rows above its header, which starts with the kraj.
+    Read as :mod:`election_map_slovakia.tables` reads ŠÚ SR's tables, the
+    candidate lists of a by-election among them (:mod:`election_map_slovakia.lists`).
     """
-    data = _member(z, path, table, ".xlsx")
+    name = f"{path.name} {table}.xlsx"
     try:
-        header, rows = xlsx.find_header(xlsx.read_rows(io.BytesIO(data)), "Kód kraja")
-        names = [_COLUMNS.get(candidates.clean(h), h) for h in header]
-        return [
-            {n: row[i] if i < len(row) else "" for i, n in enumerate(names)}
-            for row in rows
-        ]
-    except xlsx.XlsxError as e:
-        raise IncumbentsError(f"{path} {table}: {e}") from e
+        rows = tables.parse(name, _member(z, path, table, ".xlsx")).rows
+    except tables.TableError as e:
+        raise IncumbentsError(str(e)) from e
+    return [{_COLUMNS.get(k, k): v for k, v in row.items()} for row in rows]
 
 
 @dataclass
@@ -636,7 +631,7 @@ class Incumbency:
 class _Person:
     person: candidates.Person
     name: tuple[str, str]
-    age: int
+    age: int | None
     areas: set[str]
     """Contest areas and residences of its candidacies."""
     kraje: set[str]
@@ -700,7 +695,7 @@ def _index_persons(
         cs = [by_id[cid] for cid in p.candidacies]
         e = cs[0].entry
         kraje = {
-            admin.obce[c.area].kraj if c.kind in candidates.MUNICIPAL else c.area
+            admin.obce[c.area].kraj if c.kind in contests.MUNICIPAL else c.area
             for c in cs
         }
         info = _Person(
@@ -735,10 +730,15 @@ def _options(
     """Return the persons of *named* that may be *h*.
 
     An age off by a year more is taken for the lists' error only when nobody
-    of the exact age fits.
+    of the exact age fits; a person of unknown age (a by-election's package
+    of 2019–2022 gives none) fits no holder.
     """
     for slack in AGE_SLACK:
-        options = [p for p in named if age_fits(h.age, h.since, p.age, election, slack)]
+        options = [
+            p
+            for p in named
+            if p.age is not None and age_fits(h.age, h.since, p.age, election, slack)
+        ]
         options = _narrow(h, options, admin, residences)
         if options:
             return options
@@ -752,7 +752,7 @@ def _narrow(
     residences: Mapping[tuple[str, str], set[str]],
 ) -> list[_Person]:
     """Return the persons of *options* in the holder's area; see the module doc."""
-    if h.kind in candidates.MUNICIPAL:
+    if h.kind in contests.MUNICIPAL:
         merge = candidates.merge_area(admin, h.area)
         options = [p for p in options if p.person.obec == merge]
         if len(options) > 1:

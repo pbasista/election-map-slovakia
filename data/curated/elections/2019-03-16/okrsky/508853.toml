@@ -1,0 +1,52 @@
+# Okrsky of Podbrezová, transcribed by an AI agent in job okrsok-rules-1240 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Lopej – ul. Belohrad, Čelno, Dolná, Družby, Hámor, Murgašova, Partizánska, Pod Grapľom, Vajsková a Skalica
+#   okrsok 2: Podbrezová – ulice Sládkovičova, Šupkova, Kolkáreň, Bendička, Smreková, Švermov rad, Štúrov rad, ul. Hviezdoslavova, ul. Chalupkova
+#   okrsok 3: Štiavnička, Chvatimech
+obec = "508853"
+name = "Podbrezová"
+okrsky_note = "The document names the parts Lopej, Podbrezová, Štiavnička, Chvatimech, Vajsková and Skalica; addresses without a street are placed by their part."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2019-01-28
+okrsky_date_basis = "The municipality's page of the 2019 presidential election (archived 2019-08-19) carries the okrsky in its \"Informácie pre voliča\" notice, marked \"Zverejnené 28.1.2019\"; the notice itself states no decision date. (https://web.archive.org/web/20190819062930/https://www.podbrezova.sk/volby-prezidenta-sr-2019.html)"
+
+[[document]]
+url = "https://web.archive.org/web/20190819062930/https://www.podbrezova.sk/volby-prezidenta-sr-2019.html"
+sha256 = "b1c748d0fb118e92bb6f7882cb3fc0a9fabbcfb1f1ae091b0c618ca2ff4c74a9"
+title = "Informácie pre voliča – voľba prezidenta SR 2019: V obci Podbrezová boli určené tri volebné okrsky (zverejnené 28.1.2019)"
+
+[okrsok.1]
+rules = [
+  {part = "Lopej"},
+  {street = "Belohrad"},
+  {street = "Čelno"},
+  {street = "Dolná"},
+  {street = "Družby"},
+  {street = "Hámor"},
+  {street = "Jozefa Murgaša", written = "Murgašova", note = "The document writes \"Murgašova\"; the register's only street named after Murgaš is Jozefa Murgaša in Lopej, and later documents write Jozefa Murgaša."},
+  {street = "Partizánska"},
+  {street = "Pod Grapľom"},
+  {part = "Vajsková"},
+  {part = "Skalica"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Podbrezová"},
+  {street = "Sládkovičova"},
+  {street = "Šupkova"},
+  {street = "Kolkáreň"},
+  {street = "Bendíčka", written = "Bendička", note = "Written without the long í; the same street (register Bendíčka)."},
+  {street = "Smreková"},
+  {street = "Švermov rad"},
+  {street = "Štúrov rad"},
+  {street = "Hviezdoslavova"},
+  {street = "Chalupkova"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Štiavnička"},
+  {part = "Chvatimech"},
+]

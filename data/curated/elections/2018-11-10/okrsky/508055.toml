@@ -1,0 +1,25 @@
+# Okrsky of Lozorno, transcribed by an AI agent in job okrsok-rules-690 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Pre oprávnených občanov bývajúcich v obci Lozorno so súp. č. 1 – 600
+#   okrsok 2: Pre oprávnených občanov bývajúcich v obci Lozorno so súp. č. 601 – vyššie
+obec = "508055"
+name = "Lozorno"
+okrsky_note = "The document, a notice for the elections of 10 November 2018, gives okrsok 1 súp. č. 1-600 and okrsok 2 súp. č. 601 and higher; the rules apply these ranges to every address of the part Lozorno. No separate mayor's decision on the okrsky of 2018 is archived."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document (the municipality's notice of the municipal elections, linked from its old Voľby page) names the elections of 10 November 2018 and their okrsky; it states no decision date."
+
+[[document]]
+url = "https://web.archive.org/web/20190915074631/http://www.lozorno.sk/documents/dokumenty32/sub41/Volby2018.pdf"
+sha256 = "9651e79cf4bad75ade6e5160ff8ca18ab2448aa32a7682d622d93d8e26cdf699"
+title = "Voľby do orgánov samosprávy obce 10. novembra 2018 (oznam s okrskami)"
+
+[okrsok.1]
+rules = [
+  {part = "Lozorno", numbers = "1-600"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lozorno", numbers = "601-"},
+]

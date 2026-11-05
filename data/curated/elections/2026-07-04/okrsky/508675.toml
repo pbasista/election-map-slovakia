@@ -1,0 +1,25 @@
+# Okrsky of Brusno, transcribed by an AI agent in job okrsok-rules-5669 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: OKRSOK č. 1 pre občanov časti obce Brusno
+#   okrsok 2: OKRSOK č. 2 pre občanov časti obce Ondrej nad Hronom
+obec = "508675"
+name = "Brusno"
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document is undated; its heading names the referendum of 4 July 2026."
+
+[[document]]
+url = "https://www.brusno.sk/download_file_f.php?id=2404612"
+sha256 = "b47c5ec964b4f23cdcda62f7a567a7890c14ec0bb645d72991958d60a4394023"
+title = "Referendum 4. júla 2026 – Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Brusno"},
+  {part = "Brusno-kúpele", note = "The document names only the parts Brusno and Ondrej nad Hronom; the register's part Brusno-kúpele (7 addresses on Kúpeľná, the spa within Brusno beside part Brusno) is placed with Brusno.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Ondrej nad Hronom"},
+]

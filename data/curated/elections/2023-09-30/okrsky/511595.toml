@@ -1,0 +1,27 @@
+# Okrsky of Málinec, transcribed by an AI agent in job okrsok-rules-3887 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov od súp.č. 1 – 350 + časti obce Hámor, Dobrý Potok, Ipeľ, Vlčovo
+#   okrsok 2: pre voličov od súp.č. 351 - 520
+obec = "511595"
+name = "Málinec"
+okrsky_date = 2023-06-23
+okrsky_note = "The document divides by súpisné číslo (1–350 / 351–520) plus the parts Hámor, Dobrý Potok, Ipeľ, Vlčovo in okrsok 1. The numbers are applied to part Málinec; okrsok 2 is the rest (351–520 and anything else, incl. part Chladná Studňa, whose súpisné čísla lie above 350). Hámor is not a part in the register (left out)."
+
+[[document]]
+url = "https://malinec.sk/wp-content/uploads/2023/06/Oznam-o-utvoreni-volebnych-okrskov.pdf"
+sha256 = "de95f0804ec966ab7143aa4b25bbeedb72f158af84d9da4d62f6a104340b8b49"
+title = "Informácia o utvorení volebných okrskov v obci Málinec – Voľby do NRSR 30.9.2023"
+
+[okrsok.1]
+rules = [
+  {part = "Málinec", numbers = "1-350"},
+  {part = "Dobrý Potok"},
+  {part = "Ipeľ"},
+  {part = "Vlčovo"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

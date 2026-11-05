@@ -1,0 +1,24 @@
+# Okrsky of Brezovica, transcribed by an AI agent in job okrsok-rules-3886 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 - do súp. č. 320
+#   okrsok 2: Volebný okrsok č. 2 – od súp. č. 321
+obec = "524239"
+name = "Brezovica"
+okrsky_date = 2023-06-20
+okrsky_note = "The mayor's decision of 20.06.2023 for the National Council election 2023: okrsok 1 up to súpisné č. 320, okrsok 2 from 321."
+
+[[document]]
+url = "https://web.archive.org/web/20230629191452/http://brezovicanadtorysou.sk/images/dokumenty/aktuality/vytvorenie_vo_avm.pdf"
+sha256 = "151d24a29fd9038327b0c9c291e5c511ed218645fa1d370f72547af49c27ecfe"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do NR SR v roku 2023"
+
+[okrsok.1]
+rules = [
+  {part = "Brezovica", numbers = "1-320"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Brezovica", numbers = "321-"},
+]

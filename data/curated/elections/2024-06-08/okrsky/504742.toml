@@ -1,0 +1,27 @@
+# Okrsky of Radošovce, transcribed by an AI agent in job okrsok-rules-5043 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre občanov bývajúcich v Radošovciach na súp. č. 1 - 316
+#   okrsok 2: pre občanov bývajúcich v časti Vieska od súp. č. 1 - 202 a občanov Radošoviec od súp. č. 317 – 475
+obec = "504742"
+name = "Radošovce"
+okrsky_note = "Vieska taken whole (document: súp. č. 1–202, i.e. all of it); Radošovce súp. č. 317–475 given as open range 317- so newer higher numbers also fall into okrsok 2."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-02-22
+okrsky_date_basis = "The municipality's document page https://radosovce.sk/dokument/volebne-okrsky/ states 'Zverejnené 22. februára 2024', before the vote; the document itself names the European Parliament election of 8 June 2024 but states no decision date. (https://radosovce.sk/dokument/volebne-okrsky/)"
+
+[[document]]
+url = "https://radosovce.sk/wp-content/uploads/dokumenty/volby-do-europarlamentu/volebne-okrsky-vytvorenie-52x0tc.docx"
+sha256 = "eaf39ac4a0bc9bdcc1585a70253c7ed46b1e01e9cb4d70a5be259beb7970e2af"
+title = "Utvorenie volebných okrskov a určenie volebných miestností na konanie volieb do Európskeho parlamentu"
+
+[okrsok.1]
+rules = [
+  {part = "Radošovce", numbers = "1-316"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vieska"},
+  {part = "Radošovce", numbers = "317-"},
+]

@@ -1,0 +1,133 @@
+# Council obvody of Medzilaborce (520471), Medzilaborce.
+# Transcribed by an AI agent in job obvod-rules-110 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1: 5 poslancov (ulice: Komenského, Cintorínska, gen. Svobodu, Poľná, Májová, Ševčenkova, Dobrianskeho, čsl. Armády, Zámočnícka – okrsok č. 1, 2)
+#   obvod 2: Volebný obvod č. 2: 6 poslancov (ulice: A. Warholu, Laborecká, Švermova, Fučíkova, Popradova, Kukorelliho, Duk. hrdinov, Mierová, Václavského, Duchnovičova, kpt. Nálepku, Gorkého, Tolstého, Pod úbočou, SNP – okrsok č. 3,4,5)
+#   obvod 3: Volebný obvod č. 3: 1 poslanec (miestna časť Vydraň – okrsok č. 6)
+#   obvod 4: Volebný obvod č. 4: 1 poslanec (miestna časť Borov – okrsok č. 7)
+# Okrsky added by `ems job reuse`: those of the vote of 2026-10-24, data/curated/elections/2026-10-24/obvody/oz/520471.toml, standing in.
+obec = "520471"
+name = "Medzilaborce"
+date = 2018-08-08
+fill = "nearest"
+note = "Addresses without a street in part Medzilaborce go by fill_nearest."
+okrsky_date = 2026-07-20
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky per 'volebne-okrsky-podla-ulic-a-cisel' (súpisné numbers). Split streets: Komenského and gen. Svobodu listed numbers go to okrsok 1, rest of the street to okrsok 2; Duchnovičova and kpt. Nálepku listed numbers of okrsok 4 go there, rest to okrsok 5 (okrsok 5's ranges 480–748 and 393–756 overlap okrsok 4's, so okrsok 5 takes the street remainder). Addresses without street in part Medzilaborce placed by fill_nearest."
+okrsky_adopted = 2026-10-24
+okrsky_adopted_basis = "No document of 2018-11-10 placing the addresses in okrsky is known. These are the okrsky of the vote of 2026-10-24 (2026), the nearest in time with okrsky of its own that fit: 7 okrsky (nearer, not taken: 2017-11-04: okrsky of the whole obec, the council then elected in several obvody; 2023-09-30: okrsky of the whole obec, the council then elected in several obvody; 2024-03-23: okrsky of the whole obec, the council then elected in several obvody; 2024-06-08: okrsky of the whole obec, the council then elected in several obvody; 2026-07-04: okrsky of the whole obec, the council then elected in several obvody). The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://www.medzilaborce-urad.sk/download_file_f.php?id=1205485"
+sha256 = "160a3ad8f31d54d9eafdd3d6acedb209567aea917bc4addd9d1b54d9b98fbd71"
+title = "Uznesenie MsZ v Medzilaborciach č. 23/2018 zo dňa 08.08.2018"
+
+[[document]]
+url = "https://www.medzilaborce-urad.sk/download_file_f.php?id=1205487"
+sha256 = "0e99339bbef0236c38fbd3537a4684e0193149fbf6ddcda0940b571ec0d9ac37"
+title = "Oznámenie o určení počtu poslancov a utvorení volebných obvodov (10. 11. 2018)"
+
+[[document]]
+url = "https://www.medzilaborce-urad.sk/download_file_f.php?id=1205483"
+sha256 = "ab9ba39595c6bdc3833d23e96b5916bdfe1eeff2725b80e0ecb5076b43e86521"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do orgánov samosprávy obcí konaných dňa 10.11.2018 (10.9.2018)"
+
+[obvod.1]
+seats = 5
+okrsky = [1, 2]
+rules = [
+  {street = "Komenského"},
+  {street = "Cintorínska"},
+  {street = "Generála Svobodu", written = "gen. Svobodu"},
+  {street = "Poľná"},
+  {street = "Májová"},
+  {street = "Ševčenkova"},
+  {street = "Dobrianskeho"},
+  {street = "Čsl.armády", written = "čsl. Armády"},
+  {street = "Zámočnícka"},
+]
+
+[obvod.2]
+seats = 6
+okrsky = [3, 4, 5]
+rules = [
+  {street = "Andy Warhola", written = "A. Warholu", note = "'A.' is Andy; 'Warholu' a declined form; same street"},
+  {street = "Laborecká"},
+  {street = "Švermova"},
+  {street = "Fučíkova"},
+  {street = "Popradova"},
+  {street = "Kukorelliho"},
+  {street = "Dukelských hrdinov", written = "Duk. hrdinov"},
+  {street = "Mierová"},
+  {street = "Václavského"},
+  {street = "Duchnovičova"},
+  {street = "Kpt.Nálepku", written = "kpt. Nálepku"},
+  {street = "Gorkého"},
+  {street = "Tolstého"},
+  {street = "Pod Úbočou", written = "Pod úbočou"},
+  {street = "SNP"},
+]
+
+[obvod.3]
+seats = 1
+okrsky = [6]
+rules = [
+  {part = "Vydraň"},
+  {street = "Danová", note = "Danová is not named; the resolution defines obvod 3 as okrsok č. 6, and every okrsky list from 2023 on puts 'Ulica Danová a miestna časť Vydraň' in okrsok 6.", inferred = true},
+]
+
+[obvod.4]
+seats = 1
+okrsky = [7]
+rules = [
+  {part = "Borov"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Ševčenkova"},
+  {street = "Dobrianskeho"},
+  {street = "Čsl.armády", written = "Čsl. armády"},
+  {street = "Zámočnícka"},
+  {street = "Komenského", numbers = "122-127, 134, 151", by = "supisne"},
+  {street = "Generála Svobodu", numbers = "128-130", by = "supisne", written = "gen. Svobodu"},
+  {street = "Cintorínska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Generála Svobodu", written = "gen. Svobodu"},
+  {street = "Májová"},
+  {street = "Komenského"},
+  {street = "Poľná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Andy Warhola", written = "A. Warhola"},
+  {street = "Laborecká"},
+  {street = "Švermova"},
+  {street = "Dukelských hrdinov"},
+  {street = "Fučíkova"},
+  {street = "Popradova"},
+  {street = "Kukorelliho"},
+  {street = "Mierová"},
+  {street = "Václavského"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Duchnovičova", numbers = "473-478, 530-533", by = "supisne"},
+  {street = "Gorkého"},
+  {street = "Tolstého"},
+  {street = "Kpt.Nálepku", numbers = "367-392, 436-442, 662", by = "supisne", written = "kpt. Nálepku"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Duchnovičova"},
+  {street = "Kpt.Nálepku", written = "kpt. Nálepku"},
+  {street = "Pod Úbočou"},
+  {street = "SNP"},
+]

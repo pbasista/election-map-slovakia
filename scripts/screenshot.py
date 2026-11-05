@@ -15,8 +15,9 @@ The scene: the English page in the dark theme, 1280×800 at twice the pixel
 density, Banská Bystrica clicked in its council constituency No. 1, so the
 pane lists the ballots there beside the map. Whenever it is taken, it shows
 the day before the elections: the page's clock is set to noon that day, so
-there is no voting line, and the results (/results/) are blocked, so there
-are none even in a build that reads them at any time (EMS_RESULTS_ANYTIME).
+there is no voting line, and the results (/results/, /live/) are blocked, so
+there are none even in a build that reads them at any time
+(EMS_RESULTS_ANYTIME).
 """
 
 import argparse
@@ -43,8 +44,9 @@ ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
 OUT = ROOT / "docs/img/main.png"
 ELECTIONS = ROOT / "config/elections.toml"
-# The results' files, as the shells' config names them (build.py).
-RESULTS = "*/results/*"
+# The files of the final and of the live results, as the shells' config
+# names them (build.py).
+RESULTS = ("*/results/*", "*/live/*")
 WIDTH, HEIGHT, SCALE = 1280, 800, 2
 # Banská Bystrica (obec 508438), a point in its council constituency No. 1;
 # `~`: the constituency of a clicked point, as the map marks it.
@@ -160,13 +162,14 @@ class _QuietHandler(http.server.SimpleHTTPRequestHandler):
     """Serves the parts of dist/ as one site, as `ems serve` does.
 
     Where `ems build` points the app (src/election_map_slovakia/build.py,
-    `mounts`): the bundles below /map/ and /data/, the results below /results/, the
+    `mounts`): the bundles below /map/ and /data/, the base maps below /base/,
+    the final results below /results/, the live results below /live/, the
     cached sources' files where the app has none, the app everywhere else.
     """
 
     def translate_path(self, path: str) -> str:
         rel = urllib.parse.unquote(urllib.parse.urlsplit(path).path).lstrip("/")
-        if rel.startswith(("map/", "data/", "results/")):
+        if rel.startswith(("map/", "data/", "base/", "results/", "live/")):
             return str(DIST / rel)
         app = DIST / "app" / rel
         sources = DIST / "sources" / rel
@@ -284,7 +287,7 @@ def main() -> None:
             tools.call("Page.enable")
             tools.call("Page.addScriptToEvaluateOnNewDocument", source=CLOCK % noon)
             tools.call("Network.enable")
-            tools.call("Network.setBlockedURLs", urls=[RESULTS])
+            tools.call("Network.setBlockedURLs", urls=list(RESULTS))
             tools.call("Page.navigate", url=url)
             wait_until_ready(tools, deadline)
             time.sleep(SETTLE)

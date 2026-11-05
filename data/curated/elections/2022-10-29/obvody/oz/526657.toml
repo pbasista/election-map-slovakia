@@ -1,0 +1,41 @@
+# The council obvody of Žehra of the vote of 2018-11-10, data/curated/elections/2018-11-10/obvody/oz/526657.toml, standing in, by `ems job reuse`. Its header there:
+#   Council obvody of Žehra (526657), Spišská Nová Ves.
+#   Transcribed by an AI agent in job obvod-rules-206 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: Žehra od s. č. 1 až s. č. 113, Žehra časť Hodkovce od s. č. 1 až s. č. 27
+#     obvod 2: Žehra od s. č. 114 až s. č. 180
+obec = "526657"
+name = "Žehra"
+date = 2018-08-06
+fill = "nearest"
+note = "Houses numbered outside the ranges the document gives and addresses it does not place take the okrsok of the nearest address (fill_nearest)."
+adopted = 2018-11-10
+adopted_basis = "No document of 2022-10-29 setting the obvody was found (obvod-rules-393): The 2022 obvody were set not by the council but by 'Rozhodnutie prednostu Okresného úradu Spišská Nová Ves' OU-SN-OVVS-2022/010355-1 of 08.08.2022 (published on obeczehra.sk, Komunálne voľby 2022, 'Oznámenie o určení počtu poslancov a utvorení volebných obvodov'): 9 poslancov; obvod č. 1 'Žehra – centrálna časť a Žehra – časť Hodkovce' 2 poslanci; obvod č. 2 'Žehra – sídlisko Dreveník a osada Dreveník' 7 poslancov. The okrsky announcement of 21.07.2022 (JPG) uses the same descriptions. Seats match ŠÚ SR. Not transcribable: the register's part Žehra (151 addresses, no streets) must be split between the centre (obvod 1) and the Dreveník housing estate/settlement (obvod 2), and neither document gives súpisné numbers or any other boundary; Hodkovce is wholly obvod 1. A transcription would need súpisné numbers of the Dreveník estate and settlement (not published), so no rules were guessed. These are the council obvody of the vote of 2018-11-10 (2018), the nearest in time with a rule set of its own of the same obvody and seats. Voters on the roll per obvod (ŠÚ SR), 2022-10-29 → 2018-11-10: 1: 392 → 297, 2: 1,079 → 905."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "ŠÚ SR counted one okrsok per obvod in 2022-10-29, so each is drawn as its obvod."
+
+[[document]]
+url = "https://www.obeczehra.sk/e_download.php?file=data/editor/81sk_3.pdf&original=Oznamenie.pdf"
+sha256 = "0acb2b6341871cdd24fc3d6485410c044575d7a5ceed4bb4e1106d4be22f9567"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 10. novembra 2018"
+
+[[document]]
+url = "https://www.obeczehra.sk/zverejnovanie/volby-a-referendum/do-organov-samospravy-obci-2018/"
+sha256 = "5f0958e2262db7e5124497b0aec34b683fa6b8d127a616f63f69eece382ff53c"
+title = "Do orgánov samosprávy obcí 2018"
+
+[obvod.1]
+seats = 2
+okrsky = [1]
+rules = [
+  {part = "Žehra", numbers = "1-113", by = "supisne"},
+  {part = "Hodkovce", numbers = "1-27", by = "supisne"},
+]
+
+[obvod.2]
+seats = 7
+okrsky = [2]
+rules = [
+  {part = "Žehra", numbers = "114-180", by = "supisne"},
+]

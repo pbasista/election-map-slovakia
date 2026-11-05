@@ -1,0 +1,56 @@
+# The okrsky of Dobšiná of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/525634.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Dobšiná, transcribed by an AI agent in job okrsok-rules-1824 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Rybárska, Turecká, Cintorínska, Zimná, Železničná, Mlynská, Jarková, Námestie baníkov, Hronská, Slnečná, bez adresy
+#     okrsok 2: SNP, Banská, P. J. Šafárika, Záhradná, Nová, Tri ruže, Skalná, Hnilecká, Budovateľská, Vlčia dolina, Kúpeľná, Vyše mesta, Niže mesta, Severná, Mierová, Lesná, Partizánska, Lányiho Huta, Dedičná ulica
+obec = "525634"
+name = "Dobšiná"
+okrsky_date = 2019-02-22
+okrsky_fill = "nearest"
+okrsky_note = "Streets per okrsok as the document lists them. 'bez adresy' / 'bez názvu ulice' means voters registered without an address and gets no rule. fill_nearest covers the register's addresses without a street."
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2024-06-08 setting the okrsky was found (okrsok-rules-4845): No retrievable okrsky document of this vote. The town's current website (dobsina.sk, Voľby a referendá) holds only the 2026 elections; the Internet Archive's captures of the old vote pages show okrsky notices for the referendum of 2023 (download_file_f.php?id=1761110) and the National Council election of 2023 (id=1878115), but these files are no longer on the site (404) and were not archived; for 2018, 2020, 2024, the by-elections of 2024 and 2025 and the referendum of 2026 no okrsky notice was found. These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 2 okrsky (nearer, not taken: 2026-10-24: okrsky 1–3, then 1, 2). Voters on the roll per okrsok (ŠÚ SR), 2024-06-08 → 2019-05-25: 1: 1,843 → 1,849, 2: 1,807 → 1,790."
+
+[[document]]
+url = "https://web.archive.org/web/20190717064103/https://www.dobsina.sk/download_file_f.php?id=1097873"
+sha256 = "f7baa5dcc3c86126320570c8a20d2713065b9d6926127088a00a25d331d76468"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do Európskeho parlamentu 25. 5. 2019 (V Dobšinej, 22. 2. 2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Rybárska"},
+  {street = "Turecká"},
+  {street = "Cintorínska"},
+  {street = "Zimná"},
+  {street = "Železničná"},
+  {street = "Mlynská"},
+  {street = "Jarková"},
+  {street = "Námestie Baníkov", written = "Námestie baníkov"},
+  {street = "Hronská"},
+  {street = "Slnečná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "SNP"},
+  {street = "Banská"},
+  {street = "P. J. Šafárika"},
+  {street = "Záhradná"},
+  {street = "Nová"},
+  {street = "Tri Ruže", written = "Tri ruže"},
+  {street = "Skalná"},
+  {street = "Hnilecká"},
+  {street = "Budovateľská"},
+  {street = "Vlčia Dolina", written = "Vlčia dolina"},
+  {street = "Kúpeľná"},
+  {street = "Vyše Mesta", written = "Vyše mesta"},
+  {street = "Niže Mesta", written = "Niže mesta"},
+  {street = "Severná"},
+  {street = "Mierová"},
+  {street = "Lesná"},
+  {street = "Partizánska"},
+  {street = "Lányi Huta", written = "Lányiho Huta", note = "The register has both Lányi Huta and Lányiho Huta for the settlement the document calls Lányiho Huta."},
+  {street = "Lányiho Huta"},
+  {street = "Dedičná ulica"},
+]

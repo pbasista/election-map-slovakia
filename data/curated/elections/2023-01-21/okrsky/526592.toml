@@ -1,0 +1,41 @@
+# Okrsky of Hrabušice, transcribed by an AI agent in job okrsok-rules-3236 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre oprávnených občanov bývajúcich na uliciach: Bernolákova, Jarná, Letná, Majer, Podlesok, Slovenského raja, Zimná a oprávnených voličov prihlásených na Obec Hrabušice
+#   okrsok 2: pre oprávnených občanov bývajúcich na uliciach: E. Makovického, Gaštanová, Hlavná, Píla, Hviezdoslavova, Lúčna, Nová, Obchodná, Partizánska, Tomášovská, Zelená.
+obec = "526592"
+name = "Hrabušice"
+okrsky_date = 2022-11-10
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF (Internet Archive capture of 2022-12-20), read from the image. 'oprávnených voličov prihlásených na Obec Hrabušice' (okrsok 1) are voters registered without an address. The register streets Hágy and Sokol, which the document does not name, and the addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20221220232522/https://www.hrabusice.sk/e_download.php?file=data/editor/109sk_2.pdf&original=Ur%C4%8Denie%20okrskov%20a%20volebnej%20miestnosti%20pre%20referendum%2021.1.2023.pdf"
+sha256 = "9fd5eb2931c0cb45deffd5bcf7e3b0fc947a97ca7fd34f26fb2767b92d529f8c"
+title = "Určenie okrskov a volebnej miestnosti pre referendum 21.1.2023 (V Hrabušiciach, 10.11.2022), archived"
+
+[okrsok.1]
+rules = [
+  {street = "Bernoláková", written = "Bernolákova", note = "the register spells the name Bernoláková; same street"},
+  {street = "Jarná"},
+  {street = "Letná"},
+  {street = "Majer"},
+  {street = "Podlesok"},
+  {street = "Slov. Raja", written = "Slovenského raja", note = "the register abbreviates Slovenského raja as 'Slov. Raja'"},
+  {street = "Zimná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "E.Makovického", written = "E. Makovického"},
+  {street = "Gaštanová"},
+  {street = "Hlavná"},
+  {street = "Píla"},
+  {street = "Hviezdoslavova"},
+  {street = "Lúčna"},
+  {street = "Nová"},
+  {street = "Obchodná"},
+  {street = "Partizánska"},
+  {street = "Tomášovská"},
+  {street = "Zelená"},
+]

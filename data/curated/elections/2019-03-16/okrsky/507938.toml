@@ -1,0 +1,123 @@
+# Okrsky of Ivanka pri Dunaji, transcribed by an AI agent in job okrsok-rules-1087 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulica Farnianska, Hlboká, Hollého, Hurbanova, Muškátová, Nová, Partizánska, Pekná, Pluhová, Pri pálenici, Slnečná, Štefánikova, Štúrova, Veterná, Zelená
+#   okrsok 2: ulica Dobšinského, Dlhá, Družstevná, Hlinkova, Hviezdoslavova, Jesenského, Komenského, Kvetná, Lesná, Malinová, Marhuľová, Pri jazere, Rázusova, SNP, Školská, Višňová, Záhradnícka, Za školou
+#   okrsok 3: ulica Bernolákovská, Bobuľová, Gaštanová, Grasalkovičova, Hroznová, Jabloňová, Matičná, Moyzesova, Muštová, Na vŕšku, Nádražná, Nám. sv. Rozálie, Nám. padlých hrdinov, Olšinová, Orechová, Pod záhradami, Poľovnícka, Pri trati, Pri vrbine, Révová, Stromová, Šustová, Trenčianska, Vajnorská, Vinohradská, Za kostolom, Železničiarska
+#   okrsok 4: ulica Agátová, Cintorínska, Dunajská, Jahodová, Kalinčiakova, Kmeťova, Lipová, Na výslní, Okružná, Palárikova, Poľná, Potocká, Puškinova, Ružová, Sadová, Sládkovičova, Sovia, Škultétyho, Záleská, Želiarska
+obec = "507938"
+name = "Ivanka pri Dunaji"
+okrsky_date = 2019-01-29
+okrsky_fill = "nearest"
+okrsky_note = "Decision of the mayor of 29.01.2019 for the presidential election of 16 (30) March 2019, linked from the Voľby page (posted 29.1.2019). Same okrsky as the copied 2022 rule set except that Šúrska is not listed. The live website answered HTTP 429 (rate limit), so the Internet Archive copies are listed. The register's addresses without a street (súpisné čísla only) are in no list of the document; they take the okrsok of the nearest placed address (fill_nearest)."
+okrsky_supplemented = 2023-06-26
+okrsky_supplemented_from = "document"
+okrsky_supplement_basis = "The mayor's decision of 2023-06-26 (okrsky for the National Council election of 30 September 2023) lists Šúrska (Šúrska ulica) in okrsok 2 and Senecká cesta in okrsok 3; they are taken from it, in its okrsky. The 2019 decision names neither street (26 addresses in today's register), so it leaves them unplaced. (https://web.archive.org/web/20250529013302/https://www.ivankapridunaji.sk/download_file_f.php?id=1880454)"
+
+[[document]]
+url = "https://web.archive.org/web/20221220230844/https://www.ivankapridunaji.sk/download_file_f.php?id=1081781"
+sha256 = "26f9e03dd0938284729f1148bd0f42b9ecfe80aa7005e9f0488d9826d39c6b7a"
+title = "Rozhodnutie starostu obce Ivanka pri Dunaji - Volebné okrsky na odovzdávanie hlasovacích lístkov a na sčítanie hlasov (voľba prezidenta SR 16. marca 2019)"
+
+[[document]]
+url = "https://web.archive.org/web/20250529013302/https://www.ivankapridunaji.sk/download_file_f.php?id=1880454"
+sha256 = "45ab0c9b6581cddaf096594080f2e0b3bac56bb395dec6e0d4e73453e3437c10"
+title = "Rozhodnutie starostu obce Ivanka pri Dunaji - vytvorenie volebných okrskov pre voľby do NRSR (30. septembra 2023)"
+
+[okrsok.1]
+rules = [
+  {street = "Farnianska"},
+  {street = "Hlboká"},
+  {street = "Hollého"},
+  {street = "Hurbanova"},
+  {street = "Muškátová"},
+  {street = "Nová"},
+  {street = "Partizánska"},
+  {street = "Pekná"},
+  {street = "Pluhová"},
+  {street = "Pri pálenici"},
+  {street = "Slnečná"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Veterná"},
+  {street = "Zelená"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dobšinského"},
+  {street = "Dlhá"},
+  {street = "Družstevná"},
+  {street = "Hlinkova"},
+  {street = "Hviezdoslavova"},
+  {street = "Jesenského"},
+  {street = "Komenského"},
+  {street = "Kvetná"},
+  {street = "Lesná"},
+  {street = "Malinová"},
+  {street = "Marhuľová ulica", written = "Marhuľová"},
+  {street = "Pri jazere"},
+  {street = "Rázusova"},
+  {street = "SNP"},
+  {street = "Školská"},
+  {street = "Višňová"},
+  {street = "Záhradnícka"},
+  {street = "Za školou"},
+  {street = "Šúrska ulica", supplemented = true},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bernolákovská"},
+  {street = "Bobuľová"},
+  {street = "Gaštanová"},
+  {street = "Grasalkovičova"},
+  {street = "Hroznová"},
+  {street = "Jabloňová"},
+  {street = "Matičná"},
+  {street = "Moyzesova"},
+  {street = "Muštová"},
+  {street = "Na vŕšku"},
+  {street = "Nádražná"},
+  {street = "Nám. sv. Rozálie"},
+  {street = "Námestie padlých hrdinov", written = "Nám. padlých hrdinov"},
+  {street = "Olšinová"},
+  {street = "Orechová"},
+  {street = "Pod záhradami"},
+  {street = "Poľovnícka"},
+  {street = "Pri trati"},
+  {street = "Pri vrbine"},
+  {street = "Révová"},
+  {street = "Stromová"},
+  {street = "Šustová"},
+  {street = "Trenčianska"},
+  {street = "Vajnorská"},
+  {street = "Vinohradská"},
+  {street = "Za kostolom"},
+  {street = "Železničiarska"},
+  {street = "Senecká cesta", supplemented = true},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Agátová"},
+  {street = "Cintorínska"},
+  {street = "Dunajská"},
+  {street = "Jahodová ulica", written = "Jahodová"},
+  {street = "Kalinčiakova"},
+  {street = "Kmeťova"},
+  {street = "Lipová"},
+  {street = "Na výslní"},
+  {street = "Okružná"},
+  {street = "Palárikova"},
+  {street = "Poľná"},
+  {street = "Potocká"},
+  {street = "Puškinova"},
+  {street = "Ružová"},
+  {street = "Sadová"},
+  {street = "Sládkovičova"},
+  {street = "Sovia"},
+  {street = "Škultétyho"},
+  {street = "Záleská"},
+  {street = "Želiarska"},
+]

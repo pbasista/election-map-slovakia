@@ -1,0 +1,65 @@
+# Okrsky of Slovenská Ľupča, transcribed by an AI agent in job okrsok-rules-4247 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cintorínska, Czambelova, 1.mája, Mierová, Námestie SNP, Peniažky, Podkonická, Švarca, občania s pobytom na obci Slovenská Ľupča
+#   okrsok 2: Dolná, Ľupčianska, Mlynská, Oslobodenia, Partizánska, Príboj, Školská, Športová, Za Ďaňacou, Za nožiarňou, Na Zábreži
+#   okrsok 3: Františka Mazúra, Hronská, Jabloňová, Juraja Majera, Krížna, Lesnícka, Lichardova, Lúčna, Murgašova, Orechová, Pod Zámkom, Pod Hôrkou, Sadová, Tehelná, Záhradná, Železničná
+obec = "509001"
+name = "Slovenská Ľupča"
+okrsky_fill = "nearest"
+okrsky_note = "All 35 register streets are named. The 345 addresses without a street (numbered by súpisné číslo in the single part Slovenská Ľupča) take the okrsok of the nearest placed address (fill_nearest); 'občania s pobytom na obci' (residents registered only to the municipality) are in okrsok 1."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-23
+okrsky_date_basis = "The page 'Voľby prezidenta SR 2024 – … okrsky' listing the okrsky is dated 23.01.2024; no decision date is stated. (https://slovenskalupca.sk/volby-prezidenta-sr-2024-delegovanie-hlasovaci-preukaz-okrsky/)"
+
+[[document]]
+url = "https://slovenskalupca.sk/volby-prezidenta-sr-2024-delegovanie-hlasovaci-preukaz-okrsky/"
+sha256 = "31e6d189405c498a93742ba63aa75cf6faf887fb9d3813ba98a0f1a4d282cf0e"
+title = "Volebné okrsky a volebné miestnosti pre voľbu prezidenta Slovenskej republiky v roku 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Czambelova"},
+  {street = "1.mája"},
+  {street = "Mierová"},
+  {street = "Námestie SNP"},
+  {street = "Peniažky"},
+  {street = "Podkonická"},
+  {street = "Švarca"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dolná"},
+  {street = "Ľupčianska"},
+  {street = "Mlynská"},
+  {street = "Oslobodenia"},
+  {street = "Partizánska"},
+  {street = "Príboj"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Za Ďaňacou"},
+  {street = "Za nožiarňou"},
+  {street = "Na Zábreži"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Františka Mazúra"},
+  {street = "Hronská"},
+  {street = "Jabloňová"},
+  {street = "Juraja Majera"},
+  {street = "Krížna"},
+  {street = "Lesnícka"},
+  {street = "Lichardova"},
+  {street = "Lúčna"},
+  {street = "Murgašova"},
+  {street = "Orechová"},
+  {street = "Pod zámkom", written = "Pod Zámkom"},
+  {street = "Pod Hôrkou"},
+  {street = "Sadová"},
+  {street = "Tehelná"},
+  {street = "Záhradná"},
+  {street = "Železničná"},
+]

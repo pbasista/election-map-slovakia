@@ -1,0 +1,41 @@
+# Okrsky of Liptovské Revúce, transcribed by an AI agent in job okrsok-rules-5672 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: č. d. 1 – 230
+#   okrsok 2: č. d. 231 – 530
+#   okrsok 3: č. d. 531 – 800
+obec = "510718"
+name = "Liptovské Revúce"
+okrsky_date = 2026-05-06
+okrsky_note = "The document gives each okrsok its polling station and a range of house numbers (č. d., súpisné čísla; the village has no streets): 1 Nižná Revúca, č. d. 1–230; 2 Stredná Revúca, č. d. 231–530; 3 Vyšná Revúca, č. d. 531–800. The numbering runs across the whole village, so each range is written for all three parts. The PDF is a scan; transcribed from the page image."
+
+[[document]]
+url = "https://www.liptovskerevuce.sk/e_download.php?file=/data/multipage/editor/editor-59-120-sk_3.pdf&original=2%20ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20miestnosti%20v%20LR.pdf"
+sha256 = "2594267349824ee732bcf5c7dd9e5e73081a05c42bfecf2dbfa2b38f19e9ea29"
+title = "Určenie volebných okrskov a miestností v obci Liptovské Revúce k realizácii referenda konaného dňa 04.07.2026"
+
+[[document]]
+url = "https://www.liptovskerevuce.sk/2026-volby-referendum/2026-referendum-04072026/"
+sha256 = "f8036aa4ecec9068224e563715ace9605d25b1f97509aca49e59fcf569143de8"
+title = "stránka obce k voľbe"
+
+[okrsok.1]
+rules = [
+  {part = "Nižná Revúca", numbers = "1-230"},
+  {part = "Stredná Revúca", numbers = "1-230"},
+  {part = "Vyšná Revúca", numbers = "1-230"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Nižná Revúca", numbers = "231-530"},
+  {part = "Stredná Revúca", numbers = "231-530"},
+  {part = "Vyšná Revúca", numbers = "231-530"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Nižná Revúca", numbers = "531-800"},
+  {part = "Stredná Revúca", numbers = "531-800"},
+  {part = "Vyšná Revúca", numbers = "531-800"},
+]

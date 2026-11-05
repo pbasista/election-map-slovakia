@@ -1,0 +1,43 @@
+# Okrsky of Radošina, transcribed by an AI agent in job okrsok-rules-4374 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Hečkova, kpt. J. Nálepku, Piešťanská, Školská, bezdomovci
+#   okrsok 2: Ulice: Družstevná, Kamenná, Mierová, Nádražná, Nitrianska
+#   okrsok 3: Volebná miestnosť: Kultúrny dom Bzince 30
+obec = "505421"
+name = "Radošina"
+okrsky_date = 2024-01-19
+okrsky_fill = "nearest"
+okrsky_note = "'bezdomovci' (homeless, no address) in okrsok 1 are not a rule. The register's addresses of part Radošina without a street (súpisné only) take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.radosina.sk/download_file_f.php?id=1983352"
+sha256 = "a9efd3da8fac30395133ce59dad65ef32bc79b0ad3caef49cf61d99f777a0e94"
+title = "Utvorenie volebných okrskov a určenie volebných miestností na konanie volieb prezidenta Slovenskej republiky 2024 (19.1.2024)"
+
+[[document]]
+url = "https://www.radosina.sk/volby-prezidenta-sr-2024-oznam/mid/506316/.html"
+sha256 = "25df6cb642135f1fb7122d27ea73842e753ea981459982bf0902274870673408"
+title = "VOĽBY PREZIDENTA SR 2024 (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {street = "Hečkova"},
+  {street = "kpt. J. Nálepku"},
+  {street = "Piešťanská"},
+  {street = "Školská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Kamenná"},
+  {street = "Mierová"},
+  {street = "Nádražná"},
+  {street = "Nitrianska"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Bzince", note = "the document gives okrsok 3 only its polling station, the cultural house in Bzince (Bzince 30); okrsok 3 is the part Bzince, the only part not covered by the streets of okrsky 1 and 2", inferred = true},
+]

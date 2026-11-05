@@ -10,17 +10,21 @@ when that changes.
 
 An election's files are in two bundles, written from its
 ``data/build/<day>/`` (the output of ``candidates``, ``geo``,
-``basemap``, ``addresses``, ``links`` and ``results``), the curated data
-and the configuration: its map, which depends on that election alone and
-so seldom changes, and its data, which depends on every election (the
-persons linked across them, the research reused). The app fetches each
-bundle's files below its address (km-config ``map`` and ``data``;
-locally ``/map/<slug>`` and ``/data/<slug>``, deployed the address of the
-deployment that carries its key), with ``?v=`` its version (``mapVersion``,
-``dataVersion``). Paths below are relative to the bundle. Both have::
+``addresses``, ``links`` and ``results``), the curated data and the
+configuration: its map, which depends on that election alone and so
+seldom changes, and its data, which depends on every election (the
+persons linked across them, the research reused). Its base map is that of
+its OpenStreetMap extract, a part of its own that every election on the
+extract shares (:func:`bundles`). The app fetches each bundle's files
+below its address (km-config ``map``, ``data`` and ``base``; locally
+``/map/<slug>``, ``/data/<slug>`` and ``/base/<extract>``, deployed the
+address of the deployment that carries its key), with ``?v=`` its version
+(``mapVersion``, ``dataVersion``, ``baseVersion``). Paths below are
+relative to the bundle. Each has::
 
     manifest.json            {key, election, version, files}: the key the
-                             bundle was built for, the election day, a
+                             bundle was built for, the election day (of a
+                             base map ``base``, its extract instead), a
                              short hash of its files (the ``?v=`` the app
                              asks for them with) and the paths of its
                              files; the app is built against it, and
@@ -33,9 +37,12 @@ deployment that carries its key), with ``?v=`` its version (``mapVersion``,
 The map bundle, ``dist/map/<slug>/`` (:func:`bundles`)::
 
     geo/                     data/build/<day>/geo/, verbatim (see geo)
-    base/                    data/build/<day>/base/, verbatim: the base map
-                             (see basemap)
     addr/                    data/build/<day>/addr/, verbatim (see addresses)
+
+The base map, ``dist/base/<extract>/``, holds
+data/build/base/<extract>/base/ verbatim (``okres/``, ``obec/``,
+``coarse.json``, ``index.json``; see basemap), which the app asks for as
+``/base/<path>``.
 
 The data bundle, ``dist/data/<slug>/``::
 
@@ -46,6 +53,10 @@ The data bundle, ``dist/data/<slug>/``::
                              okres
     data/city/<BA|KE>.json   candidates for mayor and city council
     data/kraj/<kraj>.json    candidates for regional president and council
+    data/country.json        the country-wide contests: the president's
+                             rounds, a referendum's questions, the parties
+                             of a party-list election
+    data/list/<p>.json       the persons on the list of party number <p>
     data/names/<xx>.json     candidate-name search shard
     data/research/<lang>/<area>.json
                              the research findings of the persons of the
@@ -64,17 +75,31 @@ cached copy of every page a research finding cites, ``cache/<sha256>.html``
 from data/curated/cache/ (see cache.py), and the stylesheet they link,
 ``assets/cache.css`` (web/cache.css; the path cache.STYLESHEET, fixed in
 each copy when it was cached). The results part, ``dist/results/``
-(:func:`results_part`), holds ``<day>/``, each election's
-data/build/<day>/results/ verbatim where there is one (``Config.results_dir``;
-see results.py and docs/results.md). Each has its ``_headers``
-(web/_headers-sources, web/_headers-results), ``404.html`` and a
-``manifest.json`` with its key.
+(:func:`results_part`), holds ``<day>/``, each election's final results,
+data/build/<day>/results/ verbatim where there is one
+(``Config.results_dir``; see results.py and docs/results.md). The live
+part, ``dist/live/`` (:func:`live_part`), holds ``<day>/`` likewise, each
+election's live results of its night, data/build/<day>/live/
+(``Config.live_dir``), which ``ems results deploy`` deploys on the night,
+never a release. Each has its ``_headers`` (web/_headers-sources,
+web/_headers-results, web/_headers-live), ``404.html`` and a
+``manifest.json``: with its key, the live part's (which has none) with the
+version of each election's live results.
 
-Each contest is in exactly one area file, so a click loads the okres, kraj
-and (in Bratislava and Košice) city file of one place and nothing twice::
+Each contest is in exactly one area file (``contests.area_name``), so a
+click loads the okres, kraj and (in Bratislava and Košice) city file of one
+place and nothing twice::
 
     data/<area>.json  {contests: {contest: {(seats), (sources), (holder),
-                          (incumbents), (past), (no_result),
+                          (incumbents), (past), (no_result), (elected_only),
+                          (uncontested),
+                          (round, day), (question), (party),
+                          (preferences, quota, threshold, (coalitions),
+                           subjects: [
+                           [number, party, candidates, threshold,
+                            (withdrawn)]],
+                           (research): {number: [researched, findings,
+                                                 affairs, disputes]}),
                           candidates: [
                           [number, title_before, first_name, surname,
                            title_after, age, occupation, [party, ...],
@@ -96,11 +121,37 @@ obce with a rule set; else a council elected in one obvod has
 stand-in until the 2026 number is known (councils of several obvody have
 neither: a 2022 total says nothing about one obvod). ``no_result`` (1)
 marks a contest that had candidates but has no final result
-(:func:`no_result`). ``sources`` are the official
+(:func:`no_result`), ``elected_only`` (1) a council contest whose
+candidates are the elected only (``candidates.json``), ``uncontested``
+``[title, url]`` a contest called but held nowhere, no candidate having
+registered (``candidates.json``: what says so); a candidate's
+``age`` is null, its ``occupation`` and titles empty, where the lists do
+not give them. ``sources`` are the official
 documents that set a council's obvody, as ``[title, url]``
 (:func:`obvod_sources`). ``residence`` is the obec of residence of
-regional candidates. ``holder`` is the mayor or regional president in
-office, ``[name, since, number, result]`` (``number`` the holder's ballot
+regional and country-wide candidates: its code, or for a country-wide
+candidate whose written residence matches no one obec, the name as written.
+``round`` (1 or 2) and ``day`` (ISO) are a presidential contest's round
+and the day it is voted on, ``question`` a referendum question's wording,
+``party`` the party (``config/parties.toml``) of a list contest. A
+party-list contest (``nrsr:SK``, ``ep:SK``) has ``subjects``, the parties
+on the ballot, instead of ``candidates``: their ballot number, party,
+number of candidates on the list, the share of the valid votes in % they
+need for seats (a coalition's, by its ``members``, where it is one; see
+:func:`election_map_slovakia.contests.subject_threshold`) and ``1`` where
+the subject withdrew; ``research`` totals, by ballot number, the research
+summaries (below) of the candidates on each subject's list: how many are
+researched, and their findings, affairs and disputes summed (subjects
+with none researched have no entry); with
+``seats`` of the body, ``preferences``, how many of a list's candidates a
+voter may mark, ``quota``, the % of its party's votes a candidate's
+preference votes must reach to move up the list, and the rule the
+thresholds follow: ``threshold``, the % a party standing alone needs, and
+``coalitions``, ``[[parties, %], ...]`` by ascending parties, the % a
+coalition of at least that many parties needs (none where coalitions need
+what a party does). ``holder`` is the mayor
+or regional president in office, ``[name, since, number, result]``
+(``number`` the holder's ballot
 number in this contest, or null); ``incumbents`` maps the ballot number of
 every candidate in office now to their offices, ``[[body, since, result],
 ...]``, a body being a contest id without the obvod (see
@@ -130,7 +181,10 @@ votes, the contest's valid ballots (for a council: the voters with a valid
 ballot), the candidate's rank by votes among its ``of`` candidates (equal
 votes, equal rank) and the results' flag (``1`` elected, ``0``
 substitute, ``-1`` withdrew, null not elected); a candidacy whose results
-are not final, or whose contest has none, is ``[candidacy]`` alone.
+are not final, or whose contest has none, is ``[candidacy]`` alone. Where
+the results have the elected only (a by-election of 2019–2022), each other
+candidacy of the contest has null votes and rank and the flag ``0``, and
+``of`` counts every candidacy.
 ``research`` summarizes, for each researched person of the file, when (the
 latest date) and in which research languages they were researched and how
 many findings there are (:func:`research_summary`); a person without an
@@ -161,24 +215,35 @@ out for having no date of publication.
                       okrsky_unknown: [obec, ...],
                       boundaries: {day, on, obce: {obec: [obec, ...]}} | null,
                       names: {prefix: persons},
-                      parties: {party: [short, name, (logo)]}}
+                      parties: {party: [short, name, (logo)]},
+                      uncontested: [contest, ...],
+                      (held): {area: [contest, ...]}}
 
     data/about.json  {sources, inputs: [{name, url, (retrieved)}],
-                      logos, obvody, council, research, candidates: format,
-                      substitutes: {...} | null}
+                      logos, obvody, council, research,
+                      candidates: format | null, substitutes: {...} | null,
+                      stand_ins: {obvody: [[day, [name, ...]], ...],
+                                  okrsky: [[day, [name, ...]], ...]}}
 
-``councils`` is the number of municipal council obvody (0: no council
-election); ``by_address`` lists the obce whose council obvod goes by
+``zsk`` is the obec's regional council obvod (0: none elected) and
+``councils`` the number of municipal council obvody (0: no council
+election; of a by-election, that of the whole council where its contests
+are only some of its obvody, :func:`council_count`); ``uncontested``
+lists the contests called but held nowhere, no candidate having
+registered; ``held``, of a by-election only, maps each obec (or
+Bratislava, Košice) and kraj (its 1-digit code) where something is elected
+to the contests held there (:func:`held_areas`); ``by_address`` lists the obce
+whose council obvod goes by
 address (``addresses``: ``council`` ``"address"``) and whose shard
 features are their obvody (``geo``); ``estimated`` those of them whose
 rule set is a guess (``geo``: ``estimated``); ``reused`` those whose rule
 set is another election's, with that election's ISO day (no document of
 this election was found, and the layout provably matches, see
-:mod:`election_map_slovakia.reuse`); ``adopted`` those whose rule set is a
-later election's, with its day, though the layout is not proven to match
-(no usable document of this election places the addresses, only the
-obvod numbers and seats are known to be the same: the borders are
-indicative only); ``date_approximate`` those whose
+:mod:`election_map_slovakia.reuse`); ``adopted`` those whose rule set is
+another vote's standing in, with its day, though the layout is not proven
+to match (no usable document of this election places the addresses; that
+vote is the nearest in time with a rule set of its own of the same obvody
+and seats: the borders are indicative only); ``date_approximate`` those whose
 documents state no date, with what dates them approximately (``by``: an
 Internet Archive capture, a posting on the official page, the document
 naming the election; ``seen``: the day of the first two;
@@ -188,7 +253,7 @@ source fill them in (``from``: a later election's rule set, a
 referendum's or another later document; ``day``: that vote's day or the
 document's date; :class:`election_map_slovakia.obvody.Supplement`).
 ``okrsky_reused``, ``okrsky_adopted`` and ``okrsky_referendum`` give the
-obce whose okrsky are another election's (proven to match, or not), or
+obce whose okrsky are another vote's (proven to match, or standing in), or
 from a referendum's document, with its day, and
 ``okrsky_date_approximate`` and ``okrsky_supplemented`` those whose okrsky
 document is dated so, or filled in so
@@ -201,15 +266,21 @@ several okrsky none of which is drawn (:func:`place_facts`);
 its slug), the obce whose land moved since ``day``
 (:func:`boundary_changes`);
 About's ``inputs`` are those the election names and those no election
-names; ``substitutes``, for an election before the latest, what it takes
-from the latest and what it lacks, with counts (:func:`substitutes`);
+names, its ``candidates`` the format its candidate lists are read in (null
+for a referendum, which has none); ``substitutes``, for an election other
+than the latest, what it takes from the latest and what it lacks, with
+counts (:func:`substitutes`); ``stand_ins`` the obce whose obvody or
+okrsky another vote's stand in for, by that vote's day
+(:func:`stand_ins`);
 ``okres`` is ``""`` and ``zsk`` 0 for Bratislava and Košice
 themselves. A name shard holds every person with a name word (first name or
 surname, :func:`election_map_slovakia.candidates.search_key`) starting with its two-letter
 prefix, as ``[name, age, [candidacy, ...]]`` sorted by surname, the name and
-age being those of the person's first candidacy; ``names`` maps each prefix
+age being those of the person's first candidacy (the age null where not
+known); ``names`` maps each prefix
 to its person count, so the search picks the smallest shard among the words
-of a query. ``parties`` gives every party named in a candidacy its short
+of a query. ``parties`` gives every party named in a candidacy or on a
+party-list ballot (``subjects``) its short
 form, official name and logo at this election (``config/parties.toml``
 ``logo.<slug>``; a file name below the app's party logos, km-config
 ``logos``); About's ``logos`` credit those logos.
@@ -220,25 +291,28 @@ from __future__ import annotations
 import bisect
 import functools
 import hashlib
-import itertools
-import json
+import os
 import re
 import tomllib
-from collections import Counter, defaultdict
+from collections import Counter, defaultdict, deque
 from collections.abc import Collection, Iterable, Iterator, Mapping
-from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass
+from concurrent.futures import Future, ThreadPoolExecutor
+from dataclasses import dataclass, field
 from pathlib import Path
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, NamedTuple
+
+import orjson
 
 from election_map_slovakia import (
     addresses,
     basemap,
     candidates,
     config,
+    contests,
     geo,
     obvody,
     output,
+    parallel,
     progress,
     research,
     translate,
@@ -255,10 +329,15 @@ MAP_PART = "map"
 """Below ``dist/``: the map bundle of each election, ``<slug>/``."""
 DATA_PART = "data"
 """Below ``dist/``: the data bundle of each election, ``<slug>/``."""
+BASE_PART = config.BASE_DIR
+"""Below ``dist/``: the base map of each extract, ``<extract>/``; also the
+directory the app asks for its files below (``/base/…``)."""
 SOURCES_PART = "sources"
 """Below ``dist/``: the sources part."""
 RESULTS_PART = config.RESULTS_DIR
-"""Below ``dist/``: the results part."""
+"""Below ``dist/``: the results part, the final results."""
+LIVE_PART = config.LIVE_DIR
+"""Below ``dist/``: the live part, the live results of election nights."""
 HEADERS = "_headers"
 """Each part's Cloudflare Pages response headers (``build.header_rules``)."""
 NOT_FOUND = "404.html"
@@ -272,7 +351,7 @@ I18N_DIR = "i18n"
 LINKS_DIR = "links"
 """Below an election's build directory: its persons linked to those of every
 election before it (``ems links``), ``<earlier slug>.json`` each."""
-MAP_ROOTS = (geo.OUTPUT_DIR, basemap.OUTPUT_DIR, addresses.OUTPUT_DIR)
+MAP_ROOTS = (geo.OUTPUT_DIR, addresses.OUTPUT_DIR)
 """The directories of a map bundle, which the app fetches below its address
 (km-config ``map``)."""
 DATA_ROOTS = (DATA_DIR, I18N_DIR)
@@ -300,15 +379,41 @@ class BuildError(Exception):
     """An input of the site is missing or inconsistent."""
 
 
+class FileFacts(NamedTuple):
+    """What ``build`` needs to know of a file it copies, read once."""
+
+    size: int
+    digest: str
+    """The SHA-256 of its content, hex: the key of the gzip memo
+    (:func:`election_map_slovakia.output.gzip_sizes`)."""
+    device: int
+    inode: int
+    """With *device*, which file it is: ``dist/`` holds a hard link to it
+    where the build links rather than copies (``build.write``)."""
+
+    @classmethod
+    def read(cls, path: str) -> tuple[bytes, FileFacts]:
+        """Return the content of the file *path* and its facts."""
+        with open(path, "rb") as f:
+            content = f.read()
+            st = os.fstat(f.fileno())
+        digest = hashlib.sha256(content).hexdigest()
+        return content, cls(len(content), digest, st.st_dev, st.st_ino)
+
+
 @dataclass(frozen=True)
 class Part:
     """What ``build`` writes of one part: path below it → content.
 
     *copies* are directories and files copied verbatim: path → source.
+    *known* are the :class:`FileFacts` of source files read already, by
+    their path (``<source>/<path below it>``), which ``build`` need not
+    read again.
     """
 
     files: dict[str, bytes]
     copies: dict[str, Path]
+    known: dict[str, FileFacts] = field(default_factory=dict)
 
 
 def encode(content: object) -> bytes:
@@ -316,23 +421,46 @@ def encode(content: object) -> bytes:
     return output.to_json(content, sort_keys=True)
 
 
+def files_below(directory: Path) -> list[str]:
+    """Return the paths of the files below *directory*, relative to it.
+
+    Sorted as :class:`~pathlib.Path` objects sort, component by component
+    (``a/b`` before ``a-b``), the order :func:`content_version` has always
+    seen. Plain strings: making a Path of each of the site's 170,000
+    files, and taking it relative, took longer than reading them.
+    """
+    top = str(directory)
+    out = []
+    for parent, _, names in os.walk(top):
+        below = parent[len(top) + 1 :]
+        out += [f"{below}/{name}" if below else name for name in names]
+    out.sort(key=lambda path: path.split("/"))
+    return out
+
+
 def tree(name: str, source: Path) -> Iterator[tuple[str, bytes]]:
     """Yield (path, content) of the file or directory tree *source*.
 
     A path is *name* for a file, else *name*/<path below *source*>, in
-    sorted order, so that :func:`content_version` sees a stable sequence.
-    Threads read the files of a directory side by side: one by one, the
-    thousands of data files took more than a second.
+    :func:`files_below` order, so that :func:`content_version` sees a
+    stable sequence. Threads read the files of a directory side by side:
+    one by one, the thousands of data files took more than a second.
     """
     if not source.exists():
         raise BuildError(f"{source} missing")
     if source.is_file():
         yield name, source.read_bytes()
         return
-    paths = sorted(p for p in source.rglob("*") if p.is_file())
+    paths = files_below(source)
+    top = str(source)
+
+    def read(path: str) -> bytes:
+        with open(f"{top}/{path}", "rb") as f:
+            return f.read()
+
     with ThreadPoolExecutor() as pool:
-        for path, content in zip(paths, pool.map(Path.read_bytes, paths), strict=True):
-            yield f"{name}/{path.relative_to(source).as_posix()}", content
+        for path, content in zip(paths, pool.map(read, paths), strict=True):
+            yield f"{name}/{path}", content
 
 
 def content_version(files: Iterable[tuple[str, bytes]]) -> str:
@@ -342,22 +470,78 @@ def content_version(files: Iterable[tuple[str, bytes]]) -> str:
     """
     digest = hashlib.sha256()
     for path, content in files:
-        digest.update(f"{path}\0{len(content)}\0".encode())
-        digest.update(content)
+        _add_version(digest, path, content)
     return digest.hexdigest()[:VERSION_DIGITS]
 
 
-def area_file(contest: Mapping[str, Any], okres_of: Mapping[str, str]) -> str:
-    """Return the ``dist/`` path of the area file holding *contest*.
+def _add_version(digest: hashlib._Hash, path: str, content: bytes) -> None:
+    digest.update(f"{path}\0{len(content)}\0".encode())
+    digest.update(content)
 
-    *okres_of* maps obec codes to their okres.
+
+def copied_files(
+    copies: Mapping[str, Path],
+) -> tuple[str, list[str], dict[str, FileFacts]]:
+    """Return the version, files and :class:`FileFacts` of a map bundle or base map.
+
+    *copies* are its directories and files (target → source): its version
+    is the :func:`content_version` of them in turn, its files their paths
+    below the part, sorted, and the facts those of each source file, by
+    its path. Each file is read once, for all three: they are most of the
+    site's bytes.
     """
-    area = str(contest["area"])
-    if contest["kind"] in ("predseda", "zsk"):
-        return f"data/kraj/{area}.json"
-    if area in candidates.CITY_CODES:
-        return f"data/city/{area}.json"
-    return f"data/okres/{okres_of[area]}.json"
+    version = hashlib.sha256()
+    files = [
+        pair
+        for target, source in copies.items()
+        for pair in (
+            [(f"{target}/{path}", f"{source}/{path}") for path in files_below(source)]
+            if source.is_dir()
+            else [(target, str(source))]
+        )
+    ]
+    known = {}
+    contents = _read_ahead([full for _, full in files])
+    for (name, full), (content, facts) in zip(files, contents, strict=True):
+        known[full] = facts
+        _add_version(version, name, content)
+    return version.hexdigest()[:VERSION_DIGITS], sorted(n for n, _ in files), known
+
+
+# Threads reading a worker's files, batches of files each, at once: one
+# file at a time, a worker waited for the disk three times as long as it
+# hashed; one file per thread, they cost more than the disk where the
+# files are in memory already.
+_READERS = 8
+_READ_BATCH = 16
+
+
+def _read_ahead(paths: list[str]) -> Iterator[tuple[bytes, FileFacts]]:
+    """Yield :meth:`FileFacts.read` of each of *paths*, in order.
+
+    Threads read some batches ahead (:data:`_READERS`), and no more, so
+    that only those are held at once.
+    """
+
+    def read(batch: list[str]) -> list[tuple[bytes, FileFacts]]:
+        return [FileFacts.read(path) for path in batch]
+
+    with ThreadPoolExecutor(_READERS) as pool:
+        pending: deque[Future[list[tuple[bytes, FileFacts]]]] = deque()
+        for start in range(0, len(paths), _READ_BATCH):
+            pending.append(pool.submit(read, paths[start : start + _READ_BATCH]))
+            if len(pending) > _READERS:
+                yield from pending.popleft().result()
+        while pending:
+            yield from pending.popleft().result()
+
+
+def _area_path(contest: str, okres_of: Mapping[str, str]) -> str:
+    """Return the bundle path of the area file holding *contest*.
+
+    *okres_of* maps obec codes to their okres (:func:`_okres_of`).
+    """
+    return f"{DATA_DIR}/{contests.area_name(contest, okres_of)}.json"
 
 
 def _okres_of(data: Mapping[str, Any]) -> dict[str, str]:
@@ -388,8 +572,12 @@ _CANDIDATE_FIELDS = (
 
 def _candidate_row(c: Mapping[str, Any]) -> list[Any]:
     row = [c[field] for field in _CANDIDATE_FIELDS]
+    # A country-wide candidate's residence that matches no one obec is
+    # shown as written.
     if "residence" in c:
         row.append(c["residence"])
+    elif "residence_name" in c:
+        row.append(c["residence_name"])
     return row
 
 
@@ -409,20 +597,31 @@ def linked_persons(
     return out
 
 
-def candidacy_results(final: Mapping[str, Mapping[str, Any]]) -> dict[str, list[Any]]:
+def candidacy_results(
+    final: Mapping[str, Mapping[str, Any]], data: Mapping[str, Any]
+) -> dict[str, list[Any]]:
     """Return candidacy → ``[votes, valid, rank, of, flag]`` (see the module doc).
 
-    *final* maps contests to their final results (:func:`final_contests`).
+    *final* maps contests to their final results (:func:`final_contests`),
+    *data* is the election's ``candidates.json``.
     """
+    listed: dict[str, list[str]] = defaultdict(list)
+    for c in data["candidacies"]:
+        listed[c["contest"]].append(c["id"])
     out = {}
     for contest, record in final.items():
         rows = record["candidates"]
+        of = max(len(rows), len(listed[contest]))
         # Most votes first, negated so that bisect finds the votes' place.
         order = sorted(-v for _, v, _ in rows)
         for number, v, flag in rows:
             # Equal votes, equal rank: one more than those with more votes.
             rank = 1 + bisect.bisect_left(order, -v)
-            out[f"{contest}#{number}"] = [v, record["valid"], rank, len(rows), flag]
+            out[f"{contest}#{number}"] = [v, record["valid"], rank, of, flag]
+        for cid in listed[contest]:
+            # Results of the elected only: the others were not, with votes
+            # not published.
+            out.setdefault(cid, [None, record["valid"], None, of, 0])
     return out
 
 
@@ -463,6 +662,10 @@ def area_files(
     pasts: Mapping[str, Mapping[str, Any]] | None = None,
     no_result: Collection[str] = (),
     other: Mapping[str, Mapping[str, list[list[Any]]]] | None = None,
+    *,
+    day: str | None = None,
+    parties: Mapping[str, config.Party] | None = None,
+    part: Collection[str] = (),
 ) -> dict[str, dict[str, Any]]:
     """Return the candidate area files; see the module doc.
 
@@ -473,11 +676,17 @@ def area_files(
     :func:`council_past`), which replaces theirs; *no_result* names the
     contests the final results have none of (:func:`no_result`); *other*
     maps persons to their candidacies in other elections (:func:`elsewhere`).
+    *day* is the election's (ISO), the day of a presidential first round;
+    *parties* is ``config/parties.toml``, whose ``members`` make a ballot
+    subject a coalition (:func:`contests.subject_threshold`). *part* names
+    the obce of a by-election whose council contests are part of a larger
+    council (:func:`addresses.part_councils`): none is one of a single obvod.
     """
     sources = sources or {}
     researched = researched or {}
     pasts = pasts or {}
     other = other or {}
+    parties = parties or {}
     okres_of = _okres_of(data)
     files: dict[str, dict[str, Any]] = defaultdict(
         lambda: {"contests": {}, "persons": {}}
@@ -485,14 +694,15 @@ def area_files(
     path_of: dict[str, str] = {}
     council_obvody = Counter(c["area"] for c in data["contests"] if c["kind"] == "oz")
     for contest in data["contests"]:
-        path = path_of[contest["id"]] = area_file(contest, okres_of)
+        path = path_of[contest["id"]] = _area_path(contest["id"], okres_of)
         entry = files[path]["contests"][contest["id"]] = _contest_entry(
             contest,
             seats,
             sources,
             pasts.get(contest["id"]),
-            single=council_obvody[contest["area"]] == 1,
+            single=council_obvody[contest["area"]] == 1 and contest["area"] not in part,
         )
+        entry |= _national_entry(contest, day, parties)
         if contest["id"] in no_result:
             entry["no_result"] = 1
     by_person: dict[str, list[str]] = defaultdict(list)
@@ -514,7 +724,78 @@ def area_files(
             file["persons"][person] = by_person[person]
         if person in researched:
             file.setdefault("research", {})[person] = researched[person]
+            # A party list (`<party contest>/<number>`) adds its researched
+            # candidates to its subject's totals on the party-list ballot.
+            parent, _, number = c["contest"].rpartition("/")
+            ballot = (
+                files[path_of[parent]]["contests"][parent] if parent in path_of else {}
+            )
+            if "subjects" in ballot:
+                _, findings, _, affairs, disputes = researched[person][:5]
+                totals = ballot.setdefault("research", {}).setdefault(
+                    number, [0, 0, 0, 0]
+                )
+                totals[0] += 1
+                totals[1] += findings
+                totals[2] += affairs
+                totals[3] += disputes
     return dict(files)
+
+
+def _national_entry(
+    contest: Mapping[str, Any], day: str | None, parties: Mapping[str, config.Party]
+) -> dict[str, Any]:
+    """Return what a country-wide contest's entry has besides the common keys.
+
+    See the module doc and :func:`area_files`; empty for other contests.
+    """
+    c = contests.parse(contest["id"])
+    if c.kind.sub == "round":
+        # Round 2's day is its own; round 1 is voted on the election day.
+        when = contest.get("day", day)
+        if when is None:
+            raise BuildError(f"{contest['id']}: the day of its round is not known")
+        return {"round": c.sub, "day": when}
+    if c.kind.sub == "question":
+        return {"question": contest["question"]}
+    if c.is_list:
+        return {"party": contest["party"]}
+    if c.kind.party:
+        entry: dict[str, Any] = {
+            "preferences": contest["preferences"],
+            "quota": contest["quota"],
+            # The rule, which the ballot states in full, besides each
+            # subject's own threshold.
+            "threshold": contest["threshold"],
+            "subjects": [
+                _subject_row(contest, subject, parties)
+                for subject in contest["subjects"]
+            ],
+        }
+        if coalitions := contest.get("coalition_thresholds"):
+            entry["coalitions"] = coalitions
+        return entry
+    return {}
+
+
+def _subject_row(
+    contest: Mapping[str, Any],
+    subject: Mapping[str, Any],
+    parties: Mapping[str, config.Party],
+) -> list[Any]:
+    """Return a ballot subject of party-list *contest* as a ``subjects`` row."""
+    party = parties.get(subject["party"])
+    # site_index names a subject without an entry in parties.toml.
+    members = len(party.members) if party else 0
+    row = [
+        subject["number"],
+        subject["party"],
+        subject["candidates"],
+        contests.subject_threshold(contest, members),
+    ]
+    if subject.get("withdrawn"):
+        row.append(1)
+    return row
 
 
 def _contest_entry(
@@ -529,8 +810,11 @@ def _contest_entry(
 
     *computed* is the contest's ``past`` made here (:func:`area_files`), if
     any; *single*: the contest's council (if it is one) is elected in one obvod.
+    A party-list contest, whose candidates are its ``subjects``
+    (:func:`_national_entry`), has no ``candidates``.
     """
-    entry: dict[str, Any] = {"candidates": []}
+    c = contests.parse(contest["id"])
+    entry: dict[str, Any] = {} if c.kind.party and not c.is_list else {"candidates": []}
     # The candidate lists' own count (ŠÚ SR's of 2022) is the obvod's.
     if "seats" in contest:
         entry["seats"] = contest["seats"]
@@ -542,6 +826,11 @@ def _contest_entry(
     documents = sources.get(_sources_key(contest))
     if documents:
         entry["sources"] = documents
+    if contest.get("elected_only"):
+        entry["elected_only"] = 1
+    if "uncontested" in contest:
+        why = contest["uncontested"]
+        entry["uncontested"] = [why["title"], why["source"]]
     if "incumbent" in contest:
         holder = contest["incumbent"]
         number = holder["candidacy"] and int(holder["candidacy"].split("#")[1])
@@ -645,12 +934,11 @@ def research_files(
     language → its curated research translations (:mod:`translate`).
     """
     okres_of = _okres_of(data)
-    contest_of = {c["id"]: c for c in data["contests"]}
     areas: dict[str, set[str]] = defaultdict(set)
     for c in data["candidacies"]:
         if records.get(c["person"], {}).get("findings"):
-            path = area_file(contest_of[c["contest"]], okres_of)
-            areas[path.removeprefix("data/")].add(c["person"])
+            area = contests.area_name(c["contest"], okres_of)
+            areas[f"{area}.json"].add(c["person"])
     files: dict[str, dict[str, list[list[Any]]]] = {}
     for lang in cfg.languages.codes:
         own = translations.get(lang, {})
@@ -686,13 +974,14 @@ def _finding_row(
     ]
 
 
-def research_records(cfg: Config) -> dict[str, Any]:
-    """Return person → curated research record, of every researched person."""
+def research_records(cfg: Config) -> dict[str, dict[str, Any]]:
+    """Return election (ISO day) → person → curated research record."""
     root = cfg.curated_dir / research.CURATED_DIR
-    return {
-        path.stem: json.loads(path.read_bytes())
-        for path in sorted(root.glob("*/*.json"))
-    }
+    out: dict[str, dict[str, Any]] = defaultdict(dict)
+    for path in sorted(root.glob("*/*.json")):
+        record = orjson.loads(path.read_bytes())
+        out[record["election"]][path.stem] = record
+    return dict(out)
 
 
 def obec_props(geo_dir: Path) -> dict[str, dict[str, Any]]:
@@ -700,7 +989,7 @@ def obec_props(geo_dir: Path) -> dict[str, dict[str, Any]]:
     coarsest = geo.SHARD_LODS[0].level
     props = {}
     for path in sorted((geo_dir / "okres").glob(f"*/{coarsest}.json")):
-        for feature in json.loads(path.read_bytes())["features"]:
+        for feature in orjson.loads(path.read_bytes())["features"]:
             props[feature["properties"]["id"]] = feature["properties"]
     return props
 
@@ -731,24 +1020,26 @@ def council_past(
 
     For each obvod of a council of several whose ``past`` is of the
     election its final results (*live*, :func:`final_okrsky`) compare its
-    okrsky with (``past`` of the okrsok files, :mod:`crosswalk`): the
-    earlier figures of its okrsky added up, an obec wholly in it as a
-    whole, where all are known, with ``scope`` ``[method]``, the least
-    certain method of its okrsky (``results.PAST_DOUBT``). Otherwise its
-    ``past``
-    stays that of the whole municipality or city.
+    okrsky with (``past`` of the okrsok files, :mod:`crosswalk`: the
+    municipal contests' election before): the earlier figures of its okrsky
+    added up, an obec wholly in it as a whole, where all are known, with
+    ``scope`` ``[method]``, the least certain method of its okrsky
+    (``results.PAST_DOUBT``). Otherwise its ``past`` stays that of the
+    whole municipality or city.
     """
     from election_map_slovakia import results  # results imports this module
 
-    if live is None or not live.past.day:
+    if live is None:
         return {}
-    past = live.past
     keys_of = {c: areas for files in live.okrsky.values() for c, areas in files.items()}
     councils = Counter(c["area"] for c in data["contests"] if c["kind"] == "oz")
     out: dict[str, dict[str, Any]] = {}
     for c in data["contests"]:
         whole = c.get("past")
         if c["kind"] != "oz" or councils[c["area"]] == 1 or whole is None:
+            continue
+        past = live.past.get(contests.source_of(c["id"]))
+        if past is None:
             continue
         figures = past.contests.get(c["id"], {})
         by_obec: dict[str, list[str]] = defaultdict(list)
@@ -804,7 +1095,7 @@ def obvod_seats(geo_dir: Path, election_dir: Path) -> dict[str, int]:
 def _obvod_seats(
     geo_dir: Path, rule_sets: Mapping[str, obvody.RuleSet]
 ) -> dict[str, int]:
-    coarse = json.loads((geo_dir / geo.COARSE_FILE).read_bytes())
+    coarse = orjson.loads((geo_dir / geo.COARSE_FILE).read_bytes())
     seats = {o["id"]: o["seats"] for o in coarse["obvody"]}
     for code, rules in rule_sets.items():
         seats |= {f"oz:{code}/{n}": s for n, s in rules.seats.items()}
@@ -873,6 +1164,7 @@ def site_index(
     rule_sets: Mapping[str, obvody.RuleSet],
     okrsky: Mapping[str, obvody.RuleSet],
     places: Mapping[str, Any],
+    part: Collection[str] = (),
 ) -> dict[str, Any]:
     """Return ``data/index.json``; see the module doc.
 
@@ -880,9 +1172,11 @@ def site_index(
     *slug* are named by their file below the app's; *rule_sets* the council obvod rule sets
     (:func:`election_map_slovakia.obvody.load_rule_sets`), *okrsky* the rule
     sets that give okrsky (:func:`election_map_slovakia.obvody.okrsok_rule_sets`);
-    *places* what else the ballots say of an obec (:func:`place_facts`).
+    *places* what else the ballots say of an obec (:func:`place_facts`);
+    *part* the obce of a by-election whose council contests are part of a
+    larger council (:func:`council_count`).
     """
-    named = {p for c in data["candidacies"] for p in c["parties"]}
+    named = named_parties(data)
     if missing := sorted(named - parties.keys()):
         raise BuildError(
             f"config/{config.PARTIES_FILE}: no entry for {', '.join(missing)}"
@@ -900,7 +1194,7 @@ def site_index(
     obce = {}
     for o in data["obce"]:
         code = o["code"]
-        n = len(councils.get(code, ()))
+        n = council_count(councils.get(code, ()), rule_sets.get(code), code in part)
         if code in candidates.CITY_CODES:
             obce[code] = [o["name"], "", o["kraj"], 0, n]
             continue
@@ -916,6 +1210,7 @@ def site_index(
         "okresy": {o["code"]: [o["name"], o["kraj"]] for o in data["okresy"]},
         "obce": obce,
         "by_address": sorted({c for c, p in props.items() if "oz" in p}),
+        "uncontested": sorted(c["id"] for c in data["contests"] if "uncontested" in c),
         "estimated": sorted({c for c, p in props.items() if "estimated" in p}),
         **origin_flags(props, rule_sets, okrsky, places["okrsky_unknown"]),
         # Of the obce with several council obvody not drawn, those whose
@@ -932,6 +1227,46 @@ def site_index(
             if name in named
         },
     }
+
+
+def council_count(
+    numbers: Collection[int], rules: obvody.RuleSet | None, part: bool
+) -> int:
+    """Return ``councils`` of ``data/index.json``: an obec's council obvody.
+
+    *numbers* are those of its council contests. Where they are *part* of a
+    larger council (a by-election's, :func:`addresses.part_councils`), its
+    obvody are as many as its rule set (*rules*) has, else at least two: the
+    obec is never taken for a council of one obvod, as its addresses are
+    not (``addresses``: ``address`` or ``pending``).
+    """
+    if not part:
+        return len(numbers)
+    return max(len(rules.seats) if rules else 2, *numbers)
+
+
+def named_parties(data: Mapping[str, Any]) -> set[str]:
+    """Return the parties ``candidates.json`` *data* names.
+
+    Those of its candidacies and the subjects of its party-list ballots.
+    """
+    return {p for c in data["candidacies"] for p in c["parties"]} | {
+        s["party"] for c in data["contests"] for s in c.get("subjects", ())
+    }
+
+
+def held_areas(data: Mapping[str, Any]) -> dict[str, list[str]]:
+    """Return area → its contests held, of a by-election's ``candidates.json``.
+
+    ``held`` of ``data/index.json``: a by-election has contests only where
+    something is elected, each obec (or Bratislava, Košice) and kraj by
+    its code; one called but held nowhere (``uncontested``) is not held.
+    """
+    held: dict[str, list[str]] = defaultdict(list)
+    for c in data["contests"]:
+        if "uncontested" not in c:
+            held[c["area"]].append(c["id"])
+    return {area: sorted(ids) for area, ids in sorted(held.items())}
 
 
 def name_shards(data: Mapping[str, Any]) -> dict[str, list[Any]]:
@@ -988,7 +1323,8 @@ def boundary_changes(election_dir: Path) -> dict[str, Any] | None:
     except tomllib.TOMLDecodeError as e:
         raise BuildError(f"{path}: invalid TOML: {e}") from e
     obce: dict[str, list[str]] = {}
-    for change in table["change"]:
+    # Boundaries that differ by redrawing alone list no change.
+    for change in table.get("change", ()):
         codes = change["obce"]
         for code in codes:
             obce[code] = (
@@ -1001,12 +1337,14 @@ def several_okrsky(live: Live | None) -> set[str]:
     """Return the obce that voted in several okrsky, by the final results.
 
     *live* is those results (:func:`final_okrsky`), None before them (then
-    none is known).
+    none is known), by the okrsky of the contests that cover an obec whole:
+    its mayor's, or the country-wide ones.
     """
     numbers: dict[str, set[str]] = defaultdict(set)
-    for contests in live.okrsky.values() if live else ():
-        for contest, areas in contests.items():
-            if contest.startswith("starosta:"):
+    for files in live.okrsky.values() if live else ():
+        for contest, areas in files.items():
+            kind = contests.parse(contest).kind
+            if kind.name == "starosta" or kind.scope == "country":
                 for key in areas:
                     obec, _, n = key.partition("/")
                     numbers[obec].add(n)
@@ -1042,9 +1380,9 @@ def place_facts(
 def election_inputs(election: config.Election) -> set[str]:
     """Return the names of the inputs (``inputs.toml``) *election* names."""
     return {
-        *election.candidates.inputs.values(),
+        *(election.candidates.inputs.values() if election.candidates else ()),
         *(election.incumbents.inputs if election.incumbents else ()),
-        election.units.input,
+        *((election.units.input,) if election.units else ()),
         *election.results.inputs,
         election.addresses,
         *election.zbgis,
@@ -1069,14 +1407,16 @@ def substitutes(
     several: Collection[str],
     persons: tuple[int, int],
     records: Mapping[str, Any],
+    *,
+    researched: bool,
 ) -> dict[str, Any]:
-    """Return what an earlier *election* takes from the latest, and lacks.
+    """Return what *election*, not the latest, takes from the latest, and lacks.
 
     About's ``substitutes`` (module doc): *index* is its ``data/index.json``
     (:func:`site_index`), *several* the obce that voted in several okrsky
     (:func:`several_okrsky`), *persons* how many of its persons are linked
-    to the latest's, and of how many; *records* the research reused for
-    them (:func:`reused_research`).
+    to the latest's, and of how many; *records* its research, its own where
+    *researched*, else that reused for them (:func:`reused_research`).
     """
     inputs = {i.name: i for i in cfg.inputs.inputs}
     obce = index["obce"]
@@ -1102,7 +1442,6 @@ def substitutes(
             "several": len(councils),
             "own": sum(c in by_address and c not in other for c in councils),
             "reused": names(obce[c][0] for c in index["reused"]),
-            "adopted": names(obce[c][0] for c in index["adopted"]),
             "unknown": sum(c not in by_address for c in councils),
             "not_found": len(index["not_found"]),
             "approximate": len(index["date_approximate"]),
@@ -1112,19 +1451,39 @@ def substitutes(
             "several": len(several),
             "unknown": len(index["okrsky_unknown"]),
             "reused": len(index["okrsky_reused"]),
-            "adopted": names(obce[c][0] for c in index["okrsky_adopted"]),
             "referendum": len(index["okrsky_referendum"]),
             "approximate": len(index["okrsky_date_approximate"]),
             "supplemented": len(index["okrsky_supplemented"]),
+            # The years of the elections whose okrsky stand in.
+            "reused_from": sorted({d[:4] for d in index["okrsky_reused"].values()}),
         },
         "persons": list(persons),
         "research": [
             len(records),
             sum(bool(r["findings"]) for r in records.values()),
             sum(len(r["findings"]) for r in records.values()),
-            sum(r["undated"] for r in records.values()),
+            sum(r.get("undated", 0) for r in records.values()),
         ],
+        "research_own": researched,
     }
+
+
+def stand_ins(index: Mapping[str, Any]) -> dict[str, list[list[Any]]]:
+    """Return About's ``stand_ins``: the obce whose units another vote's stand in for.
+
+    Of *index* (``data/index.json``, :func:`site_index`), per kind of unit,
+    ``[day, [name, ...]]`` by the day of the vote whose borders they are
+    (``adopted``, ``okrsky_adopted``; the app names that vote), earliest
+    first.
+    """
+    names = functools.partial(sorted, key=candidates.search_key)
+    out = {}
+    for units, flag in (("obvody", "adopted"), ("okrsky", "okrsky_adopted")):
+        by_day: dict[str, list[str]] = defaultdict(list)
+        for code, day in index[flag].items():
+            by_day[day].append(index["obce"][code][0])
+        out[units] = [[day, names(n)] for day, n in sorted(by_day.items())]
+    return out
 
 
 def about(
@@ -1134,6 +1493,7 @@ def about(
     records: Mapping[str, Any],
     rule_sets: Mapping[str, obvody.RuleSet],
     replaced: Mapping[str, Any] | None,
+    standing: Mapping[str, Any],
 ) -> dict[str, Any]:
     """Return ``data/about.json``: what the About dialog lists from the config.
 
@@ -1144,11 +1504,12 @@ def about(
     the curated research (:func:`research_records`), counted per research
     language: candidates researched and those with findings. *rule_sets*
     are the council rule sets (:func:`obvody.load_rule_sets`). *replaced*
-    is what an earlier election takes from the latest (:func:`substitutes`),
-    None for the latest.
+    is what an election other than the latest takes from it
+    (:func:`substitutes`), None for the latest; *standing* the stand-ins
+    (:func:`stand_ins`).
     """
     election_dir = cfg.election_dir(election)
-    named_parties = {p for c in data["candidacies"] for p in c["parties"]}
+    parties = named_parties(data)
     named = {n for e in cfg.elections for n in election_inputs(e)}
     own = election_inputs(election)
     inputs = []
@@ -1210,7 +1571,7 @@ def about(
             for name, p in sorted(
                 cfg.parties.items(), key=lambda item: item[1].short.casefold()
             )
-            if name in named_parties and (logo := p.logos.get(election.slug))
+            if name in parties and (logo := p.logos.get(election.slug))
         ],
         "obvody": membership,
         "council": council,
@@ -1227,9 +1588,10 @@ def about(
             for lang, categories in sources.research.items()
         ],
         # How the candidate lists were read (elections.toml): the method
-        # section says where they come from.
-        "candidates": election.candidates.format,
+        # section says where they come from. A referendum has none.
+        "candidates": election.candidates and election.candidates.format,
         "substitutes": replaced,
+        "stand_ins": standing,
     }
 
 
@@ -1239,7 +1601,6 @@ def _built(cfg: Config, election: config.Election) -> dict[str, Path]:
     paths = {
         "candidates": directory / candidates.OUTPUT_FILE,
         "geo": directory / geo.OUTPUT_DIR,
-        "basemap": directory / basemap.OUTPUT_DIR,
         "addresses": directory / addresses.OUTPUT_DIR,
         "links": directory / LINKS_DIR,
     }
@@ -1250,15 +1611,120 @@ def _built(cfg: Config, election: config.Election) -> dict[str, Path]:
 
 
 @dataclass(frozen=True)
-class _Context:
-    """What every election's generated files are made with besides its own."""
+class _Shared:
+    """What an election's data bundle is made of besides its own build output.
+
+    Picked out of every election's in the main process, each election's
+    bundle being made in a worker process (:func:`_data_bundle`).
+    """
 
     records: Mapping[str, Any]
-    """The curated research (:func:`research_records`)."""
-    persons: Mapping[str, Mapping[str, Mapping[str, str]]]
-    """The persons linked across elections (:func:`linked_persons`)."""
+    """The research it shows: its own, else the latest election's of its
+    persons linked to the latest's (see :func:`_election_research`)."""
+    researched: bool
+    """It was researched in its own right."""
+    linked: int
+    """How many of its persons are linked to the latest election's."""
+    other: Mapping[str, Mapping[str, list[list[Any]]]]
+    """Its persons' candidacies in other elections (:func:`elsewhere`)."""
     translations: Mapping[str, translate.Curated]
-    """Language → its curated translations (:mod:`translate`)."""
+    """Language → its curated translations of its occupations and of the
+    texts of *records* (:func:`_translations_of`)."""
+
+
+def _election_research(
+    cfg: Config,
+    election: config.Election,
+    records: Mapping[str, Mapping[str, Any]],
+    persons: Mapping[str, Mapping[str, Mapping[str, str]]],
+) -> tuple[Mapping[str, Any], bool]:
+    """Return the research *election* shows, and whether it is its own.
+
+    *records* are the curated research by election (:func:`research_records`),
+    *persons* the persons linked across elections (:func:`linked_persons`).
+    """
+    # The curated research names the election whose candidates it
+    # researched (the ids of another election's persons can match by chance:
+    # same obec, name and age). An election researched in its own right
+    # shows its own; any other, its persons linked to the latest's
+    # researched ones get theirs, as of its last round's day.
+    latest = cfg.latest
+    own = records.get(election.day.isoformat(), {})
+    if own or election == latest:
+        return own, bool(own)
+    reused = reused_research(
+        records.get(latest.day.isoformat(), {}),
+        persons.get(latest.slug, {}).get(election.slug, {}),
+        election.last_day.isoformat(),
+    )
+    return reused, False
+
+
+def _translations_of(
+    translations: Mapping[str, translate.Curated],
+    occupations: Collection[str],
+    records: Mapping[str, Any],
+) -> dict[str, translate.Curated]:
+    """Return *translations* of *occupations* and of the texts of *records*.
+
+    All that :func:`occupation_files` and :func:`research_files` look up
+    (:func:`_finding_row`: English claims and quotes): the whole of them
+    sent to each worker process was 23 MB.
+    """
+    texts = {
+        text
+        for record in records.values()
+        for f in record.get("findings", ())
+        for text in (f["claim"].get("en"), f["quote"])
+    }
+    return {
+        code: translate.Curated(
+            occupations={
+                o: t.occupations[o] for o in occupations if o in t.occupations
+            },
+            research={text: t.research[text] for text in texts if text in t.research},
+        )
+        for code, t in translations.items()
+    }
+
+
+def _occupations(data: Mapping[str, Any]) -> set[str]:
+    """Return the occupations of the candidates of ``candidates.json`` *data*."""
+    return {c["occupation"] for c in data["candidacies"]} - {""}
+
+
+def _candidacy_results(cfg: Config, election: config.Election) -> dict[str, list[Any]]:
+    """Return :func:`candidacy_results` of *election*, read in a worker process."""
+    built = cfg.election_build_dir(election) / candidates.OUTPUT_FILE
+    final = final_contests(cfg.results_dir(election))
+    return candidacy_results(final or {}, orjson.loads(built.read_bytes()))
+
+
+def _data_bundle(
+    cfg: Config, election: config.Election, shared: _Shared
+) -> tuple[dict[str, bytes], dict[str, int]]:
+    """Return *election*'s generated files, encoded, and its untranslated counts.
+
+    Path below its data bundle → content (:func:`_election_files`), and
+    language → how many of its occupations are not translated into it. Run
+    in a worker process, which reads the election's own build output.
+    """
+    directory = cfg.election_build_dir(election)
+    data = orjson.loads((directory / candidates.OUTPUT_FILE).read_bytes())
+    content = _election_files(
+        cfg,
+        election,
+        data,
+        directory / geo.OUTPUT_DIR,
+        shared,
+        final_contests(cfg.results_dir(election)),
+    )
+    untranslated = {
+        path.split("/")[1].removesuffix(".json"): value["missing"]
+        for path, value in content.items()
+        if path.startswith(f"{I18N_DIR}/") and isinstance(value, dict)
+    }
+    return {path: encode(value) for path, value in content.items()}, untranslated
 
 
 def _election_files(
@@ -1266,35 +1732,27 @@ def _election_files(
     election: config.Election,
     data: Mapping[str, Any],
     geo_dir: Path,
-    context: _Context,
+    shared: _Shared,
     final: Mapping[str, Mapping[str, Any]] | None,
-    other: Mapping[str, Mapping[str, list[list[Any]]]],
 ) -> dict[str, object]:
     """Return *election*'s generated JSON, path below its bundle → content.
 
     *data* is its ``candidates.json``, *geo_dir* its ``geo`` output, *final*
-    its final results (:func:`final_contests`), *other* its persons'
-    candidacies in other elections (:func:`elsewhere`).
+    its final results (:func:`final_contests`).
     """
     curated = cfg.election_dir(election)
-    rule_sets = obvody.load_rule_sets(curated)
+    # A country-wide election's council rule sets only give its okrsky
+    # (copied from a municipal election's, reuse.py): it has no councils.
+    councils = any(c["kind"] == "oz" for c in data["contests"])
+    loaded = obvody.load_rule_sets(curated)
+    rule_sets = loaded if councils else {}
     props = obec_props(geo_dir)
-    # The curated research is keyed by the person ids of the latest
-    # election, whose candidates it researched; another election's ids can
-    # match one by chance (same obec, name and age), so its persons get the
-    # research of those linked to them, as of their own election day.
+    records = shared.records
     latest = cfg.latest
-    records = (
-        context.records
-        if election == latest
-        else reused_research(
-            context.records,
-            context.persons.get(latest.slug, {}).get(election.slug, {}),
-            election.day.isoformat(),
-        )
-    )
     live = final_okrsky(cfg.results_dir(election))
     content: dict[str, object] = {}
+    # A by-election's council contests may be some obvody of a council only.
+    part = addresses.council_parts(cfg, election, data["contests"])
     content |= area_files(
         data,
         _obvod_seats(geo_dir, rule_sets),
@@ -1302,18 +1760,21 @@ def _election_files(
         research_summary(cfg, records),
         regional_past(data, props) | council_past(data, live),
         no_result(final, data),
-        other,
+        shared.other,
+        day=election.day.isoformat(),
+        parties=cfg.parties,
+        part=part,
     )
     content |= research_files(
         cfg,
         data,
         records,
-        {code: t.research for code, t in context.translations.items()},
+        {code: t.research for code, t in shared.translations.items()},
     )
     shards = name_shards(data)
     content |= {f"{DATA_DIR}/names/{p}.json": rows for p, rows in shards.items()}
     several = several_okrsky(live)
-    drawn = json.loads((geo_dir / "index.json").read_bytes())["okrsky"]["drawn"]
+    drawn = orjson.loads((geo_dir / "index.json").read_bytes())["okrsky"]["drawn"]
     index = site_index(
         data,
         props,
@@ -1321,11 +1782,13 @@ def _election_files(
         cfg.parties,
         election.slug,
         rule_sets,
-        obvody.okrsok_rule_sets(curated),
+        obvody.okrsok_rule_sets(curated, loaded),
         place_facts(cfg, election, several, drawn),
+        part,
     )
+    if election.kind == config.BY_ELECTION:
+        index["held"] = held_areas(data)
     content[f"{DATA_DIR}/index.json"] = index
-    linked = context.persons.get(election.slug, {}).get(latest.slug, {})
     replaced = (
         None
         if election == latest
@@ -1334,15 +1797,15 @@ def _election_files(
             election,
             index,
             several,
-            (len(linked), len(data["persons"])),
+            (shared.linked, len(data["persons"])),
             records,
+            researched=shared.researched,
         )
     )
     content[f"{DATA_DIR}/about.json"] = about(
-        cfg, election, data, records, rule_sets, replaced
+        cfg, election, data, records, rule_sets, replaced, stand_ins(index)
     )
-    occupations = {c["occupation"] for c in data["candidacies"]} - {""}
-    content |= occupation_files(context.translations, occupations)
+    content |= occupation_files(shared.translations, _occupations(data))
     return content
 
 
@@ -1387,9 +1850,10 @@ def final_contests(results_dir: Path) -> dict[str, dict[str, Any]] | None:
         contest: record
         for path in st["files"]
         if not path.startswith(f"{results.OKRSKY_DIR}/")
-        for contest, record in json.loads((results_dir / f"{path}.json").read_bytes())[
-            "contests"
-        ].items()
+        and path != results.TURNOUT_FILE
+        for contest, record in orjson.loads(
+            (results_dir / f"{path}.json").read_bytes()
+        )["contests"].items()
     }
 
 
@@ -1401,112 +1865,140 @@ def no_result(
     Where a contest had candidates but the count could not be completed (in
     2022, Krušovce: its commission drew up no record and the election was
     held again), the final results (:func:`final_contests`) have no record
-    of it. None before the results are final.
+    of it; one held nowhere (``uncontested``) has none to have. None before
+    the results are final.
     """
     if final is None:
         return set()
-    return {c["id"] for c in data["contests"]} - final.keys()
+    held = {c["id"] for c in data["contests"] if "uncontested" not in c}
+    return held - final.keys()
 
 
 def bundles(
     cfg: Config,
     map_keys: Mapping[str, str | None],
     data_keys: Mapping[str, str | None],
-) -> tuple[dict[str, Part], dict[str, Part]]:
-    """Return the map and the data bundle of every election, by slug.
+    base_keys: Mapping[str, str | None],
+) -> tuple[dict[str, Part], dict[str, Part], dict[str, Part]]:
+    """Return the map and data bundles by slug, and the base maps by extract.
 
-    See the module doc. *map_keys* and *data_keys* are the bundles' keys
-    (:func:`election_map_slovakia.lock.keys`) by slug, which their
-    manifests name; None where the repository does not determine them (an
-    input not pinned yet).
+    The extracts are those of :attr:`config.Config.bases`. See the module doc.
+    *map_keys*, *data_keys* and *base_keys* are the parts' keys
+    (:func:`election_map_slovakia.lock.keys`) by slug or extract, which
+    their manifests name; None where the repository does not determine
+    them (an input not pinned yet).
+
+    Each election's data bundle is made, and its map bundle and each base
+    map read and hashed, in a worker process
+    (:mod:`election_map_slovakia.parallel`), once what they share is put
+    together here: its persons' candidacies elsewhere need every
+    election's results, which workers read first.
     """
     built = {e.slug: _built(cfg, e) for e in cfg.elections}
-    own: dict[str, dict[str, bytes]] = {}
-    # Language → how many occupations are not translated into it.
-    untranslated: dict[str, dict[str, int]] = {}
-    with progress.stage("making the candidate, name search and occupation files"):
+    bases = {osm: _built_base(cfg, osm) for osm in cfg.bases}
+    with progress.stage("making the bundles"):
         datas = {
-            e.slug: json.loads(built[e.slug]["candidates"].read_bytes())
+            e.slug: orjson.loads(built[e.slug]["candidates"].read_bytes())
             for e in cfg.elections
         }
         persons = linked_persons(
             {
-                (e.slug, path.stem): json.loads(path.read_bytes())
+                (e.slug, path.stem): orjson.loads(path.read_bytes())
                 for e in cfg.elections
                 for path in sorted(built[e.slug]["links"].glob("*.json"))
             }
         )
-        finals = {e.slug: final_contests(cfg.results_dir(e)) for e in cfg.elections}
-        others = elsewhere(
-            datas,
-            persons,
-            {slug: candidacy_results(f or {}) for slug, f in finals.items()},
-        )
-        context = _Context(
-            research_records(cfg),
-            persons,
-            {code: translate.load(cfg, code) for code in cfg.languages.codes},
-        )
-        for election in cfg.elections:
-            slug = election.slug
-            content = _election_files(
-                cfg,
-                election,
-                datas[slug],
-                built[slug]["geo"],
-                context,
-                finals[slug],
-                others[slug],
+        results = parallel.each(_candidacy_results, [(cfg, e) for e in cfg.elections])
+        others = elsewhere(datas, persons, dict(zip(datas, results, strict=True)))
+        records = research_records(cfg)
+        translations = {code: translate.load(cfg, code) for code in cfg.languages.codes}
+        shared = {}
+        for e in cfg.elections:
+            research, own = _election_research(cfg, e, records, persons)
+            shared[e.slug] = _Shared(
+                research,
+                own,
+                len(persons.get(e.slug, {}).get(cfg.latest.slug, {})),
+                others[e.slug],
+                _translations_of(translations, _occupations(datas[e.slug]), research),
             )
-            own[slug] = {path: encode(value) for path, value in content.items()}
-            untranslated[slug] = {
-                path.split("/")[1].removesuffix(".json"): value["missing"]
-                for path, value in content.items()
-                if path.startswith(f"{I18N_DIR}/") and isinstance(value, dict)
+        del datas
+        copies = {
+            e.slug: {
+                geo.OUTPUT_DIR: built[e.slug]["geo"],
+                addresses.OUTPUT_DIR: built[e.slug]["addresses"],
             }
+            for e in cfg.elections
+        }
+        # The data bundles first: a few take far longer than any map's.
+        done = list(
+            parallel.each(
+                parallel.call,
+                [
+                    *((_data_bundle, cfg, e, shared[e.slug]) for e in cfg.elections),
+                    *((copied_files, copies[e.slug]) for e in cfg.elections),
+                    *((copied_files, files) for files in bases.values()),
+                ],
+            )
+        )
     web = cfg.root / WEB_DIR
     maps, data = {}, {}
-    with progress.stage("hashing the bundles"):
-        for election in cfg.elections:
-            slug, paths = election.slug, built[election.slug]
-            copies = {
-                geo.OUTPUT_DIR: paths["geo"],
-                basemap.OUTPUT_DIR: paths["basemap"],
-                addresses.OUTPUT_DIR: paths["addresses"],
-            }
-            names = [
-                f"{target}/{p.relative_to(source).as_posix()}"
-                for target, source in copies.items()
-                for p in sorted(source.rglob("*"))
-                if p.is_file()
-            ]
-            version = content_version(
-                itertools.chain(
-                    *(tree(target, source) for target, source in copies.items())
-                )
-            )
-            manifest: dict[str, Any] = {
-                "key": map_keys.get(slug),
-                "election": election.day.isoformat(),
-                "version": version,
-                "files": sorted(names),
-            }
-            # Served as the data are: web/_headers-data.
-            maps[slug] = Part(
-                _part_files(web, DATA_PART) | {MANIFEST: encode(manifest)}, copies
-            )
-            generated = sorted(own[slug].items())
-            manifest = {
-                "key": data_keys.get(slug),
-                "election": election.day.isoformat(),
-                "version": content_version(generated),
-                "occupations": untranslated[slug],
-                "files": [path for path, _ in generated],
-            }
-            data[slug] = Part(
-                own[slug] | _part_files(web, "data") | {MANIFEST: encode(manifest)}, {}
-            )
-    return maps, data
+    count = len(cfg.elections)
+    for election, (own, untranslated), (version, names, known) in zip(
+        cfg.elections, done[:count], done[count : 2 * count], strict=True
+    ):
+        slug = election.slug
+        manifest: dict[str, Any] = {
+            "key": map_keys.get(slug),
+            "election": election.day.isoformat(),
+            "version": version,
+            "files": names,
+        }
+        # Served as the data are: web/_headers-data.
+        maps[slug] = Part(
+            _part_files(web, DATA_PART) | {MANIFEST: encode(manifest)},
+            copies[slug],
+            known,
+        )
+        generated = sorted(own.items())
+        manifest = {
+            "key": data_keys.get(slug),
+            "election": election.day.isoformat(),
+            "version": content_version(generated),
+            "occupations": untranslated,
+            "files": [path for path, _ in generated],
+        }
+        data[slug] = Part(
+            own | _part_files(web, "data") | {MANIFEST: encode(manifest)}, {}
+        )
+    base_parts = {}
+    for (osm, base_copies), (version, names, known) in zip(
+        bases.items(), done[2 * count :], strict=True
+    ):
+        manifest = {
+            "key": base_keys.get(osm),
+            "base": osm,
+            "version": version,
+            "files": names,
+        }
+        base_parts[osm] = Part(
+            _part_files(web, DATA_PART) | {MANIFEST: encode(manifest)},
+            base_copies,
+            known,
+        )
+    return maps, data, base_parts
+
+
+def _built_base(cfg: Config, osm: str) -> dict[str, Path]:
+    """Return the base map of extract *osm* to copy: its files and directories.
+
+    Each by its path below the part, which is the base map's directory in
+    ``data/build/`` (:meth:`config.Config.base_build_dir`).
+    """
+    source = cfg.base_build_dir(osm) / basemap.OUTPUT_DIR
+    if not source.is_dir():
+        raise BuildError(f"{source} missing; run `ems basemap` first")
+    return {path.name: path for path in sorted(source.iterdir())}
 
 
 def cited(cfg: Config) -> set[str]:
@@ -1515,7 +2007,7 @@ def cited(cfg: Config) -> set[str]:
     return {
         finding["cache"]
         for path in sorted(root.glob("*/*.json"))
-        for finding in json.loads(path.read_bytes())["findings"]
+        for finding in orjson.loads(path.read_bytes())["findings"]
     }
 
 
@@ -1542,6 +2034,25 @@ def results_part(cfg: Config, key: str | None) -> Part:
     }
     web = cfg.root / WEB_DIR
     return Part(_part_files(web, "results") | {MANIFEST: encode({"key": key})}, copies)
+
+
+def live_part(cfg: Config) -> Part:
+    """Return the live part; see the module doc."""
+    from election_map_slovakia import results  # results imports this module
+
+    copies = {
+        e.day.isoformat(): cfg.live_dir(e)
+        for e in cfg.elections
+        if cfg.live_dir(e).is_dir()
+    }
+    versions = {
+        day: (results.read_status(directory) or {}).get("version")
+        for day, directory in copies.items()
+    }
+    web = cfg.root / WEB_DIR
+    return Part(
+        _part_files(web, "live") | {MANIFEST: encode({"versions": versions})}, copies
+    )
 
 
 def _part_files(web: Path, part: str) -> dict[str, bytes]:

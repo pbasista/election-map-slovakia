@@ -1,0 +1,75 @@
+# Okrsky of Lednické Rovne, transcribed by an AI agent in job okrsok-rules-4804 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Námestie slobody, Jilemnického, Uhrovecká, Sokolská, Pod Skalkou, Medňanská, Hlotka, Staré dvory, Záhradná, Sklárska, Sv. Anny
+#   okrsok 2: Rovňanská, Schreiberova, Športová, Majerská, Medová, Na Kopánke, Háj
+#   okrsok 3: Súhradka, Májová
+#   okrsok 4: Púchovská cesta, Cintorínska, Horenická, Hôrčanska, Pod brehom, Na Barinách, Družstevná, U duba, Agátová, Javorová, Medňanská
+#   okrsok 5: Medňanská, Potočná, Sadová, Kaštieľska
+obec = "513326"
+name = "Lednické Rovne"
+okrsky_date = 2024-03-01
+okrsky_fill = "nearest"
+okrsky_note = "Medňanská runs through all three parts: the document lists it in okrsok 1 (Lednické Rovne), 4 (Horenická Hôrka) and 5 (Medné), so it is split by part. Addresses without a street in part Lednické Rovne (split over okrsky 1-3) take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.lednickerovne.sk/modules/file_storage/download.php?file=8f24a356%7C645&inline=1"
+sha256 = "4a278bf2cc65b84a737e10745c3b6a703a23f2f8535d113493a79e81a5c6b861"
+title = "Oznámenie o vytvorení volebných okrskov a určení volebných miestností v obci Lednické Rovne pre voľby do Európskeho parlamentu 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Námestie slobody"},
+  {street = "Jilemnického"},
+  {street = "Uhrovecká"},
+  {street = "Sokolská"},
+  {street = "Pod Skalkou"},
+  {street = "Medňanská", part = "Lednické Rovne"},
+  {street = "Hlotka"},
+  {street = "Staré dvory"},
+  {street = "Záhradná"},
+  {street = "Sklárska"},
+  {street = "Sv. Anny"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Rovňanská"},
+  {street = "Schreiberova"},
+  {street = "Športová"},
+  {street = "Majerská"},
+  {street = "Medová"},
+  {street = "Na Kopánke"},
+  {street = "Háj"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Súhradka"},
+  {street = "Májová"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Púchovská cesta"},
+  {street = "Cintorínska"},
+  {street = "Horenická"},
+  {street = "Hôrčanská", written = "Hôrčanska"},
+  {street = "Pod brehom"},
+  {street = "Na Barinách"},
+  {street = "Družstevná"},
+  {street = "U duba"},
+  {street = "Agátová"},
+  {street = "Javorová"},
+  {street = "Medňanská", part = "Horenická Hôrka"},
+  {part = "Horenická Hôrka", note = "addresses without a street in part Horenická Hôrka, whose streets all vote in okrsok 4", inferred = true},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Medňanská", part = "Medné"},
+  {street = "Potočná"},
+  {street = "Sadová"},
+  {street = "Kaštieľska"},
+  {part = "Medné", note = "addresses without a street in part Medné, whose streets all vote in okrsok 5", inferred = true},
+]

@@ -1,0 +1,64 @@
+# Okrsky of Spišské Vlachy, transcribed by an AI agent in job okrsok-rules-638 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dobrá Voľa, Za Mestom; Partizánska; Vajanského 1-51; Slobody; 9. mája; Hviezdoslavova; SNP; Mlynská; Požiarnická; Cintorínska; Jarná; Bez ulice
+#   okrsok 2: Kostolná 1-50; Železničná 1-90; Jilemníckeho 1 – 50; J. Fabiniho 1-30; Slovenská 1-50; Spišská 1-50; Kukučínova 1-50; Tajovského 1-30; 1. mája 1-30; Vajanského 52-155
+#   okrsok 3: Včelná 1-30; Záhradná 1-60; Hornádska 1-60; Komenského 1-55; Sládkovičova 1-25; Štúrova 1-50; Slnečná 1-25; Lipová 1-25; Okolie 1-100
+obec = "543594"
+name = "Spišské Vlachy"
+okrsky_date = 2018-08-27
+okrsky_fill = "nearest"
+okrsky_note = "Mayor's notice with a three-column table of streets per okrsok; the town's website (Civium CMS) serves the PDF from app.civium.sk (institution 4 = Spišské Vlachy), linked from the listed page. The number ranges listed cover each register street whole; Vajanského is split 1-51 okrsok 1, 52-155 okrsok 2. 'Bez ulice' (okrsok 1) means voters registered without an address; register houses without a street outside part Dobrá Voľa go to the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://app.civium.sk/uploads/documents/4/2018/d9c644-volby-okrsky-06-09-2018.pdf"
+sha256 = "3085790b37e4ace8c4aeba5682405ab674c690a881871e5e4aaa7ac49fcfc156"
+title = "Oznámenie o utvorení volebných okrskov, volebných miestností a zapisovateľov okrskových volebných komisií – voľby do orgánov samosprávy obcí 2018"
+
+[[document]]
+url = "https://www.spisskevlachy.sk/sk/dokumenty/oznamenie-o-utvoreni-volebnych-okrskov-volebnych-miestnosti-a-zapisovatelov-okrskovych-volebnych-komisii-volby-do-organov-samospravy-obci-2018"
+sha256 = "fe82a00b74ac56969792d6e1e2ba77a7661be8f6ed03df5793753dfd511cb510"
+title = "Page of the town's website (Dokumenty) linking the PDF: Oznámenie o utvorení volebných okrskov, volebných miestností a zapisovateľov okrskových volebných komisií – voľby do orgánov samosprávy obcí 2018"
+
+[okrsok.1]
+rules = [
+  {part = "Dobrá Voľa"},
+  {street = "Za Mestom"},
+  {street = "Partizánska"},
+  {street = "Vajanského", numbers = "1-51"},
+  {street = "Slobody"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Hviezdoslavova"},
+  {street = "SNP"},
+  {street = "Mlynská"},
+  {street = "Požiarnická"},
+  {street = "Cintorínska"},
+  {street = "Jarná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kostolná"},
+  {street = "Železničná"},
+  {street = "Jilemnického", written = "Jilemníckeho", note = "misspelt; the register's only such street"},
+  {street = "J. Fabiniho"},
+  {street = "Slovenská"},
+  {street = "Spišská"},
+  {street = "Kukučínova"},
+  {street = "Tajovského"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "Vajanského", numbers = "52-155"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Včelná"},
+  {street = "Záhradná"},
+  {street = "Hornádska"},
+  {street = "Komenského"},
+  {street = "Sládkovičova"},
+  {street = "Štúrova"},
+  {street = "Slnečná"},
+  {street = "Lipová"},
+  {street = "Okolie"},
+]

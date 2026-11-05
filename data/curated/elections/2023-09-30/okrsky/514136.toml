@@ -1,0 +1,73 @@
+# The okrsky of Lehota pod Vtáčnikom of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/514136.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Lehota pod Vtáčnikom, transcribed by an AI agent in job okrsok-rules-4840 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: 1. mája, celá ulica; 29. augusta, celá ulica; 9. mája, celá ulica; Banícka, celá ulica; Jevgenija Sirku, celá ulica; Kováčova, celá ulica; Kpt. Jaroša, celá ulica; Lehota pod Vtáčnikom (občania s trvalým pobytom na obci); Mlynská, celá ulica; Mravečnica, celá ulica; Námestie SNP, súpisné čísla (38,39,40,41,46,47,48,49,50,51,52,53,54,55); Osloboditeľov, celá ulica; Partizánska, celá ulica; Podhradská, celá ulica; Starohájska, celá ulica; Veľká Lehota, súpisné číslo (2006)
+#     okrsok 2: Dubinky, celá ulica; Fučíkova, celá ulica; Hviezdoslavova, celá ulica; Kapitána Nálepku, celá ulica; Lúčna, celá ulica; Moyzesova, celá ulica; Náklo, celá ulica; Námestie SNP, súpisné číslo (42,43,45,747,35); Nová ulica, celá ulica; Obrancov mieru, súpisné č. (497,498,500,501,502,503,504,505,506,507,508,509,510,511,512,513,539,540,541,542,543,544,546,547,548,549,550,551,552,553,554,555,556,557,558,559,560,561,1104); Rázusova, celá ulica; Suchý potok, celá ulica; Školská, celá ulica; Záhradná, celá ulica
+#     okrsok 3: 4. apríla, celá ulica; Dedinská, celá ulica; Dúbravská, celá ulica; Hájska, celá ulica; Jesenského, celá ulica; Jilemnického, celá ulica; Konečná, celá ulica; Krátka, celá ulica; Krížna, celá ulica; Kukučínova, celá ulica; Obrancov mieru, súpisné č. (514,515,516,517,518,519,520,523,524,525,526,527,528,529,530,531,532,533,534,535,536,537,538,1090,1092); Sovietskej armády, celá ulica; Úzka, celá ulica
+obec = "514136"
+name = "Lehota pod Vtáčnikom"
+okrsky_date = 2024-03-04
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 4.3.2024 with the streets of each okrsok. Námestie SNP and Obrancov mieru are split by súpisné čísla as listed; their other numbers and the houses without a street (other than the Veľká Lehota numbers listed) take the okrsok of the nearest address (fill_nearest). 'Lehota pod Vtáčnikom' (residents registered to the obec only) is in okrsok 1 (no rule)."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3585): No okrsky document for the National Council election of 2023: The website's archived election pages (old .phtml site and the new one, Internet Archive) list no okrsky document for this vote (only announcements, voters' information, commission delegation, results). These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2024-06-08: 1: 1,347 → 1,384, 2: 1,014 → 1,048, 3: 639 → 666."
+
+[[document]]
+url = "https://www.lehotapodvtacnikom.sk/download_file_f.php?id=2009288"
+sha256 = "03917116693ed0d6b45b01fe1098584ab4d9fc22e96d262f384b5e9271c83a04"
+title = "Určenie volebných okrskov a priradenie ulíc pre voľby do EP (OcÚ LpV 141/2024-5, 4.3.2024)"
+
+[okrsok.1]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "29.augusta", written = "29. augusta"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Banícka"},
+  {street = "Jevgenija Sirku"},
+  {street = "Kováčova"},
+  {street = "Kpt. Jaroša"},
+  {street = "Mlynská"},
+  {street = "Mravečnica"},
+  {street = "Námestie SNP", numbers = "38, 39, 40, 41, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55", by = "supisne"},
+  {street = "Osloboditeľov"},
+  {street = "Partizánska"},
+  {street = "Podhradská"},
+  {street = "Starohájska"},
+  {part = "Veľká Lehota", numbers = "2006"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dubinky"},
+  {street = "Fučíkova"},
+  {street = "Hviezdoslavova"},
+  {street = "Kapitána Nálepku"},
+  {street = "Lúčna"},
+  {street = "Moyzesova"},
+  {street = "Náklo"},
+  {street = "Námestie SNP", numbers = "42, 43, 45, 747, 35", by = "supisne"},
+  {street = "Nová ulica"},
+  {street = "Obrancov Mieru", numbers = "497, 498, 500, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 512, 513, 539, 540, 541, 542, 543, 544, 546, 547, 548, 549, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559, 560, 561, 1104", by = "supisne", written = "Obrancov mieru"},
+  {street = "Rázusova"},
+  {street = "Suchý Potok", written = "Suchý potok"},
+  {street = "Školská"},
+  {street = "Záhradná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "4.apríla", written = "4. apríla"},
+  {street = "Dedinská"},
+  {street = "Dúbravská"},
+  {street = "Hájska"},
+  {street = "Jesenského"},
+  {street = "Jilemnického"},
+  {street = "Konečná"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Kukučínova"},
+  {street = "Obrancov Mieru", numbers = "514, 515, 516, 517, 518, 519, 520, 523, 524, 525, 526, 527, 528, 529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 1090, 1092", by = "supisne", written = "Obrancov mieru"},
+  {street = "Sovietskej Armády", written = "Sovietskej armády"},
+  {street = "Úzka"},
+]

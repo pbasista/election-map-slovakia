@@ -1,0 +1,46 @@
+# The okrsky of Horná Kráľová of the vote of 2023-01-21, data/curated/elections/2023-01-21/okrsky/555878.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Horná Kráľová, transcribed by an AI agent in job okrsok-rules-3216 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: ulice : Hlavná, Cintorínska, Športová, Pod Tópartom, Pri potoku, Topoľová, Malá Kráľová, Nad potokom, Domoviny, časť ulíc Sereďská a Nad Humnami.
+#     okrsok 2: ulice : Hlohovecká, Sliváš I., Sliváš II., Školská, Školská II., Nad Humnami, Sereďská a Vinohradnícka.
+obec = "555878"
+name = "Horná Kráľová"
+okrsky_fill = "nearest"
+okrsky_note = "The page lists Sereďská and Nad Humnami as 'časť ulíc' in okrsok 1 and as whole streets in okrsok 2, with no house numbers. Lackov dvor (not named in the document) and súpisné čísla of Sereďská/Nad Humnami outside the listed ranges are placed by fill_nearest."
+okrsky_adopted = 2023-01-21
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-871): No okrsky document of the 2018 municipal elections on hornakralova.sk: the media library (searched for okrsk/volebn) and the posts of June 2018–2020 hold none, the elections page starts with 2022, and the Internet Archive has no 2018 elections page or okrsky PDF. These are the okrsky of the vote of 2023-01-21 (2023-referendum), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The municipality's elections page gives the okrsky under the heading of the referendum to be held on Saturday 21 January 2023; no decision date is stated."
+
+[[document]]
+url = "https://www.hornakralova.sk/volby/"
+sha256 = "3e0d71c45c627a54b1f5caa66be93acfe979b0c89a4e7b1e67e8747e7a5a24fc"
+title = "Voľby – Referendum 2023 (okrsky a volebné miestnosti na stránke obce)"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná"},
+  {street = "Cintorínska"},
+  {street = "Športová"},
+  {street = "Pod Tópartom"},
+  {street = "Pri potoku"},
+  {street = "Topoľová"},
+  {street = "Malá Kráľová"},
+  {street = "Nad Potokom", written = "Nad potokom"},
+  {street = "Domoviny"},
+  {street = "Sereďská", numbers = "421-424, 507, 510, 751, 752", by = "supisne"},
+  {street = "Nad Humnami", numbers = "425, 426, 532-697", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlohovecká"},
+  {street = "Sliváš I."},
+  {street = "Sliváš II."},
+  {street = "Školská"},
+  {street = "Školská II."},
+  {street = "Vinohradnícka"},
+  {street = "Sereďská", numbers = "546-569, 630-674, 775", by = "supisne"},
+  {street = "Nad Humnami", numbers = "400-424, 427-453, 750", by = "supisne"},
+]

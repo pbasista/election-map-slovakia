@@ -1,9 +1,16 @@
 # Election Map Slovakia
 
-A zoomable map of every constituency
-of the Slovak municipal and regional elections of 24 October 2026
-and of 29 October 2022,
-with the candidates standing in each and their results.
+A zoomable map of Slovak elections since 2017:
+every constituency of the municipal and regional elections
+of 24 October 2026 and of 29 October 2022
+(and of the municipal elections of 2018 and the regional ones of 2017),
+with the candidates standing in each and their results;
+the presidential elections of 2019 and 2024,
+the referendums of 2023 and 2026,
+the elections to the National Council of 2020 and 2023
+and to the European Parliament of 2019 and 2024,
+and the municipal by-elections since 2019
+([docs/elections.md](docs/elections.md)).
 It is at **<https://volebnamapa.sk>**.
 
 ![The map around Banská Bystrica, its council constituency No. 1 highlighted where the visitor clicked, and beside the map the ballots voted on there with the candidates in ballot order, their parties and marks, among them who held the office at the time and who ran for it in 2022](docs/img/main.png)
@@ -12,7 +19,9 @@ It is at **<https://volebnamapa.sk>**.
 
 - **Ballots by place.**
   Click the map, or search for an address, a municipality or a candidate,
-  to see every ballot voted on there.
+  to see every ballot voted on there;
+  a country-wide election opens on the ballot of the whole country,
+  a by-election on the list of the places where it is held.
 - **Candidate notes.**
   A candidate card adds AI-researched, source-linked notes
   on the candidate's career and controversies.
@@ -20,14 +29,18 @@ It is at **<https://volebnamapa.sk>**.
   Circle candidates' numbers as on the ballot to gather them in one list,
   which a link (or its QR code) shares.
 - **Results.**
-  Each candidate's votes, the turnout and the winners,
+  Each candidate's (party's, answer's) votes, the turnout and the winners,
   on the ballots and on the map, down to the polling districts;
-  shown live as they were counted on election night.
+  shown live as they were counted on the night
+  of a municipal and regional election.
+  A party's list shows its candidates' preference votes.
 - **Several elections.**
-  The logo opens the list of elections, grouped by kind;
+  The map pin in the title opens the list of elections,
+  as a timeline or grouped by kind;
   each has its own pages, its own boundaries, addresses,
   constituencies and polling districts, candidates and results.
-  A candidate who ran last time shows that result,
+  A candidate who ran in the election of the same kind before
+  shows that result,
   and the 2026 results compare with 2022's where the polling districts allow.
   Where an earlier election's data are missing, uncertain
   or taken from a later source, the page says so.
@@ -41,8 +54,10 @@ It is at **<https://volebnamapa.sk>**.
 ## Quick start
 
 You need [git](https://git-scm.com/) and
-[uv](https://docs.astral.sh/uv/getting-started/installation/);
-uv brings Python (3.11 or newer) and the packages.
+[uv](https://docs.astral.sh/uv/getting-started/installation/)
+0.13.6 or newer;
+uv brings Python (3.11 or newer; `.python-version` picks 3.15, which the
+release builds with) and the packages.
 
 ```sh
 git clone https://github.com/pbasista/election-map-slovakia.git
@@ -60,7 +75,11 @@ a GitHub release holding the exact files the site is built from
 ([docs/pipeline.md](docs/pipeline.md#fetch)).
 After changing `config/`, `data/curated/` or `web/`,
 run `uv run ems make` again:
-it redoes only the steps whose inputs changed.
+it redoes only the steps whose inputs changed,
+and records what each made in `data/outputs.toml`,
+committed with the change,
+so that whoever pulls it skips the steps whose output it left as it was
+([docs/pipeline.md](docs/pipeline.md#the-output-record)).
 A change to the data (inputs, `config/` but `site.toml`,
 `data/curated/`, the code that makes the data)
 also needs `uv run ems data lock`,
@@ -71,6 +90,7 @@ whose `data/published.toml` is committed with it.
 | Document | What it covers |
 |---|---|
 | [docs/pipeline.md](docs/pipeline.md) | Every `ems` command, what each step makes, identifiers, configuration |
+| [docs/elections.md](docs/elections.md) | Adding an election of any kind: sources, inputs, configuration |
 | [docs/frontend.md](docs/frontend.md) | How the page works: layout, ballots, map, results on the map, caching |
 | [docs/results.md](docs/results.md) | The election results: commands, file format, sources, an election night |
 | [docs/agent-jobs.md](docs/agent-jobs.md) | Translations, constituency rules and candidate research by AI agents |
@@ -85,7 +105,7 @@ uv run ruff format --check .
 uv run ruff check .
 uv run ty check
 uv run pytest
-npx --yes @biomejs/biome@2.5.12 ci
+npx --yes @biomejs/biome@2.6.4 ci
 ```
 
 A push to any branch runs these checks;

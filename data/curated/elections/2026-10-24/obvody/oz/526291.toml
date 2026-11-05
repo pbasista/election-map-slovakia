@@ -2,10 +2,15 @@
 # Estimated by hand: no 2026 document says which addresses are in which
 # obvod (see the note). The candidate list gives the obvody and seats, the
 # 2022 notice their territory then.
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/526291.toml, standing in.
 obec = "526291"
 name = "Stratená"
 note = "Estimated: the council set two obvody on 22.6.2026 but published no resolution or Oznámenie; the candidate list gives only obvod 1 with 2 seats and obvod 2 with 1 seat. In 2022 (uznesenie č. 171) obvod 1 was the obec Stratená and obvod 2 its part Dobšinská Ľadová Jaskyňa; the same two territories are assumed (98 and 45 addresses, about two to one like the seats)."
 estimated = true
+okrsky_date = 2022-06-30
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-189): No document setting the okrsky for 24.10.2026 found: the notice board lists only current items; probing the board's files obsah318-345 found the OZ invitation of 22.06.2026 (obvody on the agenda), the MVK zapisovateľ appointment, the candidacy notice and the candidate list, but no Utvorenie volebných okrskov. Search on the web and cuet.slovensko.sk found nothing. Each of the 2 obvody presumably is one okrsok (Stratená, Dobšinská Ľadová Jaskyňa) but this is undocumented. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky, those ŠÚ SR counted in each council obvod. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2022-10-29: 1: 68 → 65, 2: 31 → 34."
 
 [[document]]
 url = "https://www.obecstratena.sk/e_download.php?file=/data/uredni_deska/obsah334_2.docx&original=ZOZNAM%20ZAREGISTROVAN%C3%9DCH%20KANDID%C3%81TOV%20NA%20POSLANCA%20OZ%20OBCE%20STRATEN%C3%81.docx"
@@ -19,12 +24,14 @@ title = "Oznámenie o utvorení volebného obvodu a o určení počtu poslancov 
 
 [obvod.1]
 seats = 2
+okrsky = [1]
 rules = [
   {part = "Stratená"},
 ]
 
 [obvod.2]
 seats = 1
+okrsky = [2]
 rules = [
   {part = "Dobšinská Ľadová Jaskyňa"},
 ]

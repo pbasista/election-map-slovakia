@@ -1,0 +1,100 @@
+# Okrsky of Veľké Kapušany, transcribed by an AI agent in job okrsok-rules-1768 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Agátová, Čepeľ, Družstevná, Kúpeľná, Mlynská, Muškátová, Nezábudková, Orgovánová, Ružová, Staničná, Tulipánová, Zelená
+#   okrsok 2: Centrum I. 925, Čičarovská, Hadabuda, J.A.Komenského, Juraja Dóžu, Ľudovíta Štúra, Sándora Petőfiho, Veľké Kapušany
+#   okrsok 3: Centrum I. 921, , 922, 923, 924, Centrum II, Malokapušianska, P.O.H. 58
+#   okrsok 4: L.N. Tolstého č. 80, 81, 82, 84, 85, 914, 915, 916, 917
+#   okrsok 5: P.O.H. 21, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33
+#   okrsok 6: P.O.H. 34, 35, 36, 37, 38, 39, 40, 41, 42, 44, 48, 49, 50, 51
+#   okrsok 7: P.O.H. 52, 53, 54, 55, 56, 57, 60, 61, 63, 64, 67, 68, 72, 73, 74
+#   okrsok 8: J. Kráľa + okále, P.O.H. 16, 17, 18, 19, 20, 45, 46, 47, Vinohradská, Vojanská
+#   okrsok 9: Veškovská
+#   okrsok 10: Bratislavská, Hlavná, J. Erdélyiho, Z. Fábryho, Záhradná, Z. Fábryho bl. č. 96, 97, 98, 99, 108, 110
+obec = "543853"
+name = "Veľké Kapušany"
+okrsky_date = 2019-02-21
+okrsky_fill = "nearest"
+okrsky_note = "The document numbers the blocks of P. O. Hviezdoslava, Centrum I. and L. N. Tolstého by súpisné čísla (by: supisne). fill_nearest places what it leaves out: the houses without a street, Námestie Istvána Dobóa, Námestie Lászlóa Mécsa, P. O. Hviezdoslava súpisné čísla it does not list (30, 59, 65, 66, 69, 70, 75–79 and the family houses with higher numbers) and L. N. Tolstého súpisné čísla other than 80–82, 84, 85, 914–917. Okrsok 2 lists 'Veľké Kapušany' (voters registered without an address); it has no rule. Z. Fábryho is listed whole and also with 'bl. č. 96, 97, 98, 99, 108, 110' in okrsok 10."
+
+[[document]]
+url = "https://www.vkapusany.sk/download_file_f.php?id=1108007"
+sha256 = "5e98068bb38432f0831e41145f75de5bd95d31857f8dee6e9811c23d7ed13016"
+title = "Určenie volebných okrskov pre Voľby do Európskeho parlamentu 2019 v meste Veľké Kapušany"
+
+[okrsok.1]
+rules = [
+  {street = "Agátová"},
+  {street = "Čepeľ"},
+  {street = "Družstevná"},
+  {street = "Kúpeľná"},
+  {street = "Mlynská"},
+  {street = "Muškátová"},
+  {street = "Nezábudková"},
+  {street = "Orgovánová"},
+  {street = "Ružová"},
+  {street = "Staničná"},
+  {street = "Tulipánová"},
+  {street = "Zelená"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Centrum I.", numbers = "925", by = "supisne"},
+  {street = "Čičarovská"},
+  {street = "Hadabuda"},
+  {street = "J. A. Komenského", written = "J.A.Komenského"},
+  {street = "Juraja Dózsu", written = "Juraja Dóžu", note = "Dóžu is the Slovak spelling of Dózsu (György Dózsa)"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Sándora Petőfiho"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Centrum I.", numbers = "921-924", by = "supisne"},
+  {street = "Centrum II", written = "Centrum II."},
+  {street = "Malokapušianská", written = "Malokapušianska", note = "spelling variant of the same street"},
+  {street = "P. O. Hviezdoslava", numbers = "58", by = "supisne", written = "P.O.H.", note = "P.O.H. abbreviates P. O. Hviezdoslava; its numbers in the document are the blocks' súpisné čísla (the register numbers the entrances orientačné 1–132)"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "L. N. Tolstého", numbers = "80-82, 84, 85, 914-917", by = "supisne", written = "L.N. Tolstého"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "P. O. Hviezdoslava", numbers = "21, 23-29, 31-33", by = "supisne", written = "P.O.H.", note = "P.O.H. abbreviates P. O. Hviezdoslava; its numbers in the document are the blocks' súpisné čísla (the register numbers the entrances orientačné 1–132)"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "P. O. Hviezdoslava", numbers = "34-42, 44, 48-51", by = "supisne", written = "P.O.H.", note = "P.O.H. abbreviates P. O. Hviezdoslava; its numbers in the document are the blocks' súpisné čísla (the register numbers the entrances orientačné 1–132)"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "P. O. Hviezdoslava", numbers = "52-57, 60, 61, 63, 64, 67, 68, 72-74", by = "supisne", written = "P.O.H.", note = "P.O.H. abbreviates P. O. Hviezdoslava; its numbers in the document are the blocks' súpisné čísla (the register numbers the entrances orientačné 1–132)"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Janka Kráľa", written = "J. Kráľa", note = "'J. Kráľa + okále': Janka Kráľa with its houses"},
+  {street = "P. O. Hviezdoslava", numbers = "16-20, 45-47", by = "supisne", written = "P.O.H.", note = "P.O.H. abbreviates P. O. Hviezdoslava; its numbers in the document are the blocks' súpisné čísla (the register numbers the entrances orientačné 1–132)"},
+  {street = "Vinohradská"},
+  {street = "Vojanská"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Veškovská"},
+  {part = "Veškovce", note = "the three houses of Veškovce without a street, with Veškovská (the only street of Veškovce)", inferred = true},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Bratislavská"},
+  {street = "Hlavná"},
+  {street = "Jána Erdélyiho", written = "J. Erdélyiho"},
+  {street = "Zoltána Fábryho", written = "Z. Fábryho"},
+]

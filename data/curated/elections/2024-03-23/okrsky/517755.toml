@@ -1,0 +1,30 @@
+# Okrsky of Lietavská Svinná-Babkov, transcribed by an AI agent in job okrsok-rules-4499 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: okrsok č. 1 pre voličov oprávnených voliť v časti Lietavská Svinná
+#   okrsok 2: okrsok č. 2 pre voličov oprávnených voliť v časti Babkov
+obec = "517755"
+name = "Lietavská Svinná-Babkov"
+okrsky_date = 2024-01-11
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF; text from its text layer (OCR-like, diacritics restored). Each okrsok is one part of the obec."
+
+[[document]]
+url = "https://www.obeclietsvinnababkov.info/e_download.php?file=data/uredni_deska/obsah236_20.pdf&original=Inform%C3%A1cia%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Den%C3%AD%20volebnc%C3%BDh%20miestnost%C3%AD.pdf"
+sha256 = "bd95284d9e249e77938086bc9f7825674dac32097c3839ea78b555aee625071e"
+title = "Informácia o utvorení volebných okrskov a určení volebných miestností – voľby prezidenta SR 2024"
+
+[[document]]
+url = "https://www.obeclietsvinnababkov.info/samosprava/uradna-tabula/informacia-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-1140.html"
+sha256 = "cbc86010db1816f3b472d91716705fc6bbdaa4ee1881d433f824c95ba7527926"
+title = "notice-board item"
+
+[okrsok.1]
+rules = [
+  {part = "Lietavská Svinná"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Babkov"},
+]

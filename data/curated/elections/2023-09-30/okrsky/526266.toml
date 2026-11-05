@@ -1,0 +1,29 @@
+# Okrsky of Slavec, transcribed by an AI agent in job okrsok-rules-3974 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Obcania bývajúci v obci Slavec, v časti obce Gombasek a v časti obce Hamor
+#   okrsok 2: Obcania bývajúci v časti obce Vidová
+obec = "526266"
+name = "Slavec"
+okrsky_date = 2023-06-23
+okrsky_note = "The document is a scan, read by OCR without diacritics and checked against the page image."
+
+[[document]]
+url = "https://www.slavec.sk/e_download.php?file=data/editor/89sk_4.pdf&original=urcenie_volebnych_okrskov.pdf"
+sha256 = "7b80b3ba738c6b6ef0a711b311783a5282bc85c6fdbac382e73bc44d4a5c5afa"
+title = "Určenie volebných okrskov a volebných miestností (voľby do NR SR 30.09.2023)"
+
+[[document]]
+url = "https://www.slavec.sk/samosprava/volby-a-referenda/volby-do-narodnej-rady-sr-2023/"
+sha256 = "b109f96e0b5a8ce22697a283e506582855fd220067480384417d5299fc890cb8"
+title = "Stránka volieb obce Slavec"
+
+[okrsok.1]
+rules = [
+  {part = "Slavec", note = "Gombasek and Hamor are settlements within the part Slavec in the register"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vidová"},
+]

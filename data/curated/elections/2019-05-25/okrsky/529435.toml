@@ -1,0 +1,53 @@
+# Okrsky of Bratislava-Čunovo, transcribed by an AI agent in job okrsok-rules-2021 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: HRANIČIARSKA, NA HRÁDZI, OVSENÁ, PETRŽALSKÁ, RAŽNÁ, SCHENGENSKÁ, SKÝCOVSKÁ, SOCHOROVA, TURISTICKÁ, ZÁHRADKÁRSKA OSADA A OBČANIA PRIHLÁSENÍ NA OBEC
+#   okrsok 2: CEZMÍNOVÁ, DLHÁ, IBERKOVÁ, IBIŠTEKOVÁ, KONOPISKÁ, KRUŠPÁNOVÁ, NOVOSADNÁ, RAKYTNÍKOVÁ, REBRÍČKOVÁ, ZÁHUMENNÁ, ZOBOVÁ.
+obec = "529435"
+name = "Bratislava-Čunovo"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned documents, read from the page images; the street list writes names in capitals. 'Záhradkárska osada' (okrsok 1) has no street in the register; its houses and the other houses with only a súpisné číslo take the okrsok of the nearest address (fill_nearest). 'Občania prihlásení na obec' (registered without an address) vote in okrsok 1. The list names no street for Borievková, Cédrová, Chrenová, Ciroková, Lipnicová and Plamienková ulica (new streets of the register, probably not yet named then): supplemented. "
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The starostka's 'Určenie volebných okrskov' sets two okrsky for the European Parliament election of 25. 05. 2019 and the street list is headed with that election; neither states a date."
+okrsky_supplemented = 2022-10-29
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The 2019 European Parliament street list leaves out Borievková ulica, Cédrová ulica, Chrenová ulica, Ciroková ulica, Lipnicová ulica and Plamienková ulica, streets of the register (likely named later, in the new development by Dlhá and Novosadná); placed in okrsok 2 as the rule set of the 2022-10-29 elections lists them."
+
+[[document]]
+url = "https://www.cunovo.eu/files/2025-04-30-161944-Volebn___okrsky_pre_vo__by_do_Eur__pskeho_parlamentu.pdf"
+sha256 = "0a83cfb9e34db304395969cda49f3e86f7790f3c5fb596407ed978c40bdda278"
+title = "Určenie volebných okrskov a Volebné okrsky v MČ Bratislava-Čunovo – voľby do Európskeho parlamentu 25. 5. 2019"
+
+[okrsok.1]
+rules = [
+  {street = "Hraničiarska", written = "HRANIČIARSKA"},
+  {street = "Na hrádzi", written = "NA HRÁDZI"},
+  {street = "Ovsená", written = "OVSENÁ"},
+  {street = "Petržalská", written = "PETRŽALSKÁ"},
+  {street = "Ražná", written = "RAŽNÁ"},
+  {street = "Schengenská", written = "SCHENGENSKÁ"},
+  {street = "Skýcovská", written = "SKÝCOVSKÁ"},
+  {street = "Sochorova", written = "SOCHOROVA"},
+  {street = "Turistická", written = "TURISTICKÁ"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cezmínová", written = "CEZMÍNOVÁ"},
+  {street = "Dlhá", written = "DLHÁ"},
+  {street = "Iberková", written = "IBERKOVÁ"},
+  {street = "Ibišteková", written = "IBIŠTEKOVÁ"},
+  {street = "Konopiská", written = "KONOPISKÁ"},
+  {street = "Krušpánová", written = "KRUŠPÁNOVÁ"},
+  {street = "Novosadná", written = "NOVOSADNÁ"},
+  {street = "Rakytníková", written = "RAKYTNÍKOVÁ"},
+  {street = "Rebríčková", written = "REBRÍČKOVÁ"},
+  {street = "Záhumenná", written = "ZÁHUMENNÁ"},
+  {street = "Zobová", written = "ZOBOVÁ"},
+  {street = "Borievková ulica", supplemented = true},
+  {street = "Cédrová ulica", supplemented = true},
+  {street = "Chrenová ulica", supplemented = true},
+  {street = "Ciroková ulica", supplemented = true},
+  {street = "Lipnicová ulica", supplemented = true},
+  {street = "Plamienková ulica", supplemented = true},
+]

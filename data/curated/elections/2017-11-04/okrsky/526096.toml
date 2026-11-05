@@ -1,0 +1,52 @@
+# The okrsky of Plešivec of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/526096.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Plešivec, transcribed by an AI agent in job okrsok-rules-899 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Ul. Čsl. Armády, Ul. Domická, Ul. Gemerská, Ul. 1. mája, Ul. Letná, Ul. Rudnayho, Ul. Vinohradná
+#     okrsok 2: Ul. Daxnerova, Ul. Hradná, Ul. Obrancov mieru, Ul. Okružná, Osada, Ul. Pokroku, Ul. Štítnická, Ul. Železničná
+obec = "526096"
+name = "Plešivec"
+okrsky_date = 2018-09-11
+okrsky_fill = "nearest"
+okrsky_note = "Both okrsky have the same polling station. Addresses without a street are placed by fill_nearest."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-466): The 2017 regional elections page holds only voter information (SK/HU) and the candidate lists; no okrsky document. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2018-11-10: 1: 994 → 965, 2: 921 → 904."
+
+[[document]]
+url = "https://www.obecplesivec.sk/download_file_f.php?id=1016303"
+sha256 = "258de19d8bf1da6ccfb75f5004fe8bd91821e1a7f16f8aa2b443877f10a8cef4"
+title = "Volebné okrsky a volebné miestnosti v obci Plešivec pre voľby do orgánov samosprávy obcí dňa 10.11.2018"
+
+[[document]]
+url = "https://www.obecplesivec.sk/komunalne-volby-2018-0.html"
+sha256 = "33e714e181cc57f709b4945fa011c6cd10cdb56d6b5fca3b15cc27e803c5fd53"
+title = "page of the vote"
+
+[[document]]
+url = "https://www.obecplesivec.sk/download_file_f.php?id=1763959"
+sha256 = "efdf6074a5977caa59304380196aca3b835ad76fb7a0c4718747c2fadd989861"
+title = "Volebné okrsky a volebné miestnosti v obci Plešivec, Referendum 21.1.2023 (10.11.2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Ulica Československej armády", written = "Ul. Čsl. Armády"},
+  {street = "Domická ulica", written = "Ul. Domická"},
+  {street = "Gemerská ulica", written = "Ul. Gemerská"},
+  {street = "Ulica 1. mája", written = "Ul. 1. mája"},
+  {street = "Letná ulica", written = "Ul. Letná"},
+  {street = "Ulica Gyula Rudnayho", written = "Ul. Rudnayho", note = "the register's Ulica Gyula Rudnayho, written by surname only"},
+  {street = "Vinohradná ulica", written = "Ul. Vinohradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Daxnerova ulica", written = "Ul. Daxnerova"},
+  {street = "Hradná ulica", written = "Ul. Hradná"},
+  {street = "Ulica obrancov mieru", written = "Ul. Obrancov mieru"},
+  {street = "Okružná ulica", written = "Ul. Okružná"},
+  {street = "Osada"},
+  {street = "Ulica pokroku", written = "Ul. Pokroku"},
+  {street = "Štítnická ulica", written = "Ul. Štítnická"},
+  {street = "Železničná ulica", written = "Ul. Železničná"},
+  {street = "Slnečná ulica", note = "not named in this document; in okrsok 2 in the mayor's later documents (from the referendum of 21.1.2023 on)"},
+]

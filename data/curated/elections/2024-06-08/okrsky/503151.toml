@@ -1,0 +1,32 @@
+# Okrsky of Dolný Ohaj, transcribed by an AI agent in job okrsok-rules-5071 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: čísla domov: O – 122, 328 – 485, 494 – 495, 497, 499 – 501, 507 – 508, 510, 575 – 576, 584 – 588, 630, 667, 711, 719, 736, 738
+#   okrsok 2: čísla domov: 125 – 323, 486 – 493, 496, 498, 502 – 506, 509, 511 – 573, 593 – 595, 650 – 652, 657 - 666, 669 - 670, 676, 679, 691, 695, 696, 703, 704, 709, 710, 713, 716, 718, 720, 722, 730, 735, 742
+obec = "503151"
+name = "Dolný Ohaj"
+okrsky_fill = "nearest"
+okrsky_note = "The notice lists house numbers (čísla domov, read as súpisné čísla) for the whole village; 'O – 122' read as 0–122; duplicate numbers dropped. Unlisted house numbers take the nearest okrsok (fill_nearest). Compared with the 2022 copy it adds houses 736, 738 (okrsok 1) and 735, 742 (okrsok 2)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-02-29
+okrsky_date_basis = "The notice names the European Parliament election of 8 June 2024 but states no decision date; the municipality's page linking it says 'Zverejnené' 2024-02-29. (https://obecdolnyohaj.sk/dokument/oznamenie-o-vytvorenych-volebnych-okrskoch/)"
+
+[[document]]
+url = "https://obecdolnyohaj.sk/wp-content/uploads/dokumenty/volby-do-europarlamentu/Oznamenie-o-vytvorenych-volebnych-okrskoch.pdf"
+sha256 = "6cf7fae2511b129f4ff8bde6400c2935f598d296694db1fd19033f46a59ea835"
+title = "Oznámenie o vytvorených volebných okrskoch (voľby do Európskeho parlamentu 2024)"
+
+[[document]]
+url = "https://obecdolnyohaj.sk/dokument/oznamenie-o-vytvorenych-volebnych-okrskoch/"
+sha256 = "0894398f5cf5ff0822b4fae25513fe62740de3c2d61dfb1f66311c47d212c6de"
+title = "Oznámenie o vytvorených volebných okrskoch (voľby do Európskeho parlamentu 2024) (stránka)"
+
+[okrsok.1]
+rules = [
+  {part = "Dolný Ohaj", numbers = "1-122, 328-485, 494-495, 497, 499-501, 507-508, 510, 575-576, 584-588, 630, 667, 711, 719, 736, 738"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dolný Ohaj", numbers = "125-323, 486-493, 496, 498, 502-506, 509, 511-573, 593-595, 650-652, 657-666, 669-670, 676, 679, 691, 695, 696, 703, 704, 709, 710, 713, 716, 718, 720, 722, 730, 735, 742"},
+]

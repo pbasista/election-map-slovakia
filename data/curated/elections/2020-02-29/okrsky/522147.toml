@@ -1,0 +1,31 @@
+# Okrsky of Veľká Ida, transcribed by an AI agent in job okrsok-rules-2602 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1-319 + občania prihlásení na pobyt na obci
+#   okrsok 2: 320-777
+#   okrsok 3: Časť obce Gomboš od 1-99
+obec = "522147"
+name = "Veľká Ida"
+okrsky_date = 2019-11-19
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF read by OCR. No streets in the register: house numbers are súpisné within the part. \"všetci občania prihlásení na obec\" (residents without an address) are not a rule. Addresses whose numbers the document leaves out (above its highest number) take the okrsok of the nearest address (fill_nearest). Same okrsky as the 2022 copy except okrsok 2 ends at 777 (2022: 788)."
+
+[[document]]
+url = "https://www.velkaida.sk/files/2019-12-12-214559-img-Z12110631-0001.pdf"
+sha256 = "dc79f8e45d5c6ce7fd82ad208a94830b2803c76d0aa10d2adce24881f2564532"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do NR SR v roku 2020 (č.j. 304/2019, 19.11.2019)"
+
+[okrsok.1]
+rules = [
+  {part = "Veľká Ida", numbers = "1-319"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Veľká Ida", numbers = "320-777"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Gomboš", numbers = "1-99"},
+]

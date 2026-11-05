@@ -1,0 +1,63 @@
+# Okrsky of Marianka, transcribed by an AI agent in job okrsok-rules-3627 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: obec Marianka, Agátová, Borinská, Budovateľská, Bystrická, Čerešňová, Javorová, Jelšová, Kamenná, Krátka, Lesná, Lipová, Lúčna, Stromová, Stupavská, Štúrova, Topoľová, Višňová, Vŕbová, Záhradná
+#   okrsok 2: Družstevná, Karpatská, Na Kracinách, Na Ovsisku, Na Tálkoch, Na Vinohradoch, Bad Bednárovým, Námestie 4.apríla, Partizánska, Pod Mlynom, Podhájska, Poľná, Potočná, Púpavová, Sedmokrásková, Slnečná, Školská, Športová, Veterná
+obec = "508080"
+name = "Marianka"
+okrsky_fill = "nearest"
+okrsky_note = "Okrsok 1 also lists 'obec Marianka' (voters registered without an address); the 37 register addresses without a street (súpisné only) are placed by fill_nearest."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2023-09-22
+okrsky_date_basis = "The Internet Archive captured the municipality's 2023 NR SR elections page listing the okrsky on 2023-09-22; the page names the election of 30 September 2023; no decision date is given. (https://web.archive.org/web/20230922173001/https://www.marianka.sk/obcan/uradna-tabula/volby/volby-do-nr-sr-2023/)"
+
+[[document]]
+url = "https://web.archive.org/web/20230922173001/https://www.marianka.sk/obcan/uradna-tabula/volby/volby-do-nr-sr-2023/"
+sha256 = "29247c07dd699966992812158f08641fccfa7c7465751871cfd1c45bf99e567c"
+title = "Voľby do NR SR 2023 (úradná tabuľa) – okrsky"
+
+[okrsok.1]
+rules = [
+  {street = "Agátová"},
+  {street = "Borinská"},
+  {street = "Budovateľská"},
+  {street = "Bystrická"},
+  {street = "Čerešňová"},
+  {street = "Javorová"},
+  {street = "Jelšová"},
+  {street = "Kamenná"},
+  {street = "Krátka"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+  {street = "Lúčna"},
+  {street = "Stromová"},
+  {street = "Stupavská"},
+  {street = "Štúrova"},
+  {street = "Topoľová"},
+  {street = "Višňová"},
+  {street = "Vŕbová"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Karpatská"},
+  {street = "Na Kracinách"},
+  {street = "Na Ovsisku"},
+  {street = "Na Tálkoch"},
+  {street = "Na Vinohradoch"},
+  {street = "Nad Bednárovým", written = "Bad Bednárovým", note = "typo in the document: 'Bad' for 'Nad'"},
+  {street = "Námestie 4.apríla"},
+  {street = "Partizánska"},
+  {street = "Pod Mlynom"},
+  {street = "Podhájska"},
+  {street = "Poľná"},
+  {street = "Potočná"},
+  {street = "Púpavová"},
+  {street = "Sedmokrásková"},
+  {street = "Slnečná"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Veterná"},
+]

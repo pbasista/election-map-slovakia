@@ -1,0 +1,51 @@
+# Okrsky of Hanušovce nad Topľou, transcribed by an AI agent in job okrsok-rules-3218 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice Bukovské, Dukelská, Garbiarska, Jarmočná, Kláštorná, Komenského, Kukorelliho, Počekanec, Pod Šibenou, Prešovská, Slovenská, Šarišská, Štúrova od č. 342-343, Zámocká, Železničiarska
+#   okrsok 2: ulice Budovateľská, Mierová, Sadová, SNP, Širiava, Štúrova od č. 335- 340, Tehelná, Záhradná
+obec = "544213"
+name = "Hanušovce nad Topľou"
+okrsky_date = 2022-11-10
+okrsky_fill = "nearest"
+okrsky_note = "Štúrova is split by súpisné číslo (342–343 okrsok 1, 335–340 okrsok 2); other Štúrova houses (e.g. the school 341) and the address without a street take the nearest placed address (fill_nearest). Scanned PDF, read from the rendered image. The decision, dated 10. 11. 2022, is listed on the city's page of the referendum of 21 January 2023."
+
+[[document]]
+url = "https://www.hanusovce.sk/e_download.php?file=data/editor/226sk_3.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "5784c2714f7e3baa665842677a4505a7ca064526978a252e5a35e92929a6423c"
+title = "Utvorenie volebných okrskov"
+
+[[document]]
+url = "https://www.hanusovce.sk/zverejnovanie/uradna-tabula/volby/referendum-o-predcasnom-skonceni-funkcneho-obdobia-narodnej-rady-slovenskej-republiky/"
+sha256 = "c13859a20cbee6219da8d775e4520163cdd09fa87e437ff5556eeca77c265a88"
+title = "Úradná tabuľa – voľby"
+
+[okrsok.1]
+rules = [
+  {street = "Bukovské"},
+  {street = "Dukelská"},
+  {street = "Garbiarska"},
+  {street = "Jarmočná"},
+  {street = "Kláštorná"},
+  {street = "Komenského"},
+  {street = "Kukorelliho"},
+  {street = "Počekanec"},
+  {street = "Pod Šibenou"},
+  {street = "Prešovská"},
+  {street = "Slovenská"},
+  {street = "Šarišská"},
+  {street = "Zámocká"},
+  {street = "Železničiarska"},
+  {street = "Štúrova", numbers = "342-343", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Mierová"},
+  {street = "Sadová"},
+  {street = "SNP"},
+  {street = "Širiava"},
+  {street = "Tehelná"},
+  {street = "Záhradná"},
+  {street = "Štúrova", numbers = "335-340", by = "supisne"},
+]

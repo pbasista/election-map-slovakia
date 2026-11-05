@@ -1,0 +1,239 @@
+# Okrsky of Senec, transcribed by an AI agent in job okrsok-rules-4010 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Vinohradnícka, Tehelná, Tehelňa, Farské nám., Moyzesova, Krátka, Pivničná, Šafárikova, Pod vinicami, Fraňa Kráľa
+#   okrsok 2: Ulice: Bratislavská č. 3-25 iba nepárne čísla, Mierové námestie
+#   okrsok 3: Ulice: Námestie 1. mája, Robotnícka
+#   okrsok 4: Ulice: J.Jesenského, Trnavská, Turecká, Hollého
+#   okrsok 5: Ulice: Kollárova, Hurbanova
+#   okrsok 6: Ulice: m.č. Svätý Martin
+#   okrsok 7: Ulice: Dúhová, Boldocká cesta, Rosná, Slnečná, Mlynská, Jasná, Kvetná, Vrbenského, Fučíková, Hečková, Štefánikova
+#   okrsok 8: Ulice: Vodná, Rybárska, Štúrova, SNP, Školská, Železničná, Šamorínska, Nitrianska
+#   okrsok 9: Ulice: Žarnovova, Ľ. Fullu, Baničova, Jána Smreka, E.B.Lukáča, Záhradnícka, Novomeského, Bratislavská č. 2-30 iba párne čísla a 27-75 iba nepárne čísla, Kalinčiakova, Liptovská, M. Urbana, Pri striebornom jazere, Strieborné jazero
+#   okrsok 10: Ulice: Gagarinova, Zemplínska, Jánošíkova, Kysucká
+#   okrsok 11: Ulice: Žitavská, Považská, Inovecká, Pezinská, Oravská
+#   okrsok 12: Ulice: Sokolská, A. Sládkoviča, Svätoplukova
+#   okrsok 13: Ulice: Bernolákova, Košická, Pribinova, J.G. Tajovského, Hviezdoslavova
+#   okrsok 14: Ulice: Priemyselná, B. Bartóka, Letná, Športová, Chalupkova, Fándlyho, Vajanského, Mäsiarska, Lichnerova
+#   okrsok 15: Ulice: Čerešňová, Višňová, Gaštanová, Šípková, Trnková, Javorová, Morušová, Bazová, Drienková, Marhuľová, Horný dvor, Diaľničná, Sadová, Strmá, Svätého Urbana, Škorcová, Pri Štifte, A. Dubčeka, J. Csermáka, J. Farkasa, J. Murgaša, A. Hlinku, Mesačná
+#   okrsok 16: Ulice: Dlhá, Agátová, Lipová, Jesenná, Zimná, Jarná, Lúčna, Brezová, Orechová, Ulica pri včelárikoch, Drozdia, Slávičia, Sovia, Vtáčia, Lastovičia, Holubia, Jastrabia, Vrabčia, Škovránčia, Slnečné jazerá
+#   okrsok 17: Ulice: Karasová, Ulica pri Čiernej vode, Ulica pri Búroši, Hany Zelinovej, Dobšinského, Karola Šišku, Turnianska, Sereďská, Horná, Dolná, Okružná, Borovicová, Lesná, Smreková, Borievková, Jedľová, Tulipánová, Muškátová, Ružová, Fialková, Poľná, Kapria
+obec = "508217"
+name = "Senec"
+okrsky_date = 2024-01-22
+okrsky_fill = "nearest"
+okrsky_note = "Names the document gives that the register lacks are left out (Kapria, Strieborné jazero, Strmá, Tehelňa). Streets the document does not list (Nám. Alberta Molnára, Stavbárska) and addresses without a street take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20240404224745/https://www.senec.sk/userfiles/download/attachment/volby/Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Den%C3%AD%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "1cac1ad72dddfc910620f98c4505e337c7a1882cad05368b6907a871195e9d2d"
+title = "Rozhodnutie primátora mesta Senec o utvorení volebných okrskov a určení volebných miestností pre voľby prezidenta SR 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Vinohradnícka"},
+  {street = "Tehelná"},
+  {street = "Farské námestie", written = "Farské nám.", note = "the document writes \"Farské nám.\", the register \"Farské námestie\"; the same street"},
+  {street = "Moyzesova"},
+  {street = "Krátka"},
+  {street = "Pivničná"},
+  {street = "Šafárikova"},
+  {street = "Pod vinicami"},
+  {street = "Fraňa Kráľa"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bratislavská", numbers = "3-25", parity = "odd"},
+  {street = "Mierové nám.", written = "Mierové námestie", note = "the document writes \"Mierové námestie\", the register \"Mierové nám.\"; the same street"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Nám. 1. mája", written = "Námestie 1. mája", note = "the document writes \"Námestie 1. mája\", the register \"Nám. 1. mája\"; the same street"},
+  {street = "Robotnícka"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "J. Jesenského"},
+  {street = "Trnavská"},
+  {street = "Turecká"},
+  {street = "Hollého"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Kollárova"},
+  {street = "Hurbanova"},
+]
+
+[okrsok.6]
+rules = [
+  {part = "Svätý Martin"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Dúhová"},
+  {street = "Boldocká cesta"},
+  {street = "Rosná"},
+  {street = "Slnečná"},
+  {street = "Mlynská"},
+  {street = "Jasná"},
+  {street = "Kvetná"},
+  {street = "Vrbenského"},
+  {street = "Fučíkova", written = "Fučíková", note = "the document writes \"Fučíková\", the register \"Fučíkova\"; the same street"},
+  {street = "Hečkova", written = "Hečková", note = "the document writes \"Hečková\", the register \"Hečkova\"; the same street"},
+  {street = "Štefánikova"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Vodná"},
+  {street = "Rybárska"},
+  {street = "Štúrova"},
+  {street = "SNP"},
+  {street = "Školská"},
+  {street = "Železničná"},
+  {street = "Šamorínska"},
+  {street = "Nitrianska"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Žarnovova"},
+  {street = "Ľudovíta Fullu", written = "Ľ. Fullu", note = "the document writes \"Ľ. Fullu\", the register \"Ľudovíta Fullu\"; the same street"},
+  {street = "Baničova"},
+  {street = "Jána Smreka"},
+  {street = "Emila Boleslava Lukáča", written = "E.B.Lukáča", note = "the document writes \"E.B.Lukáča\", the register \"Emila Boleslava Lukáča\"; the same street"},
+  {street = "Záhradnícka"},
+  {street = "Novomeského"},
+  {street = "Bratislavská", numbers = "2-30", parity = "even"},
+  {street = "Bratislavská", numbers = "27-75", parity = "odd"},
+  {street = "Kalinčiakova"},
+  {street = "Liptovská"},
+  {street = "M. Urbana"},
+  {street = "Pri Striebornom jazere"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Gagarinova"},
+  {street = "Zemplínska"},
+  {street = "Jánošíkova"},
+  {street = "Kysucká"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Žitavská"},
+  {street = "Považská"},
+  {street = "Inovecká"},
+  {street = "Pezinská"},
+  {street = "Oravská"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Sokolská"},
+  {street = "Andreja Sládkoviča", written = "A. Sládkoviča", note = "the document writes \"A. Sládkoviča\", the register \"Andreja Sládkoviča\"; the same street"},
+  {street = "Svätoplukova"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Košická"},
+  {street = "Pribinova"},
+  {street = "J. G. Tajovského"},
+  {street = "Hviezdoslavova"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Priemyselná"},
+  {street = "Bélu Bartóka", written = "B. Bartóka", note = "the document writes \"B. Bartóka\", the register \"Bélu Bartóka\"; the same street"},
+  {street = "Letná"},
+  {street = "Športová"},
+  {street = "Chalupkova"},
+  {street = "Fándlyho"},
+  {street = "Vajanského"},
+  {street = "Mäsiarska"},
+  {street = "Lichnerova"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Čerešňová"},
+  {street = "Višňová"},
+  {street = "Gaštanová"},
+  {street = "Šípková"},
+  {street = "Trnková"},
+  {street = "Javorová"},
+  {street = "Morušová"},
+  {street = "Bazová"},
+  {street = "Drienková"},
+  {street = "Marhuľová"},
+  {street = "Horný dvor"},
+  {street = "Diaľničná cesta", written = "Diaľničná", note = "the document writes \"Diaľničná\", the register \"Diaľničná cesta\"; the same street"},
+  {street = "Sadová"},
+  {street = "Svätého Urbana"},
+  {street = "Škorcová"},
+  {street = "Pri Štifte"},
+  {street = "A. Dubčeka"},
+  {street = "J. Csermáka"},
+  {street = "J. Farkasa"},
+  {street = "J. Murgaša"},
+  {street = "A. Hlinku"},
+  {street = "Mesačná"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Dlhá"},
+  {street = "Agátová"},
+  {street = "Lipová"},
+  {street = "Jesenná"},
+  {street = "Zimná"},
+  {street = "Jarná"},
+  {street = "Lúčna"},
+  {street = "Brezová"},
+  {street = "Orechová"},
+  {street = "Ulica pri včelárikoch"},
+  {street = "Drozdia"},
+  {street = "Slávičia"},
+  {street = "Sovia"},
+  {street = "Vtáčia"},
+  {street = "Lastovičia"},
+  {street = "Holubia"},
+  {street = "Jastrabia"},
+  {street = "Vrabčia"},
+  {street = "Škovránčia"},
+  {street = "Slnečné jazerá"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Karasová"},
+  {street = "Ulica pri Čiernej vode"},
+  {street = "Ulica pri Búroši"},
+  {street = "Hany Zelinovej"},
+  {street = "Dobšinského"},
+  {street = "Karola Šišku"},
+  {street = "Turnianska"},
+  {street = "Sereďská"},
+  {street = "Horná"},
+  {street = "Dolná"},
+  {street = "Okružná"},
+  {street = "Borovicová"},
+  {street = "Lesná"},
+  {street = "Smreková"},
+  {street = "Borievková"},
+  {street = "Jedľová"},
+  {street = "Tulipánová"},
+  {street = "Muškátová"},
+  {street = "Ružová"},
+  {street = "Fialková"},
+  {street = "Poľná"},
+]

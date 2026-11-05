@@ -1,0 +1,31 @@
+# Okrsky of Selice, transcribed by an AI agent in job okrsok-rules-4958 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov bývajúcich v obci v kat. úz. Šók
+#   okrsok 2: pre voličov bývajúcich v obci v kat. úz. Selice
+obec = "503991"
+name = "Selice"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF (page rotated), read from the rendered image. Addresses the register gives no k.ú. take the okrsok of the nearest placed address (fill_nearest)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names the European Parliament election of 8 June 2024; it states no decision date."
+
+[[document]]
+url = "http://www.selice.eu/ZV24/europarlament04.pdf"
+sha256 = "34698f0cd85d6db1b21bbcd4ebded99fd574581af9543f15c171529427aa1fd8"
+title = "Informácia o utvorení volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu konaného dňa 8. júna 2024"
+
+[[document]]
+url = "http://www.selice.eu/"
+sha256 = "2a43e30a01df1e679ac30ee19ab1354998b950bffc5f30b3146e071fdb55dbc6"
+title = "Obec Selice – úvodná stránka (former website) linking the document"
+
+[okrsok.1]
+rules = [
+  {ku = "Šók"},
+]
+
+[okrsok.2]
+rules = [
+  {ku = "Selice"},
+]

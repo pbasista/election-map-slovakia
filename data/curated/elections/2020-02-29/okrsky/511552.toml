@@ -1,0 +1,23 @@
+# Okrsky of Lovinobaňa, transcribed by an AI agent in job okrsok-rules-2646 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: okrsok č. 1 Základná škola Lovinobaňa – Pavilón B (prízemie)
+#   okrsok 2: okrsok č. 2 Kultúrny dom Uderiná
+obec = "511552"
+name = "Lovinobaňa"
+okrsky_date = 2019-11-05
+
+[[document]]
+url = "https://web.archive.org/web/20200925081443/https://www.lovinobana.sk/files/2019-11-05-134133-Ur__en___okrsky_volebn___miestnosti_.pdf"
+sha256 = "fe9080fc4d2969c55457e3c6d5fb16a67ffd17922f52d0f3131d4c2adf2caaa4"
+title = "Určenie okrskov a volebných miestností pre voľby do Národnej rady Slovenskej republiky v roku 2020 (05. 11. 2019)"
+
+[okrsok.1]
+rules = [
+  {part = "Lovinobaňa", note = "The document gives only the polling station; 2 okrsky for 2 parts, the station of okrsok 1 (the school in Lovinobaňa) in part Lovinobaňa", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Uderiná", note = "The document gives only the polling station; the station of okrsok 2 in part Uderiná", inferred = true},
+]

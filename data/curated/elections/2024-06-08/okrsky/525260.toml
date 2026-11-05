@@ -1,0 +1,32 @@
+# Okrsky of Široké, transcribed by an AI agent in job okrsok-rules-5034 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od súp. č. 1 do súp. č. 440
+#   okrsok 2: od súp. č. 441 do súp. č. 832
+obec = "525260"
+name = "Široké"
+okrsky_date = 2024-03-13
+okrsky_fill = "nearest"
+okrsky_note = "The document splits the village by súpisné čísla (1–440, 441–832) without naming parts; applied to both parts (Široké, Pod Braniskom), súpisné čísla being numbered across the municipality as in the rule set of 2022. Houses with a súpisné číslo above 832, if any, take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://siroke.sk/wp-content/uploads/dokumenty/volby-do-europarlamentu/informacie-o-utvoreni-okrskov-a-volebnych-miestnosti-pre-volby-do-Europarlamentu-2024.pdf"
+sha256 = "efdc27093d1dbb08b2bdc9637c4c8d4699c16a0aa23030850437991ba4c126b1"
+title = "Informácia o utvorení volebných okrskov a určení volebných miestností pre voľby do Európskeho parlamentu 2024"
+
+[[document]]
+url = "https://siroke.sk/dokument/informacie-o-utvoreni-okrskov-a-volebnych-miestnosti-pre-volby-do-europarlamentu-2024/"
+sha256 = "682bdb73e46693e0f39e28a4302780854e8196edd898424c9ad3607fc0944dfc"
+title = "Informácie o utvorení okrskov a volebných miestností pre voľby do Europarlamentu 2024 (stránka dokumentu)"
+
+[okrsok.1]
+rules = [
+  {part = "Široké", numbers = "1-440"},
+  {part = "Pod Braniskom", numbers = "1-440"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Široké", numbers = "441-832"},
+  {part = "Pod Braniskom", numbers = "441-832"},
+]

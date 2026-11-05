@@ -1,0 +1,289 @@
+# Okrsky of Piešťany, transcribed by an AI agent in job okrsok-rules-5260 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dudvážska, Družby
+#   okrsok 2: Agátová, Čkalovova, Detvianska, Dubová, Haluzického, Jánošíkova, Kláštorská, Na Lehote, Orviský kút, Orviská cesta, Pod náhonom, Topoľová, Žilinská cesta okrem or. č. 1, Nový dvor, Štefánikova or. č. pár. od 98 a or. č. nepár. od 75, A. Šindelára
+#   okrsok 3: Letná, Valová, Hričovská, Lednická, Likavská, Lietavská, Starohradská, Strečnianska, Súľovská, Vršatecká, Fándlyho, Pod Párovcami, Stromová, Bajzova, Beckovská, Bodona, Budatínska, Čachtická, Domkársky rad, Ivana Stodolu, Košecká, Sv. Cyrila a Metoda, Sv. Štefana, Svätoplukova, Tematínska, Trenčianska, E. Belluša, Mariánske námestie
+#   okrsok 4: A. Hlinku, súp. č. 61 – 63, 6433, 7719, Bottova, Díčova, Holubyho, Hoštáky, Mýtny rad, Považská, Sasinkova, Úzka, Kuzmányho, Nám. 1. mája, Štefánikova or. č. pár. 2 – 96 a or. č. nepár. 1 – 73
+#   okrsok 5: Mojmírova, Sadová, Vodárenská, Ulica pplk. V. Ábela, Milana Antala, A. Hlinku súp. č. 38 – 41 a súp. č. 4430, Lipová, Zavretý kút, A. Hlinku súp. č. 37, 50 – 60, A. Hlinku súp. č. 4882, 4866
+#   okrsok 6: A. Hlinku súp.č. 15 – 21, Dopravná, Javorinská, J. Jesenského, Mudroňova, Staničná, Cintorínska, Hospodárska, Mliekárenská, Mlynská, Nová, Vrbovská cesta, or. č. pár. 2 – 68 a or. č. nepár. 1- 115, Hurbanova, Partizánska
+#   okrsok 7: Bratislavská, or. č. pár. 2 – 102 a or. č. nepár. 1 – 109 a 155 -173, Teplická, Žilinská cesta or. č. 1, Kukorelliho, Ovocná
+#   okrsok 8: Bernolákova, Kalinčiakova, Kollárova, Kukučínova, Mierová, Nám. SNP, Palárikova, Potočná, Poštová, Radlinského, Royova, Šafárikova, Štúrova
+#   okrsok 9: Ulica Eugena Suchoňa, Furdekova, Hviezdoslavova, Moyzesova, Nitrianska, Nám. slobody, Nám. J. Murgaša, Rázusova, Winterova, Beethovenova, Nábr. I. Krasku, Nábr. J.J. Torkosa, Nábr. J. Werhnera, Nálepkova, Park – pasáž, Pribinova, Sad A. Kmeťa, Kúpeľný ostrov
+#   okrsok 10: 8. mája, Krajinská, Sládkovičova, Školská, Chalupkova, D. Tatarku, Detská, Hodžova, Hollého, J. Záborského, Matúškova, Meštianska, Nábrežie Kolomana Fodora, Rastislavova, Vajanského, Urbánkova, Záhradná
+#   okrsok 11: A. Dubčeka, Baltská ulica, Fínska ulica, Heinolská ulica, Helsinská ulica, Jantárová ulica, Jarná, Jazerná ulica, Južná, Ulica J. Sibelia, Krížna, Lužná ulica, Ulica M. Waltariho, Malá, Nám. J. Kráľa, Okružná, Ulica P. Nurmiho, Panenská, Prístavná, Ratnovská zátoka, Ružová, Rybná, Sihoťská ulica, Slnečná, Tichá, Veterná, J. Kupeckého, Kúpeľná, Vážska, Lúčna, Skalná, Robotnícka
+#   okrsok 12: Dlhá, Hlboká, Jozefská, Konečná, Rekreačná, Sibírska, Studená, Valašská, Vysoká, Golfová, Jachtárska, Kajakárska, K Lodenici, Veslárska, Komenského, Broskyňová
+#   okrsok 13: Gaštanová, Javorová, Bratislavská or. č. pár. od 104 a or. č. nepár. 111 - 153, 177, Brezová
+#   okrsok 14: Brigádnická, Družstevná, N. Teslu, Obchodná, Priemyselná, Vrbovská cesta or. č. pár. od 70 a or. č. nepár. od 117
+#   okrsok 15: E. F. Scherera, Mateja Bela or. č. pár. 2 - 30 a or. č. nepár. 1 – 21
+#   okrsok 16: Adama Trajana, Mateja Bela or. č. pár. 32 - 54, nepár. 23 – 35
+obec = "507440"
+name = "Piešťany"
+okrsky_date = 2026-05-11
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 11.05.2026 merges the 28 okrsky into 16 for the referendum. A. Hlinku is split by súpisné numbers (by: supisne) as the document lists them; its other houses, and the addresses without a street, are placed by fill_nearest. Bratislavská and Vrbovská cesta are split by orientačné numbers as listed. Names in the document not in the address register, left out: Nový dvor, Kúpeľný ostrov, Starohradská, Mariánske námestie, Nábr. Kolomana Fodora, Jantárová ulica, Ulica J. Sibelia, Broskyňová."
+
+[[document]]
+url = "https://www.piestany.sk/e_download.php?file=/data/editor/929skabove_144.pdf&original=Okrsky%20a%20volebn%C3%A9%20miestnosti_Referendum_2026.pdf"
+sha256 = "6614a083ad21cd70bdc3527b85a2b7f55d4f8890bb8709dcc522d816a8adc9a1"
+title = "Utvorenie volebných okrskov a určenie volebných miestností na konanie referenda konaného dňa 04.07.2026 (11.05.2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Dudvážska"},
+  {street = "Družby"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Čkalovova"},
+  {street = "Detvianska"},
+  {street = "Dubová"},
+  {street = "Haluzického"},
+  {street = "Jánošíková"},
+  {street = "Kláštorská"},
+  {street = "Na Lehote"},
+  {street = "Orviský kút"},
+  {street = "Orviská cesta"},
+  {street = "Pod náhonom"},
+  {street = "Topoľová"},
+  {street = "Žilinská cesta", except = "1"},
+  {street = "Štefánikova", numbers = "98-", parity = "even"},
+  {street = "Štefánikova", numbers = "75-", parity = "odd"},
+  {street = "A. Šindelára"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Letná"},
+  {street = "Valová"},
+  {street = "Hričovská"},
+  {street = "Lednická"},
+  {street = "Likavská"},
+  {street = "Lietavská"},
+  {street = "Strečnianska"},
+  {street = "Súľovská"},
+  {street = "Vršatecká"},
+  {street = "Fándlyho"},
+  {street = "Pod Párovcami"},
+  {street = "Stromová"},
+  {street = "Bajzova"},
+  {street = "Beckovská"},
+  {street = "Bodona"},
+  {street = "Budatínska"},
+  {street = "Čachtická"},
+  {street = "Domkársky rad"},
+  {street = "Ivana Stodolu"},
+  {street = "Košecká"},
+  {street = "Sv. Cyrila a Metoda"},
+  {street = "Sv. Štefana"},
+  {street = "Svätoplukova"},
+  {street = "Tematínska"},
+  {street = "Trenčianska"},
+  {street = "E. Belluša"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bottova"},
+  {street = "Díčova"},
+  {street = "Holubyho"},
+  {street = "Hoštáky"},
+  {street = "Mýtny rad"},
+  {street = "Považská"},
+  {street = "Sasinkova"},
+  {street = "Úzka"},
+  {street = "A. Hlinku", numbers = "61-63, 6433, 7719", by = "supisne"},
+  {street = "Kuzmányho"},
+  {street = "Nám. 1.mája", written = "Nám. 1. mája"},
+  {street = "Štefánikova", numbers = "2-96", parity = "even"},
+  {street = "Štefánikova", numbers = "1-73", parity = "odd"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Mojmírova"},
+  {street = "Sadová"},
+  {street = "Vodárenská"},
+  {street = "Ulica pplk. V. Ábela"},
+  {street = "Milana Antala"},
+  {street = "Lipová"},
+  {street = "Zavretý kút"},
+  {street = "A. Hlinku", numbers = "38-41, 4430", by = "supisne"},
+  {street = "A. Hlinku", numbers = "37, 50-60, 4882, 4866", by = "supisne"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Dopravná"},
+  {street = "Javorinská"},
+  {street = "J. Jesenského"},
+  {street = "Mudroňova"},
+  {street = "Staničná"},
+  {street = "A. Hlinku", numbers = "15-21", by = "supisne"},
+  {street = "Cintorínska"},
+  {street = "Hospodárska"},
+  {street = "Mliekárenská"},
+  {street = "Mlynská"},
+  {street = "Nová"},
+  {street = "Vrbovská cesta", numbers = "2-68", parity = "even"},
+  {street = "Vrbovská cesta", numbers = "1-115", parity = "odd"},
+  {street = "Hurbanova"},
+  {street = "Partizánska"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Bratislavská", numbers = "2-102", parity = "even"},
+  {street = "Bratislavská", numbers = "1-109, 155-173", parity = "odd"},
+  {street = "Teplická"},
+  {street = "Žilinská cesta", numbers = "1"},
+  {street = "Kukorelliho"},
+  {street = "Ovocná"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Kalinčiakova"},
+  {street = "Kollárova"},
+  {street = "Kukučínova"},
+  {street = "Mierová"},
+  {street = "Nám. SNP"},
+  {street = "Palárikova"},
+  {street = "Potočná"},
+  {street = "Poštová"},
+  {street = "Radlinského"},
+  {street = "Royova"},
+  {street = "Šafárikova"},
+  {street = "Štúrova"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Ulica Eugena Suchoňa"},
+  {street = "Furdekova"},
+  {street = "Hviezdoslavova"},
+  {street = "Moyzesova"},
+  {street = "Nitrianska"},
+  {street = "Nám. slobody", written = "Nám. Slobody"},
+  {street = "Nám. J. Murgaša"},
+  {street = "Rázusova"},
+  {street = "Winterova"},
+  {street = "Beethovenova"},
+  {street = "Nábr. I. Krasku"},
+  {street = "Nábrežie Justusa Jána Torkosa", written = "Nábr. J.J. Torkosa"},
+  {street = "Nábrežie Juraja Wernhera", written = "Nábr. J. Werhnera", note = "misspelt (letters swapped); the register's Nábrežie Juraja Wernhera"},
+  {street = "Nálepkova"},
+  {street = "Park - pasáž", written = "Park – pasáž"},
+  {street = "Pribinova"},
+  {street = "Sad A. Kmeťa"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "8. mája"},
+  {street = "Krajinská"},
+  {street = "Sládkovičova"},
+  {street = "Školská"},
+  {street = "Chalupkova"},
+  {street = "D. Tatarku"},
+  {street = "Detská"},
+  {street = "Hodžova"},
+  {street = "Hollého"},
+  {street = "J. Záborského"},
+  {street = "Matúškova"},
+  {street = "Meštianska"},
+  {street = "Rastislavova"},
+  {street = "Vajanského"},
+  {street = "Urbánkova"},
+  {street = "Záhradná"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "A. Dubčeka"},
+  {street = "Baltská ulica"},
+  {street = "Fínska ulica"},
+  {street = "Heinolská ulica"},
+  {street = "Helsinská ulica"},
+  {street = "Jarná"},
+  {street = "Jazerná ulica"},
+  {street = "Južná"},
+  {street = "Krížna"},
+  {street = "Lužná ulica"},
+  {street = "Ulica M. Waltariho"},
+  {street = "Malá"},
+  {street = "Nám. J. Kráľa"},
+  {street = "Okružná"},
+  {street = "Ulica P. Nurmiho"},
+  {street = "Panenská"},
+  {street = "Prístavná"},
+  {street = "Ratnovská zátoka"},
+  {street = "Ružová"},
+  {street = "Rybná"},
+  {street = "Sihoťská ulica"},
+  {street = "Slnečná"},
+  {street = "Tichá"},
+  {street = "Veterná"},
+  {street = "J. Kupeckého"},
+  {street = "Kúpeľná"},
+  {street = "Vážska"},
+  {street = "Lúčna"},
+  {street = "Skalná"},
+  {street = "Robotnícka"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Dlhá"},
+  {street = "Hlboká"},
+  {street = "Jozefská"},
+  {street = "Konečná"},
+  {street = "Rekreačná"},
+  {street = "Sibírska"},
+  {street = "Studená"},
+  {street = "Valašská"},
+  {street = "Vysoká"},
+  {street = "Golfová"},
+  {street = "Jachtárska"},
+  {street = "Kajakárska"},
+  {street = "K Lodenici"},
+  {street = "Veslárska"},
+  {street = "Komenského"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Gaštanová"},
+  {street = "Javorová"},
+  {street = "Brezová"},
+  {street = "Bratislavská", numbers = "104-", parity = "even"},
+  {street = "Bratislavská", numbers = "111-153, 177", parity = "odd"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Brigádnická"},
+  {street = "Družstevná"},
+  {street = "N. Teslu"},
+  {street = "Obchodná"},
+  {street = "Priemyselná"},
+  {street = "Vrbovská cesta", numbers = "70-", parity = "even"},
+  {street = "Vrbovská cesta", numbers = "117-", parity = "odd"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "E. F. Scherera"},
+  {street = "Mateja Bela", numbers = "2-30", parity = "even"},
+  {street = "Mateja Bela", numbers = "1-21", parity = "odd"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Adama Trajana"},
+  {street = "Mateja Bela", numbers = "32-54", parity = "even"},
+  {street = "Mateja Bela", numbers = "23-35", parity = "odd"},
+]

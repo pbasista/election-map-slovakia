@@ -1,0 +1,81 @@
+# Okrsky of Zákamenné, transcribed by an AI agent in job okrsok-rules-4800 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Kamenná ulica, Klampiarska ulica, Námestie J. Vojtaššáka, Slnečná ulica, Školská ulica, Športová ulica, Ulica Dolinka, Ulica Jána Vojtaššáka, Ulica Nižný koniec, Ulica pod Kalváriou, Ulica Podkamenné, Ulica Špitál, Včelárska ulica, Veterná ulica, Západná ulica
+#   okrsok 2: Ulice: Hlavná ulica, Lesnícka ulica, Lúčna ulica, Obecná ulica, Oravická ulica, Ulica na Polianku, Ulica Oravice, Ulica pri Bielej Orave, Ulica pri potoku, Ulica Vrchná Mrzačka, Vrchová ulica
+#   okrsok 3: Ulice: Mariánska ulica, Ulica Farský Briežok, Ulica Grúnik, Ulica M. Medveckej, Ulica Maršalkov grúň, Ulica Spodná Mrzačka, Ulica Vyšný koniec
+#   okrsok 4: Ulice: Goralská ulica, Kviatková ulica, Ulica Babinec, Ulica Grúň, Ulica Kocandy, Ulica pod Kýčerou, Ulica Poriečie, Záhradnícka ulica
+obec = "510203"
+name = "Zákamenné"
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by streets; every street of the register is named. The one address without a street takes the okrsok of the nearest placed address (fill_nearest)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-03-05
+okrsky_date_basis = "The page of the elections section linking the document states it was posted (vyvesené) on 5. 3. 2024; the document is undated and names the European Parliament election of 08.06.2024. (https://www.zakamenne.sk/zverejnovanie/volby/volby-do-europskeho-parlamentu-2024-540.html)"
+
+[[document]]
+url = "https://www.zakamenne.sk/e_download.php?file=data/uredni_deska/obsah528_2.doc&original=zoznam%20okrsky%20miestnosti%20%20-%20vo%C4%BEby%202024.doc"
+sha256 = "3b726d513fb6c9f8e4349276c4a0206e577f7da7c12e368cfef54cb4da6eb00e"
+title = "Volebné miestnosti - volebné okrsky (voľby do Európskeho parlamentu 08.06.2024)"
+
+[[document]]
+url = "https://www.zakamenne.sk/zverejnovanie/volby/volby-do-europskeho-parlamentu-2024-540.html"
+sha256 = "067c8db2ae3c858b938a2f87ddd776331b710f8a06945c85e1e4ae08ae86d145"
+title = "Voľby do Európskeho parlamentu 2024 (úradná tabuľa – Voľby, vyvesené 5. 3. 2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Kamenná ulica"},
+  {street = "Klampiarska ulica"},
+  {street = "Námestie J. Vojtaššáka"},
+  {street = "Slnečná ulica"},
+  {street = "Školská ulica"},
+  {street = "Športová ulica"},
+  {street = "Ulica Dolinka"},
+  {street = "Ulica Jána Vojtaššáka"},
+  {street = "Ulica Nižný koniec"},
+  {street = "Ulica pod Kalváriou"},
+  {street = "Ulica Podkamenné"},
+  {street = "Ulica Špitál"},
+  {street = "Včelárska ulica"},
+  {street = "Veterná ulica"},
+  {street = "Západná ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná ulica"},
+  {street = "Lesnícka ulica"},
+  {street = "Lúčna ulica"},
+  {street = "Obecná ulica"},
+  {street = "Oravická ulica"},
+  {street = "Ulica na Polianku"},
+  {street = "Ulica Oravice"},
+  {street = "Ulica pri Bielej Orave"},
+  {street = "Ulica pri potoku"},
+  {street = "Ulica Vrchná Mrzačka"},
+  {street = "Vrchová ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Mariánska ulica"},
+  {street = "Ulica Farský briežok", written = "Ulica Farský Briežok", note = "Differs from the register's name only in capitalisation."},
+  {street = "Ulica Grúnik"},
+  {street = "Ulica M. Medveckej"},
+  {street = "Ulica Maršalkov grúň"},
+  {street = "Ulica Spodná Mrzačka"},
+  {street = "Ulica Vyšný koniec"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Goralská ulica"},
+  {street = "Kviatková ulica"},
+  {street = "Ulica Babinec"},
+  {street = "Ulica Grúň"},
+  {street = "Ulica Kocandy"},
+  {street = "Ulica pod Kýčerou"},
+  {street = "Ulica Poriečie"},
+  {street = "Záhradnícka ulica"},
+]

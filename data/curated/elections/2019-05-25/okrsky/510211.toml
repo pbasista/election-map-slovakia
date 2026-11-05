@@ -1,0 +1,40 @@
+# Okrsky of Zázrivá, transcribed by an AI agent in job okrsok-rules-1781 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Zázrivá-Stred, Biela
+#   okrsok 2: Petrová, Demkovská, Dolina, Ráztoky, Grúne, Končitá, Havrania, Kozinská, Plešivá
+obec = "510211"
+name = "Zázrivá"
+okrsky_note = "The document is the mayor's decision as published in full text on the municipality's notice-board post (no PDF); it states no date of the decision."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2019-03-01
+okrsky_date_basis = "The Internet Archive captured the municipality's home page on 2019-03-01 listing the post 'Utvorenie volebných okrskov a určenie volebných miestností v obci Zázrivá' (for the elections to the European Parliament of 25 May 2019) with its opening text; the decision itself states no date. (https://web.archive.org/web/20190301091833/http://zazriva.com/)"
+
+[[document]]
+url = "https://zazriva.com/podujatie/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-obci-zazriva/"
+sha256 = "8be1b93c0b150f33ef695ecc4a1c681e15cb1b9a1239df5232a63322f1743b1b"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Zázrivá (voľby do Európskeho parlamentu 25. 5. 2019)"
+
+[[document]]
+url = "https://zazriva.com/podujatie/volby-do-europskeho-parlamentu-2019/"
+sha256 = "954d2e78a5d6aecb3f084eb8da571bb12a0d90dd38007cf488e48ce4747048a0"
+title = "Voľby do Európskeho parlamentu 2019"
+
+[okrsok.1]
+rules = [
+  {part = "Zázrivá-Stred"},
+  {part = "Biela"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Petrová"},
+  {part = "Demkovská"},
+  {part = "Dolina"},
+  {part = "Ráztoky"},
+  {part = "Grúne"},
+  {part = "Končitá"},
+  {part = "Havrania"},
+  {part = "Kozinská"},
+  {part = "Plešivá"},
+]

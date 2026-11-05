@@ -1,0 +1,68 @@
+# Okrsky of Nováky, transcribed by an AI agent in job okrsok-rules-5412 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hviezdoslavova, Martina Rázusa, Ivana Krasku, Čerešňová, M. R. Štefánika, Baníkov, Chemikov, Krátka, Štúrova, Fraňa Kráľa, Kukučínova, Svätoplukova, Športová
+#   okrsok 2: Mateja Bela, Pribinova, Bernolákova, Chalúpkova, Rastislavova, J. C. Hronského, Nám. SNP, Lehotská, Šimonovská, Suvorovova, Ernesta Ottu, Tichá, Andreja Hlinku, Matice Slovenskej
+#   okrsok 3: Tajovského, Gašpara Košťála, Trenčianska, Duklianska, Kollárova, Nábrežná, Lelovská, Lesná, Jesenského, Šoltésovej, Vajanského, Hurbanova, Partizánska
+obec = "514268"
+name = "Nováky"
+okrsky_date = 2026-04-23
+okrsky_fill = "nearest"
+okrsky_note = "The decision lists the streets of each of the 3 okrsky. Register streets it does not name (Priemyselná, Žitná) and addresses without a street go by fill_nearest."
+
+[[document]]
+url = "https://novaky.sk/data/page/novaky.sk/30877/referendum_okrsky.pdf"
+sha256 = "6014c948ab1323787cb7b30754b86a3e024786846c69253db259ee64cf543323"
+title = "Určenie okrskov a miestností na hlasovanie v referende 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "Martina Rázusa"},
+  {street = "Ivana Krasku"},
+  {street = "Čerešňová"},
+  {street = "M. R. Štefánika"},
+  {street = "Baníkov"},
+  {street = "Chemikov"},
+  {street = "Krátka"},
+  {street = "Štúrova"},
+  {street = "Fraňa Kráľa"},
+  {street = "Kukučínova"},
+  {street = "Svätoplukova"},
+  {street = "Športová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mateja Bela"},
+  {street = "Pribinova"},
+  {street = "Bernolákova"},
+  {street = "Chalúpkova"},
+  {street = "Rastislavova"},
+  {street = "J. C. Hronského"},
+  {street = "Nám. SNP"},
+  {street = "Lehotská"},
+  {street = "Šimonovská"},
+  {street = "Suvorovova"},
+  {street = "Ernesta Ottu"},
+  {street = "Tichá"},
+  {street = "Andreja Hlinku"},
+  {street = "Matice Slovenskej"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Tajovského"},
+  {street = "Gašpara Košťála"},
+  {street = "Trenčianska"},
+  {street = "Duklianska"},
+  {street = "Kollárova"},
+  {street = "Nábrežná"},
+  {street = "Lelovská"},
+  {street = "Lesná"},
+  {street = "Jesenského"},
+  {street = "Šoltesovej", written = "Šoltésovej"},
+  {street = "Vajanského"},
+  {street = "Hurbanova"},
+  {street = "Partizánska"},
+]

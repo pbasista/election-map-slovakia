@@ -1,0 +1,170 @@
+# Okrsky of Bernolákovo, transcribed by an AI agent in job okrsok-rules-2865 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bottova, Hlinkova, Hurbanova, Hviezdoslavova, Chalupkova, Jesenského, Kal inčiakova, K omenského, K ukučínova, Kvetn á, Lekárenská, Nálepkova, Národného oslobodenia, Orechová, Plemenárska, Poštová orientačné čísla 21 - 97, orientačné čísla 14 A – 80, Priemyselná, Senecká cesta, Sládkovičova, Školská, Štúrova, Viničná.
+#   okrsok 2: Azalková, Krátka, Ľaliová, Lúčna, Muškátová, Orgovánová, Poľovnícka, Pot očná, Staničná, Stred ná, Trnavská orientačné čísla 89 - 199, orientačné čísla 112 - 200, Železničná.
+#   okrsok 3: Ampérova, Baničova, Hlavná, Hlboká orientačné čísla 1 - 27, orientačné čísla 2 - 8 A, Kaštieľ, Kolláro va, Mostová, Poštová orientačné čísla 1 - 19 A, orientačné čísla 2 - 14, Slaná, Vŕšky, Záhradná.
+#   okrsok 4: Brečtanová, Fialková, Hájna, Hornádska, Hronská, Chmeľová, Ipeľská, Konvalinková, Kysucká, Ľanová, Moravská, Narcisová, Okružná, Ondavs ká, Oravská, Osiková, Park Belvéder, Poľná, Pše ničná, Ražná, Roľnícka, Snežienková, Toryská, Tulipánová, Vážska. 2
+#   okrsok 5: Bernolákova, Budovateľská, Clementisova, Družst evná, Dukelská, Fándlyho, Gaštanová alej, Grobská, Horný dvor, Pribinova, Sacky, Strojárenská, Svätoplukova, Tajovského.
+#   okrsok 6: Brusnicová, Čerešňová, Čučori edková, Figová, Hlboká orientačné číslo 29, orientačné čísla 10 - 40, Hrubé Lúky, Hrušková, Kondrótova, Malinová, Obilná, Sadová , Slneč nicová, Str omová, Šípková, Tabaková, Topoľový rad, Trnavská orientačné čísla 2 - 110, orientačné čísla 1 - 87, Trnavská (záhradkárska osada) súpisné čísla 3038, 3053, 3113, 3127, 3225, 3246, 3303, 3320, 3324, 3325, 3373, 6313, 6361, 6382, 6576, Trnková.
+#   okrsok 7: Agátová, Borovicová, Broskyňová, Buková, Du bová, Dunajská, Jabloňová, Jelšová, Lesná, Lipová, Marhuľová, Mierová, Nevädzová, Púpavová, Rezedová, Riečna, Slivková, Smreková, Šalviová, Višňová.
+obec = "507814"
+name = "Bernolákovo"
+okrsky_date = 2022-11-08
+okrsky_fill = "nearest"
+okrsky_note = "Streets split between okrsky are given by the document's orientačné ranges, the first range of each pair read as the odd side and the second as the even side ('č. 14 A – 80' = 14A and 16–80 even); numbers outside the listed ranges take the nearest address (fill_nearest). Trnavská garden-colony houses are given by súpisné čísla on part Bernolákovo as listed. Streets the document names but the register lacks (left out): Baničova, HrubéLúky, Hájna, Ondavská, Park Belvéder, Plemenárska, Pribinova, Roľnícka, Senecká cesta, Snežienková, Toryská, Čučori edková. Other houses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://data.moderneobce.sk/data/uploads/bernolakovo.sk/Utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti_(1).pdf"
+sha256 = "6abfba63bf46e9075ec49d36efcfe241c710f56b773f1ca06677cfa5059d6eb6"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.bernolakovo.sk/23147/referendum-sobota-21-januar-2023"
+sha256 = "ef93c799cf62aa18c51a1dabe24cf348964fe36bde1efb5fae7bf4b1063bfb5c"
+title = "elections page"
+
+[okrsok.1]
+rules = [
+  {street = "Bottova"},
+  {street = "Hlinkova"},
+  {street = "Hurbanova"},
+  {street = "Hviezdoslavova"},
+  {street = "Chalupkova"},
+  {street = "Jesenského"},
+  {street = "Kalinčiakova"},
+  {street = "Komenského"},
+  {street = "Kukučínova"},
+  {street = "Kvetná"},
+  {street = "Lekárenská"},
+  {street = "Nálepkova"},
+  {street = "Národného oslobodenia"},
+  {street = "Orechová"},
+  {street = "Poštová", numbers = "21-97", parity = "odd"},
+  {street = "Poštová", numbers = "14A, 16-80", parity = "even"},
+  {street = "Priemyselná"},
+  {street = "Sládkovičova"},
+  {street = "Školská"},
+  {street = "Štúrova"},
+  {street = "Viničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Azalková"},
+  {street = "Krátka"},
+  {street = "Ľaliová"},
+  {street = "Lúčna"},
+  {street = "Muškátová"},
+  {street = "Orgovánová"},
+  {street = "Poľovnícka"},
+  {street = "Potočná"},
+  {street = "Staničná"},
+  {street = "Stredná"},
+  {street = "Trnavská", numbers = "89-199", parity = "odd"},
+  {street = "Trnavská", numbers = "112-200", parity = "even"},
+  {street = "Železničná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Ampérova"},
+  {street = "Hlavná"},
+  {street = "Hlboká", numbers = "1-27", parity = "odd"},
+  {street = "Hlboká", numbers = "2-8, 8A", parity = "even"},
+  {street = "Kaštieľ"},
+  {street = "Kollárova"},
+  {street = "Mostová"},
+  {street = "Poštová", numbers = "1-19, 19A", parity = "odd"},
+  {street = "Poštová", numbers = "2-14", parity = "even"},
+  {street = "Slaná"},
+  {street = "Vŕšky"},
+  {street = "Záhradná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Brečtanová"},
+  {street = "Fialková"},
+  {street = "Hornádska"},
+  {street = "Hronská"},
+  {street = "Chmeľová"},
+  {street = "Ipeľská"},
+  {street = "Konvalinková"},
+  {street = "Kysucká"},
+  {street = "Ľanová"},
+  {street = "Moravská"},
+  {street = "Narcisová"},
+  {street = "Okružná"},
+  {street = "Oravská"},
+  {street = "Osiková"},
+  {street = "Poľná"},
+  {street = "Pšeničná"},
+  {street = "Ražná"},
+  {street = "Tulipánová"},
+  {street = "Vážska"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Budovateľská"},
+  {street = "Clementisova"},
+  {street = "Družstevná"},
+  {street = "Dukelská"},
+  {street = "Fándlyho"},
+  {street = "Gaštanová alej"},
+  {street = "Grobská"},
+  {street = "Horný dvor"},
+  {street = "Sacky"},
+  {street = "Strojárenská"},
+  {street = "Svätoplukova"},
+  {street = "Tajovského"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Brusnicová"},
+  {street = "Čerešňová"},
+  {street = "Figová"},
+  {street = "Hlboká", numbers = "10-40", parity = "even"},
+  {street = "Hlboká", numbers = "29"},
+  {street = "Hrušková"},
+  {street = "Kondrótova"},
+  {street = "Malinová"},
+  {street = "Obilná"},
+  {street = "Sadová"},
+  {street = "Slnečnicová"},
+  {street = "Stromová"},
+  {street = "Šípková"},
+  {street = "Tabaková"},
+  {street = "Topoľový rad"},
+  {street = "Trnavská", numbers = "2-110", parity = "even"},
+  {street = "Trnavská", numbers = "1-87", parity = "odd"},
+  {part = "Bernolákovo", numbers = "3038, 3053, 3113, 3127, 3225, 3246, 3303, 3320, 3324, 3325, 3373, 6313, 6361, 6382, 6576", note = "Trnavská (záhradkárska osada) (houses without a street, by súpisné číslo)"},
+  {street = "Trnková"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Agátová"},
+  {street = "Borovicová"},
+  {street = "Broskyňová"},
+  {street = "Buková"},
+  {street = "Dubová"},
+  {street = "Dunajská"},
+  {street = "Jabloňová"},
+  {street = "Jelšová"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+  {street = "Marhuľová"},
+  {street = "Mierová"},
+  {street = "Nevädzová"},
+  {street = "Púpavová"},
+  {street = "Rezedová"},
+  {street = "Riečna"},
+  {street = "Slivková"},
+  {street = "Smreková"},
+  {street = "Šalviová"},
+  {street = "Višňová"},
+]

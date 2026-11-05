@@ -1,0 +1,167 @@
+# Okrsky of Miloslavov, transcribed by an AI agent in job okrsok-rules-4071 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Zoznam ulíc v okrsku: Agátová ulica, Astrová ulica, Azalková ulica, Bendovej ulica, Beňovského ulica, Bernolákova ulica, Borievková ulica, Borovicová ulica, Bottova ulica, Buková ulica, Cédrová ulica, Centrálna ulica - časť Alžbetin Dvor, Cyprušteková ulica, Čerešňová ulica, Ďatelinová ulica, Dobšinského ulica, Hlavná ulica
+#   okrsok 2: Zoznam ulíc v okrsku: Kraskova ulica, Krátka ulica, Kúkoľova ulica, Kukučínova ulica, Kvetná ulica, Kysucká ulica, Ľaliová ulica, Ľanová ulica, Lesná ulica, Liesková ulica, Liptovská ulica, Hodžova ulica, Hurbanova ulica, Hviezdoslavova ulica, Chalúpkova ulica, Chmeľová ulica, Javorová ulica, Jedľová ulica, Južná ulica, Kačínska ulica, Kalinčiakova ulica, Klinčeková ulica, Konopná ulica, Kráľova ulica, Dubová ulica, Ďuríčkovej ulica, Lúčna ulica
+#   okrsok 3: Zoznam ulíc v okrsku: Mandľová ulica, Námestie svätej Alžbety, Nová ulica, Olivová ulica, Oravská ulica, Orechová ulica, Parková ulica, Pivonková ulica, Poľná ulica, Púpavová ulica, Radničné námestie, Rázusova ulica, Rúfusova ulica, Sekvojová ulica, Sládkovičova ulica, Slnečnicová ulica, Smreková ulica, Staničná ulica, Šamorínska ulica, Športová ulica, Štvrtocká ulica, Šuňavská ulica, Tajovského ulica, Tekovská ulica, Wienerova alej, Záhradná ulica, Zelinovej ulica, Železničná ulica, Žihľavová ulica, Žitná ulica
+#   okrsok 4: Zoznam ulíc v okrsku: Bazová ulica, Oblačná ulica, Bažantia ulica, Opálová ulica, Brestová ulica, Orgovánová ulica, Brezová ulica, Orlia ulica, Broskyňová ulica, Osiková ulica, Centrálna ulica - časť Miloslavov, Perličková ulica, Diamantová ulica, Perlová ulica, Drozdia ulica, Platanová ulica, Dúhová ulica, Rubínová ulica, Fialková ulica, Sadová ulica, Figová ulica, Slávičia ulica, Holubia ulica, Slivková ulica, Hrabová ulica, Slnečná ulica, Hrušková ulica, Smaragdová ulica, Hviezdna ulica, Sokolia ulica, Jabloňová ulica, Súmračná ulica, Jantárová ulica, Šípková ulica, Jaseňová ulica, Topásová ulica, Jastrabia ulica, Topoľová ulica, Jazerná ulica, Úzka ulica, Jelšová ulica, Veterná ulica, Konvalinková ulica, Višňová ulica, Krištáľová ulica, Vŕbová ulica, Labutia ulica, Zafírová ulica, Ľadová ulica, Levanduľová ulica, Lipový park, Malinová ulica, Marhuľová ulica, Mesačná ulica, Morušová ulica, Muškátová ulica, Obchodná ulica
+obec = "508098"
+name = "Miloslavov"
+okrsky_date = 2024-01-29
+okrsky_fill = "nearest"
+okrsky_note = "The decision names the okrsky and polling stations; each okrsok's streets are in its own published list. Okrsok 1 also holds the residents of the allotment settlement by the railway and the homeless (no address). Houses without a street go by fill_nearest. Names not in the address register, left out: Bernolákova ulica, Brestová ulica, Cédrová ulica, Drozdia ulica, Hrušková ulica, Jantárová ulica, Jedľová ulica, Liesková ulica, Opálová ulica, Orgovánová ulica, Orlia ulica, Osiková ulica, Slivková ulica, Smreková ulica, Višňová ulica, Vŕbová ulica, Zafírová ulica."
+
+[[document]]
+url = "https://www.miloslavov.sk/data/news_files/miloslavov.sk/95017/volebne_okrsky_a_volebne_miestnosti.pdf"
+sha256 = "5d06f25ab27aea430ef7934039a53f67e82878586399e47ff0e4d9aee60d02b7"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností – informácia (voľby prezidenta SR 2024, 29.01.2024)"
+
+[[document]]
+url = "https://www.miloslavov.sk/data/news_files/miloslavov.sk/95017/okrsok_1_zaradene_ulice.pdf"
+sha256 = "b19bc6322e93aaae49ef6a6c4119d31eeeb7252593feb16aee647dd3ea09e60d"
+title = "Zoznam ulíc v okrsku č. 1"
+
+[[document]]
+url = "https://www.miloslavov.sk/data/news_files/miloslavov.sk/95017/okrsok_2_zaradene_ulice.pdf"
+sha256 = "1b9aa7661d93baf84525577c54596366ae7c086775315404d0bc9433b8139ff2"
+title = "Zoznam ulíc v okrsku č. 2"
+
+[[document]]
+url = "https://www.miloslavov.sk/data/news_files/miloslavov.sk/95017/okrsok_3_zaradene_ulice.pdf"
+sha256 = "5a34e8f982a88e64bd571db7ada06fa7395954beaad731fa768e6da6c7131f41"
+title = "Zoznam ulíc v okrsku č. 3"
+
+[[document]]
+url = "https://www.miloslavov.sk/data/news_files/miloslavov.sk/95017/okrsok_4_zaradene_ulice.pdf"
+sha256 = "abc3ab378ae2007a2eb376400963fae807131ab61085e9e7afa9ef3015914b97"
+title = "Zoznam ulíc v okrsku č. 4"
+
+[okrsok.1]
+rules = [
+  {street = "Agátová ulica"},
+  {street = "Astrová ulica"},
+  {street = "Azalková ulica"},
+  {street = "Bendovej ulica"},
+  {street = "Beňovského ulica"},
+  {street = "Borievková ulica"},
+  {street = "Borovicová ulica"},
+  {street = "Bottova ulica"},
+  {street = "Buková ulica"},
+  {street = "Centrálna ulica", part = "Alžbetin Dvor"},
+  {street = "Cyprušteková ulica"},
+  {street = "Čerešňová ulica"},
+  {street = "Ďatelinová ulica"},
+  {street = "Dobšinského ulica"},
+  {street = "Hlavná ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kraskova ulica"},
+  {street = "Krátka ulica"},
+  {street = "Kúkoľová ulica", written = "Kúkoľova ulica", note = "same street; the register spells it differently"},
+  {street = "Kukučínova ulica"},
+  {street = "Kvetná ulica"},
+  {street = "Kysucká ulica"},
+  {street = "Ľaliová ulica"},
+  {street = "Ľanová ulica"},
+  {street = "Lesná ulica"},
+  {street = "Liptovská ulica"},
+  {street = "Hodžova ulica"},
+  {street = "Hurbanova ulica"},
+  {street = "Hviezdoslavova ulica"},
+  {street = "Chalupkova ulica", written = "Chalúpkova ulica", note = "same street; the register spells it differently"},
+  {street = "Chmeľová ulica"},
+  {street = "Javorová ulica"},
+  {street = "Južná ulica"},
+  {street = "Kačínska ulica"},
+  {street = "Kalinčiakova ulica"},
+  {street = "Klinčeková ulica"},
+  {street = "Konopná ulica"},
+  {street = "Kráľova ulica"},
+  {street = "Dubová ulica"},
+  {street = "Ďuríčkovej ulica"},
+  {street = "Lúčna ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Mandľová ulica"},
+  {street = "Námestie svätej Alžbety"},
+  {street = "Nová ulica"},
+  {street = "Olivová ulica"},
+  {street = "Oravská ulica"},
+  {street = "Orechová ulica"},
+  {street = "Parková ulica"},
+  {street = "Pivonková ulica"},
+  {street = "Poľná ulica"},
+  {street = "Púpavová ulica"},
+  {street = "Radničné námestie"},
+  {street = "Rázusova ulica"},
+  {street = "Rúfusova ulica"},
+  {street = "Sekvojová ulica"},
+  {street = "Sládkovičova ulica"},
+  {street = "Slnečnicová ulica"},
+  {street = "Staničná ulica"},
+  {street = "Šamorínska ulica"},
+  {street = "Športová ulica"},
+  {street = "Štvrtocká ulica"},
+  {street = "Šuňavská ulica"},
+  {street = "Tajovského ulica"},
+  {street = "Tekovská ulica"},
+  {street = "Wienerova alej"},
+  {street = "Záhradná ulica"},
+  {street = "Zelinovej ulica"},
+  {street = "Železničná ulica"},
+  {street = "Žihľavová ulica"},
+  {street = "Žitná ulica"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bazová ulica"},
+  {street = "Oblačná ulica"},
+  {street = "Bažantia ulica"},
+  {street = "Brezová ulica"},
+  {street = "Broskyňová ulica"},
+  {street = "Centrálna ulica", part = "Miloslavov"},
+  {street = "Perličková ulica"},
+  {street = "Diamantová ulica"},
+  {street = "Perlová ulica"},
+  {street = "Platanová ulica"},
+  {street = "Dúhová ulica"},
+  {street = "Rubínová ulica"},
+  {street = "Fialková ulica"},
+  {street = "Sadová ulica"},
+  {street = "Figová ulica"},
+  {street = "Slávičia ulica"},
+  {street = "Holubia ulica"},
+  {street = "Hrabová ulica"},
+  {street = "Slnečná ulica"},
+  {street = "Smaragdová ulica"},
+  {street = "Hviezdna ulica"},
+  {street = "Sokolia ulica"},
+  {street = "Jabloňová ulica"},
+  {street = "Súmračná ulica"},
+  {street = "Šípková ulica"},
+  {street = "Jaseňová ulica"},
+  {street = "Topásová ulica"},
+  {street = "Jastrabia ulica"},
+  {street = "Topoľová ulica"},
+  {street = "Jazerná ulica"},
+  {street = "Úzka ulica"},
+  {street = "Jelšová ulica"},
+  {street = "Veterná ulica"},
+  {street = "Konvalinková ulica"},
+  {street = "Krištáľová ulica"},
+  {street = "Labutia ulica"},
+  {street = "Ľadová ulica"},
+  {street = "Levanduľová ulica"},
+  {street = "Lipový park"},
+  {street = "Malinová ulica"},
+  {street = "Marhuľová ulica"},
+  {street = "Mesačná ulica"},
+  {street = "Morušová ulica"},
+  {street = "Muškátová ulica"},
+  {street = "Obchodná ulica"},
+]

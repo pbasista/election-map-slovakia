@@ -1,0 +1,32 @@
+# The okrsky of Holice of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/501581.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Holice, transcribed by an AI agent in job okrsok-rules-4833 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Kostolná Gala, Póšfa
+#     okrsok 2: Malá Budafa, Veľká Budafa, Stará Gala, Beketfa, Čechová
+obec = "501581"
+name = "Holice"
+okrsky_date = 2024-03-05
+okrsky_note = "www.obecholice.sk redirects to www.gelle.sk (Gelle is the Hungarian name of Holice), where the documents are served."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2024-03-23 setting the okrsky was found (okrsok-rules-4208): The obec's website (www.obecholice.sk -> www.gelle.sk; the old www.holice.sk is a parked domain) keeps on its notice board (current and archive by year 2017-2026) okrsky documents only for the NR SR election of 2023-09-30 and the EP election of 2024-06-08; for this vote it has none (for 2017 only an 'Informácie pre voliča' DOCX, for 2026 referendum items without an okrsky decision). The Internet Archive CDX API timed out and then refused connections for about 15 minutes; the availability API shows only a 2019 homepage capture of gelle.sk, which could not be opened. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-03-23 → 2024-06-08: 1: 866 → 859, 2: 888 → 878."
+
+[[document]]
+url = "https://www.obecholice.sk/e_download.php?file=data/uredni_deska/obsah7_1.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20%281%29.pdf"
+sha256 = "186e0d8a093d2e018cd961b33d80133ae4ef46a1350c10d583a2d774f06fe85e"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre Voľby do Európskeho parlamentu, ktoré sa budú konať dňa 8. júna 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Kostolná Gala"},
+  {part = "Póšfa"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Stará Gala"},
+  {part = "Beketfa"},
+  {part = "Čechová"},
+  {part = "Veľká Budafa"},
+  {part = "Malá Budafa"},
+]

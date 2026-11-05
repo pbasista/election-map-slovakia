@@ -1,0 +1,24 @@
+# Okrsky of Hrachovo, transcribed by an AI agent in job okrsok-rules-3310 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 – Hrachovo, územný obvod tvorí celé katastrálne územie obce Hrachovo
+#   okrsok 2: Okrsok č. 2 – Svetlá, územný obvod tvorí celé katastrálne územie miestnej časti Svetlá
+obec = "514888"
+name = "Hrachovo"
+okrsky_date = 2022-11-11
+okrsky_note = "The document names 'katastrálne územie' Hrachovo and Svetlá; the register has a single k.ú. Hrachovo and the parts Hrachovo and Svetlá, so part rules."
+
+[[document]]
+url = "https://www.obechrachovo.sk/files/2022-11-14-084043-Ozn__menie_volebn__ch_okrskov_a_volebn__ch_miestnost____1_.pdf"
+sha256 = "0f91e080cea8e4754bc7541a8fdb11d1b88cc5d3e097bfead53b4efdc5badff2"
+title = "Určenie a zverejnenie volebných okrskov ... pre referendum 21. januára 2023"
+
+[okrsok.1]
+rules = [
+  {part = "Hrachovo"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Svetlá"},
+]

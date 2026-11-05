@@ -1,0 +1,25 @@
+# Okrsky of Likavka, transcribed by an AI agent in job okrsok-rules-4896 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1: súpisné čísla: 0, 2, 10, 12 až 114, 132, 664 až 1045, 1090 až 1114
+#   okrsok 2: Volebný okrsok č. 2: súpisné čísla: 9, 116 až 128, 133 až 660, 1115, 1058
+obec = "510599"
+name = "Likavka"
+okrsky_date = 2024-02-28
+okrsky_fill = "nearest"
+okrsky_note = "The document splits by súpisné čísla (the register has no streets). Súpisné číslo 0 (okrsok 1) is taken as voters registered without a house number and left out of the rules. Súpisné numbers the document does not list take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.likavka.sk/e_download.php?file=data/editor/356skabove_1.docx&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti%20pre%20vo%C4%BEby%20do%20Eur%C3%B3pskeho%20parlamentu%202024.docx"
+sha256 = "f309d6a4f07d4ce782e589d7870a577b04315e7ddad4fccb2deae05cdc61b2ff"
+title = "Volebné okrsky a volebné miestnosti v obci Likavka pre voľby do Európskeho parlamentu (28.2.2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Likavka", numbers = "2, 10, 12-114, 132, 664-1045, 1090-1114"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Likavka", numbers = "9, 116-128, 133-660, 1115, 1058"},
+]

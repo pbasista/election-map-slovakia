@@ -1,0 +1,32 @@
+# Okrsky of Imeľ, transcribed by an AI agent in job okrsok-rules-4326 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Čísla domov od : 1 - 450
+#   okrsok 2: Čísla domov od: 451 - 970
+obec = "501166"
+name = "Imeľ"
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by house numbers (čísla domov, read as súpisné) across the single part Imeľ: 1–450 and 451–970 (the 2023 documents gave 451–960). fill_nearest places any house numbered above 970."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-24
+okrsky_date_basis = "the elections page states the okrsky document was posted (\"Zverejnené 24.01.2024\"); the document itself is undated (https://www.obecimel.sk/samosprava/volby-prezidenta-sr-2024/)"
+
+[[document]]
+url = "https://www.obecimel.sk/e_download.php?file=data/editor/214sk_4.pdf&original=Volebn%C3%A9%20okrsky%20v.pdf"
+sha256 = "cf4e2bf382ae2a8ea8a108d0532065f4d97c771f3a3895ba7b060a8da8e52de7"
+title = "Volebné okrsky v obci Imeľ (voľby prezidenta SR 2024)"
+
+[[document]]
+url = "https://www.obecimel.sk/samosprava/volby-prezidenta-sr-2024/"
+sha256 = "1bff858aec4b8d42edf93639b41a68248bc650af7eb61603a09bc7cf4c52bfb7"
+title = "elections page linking it (\"Zverejnené 24.01.2024 - Volebné okrsky v obci Imeľ\")"
+
+[okrsok.1]
+rules = [
+  {part = "Imeľ", numbers = "1-450"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Imeľ", numbers = "451-970"},
+]

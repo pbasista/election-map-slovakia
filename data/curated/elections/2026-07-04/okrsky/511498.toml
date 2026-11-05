@@ -1,0 +1,80 @@
+# Okrsky of Kokava nad Rimavicou, transcribed by an AI agent in job okrsok-rules-5416 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: zahŕňa ulice: Bakulíniho, Červenej armády, F.S.Figuliho, Hámor, Huta, Chorepa, I.Krasku, Kyseľovo, Línia, Mateja Hrebendu, Nám. Požiarnikov, Nám. 1. mája, Požarina, Sinec, Sládkovičova
+#   okrsok 2: zahŕňa ulice: Belá, Čertove Potočky, Diel, Ďurovka, Farkaška, Háj, Hviezdoslavova, J.Kráľa, Kokavka, Komenského, Kotoška, Kukučínova, Liešnica, Lipovo, Močiar, Partizánska, Potočky, Slopovo, SNP, Štúrova, Vlkovo, Vyšná Chorepa, Záklično
+#   okrsok 3: zahŕňa ulice: Daxnerova, Dobšinského, Francisciho, Jánošíkova, Lúčna, Riečna, Rovienka, Sídlisko Rovienka
+obec = "511498"
+name = "Kokava nad Rimavicou"
+okrsky_fill = "nearest"
+okrsky_note = "The municipality's notice for the referendum of 4 July 2026 listing the okrsky and their streets. The houses without a street are placed by fill_nearest."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document is headed REFERENDUM and names the referendum of 4 July 2026; it states no date of its own."
+
+[[document]]
+url = "https://www.kokava.sk/download_file_f.php?id=2398370"
+sha256 = "9e9db236c9310aae8189679ca5fcadc9d8b6215c624908362ca469df4a5ef398"
+title = "REFERENDUM oznámenie (Informácia pre voličov)"
+
+[[document]]
+url = "https://www.kokava.sk/referendum-2026.html"
+sha256 = "d5ba0a07155f8d25df77a32ee3c00d7c91d47a9131756ba837bb8ba73b2bbfc8"
+title = "Elections page"
+
+[okrsok.1]
+rules = [
+  {street = "Chorepa"},
+  {street = "Huta"},
+  {street = "Hámor"},
+  {street = "Ivana Krasku", written = "I.Krasku"},
+  {street = "Námestie Požiarnikov", written = "Nám. Požiarnikov"},
+  {street = "Námestie 1.mája", written = "Nám. 1. mája"},
+  {street = "Požarina"},
+  {street = "Sinec"},
+  {street = "Červenej Armády", written = "Červenej armády", note = "only the capital A differs"},
+  {street = "Bakulíniho"},
+  {street = "Mateja Hrebendu"},
+  {street = "Kyseľovo"},
+  {street = "Sládkovičova"},
+  {street = "F.S.Figuliho"},
+  {street = "Línia"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "Janka Kráľa", written = "J.Kráľa"},
+  {street = "Štúrova"},
+  {street = "Komenského"},
+  {street = "Kotoška"},
+  {street = "SNP"},
+  {street = "Partizánska"},
+  {street = "Kukučínova"},
+  {street = "Ďurovka"},
+  {street = "Vyšná Chorepa"},
+  {street = "Diel"},
+  {street = "Kokavka"},
+  {street = "Čertove Potočky"},
+  {street = "Farkaška"},
+  {street = "Lipovo"},
+  {street = "Močiar"},
+  {street = "Háj"},
+  {street = "Belá"},
+  {street = "Potočky"},
+  {street = "Liešnica"},
+  {street = "Vlkovo"},
+  {street = "Záklično"},
+  {street = "Slopovo"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Dobšinského"},
+  {street = "Jánošíkova"},
+  {street = "Daxnerova"},
+  {street = "Francisciho"},
+  {street = "Sídlisko Rovienka"},
+  {street = "Lúčna"},
+  {street = "Riečna"},
+  {street = "Rovienka"},
+]

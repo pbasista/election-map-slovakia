@@ -1,0 +1,50 @@
+# Okrsky of Hanušovce nad Topľou, transcribed by an AI agent in job okrsok-rules-5069 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice Bukovské, Dukelská, Garbiarska, Jarmočná, Kláštorná, Komenského, Kukorelliho, Počekanec, Pod Šibenou, Prešovská, Slovenská, Šarišská, Zámocká, Železničiarska
+#   okrsok 2: ulice Budovateľská, Mierová, Sadová, SNP, Širiava, Štúrova, Tehelná, Záhradná
+obec = "544213"
+name = "Hanušovce nad Topľou"
+okrsky_date = 2024-03-11
+okrsky_fill = "nearest"
+okrsky_note = "This decision puts the whole of Štúrova in okrsok 2 (earlier decisions split it by súpisné číslo). The address without a street takes the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.hanusovce.sk/e_download.php?file=data/editor/233sk_5.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "a3ba9c8b97662ba10f8a35c52f01c39aa66af3b2b79b2f102ff850d958f6806b"
+title = "Utvorenie volebných okrskov"
+
+[[document]]
+url = "https://www.hanusovce.sk/zverejnovanie/uradna-tabula/volby/volby-do-europskeho-parlamentu-2024/"
+sha256 = "d2b3d68ad77cc9485646e52d987a511cb626b3f38383d20b2af0a9c232566377"
+title = "Úradná tabuľa – voľby"
+
+[okrsok.1]
+rules = [
+  {street = "Bukovské"},
+  {street = "Dukelská"},
+  {street = "Garbiarska"},
+  {street = "Jarmočná"},
+  {street = "Kláštorná"},
+  {street = "Komenského"},
+  {street = "Kukorelliho"},
+  {street = "Počekanec"},
+  {street = "Pod Šibenou"},
+  {street = "Prešovská"},
+  {street = "Slovenská"},
+  {street = "Šarišská"},
+  {street = "Zámocká"},
+  {street = "Železničiarska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Mierová"},
+  {street = "Sadová"},
+  {street = "SNP"},
+  {street = "Širiava"},
+  {street = "Tehelná"},
+  {street = "Záhradná"},
+  {street = "Štúrova"},
+]

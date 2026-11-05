@@ -195,7 +195,9 @@ def test_age_fits_elapsed_years():
     assert inc.age_fits(35, DAY_2022, 40, DAY_2026, slack=1)
 
 
-def candidacy(contest: str, number: int, obec: str, first: str, surname: str, age: int):
+def candidacy(
+    contest: str, number: int, obec: str, first: str, surname: str, age: int | None
+):
     kind, _, rest = contest.partition(":")
     area, _, obvod = rest.partition("/")
     entry = Entry(
@@ -253,6 +255,14 @@ def test_namesakes_are_never_matched():
     result = matched(cs, holders)
     assert not result.roles
     assert len(result.ambiguous) == 1
+
+
+def test_unknown_age_fits_no_holder():
+    holders = start()
+    cs = [candidacy("starosta:500011", 1, "500011", "Marek", "Hattas", None)]
+    result = matched(cs, holders)
+    assert not result.roles and not result.ambiguous
+    assert result.contests["starosta:500011"][1] is None
 
 
 def test_mayor_standing_elsewhere_has_no_contest_candidacy():

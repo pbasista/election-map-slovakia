@@ -1,0 +1,29 @@
+# The okrsky of Borský Mikuláš of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/504238.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Borský Mikuláš, transcribed by an AI agent in job okrsok-rules-617 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: okrsok č. 1, volebná miestnosť v Kultúrnom dome Borský Mikuláš
+#     okrsok 2: okrsok č. 2 volebná miestnosť v Kultúrnom dome časti obce Borský Peter
+obec = "504238"
+name = "Borský Mikuláš"
+okrsky_fill = "nearest"
+okrsky_note = "The page gives each okrsok only its polling station: okrsok 1 Kultúrny dom Borský Mikuláš, okrsok 2 Kultúrny dom časti obce Borský Peter; 2 okrsky, 2 parts, each okrsok is given the part of its station."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-139): No page of the 2017 regional elections on the website or in the Internet Archive. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2018-11-10: 1: 1,795 → 1,798, 2: 1,433 → 1,422."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the page names the vote ('10. novembra 2018 sa ... uskutočnia voľby do orgánov samosprávy obcí'); no decision date"
+
+[[document]]
+url = "https://www.borskymikulas.sk/komunalne-volby-2018.html"
+sha256 = "dd6a71a005ff09af22d43c235f3559d051d46e279ef80c40bd4aeef4e2172d7f"
+title = "Komunálne voľby 2018 (stránka obce): Starosta obce určil dva okrsky"
+
+[okrsok.1]
+rules = [
+  {part = "Borský Mikuláš", note = "the station lies in part Borský Mikuláš", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Borský Peter", note = "the station lies in part Borský Peter", inferred = true},
+]

@@ -1,0 +1,35 @@
+# Okrsky of Udiča, transcribed by an AI agent in job okrsok-rules-3658 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1 Obec Udiča
+#   okrsok 2: 2 Prosné
+#   okrsok 3: 3 Upohlav
+obec = "513741"
+name = "Udiča"
+okrsky_date = 2023-06-26
+okrsky_note = "Each okrsok is the part of the municipality it is named after."
+
+[[document]]
+url = "https://www.obecudica.sk/e_download.php?file=data/uredni_deska/obsah2387_7.pdf&original=Urcenie_volebnych_okrskov_a_volebnych_miestnosti_pre_volby_do_NR_SR.pdf"
+sha256 = "dc5350f463fcdee75d7d7de5f60dd144ca138816b7935feb8ab0ea3057a20b05"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do NR SR (30. septembra 2023)"
+
+[[document]]
+url = "https://www.obecudica.sk/zverejnovanie/volby-a-referendum/utvorenie-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-do-nr-sr-v-roku-2023-2414.html"
+sha256 = "e8c6363c292ffea8a1aae9a177db1afb6555281be8545e1170cb25ed097ba9c0"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do NR SR (30. septembra 2023) (notice board)"
+
+[okrsok.1]
+rules = [
+  {part = "Udiča"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Prosné"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Upohlav"},
+]

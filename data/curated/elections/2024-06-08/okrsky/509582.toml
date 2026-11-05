@@ -1,0 +1,54 @@
+# Okrsky of Bobrov, transcribed by an AI agent in job okrsok-rules-5110 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Nižný koniec, Pri kostole, Záhumenská, Za kalváriou, Za školou, Záhradnícka, Krivý kút, Zápotok, Vyšný koniec, Poľná, Družstevná, Priemyselná
+#   okrsok 2: Ulice: Hraničná, Nadbor, Zábobrovec I., Zábobrovec, Lesná, Slanická, Veterná, Okružná, Krátka, Obchodná, Slnečná, Plátenícka, Športová, Lánová I., Lánová, Šípková, Brezová, Pod Grúňom, Pasienky, Nová cesta
+obec = "509582"
+name = "Bobrov"
+okrsky_date = 2024-03-04
+okrsky_fill = "nearest"
+okrsky_note = "Námestie sv. Jakuba is not listed; inferred to okrsok 1 (its polling station is there). Šípková, Pasienky (okrsok 2) are not in the address register of this vote and are left out. Addresses without a street take the okrsok of the nearest address."
+
+[[document]]
+url = "https://www.obecbobrov.sk/data/uredni_deska/obsah67_3.pdf"
+sha256 = "09d0228c62967cb6e1fa65fdbe8a2165fe39b49c4776fa798d8f1f65a550f94e"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do Európskeho parlamentu v roku 2024 (4. 3. 2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Nižný koniec"},
+  {street = "Pri kostole"},
+  {street = "Záhumenská"},
+  {street = "Za kalváriou"},
+  {street = "Za školou"},
+  {street = "Záhradnícka"},
+  {street = "Krivý kút"},
+  {street = "Zápotok"},
+  {street = "Vyšný koniec"},
+  {street = "Poľná"},
+  {street = "Družstevná"},
+  {street = "Priemyselná"},
+  {street = "Námestie sv. Jakuba", note = "not listed; the square of okrsok 1's polling station (Kultúrny dom, Námestie sv. Jakuba 173/3), between Pri kostole and Nižný koniec", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hraničná"},
+  {street = "Nadbor"},
+  {street = "Zábobrovec I."},
+  {street = "Zábobrovec"},
+  {street = "Lesná"},
+  {street = "Slanická"},
+  {street = "Veterná"},
+  {street = "Okružná"},
+  {street = "Krátka"},
+  {street = "Obchodná"},
+  {street = "Slnečná"},
+  {street = "Plátenícka"},
+  {street = "Športová"},
+  {street = "Lánová I."},
+  {street = "Lánová"},
+  {street = "Brezová"},
+  {street = "Pod Grúňom"},
+  {street = "Nová cesta"},
+]

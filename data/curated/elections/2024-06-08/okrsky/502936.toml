@@ -1,0 +1,25 @@
+# Okrsky of Veľký Ďur, transcribed by an AI agent in job okrsok-rules-5086 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 – Dolný Ďur, Horný Ďur
+#   okrsok 2: Volebný okrsok č. 2 - Rohožnica
+obec = "502936"
+name = "Veľký Ďur"
+okrsky_date = 2024-02-29
+okrsky_note = "Each okrsok is named by the parts of the obec it covers: okrsok 1 Dolný Ďur and Horný Ďur, okrsok 2 Rohožnica."
+
+[[document]]
+url = "https://www.velkydur.sk/download_file_f.php?id=2007899"
+sha256 = "0e1322afb02a4b2df85bc8c95debffa82ffc18333fd4513c5d4a3c0cc33768f9"
+title = "Oznámenie o utvorenom volebnom okrsku a určenej volebnej miestnosti pre voľby Európskeho parlamentu 2024 (29. 02. 2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Dolný Ďur"},
+  {part = "Horný Ďur"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Rohožnica"},
+]

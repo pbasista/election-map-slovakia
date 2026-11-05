@@ -1,0 +1,55 @@
+# Okrsky of Poniky, transcribed by an AI agent in job okrsok-rules-4432 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 – Poniky: Dolná ulica, Do Hája, Družstevná ulica, Horná ulica, Hriadky, Na Hlinku, Námestie Štefana Žáryho, Malá Stráňa, Pod Dielcom, Poľná ulica
+#   okrsok 2: Volebný okrsok č. 2 – Ponická Lehôtka: Na Vladárke, Námestie Mateja Kosca, Podžiar, Ponická cesta
+#   okrsok 3: Volebný okrsok č. 3 – Ponická Huta: Bukovinka, Na píle, Námestie Pod krížom, Pod Babou
+obec = "508918"
+name = "Poniky"
+okrsky_note = "Okrsky named by part (Poniky, Ponická Lehôtka, Ponická Huta) with their streets; part rules cover the addresses without a street in each part."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2024-02-25
+okrsky_date_basis = "The Internet Archive captured the official page 'Voľby prezidenta SR 2024' linking both PDFs on 2024-02-25; the PDFs are undated and name the presidential election of 23 March 2024. (https://web.archive.org/web/20240225090733/https://www.poniky.sk/aktualne/volby-prezidenta-sr-2024/)"
+
+[[document]]
+url = "https://web.archive.org/web/20240719094539/https://www.poniky.sk/e_download.php?file=data/editor/281sk_4.pdf&original=05_OZNAM-rozdelenie%20ul%C3%ADc%20%28002%29.pdf"
+sha256 = "183a4834a70476d3bd7282081cbd98da8b530b962628e2142d714151bf78b17b"
+title = "OZNAM Rozdelenie ulíc do volebných okrskov pre potreby volieb prezidenta Slovenskej republiky v roku 2024"
+
+[[document]]
+url = "https://web.archive.org/web/20240719090842/https://www.poniky.sk/e_download.php?file=data/editor/281sk_5.pdf&original=06_Oznam%20na%20tabule-vol.okrsky%20a%20miestnosti.pdf"
+sha256 = "dcadbee1a55d04a6c72dcf5ca06690a4257ab43a7002cbaf36b9dd0124767ec8"
+title = "Voľby prezidenta Slovenskej republiky 2024 – oznam o volebných okrskoch a volebných miestnostiach"
+
+[okrsok.1]
+rules = [
+  {part = "Poniky"},
+  {street = "Dolná ulica"},
+  {street = "Do Hája"},
+  {street = "Družstevná ulica"},
+  {street = "Horná ulica"},
+  {street = "Hriadky"},
+  {street = "Na Hlinku"},
+  {street = "Námestie Štefana Žáryho"},
+  {street = "Malá Stráňa"},
+  {street = "Pod Dielcom"},
+  {street = "Poľná ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Ponická Lehôtka"},
+  {street = "Na Vladárke"},
+  {street = "Námestie Mateja Kosca"},
+  {street = "Podžiar"},
+  {street = "Ponická cesta"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Ponická Huta"},
+  {street = "Bukovinka"},
+  {street = "Na píle"},
+  {street = "Námestie Pod krížom"},
+  {street = "Pod Babou"},
+]

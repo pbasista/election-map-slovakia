@@ -1,0 +1,25 @@
+# Okrsky of Papradno, transcribed by an AI agent in job okrsok-rules-3473 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: okrsok číslo 1 so sídlom v zasadačke obecného úradu na prízemí, Papradno č. 315 - pre voličov z čísla domu 0 – 599
+#   okrsok 2: okrsok číslo 2 so sídlom v zasadačke obecného úradu na I. poschodí, Papradno č. 315 - pre voličov z čísla domu 600 a viac
+obec = "513466"
+name = "Papradno"
+okrsky_date = 2023-06-12
+okrsky_note = "The mayor's notice splits by house number (súpisné číslo, in both parts Papradno and Podjavorník): okrsok 1 numbers 0–599, okrsok 2 numbers 600 and more; okrsok 1 is written as the rest. The notice is gone from the live website; listed by its Internet Archive capture."
+
+[[document]]
+url = "https://web.archive.org/web/20230614013857/https://www.papradno.sk/uradna-tabula/utvorenie-okrskov-a-urcenie-volebnych-miestnosti-volby-do-nr-sr-v-roku-2023"
+sha256 = "51dd29866b4daba2dfeb50c66fdaaa4b1326be7c84b4158e84a2cf4ea813401f"
+title = "Utvorenie okrskov a určenie volebných miestností voľby do NR SR v roku 2023 (V Papradne 12.6.2023)"
+
+[okrsok.1]
+rules = [
+  {rest = true, note = "house numbers 0–599: every address not in okrsok 2"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Papradno", numbers = "600-"},
+  {part = "Podjavorník", numbers = "600-"},
+]

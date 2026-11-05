@@ -1,0 +1,33 @@
+# The okrsky of Somotor of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/543772.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Somotor, transcribed by an AI agent in job okrsok-rules-1501 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Kultúrny dom Somotor, Obchodná ulica 39/7
+#     okrsok 2: Obecný dom Véč, Somotor-Véč, Lipová ulica 306/19
+#     okrsok 3: Obecný dom Nová Vieska pri Bodrogu, Somotor – Nová Vieska pri Bodrogu, Novoviešťanská ulica 423/76
+obec = "543772"
+name = "Somotor"
+okrsky_date = 2019-01-25
+okrsky_note = "The decision names only the three polling stations, one in each of the three parts; each okrsok is given the part of its station, as the municipality's later decisions (2022-2026) state explicitly."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-496): No okrsky decision of this vote on the municipality's website: its document category for this vote (obecsomotor.sk/dokumenty, Voľby 2018 / Voľby do Európskeho parlamentu 2024) has notices, candidate lists and results but no okrsky decision. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2019-03-16: 1: 795 → 775, 2: 267 → 267, 3: 185 → 178."
+
+[[document]]
+url = "https://obecsomotor.sk/dokumenty?kat=1840"
+sha256 = "b591cf052d13478d99408952cf48173662a25a66111ec7835d87b2faeb35a8bd"
+title = "Určenie volebných okrskov a určenie volebných miestností – voľby prezidenta SR 16.3.2019 (Č.j. 36/2019-005, 25.1.2019)"
+
+[okrsok.1]
+rules = [
+  {part = "Somotor", note = "Part of the polling station; the later decisions name this part for this okrsok.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Véč", note = "Part of the polling station; the later decisions name this part for this okrsok.", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Nová Vieska pri Bodrogu", note = "Part of the polling station; the later decisions name this part for this okrsok.", inferred = true},
+]

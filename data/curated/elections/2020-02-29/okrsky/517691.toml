@@ -1,0 +1,37 @@
+# Okrsky of Kotešová, transcribed by an AI agent in job okrsok-rules-2539 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1 - 100
+#   okrsok 2: 101 - 369, 1000 - 1150
+#   okrsok 3: 370 - 910
+obec = "517691"
+name = "Kotešová"
+okrsky_fill = "nearest"
+okrsky_note = "The document gives the okrsky only by súpisné čísla (od – do): 1. 1 - 100, 2. 101 - 369, 1000 - 1150, 3. 370 - 910. Súpisné čísla are unique in the obec: 1–100 are the houses of the part Oblazov (polling station Oblazov 75); the part Kotešová has 101–1150, the part Buková 624–810 (all within 370–910). The ranges are applied within the parts Kotešová and Buková. Kotešová's súpisné čísla outside them (911–999) take the nearest placed address. This differs from the copied rule set of 2022-10-29 (the document of 2026): there okrsok 2 is 101–369, 813, 975–1150 and okrsok 3 370–800, 866–974 with Buková; the 2020 document has 101–369, 1000–1150 and 370–910."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The text on the page states that the obec formed 3 volebné okrsky 'pre voľby do Národnej rady Slovenskej republiky' and names the harmonogram of these elections 'v roku 2020'; it states no date."
+okrsky_supplemented = 2026-10-24
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The document gives okrsok 1 only as súpisné čísla 1–100, the houses of the part Oblazov with its polling station (Požiarna zbrojnica, Oblazov 75); Oblazov's later-numbered houses (súpisné 714–850, 52 addresses in Oblazov, 2.5 km east of Kotešová) fall only within the document's range 370–910 of upper Kotešová, plainly by oversight. The rule set of 2026-10-24 (its document names okrsok 1 'miestna časť Oblazov (1 – 100)') takes the part Oblazov whole; that rule is copied into okrsok 1."
+
+[[document]]
+url = "https://www.kotesova.info/pages/volby-do-narodnej-rady-slovenskej-republiky-2020"
+sha256 = "cbebf487fa9eeff9361c27193971b58880b4d963a792824e151b3b00cdafeb09"
+title = "Voľby do Národnej rady Slovenskej republiky 2020 – Utvorenie volebných okrskov, určenie volebných miestností a vymenovanie zapisovateliek okrskových volebných komisií"
+
+[okrsok.1]
+rules = [
+  {part = "Oblazov", numbers = "1-100"},
+  {part = "Oblazov", supplemented = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kotešová", numbers = "101-369, 1000-1150"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Kotešová", numbers = "370-910"},
+  {part = "Buková", numbers = "370-910"},
+]

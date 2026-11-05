@@ -1,0 +1,26 @@
+# Okrsky of Lehota, transcribed by an AI agent in job okrsok-rules-5000 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre občanov od súpisného čísla 1 po súpisné číslo 420
+#   okrsok 2: pre občanov s trvalým pobytom na obci Lehota a pre občanov od súpisného čísla 421 po súpisné číslo 999
+obec = "500453"
+name = "Lehota"
+okrsky_note = "Lehota has no streets; the document splits it by súpisné číslo. Okrsok 2 also holds the voters registered only at the obec ('s trvalým pobytom na obci Lehota'), so it is the rest (also any súpisné číslo above 999). The first decision for this vote (obsah7239_2, split 1–397 / 398–999) was replaced by this amendment (zmena), which moves the split to 420/421."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2024-04-23
+okrsky_date_basis = "The Internet Archive captured the undated amended decision (zmena) on the notice board on 2024-04-23. (https://web.archive.org/web/20240423045222/https://www.lehota.sk/e_download.php?file=data/uredni_deska/obsah7280_3.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD%20-%20zmena.pdf)"
+
+[[document]]
+url = "https://www.lehota.sk/e_download.php?file=data/uredni_deska/obsah7280_3.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD%20-%20zmena.pdf"
+sha256 = "17c33bbe87f73e943329245f8632f12d436c5f3904a0c67ad812984cffb3aac3"
+title = "Utvorenie volebných okrskov a určenie volebných miestností - zmena (voľby do Európskeho parlamentu 8. júna 2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Lehota", numbers = "1-420"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

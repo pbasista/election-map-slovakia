@@ -86,17 +86,18 @@ okrsok with nearly as many voters; see :mod:`election_map_slovakia.reuse`).
 Its ``note`` (then required) says so; the map says the borders are that
 election's.
 
-``adopted = 2026-10-24`` marks a rule set of an earlier election that is
-the rule set of the election of that day as it stands, its documents and
-date being that election's, though the layout is not proven to match: no
-usable document of its own election places the addresses, and drawing
-them so was chosen over leaving them unknown (the obec is listed for it,
-see :mod:`election_map_slovakia.reuse`). Only its obvod numbers and seats
-are known to be the election's. ``adopted_basis`` (then required) says
-why there are no rules of its own and what is known to differ; the map
-says the borders are the later election's, indicative only. Its okrsky,
-where it gives them, are adopted with it (``okrsky_adopted``). Neither
-``reused`` nor a supplement goes with it.
+``adopted = 2022-10-29`` marks a rule set of an election that is the rule
+set of another vote of that day as it stands, its documents and date
+being that vote's, though the layout is not proven to match: no usable
+document of its own election places the addresses, and drawing them so
+was chosen over leaving them unknown (a stand-in: that vote, earlier or
+later, is the nearest in time with a rule set of its own of the same
+obvody and seats, see :mod:`election_map_slovakia.reuse`). Only its obvod
+numbers and seats are known to be the election's. ``adopted_basis`` (then
+required) says why there are no rules of its own, why that vote and what
+is known to differ; the map says the borders are that vote's, indicative
+only. Its okrsky, where it gives them, stand in with it
+(``okrsky_adopted``). Neither ``reused`` nor a supplement goes with it.
 
 ``date_approximate`` marks documents that state no date, which an earlier
 election's rule set may still use where something else bounds their date
@@ -184,8 +185,8 @@ approximately, as ``date_approximate`` and its keys do the rule set's;
 ``okrsky_supplemented``, ``okrsky_supplemented_from`` and
 ``okrsky_supplement_basis`` mark okrsok rules from a later source, as
 ``supplemented`` and its keys do the obvod rules. ``okrsky_adopted`` and
-``okrsky_adopted_basis`` mark okrsky that are those of the later election
-of that day as they stand, as ``adopted`` and its key do a rule set; they
+``okrsky_adopted_basis`` mark okrsky that are those of another vote of
+that day as they stand, as ``adopted`` and its key do a rule set; they
 go with neither ``okrsky_reused``, ``okrsky_referendum`` nor a supplement.
 
 An obec that elects its council in one obvod but votes in several okrsky
@@ -232,9 +233,12 @@ the okrsky.
 
 from __future__ import annotations
 
+import bisect
 import datetime as dt
 import functools
+import itertools
 import json
+import math
 import re
 import tomllib
 from collections import Counter, defaultdict
@@ -244,6 +248,7 @@ from pathlib import Path
 from typing import Any, NamedTuple
 
 import numpy as np
+import orjson
 import shapely
 
 from election_map_slovakia import output
@@ -413,12 +418,13 @@ class Supplement:
 
 @dataclass(frozen=True)
 class Adoption:
-    """The later election whose rules stand in, unproven (``adopted``)."""
+    """The vote whose rules stand in, unproven (``adopted``)."""
 
     day: dt.date
-    """That election's day."""
+    """That vote's day, before or after the election's."""
     basis: str
-    """Why the election has no rules of its own, and what is known to differ."""
+    """Why the election has no rules of its own, why that vote, and what is
+    known to differ."""
 
 
 @dataclass(frozen=True)
@@ -514,8 +520,8 @@ class RuleSet:
     reused: dt.date | None = None
     """The day of the election whose rule set this is a copy of, if one."""
     adoption: Adoption | None = None
-    """The later election whose rule set this is, unproven to match, if one
-    (``adopted``)."""
+    """The vote whose rule set this is, standing in unproven to match, if
+    one (``adopted``)."""
     dating: Dating | None = None
     """What dates the documents, where they state no date and are dated
     approximately (``date_approximate``)."""
@@ -596,13 +602,17 @@ def load_rule_sets(election_dir: Path) -> dict[str, RuleSet]:
     return _load(sorted((election_dir / DIRECTORY / RULES_DIRECTORY).glob("*.toml")))
 
 
-def okrsok_rule_sets(election_dir: Path) -> dict[str, RuleSet]:
+def okrsok_rule_sets(
+    election_dir: Path, rule_sets: Mapping[str, RuleSet] | None = None
+) -> dict[str, RuleSet]:
     """Return obec → rule set, of every obec of the election whose okrsky are known.
 
-    The rule sets of :func:`load_rule_sets` that give their okrsky, and the
-    okrsky of the obce with one council obvod (:func:`okrsky_set`).
+    The rule sets of :func:`load_rule_sets` (*rule_sets*, if read already)
+    that give their okrsky, and the okrsky of the obce with one council
+    obvod (:func:`okrsky_set`).
     """
-    rule_sets = load_rule_sets(election_dir)
+    if rule_sets is None:
+        rule_sets = load_rule_sets(election_dir)
     whole = _load(sorted((election_dir / OKRSKY_DIRECTORY).glob("*.toml")), True)
     both = sorted(whole.keys() & rule_sets.keys())
     if both:
@@ -633,7 +643,7 @@ def council_origin(rules: RuleSet) -> dict[str, Any]:
     """Return the per-obec flags of council obvody not from a dated document.
 
     ``reused``, the ISO day of the election whose rule set *rules* is a
-    copy of, ``adopted``, that of the later election whose rule set it is
+    copy of, ``adopted``, that of the vote whose rule set stands in
     without proof that it matches, ``date_approximate``, the
     :meth:`Dating.flag` of documents dated approximately, and
     ``supplemented``, the :meth:`Supplement.flag` of rules from a later
@@ -654,8 +664,8 @@ def council_origin(rules: RuleSet) -> dict[str, Any]:
 def okrsky_origin(rules: RuleSet) -> dict[str, Any]:
     """Return the per-obec flags of okrsky that are another vote's, or approximately dated.
 
-    ``okrsky_reused`` (another election's okrsky), ``okrsky_adopted`` (a
-    later election's, unproven) or ``okrsky_referendum`` (a referendum's
+    ``okrsky_reused`` (another election's okrsky), ``okrsky_adopted``
+    (another vote's, standing in unproven) or ``okrsky_referendum`` (a referendum's
     document), each the ISO day of that vote, ``okrsky_date_approximate``,
     the :meth:`Dating.flag` of documents dated approximately, and
     ``okrsky_supplemented``, the :meth:`Supplement.flag` of okrsok rules
@@ -1227,16 +1237,35 @@ def house(number: str) -> tuple[int, str] | None:
     return (int(m[1]), m[2]) if m else None
 
 
-def _in(items: Sequence[NumberItem], n: int, letter: str) -> int | None:
-    """Return LETTER or NUMBERS where *items* hold the house, else None."""
-    level = None
-    for low, high, want in items:
-        if want:
-            if (n, letter) == (low, want):
-                return LETTER
-        elif low <= n and (high is None or n <= high):
-            level = NUMBERS
-    return level
+@functools.cache
+def _matcher(
+    text: str,
+) -> tuple[frozenset[tuple[int, str]], tuple[int, ...], tuple[float, ...]]:
+    """Return the houses with a letter that the items of *text* name, and their ranges.
+
+    The ranges by their start, each with the farthest end of any up to it:
+    a number is in one if the last that starts at or below it reaches it
+    (:func:`_in`). Looping over the items for every house took long, a
+    rule naming dozens of ranges.
+    """
+    items = parse_numbers(text)
+    letters = frozenset((low, want) for low, _, want in items if want)
+    ranges = sorted(
+        (low, math.inf if high is None else high)
+        for low, high, want in items
+        if not want
+    )
+    reach = list(itertools.accumulate((high for _, high in ranges), max))
+    return letters, tuple(low for low, _ in ranges), tuple(reach)
+
+
+def _in(text: str, n: int, letter: str) -> int | None:
+    """Return LETTER or NUMBERS where the items of *text* hold the house, else None."""
+    letters, lows, reach = _matcher(text)
+    if (n, letter) in letters:
+        return LETTER
+    at = bisect.bisect_right(lows, n) - 1
+    return NUMBERS if at >= 0 and reach[at] >= n else None
 
 
 def number_level(rule: Rule, supisne: str, orientacne: str) -> int | None:
@@ -1245,13 +1274,13 @@ def number_level(rule: Rule, supisne: str, orientacne: str) -> int | None:
     if number is None:
         return None
     n, letter = number
-    if rule.excluded and _in(parse_numbers(rule.excluded), n, letter) is not None:
+    if rule.excluded and _in(rule.excluded, n, letter) is not None:
         return None
     if rule.parity and n % 2 != (1 if rule.parity == "odd" else 0):
         return None
     if not rule.numbers:
         return NUMBERS
-    return _in(parse_numbers(rule.numbers), n, letter)
+    return _in(rule.numbers, n, letter)
 
 
 # --- assignment ----------------------------------------------------------------
@@ -1265,6 +1294,17 @@ class Place(NamedTuple):
     part: str
     supisne: str
     orientacne: str
+
+
+class Placed(NamedTuple):
+    """The unit of every address of an obec as ``ems addresses`` assigned it."""
+
+    rules: str
+    """A digest of what of the rule set that did the assignment depends on
+    (:func:`election_map_slovakia.geo.rules_digest`), so that a reader with
+    other rules tells them stale."""
+    units: list[int]
+    """Per address its obvod or okrsok."""
 
 
 @dataclass
@@ -1281,50 +1321,72 @@ class ObecPlaces:
     """Every k.ú. of the obec."""
     groups: list[tuple[tuple[str, str], int]] = field(default_factory=list)
     """The groups the places come from, in order, with their house counts."""
+    obvody: Placed | None = None
+    """The council obvod of each address, where ``ems addresses`` placed
+    every one in one: else None."""
+    okrsky: Placed | None = None
+    """The okrsok of each address, likewise, where its okrsky are drawn."""
 
     def planar(self) -> np.ndarray:
         """Return the points in a plane, for nearness within one obec."""
         return self.points * _PLANAR
 
-    def content(self) -> dict[str, Any]:
-        """Return the content of its file; see :func:`write_places`."""
-        return {
+    def to_json(self) -> bytes:
+        """Return its file; see :func:`write_places`."""
+        # Python floats, not NumPy's, compare fast; NaN alone is unequal to itself.
+        content: dict[str, Any] = {
             "kus": self.ku_names,
             "addresses": [
-                [
-                    *p,
-                    *(None if np.isnan(c) else int(c) for c in xy),
-                    ku,
-                ]
-                for p, xy, ku in zip(self.places, self.points, self.kus, strict=True)
+                [*p, None if x != x else int(x), None if y != y else int(y), ku]
+                for p, (x, y), ku in zip(
+                    self.places, self.points.tolist(), self.kus, strict=True
+                )
             ],
         }
+        for key, placed in (("obvody", self.obvody), ("okrsky", self.okrsky)):
+            if placed is not None:
+                content[key] = placed._asdict()
+        return output.to_json(content)
 
 
-def write_places(places: Mapping[str, ObecPlaces], directory: Path) -> None:
-    """Replace *directory* with one file per obec of *places*.
+def write_places(files: Mapping[str, bytes], directory: Path) -> None:
+    """Replace *directory* with the file of each obec, *files* by code.
 
-    ``<obec>.json`` (JSON, compact)::
+    ``<obec>.json`` (JSON, compact, :meth:`ObecPlaces.to_json`)::
 
         {
             kus: [name, ...],
             addresses: [[street, part, supisne, orientacne, lon, lat, ku], ...],
+            (obvody: {rules, units: [n, ...]}),
+            (okrsky: {rules, units: [n, ...]}),
         }
 
     ``street`` is ``""`` where the address has none; ``lon``, ``lat`` in
     1/100,000 degree, null without a point; ``ku`` is null where the point
-    is in none of the obec's k.ú. Written by ``ems addresses`` into
+    is in none of the obec's k.ú. ``obvody`` and ``okrsky`` are the council
+    obvod and the okrsok of each address, as the rules gave them where they
+    place every address in one (:class:`Placed`), so that ``geo`` need not
+    assign them again. Written by ``ems addresses`` into
     ``data/build/<election day>/obvod-addresses/``.
     """
     with output.replacing(directory) as tmp:
-        for code, p in places.items():
-            (tmp / f"{code}.json").write_bytes(output.to_json(p.content()))
+        for code, data in files.items():
+            (tmp / f"{code}.json").write_bytes(data)
 
 
 def load_places(path: Path) -> ObecPlaces:
     """Read a file :func:`write_places` wrote."""
-    content = json.loads(path.read_bytes())
+    return parse_places(path.read_bytes())
+
+
+def parse_places(data: bytes) -> ObecPlaces:
+    """Return the places of the content of a file :func:`write_places` writes."""
+    content = orjson.loads(data)
     rows = content["addresses"]
+    obvody, okrsky = (
+        Placed(**content[key]) if key in content else None
+        for key in ("obvody", "okrsky")
+    )
     return ObecPlaces(
         [Place(*r[:4]) for r in rows],
         np.array(
@@ -1332,6 +1394,8 @@ def load_places(path: Path) -> ObecPlaces:
         ).reshape(-1, 2),
         [r[6] for r in rows],
         content["kus"],
+        obvody=obvody,
+        okrsky=okrsky,
     )
 
 
@@ -1475,23 +1539,17 @@ def _assign(
     out = Assignment([0] * len(places), [None] * len(places), level=level)
     used: set[int] = set()
     for i, place in enumerate(places):
+        tests, near = index.plan(place)
+        nearest = None
+        if near and points is not None:
+            nearest = _nearest(near, points[i])
         ku = kus[i] if kus is not None else None
-        best: list[Rule] = []
-        best_level = len(LEVELS)
-        candidates = index.candidates(place)
-        nearest = _nearest(candidates, place, points[i] if points is not None else None)
-        for rule in candidates:
-            precedence = _level(rule, place, ku, nearest)
-            if precedence is None or precedence > best_level:
-                continue
-            if precedence < best_level:
-                best, best_level = [], precedence
-            best.append(rule)
+        best = _best(tests, place, None if ku is None else _key(ku), nearest)
         if not best:
             out.unassigned.append(i)
             continue
-        used.update(id(r) for r in best)
-        if len({r.unit for r in best}) > 1:
+        used.update(map(id, best))
+        if len(best) > 1 and len({r.unit for r in best}) > 1:
             out.conflicts[i] = tuple(sorted(set(best), key=order.index))
             continue
         out.units[i] = best[0].unit
@@ -1502,8 +1560,41 @@ def _assign(
     return out
 
 
+def _best(
+    tests: Iterable[tuple[Rule, int]],
+    place: Place,
+    ku_key: str | None,
+    nearest: Rule | None,
+) -> list[Rule]:
+    """Return the rules of plan *tests* that select *place* at the best level.
+
+    *ku_key* is the :func:`_key` of its k.ú., *nearest* its ``near`` rule
+    (:func:`_nearest`); see :meth:`_RuleIndex.plan` and :func:`_level`.
+    """
+    best: list[Rule] = []
+    best_level = len(LEVELS)
+    for rule, test in tests:
+        if test >= 0:
+            precedence = test
+        elif test == _BY_KU:
+            precedence = KU if ku_key is not None and ku_key == _key(rule.ku) else None
+        elif test == _BY_NEAR:
+            precedence = NEAR if rule is nearest else None
+        else:
+            precedence = number_level(rule, place.supisne, place.orientacne)
+        if precedence is None or precedence > best_level:
+            continue
+        if precedence < best_level:
+            best, best_level = [], precedence
+        best.append(rule)
+    return best
+
+
 # Names repeat over the addresses of an obec; the rules compare them often.
 _key = functools.cache(search_key)
+# How a rule of a plan (:meth:`_RuleIndex.plan`) selects an address where
+# its level is not fixed: by k.ú., by nearness, by number.
+_BY_KU, _BY_NEAR, _BY_NUMBER = -1, -2, -3
 
 
 class _RuleIndex:
@@ -1520,34 +1611,61 @@ class _RuleIndex:
                 self.parts[search_key(r.part)].append(r)
             else:
                 self.other.append(r)
+        self.plans: dict[
+            tuple[str, str], tuple[list[tuple[Rule, int]], list[Rule]]
+        ] = {}
 
-    def candidates(self, place: Place) -> list[Rule]:
-        """Return the rules that may select *place*.
+    def plan(self, place: Place) -> tuple[list[tuple[Rule, int]], list[Rule]]:
+        """Return how the rules may select *place*, and its ``near`` rules.
 
-        Those of its street and of its part, and the ones by k.ú., numbers
-        alone or the rest.
+        The rules of its street and of its part, and the ones by k.ú.,
+        numbers alone or the rest, each with its level (:func:`_level`) where
+        that is the same for every address of the street and part, else how
+        it selects (``_BY_*``); without those that select none of them. The
+        same for every address of a street and part, so made once for them.
         """
-        return [
-            *self.streets.get(_key(place.street), ()),
-            *self.parts.get(_key(place.part), ()),
-            *self.other,
-        ]
+        key = (place.street, place.part)
+        if key not in self.plans:
+            candidates = [
+                *self.streets.get(_key(place.street), ()),
+                *self.parts.get(_key(place.part), ()),
+                *self.other,
+            ]
+            tests = []
+            for rule in candidates:
+                if rule.rest:
+                    tests.append((rule, REST))
+                elif rule.ku is not None:
+                    tests.append((rule, _BY_KU))
+                elif rule.near is not None:
+                    tests.append((rule, _BY_NEAR))
+                elif (
+                    rule.street is None or _key(rule.street) == _key(place.street)
+                ) and (rule.part is None or _key(rule.part) == _key(place.part)):
+                    if rule.numbered:
+                        tests.append((rule, _BY_NUMBER))
+                    else:
+                        tests.append(
+                            (rule, STREET if rule.street is not None else PART)
+                        )
+            near = [
+                r
+                for r in candidates
+                if r.near is not None
+                and (r.part is None or _key(r.part) == _key(place.part))
+            ]
+            self.plans[key] = (tests, near)
+        return self.plans[key]
 
 
-def _nearest(
-    rules: Sequence[Rule], place: Place, point: np.ndarray | None
-) -> Rule | None:
-    """Return the ``near`` rule of *rules* that selects *place* at *point*.
+def _nearest(near: Sequence[Rule], point: np.ndarray) -> Rule | None:
+    """Return the rule of *near* nearest to *point*; None if it is NaN.
 
-    That is the one nearest to *point* (planar, see :meth:`ObecPlaces.planar`)
-    of those whose part, if any, is the place's; None without a point.
+    *near* are the ``near`` rules that may select an address (those whose
+    part, if any, is its own), *point* its point (planar, see
+    :meth:`ObecPlaces.planar`).
     """
-    near = [
-        r
-        for r in rules
-        if r.near is not None and (r.part is None or _key(r.part) == _key(place.part))
-    ]
-    if not near or point is None or np.isnan(point).any():
+    if np.isnan(point).any():
         return None
     return min(
         near,

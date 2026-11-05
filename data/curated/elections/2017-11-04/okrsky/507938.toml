@@ -1,0 +1,123 @@
+# Okrsky of Ivanka pri Dunaji, transcribed by an AI agent in job okrsok-rules-089 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulica Farnianska, Hlboká, Hollého, Hurbanova, Muškátová, Nová, Partizánska, Pekná, Pluhová, Pri pálenici, Slnečná, Štefánikova, Štúrova, Veterná, Zelená
+#   okrsok 2: ulica Dobšinského, Dlhá, Družstevná, Hlinkova, Hviezdoslavova, Jesenského, Komenského, Kvetná, Lesná, Malinová, Pri jazere, Rázusova, SNP, Školská, Višňová, Záhradnícka, Za školou
+#   okrsok 3: ulica Bernolákovská, Bobuľová, Gaštanová, Grasalkovičová, Hroznová, Jabloňová, Matičná Moyzesová, Muštová, Na vŕšku, Nádražná, Nám. sv. Rozálie, Nám. padlých hrdinov, Olšinova, Orechová, Pod záhradami, Poľovnícka, Pri trati, Pri vrbine, Révová, Stromová, Šustová, Trenčianska, Vajnorská, Vinohradská, Za kostolom, Železničiarska
+#   okrsok 4: ulicaAgátová, Cintorínska, Dunajská, Kalinčiakova, Kmeťova, Lipová, Na výslní, Okružná, Palárikova, Poľná, Potocká, Puškinova, Ružová, Sadová, Sládkovičova, Sovia, Škultétyho, Záleská, Želiarska
+obec = "507938"
+name = "Ivanka pri Dunaji"
+okrsky_date = 2017-08-21
+okrsky_fill = "nearest"
+okrsky_note = "Scanned decision of the mayor of 21.08.2017 for the regional elections of 4 November 2017, read from the page images; linked from the archived Voľby page (posted 2.10.2017). The live website answered HTTP 429 (rate limit), so the Internet Archive copies are listed. The register's addresses without a street (súpisné čísla only) are in no list of the document; they take the okrsok of the nearest placed address (fill_nearest)."
+okrsky_supplemented = 2023-06-26
+okrsky_supplemented_from = "document"
+okrsky_supplement_basis = "The mayor's decision of 2023-06-26 (okrsky for the National Council election of 30 September 2023) lists Marhuľová (Marhuľová ulica) and Šúrska (Šúrska ulica) in okrsok 2, Senecká cesta in okrsok 3 and Jahodová (Jahodová ulica) in okrsok 4; they are taken from it, in its okrsky. The 2017 decision names none of these four streets (41 addresses in today's register, probably newer development), so it leaves them unplaced. (https://web.archive.org/web/20250529013302/https://www.ivankapridunaji.sk/download_file_f.php?id=1880454)"
+
+[[document]]
+url = "https://web.archive.org/web/20180305105718/http://www.ivankapridunaji.sk:80/download_file_f.php?id=878890"
+sha256 = "8bd9c6fc6632774f8ac73ec87b1509070e9474724e7e8d07ba884413f7ae3076"
+title = "Rozhodnutie starostu obce Ivanka pri Dunaji o určení volebných okrskov a volebných miestností vo volebných okrskoch, miesta a času konania volieb do orgánov samosprávnych krajov (Volebné okrsky v obci Ivanka pri Dunaji pre voľby)"
+
+[[document]]
+url = "https://web.archive.org/web/20250529013302/https://www.ivankapridunaji.sk/download_file_f.php?id=1880454"
+sha256 = "45ab0c9b6581cddaf096594080f2e0b3bac56bb395dec6e0d4e73453e3437c10"
+title = "Rozhodnutie starostu obce Ivanka pri Dunaji - vytvorenie volebných okrskov pre voľby do NRSR (30. septembra 2023)"
+
+[okrsok.1]
+rules = [
+  {street = "Farnianska"},
+  {street = "Hlboká"},
+  {street = "Hollého"},
+  {street = "Hurbanova"},
+  {street = "Muškátová"},
+  {street = "Nová"},
+  {street = "Partizánska"},
+  {street = "Pekná"},
+  {street = "Pluhová"},
+  {street = "Pri pálenici"},
+  {street = "Slnečná"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Veterná"},
+  {street = "Zelená"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dobšinského"},
+  {street = "Dlhá"},
+  {street = "Družstevná"},
+  {street = "Hlinkova"},
+  {street = "Hviezdoslavova"},
+  {street = "Jesenského"},
+  {street = "Komenského"},
+  {street = "Kvetná"},
+  {street = "Lesná"},
+  {street = "Malinová"},
+  {street = "Pri jazere"},
+  {street = "Rázusova"},
+  {street = "SNP"},
+  {street = "Školská"},
+  {street = "Višňová"},
+  {street = "Záhradnícka"},
+  {street = "Za školou"},
+  {street = "Marhuľová ulica", supplemented = true},
+  {street = "Šúrska ulica", supplemented = true},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bernolákovská"},
+  {street = "Bobuľová"},
+  {street = "Gaštanová"},
+  {street = "Grasalkovičova", written = "Grasalkovičová", note = "the document writes Grasalkovičová, with the ending -ová; it is the register's Grasalkovičova, the only such street"},
+  {street = "Hroznová"},
+  {street = "Jabloňová"},
+  {street = "Matičná", note = "the document writes 'Matičná Moyzesová' without a comma: two streets, Matičná and Moyzesová (Moyzesova)"},
+  {street = "Moyzesova", written = "Moyzesová", note = "the document writes Moyzesová, with the ending -ová; it is the register's Moyzesova, the only such street (the polling station is at Moyzesova 41)"},
+  {street = "Muštová"},
+  {street = "Na vŕšku"},
+  {street = "Nádražná"},
+  {street = "Nám. sv. Rozálie"},
+  {street = "Námestie padlých hrdinov", written = "Nám. padlých hrdinov"},
+  {street = "Olšinová", written = "Olšinova", note = "the document writes Olšinova without the accent on the last a; it is the register's Olšinová, the only such street"},
+  {street = "Orechová"},
+  {street = "Pod záhradami"},
+  {street = "Poľovnícka"},
+  {street = "Pri trati"},
+  {street = "Pri vrbine"},
+  {street = "Révová"},
+  {street = "Stromová"},
+  {street = "Šustová"},
+  {street = "Trenčianska"},
+  {street = "Vajnorská"},
+  {street = "Vinohradská"},
+  {street = "Za kostolom"},
+  {street = "Železničiarska"},
+  {street = "Senecká cesta", supplemented = true},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Agátová"},
+  {street = "Cintorínska"},
+  {street = "Dunajská"},
+  {street = "Kalinčiakova"},
+  {street = "Kmeťova"},
+  {street = "Lipová"},
+  {street = "Na výslní"},
+  {street = "Okružná"},
+  {street = "Palárikova"},
+  {street = "Poľná"},
+  {street = "Potocká"},
+  {street = "Puškinova"},
+  {street = "Ružová"},
+  {street = "Sadová"},
+  {street = "Sládkovičova"},
+  {street = "Sovia"},
+  {street = "Škultétyho"},
+  {street = "Záleská"},
+  {street = "Želiarska"},
+  {street = "Jahodová ulica", supplemented = true},
+]

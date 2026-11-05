@@ -1,0 +1,25 @@
+# Okrsky of Kráľová pri Senci, transcribed by an AI agent in job okrsok-rules-4980 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kráľová pri Senci súpisné čísla: 1 – 500
+#   okrsok 2: Kráľová pri Senci súpisné čísla: 501 – 2059
+obec = "503894"
+name = "Kráľová pri Senci"
+okrsky_date = 2024-03-04
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's announcement of 04.03.2024. The okrsky are ranges of súpisné čísla in the part Kráľová pri Senci (the register of this time has no streets). The part Bodov, which the document does not name, and any number outside the ranges take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.kralovaprisenci.sk/e_download.php?file=data/editor/202sk_4.pdf&original=Ozn%C3%A1menie%20okrsky,%20miestnosti.pdf"
+sha256 = "01c8f679cf51392180f06b46bd1e6c6dd53535b83cc08fa7dd9616fd180a8e5c"
+title = "Volebné okrsky a miestnosti – voľby do Európskeho parlamentu 2024 (04.03.2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Kráľová pri Senci", numbers = "1-500"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kráľová pri Senci", numbers = "501-2059"},
+]

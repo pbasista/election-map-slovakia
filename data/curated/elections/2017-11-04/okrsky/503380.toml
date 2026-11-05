@@ -1,0 +1,64 @@
+# The okrsky of Veľký Kýr of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/503380.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Veľký Kýr, transcribed by an AI agent in job okrsok-rules-4189 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Budovateľská, Novozámocká, Petőfiho, Ružová, trvalý pobyt na obci
+#     okrsok 2: Bernolákova, Družstevná, Jókaiho, Krátka, Malá Sihoť, Malokýrska, Mlynská, Na Sihoti, Nitrianska, Ružový Dvor, Staničná, Školská, Vinohradnícka, Záhradná
+#     okrsok 3: Apátska, Cetínska, Gaštanová, Hámad, Hlavná, Malá Pažiť, Pažiť, Sv. Kelemena, Veľká Pažiť, Železničná
+obec = "503380"
+name = "Veľký Kýr"
+okrsky_date = 2024-01-24
+okrsky_fill = "nearest"
+okrsky_note = "The streets of each okrsok as the document lists them; \"trvalý pobyt na obci\" (voters without an address) is no rule. Námestie Sv. Jána is not listed and goes by fill_nearest, as do addresses without a street. The PDF is hosted on the municipality's CMS (app.civium.sk, institution 6 = Veľký Kýr), listed on its documents page."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-205): The municipality's document register (searched for \"okrsk\" and \"miestnost\") has okrsky documents only of 2024 and 2026, none of 2017; Internet Archive offline. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2024-03-23: 1: 817 → 780, 2: 886 → 843, 3: 849 → 835."
+
+[[document]]
+url = "https://app.civium.sk/uploads/documents/6/2026/06/e3a40b-b3f7f-volebne-okrsky-a-miestnosti.pdf"
+sha256 = "335ed81a20c65de7d2c54351aa21219220e40e046b62dd117120802ca95d22e1"
+title = "Informácia pre občanov v súvislosti s Voľbami prezidenta 2024 – volebné okrsky a miestnosti (24.1.2024)"
+
+[[document]]
+url = "https://www.velkykyr.sk/dokumenty"
+sha256 = "fe82a00b74ac56969792d6e1e2ba77a7661be8f6ed03df5793753dfd511cb510"
+title = "Obec Veľký Kýr – Dokumenty (stránka so zoznamom dokumentov)"
+
+[okrsok.1]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Novozámocká"},
+  {street = "Petőfiho"},
+  {street = "Ružová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Družstevná"},
+  {street = "Jókaiho"},
+  {street = "Krátka"},
+  {street = "Malá Sihoť"},
+  {street = "Malokýrska"},
+  {street = "Mlynská"},
+  {street = "Na Sihoti"},
+  {street = "Nitrianska"},
+  {street = "Ružový Dvor"},
+  {street = "Staničná"},
+  {street = "Školská"},
+  {street = "Vinohradnícka"},
+  {street = "Záhradná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Apátska"},
+  {street = "Cetínska"},
+  {street = "Gaštanová"},
+  {street = "Hámad"},
+  {street = "Hlavná"},
+  {street = "Malá Pažiť"},
+  {street = "Pažiť"},
+  {street = "Sv. Kelemena"},
+  {street = "Veľká Pažiť"},
+  {street = "Železničná"},
+]

@@ -1,0 +1,49 @@
+# Okrsky of Badín, transcribed by an AI agent in job okrsok-rules-5576 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: SNP, Hliny, L. Svobodu, Laurínska, Pod vŕškom, Pod Hrádkom, Na Dielnici
+#   okrsok 2: ulice: Krčméryho, Banská, Borovicová ulica, Družstevná, Kriedovnica, Nová, Osloboditeľov, Sládkovičova, Tajovského, Záhradná, Lipová ulica, Čerešňová ulica, Ulica Na Šarinke, Ulica Pekný vŕšok, bezdomovci
+obec = "508454"
+name = "Badín"
+okrsky_date = 2026-04-22
+okrsky_fill = "nearest"
+okrsky_note = "Addresses without a street (by súpisné číslo) are not in the street lists; fill_nearest places them. 'bezdomovci' (homeless) in okrsok 2 selects no address."
+
+[[document]]
+url = "https://www.obecbadin.sk/download_file_f.php?id=2404500"
+sha256 = "7cc2e6b8039785d4b08e004300d90b041bc1b61f651974d110b4fab728aa4640"
+title = "Starosta obce Badín určuje 2 volebné okrsky pre Referendum v roku 2026 (určenie obvodov)"
+
+[[document]]
+url = "https://www.obecbadin.sk/referendum-2026.html"
+sha256 = "974b553f5bff51a572329309896fb7f238702aafe16fb812140be17c4a604b4a"
+title = "Election page of obec Badín linking the document"
+
+[okrsok.1]
+rules = [
+  {street = "SNP"},
+  {street = "Hliny"},
+  {street = "L. Svobodu"},
+  {street = "Laurínska"},
+  {street = "Pod vŕškom"},
+  {street = "Pod Hrádkom"},
+  {street = "Na Dielnici"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krčméryho"},
+  {street = "Banská"},
+  {street = "Borovicová ulica"},
+  {street = "Družstevná"},
+  {street = "Kriedovnica"},
+  {street = "Nová"},
+  {street = "Osloboditeľov"},
+  {street = "Sládkovičova"},
+  {street = "Tajovského"},
+  {street = "Záhradná"},
+  {street = "Lipová ulica"},
+  {street = "Čerešňová ulica"},
+  {street = "Ulica Na Šarinke"},
+  {street = "Ulica Pekný vŕšok"},
+]

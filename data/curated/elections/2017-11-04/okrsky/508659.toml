@@ -1,0 +1,57 @@
+# The okrsky of Hrochoť of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/508659.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Hrochoť, transcribed by an AI agent in job okrsok-rules-4544 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Zoznam ulíc: pobyt bezdomovca, Hlavná ulica, Námestie Andreja Sládkoviča, Pod kostolom, Na Teplici, Ľuda Ondrejova, Dubiny, Na Hanišovú, Močare, Za Brezinku, Družstevná, Na Záhumnie, Na Hlinky, Na Kopec, Do Trávnika, Na Dúbravu, Pod Lipie, Kyslinky
+#     okrsok 2: Zoznam ulíc: Hlavná ulica, Pod Dubovým dielom, Vranní lúžok, Pod Horou, Súdenica, Pod Skalicu
+obec = "508659"
+name = "Hrochoť"
+okrsky_date = 2024-01-25
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 25 Jan 2024 (PDF) gives each okrsok's polling station; the elections page of the vote and the OZNAM of 25 Jan 2024 give the streets per okrsok (the OZNAM leaves out Kyslinky, which the elections page lists in okrsok 1). Hlavná ulica is listed in both okrsky without house numbers, so it has no rule: its houses take the okrsok of the nearest placed address (fill_nearest), as do Stará voda (not named) and addresses without a street. Okrsok 1 also holds 'pobyt bezdomovca'. Same okrsky as the 2026 document."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-521): The obec's website (hrochot.sk) keeps no okrsky document for this vote: its elections page and the aktuality of the months before the vote (all 33 pages read) hold only other notices; the notice board keeps no older items. The Internet Archive was offline (HTTP 503 'Temporarily Offline') on repeated tries, so archived copies could not be checked. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2024-03-23: 1: 967 → 964, 2: 216 → 211."
+
+[[document]]
+url = "https://www.hrochot.sk/zverejnovanie/volby/volby-prezidenta-slovenskej-republiky-2024/"
+sha256 = "32794ca8c81b19515fc4ba65d2fb77449287d03174317a971828468a9a9e50af"
+title = "Voľby prezidenta Slovenskej republiky 2024: Utvorenie volebných okrskov a určenie volebných miestností (zoznam ulíc)"
+
+[[document]]
+url = "https://www.hrochot.sk/evt_file.php?file=14812"
+sha256 = "2830440712a962ba68a5ebbcf137b955d77b1cab5720665a81f9b146e3e325d2"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (voľby prezidenta SR 2024), 25. 01. 2024"
+
+[[document]]
+url = "https://www.hrochot.sk/obcan/aktuality/oznam-1135sk.html"
+sha256 = "4745915ec5648ebb70ca6caa0db9f9d4756359f303adc9c35e8179fdc424e799"
+title = "OZNAM – Voľby prezidenta Slovenskej republiky 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Námestie Andreja Sládkoviča"},
+  {street = "Pod kostolom"},
+  {street = "Na Teplici"},
+  {street = "Ľuda Ondrejova"},
+  {street = "Dubiny"},
+  {street = "Na Hanišovú"},
+  {street = "Močare"},
+  {street = "Za Brezinku"},
+  {street = "Družstevná"},
+  {street = "Na Záhumnie"},
+  {street = "Na Hlinky"},
+  {street = "Na Kopec"},
+  {street = "Do Trávnika"},
+  {street = "Na Dúbravu"},
+  {street = "Pod Lipie"},
+  {street = "Kyslinky"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Pod Dubovým dielom"},
+  {street = "Vranní lúžok"},
+  {street = "Pod Horou"},
+  {street = "Súdenica"},
+  {street = "Pod Skalicu"},
+]

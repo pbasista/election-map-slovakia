@@ -1,0 +1,83 @@
+# Okrsky of Cífer, transcribed by an AI agent in job okrsok-rules-1150 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Potočná, Ľ.Pavetitša, Nám.A.Hlinku, Čulenova, SNP, Kaplnská, Štadionová, Mlynská, Hájska, Ľ. Štúra, Bernolákova, Cintorínska, Vendelínska, M.R.Štefánika, Hviezdoslavova, Nová, Sokolská, Veterná, Slnečná, Trnavská I. časť od čísla domu 1 po 27
+#   okrsok 2: Ulice: Trnavská II. časť od čísla domu 28, Záhradná, Družstevná, Východná, Budovateľská, Hlboká, Severná, Š.Moyzesa, M.Sch.Trnavského, J.Palárika, A.Sládkoviča, J.Fándlyho, J.Kubányiho
+#   okrsok 3: Miestna časť: Pác
+#   okrsok 4: Miestna časť: Jarná
+obec = "506877"
+name = "Cífer"
+okrsky_date = 2019-01-24
+okrsky_fill = "nearest"
+okrsky_note = "The document writes Čulenova for Marka Čulena, J.Palárika for Palárikova, Štadionová for Štadiónová (same streets; renamed/abbreviated). Addresses without a street (súpisné čísla) take the okrsok of the nearest address (fill_nearest)."
+okrsky_supplemented = 2019-11-11
+okrsky_supplemented_from = "document"
+okrsky_supplement_basis = "The decision of 24 January 2019 does not name the streets Márie Hollósyovej, Šarloty Zičiovej, Alejová, Lipová, Lúčna, Poľná and Stromová (newer streets in the register); they are placed as the mayor's decision of 11 November 2019 (NR SR 2020) lists them: Márie Hollósyovej and Šarloty Zičiovej in okrsok 1, Alejová, Lipová, Lúčna, Poľná and Stromová in okrsok 2. (https://www.cifer.sk/e_download.php?file=data/editor/161sk_9.pdf&original=Ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20miestnost%C3%AD_C%C3%ADfer_Vo%C4%BEby%20NR%20SR%202020.pdf)"
+
+[[document]]
+url = "https://www.cifer.sk/e_download.php?file=data/editor/153sk_4.pdf&original=Ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20miestnost%C3%AD_C%C3%ADfer.pdf"
+sha256 = "9597470c50250d5c70ed138430fd2d588aef1f05ef51744be2aa0d73fef99522"
+title = "Rozhodnutie starostu Obce Cífer zo dňa 24. januára 2019 o utvorení volebných okrskov a určenie volebných miestností vo volebných okrskoch"
+
+[[document]]
+url = "https://www.cifer.sk/e_download.php?file=data/editor/161sk_9.pdf&original=Ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20miestnost%C3%AD_C%C3%ADfer_Vo%C4%BEby%20NR%20SR%202020.pdf"
+sha256 = "de4da591ba60c9e6d99389fa7f1af204d13e4623e185eac03bc47966dc67bf26"
+title = "Rozhodnutie starostu Obce Cífer zo dňa 11. novembra 2019 o utvorení volebných okrskov a určenie volebných miestností vo volebných okrskoch"
+
+[okrsok.1]
+rules = [
+  {street = "Potočná"},
+  {street = "Ľudovíta Pavetitša"},
+  {street = "Nám. Andreja Hlinku"},
+  {street = "Marka Čulena"},
+  {street = "SNP"},
+  {street = "Kaplnská"},
+  {street = "Štadiónová"},
+  {street = "Mlynská"},
+  {street = "Hájska"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Bernolákova"},
+  {street = "Cintorínska"},
+  {street = "Vendelínska"},
+  {street = "M.R.Štefánika"},
+  {street = "Hviezdoslavova"},
+  {street = "Nová"},
+  {street = "Sokolská"},
+  {street = "Veterná"},
+  {street = "Slnečná"},
+  {street = "Trnavská", numbers = "1-27"},
+  {street = "Márie Hollósyovej", supplemented = true},
+  {street = "Šarloty Zičiovej", supplemented = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Záhradná"},
+  {street = "Družstevná"},
+  {street = "Východná"},
+  {street = "Budovateľská"},
+  {street = "Hlboká"},
+  {street = "Severná"},
+  {street = "Štefana Moyzesa"},
+  {street = "M. Schneidra-Trnavského"},
+  {street = "Palárikova"},
+  {street = "Andreja Sládkoviča"},
+  {street = "Juraja Fándlyho"},
+  {street = "Jozefa Kubányiho"},
+  {street = "Trnavská", numbers = "28-"},
+  {street = "Alejová", supplemented = true},
+  {street = "Lipová", supplemented = true},
+  {street = "Lúčna", supplemented = true},
+  {street = "Poľná", supplemented = true},
+  {street = "Stromová", supplemented = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Pác"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Jarná"},
+]

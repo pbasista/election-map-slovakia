@@ -1,0 +1,120 @@
+# Okrsky of Veľký Krtíš, transcribed by an AI agent in job okrsok-rules-100 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: A.H.Škultétyho 1-15 nepárne, 16-112, 113, 115, J.Kráľa, Št.Tučeka, Vinohradnícka
+#   okrsok 2: Boženy Němcovej 1-29 nepárne, Boženy Němcovej 2-34 párne
+#   okrsok 3: Boženy Němcovej 31-67 nepárne, Lučenská 1-42, 84, 86, Poľná, Za Parkom
+#   okrsok 4: P.O.Hviezdoslava 1-49 nepárne
+#   okrsok 5: Ľ.Štúra 1-15 nepárne, P.O.Hviezdoslava 2-16 párne
+#   okrsok 6: Lučenská 79-91 nepárne, Novohradská
+#   okrsok 7: Červenej Armády, Družobná, Dúbravská cesta, Duklianska, Ľ.Štúra 2-14 párne, Ľ.Štúra 16-58, Lučenská 46-48 párne, Lučenská 60-66 párne, Lučenská 72-82 párne, 75, 92, 96, 98, 100, Mládežnícka, Pionierska, Záhradná
+#   okrsok 8: Venevská
+#   okrsok 9: Lučenská 43-71 nepárne
+#   okrsok 10: Banícka, I.Madácha, Školská, Železničná
+#   okrsok 11: J.A.Komenského, M.R.Štefánika, Mierová, Nám.A.H.Škultétyho, Nemocničná, Okružná, SNP, Za Poštou
+#   okrsok 12: A.H.Škutétyho 2-14 párne, Mikszáthova, Písecká, Osloboditeľov
+obec = "515850"
+name = "Veľký Krtíš"
+okrsky_date = 2017-08-30
+okrsky_fill = "nearest"
+okrsky_note = "Mayor's decision of 30.08.2017 (scanned PDF, read from the image), linked on the city's VÚC 2017 elections page as archived 2017-10-29 ('Zverejnené 4.9.2017'). fill_nearest places the addresses without a street (súpisné only) and the numbers the ranges miss (e.g. Lučenská 44, 50-58, 68, 73, 77, 88-94, A.H.Škultétyho 114, P.O.Hviezdoslava 18 and above even, 51, 53)."
+
+[[document]]
+url = "https://www.velky-krtis.sk/download_file_f.php?id=868181"
+sha256 = "ae8b7be2538eba7aad7275e8286049b41afba17706feaa64ab076c43cab87ba6"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do orgánov samosprávnych krajov 04.11.2017 (primátor, 30.08.2017)"
+
+[okrsok.1]
+rules = [
+  {street = "A.H.Škultétyho", numbers = "1-15", parity = "odd"},
+  {street = "A.H.Škultétyho", numbers = "16-112, 113, 115"},
+  {street = "J.Kráľa"},
+  {street = "Št.Tučeka"},
+  {street = "Vinohradnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Boženy Němcovej", numbers = "1-29", parity = "odd"},
+  {street = "Boženy Němcovej", numbers = "2-34", parity = "even"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Boženy Němcovej", numbers = "31-67", parity = "odd"},
+  {street = "Lučenská", numbers = "1-42, 84, 86"},
+  {street = "Poľná"},
+  {street = "Za Parkom"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "P.O.Hviezdoslava", numbers = "1-49", parity = "odd"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Ľ.Štúra", numbers = "1-15", parity = "odd"},
+  {street = "P.O.Hviezdoslava", numbers = "2-16", parity = "even"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Lučenská", numbers = "79-91", parity = "odd"},
+  {street = "Novohradská"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Červenej Armády"},
+  {street = "Družobná"},
+  {street = "Dúbravská cesta"},
+  {street = "Duklianska"},
+  {street = "Ľ.Štúra", numbers = "2-14", parity = "even"},
+  {street = "Ľ.Štúra", numbers = "16-58"},
+  {street = "Lučenská", numbers = "46-48", parity = "even"},
+  {street = "Lučenská", numbers = "60-66", parity = "even"},
+  {street = "Lučenská", numbers = "72-82", parity = "even"},
+  {street = "Lučenská", numbers = "75, 92, 96, 98, 100"},
+  {street = "Mládežnícka"},
+  {street = "Pionierska"},
+  {street = "Záhradná"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Venevská"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Lučenská", numbers = "43-71", parity = "odd"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Banícka"},
+  {street = "I.Madácha"},
+  {street = "Školská"},
+  {street = "Železničná"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "J.A.Komenského"},
+  {street = "M.R.Štefánika"},
+  {street = "Mierová"},
+  {street = "Nám.A.H.Škultétyho"},
+  {street = "Nemocničná"},
+  {street = "Okružná"},
+  {street = "SNP"},
+  {street = "Za Poštou"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "A.H.Škultétyho", numbers = "2-14", parity = "even", written = "A.H.Škutétyho", note = "a typo for A.H.Škultétyho (letter l dropped); the same split as the obvod resolution of 2018 (A.H.Škultétyho 2-14 párne)"},
+  {street = "Mikszáthova"},
+  {street = "Písecká"},
+  {street = "Osloboditeľov"},
+]

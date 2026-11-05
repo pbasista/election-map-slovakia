@@ -1,0 +1,59 @@
+# Okrsky of Zeleneč, transcribed by an AI agent in job okrsok-rules-2554 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov z ulíc: A. Hlinku, Argentínska, Družstevná, Hlavná, Hliník, Krátka, Mlynská, Nová, Obchodná, Palárikova, Pažiť, Podolky, Sládkovičova, Školská, Športová, Ulička, Vengerova, Výhon, Vinohradnícka
+#   okrsok 2: pre voličov z ulíc: Astrová, Bernolákova, Cintorínska, Jána Klempu, Janka Kráľa, Kapitulská, M. R. Štefánika, Narcisová, Nezábudková, Ružová, Štúrova, Agátová
+obec = "507776"
+name = "Zeleneč"
+okrsky_date = 2019-11-29
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF read from the rendered page. The register's addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.zelenec.sk/e_download.php?file=data/uredni_deska/obsah428_2.pdf&original=DX-2500N_20200121_140827.pdf"
+sha256 = "f1896998d865971cb9cf91e5089f9c6a25f0c4d3dec062d2d880e9c1e475127b"
+title = "Voľby do NR SR – 2 volebné okrsky a určenie miestností, starosta 29.11.2019"
+
+[[document]]
+url = "https://www.zelenec.sk/obecny-urad/uradna-tabula/volby-nr-sr-2020-volebne-okrsky-437.html"
+sha256 = "50e6ae0203fd841ff251203db521de33e32037459fa658483e8bf7a60a697038"
+title = "Úradná tabuľa: Voľby NR SR 2020 – volebné okrsky (vyvesené 29. 11. 2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Andreja Hlinku", written = "A. Hlinku"},
+  {street = "Argentínska"},
+  {street = "Družstevná"},
+  {street = "Hlavná"},
+  {street = "Hliník"},
+  {street = "Krátka"},
+  {street = "Mlynská"},
+  {street = "Nová"},
+  {street = "Obchodná"},
+  {street = "Palárikova"},
+  {street = "Pažiť"},
+  {street = "Podolky"},
+  {street = "Sládkovičova"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Ulička"},
+  {street = "Vengerova"},
+  {street = "Výhon"},
+  {street = "Vinohradnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Astrová"},
+  {street = "Bernolákova"},
+  {street = "Cintorínska"},
+  {street = "Jána Klempu"},
+  {street = "Janka Kráľa"},
+  {street = "Kapitulská"},
+  {street = "M. R. Štefánika"},
+  {street = "Narcisová"},
+  {street = "Nezábudková"},
+  {street = "Ružová"},
+  {street = "Štúrova"},
+  {street = "Agátová"},
+]

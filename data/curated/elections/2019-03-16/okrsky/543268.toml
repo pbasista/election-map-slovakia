@@ -1,0 +1,78 @@
+# Okrsky of Krompachy, transcribed by an AI agent in job okrsok-rules-1126 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Banícka štvrť, Banská ulica, Cintorínska ulica, Dolina, Horská ulica, Ulica Júliusa Barča Ivana, Kúpeľná ulica, Lesnícka ulica, Ulica Mikuláša Šprinca, Námestie slobody, Partizánska ulica, Sadová ulica, Turistická ulica, Zemanská ulica, Krompachy bez udania ulice
+#   okrsok 2: Mlynská ulica, Slovinská ulica
+#   okrsok 3: Lorencova ulica
+#   okrsok 4: Hlavná ulica, Stará Maša, Štúrova ulica, Trangusova ulica
+#   okrsok 5: Maurerova ulica, Poštová ulica, Robotnícka ulica, Veterná ulica
+#   okrsok 6: Ulica 29. augusta, Družstevná ulica, Hornádska ulica, Ulica Janka Jesenského, Ulica kpt. Nálepku, Rázusova ulica, Ulica SNP, Stará cesta
+obec = "543268"
+name = "Krompachy"
+okrsky_date = 2019-01-18
+okrsky_note = "Okrsok 1 ends with 'Krompachy bez udania ulice': every address of Krompachy without a street (súpisné číslo only, spread over the town) belongs to okrsok 1, hence the part rule there; the street rules of the other okrsky take precedence. The register streets Podskalka and RO Plejsy are not in the document and are placed by their nearest streets (inferred). Decision of the mayor (primátorka) of 18 January 2019, č. 155/2019/SP - 570/2019. Its article (clanok 4969, 30.1.2019) is deactivated on the live site and not in the Internet Archive; the PDF in that article's file folder is still live."
+
+[[document]]
+url = "https://www.krompachy.sk/files/00004969/1548831197.pdf"
+sha256 = "e1753cd8d200a6fd76fc590f21c5b7dc5b345f5785aa55d93912a55e3c8b8478"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta Slovenskej republiky v roku 2019"
+
+[okrsok.1]
+rules = [
+  {street = "Banícka Štvrť", written = "Banícka štvrť", note = "only the capital letter differs from the register's name"},
+  {street = "Banská ulica"},
+  {street = "Cintorínska ulica"},
+  {street = "Dolina"},
+  {street = "Horská ulica"},
+  {street = "Ulica Júliusa Barča Ivana"},
+  {street = "Kúpeľná ulica"},
+  {street = "Lesnícka ulica"},
+  {street = "Ulica Mikuláša Šprinca"},
+  {street = "Námestie Slobody", written = "Námestie slobody", note = "only the capital letter differs from the register's name"},
+  {street = "Partizánska ulica"},
+  {street = "Sadová ulica"},
+  {street = "Turistická ulica"},
+  {street = "Zemanská ulica"},
+  {street = "RO Plejsy", note = "The register street RO Plejsy (the Plejsy recreation area, 3 addresses) is not in the document; placed by its nearest streets, Cintorínska ulica and Sadová ulica, both in okrsok 1.", inferred = true},
+  {part = "Krompachy", note = "'Krompachy bez udania ulice': the addresses of Krompachy without a street (súpisné číslo only)."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mlynská ulica"},
+  {street = "Slovinská ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Lorencova ulica"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Hlavná ulica"},
+  {street = "Stará Maša"},
+  {street = "Štúrova ulica"},
+  {street = "Trangusova ulica"},
+  {street = "Podskalka", note = "The register street Podskalka (1 address) is not in the document; placed by its nearest streets, Trangusova ulica and Hlavná ulica, both in okrsok 4.", inferred = true},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Maurerova ulica"},
+  {street = "Poštová ulica"},
+  {street = "Robotnícka ulica"},
+  {street = "Veterná ulica"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Ulica 29. augusta"},
+  {street = "Družstevná ulica"},
+  {street = "Hornádska ulica"},
+  {street = "Ulica Janka Jesenského"},
+  {street = "Ulica kpt. Nálepku"},
+  {street = "Rázusova ulica"},
+  {street = "Ulica SNP"},
+  {street = "Stará cesta"},
+]

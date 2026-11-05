@@ -1,0 +1,54 @@
+# Okrsky of Zvolenská Slatina, transcribed by an AI agent in job okrsok-rules-4806 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Borovinská cesta, Boroviny-Krvavník, Komenského, Kráľová, Malá strana, Maloslatinská, Nový dvor, Očovská cesta, Pod Dielom, Pod Hájom, Poľovnícka, Slov. nár. povstania, Stred, Školská, Športová, Úhrady
+#   okrsok 2: Budovateľská, Cintorínska cesta, Čsl. Armády, Družstevná, Hviezdoslavova, Mierová, Sebechov, Sládkovičova, T. Vansovej, Slatinka
+obec = "518972"
+name = "Zvolenská Slatina"
+okrsky_date = 2024-03-01
+okrsky_fill = "nearest"
+okrsky_note = "The municipality's 'Informácia o čase a mieste konania' lists for each okrsok its streets (and the part Slatinka); no separate decision is published. The 570 register addresses without a street in part Zvolenská Slatina are placed by fill_nearest; 'Slatinka' is the part Slatinka. The EP 2024 notice reuses the presidential one's wording ('Miesto konania volieb prezidenta') under the heading of the EP election of 8 June 2024."
+
+[[document]]
+url = "https://www.zvolenskaslatina.sk/e_download.php?file=data/editor/99sk_1.doc&original=inform%C3%A1cia%20o%20%C4%8Dase%20a%20mieste%20konania%20volieb.doc"
+sha256 = "e1fca7e7b90d8f71191d435c2145a54448ed5277fb15ba03e037eaaa15996872"
+title = "Informácia o čase a mieste konania volieb do Európskeho parlamentu (8. júna 2024), 01. 03. 2024"
+
+[[document]]
+url = "https://www.zvolenskaslatina.sk/urad/volby/volby-do-europskeho-parlamentu/"
+sha256 = "4a1e6588bf1213446b309ce63326087ad3f4276419398f36168029dde3ecbe1d"
+title = "Elections page linking the document"
+
+[okrsok.1]
+rules = [
+  {street = "Borovinská cesta"},
+  {street = "Boroviny-Krvavník"},
+  {street = "Komenského"},
+  {street = "Kráľová"},
+  {street = "Malá Strana", written = "Malá strana"},
+  {street = "Maloslatinská"},
+  {street = "Nový dvor"},
+  {street = "Očovská cesta"},
+  {street = "Pod Dielom"},
+  {street = "Pod Hájom"},
+  {street = "Poľovnícka"},
+  {street = "Slov.nár.povstania", written = "Slov. nár. povstania"},
+  {street = "Stred"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Úhrady"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Cintorínska cesta"},
+  {street = "Čsl. armády", written = "Čsl. Armády"},
+  {street = "Družstevná"},
+  {street = "Hviezdoslavova"},
+  {street = "Mierová"},
+  {street = "Sebechov"},
+  {street = "Sládkovičova"},
+  {street = "Terézie Vansovej", written = "T. Vansovej", note = "T. = Terézie, the register's only Vansovej street"},
+  {part = "Slatinka"},
+]

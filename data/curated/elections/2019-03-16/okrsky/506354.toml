@@ -1,0 +1,30 @@
+# Okrsky of Omšenie, transcribed by an AI agent in job okrsok-rules-1381 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 Voliči s trvalým pobytom v domoch so súp.č. 1 – 330
+#   okrsok 2: Okrsok č. 2 Voliči s trvalým pobytom v domoch so súp.č. 331 - 999
+obec = "506354"
+name = "Omšenie"
+okrsky_note = "The okrsky split the one part Omšenie by house (súpisné) number: okrsok 1 up to 330, okrsok 2 from 331 (open-ended)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The notice is headed with the presidential election of 16 March 2019 (second round 30 March 2019); it states no decision date."
+
+[[document]]
+url = "https://www.omsenie.sk/modules/file_storage/download.php?file=fc56eb18%7C307&inline=1"
+sha256 = "2d40395f386f1631fe32913ab4180760d55a8340ac0af54ee900699bfe2d2639"
+title = "Oznámenie o voľbe prezidenta 2019 – volebné okrsky"
+
+[[document]]
+url = "https://www.omsenie.sk/zverejnovanie/volby/volby-prezidenta-slovenskej-republiky/"
+sha256 = "9583cae52dcc3f07e7200d9e6121d53d87f6dbdb1f53ed7e982d8af4d10e7096"
+title = "Voľby – page linking the notice"
+
+[okrsok.1]
+rules = [
+  {part = "Omšenie", numbers = "1-330"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Omšenie", numbers = "331-"},
+]

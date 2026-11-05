@@ -1,0 +1,43 @@
+# The okrsky of Trenčianska Turná of the vote of 2022-10-29, data/curated/elections/2022-10-29/okrsky/506567.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Trenčianska Turná, transcribed by an AI agent in job okrsok-rules-750 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: súp. číslo 1-170, 237, 800-842, 860-870, 878-879, 1011, 1400-1462, 2015, 2087-2092, 2161, 2178
+#     okrsok 2: súp. číslo 236, 406-699, 881-882, 884, 871-877, 1350-1351, 2002, 2006, 2010, 2018, 2039, 2051, 2068, 2093, 2131, 2138, 2159, 3000-3058
+#     okrsok 3: súp. číslo 171-402, 700-798, 844-859, 880, 883, 1100-1174, 1258, 1300-1349, 2045, 2115-2127
+#     okrsok 4: KD Hámre 941; súp. číslo 885-893, 894-992, 2012, 2134, 4000-4057
+obec = "506567"
+name = "Trenčianska Turná"
+okrsky_fill = "nearest"
+okrsky_note = "The document lists the okrsky by súpisné čísla (rows of numbers and ranges per okrsok); it is undated, the snapshot is of 04.08.2022. The live link on the 2022 elections page is dead (404). Rows were merged per okrsok as written (row 1-170 etc.). Okrsok 4 (KD Hámre 941) is given the whole part Hámre plus its numbers in case some lie in the part Trenčianska Turná. Addresses whose súpisné číslo the document does not list are placed by fill_nearest."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2407): The current website (new CMS since 2022) has elections pages only from 2022 on. The old website's 2020 pages are only in the Internet Archive, and its CDX index of trencianskaturna.sk (2017-2026, every URL) lists no okrsky document before the one of 2022 (uploaded/volby/volebne-okrsky-a-volebne-miestnosti.pdf, captured 2022-08-04): no PDF or page under uploaded/volby, aktuality or uradna-tabula of 2020 with okrsky. The old site's official notice board was on zverejnene.sk/trencianska-turna (an external host, not the municipality's domain), which blocks access (HTTP 466) and is archived only for invoices/contracts. The archived 2020 National Council news page links only general information for voters (on trencin.sk); the results page could not be fetched (Internet Archive refused connections). The Internet Archive was intermittently offline (connection refused) during the search. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2022-10-29: 1: 816 → 857, 2: 846 → 841, 3: 868 → 877, 4: 224 → 261."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-08-04
+okrsky_date_basis = "The document states no date; the Internet Archive captured it on 2022-08-04 (https://web.archive.org/web/20220804093231/https://trencianskaturna.sk/uploaded/volby/volebne-okrsky-a-volebne-miestnosti.pdf)."
+
+[[document]]
+url = "https://web.archive.org/web/20220804093231/https://trencianskaturna.sk/uploaded/volby/volebne-okrsky-a-volebne-miestnosti.pdf"
+sha256 = "2412feb5a6558e971ae61be3df88c876671f024afdc3d613e07511aac31d5c79"
+title = "Volebné okrsky a volebné miestnosti pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov, ktoré sa uskutočnia dňa 29. októbra 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Trenčianska Turná", numbers = "1-170, 237, 800-842, 860-870, 878-879, 1011, 1400-1462, 2015, 2087-2092, 2161, 2178"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Trenčianska Turná", numbers = "236, 406-699, 881-882, 884, 871-877, 1350-1351, 2002, 2006, 2010, 2018, 2039, 2051, 2068, 2093, 2131, 2138, 2159, 3000-3058"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Trenčianska Turná", numbers = "171-402, 700-798, 844-859, 880, 883, 1100-1174, 1258, 1300-1349, 2045, 2115-2127", except = "236, 237", note = "the document lists 236 in okrsok 2 and 237 in okrsok 1 separately although they fall in this okrsok's range 171-402; the single listings are taken as exceptions"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Hámre", note = "the okrsok whose polling station is in Hámre; its súpisné ranges 885-992, 2012, 2134, 4000-4057 are taken to cover the part Hámre"},
+  {part = "Trenčianska Turná", numbers = "885-893, 894-992, 2012, 2134, 4000-4057"},
+]

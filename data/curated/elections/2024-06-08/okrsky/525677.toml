@@ -1,0 +1,25 @@
+# Okrsky of Gemerské Teplice, transcribed by an AI agent in job okrsok-rules-5223 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: okrsok č. 1 Jelšavská Teplica – volebná miestnosť – sála Kultúrneho domu
+#   okrsok 2: okrsok č. 2 Gemerský Milhosť – volebná miestnosť – sála Kultúrneho domu
+obec = "525677"
+name = "Gemerské Teplice"
+okrsky_note = "The okrsky are the two parts of the municipality."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The notice's heading names the EP election of 08.06.2024; no decision date is stated."
+
+[[document]]
+url = "https://www.gemerske-teplice.sk/e_download.php?file=/data/uredni_deska/obsah14_2.pdf&original=Ozn%C3%A1menie%20%E2%80%93%20po%C4%8Det%20okrskov%2C%20volebn%C3%A1%20miestnos%C5%A5.pdf"
+sha256 = "70087b0ce14047179d6eb7259e591557afc0459f6fc8cabdabc4b3781f932d05"
+title = "Oznámenie – voľby do Európskeho parlamentu 08.06.2024: počet okrskov, volebná miestnosť"
+
+[okrsok.1]
+rules = [
+  {part = "Jelšavská Teplica"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Gemerský Milhosť"},
+]

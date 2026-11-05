@@ -1,0 +1,38 @@
+# Okrsky of Bystrany, transcribed by an AI agent in job okrsok-rules-5194 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 Základná škola č.d. 13 Súpisné čísla: 1-47, 131-211, 303-306, 310, 312, 213-214, 217, 323, 317
+#   okrsok 2: Okrsok č. 2 Zasadacia miestnosť č.d. 52 Súpisné čísla: 224, 241-263, 265-300, 314-319, 321, 231
+#   okrsok 3: Okrsok č. 3 Materská škola č. d. 98 Súpisné čísla: 49-130, 307-308, 215-216, 218-223, 225-226, 228-230, 232-240, 264, 322, 302, 332, 320
+obec = "526436"
+name = "Bystrany"
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by súpisné číslo of the single part Bystrany. Numbers not listed (e.g. 48, 212, 227, 301, 309, 311, 313, 324-331, above 332) take the nearest address (fill_nearest). The file is on the municipality's CMS host obec.dobraobec.sk/files/120, linked from its documents page."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-06-03
+okrsky_date_basis = "The municipality's documents page for the EP elections 2024 lists 'Volebné okrsky' with 'Dátum zverejnenia 03.06.2024'; the document itself is undated. (https://obecbystrany.sk/dokumenty?kat=1780)"
+
+[[document]]
+url = "https://obec.dobraobec.sk/files/120/dokumenty/e06b8_17d35_Volebné okrsky.pdf"
+sha256 = "28f22e36bf8a10eb357265165b37510f528ba58e8607513994a0516331c189ad"
+title = "Volebné okrsky - Obec Bystrany"
+
+[[document]]
+url = "https://obecbystrany.sk/dokumenty?kat=1780"
+sha256 = "373045161366c413ba127ad785e33e968d585161595223ecb8c512ebc1e96a50"
+title = "Voľby do európskeho parlamentu 2024 (documents page linking the file)"
+
+[okrsok.1]
+rules = [
+  {part = "Bystrany", numbers = "1-47, 131-211, 303-306, 310, 312, 213-214, 217, 323, 317"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Bystrany", numbers = "224, 241-263, 265-300, 314-316, 318, 319, 321, 231", note = "the document's range 314-319 also covers 317, which it lists separately in okrsok 1; 317 is left to okrsok 1"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Bystrany", numbers = "49-130, 307-308, 215-216, 218-223, 225-226, 228-230, 232-240, 264, 322, 302, 332, 320"},
+]

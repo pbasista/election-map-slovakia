@@ -1,0 +1,24 @@
+# Okrsky of Lietava, transcribed by an AI agent in job okrsok-rules-1492 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Pre voličov s trvalým pobytom: Lietava a Lietava - Majer
+#   okrsok 2: Pre voličov s trvalým pobytom: Lietavská Závadka
+obec = "517739"
+name = "Lietava"
+okrsky_date = 2019-01-30
+okrsky_note = "The okrsky are the two parts of the municipality. The live file is gone; the Internet Archive copy is used."
+
+[[document]]
+url = "https://web.archive.org/web/20190204001955/http://www.lietava.info:80/doc/urcenie-okrskov-1548854797.pdf"
+sha256 = "f1d163849d7cfc356cc0a756e5893d08e3219df929c1c9fcbdd22f7b8bd799bb"
+title = "Oznámenie o určení okrskov a volebných miestností pre voľby prezidenta Slovenskej republiky v roku 2019"
+
+[okrsok.1]
+rules = [
+  {part = "Lietava", note = "\"Lietava a Lietava - Majer\": the settlement Majer belongs to the register's part Lietava."},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lietavská Závadka"},
+]

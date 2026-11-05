@@ -1,0 +1,59 @@
+# Okrsky of Čečejovce, transcribed by an AI agent in job okrsok-rules-5664 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: voliči s trvalým pobytom na uliciach: Mlynská, Košická, Paňovská, Krátka, Severná, Majerská, Hlavná, Južná, Buzická, Staničná, Školská, Východná, Kvetná
+#   okrsok 2: voliči s trvalým pobytom na uliciach: Kostolná, Pešia, Západná, Úzka, Dúhová, Agátová, Slnečná, Muškátová, Orgovánová, Letná, Časť SELEŠKA, Družstevná, Jarková, Viničná, Záhradná, Lúčna
+obec = "521302"
+name = "Čečejovce"
+okrsky_fill = "nearest"
+okrsky_note = "Addresses without a street in the part Čečejovce are placed by fill_nearest."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2026-04-27
+okrsky_date_basis = "The notice board item linking the PDF states 'Vyvesené: 2026-04-27'; the document names the vote but bears no date. (https://www.cecejovce.sk/uradna-tabula-1/referendum-2026-610.html)"
+
+[[document]]
+url = "https://www.cecejovce.sk/e_download.php?file=/data/uredni_deska/obsah536_4.pdf&original=Volebn%C3%A9%20okrsky.pdf"
+sha256 = "a60bca766061a2df843a2851100491adbec439969f32b23d800c0332817b2357"
+title = "Volebné okrsky, volebné miestnosti v obci Čečejovce (Referendum 2026)"
+
+[[document]]
+url = "https://www.cecejovce.sk/uradna-tabula-1/referendum-2026-610.html"
+sha256 = "0dd8000fd7f6aeb6e2f7cbdf7af2437ea6b5db195ff06ae047a168267e5c8830"
+title = "REFERENDUM 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Mlynská"},
+  {street = "Košická"},
+  {street = "Paňovská"},
+  {street = "Krátka"},
+  {street = "Severná"},
+  {street = "Majerská"},
+  {street = "Hlavná"},
+  {street = "Južná"},
+  {street = "Buzická"},
+  {street = "Staničná"},
+  {street = "Školská"},
+  {street = "Východná"},
+  {street = "Kvetná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kostolná"},
+  {street = "Pešia"},
+  {street = "Západná"},
+  {street = "Úzka"},
+  {street = "Dúhová"},
+  {street = "Agátová"},
+  {street = "Slnečná"},
+  {street = "Muškátová"},
+  {street = "Orgovánová"},
+  {street = "Letná"},
+  {street = "Družstevná"},
+  {street = "Jarková"},
+  {street = "Viničná"},
+  {street = "Záhradná"},
+  {street = "Lúčna"},
+  {part = "Seleška"},
+]

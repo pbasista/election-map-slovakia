@@ -1,0 +1,55 @@
+# Okrsky of Kapušany, transcribed by an AI agent in job okrsok-rules-3828 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Ardova, Kováčska, Kráľovská, Krátka, Nám. sv. Martina, Na rínku, Požiarnická, Prešovská, Sadová, Slánska, Slovenská, Tehelná, Vranovská, Záhradná
+#   okrsok 2: ulice: Bardejovská, Cintorínska, Dubová, Gabriela Kapyho, Hlavná, Lesná, Mlynská, Nová štvrť, Pod hradom, Poštová, Puchovská, Sekčovská, Severná, Topoľová, Urbárska, Železničná, súpisné číslo 686, súpisné číslo 749, súpisné číslo 762, adresa: Obec Kapušany
+obec = "524620"
+name = "Kapušany"
+okrsky_date = 2023-06-12
+okrsky_fill = "nearest"
+okrsky_note = "Addresses without a street other than súpisné čísla 686, 749 and 762 (okrsok 2) are not named; fill_nearest places them. Okrsok 2 also takes voters registered at 'adresa: Obec Kapušany'. Differs from the copied okrsky of 2026-10-24 only in placing súpisné čísla 686, 749 and 762 in okrsok 2 (2026: okrsok 1). The same PDF is also linked from https://archiv.kapusany.sk/volby/volby-do-narodnej-rady-slovenskej-republiky-2023/utvorenie-volebnych-okrskov-a-urcenie-volebnych-."
+
+[[document]]
+url = "https://archiv.kapusany.sk/files/files/66/19/78/56f10a3939c44349b656084e15aa03cb/56f10a3939c44349b656084e15aa03cb.pdf"
+sha256 = "9024c4858280526efdefb1388fd8990ff051d8a19ceac5ec0b5e748aa7d9d3fe"
+title = "Rozhodnutie starostu obce Kapušany o utvorení volebných okrskov a určení volebných miestností v obci Kapušany pre voľby do Národnej rady Slovenskej republiky dňa 30. septembra 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Ardova"},
+  {street = "Kováčska"},
+  {street = "Kráľovská"},
+  {street = "Krátka"},
+  {street = "Nám.sv.Martina", written = "Nám. sv. Martina"},
+  {street = "Na rínku"},
+  {street = "Požiarnická"},
+  {street = "Prešovská"},
+  {street = "Sadová"},
+  {street = "Slánska"},
+  {street = "Slovenská"},
+  {street = "Tehelná"},
+  {street = "Vranovská"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bardejovská"},
+  {street = "Cintorínska"},
+  {street = "Dubová"},
+  {street = "Gabriela Kapyho"},
+  {street = "Hlavná"},
+  {street = "Lesná"},
+  {street = "Mlynská"},
+  {street = "Nová štvrť"},
+  {street = "Pod hradom"},
+  {street = "Poštová"},
+  {street = "Puchovská"},
+  {street = "Sekčovská"},
+  {street = "Severná"},
+  {street = "Topoľová"},
+  {street = "Urbárska"},
+  {street = "Železničná"},
+  {part = "Kapušany", numbers = "686, 749, 762"},
+  {street = "Pri trati", note = "not in the document; a short street by the railway between Hlavná and Gabriela Kapyho (okrsok 2), placed with them", inferred = true},
+]

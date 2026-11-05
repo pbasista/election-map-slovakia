@@ -1,0 +1,26 @@
+# Okrsky of Dvorníky, transcribed by an AI agent in job okrsok-rules-3802 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dvorníky súp. č. od 1 – do 417
+#   okrsok 2: Dvorníky súp. č. od 418 – do 876 a voliči, ktorý majú evidovaný trvalý pobyt na adrese: Dvorníky
+obec = "507024"
+name = "Dvorníky"
+okrsky_note = "The obec is split by súpisné číslo ('Dvorníky súp. č.'): okrsok 1 súp. č. 1–417, okrsok 2 súp. č. 418–876 plus voters registered at the address 'Dvorníky' (no house); okrsok 2 is given as the rest. All houses of part Posádka have súpisné numbers above 417 and fall in okrsok 2 (the obec numbers its houses in one series). Same split as the 2022 document (which ran to 873)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-06-21
+okrsky_date_basis = "The municipality's post with the okrsky (it names the National Council election of 30 September 2023) is published on 21 June 2023 (date shown on the page); it states no decision date. (https://dvorniky.sk/2023/06/21/volby-do-nr-sr-30-09-2023-oznamenie-o-pocte-utvorenych-volebnych-okrskov-a-urcenie-volebnych-miestnosti/)"
+
+[[document]]
+url = "https://dvorniky.sk/2023/06/21/volby-do-nr-sr-30-09-2023-oznamenie-o-pocte-utvorenych-volebnych-okrskov-a-urcenie-volebnych-miestnosti/"
+sha256 = "536917e9de8e5fac3dcc4cc28f5759fc3af64583dbc2df862f322775141615d2"
+title = "Voľby do NR SR 30.09.2023 – oznámenie o počte utvorených volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Dvorníky", numbers = "1-417"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

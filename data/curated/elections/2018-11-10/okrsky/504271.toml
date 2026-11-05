@@ -1,0 +1,55 @@
+# The okrsky of Brodské of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/504271.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Brodské, transcribed by an AI agent in job okrsok-rules-1312 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: 1.mája, Hamre, Komenského, Kradlov, Letná, Martina Čulena, Nábrežná, Nám. SNP, Záhumenská a občania s trvalým pobytom na adrese obec Brodské.
+#     okrsok 2: Drahy, Dukelská, Hviezdoslavova, Kukučínova, Krátka, Mierová, Nádražná, Nálepkova, Nová, Školská, Športová, Štefánikova, Štúrova, Vajanského
+obec = "504271"
+name = "Brodské"
+okrsky_fill = "nearest"
+okrsky_note = "\"Občania s trvalým pobytom na adrese obec Brodské\" (okrsok 1) are voters registered without an address; the register's one house without a street is placed by fill_nearest."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-757): The website's election archive has no page or document of the 2018 municipal elections. The Internet Archive was offline (connection refused, retried with pauses), so archived pages could not be checked. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated document is headed \"Volebné okrsky a volebné miestnosti pre voľby prezidenta Slovenskej republiky 2019\"."
+
+[[document]]
+url = "https://brodske.sk/wp-content/uploads/2021/06/Volebne-okrsky-a-volebne-miestnosti-pre-volby-prezidenta-SR-2019.pdf"
+sha256 = "f546e2395ae53fd7955f15bda574e1029d78f1e85029742b390e77f026e89eb6"
+title = "Volebné okrsky a volebné miestnosti pre voľby prezidenta Slovenskej republiky 2019"
+
+[[document]]
+url = "https://brodske.sk/dokument/prezidentske-volby-2019/"
+sha256 = "18b56518ef16ecb5e2b4f3022e782f524b3d5fe3e2d6ac6e93662d82928140f2"
+title = "page linking the document"
+
+[okrsok.1]
+rules = [
+  {street = "1.mája"},
+  {street = "Hamre"},
+  {street = "Komenského"},
+  {street = "Kradlov"},
+  {street = "Letná"},
+  {street = "Martina Čulena"},
+  {street = "Nábrežná"},
+  {street = "Nám. SNP"},
+  {street = "Záhumenská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Drahy"},
+  {street = "Dukelská"},
+  {street = "Hviezdoslavova"},
+  {street = "Kukučínova"},
+  {street = "Krátka"},
+  {street = "Mierová"},
+  {street = "Nádražná"},
+  {street = "Nálepkova"},
+  {street = "Nová"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Vajanského"},
+]

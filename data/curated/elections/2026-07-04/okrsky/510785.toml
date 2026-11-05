@@ -1,0 +1,31 @@
+# Okrsky of Lisková, transcribed by an AI agent in job okrsok-rules-5598 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre súpisné čísla: 0-112, 368-432, 590-817, 906-908, 1024-1025.
+#   okrsok 2: pre súpisné čísla: 114-364, 433-587, 818-893, 900-902, 904, 910-940, 1002-1023, 1027-1029.
+obec = "510785"
+name = "Lisková"
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky are split by súpisné číslo within the one part Lisková; súpisné čísla in neither list (e.g. 113, 365-367, 588-589, 894-899, 941-1001, 1026, above 1029) take the nearest okrsok (fill_nearest)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The mayor's decision sets 2 okrsky for the referendum to be held on 04. 07. 2026; it states no date."
+
+[[document]]
+url = "https://www.liskova.sk/download_file_f.php?id=2412586"
+sha256 = "16a4ba1e6b0e511bcef79b5d3b86838f4d75a649199d78e7713de49ed6f28000"
+title = "Volebné miestnosti a okrsky – referendum 04. 07. 2026"
+
+[[document]]
+url = "https://www.liskova.sk/referendum-2026-oznam/mid/520937/.html"
+sha256 = "49681b69f59e585cb84b92933d76dbd4a7f9a89e7d0ce31440dcd9227e851d39"
+title = "Referendum 2026 (page linking the decision)"
+
+[okrsok.1]
+rules = [
+  {part = "Lisková", numbers = "0-112, 368-432, 590-817, 906-908, 1024-1025"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lisková", numbers = "114-364, 433-587, 818-893, 900-902, 904, 910-940, 1002-1023, 1027-1029"},
+]

@@ -1,0 +1,45 @@
+# Okrsky of Jelšava, transcribed by an AI agent in job okrsok-rules-463 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Muránska, Námestie republiky, Námestie SNP, Tomášikova, Mníšanská, Jesenského, Teplá Voda a Medzník
+#   okrsok 2: Ševcovská, Štefánikova, Kúpeľná, Teplická, Pri štadióne, Železničná, Armádna, 9. mája a Kejďák
+obec = "525791"
+name = "Jelšava"
+okrsky_date = 2017-09-02
+okrsky_fill = "nearest"
+okrsky_note = "Scanned, signed list of the mayor dated 'V Jelšave dňa 02. 09. 2017' for the elections to the organs of the Banskobystrický samosprávny kraj of 4 November 2017, linked on the city's page for those elections. Hrádok (3 addresses) is not named in the document: placed by fill_nearest, as are the houses without a street. The Internet Archive stayed offline throughout (web.archive.org refused connections or answered 'Temporarily Offline' on repeated tries with pauses), so no archived capture was checked."
+
+[[document]]
+url = "https://www.jelsava.sk/download_file_f.php?id=872138"
+sha256 = "7d0acc8e2add18d5e02460ff59b9408b5798fd061640699c1c1ddf9d762a998c"
+title = "Zoznam okrskov a určenie volebných miestností (voľby do orgánov BBSK 4. novembra 2017)"
+
+[[document]]
+url = "https://www.jelsava.sk/oznamy/volby-do-organov-samospravnych-krajov-2017--.html"
+sha256 = "2637e3ed598a8f84c5761503871d490487bc56add1579c1851e476adc1a41ed6"
+title = "Voľby do orgánov samosprávnych krajov 2017"
+
+[okrsok.1]
+rules = [
+  {street = "Muránska"},
+  {street = "Námestie Republiky", written = "Námestie republiky"},
+  {street = "Námestie SNP"},
+  {street = "Tomášikova"},
+  {street = "Mníšanská"},
+  {street = "Jesenského"},
+  {street = "Teplá Voda"},
+  {street = "Medzník"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ševcovská"},
+  {street = "Štefánikova"},
+  {street = "Kúpelná", written = "Kúpeľná", note = "Kúpeľná with soft l in the document; the register's Kúpelná, the same street"},
+  {street = "Teplická"},
+  {street = "Pri Štadióne", written = "Pri štadióne"},
+  {street = "Železničná"},
+  {street = "Armádna"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Kejďák"},
+]

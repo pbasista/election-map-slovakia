@@ -1,0 +1,29 @@
+# Okrsky of Brezovica, transcribed by an AI agent in job okrsok-rules-5130 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 - do súp. č. 320
+#   okrsok 2: Volebný okrsok č. 2 – od súp. č. 321
+obec = "524239"
+name = "Brezovica"
+okrsky_date = 2024-03-05
+okrsky_note = "The mayor's decision of 05.03.2024 for the European Parliament election of 8 June 2024: okrsok 1 up to súpisné č. 320, okrsok 2 from 321."
+
+[[document]]
+url = "https://www.brezovicanadtorysou.sk/e_download.php?file=data/editor/131sk_1.pdf&original=Utvorenie%20VO%20a%20ur%C4%8Denie%20VM..pdf"
+sha256 = "bafc7dd4da217e03b41ce0089f9de9a4944c539e9b46f59c160170eefe2c6db7"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu – 8. júna 2024"
+
+[[document]]
+url = "https://www.brezovicanadtorysou.sk/zivot-v-obci/aktuality/volby-do-europskeho-parlamentu-2024/"
+sha256 = "9c21a12452242761ba067cb372d282e8f403e6a93054506b5433da157cef77dc"
+title = "Voľby do Európskeho parlamentu 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Brezovica", numbers = "1-320"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Brezovica", numbers = "321-"},
+]

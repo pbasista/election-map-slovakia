@@ -1,0 +1,190 @@
+# Okrsky of Bratislava-Vrakuňa, transcribed by an AI agent in job okrsok-rules-1059 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Anízová, Bazalková, Bodliaková, Borovicová, Čakanková, Egrešová, Hlohová, Hradská nepárne 1-29, párne 2-82, obyvatelia s trvalým pobytom v mestskej časti Bratislava-Vrakuňa.
+#   okrsok 2: Čučoriedková, Hrušovská, Imelová, Jesienková, Krokusová, Leknová, Levanduľová, Majerská, Majoránová, Margarétová, Marhuľová, Modricová, Mostná, Pod agátmi, Pod gaštanmi.
+#   okrsok 3: Brezová, Nechtíková, Orgovánová, Orchideová, Ostružinová, Platanová, Podbeľová, Popriehradná, Prasličková, Priehradná, Rascová, Rebarborová, Repíková, Ríbezľová, Skoroceľová, Slnečnicová, Šípová, Šíravská, Tymianová.
+#   okrsok 4: Amarelková, Arménska, Begóniová, Bučinová, Estónska, Hradská nepárne 31-105, párne 84-154, Ihličnatá, Kosodrevinová, Malodunajská.
+#   okrsok 5: Čiližská č. 1, č. 1A, č. 3, Horcová, Irisová, Jazmínová, Kalinová, Magnóliová, Maková, Osiková, Palinová, Podunajská, Vážska, Žihľavová.
+#   okrsok 6: Jedľová, Píniová.
+#   okrsok 7: Kríková 5-20, Železničná.
+#   okrsok 8: Kríková 1-4A, Ráztočná, Vŕbová.
+#   okrsok 9: Domašská, Kaméliova, Poľnohospodárska.
+#   okrsok 10: Rajecká 1-15 nepár.
+#   okrsok 11: Rajecká 2-42 párne.
+#   okrsok 12: Stavbárska 34,36,38,40,42.
+#   okrsok 13: Stavbárska.
+#   okrsok 14: Bebravská.
+#   okrsok 15: Bodvianska, Čiernovodská, Hnilecká, Kazanská.
+#   okrsok 16: Dvojkrížna, Slatinská.
+#   okrsok 17: Čiližská, Toplianska.
+#   okrsok 18: Toryská, Žitavská.
+#   okrsok 19: Rajčianska.
+obec = "529338"
+name = "Bratislava-Vrakuňa"
+okrsky_fill = "nearest"
+okrsky_note = "The document names streets the address register lacks (left out): Amarelková, Hlohová, Horcová, Irisová, Kalinová, Magnóliová, Maková, Osiková, Palinová, Pod gaštanmi. Register streets the document does not name, placed by fill_nearest: Gagarinova, Medovková. Numbers of split streets that the document leaves out, the residents \"s trvalým pobytom v mestskej časti\" (no address) and addresses without a street go by fill_nearest."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the undated decision of the mayor names the presidential election announced by decision 8/2019 Z. z. and its days, 16 and 30 March 2019"
+
+[[document]]
+url = "https://www.vrakuna.sk/data/page/vrakuna.sk/17021/volebne-okrsky-volebne-miestnosti-a-zoznam-ulic-patriacich-k-prislusnym-volebnym-okrskom.pdf"
+sha256 = "a0d742b72acd11f2ceffb27a1de67b794e601fc2fc85fad41fbcb3efec2eec88"
+title = "Volebné okrsky, volebné miestnosti a zoznam ulíc patriacich k príslušným volebným okrskom, voľba prezidenta SR 16. a 30. marca 2019 (starosta MČ Bratislava-Vrakuňa)"
+
+[okrsok.1]
+rules = [
+  {street = "Anízová"},
+  {street = "Bazalková"},
+  {street = "Bodliaková"},
+  {street = "Borovicová"},
+  {street = "Čakanková"},
+  {street = "Egrešová"},
+  {street = "Hradská", numbers = "1-29", parity = "odd"},
+  {street = "Hradská", numbers = "2-82", parity = "even"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Čučoriedková"},
+  {street = "Hrušovská"},
+  {street = "Imelová"},
+  {street = "Jesienková"},
+  {street = "Krokusová"},
+  {street = "Leknová"},
+  {street = "Levanduľová"},
+  {street = "Majerská"},
+  {street = "Majoránová"},
+  {street = "Margarétová"},
+  {street = "Marhuľová"},
+  {street = "Modricová"},
+  {street = "Mostná"},
+  {street = "Pod agátmi"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Brezová"},
+  {street = "Nechtíková"},
+  {street = "Orgovánová"},
+  {street = "Orchideová"},
+  {street = "Ostružinová"},
+  {street = "Platanová"},
+  {street = "Podbeľová"},
+  {street = "Podpriehradná", written = "Popriehradná", note = "the document writes Popriehradná, a typo for Podpriehradná (next to Priehradná)"},
+  {street = "Prasličková"},
+  {street = "Priehradná"},
+  {street = "Rascová"},
+  {street = "Rebarborová"},
+  {street = "Repíková"},
+  {street = "Ríbezľová"},
+  {street = "Skorocelová", written = "Skoroceľová", note = "the document writes Skoroceľová, the register Skorocelová: the same street (soft l)"},
+  {street = "Slnečnicová"},
+  {street = "Šípová"},
+  {street = "Šíravská"},
+  {street = "Tymiánová", written = "Tymianová", note = "the document writes Tymianová (short a), the register Tymiánová: the same street"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Arménska"},
+  {street = "Begóniová"},
+  {street = "Bučinová"},
+  {street = "Estónska"},
+  {street = "Hradská", numbers = "31-105", parity = "odd"},
+  {street = "Hradská", numbers = "84-154", parity = "even"},
+  {street = "Ihličnatá"},
+  {street = "Kosodrevinová"},
+  {street = "Malodunajská"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Čiližská", numbers = "1, 1A, 3"},
+  {street = "Jazmínová"},
+  {street = "Podunajská"},
+  {street = "Vážska"},
+  {street = "Žihľavová"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Jedľová"},
+  {street = "Píniová"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Kríková", numbers = "5-20"},
+  {street = "Železničná"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Kríková", numbers = "1-4, 4A"},
+  {street = "Ráztočná"},
+  {street = "Vŕbová"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Domašská"},
+  {street = "Kaméliová", written = "Kaméliova", note = "the document writes Kaméliova (short a), the register Kaméliová: the same street"},
+  {street = "Poľnohospodárska"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Rajecká", numbers = "1-15", parity = "odd"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Rajecká", numbers = "2-42", parity = "even"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Stavbárska", numbers = "34, 36, 38, 40, 42"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Stavbárska"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Bebravská"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Bodvianska"},
+  {street = "Čiernovodská"},
+  {street = "Hnilecká"},
+  {street = "Kazanská"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Dvojkrížna"},
+  {street = "Slatinská"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Čiližská"},
+  {street = "Toplianska"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Toryská"},
+  {street = "Žitavská"},
+]
+
+[okrsok.19]
+rules = [
+  {street = "Rajčianska"},
+]

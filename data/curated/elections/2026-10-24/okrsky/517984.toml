@@ -1,0 +1,53 @@
+# The okrsky of Strečno of the vote of 2026-07-04, data/curated/elections/2026-07-04/okrsky/517984.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Strečno, transcribed by an AI agent in job okrsok-rules-5612 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: ulice: 1. mája, 28. októbra, Hradná, Kamenná, Kováčska, Lesná, Partizánska, SNP, Za záhradami, Lipová, M. Ilovského, 26. apríla, Cintorínska, Francúzskych Partizánov, Zlatné
+#     okrsok 2: ulice: Mládeže, Sokolská, Záhradná, Čsl. Brigády, Školská, Športová, Nábrežná
+obec = "517984"
+name = "Strečno"
+okrsky_date = 2026-04-21
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's information of 21 Apr 2026 (posted on the referendum page 13 May 2026); same okrsky as the 2022 referendum document. The register's 15 addresses without a street (part Strečno, by súpisné číslo) are placed by fill_nearest."
+okrsky_adopted = 2026-07-04
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-452): The website has no page or document for the 24 October 2026 elections' okrsky. Only the referendum (4 July 2026) document 'Informácia o utvorení volebných okrskov…' (blocks/files/019e1ff1-0e4d-….pdf, 21.04.2026) lists the 2 okrsky by street, and no document says they stay the same for the October elections. These are the okrsky of the vote of 2026-07-04 (2026-referendum), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2026-07-04: 1: 1,068 → 1,047, 2: 1,080 → 1,059."
+
+[[document]]
+url = "https://www.strecno.sk/blocks/files/019e1ff1-0e4d-7995-960b-c0556f6fa268.pdf"
+sha256 = "65e7cd53e4c9d809e842c96788198cd6e79f23c44dd62cfb9b232fc53375d354"
+title = "Informácia o utvorení volebných okrskov a určení volebných miestností pre referendum, ktoré sa budú konať dňa 04. 07. 2026"
+
+[[document]]
+url = "https://www.strecno.sk/pages/referendum-2026-dna-4-7-2026"
+sha256 = "d93993d228f693a33755f308db24a0a39954f52166769832fcdf1cc978169c66"
+title = "Referendum 2026 dňa 4.7.2026"
+
+[okrsok.1]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "28.októbra", written = "28. októbra"},
+  {street = "Hradná"},
+  {street = "Kamenná"},
+  {street = "Kováčska"},
+  {street = "Lesná"},
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Za záhradami"},
+  {street = "Lipová"},
+  {street = "M.Ilovského", written = "M. Ilovského"},
+  {street = "26.apríla", written = "26. apríla"},
+  {street = "Cintorínska"},
+  {street = "Francúzskych Partizánov"},
+  {street = "Zlatné"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mládeže"},
+  {street = "Sokolská"},
+  {street = "Záhradná"},
+  {street = "Čsl. Brigády"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Nábrežná"},
+]

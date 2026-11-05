@@ -1,0 +1,29 @@
+# Okrsky of Dolný Lieskov, transcribed by an AI agent in job okrsok-rules-3938 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: miestna časť Dolný Lieskov
+#   okrsok 2: miestna časť Tŕstie
+obec = "546640"
+name = "Dolný Lieskov"
+okrsky_date = 2023-06-26
+okrsky_note = "Each okrsok is a whole part of the municipality. Scanned document, read from the page image. The scan does not name the vote; the elections page lists it as \"Utvorenie volebných okrskov a určenie volebných miestností pre zabezpečenie volieb do Národnej rady Slovenskej republiky\", among the 2023 NR SR documents."
+
+[[document]]
+url = "https://obec.dobraobec.sk/files/7/dokumenty/c34b5_scan0141.pdf"
+sha256 = "6483941ba4f1a13b1171dfbb425c844be5b5bdf1e3d1932066a97c9aab80ff62"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (voľby do NR SR 30. 9. 2023)"
+
+[[document]]
+url = "https://dolnylieskov.sk/dokumenty?kat=486&strana=3"
+sha256 = "45a591486fd990ad68eb6b9c0afb4b7e41c3be5d6a12d6a34502388df18f3c96"
+title = "Dokumenty – Voľby (page linking the file)"
+
+[okrsok.1]
+rules = [
+  {part = "Dolný Lieskov"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Tŕstie"},
+]

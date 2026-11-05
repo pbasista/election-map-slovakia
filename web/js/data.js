@@ -7,7 +7,24 @@
 
 import { useEffect, useState } from '../vendor/preact-htm.module.js';
 import { addressFile, Cache, fetchJSON } from './files.js';
-import { election, elections, hasOccupations, lang, logoUrl, t } from './i18n.js';
+import { election, elections, formatShortDate, hasOccupations, lang, logoUrl, rounds, t } from './i18n.js';
+import {
+  areaName,
+  COUNTRY,
+  contestOf,
+  electionKind,
+  electionLabel,
+  holds,
+  isByElection,
+  isCity,
+  isCouncil,
+  isCountry,
+  isList,
+  isNational,
+  isRegional,
+  officeOf,
+  parseContest,
+} from './kinds.js';
 
 const files = new Cache(24);
 export const getJSON = (path) => files.get(path, fetchJSON);
@@ -73,37 +90,63 @@ export async function obecInfo(code) {
 
 /* ---------- contests and candidates ---------- */
 
-function parseContest(id) {
-  const [kind, area] = id.split(':');
-  const [code, obvod] = area.split('/');
-  return { kind, area: code, obvod: obvod ? Number(obvod) : null };
-}
-
-/* The contest id of candidacy id *candidacyId* (`<contest>#<number>`). */
-export const contestOf = (candidacyId) => candidacyId.slice(0, candidacyId.lastIndexOf('#'));
-
-// The regional contests (president and council) are by kraj.
-const isRegional = (kind) => kind === 'predseda' || kind === 'zsk';
-
-/* Whether area code *code* is Bratislava or Košice, cities whose districts
- * are municipalities of their own. */
-export const isCity = (code) => code === 'BA' || code === 'KE';
-
 /* Whether obec *code* is split into several council obvody
  * (data/index.json *index*). */
 export const hasCouncilObvody = (index, code) => (index.obce[code]?.[4] ?? 0) > 1;
 
+/* Whether some obec of data/index.json *index* elects a regional council
+ * (`regional`: a zsk obvod), Bratislava's or Košice's council (`city`: a
+ * row naming its city) or a municipal council (`municipal`: councils).
+ * Before 2022 the municipal elections (with the cities') and the regional
+ * ones were held apart, each election holding only its own, so what the
+ * map offers of them (map.js `overlaysHere`, mapmode.js `turnoutChoices`)
+ * goes by this, not by the kind of election. A by-election's rows say
+ * less (a mayor's alone has no council): it goes by `held`. */
+const ELECTS = {
+  regional: (row) => row[3] > 0,
+  city: (row) => row[5] !== undefined,
+  municipal: (row) => (row[4] ?? 0) > 0,
+};
+export const electsAnywhere = (index, election) => Object.values(index.obce).some(ELECTS[election]);
+
+/* The obce where by-election *index* (data/index.json) elects something
+ * (`held`), by code, each with the contests held there: an obec's or city
+ * district's own, Bratislava's or Košice's for all their districts, a
+ * kraj's for all its obce. Null for an election other than a by-election. */
+export function heldObce(index) {
+  if (!index.held) return null;
+  const obce = new Map();
+  const add = (code, ids) => obce.set(code, [...(obce.get(code) ?? []), ...ids]);
+  for (const [area, ids] of Object.entries(index.held)) {
+    if (index.obce[area]) add(area, ids);
+    else for (const [code, row] of Object.entries(index.obce)) if (row[2] === area || row[5] === area) add(code, ids);
+  }
+  return obce;
+}
+
 /* Orders contest ids the most local first, as a place's ballots and a
  * candidate's candidacies both list them: a municipality's or city
  * district's own, then Bratislava's or Košice's, then the kraj's; of one
- * area the council before the mayor or president. */
+ * area the council before the mayor or president; the country's last,
+ * in `countryOrder`. */
 function localFirst(a, b) {
   const rank = (id) => {
-    const { kind, area } = parseContest(id);
-    const level = isRegional(kind) ? 2 : isCity(area) ? 1 : 0;
-    return 2 * level + (kind === 'oz' || kind === 'zsk' ? 0 : 1);
+    if (isCountry(id)) return 6;
+    const level = isRegional(id) ? 2 : isCity(parseContest(id).area) ? 1 : 0;
+    return 2 * level + (isCouncil(id) ? 0 : 1);
   };
-  return rank(a) - rank(b);
+  return rank(a) - rank(b) || (isCountry(a) && isCountry(b) ? countryOrder(a, b) : 0);
+}
+
+/* Orders country-wide contest ids as the ballots list them: the latest
+ * round of a presidential election first, it being the one that decides;
+ * the questions of a referendum in their order; a party's list after its
+ * party contest. */
+function countryOrder(a, b) {
+  const x = parseContest(a);
+  const y = parseContest(b);
+  if (x.kind === 'prezident' && y.kind === 'prezident') return y.sub - x.sub;
+  return (x.sub ?? 0) - (y.sub ?? 0);
 }
 
 /* What municipal *area* is: 'city' (Bratislava or Košice), 'district' (one
@@ -117,16 +160,6 @@ function placeKind(area, index) {
 const MAYOR_LABEL = { city: 'contest.mayor_city', district: 'contest.mayor_district', obec: 'contest.mayor' };
 const COUNCIL_LABEL = { city: 'contest.council_city', district: 'contest.council_district', obec: 'contest.council' };
 const COUNCIL_OFFICE = { city: 'office.council_city', district: 'office.council_district', obec: 'office.council' };
-
-/* The area file a contest is in (build.py `area_file`), by name: kraj/<k>,
- * city/<BA|KE> or okres/<code>. The live results (live.js) name theirs
- * alike. */
-export function areaName(contest, index) {
-  const { kind, area } = parseContest(contest);
-  if (isRegional(kind)) return `kraj/${area}`;
-  if (isCity(area)) return `city/${area}`;
-  return `okres/${index.obce[area][1]}`;
-}
 
 const areaPath = (contest, index) => `/data/${areaName(contest, index)}.json`;
 
@@ -152,15 +185,26 @@ function occupations() {
  * whom could vote for several; `obvod` the obvod number of that election,
  * null for the whole area. */
 function decodeResult(body, [votes, valid, voters, eligible, obvod = null]) {
-  const { kind } = parseContest(body);
-  return { votes, valid, voters, eligible, obvod, multi: kind === 'oz' || kind === 'zsk' };
+  return { votes, valid, voters, eligible, obvod, multi: isCouncil(body) };
 }
 
-/* A candidate from their row in the contest's *entry* of area file *file*.
+/* Party *key* (config/parties.toml) as the index's party table gives it:
+ * {key, short, name, logo}. */
+function partyOf(key, index) {
+  const [short, name, logo = null] = index.parties[key];
+  return { key, short, name, logo: logo && logoUrl(logo) };
+}
+
+/* A person standing in a contest, from their row in the contest's *entry*
+ * of area file *file*: `type` 'person'.
+ * `age` is null and `occupation` empty where the lists do not give them;
  * `occupation` is in the page's language where translated, the Slovak
- * original then in `occupationSk`; `parties` are {short, name, logo} from
- * the index's party table; `offices` the offices the person held at the
- * time of the election,
+ * original then in `occupationSk`; `parties` are {key, short, name, logo}
+ * from the index's party table (a list person's: the list's party, a
+ * presidential candidate's none); `residence` the obec code of a regional
+ * or country-wide candidate's residence where known, `residenceName` its
+ * name (or the name as written, where it names no one obec); `offices` the
+ * offices the person held at the time of the election,
  * [{body, since, result}]; `research` {date, findings, languages,
  * affairs, disputes, reused, undated} (affairs: how many findings are
  * serious controversies; disputes: how many are disputed or lesser;
@@ -174,10 +218,12 @@ function decodeCandidate(contest, entry, row, translated, index, file) {
     row;
   const known = Object.hasOwn(translated, occupation);
   const research = file.research?.[person];
+  const code = residence && index.obce[residence] ? residence : null;
   return {
     id: `${contest}#${number}`,
     contest,
     number,
+    type: 'person',
     titleBefore,
     firstName,
     surname,
@@ -185,12 +231,10 @@ function decodeCandidate(contest, entry, row, translated, index, file) {
     age,
     occupation: known ? translated[occupation] : occupation,
     occupationSk: known ? occupation : null,
-    parties: parties.map((p) => {
-      const [short, name, logo = null] = index.parties[p];
-      return { short, name, logo: logo && logoUrl(logo) };
-    }),
+    parties: parties.map((p) => partyOf(p, index)),
     person,
-    residence,
+    residence: code,
+    residenceName: code ? index.obce[code][0] : residence,
     offices: (entry.incumbents?.[number] ?? []).map(([body, since, result]) => ({
       body,
       since,
@@ -205,30 +249,83 @@ function decodeResearch([date, findings, languages, affairs, disputes, undated])
   return { date, findings, languages, affairs, disputes, reused: undated !== undefined, undated: undated ?? 0 };
 }
 
+/* What every candidate has, for one that is no person: no office, no
+ * research, no other candidacy. */
+const NOT_A_PERSON = { offices: [], research: null, elsewhere: {} };
+
+/* A party on a party-list ballot (`nrsr:SK`), from its row of the entry's
+ * `subjects`: `type` 'party', its ballot `number`, `party` (as `partyOf`),
+ * `size` (the candidates on its list), `threshold` (the share of the valid
+ * votes in % it needs for seats) and `withdrawn`; `parties` itself, so that
+ * the party filter takes it like a candidate. `listResearch` is the entry's
+ * precomputed `research` totals over its list's candidates, `{researched,
+ * findings, affairs, disputes}`, or null where none is researched; not
+ * `research`, which the research filters and cards read as a person's. */
+function decodeSubject(contest, [number, key, size, threshold, withdrawn = 0], index, totals) {
+  const party = partyOf(key, index);
+  const r = totals?.[number];
+  return {
+    ...NOT_A_PERSON,
+    id: `${contest}#${number}`,
+    contest,
+    number,
+    type: 'party',
+    party,
+    parties: [party],
+    size,
+    threshold,
+    withdrawn: Boolean(withdrawn),
+    listResearch: r ? { researched: r[0], findings: r[1], affairs: r[2], disputes: r[3] } : null,
+  };
+}
+
+/* The answers to a referendum question, its candidates: `type` 'answer',
+ * number 1 `yes`, 2 `no` (`answer`). */
+const answers = (contest) =>
+  ['yes', 'no'].map((answer, i) => ({
+    ...NOT_A_PERSON,
+    id: `${contest}#${i + 1}`,
+    contest,
+    number: i + 1,
+    type: 'answer',
+    answer,
+    parties: [],
+  }));
+
+/* What a row names candidate *c* by: a person's name, a party's short
+ * form, an answer's word. */
+export function candidateName(c) {
+  if (c.type === 'party') return c.party.short;
+  if (c.type === 'answer') return t(`referendum.${c.answer}`);
+  return displayName(c);
+}
+
 /* The candidacies of a person in other elections, from the area file's
  * `elsewhere` entry: slug → [{id, contest, label, votes, valid, rank, of,
  * elected, withdrew, multi}], the numbers null where that election's
- * results are not final or the contest has none. `label` names the contest
+ * results are not final or the contest has none; `votes` and `rank` alone
+ * where they are not published (a by-election of 2019–2022 published the
+ * elected councillors' only). `label` names the contest
  * as this election's index does (the municipalities and kraje are the same
- * then). */
+ * then), without what only this election's files know (a round's day, a
+ * list's party). */
 function decodeElsewhere(bySlug, index) {
   return Object.fromEntries(
     Object.entries(bySlug).map(([slug, rows]) => [
       slug,
       rows.map(([id, votes = null, valid = null, rank = null, of = null, flag = null]) => {
         const contest = contestOf(id);
-        const { kind } = parseContest(contest);
         return {
           id,
           contest,
-          label: contestLabel(contest, index),
+          label: contestLabel(contest, index, { day: null }),
           votes,
           valid,
           rank,
           of,
           elected: flag === 1,
           withdrew: flag === -1,
-          multi: kind === 'oz' || kind === 'zsk',
+          multi: isCouncil(contest),
         };
       }),
     ]),
@@ -238,12 +335,18 @@ function decodeElsewhere(bySlug, index) {
 /* Every election other than the page's, newest first, as {day, slug}. */
 export const otherElections = elections.filter((e) => e.day !== election);
 
-/* The newest election, whose candidates the research is done on; an
- * earlier one's are given that of the person linked to them (`reused`). */
-export const latestElection = elections[0];
+/* The newest regular election, whose candidates the research is done on;
+ * an earlier one's are given that of the person linked to them
+ * (`reused`). */
+export const latestElection = elections.find((e) => e.kind === 'municipal-regional');
 
-/* The election before the page's (the next older the site shows), or null. */
-export const electionBefore = elections[elections.findIndex((e) => e.day === election) + 1] ?? null;
+/* The election before the page's for contest *id*: the next older the site
+ * shows of the same kind that holds contests like it (kinds.js `holds`),
+ * or null. */
+export const electionBefore = (id) =>
+  elections
+    .slice(elections.findIndex((e) => e.day === election) + 1)
+    .find((e) => e.kind === electionKind && holds(e.label, id)) ?? null;
 
 /* The page of candidacy *id* in the election of *slug*, opening its card. */
 export const candidacyUrl = (slug, id) => `/${lang}/${slug}/#c=${id.replace('#', '%23')}`;
@@ -259,17 +362,15 @@ export function linkedCandidacy(c, slug) {
 }
 
 /* How candidate *c* fared for the same office at the election before
- * (`electionBefore`): their candidacy there (`decodeElsewhere`) with
- * `election` {day, slug}; null where they did not stand for it then (as
- * far as the persons are linked). */
+ * (`electionBefore` of their contest): their candidacy there
+ * (`decodeElsewhere`) with `election` {day, slug}; null where they did not
+ * stand for it then (as far as the persons are linked). */
 export function ranBefore(c) {
-  if (!electionBefore) return null;
-  const there = linkedCandidacy(c, electionBefore.slug);
-  return there && officeOf(there.contest) === officeOf(c.contest) ? { ...there, election: electionBefore } : null;
+  const before = electionBefore(c.contest);
+  if (!before) return null;
+  const there = linkedCandidacy(c, before.slug);
+  return there && officeOf(there.contest) === officeOf(c.contest) ? { ...there, election: before } : null;
 }
-
-/* The office a contest elects: its id without the obvod. */
-export const officeOf = (contestId) => contestId.split('/')[0];
 
 /* Whether candidate *c* held the office their contest elects at the time
  * of the election. */
@@ -277,9 +378,9 @@ export const inOffice = (c) => c.offices.some((o) => o.body === officeOf(c.conte
 
 export function officeLabel(body, index) {
   const { kind, area } = parseContest(body);
-  if (kind === 'starosta' || kind === 'predseda') return contestLabel(body, index);
   if (kind === 'zsk') return t('office.regional_council', { kraj: index.kraje[area] });
-  return t(COUNCIL_OFFICE[placeKind(area, index)], { name: index.obce[area]?.[0] });
+  if (kind === 'oz') return t(COUNCIL_OFFICE[placeKind(area, index)], { name: index.obce[area]?.[0] });
+  return contestLabel(body, index);
 }
 
 export function displayName(c) {
@@ -290,20 +391,49 @@ export function displayName(c) {
 export const displayParties = (c) =>
   c.parties.length ? c.parties.map((p) => p.name).join(', ') : t('candidate.independent');
 
-export function contestLabel(id, index) {
-  const { kind, area, obvod } = parseContest(id);
+/* The day of round *n* of the page's presidential election, or null. */
+const roundDay = (n) => rounds?.[n - 1]?.[0] ?? null;
+
+/* The name of contest *id*: of a municipality, city district, city or kraj
+ * as data/index.json *index* names them; a presidential round with its
+ * *day* (by default the page's election's), a referendum question by its
+ * number, a party-list ballot by its body, a party's list by its *party*
+ * (as `partyOf` gives it) where known, else by its ballot number. */
+export function contestLabel(id, index, { day = undefined, party = null } = {}) {
+  const { kind, area, sub } = parseContest(id);
   const name = index.obce[area]?.[0];
   const kraj = index.kraje[area];
   switch (kind) {
     case 'starosta':
       return t(MAYOR_LABEL[placeKind(area, index)], { name });
     case 'oz':
-      return t(COUNCIL_LABEL[placeKind(area, index)], { name, n: obvod });
+      return t(COUNCIL_LABEL[placeKind(area, index)], { name, n: sub });
     case 'predseda':
       return t('contest.president', { kraj });
+    case 'zsk':
+      return t('contest.regional_council', { kraj, n: sub });
+    case 'prezident': {
+      const date = day === undefined ? roundDay(sub) : day;
+      return date
+        ? t('contest.president_round', { round: sub, date: formatShortDate(date) })
+        : t('contest.president_round_undated', { round: sub });
+    }
+    case 'referendum':
+      return t('contest.question', { n: sub });
     default:
-      return t('contest.regional_council', { kraj, n: obvod });
+      if (sub === null) return t(`contest.parties.${kind}`);
+      return party ? t('contest.list', { party: party.name }) : t('contest.list_number', { n: sub });
   }
+}
+
+/* The party whose list contest *id* (`nrsr:SK/12`) is, as `partyOf` gives
+ * it with its ballot `number`, from the party contest's subjects; null
+ * where there is no such party. */
+export async function listParty(id, index) {
+  const subjects = (await getJSON('/data/country.json')).contests[officeOf(id)]?.subjects ?? [];
+  const { sub } = parseContest(id);
+  const row = subjects.find(([number]) => number === sub);
+  return row ? { ...partyOf(row[1], index), number: sub } : null;
 }
 
 /* The mayor or president in office at the time of the election, from the
@@ -328,32 +458,109 @@ function decodePast([election, date, eligible, voters, scope]) {
 
 /* Contest *id* from its area file; `holder` and `past` (see above) are null
  * where not known; `noResult` set for a contest that had candidates but has
- * no final result (the vote could not be completed). */
+ * no final result (the vote could not be completed), `electedOnly` for a
+ * council contest whose candidates are its elected only, the others not
+ * published, `uncontested` {title, url} for one called but held nowhere,
+ * no candidate having registered (what says so). Where they apply:
+ * `round` and `day` of a presidential round, `question` (the wording) of
+ * a referendum question; of a party-list ballot `seats` (the body's),
+ * `threshold` (the % of the valid votes a party needs for seats),
+ * `coalitions` ([[parties, %]], what a coalition of at least that many
+ * parties needs instead, by ascending parties; none where it needs what a
+ * party does), `preferences` (how many of a list's candidates a voter may
+ * circle) and `quota` (the % of its party's votes a candidate's
+ * preference votes must reach to move up the list), the last two of a
+ * party's list too, and its `party` (`listParty`). `candidates` are the
+ * persons, the parties of a party-list ballot (`decodeSubject`) or a
+ * question's answers. */
 async function contest(id, index) {
   const [file, translated] = await Promise.all([getJSON(areaPath(id, index)), occupations()]);
   const entry = file.contests[id] ?? { candidates: [] };
+  const list = isList(id);
+  const party = list ? await listParty(id, index) : null;
+  const ballot = list ? ((await getJSON('/data/country.json')).contests[officeOf(id)] ?? {}) : entry;
+  const { kind } = parseContest(id);
+  let candidates;
+  if (kind === 'referendum') candidates = answers(id);
+  else if (entry.subjects) candidates = entry.subjects.map((row) => decodeSubject(id, row, index, entry.research));
+  else candidates = entry.candidates.map((row) => decodeCandidate(id, entry, row, translated, index, file));
   return {
     id,
-    label: contestLabel(id, index),
+    label: contestLabel(id, index, { day: entry.day ?? undefined, party }),
     seats: entry.seats ?? null,
     seats2022: entry.seats_2022 ?? null,
     sources: entry.sources ?? [],
     holder: entry.holder ? decodeHolder(officeOf(id), entry.holder) : null,
     past: entry.past ? decodePast(entry.past) : null,
     noResult: Boolean(entry.no_result),
-    candidates: entry.candidates.map((row) => decodeCandidate(id, entry, row, translated, index, file)),
+    electedOnly: Boolean(entry.elected_only),
+    uncontested: entry.uncontested ? { title: entry.uncontested[0], url: entry.uncontested[1] } : null,
+    round: entry.round ?? null,
+    day: entry.day ?? null,
+    question: entry.question ?? null,
+    preferences: ballot.preferences ?? null,
+    threshold: entry.threshold ?? null,
+    coalitions: entry.coalitions ?? [],
+    quota: ballot.quota ?? null,
+    party,
+    candidates,
   };
 }
 
 /* The contests *ids* (as in `ballots`), leaving out an id whose area is not
- * known (from a link made by hand, say). */
+ * known (from a link made by hand, say), or a list of no party. */
 export async function contests(ids) {
   const index = await dataIndex();
-  const known = ids.filter((id) => {
-    const { kind, area } = parseContest(id);
-    return isRegional(kind) ? area in index.kraje : area in index.obce;
+  const known = await Promise.all(
+    ids.map(async (id) => {
+      const { area, spec } = parseContest(id);
+      if (!spec) return false;
+      if (spec.scope === 'country') return area === COUNTRY && (!isList(id) || (await listParty(id, index)) !== null);
+      return spec.scope === 'kraj' ? area in index.kraje : area in index.obce;
+    }),
+  );
+  return Promise.all(ids.filter((_, i) => known[i]).map((id) => contest(id, index)));
+}
+
+/* The ids of the country-wide contests of the page's election, as the
+ * ballots list them (`countryOrder`): the party lists not among them,
+ * which open from their parties. */
+async function countryIds() {
+  const file = await getJSON('/data/country.json');
+  return Object.keys(file.contests)
+    .filter((id) => !isList(id))
+    .sort(countryOrder);
+}
+
+/* The country-wide contests of the page's election (`countryIds`), as
+ * `contests` gives them: the ballots of every voter. */
+export async function countryBallots() {
+  const index = await dataIndex();
+  return Promise.all((await countryIds()).map((id) => contest(id, index)));
+}
+
+/* The places of a by-election where something is elected
+ * (data/index.json `held`), each {code, kraj, name, detail, contests}: an
+ * obec (or Bratislava, Košice), `detail` its okres and kraj, or a kraj
+ * (`kraj` set), with what is elected there, `contests` short names of
+ * them (`byelection.<kind>`: a council's obvod where it has several);
+ * obce by name, after them the kraje. */
+export async function heldPlaces() {
+  const index = await dataIndex();
+  const collator = new Intl.Collator(lang);
+  const short = (id) => {
+    const { kind, area, sub } = parseContest(id);
+    const obvod = kind === 'zsk' || (kind === 'oz' && hasCouncilObvody(index, area));
+    return t(`byelection.${kind}${obvod ? '_obvod' : ''}`, { n: sub });
+  };
+  const places = Object.entries(index.held ?? {}).map(([code, ids]) => {
+    const contests = ids.map(short);
+    if (code in index.kraje) return { code, kraj: true, name: t('place.kraj', { name: index.kraje[code] }), contests };
+    const [name, okres, kraj] = index.obce[code];
+    const detail = [okres && t('place.okres', { name: index.okresy[okres][0] }), t('place.kraj', { name: index.kraje[kraj] })];
+    return { code, kraj: false, name, detail: detail.filter(Boolean).join(' · '), contests };
   });
-  return Promise.all(known.map((id) => contest(id, index)));
+  return places.sort((a, b) => Number(a.kraj) - Number(b.kraj) || collator.compare(a.name, b.name));
 }
 
 /* The council contests on the ballots of *obec* and how they were chosen
@@ -373,7 +580,11 @@ function councilContests(obec, obvod, byAddress) {
 /* Every contest a voter in obec *code* votes in, the most local first
  * (`localFirst`), so that what heads the list changes with the place
  * clicked: municipal council, mayor, in Bratislava and Košice the city
- * council and mayor, then regional council and president. *where* narrows
+ * council and mayor, then regional council and president; of a by-election
+ * only those held there (data/index.json `held`) or called there but held
+ * nowhere (`uncontested`); of a regular election of
+ * one half only its half's (kinds.js `holds`); of a country-wide
+ * election the country's (`countryIds`). *where* narrows
  * the council where the obec has several obvody: {obvod} of an address or a
  * point, or {street, part} chosen in the search, whose houses may all be in
  * one.
@@ -389,9 +600,9 @@ function councilContests(obec, obvod, byAddress) {
  *   obvod, so they are a guess;
  * - `origin`: where its units come from when not from this election's own
  *   documents, from data/index.json: `reused` the day of the election whose
- *   council obvod rules stand in, `adopted` that of the later election
- *   whose rules stand in though the layout is not proven to match (the
- *   borders indicative only), `dating` {by, seen} where the documents
+ *   council obvod rules stand in, `adopted` that of the vote, earlier or
+ *   later, whose rules stand in though the layout is not proven to match
+ *   (the borders indicative only), `dating` {by, seen} where the documents
  *   of its obvody state no date and are dated approximately ('archived'
  *   or 'posted' on the day `seen`, or 'named': they name the election),
  *   `supplemented` {from, day} where those documents do not place every
@@ -417,9 +628,19 @@ export async function ballots(code, where = {}) {
   const one = group.obvody.length === 1 ? group.obvody[0] : null;
   const obvod = obec.councils > 1 && byAddress ? (where.obvod ?? one) : null;
   const { council, ids: councilIds } = councilContests(obec, obvod, byAddress);
-  const ids = [...councilIds, `starosta:${obec.code}`];
-  if (obec.city) ids.push(`oz:${obec.city}/${obec.cityObvod}`, `starosta:${obec.city}`);
-  ids.push(`zsk:${obec.kraj}/${obec.zsk}`, `predseda:${obec.kraj}`);
+  let ids = isNational ? await countryIds() : [...councilIds, `starosta:${obec.code}`];
+  if (!isNational) {
+    if (obec.city) ids.push(`oz:${obec.city}/${obec.cityObvod}`, `starosta:${obec.city}`);
+    ids.push(`zsk:${obec.kraj}/${obec.zsk}`, `predseda:${obec.kraj}`);
+  }
+  if (isByElection) {
+    // Those called but held nowhere too: the ballot box says so.
+    const areas = [obec.code, obec.city, obec.kraj];
+    const held = new Set(areas.flatMap((area) => index.held[area] ?? []));
+    for (const id of index.uncontested) if (areas.includes(parseContest(id).area)) held.add(id);
+    ids = ids.filter((id) => held.has(id));
+  }
+  ids = ids.filter((id) => holds(electionLabel, id));
   const contests = await Promise.all(ids.map((id) => contest(id, index)));
   for (const c of contests) if (councilIds.includes(c.id)) c.council = council;
   const own = index.boundaries?.obce[obec.code];
@@ -527,11 +748,11 @@ export async function findings(c) {
  * 'kraj:1' the kraj (its president), 'kraj:1/3' its regional council
  * obvod. */
 export function contestArea(id, index) {
-  const { kind, area, obvod } = parseContest(id);
+  const { kind, area, sub } = parseContest(id);
   if (kind === 'predseda') return { area: `kraj:${area}` };
-  if (kind === 'zsk') return { area: `kraj:${area}/${obvod}` };
-  if (isCity(area)) return { area: kind === 'oz' ? `${area}/${obvod}` : area };
-  return { obec: area, obvod: kind === 'oz' && hasCouncilObvody(index, area) ? obvod : null };
+  if (kind === 'zsk') return { area: `kraj:${area}/${sub}` };
+  if (isCity(area)) return { area: kind === 'oz' ? `${area}/${sub}` : area };
+  return { obec: area, obvod: kind === 'oz' && hasCouncilObvody(index, area) ? sub : null };
 }
 
 /* ---------- candidate-name search ---------- */

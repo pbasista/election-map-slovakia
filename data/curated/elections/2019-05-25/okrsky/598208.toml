@@ -1,0 +1,39 @@
+# Okrsky of Košice-Pereš, transcribed by an AI agent in job okrsok-rules-1960 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bystrická (párne), Krásnohorská, Krompašská, Perešská, Revúcka, Svidnícka, Chatky, prihlásení na MČ
+#   okrsok 2: Betliarska, Bystrická (nepárne), Gelnická, Haburská, Jasovská, Jelšavská, Medzevská, Na Košarisku, Sabinovská, Vranovská
+obec = "598208"
+name = "Košice-Pereš"
+okrsky_date = 2019-02-22
+okrsky_note = "Okrsok 1 also lists 'Chatky' (the garden cottages, numbered by súpisné číslo without a street: the register's addresses without a street), given to okrsok 1 as its rest, and 'prihlásení na MČ' (residents registered at the city district without an address, not an address). Same okrsky as the copied 2022 document."
+
+[[document]]
+url = "https://www.mcperes.sk/download_file_f.php?id=1098105"
+sha256 = "cf94b45e2dce8263fee663c963e3afded8734fdaeb01ffc359c1ca8da17b6264"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do Európskeho parlamentu v roku 2019 konaných dňa 25.05.2019, na území Mestskej časti Košice - Pereš"
+
+[okrsok.1]
+rules = [
+  {street = "Bystrická", parity = "even"},
+  {street = "Krásnohorská"},
+  {street = "Krompašská"},
+  {street = "Perešská"},
+  {street = "Revúcka"},
+  {street = "Svidnícka"},
+  {rest = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Betliarska"},
+  {street = "Bystrická", parity = "odd"},
+  {street = "Gelnická"},
+  {street = "Haburská"},
+  {street = "Jasovská"},
+  {street = "Jelšavská"},
+  {street = "Medzevská"},
+  {street = "Na Košarisku"},
+  {street = "Sabinovská"},
+  {street = "Vranovská"},
+]

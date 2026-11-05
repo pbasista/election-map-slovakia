@@ -1,0 +1,31 @@
+# Okrsky of Boleráz, transcribed by an AI agent in job okrsok-rules-4383 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: č.d. 1- 400 a občania s trvalým pobytom prihlásení na obec
+#   okrsok 2: Od č.d. 401
+obec = "506818"
+name = "Boleráz"
+okrsky_date = 2024-01-22
+okrsky_note = "Scanned document. The obec is split by súpisné číslo (č.d.): okrsok 1 č.d. 1-400 and residents registered only at the obec, okrsok 2 from č.d. 401. The súpisné čísla run through both parts, so the ranges are applied to both parts Boleráz and Klčovany."
+
+[[document]]
+url = "https://www.boleraz.sk/e_download.php?file=data/uredni_deska/obsah5803_6.pdf&original=Ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20volebn%C3%BDch%20miestnost%C3%AD%20pre%20vo%C4%BEby%20prezidenta%20SR.pdf"
+sha256 = "b046a69b5e894f8b2b48272759cc11920341a8632ef14a68f3d30be9a6f7fade"
+title = "Určenie volebných okrskov a volebných miestností pre voľby prezidenta Slovenskej republiky"
+
+[[document]]
+url = "https://www.boleraz.sk/zverejnovanie/uradna-tabula-1/urcenie-volebnych-okrskov-a-volebnych-miestnosti-pre-volby-prezidenta-sr-2024-5849.html"
+sha256 = "6015614a6c5c8abdfe883f64d69014088092aefc1ecefd0c66845c8144dee3c9"
+title = "Určenie volebných okrskov a volebných miestností pre voľby prezidenta SR 2024 (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {part = "Boleráz", numbers = "1-400"},
+  {part = "Klčovany", numbers = "1-400"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Boleráz", numbers = "401-"},
+  {part = "Klčovany", numbers = "401-"},
+]

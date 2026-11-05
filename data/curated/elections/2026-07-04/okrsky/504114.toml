@@ -1,0 +1,30 @@
+# Okrsky of Váhovce, transcribed by an AI agent in job okrsok-rules-5640 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: V tomto okrsku môžu hlasovať občania s trvalým pobytom pod nasledovnými súpisnými číslami: od s.č. 0 - 430
+#   okrsok 2: V tomto okrsku môžu hlasovať občania s trvalým pobytom pod nasledovnými súpisnými číslami: od s.č. 431 - 878
+obec = "504114"
+name = "Váhovce"
+okrsky_date = 2026-05-07
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document read from the image. Okrsky by súpisné číslo (the municipality has no streets): okrsok 1 s.č. 0–430, okrsok 2 s.č. 431–878; addresses with a higher súpisné číslo (not named by the document) take the okrsok of the nearest address (fill_nearest). Same split as the document of the elections of 24 October 2026 (s.č. 0–430 / 431–878); the 2022–2024 documents ended okrsok 2 at s.č. 875."
+
+[[document]]
+url = "https://www.obecvahovce.sk/e_download.php?file=/data/uredni_deska/obsah488_1.pdf&original=Scan_1102.pdf"
+sha256 = "64cf97d06ca971ae76d4ba7ebb56f03b7794bcc79c350750ee4ccb78ab715a7b"
+title = "Určenie volebných okrskov a volebných miestností pre referendum 2026"
+
+[[document]]
+url = "https://www.obecvahovce.sk/urad/uradna-tabula-obce/urcenie-volebnych-okrskov-a-volebnych-miestnosti-pre-referendum-2026-495.html"
+sha256 = "b749ca377524da43ced0fa697c15522017117279bfad99433c8de309d8eb018b"
+title = "Určenie volebných okrskov a volebných miestností pre referendum 2026 (úradná tabuľa, vyvesené 7. 5. 2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Váhovce", numbers = "0-430"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Váhovce", numbers = "431-878"},
+]

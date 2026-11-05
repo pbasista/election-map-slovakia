@@ -1,0 +1,31 @@
+# Okrsky of Veľké Leváre, transcribed by an AI agent in job okrsok-rules-5455 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súp. č. 1 – 657; voliči s trvalým pobytom Veľké Leváre bez súp. čísla
+#   okrsok 2: súp. č. 658 - 1583
+obec = "504947"
+name = "Veľké Leváre"
+okrsky_note = "Okrsky by súpisné čísla; okrsok 2 is the rest (658-1583 and any higher number)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2026-04-29
+okrsky_date_basis = "The documents are undated; the municipality's notice board entry https://www.levare.sk/samosprava/zverejnovanie-dokumentov/uradna-tabula/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-f607 states it was posted on 2026-04-29 (the vymedzenie, entry vymedzenie-uzemneho-obvodu-volebnych-okrskov, on 2026-05-12); both documents name Referendum 2026. (https://www.levare.sk/samosprava/zverejnovanie-dokumentov/uradna-tabula/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-f607)"
+
+[[document]]
+url = "https://www.levare.sk/files/documents/uradna-tabula/2026/okrsky.pdf"
+sha256 = "c02a67e88b176ffff5b1e7fecd185742ce616c773ca0124708057ca3b81c4a82"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (Referendum 2026)"
+
+[[document]]
+url = "https://www.levare.sk/files/documents/uradna-tabula/2026/vymedzenie-uzemneho-obvodu-volebnych-okrskov.pdf"
+sha256 = "e13f47e452c5e68f62838ea8bfe6719510a30e4569d60a576f7d106c27972ebb"
+title = "Referendum 2026 – Vymedzenie územného obvodu volebných okrskov v obci Veľké Leváre"
+
+[okrsok.1]
+rules = [
+  {part = "Veľké Leváre", numbers = "1-657"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

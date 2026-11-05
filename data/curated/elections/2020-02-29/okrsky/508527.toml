@@ -1,0 +1,41 @@
+# Okrsky of Čierny Balog, transcribed by an AI agent in job okrsok-rules-2301 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1: Čierny Balog
+#   okrsok 2: Okrsok č. 2: Jánošovka, Komov, Fajtov
+#   okrsok 3: Okrsok č. 3: Pusté, Dobroč
+#   okrsok 4: Okrsok č. 4: Krám, Medveďov
+obec = "508527"
+name = "Čierny Balog"
+okrsky_note = "The document names the miestne časti of each okrsok (no streets); part rules. Same okrsky as the copied 2026 set."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The page section \"Volebné okrsky pre voľby do NRSR\" names the elections of 29 February 2020 and the 4 okrsky the mayor set; captured 2020-05-23 only, text undated."
+
+[[document]]
+url = "https://web.archive.org/web/20200523160427/https://www.ciernybalog.sk/volby-a-referendum.phtml?id3=107915"
+sha256 = "bbcd3ff80afaf26b951be89103f95b99e96f30169be48f92373b104ce568d2a2"
+title = "Voľby do NRSR (archived page): Volebné okrsky pre voľby do NRSR 29. februára 2020"
+
+[okrsok.1]
+rules = [
+  {part = "Čierny Balog"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Jánošovka"},
+  {part = "Komov"},
+  {part = "Fajtov"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Pusté"},
+  {part = "Dobroč"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Krám"},
+  {part = "Medveďov"},
+]

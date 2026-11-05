@@ -1,0 +1,46 @@
+# Okrsky of Jelšava, transcribed by an AI agent in job okrsok-rules-4478 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Námestie republiky, Námestie SNP, Muránska, Mníšanská, Tomášikova, Jesenského, Teplá Voda, Medzník, Obyvatelia bez adresy
+#   okrsok 2: Štefánikova, Armádna, 9. mája, Teplická, Železničná, Pri štadióne, Ševcovská, Kúpelná, Kejďák
+obec = "525791"
+name = "Jelšava"
+okrsky_fill = "nearest"
+okrsky_note = "The list of streets per okrsok for the presidential election of 23 March 2024 (round 2: 6 April 2024), linked on the city's page for that election. Okrsok 2 now votes in the Denný stacionár, Železničná 236/7. 'Obyvatelia bez adresy' (okrsok 1) are voters registered without an address, not the register's houses without a street. Hrádok (3 addresses) is not named in the document: placed by fill_nearest, as are the houses without a street. The Internet Archive stayed offline throughout (web.archive.org refused connections or answered 'Temporarily Offline' on repeated tries with pauses), so no archived capture was checked."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document is undated; its heading names the presidential election of 23. 03. 2024 (round 2 06. 04. 2024)."
+
+[[document]]
+url = "https://www.jelsava.sk/download_file_f.php?id=1991712"
+sha256 = "51f9198b146a703625dfd57e1785df9cffb73cb4b46b370b3aa55cd6790083d3"
+title = "Volebné okrsky (Voľby prezidenta Slovenskej republiky 23. 03. 2024)"
+
+[[document]]
+url = "https://www.jelsava.sk/oznamy/prezidentske-volby-2024.html"
+sha256 = "aa2604268ee26f0c01f2b47035e06bf79b5b89dc91a11627e65001ae83cb6839"
+title = "Prezidentské voľby 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Muránska"},
+  {street = "Námestie Republiky", written = "Námestie republiky"},
+  {street = "Námestie SNP"},
+  {street = "Tomášikova"},
+  {street = "Mníšanská"},
+  {street = "Jesenského"},
+  {street = "Teplá Voda"},
+  {street = "Medzník"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ševcovská"},
+  {street = "Štefánikova"},
+  {street = "Kúpelná"},
+  {street = "Teplická"},
+  {street = "Pri Štadióne", written = "Pri štadióne"},
+  {street = "Železničná"},
+  {street = "Armádna"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Kejďák"},
+]

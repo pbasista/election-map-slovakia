@@ -1,0 +1,99 @@
+# Okrsky of Bratislava-Záhorská Bystrica, transcribed by an AI agent in job okrsok-rules-2273 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Antona Floreka, Bratislavská, Čsl. tankistov, Gbelská, Hodonínska, Málová, Námestie sv. Petra a Pavla, Pavla Blaha, Plk. Prvoniča, Sv. Pia X., Strminová, Štefana Rosívala
+#   okrsok 2: Devínske jazero, Hargašova, Kollárova, Kučovanická, Leopoldov majer, Na Holom vrchu, Na Vlkovkách, Plavecká, Pútnická, Sekýľska, Tatranská, Tešedíkova, Vrbánska, Zákutie, Zárubov
+#   okrsok 3: Brumovická, Čerencová, Gajarská, Jána Raka, Jozefa Vachovského, Kútska, Lančárska, Lozornianska, Námestie Rodiny, Ostriežová, Plánky, Podkerepušky, Rošického, Štefana Majera, Trstínska, Záhorská, Záhumenská
+#   okrsok 4: Barancová, Bystrické sady, Čerešňový sad, Donská, Hruškový sad, Chvojnícka, Jabloňový sad, Kapsohradská, Na Krčoch, Nevská, Ota Holúska, Prídavková, Pri Vápenickom potoku, Rudavská, Slivkový sad, Strmý vŕšok
+obec = "529427"
+name = "Bratislava-Záhorská Bystrica"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned decision of the mayor (Ing. Jozef Krúpa), read from the page images. Named in the document but not in the register (left out): Zárubov, Námestie Rodiny. Not named in the document, placed by fill_nearest: Belicová, Kunovská, Ollarekova, Orešianková, Poľný mlyn, Skalníková, and addresses without a street."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2019-12-09
+okrsky_date_basis = "The mayor's scanned decision for the elections to the NR SR of 29 February 2020 is undated; the municipality's post linking it was published on 9 December 2019. (https://zahorskabystrica.sk/rozhodnutie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-pre-volby-do-nr-sr/)"
+
+[[document]]
+url = "https://zahorskabystrica.sk/wp-content/uploads/2019/12/Rozhodnutie-starostu-mestskej-časti-Bratislava-Záhorská-Bystrica-o-utvorení-volebných-okrskov-a-určení-volebných-miestností-pre-voľby-do-NR-SR.pdf"
+sha256 = "94ea73b51721774c14d9ce7a900ea75f2c520f44b0311ee8e3d4b25f27d875f9"
+title = "Rozhodnutie starostu mestskej časti Bratislava – Záhorská Bystrica o utvorení volebných okrskov a určení volebných miestností pre voľby do NR SR"
+
+[[document]]
+url = "https://zahorskabystrica.sk/rozhodnutie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-pre-volby-do-nr-sr/"
+sha256 = "db38bbc637752b6c44ce232f05bad9618c880803c083a5568d687495321c72d9"
+title = "Rozhodnutie o utvorení volebných okrskov a určení volebných miestností pre voľby do NR SR"
+
+[okrsok.1]
+rules = [
+  {street = "Antona Floreka"},
+  {street = "Bratislavská"},
+  {street = "Čsl. tankistov"},
+  {street = "Gbelská"},
+  {street = "Hodonínska"},
+  {street = "Málová"},
+  {street = "Námestie sv. Petra a Pavla"},
+  {street = "Pavla Blaha"},
+  {street = "Plk. Prvoniča"},
+  {street = "Sv. Pia X."},
+  {street = "Strminová"},
+  {street = "Štefana Rosívala"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Devínske jazero"},
+  {street = "Hargašova"},
+  {street = "Kollárova"},
+  {street = "Kučovanická"},
+  {street = "Leopoldov majer"},
+  {street = "Na Holom vrchu"},
+  {street = "Na Vlkovkách"},
+  {street = "Plavecká"},
+  {street = "Pútnická"},
+  {street = "Sekýľska"},
+  {street = "Tatranská"},
+  {street = "Tešedíkova"},
+  {street = "Vrbánska"},
+  {street = "Zákutie"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Brumovická"},
+  {street = "Čerencová"},
+  {street = "Gajarská"},
+  {street = "Jána Raka"},
+  {street = "Jozefa Vachovského"},
+  {street = "Vachovského", note = "register street Vachovského is not in the document; placed with Jozefa Vachovského, the same street", inferred = true},
+  {street = "Kútska"},
+  {street = "Lančárska"},
+  {street = "Lozornianska"},
+  {street = "Ostriežová"},
+  {street = "Plánky"},
+  {street = "Podkerepušky"},
+  {street = "Rošického"},
+  {street = "Štefana Majera"},
+  {street = "Trstínska"},
+  {street = "Záhorská"},
+  {street = "Záhumenská"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Barancová"},
+  {street = "Bystrické sady"},
+  {street = "Čerešňový sad"},
+  {street = "Donská"},
+  {street = "Hruškový sad"},
+  {street = "Chvojnícka"},
+  {street = "Jabloňový sad"},
+  {street = "Kapsohradská"},
+  {street = "Na Krčoch"},
+  {street = "Nevská"},
+  {street = "Ota Holúska"},
+  {street = "Prídavková"},
+  {street = "Pri Vápenickom potoku"},
+  {street = "Rudavská"},
+  {street = "Slivkový sad"},
+  {street = "Strmý vŕšok"},
+]

@@ -1,0 +1,52 @@
+# Okrsky of Jaslovské Bohunice, transcribed by an AI agent in job okrsok-rules-5638 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre ulice: Blavská ulica, Cintorínska ulica, Bohunická ulica, Jaslovská ulica, Pri mlyne, Pri rybníku, Námestie sv. Michala, Nová ulica, Záhradná ulica, Záhumenická ulica a obyvatelia s trvalým pobytom na obec Jaslovské Bohunice
+#   okrsok 2: pre ulice: Agátova ulica, Čerešňová ulica, Dubová ulica, Gaštanová ulica, Jabloňová ulica, Javorová ulica, Krátka ulica, Krížna ulica, Lipová ulica, Orechová ulica, Sídlisko, Šidúnky, Školská ulica, Športová ulica, Trnavská ulica, Paderovská ulica, Lúčna ulica, Poľná ulica
+obec = "507156"
+name = "Jaslovské Bohunice"
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky are given on the referendum page itself. \"Športová ulica\" is not in the address register, left out. \"obyvatelia s trvalým pobytom na obec\" are residents without an address, not a rule; the register's addresses without a street go by fill_nearest."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2026-05-20
+okrsky_date_basis = "The referendum page (which names the referendum of 4.7.2026) lists the okrsky the mayor formed; it states no decision or posting date. The Internet Archive captured the page with this okrsky text on 2026-05-20. (https://web.archive.org/web/20260520135049/https://www.jaslovske-bohunice.sk/obec-2/volby/referendum/referendum-2026/)"
+
+[[document]]
+url = "https://www.jaslovske-bohunice.sk/obec-2/volby/referendum/referendum-2026/"
+sha256 = "b5c89213c3c338b854588559ecbeef7faed23cc64055f71290f97b191d2bb52c"
+title = "Referendum 2026 (4.7.2026): volebné okrsky a volebné miestnosti"
+
+[okrsok.1]
+rules = [
+  {street = "Blavská ulica"},
+  {street = "Cintorínska ulica"},
+  {street = "Bohunická ulica"},
+  {street = "Jaslovská ulica"},
+  {street = "Pri mlyne"},
+  {street = "Pri rybníku"},
+  {street = "Námestie sv. Michala"},
+  {street = "Nová ulica"},
+  {street = "Záhradná ulica"},
+  {street = "Záhumenická ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová ulica", written = "Agátova ulica", note = "\"Agátova\" is the register's Agátová (accent typo)."},
+  {street = "Čerešňová ulica"},
+  {street = "Dubová ulica"},
+  {street = "Gaštanová ulica"},
+  {street = "Jabloňová ulica"},
+  {street = "Javorová ulica"},
+  {street = "Krátka ulica"},
+  {street = "Krížna ulica"},
+  {street = "Lipová ulica"},
+  {street = "Orechová ulica"},
+  {street = "Sídlisko"},
+  {street = "Šidúnky"},
+  {street = "Školská ulica"},
+  {street = "Trnavská ulica"},
+  {street = "Paderovská ulica"},
+  {street = "Lúčna ulica"},
+  {street = "Poľná ulica"},
+]

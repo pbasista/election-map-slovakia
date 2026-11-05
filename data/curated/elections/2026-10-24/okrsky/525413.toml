@@ -1,0 +1,30 @@
+# The okrsky of Víťaz of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/525413.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Víťaz, transcribed by an AI agent in job okrsok-rules-5117 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: do súp. č. 336, + časť obce Dolina
+#     okrsok 2: od súp. č. 346
+obec = "525413"
+name = "Víťaz"
+okrsky_fill = "nearest"
+okrsky_note = "The document splits the village by súpisné číslo: okrsok 1 up to No. 336 plus part Dolina, okrsok 2 from No. 346. Houses with súpisné čísla 337–345 in part Víťaz (if any), which the document places in neither okrsok, take the okrsok of the nearest address."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-560): The only 2026 document, 'Oznam obce Víťaz' (20.07.2026, on the obec's úradná tabuľa), says only that the obec has 2 okrsky with one polling room (Viacúčelová sála, Víťaz 183); it does not say which addresses vote in which okrsok, so the okrsky cannot be inferred. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2024-06-08: 1: 796 → 759, 2: 784 → 784."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document is undated; its heading names the elections to the European Parliament in 2024. The notice board posting date shown (08.12.2025) is a site migration date."
+
+[[document]]
+url = "https://www.obecvitaz.sk/files/2025-12-08-095547-Inform__cie_k_vo__b__m_do_Eur__pskeho_parlamentu_v_roku_2024.pdf"
+sha256 = "e82edf3356b68f1355ff9f8ffeb2612bd09dc635be33816baa446b5f215dde60"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu v roku 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Víťaz", numbers = "1-336"},
+  {part = "Dolina"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Víťaz", numbers = "346-"},
+]

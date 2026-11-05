@@ -1,0 +1,40 @@
+# Council obvody of Veľký Ďur (502936), Levice.
+# Transcribed by an AI agent in job obvod-rules-165 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1(Dolný Ďur, Horný Ďur) 7 poslancov
+#   obvod 2: Volebný obvod č. 2 ( Rohožnica) 2 poslanci.
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/502936.toml, standing in.
+obec = "502936"
+name = "Veľký Ďur"
+date = 2018-06-21
+note = "The mayor's announcement of 10.08.2018 (a scan without text, read from the page image) quotes council resolution 279/26/2018 of 21.06.2018. Each obvod is named by the parts of the obec it covers."
+okrsky_date = 2022-06-08
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-5901): The 2018 elections page (live) links no okrsky document: only the announcement of 10.08.2018 on the obvody (obvod 1 Dolný Ďur and Horný Ďur, obvod 2 Rohožnica), which names no okrsky. The Internet Archive keeps no 2018 election documents of velkydur.sk. Web search found nothing either. The later documents (2024) make okrsok 1 Dolný Ďur and Horný Ďur and okrsok 2 Rohožnica, matching the obvody, but no 2018 document states it. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://www.velkydur.sk/download_file_f.php?id=1004521"
+sha256 = "a9b2c6d4ab999e432d32803e17027ac809be17abeb4a76ff057f6bfe3f4b0814"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 10. novembra 2018 (uznesenie OZ č. 279/26/2018 zo dňa 21.06.2018)"
+
+[[document]]
+url = "https://www.velkydur.sk/oznamy/volby-do-organov-samospravy-obci-2018.html"
+sha256 = "cd5e5933c16150f6f6afac2d8b938c13c513144ac98e721cc31d48c6a13f3536"
+title = "Voľby do orgánov samosprávy obcí 2018"
+
+[obvod.1]
+seats = 7
+okrsky = [1]
+rules = [
+  {part = "Dolný Ďur"},
+  {part = "Horný Ďur"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Rohožnica"},
+]

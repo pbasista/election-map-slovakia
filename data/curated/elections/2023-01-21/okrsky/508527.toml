@@ -1,0 +1,42 @@
+# Okrsky of Čierny Balog, transcribed by an AI agent in job okrsok-rules-2930 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1 Čierny Balog
+#   okrsok 2: 2 Jánošovka, Fajtov, Komov
+#   okrsok 3: 3 Dobroč, Pusté
+#   okrsok 4: 4 Krám, Medveďov
+obec = "508527"
+name = "Čierny Balog"
+okrsky_note = "The document names the miestne časti of each okrsok (no streets); part rules. Same okrsky as the copied 2026 set."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-10
+okrsky_date_basis = "The referendum page states the okrsky section was posted (\"Zverejnené\") on 10.11.2022 (updated 7.12.2022); it names the referendum of 21 January 2023. (https://web.archive.org/web/20240206141515/https://www.ciernybalog.sk/referendum-2023.html)"
+
+[[document]]
+url = "https://web.archive.org/web/20240206141515/https://www.ciernybalog.sk/referendum-2023.html"
+sha256 = "0836472d82f814e99b4bfeeed544a9fd97a918ad0f563d9d4d8b41628cca4f58"
+title = "Referendum 2023 (archived page): starosta určil 4 volebné okrsky a hlasovacie miestnosti, zverejnené 10.11.2022"
+
+[okrsok.1]
+rules = [
+  {part = "Čierny Balog"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Jánošovka"},
+  {part = "Komov"},
+  {part = "Fajtov"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Pusté"},
+  {part = "Dobroč"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Krám"},
+  {part = "Medveďov"},
+]

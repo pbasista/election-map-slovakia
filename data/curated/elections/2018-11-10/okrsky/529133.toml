@@ -1,0 +1,28 @@
+# The okrsky of Sečovská Polianka of the vote of 2026-10-24, data/curated/elections/2026-10-24/okrsky/529133.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Sečovská Polianka, transcribed by an AI agent in job okrsok-rules-529 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: súpisné čísla domov 0 až 377
+#     okrsok 2: súpisné čísla domov 378 až 801
+obec = "529133"
+name = "Sečovská Polianka"
+okrsky_date = 2026-07-22
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky split by súpisné číslo: 0-377 and 378-801. Any súpisné number above 801 takes the nearest placed address."
+okrsky_adopted = 2026-10-24
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-870): The live website's election categories begin in 2022. In the Internet Archive (CDX of secovskapolianka.sk 2017-2026) the old site and the 2019-2021 WordPress site have no okrsky document or election page of this vote (yearly document lists of 2017, 2018, 2020 checked; 2019 not loadable). The municipality's 2023 okrsky document names only the polling stations, no borders. These are the okrsky of the vote of 2026-10-24 (2026), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://secovskapolianka.sk/wp-content/uploads/dokumenty/komunalne-volby/utvorenie_volebnych_okrskov_a_urcenie_volebnych_miestnosti_2026-6b9je7.pdf"
+sha256 = "814ac3fbb14153aad28cce08cac7028e2c27812d8174803808a7181b6274ee4e"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby 24. októbra 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Sečovská Polianka", numbers = "0-377"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Sečovská Polianka", numbers = "378-801"},
+]

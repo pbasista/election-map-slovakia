@@ -1,0 +1,24 @@
+# Okrsky of Lovinobaňa, transcribed by an AI agent in job okrsok-rules-447 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č.1 Lovinobaňa
+#   okrsok 2: Okrsok č. 2 Uderiná
+obec = "511552"
+name = "Lovinobaňa"
+okrsky_date = 2017-07-18
+okrsky_note = "The mayor's letter of 18. 07. 2017 to Okresný úrad Lučenec, posted on the website on 2017-10-04 (file name) for the regional elections of 2017, sets two okrsky: Lovinobaňa and Uderiná."
+
+[[document]]
+url = "https://web.archive.org/web/20200925074442/https://www.lovinobana.sk/files/2017-10-04-130746-Ur__en___okrsky__volebn___miestnosti.pdf"
+sha256 = "7d642a582969e302540b04487395b0b68a39164f93ea3ddc9faa5197dfc07bc7"
+title = "Určenie okrskov a volebných miestností (Obec Lovinobaňa, 18. 07. 2017)"
+
+[okrsok.1]
+rules = [
+  {part = "Lovinobaňa"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Uderiná"},
+]

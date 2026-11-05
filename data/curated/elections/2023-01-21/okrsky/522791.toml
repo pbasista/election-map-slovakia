@@ -1,0 +1,31 @@
+# Okrsky of Moravany, transcribed by an AI agent in job okrsok-rules-3311 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 01 volebná miestnosť – Dom kultúry Moravany č.98
+#   okrsok 2: Okrsok č. 02 volebná miestnosť – Dom kultúry Moravany časť Lučkovce č.1059
+obec = "522791"
+name = "Moravany"
+okrsky_note = "The notice gives each okrsok only its polling station: okrsok 1 Dom kultúry Moravany č. 98, okrsok 2 Dom kultúry in the part Lučkovce č. 1059. The okrsky are as many as the parts, so each okrsok is given the part of its station (inferred)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-10
+okrsky_date_basis = "the notice-board page states \"Dátum vyvesenia: 10.11.2022\" for the notice on the referendum of 21 January 2023; the notice is undated (https://www.obecmoravany.sk/x-a73-1114)"
+
+[[document]]
+url = "https://www.obecmoravany.sk/files/2022-11-10-135153-ozn__menie-utvorenie_volebn__ch_okrskov.pdf"
+sha256 = "4f61449f90a6879fca988cda38e1a4923ae735940c72b380b673c122bf3d2064"
+title = "Oznam: volebné okrsky pre referendum 21. januára 2023"
+
+[[document]]
+url = "https://www.obecmoravany.sk/x-a73-1114"
+sha256 = "193fab255c075906b217c425ef62a9e20ea1525193377d0f060605d27e44e24e"
+title = "official notice-board page listing the document with its posting date"
+
+[okrsok.1]
+rules = [
+  {part = "Moravany", note = "part of the polling station (Moravany č. 98)", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lučkovce", note = "part of the polling station (časť Lučkovce č. 1059)", inferred = true},
+]

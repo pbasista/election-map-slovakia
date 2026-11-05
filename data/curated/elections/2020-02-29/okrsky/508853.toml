@@ -1,0 +1,50 @@
+# Okrsky of Podbrezová, transcribed by an AI agent in job okrsok-rules-2417 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Lopej – ul. Belohrad, Čelno, Dolná, Družby, Hámor, Murgašova, Partizánska, Pod Grapľom, Vajsková a Skalica
+#   okrsok 2: Podbrezová – ulice Sládkovičova, Šupkova, Kolkáreň, Bendička, Smreková, Švermov rad, Štúrov rad, ul. Hviezdoslavova, ul. Chalupkova
+#   okrsok 3: Štiavnička, Chvatimech
+obec = "508853"
+name = "Podbrezová"
+okrsky_date = 2019-11-06
+okrsky_note = "The document names the parts Lopej, Podbrezová, Štiavnička, Chvatimech, Vajsková and Skalica; addresses without a street are placed by their part."
+
+[[document]]
+url = "https://www.podbrezova.sk/download_file_f.php?id=1230088"
+sha256 = "3f45ed5e4db49d303a6941ab96d524ea8f36b1a900815ace913575741115cae3"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (voľby do NR SR 2020)"
+
+[okrsok.1]
+rules = [
+  {part = "Lopej"},
+  {street = "Belohrad"},
+  {street = "Čelno"},
+  {street = "Dolná"},
+  {street = "Družby"},
+  {street = "Hámor"},
+  {street = "Jozefa Murgaša", written = "Murgašova", note = "The document writes \"Murgašova\"; the register's only street named after Murgaš is Jozefa Murgaša in Lopej, and later documents write Jozefa Murgaša."},
+  {street = "Partizánska"},
+  {street = "Pod Grapľom"},
+  {part = "Vajsková"},
+  {part = "Skalica"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Podbrezová"},
+  {street = "Sládkovičova"},
+  {street = "Šupkova"},
+  {street = "Kolkáreň"},
+  {street = "Bendíčka", written = "Bendička", note = "Written without the long í; the same street (register Bendíčka)."},
+  {street = "Smreková"},
+  {street = "Švermov rad"},
+  {street = "Štúrov rad"},
+  {street = "Hviezdoslavova"},
+  {street = "Chalupkova"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Štiavnička"},
+  {part = "Chvatimech"},
+]

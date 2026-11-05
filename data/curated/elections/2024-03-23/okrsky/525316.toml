@@ -1,0 +1,24 @@
+# Okrsky of Torysa, transcribed by an AI agent in job okrsok-rules-4559 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: do súp. č. 244
+#   okrsok 2: od súp. č. 245
+obec = "525316"
+name = "Torysa"
+okrsky_date = 2024-01-30
+okrsky_note = "Scanned document read from the rendered page. The village has no streets; the document splits it by súpisné číslo: okrsok 1 up to No. 244, okrsok 2 from No. 245."
+
+[[document]]
+url = "https://www.obectorysa.sk/e_download.php?file=data/editor/200sk_3.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "5204bf82921d1f4be6108a589634858ff1db7ad741509e27ad7da283d760f414"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta Slovenskej republiky v roku 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Torysa", numbers = "1-244"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Torysa", numbers = "245-"},
+]

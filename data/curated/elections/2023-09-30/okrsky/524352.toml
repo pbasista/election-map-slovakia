@@ -1,0 +1,41 @@
+# Okrsky of Drienov, transcribed by an AI agent in job okrsok-rules-3831 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ul. Jarková, ul. Mierová, ul. Mlynská, ul. Okružná, ul. Osloboditeľov, ul. Partizánska, ul. Pod Dvorom, ul. Tehelná
+#   okrsok 2: ul. Košická, ul. Krátka, ul. Jarná, ul. Kvetná, ul. Letná, ul. Májová, ul. Námestie kpt. Nálepku, ul. Revolučná, ul. Záhradná, ul. Žižkova
+obec = "524352"
+name = "Drienov"
+okrsky_date = 2023-06-21
+okrsky_fill = "nearest"
+okrsky_note = "Every register street is listed; addresses without a street go by fill_nearest."
+
+[[document]]
+url = "https://www.drienov.sk/e_download.php?file=data/uredni_deska/obsah262_7.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "9266f126049eed11e08d439be010d564a9cf5946b2d3a4ccabb897d5774047c1"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do NR SR 30. septembra 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Jarková"},
+  {street = "Mierová"},
+  {street = "Mlynská"},
+  {street = "Okružná"},
+  {street = "Osloboditeľov"},
+  {street = "Partizánska"},
+  {street = "Pod Dvorom"},
+  {street = "Tehelná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Košická"},
+  {street = "Krátka"},
+  {street = "Jarná"},
+  {street = "Kvetná"},
+  {street = "Letná"},
+  {street = "Májová"},
+  {street = "Námestie kpt. Nálepku"},
+  {street = "Revolučná"},
+  {street = "Záhradná"},
+  {street = "Žižkova"},
+]

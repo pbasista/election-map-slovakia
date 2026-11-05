@@ -1,0 +1,25 @@
+# Okrsky of Rišňovce, transcribed by an AI agent in job okrsok-rules-5018 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1: súpisné čísla 3 – 421
+#   okrsok 2: Volebný okrsok č. 2: súpisné čísla 423 – 828
+obec = "500704"
+name = "Rišňovce"
+okrsky_date = 2024-03-01
+okrsky_fill = "nearest"
+okrsky_note = "Scanned notice of 01.03.2024 for the EP election of 8 June 2024, read from the rendered page. Houses numbered 422 or above 828 are not named and take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20240325225524/https://risnovce.sk/pdf/volby/volby-do-eu-parlamentu-2024/oznamenie-o-uzatvoreni-volebnych-okrskov.pdf"
+sha256 = "7d392782598cbd3d76dd9cd817969504f569f25457a4121da9e842be6cafd44e"
+title = "Oznámenie o utvorení volebných okrskov, určenie volebných miestností (voľby do Európskeho parlamentu 8.6.2024), 01.03.2024"
+
+[okrsok.1]
+rules = [
+  {part = "Rišňovce", numbers = "3-421"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Rišňovce", numbers = "423-828"},
+]

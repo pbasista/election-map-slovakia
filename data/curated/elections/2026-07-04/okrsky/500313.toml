@@ -1,0 +1,26 @@
+# The okrsky of Hruboňovo of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/500313.toml, copied by `ems job reuse` (reused). Its header there:
+#   Okrsky of Hruboňovo, transcribed by an AI agent in job okrsok-rules-627 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Hruboňovo, časť Suľany
+#     okrsok 2: Hruboňovo, časť Výčapky
+obec = "500313"
+name = "Hruboňovo"
+okrsky_date = 2026-07-17
+okrsky_note = "These are the okrsky of the elections of 2026-10-24: in 2026-07-04 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2026-07-04 was searched for."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.hrubonovo.sk/files/2026-07-17-104943-okrsky.pdf"
+sha256 = "4ace7bf70c365c3604b11104d69f44d2cc05de7ad81446f0fa5a2c0f01bb9b6d"
+title = "OZNÁMENIE okrsky pre voľby do orgánov samosprávy obcí a orgánov samosprávnych krajov - voľby 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Suľany"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Výčapky"},
+]

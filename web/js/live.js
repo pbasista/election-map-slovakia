@@ -1,30 +1,41 @@
-/* The election results: partial on election night, final after it.
+/* The election results: the live results on election night, the final
+ * results after it.
  *
- * They are files of the site, under the election's own directory (config
- * `results`, /results/<day>/, docs/results.md). On election night `ems
- * results` writes them and deploys the site whenever they change; a
- * release afterwards carries the final results.
+ * They are files of parts of the site of their own, one directory per
+ * election (docs/results.md), in the same format: the final results
+ * (config `results`, /results/<day>/), which a release brings from the
+ * definitive packages, and the live results of an election's night
+ * (config `live`, /live/<day>/, elections.toml `live`), which `ems results
+ * poll --deploy` deploys whenever they change. The final results win
+ * wherever they are there.
  *
  * status.json is read from the polls' closing and then every minute while
  * the page is in view, for a week (config `liveWindow`, elections.toml
- * `live_days`); after that once per page load, so that a page left open,
- * or an old copy of the site, stops polling. A site built not to poll
- * (config `live`, elections.toml `live`: off once the final results are in)
- * reads it once per page load.
+ * `live_days`): the final results' first, and only where there is none yet
+ * (404) the live results', so that a page left open switches to the final
+ * results once a release brings them. After that, and in a site built
+ * without live results (config `live` null: off once the final results
+ * are in), the final results' status.json is read once per page load, so
+ * that a page left open, or an old copy of the site, stops polling.
  *
  * status.json lists a content hash per area file; each file is fetched
- * once per hash, so only what changed is fetched again: the files of the
- * contests shown, and all of them for the map's turnout (mapmode.js). The
+ * once per hash, from the directory of the status.json that lists it, so
+ * only what changed is fetched again: the files of the contests shown,
+ * and for the map's turnout of an election of many contests (mapmode.js)
+ * the turnout file (`turnout`) with the cities' or the kraje's files. The
  * final results also have figures per okrsok (`okrsky/<area>`), fetched
  * only by what shows them: the map, a place's units on the ballots
- * (`placeResults`) and the card's origins of the votes.
+ * (`placeResults`) and the card's origins of the votes. Every figure of a
+ * unit made of finer ones is the results' own (docs/results.md): nothing
+ * here or in the views adds figures up.
  *
  * Without results, or while they cannot be read, the page shows none and
  * works as before. */
 
-import { html, useEffect, useState } from '../vendor/preact-htm.module.js';
-import { areaName, dataIndex, hasCouncilObvody, isCity } from './data.js';
-import { formatNumber, formatPercent, liveWindow, live as polling, polls, resultsPath, t } from './i18n.js';
+import { html, useEffect, useLayoutEffect, useState } from '../vendor/preact-htm.module.js';
+import { dataIndex } from './data.js';
+import { formatNumber, formatPercent, livePath, liveWindow, polls, resultsPath, rounds, t } from './i18n.js';
+import { areaName, isCity, isCountry, isRegional, isSingle, parseContest } from './kinds.js';
 
 const POLL_MS = 60_000;
 // setTimeout's longest delay (2^31 − 1 ms, about 24.8 days): a longer wait
@@ -34,15 +45,12 @@ const MAX_DELAY = 2 ** 31 - 1;
 /* A contest's entry while its area has results but it is not counted yet. */
 export const NOT_COUNTED = { status: 'pending' };
 
-const SINGLE = new Set(['starosta', 'predseda']);
-
-/* Whether contest *id* elects one person (a mayor or a president) rather
- * than a council. */
-export const isSingle = (id) => SINGLE.has(id.split(':')[0]);
-
 const listeners = new Set();
-// status.json as last read; null until then, and without results.
+// status.json as last read, and the directory it was read from (the final
+// or the live results'), which the files it lists are fetched from; null
+// until then, and without results.
 let status = null;
+let source = null;
 // Whether status.json has been tried once, read or not: until then nothing
 // is known of the results, not even that they are awaited.
 let tried = false;
@@ -53,9 +61,10 @@ const files = new Map();
 let timer = null;
 
 // The files that come within this long of the last telling are told of
-// together, at its end: the map's turnout alone fetches some 230 files, and
-// each telling renders the page again and works the map's figures out anew
-// (mapmode.js), which one by one held the page up for seconds.
+// together, at its end: the map's municipal turnout alone fetches some 80
+// okrsok files, and each telling renders the page again and works the
+// map's figures out anew (mapmode.js), which one by one held the page up
+// for seconds.
 const NOTIFY_MS = 200;
 let notifying = 0;
 let notified = -Infinity;
@@ -74,15 +83,32 @@ const notifySoon = () => {
 // Whether counting has started: status.json read and naming a phase.
 const counting = () => Boolean(status) && status.phase !== 'none';
 
+/* status.json of the results in directory *base*: null where there is none
+ * (404); throws where it cannot be read. */
+async function readStatus(base) {
+  const response = await fetch(`${base}/status.json`, { cache: 'no-cache' });
+  if (response.status === 404) return null;
+  if (!response.ok) throw new Error(`${base}/status.json: HTTP ${response.status}`);
+  return response.json();
+}
+
 async function poll() {
   try {
-    const response = await fetch(`${resultsPath}/status.json`, { cache: 'no-cache' });
-    if (!response.ok) throw new Error(`status.json: HTTP ${response.status}`);
-    const next = await response.json();
-    index ??= await dataIndex();
-    if (next.version !== status?.version) {
-      status = next;
-      notify();
+    // The final results once they are there; until then, within the window,
+    // the live results.
+    let base = resultsPath;
+    let next = await readStatus(base);
+    if (!next && livePath && windowNow() === 'during') {
+      base = livePath;
+      next = await readStatus(base);
+    }
+    if (next) {
+      index ??= await dataIndex();
+      if (next.version !== status?.version || base !== source) {
+        status = next;
+        source = base;
+        notify();
+      }
     }
   } catch (e) {
     // The results shown stay as they were until status.json can be read again.
@@ -97,9 +123,9 @@ async function poll() {
 
 /* Where now is relative to the polling window: 'before' the polls close,
  * 'during' the days after, 'after' those. Always 'during' without a window
- * (a test server), always 'after' in a site that does not poll. */
+ * (a test server), always 'after' in a site without live results. */
 function windowNow() {
-  if (!polling) return 'after';
+  if (!livePath) return 'after';
   if (!liveWindow) return 'during';
   const now = Date.now();
   if (now < liveWindow[0]) return 'before';
@@ -126,7 +152,7 @@ let started = false;
 function start() {
   if (started) return;
   started = true;
-  // Past the window, once: the results as they were left.
+  // Past the window, once: the final results.
   if (windowNow() === 'after') poll();
   else update();
   // A page in a background tab does not poll; back in view, it catches up.
@@ -141,7 +167,7 @@ function load(name, hash) {
   if (file?.hash === hash) return file;
   const next = { hash, data: file?.data ?? null };
   files.set(name, next);
-  fetch(`${resultsPath}/${name}.json?v=${hash}`)
+  fetch(`${source}/${name}.json?v=${hash}`)
     .then((response) => {
       if (!response.ok) throw new Error(`${name}: HTTP ${response.status}`);
       return response.json();
@@ -170,16 +196,18 @@ const live = {
     return tried;
   },
   /* The live entry of contest *id*: NOT_COUNTED in an area not counted
-   * yet; undefined where not known. */
+   * yet; undefined where not known, or where it was held nowhere, no
+   * candidate having registered (data/index.json `uncontested`): nothing
+   * is to be counted. */
   of(id) {
-    if (!counting() || !index) return undefined;
+    if (!counting() || !index || index.uncontested.includes(id)) return undefined;
     const name = areaName(id, index);
     const hash = status.files?.[name];
     if (!hash) return NOT_COUNTED;
     const file = load(name, hash);
     return file.data ? (file.data.contests[id] ?? NOT_COUNTED) : undefined;
   },
-  /* The contests of area file *name* (data.js `areaName`, a key of
+  /* The contests of area file *name* (kinds.js `areaName`, a key of
    * `status.files`), id → live entry, for the map (mapmode.js): {} where
    * the file is absent (nothing counted in its area yet); undefined where
    * not known. */
@@ -192,7 +220,8 @@ const live = {
   /* The figures by okrsok of area file *name* (`okrsky/<name>` in
    * `status.files`, docs/results.md), only in the final results:
    * {contests: {id: {'<obec>/<n>': [eligible, voters, valid, {number:
-   * votes}]}}, past}, `past` the election before's on the same okrsky
+   * votes}]}}, units, past}, `units` the units made of the okrsky
+   * (`placeResults`), `past` the election before's on the same okrsky
    * (`pastOf`). Null where there are none; undefined where not known. */
   okrsky(name) {
     if (!counting()) return undefined;
@@ -205,13 +234,28 @@ const live = {
   hasOkrsky(name) {
     return Boolean(status?.files?.[`okrsky/${name}`]);
   },
+  /* The turnout of the elections of many contests (`turnout` in
+   * `status.files`, docs/results.md), for the map (mapmode.js): {municipal,
+   * city, regional}, each {total, …} of [eligible, voters]; null where
+   * there is none; undefined where not known. */
+  turnout() {
+    if (!counting()) return undefined;
+    const hash = status.files?.turnout;
+    if (!hash) return null;
+    return load('turnout', hash).data ?? undefined;
+  },
 };
 
 /* The live results, for a component: renders it again whenever they
- * change. */
+ * change. It listens from a layout effect, which runs as the render is
+ * committed, before anything else can: a file its first render asked for
+ * (`load`) may come before a plain effect's turn after the paint (a small
+ * one, or one the browser has kept), and its telling would then be missed,
+ * the component showing the file as still loading until something else
+ * renders it again. */
 export function useLive() {
   const [, setTick] = useState(0);
-  useEffect(() => {
+  useLayoutEffect(() => {
     const listener = () => setTick((n) => n + 1);
     listeners.add(listener);
     start();
@@ -245,106 +289,154 @@ export function pastOf(file, id, key) {
 
 /* What the figures of the election before are, by *method* (`PAST`): of the
  * same area, of the okrsok of the same number and about as many voters,
- * estimated, or not known; and (`pastTitle`) how they were found. */
+ * estimated, or not known; and (`pastTitle`) how they were found, against
+ * the election of day *day* where given (a referendum's is the vote before
+ * of whatever kind, which the page's `previous` does not name). */
 export const pastLabel = (method) => t(`past.${pastName(method)}`);
 
-export const pastTitle = (method) => t(`past.how_${pastName(method)}`);
+export const pastTitle = (method, day = null) =>
+  t(`past.how_${pastName(method)}`, day ? { previous: day.slice(0, 4) } : {});
 
 const pastName = (method) => Object.keys(PAST).find((name) => PAST[name] === method) ?? 'unknown';
 
-/* Adds *record* [eligible, voters, valid, {number: votes}] (an area's or
- * an okrsok's, docs/results.md) to the sum under *key* in *sums*. */
-export function addRecord(sums, key, [eligible, voters, valid, votes]) {
-  const sum = sums.get(key);
-  if (!sum) {
-    sums.set(key, [eligible, voters, valid, { ...votes }]);
-    return;
-  }
-  sum[0] += eligible;
-  sum[1] += voters;
-  sum[2] += valid;
-  for (const [n, v] of Object.entries(votes)) sum[3][n] = (sum[3][n] ?? 0) + v;
+/* The election before of contest *id* in a unit of okrsok file *file*
+ * made of its okrsky, as the file's `past.units` has it (summed by `ems
+ * results`, docs/results.md): *level* 'obec', 'okres', 'kraj', 'zsk' or
+ * 'obvod' and the unit's *code* ('<obec>/<k>' of a council obvod, the
+ * number of a regional one), or 'all' and 'obce', the whole contest by
+ * its okrsky or by its obce. {day, method, record}, the method the least
+ * certain of its parts'; null where not known (a part not known, or
+ * nothing then). An obec with figures of its own in `past.contests` has no
+ * entry: `pastObec`. */
+function pastUnit(file, id, level, code = null) {
+  const past = file?.past;
+  const units = past?.day ? past.units[id]?.[level] : undefined;
+  const unit = level === 'all' || level === 'obce' ? units : units?.[code];
+  return unit ? { day: past.day, method: unit[0], record: unit[1] } : null;
 }
 
-/* Okrsok '<obec>/<n>' → its council obvod '<obec>/<k>', for the obce split
- * into several (data/index.json *index*), from *file*, the okrsky of an
- * okres's municipal contests (`live.okrsky('okres/<code>')`), where each
- * council obvod's contest lists its okrsky. An obec's okrsky are the same
- * polling districts, numbered alike, in every contest, so this groups the
- * okrsky of its mayor's, city and regional contests too. Made once per
- * file. */
-const councilMaps = new WeakMap();
-export function okrsokCouncils(file, index) {
-  let councils = councilMaps.get(file);
-  if (councils) return councils;
-  councils = new Map();
-  for (const [id, records] of Object.entries(file.contests)) {
-    const [kind, area] = id.split(':');
-    const [code, k] = area.split('/');
-    if (kind !== 'oz' || !k || !hasCouncilObvody(index, code)) continue;
-    for (const key of Object.keys(records)) councils.set(key, area);
-  }
-  councilMaps.set(file, councils);
-  return councils;
+/* The election before of contest *id* in obec *code*, from okrsok file
+ * *file*: its own figures then (the same area), else its okrsky's then
+ * summed (`pastUnit`). */
+function pastObec(file, id, code) {
+  const own = file?.past?.day ? file.past.contests[id]?.[code] : undefined;
+  return own ? { day: file.past.day, method: PAST.same, record: own } : pastUnit(file, id, 'obec', code);
 }
 
-/* The scopes a contest's results can be narrowed to, coarsest first. */
-export const SCOPES = ['all', 'obec', 'obvod', 'okrsok'];
+/* The whole of contest *id* at the election before, as the okrsok file of
+ * *place* ({obec}; see `placeResults`) has it ({day, method, record}): the
+ * same contest's then, for one that is its own counterpart (a country-wide
+ * one, a mayor's), else (a council obvod's, whose file is all of it) its
+ * obce's then summed where each has its own (a regional or a city council
+ * obvod's: the same area, as the 2022 regional constituencies over 2017's
+ * figures), else its okrsky's (`pastUnit`); null where unknown or the file
+ * has not come. */
+export function placePast(id, place) {
+  const entry = live.of(id);
+  if (!entry || entry === NOT_COUNTED || !place?.obec) return null;
+  const name = okrsokFile(id, place.obec);
+  const file = live.hasOkrsky(name) ? live.okrsky(name) : null;
+  const record = file?.past?.totals?.[id];
+  if (record) return { day: file.past.day, method: PAST.same, record };
+  return pastUnit(file, id, 'obce') ?? pastUnit(file, id, 'all');
+}
+
+/* The scopes a contest's results can be narrowed to, coarsest first: the
+ * kraj and okres only of a country-wide contest, the regional obvod
+ * ('zsk') only of a regional president's. */
+export const SCOPES = ['all', 'kraj', 'okres', 'zsk', 'obec', 'obvod', 'okrsok'];
+
+/* The finest of *units* (`placeResults`) not finer than *level* (one of
+ * SCOPES), or null: the unit the ballots show at the level, and the one a
+ * map mode made there is of (mapmode.js). */
+export const unitWithin = (units, level) =>
+  units.filter((u) => SCOPES.indexOf(u.scope) <= SCOPES.indexOf(level)).at(-1) ?? null;
+
+/* The okrsok file of contest *id* for obec *obec* (`live.okrsky`): its
+ * area file's, or of a country-wide contest (a party's list too) its
+ * kraj's, `country/<kraj>` or `list/<p>/<kraj>`. */
+const okrsokFile = (id, obec) => (isCountry(id) ? `${areaName(id, index)}/${index.obce[obec][2]}` : areaName(id, index));
 
 /* The figures of counted contest *id* in the units of *place* ({obec,
  * obvod, okrsok}: its obec or city district code, and its council obvod
  * and okrsok where known), coarsest first, each unit only where it has
  * figures of its own that differ from the whole contest's and from the
  * coarser units': [{scope, record, past}], `scope` one of SCOPES, `record`
- * as in the okrsok files, `past` an okrsok's in the election before
- * (`pastOf`) where anything is known of it. The units:
- * - obec: of a regional or a city contest (its `areas` entry, else its
- *   okrsky summed);
+ * as in the okrsok files, `past` the unit's in the election before
+ * ({day, method, record}, as `pastOf` gives an okrsok's) where anything is
+ * known of it. The units, each as the results have it (summed by `ems
+ * results`, docs/results.md), never summed here:
+ * - kraj and okres: of a country-wide contest (its record's `units`); the
+ *   past, `pastUnit`;
+ * - zsk: the regional obvod of a regional president (its record's
+ *   `units`); the past, `pastUnit`;
+ * - obec: of a regional, a city or a country-wide contest (its `areas`
+ *   entry, else the okrsok file's `units`); the past, the whole obec's
+ *   then (`pastObec`);
  * - obvod: the council obvod of an obec split into several, for any
- *   contest but that obvod's own council (its okrsky summed, grouped by
- *   `okrsokCouncils`);
+ *   contest but that obvod's own council (the okrsok file's `units`); the
+ *   past, `pastUnit`;
  * - okrsok.
  * The okrsok files load as needed (only the final results have them): []
- * without them, or while they load. */
+ * without them, or while they load. Made once per entry, place and file:
+ * the ballots ask it for every party's list on every render, and the
+ * units then keep their identity (ballots.js `inUnit`, `preferenceRank`). */
+const placed = new WeakMap();
 export function placeResults(id, place) {
   const entry = live.of(id);
   if (!entry || entry === NOT_COUNTED || !place?.obec) return [];
-  const [kind, area] = id.split(':');
-  const code = area.split('/')[0];
-  const name = areaName(id, index);
+  const name = okrsokFile(id, place.obec);
   const file = live.hasOkrsky(name) ? live.okrsky(name) : null;
+  const key = `${place.obec}/${place.obvod ?? ''}/${place.okrsok ?? ''}`;
+  const kept = placed.get(entry);
+  if (kept?.key === key && kept.file === file) return kept.units;
+  const units = unitsOf(id, entry, place, file);
+  placed.set(entry, { key, file, units });
+  return units;
+}
+
+function unitsOf(id, entry, place, file) {
+  const { kind, area } = parseContest(id);
   const records = file?.contests[id] ?? {};
+  const sums = file?.units[id] ?? {};
   const same = (a, b) => a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
   const whole = [entry.eligible, entry.voters, entry.valid];
   const out = [];
   const push = (scope, record, past = null) => {
     if (record && !same(record, whole) && !out.some((u) => same(u.record, record))) out.push({ scope, record, past });
   };
-  const sumOf = (keys) => {
-    const sums = new Map();
-    for (const key of keys) addRecord(sums, 0, records[key]);
-    return sums.get(0);
-  };
-  const keys = Object.keys(records);
-  if (kind === 'predseda' || kind === 'zsk' || isCity(code)) {
+  const [, okres, kraj, zsk] = index.obce[place.obec];
+  if (isCountry(id) && entry.units) {
+    // Bratislava and Košice as wholes are in no okres.
+    push('kraj', entry.units.kraj[kraj], pastUnit(file, id, 'kraj', kraj));
+    if (okres) push('okres', entry.units.okres[okres], pastUnit(file, id, 'okres', okres));
+  }
+  if (kind === 'predseda' && entry.units && zsk) {
+    push('zsk', entry.units.zsk[zsk], pastUnit(file, id, 'zsk', zsk));
+  }
+  if (isRegional(id) || isCountry(id) || isCity(area)) {
     // Where the contest has `areas`, an obec missing from them is one whose
     // votes are not known (okrsky of the cities not told apart): none shown.
-    push('obec', entry.areas ? entry.areas[place.obec] : sumOf(keys.filter((key) => key.startsWith(`${place.obec}/`))));
+    push('obec', entry.areas ? entry.areas[place.obec] : sums.obec?.[place.obec], pastObec(file, id, place.obec));
   }
-  if (place.obvod && hasCouncilObvody(index, place.obec) && !(kind === 'oz' && code === place.obec)) {
-    const municipal = `okres/${index.obce[place.obec][1]}`;
-    const councils = live.hasOkrsky(municipal) ? live.okrsky(municipal) : null;
-    if (councils) {
-      const of = okrsokCouncils(councils, index);
-      const target = `${place.obec}/${place.obvod}`;
-      push('obvod', sumOf(keys.filter((key) => of.get(key) === target)));
-    }
+  if (place.obvod) {
+    // Only an obec split into several has them, and not for its councils.
+    const target = `${place.obec}/${place.obvod}`;
+    push('obvod', sums.obvod?.[target], pastUnit(file, id, 'obvod', target));
   }
   if (place.okrsok) {
     const key = `${place.obec}/${place.okrsok}`;
     push('okrsok', records[key], pastOf(file, id, key));
   }
   return out;
+}
+
+/* Whether the figures by okrsok of contest *id* for obec *obec* are still
+ * loading: `placeResults` then has none of the units made of them yet,
+ * which are not to be taken for missing. */
+export function okrskyLoading(id, obec) {
+  const name = okrsokFile(id, obec);
+  return live.hasOkrsky(name) && live.okrsky(name) === undefined;
 }
 
 /* How much the registered voters may have grown since the contest's last
@@ -400,8 +492,13 @@ export function formatProgress(share) {
   return formatPercent(share, share > 0 && share < 0.1 ? 1 : 0);
 }
 
-/* The flag of a candidate who withdrew yet stayed on the ballot, whose
- * votes count (docs/results.md). */
+/* The flags of the results (docs/results.md): elected (a party: won
+ * seats; an answer: won), a substitute on a party's list, through to a
+ * presidential election's round 2, withdrew yet stayed on the ballot
+ * (whose votes count). */
+const ELECTED = 1;
+const SUBSTITUTE = 0;
+const ADVANCED = 2;
 const WITHDRAWN = -1;
 
 /* The results of *contest* (data.js `contest`) from its live entry *r*
@@ -409,15 +506,20 @@ const WITHDRAWN = -1;
  * - status: 'partial', 'winner' or 'final';
  * - counted, eligible, voters, valid, filled: as in the entry, null where
  *   absent;
+ * - preferences: of a party's list, its persons' preference votes (summed
+ *   by `ems results`), else null;
  * - seats: the seats elected; reportedSeats those the results give, null
  *   where they give none;
  * - registered: while counting, the area's registered voters as far as
  *   known (those of its last election, or those counted if more);
  * - progress: how far the count has got (`countShare`);
- * - byNumber: ballot number → {votes, share, elected, called, withdrawn},
- *   `share` of the valid ballots (for a council: of the voters with a
- *   valid ballot), `called` decided by this site on a partial count, not
- *   yet officially;
+ * - byNumber: ballot number → {votes, share, elected, called, withdrawn,
+ *   substitute, advanced, won}, `share` of the valid ballots (for a
+ *   council: of the voters with a valid ballot; for a party's list: of
+ *   the party's votes), `called` decided by this site on a partial count,
+ *   not yet officially, `substitute` of a party's list, `advanced` to a
+ *   presidential round 2, `won` a party's seats (where the results give
+ *   them);
  * - call: {remaining, bound} (`uncounted`), what a call rests on.
  * A contest counted with as many seats filled as it has candidates has
  * them all elected, `votes` and `share` null, until ŠÚ SR publishes their
@@ -425,8 +527,19 @@ const WITHDRAWN = -1;
  * withdrew but stayed on the list cannot be elected, so fewer seats are
  * filled; where the results flag them (`withdrawn`), their votes count
  * among the valid ones and in the shares, but they are never called, nor
- * in the way of a call. */
+ * in the way of a call. Decoded once per entry and contest: the ballots
+ * decode every party's list on every render, and an entry stays as long as
+ * its file. */
+const decoded = new WeakMap();
 export function decodeResults(contest, r) {
+  const kept = decoded.get(r);
+  if (kept?.contest === contest) return kept.results;
+  const results = decode(contest, r);
+  decoded.set(r, { contest, results });
+  return results;
+}
+
+function decode(contest, r) {
   const seats = r.seats ?? (isSingle(contest.id) ? 1 : (contest.seats ?? contest.seats2022));
   const votes = r.candidates.filter(([, , flag]) => flag !== WITHDRAWN).map(([n, v]) => [n, v]);
   const call = r.status === 'partial' && seats ? uncounted(contest, r) : null;
@@ -437,9 +550,12 @@ export function decodeResults(contest, r) {
       {
         votes: v,
         share: r.valid ? v / r.valid : null,
-        elected: flag === 1,
+        elected: flag === ELECTED,
         called: called.has(n),
         withdrawn: flag === WITHDRAWN,
+        substitute: flag === SUBSTITUTE,
+        advanced: flag === ADVANCED,
+        won: r.won?.[n] ?? null,
       },
     ]),
   );
@@ -458,6 +574,7 @@ export function decodeResults(contest, r) {
     seats,
     reportedSeats: r.seats ?? null,
     filled: r.filled ?? null,
+    preferences: r.preferences ?? null,
     registered,
     progress: countShare(registered === null ? null : [r.eligible, registered], r.counted),
     byNumber,
@@ -475,7 +592,7 @@ const slovakTime = (date) =>
     timeZone: 'Europe/Bratislava',
   });
 
-/* The time `ems results` last got the results from ŠÚ SR (the latest of
+/* The time the results were last got from ŠÚ SR (the latest of
  * the sources', else status.json's `updated`). */
 function sourceTime(s) {
   const times = Object.values(s.source ?? {})
@@ -487,7 +604,15 @@ function sourceTime(s) {
   return latest ? slovakTime(latest) : '';
 }
 
-/* The voting under way, under the site's name, from the polls' opening to
+/* The polls' opening and closing that now falls in or after: a presidential
+ * election's round 2 is voted two weeks after round 1, at the same hours,
+ * so its day has the voting line too. */
+function pollsOf(now) {
+  const windows = rounds ? rounds.map(([, open, close]) => [new Date(open), new Date(close)]) : [polls];
+  return windows.findLast(([open]) => now >= open) ?? windows[0];
+}
+
+/* The voting under way, under the title, from the polls' opening to
  * their closing (config `polls`), while there are no results yet: a bar
  * of how much of the voting day has passed and when the polls close. It
  * neither moves nor blinks, as nothing on the site changes meanwhile; it is
@@ -505,7 +630,7 @@ function VotingStatus({ tried }) {
     return () => clearInterval(timer);
   }, []);
   if (!polls) return null;
-  const [open, close] = polls;
+  const [open, close] = pollsOf(now);
   if (now < open) return null;
   if (now >= close) {
     if (!tried || windowNow() === 'after') return null;
@@ -521,29 +646,46 @@ function VotingStatus({ tried }) {
   </p>`;
 }
 
-/* The state of the results under the site's name, on one line where it
- * fits. While counting: how far each election has got (`countShare`; the
- * okrsky counted in the tooltip) and the time of the results. Nothing once
- * final, which goes without saying after the elections. Before counting
- * starts, or without results: VotingStatus. */
+/* The results' sources (status.json `source`, contests.py `source_of`) in
+ * the order the status line names them: [key, the strings that name it
+ * (`results.status_<name>` there, `results.units_<name>` in the tooltip's
+ * count of units), their variables]. The regional elections first, as
+ * they are counted by okrsok and come in sooner; a presidential
+ * election's rounds by number; a country-wide election's one source as
+ * the country. */
+const SOURCES = [
+  ['osk', 'regional', {}],
+  ['oso', 'municipal', {}],
+  ['prez1', 'round', { round: 1 }],
+  ['prez2', 'round', { round: 2 }],
+  ['ref', 'country', {}],
+  ['nrsr', 'country', {}],
+  ['ep', 'country', {}],
+];
+
+/* The state of the results under the title, on one line where it
+ * fits. While counting: how far each of the election's sources has got
+ * (`countShare`; the units counted in the tooltip) and the time of the
+ * results. Nothing once final, which goes without saying after the
+ * elections. Before counting starts, or without results: VotingStatus. */
 export function LiveStatus() {
   const results = useLive();
   const s = results.status;
   if (!s || s.phase === 'none') return html`<${VotingStatus} tried=${results.tried} />`;
   if (s.phase === 'final') return null;
-  const progress = (x) => {
-    const share = countShare(x?.voters, x?.counted);
-    return share === null ? null : formatProgress(share);
-  };
-  const regional = progress(s.source?.osk);
-  const municipal = progress(s.source?.oso);
-  const parts = [
-    regional && t('results.status_regional', { share: regional }),
-    municipal && t('results.status_municipal', { share: municipal }),
-  ].filter(Boolean);
+  const sources = SOURCES.filter(([key]) => s.source?.[key]).map(([key, name, vars]) => ({ x: s.source[key], name, vars }));
+  const parts = sources.flatMap(({ x, name, vars }) => {
+    const share = countShare(x.voters, x.counted);
+    return share === null ? [] : [t(`results.status_${name}`, { ...vars, share: formatProgress(share) })];
+  });
   const text = [t('results.status_counting'), ...parts, sourceTime(s)].filter(Boolean).join(' · ');
-  const units = (x) => (x?.counted ? `${formatNumber(x.counted[0])}/${formatNumber(x.counted[1])}` : '–');
-  const title = `${t('results.status_source')} ${t('results.status_units', { regional: units(s.source?.osk), municipal: units(s.source?.oso) })}`;
+  const units = sources.map(({ x, name, vars }) =>
+    t(`results.units_${name}`, {
+      ...vars,
+      n: x.counted ? `${formatNumber(x.counted[0])}/${formatNumber(x.counted[1])}` : '–',
+    }),
+  );
+  const title = `${t('results.status_source')} ${t('results.status_units', { list: units.join(', ') })}`;
   return html`<p class="live-status" role="status" title=${title}>
     <span class="live-dot" aria-hidden="true"></span>${text}
   </p>`;

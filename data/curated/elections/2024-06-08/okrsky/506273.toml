@@ -1,0 +1,31 @@
+# Okrsky of Motešice, transcribed by an AI agent in job okrsok-rules-5176 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Horné Motešice, kultúrny dom s.č. 83
+#   okrsok 2: Dolné Motešice, budova novej školy s.č. 67
+#   okrsok 3: Peťovka, bývalá požiarna zbrojnica s.č. 43
+obec = "506273"
+name = "Motešice"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2024-03-14
+okrsky_date_basis = "The Internet Archive captured the undated PDF on 2024-03-14; it names the European Parliament election 2024. (https://web.archive.org/web/20240314125603/https://www.motesice.sk/wp-content/uploads/2024/02/volebne%CC%81-okrsky_EP.pdf)"
+
+[[document]]
+url = "https://web.archive.org/web/20240314125603/https://www.motesice.sk/wp-content/uploads/2024/02/volebne%CC%81-okrsky_EP.pdf"
+sha256 = "bec8c000a432617c5d74ffc095b8f8febf5d84e1ab17e906f4e150b5d2f94450"
+title = "Volebné okrsky (voľby do Európskeho parlamentu 2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Horné Motešice", note = "The document names only each okrsok's polling station; the three okrsky match the three parts of the municipality and each station lies in another part, so each okrsok is given the part of its station.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dolné Motešice", note = "The document names only each okrsok's polling station; the three okrsky match the three parts of the municipality and each station lies in another part, so each okrsok is given the part of its station.", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Peťovka", note = "The document names only each okrsok's polling station; the three okrsky match the three parts of the municipality and each station lies in another part, so each okrsok is given the part of its station.", inferred = true},
+]

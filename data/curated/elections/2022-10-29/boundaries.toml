@@ -1,5 +1,5 @@
 # The boundaries the 2022 election is drawn on, and how they differ from its
-# own. The site draws it on the ZBGIS boundaries of 2026 (inputs zbgis-0..2):
+# own. The site draws it on the ZBGIS boundaries of 2026 (inputs zbgis-*-2026):
 # the boundaries of January 2022 survive only as full-detail shapefiles
 # (input zbgis-2022, a record), with the same 8 kraje, 79 okresy and 2,927
 # obce, codes and names as 2026. Compared obec by obec (symmetric difference
@@ -23,7 +23,7 @@
 # About that the 2026 boundaries are drawn (build.py `boundary_changes`).
 
 compared = 2022-01-18  # the data date (DOW) of the 2022 shapefiles
-used = "zbgis-0"
+used = "zbgis-0-2026"
 
 [[change]]
 obce = ["523585", "523682"]  # Kežmarok 1.37 %, Ľubica 0.44 %

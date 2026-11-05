@@ -1,0 +1,55 @@
+# Okrsky of Turňa nad Bodvou, transcribed by an AI agent in job okrsok-rules-3206 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Moldavská cesta – súp.č. 1 – 6, 9, 10, 13, 55 – 58, 107 – 108, 110 – 112, 115 – 116, 419, 420, 423 – 428, 435 – 436, 502, 503 – 508, 693 Tokajská ulica, Malá ulica, Kvetná ulica, Gazdovská ulica, Župná cesta, Vodná ulica, Hlavná ulica
+#   okrsok 2: Žarnovská ulica, Nová ulica, Hradná ulica, Hájska cesta, Ulica Čiga, Muškátová ulica, Potočná ulica, Ulica Gyűr, Školská ulica, Dolná Kostolná ulica, Horná Kostolná ulica, Moldavská cesta – súp.č. 232 – 234, 278 - 281, 704, Kaštieľska ulica, Pustá ulica
+#   okrsok 3: Sídlisko Cementár, Severná ulica, Slepá ulica, Moldavská cesta 310, 313, 314, 343 - 344, 346 – 352, 512, 544 – 554, Staničná ulica
+obec = "559784"
+name = "Turňa nad Bodvou"
+okrsky_date = 2022-11-10
+okrsky_fill = "nearest"
+okrsky_note = "Moldavská cesta is split by the súpisné čísla listed; its other houses, Hájska ulica (in the register, not in the document) and the addresses without a street are placed by fill_nearest. The file is gone from the live site; Internet Archive snapshot of the original file."
+
+[[document]]
+url = "https://web.archive.org/web/20221204130209/https://www.turnanadbodvou.sk/files/2022-11-10-132946-Utvorenie_volebn__ch_okrskov.pdf"
+sha256 = "c05a37392ded029d53dca627e2a1cde83dbf148261ca4b5c6581f85e3661eccb"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre hlasovanie v referende (10.11.2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Gazdovská ulica"},
+  {street = "Hlavná ulica"},
+  {street = "Kvetná ulica"},
+  {street = "Malá ulica"},
+  {street = "Moldavská cesta", numbers = "1-6, 9, 10, 13, 55-58, 107-108, 110-112, 115-116, 419, 420, 423-428, 435-436, 502-508, 693", by = "supisne"},
+  {street = "Tokajská ulica"},
+  {street = "Vodná ulica"},
+  {street = "Župná cesta"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dolná Kostolná ulica"},
+  {street = "Hájska cesta"},
+  {street = "Horná Kostolná ulica"},
+  {street = "Hradná ulica"},
+  {street = "Kaštieľska ulica"},
+  {street = "Moldavská cesta", numbers = "232-234, 278-281, 704", by = "supisne"},
+  {street = "Muškátová ulica"},
+  {street = "Nová ulica"},
+  {street = "Potočná ulica"},
+  {street = "Pustá ulica"},
+  {street = "Školská ulica"},
+  {street = "Ulica Čiga"},
+  {street = "Ulica Gyűr"},
+  {street = "Žarnovská ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Moldavská cesta", numbers = "310, 313, 314, 343-344, 346-352, 512, 544-554", by = "supisne"},
+  {street = "Severná ulica"},
+  {street = "Sídlisko Cementár"},
+  {street = "Slepá ulica"},
+  {street = "Staničná ulica"},
+]

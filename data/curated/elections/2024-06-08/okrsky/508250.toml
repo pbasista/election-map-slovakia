@@ -1,0 +1,80 @@
+# Okrsky of Šenkvice, transcribed by an AI agent in job okrsok-rules-4752 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Uhliská, Vinohradská, Priečna, Školská, Kozare, Spojná, Chorvátska: párne: od 2 – 162A, Chorvátska: nepárne: od 1 - 187
+#   okrsok 2: Trlinská, Pezinská, Medzi cesty, Lúčna, Horná, Domovina, Družstevná, Kostolná, Jánska
+#   okrsok 3: Modranská, Vištucká, Hroznová, Paulenova, Ulica Svätého Urbana, Ulica A. Behunka, Poľná, Príka, Krátka, Nádražná, Zapotok, Slnečná, Veterná
+#   okrsok 4: Cintorínska, Jagned, Glogovec, Cerovská, Agátová, Ružová, Lipová, Záhradná, Chorvátska: párne: od 164 – 184, Chorvátska: nepárne: od 189 - 201 A
+obec = "508250"
+name = "Šenkvice"
+okrsky_fill = "nearest"
+okrsky_note = "Námestie Gabriela Kolinoviča, which the document does not list, and addresses without a street take the okrsok of the nearest address (fill_nearest)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-03-04
+okrsky_date_basis = "The list is undated; the municipality's notice linking it states \"Zverejnené 4.3.2024\". (https://www.senkvice.eu/oznamy/volby-do-europskeho-parlamentu-2024-volebne-okrsky-a-volebne-miestnosti.html)"
+
+[[document]]
+url = "https://www.senkvice.eu/download_file_f.php?id=2009709"
+sha256 = "2c134e75a8c99a8b0945ade94ae607212c5647980933dae5d5711b75d94679d0"
+title = "Volebné okrsky a volebné miestnosti pre voľby do Európskeho parlamentu 08.06.2024"
+
+[[document]]
+url = "https://www.senkvice.eu/oznamy/volby-do-europskeho-parlamentu-2024-volebne-okrsky-a-volebne-miestnosti.html"
+sha256 = "9e4b097fdc56313c51fbe8cc1e256f05806c6ab57153a5da959d6d46ab7f6a95"
+title = "Oznam obce Šenkvice"
+
+[okrsok.1]
+rules = [
+  {street = "Uhliská"},
+  {street = "Vinohradská"},
+  {street = "Priečna"},
+  {street = "Školská"},
+  {street = "Kozare"},
+  {street = "Spojná"},
+  {street = "Chorvátska", numbers = "2-162, 162A", parity = "even"},
+  {street = "Chorvátska", numbers = "1-187", parity = "odd"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Trlinská"},
+  {street = "Pezinská"},
+  {street = "Medzi cesty"},
+  {street = "Lúčna"},
+  {street = "Horná"},
+  {street = "Domovina"},
+  {street = "Družstevná"},
+  {street = "Kostolná"},
+  {street = "Jánska"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Modranská"},
+  {street = "Vištucká"},
+  {street = "Hroznová ulica", written = "Hroznová"},
+  {street = "Paulenova"},
+  {street = "ulica Svätého Urbana", written = "Ulica Svätého Urbana"},
+  {street = "Ulica A. Behunka"},
+  {street = "Poľná"},
+  {street = "Príka"},
+  {street = "Krátka"},
+  {street = "Nádražná"},
+  {street = "Zapotok"},
+  {street = "Slnečná"},
+  {street = "Veterná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Jagned"},
+  {street = "Glogovec"},
+  {street = "Cerovská"},
+  {street = "Agátová"},
+  {street = "Ružová"},
+  {street = "Lipová"},
+  {street = "Záhradná"},
+  {street = "Chorvátska", numbers = "164-184", parity = "even"},
+  {street = "Chorvátska", numbers = "189-201, 201A", parity = "odd"},
+]

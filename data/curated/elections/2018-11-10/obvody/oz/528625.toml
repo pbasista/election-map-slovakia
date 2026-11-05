@@ -1,0 +1,41 @@
+# The council obvody of Nový Ruskov of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/528625.toml, standing in, by `ems job reuse`. Its header there:
+#   Council obvody of Nový Ruskov (528625), Trebišov.
+#   Transcribed by an AI agent in job obvod-rules-388 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: Vo volebnom obvode č. 1, ktorý zahŕňa časť obce Veľký Ruskov sa volí 5 poslancov.
+#     obvod 2: Vo volebnom obvode č. 2, ktorý zahŕňa časť obce Malý Ruskov sa volia 2 poslanci.
+#   Okrsky added by an AI agent in job okrsok-rules-1248 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Vo volebnom obvode č. 1, ktorý zahŕňa časť obce Veľký Ruskov sa volí 5 poslancov.
+#     okrsok 2: Vo volebnom obvode č. 2, ktorý zahŕňa časť obce Malý Ruskov sa volia 2 poslanci.
+obec = "528625"
+name = "Nový Ruskov"
+date = 2022-06-17
+note = "Scanned announcement, read visually."
+adopted = 2022-10-29
+adopted_basis = "No document of 2018-11-10 setting the obvody was found (obvod-rules-201): No 2018 council resolution or announcement on the obvody was found. The municipality's old Joomla site (archived by the Internet Archive) has for the 2018 municipal elections only the delegation address, the recorder of the commission, information for candidates and the list of registered candidates (scan of 18.9.2018, which lists 'volebný obvod č. 1' with 5 seats and 'č. 2' with 2 seats but does not say what each obvod covers). The minutes of the 23rd council session of 23.5.2018 list an item 'Určenie počtu poslancov', but the archived minutes break off before it and no resolution text survives. The live site (novyruskov.sk) has the 2022 'Oznámenie o utvorení volebných obvodov' (uznesenie č. 128 of 17.6.2022: obvod 1 = časť Veľký Ruskov, 5 seats; obvod 2 = časť Malý Ruskov, 2 seats), which is not valid for 2018, and a 2014 'Oznámenie o určení počtu poslancov'. These are the council obvody of the vote of 2022-10-29 (2022), the nearest in time with a rule set of its own of the same obvody and seats. The voters on the roll per obvod are not known for both votes, so whether the layout changed is not known either."
+okrsky_date = 2022-06-17
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "The okrsky of the same rule set: 2 okrsky, those ŠÚ SR counted in each obvod. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://novyruskov.sk/wp-content/uploads/dokumenty/komunalne-volby/OZNAMENIE-o-utvoreni-volebnych-obvodov-a-o-urcovani-poctu-poslancov.pdf"
+sha256 = "1a1db526fb5126cbab4cebfdb9e57795154c50455b94339f77d954b8988fa53f"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do samosprávy obcí 29. októbra 2022 (uznesenie č. 128 zo dňa 17.6.2022), dňa 18.6.2022"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Veľký Ruskov"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Malý Ruskov"},
+]

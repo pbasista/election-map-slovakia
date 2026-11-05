@@ -1,0 +1,51 @@
+# Okrsky of Hanušovce nad Topľou, transcribed by an AI agent in job okrsok-rules-4448 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice Bukovské, Dukelská, Garbiarska, Jarmočná, Kláštorná, Komenského, Kukorelliho, Počekanec, Pod Šibenou, Prešovská, Slovenská, Šarišská, Štúrova od č. 342-343, Zámocká, Železničiarska
+#   okrsok 2: ulice Budovateľská, Mierová, Sadová, SNP, Širiava, Štúrova od č. 335- 340, Tehelná, Záhradná
+obec = "544213"
+name = "Hanušovce nad Topľou"
+okrsky_date = 2024-01-26
+okrsky_fill = "nearest"
+okrsky_note = "Štúrova is split by súpisné číslo (342–343 okrsok 1, 335–340 okrsok 2); other Štúrova houses (e.g. the school 341) and the address without a street take the nearest placed address (fill_nearest). Scanned PDF, read from the rendered image."
+
+[[document]]
+url = "https://www.hanusovce.sk/e_download.php?file=data/editor/230sk_3.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "49e2b6676e4fcbcb3441b83b3c49be58529e718088a9e430557d3d032369db36"
+title = "Utvorenie volebných okrskov"
+
+[[document]]
+url = "https://www.hanusovce.sk/zverejnovanie/uradna-tabula/volby/volby-prezidenta-sr-2024/"
+sha256 = "ddd0be66a1d0dd00e48b5302a9a40f9e7b7361c0982a5efad27e8a9e398e5f58"
+title = "Úradná tabuľa – voľby"
+
+[okrsok.1]
+rules = [
+  {street = "Bukovské"},
+  {street = "Dukelská"},
+  {street = "Garbiarska"},
+  {street = "Jarmočná"},
+  {street = "Kláštorná"},
+  {street = "Komenského"},
+  {street = "Kukorelliho"},
+  {street = "Počekanec"},
+  {street = "Pod Šibenou"},
+  {street = "Prešovská"},
+  {street = "Slovenská"},
+  {street = "Šarišská"},
+  {street = "Zámocká"},
+  {street = "Železničiarska"},
+  {street = "Štúrova", numbers = "342-343", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Mierová"},
+  {street = "Sadová"},
+  {street = "SNP"},
+  {street = "Širiava"},
+  {street = "Tehelná"},
+  {street = "Záhradná"},
+  {street = "Štúrova", numbers = "335-340", by = "supisne"},
+]

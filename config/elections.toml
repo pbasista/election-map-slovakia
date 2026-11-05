@@ -1,55 +1,115 @@
 # The elections the site shows, one table each, named by the election's
-# slug: its name in URLs, the year of its day. Each election has its own
+# slug: its name in URLs, a digit (the year), then lowercase letters, digits
+# and dashes: "2026" for regular elections, "<year>-<month>" for
+# by-elections ("2026-03"), "<year>-<word>" for the others ("2024-prezident",
+# "2023-referendum", "2023-nrsr", "2024-ep"). Each election has its own
 # pages, /<lang>/<slug>/, its data bundle (the Pages project
 # ems-data-<slug>, see site.toml) and results, /<day>/ of the results;
 # its curated data in data/curated/elections/<day>/ and
-# what the steps make of it in data/build/<day>/. The newest is also shown
-# at /<lang>/. Adding an election is adding a table here and the inputs it
-# names to inputs.toml.
+# what the steps make of it in data/build/<day>/, so no two may share a
+# day. The newest that is not a by-election is also shown at /<lang>/; the
+# jobs and research work on the newest regular one, of which there must be
+# one. Adding an election is adding a table here and the inputs it names
+# to inputs.toml.
 #
 #   kind           the kind of election, as the list of elections groups
-#                  them: "municipal-regional", the municipal and regional
-#                  elections held together (the only kind so far)
-#   day            the election day
+#                  them: "municipal-regional", the regular municipal and
+#                  regional elections held together; "by-election",
+#                  municipal (or regional) by-elections and new elections
+#                  held on one day in some areas only; "presidential",
+#                  "referendum", "parliament" (National Council) and
+#                  "european" (European Parliament), country-wide
+#   day            the election day (of a presidential election, round 1)
 #   polls_open, polls_close
 #                  the polls' opening hours that day, Slovak time; the
 #                  search card shows the voting under way between them
-#   live           whether the app polls the results, i.e. reads them every
-#                  minute for live_days: on for an election night and the
-#                  days after, off once the final results are built into
-#                  the site and nothing changes any more. Off, the app reads
-#                  them once per page load. Built with EMS_RESULTS_ANYTIME=1
-#                  (for testing), it polls at any time either way.
+#   live           whether the app reads the live results of the election
+#                  night (live/<day>/, which `ems results poll --deploy`
+#                  deploys) where the final results (results/<day>/, written
+#                  by the results step of `ems make` from the `results`
+#                  inputs) are not there yet, every minute for live_days: on
+#                  for an election night and the days after, off once the
+#                  final results are built into the site. Off, the app reads
+#                  the final results alone, once per page load. Built with
+#                  EMS_RESULTS_ANYTIME=1 (for testing), it reads the live
+#                  results at any time either way.
 #   live_days      days after the polls close that the app reads the results
-#                  every minute (dist/results/<day>/status.json, written by
-#                  `ems results` and the results step of `ems make`;
-#                  docs/results.md). Before the polls close it reads nothing;
-#                  after these days, once per page load, so that a copy of
-#                  the site left open or cached stops polling.
+#                  every minute (docs/results.md). Before the polls close it
+#                  reads nothing; after these days, the final results once
+#                  per page load, so that a copy of the site left open or
+#                  cached stops polling.
+#
+# what only some kinds have:
+#
+#   second_round   (presidential, optional) the day of round 2, polls open
+#                  the same hours; its contest exists once its candidate
+#                  list does (`round2`, or round 2 in candidates.toml)
+#   questions      (referendum) the questions' wording, in order, as the
+#                  President's decision has them
+#   seats          (parliament, european) the seats the body has: 150, EP 15
+#   threshold      (parliament, european) % of the valid votes a party needs
+#                  for seats, 5.0
+#   coalition_thresholds
+#                  (parliament, european, optional) [[parties, %], …], by
+#                  ascending parties: what a coalition of at least that many
+#                  parties needs instead, NR SR [[2, 7.0], [4, 10.0]]; a
+#                  coalition is a ballot subject whose parties.toml entry has
+#                  `members`
+#   preferences    (parliament, european) how many candidates of the chosen
+#                  list a voter may circle: NR SR 4, EP 2
+#   preference_quota
+#                  (parliament, european) % of its party's valid votes a
+#                  candidate's preference votes must reach to move ahead of
+#                  the list order: NR SR 3.0, EP 3.0 (Act No. 180/2014
+#                  Coll. § 68 ods. 5, § 94 ods. 5)
 #
 # and the inputs (inputs.toml) its steps read:
 #
-#   candidates     the candidate lists: `format` says which and how they are
-#                  read; "mvsr" names the four lists of MV SR by contest
-#                  kind: starosta, oz, predseda, zsk; "susr" the packages of
-#                  ŠÚ SR's definitive results of the municipal (oso) and
+#   candidates     the candidate lists (none for a referendum): `format`
+#                  says which and how they are read
+#                  (src/election_map_slovakia/lists.py); "mvsr" (regular)
+#                  names the four lists of MV SR by contest kind: starosta,
+#                  oz, predseda, zsk; "susr" (regular) the packages of ŠÚ
+#                  SR's definitive results of the municipal (oso) and
 #                  regional (osk) elections, whose tables list every
-#                  candidate (src/election_map_slovakia/statoffice.py)
-#   incumbents     (optional) the final results the office holders at the
-#                  election are rebuilt from: those of the regular elections
-#                  of `day` before (`municipal`, `regional`) and of every
-#                  municipal by-election since (`by_elections`, in date
-#                  order); see src/election_map_slovakia/incumbents.py.
-#                  Without it the election is shown without office holders
-#                  and without the turnout of the elections before.
-#   units          the territorial division (ŠÚ SR tab0dd), okrsky per obec:
-#                  `input`, read as `format` says: "xlsx" the table alone,
-#                  "susr" the table in the municipal package of ŠÚ SR
-#   results        the definitive results: `inputs`, read as `format` says:
-#                  "volbysr" the CSV tables of volbysr.sk (2026 on), none
-#                  until they are published (the results step of `ems make`
-#                  reads them; until then the results stay as `ems results`
-#                  left them); "susr" the packages of 2022, oso then osk
+#                  candidate (src/election_map_slovakia/statoffice.py);
+#                  "susr-by" (by-election) ŠÚ SR's `package` of a municipal
+#                  by-election; "volbysr" ŠÚ SR's candidate tables, a table
+#                  file or a package holding it: `round1` and optionally
+#                  `round2` (presidential, tab0a), or `subjects` (tab0a, the
+#                  parties) and `candidates` (tab0b, their lists)
+#                  (parliament, european); "curated" (any but referendum)
+#                  names nothing: the lists are
+#                  data/curated/elections/<day>/candidates.toml
+#   incumbents     (optional, regular elections only) the final results the
+#                  office holders at the election are rebuilt from: those of
+#                  the regular elections of `day` before (`municipal`,
+#                  `regional`) and of every municipal by-election since
+#                  (`by_elections`, in date order); see
+#                  src/election_map_slovakia/incumbents.py. Without it the
+#                  election is shown without office holders and without the
+#                  candidates' turnouts of the elections before, whose
+#                  results (`past`, docs/results.md) still give them where
+#                  their okrsky match.
+#   units          (optional but for regular elections) the territorial
+#                  division (ŠÚ SR tab0dd), okrsky per obec: `input`, read
+#                  as `format` says: "xlsx" the table alone, "susr" the
+#                  table in the municipal package of ŠÚ SR, "volbysr" the
+#                  table `table` of a country-wide election's package
+#                  (presidential: tab0c in 2019, tab0b in 2024). Without it
+#                  no okrsky are counted or drawn: the map stops at the
+#                  obce. A country-wide election's okrsky are those of the
+#                  regular elections where they provably match (`ems job
+#                  reuse`, src/election_map_slovakia/reuse.py).
+#   results        (optional) the definitive results: `inputs`, read as
+#                  `format` says, none (or no `results`) until they are
+#                  published (the results step of `ems make` reads them;
+#                  until then the results stay as `ems results` left them):
+#                  regular elections "volbysr", the CSV tables of volbysr.sk
+#                  (2026 on), or "susr", the packages of 2022, oso then osk;
+#                  by-elections "susr-by", the package; country-wide
+#                  elections "volbysr", ŠÚ SR's national tables (packages or
+#                  table files; presidential: round 1's, then round 2's)
 #   addresses      the address register
 #   zbgis          the administrative boundaries, levels of detail 0 to 2
 #   osm            the OpenStreetMap extract of the base map
@@ -68,28 +128,30 @@ polls_open = 07:00:00
 polls_close = 20:00:00
 live = false
 live_days = 7
-addresses = "addresses"
-zbgis = ["zbgis-0", "zbgis-1", "zbgis-2"]
-osm = "osm-slovakia"
+addresses = "addresses-2026"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2026"
 units = { format = "xlsx", input = "units-oso2026" }
 results = { format = "volbysr", inputs = ["results-oso2026", "results-osk2026"] }
 records = [
-    "zsk-obvody-ba",
-    "zsk-obvody-tt",
-    "zsk-obvody-tn",
-    "zsk-obvody-nr",
-    "zsk-obvody-za",
-    "zsk-obvody-bb",
-    "zsk-obvody-po",
-    "zsk-obvody-ke",
+    "zsk-obvody-ba-2026",
+    "zsk-obvody-tt-2026",
+    "zsk-obvody-tn-2026",
+    "zsk-obvody-nr-2026",
+    "zsk-obvody-za-2026",
+    "zsk-obvody-bb-2026",
+    "zsk-obvody-po-2026",
+    "zsk-obvody-ke-2026",
 ]
 
 [election.2026.candidates]
 format = "mvsr"
-starosta = "candidates-starosta"
-oz = "candidates-oz"
-predseda = "candidates-predseda"
-zsk = "candidates-zsk"
+starosta = "candidates-starosta-2026"
+oz = "candidates-oz-2026"
+predseda = "candidates-predseda-2026"
+zsk = "candidates-zsk-2026"
+# What is held where: ŠÚ SR's territorial division ("Typ volieb").
+units = "units-oso2026"
 
 # By-elections as listed on
 # https://volby.statistics.sk/oso/doplnkove2022/sk/index.html; there were
@@ -108,6 +170,29 @@ by_elections = [
     { input = "results-oso202603", day = 2026-03-21 },
 ]
 
+# The presidential elections, ŠÚ SR's packages of each round
+# (inputs.toml). The boundaries and the basis of the base map's area are
+# those of 2026 (see data/curated/elections/<day>/boundaries.toml); the
+# OpenStreetMap extract is of the election's year; the address register of
+# 09/2022, the earliest kept (none of 2019 or 2024 survives).
+[election.2024-prezident]
+day = 2024-03-23
+kind = "presidential"
+second_round = 2024-04-06
+# Decision of the Speaker of the National Council no. 1/2024 Coll.; polls
+# 7:00 to 22:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 22:00:00
+live = false
+live_days = 7
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2024"
+records = ["zbgis-2024"]
+units = { format = "volbysr", input = "results-prez2024-1", table = "tab0b" }
+candidates = { format = "volbysr", round1 = "results-prez2024-1", round2 = "results-prez2024-2" }
+results = { format = "volbysr", inputs = ["results-prez2024-1", "results-prez2024-2"] }
+
 # Without incumbents: the office holders before (from 2018 and 2017) are not
 # in the inputs. The boundaries and the basis of the base map's area are
 # those of 2026 (see data/curated/elections/2022-10-29/boundaries.toml); the
@@ -121,7 +206,7 @@ polls_close = 20:00:00
 live = false
 live_days = 7
 addresses = "addresses-2022"
-zbgis = ["zbgis-0", "zbgis-1", "zbgis-2"]
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
 osm = "osm-slovakia-2022"
 units = { format = "susr", input = "results-oso2022" }
 results = { format = "susr", inputs = ["results-oso2022", "results-osk2022"] }
@@ -141,3 +226,438 @@ records = [
 format = "susr"
 oso = "results-oso2022"
 osk = "results-osk2022"
+
+[election.2019-prezident]
+day = 2019-03-16
+kind = "presidential"
+second_round = 2019-03-30
+# Decision of the Speaker of the National Council no. 8/2019 Coll.; polls
+# 7:00 to 22:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 22:00:00
+live = false
+live_days = 7
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2019"
+records = ["zbgis-2022"]
+units = { format = "volbysr", input = "results-prez2019-1", table = "tab0c" }
+candidates = { format = "volbysr", round1 = "results-prez2019-1", round2 = "results-prez2019-2" }
+results = { format = "volbysr", inputs = ["results-prez2019-1", "results-prez2019-2"] }
+
+# The referendums since 2019, ŠÚ SR's packages (inputs.toml). As every
+# election before 2026, drawn on the 2026 boundaries (boundaries.toml in
+# their curated data compares those of the nearest surviving date); the
+# OpenStreetMap extract of their year, the address register nearest them.
+
+[election.2023-referendum]
+day = 2023-01-21
+kind = "referendum"
+# Decision of the President no. 362/2022 Coll.; polls 7:00
+# to 22:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 22:00:00
+live = false
+live_days = 7
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2023"
+records = ["zbgis-2022"]
+units = { format = "volbysr", input = "results-ref2023", table = "tab0b" }
+results = { format = "volbysr", inputs = ["results-ref2023"] }
+# As tab0a of the package words them.
+questions = [
+    "Súhlasíte s tým, že predčasné skončenie volebného obdobia Národnej rady Slovenskej republiky je možné uskutočniť referendom alebo uznesením Národnej rady Slovenskej republiky, a to zmenou Ústavy Slovenskej republiky tak, že: - v Čl. 73 ods. 1 sa na konci pripája čiarka a tieto slová: „ak v súlade s touto ústavou nedôjde k predčasnému skončeniu volebného obdobia Národnej rady Slovenskej republiky.“; - v Čl. 81a sa za písmeno a) vkladá nové písmeno b), ktoré znie: „b) predčasným skončením volebného obdobia,“. Doterajšie písmená b) až f) sa označujú ako písmená c) až g); - v Čl. 82 ods. 5 sa za slová „volebného obdobia“ vkladá čiarka a slová „predčasným skončením volebného obdobia“; - v Čl. 84 ods. 3 sa za slová „s medzinárodnou zmluvou podľa čl. 7 ods. 3 a 4“ vkladá čiarka a tieto slová: „na prijatie uznesenia o predčasnom skončení volebného obdobia Národnej rady Slovenskej republiky podľa čl. 86 písm. n)“; - v Čl. 86 sa dopĺňa písmeno n),ktoré znie: „n) uznášať sa na predčasnom skončení volebného obdobia Národnej rady Slovenskej republiky; prijaté uznesenie je všeobecne záväzné a vyhlasuje sa rovnako ako zákon.“; - v Čl. 93 ods. 2 sa na konci pripájajú tieto slová: „vrátane predčasného skončenia volebného obdobia Národnej rady Slovenskej republiky.“; - Čl. 98 odsek 2 znie: „Návrhy prijaté v referende vyhlási predseda Národnej rady Slovenskej republiky ako ústavný zákon.“?",
+]
+
+[election.2026-referendum]
+day = 2026-07-04
+kind = "referendum"
+# Decision of the President no. 60/2026 Coll.; polls 7:00
+# to 22:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 22:00:00
+live = false
+live_days = 7
+addresses = "addresses-2026"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2026"
+records = ["zbgis-2024"]
+units = { format = "volbysr", input = "results-ref2026", table = "tab0b" }
+results = { format = "volbysr", inputs = ["results-ref2026"] }
+# As tab0a of the package words them.
+questions = [
+    "Súhlasíte so zrušením tzv. doživotnej renty, napríklad, pre Roberta Fica, ustanovenej v § 24a ods. 1 písm. b) zákona č. 120/1993 Z. z. o platových pomeroch niektorých ústavných činiteľov Slovenskej republiky v aktuálnom znení?",
+    "Súhlasíte s tým, aby boli obnovené Úrad špeciálnej prokuratúry a Národná kriminálna agentúra?",
+]
+
+# The municipal by-elections ("nové voľby") of the 2022–2026 term, each day
+# ŠÚ SR's package (results-oso<yyyymm> in inputs.toml, which the 2026
+# election reads for its office holders too), listed with the Speaker's
+# decisions at https://volby.statistics.sk/oso/doplnkove2022/sk/index.html.
+
+[election.2023-03]
+day = 2023-03-25
+kind = "by-election"
+# Polls 7:00 to 20:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 20:00:00
+live = false
+live_days = 7
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2023"
+records = ["zbgis-2022"]
+units = { format = "volbysr", input = "results-oso202303", table = "tab0dd" }
+candidates = { format = "susr-by", package = "results-oso202303" }
+results = { format = "susr-by", inputs = ["results-oso202303"] }
+
+[election.2023-09]
+day = 2023-09-09
+kind = "by-election"
+# Polls 7:00 to 20:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 20:00:00
+live = false
+live_days = 7
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2023"
+records = ["zbgis-2024"]
+units = { format = "volbysr", input = "results-oso202309", table = "tab0dd" }
+candidates = { format = "susr-by", package = "results-oso202309" }
+results = { format = "susr-by", inputs = ["results-oso202309"] }
+
+[election.2024-02]
+day = 2024-02-10
+kind = "by-election"
+# Polls 7:00 to 20:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 20:00:00
+live = false
+live_days = 7
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2024"
+records = ["zbgis-2024"]
+units = { format = "volbysr", input = "results-oso202402", table = "tab0dd" }
+candidates = { format = "susr-by", package = "results-oso202402" }
+results = { format = "susr-by", inputs = ["results-oso202402"] }
+
+[election.2024-10]
+day = 2024-10-05
+kind = "by-election"
+# Polls 7:00 to 20:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 20:00:00
+live = false
+live_days = 7
+addresses = "addresses-2026"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2024"
+records = ["zbgis-2024"]
+units = { format = "volbysr", input = "results-oso202410", table = "tab0dd" }
+candidates = { format = "susr-by", package = "results-oso202410" }
+results = { format = "susr-by", inputs = ["results-oso202410"] }
+
+[election.2025-03]
+day = 2025-03-15
+kind = "by-election"
+# Polls 7:00 to 20:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 20:00:00
+live = false
+live_days = 7
+addresses = "addresses-2026"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2025"
+records = ["zbgis-2024"]
+units = { format = "volbysr", input = "results-oso202503", table = "tab0dd" }
+candidates = { format = "susr-by", package = "results-oso202503" }
+results = { format = "susr-by", inputs = ["results-oso202503"] }
+
+[election.2025-09]
+day = 2025-09-06
+kind = "by-election"
+# Polls 7:00 to 20:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 20:00:00
+live = false
+live_days = 7
+addresses = "addresses-2026"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2025"
+records = ["zbgis-2024"]
+units = { format = "volbysr", input = "results-oso202509", table = "tab0dd" }
+candidates = { format = "susr-by", package = "results-oso202509" }
+results = { format = "susr-by", inputs = ["results-oso202509"] }
+
+[election.2026-03]
+day = 2026-03-21
+kind = "by-election"
+# Polls 7:00 to 20:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 20:00:00
+live = false
+live_days = 7
+addresses = "addresses-2026"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2026"
+records = ["zbgis-2024"]
+units = { format = "volbysr", input = "results-oso202603", table = "tab0dd" }
+candidates = { format = "susr-by", package = "results-oso202603" }
+results = { format = "susr-by", inputs = ["results-oso202603"] }
+
+# The municipal by-elections of the 2018–2022 term, listed with the
+# Speaker's decisions at https://volby.statistics.sk/oso/doplnkove2018/sk/
+# (those of 2020 called for spring and moved to 3 October 2020 for the
+# pandemic). Their packages publish the mayoral candidates without age or
+# occupation and only the councillors elected: a contest transcribed from
+# the municipality's own list in data/curated/elections/<day>/candidates.toml
+# replaces the package's list (docs/elections.md). Results per obec only.
+
+[election.2019-04]
+day = 2019-04-13
+kind = "by-election"
+# Polls 7:00 to 20:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 20:00:00
+live = false
+live_days = 7
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2019"
+records = ["zbgis-2022"]
+units = { format = "volbysr", input = "results-oso201904", table = "tab02ad" }
+candidates = { format = "susr-by", package = "results-oso201904" }
+results = { format = "susr-by", inputs = ["results-oso201904"] }
+
+[election.2019-09]
+day = 2019-09-21
+kind = "by-election"
+# Polls 7:00 to 20:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 20:00:00
+live = false
+live_days = 7
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2019"
+records = ["zbgis-2022"]
+units = { format = "volbysr", input = "results-oso201909", table = "tab02ad" }
+candidates = { format = "susr-by", package = "results-oso201909" }
+results = { format = "susr-by", inputs = ["results-oso201909"] }
+
+[election.2020-10]
+day = 2020-10-03
+kind = "by-election"
+# Polls 7:00 to 20:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 20:00:00
+live = false
+live_days = 7
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2020"
+records = ["zbgis-2022"]
+units = { format = "volbysr", input = "results-oso202010", table = "tab02ad" }
+candidates = { format = "susr-by", package = "results-oso202010" }
+results = { format = "susr-by", inputs = ["results-oso202010"] }
+
+[election.2021-05]
+day = 2021-05-15
+kind = "by-election"
+# Polls 7:00 to 20:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 20:00:00
+live = false
+live_days = 7
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2021"
+records = ["zbgis-2022"]
+units = { format = "volbysr", input = "results-oso202105", table = "tab02ad" }
+candidates = { format = "susr-by", package = "results-oso202105" }
+results = { format = "susr-by", inputs = ["results-oso202105"] }
+
+[election.2021-10]
+day = 2021-10-23
+kind = "by-election"
+# Polls 7:00 to 20:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 20:00:00
+live = false
+live_days = 7
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2021"
+records = ["zbgis-2022"]
+units = { format = "volbysr", input = "results-oso202110", table = "tab02ad" }
+candidates = { format = "susr-by", package = "results-oso202110" }
+results = { format = "susr-by", inputs = ["results-oso202110"] }
+
+[election.2022-03]
+day = 2022-03-19
+kind = "by-election"
+# Polls 7:00 to 20:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 20:00:00
+live = false
+live_days = 7
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2022"
+records = ["zbgis-2022"]
+units = { format = "volbysr", input = "results-oso202203", table = "tab02ad" }
+candidates = { format = "susr-by", package = "results-oso202203" }
+results = { format = "susr-by", inputs = ["results-oso202203"] }
+
+# The elections to the European Parliament and the National Council since
+# 2019, ŠÚ SR's packages (inputs.toml), drawn on the 2026 boundaries as the
+# others before 2026.
+
+[election.2019-ep]
+day = 2019-05-25
+kind = "european"
+# Polls 7:00 to 22:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 22:00:00
+live = false
+live_days = 7
+# Slovakia's 14 seats of 2019–2024, European Council Decision (EU) 2018/937
+# Art. 3, of which one was taken up only after Brexit; ŠÚ SR allotted all 14
+# (tab04x, tab06 "N"). Act No. 180/2014 Coll. as in force on 25 May 2019
+# (version of 2019-02-19): § 93 ods. 2 five per cent for parties and
+# coalitions alike, § 87 two marks, § 94 ods. 5 three per cent of the
+# party's votes.
+seats = 14
+threshold = 5.0
+preferences = 2
+preference_quota = 3.0
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2019"
+records = ["zbgis-2022"]
+units = { format = "volbysr", input = "results-ep2019", table = "tab0c" }
+candidates = { format = "volbysr", subjects = "results-ep2019", candidates = "results-ep2019" }
+results = { format = "volbysr", inputs = ["results-ep2019"] }
+
+[election.2020-nrsr]
+day = 2020-02-29
+kind = "parliament"
+# Polls 7:00 to 22:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 22:00:00
+live = false
+live_days = 7
+# 150 seats (Constitution art. 73; tab04x). Act No. 180/2014 Coll. as in
+# force on 29 February 2020 (version of 2019-02-19): § 66 ods. 2 five per
+# cent, seven for coalitions of 2–3 parties, ten for 4 and more; § 58 four
+# marks; § 68 ods. 5 three per cent.
+seats = 150
+threshold = 5.0
+coalition_thresholds = [[2, 7.0], [4, 10.0]]
+preferences = 4
+preference_quota = 3.0
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2020"
+records = ["zbgis-2022"]
+units = { format = "volbysr", input = "results-nrsr2020", table = "tab0c" }
+candidates = { format = "volbysr", subjects = "results-nrsr2020", candidates = "results-nrsr2020" }
+results = { format = "volbysr", inputs = ["results-nrsr2020"] }
+
+[election.2023-nrsr]
+day = 2023-09-30
+kind = "parliament"
+# Polls 7:00 to 22:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 22:00:00
+live = false
+live_days = 7
+# 150 seats; Act No. 180/2014 Coll. as in force on 30 September 2023
+# (version of 2023-06-04): § 66 ods. 2, § 58, § 68 ods. 5, as for 2020.
+seats = 150
+threshold = 5.0
+coalition_thresholds = [[2, 7.0], [4, 10.0]]
+preferences = 4
+preference_quota = 3.0
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2023"
+records = ["zbgis-2024"]
+units = { format = "volbysr", input = "results-nrsr2023", table = "tab0c" }
+candidates = { format = "volbysr", subjects = "results-nrsr2023", candidates = "results-nrsr2023" }
+results = { format = "volbysr", inputs = ["results-nrsr2023"] }
+
+[election.2024-ep]
+day = 2024-06-08
+kind = "european"
+# Polls 7:00 to 22:00 (Act No. 180/2014 Coll.)
+polls_open = 07:00:00
+polls_close = 22:00:00
+live = false
+live_days = 7
+# 15 seats, European Council Decision (EU) 2023/2061 (tab04x); Act No.
+# 180/2014 Coll. as in force on 8 June 2024 (version of 2024-06-01): § 93
+# ods. 2, § 87, § 94 ods. 5, as for 2019.
+seats = 15
+threshold = 5.0
+preferences = 2
+preference_quota = 3.0
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2024"
+records = ["zbgis-2024"]
+units = { format = "volbysr", input = "results-ep2024", table = "tab0c" }
+candidates = { format = "volbysr", subjects = "results-ep2024", candidates = "results-ep2024" }
+results = { format = "volbysr", inputs = ["results-ep2024"] }
+
+# The regular elections before 2022 were held apart: the municipal ones
+# (`candidates` naming only `oso`) and the regional ones (only `osk`), each
+# its own election of kind "municipal-regional" (src/election_map_slovakia/
+# config.py `halves`). ŠÚ SR's XLSX packages; drawn on the 2026 boundaries.
+# Without incumbents: the office holders before are not in the inputs.
+
+[election.2018]
+day = 2018-11-10
+kind = "municipal-regional"
+# Decision of the Speaker of the National Council no. 203/2018 Coll. (as
+# https://volby.statistics.sk/oso/oso2018/sk/ names it); polls 7:00 to 20:00
+polls_open = 07:00:00
+polls_close = 20:00:00
+live = false
+live_days = 7
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2018"
+records = ["zbgis-2022"]
+units = { format = "volbysr", input = "results-oso2018", table = "tab02bd" }
+candidates = { format = "susr", oso = "results-oso2018", okrsky = "results-oso2018-okrsky" }
+results = { format = "susr", inputs = ["results-oso2018", "results-oso2018-okrsky"] }
+
+[election.2017]
+day = 2017-11-04
+kind = "municipal-regional"
+# Decision of the Speaker of the National Council no. 166/2017 Coll. (as
+# https://volby.statistics.sk/osk/osk2017/sk/ names it); polls 7:00 to 22:00
+polls_open = 07:00:00
+polls_close = 22:00:00
+live = false
+live_days = 7
+addresses = "addresses-2022"
+zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
+osm = "osm-slovakia-2017"
+records = [
+    "zbgis-2022",
+    "zsk-obvody-ba-2017",
+    "zsk-obvody-tt-2017",
+    "zsk-obvody-tn-2017",
+    "zsk-obvody-nr-2017",
+    "zsk-obvody-bb-2017",
+    "zsk-obvody-po-2017",
+    "zsk-obvody-ke-2017",
+]
+units = { format = "volbysr", input = "results-osk2017", table = "tab0dc" }
+candidates = { format = "susr", osk = "results-osk2017" }
+results = { format = "susr", inputs = ["results-osk2017"] }

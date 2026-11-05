@@ -1,0 +1,36 @@
+# Okrsky of Spišský Štiavnik, transcribed by an AI agent in job okrsok-rules-3924 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice Hornádska, Kláštorná, Lúčna, Mlynská, Železničná stanica, Mariánske námestie, Kaštieľ, Priečna súp.číslo 1 - 274, Kvetná, Slnečná
+#   okrsok 2: ulice Hlavná, Priečna od súp.čísla 275
+obec = "523879"
+name = "Spišský Štiavnik"
+okrsky_fill = "nearest"
+okrsky_note = "The municipality's notice for this vote on the elections page. 'Železničná stanica' (okrsok 1) is not a street of the register and is left out. Priečna is split by súpisné číslo (1–274 okrsok 1, from 275 okrsok 2). The houses without a street take the okrsok of the nearest placed address (fill_nearest)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-06-28
+okrsky_date_basis = "The page states 'Dátum vloženia: 28. 6. 2023'; the notice itself is undated. (https://www.spisskystiavnik.sk/samosprava/volby/urcenie-volebnych-okrskov-136sk.html)"
+
+[[document]]
+url = "https://www.spisskystiavnik.sk/samosprava/volby/urcenie-volebnych-okrskov-136sk.html"
+sha256 = "c344d9d6e291a70d1bc2f25884d91ec6c8ec92f490fdcd2de95a28f307965b16"
+title = "Určenie volebných okrskov v obci Volieb do NR SR v roku 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Hornádska"},
+  {street = "Kláštorná"},
+  {street = "Lúčna"},
+  {street = "Mlynská"},
+  {street = "Mariánske námestie"},
+  {street = "Kaštieľ"},
+  {street = "Priečna", numbers = "1-274", by = "supisne"},
+  {street = "Kvetná"},
+  {street = "Slnečná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná"},
+  {street = "Priečna", numbers = "275-", by = "supisne"},
+]

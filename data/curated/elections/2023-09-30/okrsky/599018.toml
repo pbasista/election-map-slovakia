@@ -1,0 +1,41 @@
+# Okrsky of Košice-Košická Nová Ves, transcribed by an AI agent in job okrsok-rules-3594 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Pre občanov s trvalým pobytom na uliciach: Agátová, Brestová, Buková, Mliečna, Na Doline, Poľná, Sv. Ladislava, Vínová a občania s trvalým pobytom na obci bez konkrétnej adresy a občania s trvalým pobytom v záhradkárskych lokalitách.
+#   okrsok 2: Pre občanov s trvalým pobytom na uliciach: Čerešňová, Furčianska, Herlianska, Jaseňová, Ortvaňová, Trnková, Vyšná Úvrať, Ulica Zelená stráň.
+obec = "599018"
+name = "Košice-Košická Nová Ves"
+okrsky_note = "Okrsok 1's 'občania s trvalým pobytom v záhradkárskych lokalitách' are the register's houses without a street (garden localities, numbered by súpisné číslo only): the whole part goes to okrsok 1 as a part rule, below every street rule. Arm. Gen. Ľ. Svobodu (not named) is placed in okrsok 2 (inferred)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The notice is undated; its heading names the elections to the Národná rada SR 2023 held on 30 September 2023."
+
+[[document]]
+url = "https://web.archive.org/web/20231202011438/https://www.kosickanovaves.sk/file/4213/Ozn%C3%A1menie+o+utvoren%C3%AD+volebn%C3%BDch+okrskov+a+ur%C4%8Den%C3%AD+volebn%C3%BDch+miestnost%C3%AD+pre+vo%C4%BEby+do+N%C3%A1rodnej+rady+Slovenskej+republiky+2023.pdf"
+sha256 = "d9bf062f306cf8e3937a313d17b47dc09cbbface7d37c77a30d98821a925c7a0"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby do Národnej rady Slovenskej republiky 2023"
+
+[okrsok.1]
+rules = [
+  {part = "Košice-Košická Nová Ves", note = "'občania s trvalým pobytom v záhradkárskych lokalitách': the garden localities' houses, which the register numbers without a street; as a whole-part rule it takes only addresses no street rule selects"},
+  {street = "Agátová"},
+  {street = "Brestová"},
+  {street = "Buková"},
+  {street = "Mliečna"},
+  {street = "Na Doline"},
+  {street = "Poľná"},
+  {street = "Sv.Ladislava", written = "Sv. Ladislava"},
+  {street = "Vínová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Čerešňová"},
+  {street = "Furčianska"},
+  {street = "Herlianska"},
+  {street = "Jaseňová"},
+  {street = "Ortvaňová"},
+  {street = "Trnková"},
+  {street = "Vyšná Úvrať"},
+  {street = "Ulica Zelená stráň"},
+  {street = "Arm. Gen. Ľ. Svobodu", note = "not named in the document (2 addresses); placed with Furčianska, the street it adjoins at the Furča edge of the district", inferred = true},
+]

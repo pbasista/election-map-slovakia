@@ -1,0 +1,35 @@
+# Okrsky of Košecké Podhradie, transcribed by an AI agent in job okrsok-rules-5716 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: budova Kultúrneho domu, Veľké Košecké Podhradie 359
+#   okrsok 2: budova Kultúrneho domu, Malé Košecké Podhradie 116
+#   okrsok 3: budova Kultúrneho domu, Kopec 37
+obec = "513351"
+name = "Košecké Podhradie"
+okrsky_date = 2026-05-07
+okrsky_note = "Scanned document (except 2026), read from the page image. The document gives each okrsok only its polling station; okrsky are as many as the parts and each station lies in another part, so each okrsok takes the part of its station."
+
+[[document]]
+url = "https://www.koseckepodhradie.sk/files/2026-05-07-124514-okrsky.pdf"
+sha256 = "1ab41df5c8c285114108ae899bcf69410d374630bd0427def65a28850f8db353"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre referendum 4. júla 2026"
+
+[[document]]
+url = "https://www.koseckepodhradie.sk/referendum---4-jula-2026-a73-499"
+sha256 = "a6f120d733042e962043d4c56b34fcfb4e2de46790b4a380e2a0d75aa3cae47f"
+title = "page of the vote"
+
+[okrsok.1]
+rules = [
+  {part = "Veľké Košecké Podhradie", note = "The document gives each okrsok only its polling station; okrsky are as many as the parts and each station lies in another part, so each okrsok takes the part of its station.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Malé Košecké Podhradie", note = "The document gives each okrsok only its polling station; okrsky are as many as the parts and each station lies in another part, so each okrsok takes the part of its station.", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Kopec", note = "The document gives each okrsok only its polling station; okrsky are as many as the parts and each station lies in another part, so each okrsok takes the part of its station.", inferred = true},
+]

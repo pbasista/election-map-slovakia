@@ -1,0 +1,56 @@
+# Okrsky of Veľký Kýr, transcribed by an AI agent in job okrsok-rules-5445 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Budovateľská, Cetínska, Hlavná, Malá Pažiť, Novozámocká, Pažiť, Petőfiho, Ružová, Veľká Pažiť, trvalý pobyt na obci
+#   okrsok 2: Apátska, Bernolákova, Družstevná, Gaštanová, Hámad, Jókaiho, Krátka, Malá Sihoť, Malokýrska, Mlynská, Na Sihoti, Nitrianska, Ružový Dvor, Staničná, Sv. Kelemena, Školská, Vinohradnícka, Záhradná, Železničná
+obec = "503380"
+name = "Veľký Kýr"
+okrsky_date = 2026-04-27
+okrsky_fill = "nearest"
+okrsky_note = "The streets of each okrsok as the document lists them; \"trvalý pobyt na obci\" (voters without an address) is no rule. Námestie Sv. Jána is not listed and goes by fill_nearest, as do addresses without a street. The PDF is hosted on the municipality's CMS (app.civium.sk, institution 6 = Veľký Kýr), listed on its documents page."
+
+[[document]]
+url = "https://app.civium.sk/uploads/documents/6/2026/06/5a8a31-e13f4-volebn-c3-a9-20okrsky-20a-20miestnosti.pdf"
+sha256 = "14f14a1f5726c4a29df5b425bf6330193fc72b7b34ea8cdeb3be65e6ddea4d74"
+title = "Informácia pre občanov - REFERENDUM 2026, volebné okrsky a miestnosti (27.4.2026)"
+
+[[document]]
+url = "https://www.velkykyr.sk/dokumenty"
+sha256 = "fe82a00b74ac56969792d6e1e2ba77a7661be8f6ed03df5793753dfd511cb510"
+title = "Obec Veľký Kýr – Dokumenty (stránka so zoznamom dokumentov)"
+
+[okrsok.1]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Cetínska"},
+  {street = "Hlavná"},
+  {street = "Malá Pažiť"},
+  {street = "Novozámocká"},
+  {street = "Pažiť"},
+  {street = "Petőfiho"},
+  {street = "Ružová"},
+  {street = "Veľká Pažiť"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Apátska"},
+  {street = "Bernolákova"},
+  {street = "Družstevná"},
+  {street = "Gaštanová"},
+  {street = "Hámad"},
+  {street = "Jókaiho"},
+  {street = "Krátka"},
+  {street = "Malá Sihoť"},
+  {street = "Malokýrska"},
+  {street = "Mlynská"},
+  {street = "Na Sihoti"},
+  {street = "Nitrianska"},
+  {street = "Ružový Dvor"},
+  {street = "Staničná"},
+  {street = "Sv. Kelemena"},
+  {street = "Školská"},
+  {street = "Vinohradnícka"},
+  {street = "Záhradná"},
+  {street = "Železničná"},
+]

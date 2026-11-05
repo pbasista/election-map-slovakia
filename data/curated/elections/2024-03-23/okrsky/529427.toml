@@ -1,0 +1,104 @@
+# Okrsky of Bratislava-Záhorská Bystrica, transcribed by an AI agent in job okrsok-rules-4082 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Antona Floreka, Bratislavská, Čsl. tankistov, Gbelská, Hodonínska, Málová, Námestie sv. Petra a Pavla, Pavla Blaha, Prvoniča, Pia X., Strminová, Štefana Rosívala, Na Hliníku
+#   okrsok 2: Hargašova, Kollárova, Kučovanická, Leopoldov majer, Na Holom vrchu, Na Vlkovkách, Plavecká, Pútnická, Sekýľska, Tatranská, Tešedíkova, Vrbánska, Zákutie, Zárubova
+#   okrsok 3: Brumovická, Čerencová, Gajarská, Jána Raka, Jozefa Vachovského, Kútska, Lozornianska, Námestie Rodiny, Ostriežová, Plánky, Rošického, Štefana Majera, Trstínska, Záhorská, Záhumenská
+#   okrsok 4: Barancová, Donská, Chvojnícka, Kapsohradská, Lančárska, Na Krčoch, Nevská, Ollareková, Orešianková, Prídavková, Rudavská, Skalníková, Strmý vŕšok, Vislianska
+#   okrsok 5: Belicová, Bystrické sady, Čerešňový sad, Devínske jazero, Hruškový sad, Jabloňový sad, Kunovská, Ota Holúska, Podkerepušky, Pri Vápenickom potoku, Slivkový sad, Hadincová, Dobrienková, Hrabovinská, Trebuľková
+obec = "529427"
+name = "Bratislava-Záhorská Bystrica"
+okrsky_fill = "nearest"
+okrsky_note = "Official post of the municipality listing the streets of each okrsok. Named in the document but not in the register (left out): Na Hliníku, Zárubova, Námestie Rodiny, Vislianska, Hadincová, Dobrienková, Hrabovinská, Trebuľková. Not named in the document, placed by fill_nearest: Poľný mlyn, and addresses without a street."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-03-20
+okrsky_date_basis = "The municipality's official post listing the okrsky determined for the presidential election of 23 March 2024 (under § 8 of Act 180/2014) was published on 20 March 2024; the mayor's decision itself was not found. (https://zahorskabystrica.sk/v-sobotu-sa-kona-1-kolo-prezidentskych-volieb-tu-je-rozdelenie-ulic-do-volebnych-okrskov/)"
+
+[[document]]
+url = "https://zahorskabystrica.sk/v-sobotu-sa-kona-1-kolo-prezidentskych-volieb-tu-je-rozdelenie-ulic-do-volebnych-okrskov/"
+sha256 = "5e863d36759d0f38a27aea6c6217e0dfaac830289718181502592fed64eda190"
+title = "V sobotu sa koná 1. kolo prezidentských volieb: Tu je rozdelenie ulíc do volebných okrskov"
+
+[okrsok.1]
+rules = [
+  {street = "Antona Floreka"},
+  {street = "Bratislavská"},
+  {street = "Čsl. tankistov"},
+  {street = "Gbelská"},
+  {street = "Hodonínska"},
+  {street = "Málová"},
+  {street = "Námestie sv. Petra a Pavla"},
+  {street = "Pavla Blaha"},
+  {street = "Plk. Prvoniča", written = "Prvoniča", note = "document leaves out the rank Plk.; register Plk. Prvoniča, same street"},
+  {street = "Sv. Pia X.", written = "Pia X.", note = "document leaves out Sv.; register Sv. Pia X., same street"},
+  {street = "Strminová"},
+  {street = "Štefana Rosívala"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hargašova"},
+  {street = "Kollárova"},
+  {street = "Kučovanická"},
+  {street = "Leopoldov majer"},
+  {street = "Na Holom vrchu"},
+  {street = "Na Vlkovkách"},
+  {street = "Plavecká"},
+  {street = "Pútnická"},
+  {street = "Sekýľska"},
+  {street = "Tatranská"},
+  {street = "Tešedíkova"},
+  {street = "Vrbánska"},
+  {street = "Zákutie"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Brumovická"},
+  {street = "Čerencová"},
+  {street = "Gajarská"},
+  {street = "Jána Raka"},
+  {street = "Jozefa Vachovského"},
+  {street = "Vachovského", note = "register street Vachovského is not in the document; placed with Jozefa Vachovského, the same street", inferred = true},
+  {street = "Kútska"},
+  {street = "Lozornianska"},
+  {street = "Ostriežová"},
+  {street = "Plánky"},
+  {street = "Rošického"},
+  {street = "Štefana Majera"},
+  {street = "Trstínska"},
+  {street = "Záhorská"},
+  {street = "Záhumenská"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Barancová"},
+  {street = "Donská"},
+  {street = "Chvojnícka"},
+  {street = "Kapsohradská"},
+  {street = "Lančárska"},
+  {street = "Na Krčoch"},
+  {street = "Nevská"},
+  {street = "Ollarekova", written = "Ollareková", note = "document writes Ollareková; register Ollarekova, same street (accent only)"},
+  {street = "Orešianková"},
+  {street = "Prídavková"},
+  {street = "Rudavská"},
+  {street = "Skalníková"},
+  {street = "Strmý vŕšok"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Belicová"},
+  {street = "Bystrické sady"},
+  {street = "Čerešňový sad"},
+  {street = "Devínske jazero"},
+  {street = "Hruškový sad"},
+  {street = "Jabloňový sad"},
+  {street = "Kunovská"},
+  {street = "Ota Holúska"},
+  {street = "Podkerepušky"},
+  {street = "Pri Vápenickom potoku"},
+  {street = "Slivkový sad"},
+]

@@ -1,0 +1,80 @@
+# The okrsky of Brezová pod Bradlom of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/504262.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Brezová pod Bradlom, transcribed by an AI agent in job okrsok-rules-644 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Baranecká, Cesta SNP, Čierne blato, Dolina, Dolné lúky, Garbiarska, J. M. Hurbana, Nám. 7. apríla, Nám. gen. M. R. Štefánika, Odbojárov, Partizánska, Piešťanská, Pod Vŕškami, Staničná, Športová, Vajanského
+#     okrsok 2: Bradlianska, Budovateľská, Bukovská cesta, Danov vrch, Dolný Štverník, Družstevná, Horný Štverník, Hoštáky, Hurbanova dolina, Jána Závodného, Janka Kráľa, Minárčiných, Prielohy, Prostredný Štverník, Štúrova, U Držkovcov, U Dzurákovcov, U Kravárikovcov, U Vaškovcov, Záhumnie, Žriedlová dolina, občania bez adresy
+#     okrsok 3: Sídlisko Dušana Jurkoviča
+#     okrsok 4: Dr. Št. Osuského, Horný rad, V jarku
+obec = "504262"
+name = "Brezová pod Bradlom"
+okrsky_fill = "nearest"
+okrsky_note = "No mayor's notice of 2018 survives on the website (the 2018 elections page, live and archived, links only the call of the elections and the council's obvod notice); the city's own newspaper 'Novinky spod Bradla', election issue of 26 October 2018 published on brezova.sk, states that four okrsky were formed and gives 'Rozdelenie ulíc do okrskov'. 'občania bez adresy' (okrsok 2) are voters registered without an address. The register's addresses without a street (súpisné čísla only) are placed by fill_nearest. Myjavská, which the paper leaves out, is inferred to okrsok 2. Same okrsky as the documents of 2020–2024."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-179): No document of 2017 listing the okrsky' streets found. The 2017 regional elections page (live: only candidate lists; archived 2017-09-24: only the information for voters) gives no okrsky. The city newspaper of September/October 2017 (archived; the September issue only as a truncated 1 MB capture) says the vote is held in four okrsky at the Základná škola Dolné lúky 357 but lists no streets; the notice of time and place was delivered to households and is not on the website. The 2017 newspapers are no longer live. The next votes (2018 newspaper, 2020 PDF) show the same four okrsky, but no 2017 source states them. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 4 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The newspaper issue is headed 'Komunálne voľby 2018' and names the elections to the organs of municipal self-government of 10 November 2018; it is dated 26/10/2018 but states no date of the decision."
+
+[[document]]
+url = "https://web.archive.org/web/20220308012306/https://www.brezova.sk/e_download.php?file=data/editor/636sk_9.pdf&original=novinky_volby2018-i.pdf"
+sha256 = "18a0080ea00c3d9256b2ff67b0fb891d349f645885928a587daacfebcc6fda18"
+title = "Novinky spod Bradla, Komunálne voľby 2018 (city newspaper, 26/10/2018): Rozdelenie ulíc do okrskov"
+
+[okrsok.1]
+rules = [
+  {street = "Baranecká"},
+  {street = "Cesta SNP"},
+  {street = "Čierne blato"},
+  {street = "Dolina"},
+  {street = "Dolné lúky"},
+  {street = "Garbiarska"},
+  {street = "J.M.Hurbana"},
+  {street = "Námestie 7.apríla"},
+  {street = "Námestie gen.M.R.Štefánika"},
+  {street = "Odbojárov"},
+  {street = "Partizánska"},
+  {street = "Piešťanská"},
+  {street = "Pod Vŕškami"},
+  {street = "Staničná"},
+  {street = "Športová"},
+  {street = "Vajanského"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bradlianska"},
+  {street = "Budovateľská"},
+  {street = "Bukovská cesta"},
+  {street = "Danov Vrch", written = "Danov vrch"},
+  {street = "Ulica Danov vrch", written = "Danov vrch", note = "the paper names 'Danov vrch' once; the register has both Danov Vrch and Ulica Danov vrch there, both taken as named"},
+  {street = "Dolný Štverník"},
+  {street = "Družstevná"},
+  {street = "Ulica Horný Štverník", written = "Horný Štverník"},
+  {street = "Hoštáky"},
+  {street = "Ulica Hurbanova dolina", written = "Hurbanova dolina"},
+  {street = "Ulica Jána Závodného", written = "Jána Závodného"},
+  {street = "Janka Kráľa"},
+  {street = "Minárčiných ulica", written = "Minárčiných"},
+  {street = "Prielohy"},
+  {street = "Ulica Prostredný Štverník", written = "Prostredný Štverník"},
+  {street = "Štúrova"},
+  {street = "Ulica u Držkovcov", written = "U Držkovcov", note = "same street: the paper leaves out 'Ulica' and capitalises 'u'"},
+  {street = "Ulica u Dzurákovcov", written = "U Dzurákovcov", note = "same street: the paper leaves out 'Ulica' and capitalises 'u'"},
+  {street = "Ulica u Kravárikovcov", written = "U Kravárikovcov", note = "same street: the paper leaves out 'Ulica' and capitalises 'u'"},
+  {street = "Ulica u Vaškovcov", written = "U Vaškovcov", note = "same street: the paper leaves out 'Ulica' and capitalises 'u'"},
+  {street = "Záhumnie"},
+  {street = "Ulica Žriedlová dolina", written = "Žriedlová dolina"},
+  {street = "Myjavská", note = "the paper does not name Myjavská; it lies among the streets of okrsok 2 and is in okrsok 2 in every other document of 2019–2026", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Sídlisko Dušana Jurkoviča"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Dr.Št.Osuského"},
+  {street = "Horný rad"},
+  {street = "V jarku"},
+]

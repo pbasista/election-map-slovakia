@@ -1,0 +1,55 @@
+# Okrsky of Bratislava-Čunovo, transcribed by an AI agent in job okrsok-rules-5059 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: CSENÁROVA ulica, Hraničiarska, JANKOVIČOVA ULICA, Na hrádzi, Ovsená, Petržalská, Ražná, Schengenská, Skýcovská, Sochorova, Turistická, Záhumenná, ZICHYHO ULICA, Záhradkárska osada a občania prihlásení na obec
+#   okrsok 2: BORIEVKOVÁ ULICA, Cezmínová, CÉDROVÁ ULICA, CIROKOVÁ ULICA, Dlhá, CHRENOVÁ ULICA, Iberková, Ibišteková, Konopiská, Krušpánová, LIPKAVCOVÁ ULICA, LIPNICOVÁ ULICA, Novosadná, PLAMIENKOVÁ ULICA, PROSOVÁ ULICA, Rakytníková, Rebríčková, ROZCHODnÍKOVÁ ULICA, Zobová.
+obec = "529435"
+name = "Bratislava-Čunovo"
+okrsky_fill = "nearest"
+okrsky_note = "Street list as DOCX text. 'Záhradkárska osada' (okrsok 1) has no street in the register; its houses and the other houses with only a súpisné číslo take the okrsok of the nearest address (fill_nearest). 'Občania prihlásení na obec' (registered without an address) vote in okrsok 1. The list names CSENÁROVA/CSENÁROVÁ ULICA, JANKOVIČOVA ULICA, ZICHYHO ULICA (okrsok 1) and LIPKAVCOVÁ, PROSOVÁ, ROZCHODNÍKOVÁ ULICA (okrsok 2), which the register lacks: left out. Unlike the documents of 2018–2020 (and the copied 2022 rule set), Záhumenná is in okrsok 1."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The starostka's 'Určenie volebných okrskov' sets two okrsky for the European Parliament election of 08. 06. 2024 and the street list (DOCX) is headed with that election; neither states a date."
+
+[[document]]
+url = "https://www.cunovo.eu/files/2025-04-30-161950-Ur__enie_volebn__ch_okrskov_____vo__by_E__.pdf"
+sha256 = "2a25fc7bf5b6d9b571c95dd66b1c1786d3f08aa0111d19dc165eb6e82f1ee0cb"
+title = "Určenie volebných okrskov – voľby do Európskeho parlamentu 08. 06. 2024"
+
+[[document]]
+url = "https://www.cunovo.eu/files/2025-04-30-161949-Okrsky-zoznam_ul__c.docx"
+sha256 = "ca02a3bcda8d1254345f1cfc34172159edac91fda48aefab260eb44961dc6db3"
+title = "Voľby do Európskeho parlamentu 08. 06. 2024 – Volebné okrsky v MČ Bratislava-Čunovo (zoznam ulíc)"
+
+[okrsok.1]
+rules = [
+  {street = "Hraničiarska"},
+  {street = "Na hrádzi"},
+  {street = "Ovsená"},
+  {street = "Petržalská"},
+  {street = "Ražná"},
+  {street = "Schengenská"},
+  {street = "Skýcovská"},
+  {street = "Sochorova"},
+  {street = "Turistická"},
+  {street = "Záhumenná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cezmínová"},
+  {street = "Dlhá"},
+  {street = "Iberková"},
+  {street = "Ibišteková"},
+  {street = "Konopiská"},
+  {street = "Krušpánová"},
+  {street = "Novosadná"},
+  {street = "Rakytníková"},
+  {street = "Rebríčková"},
+  {street = "Zobová"},
+  {street = "Borievková ulica", written = "BORIEVKOVÁ ULICA"},
+  {street = "Cédrová ulica", written = "CÉDROVÁ ULICA"},
+  {street = "Chrenová ulica", written = "CHRENOVÁ ULICA"},
+  {street = "Ciroková ulica", written = "CIROKOVÁ ULICA"},
+  {street = "Lipnicová ulica", written = "LIPNICOVÁ ULICA"},
+  {street = "Plamienková ulica", written = "PLAMIENKOVÁ ULICA"},
+]

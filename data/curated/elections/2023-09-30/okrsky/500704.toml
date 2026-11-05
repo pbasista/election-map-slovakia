@@ -1,0 +1,25 @@
+# Okrsky of Rišňovce, transcribed by an AI agent in job okrsok-rules-3766 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1: súpisné čísla 3 – 421
+#   okrsok 2: Volebný okrsok č. 2: súpisné čísla 423 – 821
+obec = "500704"
+name = "Rišňovce"
+okrsky_date = 2023-06-22
+okrsky_fill = "nearest"
+okrsky_note = "Scanned notice of 22.6.2023 for the NR SR election of 30 September 2023, read from the rendered page. Houses numbered 422 or above 821 are not named and take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20230702000443/https://www.risnovce.sk/pdf/volby/obec-risnovce-volebne-okrsky-miestnosti.pdf"
+sha256 = "309f538c70fb1e2917f5bd91e720c1364dcbd1500a2e6b41aedf21c69954f225"
+title = "Oznámenie o utvorení volebných okrskov, určenie volebných miestností a vymedzenie územného obvodu volebných okrskov (voľby do NR SR 30.9.2023), 22.6.2023"
+
+[okrsok.1]
+rules = [
+  {part = "Rišňovce", numbers = "3-421"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Rišňovce", numbers = "423-821"},
+]

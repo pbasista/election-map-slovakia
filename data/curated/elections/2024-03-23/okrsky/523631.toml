@@ -1,0 +1,48 @@
+# Okrsky of Liptovská Teplička, transcribed by an AI agent in job okrsok-rules-4456 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Tu patria ulice: Kufajka, Pilisko, Ráztocká, Teplická, Záhrady, Horárne, Zaglinka, č. d. 732, 733
+#   okrsok 2: Tu patria ulice: Bory, Uhlárová, Drevárska, Koliesko, Kobyliarky, Ul. Š. Náhalku, Pod úbočou, Na jarku, Potočná, Úzka, Ul. Š. Garaja, č. d. 535, 683, 689, 725, 726, 730, 734
+obec = "523631"
+name = "Liptovská Teplička"
+okrsky_fill = "nearest"
+okrsky_note = "Horárne and Zaglinka (okrsok 1) are not streets in the address register (settlements/houses without a street) and are left out; house numbers the document lists (\"č.\", \"č. d.\") are súpisné numbers of houses without a street, given as numbers in the part. Other addresses without a street are placed by fill_nearest."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-29
+okrsky_date_basis = "The notice itself is undated; its notice-board page states \"Vyvesené: 29. 1. 2024\". (https://www.liptovskateplicka.sk/obecny-urad-1/zverejnovanie/uradna-tabula/volby-prezidenta-slovenskej-republiky-volebne-okrsky-a-miestnosti-920.html)"
+
+[[document]]
+url = "https://www.liptovskateplicka.sk/e_download.php?file=data/uredni_deska/obsah804_6.pdf&original=Vo%C4%BEby%202024%20-%20Voleb.okrsky%20a%20vol.miestnosti.pdf"
+sha256 = "643b06bc6f5226cacb8d29e9f80170a52194a7b377970e3b33cd77b8a3a1dfe0"
+title = "Oznámenie o určení volebných okrskov a volebných miestností pre voľby prezidenta Slovenskej republiky"
+
+[[document]]
+url = "https://www.liptovskateplicka.sk/obecny-urad-1/zverejnovanie/uradna-tabula/volby-prezidenta-slovenskej-republiky-volebne-okrsky-a-miestnosti-920.html"
+sha256 = "e68d7db88121946990941bbd0851cf9915cf4548ffdd7a160587ab0425e4ada3"
+title = "Voľby prezidenta Slovenskej republiky – volebné okrsky a miestnosti (úradná tabuľa, vyvesené 29. 1. 2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Kufajka"},
+  {street = "Pilisko"},
+  {street = "Ráztocka", written = "Ráztocká", note = "the document writes \"Ráztocká\" with a long á; the register's only such street is Ráztocka"},
+  {street = "Teplická"},
+  {street = "Záhrady"},
+  {part = "Liptovská Teplička", numbers = "732, 733"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bory"},
+  {street = "Uhlárová"},
+  {street = "Drevárska"},
+  {street = "Koliesko"},
+  {street = "Kobyliarky"},
+  {street = "Ul. Štefana Nahalku", written = "Ul. Š. Náhalku", note = "Ul. Š. Náhalku: the street is named after Štefan Náhalka; the register writes it without the long á"},
+  {street = "Pod úbočou"},
+  {street = "Na jarku"},
+  {street = "Potočná"},
+  {street = "Úzka"},
+  {street = "Ul. Štefana Garaja", written = "Ul. Š. Garaja"},
+  {part = "Liptovská Teplička", numbers = "535, 683, 689, 725, 726, 730, 734"},
+]

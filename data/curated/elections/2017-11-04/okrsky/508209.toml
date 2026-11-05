@@ -1,0 +1,93 @@
+# Okrsky of Rovinka, transcribed by an AI agent in job okrsok-rules-083 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Čerešňová, Hlavná, Jabloňová, Krásna, Krátka, Lekárenská, Nová, Okružná, Orechová, Sadová, Slivková, Školská, Športová, Višňová, Vojenská, Záhradná, Zelená, Rovinka s a bez súpisného čísla
+#   okrsok 2: Agátová, Astrová, Belasá, Brezová, Bronzová, Družstevná, Dúhová, Dunajská, Farebná, Gazdovská, Hrádzna, Jarná, Jasná, Jazdecká, Jazerná, Krajná, Kvetná, Lúčna, Majerská, Medená, Narcisová, Obilná, Orgovánová, Pasienková, Pivonková, Pluhová, Poľná, Potočná, Púpavová, Repková, Riečna, Slnečná, Súmračná, Úzka, Veterná, Za hrádzou, Železničná
+obec = "508209"
+name = "Rovinka"
+okrsky_note = "The document's 'Rovinka' (earlier documents: 'Rovinka so súpisným číslom a Rovinka bez súpisného čísla') means the houses without a street name, numbered only by súpisné číslo, and residents registered without an address: a part rule for Rovinka in okrsok 1 selects exactly the addresses no street rule selects. Streets the document does not name (Broskyňová ulica, Cínová ulica, Lipová ulica, Maková ulica, Nechtíková ulica, Platanová ulica, Podbeľová ulica, Pšeničná ulica, Rovná, Rozmarínová ulica, Slnečnicová ulica, Topoľová ulica, Ľanová ulica, Žitná ulica) are placed by inference with the nearest listed street; no later document with two okrsky exists to supplement them. The PDF linked from the page was not archived; the page itself lists the okrsky."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2017-09-12
+okrsky_date_basis = "The Internet Archive captured the municipality's page listing the okrsky on 2017-09-12 (the page is dated 5. septembra 2017); no decision date is stated. (https://web.archive.org/web/20170912222949/http://obecrovinka.sk:80/oznamenie-o-case-mieste-konania-volby-organov-samospravnych-krajov-2017/)"
+
+[[document]]
+url = "https://web.archive.org/web/20170912222949/http://obecrovinka.sk:80/oznamenie-o-case-mieste-konania-volby-organov-samospravnych-krajov-2017/"
+sha256 = "1e1b007ab682073e9c6a8927e296b086be88875f23875864124b68a031653214"
+title = "Oznámenie o čase a mieste konania Voľby do orgánov samosprávnych krajov 2017 (obecrovinka.sk, archived 2017-09-12)"
+
+[okrsok.1]
+rules = [
+  {street = "Čerešňová"},
+  {street = "Hlavná"},
+  {street = "Jabloňová"},
+  {street = "Krásna"},
+  {street = "Krátka"},
+  {street = "Lekárenská"},
+  {street = "Nová"},
+  {street = "Okružná"},
+  {street = "Orechová"},
+  {street = "Sadová"},
+  {street = "Slivková"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Višňová"},
+  {street = "Vojenská"},
+  {street = "Záhradná"},
+  {street = "Zelená"},
+  {part = "Rovinka", note = "houses without a street name (súpisné číslo only) and residents without an address: 'Rovinka' in the document"},
+  {street = "Nechtíková ulica", note = "not named in the document (newer street); placed with its nearest listed street, Hlavná (okrsok 1), by the address map points", inferred = true},
+  {street = "Cínová ulica", note = "not named in the document (newer street); placed with its nearest listed street, Vojenská (okrsok 1), by the address map points", inferred = true},
+  {street = "Platanová ulica", note = "not named in the document (newer street); placed with its nearest listed street, Nová (okrsok 1), by the address map points", inferred = true},
+  {street = "Žitná ulica", note = "not named in the document (newer street); placed with its nearest listed street, Sadová (okrsok 1), by the address map points", inferred = true},
+  {street = "Podbeľová ulica", note = "not named in the document (newer street); placed with its nearest listed street, Záhradná (okrsok 1), by the address map points", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Astrová"},
+  {street = "Belasá"},
+  {street = "Brezová"},
+  {street = "Bronzová"},
+  {street = "Družstevná"},
+  {street = "Dúhová"},
+  {street = "Dunajská"},
+  {street = "Farebná"},
+  {street = "Gazdovská"},
+  {street = "Hrádzna"},
+  {street = "Jarná"},
+  {street = "Jasná"},
+  {street = "Jazdecká"},
+  {street = "Jazerná"},
+  {street = "Krajná"},
+  {street = "Kvetná"},
+  {street = "Lúčna"},
+  {street = "Majerská"},
+  {street = "Medená"},
+  {street = "Narcisová"},
+  {street = "Obilná"},
+  {street = "Orgovánová"},
+  {street = "Pasienková"},
+  {street = "Pivonková"},
+  {street = "Pluhová"},
+  {street = "Poľná"},
+  {street = "Potočná"},
+  {street = "Púpavová"},
+  {street = "Repková"},
+  {street = "Riečna"},
+  {street = "Slnečná"},
+  {street = "Súmračná"},
+  {street = "Úzka"},
+  {street = "Veterná"},
+  {street = "Za hrádzou"},
+  {street = "Železničná"},
+  {street = "Rovná", note = "not named in the document (newer street); placed with its nearest listed street, Bronzová (okrsok 2), by the address map points", inferred = true},
+  {street = "Lipová ulica", note = "not named in the document (newer street); placed with its nearest listed street, Majerská (okrsok 2), by the address map points", inferred = true},
+  {street = "Ľanová ulica", note = "not named in the document (newer street); placed with its nearest listed street, Dunajská (okrsok 2), by the address map points", inferred = true},
+  {street = "Rozmarínová ulica", note = "not named in the document (newer street); placed with its nearest listed street, Jarná (okrsok 2), by the address map points", inferred = true},
+  {street = "Topoľová ulica", note = "not named in the document (newer street); placed with its nearest listed street, Dunajská (okrsok 2), by the address map points", inferred = true},
+  {street = "Pšeničná ulica", note = "not named in the document (newer street); placed with its nearest listed street, Hrádzna (okrsok 2), by the address map points", inferred = true},
+  {street = "Slnečnicová ulica", note = "not named in the document (newer street); placed with its nearest listed street, Kvetná (okrsok 2), by the address map points", inferred = true},
+  {street = "Broskyňová ulica", note = "not named in the document (newer street); placed with its nearest listed street, Pluhová (okrsok 2), by the address map points", inferred = true},
+  {street = "Maková ulica", note = "not named in the document (newer street); placed with its nearest listed street, Jasná (okrsok 2), by the address map points", inferred = true},
+]

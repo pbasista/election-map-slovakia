@@ -1,0 +1,76 @@
+# Okrsky of Kanianka, transcribed by an AI agent in job okrsok-rules-2560 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Banícka, Bojnická cesta – orientačné čísla 3 až 24, ČSĽA – orientačné čísla 19 až 25 a 32 až 44, Hviezdoslavova, Košovská, Krátka, Kukučínova, Lazianska cesta, Lesná, Lipová, Lúčna, Mierová, Mlynská, Pionierov, Pod Vinicou – orientačné čísla 1 – 13 a 2 až 12, Poľovnícka, Porubská cesta, Sládkovičova, Stará cesta, Športová, Štúrova, Tehelná, Veterná, Záhradná, Pánsky Háj, Za Lančekom a Zlatná.
+#   okrsok 2: ulice: Bojnická cesta – obytné domy súpisné číslo 593 a 594 Nová - obytné domy súpisné číslo 595, 596, 597 a 598.
+#   okrsok 3: ulice: Agátova, Bojnická cesta - obytné domy súpisné číslo 590 a 591, ČSĽA – orientačné čísla 1 až 9 a 2 až 30, Lyžiarska, Májová, Nová – obytný dom súpisné číslo 600, Pod vinicou – orientačné čísla 14 až 48 a 15 až 67, SNP, Šípkova, Školská – obytný dom súpisné číslo 589.
+obec = "514071"
+name = "Kanianka"
+okrsky_date = 2019-11-28
+okrsky_fill = "nearest"
+okrsky_note = "Not named in the document, so placed by the nearest address (fill_nearest): Ružová, the Nová, Školská and Bojnická cesta addresses other than the blocks named by súpisné číslo and Bojnická cesta orientačné 3-24, ČSĽA odd 11-17 and odd above 25, Pod Vinicou numbers outside the document's ranges, and the one address without a street. Scanned decision of the mayor, archived in the Internet Archive (gone from the current website), read from the image. Same text as the 2022 document the copy came from."
+
+[[document]]
+url = "https://web.archive.org/web/20201022115057/http://www.kanianka.sk/wp-content/uploads/2019/10/Volebn%C3%A9-okrsky-a-miestnosti.pdf"
+sha256 = "03269e612033a649df06303c8f48ef98069d4cc4153aff47f725b86d92de63e0"
+title = "Vytvorenie okrskov a určenie volebných miestností pre voľby Národnej rady Slovenskej republiky, konaných dňa 29.2.2020 (starosta, 28.11.2019)"
+
+[[document]]
+url = "https://web.archive.org/web/20200804072326/http://www.kanianka.sk:80/category/volby-do-nr-sr-2020/"
+sha256 = "315257fd5372efc9a6a0ffcee6e0927eda8fa69a98e6ec1d6d8944587601a5e8"
+title = "Voľby do NR SR 2020 (archived category page linking 'Volebné okrsky a miestnosti')"
+
+[okrsok.1]
+rules = [
+  {street = "Bojnická cesta", numbers = "3-24"},
+  {street = "Čsľa", numbers = "19-25", parity = "odd", written = "ČSĽA", note = "the register's 'Čsľa' is the document's 'ČSĽA' (Československej armády), the same street; '19 až 25 a 32 až 44' read as odd 19-25 and even 32-44, matching '1 až 9 a 2 až 30' of okrsok 3"},
+  {street = "Čsľa", numbers = "32-44", parity = "even", written = "ČSĽA"},
+  {street = "Pod Vinicou", numbers = "1-13", parity = "odd"},
+  {street = "Pod Vinicou", numbers = "2-12", parity = "even"},
+  {street = "Banícka"},
+  {street = "Hviezdoslavova"},
+  {street = "Košovská"},
+  {street = "Krátka"},
+  {street = "Kukučínova"},
+  {street = "Lazianska cesta"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+  {street = "Lúčna"},
+  {street = "Mierová"},
+  {street = "Mlynská"},
+  {street = "Pionierov"},
+  {street = "Poľovnícka"},
+  {street = "Porubská cesta"},
+  {street = "Sládkovičova"},
+  {street = "Stará cesta"},
+  {street = "Športová"},
+  {street = "Štúrova"},
+  {street = "Tehelná"},
+  {street = "Veterná"},
+  {street = "Záhradná"},
+  {street = "Za Lančekom"},
+  {street = "Zlatná"},
+  {street = "Pánsky Háj"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bojnická cesta", numbers = "593, 594", by = "supisne"},
+  {street = "Nová", numbers = "595-598", by = "supisne"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová", written = "Agátova"},
+  {street = "Bojnická cesta", numbers = "590, 591", by = "supisne"},
+  {street = "Čsľa", numbers = "1-9", parity = "odd", written = "ČSĽA", note = "the register's 'Čsľa' is the document's 'ČSĽA' (Československej armády), the same street"},
+  {street = "Čsľa", numbers = "2-30", parity = "even", written = "ČSĽA"},
+  {street = "Lyžiarska"},
+  {street = "Májová"},
+  {street = "Nová", numbers = "600", by = "supisne"},
+  {street = "Pod Vinicou", numbers = "14-48", parity = "even", written = "Pod vinicou"},
+  {street = "Pod Vinicou", numbers = "15-67", parity = "odd", written = "Pod vinicou"},
+  {street = "SNP"},
+  {street = "Šípková", written = "Šípkova"},
+  {street = "Školská", numbers = "589", by = "supisne"},
+]

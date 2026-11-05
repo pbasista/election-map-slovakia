@@ -1,0 +1,89 @@
+# Okrsky of Gelnica, transcribed by an AI agent in job okrsok-rules-4119 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný obvod zahŕňa ulice: Banícka, Banícke námestie, Cintorínska, Háj, Hlavná, Krížna, Lutherovo námestie, Požiarnicka, Slovenská, Slovenské Cechy, Turzovská, Zámková
+#   okrsok 2: Volebný obvod zahŕňa ulice: Agátová, Dubová, Hnilecká, Jarná, Javorová, Jesenná, Lesná, Letná, Lipová, Lyžiarska, Partizánska, Plynárenská, Potočná, Vodárenská, Zimná
+#   okrsok 3: Volebný obvod zahŕňa ulice: SNP, Hviezdoslavova, Kukučínova, Nemocničná, Vajanského
+#   okrsok 4: Volebný obvod zahŕňa ulicu Športovú
+#   okrsok 5: Volebný obvod zahŕňa ulice: Tehelná, Záhradná
+#   okrsok 6: Volebný obvod zahŕňa ulice: Banská, Geologická, Hutná, Kováčska, Medená, Perlová, Pod brehom, Poľná, Strojárenská, Žakarovská, Železničná
+obec = "526509"
+name = "Gelnica"
+okrsky_date = 2024-01-10
+okrsky_fill = "nearest"
+okrsky_note = "The register street \"Febr. Víť.\" (7 addresses, old name, nos. 52-147) is not named in the document, nor are the addresses without a street (numbered by súpisné číslo); fill_nearest places these by the nearest address."
+
+[[document]]
+url = "https://web.archive.org/web/20240111102200/https://www.gelnica.sk/volby-prezidenta-slovenskej-republiky.html"
+sha256 = "4b29ac282d613db30911cf37b9b152bd67c49b3a9a7e5d3acddee52a83957b48"
+title = "Oznámenie o určení volebných okrskov a určení volebných miestností (voľby prezidenta SR 2024, 10.01.2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Banícka"},
+  {street = "Banícke námestie"},
+  {street = "Cintorínska"},
+  {street = "Háj"},
+  {street = "Hlavná"},
+  {street = "Krížna"},
+  {street = "Lutherovo Námestie", written = "Lutherovo námestie"},
+  {street = "Požiarnická", written = "Požiarnicka", note = "The document writes \"Požiarnicka\" without the long á; the register's Požiarnická is the same street in the old town."},
+  {street = "Slovenská"},
+  {street = "Slovenské Cechy"},
+  {street = "Turzovská"},
+  {street = "Zámková"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Dubová"},
+  {street = "Hnilecká"},
+  {street = "Jarná"},
+  {street = "Javorová"},
+  {street = "Jesenná"},
+  {street = "Lesná"},
+  {street = "Letná"},
+  {street = "Lipová"},
+  {street = "Lyžiarska"},
+  {street = "Partizánska"},
+  {street = "Plynárenská"},
+  {street = "Potočná"},
+  {street = "Vodárenská"},
+  {street = "Zimná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Sídlisko SNP", written = "SNP", note = "\"SNP\" is the register's Sídlisko SNP (sídlisko Slovenského národného povstania), the housing estate of okrsok 3 \"sídl. SNP\"."},
+  {street = "Hviezdoslavova"},
+  {street = "Kukučínova"},
+  {street = "Nemocničná"},
+  {street = "Vajanského"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Športová"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Tehelná"},
+  {street = "Záhradná"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Banská"},
+  {street = "Geologická"},
+  {street = "Hutná"},
+  {street = "Kováčska"},
+  {street = "Medená"},
+  {street = "Perlová"},
+  {street = "Pod Brehom", written = "Pod brehom"},
+  {street = "Poľná"},
+  {street = "Strojárenská"},
+  {street = "Žakarovská"},
+  {street = "Železničná"},
+]

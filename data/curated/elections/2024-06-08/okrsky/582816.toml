@@ -1,0 +1,29 @@
+# Okrsky of Žitavany, transcribed by an AI agent in job okrsok-rules-5044 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1: Kultúrno – spoločenské zariadenie, Opatovecká ulica č. 847/32, Žitavany
+#   okrsok 2: Volebný okrsok č. 2: Športová hala Žitavany, Športová ulica č. 791/26, Žitavany
+obec = "582816"
+name = "Žitavany"
+okrsky_date = 2024-03-01
+okrsky_note = "The document gives each okrsok only its polling station, no streets: okrsok 1 in the Kultúrno-spoločenské zariadenie, Opatovecká 847/32 (k.ú. Opatovce), okrsok 2 in the Športová hala, Športová 791/26 (k.ú. Kňažice). Žitavany has one part but two k.ú., the former villages Opatovce and Kňažice, each holding one station, so each okrsok is given the k.ú. of its station (inferred, by analogy with one part per station), as for the 2022 elections and the 2023 referendum in this repository. The scanned document is dated and signed 01.03.2024."
+
+[[document]]
+url = "https://www.zitavany.sk/modules/file_storage/download.php?file=d0195548%7C855&inline=1"
+sha256 = "e751f4270c6c4c765af5a0e390bf8666fc3c7750fb4ac1b40102187c34d7df5c"
+title = "Vytvorenie volebného okrsku a určenie volebnej miestnosti pre voľby do Európskeho parlamentu 2024, konané dňa 8. júna 2024"
+
+[[document]]
+url = "https://www.zitavany.sk/zverejnovanie/volby-referendum-1/volby-do-europskeho-parlamentu-2024/"
+sha256 = "e9a15e0a0b2e47760b1641addb726b4109e1cb47007683de090dfa15c0c22e1a"
+title = "Voľby do Európskeho parlamentu 2024"
+
+[okrsok.1]
+rules = [
+  {ku = "Opatovce", note = "k.ú. of the polling station Opatovecká 847/32", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {ku = "Kňažice", note = "k.ú. of the polling station Športová 791/26", inferred = true},
+]

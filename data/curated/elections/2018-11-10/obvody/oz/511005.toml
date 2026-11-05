@@ -1,0 +1,53 @@
+# Council obvody of Liptovské Sliače (511005), Ružomberok.
+# Transcribed by an AI agent in job obvod-rules-127 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č. 1 – pre voľby poslancov v časti obce Nižný Sliač, v ktorom sa budú voliť traja poslanci
+#   obvod 2: volebný obvod č. 2 – pre voľby poslancov v časti obce Stredný Sliač, v ktorom sa budú voliť piati poslanci
+#   obvod 3: volebný obvod č. 3 – pre voľby poslancov v časti obce Vyšný Sliač, v ktorom sa budú voliť traja poslanci
+# Okrsky added by an AI agent in job okrsok-rules-5886 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+obec = "511005"
+name = "Liptovské Sliače"
+date = 2018-06-21
+note = "Scanned resolution read from the rendered image."
+okrsky_note = "The mayor's 2018 decision on the okrsky and polling stations is not published on the municipality's website (its 2018 elections page lists the obvody resolution, population, recorder, candidates and results, but no okrsky notice; the notice board and the Internet Archive, which has no capture of the site between June and November 2018 apart from scripts, have none either). The council resolution sets three obvody, one per part (Nižný, Stredný, Vyšný Sliač), and the 2018 results count the votes in three okrsky Nižný, Stredný, Vyšný: one okrsok per obvod, so each okrsok is its whole obvod; no street list is needed."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "No published document states the date of the mayor's decision on the okrsky; the results document's heading names the elections of 10 November 2018 and counts the votes in the okrsky Nižný, Stredný and Vyšný."
+
+[[document]]
+url = "https://www.liptovskesliace.sk/e_download.php?file=data/editor/143sk_19.pdf&original=Po%C4%8Det%20poslancov.pdf"
+sha256 = "a2b25f740fad2ffedc235fb984a708de3f68336e886dee75d7380c0b38682e37"
+title = "Uznesenie č. 59/26/2018 zo zasadnutia obecného zastupiteľstva obce Liptovské Sliače prijaté na rokovaní dňa 21.06.2018"
+
+[[document]]
+url = "https://www.liptovskesliace.sk/e_download.php?file=data/editor/143sk_13.pdf&original=VOLBY%202018%20vysledky%20STAROSTA%20OBCE.pdf"
+sha256 = "64e14fef01436d68bd7f3e19ef18ebd09bd19a2d15586476c0447ac900a83585"
+title = "Výsledky komunálnych volieb pre voľby starostu obce v Liptovských Sliačoch 10. novembra 2018 (počet platných hlasov v okrskoch Nižný, Stredný, Vyšný)"
+
+[[document]]
+url = "https://www.liptovskesliace.sk/obec-2/volby/volby-do-organov-samospravy-obci-2018/"
+sha256 = "10fbf4921c10d8ec7f62a723915c53378ac4999fae66d1d2d7b61823d6d410ac"
+title = "Voľby do orgánov samosprávy obcí 2018 (stránka obce)"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {part = "Nižný Sliač"},
+]
+
+[obvod.2]
+seats = 5
+okrsky = [2]
+rules = [
+  {part = "Stredný Sliač"},
+]
+
+[obvod.3]
+seats = 3
+okrsky = [3]
+rules = [
+  {part = "Vyšný Sliač"},
+]

@@ -1,0 +1,34 @@
+# Council obvody of Zemplínska Nová Ves (544001), Trebišov.
+# Transcribed by an AI agent in job obvod-rules-198 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: vo volebnom obvode Úpor budú zvolení 4 poslanci
+#   obvod 2: vo volebnom obvode Zemplínsky Klečenov budú zvolení 3 poslanci
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/544001.toml, standing in.
+obec = "544001"
+name = "Zemplínska Nová Ves"
+date = 2018-08-02
+note = "Scanned collection of the 2018 resolutions, read by OCR (no diacritics in the OCR; names restored). Resolution 21/2018 (3+3 seats) was not adopted (3 for, 3 against); resolution 22/2018 of 2.8.2018 was adopted: obvod Zemplínsky Klečenov 3 seats, obvod Úpor 4 seats, 7 in total. The resolution lists Klečenov first, but the candidate lists and results number the 4-seat obvod (Úpor) 1 and the 3-seat obvod (Zemplínsky Klečenov) 2, so they are numbered by their seats here. Each obvod is a whole part of the municipality."
+okrsky_date = 2022-06-22
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-5917): No 2018 okrsky document found. The live site lists elections only from 2022 on and its notice-board archive starts in 2021. The Internet Archive keeps the 2018 site (homepage 2018-08-31, notices of September 2018 such as the e-mail address for commission delegations and the candidate list, and every PDF of /files/2018-*), but none of them is the mayor's utvorenie volebných okrskov for 10 November 2018; the elections page /-volby as archived in 2019 holds only 2019 files. The council minutes of 2.8.2018 (scan, OCR) and resolution 22/2018 set only the two obvody (Úpor 4 seats, Zemplínsky Klečenov 3 seats) and do not mention okrsky. Okrsky documents exist only from 2023 on (files/2023-01-11-…, 2024-01-18-… Určenie volebných okrskov a volebných miestností). Web search found nothing else. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://www.znves.sk/files/dokumenty/zapisnice-a-uznesenia-oz/zapisnice-a-uznesenia-oz/2019-03-19-170013-Uznesenia___2018.pdf"
+sha256 = "81898d765804af518bfd50505572221307b882ce17fcd670ace1d48826ddc7c4"
+title = "Uznesenia OZ 2018 – uznesenie č. 22/2018 zo zasadnutia obecného zastupiteľstva zo dňa 2.8.2018 (volebné obvody a počet poslancov)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Úpor"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Zemplínsky Klečenov"},
+]

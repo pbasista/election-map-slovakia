@@ -1,0 +1,32 @@
+# Okrsky of Široké, transcribed by an AI agent in job okrsok-rules-3782 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od súp. č. 1 do súp. č. 440
+#   okrsok 2: od súp. č. 441 do súp. č. 825
+obec = "525260"
+name = "Široké"
+okrsky_date = 2023-06-20
+okrsky_fill = "nearest"
+okrsky_note = "The document splits the village by súpisné čísla (1–440, 441–825) without naming parts; applied to both parts (Široké, Pod Braniskom), súpisné čísla being numbered across the municipality as in the rule set of 2022. Houses with a súpisné číslo above 825, if any, take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://siroke.sk/wp-content/uploads/dokumenty/volby-do-nrsr/Utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-do-Narodnej-rady-SR.pdf"
+sha256 = "509d88ef65fcdfcea10616a7fcd03cd94e2c16256d20637b7e2cbf947607e887"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Národnej rady SR"
+
+[[document]]
+url = "https://siroke.sk/dokument/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-do-narodnej-rady-sr/"
+sha256 = "e12ed48c2d9f2daed9b9b051612673e6db12e3df9e8e98f7c38c8a6b7ad66d41"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Národnej rady SR (stránka dokumentu)"
+
+[okrsok.1]
+rules = [
+  {part = "Široké", numbers = "1-440"},
+  {part = "Pod Braniskom", numbers = "1-440"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Široké", numbers = "441-825"},
+  {part = "Pod Braniskom", numbers = "441-825"},
+]

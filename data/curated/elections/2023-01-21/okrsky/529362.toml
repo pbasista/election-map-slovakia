@@ -1,0 +1,83 @@
+# Okrsky of Bratislava-Vajnory, transcribed by an AI agent in job okrsok-rules-2917 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Alviano, Buzalkova, Dorastenecká, Nové Šuty, Pod krížom, Pračanská, Pri majeri, Pri nadjazde, Pri pasienku, Pri pekárni, Pri potoku, Pri rybníku, Pri starom letisku, Pri šanci, Regrútska, Rybničná, Šinkovské, Šutráková, Šuty, Tibenského, Tuhovská, Uhliská, Zbrody, lokalita Vajnorké jazerá
+#   okrsok 2: Čierny chodník, Pri mlyne, Príjazdná, Roľnícka, Šachorová, Široká, Za mlynom
+#   okrsok 3: Baničova, Hospodárska, Jačmenná, Kataríny Brúderovej, Koncová, Koniarkova, Kratiny, Kúkoľová, Na doline, Na jarku, Nad jazierkom, Nad Válkom, Nemecká dolina, Ochotnícka, Osloboditeľská, Pod lipami, Pod Válkom, Pri pastierni, Pri Struhe, Skuteckého, Šaldova, Tomanova, Veľké Štepnice, Za farou, Za humnami, Zátureckého
+obec = "529362"
+name = "Bratislava-Vajnory"
+okrsky_date = 2022-11-10
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document, read from the page image. 'lokalita Vajnorké jazerá' (so written, for Vajnorské jazerá; okrsok 1) is a locality, not a street. 'Pri potoku' (okrsok 1) is not a street of the address register and is left out. Námestie Titusa Zemana (1 address, not named) and the addresses without a street (súpisné only, incl. those at Vajnorské jazerá) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.vajnory.sk/sites/default/files/files/urcenie_volebnych_okrskov_a_volebnych_miestnosti_pre_referendum.pdf"
+sha256 = "4efe83c349cef4d2194ceaac7881d2e0ffcc2dad59de54c6d57cd6f77e459841"
+title = "Určenie volebných okrskov a volebných miestností pre referendum 21. januára 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Alviano"},
+  {street = "Buzalkova"},
+  {street = "Dorastenecká"},
+  {street = "Nové Šuty"},
+  {street = "Pod krížom"},
+  {street = "Pračanská"},
+  {street = "Pri majeri"},
+  {street = "Pri nadjazde"},
+  {street = "Pri pasienku"},
+  {street = "Pri pekárni"},
+  {street = "Pri rybníku"},
+  {street = "Pri starom letisku"},
+  {street = "Pri šanci"},
+  {street = "Regrútska"},
+  {street = "Rybničná"},
+  {street = "Šinkovské"},
+  {street = "Šutráková"},
+  {street = "Šuty"},
+  {street = "Tibenského"},
+  {street = "Tuhovská"},
+  {street = "Uhliská"},
+  {street = "Zbrody"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Čierny chodník"},
+  {street = "Pri mlyne"},
+  {street = "Príjazdná"},
+  {street = "Roľnícka"},
+  {street = "Šachorová"},
+  {street = "Široká"},
+  {street = "Za mlynom"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Baničova"},
+  {street = "Hospodárska"},
+  {street = "Jačmenná"},
+  {street = "Kataríny Brúderovej"},
+  {street = "Koncová"},
+  {street = "Koniarkova"},
+  {street = "Kratiny"},
+  {street = "Kúkoľová"},
+  {street = "Na doline"},
+  {street = "Na jarku"},
+  {street = "Nad jazierkom"},
+  {street = "Nad Válkom"},
+  {street = "Nemecká dolina"},
+  {street = "Ochotnícka"},
+  {street = "Osloboditeľská"},
+  {street = "Pod lipami"},
+  {street = "Pod Válkom"},
+  {street = "Pri pastierni"},
+  {street = "Pri Struhe"},
+  {street = "Skuteckého"},
+  {street = "Šaldova"},
+  {street = "Tomanova"},
+  {street = "Veľké Štepnice"},
+  {street = "Za farou"},
+  {street = "Za humnami"},
+  {street = "Zátureckého"},
+]

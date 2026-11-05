@@ -1,0 +1,47 @@
+# The council obvody of Lubina of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/506184.toml, standing in, by `ems job reuse`. Its header there:
+#   Council obvody of Lubina (506184), Nové Mesto nad Váhom.
+#   Transcribed by an AI agent in job obvod-rules-336 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: Lubina obvod č.1. počet poslancov 4 /Lubina obec a Hrabové/
+#     obvod 2: Lubina obvod č. 2 počet poslancov 4 /miestna časť Hrnčiarové a Miškech Dedinka/
+#   Okrsky added by an AI agent in job okrsok-rules-1204 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Lubina obvod č.1. počet poslancov 4 /Lubina obec a Hrabové/
+#     okrsok 2: Lubina obvod č. 2 počet poslancov 4 /miestna časť Hrnčiarové a Miškech Dedinka/
+obec = "506184"
+name = "Lubina"
+date = 2022-06-29
+note = "Resolution 26/2022: obvod 1 = 'Lubina obec a Hrabové' (register part Lubina; Hrabové is a settlement without its own register part, taken as within part Lubina), obvod 2 = parts Hrnčiarové and Miškech Dedinka."
+adopted = 2022-10-29
+adopted_basis = "No document of 2018-11-10 setting the obvody was found (obvod-rules-149): The council resolutions of 31.5.2018 (návrhy, text) and 28.6.2018 (scan; the archived copy is truncated at 1 MB, its readable pages are resolutions 37–43 on minutes, control plan and land sales) contain no resolution on the 2018 obvody; no other 2018 elections document of the municipality is archived and the current site starts with 2022. These are the council obvody of the vote of 2022-10-29 (2022), the nearest in time with a rule set of its own of the same obvody and seats. The voters on the roll per obvod are not known for both votes, so whether the layout changed is not known either."
+okrsky_date = 2022-06-29
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office okrsky per obvod), so each okrsok is its whole obvod; the obvody document is the source and date is that resolution's date (no separate okrsky announcement used). Hrabové is a settlement within part Lubina (obvod 1)."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "The okrsky of the same rule set: 2 okrsky, those ŠÚ SR counted in each obvod. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://www.obeclubina.sk/download_file_f.php?id=1707181"
+sha256 = "aa08e78be08543eaf9487e161e71a9e457bca10c0691efc6f5f133444eb93529"
+title = "Uznesenia OZ Lubina zo dňa 29.6.2022 (uznesenie č. 26/2022)"
+
+[[document]]
+url = "https://www.obeclubina.sk/download_file_f.php?id=1707185"
+sha256 = "a70e98420310ab40ca8700fe2804cd4a648c95df53a35d6a26deb64559a45fc8"
+title = "Zápisnica zo zasadnutia OZ Lubina dňa 29.6.2022"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Lubina", note = "'Lubina obec a Hrabové'; Hrabové has no separate part in the register"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [2]
+rules = [
+  {part = "Hrnčiarové"},
+  {part = "Miškech Dedinka"},
+]

@@ -1,0 +1,27 @@
+# The okrsky of České Brezovo of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/511340.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of České Brezovo, transcribed by an AI agent in job okrsok-rules-2152 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Sála kultúrneho domu České Brezovo
+#     okrsok 2: Zasadačka Kultúrneho domu Váľkovo
+obec = "511340"
+name = "České Brezovo"
+okrsky_date = 2019-02-22
+okrsky_note = "The document lists only the two polling stations (okrsok 1 kultúrny dom České Brezovo, okrsok 2 kultúrny dom Vaľkovo). The obec has three parts but two k.ú., each with one station, so each okrsok is the k.ú. of its station, inferred, as in the rule set of 2022."
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-561): The 2017 elections page, archived 2017-09-29, gives only general voter information and a link to Poltár's document; no okrsky document of České Brezovo for 2017 is live or in the Internet Archive. These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2019-05-25: 1: 348 → 336, 2: 62 → 63."
+
+[[document]]
+url = "https://web.archive.org/web/20200807045626/http://www.ceskebrezovo.sk/e_download.php?file=data/editor/89sk_1.pdf&original=vo%C4%BEby%20do%20EP%20-%20volebn%C3%A9%20okrsky%202019.pdf"
+sha256 = "89355bd52436d44009daae9f6032aa2bcab49bf8b8424cd7637a6f584bbeb81e"
+title = "Volebné okrsky pre voľby do Európskeho parlamentu v roku 2019"
+
+[okrsok.1]
+rules = [
+  {ku = "České Brezovo", note = "The document gives okrsok 1 only its polling station, the kultúrny dom in České Brezovo; the obec has two k.ú., each holding one station, so okrsok 1 is the k.ú. of its station (part Salajka lies in k.ú. České Brezovo).", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {ku = "Vaľkovo", note = "The document gives okrsok 2 only its polling station, the kultúrny dom in Vaľkovo (written Váľkovo); okrsok 2 is the k.ú. of its station.", inferred = true},
+]

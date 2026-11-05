@@ -1,0 +1,28 @@
+# The okrsky of Seňa of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/521973.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Seňa, transcribed by an AI agent in job okrsok-rules-5093 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: od čísla domov: 0 -314
+#     okrsok 2: od čísla domov: 315 - 676
+obec = "521973"
+name = "Seňa"
+okrsky_date = 2024-03-01
+okrsky_fill = "nearest"
+okrsky_note = "The document splits Seňa by house (súpisné) numbers 0–314 and 315–676; addresses outside these ranges, if any, take the okrsok of the nearest address."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2023-01-21 setting the okrsky was found (okrsok-rules-3239): The referendum 2023 document (9.11.2022) only states 2 okrsky and one polling station (Kultúrny dom, Seňa 148), with no house numbers. Seňa has one part and no streets; okrsky can be drawn only from house-number ranges, which only the documents of the 2019 presidential election and the 2024 EP election give. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-01-21 → 2024-06-08: 1: 862 → 905, 2: 855 → 811."
+
+[[document]]
+url = "https://obecsena.sk/wp-content/uploads/dokumenty/volby-do-europarlamentu/Vytvorenie-okrskov.pdf"
+sha256 = "4b3665deff8b011210371706e67c569f12c9f8165f300e5b69c88dd85f2f9613"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností (voľby do Európskeho parlamentu 8. júna 2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Seňa", numbers = "1-314", note = "The document's range 0–314; house numbers start at 1."},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Seňa", numbers = "315-676"},
+]

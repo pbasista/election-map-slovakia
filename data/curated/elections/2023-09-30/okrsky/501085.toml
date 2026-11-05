@@ -1,0 +1,29 @@
+# Okrsky of Čalovec, transcribed by an AI agent in job okrsok-rules-3881 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volebný okrsok č. 1: zasadacia miestnosť obecného úradu v Čalovci, 946 02 Čalovec č. 170
+#   okrsok 2: volebný okrsok č. 2: kultúrno-spoločenská miestnosť Čalovec-Violín č. 56
+obec = "501085"
+name = "Čalovec"
+okrsky_date = 2023-07-26
+okrsky_note = "The notice creates two okrsky and names only their polling stations: okrsok 1 the obecný úrad, Čalovec č. 170; okrsok 2 the kultúrno-spoločenská miestnosť Čalovec-Violín č. 56. The okrsky are as many as the parts and each station lies in another part, so each okrsok is given the part of its station (inferred); the voters (about 850 vs 75) fit Čalovec and Violín. The notice board page shows it posted (vyvesené) on 27. 6. 2023; the document is signed \"V Čalovci dňa 26.7.2023\"."
+
+[[document]]
+url = "https://www.calovec.sk/e_download.php?file=data/uredni_deska/obsah305_2.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Den%C3%AD%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "089b7aab3311efdfd7ea10f1e789056e5c3d870fbfc53809aa0041d782d8c1a9"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby do NR SR dňa 30. septembra 2023"
+
+[[document]]
+url = "https://www.calovec.sk/urad/uradna-tabula/oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-325.html"
+sha256 = "bbb0489f602a56233fd22e356dc617e1ca2875be90a0730c56a73682633e7c53"
+title = "Úradná tabuľa: Oznámenie o utvorení volebných okrskov a určení volebných miestností (pre voľby do NR SR dňa 30. septembra 2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Čalovec", note = "polling station in Čalovec (č. 170)", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Violín", note = "polling station in Čalovec-Violín (č. 56)", inferred = true},
+]

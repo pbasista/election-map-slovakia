@@ -54,7 +54,11 @@
  * or off on its own and drawn, when on, from the zoom where it reads
  * (`OVERLAYS`): the regional ones from the whole country, the cities' once
  * the cities are large enough, the municipal ones once the obce are. A
- * selected place highlights its obvod of the finest overlay drawn.
+ * selected place highlights its obvod of the finest overlay drawn. The
+ * level the ballots show the results at (`setLevel`) outlines its unit of
+ * the selected place, a kraj, okres, regional obvod, obec, council obvod
+ * or okrsok, and veils the rest of the map, under that highlight
+ * (`drawScope`).
  *
  * The okrsky (polling districts) of the obce that have them drawn are
  * files of their own (geo/okrsky/<okres>/<lod>.json, geo/index.json
@@ -68,9 +72,11 @@
  * stripes of the tied candidates' colours, `stepFill`), by the units
  * of the zoom, from the zoom each overlay draws its borders at (`OVERLAYS`
  * `lines`, whether the overlay is on or not): below the shards every
- * regional obvod by its own value or that of its obce together; in the
- * shards every obec by its own (or by its regional obvod's where only that
- * is known, election night); from the council overlay's zoom, the council
+ * regional obvod by its own value or that of its obce together (for a
+ * country-wide contest or a by-election, every okres by its obce's
+ * instead); in the shards every obec by its own (or by its regional
+ * obvod's where only that is known, election night); from the council
+ * overlay's zoom, the council
  * obvody of an obec drawn as its obvody by theirs (a council obvod's own
  * contest at every zoom, its obec having no value of it); from the okrsky
  * overlay's zoom, every okrsok drawn by its own, over its obec. An obec
@@ -78,7 +84,8 @@
  * paths like the land's, made again only when the values change, under
  * the borders and labels; every unit filled carries its value under its
  * label: an obec's name, a council obvod's or an okrsok's number, or for
- * a regional obvod at its label where no obec names stand for it. `hover`
+ * a regional obvod or an okres at its label where no obec names stand for
+ * it (an okres from its names' zoom under its name). `hover`
  * tells the page which unit's fill is under the pointer, for its tooltip.
  *
  * Labels and house numbers are drawn above them with greedy collision
@@ -149,6 +156,9 @@ const STREET_PIXELS = [5, 14];
 // the street has a gap there, or is two streets with one name.
 const STREET_GAP = 250;
 const STREET_FILL = 0.18;
+// The outline of the unit of the ballots' level (`drawScope`), in pixels: a
+// little under the selected obec's, which covers it where they coincide.
+const SCOPE_LINE = 2;
 
 // Line codes of the geo files (geo.py): a rank, plus flags.
 const RANK = 3;
@@ -664,11 +674,17 @@ class CellHeap {
   }
 }
 
-/* Sets the transform of *ctx* to draw the coordinates of *file* in *view*. */
-function placeFile(ctx, file, view) {
+/* The transform that draws the coordinates of *file* in *view*, as a
+ * DOMMatrix2DInit. */
+function fileTransform(file, view) {
   const s = view.ratio * view.k;
   const [ox, oy] = file.origin;
-  ctx.setTransform(s, 0, 0, s, view.ratio * (ox * view.k - view.x), view.ratio * (oy * view.k - view.y));
+  return { a: s, d: s, e: view.ratio * (ox * view.k - view.x), f: view.ratio * (oy * view.k - view.y) };
+}
+
+/* Sets the transform of *ctx* to draw the coordinates of *file* in *view*. */
+function placeFile(ctx, file, view) {
+  ctx.setTransform(fileTransform(file, view));
 }
 
 /* Fills each of *bins* with its path *key* at zoom level *z* (`binPath`),
@@ -997,15 +1013,20 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
   let overlays = { zsk: true, city: true, oz: true, okrsky: true, base: true, buildings: true };
   let councils = null;
   // The 2026 results shown (`setResults`): {steps, tone, palette, obce,
-  // zsk, councils, okrsky, okrsokObce}, `tone` 'result' (the colours
-  // `result-<n>`) or the colour a turnout is mixed from ('accent',
-  // 'council', 'city', 'zsk'); `palette`, where set, the colour of each step
-  // by name instead (a winner's, `series-<n>`, or a tie's several names,
-  // in stripes: `stepFill`); `obce` obec code → [step, text], `zsk`
-  // '<kraj>/<n>' → [step, text, whole], `whole` where the obvod is known
-  // only as a whole, `councils` '<obec>/<n>' → [step, text] a municipal
-  // council obvod's, `okrsky` '<obec>/<n>' → [step, text] an okrsok's,
-  // `okrsokObce` the obce those are of; null for none.
+  // zsk, okresy, councils, okrsky, okrsokObce}, `tone` 'result' (the
+  // colours `result-<n>`) or the colour a turnout is mixed from ('accent',
+  // 'council', 'city', 'zsk', 'turnout'); `palette`, where set, the colour of
+  // each step by name instead (a winner's, `series-<n>`, or a tie's
+  // several names, in stripes: `stepFill`); `obce` obec code → [step,
+  // text], `zsk` '<kraj>/<n>' → [step, text, whole], `whole` where the
+  // obvod is known only as a whole, `okresy` okres code → [step, text] (a
+  // country-wide contest's or a by-election's coarsest units, in place of
+  // the regional obvody), `councils` '<obec>/<n>' → [step, text] a
+  // municipal council obvod's, `okrsky` '<obec>/<n>' → [step, text] an
+  // okrsok's, `okrsokObce` the obce those are of, `byObvod` the obce whose
+  // council obvody are filled by their own values alone (a by-election's:
+  // the others elect no one), `uncontested` the units held nowhere for want
+  // of candidates (obce and council obvody '<obec>/<n>'); null for none.
   let results = null;
   const zskOf = (p) => `${p.kraj}/${p.zsk}`;
   const okrsokKey = (p) => `${p.obec}/${p.okrsok}`;
@@ -1017,6 +1038,16 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
   // The selected obec for when its shard is not drawn: {code, obec}, obec
   // from the coarsest shard (`featureOf`) once that has come.
   let selectedObec = null;
+  // The level of the ballots whose unit of the selected place is outlined,
+  // the rest veiled (`setLevel`): one of live.js SCOPES, 'all' for none.
+  let scope = 'all';
+  // The okrsky file an okrsok is outlined from where none is drawn
+  // (`okrskyFor`): {key: '<okres>/<lod>', file}, `file` the one before
+  // until it comes.
+  let scopeOkrsky = null;
+  // File → {key, fill, line}: the paths of the unit outlined in it
+  // (`scopePaths`), made again as the unit or the zoom level changes.
+  const scopeCache = new WeakMap();
   // The page's latest view: {view, free, seq} (`show`).
   let current = null;
   const level = () => Math.floor(current.view.zoom);
@@ -1074,25 +1105,53 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
    * *which(feature)* telling its members. */
   function fillGroups(z) {
     if (!drawsOverlay('oz', z) || !councils) return [['all', COLOR.land, () => true]];
-    const count = (f) => councils[f.properties.id] ?? 0;
+    // An obec without a count is no part of the election (a by-election's
+    // where nothing is elected, map.js `setOverlays`): land, as with the
+    // overlay off, not an obec without a council election.
+    const count = (f) => councils[f.properties.id];
+    // A council obvod that elects no one and a unit held nowhere for want
+    // of candidates (`unvoted`) are drawn as an obec without a council
+    // election; their groups cached apart, and let go with the results
+    // (`setResults`).
+    const some = Boolean(results?.byObvod.size || results?.uncontested.size);
+    const none = (f) => some && unvoted(f.properties, z) !== null;
+    const tag = some ? ' result-unvoted' : '';
+    const unheld = (f) => count(f) === 0 || none(f);
     // An obec whose council obvod goes by address is drawn as its obvody.
-    const known = (f) => count(f) === 1 || 'oz' in f.properties;
+    const pending = (f) => count(f) > 1 && !('oz' in f.properties) && !none(f);
     return [
-      ['oz-land', COLOR.land, known],
-      ['oz-pending', COLOR.pending, (f) => !known(f) && count(f) > 1],
-      ['oz-none', COLOR.none, (f) => count(f) === 0],
+      [`oz-land${tag}`, COLOR.land, (f) => !unheld(f) && !pending(f)],
+      ['oz-pending', COLOR.pending, pending],
+      [`oz-none${tag}`, COLOR.none, unheld],
     ];
+  }
+
+  /* Why a feature with properties *p* in the shards, at zoom *z*, is drawn
+   * as a place without a vote, not with its obec's value: 'uncontested',
+   * a unit held nowhere for want of candidates (`uncontested`: an obec, or
+   * from the zoom of the council obvody's units a council obvod); 'none',
+   * from that zoom, a council obvod that elects no one, of an obec of
+   * `byObvod`; null where it is not. */
+  function unvoted(p, z) {
+    const piece = p.oz === undefined ? null : `${p.id}/${p.oz}`;
+    const units = piece !== null && showsUnits('oz', z);
+    if ((results.uncontested.has(p.id) && !results.obce.has(p.id)) || (units && results.uncontested.has(piece))) {
+      return 'uncontested';
+    }
+    return units && results.byObvod.has(p.id) && !results.councils.has(piece) ? 'none' : null;
   }
 
   /* The unit of the results whose value a feature with properties *p* in
    * the shards is filled with at zoom *z*, as [kind, key] (`results`):
    * its council obvod where it is one, from the zoom of their units
-   * (`showsUnits`); else its obec; else its council obvod at any zoom (a
-   * council obvod's own contest, of which the obec has no value); else its
-   * regional obvod where only that is known; null for none. */
+   * (`showsUnits`); none where that elects no one (`unvoted`); else its
+   * obec; else its council obvod at any zoom (a council obvod's own
+   * contest, of which the obec has no value); else its regional obvod
+   * where only that is known; null for none. */
   function shardUnit(p, z) {
     const piece = p.oz === undefined ? null : `${p.id}/${p.oz}`;
     if (piece && showsUnits('oz', z) && results.councils.has(piece)) return ['councils', piece];
+    if (unvoted(p, z)) return null;
     if (results.obce.has(p.id)) return ['obce', p.id];
     if (piece && results.councils.has(piece)) return ['councils', piece];
     const zsk = zskOf(p);
@@ -1103,6 +1162,23 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
   // zoom *z* (`shardUnit`); undefined for none.
   const obecStep = (p, z) => {
     const unit = shardUnit(p, z);
+    return unit ? results[unit[0]].get(unit[1])[0] : undefined;
+  };
+
+  /* The unit of the results whose value a cell of coarse.json with
+   * properties *p* is filled with, as [kind, key] (`results`): its okres
+   * where the results go by okres, else its regional obvod; null for
+   * none. */
+  function coarseUnit(p) {
+    if (results.okresy.has(p.okres)) return ['okresy', p.okres];
+    const zsk = zskOf(p);
+    return results.zsk.has(zsk) ? ['zsk', zsk] : null;
+  }
+
+  // The step a cell of coarse.json with properties *p* is filled in at
+  // (`coarseUnit`); undefined for none.
+  const coarseStep = (p) => {
+    const unit = coarseUnit(p);
     return unit ? results[unit[0]].get(unit[1])[0] : undefined;
   };
 
@@ -1342,8 +1418,8 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
         if (coarse.landPath?.z !== z) coarse.landPath = { z, path: unionPath(coarse, [{ arcs: coarse.land }], z) };
         ctx.fillStyle = COLOR.land;
         ctx.fill(coarse.landPath.path, 'evenodd');
-        // The results by regional obvod, cell by cell.
-        if (results) fillResults(ctx, view, coarse, bins, 'coarse', (f) => results.zsk.get(zskOf(f.properties))?.[0]);
+        // The results by regional obvod or by okres, cell by cell.
+        if (results) fillResults(ctx, view, coarse, bins, 'coarse', (f) => coarseStep(f.properties));
         continue;
       }
       const groups = fillGroups(z);
@@ -1351,13 +1427,16 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
         ctx.fillStyle = color;
         fillBins(ctx, bins, z, name, (bin) => unionPath(file, bin.features.filter(which), z));
       }
-      // Over the land only: the council overlay's obce of no known obvod or
-      // no council keep their colours. Cached apart below and from the
-      // council obvody's zoom: a shard's level of detail spans both.
+      // Over every group: a unit keeps its value whatever the council
+      // overlay has its obec as (one electing no council may still elect a
+      // mayor or vote in the regional contests; one whose obvody are not
+      // known still has its own figure), the overlay's colours showing
+      // where the results have none (`unvoted` among them). Cached apart
+      // below and from the council obvody's zoom: a shard's level of detail
+      // spans both.
       if (results) {
-        const [land, , which] = groups[0];
-        const group = showsUnits('oz', z) ? `${land} by-oz` : land;
-        fillResults(ctx, view, file, bins, group, (f) => (which(f) ? obecStep(f.properties, z) : undefined));
+        const group = showsUnits('oz', z) ? 'obce by-oz' : 'obce';
+        fillResults(ctx, view, file, bins, group, (f) => obecStep(f.properties, z));
       }
     }
     drawBase(ctx, view);
@@ -1457,9 +1536,154 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
     ctx.stroke(path);
   }
 
-  /* The selected obvod (its border from the files drawn now, so it is
-   * theirs), the selected obec and the selected point. */
+  /* The level of the unit outlined for level *s* (one of live.js SCOPES)
+   * of place *p* ({info, obvod, okrsok}): an okrsok or a council obvod the
+   * place has none of (not known, or its obec's okrsky not drawn) falls
+   * back to the next coarser it has. */
+  function scopeOf(s, p) {
+    if (s === 'okrsok' && (p.okrsok == null || !okrsokObce.has(p.info.code))) return scopeOf('obvod', p);
+    if (s === 'obvod' && p.obvod == null) return 'obec';
+    return s;
+  }
+
+  /* The okrsky file of *okres* to outline an okrsok from where none is
+   * drawn (`scopeOkrsky`): at the level of detail of its shard drawn now,
+   * else the coarsest; null until the first comes, which then draws. */
+  function okrskyFor(okres) {
+    const lod = shown.get(okres)?.lod ?? okrsokBands[0].lod;
+    const key = `${okres}/${lod}`;
+    if (scopeOkrsky?.key !== key) {
+      const entry = { key, file: scopeOkrsky?.file ?? null };
+      scopeOkrsky = entry;
+      loadOkrsky(okres, lod)
+        .then((file) => {
+          if (scopeOkrsky !== entry) return;
+          entry.file = file;
+          redraw();
+        })
+        .catch(logError);
+    }
+    return scopeOkrsky.file;
+  }
+
+  /* The unit outlined (`scope`) of the selected place as drawn now: {key,
+   * border, parts: [[file, features()]]}, *features()* its features in each
+   * file, found only where its paths are made (`scopePaths`); `border(code)`,
+   * of a kraj, an okres or a regional obvod, whether a line of that code
+   * bounds it (an okres border between two shards is in both, a copy on
+   * each side, so its outline is of those lines), else null. Null for
+   * none, or while its obec's or its okrsok's file loads. */
+  function scopeUnit() {
+    const info = place?.info;
+    if (scope === 'all' || !info?.okres) return null;
+    const s = scopeOf(scope, place);
+    if (s === 'kraj' || s === 'okres' || s === 'zsk') {
+      const files = coarseShown ? [coarse] : [...shown.values()].map((d) => d.file);
+      const of = {
+        kraj: [info.kraj, (p) => p.kraj === info.kraj, (code) => (code & RANK) >= 2],
+        okres: [info.okres, (p) => p.okres === info.okres, (code) => (code & RANK) >= OKRES],
+        // A regional obvod's border is flagged so, the kraj's and the
+        // country's (the outer edge) are higher ranks.
+        zsk: [
+          `${info.kraj}/${info.zsk}`,
+          (p) => p.kraj === info.kraj && p.zsk === info.zsk,
+          (code) => (code & FLAG.zsk) !== 0 || (code & RANK) >= 2,
+        ],
+      };
+      const [code, member, border] = of[s];
+      return {
+        key: `${s}:${code}`,
+        border,
+        parts: files.map((file) => [file, () => file.features.filter((f) => member(f.properties))]),
+      };
+    }
+    if (s === 'okrsok') {
+      const file = okrskyShown.get(info.okres)?.file ?? okrskyFor(info.okres);
+      const own = (p) => p.obec === info.code && p.okrsok === place.okrsok;
+      return file && { key: `okrsok:${info.code}/${place.okrsok}`, border: null, parts: [[file, () => file.features.filter((f) => own(f.properties))]] };
+    }
+    const obec = shownObec(info);
+    if (!obec) return null;
+    // An obec not drawn as its council obvody is its one obvod.
+    const pieces = s === 'obvod' ? obec.features.filter((f) => f.properties.oz === place.obvod) : [];
+    return {
+      key: `${s}:${info.code}/${place.obvod}`,
+      border: null,
+      parts: [[obec.file, () => (pieces.length ? pieces : obec.features)]],
+    };
+  }
+
+  /* The paths of *unit* (`scopeUnit`) in *file*, whose features of it are
+   * *features()*, at zoom level *z*: {fill, line}, the area to fill
+   * even-odd and the outline; null where it has none there. Kept for the
+   * next drawing (`scopeCache`). */
+  function scopePaths(file, unit, features, z) {
+    const key = `${unit.key} ${z}`;
+    const kept = scopeCache.get(file);
+    if (kept?.key === key) return kept.paths;
+    const members = features();
+    let paths = null;
+    if (members.length && unit.border === null) {
+      const path = unionPath(file, members, z);
+      paths = { fill: path, line: path };
+    } else if (members.length) {
+      const fill = new Path2D();
+      const line = new Path2D();
+      const added = new Set();
+      for (const f of members) {
+        addFeature(fill, file, f, z);
+        for (const polygon of f.arcs) {
+          for (const ring of polygon) {
+            for (const r of ring) {
+              const a = arcOf(r);
+              if (added.has(a) || !unit.border(file.lines[a])) continue;
+              added.add(a);
+              addArc(line, file, a, z);
+            }
+          }
+        }
+      }
+      paths = { fill, line };
+    }
+    scopeCache.set(file, { key, paths });
+    return paths;
+  }
+
+  /* The unit of the ballots' level of the selected place (`setLevel`),
+   * outlined in the level's colour, and the rest of the map veiled, its
+   * borders too, not its labels, which are drawn after. Under the
+   * selection's highlight: where that outlines the same unit (the obec,
+   * or its council obvod or okrsok at the zooms that draw those), its
+   * colour covers the level's, and the two read as one. */
+  function drawScope(ctx, view) {
+    const unit = scopeUnit();
+    if (!unit) return;
+    const z = Math.floor(view.zoom);
+    const parts = unit.parts
+      .map(([file, features]) => [file, scopePaths(file, unit, features, z)])
+      .filter(([, paths]) => paths);
+    if (!parts.length) return;
+    // One path for the whole veil: filled file by file, it would show a
+    // seam where two files meet.
+    const veil = new Path2D();
+    veil.rect(0, 0, view.w * view.ratio, view.h * view.ratio);
+    for (const [file, paths] of parts) veil.addPath(paths.fill, fileTransform(file, view));
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillStyle = COLOR['level-veil'];
+    ctx.fill(veil, 'evenodd');
+    ctx.strokeStyle = COLOR.level;
+    for (const [file, paths] of parts) {
+      placeFile(ctx, file, view);
+      ctx.lineWidth = SCOPE_LINE / view.k;
+      ctx.stroke(paths.line);
+    }
+  }
+
+  /* The unit of the ballots' level (`drawScope`), the selected obvod (its
+   * border from the files drawn now, so it is theirs), the selected obec
+   * and the selected point. */
   function drawHighlight(ctx, view) {
+    drawScope(ctx, view);
     const info = place?.info;
     const overlay = highlighted(level());
     const member = {
@@ -1955,8 +2179,10 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
     const obce = lodFor(view.zoom) !== null;
     if (l.z < OKRES_ZOOM) drawKrajNames(l);
     // After the names of the kraje, before those of the okresy, both
-    // stacking with them.
+    // stacking with them; the okresy's values below their names' zoom (from
+    // there, under the names).
     drawZskResults(l, obce);
+    if (l.z < OKRES_ZOOM) drawOkresResults(l);
     if (l.z >= OKRES_ZOOM && !obce) drawOkresNames(l);
     if (obce) drawShardLabels(l);
     if (neighbours) drawNeighbourNames(l);
@@ -2014,14 +2240,38 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
     }
   }
 
-  /* The names of the okresy (`labelling` *l*). */
+  /* The results of the okresy where they go by okres below their names'
+   * zoom (`labelling` *l*): the values alone, as the regional obvody's. */
+  function drawOkresResults(l) {
+    if (!results?.okresy.size) return;
+    for (const o of coarse.okresy) {
+      const text = results.okresy.get(o.id)?.[1];
+      if (!text) continue;
+      const area = coarseAreas.get(`okres:${o.id}`);
+      const p = l.spot(area, l.at(o.label), text, OBVOD_FONT, 12);
+      if (p) l.value(text, p.x, p.y, area);
+    }
+  }
+
+  /* The names of the okresy (`labelling` *l*), where the results go by
+   * okres each with its value under it (else under that of the first of
+   * its other parts named), as the obce's. */
   function drawOkresNames(l) {
     const name = (o) => (p) =>
       l.label(o.name, p, NAME_FONT, NAME_SIZE, COLOR.label, { kind: 'okres', area: coarseAreas.get(`okres:${o.id}`) });
+    const resultOf = (o) => results?.okresy.get(o.id)?.[1];
+    const unvalued = new Set();
     for (const o of coarse.okresy) {
-      name(o)(l.spot(coarseAreas.get(`okres:${o.id}`), l.at(o.label), o.name, NAME_FONT, NAME_SIZE, o.parts));
+      const area = coarseAreas.get(`okres:${o.id}`);
+      const p = l.spot(area, l.at(o.label), o.name, NAME_FONT, NAME_SIZE, o.parts);
+      if (!l.labelWithValue(name(o), p, resultOf(o), area)) unvalued.add(o);
     }
-    for (const o of coarse.okresy) l.inParts(o.parts, o.name, NAME_FONT, NAME_SIZE, name(o));
+    for (const o of coarse.okresy) {
+      let value = unvalued.has(o) ? resultOf(o) : undefined;
+      l.inParts(o.parts, o.name, NAME_FONT, NAME_SIZE, (p) => {
+        if (l.labelWithValue(name(o), p, value, coarseAreas.get(`okres:${o.id}`))) value = undefined;
+      });
+    }
   }
 
   // Whether an obec (or council obvod) with properties *props* is filled by
@@ -2243,8 +2493,10 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
 
   /* The unit of the results whose fill is drawn at (lon, lat), from what
    * is drawn now, without loading anything: {kind, key}, `kind` 'okrsky',
-   * 'councils', 'obce' or 'zsk' and `key` as `results` has them (as
-   * `drawShapes` fills them); null where none is. */
+   * 'councils', 'obce', 'zsk' or 'okresy' and `key` as `results` has them
+   * (as `drawShapes` fills them); {kind, key, unvoted} for a unit drawn as
+   * a place without a vote (`unvoted`: why), an obec held nowhere or a
+   * council obvod; null where none is. */
   function unitAt(lon, lat) {
     if (!results) return null;
     const z = level();
@@ -2258,16 +2510,20 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
     }
     if (!f) {
       const cell = at(coarse);
-      const key = cell && zskOf(cell.properties);
-      return key && results.zsk.has(key) ? { kind: 'zsk', key } : null;
+      const unit = cell && coarseUnit(cell.properties);
+      return unit && { kind: unit[0], key: unit[1] };
     }
     const p = f.properties;
     const okrsky = showsUnits('okrsky', z) && okrsokObce.has(p.id) ? okrskyShown.get(p.okres)?.file : null;
     const okrsok = okrsky ? at(okrsky, (q) => q.obec === p.id) : null;
     const key = okrsok ? okrsokKey(okrsok.properties) : null;
     if (key && results.okrsky.has(key)) return { kind: 'okrsky', key };
-    const [, , which] = fillGroups(z)[0];
-    const unit = which(f) ? shardUnit(p, z) : null;
+    const why = unvoted(p, z);
+    if (why) {
+      const whole = results.uncontested.has(p.id) && !results.obce.has(p.id);
+      return whole ? { kind: 'obce', key: p.id, unvoted: why } : { kind: 'councils', key: `${p.id}/${p.oz}`, unvoted: why };
+    }
+    const unit = shardUnit(p, z);
     return unit && { kind: unit[0], key: unit[1] };
   }
 
@@ -2282,6 +2538,15 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
   async function obecFeature(info) {
     const own = shown.get(info.okres);
     return featureOf(own?.file ?? (await loadShard(info.okres, coarsestLod)), info);
+  }
+
+  /* The box in Z0 pixels of obec *info* (data.js `obecInfo`), or of its
+   * council *obvod* where it is drawn as its obvody; null if it has none. */
+  async function obecBox(info, obvod = null) {
+    const obec = await obecFeature(info);
+    if (!obec) return null;
+    const pieces = obvod === null ? [] : obec.features.filter((f) => f.properties.oz === obvod);
+    return pieces.length ? boxOf(pieces) : obec.box;
   }
 
   /* The selected obec *info* to draw now (see `obecFeature`), as
@@ -2372,13 +2637,38 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
       return shape?.points ?? null;
     },
 
-    /* The box in Z0 pixels of obec *info* (data.js `obecInfo`), or of its
-     * council *obvod* where it is drawn as its obvody; null if it has none. */
-    async obecBox(info, obvod = null) {
-      const obec = await obecFeature(info);
-      if (!obec) return null;
-      const pieces = obvod === null ? [] : obec.features.filter((f) => f.properties.oz === obvod);
-      return pieces.length ? boxOf(pieces) : obec.box;
+    obecBox,
+
+    /* The box in Z0 pixels of the unit at level *s* (one of live.js SCOPES
+     * but 'all') of place *p* ({info, obvod, okrsok}, info as data.js
+     * `obecInfo` gives it), the unit `drawScope` outlines, with the level
+     * it is of (`scopeOf`): {box, level}; null if it has none. */
+    async unitBox(s, p) {
+      const { info } = p;
+      const unit = scopeOf(s, p);
+      if (unit === 'kraj' || unit === 'okres' || unit === 'zsk') {
+        const member =
+          unit === 'zsk' ? (q) => q.kraj === info.kraj && q.zsk === info.zsk : (q) => q[unit] === info[unit];
+        const cells = coarse.features.filter((f) => member(f.properties));
+        return cells.length ? { box: boxOf(cells), level: unit } : null;
+      }
+      if (unit === 'okrsok') {
+        // The finest level of detail: the one the view fitted to an okrsok
+        // (mostly from zoom 14) draws, so the file it loads anyway.
+        const file = await loadOkrsky(info.okres, okrsokBands.at(-1).lod);
+        const own = file.features.filter((f) => f.properties.obec === info.code && f.properties.okrsok === p.okrsok);
+        if (own.length) return { box: boxOf(own), level: unit };
+      }
+      const level = unit === 'okrsok' ? scopeOf('obvod', p) : unit;
+      const box = await obecBox(info, level === 'obvod' ? p.obvod : null);
+      return box && { box, level };
+    },
+
+    /* Outlines the unit at level *next* (one of live.js SCOPES; 'all' for
+     * none) of the selected place, the rest veiled (`drawScope`). */
+    setLevel(next) {
+      scope = next;
+      redraw();
     },
 
     /* The box in Z0 pixels of *area* (as `inArea` takes it), or null. */
@@ -2390,7 +2680,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
     /* Switches the overlays on or off: *wanted* {zsk, city, oz, okrsky,
      * base, buildings}, `base` the roads, railways and waters of the base
      * map; *counts*, once the council overlay is on, the number of council
-     * obvody of every obec by code. */
+     * obvody of every obec of the election by code (`fillGroups`). */
     setOverlays(wanted, counts) {
       overlays = wanted;
       councils = counts ?? councils;
@@ -2404,11 +2694,14 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
 
     /* Colours the land by the 2026 results *next* (mapmode.js): {steps,
      * tone, palette?, obce: {code: [step, text]}, zsk: {'<kraj>/<n>':
-     * [step, text, whole]}, councils: {'<obec>/<n>': [step, text]}, okrsky:
-     * {'<obec>/<n>': [step, text]}}, step 0 the lowest of *steps*, `tone`
-     * and `palette` as `results` has them, `whole` where the obvod is known
-     * only as a whole; null for none. The fills cached for the values
-     * before are let go, and the stripes of their ties. */
+     * [step, text, whole]}, okresy: {okres: [step, text]}, councils:
+     * {'<obec>/<n>': [step, text]}, okrsky: {'<obec>/<n>': [step, text]},
+     * byObvod: [obec, ...], uncontested: [unit, ...]}, step 0 the lowest of
+     * *steps*, `tone` and `palette` as `results` has them, `whole` where
+     * the obvod is known only as a whole, `byObvod` and `uncontested` as
+     * `results` has them; null for
+     * none. The fills cached for the values before are let go, and the
+     * stripes of their ties. */
     setResults(next) {
       results = next && {
         steps: next.steps,
@@ -2416,9 +2709,12 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
         palette: next.palette ?? null,
         obce: new Map(Object.entries(next.obce)),
         zsk: new Map(Object.entries(next.zsk)),
+        okresy: new Map(Object.entries(next.okresy)),
         councils: new Map(Object.entries(next.councils)),
         okrsky: new Map(Object.entries(next.okrsky)),
         okrsokObce: new Set(Object.keys(next.okrsky).map((key) => key.split('/')[0])),
+        byObvod: new Set(next.byObvod),
+        uncontested: new Set(next.uncontested),
       };
       stripePatterns.clear();
       const drawnFiles = [...shown.values(), ...okrskyShown.values()].map((s) => s.file);

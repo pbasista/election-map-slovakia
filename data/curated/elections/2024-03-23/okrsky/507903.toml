@@ -1,0 +1,82 @@
+# Okrsky of Hamuliakovo, transcribed by an AI agent in job okrsok-rules-4241 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Záhradkárska osada, Horná Vrbina, Cintorínska, Dlhá, Dunajská, Hlavná, Kania, Kaštieľska, Kormoránia, Korytárska, Kostolná, Labutia, Lipová, Nová, Pastierska, Pod záhradami, Poľná, Pri hrádzi, Pri pšeničnej bráne, Rybárska, Rybáričia, Sadová, Sýkorčia, Šamorínska, Tesná, Úzka, Volavčia, Židovská, Hamuliakovo 0
+#   okrsok 2: Astrová, Bazová, Bleduľová, Borievková, Brestová, Brezová, Buková, Družstevná, Dubová, Fialková, Gaštanová, Hrabová, Javorová, Jaseňová, Jelšová, Konvalinková, Kosatcová, Kruštíková, Leknová, Liesková, Lipnicová, Malogútorska Mlynárska, Nezábudková, Ostricová, Ostružinová, Prasličková, Pri píle, Rezavková, Scilová, Snežienková, Topoľová, Višňová, Vrbová
+obec = "507903"
+name = "Hamuliakovo"
+okrsky_date = 2024-01-29
+okrsky_note = "'Sýkorčia' (okrsok 1) is not in the register (left out). 'Rez avková' of the PDF's text layer is Rezavková."
+
+[[document]]
+url = "https://www.obechamuliakovo.sk/data/page/obechamuliakovo.sk/24319/urcenie-volebnych-okrskov-volby-prezidenta-sr-1.pdf"
+sha256 = "bf35db2dad33e5db4e5c9d25890b97d6ac932165f569351a7521e7dab0b10e1b"
+title = "Informácia o utvorení volebných okrskov a určení volebných miestností v obci Hamuliakovo k voľbám prezidenta SR 23.03.2024 (V Hamuliakove, 29.01.2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Dlhá"},
+  {street = "Dunajská"},
+  {street = "Hlavná"},
+  {street = "Kania"},
+  {street = "Kaštieľska"},
+  {street = "Kormoránia"},
+  {street = "Korytárska"},
+  {street = "Kostolná"},
+  {street = "Labutia"},
+  {street = "Lipová"},
+  {street = "Nová"},
+  {street = "Pastierska"},
+  {street = "Pod záhradami"},
+  {street = "Poľná"},
+  {street = "Pri hrádzi"},
+  {street = "Pri pšeničnej bráne"},
+  {street = "Rybárska"},
+  {street = "Rybáričia"},
+  {street = "Sadová"},
+  {street = "Šamorínska"},
+  {street = "Tesná"},
+  {street = "Úzka"},
+  {street = "Volavčia"},
+  {street = "Židovská"},
+  {rest = true, note = "Záhradkárska osada and Horná Vrbina have no street in the register: the houses without a street (súpisné čísla only) fall to okrsok 1, as does 'Hamuliakovo 0' (voters without an address); okrsok 2 is the closed list of its streets"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Astrová"},
+  {street = "Bazová"},
+  {street = "Bleduľová"},
+  {street = "Borievková"},
+  {street = "Brestová"},
+  {street = "Brezová"},
+  {street = "Buková"},
+  {street = "Družstevná"},
+  {street = "Dubová"},
+  {street = "Fialková"},
+  {street = "Gaštanová"},
+  {street = "Hrabová"},
+  {street = "Javorová ulica", written = "Javorová"},
+  {street = "Jaseňová"},
+  {street = "Jelšová"},
+  {street = "Konvalinková"},
+  {street = "Kosatcová"},
+  {street = "Kruštíková"},
+  {street = "Leknová"},
+  {street = "Liesková"},
+  {street = "Lipnicová"},
+  {street = "Malogútorská", written = "Malogútorska", note = "the document writes 'Malogútorska Mlynárska' (short a, no comma): the register's Malogútorská and Mlynárska ulica"},
+  {street = "Mlynárska ulica", written = "Mlynárska"},
+  {street = "Nezábudková"},
+  {street = "Ostricová"},
+  {street = "Ostružinová"},
+  {street = "Prasličková"},
+  {street = "Pri píle"},
+  {street = "Rezavková"},
+  {street = "Scilová ulica", written = "Scilová"},
+  {street = "Snežienková"},
+  {street = "Topoľová"},
+  {street = "Višňová"},
+  {street = "Vrbová"},
+]

@@ -1,0 +1,239 @@
+# Okrsky of Hlohovec, transcribed by an AI agent in job okrsok-rules-032 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Fraštacká, Hlohová, Kamenná, M. R. Štefánika, Tolstého a pre voličov, ktorí majú evidovaný trvalý pobyt na adrese: Mesto Hlohovec (t.j. občania, ktorým bol zrušený trvalý pobyt podľa § 7 ods. 1 zákona č. 253/1998 Z. z. o hlásení pobytu občanov Slovenskej republiky a registri obyvateľov Slovenskej republiky v znení neskorších predpisov)
+#   okrsok 2: Bezručova, Františkánske námestie, Komenského, Nábrežie A. Hlinku (č. 1 – 23 nepárne), Nám. sv. Michala, R. Dilonga, Zábranie
+#   okrsok 3: Fándlyho, Hurbanova, Jesenského, Palackého, Pribinova, Puškinova, Radlinského, Rozmarínova, Starý rínok, Štúrova, Železničná
+#   okrsok 4: Bernolákova, Drevená, Družstevná, Jarmočná, Kalinčiakova, Krátka, Mladý háj, Palárikova, Pri cintoríne, Rázusova, Šafárikova, Teplá izba, Továrenska, Zajačky
+#   okrsok 5: Kukučínova, Nitrianska, Tehelná
+#   okrsok 6: Koperníkova (okrem č. 1, 2, 3), Lipiny, Pri hvezdárni, Slov. nár. povstania, Tokajka, Vinohradská (č. 1, 2, 3, 4, 9, 10)
+#   okrsok 7: Balatón, Balatónska, Bottova, Koperníkova (č. 1, 2, 3), Kpt. Nálepku, Nerudova, Rad mjr. Pavloviča, Sládkovičova, Šomodská, Tajovského, Vinohradská (č. 6, 8, 11, 13), Vodárenská, Zámok, lokalita Svinná hora (súp.č. 4208) a lokalita Obora (súp.č. 4213)
+#   okrsok 8: Za poštou, Závalie (č. 1, 2, 3, 5, 7, 9)
+#   okrsok 9: Michalská, Podzámska (č. 2 – 21, 37, 41)
+#   okrsok 10: Podzámska (č. 23 – 35), Závalie (č. 6, 8, 10, 11, 13, 15, 19A, 19B)
+#   okrsok 11: Hollého, M. Bela (č. 10, 12, 14), Pod Beranom
+#   okrsok 12: M. Bela (č. 1, 2, 4, 6, 8), Manckovičova
+#   okrsok 13: Gaštanová, Nábrežie A. Hlinku (č. 2 – 12 párne, č. 27 – 39 nepárne), Pod Šomod, Sihotská
+#   okrsok 14: 9. mája, Arpáda Felcána, Cisárka, Čsl. armády, Hviezdoslavova, Ľ. Zúbka, M. Benku, Petra Jilemnického, Vansovej
+#   okrsok 15: Fraňa Kráľa, Františka Lipku, Gáborská, Gorkého, Inovecká, J. A. Gagarina, Kamenohorská, Karpatská, Mierová, Ružová, Stará hora, Veterná
+#   okrsok 16: Čulenova, Dukelská, Hošták, Kruhová, Pánska niva, Poniklecová, Rovná, Slnečná, Svätopeterská, Šoltésova, Timravy, Vážska, lokalita Ivarnoky (súp.č. 3859) a lokalita Štrkovka (súp.č. 3867)
+#   okrsok 17: D. Jurkoviča, Mlynská, Okrúhla, Pltnícka, Priemyselná, Školská, Šulekova, Za Váhom, Záhradnícka
+#   okrsok 18: Hájska, Holubyho, Janka Kráľa, L. Novomeského, Ľ. Podjavorinskej, Osloboditeľov, Rybárska, Seredská, Terezov
+obec = "507032"
+name = "Hlohovec"
+okrsky_fill = "nearest"
+okrsky_note = "'Mesto Hlohovec' in okrsok 1 means voters whose permanent residence was cancelled (registered without an address), not register houses. The lokality given by súpisné číslo and the other register addresses without a street (parts Hlohovec, Šulekovo), and the numbers of split streets the document lists in no okrsok (e.g. Vinohradská 5, 7, 12; Nábrežie A. Hlinku even numbers above 12), are placed by fill_nearest, since a part+súpisné rule would also catch street houses with the same súpisné číslo."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names the elections to the organs of the self-governing regions of 4 November 2017 (decision of the Speaker no. 166 of 23. 6. 2017); the document itself carries no date."
+okrsky_supplemented = 2019-11-29
+okrsky_supplemented_from = "document"
+okrsky_supplement_basis = "The document does not name Šumperská ulica (okrsok 5), streets of the register; the city's okrsky document of 29. 11. 2019 (NR SR 2020), with otherwise the same okrsky, lists them there, so they are taken from it. (https://www.hlohovec.sk/download_file_f.php?id=1249863)"
+
+[[document]]
+url = "https://www.hlohovec.sk/download_file_f.php?id=1217025"
+sha256 = "121c8c96f6ea79c72a72d2dfb45fbbf89c207649eb115e2479fbd4737b0d43e0"
+title = "Určenie volebných okrskov a volebných miestností – voľby do orgánov samosprávnych krajov 2017"
+
+[[document]]
+url = "https://www.hlohovec.sk/download_file_f.php?id=1249863"
+sha256 = "df4081ccaa07337186a84a648a3742ae75ab7ecc1e40f5ee9b2cfd821291262f"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do NR SR 2020 (29. 11. 2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Fraštacká"},
+  {street = "Hlohová"},
+  {street = "Kamenná"},
+  {street = "M.R.Štefánika", written = "M. R. Štefánika"},
+  {street = "Tolstého"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bezručova"},
+  {street = "Františkánske námestie"},
+  {street = "Komenského"},
+  {street = "Nábrežie A.Hlinku", numbers = "1-23", parity = "odd", written = "Nábrežie A. Hlinku"},
+  {street = "Nám.sv.Michala", written = "Nám. sv. Michala"},
+  {street = "R.Dilonga", written = "R. Dilonga"},
+  {street = "Zábranie"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Fándlyho"},
+  {street = "Hurbanova"},
+  {street = "Jesenského"},
+  {street = "Palackého"},
+  {street = "Pribinova"},
+  {street = "Puškinova"},
+  {street = "Radlinského"},
+  {street = "Rozmarínova"},
+  {street = "Starý rínok"},
+  {street = "Štúrova"},
+  {street = "Železničná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Drevená"},
+  {street = "Družstevná"},
+  {street = "Jarmočná"},
+  {street = "Kalinčiakova"},
+  {street = "Krátka"},
+  {street = "Mladý háj"},
+  {street = "Palárikova"},
+  {street = "Pri cintoríne"},
+  {street = "Rázusova"},
+  {street = "Šafárikova"},
+  {street = "Teplá izba"},
+  {street = "Továrenska"},
+  {street = "Zajačky"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Kukučínova"},
+  {street = "Nitrianska"},
+  {street = "Tehelná"},
+  {street = "Šumperská ulica", supplemented = true},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Koperníkova"},
+  {street = "Lipiny"},
+  {street = "Pri hvezdárni"},
+  {street = "Slov.nár.povstania", written = "Slov. nár. povstania"},
+  {street = "Tokajka"},
+  {street = "Vinohradská", numbers = "1, 2, 3, 4, 9, 10"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Balatón"},
+  {street = "Balatónska"},
+  {street = "Bottova"},
+  {street = "Koperníkova", numbers = "1, 2, 3"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Nerudova"},
+  {street = "Rad mjr.Pavloviča", written = "Rad mjr. Pavloviča"},
+  {street = "Sládkovičova"},
+  {street = "Šomodská"},
+  {street = "Tajovského"},
+  {street = "Vinohradská", numbers = "6, 8, 11, 13"},
+  {street = "Vodárenská"},
+  {street = "Zámok"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Za poštou"},
+  {street = "Závalie", numbers = "1, 2, 3, 5, 7, 9"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Michalská"},
+  {street = "Podzámska", numbers = "2-21, 37, 41"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Podzámska", numbers = "23-35"},
+  {street = "Závalie", numbers = "6, 8, 10, 11, 13, 15, 19A, 19B"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Hollého"},
+  {street = "M.Bela", numbers = "10, 12, 14", written = "M. Bela"},
+  {street = "Pod Beranom"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "M.Bela", numbers = "1, 2, 4, 6, 8", written = "M. Bela"},
+  {street = "Manckovičova"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Gaštanová"},
+  {street = "Nábrežie A.Hlinku", numbers = "2-12", parity = "even", written = "Nábrežie A. Hlinku"},
+  {street = "Nábrežie A.Hlinku", numbers = "27-39", parity = "odd", written = "Nábrežie A. Hlinku"},
+  {street = "Pod Šomod"},
+  {street = "Sihotská"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "9.mája", written = "9. mája"},
+  {street = "Arpáda Felcána"},
+  {street = "Cisárka"},
+  {street = "Čsl.armády", written = "Čsl. armády"},
+  {street = "Hviezdoslavova"},
+  {street = "Ľ.Zúbka", written = "Ľ. Zúbka"},
+  {street = "M.Benku", written = "M. Benku"},
+  {street = "Petra Jilemnického"},
+  {street = "Vansovej"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Fraňa Kráľa"},
+  {street = "Františka Lipku"},
+  {street = "Gáborská"},
+  {street = "Gorkého"},
+  {street = "Inovecká"},
+  {street = "J.A.Gagarina", written = "J. A. Gagarina"},
+  {street = "Kamenohorská"},
+  {street = "Karpatská"},
+  {street = "Mierová"},
+  {street = "Ružová"},
+  {street = "Stará hora"},
+  {street = "Veterná"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Čulenova"},
+  {street = "Dukelská"},
+  {street = "Hošták"},
+  {street = "Kruhová"},
+  {street = "Pánska niva"},
+  {street = "Poniklecová"},
+  {street = "Rovná"},
+  {street = "Slnečná"},
+  {street = "Svätopeterská"},
+  {street = "Šoltésova"},
+  {street = "Timravy"},
+  {street = "Vážska"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "D.Jurkoviča", written = "D. Jurkoviča"},
+  {street = "Mlynská"},
+  {street = "Okrúhla"},
+  {street = "Pltnícka"},
+  {street = "Priemyselná"},
+  {street = "Školská"},
+  {street = "Šulekova"},
+  {street = "Za Váhom"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Hájska"},
+  {street = "Holubyho"},
+  {street = "Janka Kráľa"},
+  {street = "Ladislava Novomeského", written = "L. Novomeského", note = "the register's Ladislava Novomeského: 'L.' is the initial of the first name"},
+  {street = "Ľ.Podjavorinskej", written = "Ľ. Podjavorinskej"},
+  {street = "Osloboditeľov"},
+  {street = "Rybárska"},
+  {street = "Seredská"},
+  {street = "Terezov"},
+]

@@ -1,0 +1,62 @@
+# Okrsky of Heľpa, transcribed by an AI agent in job okrsok-rules-4309 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Alexyho, Furmanská, Hlavná, Hronská, J. C. Hronského, Jánošíkova, Krátka, Krížna, Mierová, Mládežnícka, Mlynská, Murgašova, Plickova, Pod Pustinou, Pri štadióne, Studničná, Tichá
+#   okrsok 2: ulice: Burkovaná, Cintorínska, Čaneckého, Farská, Furtačka, Hurbanova, Hviezdoslavova, Partizánska, Poľná, Potočná, Rovná, Sama Chalúpku, Strmá, Školská, Štúrova, Za školou, Záhradná
+obec = "508608"
+name = "Heľpa"
+okrsky_date = 2024-01-19
+okrsky_fill = "nearest"
+okrsky_note = "The document lists streets only; the 83 addresses without a street (by súpisné číslo) take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.helpa.sk/e_download.php?file=data/editor/397sk_2.pdf&original=povinne%20zverej%C5%88ovan%C3%A9%20inform%C3%A1cie%20k%20vo%C4%BEb%C3%A1m.pdf"
+sha256 = "3eb5c93204a9a47d32736f7949f17c89e252289d008677c9032ab344b02ab27a"
+title = "Informácie k voľbám prezidenta SR (rozhodnutie starostu č. 2/2024 z 19.1.2024)"
+
+[[document]]
+url = "https://www.helpa.sk/zverejnovanie/volby-a-statistika/volby-prezidenta-2024/informacie/"
+sha256 = "7d3d524b22ca457726391244a9e9a2148ae8b1509b0c953dcaa3e738f770611a"
+title = "Voľby prezidenta 2024 – Informácie"
+
+[okrsok.1]
+rules = [
+  {street = "Alexyho"},
+  {street = "Furmanská"},
+  {street = "Hlavná"},
+  {street = "Hronská"},
+  {street = "J. C. Hronského"},
+  {street = "Jánošíkova"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Mierová"},
+  {street = "Mládežnícka"},
+  {street = "Mlynská"},
+  {street = "Murgašova"},
+  {street = "Plickova"},
+  {street = "Pod Pustinou"},
+  {street = "Pri štadióne"},
+  {street = "Studničná"},
+  {street = "Tichá"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Burkovaná"},
+  {street = "Cintorínska"},
+  {street = "Čaneckého"},
+  {street = "Farská"},
+  {street = "Furtačka"},
+  {street = "Hurbanova"},
+  {street = "Hviezdoslavova"},
+  {street = "Partizánska"},
+  {street = "Poľná"},
+  {street = "Potočná"},
+  {street = "Rovná"},
+  {street = "Sama Chalúpku"},
+  {street = "Strmá"},
+  {street = "Školská"},
+  {street = "Štúrova"},
+  {street = "Za školou"},
+  {street = "Záhradná"},
+]

@@ -1,7 +1,9 @@
-# Response headers of an election's bundles, its map and its data, which
-# `ems build` writes to dist/map/<slug>/_headers and dist/data/<slug>/_headers
-# (src/election_map_slovakia/bundle.py), for the Cloudflare Pages project
-# of each bundle (docs/deploy.md). Syntax and limits as in web/_headers.
+# Response headers of an election's bundles, its map and its data, and of
+# the base map of each OpenStreetMap extract, which `ems build` writes to
+# dist/map/<slug>/_headers, dist/data/<slug>/_headers and
+# dist/base/<extract>/_headers (src/election_map_slovakia/bundle.py), for
+# the Cloudflare Pages project of each (docs/deploy.md). Syntax and limits
+# as in web/_headers.
 
 # The app on the site's own domain fetches the files from here, so every
 # origin may read them: they are public data. Search engines should index

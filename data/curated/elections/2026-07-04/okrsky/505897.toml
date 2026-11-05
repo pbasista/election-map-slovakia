@@ -1,0 +1,44 @@
+# Okrsky of Bzince pod Javorinou, transcribed by an AI agent in job okrsok-rules-5554 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č.1 Bzince
+#   okrsok 2: Okrsok č.2 Hrušové
+#   okrsok 3: Okrsok č.3 Cetuna
+#   okrsok 4: Okrsok č.4 Hrubá Strana
+obec = "505897"
+name = "Bzince pod Javorinou"
+okrsky_note = "Each okrsok is named by its part (Bzince = part Bzince pod Javorinou); the hamlet Vrzavka is not named and is placed in okrsok 3 with Cetuna (inferred)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2026-04-30
+okrsky_date_basis = "The DOCX is undated; the municipality's page linking it says \"Zverejnené 30. apríla 2026\", before the vote; its heading names the referendum of 4 July 2026. (https://obecbzince.sk/dokument/r-e-f-e-r-e-n-d-u-m-4-jula-2026-volebne-okrsky-a-volebne-miestnosti/)"
+
+[[document]]
+url = "https://obecbzince.sk/wp-content/uploads/dokumenty/referendum/okrsky-a-volebne-miestnosti-j40q4o.docx"
+sha256 = "737c6b616a27ab6d2000001b9f21bb93022b2df562c0aae7f5aae92fdec04db3"
+title = "Referendum 4. júla 2026 – Volebné okrsky a volebné miestnosti"
+
+[[document]]
+url = "https://obecbzince.sk/dokument/r-e-f-e-r-e-n-d-u-m-4-jula-2026-volebne-okrsky-a-volebne-miestnosti/"
+sha256 = "6193dbb4bcca499bde05dd9ecd2c4742b91b0287eb272e1c0c8174c099f44d1a"
+title = "Referendum 4. júla 2026 – volebné okrsky a volebné miestnosti (zverejnené 30. apríla 2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Bzince pod Javorinou", note = "the document writes 'Bzince': the part Bzince pod Javorinou"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Hrušové"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Cetuna"},
+  {part = "Vrzavka", note = "the hamlet Vrzavka is not named; it lies by Cetuna and the obvody of 2022 put Cetuna and Vrzávka together in obvod 2, whose only okrsok is č. 3", inferred = true},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Hrubá Strana"},
+]

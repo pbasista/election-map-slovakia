@@ -1,0 +1,33 @@
+# The okrsky of Imeľ of the vote of 2022-10-29, data/curated/elections/2022-10-29/okrsky/501166.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Imeľ, transcribed by an AI agent in job okrsok-rules-845 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Čísla domov od : 1 - 450
+#     okrsok 2: Čísla domov od:451 - 960
+obec = "501166"
+name = "Imeľ"
+okrsky_date = 2022-11-10
+okrsky_fill = "nearest"
+okrsky_note = "no document of the elections found (the 2022 elections page, live and archived, lists no okrsky document); the referendum's document 'Volebné okrsky v obci Imeľ' (undated DOCX; the referendum page states 'Zverejnené 10.11.2022', used as date). Okrsky by house numbers (čísla domov, read as súpisné): 1–450 and 451–960; fill_nearest places any house numbered above 960."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-335): No okrsky document for the regional elections of 4 November 2017 found. obecimel.sk has no 2017 elections page (live or archived); the Internet Archive's CDX of obecimel.sk (2016–2026) lists no okrsky file or election page of 2017 (only 2016 'Okrsok č. 1/2' PDFs of the 2016 vote and 2019+ pages), and has no capture of the notice board between May 2017 and April 2018. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2022-10-29: 1: 815 → 834, 2: 882 → 867."
+
+[[document]]
+url = "https://www.obecimel.sk/e_download.php?file=data/editor/196sk_1.docx&original=Volebn%C3%A9%20okrsky%20v.docx"
+sha256 = "559b12a2252de69c83be2cb3657305fee2c3a71f672e99153854735365066622"
+title = "Volebné okrsky v obci Imeľ (referendum 21.01.2023)"
+
+[[document]]
+url = "https://www.obecimel.sk/samosprava/referendum-21012023/"
+sha256 = "bbc60aecac50daacf9d0ddab31f409e5e429e4e393076542511b95fbbc59b56f"
+title = "Referendum 21.01.2023"
+
+[okrsok.1]
+rules = [
+  {part = "Imeľ", numbers = "1-450"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Imeľ", numbers = "451-960"},
+]

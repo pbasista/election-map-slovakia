@@ -48,9 +48,7 @@ of the source (or, for UI strings, of the Slovak reference) unless marked
 from __future__ import annotations
 
 import hashlib
-import json
 import math
-import os
 import re
 import unicodedata
 from collections import Counter
@@ -58,6 +56,8 @@ from collections.abc import Iterable, Iterator, Mapping
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, NamedTuple
+
+import orjson
 
 from election_map_slovakia import candidates, jobs, research
 from election_map_slovakia.config import Config
@@ -397,7 +397,7 @@ def load(cfg: Config, code: str) -> Curated:
     path = curated_path(cfg, code)
     if not path.is_file():
         return Curated()
-    content = json.loads(path.read_bytes())
+    content = orjson.loads(path.read_bytes())
     return Curated(
         content.get(UI, {}), content.get(OCCUPATIONS, {}), content.get(RESEARCH, {})
     )
@@ -420,7 +420,7 @@ def research_texts(cfg: Config) -> list[tuple[str, str]]:
     root = cfg.curated_dir / research.CURATED_DIR
     seen: dict[str, str] = {}
     for path in sorted(root.glob("*/*.json")):
-        for f in json.loads(path.read_bytes()).get("findings", []):
+        for f in orjson.loads(path.read_bytes()).get("findings", []):
             seen.setdefault(f["claim"]["en"], SOURCE)
             seen.setdefault(f["quote"], f["language"])
     return list(seen.items())
@@ -438,7 +438,7 @@ def research_targets(cfg: Config, text_language: str) -> list[str]:
 
 def ui_source(cfg: Config, code: str) -> dict[str, str]:
     """Return the hand-written UI strings of language *code*."""
-    return json.loads((cfg.root / UI_DIR / f"{code}.json").read_bytes())
+    return orjson.loads((cfg.root / UI_DIR / f"{code}.json").read_bytes())
 
 
 def hand_written(cfg: Config) -> frozenset[str]:
@@ -475,18 +475,75 @@ _CONTROVERSIES = (
 )
 
 _NOTES = (
-    ("app.title", "browser tab title of the page"),
-    ("app.description", "page description for search engines, at most 160 characters"),
     (
-        "app.features",
+        "app.title.",
+        "browser tab title of the page of an election of the kind the key"
+        " ends in; {year} is the election's year",
+    ),
+    (
+        "app.description.",
+        "page description for search engines of an election of the kind the"
+        " key ends in, at most 160 characters; {year} is the election's year",
+    ),
+    (
+        "app.features.",
         "paragraph for search engines and visitors without JavaScript: what"
-        " the site offers",
+        " the site offers on the page of an election of the kind the key ends"
+        " in; {year} is the election's year",
     ),
     ("app.noscript", "shown when JavaScript is off"),
     (
-        "app.tagline",
-        "subtitle under the site name in the header; {date} is the election"
-        " date, already formatted",
+        "site.description",
+        "page description for search engines of the site's front page: the"
+        " site as a whole, followed there by the description of the election"
+        " the front page shows; {since} is the year of the oldest election"
+        " the site shows",
+    ),
+    (
+        "site.features",
+        "paragraph for search engines and visitors without JavaScript on the"
+        " site's front page: the site as a whole, followed there by what it"
+        " offers on the page of the election the front page shows; {since} is"
+        " the year of the oldest election the site shows",
+    ),
+    (
+        "elections.item",
+        "an election named with its date: {name} is its name (the"
+        " elections.name.* strings), {date} its date, already formatted; the"
+        " header's subtitle, tooltips, screen readers and sentences use it;"
+        " no comma or other punctuation between the two (the header sets the"
+        " date apart by style), the order as the language puts them",
+    ),
+    (
+        "elections.name.",
+        "the name of an election of the kind the key ends in, without its"
+        " date: the header's subtitle before the date and the name under the"
+        " date in the list of elections; the short, widely accepted form"
+        " (parliament: the parliamentary election, to the National Council"
+        " of the Slovak Republic), no abbreviations",
+    ),
+    (
+        "elections.kind.",
+        "heading of a group in the list of elections, the kind the key ends"
+        " in (municipal-regional: the regular municipal and regional"
+        " elections; municipal, regional: the municipal or the regional"
+        " ones of a year they were held apart, named so to screen readers;"
+        " by-election: municipal by-elections and new elections in some"
+        " places; parliament: the parliamentary elections, to the National"
+        " Council of the Slovak Republic); also a heading in Favourites; the"
+        " short, widely accepted form, no abbreviations",
+    ),
+    (
+        "elections.part.",
+        "beside the date of an election in the list of elections, under the"
+        " heading of the municipal and regional elections: which of the two"
+        " it was, in a year they were held apart (an adjective agreeing with"
+        " 'elections')",
+    ),
+    (
+        "date.short",
+        "a date in numbers, for browsers without the language's calendar;"
+        " {month} is the month's number",
     ),
     ("nav.language", "heading of the language menu"),
     (
@@ -525,6 +582,11 @@ _NOTES = (
     ),
     ("layers.auto", "note in the fold-out of the boundaries menu"),
     (
+        "layers.auto_",
+        "note in the fold-out of the boundaries menu, one sentence per overlay"
+        " where an election has only some of them (layers.auto otherwise)",
+    ),
+    (
         "layers.base_title",
         "title of the base map menu, also its button's tooltip",
     ),
@@ -538,8 +600,48 @@ _NOTES = (
     (
         "mapmode.button",
         "tooltip of the turnout button, which opens the menu of the turnout"
-        " layers; {layer} is the option shown (mapmode.off or one of the"
-        " mapmode.turnout_…_option)",
+        " layers; {layer} is the layer shown (mapmode.off when none is, or one"
+        " of the mapmode.turnout_…_option)",
+    ),
+    (
+        "mapmode.menu.",
+        "title of the ballot-box menu of a party-list election or a"
+        " referendum, also its button's tooltip: it opens the overview of the"
+        " candidate lists or of the referendum's questions and puts the"
+        " turnout on the map",
+    ),
+    (
+        "mapmode.level_",
+        "a kind of unit the map's results go by, as {units} in mapmode.levels"
+        ' and mapmode.levels_one ("By …"); okresy are the 79 districts',
+    ),
+    (
+        "mapmode.tip_okres",
+        "first line of the map's tooltip over a district (okres); {name} is its name",
+    ),
+    (
+        "mapmode.winner_of_",
+        "legend subtitle of the map of who got the most votes where, after the"
+        " contest's name: what leads in each area (a candidate, a party, a"
+        " referendum's answer, a person on a party's list by preference votes)",
+    ),
+    (
+        "mapmode.share_",
+        "legend subtitle of a candidate's map, after the contest's name: what"
+        " the percentages are of",
+    ),
+    (
+        "mapmode.preferences",
+        "legend of the map of a person on a party's list: how many preference"
+        " votes they got in all, after their share",
+    ),
+    (
+        "mapmode.held_",
+        "map of a by-election, held in a few places only: its legend (title"
+        " 'where elections are held', the colour of the municipalities voting"
+        " and, lighter, of the districts they are in when zoomed out), its"
+        " close button, and the tooltip of a district ({places} their names,"
+        " {n} how many)",
     ),
     (
         "map.attribution",
@@ -578,7 +680,100 @@ _NOTES = (
         " (region), e.g. Bratislavský",
     ),
     ("place.", "subtitle or message of the place shown in the panel"),
+    (
+        "ballots.country",
+        "subtitle of the panel of a country-wide election before a place is"
+        " chosen, under the heading 'Slovakia'",
+    ),
     ("ballots.", "the ballots of a place"),
+    (
+        "scope.",
+        "button of the choice of the unit a ballot's results are of: the"
+        " whole contest, Slovakia, a region ({name} is the Slovak adjective of"
+        " the kraj), a district (okres, {name} its name), a constituency or"
+        " polling district ({n} its number)",
+    ),
+    (
+        "contest.president_round",
+        "heading of the ballot of one round of the election of the President"
+        " of the Slovak Republic; {round} is 1 or 2, {date} its day, short",
+    ),
+    ("contest.question", "heading of one question of a referendum; {n} its number"),
+    (
+        "contest.parties.",
+        "heading of the ballot of a party-list election, of the body the key"
+        " ends in: nrsr the National Council of the Slovak Republic, ep the"
+        " European Parliament",
+    ),
+    (
+        "contest.list",
+        "heading of a party's candidate list; {party} is the party's name,"
+        " {n} its ballot number",
+    ),
+    (
+        "contest.rules",
+        "a link-like button in a contest's facts line that unfolds the rules"
+        " of the contest (threshold, coalitions, preference votes, what makes"
+        " a referendum valid, what decides a presidential round)",
+    ),
+    (
+        "contest.rules_coalitions_",
+        "an item of contest.rules_coalitions' {list}: what a coalition of"
+        " {from} (to {to}) parties needs for seats, {share} a percentage",
+    ),
+    (
+        "contest.rules_",
+        "a sentence of the rules unfolded under a party-list ballot's facts:"
+        " the share of the valid votes a party needs for seats ({share}), what"
+        " coalitions need ({list} joins items of contest.rules_coalitions_*),"
+        " how many candidates of the chosen party's list a voter may circle"
+        " ({n}, preference votes)",
+    ),
+    (
+        "contest.preferences",
+        "a line of the tooltip of a party's row on a party-list ballot: how"
+        " many candidates of its list a voter may circle (preference votes)",
+    ),
+    (
+        "contest.too_many_",
+        "warning where the visitor has circled more parties than one, or more"
+        " candidates of a list than the preference votes allowed ({n}); {picked}"
+        " is how many are circled",
+    ),
+    (
+        "party.",
+        "a party on a party-list ballot (National Council or European"
+        " Parliament election) and its candidate list, which opens under it;"
+        " {share} is a threshold in %, {seats} and {n} numbers; preference"
+        " votes are the circles voters give candidates on the party's list",
+    ),
+    (
+        "referendum.",
+        "a referendum question: its answers (yes, no), its wording ({text},"
+        " in the quotation marks of the language), whether the referendum is"
+        " valid (more than half of the registered voters must take part)",
+    ),
+    (
+        "president.",
+        "a round of the election of the President of the Slovak Republic: the"
+        " rule of who is elected, and a candidate's result",
+    ),
+    (
+        "byelection.",
+        "the list of the places where municipal by-elections and new elections"
+        " are held (a municipality or region), and what each elects; {n} is a"
+        " number",
+    ),
+    (
+        "results.status_",
+        "part of the one-line status of the count under the site name;"
+        " {share} is a percentage counted, {round} 1 or 2 (presidential round)",
+    ),
+    (
+        "results.units_",
+        "item of the list {list} in results.status_units: the units counted"
+        " so far, {n} as 'counted/all'; {round} 1 or 2 (presidential round)",
+    ),
     (
         "contest.",
         "heading or details of one contest (ballot); {name} is a municipality"
@@ -627,6 +822,11 @@ _NOTES = (
         " which a link shares; its button, text and the button that copies"
         " the link (an icon whose tooltip this is)",
     ),
+    (
+        "card.list_position",
+        "candidate card of a person on a party's candidate list: {party} the"
+        " party's name, {n} the person's place on the list",
+    ),
     ("card.", "candidate card"),
     ("research.kind.cv", "candidate card, research section"),
     ("research.kind.", _CONTROVERSIES),
@@ -648,6 +848,16 @@ _NOTES = (
     ),
     ("research.", "candidate card, research section"),
     ("about.category.", "name of a group of news sources in the About dialog"),
+    (
+        "about.lead",
+        "first sentence of the About dialog: the site as a whole; {since} is"
+        " the year of the oldest election the site shows",
+    ),
+    (
+        "about.feature.",
+        "an item of the bulleted list in the About dialog of what the page of"
+        " an election offers, under its name: short, plain, one sentence",
+    ),
     ("about.", "About dialog"),
 )
 _LIMITS = (
@@ -667,7 +877,7 @@ _LIMITS = (
     ("theme.system", 30),
     ("search.placeholder", 34),
     ("disclaimer.more", 34),
-    ("app.tagline", 60),
+    ("elections.name.", 40),
     ("council.summary_", 52),
     ("notice.summary_", 52),
     # What fits a 360 px phone in Latin script: the first in bold, beside the
@@ -787,7 +997,7 @@ def _occupations(cfg: Config) -> list[str]:
         built = cfg.election_build_dir(election) / candidates.OUTPUT_FILE
         if not built.is_file():
             raise jobs.JobError(f"{built} missing; run `ems candidates` first")
-        counts += occupation_counts(json.loads(built.read_bytes()))
+        counts += occupation_counts(orjson.loads(built.read_bytes()))
     return sorted(counts, key=lambda text: (-counts[text], text))
 
 
@@ -980,10 +1190,22 @@ def _name_form(word: str, names: set[str]) -> bool:
     if not word[:1].isupper() or len(_letters_by_script(word)) != 1:
         return False
     for name in names:
-        stem = len(os.path.commonprefix([word, name]))
+        stem = _common_prefix(word, name)
         if stem >= _MIN_STEM and max(len(word), len(name)) - stem <= _ENDING:
             return True
     return False
+
+
+def _common_prefix(a: str, b: str) -> int:
+    """Return the length of the longest common prefix of *a* and *b*.
+
+    Not ``os.path.commonprefix``: Python 3.15 deprecates it, as it does not
+    compare paths by their components.
+    """
+    return next(
+        (i for i, (x, y) in enumerate(zip(a, b)) if x != y),
+        min(len(a), len(b)),
+    )
 
 
 def _copy_problems(text: str, copies: list[str], identical: bool) -> Iterator[str]:

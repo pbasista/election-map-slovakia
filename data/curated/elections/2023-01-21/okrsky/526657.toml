@@ -1,0 +1,31 @@
+# Okrsky of Žehra, transcribed by an AI agent in job okrsok-rules-3334 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 - Žehra centrálna časť (s. č. 0-113), Žehra časť Hodkovce (s. č. 1 - 28)
+#   okrsok 2: Okrsok č. 2 - Žehra sídlisko Dreveník (s. č. 162 - 187), osada Dreveník (s. č. 114 - 161)
+obec = "526657"
+name = "Žehra"
+okrsky_date = 2022-11-10
+okrsky_fill = "nearest"
+okrsky_note = "The document is a scan, read by OCR without diacritics and checked against the page image; the text is given with diacritics. Houses numbered outside the ranges the document gives and addresses it does not place take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.obeczehra.sk/modules/file_storage/download.php?file=cbf58c43%7C684&inline=1"
+sha256 = "8e36e5a5bcf1be67b77bc023e4ae88d9883655c5e49706a28e3a31e74d885217"
+title = "Oznámenie o utvorení volebných okrskov (referendum 21. januára 2023)"
+
+[[document]]
+url = "https://www.obeczehra.sk/zverejnovanie/volby-a-referendum/referendum-2023/"
+sha256 = "8554ccc4ae2b4961297f5e5540795590daecc58189f827f439c4e525e7aec6b6"
+title = "Referendum 2023"
+
+[okrsok.1]
+rules = [
+  {part = "Žehra", numbers = "0-113", by = "supisne"},
+  {part = "Hodkovce", numbers = "1-28", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Žehra", numbers = "114-187", by = "supisne"},
+]

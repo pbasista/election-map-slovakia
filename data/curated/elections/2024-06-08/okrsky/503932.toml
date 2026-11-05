@@ -1,0 +1,37 @@
+# Okrsky of Neded, transcribed by an AI agent in job okrsok-rules-4870 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: v tomto okrsku budú hlasovať občania bez adresy, a bývajúci na súp.č.: 1-353,1274,1279,1289 -1291,1295-1300,1303,1314-1319,1325,1327,1341-1346,1501,1502
+#   okrsok 2: v tomto okrsku budú hlasovať občania bývajúci na súp.č.: 354-844, 1281,1301,1322,1334
+#   okrsok 3: v tomto okrsku budú hlasovať občania bývajúci na súp.č.: 845-1269,176,1277,1280-1288,1292,1294,1305-1308,1312,1330-1333,1492,1521
+obec = "503932"
+name = "Neded"
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by súpisné číslo of the single part Neded. Okrsok 3's '176' is a slip for 1276 (176 lies in okrsok 1's range 1-353; the other documents list 1276 in okrsok 3); its range 1280-1288 is written 1280, 1282-1288 because 1281 is listed in okrsok 2. Numbers not listed take the nearest address (fill_nearest)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The mayor's notice is undated; it names the vote (voľby do Európskeho parlamentu 8. júna 2024)."
+
+[[document]]
+url = "https://www.neded.sk/modules/file_storage/download.php?file=d262356d%7C874&inline=1"
+sha256 = "ee4d8cbfd544e9662ff5ede25a59681cc0c6e3480b958efe5a1afc8fda7db5a0"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (voľby do Európskeho parlamentu 2024)"
+
+[[document]]
+url = "https://www.neded.sk/obecny-urad/volby/"
+sha256 = "c2ae9a589bbbf85835be7e1935599ab634f349232ba9a47a65401036987b0e5f"
+title = "Voľby (elections page)"
+
+[okrsok.1]
+rules = [
+  {part = "Neded", numbers = "1-353, 1274, 1279, 1289-1291, 1295-1300, 1303, 1314-1319, 1325, 1327, 1341-1346, 1501, 1502"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Neded", numbers = "354-844, 1281, 1301, 1322, 1334"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Neded", numbers = "845-1269, 1276, 1277, 1280, 1282-1288, 1292, 1294, 1305-1308, 1312, 1330-1333, 1492, 1521", note = "'176' read as 1276; 1281 left to okrsok 2"},
+]

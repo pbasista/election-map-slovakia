@@ -1,0 +1,38 @@
+# Council obvody of Horné Obdokovce (542938), Topoľčany.
+# Transcribed by an AI agent in job obvod-rules-174 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: 7 poslancov za volebný obvod č. 1 - Horné Obdokovce
+#   obvod 2: 2 poslanci za volebný obvod č. 2 - Obsolovce
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/542938.toml, standing in.
+obec = "542938"
+name = "Horné Obdokovce"
+date = 2018-06-27
+note = "Uznesenie č. 3/25/2018 of 27 June 2018, point B5, approves 9 councillors: 7 for obvod č. 1 Horné Obdokovce and 2 for obvod č. 2 Obsolovce. It names the obvody by village only; the part Bodok is not named and is placed in obvod 1 as the 2022 rules do (supplement). The Internet Archive was unreachable (connection refused) on several tries."
+supplemented = 2022-10-29
+supplemented_from = "election"
+supplement_basis = "The 2018 resolution names obvod 1 Horné Obdokovce and obvod 2 Obsolovce but not the part Bodok (29 addresses), a hamlet in the k.ú. Horné Obdokovce. The rule set of the elections of 2022-10-29 puts the part Bodok in obvod 1 with Horné Obdokovce (the 2022 okrsky decision has Bodok and Horné Obdokovce vote in okrsok 1); that rule is copied."
+okrsky_date = 2022-06-24
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-5907): No document of the 2018 okrsky found. The municipality's 'Komunálne voľby 2018' page (live and as archived 2019-07-31) holds only the results (posted 22.11.2018); the old site archiv.hobdokovce.sk ends in 2017; the Internet Archive has no 2018 capture of the new site's elections pages or notice board; the council minutes of 27.6.2018 (input document) set the two obvody (Horné Obdokovce, Obsolovce) but do not name or number the okrsky. Web searches found nothing. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://www.hobdokovce.sk/download_file_f.php?id=1019681"
+sha256 = "ca4709878c5d62502aae12bf4ae372c66bc119bbb3487167299ddc0d8f4344b3"
+title = "Zápisnica a Uznesenie č. 3/25/2018 z 25. zasadnutia OZ Horné Obdokovce z 27. 06. 2018 (bod B5: počet poslancov a volebné obvody)"
+
+[obvod.1]
+seats = 7
+okrsky = [1]
+rules = [
+  {part = "Horné Obdokovce"},
+  {part = "Bodok", note = "Bodok is not named in the 2018 resolution; placed with Horné Obdokovce as in the 2022 rules", supplemented = true},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Obsolovce"},
+]

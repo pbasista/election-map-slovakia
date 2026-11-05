@@ -1,0 +1,32 @@
+# Okrsky of Závod, transcribed by an AI agent in job okrsok-rules-3067 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súp. č. 0 – 600
+#   okrsok 2: súp. č. 601 – 1200
+obec = "504980"
+name = "Závod"
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by súpisné čísla (Závod has no streets in the register); any súpisné číslo outside the ranges takes the okrsok of the nearest address (fill_nearest)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-30
+okrsky_date_basis = "The document page states 'Zverejnené 30. novembra 2022'; the PDF is undated. (https://obeczavod.sk/dokument/oznamenie-o-utvoreni-volebnych-okrskov-urcenie-volebnych-miestnosti/)"
+
+[[document]]
+url = "https://obeczavod.sk/wp-content/uploads/dokumenty/referendum/Oznamenie-o-utvoreni-volebnych-okrskov-urcenie-volebnych-miestnosti.pdf"
+sha256 = "3a466fd5a193e0ea30fdb9ddc0b0d4c1e111752440dd692429d451f4bea39f36"
+title = "Oznámenie o utvorení volebných okrskov, určenie volebných miestností a vymedzenie územného obvodu volebných okrskov (referendum 21. januára 2023)"
+
+[[document]]
+url = "https://obeczavod.sk/dokument/oznamenie-o-utvoreni-volebnych-okrskov-urcenie-volebnych-miestnosti/"
+sha256 = "8082d778fd7e92e7b0860404467a18294fa528256e5a7f931dbcde1aff258e1e"
+title = "Oznámenie o utvorení volebných okrskov, určenie volebných miestností (Zverejnené 30. novembra 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Závod", numbers = "0-600"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Závod", numbers = "601-1200"},
+]

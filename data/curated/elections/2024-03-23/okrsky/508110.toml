@@ -1,0 +1,108 @@
+# The okrsky of Most pri Bratislave of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/508110.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Most pri Bratislave, transcribed by an AI agent in job okrsok-rules-3501 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Voliči zapísaní v zozname voličov: Achátová; Majoránová; Rozmarínová; Anízová; Mätová; Rubínová; Bazalková; Medovková; Smaragdová; Bratislavská; Nálepkova; Snežienková; Feniklová; Nezábudková; Šalviová; Fialková; Opálová; Tomášovská; Jantárová; Oreganová; Tymianová; Jazmínová; Pažítková; Žihľavová; Konvalinková; Rascová; Levanduľová; Repíková
+#     okrsok 2: Voliči zapísaní v zozname voličov: Agátová; Dunajská; Poľná; Borovicová I.; Javorová; Smreková; Borovicová II.; Jedľová; Školská; Brezová; Jelšová; Športová; Budovateľská; Krátka; Veterná; Družstevná; Limbová; Záhradná
+#     okrsok 3: Voliči zapísaní v zozname voličov: 29. augusta; Ľ. Podjavorinskej; Slivková; Broskyňová; Marhuľová; Slnečná; Buková; Mesačná; Súmračná; Čerešňová; M. Kukučína; Škoricová; Dubová; M. R. Štefánika; Tichá; Hrušková; Nové polia; Višňová; Kamilková; Orgovánová; Zadné záhrady; Klinčeková; P. O. Hviezdoslava; Oblasť Zelená voda; Lipová; Pri tureckom kopci; Ľ. Kukorelliho; Sekvojová
+obec = "508110"
+name = "Most pri Bratislave"
+okrsky_date = 2023-06-20
+okrsky_fill = "nearest"
+okrsky_note = "The letter of 20. 06. 2023 (posted as \"Voľby NR SR 2023\") repeats by mistake the 2020 election day in its first sentence; its title, date and the 3 okrsky are those of the 2023 election. Streets as listed per okrsok. Ľ. Podjavorinskej is not in the address register and is left out; \"Oblasť Zelená voda\" (okrsok 3, a recreation area) is no street and its addresses, Technická (not listed) and addresses without a street go by fill_nearest."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2024-03-23 setting the okrsky was found (okrsok-rules-4131): The municipality's elections section lists an okrsky announcement only for the NR SR election 2023; none of the presidential election 2024 (the 2017 entry has only candidate lists). Internet Archive offline. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-03-23 → 2023-09-30: 1: 1,130 → 1,096, 2: 1,064 → 1,032, 3: 1,048 → 1,006."
+
+[[document]]
+url = "https://www.mostpribratislave.sk/data/advertisement/mostpribratislave/284191/116793_urcenie-volebnych-okrskov-a-volebnych-miestnosti_2023.pdf"
+sha256 = "afc8ab9cf3d4a4713cd4cf8bfa1e0162d71126148d9689b2b9af88b5ff2b37eb"
+title = "Voľby NR SR 2023 - utvorenie volebných okrskov a určenie volebných miestností v obci Most pri Bratislave (20. 06. 2023)"
+
+[[document]]
+url = "https://www.mostpribratislave.sk/zverejnovanie/detail/284191/volby-nr-sr-2023-utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-obci-most-pri-bratislave"
+sha256 = "2582c95c41ed9ff732b0a95feb019c4444f77dc934f409d9d86f9005a209a7d5"
+title = "Úradná tabuľa: Voľby NR SR 2023 - utvorenie volebných okrskov"
+
+[okrsok.1]
+rules = [
+  {street = "Achátová"},
+  {street = "Majoránová"},
+  {street = "Rozmarínová"},
+  {street = "Anízová"},
+  {street = "Mätová"},
+  {street = "Rubínová"},
+  {street = "Bazalková"},
+  {street = "Medovková"},
+  {street = "Smaragdová"},
+  {street = "Bratislavská"},
+  {street = "Nálepkova"},
+  {street = "Snežienková"},
+  {street = "Feniklová"},
+  {street = "Nezábudková"},
+  {street = "Šalviová"},
+  {street = "Fialková"},
+  {street = "Opálová"},
+  {street = "Tomášovská"},
+  {street = "Jantárová"},
+  {street = "Oreganová"},
+  {street = "Tymianová"},
+  {street = "Jazmínová"},
+  {street = "Pažítková"},
+  {street = "Žihľavová"},
+  {street = "Konvalinková"},
+  {street = "Rascová"},
+  {street = "Levanduľová"},
+  {street = "Repíková"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Dunajská"},
+  {street = "Poľná"},
+  {street = "Borovicová I."},
+  {street = "Javorová"},
+  {street = "Smreková"},
+  {street = "Borovicová II."},
+  {street = "Jedľová"},
+  {street = "Školská"},
+  {street = "Brezová"},
+  {street = "Jelšová"},
+  {street = "Športová"},
+  {street = "Budovateľská"},
+  {street = "Krátka"},
+  {street = "Veterná"},
+  {street = "Družstevná"},
+  {street = "Limbová"},
+  {street = "Záhradná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "29. augusta"},
+  {street = "Slivková"},
+  {street = "Broskyňová"},
+  {street = "Marhuľová"},
+  {street = "Slnečná"},
+  {street = "Buková"},
+  {street = "Mesačná"},
+  {street = "Súmračná"},
+  {street = "Čerešňová"},
+  {street = "M. Kukučína"},
+  {street = "Škoricová"},
+  {street = "Dubová"},
+  {street = "M. R. Štefánika"},
+  {street = "Tichá"},
+  {street = "Hrušková"},
+  {street = "Nové polia"},
+  {street = "Višňová"},
+  {street = "Kamilková"},
+  {street = "Orgovánová"},
+  {street = "Zadné záhrady"},
+  {street = "Klinčeková"},
+  {street = "P. O. Hviezdoslava"},
+  {street = "Lipová"},
+  {street = "Pri tureckom kopci"},
+  {street = "Ľ. Kukorelliho"},
+  {street = "Sekvojová"},
+]

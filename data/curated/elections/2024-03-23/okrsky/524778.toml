@@ -1,0 +1,75 @@
+# Okrsky of Lipany, transcribed by an AI agent in job okrsok-rules-4213 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Jarková, Jána Bottu, Komenského, Moyzesova, Štúrova
+#   okrsok 2: Dubovická roveň, Kpt. Nálepku, Krivianska, Kuzmányho, Mlynská, Sabinovská, Sládkovičova, Za kúpaliskom, Za traťou, Záhradná, Železničná, Tehelná
+#   okrsok 3: Kollárova, Námestie sv. Martina
+#   okrsok 4: Hviezdoslavova, Kukučínova, Ovocinárska, Rovinky, Sama Chalupku, Tajovského, Voliči s trvalým pobytom Lipany
+#   okrsok 5: Janka Kráľa, Jánošíkova, Odbojárska, Pod Hájom, Pod kopaninou, Poľná
+obec = "524778"
+name = "Lipany"
+okrsky_fill = "nearest"
+okrsky_note = "'Pod Hájom' (okrsok 5) is not in the address register and is left out. 'Voliči s trvalým pobytom Lipany' (okrsok 4) are residents registered without an address. fill_nearest places the addresses without a street (súpisné only)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-24
+okrsky_date_basis = "The document is undated; its heading names the presidential election of 23 March 2024. The city's page for the vote lists it with 'Dátum: 24.1.2024'. (https://www.lipany.sk/24460/prezidentske-volby-2024)"
+
+[[document]]
+url = "https://www.lipany.sk/data/page/lipany.sk/24460/volebne-okrsky-a-volebne-miestnosti-v-meste-lipany-1.pdf"
+sha256 = "d6b23300533946edd6758bfc7db5dea1cd6ab62311812e8d12f78a27b8fbb7d8"
+title = "Určenie volebných okrskov a volebných miestností v meste Lipany pre voľby prezidenta SR, ktoré sa budú konať 23.3.2024"
+
+[[document]]
+url = "https://www.lipany.sk/24460/prezidentske-volby-2024"
+sha256 = "856c1ad068af390b6b4fa98a438a2aad9b5b49f6def095bb0e192d79cfe85702"
+title = "Mesto Lipany: presidential election of 23 March 2024 (page)"
+
+[okrsok.1]
+rules = [
+  {street = "Jarková"},
+  {street = "Jána Bottu"},
+  {street = "Komenského"},
+  {street = "Moyzesova"},
+  {street = "Štúrova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dubovická roveň"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Krivianska"},
+  {street = "Kuzmányho"},
+  {street = "Mlynská"},
+  {street = "Sabinovská"},
+  {street = "Sládkovičova"},
+  {street = "Za kúpaliskom"},
+  {street = "Za traťou"},
+  {street = "Záhradná"},
+  {street = "Železničná"},
+  {street = "Tehelná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Kollárova"},
+  {street = "Námestie sv. Martina"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "Kukučínova"},
+  {street = "Ovocinárska"},
+  {street = "Rovinky"},
+  {street = "Sama Chalupku"},
+  {street = "Tajovského"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Janka Kráľa"},
+  {street = "Jánošíkova"},
+  {street = "Odbojárska"},
+  {street = "Pod kopaninou"},
+  {street = "Poľná"},
+]

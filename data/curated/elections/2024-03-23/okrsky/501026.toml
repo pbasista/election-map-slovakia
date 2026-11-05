@@ -1,0 +1,529 @@
+# Okrsky of Komárno, transcribed by an AI agent in job okrsok-rules-3996 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Čerhát Celá časť obce; Nová Stráž Dlhá ul. Celá ulica; Nová Stráž Hlavná ul. Všetky čísla; Nová Stráž Kostolná ul. Celá ulica; Nová Stráž Krížna ul. Celá ulica; Nová Stráž Podzáhradná ul. Celá ulica; Nová Stráž Vnútorná ul. Celá ulica; Pavel Celá časť obce
+#   okrsok 2: Nová Stráž Agátová ul. Celá ulica; Nová Stráž Darányiho ul. Celá ulica; Nová Stráž Dunajský rad Celá ulica; Nová Stráž Jarabínková ul. Celá ulica; Nová Stráž Jázminová ul. Celá ulica; Nová Stráž Levanduľová ul. Celá ulica; Nová Stráž Nárcisová ul. Celá ulica; Nová Stráž Obchodná ul. Celá ulica; Nová Stráž Slnečnicová ul. Celá ulica; Nová Stráž Smrečinová ul. Celá ulica; Nová Stráž Snežienková ul. Celá ulica; Nová Stráž Strážna ul. Celá ulica; Nová Stráž Školská ul. Celá ulica; Nová Stráž Ul. K. Harmosa Celá ulica; Nová Stráž Ul. Móra Krausza Celá ulica; Nová Stráž Ul. vtáčej záhrady Celá ulica; Nová Stráž Vadaš Celá ulica; Nová Stráž Včelárska ul. Celá ulica; Nová Stráž Zámočnícka ul. Celá ulica
+#   okrsok 3: Hadovce Celá časť obce; Komárno 4007 Jedno číslo; Komárno 4428 Jedno číslo; Nová Osada Celá časť obce
+#   okrsok 4: Komárno Bažantia ul. Celá ulica; Komárno Bottova ul. Celá ulica; Komárno Bratislavská cesta Celá ulica; Komárno Čajakova ul. Celá ulica; Komárno Dolná ul. Celá ulica; Komárno Javorová ul. Celá ulica; Komárno Krymská ul. Celá ulica; Komárno Ľaliová ul. Celá ulica; Komárno Listová ul. Celá ulica; Komárno Muškátová Celá ulica; Komárno Nezábudková ul. Celá ulica; Komárno Nitrianska ul. Celá ulica; Komárno Piesočný hon Celá ulica; Komárno Pokojná ul. Celá ulica; Komárno Prievidzská ul. Celá ulica; Komárno Prowázekova ul. Celá ulica; Komárno Robotnícka ul. Celá ulica; Komárno Slnečné nám. Celá ulica; Komárno Tajovského ul. Celá ulica; Komárno Topoľčianska ul. Celá ulica; Komárno Ul. B. Němcovej Celá ulica; Komárno Ul. G. Czuczora Celá ulica; Komárno Ul. Gy. Alapyho Celá ulica; Komárno Ul. I. Kultsára Celá ulica; Komárno Ul. J. Baranyaiho Celá ulica; Komárno Ul. M. Staudta Celá ulica; Komárno Ul. roľníckej školy Celá ulica; Komárno Ul. S. Takátsa Celá ulica; Komárno Ul. Tolstého Celá ulica; Komárno Zvolenská ul. Celá ulica
+#   okrsok 5: Komárno Družstevná ul. 1 13 Nepárne čísla; Komárno Družstevná ul. 21 25 Nepárne čísla; Komárno Družstevná ul. 29 39 Nepárne čísla; Komárno Fialková ul. Celá ulica; Komárno Handlovská ul. Celá ulica; Komárno Murgašova ul. Celá ulica; Komárno Orechový rad Celá ulica; Komárno Orgovánová ul. Celá ulica; Komárno Rožná ul. Celá ulica; Komárno Ružová ul. Celá ulica; Komárno Šalviová ul. Celá ulica; Komárno Ul. J. Tubu Celá ulica; Komárno Ul. Mateja Bela Celá ulica; Komárno Ul. pri Panoráme Celá ulica; Komárno Ul. slobody Celá ulica
+#   okrsok 6: Komárno Družstevná ul. 2 10 Párne čísla; Komárno Družstevná ul. 14 19 Všetky čísla; Komárno Hviezdoslavova ul. Celá ulica; Komárno Priemyselná ul. Celá ulica; Komárno Ul. budovateľská 2 50 Párne čísla
+#   okrsok 7: Komárno Ul. budovateľská 1 13 Nepárne čísla; Komárno Ul. budovateľská 17 51 Nepárne čísla; Komárno Ul. budovateľská 52 59 Všetky čísla; Komárno Ul. budovateľská 61 61 Jedno číslo; Komárno Ul. E. B. Lukáča 27 33 Nepárne čísla; Komárno Ul. E. B. Lukáča 48 54 Párne čísla; Komárno Zváračská ul. Celá ulica
+#   okrsok 8: Komárno Dvorská ul. Celá ulica; Komárno Ul. mieru Celá ulica; Komárno Ul. odborárov 42 66 Párne čísla; Komárno Ul. priateľstva Celá ulica
+#   okrsok 9: Komárno Sústružnícka ul. Celá ulica; Komárno Ul. E. B. Lukáča 1 24 Všetky čísla; Komárno Ul. E. B. Lukáča 26 46 Párne čísla; Komárno Ul. mládeže Celá ulica; Komárno Ul. odborárov 2 14 Párne čísla; Komárno Ul. odborárov 15 18 Všetky čísla; Komárno Ul. odborárov 20 34A Párne čísla; Komárno Ul. odborárov 35 36 Všetky čísla; Komárno Ul. odborárov 38 40D Párne čísla
+#   okrsok 10: Komárno Eötvösova ul. 43 59 Nepárne čísla; Komárno Hviezdna ul. 20 26 Párne čísla; Komárno Pávia ul. 21 29 Nepárne čísla; Komárno Ul. zlatého muža Celá ulica
+#   okrsok 11: Komárno Bubnová ul. Celá ulica; Komárno Eötvösova ul. 66 76 Párne čísla; Komárno Hviezdna ul. 2 18 Párne čísla; Komárno Pávia ul. 2 6 Párne čísla; Komárno Pávia ul. 9 19 Nepárne čísla
+#   okrsok 12: Komárno Dunajské nábrežie 40 46 Párne čísla; Komárno Eötvösova ul. 50 60 Párne čísla; Komárno Hviezdna ul. 1 19 Nepárne čísla; Komárno Svätojánska ul. Celá ulica; Komárno Ul. R. Seressa Celá ulica
+#   okrsok 13: Komárno Dunajské nábrežie 24 38 Párne čísla; Komárno Dunajské nábrežie 39 39A Všetky čísla; Komárno Eötvösova ul. 34 48 Párne čísla; Komárno Klinčeková ul. Celá ulica; Komárno Meštianska ul. 2 24 Párne čísla
+#   okrsok 14: Komárno Česká ul. Celá ulica; Komárno Hrnčiarska ul. Celá ulica; Komárno Meštianska ul. 1 13 Nepárne čísla; Komárno Meštianska ul. 17 17 Jedno číslo; Komárno Palatínova ul. 55 71 Nepárne čísla
+#   okrsok 15: Komárno Eötvösova ul. 14 16 Párne čísla; Komárno Eötvösova ul. 17 17 Jedno číslo; Komárno Eötvösova ul. 21 23A Nepárne čísla; Komárno Eötvösova ul. 26 32 Párne čísla; Komárno Kúpeľná ul. Celá ulica; Komárno Rozmarínová ul. Celá ulica; Komárno Špitálska ul. 16 16 Jedno číslo; Komárno Ul. biskupa Királya 26 28 Párne čísla; Komárno Ul. I. Madácha Celá ulica; Komárno Ul. stavbárov Celá ulica
+#   okrsok 16: Komárno Eötvösova ul. 1 2 Všetky čísla; Komárno Eötvösova ul. 4 11 Všetky čísla; Komárno Eötvösova ul. 13 15 Nepárne čísla; Komárno Gazdovská ul. 4 18 Párne čísla; Komárno Klobučnícka ul. Celá ulica; Komárno Palatínova ul. 32 36A Párne čísla; Komárno Palatínova ul. 38 40 Párne čísla; Komárno Palatínova ul. 41 45 Všetky čísla; Komárno Palatínova ul. 47 53 Nepárne čísla; Komárno Rybárska ul. Celá ulica; Komárno Špitálska ul. 1 9 Všetky čísla; Komárno Špitálska ul. 11 15 Všetky čísla; Komárno Špitálska ul. 17 19 Nepárne čísla; Komárno Štúrova ul. Celá ulica; Komárno Ul. biskupa Királya 2 3 Všetky čísla; Komárno Ul. biskupa Királya 5 15 Všetky čísla; Komárno Ul. biskupa Királya 18 25 Všetky čísla; Komárno Ul. biskupa Királya 27 41 Nepárne čísla
+#   okrsok 17: Komárno Cintorínsky rad Celá ulica; Komárno Gazdovská ul. 13 19 Nepárne čísla; Komárno Gazdovská ul. 20 38 Všetky čísla; Komárno Gazdovská ul. 40 46 Párne čísla; Komárno Ul. biskupa Királya 43 45 Nepárne čísla
+#   okrsok 18: Komárno Gútsky rad Celá ulica; Komárno Mederčská ul. 12 28 Párne čísla; Komárno Mederčská ul. 36 36 Jedno číslo; Komárno Mederčská ul. 39 79 Nepárne čísla; Komárno Petöfiho ul. Celá ulica; Komárno Plynárenská ul. Celá ulica; Komárno Potočná ul. Celá ulica; Komárno Železničná ul. 1 11 Nepárne čísla
+#   okrsok 19: Komárno Košická ul. Celá ulica; Komárno Staničná ul. Celá ulica
+#   okrsok 20: Komárno Komárňanská ul. Celá ulica; Komárno Krátka ul. Celá ulica; Komárno Lúčová ul. Celá ulica; Komárno Malá jarková ul. Celá ulica; Komárno Mesačná ul. Celá ulica; Komárno Slnečná ul. Celá ulica; Komárno Trstinová ul. Celá ulica; Komárno Ul. práce Celá ulica; Komárno Veľký rad Celá ulica; Komárno Zimná ul. Celá ulica; Komárno Železničná ul. 4 6 Párne čísla; Komárno Železničná ul. 10 12A Párne čísla; Komárno Železničná ul. 15 23 Nepárne čísla
+#   okrsok 21: Komárno Apalská ul. Celá ulica; Komárno Bernolákova ul. Celá ulica; Komárno Bočná ul. Celá ulica; Komárno Hríbová ul. Celá ulica; Komárno Lipová ul. Celá ulica; Komárno Nová ul. 1 5 Všetky čísla; Komárno Nová ul. 7 9 Všetky čísla; Komárno Nová ul. 13 15 Nepárne čísla; Komárno Nová ul. 23 23 Jedno číslo; Komárno Okružná cesta 1 4 Všetky čísla; Komárno Okružná cesta 6 36A Párne čísla; Komárno Okružná cesta 38 38 Jedno číslo; Komárno Poľovnícka ul. Celá ulica; Komárno Šípková ul. Celá ulica; Komárno Tichá ul. Celá ulica; Komárno Topoľová ul. Celá ulica; Komárno Ul. 29. augusta Celá ulica; Komárno Ul. holubárov Celá ulica; Komárno Ul. J. Szinnyeiho Celá ulica; Komárno Ul. Komáromi Kacza 2 8 Párne čísla; Komárno Ul. Komáromi Kacza 9 13 Všetky čísla; Komárno Ul. Komáromi Kacza 15 23 Nepárne čísla; Komárno Ul. Komáromi Kacza 24 31 Všetky čísla; Komárno Ul. M. Urbana Celá ulica; Komárno Ul. víťazstva Celá ulica
+#   okrsok 22: Komárno Baštová ul. Celá ulica; Komárno Hrušková ul. Celá ulica; Komárno Konvalínková ul. Celá ulica; Komárno Kováčska ul. Celá ulica; Komárno Krivá ul. Celá ulica; Komárno Kvetná ul. Celá ulica; Komárno Lesná ul. Celá ulica; Komárno Okružná cesta 19 19 Jedno číslo; Komárno Okružná cesta 23 23 Jedno číslo; Komárno Okružná cesta 42 78A Párne čísla; Komárno Okružná cesta 80 88 Párne čísla; Komárno Okružná cesta 89 96 Všetky čísla; Komárno Okružná cesta 98 102 Párne čísla; Komárno Okružná cesta 756 756 Jedno číslo; Komárno Okružná cesta 763 763 Jedno číslo; Komárno Požiarnická ul. Celá ulica; Komárno Rovná ul. Celá ulica; Komárno Skalná ul. Celá ulica; Komárno Stredná ul. 1 5 Všetky čísla; Komárno Stredná ul. 7 9 Nepárne čísla; Komárno Stredná ul. 10 10 Jedno číslo; Komárno Tesárska ul. Celá ulica; Komárno Ul. Gy. Berecza Celá ulica; Komárno Ul. J. Péczeliho Celá ulica; Komárno Ul. Komáromi Kacza 32 36 Párne čísla; Komárno Ul. Komáromi Kacza 37 B Jedno číslo; Komárno Ul. Komáromi Kacza 38 40 Párne čísla; Komárno Ul. Komáromi Kacza 41 44 Všetky čísla; Komárno Ul. Komáromi Kacza 46 48 Párne čísla; Komárno Ul. Komáromi Kacza 49 50 Všetky čísla; Komárno Ul. Komáromi Kacza 52 86 Párne čísla; Komárno Úzka ul. Celá ulica; Komárno Vŕbová Celá ulica; Komárno Zlievarenská ul. Celá ulica
+#   okrsok 23: Komárno Selyeho ul. Celá ulica; Komárno Ul. gen. Klapku 2 10 Párne čísla; Komárno Ul. gen. Klapku 11 14 Všetky čísla; Komárno Ul. gen. Klapku 16 22 Párne čísla; Komárno Ul. gen. Klapku 26 30 Párne čísla; Komárno Ul. gen. Klapku 61 69 Nepárne čísla; Komárno Ul. gen. Klapku 73 101 Nepárne čísla; Komárno Ul. gen. Klapku 105 107 Nepárne čísla
+#   okrsok 24: Komárno Ul. gen. Klapku 32 34 Párne čísla; Komárno Ul. gen. Klapku 35 37 Všetky čísla; Komárno Ul. gen. Klapku 41 45 Nepárne čísla; Komárno Ul. gen. Klapku 46 49 Všetky čísla; Komárno Ul. gen. Klapku 51 52 Všetky čísla; Komárno Ul. gen. Klapku 54 70 Párne čísla; Komárno Ul. K. Nagya Celá ulica
+#   okrsok 25: Komárno Kapitánova ul. Celá ulica; Komárno Malodunajská cesta Celá ulica; Komárno Malodunajské nábr. Celá ulica; Komárno Mederčská ul. 2 2 Jedno číslo; Komárno Nám. Kossutha Celá ulica; Komárno Platanová alej Celá ulica; Komárno Prvá priečna ul. Celá ulica; Komárno Rákócziho ul. 1 15 Nepárne čísla; Komárno Senný trh Celá ulica; Komárno Ul. Á. Jedlika Celá ulica; Komárno Ul. K. Thalyho Celá ulica; Komárno Ul. pohraničná Celá ulica; Komárno Veľkodunajská cesta Celá ulica; Komárno Veľkodunajské nábr. Celá ulica; Komárno Vozová ul. Celá ulica; Komárno Záhradnícka ul. Celá ulica
+#   okrsok 26: Komárno Csokonaiho ul. Celá ulica; Komárno Elektrárenská cesta 12 A 12 J Všetky čísla; Komárno Gombaiho ul. Celá ulica; Komárno Hradná ul. Celá ulica; Komárno Jazerná ul. 3 9 Nepárne čísla; Komárno Jókaiho ul. 25 39 Všetky čísla; Komárno Letná ul. Celá ulica; Komárno Majstrovská ul. Celá ulica; Komárno Parná ul. Celá ulica; Komárno Pevnostný rad Celá ulica; Komárno Športová ul. Celá ulica; Komárno Tabaková ul. Celá ulica; Komárno Ul. františkánov 16 33 Všetky čísla; Komárno Ul. J. Husa Celá ulica; Komárno Ul. M. Csáka Celá ulica; Komárno Vnútorná okružná 1 13 Všetky čísla; Komárno Vnútorná okružná 15 21A Nepárne čísla; Komárno Vnútorná okružná 23 27 Nepárne čísla; Komárno Vnútorná okružná 28 35 Všetky čísla; Komárno Vnútorná okružná 37 50 Všetky čísla; Komárno Vnútorná okružná 52 52 Jedno číslo; Komárno Vnútorná okružná 60 68 Párne čísla; Komárno Zámoryho ul. Celá ulica
+#   okrsok 27: Komárno občania s trvalým pobytom Komárno Jedno číslo; Komárno Dunajská ul. Celá ulica; Komárno Dunajské nábrežie 4 10 Všetky čísla; Komárno Dunajské nábrežie 12 12 Jedno číslo; Komárno Elektrárenská cesta 3 10 Všetky čísla; Komárno Elektrárenská cesta 12 12 Jedno číslo; Komárno Jókaiho ul. 3 7 Všetky čísla; Komárno Jókaiho ul. 9 10 Všetky čísla; Komárno Jókaiho ul. 12 16 Všetky čísla; Komárno Jókaiho ul. 18 24 Všetky čísla; Komárno Lehárova ul. Celá ulica; Komárno Nádvorie Európy Celá ulica; Komárno Nám. gen. Klapku Celá ulica; Komárno Nám. M. R. Štefánika Celá ulica; Komárno Palatínova ul. 2 4 Párne čísla; Komárno Palatínova ul. 7 18 Všetky čísla; Komárno Palatínova ul. 20 20 Jedno číslo; Komárno Palatínova ul. 23 27 Všetky čísla; Komárno Palatínova ul. 31 39 Nepárne čísla; Komárno Svätoondrejská ul. Celá ulica; Komárno Ul. františkánov 1 3 Všetky čísla; Komárno Ul. františkánov 5 15 Všetky čísla; Komárno Ulička Celá ulica; Komárno Valchovnícka ul. Celá ulica; Komárno Župná ul. Celá ulica
+#   okrsok 28: Komárno Beöthyho ul. Celá ulica; Komárno Damjanichova ul. Celá ulica; Komárno Jazerná ul. 2 8 Párne čísla; Komárno Jazerná ul. 11 13 Nepárne čísla; Komárno Mederčská ul. 19 21 Nepárne čísla; Komárno Nám. sv. Rozálie Celá ulica; Komárno Považská ul. Celá ulica; Komárno Rákócziho ul. 17 29 Nepárne čísla; Komárno Rákócziho ul. 35 45 Nepárne čísla; Komárno Vnútorná okružná 55 67 Nepárne čísla
+#   okrsok 29: Komárno Hlboká ul. Celá ulica; Komárno Vnútorná okružná 54 58 Párne čísla; Komárno Vnútorná okružná 1210 1211 Všetky čísla; Komárno Vnútorná okružná 1222 1222 Jedno číslo; Komárno Vodná ul. 1 9 Nepárne čísla; Komárno Vodná ul. 10 28 Všetky čísla; Komárno Vodná ul. 30 34 Párne čísla
+#   okrsok 30: Ďulov Dvor Celá časť obce; Komárno Jazerná ul. 10 14 Párne čísla; Komárno Jazerná ul. 17 21 Nepárne čísla; Komárno Komenského ul. 1 3 Nepárne čísla; Komárno Lodná ul. Celá ulica; Komárno Novozámocká cesta Celá ulica; Komárno Rákócziho ul. 4 36 Párne čísla
+#   okrsok 31: Komárno Ižianska cesta Celá ulica; Komárno Komenského ul. 2 4 Párne čísla; Komárno Komenského ul. 5 12 Všetky čísla; Komárno Komenského ul. 14 46 Párne čísla; Komárno Veľká jarková ul. Celá ulica; Komárno Vodná ul. 2 8 Párne čísla; Malá Iža Celá časť obce; Veľký Harčáš Celá časť obce
+#   okrsok 32: Kava Celá časť obce; Lándor Celá časť obce
+obec = "501026"
+name = "Komárno"
+okrsky_date = 2024-01-09
+okrsky_fill = "nearest"
+okrsky_note = "The Oznámenie of 9 January 2024 sets 32 okrsky (the former okrsky 29–33 regrouped into 28–32: Ďulov Dvor and Novozámocká cesta now okrsok 30, Kava/Lándor 32). Rules transcribe the annex 'Zoznam adries začlenených v jednotlivých okrskoch' (časť obce, ulica, orientačné čísla od–do, párne/nepárne/všetky/jedno číslo). A street the list puts in one okrsok only is a whole-street rule; streets split between okrsky carry the list's numbers (a range ending in a lettered number, e.g. 16–18A, read as 16-18 plus 18A; 12A–12J as the single lettered houses). Numbers listed in časť Komárno without a street (4007, 4428) are súpisné čísla of addresses without a street. 'Piesočný hon' (listed) has no register addresses and is left out. Register spelling variants (Slobody, Ul.biskupa Királya, Ul.roľníckej školy, Ul.práce, K. Harmoša, Nová) follow their main street (inferred). The row 'občania s trvalým pobytom Komárno' (residents registered only to the city) has no rule. fill_nearest places addresses the list does not name: addresses without a street outside the whole parts listed, register streets not in the list (e.g. Hadovská cesta, Park pri Pevnosti - Anglia, Tržničné nám., Druhá priečna ul.) and unlisted numbers of split streets."
+
+[[document]]
+url = "https://komarno.sk/wp-content/uploads/2024/01/3-Zoznam-adries-zaclenenych-v-jednotlivych-okrskoch-1.pdf"
+sha256 = "a34ccd0ff1a88d078da1c40a26f312af732d5f2a4ecc78daf5def9f819ba33ea"
+title = "Zoznam adries začlenených v jednotlivých okrskoch (9.1.2024)"
+
+[[document]]
+url = "https://komarno.sk/wp-content/uploads/2024/01/2-Oznamenie-o-case-a-mieste-konania-volieb-prezidenta-2024-a-o-urceni-volebnych-okrskov.pdf"
+sha256 = "dbaff4c182a9d3c18636940e42e0a316ef187e51afda7d80fea72b77c0419b19"
+title = "Oznámenie o čase a mieste konania volieb prezidenta SR v roku 2024, o vytvorení volebných okrskov a o určení volebných miestností, 740/468/OEV/2024 (9. januára 2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Čerhát"},
+  {street = "Dlhá ul."},
+  {street = "Hlavná ul.", part = "Nová Stráž"},
+  {street = "Kostolná ul."},
+  {street = "Krížna ul."},
+  {street = "Podzáhradná ul."},
+  {street = "Vnútorná ul."},
+  {part = "Pavel"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová ul."},
+  {street = "Darányiho ul."},
+  {street = "Dunajský Rad", written = "Dunajský rad", note = "spelling variant of the register name"},
+  {street = "Jarabinková ul.", written = "Jarabínková ul.", note = "spelling variant of the register name"},
+  {street = "Jazmínová ul.", written = "Jázminová ul.", note = "spelling variant of the register name"},
+  {street = "Levanduľová ul."},
+  {street = "Narcisová ul.", written = "Nárcisová ul.", note = "spelling variant of the register name"},
+  {street = "Obchodná ul."},
+  {street = "Slnečnicová ul."},
+  {street = "Smrečinová ul."},
+  {street = "Snežienková ul."},
+  {street = "Strážna ul."},
+  {street = "Školská ul."},
+  {street = "Ul. K. Harmosa"},
+  {street = "Ul. Móra Krausza", part = "Nová Stráž"},
+  {street = "Ul. vtáčej záhrady"},
+  {street = "Vadaš"},
+  {street = "Včelárska ul."},
+  {street = "Zámočnícka ul."},
+  {street = "K. Harmoša", note = "register spelling variant of Ul. K. Harmosa (1 address(es), no. 14-14); the list puts Ul. K. Harmosa in this okrsok", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Hadovce"},
+  {part = "Komárno", numbers = "4007", note = "number listed without a street in časť Komárno: an address without a street, by its súpisné číslo"},
+  {part = "Komárno", numbers = "4428", note = "number listed without a street in časť Komárno: an address without a street, by its súpisné číslo"},
+  {part = "Nová Osada"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bažantia ul."},
+  {street = "Bottova ul."},
+  {street = "Bratislavská cesta"},
+  {street = "Čajakova ul."},
+  {street = "Dolná ul."},
+  {street = "Javorová ul."},
+  {street = "Krymská ul."},
+  {street = "Ľaliová ul."},
+  {street = "Listová ul."},
+  {street = "Muškátová ul.", written = "Muškátová"},
+  {street = "Nezábudková ul."},
+  {street = "Nitrianska ul."},
+  {street = "Pokojná ul."},
+  {street = "Prievidzská ul."},
+  {street = "Prowazekova ul.", written = "Prowázekova ul.", note = "spelling variant of the register name"},
+  {street = "Robotnícka ul."},
+  {street = "Slnečné nám."},
+  {street = "Tajovského ul."},
+  {street = "Topoľčianska ul."},
+  {street = "Ul. B. Němcovej"},
+  {street = "Ul. G. Czuczora"},
+  {street = "Ul. Gy. Alapyho"},
+  {street = "Ul. I. Kultsára"},
+  {street = "Ul. J. Baranyaiho"},
+  {street = "Ul. M. Staudta"},
+  {street = "Ul. roľníckej školy"},
+  {street = "Ul. S. Takátsa"},
+  {street = "Ul. Tolstého"},
+  {street = "Zvolenská ul."},
+  {street = "Ul.roľníckej školy", note = "register spelling variant of Ul. roľníckej školy (4 address(es), no. 10-51); the list puts Ul. roľníckej školy in this okrsok", inferred = true},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Družstevná ul.", numbers = "1-13", parity = "odd"},
+  {street = "Družstevná ul.", numbers = "21-25", parity = "odd"},
+  {street = "Družstevná ul.", numbers = "29-39", parity = "odd"},
+  {street = "Fialková ul."},
+  {street = "Handlovská ul."},
+  {street = "Murgašova ul."},
+  {street = "Orechový rad"},
+  {street = "Orgovánová ul."},
+  {street = "Rožná ul."},
+  {street = "Ružová ul."},
+  {street = "Šalviová ul."},
+  {street = "Ul. J. Tubu"},
+  {street = "Ul. Mateja Bela"},
+  {street = "Ul. pri Panoráme"},
+  {street = "Ul. slobody"},
+  {street = "Slobody", note = "register spelling variant of Ul. slobody (1 address(es), no. 18-18); the list puts Ul. slobody in this okrsok", inferred = true},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Družstevná ul.", numbers = "2-10", parity = "even"},
+  {street = "Družstevná ul.", numbers = "14-19"},
+  {street = "Hviezdoslavova ul."},
+  {street = "Priemyselná ul."},
+  {street = "Ul. budovateľská", numbers = "2-50", parity = "even"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Ul. budovateľská", numbers = "1-13", parity = "odd"},
+  {street = "Ul. budovateľská", numbers = "17-51", parity = "odd"},
+  {street = "Ul. budovateľská", numbers = "52-59"},
+  {street = "Ul. budovateľská", numbers = "61"},
+  {street = "Ul. E. B. Lukáča", numbers = "27-33", parity = "odd"},
+  {street = "Ul. E. B. Lukáča", numbers = "48-54", parity = "even"},
+  {street = "Zváračská ul."},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Dvorská ul."},
+  {street = "Ul. mieru"},
+  {street = "Ul. odborárov", numbers = "42-66", parity = "even"},
+  {street = "Ul. priateľstva"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Sústružnícka ul."},
+  {street = "Ul. E. B. Lukáča", numbers = "1-24"},
+  {street = "Ul. E. B. Lukáča", numbers = "26-46", parity = "even"},
+  {street = "Ul. mládeže"},
+  {street = "Ul. odborárov", numbers = "2-14", parity = "even"},
+  {street = "Ul. odborárov", numbers = "15-18"},
+  {street = "Ul. odborárov", numbers = "20-34, 34A", parity = "even"},
+  {street = "Ul. odborárov", numbers = "35-36"},
+  {street = "Ul. odborárov", numbers = "38-40, 40D", parity = "even"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Eötvösova ul.", numbers = "43-59", parity = "odd"},
+  {street = "Hviezdna ul.", numbers = "20-26", parity = "even"},
+  {street = "Pávia ul.", numbers = "21-29", parity = "odd"},
+  {street = "Ul. zlatého muža"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Bubnová ul."},
+  {street = "Eötvösova ul.", numbers = "66-76", parity = "even"},
+  {street = "Hviezdna ul.", numbers = "2-18", parity = "even"},
+  {street = "Pávia ul.", numbers = "2-6", parity = "even"},
+  {street = "Pávia ul.", numbers = "9-19", parity = "odd"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Dunajské nábrežie", numbers = "40-46", parity = "even"},
+  {street = "Eötvösova ul.", numbers = "50-60", parity = "even"},
+  {street = "Hviezdna ul.", numbers = "1-19", parity = "odd"},
+  {street = "Svätojánska ul."},
+  {street = "Ul. R. Seressa"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Dunajské nábrežie", numbers = "24-38", parity = "even"},
+  {street = "Dunajské nábrežie", numbers = "39, 39A"},
+  {street = "Eötvösova ul.", numbers = "34-48", parity = "even"},
+  {street = "Klinčeková ul."},
+  {street = "Meštianska ul.", numbers = "2-24", parity = "even"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Česká ul."},
+  {street = "Hrnčiarska ul."},
+  {street = "Meštianska ul.", numbers = "1-13", parity = "odd"},
+  {street = "Meštianska ul.", numbers = "17"},
+  {street = "Palatínova ul.", numbers = "55-71", parity = "odd"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Eötvösova ul.", numbers = "14-16", parity = "even"},
+  {street = "Eötvösova ul.", numbers = "17"},
+  {street = "Eötvösova ul.", numbers = "21-23, 23A", parity = "odd"},
+  {street = "Eötvösova ul.", numbers = "26-32", parity = "even"},
+  {street = "Kúpeľná ul."},
+  {street = "Rozmarínová ul."},
+  {street = "Špitálska ul.", numbers = "16"},
+  {street = "Ul. biskupa Királya", numbers = "26-28", parity = "even"},
+  {street = "Ul. I. Madácha"},
+  {street = "Ul. stavbárov"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Eötvösova ul.", numbers = "1-2"},
+  {street = "Eötvösova ul.", numbers = "4-11"},
+  {street = "Eötvösova ul.", numbers = "13-15", parity = "odd"},
+  {street = "Gazdovská ul.", numbers = "4-18", parity = "even"},
+  {street = "Klobučnícka ul."},
+  {street = "Palatínova ul.", numbers = "32-36, 36A", parity = "even"},
+  {street = "Palatínova ul.", numbers = "38-40", parity = "even"},
+  {street = "Palatínova ul.", numbers = "41-45"},
+  {street = "Palatínova ul.", numbers = "47-53", parity = "odd"},
+  {street = "Rybárska ul."},
+  {street = "Špitálska ul.", numbers = "1-9"},
+  {street = "Špitálska ul.", numbers = "11-15"},
+  {street = "Špitálska ul.", numbers = "17-19", parity = "odd"},
+  {street = "Štúrova ul."},
+  {street = "Ul. biskupa Királya", numbers = "2-3"},
+  {street = "Ul. biskupa Királya", numbers = "5-15"},
+  {street = "Ul. biskupa Királya", numbers = "18-25"},
+  {street = "Ul. biskupa Királya", numbers = "27-41", parity = "odd"},
+  {street = "Ul.biskupa Királya", numbers = "12", note = "register spelling variant of Ul. biskupa Királya (1 address(es), no. 12-12); the list puts Ul. biskupa Királya 12 in this okrsok", inferred = true},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Cintorínsky rad"},
+  {street = "Gazdovská ul.", numbers = "13-19", parity = "odd"},
+  {street = "Gazdovská ul.", numbers = "20-38"},
+  {street = "Gazdovská ul.", numbers = "40-46", parity = "even"},
+  {street = "Ul. biskupa Királya", numbers = "43-45", parity = "odd"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Gútsky rad"},
+  {street = "Mederčská ul.", numbers = "12-28", parity = "even"},
+  {street = "Mederčská ul.", numbers = "36"},
+  {street = "Mederčská ul.", numbers = "39-79", parity = "odd"},
+  {street = "Petőfiho ul.", written = "Petöfiho ul.", note = "spelling variant of the register name"},
+  {street = "Plynárenská ul."},
+  {street = "Potočná ul."},
+  {street = "Železničná ul.", numbers = "1-11", parity = "odd"},
+]
+
+[okrsok.19]
+rules = [
+  {street = "Košická ul."},
+  {street = "Staničná ul."},
+]
+
+[okrsok.20]
+rules = [
+  {street = "Komárňanská ul."},
+  {street = "Krátka ul."},
+  {street = "Lúčová ul."},
+  {street = "Malá Jarková ul.", written = "Malá jarková ul.", note = "spelling variant of the register name"},
+  {street = "Mesačná ul."},
+  {street = "Slnečná ul."},
+  {street = "Trstinová ul."},
+  {street = "Ul. práce"},
+  {street = "Veľký rad"},
+  {street = "Zimná ul."},
+  {street = "Železničná ul.", numbers = "4-6", parity = "even"},
+  {street = "Železničná ul.", numbers = "10-12, 12A", parity = "even"},
+  {street = "Železničná ul.", numbers = "15-23", parity = "odd"},
+]
+
+[okrsok.21]
+rules = [
+  {street = "Apálska ul.", written = "Apalská ul.", note = "spelling variant of the register name"},
+  {street = "Bernolákova ul."},
+  {street = "Bočná ul."},
+  {street = "Hríbová ul."},
+  {street = "Lipová ul."},
+  {street = "Nová ul.", part = "Komárno", note = "the list gives number ranges of this street only in this okrsok: whole street"},
+  {street = "Okružná cesta", numbers = "1-4"},
+  {street = "Okružná cesta", numbers = "6-36, 36A", parity = "even"},
+  {street = "Okružná cesta", numbers = "38"},
+  {street = "Poľovnícka ul."},
+  {street = "Šípková ul."},
+  {street = "Tichá ul."},
+  {street = "Topoľová ul."},
+  {street = "Ul. 29. augusta"},
+  {street = "Ul. holubárov"},
+  {street = "Ul. J. Szinnyeiho"},
+  {street = "Ul. Komáromi Kacza", numbers = "2-8", parity = "even"},
+  {street = "Ul. Komáromi Kacza", numbers = "9-13"},
+  {street = "Ul. Komáromi Kacza", numbers = "15-23", parity = "odd"},
+  {street = "Ul. Komáromi Kacza", numbers = "24-31"},
+  {street = "Ul. M. Urbana"},
+  {street = "Ul. víťazstva"},
+  {street = "Nová", note = "register spelling variant of Nová ul. (1 address(es), no. 7-7); the list puts Nová ul. in this okrsok", inferred = true},
+]
+
+[okrsok.22]
+rules = [
+  {street = "Baštová ul."},
+  {street = "Hrušková ul."},
+  {street = "Konvalinková ul.", written = "Konvalínková ul.", note = "spelling variant of the register name"},
+  {street = "Kováčska ul."},
+  {street = "Krivá ul."},
+  {street = "Kvetná ul."},
+  {street = "Lesná ul."},
+  {street = "Okružná cesta", numbers = "19"},
+  {street = "Okružná cesta", numbers = "23"},
+  {street = "Okružná cesta", numbers = "42-78, 78A", parity = "even"},
+  {street = "Okružná cesta", numbers = "80-88", parity = "even"},
+  {street = "Okružná cesta", numbers = "89-96"},
+  {street = "Okružná cesta", numbers = "98-102", parity = "even"},
+  {street = "Okružná cesta", numbers = "756"},
+  {street = "Okružná cesta", numbers = "763"},
+  {street = "Požiarnická ul."},
+  {street = "Rovná ul."},
+  {street = "Skalná ul."},
+  {street = "Stredná ul.", part = "Komárno", note = "the list gives number ranges of this street only in this okrsok: whole street"},
+  {street = "Tesárska ul."},
+  {street = "Ul. Gy. Berecza"},
+  {street = "Ul. J. Péczeliho"},
+  {street = "Ul. Komáromi Kacza", numbers = "32-36", parity = "even"},
+  {street = "Ul. Komáromi Kacza", numbers = "37B"},
+  {street = "Ul. Komáromi Kacza", numbers = "38-40", parity = "even"},
+  {street = "Ul. Komáromi Kacza", numbers = "41-44"},
+  {street = "Ul. Komáromi Kacza", numbers = "46-48", parity = "even"},
+  {street = "Ul. Komáromi Kacza", numbers = "49-50"},
+  {street = "Ul. Komáromi Kacza", numbers = "52-86", parity = "even"},
+  {street = "Úzka ul."},
+  {street = "Vrbová ul.", written = "Vŕbová", note = "spelling variant of the register name"},
+  {street = "Zlievarenská ul."},
+]
+
+[okrsok.23]
+rules = [
+  {street = "Selyeho ul."},
+  {street = "Ul. gen. Klapku", numbers = "2-10", parity = "even"},
+  {street = "Ul. gen. Klapku", numbers = "11-14"},
+  {street = "Ul. gen. Klapku", numbers = "16-22", parity = "even"},
+  {street = "Ul. gen. Klapku", numbers = "26-30", parity = "even"},
+  {street = "Ul. gen. Klapku", numbers = "61-69", parity = "odd"},
+  {street = "Ul. gen. Klapku", numbers = "73-101", parity = "odd"},
+  {street = "Ul. gen. Klapku", numbers = "105-107", parity = "odd"},
+]
+
+[okrsok.24]
+rules = [
+  {street = "Ul. gen. Klapku", numbers = "32-34", parity = "even"},
+  {street = "Ul. gen. Klapku", numbers = "35-37"},
+  {street = "Ul. gen. Klapku", numbers = "41-45", parity = "odd"},
+  {street = "Ul. gen. Klapku", numbers = "46-49"},
+  {street = "Ul. gen. Klapku", numbers = "51-52"},
+  {street = "Ul. gen. Klapku", numbers = "54-70", parity = "even"},
+  {street = "Ul. K. Nagya"},
+]
+
+[okrsok.25]
+rules = [
+  {street = "Kapitánova ul."},
+  {street = "Malodunajská cesta"},
+  {street = "Malodunajské nábr."},
+  {street = "Mederčská ul.", numbers = "2"},
+  {street = "Nám. Kossutha"},
+  {street = "Platanová alej"},
+  {street = "Prvá priečna ul."},
+  {street = "Rákócziho ul.", numbers = "1-15", parity = "odd"},
+  {street = "Senný trh"},
+  {street = "Ul. Á. Jedlika"},
+  {street = "Ul. K. Thalyho"},
+  {street = "Ul. pohraničná"},
+  {street = "Veľkodunajská cesta"},
+  {street = "Veľkodunajské nábr."},
+  {street = "Vozová ul."},
+  {street = "Záhradnícka ul."},
+]
+
+[okrsok.26]
+rules = [
+  {street = "Csokonaiho ul."},
+  {street = "Elektrárenská cesta", numbers = "12A, 12B, 12C, 12D, 12E, 12F, 12G, 12H, 12I, 12J"},
+  {street = "Gombaiho ul."},
+  {street = "Hradná ul."},
+  {street = "Jazerná ul.", numbers = "3-9", parity = "odd"},
+  {street = "Jókaiho ul.", numbers = "25-39"},
+  {street = "Letná ul."},
+  {street = "Majstrovská ul."},
+  {street = "Parná ul."},
+  {street = "Pevnostný rad"},
+  {street = "Športová ul."},
+  {street = "Tabaková ul."},
+  {street = "Ul. františkánov", numbers = "16-33"},
+  {street = "Ul. J. Husa"},
+  {street = "Ul. M. Csáka"},
+  {street = "Vnútorná okružná", numbers = "1-13"},
+  {street = "Vnútorná okružná", numbers = "15-21, 21A", parity = "odd"},
+  {street = "Vnútorná okružná", numbers = "23-27", parity = "odd"},
+  {street = "Vnútorná okružná", numbers = "28-35"},
+  {street = "Vnútorná okružná", numbers = "37-50"},
+  {street = "Vnútorná okružná", numbers = "52"},
+  {street = "Vnútorná okružná", numbers = "60-68", parity = "even"},
+  {street = "Zámoryho ul."},
+]
+
+[okrsok.27]
+rules = [
+  {street = "Dunajská ul."},
+  {street = "Dunajské nábrežie", numbers = "4-10"},
+  {street = "Dunajské nábrežie", numbers = "12"},
+  {street = "Elektrárenská cesta", numbers = "3-10"},
+  {street = "Elektrárenská cesta", numbers = "12"},
+  {street = "Jókaiho ul.", numbers = "3-7"},
+  {street = "Jókaiho ul.", numbers = "9-10"},
+  {street = "Jókaiho ul.", numbers = "12-16"},
+  {street = "Jókaiho ul.", numbers = "18-24"},
+  {street = "Lehárova ul."},
+  {street = "Nádvorie Európy"},
+  {street = "Nám. gen. Klapku"},
+  {street = "Nám. M. R. Štefánika"},
+  {street = "Palatínova ul.", numbers = "2-4", parity = "even"},
+  {street = "Palatínova ul.", numbers = "7-18"},
+  {street = "Palatínova ul.", numbers = "20"},
+  {street = "Palatínova ul.", numbers = "23-27"},
+  {street = "Palatínova ul.", numbers = "31-39", parity = "odd"},
+  {street = "Svätoondrejská ul."},
+  {street = "Ul. františkánov", numbers = "1-3"},
+  {street = "Ul. františkánov", numbers = "5-15"},
+  {street = "Ulička"},
+  {street = "Valchovnícka ul."},
+  {street = "Župná ul."},
+]
+
+[okrsok.28]
+rules = [
+  {street = "Beöthyho ul."},
+  {street = "Damjanichova ul."},
+  {street = "Jazerná ul.", numbers = "2-8", parity = "even"},
+  {street = "Jazerná ul.", numbers = "11-13", parity = "odd"},
+  {street = "Mederčská ul.", numbers = "19-21", parity = "odd"},
+  {street = "Nám. sv. Rozálie"},
+  {street = "Považská ul."},
+  {street = "Rákócziho ul.", numbers = "17-29", parity = "odd"},
+  {street = "Rákócziho ul.", numbers = "35-45", parity = "odd"},
+  {street = "Vnútorná okružná", numbers = "55-67", parity = "odd"},
+]
+
+[okrsok.29]
+rules = [
+  {street = "Hlboká ul."},
+  {street = "Vnútorná okružná", numbers = "54-58", parity = "even"},
+  {street = "Vnútorná okružná", numbers = "1210-1211"},
+  {street = "Vnútorná okružná", numbers = "1222"},
+  {street = "Vodná ul.", numbers = "1-9", parity = "odd"},
+  {street = "Vodná ul.", numbers = "10-28"},
+  {street = "Vodná ul.", numbers = "30-34", parity = "even"},
+]
+
+[okrsok.30]
+rules = [
+  {part = "Ďulov Dvor"},
+  {street = "Jazerná ul.", numbers = "10-14", parity = "even"},
+  {street = "Jazerná ul.", numbers = "17-21", parity = "odd"},
+  {street = "Komenského ul.", numbers = "1-3", parity = "odd"},
+  {street = "Lodná ul."},
+  {street = "Novozámocká cesta"},
+  {street = "Rákócziho ul.", numbers = "4-36", parity = "even"},
+]
+
+[okrsok.31]
+rules = [
+  {street = "Ižianska cesta"},
+  {street = "Komenského ul.", numbers = "2-4", parity = "even"},
+  {street = "Komenského ul.", numbers = "5-12"},
+  {street = "Komenského ul.", numbers = "14-46", parity = "even"},
+  {street = "Veľká jarková ul."},
+  {street = "Vodná ul.", numbers = "2-8", parity = "even"},
+  {part = "Malá Iža"},
+  {part = "Veľký Harčáš"},
+]
+
+[okrsok.32]
+rules = [
+  {part = "Kava"},
+  {part = "Lándor"},
+]

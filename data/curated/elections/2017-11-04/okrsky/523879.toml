@@ -1,0 +1,39 @@
+# The okrsky of Spišský Štiavnik of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/523879.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Spišský Štiavnik, transcribed by an AI agent in job okrsok-rules-947 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: ulice Hornádska, Kláštorná, Lúčna, Mlynská, Železničná stanica, Mariánske námestie, Kaštieľ, Priečna súp.číslo 1 - 274, Kvetná, Slnečná
+#     okrsok 2: ulice Hlavná, Priečna od súp.čísla 275
+obec = "523879"
+name = "Spišský Štiavnik"
+okrsky_fill = "nearest"
+okrsky_note = "The municipality's notice ('OZNÁMENIE o čase a mieste konania volieb') for the municipal elections of 10 November 2018, on the old website (Internet Archive copy). 'Železničná stanica' (okrsok 1) is not a street of the register and is left out. Priečna is split by súpisné číslo (1–274 okrsok 1, from 275 okrsok 2). The houses without a street take the okrsok of the nearest placed address (fill_nearest)."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-527): The old website's 2017 notice (archived 2017-11-12) only links 'určenie volebných okrskov 2017' (a PDF); the PDF was not archived and the old site is gone. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2018-07-27
+okrsky_date_basis = "The old website's post is dated 2018-07-27 (before the vote); the notice itself states no date. (https://web.archive.org/web/20201023113000/https://www.spisskystiavnik.sk/2018/07/oznamenie-o-case-a-mieste-konania-volieb-do-organov-samospravy-obci/)"
+
+[[document]]
+url = "https://web.archive.org/web/20201023113000/https://www.spisskystiavnik.sk/2018/07/oznamenie-o-case-a-mieste-konania-volieb-do-organov-samospravy-obci/"
+sha256 = "02c4e5cb1f837b99029bcf7707bc088b067920ff8b9e681a8d78ec3e4746144f"
+title = "OZNÁMENIE o čase a mieste konania volieb do orgánov samosprávy obcí (10.11.2018)"
+
+[okrsok.1]
+rules = [
+  {street = "Hornádska"},
+  {street = "Kláštorná"},
+  {street = "Lúčna"},
+  {street = "Mlynská"},
+  {street = "Mariánske námestie"},
+  {street = "Kaštieľ"},
+  {street = "Priečna", numbers = "1-274", by = "supisne"},
+  {street = "Kvetná"},
+  {street = "Slnečná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná"},
+  {street = "Priečna", numbers = "275-", by = "supisne"},
+]

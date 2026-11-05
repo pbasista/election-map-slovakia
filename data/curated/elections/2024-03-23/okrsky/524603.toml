@@ -1,0 +1,38 @@
+# Okrsky of Jarovnice, transcribed by an AI agent in job okrsok-rules-4530 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súpisné čísla: 0 - 315
+#   okrsok 2: súpisné čísla: 316 – 422
+#   okrsok 3: súpisné čísla: 423 - 608
+obec = "524603"
+name = "Jarovnice"
+okrsky_date = 2024-01-23
+okrsky_note = "Okrsky are súpisné-číslo ranges for the whole obec; the document does not name the parts, so each range is applied in both parts (Jarovnice, Močidľany), the súpisné čísla being numbered across the obec. The last okrsok is open-ended so that higher numbers also fall there."
+
+[[document]]
+url = "https://www.jarovnice.sk/e_download.php?file=data/uredni_deska/obsah8460_5.pdf&original=Vytvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD%20v%20obci%20Jarovnice.pdf"
+sha256 = "6d890d07c303e53263e3486acaae4146a323f64a02d5fd8f6fb78445d09adf2f"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností v obci Jarovnice pre voľby prezidenta SR 2024"
+
+[[document]]
+url = "https://www.jarovnice.sk/samosprava/volby/oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-v-obci-jarovnice-pre-volby-prezidenta-sr-8471.html"
+sha256 = "85d0a188cc4b24f55c4ac59eb8b5155210813a5c646f6f6c5b2f72da6e79dac9"
+title = "Election page posting the document"
+
+[okrsok.1]
+rules = [
+  {part = "Jarovnice", numbers = "0-315"},
+  {part = "Močidľany", numbers = "0-315"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Jarovnice", numbers = "316-422"},
+  {part = "Močidľany", numbers = "316-422"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Jarovnice", numbers = "423-"},
+  {part = "Močidľany", numbers = "423-"},
+]

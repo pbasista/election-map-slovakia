@@ -1,6 +1,7 @@
 """Assemble the static site in ``dist/`` and serve it for local testing.
 
-``build`` wipes ``dist/`` and writes the site in parts, each deployed to a
+``build`` updates ``dist/`` in place (:func:`write`) with the site in
+parts, each deployed to a
 Cloudflare Pages project of its own (docs/deploy.md): the app, written
 here from ``web/`` (the frontend source) and the configuration, and the
 data parts, which :mod:`election_map_slovakia.bundle` assembles from each
@@ -14,21 +15,27 @@ keys)::
     app/                     the app (below)
     map/<slug>/              each election's map bundle (bundle.py)
     data/<slug>/             each election's data bundle (bundle.py)
+    base/<extract>/          the base map of each OpenStreetMap extract,
+                             which every election on it shows (bundle.py)
     sources/                 the cached copies of the pages research cites
                              (bundle.py)
-    results/                 the results of every election (bundle.py)
+    results/                 the final results of every election (bundle.py)
+    live/                    the live results of election nights, which a
+                             release never deploys (bundle.py)
 
 Built with ``--deployed``, ``dist/`` holds the app alone, whose shells
-name the deployed data (:class:`Locations`), and of each election the
-``manifest.json`` of the deployments of its bundles, which ``check``
-checks the app against. ``serve`` serves the parts as one site, where the
-app finds them without ``--deployed`` (:func:`mounts`): each bundle at
-``/map/<slug>`` or ``/data/<slug>``, the results at ``/results``, the
-sources at the root.
+name the deployed data (:class:`Locations`), and of each election and
+extract the ``manifest.json`` of the deployments of its bundles and base
+map, which ``check`` checks the app against. ``serve`` serves the parts
+as one site, where the app finds them without ``--deployed``
+(:func:`mounts`): each bundle at ``/map/<slug>`` or ``/data/<slug>``,
+each base map at ``/base/<extract>``, the final results at ``/results``,
+the live results at ``/live``, the sources at the root.
 
 The app, below ``app/``. Every election of ``config/elections.toml`` has
-its own pages, named by its slug (``2026``); the newest, the latest, is
-also the one ``/<lang>/`` shows::
+its own pages, named by its slug (``2026``); the home election
+(``Config.home``, the newest that is not a by-election, an upcoming one
+included) is also the one ``/<lang>/``, the site's front page, shows::
 
     index.html               language picker: stored choice, then
                              navigator.languages (aliases applied), then the
@@ -37,7 +44,7 @@ also the one ``/<lang>/`` shows::
                              with, status 404; from web/404.html
     <lang>/<slug>/index.html app shell per enabled language and election,
                              from web/index.html
-    <lang>/index.html        the latest election's, whose canonical URL it
+    <lang>/index.html        the home election's, whose canonical URL it
                              is (:func:`shells`)
     _headers                 Cloudflare Pages response headers, from
                              web/_headers (see :func:`header_rules`) with
@@ -84,40 +91,49 @@ so a library upgrade is new code too. The UI strings (``i18n/``), the same
 for every election, are requested with ``?v=<sv>``, a hash of them alone,
 so that switching elections keeps the browser's copies; an election's
 files with ``?v=`` its bundle's version (its ``manifest.json``), so that a
-browser's copy belongs to the version it was fetched for. The results
-files are requested with ``?v=`` the hash of each that their
-``status.json`` lists, and ``status.json`` itself is revalidated on every
-load (web/_headers-results). The app shells carry, in the ``km-config``
-meta JSON (:func:`shells`), the versions as ``mapVersion``,
-``dataVersion`` and ``stringsVersion``, the addresses of the election's
-bundles (``map``, ``data``), of its results (``results``, named even
-before there are any: a page loaded then finds them there once a
-deployment brings them), of the cached sources (``sources``) and of the
-party logos (``logos``). A shell whose map bundle is on another origin
-preconnects to it, as the map's first files are what it fetches first.
+browser's copy belongs to the version it was fetched for; its base map's
+likewise, which every election on the extract shares, so that switching
+between them keeps those copies too. The results files, final and live,
+are requested with ``?v=`` the hash of each that their ``status.json``
+lists, and ``status.json`` itself is revalidated on every load
+(web/_headers-results, web/_headers-live). The app shells carry, in the
+``km-config`` meta JSON (:func:`shells`), the versions as ``mapVersion``,
+``dataVersion``, ``baseVersion`` and ``stringsVersion``, the addresses of
+the election's bundles and base map (``map``, ``data``, ``base``), of its
+final results (``results``, named even before there are any: a page
+loaded then finds them there once a release brings them) and, for an
+election with ``live``, of its live results (``live``), of the cached
+sources (``sources``) and of the party logos (``logos``). A shell whose
+map bundle or base map is on another origin preconnects to it, as their
+files are what it fetches first.
 """
 
 from __future__ import annotations
 
+import errno
 import functools
+import hashlib
 import html
-import json
+import os
 import re
 import shutil
 import urllib.parse
-from collections.abc import Iterator, Mapping
+from collections import defaultdict
+from collections.abc import Callable, Iterator, Mapping
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
+import orjson
+
 from election_map_slovakia import (
     __version__,
-    basemap,
     bundle,
     config,
+    contests,
     geo,
     lock,
     output,
@@ -130,6 +146,7 @@ from election_map_slovakia.bundle import (
     NOT_FOUND,
     WEB_DIR,
     BuildError,
+    FileFacts,
     Part,
     content_version,
     encode,
@@ -171,11 +188,11 @@ _SITE = "{site}"
 
 @dataclass(frozen=True)
 class Located:
-    """An election's bundle, map or data, as the app finds it."""
+    """An election's bundle, map or data, or a base map, as the app finds it."""
 
     url: str
-    """Its address: ``/map/<slug>`` or ``/data/<slug>`` served by ``serve``,
-    else that of the deployment that carries its key."""
+    """Its address: ``/map/<slug>``, ``/data/<slug>`` or ``/base/<extract>``
+    served by ``serve``, else that of the deployment that carries its key."""
     manifest: dict[str, Any]
     """Its ``manifest.json`` (:mod:`election_map_slovakia.bundle`)."""
 
@@ -188,30 +205,40 @@ class Locations:
     """Election slug → its map bundle."""
     data: dict[str, Located]
     """Election slug → its data bundle."""
+    bases: dict[str, Located]
+    """Extract → its base map."""
     results: str
     """The address of the results part, the days below it."""
+    live: str
+    """The address of the live part, the days below it, which the app of an
+    election with ``live`` reads where its final results are not there yet."""
     sources: str
     """The address of the sources part, ``cache/`` below it (empty: the
     app's own origin)."""
 
-    @property
-    def origins(self) -> list[str]:
-        """Return the other origins the app fetches from, sorted."""
+    def origins(self, *, live: bool) -> list[str]:
+        """Return the other origins the app fetches from, sorted.
+
+        The live part's only with *live*: when an election reads it.
+        """
         urls = [
             *(d.url for d in self.maps.values()),
             *(d.url for d in self.data.values()),
+            *(d.url for d in self.bases.values()),
             self.results,
+            *([self.live] if live else []),
         ]
         return sorted({origin(url) for url in urls if origin(url)})
 
     def bundles(self) -> Iterator[tuple[str, Located]]:
-        """Yield (directory below ``dist/``, bundle) of every bundle."""
+        """Yield (directory below ``dist/``, part) of every bundle and base map."""
         for part, located in (
             (bundle.MAP_PART, self.maps),
             (bundle.DATA_PART, self.data),
+            (bundle.BASE_PART, self.bases),
         ):
-            for slug, one in located.items():
-                yield f"{part}/{slug}", one
+            for name, one in located.items():
+                yield f"{part}/{name}", one
 
 
 def origin(url: str) -> str:
@@ -220,19 +247,23 @@ def origin(url: str) -> str:
     return f"{parts.scheme}://{parts.netloc}" if parts.netloc else ""
 
 
-def local_locations(maps: Mapping[str, Part], data: Mapping[str, Part]) -> Locations:
-    """Return where ``serve`` serves the parts built with *maps* and *data*."""
+def local_locations(
+    maps: Mapping[str, Part], data: Mapping[str, Part], bases: Mapping[str, Part]
+) -> Locations:
+    """Return where ``serve`` serves the parts built with *maps*, *data*, *bases*."""
 
-    def located(part: str, bundles: Mapping[str, Part]) -> dict[str, Located]:
+    def located(part: str, parts: Mapping[str, Part]) -> dict[str, Located]:
         return {
-            slug: Located(f"/{part}/{slug}", json.loads(b.files[MANIFEST]))
-            for slug, b in bundles.items()
+            name: Located(f"/{part}/{name}", orjson.loads(p.files[MANIFEST]))
+            for name, p in parts.items()
         }
 
     return Locations(
         located(bundle.MAP_PART, maps),
         located(bundle.DATA_PART, data),
+        located(bundle.BASE_PART, bases),
         f"/{bundle.RESULTS_PART}",
+        f"/{bundle.LIVE_PART}",
         "",
     )
 
@@ -242,13 +273,15 @@ class Site:
     """Everything ``build`` writes: ``dist/`` path → content.
 
     *copies* are directories and files copied verbatim: ``dist/`` path →
-    source.
+    source. *known* are the facts of source files read already
+    (:attr:`bundle.Part.known`).
     """
 
     files: dict[str, bytes]
     copies: dict[str, Path]
     log: list[str]
     """What ``build`` reports besides the files, e.g. untranslated strings."""
+    known: dict[str, FileFacts] = field(default_factory=dict)
 
     @classmethod
     def of(cls, parts: Mapping[str, Part], log: list[str]) -> Site:
@@ -265,6 +298,7 @@ class Site:
                 for path, src in p.copies.items()
             },
             log,
+            {path: facts for p in parts.values() for path, facts in p.known.items()},
         )
 
 
@@ -303,7 +337,7 @@ def hand_written(cfg: Config, web: Path) -> dict[str, dict[str, str]]:
     langs = cfg.languages
     base_code = langs.fallback[0]
     own = {
-        path.stem: json.loads(path.read_bytes())
+        path.stem: orjson.loads(path.read_bytes())
         for path in sorted((web / I18N_DIR).glob("*.json"))
     }
     for code, strings in own.items():
@@ -392,13 +426,15 @@ def headers(cfg: Config, web: Path, locations: Locations) -> bytes:
     """Return the app's ``_headers``: web/_headers for these *locations*.
 
     Its CSP lets the app fetch from its own origin and the other origins of
-    the data parts (:attr:`Locations.origins`). A noindex rule for
+    the data parts (:meth:`Locations.origins`), the live part's where an
+    election reads it (``live``). A noindex rule for
     pages.dev is added once the site has a domain of its own
     (``base_url``): Pages keeps serving every deployment at
     <project>.pages.dev and at <hash>.<project>.pages.dev, and a search
     engine should know the site only by its domain.
     """
-    connect = " ".join(["'self'", *locations.origins])
+    live = any(e.live for e in cfg.elections)
+    connect = " ".join(["'self'", *locations.origins(live=live)])
     text = _fill(
         (web / HEADERS).read_text(encoding="utf-8"), {"connect_src": connect}, HEADERS
     )
@@ -417,9 +453,10 @@ def headers(cfg: Config, web: Path, locations: Locations) -> bytes:
 def page(cfg: Config, lang: str, election: config.Election) -> str:
     """Return the path of *election*'s page in *lang*, as linked and canonical.
 
-    ``<lang>/`` for the latest election, else ``<lang>/<slug>/``.
+    ``<lang>/`` for the home election (``Config.home``), else
+    ``<lang>/<slug>/``.
     """
-    if election.slug == cfg.latest.slug:
+    if election.slug == cfg.home.slug:
         return f"{lang}/"
     return f"{lang}/{election.slug}/"
 
@@ -429,7 +466,7 @@ def sitemap(cfg: Config) -> bytes | None:
 
     A sitemap lists absolute URLs only, so without ``base_url`` there is
     none. The pages name their other languages themselves (:func:`shells`).
-    Each page is listed by its canonical URL (:func:`page`): the latest
+    Each page is listed by its canonical URL (:func:`page`): the home
     election's ``<lang>/<slug>/`` copy is the same page as ``<lang>/``.
     """
     base = cfg.site.base_url
@@ -475,9 +512,12 @@ def shells(
     """Return the app shells, the root language picker and the 404 page.
 
     One shell per language and election, ``<lang>/<slug>/index.html``, the
-    latest election's also as ``<lang>/index.html``, which both name as
+    home election's also as ``<lang>/index.html``, which both name as
     canonical (:func:`page`); each fetches the election's files from its
-    bundle in *locations*, with ``?v=`` its version.
+    bundle in *locations*, with ``?v=`` its version. Its title is that of
+    the election's kind (``app.title.<label>``,
+    :attr:`config.Election.label`), its description and ``<noscript>``
+    paragraphs are :func:`_texts`.
     """
     langs = cfg.languages
     site_names = _site_names(langs)
@@ -497,26 +537,32 @@ def shells(
 
     template = (web / SHELL).read_text(encoding="utf-8")
     out = {}
+    home = cfg.home
     for election in cfg.elections:
         mapped = locations.maps[election.slug]
-        # The map's files are what the page fetches first (index.html).
-        preconnect = (
-            f'\n    <link rel="preconnect" href="{html.escape(origin(mapped.url))}"'
+        based = locations.bases[election.osm]
+        # The map's and the base map's files are what the page fetches
+        # first (index.html).
+        preconnect = "".join(
+            f'\n    <link rel="preconnect" href="{html.escape(o)}"'
             ' crossorigin="anonymous" />'
-            if origin(mapped.url)
-            else ""
+            for o in dict.fromkeys(origin(url) for url in (mapped.url, based.url))
+            if o
         )
         config_json = _attribute_json(_app_config(cfg, election, assets, locations))
         links = alternates(election)
         for lang in langs.languages:
             s = strings[lang.code]
+            description, features = _texts(cfg, s, election)
             values = {
                 "lang": lang.code,
                 "dir": lang.direction,
-                "title": html.escape(_year(s["app.title"], election)),
-                "description": html.escape(_year(s["app.description"], election)),
-                "noscript": html.escape(s["app.noscript"]),
-                "features": html.escape(_year(s["app.features"], election)),
+                "title": html.escape(_year(s[f"app.title.{election.label}"], election)),
+                "description": html.escape(description),
+                "noscript": "".join(
+                    f'<p class="noscript">{html.escape(p)}</p>'
+                    for p in (s["app.noscript"], *features)
+                ),
                 "alternates": links,
                 "canonical": canonical(page(cfg, lang.code, election)),
                 "assets": assets.code,
@@ -529,7 +575,7 @@ def shells(
             }
             shell = _fill(template, values, SHELL).encode()
             out[f"{lang.code}/{election.slug}/index.html"] = shell
-            if election.slug == cfg.latest.slug:
+            if election.slug == home.slug:
                 out[f"{lang.code}/index.html"] = shell
     picker_config = {
         "codes": list(langs.codes),
@@ -546,16 +592,14 @@ def shells(
         # Shown before a language is known: the names in the fallback languages.
         "title": html.escape(" · ".join(site_names[code] for code in langs.fallback)),
         # The page is in the first fallback language (web/picker.html).
-        "description": html.escape(
-            _year(strings[langs.fallback[0]]["app.description"], cfg.latest)
-        ),
+        "description": html.escape(_texts(cfg, strings[langs.fallback[0]], home)[0]),
         # What the site offers, in each fallback language.
         "features": "\n".join(
-            f'    <p lang="{code}">'
-            f"{html.escape(_year(strings[code]['app.features'], cfg.latest))}</p>"
+            f'    <p lang="{code}">{html.escape(p)}</p>'
             for code in langs.fallback
+            for p in _texts(cfg, strings[code], home)[1]
         ),
-        "alternates": alternates(cfg.latest),
+        "alternates": alternates(home),
         "canonical": canonical(""),
         "config": _attribute_json(picker_config),
         "links": links,
@@ -568,21 +612,45 @@ def shells(
     return out
 
 
+def _texts(
+    cfg: Config, s: Mapping[str, Any], election: config.Election
+) -> tuple[str, list[str]]:
+    """Return *election*'s page description and what it offers, in strings *s*.
+
+    The description and the paragraphs for search engines and visitors
+    without JavaScript are those of the election's kind
+    (``app.description.<label>``, ``app.features.<label>``). The home
+    election's page is the site's front page (``/<lang>/``, as is the root
+    page), so its texts start with the site's own (``site.description``,
+    ``site.features``): every kind of election the site shows, since the
+    year of the oldest (``{since}``).
+    """
+    description = _year(s[f"app.description.{election.label}"], election)
+    features = [_year(s[f"app.features.{election.label}"], election)]
+    if election.slug != cfg.home.slug:
+        return description, features
+    since = str(cfg.elections[-1].day.year)
+    description = f"{s['site.description'].replace('{since}', since)} {description}"
+    return description, [s["site.features"].replace("{since}", since), *features]
+
+
 def _year(text: str, election: config.Election) -> str:
-    """Return a UI string with ``{year}`` filled in: *election*'s year, its slug."""
-    return text.replace("{year}", election.slug)
+    """Return a UI string with ``{year}`` filled in: *election*'s year."""
+    return text.replace("{year}", str(election.day.year))
 
 
 def _credits(cfg: Config, election: config.Election) -> dict[str, Any] | None:
-    """Return what an earlier election's map credits name, None for the latest.
+    """Return what an election's map credits name, None if its boundaries' newest.
 
-    ``boundaries``: ``[slug, n]`` where it is drawn on a later election's
-    boundaries, *n* obce of its own differing
-    (:func:`bundle.boundary_changes`), else null; ``osm`` and ``addresses``
-    the dates their data are of (``inputs.toml`` ``as_of``), which the
-    credits must name.
+    ``boundaries``: ``[slug, n]``, the later election whose boundaries it is
+    drawn on and how many obce of its own differ
+    (:func:`bundle.boundary_changes`); ``osm`` and ``addresses`` the dates
+    their data are of (``inputs.toml`` ``as_of``), which the credits must
+    name. None for the newest election of its ZBGIS inputs
+    (:func:`bundle.drawn_on`): its map is drawn on its own boundaries.
     """
-    if election == cfg.latest:
+    on = bundle.drawn_on(cfg, election)
+    if on == election:
         return None
     inputs = {i.name: i for i in cfg.inputs.inputs}
     for name in (election.osm, election.addresses):
@@ -591,15 +659,14 @@ def _credits(cfg: Config, election: config.Election) -> dict[str, Any] | None:
                 f"config/inputs.toml: input {name} of the {election.slug} election"
                 " needs `as_of`, which its map credits name"
             )
-    on = bundle.drawn_on(cfg, election)
     changes = bundle.boundary_changes(cfg.election_dir(election))
-    if on != election and changes is None:
+    if changes is None:
         raise BuildError(
             f"{cfg.election_dir(election) / bundle.BOUNDARIES_FILE} missing: the"
             f" {election.slug} election is drawn on the boundaries of {on.slug}"
         )
     return {
-        "boundaries": None if changes is None else [on.slug, len(changes["obce"])],
+        "boundaries": [on.slug, len(changes["obce"])],
         "osm": inputs[election.osm].as_of,
         "addresses": inputs[election.addresses].as_of,
     }
@@ -611,26 +678,32 @@ def _app_config(
     """Return the ``km-config`` of *election*'s app shells; see :func:`shells`."""
     located = locations.data[election.slug]
     mapped = locations.maps[election.slug]
+    based = locations.bases[election.osm]
     return {
         "languages": [[lang.code, lang.name] for lang in cfg.languages.languages],
         "storage": STORAGE_KEY,
         "election": str(election.day),
         # Every election the site shows, newest first, with its kind: the
         # search card lists them under a heading per kind and links to each
-        # one's page, /<lang>/<slug>/.
+        # one's page, /<lang>/<slug>/; its label keys its kind's strings
+        # (config.Election.label: a regular election of one half has its own).
         "elections": [
-            {"day": str(e.day), "slug": e.slug, "kind": e.kind} for e in cfg.elections
+            {"day": str(e.day), "slug": e.slug, "kind": e.kind, "label": e.label}
+            for e in cfg.elections
         ],
         # Where the app fetches the election's files: its map bundle, below
-        # which are geo/…, base/…, addr/…, and its data bundle, below which
-        # are data/…, i18n/… (bundle.py).
+        # which are geo/…, addr/…, its data bundle, below which are data/…,
+        # i18n/… (bundle.py), and its extract's base map, whose files the
+        # app asks for as base/… (web/js/files.js).
         "map": mapped.url,
         "data": located.url,
+        "base": based.url,
         # Day of the regular elections before, of which the office holders
-        # and the past turnouts are; null where they are not known.
+        # and the past turnouts of candidates.json are; null where they are
+        # not known. The results' `past` names its own day (results.py).
         "previous": str(election.incumbents.day) if election.incumbents else None,
-        # For an election before the latest, the dates and boundaries the
-        # map's credits name (:func:`_credits`); null for the latest.
+        # For an election drawn on a later one's boundaries, the dates and
+        # boundaries the map's credits name (:func:`_credits`); else null.
         "credits": _credits(cfg, election),
         # When the polls open and close (ISO 8601 with the offset): the search
         # card shows the voting under way between them.
@@ -644,14 +717,16 @@ def _app_config(
         # The About dialog names the version, linked to its release.
         "version": __version__,
         # Appended to every file of the election the app fetches (``?v=``):
-        # its bundle's version, the map's or the data's.
+        # its bundle's version, the map's or the data's, or its base map's.
         "mapVersion": mapped.manifest["version"],
         "dataVersion": located.manifest["version"],
+        "baseVersion": based.manifest["version"],
         # Appended to the UI strings (``/i18n/``), which every election
         # shares: switching keeps the browser's copies.
         "stringsVersion": assets.strings,
-        # The election's results directory (status.json and the files it
-        # names, docs/results.md); nothing there before there are results.
+        # The election's final results directory (status.json and the files
+        # it names, docs/results.md); nothing there before a release brings
+        # them.
         "results": f"{locations.results}/{election.day.isoformat()}",
         # The cached copies of the pages research cites: <sources>/cache/….
         "sources": locations.sources,
@@ -662,13 +737,30 @@ def _app_config(
         # in which they are written): the app says the translation is
         # incomplete where any are not.
         "occupations": located.manifest["occupations"],
-        # Whether the app polls them (elections.toml live); without, it reads
-        # them once per page load.
-        "live": election.live,
-        # When, polling, it reads them every minute (ISO 8601); null: any time.
+        # The election's live results directory, with elections.toml live:
+        # where the final results are not there yet the app reads these,
+        # every minute within liveWindow; null: the final results alone,
+        # once per page load.
+        "live": f"{locations.live}/{election.day.isoformat()}"
+        if election.live
+        else None,
+        # When it reads them every minute (ISO 8601); null: any time.
         "liveWindow": [when.isoformat() for when in election.live_window]
         if election.live_window
         else None,
+        # A presidential election's rounds, [day, polls open, polls close]
+        # each (ISO 8601), the second once it is set: the ballots label
+        # each round's contest with its day.
+        **(
+            {
+                "rounds": [
+                    [start.date().isoformat(), start.isoformat(), end.isoformat()]
+                    for start, end in election.rounds
+                ]
+            }
+            if "prezident" in contests.ELECTION_KINDS[election.kind]
+            else {}
+        ),
     }
 
 
@@ -709,18 +801,25 @@ def assemble(cfg: Config, keys: lock.Keys | None) -> Site:
     manifests name; None where the repository does not determine them (an
     input not pinned yet).
     """
-    maps, data = bundle.bundles(
-        cfg, keys.maps if keys else {}, keys.data if keys else {}
+    maps, data, bases = bundle.bundles(
+        cfg,
+        keys.maps if keys else {},
+        keys.data if keys else {},
+        keys.bases if keys else {},
     )
     parts = {f"{bundle.MAP_PART}/{slug}": part for slug, part in maps.items()}
     parts |= {f"{bundle.DATA_PART}/{slug}": part for slug, part in data.items()}
+    parts |= {f"{bundle.BASE_PART}/{osm}": part for osm, part in bases.items()}
     parts[bundle.SOURCES_PART] = bundle.sources_part(
         cfg, keys.sources if keys else None
     )
     parts[bundle.RESULTS_PART] = bundle.results_part(
         cfg, keys.results if keys else None
     )
-    parts[APP_PART], log = app(cfg, local_locations(maps, data))
+    # Built here to be served with the rest (`serve`); only `ems results
+    # deploy` deploys it, never a release.
+    parts[bundle.LIVE_PART] = bundle.live_part(cfg)
+    parts[APP_PART], log = app(cfg, local_locations(maps, data, bases))
     site = Site.of(parts, log)
     for source in site.copies.values():
         if not source.exists():
@@ -731,9 +830,10 @@ def assemble(cfg: Config, keys: lock.Keys | None) -> Site:
 def assemble_deployed(cfg: Config, locations: Locations) -> Site:
     """Return the app alone, for the data parts deployed at *locations*.
 
-    With the manifest of each election's bundles, which ``check`` checks
-    the app against: ``dist/map/<slug>/manifest.json`` and
-    ``dist/data/<slug>/manifest.json`` (module doc).
+    With the manifest of each election's bundles and each base map, which
+    ``check`` checks the app against: ``dist/map/<slug>/manifest.json``,
+    ``dist/data/<slug>/manifest.json`` and
+    ``dist/base/<extract>/manifest.json`` (module doc).
     """
     part, log = app(cfg, locations)
     parts = {APP_PART: part} | {
@@ -744,63 +844,213 @@ def assemble_deployed(cfg: Config, locations: Locations) -> Site:
 
 
 def write(
-    site: Site, directory: Path, memo: Path | None = None
+    site: Site,
+    directory: Path,
+    memo: Path | None = None,
+    link_below: Path | None = None,
 ) -> dict[str, tuple[int, int]]:
-    """Replace *directory* with *site*.
+    """Make *directory* hold *site*, and nothing else.
 
-    Returns ``dist/`` path → (bytes, gzip -9 bytes) of every file, the gzip
+    Returns ``dist/`` path → (bytes, gzipped bytes) of every file, the gzip
     sizes kept in *memo* (:func:`election_map_slovakia.output.gzip_sizes`).
+
+    *directory* is changed in place (:func:`election_map_slovakia.output.updating`):
+    a file there with the content wanted stays, so a build that changes
+    little writes little. A file copied from below *link_below*
+    (``data/build/``) is a hard link to its source: the steps replace their
+    output and never write into a file, so the link keeps the content it
+    was made for, and the 3.5 GB of the map bundles are neither copied nor,
+    where the link is there already, touched. The sizes are those of the
+    contents written or read to write them: nothing is read back.
     """
+    copied = _copied(site.copies)
+    _check_paths([*site.files, *copied])
+    linked = f"{link_below}/" if link_below is not None else None
+    # dist/ path → (bytes, SHA-256) of its content.
+    facts: dict[str, tuple[int, str]] = {}
     with (
         progress.stage(f"writing {directory.name}/") as s,
-        output.replacing(directory) as tmp,
+        output.updating(directory) as tmp,
     ):
-
-        def copy(source: str, target: str) -> None:
-            shutil.copy2(source, target)
-            s.advance()
-
-        for target, source in sorted(site.copies.items()):
-            if source.is_dir():
-                shutil.copytree(source, tmp / target, copy_function=copy)
+        present, present_dirs = _present(tmp)
+        wanted = site.files.keys() | copied.keys()
+        for path in present.keys() - wanted:
+            os.unlink(tmp / path)
+        dirs = {d for path in wanted for d in _parents(path)}
+        for d in sorted(present_dirs - dirs, reverse=True):
+            os.rmdir(tmp / d)  # its files went just now
+        for d in sorted(dirs - present_dirs):
+            os.mkdir(tmp / d)
+        root = str(tmp)
+        work: list[Callable[[], tuple[str, tuple[int, str]]]] = [
+            functools.partial(_put, root, path, data, path in present)
+            for path, data in site.files.items()
+        ]
+        for path, source in copied.items():
+            known = site.known.get(source)
+            if linked is None or not source.startswith(linked):
+                work.append(
+                    functools.partial(_copy, root, path, source, path in present)
+                )
+            elif known is not None and present.get(path) == (known.device, known.inode):
+                facts[path] = (known.size, known.digest)  # the very file already
             else:
-                (tmp / target).parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(source, tmp / target)
-                s.advance()
-        for path, data in s.track(sorted(site.files.items())):
-            out = tmp / path
-            if out.exists():
-                raise BuildError(f"{path} is both generated and copied")
-            out.parent.mkdir(parents=True, exist_ok=True)
-            out.write_bytes(data)
-    with (
-        progress.stage(f"reading {directory.name}/ for the size report") as s,
-        ThreadPoolExecutor() as pool,
-    ):
-        files = sorted(p for p in directory.rglob("*") if p.is_file())
-        blobs = list(s.track(pool.map(Path.read_bytes, files)))
-    return {
-        path.relative_to(directory).as_posix(): (len(data), gz)
-        for path, data, gz in zip(
-            files, blobs, output.gzip_sizes(blobs, memo), strict=True
+                work.append(
+                    functools.partial(
+                        _link, root, path, source, known, present.get(path)
+                    )
+                )
+        with ThreadPoolExecutor() as pool:
+            facts |= dict(s.track(pool.map(lambda w: w(), work)))
+        s.advance(len(copied) + len(site.files) - len(work))
+    paths = sorted(facts)
+    gzipped = output.gzip_sizes_by_digest(
+        [facts[p][1] for p in paths],
+        lambda i: (directory / paths[i]).read_bytes(),
+        memo,
+    )
+    return {p: (facts[p][0], gz) for p, gz in zip(paths, gzipped, strict=True)}
+
+
+def _copied(copies: Mapping[str, Path]) -> dict[str, str]:
+    """Return ``dist/`` path → source file of each file of *copies*."""
+    out: dict[str, str] = {}
+    for target, source in sorted(copies.items()):
+        files = (
+            [(f"{target}/{p}", f"{source}/{p}") for p in bundle.files_below(source)]
+            if source.is_dir()
+            else [(target, str(source))]
         )
-    }
+        for path, file in files:
+            if out.setdefault(path, file) != file:
+                raise BuildError(f"{path} is copied from both {out[path]} and {file}")
+    return out
+
+
+def _parents(path: str) -> Iterator[str]:
+    """Yield the directories *path* is below, the deepest first."""
+    while "/" in path:
+        path = path.rpartition("/")[0]
+        yield path
+
+
+def _check_paths(paths: list[str]) -> None:
+    """Raise :class:`BuildError` unless each of *paths* is one file, below no other."""
+    files: set[str] = set()
+    for path in paths:
+        if path in files:  # generated and copied: each is a mapping
+            raise BuildError(f"{path} is both generated and copied")
+        files.add(path)
+    for path in paths:
+        if below := next((d for d in _parents(path) if d in files), None):
+            raise BuildError(f"{below} is a file, and {path} below it")
+
+
+def _present(root: Path) -> tuple[dict[str, tuple[int, int]], set[str]]:
+    """Return what is below *root*: path → (device, inode) of each file, the directories.
+
+    The inodes as the directories list them, sparing a ``stat`` of each of
+    the site's files.
+    """
+    files: dict[str, tuple[int, int]] = {}
+    dirs: set[str] = set()
+    pending = [""]
+    while pending:
+        below = pending.pop()
+        directory = f"{root}/{below}" if below else str(root)
+        device = os.stat(directory).st_dev
+        with os.scandir(directory) as entries:
+            for entry in entries:
+                path = f"{below}/{entry.name}" if below else entry.name
+                if entry.is_dir(follow_symlinks=False):
+                    dirs.add(path)
+                    pending.append(path)
+                else:
+                    files[path] = (device, entry.inode())
+    return files, dirs
+
+
+def _replace(out: str, content: bytes, present: bool) -> None:
+    """Write *content* to *out* unless it is there; never into the file there.
+
+    That may be a hard link to a step's output (:func:`write`).
+    """
+    if present:
+        with open(out, "rb") as f:
+            if os.fstat(f.fileno()).st_size == len(content) and f.read() == content:
+                return
+        os.unlink(out)
+    with open(out, "xb") as f:
+        f.write(content)
+
+
+def _put(
+    root: str, path: str, content: bytes, present: bool
+) -> tuple[str, tuple[int, str]]:
+    """Write the generated file *path* below *root*; return it and its facts."""
+    _replace(f"{root}/{path}", content, present)
+    return path, (len(content), hashlib.sha256(content).hexdigest())
+
+
+def _copy(
+    root: str, path: str, source: str, present: bool
+) -> tuple[str, tuple[int, str]]:
+    """Copy *source* to *path* below *root*; return it and its facts."""
+    content, facts = FileFacts.read(source)
+    _replace(f"{root}/{path}", content, present)
+    return path, (facts.size, facts.digest)
+
+
+# Where a hard link cannot be made: another file system, or one without
+# them, or too many links to the file.
+_NO_LINK = frozenset({errno.EXDEV, errno.EPERM, errno.EMLINK, errno.EOPNOTSUPP})
+
+
+def _link(
+    root: str,
+    path: str,
+    source: str,
+    known: FileFacts | None,
+    present: tuple[int, int] | None,
+) -> tuple[str, tuple[int, str]]:
+    """Link *path* below *root* to *source*; return it and its facts.
+
+    *known* are the source's facts if read already, *present* the device
+    and inode of the file at *path*, if any.
+    """
+    if known is None:
+        _, known = FileFacts.read(source)
+    out = f"{root}/{path}"
+    if present is not None:
+        if present == (known.device, known.inode):
+            return path, (known.size, known.digest)
+        os.unlink(out)
+    try:
+        os.link(source, out)
+    except OSError as e:
+        if e.errno not in _NO_LINK:
+            raise
+        shutil.copyfile(source, out)
+    return path, (known.size, known.digest)
 
 
 _GROUPS = (
     ("data/okres/", "candidates per okres"),
     ("data/kraj/", "candidates per kraj"),
     ("data/city/", "candidates per city"),
+    ("data/country.json", "country-wide contests"),
+    ("data/list/", "candidates per list"),
     ("data/names/", "name search shards"),
     ("data/research/", "research findings"),
     ("data/index.json", "data/index.json"),
     ("geo/", "geometry"),
     (f"geo/{geo.OKRSKY_DIR}/", "  of it okrsky"),
-    (f"{basemap.OUTPUT_DIR}/", "base map"),
+    (f"{bundle.BASE_PART}/", "base map"),
     ("addr/", "addresses"),
     (f"{bundle.I18N_DIR}/", "occupations"),
     (f"{bundle.SOURCES_PART}/{bundle.CACHE_DIR}/", "cached pages"),
     (f"{bundle.RESULTS_PART}/", "results"),
+    (f"{bundle.LIVE_PART}/", "live results"),
     (f"{APP_PART}/{I18N_DIR}/", "UI strings"),
     (f"{APP_PART}/{ASSETS_DIR}/", "assets"),
 )
@@ -809,26 +1059,49 @@ _GROUPS = (
 def report(sizes: Mapping[str, tuple[int, int]]) -> Iterator[str]:
     """Yield a summary of the written files: count, bytes, gzip per group.
 
-    The bundles' files are counted together, without their ``map/<slug>/``
-    or ``data/<slug>/``; then each part's, which a Pages project limits.
+    The parts' files are counted together, without their ``map/<slug>/``,
+    ``data/<slug>/`` or extract (a base map's as ``base/…``, the paths the
+    app asks for); then each part's, which a Pages project limits.
     """
-    prefixes = (f"{bundle.MAP_PART}/", f"{bundle.DATA_PART}/")
-    files = [
-        (p.split("/", 2)[2] if p.startswith(prefixes) else p, s)
-        for p, s in sizes.items()
-    ]
-    bundles = sorted(
-        {"/".join(p.split("/")[:2]) for p in sizes if p.startswith(prefixes)}
-    )
-    parts = [*bundles, APP_PART, bundle.SOURCES_PART, bundle.RESULTS_PART]
+    # Each file by the first directory of its path, bundles' without their
+    # ``map/<slug>/``, which each group's is (170,000 files, 40 groups).
+    tops: dict[str, list[tuple[str, tuple[int, int]]]] = defaultdict(list)
+    by_part: dict[str, list[tuple[int, int]]] = defaultdict(list)
+    parted = (bundle.MAP_PART, bundle.DATA_PART, bundle.BASE_PART)
+    for p, s in sizes.items():
+        first, _, rest = p.partition("/")
+        if first in parted:
+            name, _, rest = rest.partition("/")
+            if first == bundle.BASE_PART:
+                rest = f"{first}/{rest}"
+            first = f"{first}/{name}"
+        else:
+            rest = p
+        by_part[first].append(s)
+        tops[rest.partition("/")[0]].append((rest, s))
+    bundles = sorted(d for d in by_part if d.startswith(tuple(f"{p}/" for p in parted)))
     rows = [
-        *((prefix, label, files) for prefix, label in _GROUPS),
-        *((f"{d}/", f"part {d}", sizes.items()) for d in parts),
-        ("", "total", files),
+        *(
+            (
+                label,
+                [s for p, s in tops[prefix.partition("/")[0]] if p.startswith(prefix)],
+            )
+            for prefix, label in _GROUPS
+        ),
+        *(
+            (f"part {d}", by_part.get(d, []))
+            for d in [
+                *bundles,
+                APP_PART,
+                bundle.SOURCES_PART,
+                bundle.RESULTS_PART,
+                bundle.LIVE_PART,
+            ]
+        ),
+        ("total", list(sizes.values())),
     ]
     yield f"{'':<22} {'files':>6} {'bytes':>11} {'gzip':>11} {'max gzip':>11}"
-    for prefix, label, within in rows:
-        group = [s for p, s in within if p.startswith(prefix)]
+    for label, group in rows:
         if not group:
             continue
         yield (
@@ -915,19 +1188,22 @@ def mounts(dist: Path) -> list[tuple[str, Path]]:
 
     As ``serve`` serves them, and as the app built without ``--deployed``
     finds them (:func:`local_locations`): each bundle at ``/map/<slug>/`` or
-    ``/data/<slug>/``, the results at ``/results/``, the app at the root and
+    ``/data/<slug>/``, each base map at ``/base/<extract>/``, the final
+    results at ``/results/``, the live results at ``/live/``, the app at the
+    root and
     the sources there too, below it (its ``cache/`` and
     ``assets/cache.css`` are no paths of the app's). Parts not built,
     without their ``_headers``, are left out.
     """
     candidates = [
         (f"/{part}/{d.name}/", d)
-        for part in (bundle.MAP_PART, bundle.DATA_PART)
+        for part in (bundle.MAP_PART, bundle.DATA_PART, bundle.BASE_PART)
         if (dist / part).is_dir()
         for d in sorted((dist / part).iterdir())
     ]
     candidates += [
         (f"/{bundle.RESULTS_PART}/", dist / bundle.RESULTS_PART),
+        (f"/{bundle.LIVE_PART}/", dist / bundle.LIVE_PART),
         ("/", dist / APP_PART),
         ("/", dist / bundle.SOURCES_PART),
     ]

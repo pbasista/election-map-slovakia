@@ -1,0 +1,42 @@
+# Okrsky of Hranovnica, transcribed by an AI agent in job okrsok-rules-727 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Vo volebnom okrsku č. 1 budú voliť občania bývajúci na ulicach: SNP, Sládkovičova, Štúrova, Rovná, Školská, Lúčna.
+#   okrsok 2: Vo volebnom okrsku č. 2 budú voliť občania bývajúci na uliciach: Budovateľská, Družstevná, Dubina, Hranovnické Pleso, Hviezdoslavova, M. R. Štefánika, Mlynská, Víťazstva, Slnečná, Topoľová, Lipová, a občania nahlásení na obec Hranovnica – bezdomovci.
+obec = "523518"
+name = "Hranovnica"
+okrsky_fill = "nearest"
+okrsky_note = "Source is the municipality's official article for the 2018 municipal elections (archived), which states 'V obci Hranovnica sú vytvorené dva volebné okrsky' with their streets. The addresses without a street and Pod Babkou (not named) take the okrsok of the nearest placed address (fill_nearest). The homeless voters registered on the obec vote in okrsok 2, which also has addresses."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2018-10-31
+okrsky_date_basis = "The municipality's article on its website, dated 31 October 2018 and naming the elections of 10 November 2018, lists the two okrsky and their streets; the mayor's own okrsky document of 2018 was not found (the 2018 elections page was archived only on 2018-07-25, before it was posted). (https://web.archive.org/web/20200926121216/https://hranovnica.sk/2018/10/31/komunalne-volby-2018-uzitocne-informacie-pre-volica/)"
+
+[[document]]
+url = "https://web.archive.org/web/20200926121216/https://hranovnica.sk/2018/10/31/komunalne-volby-2018-uzitocne-informacie-pre-volica/"
+sha256 = "17bf99f017c47236d607848a255e2c2479cad630e6d6c8fa79a9fbe6a9dd76e6"
+title = "Komunálne voľby 2018: Užitočné informácie pre voliča (obec Hranovnica, 31. októbra 2018)"
+
+[okrsok.1]
+rules = [
+  {street = "SNP"},
+  {street = "Sládkovičova"},
+  {street = "Štúrova"},
+  {street = "Rovná"},
+  {street = "Školská"},
+  {street = "Lúčna"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Družstevná"},
+  {street = "Dubina"},
+  {street = "Hranovnické Pleso"},
+  {street = "Hviezdoslavova"},
+  {street = "M. R. Štefánika"},
+  {street = "Mlynská"},
+  {street = "Víťazstva"},
+  {street = "Slnečná"},
+  {street = "Topoľová"},
+  {street = "Lipová"},
+]

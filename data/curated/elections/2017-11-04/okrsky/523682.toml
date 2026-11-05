@@ -1,0 +1,61 @@
+# Okrsky of Ľubica, transcribed by an AI agent in job okrsok-rules-159 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bernolákova, Gen. Svobodu, Jesenského, Povstalecká, Úzka, voliči s trvalým pobytom Obec Ľubica
+#   okrsok 2: Pod lesom, Poľná, Športová, Vrbovská
+#   okrsok 3: 8. mája, Hlboká, Jarná, Kruhová, Mierová, Na vŕšku, Remeselnícka
+#   okrsok 4: Budovateľská, Jánošíkova, Podtatranská, Slnečná, Svätej Alžbety, Školská
+obec = "523682"
+name = "Ľubica"
+okrsky_date = 2017-08-28
+okrsky_fill = "nearest"
+okrsky_note = "\"voliči s trvalým pobytom Obec Ľubica\" (okrsok 1) are voters registered without an address, not the register's houses without a street; those (súpisné only, incl. Ľubické Kúpele) go to the nearest placed address (fill_nearest). The same decision is also uploaded as download_file_f.php?id=889981."
+okrsky_supplemented = 2022-10-29
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The document does not name Karola Kuzmányho (okrsok 4), Hraničná ulica (3 addresses, okrsok 1) and Chrenová ulica (1 address, okrsok 3), which are in the address register; placed as the rule set of the municipal elections of 29 October 2022 (the municipality's next document naming them) has them. Every other rule is the document's own."
+
+[[document]]
+url = "https://www.obeclubica.sk/download_file_f.php?id=866993"
+sha256 = "0a811116b91819d181354d4a4454df39bec5e83fb64c03c126a5ea88f10028eb"
+title = "Urcenie_volebne_okrsky_VUC_2017.pdf (utvorenie volebných okrskov pre voľby do orgánov samosprávnych krajov 2017)"
+
+[okrsok.1]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Gen. Svobodu"},
+  {street = "Jesenského"},
+  {street = "Povstalecká"},
+  {street = "Úzka"},
+  {street = "Hraničná ulica", supplemented = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Pod lesom"},
+  {street = "Poľná"},
+  {street = "Športová"},
+  {street = "Vrbovská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "8.mája", written = "8. mája"},
+  {street = "Hlboká"},
+  {street = "Jarná"},
+  {street = "Kruhová"},
+  {street = "Mierová"},
+  {street = "Na vŕšku"},
+  {street = "Remeselnícka"},
+  {street = "Chrenová ulica", supplemented = true},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Jánošíkova"},
+  {street = "Podtatranská"},
+  {street = "Slnečná"},
+  {street = "Svätej Alžbety"},
+  {street = "Školská"},
+  {street = "Karola Kuzmányho", supplemented = true},
+]

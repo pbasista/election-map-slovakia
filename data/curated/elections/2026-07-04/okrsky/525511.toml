@@ -1,0 +1,25 @@
+# Okrsky of Župčany, transcribed by an AI agent in job okrsok-rules-5675 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 od súp. čísla 0 - do súp. č. 315
+#   okrsok 2: Volebný okrsok č. 2 od súp. č. 316 do neurčito
+obec = "525511"
+name = "Župčany"
+okrsky_note = "The obec has one part and no streets; the document splits it by súpisné číslo, written as part rules with súpisné number ranges."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's subject names the Referendum 2026; it bears no date."
+
+[[document]]
+url = "https://zupcany.sk/wp-content/uploads/dokumenty/referendum/volebne-okrsky-oznamenie-765dtq.pdf"
+sha256 = "c3f9bcee9fbc76dcbc8e47288d2c2c38779ba421c037450072ce069cc52cfbaf"
+title = "Utvorenie volebných okrskov a určenie volebných miestnosti pre Referendum 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Župčany", numbers = "1-315"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Župčany", numbers = "316-"},
+]

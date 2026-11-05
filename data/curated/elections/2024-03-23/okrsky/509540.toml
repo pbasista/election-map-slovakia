@@ -1,0 +1,193 @@
+# Okrsky of Dolný Kubín, transcribed by an AI agent in job okrsok-rules-4034 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kocmál, Kubínska, Mokraďská, Nábrežie Oravy (súp.č. 3441, 499, 533, 610, 613, 626), Priemyselná
+#   okrsok 2: 9. mája, 28. októbra, Vodárenská, Pod Dúbravou, Nábrežie Oravy (súp.č. 220 - 252, 3396, 3433), J. A. Komenského, Na Záhumní, Jelšavská, Kalinova, Kpt. Jaroša, Kňažská, Mládežnícka, Pod Čereňou, Podzámocká, 1. mája, Kpt. Nálepku
+#   okrsok 3: Andreja Halašu, 29. augusta, Jilemnického, Pltisko, Rybárska, Severná, Timravina, Záskalická, Na lánoch, Hôrky
+#   okrsok 4: M. R. Štefánika, Československej armády, Staničná, Železničiarov, Bernolákova, Aleja Slobody, J. Ťatliaka, A. Sládkoviča, Obrancov mieru, Radlinského
+#   okrsok 5: Samuela Nováka, Gäceľská cesta, Hviezdoslavovo námestie, Kohútov Sad, Jána Hollého, Matúškova, Jánoškova, voliči bez adresy trvalého pobytu
+#   okrsok 6: Medzihradská, E. Hroboňovej, Martina Hamuljaka, Šmidkeho, Jána Bottu, Mila Urbana, Na Kopanici, Partizánska cesta (Srňacie)
+#   okrsok 7: Chočská, Slnečná
+#   okrsok 8: Nemocničná, Námestie Jána Vojtaššáka Nemocnica s poliklinikou
+#   okrsok 9: Ľudovíta Štúra, Dukelských hrdinov, Na Ožnici
+#   okrsok 10: Martina Hattalu, M. M. Hodžu Zariadenie pre seniorov a domov sociálnych služieb Dolný Kubín
+#   okrsok 11: Odbojárov, Mierová, Tulská, J. Gagarina, Družby, M. Gaceka
+#   okrsok 12: Na Sihoti
+#   okrsok 13: Bysterecká, Lucenkova, Nad brehmi
+#   okrsok 14: Hurbanova, SNP, Námestie Slobody
+#   okrsok 15: Športovcov, Pelhřimovská
+#   okrsok 16: Okružná
+#   okrsok 17: Zochova, Bohúňova, MDD, MDŽ, Generála Svobodu, Fučíkova, Miloša Uhra, Lopušná, Veterná
+#   okrsok 18: Beňovolehotská
+obec = "509540"
+name = "Dolný Kubín"
+okrsky_date = 2024-01-24
+okrsky_fill = "nearest"
+okrsky_note = "Text is the document's list of streets per okrsok. \"Voliči/občania bez adresy trvalého pobytu\" (okrsok 5) and institutions named beside the streets (Nemocnica s poliklinikou, Zariadenie pre seniorov, Centrum sociálnych služieb) are not rules. Nábrežie Oravy is split by the súpisné čísla the document gives; its other houses go by fill_nearest. Podzámocká is not in the register; left out. Register streets the document does not list, placed by fill_nearest: P. Jilemnického; also the addresses without a street."
+
+[[document]]
+url = "https://www.dolnykubin.sk/download_file_f.php?id=1987216"
+sha256 = "b7406b7307a8ed2d3a5659a238b8daaf9ee85fc593a0bee83bed5b96f6598696"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v Meste Dolný Kubín pre voľby prezidenta Slovenskej republiky 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Kocmál"},
+  {street = "Kubínska"},
+  {street = "Mokraďská"},
+  {street = "Nábrežie Oravy", numbers = "3441, 499, 533, 610, 613, 626", by = "supisne"},
+  {street = "Priemyselná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "9.mája"},
+  {street = "28.októbra"},
+  {street = "Vodárenská"},
+  {street = "Pod Dúbravou"},
+  {street = "Nábrežie Oravy", numbers = "220-252, 3396, 3433", by = "supisne"},
+  {street = "J. A. Komenského"},
+  {street = "Na Záhumní"},
+  {street = "Jelšavská"},
+  {street = "Kalinova"},
+  {street = "Kpt. Jaroša"},
+  {street = "Kňažská"},
+  {street = "Mládežnícka"},
+  {street = "Pod Čereňou"},
+  {street = "1.mája"},
+  {street = "Kpt.Nálepku"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Andreja Halašu"},
+  {street = "29.augusta"},
+  {street = "Jilemnického"},
+  {street = "Pltisko"},
+  {street = "Rybárska"},
+  {street = "Severná"},
+  {street = "Timravina"},
+  {street = "Záskalická"},
+  {street = "Na Lánoch"},
+  {street = "Hôrky"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "M. R. Štefánika"},
+  {street = "Československej armády"},
+  {street = "Staničná"},
+  {street = "Železničiarov"},
+  {street = "Bernolákova"},
+  {street = "Aleja Slobody"},
+  {street = "J. Ťatliaka"},
+  {street = "A. Sládkoviča"},
+  {street = "Obrancov mieru"},
+  {street = "Radlinského"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Samuela Nováka"},
+  {street = "Gäceľská cesta"},
+  {street = "Hviezdoslavovo Námestie"},
+  {street = "Kohútov Sad"},
+  {street = "Jána Hollého"},
+  {street = "Matúškova"},
+  {street = "Jánoškova"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Medzihradská"},
+  {street = "E. Hroboňovej"},
+  {street = "Martina Hamuljaka"},
+  {street = "Šmidkeho"},
+  {street = "Jána Bottu"},
+  {street = "Mila Urbana"},
+  {street = "Na Kopanici"},
+  {street = "Partizánska cesta"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Chočská"},
+  {street = "Slnečná"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Nemocničná"},
+  {street = "Námestie Jána Vojtaššáka"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Ľudovíta Štúra"},
+  {street = "Dukelských hrdinov"},
+  {street = "Na Ožnici"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Martina Hattalu"},
+  {street = "M. M. Hodžu"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Odbojárov"},
+  {street = "Mierová"},
+  {street = "Tulská"},
+  {street = "J. Gagarina"},
+  {street = "Družby"},
+  {street = "M. Gaceka"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Na Sihoti"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Bysterecká"},
+  {street = "Lucenkova"},
+  {street = "Nad brehmi"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Hurbanova"},
+  {street = "SNP"},
+  {street = "Námestie Slobody"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Športovcov"},
+  {street = "Pelhřimovská"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Okružná"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Zochova"},
+  {street = "Bohúňova"},
+  {street = "MDD"},
+  {street = "MDŽ"},
+  {street = "Generála Svobodu"},
+  {street = "Fučíkova"},
+  {street = "Miloša Uhra"},
+  {street = "Lopušná"},
+  {street = "Veterná"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Beňovolehotská"},
+]

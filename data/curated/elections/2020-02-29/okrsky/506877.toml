@@ -1,0 +1,74 @@
+# Okrsky of Cífer, transcribed by an AI agent in job okrsok-rules-2326 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Potočná, Ulica Márie Hollósyovej, Ulica Šarloty Zičiovej, Ľudovíta Pavetitša, Nám. A. Hlinku, Marka Čulena, SNP, Kaplnská, Štadionová, Mlynská, Hájska, Ľudovíta Štúra, Bernolákova, Cintorínska, Vendelínska, M.R.Štefánika, Hviezdoslavova, Nová, Sokolská, Trnavská
+#   okrsok 2: Ulice: Záhradná, Družstevná, Východná, Budovateľská, Hlboká, Severná, Štefana Moyzesa, M.Sch.Trnavského, Palárikova, Andreja Sládkoviča, Juraja Fándlyho, Jozefa Kubányiho, Veterná, Slnečná, Lúčna, Poľná, Stromová, Lipová, Alejová
+#   okrsok 3: Miestna časť: Pác
+#   okrsok 4: Miestna časť: Jarná
+obec = "506877"
+name = "Cífer"
+okrsky_date = 2019-11-11
+okrsky_fill = "nearest"
+okrsky_note = "Addresses without a street (súpisné čísla) take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.cifer.sk/e_download.php?file=data/editor/161sk_9.pdf&original=Ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20miestnost%C3%AD_C%C3%ADfer_Vo%C4%BEby%20NR%20SR%202020.pdf"
+sha256 = "de4da591ba60c9e6d99389fa7f1af204d13e4623e185eac03bc47966dc67bf26"
+title = "Rozhodnutie starostu Obce Cífer zo dňa 11. novembra 2019 o utvorení volebných okrskov a určenie volebných miestností vo volebných okrskoch"
+
+[okrsok.1]
+rules = [
+  {street = "Potočná"},
+  {street = "Márie Hollósyovej", written = "Ulica Márie Hollósyovej"},
+  {street = "Šarloty Zičiovej", written = "Ulica Šarloty Zičiovej"},
+  {street = "Ľudovíta Pavetitša"},
+  {street = "Nám. Andreja Hlinku"},
+  {street = "Marka Čulena"},
+  {street = "SNP"},
+  {street = "Kaplnská"},
+  {street = "Štadiónová"},
+  {street = "Mlynská"},
+  {street = "Hájska"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Bernolákova"},
+  {street = "Cintorínska"},
+  {street = "Vendelínska"},
+  {street = "M.R.Štefánika"},
+  {street = "Hviezdoslavova"},
+  {street = "Nová"},
+  {street = "Sokolská"},
+  {street = "Trnavská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Záhradná"},
+  {street = "Družstevná"},
+  {street = "Východná"},
+  {street = "Budovateľská"},
+  {street = "Hlboká"},
+  {street = "Severná"},
+  {street = "Štefana Moyzesa"},
+  {street = "M. Schneidra-Trnavského"},
+  {street = "Palárikova"},
+  {street = "Andreja Sládkoviča"},
+  {street = "Juraja Fándlyho"},
+  {street = "Jozefa Kubányiho"},
+  {street = "Veterná"},
+  {street = "Slnečná"},
+  {street = "Lúčna"},
+  {street = "Poľná"},
+  {street = "Stromová"},
+  {street = "Lipová"},
+  {street = "Alejová"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Pác"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Jarná"},
+]

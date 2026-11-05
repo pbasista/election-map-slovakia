@@ -1,0 +1,67 @@
+# Okrsky of Marianka, transcribed by an AI agent in job okrsok-rules-5507 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: obec Marianka, Agátová, Borinská, Budovateľská, Bystrická, Čerešňová, Javorová, Jelšová, Kamenná, Krátka, Lesná, Lipová, Lúčna, Stromová, Stupavská, Štúrova, Topoľová, Višňová, Vŕbová, Záhradná
+#   okrsok 2: Družstevná, Karpatská, Na Kracinách, Na Ovsisku, Na Tálkoch, Na Vinohradoch, Nad Bednárovým, Námestie 4.apríla, Partizánska, Pod Mlynom, Podhájska, Poľná, Potočná, Púpavová, Sedmokrásková, Slnečná, Školská, Športová, Veterná
+obec = "508080"
+name = "Marianka"
+okrsky_fill = "nearest"
+okrsky_note = "Okrsok 1 also lists 'obec Marianka' (voters registered without an address / houses without a street); the 37 register addresses without a street (súpisné only) are placed by fill_nearest. No decision date in the document."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names the referendum of 4 July 2026; it is undated."
+
+[[document]]
+url = "https://www.marianka.sk/e_download.php?file=/data/editor/127sk_4.pdf&original=Referendum%20-%20okrsky.pdf"
+sha256 = "4cebffd6282506d2668f478935e34fd22e10538fcc250a507e51fc5db81f35e0"
+title = "Referendum 4.7.2026 – okrsky"
+
+[[document]]
+url = "https://www.marianka.sk/sk/zverejnovanie/referendum-04072026/"
+sha256 = "3ba5206b4f31009247e96e710ec7ecf8f0730cdef3d9da178d9d132bb8bc319c"
+title = "Referendum 04.07.2026"
+
+[okrsok.1]
+rules = [
+  {street = "Agátová"},
+  {street = "Borinská"},
+  {street = "Budovateľská"},
+  {street = "Bystrická"},
+  {street = "Čerešňová"},
+  {street = "Javorová"},
+  {street = "Jelšová"},
+  {street = "Kamenná"},
+  {street = "Krátka"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+  {street = "Lúčna"},
+  {street = "Stromová"},
+  {street = "Stupavská"},
+  {street = "Štúrova"},
+  {street = "Topoľová"},
+  {street = "Višňová"},
+  {street = "Vŕbová"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Karpatská"},
+  {street = "Na Kracinách"},
+  {street = "Na Ovsisku"},
+  {street = "Na Tálkoch"},
+  {street = "Na Vinohradoch"},
+  {street = "Nad Bednárovým"},
+  {street = "Námestie 4.apríla"},
+  {street = "Partizánska"},
+  {street = "Pod Mlynom"},
+  {street = "Podhájska"},
+  {street = "Poľná"},
+  {street = "Potočná"},
+  {street = "Púpavová"},
+  {street = "Sedmokrásková"},
+  {street = "Slnečná"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Veterná"},
+]

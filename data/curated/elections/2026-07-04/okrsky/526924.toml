@@ -1,0 +1,31 @@
+# Okrsky of Nová Ľubovňa, transcribed by an AI agent in job okrsok-rules-5629 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1: 1-280 + voliči – TP bez súpisného čísla
+#   okrsok 2: Okrsok č. 2: 281 – 530
+#   okrsok 3: Okrsok č. 3: 531 – 1014
+obec = "526924"
+name = "Nová Ľubovňa"
+okrsky_date = 2026-04-23
+okrsky_fill = "nearest"
+okrsky_note = "The document assigns voters by súpisné (house) number ranges. Voters without a súpisné číslo (okrsok 1) and foreign voters are not register addresses. Súpisné numbers outside the listed ranges, if any, take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.novalubovna.sk/resources/File/utvorenie-okrskov-a-urcenie-volebnych-miestnosti-referendum-2026-na-zverejnenie.pdf"
+sha256 = "af9eec8f439999b14b0ce8b8aa631f9dc9ababab426c2c91e5365fa27004abc2"
+title = "Referendum 04.07.2026 – utvorenie okrskov a určenie volebných miestností (23.04.2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Nová Ľubovňa", numbers = "1-280"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Nová Ľubovňa", numbers = "281-530"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Nová Ľubovňa", numbers = "531-1014"},
+]

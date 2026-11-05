@@ -1,0 +1,39 @@
+# The okrsky of Belá nad Cirochou of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/520039.toml, reused by `ems job reuse`.
+obec = "520039"
+name = "Belá nad Cirochou"
+okrsky_date = 2026-07-20
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2018-11-10 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2018 (each okrsok's voters on the roll within 10%). fill_nearest places the 54 addresses without street and Vihorlatská houses whose súpisné číslo lies outside the listed ranges (the document places 'new family houses' by the section they lie in)."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.belanadcirochou.sk/files/2026-07-27-103823-Ozn__menie_o_utvoren___volebn__ch_okrskov_a_ur__enie_volebn__ch_miestnost__.pdf"
+sha256 = "57069df8efba16b9eca25f1fc149443892a0a6377cb9c5146b5069cc08f6b3b2"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby 24.10.2026"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Riečna"},
+  {street = "Komenského"},
+  {street = "Štúrova"},
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Švermova"},
+  {street = "Vihorlatská", numbers = "167-204, 251-318, 445-471", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mlynská"},
+  {street = "Osloboditeľov"},
+  {street = "Kukučínova"},
+  {street = "Budovateľská"},
+  {street = "Brusná"},
+  {street = "Tajch"},
+  {street = "Sládkovičova"},
+  {street = "Staničná"},
+  {street = "Drieňová"},
+  {street = "Hviezdoslavova"},
+  {street = "Vihorlatská", numbers = "472-515", by = "supisne"},
+]

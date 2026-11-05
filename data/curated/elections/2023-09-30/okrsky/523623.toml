@@ -1,0 +1,72 @@
+# Okrsky of Lendak, transcribed by an AI agent in job okrsok-rules-3609 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kostolná, Na Kosorku, Partizánska, Revolučná, Jána Pavla II., Potočná, Riečna, Biela, Krátka, Lesná, Občania prihlásení na Obec Lendak
+#   okrsok 2: Hlavná, Zadná, Poľná, Sv. Rodiny, Školská, Farské lúky, Záhradná, Jána Stilla
+#   okrsok 3: Jarná, Letná, Slnečná, Nová, Mlynská
+#   okrsok 4: Jána Vojtaššáka, Lemeje, Na úbočí, Pod Kicorou, Rovinky, Sv. Mikuláša, Športová, Vysoká Hora, Jána Krstiteľa, Tatranská, Zadná Hora
+obec = "523623"
+name = "Lendak"
+okrsky_fill = "nearest"
+okrsky_note = "The document lists the four okrsky in order without numbers; they are numbered 1–4 as listed. Riečna and Jána Krstiteľa are not in the address register of this vote and are left out. 'Občania prihlásení na Obec Lendak' (okrsok 1) are residents without an address and get no rule. Goralská, not listed, and the addresses without a street take the nearest okrsok (fill_nearest)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-07-03
+okrsky_date_basis = "The notice board page states the document was posted (vyvesené) on 3. 7. 2023; the DOCX names the elections of 30.9.2023 but states no decision date. (https://www.lendak.sk/zverejnovanie/volby/volebne-okrsky-obce-lendak-808.html)"
+
+[[document]]
+url = "https://www.lendak.sk/zverejnovanie/volby/volebne-okrsky-obce-lendak-808.html"
+sha256 = "2f698d30b0f4ad5765351e155f7fdc4d83b98e2df52789aa93d8c8e85685d906"
+title = "Volebné okrsky Obce Lendak (Voľby do NR SR 2023), vyvesené 3. 7. 2023"
+
+[[document]]
+url = "https://www.lendak.sk/e_download.php?file=data/uredni_deska/obsah781_3.docx&original=Vo%C4%BEby%20do%20N%C3%A1rodnej%20Slovenskej%20republiky.docx"
+sha256 = "93c0532ada276930060f30853ba32405caf619892319878e31a4ed6ec1acceb7"
+title = "Voľby do Národnej Slovenskej republiky 30.9.2023 – Volebné okrsky v Obci Lendak (DOCX)"
+
+[okrsok.1]
+rules = [
+  {street = "Kostolná"},
+  {street = "Na Kosorku"},
+  {street = "Partizánska"},
+  {street = "Revolučná"},
+  {street = "Jána Pavla II."},
+  {street = "Potočná"},
+  {street = "Biela"},
+  {street = "Krátka"},
+  {street = "Lesná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná"},
+  {street = "Zadná"},
+  {street = "Poľná"},
+  {street = "Sv. Rodiny"},
+  {street = "Školská"},
+  {street = "Farské lúky"},
+  {street = "Záhradná"},
+  {street = "Jána Stilla"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Jarná"},
+  {street = "Letná"},
+  {street = "Slnečná"},
+  {street = "Nová"},
+  {street = "Mlynská"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Jána Vojtaššáka"},
+  {street = "Lemeje"},
+  {street = "Na úbočí"},
+  {street = "Pod Kicorou"},
+  {street = "Rovinky"},
+  {street = "Sv. Mikuláša"},
+  {street = "Športová"},
+  {street = "Vysoká hora", written = "Vysoká Hora"},
+  {street = "Tatranská"},
+  {street = "Zadná hora", written = "Zadná Hora"},
+]

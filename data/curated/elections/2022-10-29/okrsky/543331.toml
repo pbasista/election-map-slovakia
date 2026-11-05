@@ -1,0 +1,55 @@
+# The okrsky of Markušovce of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/543331.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Markušovce, transcribed by an AI agent in job okrsok-rules-3833 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Jareček
+#     okrsok 2: Banícka, Brezová, Krátka, Matejovská cesta, Pod horou, Pod Stožkami, Poľná, Slovenská, Sv. J. Nepomuckého - or. č. 50 — 125, Za tehelňou, Železničná, rodinný dom súp. č. 668
+#     okrsok 3: Brunské, Bystrá, Hornádska, Komenského, Michalská, Odorínska cesta, Podhradová, SNP, Sv. J. Nepomuckého - or.č. 1 — 49, Školská; voliči s trvalým pobytom Markušovce (bez ulice, súpisného a orientačného čísla)
+obec = "543331"
+name = "Markušovce"
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's undated decision for this vote. Voters registered without an address are in okrsok 3 (no rule). Houses without a street other than súp. č. 668, and Sv. J. Nepomuckého numbers above 125, take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2022-10-29 setting the okrsky was found (okrsok-rules-963): The 2022 notice (vyvesené 10. 8. 2022) links \"Určenie volebných okrskov a volebných miestností.pdf\" (obsah1910_4.pdf), which the Internet Archive did not capture and the new website no longer has. The referendum's document (9.11.2022) forms a single okrsok, so it cannot stand in for the 3 okrsky. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2022-10-29 → 2023-09-30: 1: 1,234 → 1,264, 2: 811 → 803, 3: 931 → 918."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names the vote ('voľby do Národnej rady SR v roku 2023', '30. septembra 2023'); it states no date of its own."
+
+[[document]]
+url = "https://www.markusovce.sk/data/page/markusovce.sk/21318/vol-okrsky-a-vol-miestnosti.pdf"
+sha256 = "3271e2308998e597db60595b8a55421ae498ed9cfaf22691c7ddabbe18dcf4d3"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Národnej rady SR v roku 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Jareček"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Banícka"},
+  {street = "Brezová"},
+  {street = "Krátka"},
+  {street = "Matejovská cesta"},
+  {street = "Pod Horou", written = "Pod horou"},
+  {street = "Pod Stožkami"},
+  {street = "Poľná"},
+  {street = "Slovenská"},
+  {street = "Sv.J.Nepomuckého", numbers = "50-125", written = "Sv. J. Nepomuckého"},
+  {street = "Za Tehelňou", written = "Za tehelňou"},
+  {street = "Železničná"},
+  {part = "Markušovce", numbers = "668", note = "'rodinný dom súp. č. 668', a house without a street."},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Brunské"},
+  {street = "Bystrá"},
+  {street = "Hornádska"},
+  {street = "Komenského"},
+  {street = "Michalská"},
+  {street = "Odorínska cesta"},
+  {street = "Podhradová"},
+  {street = "SNP"},
+  {street = "Sv.J.Nepomuckého", numbers = "1-49", written = "Sv. J. Nepomuckého"},
+  {street = "Školská"},
+]

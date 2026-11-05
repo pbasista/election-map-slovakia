@@ -1,0 +1,52 @@
+# The okrsky of Dolný Štál of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/501611.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Dolný Štál, transcribed by an AI agent in job okrsok-rules-4852 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Ulice: Gárdonyská ulica Hasičská ulica Hlavná ulica Kengyelská ulica Lesná ulica Lycejná ulica Mostová ulica Pri škôlke Smotanová ulica Stará ulica Záhradnícka ulica
+#     okrsok 2: Ulice: Ul.Mateja Korvína Hornoštálska ulica K vinohradom Komárňanská ulica Krátka ulica Ku kamennému stľpu Marhuľová ulica Orechová ulica Pri jazere Slnečná ulica Tichá ulica Topoľnianska ulica Tôňska ulica Vŕbová ulica Zelená ulica
+obec = "501611"
+name = "Dolný Štál"
+okrsky_date = 2024-03-07
+okrsky_fill = "nearest"
+okrsky_note = "The document lists the streets of each okrsok; it leaves out Cintorínska and Okočská cesta and the register's 466 houses without a street name, which are placed by the nearest address (fill_nearest)."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-297): The 2026 notice (dolnystal.eu, 2026-07-21) gives the two okrsky only their polling stations (Spoločenský dom Domokosa Bodu, Pri škôlke 85/1; Obecný úrad, Mateja Korvína 676/2), both in the single part Dolný Štál, so no part can be inferred. A street list exists only for the 2024 EP elections; no 2026 or referendum-2026 document lists streets or says the okrsky are unchanged. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2024-06-08: 1: 887 → 864, 2: 789 → 779."
+
+[[document]]
+url = "https://dolnystal.eu/wp-content/uploads/2024/02/Volebne-okrsky.pdf"
+sha256 = "63ae7c1300210730ed70db25996beb2fa9f79f9fca6654399accf3bcb8fc9ace"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre Voľby do Európskeho parlamentu 8. júna 2024 (V Dolnom Štále, dňa 07.03.2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Gárdonyská"},
+  {street = "Hasičská"},
+  {street = "Hlavná"},
+  {street = "Kengyelská"},
+  {street = "Lesná"},
+  {street = "Lycejná"},
+  {street = "Mostová"},
+  {street = "Pri škôlke"},
+  {street = "Smotanová"},
+  {street = "Stará"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mateja Korvína", written = "Ul.Mateja Korvína"},
+  {street = "Hornoštálska cesta", written = "Hornoštálska ulica", note = "The document writes 'Hornoštálska ulica'; the register's only street of that name is 'Hornoštálska cesta' (the road to that place), the same street."},
+  {street = "K vinohradom"},
+  {street = "Komárňanská cesta", written = "Komárňanská ulica", note = "The document writes 'Komárňanská ulica'; the register's only street of that name is 'Komárňanská cesta' (the road to that place), the same street."},
+  {street = "Krátka"},
+  {street = "Ku kamennému stľpu"},
+  {street = "Marhuľová"},
+  {street = "Orechová"},
+  {street = "Pri jazere"},
+  {street = "Slnečná"},
+  {street = "Tichá"},
+  {street = "Topoľnianska cesta", written = "Topoľnianska ulica", note = "The document writes 'Topoľnianska ulica'; the register's only street of that name is 'Topoľnianska cesta' (the road to that place), the same street."},
+  {street = "Tôňska cesta", written = "Tôňska ulica", note = "The document writes 'Tôňska ulica'; the register's only street of that name is 'Tôňska cesta' (the road to that place), the same street."},
+  {street = "Vŕbová"},
+  {street = "Zelená"},
+]

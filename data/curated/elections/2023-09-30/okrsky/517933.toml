@@ -1,0 +1,67 @@
+# Okrsky of Rajecké Teplice, transcribed by an AI agent in job okrsok-rules-3592 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 30. apríla, Farská, Karola Kašjaka, Kvetná, Kuneradská cesta, Kúpeľný park, Lesná, Ľudovíta Štúra, Námestie SNP, Pionierska, Pri Bystričke, Rudolfa Súľovského, Slnečná, Školská, Veterná, Rajecká cesta- rodinné domy so súpisným číslom: 1,2,4,5,7,14,132, 156,170,179,192,281,334,338,396, 397.
+#   okrsok 2: 1.mája, Dielnice, Dolná, Jozefa Gabčíka, Lúčky, Lúčna, M.R.Štefánika, Horná, Osloboditeľov, Partizánska cesta, Poľná cesta, Riečna, Stredná, Za Dielom, Zábrežná, Záhradnícka cesta, Zátočná, Žliabková dolina, Rajecká cesta - rodinné domy so súpisným číslom:231,232,245,246, 247,248,249,250,251,252,253,254, 255,656, K Lipovej aleji, Jozefa Pekaru, Jozefa Cincíka.
+#   okrsok 3: mestská časť Poluvsie
+obec = "517933"
+name = "Rajecké Teplice"
+okrsky_fill = "nearest"
+okrsky_note = "'Dielnice' and 'Žliabková dolina' are not in the address register and are left out. Rajecká cesta is split by súpisné čísla; its addresses not listed, Pri Rajčanke (not named by the document) and the addresses without a street in part Rajecké Teplice take the nearest okrsok (fill_nearest)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-06-29
+okrsky_date_basis = "The town's page lists 'Oznámenie o určení voleb. okrskov.pdf' with 'Dátum zverejnenia' 2023-06-29; the document itself is undated. (https://www.rajecke-teplice.info/pages/volby-v-roku-2023)"
+
+[[document]]
+url = "https://www.rajecke-teplice.info/pages/attachments/KPkDQMwTVzU4FvXQYBRJLQ.pdf"
+sha256 = "8ff958a136235512008b125087232b6f9ff8457414afca9778a486ace26d62bd"
+title = "Oznámenie o určení volebných okrskov a volebných miestností pre hlasovanie vo voľbách do NR SR 30. septembra 2023"
+
+[okrsok.1]
+rules = [
+  {street = "30.apríla", written = "30. apríla"},
+  {street = "Farská"},
+  {street = "Karola Kašjaka"},
+  {street = "Kvetná"},
+  {street = "Kuneradská cesta"},
+  {street = "Kúpeľný Park", written = "Kúpeľný park"},
+  {street = "Lesná"},
+  {street = "Ľ.Štúra", written = "Ľudovíta Štúra"},
+  {street = "Námestie SNP"},
+  {street = "Pionierska"},
+  {street = "Pri Bystričke"},
+  {street = "Rudolfa Súľovského"},
+  {street = "Slnečná"},
+  {street = "Školská"},
+  {street = "Veterná"},
+  {street = "Rajecká cesta", numbers = "1, 2, 4, 5, 7, 14, 132, 156, 170, 179, 192, 281, 334, 338, 396, 397", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája"},
+  {street = "Dolná"},
+  {street = "Jozefa Gabčíka"},
+  {street = "Lúčky"},
+  {street = "Lúčna"},
+  {street = "M.R.Štefánika"},
+  {street = "Horná"},
+  {street = "Osloboditeľov"},
+  {street = "Partizánska cesta"},
+  {street = "Poľna cesta", written = "Poľná cesta", note = "Register spells it 'Poľna cesta'; same street."},
+  {street = "Riečna"},
+  {street = "Stredná"},
+  {street = "Za Dielom"},
+  {street = "Zábrežná"},
+  {street = "Zahradnícka cesta", written = "Záhradnícka cesta", note = "Spelling variant (á) of the register's 'Zahradnícka cesta'; same street."},
+  {street = "Zátočná"},
+  {street = "Rajecká cesta", numbers = "231, 232, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 656", by = "supisne"},
+  {street = "Ulica k lipovej aleji", written = "K Lipovej aleji"},
+  {street = "Ulica Jozefa Pekaru", written = "Jozefa Pekaru"},
+  {street = "Ulica Jozefa Cincíka", written = "Jozefa Cincíka"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Poluvsie"},
+]

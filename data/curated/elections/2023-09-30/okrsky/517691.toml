@@ -1,0 +1,37 @@
+# Okrsky of Kotešová, transcribed by an AI agent in job okrsok-rules-3722 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1 - 100
+#   okrsok 2: 101 - 369, 813, 975 - 1150
+#   okrsok 3: 370 – 812, 860 - 974
+obec = "517691"
+name = "Kotešová"
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky are given in the text of the elections page only by súpisné čísla (od – do): 1. 1 - 100 (Požiarna zbrojnica Kotešová, Oblazov 75), 2. 101 - 369, 813, 975 - 1150, 3. 370 – 812, 860 - 974. Súpisné čísla are unique in the obec: Oblazov has 2–100 (and 714–850), Kotešová 101–1150, Buková 624–810. The ranges are applied within the parts Kotešová and Buková. Kotešová's súpisné čísla 814–859 (no okrsok) take the nearest placed address. This vote's own document is used, not the referendum's (which has 2 okrsky). It differs from the copied rule set of 2022-10-29 (the document of 2026: okrsok 3 370–800, 866–974) in okrsok 3's ranges 370–812, 860–974."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The text on the elections page states that the obec formed 3 volebné okrsky 'pre voľby do Národnej rady Slovenskej republiky', on the page of the elections of 30 September 2023; it states no date."
+okrsky_supplemented = 2026-10-24
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The document gives okrsok 1 only as súpisné čísla 1–100, the houses of the part Oblazov with its polling station (Požiarna zbrojnica, Oblazov 75); Oblazov's later-numbered houses (súpisné 714–850, 52 addresses in Oblazov, 2.5 km east of Kotešová) fall within the document's range 370–812 of okrsok 3 (upper Kotešová) or, 836–850, in no range, plainly by oversight. The rule set of 2026-10-24 (its document names okrsok 1 'miestna časť Oblazov (1 – 100)') takes the part Oblazov whole; that rule is copied into okrsok 1."
+
+[[document]]
+url = "https://www.kotesova.info/pages/volby-do-narodnej-rady-slovenskej-republiky-2023"
+sha256 = "cf7ba3bd9c7bed4ad236a39b094dc3e44166c4d9f5e4bf2cfe740357ef970425"
+title = "Voľby do Národnej rady Slovenskej republiky 2023 – Utvorenie volebných okrskov, určenie volebných miestností a vymenovanie zapisovateliek okrskových volebných komisií"
+
+[okrsok.1]
+rules = [
+  {part = "Oblazov", numbers = "1-100"},
+  {part = "Oblazov", supplemented = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kotešová", numbers = "101-369, 813, 975-1150"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Kotešová", numbers = "370-812, 860-974"},
+  {part = "Buková", numbers = "370-812, 860-974"},
+]

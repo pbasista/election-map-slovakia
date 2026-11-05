@@ -4,15 +4,16 @@
 # text per obvod, verbatim:
 #   obvod 1: volebný obvod č. 1 (Veľký Meder) - počet poslancov: 12
 #   obvod 2: volebný obvod č. 2 (Ižop) - počet poslancov: 1
-# Okrsky added by `ems job reuse`: those of the elections of 2026-10-24, data/curated/elections/2026-10-24/obvody/oz/501522.toml, adopted by `ems job reuse`.
+# Okrsky added by `ems job reuse`: those of the vote of 2026-10-24, data/curated/elections/2026-10-24/obvody/oz/501522.toml, standing in.
 obec = "501522"
 name = "Veľký Meder"
 date = 2022-06-29
+note = "On the okrsky: no usable 2022 document places the addresses in okrsky. The 2022 announcement of the obvody (notice board 7.7.2022) puts okrsky 1–7 in obvod 1 (the part Veľký Meder) and okrsok 8 in obvod 2 (Ižop), but no 2022 document lists the streets of okrsky 1–7, and the January 2023 referendum's document gives only the 8 polling stations (okrsok-rules-1116). The okrsky standing in have the same numbers in the same obvody; their streets may have been split otherwise in 2022."
 okrsky_date = 2026-07-27
 okrsky_fill = "nearest"
 okrsky_note = "Mayor's decision of 27.7.2026. Cintorínska, Nagy Dür and Istvána Cseriho are not in the register and are left out. Addresses of obvod 1 without a street take the okrsok of the nearest address (fill_nearest)."
 okrsky_adopted = 2026-10-24
-okrsky_adopted_basis = "No usable 2022 document places the addresses in okrsky: the 2022 announcement of the obvody (notice board 7.7.2022) puts okrsky 1–7 in obvod 1 (the part Veľký Meder) and okrsok 8 in obvod 2 (Ižop), but no 2022 document lists the streets of okrsky 1–7, and the January 2023 referendum's document gives only the 8 polling stations (okrsok-rules-1116). The 2026 okrsky have the same numbers in the same obvody; their streets may have been split otherwise in 2022. Voters on the roll per okrsok (ŠÚ SR), 2022 → 2026: 1: 914 → 860, 2: 870 → 931, 3: 1,137 → 1,190, 4: 752 → 742, 5: 1,154 → 1,157, 6: 973 → 961, 7: 939 → 896, 8: 480 → 477."
+okrsky_adopted_basis = "No document of 2022-10-29 placing the addresses in okrsky is known. These are the okrsky of the vote of 2026-10-24 (2026), the nearest in time with okrsky of its own that fit: 8 okrsky, those ŠÚ SR counted in each council obvod (nearer, not taken: 2024-03-23: okrsky of the whole obec, the council then elected in several obvody; 2024-06-08: okrsky of the whole obec, the council then elected in several obvody). Voters on the roll per okrsok (ŠÚ SR), 2022-10-29 → 2026-10-24: 1: 914 → 860, 2: 870 → 930, 3: 1,137 → 1,190, 4: 752 → 742, 5: 1,154 → 1,158, 6: 973 → 961, 7: 939 → 896, 8: 480 → 477."
 
 [[document]]
 url = "https://www.velkymeder.sk/e_download.php?file=data/editor/257sk_674.pdf&original=2022msz6_uznesenia.pdf"

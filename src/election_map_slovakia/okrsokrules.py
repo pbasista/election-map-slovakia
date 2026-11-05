@@ -1,11 +1,11 @@
 """The ``okrsok-rules`` job kind: transcribe a municipality's okrsky.
 
-For each election the mayor of every obec sets its okrsky (volebné okrsky:
-the polling districts, each with its polling station and roll of voters) and
+For each vote the mayor of every obec sets its okrsky (volebné okrsky: the
+polling districts, each with its polling station and roll of voters) and
 publishes them: which streets, house numbers or parts of the obec vote in
-each, often grouped by council obvod, each okrsok lying within one. An item
-of a job is an obec with several okrsky (ŠÚ SR's territorial division, the
-election's ``units`` input) of one of two kinds:
+each, for municipal elections often grouped by council obvod, each okrsok
+lying within one. An item of a job is an obec with several okrsky (ŠÚ SR's
+territorial division, the election's ``units`` input) of one of two kinds:
 
 - an obec whose council obvody already have a rule set
   (:mod:`election_map_slovakia.obvodrules`): the item has its obvody with
@@ -14,8 +14,18 @@ election's ``units`` input) of one of two kinds:
   and, for the obvody with several, rules that share the obvod's addresses
   among them; or, where no document lists the okrsky's streets, only which
   okrsky make up each obvod.
-- an obec that elects its council in one obvod (no ``obvody`` in the item):
-  the agent writes rules that share all its addresses among the okrsky.
+- an obec without (no ``obvody`` in the item): the agent writes rules that
+  share all its addresses among the okrsky.
+
+A regular election has items of the first kind for its obce with several
+council obvody, of the second for those with one. Any other vote elects no
+council, or a by-election some of one: every obec voting in several okrsky
+is an item of the second kind, but a by-election's obec with a council
+contest and a rule set of its council (copied from a regular election by
+``ems job reuse``, or by hand), which is of the first. Its obce are those
+with a contest (:func:`held`), and those whose okrsky are only a copy of
+another election's (``okrsky_reused``, ``okrsky_adopted``) are items too:
+its own document replaces the copy.
 
 Either way the agent finds the okrsky document and writes the rules in the
 form of :mod:`election_map_slovakia.obvody`. ``check`` (run by ``ems job
@@ -26,14 +36,16 @@ ingest``) accepts an item only if
   Archive snapshots too), or linked from one of its documents that is, and
   can be fetched; they are kept, by sha256, for ``accept``; and they are
   dated as :func:`election_map_slovakia.obvodrules.date_problems` asks, or,
-  where the referendum after an earlier election stands in
-  (``referendum``, :data:`REFERENDA`), before that referendum, with a note;
+  where a referendum's document stands in (``referendum``,
+  :func:`referenda`), before that referendum or the vote, the later, with
+  a note;
 - it numbers the okrsky 1..N for the N okrsky of the territorial division,
   giving every obvod of the rule set its okrsky, each in one obvod, those
-  ŠÚ SR's results count in it where known (:func:`grouping_problems`);
+  ŠÚ SR's results count in it where known (:func:`grouping_problems`; a
+  by-election's results count only the obvody that voted);
 - its okrsok rules are well formed, name only streets, parts and k.ú. the
   obec has, place every address of each obvod with several okrsky (of the
-  obec, with one obvod) in exactly one of them, give each such okrsok
+  obec, without obvody) in exactly one of them, give each such okrsok
   addresses, and none selects addresses of another obvod only; and the
   okrsky can be drawn: they tile their obvod
   (:func:`election_map_slovakia.geo.okrsky_split`);
@@ -41,7 +53,8 @@ ingest``) accepts an item only if
   in ``note`` why.
 
 It notes, without rejecting, okrsky whose share of their obvod's addresses
-is far off their share of its voters (:func:`okrsok_plausibility`).
+is far off their share of its voters (:func:`okrsok_plausibility`; the
+voters of a vote without councils from :func:`okrsok_voters`).
 
 Each checked item gets a review sheet, ``review/<obec>.html``: the okrsky
 drawn within the obvody, every address point coloured by okrsok, the rules
@@ -49,10 +62,11 @@ and the document's text. ``accept`` copies the documents to
 ``data/curated/cache/<sha256>.<ext>`` and adds the okrsky to the rule set,
 ``obvody/oz/<obec>.toml`` in the data of the job's election
 (:meth:`election_map_slovakia.config.Config.election_dir`), or writes them to
-``okrsky/<obec>.toml`` there for an obec with one obvod; an obec reported
-not found goes to ``okrsky/not-found.json`` there with the URLs tried, losing
-any okrsky an earlier ingest gave it, and ``make`` leaves it out unless
-named with ``--only``.
+``okrsky/<obec>.toml`` there for an item without obvody, removing a copied
+rule set that only placed copied okrsky. An obec reported not found goes to
+``okrsky/not-found.json`` there with the URLs tried, losing any okrsky an
+earlier ingest gave it but keeping a copy (which records no search), and
+``make`` leaves it out unless named with ``--only``.
 """
 
 from __future__ import annotations
@@ -72,15 +86,17 @@ import numpy as np
 
 from election_map_slovakia import (
     addresses,
+    contests,
     geo,
     jobs,
     obvodrules,
     obvody,
     statoffice,
+    tables,
     xlsx,
 )
 from election_map_slovakia.candidates import search_key
-from election_map_slovakia.config import Config, Election
+from election_map_slovakia.config import BY_ELECTION, REGULAR, Config, Election
 
 NAME = "okrsok-rules"
 PRIORITY = "addresses"
@@ -95,11 +111,11 @@ _SEARCH_TITLES = (
     "utvorenie volebných okrskov a určenie volebných miestností",
     "zoznam volebných okrskov a volebných miestností",
 )
-REFERENDA = (dt.date(2023, 1, 21),)
-"""Nationwide referendums. The okrsky an obec set for one held within a
-year after an election may stand in for the election's own (``referendum``
-of an output item), where they stayed the same or the election's document
-is gone; the 2023 referendum came three months after the 2022 elections."""
+REFERENDUM = "referendum"
+"""The kind of a referendum (``elections.toml``)."""
+STAND_IN = dt.timedelta(days=366)
+"""How near a referendum is to a vote for its okrsky document to stand in for
+the vote's own (:func:`referenda`)."""
 
 _OKRSOK_SCHEMA: dict[str, Any] = {
     "type": "object",
@@ -195,10 +211,20 @@ ITEM_SCHEMA: dict[str, Any] = {
 def okrsok_counts(cfg: Config, election: Election) -> dict[str, int]:
     """Return obec → its number of okrsky in *election* (its ``units`` input)."""
     path = obvodrules.units_path(cfg, election)
-    if election.units.format == "susr":
+    units = obvodrules.units_of(election)
+    if units.format == "susr":
         try:
             return statoffice.okrsok_counts(obvodrules.units_package(path))
         except (statoffice.StatOfficeError, ValueError) as e:
+            raise jobs.JobError(f"{path}: {e}") from None
+    if units.format == "volbysr":
+        try:
+            package = tables.open_package([path], dt.UTC)
+            t = package.table(units.table or "")
+            code = t.column("Kód obce")
+            count = t.column("Počet volebných okrskov", "Počet okrskov")
+            return {r[code]: int(r[count]) for r in t.rows}
+        except (tables.TableError, ValueError) as e:
             raise jobs.JobError(f"{path}: {e}") from None
     try:
         header, rows = xlsx.find_header(xlsx.read_rows(path), "Kód kraja")
@@ -219,15 +245,69 @@ def load_not_found(cfg: Config, election: Election) -> dict[str, Any]:
     return json.loads(path.read_bytes()) if path.is_file() else {}
 
 
+def held(election: Election, data: Mapping[str, Any]) -> set[str] | None:
+    """Return the obce *election* is held in; None: everywhere.
+
+    A by-election's are those with a mayor or council contest in its
+    candidate data *data*: ŠÚ SR's territorial division of one lists the
+    obce where it was called off too.
+    """
+    if election.kind != BY_ELECTION:
+        return None
+    return {str(c["area"]) for c in data["contests"] if c["kind"] in ("starosta", "oz")}
+
+
+def okrsok_voters(cfg: Config, election: Election) -> dict[str, dict[int, int]]:
+    """Return obec → okrsok → voters on the roll, from *election*'s okrsok files.
+
+    Of the final results the ``results`` step of ``ems make`` built
+    (:mod:`election_map_slovakia.results`): of a country-wide election its
+    first whole contest (a presidential election's round 1, a referendum's
+    first question), of any other every contest, an okrsok having one roll
+    for all. Empty before the final results; a by-election's council
+    contest in some obvody of an obec has only their okrsky, and the
+    by-elections of 2018–2022 have no results per okrsok.
+    """
+    national = election.kind in contests.NATIONAL
+    out: dict[str, dict[int, int]] = {}
+    for path in sorted((cfg.results_dir(election) / "okrsky").rglob("*.json")):
+        by_contest = json.loads(path.read_bytes())["contests"]
+        chosen = sorted(by_contest)
+        if national:
+            chosen = [c for c in chosen if contests.counterpart(c) == c][:1]
+        for contest in chosen:
+            for key, row in by_contest[contest].items():
+                obec, _, n = key.partition("/")
+                if row[0] is not None:
+                    out.setdefault(obec, {}).setdefault(int(n), row[0])
+    return {o: dict(sorted(k.items())) for o, k in sorted(out.items())}
+
+
+def own(rules: obvody.RuleSet | None) -> bool:
+    """Return whether *rules* give okrsky transcribed for their own election.
+
+    Not copied from another (``okrsky_reused``, ``okrsky_adopted``).
+    """
+    return (
+        rules is not None
+        and bool(rules.okrsky)
+        and rules.okrsky_reused is None
+        and rules.okrsky_adoption is None
+    )
+
+
 def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
     """Return the jobs for the obce with several okrsky not yet known.
 
-    Those with a rule set that lacks the okrsky, then those with one council
-    obvod and no ``okrsky/<obec>.toml`` that are in the address register.
+    Those with a rule set of their council obvody that lacks the okrsky,
+    then those without one that are in the address register (see the
+    module doc). A regular election's okrsky are known once it has any; any
+    other's once it has its own (:func:`own`), a copy wanting replacing.
     ``--only`` takes obec codes or names; it also brings back obce whose
     document was not found before, and obce whose okrsky are known.
     """
     election = options.election
+    regular = election.kind == REGULAR
     curated = cfg.election_dir(election)
     data = obvodrules.candidate_data(cfg, election)
     names = {o["code"]: o for o in data["obce"]}
@@ -238,61 +318,46 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
     not_found = load_not_found(cfg, election)
     pending = {i["id"] for j in options.pending for i in j.items}
     only = {search_key(x) for x in options.only}
-
-    def wanted(code: str, known: bool) -> bool:
-        if only:
-            return bool({code, search_key(names[code]["name"])} & only)
-        return not known and code not in not_found
-
-    split, whole = [], []
-    rule_sets = obvody.load_rule_sets(curated)
-    for code, rules in rule_sets.items():
-        if code in pending or not wanted(code, bool(rules.okrsky)):
-            continue
-        path = obvody.rules_path(curated, code)
-        p = obvody.load_places(directory / f"{code}.json")
-        a = obvody.assign(rules, p.places, p.kus, p.planar())
-        split.append(
-            _item(
-                cfg,
-                names[code],
-                okresy,
-                kraje,
-                rules,
-                path,
-                counts[code],
-                p,
-                a.units,
-                names,
-                election.day.year,
-            )
-        )
-    # An obec with several council obvody but no rule set yet gets its okrsky
-    # with the obvody, not as a whole obec.
     council = addresses.council_obvody(data["contests"])
-    for code, count in counts.items():
-        # The city-wide rows of Bratislava and Košice are no obec of the
-        # candidate data; an obec without addresses has no places file.
-        places = directory / f"{code}.json"
-        if (
-            count < _SEVERAL
-            or code in rule_sets
-            or len(council.get(code, ())) >= _SEVERAL
-            or code not in names
-            or code in pending
-            or not places.is_file()
-        ):
-            continue
-        if wanted(code, obvody.okrsky_path(curated, code).is_file()):
-            p = obvody.load_places(places)
-            whole.append(
-                _whole_item(
-                    names[code], okresy, kraje, count, p, names, election.day.year
-                )
+
+    def wanted(code: str, rules: obvody.RuleSet | None) -> bool:
+        return _wanted(
+            code, names[code]["name"], rules, regular=regular, only=only, skip=not_found
+        )
+
+    rule_sets = obvody.load_rule_sets(curated)
+    # Where the vote elects none of an obec's council, its rule set only
+    # places okrsky copied with it (`ems job reuse`): the obec's own okrsky
+    # are written for it as a whole.
+    by_obvod = {c for c in rule_sets if regular or c in council}
+    split = [
+        _item(cfg, names[c], okresy, kraje, rule_sets[c], counts[c], names, election)
+        for c in sorted(by_obvod - pending)
+        if wanted(c, rule_sets[c])
+    ]
+    # In a regular election, an obec with several council obvody gets its
+    # okrsky with the obvody, once they have a rule set.
+    several = {c for c, ns in council.items() if len(ns) >= _SEVERAL and regular}
+    whole = []
+    for code in _whole_candidates(
+        counts, names, held(election, data), directory, by_obvod | several | pending
+    ):
+        rules = obvody.load_obec(curated, code)
+        if wanted(code, rules):
+            p = obvody.load_places(directory / f"{code}.json")
+            item = _whole_item(
+                names[code], okresy, kraje, counts[code], p, names, election
             )
+            whole.append(item | _copied(cfg, rules))
     units = obvodrules.official_okrsky(cfg, election)
-    for item in (*split, *whole):
+    voters = {} if regular else okrsok_voters(cfg, election)
+    for item in split:
         _add_units(item, units.get(item["id"], {}))
+    for item in whole:
+        if regular:
+            _add_units(item, units.get(item["id"], {}))
+        elif voters.get(item["id"]):
+            item["voters"] = {str(k): v for k, v in voters[item["id"]].items()}
     return obvodrules.batches(
         split, _prompt(cfg, election, PROMPT), options.size, "okrsky"
     ) + obvodrules.batches(
@@ -300,33 +365,135 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
     )
 
 
+def _wanted(
+    code: str,
+    name: str,
+    rules: obvody.RuleSet | None,
+    *,
+    regular: bool,
+    only: set[str],
+    skip: Mapping[str, Any],
+) -> bool:
+    """Return whether obec *code* (*name*), its okrsky *rules*, is an item.
+
+    Named in *only* (search keys), or else without okrsky known and not in
+    *skip* (not found before): a regular election's known once it has any,
+    any other vote's once it has its own (:func:`own`).
+    """
+    if only:
+        return bool({code, search_key(name)} & only)
+    known = bool(rules and rules.okrsky) if regular else own(rules)
+    return not known and code not in skip
+
+
+def _whole_candidates(
+    counts: Mapping[str, int],
+    names: Mapping[str, Any],
+    voting: set[str] | None,
+    directory: Path,
+    skip: set[str],
+) -> list[str]:
+    """Return the obce that may be items without obvody.
+
+    Of several okrsky (*counts*), in the candidate data (*names*), voting
+    (*voting*, :func:`held`), with addresses (a places file in
+    *directory*), not in *skip*.
+    """
+    # The city-wide rows of Bratislava and Košice are no obec of the
+    # candidate data; an obec without addresses has no places file.
+    return [
+        code
+        for code, count in counts.items()
+        if count >= _SEVERAL
+        and code not in skip
+        and code in names
+        and (voting is None or code in voting)
+        and (directory / f"{code}.json").is_file()
+    ]
+
+
 def _add_units(item: dict[str, Any], units: Mapping[int, Mapping[int, int]]) -> None:
     """Give *item* ŠÚ SR's okrsky of each obvod and the voters of each okrsok.
 
     *units* is obvod → okrsok → voters (:func:`election_map_slovakia.obvodrules.official_okrsky`),
-    empty where unknown.
+    empty where unknown; a by-election's has only the obvody that voted.
     """
     if not units:
         return
     for o in item.get("obvody", []):
-        o["okrsky"] = list(units.get(o["number"], {}))
+        if o["number"] in units:
+            o["okrsky"] = list(units[o["number"]])
     item["voters"] = {str(k): v for ks in units.values() for k, v in ks.items()}
 
 
-def referendum_after(day: dt.date) -> dt.date | None:
-    """Return the day of the referendum within a year after *day*, if one (:data:`REFERENDA`)."""
-    return next((r for r in REFERENDA if day < r <= day + dt.timedelta(days=366)), None)
+def _copied(cfg: Config, rules: obvody.RuleSet | None) -> dict[str, Any]:
+    """Return the ``copied`` field of an item whose okrsky *rules* are a copy.
+
+    The day of the election they are of, and its documents with their
+    local copies; nothing where *rules* are not a copy.
+    """
+    if rules is None or not rules.okrsky:
+        return {}
+    if rules.okrsky_reused:
+        day = rules.okrsky_reused
+    elif rules.okrsky_adoption:
+        day = rules.okrsky_adoption.day
+    else:
+        return {}
+    return {
+        "copied": {
+            "from": day.isoformat(),
+            "documents": [
+                {"url": d.url, "title": d.title, "copy": _copy(cfg, d.sha256)}
+                for d in rules.documents
+            ],
+        }
+    }
+
+
+def referenda(cfg: Config, election: Election) -> list[dt.date]:
+    """Return the days of the referendums whose okrsky may stand in for *election*'s.
+
+    The referendums the site shows within :data:`STAND_IN` of its day,
+    before or after, other than itself. The mayor sets the okrsky for each
+    vote, mostly as they were: a referendum's document may give them where
+    it or the vote's own document says they are the same, or where no
+    document of the vote is found (``referendum`` of an output item, with
+    a note); the 2023 referendum came three months after the 2022
+    elections, the 2026 one some months after the by-elections of March.
+    """
+    return sorted(
+        e.day
+        for e in cfg.elections
+        if e.kind == REFERENDUM
+        and e.day != election.day
+        and abs(e.day - election.day) <= STAND_IN
+    )
 
 
 def _prompt(cfg: Config, election: Election, template: str) -> str:
-    """Return *template* for *election*, with the earlier election's part if not the latest."""
-    earlier = EARLIER
-    referendum = referendum_after(election.day)
-    if referendum is not None:
-        earlier += string.Template(REFERENDUM).safe_substitute(
-            referendum=jobs.long_date(referendum), referendum_iso=referendum.isoformat()
+    """Return *template* for *election*.
+
+    With the part on an earlier regular election or on another vote where
+    it is not the latest, and on the referendums whose okrsky may stand in.
+    """
+    regular = election.kind == REGULAR
+    template = string.Template(template).safe_substitute(
+        whole=WHOLE_REGULAR if regular else WHOLE_OTHER,
+        where=WHERE_REGULAR if regular else WHERE_OTHER,
+    )
+    if election.day != cfg.latest.day:
+        template += EARLIER if regular else OTHER_VOTE
+    for day in referenda(cfg, election):
+        after = day > election.day
+        template += string.Template(REFERENDUM_SECTION).safe_substitute(
+            referendum=jobs.long_date(day),
+            referendum_iso=day.isoformat(),
+            when="after" if after else "before",
+            says=REFERENDUM_AFTER if after else REFERENDUM_BEFORE,
+            until=jobs.long_date(max(day, election.day)),
         )
-    return obvodrules.prompt(cfg, election, template, earlier)
+    return jobs.election_prompt(template, election)
 
 
 def obvod_texts(path: Path) -> dict[int, str]:
@@ -364,18 +531,16 @@ def _item(
     okresy: Mapping[str, str],
     kraje: Mapping[str, str],
     rules: obvody.RuleSet,
-    path: Path,
     okrsky: int,
-    p: obvody.ObecPlaces,
-    assigned: Sequence[int],
     obce: Mapping[str, Mapping[str, Any]],
-    year: int,
+    election: Election,
 ) -> dict[str, Any]:
-    """Return the input item of an obec with a rule set (at *path*).
-
-    *year* is the election's.
-    """
-    texts = obvod_texts(path)
+    """Return the input item of an obec with a council rule set *rules* in *election*."""
+    code = obec["code"]
+    texts = obvod_texts(obvody.rules_path(cfg.election_dir(election), code))
+    p = obvody.load_places(obvodrules.places_dir(cfg, election) / f"{code}.json")
+    assigned = obvody.assign(rules, p.places, p.kus, p.planar()).units
+    copied = _copied(cfg, rules) if election.kind != REGULAR else {}
     return (
         _identity(obec, okresy, kraje, okrsky, obce)
         | {
@@ -390,7 +555,8 @@ def _item(
             "note": rules.note or "",
         }
         | obvodrules.address_fields(p, assigned)
-        | _search(obec, year)
+        | _search(obec, election)
+        | copied
     )
 
 
@@ -401,13 +567,13 @@ def _whole_item(
     okrsky: int,
     p: obvody.ObecPlaces,
     obce: Mapping[str, Mapping[str, Any]],
-    year: int,
+    election: Election,
 ) -> dict[str, Any]:
-    """Return the input item of an obec with one council obvod in *year*'s election."""
+    """Return the input item of an obec without council obvody in *election*."""
     return (
         _identity(obec, okresy, kraje, okrsky, obce)
         | obvodrules.address_fields(p)
-        | _search(obec, year)
+        | _search(obec, election)
     )
 
 
@@ -435,12 +601,29 @@ def _identity(
     return out | {"okrsky": okrsky}
 
 
-def _search(obec: Mapping[str, Any], year: int) -> dict[str, list[str]]:
-    """Return the ``search`` field of an item: queries that find the document."""
+_SEARCH_WORDS = {
+    BY_ELECTION: "nové voľby",
+    "presidential": "voľba prezidenta",
+    REFERENDUM: "referendum",
+}
+"""Election kind → the words that tell its documents in a web search, where
+the year alone does not (it does for the regular elections)."""
+
+
+def _search(obec: Mapping[str, Any], election: Election) -> dict[str, Any]:
+    """Return the ``vote`` and ``search`` fields of an item in *election*.
+
+    ``vote`` names the vote with its day (and round 2's), ``search`` has
+    queries that find the document.
+    """
     name = obec["name"]
+    when = " ".join(
+        filter(None, (_SEARCH_WORDS.get(election.kind), str(election.day.year)))
+    )
     return {
-        "search": [f'"{name}" {t} {year}' for t in _SEARCH_TITLES]
-        + [f"{name} volebné okrsky {year} ulice"]
+        "vote": jobs.vote_words(election)["vote"],
+        "search": [f'"{name}" {t} {when}' for t in _SEARCH_TITLES]
+        + [f"{name} volebné okrsky {when} ulice"],
     }
 
 
@@ -562,11 +745,7 @@ def check(
         )
     except obvody.ObvodyError as e:
         return [str(e)]
-    count = sum(map(len, rules.okrsky.values()))
-    if count != item["okrsky"]:
-        return [f"{count} okrsky given, the territorial division has {item['okrsky']}"]
-    units = obvodrules.official_okrsky(cfg, election).get(item["id"], {})
-    problems = grouping_problems(rules, units)
+    units, problems = _count_problems(cfg, election, item, rules)
     if problems:
         return problems
     texts = {k["number"] for k in out.get("okrsky", [])}
@@ -580,24 +759,50 @@ def check(
         k, problems = okrsok_problems(rules, p, a.units)
         problems = obvodrules.place_name_problems(rules, p) + problems
     problems = _supplement_problems(cfg, election, out, rules) + problems
-    until = dt.date.fromisoformat(out["referendum"]) if "referendum" in out else None
-    notes = obvodrules.date_notes(out, until or election.day)
+    until = election.day
+    if "referendum" in out:
+        until = max(until, dt.date.fromisoformat(out["referendum"]))
+    notes = obvodrules.date_notes(out, until)
     notes += okrsok_plausibility(rules, k, units)
     obvodrules.write_notes(job, item["id"], notes)
     return write_review(cfg, job, rules, p, a, k, out, problems, notes)
 
 
+def _count_problems(
+    cfg: Config, election: Election, item: Mapping[str, Any], rules: obvody.RuleSet
+) -> tuple[dict[int, dict[int, int]], list[str]]:
+    """Return ŠÚ SR's okrsky of the obec of *item* by obvod, and how *rules* differ.
+
+    *rules*, numbered 1..N by their form, must have the N okrsky of the
+    territorial division (*item*'s ``okrsky``), each obvod those ŠÚ SR's
+    results count in it (:func:`grouping_problems`). For an item without
+    obvody in a vote other than a regular election, ŠÚ SR's okrsky are
+    those of the whole obec, with the voters of those that voted where its
+    results have them (*item*'s ``voters``).
+    """
+    count = sum(map(len, rules.okrsky.values()))
+    if count != item["okrsky"]:
+        return {}, [
+            f"{count} okrsky given, the territorial division has {item['okrsky']}"
+        ]
+    regular = election.kind == REGULAR
+    if "obvody" not in item and not regular:
+        return {1: {int(k): v for k, v in item.get("voters", {}).items()}}, []
+    units = obvodrules.official_okrsky(cfg, election).get(item["id"], {})
+    return units, grouping_problems(rules, units, every=regular)
+
+
 def _form_problems(whole: bool, out: Mapping[str, Any]) -> list[str]:
     """Return what output item *out*, found, lacks or has too much of.
 
-    *whole* is whether the obec elects its council in one obvod.
+    *whole* is whether the item has no obvody.
     """
     needed = ("website", "documents", "okrsky" if whole else "obvody")
     missing = [k for k in needed if k not in out]
     if missing:
         return [f"status found needs {', '.join(missing)}"]
     if whole and "obvody" in out:
-        return ["the municipality elects its council in one obvod: leave out obvody"]
+        return ["the item has no obvody: leave out obvody"]
     if "okrsky" not in out and "note" not in out:
         return ["okrsky without their rules need a note saying why"]
     return []
@@ -609,8 +814,8 @@ def _vote_problems(
     """Return why the documents of *out* may not give the okrsky of *election*.
 
     Those of the election (:func:`election_map_slovakia.obvodrules.date_problems`),
-    or of the referendum after it (:func:`referendum_after`) where ``referendum``
-    says so, with a note why.
+    or of a referendum near it (:func:`referenda`) where ``referendum`` says
+    so, with a note why; then dated before the later of the two votes.
     """
     if "referendum" not in out:
         return obvodrules.date_problems(cfg, election, out)
@@ -618,14 +823,14 @@ def _vote_problems(
         day = dt.date.fromisoformat(out["referendum"])
     except ValueError:
         return ["referendum: not a date"]
-    if day != referendum_after(election.day):
+    if day not in referenda(cfg, election):
         return [
-            f"referendum {day}: not a referendum within the year after"
+            f"referendum {day}: not a referendum within a year of"
             f" {election.day} whose okrsky may stand in"
         ]
     if "note" not in out:
         return ["the okrsky of a referendum need a note saying why"]
-    return obvodrules.date_problems(cfg, election, out, day)
+    return obvodrules.date_problems(cfg, election, out, max(day, election.day))
 
 
 def _supplement_problems(
@@ -634,30 +839,32 @@ def _supplement_problems(
     """Return why the okrsok rules of *out* from a later source may not stand.
 
     As :func:`election_map_slovakia.obvodrules.supplement_problems`; a
-    referendum's document must be that of the referendum after *election*
-    (:func:`referendum_after`), and fills in only the election's own.
+    referendum's document must be that of a referendum after *election*
+    whose okrsky may stand in (:func:`referenda`), and fills in only the
+    election's own.
     """
     s = out.get("supplement")
     if s and s["from"] == obvody.LATER_REFERENDUM:
         if "referendum" in out:
             return ["okrsky from the referendum's document take no supplement from it"]
         day = obvodrules.supplement_day(s)
-        if day != referendum_after(election.day):
+        if day <= election.day or day not in referenda(cfg, election):
             return [
-                f"supplement day {day}: not the referendum within the year after"
+                f"supplement day {day}: not a referendum within the year after"
                 f" {election.day}"
             ]
     return obvodrules.supplement_problems(cfg, election, out, rules, obvody.OKRSOK)
 
 
 def grouping_problems(
-    rules: obvody.RuleSet, units: Mapping[int, Mapping[int, int]]
+    rules: obvody.RuleSet, units: Mapping[int, Mapping[int, int]], every: bool = True
 ) -> list[str]:
     """Return the obvody whose okrsky differ from those ŠÚ SR counted in them.
 
     *units* is obvod → okrsok → voters
     (:func:`election_map_slovakia.obvodrules.official_okrsky`); empty where
-    unknown, which passes.
+    unknown, which passes. Not *every*: *units* are of the obvody that
+    voted only (a by-election's), the others passing.
     """
     if not units:
         return []
@@ -665,7 +872,7 @@ def grouping_problems(
     return [
         f"obvod {n}: okrsky {', '.join(map(str, given.get(n, []))) or 'none'} given,"
         f" the Statistical Office's results count {', '.join(map(str, units.get(n, {}))) or 'none'}"
-        for n in sorted(given.keys() | units.keys())
+        for n in sorted(given.keys() | units.keys() if every else units.keys())
         if given.get(n, []) != list(units.get(n, {}))
     ]
 
@@ -768,17 +975,26 @@ def draw(
         return "", []
     obce, kus = obvodrules.obce_and_kus(gpkg)
     mine = kus.get(rules.obec, [])
+    lines = obvodrules.barriers(cfg).of(mine)
     to_wgs84 = geo.transformer()
     scale = 10**geo.DECIMALS
-    split = (
-        geo.whole_split(mine)
+    split, cut = (
+        (geo.whole_split(mine), {})
         if rules.whole
-        else geo.council_split(rules, places, obvod_assignment.units, mine, to_wgs84)
+        else geo.council_split(
+            rules,
+            places,
+            obvod_assignment.units,
+            mine,
+            lines,
+            to_wgs84,
+            assignment.units,
+        )
     )
     obec = geo.to_grid(obce[rules.obec], to_wgs84, scale)
     try:
         okrsky = geo.okrsky_split(
-            rules, places, assignment.units, split, mine, to_wgs84
+            rules, places, assignment.units, split, mine, lines, to_wgs84, cut
         )
         grid = geo.to_grid(np.array([o.area for o in okrsky]), to_wgs84, scale)
         outlines = [
@@ -864,7 +1080,7 @@ def accept(cfg: Config, job: jobs.Job, accepted: list[jobs.Accepted]) -> list[st
         code = item["id"]
         if out["status"] == "not_found":
             lines.append(obvodrules.record_not_found(not_found, job, item, out))
-            lines += _drop_okrsky(curated, item, rule_sets.get(code))
+            lines += _drop_okrsky(curated, item)
             continue
         not_found.pop(code, None)
         shas = obvodrules.cache_documents(cfg, job, index, out)
@@ -877,6 +1093,15 @@ def accept(cfg: Config, job: jobs.Job, accepted: list[jobs.Accepted]) -> list[st
             path = obvody.okrsky_path(curated, code)
             comments = []
             by = f"Okrsky of {item['name']}, transcribed by an AI agent in job"
+            # A vote without councils has a rule set only where `ems job
+            # reuse` copied one to place another election's okrsky.
+            copied = obvody.rules_path(curated, code)
+            if copied.is_file():
+                copied.unlink()
+                lines.append(
+                    f"{item['name']} ({code}): the copied"
+                    f" {copied.relative_to(cfg.root)} removed"
+                )
         comments += [
             f"{by} {job.name} from the documents below;",
             "checked by `ems job ingest` against the address register. The document's",
@@ -905,21 +1130,21 @@ def obvod_header(path: Path) -> list[str]:
     return lines[: next((i for i, h in enumerate(lines) if h.startswith(ADDED)), None)]
 
 
-def _drop_okrsky(
-    curated: Path, item: Mapping[str, Any], current: obvody.RuleSet | None
-) -> list[str]:
+def _drop_okrsky(curated: Path, item: Mapping[str, Any]) -> list[str]:
     """Remove the okrsky an earlier ingest gave the obec of *item*; return report lines.
 
-    *curated* is the election's data; *current* is the obec's council rule
-    set, None for an obec with one obvod.
+    *curated* is the election's data. Okrsky copied from another election
+    (``okrsky_reused``, ``okrsky_adopted``) stay: they record no search.
     """
     code = item["id"]
-    if current is None:
-        path = obvody.okrsky_path(curated, code)
-        if not path.is_file():
-            return []
-        path.unlink()
-    elif current.okrsky:
+    current = obvody.load_obec(curated, code)
+    if current is None or not current.okrsky:
+        return []
+    if current.okrsky_reused or current.okrsky_adoption:
+        return [f"{item['name']} ({code}): its copied okrsky stay"]
+    if current.whole:
+        obvody.okrsky_path(curated, code).unlink()
+    else:
         path = obvody.rules_path(curated, code)
         kept = obvod_header(path)
         rules = dataclasses.replace(
@@ -937,8 +1162,6 @@ def _drop_okrsky(
             addressless=(),
         )
         path.write_text(obvody.dump(rules, kept), encoding="utf-8")
-    else:
-        return []
     return [f"{item['name']} ({code}): its earlier okrsky removed"]
 
 
@@ -948,7 +1171,7 @@ _TASK = """\
 Each item of `input.json` is a Slovak municipality (obec, or a city
 district of Bratislava or Košice) that votes in several okrsky (volebné
 okrsky: the polling districts, each with its polling station, volebná
-miestnosť) in the elections of $day. Its mayor set them and
+miestnosť) in $vote. Its mayor set them for that vote and
 published them: which streets, house numbers or parts of the municipality
 vote in each okrsok.
 """
@@ -960,7 +1183,8 @@ Each item has:
 
 - `id`: the municipality code; `name`, `okres`, `kraj` (and `city` for a
   district of Bratislava or Košice: the document is the district's).
-- `okrsky`: how many okrsky the municipality has in these elections, per the
+- `vote`: the vote whose okrsky are wanted, with its day.
+- `okrsky`: how many okrsky the municipality has in this vote, per the
   Statistical Office. Number them 1..`okrsky` as the document does.
 - `voters` (where known): okrsok → the voters on its roll in the
   Statistical Office's results; an okrsok's addresses are roughly in
@@ -970,17 +1194,16 @@ Each item has:
 _FINDING = """\
 ## Finding the document
 
-On the municipality's official website, look at the $year elections page
-(Voľby $year, Voľby do orgánov samosprávy obcí a samosprávnych krajov $year)
-and the official notice board (úradná tabuľa) of July–August $year. Typical
+On the municipality's official website, look at $where. Typical
 titles: "Utvorenie volebných okrskov a určenie volebných miestností",
 "Oznámenie o utvorení volebných okrskov", "Zoznam volebných okrskov a
 volebných miestností" (with "ulice", "zoznam ulíc"). Web search with the
 queries in `search` helps.
 
-- Use the document for the elections of $day; one for an earlier vote
-  (e.g. a referendum) only if it says the okrsky stay the same, and say so
-  in `note`.
+- Use the document set for $vote. Municipalities mostly keep their okrsky
+  from one vote to the next, but another vote's document counts only where
+  this prompt says so below; one that says the okrsky of this vote are
+  those of an earlier vote (and lists them) is this vote's.
 - `documents` must be on the municipality's own website (its domain or
   subdomains), on `cuet.slovensko.sk`, or on a CMS host with the
   municipality's domain in the path. A file on a CMS host that does not
@@ -1146,10 +1369,10 @@ the input's documents sufficed).
 {_CHECKS}"""
 
 WHOLE_PROMPT = f"""\
-{_TASK}This one elects its council in one electoral district (volebný
-obvod). Your task: find the official document, read it, and write rules a
-program can apply to every address of the municipality to find its okrsok.
-You need web search and the ability to fetch web pages and PDFs.
+{_TASK}$whole Your task: find the official document, read it, and write
+rules a program can apply to every address of the municipality to find
+its okrsok. You need web search and the ability to fetch web pages and
+PDFs.
 
 {_INPUT}\
 - `streets`: every street in the official address register:
@@ -1208,6 +1431,21 @@ or `{{"id": "…", "status": "not_found", "tried": ["…"], "note": "…"}}`.
 
 {_CHECKS}"""
 
+WHOLE_REGULAR = """\
+This one elects its council in one electoral district (volebný obvod)."""
+WHOLE_OTHER = """\
+Write its okrsky for the whole municipality, without council obvody."""
+"""What :data:`WHOLE_PROMPT` says of the municipality (``$whole``): in a
+regular election, and in any other vote."""
+WHERE_REGULAR = """\
+the $year elections page (Voľby $year, Voľby do orgánov samosprávy obcí a
+samosprávnych krajov $year) and the official notice board (úradná
+tabuľa) of July–August $year"""
+WHERE_OTHER = """\
+the page of the vote ("$named") and the official notice board (úradná
+tabuľa) of the weeks before $day"""
+"""Where the prompts send the agent to look (``$where``), as above."""
+
 EARLIER = f"""
 ## An earlier election
 
@@ -1219,22 +1457,51 @@ they look, except to fill them in (below). {obvodrules.ARCHIVE}
 If you find no document of $year, report not_found; the maintainer then
 checks whether a later election's okrsky provably fit.
 {obvodrules.SUPPLEMENT}"""
-"""Added to the prompts for an election other than the latest."""
+"""Added to the prompts for a regular election other than the latest."""
 
-REFERENDUM = """
-The referendum of $referendum came soon after these elections, mostly in
-the same okrsky. Its okrsky document (on the notice board some two months
-before it: "utvorenie volebných okrskov … referendum") may stand in where
-it says the okrsky are those of the elections, or where no document of the
-elections is found: set `"referendum": "$referendum_iso"` and say in
-`note` which ("the referendum's document; it says the okrsky are
-unchanged", or "no document of the elections found; the referendum's
-document"). Its okrsky must still be those the Statistical Office counts
-(`okrsky` of each obvod, `voters`); the dating above then counts from the
-referendum: `date`, or a capture or posting (`date_seen`), before
-$referendum.
+OTHER_VOTE = f"""
+## A past vote
+
+This vote, $vote, is past: the municipality's website may show a later
+vote's okrsky by now, and its $year pages may be gone. Use only
+documents valid for this vote, the okrsky set for it (most municipalities
+publish a new "určenie volebných okrskov a volebných miestností" for
+every vote, often repeating the last one's); never another vote's because
+it looks alike, except as allowed below. {obvodrules.ARCHIVE}
+An item with `copied` is drawn for now with the okrsky of another
+election (`from`, its day), copied by the maintainer where the
+municipality had as many okrsky with about the same voters. Its
+`documents` (local copies in `copy`) are that election's, for orientation
+only: they lead to the municipality's website, and this vote's document
+often repeats them. Your transcription of this vote's document replaces
+the copy; say in `note` where it differs from that election's. If you
+find no document of this vote, report not_found; the copy then stays.
+{obvodrules.SUPPLEMENT}"""
+"""Added to the prompts for a vote other than a regular election: a
+country-wide one, a by-election."""
+
+REFERENDUM_SECTION = """
+## The referendum of $referendum
+
+The referendum of $referendum came soon $when this vote, mostly in the
+same okrsky. Its okrsky document (on the notice board some two months
+before it: "utvorenie volebných okrskov … referendum") may stand in $says,
+or where no document of this vote is found: set `"referendum":
+"$referendum_iso"` and say in `note` which ("the referendum's document; it
+says the okrsky are unchanged", or "no document of this vote found; the
+referendum's document"). Its okrsky must still be those the Statistical
+Office counts (`okrsky`, of each obvod where given, and `voters`), and
+every document must be dated (by `date`, or a capture or posting,
+`date_seen`) before $until.
 """
-"""Added to :data:`EARLIER` where a referendum followed the election (:data:`REFERENDA`)."""
+"""Added to the prompts for each referendum whose okrsky may stand in
+(:func:`referenda`): ``$when`` it was (``after``, ``before``), what
+``$says`` the okrsky are the same, and the day ``$until`` which the
+documents are dated, the later of the two votes."""
+REFERENDUM_AFTER = "where it says the okrsky are those of this vote"
+REFERENDUM_BEFORE = """\
+where this vote's document says the okrsky are those of the referendum
+(list both documents)"""
 
 KIND = jobs.Kind(
     name=NAME,

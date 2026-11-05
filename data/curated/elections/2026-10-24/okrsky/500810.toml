@@ -1,0 +1,31 @@
+# The okrsky of Tesárske Mlyňany of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/500810.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Tesárske Mlyňany, transcribed by an AI agent in job okrsok-rules-5100 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: pre občanov Obce Tesárske Mlyňany, časť Tesáre nad Žitavou
+#     okrsok 2: pre občanov Obce Tesárske Mlyňany, časť Mlyňany
+obec = "500810"
+name = "Tesárske Mlyňany"
+okrsky_date = 2024-03-01
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-548): The elections section (VOĽBY DO ORGÁNOV SAMOSPRÁVY… 24.10.2026) lists the NR SR decision, information on voting rights, the volebný obvod notice, the zapisovateľ, e-mail for delegation, kandidátne listiny and candidate lists, but no utvorenie volebných okrskov; web search found nothing. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2024-06-08: 1: 771 → 767, 2: 622 → 615."
+
+[[document]]
+url = "https://web.archive.org/web/20240305032914/https://www.tesarskemlynany.sk/download_file_f.php?id=2008248"
+sha256 = "f12af9765ff35a8e5bb2d3f43d5d6fb55d3a158cef29d4ea278a08fcc3de74c0"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Tesárske Mlyňany počas konania volieb do Európskeho parlamentu (01.03.2024)"
+
+[[document]]
+url = "https://web.archive.org/web/20240319204330/https://www.tesarskemlynany.sk/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-obci-tesarske-mlynany-oznam-0/mid/528978/.html"
+sha256 = "8ca368a7fd610c749decc92b87ffa345c1d3d44cc5aab3a0829aaf8304516358"
+title = "Úradná tabuľa: Utvorenie volebných okrskov a určenie volebných miestností v obci Tesárske Mlyňany (zverejnené 1.3.2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Tesáre nad Žitavou"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Mlyňany"},
+]

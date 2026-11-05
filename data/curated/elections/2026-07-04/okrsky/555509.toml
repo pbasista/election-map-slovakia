@@ -1,0 +1,62 @@
+# Okrsky of Zálesie, transcribed by an AI agent in job okrsok-rules-5530 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bazová Jazerná Pri kríži Cintorínska Konečná Siladická Dolnomajerská Ku gaštanu Slnečná Domky Lesná Topoľová Družstevná Lipová Trojičné námestie Dunajská Malinovská Turčianska Hornozelenická Muškátová Záhumenná Ivánska Obilná Jaseňová Okružná
+#   okrsok 2: Dlhá Krížna Stredná Fülova Lúčna Terchovská Ignáca Gešaja Novobystrická Tichá Krajná Poľná Veselá Krátka Starobystrická Za záhradami
+obec = "555509"
+name = "Zálesie"
+okrsky_date = 2026-05-11
+okrsky_fill = "nearest"
+okrsky_note = "The decision lists each okrsok's streets. Addresses without a street and streets it does not name are placed by fill_nearest. Named by the document but not in the register, left out: Trojičné námestie. Register streets the document does not name (fill_nearest): Jágerňa, U Rusa."
+
+[[document]]
+url = "https://www.obeczalesie.sk/modules/file_storage/download.php?file=240b5a77%7C1057&inline=1"
+sha256 = "b0c1f6df5d2cd256d4f99c41c9976c60afb25d825fa3d86ef89eca518c4ca965"
+title = "Rozhodnutie starostu obce (referendum 04.07.2026), V Zálesí 11.05.2026"
+
+[okrsok.1]
+rules = [
+  {street = "Bazová"},
+  {street = "Cintorínska"},
+  {street = "Dolnomajerská"},
+  {street = "Domky"},
+  {street = "Družstevná"},
+  {street = "Dunajská"},
+  {street = "Hornozelenická"},
+  {street = "Ivanská", written = "Ivánska"},
+  {street = "Jaseňová"},
+  {street = "Jazerná"},
+  {street = "Konečná"},
+  {street = "Ku gaštanu"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+  {street = "Malinovská"},
+  {street = "Muškátová"},
+  {street = "Obilná"},
+  {street = "Okružná"},
+  {street = "Pri kríži"},
+  {street = "Siladická"},
+  {street = "Slnečná"},
+  {street = "Topoľová"},
+  {street = "Turčianska"},
+  {street = "Záhumenná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dlhá"},
+  {street = "Fülova ulica", written = "Fülova"},
+  {street = "Ignáca Gešaja"},
+  {street = "Krajná"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Lúčna"},
+  {street = "Poľná"},
+  {street = "Starobystrická"},
+  {street = "Stredná"},
+  {street = "Terchovská"},
+  {street = "Tichá"},
+  {street = "Veselá"},
+  {street = "Za záhradami"},
+  {street = "Novobystrická ulica", written = "Novobystrická"},
+]

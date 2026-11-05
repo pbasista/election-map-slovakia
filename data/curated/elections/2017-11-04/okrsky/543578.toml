@@ -1,0 +1,61 @@
+# The okrsky of Spišské Podhradie of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/543578.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Spišské Podhradie, transcribed by an AI agent in job okrsok-rules-1884 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Ulice – Galova, Hviezdoslavova, Jarmočná, Mariánske námestie, Školská, Štúrova, Trhovisko
+#     okrsok 2: Ulice – Bielidla, Komenského, Levočská cesta, Májová, Robotnícka, Spišská Kapitula, Starý jarok
+#     okrsok 3: Ulice – Bezdomovci, Dr. Špirka, Kúpeľná, Palešovo námestie, Podzámková, Prešovská, Sídlisko Hrad, Štefánikova, Ulica sv. Jána Pavla II., Vodný rad
+#     okrsok 4: Samostatný volebný okrsok, Volebná miestnosť: Kultúrny dom Katúň 15
+obec = "543578"
+name = "Spišské Podhradie"
+okrsky_date = 2019-02-21
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 21.02.2019 (scan, read from the image), posted on the notice board 5.2.–3.6.2019. 'Bezdomovci' (okrsok 3) are voters without an address (no rule). The register's old street names (1.čsl. Armadného Zboru, Kpt. Nálepku, Februárového Víťazstva; not in the document) and the houses without a street in Spišské Podhradie take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-294): No okrsky document for the regional elections of 2017: the website's notice board and search have no 2017 election notice, and the Internet Archive's CDX of spisskepodhradie.sk has none. These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2019-05-25: 1: 1,250 → 1,039, 2: 891 → 975, 3: 871 → 1,014, 4: 85 → 85."
+
+[[document]]
+url = "https://www.spisskepodhradie.sk/e_download.php?file=data/uredni_deska/obsah70_1.pdf&original=Vytvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnosti.pdf"
+sha256 = "97478cb2ad30fafc388829a8be968738517debe728aa705baf2924ea44a17653"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností – voľby do Európskeho parlamentu 2019 (21.02.2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Galova"},
+  {street = "Hviezdoslavova"},
+  {street = "Jarmočná"},
+  {street = "Mariánske námestie"},
+  {street = "Školská"},
+  {street = "Štúrova"},
+  {street = "Trhovisko"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bielidla"},
+  {street = "Komenského"},
+  {street = "Levočská cesta"},
+  {street = "Májová"},
+  {street = "Robotnícka"},
+  {street = "Spišská Kapitula"},
+  {street = "Starý jarok"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Dr. Špirka"},
+  {street = "Kúpeľná"},
+  {street = "Palešovo námestie"},
+  {street = "Podzámková"},
+  {street = "Prešovská"},
+  {street = "Sídlisko Hrad"},
+  {street = "Štefánikova"},
+  {street = "Ulica sv. Jána Pavla II."},
+  {street = "Vodný Rad", written = "Vodný rad"},
+  {street = "Palešovo Nám", note = "The register's duplicate spelling of Palešovo námestie (1 address); the document lists Palešovo námestie in okrsok 3.", inferred = true},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Katúň", note = "The document gives this okrsok ('Samostatný volebný okrsok') only its polling station, Kultúrny dom Katúň 15, in the separate part Katúň; the Statistical Office's last okrsok (about 80 voters) is Katúň.", inferred = true},
+]

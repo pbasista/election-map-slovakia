@@ -1,0 +1,151 @@
+# Okrsky of Veľký Šariš, transcribed by an AI agent in job okrsok-rules-3484 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dr. Greša, Dr. Leščáka, Harminy, Hlavná, Jarková, kpt. Nálepku, Nám. sv.Jakuba, Pekárska, Pod hradom, Poľná, Rákocziho, Severná, Tulčická, Východná, Zámocká, Západná
+#   okrsok 2: Agátová, Doliny, Jelšová, Kanašská, Korpašská, Ľ. Štúra, Pivovarská, Pod Bikošom, Pod Sordokom, Pri Toryse, Sabinovská, Staničná, Tomášika Dumína, Záhradná
+#   okrsok 3: Červeného Kríža, Dujavská, J. Záborského, Letná, M. Nemcovej, M.R.Štefánika, Prešovská, Púchovská, Slovenská, Staré Ihrisko, Zimná
+#   okrsok 4: A.Sládkoviča, Janka Kráľa, Matice Slovenskej, P.O.Hviezdoslava, Školská
+#   okrsok 5: A. Hlinku, Baratoky, Dlhá, Eleny Lackovej, Farská, Gardom, Južná, Kamence, kpt. Jaroša, Krátka, Martina Šarošiho, mesto Veľký Šariš, Mlynská, Slnečná, Štefana Rómera, Veterná, Vŕbová
+#   okrsok 6: Bažantia, Bočná, Brezová, Broskyňová, Cintorínska, Čerešňová, Dubová, Dúbravská, Fintická, Gaštanová, Hríbová, Jabloňová, Jahodová, Jarná, Jasná, Jazdecká, Jedľová, Jesenná, Krásna lúka, Kvetná, Lesnícka, Lipová, Lúčna, Močiarna, Okružná, Orgovánová, Pod Hrbom, Pod lesom, Pod Pachmaľom, Púpavová, Ružová, Sadová, Slávičia, Smreková, Strážovská, Stromová, Šarišská, Šípková, Topoľová, Trnková, Višňová, Za kostolom
+obec = "525405"
+name = "Veľký Šariš"
+okrsky_date = 2023-06-27
+okrsky_fill = "nearest"
+okrsky_note = "'mesto Veľký Šariš' in the document means voters registered without an address and gets no rule. Železničná (4 addresses) is named in no okrsok, and the houses without a street are not listed: both are placed by fill_nearest. Topoľová, which the document lists, is not in the address register and is left out. The announcement is dated 'Veľký Šariš, 27. 06. 2023'. It differs from the referendum of 2023 (4 okrsky): 6 okrsky, Kanaš alone in okrsok 6."
+
+[[document]]
+url = "https://www.velkysaris.sk/download_file_f.php?id=1881262"
+sha256 = "3735173485607ef88036c2338296636415426ccb037ee28dd931843f51978d40"
+title = "Oznámenie mesta Veľký Šariš o čase a mieste konania volieb do NR SR v roku 2023 a o utvorení volebných okrskov a určení volebných miestností (Veľký Šariš, 27. 06. 2023)"
+
+[[document]]
+url = "https://www.velkysaris.sk/informacia-o-utvoreni-volebnych-okrskov--kopia-oznam/mid/566732/.html"
+sha256 = "1ffddbc6a821ec5c78e9c76381e8b8eef9b34ea567a2d9ac2a2cc73a7e489052"
+title = "Informácia o utvorení volebných okrskov – oznámenie o voľbách do NR SR 2023 (archív úradnej tabule, zverejnené 27.6.2023)"
+
+[okrsok.1]
+rules = [
+  {street = "Dr. Greša"},
+  {street = "Dr. Leščáka"},
+  {street = "Harminy"},
+  {street = "Hlavná"},
+  {street = "Jarková"},
+  {street = "kpt.Nálepku", written = "kpt. Nálepku"},
+  {street = "Nám.sv.Jakuba", written = "Nám. sv.Jakuba"},
+  {street = "Pekárska"},
+  {street = "Pod hradom"},
+  {street = "Poľná"},
+  {street = "Rákocziho"},
+  {street = "Severná"},
+  {street = "Tulčická"},
+  {street = "Východná"},
+  {street = "Zámocká"},
+  {street = "Západná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Doliny"},
+  {street = "Jelšová"},
+  {street = "Kanašská"},
+  {street = "Korpašská"},
+  {street = "Ľ. Štúra"},
+  {street = "Pivovarská"},
+  {street = "Pod Bikošom"},
+  {street = "Pod Sordokom"},
+  {street = "Pri Toryse"},
+  {street = "Sabinovská"},
+  {street = "Staničná"},
+  {street = "Tomášika Dumína"},
+  {street = "Záhradná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Červeného Kríža"},
+  {street = "Dujavská"},
+  {street = "J. Záborského"},
+  {street = "Letná"},
+  {street = "M. Nemcovej"},
+  {street = "M. R. Štefánika", written = "M.R.Štefánika"},
+  {street = "Prešovská"},
+  {street = "Púchovská"},
+  {street = "Slovenská"},
+  {street = "Staré Ihrisko"},
+  {street = "Zimná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "A. Sládkoviča", written = "A.Sládkoviča"},
+  {street = "Janka Kráľa"},
+  {street = "Matice Slovenskej"},
+  {street = "P. O. Hviezdoslava", written = "P.O.Hviezdoslava"},
+  {street = "Školská"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "A. Hlinku"},
+  {street = "Baratoky"},
+  {street = "Dlhá"},
+  {street = "Eleny Lackovej"},
+  {street = "Farská"},
+  {street = "Gardom"},
+  {street = "Južná"},
+  {street = "Kamence"},
+  {street = "kpt. Jaroša"},
+  {street = "Krátka"},
+  {street = "Martina Šarošiho"},
+  {street = "Mlynská"},
+  {street = "Slnečná"},
+  {street = "Štefana Rómera"},
+  {street = "Veterná"},
+  {street = "Vŕbová"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bažantia"},
+  {street = "Bočná"},
+  {street = "Brezová"},
+  {street = "Broskyňová"},
+  {street = "Cintorínska"},
+  {street = "Čerešňová"},
+  {street = "Dubová"},
+  {street = "Dúbravská"},
+  {street = "Fintická"},
+  {street = "Gaštanová"},
+  {street = "Hríbová"},
+  {street = "Jabloňová"},
+  {street = "Jahodová"},
+  {street = "Jarná"},
+  {street = "Jasná"},
+  {street = "Jazdecká"},
+  {street = "Jedľová"},
+  {street = "Jesenná"},
+  {street = "Krásna lúka"},
+  {street = "Kvetná"},
+  {street = "Lesnícka"},
+  {street = "Lipová"},
+  {street = "Lúčna"},
+  {street = "Močiarna"},
+  {street = "Okružná"},
+  {street = "Orgovánová"},
+  {street = "Pod Hrbom"},
+  {street = "Pod lesom"},
+  {street = "Pod Pachmaľom"},
+  {street = "Púpavová"},
+  {street = "Ružová"},
+  {street = "Sadová"},
+  {street = "Slávičia"},
+  {street = "Smreková"},
+  {street = "Strážovská"},
+  {street = "Stromová"},
+  {street = "Šarišská"},
+  {street = "Šípková"},
+  {street = "Trnková"},
+  {street = "Višňová"},
+  {street = "Za kostolom"},
+]

@@ -1,0 +1,114 @@
+# Okrsky of Nemšová, transcribed by an AI agent in job okrsok-rules-3517 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Janka Palu, Sklárska, Odbojárov, Hornov, Sládkovičova, „Nemšová“
+#   okrsok 2: Agátová, Bernolákova, Brezová, Jaseňová, Javorová, Jesenského, Kamenec, Lipová, Mierové námestie, Mlynská, Moravská, Nová Nemšová, Osloboditeľov, Rybárska, SNP, Šidlíkové, Šmidkeho, Štúrova, Topoľová, Vlárska
+#   okrsok 3: 9. mája, A. Kropáčiho, Duklianska, Fraňa Madvu, Jozefa Hanku, Karpatská, Mládežnícka, Obrancov mieru, Ohrádky, Pavla Kyrmezera, Pionierska, Považská, Púchovská, Revolučná, Slovenskej armády, Školská, Športovcov, Urbárska, Vážska, Za Soľnou, Záhumnie, Železničná
+#   okrsok 4: Antonstál, Bottova, Čerešňová, Družstevná, Dvorecká, Fučíkova, Hradná, J. Borovského, J. Lacu, Kukučínova, Ľuborčianska, M. Gorkého, Višňová, Závadská
+#   okrsok 5: Holubyho, Sadová, Slnečná, Stromová, Trenčianska, Záhradná, Pod Horou, Kvetná
+#   okrsok 6: Kúty, Podhorská, Potôčky
+obec = "506281"
+name = "Nemšová"
+okrsky_fill = "nearest"
+okrsky_note = "'Nemšová' in okrsok 1 means voters registered without an address (no rule). Addresses without a street and Záhradná's addresses in the part Nemšová (not listed for okrsky 1–3) are placed by fill_nearest. The document's 'J. Lacu' is Jozefa Lacu. Okrsok 5 also lists 'Pod Horou' and 'Kvetná', which the address register lacks; left out."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated document's heading names the National Council election of 30 September 2023."
+
+[[document]]
+url = "https://www.nemsova.sk/content/64/volebne-okrsky-nr-sr-2023.pdf"
+sha256 = "39456a8ceec03d4896af5d7e5bf503c3cb1a988fa995abbabe832dd660ac8d15"
+title = "Volebné okrsky a volebné miestnosti pre voľby do Národnej rady Slovenskej republiky v roku 2023, ktoré sa uskutočnia dňa 30. septembra 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Janka Palu"},
+  {street = "Sklárska"},
+  {street = "Odbojárov"},
+  {street = "Hornov"},
+  {street = "Sládkovičova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Bernolákova"},
+  {street = "Brezová"},
+  {street = "Jaseňová"},
+  {street = "Javorová"},
+  {street = "Jesenského"},
+  {street = "Kamenec"},
+  {street = "Lipová"},
+  {street = "Mierové námestie"},
+  {street = "Mlynská"},
+  {street = "Moravská"},
+  {street = "Nová Nemšová"},
+  {street = "Osloboditeľov"},
+  {street = "Rybárska"},
+  {street = "SNP"},
+  {street = "Šidlíkové"},
+  {street = "Šmidkeho"},
+  {street = "Štúrova"},
+  {street = "Topoľová"},
+  {street = "Vlárska"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "9.mája", written = "9. mája"},
+  {street = "Antona Kropáčiho", written = "A. Kropáčiho"},
+  {street = "Duklianska"},
+  {street = "Fraňa Madvu"},
+  {street = "Jozefa Hanku"},
+  {street = "Karpatská"},
+  {street = "Mládežnícka"},
+  {street = "Ohrádky"},
+  {street = "Pavla Kyrmezera"},
+  {street = "Pionierska"},
+  {street = "Považská"},
+  {street = "Púchovská"},
+  {street = "Revolučná"},
+  {street = "Slovenskej armády"},
+  {street = "Školská"},
+  {street = "Športovcov"},
+  {street = "Urbárska"},
+  {street = "Vážska"},
+  {street = "Za Soľnou"},
+  {street = "Záhumnie"},
+  {street = "Železničná"},
+  {street = "Obrancov Mieru", written = "Obrancov mieru"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Antonstál"},
+  {street = "Bottova"},
+  {street = "Čerešňová"},
+  {street = "Družstevná"},
+  {street = "Dvorecká"},
+  {street = "Fučíkova"},
+  {street = "Hradná"},
+  {street = "J. Borovského"},
+  {street = "Kukučínova"},
+  {street = "Ľuborčianska"},
+  {street = "M. Gorkého"},
+  {street = "Višňová"},
+  {street = "Závadská"},
+  {street = "Jozefa Lacu", written = "J. Lacu"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Holubyho"},
+  {street = "Sadová"},
+  {street = "Slnečná"},
+  {street = "Stromová"},
+  {street = "Trenčianská", written = "Trenčianska", note = "the register's Trenčianská (only a length mark differs) is the street of the polling station Trenčianska 41 in Kľúčové"},
+  {street = "Záhradná", part = "Kľúčové", note = "Záhradná lies in parts Kľúčové and Nemšová in the register; the document lists it in okrsok 5 (Kľúčové) only, so its Kľúčové addresses are placed here"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Kúty"},
+  {street = "Podhorská"},
+  {street = "Potôčky"},
+]

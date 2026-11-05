@@ -1,0 +1,26 @@
+# Okrsky of Kvetoslavov, transcribed by an AI agent in job okrsok-rules-3641 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Súpisné čísla od 1 do 400
+#   okrsok 2: Súpisné čísla od 401 do 1500
+obec = "501727"
+name = "Kvetoslavov"
+okrsky_note = "The document splits the obec by súpisné číslo only (both okrsky vote in the same room)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-07-06
+okrsky_date_basis = "The notice 'Utvorenie velebných okrskov' on the website is dated 6.7.2023; the PDF (naming the NR SR election of 30.9.2023) states no date. (https://www.obeckvetoslavov.sk/novinka/58648/utvorenie-velebnych-okrskov)"
+
+[[document]]
+url = "https://www.obeckvetoslavov.sk/data/news_files/kvetoslavov.sk/58648/utvorenie-volebnych-okrskov.pdf"
+sha256 = "a065dbd242bf439354d82f4f567e10ea12252400314864ba402cdb0572a5b87d"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do NR SR v roku 2023"
+
+[okrsok.1]
+rules = [
+  {part = "Kvetoslavov", numbers = "1-400"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kvetoslavov", numbers = "401-1500"},
+]

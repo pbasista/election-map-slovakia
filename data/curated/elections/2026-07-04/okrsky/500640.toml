@@ -1,0 +1,29 @@
+# Okrsky of Nové Sady, transcribed by an AI agent in job okrsok-rules-5723 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: okrsok č. 1 je vytvorený pre občanov z Nových Sadov, Kotrbála a Cerovín.
+#   okrsok 2: okrsok č. 2 je vytvorený pre občanov zo Sily.
+obec = "500640"
+name = "Nové Sady"
+okrsky_date = 2026-04-22
+
+[[document]]
+url = "https://novesady.sk/wp-content/uploads/dokumenty/referendum/volebne-okrsky-a-volebne-miestnosti-gaa082.pdf"
+sha256 = "d3c97a5cfc16c2c3686a1ac38f8c801af8a817cc0048ab6c6156b7988ea5377e"
+title = "Oznámenie o utvorení volebných okrskov a určenie volebných miestností pre referendum dňa 4. júla 2026 (22. apríla 2026)"
+
+[[document]]
+url = "https://novesady.sk/dokument/volebne-okrsky-a-volebne-miestnosti/"
+sha256 = "f8e2d7f6cf27e08135261d7c409559b86a550b42922053f26de2341caee6e8a9"
+title = "Volebné okrsky a volebné miestnosti"
+
+[okrsok.1]
+rules = [
+  {part = "Nové Sady", note = "Kotrbál is a settlement the register keeps in part Nové Sady"},
+  {part = "Ceroviny"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Sila"},
+]

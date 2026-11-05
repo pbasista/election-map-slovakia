@@ -1,0 +1,40 @@
+# Okrsky of Kopčany, transcribed by an AI agent in job okrsok-rules-4294 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bratislavská, Kollárova, Sasinkova, Priečna, Slnečná, Športová, Kopčany (občania s trvalým pobytom na adrese obec Kopčany)
+#   okrsok 2: Masarykova, Štefánikovo námestie, Hurbanova, Moravská, Marxova, Damborského
+obec = "504459"
+name = "Kopčany"
+okrsky_date = 2024-01-15
+okrsky_fill = "nearest"
+okrsky_note = "'Kopčany (občania s trvalým pobytom na adrese obec Kopčany)' are voters registered without an address, not houses without a street; the register's houses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.kopcany.sk/e_download.php?file=data/uredni_deska/obsah1016_3.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A1%20miestnos%C5%A5.pdf"
+sha256 = "650698f1fe4acd85ade0df341638180b1aed1281cca67364a174ca43d165b94d"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta SR 2024"
+
+[[document]]
+url = "https://www.kopcany.sk/obcan/volby-a-referendum/volby-prezidenta-sr-2024-1029.html?kshow=3"
+sha256 = "d02357a328105c15ac86bb3ee5871c7c76e9dbe1dd887a792067403519d825a8"
+title = "Election page linking the document"
+
+[okrsok.1]
+rules = [
+  {street = "Bratislavská"},
+  {street = "Kollárova"},
+  {street = "Sasinkova"},
+  {street = "Priečna"},
+  {street = "Slnečná"},
+  {street = "Športová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Masarykova"},
+  {street = "Štefánikovo Námestie", written = "Štefánikovo námestie"},
+  {street = "Hurbanova"},
+  {street = "Moravská"},
+  {street = "Marxova"},
+  {street = "Damborského"},
+]

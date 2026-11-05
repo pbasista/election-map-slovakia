@@ -1,0 +1,47 @@
+# Okrsky of Častá, transcribed by an AI agent in job okrsok-rules-4349 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Andreja Hlinku, Červený Kameň, Družstevná, Fándlyho, Hlavná, Mraznická, Pastierska, Píla-rázcestie, Podzámocká, Zámocká
+#   okrsok 2: ulice: Cintorínska, Kíperská, Karpatská, Mesačná, Na vŕšku, Nová, Podhorská, Poľná, Ružová, Slnečná, Sokolská, Štefanovská, Veterná, Záhradnícka
+obec = "507857"
+name = "Častá"
+okrsky_date = 2024-01-10
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document, read from the rendered page. Differs from the 2022/2023 okrsky: Červený Kameň and Píla-rázcestie move to okrsok 1; Andreja Hlinku and Pastierska stay in 1; Karpatská, Mesačná and Záhradnícka move to okrsok 2. Houses without a street are placed by the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.casta.sk/www/wp-content/uploads/2024/01/20240110161432909.pdf"
+sha256 = "d9b7a43e2698b9115cec6a2a2b9770a607338d81eda91aa5cf07bf514bdbd573"
+title = "Voľby prezidenta Slovenskej republiky v r. 2024 – určenie volebných okrskov a volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Andreja Hlinku"},
+  {part = "Červený Kameň"},
+  {street = "Družstevná"},
+  {street = "Fándlyho"},
+  {street = "Hlavná"},
+  {street = "Mraznická"},
+  {street = "Pastierska"},
+  {street = "Píla-rázcestie"},
+  {street = "Podzámocká"},
+  {street = "Zámocká"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Kíperská"},
+  {street = "Karpatská"},
+  {street = "Mesačná"},
+  {street = "Na vŕšku"},
+  {street = "Nová"},
+  {street = "Podhorská"},
+  {street = "Poľná"},
+  {street = "Ružová"},
+  {street = "Slnečná"},
+  {street = "Sokolská"},
+  {street = "Štefanovská"},
+  {street = "Veterná"},
+  {street = "Záhradnícka"},
+]

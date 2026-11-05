@@ -1,0 +1,49 @@
+# Okrsky of Ražňany, transcribed by an AI agent in job okrsok-rules-5760 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Pečovec, Hlavná ulica č. 135/1 – 235/62, K ihrisku, Pod Haluškovcom, Nová ulica, Čerešňová ulica, K osade a Ku krížu
+#   okrsok 2: Sabinovská ulica, Šalgovská ulica, Konopná ulica, Družstevná ulica, Úzka, Sadová, Surdok, Hlavná č. 242/64 – 267/106, Cintorínska ulica, Rybník, K letisku, Ulica Štefana Onderča
+obec = "525090"
+name = "Ražňany"
+okrsky_fill = "nearest"
+okrsky_note = "Hlavná is split as the document gives it, súpisné/orientačné 135/1 – 235/62 to okrsok 1 and 242/64 – 267/106 to okrsok 2, written here by orientačné číslo; houses with only a súpisné číslo take the okrsok of the nearest address (fill_nearest). Scanned document, read from the page image."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document is undated; its heading names the referendum of 4 July 2026."
+
+[[document]]
+url = "https://www.raznany.sk/modules/file_storage/download.php?file=beb114b9%7C2945"
+sha256 = "f9717f7da3dfe1e39fcf6ae1ee91eb6ee46a81cbb938e4352b407e689abe43df"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre referendum – 04. júla 2026"
+
+[[document]]
+url = "https://www.raznany.sk/samosprava/volby/?page=all"
+sha256 = "4147de6f503ee6719b4c625ebfc8a88188116f54ebb967928581aaa5e618fdb1"
+title = "Voľby (obec's elections page linking the document)"
+
+[okrsok.1]
+rules = [
+  {street = "Pečovec"},
+  {street = "Hlavná", numbers = "1-62, 8A, 39A", note = "135/1 – 235/62 read by orientačné číslo 1–62 (with 8A, 39A), as in the register"},
+  {street = "K ihrisku"},
+  {street = "Pod Haluškovcom"},
+  {street = "Nová"},
+  {street = "Čerešňová"},
+  {street = "K osade"},
+  {street = "Ku krížu"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Sabinovská"},
+  {street = "Šalgovská"},
+  {street = "Konopná"},
+  {street = "Družstevná"},
+  {street = "Úzka"},
+  {street = "Sadová"},
+  {street = "Surdok"},
+  {street = "Hlavná", numbers = "64-106, 100A", note = "242/64 – 267/106 read by orientačné číslo 64–106 (with 100A)"},
+  {street = "Cintorínska"},
+  {street = "Rybník"},
+  {street = "K letisku"},
+  {street = "Ul. Štefana Onderča", written = "Ulica Štefana Onderča"},
+]

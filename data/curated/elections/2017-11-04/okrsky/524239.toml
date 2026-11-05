@@ -1,0 +1,29 @@
+# Okrsky of Brezovica, transcribed by an AI agent in job okrsok-rules-493 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 - do súp. č. 320
+#   okrsok 2: Volebný okrsok č. 2 – od súp. č. 321
+obec = "524239"
+name = "Brezovica"
+okrsky_date = 2017-08-22
+okrsky_note = "The mayor's decision of 22-08-2017 for the regional elections of 4 November 2017 (scan; the 2017 elections page linked it): okrsok 1 up to súpisné č. 320, okrsok 2 from súpisné č. 321."
+
+[[document]]
+url = "https://web.archive.org/web/20220308151302/http://brezovicanadtorysou.sk/images/dokumenty/aktuality/utvorenie_volebnych_okrskov.pdf"
+sha256 = "a0231e393148a711ae2c9315abfa446cf64fc6842f209a4e6fa9ae5c7edd6520"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávnych krajov v roku 2017"
+
+[[document]]
+url = "https://web.archive.org/web/20171027082807/http://www.brezovicanadtorysou.sk:80/index.php/91-zakladna-stranka/193-volby-do-vuc"
+sha256 = "89afc6f494ead7ca6fcaf10d11ba078d3fc7cab717d89e820019b6874f4c7f5c"
+title = "Voľby do VÚC (elections page linking the PDF, archived 2017-10-27)"
+
+[okrsok.1]
+rules = [
+  {part = "Brezovica", numbers = "1-320"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Brezovica", numbers = "321-"},
+]

@@ -1,0 +1,31 @@
+# Okrsky of Kostolné, transcribed by an AI agent in job okrsok-rules-3933 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Voliči: Kostolné
+#   okrsok 2: Voliči: Babulicov Vrch, U Tížikov, U Mihálikov, U Hajtúnov, U Medveďov, U Hučkov.
+obec = "506141"
+name = "Kostolné"
+okrsky_note = "Okrsok 2 also lists the settlements U Tížikov, U Mihálikov, U Hajtúnov, U Medveďov, U Hučkov, which are no parts, streets or k.ú. in the register and the document gives no house numbers; they stay with the part they belong to in the register."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-07-03
+okrsky_date_basis = "The municipality's Voľby do NR SR 2023 page lists the post \"Vyhlásenie volieb a okrsky\" (which links the DOC) as posted on 3. 7. 2023; the DOC itself is undated. (https://web.archive.org/web/20231003011550/https://obeckostolne.estranky.sk/clanky/vo--by/volby-do-narodnej-rady-sr-2023/)"
+
+[[document]]
+url = "https://obeckostolne.estranky.sk/file/253/volby-oznam-okrsky-2023.doc"
+sha256 = "2ecc52a178a668bfa22b8ba8458bab580141ee4311778f982bc769b4bbd83be6"
+title = "OZNAM: Starosta obce Kostolné utvoril dva volebné okrsky pre voľby do NR SR v roku 2023"
+
+[[document]]
+url = "https://web.archive.org/web/20231003011550/https://obeckostolne.estranky.sk/clanky/vo--by/volby-do-narodnej-rady-sr-2023/"
+sha256 = "5f5a416d59ccde30d786bd0d9a5cd39657b4fedb973899a15c2c4f4004af1372"
+title = "Voľby do Národnej rady SR 2023 (rubrika, príspevok „Vyhlásenie volieb a okrsky“ 3. 7. 2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Kostolné"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Babulicov Vrch"},
+]

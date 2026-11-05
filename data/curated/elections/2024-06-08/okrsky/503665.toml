@@ -1,0 +1,232 @@
+# Okrsky of Galanta, transcribed by an AI agent in job okrsok-rules-4667 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ul. Železničiarska 1422, 1423, 1424, 1425, 1427, 1433, 1603, ul. Mierová 1430, 1431, 1432
+#   okrsok 2: ul. Železničiarska 1439, 1440, ul. Česká 1428, 1429, 1437, 1438,1451 ul. Mierová 1434, 1436,3152,3204 ul. Karola Duchoňa ul. Švermova 1457 - DD
+#   okrsok 3: ul. Železničiarska 1441, 1442 ul. Mierová 1435, 1447, 1448, 1449 ul. Švermova 1443, 1444, 1445, 1446
+#   okrsok 4: ul. Bratislavská, Švermova Sládkovičova, kpt. Uhra, Ruská, Česká, T. Vansovej, Urbánkova, Matičná, Železničiarska, Ružová, Vodárenská, Jesenského, sídl. Hanza,
+#   okrsok 5: ul. Bratislavská č. 1458, sídl. JAS 932, 933,934, 935, Clementisove sady 903, 905, 907,3150,3151 ul. Hodská, Ulica Bálinta Balogha, Ulica Alexandra Alagovicha, Ulica Cankova záhrada, Drevená ul. J.M. Petzvala, Staničná, Cintorínska, 29.Augusta
+#   okrsok 6: ul. Poštová 915, Zornička 910, 911, 912,913 ul. Vajanského 909, 870 - 873, 1401, ul. Jazerná, Matúškovska cesta, Mierové nám. 3165 Clementisove sady č.906,908,1410,1617,Hlavná 929 + obyvatelia s trvalým pobytom mesto Galanta
+#   okrsok 7: ul. Šafárikova, Jilemnického, Športová, Nová, Škovránkova, Majakovského, Slnečná, Nemocničná, Mierové nám. č. 941, Námestie detí, Ulica na Štrande
+#   okrsok 8: ul. Krásna, Priečna, Májov.povst. čes. ľudu, ul. Októbrová, Kvetná, Nezábudková, ul. Tulipánová, Palinová, Brečtanová, Jabloňová
+#   okrsok 9: Revolučná štvrť 970, 971, 972, 973, štvrť SNP 955, 995, 1508
+#   okrsok 10: Revolučná štvrť 957, 967, 959, 960, 961,962,963, 964, 965, 969 ul. Štúrova 974, Hlavná 944, 945, 946, 947, 949,951
+#   okrsok 11: štvrť SNP 708,998,997, ul. Hlavná 990, 991, 992, 993,ul. Esterházyovcov 710,3153
+#   okrsok 12: štvrť SNP 1001, 1002, 1003, 1004 štvrť SNP 956, 966, 968, 996
+#   okrsok 13: ul. Z. Kodálya 768 - 786, 1577, 790, 791, 792, 793, 794, Hviezdoslavova Priemyselná, Hlavná 930,978,1409, ul. Poštová 916, Nová Doba 920, 921, 926, ul. Stavbárska 1044, 1045, 1046, 1047, 1048
+#   okrsok 14: ul. Parková 760, 761, Hlavná 988, 989 Nová Doba 925, 927, Esterházyovcov, Štefánikova, Školská, kpt. Nálepku, Úzka, Puškinova, ul. Z. Kodálya 763, 795, 796 Kúpeľná, Veterná, Ulica Pri Derni, Mládežnícka štvrť, Vodná, Čipkéš
+#   okrsok 15: MČ HODY
+#   okrsok 16: MČ JAVORINKA
+#   okrsok 17: MČ NEBOJSA
+#   okrsok 18: Kolónia, Orechová, Lipová, Javorová, Agátová, Gaštanová, Fialková, Topoľová, Poľná, Narcisová Marhuľová, Konvalinková, Vřbová, Hrabová, Egrešová, Dubová, Brezová, Čerešňová, Liesková, Rezedová, Višňová Ulica Richtárske pole, Dvor Garažd, Terezov,Bíbic
+obec = "503665"
+name = "Galanta"
+okrsky_date = 2024-03-04
+okrsky_fill = "nearest"
+okrsky_note = "Numbers are súpisné čísla (blocks of flats). A street named whole in one okrsok and by numbers in another is whole in the first, the numbers being more specific. Unlisted numbers of split streets (Mierová, Hlavná, Clementisove sady, Poštová, Vajanského, Zornička, Revolučná štvrť, Štvrť SNP, Z. Kodálya, Nová Doba, Parková, Mierové námestie, Štúrova, Stavbárska, Sídl. Jas), the register streets the document does not name (Šaľská, Obrancov Mieru) and addresses without a street are placed by fill_nearest. '+ obyvatelia s trvalým pobytom mesto Galanta' (okrsok 6) means voters registered without an address. MČ Hody, Javorinka, Nebojsa are register parts. Streets the register writes twice (29. augusta / 29.augusta, Mierové Nám. / Mierové námestie, Šafarikova / Šafárikova, Škovránkova / Škovránková, Esterházyovcov / ulica Esterházyovcov) are given under both names. Streets the document names but the register lacks (no addresses) are left out: Jabloňová, Vodná, Čipkéš."
+
+[[document]]
+url = "https://www.galanta.sk/evt_file.php?file=8827"
+sha256 = "2a191067dd1f00cf85d8456d47d871ddb48d9266fecf88ac5bc39cad2a67d971"
+title = "Tvorba okrskov EUPA 2024 (4.3.2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Železničiarska", numbers = "1422-1425, 1427, 1433, 1603", by = "supisne"},
+  {street = "Mierová", numbers = "1430-1432", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Železničiarska", numbers = "1439, 1440", by = "supisne"},
+  {street = "Česká", numbers = "1428, 1429, 1437, 1438, 1451", by = "supisne"},
+  {street = "Mierová", numbers = "1434, 1436, 3152, 3204", by = "supisne"},
+  {street = "Ulica Karola Duchoňa", written = "ul. Karola Duchoňa"},
+  {street = "Švermova", numbers = "1457", by = "supisne"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Železničiarska", numbers = "1441, 1442", by = "supisne"},
+  {street = "Mierová", numbers = "1435, 1447-1449", by = "supisne"},
+  {street = "Švermova", numbers = "1443-1446", by = "supisne"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bratislavská"},
+  {street = "Švermova"},
+  {street = "Sládkovičova"},
+  {street = "Ruská"},
+  {street = "Česká"},
+  {street = "T. Vansovej"},
+  {street = "Urbánkova"},
+  {street = "Matičná"},
+  {street = "Železničiarska"},
+  {street = "Ružová"},
+  {street = "Vodárenská"},
+  {street = "Jesenského"},
+  {street = "Kpt. Uhra", written = "kpt. Uhra"},
+  {street = "Sídl. Hanza", written = "sídl. Hanza"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Bratislavská", numbers = "1458", by = "supisne"},
+  {street = "Sídl. Jas", written = "sídl. JAS"},
+  {street = "Clementisove sady", numbers = "903, 905, 907, 3150, 3151", by = "supisne"},
+  {street = "Hodská"},
+  {street = "Ulica Bálinta Balogha"},
+  {street = "Ulica Alexandra Alagovicha"},
+  {street = "Ulica Cankova záhrada"},
+  {street = "Drevená"},
+  {street = "J.M.Petzvala", written = "J.M. Petzvala"},
+  {street = "Staničná"},
+  {street = "Cintorínska"},
+  {street = "29.augusta", written = "29.Augusta"},
+  {street = "29. augusta", written = "29.Augusta"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Poštová", numbers = "915", by = "supisne"},
+  {street = "Zornička"},
+  {street = "Vajanského"},
+  {street = "Jazerná"},
+  {street = "Matúškovská cesta", written = "Matúškovska cesta", note = "typo in the document (Matúškovska for Matúškovská)"},
+  {street = "Mierové Nám.", numbers = "3165", by = "supisne", written = "Mierové nám."},
+  {street = "Mierové námestie", numbers = "3165", by = "supisne", written = "Mierové nám.", note = "the same street under another spelling in the register"},
+  {street = "Clementisove sady", numbers = "906, 908, 1410, 1617", by = "supisne"},
+  {street = "Hlavná", numbers = "929", by = "supisne"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Šafarikova", written = "Šafárikova", note = "the register writes the street both Šafarikova and Šafárikova; the same street"},
+  {street = "Šafárikova"},
+  {street = "Jilemnického"},
+  {street = "Športová"},
+  {street = "Nová"},
+  {street = "Škovránkova"},
+  {street = "Škovránková", written = "Škovránkova", note = "the register writes the street both Škovránkova and Škovránková; the same street"},
+  {street = "Majakovského"},
+  {street = "Slnečná"},
+  {street = "Nemocničná"},
+  {street = "Mierové Nám.", numbers = "941", by = "supisne", written = "Mierové nám."},
+  {street = "Mierové námestie", numbers = "941", by = "supisne", written = "Mierové nám.", note = "the same street under another spelling in the register"},
+  {street = "Námestie detí"},
+  {street = "Ulica na Štrande"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Krásna"},
+  {street = "Priečna"},
+  {street = "ulica Máj. povst. čes. ľ.", written = "Májov.povst. čes. ľudu", note = "Májového povstania českého ľudu, abbreviated differently in the register"},
+  {street = "Októbrová"},
+  {street = "Kvetná"},
+  {street = "Nezábudková"},
+  {street = "Tulipánová"},
+  {street = "Palinová"},
+  {street = "Brečtanová"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Revolučná Štvrť", numbers = "970-973", by = "supisne", written = "Revolučná štvrť"},
+  {street = "Štvrť SNP", numbers = "955, 995, 1508", by = "supisne", written = "štvrť SNP"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Revolučná Štvrť", numbers = "957, 959-965, 967, 969", by = "supisne", written = "Revolučná štvrť"},
+  {street = "Štúrova"},
+  {street = "Hlavná", numbers = "944-947, 949, 951", by = "supisne"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Štvrť SNP", numbers = "708, 997, 998", by = "supisne", written = "štvrť SNP"},
+  {street = "Hlavná", numbers = "990-993", by = "supisne"},
+  {street = "ulica Esterházyovcov", numbers = "710, 3153", by = "supisne", written = "ul. Esterházyovcov"},
+  {street = "Esterházyovcov", numbers = "710, 3153", by = "supisne"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Štvrť SNP", numbers = "956, 966, 968, 996, 1001-1004", by = "supisne", written = "štvrť SNP"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Z.Kodálya", numbers = "768-786, 790-794, 1577", by = "supisne", written = "Z. Kodálya"},
+  {street = "Hviezdoslavova"},
+  {street = "Priemyselná"},
+  {street = "Hlavná", numbers = "930, 978, 1409", by = "supisne"},
+  {street = "Poštová", numbers = "916", by = "supisne"},
+  {street = "Nová Doba", numbers = "920, 921, 926", by = "supisne"},
+  {street = "Stavbárska"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Parková"},
+  {street = "Hlavná", numbers = "988, 989", by = "supisne"},
+  {street = "Nová Doba", numbers = "925, 927", by = "supisne"},
+  {street = "ulica Esterházyovcov", written = "Esterházyovcov"},
+  {street = "Esterházyovcov"},
+  {street = "Štefánikova"},
+  {street = "Školská"},
+  {street = "ulica kpt. Nálepku", written = "kpt. Nálepku"},
+  {street = "Úzka"},
+  {street = "Puškinova"},
+  {street = "Z.Kodálya", numbers = "763, 795, 796", by = "supisne", written = "Z. Kodálya"},
+  {street = "Kúpeľná ulica", written = "Kúpeľná"},
+  {street = "Veterná ulica", written = "Veterná"},
+  {street = "Ulica Pri Derni"},
+  {street = "Mládežnícka štvrť"},
+]
+
+[okrsok.15]
+rules = [
+  {part = "Hody"},
+]
+
+[okrsok.16]
+rules = [
+  {part = "Javorinka"},
+]
+
+[okrsok.17]
+rules = [
+  {part = "Nebojsa"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Kolónia"},
+  {street = "Orechová"},
+  {street = "Lipová"},
+  {street = "Javorová"},
+  {street = "Agátová"},
+  {street = "Gaštanová"},
+  {street = "Fialková"},
+  {street = "Topoľová"},
+  {street = "Poľná"},
+  {street = "Narcisová"},
+  {street = "Marhuľová"},
+  {street = "Konvalinková"},
+  {street = "Vŕbová"},
+  {street = "Hrabová"},
+  {street = "Egrešová"},
+  {street = "Dubová"},
+  {street = "Brezová"},
+  {street = "Čerešňová"},
+  {street = "Liesková ulica", written = "Liesková"},
+  {street = "Rezedová ulica", written = "Rezedová"},
+  {street = "Višňová ulica", written = "Višňová"},
+  {street = "ulica Richtárske pole", written = "Ulica Richtárske pole"},
+  {street = "Dvor Garažd"},
+  {street = "Dvor Terezov", written = "Terezov", note = "the same street under another spelling in the register"},
+  {street = "Dvor Bibic", written = "Bíbic", note = "the same street under another spelling in the register"},
+]

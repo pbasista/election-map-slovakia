@@ -1,0 +1,128 @@
+# Okrsky of Kysucké Nové Mesto, transcribed by an AI agent in job okrsok-rules-062 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Jesenského, M. Nešporu, Benkova, Kysucká
+#   okrsok 2: Sládkovičova
+#   okrsok 3: 9. mája, Horná Skotňa, Pod Lipkou, Tŕstie, Pod Hájom, Štúrova bytové domy súp. č. 1210, 1211, 2591
+#   okrsok 4: Revolučná, ČSA bytové domy súp. č. 1300, 1301, 1302, 1190, 2822, 2823
+#   okrsok 5: Štúrova rodinné domy, Štúrova bytové domy súp. č. 1303, 1304, 1305, SNP, ČSA rodinné domy, ČSA bytový dom súp. č. 1306
+#   okrsok 6: Hviezdoslavova, 1. mája, Belanského, Nám. slobody, Pivovarská, Komenského, Nábrežná + občania KNM bez bližšie určenej adresy trvalého pobytu
+#   okrsok 7: Vajanského, Murgašova, Družstevná, Litovelská
+#   okrsok 8: Matice slovenskej, Kollárova, Lipová, Cesta do Rudiny
+#   okrsok 9: Clementisova, Dlhomíra Poľského
+#   okrsok 10: Bottova, Jarošova, Hálkova, Novomeského, Dolinský potok, Na Podstráni, Kukučinova
+#   okrsok 11: Hurbanova, Dubská cesta, Neslušská cesta, Dubie, Športová, Štefánikova štvrť
+#   okrsok 12: Budatínska Lehota
+#   okrsok 13: Oškerda
+obec = "509256"
+name = "Kysucké Nové Mesto"
+okrsky_date = 2017-08-22
+okrsky_fill = "nearest"
+okrsky_note = "Štúrova and ČSA are split by the súpisné čísla of the blocks of flats the document lists (okrsky 3, 4, 5); their other houses (\"rodinné domy\") are okrsok 5. Budatínska Lehota, Dubie and Oškerda are parts. \"+ občania KNM bez bližšie určenej adresy\" (okrsok 6) are voters without an address, not a rule. Register streets the document does not list, placed by fill_nearest: Dr.G.Schaefflera, Karola Andela, Škorčie, Ulica Jánska, Viliama Galvánka; also the addresses without a street."
+
+[[document]]
+url = "https://web.archive.org/web/20170830145147/http://www.kysuckenovemesto.sk:80/mesto-informuje/items/informacie-pre-volicov-volby-do-vuc-2017.html?file=files/dokumenty/sekcie/obcan/volby/4.11.207/Urcenie+voleb.+okrskov+VUC,+4.11.2017.pdf"
+sha256 = "d101af89504ed9d0d9135527a8342693814e5ad1dced8eb5e6d999d40b2d6cd1"
+title = "Určenie volebných miestností a vytvorenie volebných okrskov pre voľby do zastupiteľstva Žilinského samosprávneho kraja 4.11.2017"
+
+[okrsok.1]
+rules = [
+  {street = "Jesenského"},
+  {street = "M. Nešporu"},
+  {street = "Benkova"},
+  {street = "Kysucká"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Sládkovičova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "9.mája"},
+  {street = "Horná Skotňa"},
+  {street = "Pod Lipkou"},
+  {street = "Tŕstie"},
+  {street = "Pod Hájom"},
+  {street = "Štúrova", numbers = "1210, 1211, 2591", by = "supisne"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Revolučná"},
+  {street = "ČSA", numbers = "1300, 1301, 1302, 1190, 2822, 2823", by = "supisne"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Štúrova"},
+  {street = "Štúrova", numbers = "1303, 1304, 1305", by = "supisne"},
+  {street = "SNP"},
+  {street = "ČSA"},
+  {street = "ČSA", numbers = "1306", by = "supisne"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "1.mája"},
+  {street = "Belanského"},
+  {street = "Námestie slobody", written = "Nám. slobody"},
+  {street = "Pivovarská"},
+  {street = "Komenského"},
+  {street = "Nábrežná"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Vajanského"},
+  {street = "Murgašova"},
+  {street = "Družstevná"},
+  {street = "Litovelská"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Matice slovenskej"},
+  {street = "Kollárova"},
+  {street = "Lipová"},
+  {street = "Cesta do Rudiny"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Clementisova"},
+  {street = "Dlhomíra Poľského"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Bottova"},
+  {street = "Jarošova"},
+  {street = "Hálkova"},
+  {street = "Novomeského"},
+  {street = "Dolinský potok"},
+  {street = "Na Podstráni"},
+  {street = "Kukučinova"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Hurbanova"},
+  {street = "Dubská cesta"},
+  {street = "Neslušská cesta"},
+  {part = "Dubie"},
+  {street = "Športová"},
+  {street = "Štefánikova štvrť"},
+]
+
+[okrsok.12]
+rules = [
+  {part = "Budatínska Lehota"},
+]
+
+[okrsok.13]
+rules = [
+  {part = "Oškerda"},
+]

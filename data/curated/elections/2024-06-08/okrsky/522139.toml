@@ -1,0 +1,36 @@
+# Okrsky of Valaliky, transcribed by an AI agent in job okrsok-rules-4836 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: zahŕňa časť obce Buzice
+#   okrsok 2: zahŕňa časť obce Bernátovce
+#   okrsok 3: zahŕňa časť obce Všechsvätých
+#   okrsok 4: zahŕňa časť obce Košťany
+obec = "522139"
+name = "Valaliky"
+okrsky_date = 2024-02-27
+okrsky_note = "4 okrsky, one per part of the municipality; the same as the copied okrsky (2022-10-29)."
+
+[[document]]
+url = "https://www.valaliky.sk/e_download.php?file=data/uredni_deska/obsah2841_23.pdf&original=utvorenie%20volebnych%20okrskov%20a%20urcenie%20volebnych%20miestnosti.pdf"
+sha256 = "129a06308175fe3b677c3343f9a2ed31f55a7a0b372ae71503c6385951857d68"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby do Európskeho parlamentu 8. júna 2024 (starosta, p. č. 328/913/2024/OU, 27. február 2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Buzice"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Bernátovce"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Všechsvätých"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Košťany"},
+]

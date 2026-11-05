@@ -78,12 +78,22 @@ export const BaseMapIcon = () =>
     <path class="thin" d="M4.5 18.5h2.5M10.75 18.5h2.5M17 18.5h2.5" />
   `);
 
-/* A ballot going into the box: the turnout on the map. */
+/* A ballot going into the box: the 2026 results on the map, a value per
+ * area (a turnout, a candidate's share), on the ballot-box menu's button
+ * and the buttons that put one on the map. */
 export const TurnoutIcon = () =>
   icon(html`
     <path d="M3 12.5h18M4.5 12.5V20h15v-7.5M8 12.5V4h8v8.5" />
     <path class="thin" d="m10 8.3 1.5 1.5 2.6-3" />
   `);
+
+/* A country's outline, long from west to east as Slovakia is: the
+ * turnout of a country-wide contest, beside the overlay icons of the
+ * regular elections' turnouts. */
+export const CountryIcon = () =>
+  icon(
+    html`<path class="fill" d="M1.5 15 4 10.5l4-1.5 2.5-3 4-.5 3.5-2 4.5 2.5-1 4.5-3.5 2-4.5.5-2.5 3-5 1.5-3.5-1z" />`,
+  );
 
 export const SunIcon = () =>
   icon(html`
@@ -192,6 +202,20 @@ export const QrIcon = () =>
  * the election. */
 export const ChairIcon = () => icon(html`<path d="M7 3v18M7 12.5h11V21M7 16.5h11" />`);
 
+/* The person of the seats won (`PersonIcon`) struck through, the figure
+ * cut away along the stroke so that the stroke reads on it at 12 px: a
+ * party that won no seats (ballots.js `NoSeats`). *id*: the mask's, one
+ * of the element's own (an id must be unique in the page). */
+export const NoSeatsIcon = ({ id }) =>
+  icon(html`
+    <mask id=${id}><rect width="24" height="24" fill="#fff" /><path d="M3 3l18 18" stroke="#000" stroke-width="5.5" /></mask>
+    <g mask=${`url(#${id})`}>
+      <circle class="fill" cx="12" cy="7" r="4.5" />
+      <path class="fill" d="M3.5 22a8.5 8.5 0 0 1 17 0z" />
+    </g>
+    <path d="M3 3l18 18" />
+  `);
+
 /* A clock with its hand turned back: the candidate stood for the same
  * office at the election before. */
 export const HistoryIcon = () =>
@@ -202,10 +226,30 @@ export const HistoryIcon = () =>
 export const WithdrawnIcon = () =>
   icon(html`<path d="M10.5 4H5.5v16h5" /><path d="M10 12h10m-3.5-3.5L20 12l-3.5 3.5" />`);
 
-/* The results on the map: a folded map whose panels are shaded apart, as
- * the map colours its areas by them (who got the most votes where, or a
- * candidate's share). A pin would read as a place, as the selected one is
- * drawn. */
+/* An arrow into a 2: through to a presidential round 2 (ballots.js
+ * `ResultTags`). */
+export const AdvancedIcon = () =>
+  icon(html`<path d="M2.5 12h8m-3.2-3.2 3.2 3.2-3.2 3.2" /><path d="M13.8 9.2a3.2 3.2 0 1 1 6 1.6L13.8 18h6.7" />`);
+
+/* An arrow going up beside the lines of a list: elected by preference
+ * votes from lower on the party's list (ballots.js `ResultTags`). */
+export const PreferredIcon = () =>
+  icon(html`<path d="M3.5 6.5h7M3.5 12h7M3.5 17.5h7" /><path d="M17 20.5V4.5m-4 4 4-4 4 4" />`);
+
+/* A person beside the arrows of a swap, in and out, as a substitution is
+ * shown in sport: a list's substitute, who takes a seat its party's member
+ * leaves (ballots.js `ResultTags`). */
+export const SubstituteIcon = () =>
+  icon(html`
+    <circle class="fill" cx="8" cy="7" r="4" />
+    <path class="fill" d="M1 21.5a7 7 0 0 1 14 0z" />
+    <path d="M16.5 7.5h6m-2.5-2.5 2.5 2.5-2.5 2.5M22.5 16h-6m2.5-2.5-2.5 2.5 2.5 2.5" />
+  `);
+
+/* Who got the most votes where on the map: a folded map whose panels are
+ * shaded apart, as the map colours its areas by them (a value per area has
+ * the ballot box, `TurnoutIcon`). A pin would read as a place, as the
+ * selected one is drawn. */
 export const MapResultsIcon = () =>
   icon(html`
     <path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z" />
@@ -234,6 +278,16 @@ export const MedalOutlineIcon = () =>
     <path d="M5.8 2h3.2l2.6 5.8H8.4zM18.2 2H15l-2.6 5.8h3.2z" />
     <path d="M12 9.4 13.4 12.6 16.6 11.3 15.3 14.5 18.5 15.9 15.3 17.3 16.6 20.5 13.4 19.2 12 22.4 10.6 19.2 7.4 20.5 8.7 17.3 5.5 15.9 8.7 14.5 7.4 11.3 10.6 12.6z" />
   `);
+
+/* A person, solid: the seats a party won, beside their number, one for
+ * each member it sends; solid as the medal is, as only winning earns it. */
+export const PersonIcon = () =>
+  icon(html`<circle class="fill" cx="12" cy="7" r="4.5" /><path class="fill" d="M3.5 22a8.5 8.5 0 0 1 17 0z" />`);
+
+/* A page in three columns: the parties' lists in full, in as many columns
+ * as fit (lists.js). */
+export const ColumnsIcon = () =>
+  icon(html`<rect x="3.5" y="4" width="17" height="16" rx="1.5" /><path d="M9.2 4v16M14.8 4v16" />`);
 
 /* The filter's two modes: an open eye, only these are shown; struck
  * through, these are hidden. */
@@ -265,4 +319,72 @@ export const DisputeIcon = () =>
     <circle cx="12" cy="12" r="9.2" />
     <path d="M9.6 9.6a2.5 2.5 0 1 1 3.6 2.2c-.7.4-1.2.9-1.2 1.8" />
     <circle class="fill" cx="12" cy="16.8" r="1.2" />
+  `);
+
+/* The kinds of election (kinds.js `kindIcon`), each a line drawing of what
+ * it elects or asks, beside its name in the switcher's timeline and
+ * headings and in the badge on the title's pin: two houses, a town (the
+ * municipal and regional elections); a ballot paper with a plus, an extra
+ * election (the by-elections, held in some places between the regular
+ * ones); a person with a sash (the president); a ballot paper asking a
+ * question (a referendum); a building with columns under a dome (the
+ * National Council); a ring of stars (the European Parliament). */
+export const KIND_ICON = {
+  'municipal-regional': () =>
+    icon(html`
+      <path d="M3 20.5V11.5l4.5-4 4.5 4v9" />
+      <path d="M12 20.5V9l4.5-4L21 9v11.5" />
+      <path d="M2 20.5h20M6.5 20.5v-4h2v4" />
+    `),
+  'by-election': () =>
+    icon(html`
+      <rect x="5" y="3" width="14" height="18" rx="1.5" />
+      <path d="M12 8.5v7M8.5 12h7" />
+    `),
+  presidential: () =>
+    icon(html`
+      <circle cx="12" cy="7" r="3.5" />
+      <path d="M5 21a7 7 0 0 1 14 0" />
+      <path d="m7.4 15.2 6.3 5.8M9.2 13.8l6.3 5.8" />
+    `),
+  referendum: () =>
+    icon(html`
+      <rect x="5" y="3" width="14" height="18" rx="1.5" />
+      <path d="M9.7 9.4a2.3 2.3 0 1 1 3.3 2.1c-.7.4-1 .8-1 1.5" />
+      <circle class="fill" cx="12" cy="16.4" r="1.1" />
+    `),
+  parliament: () =>
+    icon(html`
+      <path d="M8 9.5a4 4 0 0 1 8 0M12 5.5V3.5" />
+      <path d="M4.5 9.5h15M5.5 12.5h13M3.5 20.5h17" />
+      <path d="M7 12.5v8M10.3 12.5v8M13.7 12.5v8M17 12.5v8" />
+    `),
+  european: () =>
+    icon(html`
+      <circle class="fill" cx="12" cy="4.5" r="1.5" />
+      <circle class="fill" cx="17.3" cy="6.7" r="1.5" />
+      <circle class="fill" cx="19.5" cy="12" r="1.5" />
+      <circle class="fill" cx="17.3" cy="17.3" r="1.5" />
+      <circle class="fill" cx="12" cy="19.5" r="1.5" />
+      <circle class="fill" cx="6.7" cy="17.3" r="1.5" />
+      <circle class="fill" cx="4.5" cy="12" r="1.5" />
+      <circle class="fill" cx="6.7" cy="6.7" r="1.5" />
+    `),
+};
+
+/* The switcher's two views of the elections (search.js): a calendar page,
+ * the timeline, every election by its date; a list with its bullets, the
+ * elections in groups by kind. */
+export const CalendarIcon = () =>
+  icon(html`
+    <rect x="3.5" y="5" width="17" height="15.5" rx="2" />
+    <path d="M8 3v4M16 3v4M3.5 10.5h17" />
+  `);
+
+export const ListIcon = () =>
+  icon(html`
+    <circle class="fill" cx="4.8" cy="6" r="1.4" />
+    <circle class="fill" cx="4.8" cy="12" r="1.4" />
+    <circle class="fill" cx="4.8" cy="18" r="1.4" />
+    <path d="M9.5 6H20M9.5 12H20M9.5 18H20" />
   `);

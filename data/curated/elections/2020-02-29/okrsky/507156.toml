@@ -1,0 +1,68 @@
+# Okrsky of Jaslovské Bohunice, transcribed by an AI agent in job okrsok-rules-2613 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice Blavská, Cintorínska, Hlavná Bohunice, Hlavná Jaslovce, Na rybníku, Námestie sv. Michala, Nová, Záhradná, Záhumenická, občania s trvalým pobytom na obec Jaslovské Bohunice
+#   okrsok 2: ulice Agatova, Čerešňová, Gaštanová, Jabloňová, Javorová, Krátka, Krížna, Lipová, Orechová, Sídlisko, Šidúnky, Školská, Športová, Trnavská
+#   okrsok 3: časti Paderovce: ulice Hlavná Paderovce, Lúčna a Poľná
+obec = "507156"
+name = "Jaslovské Bohunice"
+okrsky_date = 2019-11-05
+okrsky_fill = "nearest"
+okrsky_note = "Decision of the mayor OcÚ/1414/2019/04309 of 5.11.2019 (scanned PDF, read by OCR; text from the web page, which repeats it). \"Športová\" is not in the address register, left out. \"občania s trvalým pobytom na obec\" are residents without an address, not a rule; the register's addresses without a street go by fill_nearest. Differs from the copied 2022 okrsky only in naming neither Dubová nor Na mlyne (supplemented as in 2022)."
+okrsky_supplemented = 2022-08-03
+okrsky_supplemented_from = "document"
+okrsky_supplement_basis = "The 2019 document omits the streets Dubová (a new street in Bohunice, 17 addresses) and Na mlyne (1 address in Jaslovce); the 2022 okrsky page of the same three okrsky (as do the 2018 page and the January 2023 referendum page) puts Dubová in okrsok 2 and Na mlyne in okrsok 1; only these two streets are taken from it. (https://www.jaslovske-bohunice.sk/obec-2/volby/samosprava-a-samospravne-kraje/2022/zverejnenie-okrskov-a-sidla-volebnych-miestnosti-1534sk.html)"
+
+[[document]]
+url = "https://www.jaslovske-bohunice.sk/obec-2/volby/narodna-rada-sr/volby-do-nr-sr-2020/vytvorenie-okrskov-pre-volby-do-nr-sr-2020-1199sk.html"
+sha256 = "31bd1ad57c9daddba79f2ab057e4ffbf7359babd98634b4bae98d3667b54b58e"
+title = "Vytvorenie okrskov pre voľby do NR SR 2020 (5. 11. 2019)"
+
+[[document]]
+url = "https://www.jaslovske-bohunice.sk/evt_file.php?file=27007"
+sha256 = "7b96e997ece792049d79cc163e2990b249a322f3943c2e1f340c7d671696a128"
+title = "Vytvorenie volebných okrskov, OcÚ/1414/2019/04309, 5.11.2019 (okrsky.pdf, scan)"
+
+[[document]]
+url = "https://www.jaslovske-bohunice.sk/obec-2/volby/samosprava-a-samospravne-kraje/2022/zverejnenie-okrskov-a-sidla-volebnych-miestnosti-1534sk.html"
+sha256 = "c0e5bc3c9e67a2a05c36d1ab4c01b6e2012d3f09004c19f36884acff5eb9235c"
+title = "Zverejnenie okrskov a sídla volebných miestností (2022, later source for Dubová and Na mlyne)"
+
+[okrsok.1]
+rules = [
+  {street = "Blavská"},
+  {street = "Cintorínska"},
+  {street = "Hlavná Bohunice"},
+  {street = "Hlavná Jaslovce"},
+  {street = "Na rybníku"},
+  {street = "Námestie sv. Michala"},
+  {street = "Nová"},
+  {street = "Záhradná"},
+  {street = "Záhumenická"},
+  {street = "Na Mlyne", note = "Not named in the 2019 document; the 2022 document (and those of 2018 and January 2023) put Na mlyne in okrsok 1.", supplemented = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová", written = "Agatova", note = "\"Agátova\" is the register's Agátová (accent typo)."},
+  {street = "Čerešňová"},
+  {street = "Gaštanová"},
+  {street = "Jabloňová"},
+  {street = "Javorová"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Lipová"},
+  {street = "Orechová"},
+  {street = "Sídlisko"},
+  {street = "Šidúnky"},
+  {street = "Školská"},
+  {street = "Trnavská"},
+  {street = "Dubová", note = "Not named in the 2019 document; the 2022 document (and those of 2018 and January 2023) put Dubová in okrsok 2.", supplemented = true},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hlavná Paderovce"},
+  {street = "Lúčna"},
+  {street = "Poľná"},
+]

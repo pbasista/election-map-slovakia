@@ -1,0 +1,52 @@
+# Okrsky of Brodské, transcribed by an AI agent in job okrsok-rules-4925 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1.mája, Hamre, Komenského, Kradlov, Letná, Martina Čulena, Nábrežná, Nám. SNP, Záhumenská, Brodské (občania s trvalým pobytom na adrese obec Brodské)
+#   okrsok 2: Drahy, Dukelská, Hviezdoslavova, Kukučínova, Krátka, Mierová, Nádražná, Nálepkova, Nová, Školská, Športová, Štefánikova, Štúrova, Vajanského
+obec = "504271"
+name = "Brodské"
+okrsky_fill = "nearest"
+okrsky_note = "\"Občania s trvalým pobytom na adrese obec Brodské\" (okrsok 1) are voters registered without an address; the register's one house without a street is placed by fill_nearest."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated decision names the European Parliament election of 08. júna 2024."
+
+[[document]]
+url = "https://brodske.sk/wp-content/uploads/dokumenty/volby-do-europarlamentu/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-do-europskeho-parlamentu-ivpovd.pdf"
+sha256 = "c29e532f5056ca42e7f439aacd612219e10cd54cf107e92df5ad3107cb91975b"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu (8. júna 2024)"
+
+[[document]]
+url = "https://brodske.sk/dokument/volby-do-europskeho-parlamentu-na-uzemi-slovenskej-republiky/"
+sha256 = "bb169d37e80d4905082124c5baf68030da5086b57b3824141850bc358ed0c274"
+title = "page linking the document"
+
+[okrsok.1]
+rules = [
+  {street = "1.mája"},
+  {street = "Hamre"},
+  {street = "Komenského"},
+  {street = "Kradlov"},
+  {street = "Letná"},
+  {street = "Martina Čulena"},
+  {street = "Nábrežná"},
+  {street = "Nám. SNP"},
+  {street = "Záhumenská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Drahy"},
+  {street = "Dukelská"},
+  {street = "Hviezdoslavova"},
+  {street = "Kukučínova"},
+  {street = "Krátka"},
+  {street = "Mierová"},
+  {street = "Nádražná"},
+  {street = "Nálepkova"},
+  {street = "Nová"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Vajanského"},
+]

@@ -1,0 +1,26 @@
+# Okrsky of Rykynčice, transcribed by an AI agent in job okrsok-rules-3295 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: VO č. 1 - Horné Rykynčice - kultúrny dom - občania s trvalým pobytom Horné Rykynčice
+#   okrsok 2: VO č. 2 - Dolné Rykynčice - kultúrny dom - občania s trvalým pobytom Dolné Rykynčice
+obec = "518701"
+name = "Rykynčice"
+okrsky_note = "Each okrsok is the part it is named after: okrsok 1 Horné Rykynčice, okrsok 2 Dolné Rykynčice."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-08
+okrsky_date_basis = "The okrsky are stated on the municipality's page of the referendum (of 21 January 2023), posted 08.11.2022; no decision date is given. (https://www.rykyncice.sk/referendum-a73-404)"
+
+[[document]]
+url = "https://www.rykyncice.sk/referendum-a73-404"
+sha256 = "c7254d19bc0b68943133dd28c61ef3208ed6c5f4f910ea46c1fc14aa7e8917b7"
+title = "Rykynčice – Voľby: Referendum"
+
+[okrsok.1]
+rules = [
+  {part = "Horné Rykynčice"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dolné Rykynčice"},
+]

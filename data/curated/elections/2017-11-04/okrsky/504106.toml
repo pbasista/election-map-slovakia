@@ -1,0 +1,38 @@
+# The okrsky of Trstice of the vote of 2022-10-29, data/curated/elections/2022-10-29/okrsky/504106.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Trstice, transcribed by an AI agent in job okrsok-rules-738 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Okrsok č. 1 - Obecný úrad, pre voličov s trvalým pobytom od súp. č. 1 – 450
+#     okrsok 2: Okrsok č. 2 - Kultúrny dom, pre voličov s trvalým pobytom od súp. č. 451 – 900. Do tohto okrsku boli zaradení i občania, ktorým boli zrušené trvalé pobyty.
+#     okrsok 3: Okrsok č. 3 - Základná škola, pre voličov s trvalým pobytom od súp. č. 901 – 1500
+obec = "504106"
+name = "Trstice"
+okrsky_date = 2022-10-06
+okrsky_note = "Scanned, undated announcement; date = its posting date on the official notice board ('Vyvesené: 6. 10. 2022', also shown as 06.okt 2022 in the archived 2022 notice-board page, snapshot 20221024203507). The okrsky are ranges of súpisné čísla (1-450, 451-900, 901-1500). Okrsok 2 also holds the citizens whose permanent residence was cancelled (registered only to the obec), which has no address of its own."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-214): No okrsky document for the regional elections of 4 November 2017 on trstice.sk. The 2017 notice-board items are only the generic 'Informácie pre voliča' (item 30, 3.7.2017) and the candidate lists (items 36, 37); no 'utvorenie volebných okrskov' was posted, and the archived radio announcements of October/November 2017 do not mention the okrsky. The first okrsky document on the site is that of 29.10.2022 (súp. č. 1–450, 451–900, 901–1500), which is not valid for 2017. Every item of the official notice board (úradná tabuľa, items 1–444, 2016–2026, incl. the items migrated from the old Joomla site) was listed by id and every election item opened; the Internet Archive (CDX of trstice.sk, old site trstice.sk/sk/aktuality/…) was searched for election pages and radio announcements (hlásenie miestneho rozhlasu) around the vote; the IA was slow and often refused connections, but the pages listed in tried were retrieved. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2022-10-29: 1: 1,052 → 1,014, 2: 1,017 → 1,030, 3: 1,147 → 1,203."
+
+[[document]]
+url = "https://www.trstice.sk/e_download.php?file=/data/uredni_deska/obsah222_1.pdf&original=Utvorenie+volebn%C3%BDch+okrskor.pdf"
+sha256 = "1af59ad442e5b9224978e6447bc2125ba5d7dae15f8ab16f5e74e03f00a454f4"
+title = "Utvorenie volebných okrskov v Trsticiach pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov dňa 29.10.2022"
+
+[[document]]
+url = "https://www.trstice.sk/urad/uradna-tabula-2/utvorenie-volebnych-okrskov-v-trsticiach-pre-volby-do-organov-samospravy-obci-a-do-organov-sampravnych-krajov-29102022-222.html"
+sha256 = "30fff5563b8d15bae6711d8cbc798ffef7c24635cc92e3bc41afb2dea41334a4"
+title = "Úradná tabuľa: Utvorenie volebných okrskov v Trsticiach … 29.10.2022 (vyvesené 6. 10. 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Trstice", numbers = "1-450"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Trstice", numbers = "451-900"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Trstice", numbers = "901-1500"},
+]

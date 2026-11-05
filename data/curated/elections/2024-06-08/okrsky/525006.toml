@@ -1,0 +1,42 @@
+# Okrsky of Pečovská Nová Ves, transcribed by an AI agent in job okrsok-rules-5015 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Pravá strana hlavnej cesty I/68 v smere Sabinov – Lipany.
+#   okrsok 2: Ľavá strana hlavnej cesty I/68 v smere Sabinov – Lipany.
+obec = "525006"
+name = "Pečovská Nová Ves"
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky are split by road I/68 (ulica Hlavná): right side heading Sabinov→Lipany (north-east) okrsok 1, left side okrsok 2. Streets placed by their OpenStreetMap position relative to Hlavná (all inferred). Left to fill_nearest (nearest address): Hlavná and the addresses without a street. The document states no decision date."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names the elections to the European Parliament 2024 and their day, 8 June 2024; it is undated (the file was re-uploaded 2025-07-03)."
+
+[[document]]
+url = "https://www.pecovska.sk/files/obsahy-stranok/volby/2025-07-03-112239-Ozn__menie_o_utvoren___volebn__ch_okrskov_a_ur__en___volebn__ch_miestnost___pre_vo__by_do_Eur__pskeho_parlamentu_2024.pdf"
+sha256 = "2b18327508a92b1a83019cc0aeaf8bc2c34e88bbc4c1820c3e7f6a7c8f32f81f"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností v obci Pečovská Nová Ves pre voľby do Európskeho parlamentu 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Kvetná", note = "The document only says the okrsok is the right side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Ľutinská", note = "The document only says the okrsok is the right side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Na Hliník", note = "The document only says the okrsok is the right side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Na Pečovec", note = "The document only says the okrsok is the right side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Rómska", note = "The document only says the okrsok is the right side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Za Majerom", note = "The document only says the okrsok is the right side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Záhradná", note = "The document only says the okrsok is the right side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Jabloňová", note = "The document only says the okrsok is the left side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Južná", note = "The document only says the okrsok is the left side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Kostolná", note = "The document only says the okrsok is the left side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Mlynská", note = "The document only says the okrsok is the left side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Na Dujave", note = "The document only says the okrsok is the left side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Na Rybníkoch", note = "The document only says the okrsok is the left side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Na Trubalovec", note = "The document only says the okrsok is the left side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Orgovánova", note = "The document only says the okrsok is the left side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Poľský Dvor", note = "The document only says the okrsok is the left side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Školská", note = "The document only says the okrsok is the left side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Za Ľutinkou", note = "The document only says the okrsok is the left side of road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+]

@@ -1,0 +1,78 @@
+# Council obvody of Jaslovské Bohunice (507156), Trnava.
+# Transcribed by an AI agent in job obvod-rules-158 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: volebný obvod č. 1 pre časti Jaslovce a Bohunice; Pre volebný obvod č.1 je to 8 poslancov
+#   obvod 2: volebný obvod č.2 pre časť Paderovce; pre volebný obvod č.2 je to 1 poslanec
+# Okrsky added by an AI agent in job okrsok-rules-5899 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Blavská, Cintorínska, Hlavná Bohunice, Hlavná Jaslovce, Na mlyne, Na rybníku, Námestie sv. Michala, Nová, Záhradná, Záhumenická a obyvatelia s trvalým pobytom na obec Jaslovské Bohunice
+#   okrsok 2: ulice: Agátova, Čerešňová, Dubová, Gaštanová, Jabloňová, Javorová, Krátka, Krížna, Lipová, Orechová, Sídlisko, Šidúnky, Školská, Športová, Trnavská
+#   okrsok 3: ulice: Hlavná Paderovce, Lúčna, Poľná
+obec = "507156"
+name = "Jaslovské Bohunice"
+date = 2018-08-06
+note = "Obvody and seats from council resolutions 688/VII and 689/VII of 6.8.2018 as published on the 2018 elections page (posted 7. 8. 2018)."
+okrsky_fill = "nearest"
+okrsky_note = "'Športová' (okrsok 2) is not in the address register, left out. 'obyvatelia s trvalým pobytom na obec' (okrsok 1) are residents without an address, not a rule; the register's addresses without a street in obvod 1 go by fill_nearest."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2018-08-28
+okrsky_date_basis = "The page states 'Dátum vloženia: 28. 8. 2018 15:06' (the 2018 elections page lists it under 'Dátum: 28. 8. 2018'); the mayor's decision it reports states no date of its own. (https://www.jaslovske-bohunice.sk/obec-2/volby/samosprava/2018/vytvorenie-volebnych-okrskov-1018sk.html)"
+
+[[document]]
+url = "https://www.jaslovske-bohunice.sk/obec-2/volby/samosprava/2018/volebne-obvody-a-pocty-poslancov-1011sk.html"
+sha256 = "7f3362486bf1d73547d54117491cabb27b9d54a3705046448a85b68be14fa763"
+title = "Volebné obvody a počty poslancov (OZ 6.8.2018, uzn. 688/VII a 689/VII)"
+
+[[document]]
+url = "https://www.jaslovske-bohunice.sk/obec-2/volby/samosprava/2018/vytvorenie-volebnych-okrskov-1018sk.html"
+sha256 = "d646639c9fe4589c6e9b45881a202ce486ab42eae25d935c507ecfdd24e122d5"
+title = "Vytvorenie volebných okrskov (voľby do orgánov samosprávy obcí 10. novembra 2018), vložené 28. 8. 2018"
+
+[obvod.1]
+seats = 8
+okrsky = [1, 2]
+rules = [
+  {part = "Jaslovce"},
+  {part = "Bohunice"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [3]
+rules = [
+  {part = "Paderovce"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Blavská"},
+  {street = "Cintorínska"},
+  {street = "Hlavná Bohunice"},
+  {street = "Hlavná Jaslovce"},
+  {street = "Na Mlyne", written = "Na mlyne"},
+  {street = "Na rybníku"},
+  {street = "Námestie sv. Michala"},
+  {street = "Nová"},
+  {street = "Záhradná"},
+  {street = "Záhumenická"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová", written = "Agátova", note = "'Agátova' is the register's Agátová (length mark on the ending), the same street in Bohunice"},
+  {street = "Čerešňová"},
+  {street = "Dubová"},
+  {street = "Gaštanová"},
+  {street = "Jabloňová"},
+  {street = "Javorová"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Lipová"},
+  {street = "Orechová"},
+  {street = "Sídlisko"},
+  {street = "Šidúnky"},
+  {street = "Školská"},
+  {street = "Trnavská"},
+]

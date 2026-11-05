@@ -1,0 +1,63 @@
+# Okrsky of Malá Ida, transcribed by an AI agent in job okrsok-rules-2644 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Pažitná, Skladná, Letná, Idanská, Pri splave, Bočná, Tichá, Zlaté pole, K ihrisku, Mlynská, Školská, Svetlá, Vodná, Obec Malá Ida, Pod Dúbravou
+#   okrsok 2: Konvalinková, Slnečnicová, Ružová, Tulipánová, Orgovánová, Narcisová, Brezová, Lipová, Zvončeková, Smreková, s.č. 332, Kvetná, Šalviová, Borovicová, Kamilková, Levanduľová, Medovková, Prvosienková, Púpavová, Jahodová, Malinová, Bukovecká, Pri hati, Hlavná, Zimná
+obec = "521655"
+name = "Malá Ida"
+okrsky_fill = "nearest"
+okrsky_note = "'Obec Malá Ida' in okrsok 1 means voters registered without an address (no rule). Register streets the document does not name (Nevädzová) and the houses without a street are placed by fill_nearest."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the document's text names the vote: 'utvorila volebné okrsky a volebné miestnosti pre voľby do Národnej rady Slovenskej republiky 2020'; it states no date"
+
+[[document]]
+url = "https://www.malaida.sk/modules/file_storage/download.php?file=a5c9323e%7C188"
+sha256 = "007b5fc48cd241890f64284b52f7d756f93bd386cade349c068b210e2ccd4bef"
+title = "Oznámenie o utvorení volebných okrskov a volebných miestností pre voľby do NR SR 2020 (Volebné okrsky)"
+
+[okrsok.1]
+rules = [
+  {street = "Pažitná"},
+  {street = "Skladná"},
+  {street = "Letná"},
+  {street = "Idanská"},
+  {street = "Pri Splave", written = "Pri splave"},
+  {street = "Bočná"},
+  {street = "Tichá"},
+  {street = "Zlaté Pole", written = "Zlaté pole"},
+  {street = "K ihrisku"},
+  {street = "Mlynská"},
+  {street = "Školská"},
+  {street = "Svetlá"},
+  {street = "Vodná"},
+  {street = "Pod Dúbravou"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Konvalinková"},
+  {street = "Slnečnicová"},
+  {street = "Ružová"},
+  {street = "Tulipánová"},
+  {street = "Orgovánová"},
+  {street = "Narcisová"},
+  {street = "Brezová"},
+  {street = "Lipová"},
+  {street = "Zvončeková"},
+  {street = "Smreková"},
+  {part = "Malá Ida", numbers = "332", note = "a house without a street, by súpisné číslo"},
+  {street = "Kvetná"},
+  {street = "Šalviová"},
+  {street = "Borovicová"},
+  {street = "Kamilková"},
+  {street = "Levanduľová"},
+  {street = "Medovková"},
+  {street = "Prvosienková"},
+  {street = "Púpavová"},
+  {street = "Jahodová"},
+  {street = "Malinová"},
+  {street = "Bukovecká"},
+  {street = "Pri Hati", written = "Pri hati"},
+  {street = "Hlavná"},
+  {street = "Zimná"},
+]

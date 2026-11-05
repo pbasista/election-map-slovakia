@@ -1,0 +1,539 @@
+# Okrsky of Bratislava-Petržalka, transcribed by an AI agent in job okrsok-rules-1675 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: DARGOVSKÁ 43, 45, 47, 49, 51, 59, 63, 65; GOGOĽOVA 9, 11, 26; GORALSKÁ 43, 45, 47, 49, 49A, 51; HROBÁRSKA 3, 4, 5, 6, 9, 10, 12A; KAUKAZSKÁ 16, 18, 41; KOPČIANSKA 8, 10, 78, 80, 82, 82H, 86, 88, 90; KUBÍNSKA 35, 39, 43, 48, 50, 53, 57, 62, 63; OČOVSKÁ 2, 4, 6, 8, 10, 12; NÁBREŽNÁ 2, 4, 6, 8, 12, 14, 15, 16, 18, 20, 24, 26, 34; VIEDENSKÁ CESTA 7, 8, 26, 36, 37, 38; VRANOVSKÁ 2, 6, 6A, 21, 27, 37, 39, 51, 53, 54, 55, 57, 59, 60, 61, 63, 65, 67
+#   okrsok 2: VILOVÁ 5, 6, 7, 9, 11, 13, 15, 17, 19, 19A, 21, 23, 25, 27, 29, 31, 33, 35, 37; RUSOVSKÁ CESTA 5, 7, 9, 11, 13, 14, 15, 17, 22, 28, 34; DUBNICKÁ 2, 4; HANDLOVSKÁ 1, 1A, 2, 4, 5, 6, 8, 10, 12, 14, 15, 17, 18, 20, 21, 22, 23, 26, 27, 28, 29, 31, 33, 33A, 35, 39, 41, 45; HARMANECKÁ 2, 4, 6; JAROSLAVOVA 8, 10, 11, 12, 12A, 13, 15, 15A, 16, 19, 21, 23; KEŽMARSKÉ NÁM. 1, 3, 4, 4A, 5, 6, 7, 7A; KREMNICKÁ 7, 9, 10, 11, 13, 16, 17, 18, 19, 20, 21, 22, 23, 25, 26, 27, 29, 33; KRUPINSKÁ 2; LEVOČSKÁ 7, 7A, 11, 13, 24, 32, 34, 38; ĽUBIETOVSKÁ 2, 4, 4A, 6, 8, 12, 14, 16; NOVOBANSKÁ 1, 3, 4, 5, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17; PROKOPOVA 1, 2, 5, 6, 8, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 24, 25, 26, 27, 28.29, 30, 32, 35, 36, 39, 40, 42, 44, 45, 48, 50; ÚDERNÍCKA 2, 2A, 2B, 6, 9, 10, 24
+#   okrsok 3: GERCENOVA 1, 2, 2A, 2B, 3, 4, 4A, 5, 6, 6A, 6B, 6C, 7, 8A, 8H, 9, 11, 13, 15, 17, 19, 21, 23, 27; DALIBOROVO NÁM. 3
+#   okrsok 4: PEČNIANSKA 1, 3, 5, 7, 8, 9, 10, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33
+#   okrsok 5: ZÁPOROŽSKÁ 1, 2, 3, 4, 6, 7, 9, 12; BOHROVA 1, 3, 5, 7, 9, 11; PLANCKOVA 1, 2, 3, 4; ZADUNAJSKÁ CESTA 1, 3, 5, 6, 6A, 7, 8, 9, 27
+#   okrsok 6: KAPICOVA 1, 2, 4, 5, 6, 7, 11, 13, 15; GERCENOVA 29, 31, 33, 35; NOBELOVO NÁM. 6, 7, 8, 9, 10
+#   okrsok 7: RŐNTGENOVA 2, 4, 6, 8, 10, 12, 14, 16, 18, 20; LENARDOVA 2, 4, 6, 8, 10, 12, 14, 16, 18
+#   okrsok 8: JUNGMANNOVA 2, 4, 6, 8, 10, 12, 14, 16, 18, 20; WOLKROVA 1, 3, 5, 7; VLASTENECKÉ NÁM. 1, 3, 7, 8, 9, 10
+#   okrsok 9: VAVILOVOVA 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26; WOLKROVA 9, 11
+#   okrsok 10: WOLKROVA 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45
+#   okrsok 11: ČERNYŠEVSKÉHO 1, 3, 5, 7, 8, 9, 11, 12, 13, 15, 17, 18, 19, 21, 22, 23, 29, 31, 33, 35, 37, 39, 40, 46
+#   okrsok 12: KRASOVSKÉHO 13; MACHAROVA 1, 3, 5, 7, 9, 11; MUCHOVO NÁM. 3, 4; FARSKÉHO 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22
+#   okrsok 13: MÁNESOVO NÁM. 1, 2, 3, 4, 5, 6, 7, 8; PIFFLOVA 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+#   okrsok 14: BELINSKÉHO 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17,
+#   okrsok 15: BELINSKÉHO 18, 19, 20, 21, 22, 23, 24, 25; RUSOVSKÁ CESTA 50, 52, 54, 56; ŠEVČENKOVA 24, 26, 28; HÁLOVA 19, 20; PANONSKA CESTA 4, 4A, 8
+#   okrsok 16: HÁLOVA 2, 4, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18,
+#   okrsok 17: ŠEVČENKOVA 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22,
+#   okrsok 18: ČAPAJEVOVA 2, 3, 5; KOLMÁ 8; PROKOFIEVOVA 4, 5, 14, 16; ANDRUSOVOVA 1, 2, 3, 4, 5, 6, 7, 8, 9A. 9B, 10, 11; FEDINOVA 22, 24
+#   okrsok 19: FEDINOVA 1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 16A, 18, 20
+#   okrsok 20: ŠEVČENKOVA 1, 3, 5, 7, 9, 13, 15, 17, 19, 25, 27, 29, 31, 33, 35
+#   okrsok 21: ŠVABINSKÉHO 1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 15, 16, 17, 18, 20, 22
+#   okrsok 22: IĽJUŠINOVA 1, 4, 6, 8, 10, 12, 14; JIRÁSKOVA 2, 4, 6, 8, 10
+#   okrsok 23: MARKOVA 3, 5, 7, 9, 11, 13, 15; TUPOLEVOVA 14, 16, 18, 20, 22, 24; PAJŠTÚNSKA 1, 3, 5, 7, 9
+#   okrsok 24: TUPOLEVOVA 1, 2, 3, 4, 5, 6A, 6B, 7, 8, 9, 10, 11, 12, 13, 15, 17, 19
+#   okrsok 25: HROBÁKOVA 1, 2, 3, 4, 5, 10, 11, 12, 13, 14, 15, 20, 22, 24, 26, 32, 38, 40, 42, 44
+#   okrsok 26: STAROHÁJSKA 4, 5, 6, 10; ROVNIANKOVA 1, 2, 3A, 4, 5, 6; HROBÁKOVA 7, 8, 9
+#   okrsok 27: ROVNIANKOVA 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
+#   okrsok 28: AMBROSEHO 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 17, 19; BRADÁČOVA 1, 2, 4, 5,
+#   okrsok 29: BRADÁČOVA 6; ROMANOVA 1, 3, 5, 9; ROVNIANKOVA 18, 20, 22, 24
+#   okrsok 30: ROMANOVA 2, 4, 6, 8, , 10, 11, 12, 13, 15, 19, 21, 22, 23, 24, 26, 27, 28, 29, 30, 32, 33, 34, 35, 36, 37, 38, 40
+#   okrsok 31: KUTLÍKOVA 1, 2, 3, 5, 7, 9, 11, 13, 13A, 13B, 13C, 13D, 13E, 1F, 13G, 13H, 13I, 13J; ROMANOVA 42, 44, 46; DUDOVA 1, 2, 4; BRATISLAVA - PETRŽALKA
+#   okrsok 32: GESSAYOVA 11, , 13, 15, 17, 19, 21, 23, 25, 31, 33, 35, 37, 39, 41, 43, 45, 47
+#   okrsok 33: OSUSKÉHO 1, 1A, 2, 3, 3A, 3B, 3C, 3D, 5, 7, 40; GESSAYOVA 2, 6, 10, 12, 14, 16, 18, 20
+#   okrsok 34: OSUSKÉHO 4, 6, 8, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 42, 44, 46
+#   okrsok 35: NÁM. HRANIČIAROV 2, 2A, 4A, 4B, 6A, 6B, 8A, 8B, 10, 12, 14, 16, 18, 20
+#   okrsok 36: FURDEKOVA 3, 4, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25; FURDOKOVA 6, 8, 10, 12, 14
+#   okrsok 37: LACHOVA 29.33, 35, 37, 39
+#   okrsok 38: LACHOVA 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 32,
+#   okrsok 39: NÁM. HRANIČIAROV 1, 3, 5, 7, 9, 11, 13, 17, 19, 21, 23, 27, 29, 31, 33, 35, 37, 39; FURDEKOVA 1, 2
+#   okrsok 40: HAANOVA 1, 2, 3, 4, 6, 7, 8, 9, 11, 13, 14, 14A, 15, 16, 17, 18, 19, 20, 21, 22, 24, 26, 28, 31, 33, 35, 36, 37, 39, 40, 41, 42, 44, 46, 48, 50
+#   okrsok 41: MLYNAROVIČO0VA 15, 16, 17, 18, 19, 20, 22, 24; PANKÚCHOVA 1, 3, 5, 6, 7
+#   okrsok 42: MLYNAROVIČOVA 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+#   okrsok 43: ŠUSTEKOVA 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20
+#   okrsok 44: BLAGOEVOVA 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24; BULÍKOVA 1, 3, 5, 7, 9
+#   okrsok 45: BULÍKOVA 11, 13, 15, 17, 19, 21, 23, 25; BOSÁKOVA 3, 5A, 7, 9; KLOKOČOVA 1, 10, 41, 43, 49; KOČÁNKOVA 23; MÁJOVÁ 21; LUŽNA 1, 2, 3, 4, 5, 6, 7, 8, 10, 12,; DOLNOZEMSKÁ CESTA 1
+#   okrsok 46: MAMATEYOVA 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15
+#   okrsok 47: POLERECKÉHO 2, 3, 5, 7, 9; SOSNOVÁ 35, 37, 41, 43; ŠUSTEKOVA 17, 19, 21, 23, 25, 27, 29, 31, 33, 45, 47, 49, 51
+#   okrsok 48: A. GWERKOVEJ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 33; JANKOLOVA 1, 2, 3, 4, 5, 6, 7, 8, 9
+#   okrsok 49: M. C. SKLODOWSKEJ 1, 2, 3, 4, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41; MAMATEYOVA 14, 16, 18, 20, 22, 24, 26, 28, 30; MEDVEĎOVEJ 32, 34
+#   okrsok 50: MEDVEĎOVEJ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 26, 28, 30
+#   okrsok 51: PETRŽALKA 3591, 3644, 6101, 6198; STARHRADSKÁ 2, 4, 5, 6, 8, 10, 12, 14, 16, 18; TEMATÍNSKA 1, 2, 4, 6, 7, 8
+#   okrsok 52: TOPOĽČIANSKA 1, 3, 5, 7, 10, 12, 14, 16, 18
+#   okrsok 53: TOPOĽČIANSKA 8, 15, 17, 19, 20, 21, 22, 23, 25, 27, 29, 31, 33
+#   okrsok 54: HOLÍČSKA 1, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18,
+#   okrsok 55: HOLÍČSKA 19, 20, 21, 23, 24, 25, 26, 28, 30, 32, 34, 36, 40, 42, 46, 48, 50
+#   okrsok 56: SMOLENICKÁ 1, 2, 3, 4, 5, 8, 10, 12, 14, 16, 18; BRANČSKÁ 1, 3, 5, 7, 9, 11
+#   okrsok 57: BUDATÍNSKA 1, 3, 5, 7, 9, 10, 11, 12, 13, 15, 16, 17, 19, 20, 21, 22
+#   okrsok 58: STREČNIANSKA 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 14, 15, 16, 18, 20; ŠINTAVSKÁ 2, 6, 8, 10, 12, 14, 18, 20, 22, 26
+#   okrsok 59: BUDATÍNSKA 23, 24, 25, 26, 27, 29, 31, 33, 34, 34A, 35, 37, 41, 43, 47
+#   okrsok 60: BUDATÍNSKA 49, 51, 53, 55, 57, 57A, 59, 61, 63, 65, 67, 69, 71, 73, 75, 77, 79, 81
+#   okrsok 61: LIETAVSKÁ 2, 4, 6, 8, 10, 12, 14, 16; ZNIEVSKA 1, 3, 4, 5, 6, 7, 8, 9, 11, 13, 15, 17, 19, 21
+#   okrsok 62: ZNIEVSKA 10, 12, 16, 18, 20, 22, 23, 24, 28, 30, 32, 34, 36, 38, 40, 42, 44
+#   okrsok 63: BEŇADICKÁ 1, 2, 3, 4, 5, 7, 8, 9, 11, 13, 15, 17, 19, 38
+#   okrsok 64: LIETAVSKÁ 1, 3, 5, 7, 9, 11, 13, 15; BEŇADICKÁ 10, 12, 14, 16, 20, 22, 28, 30, 32, 34, 36
+#   okrsok 65: ŠÁŠOVSKÁ 2, 4, 6, 8, 10, 12, 14, 16; VYŠEHRADSKÁ 1, 3, 5, 6, 7, 29, 31, 33, 35, 37, 39
+#   okrsok 66: VÍGĽAŠSKÁ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 17
+#   okrsok 67: VÍGĽAŠSKÁ 19, 21; VYŠEHRADSKÁ 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 21, 23, 25, 27
+#   okrsok 68: BETLIARSKA 8B, 9, 10, 11, 12, 22; ĽUBOVNIANSKA 1, 3, 5, 7; TURNIANSKA 1, 2, 3, 4, 5, 6, 7, 10; JASOVSKÁ 2, 4, 6, 8
+#   okrsok 69: KRÁSNOHORSKÁ 1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22
+#   okrsok 70: JASOVSKÁ 1, 3, 5, 7, 9, 10, 11, 12, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33
+#   okrsok 71: ANTOLSKÁ 4, 6; BZOVÍCKA 2, 4, 6, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 36; HUMENSKÉ NÁM. 4, 5, 6, 7, 8
+#   okrsok 72: BÉŽOVÁ 2, 4, 6, 8; JANÍKOVSKÉ ROLE 1; ŽLTÁ 1, 1A, 2, 2A, 2B, 2C, 2E, 2F, 3, 4, 5, 6, 7, 8, 8B, 8C, 8D, 8F, 8H, 9, 11, 13, 13A, 14, 14B, 14C, 14D, 14E, 14H, 16, 16A, 16C, 16E, 16F, 16G, 16H, 16I, 18, 22B, 22C, 22D, 22E, 22G, 22H, 24, 24A, 24B, 24C, 24D, 24F, 24G, 26, 28, 30, 30A, 30B, 30D, 30E, 30G, 30H, 32A, 32B, 34; ŽEHRIANSKA 2, 3, 4, 5, 7, 8, 9, 10, 12, 14; ZUZANY CHALUPOVEJ 8, 8A, 10, 10A, 10B, 12
+#   okrsok 73: JASOVSKÁ 37, 39, 41, 43, 45, 47, 49, 51; ĽUBOVNIANSKA 2, 4, 6, 8, 10, 12, 14, 16, 18
+obec = "529460"
+name = "Bratislava-Petržalka"
+okrsky_fill = "nearest"
+okrsky_note = "Text is the table's street (upper case as printed) and house numbers per okrsok. A street listed in a single okrsok is a whole-street rule; a street split among okrsky lists the document's numbers, and its unlisted numbers go by fill_nearest. Entries for voters without an address (okrsok 31: BRATISLAVA - PETRŽALKA; okrsok 51: PETRŽALKA 3591, 3644, 6101, 6198) are not rules; the houses without a street go by fill_nearest. Register streets the document does not list, placed by fill_nearest: Bratská, Einsteinova, Fialová, Jantárova cesta, Námestie Jána Pavla II., Ovsištské námestie, Pobrežná, Pri Seči, Pri smaltovni, Sad J. Kráľa, Sitnianska, Ulica Gustáva Mallého, Ulica závodu Matador, Urpínska."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The sheet is headed \"Zoznam volebných okrskov a volebných miestností pre voľby do Európskeho parlamentu\" (without a year); the file is in the website's uploads of May 2019 and has the 73 okrsky of the election of 25 May 2019. No decision date is stated."
+
+[[document]]
+url = "https://www.petrzalka.sk/wp-content/uploads/2019/05/EP-okrsky-konečné222.xlsx"
+sha256 = "bf324abbbf40d78e5b8f0c8d97e1a44f80838e9ef907a38a2d356c7fd73bcec4"
+title = "Zoznam volebných okrskov a volebných miestností pre voľby do Európskeho parlamentu (EP okrsky konečné, May 2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Dargovská"},
+  {street = "Gogoľova"},
+  {street = "Goralská"},
+  {street = "Hrobárska"},
+  {street = "Kaukazská"},
+  {street = "Kopčianska"},
+  {street = "Kubínska"},
+  {street = "Očovská"},
+  {street = "Nábrežná"},
+  {street = "Viedenská cesta"},
+  {street = "Vranovská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Vilová"},
+  {street = "Rusovská cesta", numbers = "5, 7, 9, 11, 13, 14, 15, 17, 22, 28, 34"},
+  {street = "Dubnická"},
+  {street = "Handlovská"},
+  {street = "Harmanecká"},
+  {street = "Jaroslavova"},
+  {street = "Kežmarské nám."},
+  {street = "Kremnická"},
+  {street = "Krupinská"},
+  {street = "Levočská"},
+  {street = "Ľubietovská"},
+  {street = "Novobanská"},
+  {street = "Prokopova"},
+  {street = "Údernícka"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Gercenova", numbers = "1, 2, 2A, 2B, 3, 4, 4A, 5, 6, 6A, 6B, 6C, 7, 8A, 8H, 9, 11, 13, 15, 17, 19, 21, 23, 27"},
+  {street = "Daliborovo nám."},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Pečnianska"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Záporožská"},
+  {street = "Bohrova"},
+  {street = "Planckova"},
+  {street = "Zadunajská cesta"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Kapicova"},
+  {street = "Gercenova", numbers = "29, 31, 33, 35"},
+  {street = "Nobelovo nám."},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Rőntgenova"},
+  {street = "Lenardova"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Jungmannova"},
+  {street = "Wolkrova", numbers = "1, 3, 5, 7"},
+  {street = "Vlastenecké námestie", written = "VLASTENECKÉ NÁM."},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Vavilovova"},
+  {street = "Wolkrova", numbers = "9, 11"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Wolkrova", numbers = "13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Černyševského"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Krasovského"},
+  {street = "Macharova"},
+  {street = "Muchovo námestie", written = "MUCHOVO NÁM."},
+  {street = "Farského"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Mánesovo nám."},
+  {street = "Pifflova"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Belinského", numbers = "2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Belinského", numbers = "18, 19, 20, 21, 22, 23, 24, 25"},
+  {street = "Rusovská cesta", numbers = "50, 52, 54, 56"},
+  {street = "Ševčenkova", numbers = "24, 26, 28"},
+  {street = "Hálova", numbers = "19, 20"},
+  {street = "Panónska cesta", written = "PANONSKA CESTA", note = "Typo in the document (missing diacritics) for Panónska cesta."},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Hálova", numbers = "2, 4, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Ševčenkova", numbers = "2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Ulica Ondreja Štefanka", written = "ČAPAJEVOVA", note = "Čapajevova was renamed Ulica Ondreja Štefanka; the same houses 2, 3, 5 are listed under the new name in later documents."},
+  {street = "Kolmá"},
+  {street = "Prokofievova"},
+  {street = "Andrusovova"},
+  {street = "Fedinova", numbers = "22, 24"},
+]
+
+[okrsok.19]
+rules = [
+  {street = "Fedinova", numbers = "1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 16A, 18, 20"},
+]
+
+[okrsok.20]
+rules = [
+  {street = "Ševčenkova", numbers = "1, 3, 5, 7, 9, 13, 15, 17, 19, 25, 27, 29, 31, 33, 35"},
+]
+
+[okrsok.21]
+rules = [
+  {street = "Švabinského"},
+]
+
+[okrsok.22]
+rules = [
+  {street = "Iľjušinova"},
+  {street = "Jiráskova"},
+]
+
+[okrsok.23]
+rules = [
+  {street = "Markova"},
+  {street = "Tupolevova", numbers = "14, 16, 18, 20, 22, 24"},
+  {street = "Pajštúnska"},
+]
+
+[okrsok.24]
+rules = [
+  {street = "Tupolevova", numbers = "1, 2, 3, 4, 5, 6A, 6B, 7, 8, 9, 10, 11, 12, 13, 15, 17, 19"},
+]
+
+[okrsok.25]
+rules = [
+  {street = "Hrobákova", numbers = "1, 2, 3, 4, 5, 10, 11, 12, 13, 14, 15, 20, 22, 24, 26, 32, 38, 40, 42, 44"},
+]
+
+[okrsok.26]
+rules = [
+  {street = "Starohájska"},
+  {street = "Rovniankova", numbers = "1, 2, 3A, 4, 5, 6"},
+  {street = "Hrobákova", numbers = "7, 8, 9"},
+]
+
+[okrsok.27]
+rules = [
+  {street = "Rovniankova", numbers = "7, 8, 9, 10, 11, 12, 13, 14, 15, 16"},
+]
+
+[okrsok.28]
+rules = [
+  {street = "Ambroseho"},
+  {street = "Bradáčova", numbers = "1, 2, 4, 5"},
+]
+
+[okrsok.29]
+rules = [
+  {street = "Bradáčova", numbers = "6"},
+  {street = "Romanova", numbers = "1, 3, 5, 9"},
+  {street = "Rovniankova", numbers = "18, 20, 22, 24"},
+]
+
+[okrsok.30]
+rules = [
+  {street = "Romanova", numbers = "2, 4, 6, 8, 10, 11, 12, 13, 15, 19, 21, 22, 23, 24, 26, 27, 28, 29, 30, 32, 33, 34, 35, 36, 37, 38, 40"},
+]
+
+[okrsok.31]
+rules = [
+  {street = "Kutlíkova"},
+  {street = "Romanova", numbers = "42, 44, 46"},
+  {street = "Dudova"},
+]
+
+[okrsok.32]
+rules = [
+  {street = "Gessayova", numbers = "11, 13, 15, 17, 19, 21, 23, 25, 31, 33, 35, 37, 39, 41, 43, 45, 47"},
+]
+
+[okrsok.33]
+rules = [
+  {street = "Osuského", numbers = "1, 1A, 2, 3, 3A, 3B, 3C, 3D, 5, 7, 40"},
+  {street = "Gessayova", numbers = "2, 6, 10, 12, 14, 16, 18, 20"},
+]
+
+[okrsok.34]
+rules = [
+  {street = "Osuského", numbers = "4, 6, 8, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 42, 44, 46"},
+]
+
+[okrsok.35]
+rules = [
+  {street = "Nám. Hraničiarov", numbers = "2, 2A, 4A, 4B, 6A, 6B, 8A, 8B, 10, 12, 14, 16, 18, 20"},
+]
+
+[okrsok.36]
+rules = [
+  {street = "Furdekova", numbers = "3, 4, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 6, 8, 10, 12, 14"},
+]
+
+[okrsok.37]
+rules = [
+  {street = "Lachova", numbers = "35, 37, 39"},
+]
+
+[okrsok.38]
+rules = [
+  {street = "Lachova", numbers = "2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 32"},
+]
+
+[okrsok.39]
+rules = [
+  {street = "Nám. Hraničiarov", numbers = "1, 3, 5, 7, 9, 11, 13, 17, 19, 21, 23, 27, 29, 31, 33, 35, 37, 39"},
+  {street = "Furdekova", numbers = "1, 2"},
+]
+
+[okrsok.40]
+rules = [
+  {street = "Haanova"},
+]
+
+[okrsok.41]
+rules = [
+  {street = "Mlynarovičova", numbers = "15, 16, 17, 18, 19, 20, 22, 24", written = "MLYNAROVIČO0VA", note = "Typo in the document (a stray digit in MLYNAROVIČO0VA) for Mlynarovičova."},
+  {street = "Pankúchova"},
+]
+
+[okrsok.42]
+rules = [
+  {street = "Mlynarovičova", numbers = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14"},
+]
+
+[okrsok.43]
+rules = [
+  {street = "Šustekova", numbers = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20"},
+]
+
+[okrsok.44]
+rules = [
+  {street = "Blagoevova"},
+  {street = "Bulíkova", numbers = "1, 3, 5, 7, 9"},
+]
+
+[okrsok.45]
+rules = [
+  {street = "Bulíkova", numbers = "11, 13, 15, 17, 19, 21, 23, 25"},
+  {street = "Bosákova"},
+  {street = "Klokočova"},
+  {street = "Kočánkova"},
+  {street = "Májová"},
+  {street = "Lužná", written = "LUŽNA", note = "Typo in the document (missing diacritics) for Lužná."},
+  {street = "Dolnozemská cesta"},
+]
+
+[okrsok.46]
+rules = [
+  {street = "Mamateyova", numbers = "1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15"},
+]
+
+[okrsok.47]
+rules = [
+  {street = "Polereckého"},
+  {street = "Sosnová"},
+  {street = "Šustekova", numbers = "17, 19, 21, 23, 25, 27, 29, 31, 33, 45, 47, 49, 51"},
+]
+
+[okrsok.48]
+rules = [
+  {street = "A. Gwerkovej"},
+  {street = "Jankolova"},
+]
+
+[okrsok.49]
+rules = [
+  {street = "M. Curie Sklodowskej", written = "M. C. SKLODOWSKEJ"},
+  {street = "Mamateyova", numbers = "14, 16, 18, 20, 22, 24, 26, 28, 30"},
+  {street = "Medveďovej", numbers = "32, 34"},
+]
+
+[okrsok.50]
+rules = [
+  {street = "Medveďovej", numbers = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 26, 28, 30"},
+]
+
+[okrsok.51]
+rules = [
+  {street = "Starhradská"},
+  {street = "Tematínska"},
+]
+
+[okrsok.52]
+rules = [
+  {street = "Topoľčianska", numbers = "1, 3, 5, 7, 10, 12, 14, 16, 18"},
+]
+
+[okrsok.53]
+rules = [
+  {street = "Topoľčianska", numbers = "8, 15, 17, 19, 20, 21, 22, 23, 25, 27, 29, 31, 33"},
+]
+
+[okrsok.54]
+rules = [
+  {street = "Holíčska", numbers = "1, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18"},
+]
+
+[okrsok.55]
+rules = [
+  {street = "Holíčska", numbers = "19, 20, 21, 23, 24, 25, 26, 28, 30, 32, 34, 36, 40, 42, 46, 48, 50"},
+]
+
+[okrsok.56]
+rules = [
+  {street = "Smolenická"},
+  {street = "Brančská"},
+]
+
+[okrsok.57]
+rules = [
+  {street = "Budatínska", numbers = "1, 3, 5, 7, 9, 10, 11, 12, 13, 15, 16, 17, 19, 20, 21, 22"},
+]
+
+[okrsok.58]
+rules = [
+  {street = "Strečnianska"},
+  {street = "Šintavská"},
+]
+
+[okrsok.59]
+rules = [
+  {street = "Budatínska", numbers = "23, 24, 25, 26, 27, 29, 31, 33, 34, 34A, 35, 37, 41, 43, 47"},
+]
+
+[okrsok.60]
+rules = [
+  {street = "Budatínska", numbers = "49, 51, 53, 55, 57, 57A, 59, 61, 63, 65, 67, 69, 71, 73, 75, 77, 79, 81"},
+]
+
+[okrsok.61]
+rules = [
+  {street = "Lietavská", numbers = "2, 4, 6, 8, 10, 12, 14, 16"},
+  {street = "Znievska", numbers = "1, 3, 4, 5, 6, 7, 8, 9, 11, 13, 15, 17, 19, 21"},
+]
+
+[okrsok.62]
+rules = [
+  {street = "Znievska", numbers = "10, 12, 16, 18, 20, 22, 23, 24, 28, 30, 32, 34, 36, 38, 40, 42, 44"},
+]
+
+[okrsok.63]
+rules = [
+  {street = "Beňadická", numbers = "1, 2, 3, 4, 5, 7, 8, 9, 11, 13, 15, 17, 19, 38"},
+]
+
+[okrsok.64]
+rules = [
+  {street = "Lietavská", numbers = "1, 3, 5, 7, 9, 11, 13, 15"},
+  {street = "Beňadická", numbers = "10, 12, 14, 16, 20, 22, 28, 30, 32, 34, 36"},
+]
+
+[okrsok.65]
+rules = [
+  {street = "Šášovská"},
+  {street = "Vyšehradská", numbers = "1, 3, 5, 6, 7, 29, 31, 33, 35, 37, 39"},
+]
+
+[okrsok.66]
+rules = [
+  {street = "Vígľašská", numbers = "2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 17"},
+]
+
+[okrsok.67]
+rules = [
+  {street = "Vígľašská", numbers = "19, 21"},
+  {street = "Vyšehradská", numbers = "8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 21, 23, 25, 27"},
+]
+
+[okrsok.68]
+rules = [
+  {street = "Betliarska"},
+  {street = "Ľubovnianska", numbers = "1, 3, 5, 7"},
+  {street = "Turnianska"},
+  {street = "Jasovská", numbers = "2, 4, 6, 8"},
+]
+
+[okrsok.69]
+rules = [
+  {street = "Krásnohorská"},
+]
+
+[okrsok.70]
+rules = [
+  {street = "Jasovská", numbers = "1, 3, 5, 7, 9, 10, 11, 12, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33"},
+]
+
+[okrsok.71]
+rules = [
+  {street = "Antolská"},
+  {street = "Bzovícka"},
+  {street = "Humenské nám."},
+]
+
+[okrsok.72]
+rules = [
+  {street = "Béžová"},
+  {street = "Janíkovské Role"},
+  {street = "Žltá"},
+  {street = "Žehrianska"},
+  {street = "Zuzany Chalupovej"},
+]
+
+[okrsok.73]
+rules = [
+  {street = "Jasovská", numbers = "37, 39, 41, 43, 45, 47, 49, 51"},
+  {street = "Ľubovnianska", numbers = "2, 4, 6, 8, 10, 12, 14, 16, 18"},
+]

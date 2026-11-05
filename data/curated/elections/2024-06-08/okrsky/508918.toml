@@ -1,0 +1,54 @@
+# Okrsky of Poniky, transcribed by an AI agent in job okrsok-rules-5053 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 – Poniky: Dolná ulica, Do Hája, Družstevná ulica, Horná ulica, Hriadky, Na Hlinku, Námestie Štefana Žáryho, Malá Stráňa, Pod Dielcom, Poľná ulica
+#   okrsok 2: Volebný okrsok č. 2 – Ponická Lehôtka: Na Vladárke, Námestie Mateja Kosca, Podžiar, Ponická cesta
+#   okrsok 3: Volebný okrsok č. 3 – Ponická Huta: Bukovinka, Na píle, Námestie Pod krížom, Pod Babou
+obec = "508918"
+name = "Poniky"
+okrsky_note = "Okrsky named by part (Poniky, Ponická Lehôtka, Ponická Huta) with their streets; part rules cover the addresses without a street in each part."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "Both documents are undated; their headings name the European Parliament election of 8 June 2024."
+
+[[document]]
+url = "https://www.poniky.sk/e_download.php?file=data/editor/284sk_3.pdf&original=oznam%20vo%C4%BEby%20do%20EP%20v%20Ponik%C3%A1ch.pdf"
+sha256 = "74b852959db19b328ac5525da311ec5c39171391774581c173f75730419f8d75"
+title = "Voľby do Európskeho parlamentu 2024 – oznam o volebných okrskoch a volebných miestnostiach"
+
+[[document]]
+url = "https://www.poniky.sk/e_download.php?file=data/editor/284sk_6.pdf&original=OZNAM%20Rozdelenie%20ul%C3%ADc%20do%20volebn%C3%BDch%20okrskov%20pre%20potreby%20.pdf"
+sha256 = "f3e500cbe7c3812f8adcc226231065120b27d391ceb0e3aca869e0b0c95df522"
+title = "OZNAM Rozdelenie ulíc do volebných okrskov pre potreby volieb do Európskeho parlamentu v roku 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Poniky"},
+  {street = "Dolná ulica"},
+  {street = "Do Hája"},
+  {street = "Družstevná ulica"},
+  {street = "Horná ulica"},
+  {street = "Hriadky"},
+  {street = "Na Hlinku"},
+  {street = "Námestie Štefana Žáryho"},
+  {street = "Malá Stráňa"},
+  {street = "Pod Dielcom"},
+  {street = "Poľná ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Ponická Lehôtka"},
+  {street = "Na Vladárke"},
+  {street = "Námestie Mateja Kosca"},
+  {street = "Podžiar"},
+  {street = "Ponická cesta"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Ponická Huta"},
+  {street = "Bukovinka"},
+  {street = "Na píle"},
+  {street = "Námestie Pod krížom"},
+  {street = "Pod Babou"},
+]

@@ -1,0 +1,39 @@
+# The okrsky of Rohožník of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/504769.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Rohožník, transcribed by an AI agent in job okrsok-rules-4415 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: súpisné čísla 1 – 381
+#     okrsok 2: súpisné čísla 382 – 395
+#     okrsok 3: súpisné čísla 396 – 800
+obec = "504769"
+name = "Rohožník"
+okrsky_date = 2024-01-24
+okrsky_fill = "nearest"
+okrsky_note = "The document assigns okrsky by súpisné číslo ranges over the whole village (single part Rohožník). 49 addresses with súpisné čísla outside 1–800 (newer houses) are not in the document's ranges and take the okrsok of the nearest placed address (fill_nearest)."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-850): No document of this vote assigning addresses to okrsky found live or in the Internet Archive. The only Rohožník document with an address split is the 2024 presidential one (súpisné čísla 1–381 / 382–395 / 396–800, dated 24.1.2024); other okrsky documents on the site (e.g. the NR SR 2020 / 2026 'Určenie volebných okrskov') list only the polling station (all three in the same school), so they cannot place addresses. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 3 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://rohoznik.sk/wp-content/uploads/dokumenty/volby-prezidenta/Urcenie-volebnych-okrskov-r.2023-I-kolo.pdf"
+sha256 = "dd8da2cf8fa954d70ff01692aecaeb15a1d88461e213c3a10b3a6b474e496a82"
+title = "Zoznam súpisných čísiel a volebných okrskov pre voľby prezidenta SR 2024 v obci Rohožník I. kolo"
+
+[[document]]
+url = "https://rohoznik.sk/wp-content/uploads/dokumenty/volby-prezidenta/Urcenie-volebnych-okrskov-r.2023-II-kolo.pdf"
+sha256 = "117053492a49f413d63cf5a9475019b19567745b67f9090355b2902823a8c327"
+title = "Zoznam súpisných čísiel a volebných okrskov pre voľby prezidenta SR 2024 v obci Rohožník II. kolo"
+
+[okrsok.1]
+rules = [
+  {part = "Rohožník", numbers = "1-381"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Rohožník", numbers = "382-395"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Rohožník", numbers = "396-800"},
+]

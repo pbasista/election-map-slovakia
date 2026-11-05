@@ -1,0 +1,67 @@
+# Okrsky of Marianka, transcribed by an AI agent in job okrsok-rules-4881 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Agátová, Borinská, Budovateľská, Bystrická, Čerešňová, Javorová, Jelšová, Kamenná, Krátka, Lesná, Lipová, Lúčna, Stromová, Stupavská, Štúrova, Topoľová, Višňová, Vŕbová, Záhradná
+#   okrsok 2: Družstevná, Karpatská, Na Kracinách, Na Ovsisku, Na Tálkoch, Na Vinohradoch, Nad Bednárovým, Námestie 4.apríla, Partizánska, Pod Mlynom, Podhájska, Poľná, Potočná, Púpavová, Sedmokrásková, Slnečná, Školská, Športová, Veterná
+obec = "508080"
+name = "Marianka"
+okrsky_fill = "nearest"
+okrsky_note = "The document does not list addresses without a street; the 37 register addresses without a street (súpisné only) are placed by fill_nearest. No decision date in the document."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names the European Parliament election of 8 June 2024; it is undated."
+
+[[document]]
+url = "https://www.marianka.sk/e_download.php?file=/data/uredni_deska/obsah531_4.pdf&original=volebne-okrsky_europarlament-2024.pdf"
+sha256 = "813b59dc4288d4df6513c4f90ac19207776e4f428fb7821c5b0523602e8ac42d"
+title = "Voľby do Európskeho parlamentu v roku 2024 – okrsky"
+
+[[document]]
+url = "https://www.marianka.sk/sk/zverejnovanie/volby/volby-do-europskeho-parlamentu-2024-532.html"
+sha256 = "191501348ef1e4078536f6a01cb530aa1403dd6ecb9a0921aa66dffe522ce295"
+title = "Voľby do Európskeho parlamentu 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Agátová"},
+  {street = "Borinská"},
+  {street = "Budovateľská"},
+  {street = "Bystrická"},
+  {street = "Čerešňová"},
+  {street = "Javorová"},
+  {street = "Jelšová"},
+  {street = "Kamenná"},
+  {street = "Krátka"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+  {street = "Lúčna"},
+  {street = "Stromová"},
+  {street = "Stupavská"},
+  {street = "Štúrova"},
+  {street = "Topoľová"},
+  {street = "Višňová"},
+  {street = "Vŕbová"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Karpatská"},
+  {street = "Na Kracinách"},
+  {street = "Na Ovsisku"},
+  {street = "Na Tálkoch"},
+  {street = "Na Vinohradoch"},
+  {street = "Nad Bednárovým"},
+  {street = "Námestie 4.apríla"},
+  {street = "Partizánska"},
+  {street = "Pod Mlynom"},
+  {street = "Podhájska"},
+  {street = "Poľná"},
+  {street = "Potočná"},
+  {street = "Púpavová"},
+  {street = "Sedmokrásková"},
+  {street = "Slnečná"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Veterná"},
+]

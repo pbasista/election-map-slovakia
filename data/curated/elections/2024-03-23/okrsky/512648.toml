@@ -1,0 +1,99 @@
+# Okrsky of Sučany, transcribed by an AI agent in job okrsok-rules-4180 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Pri Váhu, Stará hradská, 29.augusta, Podskala, Námestie SNP, Jánošíkova, Kollárova, Hviezdoslavova, Hurbanova, Fučíkova, Čsl. armády, Dukelských hrdinov a Kpt. Nálepku, obec Sučany
+#   okrsok 2: Fr. Kráľa, Kalinčiakova, Mierová, Osloboditeľov, Partizánska, Pod Brezinou, Stromová, Podhradská cesta, Stará Teheleň, Štiavnická cesta, Moyzesova, Kuzmányho, Horčičkova, Tehelná, Stredisko Evanjelickej DIAKONIE -Diakonické centrum Sučany
+#   okrsok 3: 1. mája, Ď. Langsfelda, Gen. Svobodu, Hlavná, Hodžova, Ing. Kožucha, J. Kostru, Jilemnického, Pionierska, J. A. Komenského, Malý diel, Sládkovičova, Sokolská, Sološenkova, Štúrova, Vrútocká cesta, Železničná, Stará Prefa, Družstevná, Pod Bukovinou
+#   okrsok 4: Budovateľská, Fatranská cesta, Hrabinská, Kráľova, Krivánska, Meškalská, Turianska, Vážska, Pod Kečkou, Hradiská, Brezová a Hubová, Smreková, Pod strelnicou, Pod Stratencom, Pri spádoch, Borovicová, Jedľová, Brestová, Ústav na výkon trestu odňatia slobody pre mladistvých.
+obec = "512648"
+name = "Sučany"
+okrsky_date = 2024-01-26
+okrsky_fill = "nearest"
+okrsky_note = "\"obec Sučany\" in okrsok 1 are the voters registered only to the obec (no address); the Diakonické centrum (okrsok 2) and the youth prison (okrsok 4) are institutions, not streets. The register streets SNP (4 addresses, distinct from Námestie SNP) and Ulica priemyselná (1) are not named by the document: placed by fill_nearest, as are the addresses without a street. The page text (dated 26.1.2024) is this vote's decision; the PDF linked beside it is the 2023 notice with the same okrsky. Same okrsky as the 2022 elections."
+
+[[document]]
+url = "https://www.sucany.sk/obec/volby-a-referenda/prezidentske-volby-2024/"
+sha256 = "c090acbae22ba5997bc73632b05f0498ed2f4917489d16d3d884ad0e118be013"
+title = "Prezidentské voľby 2024 – Oznam: rozdelenie ulíc do volebných okrskov (V Sučanoch 26.1.2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Pri Váhu"},
+  {street = "Stará Hradská", written = "Stará hradská", note = "only the capital letter differs"},
+  {street = "29.augusta"},
+  {street = "Podskala"},
+  {street = "Námestie SNP"},
+  {street = "Jánošíkova"},
+  {street = "Kollárova"},
+  {street = "Hviezdoslavova"},
+  {street = "Hurbanova"},
+  {street = "Fučíkova"},
+  {street = "Československej armády", written = "Čsl. armády"},
+  {street = "Dukelských hrdinov"},
+  {street = "Kapitána Nálepku", written = "Kpt. Nálepku", note = "Kpt. is the standard abbreviation of Kapitána"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Fraňa Kráľa", written = "Fr. Kráľa"},
+  {street = "Kalinčiakova"},
+  {street = "Mierová"},
+  {street = "Osloboditeľov"},
+  {street = "Partizánska"},
+  {street = "Pod Brezinou"},
+  {street = "Stromová"},
+  {street = "Podhradská cesta"},
+  {street = "Stará Teheleň"},
+  {street = "Štiavnická cesta"},
+  {street = "Moyzesova"},
+  {street = "Kuzmányho"},
+  {street = "Horčičkova"},
+  {street = "Tehelná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Ďurka Langsfelda", written = "Ď. Langsfelda"},
+  {street = "Gen.Svobodu", written = "Gen. Svobodu"},
+  {street = "Hlavná"},
+  {street = "Hodžova"},
+  {street = "Ing. Kožucha"},
+  {street = "Jána Kostru", written = "J. Kostru"},
+  {street = "Jilemnického"},
+  {street = "Pionierska"},
+  {street = "J.A.Komenského", written = "J. A. Komenského"},
+  {street = "Malý Diel", written = "Malý diel", note = "only the capital letter differs"},
+  {street = "Sládkovičova"},
+  {street = "Sokolská"},
+  {street = "Sološenkova"},
+  {street = "Štúrova"},
+  {street = "Vrútocká cesta"},
+  {street = "Železničná"},
+  {street = "Stará Prefa"},
+  {street = "Družstevná"},
+  {street = "Pod Bukovinou"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Fatranská cesta"},
+  {street = "Hrabinská"},
+  {street = "Kráľova"},
+  {street = "Krivánska"},
+  {street = "Meškalská"},
+  {street = "Turianska"},
+  {street = "Vážska"},
+  {street = "Pod Kečkou"},
+  {street = "Hradiská"},
+  {street = "Brezová"},
+  {street = "Hubová"},
+  {street = "Smreková"},
+  {street = "Pod strelnicou"},
+  {street = "Pod Stratencom"},
+  {street = "Pri spádoch"},
+  {street = "Borovicová"},
+  {street = "Jedľová"},
+  {street = "Brestová"},
+]

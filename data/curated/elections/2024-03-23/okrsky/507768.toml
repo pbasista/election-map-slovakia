@@ -1,0 +1,47 @@
+# Okrsky of Zavar, transcribed by an AI agent in job okrsok-rules-4407 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Blavská, Budovateľská, Diaľničná, Hlinícka, Košárska, Majerská, Mlynská, Muškátová, Pažitná, Vetrová, Viktorínova, Záhrady, Záhumenská, Zdravotnícka,
+#   okrsok 2: Ulice: Hlavná, Krátka, Poronda, Športová, Tichá, Na vŕšku, Vinohradská, Výhon, Prílohy
+obec = "507768"
+name = "Zavar"
+okrsky_fill = "nearest"
+okrsky_note = "The register streets Logistická, which the document does not name, are placed by fill_nearest."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated announcement names the election of the President of the Slovak Republic called by the Speaker's decision No. 1/2024 of 8 January 2024 (the 2024 presidential election)."
+
+[[document]]
+url = "https://www.zavar.sk/data/page/zavar.sk/24228/volebne-okrsky-a-volebne-miestnosti.pdf"
+sha256 = "d0fc9715f0f01889900ca673fa7d02b9cc079e3cfebd81dfcfdd260dd0b89b3e"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby prezidenta Slovenskej republiky"
+
+[okrsok.1]
+rules = [
+  {street = "Blavská"},
+  {street = "Budovateľská"},
+  {street = "Diaľničná"},
+  {street = "Hlinícka"},
+  {street = "Košárska"},
+  {street = "Majerská"},
+  {street = "Mlynská"},
+  {street = "Muškátová"},
+  {street = "Pažitná"},
+  {street = "Vetrová"},
+  {street = "Viktorínova"},
+  {street = "Záhrady"},
+  {street = "Záhumenská"},
+  {street = "Zdravotnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná"},
+  {street = "Krátka"},
+  {street = "Poronda"},
+  {street = "Športová"},
+  {street = "Tichá"},
+  {street = "Ulica Na vŕšku", written = "Na vŕšku"},
+  {street = "Vinohradská"},
+  {street = "Výhon"},
+  {street = "Prílohy"},
+]

@@ -1,0 +1,53 @@
+# Okrsky of Dobšiná, transcribed by an AI agent in job okrsok-rules-1824 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Rybárska, Turecká, Cintorínska, Zimná, Železničná, Mlynská, Jarková, Námestie baníkov, Hronská, Slnečná, bez adresy
+#   okrsok 2: SNP, Banská, P. J. Šafárika, Záhradná, Nová, Tri ruže, Skalná, Hnilecká, Budovateľská, Vlčia dolina, Kúpeľná, Vyše mesta, Niže mesta, Severná, Mierová, Lesná, Partizánska, Lányiho Huta, Dedičná ulica
+obec = "525634"
+name = "Dobšiná"
+okrsky_date = 2019-02-22
+okrsky_fill = "nearest"
+okrsky_note = "Streets per okrsok as the document lists them. 'bez adresy' / 'bez názvu ulice' means voters registered without an address and gets no rule. fill_nearest covers the register's addresses without a street."
+
+[[document]]
+url = "https://web.archive.org/web/20190717064103/https://www.dobsina.sk/download_file_f.php?id=1097873"
+sha256 = "f7baa5dcc3c86126320570c8a20d2713065b9d6926127088a00a25d331d76468"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do Európskeho parlamentu 25. 5. 2019 (V Dobšinej, 22. 2. 2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Rybárska"},
+  {street = "Turecká"},
+  {street = "Cintorínska"},
+  {street = "Zimná"},
+  {street = "Železničná"},
+  {street = "Mlynská"},
+  {street = "Jarková"},
+  {street = "Námestie Baníkov", written = "Námestie baníkov"},
+  {street = "Hronská"},
+  {street = "Slnečná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "SNP"},
+  {street = "Banská"},
+  {street = "P. J. Šafárika"},
+  {street = "Záhradná"},
+  {street = "Nová"},
+  {street = "Tri Ruže", written = "Tri ruže"},
+  {street = "Skalná"},
+  {street = "Hnilecká"},
+  {street = "Budovateľská"},
+  {street = "Vlčia Dolina", written = "Vlčia dolina"},
+  {street = "Kúpeľná"},
+  {street = "Vyše Mesta", written = "Vyše mesta"},
+  {street = "Niže Mesta", written = "Niže mesta"},
+  {street = "Severná"},
+  {street = "Mierová"},
+  {street = "Lesná"},
+  {street = "Partizánska"},
+  {street = "Lányi Huta", written = "Lányiho Huta", note = "The register has both Lányi Huta and Lányiho Huta for the settlement the document calls Lányiho Huta."},
+  {street = "Lányiho Huta"},
+  {street = "Dedičná ulica"},
+]

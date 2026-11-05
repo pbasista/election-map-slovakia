@@ -1,0 +1,25 @@
+# Okrsky of Vyšný Medzev, transcribed by an AI agent in job okrsok-rules-3305 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: banícka ulica
+#   okrsok 2: ulica Hrdinov SNP
+obec = "582093"
+name = "Vyšný Medzev"
+okrsky_date = 2022-11-09
+okrsky_fill = "nearest"
+okrsky_note = "The addresses without a street take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.vysnymedzev.sk/files/2022-11-10-091608-UTVORENIE_VOLEBN__CH_OKRSKOV_A_UR__ENIE_VOLEBN__CH_MIESTNOST___PRE_REFERENDUM_2023.pdf"
+sha256 = "cf1e3ace54b72cca495d80202b8813274be7fa4b4bb31756dc65c62969f8bd04"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre referendum 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Banícka", written = "banícka ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hrdinov SNP", written = "ulica Hrdinov SNP"},
+]

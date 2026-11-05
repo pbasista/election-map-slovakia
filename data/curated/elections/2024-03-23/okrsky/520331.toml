@@ -1,0 +1,48 @@
+# Okrsky of Kamenica nad Cirochou, transcribed by an AI agent in job okrsok-rules-4392 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Humenská, Partizánska, Lesná, Železničná, Sládkovičova, Čsl. Armády, Ružová, Krátka, Sadová, Jarná, Slepá, Juraja Macáka
+#   okrsok 2: Osloboditeľov, Vihorlatská, Gaštanová, Mierová, Záhradná, Štúrova, Veterná, Kpt. Nálepku, Kamenná, Pod Žbirom, Pod Drieňovou
+obec = "520331"
+name = "Kamenica nad Cirochou"
+okrsky_fill = "nearest"
+okrsky_note = "The municipality's notice to voters lists the streets of each okrsok (live page now empty; archived copy). Addresses without a street name go by fill_nearest."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-03-19
+okrsky_date_basis = "The notice (as archived on 2024-03-19) states 'Zverejnené 19.3.2024'. (https://web.archive.org/web/20240319230911/https://www.obeckamenicanadcirochou.sk/oznamy/oznam-pre-volicov-volby-prezidenta-slovenskej-republiky-2024.html)"
+
+[[document]]
+url = "https://web.archive.org/web/20240319230911/https://www.obeckamenicanadcirochou.sk/oznamy/oznam-pre-volicov-volby-prezidenta-slovenskej-republiky-2024.html"
+sha256 = "804218fdca2082eeb2dc676c2ba568e09d43cb9c2b20d0b6d24af3355b982b00"
+title = "Oznam pre voličov - Voľby prezidenta Slovenskej republiky 2024 (zverejnené 19.3.2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Humenská"},
+  {street = "Partizánska"},
+  {street = "Lesná"},
+  {street = "Železničná"},
+  {street = "Sládkovičova"},
+  {street = "Čsl.armády", written = "Čsl. Armády"},
+  {street = "Ružová"},
+  {street = "Krátka"},
+  {street = "Sadová"},
+  {street = "Jarná"},
+  {street = "Slepá"},
+  {street = "Juraja Macáka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Osloboditeľov"},
+  {street = "Vihorlatská"},
+  {street = "Gaštanová"},
+  {street = "Mierová"},
+  {street = "Záhradná"},
+  {street = "Štúrova"},
+  {street = "Veterná"},
+  {street = "Kpt. Nálepku"},
+  {street = "Kamenná"},
+  {street = "Pod Žbirom"},
+  {street = "Pod Drieňovou"},
+]

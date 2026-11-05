@@ -1,0 +1,27 @@
+# The okrsky of Torysa of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/525316.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Torysa, transcribed by an AI agent in job okrsok-rules-3934 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: do súp. č. 244
+#     okrsok 2: od súp. č. 245
+obec = "525316"
+name = "Torysa"
+okrsky_date = 2023-06-20
+okrsky_note = "The village has no streets; the document splits it by súpisné číslo: okrsok 1 up to No. 244, okrsok 2 from No. 245."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1542): The archived page of the 2019 presidential election (captured 2019-05-29) links 'Volebné okrsky pre voľby prezidenta SR' (data/editor/109sk_1.PDF), but the PDF is gone from the live site (HTTP 404) and the Internet Archive never captured it (CDX of e_download.php checked; the archived 109sk_1.pdf is an unrelated 2020 file). Without its content the okrsky cannot be transcribed. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2023-09-30: 1: 566 → 541, 2: 565 → 590."
+
+[[document]]
+url = "https://www.obectorysa.sk/e_download.php?file=data/editor/197sk_1.PDF&original=Utvorenie%20VO%20a%20ur%C4%8Denie%20VM.PDF"
+sha256 = "2896448e75af9204bd9d154dc848a26c14eb77114469ad505df3b2764c902fa9"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do NR SR v roku 2023"
+
+[okrsok.1]
+rules = [
+  {part = "Torysa", numbers = "1-244"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Torysa", numbers = "245-"},
+]

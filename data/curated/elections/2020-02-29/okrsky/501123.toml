@@ -1,0 +1,46 @@
+# Okrsky of Dulovce, transcribed by an AI agent in job okrsok-rules-2584 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cintorínska, Družstevná, Dvorská, Hlavná, Hurbanovská, Mierová, Mudroňovská, Nová, Robotnícka, Záhradná; obyvatelia s trvalým pobytom na adrese Obec Dulovce (bez udania súpisného a orientačného čísla)
+#   okrsok 2: Kamenica, Krivá, Novozámocká, Podháj, Poľná, Podbrežná, Rovná, Starohorská, Urbárska, Úzka
+obec = "501123"
+name = "Dulovce"
+okrsky_date = 2019-11-19
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 19.11.2019 names only the two polling stations; the announcement of the time and place of the vote, on the same page, lists the streets of each okrsok. Kamenica and Podháj (okrsok 2) are settlements the address register has no street or part for; their houses, like the other addresses without a street, are placed by fill_nearest. Residents registered only on the obec vote in okrsok 1; they have no register address."
+
+[[document]]
+url = "https://www.dulovce.sk/download_file_f.php?id=1237383"
+sha256 = "4fe04b85e312cc93d0900418e04f600c6b9c0286229fb653bd3d3f7898eef12c"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Dulovce pre voľby do Národnej rady Slovenskej republiky dňa 29. februára 2020"
+
+[[document]]
+url = "https://www.dulovce.sk/download_file_f.php?id=1247192"
+sha256 = "a09a93bfa998ee7aec760a6a912b9a91cab0bbb4f16148dd242fceb6e4ba9860"
+title = "Oznámenie o čase a mieste konania voľby do Národnej rady Slovenskej republiky v roku 2020 v obci Dulovce"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Dvorská"},
+  {street = "Hlavná"},
+  {street = "Hurbanovská"},
+  {street = "Mierová"},
+  {street = "Mudroňovská"},
+  {street = "Nová"},
+  {street = "Robotnícka"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krivá"},
+  {street = "Novozámocká"},
+  {street = "Poľná"},
+  {street = "Podbrežná"},
+  {street = "Rovná"},
+  {street = "Starohorská"},
+  {street = "Urbárska"},
+  {street = "Úzka"},
+]

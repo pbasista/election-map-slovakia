@@ -1,0 +1,104 @@
+# Okrsky of Vráble, transcribed by an AI agent in job okrsok-rules-082 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Sídl. Žitava; časť obce Vráble; Ulica: Žitavská
+#   okrsok 2: Sídl. Lúky - od orientačného čísla 60, 61, 62, 63, 68, 69, … 92
+#   okrsok 3: Sídl. Lúky - od orientačného čísla 40, 41, … 59, 64, 65, 66, 67
+#   okrsok 4: Sídl. Lúky - od orientačného čísla 7, 8, … 36; Ulice Staničná, Vinohrady
+#   okrsok 5: Ulice l. mája Krátka Levická – pravá strana Moravská Partizánska Poštová Šafárikova Sídl. Kaška Školská Záhradná
+#   okrsok 6: Ulice Cintorínska Družstevná Hlavná Hliníkova Hviezdoslavova Kostolná Martina Benku Nám. kpt. Nálepku Okružná Orechová Štúrova Za humnami
+#   okrsok 7: Ulice Bernolákova Chalúpkova Dukelská Hurbanova Kollárova Kukučinova Levická - ľavá strana Podmájska Sládkovičova
+#   okrsok 8: Vráble – časť Horný Ohaj
+#   okrsok 9: Vráble – časť Dyčka
+obec = "500933"
+name = "Vráble"
+okrsky_fill = "nearest"
+okrsky_note = "\"časť obce Vráble\" (okrsok 1) means voters registered with the town only (no part rule). Levická \"pravá strana\" / \"ľavá strana\" are read as the even / odd side. Sídl. Lúky numbers the list leaves out, the part Vráble's addresses without a street and Čerešňové námestie go by fill_nearest."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the okrsky page names the decree calling the regional elections of 4 November 2017 (166/2017 Z. z.) and was updated 22.8.2017; the city's 2017 elections page, captured on 2017-09-15, links it"
+
+[[document]]
+url = "https://web.archive.org/web/20190718042907/http://www.vrable.sk/volebne-okrsky.phtml?id3=88720"
+sha256 = "16e58b6f8c6ce8a4a9e7e08e882efa19ddc75b977720e5f2e644ebfeedc0717d"
+title = "Volebné okrsky – Kde budeme hlasovať? (okrsky určené primátorom na základe rozhodnutia č. 166/2017 Z. z.)"
+
+[[document]]
+url = "https://web.archive.org/web/20170915080435/http://www.vrable.sk:80/x/volby-do-organov-samospravnych-krajov-2017.phtml?id5=20721"
+sha256 = "aacdc2fed4c995ed27e439fbb0a85e61673b4abf39cf9827e044129d1836a577"
+title = "Voľby do orgánov samosprávnych krajov 2017 (page linking \"Volebné okrsky\")"
+
+[okrsok.1]
+rules = [
+  {street = "Sídl. Žitava"},
+  {street = "Žitavská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Sídl. Lúky", numbers = "60-63, 68-92"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Sídl. Lúky", numbers = "40-59, 64-67"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Sídl. Lúky", numbers = "7-36"},
+  {street = "Staničná"},
+  {street = "Vinohrady"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "1.mája", written = "l. mája", note = "\"l. mája\" (letter l for 1) = 1. mája"},
+  {street = "Krátka"},
+  {street = "Levická", parity = "even", note = "pravá strana: the even side (the 2018 list gives this okrsok Levická 12-80 even)"},
+  {street = "Moravská"},
+  {street = "Partizánska"},
+  {street = "Poštová"},
+  {street = "Šafárikova"},
+  {street = "Sídl. Kaška"},
+  {street = "Školská"},
+  {street = "Záhradná"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Hlavná"},
+  {street = "Hliníková", written = "Hliníkova", note = "vowel length of the register's Hliníková"},
+  {street = "Hviezdoslavova"},
+  {street = "Kostolná"},
+  {street = "Martina Benku"},
+  {street = "Nám. Kpt. Nálepku", written = "Nám. kpt. Nálepku"},
+  {street = "Okružná"},
+  {street = "Orechová"},
+  {street = "Štúrova"},
+  {street = "Za Humnami", written = "Za humnami"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Chalupkova", written = "Chalúpkova", note = "vowel length of the register's Chalupkova"},
+  {street = "Dukelská"},
+  {street = "Hurbanova"},
+  {street = "Kollárova"},
+  {street = "Kukučínova", written = "Kukučinova", note = "vowel length of the register's Kukučínova"},
+  {street = "Levická", parity = "odd", note = "ľavá strana: the odd side (the 2018 list gives this okrsok Levická 1-57 odd)"},
+  {street = "Podmájska"},
+  {street = "Sládkovičova"},
+]
+
+[okrsok.8]
+rules = [
+  {part = "Horný Ohaj"},
+]
+
+[okrsok.9]
+rules = [
+  {part = "Dyčka"},
+]

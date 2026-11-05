@@ -1,0 +1,28 @@
+# The okrsky of Stráňavy of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/517950.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Stráňavy, transcribed by an AI agent in job okrsok-rules-5133 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Čísla domov od 1 do 300
+#     okrsok 2: Čísla domov od 301 do 600
+obec = "517950"
+name = "Stráňavy"
+okrsky_date = 2024-02-20
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 20 February 2024 is given as the text of the section 'Volebné okrsky' on the village's page of the 2024 European Parliament election. The village has no streets; the house numbers are súpisné čísla in the part Stráňavy. Any address outside 1–600 takes the nearest placed address (fill_nearest)."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-578): The obec published its 2 okrsky (Oznámenie o utvorení volebných okrskov…, and the úradná tabuľa notice of 31.7.2026) only by polling station: okrsok 1 zasadacia miestnosť, okrsok 2 klub dôchodcov, both in the Obecný úrad, Májová 336. No territory (streets, súpisné čísla) is given, the village has a single part and no streets, so the okrsky cannot be placed. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2024-06-08: 1: 781 → 806, 2: 751 → 743."
+
+[[document]]
+url = "https://www.stranavy.sk/obec/volby/2024-volby-do-europskeho-parlamentu/"
+sha256 = "4e4531b5b9154d56e9b76157829842aee5bf1851881e1cb0d4139317103e685d"
+title = "Volebné okrsky"
+
+[okrsok.1]
+rules = [
+  {part = "Stráňavy", numbers = "1-300"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Stráňavy", numbers = "301-600"},
+]

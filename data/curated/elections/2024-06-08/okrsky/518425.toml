@@ -1,0 +1,35 @@
+# Okrsky of Hontianske Tesáre, transcribed by an AI agent in job okrsok-rules-5106 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hontianske Tesáre 66 – Malá sála kultúrneho domu
+#   okrsok 2: Báčovce 33 – Kultúrny dom
+#   okrsok 3: Dvorníky 13 - Kultúrny dom
+#   okrsok 4: Šipice 4 – Kultúrny dom
+obec = "518425"
+name = "Hontianske Tesáre"
+okrsky_date = 2024-04-08
+
+[[document]]
+url = "https://www.hontiansketesare.sk/e_download.php?file=data/uredni_deska/obsah71_5.pdf&original=(112.2%20kB)OZN%C3%81MENIEo%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Den%C3%AD%20volebn%C3%BDch%20miestnost%C3%ADv%20obci%20Hontianske%20Tes%C3%A1repre%20vo%C4%BEby%20do%20Eur%C3%B3pskeho%20parlamentu%202024.pdf"
+sha256 = "50a6f0ec2b582006cb43b29b29353cdd1ce8595927958ea224e381c08ce0beee"
+title = "OZNÁMENIE o utvorení volebných okrskov a určení volebných miestností v obci Hontianske Tesáre pre voľby do Európskeho parlamentu 2024 (08. 04. 2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Hontianske Tesáre", note = "The document gives only the polling station (Hontianske Tesáre 66 – Malá sála kultúrneho domu); 4 okrsky for 4 parts, each station in another part: okrsok = part Hontianske Tesáre", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Báčovce", note = "The document gives only the polling station (Báčovce 33 – Kultúrny dom); 4 okrsky for 4 parts, each station in another part: okrsok = part Báčovce", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Dvorníky", note = "The document gives only the polling station (Dvorníky 13 - Kultúrny dom); 4 okrsky for 4 parts, each station in another part: okrsok = part Dvorníky", inferred = true},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Šipice", note = "The document gives only the polling station (Šipice 4 – Kultúrny dom); 4 okrsky for 4 parts, each station in another part: okrsok = part Šipice", inferred = true},
+]

@@ -1,0 +1,29 @@
+# Okrsky of Záhorce, transcribed by an AI agent in job okrsok-rules-5766 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Záhorce
+#   okrsok 2: Selešťany
+obec = "516546"
+name = "Záhorce"
+okrsky_date = 2026-05-13
+okrsky_note = "The document gives each okrsok a part of the municipality (Názov časti obce)."
+
+[[document]]
+url = "https://www.zahorce.sk/e_download.php?file=/data/multipage/editor/editor-8-34-sk_1.pdf&original=Ur%C4%8Denie%20obvodov%20-%20referendum.pdf"
+sha256 = "5affcd9b4401ad91da62156d993b1629961d0c0ef8bcc2c4cc3d20c1ede81d4b"
+title = "Určenie volebných okrskov a volebných miestností – referendum 4. júla 2026"
+
+[[document]]
+url = "https://www.zahorce.sk/pre-verejnost/volby/referendum-4-jula-2026/"
+sha256 = "f56b3af7469f73c275be063c8f27175cd05bdbfb4eb20b30990d6c8b0fdf3877"
+title = "Election page linking the document"
+
+[okrsok.1]
+rules = [
+  {part = "Záhorce"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Selešťany"},
+]

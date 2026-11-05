@@ -1,0 +1,306 @@
+# Council obvody of Bernolákovo (507814), Senec.
+# Transcribed by an AI agent in job obvod-rules-057 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode č. 1, ktorý zahŕňa ulice: Azalková, Bottova, Fialková, Hlinkova, Hviezdoslavova, Chalupkova, Chmeľová, Jesenského, Kalinčiakova, Komenského, Konvalinková, Krátka, Kukučínova, Kvetná, Lekárenská, Lúčna, Ľaliová, Ľanová, Muškátová, Nálepkova, Narcisová, Nár. oslobodenia, Okružná, Orechová, Orgovánová, Osiková, Plemenárska, Poľná, Poľovnícka, Poštová (od križovatky s Dukelskou ulicou po križovatku so Seneckou cestou), Potočná, Priemyselná, Pšeničná, Ražná, Roľnícka, Senecká cesta, Sládkovičova, Snežienková, Staničná, Stredná, Školská, Štúrova, Trnavská (od križovatky s Hlavnou ulicou po križovatku so Seneckou cestou), Tulipánová, Viničná, Železničná sa volí 5 poslancov.
+#   obvod 2: Vo volebnom obvode č. 2, ktorý zahŕňa ulice: Bernolákova, Budovateľská, Clementisova, Družstevná, Dukelská, Fándlyho, Gaštanová alej, Grobská, Hlavná, Hlboká (od križovatky s Hlavnou ulicou po železničné priecestie), Horný dvor, Kaštieľ, Kollárova, Mostová, Poštová (od križovatky s Hlavnou ulicou po križovatku s Dukelskou ulicou), Sacky, Slaná, Strojárenská, Svätoplukova, Tajovského, Vŕšky, Záhradná sa volia 4 poslanci.
+#   obvod 3: Vo volebnom obvode č. 3, ktorý zahŕňa ulice: Agátová, Borovicová, Broskyňová, Brusnicová, Buková, Čerešňová, Čučoriedková, Dubová, Dunajská, Figová, Hrušková, Hlboká (od železničného priecestia po križovatku s Trnavskou ulicou), Jabloňová, Jelšová, Lesná, Lipová, Malinová, Marhuľová, Mierová, Nevädzová, Obilná, Púpavová, Rezedová, Riečna, Sadová, Slivková, Slnečnicová, Smreková, Stromová, Šalviová, Šípková, Tabaková, Topoľový rad, Trnavská (od križovatky s Hlavnou ulicou po križovatku s Nevädzovou ulicou), Trnková, Višňová, záhradkárska osada Tabaková, záhradkárska osada Trnavská sa volia 4 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-5843 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bottova, Hlinkova, Hviezdoslavova, Chalupkova, Jesenského, Kalinčiakova, Komenského, Kukučínova, Kvetná, Lekárenská, Nálepkova, Národného oslobodenia, Orechová, Plemenárska, Poštová č. 21 - 97, č. 14 A – 80, Priemyselná, Senecká cesta, Sládkovičova, Školská, Štúrova, Viničná.
+#   okrsok 2: Azalková, Fialková, Chmeľová, Konvalinková, Krátka, Ľaliová, Ľanová, Lúčna, Muškátová, Narcisová, Okružná, Orgovánová, Osiková, Poľná, Poľovnícka, Potočná, Pšeničná, Ražná, Roľnícka, Snežienková, Staničná, Stredná, Trnavská č. 89 - 199, č.112 - 200, Tulipánová, Železničná.
+#   okrsok 3: Bernolákova, Budovateľská, Clementisova, Družstevná, Dukelská, Fándlyho, Gaštanová, Grobská, Horný dvor, Sacky, Strojárenská, Svätoplukova, Tajovského.
+#   okrsok 4: Hlavná, Hlboká č. 1 - 27, č. 2 - 8 A, Kaštieľ, Kollárova, Mostová, Poštová č. 1 - 19 A, č. 2 - 14, Slaná, Vršky, Záhradná.
+#   okrsok 5: Broskyňová, Brusnicová, Čerešňová, Čučoriedková, Figová, Hlboká č. 29, č. 10 - 40, Hrušková, Malinová, Marhuľová, Obilná, Sadová, Slivková, Slnečnicová, Stromová, Šípková, Tabaková, Topoľový rad, Trnavská č. 2 - 110, č. 1 - 87, Trnková, Višňová, Záhradkárska osada Tabaková, Záhradkárska osada Trnavská.
+#   okrsok 6: Agátová, Borovicová, Buková, Dubová, Dunajská, Jabloňová, Jelšová, Lesná, Lipová, Mierová, Nevädzová, Púpavová, Rezedová, Riečna, Smreková, Šalviová.
+obec = "507814"
+name = "Bernolákovo"
+date = 2018-08-13
+fill = "nearest"
+note = "Scanned announcement read from the rendered pages. Streets named but not in the register (left out): Plemenárska, Roľnícka, Senecká cesta, Snežienková, Čučoriedková. 'Záhradkárska osada Tabaková / Trnavská' (obvod 3, garden colonies without a street) and other houses without a street are placed by fill_nearest, as are numbers of the split streets outside the ranges."
+supplemented = 2019-01-29
+supplemented_from = "document"
+supplement_basis = "The 2018 announcement splits Poštová, Trnavská and Hlboká between obvody by street crossings (Dukelská, Senecká cesta, Hlavná, the railway crossing, Nevädzová), which the address register cannot express; the mayor's okrsky document of 29.1.2019 gives the same split by orientačné ranges (okrsky 1-2 = obvod 1, 3-4 = obvod 2, 5-6 = obvod 3), taken for these three streets. (https://data.moderneobce.sk/data/uploads/bernolakovo.sk/volebne-okrsky_(1).pdf)"
+okrsky_date = 2018-09-07
+okrsky_fill = "nearest"
+okrsky_note = "Scanned notice of the mayor of 7.9.2018, read from the rendered pages (archived copy; the 2018 elections page on the current site links the item 'Utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti' to a wrong file, the notice on accepting candidate lists). The split streets Poštová (okrsky 1 and 4), Trnavská (2 and 5) and Hlboká (4 and 5) each lie in one okrsok within each obvod, so they are given as whole streets: the obvody already split them. Streets the notice names but the register lacks (left out): Plemenárska, Senecká cesta, Roľnícka, Snežienková, Čučoriedková. 'Gaštanová' is the register's 'Gaštanová alej', 'Vršky' its 'Vŕšky'. Ampérova (3 addresses, obvod 2), the garden colonies (Záhradkárska osada Tabaková / Trnavská, okrsok 5) and other houses without a street take the okrsok of the nearest address in their obvod (fill_nearest)."
+okrsky_supplemented = 2022-03-19
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The 2018 notice does not name the streets Hurbanova, Brečtanová, Hornádska, Hronská, Ipeľská, Kysucká, Moravská, Oravská, Vážska (obvod 1) and Kondrótova (obvod 3); the okrsky of 19 March 2022, whose okrsky 1, 2 and 5 repeat the 2018 lists, put Hurbanova in okrsok 1, the other eight in okrsok 2 and Kondrótova in okrsok 5; these streets are taken from that rule set."
+
+[[document]]
+url = "https://data.moderneobce.sk/data/uploads/bernolakovo.sk/Oznamenie-o-urceni-poctu-poslancov-a-o-utvoreni-volebnych-obvodov.pdf"
+sha256 = "fed4cb9665886d4815ed1a70dd7d9dc3a67c6ddd2458ffa6ad5bc62f9c5fd675"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 10. novembra 2018 (uznesenie č. 9/27/2018 zo dňa 13. augusta 2018), 16. augusta 2018"
+
+[[document]]
+url = "https://www.bernolakovo.sk/23153/volby-do-organov-samospravy-obci-10-november-2018"
+sha256 = "ed5edf85d8311b3905eed2104ca3d724ad7a006c01d658677e81f2bd8ebfcc0f"
+title = "elections page 2018"
+
+[[document]]
+url = "https://data.moderneobce.sk/data/uploads/bernolakovo.sk/volebne-okrsky_(1).pdf"
+sha256 = "a45a80e4d1be42641abeb37f4ab59c0c8ee74db3fd9b6015bb9b00c7fcbb2656"
+title = "Utvorenie volebných okrskov a určenie volebných miestností, 29.1.2019 (voľby prezidenta SR 2019)"
+
+[[document]]
+url = "https://web.archive.org/web/20210922123442/https://www.bernolakovo.sk/wp-content/uploads/2018/09/Utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti.pdf"
+sha256 = "32a34efd95e6b8ab05679da28ff5ab1e7410a258b9bddb93e59e034d23765f0a"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (starosta, 7.9.2018, voľby do orgánov samosprávy obcí 10. novembra 2018)"
+
+[obvod.1]
+seats = 5
+okrsky = [1, 2]
+rules = [
+  {street = "Azalková"},
+  {street = "Bottova"},
+  {street = "Fialková"},
+  {street = "Hlinkova"},
+  {street = "Hviezdoslavova"},
+  {street = "Chalupkova"},
+  {street = "Chmeľová"},
+  {street = "Jesenského"},
+  {street = "Kalinčiakova"},
+  {street = "Komenského"},
+  {street = "Konvalinková"},
+  {street = "Krátka"},
+  {street = "Kukučínova"},
+  {street = "Kvetná"},
+  {street = "Lekárenská"},
+  {street = "Lúčna"},
+  {street = "Ľaliová"},
+  {street = "Ľanová"},
+  {street = "Muškátová"},
+  {street = "Nálepkova"},
+  {street = "Narcisová"},
+  {street = "Národného oslobodenia", written = "Nár. oslobodenia"},
+  {street = "Okružná"},
+  {street = "Orechová"},
+  {street = "Orgovánová"},
+  {street = "Osiková"},
+  {street = "Poľná"},
+  {street = "Poľovnícka"},
+  {street = "Potočná"},
+  {street = "Priemyselná"},
+  {street = "Pšeničná"},
+  {street = "Ražná"},
+  {street = "Sládkovičova"},
+  {street = "Staničná"},
+  {street = "Stredná"},
+  {street = "Školská"},
+  {street = "Štúrova"},
+  {street = "Tulipánová"},
+  {street = "Viničná"},
+  {street = "Železničná"},
+  {street = "Poštová", numbers = "21-97", parity = "odd", supplemented = true},
+  {street = "Poštová", numbers = "14A, 16-80", parity = "even", supplemented = true},
+  {street = "Trnavská", numbers = "89-199", parity = "odd", supplemented = true},
+  {street = "Trnavská", numbers = "112-200", parity = "even", supplemented = true},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [3, 4]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Budovateľská"},
+  {street = "Clementisova"},
+  {street = "Družstevná"},
+  {street = "Dukelská"},
+  {street = "Fándlyho"},
+  {street = "Gaštanová alej"},
+  {street = "Grobská"},
+  {street = "Hlavná"},
+  {street = "Horný dvor"},
+  {street = "Kaštieľ"},
+  {street = "Kollárova"},
+  {street = "Mostová"},
+  {street = "Sacky"},
+  {street = "Slaná"},
+  {street = "Strojárenská"},
+  {street = "Svätoplukova"},
+  {street = "Tajovského"},
+  {street = "Vŕšky"},
+  {street = "Záhradná"},
+  {street = "Hlboká", numbers = "1-27", parity = "odd", supplemented = true},
+  {street = "Hlboká", numbers = "2-8, 8A", parity = "even", supplemented = true},
+  {street = "Poštová", numbers = "1-19, 19A", parity = "odd", supplemented = true},
+  {street = "Poštová", numbers = "2-14", parity = "even", supplemented = true},
+]
+
+[obvod.3]
+seats = 4
+okrsky = [5, 6]
+rules = [
+  {street = "Agátová"},
+  {street = "Borovicová"},
+  {street = "Broskyňová"},
+  {street = "Brusnicová"},
+  {street = "Buková"},
+  {street = "Čerešňová"},
+  {street = "Dubová"},
+  {street = "Dunajská"},
+  {street = "Figová"},
+  {street = "Hrušková"},
+  {street = "Jabloňová"},
+  {street = "Jelšová"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+  {street = "Malinová"},
+  {street = "Marhuľová"},
+  {street = "Mierová"},
+  {street = "Nevädzová"},
+  {street = "Obilná"},
+  {street = "Púpavová"},
+  {street = "Rezedová"},
+  {street = "Riečna"},
+  {street = "Sadová"},
+  {street = "Slivková"},
+  {street = "Slnečnicová"},
+  {street = "Smreková"},
+  {street = "Stromová"},
+  {street = "Šalviová"},
+  {street = "Šípková"},
+  {street = "Tabaková"},
+  {street = "Topoľový rad"},
+  {street = "Trnková"},
+  {street = "Višňová"},
+  {street = "Hlboká", numbers = "29", parity = "odd", supplemented = true},
+  {street = "Hlboká", numbers = "10-40", parity = "even", supplemented = true},
+  {street = "Trnavská", numbers = "2-110", parity = "even", supplemented = true},
+  {street = "Trnavská", numbers = "1-87", parity = "odd", supplemented = true},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Bottova"},
+  {street = "Hlinkova"},
+  {street = "Hviezdoslavova"},
+  {street = "Chalupkova"},
+  {street = "Jesenského"},
+  {street = "Kalinčiakova"},
+  {street = "Komenského"},
+  {street = "Kukučínova"},
+  {street = "Kvetná"},
+  {street = "Lekárenská"},
+  {street = "Nálepkova"},
+  {street = "Národného oslobodenia"},
+  {street = "Orechová"},
+  {street = "Poštová"},
+  {street = "Priemyselná"},
+  {street = "Sládkovičova"},
+  {street = "Školská"},
+  {street = "Štúrova"},
+  {street = "Viničná"},
+  {street = "Hurbanova", supplemented = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Azalková"},
+  {street = "Fialková"},
+  {street = "Chmeľová"},
+  {street = "Konvalinková"},
+  {street = "Krátka"},
+  {street = "Ľaliová"},
+  {street = "Ľanová"},
+  {street = "Lúčna"},
+  {street = "Muškátová"},
+  {street = "Narcisová"},
+  {street = "Okružná"},
+  {street = "Orgovánová"},
+  {street = "Osiková"},
+  {street = "Poľná"},
+  {street = "Poľovnícka"},
+  {street = "Potočná"},
+  {street = "Pšeničná"},
+  {street = "Ražná"},
+  {street = "Staničná"},
+  {street = "Stredná"},
+  {street = "Trnavská"},
+  {street = "Tulipánová"},
+  {street = "Železničná"},
+  {street = "Brečtanová", supplemented = true},
+  {street = "Hornádska", supplemented = true},
+  {street = "Hronská", supplemented = true},
+  {street = "Ipeľská", supplemented = true},
+  {street = "Kysucká", supplemented = true},
+  {street = "Moravská", supplemented = true},
+  {street = "Oravská", supplemented = true},
+  {street = "Vážska", supplemented = true},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Budovateľská"},
+  {street = "Clementisova"},
+  {street = "Družstevná"},
+  {street = "Dukelská"},
+  {street = "Fándlyho"},
+  {street = "Gaštanová alej", written = "Gaštanová", note = "the register's only street of that name; the obvody resolution writes it 'Gaštanová alej' in the same list"},
+  {street = "Grobská"},
+  {street = "Horný dvor"},
+  {street = "Sacky"},
+  {street = "Strojárenská"},
+  {street = "Svätoplukova"},
+  {street = "Tajovského"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Hlavná"},
+  {street = "Hlboká"},
+  {street = "Kaštieľ"},
+  {street = "Kollárova"},
+  {street = "Mostová"},
+  {street = "Poštová"},
+  {street = "Slaná"},
+  {street = "Vŕšky", written = "Vršky", note = "missing accent; the register's only such street"},
+  {street = "Záhradná"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Broskyňová"},
+  {street = "Brusnicová"},
+  {street = "Čerešňová"},
+  {street = "Figová"},
+  {street = "Hlboká"},
+  {street = "Hrušková"},
+  {street = "Malinová"},
+  {street = "Marhuľová"},
+  {street = "Obilná"},
+  {street = "Sadová"},
+  {street = "Slivková"},
+  {street = "Slnečnicová"},
+  {street = "Stromová"},
+  {street = "Šípková"},
+  {street = "Tabaková"},
+  {street = "Topoľový rad"},
+  {street = "Trnavská"},
+  {street = "Trnková"},
+  {street = "Višňová"},
+  {street = "Kondrótova", supplemented = true},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Agátová"},
+  {street = "Borovicová"},
+  {street = "Buková"},
+  {street = "Dubová"},
+  {street = "Dunajská"},
+  {street = "Jabloňová"},
+  {street = "Jelšová"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+  {street = "Mierová"},
+  {street = "Nevädzová"},
+  {street = "Púpavová"},
+  {street = "Rezedová"},
+  {street = "Riečna"},
+  {street = "Smreková"},
+  {street = "Šalviová"},
+]

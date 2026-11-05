@@ -1,0 +1,1306 @@
+﻿<!DOCTYPE html>
+<html lang="sk">
+  <head>
+  <meta  charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Voľby do NR SR - 29.2.2020 | Pribeta | Oficiálne stránky obce</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/design/css/style.min.css?v=2" rel="stylesheet" />
+    <link href="rse/app/app.css" rel="stylesheet" />
+        <meta name="description" content="Vitajte na oficiálnych internetových stránkach obce Pribeta." />
+    <meta name="keywords" content="Pribeta, obec, mesto, obecný úrad, slovensko, turizmus, samospráva" />
+        <meta name="robots" content="index, follow" />
+    <meta name="author" content="webex.digital" />
+    <link rel="shortcut icon" href="/design/images/erb.png" />
+        <meta property="og:title" content="Voľby do NR SR - 29.2.2020 | Pribeta | Oficiálne stránky obce" />
+    <meta property="og:site_name" content="Pribeta" />
+    <meta property="og:description" content="Vitajte na oficiálnych internetových stránkach obce Pribeta." />
+        <meta property="og:image" content="https://www.pribeta.sk/design/images/erb.png" />
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="rse/jscripts/jquery.form.js"></script>
+    <script type="text/javascript" src="rse/jscripts/fancybox-3/dist/jquery.fancybox.min.js"></script>
+    <script type="text/javascript" src="rse/jscripts/md5.js"></script>
+    <link rel="stylesheet" href="rse/jscripts/fancybox-3/dist/jquery.fancybox.min.css" type="text/css" media="screen" />
+    <script src="design/js/bootstrap.min.js"></script>
+	<script src="rse/jscripts/rslider/responsiveslides.js"></script>
+    <!--<script type="text/javascript" src="rse/jscripts/nivo-slider/jquery.nivo.slider.pack.js"></script>-->
+    <!--<link rel="stylesheet" href="rse/jscripts/nivo-slider/nivo-slider.css" type="text/css" media="screen" />-->
+    <script type="text/javascript" src="/design/js/jquery.jfontsize-1.0.js"></script>
+    <script type="text/javascript" src="/design/js/persistentFontSize.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            restoreSize();
+        });
+    </script>
+    <script type="text/javascript" src="rse/jscripts/init.js"></script>
+    <script src="rse/jscripts/bxslider/jquery.bxslider.min.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=XXXXXXXXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    /* admin21 */
+    gtag('config', 'UA-154564985-1', { 'anonymize_ip': true });
+  </script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>  <script src="//code.responsivevoice.org/responsivevoice.js"></script>
+<script>
+    function stringToBoolean(string) {
+        switch(string.toLowerCase().trim()){
+            case "true": case "yes": case "1": return true;
+            case "false": case "no": case "0": case null: return false;
+            default: return Boolean(string);
+        }
+    }
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1);
+            if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+        }
+        return "";
+    }
+    function isTextToSpeechEnabled() {
+        if(typeof(Storage) !== "undefined") {
+            if(localStorage.getItem('textToSpeechEnabled')) {
+                return stringToBoolean(localStorage.getItem('textToSpeechEnabled'));
+            }
+        } else if(getCookie('textToSpeechEnabled')) {
+            return stringToBoolean(getCookie('textToSpeechEnabled'));
+        }
+        return false;
+    }
+    function setTextToSpeechEnabled(isEnabled) {
+        if(typeof isEnabled == "string") {
+            isEnabled = stringToBoolean(isEnabled);
+        }
+        if(isEnabled) {
+//            if(!responsiveVoice.voiceSupport()) {
+//                alert('Váš prehliadač nepodporuje čítačku textu.');
+//                return;
+//            }
+        }
+        if(typeof(Storage) !== "undefined") {
+            localStorage.setItem('textToSpeechEnabled', isEnabled);
+        } else {
+            setCookie('textToSpeechEnabled', isEnabled, 3000);
+        }
+        if(isEnabled) {
+            removeVolumeControls();
+            appendVolumeControls();
+            $('a').mouseenter(function () { // Attach this function to all mouseenter events for 'a' tags
+                responsiveVoice.cancel(); // Cancel anything else that may currently be speaking
+                speak($(this).text()); // Speak the text contents of all nodes within the current 'a' tag
+            });
+            refreshReadbales();
+        }
+        if(!isEnabled) {
+          $(".textToSpeechHandler").each(function() {
+              $(this).remove();
+          });
+        }
+    }
+    function setContentAsReadable(selector) {
+        var str = selector.html();
+        str = str.replace(/<\/?[^>]+(>|$)/g, ".");
+        str = str.replace(/[\t\n]/g, "");
+        str = str.replace(/\.+/g, '.');
+        str = str.replace(/^\./, '');
+        str = str.toLowerCase();
+        selector.attr('data-textToSpeech', str);
+        selector.append('<div class="textToSpeechHandler"><i class="fa fa1 fa-volume-up"></i></div>');
+        refreshReadbales();
+    }
+    function speak(text) {
+        if(!isTextToSpeechEnabled()) {
+            return;
+        }
+//        if (!responsiveVoice.voiceSupport()) {
+//            alert('Váš prehliadač nepodporuje čítačku textu.');
+//            return;
+//        }
+        responsiveVoice.cancel();
+        // treba skusit ktore ide a to nechat - zoradene je to od najlepsieho po najhorsie podla pouzitelnosti
+        // responsiveVoice.speak(text, "Slovak Female", {volume: 2});
+        responsiveVoice.speak(text, "Slovak Female", {volume: 2, rate: 1, pitch: 1});
+        // responsiveVoice.speak(text, "Czech Female", {volume: 2});
+        // responsiveVoice.speak(text, "UK English Female", {volume: 2});
+    }
+    function refreshReadbales() {
+        $(".textToSpeechHandler").on('click', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            var text = $(this).parents('[data-textToSpeech]').attr('data-textToSpeech');
+            speak(text);
+        });
+    }
+    function setSwitcherIcon(isSet) {
+        if(isSet) {
+            $('.textToSpeechSwitcher').find('.fa1').removeClass('fa-volume-off').addClass('fa-volume-up');
+            $('.textToSpeechSwitcher').find('.fa2').removeClass('fa-times').addClass('fa-nothing');
+            $('a').mouseenter(function () { // Attach this function to all mouseenter events for 'a' tags
+                responsiveVoice.cancel(); // Cancel anything else that may currently be speaking
+                speak($(this).text()); // Speak the text contents of all nodes within the current 'a' tag
+            });
+            $('.main_content_right_in').find('.textToSpeechSwitcher').addClass('textToSpeechSwitcher_active');
+            $('.main_content_right_in').find('.textToSpeechSwitcherBlock').addClass('textToSpeechSwitcherBlock_active');
+        } else {
+            $('.textToSpeechSwitcher').find('.fa1').removeClass('fa-volume-up').addClass('fa-volume-off');
+            $('.textToSpeechSwitcher').find('.fa2').removeClass('fa-nothing').addClass('fa-times');
+            $('.main_content_right_in').find('.textToSpeechSwitcher').removeClass('textToSpeechSwitcher_active');
+            $('.main_content_right_in').find('.textToSpeechSwitcherBlock').removeClass('textToSpeechSwitcherBlock_active');
+        }
+    }
+    function appendVolumeControls() {
+        $("[data-textToSpeech]").each(function () {
+            $(this).append('<div class="textToSpeechHandler"><i class="fa fa1 fa-volume-up"></i></div>');
+        });
+    }
+    function removeVolumeControls() {
+        $(".textToSpeechHandler").each(function() {
+            $(this).remove();
+        });
+    }
+    $(function () {
+        $(".textToSpeechSwitcher").click(function() {
+            var setVal = !isTextToSpeechEnabled();
+            setTextToSpeechEnabled(setVal);
+            setSwitcherIcon(setVal);
+            if(setVal) {
+                refreshReadbales();
+            }
+        });
+        if(isTextToSpeechEnabled()) {
+            setSwitcherIcon(true);
+            appendVolumeControls();
+            refreshReadbales();
+        }
+    });
+</script>
+  </head>
+<body>
+<div class="cc_disclaimer">
+                <div class="cc_disclaimer_box">
+                    <div class="cc_disclaimer_content">
+                        <!--div class="cc_disclaimer_head">
+                            Obec <span>XXXXXXXX</span> rešpektuje ochranu vašich údajov                        </div-->
+                        <div class="cc_disclaimer_body">
+                            <p>
+	T&aacute;to internetov&aacute; str&aacute;nka použ&iacute;va technol&oacute;giu cookies. Bliž&scaron;ie inform&aacute;cie o s&uacute;boroch cookies n&aacute;jdete v sekcii webstr&aacute;nky <a href="/subory-cookies" target="_blank">Cookies</a>.</p>
+                                                    </div>
+                        <div class="cc_disclaimer_buttons">
+                            <button class="cc_button_allow" type="button" name="consent" onClick="cookies_disclaimer.allow();">
+                                Súhlasím                            </button>
+                            <!--button class="cc_button_disallow" type="button" name="button" onClick="cookies_disclaimer.disallow();">
+                                Nesúhlasím                            </button-->
+                            <a class="cc_button_disallow" name="button" href="subory-cookies">Viac</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+  <div class="mainBg" style="background-image:url('imgcache/e-img-1244-5-1680-850-0-ffffff.jpg?v=1576239431');"><div class="mainBgGradient">&nbsp;</div></div>
+<!-- /MAIN-BG-->
+<div class="content">
+<header class="header hidden-print">
+<div class="container">
+<div class="row">
+<div class="col-sm-0 visible-xs mainLogo"><a href="/" title="Pribeta"><img src="/design/images/erb.png" class="img-responsive" alt="Pribeta" /> <p>Pribeta <small>Oficiálne stránky obce</small></p></a></div>
+<div class="col-sm-9 header_middle">
+<div class="input-group" id="searchInput">
+<form action="/" style="display:inherit;" id="searchbox_008285927291506622991:rcxstx32fx4">
+  <input class="input_hidden" type="hidden" name="cx" value="008285927291506622991:rcxstx32fx4">
+  <input class="input_hidden" type="hidden" name="page" value="google" />
+  <input class="input_hidden" type="hidden" name="cof" value="FORID:11" />
+  <input class="input_hidden" type="hidden" name="id" value="36" />
+    <input type="text" class="form-control searchInputWidth" name="q" placeholder="Vyhľadávanie">
+  <span class="input-group-btn">
+    <button class="btn btn-default" name="sa" type="submit"><i class="fa fa-search"></i></button>
+  </span>
+</form>
+</div>
+<nav class="navigation hidden-xs">
+<div class="navbar-header navbar-default" role="navigation">
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+</div>
+<div class="collapse navbar-collapse navbar-ex1-collapse">
+<ul>
+        <li class=""><a href="nasa-obec"   class="nav_header01 ">Naša obec  </a>
+                </li>
+        <li class=""><a href="samosprava"   class="nav_header02 ">Samospráva  </a>
+                </li>
+        <li class=""><a href="aktuality"   class="nav_header03 hj">Aktuality  </a>
+                </li>
+        <li class=""><a href="kontakty"   class="nav_header04 ">Kontakt  </a>
+                </li>
+        </ul>
+</div>
+</nav>
+</div>
+<div class="col-sm-3 text-right header_right">
+<a href="#" id="toggleSearch" class="search_button"><i class="fa fa-search"></i></a>
+<ul class="header_font_size">
+<li><a href="#" title="Zmenšiť" class="jfontsize-d2">A</a></li>
+<li><a href="#" title="Zväčšiť" class="jfontsize-p2">A</a></li>
+</ul>
+<span class="hidden-xs"><a href="#" title="Zmenšiť" class="jfontsize-d2">Zmenšiť</a> / <a href="#" title="Zväčšiť" class="jfontsize-p2">Zväčšiť</a></span>
+<ul class="header_lang"><li class="text-uppercase"><a href="language.php?lang=sk&href=aktuality">sk</a></li>&nbsp;<li class="text-uppercase"><a href="language.php?lang=hu&href=aktualitasok">hu</a></li>&nbsp;<li class="text-uppercase"><a href="contact">EN</a></li></ul></div>
+</div>
+</div>
+</header><!-- /HEADER-->
+<div class="container top_box top_box_in hidden-xs hidden-print">
+<div class="row">
+<div class="col-sm-6 top_box_title">
+<a href="/" title="Pribeta"><img src="/design/images/erb.png" class="img-responsive" alt="Pribeta" /> <p>Pribeta <small>Oficiálne stránky obce</small></p></a>
+</div>
+<div class="col-sm-6 text-right slider-right">
+</div>
+</div>
+</div><!-- /TOP-BOX-->
+<div class="main_content">
+<div class="container">
+<div class="row row-eq-height">
+<aside class="col-sm-3 main_content_left hidden-print">
+  <nav class="navVertical">
+      <div class="navbar-header navbar-header-lave-menu">
+        <button type="button" class="navbar-toggle navbar-togle-lave-menu btn btn-refresh btn-block collapsed" data-toggle="collapse" data-target="#lave-menu" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="text-uppercase"><i class="fa fa-bars fa-lg"></i> Hlavné menu</span>
+        </button>
+        <!--span class="navbar-brand lave-menu-brand">Hlavné menu</span-->
+      </div>
+      <div class="collapse navbar-collapse" id="lave-menu">
+        <ul class="navigation-left-box">
+                        <li><span class="nlb_title">Samospráva</span></li>
+                </li>
+                        <li class=""><a href="nasa-obec"   class="">Naša obec  </a>
+                </li>
+                        <li class=""><a href="starosta-obce"   class="">Starosta obce  </a>
+                </li>
+                        <li class="dropdown"><a href="#"  data-toggle="dropdown" class="nav_imp rozklik ">Obecné zastupiteľstvo  <span class="caret"></span></a>
+                    <ul class="dropdown-menu2">
+                <li class=""><a href="poslanci-oz" ><i class="fa fa-caret-right"></i> Poslanci OZ </a></li>
+                <li class=""><a href="komisie-pri-oz" ><i class="fa fa-caret-right"></i> Komisie pri OZ </a></li>
+                <li class=""><a href="zapisnice-oz" ><i class="fa fa-caret-right"></i> Zápisnice OZ </a></li>
+                <li class=""><a href="uznesenia-oz" ><i class="fa fa-caret-right"></i> Uznesenia OZ </a></li>
+                    </ul>
+                    </li>
+                        <li class=""><a href="hlavny-kontrolor"   class="">Hlavný kontrolór  </a>
+                </li>
+                        <li class="dropdown"><a href="skolstvo"  data-toggle="dropdown" class="nav_imp rozklik ">Školstvo  <span class="caret"></span></a>
+                    <ul class="dropdown-menu2">
+                <li class=""><a href="zakladna-skola" ><i class="fa fa-caret-right"></i> Základná škola </a></li>
+                <li class=""><a href="materska-skola" ><i class="fa fa-caret-right"></i> Materská škola </a></li>
+                <li class=""><a href="materska-skola-s-vjm-" ><i class="fa fa-caret-right"></i> Materská škola s VJM  </a></li>
+                <li class=""><a href="zakladna-skola-s-vjm" ><i class="fa fa-caret-right"></i> Základná škola s VJM </a></li>
+                    </ul>
+                    </li>
+                        <li class="dropdown"><a href="#"  data-toggle="dropdown" class="nav_imp rozklik ">Dokumenty  <span class="caret"></span></a>
+                    <ul class="dropdown-menu2">
+                <li class=""><a href="vseobecne-zavazne-nariadenia" ><i class="fa fa-caret-right"></i> Všeobecné záväzné nariadenia </a></li>
+                <li class=""><a href="tlaciva" ><i class="fa fa-caret-right"></i> Tlačivá na stiahnutie </a></li>
+                <li class=""><a href="ostatne-dokumenty" ><i class="fa fa-caret-right"></i> Ostatné dokumenty </a></li>
+                    </ul>
+                    </li>
+                        <li class=""><a href="miestny-rozhlas"   class="">Miestny rozhlas  </a>
+                </li>
+                        <li class=""><a href="symboly-obce"   class="">Symboly obce  </a>
+                </li>
+                        <li class=""><a href="volby"   class="">Voľby  </a>
+                </li>
+                        <li class=""><a href="kontakty"   class="">Kontakty  </a>
+                </li>
+                        <li><span class="nlb_title">Život v obci</span></li>
+                </li>
+                        <li class=""><a href="uradna-tabula"   class="">Úradná tabuľa  </a>
+                </li>
+                        <li class=""><a href="aktuality"   class="hj">Aktuality  </a>
+                </li>
+                        <li class=""><a href="sucasnost"   class="">Súčasnosť  </a>
+                </li>
+                        <li class=""><a href="historia"   class="">História obce  </a>
+                </li>
+                        <li class="dropdown"><a href="kultura"  data-toggle="dropdown" class="nav_imp rozklik ">Kultúra  <span class="caret"></span></a>
+                    <ul class="dropdown-menu2">
+                <li class=""><a href="csemadok" ><i class="fa fa-caret-right"></i> Kultúrny spolok CSEMADOK </a></li>
+                <li class=""><a href="folklorna-skupina-napraforgo" ><i class="fa fa-caret-right"></i> Folklórna skupina Napraforgó </a></li>
+                <li class=""><a href="mazoretkovy-atanecny-klub-margaret" ><i class="fa fa-caret-right"></i> Mažoretkový a tanečný klub Margaret </a></li>
+                <li class=""><a href="narodopisna-zbierka" ><i class="fa fa-caret-right"></i> Národopisná zbierka  </a></li>
+                    </ul>
+                    </li>
+                        <li class=""><a href="fotogaleria"   class="">Fotogaléria  </a>
+                </li>
+                        <li class=""><a href="videogaleria"   class="">Videogaléria  </a>
+                </li>
+                        <li class=""><a href="krasy-nasej-obce"   class="">Krásy našej obce  </a>
+                </li>
+                        <li class="dropdown"><a href="cirkev"  data-toggle="dropdown" class="nav_imp rozklik ">Cirkev  <span class="caret"></span></a>
+                    <ul class="dropdown-menu2">
+                <li class=""><a href="evanjelicka-cirkev-augsburskeho-vyznania" ><i class="fa fa-caret-right"></i> Evanjelická cirkev augsburského vyznania </a></li>
+                <li class=""><a href="reformovana-krestanska-cirkev" ><i class="fa fa-caret-right"></i> Reformovaná kresťanská cirkev </a></li>
+                <li class=""><a href="rimskokatolicka-cirkev" ><i class="fa fa-caret-right"></i> Rímskokatolícka cirkev </a></li>
+                    </ul>
+                    </li>
+                        <li class="dropdown"><a href="sport"  data-toggle="dropdown" class="nav_imp rozklik ">Šport  <span class="caret"></span></a>
+                    <ul class="dropdown-menu2">
+                <li class=""><a href="futbal" ><i class="fa fa-caret-right"></i> Futbal </a></li>
+                <li class=""><a href="lukostrelba" ><i class="fa fa-caret-right"></i> Lukostrelba </a></li>
+                <li class=""><a href="stolny-tenis" ><i class="fa fa-caret-right"></i> Stolný tenis </a></li>
+                <li class=""><a href="sachy" ><i class="fa fa-caret-right"></i> Šachy </a></li>
+                <li class=""><a href="volejbal" ><i class="fa fa-caret-right"></i> Volejbal </a></li>
+                    </ul>
+                    </li>
+                        <li class=""><a href="firmy-v-obci"   class="">Firmy v obci  </a>
+                </li>
+                        <li class=""><a href="pribetsky-spravodaj"   class="">Pribetský spravodaj  </a>
+                </li>
+                        <li class="dropdown"><a href="organizacie"  data-toggle="dropdown" class="nav_imp rozklik ">Organizácie  <span class="caret"></span></a>
+                    <ul class="dropdown-menu2">
+                <li class=""><a href="dobrovolny-hasicsky-zbor" ><i class="fa fa-caret-right"></i> Dobrovoľný hasičský zbor </a></li>
+                <li class=""><a href="slovensky-erveny-kriz" ><i class="fa fa-caret-right"></i> Slovenský Ćervený kríž </a></li>
+                <li class=""><a href="jednota-dochodcov" ><i class="fa fa-caret-right"></i> Jednota dôchodcov </a></li>
+                    </ul>
+                    </li>
+                        <li><span class="nlb_title">Povinné zverejňovanie</span></li>
+                </li>
+                        <li class=""><a href="zmluvy"   class="">Zmluvy  </a>
+                </li>
+                        <li class=""><a href="faktury"   class="">Faktúry  </a>
+                </li>
+                        <li class=""><a href="objednavky"   class="">Objednávky  </a>
+                </li>
+                        <li class=""><a href="verejne-obstaravanie"   class="">Verejné obstarávanie  </a>
+                </li>
+                        <li class=""><a href="ochrana-osobnych-udajov"   class="">Ochrana osobných údajov  </a>
+                </li>
+                        <li class=""><a href="archiv"   class="">Archív  </a>
+                </li>
+                </ul>
+        <script type="text/javascript">
+        if($(".hj").parent().hasClass("dropdown-menu2")) {
+            $(".hj").parents(".dropdown-menu2").addClass("visible");
+            $(".hj").parents(".dropdown-menu2").attr("style", "display:block");
+        }
+        </script>
+              </div>
+  </nav>
+<!--nav class="navVertical">
+</nav-->
+</aside><!-- /MAIN-CONTENT-LEFT-->
+<div class="col-sm-6 main_content_center">
+<section class="main_content_center_in">
+<ul class="breadcrumb"><li><a href="/"><i class="fa fa-home"></i></a></li>	<li><a href="aktuality">Aktuality</a></li>
+	<li><a href="">Voľby do NR SR - 29.2.2020</a></li>
+	</ul><div class="title_box box_margin"><h1 data-texttospeech="Voľby do NR SR - 29.2.2020">Voľby do NR SR - 29.2.2020</h1></div>
+<p><i class="fa fa-calendar"></i>&nbsp;22.10.2019</p><div class="e2_htmlcontent"><h2>
+	&nbsp;&nbsp;</h2>
+<p>
+	<strong><em><u>Vytvorenie volebn&yacute;ch okrskov pre voľby do N&aacute;rodnej rady Slovenskej republiky dňa 29.2.2020</u></em></strong></p>
+<p>
+</p>
+<p>
+	V&nbsp;zmysle &sect;8 ods. 1 z&aacute;kona NR SR č. 180/2014 o podmienkach v&yacute;konu volebn&eacute;ho pr&aacute;va a o zmene a doplnen&iacute; niektor&yacute;ch z&aacute;konov a v s&uacute;lade s rozhodnut&iacute;m predsedu NR SR č. 351/2019 Z. z. o vyhl&aacute;sen&iacute; volieb do N&aacute;rodnej rady Slovenskej republiky a určen&iacute; dňa ich konania na sobotu 29. febru&aacute;ra 2020 určujem</p>
+<p>
+</p>
+<p>
+	<strong>volebn&eacute; </strong><strong>okrsky pre obec Pribeta nasledovne:</strong></p>
+<p>
+</p>
+<p>
+	<strong><em><u>okrsok č. 1</u></em></strong></p>
+<p>
+</p>
+<p>
+	<em>&nbsp;&nbsp;&nbsp;&nbsp; <strong>S&iacute;dlo volebnej miestnosti: </strong></em></p>
+<p>
+	<strong><em>&nbsp;&nbsp;&nbsp;&nbsp; Kult&uacute;rny dom, Hlavn&aacute; ulica č. 127, Pribeta </em></strong></p>
+<p>
+	<em>Pre voličov opr&aacute;vnen&yacute;ch voliť b&yacute;vaj&uacute;cich v&nbsp;obci Pribeta na nasledovn&yacute;ch uliciach:</em></p>
+<p>
+	<em>N&aacute;dražn&aacute; ulica, Novoz&aacute;mock&aacute; ulica, Nov&yacute; rad, Revolučn&aacute; ulica, Dlh&aacute; ulica, R&uacute;baňsk&aacute; ulica, Mierov&aacute; ulica, Hlavn&aacute; ulica, Kr&aacute;tka ulica, Pri stanici, Pribeta</em></p>
+<p>
+</p>
+<p>
+	<strong><em>&nbsp;&nbsp;&nbsp;&nbsp; <u>okrsok č. 2</u></em></strong></p>
+<p>
+</p>
+<p>
+	<em>&nbsp;&nbsp;&nbsp;&nbsp; <strong>S&iacute;dlo volebnej miestnosti:</strong></em></p>
+<p>
+	<strong><em>&nbsp;&nbsp;&nbsp;&nbsp; &Scaron;portov&aacute; hala, &Scaron;kolsk&aacute; ulica č. 15, Pribeta </em></strong></p>
+<p>
+	<em>Pre voličov opr&aacute;vnen&yacute;ch voliť b&yacute;vaj&uacute;cich v&nbsp;obci Pribeta na nasledovn&yacute;ch uliciach:</em></p>
+<p>
+	<em>Vojnick&aacute; ulica, Družstevn&aacute; ulica, Modransk&aacute; ulica, Ružov&aacute; ulica, Robotn&iacute;cka ulica, Kvetn&aacute; ulica, &Scaron;kolsk&aacute; ulica, Obchodn&aacute; ulica, Kom&aacute;rňansk&aacute; ulica, Jarkov&aacute; ulica, L&uacute;čna ulica, Jarmočn&aacute; ulica, &Scaron;portov&aacute; ulica, Cintor&iacute;nska ulica, Ml&aacute;dežn&iacute;cka ulica, Podz&aacute;hradn&aacute; ulica, N&aacute;mestie J&aacute;na Kalv&iacute;na</em></p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+	<em>v Pribete, dňa 22.11.2019</em></p>
+<p style="margin-left:64.8pt;">
+</p>
+<p style="margin-left:64.8pt;">
+	Norbert Zsitva</p>
+<p style="margin-left:18.0pt;">
+	<strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;starosta obce</strong></p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif; text-align: center;">
+</p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif; text-align: center;">
+</p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif; text-align: center;">
+</p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif; text-align: center;">
+	<span style="color: rgb(255, 0, 0);"><strong>VOĽBY DO N&Aacute;RODNEJ RADY SLOVENSKEJ REPUBLIKY 2020</strong></span></p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif; text-align: center;">
+	<span style="color: rgb(34, 34, 34); font-family: Arial, Verdana, sans-serif; font-size: 12px;">Predseda N&aacute;rodnej rady Slovenskej republiky dňa 04.11.2019, rozhodnut&iacute;m č. 351/2019 Z. z. vyhl&aacute;sil voľby do N&aacute;rodnej rady Slovenskej republiky a&nbsp;určil term&iacute;n ich konania na </span><strong style="color: rgb(34, 34, 34); font-family: Arial, Verdana, sans-serif; font-size: 12px;">sobotu 29.febru&aacute;ra 2020&nbsp;</strong><strong style="color: rgb(34, 34, 34); font-family: Arial, Verdana, sans-serif; font-size: 12px;">od 7:00 do 22:00 h</strong><span style="color: rgb(34, 34, 34); font-family: Arial, Verdana, sans-serif; font-size: 12px;">.</span></p>
+<br />
+<ul style="margin: 5px 0px; padding-left: 8px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif; font-size: 14.4px;">
+	<li style="margin: 4px 10px;">
+		Elektronick&aacute; adresa na doručovanie žiadost&iacute; o&nbsp;voľbu po&scaron;tou:&nbsp;<strong><a href="mailto:podatelna@vysoketatry.sk?subject=%E2%80%9EVO%C4%BDBA%20PO%C5%A0TOU%20-%20ELECTION%20BY%20MAIL%E2%80%9C" style="color: rgb(0, 76, 142);">obec@pribeta.sk</a></strong></li>
+</ul>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	Inform&aacute;cie o&nbsp;podmienkach hlasovania po&scaron;tou voličmi s&nbsp;trval&yacute;m pobytom na &uacute;zem&iacute; SR, ktor&iacute; sa v&nbsp;čase volieb bud&uacute; nach&aacute;dzať mimo SR:</p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+</p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	<strong>Voľba po&scaron;tou voličom, ktor&yacute; m&aacute; trval&yacute; pobyt na &uacute;zem&iacute; Slovenskej republiky a v čase volieb sa zdržiava mimo jej &uacute;zemia</strong></p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	Volič, ktor&yacute;</p>
+<p align="center" style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	<strong>m&aacute; trval&yacute; pobyt na &uacute;zem&iacute; Slovenskej republiky<br />
+	a v&nbsp;čase volieb sa zdržiava mimo jej &uacute;zemia</strong>,</p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	m&ocirc;že požiadať o voľbu po&scaron;tou a to</p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	v&nbsp;listinnej forme&nbsp; tak,</p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	aby žiadosť o&nbsp;voľbu po&scaron;tou bola doručen&aacute; na adresu obce (obecn&eacute;ho &uacute;radu) najnesk&ocirc;r 50 dn&iacute; predo dňom konania volieb (t.j. najnesk&ocirc;r 10.1.2020)</p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	Na žiadosť doručen&uacute; po ustanovenej lehote sa neprihliada.</p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	elektronicky (e-mailom) tak,</p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	aby žiadosť o voľbu po&scaron;tou bola doručen&aacute; na elektronick&uacute; (e-mailov&uacute;) adresu, ktor&uacute; obec zverejnila na svojom webovom s&iacute;dle alebo na &uacute;radnej tabuli obce najnesk&ocirc;r 50 dn&iacute; predo dňom konania volieb (t.j. najnesk&ocirc;r 10.1.2020).</p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	Na žiadosť doručen&uacute; po ustanovenej lehote sa neprihliada.</p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	<span style="color: rgb(255, 102, 0); font-family: Verdana, sans-serif; font-size: 14.6667px; text-align: center;">Voličovi, ktor&yacute; pri elektronickej komunik&aacute;cii využil sprostredkovateľsk&yacute; port&aacute;l, odpor&uacute;čame overiť si doručenie svojej žiadosti o&nbsp;voľbu po&scaron;tou priamo</span><br style="color: rgb(255, 102, 0); font-family: Verdana, sans-serif; font-size: 14.6667px; text-align: center;" />
+	<span style="color: rgb(255, 102, 0); font-family: Verdana, sans-serif; font-size: 14.6667px; text-align: center;">na pr&iacute;slu&scaron;nom obecnom alebo mestskom &uacute;rade.</span></p>
+<p style="margin: 0px 0px 1em 14.2pt; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	<strong>Žiadosť o voľbu po&scaron;tou</strong>&nbsp;<strong>mus&iacute; obsahovať &uacute;daje o&nbsp;voličovi</strong></p>
+<ul style="margin: 5px 0px; padding-left: 8px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif; font-size: 14.4px;">
+	<li style="margin: 4px 10px 4px 14.2pt;">
+		meno a priezvisko,</li>
+	<li style="margin: 4px 10px 4px 14.2pt;">
+		rodn&eacute; č&iacute;slo,</li>
+	<li style="margin: 4px 10px 4px 14.2pt;">
+		adresu trval&eacute;ho pobytu v&nbsp;Slovenskej republike,</li>
+	<li style="margin: 4px 10px 4px 14.2pt;">
+		adresu miesta pobytu v cudzine.</li>
+</ul>
+<p style="margin: 0px 0px 1em 14.2pt; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	Ak žiadosť spĺňa z&aacute;konom ustanoven&eacute; n&aacute;ležitosti, obec za&scaron;le najnesk&ocirc;r 35 dn&iacute; predo dňom konania volieb voličovi, ktor&yacute; požiadal o voľbu po&scaron;tou, na adresu miesta pobytu v&nbsp;cudzine</p>
+<ul style="margin: 5px 0px; padding-left: 8px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif; font-size: 14.4px;">
+	<li style="margin: 4px 10px 4px 14.2pt;">
+		ob&aacute;lku opatren&uacute; odtlačkom &uacute;radnej pečiatky obce,</li>
+	<li style="margin: 4px 10px 4px 14.2pt;">
+		hlasovacie l&iacute;stky,</li>
+	<li style="margin: 4px 10px 4px 14.2pt;">
+		n&aacute;vratn&uacute; ob&aacute;lku (označen&uacute; heslom &bdquo;<strong><em>VOĽBA PO&Scaron;TOU - ELECTION BY MAIL</em></strong>&ldquo; a&nbsp;vyp&iacute;sanou adresou s&iacute;dla obecn&eacute;ho &uacute;radu obce ako adres&aacute;ta a adresou voliča ako odosielateľa),</li>
+	<li style="margin: 4px 10px 4px 14.2pt;">
+		poučenie o sp&ocirc;sobe hlasovania.</li>
+</ul>
+<p align="center" style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	<strong>Hlasovanie</strong></p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	<em>Vybrať jeden hlasovac&iacute; l&iacute;stok ....</em></p>
+<p style="margin: 0px 0px 1em 14.2pt; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	Po rozhodnut&iacute;, ktor&eacute;mu kandiduj&uacute;cemu subjektu chce volič odovzdať svoj hlas, vyberie zo sady hlasovac&iacute;ch l&iacute;stkov jeden konkr&eacute;tny hlasovac&iacute; l&iacute;stok, ktor&yacute; m&ocirc;že bez ďal&scaron;ej &uacute;pravy vložiť do ob&aacute;lky opatrenej odtlačkom &uacute;radnej pečiatky obce a&nbsp;t&uacute;to zalep&iacute;.</p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	<em>Prednostn&yacute; hlas ....</em></p>
+<p style="margin: 0px 0px 1em 14.2pt; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	Ak sa volič rozhodne dať niektor&eacute;mu z&nbsp;kandid&aacute;tov uveden&yacute;ch na hlasovacom l&iacute;stku prednostn&yacute; hlas, zakr&uacute;žkuje poradov&eacute; č&iacute;slo uveden&eacute; pred menom kandid&aacute;ta. Prednostn&yacute; hlas m&ocirc;že dať volič najviac &scaron;tyrom kandid&aacute;tom. Ak volič zakr&uacute;žkuje vy&scaron;&scaron;&iacute; počet poradov&yacute;ch č&iacute;siel ako &scaron;tyri, na prednostn&eacute; hlasy sa pri zisťovan&iacute; v&yacute;sledkov hlasovania nebude prihliadať, ale hlasovac&iacute; l&iacute;stok sa započ&iacute;ta v&nbsp;prospech kandiduj&uacute;ceho subjektu. Po &uacute;prave hlasovacieho l&iacute;stka vlož&iacute; volič hlasovac&iacute; l&iacute;stok do ob&aacute;lky opatrenej odtlačkom &uacute;radnej pečiatky Ministerstva vn&uacute;tra Slovenskej republiky a&nbsp;t&uacute;to zalep&iacute;.</p>
+<p style="margin: 0px 0px 1em; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	<em>Odoslať n&aacute;vratn&uacute; ob&aacute;lku ....</em></p>
+<p style="margin: 0px 0px 1em 14.2pt; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	Zalepen&uacute; ob&aacute;lku volič vlož&iacute; do n&aacute;vratnej ob&aacute;lky označenej heslom &bdquo;<strong><em>VOĽBA PO&Scaron;TOU - ELECTION BY MAIL</em></strong>&ldquo;, mus&iacute; byť na nej uveden&aacute; adresa s&iacute;dla obecn&eacute;ho &uacute;radu obce ako adres&aacute;ta a adresa voliča ako&nbsp;odosielateľa.</p>
+<p style="margin: 0px 0px 1em 14.2pt; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	N&aacute;vratn&uacute; ob&aacute;lku odo&scaron;le po&scaron;tou. V&yacute;davky spojen&eacute; so zaslan&iacute;m n&aacute;vratnej ob&aacute;lky po&scaron;tou hrad&iacute; odosielateľ.</p>
+<p style="margin: 0px 0px 1em 14.2pt; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	Do v&yacute;sledku hlasovania sa započ&iacute;tavaj&uacute; hlasy na hlasovac&iacute;ch l&iacute;stkoch, ktor&eacute; boli doručen&eacute; obci trval&eacute;ho pobytu voliča najnesk&ocirc;r v posledn&yacute; pracovn&yacute; deň predo dňom konania volieb (t.j. najnesk&ocirc;r 28.2.2020).</p>
+<p style="margin: 0px 0px 1em 14.2pt; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	<span archivo="" background-color:="" font-size:="" style="font-family: ">V&scaron;etky d&ocirc;ležit&eacute; inform&aacute;cie k&nbsp;voľbe po&scaron;tou s&uacute; uveden&eacute; na webovej str&aacute;nke Ministerstva vn&uacute;tra Slovenskej republiky:&nbsp;&nbsp; &nbsp;</span><span archivo="" background-color:="" font-size:="" style="font-family: " text-decoration-line:=""><a href="http://www.minv.sk/?nr20-posta2" style="color: rgb(34, 34, 34); text-decoration-line: none;">http://www.minv.sk/?nr20-posta2</a></span></p>
+<p style="margin: 0px 0px 1em 14.2pt; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif;">
+	&nbsp; &nbsp; &nbsp; &nbsp;</p>
+<p style="margin: 0px 0px 1em 14.2pt; line-height: 21.6px; font-size: 14.4px; color: rgb(0, 0, 0); font-family: Montserrat, sans-serif; text-align: center;">
+	<strong style="color: rgb(34, 34, 34); font-family: Arial, Verdana, sans-serif; font-size: 12px;">Voľby</strong></p>
+<p align="center">
+	<strong>do N&aacute;rodnej rady Slovenskej republiky</strong></p>
+<p align="center">
+	<strong>Inform&aacute;cie pre volič</strong><strong>a</strong></p>
+<p align="center">
+	I</p>
+<p align="center">
+	D&aacute;tum a&nbsp;čas konania volieb</p>
+<p>
+	Voľby do N&aacute;rodnej rady Slovenskej republiky sa konaj&uacute; <strong>v&nbsp;sobotu 29. 2. 2020 od 7:00 do 22:00 h</strong>.</p>
+<p align="center">
+	II</p>
+<p align="center">
+	Pr&aacute;vo voliť</p>
+<p>
+	Pr&aacute;vo voliť do N&aacute;rodnej rady Slovenskej republiky m&aacute; občan Slovenskej republiky,<br />
+	ktor&yacute; najnesk&ocirc;r v&nbsp;deň konania volieb dovŕ&scaron;il 18 rokov veku a&nbsp;nenastala u&nbsp;neho prek&aacute;žka pr&aacute;va voliť.</p>
+<p>
+	Prek&aacute;žkou pr&aacute;va voliť je z&aacute;konom ustanoven&eacute; obmedzenie osobnej slobody z&nbsp;d&ocirc;vodov ochrany verejn&eacute;ho zdravia.</p>
+<p align="center">
+	III</p>
+<p align="center">
+	Pr&aacute;vo byť volen&yacute;</p>
+<p>
+	Za poslanca N&aacute;rodnej rady Slovenskej republiky m&ocirc;že byť zvolen&yacute; občan Slovenskej republiky, ktor&yacute; najnesk&ocirc;r v&nbsp;deň konania volieb dovŕ&scaron;il 21 rokov veku a&nbsp;m&aacute; trval&yacute; pobyt na &uacute;zem&iacute; Slovenskej republiky.</p>
+<p>
+	Prek&aacute;žkou pr&aacute;va byť volen&yacute; je</p>
+<p style="margin-left:14.2pt;">
+	&nbsp;&nbsp; v&yacute;kon trestu odňatia slobody,</p>
+<p style="margin-left:14.2pt;">
+	&nbsp;&nbsp; pr&aacute;voplatn&eacute; ods&uacute;denie za &uacute;myseln&yacute; trestn&yacute; čin, ak ods&uacute;denie nebolo zahladen&eacute;,</p>
+<p style="margin-left:14.2pt;">
+	&nbsp;&nbsp; pozbavenie sp&ocirc;sobilosti na pr&aacute;vne &uacute;kony.</p>
+<p align="center">
+	IV</p>
+<p align="center">
+	Sp&ocirc;sob voľby</p>
+<p>
+	Volič m&ocirc;že voliť na &uacute;zem&iacute; Slovenskej republiky</p>
+<p style="margin-left:14.2pt;">
+	&nbsp;&nbsp; vo volebnom okrsku, v ktor&eacute;ho zozname voličov je zap&iacute;san&yacute;, alebo</p>
+<p style="margin-left:14.2pt;">
+	&nbsp;&nbsp; v ktoromkoľvek volebnom okrsku na z&aacute;klade hlasovacieho preukazu.</p>
+<p>
+	Volič m&ocirc;že voliť mimo &uacute;zemia Slovenskej republiky po&scaron;tou, ak</p>
+<p style="margin-left:14.2pt;">
+	&nbsp;&nbsp; nem&aacute; trval&yacute; pobyt na &uacute;zem&iacute; Slovenskej republiky a bol na z&aacute;klade žiadosti zap&iacute;san&yacute; do osobitn&eacute;ho zoznamu voličov,</p>
+<p style="margin-left:14.2pt;">
+	&nbsp;&nbsp; m&aacute; trval&yacute; pobyt na &uacute;zem&iacute; Slovenskej republiky a v čase volieb sa zdržiava mimo jej &uacute;zemia a o voľbu po&scaron;tou požiada obec, v ktorej m&aacute; trval&yacute; pobyt.</p>
+<p align="center">
+	V</p>
+<p align="center">
+	Hlasovac&iacute; preukaz</p>
+<p>
+	Volič,&nbsp;ktor&yacute; m&aacute; trval&yacute; pobyt na &uacute;zem&iacute; Slovenskej republiky a&nbsp;v&nbsp;deň konania volieb nebude m&ocirc;cť voliť v&nbsp;mieste svojho trval&eacute;ho pobytu vo volebnom okrsku, v&nbsp;ktor&eacute;ho zozname voličov je zap&iacute;san&yacute;, m&ocirc;že požiadať <strong>obec svojho trval&eacute;ho pobytu </strong>o&nbsp;vydanie hlasovacieho preukazu. Obec na z&aacute;klade žiadosti voličovi vyd&aacute; hlasovac&iacute; preukaz a zo zoznamu voličov ho vyčiarkne s pozn&aacute;mkou o vydan&iacute; hlasovacieho preukazu.</p>
+<p>
+	Hlasovac&iacute; preukaz opr&aacute;vňuje na z&aacute;pis do zoznamu voličov v&nbsp;ktoromkoľvek volebnom okrsku.</p>
+<p>
+</p>
+<p>
+	Volič m&ocirc;že požiadať o&nbsp;vydanie hlasovacieho preukazu</p>
+<p>
+	<u>osobne</u><strong>,</strong></p>
+<p>
+	najnesk&ocirc;r posledn&yacute; pracovn&yacute; deň pred konan&iacute;m volieb (t.j. najnesk&ocirc;r 28. 2. 2020) v &uacute;radn&yacute;ch hodin&aacute;ch obce.</p>
+<p>
+	Obec vyd&aacute; hlasovac&iacute; preukaz bezodkladne.</p>
+<p>
+	<u>v listinnej forme</u> tak,</p>
+<p>
+	aby žiadosť o&nbsp;vydanie hlasovacieho preukazu bola doručen&aacute; obci najnesk&ocirc;r 15 pracovn&yacute;ch dn&iacute; predo dňom konania volieb (t.j. najnesk&ocirc;r 10. 2. 2020),</p>
+<p>
+	<u>elektronicky</u> (e-mailom) tak,</p>
+<p>
+	aby žiadosť o&nbsp;vydanie hlasovacieho preukazu bola doručen&aacute; obci najnesk&ocirc;r 15 pracovn&yacute;ch dn&iacute; predo dňom konania volieb (t.j. najnesk&ocirc;r 10. 2. 2020). Obec na tieto &uacute;čely zverejňuje na svojom webovom s&iacute;dle elektronick&uacute; adresu na doručovanie žiadost&iacute;. Ak obec nem&aacute; webov&eacute; s&iacute;dlo, zverejn&iacute; elektronick&uacute; adresu na doručovanie žiadosti na &uacute;radnej tabuli obce.</p>
+<p>
+	Žiadosť mus&iacute; obsahovať &uacute;daje o&nbsp;voličovi</p>
+<p style="margin-left:14.2pt;">
+	&nbsp;&nbsp; meno a&nbsp;priezvisko,</p>
+<p style="margin-left:14.2pt;">
+	&nbsp;&nbsp; rodn&eacute; č&iacute;slo,</p>
+<p style="margin-left:14.2pt;">
+	&nbsp;&nbsp; &scaron;t&aacute;tnu pr&iacute;slu&scaron;nosť,</p>
+<p style="margin-left:14.2pt;">
+	&nbsp;&nbsp; adresu trval&eacute;ho pobytu (obec, ulica, č&iacute;slo domu),</p>
+<p style="margin-left:14.2pt;">
+	&nbsp;&nbsp; kore&scaron;pondenčn&uacute; adresu, na ktor&uacute; obec doruč&iacute; hlasovac&iacute; preukaz.</p>
+<p>
+	<u>prostredn&iacute;ctvom osoby splnomocnenej žiadateľom</u></p>
+<p>
+	možno požiadať o vydanie hlasovacieho preukazu najnesk&ocirc;r v posledn&yacute; deň predo dňom konania volieb (t.j. najnesk&ocirc;r 28. 2. 2020).</p>
+<p>
+	Žiadosť mus&iacute; obsahovať &uacute;daje o&nbsp;voličovi</p>
+<p style="margin-left:14.2pt;">
+	&nbsp;&nbsp; meno a&nbsp;priezvisko,</p>
+<p style="margin-left:14.2pt;">
+	&nbsp;&nbsp; rodn&eacute; č&iacute;slo,</p>
+<p style="margin-left:14.2pt;">
+	&nbsp;&nbsp; &scaron;t&aacute;tnu pr&iacute;slu&scaron;nosť,</p>
+<p style="margin-left:14.2pt;">
+	&nbsp;&nbsp; adresu trval&eacute;ho pobytu (obec, ulica, č&iacute;slo domu).</p>
+<p>
+	Obec za&scaron;le hlasovac&iacute; preukaz voličovi na adresu trval&eacute;ho pobytu, ak v žiadosti neuvedie in&uacute; kore&scaron;pondenčn&uacute; adresu, najnesk&ocirc;r tri pracovn&eacute; dni od doručenia žiadosti. Obec za&scaron;le hlasovac&iacute; preukaz na adresu uveden&uacute; v&nbsp;žiadosti doporučenou z&aacute;sielkou &bdquo;<em>Do vlastn&yacute;ch r&uacute;k</em>&ldquo;.</p>
+<p>
+	Ak volič v p&iacute;somnej žiadosti alebo elektronickej žiadosti uvedie, že hlasovac&iacute; preukaz prevezme in&aacute; osoba, mus&iacute; v žiadosti uviesť jej meno, priezvisko a č&iacute;slo občianskeho preukazu. T&aacute;to osoba je povinn&aacute; prevzatie hlasovacieho preukazu potvrdiť svoj&iacute;m podpisom.</p>
+<p align="center">
+	VI</p>
+<p align="center">
+	Voľba po&scaron;tou</p>
+<p>
+	<u>Volič, ktor&yacute; <strong>m&aacute; trval&yacute; pobyt </strong>na &uacute;zem&iacute; Slovenskej republiky a v&nbsp;čase volieb sa zdržiava mimo jej &uacute;zemia</u></p>
+<p>
+	Volič, ktor&yacute; m&aacute; trval&yacute; pobyt na &uacute;zem&iacute; Slovenskej republiky a&nbsp;v&nbsp;čase volieb sa zdržiava mimo jej &uacute;zemia, m&ocirc;že požiadať obec trval&eacute;ho pobytu o voľbu po&scaron;tou, a&nbsp;to</p>
+<p>
+	<u>p&iacute;somne</u> (v listinnej forme) tak,</p>
+<p>
+	aby žiadosť o&nbsp;voľbu po&scaron;tou bola doručen&aacute; na adresu obce (obecn&eacute;ho &uacute;radu) najnesk&ocirc;r 50 dn&iacute; predo dňom konania volieb (t.j. najnesk&ocirc;r 10. 1. 2020)</p>
+<p>
+	Na žiadosť doručen&uacute; po ustanovenej lehote sa neprihliada.</p>
+<p>
+</p>
+<p>
+	<u>elektronicky</u> (e-mailom) tak,</p>
+<p>
+	aby žiadosť o voľbu po&scaron;tou bola doručen&aacute; na elektronick&uacute; adresu obce najnesk&ocirc;r 50 dn&iacute; predo dňom konania volieb (t.j. najnesk&ocirc;r 10. 1. 2020).</p>
+<p>
+	Na žiadosť doručen&uacute; po ustanovenej lehote sa neprihliada.</p>
+<p>
+	Žiadosť o voľbu po&scaron;tou mus&iacute; obsahovať tieto &uacute;daje o voličovi:</p>
+<p style="margin-left:7.1pt;">
+	 meno a priezvisko,</p>
+<p style="margin-left:7.1pt;">
+	 rodn&eacute; č&iacute;slo,</p>
+<p style="margin-left:7.1pt;">
+	 adresu trval&eacute;ho pobytu,</p>
+<p style="margin-left:7.1pt;">
+	 adresu miesta pobytu v cudzine.</p>
+<p>
+	Ak žiadosť spĺňa z&aacute;konom ustanoven&eacute; n&aacute;ležitosti, obec za&scaron;le najnesk&ocirc;r 35 dn&iacute; predo dňom konania volieb voličovi, ktor&yacute; požiadal o voľbu po&scaron;tou, na adresu miesta pobytu v cudzine</p>
+<p style="margin-left:7.1pt;">
+	 ob&aacute;lku opatren&uacute; odtlačkom &uacute;radnej pečiatky obce,</p>
+<p style="margin-left:7.1pt;">
+	 hlasovacie l&iacute;stky,</p>
+<p style="margin-left:7.1pt;">
+	 n&aacute;vratn&uacute; ob&aacute;lku (označen&uacute; heslom &bdquo;VOĽBA PO&Scaron;TOU&ldquo; vyp&iacute;sanou adresou obce ako adres&aacute;ta a adresou voliča ako odosielateľa,</p>
+<p style="margin-left:7.1pt;">
+	 poučenie o sp&ocirc;sobe hlasovania.</p>
+<p>
+	Po vykonan&iacute; hlasovania (podľa poučenia o&nbsp;sp&ocirc;sobe hlasovania) vlož&iacute; volič hlasovac&iacute; l&iacute;stok do ob&aacute;lky opatrenej odtlačkom &uacute;radnej pečiatky obce a&nbsp;zalep&iacute; ju. Zalepen&uacute; ob&aacute;lku vlož&iacute; do n&aacute;vratnej ob&aacute;lky, ktor&uacute; odosiela. V&yacute;davky spojen&eacute; so zaslan&iacute;m n&aacute;vratnej ob&aacute;lky po&scaron;tou hrad&iacute; odosielateľ.</p>
+<p>
+	Do v&yacute;sledku hlasovania sa započ&iacute;tavaj&uacute; hlasy na hlasovac&iacute;ch l&iacute;stkoch, ktor&eacute; boli doručen&eacute; obci trval&eacute;ho pobytu voliča najnesk&ocirc;r v posledn&yacute; pracovn&yacute; deň predo dňom konania volieb (t.j. najnesk&ocirc;r 28. 2. 2020).</p>
+<p align="center">
+	***</p>
+<p>
+	Ďal&scaron;ie inform&aacute;cie k&nbsp;voľb&aacute;m do N&aacute;rodnej rady Slovenskej republiky s&uacute; uverejnen&eacute; na webovej str&aacute;nke</p>
+<p align="center">
+	www.minv.sk/?volby-nrsr</p>
+<p align="center">
+</p>
+<p align="center">
+	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>
+<p align="center">
+	<strong>V&aacute;laszt&aacute;sok</strong></p>
+<p align="center">
+	<strong>a Szlov&aacute;k K&ouml;zt&aacute;rsas&aacute;g Nemzeti Tan&aacute;cs&aacute;ba</strong></p>
+<p align="center">
+	<strong>T&aacute;j&eacute;koztat&oacute; a v&aacute;laszt&oacute;polg&aacute;r r&eacute;sz&eacute;re</strong></p>
+<p align="center">
+	I</p>
+<p align="center">
+	A v&aacute;laszt&aacute;sok napja &eacute;s időpontja</p>
+<p>
+	A Szlov&aacute;k K&ouml;zt&aacute;rsas&aacute;g Nemzeti Tan&aacute;cs&aacute;ba val&oacute; v&aacute;laszt&aacute;sokra <strong>2020. 02. 29., szombaton 7:00 &oacute;r&aacute;t&oacute;l 22:00 &oacute;r&aacute;ig</strong> ker&uuml;l sor.</p>
+<p align="center">
+	II</p>
+<p align="center">
+	Szavazati jog</p>
+<p>
+	A Szlov&aacute;k K&ouml;zt&aacute;rsas&aacute;g Nemzeti Tan&aacute;cs&aacute;ba t&ouml;rt&eacute;nő v&aacute;laszt&aacute;sokon szavazati joggal rendelkezik a Szlov&aacute;k K&ouml;zt&aacute;rsas&aacute;g minden olyan polg&aacute;ra, aki bet&ouml;lt&ouml;tte a 18. &eacute;let&eacute;v&eacute;t, &eacute;s akinek a szavazati joga nem esik korl&aacute;toz&aacute;s al&aacute;.</p>
+<p>
+	Akad&aacute;lyoztat&aacute;st jelent a v&aacute;laszt&oacute;jog gyakorl&aacute;s&aacute;ban a szem&eacute;lyi szabads&aacute;g korl&aacute;toz&aacute;sa a k&ouml;zeg&eacute;szs&eacute;g v&eacute;delme &eacute;rdek&eacute;ben.</p>
+<p align="center">
+	III</p>
+<p align="center">
+	V&aacute;laszthat&oacute;s&aacute;g joga [passz&iacute;v v&aacute;laszt&oacute;jog]</p>
+<p>
+	A Szlov&aacute;k K&ouml;zt&aacute;rsas&aacute;g Nemzeti Tan&aacute;cs&aacute;nak k&eacute;pviselőj&eacute;v&eacute; a A Szlov&aacute;k K&ouml;zt&aacute;rsas&aacute;g minden olyan polg&aacute;ra megv&aacute;laszthat&oacute;, aki bet&ouml;lt&ouml;tte a 21. &eacute;let&eacute;v&eacute;t, &eacute;s a Szlov&aacute;k K&ouml;zt&aacute;rsas&aacute;g ter&uuml;let&eacute;n &aacute;lland&oacute; lakhellyel rendelkezik.</p>
+<p>
+	A v&aacute;laszthat&oacute;s&aacute;g akad&aacute;lya</p>
+<ul>
+	<li>
+		a szabads&aacute;gveszt&eacute;s b&uuml;ntet&eacute;s&eacute;nek t&ouml;lt&eacute;se,</li>
+	<li>
+		sz&aacute;nd&eacute;kos bűncselekm&eacute;ny&eacute;rt val&oacute; el&iacute;t&eacute;l&eacute;s, amennyiben az &iacute;t&eacute;let nem ker&uuml;lt t&ouml;rl&eacute;sre a nyilv&aacute;ntart&aacute;sb&oacute;l,</li>
+	<li>
+		jogk&eacute;pess&eacute;g megvon&aacute;sa.</li>
+</ul>
+<p align="center">
+	IV</p>
+<p align="center">
+	A v&aacute;laszt&aacute;s m&oacute;dja</p>
+<p>
+	A v&aacute;laszt&oacute;polg&aacute;r a Szlov&aacute;k K&ouml;zt&aacute;rsas&aacute;g ter&uuml;let&eacute;n szavazhat</p>
+<ul>
+	<li>
+		abban a v&aacute;laszt&oacute;k&ouml;rzetben, ahol jegyezve van a v&aacute;laszt&oacute;k jegyz&eacute;k&eacute;ben, vagy</li>
+	<li>
+		b&aacute;rmilyen m&aacute;s v&aacute;laszt&oacute;k&ouml;rzetben szavaz&oacute;i igazolv&aacute;ny alapj&aacute;n.</li>
+</ul>
+<p>
+	A v&aacute;laszt&oacute;polg&aacute;r a Szlov&aacute;k K&ouml;zt&aacute;rsas&aacute;g ter&uuml;let&eacute;n k&iacute;v&uuml;l szavazhat postai &uacute;ton, ha</p>
+<ul>
+	<li>
+		nem rendelkezik &aacute;lland&oacute; lakhellyel a Szlov&aacute;k K&ouml;zt&aacute;rsas&aacute;g ter&uuml;let&eacute;n &eacute;s k&eacute;relem alapj&aacute;n a v&aacute;laszt&oacute;k k&uuml;l&ouml;n jegyz&eacute;k&eacute;ben van bejegyezve,</li>
+	<li>
+		a Szlov&aacute;k K&ouml;zt&aacute;rsas&aacute;g ter&uuml;let&eacute;n &aacute;lland&oacute; lakhellyel rendelkezik &eacute;s a v&aacute;laszt&aacute;sok ideje alatt annak ter&uuml;let&eacute;n k&iacute;v&uuml;l tart&oacute;zkodik, &eacute;s a lakc&iacute;me szerinti k&ouml;zs&eacute;gn&eacute;l postai &uacute;ton k&eacute;rv&eacute;nyezi a szavaz&aacute;s lehetős&eacute;g&eacute;t,</li>
+</ul>
+<p align="center">
+</p>
+<p align="center">
+</p>
+<p align="center">
+</p>
+<p align="center">
+	V</p>
+<p align="center">
+	Szavaz&oacute;i igazolv&aacute;ny</p>
+<p>
+	A Szlov&aacute;k K&ouml;zt&aacute;rsas&aacute;g ter&uuml;let&eacute;n &aacute;lland&oacute; lakhellyel rendelkező v&aacute;laszt&oacute;polg&aacute;r, aki a v&aacute;laszt&aacute;sok napj&aacute;n nem tud szavazni az &aacute;lland&oacute; lakhely&eacute;n abban a v&aacute;laszt&oacute;k&ouml;rzetben, ahol jegyezve van a v&aacute;laszt&oacute;k jegyz&eacute;k&eacute;ben, <strong>az &aacute;lland&oacute; lakhelye szerinti k&ouml;zs&eacute;gn&eacute;l</strong> szavaz&oacute;i igazolv&aacute;ny kiad&aacute;s&aacute;t k&eacute;rv&eacute;nyezheti. A k&ouml;zs&eacute;g a k&eacute;relem alapj&aacute;n a v&aacute;laszt&oacute;polg&aacute;rnak kiadja a szavaz&oacute;i igazolv&aacute;nyt &eacute;s a v&aacute;laszt&oacute;i jegyz&eacute;k&eacute;ből kih&uacute;zza őt a szavaz&oacute;i igazolv&aacute;ny kiad&aacute;s&aacute;ra utal&oacute; megjegyz&eacute;ssel.</p>
+<p>
+	A szavaz&oacute;i igazolv&aacute;ny lehetőv&eacute; teszi, hogy bejegyz&eacute;sre ker&uuml;lj&ouml;n b&aacute;rmelyik v&aacute;laszt&oacute;i k&ouml;rzet v&aacute;laszt&oacute;i jegyz&eacute;k&eacute;ben.</p>
+<p>
+	A v&aacute;laszt&oacute; a szavaz&oacute;i igazolv&aacute;ny kiad&aacute;s&aacute;t k&eacute;rv&eacute;nyezheti</p>
+<p>
+	<u>szem&eacute;lyesen,</u></p>
+<p>
+	legk&eacute;sőbb a v&aacute;laszt&aacute;sok előtti utols&oacute; munkanapon (teh&aacute;t legk&eacute;sőbb 2020. 02. 28.) a k&ouml;zs&eacute;g &uuml;gyf&eacute;lfogad&aacute;si ideje alatt.</p>
+<p>
+	A k&ouml;zs&eacute;g a szavaz&oacute;i igazolv&aacute;nyt halad&eacute;ktalanul kiadja.</p>
+<p>
+	<u>okirat form&aacute;j&aacute;ban</u> &uacute;gy,</p>
+<p>
+	hogy a szavaz&oacute;i igazolv&aacute;ny kiad&aacute;s&aacute;ra vonatkoz&oacute; k&eacute;rv&eacute;ny a k&ouml;zs&eacute;g r&eacute;sz&eacute;re legk&eacute;sőbb 15 munkanappal (teh&aacute;t legk&eacute;sőbb 2020. 02. 10.) a v&aacute;laszt&aacute;sok előtt k&eacute;zbes&iacute;t&eacute;sre ker&uuml;lj&ouml;n,</p>
+<p>
+	<u>elektronikus lev&eacute;lben</u> (e-mailben) &uacute;gy,</p>
+<p>
+	hogy a szavaz&oacute;i igazolv&aacute;ny kiad&aacute;s&aacute;ra vonatkoz&oacute; k&eacute;rv&eacute;ny a k&ouml;zs&eacute;g r&eacute;sz&eacute;re legk&eacute;sőbb 15 munkanappal (teh&aacute;t legk&eacute;sőbb 2020. 02. 10.) a v&aacute;laszt&aacute;sok előtt k&eacute;zbes&iacute;t&eacute;sre ker&uuml;lj&ouml;n. A k&ouml;zs&eacute;g ezen c&eacute;lb&oacute;l a honlapj&aacute;n nyilv&aacute;noss&aacute;gra hozza a k&eacute;rv&eacute;nyek fogad&aacute;s&aacute;t szolg&aacute;l&oacute; elektronikus levelez&eacute;si c&iacute;met. Amennyiben a k&ouml;zs&eacute;g nem rendelkezik honlappal, a k&eacute;rv&eacute;nyek fogad&aacute;s&aacute;t szolg&aacute;l&oacute; elektronikus levelez&eacute;si c&iacute;met a k&ouml;zs&eacute;g hivatalos hirdetőt&aacute;bl&aacute;j&aacute;n teszi k&ouml;zz&eacute;.</p>
+<p>
+	A k&eacute;rv&eacute;nynek tartalmaznia kell a v&aacute;laszt&oacute;polg&aacute;r al&aacute;bbi adatait</p>
+<ul>
+	<li>
+		keresztn&eacute;v &eacute;s vezet&eacute;kn&eacute;v,</li>
+	<li>
+		szem&eacute;lyi sz&aacute;m,</li>
+	<li>
+		&aacute;llampolg&aacute;rs&aacute;g,</li>
+	<li>
+		&aacute;lland&oacute; lakc&iacute;m (k&ouml;zs&eacute;g, utca, h&aacute;zsz&aacute;m),</li>
+	<li>
+		levelez&eacute;si c&iacute;m, amelyre a k&ouml;zs&eacute;g k&eacute;zbes&iacute;ti a szavaz&oacute;i igazolv&aacute;nyt.</li>
+</ul>
+<p>
+	<u>k&eacute;relmező &aacute;ltal felhatalmazott szem&eacute;ly k&ouml;zvet&iacute;t&eacute;s&eacute;vel</u></p>
+<p>
+	k&eacute;relmezni lehet a szavaz&oacute;i igazolv&aacute;ny kiad&aacute;s&aacute;t legk&eacute;sőbb a v&aacute;laszt&aacute;sok előtti napon (teh&aacute;t legk&eacute;sőbb 2020. 02. 28.).</p>
+<p>
+	A k&eacute;rv&eacute;nynek tartalmaznia kell a v&aacute;laszt&oacute;polg&aacute;r al&aacute;bbi adatait</p>
+<ul>
+	<li>
+		keresztn&eacute;v &eacute;s vezet&eacute;kn&eacute;v,</li>
+	<li>
+		szem&eacute;lyi sz&aacute;m,</li>
+	<li>
+		&aacute;llampolg&aacute;rs&aacute;g,</li>
+	<li>
+		&aacute;lland&oacute; lakc&iacute;m (k&ouml;zs&eacute;g, utca, h&aacute;zsz&aacute;m).</li>
+</ul>
+<p>
+	A k&ouml;zs&eacute;g legk&eacute;sőbb a k&eacute;rv&eacute;ny k&eacute;zbes&iacute;t&eacute;s&eacute;től sz&aacute;m&iacute;tott h&aacute;rom napon bel&uuml;l elk&uuml;ldi a szavaz&oacute;i igazolv&aacute;nyt a v&aacute;laszt&oacute;polg&aacute;r &aacute;lland&oacute; lakc&iacute;m&eacute;re, hacsak a k&eacute;rv&eacute;nyben nem ad meg m&aacute;s levelez&eacute;si c&iacute;met. A k&ouml;zs&eacute;g a szavaz&oacute;i igazolv&aacute;nyt &bdquo;<em>Saj&aacute;t k&eacute;zbe</em>&ldquo; k&uuml;ldi el aj&aacute;nlott k&uuml;ldem&eacute;ny form&aacute;j&aacute;ban a k&eacute;rv&eacute;nyben megadott c&iacute;mre.</p>
+<p>
+	Amennyiben a v&aacute;laszt&oacute;polg&aacute;r &iacute;r&aacute;sos, vagy elektronikus m&oacute;don beadott k&eacute;relm&eacute;ben k&ouml;zli, hogy a szavaz&oacute;i igazolv&aacute;nyt m&aacute;s szem&eacute;ly veszi &aacute;t, a k&eacute;relemben k&ouml;z&ouml;lnie kell annak kereszt- &eacute;s vezet&eacute;knev&eacute;t, valamint a szem&eacute;lyi igazolv&aacute;ny sz&aacute;m&aacute;t. Ez a szem&eacute;ly k&ouml;teles a szavaz&oacute;i igazolv&aacute;ny &aacute;tv&eacute;tel&eacute;t al&aacute;&iacute;r&aacute;s&aacute;val igazolni.</p>
+<p>
+</p>
+<p align="center">
+	VI</p>
+<p align="center">
+	Postai &uacute;ton t&ouml;rt&eacute;nő szavaz&aacute;s</p>
+<p>
+	<u>A Szlov&aacute;k K&ouml;zt&aacute;rsas&aacute;g ter&uuml;let&eacute;n <strong>&aacute;lland&oacute; lakhellyel rendelkező</strong> v&aacute;laszt&oacute;polg&aacute;r, aki a v&aacute;laszt&aacute;sok idej&eacute;n annak ter&uuml;let&eacute;n k&iacute;v&uuml;l tart&oacute;zkodik</u></p>
+<p>
+	A Szlov&aacute;k K&ouml;zt&aacute;rsas&aacute;g ter&uuml;let&eacute;n &aacute;lland&oacute; lakhellyel rendelkező v&aacute;laszt&oacute;polg&aacute;r, aki a v&aacute;laszt&aacute;sok idej&eacute;n annak ter&uuml;let&eacute;n k&iacute;v&uuml;l tart&oacute;zkodik, a lakc&iacute;me szerinti k&ouml;zs&eacute;gn&eacute;l postai &uacute;ton k&eacute;rv&eacute;nyezheti a szavaz&aacute;s lehetős&eacute;g&eacute;t, m&eacute;gpedig</p>
+<p>
+	<u>&iacute;r&aacute;sban</u> (<u>okirat form&aacute;j&aacute;ban</u>) &uacute;gy,</p>
+<p>
+	hogy a postai &uacute;ton t&ouml;rt&eacute;nő szavaz&aacute;s ir&aacute;nti k&eacute;rv&eacute;ny k&eacute;zbes&iacute;t&eacute;sre ker&uuml;lj&ouml;n a k&ouml;zs&eacute;g (k&ouml;zs&eacute;gi hivatal) c&iacute;m&eacute;re legk&eacute;sőbb 50 nappal a v&aacute;laszt&aacute;sok napja előtt (teh&aacute;t legk&eacute;sőbb)</p>
+<p>
+	A meghat&aacute;rozott hat&aacute;ridőn t&uacute;l k&eacute;zbes&iacute;tett k&eacute;rv&eacute;ny nem v&eacute;tetik figyelembe.</p>
+<p>
+	<u>elektronikus lev&eacute;lben</u> (e-mailben) &uacute;gy,</p>
+<p>
+	hogy a postai &uacute;ton t&ouml;rt&eacute;nő szavaz&aacute;s ir&aacute;nti k&eacute;rv&eacute;ny k&eacute;zbes&iacute;t&eacute;sre ker&uuml;lj&ouml;n a k&ouml;zs&eacute;g elektronikus levelez&eacute;si c&iacute;m&eacute;re legk&eacute;sőbb 50 nappal a v&aacute;laszt&aacute;sok napja előtt (teh&aacute;t legk&eacute;sőbb 2020. 01.10.)</p>
+<p>
+	A meghat&aacute;rozott hat&aacute;ridőn t&uacute;l k&eacute;zbes&iacute;tett k&eacute;rv&eacute;ny nem v&eacute;tetik figyelembe.</p>
+<p>
+	A postai &uacute;ton t&ouml;rt&eacute;nő szavaz&aacute;sra vonatkoz&oacute; k&eacute;relemnek tartalmaznia kell a v&aacute;laszt&oacute;polg&aacute;r al&aacute;bbi adatait:</p>
+<ul>
+	<li>
+		keresztn&eacute;v &eacute;s vezet&eacute;kn&eacute;v,</li>
+	<li>
+		szem&eacute;lyi sz&aacute;m,</li>
+	<li>
+		&aacute;lland&oacute; lakhely:</li>
+	<li>
+		k&uuml;lf&ouml;ldi lakhely c&iacute;me.</li>
+</ul>
+<p>
+	Amennyiben a k&eacute;rv&eacute;ny eleget tesz a t&ouml;rv&eacute;ny &aacute;ltal meghat&aacute;rozott formai k&ouml;vetelm&eacute;nyeknek, a k&ouml;zs&eacute;g legk&eacute;sőbb 35 nappal a v&aacute;laszt&aacute;sok napja előtt elk&uuml;ldi a postai &uacute;ton val&oacute; szavaz&aacute;st k&eacute;rő v&aacute;laszt&oacute;polg&aacute;rnak a k&uuml;lf&ouml;ldi tart&oacute;zkod&aacute;si hely&eacute;re</p>
+<ul>
+	<li>
+		a k&ouml;zs&eacute;g hivatalos b&eacute;lyegzőj&eacute;nek lenyomat&aacute;val ell&aacute;tott bor&iacute;t&eacute;kot,</li>
+	<li>
+		szavaz&oacute;lapokat,</li>
+	<li>
+		v&aacute;laszbor&iacute;t&eacute;kot (amely tartalmazza a &bdquo;VOĽBA PO&Scaron;TOU - ELECTION BY MAIL&ldquo; feliratot, a k&ouml;zs&eacute;gnek c&iacute;mzettk&eacute;nt, a v&aacute;laszt&oacute;polg&aacute;rnak pedig felad&oacute;k&eacute;nt le&iacute;rt c&iacute;m&eacute;t),</li>
+	<li>
+		a szavaz&aacute;s m&oacute;dj&aacute;r&oacute;l val&oacute; t&aacute;j&eacute;koztat&aacute;st.</li>
+</ul>
+<p>
+	A (a szavaz&aacute;s m&oacute;dj&aacute;r&oacute;l val&oacute; t&aacute;j&eacute;koztat&aacute;s szerinti) szavaz&aacute;s ut&aacute;n a v&aacute;laszt&oacute;polg&aacute;r a szavaz&oacute;lapot a k&ouml;zs&eacute;g hivatalos b&eacute;lyegzőj&eacute;nek lenyomat&aacute;val ell&aacute;tott bor&iacute;t&eacute;kba helyezi &eacute;s leragasztja azt. A leragasztott bor&iacute;t&eacute;kot belehelyezi abba a v&aacute;laszbor&iacute;t&eacute;kba, amelyet el fog k&uuml;ldeni. A v&aacute;laszbor&iacute;t&eacute;k postai &uacute;ton val&oacute; elk&uuml;ld&eacute;s&eacute;vel kapcsolatos k&ouml;lts&eacute;geket a felad&oacute; t&eacute;r&iacute;ti.</p>
+<p>
+	A szavaz&aacute;s v&eacute;geredm&eacute;ny&eacute;be belesz&aacute;m&iacute;t&oacute;dnak az olyan szavaz&oacute;lapok szavazatai is, amelyek a v&aacute;laszt&oacute;polg&aacute;r &aacute;lland&oacute; lakc&iacute;me szerinti k&ouml;zs&eacute;ghez legk&eacute;sőbb a v&aacute;laszt&aacute;sok előtti utols&oacute; munkanapon (teh&aacute;t legk&eacute;sőbb 2020. 02.28.) ker&uuml;ltek k&eacute;zbes&iacute;t&eacute;sre.</p>
+<p align="center">
+	***</p>
+<p>
+	A Szlov&aacute;k K&ouml;zt&aacute;rsas&aacute;g Nemzeti Tan&aacute;cs&aacute;ba val&oacute; v&aacute;laszt&aacute;sokkal kapcsolatos tov&aacute;bbi inform&aacute;ci&oacute;k az al&aacute;bbi honlapon tal&aacute;lhat&oacute;k</p>
+<p align="center">
+	www.minv.sk/?volby-nrsr</p>
+<p>
+</p>
+<p align="center">
+</p>
+<br />
+</div><hr /><h2>Zoznam aktualít:</h2><div class="row box_imp02_wrapper no_extern_icon">
+                    <div class="col-xs-6 box_imp02 box_margin matchHeight">
+                    <a href="vyberove-konanie---palyazati-felhivas-a22-82"  title="Výberové konanie - Pályázati felhívás" class="novinka_img">
+                                            <img src="/design/images/default.jpg" class="img-responsive hvr-grow" alt="Výberové konanie - Pályázati felhívás" />
+                                        </a>
+                    <ul class="box_imp02_nav">
+                    <li><a href="vyberove-konanie---palyazati-felhivas-a22-82"  title="Výberové konanie - Pályázati felhívás">13.07.2020</a></li>
+                    </ul>
+                    <a href="vyberove-konanie---palyazati-felhivas-a22-82"  title="Výberové konanie - Pályázati felhívás" class="box_imp02_content">
+                    <h3>Výberové konanie - Pályázati felhívás </h3>
+                    <p></p>
+                    </a>
+                    </div>
+                    <div class="col-xs-6 box_imp02 box_margin matchHeight">
+                    <a href="vitajte-na-novej-internetovej-stranke-obce-pribeta-a22-80"  title="Vítajte na novej internetovej stránke Obce Pribeta!" class="novinka_img">
+                                            <img src="/design/images/default.jpg" class="img-responsive hvr-grow" alt="Vítajte na novej internetovej stránke Obce Pribeta!" />
+                                        </a>
+                    <ul class="box_imp02_nav">
+                    <li><a href="vitajte-na-novej-internetovej-stranke-obce-pribeta-a22-80"  title="Vítajte na novej internetovej stránke Obce Pribeta!">30.06.2020</a></li>
+                    </ul>
+                    <a href="vitajte-na-novej-internetovej-stranke-obce-pribeta-a22-80"  title="Vítajte na novej internetovej stránke Obce Pribeta!" class="box_imp02_content">
+                    <h3>Vítajte na novej internetovej stránke Obce Pribeta! </h3>
+                    <p></p>
+                    </a>
+                    </div>
+                    <div class="col-xs-6 box_imp02 box_margin matchHeight">
+                    <a href="wifi-pre-teba-v-obci-pribeta-a22-73"  title="Wifi pre Teba v obci Pribeta" class="novinka_img">
+                                            <img src="/design/images/default.jpg" class="img-responsive hvr-grow" alt="Wifi pre Teba v obci Pribeta" />
+                                        </a>
+                    <ul class="box_imp02_nav">
+                    <li><a href="wifi-pre-teba-v-obci-pribeta-a22-73"  title="Wifi pre Teba v obci Pribeta">29.01.2020</a></li>
+                    </ul>
+                    <a href="wifi-pre-teba-v-obci-pribeta-a22-73"  title="Wifi pre Teba v obci Pribeta" class="box_imp02_content">
+                    <h3>Wifi pre Teba v obci Pribeta </h3>
+                    <p></p>
+                    </a>
+                    </div>
+                    <div class="col-xs-6 box_imp02 box_margin matchHeight">
+                    <a href="plan-udrzatelnej-mobility-nsk-a22-42"  title="Plán udržateľnej mobility NSK" class="novinka_img">
+                                            <img src="/design/images/default.jpg" class="img-responsive hvr-grow" alt="Plán udržateľnej mobility NSK" />
+                                        </a>
+                    <ul class="box_imp02_nav">
+                    <li><a href="plan-udrzatelnej-mobility-nsk-a22-42"  title="Plán udržateľnej mobility NSK">09.11.2019</a></li>
+                    </ul>
+                    <a href="plan-udrzatelnej-mobility-nsk-a22-42"  title="Plán udržateľnej mobility NSK" class="box_imp02_content">
+                    <h3>Plán udržateľnej mobility NSK </h3>
+                    <p></p>
+                    </a>
+                    </div>
+                    <div class="col-xs-6 box_imp02 box_margin matchHeight">
+                    <a href="volby-do-nr-sr---2922020-a22-43"  title="Voľby do NR SR - 29.2.2020" class="novinka_img">
+                                            <img src="/design/images/default.jpg" class="img-responsive hvr-grow" alt="Voľby do NR SR - 29.2.2020" />
+                                        </a>
+                    <ul class="box_imp02_nav">
+                    <li><a href="volby-do-nr-sr---2922020-a22-43"  title="Voľby do NR SR - 29.2.2020">22.10.2019</a></li>
+                    </ul>
+                    <a href="volby-do-nr-sr---2922020-a22-43"  title="Voľby do NR SR - 29.2.2020" class="box_imp02_content">
+                    <h3>Voľby do NR SR - 29.2.2020 </h3>
+                    <p></p>
+                    </a>
+                    </div>
+                    <div class="col-xs-6 box_imp02 box_margin matchHeight">
+                    <a href="roven-vytriedenia-a22-45"  title="Úroveň vytriedenia" class="novinka_img">
+                                            <img src="imgcache/e-news-45-5-720-420-0-ffffff.jpg?v=1593770646" class="img-responsive hvr-grow" alt="Úroveň vytriedenia" />
+                                        </a>
+                    <ul class="box_imp02_nav">
+                    <li><a href="roven-vytriedenia-a22-45"  title="Úroveň vytriedenia">26.02.2019</a></li>
+                    </ul>
+                    <a href="roven-vytriedenia-a22-45"  title="Úroveň vytriedenia" class="box_imp02_content">
+                    <h3>Úroveň vytriedenia </h3>
+                    <p></p>
+                    </a>
+                    </div>
+                    </div><div class="pager"><span class="p_page p_page_active"> <a rel="nofollow" href="sub.php?action=pager&box=22/5/35&page=1&href=/volby-do-nr-sr---2922020-a22-43">1</a> </span><span class="p_page "> <a rel="nofollow" href="sub.php?action=pager&box=22/5/35&page=2&href=/volby-do-nr-sr---2922020-a22-43">2</a> </span><span class="p_page "> <a rel="nofollow" href="sub.php?action=pager&box=22/5/35&page=3&href=/volby-do-nr-sr---2922020-a22-43">3</a> </span><span class="p_page "> <a rel="nofollow" href="sub.php?action=pager&box=22/5/35&page=4&href=/volby-do-nr-sr---2922020-a22-43">4</a> </span><span class="p_page "> <a rel="nofollow" href="sub.php?action=pager&box=22/5/35&page=5&href=/volby-do-nr-sr---2922020-a22-43">5</a> </span><span class="p_prev"><a rel="nofollow" href="sub.php?action=pager&box=22/5/35&page=2&href=/volby-do-nr-sr---2922020-a22-43" title="nasledujúca strana">&gt;</a></span></div></section>
+</div><!-- /MAIN-CONTENT-CENTER-->
+<aside class="col-sm-3 main_content_right hidden-print">
+<div class="main_content_right_in">
+<div class="text-right nlb_title">Úradné hodiny</div><div class="mclBox"><div class="e2_htmlcontent" data-textToSpeech="
+				pondelok
+				07:30 - 16:00
+				utorok
+				-----------------
+				streda
+				08:00 - 17:00
+				Štvrtok
+				-----------------
+				piatok
+				07:30 - 13:00
+	tel. číslo: +421 35 769 31 01
+	e-mail: podatelna@pribeta.sk
+"><table>
+	<tbody>
+		<tr>
+			<td>
+				Pondelok</td>
+			<td>
+				07:30 - 16:00</td>
+		</tr>
+		<tr>
+			<td>
+				Utorok</td>
+			<td>
+				-----------------</td>
+		</tr>
+		<tr>
+			<td>
+				Streda</td>
+			<td>
+				08:00 - 17:00</td>
+		</tr>
+		<tr>
+			<td>
+				&Scaron;tvrtok</td>
+			<td>
+				-----------------</td>
+		</tr>
+		<tr>
+			<td>
+				Piatok</td>
+			<td>
+				07:30 - 13:00</td>
+		</tr>
+	</tbody>
+</table>
+<p style="text-align: center;">
+	<br />
+	Tel. č&iacute;slo:&nbsp;<strong><a href="tel:+421 35 769 31 01">+421 35 769 31 01</a></strong><br />
+	E-mail:&nbsp;<strong><a href="mailto:podatelna@pribeta.sk">podatelna@pribeta.sk</a></strong></p>
+</div></div><div class="text-right nlb_title title_white"><a href="aktuality">Aktuality</a></div><div class="row mcr_news_box bottom15">        <div class="col-xs-12">
+            <a href="vyberove-konanie---palyazati-felhivas-a22-82"  title="Výberové konanie - Pályázati felhívás">
+            <strong>Výberové konanie - Pályázati felhívás </strong>
+            <br />
+            <small class="text-muted"><i class="fa fa-calendar"></i> 13.07.2020</small>
+            </a>
+        </div>
+            <div class="col-xs-12">
+            <a href="vitajte-na-novej-internetovej-stranke-obce-pribeta-a22-80"  title="Vítajte na novej internetovej stránke Obce Pribeta!">
+            <strong>Vítajte na novej internetovej stránke Obce Pribeta! </strong>
+            <br />
+            <small class="text-muted"><i class="fa fa-calendar"></i> 30.06.2020</small>
+            </a>
+        </div>
+            <div class="col-xs-12">
+            <a href="wifi-pre-teba-v-obci-pribeta-a22-73"  title="Wifi pre Teba v obci Pribeta">
+            <strong>Wifi pre Teba v obci Pribeta </strong>
+            <br />
+            <small class="text-muted"><i class="fa fa-calendar"></i> 29.01.2020</small>
+            </a>
+        </div>
+    </div><div class="text-right nlb_title title_white"><a href="krasy-nasej-obce">Krásy našej obce</a></div>    <div class="galleryBox"><a href="kostol-reformovanej-cirkvi-1784-1786-a33-78">
+    <img src="imgcache/e-news-78-5-720-475-0-ffffff.jpg?v=1593502500" class="img-responsive" alt="" />
+    <div class="galleryBox_in hidden-xs hidden-sm"><h2>Kostol reformovanej cirkvi (1784-1786)</h2></div>
+    <div class="galleryBox_in visible-xs visible-sm"><h2>Kostol reformovanej...</h2></div>
+    </a>
+    </div>
+    <div class="text-right nlb_title title_white"><a href="fotogaleria">Fotogaléria</a></div>
+            <div class="galleryBox "><a href="malicka-perbete-utca-pribetska-ulica-v-budapesti-g28-88">
+            <img src="imgcache/e-img-1410-5-720-475-0-ffffff.jpg?v=1595941843" class="img-responsive" alt="Maličká Perbete utca (Pribetská ulica) v Budapešti" />
+            <div class="galleryBox_in"><h2>Maličká Perbete utca (Pribetská ulica) v Budapešti</h2></div>
+            </a></div>
+    <div class="mclBox"> <div class="boxWhiteBg"><a href="kalendar-odvozu-odpadu"><img src="/design/images/img-calendar.jpg" class="img-responsive center-block" alt="Kalendár odvozu odpadu" /></a></div></div><div class="boxWhiteBg">
+<div id="kalendar_22_18__21"></div><script type="text/javascript">$("#kalendar_22_18__21").load("sub.php?action=kalendar_content&params=a%3A5%3A%7Bs%3A2%3A%22id%22%3Bs%3A1%3A%221%22%3Bs%3A6%3A%22is_top%22%3Bs%3A1%3A%221%22%3Bs%3A3%3A%22tag%22%3Bs%3A0%3A%22%22%3Bs%3A5%3A%22class%22%3Bs%3A20%3A%22kalendar+dnes+meniny%22%3Bs%3A6%3A%22render%22%3Bs%3A2%3A%2234%22%3B%7D&date=2020.08&boxid=22_18__21");</script></div></div>
+</aside><!-- /MAIN-CONTENT-RIGHT-->
+</div>
+</div>
+</div><!-- ........................../MAIN-CONTENT.......................... -->
+<footer class="footer hidden-print">
+<div class="container">
+<div class="row">
+<div class="col-sm-8 footer_wrapper">
+<div class="row">
+<div class="col-sm-6 col-sm-push-6">
+<script>
+                function validateEmail(email) {
+                    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    return re.test(String(email).toLowerCase());
+                }
+                function checkform_2() {
+                    var $form = $("form.form_2");
+                    if(
+                        $form.find("[name=meno]").val()=="" || $form.find("[name=email]").val()==""                    ) {
+                        alert('Prosím vyplňte všetky povinné údaje.');
+                        return false;
+                        } else if($form.find("[name=e2_consent_approval]").prop('checked') == false) {
+                            alert('Oboznámte sa so spracúvaním osobných údajov!');
+                            return false;
+                    } else if(validateEmail($form.find("[name=email]").val()) == false) {
+                        alert('Zadajte správny formát emailovej adresy! (meno@domena.sk)');
+                        return false;
+                    } else {
+                        return true;
+                    };
+                };
+            </script>
+<form method="POST" action="sub.php" class="form-horizontal form-signin form_2" onsubmit="return checkform_2();">
+    <input type="hidden" name="action" value="form">
+    <input type="hidden" name="formid" value="2">
+    <input type="hidden" name="formclass" value="formular">
+    <input type="hidden" name="e2_ident" value="">
+    <input style="display:none;" type="text" name="nick" value="">
+    <div class="footer_title box_margin2"><h2>Napíšte nám</h2></div>
+    <div class="e2_htmlcontent" data-textToSpeech="
+		  meno a priezvisko *  
+		  e-mail * 
+text správy  "><div class="row">
+	<div class="col-md-6">
+		<span class="input input--fumi"><input class="input__field input__field--fumi" id="meno" name="meno" required="" type="text" /> <label class="input__label input__label--fumi" for="meno"> <span class="input__label-content input__label-content--fumi">Meno a priezvisko <span class="text-danger">*</span></span> </label> </span></div>
+	<div class="col-md-6">
+		<span class="input input--fumi"><input class="input__field input__field--fumi" id="email" name="email" required="" type="email" /> <label class="input__label input__label--fumi" for="email"> <span class="input__label-content input__label-content--fumi">E-mail <span class="text-danger">*</span></span></label> </span></div>
+</div>
+<span class="input input--fumi"><textarea class="input__field input__field--fumi" cols="18" id="text" name="text" rows="3"></textarea><label class="input__label input__label--fumi" for="text"><span class="input__label-content input__label-content--fumi">Text spr&aacute;vy</span> </label> </span></div>
+            <div class="checkbox">
+            <label for="ec_consent_approval">
+                <input type="checkbox" id="ec_consent_approval" name="e2_consent_approval" value="1" />&nbsp;*&nbsp;Oboznámil som sa so
+                                    <a target="_blank" href="ochrana-osobnych-udajov">spracúvaním osobných údajov</a>
+                            </label>
+        </div>
+    <div id='g-recaptcha_8610' class="g-recaptcha" data-sitekey="6LcIn8cUAAAAAL7ND16jqtF7zevmPeMraDZ-CUEV" data-callback="onSubmit" data-size="invisible"></div>
+<div class="row"><div class="col-md-6 col-sm-12 col-xs-12 pull-right">
+<div class="text-center"><button id="g-recaptcha-submit_8610" class="formular_button" type="submit" >ODOSLAŤ SPRÁVU</button></div>
+</div></div>
+<script>
+function onSubmit(token) {
+    $("[name=g-recaptcha-response]").val(token);
+    $("#g-recaptcha-submit_8610").parents('form').submit();
+}
+function validate(event) {
+    event.preventDefault();
+    if(checkform_2() == true) {
+        grecaptcha.execute();
+    }
+}
+function onload() {
+    var element = document.getElementById('g-recaptcha-submit_8610');
+    element.onclick = validate;
+}
+onload();
+</script>
+</form>
+</div>
+<div class="col-sm-6 col-sm-pull-6">
+<div class="footer_title uzitocne_linky box_margin2"><h2>Užitočné linky</h2></div>    <div class="footerContent">
+        <div class="row"><div class="col-xs-12">
+    <div class="margin2"><a href="" >
+    <div class="img-circle box_margin2 footerContentImg"><img src="/design/images/footer_1.png" class="img-responsive" alt="nový článok" /></div>
+    <h2>nový článok</h2>
+    <p></p>
+    </a></div>
+    </div></div>
+        <div class="row"><div class="col-xs-12">
+    <div class="margin2"><a href="kontakty" >
+    <div class="img-circle box_margin2 footerContentImg"><img src="/design/images/footer_2.png" class="img-responsive" alt="Kontakty" /></div>
+    <h2>Kontakty</h2>
+    <p>Telefónne kontakty, poštové adresy, mailové adresy na obecný úrad.</p>
+    </a></div>
+    </div></div>
+        <div class="row"><div class="col-xs-12">
+    <div class="margin2"><a href="dolezite-tel-cisla" >
+    <div class="img-circle box_margin2 footerContentImg"><img src="/design/images/footer_3.png" class="img-responsive" alt="Dôležité telefónne čísla" /></div>
+    <h2>Dôležité telefónne čísla</h2>
+    <p>Hasiči, polícia, záchranka...</p>
+    </a></div>
+    </div></div>
+        </div>
+    </div>
+</div>
+<div class="row footerNav">
+<div class="col-sm-5 col-sm-push-7 text-right">
+<a href="#"><a title="Posledná aktualizácia"><div>Posledná aktualizácia: <strong>10.07.2020</strong></div></a></a>
+<a href="rss.rss" target="_blank" title="využite možnosť získavania aktuálnych informácií s využitím RSS"><i class="fa fa-lg fa-rss" aria-hidden="true"></i> získavania aktuálnych informácií s využitím RSS</a>
+</div>
+<div class="col-sm-7 col-sm-pull-5">
+<a href="mapa-stranok" title="Mapa stránok">Mapa stránok</a> | <a href="#" title="Vytlačiť stránku" onClick="window.print();">Vytlačiť stránku <i class="fa fa-print"></i></a><br />
+<a href="vyhlasenie-o-pristupnosti" title="Vyhlásenie o prístupnosti">Vyhlásenie o prístupnosti</a> | <a href="autorske-prava" title="Autorské práva">Autorské práva</a><br />
+<a href="ochrana-osobnych-udajov" title="Ochrana osobných údajov">Ochrana osobných údajov</a>
+</div>
+</div>
+<div class="row footerNav footerNav2">
+<div class="col-sm-5 col-sm-push-7 text-right">
+<a href="http://www.webex.digital/" target="_blank">technický prevádzkovateľ</a><br />
+<a href="http://www.webex.digital/" target="_blank">webdesign</a> | <a href="http://www.webex.digital/" target="_blank">webex.digital</a>
+</div>
+<div class="col-sm-7 col-sm-pull-5">
+<a href="http://www.webex.digital/" target="_blank" title="CMS systém (redakčný) systém ECHELON 2">CMS systém (redakčný) systém ECHELON 2</a>, <a href="http://www.webex.digital/" target="_blank" title="web portál">web portál</a>,<br />
+<a href="http://www.webex.digital/" target="_blank" title="webhosting">webhosting</a>, <a href="http://www.webex.digital/" target="_blank" title="webex.digital">webex.digital</a>, <a href="http://www.webex.digital/" target="_blank" title="domény">domény</a>, <a href="http://www.webex.digital/" target="_blank" title="registrácia domény">registrácia domény</a>,<br />
+<a href="http://www.webex.digital/" target="_blank" title="spoločnosť webex.digital">spoločnosť webex.digital</a>
+</div>
+</div>
+</div>
+<div class="col-sm-4 map_wrapper">
+<div id="canvas1"><div class="map_canvas1" id="map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d42799.10201822491!2d18.277228384148295!3d47.898771576397564!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476aff42cc024411%3A0x1b36d4f0f35d32b3!2s946%2055%20Pribeta!5e0!3m2!1ssk!2ssk!4v1576246471877!5m2!1ssk!2ssk" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe></div></div>
+</div>
+</div>
+</div>
+</footer><!-- /FOOTER-->
+</div><!-- /CONTENT-->
+<!--div id="fb-root"></div-->
+<script>
+/*
+  (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/sk_SK/sdk.js#xfbml=1&version=v2.4";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+*/
+</script>
+    <script>
+      $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+      });
+    </script>
+    <!-- Wow -->
+      <script src="/design/js/wow.min.js"></script>
+      <script>
+       new WOW().init();
+    </script>
+        <!-- Dropdown -->
+        <script>
+        $(function(){
+            $('.dropdown').on('show.bs.dropdown', function(e){
+            $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
+        });
+      $('.dropdown').on('hide.bs.dropdown', function(e){
+          e.preventDefault();
+          $(this).find('.dropdown-menu').first().stop(true, true).slideUp(400, function(){
+      $('.dropdown').removeClass('open');
+        $('.dropdown').find('.dropdown-toggle').attr('aria-expanded','false');
+          });
+        });
+      });
+        </script>
+        <!-- Navigation Vertical -->
+        <script>
+        $(document).ready(function(){
+            $(".rozklik").click(function(){
+              $(this).parent().find('.dropdown-menu2').slideToggle();
+         });
+        });
+        </script>
+        <script>
+        $(document).ready(function(){
+            $(".srozklik").click(function(){
+              $(this).parent().find('.dropdown-menu3').slideToggle(0);
+              $('.dropdown-menu3').addClass("dropdown-menu3-display");
+              event.stopPropagation();
+            });
+        });
+        </script>
+                <script>
+    $(document).ready(function () {
+        $('.map_canvas1').addClass('scrolloff');
+        $('#canvas1').on('click', function () {
+            $('.map_canvas1').removeClass('scrolloff');
+        });
+        $(".map_canvas1").mouseleave(function () {
+            $('.map_canvas1').addClass('scrolloff');
+        });
+    });
+    </script>
+        <!-- Formular -->
+        <script src="/design/js/classie.js"></script>
+        <script>
+      (function() {
+        if (!String.prototype.trim) {
+          (function() {
+            // Make sure we trim BOM and NBSP
+            var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+            String.prototype.trim = function() {
+              return this.replace(rtrim, '');
+            };
+          })();
+        }
+        [].slice.call( document.querySelectorAll( 'input.input__field' ) ).forEach( function( inputEl ) {
+          // in case the input is already filled..
+          if( inputEl.value.trim() !== '' ) {
+            classie.add( inputEl.parentNode, 'input--filled' );
+          }
+          // events:
+          inputEl.addEventListener( 'focus', onInputFocus );
+          inputEl.addEventListener( 'blur', onInputBlur );
+        } );
+        [].slice.call( document.querySelectorAll( 'textarea.input__field' ) ).forEach( function( inputEl ) {
+          // in case the input is already filled..
+          if( inputEl.value.trim() !== '' ) {
+            classie.add( inputEl.parentNode, 'input--filled' );
+          }
+          // events:
+          inputEl.addEventListener( 'focus', onInputFocus );
+          inputEl.addEventListener( 'blur', onInputBlur );
+        } );
+        function onInputFocus( ev ) {
+          classie.add( ev.target.parentNode, 'input--filled' );
+        }
+        function onInputBlur( ev ) {
+          if( ev.target.value.trim() === '' ) {
+            classie.remove( ev.target.parentNode, 'input--filled' );
+          }
+        }
+      })();
+</script>
+<script src="/design/js/matchHeight.min.js" type="text/javascript"></script>
+<script>
+$(function() {
+  $('.matchHeight').matchHeight();
+});
+</script>
+</body></html>

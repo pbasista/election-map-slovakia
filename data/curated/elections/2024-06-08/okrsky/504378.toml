@@ -1,0 +1,118 @@
+# Okrsky of Holíč, transcribed by an AI agent in job okrsok-rules-4683 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bottova, Fučíkova, Jednoradová 1 -14, Jesenského, Kátovská, kpt. Nálepku Kukučínova, M.R. Štefánika, Mlynská, Partizánska, Potočná, Sasinkova, Schiffelova, Ulica A. Dubčeka
+#   okrsok 2: D. Rapanta, Hodonínska 15, Hollého, Jednoradová 15-16, Lesná, Ružová, Staničná
+#   okrsok 3: Bernolákova, Hodonínska 1 -11, Hviezdoslavova, Lúčky, M. Nešpora 33 -34, Nám. mieru, Nám. sv. Martina, Školská, Zámocká
+#   okrsok 4: Bratislavská, J.J. Boora, SNP 1-8, Ulica Márie Terézie, J. Čabelku
+#   okrsok 5: Hurbanova, M. Nešpora 1-6, 9-31, 35 - 45, Moyzesova
+#   okrsok 6: Bažantnica, Betlehém, Kopčanská, Pod sýpkou, Pri kaštieli 1-26, Svätojánska
+#   okrsok 7: SNP 9 - 47, Kollárova, Pod hrebeňom
+#   okrsok 8: 29. augusta, Budovateľská, Duklianska, Gagarinova, Lidická, Palárikova, Pri štadióne, Priateľstva, Priečna, Rodinné domky, Sibírska, Sv. Anny, Športová, Štúrova, Veterná, Vrádištská, Vysoká
+obec = "504378"
+name = "Holíč"
+okrsky_fill = "nearest"
+okrsky_note = "Placed by fill_nearest: addresses without a street (súpisné only), and numbers the document does not list on split streets (M. Nešpora 7, 8, 32; SNP 48 and up). The document states no decision date (signed by the mayor, undated)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document is undated; its heading names the European Parliament election of 8 June 2024 (\"konané dňa 8.6.2024\")."
+
+[[document]]
+url = "https://www.holic.sk/e_download.php?file=data/uredni_deska/obsah12_1.pdf&original=Volebne%20okrsky%20miestnosti%20%2C%20ulice%20web.pdf"
+sha256 = "0385bc6c0791f14dab18631c960f9979efb9a8e9bc6dc187194deb1094e37242"
+title = "Volebné okrsky a volebné miestnosti v meste Holíč na voľby do Európskeho parlamentu na území Slovenskej republiky konané dňa 8.6.2024"
+
+[okrsok.1]
+rules = [
+  {street = "Bottova"},
+  {street = "Fučíkova"},
+  {street = "Jednoradová", numbers = "1-14"},
+  {street = "Jesenského"},
+  {street = "Kátovská"},
+  {street = "Kpt. Nálepku", written = "kpt. Nálepku"},
+  {street = "Kukučínova"},
+  {street = "M. R. Štefánika", written = "M.R. Štefánika"},
+  {street = "Mlynská"},
+  {street = "Partizánska"},
+  {street = "Potočná"},
+  {street = "Sasinkova"},
+  {street = "Schiffelova"},
+  {street = "Ulica A. Dubčeka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "D. Rapanta"},
+  {street = "Hodonínska", note = "document: 'Hodonínska 15'; Hodonínska 1-11 is in another okrsok, the rest of the street taken here"},
+  {street = "Hollého"},
+  {street = "Jednoradová", note = "document: 'Jednoradová 15-16'; 1-14 is in another okrsok, the rest of the street (15 and up) taken here"},
+  {street = "Lesná"},
+  {street = "Ružová"},
+  {street = "Staničná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Hodonínska", numbers = "1-11"},
+  {street = "Hviezdoslavova"},
+  {street = "Lúčky"},
+  {street = "M. Nešpora", numbers = "33-34"},
+  {street = "Námestie mieru", written = "Nám. mieru"},
+  {street = "Námestie sv. Martina", written = "Nám. sv. Martina"},
+  {street = "Školská"},
+  {street = "Zámocká"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bratislavská"},
+  {street = "J. J. Boora", written = "J.J. Boora"},
+  {street = "SNP", numbers = "1-8"},
+  {street = "Ulica Márie Terézie"},
+  {street = "J. Čabelku"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Hurbanova"},
+  {street = "M. Nešpora", numbers = "1-6, 9-31, 35-45"},
+  {street = "Moyzesova"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bažantnica"},
+  {street = "Betlehém"},
+  {street = "Kopčanská"},
+  {street = "Pod sýpkou"},
+  {street = "Pri kaštieli", numbers = "1-26"},
+  {street = "Svätojánska"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "SNP", numbers = "9-47"},
+  {street = "Kollárova"},
+  {street = "Pod hrebeňom"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "29. augusta"},
+  {street = "Budovateľská"},
+  {street = "Duklianska"},
+  {street = "Gagarinova"},
+  {street = "Lidická"},
+  {street = "Palárikova"},
+  {street = "Pri štadióne"},
+  {street = "Priateľstva"},
+  {street = "Priečna"},
+  {street = "Rodinné domky"},
+  {street = "Sibírska"},
+  {street = "Sv. Anny"},
+  {street = "Športová"},
+  {street = "Štúrova"},
+  {street = "Veterná"},
+  {street = "Vrádištská"},
+  {street = "Vysoká"},
+]

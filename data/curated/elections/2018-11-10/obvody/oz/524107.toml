@@ -1,0 +1,32 @@
+# Council obvody of Šuňava (524107), Poprad.
+# Transcribed by an AI agent in job obvod-rules-171 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: miestnu časť Nižná Šuňava; Ulice: SNP, Družstevná, Záhradná, Jagrová, Mieru, Š. Šmálika, Športová, Hŕbky, Tatranská, Tichá
+#   obvod 2: miestnu časť Vyšná Šuňava; Ulice: SNP, Lúčna, Cintorínska, Pod vodojemom, Poľnohospodárska, Štrbská, Liptovská, Krátka, Podhorská, Okružná
+# Okrsky added by `ems job reuse`: those of the elections of 2026-10-24, data/curated/elections/2026-10-24/obvody/oz/524107.toml, reused by `ems job reuse`.
+obec = "524107"
+name = "Šuňava"
+date = 2018-06-21
+note = "Each obvod is a whole part of the municipality (miestna časť); streets crossing parts (SNP, Š. Šmálika) are split by part. Trojičné námestie (Vyšná Šuňava) is not listed but lies in that part."
+okrsky_note = "No document of the elections of 2018-11-10 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2018 (each okrsok's voters on the roll within 10%). The notice (posted 31.7.2026) gives no date of the mayor's decision, so date is left out."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.sunava.sk/e_download.php?file=data/editor/179sk_1.pdf&original=ozn%C3%A1menie%20o%20utvoren%C3%AD%20obvodov%20a%20po%C4%8Dtu%20poslancov.pdf"
+sha256 = "814f637781b8b5400de909d8977a0d555194cda1251d931e0c2c6d6584ac94f4"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 10. novembra 2018 (uznesenie č. 294/2018 zo dňa 21.06.2018)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Nižná Šuňava"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [2]
+rules = [
+  {part = "Vyšná Šuňava"},
+]

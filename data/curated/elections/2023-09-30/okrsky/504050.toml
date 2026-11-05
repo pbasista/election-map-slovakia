@@ -1,0 +1,32 @@
+# Okrsky of Šoporňa, transcribed by an AI agent in job okrsok-rules-3523 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súp. č. 1-640
+#   okrsok 2: súp. č. 641-1175
+#   okrsok 3: súp. č. 1176-1680 a časť Štrkovec
+obec = "504050"
+name = "Šoporňa"
+okrsky_date = 2023-06-20
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 2023-06-20 sets 3 okrsky by súpisné číslo across the village: 1-640, 641-1175, 1176-1680 and part Štrkovec. Súpisné numbers beyond 1680 (if any in the register) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.soporna.sk/e_download.php?file=data/editor/152sk_1.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20urcenie%20volebnych%20miestnosti.pdf"
+sha256 = "3d73fe7e524ca9f4410ba4bea4d6f7c507adadbaf5519627dd42d1f9e0f0a1d8"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do NR SR 2023"
+
+[okrsok.1]
+rules = [
+  {part = "Šoporňa", numbers = "1-640"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Šoporňa", numbers = "641-1175"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Šoporňa", numbers = "1176-1680"},
+  {part = "Štrkovec"},
+]

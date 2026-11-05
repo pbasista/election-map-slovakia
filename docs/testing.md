@@ -14,7 +14,7 @@ uv run ruff format --check .
 uv run ruff check .
 uv run ty check
 uv run pytest -q
-npx --yes @biomejs/biome@2.5.12 ci
+npx --yes @biomejs/biome@2.6.4 ci
 uv run ems build && uv run ems check
 ```
 
@@ -30,22 +30,24 @@ uv run pytest -q > /tmp/ems-pytest.log 2>&1; echo rc=$?
 
 ```sh
 uv run ems make                         # the final results of the inputs
-EMS_RESULTS_ANYTIME=1 uv run ems build  # read them at any time
+uv run ems build
 uv run ems serve --port 8765 &          # the parts of dist/ as one site
 ```
 
 `ems serve` serves the parts of `dist/` as one site
 ([pipeline.md](pipeline.md#serve)):
 the app at `/`, each election's bundles at `/map/<slug>/` and `/data/<slug>/`,
-the results at `/results/` (the site reads `/results/<election day>/`)
+each base map at `/base/<extract>/`,
+the final results at `/results/` (the site reads `/results/<election day>/`),
+the live results at `/live/`
 and the cached copies of sources at the root,
 so one server is all it takes.
-A plain build reads the results once per page load,
-which also works;
-`EMS_RESULTS_ANYTIME=1` polls at any time
-(when the app polls: [deploy.md](deploy.md#polling-live)).
+A plain build reads the final results once per page load;
+`EMS_RESULTS_ANYTIME=1` makes the app read the live results
+every minute at any time, where an election has no final results
+([deploy.md](deploy.md#live-results-live)).
 
-For dummy results in place of the final ones:
+For dummy live results:
 
 ```sh
 uv run ems results fake mid             # none, early, mid, late or final
@@ -54,6 +56,11 @@ EMS_RESULTS_ANYTIME=1 uv run ems build
 
 The stages and what each holds are in
 [results.md](results.md#testing-the-app-with-dummy-results).
+`fake` takes the latest election (2026) by default,
+`--election` another;
+the app shows them only where the election has no final results,
+so move its `data/build/<election day>/results/` aside for the test
+and back afterwards, and remove `data/build/<election day>/live/`.
 Start `ems serve` after the build,
 since it reads each part's `_headers` once, at startup.
 
@@ -70,6 +77,14 @@ Open them as `/en/#…`:
 
 `k` lists circled candidates as `<contest>.<ballot numbers>`,
 contests comma-separated; `f=1` opens Favourites.
+
+An election of another kind shows its own on the page of its slug,
+`/en/<slug>/`: with no hash the country's ballots
+or, of a by-election, where it is held.
+Trying one needs it configured with its inputs
+([elections.md](elections.md));
+`ems results fake` then gives it dummy live results,
+which it shows while it has no final results.
 
 ## A headless browser
 
@@ -159,7 +174,8 @@ Its states and what to look for:
   with `touchStart`, a few `touchMove`s and `touchEnd`);
   a quick stroke goes to the next height,
   a drag down from peek closes the sheet.
-- **The legend:** without the sheet `.map-legend.pill`,
+- **The legend:** without the sheet `.map-legend.pill`
+  (unless unfolded before: the choice is kept in `localStorage`),
   unfolded by `.map-legend-unfold` and folded again by `.map-legend-fold`;
   with the sheet open, `.map-legend.bar` in `.pane-top`,
   `.map-legend-fold` showing its units sentence.
@@ -219,7 +235,10 @@ arguments after `--` go to the browser).
 ## Afterwards
 
 Put the results and `dist/` back to the real state and stop the server:
+the dummy live results go, a final results directory moved aside
+comes back (or `ems make` writes it again), and `ems make` rebuilds `dist/`:
 
 ```sh
+rm -r data/build/<election day>/live
 uv run ems make
 ```

@@ -1,0 +1,117 @@
+# The okrsky of Sabinov of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/525146.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Sabinov, transcribed by an AI agent in job okrsok-rules-3437 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: v miestnej časti Orkucany - Bernolákova, J. Záborského, Jarková, Kvetná, Mudroňova, Prídavková, S. Chalúpku, Višňová
+#     okrsok 2: Komenského, Kukučínova, Medzi vodami, Prešovská
+#     okrsok 3: 9. mája, Hviezdoslavova, Mieru, Štúrova, Matice slovenskej
+#     okrsok 4: Hliník, Janka Borodáča, Jilemnického, Levočská, Mlynská, Šancová, Švermova, Ružová
+#     okrsok 5: Námestie Slobody, Kpt. Nálepku, Murgašova
+#     okrsok 6: ulici 17.novembra č. 1-77
+#     okrsok 7: 17. novembra č. 78 - 83, Jakubovanská
+#     okrsok 8: Jolany Cirbusovej, Nezabudova, Pavla Gojdiča, Severná, Záhradná, Sládkovičova, SNP
+#     okrsok 9: Puškinova, Janka Jesenského, Moyzesova
+#     okrsok 10: Novomeského, Fraňa Kráľa, Čergovská, Gen. Svobodu, Hollého, Karpatská, Ovocinárska, Pod Švabľovkou, Priemyselná štvrť, Samuela Fábryho, Sadová, Tehelná, obyvatelia s trvalým pobytom Sabinov – 0
+obec = "525146"
+name = "Sabinov"
+okrsky_date = 2023-06-20
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF read from the page images. 'Medzi vodami' (a garden area) is not in the register; left out. The register street Lazy is not named; it, house numbers on 17. novembra outside the ranges, and houses without a street take the okrsok of the nearest address (fill_nearest). 'Sabinov 0' / 'bezdomovci' are voters registered only on the town, not places. The register keeps Janka Jesenského also as 'J. Jesenského': both are given."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2024-06-08 setting the okrsky was found (okrsok-rules-4692): The archived EP 2024 page lists 'Oznámenie o utvorení volebných okrskov ... Eurovoľby 2024.pdf', but the attachment is not archived (404) and the page is gone live. Internet Archive (CDX API) refused connections / 503 on retries, so archived pages could not be checked. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 10 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-06-08 → 2023-09-30: 1: 658 → 639, 2: 1,107 → 1,101, 3: 1,146 → 1,112, 4: 864 → 818, 5: 626 → 693, 6: 963 → 935, 7: 675 → 651, 8: 1,042 → 1,017, 9: 1,172 → 1,156, 10: 1,195 → 1,172."
+
+[[document]]
+url = "https://www.sabinov.sk/index.php?option=com_cwattachments&task=open&id=6c9882bbac1c7093bd25041881277658&sid=3cf4033a0e01f06a5c51bafb767c8011"
+sha256 = "050fef5a2d8dc560047172f249a8031216407bd4c48ac3e822f8f9046df3da5b"
+title = "Oznámenie - vytvorenie okrskov - voľby do NR SR 2023 (20. júna 2023)"
+
+[[document]]
+url = "https://www.sabinov.sk/navstevnik/826-vo%C4%BEby-do-nr-sr"
+sha256 = "17bcda14d9d0a93fec610c5e7e31e1ecd572c5578d7eccd12051c4ace400b5dd"
+title = "Voľby do NR SR (page linking the document)"
+
+[okrsok.1]
+rules = [
+  {part = "Orkucany"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Komenského"},
+  {street = "Kukučínova"},
+  {street = "Prešovská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "9.mája", written = "9. mája"},
+  {street = "Hviezdoslavova"},
+  {street = "Mieru"},
+  {street = "Štúrova"},
+  {street = "Matice Slovenskej", written = "Matice slovenskej"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Hliník"},
+  {street = "Janka Borodáča"},
+  {street = "Jilemnického"},
+  {street = "Levočská"},
+  {street = "Mlynská"},
+  {street = "Šancová"},
+  {street = "Švermova"},
+  {street = "Ružová"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Námestie Slobody"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Murgašova"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "17.novembra", numbers = "1-77", written = "17. novembra"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "17.novembra", numbers = "78-83", written = "17. novembra"},
+  {street = "Jakubovanská"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "J. Cirbusovej", written = "Jolany Cirbusovej"},
+  {street = "Nezabudova"},
+  {street = "Pavla Gojdiča"},
+  {street = "Severná"},
+  {street = "Záhradná"},
+  {street = "Sládkovičova"},
+  {street = "SNP"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Puškinova"},
+  {street = "Janka Jesenského"},
+  {street = "J. Jesenského", written = "Janka Jesenského", note = "the register keeps the same street under both 'J. Jesenského' and 'Janka Jesenského'"},
+  {street = "Moyzesova"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Novomeského"},
+  {street = "Fraňa Kráľa"},
+  {street = "Čergovská"},
+  {street = "Gen. Svobodu"},
+  {street = "Hollého"},
+  {street = "Karpatská"},
+  {street = "Ovocinárska"},
+  {street = "Pod Švabľovkou"},
+  {street = "Priemyselná Štvrť", written = "Priemyselná štvrť"},
+  {street = "S. Fábryho", written = "Samuela Fábryho"},
+  {street = "Sadová"},
+  {street = "Tehelná"},
+]

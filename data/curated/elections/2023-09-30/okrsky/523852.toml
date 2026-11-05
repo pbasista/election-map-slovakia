@@ -1,0 +1,43 @@
+# Okrsky of Spišské Bystré, transcribed by an AI agent in job okrsok-rules-3772 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Partizánska, SNP, Hornádska, Michalská, Jána Lačeka, Vodárenska, Pod lesom
+#   okrsok 2: Cintorínska, Hviezdoslavova, Kukučínova, Školská, Slnečná, Krátka, Kamenec, Družstevná
+obec = "523852"
+name = "Spišské Bystré"
+okrsky_date = 2023-06-13
+okrsky_fill = "nearest"
+okrsky_note = "The 51 register addresses without a street are placed by fill_nearest. Same okrsky as the 2022 copy."
+
+[[document]]
+url = "https://www.spisskebystre.sk/e_download.php?file=data/editor/366sk_3.pdf&original=ozn%C3%A1menie%20okrsky%20a%20miestnosti%20NR%20SR.pdf"
+sha256 = "51551829665bbef14596f3d9030543cabdd9d7950ce53292840022e81b30fbca"
+title = "Oznámenie o určení volebných okrskov a volebných miestností (13.6.2023)"
+
+[[document]]
+url = "https://www.spisskebystre.sk/urad/volby-referendum/volby-referendum-archiv/volby-do-nr-sr-3092023/"
+sha256 = "880d7cc478290164e42a48eb64f988f9641dc0f8988b00c1e2f7c8aae53c2039"
+title = "Voľby do NR SR - 30.9.2023"
+
+[okrsok.1]
+rules = [
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Hornádska"},
+  {street = "Michalská"},
+  {street = "Jána Lačeka"},
+  {street = "Vodárenska"},
+  {street = "Pod lesom"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Hviezdoslavova"},
+  {street = "Kukučínova"},
+  {street = "Školská"},
+  {street = "Slnečná"},
+  {street = "Krátka"},
+  {street = "Kamenec"},
+  {street = "Družstevná"},
+]

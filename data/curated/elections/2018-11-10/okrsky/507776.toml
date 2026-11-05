@@ -1,0 +1,67 @@
+# Okrsky of Zeleneč, transcribed by an AI agent in job okrsok-rules-811 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov z ulíc: A. Hlinku, Argentínska, Družstevná, Hlavná, Hliník, Krátka, Mlynská, Nová, Obchodná, Palárikova, Pažiť, Podolky, Sládkovičova, Školská, Športová, Ulička, Vengerova, Výhon, Vinohradnícka
+#   okrsok 2: pre voličov z ulíc: Astrová, Bernolákova, Cintorínska, Jána Klempu, Janka Kráľa, Kapitulská, M. R. Štefánika, Narcisová, Nezábudková, Ružová, Štúrova
+obec = "507776"
+name = "Zeleneč"
+okrsky_date = 2018-08-28
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF read from the rendered page. The 2018 document leaves out Agátová; it is placed in okrsok 2 as the next document (29.11.2019) and every later one lists it. The register's addresses without a street are placed by fill_nearest."
+okrsky_supplemented = 2019-11-29
+okrsky_supplemented_from = "document"
+okrsky_supplement_basis = "The 2018 document omits Agátová (18 addresses, between Bernolákova and Cintorínska); the mayor's okrsky document of 29.11.2019 for the 2020 National Council election, otherwise identical, lists it in okrsok 2, as do all later documents. (https://www.zelenec.sk/e_download.php?file=data/uredni_deska/obsah428_2.pdf&original=DX-2500N_20200121_140827.pdf)"
+
+[[document]]
+url = "https://www.zelenec.sk/e_download.php?file=data/uredni_deska/obsah351_4.pdf&original=volebn%C3%A9%20okrsky.pdf"
+sha256 = "7f9b37992614bb92130529ea7f639da2d29c1b64ac1d24f397c53c9024a457c3"
+title = "Voľby do orgánov samosprávy obcí – 2 volebné okrsky a určenie miestností, starostka 28.08.2018"
+
+[[document]]
+url = "https://www.zelenec.sk/obecny-urad/uradna-tabula/volby-do-organov-samospravy-obci-urcenie-miestnosti-pre-volebne-okrsky-356.html"
+sha256 = "c89d73a8d2acd77a50437696c8c1ebdaa537f22a30c47f31a603530e0cd870cc"
+title = "Úradná tabuľa: Voľby do orgánov samosprávy obcí – určenie miestností pre volebné okrsky (vyvesené 12. 9. 2018)"
+
+[[document]]
+url = "https://www.zelenec.sk/e_download.php?file=data/uredni_deska/obsah428_2.pdf&original=DX-2500N_20200121_140827.pdf"
+sha256 = "f1896998d865971cb9cf91e5089f9c6a25f0c4d3dec062d2d880e9c1e475127b"
+title = "Voľby do NR SR – 2 volebné okrsky, starosta 29.11.2019 (source of the supplemented Agátová)"
+
+[okrsok.1]
+rules = [
+  {street = "Andreja Hlinku", written = "A. Hlinku"},
+  {street = "Argentínska"},
+  {street = "Družstevná"},
+  {street = "Hlavná"},
+  {street = "Hliník"},
+  {street = "Krátka"},
+  {street = "Mlynská"},
+  {street = "Nová"},
+  {street = "Obchodná"},
+  {street = "Palárikova"},
+  {street = "Pažiť"},
+  {street = "Podolky"},
+  {street = "Sládkovičova"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Ulička"},
+  {street = "Vengerova"},
+  {street = "Výhon"},
+  {street = "Vinohradnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Astrová"},
+  {street = "Bernolákova"},
+  {street = "Cintorínska"},
+  {street = "Jána Klempu"},
+  {street = "Janka Kráľa"},
+  {street = "Kapitulská"},
+  {street = "M. R. Štefánika"},
+  {street = "Narcisová"},
+  {street = "Nezábudková"},
+  {street = "Ružová"},
+  {street = "Štúrova"},
+  {street = "Agátová", supplemented = true},
+]

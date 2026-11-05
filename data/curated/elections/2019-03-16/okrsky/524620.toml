@@ -1,0 +1,64 @@
+# Okrsky of Kapušany, transcribed by an AI agent in job okrsok-rules-1447 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Ardova, Kováčska, Kráľovská, Krátka, Požiarnická, Prešovská, Pri trati, Sadová, Sekčovská, Slánska, Slovenská, Tehelná, Urbárska, Vranovská, Záhradná, súpisné číslo 686
+#   okrsok 2: ulice: Bardejovská, Cintorínska, Dubová, Gabriela Kapyho, Hlavná, Lesná, Mlynská, Na rínku, Nám. sv. Martina, Nová štvrť, Pod hradom, Poštová, Puchovská, Topoľová, Železničná
+obec = "524620"
+name = "Kapušany"
+okrsky_fill = "nearest"
+okrsky_note = "Addresses without a street other than súpisné číslo 686 (okrsok 1) are not named; fill_nearest places them. Differs from the copied okrsky of 2022-10-29/2026-10-24: Pri trati, Sekčovská and Urbárska are in okrsok 1, Na rínku and Nám. sv. Martina in okrsok 2, and of the súpisné čísla only 686 is named (okrsok 1)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The announcement's heading names the presidential election of 2019, held on 16 March 2019 (round 2: 30 March 2019); it states no date of the decision."
+okrsky_supplemented = 2022-07-26
+okrsky_supplemented_from = "document"
+okrsky_supplement_basis = "The 2019 document does not name Severná (one address, Severná 6), probably a street named later; it is placed in okrsok 2 as the mayor's decision of 26 July 2022 for the elections of 29 October 2022 places it (as do those of 2023 and 2024). In 2019 the neighbouring Urbárska and Sekčovská were in okrsok 1, so its 2019 okrsok may have differed. (https://archiv.kapusany.sk/files/files/49/53/40/df30617d005546378b77f570ddadb541/df30617d005546378b77f570ddadb541.pdf)"
+
+[[document]]
+url = "https://archiv.kapusany.sk/files/files/32/19/47/17ba9614ee104ee4a62e702756be8aa2/17ba9614ee104ee4a62e702756be8aa2.pdf"
+sha256 = "c12853238b8f4f3f6d5a25b7f19a510e8abb1e427bdbeb2b94561a59f260ba30"
+title = "Oznámenie obce Kapušany o čase a mieste konania volieb prezidenta Slovenskej republiky v roku 2019 a o utvorení volebných okrskov a určení volebných miestností"
+
+[[document]]
+url = "https://archiv.kapusany.sk/files/files/49/53/40/df30617d005546378b77f570ddadb541/df30617d005546378b77f570ddadb541.pdf"
+sha256 = "34843e118a404b60c1d9c103a16858bd81e5217892539935997520d3218c905e"
+title = "Rozhodnutie starostky obce Kapušany o utvorení volebných okrskov a určení volebných miestností v obci Kapušany pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov dňa 29. októbra 2022 (supplement for Severná)"
+
+[okrsok.1]
+rules = [
+  {street = "Ardova"},
+  {street = "Kováčska"},
+  {street = "Kráľovská"},
+  {street = "Krátka"},
+  {street = "Požiarnická"},
+  {street = "Prešovská"},
+  {street = "Pri trati"},
+  {street = "Sadová"},
+  {street = "Sekčovská"},
+  {street = "Slánska"},
+  {street = "Slovenská"},
+  {street = "Tehelná"},
+  {street = "Urbárska"},
+  {street = "Vranovská"},
+  {street = "Záhradná"},
+  {part = "Kapušany", numbers = "686"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bardejovská"},
+  {street = "Cintorínska"},
+  {street = "Dubová"},
+  {street = "Gabriela Kapyho"},
+  {street = "Hlavná"},
+  {street = "Lesná"},
+  {street = "Mlynská"},
+  {street = "Na rínku"},
+  {street = "Nám.sv.Martina", written = "Nám. sv. Martina"},
+  {street = "Nová štvrť"},
+  {street = "Pod hradom"},
+  {street = "Poštová"},
+  {street = "Puchovská"},
+  {street = "Topoľová"},
+  {street = "Železničná"},
+  {street = "Severná", note = "not in the 2019 document (the register has one address, Severná 6); okrsok 2 as in the decision of 26 July 2022", inferred = true, supplemented = true},
+]

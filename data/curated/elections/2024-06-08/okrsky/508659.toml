@@ -1,0 +1,49 @@
+# Okrsky of Hrochoť, transcribed by an AI agent in job okrsok-rules-5163 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Zoznam ulíc: pobyt bezdomovca, Hlavná ulica, Námestie Andreja Sládkoviča, Pod kostolom, Na Teplici, Ľuda Ondrejova, Dubiny, Na Hanišovú, Močare, Za Brezinku, Družstevná, Na Záhumnie, Na Hlinky, Na Kopec, Do Trávnika, Na Dúbravu, Pod Lipie, Kyslinky
+#   okrsok 2: Zoznam ulíc: Hlavná ulica, Pod Dubovým dielom, Vranní lúžok, Pod Horou, Súdenica, Pod Skalicu
+obec = "508659"
+name = "Hrochoť"
+okrsky_date = 2024-02-27
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 27 Feb 2024 lists 'Hlavná ulica' in both okrsky without house numbers, so Hlavná ulica has no rule: its houses take the okrsok of the nearest placed address (fill_nearest), as do Stará voda (not named in the document) and addresses without a street. Okrsok 1 also holds 'pobyt bezdomovca'. Same okrsky as the 2026 document."
+
+[[document]]
+url = "https://www.hrochot.sk/evt_file.php?file=14901"
+sha256 = "7a1daa56f3b499dc9a10b29f781fc7533c2743dc6362ae377ca87d9f06a9badc"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (voľby do Európskeho parlamentu 2024)"
+
+[[document]]
+url = "https://www.hrochot.sk/obcan/aktuality/volby-do-europskeho-parlamentu-v-roku-2024-1148sk.html"
+sha256 = "3c73420ae0e23d799550de48516771a166b5e741160fe981081d3392d3ffb65b"
+title = "Voľby do Európskeho parlamentu v roku 2024 (aktualita linking the document)"
+
+[okrsok.1]
+rules = [
+  {street = "Námestie Andreja Sládkoviča"},
+  {street = "Pod kostolom"},
+  {street = "Na Teplici"},
+  {street = "Ľuda Ondrejova"},
+  {street = "Dubiny"},
+  {street = "Na Hanišovú"},
+  {street = "Močare"},
+  {street = "Za Brezinku"},
+  {street = "Družstevná"},
+  {street = "Na Záhumnie"},
+  {street = "Na Hlinky"},
+  {street = "Na Kopec"},
+  {street = "Do Trávnika"},
+  {street = "Na Dúbravu"},
+  {street = "Pod Lipie"},
+  {street = "Kyslinky"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Pod Dubovým dielom"},
+  {street = "Vranní lúžok"},
+  {street = "Pod Horou"},
+  {street = "Súdenica"},
+  {street = "Pod Skalicu"},
+]

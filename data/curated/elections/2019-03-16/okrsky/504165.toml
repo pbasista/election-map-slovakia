@@ -1,0 +1,31 @@
+# Okrsky of Vlčany, transcribed by an AI agent in job okrsok-rules-1200 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: č.d.: 5-399, 1450-1452,1454-1457,1470-1500,1502-1534,1536,1540-1541,1544-1547,1552, 1564-1565,1567-1569,1575-1576,1581,1585,1587,1589,1593-1594,1600-1604,1619-1623,1627, 1633-1634,1637,1638,1641,1644,1646,1651,1652,1653,1660.
+#   okrsok 2: č.d.: 401-904,1458-1466,1535,1537,1538,1542,1548,1549,1563,1566,1574,1579,1582,1586, 1591,1592,1596,1626,1647-1649,1655, 1661, 1662.
+#   okrsok 3: č.d.:906-1412,1427,1432,1467-1469,1539,1543,1568,1570-1573,1577,1578,1580,1584,1590, 1597,1598,1605-1608,1613,1617,1628,1630-1632,1635,1640,1645,1658.
+obec = "504165"
+name = "Vlčany"
+okrsky_date = 2019-01-28
+okrsky_fill = "nearest"
+okrsky_note = "Vlčany has no streets in the register; the document assigns houses by súpisné (popisné) čísla ('č.d.'), so each okrsok is a set of súpisné numbers within part Vlčany. The document lists 1568 both in okrsok 1 (range 1567-1569) and explicitly in okrsok 3; given to okrsok 3 (the explicit mention). It differs from the copied 2022 okrsky: 1662 is in okrsok 2 (in 2022 in okrsok 1), and 1663, 1664-1665, 1666, 1667-1668 are not listed; these, like the other numbers it does not list (e.g. 1-4, 400, 905, 1413-1449 except 1427 and 1432, 1453, 1501, 1550-1562 except 1552), are placed by fill_nearest. The document is a scan without a text layer; its text was read from the rendered page. The page and document are gone from the current website and were found in the Internet Archive."
+
+[[document]]
+url = "https://web.archive.org/web/20191017181539/http://obecvlcany.sk/uradna-tabula/category/16-volby-prezidenta-slovenskej-republiky-2019?download=600:utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-obci-vlcany"
+sha256 = "8372bf7b6167f5912e69e175afe6efa1b629a5386615f2a823c3678fe2b8756a"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Vlčany pre voľby prezidenta Slovenskej republiky v roku 2019"
+
+[okrsok.1]
+rules = [
+  {part = "Vlčany", numbers = "5-399, 1450-1452, 1454-1457, 1470-1500, 1502-1534, 1536, 1540-1541, 1544-1547, 1552, 1564-1565, 1567, 1569, 1575-1576, 1581, 1585, 1587, 1589, 1593-1594, 1600-1604, 1619-1623, 1627, 1633-1634, 1637, 1638, 1641, 1644, 1646, 1651, 1652, 1653, 1660"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vlčany", numbers = "401-904, 1458-1466, 1535, 1537, 1538, 1542, 1548, 1549, 1563, 1566, 1574, 1579, 1582, 1586, 1591, 1592, 1596, 1626, 1647-1649, 1655, 1661, 1662"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Vlčany", numbers = "906-1412, 1427, 1432, 1467-1469, 1539, 1543, 1568, 1570-1573, 1577, 1578, 1580, 1584, 1590, 1597, 1598, 1605-1608, 1613, 1617, 1628, 1630-1632, 1635, 1640, 1645, 1658"},
+]

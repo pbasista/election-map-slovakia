@@ -1,0 +1,24 @@
+# Okrsky of Nižná Slaná, transcribed by an AI agent in job okrsok-rules-5775 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok: 01 Miestnosť: Obradná miestnosť v budove obecného úradu Námestie SNP 54/5, Nižná Slaná - pre obyvateľov časti obce Nižná Slaná
+#   okrsok 2: Okrsok: 02 Miestnosť: Úradovňa v budove bývalej kolkárne, Dobšinská 1084/1, Nižná Slaná-Nižnoslanská Baňa - pre obyvateľov časti obce Nižnoslanská Baňa
+obec = "526045"
+name = "Nižná Slaná"
+okrsky_date = 2026-04-27
+okrsky_note = "Two okrsky in a municipality of two parts, each named in the document."
+
+[[document]]
+url = "https://www.niznaslana.sk/e_download.php?file=/data/uredni_deska/obsah473_2.pdf&original=Ur%C4%8Denie%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "8bf71c92210aaadde7e5e243bab29c05efcef8936295505fd72c7cc3181c7c3a"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre referendum 4. júla 2026 (27.04.2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Nižná Slaná"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Nižnoslanská Baňa"},
+]

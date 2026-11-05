@@ -1,0 +1,59 @@
+# The okrsky of Banka of the vote of 2023-01-21, data/curated/elections/2023-01-21/okrsky/581399.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Banka, transcribed by an AI agent in job okrsok-rules-3145 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Arménska ulica, Bananská, Bazovského, Červená veža, Dominova cesta, Hudobná, Inovecká, Karpatská, Moravanská ulica, Pokojná, Spojovacia, Športová, Žiacka
+#     okrsok 2: Banka, Cesta Janka Alexyho, Horný majer, Kamenná, Krátka, Lesná, Lyžiarska, Námestie Martina Benku, Odborárska, Podhorská, Poľná, Ratnovská ulica, Tehelná, Topoľčianska
+obec = "581399"
+name = "Banka"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document, read from the page image. Okrsok 2's bare 'Banka' is the voters registered without a street address, not the register's houses without a street; those are placed by fill_nearest."
+okrsky_adopted = 2023-01-21
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-424): The official site obecbanka.sk has no 2026 document on the okrsky: its úradná tabuľa and site search show only the 2022 elections and 2023 referendum notices (the 2022 'Informácia o utvorení volebných okrskov' is for the previous elections); the only 2026 election item is the list of registered candidates. banka.sk is a parked domain. These are the okrsky of the vote of 2023-01-21 (2023-referendum), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2023-01-21: 1: 862 → 866, 2: 966 → 941."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-08
+okrsky_date_basis = "The notice-board item 'Referendum 2023' linking the undated scan states 'Vyvesené: 8. 11. 2022'. (https://www.obecbanka.sk/samosprava/uradna-tabula/referendum-2023-146.html)"
+
+[[document]]
+url = "https://www.obecbanka.sk/e_download.php?file=data/uredni_deska/obsah145_4.pdf&original=Inform%C3%A1cia%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20v%20referende%20.pdf"
+sha256 = "707c78ae2225654f6403866ca726f2446088a164b436bc33dc88083344c7f542"
+title = "Informácia o utvorení volebných okrskov – referendum 2023"
+
+[[document]]
+url = "https://www.obecbanka.sk/samosprava/uradna-tabula/referendum-2023-146.html"
+sha256 = "22ddd89131f4c7ad5a16a24b3fa9cbfb8ace708207d4ef8807ca887ca0d926b1"
+title = "Referendum 2023 (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {street = "Arménska ulica"},
+  {street = "Bananská"},
+  {street = "M.Bazovského", written = "Bazovského", note = "The document leaves out the initial M. (Miloš); the only street of that name in Banka."},
+  {street = "Červená Veža", written = "Červená veža", note = "Same street; only capitalization differs."},
+  {street = "Dominova cesta"},
+  {street = "Hudobná"},
+  {street = "Inovecká"},
+  {street = "Karpatská"},
+  {street = "Moravanská ulica"},
+  {street = "Pokojná"},
+  {street = "Spojovacia"},
+  {street = "Športová"},
+  {street = "Žiacka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cesta J.Alexyho", written = "Cesta Janka Alexyho"},
+  {street = "Horný majer"},
+  {street = "Kamenná"},
+  {street = "Krátka"},
+  {street = "Lesná"},
+  {street = "Lyžiarska"},
+  {street = "Nám. Martina Benku", written = "Námestie Martina Benku"},
+  {street = "Odborárska"},
+  {street = "Podhorská"},
+  {street = "Poľná"},
+  {street = "Ratnovská ulica"},
+  {street = "Tehelná"},
+  {street = "Topoľčianska"},
+]

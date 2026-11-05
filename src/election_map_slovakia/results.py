@@ -4,52 +4,109 @@ On election night (24–25 October 2026) ŠÚ SR publishes the count of the
 municipal (OSO) and regional (OSK) elections on https://volbysr.sk/oso/
 and https://volbysr.sk/osk/ as JSON files, which its own pages read and
 which it overwrites as the commissions' records come in. A day or two
-later the definitive results follow as CSV tables in a zip.
-``ems results`` turns either into the results of the election in
-``data/build/<election day>/results/`` (:meth:`Config.results_dir`);
-``build`` copies them to ``dist/results/<election day>/``, the results part
-of the site, where the app reads them (``web/js/live.js``)::
+later the definitive results follow as CSV tables in a zip. Both are
+written in the same format, apart: ``ems results poll`` turns the night's
+files into the live results of the election in
+``data/build/<election day>/live/`` (:meth:`Config.live_dir`), which
+``ems results deploy`` deploys on the night as the live part
+(``dist/live/<election day>/``); the ``results`` step of ``ems make`` turns
+the pinned definitive packages into its final results in
+``data/build/<election day>/results/`` (:meth:`Config.results_dir`), which
+``build`` copies to ``dist/results/<election day>/``, the results part, and
+a release deploys. The app reads the final results, and the live ones where
+there are none yet (``web/js/live.js``)::
 
-    status.json        {version, updated, phase, source: {osk, oso}, files}
+    status.json        {version, updated, phase, source: {<source>: {time,
+                        counted, unit, voters}}, files}
     <area>.json        {contests: {contest: {status, counted, eligible,
-                        voters, valid, seats, filled, candidates, (areas)}}}
+                        voters, valid, seats, filled, candidates, (areas),
+                        (won), (preferences), (units: {kraj, okres | zsk:
+                        {code: [eligible, voters, valid, {number:
+                        votes}]}}), (origins: {number: [most, highest]:
+                        [[okrsok, votes, valid]]})}}}
     okrsky/<area>.json {contests: {contest: {okrsok: [eligible, voters,
-                        valid, {number: votes}]}}, past: {} | {day,
+                        valid, {number: votes}]}}, units: {contest:
+                        {obvod | obec: {unit: figures}}}, past: {} | {day,
                         okrsky: {okrsok: method}, contests: {contest:
                         {okrsok | obec: [eligible, voters, valid,
-                        {number: votes}]}}}}         okrsok "500011/3"
+                        {number: votes}]}}, totals, units: {contest:
+                        {level: {unit: [method, figures]}}}}}
+                                                     okrsok "500011/3"
+    turnout.json       {municipal: {total, obce, councils, zsk | okres},
+                        city: {total, obce, zsk | okres}, regional:
+                        {total}}: [eligible, voters] each
 
 The format is the shared contract of docs/results.md.
 
 - ``<area>`` is the site's area file of the contest without ``data/``
-  (:func:`live_path`).
+  (:func:`live_path`, :func:`contests.area_name`): ``kraj/<k>``,
+  ``city/<BA|KE>``, ``okres/<okres>``, ``country`` (the country-wide
+  contests) or ``list/<p>`` (party p's list).
 - ``candidates`` are ``[number, votes, flag]``: flag 1 elected, 0 a
-  council's substitute, :data:`WITHDRAWN` (-1) a candidate who withdrew
-  yet stayed on the ballot (ŠÚ SR counts and publishes their votes), else
-  null.
+  council's (or a party list's) substitute, :data:`WITHDRAWN` (-1) a
+  candidate who withdrew yet stayed on the ballot (ŠÚ SR counts and
+  publishes their votes), :data:`ADVANCED` (2) a presidential candidate on
+  to round 2, else null; the national kinds' are in
+  :mod:`election_map_slovakia.national`. A party contest's ``won`` has the
+  seats of each party that won some.
 - ``status.json`` names every area and okrsok file with a hash of its
   content, which the app appends to the URL. Its ``version`` changes
   whenever anything in it does; a run that changes nothing writes nothing
-  (:func:`write`), so a deployment follows only a change.
+  (:func:`write`), so a deployment follows only a change. Its ``source``
+  has an entry per source of the election's contests (:func:`sources_of`):
+  ``oso`` (municipal), ``osk`` (regional), ``prez1``, ``prez2`` (a round of
+  a presidential election), ``ref``, ``nrsr``, ``ep``; the phase is final
+  once each has its definitive results (:func:`finalize`).
 - Each election has a directory of its own, keyed by its day, so a later
   election's results never replace an earlier one's.
 - The okrsok files (final results only) hold the area file's contests per
   okrsok (polling district), keyed ``<obec>/<okrsok>`` (:func:`okrsok_key`)
   in the obec's own numbering; Bratislava's and Košice's own contests in
-  their districts'. ``past`` holds the figures of the election before
-  (``day``) on these okrsky and their obce, as far as they are known
-  (:class:`Past`, made by :mod:`election_map_slovakia.crosswalk`), ``{}``
-  where there is none.
+  their districts'; the country-wide contests' by kraj,
+  ``okrsky/country/<kraj>``, and a party's list's likewise,
+  ``okrsky/list/<p>/<kraj>`` (:func:`okrsok_file`). ``past`` holds the
+  figures of the election before (``day``) on these okrsky and their obce,
+  the newest earlier one that held the file's contests (of a regular
+  election, their half: 2022's municipal contests are 2018's, its regional
+  ones 2017's, held apart then), as far as they are known (:class:`Past`,
+  made by :mod:`election_map_slovakia.crosswalk`), ``{}`` where there is
+  none (a party's list's always).
+- The units the app shows a contest by, or the map colours, that are sums
+  of finer ones are summed here, once, so that the app only reads them
+  (:func:`render`): a country-wide contest's kraje and okresy, a regional
+  president's regional obvody and a city contest's coarsest units
+  (``units``, its ``areas`` summed, :func:`units_of`); in an okrsok file
+  a council obvod's and an obec's okrsky (``units``,
+  :func:`okrsok_units`) and in ``past`` the election before in an obec, a
+  council obvod, a kraj, an okres, a regional obvod or the whole contest
+  made of okrsky or obce (:func:`past_units`); the turnout of the
+  municipal, the cities' and the regional elections as wholes, by obec and
+  by coarse unit (:data:`TURNOUT_FILE`, :func:`turnout`). A party's list
+  has its persons' preference votes summed beside the party's votes: the
+  record's ``preferences``, and a fifth figure in each of its units
+  (:func:`area_json`). :class:`Divisions` says where each obec lies, the
+  regional council contests in which regional obvod (:func:`file_obvody`).
+  A country-wide contest of persons (a president's round, a party's list)
+  has the okrsky each of its candidates' votes came from most, by votes
+  and by share (``origins``, :func:`origins`): its okrsky are in a file
+  per kraj, which the candidate card would otherwise all have to load.
 
-:func:`check` holds the files to the format and to what the votes must add
-up to in every unit counted (the contest, each of its ``areas`` and
-okrsky): in a mayor's or president's contest the candidates' votes are the
-valid ballots; in a council's no candidate has more votes than there are
-valid ballots, nor all together more than seats times those.
+:func:`check` holds the files to the format, the sources to those of the
+election (:class:`Expect`), and the votes to what they must add up to in
+every unit counted (the contest, each of its ``areas`` and okrsky): in a
+single-choice contest (a mayor, a president, a referendum's question, a
+party contest) the candidates' votes are the valid ballots; in a council's
+no candidate has more votes than there are valid ballots, nor all together
+more than seats times those; on a party's list no person has more
+preference votes than the party's votes, nor all together more than the
+preferences a voter may give times those, and a final list's elected are
+the first by the preference rule (:func:`preference_order`).
 
 Sources:
 
-- ``poll`` (:class:`Poller`, :func:`night`): the night's JSON. The progress
+- ``poll`` (:class:`Poller`, :func:`night`): the night's JSON of a
+  municipal and regional election (the other kinds' night files differ;
+  their results come final only). The progress
   files (``tab01.json``, ``dateSK.json`` of each election) are fetched
   every interval with conditional requests; only when one changed are the
   per-unit files fetched (:func:`unit_paths`):
@@ -74,36 +131,46 @@ Sources:
   file is kept under ``data/raw/results/<UTC time>/``.
 - ``final`` (:func:`read_final`): the definitive CSV tables, the zips
   ``oso/files/OSO<year>_SK_csv.zip`` and ``osk/files/OSK<year>_SK_csv.zip``
-  of volbysr.sk. Once pinned, they are inputs of ``config/inputs.toml``
-  that ``config/elections.toml`` names as the election's ``results``,
-  which the results step of ``ems make`` reads, so
-  a release's results are a pure function of its inputs like every other
-  file; before, they are downloaded (:func:`fetch_final`) and kept like
-  the night's files, or given. The tables summed per municipality, council
-  obvod, kraj and regional obvod give the contests; those per okrsok the
-  okrsok files and the two cities' own contests by district (the city's
-  okrsky found among the districts' by :func:`city_matches`, okrsky of a
-  number told apart by their shares by :func:`city_votes`). The tables and
-  columns read are named per election (:data:`_FINAL_TABLES`) and checked;
-  the results are written only if they pass :func:`check`.
+  of volbysr.sk, pinned as inputs of ``config/inputs.toml`` that
+  ``config/elections.toml`` names as the election's ``results``, which the
+  results step of ``ems make`` reads, so a release's results are a pure
+  function of its inputs like every other file. The tables summed per
+  municipality, council obvod, kraj and regional obvod give the contests;
+  those per okrsok the okrsok files and the two cities' own contests by
+  district (the city's okrsky found among the districts' by
+  :func:`city_matches`, okrsky of a number told apart by their shares by
+  :func:`city_votes`). The tables and columns read are named per election
+  (:data:`_FINAL_TABLES`) and checked; the results are written only if
+  they pass :func:`check`.
+- ``by-election`` (:func:`read_by_election`): ŠÚ SR's package of the
+  municipal by-elections held on one day (format ``susr-by``), XLSX tables
+  of the 2026 tables' columns, read the same way; those of 2019–2022
+  (:func:`older_by_election`) have no okrsky and of the councils the
+  elected only.
+- national: the tables of a presidential election, a referendum or an
+  election to the NR SR or the European Parliament, read by
+  :mod:`election_map_slovakia.national`.
 - ``fake`` (:func:`fake`): plausible, deterministic dummy results from the
-  candidate lists for testing the app, with okrsky at ``final``.
+  candidate lists of a municipal and regional election or a by-election
+  (:func:`national.fake` the national kinds') for testing the app, with
+  okrsky at ``final``, written as live results.
 
 The column meanings of the night's JSON (``_GRAPH``, ``_OSK_TURNOUT``,
 ``_BALLOT``, ``_COUNCIL_BALLOT``) are those of the 2026 site scripts
 (``functions.js`` of oso/ and osk/), checked against the 2018 and 2022
 files where the tables existed then.
 
-The module also uploads ``dist/`` (:func:`deploy`) and summarizes a results
-directory (:func:`describe`).
+The module also summarizes a results directory (:func:`describe`).
 """
 
 from __future__ import annotations
 
 import csv
 import datetime as dt
+import functools
 import gzip
 import hashlib
+import heapq
 import http
 import http.client
 import io
@@ -133,7 +200,18 @@ from pathlib import Path
 from typing import Any, NamedTuple, TypeVar
 from zoneinfo import ZoneInfo
 
-from election_map_slovakia import bundle, candidates, fetch, geo, output, progress
+import orjson
+
+from election_map_slovakia import (
+    bundle,
+    candidates,
+    contests as kinds,
+    fetch,
+    geo,
+    output,
+    progress,
+    tables,
+)
 
 RAW_DIR = "results"
 """Below ``data/raw/``: every file ``poll`` fetched, per poll."""
@@ -148,8 +226,6 @@ TIMEOUT = 30
 PHASES = ("none", "partial", "final")
 STATUSES = ("partial", "winner", "final")
 TIMEZONE = ZoneInfo("Europe/Bratislava")
-SINGLE_CHOICE = frozenset({"starosta", "predseda"})
-"""The kinds of contest of one seat, whose voters mark one candidate."""
 CITY_OBCE = {"582000": "BA", "599981": "KE"}
 """ŠÚ SR's municipality codes of Bratislava and Košice as wholes."""
 OBEC_OF_CITY = {city: obec for obec, city in CITY_OBCE.items()}
@@ -206,6 +282,9 @@ WITHDRAWN = -1
 """The flag of a candidate who withdrew (``X``) in a record's candidates:
 still on the ballot, their votes counted among the valid ones, never
 elected."""
+ADVANCED = 2
+"""The flag of a candidate who goes on to round 2 of a presidential
+election: round 1 elected nobody, and they are among its two best."""
 _OBVOD_NAME = re.compile(r"^\s*(\d+)\.|č\.\s*(\d+)")
 _NUMBER_GAPS = re.compile(r"[\s\u00a0\u202f]+")
 _TIME = re.compile(
@@ -214,14 +293,26 @@ _TIME = re.compile(
 # ŠÚ SR writes the time zone after the time: summer (SELČ, CEST) or winter
 # (SEČ, CET) time; the clocks go back at 03:00 on 25 October 2026.
 _ZONES = {"SELČ": 2, "CEST": 2, "SEČ": 1, "CET": 1}
-_CONTEST_ID = re.compile(
-    r"(?:starosta:(?:\d{6}|BA|KE)|oz:(?:\d{6}|BA|KE)/[1-9]\d*"
-    r"|predseda:[1-8]|zsk:[1-8]/[1-9]\d*)"
-)
 _AREA_KEY = re.compile(r"\d{6}|obvod:[1-9]\d*")
 _OKRSOK_KEY = re.compile(r"\d{6}/[1-9]\d*")
 OKRSKY_DIR = "okrsky"
-"""The okrsok files: ``okrsky/<area>``, beside the area files."""
+"""The okrsok files: ``okrsky/<area>``, beside the area files; a country-wide
+contest's by kraj, ``okrsky/country/<kraj>`` or ``okrsky/list/<p>/<kraj>``
+(:func:`okrsok_file`)."""
+_COUNTRY = "country"
+"""The area file of the country-wide contests (:func:`contests.area_name`)."""
+_LIST = "list/"
+"""The prefix of a party's list's area file, ``list/<p>`` (:func:`contests.area_name`)."""
+_OKRES = "okres/"
+"""The prefix of the area file of an okres's municipal contests, ``okres/<o>``."""
+_KRAJ = "kraj/"
+"""The prefix of a kraj's area file, ``kraj/<k>``, of its regional contests."""
+_CITY = "city/"
+"""The prefix of Bratislava's and Košice's own area files, ``city/<BA|KE>``."""
+TURNOUT_FILE = "turnout"
+"""The file of the turnout of the municipal, the two cities' and the
+regional elections as wholes and by coarse unit (:func:`turnout`), beside
+the area files."""
 _OBEC_KEY = re.compile(r"\d{6}")
 UNKNOWN = 0
 """``past`` method of an okrsok whose earlier figures are not known: the
@@ -243,7 +334,8 @@ _RECORD_KEYS = frozenset(
     {"status", "counted", "eligible", "voters", "valid", "seats", "filled"}
     | {"candidates"}
 )
-"""The keys of every record; ``areas`` is optional."""
+"""The keys of every record; ``areas`` and (party contests) ``won`` are
+optional."""
 
 
 class ResultsError(Exception):
@@ -325,6 +417,20 @@ class Candidate:
 
 
 @dataclass(frozen=True)
+class Subject:
+    """A ballot subject (party or coalition) of a party-list contest."""
+
+    number: int
+    party: str
+    """Its key in ``config/parties.toml``."""
+    candidates: int
+    """The persons on its list."""
+    threshold: float
+    """The share of the valid votes, in per cent, it needs for seats
+    (:func:`contests.subject_threshold`)."""
+
+
+@dataclass(frozen=True)
 class Contest:
     """A contest of the candidate lists."""
 
@@ -332,12 +438,27 @@ class Contest:
     kind: str
     area: str
     obvod: int | None
+    """The ``/<sub>`` of its id: obvod, round, question or a party's number."""
     path: str
     """Its live area file (:func:`live_path`)."""
     seats: int | None
     """Seats elected, where known before the election."""
     past: tuple[int, int] | None
     """Eligible and voters of its area in its last election (``past``)."""
+    subjects: tuple[Subject, ...] = ()
+    """A party contest's ballot subjects."""
+    preferences: int | None = None
+    """A party contest's: how many persons of one list a voter may mark."""
+    quota: float | None = None
+    """A party contest's: the share of a party's votes, in per cent, that a
+    person's preference votes must reach to go ahead of the list order."""
+    day: str | None = None
+    """Round 2 of a presidential election: its ISO day."""
+
+    @property
+    def single(self) -> bool:
+        """Whether a voter marks one of its candidates."""
+        return kinds.parse(self.id).single
 
 
 @dataclass(frozen=True)
@@ -350,11 +471,48 @@ class Place:
     city: str | None
     """BA or KE for a district of the city."""
     zsk: int | None
-    """Its 2026 regional obvod."""
+    """Its regional obvod; 0 where the election has none, None for
+    Bratislava and Košice as wholes, which have no map properties."""
     city_obvod: int | None
     """Its city council obvod, for a district of Bratislava or Košice."""
     past: tuple[int, int] | None
     """Eligible and voters in the 2022 regional election."""
+
+
+@dataclass(frozen=True)
+class Divisions:
+    """Where each obec lies, as the app's ``data/index.json`` has it.
+
+    What the results sum their units by (:func:`render`): the okres and kraj
+    of a country-wide contest's obce, the council obvody of an obec's okrsky.
+    """
+
+    okres: Mapping[str, str]
+    """Obec → its okres; "" for Bratislava and Košice as wholes, in none."""
+    kraj: Mapping[str, str]
+    """Obec → its kraj."""
+    split: frozenset[str]
+    """The obce of several council obvody (``data/index.json`` ``councils``
+    above 1): of more than one council contest, or a by-election's whose
+    council contests are part of a larger council
+    (:func:`election_map_slovakia.addresses.council_parts`: an obvod above
+    1, or obvod 1 of a council its term elected in several)."""
+
+    @classmethod
+    def of(cls, data: Mapping[str, Any], parts: Collection[str]) -> Divisions:
+        """Return the divisions of ``candidates.json`` *data*.
+
+        *parts* are the obce whose council contests are part of a larger
+        council (:func:`election_map_slovakia.addresses.council_parts`).
+        """
+        councils = Counter(
+            str(c["area"]) for c in data["contests"] if c["kind"] == "oz"
+        )
+        return cls(
+            {o["code"]: o.get("okres", "") for o in data["obce"]},
+            {o["code"]: o["kraj"] for o in data["obce"]},
+            frozenset(code for code, n in councils.items() if n > 1) | frozenset(parts),
+        )
 
 
 @dataclass(frozen=True)
@@ -371,62 +529,115 @@ class Reference:
     """Municipal area → its mayor contest and council contests (by obvod)."""
     regional: dict[str, tuple[Contest | None, tuple[Contest, ...]]]
     """Kraj → its president contest and council contests (by obvod)."""
+    sources: frozenset[str]
+    """The ``source`` keys of ``status.json`` (:func:`sources_of`)."""
+    divisions: Divisions
+    """The units the results are summed by (:func:`render`)."""
 
 
-def live_path(contest: Mapping[str, Any], okres_of: Mapping[str, str]) -> str:
-    """Return the results area file of *contest*: the site's area file, bare.
+def live_path(contest: str, okres_of: Mapping[str, str]) -> str:
+    """Return the results area file of *contest*: :func:`contests.area_name`.
 
-    That is :func:`bundle.area_file` without ``data/`` and ``.json``, as the
-    app's ``areaPath`` names it.
+    The site's area file without ``data/`` and ``.json``, as the app's
+    ``areaPath`` names it; *okres_of* maps an obec to its okres.
     """
-    return (
-        bundle.area_file(contest, okres_of).removeprefix("data/").removesuffix(".json")
-    )
+    return kinds.area_name(contest, okres_of)
+
+
+def okrsok_file(path: str, kraj: str) -> str:
+    """Return the okrsok file of the contests of area file *path* in *kraj*.
+
+    A country-wide contest's okrsky are split by kraj (``country/<kraj>``, a
+    party's list's ``list/<p>/<kraj>``), which keeps a file the size of a
+    regional one; any other contest's okrsky are in the file of its area
+    (*path*).
+    """
+    return f"{path}/{kraj}" if path == _COUNTRY or path.startswith(_LIST) else path
+
+
+def area_of_okrsok_file(path: str) -> str:
+    """Return the area file of the contests of okrsok file *path* (no prefix)."""
+    by_kraj = path.startswith((f"{_COUNTRY}/", _LIST))
+    return path.rpartition("/")[0] if by_kraj else path
+
+
+def sources_of(ids: Iterable[str]) -> frozenset[str]:
+    """Return the ``source`` keys of the results of contests *ids*.
+
+    ``oso`` (municipal), ``osk`` (regional), ``prez1``, ``prez2`` (each round
+    of a presidential election), ``ref``, ``nrsr``, ``ep``
+    (:func:`contests.source_of`).
+    """
+    return frozenset(kinds.source_of(c) for c in ids)
 
 
 def reference(
     data: Mapping[str, Any],
     props: Mapping[str, Mapping[str, Any]],
     seats: Mapping[str, int],
+    members: Mapping[str, int] | None = None,
+    *,
+    parts: Collection[str],
 ) -> Reference:
     """Return the :class:`Reference` of ``candidates.json`` *data*.
 
     *props* are the municipalities' :func:`bundle.obec_props`, *seats* the
-    known seats per obvod contest (:func:`bundle.obvod_seats`).
+    known seats per obvod contest (:func:`bundle.obvod_seats`), else those
+    of the contest in *data* (a by-election's council); *members* the
+    member parties' count of each coalition by its party key
+    (``config/parties.toml``), which sets its threshold; *parts* as
+    :meth:`Divisions.of` takes them.
     """
     okres_of = {o["code"]: o.get("okres", "") for o in data["obce"]}
     regional_past = bundle.regional_past(data, props)
-    contests = {}
+    found = {}
     for c in data["contests"]:
         past = c.get("past") or regional_past.get(c["id"])
-        known = seats.get(c["id"], 1 if c["kind"] in SINGLE_CHOICE else None)
-        contests[c["id"]] = Contest(
+        single = kinds.parse(c["id"]).single
+        known = seats.get(c["id"], c.get("seats", 1 if single else None))
+        found[c["id"]] = Contest(
             c["id"],
             c["kind"],
             str(c["area"]),
             c.get("obvod"),
-            live_path(c, okres_of),
+            live_path(c["id"], okres_of),
             known,
             (past["eligible"], past["voters"]) if past else None,
+            tuple(
+                Subject(
+                    s["number"],
+                    s["party"],
+                    s.get("candidates", 0),
+                    kinds.subject_threshold(c, (members or {}).get(s["party"], 0)),
+                )
+                for s in c.get("subjects", ())
+            ),
+            c.get("preferences"),
+            c.get("quota"),
+            c.get("day"),
         )
+    # A party's name repeats over its candidacies: keyed once.
+    party_key = functools.cache(candidates.search_key)
     by_contest: dict[str, list[Candidate]] = defaultdict(list)
     for c in data["candidacies"]:
         by_contest[c["contest"]].append(
             Candidate(
                 c["number"],
                 candidates.search_key(f"{c['first_name']} {c['surname']}"),
-                tuple(candidates.search_key(p) for p in c["parties"]),
+                tuple(party_key(p) for p in c["parties"]),
                 bool(c.get("independent")),
             )
         )
     places = {o["code"]: _place(o, props.get(o["code"], {})) for o in data["obce"]}
     return Reference(
-        contests,
+        found,
         {k: tuple(v) for k, v in by_contest.items()},
         places,
         {k["code"]: k["name"] for k in data["kraje"]},
-        _bodies(contests.values(), "starosta", "oz"),
-        _bodies(contests.values(), "predseda", "zsk"),
+        _bodies(found.values(), "starosta", "oz"),
+        _bodies(found.values(), "predseda", "zsk"),
+        sources_of(found),
+        Divisions.of(data, parts),
     )
 
 
@@ -462,13 +673,19 @@ def _bodies(
     }
 
 
-def load_reference(build_dir: Path, election_dir: Path) -> Reference:
+def load_reference(
+    build_dir: Path,
+    election_dir: Path,
+    members: Mapping[str, int],
+    parts: Collection[str],
+) -> Reference:
     """Return the :class:`Reference` of the built candidates and geometry.
 
     *build_dir* is the election's build directory
     (:meth:`election_map_slovakia.config.Config.election_build_dir`),
     *election_dir* its curated data
-    (:meth:`election_map_slovakia.config.Config.election_dir`).
+    (:meth:`election_map_slovakia.config.Config.election_dir`), *members*
+    and *parts* as :func:`reference` takes them.
     """
     data_path = build_dir / candidates.OUTPUT_FILE
     geo_dir = build_dir / geo.OUTPUT_DIR
@@ -476,9 +693,11 @@ def load_reference(build_dir: Path, election_dir: Path) -> Reference:
         if not path.exists():
             raise ResultsError(f"{path} missing; run `ems make` first")
     return reference(
-        json.loads(data_path.read_bytes()),
+        orjson.loads(data_path.read_bytes()),
         bundle.obec_props(geo_dir),
         bundle.obvod_seats(geo_dir, election_dir),
+        members,
+        parts=parts,
     )
 
 
@@ -517,7 +736,7 @@ Area = tuple[int | None, int | None, int | None, dict[int, int]]
 """Eligible, voters, valid and votes per ballot number of a sub-unit."""
 Ballot = tuple[int, int, int | None]
 """Ballot number, votes, flag (1 elected, 0 substitute, :data:`WITHDRAWN`,
-None)."""
+:data:`ADVANCED`, None)."""
 
 
 @dataclass
@@ -533,9 +752,16 @@ class Record:
     filled: int | None = None
     candidates: list[Ballot] = field(default_factory=list)
     areas: dict[str, Area] | None = None
+    won: dict[int, int] | None = None
+    """A party contest's seats per party that won some."""
 
-    def to_json(self) -> dict[str, Any]:
-        """Return the record as written, candidates by votes."""
+    def to_json(self, *, preferences: bool = False) -> dict[str, Any]:
+        """Return the record as written, candidates by votes.
+
+        A party's list's (*preferences*) has its persons' preference votes
+        summed too: the whole list's ``preferences``, and of each of its
+        ``areas`` a fifth figure (:func:`area_json`).
+        """
         out: dict[str, Any] = {
             "status": self.status,
             "counted": list(self.counted) if self.counted else None,
@@ -548,14 +774,22 @@ class Record:
                 list(c) for c in sorted(self.candidates, key=lambda c: (-c[1], c[0]))
             ],
         }
+        if preferences:
+            out["preferences"] = sum(c[1] for c in self.candidates)
         if self.areas is not None:
-            out["areas"] = {key: area_json(a) for key, a in sorted(self.areas.items())}
+            out["areas"] = {
+                key: area_json(a, preferences=preferences)
+                for key, a in sorted(self.areas.items())
+            }
+        if self.won is not None:
+            out["won"] = {str(n): seats for n, seats in sorted(self.won.items())}
         return out
 
     @classmethod
     def from_json(cls, entry: Mapping[str, Any]) -> Record:
         """Return the record of a written *entry*."""
         areas = entry.get("areas")
+        won = entry.get("won")
         counted = entry["counted"]
         return cls(
             entry["status"],
@@ -567,18 +801,30 @@ class Record:
             entry["filled"],
             [(c[0], c[1], c[2]) for c in entry["candidates"]],
             None if areas is None else {k: area_of_json(a) for k, a in areas.items()},
+            None if won is None else {int(n): s for n, s in won.items()},
         )
 
 
-def area_json(area: Area) -> list[Any]:
-    """Return *area* as written: votes keyed by the ballot number as text."""
+def area_json(area: Area, *, preferences: bool = False) -> list[Any]:
+    """Return *area* as written: votes keyed by the ballot number as text.
+
+    A party's list's (*preferences*) has a fifth figure, its persons'
+    preference votes summed, which the app shows beside the party's votes.
+    """
     e, v, valid, votes = area
-    return [e, v, valid, {str(n): x for n, x in sorted(votes.items())}]
+    out = [e, v, valid, {str(n): x for n, x in sorted(votes.items())}]
+    if preferences:
+        out.append(sum(votes.values()))
+    return out
 
 
 def area_of_json(entry: Sequence[Any]) -> Area:
-    """Return the :data:`Area` of a written *entry*."""
-    e, v, valid, votes = entry
+    """Return the :data:`Area` of a written *entry*.
+
+    A party's list's fifth figure, its votes summed, is not kept: it is
+    made again when written (:func:`area_json`).
+    """
+    e, v, valid, votes = entry[:4]
     return (e, v, valid, {int(n): x for n, x in votes.items()})
 
 
@@ -614,16 +860,22 @@ def source(
     }
 
 
-def _no_source() -> dict[str, dict[str, Any]]:
-    return {"osk": source(None, None, "okrsky"), "oso": source(None, None, "obce")}
+def source_unit(name: str) -> str:
+    """Return what source *name* counts: ``obce`` (municipal), else ``okrsky``."""
+    return "obce" if name == "oso" else "okrsky"
+
+
+def no_sources(names: Iterable[str]) -> dict[str, dict[str, Any]]:
+    """Return the ``source`` of ``status.json`` before any of *names* counted."""
+    return {name: source(None, None, source_unit(name)) for name in sorted(names)}
 
 
 @dataclass
 class Past:
-    """The election before on this one's okrsky and obce (``past``).
+    """An election before on this one's okrsky and obce (``past``).
 
-    Made by :mod:`election_map_slovakia.crosswalk`; empty (``day`` "") where
-    there is no election before or nothing of it is known.
+    Made by :mod:`election_map_slovakia.crosswalk`, one per election before
+    (:attr:`Live.past`); empty (``day`` "") where nothing of it is known.
     """
 
     day: str = ""
@@ -638,8 +890,9 @@ class Past:
     figures of the election before there, the votes by this election's
     ballot numbers of the candidates who stood for the same office then."""
     totals: dict[str, Area] = field(default_factory=dict)
-    """Contest of a whole body (no obvod, whose area is the same in both
-    elections) → the figures of the same contest then, the votes as in
+    """Contest that is its own counterpart (:func:`contests.counterpart`: no
+    obvod nor list, its area the same in both elections) → the figures of
+    the same contest then, the votes as in
     :attr:`contests`: the contest as a whole, which its units then need not
     add up to where some are not known."""
 
@@ -649,60 +902,833 @@ class Live:
     """Everything the results hold: phase, sources, area and okrsok files."""
 
     phase: str
-    source: dict[str, dict[str, Any]] = field(default_factory=_no_source)
+    source: dict[str, dict[str, Any]] = field(default_factory=dict)
+    """Source (:func:`sources_of`) → its ``status.json`` entry (:func:`source`)."""
     files: dict[str, dict[str, Record]] = field(default_factory=dict)
     """Area file → contest → record."""
     okrsky: dict[str, dict[str, dict[str, Area]]] = field(default_factory=dict)
-    """Area file → contest → :func:`okrsok_key` → its figures (final only)."""
-    past: Past = field(default_factory=Past)
+    """Okrsok file without ``okrsky/`` (:func:`okrsok_file`, the area file
+    but for a country-wide contest's) → contest → :func:`okrsok_key` → its
+    figures (final only)."""
+    past: dict[str, Past] = field(default_factory=dict)
+    """Source (:func:`sources_of`) → the election before its contests are
+    compared with, the sources compared with one sharing its :class:`Past`
+    (2022's ``oso`` the municipal election of 2018, its ``osk`` the
+    regional one of 2017); none where there is none (:func:`past_of`)."""
 
     def add(self, path: str, contest: str, record: Record) -> None:
         """Put *record* of *contest* into area file *path*."""
         self.files.setdefault(path, {})[contest] = record
 
     def add_okrsky(self, path: str, contest: str, areas: dict[str, Area]) -> None:
-        """Put the okrsky *areas* of *contest* into the okrsok file of *path*."""
+        """Put the okrsky *areas* of *contest* into okrsok file *path*."""
         self.okrsky.setdefault(path, {})[contest] = areas
 
     def records(self) -> dict[str, Record]:
         """Return contest → record of every area file."""
         return {c: r for contests in self.files.values() for c, r in contests.items()}
 
+    def part(self, sources: Collection[str]) -> Live:
+        """Return its contests of *sources* alone, without ``past``."""
+        return Live(
+            self.phase,
+            {s: entry for s, entry in self.source.items() if s in sources},
+            {
+                path: mine
+                for path, contests in self.files.items()
+                if (
+                    mine := {
+                        c: r
+                        for c, r in contests.items()
+                        if kinds.source_of(c) in sources
+                    }
+                )
+            },
+            {
+                path: mine
+                for path, contests in self.okrsky.items()
+                if (
+                    mine := {
+                        c: a
+                        for c, a in contests.items()
+                        if kinds.source_of(c) in sources
+                    }
+                )
+            },
+        )
 
-def render(live: Live) -> dict[str, bytes]:
+
+def past_of(live: Live, path: str, contests: Iterable[str]) -> Past | None:
+    """Return the election before okrsok file *path*'s *contests* are compared with.
+
+    None where none: no election before of their kind. A file's contests
+    are of one half of a regular election (a kraj's regional, an okres's or
+    a city's municipal) or of one election of another kind, so of one
+    election before; a file of several would need one ``past`` each.
+    """
+    found = {
+        id(p): p
+        for c in contests
+        if (p := live.past.get(kinds.source_of(c))) is not None
+    }
+    if len(found) > 1:
+        raise ValueError(f"{path}: contests compared with several elections")
+    return next(iter(found.values()), None)
+
+
+def render(live: Live, divisions: Divisions) -> dict[str, bytes]:
     """Return file → content, of the area and okrsok files with a contest.
 
-    An okrsok file has the ``past`` of its contests and of the okrsky in them.
+    A record with ``areas`` has the units made of them too (:func:`units_of`):
+    a country-wide contest's kraje and okresy, a regional president's
+    regional obvody, a city contest's coarse units. A country-wide contest
+    of persons with okrsky has the okrsky its candidates' votes came from
+    most (:func:`origins`). An okrsok file has the
+    units of its contests made of its okrsky (:func:`okrsok_units`), and
+    the ``past`` of its contests and of the okrsky in them, of the election
+    before they are compared with (:func:`past_of`), with that of the
+    units made of them (:func:`past_units`). The turnout of the elections
+    of many contests has a file of its own (:func:`turnout`). *divisions*
+    says where each obec lies, the regional council contests in which
+    regional obvody (:func:`file_obvody`).
     """
+    obvody = file_obvody(
+        {
+            path: {c: r.areas or {} for c, r in contests.items()}
+            for path, contests in live.files.items()
+        },
+        divisions,
+    )
+    spread = contest_okrsky(live.okrsky)
     out = {
-        path: bundle.encode({"contests": {c: r.to_json() for c, r in contests.items()}})
+        path: bundle.encode(
+            {
+                "contests": {
+                    c: _record_json(c, r, divisions, obvody[path], spread.get(c))
+                    for c, r in contests.items()
+                }
+            }
+        )
         for path, contests in sorted(live.files.items())
         if contests
     }
+    records = live.records()
+    councils = council_of(live.okrsky, divisions.split)
     for path, contests in sorted(live.okrsky.items()):
         keys = {k for areas in contests.values() for k in areas}
-        if keys:
-            out[f"{OKRSKY_DIR}/{path}"] = bundle.encode(
-                {
-                    "contests": {
-                        c: {k: area_json(a) for k, a in areas.items()}
-                        for c, areas in contests.items()
-                    },
-                    "past": _past_json(live.past, contests, keys),
-                }
+        if not keys:
+            continue
+        then = past_of(live, path, contests)
+        past = _past_json(then, contests, keys) if then else {}
+        if past:
+            obce = {c: r.areas for c in contests if (r := records.get(c)) and r.areas}
+            past["units"] = past_units(
+                past,
+                contests,
+                obce,
+                councils,
+                divisions,
+                obvody.get(area_of_okrsok_file(path), {}),
             )
+        with_areas = {
+            c: (r := records.get(c)) is not None and r.areas is not None
+            for c in contests
+        }
+        units = okrsok_units(contests, with_areas, councils)
+        out[f"{OKRSKY_DIR}/{path}"] = bundle.encode(
+            {
+                "contests": {
+                    c: {k: area_json(a, preferences=_is_list(c)) for k, a in o.items()}
+                    for c, o in contests.items()
+                },
+                "units": {c: _units_json(c, u) for c, u in units.items()},
+                "past": past,
+            }
+        )
+    figures = turnout(live.files, divisions, regional_units(obvody))
+    if figures:
+        out[TURNOUT_FILE] = bundle.encode(figures)
     return out
+
+
+def _is_list(contest: str) -> bool:
+    """Whether *contest* is a party's list, whose figures carry their sum."""
+    return kinds.parse(contest).is_list
+
+
+def _units_json(contest: str, units: Mapping[str, Mapping[str, Area]]) -> Any:
+    """Return *units* (level → unit → figures) of *contest* as written."""
+    listed = _is_list(contest)
+    return {
+        level: {u: area_json(a, preferences=listed) for u, a in by_unit.items()}
+        for level, by_unit in units.items()
+    }
+
+
+def _record_json(
+    contest: str,
+    record: Record,
+    divisions: Divisions,
+    obvody: Mapping[str, str],
+    okrsky: Mapping[str, Area] | None,
+) -> dict[str, Any]:
+    """Return *record* of *contest* as written, with its ``units`` if any.
+
+    *okrsky* are all its okrsky (:func:`contest_okrsky`), whose units its
+    candidates' votes came from most are its ``origins``, if any.
+    """
+    out = record.to_json(preferences=_is_list(contest))
+    units = units_of(contest, record.status, record.areas, divisions, obvody)
+    if units is not None:
+        out["units"] = _units_json(contest, units)
+    found = origins(okrsky) if okrsky else None
+    if found:
+        out["origins"] = found
+    return out
+
+
+ORIGINS = 5
+"""Okrsky ``origins`` lists each way (web/js/candidate.js ``ORIGINS``)."""
+ORIGIN_VALID = 30
+"""Valid ballots of the okrsky ``origins`` lists by share, where two or more
+have as many: the share of a handful of ballots says little
+(web/js/candidate.js ``ORIGIN_VALID``)."""
+
+
+def _has_origins(contest: str) -> bool:
+    """Whether *contest* has ``origins``: a country-wide contest of persons.
+
+    A president's round or a party's list, whose okrsky are in a file per
+    kraj; a card shows a person, not a party nor an answer.
+    """
+    c = kinds.parse(contest)
+    return c.kind.scope == "country" and (c.is_list or c.kind.sub == "round")
+
+
+def contest_okrsky(
+    files: Mapping[str, Mapping[str, Mapping[str, Area]]],
+) -> dict[str, dict[str, Area]]:
+    """Return contest → all its okrsky of okrsok *files*, of those with ``origins``.
+
+    *files* as :attr:`Live.okrsky`: a contest's okrsky in one file per kraj.
+    """
+    out: dict[str, dict[str, Area]] = defaultdict(dict)
+    for contests in files.values():
+        for c, areas in contests.items():
+            if _has_origins(c):
+                out[c].update(areas)
+    return dict(out)
+
+
+def origins(okrsky: Mapping[str, Area]) -> dict[str, list[list[list[Any]]]]:
+    """Return where each candidate's votes in *okrsky* came from most.
+
+    Number → [most, highest]: the :data:`ORIGINS` okrsky with the most of
+    their votes and those with the highest share of the valid ballots (of
+    the okrsky with at least :data:`ORIGIN_VALID`, where two or more have
+    as many), each ``[okrsok, votes, valid]``, ties by okrsok; only the
+    okrsky where they got votes. Nothing for a contest of fewer than two
+    okrsky with valid ballots, as the card then lists none.
+    """
+    counted = [(key, a[2], a[3]) for key, a in sorted(okrsky.items()) if a[2]]
+    if len(counted) < 2:  # noqa: PLR2004 - one okrsok is the whole contest
+        return {}
+    sizeable = sum(valid >= ORIGIN_VALID for _, valid, _ in counted) > 1
+    voted: dict[int, list[tuple[str, int, int]]] = defaultdict(list)
+    for key, valid, votes in counted:
+        for n, x in votes.items():
+            if x:
+                voted[n].append((key, x, valid))
+    out = {}
+    for n, units in sorted(voted.items()):
+        pool = [u for u in units if u[2] >= ORIGIN_VALID] if sizeable else units
+        most = heapq.nsmallest(ORIGINS, units, key=lambda u: (-u[1], u[0]))
+        highest = heapq.nsmallest(ORIGINS, pool, key=lambda u: (-u[1] / u[2], u[0]))
+        out[str(n)] = [[list(u) for u in most], [list(u) for u in highest]]
+    return out
+
+
+def units_of(
+    contest: str,
+    status: str,
+    areas: Mapping[str, Area] | None,
+    divisions: Divisions,
+    obvody: Mapping[str, str],
+) -> dict[str, dict[str, Area]] | None:
+    """Return the units of a record of *contest* made of its *areas*, or None.
+
+    A country-wide contest's kraje and okresy (:func:`area_units`); a
+    regional president's regional council obvody, ``zsk``
+    (:func:`obvod_units`, *obvody* those of its file, :func:`file_obvody`);
+    a contest of Bratislava or Košice, its districts summed by the coarsest
+    units the map colours (:func:`coarse_units`). The app shows the contest
+    by these, and the map colours the okresy or the regional obvody by
+    them, so that it never sums the obce itself.
+    """
+    if areas is None:
+        return None
+    c = kinds.parse(contest)
+    if c.kind.scope == "country":
+        return area_units(areas, divisions)
+    if c.kind.name == "predseda":
+        zsk = obvod_units(areas, obvody, final=status == "final")
+        return {ZSK_LEVEL: zsk} if zsk else None
+    if c.area in candidates.CITY_CODES:
+        return coarse_units(areas, obvody, divisions)
+    return None
+
+
+ZSK_LEVEL = "zsk"
+"""The level of a regional president's ``units`` (and of its ``past``
+units): the regional council obvody of its kraj, keyed by their number."""
+
+_OBVOD_AREA = "obvod:"
+"""The prefix of an ``areas`` key of a regional obvod as a whole (night)."""
+
+
+def regional_obvody(areas: Mapping[str, Collection[str]]) -> dict[str, str]:
+    """Return obec → the number of its regional council obvod, as text.
+
+    *areas* maps the contests of an area file to the keys of their
+    ``areas``: a regional council obvod's (``zsk:<kraj>/<n>``) are its
+    obce, each in one obvod (an obvod as a whole, ``obvod:<n>``, aside).
+    The candidate lists do not tell every election's obvody (2026's come
+    with the geometry); its results do, final with every obce of each.
+    """
+    out: dict[str, str] = {}
+    for contest, keys in areas.items():
+        c = kinds.parse(contest)
+        if c.kind.name == "zsk" and c.sub:
+            out |= {k: str(c.sub) for k in keys if not k.startswith(_OBVOD_AREA)}
+    return out
+
+
+def file_obvody(
+    areas: Mapping[str, Mapping[str, Collection[str]]], divisions: Divisions
+) -> dict[str, dict[str, str]]:
+    """Return area file → obec → its regional obvod (:func:`regional_obvody`).
+
+    *areas* maps each area file to its contests' ``areas`` keys. A kraj's
+    file has its own obce's obvody; Bratislava's and Košice's have those of
+    their kraj's, the cities' districts being obce of its obvody; any other
+    file none.
+    """
+    by_kraj = {
+        path.removeprefix(_KRAJ): regional_obvody(contests)
+        for path, contests in areas.items()
+        if path.startswith(_KRAJ)
+    }
+    out: dict[str, dict[str, str]] = {}
+    for path in areas:
+        kraj = path.removeprefix(_KRAJ) if path.startswith(_KRAJ) else None
+        if path.startswith(_CITY):
+            kraj = divisions.kraj.get(path.removeprefix(_CITY))
+        out[path] = by_kraj.get(kraj, {}) if kraj else {}
+    return out
+
+
+def regional_units(obvody: Mapping[str, Mapping[str, str]]) -> dict[str, str]:
+    """Return obec → ``<kraj>/<n>``, its regional obvod, of all kraj files.
+
+    *obvody* is :func:`file_obvody`; the key is the map's of a regional
+    obvod (``<kraj>/<n>``), as the obce of all kraje are summed together.
+    """
+    return {
+        code: f"{path.removeprefix(_KRAJ)}/{n}"
+        for path, of in obvody.items()
+        if path.startswith(_KRAJ)
+        for code, n in of.items()
+    }
+
+
+def obvod_units(
+    areas: Mapping[str, Area], obvody: Mapping[str, str], *, final: bool
+) -> dict[str, Area]:
+    """Return a regional president's figures per obvod of *areas*.
+
+    Before it is *final*, the obvody ŠÚ SR counted as wholes
+    (``obvod:<n>``), as its obce fully counted are fewer than the obvod's;
+    final, the obce of each obvod (*obvody*, :func:`regional_obvody`)
+    summed, of an obvod whose obce are all in *areas* (a sum short of one
+    would mislead). By obvod number, ascending.
+    """
+    if not final:
+        wholes = {
+            k.removeprefix(_OBVOD_AREA): a
+            for k, a in areas.items()
+            if k.startswith(_OBVOD_AREA)
+        }
+        return dict(sorted(wholes.items(), key=lambda item: int(item[0])))
+    members: dict[str, list[str]] = defaultdict(list)
+    for code, n in obvody.items():
+        members[n].append(code)
+    return {
+        n: sum_areas(areas[c] for c in codes)
+        for n, codes in sorted(members.items(), key=lambda item: int(item[0]))
+        if all(c in areas for c in codes)
+    }
+
+
+def area_units(
+    areas: Mapping[str, Area], divisions: Divisions
+) -> dict[str, dict[str, Area]]:
+    """Return the kraje and okresy of *areas* (obec → figures), their obce summed.
+
+    ``kraj`` and ``okres`` → code → figures, of every unit with an obec in
+    *areas*; Bratislava and Košice as wholes are in no okres. The app shows
+    a country-wide contest by these units, and the map colours its okresy
+    by them.
+    """
+    return {
+        "kraj": _sums_by(areas, divisions.kraj),
+        "okres": _sums_by(areas, divisions.okres),
+    }
+
+
+def coarse_units(
+    areas: Mapping[str, Area], obvody: Mapping[str, str], divisions: Divisions
+) -> dict[str, dict[str, Area]]:
+    """Return the coarsest units the map colours *areas* (obec → figures) by.
+
+    Its regional obvody (``zsk``, by number, *obvody*), each its obce of
+    *areas* summed; where the election has none (no regional contests: a
+    municipal one alone, a by-election), its okresy (``okres``) likewise.
+    The map shows these below the obce's zoom.
+    """
+    if obvody:
+        return {ZSK_LEVEL: _sums_by(areas, obvody)}
+    return {"okres": _sums_by(areas, divisions.okres)}
+
+
+def _sums_by(areas: Mapping[str, Area], unit_of: Mapping[str, str]) -> dict[str, Area]:
+    """Return unit → its obce of *areas* summed, *unit_of* naming each obec's."""
+    parts: dict[str, list[Area]] = defaultdict(list)
+    for code, area in areas.items():
+        if unit := unit_of.get(code):
+            parts[unit].append(area)
+    return {unit: sum_areas(p) for unit, p in sorted(parts.items())}
+
+
+def okrsok_units(
+    okrsky: Mapping[str, Mapping[str, Area]],
+    with_areas: Mapping[str, bool],
+    councils: Mapping[str, str],
+) -> dict[str, dict[str, dict[str, Area]]]:
+    """Return the ``units`` of an okrsok file: its contests' okrsky summed.
+
+    *okrsky* is the file's contest → okrsok → figures, *with_areas* whether
+    each contest's record has ``areas``, *councils* :func:`council_of`. Per
+    contest, the units the app narrows its results to that are made of its
+    okrsky (live.js ``placeResults``), each of the okrsky of it in the file:
+
+    - ``obvod``: a council obvod ``<obec>/<k>`` of an obec split into
+      several (:func:`council_obvod`), its okrsky summed;
+    - ``obec``: of a regional, a city or a country-wide contest without
+      ``areas``, each obec with okrsky in the file, its okrsky summed (one
+      with ``areas`` has the obec's own figures there).
+    """
+    out: dict[str, dict[str, dict[str, Area]]] = {}
+    for contest, figures in okrsky.items():
+        c = kinds.parse(contest)
+        by_obvod: dict[str, list[Area]] = defaultdict(list)
+        by_obec: dict[str, list[Area]] = defaultdict(list)
+        for key, area in figures.items():
+            if council := council_obvod(c, councils, key):
+                by_obvod[council].append(area)
+            by_obec[key.partition("/")[0]].append(area)
+        units = {"obvod": by_obvod}
+        if not with_areas[contest] and _by_obec(c):
+            units["obec"] = by_obec
+        sums = {
+            level: {u: sum_areas(parts) for u, parts in sorted(groups.items())}
+            for level, groups in units.items()
+            if groups
+        }
+        if sums:
+            out[contest] = sums
+    return out
+
+
+def _by_obec(c: kinds.Contest) -> bool:
+    """Whether the app shows contest *c* by obec (live.js ``placeResults``).
+
+    A regional, a city or a country-wide contest: one of an obec is all of
+    it, or of one council obvod in it.
+    """
+    return c.kind.scope in ("country", "kraj") or c.area in candidates.CITY_CODES
+
+
+def council_obvod(
+    c: kinds.Contest, councils: Mapping[str, str], key: str
+) -> str | None:
+    """Return the council obvod okrsok *key* of contest *c* is shown in, if any.
+
+    Its council obvod ``<obec>/<k>`` (*councils*, :func:`council_of`), of an
+    obec split into several; not for a council of that obec, which is of one
+    obvod, its okrsky those of that obvod alone: the app shows its whole
+    (``all``), not an obvod in it.
+    """
+    council = councils.get(key)
+    if council and c.kind.name == "oz" and council.partition("/")[0] == c.area:
+        return None
+    return council
+
+
+Turnout = tuple[int, int]
+"""An area's ``[eligible, voters]`` in :data:`TURNOUT_FILE`."""
+
+
+def turnout(
+    files: Mapping[str, Mapping[str, Record]],
+    divisions: Divisions,
+    regional: Mapping[str, str],
+) -> dict[str, Any]:
+    """Return the content of :data:`TURNOUT_FILE`: {} where nothing is known.
+
+    The turnout map's figures of the elections of many contests
+    (mapmode.js), each ``[eligible, voters]`` of the records whose two are
+    known, summed here once:
+
+    - ``municipal``, of the okres files: ``obce``, each obec's (its
+      mayor's, else its council obvody's summed), ``councils``, each
+      council obvod of an obec split into several (``<obec>/<k>``),
+      ``total`` the obce's summed and its coarsest units (:func:`_coarse`);
+    - ``city``, of Bratislava's and Košice's files: ``obce``, each city's
+      (as an obec's), ``total`` and the coarsest units of the districts of
+      its mayor's ``areas``;
+    - ``regional``, of the kraj files: ``total``, the kraje's presidents'.
+
+    *regional* is :func:`regional_units`; a part without figures is absent.
+    """
+    out: dict[str, Any] = {}
+    municipal = {p: c for p, c in files.items() if p.startswith(_OKRES)}
+    obce, councils = _municipal_turnouts(municipal, divisions.split)
+    if obce:
+        out["municipal"] = {
+            "total": list(_add_turnouts(obce.values())),
+            "obce": _pairs(obce),
+            "councils": _pairs(councils),
+            **_coarse(obce, divisions, regional),
+        }
+    city = {p: c for p, c in files.items() if p.startswith(_CITY)}
+    cities, _ = _municipal_turnouts(city, frozenset())
+    if cities:
+        districts = {
+            code: (a[0] or 0, a[1] or 0)
+            for contests in city.values()
+            for c, r in contests.items()
+            if c.startswith("starosta:") and _turnout_of(r) and r.areas
+            for code, a in r.areas.items()
+        }
+        out["city"] = {
+            "total": list(_add_turnouts(cities.values())),
+            "obce": _pairs(cities),
+            **_coarse(districts, divisions, regional),
+        }
+    presidents = [
+        t
+        for path, contests in files.items()
+        if path.startswith(_KRAJ)
+        for c, r in contests.items()
+        if c.startswith("predseda:") and (t := _turnout_of(r))
+    ]
+    if presidents:
+        out["regional"] = {"total": list(_add_turnouts(presidents))}
+    return out
+
+
+def _turnout_of(record: Record) -> Turnout | None:
+    """Return *record*'s turnout, None unless its eligible and voters are known."""
+    if not record.eligible or record.voters is None:
+        return None
+    return (record.eligible, record.voters)
+
+
+def _add_turnouts(parts: Iterable[Turnout]) -> Turnout:
+    eligible = voters = 0
+    for e, v in parts:
+        eligible += e
+        voters += v
+    return (eligible, voters)
+
+
+def _pairs(turnouts: Mapping[str, Turnout]) -> dict[str, list[int]]:
+    return {key: list(t) for key, t in sorted(turnouts.items())}
+
+
+def _municipal_turnouts(
+    files: Mapping[str, Mapping[str, Record]], split: Collection[str]
+) -> tuple[dict[str, Turnout], dict[str, Turnout]]:
+    """Return the turnouts of the municipal contests of *files*.
+
+    Area → its mayor's, else its councils' summed (a municipality where no
+    mayor is elected, or whose mayor's figures are not known); and council
+    obvod ``<area>/<k>`` → its own, of the areas in *split*.
+    """
+    mayors: dict[str, Turnout] = {}
+    councils: dict[str, list[Turnout]] = defaultdict(list)
+    obvody: dict[str, Turnout] = {}
+    for contests in files.values():
+        for contest, record in contests.items():
+            t = _turnout_of(record)
+            if t is None:
+                continue
+            c = kinds.parse(contest)
+            if c.kind.name == "starosta":
+                mayors[c.area] = t
+            elif c.kind.name == "oz":
+                councils[c.area].append(t)
+                if c.area in split:
+                    obvody[f"{c.area}/{c.sub}"] = t
+    whole = {area: _add_turnouts(parts) for area, parts in councils.items()}
+    return whole | mayors, obvody
+
+
+def _coarse(
+    areas: Mapping[str, Turnout], divisions: Divisions, regional: Mapping[str, str]
+) -> dict[str, dict[str, list[int]]]:
+    """Return *areas* (obec → turnout) by the coarsest units the map colours.
+
+    Their regional obvody (``zsk``, ``<kraj>/<n>``, *regional*); where the
+    election has none (a municipal election alone, a by-election), their
+    okresy (``okres``). Each unit of the obce of *areas* in it.
+    """
+    level, unit_of = (ZSK_LEVEL, regional) if regional else ("okres", divisions.okres)
+    parts: dict[str, list[Turnout]] = defaultdict(list)
+    for code, t in areas.items():
+        if unit := unit_of.get(code):
+            parts[unit].append(t)
+    return {level: {u: list(_add_turnouts(p)) for u, p in sorted(parts.items())}}
+
+
+def council_of(
+    okrsky: Mapping[str, Mapping[str, Collection[str]]], split: Collection[str]
+) -> dict[str, str]:
+    """Return okrsok → its council obvod ``<obec>/<k>``, of the obce in *split*.
+
+    *okrsky* is okrsok file (without ``okrsky/``) → contest → its okrsky.
+    Each council obvod's contest, in the file of its okres, lists its
+    okrsky; an obec's okrsky are the same polling districts, numbered
+    alike, in every contest, so this groups those of its other contests
+    too (Bratislava's and Košice's own council obvody, in the cities'
+    files, are not those of their districts).
+    """
+    out: dict[str, str] = {}
+    for path, contests in okrsky.items():
+        if not path.startswith(_OKRES):
+            continue
+        for contest, keys in contests.items():
+            c = kinds.parse(contest)
+            if c.kind.name == "oz" and c.sub and c.area in split:
+                out |= dict.fromkeys(keys, f"{c.area}/{c.sub}")
+    return out
+
+
+PastUnit = list[Any]
+"""The election before in a unit as written: ``[method, [eligible, voters,
+valid, {number: votes}]]``; an okrsok's part of a sum has null figures
+where its method is :data:`UNKNOWN`, which a sum never has."""
+
+
+def past_units(
+    past: Mapping[str, Any],
+    okrsky: Mapping[str, Collection[str]],
+    areas: Mapping[str, Collection[str]],
+    councils: Mapping[str, str],
+    divisions: Divisions,
+    obvody: Mapping[str, str],
+) -> dict[str, dict[str, Any]]:
+    """Return the ``units`` of an okrsok file's written *past*.
+
+    *okrsky* are its contests' okrsky, *areas* the obce of the ``areas`` of
+    its contests that have them, *councils* :func:`council_of`, *obvody*
+    the regional obvody of its area file's obce (:func:`file_obvody`).
+    Per contest, the election before in the units the app narrows its
+    results to, or colours the map by, that are made of okrsky or obce,
+    each :data:`PastUnit`, its method the least certain of its parts', and
+    only where every part is known (a sum short of some would mislead):
+
+    - ``obec``: of a regional, a city or a country-wide contest, an obec
+      with okrsky in the file but no figures of its own in ``contests``, its
+      okrsky summed;
+    - ``kraj``, ``okres``: of a country-wide contest, those of its obce
+      (its own figures, else as ``obec``) in the file, summed;
+    - ``zsk``: of a regional president, a regional obvod, its obce (as for
+      ``kraj``) summed; of a city contest, its districts with okrsky in the
+      file likewise by regional obvod, or (no regional obvody) ``okres``;
+    - ``obvod``: a council obvod ``<obec>/<k>`` of an obec split into
+      several, its okrsky summed; not of that obec's councils;
+    - ``all``: a contest not country-wide without ``totals``, all of it,
+      the file's okrsky of it summed;
+    - ``obce``: such a contest of a kraj or a city (a regional or a city
+      council obvod), each of its obce with figures of its own then, those
+      summed (method same): the whole the map of the election before
+      takes, as it colours the obce by those figures.
+    """
+    return {
+        contest: units
+        for contest, keys in okrsky.items()
+        if (
+            units := _contest_past(
+                contest, keys, past, areas.get(contest), councils, divisions, obvody
+            )
+        )
+    }
+
+
+def _contest_past(
+    contest: str,
+    keys: Collection[str],
+    past: Mapping[str, Any],
+    areas: Collection[str] | None,
+    councils: Mapping[str, str],
+    divisions: Divisions,
+    obvody: Mapping[str, str],
+) -> dict[str, Any]:
+    """Return :func:`past_units` of one contest."""
+    figures = past["contests"].get(contest)
+    if not figures:
+        return {}
+    c = kinds.parse(contest)
+    country = c.kind.scope == "country"
+    of = {key: _okrsok_past(past["okrsky"], figures, key) for key in keys}
+    by_obec: dict[str, list[PastUnit | None]] = defaultdict(list)
+    by_obvod: dict[str, list[PastUnit | None]] = defaultdict(list)
+    for key, part in of.items():
+        by_obec[key.partition("/")[0]].append(part)
+        if council := council_obvod(c, councils, key):
+            by_obvod[council].append(part)
+    units: dict[str, Any] = {"obvod": _past_sums(by_obvod)}
+    obce: dict[str, PastUnit] = {}
+    if _by_obec(c):
+        obce = units["obec"] = _past_sums(
+            {code: parts for code, parts in by_obec.items() if code not in figures}
+        )
+    for level, unit_of, codes in _obce_groups(c, areas, by_obec, divisions, obvody):
+        units[level] = _obce_past(codes, unit_of, figures, obce)
+    if not country and contest not in past["totals"]:
+        units["all"] = _past_sum(list(of.values()))
+        own = all(code in figures for code in by_obec)
+        if own and (c.kind.scope == "kraj" or c.area in candidates.CITY_CODES):
+            units["obce"] = _past_sum([[SAME, figures[code]] for code in by_obec])
+    return {level: u for level, u in units.items() if u}
+
+
+def _obce_groups(
+    c: kinds.Contest,
+    areas: Collection[str] | None,
+    okrsky: Collection[str],
+    divisions: Divisions,
+    obvody: Mapping[str, str],
+) -> list[tuple[str, Mapping[str, str], Collection[str]]]:
+    """Return the units of obce of contest *c*'s past: [(level, unit_of, obce)].
+
+    A country-wide contest's kraje and okresy of its *areas*; a regional
+    president's regional obvody of all of the kraj's obce (*obvody*); a
+    city contest's coarsest units (as :func:`coarse_units`) of its obce
+    with *okrsky*.
+    """
+    if c.kind.scope == "country":
+        if areas is None:
+            return []
+        return [("kraj", divisions.kraj, areas), ("okres", divisions.okres, areas)]
+    if c.kind.name == "predseda":
+        return [(ZSK_LEVEL, obvody, obvody)]
+    if c.area in candidates.CITY_CODES:
+        level, unit_of = (ZSK_LEVEL, obvody) if obvody else ("okres", divisions.okres)
+        return [(level, unit_of, okrsky)]
+    return []
+
+
+def _obce_past(
+    codes: Collection[str],
+    unit_of: Mapping[str, str],
+    figures: Mapping[str, Any],
+    obce: Mapping[str, PastUnit],
+) -> dict[str, PastUnit]:
+    """Return the units of obce *codes* (``unit_of`` each) at the election before.
+
+    Each obec by its own figures then (*figures*), else its okrsky's
+    (*obce*, the ``obec`` units); a unit only where all are known.
+    """
+    parts: dict[str, list[PastUnit | None]] = defaultdict(list)
+    for code in codes:
+        if unit := unit_of.get(code):
+            own = figures.get(code)
+            parts[unit].append([SAME, own] if own else obce.get(code))
+    return _past_sums(parts)
+
+
+def _okrsok_past(
+    methods: Mapping[str, int], figures: Mapping[str, Any], key: str
+) -> PastUnit | None:
+    """Return the election before in okrsok *key*, as the app's ``pastOf``.
+
+    *methods* and *figures* are a written ``past``'s ``okrsky`` and its
+    contest's ``contests``; an okrsok not in *methods* is of an obec of one
+    okrsok then and now, its figures the obec's. None where the method is
+    known but not the figures.
+    """
+    method = methods.get(key, SAME)
+    if method == UNKNOWN:
+        return [UNKNOWN, None]
+    obec = key.partition("/")[0]
+    record = figures.get(key) or (None if key in methods else figures.get(obec))
+    return [method, record] if record else None
+
+
+def _past_sums(groups: Mapping[str, list[PastUnit | None]]) -> dict[str, PastUnit]:
+    """Return unit → its *groups* of parts summed, where all are known."""
+    return {
+        unit: s for unit, parts in sorted(groups.items()) if (s := _past_sum(parts))
+    }
+
+
+def _past_sum(parts: Sequence[PastUnit | None]) -> PastUnit | None:
+    """Return *parts* summed with the least certain method of theirs.
+
+    None where there are none or the figures of one are not known.
+    """
+    if not parts or any(p is None or p[1] is None for p in parts):
+        return None
+    known = [p for p in parts if p is not None]
+    return [
+        max((p[0] for p in known), key=PAST_DOUBT.index),
+        area_json(sum_areas(area_of_json(p[1]) for p in known)),
+    ]
 
 
 def _past_json(
     past: Past, contests: Collection[str], keys: Collection[str]
 ) -> dict[str, Any]:
-    """Return the ``past`` of an okrsok file of *contests* and okrsky *keys*."""
+    """Return the ``past`` of an okrsok file of *contests* and okrsky *keys*.
+
+    A country-wide contest's past covers every kraj: the file gets its own
+    okrsky and obce of it. Any other contest is in one file, which gets its
+    past whole (so that the check sees a unit of no okrsok of the file). A
+    file of a party's list alone gets none: a list is compared with nothing
+    (:func:`contests.counterpart`), so how its okrsky map onto the earlier
+    ones would tell nothing.
+    """
+    if not any(kinds.counterpart(c) for c in contests):
+        return {}
     methods = {k: past.methods[k] for k in keys if k in past.methods}
+    obce = {k.partition("/")[0] for k in keys}
+
+    def own(contest: str, unit: str) -> bool:
+        whole = kinds.parse(contest).kind.scope != "country"
+        return whole or unit in keys or unit in obce
+
     records = {
-        c: {unit: area_json(a) for unit, a in past.contests[c].items()}
+        c: units
         for c in contests
-        if past.contests.get(c)
+        if (
+            units := {
+                unit: area_json(a)
+                for unit, a in past.contests.get(c, {}).items()
+                if own(c, unit)
+            }
+        )
     }
     totals = {c: area_json(past.totals[c]) for c in contests if c in past.totals}
     if not (methods or records or totals):
@@ -746,7 +1772,7 @@ def status(
 def read_status(directory: Path) -> dict[str, Any] | None:
     """Return *directory*'s ``status.json``, or None if absent or unreadable."""
     try:
-        data = json.loads((directory / STATUS_FILE).read_bytes())
+        data = orjson.loads((directory / STATUS_FILE).read_bytes())
     except (OSError, ValueError):
         return None
     return data if isinstance(data, dict) else None
@@ -755,18 +1781,20 @@ def read_status(directory: Path) -> dict[str, Any] | None:
 def write(
     directory: Path,
     live: Live,
+    divisions: Divisions,
     now: dt.datetime | None = None,
     *,
-    checked: bool = False,
+    expect: Expect | None = None,
 ) -> dict[str, Any] | None:
     """Replace *directory* with *live*; return the new status, or None.
 
-    Nothing is written when phase, sources and files are those of the status
-    already there. The directory is written beside the old one and swapped
-    in when complete; *checked*, only if it keeps the contract (:func:`check`),
+    *divisions* are the election's (:func:`render`). Nothing is written
+    when phase, sources and files are those of the status already there.
+    The directory is written beside the old one and swapped in when
+    complete; with *expect*, only if it keeps the contract (:func:`check`),
     else a :class:`ResultsError` names what breaks it.
     """
-    contents = render(live)
+    contents = render(live, divisions)
     moment = now or dt.datetime.now(TIMEZONE).replace(microsecond=0)
     new = status(live, contents, read_status(directory), moment)
     if new is None:
@@ -777,7 +1805,7 @@ def write(
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_bytes(data)
         (tmp / STATUS_FILE).write_bytes(bundle.encode(new))
-        problems = check(tmp) if checked else []
+        problems = check(tmp, expect) if expect else []
         if problems:
             raise ResultsError(
                 "the results break the contract of docs/results.md; not written:\n  "
@@ -787,71 +1815,121 @@ def write(
 
 
 def read_live(directory: Path) -> Live | None:
-    """Return the results in *directory*, or None if it has none."""
+    """Return the results in *directory*, or None if it has none.
+
+    The sums written with them (``units``, :data:`TURNOUT_FILE`, a party
+    list's preference votes) are left out: :func:`render` makes them again.
+    The ``past`` of the okrsok files is gathered by its day, one
+    :class:`Past` for each election before, under the sources of the files'
+    contests.
+    """
     st = read_status(directory)
     if st is None:
         return None
     live = Live(st["phase"], st["source"])
+    by_day: dict[str, Past] = {}
     for path in st["files"]:
-        content = json.loads((directory / f"{path}.json").read_bytes())
+        if path == TURNOUT_FILE:
+            continue
+        content = orjson.loads((directory / f"{path}.json").read_bytes())
         area = path.removeprefix(f"{OKRSKY_DIR}/")
         if area != path:
             for contest, okrsky in content["contests"].items():
                 live.add_okrsky(
                     area, contest, {k: area_of_json(a) for k, a in okrsky.items()}
                 )
-            past = content["past"]
-            if past:
-                live.past.day = past["day"]
-                live.past.methods |= past["okrsky"]
-                for contest, units in past["contests"].items():
-                    live.past.contests[contest] = {
-                        u: area_of_json(a) for u, a in units.items()
-                    }
-                for contest, total in past["totals"].items():
-                    live.past.totals[contest] = area_of_json(total)
+            if content["past"]:
+                _read_past(live, by_day, content["contests"], content["past"])
             continue
         for contest, entry in content["contests"].items():
             live.add(path, contest, Record.from_json(entry))
     return live
 
 
-def merge(old: Live | None, new: Live, elections: Collection[str]) -> Live:
-    """Return *old* with the contests and sources of *new* in place of its own.
+def _read_past(
+    live: Live,
+    by_day: dict[str, Past],
+    contests: Iterable[str],
+    past: Mapping[str, Any],
+) -> None:
+    """Add an okrsok file's written *past* to *live*'s, of its *contests*.
 
-    *elections* are those *new* has in full (``oso``, ``osk``): with both,
-    the phase is final; otherwise the old phase stays, at least partial.
-    The okrsky of a contest go with it; ``past`` is that of *new* if it has
-    one (the final results'), else *old*'s.
+    To the :class:`Past` of its day in *by_day*, made where none is yet.
     """
-    base = old or Live("none")
-    merged = Live(
-        base.phase,
-        {**base.source, **{e: new.source[e] for e in elections}},
-        {path: dict(contests) for path, contests in base.files.items()},
-        {path: dict(contests) for path, contests in base.okrsky.items()},
-        new.past if new.past.day else base.past,
-    )
-    for path, contests in new.files.items():
-        for contest, record in contests.items():
-            merged.add(path, contest, record)
-            merged.okrsky.get(path, {}).pop(contest, None)
-    for path, contests in new.okrsky.items():
-        for contest, areas in contests.items():
-            merged.add_okrsky(path, contest, areas)
-    both = {"oso", "osk"} <= set(elections)
-    merged.phase = (
-        "final" if both else ("partial" if base.phase == "none" else base.phase)
-    )
-    return merged
+    then = by_day.setdefault(past["day"], Past(past["day"]))
+    for source in sources_of(contests):
+        live.past[source] = then
+    then.methods |= past["okrsky"]
+    for contest, units in past["contests"].items():
+        then.contests[contest] = {u: area_of_json(a) for u, a in units.items()}
+    for contest, total in past["totals"].items():
+        then.totals[contest] = area_of_json(total)
 
 
-def check(directory: Path) -> list[str]:
-    """Return what in the results in *directory* breaks the contract."""
+def finalize(live: Live, final: Collection[str], sources: Collection[str]) -> Live:
+    """Return the definitive results *live* with the sources of the election.
+
+    *final* are the sources *live* has in full (``oso``, ``prez1``, …),
+    *sources* those of the election (:attr:`Reference.sources`): each has
+    its entry of *live* where it is final, else one of nothing counted
+    (:func:`no_sources`); once *final* has them all, the phase is final,
+    otherwise partial.
+    """
+    return Live(
+        "final" if set(sources) <= set(final) else "partial",
+        {**no_sources(sources), **{s: live.source[s] for s in final}},
+        live.files,
+        live.okrsky,
+        live.past,
+    )
+
+
+@dataclass(frozen=True)
+class Expect:
+    """What :func:`check` holds an election's results to, beyond the format."""
+
+    sources: frozenset[str]
+    """The ``source`` keys of ``status.json``: exactly these."""
+    preferences: Mapping[str, int]
+    """Party contest → how many persons of one list a voter may mark."""
+    quotas: Mapping[str, float]
+    """Party contest → the % of a party's votes a person's preference votes
+    must reach to go ahead of the list order (:func:`preference_order`)."""
+    divisions: Divisions
+    """What the units of the results are summed by (:func:`render`)."""
+    past: Mapping[str, str] = field(default_factory=dict)
+    """Source → ISO day of the election before its contests are compared
+    with (``cli._compare``), which the ``past`` of their okrsok files must
+    be of; a source compared with none has none, nor its files a ``past``."""
+
+    @classmethod
+    def of(
+        cls, data: Mapping[str, Any], parts: Collection[str], past: Mapping[str, str]
+    ) -> Expect:
+        """Return the expectations of ``candidates.json`` *data*.
+
+        *parts* as :meth:`Divisions.of` takes them, *past* as :attr:`past`.
+        """
+        entries = data["contests"]
+        return cls(
+            sources_of(c["id"] for c in entries),
+            {c["id"]: c["preferences"] for c in entries if "preferences" in c},
+            {c["id"]: c["quota"] for c in entries if c.get("quota") is not None},
+            Divisions.of(data, parts),
+            past,
+        )
+
+
+def check(directory: Path, expect: Expect) -> list[str]:
+    """Return what in the results in *directory* breaks the contract.
+
+    *expect* says which sources the election has, what its party lists
+    allow and where its obce lie (:meth:`Expect.of`).
+    """
     st = read_status(directory)
     if st is None:
         return [f"{STATUS_FILE} missing or not a JSON object"]
-    problems = _check_status(st)
+    problems = _check_status(st, expect.sources)
     files = st.get("files")
     listed: dict[str, Any] = files if isinstance(files, dict) else {}
     present = {
@@ -871,18 +1949,134 @@ def check(directory: Path) -> list[str]:
             problems.append(f"{path}: {problem}")
         else:
             contents[path] = content
+    # The council obvody of the okrsky, from the files that are well formed
+    # enough to tell them; a malformed one is reported with its file.
+    okrsky = {
+        path.removeprefix(f"{OKRSKY_DIR}/"): {
+            c: keys
+            for c, keys in content["contests"].items()
+            if kinds.CONTEST_ID.fullmatch(c) and isinstance(keys, dict)
+        }
+        for path, content in contents.items()
+        if path.startswith(f"{OKRSKY_DIR}/")
+        and isinstance(content, dict)
+        and isinstance(content.get("contests"), dict)
+    }
+    councils = council_of(okrsky, expect.divisions.split)
+    # The well-formed records of the area files, and the regional obvody
+    # their regional council contests tell.
+    areas = {path for path in listed if not path.startswith(f"{OKRSKY_DIR}/")} - {
+        TURNOUT_FILE
+    }
+    records = {
+        path: {c: e for c, e in content["contests"].items() if not _check_record(c, e)}
+        for path, content in contents.items()
+        if path in areas
+        and isinstance(content, dict)
+        and isinstance(content.get("contests"), dict)
+    }
+    obvody = file_obvody(
+        {
+            p: {c: _keys(e.get("areas")) for c, e in cs.items()}
+            for p, cs in records.items()
+        },
+        expect.divisions,
+    )
     for path, content in contents.items():
         area = path.removeprefix(f"{OKRSKY_DIR}/")
-        found = (
-            _check_area_file(content)
-            if area == path
-            else _check_okrsok_file(content, contents.get(area))
-        )
+        if path == TURNOUT_FILE:
+            continue
+        if area == path:
+            found = _check_area_file(content, expect, obvody.get(path, {}))
+        else:
+            found = _check_okrsok_file(
+                content,
+                contents.get(area_of_okrsok_file(area)),
+                expect,
+                councils,
+                obvody.get(area_of_okrsok_file(area), {}),
+            )
         problems += [f"{path}: {p}" for p in found]
+    problems += _check_origins(records, okrsky)
+    # The turnout is of all the area files: checked once they are all sound,
+    # else what is wrong with them is reported alone, as is a turnout file
+    # that cannot be read.
+    sound = records.keys() == areas and all(
+        len(records[p]) == len(contents[p]["contests"]) for p in areas
+    )
+    if sound and (TURNOUT_FILE in contents or TURNOUT_FILE not in listed):
+        found = _check_turnout(
+            contents.get(TURNOUT_FILE), records, expect.divisions, obvody
+        )
+        problems += [f"{TURNOUT_FILE}: {p}" for p in found]
     return problems
 
 
-def _check_status(st: Mapping[str, Any]) -> list[str]:
+def _check_origins(
+    records: Mapping[str, Mapping[str, Any]],
+    okrsky: Mapping[str, Mapping[str, Any]],
+) -> list[str]:
+    """Check the ``origins`` of the well-formed *records* of each area file.
+
+    Each must be what :func:`origins` makes of the contest's okrsky in all
+    the okrsok files *okrsky* (path → contest → okrsky), none without them;
+    a malformed okrsok is reported with its file, and left out here.
+    """
+    spread: dict[str, dict[str, Area]] = defaultdict(dict)
+    for contests in okrsky.values():
+        for c, areas in contests.items():
+            if _has_origins(c):
+                listed = _is_list(c)
+                spread[c].update(
+                    (k, area_of_json(a))
+                    for k, a in areas.items()
+                    if _is_area(a, complete=True, preferences=listed)
+                )
+    return [
+        f"{path}: {c}: origins not those of its okrsky"
+        for path, contests in sorted(records.items())
+        for c, entry in sorted(contests.items())
+        if entry.get("origins", {}) != (origins(spread[c]) if c in spread else {})
+    ]
+
+
+def _turnout_of_records(
+    records: Mapping[str, Mapping[str, Any]],
+    divisions: Divisions,
+    obvody: Mapping[str, Mapping[str, str]],
+) -> dict[str, Any]:
+    """Return :func:`turnout` of the written well-formed *records* of each area file."""
+    files = {
+        path: {c: Record.from_json(e) for c, e in contests.items()}
+        for path, contests in records.items()
+    }
+    return turnout(files, divisions, regional_units(obvody))
+
+
+def _check_turnout(
+    content: Any,
+    records: Mapping[str, Mapping[str, Any]],
+    divisions: Divisions,
+    obvody: Mapping[str, Mapping[str, str]],
+) -> list[str]:
+    """Check :data:`TURNOUT_FILE`, *content* (None if absent), against *records*.
+
+    Those of the area files, all well formed.
+    """
+    want = _turnout_of_records(records, divisions, obvody)
+    if content is None:
+        return ["missing, though the area files have turnouts"] if want else []
+    if not want:
+        return ["present, though the area files have no turnouts"]
+    got = content if isinstance(content, dict) else {}
+    return [
+        f"{part} not the turnout of the area files"
+        for part in sorted(want.keys() | got.keys())
+        if want.get(part) != got.get(part)
+    ]
+
+
+def _check_status(st: Mapping[str, Any], expected: Collection[str]) -> list[str]:
     problems = []
     if set(st) != {"version", "updated", "phase", "source", "files"}:
         problems.append(f"{STATUS_FILE}: keys {sorted(st)}")
@@ -895,8 +2089,11 @@ def _check_status(st: Mapping[str, Any]) -> list[str]:
     except (KeyError, TypeError, ValueError):
         problems.append(f"{STATUS_FILE}: updated {st.get('updated')!r}")
     sources = st.get("source")
-    if not isinstance(sources, dict) or set(sources) != {"oso", "osk"}:
-        return [*problems, f"{STATUS_FILE}: source {sources!r}"]
+    if not isinstance(sources, dict) or set(sources) != set(expected):
+        return [
+            *problems,
+            f"{STATUS_FILE}: source {sources!r}, not of {sorted(expected)}",
+        ]
     for name, entry in sorted(sources.items()):
         if not _is_source(entry):
             problems.append(f"{STATUS_FILE}: source.{name} {entry!r}")
@@ -935,28 +2132,167 @@ def _load_file(path: Path, digest: str) -> tuple[Any, str | None]:
     if _digest(data)[:_HASH] != digest:
         return None, "hash differs from status.json"
     try:
-        return json.loads(data), None
+        return orjson.loads(data), None
     except ValueError:
         return None, "not JSON"
 
 
-def _check_area_file(content: Any) -> list[str]:
+def _check_area_file(
+    content: Any, expect: Expect, obvody: Mapping[str, str]
+) -> list[str]:
+    """Check an area file; *obvody* are its regional obvody (:func:`file_obvody`)."""
     contests = content.get("contests") if isinstance(content, dict) else None
     if not isinstance(contests, dict) or not contests or set(content) != {"contests"}:
         return ["no contests"]
     problems = []
     for contest, entry in sorted(contests.items()):
-        found = _check_record(contest, entry) or _unit_votes(
-            contest, entry["seats"], _counted_units(entry)
+        found = _check_record(contest, entry) or (
+            _unit_votes(contest, _marks(contest, entry, expect), _counted_units(entry))
+            + _check_preferences(contest, entry)
+            + _check_units(contest, entry, expect.divisions, obvody)
+            + _check_list_order(contest, entry, expect)
         )
         problems += [f"{contest}: {p}" for p in found]
     return problems
 
 
-def _check_okrsok_file(content: Any, area: Any) -> list[str]:
-    """Check an okrsok file against the area file of its contests (*area*)."""
-    if not isinstance(content, dict) or set(content) != {"contests", "past"}:
-        return ["keys not contests and past"]
+def _check_preferences(contest: str, entry: Mapping[str, Any]) -> list[str]:
+    """Check a well-formed party list's preference votes summed.
+
+    Of the whole list (``preferences``) and of each of its ``areas``: its
+    persons' votes (``units`` are checked as the areas summed).
+    """
+    if not _is_list(contest):
+        return []
+    whole = sum(c[1] for c in entry["candidates"])
+    wrong = [] if entry["preferences"] == whole else ["the list"]
+    wrong += _unsummed(entry.get("areas") or {})
+    if not wrong:
+        return []
+    return [f"preference votes not its persons' summed: {', '.join(wrong)}"]
+
+
+def _unsummed(figures: Mapping[str, Sequence[Any]]) -> list[str]:
+    """Return the units of a party list's well-formed *figures* not summed.
+
+    Those whose fifth figure is not their votes summed.
+    """
+    return [k for k, a in sorted(figures.items()) if a[4] != sum(a[3].values())]
+
+
+def _check_units(
+    contest: str,
+    entry: Mapping[str, Any],
+    divisions: Divisions,
+    obvody: Mapping[str, str],
+) -> list[str]:
+    """Check a well-formed record's ``units``: its ``areas`` summed.
+
+    A country-wide contest with ``areas`` has them by kraj and okres, a
+    regional president by its regional obvody, a city contest by its
+    coarsest units (:func:`units_of`, *obvody* of its file); no other
+    record has any.
+    """
+    areas = entry.get("areas")
+    units = units_of(
+        contest,
+        entry["status"],
+        None if areas is None else {k: area_of_json(a) for k, a in areas.items()},
+        divisions,
+        obvody,
+    )
+    want = None if units is None else _units_json(contest, units)
+    got = entry.get("units")
+    if got == want:
+        return []
+    if want is None:
+        return ["units of a record without them"]
+    if not isinstance(got, dict) or set(got) != set(want):
+        return [f"units missing or not by {' and '.join(want)}"]
+    wrong = [
+        f"{level} {unit}"
+        for level, by_unit in want.items()
+        for unit in sorted(by_unit.keys() | _keys(got[level]))
+        if not isinstance(got[level], dict) or got[level].get(unit) != by_unit.get(unit)
+    ]
+    return [f"units not the areas summed: {', '.join(wrong)}"]
+
+
+def _check_list_order(
+    contest: str, entry: Mapping[str, Any], expect: Expect
+) -> list[str]:
+    """Check a final party list's elected against the preference rule.
+
+    They are the first of its persons in :func:`preference_order` of the
+    whole list, as many as it filled, which the app takes the official
+    order to be; the order of every other unit is the rule's on its votes.
+    """
+    quota = (
+        expect.quotas.get(kinds.body(contest)) if kinds.parse(contest).is_list else None
+    )
+    if quota is None or entry["status"] != "final" or not entry["filled"]:
+        return []
+    votes = {n: v for n, v, _ in entry["candidates"]}
+    order = preference_order(votes, entry["valid"] or 0, quota)
+    elected = {n for n, _, flag in entry["candidates"] if flag == 1}
+    if set(order[: entry["filled"]]) == elected:
+        return []
+    return ["the elected are not the first by the preference rule"]
+
+
+def preference_order(votes: Mapping[int, int], valid: int, quota: float) -> list[int]:
+    """Return a party list's positions in the order the law gives them seats.
+
+    *votes* maps every position to its preference votes, *valid* is the
+    party's votes, *quota* the % of them a person's preference votes must
+    reach (Act No. 180/2014 Coll. § 68 ods. 5, § 94 ods. 5: three per cent
+    for the NR SR and the European Parliament): those who reach it first,
+    by preference votes (a tie by list position), then the others by list
+    position. Applied to a unit's votes, it ranks the list there
+    (web/js/ballots.js ``preferenceOrder`` does the same).
+    """
+    least = quota * valid / 100
+    ahead = sorted(
+        (n for n, v in votes.items() if v >= least), key=lambda n: (-votes[n], n)
+    )
+    reached = set(ahead)
+    return ahead + sorted(n for n in votes if n not in reached)
+
+
+def _keys(value: object) -> set[str]:
+    """Return the keys of *value* if it is an object, else none."""
+    return set(value) if isinstance(value, dict) else set()
+
+
+def _marks(contest: str, entry: Mapping[str, Any], expect: Expect) -> int | None:
+    """Return how many candidates of *contest* a voter may mark, if known.
+
+    One in a single-choice contest, up to the preferences of its party
+    contest on a party's list, up to the seats (of the well-formed *entry*)
+    in a council.
+    """
+    c = kinds.parse(contest)
+    if c.single:
+        return 1
+    if c.is_list:
+        return expect.preferences.get(kinds.body(contest))
+    return entry["seats"]
+
+
+def _check_okrsok_file(
+    content: Any,
+    area: Any,
+    expect: Expect,
+    councils: Mapping[str, str],
+    obvody: Mapping[str, str],
+) -> list[str]:
+    """Check an okrsok file against the area file of its contests (*area*).
+
+    *councils* are the council obvody of the okrsky (:func:`council_of`),
+    *obvody* the regional obvody of the area file (:func:`file_obvody`).
+    """
+    if not isinstance(content, dict) or set(content) != {"contests", "units", "past"}:
+        return ["keys not contests, units and past"]
     contests, past = content["contests"], content["past"]
     if not isinstance(contests, dict) or not contests:
         return ["no contests"]
@@ -966,19 +2302,85 @@ def _check_okrsok_file(content: Any, area: Any) -> list[str]:
     problems = [
         f"{contest}: {p}"
         for contest, okrsky in sorted(contests.items())
-        for p in _check_okrsky(contest, okrsky, records.get(contest))
+        for p in _check_okrsky(contest, okrsky, records.get(contest), expect)
     ]
     if problems:
         return problems
-    return _check_past(past, contests, records)
+    problems = _check_okrsok_units(content["units"], contests, records, councils)
+    problems += _check_past(past, contests, records, expect.past)
+    if problems or past == {}:
+        return problems
+    return _check_past_units_summed(
+        past, contests, records, councils, expect.divisions, obvody
+    )
+
+
+def _check_okrsok_units(
+    units: Any,
+    contests: Mapping[str, Any],
+    records: Mapping[str, Any],
+    councils: Mapping[str, str],
+) -> list[str]:
+    """Check a well-formed okrsok file's ``units``: its okrsky summed.
+
+    (:func:`okrsok_units`.) Not of a contest whose record is malformed,
+    which is reported with its area file.
+    """
+    if not isinstance(units, dict):
+        return ["units malformed"]
+    sound = {c: o for c, o in contests.items() if not _check_record(c, records[c])}
+    figures = {
+        c: {k: area_of_json(a) for k, a in okrsky.items()}
+        for c, okrsky in sound.items()
+    }
+    with_areas = {c: "areas" in records[c] for c in sound}
+    want = {
+        c: _units_json(c, u)
+        for c, u in okrsok_units(figures, with_areas, councils).items()
+    }
+    got = {c: u for c, u in units.items() if c in sound or c not in contests}
+    wrong = sorted(c for c in want.keys() | got.keys() if want.get(c) != got.get(c))
+    return [f"{c}: units not those of its okrsky" for c in wrong]
+
+
+def _check_past_units_summed(
+    past: Mapping[str, Any],
+    contests: Mapping[str, Any],
+    records: Mapping[str, Any],
+    councils: Mapping[str, str],
+    divisions: Divisions,
+    obvody: Mapping[str, str],
+) -> list[str]:
+    """Check a well-formed ``past``'s ``units``: its okrsky's summed.
+
+    Not of a contest whose record is malformed, which is reported with its
+    area file.
+    """
+    if not isinstance(past["units"], dict):
+        return ["past units malformed"]
+    sound = {c: o for c, o in contests.items() if not _check_record(c, records[c])}
+    areas = {
+        c: records[c]["areas"]
+        for c in sound
+        if isinstance(records[c].get("areas"), dict)
+    }
+    want = past_units(past, sound, areas, councils, divisions, obvody)
+    got = {c: u for c, u in past["units"].items() if c in sound or c not in contests}
+    wrong = sorted(c for c in want.keys() | got.keys() if want.get(c) != got.get(c))
+    return [f"{c}: past units not those of its okrsky then" for c in wrong]
 
 
 def _check_past(
-    past: Any, contests: Mapping[str, Any], records: Mapping[str, Any]
+    past: Any,
+    contests: Mapping[str, Any],
+    records: Mapping[str, Any],
+    days: Mapping[str, str],
 ) -> list[str]:
     """Check an okrsok file's ``past`` against its well-formed *contests*.
 
-    *records* are the contests' entries of their area file.
+    *records* are the contests' entries of their area file, *days* the
+    elections before by source (:attr:`Expect.past`): the ``past`` is of the
+    one its contests are compared with.
     """
     if past == {}:
         return []
@@ -987,6 +2389,7 @@ def _check_past(
         "okrsky",
         "contests",
         "totals",
+        "units",
     }:
         return ["past malformed"]
     problems = []
@@ -994,6 +2397,13 @@ def _check_past(
         dt.date.fromisoformat(past["day"])
     except (TypeError, ValueError):
         problems.append(f"past day {past['day']!r}")
+    want = {days.get(kinds.source_of(c)) for c in contests}
+    if want != {past["day"]}:
+        then = ", ".join(sorted(d or "none" for d in want))
+        problems.append(
+            f"past day {past['day']!r}, not that of the election before its"
+            f" contests are compared with ({then})"
+        )
     methods, units = past["okrsky"], past["contests"]
     keys = {k for okrsky in contests.values() for k in okrsky}
     if not isinstance(methods, dict) or not all(
@@ -1020,7 +2430,11 @@ def _check_past_totals(
     """Check an okrsok file's ``past`` ``totals``: whole contests of the file."""
     problems = []
     for contest, total in sorted(totals.items()):
-        if contest not in contests or "/" in contest:
+        if (
+            contest not in contests
+            or not kinds.CONTEST_ID.fullmatch(contest)
+            or kinds.counterpart(contest) != contest
+        ):
             problems.append(f"{contest}: past total of no whole contest of the file")
         # A malformed record is reported with its area file.
         elif not _check_record(contest, records[contest]):
@@ -1061,14 +2475,15 @@ def _check_past_units(
     return wrong
 
 
-def _check_okrsky(contest: str, okrsky: Any, record: Any) -> list[str]:
+def _check_okrsky(contest: str, okrsky: Any, record: Any, expect: Expect) -> list[str]:
     """Check a contest's okrsky against its *record* in the area file."""
     if record is None:
         return ["not in the area file"]
     if not isinstance(okrsky, dict) or not okrsky:
         return ["no okrsky"]
+    listed = _is_list(contest)
     if not all(
-        _OKRSOK_KEY.fullmatch(k) and _is_area(a, complete=True)
+        _OKRSOK_KEY.fullmatch(k) and _is_area(a, complete=True, preferences=listed)
         for k, a in okrsky.items()
     ):
         return ["okrsky malformed"]
@@ -1076,7 +2491,17 @@ def _check_okrsky(contest: str, okrsky: Any, record: Any) -> list[str]:
     if _check_record(contest, record):
         return []
     units = [(key, a[2], a[3]) for key, a in sorted(okrsky.items())]
-    return _okrsok_sums(record, okrsky) + _unit_votes(contest, record["seats"], units)
+    marks = _marks(contest, record, expect)
+    unsummed = _unsummed(okrsky) if listed else []
+    return (
+        _okrsok_sums(record, okrsky)
+        + _unit_votes(contest, marks, units)
+        + (
+            [f"preference votes not its persons' summed: {', '.join(unsummed)}"]
+            if unsummed
+            else []
+        )
+    )
 
 
 def _okrsok_sums(record: Mapping[str, Any], okrsky: Mapping[str, list]) -> list[str]:
@@ -1124,23 +2549,24 @@ def _counted_units(entry: Mapping[str, Any]) -> list[_Counted]:
 
 
 def _unit_votes(
-    contest: str, seats: int | None, units: Iterable[_Counted]
+    contest: str, marks: int | None, units: Iterable[_Counted]
 ) -> list[str]:
     """Return the counted *units* of *contest* whose votes break the rules.
 
-    A mayor's or president's voter gives one candidate one vote: the votes
-    are the valid ballots. A council's gives a candidate one vote at most,
-    and *seats* votes at most in all.
+    A voter of a single-choice contest (a mayor, a president, a question, a
+    party) gives one candidate one vote: the votes are the valid ballots. A
+    council's voter, or a party's voter among its list, gives a candidate
+    one vote at most, and *marks* (:func:`_marks`) at most in all.
     """
-    single = contest.partition(":")[0] in SINGLE_CHOICE
+    c = kinds.parse(contest)
     wrong = []
     for name, valid, votes in units:
         if valid is None:
             continue
         total, most = sum(votes.values()), max(votes.values(), default=0)
-        if single and total != valid:
+        if c.single and total != valid:
             wrong.append(f"{name} ({total} votes, {valid} valid)")
-        elif not single and (most > valid or (seats and total > seats * valid)):
+        elif not c.single and (most > valid or (marks and total > marks * valid)):
             wrong.append(
                 f"{name} ({most} votes at most, {total} in all, {valid} valid)"
             )
@@ -1148,66 +2574,125 @@ def _unit_votes(
         return []
     rule = (
         "votes other than the valid ballots"
-        if single
-        else f"votes beyond the valid ballots and {seats} seats"
+        if c.single
+        else f"votes beyond the valid ballots and {marks}"
+        + (" preferences" if c.is_list else " seats")
     )
     return [f"{rule}: {'; '.join(wrong)}"]
 
 
 def _check_record(contest: str, entry: object) -> list[str]:
-    if not _CONTEST_ID.fullmatch(contest):
+    if not kinds.CONTEST_ID.fullmatch(contest):
         return ["not a contest id"]
     if not isinstance(entry, dict) or not _RECORD_KEYS <= set(entry):
         return ["keys missing"]
+    c = kinds.parse(contest)
+    party = c.kind.party and not c.is_list
     problems = []
-    unknown = set(entry) - _RECORD_KEYS - {"areas"}
+    # ``units`` are checked against the areas (:func:`_check_units`), a
+    # party list's ``preferences`` against its votes (:func:`_check_preferences`),
+    # ``origins`` against the okrsky (:func:`_check_origins`).
+    known = {
+        "areas",
+        "units",
+        *(["won"] if party else []),
+        *(["preferences"] if c.is_list else []),
+        *(["origins"] if _has_origins(contest) else []),
+    }
+    unknown = set(entry) - _RECORD_KEYS - known
     if unknown:
         problems.append(f"unknown keys {sorted(unknown)}")
+    if c.is_list and not _is_count(entry.get("preferences")):
+        problems.append(f"preferences {entry.get('preferences')!r}")
     if entry["status"] not in STATUSES:
         problems.append(f"status {entry['status']!r}")
+    problems += _figure_problems(entry)
+    flags = _flags(c)
+    if not isinstance(entry["candidates"], list) or not all(
+        _is_ballot(b, flags) for b in entry["candidates"]
+    ):
+        problems.append("candidates not [number, votes, flag] rows")
+    if "areas" in entry and not _is_areas(entry["areas"], preferences=c.is_list):
+        problems.append("areas malformed")
+    if not _is_won(entry.get("won")):
+        problems.append(f"won {entry['won']!r}")
+    return problems
+
+
+def _figure_problems(entry: Mapping[str, Any]) -> list[str]:
+    """Return what of a record's ``counted`` and counts is malformed."""
+    problems = []
     if entry["counted"] is not None and not _is_pair(entry["counted"]):
         problems.append(f"counted {entry['counted']!r}")
     for key in ("eligible", "voters", "valid", "seats", "filled"):
         if entry[key] is not None and not _is_count(entry[key]):
             problems.append(f"{key} {entry[key]!r}")
-    if not isinstance(entry["candidates"], list) or not all(
-        _is_ballot(c) for c in entry["candidates"]
-    ):
-        problems.append("candidates not [number, votes, flag] rows")
-    if "areas" in entry and not _is_areas(entry["areas"]):
-        problems.append("areas malformed")
     return problems
 
 
-def _is_ballot(c: object) -> bool:
+def _is_won(won: object) -> bool:
+    """Whether *won* is absent or a party contest's seats by party number."""
+    return won is None or (
+        isinstance(won, dict)
+        and all(n.isdigit() and _is_count(s) for n, s in won.items())
+    )
+
+
+def _flags(c: kinds.Contest) -> frozenset[int | None]:
+    """Return the flags a candidate of contest *c* can have.
+
+    An answer or a party wins (1) or not (null); a presidential candidate
+    is elected, goes on to round 2 (:data:`ADVANCED`) or withdrew
+    (:data:`WITHDRAWN`); any other person is elected, a substitute (0) or
+    withdrew.
+    """
+    if c.kind.sub == "question" or (c.kind.party and not c.is_list):
+        return frozenset({None, 1})
+    if c.kind.sub == "round":
+        return frozenset({None, 1, ADVANCED, WITHDRAWN})
+    return frozenset({None, 0, 1, WITHDRAWN})
+
+
+def _is_ballot(c: object, flags: frozenset[int | None]) -> bool:
     ballot_length = 3
     return (
         isinstance(c, list)
         and len(c) == ballot_length
         and _is_count(c[0])
         and _is_count(c[1])
-        and c[2] in (None, 0, 1, WITHDRAWN)
+        and c[2] in flags
     )
 
 
-def _is_areas(areas: object) -> bool:
+def _is_areas(areas: object, *, preferences: bool) -> bool:
     return isinstance(areas, dict) and all(
-        _AREA_KEY.fullmatch(key) and _is_area(value) for key, value in areas.items()
+        _AREA_KEY.fullmatch(key) and _is_area(value, preferences=preferences)
+        for key, value in areas.items()
     )
 
 
-def _is_area(value: object, *, complete: bool = False) -> bool:
+def _is_area(
+    value: object, *, complete: bool = False, preferences: bool = False
+) -> bool:
     """Whether *value* is ``[eligible, voters, valid, {number: votes}]``.
 
-    The three figures can be null unless *complete*.
+    The three figures can be null unless *complete*. A party's list's
+    (*preferences*) has a fifth, a count: its votes summed
+    (:func:`area_json`, checked apart).
     """
-    area_length = 4
+    area_length = 5 if preferences else 4
     if not isinstance(value, list) or len(value) != area_length:
+        return False
+    if preferences and not _is_count(value[4]):
         return False
     if not all((v is None and not complete) or _is_count(v) for v in value[:3]):
         return False
-    return isinstance(value[3], dict) and all(
-        n.isdigit() and _is_count(x) for n, x in value[3].items()
+    votes = value[3]
+    # Mapped, not a generator: the results hold millions of votes.
+    return (
+        isinstance(votes, dict)
+        and all(map(str.isdigit, votes))
+        and all(map(_is_count, votes.values()))
     )
 
 
@@ -1220,6 +2705,8 @@ def _rows(files: Mapping[str, bytes], path: str) -> list[dict[str, Any]]:
     if body is None:
         return []
     try:
+        # volbysr.sk's files by json, as lenient as before (a byte order
+        # mark, NaN); orjson reads the project's own.
         data = json.loads(body)
     except ValueError:
         return []
@@ -1272,7 +2759,8 @@ def night(files: Mapping[str, bytes], ref: Reference, log: Log = progress.note) 
     oso = _progress(files, "oso", "obce")
     osk = _progress(files, "osk", "okrsky")
     live = Live("partial" if _started(oso) or _started(osk) else "none")
-    live.source = {"osk": osk, "oso": oso}
+    # The night's files have both elections; status.json names the election's.
+    live.source = {s: e for s, e in (("osk", osk), ("oso", oso)) if s in ref.sources}
     if live.phase == "none":
         return live
     if _started(osk):
@@ -1335,7 +2823,7 @@ def _count_voters(live: Live, ref: Reference) -> None:
         if area not in candidates.CITY_CODES
     )
     for name, contests in (("osk", presidents), ("oso", municipal)):
-        if live.source[name]["counted"]:
+        if name in live.source and live.source[name]["counted"]:
             live.source[name] = {**live.source[name], "voters": tally(contests)}
 
 
@@ -1874,23 +3362,6 @@ class Client:
             self.copies[path] = _Copy(body, *validators)
         return "same" if previous and previous.body == body else "changed"
 
-    def download(self, path: str, stamp: str) -> Path:
-        """Fetch *path* whole, unconditionally; return its copy in the archive.
-
-        The copy is ``<archive>/<stamp>/<path>``. Fails unless the file is
-        there (status 200).
-        """
-        url = f"{'https' if self.https else 'http'}://{self.host}{self.prefix}/{path}"
-        try:
-            code, _, body = self._request(path, {"User-Agent": self.agent})
-        except (OSError, http.client.HTTPException) as e:
-            raise ResultsError(f"{url}: {e}") from e
-        if code == http.HTTPStatus.NOT_FOUND:
-            raise ResultsError(f"{url}: not published (404)")
-        if code != http.HTTPStatus.OK:
-            raise ResultsError(f"{url}: HTTP {code}")
-        return self._archive(path, stamp, body)
-
     def _archive(self, path: str, stamp: str, body: bytes) -> Path:
         target = self.archive / stamp / path
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -1971,7 +3442,7 @@ class Poller:
     def __init__(
         self, client: Client, ref: Reference, directory: Path, log: Log
     ) -> None:
-        """Poll with *client* into results directory *directory*."""
+        """Poll with *client* into live results directory *directory*."""
         self.client = client
         self.ref = ref
         self.directory = directory
@@ -2002,7 +3473,7 @@ class Poller:
         self.pending = units["failed"] > 0
         self._report("units", units)
         live = night(self.client.files(), self.ref, self.log)
-        new = write(self.directory, live)
+        new = write(self.directory, live, self.ref.divisions)
         self.log(
             f"{live.phase}: {sum(map(len, live.files.values()))} contests; "
             + (f"version {new['version']}" if new else "results unchanged")
@@ -2018,9 +3489,6 @@ class Poller:
 
 
 # The definitive CSV tables.
-
-FINAL_ELECTIONS = ("oso", "osk")
-"""The elections of the definitive results packages, one zip each."""
 
 # Columns of the 2026 tables, which name them in full in their header rows.
 _C_KRAJ = "Kód kraja"
@@ -2105,20 +3573,6 @@ here."""
 _PACKAGE_FILE = re.compile(r"(OSO|OSK)\d{4}_SK_(tab\w+?)\.csv$", re.IGNORECASE)
 
 
-def final_path(election: str, year: int) -> str:
-    """Return the path on volbysr.sk of an election's definitive results zip."""
-    return f"{election}/files/{election.upper()}{year}_SK_csv.zip"
-
-
-def fetch_final(client: Client, year: int) -> list[Path]:
-    """Download the definitive results zips of both elections; return them.
-
-    They are kept, like the night's files, in the client's archive.
-    """
-    stamp = _stamp()
-    return [client.download(final_path(e, year), stamp) for e in FINAL_ELECTIONS]
-
-
 def data_time(live: Live) -> dt.datetime | None:
     """Return the time of the newest data of *live*'s sources, or None.
 
@@ -2144,7 +3598,7 @@ class Tables:
 
     def rows(self, table: str) -> list[dict[str, str]]:
         """Return the rows of a table (comma-separated, with a header)."""
-        return list(csv.DictReader(io.StringIO(self._text(table))))
+        return tables.dict_rows(self._text(table))
 
     def check(self) -> None:
         """Fail unless the package has the tables and columns read."""
@@ -2254,20 +3708,23 @@ def _final_ballots(
 
 
 def _final_council_ballots(
-    rows: Iterable[Mapping[str, str]], okrsky: Iterable[Mapping[str, str]]
+    rows: Iterable[Mapping[str, str]],
+    okrsky: Iterable[Mapping[str, str]],
+    okrsok_flag: str = _C_FLAG,
 ) -> list[Ballot]:
     """Return the candidates of a council obvod's vote *rows*, withdrawn too.
 
     ŠÚ SR's council tables per obvod (``tab08e``, ``tab08ex``) leave out a
     candidate who withdrew; its tables per okrsok (*okrsky*, the obvod's
-    rows) have their votes, which count among the valid ones.
+    rows) have their votes, which count among the valid ones, and the ``X``
+    in column *okrsok_flag* (a by-election's ``tab08f`` has it as a note).
     """
     ballots = _final_ballots(rows, _C_FLAG, 0)
     have = {n for n, _, _ in ballots}
     missing = _row_votes(
         r
         for r in okrsky
-        if int(r[_C_NUMBER]) not in have and _flag(r[_C_FLAG], 0) == WITHDRAWN
+        if int(r[_C_NUMBER]) not in have and _flag(r[okrsok_flag], 0) == WITHDRAWN
     )
     return ballots + [(n, v, WITHDRAWN) for n, v in sorted(missing.items())]
 
@@ -2348,7 +3805,7 @@ def _bounds(valid: int, kind: str, seats: int | None) -> _Bounds:
     A mayor's votes are the valid ballots; a council's at least those (each
     marks a candidate) and at most *seats* times as many.
     """
-    if kind in SINGLE_CHOICE:
+    if kinds.KINDS[kind].single:
         return _Bounds(float(valid), float(valid), valid)
     return _Bounds(float(valid), valid * seats if seats else math.inf, valid)
 
@@ -2698,8 +4155,7 @@ def _final_municipal(
         if known:
             path = known.path
         else:
-            kind, _, area = contest.partition(":")
-            path = live_path({"kind": kind, "area": area.partition("/")[0]}, okres)
+            path = live_path(contest, okres)
         live.add(path, contest, record)
         if areas:
             live.add_okrsky(path, contest, areas)
@@ -2891,7 +4347,216 @@ def _final_regional(t: Tables, live: Live) -> None:
 
 
 def _kraj_path(kraj: str) -> str:
-    return live_path({"kind": "predseda", "area": kraj}, {})
+    return live_path(f"predseda:{kraj}", {})
+
+
+# A municipal by-election's package.
+
+_TYPE = "Typ volieb"
+_NOT_HELD = "nekonajú sa"
+"""The ``Typ volieb`` of an obec whose by-election did not take place,
+casefolded: since 2023 it is capitalised, before not."""
+_BY_TABLES: dict[str, frozenset[str]] = {
+    "tab0dd": frozenset({_C_OBEC, _TYPE}),
+    "tab02ad": frozenset({_C_OBEC, _C_SEATS}),
+    "tab02bd": _TURNOUT | {_C_OBEC, _C_OKRES, _C_OKRSKY, _VALID_OF["starosta"]},
+    "tab02be": _TURNOUT | {_C_OBEC, _C_OBVOD, _C_OKRSKY, _VALID_OF["oz"]},
+    "tab02bf": _TURNOUT
+    | {_C_OBEC, _C_OBVOD, _C_OKRSOK, _VALID_OF["starosta"], _VALID_OF["oz"]},
+    "tab05d": _VOTE_COLUMNS | {_C_OBEC, _C_NOTE},
+    "tab05f": _VOTE_COLUMNS | {_C_OBEC, _C_OKRSOK},
+    "tab08e": _VOTE_COLUMNS | {_C_OBEC, _C_OBVOD, _C_FLAG},
+    "tab08f": _VOTE_COLUMNS | {_C_OBEC, _C_OBVOD, _C_OKRSOK, _C_NOTE},
+}
+"""The tables read from a by-election's package, with the columns used:
+those of the 2026 tables, but for the turnout tables' ids, the seats per
+obec (``tab02ad``) and the withdrawn's ``X`` per okrsok as a note."""
+_C_ENVELOPES = "Počet vydaných obálok"
+"""The voters in the turnout of a by-election of 2019–2022: the envelopes
+issued, as the night's files count them (``_GRAPH``)."""
+_C_NAME = "Meno a priezvisko"
+_OLDER_BY_TABLES: dict[str, frozenset[str]] = {
+    "tab0c": frozenset({_C_OBEC, _TYPE, _C_SEATS}),
+    "tab02bd": frozenset({_C_OBEC, _C_OKRES, _C_OKRSKY, _C_ELIGIBLE, _C_ENVELOPES})
+    | {_VALID_OF["starosta"], _VALID_OF["oz"]},
+    "tab05": _VOTE_COLUMNS | {_C_OBEC, _C_FLAG},
+    "tab06": frozenset({_C_OBEC, _C_OBVOD, _C_NAME, _C_VOTES}),
+}
+"""The tables read from a by-election's package of 2019–2022
+(:func:`older_by_election`), with the columns used: the obce with their
+seats, the turnout and the mayors' votes per obec, the elected councillors
+per obvod with their votes."""
+
+
+def older_by_election(package: tables.Package) -> bool:
+    """Return whether a by-election's *package* is of 2019–2022.
+
+    ŠÚ SR's packages of the term elected in 2018 (``OSO_<yyyymm>_xlsx.zip``)
+    are laid out otherwise than those since: their obce are ``tab0c``, not
+    ``tab0dd``, their mayor candidates ``tab0a``; they have no results per
+    okrsok, and of the councils the elected only.
+    """
+    return not package.has("tab0dd")
+
+
+def read_by_election(
+    paths: Sequence[Path], ref: Reference, log: Log = progress.note
+) -> tuple[Live, list[str]]:
+    """Return the results of a municipal by-election's package, and its sources.
+
+    ŠÚ SR publishes the doplňujúce and nové voľby held on one day as one
+    package (``OSO<yyyymm>_SK_xlsx.zip``, format ``susr-by``) of XLSX tables
+    read by :mod:`election_map_slovakia.tables` (:data:`_BY_TABLES`): the
+    turnout per obec, council obvod and okrsok, the votes of the mayors per
+    obec and okrsok and of the councils per obvod and okrsok. A contest's
+    record is its unit's, its okrsky go to the okrsok files; the contests
+    of *ref* give the results file and a council's seats where the obec
+    elects in several obvody (the package has the seats of the whole obec).
+    A package of 2019–2022 (:func:`older_by_election`) is read as
+    :func:`_older_by_election` says. The source is ``oso``, counted in the
+    obce where something was to be elected; *log* is told of the contests
+    of the candidate lists without results.
+    """
+    contests = ref.contests
+    try:
+        package = tables.open_package(paths, TIMEZONE)
+        older = older_by_election(package)
+        wanted = _OLDER_BY_TABLES if older else _BY_TABLES
+        rows = {t: _table_rows(package, t, cols) for t, cols in wanted.items()}
+    except tables.TableError as e:
+        raise ResultsError(str(e)) from e
+    live = Live("final")
+    obce = {r[_C_OBEC]: r for r in rows["tab02bd"]}
+    okres = {code: r[_C_OKRES] for code, r in obce.items()}
+    of_obec, of_obvod = itemgetter(_C_OBEC), itemgetter(_C_OBEC, _C_OBVOD)
+
+    def add(contest: str, record: Record, areas: dict[str, Area]) -> None:
+        known = contests.get(contest)
+        path = known.path if known else live_path(contest, okres)
+        live.add(path, contest, record)
+        if areas:
+            live.add_okrsky(path, contest, areas)
+
+    def okrsky_of(
+        code: str,
+        turnout: Sequence[Mapping[str, str]],
+        votes: Sequence[Mapping[str, str]],
+        kind: str,
+    ) -> dict[str, Area]:
+        """Return a contest's okrsky from its rows.
+
+        None of Bratislava or Košice as a whole, whose own okrsky the
+        package does not join to their districts'.
+        """
+        if code in CITY_OBCE:
+            log(f"{CITY_OBCE[code]}: a {kind} contest's okrsky left out")
+            return {}
+        return _okrsok_areas(turnout, votes, kind, _C_OKRSOK)
+
+    if older:
+        _older_by_election(rows, ref, add)
+    else:
+        turnout = _group(rows["tab02bf"], of_obec)
+        votes = _group(rows["tab05f"], of_obec)
+        for code, mine in _group(rows["tab05d"], of_obec).items():
+            row = obce[code]
+            ballots = _final_ballots(mine, _C_NOTE, None)
+            record = _final_record(row, "starosta", ballots, _every_okrsok(row), 1)
+            areas = okrsky_of(
+                code, turnout.get(code, []), votes.get(code, []), "starosta"
+            )
+            add(f"starosta:{CITY_OBCE.get(code, code)}", record, areas)
+        obvody = {of_obvod(r): r for r in rows["tab02be"]}
+        seats = {r[_C_OBEC]: number(r[_C_SEATS]) for r in rows["tab02ad"]}
+        turnout = _group(rows["tab02bf"], of_obvod)
+        votes = _group(rows["tab08f"], of_obvod)
+        councils = _group(rows["tab08e"], of_obvod)
+        electing = Counter(code for code, _ in councils)
+        for key, mine in councils.items():
+            code, obvod = key
+            row = obvody[key]
+            contest = f"oz:{CITY_OBCE.get(code, code)}/{int(obvod)}"
+            n = seats.get(code) if electing[code] == 1 else _seats(contests, contest)
+            ballots = _final_council_ballots(mine, votes.get(key, []), _C_NOTE)
+            record = _final_record(row, "oz", ballots, _every_okrsok(row), n)
+            add(
+                contest,
+                record,
+                okrsky_of(code, turnout.get(key, []), votes.get(key, []), "oz"),
+            )
+    units = rows["tab0c" if older else "tab0dd"]
+    held = {r[_C_OBEC] for r in units if r[_TYPE].strip().casefold() != _NOT_HELD}
+    time = package.time.isoformat() if package.time else None
+    live.source["oso"] = source(time, (len(held & obce.keys()), len(held)), "obce")
+    found = live.records()
+    lacking = sorted(
+        c for c in contests if kinds.source_of(c) == "oso" and c not in found
+    )
+    if lacking:
+        log(f"no results of {len(lacking)} contests: {', '.join(lacking)}")
+    return live, ["oso"]
+
+
+def _older_by_election(
+    rows: Mapping[str, Sequence[Mapping[str, str]]],
+    ref: Reference,
+    add: Callable[[str, Record, dict[str, Area]], None],
+) -> None:
+    """Add the contests of a by-election's package of 2019–2022 with *add*.
+
+    *rows* are its tables (:data:`_OLDER_BY_TABLES`). A mayor's record is
+    the obec's, the voters the envelopes issued. A council's lists its
+    elected only, whom the package names (titles and all) but does not
+    number: each is the candidate of that name in *ref*
+    (:func:`candidates.name_words`), as the candidate lists have them (read
+    from the same package, or curated where its list was replaced:
+    :mod:`election_map_slovakia.lists`). Where one obvod of the obec
+    elects, the obec's turnout and seats are its; where several, those of
+    none is known.
+    """
+    obce = {r[_C_OBEC]: {**r, _C_VOTERS: r[_C_ENVELOPES]} for r in rows["tab02bd"]}
+    for code, mine in _group(rows["tab05"], itemgetter(_C_OBEC)).items():
+        row = obce[code]
+        ballots = _final_ballots(mine, _C_FLAG, None)
+        record = _final_record(row, "starosta", ballots, _every_okrsok(row), 1)
+        add(f"starosta:{CITY_OBCE.get(code, code)}", record, {})
+    seats = {r[_C_OBEC]: number(r[_C_SEATS]) for r in rows["tab0c"]}
+    councils = _group(rows["tab06"], itemgetter(_C_OBEC, _C_OBVOD))
+    electing = Counter(code for code, _ in councils)
+    for (code, obvod), mine in councils.items():
+        contest = f"oz:{CITY_OBCE.get(code, code)}/{int(obvod)}"
+        named = ref.candidates.get(contest, ())
+        ballots: list[Ballot] = [
+            (_named(named, r[_C_NAME], contest), int(r[_C_VOTES]), 1) for r in mine
+        ]
+        if electing[code] == 1:
+            row = obce[code]
+            n = seats.get(code)
+            record = _final_record(row, "oz", ballots, _every_okrsok(row), n)
+        else:
+            n = _seats(ref.contests, contest)
+            record = Record("final", None, None, None, None, n, len(ballots), ballots)
+        add(contest, record, {})
+
+
+def _named(cands: Iterable[Candidate], name: str, contest: str) -> int:
+    """Return the ballot number of the candidate of *contest* named *name*."""
+    words = candidates.name_words(name)
+    found = [c.number for c in cands if candidates.name_words(c.name) == words]
+    if len(found) != 1:
+        how = "more than one candidate" if found else "no candidate"
+        raise ResultsError(f"{contest}: {how} named {name!r} in the candidate lists")
+    return found[0]
+
+
+def _table_rows(
+    package: tables.Package, table: str, columns: Iterable[str]
+) -> list[dict[str, str]]:
+    """Return the rows of *table* of *package*; fail unless it has *columns*."""
+    t = package.table(table)
+    for column in sorted(columns):
+        t.column(column)
+    return t.rows
 
 
 # Dummy results.
@@ -2938,8 +4603,6 @@ _COUNCIL_SEATS = (3, 9)
 _PAST_LEFT_OUT = 0.25
 """Share of the fake obce of several okrsky whose earlier okrsky are not
 known (:data:`UNKNOWN`)."""
-_PAST_DAY = "2022-10-29"
-"""The day of the made-up election before."""
 _PAST_RAN = 0.5
 """Share of the fake candidates who stood for the same office before."""
 
@@ -2955,12 +4618,13 @@ class _Unit:
     """The unit is counted once the stage's share passes it."""
 
 
-def _rng(seed: int, *key: object) -> random.Random:
+def rng(seed: int, *key: object) -> random.Random:
+    """Return the random numbers of a fake's *key* for *seed*."""
     # A string seed is hashed with SHA-512: the same numbers in every run.
     return random.Random(":".join(map(str, (seed, *key))))
 
 
-def _apportion(total: int, weights: Sequence[float]) -> list[int]:
+def apportion(total: int, weights: Sequence[float]) -> list[int]:
     """Return *total* split in proportion to *weights*, the parts adding up to it.
 
     Each part is the step between rounded running totals, so rounding
@@ -2979,7 +4643,7 @@ def _apportion(total: int, weights: Sequence[float]) -> list[int]:
     return parts
 
 
-def _deal(total: int, weights: Sequence[float], caps: Sequence[int]) -> list[int]:
+def deal(total: int, weights: Sequence[float], caps: Sequence[int]) -> list[int]:
     """Return *total* split in proportion to *weights*, no part above its cap.
 
     What a part has no room for goes to the others with room, in proportion
@@ -2989,11 +4653,68 @@ def _deal(total: int, weights: Sequence[float], caps: Sequence[int]) -> list[int
     left = total
     while left:
         room = [i for i, part in enumerate(parts) if part < caps[i]]
-        for i, share in zip(room, _apportion(left, [weights[i] for i in room])):
+        for i, share in zip(room, apportion(left, [weights[i] for i in room])):
             given = min(share, caps[i] - parts[i])
             parts[i] += given
             left -= given
     return parts
+
+
+def fake_okrsky(
+    seed: int, contest: str, code: str, area: Area, numbers: Iterable[int]
+) -> dict[str, Area]:
+    """Return *area* of *contest* in obec *code* split into its okrsky *numbers*.
+
+    An okrsok's size and turnout are its own in every contest; the
+    candidates' votes lean a different way in each, keeping to what the
+    check holds the okrsky to: in a single-choice contest each okrsok's
+    votes are its valid ballots, dealt out okrsok by okrsok from what the
+    candidates have left; in a council's no candidate has more votes in an
+    okrsok than its valid ballots.
+    """
+    e, v, valid, votes = area
+    numbers = list(numbers)
+    shape = [rng(seed, "okrsok", code, k) for k in numbers]
+    size = [r.uniform(0.5, 1.5) for r in shape]
+    eligible = apportion(e or 0, size)
+    voters = apportion(
+        v or 0,
+        [x * r.uniform(0.92, 1.08) for x, r in zip(eligible, shape, strict=True)],
+    )
+    valids = apportion(valid or 0, voters)
+    lean = rng(seed, "lean", contest, code)
+    names = sorted(votes)
+    leans = {n: [lean.uniform(0.6, 1.4) for _ in numbers] for n in names}
+    if kinds.parse(contest).single:
+        left = dict(votes)
+        cells = {n: [0] * len(numbers) for n in names}
+        for i, count in enumerate(valids):
+            parts = deal(
+                count,
+                [left[n] * leans[n][i] for n in names],
+                [left[n] for n in names],
+            )
+            for n, part in zip(names, parts, strict=True):
+                cells[n][i] = part
+                left[n] -= part
+    else:
+        cells = {
+            n: deal(
+                votes[n],
+                [w * x for w, x in zip(valids, leans[n], strict=True)],
+                valids,
+            )
+            for n in names
+        }
+    return {
+        okrsok_key(code, k): (
+            eligible[i],
+            voters[i],
+            valids[i],
+            {n: cells[n][i] for n in names},
+        )
+        for i, k in enumerate(numbers)
+    }
 
 
 class _Fake:
@@ -3031,7 +4752,7 @@ class _Fake:
                 self.units[code] = replace(u, rank=u.rank * _LANDSLIDE_RANK)
 
     def _unit(self, key: str, past: tuple[int, int] | None, code: str) -> _Unit:
-        r = _rng(self.seed, "unit", key)
+        r = rng(self.seed, "unit", key)
         e0, v0 = past or _DEFAULT_PAST
         eligible = max(1, round(e0 * r.uniform(0.97, 1.01)))
         turnout = v0 / max(e0, 1) * r.uniform(0.9, 1.15)
@@ -3068,67 +4789,11 @@ class _Fake:
                     numbers = sorted(known)
                 elif len(self.ref.municipal[code][1]) > 1:
                     continue
-            out |= self._split(c, code, area, numbers)
+            out |= fake_okrsky(self.seed, c.id, code, area, numbers)
         return out
 
-    def _split(
-        self, c: Contest, code: str, area: Area, numbers: Iterable[int]
-    ) -> dict[str, Area]:
-        """Return *area* of municipality *code* split into its okrsky *numbers*.
-
-        An okrsok's size and turnout are its own in every contest; the
-        candidates' votes lean a different way in each, keeping to what the
-        check holds the okrsky to: in a mayor's or president's contest each
-        okrsok's votes are its valid ballots, dealt out okrsok by okrsok from
-        what the candidates have left; in a council's no candidate has more
-        votes in an okrsok than its valid ballots.
-        """
-        e, v, valid, votes = area
-        numbers = list(numbers)
-        shape = [_rng(self.seed, "okrsok", code, k) for k in numbers]
-        size = [r.uniform(0.5, 1.5) for r in shape]
-        eligible = _apportion(e or 0, size)
-        voters = _apportion(
-            v or 0,
-            [x * r.uniform(0.92, 1.08) for x, r in zip(eligible, shape, strict=True)],
-        )
-        valids = _apportion(valid or 0, voters)
-        lean = _rng(self.seed, "lean", c.id, code)
-        names = sorted(votes)
-        leans = {n: [lean.uniform(0.6, 1.4) for _ in numbers] for n in names}
-        if c.kind in SINGLE_CHOICE:
-            left = dict(votes)
-            cells = {n: [0] * len(numbers) for n in names}
-            for i, count in enumerate(valids):
-                parts = _deal(
-                    count,
-                    [left[n] * leans[n][i] for n in names],
-                    [left[n] for n in names],
-                )
-                for n, part in zip(names, parts, strict=True):
-                    cells[n][i] = part
-                    left[n] -= part
-        else:
-            cells = {
-                n: _deal(
-                    votes[n],
-                    [w * x for w, x in zip(valids, leans[n], strict=True)],
-                    valids,
-                )
-                for n in names
-            }
-        return {
-            okrsok_key(code, k): (
-                eligible[i],
-                voters[i],
-                valids[i],
-                {n: cells[n][i] for n in names},
-            )
-            for i, k in enumerate(numbers)
-        }
-
-    def past(self, live: Live) -> Past:
-        """Return a made-up :class:`Past` of *live*'s okrsky.
+    def past(self, live: Live, day: str) -> Past:
+        """Return a made-up :class:`Past` of *live*'s okrsky, of *day*.
 
         Each obec of several okrsky gets a method drawn for all of them, some
         :data:`UNKNOWN`; each okrsok of a known one and each obec wholly in
@@ -3140,7 +4805,7 @@ class _Fake:
             for areas in contests.values():
                 for key in areas:
                     okrsky[key.partition("/")[0]].add(key)
-        past = Past(_PAST_DAY, self._methods(okrsky))
+        past = Past(day, self._methods(okrsky))
         for contests in live.okrsky.values():
             for contest, areas in contests.items():
                 units = self._units(contest, areas, past.methods, okrsky)
@@ -3159,7 +4824,7 @@ class _Fake:
         ran = {
             n
             for n in self._numbers(self.ref.contests[contest])
-            if _rng(self.seed, "ran", contest, n).random() < _PAST_RAN
+            if rng(self.seed, "ran", contest, n).random() < _PAST_RAN
         }
         units: dict[str, Area] = {}
         by_obec: dict[str, list[Area]] = defaultdict(list)
@@ -3178,7 +4843,7 @@ class _Fake:
         methods: dict[str, int] = {}
         for obec, keys in sorted(okrsky.items()):
             if len(keys) > 1:
-                r = _rng(self.seed, "past", obec)
+                r = rng(self.seed, "past", obec)
                 left_out = r.random() < _PAST_LEFT_OUT
                 method = UNKNOWN if left_out else r.choice(PAST_METHODS[1:])
                 methods |= dict.fromkeys(keys, method)
@@ -3187,12 +4852,12 @@ class _Fake:
     def _then(self, contest: str, key: str, area: Area, ran: Collection[int]) -> Area:
         """Return made-up earlier figures of okrsok *key* of *contest*."""
         e, v, valid, votes = area
-        r = _rng(self.seed, "then", key)
+        r = rng(self.seed, "then", key)
         eligible = round((e or 0) * r.uniform(0.95, 1.05))
         share = r.uniform(0.8, 1.1)
         voters = min(eligible, round((v or 0) * share))
         valid_then = min(voters, round((valid or 0) * share))
-        jitter = _rng(self.seed, "then", contest, key)
+        jitter = rng(self.seed, "then", contest, key)
         return (
             eligible,
             voters,
@@ -3222,7 +4887,7 @@ class _Fake:
 
     def _weights(self, c: Contest) -> dict[int, float]:
         """Return each candidate's popularity in *c*."""
-        r = _rng(self.seed, "weights", c.id)
+        r = rng(self.seed, "weights", c.id)
         numbers = self._numbers(c)
         weights = {n: r.expovariate(1) ** 2 for n in numbers}
         order = sorted(numbers, key=lambda n: -weights[n])
@@ -3237,10 +4902,10 @@ class _Fake:
     def _votes(self, c: Contest, unit: _Unit, seats: int) -> dict[int, int]:
         """Return the votes of each candidate of *c* of *seats* in *unit*."""
         weights = self._weights(c)
-        r = _rng(self.seed, "votes", c.id, unit.code)
-        if c.kind in SINGLE_CHOICE:
+        r = rng(self.seed, "votes", c.id, unit.code)
+        if c.single:
             noisy = [w * r.uniform(0.85, 1.15) for w in weights.values()]
-            return dict(zip(weights, _apportion(unit.valid, noisy), strict=True))
+            return dict(zip(weights, apportion(unit.valid, noisy), strict=True))
         if self.landslide is not None and c.id == self.landslide.id:
             votes = [
                 round(unit.valid * w * r.uniform(0.9, 1.1)) for w in weights.values()
@@ -3255,13 +4920,13 @@ class _Fake:
             ]
         room = math.floor(unit.valid * seats * _COUNCIL_MARKS)
         if sum(votes) > room:
-            votes = _apportion(room, votes)
+            votes = apportion(room, votes)
         return dict(zip(weights, votes, strict=True))
 
     def _elect(self, c: Contest, record: Record, elected: int) -> None:
         """Flag the *elected* candidates with the most votes, the rest lost."""
         order = sorted(record.candidates, key=lambda b: (-b[1], b[0]))
-        loser = 0 if c.kind in ("oz", "zsk") else None
+        loser = None if c.single else 0
         won = {b[0] for b in order[:elected]}
         record.candidates = [(n, v, 1 if n in won else loser) for n, v, _ in order]
         record.filled = len(won)
@@ -3285,8 +4950,9 @@ class _Fake:
             votes = self._votes(c, u, c.seats or 1)
             totals = _add(totals, votes)
             keys = [u.code]
-            if night and c.kind == "predseda":
-                keys.append(f"obvod:{self.ref.places[u.code].zsk}")
+            zsk = self.ref.places[u.code].zsk
+            if night and c.kind == "predseda" and zsk:
+                keys.append(f"obvod:{zsk}")
             for key in keys:
                 unit = (u.eligible, u.voters, u.valid, votes)
                 areas[key] = _add_area(areas.get(key, (0, 0, 0, {})), unit)
@@ -3328,7 +4994,7 @@ class _Fake:
         part = 1 if c.kind == "starosta" else len(councils)
         e0, v0 = c.past or _DEFAULT_PAST
         unit = self._unit(c.id, (e0 // part, v0 // part), c.area)
-        r = _rng(self.seed, "seats", c.id)
+        r = rng(self.seed, "seats", c.id)
         seats = c.seats or (1 if c.kind == "starosta" else r.randint(*_COUNCIL_SEATS))
         record = Record("winner", None, unit.eligible, unit.voters, unit.valid, seats)
         record.candidates = [
@@ -3348,10 +5014,10 @@ class _Fake:
 
     def reported(self, area: str, share: float) -> bool:
         """Whether a municipality's results are in at *share*."""
-        return share >= 1 or _rng(self.seed, "report", area).random() < share
+        return share >= 1 or rng(self.seed, "report", area).random() < share
 
     def sources(self, s: Stage) -> dict[str, dict[str, Any]]:
-        """Return ``source`` of ``status.json`` at stage *s*."""
+        """Return ``source`` of ``status.json`` at stage *s*: the election's."""
         units = self.units.values()
         counted = [u for u in units if s.regional >= 1 or u.rank < s.regional]
         areas = [
@@ -3363,7 +5029,7 @@ class _Fake:
                 else self.reported(area, s.municipal)
             )
         ]
-        return {
+        out = {
             "osk": source(
                 s.time,
                 (sum(u.okrsky for u in counted), sum(u.okrsky for u in units)),
@@ -3371,6 +5037,7 @@ class _Fake:
             ),
             "oso": source(s.time, (len(areas), len(self.ref.municipal)), "obce"),
         }
+        return {name: entry for name, entry in out.items() if name in self.ref.sources}
 
     def regional(self, s: Stage, final: bool) -> Iterator[tuple[Contest, Record]]:
         """Yield the regional contests counted at stage *s*."""
@@ -3407,8 +5074,12 @@ def fake(
     seed: int = 0,
     okrsky: Mapping[str, int] | None = None,
     obvod_okrsky: Mapping[str, Mapping[int, Sequence[int]]] | None = None,
+    past: Mapping[str, str] | None = None,
 ) -> Live:
     """Return dummy results of the counting at *stage* (:data:`STAGES`).
+
+    Of a municipal and regional election or a by-election (the sources of
+    *ref*'s contests); :func:`national.fake` makes the national kinds'.
 
     Turnout follows each area's past election, votes a stable random
     distribution. The counted parts only grow from one stage to the next
@@ -3419,8 +5090,9 @@ def fake(
     ``final`` has the okrsky of every contest too, as many per municipality
     as *okrsky* says (else one per 800 registered voters), a council
     obvod's those of *obvod_okrsky* (municipality → obvod → okrsok numbers)
-    where given, and a made-up ``past`` for most of the municipalities of
-    several.
+    where given, and, of the sources *past* names (source → the day of the
+    election before its contests are compared with, :attr:`Expect.past`), a
+    made-up ``past`` for most of the municipalities of several.
     """
     s = STAGES[stage]
     model = _Fake(ref, seed, okrsky or {}, obvod_okrsky or {})
@@ -3439,7 +5111,11 @@ def fake(
                 record.counted = record.counted or (len(areas), len(areas))
                 live.add_okrsky(c.path, c.id, areas)
     if final:
-        live.past = model.past(live)
+        days = past or {}
+        for day in sorted(set(days.values())):
+            sources = [s for s, d in days.items() if d == day]
+            then = model.past(live.part(sources), day)
+            live.past |= dict.fromkeys(sources, then)
     _count_voters(live, ref)
     return live
 
@@ -3461,8 +5137,9 @@ def describe(directory: Path) -> list[str]:
     live = read_live(directory)
     by_status = Counter(r.status for r in (live.records().values() if live else ()))
     okrsky = sum(1 for path in st["files"] if path.startswith(f"{OKRSKY_DIR}/"))
+    areas = len(st["files"]) - okrsky - (TURNOUT_FILE in st["files"])
     lines.append(
-        f"  {len(st['files']) - okrsky} area files, {okrsky} okrsok files, "
+        f"  {areas} area files, {okrsky} okrsok files, "
         + (", ".join(f"{n} {k}" for k, n in sorted(by_status.items())) or "no contests")
     )
     return lines

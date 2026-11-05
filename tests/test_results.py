@@ -1,5 +1,6 @@
 import argparse
 import csv
+import dataclasses
 import datetime as dt
 import hashlib
 import io
@@ -13,7 +14,7 @@ from typing import cast
 
 import pytest
 
-from election_map_slovakia import candidates, cli, config, results
+from election_map_slovakia import addresses, candidates, cli, config, pages, results
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -156,9 +157,22 @@ def make_data(obce_per_obvod: int = 1) -> tuple[dict, dict, dict]:
     return data, props, seats
 
 
+DIVISIONS = results.Divisions.of(make_data()[0], ())
+"""Where the obce of the results tested lie."""
+EXPECT = results.Expect(
+    frozenset({"oso", "osk"}),
+    {},
+    {},
+    DIVISIONS,
+    {"oso": "2022-10-29", "osk": "2022-10-29"},
+)
+"""What the municipal and regional results are checked against, each
+half compared with that of 2022."""
+
+
 @pytest.fixture(scope="module")
 def ref() -> results.Reference:
-    return results.reference(*make_data())
+    return results.reference(*make_data(), parts=())
 
 
 def test_slovak_numbers():
@@ -196,12 +210,18 @@ def test_code_mapping(ref):
     assert results.vobvod("1", 5) == "105"
     assert results.vobvod("8", 12) == "812"
     assert results.CITY_OBCE == {"582000": "BA", "599981": "KE"}
-    assert results.live_path({"kind": "zsk", "area": "3"}, {}) == "kraj/3"
-    assert results.live_path({"kind": "oz", "area": "KE"}, {}) == "city/KE"
+    assert results.live_path("zsk:3/1", {}) == "kraj/3"
+    assert results.live_path("oz:KE/2", {}) == "city/KE"
     okres_of = {"508063": "106"}
-    assert results.live_path({"kind": "starosta", "area": "508063"}, okres_of) == (
-        "okres/106"
-    )
+    assert results.live_path("starosta:508063", okres_of) == "okres/106"
+    assert results.live_path("nrsr:SK", {}) == "country"
+    assert results.live_path("nrsr:SK/12", {}) == "list/12"
+    assert results.okrsok_file("country", "3") == "country/3"
+    assert results.okrsok_file("list/12", "3") == "list/12/3"
+    assert results.okrsok_file("kraj/3", "3") == "kraj/3"
+    assert results.area_of_okrsok_file("country/3") == "country"
+    assert results.area_of_okrsok_file("list/12/3") == "list/12"
+    assert results.area_of_okrsok_file("kraj/3") == "kraj/3"
     assert ref.contests["zsk:1/2"].path == "kraj/1"
     assert ref.contests["oz:BA/2"].path == "city/BA"
     assert ref.contests["starosta:528595"].path == "okres/101"
@@ -423,8 +443,8 @@ def test_night_normalization(ref, tmp_path):
     ]
     assert zsk.filled == 1
     assert "zsk:1/2" not in records
-    assert results.write(tmp_path, live, NOW) is not None
-    assert results.check(tmp_path) == []
+    assert results.write(tmp_path, live, DIVISIONS, NOW) is not None
+    assert results.check(tmp_path, EXPECT) == []
 
 
 def test_night_voters_counted(ref):
@@ -620,15 +640,15 @@ def test_night_before_counting(ref, tmp_path):
         "voters": None,
     }
     assert results.unit_paths(files, ref) == []
-    status = results.write(tmp_path, live, NOW)
+    status = results.write(tmp_path, live, DIVISIONS, NOW)
     assert status["phase"] == "none"
     assert status["files"] == {}
-    assert results.check(tmp_path) == []
+    assert results.check(tmp_path, EXPECT) == []
 
 
 def test_status_versions_and_hashes(ref, tmp_path):
     live = results.night(night_files(ref), ref)
-    first = results.write(tmp_path, live, NOW)
+    first = results.write(tmp_path, live, DIVISIONS, NOW)
     assert first["version"].startswith("20261024T214012-")
     assert first["updated"] == "2026-10-24T21:40:12+02:00"
     for path, digest in first["files"].items():
@@ -637,22 +657,22 @@ def test_status_versions_and_hashes(ref, tmp_path):
     assert {"kraj/1", "city/BA"} <= set(first["files"])
     # The same content again: nothing is written.
     later = NOW + dt.timedelta(minutes=1)
-    assert results.write(tmp_path, live, later) is None
+    assert results.write(tmp_path, live, DIVISIONS, later) is None
     assert results.read_status(tmp_path) == first
     # One contest changes: a new version, a new hash of its file only.
     live.files["kraj/1"]["zsk:1/1"].candidates[0] = (1, 5001, 1)
-    second = results.write(tmp_path, live, later)
+    second = results.write(tmp_path, live, DIVISIONS, later)
     assert second["version"] != first["version"]
     changed = {p for p in first["files"] if first["files"][p] != second["files"][p]}
     assert changed == {"kraj/1"}
     # Only the source time changes: a new version, the same files.
     live.source["oso"]["time"] = "2026-10-25T01:35:00+02:00"
-    third = results.write(tmp_path, live, later)
+    third = results.write(tmp_path, live, DIVISIONS, later)
     assert third["version"] != second["version"]
     assert third["files"] == second["files"]
     # A file edited behind the status breaks the contract.
     (tmp_path / "kraj/1.json").write_bytes(b'{"contests":{}}')
-    assert any("hash" in p for p in results.check(tmp_path))
+    assert any("hash" in p for p in results.check(tmp_path, EXPECT))
 
 
 def decided(record: results.Record, eligible_2022: int) -> bool:
@@ -668,14 +688,14 @@ def decided(record: results.Record, eligible_2022: int) -> bool:
 
 @pytest.fixture(scope="module")
 def big_ref() -> results.Reference:
-    return results.reference(*make_data(obce_per_obvod=12))
+    return results.reference(*make_data(obce_per_obvod=12), parts=())
 
 
 def test_fake_stages_follow_the_contract_and_only_grow(big_ref, tmp_path):
     stages = {s: results.fake(big_ref, s, seed=7) for s in results.STAGES}
     for name, live in stages.items():
-        assert results.write(tmp_path / name, live, NOW) is not None
-        assert results.check(tmp_path / name) == [], name
+        assert results.write(tmp_path / name, live, DIVISIONS, NOW) is not None
+        assert results.check(tmp_path / name, EXPECT) == [], name
     assert stages["none"].phase == "none" and not stages["none"].files
     assert stages["final"].phase == "final"
     assert stages["late"].phase == stages["mid"].phase == "partial"
@@ -742,6 +762,7 @@ def test_fake_final_okrsky_add_up(big_ref, tmp_path):
         "final",
         okrsky={"528595": 3, "529320": 4},
         obvod_okrsky={"528595": {1: (2, 3)}},
+        past=EXPECT.past,
     )
     ba = live.okrsky["city/BA"]
     assert set(ba["starosta:BA"]) == {f"528595/{n}" for n in (1, 2, 3)} | {
@@ -758,7 +779,8 @@ def test_fake_final_okrsky_add_up(big_ref, tmp_path):
             assert len(okrsky) == record.counted[1], contest
             assert sum(a[0] for a in okrsky.values()) == record.eligible, contest
             assert sum(a[2] for a in okrsky.values()) == record.valid, contest
-    past = live.past
+    past = live.past["oso"]
+    assert live.past == dict.fromkeys(live.source, past)
     assert past.day and past.methods and past.contests
     keys = {
         k for contests in live.okrsky.values() for c in contests.values() for k in c
@@ -772,8 +794,8 @@ def test_fake_final_okrsky_add_up(big_ref, tmp_path):
             assert "/" not in unit or past.methods.get(unit, results.UNKNOWN)
     assert "528595" in past.contests["starosta:BA"]
     assert "528595" not in past.contests["oz:528595/1"]
-    assert results.write(tmp_path / "good", live, NOW) is not None
-    assert results.check(tmp_path / "good") == []
+    assert results.write(tmp_path / "good", live, DIVISIONS, NOW) is not None
+    assert results.check(tmp_path / "good", EXPECT) == []
     # The regional contests too: the regional okrsky are the municipal ones.
     okrsky_dir = tmp_path / "good" / results.OKRSKY_DIR
     written = {
@@ -781,11 +803,11 @@ def test_fake_final_okrsky_add_up(big_ref, tmp_path):
         for p in okrsky_dir.rglob("*.json")
     }
     assert any(f["past"] for p, f in written.items() if p.startswith("kraj/"))
-    assert results.read_live(tmp_path / "good").past == past
+    assert results.read_live(tmp_path / "good").past == live.past
     e, v, valid, votes = district["oz:528595/1"]["528595/2"]
     district["oz:528595/1"]["528595/2"] = (e, v, valid, {**votes, 1: votes[1] + 1})
-    assert results.write(tmp_path / "bad", live, NOW) is not None
-    assert results.check(tmp_path / "bad") == [
+    assert results.write(tmp_path / "bad", live, DIVISIONS, NOW) is not None
+    assert results.check(tmp_path / "bad", EXPECT) == [
         "okrsky/okres/101: oz:528595/1: votes of the okrsky do not add up to the"
         " candidates'"
     ]
@@ -800,7 +822,7 @@ def test_fake_final_no_okrsky_of_unknown_obvody():
     )
     data["candidacies"].append(candidacy("oz:529320/2", 1, "Ján", "Novák"))
     live = results.fake(
-        results.reference(data, props, seats), "final", okrsky={"529320": 4}
+        results.reference(data, props, seats, parts=()), "final", okrsky={"529320": 4}
     )
     okrsky = live.okrsky["okres/102"]
     assert "oz:529320/1" not in okrsky and "oz:529320/2" not in okrsky
@@ -1282,30 +1304,29 @@ def test_final_okrsky(final_2026):
     assert len(regional["zsk:1/1"]) == 5
 
 
-def test_final_written_and_merged(final_2026, tmp_path):
+def test_final_written(final_2026, tmp_path):
     live, elections = final_2026
-    night = results.Live("partial")
-    night.add(
-        "kraj/9", "predseda:9", results.Record("partial", candidates=[(1, 5, None)])
-    )
-    only_oso = results.merge(night, live, ["oso"])
+    only_oso = results.finalize(live, ["oso"], {"oso", "osk"})
     assert only_oso.phase == "partial"
-    assert "predseda:9" in only_oso.records()
-    merged = results.merge(None, live, elections)
+    assert only_oso.source["osk"]["counted"] is None
+    merged = results.finalize(live, elections, {"oso", "osk"})
     assert merged.phase == "final"
-    merged.past = results.Past(
-        "2022-10-29",
-        {"528595/1": results.SAME, "528595/2": results.UNKNOWN},
-        {
-            "starosta:BA": {
-                "528595/1": (90, 40, 39, {1: 20}),
-                "529320": (180, 70, 69, {1: 30, 3: 5}),
-            }
-        },
-    )
+    # The municipal contests alone compared with an election before.
+    merged.past = {
+        "oso": results.Past(
+            "2022-10-29",
+            {"528595/1": results.SAME, "528595/2": results.UNKNOWN},
+            {
+                "starosta:BA": {
+                    "528595/1": (90, 40, 39, {1: 20}),
+                    "529320": (180, 70, 69, {1: 30, 3: 5}),
+                }
+            },
+        )
+    }
     out = tmp_path / "results"
-    assert results.write(out, merged, NOW) is not None
-    assert results.check(out) == []
+    assert results.write(out, merged, DIVISIONS, NOW) is not None
+    assert results.check(out, EXPECT) == []
     again = results.read_live(out)
     assert {c: r.to_json() for c, r in again.records().items()} == {
         c: r.to_json() for c, r in merged.records().items()
@@ -1314,13 +1335,13 @@ def test_final_written_and_merged(final_2026, tmp_path):
     assert again.past == merged.past
     # Figures of an okrsok of unknown method, of a number not on the
     # ballot, of an obec outside the contest are caught.
-    merged.past.contests["starosta:BA"] |= {
+    merged.past["oso"].contests["starosta:BA"] |= {
         "528595/2": (1, 1, 1, {}),
         "529320": (1, 1, 1, {9: 1}),
         "500011": (1, 1, 1, {}),
     }
-    assert results.write(tmp_path / "bad", merged, NOW) is not None
-    assert results.check(tmp_path / "bad") == [
+    assert results.write(tmp_path / "bad", merged, DIVISIONS, NOW) is not None
+    assert results.check(tmp_path / "bad", EXPECT) == [
         "okrsky/city/BA: starosta:BA: past 500011 (no okrsok of known method or"
         " obec of the contest)",
         "okrsky/city/BA: starosta:BA: past 528595/2 (no okrsok of known method or"
@@ -1328,6 +1349,881 @@ def test_final_written_and_merged(final_2026, tmp_path):
         "okrsky/city/BA: starosta:BA: past 529320 (malformed, or votes of no"
         " candidate)",
     ]
+
+
+def test_country_wide_past_split_by_okrsok_file():
+    """A country-wide contest's okrsky span one okrsok file per kraj: each
+    file's past has only its own units of it, else every file would carry
+    units of no okrsok of its own. A municipal contest's past, in one file,
+    stays whole, so that the check sees a unit outside the file."""
+    past = results.Past(
+        "2019-03-16",
+        {"528595/1": results.SAME, "500011/1": results.SAME},
+        {
+            "prezident:SK/1": {
+                "528595/1": (90, 40, 39, {1: 20}),
+                "529320": (180, 70, 69, {1: 30}),
+                "500011/1": (50, 20, 19, {1: 10}),
+                "500020": (60, 30, 29, {1: 15}),
+            },
+            "starosta:BA": {
+                "528595/1": (90, 40, 39, {1: 20}),
+                "500011": (1, 1, 1, {}),
+            },
+        },
+    )
+    contests = ["prezident:SK/1", "starosta:BA"]
+    ba = results._past_json(past, contests, ["528595/1", "529320/1"])
+    assert ba["okrsky"] == {"528595/1": results.SAME}
+    assert set(ba["contests"]["prezident:SK/1"]) == {"528595/1", "529320"}
+    assert set(ba["contests"]["starosta:BA"]) == {"528595/1", "500011"}
+    nitra = results._past_json(past, ["prezident:SK/1"], ["500011/1", "500020/1"])
+    assert set(nitra["contests"]["prezident:SK/1"]) == {"500011/1", "500020"}
+    # A file with no unit of the contest gets no past of it at all.
+    assert results._past_json(past, ["prezident:SK/1"], ["503011/1"]) == {}
+
+
+def test_each_half_compared_with_the_newest_election_that_held_it():
+    """Before 2022 the municipal and the regional elections were held apart:
+    2022's municipal contests are compared with 2018's, its regional ones
+    with 2017's, and 2026's both with 2022's; another kind's with the newest
+    of its kind, a by-election's with none."""
+    cfg = config.load()
+
+    def earlier(slug: str) -> list[tuple[str, tuple[str, ...]]]:
+        compared = cli._earlier(cfg, cfg.election(slug))
+        return [(e.slug, halves) for e, halves in compared]
+
+    assert earlier("2022") == [("2017", ("osk",)), ("2018", ("oso",))]
+    assert earlier("2026") == [("2022", ("oso", "osk"))]
+    assert earlier("2018") == []
+    assert earlier("2017") == []
+    assert earlier("2024-prezident") == [("2019-prezident", ())]
+    assert earlier("2026-03") == []
+    assert cli._past_days(cfg, cfg.election("2022"), ["oso", "osk"]) == {
+        "oso": "2018-11-10",
+        "osk": "2017-11-04",
+    }
+    assert cli._past_days(cfg, cfg.election("2024-prezident"), ["prez1", "prez2"]) == {
+        "prez1": "2019-03-16",
+        "prez2": "2019-03-16",
+    }
+
+
+def test_halves_compared_with_elections_of_their_own(big_ref, tmp_path):
+    """Each half's okrsok files get the past of the election it is compared
+    with, read back apart, and the check holds each file to its own."""
+    days = {"oso": "2018-11-10", "osk": "2017-11-04"}
+    live = results.fake(big_ref, "final", past=days)
+    assert live.past["oso"].day == "2018-11-10"
+    assert live.past["osk"].day == "2017-11-04"
+    assert set(live.part({"osk"}).okrsky) == {p for p in live.okrsky if "kraj/" in p}
+    out = tmp_path / "out"
+    expect = dataclasses.replace(EXPECT, past=days)
+    assert results.write(out, live, DIVISIONS, NOW, expect=expect) is not None
+    okrsky_dir = out / results.OKRSKY_DIR
+    written = {
+        p.relative_to(okrsky_dir).as_posix(): past
+        for p in okrsky_dir.rglob("*.json")
+        if (past := json.loads(p.read_bytes())["past"])
+    }
+    assert {p["day"] for f, p in written.items() if f.startswith("kraj/")} == {
+        "2017-11-04"
+    }
+    assert {p["day"] for f, p in written.items() if not f.startswith("kraj/")} == {
+        "2018-11-10"
+    }
+    assert results.read_live(out).past == live.past
+    # Held to 2026's days (both 2022's), every file with a past is refused;
+    # with no regional election before, every kraj's.
+    wrong = results.check(out, EXPECT)
+    assert len(wrong) == len(written)
+    assert all("past day" in p for p in wrong)
+    halved = dataclasses.replace(EXPECT, past={"oso": "2018-11-10"})
+    refused = results.check(out, halved)
+    assert refused and all(p.startswith("okrsky/kraj/") for p in refused)
+    assert all(p.endswith("compared with (none)") for p in refused)
+
+
+# Two kraje of four obce; Nitra (500011) split into two council obvody.
+UNITS = results.Divisions(
+    {"500011": "403", "500020": "403", "500038": "404", "528595": "101"},
+    {"500011": "4", "500020": "4", "500038": "4", "528595": "1"},
+    frozenset({"500011"}),
+)
+
+
+def tamper(directory: Path, path: str, change) -> None:
+    """Change results file *path* in *directory* by *change*, and its hash too."""
+    file = directory / f"{path}.json"
+    content = json.loads(file.read_bytes())
+    change(content)
+    body = json.dumps(content).encode()
+    file.write_bytes(body)
+    status = json.loads((directory / results.STATUS_FILE).read_bytes())
+    status["files"][path] = hashlib.sha256(body).hexdigest()[:8]
+    (directory / results.STATUS_FILE).write_text(json.dumps(status))
+
+
+def test_country_wide_units_are_their_obce_summed(tmp_path):
+    """A country-wide contest's kraje and okresy are written with it, each its
+    obce's areas summed; the check refuses a sum that is not."""
+    areas = {
+        "500011": (100, 50, 48, {1: 30, 2: 18}),
+        "500020": (60, 30, 29, {1: 9, 2: 20}),
+        "500038": (40, 20, 20, {1: 5, 2: 15}),
+        "528595": (80, 40, 40, {1: 25, 2: 15}),
+    }
+    record = results.Record(
+        "final", None, 280, 140, 137, 1, 1, [(1, 69, 1), (2, 68, None)], areas
+    )
+    live = results.Live("final", results.no_sources({"prez1"}))
+    live.add("country", "prezident:SK/1", record)
+    out = tmp_path / "out"
+    expect = results.Expect(frozenset({"prez1"}), {}, {}, UNITS)
+    assert results.write(out, live, UNITS, NOW, expect=expect) is not None
+    written = json.loads((out / "country.json").read_bytes())
+    assert written["contests"]["prezident:SK/1"]["units"] == {
+        "kraj": {
+            "1": [80, 40, 40, {"1": 25, "2": 15}],
+            "4": [200, 100, 97, {"1": 44, "2": 53}],
+        },
+        "okres": {
+            "101": [80, 40, 40, {"1": 25, "2": 15}],
+            "403": [160, 80, 77, {"1": 39, "2": 38}],
+            "404": [40, 20, 20, {"1": 5, "2": 15}],
+        },
+    }
+    assert results.read_live(out).records()["prezident:SK/1"] == record
+
+    def wrong(content: dict) -> None:
+        content["contests"]["prezident:SK/1"]["units"]["okres"]["403"][0] += 1
+
+    tamper(out, "country", wrong)
+    assert results.check(out, expect) == [
+        "country: prezident:SK/1: units not the areas summed: okres 403"
+    ]
+
+
+def test_country_wide_origins_are_their_okrsky_ranked(tmp_path):
+    """A country-wide contest of persons has, per candidate, the okrsky of
+    all its kraj files with the most of their votes and with the highest
+    share (of the okrsky of 30 valid ballots or more, there being two),
+    only where they got votes; the check refuses others."""
+    okrsky = {
+        "country/4": {
+            "500011/1": (100, 60, 60, {1: 40, 2: 20}),
+            "500011/2": (50, 25, 25, {1: 5, 2: 20}),
+            "500038/1": (20, 10, 10, {1: 10}),
+        },
+        "country/1": {"528595/1": (90, 45, 45, {1: 15, 2: 30})},
+    }
+    record = results.Record(
+        "final", None, 260, 140, 140, 1, 1, [(1, 70, 1), (2, 70, None)]
+    )
+    live = results.Live("final", results.no_sources({"prez1"}))
+    live.add("country", "prezident:SK/1", record)
+    for path, areas in okrsky.items():
+        live.add_okrsky(path, "prezident:SK/1", areas)
+    out = tmp_path / "out"
+    expect = results.Expect(frozenset({"prez1"}), {}, {}, UNITS)
+    assert results.write(out, live, UNITS, NOW, expect=expect) is not None
+    written = json.loads((out / "country.json").read_bytes())
+    assert written["contests"]["prezident:SK/1"]["origins"] == {
+        "1": [
+            [
+                ["500011/1", 40, 60],
+                ["528595/1", 15, 45],
+                ["500038/1", 10, 10],
+                ["500011/2", 5, 25],
+            ],
+            [["500011/1", 40, 60], ["528595/1", 15, 45]],
+        ],
+        "2": [
+            [["528595/1", 30, 45], ["500011/1", 20, 60], ["500011/2", 20, 25]],
+            [["528595/1", 30, 45], ["500011/1", 20, 60]],
+        ],
+    }
+
+    def wrong(content: dict) -> None:
+        content["contests"]["prezident:SK/1"]["origins"]["1"][0][0][1] = 41
+
+    tamper(out, "country", wrong)
+    assert results.check(out, expect) == [
+        "country: prezident:SK/1: origins not those of its okrsky"
+    ]
+
+
+def test_bratislava_and_kosice_as_wholes_are_in_no_okres():
+    divisions = results.Divisions.of(
+        {
+            "contests": [],
+            "obce": [
+                {"code": "BA", "name": "Bratislava", "kraj": "1"},
+                {"code": "528595", "name": "Staré Mesto", "okres": "101", "kraj": "1"},
+            ],
+        },
+        (),
+    )
+    units = results.area_units(
+        {"BA": (10, 5, 5, {1: 5}), "528595": (8, 4, 4, {1: 4})}, divisions
+    )
+    assert units == {
+        "kraj": {"1": (18, 9, 9, {1: 9})},
+        "okres": {"101": (8, 4, 4, {1: 4})},
+    }
+
+
+def test_split_obce_of_several_council_contests_or_part_of_a_larger_council():
+    """An obec is split into several council obvody where it has several
+    council contests, or a by-election's are part of a larger council
+    (`addresses.council_parts`: obvod 3, or obvod 1 of a council its term
+    elected in several); one of obvod 1 alone of a council elected in one
+    is taken for the whole."""
+    contests = [
+        {"id": "oz:500011/1", "kind": "oz", "area": "500011", "obvod": 1},
+        {"id": "oz:500011/2", "kind": "oz", "area": "500011", "obvod": 2},
+        {"id": "oz:500020/3", "kind": "oz", "area": "500020", "obvod": 3, "seats": 1},
+        {"id": "oz:500038/1", "kind": "oz", "area": "500038", "obvod": 1, "seats": 1},
+        {"id": "oz:500046/1", "kind": "oz", "area": "500046", "obvod": 1, "seats": 5},
+        {"id": "starosta:500038", "kind": "starosta", "area": "500038"},
+    ]
+    parts = addresses.part_councils(contests, {"500038"})
+    divisions = results.Divisions.of({"contests": contests, "obce": []}, parts)
+    assert divisions.split == {"500011", "500020", "500038"}
+
+
+def test_lone_obvod_1_of_a_split_council_has_its_turnout(tmp_path):
+    """Divina's by-election of 2026-03 elects obvod 1 of the three of 2022:
+    its turnout is that obvod's (``councils``), as the app draws it, and the
+    check refuses results without it."""
+    live = results.Live("final", results.no_sources({"oso"}))
+    live.add("okres/404", "oz:500038/1", council({1: 10}, 40, 20))
+    split = dataclasses.replace(UNITS, split=frozenset({"500038"}))
+    expect = results.Expect(frozenset({"oso"}), {}, {}, split)
+    out = rewritten(tmp_path, "split", live, expect)
+    turnout = json.loads((out / "turnout.json").read_bytes())["municipal"]
+    assert turnout["councils"] == {"500038/1": [40, 20]}
+    whole = tmp_path / "whole"
+    results.write(whole, live, UNITS, NOW)
+    assert results.check(whole, expect) == [
+        "turnout: municipal not the turnout of the area files"
+    ]
+
+
+def regional_live(phase: str, president: dict) -> results.Live:
+    """Return results of kraj 4 of obvod 1 (500011, 500020) and 2 (500038)."""
+    live = results.Live(phase, results.no_sources({"osk"}))
+    status = "final" if phase == "final" else "partial"
+    for n, areas in ((1, ("500011", "500020")), (2, ("500038",))):
+        council = {code: (50, 25, 20, {1: 20}) for code in areas}
+        record = results.Record(
+            status, None, None, None, None, 1, 1, [(1, 20 * len(areas), 1)], council
+        )
+        live.add("kraj/4", f"zsk:4/{n}", record)
+    record = results.Record(
+        status, None, 200, 100, 97, 1, 1, [(1, 44, 1), (2, 53, None)], president
+    )
+    live.add("kraj/4", "predseda:4", record)
+    return live
+
+
+def test_regional_president_units_are_its_obvody(tmp_path):
+    """A regional president is written with its regional obvody too: final,
+    each the obce of its council contest's areas summed; at night, the
+    obvody counted as wholes. The check refuses a sum that is not."""
+    final = {
+        "500011": (100, 50, 48, {1: 30, 2: 18}),
+        "500020": (60, 30, 29, {1: 9, 2: 20}),
+        "500038": (40, 20, 20, {1: 5, 2: 15}),
+    }
+    out = tmp_path / "final"
+    expect = results.Expect(frozenset({"osk"}), {}, {}, UNITS)
+    live = regional_live("final", final)
+    assert results.write(out, live, UNITS, NOW, expect=expect) is not None
+    written = json.loads((out / "kraj/4.json").read_bytes())["contests"]
+    assert written["predseda:4"]["units"] == {
+        "zsk": {
+            "1": [160, 80, 77, {"1": 39, "2": 38}],
+            "2": [40, 20, 20, {"1": 5, "2": 15}],
+        }
+    }
+    assert "units" not in written["zsk:4/1"]
+
+    def wrong(content: dict) -> None:
+        content["contests"]["predseda:4"]["units"]["zsk"]["2"][1] += 1
+
+    tamper(out, "kraj/4", wrong)
+    assert results.check(out, expect) == [
+        "kraj/4: predseda:4: units not the areas summed: zsk 2"
+    ]
+    # An obvod with an obec missing from the areas is not summed short.
+    short = results.obvod_units(
+        {"500011": final["500011"], "500038": final["500038"]},
+        {"500011": "1", "500020": "1", "500038": "2"},
+        final=True,
+    )
+    assert short == {"2": final["500038"]}
+    night = {"obvod:2": (40, 20, 20, {1: 5, 2: 15}), "500038": final["500038"]}
+    out = tmp_path / "night"
+    assert results.write(out, regional_live("partial", night), UNITS, NOW) is not None
+    written = json.loads((out / "kraj/4.json").read_bytes())["contests"]
+    assert written["predseda:4"]["units"] == {
+        "zsk": {"2": [40, 20, 20, {"1": 5, "2": 15}]}
+    }
+    assert results.check(out, expect) == []
+
+
+def test_regional_president_past_by_obvod():
+    """A regional president's past is summed by regional obvod too: each of
+    its obce by its own figures then, else its okrsky's, and an obvod only
+    where all are known."""
+    past = {
+        "day": "2022-10-29",
+        "okrsky": {},
+        "contests": {
+            "predseda:4": {
+                "500011": [100, 50, 48, {"1": 30, "2": 18}],
+                "500020/1": [30, 15, 15, {"1": 5, "2": 10}],
+                "500020/2": [30, 15, 14, {"1": 4, "2": 10}],
+            }
+        },
+        "totals": {"predseda:4": [300, 150, 145, {"1": 60, "2": 85}]},
+    }
+    okrsky = {"predseda:4": ["500011/1", "500020/1", "500020/2", "500038/1"]}
+    obvody = {"500011": "1", "500020": "1", "500038": "2"}
+    units = results.past_units(past, okrsky, {}, {}, UNITS, obvody)
+    assert units == {
+        "predseda:4": {
+            "obec": {"500020": [1, [60, 30, 29, {"1": 9, "2": 20}]]},
+            "zsk": {"1": [1, [160, 80, 77, {"1": 39, "2": 38}]]},
+        }
+    }
+
+
+def test_preference_order():
+    """Those whose preference votes reach the quota of the party's votes go
+    first, by their votes, a tie by list position; then the rest by
+    position. Exactly the quota reaches it; one vote short does not."""
+    votes = {1: 10, 2: 30, 3: 29, 4: 30, 5: 2}
+    assert results.preference_order(votes, 1000, 3.0) == [2, 4, 1, 3, 5]
+    assert results.preference_order(votes, 1000, 10.0) == [1, 2, 3, 4, 5]
+    assert results.preference_order(votes, 900, 3.0) == [2, 4, 3, 1, 5]
+
+
+def test_list_elected_follow_the_preference_rule(tmp_path):
+    """A final party list's elected are the first by the preference rule on
+    the whole list's votes; the check refuses others."""
+    candidates = [(1, 10, 0), (2, 30, 1), (3, 29, 0), (4, 30, 1), (5, 2, 0)]
+    record = results.Record("final", None, None, None, 1000, 2, 2, candidates)
+    live = results.Live("final", results.no_sources({"nrsr"}))
+    live.add("list/1", "nrsr:SK/1", record)
+    out = tmp_path / "out"
+    expect = results.Expect(frozenset({"nrsr"}), {}, {"nrsr:SK": 3.0}, UNITS)
+    assert results.write(out, live, UNITS, NOW, expect=expect) is not None
+
+    def wrong(content: dict) -> None:
+        rows = content["contests"]["nrsr:SK/1"]["candidates"]
+        for row in rows:
+            row[2] = 1 if row[0] in (1, 2) else 0
+
+    tamper(out, "list/1", wrong)
+    assert results.check(out, expect) == [
+        "list/1: nrsr:SK/1: the elected are not the first by the preference rule"
+    ]
+
+
+def test_past_by_unit(tmp_path):
+    """The okrsok files' past has the election before summed in the units
+    the app shows that are made of okrsky: an obec without figures of its
+    own, a country-wide contest's okres and kraj, a council obvod (grouped by
+    the council contests' okrsky), a council's whole. Each sum has the least
+    certain method of its parts and is left out unless all are known."""
+    now = {
+        "500011/1": (100, 50, 50, {1: 30, 2: 20}),
+        "500011/2": (100, 60, 60, {1: 20, 2: 40}),
+        "500011/3": (100, 40, 40, {1: 10, 2: 30}),
+    }
+    live = results.Live("final", results.no_sources({"prez1", "oso"}))
+    live.add(
+        "country",
+        "prezident:SK/1",
+        results.Record(
+            "final",
+            None,
+            450,
+            225,
+            225,
+            1,
+            1,
+            [(2, 125, 1), (1, 100, None)],
+            {
+                "500011": (300, 150, 150, {1: 60, 2: 90}),
+                "500020": (50, 25, 25, {1: 15, 2: 10}),
+                "500038": (100, 50, 50, {1: 25, 2: 25}),
+            },
+        ),
+    )
+    live.add_okrsky(
+        "country/4",
+        "prezident:SK/1",
+        now
+        | {
+            "500020/1": (50, 25, 25, {1: 15, 2: 10}),
+            "500038/1": (60, 30, 30, {1: 20, 2: 10}),
+            "500038/2": (40, 20, 20, {1: 5, 2: 15}),
+        },
+    )
+    mayor = results.Record(
+        "final", None, 300, 150, 150, 1, 1, [(1, 60, None), (2, 90, 1)]
+    )
+    live.add("okres/403", "starosta:500011", mayor)
+    live.add_okrsky("okres/403", "starosta:500011", dict(now))
+    for obvod, keys, seats in ((1, ["500011/1", "500011/2"], 2), (2, ["500011/3"], 1)):
+        okrsky = {k: now[k] for k in keys}
+        total = results.sum_areas(okrsky.values())
+        council = f"oz:500011/{obvod}"
+        votes = [(n, x, 1) for n, x in total[3].items()]
+        live.add(
+            "okres/403",
+            council,
+            results.Record("final", None, *total[:3], seats, seats, votes),
+        )
+        live.add_okrsky("okres/403", council, okrsky)
+    then = {
+        "500011/1": (90, 40, 40, {1: 25, 2: 15}),
+        "500011/2": (110, 50, 50, {1: 20, 2: 30}),
+        "500011/3": (95, 45, 45, {1: 15, 2: 30}),
+    }
+    nitra = (295, 135, 135, {1: 60, 2: 75})
+    # One election before of both kinds, made up to compare them alike.
+    past = results.Past(
+        "2019-03-16",
+        {
+            "500011/1": results.SAME,
+            "500011/2": results.APPROXIMATE,
+            "500011/3": results.IDENTITY,
+            "500038/1": results.SAME,
+            "500038/2": results.UNKNOWN,
+        },
+        {
+            "prezident:SK/1": then
+            | {
+                "500020": (48, 20, 20, {1: 12, 2: 8}),
+                "500038/1": (55, 25, 25, {1: 10, 2: 15}),
+            },
+            "starosta:500011": then | {"500011": nitra},
+            "oz:500011/1": {k: then[k] for k in ("500011/1", "500011/2")},
+            "oz:500011/2": {"500011/3": then["500011/3"]},
+        },
+        {
+            "prezident:SK/1": (500, 230, 230, {1: 100, 2: 130}),
+            "starosta:500011": nitra,
+        },
+    )
+    live.past = {"prez1": past, "oso": past}
+    out = tmp_path / "out"
+    compared = {"prez1": "2019-03-16", "oso": "2019-03-16"}
+    expect = results.Expect(frozenset({"prez1", "oso"}), {}, {}, UNITS, compared)
+    assert results.write(out, live, UNITS, NOW, expect=expect) is not None
+
+    def units(path: str) -> dict:
+        file = out / results.OKRSKY_DIR / f"{path}.json"
+        return json.loads(file.read_bytes())["past"]["units"]
+
+    approximate, identity = results.APPROXIMATE, results.IDENTITY
+    obvody = {
+        "500011/1": [approximate, [200, 90, 90, {"1": 45, "2": 45}]],
+        "500011/2": [identity, [95, 45, 45, {"1": 15, "2": 30}]],
+    }
+    # Nitra by its okrsky, its okres with 500020's own figures; not 500038,
+    # one of whose okrsky is not known, nor its okres and kraj.
+    assert units("country/4") == {
+        "prezident:SK/1": {
+            "obec": {"500011": [approximate, [295, 135, 135, {"1": 60, "2": 75}]]},
+            "okres": {"403": [approximate, [343, 155, 155, {"1": 72, "2": 83}]]},
+            "obvod": obvody,
+        }
+    }
+    # The mayor's obvody; a council's whole, but no obvod of its own obec.
+    assert units("okres/403") == {
+        "starosta:500011": {"obvod": obvody},
+        "oz:500011/1": {"all": obvody["500011/1"]},
+        "oz:500011/2": {"all": obvody["500011/2"]},
+    }
+
+    def wrong(content: dict) -> None:
+        content["past"]["units"]["prezident:SK/1"]["obvod"]["500011/2"][0] = 1
+
+    tamper(out, f"{results.OKRSKY_DIR}/country/4", wrong)
+    assert results.check(out, expect) == [
+        "okrsky/country/4: prezident:SK/1: past units not those of its okrsky then"
+    ]
+
+
+def rewritten(tmp_path: Path, name: str, live: results.Live, expect) -> Path:
+    """Write *live* to a directory of its own, *name*, keeping the contract."""
+    out = tmp_path / name
+    assert results.write(out, live, expect.divisions, NOW, expect=expect) is not None
+    return out
+
+
+def council(votes: dict[int, int], eligible: int, voters: int) -> results.Record:
+    """A final council record of one seat, its candidates' *votes* the valid."""
+    valid = sum(votes.values())
+    rows = [(n, x, 1) for n, x in votes.items()]
+    return results.Record("final", None, eligible, voters, valid, 1, 1, rows)
+
+
+def test_okrsok_units_are_their_okrsky_summed(tmp_path):
+    """An okrsok file has the units the app narrows a contest to that are
+    made of its okrsky: each council obvod of an obec split into several
+    (not for that obec's own councils), and of a regional, a city or a
+    country-wide contest without areas each obec. The check refuses a sum
+    that is not."""
+    okrsky = {
+        "500011/1": (100, 50, 50, {1: 30, 2: 20}),
+        "500011/2": (100, 60, 60, {1: 20, 2: 40}),
+        "500011/3": (100, 40, 40, {1: 10, 2: 30}),
+    }
+    live = results.Live("final", results.no_sources({"oso", "osk"}))
+    mayor = results.Record(
+        "final", None, 300, 150, 150, 1, 1, [(1, 60, None), (2, 90, 1)]
+    )
+    live.add("okres/403", "starosta:500011", mayor)
+    live.add_okrsky("okres/403", "starosta:500011", dict(okrsky))
+    for obvod, keys in ((1, ["500011/1", "500011/2"]), (2, ["500011/3"])):
+        part = {k: okrsky[k] for k in keys}
+        total = results.sum_areas(part.values())
+        live.add("okres/403", f"oz:500011/{obvod}", council(total[3], *total[:2]))
+        live.add_okrsky("okres/403", f"oz:500011/{obvod}", part)
+    president = results.Record(
+        "final", None, 350, 175, 175, 1, 1, [(1, 75, 1), (2, 100, None)]
+    )
+    live.add("kraj/4", "predseda:4", president)
+    live.add_okrsky(
+        "kraj/4", "predseda:4", okrsky | {"500020/1": (50, 25, 25, {1: 15, 2: 10})}
+    )
+    expect = results.Expect(frozenset({"oso", "osk"}), {}, {}, UNITS)
+    out = rewritten(tmp_path, "out", live, expect)
+
+    def units(path: str) -> dict:
+        file = out / results.OKRSKY_DIR / f"{path}.json"
+        return json.loads(file.read_bytes())["units"]
+
+    obvody = {
+        "500011/1": [200, 110, 110, {"1": 50, "2": 60}],
+        "500011/2": [100, 40, 40, {"1": 10, "2": 30}],
+    }
+    # The mayor's obvody; none of a council of its own obec.
+    assert units("okres/403") == {"starosta:500011": {"obvod": obvody}}
+    assert units("kraj/4") == {
+        "predseda:4": {
+            "obvod": obvody,
+            "obec": {
+                "500011": [300, 150, 150, {"1": 60, "2": 90}],
+                "500020": [50, 25, 25, {"1": 15, "2": 10}],
+            },
+        }
+    }
+    # With areas, an obec's figures are its own there: none summed.
+    figures = {"predseda:4": dict(okrsky)}
+    councils = {"500011/1": "500011/1", "500011/3": "500011/2"}
+    assert results.okrsok_units(figures, {"predseda:4": True}, councils) == {
+        "predseda:4": {
+            "obvod": {
+                "500011/1": okrsky["500011/1"],
+                "500011/2": okrsky["500011/3"],
+            }
+        }
+    }
+
+    def wrong(content: dict) -> None:
+        content["units"]["predseda:4"]["obec"]["500020"][1] += 1
+
+    tamper(out, f"{results.OKRSKY_DIR}/kraj/4", wrong)
+    assert results.check(out, expect) == [
+        "okrsky/kraj/4: predseda:4: units not those of its okrsky"
+    ]
+
+
+def test_party_list_preference_votes_summed(tmp_path):
+    """A party's list has its persons' preference votes summed beside the
+    party's votes: the record's ``preferences``, and a fifth figure of each
+    of its areas, units and okrsky. The check refuses one that is not."""
+    areas = {
+        "500011": (100, 50, 30, {1: 20, 2: 8}),
+        "528595": (80, 40, 20, {1: 10, 2: 4}),
+    }
+    record = results.Record(
+        "final", None, 180, 90, 50, 1, 1, [(1, 30, 1), (2, 12, 0)], areas
+    )
+    live = results.Live("final", results.no_sources({"nrsr"}))
+    live.add("list/1", "nrsr:SK/1", record)
+    live.add_okrsky("list/1/4", "nrsr:SK/1", {"500011/1": areas["500011"]})
+    expect = results.Expect(frozenset({"nrsr"}), {"nrsr:SK": 4}, {}, UNITS)
+    out = rewritten(tmp_path, "out", live, expect)
+    written = json.loads((out / "list/1.json").read_bytes())["contests"]["nrsr:SK/1"]
+    assert written["preferences"] == 42
+    assert written["areas"] == {
+        "500011": [100, 50, 30, {"1": 20, "2": 8}, 28],
+        "528595": [80, 40, 20, {"1": 10, "2": 4}, 14],
+    }
+    assert written["units"]["kraj"] == {
+        "1": [80, 40, 20, {"1": 10, "2": 4}, 14],
+        "4": [100, 50, 30, {"1": 20, "2": 8}, 28],
+    }
+    okrsok = out / results.OKRSKY_DIR / "list/1/4.json"
+    assert json.loads(okrsok.read_bytes())["contests"]["nrsr:SK/1"] == {
+        "500011/1": [100, 50, 30, {"1": 20, "2": 8}, 28]
+    }
+    # Read back without them, as they are made again when written.
+    assert results.read_live(out).records()["nrsr:SK/1"] == record
+
+    def whole(content: dict) -> None:
+        content["contests"]["nrsr:SK/1"]["preferences"] = 41
+
+    def area(content: dict) -> None:
+        content["contests"]["nrsr:SK/1"]["areas"]["528595"][4] = 15
+
+    def unit(content: dict) -> None:
+        content["contests"]["nrsr:SK/1"]["units"]["okres"]["101"][4] = 15
+
+    def okrsok_sum(content: dict) -> None:
+        content["contests"]["nrsr:SK/1"]["500011/1"][4] = 27
+
+    def missing(content: dict) -> None:
+        del content["contests"]["nrsr:SK/1"]["preferences"]
+
+    prefix = "list/1: nrsr:SK/1: "
+    for name, path, change, problem in (
+        (
+            "whole",
+            "list/1",
+            whole,
+            "preference votes not its persons' summed: the list",
+        ),
+        ("area", "list/1", area, "preference votes not its persons' summed: 528595"),
+        ("unit", "list/1", unit, "units not the areas summed: okres 101"),
+        ("missing", "list/1", missing, "preferences None"),
+    ):
+        out = rewritten(tmp_path, name, live, expect)
+        tamper(out, path, change)
+        assert results.check(out, expect) == [prefix + problem], name
+    out = rewritten(tmp_path, "okrsok", live, expect)
+    tamper(out, f"{results.OKRSKY_DIR}/list/1/4", okrsok_sum)
+    assert results.check(out, expect) == [
+        "okrsky/list/1/4: nrsr:SK/1: preference votes not its persons' summed: 500011/1"
+    ]
+
+
+# Bratislava and two of its districts, in kraj 1; Nitra in kraj 4.
+CITY = results.Divisions(
+    {"BA": "", "528595": "101", "529320": "102", "500011": "403"},
+    {"BA": "1", "528595": "1", "529320": "1", "500011": "4"},
+    frozenset(),
+)
+
+
+def city_live(regional: bool) -> results.Live:
+    """Bratislava's mayor by district; with the *regional* contests, the
+    districts' regional obvody (1 and 2)."""
+    live = results.Live("final", results.no_sources({"oso", "osk"}))
+    districts = {
+        "528595": (100, 50, 50, {1: 30, 2: 20}),
+        "529320": (200, 80, 80, {1: 50, 2: 30}),
+    }
+    mayor = results.Record(
+        "final", None, 300, 130, 130, 1, 1, [(1, 80, 1), (2, 50, None)], districts
+    )
+    live.add("city/BA", "starosta:BA", mayor)
+    if regional:
+        for n, code in enumerate(districts, 1):
+            record = council({1: 30}, 0, 0)
+            record.eligible = record.voters = None
+            record.areas = {code: (None, None, 30, {1: 30})}
+            live.add("kraj/1", f"zsk:1/{n}", record)
+    return live
+
+
+def test_city_contest_coarse_units(tmp_path):
+    """A contest of Bratislava or Košice with areas is summed by the coarsest
+    units the map colours: its districts' regional obvody, or the okresy
+    where the election has none. The check refuses a sum that is not."""
+    expect = results.Expect(frozenset({"oso", "osk"}), {}, {}, CITY)
+    out = rewritten(tmp_path, "regional", city_live(regional=True), expect)
+
+    def units(directory: Path) -> dict:
+        content = json.loads((directory / "city/BA.json").read_bytes())
+        return content["contests"]["starosta:BA"]["units"]
+
+    assert units(out) == {
+        "zsk": {
+            "1": [100, 50, 50, {"1": 30, "2": 20}],
+            "2": [200, 80, 80, {"1": 50, "2": 30}],
+        }
+    }
+    alone = rewritten(tmp_path, "alone", city_live(regional=False), expect)
+    assert units(alone) == {
+        "okres": {
+            "101": [100, 50, 50, {"1": 30, "2": 20}],
+            "102": [200, 80, 80, {"1": 50, "2": 30}],
+        }
+    }
+
+    def wrong(content: dict) -> None:
+        content["contests"]["starosta:BA"]["units"]["zsk"]["2"][0] += 1
+
+    tamper(out, "city/BA", wrong)
+    assert results.check(out, expect) == [
+        "city/BA: starosta:BA: units not the areas summed: zsk 2"
+    ]
+
+
+def mayor(eligible: int | None, voters: int | None) -> results.Record:
+    return results.Record("final", None, eligible, voters, 20, 1, 1, [(1, 20, 1)])
+
+
+def test_turnout_file(tmp_path):
+    """The turnout of the elections of many contests is summed once: each
+    municipality's (its mayor's, else its council obvody's summed), each
+    council obvod of one split into several, the whole and the coarsest
+    units; Bratislava's and Košice's likewise, by their districts; the
+    regional presidents' whole. The check refuses a sum that is not, and
+    the file missing."""
+    live = results.Live("final", results.no_sources({"oso", "osk"}))
+    # Nitra (split) elects no mayor: its obvody summed. 500020's mayor
+    # counts, not its council; 500038's mayor has no figures: its council.
+    live.add("okres/403", "oz:500011/1", council({1: 10}, 100, 50))
+    live.add("okres/403", "oz:500011/2", council({1: 10}, 60, 30))
+    live.add("okres/403", "starosta:500020", mayor(50, 25))
+    live.add("okres/403", "oz:500020/1", council({1: 10}, 51, 26))
+    live.add("okres/404", "starosta:500038", mayor(None, None))
+    live.add("okres/404", "oz:500038/1", council({1: 10}, 40, 20))
+    expect = results.Expect(frozenset({"oso", "osk"}), {}, {}, UNITS)
+    municipal = {
+        "total": [250, 125],
+        "obce": {"500011": [160, 80], "500020": [50, 25], "500038": [40, 20]},
+        "councils": {"500011/1": [100, 50], "500011/2": [60, 30]},
+    }
+    out = rewritten(tmp_path, "municipal", live, expect)
+    assert json.loads((out / "turnout.json").read_bytes()) == {
+        "municipal": municipal | {"okres": {"403": [210, 105], "404": [40, 20]}}
+    }
+    # With the regional contests, by regional obvod.
+    for n, codes in ((1, ("500011", "500020")), (2, ("500038",))):
+        record = council({1: 10}, 0, 0)
+        record.eligible = record.voters = None
+        record.areas = {code: (None, None, 10, {1: 10}) for code in codes}
+        live.add("kraj/4", f"zsk:4/{n}", record)
+    live.add("kraj/4", "predseda:4", mayor(250, 125))
+    out = rewritten(tmp_path, "both", live, expect)
+    assert json.loads((out / "turnout.json").read_bytes()) == {
+        "municipal": municipal | {"zsk": {"4/1": [210, 105], "4/2": [40, 20]}},
+        "regional": {"total": [250, 125]},
+    }
+    city = rewritten(
+        tmp_path,
+        "city",
+        city_live(regional=True),
+        results.Expect(frozenset({"oso", "osk"}), {}, {}, CITY),
+    )
+    assert json.loads((city / "turnout.json").read_bytes()) == {
+        "city": {
+            "total": [300, 130],
+            "obce": {"BA": [300, 130]},
+            "zsk": {"1/1": [100, 50], "1/2": [200, 80]},
+        }
+    }
+
+    def wrong(content: dict) -> None:
+        content["municipal"]["zsk"]["4/2"][1] += 1
+
+    tamper(out, results.TURNOUT_FILE, wrong)
+    assert results.check(out, expect) == [
+        "turnout: municipal not the turnout of the area files"
+    ]
+    (out / "turnout.json").unlink()
+    status = json.loads((out / results.STATUS_FILE).read_bytes())
+    del status["files"][results.TURNOUT_FILE]
+    (out / results.STATUS_FILE).write_text(json.dumps(status))
+    assert results.check(out, expect) == [
+        "turnout: missing, though the area files have turnouts"
+    ]
+
+
+def test_past_of_the_coarse_units(tmp_path):
+    """The election before of a contest of several obce without totals is,
+    for the map, its obce's own figures then summed (``obce``, beside
+    ``all``, its okrsky's); a city contest's, by its districts' regional
+    obvody or else okresy. The check refuses a sum that is not."""
+    then = {
+        "500011/1": (60, 30, 30, {1: 20}),
+        "500011/2": (40, 20, 20, {1: 5}),
+        "500011": (100, 50, 50, {1: 25}),
+        "500020": (50, 20, 20, {1: 10}),
+    }
+    live = results.Live("final", results.no_sources({"osk"}))
+    okrsky = {
+        "500011/1": (60, 30, 30, {1: 20}),
+        "500011/2": (40, 20, 20, {1: 10}),
+        "500020/1": (50, 25, 25, {1: 15}),
+    }
+    record = council({1: 45}, 150, 75)
+    record.areas = {"500011": (100, 50, 30, {1: 30}), "500020": (50, 25, 15, {1: 15})}
+    live.add("kraj/4", "zsk:4/1", record)
+    live.add_okrsky("kraj/4", "zsk:4/1", okrsky)
+    live.past = {
+        "osk": results.Past(
+            "2022-10-29",
+            {"500011/1": results.SAME, "500011/2": results.APPROXIMATE},
+            {"zsk:4/1": then},
+        )
+    }
+    expect = results.Expect(frozenset({"osk"}), {}, {}, UNITS, {"osk": "2022-10-29"})
+    out = rewritten(tmp_path, "out", live, expect)
+    file = out / results.OKRSKY_DIR / "kraj/4.json"
+    assert json.loads(file.read_bytes())["past"]["units"] == {
+        "zsk:4/1": {
+            "all": [results.APPROXIMATE, [150, 70, 70, {"1": 35}]],
+            "obce": [results.SAME, [150, 70, 70, {"1": 35}]],
+        }
+    }
+
+    def wrong(content: dict) -> None:
+        content["past"]["units"]["zsk:4/1"]["obce"][1][1] += 1
+
+    tamper(out, f"{results.OKRSKY_DIR}/kraj/4", wrong)
+    assert results.check(out, expect) == [
+        "okrsky/kraj/4: zsk:4/1: past units not those of its okrsky then"
+    ]
+    # A city contest's districts by regional obvod, each its own figures
+    # then, else its okrsky's; else by okres.
+    past = {
+        "day": "2022-10-29",
+        "okrsky": {"529320/1": results.SAME, "529320/2": results.IDENTITY},
+        "contests": {
+            "starosta:BA": {
+                "528595": [100, 50, 50, {"1": 30}],
+                "529320/1": [80, 40, 40, {"1": 20}],
+                "529320/2": [70, 30, 30, {"1": 10}],
+            }
+        },
+        "totals": {"starosta:BA": [250, 120, 120, {"1": 60}]},
+    }
+    keys = {"starosta:BA": ["528595/1", "529320/1", "529320/2"]}
+    district = [results.IDENTITY, [150, 70, 70, {"1": 30}]]
+    by = {"528595": "1", "529320": "2"}
+    assert results.past_units(past, keys, {}, {}, CITY, by) == {
+        "starosta:BA": {
+            "obec": {"529320": district},
+            "zsk": {"1": [results.SAME, [100, 50, 50, {"1": 30}]], "2": district},
+        }
+    }
+    assert results.past_units(past, keys, {}, {}, CITY, {})["starosta:BA"]["okres"] == {
+        "101": [results.SAME, [100, 50, 50, {"1": 30}]],
+        "102": district,
+    }
 
 
 def test_check_catches_votes_beyond_the_valid_ballots(final_2026, tmp_path):
@@ -1345,8 +2241,8 @@ def test_check_catches_votes_beyond_the_valid_ballots(final_2026, tmp_path):
     nitra["500011/3"] = (e, v, valid - 1, votes)
     council = live.files["kraj/1"]["zsk:1/1"]
     council.valid = 150
-    assert results.write(tmp_path, live, NOW) is not None
-    problems = results.check(tmp_path)
+    assert results.write(tmp_path, live, DIVISIONS, NOW) is not None
+    problems = results.check(tmp_path, EXPECT)
     assert (
         "city/BA: starosta:BA: votes other than the valid ballots:"
         " 529320 (79 votes, 78 valid)"
@@ -1384,14 +2280,18 @@ def files_of(directory: Path) -> dict[str, bytes]:
     }
 
 
-def test_make_writes_the_final_results_of_the_inputs(ref, tmp_path, monkeypatch):
-    """The results step of `ems make` reads the election's pinned final
-    results inputs (elections.toml `results`) into its results directory,
-    the same files from the same packages; what `ems results` writes there
-    makes it run again."""
+def results_project(tmp_path: Path, ref, monkeypatch) -> config.Config:
+    """A project of the repository's configuration, the 2026 election built.
+
+    Its final results packages pinned (``data/raw/``), its reference *ref*,
+    and volbysr.sk on the night serving :func:`night_files`.
+    """
     root = tmp_path / "project"
     shutil.copytree(REPO / "config", root / "config")
-    shutil.copytree(REPO / config.PARTY_LOGO_DIR, root / config.PARTY_LOGO_DIR)
+    # The web/ of the live part, the party logos among it.
+    shutil.copytree(REPO / "web", root / "web")
+    # The step's inputs name the libraries of uv.lock.
+    shutil.copy(REPO / "uv.lock", root / "uv.lock")
     raw = root / "data" / "raw"
     for prefix, tables in (("OSO2026", oso_tables()), ("OSK2026", osk_tables())):
         name = f"results-{prefix.lower()}"
@@ -1399,13 +2299,30 @@ def test_make_writes_the_final_results_of_the_inputs(ref, tmp_path, monkeypatch)
         package(raw / name / f"{prefix}_SK_csv.zip", prefix, tables)
     build_dir = root / "data" / "build" / "2026-10-24"
     (build_dir / "geo").mkdir(parents=True)
-    (build_dir / "candidates.json").write_text(json.dumps({"obce": []}))
+    (build_dir / "candidates.json").write_text(
+        json.dumps(
+            {"obce": make_data()[0]["obce"], "contests": make_data()[0]["contests"]}
+        )
+    )
     monkeypatch.setattr(results, "load_reference", lambda *_: ref)
     # Without the 2022 addresses and results: no comparison (test_crosswalk).
-    monkeypatch.setattr(cli, "_compare", lambda *_: None)
+    monkeypatch.setattr(cli, "_earlier", lambda *_: [])
+    monkeypatch.setattr(cli, "_client", lambda _cfg: FakeClient(night_files(ref)))
+    # Without the okrsky of units-oso2026 and the rule sets: fakes of none.
+    monkeypatch.setattr(cli.okrsokrules, "okrsok_counts", lambda *_: {})
+    monkeypatch.setattr(cli.obvody, "okrsok_rule_sets", lambda *_: {})
     monkeypatch.chdir(root)
-    cfg = config.load()
+    return config.load()
+
+
+def test_make_writes_the_final_results_of_the_inputs(ref, tmp_path, monkeypatch):
+    """The results step of `ems make` reads the election's pinned final
+    results inputs (elections.toml `results`) into its results directory,
+    the same files from the same packages; the night's commands write the
+    live results apart and leave the step, its output and stamp alone."""
+    cfg = results_project(tmp_path, ref, monkeypatch)
     assert cfg.latest.results.inputs == ("results-oso2026", "results-osk2026")
+    build_dir = cfg.election_build_dir(cfg.latest)
     out = cfg.results_dir(cfg.latest)
     assert out == build_dir / "results"
     make = argparse.Namespace(force=False, election="2026")
@@ -1416,38 +2333,473 @@ def test_make_writes_the_final_results_of_the_inputs(ref, tmp_path, monkeypatch)
     assert status["phase"] == "final"
     # Written as of the packages' data, not of the run.
     assert status["updated"] == max(s["time"] for s in status["source"].values())
-    assert results.check(out) == []
+    assert results.check(out, EXPECT) == []
     first = files_of(out)
     shutil.rmtree(out)
     assert cli._run_results(make) == 0
     assert files_of(out) == first
 
-    tables = oso_tables()
-    tables["tab02ex"][0][VOTERS] += 1
-    other = package(tmp_path / "OSO2026_SK_csv.zip", "OSO2026", tables)
-    assert cli.main(["results", "final", str(other)]) == 0
-    assert files_of(out) != first
+    stamp = cli._stamp_path(build_dir, "results")
+    stamped = stamp.read_bytes()
+    live = cfg.live_dir(cfg.latest)
+    assert cli.main(["results", "poll", "--once"]) == 0
+    polled = results.read_status(live)
+    assert polled is not None and polled["phase"] == "partial"
+    assert cli.main(["results", "fake", "mid"]) == 0
+    assert results.read_status(live) != polled
+    assert files_of(out) == first
+    assert stamp.read_bytes() == stamped
+
+    # Up to date: the step runs nothing.
+    def unexpected(*_args, **_kwargs):
+        raise AssertionError("the results step ran")
+
+    monkeypatch.setattr(cli, "_write_final", unexpected)
     assert cli._run_results(make) == 0
     assert files_of(out) == first
 
-    # A package whose mayor's votes do not add up to the valid ballots is
-    # not written.
+
+def test_a_broken_package_is_not_written(ref, tmp_path, monkeypatch):
+    """A package whose mayor's votes do not add up to the valid ballots
+    leaves the final results as they were."""
+    cfg = results_project(tmp_path, ref, monkeypatch)
+    out = cfg.results_dir(cfg.latest)
+    make = argparse.Namespace(force=False, election="2026")
+    assert cli._run_results(make) == 0
+    first = files_of(out)
     tables = oso_tables()
     tables["tab05d"][0]["Počet platných hlasov"] += 1
-    broken = package(tmp_path / "broken.zip", "OSO2026", tables)
-    assert cli.main(["results", "final", str(broken)]) == 1
+    package(cfg.raw_dir / "results-oso2026" / "OSO2026_SK_csv.zip", "OSO2026", tables)
+    assert cli._run_results(argparse.Namespace(force=True, election="2026")) == 1
     assert files_of(out) == first
 
 
-def test_poll_and_fake_only_the_elections_they_serve(tmp_path, monkeypatch, capsys):
-    """Polling reads volbysr.sk, which has the latest election's results
-    only; faking makes a night of the latest election."""
+def test_the_live_results_are_checked_and_deployed_alone(ref, tmp_path, monkeypatch):
+    """`results deploy` and `poll --deploy` write the live part, the live
+    results alone, check them every time and deploy them to the live
+    project only if they keep the contract."""
+    cfg = results_project(tmp_path, ref, monkeypatch)
+    deployed: list[tuple[Path, str, str]] = []
+
+    def deploy(directory: Path, project: str, message: str) -> int:
+        deployed.append((directory, project, message))
+        return 0
+
+    monkeypatch.setattr(pages, "deploy", deploy)
+    checked: list[Path] = []
+    check = results.check
+
+    def recording(directory: Path, expect: results.Expect) -> list[str]:
+        checked.append(directory)
+        return check(directory, expect)
+
+    monkeypatch.setattr(results, "check", recording)
+    dist = cfg.root / "dist"
+    # Nothing to deploy before the night.
+    assert cli.main(["results", "deploy", "--yes"]) == 1
+    assert deployed == []
+
+    assert cli.main(["results", "poll", "--once", "--deploy"]) == 0
+    status = results.read_status(cfg.live_dir(cfg.latest))
+    assert status is not None
+    version = status["version"]
+    assert checked == [dist / "live/2026-10-24"]
+    assert deployed == [(dist / "live", "ems-live", f"live 2026-10-24@{version}")]
+    assert sorted(p.name for p in (dist / "live").iterdir()) == [
+        "2026-10-24",
+        "404.html",
+        "_headers",
+        "manifest.json",
+    ]
+    assert not (dist / "results").exists()
+
+    # Live results that break the contract are not deployed.
+    area = next(cfg.live_dir(cfg.latest).glob("kraj/*.json"))
+    area.write_text(area.read_text().replace('"partial"', '"final"', 1))
+    assert cli.main(["results", "deploy", "--yes"]) == 1
+    assert len(checked) == 2
+    assert len(deployed) == 1
+
+
+def test_poll_only_the_elections_it_serves(tmp_path, monkeypatch, capsys):
+    """Polling reads the night of a municipal and regional election on
+    volbysr.sk."""
     root = tmp_path / "project"
     shutil.copytree(REPO / "config", root / "config")
     shutil.copytree(REPO / config.PARTY_LOGO_DIR, root / config.PARTY_LOGO_DIR)
     monkeypatch.chdir(root)
     assert cli.main(["results", "poll", "--once", "--election", "2022"]) == 1
-    assert "not on volbysr.sk (susr)" in capsys.readouterr().err
-    stage = next(iter(results.STAGES))
-    assert cli.main(["results", "fake", stage, "--election", "2022"]) == 1
-    assert "only the latest election (2026)" in capsys.readouterr().err
+    assert "only the night of a municipal and regional" in capsys.readouterr().err
+
+
+def test_check_wants_exactly_the_sources_of_the_election(ref, tmp_path):
+    live = results.fake(ref, "mid")
+    assert results.write(tmp_path, live, DIVISIONS, NOW) is not None
+    assert results.check(tmp_path, EXPECT) == []
+    problems = results.check(
+        tmp_path, results.Expect(frozenset({"oso"}), {}, {}, DIVISIONS)
+    )
+    assert len(problems) == 1
+    assert problems[0].startswith("status.json: source {")
+    assert problems[0].endswith("not of ['oso']")
+
+
+NS = 'xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"'
+
+
+def xlsx_package(path: Path, prefix: str, tables: dict[str, list[dict]]) -> Path:
+    """Write a by-election's package: XLSX tables, a title above the header."""
+    with zipfile.ZipFile(path, "w") as z:
+        for table, rows in tables.items():
+            header = list(rows[0])
+            lines = [["Tabuľka"], [], header]
+            lines += [[str(r.get(h, "")) for h in header] for r in rows]
+            sheet = "".join(
+                f'<row r="{i}">'
+                + "".join(f'<c t="inlineStr"><is><t>{v}</t></is></c>' for v in line)
+                + "</row>"
+                for i, line in enumerate(lines, 1)
+            )
+            book = io.BytesIO()
+            with zipfile.ZipFile(book, "w") as x:
+                x.writestr(
+                    "xl/workbook.xml",
+                    f"<workbook {NS} xmlns:r="
+                    '"http://schemas.openxmlformats.org/officeDocument/2006/relationships">'
+                    '<sheets><sheet name="1" sheetId="1" r:id="rId1"/></sheets></workbook>',
+                )
+                x.writestr(
+                    "xl/_rels/workbook.xml.rels",
+                    '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+                    '<Relationship Id="rId1" Target="worksheets/sheet1.xml"/></Relationships>',
+                )
+                x.writestr(
+                    "xl/worksheets/sheet1.xml",
+                    f"<worksheet {NS}><sheetData>{sheet}</sheetData></worksheet>",
+                )
+            z.writestr(f"{prefix}_SK_{table}.xlsx", book.getvalue())
+    return path
+
+
+def by_election_tables() -> dict[str, list[dict]]:
+    """A by-election's package as ŠÚ SR's of 2023–2026: a mayor and a council
+    in 502341, a mayor of two okrsky in 505498, a council in 500411 whose
+    candidate 2 withdrew (in the okrsok table only, marked in its note), and
+    512885 where the by-election did not take place."""
+    obce = {
+        "502341": ("402", "Starosta a zastupiteľstvo", 1),
+        "505498": ("406", "Len starosta", 0),
+        "500411": ("403", "Len zastupiteľstvo", 1),
+        "512885": ("302", "Nekonajú sa", 1),
+    }
+
+    def where(obec: str, **more: str) -> dict:
+        return {"Kód okresu": obce[obec][0], "Kód obce": obec} | more
+
+    def turnout(e: int, v: int, council: int, mayor: int) -> dict:
+        return {ELIGIBLE: e, VOTERS: v, COUNCIL: council, MAYOR: mayor}
+
+    obvod = {"Volebný obvod v obci": "1"}
+    return {
+        "tab0dd": [
+            where(o, **{"Počet okrskov": "1", "Typ volieb": typ})
+            for o, (_, typ, _) in obce.items()
+        ],
+        "tab02ad": [
+            where(o, **{"Počet volených poslancov": str(s)})
+            for o, (_, _, s) in obce.items()
+            if o != "512885"
+        ],
+        "tab02bd": [
+            where("502341", **{"Počet okrskov": "1"}) | turnout(660, 379, 357, 369),
+            where("505498", **{"Počet okrskov": "2"}) | turnout(2066, 1313, 0, 1299),
+            where("500411", **{"Počet okrskov": "1"}) | turnout(1269, 37, 33, 0),
+        ],
+        "tab02be": [
+            where("502341", **obvod, **{"Počet okrskov": "1"})
+            | turnout(660, 379, 357, 369),
+            where("505498", **obvod, **{"Počet okrskov": "2"})
+            | turnout(2066, 1313, 0, 1299),
+            where("500411", **obvod, **{"Počet okrskov": "1"})
+            | turnout(1269, 37, 33, 0),
+        ],
+        "tab02bf": [
+            where("502341", **obvod, Okrsok="1") | turnout(660, 379, 357, 369),
+            where("505498", **obvod, Okrsok="1") | turnout(1005, 630, 0, 626),
+            where("505498", **obvod, Okrsok="2") | turnout(1061, 683, 0, 673),
+            where("500411", **obvod, Okrsok="1") | turnout(1269, 37, 33, 0),
+        ],
+        "tab05d": [
+            *votes("Poznámka", where("502341"), (1, 240, "zvolený"), (2, 129, "")),
+            *votes(
+                "Poznámka",
+                where("505498"),
+                (1, 318, ""),
+                (2, 484, ""),
+                (3, 497, "zvolený"),
+            ),
+        ],
+        "tab05f": [
+            *votes(
+                "Poznámka",
+                where("502341", **obvod, Okrsok="1"),
+                (1, 240, ""),
+                (2, 129, ""),
+            ),
+            *votes(
+                "Poznámka",
+                where("505498", **obvod, Okrsok="1"),
+                (1, 148, ""),
+                (2, 228, ""),
+                (3, 250, ""),
+            ),
+            *votes(
+                "Poznámka",
+                where("505498", **obvod, Okrsok="2"),
+                (1, 170, ""),
+                (2, 256, ""),
+                (3, 247, ""),
+            ),
+        ],
+        "tab08e": [
+            *votes(
+                "Kandidát",
+                where("502341", **obvod),
+                (1, 112, "zvolený"),
+                (2, 107, "náhradník"),
+            ),
+            *votes("Kandidát", where("500411", **obvod), (1, 20, "zvolený")),
+        ],
+        "tab08f": [
+            *votes(
+                "Poznámka",
+                where("502341", **obvod, Okrsok="1"),
+                (1, 112, ""),
+                (2, 107, ""),
+            ),
+            *votes(
+                "Poznámka",
+                where("500411", **obvod, Okrsok="1"),
+                (1, 20, ""),
+                (2, 13, "X"),
+            ),
+        ],
+    }
+
+
+def by_election_reference() -> results.Reference:
+    okresy = {"502341": "402", "505498": "406", "500411": "403", "512885": "302"}
+    contests = [
+        {"id": "starosta:502341", "kind": "starosta", "area": "502341"},
+        {"id": "oz:502341/1", "kind": "oz", "area": "502341", "obvod": 1, "seats": 1},
+        {"id": "starosta:505498", "kind": "starosta", "area": "505498"},
+        {"id": "oz:500411/1", "kind": "oz", "area": "500411", "obvod": 1, "seats": 1},
+        {"id": "starosta:512885", "kind": "starosta", "area": "512885"},
+    ]
+    data = {
+        "kraje": [],
+        "okresy": [],
+        "obce": [
+            {"code": o, "name": o, "okres": okres, "kraj": okres[0]}
+            for o, okres in okresy.items()
+        ],
+        "contests": contests,
+        "candidacies": [
+            candidacy(c["id"], n, *name.split())
+            for c in contests
+            for n, name in enumerate(("Ján Novák", "Eva Tóthová", "Juraj Varga"), 1)
+        ],
+    }
+    return results.reference(data, {o: {"zsk": 0} for o in okresy}, {}, parts=())
+
+
+def test_by_election_package(tmp_path):
+    ref = by_election_reference()
+    path = xlsx_package(
+        tmp_path / "OSO202603_SK_xlsx.zip", "OSO202603", by_election_tables()
+    )
+    logged: list[str] = []
+    live, done = results.read_by_election([path], ref, logged.append)
+    assert done == ["oso"]
+    assert logged == ["no results of 1 contests: starosta:512885"]
+    assert live.source["oso"]["counted"] == [3, 3]
+    assert live.source["oso"]["unit"] == "obce"
+    mayor = live.files["okres/402"]["starosta:502341"]
+    assert (mayor.eligible, mayor.voters, mayor.valid, mayor.seats) == (
+        660,
+        379,
+        369,
+        1,
+    )
+    assert mayor.candidates == [(1, 240, 1), (2, 129, None)]
+    council = live.files["okres/402"]["oz:502341/1"]
+    assert (council.valid, council.seats, council.filled) == (357, 1, 1)
+    assert council.candidates == [(1, 112, 1), (2, 107, 0)]
+    other = live.files["okres/403"]["oz:500411/1"]
+    assert other.candidates == [(1, 20, 1), (2, 13, results.WITHDRAWN)]
+    assert live.okrsky["okres/406"]["starosta:505498"] == {
+        "505498/1": (1005, 630, 626, {1: 148, 2: 228, 3: 250}),
+        "505498/2": (1061, 683, 673, {1: 170, 2: 256, 3: 247}),
+    }
+    merged = results.finalize(live, done, ref.sources)
+    assert merged.phase == "final"
+    expect = results.Expect(ref.sources, {}, {}, ref.divisions)
+    assert (
+        results.write(tmp_path / "out", merged, ref.divisions, NOW, expect=expect)
+        is not None
+    )
+
+
+def older_by_election_tables() -> dict[str, list[dict]]:
+    """A by-election's package as ŠÚ SR's of 2019–2022 (OSO_201904): a mayor
+    in 506311 (candidate 3 withdrew), a council of one obvod in 507415, one
+    of two obvody in 542938, and 512885 where it did not take place."""
+    obce = {
+        "506311": ("304", "len starosta", 0),
+        "507415": ("203", "len zastupiteľstvo", 2),
+        "542938": ("406", "len zastupiteľstvo", 2),
+        "512885": ("302", "nekonajú sa", 1),
+    }
+
+    def where(obec: str, **more: str) -> dict:
+        return {"Kód okresu": obce[obec][0], "Kód obce": obec} | more
+
+    def turnout(okrsky: int, e: int, v: int, council: int, mayor: int) -> dict:
+        return {
+            "Počet okrskov": okrsky,
+            ELIGIBLE: e,
+            "Počet vydaných obálok": v,
+            COUNCIL: council,
+            MAYOR: mayor,
+        }
+
+    def elected(obec: str, obvod: int, order: int, name: str, votes: int) -> dict:
+        return where(
+            obec,
+            **{
+                "Volebný obvod v obci": str(obvod),
+                "Poradie zvolenia v obci": str(order),
+                "Meno a priezvisko": name,
+                "Politický subjekt": "NEKA",
+                "Počet platných hlasov": str(votes),
+            },
+        )
+
+    return {
+        "tab0c": [
+            where(o, **{"Počet volených poslancov": str(s), "Typ volieb": typ})
+            for o, (_, typ, s) in obce.items()
+        ],
+        "tab02bd": [
+            where("506311") | turnout(1, 243, 141, 0, 139),
+            where("507415") | turnout(1, 768, 35, 32, 0),
+            where("542938") | turnout(2, 1314, 181, 178, 0),
+        ],
+        "tab05": votes(
+            "Kandidát",
+            where("506311"),
+            (2, 74, "zvolený"),
+            (1, 60, ""),
+            (3, 5, "X"),
+        ),
+        "tab06": [
+            # Titles anywhere, the surname first at times.
+            elected("507415", 1, 1, "Ing. Novák Ján", 31),
+            elected("507415", 1, 2, "Eva Tóthová, Mgr.", 22),
+            elected("542938", 1, 1, "Juraj Varga", 66),
+            elected("542938", 2, 2, "Ján Novák", 22),
+        ],
+    }
+
+
+def older_by_election_reference() -> results.Reference:
+    okresy = {"506311": "304", "507415": "203", "542938": "406", "512885": "302"}
+    names = {
+        "starosta:506311": ("Ján Novák", "Eva Tóthová", "Juraj Varga"),
+        # A curated list in place of the package's: the elected and others.
+        "oz:507415/1": ("Peter Malý", "Eva Tóthová", "Ján Novák"),
+        "oz:542938/1": ("Juraj Varga",),
+        "oz:542938/2": ("Ján Novák",),
+    }
+    data = {
+        "kraje": [],
+        "okresy": [],
+        "obce": [
+            {"code": o, "name": o, "okres": okres, "kraj": okres[0]}
+            for o, okres in okresy.items()
+        ],
+        "contests": [
+            {"id": "starosta:506311", "kind": "starosta", "area": "506311"},
+            {"id": "oz:507415/1", "kind": "oz", "area": "507415", "obvod": 1},
+            {"id": "oz:542938/1", "kind": "oz", "area": "542938", "obvod": 1},
+            {"id": "oz:542938/2", "kind": "oz", "area": "542938", "obvod": 2},
+        ],
+        "candidacies": [
+            candidacy(c, n, *name.split())
+            for c, ns in names.items()
+            for n, name in enumerate(ns, 1)
+        ],
+    }
+    return results.reference(data, {o: {"zsk": 0} for o in okresy}, {}, parts=())
+
+
+def test_older_by_election_package(tmp_path):
+    ref = older_by_election_reference()
+    path = xlsx_package(
+        tmp_path / "OSO_201904_xlsx.zip", "OSO_201904", older_by_election_tables()
+    )
+    live, done = results.read_by_election([path], ref, lambda _: None)
+    assert done == ["oso"]
+    # Held in three obce: 512885 did not vote.
+    assert live.source["oso"]["counted"] == [3, 3]
+    mayor = live.files["okres/304"]["starosta:506311"]
+    assert (mayor.counted, mayor.eligible, mayor.voters, mayor.valid) == (
+        (1, 1),
+        243,
+        141,
+        139,
+    )
+    assert mayor.candidates == [(2, 74, 1), (1, 60, None), (3, 5, results.WITHDRAWN)]
+    # The elected numbered as the candidate lists have them, by name.
+    council = live.files["okres/203"]["oz:507415/1"]
+    assert (council.valid, council.seats, council.filled) == (32, 2, 2)
+    assert council.candidates == [(3, 31, 1), (2, 22, 1)]
+    # One obvod of two: the obec's turnout and seats are neither's.
+    part = live.files["okres/406"]["oz:542938/2"]
+    assert (part.counted, part.eligible, part.voters, part.valid, part.seats) == (
+        None,
+        None,
+        None,
+        None,
+        None,
+    )
+    assert (part.filled, part.candidates) == (1, [(1, 22, 1)])
+    assert live.okrsky == {}
+    merged = results.finalize(live, done, ref.sources)
+    expect = results.Expect(ref.sources, {}, {}, ref.divisions)
+    assert (
+        results.write(tmp_path / "out", merged, ref.divisions, NOW, expect=expect)
+        is not None
+    )
+
+
+def test_older_by_election_councillor_not_in_the_lists(tmp_path):
+    tables = older_by_election_tables()
+    tables["tab06"][1]["Meno a priezvisko"] = "Eva Tóthová-Nagyová"
+    path = xlsx_package(tmp_path / "OSO_201904_xlsx.zip", "OSO_201904", tables)
+    with pytest.raises(
+        results.ResultsError,
+        match=r"oz:507415/1: no candidate named 'Eva Tóthová-Nagyová'",
+    ):
+        results.read_by_election([path], older_by_election_reference())
+
+
+def test_by_election_fakes_keep_the_contract(tmp_path):
+    ref = by_election_reference()
+    assert ref.sources == {"oso"}
+    for stage in results.STAGES:
+        live = results.fake(ref, stage, okrsky={"505498": 2})
+        assert set(live.source) == {"oso"}
+        assert results.write(tmp_path / stage, live, ref.divisions, NOW) is not None
+        expect = results.Expect(ref.sources, {}, {}, ref.divisions)
+        assert results.check(tmp_path / stage, expect) == []

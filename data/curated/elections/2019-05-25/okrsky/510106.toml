@@ -1,0 +1,100 @@
+# Okrsky of Trstená, transcribed by an AI agent in job okrsok-rules-1718 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bytové domy: 1053, 1054, 1056, 1057, 1058, 1139, 1140, 1141, 1142, 1143, 1144, 1145, 1241, 1317
+#   okrsok 2: Zápotočná, Malý Rad, Puškinova, P. Jilemnického, Pod Vápenicou, J. Kráľa, J. Kollára, H. Gavloviča, Družstevníkov, Na Diele, Požiarnikov, Poddielová, Krátka, Partizánov, Kukučínova, Dukelských hrdinov, Námestie M.R. Štefánika, SpKCH – Dom Charitas, Nábrežie Ľ. Štúra
+#   okrsok 3: Mieru, Hattalova, Bernolákova, Hviezdoslavova, Československej armády, Hornooravská nemocnica s poliklinikou, Trstená 0
+#   okrsok 4: Š. Furdeka, 1. mája, SNP, Železničiarov, J. Hertela, Oravická, Nová
+#   okrsok 5: Hraničiarov, Kvetná, Msgr. V. Trstenského, Pod Stráňou, Hýbeľ, Lesná, Obrancov mieru, Pri Kovalinci, I. Obrachta, Lúčna, Odbojárov, R. Dilonga, Kpt. Nálepku, M. Jankolu, Osadská, Ústianska, Krakovská cesta, Mládežnícka, Oslobodenia
+#   okrsok 6: Ústie nad Priehradou, Oravská priehrada - Prístav
+obec = "510106"
+name = "Trstená"
+okrsky_date = 2019-02-21
+okrsky_fill = "nearest"
+okrsky_note = "Okrsok 1 is given by the súpisné čísla of its apartment blocks; the other houses of the street Západ, which the document does not name, take the okrsok of the nearest placed address. Left out: \"Hornooravská nemocnica s poliklinikou\" (a hospital, not a street), \"Pri Kovalinci\" (not in the address register), \"SpKCH – Dom Charitas\" (a care home, not a street), \"Trstená 0\" (voters registered without an address). Brezovická cesta (named in no okrsok) and the houses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.trstena.sk/download_file_f.php?id=1095523"
+sha256 = "ed6903e56e53eb7206a96fd4365bfb6197dc70dfbed235541018216d502e51ca"
+title = "Určenie volebných okrskov a volebných miestností – Voľby do Európskeho parlamentu 2019 (21.02.2019)"
+
+[[document]]
+url = "https://www.trstena.sk/volby-do-europskeho-parlamentu-2019.html"
+sha256 = "c73aa13218ed6a451520ec57140236a9583207fe148255340c4962c4138fe9d2"
+title = "Page of the vote linking the document"
+
+[okrsok.1]
+rules = [
+  {part = "Trstená", numbers = "1053, 1054, 1056, 1057, 1058, 1139, 1140, 1141, 1142, 1143, 1144, 1145, 1241, 1317", note = "the bytové domy are listed by súpisné číslo"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Zápotočná"},
+  {street = "Malý rad", written = "Malý Rad"},
+  {street = "Puškinova"},
+  {street = "P. Jilemnického"},
+  {street = "Pod Vápenicou"},
+  {street = "J. Kráľa"},
+  {street = "J. Kollára"},
+  {street = "H. Gavloviča"},
+  {street = "Družstevníkov"},
+  {street = "Na Diele"},
+  {street = "Požiarnikov"},
+  {street = "Poddielová"},
+  {street = "Krátka"},
+  {street = "Partizánov"},
+  {street = "Kukučínova"},
+  {street = "Dukelských hrdinov"},
+  {street = "Námestie M.R.Štefánika", written = "Námestie M.R. Štefánika"},
+  {street = "Nábrežie Ľ. Štúra"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Mieru"},
+  {street = "Hattalova"},
+  {street = "Bernolákova"},
+  {street = "Hviezdoslavova"},
+  {street = "Čsl. armády", written = "Československej armády", note = "the register abbreviates Československej armády as Čsl. armády"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Š. Furdeka"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "SNP"},
+  {street = "Železničiarov"},
+  {street = "J. Hertela"},
+  {street = "Oravická"},
+  {street = "Nová"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Hraničiarov"},
+  {street = "Kvetná"},
+  {street = "Msgr. V. Trstenského"},
+  {street = "Pod Stráňou"},
+  {street = "Hýbeľ"},
+  {street = "Lesná"},
+  {street = "Obrancov mieru"},
+  {street = "I. Olbrachta", written = "I. Obrachta", note = "typo in the document (missing l): the register's I. Olbrachta"},
+  {street = "Lúčna"},
+  {street = "Odbojárov"},
+  {street = "R. Dilonga"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "M. Jankoľu", written = "M. Jankolu", note = "the document drops the soft sign: the register's M. Jankoľu"},
+  {street = "Osadská"},
+  {street = "Ústianska"},
+  {street = "Krakovská cesta"},
+  {street = "Mládežnícka"},
+  {street = "Oslobodenia"},
+]
+
+[okrsok.6]
+rules = [
+  {part = "Ústie nad Priehradou"},
+  {part = "Oravská Priehrada"},
+  {part = "Prístav"},
+]

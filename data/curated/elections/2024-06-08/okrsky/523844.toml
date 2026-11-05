@@ -1,0 +1,50 @@
+# Okrsky of Spišská Teplica, transcribed by an AI agent in job okrsok-rules-5047 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1. mája, Budovateľská, Krátka, Lesná, Mládeže, Obrancov mieru, Podhrádok, Svitská, Školská
+#   okrsok 2: Cintorínska, Družstevná, Mlynská, Okružná, Osloboditeľov, Pokroku, Popradská, Tatranská, Vápenica, Vodárenská, Záhradná, Patrónska, Topoľová
+obec = "523844"
+name = "Spišská Teplica"
+okrsky_date = 2024-03-05
+okrsky_fill = "nearest"
+okrsky_note = "The 144 addresses without a street (súpisné čísla only) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.obecspisskateplica.sk/e_download.php?file=data/uredni_deska/obsah677_21.pdf&original=Vo%C4%BEby%20inform%C3%A1cia%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20miestnost%C3%AD_pdf.pdf"
+sha256 = "83ca4f33876b4472d5599b4ba45201abadd8742bff0d343a0ee8ef59dd913961"
+title = "Voľby informácia o utvorení volebných okrskov a miestností"
+
+[[document]]
+url = "https://www.obecspisskateplica.sk/zverejnovanie-1/uradna-tabula/volby-do-europskeho-paramentu-informacia-o-utvoreni-volebnych-okrskov-a-miestnosti-738.html"
+sha256 = "a8c290691f0f3e6fd372f4f6a7049d55732c5023793a127546ac72b2b90ebda4"
+title = "Informácia o utvorení volebných okrskov a miestností (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {street = "1. mája"},
+  {street = "Budovateľská"},
+  {street = "Krátka"},
+  {street = "Lesná"},
+  {street = "Mládeže"},
+  {street = "Obrancov mieru"},
+  {street = "Podhrádok"},
+  {street = "Svitská"},
+  {street = "Školská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Mlynská"},
+  {street = "Okružná"},
+  {street = "Osloboditeľov"},
+  {street = "Pokroku"},
+  {street = "Popradská"},
+  {street = "Tatranská"},
+  {street = "Vápenica"},
+  {street = "Vodárenská"},
+  {street = "Záhradná"},
+  {street = "Patrónska"},
+  {street = "Topoľová"},
+]

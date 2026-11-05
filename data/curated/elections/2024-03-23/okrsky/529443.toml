@@ -1,0 +1,73 @@
+# Okrsky of Bratislava-Jarovce, transcribed by an AI agent in job okrsok-rules-4285 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: BAŽANTNICOVÁ, BYLINKOVÁ, FIGOVÁ, FIKUSOVÁ, CHOTÁRNA, KOREŇOVÁ, KOŽUŠNÍCKA, KÔSTKOVÁ, MANDĽOVÁ, OLEANDROVÁ, OSIJECKÁ, PALMOVÁ, PLITVICKÁ, RASTLINNÁ, REPKOVÁ, SLAVÓNSKA, TRNKOVÁ, ZADARSKÁ, ZAMATOVÁ, OBČANIA S TRVALÝM POBYTOM NA OBCI MČ BRATISLAVA - JAROVCE
+#   okrsok 2: ARAGONITOVÁ, DIAMANTOVÁ, FRANTIŠKA SCHMUCKERA, GRANITOVÁ, JANTÁROVÁ, JASPISOVÁ, JAZERNÁ, JOZEFA MIKISITSA, KRIŠTÁĽOVÁ, LADISLAVA BATTHYÁNYHO, MORUŠOVÁ, NÁMESTIE PRI SÝPKE, NEFRITOVÁ, ÓNYXOVÁ, OPÁLOVÁ, OVOCNÁ, PAVE VUKOVIČA, PERLOVÁ, PETARA PASICHA, PÍLOVÁ, PRI TEHELNI, SEMENÁRSKA, SMARAGDOVÁ, TOPÁSOVÁ, TYRKYSOVÁ, URBÁRSKA, ZAFÍROVÁ, ZELENINOVÁ
+obec = "529443"
+name = "Bratislava-Jarovce"
+okrsky_fill = "nearest"
+okrsky_note = "Addresses without a street take the nearest okrsok (fill_nearest). Residents registered without an address ('občania s trvalým pobytom na obci MČ Bratislava - Jarovce') belong to okrsok 1. Jazerná, Námestie pri sýpke, Perlová (named in the document) are not in the address register and left out. Texts read from the PDF's garbled text layer, written with diacritics."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The starosta's undated decision sets 2 okrsky for the presidential election of 23. 03. 2024 (and second round 06. 04. 2024); the list of streets is headed with the same election."
+
+[[document]]
+url = "http://www.jarovce.sk/dokumenty/volby/prez2024/Urcenie%20volebnych%20okrskov.pdf"
+sha256 = "974a8573b3bc5b3ba31e9d544e18e1d7f8e982ffe2cdb1f7f79627f89ca41bc2"
+title = "Určenie volebných okrskov (voľba prezidenta SR 23. 03. 2024)"
+
+[[document]]
+url = "http://www.jarovce.sk/dokumenty/volby/prez2024/Volebne%20okrsky.pdf"
+sha256 = "2f6d29fefe219300a478f7a6c18f623d294038a605d99252c7dc3c4968930083"
+title = "Volebné okrsky v MČ Bratislava - Jarovce (voľba prezidenta SR 23. 03. 2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Bažantnicová"},
+  {street = "Bylinková"},
+  {street = "Figová"},
+  {street = "Fikusová"},
+  {street = "Chotárna"},
+  {street = "Koreňová"},
+  {street = "Kožušnícka"},
+  {street = "Kôstková"},
+  {street = "Mandľová"},
+  {street = "Oleandrová"},
+  {street = "Osijecká"},
+  {street = "Palmová"},
+  {street = "Plitvická"},
+  {street = "Rastlinná"},
+  {street = "Repková"},
+  {street = "Slavónska"},
+  {street = "Trnková"},
+  {street = "Zadarská"},
+  {street = "Zamatová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Aragonitová"},
+  {street = "Diamantová"},
+  {street = "Františka Schmuckera"},
+  {street = "Granitová"},
+  {street = "Jantárová"},
+  {street = "Jaspisová"},
+  {street = "Jozefa Mikisitsa"},
+  {street = "Krištáľová"},
+  {street = "Ladislava Batthyányho"},
+  {street = "Morušová"},
+  {street = "Nefritová"},
+  {street = "Ónyxová"},
+  {street = "Opálová"},
+  {street = "Ovocná"},
+  {street = "Pave Vukoviča"},
+  {street = "Petara Pasicha"},
+  {street = "Pílová"},
+  {street = "Pri tehelni"},
+  {street = "Semenárska"},
+  {street = "Smaragdová"},
+  {street = "Topásová"},
+  {street = "Tyrkysová"},
+  {street = "Urbárska"},
+  {street = "Zafírová"},
+  {street = "Zeleninová"},
+]

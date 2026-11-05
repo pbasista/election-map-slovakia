@@ -1,0 +1,25 @@
+# Okrsky of Maťovské Vojkovce, transcribed by an AI agent in job okrsok-rules-5211 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: v časti obce Maťovce utváram volebný okrsok č. 1
+#   okrsok 2: v časti obce Vojkovce utváram volebný okrsok č. 2
+obec = "528579"
+name = "Maťovské Vojkovce"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2024-04-14
+okrsky_date_basis = "The decision is undated; the Internet Archive captured the elections page linking it on 2024-04-14, and its heading names the EP election of 8 June 2024. (https://web.archive.org/web/20240414225100/https://www.matovskevojkovce.sk/volby-do-europskeho-parlamentu-2024-a22-726)"
+
+[[document]]
+url = "https://www.matovskevojkovce.sk/data/65de15885bad9_utvorenie_volebnych_oksrkov_ep_000158.pdf"
+sha256 = "308c8ef9e9a8560e67a860264783668af9eb4fcd5f6c9a659c3bb6cf8b2c18a9"
+title = "Utvorenie volebných okrskov pre voľby do Európskeho parlamentu v obci Maťovské Vojkovce"
+
+[okrsok.1]
+rules = [
+  {part = "Maťovce"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kapušianske Vojkovce", note = "The document calls the part Kapušianske Vojkovce simply \"Vojkovce\"; the municipality has only the two parts Maťovce and Kapušianske Vojkovce."},
+]

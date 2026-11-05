@@ -1,0 +1,30 @@
+# Okrsky of Váhovce, transcribed by an AI agent in job okrsok-rules-4386 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od s. č. 0 - 430
+#   okrsok 2: od s.č. 431 - 875
+obec = "504114"
+name = "Váhovce"
+okrsky_date = 2024-01-30
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document read from the image. The document is headed for the presidential election of 2024 and dated \"Vo Váhovciach, dňa 30.01.2023\", an evident slip for 30.01.2024: the notice board posted it on 30. 1. 2024 and the election was called in January 2024; date set to 2024-01-30. Okrsky by súpisné číslo (the municipality has no streets): okrsok 1 s.č. 0–430, okrsok 2 s.č. 431–875; addresses with a higher súpisné číslo (not named by the document) take the okrsok of the nearest address (fill_nearest). Same okrsky as the 2022 and 2023 documents."
+
+[[document]]
+url = "https://www.obecvahovce.sk/e_download.php?file=data/uredni_deska/obsah373_1.pdf&original=Scan_1418.pdf"
+sha256 = "63bbc148dd99f1bb22827054fa6ed5102ea765cc2eacf2e45aab8705500b8ed8"
+title = "Určenie volebných okrskov a volebných miestností pre voľby prezidenta Slovenskej republiky v roku 2024"
+
+[[document]]
+url = "https://www.obecvahovce.sk/urad/uradna-tabula-obce/urcenie-volebnych-okrskov-a-volebnych-miestnosti-pre-volby-prezidenta-sr-2024-377.html"
+sha256 = "2866441a1734f07bfab56db960f7c4749d5aafb6248772a81727fc21e144e6eb"
+title = "Určenie volebných okrskov a volebných miestností pre voľby prezidenta SR 2024 (úradná tabuľa, vyvesené 30. 1. 2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Váhovce", numbers = "0-430"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Váhovce", numbers = "431-875"},
+]

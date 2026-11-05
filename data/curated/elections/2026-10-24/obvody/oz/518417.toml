@@ -4,10 +4,17 @@
 # text per obvod, verbatim:
 #   obvod 1: obvod č.1 -5 poslancov Hontianske Nemce
 #   obvod 2: obvod č.2 -2 poslanci Rakovec Majer Sitnianska Lehôtka
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/518417.toml, standing in.
 obec = "518417"
 name = "Hontianske Nemce"
 date = 2026-07-27
 note = "The document is the mayor's announcement (\"určujem\", citing § 11 ods. 3 písm. d) zákona č. 369/1990 Zb.); no council resolution on the obvody was found on the website (only the February and April 2026 council minutes are published). The PDF carries no date; date is the posting date on the website (Vyvesené: 27. 7. 2026), which matches the PDF creation date. Obvod 2 includes the settlement Majer, which the address register has no separate part for: its addresses are súpisné čísla in part Hontianske Nemce. I selected them by location and numbering (see the rule note)."
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office okrsky per obvod), so each okrsok is its whole obvod; the obvody document is the source and date is that resolution's date (no separate okrsky announcement used). Undated scanned announcement; given as an Internet Archive snapshot of 21 Oct 2022, so no date."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-135): No document forming the okrsky for 24.10.2026 is published on hontianskenemce.sk (elections section and úradná tabuľa list only the obvody announcement, MVK/OVK delegation e-mail, zapisovateľ, candidate lists). The only 2026 okrsok document is for the referendum of 4.7.2026 (dated 7.5.2026) and creates a single okrsok (KS Hontianske Nemce 500), which does not match the 2 okrsky of the October elections and does not say they stay the same. Web search found nothing else. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky, those ŠÚ SR counted in each council obvod. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2022-10-29: 1: 901 → 934, 2: 234 → 231."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-10-21
+okrsky_date_basis = "The announcement states no date; the Internet Archive captured it on 2022-10-21 (https://web.archive.org/web/20221021225318/https://www.hontianskenemce.sk/e_download.php?file=data/uredni_deska/obsah32_1.pdf&original=2123.pdf)."
 
 [[document]]
 url = "https://www.hontianskenemce.sk/e_download.php?file=/data/uredni_deska/obsah872_1.pdf&original=ozn%C3%A1menie%20o%20po%C4%8Dte%20poslancov.pdf"
@@ -16,12 +23,14 @@ title = "Oznámenie o určení počtu poslancov a utvorení volebných obvodov (
 
 [obvod.1]
 seats = 5
+okrsky = [1]
 rules = [
   {part = "Hontianske Nemce"},
 ]
 
 [obvod.2]
 seats = 2
+okrsky = [2]
 rules = [
   {part = "Rakovec"},
   {part = "Sitnianska Lehôtka"},

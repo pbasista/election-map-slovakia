@@ -30,14 +30,18 @@ jobs:
       github.event_name != 'pull_request' ||
       github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
+    # Generous: a hung test would otherwise hold a release (release.yml
+    # runs these jobs first) for the 360 minutes a hosted runner allows.
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.11", "3.12", "3.14"]
+        python-version: ["3.11", "3.12", "3.14", "3.15"]
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
+          version: "0.13.6"
           python-version: ${{ matrix.python-version }}
           enable-cache: true
       # --locked: a uv.lock that no longer matches pyproject.toml is a
@@ -51,6 +55,12 @@ jobs:
       # a release deploys a data part only when its locked key is not
       # deployed yet, so a stale lock would leave changed data unpublished.
       - run: uv run ems data lock --check
+      # data/outputs.toml must have the inputs of every step at this
+      # commit, computed from it alone (Python from .python-version, so
+      # every Python of the matrix agrees): `ems make` skips a step whose
+      # inputs and output are those recorded, so a stale entry would rerun
+      # the step for whoever pulls the commit.
+      - run: uv run ems record check
 
   # Biome is one native binary and needs no Node; it lints the browser half
   # once, not once per Python version.
@@ -59,9 +69,10 @@ jobs:
       github.event_name != 'pull_request' ||
       github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: biomejs/setup-biome@v2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: biomejs/setup-biome@4c91541eaada48f67d7dbd7833600ce162b68f51 # v2.7.1
         with:
-          version: 2.5.12
+          version: 2.6.4
       - run: biome ci

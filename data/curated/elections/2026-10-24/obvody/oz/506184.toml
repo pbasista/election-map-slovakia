@@ -4,10 +4,15 @@
 # text per obvod, verbatim:
 #   obvod 1: Lubina obvod č.1.- počet poslancov 4 /Lubina obec a Hrabové/
 #   obvod 2: Lubina obvod č. 2- počet poslancov 4 /miestna časť Hrnčiarové a Miškech Dedinka/
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/506184.toml, standing in.
 obec = "506184"
 name = "Lubina"
 date = 2026-06-24
 note = "Uznesenie č. 46/2026 (page 27 of the published resolutions of 24.6.2026). Seats: 4 + 4 = 8 total."
+okrsky_date = 2022-06-29
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office okrsky per obvod), so each okrsok is its whole obvod; the obvody document is the source and date is that resolution's date (no separate okrsky announcement used). Hrabové is a settlement within part Lubina (obvod 1)."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-133): No okrsky document for the 24 Oct 2026 elections is published on obeclubina.sk (Voľby page, notice board). The only one is for the referendum of 4 July 2026 (id=2403311: okrsok 1 obec, Hrabové; okrsok 2 Hrnčiarové, Miškech Dedinka), which does not say the okrsky stay the same; it matches the obvody (1 = okrsok 1, 2 = okrsok 2) but per the prompt cannot be used. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky, those ŠÚ SR counted in each council obvod (nearer, not taken: 2026-07-04: okrsky of the whole obec, the council then elected in several obvody; 2024-06-08: okrsky of the whole obec, the council then elected in several obvody; 2024-03-23: okrsky of the whole obec, the council then elected in several obvody; 2023-09-30: okrsky of the whole obec, the council then elected in several obvody). Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2022-10-29: 1: 668 → 624, 2: 605 → 595."
 
 [[document]]
 url = "https://www.obeclubina.sk/download_file_f.php?id=2431989"
@@ -16,12 +21,14 @@ title = "Uznesenia OZ Lubina zo zasadnutia dňa 24.6.2026 (Uznesenie č. 46/2026
 
 [obvod.1]
 seats = 4
+okrsky = [1]
 rules = [
   {part = "Lubina", note = "'Lubina obec a Hrabové': Hrabové is a settlement (kopanica) within the časť obce Lubina, not a separate part in the register, so the whole part Lubina."},
 ]
 
 [obvod.2]
 seats = 4
+okrsky = [2]
 rules = [
   {part = "Hrnčiarové"},
   {part = "Miškech Dedinka"},

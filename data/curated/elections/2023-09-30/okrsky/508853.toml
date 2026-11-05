@@ -1,0 +1,50 @@
+# Okrsky of Podbrezová, transcribed by an AI agent in job okrsok-rules-3596 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Lopej – ulice Belohrad, Čelno, Dolná, Družby, Hámor, Jozefa Murgaša, Partizánska, Pod Grapľom; Vajsková; Skalica
+#   okrsok 2: Podbrezová – ulice Sládkovičova, Šupkova, Kolkáreň, Bendíčka, Smreková, Švermov rad, Štúrov rad, Hviezdoslavova, Chalupkova
+#   okrsok 3: Štiavnička, Chvatimech
+obec = "508853"
+name = "Podbrezová"
+okrsky_date = 2023-06-22
+okrsky_note = "The document names the parts Lopej, Podbrezová, Štiavnička, Chvatimech, Vajsková and Skalica; addresses without a street are placed by their part."
+
+[[document]]
+url = "https://www.podbrezova.sk/download_file_f.php?id=1880748"
+sha256 = "5e613978b0e65ac4201d74eca97bbde91316145ccfe5a1fcc9b8ab1fb93347df"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (voľby do NR SR 2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Lopej"},
+  {street = "Belohrad"},
+  {street = "Čelno"},
+  {street = "Dolná"},
+  {street = "Družby"},
+  {street = "Hámor"},
+  {street = "Jozefa Murgaša"},
+  {street = "Partizánska"},
+  {street = "Pod Grapľom"},
+  {part = "Vajsková"},
+  {part = "Skalica"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Podbrezová"},
+  {street = "Sládkovičova"},
+  {street = "Šupkova"},
+  {street = "Kolkáreň"},
+  {street = "Bendíčka"},
+  {street = "Smreková"},
+  {street = "Švermov rad"},
+  {street = "Štúrov rad"},
+  {street = "Hviezdoslavova"},
+  {street = "Chalupkova"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Štiavnička"},
+  {part = "Chvatimech"},
+]

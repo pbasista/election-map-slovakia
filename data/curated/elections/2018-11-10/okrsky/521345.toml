@@ -1,0 +1,24 @@
+# Okrsky of Družstevná pri Hornáde, transcribed by an AI agent in job okrsok-rules-886 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 – pre časť obce Malá Vieska
+#   okrsok 2: Okrsok č. 2 – pre časť obce Tepličany.
+obec = "521345"
+name = "Družstevná pri Hornáde"
+okrsky_date = 2018-09-11
+okrsky_note = "Scanned PDF, read from the rendered page."
+
+[[document]]
+url = "https://www.druzstevna.sk/file/page1_file4034.pdf"
+sha256 = "aa597d020caf8f887ea892d5496c9acea2752c4ea036df81d6d65eb92f0aab5e"
+title = "Určenie volebných okrskov pre voľby do orgánov samosprávy obcí 2018"
+
+[okrsok.1]
+rules = [
+  {part = "Malá Vieska"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Tepličany"},
+]

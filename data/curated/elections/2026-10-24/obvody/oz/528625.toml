@@ -4,10 +4,15 @@
 # text per obvod, verbatim:
 #   obvod 1: Obecné zastupiteľstvo schvaľuje volebné obvody číslo 1. Veľký Ruskov a volebný obvod číslo 2. Malý Ruskov; Obecné zastupiteľstvo schvaľuje 5. poslancov za Veľký Ruskov a 2. poslancov Malý Ruskov
 #   obvod 2: Obecné zastupiteľstvo schvaľuje volebné obvody číslo 1. Veľký Ruskov a volebný obvod číslo 2. Malý Ruskov; Obecné zastupiteľstvo schvaľuje 5. poslancov za Veľký Ruskov a 2. poslancov Malý Ruskov
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/528625.toml, standing in.
 obec = "528625"
 name = "Nový Ruskov"
 date = 2026-06-18
 note = "No separate 2026 oznámenie or uznesenia PDF for the 27th session is published (the oznámenie on the elections page is from 2022); the decision is transcribed from the official minutes (zápisnica) of 18.6.2026, items 8 and 9: uznesenie 187 sets obvod 1 = Veľký Ruskov, obvod 2 = Malý Ruskov; uznesenie 188 sets 5 and 2 seats."
+okrsky_date = 2022-06-17
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-182): No 2026 okrsky document is published. The only 'Určenie volebných okrskov a volebných miestností' on the site is the 2022 one (OSO a OSK 2022: okrsok 1 Veľký Ruskov, okrsok 2 Malý Ruskov), which would match obvod 1 / obvod 2 but is not for the 2026 elections. Web search and cuet.slovensko.sk found nothing for 2026. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky, those ŠÚ SR counted in each council obvod (nearer, not taken: 2024-03-23: okrsky of the whole obec, the council then elected in several obvody). Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2022-10-29: 1: 403 → 418, 2: 145 → 139."
 
 [[document]]
 url = "https://novyruskov.sk/wp-content/uploads/dokumenty/zapisnice-zasadnuti-oz/zapisnica-z-27.-zasadnutia-oz-18.6.2026-dt5m3d.pdf"
@@ -16,12 +21,14 @@ title = "Zápisnica z 27. zasadnutia OZ dňa 18.6.2026 (uznesenia č. 187 a 188)
 
 [obvod.1]
 seats = 5
+okrsky = [1]
 rules = [
   {part = "Veľký Ruskov"},
 ]
 
 [obvod.2]
 seats = 2
+okrsky = [2]
 rules = [
   {part = "Malý Ruskov"},
 ]

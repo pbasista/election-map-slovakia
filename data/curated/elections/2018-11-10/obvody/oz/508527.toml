@@ -1,0 +1,67 @@
+# Council obvody of Čierny Balog (508527), Brezno.
+# Transcribed by an AI agent in job obvod-rules-100 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod č. 1 Čierny Balog – miestna časť Čierny Balog Vo volebnom obvode č. 1 budú zvolení 2 poslanci.
+#   obvod 2: Volebný obvod č. 2 Jánošovka - miestna časť Jánošovka Vo volebnom obvode č. 2 budú zvolení 2 poslanci.
+#   obvod 3: Volebný obvod č. 3 Pusté, Dobroč – miestne časti Pusté a Dobroč Vo volebnom obvode č. 3 budú zvolení 4 poslanci.
+#   obvod 4: Volebný obvod č. 4 Komov, Fajtov– miestne časti Komov a Fajtov Vo volebnom obvode č. 4 budú zvolení 2 poslanci.
+#   obvod 5: Volebný obvod č. 5 Krám, Medveďov – miestne časti Krám a Medveďov Vo volebnom obvode č. 5 budú zvolení 3 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-5871 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Čierny Balog
+#   okrsok 2: Jánošovka
+#   okrsok 3: Dobroč, Pusté
+#   okrsok 4: Fajtov, Komov
+#   okrsok 5: Krám, Medveďov
+obec = "508527"
+name = "Čierny Balog"
+date = 2018-08-09
+note = "The municipality's Komunálne voľby 2018 page (Internet Archive) publishes the announcement of resolution 62/2018 of 9 Aug 2018: five obvody defined by miestne časti; part rules. Obvod 3 elects 4 councillors (only 3 candidates; the page notes a by-election for the fourth)."
+okrsky_note = "The page says the 5 obvody also form the okrsky (okrsok n = obvod n)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The Komunálne voľby 2018 page (archived 2019-09-18) states that for the elections to the organs of municipal self-government in 2018 the mayor set these okrsky, the 5 obvody forming the okrsky; no decision date given."
+
+[[document]]
+url = "https://web.archive.org/web/20190918161141/https://www.ciernybalog.sk/catalog/0/komunalne-volby-2018.phtml?id3=138848"
+sha256 = "44b4806e55fe7f15088fbb947fe5cedc3f5958906465890f27360ee49e44fcdf"
+title = "Komunálne voľby 2018 (archived page): Určenie volebných obvodov a počtu volených poslancov, uznesenie OZ č. 62/2018 z 9. augusta 2018, zverejnené 30.8.2018"
+
+[obvod.1]
+seats = 2
+okrsky = [1]
+rules = [
+  {part = "Čierny Balog"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Jánošovka"},
+]
+
+[obvod.3]
+seats = 4
+okrsky = [3]
+rules = [
+  {part = "Pusté"},
+  {part = "Dobroč"},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [4]
+rules = [
+  {part = "Komov"},
+  {part = "Fajtov"},
+]
+
+[obvod.5]
+seats = 3
+okrsky = [5]
+rules = [
+  {part = "Krám"},
+  {part = "Medveďov"},
+]

@@ -1,0 +1,55 @@
+# Okrsky of Bratislava-Čunovo, transcribed by an AI agent in job okrsok-rules-4438 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: CSENÁROVÁ ULICA, HRANIČIARSKA, JANKOVIČOVA ULICA, NA HRÁDZI, OVSENÁ, PETRŽALSKÁ, RAŽNÁ, SCHENGENSKÁ, SKÝCOVSKÁ, SOCHOROVA, TURISTICKÁ, ZÁHUMENNÁ, ZICHYHO ULICA, ZÁHRADKÁRSKA OSADA A OBČANIA PRIHLÁSENÍ NA OBEC
+#   okrsok 2: BORIEVKOVÁ ULICA, CEZMÍNOVÁ, CÉDROVÁ ULICA, CIROKOVÁ ULICA, DLHÁ, CHRENOVÁ ULICA, IBERKOVÁ, IBIŠTEKOVÁ, KONOPISKÁ, KRUŠPÁNOVÁ, LIPKAVCOVÁ ULICA, LIPNICOVÁ ULICA, NOVOSADNÁ, PLAMIENKOVÁ ULICA, PROSOVÁ ULICA, RAKYTNÍKOVÁ, REBRÍČKOVÁ, ROZCHODNÍKOVÁ ULICA, ZOBOVÁ.
+obec = "529435"
+name = "Bratislava-Čunovo"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned documents, read from the page images; the street list writes names in capitals. 'Záhradkárska osada' (okrsok 1) has no street in the register; its houses and the other houses with only a súpisné číslo take the okrsok of the nearest address (fill_nearest). 'Občania prihlásení na obec' (registered without an address) vote in okrsok 1. The list names CSENÁROVA/CSENÁROVÁ ULICA, JANKOVIČOVA ULICA, ZICHYHO ULICA (okrsok 1) and LIPKAVCOVÁ, PROSOVÁ, ROZCHODNÍKOVÁ ULICA (okrsok 2), which the register lacks: left out. Unlike the documents of 2018–2020 (and the copied 2022 rule set), Záhumenná is in okrsok 1."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The starostka's 'Určenie volebných okrskov' sets two okrsky for the presidential election of 23. 03. 2024 (round 2 06. 04. 2024) and the street list is headed with that election; neither states a date."
+
+[[document]]
+url = "https://www.cunovo.eu/files/2025-04-30-162013-Vo__by_prezidenta-_Ur__enie_volebn__ch_obvodov.pdf"
+sha256 = "988092a4ba1744269f6998629cd3b8ee9ff9da90d2e61ed9fc52df5f8ec44b6b"
+title = "Určenie volebných okrskov – voľba prezidenta SR 23. 03. 2024"
+
+[[document]]
+url = "https://www.cunovo.eu/files/2025-04-30-162012-rozdelenie_ul__c_do_volebn__ch_okrskov.pdf"
+sha256 = "281c1f1e85b73d5c29fa47dc5678405f496e563a0b61bd82531c79e6eea64e66"
+title = "Voľba prezidenta SR 23. 03. 2024 – Volebné okrsky v MČ Bratislava-Čunovo (rozdelenie ulíc)"
+
+[okrsok.1]
+rules = [
+  {street = "Hraničiarska", written = "HRANIČIARSKA"},
+  {street = "Na hrádzi", written = "NA HRÁDZI"},
+  {street = "Ovsená", written = "OVSENÁ"},
+  {street = "Petržalská", written = "PETRŽALSKÁ"},
+  {street = "Ražná", written = "RAŽNÁ"},
+  {street = "Schengenská", written = "SCHENGENSKÁ"},
+  {street = "Skýcovská", written = "SKÝCOVSKÁ"},
+  {street = "Sochorova", written = "SOCHOROVA"},
+  {street = "Turistická", written = "TURISTICKÁ"},
+  {street = "Záhumenná", written = "ZÁHUMENNÁ"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cezmínová", written = "CEZMÍNOVÁ"},
+  {street = "Dlhá", written = "DLHÁ"},
+  {street = "Iberková", written = "IBERKOVÁ"},
+  {street = "Ibišteková", written = "IBIŠTEKOVÁ"},
+  {street = "Konopiská", written = "KONOPISKÁ"},
+  {street = "Krušpánová", written = "KRUŠPÁNOVÁ"},
+  {street = "Novosadná", written = "NOVOSADNÁ"},
+  {street = "Rakytníková", written = "RAKYTNÍKOVÁ"},
+  {street = "Rebríčková", written = "REBRÍČKOVÁ"},
+  {street = "Zobová", written = "ZOBOVÁ"},
+  {street = "Borievková ulica", written = "BORIEVKOVÁ ULICA"},
+  {street = "Cédrová ulica", written = "CÉDROVÁ ULICA"},
+  {street = "Chrenová ulica", written = "CHRENOVÁ ULICA"},
+  {street = "Ciroková ulica", written = "CIROKOVÁ ULICA"},
+  {street = "Lipnicová ulica", written = "LIPNICOVÁ ULICA"},
+  {street = "Plamienková ulica", written = "PLAMIENKOVÁ ULICA"},
+]

@@ -1,0 +1,46 @@
+# Okrsky of Liptovské Revúce, transcribed by an AI agent in job okrsok-rules-4433 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: č. d. 1 – 230
+#   okrsok 2: č. d. 231 – 530
+#   okrsok 3: č. d. 531 – 800
+obec = "510718"
+name = "Liptovské Revúce"
+okrsky_date = 2024-01-22
+okrsky_note = "The document gives each okrsok its polling station and a range of house numbers (č. d., súpisné čísla; the village has no streets): 1 Nižná Revúca, č. d. 1–230; 2 Stredná Revúca, č. d. 231–530; 3 Vyšná Revúca, č. d. 531–800. The numbering runs across the whole village, so each range is written for all three parts."
+
+[[document]]
+url = "https://www.liptovskerevuce.sk/e_download.php?file=data/editor/248sk_3.pdf&original=ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20miestnost%C3%AD%20v%20obci%20LR.pdf"
+sha256 = "162ca19b32690adf78b7ad5aabf9ffd9b0e71708bb93f03a277b1130db4b4eff"
+title = "Určenie volebných okrskov a miestností v obci Liptovské Revúce pre voľby prezidenta SR 23.03.2024"
+
+[[document]]
+url = "https://www.liptovskerevuce.sk/e_download.php?file=data/editor/248sk_2.docx&original=2%20ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20miesnost%C3%AD%20v%20obci%20Liptovsk%C3%A9%20Rev%C3%BAce%202024.docx"
+sha256 = "ff1cc8cbf4859c07f484a8bc02a2f7db0289a77a464b45ddf235beb84206b557"
+title = "Určenie volebných okrskov a miestností v obci Liptovské Revúce 2024 (DOCX)"
+
+[[document]]
+url = "https://www.liptovskerevuce.sk/2026-volby-referendum/2024-prezidentske-volby-liptovske-revuce/"
+sha256 = "1619ee7ea673c9d66be4ecf24be99dfb814404d78ba20b658d33071dd573ef89"
+title = "Prezidentské voľby 2024 – stránka obce"
+
+[okrsok.1]
+rules = [
+  {part = "Nižná Revúca", numbers = "1-230"},
+  {part = "Stredná Revúca", numbers = "1-230"},
+  {part = "Vyšná Revúca", numbers = "1-230"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Nižná Revúca", numbers = "231-530"},
+  {part = "Stredná Revúca", numbers = "231-530"},
+  {part = "Vyšná Revúca", numbers = "231-530"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Nižná Revúca", numbers = "531-800"},
+  {part = "Stredná Revúca", numbers = "531-800"},
+  {part = "Vyšná Revúca", numbers = "531-800"},
+]

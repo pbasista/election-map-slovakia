@@ -1,0 +1,46 @@
+# The okrsky of Petrovice of the vote of 2018-11-10, data/curated/elections/2018-11-10/obvody/oz/517861.toml, standing in, by `ems job reuse`. Its header there:
+#   Council obvody of Petrovice (517861), Bytča.
+#   Transcribed by an AI agent in job obvod-rules-170 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: 1. Petrovice s počtom poslancov 6
+#     obvod 2: 2. Setechov s počtom poslancov 3
+#   Okrsky added by an AI agent in job okrsok-rules-5905 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Petrovice, Pláne, Magale
+#     okrsok 2: Setechov
+obec = "517861"
+name = "Petrovice"
+date = 2018-06-13
+note = "The council obvody of the vote of 2018-11-10: they only place the okrsky. The council's minutes of 13 June 2018 set 9 councillors in two obvody: '1. Petrovice s počtom poslancov 6, 2. Setechov s počtom poslancov 3'. Obvod 1 is the parts Petrovice, Pláne and Magale (as okrsok 1 of the mayor's okrsky decision of 27.8.2018 is 'Petrovice, Pláne, Magale', okrsok 2 'Setechov')."
+reused = 2018-11-10
+okrsky_date = 2018-08-27
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-475): No okrsky document for the regional elections of 2017: the website's elections pages start with 2018, the 2017 council minutes and the notice board's 'Voľby' category list nothing for 2017; the Internet Archive's CDX of obecpetrovice.sk lists no election PDF. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2018-11-10: 1: 1,007 → 1,026, 2: 275 → 275."
+
+[[document]]
+url = "https://www.obecpetrovice.sk/blocks/files/0193bb67-ee53-7e21-a868-8c6e387e4394.pdf"
+sha256 = "e4969df862267b528caa14f5bc6036ed682c8dcd40d2e153a61c518f6fd18297"
+title = "Zápisnica a uznesenie OZ 13. 06. 2018"
+
+[[document]]
+url = "https://www.obecpetrovice.sk/blocks/files/0193bb67-b34f-7b5d-ae1d-f107094484dc.pdf"
+sha256 = "a3206aa778958e07bc3e1f2e2d780b004c2dcee14a51130ef78e8e4f857db9b0"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí v roku 2018 (27.8.2018)"
+
+[obvod.1]
+seats = 6
+okrsky = [1]
+rules = [
+  {part = "Petrovice"},
+  {part = "Pláne", note = "Settlement of Petrovice; okrsok 1 of the mayor's decision of 27.8.2018 is 'Petrovice, Pláne, Magale'."},
+  {part = "Magale", note = "Settlement of Petrovice; okrsok 1 of the mayor's decision of 27.8.2018 is 'Petrovice, Pláne, Magale'."},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Setechov"},
+]

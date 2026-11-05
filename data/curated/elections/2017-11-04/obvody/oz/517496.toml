@@ -1,0 +1,41 @@
+# The okrsky of Divinka of the vote of 2018-11-10, data/curated/elections/2018-11-10/obvody/oz/517496.toml, standing in, by `ems job reuse`. Its header there:
+#   Council obvody of Divinka (517496), Žilina.
+#   Transcribed by an AI agent in job obvod-rules-197 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: DIVINKA
+#     obvod 2: LALINOK
+#   Okrsky added by an AI agent in job okrsok-rules-5916 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: DIVINKA
+#     okrsok 2: LALINOK
+obec = "517496"
+name = "Divinka"
+date = 2018-06-15
+note = "The council obvody of the vote of 2018-11-10: they only place the okrsky."
+reused = 2018-11-10
+okrsky_note = "No mayor's okrsky notice of 2018 is archived (the 2018 election files the Internet Archive keeps from divinka-lalinok.sk are the call of the elections, general voter information, the obvody notice, the population notice, the commission notices, candidates and results). Each obvod holds exactly one okrsok in the Statistical Office's results (obvod 1 Divinka = okrsok 1, obvod 2 Lalinok = okrsok 2), so each okrsok is its whole obvod and has rules []. Text is the obvody notice's words."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-554): The archived articles of the 2017 regional elections (Informácia pre voliča, Zverejnenie elektronickej adresy) carry no okrsky document, and the Internet Archive keeps no okrsky file of 2017 for this site; the current site has no 2017 elections page. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2018-11-10: 1: 430 → 425, 2: 365 → 366."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The obec's notice of 13.08.2018 names the elections of 10 November 2018 and sets the two obvody (council resolution 8./XX.18 of 15.06.2018); each obvod is one okrsok in the Statistical Office's results, so it gives the okrsky's extent; no separate okrsky notice of 2018 with its own date was found."
+
+[[document]]
+url = "https://web.archive.org/web/20210512225619/https://divinka-lalinok.sk/files/12656-Oznamenie-o-urceni-poctu-poslancov-a-utvoreni-volebnych-obvo.pdf"
+sha256 = "8d23a351bd33f602dad87ef366435df19f75886b47c6b9b57b8d09193e2ed297"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 10. novembra 2018 (uznesenie č. 8./XX.18 zo dňa 15.06.2018)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Divinka"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [2]
+rules = [
+  {part = "Lalinok"},
+]

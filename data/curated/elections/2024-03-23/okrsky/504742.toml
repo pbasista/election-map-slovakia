@@ -1,0 +1,27 @@
+# Okrsky of Radošovce, transcribed by an AI agent in job okrsok-rules-4422 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre občanov bývajúcich v Radošovciach na súp. č. 1 - 316
+#   okrsok 2: pre občanov bývajúcich v časti Vieska od súp. č. 1 - 202 a občanov Radošoviec od súp. č. 317 – 475
+obec = "504742"
+name = "Radošovce"
+okrsky_note = "Vieska taken whole (document: súp. č. 1–202, i.e. all of it); Radošovce súp. č. 317–475 given as open range 317- so newer higher numbers also fall into okrsok 2."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-02-06
+okrsky_date_basis = "The municipality's document page https://radosovce.sk/dokument/volebne-okrsky-a-volebne-miestnosti/ states 'Zverejnené 6. februára 2024', before the vote; the document itself names the presidential election of 23 March 2024 but states no decision date. (https://radosovce.sk/dokument/volebne-okrsky-a-volebne-miestnosti/)"
+
+[[document]]
+url = "https://radosovce.sk/wp-content/uploads/dokumenty/volby-prezidenta/volebne-okrsky-vytvorenie-qztujn.docx"
+sha256 = "9a657d744815954ace1a7582de0baaf9a191a6c6477185ad12cea5b0898e0aa4"
+title = "Utvorenie volebných okrskov a určenie volebných miestností na konanie volieb prezidenta Slovenskej republiky"
+
+[okrsok.1]
+rules = [
+  {part = "Radošovce", numbers = "1-316"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vieska"},
+  {part = "Radošovce", numbers = "317-"},
+]

@@ -1,0 +1,44 @@
+# Okrsky of Selce, transcribed by an AI agent in job okrsok-rules-4368 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1: Dolná ulica, Družstevná ulica, Horná ulica, Husádok, Ku Strelnici, Selčianska cesta, Školská ulica, Vyšovec
+#   okrsok 2: Okrsok č. 2: Bezdomovci, Mlynská ulica, Nemčianska ulica, Nová ulica, Partizánska ulica, Poľná ulica, Potočná ulica, Selce bez ulice, Športová ulica
+obec = "508985"
+name = "Selce"
+okrsky_date = 2024-01-23
+okrsky_note = "Scanned PDF, read from the rendered image; signed 'V Selciach dňa 23.01.2024' by the mayor. 'Bezdomovci' (residents without an address) are in okrsok 2 with 'Selce bez ulice'. The Internet Archive was offline (CDX returned 'Temporarily Offline' after retries)."
+
+[[document]]
+url = "https://www.selce.sk/e_download.php?file=data/uredni_deska/obsah569_6.pdf&original=volebn%C3%A9%20okrsky.pdf"
+sha256 = "62da72209da74edaf637eda7610c2e7a636d68c3b9c73ecc80d3852aea1e34d6"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby prezidenta Slovenskej republiky v roku 2024"
+
+[[document]]
+url = "https://www.selce.sk/zverejnovanie/uradna-tabula/volby-prezidenta-sr-oznamenie-o-urceni-volebnych-okrskov-651.html"
+sha256 = "751c0e56bc5506654d898ceffad007e0f067525be75349a3ff03421b85c46857"
+title = "Úradná tabuľa: Voľby prezidenta SR - oznámenie o určení volebných okrskov"
+
+[okrsok.1]
+rules = [
+  {street = "Dolná ulica"},
+  {street = "Družstevná ulica"},
+  {street = "Horná ulica"},
+  {street = "Husádok"},
+  {street = "Ku Strelnici"},
+  {street = "Selčianska cesta"},
+  {street = "Školská ulica"},
+  {street = "Vyšovec"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mlynská ulica"},
+  {street = "Nemčianska ulica"},
+  {street = "Nová ulica"},
+  {street = "Nová", written = "Nová ulica", note = "The register has 2 addresses under 'Nová' (nos. 22-33) beside 'Nová ulica'; the same street."},
+  {street = "Partizánska ulica"},
+  {street = "Poľná ulica"},
+  {street = "Potočná ulica"},
+  {street = "Športová ulica"},
+  {part = "Selce", note = "'Selce bez ulice': the addresses of Selce without a street; streets are taken by the more specific street rules."},
+]

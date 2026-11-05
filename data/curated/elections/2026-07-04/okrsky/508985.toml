@@ -1,0 +1,45 @@
+# Okrsky of Selce, transcribed by an AI agent in job okrsok-rules-5618 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Horná, Dolná, Družstevná, Ku Strelnici, Školská, Husádok, Selčianska, Vyšovec
+#   okrsok 2: Partizánska, Nová, Športová, Mlynská, Poľná, Nemčianska, Potočná, Selce
+obec = "508985"
+name = "Selce"
+okrsky_note = "PDF with a text layer, signed by mayor Ing. Daniel Hlinka. Both okrsky vote in the veľká sála of the Kultúrny dom Selce. The Internet Archive was offline (CDX returned 'Temporarily Offline' after retries)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2026-05-07
+okrsky_date_basis = "The decision itself ends 'Vyvesené: 7. mája 2026' and names the referendum of 4 July 2026; it states no decision date. (https://www.selce.sk/e_download.php?file=/data/uredni_deska/obsah737_3.pdf&original=Vytvorenie%20okrskov%20.pdf)"
+
+[[document]]
+url = "https://www.selce.sk/e_download.php?file=/data/uredni_deska/obsah737_3.pdf&original=Vytvorenie%20okrskov%20.pdf"
+sha256 = "7da86e09e80c07cbc668ab5114079ae70ba76d98106e46a7160a967ad6efa104"
+title = "Utváram volebné okrsky a určujem volebné miestnosti pre referendum, ktoré sa bude konať 4. júla 2026 na území obce Selce"
+
+[[document]]
+url = "https://www.selce.sk/zverejnovanie/uradna-tabula/referendum-4-jula-2026-838.html"
+sha256 = "a0cf4234a755f23af54933524f9a876c1078fae5526c779e3dcc81729f20eb06"
+title = "Úradná tabuľa: Referendum 4. júla 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Horná ulica", written = "Horná"},
+  {street = "Dolná ulica", written = "Dolná"},
+  {street = "Družstevná ulica", written = "Družstevná"},
+  {street = "Ku Strelnici"},
+  {street = "Školská ulica", written = "Školská"},
+  {street = "Husádok"},
+  {street = "Selčianska cesta", written = "Selčianska", note = "The document writes 'Selčianska'; the only such street in the register is Selčianska cesta."},
+  {street = "Vyšovec"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Partizánska ulica", written = "Partizánska"},
+  {street = "Nová ulica", written = "Nová"},
+  {street = "Športová ulica", written = "Športová"},
+  {street = "Mlynská ulica", written = "Mlynská"},
+  {street = "Poľná ulica", written = "Poľná"},
+  {street = "Nemčianska ulica", written = "Nemčianska"},
+  {street = "Potočná ulica", written = "Potočná"},
+  {part = "Selce", note = "The document lists 'Selce' among okrsok 2's streets: the addresses of Selce without a street; streets are taken by the more specific street rules."},
+]

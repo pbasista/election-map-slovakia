@@ -1,0 +1,61 @@
+# Okrsky of Marianka, transcribed by an AI agent in job okrsok-rules-2800 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: obec Marianka, Agátová, Borinská, Budovateľská, Bystrická, Čerešňová, Družstevná, Javorová, Jelšová, Kamenná, Karpatská, Krátka, Lesná, Lipová
+#   okrsok 2: Lúčna, Na Kracinách, Na Ovsisku, Na Tálkoch, Na Vinohradoch, Bad Bednárovým, Námestie, Partizánska, Pod Mlynom, Podhájska, Poľná, Potočná, Púpavová, Sedmokrásková, Slnečná, Stromová, Školská, Športová, Štúrova, Topoľová, Višňová, Vŕbová, Záhradná
+obec = "508080"
+name = "Marianka"
+okrsky_fill = "nearest"
+okrsky_note = "The document lists neither Stupavská nor Veterná (nor the 37 register addresses without a street, súpisné only); these are placed by fill_nearest. 'obec Marianka' in okrsok 1 = voters registered without an address."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2021-09-26
+okrsky_date_basis = "The Internet Archive captured the municipality's page for the by-election of 23 October 2021 with the mayor's 'určujem volebné miestnosti' and the streets of each okrsok on 2021-09-26 (page last modified 13.09.2021); no decision date is stated. (https://web.archive.org/web/20210926183446/https://www.marianka.sk/obcan/uradna-tabula/volby-do-organov-samospravy-obci/volby-do-organov-samospravy-obci.html)"
+
+[[document]]
+url = "https://web.archive.org/web/20210926183446/https://www.marianka.sk/obcan/uradna-tabula/volby-do-organov-samospravy-obci/volby-do-organov-samospravy-obci.html"
+sha256 = "08647e740cdb4545147c93c107a45b3d93dce65a7dfa9c4cd3ab33be1c53b15b"
+title = "Voľby do orgánov samosprávy obcí 2021 – určenie volebných miestností a okrskov"
+
+[okrsok.1]
+rules = [
+  {street = "Agátová"},
+  {street = "Borinská"},
+  {street = "Budovateľská"},
+  {street = "Bystrická"},
+  {street = "Čerešňová"},
+  {street = "Družstevná"},
+  {street = "Javorová"},
+  {street = "Jelšová"},
+  {street = "Kamenná"},
+  {street = "Karpatská"},
+  {street = "Krátka"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Lúčna"},
+  {street = "Na Kracinách"},
+  {street = "Na Ovsisku"},
+  {street = "Na Tálkoch"},
+  {street = "Na Vinohradoch"},
+  {street = "Nad Bednárovým", written = "Bad Bednárovým", note = "typo in the document: 'Bad' for 'Nad'"},
+  {street = "Námestie 4.apríla", written = "Námestie", note = "the only square (námestie) in the register is Námestie 4.apríla"},
+  {street = "Partizánska"},
+  {street = "Pod Mlynom"},
+  {street = "Podhájska"},
+  {street = "Poľná"},
+  {street = "Potočná"},
+  {street = "Púpavová"},
+  {street = "Sedmokrásková"},
+  {street = "Slnečná"},
+  {street = "Stromová"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Štúrova"},
+  {street = "Topoľová"},
+  {street = "Višňová"},
+  {street = "Vŕbová"},
+  {street = "Záhradná"},
+]

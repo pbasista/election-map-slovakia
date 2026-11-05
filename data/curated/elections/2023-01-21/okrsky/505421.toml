@@ -1,0 +1,38 @@
+# Okrsky of Radošina, transcribed by an AI agent in job okrsok-rules-3161 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Hečkova, kpt.J.Nálepku, Piešťanská, Školská, bezdomovci
+#   okrsok 2: Ulice: Družstevná, Kamenná, Mierová, Nádražná Nitrianska
+#   okrsok 3: Volebná miestnosť: Kultúrny dom Bzince 30
+obec = "505421"
+name = "Radošina"
+okrsky_date = 2022-11-08
+okrsky_fill = "nearest"
+okrsky_note = "'bezdomovci' (homeless, no address) in okrsok 1 are not a rule. The register's addresses of part Radošina without a street (súpisné only) take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20221128172923/https://www.radosina.sk/fileadmin/user_upload/okrsky_ref._21.1.2023.pdf"
+sha256 = "b6b8c86a1e9bb190f8948660e9fd6da1418b8a611e507d536fa5618e15ec6f7e"
+title = "Utvorenie volebných okrskov a určenie volebných miestností na konanie referenda dňa 21.1.2023 (8.11.2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Hečkova"},
+  {street = "kpt. J. Nálepku"},
+  {street = "Piešťanská"},
+  {street = "Školská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Kamenná"},
+  {street = "Mierová"},
+  {street = "Nádražná"},
+  {street = "Nitrianska"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Bzince", note = "the document gives okrsok 3 only its polling station, the cultural house in Bzince (Bzince 30); okrsok 3 is the part Bzince, the only part not covered by the streets of okrsky 1 and 2", inferred = true},
+]

@@ -1,0 +1,116 @@
+# Okrsky of Svätý Jur, transcribed by an AI agent in job okrsok-rules-4126 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Biely kríž, Dlhé, Gaštanová, Hamrovská cesta, Horné predmestie, Hradištná, Jozefkovo údolie, Konečné, Malokarpatská, Mariánska cesta, Peredzké, Pitvory, Podhradie, Pri hornej skalke, Pri Peci, Prostredná, Prostredné, Rebrá, Zámočnica, Ulica Sauberg
+#   okrsok 2: Ulice: Dr. Kautza, Bratislavská, Cibická cesta, Družstevná, Hájniky, Hanzlíčkova, Letohradská, Mikovíniho, Pezinská, Pezinské záhumenice, Staromlynská, Vinohradnícka
+#   okrsok 3: Ulice: 1. Mája, Krajinská cesta, Muškátová, Nová Pezinská, Olšavská, Pálavová, Pannónska, Rulandská, Silvánska, Šúrska, Tramínová, Trenčianka, Veltlínska
+#   okrsok 4: Ulice: Alexandra Dubčeka, Bernolákova, Dukelská, Fraňa Kráľa, Háj, Hrúšťová, Jelenie, Kollárova, Kúpeľné, Martina Kukučína, Mierová, Na Pažiti, Osúchy, Panciere, P.O.Hviezdoslava, Partizánska, Polkoráby, Pri ČOV, Pri kaplnke, Sasinkova, Slnečná, SNP, Staničná, Strapáky, Svätojánska, Športová, Zuby, Žabky
+#   okrsok 5: Ulice: Bratislavské záhumenice, Felcánova, Hergottova, Ulica Karola Drexlera, Ulica J. Cubínka, Kozmonautov, Ulica Mateja Bela, Ulica Michala Dočolomanského, Ulica Mórica Beňovského, Pri štadióne, Štúrova
+obec = "507989"
+name = "Svätý Jur"
+okrsky_date = 2024-01-17
+okrsky_fill = "nearest"
+okrsky_note = "Streets as the document lists them per okrsok. Olšavská, Pálavová, Karola Drexlera, Mateja Bela, Michala Dočolomanského and Mórica Beňovského are not in the address register and are left out. Register streets the document does not name (Bujačky, Hajná Hora, Kukly, Malý Javorník, Nové Hory, Tri Bresty, Ulica Priemyselná, Veľký Javorník, Žebráky: vineyard and forest localities) and addresses without a street go by fill_nearest."
+
+[[document]]
+url = "https://www.svatyjur.sk/data/page/svatyjur.sk/24218/volebne-okrsky-svaty-jur.pdf"
+sha256 = "c4f8058e11afd69016b408ebb977061cf6878b3afc2cb623a5d3e390ffa27a5b"
+title = "Určenie volebných okrskov a volebných miestností pre voľby prezidenta SR v roku 2024 (17.01.2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Biely Kríž", written = "Biely kríž"},
+  {street = "Dlhé"},
+  {street = "Gaštanová"},
+  {street = "Hamrovská cesta"},
+  {street = "Horné Predmestie", written = "Horné predmestie"},
+  {street = "Hradištná"},
+  {street = "Jozefkovo Údolie", written = "Jozefkovo údolie"},
+  {street = "Konečné"},
+  {street = "Malokarpatská"},
+  {street = "Mariánska cesta"},
+  {street = "Peredzké"},
+  {street = "Pitvory"},
+  {street = "Podhradie"},
+  {street = "Pri Hornej Skalke", written = "Pri hornej skalke"},
+  {street = "Pri Peci"},
+  {street = "Prostredná"},
+  {street = "Prostredné"},
+  {street = "Rebrá"},
+  {street = "Zámočnica"},
+  {street = "Ulica Sauberg"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dr. Kautza"},
+  {street = "Bratislavská"},
+  {street = "Cibická cesta"},
+  {street = "Družstevná"},
+  {street = "Hájniky"},
+  {street = "Hanzlíčkova"},
+  {street = "Letohradská"},
+  {street = "Mikovíniho"},
+  {street = "Pezinská"},
+  {street = "Pezinské Záhumenice", written = "Pezinské záhumenice"},
+  {street = "Staromlynská"},
+  {street = "Vinohradnícka"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "1.mája", written = "1. Mája"},
+  {street = "Krajinská cesta"},
+  {street = "Muškátová"},
+  {street = "Nová pezinská", written = "Nová Pezinská"},
+  {street = "Pannónska"},
+  {street = "Rulandská"},
+  {street = "Silvánska"},
+  {street = "Šúrska"},
+  {street = "Tramínová"},
+  {street = "Trenčianka"},
+  {street = "Veltlínska"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Alexandra Dubčeka"},
+  {street = "Bernolákova"},
+  {street = "Dukelská"},
+  {street = "Fraňa Kráľa"},
+  {street = "Háj"},
+  {street = "Hrúšťová"},
+  {street = "Jelenie"},
+  {street = "Kollárova"},
+  {street = "Kúpeľné"},
+  {street = "Martina Kukučína"},
+  {street = "Mierová"},
+  {street = "Na Pažiti"},
+  {street = "Osúchy"},
+  {street = "Panciere"},
+  {street = "P. O. Hviezdoslava", written = "P.O.Hviezdoslava"},
+  {street = "Partizánska"},
+  {street = "Polkoráby"},
+  {street = "Pri ČOV"},
+  {street = "Pri Kaplnke", written = "Pri kaplnke"},
+  {street = "Sasinkova"},
+  {street = "Slnečná"},
+  {street = "SNP"},
+  {street = "Staničná"},
+  {street = "Strapáky"},
+  {street = "Svätojánska"},
+  {street = "Športová"},
+  {street = "Zuby"},
+  {street = "Žabky"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Bratislavské Záhumenice", written = "Bratislavské záhumenice"},
+  {street = "Felcánova"},
+  {street = "Hergottova"},
+  {street = "Ulica J.Cubínka", written = "Ulica J. Cubínka"},
+  {street = "Kozmonautov"},
+  {street = "Pri Štadióne", written = "Pri štadióne"},
+  {street = "Štúrova"},
+]

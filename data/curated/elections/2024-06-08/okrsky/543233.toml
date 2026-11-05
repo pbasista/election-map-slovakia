@@ -1,0 +1,24 @@
+# Okrsky of Kluknava, transcribed by an AI agent in job okrsok-rules-5087 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volebný okrsok č. 1 - Kluknava
+#   okrsok 2: volebný okrsok č. 2 - Štefanská Huta
+obec = "543233"
+name = "Kluknava"
+okrsky_date = 2024-03-04
+okrsky_note = "Scanned PDF read by OCR (no diacritics); text restored with diacritics."
+
+[[document]]
+url = "https://www.kluknava.sk/e_download.php?file=data/editor/272sk_4.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD%20pre%20vo%C4%BEby%20do%20EP%202024.pdf"
+sha256 = "5fb2cf744b63afbde5683c85199dcbc529deda945a05f923713c415d829417cc"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do EP 2024"
+
+[okrsok.1]
+rules = [
+  {rest = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kluknava", numbers = "589-593, 595-622, 627-643, 645-652, 654-668, 682, 692, 696-700, 716-717, 729, 731, 737, 743, 1017, 1023-1024, 1028, 1032, 1034, 1037-1038", by = "supisne", note = "Štefanská Huta is a settlement inside the register's single part Kluknava; its houses are the cluster around s.č. 599 (the okrsok's polling room), as the municipality's 2026 obvody rules list them.", inferred = true},
+]

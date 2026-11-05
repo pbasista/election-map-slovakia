@@ -1,0 +1,31 @@
+# Okrsky of Veľký Klíž, transcribed by an AI agent in job okrsok-rules-3917 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Klíž
+#   okrsok 2: Klížske Hradište
+obec = "505731"
+name = "Veľký Klíž"
+okrsky_note = "Scanned notice read from the rendered page: okrsok č. 1 – Klíž, okrsok č. 2 – Klížske Hradište (the two parts of the municipality); polling stations Klíž č. 156 and Klížske Hradište č. 1. No decision date is stated."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-06-23
+okrsky_date_basis = "The scanned notice names the National Council election of 30 September 2023 but states no decision date; the municipality's notice board entry linking it says it was posted (vyvesené) on 23. 6. 2023. The same notice was posted again on the Voľby 2023 page on 12. 7. 2023. (https://www.velky-kliz.sk/samosprava/uradna-tabula/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-229.html?show=1&kshow=2)"
+
+[[document]]
+url = "https://www.velky-kliz.sk/e_download.php?file=data/uredni_deska/obsah198_3.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "0412677095863c4e2886480322d1a5d4315bbfead868f608f893b1736c6728d5"
+title = "Zverejnenie utvorených volebných okrskov a určení volebných miestností (voľby do NR SR 2023)"
+
+[[document]]
+url = "https://www.velky-kliz.sk/samosprava/uradna-tabula/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-229.html?show=1&kshow=2"
+sha256 = "7db0df5674707ac776f40815a9eb545f9d9630f3d2a9ff1fcb11f3027e98b896"
+title = "Úradná tabuľa: Utvorenie volebných okrskov a určenie volebných miestností (vyvesené 23. 6. 2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Klíž"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Klížske Hradište"},
+]

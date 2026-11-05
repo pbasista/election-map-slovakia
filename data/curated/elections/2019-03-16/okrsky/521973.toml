@@ -1,0 +1,25 @@
+# Okrsky of Seňa, transcribed by an AI agent in job okrsok-rules-1462 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od čísla domov: 0 -300
+#   okrsok 2: od čísla domov: 301 - 654
+obec = "521973"
+name = "Seňa"
+okrsky_date = 2019-01-28
+okrsky_fill = "nearest"
+okrsky_note = "The document splits Seňa by house (súpisné) numbers 0–300 and 301–654; addresses above 654 take the okrsok of the nearest address."
+
+[[document]]
+url = "https://web.archive.org/web/20240223173108/https://www.obecsena.sk/data/page/sena.sk/2786/vytvorenie-okrskov.pdf"
+sha256 = "c18bbd5c94298f9f972bc3dae3e5e59b0e10d77701d18afdb387249b3a8f0327"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností (voľby prezidenta SR 16. a 30. marca 2019)"
+
+[okrsok.1]
+rules = [
+  {part = "Seňa", numbers = "1-300", note = "The document's range 0–300; house numbers start at 1."},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Seňa", numbers = "301-654"},
+]

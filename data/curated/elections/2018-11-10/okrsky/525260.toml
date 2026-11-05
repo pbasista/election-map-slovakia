@@ -1,0 +1,22 @@
+# The okrsky of Široké of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/525260.toml, reused by `ems job reuse`.
+obec = "525260"
+name = "Široké"
+okrsky_date = 2026-07-13
+okrsky_note = "No document of the elections of 2018-11-10 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2018 (each okrsok's voters on the roll within 10%). The okrsky are defined by súpisné číslo (1–430, 431–845), applied in both parts of the obec (Široké and Pod Braniskom share the obec's súpisné numbering). Numbers above 845, if any, go to okrsok 2."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://siroke.sk/wp-content/uploads/dokumenty/komunalne-volby/oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-pre-volby-do-organov-samospravy-obci-fopg3z.pdf"
+sha256 = "9520fe658dc9893c10f080cf438a60541c6e09e5cb4595ebf3eed48fbd5d2192"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby do orgánov samosprávy obcí"
+
+[okrsok.1]
+rules = [
+  {part = "Široké", numbers = "1-430"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Široké", numbers = "431-"},
+  {part = "Pod Braniskom", numbers = "431-"},
+]

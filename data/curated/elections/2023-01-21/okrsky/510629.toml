@@ -1,0 +1,30 @@
+# Okrsky of Liptovská Lúžna, transcribed by an AI agent in job okrsok-rules-3032 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od súpisného čísla 1 do 400 + nové domy v tomto okrsku
+#   okrsok 2: od súpisného čísla 401 do 800 + nové domy v tomto okrsku,
+#   okrsok 3: od súpisného čísla 801 - nahor.
+obec = "510629"
+name = "Liptovská Lúžna"
+okrsky_date = 2022-10-10
+okrsky_note = "Okrsky by súpisné čísla: 1–400, 401–800, 801 and up; okrsky 1 and 2 also get 'nové domy v tomto okrsku' (new houses located there), which cannot be told apart by number, so every house from 801 up is in okrsok 3."
+
+[[document]]
+url = "https://www.liptovskaluzna.sk/e_download.php?file=data/editor/303sk_2.pdf&original=2870_001.pdf"
+sha256 = "0b03178d8027ccd82063686b0429ae9d07b032aa32728ba8e22421961efb1bca"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre Referendum 21. januára 2023 (č.j. 1539/2022, 10.10.2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Liptovská Lúžna", numbers = "1-400"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Liptovská Lúžna", numbers = "401-800"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Liptovská Lúžna", numbers = "801-"},
+]

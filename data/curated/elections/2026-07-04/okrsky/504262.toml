@@ -1,0 +1,77 @@
+# Okrsky of Brezová pod Bradlom, transcribed by an AI agent in job okrsok-rules-5432 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Baranecká, Cesta SNP, Čierne blato, Dolina, Dolné lúky, Garbiarska, J.M.Hurbana, Námestie 7.apríla, Námestie gen.M.R.Štefánika, Odbojárov, Partizánska, Piešťanská, Pod Vŕškami, Staničná, Športová, Vajanského
+#   okrsok 2: Dr. Št. Osuského, Bez adresy, Bradlianska, Myjavská, Prielohy, Bukovská, Štúrova, Ulica Danov vrch, Dolný Štverník, Ulica Horný Štverník, Ulica Hurbanova dolina, Ulica Jána Závodného, Minárčiných ulica, Ulica Prostredný Štverník, Ulica u Držkovcov, Ulica u Dzurákovcov, Ulica u Kravárikovcov, Ulica u Vaškovcov, Ulica Žriedlová dolina
+#   okrsok 3: Sídlisko Dušana Jurkoviča, Záhumnie, Družstevná
+#   okrsok 4: Horný rad, V jarku, Hoštáky, Janka Kráľa, Budovateľská
+obec = "504262"
+name = "Brezová pod Bradlom"
+okrsky_fill = "nearest"
+okrsky_note = "Same okrsky as the document of the elections of 24 October 2026. 'Bez adresy' (okrsok 2) are voters registered without an address. The register's addresses without a street (súpisné čísla only) are placed by fill_nearest. Danov Vrch (2 addresses), which the document does not name, is inferred to okrsok 2 with Ulica Danov vrch."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated notice names the Referendum 2026 of 4 July 2026."
+
+[[document]]
+url = "https://www.brezova.sk/e_download.php?file=/data/editor/756sk_3.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20okrskov.pdf"
+sha256 = "33d6e34b261d282128e107d6d28135c62b01099f6c49a191dcc023e1d0da1270"
+title = "Oznámenie o utvorení volebných okrskov a určenie volebných miestností pre Referendum 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Baranecká"},
+  {street = "Cesta SNP"},
+  {street = "Čierne blato"},
+  {street = "Dolina"},
+  {street = "Dolné lúky"},
+  {street = "Garbiarska"},
+  {street = "J.M.Hurbana"},
+  {street = "Námestie 7.apríla"},
+  {street = "Námestie gen.M.R.Štefánika"},
+  {street = "Odbojárov"},
+  {street = "Partizánska"},
+  {street = "Piešťanská"},
+  {street = "Pod Vŕškami"},
+  {street = "Staničná"},
+  {street = "Športová"},
+  {street = "Vajanského"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dr.Št.Osuského", written = "Dr. Št. Osuského"},
+  {street = "Bradlianska"},
+  {street = "Myjavská"},
+  {street = "Prielohy"},
+  {street = "Bukovská cesta", written = "Bukovská", note = "same street: the register's Bukovská cesta; the document leaves out 'cesta'"},
+  {street = "Štúrova"},
+  {street = "Ulica Danov vrch"},
+  {street = "Dolný Štverník"},
+  {street = "Ulica Horný Štverník"},
+  {street = "Ulica Hurbanova dolina"},
+  {street = "Ulica Jána Závodného"},
+  {street = "Minárčiných ulica"},
+  {street = "Ulica Prostredný Štverník"},
+  {street = "Ulica u Držkovcov"},
+  {street = "Ulica u Dzurákovcov"},
+  {street = "Ulica u Kravárikovcov"},
+  {street = "Ulica u Vaškovcov"},
+  {street = "Ulica Žriedlová dolina"},
+  {street = "Danov Vrch", note = "register street the document does not name; the same locality as Ulica Danov vrch, which the document puts here", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Sídlisko Dušana Jurkoviča"},
+  {street = "Záhumnie"},
+  {street = "Družstevná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Horný rad"},
+  {street = "V jarku"},
+  {street = "Hoštáky"},
+  {street = "Janka Kráľa"},
+  {street = "Budovateľská"},
+]

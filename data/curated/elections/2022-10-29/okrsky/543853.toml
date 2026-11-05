@@ -15,7 +15,7 @@ obec = "543853"
 name = "Veľké Kapušany"
 okrsky_date = 2022-08-02
 okrsky_fill = "nearest"
-okrsky_note = "Centrum I. split by súpisné čísla (921-925). P.O.H. numbers taken as orientačné. Námestie Istvána Dobóa, Námestie Lászlóa Mécsa and P.O.H. numbers not listed, plus houses without a street, placed by nearest address (fill_nearest). L. N. Tolstého listed with house numbers but lies wholly in okrsok 4."
+okrsky_note = "Centrum I. split by súpisné čísla (921-925). P.O.H. numbers are the blocks' súpisné čísla (the register numbers the entrances orientačné 1–132), as the city's other documents of 2017–2026 read too. Námestie Istvána Dobóa, Námestie Lászlóa Mécsa and P.O.H. numbers not listed, plus houses without a street, placed by nearest address (fill_nearest). L. N. Tolstého listed with house numbers but lies wholly in okrsok 4."
 
 [[document]]
 url = "https://www.vkapusany.sk/download_file_f.php?id=1720037"
@@ -68,23 +68,23 @@ rules = [
 
 [okrsok.5]
 rules = [
-  {street = "P. O. Hviezdoslava", numbers = "21, 23-29, 31-33", written = "P.O.H.", note = "P.O.H. abbreviates P. O. Hviezdoslava"},
+  {street = "P. O. Hviezdoslava", numbers = "21, 23-29, 31-33", by = "supisne", written = "P.O.H.", note = "P.O.H. abbreviates P. O. Hviezdoslava"},
 ]
 
 [okrsok.6]
 rules = [
-  {street = "P. O. Hviezdoslava", numbers = "34-42, 44, 48-51", written = "P.O.H.", note = "P.O.H. abbreviates P. O. Hviezdoslava"},
+  {street = "P. O. Hviezdoslava", numbers = "34-42, 44, 48-51", by = "supisne", written = "P.O.H.", note = "P.O.H. abbreviates P. O. Hviezdoslava"},
 ]
 
 [okrsok.7]
 rules = [
-  {street = "P. O. Hviezdoslava", numbers = "52-58, 60, 61, 63, 64, 67, 68, 72-74", written = "P.O.H.", note = "P.O.H. abbreviates P. O. Hviezdoslava"},
+  {street = "P. O. Hviezdoslava", numbers = "52-58, 60, 61, 63, 64, 67, 68, 72-74", by = "supisne", written = "P.O.H.", note = "P.O.H. abbreviates P. O. Hviezdoslava"},
 ]
 
 [okrsok.8]
 rules = [
   {street = "Janka Kráľa", written = "J. Kráľa"},
-  {street = "P. O. Hviezdoslava", numbers = "16-20, 45-47", written = "P.O.H.", note = "P.O.H. abbreviates P. O. Hviezdoslava"},
+  {street = "P. O. Hviezdoslava", numbers = "16-20, 45-47", by = "supisne", written = "P.O.H.", note = "P.O.H. abbreviates P. O. Hviezdoslava"},
   {street = "Vinohradská"},
   {street = "Vojanská"},
 ]

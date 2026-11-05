@@ -1,0 +1,25 @@
+# Okrsky of Stráňavy, transcribed by an AI agent in job okrsok-rules-3889 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Čísla domov od 1 do 300
+#   okrsok 2: Čísla domov od 301 do 600
+obec = "517950"
+name = "Stráňavy"
+okrsky_date = 2023-06-13
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 13 June 2023 is given as the text of the section 'Volebné okrsky' on the village's page of the 2023 National Council election. The village has no streets; the house numbers are súpisné čísla in the part Stráňavy. Any address outside 1–600 takes the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.stranavy.sk/obec/volby/2023-volby-do-narodnej-rady-slovenskej-republiky/"
+sha256 = "286c3253df1038ae4f120014915a98e3f82fda22440868ef8ea9afb95e83eb6e"
+title = "Volebné okrsky"
+
+[okrsok.1]
+rules = [
+  {part = "Stráňavy", numbers = "1-300"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Stráňavy", numbers = "301-600"},
+]

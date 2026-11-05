@@ -1,0 +1,42 @@
+# Okrsky of Dulovce, transcribed by an AI agent in job okrsok-rules-1398 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cintorínska, Družstevná, Dvorská, Hlavná, Hurbanovská, Mierová, Mudroňovská, Nová, Robotnícka, Záhradná; obyvatelia s trvalým pobytom na adrese Obec Dulovce (bez udania súpisného a orientačného čísla)
+#   okrsok 2: Kamenica, Krivá, Novozámocká, Podháj, Poľná, Podbrežná, Rovná, Starohorská, Urbárska, Úzka
+obec = "501123"
+name = "Dulovce"
+okrsky_fill = "nearest"
+okrsky_note = "Kamenica and Podháj (okrsok 2) are settlements the address register has no street or part for; their houses, like the other addresses without a street, are placed by fill_nearest. Residents registered only on the obec vote in okrsok 1; they have no register address."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the announcement names the presidential election of 16 March 2019 (round 2 on 30 March 2019)"
+
+[[document]]
+url = "https://www.dulovce.sk/download_file_f.php?id=1083651"
+sha256 = "8bbb6897029989c7b59bee6bd63b841e00121ba77d78144c4947cf6a0f1df564"
+title = "Oznámenie o čase a mieste konania voľby prezidenta Slovenskej republiky 2019 v obci Dulovce"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Dvorská"},
+  {street = "Hlavná"},
+  {street = "Hurbanovská"},
+  {street = "Mierová"},
+  {street = "Mudroňovská"},
+  {street = "Nová"},
+  {street = "Robotnícka"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krivá"},
+  {street = "Novozámocká"},
+  {street = "Poľná"},
+  {street = "Podbrežná"},
+  {street = "Rovná"},
+  {street = "Starohorská"},
+  {street = "Urbárska"},
+  {street = "Úzka"},
+]

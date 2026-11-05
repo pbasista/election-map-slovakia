@@ -88,13 +88,64 @@ def long_date(day: dt.date) -> str:
 
 
 def election_prompt(template: str, election: Election) -> str:
-    """Return *template* with *election*'s ``$day`` and ``$year`` filled in.
+    """Return *template* with *election*'s placeholders filled in.
 
-    The day as :func:`long_date` writes it.
+    ``$day`` (as :func:`long_date` writes it), ``$year`` and those of
+    :func:`vote_words`.
     """
     return string.Template(template).substitute(
-        day=long_date(election.day), year=election.day.year
+        day=long_date(election.day), year=election.day.year, **vote_words(election)
     )
+
+
+_VOTES = {
+    "municipal-regional": (
+        "the elections of {day}",
+        "voľby do orgánov samosprávy obcí … {year}",
+    ),
+    "municipal": (
+        "the municipal elections of {day}",
+        "voľby do orgánov samosprávy obcí {year}",
+    ),
+    "regional": (
+        "the regional elections of {day}",
+        "voľby do orgánov samosprávnych krajov {year}",
+    ),
+    "by-election": (
+        "the municipal by-elections of {day}",
+        "nové voľby do orgánov samosprávy obcí … {year}",
+    ),
+    "presidential": (
+        "the presidential election of {day}",
+        "voľba prezidenta Slovenskej republiky {year}",
+    ),
+    "referendum": ("the referendum of {day}", "referendum {year}"),
+    "parliament": (
+        "the National Council election of {day}",
+        "voľby do Národnej rady Slovenskej republiky {year}",
+    ),
+    "european": (
+        "the European Parliament election of {day}",
+        "voľby do Európskeho parlamentu {year}",
+    ),
+}
+"""Election label (:attr:`config.Election.label`: its kind, or the half of a
+regular election of one) → how a prompt names a vote of it, in English and
+as the municipalities' documents do."""
+
+
+def vote_words(election: Election) -> dict[str, str]:
+    """Return how prompts name *election*'s vote: ``vote`` and ``named``.
+
+    ``vote`` in English with its day, a presidential election's round 2
+    too ("the presidential election of 23 March 2024 (round 2: 6 April
+    2024)"); ``named``, the words its documents name it by in Slovak.
+    """
+    vote, named = _VOTES[election.label]
+    vote = vote.format(day=long_date(election.day))
+    if election.second_round is not None:
+        vote += f" (round 2: {long_date(election.second_round)})"
+    return {"vote": vote, "named": named.format(year=election.day.year)}
 
 
 @dataclass(frozen=True)

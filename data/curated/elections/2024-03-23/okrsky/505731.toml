@@ -1,0 +1,31 @@
+# Okrsky of Veľký Klíž, transcribed by an AI agent in job okrsok-rules-4543 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Klíž
+#   okrsok 2: Klížske Hradište
+obec = "505731"
+name = "Veľký Klíž"
+okrsky_note = "Scanned notice read from the rendered page: okrsok č. 1 – Klíž, okrsok č. 2 – Klížske Hradište (the two parts of the municipality); polling stations Klíž č. 156 and Klížske Hradište č. 1. No decision date is stated."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-30
+okrsky_date_basis = "The scanned notice names the presidential election of 23 March 2024 but states no decision date; the municipality's elections page entry linking it says it was posted (vyvesené) on 30. 1. 2024. (https://www.velky-kliz.sk/samosprava/prezidentske-volby-2024/utvornie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-277.html?kshow=13)"
+
+[[document]]
+url = "https://www.velky-kliz.sk/e_download.php?file=data/uredni_deska/obsah163_4.pdf&original=20240130092910.pdf"
+sha256 = "dcdd09a1dfb232dd4f3d91b44095dd3d24b2f9ba939aae6e2c18c50ab352013c"
+title = "Zverejnenie utvorených volebných okrskov a určení volebných miestností (voľba prezidenta SR 2024)"
+
+[[document]]
+url = "https://www.velky-kliz.sk/samosprava/prezidentske-volby-2024/utvornie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-277.html?kshow=13"
+sha256 = "3c9c0e5aeade0f90c15407b0ef175e2edc4781019e43f1c2c2036dea68afa54f"
+title = "Prezidentské voľby 2024: Utvornie volebných okrskov a určenie volebných miestností (vyvesené 30. 1. 2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Klíž"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Klížske Hradište"},
+]

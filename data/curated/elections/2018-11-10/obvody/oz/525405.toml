@@ -1,0 +1,118 @@
+# Council obvody of Veľký Šariš (525405), Prešov.
+# Transcribed by an AI agent in job obvod-rules-103 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: vo volebnom obvode číslo 1, ktorý zahŕňa Veľký Šariš bude deväť poslancov
+#   obvod 2: vo volebnom obvode číslo 2, ktorý zahŕňa mestskú časť Kanaš budú dvaja poslanci
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/525405.toml, standing in.
+obec = "525405"
+name = "Veľký Šariš"
+date = 2018-06-28
+note = "Uznesenie č. 956/2018-27/XXXII of 28.6.2018: 11 poslancov in 2 obvody; obvod 1 is Veľký Šariš (the part), obvod 2 the mestská časť Kanaš."
+okrsky_date = 2022-08-10
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's announcement is dated 'Veľký Šariš, 10.8.2022'. 'mesto Veľký Šariš' (okrsok 1) means residents registered without an address, not placed. Železničná (4 addresses, named in no okrsok) and the houses without a street in part Veľký Šariš are placed by fill_nearest within obvod 1. Okrsok 5 is obvod 2 (Kanaš) alone."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-5873): No 2018 okrsky document found. The council resolution 956/2018-27/XXXII of 28.6.2018 sets only the 2 obvody (Veľký Šariš, Kanaš), not the okrsky or their streets. The city's 2018 elections page as archived on 6.9.2018 lists eight items (zapisovateľ MVK, e-mail for delegating, počet obyvateľov, plagáty, informácie pre voliča/kandidátov/strany, počet poslancov, obvody, rozsah funkcie primátora) but none on the okrsky; its item pages and attachments were never archived, and on the live site the 2018 items have expired (old URLs redirect to the module's current list). The archived notice board of 11.9.2018 has no okrsky notice, and no velkysaris.sk PDF of mid-2018 is in the Internet Archive. The Internet Archive was intermittently offline (HTTP 503) during the search. The later documents (2023: 6 okrsky, Kanaš alone in okrsok 6) differ from 2018's 5 okrsky, so they were not used. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 5 okrsky, those ŠÚ SR counted in each council obvod. Voters on the roll per okrsok (ŠÚ SR), 2018-11-10 → 2022-10-29: 1: 965 → 1,062, 2: 941 → 1,017, 3: 949 → 1,052, 4: 970 → 972, 5: 893 → 1,035."
+
+[[document]]
+url = "https://www.velkysaris.sk/download_file_f.php?id=996208"
+sha256 = "85519c0147f9db99fa624502c4578ac3ae03a8616aac60d3cc9832f721423203"
+title = "Uznesenia z XXXII. riadneho zasadnutia MsZ vo Veľkom Šariši zo dňa 28.6.2018, uznesenie č. 956/2018-27/XXXII (Voľby do orgánov samosprávy obcí 2018 – Určenie volebných obvodov)"
+
+[[document]]
+url = "https://www.velkysaris.sk/2018-06-28-zasadnutie/mid/198107/ma0/2018/.html"
+sha256 = "09fbf632548bee4e79a782713bfe89ba2089e7b884e730523adadf83d8b0c833"
+title = "XXXII. zasadnutie MsZ zo dňa 28.6.2018 (stránka s uzneseniami)"
+
+[obvod.1]
+seats = 9
+okrsky = [1, 2, 3, 4]
+rules = [
+  {part = "Veľký Šariš"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [5]
+rules = [
+  {part = "Kanaš"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Baratoky"},
+  {street = "Dr. Greša"},
+  {street = "Dr. Leščáka"},
+  {street = "Eleny Lackovej"},
+  {street = "Harminy"},
+  {street = "Hlavná"},
+  {street = "Jarková"},
+  {street = "Kamence"},
+  {street = "kpt.Nálepku", written = "kpt. Nálepku"},
+  {street = "Krátka"},
+  {street = "Martina Šarošiho", written = "Marina Šarošiho", note = "a typo for Martina Šarošiho, the register's street"},
+  {street = "Mlynská"},
+  {street = "Nám.sv.Jakuba", written = "Nám. sv.Jakuba"},
+  {street = "Pekárska"},
+  {street = "Pod hradom"},
+  {street = "Poľná"},
+  {street = "Rákocziho"},
+  {street = "Severná"},
+  {street = "Štefana Rómera"},
+  {street = "Tulčická"},
+  {street = "Východná"},
+  {street = "Zámocká"},
+  {street = "Západná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "A. Hlinku", written = "A.Hlinku"},
+  {street = "Agátová"},
+  {street = "Doliny"},
+  {street = "Gardom"},
+  {street = "Jelšová"},
+  {street = "Kanašská"},
+  {street = "Korpašská"},
+  {street = "Ľ. Štúra"},
+  {street = "Pivovarská"},
+  {street = "Pod Bikošom"},
+  {street = "Pod Sordokom"},
+  {street = "Pri Toryse"},
+  {street = "Sabinovská"},
+  {street = "Staničná"},
+  {street = "Tomášika Dumína"},
+  {street = "Záhradná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Červeného Kríža"},
+  {street = "Dlhá"},
+  {street = "Dujavská"},
+  {street = "Farská"},
+  {street = "J. Záborského"},
+  {street = "kpt. Jaroša"},
+  {street = "Letná"},
+  {street = "M. Nemcovej"},
+  {street = "M. R. Štefánika", written = "M.R.Štefánika"},
+  {street = "Prešovská"},
+  {street = "Púchovská"},
+  {street = "Slnečná"},
+  {street = "Slovenská"},
+  {street = "Staré Ihrisko"},
+  {street = "Veterná"},
+  {street = "Vŕbová"},
+  {street = "Zimná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "A. Sládkoviča", written = "A.Sládkoviča"},
+  {street = "Janka Kráľa"},
+  {street = "Južná"},
+  {street = "Matice Slovenskej"},
+  {street = "P. O. Hviezdoslava", written = "P.O.Hviezdoslava"},
+  {street = "Školská"},
+]

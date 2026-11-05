@@ -1,0 +1,32 @@
+# Okrsky of Lietavská Svinná-Babkov, transcribed by an AI agent in job okrsok-rules-3257 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: v tomto okrsku budú voliť obyvatelia časti obce Lietavská Svinná
+#   okrsok 2: v tomto okrsku budú voliť obyvatelia časti obce Babkov
+obec = "517755"
+name = "Lietavská Svinná-Babkov"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF; text from its text layer (OCR-like, diacritics restored). Each okrsok is one part of the obec."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-10
+okrsky_date_basis = "The notice board states the document was posted (\"Vyvesené\") on 2022-11-10, before 21 January 2023; the document itself is undated. (https://www.obeclietsvinnababkov.info/samosprava/uradna-tabula/oznamenie-o-urceni-volebnych-miestnosti-pre-referendum-2023-1040.html)"
+
+[[document]]
+url = "https://www.obeclietsvinnababkov.info/e_download.php?file=data/uredni_deska/obsah147_17.pdf&original=Ozn%C3%A1menie%20o%20ur%C4%8Den%C3%AD%20volebn%C3%BDch%20okrskov%20a%20miestnost%C3%AD%20pre%20referendum%202023.pdf"
+sha256 = "387a0dfc26d50363b7de4be87b5936329fd854da4a30dfe8fae3e7c6e054339c"
+title = "Oznámenie o určení volebných okrskov a volebných miestností pre referendum 21.01.2023"
+
+[[document]]
+url = "https://www.obeclietsvinnababkov.info/samosprava/uradna-tabula/oznamenie-o-urceni-volebnych-miestnosti-pre-referendum-2023-1040.html"
+sha256 = "c0fe6e9ff2191bf0d3c652a81b0eab47a2d02e9f50ea00704c3782ee9098b3fd"
+title = "notice-board item"
+
+[okrsok.1]
+rules = [
+  {part = "Lietavská Svinná"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Babkov"},
+]

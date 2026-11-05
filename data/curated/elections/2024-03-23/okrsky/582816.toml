@@ -1,0 +1,29 @@
+# Okrsky of Žitavany, transcribed by an AI agent in job okrsok-rules-4423 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1: Kultúrno – spoločenské zariadenie, Opatovecká ulica č. 847/32, Žitavany
+#   okrsok 2: Volebný okrsok č. 2: Športová hala Žitavany, Športová ulica č. 791/26, Žitavany
+obec = "582816"
+name = "Žitavany"
+okrsky_date = 2024-01-29
+okrsky_note = "The document gives each okrsok only its polling station, no streets: okrsok 1 in the Kultúrno-spoločenské zariadenie, Opatovecká 847/32 (k.ú. Opatovce), okrsok 2 in the Športová hala, Športová 791/26 (k.ú. Kňažice). Žitavany has one part but two k.ú., the former villages Opatovce and Kňažice, each holding one station, so each okrsok is given the k.ú. of its station (inferred, by analogy with one part per station), as for the 2022 elections and the 2023 referendum in this repository. The scanned document's header is dated 29.01.2024; its signature line reads 'V Žitavanoch 29.03.2024', after the vote, evidently a misprint for 29.01.2024."
+
+[[document]]
+url = "https://www.zitavany.sk/modules/file_storage/download.php?file=078715db%7C860&inline=1"
+sha256 = "65c19200e1e6f4b1392e897a7a85817568d207d1469a7fe5c3daf1f767a66be8"
+title = "Vytvorenie volebného okrsku a určenie volebnej miestnosti pre voľby prezidenta Slovenskej republiky, konané dňa 23. marca 2024"
+
+[[document]]
+url = "https://www.zitavany.sk/zverejnovanie/volby-referendum-1/volby-prezidenta-2024/"
+sha256 = "b6521b1bf5f7ff51f2fa8eeddde085a4580a9932a5453913a97d5092ca3932c1"
+title = "Voľby prezidenta 2024"
+
+[okrsok.1]
+rules = [
+  {ku = "Opatovce", note = "k.ú. of the polling station Opatovecká 847/32", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {ku = "Kňažice", note = "k.ú. of the polling station Športová 791/26", inferred = true},
+]

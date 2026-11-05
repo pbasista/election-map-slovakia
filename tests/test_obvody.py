@@ -1,6 +1,7 @@
 import dataclasses
 import datetime as dt
 import tomllib
+import zipfile
 from pathlib import Path
 from typing import Any
 
@@ -331,6 +332,26 @@ def test_number_syntax(text: str, message: str | None):
     else:
         with pytest.raises(ValueError, match=message):
             obvody.parse_numbers(text)
+
+
+def test_numbers_hold_a_house_as_any_of_their_items_does():
+    # The ranges are searched by their start, the farthest end so far kept:
+    # the same as asking each item, overlapping and open ranges too.
+    def by_item(text, n, letter):
+        level = None
+        for low, high, want in obvody.parse_numbers(text):
+            if want:
+                if (n, letter) == (low, want):
+                    return obvody.LETTER
+            elif low <= n and (high is None or n <= high):
+                level = obvody.NUMBERS
+        return level
+
+    texts = ["1-35, 40, 12A", "50-", "3-9, 1-20, 5", "7B, 7", "100-120, 2-4, 60-"]
+    for text in texts:
+        for n in range(0, 130):
+            for letter in ("", "a", "b"):
+                assert obvody._in(text, n, letter) == by_item(text, n, letter)
 
 
 @pytest.mark.parametrize(
@@ -1022,9 +1043,15 @@ def test_plausibility_notes_far_off_shares():
     assert obvodrules.plausibility("okrsok", {1: 40, 2: 2}, {1: 20, 2: 30}) == []
 
 
-def test_a_referendum_may_stand_in_for_an_earlier_election():
-    assert okrsokrules.referendum_after(EARLIER.day) == dt.date(2023, 1, 21)
-    assert okrsokrules.referendum_after(_CFG.latest.day) is None
+def test_a_referendum_may_stand_in_for_a_vote_within_a_year():
+    """The referendums the site shows within a year of a vote, before or
+    after, but not the vote itself."""
+    referendum, later = dt.date(2023, 1, 21), dt.date(2026, 7, 4)
+    assert okrsokrules.referenda(_CFG, EARLIER) == [referendum]
+    assert okrsokrules.referenda(_CFG, _CFG.latest) == [later]
+    assert okrsokrules.referenda(_CFG, _CFG.election("2023-03")) == [referendum]
+    assert okrsokrules.referenda(_CFG, _CFG.election("2023-referendum")) == []
+    assert okrsokrules.referenda(_CFG, _CFG.election("2024-prezident")) == []
     out = _out("2022-12-01", "https://obec.sk/u.pdf") | {"referendum": "2023-01-21"}
     assert okrsokrules._vote_problems(_CFG, EARLIER, out) == [
         "the okrsky of a referendum need a note saying why"
@@ -1033,6 +1060,19 @@ def test_a_referendum_may_stand_in_for_an_earlier_election():
     assert okrsokrules._vote_problems(
         _CFG, EARLIER, out | {"note": "n", "referendum": "2023-01-22"}
     )
+
+
+def test_a_referendum_before_the_vote_dates_by_the_vote():
+    """Before the vote, the referendum's document is older still: the
+    documents are dated before the vote, the later of the two."""
+    by_election = _CFG.election("2023-03")
+    stand_in = {"referendum": "2023-01-21", "note": "the referendum's"}
+    after_referendum = _out("2023-02-20", "https://obec.sk/u.pdf") | stand_in
+    assert okrsokrules._vote_problems(_CFG, by_election, after_referendum) == []
+    late = _out("2023-03-25", "https://obec.sk/u.pdf") | stand_in
+    assert okrsokrules._vote_problems(_CFG, by_election, late) == [
+        "date 2023-03-25 is not before 2023-03-25: the decision is of another vote"
+    ]
 
 
 def test_reuse_needs_the_same_okrsky_and_voters():
@@ -1045,16 +1085,89 @@ def test_reuse_needs_the_same_okrsky_and_voters():
         {"500001": {1: {1: 1080, 2: 460}, 2: {3: 800}}},
     )
     rules = obvody.rule_set(okrsky_set({"1": [1, 2], "2": [3]}, {}), "test")
-    tolerance = reuse.TOLERANCE
-    assert reuse._layout_problem(c, "500001", rules, tolerance) is None
+    assert reuse._layout_problem(c, "500001", rules) is None
     other = obvody.rule_set(okrsky_set({"1": [1], "2": [2, 3]}, {}), "test")
-    problem = reuse._layout_problem(c, "500001", other, tolerance)
+    problem = reuse._layout_problem(c, "500001", other)
     assert "okrsky per obvod" in (problem or "")
     c = dataclasses.replace(
         c, later_units={"500001": {1: {1: 1120, 2: 500}, 2: {3: 800}}}
     )
-    assert reuse._layout_problem(c, "500001", rules, tolerance) == (
+    assert reuse._layout_problem(c, "500001", rules) == (
         "okrsok 1: 1,000 voters then, 1,120 in 2026"
     )
-    # Within what adoption takes as plausible.
-    assert reuse._layout_problem(c, "500001", rules, reuse.PLAUSIBLE) is None
+
+
+def test_okrsok_counts_of_a_national_package(tmp_path: Path):
+    """A presidential election's okrsky per obec come from its package's
+    territorial division table (tab0b of 2024), the count column as worded
+    there."""
+    election = _CFG.election("2024-prezident")
+    units = obvodrules.units_of(election)
+    inp = next(i for i in _CFG.inputs.inputs if i.name == units.input)
+    cfg = dataclasses.replace(_CFG, root=tmp_path)
+    path = cfg.raw_dir / inp.name / inp.file
+    path.parent.mkdir(parents=True)
+    header = "Kód kraja;Kód okresu;Kód obce;Názov obce;Počet volebných okrskov"
+    table = f"{header}\n1;101;528595;Staré Mesto;24\n4;403;500011;Nitra;64\n"
+    with zipfile.ZipFile(path, "w") as z:
+        z.writestr(f"PREZ2024_kolo1_SK_{units.table}.csv", table.encode("cp1250"))
+        z.writestr("PREZ2024_kolo1_SK_tab01.csv", "A;B\n1;2\n")
+    assert okrsokrules.okrsok_counts(cfg, election) == {"528595": 24, "500011": 64}
+
+
+def test_by_election_prompt_asks_for_its_term_s_decision():
+    """Ilava's by-election of 2019-04 fills the seat of obvod 6 of the
+    council elected in 2018: the obvody are those of the 2018 decision."""
+    text = obvodrules.prompt(
+        _CFG, _CFG.election("2019-04"), obvodrules.PROMPT, obvodrules.EARLIER
+    )
+    assert "## A by-election" in text and "## An earlier election" not in text
+    assert "fill seats of the council elected on 10 November 2018" in text
+    assert "decision on the obvody and their seats of mid-2018" in text
+    assert "web.archive.org/web/2018*" in text
+
+
+def test_ingest_takes_an_uncontested_obvod_of_the_decision_only():
+    """Ilava 2018: the decision sets 6 obvody, 13 seats, but the candidate
+    lists have obvody 1–5 (no one stood in 6). Obvod 6 stands as the
+    decision's, uncontested, with its document and the council's seats;
+    an obvod beyond the lists' that says neither is refused."""
+    doc = "https://www.ilava.sk/obvody5a6.pdf"
+    item = {"obvody": [{"number": n, "candidates": 2} for n in range(1, 6)]}
+    obvody_out = [
+        {"number": n, "seats": s} for n, s in zip(range(1, 6), (3, 3, 2, 2, 2))
+    ]
+    six = {"number": 6, "seats": 1, "uncontested": True, "document": doc}
+    out = {
+        "documents": [{"url": doc, "title": "Oznámenie"}],
+        "council_seats": 13,
+        "obvody": [*obvody_out, six],
+    }
+    assert obvodrules.uncontested_problems(item, out) == []
+    bare = {**out, "obvody": [*obvody_out, {"number": 6, "seats": 1}]}
+    assert obvodrules.uncontested_problems(item, bare) == [
+        "obvod 6: not one of the candidate lists' obvody; one the decision lists"
+        " without candidates is uncontested, with its document"
+    ]
+    undocumented = {
+        **out,
+        "obvody": [*obvody_out, {**six, "document": "https://x.sk/y"}],
+    }
+    assert obvodrules.uncontested_problems(item, undocumented) == [
+        "obvod 6: uncontested needs its document, one of documents"
+    ]
+    assert obvodrules.uncontested_problems(item, {**out, "council_seats": 12}) == [
+        "council_seats 12, the obvody's seats summed 13"
+    ]
+    unstated = {k: v for k, v in out.items() if k != "council_seats"}
+    assert obvodrules.uncontested_problems(item, unstated) == [
+        "an uncontested obvod needs the decision's council_seats"
+    ]
+    listed = {"obvody": [*item["obvody"], {"number": 6, "candidates": 1}]}
+    assert obvodrules.uncontested_problems(listed, out) == [
+        "obvod 6: uncontested, yet the candidate lists have it"
+    ]
+    # A by-election's obvody are its term's: an uncontested one is the term's.
+    assert obvodrules.uncontested_problems(item, out, by_election=True) == [
+        "obvod 6: a by-election's obvody are its term's; an uncontested one is the term's"
+    ]

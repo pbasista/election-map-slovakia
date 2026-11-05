@@ -1,0 +1,29 @@
+# Okrsky of Ludanice, transcribed by an AI agent in job okrsok-rules-5007 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: okrsok č. 1 Ludanice tvoria všetky ulice obce: 1. mája, 9. mája, Cintorínska, Družstevná, Hviezdoslavova, Kpt. Nálepku, Nádražná, Pivovarská, Slobody, SNP, Štúrova, Topoľčianska, Trojičné námestie, Občania bez trvalého pobytu
+#   okrsok 2: okrsok č. 2 tvorí miestna časť obce Mýtna Nová Ves
+obec = "505048"
+name = "Ludanice"
+okrsky_date = 2024-03-01
+okrsky_note = "Okrsok 1 is all streets of Ludanice (the part Ludanice), okrsok 2 the part Mýtna Nová Ves; 'Občania bez trvalého pobytu' are voters without an address. The file is gone from the live site; Internet Archive snapshot."
+
+[[document]]
+url = "https://web.archive.org/web/20240523185029/https://www.obecludanice.sk/data/news_files/obecludanice.sk/79720/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti.pdf"
+sha256 = "2ad81b489c3694db1bd7fee38b58d52862e5ed4ac22c29fa3fad517c20f051cf"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu 2024 (123/2024-VOM)"
+
+[[document]]
+url = "https://web.archive.org/web/20240413143244/https://www.obecludanice.sk/novinka/79720/volby-do-europskeho-parlamentu-2024"
+sha256 = "7654b460a973b81328e57abe6880e73638c9cbd017581658c5f8d547a922bc1b"
+title = "News post linking the document"
+
+[okrsok.1]
+rules = [
+  {part = "Ludanice"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Mýtna Nová Ves"},
+]

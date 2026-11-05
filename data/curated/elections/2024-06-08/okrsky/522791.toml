@@ -1,0 +1,31 @@
+# Okrsky of Moravany, transcribed by an AI agent in job okrsok-rules-5185 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 01 volebná miestnosť – Dom kultúry Moravany č.98
+#   okrsok 2: Okrsok č. 02 volebná miestnosť – Dom kultúry Moravany časť Lučkovce č.1059
+obec = "522791"
+name = "Moravany"
+okrsky_note = "The notice gives each okrsok only its polling station: okrsok 1 Dom kultúry Moravany č. 98, okrsok 2 Dom kultúry in the part Lučkovce č. 1059. The okrsky are as many as the parts, so each okrsok is given the part of its station (inferred)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-03-01
+okrsky_date_basis = "the notice-board page states \"Dátum vyvesenia: 01.03.2024\" for the notice on the European Parliament election of 2024; the notice is undated (https://www.obecmoravany.sk/x-a73-1431)"
+
+[[document]]
+url = "https://www.obecmoravany.sk/files/2024-03-01-141900-ozn__menie-utvorenie_volebn__ch_okrskov.pdf"
+sha256 = "cf285410e9b8d968a539ee23ed520e5b092460e354ba047de8a5aabc75c4aa1d"
+title = "Oznam: volebné okrsky pre voľby do Európskeho parlamentu 2024"
+
+[[document]]
+url = "https://www.obecmoravany.sk/x-a73-1431"
+sha256 = "dd7ad1f7ddca85fa4e4aded021651c9e0dcc0d90fb29fb897f59d9d442d28083"
+title = "official notice-board page listing the document with its posting date"
+
+[okrsok.1]
+rules = [
+  {part = "Moravany", note = "part of the polling station (Moravany č. 98)", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lučkovce", note = "part of the polling station (časť Lučkovce č. 1059)", inferred = true},
+]

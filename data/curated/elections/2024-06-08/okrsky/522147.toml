@@ -1,0 +1,43 @@
+# Okrsky of Veľká Ida, transcribed by an AI agent in job okrsok-rules-5038 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov bývajúcich vo Veľkej Ide od súp.č. 1- 12; súp. č. 23 – 319
+#   okrsok 2: pre voličov bývajúcich vo Veľkej Ide od súp.č. 320 – 590; súp.č. 741 – 791 + všetci občania prihlásení na obec Veľká Ida
+#   okrsok 3: pre voličov bývajúcich vo Veľkej Ide od súp.č. 13 – 22; súp.č. 591 – 652, 669,678,692, súp.č. 700 – 740
+#   okrsok 4: pre voličov bývajúcich vo Veľkej Ide v časti obce Gomboš od č. 1-99
+obec = "522147"
+name = "Veľká Ida"
+okrsky_fill = "nearest"
+okrsky_note = "No streets in the register: house numbers are súpisné within the part. \"všetci občania prihlásení na obec\" (residents without an address) are not a rule. Addresses whose numbers the document leaves out (653-699 except those listed, above 791) take the okrsok of the nearest address (fill_nearest)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated announcement names the European Parliament election of 8 June 2024."
+
+[[document]]
+url = "https://www.velkaida.sk/files/2024-03-06-122548-Vo__by_EUROVO__BY_2024__oznam_vo__by__1_.docx"
+sha256 = "3c13366b20265f03450e6fb3e0e9914dbc409ce61b1b8bba9eed32dd5757bf46"
+title = "Voľby do Európskeho parlamentu 2024 – oznámenie o určení počtu volebných okrskov a miestností (DOCX)"
+
+[[document]]
+url = "https://www.velkaida.sk/files/2024-03-06-122513-Obec_velka_ida_eurovolby_04032024171716.pdf"
+sha256 = "450b3cec6287f6b4ef26336b01692f0414998ea9668c27c0a87a61d70ad75440"
+title = "Voľby do Európskeho parlamentu 2024 – oznámenia (scan)"
+
+[okrsok.1]
+rules = [
+  {part = "Veľká Ida", numbers = "1-12, 23-319"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Veľká Ida", numbers = "320-590, 741-791"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Veľká Ida", numbers = "13-22, 591-652, 669, 678, 692, 700-740"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Gomboš", numbers = "1-99"},
+]

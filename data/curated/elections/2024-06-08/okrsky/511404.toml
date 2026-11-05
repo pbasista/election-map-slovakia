@@ -1,0 +1,37 @@
+# Okrsky of Fiľakovské Kováče, transcribed by an AI agent in job okrsok-rules-5195 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volebný obvod č. 1 v časti obce Fiľakovské Kováče
+#   okrsok 2: volebný obvod č. 2 v časti obce Kurtáň
+#   okrsok 3: volebný obvod č. 3 v časti obce Fiľakovské Kľačany
+obec = "511404"
+name = "Fiľakovské Kováče"
+okrsky_note = "The announcement calls the okrsky \"volebné obvody\" (it also announces the 3 okrskové volebné komisie); each is a part of the municipality. Read from the scanned PDF."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-03-08
+okrsky_date_basis = "The document is undated; the municipality's page linking it says it was posted (\"Zverejnené / Vyvesené na úradnej tabuli\") on 2024-03-08, before the vote; its heading names this vote. (https://filakovskekovace.sk/dokument/oznamenie-k-volbam-do-europskeho-parlamentu-v-roku-2024/)"
+
+[[document]]
+url = "https://filakovskekovace.sk/wp-content/uploads/dokumenty/volby-do-europarlamentu/oznamenie-k-volbam-do-europskeho-parlamentu-v-roku-2024-ekhbcv.pdf"
+sha256 = "99256ee1a1ec026e4022a51c73056eb2da1a3fff1559e5115a2ca20f49bd3c32"
+title = "Oznámenie k voľbám do Európskeho parlamentu v roku 2024"
+
+[[document]]
+url = "https://filakovskekovace.sk/dokument/oznamenie-k-volbam-do-europskeho-parlamentu-v-roku-2024/"
+sha256 = "d9fa1d3c90e159b93e0cfa126dbd3f381c5aa4c30751e74d8e6614c2db117765"
+title = "Page of the document (zverejnené 2024-03-08)"
+
+[okrsok.1]
+rules = [
+  {part = "Fiľakovské Kováče"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kurtáň"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Fiľakovské Kľačany"},
+]

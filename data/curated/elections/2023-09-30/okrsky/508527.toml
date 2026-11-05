@@ -1,0 +1,84 @@
+# Okrsky of Čierny Balog, transcribed by an AI agent in job okrsok-rules-3480 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1 Čierny Balog: Závodie celá ulica, Vydrovo celá ulica, Jergov celá ulica, Piliarska celá ulica, Drevárska celá ulica, Hlavná 8-20, 22-35, 38-56, 58-72, 78, 81, 84-86
+#   okrsok 2: 2 Jánošovka, Komov, Fajtov: Ovocinárska celá ulica, Lipová celá ulica, Švermova celá ulica, Hronská celá ulica, Slnečná celá ulica, Nová 4, 5, 7-10, 14-34, 36, 38, 39, Školská 3, Kopaničná celá ulica, Potočná celá ulica, Školská 17-40, 42-53, 55, 57-62, 64-73, 75-91, 93-108, 110-120, 122-155, Nová 1-3, 11 - 13
+#   okrsok 3: 3 Pusté, Dobroč: Zadná celá ulica, Družstevná celá ulica, Strakovo celá ulica, Vodárenská celá ulica, Šaling celá ulica, Krížno celá ulica, Brotovo celá ulica, Páleničné celá ulica, Školská 6 - 15, P. Jilemnického celá ulica, J. D. Matejovie celá ulica
+#   okrsok 4: 4 Krám, Medveďov: Hlavná 1-7, 79, 80, 82, 83, Mlynská celá ulica, Krátka celá ulica, Lesná celá ulica, Horná celá ulica, Dolná celá ulica, Poľná celá ulica, Partizánska celá ulica, Bánik celá ulica, Bexeľ celá ulica, Do Doliny celá ulica
+obec = "508527"
+name = "Čierny Balog"
+okrsky_date = 2023-06-26
+okrsky_note = "The PDF lists each okrsok's miestne časti and streets with house numbers; part rules for the named miestne časti place addresses without a street and Hlavná/Školská numbers the lists omit (Hlavná 21, 36, 37, 57, 73-77; Školská 1, 2, 4, 5, 16, 41 …)."
+
+[[document]]
+url = "https://www.ciernybalog.sk/download_file_f.php?id=1879927"
+sha256 = "df3fa12e5b427bdb23d8ff9fbdbb11f890e7c40ba177759fea1461566ae0197b"
+title = "Volebné okrsky pre voľby do NRSR v obci Čierny Balog (rozpis domov podľa ulíc), 26. 06. 2023"
+
+[[document]]
+url = "https://web.archive.org/web/20240206141434/https://www.ciernybalog.sk/volby-do-nrsr-2023.html"
+sha256 = "a1f55bc4fbb4c930a5f6f0d549108157e65640dfba51aaf850ef3bcc974a8ead"
+title = "Voľby do NRSR 2023 (archived page): volebné okrsky a miestnosti"
+
+[okrsok.1]
+rules = [
+  {street = "Závodie"},
+  {street = "Vydrovo"},
+  {street = "Jergov"},
+  {street = "Piliarska"},
+  {street = "Drevárska"},
+  {street = "Hlavná", numbers = "8-20, 22-35, 38-56, 58-72, 78, 81, 84-86"},
+  {part = "Čierny Balog"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ovocinárska"},
+  {street = "Lipová"},
+  {street = "Švermova"},
+  {street = "Hronská"},
+  {street = "Slnečná"},
+  {street = "Nová", numbers = "4, 5, 7-10, 14-34, 36, 38, 39"},
+  {street = "Školská", numbers = "3"},
+  {street = "Kopaničná"},
+  {street = "Potočná"},
+  {street = "Školská", numbers = "17-40, 42-53, 55, 57-62, 64-73, 75-91, 93-108, 110-120, 122-155"},
+  {street = "Nová", numbers = "1-3, 11-13"},
+  {part = "Jánošovka"},
+  {part = "Komov"},
+  {part = "Fajtov"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Zadná"},
+  {street = "Družstevná"},
+  {street = "Strakovo"},
+  {street = "Vodárenská"},
+  {street = "Šaling"},
+  {street = "Krížno"},
+  {street = "Brotovo"},
+  {street = "Páleničné"},
+  {street = "Školská", numbers = "6-15"},
+  {street = "Petra Jilemnického", written = "P. Jilemnického"},
+  {street = "J. D. Matejovie"},
+  {part = "Pusté"},
+  {part = "Dobroč"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Hlavná", numbers = "1-7, 79, 80, 82, 83"},
+  {street = "Mlynská"},
+  {street = "Krátka"},
+  {street = "Lesná"},
+  {street = "Horná"},
+  {street = "Dolná"},
+  {street = "Poľná"},
+  {street = "Partizánska"},
+  {street = "Bánik"},
+  {street = "Bexeľ"},
+  {street = "Do Doliny"},
+  {part = "Krám"},
+  {part = "Medveďov"},
+]

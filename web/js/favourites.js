@@ -1,6 +1,7 @@
 /* Favourites: every candidate the visitor has circled, on whichever
- * ballots, by contest, municipal then regional, the contests in the order
- * their first candidate was circled. A contest is listed as on the
+ * ballots, by contest, municipal then regional (a country-wide election's
+ * under its kind), the contests in the order their first candidate was
+ * circled. A contest is listed as on the
  * candidate card: closed, just the circled candidates; opened by its
  * header, the others after them, the filter applying to those only. The
  * page's address holds the circles and the filter (app.js); buttons by the
@@ -12,10 +13,11 @@
  * candidate chosen here; on a narrower one the pane shows it (app.js). */
 
 import { html, useEffect, useRef, useState } from '../vendor/preact-htm.module.js';
-import { Contest, FilterBar, isMunicipal, useRowActions } from './ballots.js';
+import { Contest, FilterBar, useRowActions } from './ballots.js';
 import { contests, useLoaded } from './data.js';
 import { formatNumber, t } from './i18n.js';
 import { BackIcon, CheckIcon, CloseIcon, LinkIcon, QrIcon } from './icons.js';
+import { electionKind, isCountry, isMunicipal, isRegional } from './kinds.js';
 import { decodeResults, NOT_COUNTED, useLive } from './live.js';
 import { byContest } from './picks.js';
 
@@ -220,14 +222,17 @@ export function Favourites({ picks, onPicks, filter, onFilter, onCandidate, onBa
     picks,
     onPicks,
   );
-  // How many of the circled the 2026 results have elected so far.
+  // How many of the circled persons the 2026 results have elected so far
+  // (a party that won seats is no person elected).
   const live = useLive();
   let elected = 0;
   for (const c of list) {
     const entry = live.of(c.id);
     if (!entry || entry === NOT_COUNTED) continue;
     const { byNumber } = decodeResults(c, entry);
-    elected += c.candidates.filter((x) => actions.isPicked(x.id) && byNumber.get(x.number)?.elected).length;
+    elected += c.candidates.filter(
+      (x) => x.type === 'person' && actions.isPicked(x.id) && byNumber.get(x.number)?.elected,
+    ).length;
   }
 
   useEffect(() => {
@@ -307,7 +312,11 @@ export function Favourites({ picks, onPicks, filter, onFilter, onCandidate, onBa
       )}
       ${group(
         t('ballots.regional'),
-        shown.filter((c) => !isMunicipal(c.id)),
+        shown.filter((c) => isRegional(c.id)),
+      )}
+      ${group(
+        t(`elections.kind.${electionKind}`),
+        shown.filter((c) => isCountry(c.id)),
       )}
     `;
   }

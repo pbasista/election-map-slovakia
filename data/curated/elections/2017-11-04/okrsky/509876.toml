@@ -1,0 +1,77 @@
+# The okrsky of Nižná of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/509876.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Nižná, transcribed by an AI agent in job okrsok-rules-1255 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: ulice Družstevná, Gen. Štefánika, Jána Hollého, Jesenského, Kollárova, Na Ostrvke, Na Skalke, Orličie, Podjavorinskej, Pri rybníkoch, Sama Chalupku, Svrčková, Šoltésovej, Tajovského, Vansovej Za mostom, Za Vŕškom, Záhradnícka
+#     okrsok 2: ulice Hviezdoslavova s.č. 23 -56, s.č. 135, s.č. 150 - 177, s.č. 217, Kukučínova, Mila Urbana, Nová doba, s.č. 487, s.č. 489, s.č. 491, s.č. 502 – 505, Partizánska, Radlinského, Štúrova, Vintiška, Tomanoczyho, Železničná
+#     okrsok 3: ulice Bernolákova, Farkašovského, Hamuljakova, Hattalova, Hviezdoslavova s.č. 179 – 200, s.č. 308 - 350, Kolejákova, Lesná, Mieru, Matúškova, Nová doba s.č. 482, s.č. 483, s.č. 485, s.č. 496, s.č. 498-501, Uhliská, Závodná.
+#     okrsok 4: č. 4 Kultúrny dom Zemianska Dedina
+obec = "509876"
+name = "Nižná"
+okrsky_date = 2019-01-22
+okrsky_fill = "nearest"
+okrsky_note = "Hviezdoslavova and Nová doba are split by súpisné čísla as listed; their other numbers, the register streets the document does not name (Sihoť, Samota Hldočín, Samota-mlyn) and houses without a street are placed by fill_nearest. Okrsok 4 (Kultúrny dom Zemianska Dedina) is the part Zemianská Dedina."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-257): The archived 2017 notice-board item on the regional elections carries no okrsky document; none found elsewhere. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2019-03-16: 1: 965 → 938, 2: 1,125 → 1,087, 3: 1,044 → 1,016, 4: 204 → 200."
+
+[[document]]
+url = "https://www.nizna.sk/e_download.php?file=data/editor/223sk_3.pdf&original=Oznamenie_utvorenie_volebnych_okrskov2.pdf"
+sha256 = "f3292f37d00ceb15716c57124c597777c65fe4abbf4b5f2b1a5682354b9db6f3"
+title = "Oznámenie o utvorení volebných okrskov a určenie volebných miestností pre voľby prezidenta SR 16. marca 2019 (22.1.2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Družstevná"},
+  {street = "Gen. Štefánika"},
+  {street = "Jána Hollého"},
+  {street = "Jesenského"},
+  {street = "Kollárova"},
+  {street = "Na Ostrvke"},
+  {street = "Na Skalke"},
+  {street = "Orličie"},
+  {street = "Podjavorinskej"},
+  {street = "Pri rybníkoch"},
+  {street = "Sama Chalupku"},
+  {street = "Svrčkova", written = "Svrčková"},
+  {street = "Šoltesovej", written = "Šoltésovej"},
+  {street = "Tajovského"},
+  {street = "Vansovej"},
+  {street = "Za Mostom", written = "Za mostom"},
+  {street = "Za Vrškom", written = "Za Vŕškom"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hviezdoslavova", numbers = "23-56, 135, 150-177, 217", by = "supisne"},
+  {street = "Kukučínova"},
+  {street = "Mila Urbana"},
+  {street = "Nová Doba", numbers = "487, 489, 491, 502-505", by = "supisne", written = "Nová doba", note = "'Nová doba, s.č. 487, …' read as Nová doba with these súpisné čísla"},
+  {street = "Partizánska"},
+  {street = "Radlinského"},
+  {street = "Štúrova"},
+  {street = "Vintiška"},
+  {street = "Tomanoczyho"},
+  {street = "Železničná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Farkašovského"},
+  {street = "Hamuliakova", written = "Hamuljakova", note = "the same street, the register spells it Hamuliakova"},
+  {street = "Hattalova"},
+  {street = "Hviezdoslavova", numbers = "179-200, 308-350", by = "supisne"},
+  {street = "Kolejákova"},
+  {street = "Lesná"},
+  {street = "Mieru"},
+  {street = "Matúškova"},
+  {street = "Nová Doba", numbers = "482, 483, 485, 496, 498-501", by = "supisne", written = "Nová doba"},
+  {street = "Uhliská"},
+  {street = "Závodná"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Zemianská Dedina", note = "'Kultúrny dom Zemianska Dedina': the okrsok of the part Zemianská Dedina"},
+]

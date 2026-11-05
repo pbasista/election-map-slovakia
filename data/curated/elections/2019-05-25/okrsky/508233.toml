@@ -1,0 +1,206 @@
+# Okrsky of Stupava, transcribed by an AI agent in job okrsok-rules-1625 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Družstevná; Džbankárska; Ferdiša Kostku; Jilemnického; Kalinčiakova; Malacká; Námestie Slovenského povstania; Obuvnícka; Pastierska; Pažitná; Pod Kopcami; Poľná; SNP; hlásení na mesto
+#   okrsok 2: Bitúnková; Borovicová; Brezová; Dubová; Duklianska; Hrabová; Jána Ondruša; Jedľová; Jelenia; Ľ. Kraskovskej; Lesná; Liesková; Líščia; Mateja Bela; Medzipotočná; Na Kopcoch; Nad potokom; Nová; Osiková; Pajštúnska; Piesková; Platanová; Pod vŕškom; Pri artézskej studni; Pri majeri; Pri potoku; Prof. Ondroucha; Rímska; Ruda Mórica; U Kozánka; Václava Honzu; Vincenta Šikulu; Stavby v k.ú. Stupava, súp. č.: 2234; 2235; 5012; 5070; 5092; 5105; 5127; 5132; 5145; 5147; 5158; 5230; 5408; 5423; 5505; 5555; 5556; 5566; 5574; 5595
+#   okrsok 3: Bazová; Cintorínska; Čakanková; Debnáreň; Gaštanová; Hlavná 1-11, 15-57A nepárne čísla, 2-46 párne čísla; Hlavná 13 (DSS a ZpS); Hroznová; Jaseňová; Javorová; Kalvárska; Karpatská; Konvalinková; Kvetná; Lúčna; Marcheggská; Muštová; Na vyhliadke; Nám. M. R. Štefánika; Nám. sv. Trojice; Námestie Maxa Reinhardta; Nevädzová; Orechová; Park; Pod Kremenicou; Pri Borníku; Pri Greftoch; Révová; Slovenská; Viničná; Vinohradská; Žabárňa; Stavba v k.ú. Stupava, súp. č. 5600
+#   okrsok 4: Bezručova; Budovateľská; J. Kráľa; Keltská; Krížna; Kukučínova; Mlynská; Továrenská; Troyerovo námestie; Záhradná; Zemanská
+#   okrsok 5: Agátová; Bernolákova; Bočná; Cementárenská; Dlhá; Fándlyho; Kúpeľná; Lipová; Mierová; Na aleji; Robotnícka; Sama Tomášika; Sládkovičova; Vajanského; Veterná; Wolkerova
+#   okrsok 6: Kosatcová; Krátka; Ľanová; M. Benku; Marianska; Na Dieloch; Na Pekárkach; Na stráni; Na Vrchnú horu; Okružná; Pri kríži; Púpavová; Ružová; Sadová; Slnečná; Stromová; Školská; Veternicová; Zvončeková; Stavby v k.ú. Mást II., súp. č. 5046; 5238; 5248; 5249; 5277; 5284; 5309; 5337; 5364; 5365; 5434; 5468; 5507; 5549; 5583; 5608;; Stavby v k.ú. Stupava, súp. č. 5226
+#   okrsok 7: Hlavná 59-99 nepárne čísla, 48-96A párne čísla; Krajná; Malý Háj; Rovná; Sama Chalupku; Stredná; Zadná; Zdravotnícka; Železničná; Stavba v k.ú. Mást I., súp. č. 5050
+#   okrsok 8: Bajzova; Bottova; Devínska cesta; Dolná; Hodžova; Hollého; Hurbanova; Hviezdoslavova; Juračkova; Kolakovičova; Matuškova; Moyzesova; Pri Polankach; Šípková; Štúrova; Záhumenská
+obec = "508233"
+name = "Stupava"
+okrsky_date = 2019-02-21
+okrsky_fill = "nearest"
+okrsky_note = "Streets the document names that the register lacks are left out: Malý Háj, Námestie Maxa Reinhardta, Pri Polankach, Púpavová, Ruda Mórica, Troyerovo námestie, Čakanková. Register streets the document does not name (newer): Spojná; they, the house numbers outside the listed ranges and houses without a street not otherwise selected take the okrsok of the nearest address (fill_nearest). Numbered ranges such as 'Hlavná 1-57A, 2-50' are read as the odd and even sides. 'hlásení na mesto' (voters registered only on the town) is not a place."
+
+[[document]]
+url = "https://www.stupava.sk/e_download.php?file=data/uredni_deska/obsah3900_11.pdf&original=Stupava_oznamenie_-_volebn%C3%A9_okrsky_volebne_miestnosti20190221.pdf"
+sha256 = "69d4f7abe7b08e7be28ae276fe3321f50650f6cb412fe4a41de386f7ab4bd0a7"
+title = "Voľby do európskeho parlamentu Oznámenie o utvorení volebných okrskov a o určení volebných miestností pre voľby do Európskeho parlamentu dňa 25. mája 2019 pdf."
+
+[[document]]
+url = "https://www.stupava.sk/sk/samosprava/volby-referendum/oznamenie-o-utvoreni-volebnych-okrskov-a-o-urceni-volebnych-miestnosti-pre-volby-do-europskeho-parlamentu-dna-25-maja-2019-4037.html"
+sha256 = "37d997883c137adb3dad27767db7622777929a2a2ac4e18bbcb7d16db440c788"
+title = "Notice board item (Vyvesené: 25. 2. 2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Družstevná"},
+  {street = "Džbankárska"},
+  {street = "Ferdiša Kostku"},
+  {street = "Jilemnického"},
+  {street = "Kalinčiakova"},
+  {street = "Malacká"},
+  {street = "Námestie Slovenského povstania"},
+  {street = "Obuvnícka"},
+  {street = "Pastierska"},
+  {street = "Pažitná"},
+  {street = "Pod Kopcami"},
+  {street = "Poľná"},
+  {street = "SNP"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bitúnková"},
+  {street = "Borovicová"},
+  {street = "Brezová"},
+  {street = "Dubová"},
+  {street = "Duklianska"},
+  {street = "Hrabová"},
+  {street = "Jána Ondruša"},
+  {street = "Jedľová"},
+  {street = "Jelenia"},
+  {street = "Ľ. Kraskovskej"},
+  {street = "Lesná"},
+  {street = "Liesková"},
+  {street = "Líščia"},
+  {street = "Mateja Bela"},
+  {street = "Medzipotočná"},
+  {street = "Na Kopcoch"},
+  {street = "Nad potokom"},
+  {street = "Nová"},
+  {street = "Osiková"},
+  {street = "Pajštúnska"},
+  {street = "Piesková"},
+  {street = "Platanová"},
+  {street = "Pod vŕškom"},
+  {street = "Pri artézskej studni"},
+  {street = "Pri majeri"},
+  {street = "Pri potoku"},
+  {street = "Prof. Ondroucha"},
+  {street = "Rímska"},
+  {street = "U Kozánka"},
+  {street = "Václava Honzu"},
+  {street = "Vincenta Šikulu"},
+  {part = "Stupava", numbers = "2234, 2235, 5012, 5070, 5092, 5105, 5127, 5132, 5145, 5147, 5158, 5230, 5408, 5423, 5505, 5555, 5556, 5566, 5574, 5595", note = "buildings in k.ú. Stupava listed by súpisné číslo; the register keeps them in part Stupava"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bazová"},
+  {street = "Cintorínska"},
+  {street = "Debnáreň"},
+  {street = "Gaštanová"},
+  {street = "Hlavná", numbers = "1-11, 15-57, 57A", parity = "odd"},
+  {street = "Hlavná", numbers = "2-46", parity = "even"},
+  {street = "Hlavná", numbers = "13", parity = "odd"},
+  {street = "Hroznová"},
+  {street = "Jaseňová"},
+  {street = "Javorová"},
+  {street = "Kalvárska"},
+  {street = "Karpatská"},
+  {street = "Konvalinková"},
+  {street = "Kvetná"},
+  {street = "Lúčna"},
+  {street = "Marcheggská"},
+  {street = "Muštová"},
+  {street = "Na vyhliadke"},
+  {street = "Nám. M. R. Štefánika"},
+  {street = "Nám. sv. Trojice"},
+  {street = "Nevädzová"},
+  {street = "Orechová"},
+  {street = "Park"},
+  {street = "Pod Kremenicou"},
+  {street = "Pri Borníku"},
+  {street = "Pri Greftoch"},
+  {street = "Révová"},
+  {street = "Slovenská"},
+  {street = "Viničná"},
+  {street = "Vinohradská"},
+  {street = "Žabárňa"},
+  {part = "Stupava", numbers = "5600", note = "buildings in k.ú. Stupava listed by súpisné číslo; the register keeps them in part Stupava"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bezručova"},
+  {street = "Budovateľská"},
+  {street = "J. Kráľa"},
+  {street = "Keltská"},
+  {street = "Krížna"},
+  {street = "Kukučínova"},
+  {street = "Mlynská"},
+  {street = "Továrenská"},
+  {street = "Záhradná"},
+  {street = "Zemanská"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Agátová"},
+  {street = "Bernolákova"},
+  {street = "Bočná"},
+  {street = "Cementárenská"},
+  {street = "Dlhá"},
+  {street = "Fándlyho"},
+  {street = "Kúpeľná"},
+  {street = "Lipová"},
+  {street = "Mierová"},
+  {street = "Na aleji"},
+  {street = "Robotnícka"},
+  {street = "Sama Tomášika"},
+  {street = "Sládkovičova"},
+  {street = "Vajanského"},
+  {street = "Veterná"},
+  {street = "Wolkerova"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Kosatcová"},
+  {street = "Krátka"},
+  {street = "Ľanová"},
+  {street = "M. Benku"},
+  {street = "Marianska"},
+  {street = "Na Dieloch"},
+  {street = "Na Pekárkach"},
+  {street = "Na stráni"},
+  {street = "Na Vrchnú horu"},
+  {street = "Okružná"},
+  {street = "Pri kríži"},
+  {street = "Ružová"},
+  {street = "Sadová"},
+  {street = "Slnečná"},
+  {street = "Stromová"},
+  {street = "Školská"},
+  {street = "Veternicová"},
+  {street = "Zvončeková"},
+  {part = "Stupava", numbers = "5046, 5238, 5248, 5249, 5277, 5284, 5309, 5337, 5364, 5365, 5434, 5468, 5507, 5549, 5583, 5608", note = "buildings in k.ú. Mást listed by súpisné číslo; the register keeps them in part Stupava"},
+  {part = "Stupava", numbers = "5226", note = "buildings in k.ú. Stupava listed by súpisné číslo; the register keeps them in part Stupava"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Hlavná", numbers = "59-99", parity = "odd"},
+  {street = "Hlavná", numbers = "48-96, 96A", parity = "even"},
+  {street = "Krajná"},
+  {street = "Rovná"},
+  {street = "Sama Chalupku"},
+  {street = "Stredná"},
+  {street = "Zadná"},
+  {street = "Zdravotnícka"},
+  {street = "Železničná"},
+  {part = "Stupava", numbers = "5050", note = "buildings in k.ú. Mást listed by súpisné číslo; the register keeps them in part Stupava"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Bajzova"},
+  {street = "Bottova"},
+  {street = "Devínska cesta"},
+  {street = "Dolná"},
+  {street = "Hodžova"},
+  {street = "Hollého"},
+  {street = "Hurbanova"},
+  {street = "Hviezdoslavova"},
+  {street = "Juračkova"},
+  {street = "Kolakovičova"},
+  {street = "Matuškova"},
+  {street = "Moyzesova"},
+  {street = "Šípková"},
+  {street = "Štúrova"},
+  {street = "Záhumenská"},
+]

@@ -1,0 +1,40 @@
+# The council obvody of Záhorce of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/516546.toml, standing in, by `ems job reuse`. Its header there:
+#   Council obvody of Záhorce (516546), Veľký Krtíš.
+#   Transcribed by an AI agent in job obvod-rules-376 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: viacmandátový volebný obvod č. 1 pre voľby poslancov v časti obce Záhorce, v ktorom sa budú voliť piati poslanci
+#     obvod 2: viacmandátový volebný obvod č. 2 pre voľby poslancov v časti obce Selešťany, v ktorom sa budú voliť dvaja poslanci
+#   Okrsky added by an AI agent in job okrsok-rules-1237 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: viacmandátový volebný obvod č. 1 pre voľby poslancov v časti obce Záhorce, v ktorom sa budú voliť piati poslanci
+#     okrsok 2: viacmandátový volebný obvod č. 2 pre voľby poslancov v časti obce Selešťany, v ktorom sa budú voliť dvaja poslanci
+obec = "516546"
+name = "Záhorce"
+date = 2022-06-27
+adopted = 2022-10-29
+adopted_basis = "No document of 2018-11-10 setting the obvody was found (obvod-rules-190): No 2018 council resolution or announcement on the obvody was found on the website or in the Internet Archive (the archived notice-board posts on obvody are of 2022). These are the council obvody of the vote of 2022-10-29 (2022), the nearest in time with a rule set of its own of the same obvody and seats. The voters on the roll per obvod are not known for both votes, so whether the layout changed is not known either."
+okrsky_date = 2022-06-27
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "The okrsky of the same rule set: 2 okrsky, those ŠÚ SR counted in each obvod. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://www.zahorce.sk/e_download.php?file=data/uredni_deska/obsah210_4.pdf&original=Uznesenie%20UZN%2027.6.2022_final.pdf"
+sha256 = "7c298ed76dc12cbbd085890b6a1fe473ccb7a72d3a526300396ee371e13930bc"
+title = "Uznesenia OZ Záhorce z 27.6.2022, uznesenie č. 07-02/2022"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Záhorce"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Selešťany"},
+]

@@ -1,0 +1,149 @@
+# The okrsky of Veľký Meder of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/501522.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Veľký Meder, transcribed by an AI agent in job okrsok-rules-4031 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Komárňanská 1-6, 8-172; Mlynská; Nám.Mládeže; Nezábudková; Partizánska; Zelená
+#     okrsok 2: Cintorínska; Čičovská; Čiližská; Dubová; Hraničná; Ižopská; Kurtaserská; Lastovičková; Letná; Ľ.Štúra; Nám.B.Bartóka; Orechová; P.O.Hviezdoslava; Petőfiho; Poľovnícka; Pri prameni; Promenádna; Rekreačná; Rozmarínová; Slnečná; Sv.Štefana; Turistická; Nám. László Kovácsa
+#     okrsok 3: Agátová; Besnyeiho; Fialková; Fučíkova; Jahodová; Jenő Farkasa; Józsefa Nagy Rátza; Lajosa Kazinczyho; M.Gorkého; Mierová; Okočská; Orgovánová; Táborská; Tibora Ága; Tichá; Železničná
+#     okrsok 4: Dunajská; Lesná; Medveďovská; Nový Dvor; Šarkaň; Štadionová; Tajlok; Želiarska
+#     okrsok 5: Sídl.M.Corvina 1 - 32; Komárňanská 7 (voliči bez adresy trvalého pobytu)
+#     okrsok 6: Bitúnková; Bratislavská; Dolná; J.Gagarina; Jelenia; Krátka; Kúpeľná; Kvetná; Lipová; Ľ. Kossutha; Malá; Mostová; Nám.Hrdinov; Nová; Podzáhradná; Priemyslová; Rybárska; Stará; Záhradnícka
+#     okrsok 7: Labutia; Sídl.M.Corvina 33 - 61; Ružová
+#     okrsok 8: Hlavná; Hrušková; Ižop Pusta; Konopná; Konvalinková; Kostolná; Mládeže; Podlesná; Športová; Zemiansky Les
+obec = "501522"
+name = "Veľký Meder"
+okrsky_fill = "nearest"
+okrsky_note = "Cintorínska is not in the register and is left out. Komárňanská 7, the address of voters without a permanent address, is placed in okrsok 5 as the document says. Addresses without a street (e.g. in Ižop) and streets the document omits go by fill_nearest."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2222): No okrsky document of 2020 on the website; Internet Archive offline. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 8 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2024-03-23: 1: 936 → 858, 2: 828 → 787, 3: 1,067 → 1,114, 4: 767 → 715, 5: 1,100 → 1,122, 6: 957 → 928, 7: 963 → 898, 8: 464 → 459."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-30
+okrsky_date_basis = "The official notice board page states the document was posted (Vyvesené) on 30. 1. 2024; the document itself names the vote of 23. 3. 2024 but is undated. (https://www.velkymeder.sk/nase-mesto/uradna-tabula/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-3421.html)"
+
+[[document]]
+url = "https://www.velkymeder.sk/e_download.php?file=data/uredni_deska/obsah2203_1.pdf&original=utvorenie_volebnych_okrskov.pdf"
+sha256 = "cc324ad3e55e04eab8c3ec1f1f67290d87975eddd730833b02fda3bf7e2263e1"
+title = "Utvorenie volebných okrskov a určenie volebných miestností, Voľby prezidenta SR 2024"
+
+[[document]]
+url = "https://www.velkymeder.sk/nase-mesto/uradna-tabula/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-3421.html"
+sha256 = "70512cd61edecfecaf6694884c551cdd78044154cbe32ad431b7b946e7673221"
+title = "Úradná tabuľa: Utvorenie volebných okrskov a určenie volebných miestností, Voľby prezidenta SR 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Komárňanská", numbers = "1-6, 8-172"},
+  {street = "Mlynská"},
+  {street = "Nám. Mládeže", written = "Nám.Mládeže"},
+  {street = "Nezábudková"},
+  {street = "Partizánska"},
+  {street = "Zelená"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Čičovská"},
+  {street = "Čiližská"},
+  {street = "Dubová"},
+  {street = "Hraničná"},
+  {street = "Ižopská"},
+  {street = "Kurtaserská"},
+  {street = "Lastovičková"},
+  {street = "Letná"},
+  {street = "Ľ. Štúra", written = "Ľ.Štúra"},
+  {street = "Nám. Bélu Bartóka", written = "Nám.B.Bartóka"},
+  {street = "Orechová"},
+  {street = "P. O. Hviezdoslava", written = "P.O.Hviezdoslava"},
+  {street = "Petőfiho ulica", written = "Petőfiho", note = "Petőfiho = Petőfiho ulica"},
+  {street = "Poľovnícka"},
+  {street = "Pri prameni"},
+  {street = "Promenádna"},
+  {street = "Rekreačná"},
+  {street = "Rozmarínová"},
+  {street = "Slnečná"},
+  {street = "Ul. Svätého Štefana", written = "Sv.Štefana", note = "Sv. Štefana is the register's Ul. Svätého Štefana"},
+  {street = "Turistická"},
+  {street = "Námestie László Kovácsa", written = "Nám. László Kovácsa"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová"},
+  {street = "Besnyeiho"},
+  {street = "Fialková"},
+  {street = "Fučíkova"},
+  {street = "Jahodová"},
+  {street = "Jenő Farkasa"},
+  {street = "Józsefa Nagy Rátza"},
+  {street = "Lajosa Kazinczyho"},
+  {street = "Max. Gorkého", written = "M.Gorkého"},
+  {street = "Mierová"},
+  {street = "Okočská"},
+  {street = "Orgovánová"},
+  {street = "Táborská"},
+  {street = "Tibora Ága"},
+  {street = "Tichá"},
+  {street = "Železničná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Dunajská"},
+  {street = "Lesná"},
+  {street = "Medveďovská cesta", written = "Medveďovská", note = "Medveďovská = Medveďovská cesta (dropped \"cesta\")"},
+  {street = "Osada Nový Dvor", written = "Nový Dvor", note = "the settlement Nový Dvor is the register's street Osada Nový Dvor"},
+  {street = "Šarkaň"},
+  {street = "Štadiónová", written = "Štadionová"},
+  {street = "Osada Tajlok", written = "Tajlok", note = "the settlement Tajlok is the register's street Osada Tajlok"},
+  {street = "Želiarska"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Sídl.M.Corvina", numbers = "1-32"},
+  {street = "Komárňanská", numbers = "7"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bitunková", written = "Bitúnková", note = "Bitúnková is the register's Bitunková (spelling)"},
+  {street = "Bratislavská"},
+  {street = "Dolná"},
+  {street = "J. Gagarina", written = "J.Gagarina"},
+  {street = "Jelenia"},
+  {street = "Krátka"},
+  {street = "Kúpeľná"},
+  {street = "Kvetná"},
+  {street = "Lipová"},
+  {street = "Ľ. Kossútha", written = "Ľ. Kossutha"},
+  {street = "Malá"},
+  {street = "Mostová"},
+  {street = "Nám. Hrdinov", written = "Nám.Hrdinov"},
+  {street = "Nová"},
+  {street = "Podzáhradná"},
+  {street = "Priemyslová"},
+  {street = "Rybárska"},
+  {street = "Stará"},
+  {street = "Zahradnícka", written = "Záhradnícka", note = "Záhradnícka is the register's Zahradnícka (spelling)"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Labutia"},
+  {street = "Sídl.M.Corvina", numbers = "33-61"},
+  {street = "Ružová"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Hlavná"},
+  {street = "Hrušková"},
+  {street = "Ižop Pusta"},
+  {street = "Konopná"},
+  {street = "Konvalinková"},
+  {street = "Kostolná"},
+  {street = "Mládeže"},
+  {street = "Podlesná"},
+  {street = "Športová"},
+  {street = "Zemiansky Les"},
+]

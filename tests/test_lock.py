@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from election_map_slovakia import cli, config, lock, stamp
+from election_map_slovakia import cli, config, lock, pages, stamp
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -46,9 +46,21 @@ def root(tmp_path: Path) -> Path:
 def test_keys_follow_from_the_repository_alone(root: Path):
     first = keys(root)
     assert first == keys(root)
-    assert set(first.maps) == set(first.data) == {"2026", "2022"}
-    values = [*first.maps.values(), *first.data.values(), first.sources, first.results]
-    assert len(set(values)) == 6
+    cfg = config.load(root / "config")
+    slugs = {e.slug for e in cfg.elections}
+    assert {"2026", "2022", "2024-prezident"} <= slugs
+    assert set(first.maps) == set(first.data) == slugs
+    # One base map per extract, whatever number of elections are on it.
+    assert set(first.bases) == {e.osm for e in cfg.elections}
+    assert len(first.bases) < len(slugs)
+    values = [
+        *first.maps.values(),
+        *first.data.values(),
+        *first.bases.values(),
+        first.sources,
+        first.results,
+    ]
+    assert len(set(values)) == 2 * len(slugs) + len(first.bases) + 2
     assert lock.read(root / lock.LOCK_FILE) is None
     (root / lock.LOCK_FILE).write_text(lock.render(first))
     assert lock.read(root / lock.LOCK_FILE) == first
@@ -67,24 +79,43 @@ def test_what_only_the_app_reads_changes_no_key(root: Path):
 
 def test_a_shared_input_changes_every_key_but_the_sources(root: Path):
     before = keys(root)
-    # The ZBGIS boundaries, which both elections are drawn on.
+    # The ZBGIS boundaries, which both elections are drawn on and the base
+    # maps hold the buildings of.
     edit(root / "config/inputs.toml", 'sha256 = "ff8efeb4', 'sha256 = "0f8efeb4')
     after = keys(root)
     for slug in ("2026", "2022"):
         assert after.maps[slug] != before.maps[slug]
         assert after.data[slug] != before.data[slug]
+    for osm in before.bases:
+        assert after.bases[osm] != before.bases[osm]
     assert after.results != before.results
     assert after.sources == before.sources
 
 
-def test_an_elections_base_map_extract_is_its_maps_alone(root: Path):
+def test_an_elections_extract_is_its_base_map_and_its_maps_alone(root: Path):
     before = keys(root)
     edit(root / "config/inputs.toml", 'sha256 = "b868894a', 'sha256 = "0868894a')
     after = keys(root)
+    # The base map of 2022's extract, and the maps on it, whose geo reads
+    # the extract's roads, railways and rivers.
+    assert after.bases["osm-slovakia-2022"] != before.bases["osm-slovakia-2022"]
     assert after.maps["2022"] != before.maps["2022"]
+    assert after.bases["osm-slovakia-2026"] == before.bases["osm-slovakia-2026"]
     assert after.maps["2026"] == before.maps["2026"]
     assert after.data == before.data
     assert after.results == before.results
+
+
+def test_elections_on_one_extract_share_its_base_map(root: Path):
+    cfg = config.load(root / "config")
+    on_2026 = [e.slug for e in cfg.elections if e.osm == "osm-slovakia-2026"]
+    assert {"2026", "2026-referendum"} <= set(on_2026)
+    before = keys(root)
+    # A candidate list of 2026: its map and data, not its base map.
+    edit(root / "config/inputs.toml", 'sha256 = "9216341d', 'sha256 = "0216341d')
+    after = keys(root)
+    assert after.maps["2026"] != before.maps["2026"]
+    assert after.bases == before.bases
 
 
 def test_curated_data_changes_its_map_and_every_data_key(root: Path):
@@ -98,9 +129,10 @@ def test_curated_data_changes_its_map_and_every_data_key(root: Path):
     assert after.data["2026"] != before.data["2026"]
     assert after.data["2022"] != before.data["2022"]
     assert after.results != before.results
+    assert after.bases == before.bases
 
 
-def test_research_changes_the_data_keys_and_no_map_key(root: Path):
+def test_research_changes_the_data_keys_and_no_map_or_results_key(root: Path):
     before = keys(root)
     record(root, "b", ["c2"])
     after = keys(root)
@@ -109,6 +141,10 @@ def test_research_changes_the_data_keys_and_no_map_key(root: Path):
     assert after.data["2026"] != before.data["2026"]
     assert after.data["2022"] != before.data["2022"]
     assert after.maps == before.maps
+    assert after.bases == before.bases
+    # Nor do the results read it: a release of it does not deploy the same
+    # results again.
+    assert after.results == before.results
 
 
 def test_code_reaches_the_keys_of_what_it_makes(
@@ -130,19 +166,32 @@ def test_code_reaches_the_keys_of_what_it_makes(
         edit(package / "cli.py", 'help="serve dist/', 'help="Serve dist/')
         after = fresh()
         assert after.maps == before.maps
+        assert after.bases == before.bases
         assert after.data["2026"] != before.data["2026"]
         # Code that makes the data but not the maps.
         edit(package / "links.py", "\ndef ", "\nUNUSED = 1\n\n\ndef ")
         again = fresh()
         assert again.maps == before.maps
         assert again.data["2026"] != after.data["2026"]
+
+        def reword(function: str) -> None:
+            """Add a comment to the CLI's *function*."""
+            text = (package / "cli.py").read_text(encoding="utf-8")
+            body = text.index(":\n", text.index(f"\ndef {function}(")) + 2
+            (package / "cli.py").write_text(
+                text[:body] + "    # Reworded.\n" + text[body:], encoding="utf-8"
+            )
+
         # The CLI's part of the map steps, even a comment of it.
-        text = (package / "cli.py").read_text(encoding="utf-8")
-        body = text.index(":\n", text.index("\ndef _geo(")) + 2
-        (package / "cli.py").write_text(
-            text[:body] + "    # Reworded.\n" + text[body:], encoding="utf-8"
-        )
-        assert fresh().maps["2026"] != before.maps["2026"]
+        reword("_geo")
+        mapped = fresh()
+        assert mapped.maps["2026"] != before.maps["2026"]
+        assert mapped.bases == before.bases
+        # That of the base map: every base map, no election's map.
+        reword("_basemap")
+        based = fresh()
+        assert based.maps == mapped.maps
+        assert all(based.bases[osm] != mapped.bases[osm] for osm in mapped.bases)
     finally:
         lock.code_digest.cache_clear()
 
@@ -154,7 +203,7 @@ def test_an_input_not_pinned_has_no_key(root: Path):
         "retrieved = 2026-10-18\n",
         "",
     )
-    with pytest.raises(lock.LockError, match="candidates-zsk not pinned"):
+    with pytest.raises(lock.LockError, match="candidates-zsk-2026 not pinned"):
         keys(root)
 
 
@@ -167,3 +216,40 @@ def test_data_lock_check_fails_on_a_stale_lock(
     assert cli.main(["data", "lock", "--check"]) == 0
     record(root, "b", ["c2"])
     assert cli.main(["data", "lock", "--check"]) == 1
+
+
+def test_data_status_tells_a_release_what_to_build(
+    root: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+):
+    monkeypatch.chdir(root)
+    assert cli.main(["data", "lock"]) == 0
+    locked = keys(root)
+    # Every part deployed with its key but the map of 2026.
+    monkeypatch.setattr(
+        pages,
+        "find",
+        lambda project, key: (
+            None if key == locked.maps["2026"] else pages.Deployment("https://x", key)
+        ),
+    )
+    monkeypatch.setattr(
+        pages,
+        "current",
+        lambda project: pages.Deployment(
+            "https://x", locked.sources if "sources" in project else locked.results
+        ),
+    )
+    out = tmp_path / "github-output"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(out))
+    assert cli.main(["data", "status", "--github-output"]) == 0
+    lines = out.read_text(encoding="utf-8").splitlines()
+    assert lines[0] == "stale=true"
+    # The days of every election: the build of any part reads them all.
+    days = [e.day.isoformat() for e in config.load(root / "config").elections]
+    assert lines[1] == f"elections={json.dumps(days)}"
+    assert "2026-10-24" in days and "2022-10-29" in days
+    # Each extract once, for the release's job per base map.
+    extracts = json.loads(lines[2].removeprefix("extracts="))
+    assert lines[2].startswith("extracts=")
+    assert len(extracts) == len(set(extracts)) == len(locked.bases)
+    assert set(extracts) == set(locked.bases)

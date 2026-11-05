@@ -1,0 +1,73 @@
+# Okrsky of Košice-Vyšné Opátske, transcribed by an AI agent in job okrsok-rules-220 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Alšavská, Bazová, Borievková, Cezmínová, Hájnická, Hlohová, Hrabová, Jačmenná, Jarabinová, Jelšová, Južné nábrežie, Kukuričná, Nevädzová, Nižný Heringeš, Nižná úvrať, Opatovská cesta 1 – 53 nepárne, Ovsená, Pod vinicami, Prvosienková, Ražná, Roľnícka, Sečovská cesta, Snežienková, Šarišská, Tigria, Zemplínska, Žatevná, Žitná
+#   okrsok 2: Bažantia, Dubová, Jelenia, Klinčeková, Kosatcová, Králičia, Liesková, Opatovská cesta – párne, Opatovská cesta 55-155 nepárne, Osiková, Pod hrebienkom, Príkra, Pšeničná, Púpavová, Slávičia, Šafranová, Šípková, Škovránčia, Včelárska paseka, Viničná, V úvoze, Zajačia, MČ – chaty, MČ – zrušený trvalý pobyt
+obec = "599913"
+name = "Košice-Vyšné Opátske"
+okrsky_date = 2017-09-04
+okrsky_note = "'MČ – zrušený trvalý pobyt' are voters registered without an address (cancelled permanent residence), not the register's houses without a street; those (chalets, súpisné only) go with 'MČ – chaty' via the rest rule."
+
+[[document]]
+url = "https://web.archive.org/web/20190724083314/https://www.vysneopatske.sk/download_file_f.php?id=868557"
+sha256 = "1f2c2abebc28d2120ed2e9b94d5d87335960020b4f2102680083048efedd0299"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do orgánov samosprávnych krajov v roku 2017 (04.09.2017)"
+
+[okrsok.1]
+rules = [
+  {street = "Alšavská"},
+  {street = "Bazová"},
+  {street = "Borievková"},
+  {street = "Cezmínová"},
+  {street = "Hájnická"},
+  {street = "Hlohová"},
+  {street = "Hrabová"},
+  {street = "Jačmenná"},
+  {street = "Jarabinová"},
+  {street = "Jelšová"},
+  {street = "Južné nábrežie"},
+  {street = "Kukuričná"},
+  {street = "Nevädzová"},
+  {street = "Nižný Heringeš"},
+  {street = "Nižná úvrať"},
+  {street = "Opatovská cesta", numbers = "1-53", parity = "odd"},
+  {street = "Ovsená"},
+  {street = "Pod vinicami"},
+  {street = "Prvosienková"},
+  {street = "Ražná"},
+  {street = "Roľnícka"},
+  {street = "Sečovská cesta"},
+  {street = "Snežienková"},
+  {street = "Šarišská"},
+  {street = "Tigria"},
+  {street = "Zemplínska"},
+  {street = "Žatevná"},
+  {street = "Žitná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bažantia"},
+  {street = "Dubová"},
+  {street = "Jelenia"},
+  {street = "Klinčeková"},
+  {street = "Kosatcová"},
+  {street = "Králičia"},
+  {street = "Liesková"},
+  {street = "Opatovská cesta", parity = "even"},
+  {street = "Opatovská cesta", numbers = "55-155", parity = "odd"},
+  {street = "Osiková"},
+  {street = "Pod hrebienkom"},
+  {street = "Príkra"},
+  {street = "Pšeničná"},
+  {street = "Púpavová"},
+  {street = "Slávičia"},
+  {street = "Šafranová"},
+  {street = "Šípková"},
+  {street = "Škovránčia"},
+  {street = "Včelárska paseka"},
+  {street = "Viničná"},
+  {street = "V úvoze"},
+  {street = "Zajačia"},
+  {rest = true, note = "'MČ – chaty': the register's houses without a street (súpisné only, chalets) are put here as the document lists the chalets in this okrsok; streets the document does not name also fall here"},
+]

@@ -2,17 +2,13 @@
 
 import datetime as dt
 import json
-from pathlib import Path
 
 import pytest
 
 from election_map_slovakia import addresses, crosswalk, results
-from election_map_slovakia.candidates import Admin
 from election_map_slovakia.results import APPROXIMATE, IDENTITY, SAME, UNKNOWN
 
 DAY = dt.date(2022, 10, 29)
-# The registers are read by a stand-in (register_rows), which names no obce.
-ADMIN = Admin({}, {}, {})
 
 
 def test_identity_by_number_and_registered_voters():
@@ -180,7 +176,7 @@ def test_obvody_counted_by_their_least_certain_okrsok():
     ) == {"oz:500001/1": "same", "oz:500001/2": "whole", "oz:500002/1": "unknown"}
 
 
-def test_addresses_paired_by_id_then_by_street_and_number(tmp_path, monkeypatch):
+def test_addresses_paired_by_id_then_by_street_and_number(tmp_path):
     """An address is the same by its id in both registers; one whose id is
     new by its street and house number, where only one has them."""
     rows = {
@@ -188,11 +184,13 @@ def test_addresses_paired_by_id_then_by_street_and_number(tmp_path, monkeypatch)
         "now": [("a1", "A", "1"), ("a2", "A", "2"), ("x3", "A", "3"), ("n4", "B", "1")],
     }
 
-    def register_rows(path, *_):
-        for i, (ident, street, number) in enumerate(rows[path.name]):
-            yield addresses.Row(ident, "500001", "X", street, number, "", "", "", i)
+    def houses(name):
+        def of(obce):
+            keys = {i: (addresses.STREETS, s, n) for i, s, n in rows[name]}
+            return {"500001": keys} if "500001" in obce else {}
 
-    monkeypatch.setattr(addresses, "register_rows", register_rows)
+        return of
+
     files = {
         "then": {
             "streets": [{"name": "A", "numbers": ["1", "2", "3"], "okrsky": [1, 1, 2]}]
@@ -209,7 +207,7 @@ def test_addresses_paired_by_id_then_by_street_and_number(tmp_path, monkeypatch)
         addr = tmp_path / name / "addr"
         addr.mkdir(parents=True)
         (addr / "500001.json").write_text(json.dumps(content))
-        registers.append(crosswalk.Register(Path(name), ADMIN, {}, (), addr))
+        registers.append(crosswalk.Register(houses(name), addr))
     okrsky = ({"500001": {1: 10, 2: 5}}, {"500001": {1: 10, 2: 5}})
     pairs, paired = crosswalk.address_pairs(registers, okrsky)
     assert pairs == {"500001": {(1, 1): 2, (2, 1): 1}}

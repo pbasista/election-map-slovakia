@@ -1,0 +1,76 @@
+# Okrsky of Lipany, transcribed by an AI agent in job okrsok-rules-5466 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Jarková, Jána Bottu, Komenského, Moyzesova, Štúrova
+#   okrsok 2: Dubovická roveň, Kpt. Nálepku, Krivianska, Kuzmányho, Mlynská, Sabinovská, Sládkovičova, Za kúpaliskom, Za traťou, Záhradná, Železničná, Tehelná
+#   okrsok 3: Kollárova, Námestie sv. Martina
+#   okrsok 4: Hviezdoslavova, Kukučínova, Ovocinárska, Rovinky, Sama Chalupku, Tajovského, Voliči s trvalým pobytom Lipany
+#   okrsok 5: Janka Kráľa, Jánošíkova, Odbojárska, Pod Hájom, Pod kopaninou, Poľná
+obec = "524778"
+name = "Lipany"
+okrsky_fill = "nearest"
+okrsky_note = "'Voliči s trvalým pobytom Lipany' (okrsok 4) are residents registered without an address. fill_nearest places the addresses without a street (súpisné only)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2026-04-27
+okrsky_date_basis = "The document is undated; its heading names the referendum of 4 July 2026. The city's page for the vote lists it with 'Dátum: 27.4.2026'. (https://www.lipany.sk/30929/referendum-2026)"
+
+[[document]]
+url = "https://www.lipany.sk/data/page/lipany.sk/30929/6_urcenie-vol_okrskov-a-vol_miestnosti.pdf"
+sha256 = "51029fcedc043453fc5491c7cbe55dfd6d29309f871210f2051f64f8b3952f88"
+title = "Určenie volebných okrskov a volebných miestností v meste Lipany pre REFERENDUM, ktoré sa bude konať 4.7.2026"
+
+[[document]]
+url = "https://www.lipany.sk/30929/referendum-2026"
+sha256 = "a254d2f5985edf2662343dca7a2d922929472c373dc77f4df85c3d4869429297"
+title = "Mesto Lipany: referendum of 4 July 2026 (page)"
+
+[okrsok.1]
+rules = [
+  {street = "Jarková"},
+  {street = "Jána Bottu"},
+  {street = "Komenského"},
+  {street = "Moyzesova"},
+  {street = "Štúrova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dubovická roveň"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Krivianska"},
+  {street = "Kuzmányho"},
+  {street = "Mlynská"},
+  {street = "Sabinovská"},
+  {street = "Sládkovičova"},
+  {street = "Za kúpaliskom"},
+  {street = "Za traťou"},
+  {street = "Záhradná"},
+  {street = "Železničná"},
+  {street = "Tehelná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Kollárova"},
+  {street = "Námestie sv. Martina"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "Kukučínova"},
+  {street = "Ovocinárska"},
+  {street = "Rovinky"},
+  {street = "Sama Chalupku"},
+  {street = "Tajovského"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Janka Kráľa"},
+  {street = "Jánošíkova"},
+  {street = "Odbojárska"},
+  {street = "Pod Hájom"},
+  {street = "Pod kopaninou"},
+  {street = "Poľná"},
+]

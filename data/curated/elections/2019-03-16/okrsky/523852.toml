@@ -1,0 +1,43 @@
+# Okrsky of Spišské Bystré, transcribed by an AI agent in job okrsok-rules-1403 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Partizánska, SNP, Hornádska, Jána Lačeka, Vodárenska, Pod lesom
+#   okrsok 2: Cintorínska, Hviezdoslavova, Kukučínova, Školská, Slnečná, Krátka, Kamenec, Družstevná, Michalská
+obec = "523852"
+name = "Spišské Bystré"
+okrsky_date = 2019-01-23
+okrsky_fill = "nearest"
+okrsky_note = "The 51 register addresses without a street are placed by fill_nearest. The document is a scan; its text is transcribed from the page image. Unlike the 2022 copy, Michalská is in okrsok 2."
+
+[[document]]
+url = "https://www.spisskebystre.sk/e_download.php?file=data/editor/361sk_1.PDF&original=Xerox%20Scan_24012019124720.PDF"
+sha256 = "ee3cb9c5148693ba8074bf588638283922a84cd36ccc775d2fa4101ff0f17328"
+title = "Oznámenie o určení volebných okrskov a volebných miestností (23.1.2019)"
+
+[[document]]
+url = "https://www.spisskebystre.sk/urad/volby-referendum/volby-referendum-archiv/volby-prezidenta-sr-1632019-a-3032019/"
+sha256 = "7d1ac27afcc2429523b7621c12f9f4efdf024538a0cd24094287d052761051cb"
+title = "Voľby prezidenta SR - 16.3.2019 a 30.3.2019"
+
+[okrsok.1]
+rules = [
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Hornádska"},
+  {street = "Jána Lačeka"},
+  {street = "Vodárenska"},
+  {street = "Pod lesom"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Hviezdoslavova"},
+  {street = "Kukučínova"},
+  {street = "Školská"},
+  {street = "Slnečná"},
+  {street = "Krátka"},
+  {street = "Kamenec"},
+  {street = "Družstevná"},
+  {street = "Michalská"},
+]

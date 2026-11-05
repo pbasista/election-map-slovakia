@@ -1,7 +1,7 @@
 /* The round buttons floating on the map: those with a small popover
- * (language; the map's layers: constituency boundaries, the 2026 turnout
- * and the base map; theme, zoom, and help with the disclaimer) and
- * Favourites, which shows the candidates circled.
+ * (language; the map's layers: constituency boundaries, the ballots' (the
+ * overview and the 2026 turnout) and the base map; theme, zoom, and help
+ * with the disclaimer) and Favourites, which shows the candidates circled.
  *
  * A popover is a non-modal dialog next to its button: opening it moves focus
  * into it; Esc, a click elsewhere or focus leaving it closes it. Only one is
@@ -11,11 +11,14 @@
  */
 
 import { html, useEffect, useRef, useState } from '../vendor/preact-htm.module.js';
+import { useLoaded } from './data.js';
 import { formatNumber, lang, languagePage, languages, polls, switchLanguage, t } from './i18n.js';
 import {
   ArrowIcon,
   BaseMapIcon,
   CheckIcon,
+  ColumnsIcon,
+  CountryIcon,
   ExpandIcon,
   GlobeIcon,
   HeartIcon,
@@ -29,12 +32,12 @@ import {
   SystemIcon,
   TurnoutIcon,
 } from './icons.js';
+import { overviewKind } from './kinds.js';
 import { useLive } from './live.js';
-import { setMapMode, useMapMode } from './mapmode.js';
+import { CONSTITUENCIES, overlaysHere } from './map.js';
+import { setMapMode, useMapMode, useTurnoutChoices } from './mapmode.js';
 import { Notice } from './pane.js';
 
-// Broadest first.
-const OVERLAYS = ['zsk', 'city', 'oz', 'okrsky'];
 // The legend of an overlay switched on: [swatch class (app.css), string].
 const OVERLAY_KEYS = {
   oz: [
@@ -293,82 +296,128 @@ const LayerCheck = ({ layer, overlays, onOverlays, children }) => {
 
 /* The map's layers, one button each in one group, each with its popover:
  *
- * - the constituency overlays, each switched on or off on its own; whichever
+ * - the constituency overlays the election has (map.js `overlaysHere`;
+ *   none, no button), each switched on or off on its own; whichever
  *   are on, the map draws each from the zoom where it reads (map.js
  *   `OVERLAYS`). The icons are in the colours their borders are drawn in.
  *   When each appears and the legend of those on are folded under them, so
  *   that the menu stays short (on a phone, on the screen);
- * - once there are 2026 results, the turnout of either election on the map
- *   (mapmode.js), the button dotted while one is shown;
+ * - the ballots: of an election with an overview (kinds.js
+ *   `overviewKind`), the overview shown or not, *overview* {open,
+ *   onToggle()}, so that it opens without a place picked first; once there
+ *   are 2026 results, the turnouts the election has on the map
+ *   (mapmode.js `useTurnoutChoices`), each switched on or off, at most one
+ *   at a time, as the map shows one mode. The button is dotted while
+ *   either is in effect;
  * - the base map: roads, railways and waters, and buildings, both on by
  *   default.
  *
  * `menu` is the open popover (app.js), `toggle(name)` its onToggle. */
-export function LayerMenus({ menu, toggle, overlays, onOverlays }) {
+export function LayerMenus({ menu, toggle, overlays, onOverlays, overview }) {
   const { status } = useLive();
   const mode = useMapMode();
+  const [here] = useLoaded(overlaysHere, []);
+  const choices = useTurnoutChoices();
   const counting = status && status.phase !== 'none';
-  const turnout = mode?.kind === 'turnout' ? mode.election : null;
-  const legend = OVERLAYS.flatMap((k) => (overlays[k] ? (OVERLAY_KEYS[k] ?? []) : []));
+  const turnouts = counting && choices?.length ? choices : null;
+  // The turnout shown, at whatever level the ballots gave it: a contest's
+  // or an election's.
+  const turnoutOf = (m) => m.contest ?? m.election;
+  const chosen = mode?.kind === 'turnout' ? turnouts?.find((c) => turnoutOf(c.mode) === turnoutOf(mode)) : null;
+  const constituencies = CONSTITUENCIES.filter((k) => here?.has(k));
+  const legend = constituencies.flatMap((k) => (overlays[k] ? (OVERLAY_KEYS[k] ?? []) : []));
+  // When each appears: in one sentence where the election has all of them.
+  const auto =
+    constituencies.length === CONSTITUENCIES.length
+      ? t('layers.auto')
+      : constituencies.map((k) => t(`layers.auto_${k}`)).join(' ');
   const layers = { overlays, onOverlays };
+  // With the overview, the menu is named by both, the turnouts' group by
+  // its own legend under the overview.
+  let ballotsTitle = t('mapmode.title');
+  if (overview) ballotsTitle = t(turnouts ? `mapmode.menu.${overviewKind}` : `overview.title.${overviewKind}`);
   return html`
     <div class="fab-group" role="group" aria-label=${t('layers.group')}>
-      <${Popover}
-        name="constituencies"
-        label=${t('layers.button')}
-        icon=${LayersIcon}
-        open=${menu === 'constituencies'}
-        onToggle=${toggle('constituencies')}
-      >
-        <${Title} name="constituencies">${t('layers.title')}<//>
-        <fieldset class="options">
-          <legend class="sr-only">${t('layers.title')}</legend>
-          ${OVERLAYS.map((k) => html`<${LayerCheck} key=${k} layer=${k} ...${layers}>${t(`layers.${k}`)}<//>`)}
-        </fieldset>
-        <details class="pop-more">
-          <summary>${t('layers.legend')}<${ExpandIcon} /></summary>
-          <p class="pop-note">${t('layers.auto')}</p>
-          ${
-            legend.length
-              ? html`
-                  <div class="notice legend" role="note">
-                    ${legend.map(([swatch, key]) => html`<p class="key"><span class=${`swatch ${swatch}`}></span>${t(key)}</p>`)}
-                  </div>
-                `
-              : null
-          }
-        </details>
-      <//>
       ${
-        counting
+        constituencies.length
+          ? html`
+              <${Popover}
+                name="constituencies"
+                label=${t('layers.button')}
+                icon=${LayersIcon}
+                open=${menu === 'constituencies'}
+                onToggle=${toggle('constituencies')}
+              >
+                <${Title} name="constituencies">${t('layers.title')}<//>
+                <fieldset class="options">
+                  <legend class="sr-only">${t('layers.title')}</legend>
+                  ${constituencies.map((k) => html`<${LayerCheck} key=${k} layer=${k} ...${layers}>${t(`layers.${k}`)}<//>`)}
+                </fieldset>
+                <details class="pop-more">
+                  <summary>${t('layers.legend')}<${ExpandIcon} /></summary>
+                  <p class="pop-note">${auto}</p>
+                  ${
+                    legend.length
+                      ? html`
+                          <div class="notice legend" role="note">
+                            ${legend.map(([swatch, key]) => html`<p class="key"><span class=${`swatch ${swatch}`}></span>${t(key)}</p>`)}
+                          </div>
+                        `
+                      : null
+                  }
+                </details>
+              <//>
+            `
+          : null
+      }
+      ${
+        overview || turnouts
           ? html`
               <${Popover}
                 name="turnout"
-                label=${t('mapmode.button', { layer: t(turnout ? `mapmode.turnout_${turnout}_option` : 'mapmode.off') })}
+                label=${overview ? ballotsTitle : t('mapmode.button', { layer: chosen ? chosen.label : t('mapmode.off') })}
                 icon=${TurnoutIcon}
-                on=${turnout !== null}
+                on=${mode?.kind === 'turnout' || overview?.open}
                 open=${menu === 'turnout'}
                 onToggle=${toggle('turnout')}
               >
-                <${Title} name="turnout">${t('mapmode.title')}<//>
-                <fieldset class="options">
-                  <legend class="sr-only">${t('mapmode.title')}</legend>
-                  ${[null, 'municipal', 'city', 'regional'].map((election) => {
-                    const Icon = TURNOUT_ICON[election];
-                    return html`
-                      <label class=${election ? `option turnout-${election}` : 'option'} key=${election ?? 'off'}>
-                        <input
-                          type="radio"
-                          name="km-turnout"
-                          checked=${election ? turnout === election : !mode}
-                          onChange=${() => setMapMode(election && { kind: 'turnout', election })}
-                        />
-                        ${Icon ? html`<${Icon} />` : html`<span class="ico" aria-hidden="true"></span>`}
-                        <span>${t(election ? `mapmode.turnout_${election}_option` : 'mapmode.off')}</span>
-                      </label>
-                    `;
-                  })}
-                </fieldset>
+                <${Title} name="turnout">${ballotsTitle}<//>
+                ${
+                  overview
+                    ? html`<div class="options">
+                        <label class="option">
+                          <input type="checkbox" checked=${overview.open} onChange=${overview.onToggle} />
+                          <${ColumnsIcon} />
+                          <span>${t(`overview.open.${overviewKind}`)}</span>
+                        </label>
+                      </div>`
+                    : null
+                }
+                ${
+                  turnouts
+                    ? html`<fieldset class=${overview ? 'options pop-group' : 'options'}>
+                        <legend class=${overview ? 'pop-title' : 'sr-only'}>${t('mapmode.title')}</legend>
+                        ${turnouts.map(({ mode: next, label }) => {
+                          const key = turnoutOf(next);
+                          // A turnout of the regular elections by the overlay
+                          // of its areas, a country-wide contest's by the
+                          // country.
+                          const Icon = next.election ? TURNOUT_ICON[next.election] : CountryIcon;
+                          return html`
+                            <label class=${`option turnout-${next.election ?? 'country'}`} key=${key}>
+                              <input
+                                type="checkbox"
+                                checked=${chosen?.mode === next}
+                                onChange=${() => setMapMode(chosen?.mode === next ? null : next)}
+                              />
+                              <${Icon} />
+                              <span>${label}</span>
+                            </label>
+                          `;
+                        })}
+                      </fieldset>`
+                    : null
+                }
               <//>
             `
           : null

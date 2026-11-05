@@ -1,0 +1,47 @@
+# Okrsky of Šarišské Michaľany, transcribed by an AI agent in job okrsok-rules-4492 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Čerešňová, Hviezdoslavova, Jarková, Komenského, Kpt. Nálepku, Melichara Zeleného, Mlynská, Požiarnická, Ružová, Sabinovská, SNP, Štúrova, Záhradná, Železničiarska
+#   okrsok 2: ulice: Družstevná, Michalská, M.R. Štefánika, Pod lesíkom, Prešovská
+obec = "525235"
+name = "Šarišské Michaľany"
+okrsky_date = 2024-01-26
+okrsky_fill = "nearest"
+okrsky_note = "Register houses without a street are placed by the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.sarisskemichalany.sk/obec-2/volby/volby-2024/?page=all"
+sha256 = "6ad03350ff9e3ef217c390c75650ced6808fdc106d60351267047a87ed39c12d"
+title = "Voľby 2024"
+
+[[document]]
+url = "https://www.sarisskemichalany.sk/modules/file_storage/download.php?file=952249d6%7C1808&inline=1"
+sha256 = "6bb3b781321844397797cbc715c25503cf54c850501c289176a2361138d6a71a"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta SR 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Čerešňová"},
+  {street = "Hviezdoslavova"},
+  {street = "Jarková"},
+  {street = "J. A. Komenského", written = "Komenského", note = "initials of the first names left out"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "M.Zeleného", written = "Melichara Zeleného"},
+  {street = "Mlynská"},
+  {street = "Požiarnická"},
+  {street = "Ružová"},
+  {street = "Sabinovská"},
+  {street = "SNP"},
+  {street = "Štúrova"},
+  {street = "Záhradná"},
+  {street = "Železničiarska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Michalská"},
+  {street = "M. R. Štefánika", written = "M.R. Štefánika"},
+  {street = "Pod Lesíkom", written = "Pod lesíkom"},
+  {street = "Prešovská"},
+]

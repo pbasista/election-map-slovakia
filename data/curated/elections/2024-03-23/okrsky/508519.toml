@@ -1,0 +1,29 @@
+# Okrsky of Čerín, transcribed by an AI agent in job okrsok-rules-4588 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Čerín
+#   okrsok 2: Čačín
+obec = "508519"
+name = "Čerín"
+okrsky_date = 2024-01-25
+okrsky_note = "Scanned letter OcU 79/2024 of the mayor dated 25.01.2024: okrsok 1 Čerín (Obecný úrad), okrsok 2 Čačín (Kultúrny dom Čačín). Date is the publication letter date."
+
+[[document]]
+url = "https://www.cerin.sk/zverejnovanie/uradna-tabula/volebne-okrsky-a-volebne-miestnosti-453.html"
+sha256 = "cc71724e3144e616e77a3070c0b124420ab716c216753df039701fe252ec4065"
+title = "Voľby prezidenta SR v roku 2024 - zverejnenie (Volebné okrsky obce Čerín) (úradná tabuľa)"
+
+[[document]]
+url = "https://www.cerin.sk/e_download.php?file=data/uredni_deska/obsah100_11.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti%20zverejnenie.pdf"
+sha256 = "88df560d82d64b46249cb5699a1707e11ec0e6d6549749d940d861ffa746c0d9"
+title = "Voľby prezidenta SR v roku 2024 - zverejnenie (Volebné okrsky obce Čerín)"
+
+[okrsok.1]
+rules = [
+  {part = "Čerín"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Čačín"},
+]

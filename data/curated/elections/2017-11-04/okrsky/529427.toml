@@ -1,0 +1,101 @@
+# The okrsky of Bratislava-Záhorská Bystrica of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/529427.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Bratislava-Záhorská Bystrica, transcribed by an AI agent in job okrsok-rules-1097 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Antona Floreka, Bratislavská, Čsl. tankistov, Gbelská, Hodonínska, Málová, Námestie sv. Petra a Pavla, Pavla Blaha, Plk. Prvoniča, Sv. Pia X., Strminová, Štefana Rosívala
+#     okrsok 2: Devínske jazero, Hargašova, Kollárova, Kučovanická, Leopoldov majer, Na Holom vrchu, Na Vlkovkách, Plavecká, Pútnická, Sekýľska, Tatranská, Tešedíkova, Vrbánska, Zákutie, Zárubov
+#     okrsok 3: Brumovická, Čerencová, Gajarská, Jána Raka, Jozefa Vachovského, Kútska, Lančárska, Lozornianska, Námestie Rodiny, Ostriežová, Plánky, Podkerepušky, Rošického, Štefana Majera, Trstínska, Záhorská, Záhumenská
+#     okrsok 4: Barancová, Bystrické sady, Čerešňový sad, Donská, Hruškový sad, Chvojnícka, Jabloňový sad, Kapsohradská, Na Krčoch, Nevská, Ota Holúska, Prídavková, Pri Vápenickom potoku, Rudavská, Slivkový sad, Strmý vŕšok
+obec = "529427"
+name = "Bratislava-Záhorská Bystrica"
+okrsky_fill = "nearest"
+okrsky_note = "Decision of the mayor (Ing. Jozef Krúpa), text layer; same okrsky as in 2019 EP and 2020 NR SR decisions. Named in the document but not in the register (left out): Zárubov, Námestie Rodiny. Not named in the document, placed by fill_nearest: Belicová, Kunovská, Ollarekova, Orešianková, Poľný mlyn, Skalníková, and addresses without a street."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-099): The live site has no 2017 elections page. The Internet Archive kept the 2017 category page Voľby do orgánov sam. krajov 2017 (2017-08-22) linking only Informácie pre voliča, which it did not archive; no okrsky document of 2017 is in the CDX of zahorskabystrica.sk or old.zahorskabystrica.sk (only a 2013 and 2014 decision). The 2019 decisions list 4 okrsky by streets but are of a later vote. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2019-03-16: 1: 1,002 → 1,044, 2: 1,030 → 1,046, 3: 993 → 1,039, 4: 1,066 → 1,209."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The mayor's decision is undated; its text names the presidential election of 16 March 2019 (second round 30 March 2019). The live page Voľba prezidenta Slovenskej republiky links it on old.zahorskabystrica.sk, now offline; it is listed as the Internet Archive copy."
+
+[[document]]
+url = "https://web.archive.org/web/20230616103738/https://old.zahorskabystrica.sk/wp-content/uploads/Rozhodnutie-o-volebn%C3%83%C2%BDch-okrskoch-prezident.pdf"
+sha256 = "426d9dc714e17a136d333b675820c75f9ac650d8c559ce60a6069737c0225cde"
+title = "Rozhodnutie starostu mestskej časti Bratislava – Záhorská Bystrica o utvorení volebných okrskov a určení volebných miestností pre voľby prezidenta Slovenskej republiky"
+
+[[document]]
+url = "https://zahorskabystrica.sk/volba-prezidenta-slovenskej-republiky/"
+sha256 = "c4c61309edc9cc834e4e13fb481a8b01da9735fa32b71761607d4cb694ff9751"
+title = "Voľba prezidenta Slovenskej republiky"
+
+[okrsok.1]
+rules = [
+  {street = "Antona Floreka"},
+  {street = "Bratislavská"},
+  {street = "Čsl. tankistov"},
+  {street = "Gbelská"},
+  {street = "Hodonínska"},
+  {street = "Málová"},
+  {street = "Námestie sv. Petra a Pavla"},
+  {street = "Pavla Blaha"},
+  {street = "Plk. Prvoniča"},
+  {street = "Sv. Pia X."},
+  {street = "Strminová"},
+  {street = "Štefana Rosívala"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Devínske jazero"},
+  {street = "Hargašova"},
+  {street = "Kollárova"},
+  {street = "Kučovanická"},
+  {street = "Leopoldov majer"},
+  {street = "Na Holom vrchu"},
+  {street = "Na Vlkovkách"},
+  {street = "Plavecká"},
+  {street = "Pútnická"},
+  {street = "Sekýľska"},
+  {street = "Tatranská"},
+  {street = "Tešedíkova"},
+  {street = "Vrbánska"},
+  {street = "Zákutie"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Brumovická"},
+  {street = "Čerencová"},
+  {street = "Gajarská"},
+  {street = "Jána Raka"},
+  {street = "Jozefa Vachovského"},
+  {street = "Vachovského", note = "register street Vachovského is not in the document; placed with Jozefa Vachovského, the same street", inferred = true},
+  {street = "Kútska"},
+  {street = "Lančárska"},
+  {street = "Lozornianska"},
+  {street = "Ostriežová"},
+  {street = "Plánky"},
+  {street = "Podkerepušky"},
+  {street = "Rošického"},
+  {street = "Štefana Majera"},
+  {street = "Trstínska"},
+  {street = "Záhorská"},
+  {street = "Záhumenská"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Barancová"},
+  {street = "Bystrické sady"},
+  {street = "Čerešňový sad"},
+  {street = "Donská"},
+  {street = "Hruškový sad"},
+  {street = "Chvojnícka"},
+  {street = "Jabloňový sad"},
+  {street = "Kapsohradská"},
+  {street = "Na Krčoch"},
+  {street = "Nevská"},
+  {street = "Ota Holúska"},
+  {street = "Prídavková"},
+  {street = "Pri Vápenickom potoku"},
+  {street = "Rudavská"},
+  {street = "Slivkový sad"},
+  {street = "Strmý vŕšok"},
+]

@@ -1,0 +1,24 @@
+# Okrsky of Veľké Lovce, transcribed by an AI agent in job okrsok-rules-4400 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Územný obvod: 0-390
+#   okrsok 2: Územný obvod: 391-856
+obec = "503631"
+name = "Veľké Lovce"
+okrsky_date = 2024-01-24
+okrsky_note = "The document gives each okrsok a range of súpisné čísla (0-390, 391-856); okrsok 2 takes all numbers from 391 up (the register has none above the document's upper bound)."
+
+[[document]]
+url = "https://www.velkelovce.sk/e_download.php?file=data/editor/146sk_3.pdf&original=Voledn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti.pdf"
+sha256 = "4ca95cfad6fd1e9c15ed719aeed73c704bf0d7ead754c74df4f0f47631ab2aca"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta SR v roku 2024 (24.1.2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Veľké Lovce", numbers = "1-390"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Veľké Lovce", numbers = "391-"},
+]

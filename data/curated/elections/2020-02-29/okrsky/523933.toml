@@ -1,0 +1,89 @@
+# The okrsky of Štrba of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/523933.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Štrba, transcribed by an AI agent in job okrsok-rules-3580 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: 29. januára, Družstevná, Hlavná, Hviezdoslavova, J. Kráľa, Mlynská, P. Z. Vrbického, Raštub, SNP, Strmá, Školská, Štepánkovická
+#     okrsok 2: 1.mája, A.Sládkoviča, Brezová, Čsl.armády, Dr.Markušovského, J.Gejdoša, Jurkovičova, Krôn, M.Benku, Liptovská, M.Janošku, Poľná, Štefánikova, Tatranská
+#     okrsok 3: Bellova, Horská, Lesná, Lúčna, Partizánska, Popradská, Pullmanova, Rekreačná, Štúrova, Železničná
+#     okrsok 4: K vodopádom, Kúpeľná, Limbová, Maše Haľamovej, Móryho, Poštová, Pri jazere, Szentiványho, Športová
+obec = "523933"
+name = "Štrba"
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky 3 and 4 are the streets of the parts Tatranská Štrba and Štrbské Pleso, so those parts' houses without a street follow them; the houses without a street in part Štrba (okrsky 1 and 2) are placed by fill_nearest."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2401): The 2020 National Council election page holds the results, voter information, delegation notice and the posters VZN; no okrsky document, live or in the Internet Archive. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 4 okrsky (nearer, not taken: 2018-11-10: okrsok 4: 716 voters then, 92 in 2018-11-10; 2022-10-29: okrsok 4: 716 voters then, 90 in 2022-10-29; 2023-01-21: okrsok 4: 716 voters then, 177 in 2023-01-21). Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2023-09-30: 1: 1,225 → 1,149, 2: 874 → 821, 3: 908 → 748, 4: 716 → 632."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document names the elections to the National Council held on 30 September 2023; it states no date of the decision."
+
+[[document]]
+url = "https://www.strba.sk/download_file_f.php?id=2444914"
+sha256 = "76cfac2bd79ccb3f905b49b7d995b73272ebc8a67ff371fd1cf635538b7a06f2"
+title = "Volebné obvody – voľby do NRSR 2023 (pre voľby do NR SR konané dňa 30. septembra 2023 vytvorila štyri volebné okrsky)"
+
+[[document]]
+url = "https://www.strba.sk/volby-do-nr-sr-2023-oznam/mid/583856/.html"
+sha256 = "40f188da7d99bfe4418a004b693da8232f66c0eb281e10e9897a0ca2bbc78134"
+title = "page of the vote"
+
+[okrsok.1]
+rules = [
+  {street = "29. januára"},
+  {street = "Družstevná"},
+  {street = "Hlavná"},
+  {street = "Hviezdoslavova"},
+  {street = "J. Kráľa"},
+  {street = "Mlynská"},
+  {street = "P. Z. Vrbického"},
+  {street = "Raštub"},
+  {street = "SNP"},
+  {street = "Strmá"},
+  {street = "Školská"},
+  {street = "Štepánkovická"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1. mája", written = "1.mája"},
+  {street = "A. Sládkoviča", written = "A.Sládkoviča"},
+  {street = "Brezová"},
+  {street = "Čsl. Armády", written = "Čsl.armády"},
+  {street = "Dr. Markušovského", written = "Dr.Markušovského"},
+  {street = "J. Gejdoša", written = "J.Gejdoša"},
+  {street = "Jurkovičova"},
+  {street = "Krôn"},
+  {street = "M. Benku", written = "M.Benku"},
+  {street = "Liptovská"},
+  {street = "M. Janošku", written = "M.Janošku"},
+  {street = "Poľná"},
+  {street = "Štefánikova"},
+  {street = "Tatranská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bellova"},
+  {street = "Horská"},
+  {street = "Lesná"},
+  {street = "Lúčna"},
+  {street = "Partizánska"},
+  {street = "Popradská"},
+  {street = "Pullmanova"},
+  {street = "Rekreačná"},
+  {street = "Štúrova"},
+  {street = "Železničná"},
+  {part = "Tatranská Štrba", note = "the houses without a street (súpisné only) in Tatranská Štrba go with its streets, okrsok 3 (polling station in Tatranská Štrba)", inferred = true},
+]
+
+[okrsok.4]
+rules = [
+  {street = "K vodopádom"},
+  {street = "Kúpeľná"},
+  {street = "Limbová"},
+  {street = "Maše Haľamovej"},
+  {street = "Móryho"},
+  {street = "Poštová"},
+  {street = "Pri jazere"},
+  {street = "Szentiványho"},
+  {street = "Športová"},
+  {part = "Štrbské Pleso", note = "the houses without a street (súpisné only) in Štrbské Pleso go with its streets, okrsok 4 (polling station on Štrbské Pleso)", inferred = true},
+]

@@ -1,0 +1,87 @@
+# Okrsky of Košice-Barca, transcribed by an AI agent in job okrsok-rules-642 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Zoznam ulíc: Abovská, Bahýľova, Berzeviczyho, Borodáčova, Bielych albatrosov, Gavlovičova, Janitorova, K letisku, Krátka, Matičná, Poničanova, Radlinského, Timravy, Zemianska, Zichyho.
+#   okrsok 2: Zoznam ulíc: Alejová, Barčianska, Cirbusovej, Červený rak, Horovova, Hraničná, Kapustná, Kostrova, Ľanová, Ovocná, Pri salaši, Svetlá, Svetlá Pusta, Teplého, Turnianska, Vozárova.
+#   okrsok 3: Zoznam ulíc: Bronzová, Cínová, Čkalovova, Fándlyho, Hečkova, Chrómová, Kubíková, Medená, Močiarna, Mosadzná, Námestie ml. poľnohospodárov, Niklová, Osloboditeľov, Platinová, Podnikateľská, Pokojná, Pri pošte, Pri vagovni, Pri železničnej stanici, Rusnákova, Strieborná, Tešedíkova, Titánová, Za školou, Zborovjanova, Zinková.
+#   okrsok 4: Zoznam ulíc: Andraščíkova
+obec = "599093"
+name = "Košice-Barca"
+okrsky_date = 2018-09-05
+okrsky_fill = "nearest"
+okrsky_note = "Streets the document names but the register lacks (left out): Bahýľova, Bielych albatrosov, K letisku (okrsok 1), Alejová (okrsok 2). Okrsok 4 is Andraščíkova (Via Lux social-services home). The register's Ulica Andreja Kvasa is not in the document; it and the addresses without a street are placed by fill_nearest. Unlike later votes, Borodáčova is in okrsok 1."
+
+[[document]]
+url = "https://web.archive.org/web/20191112004524/http://barca.sk/images/subory/ine/Urenie%20volebnch%20okrskov.pdf"
+sha256 = "4fbdb70cc99d89ab59dabc19f09d98494155c6aaee06ed5d8c6f87588e633a2a"
+title = "Oznámenie – utvorenie 4 volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí 10.11.2018"
+
+[okrsok.1]
+rules = [
+  {street = "Abovská"},
+  {street = "Berzeviczyho"},
+  {street = "Borodáčova"},
+  {street = "Gavlovičova"},
+  {street = "Janitorova"},
+  {street = "Krátka"},
+  {street = "Matičná"},
+  {street = "Poničanova"},
+  {street = "Radlinského"},
+  {street = "Timravy"},
+  {street = "Zemianska"},
+  {street = "Zichyho"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Barčianska"},
+  {street = "Cirbusovej"},
+  {street = "Červený Rak", written = "Červený rak"},
+  {street = "Horovova"},
+  {street = "Hraničná"},
+  {street = "Kapustná"},
+  {street = "Kostrova"},
+  {street = "Ľanová"},
+  {street = "Ovocná"},
+  {street = "Pri Salaši", written = "Pri salaši"},
+  {street = "Svetlá"},
+  {street = "Svetlá Pusta"},
+  {street = "Teplého"},
+  {street = "Turnianska"},
+  {street = "Vozárova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bronzová"},
+  {street = "Cínová"},
+  {street = "Čkalovova"},
+  {street = "Fándlyho"},
+  {street = "Hečkova"},
+  {street = "Chrómová"},
+  {street = "Kubíková"},
+  {street = "Medená"},
+  {street = "Močiarna"},
+  {street = "Mosadzná"},
+  {street = "Námestie mladých poľnohospodárov", written = "Námestie ml. poľnohospodárov"},
+  {street = "Niklová"},
+  {street = "Osloboditeľov"},
+  {street = "Platinová"},
+  {street = "Podnikateľská"},
+  {street = "Pokojná"},
+  {street = "Pri Pošte", written = "Pri pošte"},
+  {street = "Pri Vagovni", written = "Pri vagovni"},
+  {street = "Pri železničnej stanici"},
+  {street = "Rusnákova"},
+  {street = "Strieborná"},
+  {street = "Tešedíkova"},
+  {street = "Titánová"},
+  {street = "Za školou"},
+  {street = "Zborovjanova"},
+  {street = "Zinková"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Andraščíkova"},
+]

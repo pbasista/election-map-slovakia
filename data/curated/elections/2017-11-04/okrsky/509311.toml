@@ -1,0 +1,33 @@
+# The okrsky of Nová Bystrica of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/509311.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Nová Bystrica, transcribed by an AI agent in job okrsok-rules-701 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Okrsok č. 1 – „Nová Bystrica“
+#     okrsok 2: Okrsok č. 2 – „Vychylovka“
+obec = "509311"
+name = "Nová Bystrica"
+okrsky_date = 2018-08-15
+okrsky_note = "Okrsok č. 1 – 'Nová Bystrica' and Okrsok č. 2 – 'Vychylovka' are the parts of those names; Riečnica (1 address) is placed in okrsok 1 (inferred)."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-253): The 2017 regional-elections page lists only the candidate lists; no okrsky document or text. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2018-11-10: 1: 1,591 → 1,511, 2: 774 → 694."
+
+[[document]]
+url = "https://www.novabystrica.sk/sk/informacie-ou/1264-oznamenie-o-urceni-poctu-poslancov-utvoreni-volebneho-obvodu-a-volebnych-okrskov"
+sha256 = "e35178704dc5e8f9657e49642d9d901709aeb93d89c0a2abb1aecf0c84df7c05"
+title = "Oznámenie o určení počtu poslancov, utvorení volebného obvodu a volebných okrskov (uznesenie OZ č. 6/2018 zo dňa 15.08.2018)"
+
+[[document]]
+url = "https://www.novabystrica.sk/images/stories/2018/volby/Uznesenie.pdf"
+sha256 = "38f5bc20f25e1e1f8a5e1ec719acb26a316fb45882b9a506dbdb1e0ede4905d3"
+title = "Uznesenie č. 6/2018 zo dňa 15.08.2018"
+
+[okrsok.1]
+rules = [
+  {part = "Nová Bystrica"},
+  {part = "Riečnica", note = "part not named in the document (1 address); placed with Nová Bystrica, on whose side its k.ú. lies", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vychylovka"},
+]

@@ -1,0 +1,73 @@
+# The okrsky of Bánov of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/503045.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Bánov, transcribed by an AI agent in job okrsok-rules-3557 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Bernolákova, Gen. Svobodu, Hviezdoslavova, J. G. Tajovského, J. Jesenského, Janka Kráľa, Kukučínova, Novozámocká, Školská, Štefánikova, Štúrova, Cintorínska
+#     okrsok 2: 1. mája, 9. mája, Červenej armády, Čsľ. Armády, Malinovského, Mlynská, Obrancov mieru, Pod hájom, Poľná, Pri kaštieli, Slovenská, Slov. Nár. Povstania, Šurianska
+#     okrsok 3: B. Němcovej, Bottova, Dolinská, Hlavná, Jastrabia, Jozefa Hralu, J. Fučíka, J.Palárika, Kpt. Nálepku, Nová, Pod Remízkou, Rázusova, Richtárska, Sládkovičova, Tichá, T. Vansovej, Viničná
+obec = "503045"
+name = "Bánov"
+okrsky_fill = "nearest"
+okrsky_note = "The document also names Dolinská, which the address register lacks; left out. fill_nearest covers the 81 addresses without a street (numbered by súpisné číslo only), which the document does not place."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2022-10-29 setting the okrsky was found (okrsok-rules-730): No 2022 elections okrsky document is left: the 2022 elections articles are deleted (the candidates article 404s; the remaining 'Komunálne voľby 2022' article has only results and says three okrsky in one obvod), the site's surviving attachments of July–September 2022 (evt_file ids 21500–22100 probed) include no okrsky notice, and the Internet Archive has no capture of the site between April 2022 and mid-2023. The referendum's document (evt_file 22857, 10. novembra 2022) has only 2 okrsky (streets split 1/2), so it does not match the 3 okrsky of 2022. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 3 okrsky (nearer, not taken: 2023-01-21: okrsky 1, 2, then 1–3). Voters on the roll per okrsok (ŠÚ SR), 2022-10-29 → 2023-09-30: 1: 1,019 → 910, 2: 1,056 → 1,020, 3: 958 → 925."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document is undated; its heading names the elections to the National Council of 30 September 2023. It is attached to the page \"Parlamentné voľby 2023\" (https://www.banov.sk/pre-obcanov/aktuality/spravodajstvo/parlamentne-volby-2023-2763sk.html), whose earliest Internet Archive capture (2023-10-01) is after the vote."
+
+[[document]]
+url = "https://www.banov.sk/evt_file.php?file=23870"
+sha256 = "8bd990d7b40e935a476bde24095bcc2940e51f8f6d91d43553111e348cf5e593"
+title = "Volebné okrsky na voľby do Národnej rady Slovenskej republiky, konaných dňa 30. septembra 2023 v Bánove"
+
+[okrsok.1]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Gen. Svobodu"},
+  {street = "Hviezdoslavova"},
+  {street = "J. G. Tajovského"},
+  {street = "J. Jesenského"},
+  {street = "Janka Kráľa"},
+  {street = "Kukučínova"},
+  {street = "Novozámocká"},
+  {street = "Školská"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Cintorínska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája", written = "1. mája", note = "the document writes a space after \"1.\"; same street"},
+  {street = "9.mája", written = "9. mája", note = "the document writes a space after \"9.\"; same street"},
+  {street = "Červenej armády"},
+  {street = "Čsľ. armády", written = "Čsľ. Armády"},
+  {street = "Malinovského"},
+  {street = "Mlynská"},
+  {street = "Obrancov mieru"},
+  {street = "Pod hájom"},
+  {street = "Poľná"},
+  {street = "Pri kaštieli"},
+  {street = "Slovenská"},
+  {street = "Slov. Nár. Povstania"},
+  {street = "Šurianska"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "B. Němcovej"},
+  {street = "Bottova"},
+  {street = "Hlavná"},
+  {street = "Jastrabia"},
+  {street = "Jozefa Hralu"},
+  {street = "J. Fučíka"},
+  {street = "Jána Palárika", written = "J.Palárika"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku", note = "the document writes a space after the abbreviation \"Kpt.\"; same street"},
+  {street = "Nová ulica", written = "Nová"},
+  {street = "Pod Remízkou"},
+  {street = "Rázusova"},
+  {street = "Richtárska"},
+  {street = "Sládkovičova"},
+  {street = "Tichá"},
+  {street = "T. Vansovej"},
+  {street = "Viničná"},
+]

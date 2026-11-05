@@ -1,0 +1,67 @@
+# Okrsky of Heľpa, transcribed by an AI agent in job okrsok-rules-3679 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Furtačka, Hlavná, Hronská, Mládežnícka, Poľná, Potočná, Rovná, Sama Chalúpku, Strmá, Tichá, Záhradná
+#   okrsok 2: ulice: Cintorínska, Farská, Krížna, Mlynská, Partizánska, Školská, Štúrova, Za školou
+#   okrsok 3: ulice: Alexyho, Burkovaná, Čaneckého, Furmanská, Hurbanova, Hviezdoslavova, J.C. Hronského, Jánošíkova, Krátka, Mierová, Murgašova, Plickova, Pod Pustinou, Pri štadióne, Studničná
+obec = "508608"
+name = "Heľpa"
+okrsky_date = 2023-06-26
+okrsky_fill = "nearest"
+okrsky_note = "The document lists streets only; the 83 addresses without a street (by súpisné číslo) take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.helpa.sk/e_download.php?file=data/editor/379sk_3.pdf&original=oznam_o_vytvoreni_okrskov.pdf"
+sha256 = "73ead1ff278e688d1a281dbb72edab4f9e3e392b7a801c44309daff157ad2db9"
+title = "Oznam o vytvorení okrskov v obci Heľpa na vykonanie volieb do NR SR 30.9.2023"
+
+[[document]]
+url = "https://www.helpa.sk/zverejnovanie/volby-a-statistika/volby-do-nr-sr-2023/informacie/"
+sha256 = "4c2f80501ff586450210e130d83656479bcf5d0e428293a923faec75f5c22451"
+title = "Voľby do NR SR 2023 – Informácie"
+
+[okrsok.1]
+rules = [
+  {street = "Furtačka"},
+  {street = "Hlavná"},
+  {street = "Hronská"},
+  {street = "Mládežnícka"},
+  {street = "Poľná"},
+  {street = "Potočná"},
+  {street = "Rovná"},
+  {street = "Sama Chalúpku"},
+  {street = "Strmá"},
+  {street = "Tichá"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Farská"},
+  {street = "Krížna"},
+  {street = "Mlynská"},
+  {street = "Partizánska"},
+  {street = "Školská"},
+  {street = "Štúrova"},
+  {street = "Za školou"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Alexyho"},
+  {street = "Burkovaná"},
+  {street = "Čaneckého"},
+  {street = "Furmanská"},
+  {street = "Hurbanova"},
+  {street = "Hviezdoslavova"},
+  {street = "J. C. Hronského", written = "J.C. Hronského"},
+  {street = "Jánošíkova"},
+  {street = "Krátka"},
+  {street = "Mierová"},
+  {street = "Murgašova"},
+  {street = "Plickova"},
+  {street = "Pod Pustinou"},
+  {street = "Pri štadióne"},
+  {street = "Studničná"},
+]

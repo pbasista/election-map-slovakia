@@ -1,0 +1,30 @@
+# Okrsky of Somotor, transcribed by an AI agent in job okrsok-rules-3891 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č.1 zahŕňa voličov z časti obce Somotor a voličov, ktorým bol zrušený trvalý pobyt
+#   okrsok 2: Okrsok č.2 zahŕňa voličov z časti obce Véč
+#   okrsok 3: Okrsok č.3 zahŕňa voličov z časti obce Nová Vieska pri Bodrogu
+obec = "543772"
+name = "Somotor"
+okrsky_date = 2023-06-13
+okrsky_note = "The decision names for each okrsok the part of the municipality whose voters it takes (document on obec.dobraobec.sk/files/128, the municipality's CMS, linked from this page)."
+
+[[document]]
+url = "https://obecsomotor.sk/dokumenty?kat=1850"
+sha256 = "6c4fba123e13c4c25608a2b0f61676cc0611194b733d18cb11180196a7773f4a"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do NR SR v roku 2023 (V Somotore dňa 13.6.2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Somotor"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Véč"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Nová Vieska pri Bodrogu"},
+]

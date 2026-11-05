@@ -1,0 +1,28 @@
+# The okrsky of Seňa of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/521973.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Seňa, transcribed by an AI agent in job okrsok-rules-1462 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: od čísla domov: 0 -300
+#     okrsok 2: od čísla domov: 301 - 654
+obec = "521973"
+name = "Seňa"
+okrsky_date = 2019-01-28
+okrsky_fill = "nearest"
+okrsky_note = "The document splits Seňa by house (súpisné) numbers 0–300 and 301–654; addresses above 654 take the okrsok of the nearest address."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2658): The 2020 elections page (archived 2021-11-28) links no okrsky document; none found live or in the Internet Archive. Seňa has one part and no streets; okrsky can be drawn only from house-number ranges, which only the documents of the 2019 presidential election and the 2024 EP election give. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2019-03-16: 1: 855 → 828, 2: 825 → 875."
+
+[[document]]
+url = "https://web.archive.org/web/20240223173108/https://www.obecsena.sk/data/page/sena.sk/2786/vytvorenie-okrskov.pdf"
+sha256 = "c18bbd5c94298f9f972bc3dae3e5e59b0e10d77701d18afdb387249b3a8f0327"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností (voľby prezidenta SR 16. a 30. marca 2019)"
+
+[okrsok.1]
+rules = [
+  {part = "Seňa", numbers = "1-300", note = "The document's range 0–300; house numbers start at 1."},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Seňa", numbers = "301-654"},
+]

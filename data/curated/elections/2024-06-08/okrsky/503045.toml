@@ -1,0 +1,64 @@
+# Okrsky of Bánov, transcribed by an AI agent in job okrsok-rules-4812 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bernolákova, Gen. Svobodu, Hviezdoslavova, J. G. Tajovského, J. Jesenského, Janka Kráľa, Kukučínova, Novozámocká, Školská, Štefánikova, Štúrova, Cintorínska, B. Němcovej, Bottova, Dolinská, Hlavná, Jastrabia, Jozefa Hralu, J. Palárika, Nová, Pod Remízkou, Rázusova, Richtárska, Sládkovičova, Tichá, T. Vansovej, Viničná
+#   okrsok 2: 1. mája, 9. mája, Červenej armády, Čsľ. Armády, Malinovského, Mlynská, Obrancov mieru, Pod hájom, Poľná, Pri kaštieli, Slovenská, Slov. Nár. Povstania, Šurianska, J. Fučíka, Kpt. Nálepku, Kvetná
+obec = "503045"
+name = "Bánov"
+okrsky_date = 2024-02-29
+okrsky_fill = "nearest"
+okrsky_note = "Linked from the page \"Voľby do Európskeho parlamentu 2024\" (archived 2024-05-28). The document also names Dolinská and Kvetná, which the address register lacks; left out. fill_nearest covers the 81 addresses without a street (numbered by súpisné číslo only), which the document does not place."
+
+[[document]]
+url = "https://www.banov.sk/evt_file.php?file=26114"
+sha256 = "f5ce0d30a0b2f4f3507e6fb952ad3f1f2cda2834cdbd950a1e1ee002f0557217"
+title = "Volebné okrsky a miestnosti určené pre voľby do Európskeho parlamentu, ktoré sa budú konať dňa 08. júna 2024 na území obce Bánov"
+
+[okrsok.1]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Gen. Svobodu"},
+  {street = "Hviezdoslavova"},
+  {street = "J. G. Tajovského"},
+  {street = "J. Jesenského"},
+  {street = "Janka Kráľa"},
+  {street = "Kukučínova"},
+  {street = "Novozámocká"},
+  {street = "Školská"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Cintorínska"},
+  {street = "B. Němcovej"},
+  {street = "Bottova"},
+  {street = "Hlavná"},
+  {street = "Jastrabia"},
+  {street = "Jozefa Hralu"},
+  {street = "Jána Palárika", written = "J. Palárika"},
+  {street = "Nová ulica", written = "Nová"},
+  {street = "Pod Remízkou"},
+  {street = "Rázusova"},
+  {street = "Richtárska"},
+  {street = "Sládkovičova"},
+  {street = "Tichá"},
+  {street = "T. Vansovej"},
+  {street = "Viničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája", written = "1. mája", note = "the document writes a space after \"1.\"; same street"},
+  {street = "9.mája", written = "9. mája", note = "the document writes a space after \"9.\"; same street"},
+  {street = "Červenej armády"},
+  {street = "Čsľ. armády", written = "Čsľ. Armády"},
+  {street = "Malinovského"},
+  {street = "Mlynská"},
+  {street = "Obrancov mieru"},
+  {street = "Pod hájom"},
+  {street = "Poľná"},
+  {street = "Pri kaštieli"},
+  {street = "Slovenská"},
+  {street = "Slov. Nár. Povstania"},
+  {street = "Šurianska"},
+  {street = "J. Fučíka"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku", note = "the document writes a space after the abbreviation \"Kpt.\"; same street"},
+]

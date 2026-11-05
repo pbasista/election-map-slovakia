@@ -1,0 +1,34 @@
+# Council obvody of Oborín (528633), Michalovce.
+# Transcribed by an AI agent in job obvod-rules-204 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: obec Oborín
+#   obvod 2: časť obce Kucany
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/528633.toml, standing in.
+obec = "528633"
+name = "Oborín"
+date = 2018-06-20
+note = "Scanned announcement. Obvod 1 'obec Oborín' is read as the part Oborín (obvod 2 is the other part, Kucany)."
+okrsky_date = 2022-06-24
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-5920): The website is unreachable today (connection refused). As archived in 2019, its 2018 elections page lists only the population notice, the obvod announcement (obvod 1 'obec Oborín', obvod 2 'časť obce Kucany'; it names no okrsky), the e-mail address for delegations, the commission clerk and the candidate lists; no 'utvorenie volebných okrskov' for 10 November 2018 is there or on the archived notice board and documents pages, so which okrsok number covers which part is not documented for 2018. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://www.oborin.sk/files/2018-08-17-084243-Ozn__menie_o_ur__en___po__tu_poslancov_a_o_utvoren___volebn__ch_obvod.pdf"
+sha256 = "4599991022ee1e19408f2e581655b415dfd77f4d864498dac80ee55db7ded076"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 10. novembra 2018 (uznesenie č. 234/2018 zo dňa 20.06.2018)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Oborín", note = "'obec Oborín' besides the part Kucany in obvod 2: the part Oborín"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Kucany"},
+]

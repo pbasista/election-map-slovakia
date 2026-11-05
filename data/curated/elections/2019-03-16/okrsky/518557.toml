@@ -1,0 +1,146 @@
+# Okrsky of Krupina, transcribed by an AI agent in job okrsok-rules-1071 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 29. augusta, Bernolákova, Bočkayho nám., Čsl. armády, E. M. Šoltésovej, Ficberg, Gliarska, Gubáň, Hajdúsky rad, J. C. Hronského, J. G. Tajovského, J. Špitzera, J. Vacholda, Kmeťova, Koháryho rad, Krupina – mesto, Kuzmányho, Nám. SNP, Obchodná, Partizánska, Poloma, Sládkovičova, Stará Hora, Starohorská cesta, Starý Háj, Svätotrojičné nám., Šváb, Tepličky, Tvoľ, Vajsov, Vĺčok, Zvolenská cesta
+#   okrsok 2: Bebrava, Bebravská, Čierne Blato, Fraňa Kráľa, Havran, Hviezdoslavova, J. Mikulku, Kalinčiakova, Líška, Molkňa, Peter, Pijavice, Šibeničná, Školská, Záhradná, Žobrák
+#   okrsok 3: M. R. Štefánika, Malinovského
+#   okrsok 4: Majerský rad
+#   okrsok 5: Dráhy, Holý Vrch, Horná, I. Krasku, J. Bottu, Jilemnického, Kamenný kríž, Kňazova dolina, Kopanice, Krupinica, Kukučka, Lipová, Nad mestom, Nová, Nová Hora, Odrobinovo Pole, Palánkova, Plavárenská, Pribinova, Prostredná, S. Hruškovica, Saská, Slnečná, Široké lúky, Vinohradnícka, Za Baštou
+#   okrsok 6: Biely Kameň, Briač, Červená Hora, Dionýza Štúra, Hozník, Husársky most, Jesenského, Mlynská, Nad Kotlom, Okrúhla Hora, Osloboditeľov, Priemyselná, Rudolfa Geschwinda, Sencovka, Tanistravár, Tehelná, Železničná
+obec = "518557"
+name = "Krupina"
+okrsky_date = 2019-01-24
+okrsky_supplemented = 2022-11-09
+okrsky_supplemented_from = "document"
+okrsky_supplement_basis = "This document predates the new streets Agátová ulica, Gaštanová ulica and Ulica P. M. Hnilicu (new housing next to Malinovského / M. R. Štefánika), which it does not list; the city's document of 2022-11-09 lists them in okrsok 3 with M. R. Štefánika and Malinovského, so they are placed there. (https://krupina.sk/data/web_files/2022/11/9380.pdf)"
+
+[[document]]
+url = "https://krupina.sk/data/web_files/2019/1/4868.pdf"
+sha256 = "77ceaa1de54322a7c66abea1e5cb81e7d942c0d6ab2f39901e36133664ddaa2a"
+title = "Určenie volebných miestností a okrskov (voľby prezidenta SR 2019)"
+
+[[document]]
+url = "https://krupina.sk/data/web_files/2022/11/9380.pdf"
+sha256 = "8a0e8159503e54072044b9eb5bb5ae601b88d2acbad57aa61d7c91200be80d6f"
+title = "Určenie volebných miestností a okrskov pre referendum (21. 1. 2023)"
+
+[okrsok.1]
+rules = [
+  {street = "29. augusta"},
+  {street = "Bernolákova"},
+  {street = "Bočkayho nám."},
+  {street = "Čsl.armády", written = "Čsl. armády"},
+  {street = "E. M. Šoltésovej"},
+  {street = "Ficberg"},
+  {street = "Gliarska"},
+  {street = "Gubáň"},
+  {street = "Hajdúsky rad"},
+  {street = "J. C. Hronského"},
+  {street = "J. G. Tajovského"},
+  {street = "J. Špitzera"},
+  {street = "J. Vacholda"},
+  {street = "Kmeťova"},
+  {street = "Koháryho rad"},
+  {part = "Krupina", note = "'Krupina – mesto': the addresses without a street (part Krupina rule; streets have their own rules)"},
+  {street = "Kuzmányho"},
+  {street = "Nám.SNP", written = "Nám. SNP"},
+  {street = "Obchodná"},
+  {street = "Partizánska"},
+  {street = "Poloma"},
+  {street = "Sládkovičova"},
+  {street = "Stará Hora"},
+  {street = "Starohorská cesta"},
+  {street = "Starý Háj"},
+  {street = "Svätotrojičné nám."},
+  {street = "Šváb"},
+  {street = "Tepličky"},
+  {street = "Tvoľ"},
+  {street = "Vajsov"},
+  {street = "Vĺčok"},
+  {street = "Zvolenská cesta"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bebrava"},
+  {street = "Bebravská"},
+  {street = "Čierne Blato"},
+  {street = "Fraňa Kráľa"},
+  {street = "Havran"},
+  {street = "Hviezdoslavova"},
+  {street = "J. Mikulku"},
+  {street = "Kalinčiakova"},
+  {street = "Líška"},
+  {street = "Molkňa"},
+  {street = "Peter"},
+  {street = "Pijavice"},
+  {street = "Šibeničná"},
+  {street = "Školská"},
+  {street = "Záhradná"},
+  {street = "Žobrák"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "M. R. Štefánika"},
+  {street = "Malinovského"},
+  {street = "Agátová ulica", supplemented = true},
+  {street = "Gaštanová ulica", supplemented = true},
+  {street = "Ulica P. M. Hnilicu", supplemented = true},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Majerský rad"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Dráhy"},
+  {street = "Holý Vrch"},
+  {street = "Horná"},
+  {street = "I. Krasku"},
+  {street = "J. Bottu"},
+  {street = "Jilemnického"},
+  {street = "Kamenný kríž"},
+  {street = "Kňazova dolina"},
+  {street = "Kopanice"},
+  {street = "Krupinica"},
+  {street = "Kukučka"},
+  {street = "Lipová"},
+  {street = "Nad mestom"},
+  {street = "Nová"},
+  {street = "Nová Hora"},
+  {street = "Odrobinovo pole", written = "Odrobinovo Pole", note = "only the capitalisation differs from the register's name"},
+  {street = "Palánkova"},
+  {street = "Plavárenská"},
+  {street = "Pribinova"},
+  {street = "Prostredná"},
+  {street = "S. Hruškovica"},
+  {street = "Saská"},
+  {street = "Slnečná"},
+  {street = "Široké Lúky", written = "Široké lúky", note = "only the capitalisation differs from the register's name"},
+  {street = "Vinohradnícka"},
+  {street = "Za Baštou"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Biely Kameň"},
+  {street = "Briač"},
+  {street = "Červená Hora"},
+  {street = "Dionýza Štúra"},
+  {street = "Hozník"},
+  {street = "Husársky most"},
+  {street = "Jesenského"},
+  {street = "Mlynská"},
+  {street = "Nad Kotlom"},
+  {street = "Okrúhla Hora"},
+  {street = "Osloboditeľov"},
+  {street = "Priemyselná"},
+  {street = "Rudolfa Geschwinda"},
+  {street = "Sencovka"},
+  {street = "Tanistravár"},
+  {street = "Tehelná"},
+  {street = "Železničná"},
+]

@@ -1,0 +1,31 @@
+# Okrsky of Dubník, transcribed by an AI agent in job okrsok-rules-5615 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volebná miestnosť v budove ZŠ Dubník Sídlo: Dubník 93
+#   okrsok 2: volebná miestnosť v administratívnej budove - mechanizačného strediska firmy Agrocontract Mikuláš a.s Sídlo: Dvor Mikuláš 904
+obec = "503169"
+name = "Dubník"
+okrsky_fill = "nearest"
+okrsky_note = "Addresses without a rule (if any) take the nearest placed address (fill_nearest)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the document's heading names the referendum of 4 July 2026; it is undated"
+
+[[document]]
+url = "https://www.obec-dubnik.sk/e_download.php?file=/data/multipage/editor/editor-18-93-sk_4.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Den%C3%AD%20volebn%C3%BDch%20miestnost%C3%AD%20-%20Referendum%202026.pdf"
+sha256 = "e8a61ce5d668ac6d7faf86883da714d1ff2417911b4db49312554d0138ce4ad8"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností - Referendum 2026"
+
+[[document]]
+url = "https://www.obec-dubnik.sk/obecny-urad/volby-referendum/referendum-2026/"
+sha256 = "67a67535d82a4b73faafb5b82bd6355bb845313e82fc2dc5f993dc4a1a634e07"
+title = "page linking the document"
+
+[okrsok.1]
+rules = [
+  {part = "Dubník", note = "The document gives each okrsok only its polling station; the okrsky are as many as the parts and the stations lie in different parts (ZŠ Dubník 93 in Dubník, Agrocontract Dvor Mikuláš in Dvor Mikuláš), so each okrsok is given the part of its station.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dvor Mikuláš", note = "The document gives each okrsok only its polling station; the okrsky are as many as the parts and the stations lie in different parts (ZŠ Dubník 93 in Dubník, Agrocontract Dvor Mikuláš in Dvor Mikuláš), so each okrsok is given the part of its station.", inferred = true},
+]

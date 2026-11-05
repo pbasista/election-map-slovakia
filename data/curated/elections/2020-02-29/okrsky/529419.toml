@@ -1,0 +1,80 @@
+# The okrsky of Bratislava-Lamač of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/529419.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Bratislava-Lamač, transcribed by an AI agent in job okrsok-rules-1868 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Ulice: Bakošova 1 - 36, Na barine
+#     okrsok 2: Ulice: Borinská, Cesta na Klanec, Malokarpatské námestie, Podháj, Segnáre, Stanekova, Vrančovičova
+#     okrsok 3: Ulice: Havelkova, Heyrovského, Podlesná
+#     okrsok 4: Ulice: Furmanská, Hodonínska, Kunerádska, Lediny, Pod násypom, Povoznícka, Skerličova, Studenohorská 1-24, Zlatohorská
+#     okrsok 5: Ulice: Studenohorská 25-71
+#     okrsok 6: Ulice: Bakošova 38-46, Lamačská cesta, Pod Zečákom, Rácova, Rajtákova, Rozálska, Studenohorská 72-91, Vysokohorská, Záhrady, Zelenohorská, Zhorínska, Zidiny
+obec = "529419"
+name = "Bratislava-Lamač"
+okrsky_date = 2019-02-22
+okrsky_fill = "nearest"
+okrsky_note = "Register streets the document does not name, placed by fill_nearest: Hany Ponickej, Pridánky, Ulica Milana Šimečku, Vysoká Hora; likewise house numbers outside the listed ranges and the addresses without a street."
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2457): The live ZIP volby_nrsr_2020.zip on the district's 'Parlamentné voľby' page contains 02_Oznámenie_o_určení_volebných_okrskov.pdf: a bare list of 6 okrsky (as in 2019 plus Hany Ponickej in okrsok 2, Kunerádska in 4, Studenohorská 72-91 in 6) without heading, date, signature or naming of the vote; the ZIP entry is dated 2023-10-02 and the Internet Archive has no capture of the old site's 2020 elections pages or of this file before 29 February 2020. Under the dating rules (no stated date, no pre-vote capture or posting, the document does not name the vote) it cannot be dated, so reported not_found. These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 6 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2019-05-25: 1: 1,127 → 1,053, 2: 1,057 → 946, 3: 1,018 → 988, 4: 1,048 → 1,066, 5: 1,016 → 1,034, 6: 962 → 972."
+
+[[document]]
+url = "https://www.lamac.sk/files/documents/zverejnovanie/volby/eu/eu-volby-2019.zip"
+sha256 = "c5b5a499f3cd139c70b2f88f5bd81530c81bb48d07f9132aa10c46692bcc387a"
+title = "EU voľby 2019 (ZIP): určenie volebných okrskov 2019 - EP.pdf – Určenie volebných okrskov, času a miesta konania volieb do Európskeho parlamentu v roku 2019"
+
+[okrsok.1]
+rules = [
+  {street = "Bakošova", numbers = "1-36"},
+  {street = "Na barine"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Borinská"},
+  {street = "Cesta na Klanec"},
+  {street = "Malokarpatské námestie"},
+  {street = "Podháj"},
+  {street = "Segnáre"},
+  {street = "Stanekova"},
+  {street = "Vrančovičova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Havelkova"},
+  {street = "Heyrovského"},
+  {street = "Podlesná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Furmanská"},
+  {street = "Hodonínska"},
+  {street = "Kuneradská", written = "Kunerádska", note = "the document writes Kunerádska with a misplaced accent; the register street Kuneradská (written so in the later documents)"},
+  {street = "Lediny"},
+  {street = "Pod násypom"},
+  {street = "Povoznícka"},
+  {street = "Skerličova"},
+  {street = "Studenohorská", numbers = "1-24"},
+  {street = "Zlatohorská"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Studenohorská", numbers = "25-71"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bakošova", numbers = "38-46"},
+  {street = "Lamačská cesta"},
+  {street = "Pod Zečákom"},
+  {street = "Rácova"},
+  {street = "Rajtákova"},
+  {street = "Rozálska"},
+  {street = "Studenohorská", numbers = "72-91"},
+  {street = "Vysokohorská"},
+  {street = "Záhrady"},
+  {street = "Zelenohorská"},
+  {street = "Zhorínska"},
+  {street = "Zidiny"},
+]

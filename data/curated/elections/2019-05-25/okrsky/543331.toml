@@ -1,0 +1,54 @@
+# The okrsky of Markušovce of the vote of 2020-02-29, data/curated/elections/2020-02-29/okrsky/543331.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Markušovce, transcribed by an AI agent in job okrsok-rules-2645 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Jareček
+#     okrsok 2: Banícka, Brezová, Krátka, Matejovská cesta, Pod horou, Pod Stožkami, Poľná, Slovenská, sv.J.Nepomuckého, or. č. 50 – 125, Za tehelňou, Železničná, rodinný dom súp. č. 668
+#     okrsok 3: Brunské, Bystrá, Hornádska, Komenského, Michalská, Odorínska cesta, Podhradová, SNP, Sv.J.Nepomuckého, or.č. 1 – 49, Školská; voliči s trvalým pobytom Markušovce (bez ulice, súpisného a orientačného čísla)
+obec = "543331"
+name = "Markušovce"
+okrsky_date = 2019-11-20
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 20.11.2019 (okrsok 2 'Ulice: súp.č. 668' first). Voters registered without an address are in okrsok 3 (no rule). Houses without a street other than súp. č. 668, and Sv. J. Nepomuckého numbers above 125, take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2020-02-29
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-2039): The website's elections section has pages only for NR SR 2020/2023, municipal 2018/2022, prezident 2024 and EP 2024; the EP section has no 2019 page or file. The Internet Archive was unreachable when checked. These are the okrsky of the vote of 2020-02-29 (2020-nrsr), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2020-02-29: 1: 1,067 → 1,097, 2: 821 → 801, 3: 905 → 908."
+
+[[document]]
+url = "https://www.markusovce.sk/data/page/markusovce.sk/17241/utvorenie-volebnych-okrskov-vr.pdf"
+sha256 = "60f8b2e2e7a5aacb7bfa3f4862394454ed16b39106caa642cdcde95fa9f8f802"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do NR SR 29. 2. 2020 (20.11.2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Jareček"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Banícka"},
+  {street = "Brezová"},
+  {street = "Krátka"},
+  {street = "Matejovská cesta"},
+  {street = "Pod Horou", written = "Pod horou"},
+  {street = "Pod Stožkami"},
+  {street = "Poľná"},
+  {street = "Slovenská"},
+  {street = "Sv.J.Nepomuckého", numbers = "50-125", written = "sv.J.Nepomuckého"},
+  {street = "Za Tehelňou", written = "Za tehelňou"},
+  {street = "Železničná"},
+  {part = "Markušovce", numbers = "668", note = "'rodinný dom súp. č. 668', a house without a street."},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Brunské"},
+  {street = "Bystrá"},
+  {street = "Hornádska"},
+  {street = "Komenského"},
+  {street = "Michalská"},
+  {street = "Odorínska cesta"},
+  {street = "Podhradová"},
+  {street = "SNP"},
+  {street = "Sv.J.Nepomuckého", numbers = "1-49", written = "sv.J.Nepomuckého"},
+  {street = "Školská"},
+]

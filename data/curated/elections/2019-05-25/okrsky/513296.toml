@@ -1,0 +1,60 @@
+# The okrsky of Ladce of the vote of 2020-02-29, data/curated/elections/2020-02-29/okrsky/513296.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Ladce, transcribed by an AI agent in job okrsok-rules-2492 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: ulice. Záhradná, Cementárska, Janka Kráľa
+#     okrsok 2: ulice: Hviezdoslavova, Ľudovíta Štúra, Pavla Koyša, Jána Kollára, Kukučínova, Vážska
+#     okrsok 3: ulice: Bottova, Podjavorinskej, Kalinčiakova, Tajovského, Hviezdoslavova
+obec = "513296"
+name = "Ladce"
+okrsky_fill = "nearest"
+okrsky_note = "The 2020 table names only some streets per okrsok; Hviezdoslavova ulica in okrsok 2 is its Ladce part, in okrsok 3 (Tunežice) its Tunežice part. Addresses without a street in the part Ladce go by fill_nearest."
+okrsky_adopted = 2020-02-29
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1903): The page of this vote on ladce.sk has only results (or the decree calling it); no list of okrsky. web.archive.org refused connections. These are the okrsky of the vote of 2020-02-29 (2020-nrsr), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2020-02-29: 1: 930 → 918, 2: 765 → 755, 3: 406 → 399."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the table is shown on the page \"Voľby do NR SR 2020\" under \"Volebné okrsky a volebné miestnosti\"; it states no decision date"
+
+[[document]]
+url = "https://www.ladce.sk/_public/images/obec/volby/volby_2020_okrsky.png"
+sha256 = "10181a3699a501c50eeab71afde7ce42a0c2136d4bb83421e26910994c710c95"
+title = "Volebné okrsky a volebné miestnosti (voľby do NR SR 2020, tabuľka)"
+
+[[document]]
+url = "https://www.ladce.sk/volby-do-nr-sr-2020/"
+sha256 = "4a7c9ca237164e29615046979a9734cd33efb5f34210a98ecc0ef573823f1b52"
+title = "Voľby do NR SR 2020"
+
+[okrsok.1]
+rules = [
+  {street = "Záhradná ulica", written = "Záhradná"},
+  {street = "Cementárska ulica", written = "Cementárska"},
+  {street = "Ulica Janka Kráľa", written = "Janka Kráľa"},
+  {street = "Farská ulica"},
+  {street = "Lúčkovská ulica"},
+  {street = "Kopanice"},
+  {street = "Pod hájom"},
+  {street = "Pod rotbánom"},
+  {street = "Pod Skalkou"},
+  {street = "Podhorská ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hviezdoslavova ulica", part = "Ladce", written = "Hviezdoslavova"},
+  {street = "Ulica Ľudovíta Štúra", written = "Ľudovíta Štúra"},
+  {street = "Ulica Pavla Koyša", written = "Pavla Koyša"},
+  {street = "Ulica Jána Kollára", written = "Jána Kollára"},
+  {street = "Kukučínova ulica", written = "Kukučínova"},
+  {street = "Vážska ulica", written = "Vážska"},
+  {street = "Za kaštieľom"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bottova ulica", written = "Bottova"},
+  {street = "Podjavorinskej ulica", written = "Podjavorinskej"},
+  {street = "Kalinčiakova ulica", written = "Kalinčiakova"},
+  {street = "Tajovského ulica", written = "Tajovského"},
+  {street = "Hviezdoslavova ulica", part = "Tunežice", written = "Hviezdoslavova"},
+  {part = "Tunežice"},
+]

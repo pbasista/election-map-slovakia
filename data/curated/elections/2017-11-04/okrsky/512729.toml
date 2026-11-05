@@ -1,0 +1,80 @@
+# The okrsky of Turčianske Teplice of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/512729.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Turčianske Teplice, transcribed by an AI agent in job okrsok-rules-3508 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: vymedzený územím mestskej časti Dolná Štubňa pre voličov bývajúcich v Turčianskych Tepliciach – časti Dolná Štubňa
+#     okrsok 2: vymedzený územím mestskej časti Turčiansky Michal pre voličov bývajúcich v Turčianskych Tepliciach – časti Turčiansky Michal
+#     okrsok 3: vymedzený územím mestskej časti Diviaky pre voličov bývajúcich v Turčianskych Tepliciach – časti Diviaky
+#     okrsok 4: tvorí Centrum sociálnych služieb Horný Turiec (bývalé Zariadenie pre seniorov, domov sociálnych služieb a špecializované zariadenie) na ulici Banská 533/19 pre voličov bývajúcich v tomto zariadení a pre voličov s trvalým pobytom na adrese Turčianske Teplice, 039 01 Turčianske Teplice
+#     okrsok 5: vymedzený územím Horných Rakoviec a Dolných Rakoviec, časťou Ulice SNP (od budovy MsÚ po vyústenie na štátnu cestu I/65), Ulicou Banskou a Ulicou Hájskou pre voličov bývajúcich v Turčianskych Tepliciach v častiach Horné Rakovce, Dolné Rakovce, na uliciach Banská, Hájska a na časti Ulice SNP
+#     okrsok 6: vymedzený ulicami Kuzmányho, Slobody, Partizánskou, 9. mája, Školskou, 29. augusta, Mládeže, Pod Bôrom a SNP (od liečebného domu Veľká Fatra po začiatok Dolnej Štubne) pre voličov bývajúcich na týchto uliciach
+#     okrsok 7: vymedzený ulicami Kollárovou, Somolického, Družstevnou, Železničnou, J. Lettricha, Robotníckou, Kúpeľnou, Odbojárov, Slnečnou, Záhradnou, Pod Stráňou, a M. Galandu pre voličov bývajúcich na týchto uliciach
+obec = "512729"
+name = "Turčianske Teplice"
+okrsky_fill = "nearest"
+okrsky_note = "Same okrsky as in 2026-10-24. SNP in the part Turčianske Teplice is split between okrsok 5 (from the MsÚ to the I/65 road) and okrsok 6 (from liečebný dom Veľká Fatra to Dolná Štubňa) without house numbers, so its addresses there are placed by fill_nearest. Okrsok 4 holds the Centrum sociálnych služieb at Banská 19 (and residents registered only at the town). Also by fill_nearest: the parts of Poľnohospodárska, Prievidzská, Tehelná and Teplická in the part Turčianske Teplice, which the document does not name, and addresses without a street. Dolné Rakovce and Horné Rakovce are streets in the register."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-155): The city's Voľby page keeps for this vote no okrsky document (only voter information and results). These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 7 okrsky (nearer, not taken: 2022-10-29: okrsok 2: 414 voters then, 523 in 2022-10-29). Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2023-09-30: 1: 525 → 503, 2: 414 → 471, 3: 984 → 923, 4: 284 → 308, 5: 1,478 → 1,372, 6: 1,278 → 1,178, 7: 604 → 566."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the mayor's \"Utvorenie volebných okrskov a určenie volebných miestností\" on the city's Voľby page names the National Council election of 30 September 2023 (decree 204/2023); it states no date"
+
+[[document]]
+url = "https://www.turciansketeplice.sk/volby.html"
+sha256 = "2a5dada89a006ecafd87bb620dbb2ece1c0a46d2410bdac22c82853e9fe683b8"
+title = "Voľby – Utvorenie volebných okrskov a určenie volebných miestností (primátor), section of the National Council election of 30 September 2023"
+
+[okrsok.1]
+rules = [
+  {part = "Dolná Štubňa"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Turčiansky Michal"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Diviaky"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Banská", numbers = "19"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Horné Rakovce"},
+  {street = "Dolné Rakovce"},
+  {street = "Banská"},
+  {street = "Hájska"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Kuzmányho"},
+  {street = "Slobody"},
+  {street = "Partizánska"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Školská"},
+  {street = "29.augusta", written = "29. augusta"},
+  {street = "Mládeže"},
+  {street = "Pod Bôrom"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Kollárova"},
+  {street = "Somolického"},
+  {street = "Družstevná"},
+  {street = "Železničná"},
+  {street = "Jozefa Lettricha"},
+  {street = "Robotnícka"},
+  {street = "Kúpelná", written = "Kúpeľnou", note = "Kúpeľná (document) and Kúpelná (register) are the same street of Turčianske Teplice; the register drops the soft sign."},
+  {street = "Odbojárov"},
+  {street = "Slnečná"},
+  {street = "Záhradná"},
+  {street = "Pod Stráňou"},
+  {street = "M. Galandu"},
+]

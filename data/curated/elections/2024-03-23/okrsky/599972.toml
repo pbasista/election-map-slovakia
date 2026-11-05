@@ -1,0 +1,26 @@
+# Okrsky of Košice-Luník IX, transcribed by an AI agent in job okrsok-rules-4608 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hrebendova 2A, Hrebendova č. 1-3, Hrebendova 10 – 12
+#   okrsok 2: Krčméryho č. 1 – 15, Podjavorinskej 3 - 13
+obec = "599972"
+name = "Košice-Luník IX"
+okrsky_date = 2024-01-30
+okrsky_fill = "nearest"
+okrsky_note = "The document lists the house numbers per street; each street lies wholly in one okrsok, so whole-street rules are used (register numbers the document does not list, e.g. Hrebendova 4-9, Podjavorinskej 1-2, 14-18, go with their street). 'Voliči s trvalým pobytom Košice-Luník IX' are voters registered only to the city part (okrsok 1); the register's 2 addresses without a street are placed by fill_nearest. Same okrsky as the 2022 document. Scan, read from the page image."
+
+[[document]]
+url = "https://web.archive.org/web/20240521094850/https://mclunik9.sk/wp-content/uploads/dokumenty/volby-prezidenta/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-tasu3p.pdf"
+sha256 = "4de5242760418be9234d24beccd9ad61b106bae864595350fc0e7537fc52ae45"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta Slovenskej republiky, konaných dňa 23.03.2024 (prvé kolo) a dňa 06.04.2024 (druhé kolo), na území mestskej časti Košice-Luník IX"
+
+[okrsok.1]
+rules = [
+  {street = "Hrebendova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krčméryho"},
+  {street = "Podjavorinskej"},
+]

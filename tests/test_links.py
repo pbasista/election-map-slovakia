@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def cand(
-    cid: str, first: str, surname: str, age: int, residence: str = ""
+    cid: str, first: str, surname: str, age: int | None, residence: str = ""
 ) -> dict[str, object]:
     item: dict[str, object] = {
         "id": cid,
@@ -55,7 +55,7 @@ def lists(*persons: tuple[str, str, list[dict[str, object]]]) -> dict[str, list]
 
 def match(later, earlier, overrides: Overrides | None = None) -> links.Links:
     return links.match(
-        Candidates(LATER, later), Candidates(EARLIER, earlier), overrides
+        Candidates.of(LATER, later), Candidates.of(EARLIER, earlier), overrides
     )
 
 
@@ -229,6 +229,22 @@ def test_overrides_link_and_unlink():
     assert result.overridden == 1
 
 
+def test_unknown_age_links_only_by_override():
+    # A by-election's package of 2019–2022 gives no age: its namesake in the
+    # same obec fits by name and place alone, which is not enough.
+    later = lists(
+        ("l1", "500011", [cand("oz:500011/1#1", "Peter", "Kováč", 55)]),
+        ("l2", "500011", [cand("oz:500011/1#2", "Jana", "Biela", 40)]),
+    )
+    earlier = lists(
+        ("e1", "500011", [cand("oz:500011/1#1", "Peter", "Kováč", None)]),
+        ("e2", "500011", [cand("oz:500011/1#2", "Jana", "Biela", None)]),
+    )
+    assert match(later, earlier).persons == {}
+    overrides = Overrides(link=(("oz:500011/1#2", "oz:500011/1#2"),))
+    assert match(later, earlier, overrides).persons == {"l2": "e2"}
+
+
 @pytest.mark.parametrize(
     ("overrides", "message"),
     [
@@ -284,6 +300,20 @@ def test_to_json():
     }
 
 
+def test_read_remembers_a_file_until_it_is_replaced(tmp_path):
+    path = tmp_path / "candidates.json"
+    one = lists(("e1", "500011", [cand("oz:500011/2#4", "Peter", "Kováč", 51)]))
+    path.write_text(json.dumps(one))
+    first = links.read(path, EARLIER)
+    assert links.read(path, EARLIER) is first
+    assert list(first.persons) == ["e1"]
+    two = lists(("e2", "500411", [cand("oz:500411/1#1", "Jana", "Biela", 36)]))
+    replacement = tmp_path / "new.json"
+    replacement.write_text(json.dumps(two))
+    replacement.replace(path)
+    assert list(links.read(path, EARLIER).persons) == ["e2"]
+
+
 def test_load_overrides(tmp_path):
     path = tmp_path / "links.toml"
     path.write_text(
@@ -329,11 +359,17 @@ def test_each_pair_of_elections_takes_its_own_overrides(tmp_path, monkeypatch):
     one by the table of that pair alone."""
     shutil.copytree(ROOT / "config", tmp_path / "config")
     shutil.copytree(ROOT / config.PARTY_LOGO_DIR, tmp_path / config.PARTY_LOGO_DIR)
+    # The step's inputs name the libraries of uv.lock.
+    shutil.copy(ROOT / "uv.lock", tmp_path / "uv.lock")
     cfg = config.load(tmp_path / "config")
     older = dataclasses.replace(
         cfg.election("2022"), day=dt.date(2018, 11, 10), slug="2018"
     )
-    cfg = dataclasses.replace(cfg, elections=(*cfg.elections, older))
+    # The presidential elections between them are left out: only the
+    # municipal ones carry lists to link.
+    cfg = dataclasses.replace(
+        cfg, elections=(cfg.election("2026"), cfg.election("2022"), older)
+    )
     lists_of = {
         "2026": lists(("l2", "500411", [cand("oz:500411/1#1", "Jana", "Biela", 40)])),
         "2022": lists(("e3", "500011", [cand("oz:500011/1#3", "Jana", "Bielová", 36)])),
@@ -356,3 +392,26 @@ def test_each_pair_of_elections_takes_its_own_overrides(tmp_path, monkeypatch):
     assert cli._links(cfg, cfg.election("2022"), argparse.Namespace(force=False)) == 0
     out = cfg.election_build_dir(cfg.election("2022")) / "links"
     assert json.loads((out / "2018.json").read_text())["persons"] == {"e3": "f3"}
+
+
+def test_country_wide_persons_link_by_residence_and_list_body():
+    # A list person's obec is the residence; any party's list of the body is
+    # the same office. Nobody of unknown residence (obec "") fits anyone.
+    later = lists(
+        ("l1", "500011", [cand("nrsr:SK/3#5", "Jan", "Novak", 54, "500011")]),
+        ("l2", "", [cand("nrsr:SK/3#6", "Eva", "Malá", 30)]),
+    )
+    earlier = lists(
+        (
+            "e1",
+            "500011",
+            [
+                cand("nrsr:SK/1#2", "Ján", "Novák", 50, "500011"),
+                cand("oz:500011/1#4", "Ján", "Novák", 50),
+            ],
+        ),
+        ("e2", "", [cand("nrsr:SK/2#1", "Eva", "Malá", 26)]),
+    )
+    result = match(later, earlier)
+    assert result.persons == {"l1": "e1"}
+    assert result.candidacies == {"nrsr:SK/3#5": ["nrsr:SK/1#2"]}

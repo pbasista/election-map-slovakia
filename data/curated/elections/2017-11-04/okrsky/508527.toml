@@ -1,0 +1,41 @@
+# Okrsky of Čierny Balog, transcribed by an AI agent in job okrsok-rules-127 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1: Čierny Balog
+#   okrsok 2: Okrsok č. 2: Jánošovka, Komov, Fajtov
+#   okrsok 3: Okrsok č. 3: Pusté, Dobroč
+#   okrsok 4: Okrsok č. 4: Krám, Medveďov
+obec = "508527"
+name = "Čierny Balog"
+okrsky_note = "The document names the miestne časti of each okrsok (no streets); part rules."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The page section \"URČENIE VOLEBNÝCH OKRSKOV PRE VOĽBY DO VÚC\" says the mayor set these okrsky for the elections to the self-governing regions in 2017; the only capture is of 2019-09-18, the text is undated."
+
+[[document]]
+url = "https://web.archive.org/web/20190918152407/https://www.ciernybalog.sk/catalog/0/volby-do-vuc-2017.phtml?id3=128597"
+sha256 = "b3275a33ab78ccc1202fbb6213deb4b9c81163c1bc26931f40f228f4d2396fd6"
+title = "Voľby do VÚC 2017 (archived page): Určenie volebných okrskov pre voľby do VÚC"
+
+[okrsok.1]
+rules = [
+  {part = "Čierny Balog"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Jánošovka"},
+  {part = "Komov"},
+  {part = "Fajtov"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Pusté"},
+  {part = "Dobroč"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Krám"},
+  {part = "Medveďov"},
+]

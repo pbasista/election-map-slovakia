@@ -1,0 +1,31 @@
+# Okrsky of Magnezitovce, transcribed by an AI agent in job okrsok-rules-5798 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1, Adresa (trvalý pobyt): Mníšany
+#   okrsok 2: Volebný okrsok č. 2, Adresa (trvalý pobyt): Kopráš
+obec = "525944"
+name = "Magnezitovce"
+okrsky_note = "No separate 'utvorenie volebných okrskov' decision for the referendum is on the notice board; the municipality's notice of the time and place of the referendum (one page per okrsok) gives okrsok č. 1 for residents of Mníšany (Obecný úrad) and okrsok č. 2 for residents of Kopráš (Kultúrny dom Kopráš). The PDF is on the uradne.sk portal that hosts the municipality's notice board, linked from the board's item."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2026-06-04
+okrsky_date_basis = "The notice states no decision date (it is signed 04.06.2026); the notice board gives 'Dátum zverejnenia 04.06.2026'. (https://www.magnezitovce.sk/samosprava/uradna-tabula?p=1&detail=70166&count=10&tagSelect=&subcategory=)"
+
+[[document]]
+url = "https://www.uradne.sk/user/tablenews/file/1574050"
+sha256 = "0d0cb9c5f8c9b8c98f7e8ca8910ebe00da4e9ade913c867b232cf4bbcfdec6e9"
+title = "Oznámenie o čase a mieste konania referenda (okrsok č. 1 Mníšany, okrsok č. 2 Kopráš)"
+
+[[document]]
+url = "https://www.magnezitovce.sk/samosprava/uradna-tabula?p=1&detail=70166&count=10&tagSelect=&subcategory="
+sha256 = "03677825b3dba297a3eaa549feb2340e92f967b872a8ec4a02c1d9b7e2e4c57c"
+title = "Úradná tabuľa: Oznámenie o čase a mieste konania referenda (page linking the PDF)"
+
+[okrsok.1]
+rules = [
+  {part = "Mníšany"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kopráš"},
+]

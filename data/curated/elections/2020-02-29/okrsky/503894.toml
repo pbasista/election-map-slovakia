@@ -1,0 +1,28 @@
+# The okrsky of Kráľová pri Senci of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/503894.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Kráľová pri Senci, transcribed by an AI agent in job okrsok-rules-3727 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Kráľová pri Senci súpisné čísla: 1 – 450
+#     okrsok 2: Kráľová pri Senci súpisné čísla: 451 – 2059
+obec = "503894"
+name = "Kráľová pri Senci"
+okrsky_date = 2023-06-27
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's announcement of 27.06.2023 (Internet Archive copy; gone live). The okrsky are ranges of súpisné čísla in the part Kráľová pri Senci (the register of this time has no streets). The part Bodov, which the document does not name, and any number outside the ranges take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2544): No okrsky document for the National Council election of 2020: the website keeps only later election pages, and the Internet Archive's CDX of kralovaprisenci.sk has only the 2020 results notice. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2023-09-30: 1: 782 → 832, 2: 842 → 855."
+
+[[document]]
+url = "https://web.archive.org/web/20231003174901/https://www.kralovaprisenci.sk/e_download.php?file=data/editor/172sk_3.pdf&original=Ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20miestnosti%20NRSR%20obec%20Kr%C3%A1%C4%BEov%C3%A1%20pri%20Senci.pdf"
+sha256 = "c91c2b9a907eaa8d53ba925d4817f762ddf486e72a8a63a9ce41e02bd7ba7718"
+title = "Volebné okrsky a miestnosti – voľby do NR SR 30.09.2023 (27.06.2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Kráľová pri Senci", numbers = "1-450"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kráľová pri Senci", numbers = "451-2059"},
+]

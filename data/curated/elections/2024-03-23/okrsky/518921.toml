@@ -1,0 +1,25 @@
+# Okrsky of Vígľaš, transcribed by an AI agent in job okrsok-rules-4391 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: V okrsku č. 1 volia voliči bývajúci v starej časti Vígľaša t.j ulica Zvolenská, Podhorská, Zámocká, Pod Baštou, Lesnícka, Železničná, Riečna, Partizánska, Slovenského národného povstania, Káplnská, Malinovského, Poľná, časti Hájniková, Malý Sliač a voliči bývajúci v miestnej časti za školou
+#   okrsok 2: V okrsku č. 2 volia voliči bývajúci na Pstruši, Dolinkách, Podrohy a Kocaň
+obec = "518921"
+name = "Vígľaš"
+okrsky_note = "Okrsok 1 is the old village (part Vígľaš: all its streets, the hamlets Hájniková and Malý Sliač and the area 'za školou'), okrsok 2 Pstruša with Dolinky, Podrohy and Kocaň (part Pstruša). The hamlets have no street in the register and are not separate parts; they are taken with the part they belong to in the register (okrsok 1 holds part Vígľaš, okrsok 2 part Pstruša)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The okrsky are listed on the municipality's page dedicated to the presidential election of 23 March 2024; no decision date is stated."
+
+[[document]]
+url = "https://www.viglas.net/volby-prezidenta-sr-2024.html"
+sha256 = "8627701be91c89534c301844dcf6e3cf2ee71b25461b4570ff73fdff6e6834fa"
+title = "Obec Vígľaš – page of the presidential election of 23 March 2024: Volebné okrsky vytvorené v obci Vígľaš"
+
+[okrsok.1]
+rules = [
+  {part = "Vígľaš"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Pstruša"},
+]

@@ -1,0 +1,59 @@
+# Okrsky of Košice-Myslava, transcribed by an AI agent in job okrsok-rules-1849 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: lokalita Kamenný potok, Girbeš; adresa Košice – Myslava; Ku Bangortu; Na Kope; Na Kope I-X; Nižné Chmeľníky; Pod Hrabinou; Povrazová; Vrchná; Za dolným mlynom; Za priekopou; Ulica na Grunte
+#   okrsok 2: Chmeľníky; Ku Hájovni; Ku Potoku; Myslavská - celá ulica; Pod Gruntom; Pod Horou
+obec = "598216"
+name = "Košice-Myslava"
+okrsky_note = "List 'OKRSKY VOĽBY DO EURÓPSKEHO PARLAMENTU 2019 (headed 'Voľby do Európskeho parlamentu')' of streets per okrsok; okrsok 1 also lists 'lokalita Kamenný potok, Girbeš' and 'adresa Košice – Myslava', the addresses without a street, so okrsok 1 takes the rest. 'Na Kope I-X' is the ten streets Na Kope I … Na Kope X. The document leaves out Nad Bangortami, taken from the rule set of 2022-10-29."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2019-02-27
+okrsky_date_basis = "The district's elections page volby-do-europskeho-parlamentu-2019-0.html lists 'OKRSKY VOĽBY DO EURÓPSKEHO PARLAMENTU 2019' as 'Zverejnené 27.2.2019'; the document itself is undated. (https://www.myslava.eu/volby-do-europskeho-parlamentu-2019-0.html)"
+okrsky_supplemented = 2022-10-29
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The document does not name Nad Bangortami; the 2022 rule set (same two okrsky, otherwise the same streets) puts Ulica na Grunte in okrsok 1 and Nad Bangortami in okrsok 2; taken from it for these streets only."
+
+[[document]]
+url = "https://www.myslava.eu/download_file_f.php?id=1098028"
+sha256 = "fc7d2432da815d4857402f9de70c3b25f9f8f9967319619ec734346b4aa16fc9"
+title = "Okrsky voľby do Európskeho parlamentu 2019"
+
+[[document]]
+url = "https://www.myslava.eu/volby-do-europskeho-parlamentu-2019-0.html"
+sha256 = "af82fa936d0ad92d28d3a28e7b1fd53c7a97f7f05d332620a62d602017fb3515"
+title = "Voľby do Európskeho parlamentu 2019"
+
+[okrsok.1]
+rules = [
+  {street = "Ku Bangortu"},
+  {street = "Na Kope"},
+  {street = "Na Kope I"},
+  {street = "Na Kope II"},
+  {street = "Na Kope III"},
+  {street = "Na Kope IV"},
+  {street = "Na Kope V"},
+  {street = "Na Kope VI"},
+  {street = "Na Kope VII"},
+  {street = "Na Kope VIII"},
+  {street = "Na Kope IX"},
+  {street = "Na Kope X"},
+  {street = "Nižné Chmeľníky"},
+  {street = "Pod Hrabinou"},
+  {street = "Povrazová"},
+  {street = "Vrchná"},
+  {street = "Za Dolným Mlynom", written = "Za dolným mlynom"},
+  {street = "Za Priekopou", written = "Za priekopou"},
+  {street = "Ulica na Grunte"},
+  {rest = true, note = "'lokalita Kamenný potok, Girbeš' and 'adresa Košice – Myslava': the addresses without a street"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Chmeľníky"},
+  {street = "Ku Hájovni"},
+  {street = "Ku Potoku"},
+  {street = "Myslavská"},
+  {street = "Pod Gruntom"},
+  {street = "Pod Horou"},
+  {street = "Nad Bangortami", supplemented = true},
+]

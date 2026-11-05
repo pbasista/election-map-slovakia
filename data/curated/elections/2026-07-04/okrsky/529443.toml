@@ -1,0 +1,71 @@
+# Okrsky of Bratislava-Jarovce, transcribed by an AI agent in job okrsok-rules-5522 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: BAŽANTNICOVÁ, BYLINKOVÁ, FIGOVÁ, FIKUSOVÁ, CHOTÁRNA, KOREŇOVÁ, KOŽUŠNÍCKA, KÔSTKOVÁ, MANDĽOVÁ, OLEANDROVÁ, OSIJECKÁ, PALMOVÁ, PLITVICKÁ, RASTLINNÁ, REPKOVÁ, SLAVÓNSKA, TRNKOVÁ, ZADARSKÁ, ZAMATOVÁ, OBČANIA S TRVALÝM POBYTOM NA OBCI MČ BRATISLAVA-JAROVCE
+#   okrsok 2: ARAGONITOVÁ, DIAMANTOVÁ, FRANTIŠKA SCHMUCKERA, GRANITOVÁ, JANTÁROVÁ, JASPISOVÁ, JAZERNÁ, JOZEFA MIKISITSA, KRIŠTÁĽOVÁ, LADISLAVA BATTHYÁNYHO, MORUŠOVÁ, NÁMESTIE PRI SÝPKE, NEFRITOVÁ, ÓNYXOVÁ, OPÁLOVÁ, OVOCNÁ, PAVE VUKOVIČA, PERLOVÁ, PETARA PASICHA, PÍLOVÁ, PRI TEHELNI, SEMENÁRSKA, SMARAGDOVÁ, TOPÁSOVÁ, TYRKYSOVÁ, URBÁRSKA, ZAFÍROVÁ, ZELENINOVÁ
+obec = "529443"
+name = "Bratislava-Jarovce"
+okrsky_fill = "nearest"
+okrsky_note = "Addresses without a street take the nearest okrsok (fill_nearest). 'Občania s trvalým pobytom na obci MČ Bratislava-Jarovce' (residents without an address) belong to okrsok 1. Text from the PDF's garbled text layer, read as capitals with diacritics."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The starosta's announcement is undated but sets the 2 okrsky for the referendum to be held on 04. júla 2026."
+
+[[document]]
+url = "http://www.jarovce.sk/dokumenty/volby/ref2026/Oznamenie%20o%20utvoreni%20volebnych%20okrskov%20a%20urcenie%20volebnych%20miestnosti%20pre%20Referendum%202026.pdf"
+sha256 = "8f869159fd6e22bc3de9fe69470a651631ec50da349b5dc15a047ab21d5532a5"
+title = "Oznámenie o utvorení volebných okrskov a určenie volebných miestností pre Referendum 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Bažantnicová"},
+  {street = "Bylinková"},
+  {street = "Figová"},
+  {street = "Fikusová"},
+  {street = "Chotárna"},
+  {street = "Koreňová"},
+  {street = "Kožušnícka"},
+  {street = "Kôstková"},
+  {street = "Mandľová"},
+  {street = "Oleandrová"},
+  {street = "Osijecká"},
+  {street = "Palmová"},
+  {street = "Plitvická"},
+  {street = "Rastlinná"},
+  {street = "Repková"},
+  {street = "Slavónska"},
+  {street = "Trnková"},
+  {street = "Zadarská"},
+  {street = "Zamatová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Aragonitová"},
+  {street = "Diamantová"},
+  {street = "Františka Schmuckera"},
+  {street = "Granitová"},
+  {street = "Jantárová"},
+  {street = "Jaspisová"},
+  {street = "Jazerná"},
+  {street = "Jozefa Mikisitsa"},
+  {street = "Krištáľová"},
+  {street = "Ladislava Batthyányho"},
+  {street = "Morušová"},
+  {street = "Námestie pri sýpke"},
+  {street = "Nefritová"},
+  {street = "Ónyxová"},
+  {street = "Opálová"},
+  {street = "Ovocná"},
+  {street = "Pave Vukoviča"},
+  {street = "Perlová"},
+  {street = "Petara Pasicha"},
+  {street = "Pílová"},
+  {street = "Pri tehelni"},
+  {street = "Semenárska"},
+  {street = "Smaragdová"},
+  {street = "Topásová"},
+  {street = "Tyrkysová"},
+  {street = "Urbárska"},
+  {street = "Zafírová"},
+  {street = "Zeleninová"},
+]

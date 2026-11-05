@@ -1,0 +1,98 @@
+# Okrsky of Sliač, transcribed by an AI agent in job okrsok-rules-5413 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Clementisova, ČSA, Hájnická, Hronská, J. Fučíka, Kalinčiakova, Kollárova, Kpt. Nálepku, Krátka, Letecká, Ľudovíta Štúra, Mládežnícka, Sládkovičova, SNP or. č. 1-7, Teheľňa - osada, Trebuľa, Zvolenská
+#   okrsok 2: Rybárska - celá ulica, 1. mája, Brezová, Janka Kráľa, Lipová, MDŽ, Mlynská, Na Dolinke, Pionierska, SNP or. č. od 8, Š. Záhorského, Topoľová, Továrenská, Ulica Františka Papánka, Ulica Hany Ponickej, Ulica gen. Otta Smika, Ulica Ľ. Podjavorinskej, Ulica B. S. Timravy, Ulica Kopanisko, Za Školou
+#   okrsok 3: Družstevná, Horská, Hviezdoslavova, Jarná, Kukučínova, Kúpeľná, Letná, Na Brázdach, Na Slatinkách, Nová, Partizánska, Tajovského, Železničná, B. Němcovej, Gorkého, J. Cikkera, Pod Kozákom, Mirka Nešpora, Nový Partizán, Starý Partizán, Poľovnícka
+#   okrsok 4: Sampor
+obec = "518808"
+name = "Sliač"
+okrsky_date = 2026-05-06
+okrsky_fill = "nearest"
+okrsky_note = "Scans read by OCR without diacritics; street names are the register's. Okrsok 4 \"Sampor\" is the part Sampor. Ulica Kopanisko is not in the address register; Ulica Slnečnicová (not listed) and addresses without a street go by fill_nearest. Where the register has two spellings of one street (1.mája/Prvého mája, Š. Záhorského/Š.Záhorského) both are listed."
+
+[[document]]
+url = "https://www.sliac.sk/wp-content/uploads/2026/05/Zoznam-ulic-a-okrskov.pdf"
+sha256 = "8ee346dbd270f8f94302ad3b1ef6c7adc11582f230a6059179297282c2c79378"
+title = "Zoznam ulíc a okrskov pre Referendum 2026 (06.05.2026)"
+
+[[document]]
+url = "https://www.sliac.sk/wp-content/uploads/2026/05/Okrsok.pdf"
+sha256 = "89b6ed2d54ca419ea97047e56a0f0d31fb30899e32c6eef0d4ea597379bf3e6a"
+title = "Určenie volebných miestností a volebných okrskov, referendum 4. júla 2026 (06.05.2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Clementisova"},
+  {street = "ČSA"},
+  {street = "Hájnická"},
+  {street = "Hronská"},
+  {street = "Júliusa Fučíka"},
+  {street = "Kalinčiakova"},
+  {street = "Kollárova"},
+  {street = "Kpt.Nálepku"},
+  {street = "Krátka"},
+  {street = "Letecká"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Mládežnícka"},
+  {street = "Sládkovičova"},
+  {street = "SNP", numbers = "1-7"},
+  {street = "Tehelňa"},
+  {street = "Trebuľa"},
+  {street = "Zvolenská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Rybárska"},
+  {street = "1.mája"},
+  {street = "Prvého mája", note = "a second register spelling of the same street"},
+  {street = "Brezová"},
+  {street = "Janka Kráľa"},
+  {street = "Lipová"},
+  {street = "MDŽ"},
+  {street = "Mlynská"},
+  {street = "Na Dolinke"},
+  {street = "Pionierska"},
+  {street = "SNP", numbers = "8-"},
+  {street = "Topoľová"},
+  {street = "Továrenská"},
+  {street = "Ulica Františka Papánka"},
+  {street = "Ulica Hany Ponickej"},
+  {street = "Ulica gen. Otta Smika"},
+  {street = "Ulica Ľ. Podjavorinskej"},
+  {street = "Ulica B. S. Timravy"},
+  {street = "Za Školou"},
+  {street = "Š. Záhorského"},
+  {street = "Š.Záhorského", note = "a second register spelling of the same street"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Družstevná"},
+  {street = "Horská"},
+  {street = "Hviezdoslavova"},
+  {street = "Jarná"},
+  {street = "Kukučínova"},
+  {street = "Kúpelná"},
+  {street = "Letná"},
+  {street = "Na Brázdach"},
+  {street = "Na Slatinkách"},
+  {street = "Nová"},
+  {street = "Partizánska"},
+  {street = "Tajovského"},
+  {street = "Železničná"},
+  {street = "Boženy Nemcovej"},
+  {street = "Gorkého"},
+  {street = "J. Cikkera"},
+  {street = "Pod Kozákom"},
+  {street = "Mirka Nešpora"},
+  {street = "Nový Partizán"},
+  {street = "Starý Partizán"},
+  {street = "Poľovnícka"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Sampor"},
+]

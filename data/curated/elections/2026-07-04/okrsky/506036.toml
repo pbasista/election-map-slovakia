@@ -1,0 +1,25 @@
+# Okrsky of Horné Srnie, transcribed by an AI agent in job okrsok-rules-5587 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 - časť obce so súp. číslami 1 - 460 + občania bez pobytu
+#   okrsok 2: Okrsok č. 2 - časť obce so súp. číslami 461 - 1100
+obec = "506036"
+name = "Horné Srnie"
+okrsky_date = 2026-05-07
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by súpisné čísla: 1–460 (+ 'občania bez pobytu', voters without an address) and 461–1100; higher numbers are placed by fill_nearest."
+
+[[document]]
+url = "https://www.hornesrnie.sk/modules/file_storage/download.php?file=751368f7%7C2092&inline=1"
+sha256 = "37477184267d0f8494d91147a366bd36beb241e086da7234ebc7e1229da47794"
+title = "Referendum dňa 4. júla 2026 – Utvorenie okrskov (07.05.2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Horné Srnie", numbers = "1-460"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Horné Srnie", numbers = "461-1100"},
+]

@@ -1,0 +1,58 @@
+# Okrsky of Hruštín, transcribed by an AI agent in job okrsok-rules-3656 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hruštín: Ulice: Lán, Radzovka, Včielok, Kút, Hrnčiarka, Výhon, Kultúrna, Potok, Črchľa, Zavoda
+#   okrsok 2: Hruštín: Ulice: Dielnice, Dedina, Kutina, Pod brehom, Školská, Hlavná, Zamost, Pod Príslopom, Baraniarky, Ku pekárni, Slnečná, Veterná, Pod Uhliskom, Ulica Dlhá, Ulica Krátka, Ulica Lúčna, Ulica Poľná
+#   okrsok 3: Vaňovka: Ulice: Dolný koniec, Horný koniec, Klinok, Kostolná, Kúty, Podsádok, Hredy
+obec = "509680"
+name = "Hruštín"
+okrsky_fill = "nearest"
+okrsky_note = "The announcement names each okrsok's streets; okrsok 3 is the part Vaňovka. Addresses without a street in part Hruštín are placed by fill_nearest. The website refuses connections from here; the document is listed by its Internet Archive capture."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2023-07-11
+okrsky_date_basis = "The announcement is undated; the Internet Archive captured it on 2023-07-11, before the vote. (https://web.archive.org/web/20230711170042/https://www.hrustin.sk/files/2023-07-11-082958-Uvtvorenie_volebn__ch_okrskov.pdf)"
+
+[[document]]
+url = "https://web.archive.org/web/20230711170042/https://www.hrustin.sk/files/2023-07-11-082958-Uvtvorenie_volebn__ch_okrskov.pdf"
+sha256 = "e4e3c1ca3ced9ebf17df394a0ba41077197696f86eadb3ddf1b0e3e306cfc2a0"
+title = "Oznámenie o utvorení volebných okrskov pre voľby do NR SR dňa 30.09.2023"
+
+[okrsok.1]
+rules = [
+  {street = "Lán"},
+  {street = "Radzovka"},
+  {street = "Včielok"},
+  {street = "Kút"},
+  {street = "Hrnčiarka"},
+  {street = "Výhon"},
+  {street = "Kultúrna"},
+  {street = "Potok"},
+  {street = "Črchľa"},
+  {street = "Zavoda"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dielnice"},
+  {street = "Dedina"},
+  {street = "Kutina"},
+  {street = "Pod brehom"},
+  {street = "Školská"},
+  {street = "Hlavná"},
+  {street = "Zamost"},
+  {street = "Pod Príslopom"},
+  {street = "Baraniarky"},
+  {street = "Ku pekárni"},
+  {street = "Slnečná"},
+  {street = "Veterná"},
+  {street = "Pod Uhliskom"},
+  {street = "Ulica Dlhá"},
+  {street = "Ulica Krátka"},
+  {street = "Ulica Lúčna"},
+  {street = "Ulica Poľná"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Vaňovka", note = "okrsok 3 is the part Vaňovka; the document lists all its streets"},
+]

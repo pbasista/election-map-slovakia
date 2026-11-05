@@ -1,0 +1,32 @@
+# The okrsky of Žitavany of the vote of 2026-07-04, data/curated/elections/2026-07-04/okrsky/582816.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Žitavany, transcribed by an AI agent in job okrsok-rules-5653 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Volebný okrsok č. 1: Kultúrno – spoločenské zariadenie, Opatovecká ulica č. 847/32, Žitavany
+#     okrsok 2: Volebný okrsok č. 2: Obecný úrad Žitavany, Športová ulica č. 229/5, Žitavany
+obec = "582816"
+name = "Žitavany"
+okrsky_date = 2026-04-29
+okrsky_note = "The document gives each okrsok only its polling station, no streets: okrsok 1 in the Kultúrno-spoločenské zariadenie, Opatovecká 847/32 (k.ú. Opatovce), okrsok 2 in the Obecný úrad, Športová 229/5 (k.ú. Kňažice). Žitavany has one part but two k.ú., the former villages Opatovce and Kňažice, each holding one station, so each okrsok is given the k.ú. of its station (inferred, by analogy with one part per station), as for the 2022 elections and the 2023 referendum in this repository. Dated and signed 29.04.2026. Okrsok 2 now votes in the Obecný úrad (Športová 229/5) instead of the Športová hala (Športová 791/26) of 2023–2024; both on Športová in Kňažice, the okrsky are otherwise as before."
+okrsky_adopted = 2026-07-04
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-501): The 2026 election pages publish no decision on okrsky. The referendum 2026 decision (29.04.2026) gives each of the 2 okrsky only its polling station (1: Kultúrno-spoločenské zariadenie, Opatovecká 847/32; 2: Obecný úrad, Športová 229/5), with no streets; the obec has a single part, so no rules can be given. These are the okrsky of the vote of 2026-07-04 (2026-referendum), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2026-07-04: 1: 787 → 774, 2: 731 → 726."
+
+[[document]]
+url = "https://www.zitavany.sk/modules/file_storage/download.php?file=5eff6d2c%7C1106&inline=1"
+sha256 = "52130cb885fbcbd1af4ade58034c4961327ed1731d834d8b9c3090a5c3a4a91d"
+title = "Vytvorenie volebného okrsku a určenie volebnej miestnosti pre Referendum 2026, konané dňa 4. júla 2026"
+
+[[document]]
+url = "https://www.zitavany.sk/zverejnovanie/volby-referendum-1/referendum-2026/"
+sha256 = "7f0b7c4e586a01cf0cbd54930b1cf5fb8c512ddf39b20ee8844e3ca7e2b0f39c"
+title = "Referendum 2026"
+
+[okrsok.1]
+rules = [
+  {ku = "Opatovce", note = "k.ú. of the polling station Opatovecká 847/32", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {ku = "Kňažice", note = "k.ú. of the polling station Športová 229/5", inferred = true},
+]

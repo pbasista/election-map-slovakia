@@ -1,0 +1,31 @@
+# Okrsky of Hnilčík, transcribed by an AI agent in job okrsok-rules-4554 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok zahŕňa voličov od súp. čísla 92, miestnu časť Zimná dolina, Cechy, Štolvek, Grétla.
+#   okrsok 2: Volebný okrsok zahŕňa voličov Dolnej časti obce, miestnu časť Ráztoky, Bindt a voličov, ktorí majú miesto trvalého bydliska Obec Hnilčík.
+obec = "526576"
+name = "Hnilčík"
+okrsky_date = 2024-01-29
+okrsky_note = "The mayor's letter of 29 January 2024, posted on the municipality's presidential elections page with the 2024 election's other documents, sets 2 okrsky, as in 2022 and 2023. Voters with only the municipality as their permanent residence (okrsok 2) have no address."
+
+[[document]]
+url = "https://www.obechnilcik.sk/files/2024-02-05-102557-Utvorenie_volebn__ch_okrskov_a_ur__enie_volebn__ch_miestnost__.pdf"
+sha256 = "a46ce4e6177c167cb89201706f8b137bd1361366eff35c405733f380f0cd721a"
+title = "Utvorenie volebných okrskov a určenie volebných miestností - odpoveď (Ocú-16/2024-Ocú, 29. 1. 2024)"
+
+[[document]]
+url = "https://www.obechnilcik.sk/samosprava/volby-v-obci/volby-prezidenta"
+sha256 = "01964baa725fce841b02e6c5f748cc68eb40b70c2f1a4795bd08e10ef5346ace"
+title = "Voľby v obci - Voľby prezidenta"
+
+[okrsok.1]
+rules = [
+  {part = "Hnilčík", numbers = "92-", note = "'od súp. čísla 92' read as súpisné čísla 92 and up in part Hnilčík; the settlements Zimná dolina, Cechy, Štolvek, Grétla are neither parts nor streets in the register (they lie in part Hnilčík) and are taken to be within these numbers"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Hnilčík", numbers = "1-91", note = "'Dolná časť obce' taken as the súpisné čísla below 92 in part Hnilčík (okrsok 1 holds 92 and up)", inferred = true},
+  {part = "Ráztoky"},
+  {part = "Bindt"},
+]

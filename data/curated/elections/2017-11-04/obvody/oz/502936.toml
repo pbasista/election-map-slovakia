@@ -1,0 +1,41 @@
+# The okrsky of Veľký Ďur of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/502936.toml, standing in, by `ems job reuse`. Its header there:
+#   Council obvody of Veľký Ďur (502936), Levice.
+#   Transcribed by an AI agent in job obvod-rules-351 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: Volebný obvod č. 1 (Dolný Ďur, Horný Ďur) 7 poslancov
+#     obvod 2: Volebný obvod č. 2 (Rohožnica) 2 poslanci.
+#   Okrsky added by an AI agent in job okrsok-rules-1216 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Volebný obvod č. 1 (Dolný Ďur, Horný Ďur) 7 poslancov
+#     okrsok 2: Volebný obvod č. 2 (Rohožnica) 2 poslanci.
+obec = "502936"
+name = "Veľký Ďur"
+date = 2022-06-08
+note = "The council obvody of the vote of 2022-10-29: they only place the okrsky."
+reused = 2022-10-29
+okrsky_date = 2022-06-08
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-451): The live and archived 2017 regional-elections page (volby-vuc) lists only the results; the Internet Archive keeps no 2017 notice-board page or okrsky document of velkydur.sk. No okrsky document of 4.11.2017 found. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2022-10-29: 1: 838 → 807, 2: 272 → 272."
+
+[[document]]
+url = "https://www.velkydur.sk/download_file_f.php?id=1708975"
+sha256 = "9d1ec2035860b9dc7e369cb4460a4376bfd3c8ab3b783c7960efd843d65552e0"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie OZ č. 288/28/2022 zo dňa 08.06.2022)"
+
+[obvod.1]
+seats = 7
+okrsky = [1]
+rules = [
+  {part = "Dolný Ďur"},
+  {part = "Horný Ďur"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Rohožnica"},
+]

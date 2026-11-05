@@ -1,0 +1,37 @@
+# Okrsky of Veľká Ida, transcribed by an AI agent in job okrsok-rules-5656 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov bývajúcich vo Veľkej Ide od súp.č. 1 – 319 + prihlásení na Obec
+#   okrsok 2: pre voličov bývajúcich vo Veľkej Ide od súp.č. 320 – 798
+#   okrsok 3: pre voličov bývajúcich vo Veľkej Ide časť obce Gomboš
+obec = "522147"
+name = "Veľká Ida"
+okrsky_fill = "nearest"
+okrsky_note = "No streets in the register: house numbers are súpisné within the part. \"všetci občania prihlásení na obec\" (residents without an address) are not a rule. Addresses whose numbers the document leaves out (above its highest number) take the okrsok of the nearest address (fill_nearest)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The announcement names the referendum of 4 July 2026; posted on the notice board on 02.06.2026."
+
+[[document]]
+url = "https://www.velkaida.sk/uradna-tabula?p=1&detail=70017&count=10&tagSelect=&subcategory="
+sha256 = "753e0bf7fadf78687bf47e677b0514f8cc97f8e2df592e2d5afab5b42c92910c"
+title = "Úradná tabuľa: REFERENDUM 2026 (zverejnené 02.06.2026)"
+
+[[document]]
+url = "https://www.uradne.sk/user/tablenews/file/1572881"
+sha256 = "8412eaedceadb8f865cf8f57bf6d586f941f37c32f2d7f4512c02802f9678b61"
+title = "referendum_2026_web.docx – Oznámenie o určení počtu volebných okrskov a miestností na Referendum 04.07.2026"
+
+[okrsok.1]
+rules = [
+  {part = "Veľká Ida", numbers = "1-319"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Veľká Ida", numbers = "320-798"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Gomboš"},
+]

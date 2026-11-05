@@ -1,0 +1,29 @@
+# Okrsky of Veľké Revištia, transcribed by an AI agent in job okrsok-rules-4597 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1: Kultúrny dom, Vyšné Revištia 31, Veľké Revištia
+#   okrsok 2: Volebný okrsok č. 2: Kultúrny dom, Gajdoš 230, Veľké Revištia
+obec = "523232"
+name = "Veľké Revištia"
+okrsky_date = 2024-01-26
+okrsky_note = "The document gives each okrsok only its polling station. Two okrsky, two parts of the municipality, each station in another part: each okrsok gets the part of its station (inferred)."
+
+[[document]]
+url = "https://www.velkerevistia.sk/download_file_f.php?id=1987806"
+sha256 = "eae106715f46c0bc911df5523b8f6635902350c515120d9631d0faddf6488e47"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta SR 2024"
+
+[[document]]
+url = "https://www.velkerevistia.sk/volby-a-referenda-2026.html"
+sha256 = "6ad1a74f51ca75333799f04df3edce240407e10ce28bf9baa898589afc923de5"
+title = "Voľby a referendá (stránka obce)"
+
+[okrsok.1]
+rules = [
+  {part = "Vyšné Revištia", note = "part of the polling station (Kultúrny dom, Vyšné Revištia 31)", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Gajdoš", note = "part of the polling station (Kultúrny dom, Gajdoš 230)", inferred = true},
+]

@@ -1,0 +1,27 @@
+# The okrsky of Brusno of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/508675.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Brusno, transcribed by an AI agent in job okrsok-rules-3809 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: OKRSOK č. 1 pre občanov časti obce Brusno
+#     okrsok 2: OKRSOK č. 2 pre občanov časti obce Ondrej nad Hronom
+obec = "508675"
+name = "Brusno"
+okrsky_date = 2023-06-22
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2024-03-23 setting the okrsky was found (okrsok-rules-4437): The presidential election 2024 page on brusno.sk lists only the NR SR chairman's decision, voter information, candidates and results; no okrsky decision. The Internet Archive was intermittently unreachable; the archived page could not be loaded. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-03-23 → 2023-09-30: 1: 829 → 863, 2: 955 → 963."
+
+[[document]]
+url = "https://www.brusno.sk/download_file_f.php?id=1878702"
+sha256 = "89580d1a0570ac513087f5c261b7f8aa743c3c11a0da8d628d747869a3fb1748"
+title = "Rozhodnutie starostu obce z 22.6.2023 o utvorení volebných okrskov a určení volebných miestností pre voľby do NR SR v roku 2023"
+
+[okrsok.1]
+rules = [
+  {part = "Brusno"},
+  {part = "Brusno-kúpele", note = "The document names only the parts Brusno and Ondrej nad Hronom; the register's part Brusno-kúpele (7 addresses on Kúpeľná, the spa within Brusno beside part Brusno) is placed with Brusno.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Ondrej nad Hronom"},
+]

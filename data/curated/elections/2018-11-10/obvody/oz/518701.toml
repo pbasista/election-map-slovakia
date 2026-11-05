@@ -1,0 +1,39 @@
+# Council obvody of Rykynčice (518701), Krupina.
+# Transcribed by an AI agent in job obvod-rules-189 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: 1 v hornej časti obce
+#   obvod 2: 4 v dolnej časti obce
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/518701.toml, standing in.
+obec = "518701"
+name = "Rykynčice"
+date = 2018-06-14
+note = "Resolution No. 20 sets 5 councillors for 2018–2022: 4 in the lower part (Dolné Rykynčice) and 1 in the upper part (Horné Rykynčice). It does not number the obvody; by their seats (ŠÚ SR: obvod 1 one seat, obvod 2 four seats) obvod 1 is Horné Rykynčice and obvod 2 Dolné Rykynčice, as in the municipality's 2022 decision."
+okrsky_date = 2022-06-06
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-5915): No 2018 okrsky document found. The live website (www.rykyncice.sk) refused connections throughout (about 20 minutes, ports 80 and 443). Of its 2018 files the Internet Archive keeps from the election period only the information for voters, the speaker's decision (vo__by1.pdf = Z. z. 203/2018) and the number of councillors (Po__et_poslancov.pdf); no 'utvorenie volebných okrskov' notice, and no capture of the 2018 elections page or notice board. Two okrsky = the two obvody (Horné and Dolné Rykynčice) per the Statistical Office, but no 2018 document states it. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://www.rykyncice.sk/files/2018-10-26-134447-uznesenie_zo_d__a_14.06.2018.pdf"
+sha256 = "1794143141641cc68be5edfb1e4ea0276e8b30a60c1f580258d0a0a568b8a748"
+title = "Uznesenie zo zasadnutia OZ obce Rykynčice konaného dňa 14.06.2018 (č. 14–30), uznesenie č. 20"
+
+[[document]]
+url = "https://www.rykyncice.sk/zapisnice-a-uznesenia-oz"
+sha256 = "82cd1ad040a70722aaa73faa749dd709a4f9f66d09d28be44458bd27076e81a0"
+title = "Zápisnice a uznesenia OZ"
+
+[obvod.1]
+seats = 1
+okrsky = [1]
+rules = [
+  {part = "Horné Rykynčice"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [2]
+rules = [
+  {part = "Dolné Rykynčice"},
+]

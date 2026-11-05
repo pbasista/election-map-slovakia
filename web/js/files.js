@@ -50,21 +50,27 @@ export class Cache {
 }
 
 /* Where the page's election's files are and their versions: its map
- * (km-config `map`, `mapVersion`: geo/, base/, addr/) and its data
- * (`data`, `dataVersion`: data/, i18n/), each a bundle of its own (served
- * by `ems serve` at /map/2026 and /data/2026, deployed at the addresses of
- * their deployments). A file is asked for with its bundle's version
- * (`?v=`), so that other files replace the browser's copies (build.py,
- * Cache busting). The page sets them from its config (i18n.js); the map's
+ * (km-config `map`, `mapVersion`: geo/, addr/), its data (`data`,
+ * `dataVersion`: data/, i18n/), each a bundle of its own, and the base map
+ * of its OpenStreetMap extract (`base`, `baseVersion`), which every
+ * election on the extract shares, so that switching between them keeps
+ * the browser's copies (served by `ems serve` at /map/2026, /data/2026 and
+ * /base/osm-slovakia-2026, deployed at the addresses of their
+ * deployments). A file is asked for with its part's version (`?v=`), so
+ * that other files replace the browser's copies (build.py, Cache
+ * busting). The page sets them from its config (i18n.js); the map's
  * renderer, which may run in a worker without the page, from its options
  * (draw.js). */
-let source = { data: '', dataVersion: '', map: '', mapVersion: '' };
+let source = { data: '', dataVersion: '', map: '', mapVersion: '', base: '', baseVersion: '' };
 export function setDataSource(next) {
   source = next;
 }
 
-// The directories of the map's bundle; any other file is the data's.
-const MAP_ROOT = /^\/(?:geo|base|addr)\//;
+// The directories of the map's bundle; any other file but the base map's
+// is the data's.
+const MAP_ROOT = /^\/(?:geo|addr)\//;
+// The base map's files are asked for below it, at the root of its part.
+const BASE_ROOT = '/base/';
 
 /* The UI strings' version (km-config `stringsVersion`), asked for with
  * the site's shared files (/i18n/): the same on every election's page, so
@@ -79,9 +85,13 @@ export function setStringsVersion(version) {
 export const sharedUrl = (path) => `${path}?v=${stringsVersion}`;
 
 /* The URL to fetch the page's election's file *path* (/geo/index.json,
- * /data/index.json) by: in its map or its data bundle. */
-export const dataUrl = (path) =>
-  MAP_ROOT.test(path) ? `${source.map}${path}?v=${source.mapVersion}` : `${source.data}${path}?v=${source.dataVersion}`;
+ * /data/index.json, /base/index.json) by: in its map or its data bundle,
+ * or in its base map. */
+export function dataUrl(path) {
+  if (path.startsWith(BASE_ROOT)) return `${source.base}/${path.slice(BASE_ROOT.length)}?v=${source.baseVersion}`;
+  if (MAP_ROOT.test(path)) return `${source.map}${path}?v=${source.mapVersion}`;
+  return `${source.data}${path}?v=${source.dataVersion}`;
+}
 
 async function fetchFrom(url, path, missing) {
   const response = await fetch(url);

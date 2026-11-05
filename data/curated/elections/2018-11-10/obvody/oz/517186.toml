@@ -1,0 +1,40 @@
+# The council obvody of Prestavlky of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/517186.toml, standing in, by `ems job reuse`. Its header there:
+#   Council obvody of Prestavlky (517186), Žiar nad Hronom.
+#   Transcribed by an AI agent in job obvod-rules-379 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: volebný obvod č. 1, časť Prestavlky 4 poslanci
+#     obvod 2: volebný obvod č. 2, časť Horná Trnávka 3 poslanci
+#   Okrsky added by an AI agent in job okrsok-rules-1240 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: volebný obvod č. 1, časť Prestavlky 4 poslanci
+#     okrsok 2: volebný obvod č. 2, časť Horná Trnávka 3 poslanci
+obec = "517186"
+name = "Prestavlky"
+date = 2022-06-14
+adopted = 2022-10-29
+adopted_basis = "No document of 2018-11-10 setting the obvody was found (obvod-rules-193): The website's notice board keeps only current items (the month archives show the same list) and no election pages for this vote; no okrsky/obvody document found. web.archive.org was unreachable (connection failed) when checked. These are the council obvody of the vote of 2022-10-29 (2022), the nearest in time with a rule set of its own of the same obvody and seats. The voters on the roll per obvod are not known for both votes, so whether the layout changed is not known either."
+okrsky_date = 2022-06-14
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "The okrsky of the same rule set: 2 okrsky, those ŠÚ SR counted in each obvod. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://www.prestavlky.sk/download_file_f.php?id=1703576"
+sha256 = "0758bc841764047a616a55c827e5aa8c332f4ca838d701ed0597ede8033a17f5"
+title = "Uznesenia zo zasadnutia OZ dňa 14.06.2022 (uznesenie č. 22/2022)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Prestavlky"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Horná Trnávka"},
+]

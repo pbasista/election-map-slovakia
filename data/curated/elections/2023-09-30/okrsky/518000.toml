@@ -1,0 +1,33 @@
+# The okrsky of Svederník of the vote of 2026-10-24, data/curated/elections/2026-10-24/okrsky/518000.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Svederník, transcribed by an AI agent in job okrsok-rules-506 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Svederník, Marček
+#     okrsok 2: Zárieč-Keblov
+obec = "518000"
+name = "Svederník"
+okrsky_date = 2026-08-06
+okrsky_note = "Scanned decision read from the rendered page; date handwritten \"6.8.\" 2026. svedernik.info is the obec's official site (Obec Svederník)."
+okrsky_adopted = 2026-10-24
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3811): The obec's page \"Parlamentné voľby 2023\" is gone (404); its only Internet Archive capture (14.6.2023) links the election announcement, voter information and a DOCX notice, but no okrsky determination. The notice board and sitemap list nothing for 2023 okrsky; scanned 2023 attachments archived in the period are contracts, not the determination. These are the okrsky of the vote of 2026-10-24 (2026), the nearest in time with okrsky of its own that fit: 2 okrsky (nearer, not taken: 2022-10-29: okrsok 1: 678 voters then, 960 in 2022-10-29). Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2026-10-24: 1: 678 → 699, 2: 594 → 668."
+
+[[document]]
+url = "https://www.svedernik.info/pages/attachments/yWydXvccTNERxEZEbGBG4R.pdf"
+sha256 = "1c3fbd3454f464bf22615e0b7085858ef5aa775b09ba4f322677b871fe8506eb"
+title = "Rozhodnutie starostu obce o utvorení volebných okrskov pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov v roku 2026"
+
+[[document]]
+url = "https://www.svedernik.info/pages/volby-do-organov-samospravy-obci-a-do-organov-samospravnych-krajov-24-oktober-2026"
+sha256 = "ca1fb2dc6e3d994fc8943d84ec94dfd4ca3e5358eafe12bf70ce1f44b4a82c00"
+title = "Voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov, 24. október 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Svederník"},
+  {part = "Marček"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Zárieč-Keblov"},
+]

@@ -1,0 +1,276 @@
+# Okrsky of Dunajská Streda, transcribed by an AI agent in job okrsok-rules-1604 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: námestie SNP 184, 185, 186, 188, 189, 190, 191, 192
+#   okrsok 2: námestie SNP 193, 194, 195, 196, 197, 198, Ulica Júliusa Lőrincza 2133, 2134, 2135, 2136, 2137, Boriny 1381, 1382, 1383, 1384, 1528
+#   okrsok 3: Smetanov háj 283, 286, 287, 288, 289, 290, 291, 292, 293, Ulica Istvána Gyurcsóa , Boriny 1365, 1366, 1367, 1368
+#   okrsok 4: Boriny 1360, 1361, 1362, 1363, 1364, Ružový háj 1352, 1353, 1354,1355, 1357, 1369, 1370, 1371, 1372, 1373, 1374, 1375, 1376, 1377, 1378, 1379, Športová ulica
+#   okrsok 5: Ulica M.R.Štefánika, Sládkovičova ulica, Trhovisko, rodinné domy a obytný blok 444, Ružová ulica, Malodvornícka cesta, Bacsákova ulica, Jilemnického ulica 201, Radničné námestie 373, 374, 375, 376, 377, 378, 379, 5612, 5863, Ulica biskupa Kondého, Múzejná ulica, Poštová ulica, Korzo Bélu Bartóka, Ovocný sad, , Štvrť svätého Jána, Ulica Lászlóa Telekiho
+#   okrsok 6: Hlavná ulica bytové domy 46, 47, Dunajská ul. 369, 370, 371, 372, Nám. Ármina Vámbéryho 53, 54, 55, 7453, Budovateľská ulica, Ulica Sándora Petőfiho, Ulica Jánosa Aranya, Mesto – Dunajská Streda, Ulica Bálinta Balassiho
+#   okrsok 7: Nám. Sv. Štefana, Alžbetínske námestie, Kukučínova ulica 1210, 1211, 1212, 1213, 1214, 1216, Komenského ulica 1214, 1215, 1217, 1218, 6331, 5872 Kukučínova ulica rodinné domy, Komenského ulica rodinné domy, Nezábudková ulica, Železničná ulica, Kulačská ulica, Jesenského ulica, Ádorská ulica, Štúrova ulica, Táborová ulica
+#   okrsok 8: Zelená ulica, Žitnoostrovská ulica, Brezová ulica, Hviezdna ulica, Krížna ulica, Povodská cesta, Neratovické námestie 2143, 2144, 2145, 2146, 2147, Gabčíkovská cesta, Hlboká ulica, Vajanského ulica
+#   okrsok 9: Rákócziho ulica, Mierová ulica, Kúpeľná ulica, Orechová ulica, Narcisová ulica, Malotejedská ulica, Priemyselná ulica, Podzáhradná ulica, Bihariho ulica, Drevárska ulica, Nová osada, Kračanská cesta, Kračanská cesta núdzové byty, Rekreačný rad, Nemešsegská ulica 132, 133, 6331, 6575, Viedenská cesta, Cesta svätého Krištofa, Levanduľová ulica, Púpavova ulica, Fialková ulica, Kaplnská ulica, Ulica Kapuhegyská
+#   okrsok 10: mestskú časť Mliečany
+#   okrsok 11: Školská ul. 936/1, Poľná cesta, Školská ulica, Partizánska ulica, Ul. Sv. Juraja, Ul. Lászlóa Amadea, Ulica Gyulu Szabóa – časť Dunajská Streda, Jókaiho ulica, Kodályova ulica, Záhradnícka ulica, Ulica Adyho, Maloblahovská ulica, Ulica Ignáca Gálffyho
+#   okrsok 12: Bratislavská cesta, Októbrová ulica, Jantárova cesta 1866, 1867, 1868, 1869, 1870, Ulica generála Svobodu 1946, 1947, 1948, 1949, 1950, 1951, 1952, 1953, Ulica gen.Svobodu rodinné domy, Ulica Kálmána Mikszátha, Ulica Lajosa Kossutha, Ulica Ferenca Liszta, Cukrovarská ulica, Krátka ulica, Kvetná ulica, Agátová ulica, Ulica Pála Angyala, Ulica Ferenca Vermesa
+#   okrsok 13: Jantárová cesta, Hviezdoslavova ulica, Malá ulica, Széchenyiho ulica, Ulica Zoltána Fábryho, Ulica Imre Madácha, Tichá ulica, Jasná ulica, Nevädzová ulica, Rényská ulica, Veľkoblahovská cesta rodinné domy, Veľkoblahovská cesta 1491, 1064, 1065, 1066, 1067, 1068, 1069, 1070, Veľkoblahovská cesta obytné bloky od č. 64 – 76, Átriová ulica, Gaštanový rad, Ulica Jánosa Esterházyho, Ulica Mihálya Marczella, Czibóková ulica
+#   okrsok 14: Ulica Gyulu Szabóa, časť Malé Blahovo, Horná ulica, Letištná ulica, Vinohradnícka ulica, Topoľová ulica, Družstevná ulica, Gombótášska ulica, Lesná ulica, Čigérska ulica, Lipová ulica, Ulica Sv. Alžbety, Malolesná ulica, Ulica László Mécsa, Svetlá ulica, Dolná ulica, Spojná ulica, Pekná ulica, Stromová ulica, Javorová ulica, Slepá ulica, Hájska, Čótfa, Čukáraboň, Ulica Ármina Kornfelda
+#   okrsok 15: Rybný trh 330, 331, 333, 334, 335, 336, Mlynská ulica 306, 307, 308, 309, Mlynská ulica rodinné domy, Galantská cesta, Nová Ves 5555, 5995, 6834, 7046
+#   okrsok 16: Nová Ves 2220, 2221, 2222, 2223, 2224, 2225, 2226, 2227, 2441, , Rad Pókatelek, Na pažiti, Ľanárska ulica, Csermelyova ulica, Ulica Benedeka Csaplára, Ulica Attilu Józsefa, Ulica Lajosa Kassáka, Cesta aradských mučeníkov, Ulica kráľa Žigmunda, Ulica Zsigmonda Móricza, Ulica kráľa Mateja, Ulica bohatierská, Ulica svätého Ladislava, Ulica Károlya Szladitsa, Ulica Istvána Dobóa, Ulica Hermana Steinera, Ulica Györgya Tölgyessyho, Ulica Károlya Róberta, Cesta svätého pápeža Jána Pavla II.
+#   okrsok 17: Námestie priateľstva 2164, 2166, 2168, 2169, 2170, 2171, 2172, 5090, Bažantia, Cesta siedmich vojvodcov, Ulica vojvodcu Árpáda
+#   okrsok 18: Jilemnického ulica 203, 204, 205, 233, 234, 337, 338, Nová Ves 2217, 2218, 2219, Námestie priateľstva 2201
+obec = "501433"
+name = "Dunajská Streda"
+okrsky_date = 2019-02-18
+okrsky_fill = "nearest"
+okrsky_note = "Transcribed from the mayor's okrsky document: streets per okrsok, blocks of flats by súpisné číslo. Streets split between okrsky (námestie SNP, Boriny, Jantárová cesta, Nová Ves, Námestie priateľstva, Jilemnického) take the listed súpisné numbers (by supisne) and the rest of the street goes to the okrsok listing its family houses or the main part (SNP okr. of 193–198, Boriny 1360–1364, Jantárová cesta without numbers, Nová Ves 2220–2441, Námestie priateľstva 2164–5090, Jilemnického 201). 'Mesto – Dunajská Streda' means voters registered only to the town, not a street. Streets the document names but the register lacks are left out; register streets the document does not name and the addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://dunstreda.sk/files/utvorenie_volebnych_okrskov_a_urcenie_volebnych_miestnosti_6.pdf"
+sha256 = "2b260f386f15f0585c5e8a943b41bb86b7ff52d1305b100c91527e7bef3c473a"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://dunstreda.sk/volby-do-europskeho-parlamentu"
+sha256 = "4804e3654712d16f462f25d898706671bd107ace16c2686d965609ce2defbed5"
+title = "Election page linking the document"
+
+[okrsok.1]
+rules = [
+  {street = "Nám. SNP", numbers = "184-186, 188-192", by = "supisne", written = "námestie SNP"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Júliusa Lőrincza"},
+  {street = "Nám. SNP"},
+  {street = "Boriny", numbers = "1381-1384, 1528", by = "supisne"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Smetanov háj"},
+  {street = "Ul.Istvána Gyurcsóa", written = "Ulica Istvána Gyurcsóa"},
+  {street = "Boriny", numbers = "1365-1368", by = "supisne"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Ružový háj"},
+  {street = "Športová"},
+  {street = "Boriny"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Ulica M.R.Štefánika"},
+  {street = "Sládkovičova"},
+  {street = "Trhovisko"},
+  {street = "Ružová"},
+  {street = "Malodvornícka cesta"},
+  {street = "Bacsákova"},
+  {street = "Radničné námestie"},
+  {street = "Ul.biskupa Kondého", written = "Ulica biskupa Kondého"},
+  {street = "Múzejná"},
+  {street = "Poštová"},
+  {street = "Korzo Bélu Bartóka"},
+  {street = "Ovocný sad"},
+  {street = "Štvrť svätého Jána"},
+  {street = "Ulica Lászlóa Telekiho"},
+  {street = "Jilemnického"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Hlavná", note = "The document names \"Hlavná ulica bytové domy 46, 47\" only here and Hlavná in no other okrsok; the whole street is placed here."},
+  {street = "Nám. Ármina Vámbéryho"},
+  {street = "Budovateľská"},
+  {street = "Ulica Sándora Petőfiho"},
+  {street = "Ulica Jánosa Aranya"},
+  {street = "Ulica Bálinta Balassiho"},
+  {street = "Dunajská", written = "Dunajská ul."},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Námestie Sv.Štefana", written = "Nám. Sv. Štefana"},
+  {street = "Alžbetínske námestie"},
+  {street = "Kukučínova"},
+  {street = "Komenského"},
+  {street = "Nezábudková"},
+  {street = "Železničná"},
+  {street = "Kulačská"},
+  {street = "Jesenského"},
+  {street = "Ádorská"},
+  {street = "Štúrova"},
+  {street = "Táborová"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Zelená"},
+  {street = "Žitnoostrovská"},
+  {street = "Brezová"},
+  {street = "Hviezdna"},
+  {street = "Krížna"},
+  {street = "Povodská cesta"},
+  {street = "Neratovické nám."},
+  {street = "Gabčíkovská cesta"},
+  {street = "Hlboká cesta", written = "Hlboká ulica", note = "the document calls it ulica, the register cesta; the only street of that name"},
+  {street = "Vajanského"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Rákócziho"},
+  {street = "Mierová"},
+  {street = "Kúpeľná"},
+  {street = "Orechová"},
+  {street = "Narcisová ulica"},
+  {street = "Malotejedská"},
+  {street = "Priemyselná"},
+  {street = "Podzáhradná"},
+  {street = "Bihariho"},
+  {street = "Drevárska"},
+  {street = "Nová Osada"},
+  {street = "Kračanská cesta"},
+  {street = "Rekreačný Rad"},
+  {street = "Nemesszegská", written = "Nemešsegská ulica", note = "Slovak spelling of the Hungarian name Nemesszeg"},
+  {street = "Viedenská cesta"},
+  {street = "Cesta svätého Krištófa", written = "Cesta svätého Krištofa"},
+  {street = "Levanduľová ulica"},
+  {street = "Púpavová ulica", written = "Púpavova ulica"},
+  {street = "Fialková ulica"},
+  {street = "Ulica Kapuhegyská"},
+]
+
+[okrsok.10]
+rules = [
+  {part = "Mliečany"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Poľná cesta"},
+  {street = "Školská"},
+  {street = "Partizánska"},
+  {street = "Ulica svätého Juraja", written = "Ul. Sv. Juraja"},
+  {street = "Ulica László Amadea", written = "Ul. Lászlóa Amadea", note = "Lászlóa is the Slovak genitive of László"},
+  {street = "Jókaiho"},
+  {street = "Kodályova"},
+  {street = "Záhradnícka"},
+  {street = "Ulica Adyho"},
+  {street = "Maloblahovská ulica"},
+  {street = "Ulica Ignáca Gálffyho"},
+  {street = "Ulica Gyulu Szabóa", part = "Dunajská Streda", written = "Ulica Gyulu Szabóa", note = "The document puts the street's section in part Dunajská Streda here (\"– časť Dunajská Streda\") and the street otherwise with part Malé Blahovo."},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Bratislavská cesta"},
+  {street = "Októbrová"},
+  {street = "Ul.gen.Svobodu", written = "Ulica generála Svobodu"},
+  {street = "Ulica Kálmána Mikszátha"},
+  {street = "Ulica Lajosa Kossutha"},
+  {street = "Ulica Ferenca Liszta"},
+  {street = "Cukrovarská"},
+  {street = "Krátka"},
+  {street = "Kvetná"},
+  {street = "Agátová"},
+  {street = "Ulica Pála Angyala"},
+  {street = "Ulica Ferenca Vermesa"},
+  {street = "Jantárová cesta", numbers = "1866-1870", by = "supisne", written = "Jantárova cesta"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "Malá"},
+  {street = "Széchényiho", written = "Széchenyiho ulica"},
+  {street = "Zoltána Fábryho", written = "Ulica Zoltána Fábryho"},
+  {street = "Ulica Imre Madácha"},
+  {street = "Tichá"},
+  {street = "Jasná"},
+  {street = "Nevädzová ulica"},
+  {street = "Rényska"},
+  {street = "Rényska ulica"},
+  {street = "Veľkoblahovská cesta"},
+  {street = "Átriová"},
+  {street = "Gaštanový rad"},
+  {street = "Ulica Jánosa Esterházyho"},
+  {street = "Ulica Mihálya Marczella"},
+  {street = "Czibókova ulica", written = "Czibóková ulica"},
+  {street = "Jantárová cesta"},
+]
+
+[okrsok.14]
+rules = [
+  {part = "Malé Blahovo"},
+  {street = "Ulica Gyulu Szabóa", part = "Malé Blahovo"},
+  {street = "Horná"},
+  {street = "Letištná"},
+  {street = "Vinohradnícka"},
+  {street = "Topoľová"},
+  {street = "Družstevná"},
+  {street = "Gombótášska"},
+  {street = "Lesná"},
+  {street = "Čigérska"},
+  {street = "Lipová"},
+  {street = "Ulica sv. Alžbety", written = "Ulica Sv. Alžbety"},
+  {street = "Malolesná ulica"},
+  {street = "Ulica László Mécsa"},
+  {street = "Svetlá ulica"},
+  {street = "Dolná"},
+  {street = "Spojná ulica"},
+  {street = "Pekná ulica"},
+  {street = "Stromová ulica"},
+  {street = "Javorová"},
+  {street = "Slepá ulica"},
+  {street = "Hájska"},
+  {street = "Čótfa"},
+  {street = "Čukáraboň"},
+  {street = "Ulica Ármina Kornfelda"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Rybný trh"},
+  {street = "Mlynská"},
+  {street = "Galantská cesta"},
+  {street = "Nová Ves", numbers = "5555, 5995, 6834, 7046", by = "supisne"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Rad Pókatelek"},
+  {street = "Na Pažiti"},
+  {street = "Ľanárska ulica"},
+  {street = "Csermelyova ulica"},
+  {street = "Ulica Benedeka Csaplára"},
+  {street = "Ulica Attilu Józsefa"},
+  {street = "Ulica Lajosa Kassáka"},
+  {street = "Cesta aradských mučeníkov"},
+  {street = "Ulica kráľa Žigmunda"},
+  {street = "Ulica Zsigmonda Móricza"},
+  {street = "Ulica bohatierska", written = "Ulica bohatierská"},
+  {street = "Ulica svätého Ladislava"},
+  {street = "Ulica Károlya Szladitsa"},
+  {street = "Ulica Hermana Steinera"},
+  {street = "Ulica Györgya Tölgyessyho"},
+  {street = "Nová Ves"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Bažantia"},
+  {street = "Cesta siedmich vojvodcov"},
+  {street = "Ulica vojvodcu Árpáda"},
+  {street = "Nám.priateľstva"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Nová Ves", numbers = "2217-2219", by = "supisne"},
+  {street = "Nám.priateľstva", numbers = "2201", by = "supisne", written = "Námestie priateľstva"},
+  {street = "Jilemnického", numbers = "203-205, 233-234, 337-338", by = "supisne", written = "Jilemnického ulica"},
+]

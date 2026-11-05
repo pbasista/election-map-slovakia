@@ -1,0 +1,31 @@
+# Okrsky of Liptovské Revúce, transcribed by an AI agent in job okrsok-rules-3205 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 – Hasičská zbrojnica, spoločenská miestnosť, Nižná Revúca 213
+#   okrsok 2: Okrsok č. 2 – Obecný úrad, obradná miestnosť, Stredná Revúca 386
+#   okrsok 3: Okrsok č. 3 – Hasičská zbrojnica, spoločenská miestnosť, Vyšná Revúca 563
+obec = "510718"
+name = "Liptovské Revúce"
+okrsky_note = "No 'určenie volebných okrskov' of the referendum is published; the municipality's notice for the referendum of 21.01.2023 lists the 3 okrsky with their polling stations (Nižná, Stredná, Vyšná Revúca), so each okrsok gets the part of its station. The other votes' documents split by súpisné číslo ranges (1–230, 231–530, 531–800), which the part split may not match exactly."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names the referendum of 21.01.2023; it is undated."
+
+[[document]]
+url = "https://www.liptovskerevuce.sk/evt_file.php?file=7465"
+sha256 = "f2feb71fe344d8f1558c2b581e6c436de5e88888d63333d1bf484763baea77ed"
+title = "Oznámenie pre voličov k hlasovaniu do prenosnej volebnej schránky pre referendum 21.01.2023 (okrsky a volebné miestnosti)"
+
+[okrsok.1]
+rules = [
+  {part = "Nižná Revúca", note = "the document gives only the polling station, in Nižná Revúca; 3 okrsky and 3 parts, each station in another part", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Stredná Revúca", note = "the document gives only the polling station, in Stredná Revúca; 3 okrsky and 3 parts, each station in another part", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Vyšná Revúca", note = "the document gives only the polling station, in Vyšná Revúca; 3 okrsky and 3 parts, each station in another part", inferred = true},
+]

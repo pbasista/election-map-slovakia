@@ -1,0 +1,73 @@
+# Okrsky of Bratislava-Rusovce, transcribed by an AI agent in job okrsok-rules-178 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Antická, Attidova, Auréliova, Balkánska, Dolichénska, Domiciánova, Firmova, Hadriánova, Ilýrska, Kananefatská, Laténska, Longobardská, Septimiova, Severovcov, Starorímska, Tibériova, Trajánova, Valentiniánova
+#   okrsok 2: Bronzová, Colnícka, Druidská, Fláviovska, Hájenka, Hájová, Irkutská, Keltská, Lesnícka, Mínešská, Pri Gaštanovej aleji, Pri pieskovom hone, Pri Rusovskom ramene, Pri žrebčíne, Svébska, Švajčiareň, Pri vodnej veži, Zdravotnícka, Vývojová, občania prihlásení na obec
+#   okrsok 3: Ágosta Sötéra, Aladára Radnotiho, Gerulatská, Jána Dekana, Kovácsova, Lónyaiová, Ľudmily Kraskovskej, Maďarská, Pohraničníkov, Radoslava Hošeka, Vojtecha Ondrucha
+obec = "529494"
+name = "Bratislava-Rusovce"
+okrsky_fill = "nearest"
+okrsky_note = "Streets Auréliova, Kananefatská, Pri žrebčíne and Hájenka named by the document are not in the register and are left out. \"Občania prihlásení na obec\" are voters registered without an address. Addresses without a street (súpisné only) are placed by fill_nearest. The document does not name Laury Henckelovej (7 addresses, a newer street); fill_nearest places it. The 2017 list differs from 2018: Antická, Tibériova, Trajánova in okrsok 1."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document is headed \"Voľby 4. 11. 2017\" (the regional elections of 4 November 2017); it states no decision date. Linked from the page \"Voľby do orgánov Bratislavského samosprávneho kraja 2017\"."
+
+[[document]]
+url = "https://www.bratislava-rusovce.sk/media/files/Volby_do_VUC/okrsky_2017_s_ulicami_Microsoft_Word_Document.docx"
+sha256 = "e8a67e5bbcb8d0b9d3ca0ed05f98d387b9e0235244e406e5a50a6927833ddc47"
+title = "Voľby 4. 11. 2017 – Volebné okrsky v MČ Bratislava - Rusovce"
+
+[okrsok.1]
+rules = [
+  {street = "Antická"},
+  {street = "Attidova"},
+  {street = "Balkánska"},
+  {street = "Dolichénska"},
+  {street = "Domiciánova"},
+  {street = "Firmova"},
+  {street = "Hadriánova"},
+  {street = "Ilýrska"},
+  {street = "Laténska"},
+  {street = "Longobardská"},
+  {street = "Septimiova"},
+  {street = "Severovcov"},
+  {street = "Starorímska"},
+  {street = "Tibériova"},
+  {street = "Trajánova"},
+  {street = "Valentiniánova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bronzová"},
+  {street = "Colnícka"},
+  {street = "Druidská"},
+  {street = "Fláviovska"},
+  {street = "Hájová"},
+  {street = "Irkutská"},
+  {street = "Keltská"},
+  {street = "Lesnícka"},
+  {street = "Mínešská"},
+  {street = "Pri gaštanovej aleji", written = "Pri Gaštanovej aleji"},
+  {street = "Pri pieskovom hone"},
+  {street = "Pri Rusovskom ramene"},
+  {street = "Svébska"},
+  {street = "Švajčiareň"},
+  {street = "Pri vodnej veži"},
+  {street = "Zdravotnícka"},
+  {street = "Vývojová"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Ágosta Sötéra"},
+  {street = "Aladára Radnótiho", written = "Aladára Radnotiho", note = "missing accent: the register's Aladára Radnótiho"},
+  {street = "Gerulatská"},
+  {street = "Jána Dekana"},
+  {street = "Kovácsova"},
+  {street = "Lónyaiová"},
+  {street = "Ľudmily Kraskovskej"},
+  {street = "Maďarská"},
+  {street = "Pohraničníkov"},
+  {street = "Radoslava Hošeka"},
+  {street = "Vojtecha Ondroucha", written = "Vojtecha Ondrucha", note = "misspelling of Vojtecha Ondroucha"},
+]

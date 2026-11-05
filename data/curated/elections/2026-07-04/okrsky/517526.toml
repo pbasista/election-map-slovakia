@@ -1,0 +1,29 @@
+# Okrsky of Dolný Hričov, transcribed by an AI agent in job okrsok-rules-5731 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volebný okrsok č. 1 – Dolný Hričov
+#   okrsok 2: volebný okrsok č. 2 – Peklina
+obec = "517526"
+name = "Dolný Hričov"
+okrsky_date = 2026-05-07
+okrsky_note = "The okrsky are named after the parts: okrsok 1 Dolný Hričov, okrsok 2 Peklina; each is the part it is named after."
+
+[[document]]
+url = "https://www.dolnyhricov.sk/e_download.php?file=/data/uredni_deska/obsah1805_1.pdf&original=Vytvorenie%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "88c1ac7cbe6ffd97de0360841527277660f3b4e1baa5710064445b98a0ac72af"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností pre referendum – 04. 07. 2026 (07. 05. 2026)"
+
+[[document]]
+url = "https://www.dolnyhricov.sk/uradna-tabula/uradna-tabula/vytvorenie-volebnych-okrskov-1862.html"
+sha256 = "edc135d4ae1e2d4b49b7945a90899372bd8e57f3800e171605a62cdba02e157a"
+title = "Vytvorenie volebných okrskov (úradná tabuľa, vyvesené 7. 5. 2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Dolný Hričov"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Peklina"},
+]

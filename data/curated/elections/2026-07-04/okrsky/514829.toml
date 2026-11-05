@@ -1,0 +1,103 @@
+# Okrsky of Hnúšťa, transcribed by an AI agent in job okrsok-rules-5396 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Brandzová, Hlavná 12-43, 437, 935, Križanova, Milana Rastislava Štefánika 443, Mútnik, SNP, Železničná, Ždiar, mestská časť Polom, mestská časť Brádno, mestská časť Hačava, voliči zapísaní na trvalý pobyt Hnúšťa
+#   okrsok 2: Francisciho, Fučíkova, Hrebendova, Iváčka, Jilemnického, Kotlište, Kotlištská, Kraskova, Maša, Námestie Janka Francisciho, Partizánska, Rad, Rumunskej armády, Skalica, 1. mája 523 – 551, 620 – 623, 727 -728
+#   okrsok 3: Banícka, Budovateľov, Hurbanova, Mierová, Mládeže, Pokroku, Poľná, Sinecká, Štefana Marka Daxnera, Vansovej, l. mája 907-908-909, 5l3-520,624-645
+#   okrsok 4: Hlavná 374 - 436, Milana Rastislava Štefánika 444, 445, Nábrežie Rimavy, Športová
+#   okrsok 5: Klokočova
+#   okrsok 6: Bakulíniho, Bottova, Janka.Kráľa, Jesenského, Kpt. Nálepku, Sládkovičova, Školská, Štúrova, Švermova, Vladimíra Clementisa, Zápotockého, Horná, Dolná
+obec = "514829"
+name = "Hnúšťa"
+okrsky_date = 2026-05-04
+okrsky_fill = "nearest"
+okrsky_note = "House numbers of Hlavná, M. R. Štefánika and 1. mája are súpisné (by: supisne). Addresses of Hlavná, M. R. Štefánika and 1. mája whose súpisné číslo the document does not list, Záhrada 1.mája, Skálie (part Hačava, okrsok 1 by part) and the houses without a street take the nearest okrsok (fill_nearest). 'Voliči zapísaní na trvalý pobyt Hnúšťa' (okrsok 1) are voters without an address, not register houses."
+
+[[document]]
+url = "https://mesto.hnusta.sk/e_download.php?file=/data/editor/464sk_2.pdf&original=Rozhodnutie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Den%C3%AD%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "0b15e17dd44acc74308e78a60ebb5bf2838ec91776d482af80371f0adb97efcb"
+title = "Rozhodnutie primátora mesta Hnúšťa o utvorení volebných okrskov a určení volebných miestností (referendum 4. 7. 2026)"
+
+[[document]]
+url = "https://mesto.hnusta.sk/samosprava/volby-a-referenda/referendum-2026-4/referendum-2026-utvorenie-volebnych-okrskov-5640sk.html"
+sha256 = "b44164e90af73de9c3a60c8d9ef983894b81d1362a1b43a5e0dfee1e117d89ad"
+title = "REFERENDUM 2026 - Utvorenie volebných okrskov"
+
+[okrsok.1]
+rules = [
+  {street = "Brandzová"},
+  {street = "Hlavná", numbers = "12-43, 437, 935", by = "supisne"},
+  {street = "Križanova"},
+  {street = "Milana Rastislava Štefánika", numbers = "443", by = "supisne"},
+  {street = "Mútnik"},
+  {street = "SNP"},
+  {street = "Železničná"},
+  {street = "Ždiar"},
+  {part = "Polom"},
+  {part = "Brádno"},
+  {part = "Hačava"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Francisciho"},
+  {street = "Fučíkova"},
+  {street = "Hrebendova"},
+  {street = "Iváčka"},
+  {street = "Jilemnického"},
+  {street = "Kotlište"},
+  {street = "Kotlištská"},
+  {street = "Kraskova"},
+  {street = "Maša"},
+  {street = "Námestie Janka Francisciho"},
+  {street = "Partizánska"},
+  {street = "Rad"},
+  {street = "Rumunskej armády"},
+  {street = "Skalica"},
+  {street = "1.mája", numbers = "523-551, 620-623, 727-728", by = "supisne", written = "1. mája"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Banícka"},
+  {street = "Budovateľov"},
+  {street = "Hurbanova"},
+  {street = "Mierová"},
+  {street = "Mládeže"},
+  {street = "Pokroku"},
+  {street = "Poľná"},
+  {street = "Sinecká"},
+  {street = "Štefana Marka Daxnera"},
+  {street = "Vansovej"},
+  {street = "1.mája", numbers = "907-909, 513-520, 624-645", by = "supisne", written = "l. mája", note = "\"l\" for \"1\" in the document"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Hlavná", numbers = "374-436", by = "supisne"},
+  {street = "Milana Rastislava Štefánika", numbers = "444, 445", by = "supisne"},
+  {street = "Nábrežie Rimavy"},
+  {street = "Športová"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Klokočova"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bakulíniho"},
+  {street = "Bottova"},
+  {street = "Janka Kráľa", written = "Janka.Kráľa"},
+  {street = "Jesenského"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Sládkovičova"},
+  {street = "Školská"},
+  {street = "Štúrova"},
+  {street = "Švermova"},
+  {street = "Vladimíra Clementisa"},
+  {street = "Zápotockého"},
+  {street = "Horná"},
+  {street = "Dolná"},
+]

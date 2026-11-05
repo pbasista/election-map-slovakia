@@ -1,0 +1,29 @@
+# The okrsky of Zlatná na Ostrove of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/501425.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Zlatná na Ostrove, transcribed by an AI agent in job okrsok-rules-734 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Volebný okrsok č. 1 – Spoločenský dom, 946 12 Zlatná na Ostrove 217 (od súp. č. 0 – do súp. č. 436 a osada Veľký Lél)
+#     okrsok 2: Volebný okrsok č. 2 – Miestne kultúrne stredisko, 946 12 Zlatná na Ostrove 455 (od súp. č. 437 – do súp. č. 992 a osada Horná Zlatná)
+obec = "501425"
+name = "Zlatná na Ostrove"
+okrsky_date = 2018-09-10
+okrsky_note = "The village has no street names; okrsky are given by súpisné čísla of the part Zlatná na Ostrove and the settlements Veľký Lél and Horná Zlatná (register parts). The document is a scan read by OCR."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1875): The website (elections section, full-text search) has no okrsky document of the EP election 2019; the Internet Archive was offline. Later announcements (2018, 2023, 2024) use súp. č. 0-436 + Veľký Lél / 437-992 + Horná Zlatná. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://www.obeczlatna.sk/e_download.php?file=data/uredni_deska/obsah20_6.pdf&original=utvorenie%20volebnych%20okrskov.pdf"
+sha256 = "daba34c637c2a1e23643c85b3943c2e5c0a226d7d05ee66b4db6df0793d06d78"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí dňa 10. novembra 2018"
+
+[okrsok.1]
+rules = [
+  {part = "Zlatná na Ostrove", numbers = "1-436", by = "supisne"},
+  {part = "Veľký Lél"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Zlatná na Ostrove", numbers = "437-", by = "supisne", note = "the document says up to súp. č. 992, the highest number; written open so later houses are included"},
+  {part = "Horná Zlatná"},
+]

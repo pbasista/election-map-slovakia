@@ -1,0 +1,105 @@
+# The okrsky of Modra of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/508101.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Modra, transcribed by an AI agent in job okrsok-rules-4674 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Dukelská, Kalinčiakova, Kukučínova, Podhorská, Nám. Slobody, Kuzmányho, Ulica za Štadiónom
+#     okrsok 2: Hviezdoslavova, Bratislavská, Zochova, Cpinova, Dr. Bodického, Fr. Kráľa, Hečkova, Jesenského, Kollárova, Kellenbergerova, Sládkovičova, Bernolákova, Štefánikova, Vinárska, Sokolská, Ulica Ferdinanda Píseckého, Ulica Jána Bakoša
+#     okrsok 3: Štúrova, Horná, Baštová, Dolná, Kostolná, Moyzesova, Súkenícka, Komenského č. 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, mesto Modra
+#     okrsok 4: Družstevná, Komenského č. 1, 2, 4, 6, 1. mája, Čsl. armády, Krátka
+#     okrsok 5: Erneyho, Hrnčiarska, Šúrska, SNP, Vajanského, Komenského č. 8, 10, 12, 14, 16, 18, 20, 22, 24,26, 28
+#     okrsok 6: Partizánska, Trnavská, Karpatská, Národná, Puškinova, Pod vinicami
+#     okrsok 7: Lúčna, Potočná, Muškátová ulica, Leánková ulica, Tramínová ulica, Strapáková ulica, Malagová ulica, Šípková ulica, Veštíkova ulica, časť Harmónia, časť Piesok
+obec = "508101"
+name = "Modra"
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's undated decision for this vote (scan, read from the image); 1. mája, Čsl. armády and Krátka moved to okrsok 4. Streets the document names that the register lacks (left out): Muškátová ulica, Leánková ulica, Tramínová ulica, Strapáková ulica, Malagová ulica, Šípková ulica, Veštíkova ulica. 'mesto Modra' are voters without an address (no rule). Addresses the document leaves out (e.g. Komenského numbers not listed, streets of Kráľová it does not name) and those without a street take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1654): The old site's EP 2019 page (archived 2019-04-03) links 'Určenie volebných okrskov a miestností pre voľby do Európskeho parlamentu 2019 v Modre' (File.ashx id 6253), but the file was not archived and the old site is gone. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 7 okrsky (nearer, not taken: 2023-01-21: okrsky 1–4, then 1–7; 2023-09-30: okrsky 1–6, then 1–7; 2024-03-23: okrsok 7: 544 voters then, 685 in 2024-03-23). Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2024-06-08: 1: 999 → 978, 2: 987 → 1,224, 3: 1,558 → 1,503, 4: 1,244 → 1,099, 5: 1,069 → 1,056, 6: 1,242 → 1,093, 7: 544 → 658."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names the vote ('voľby do Europarlamentu 2024, 08. júna 2024'); it states no date of its own."
+
+[[document]]
+url = "https://www.modra.sk/wp-content/uploads/2024/04/Urcenie-volebnych-okrskov_Eurovolby-2024.pdf"
+sha256 = "a4daee71c319d91d9a3e614e19e641a98855232a208eefcacfa29d444823e9c1"
+title = "Určenie volebných okrskov a miestností pre voľby do Europarlamentu 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Dukelská"},
+  {street = "Kalinčiakova"},
+  {street = "Kukučínova"},
+  {street = "Podhorská"},
+  {street = "Nám. slobody", written = "Nám. Slobody"},
+  {street = "Kuzmányho"},
+  {street = "Za štadiónom", written = "Ulica za Štadiónom"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "Bratislavská"},
+  {street = "Zochova"},
+  {street = "Cpinova"},
+  {street = "Dr.Bodického", written = "Dr. Bodického"},
+  {street = "Fraňa Kráľa", written = "Fr. Kráľa"},
+  {street = "Hečkova"},
+  {street = "Jesenského"},
+  {street = "Kollárova"},
+  {street = "Kellenbergerova"},
+  {street = "Sládkovičova"},
+  {street = "Bernolákova"},
+  {street = "Štefánikova"},
+  {street = "Vinárska"},
+  {street = "Sokolská"},
+  {street = "Ulica Ferdinanda Píseckého"},
+  {street = "Ulica Jána Bakoša"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Štúrova"},
+  {street = "Horná"},
+  {street = "Baštová"},
+  {street = "Dolná"},
+  {street = "Kostolná"},
+  {street = "Moyzesova"},
+  {street = "Súkenícka"},
+  {street = "Komenského", numbers = "3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Družstevná"},
+  {street = "Komenského", numbers = "1, 2, 4, 6"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "Čsl. armády"},
+  {street = "Krátka"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Erneyho"},
+  {street = "Hrnčiarska"},
+  {street = "Šúrska"},
+  {street = "SNP"},
+  {street = "Vajanského"},
+  {street = "Komenského", numbers = "8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Partizánska"},
+  {street = "Trnavská"},
+  {street = "Karpatská"},
+  {street = "Národná"},
+  {street = "Puškinova"},
+  {street = "Pod Vinicami", written = "Pod vinicami"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Lúčna"},
+  {street = "Potočná"},
+  {part = "Harmónia"},
+  {part = "Piesok"},
+]

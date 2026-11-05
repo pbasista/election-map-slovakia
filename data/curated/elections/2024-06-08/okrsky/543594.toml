@@ -1,0 +1,59 @@
+# Okrsky of Spišské Vlachy, transcribed by an AI agent in job okrsok-rules-4782 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dobrá Voľa, Za Mestom; Partizánska; Vajanského 1-51; Slobody; 9. mája; Hviezdoslavova; SNP; Mlynská; Požiarnická; Cintorínska; Jarná; Bez ulice
+#   okrsok 2: Kostolná 1-50; Železničná 1-90; Jilemníckeho 1 – 50; J. Fabiniho 1-30; Slovenská 1-50; Spišská 1-50; Kukučínova 1-50; Tajovského 1-30; 1. mája 1-30; Vajanského 52-155
+#   okrsok 3: Včelná 1-30; Záhradná 1-60; Hornádska 1-60; Komenského 1-55; Sládkovičova 1-25; Štúrova 1-50; Slnečná 1-25; Lipová 1-25; Okolie 1-100
+obec = "543594"
+name = "Spišské Vlachy"
+okrsky_date = 2024-03-04
+okrsky_fill = "nearest"
+okrsky_note = "Mayor's notice with a three-column table of streets per okrsok; gone from the town's new website; used as archived. The number ranges listed cover each register street whole; Vajanského is split 1-51 okrsok 1, 52-155 okrsok 2. 'Bez ulice' (okrsok 1) means voters registered without an address; register houses without a street outside part Dobrá Voľa go to the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20241202170538/https://spisskevlachy.sk/dokumenty/eu_volby_2024/okrsky_eurovolby_2024.pdf"
+sha256 = "880cdd3d617566d8c362066d46555afcc0fba3f01ed5a1619c33acf2fc7f3024"
+title = "Oznámenie o utvorení volebných okrskov pre voľby do Európskeho parlamentu 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Dobrá Voľa"},
+  {street = "Za Mestom"},
+  {street = "Partizánska"},
+  {street = "Vajanského", numbers = "1-51"},
+  {street = "Slobody"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Hviezdoslavova"},
+  {street = "SNP"},
+  {street = "Mlynská"},
+  {street = "Požiarnická"},
+  {street = "Cintorínska"},
+  {street = "Jarná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kostolná"},
+  {street = "Železničná"},
+  {street = "Jilemnického", written = "Jilemníckeho", note = "misspelt; the register's only such street"},
+  {street = "J. Fabiniho"},
+  {street = "Slovenská"},
+  {street = "Spišská"},
+  {street = "Kukučínova"},
+  {street = "Tajovského"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "Vajanského", numbers = "52-155"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Včelná"},
+  {street = "Záhradná"},
+  {street = "Hornádska"},
+  {street = "Komenského"},
+  {street = "Sládkovičova"},
+  {street = "Štúrova"},
+  {street = "Slnečná"},
+  {street = "Lipová"},
+  {street = "Okolie"},
+]

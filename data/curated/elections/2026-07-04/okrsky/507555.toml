@@ -1,0 +1,50 @@
+# Okrsky of Smolenice, transcribed by an AI agent in job okrsok-rules-5457 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Budovateľská, Cintorínska, Fándlyho, Hollého, Hviezdoslavova, Komenského, Krátka, Kukučínova, Lesná, Obec Smolenice, Pivovarská, Pod Molpírom, Sládkovičova, SNP, Štúrova, Továrenská, Trnavská, Za bránou, Záhradnícka, Zajačia, Zalázne, Zámocká, Železničná
+#   okrsok 2: Jahodnícka, Kpt. Nálepku, Na lúkach, Obrancov mieru, Štefana Baniča
+obec = "507555"
+name = "Smolenice"
+okrsky_date = 2026-04-27
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's determination of 27.4.2026: two okrsky. 'Obec Smolenice' in okrsok 1 means voters registered only on the obec (no rule). Bernolákova, which the document does not name, and the houses without a street take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.smolenice.com/data/news_files/smolenice.com/132481/urcenie-okrskov-na-konanie-referenda-v-obci-smolenice.pdf"
+sha256 = "7d3b2a0b71738ad8200b9b3f3eea89a33356d0e0a60e0c52e2afab52a63b00ab"
+title = "Určenie okrskov na konanie Referenda v Obci Smolenice dňa 4. júla 2026 (27.4.2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Cintorínska"},
+  {street = "Fándlyho"},
+  {street = "Hollého"},
+  {street = "Hviezdoslavova"},
+  {street = "Komenského"},
+  {street = "Krátka"},
+  {street = "Kukučínova"},
+  {street = "Lesná"},
+  {street = "Pivovarská"},
+  {street = "Pod Molpírom"},
+  {street = "Sládkovičova"},
+  {street = "SNP"},
+  {street = "Štúrova"},
+  {street = "Továrenská"},
+  {street = "Trnavská"},
+  {street = "Za bránou"},
+  {street = "Záhradnícka"},
+  {street = "Zajačia"},
+  {street = "Zalázne"},
+  {street = "Zámocká"},
+  {street = "Železničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Jahodnícka"},
+  {street = "Kpt. Nálepku"},
+  {street = "Na lúkach"},
+  {street = "Obrancov mieru"},
+  {street = "Štefana Baniča"},
+]

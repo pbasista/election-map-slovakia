@@ -1,0 +1,28 @@
+# The okrsky of Likavka of the vote of 2020-02-29, data/curated/elections/2020-02-29/okrsky/510599.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Likavka, transcribed by an AI agent in job okrsok-rules-2463 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Volebný okrsok č. 1: súpisné čísla: 0, 2, 10, 12 až 114, 132, 664 až 1044, 1090 až 1111
+#     okrsok 2: Volebný okrsok č. 2: súpisné čísla: 9, 117 až 131, 133 až 660, 1058
+obec = "510599"
+name = "Likavka"
+okrsky_date = 2019-11-27
+okrsky_fill = "nearest"
+okrsky_note = "The document splits by súpisné čísla (the register has no streets). Súpisné číslo 0 (okrsok 1) is taken as voters registered without a house number and left out of the rules. Súpisné numbers the document does not list take the okrsok of the nearest placed address (fill_nearest)."
+okrsky_adopted = 2020-02-29
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-285): No okrsky document of this vote on the website or in the Internet Archive (the archived 'komunálne voľby 2018' okrsky page holds the 2014 notice). These are the okrsky of the vote of 2020-02-29 (2020-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2020-02-29: 1: 1,173 → 1,115, 2: 1,278 → 1,305."
+
+[[document]]
+url = "https://www.likavka.sk/e_download.php?file=data/uredni_deska/obsah327_11.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti%20pre%20vo%C4%BEby%20do%20NR%20SR%202020.pdf"
+sha256 = "772ea4df5a5841586c038c42c5d94994edd13bba2dffca4d12538d9517074b9e"
+title = "Volebné okrsky a volebné miestnosti v obci Likavka pre voľby do NR SR (27.11.2019)"
+
+[okrsok.1]
+rules = [
+  {part = "Likavka", numbers = "2, 10, 12-114, 132, 664-1044, 1090-1111"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Likavka", numbers = "9, 117-131, 133-660, 1058"},
+]

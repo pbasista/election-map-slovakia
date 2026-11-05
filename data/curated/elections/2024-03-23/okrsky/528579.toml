@@ -1,0 +1,24 @@
+# Okrsky of Maťovské Vojkovce, transcribed by an AI agent in job okrsok-rules-4594 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: v časti obce Maťovce utváram volebný okrsok č. 1
+#   okrsok 2: v časti obce Vojkovce utváram volebný okrsok č. 2
+obec = "528579"
+name = "Maťovské Vojkovce"
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The decision is undated; its heading names the presidential election of 23 March 2024."
+
+[[document]]
+url = "https://www.matovskevojkovce.sk/data/65c426f196cb2_utvorenie_volebnych_okrskov_000150.pdf"
+sha256 = "ad020be5012175b33bd47b584453e6f73e9b6d8f918d4f71c73c3cbf7e416470"
+title = "Utvorenie volebných okrskov pre voľby prezidenta SR v obci Maťovské Vojkovce"
+
+[okrsok.1]
+rules = [
+  {part = "Maťovce"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kapušianske Vojkovce", note = "The document calls the part Kapušianske Vojkovce simply \"Vojkovce\"; the municipality has only the two parts Maťovce and Kapušianske Vojkovce."},
+]

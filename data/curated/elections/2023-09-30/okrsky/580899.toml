@@ -1,0 +1,67 @@
+# Okrsky of Lužianky, transcribed by an AI agent in job okrsok-rules-3567 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok I. Ulice: Egrešová ulica, Horákova, Jahodová ulica, Kaplanova, Malinová ulica, Mesačná, Obežná, Pri trati, Rastislavova, Smreková ulica, Topoľová ulica, Lužianky 0
+#   okrsok 2: Okrsok II Ulice: Ciolkovského, Dunajského, Edisonova, Hlohovecká, Hronského, Kajsa, Kajsa II., Korytovská, Na Holotke, Na ihrisko, Nejedlého, Počašie, Pod Hliníkom, Prúdov, Radošinská, Sasinkova, Slivková ulica, Športová, Švantnerova, Tatranská, Teslova, Urbanova, Venušina, Vinárska, Vodárenská, Závodníkova
+obec = "580899"
+name = "Lužianky"
+okrsky_fill = "nearest"
+okrsky_note = "'Lužianky 0' in okrsok I are the voters registered without a street address (no rule). The list leaves out Čerešňová ulica, Cez panské, Dolné Hony, Golfová, Lipová ulica and Višňová ulica (new streets, a few houses) and the addresses without a street: fill_nearest places them."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-06-19
+okrsky_date_basis = "The obec's page 'Voľby do Národnej rady Slovenskej republiky 2023' lists 'okrsky - ulice' and 'okrsky' (the latter headed 'VOĽBY DO NÁRODNEJ RADY SR 30.9.2023') with the date 19.6.2023; the street list itself is undated. The Internet Archive captured the page on 2023-10-01 and the PDF on 2024-02-07, both after the vote. (https://www.luzianky.sk/3051/volby-do-narodnej-rady-slovenskej-republiky-2023)"
+
+[[document]]
+url = "https://www.luzianky.sk/data/page/luzianky.sk/3051/okrsky-ulice.pdf"
+sha256 = "dd7cc5ea617201905c8914ab1fd5144118f145e93694a0359202290316e172c3"
+title = "okrsky - ulice (Okrsok I., Okrsok II – ulice)"
+
+[[document]]
+url = "https://www.luzianky.sk/data/page/luzianky.sk/3051/okrsky.pdf"
+sha256 = "3674c77276134e6131cacbbbde7945d99a66a1b06c210003c8caaddf066fcc50"
+title = "Voľby do Národnej rady SR 30.9.2023 – volebné miestnosti okrsok 1. a okrsok 2."
+
+[okrsok.1]
+rules = [
+  {street = "Egrešová ulica"},
+  {street = "Horákova"},
+  {street = "Jahodová ulica"},
+  {street = "Kaplanova"},
+  {street = "Malinová ulica"},
+  {street = "Mesačná"},
+  {street = "Obežná"},
+  {street = "Pri trati"},
+  {street = "Rastislavova"},
+  {street = "Smreková ulica"},
+  {street = "Topoľová ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ciolkovského"},
+  {street = "Dunajského"},
+  {street = "Edisonova"},
+  {street = "Hlohovecká"},
+  {street = "Hronského"},
+  {street = "Kajsa"},
+  {street = "Kajsa II", written = "Kajsa II."},
+  {street = "Korytovská"},
+  {street = "Na Holotke"},
+  {street = "Na Ihrisko", written = "Na ihrisko"},
+  {street = "Nejedlého"},
+  {street = "Počašie"},
+  {street = "Pod Hliníkom"},
+  {street = "Prúdová", written = "Prúdov", note = "the document's 'Prúdov' is Prúdová with the ending cut off; no other street of the register is alike"},
+  {street = "Radošinská"},
+  {street = "Sasinkova"},
+  {street = "Slivková ulica"},
+  {street = "Športová"},
+  {street = "Švantnerova"},
+  {street = "Tatranská"},
+  {street = "Teslova"},
+  {street = "Urbanova"},
+  {street = "Venušina"},
+  {street = "Vinárska"},
+  {street = "Vodárenská"},
+  {street = "Závodníkova"},
+]

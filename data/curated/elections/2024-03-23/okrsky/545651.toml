@@ -1,0 +1,29 @@
+# Okrsky of Veľké Držkovce, transcribed by an AI agent in job okrsok-rules-4583 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: miestna časť obce Čuklasovce
+#   okrsok 2: miestna časť obce Horné Držkovce
+#   okrsok 3: miestna časť obce Dolné Držkovce
+obec = "545651"
+name = "Veľké Držkovce"
+okrsky_date = 2024-01-10
+
+[[document]]
+url = "https://www.velkedrzkovce.sk/files/2024-01-23-135023-Ur__enie_vol._miestnost___a_okrskov.pdf"
+sha256 = "d6ef12e9549a184d5e6f8d8a6e1652894a9837b2707df514ed41cf4f51d1b7b2"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre Voľby prezidenta v roku 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Čuklasovce"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Horné Držkovce"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Dolné Držkovce"},
+]

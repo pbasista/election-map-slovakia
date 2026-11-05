@@ -1,0 +1,26 @@
+# The okrsky of Kuchyňa of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/508021.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Kuchyňa, transcribed by an AI agent in job okrsok-rules-4431 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: súp. č. 0 -300
+#     okrsok 2: súp. č. 301 - 1480
+obec = "508021"
+name = "Kuchyňa"
+okrsky_date = 2024-01-24
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3803): The municipality's website (obeckuchyna.sk) keeps election pages for 2018, 2020, 2024 and 2026 but none for the National Council election of 2023 or the referendum of January 2023; its notice-board archive and full-text search find no okrsky document of 2023. The 2024 documents (súp. č. 0-300 / 301-1480, from 24.1.2024) are later votes' and not allowed here. The Internet Archive has a capture of the 2023 homepage (20230924185726), but web.archive.org stayed offline (connection failures, then 503 'Temporarily Offline') over ~16 attempts with 30-60 s pauses, so the 2023 site could not be searched there. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2024-03-23: 1: 758 → 742, 2: 746 → 751."
+
+[[document]]
+url = "https://www.obeckuchyna.sk/e_download.php?file=/data/uredni_deska/obsah3_8.pdf&original=okrsky-urcenie.pdf"
+sha256 = "05f995326d4a19189106dcba70cb2b886569291b4e6e334fcba84749b4e7951a"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta Slovenskej republiky 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Kuchyňa", numbers = "0-300"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kuchyňa", numbers = "301-1480"},
+]

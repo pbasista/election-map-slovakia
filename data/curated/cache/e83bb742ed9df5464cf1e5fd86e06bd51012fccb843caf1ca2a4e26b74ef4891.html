@@ -1,0 +1,312 @@
+ 
+
+
+<html lang="sk">
+<head>
+	<meta charset="utf-8">
+	<title>Komunálne voľby 2018</title>
+	<meta name="description" content="Komunálne voľby 2018">
+	<meta name="author" content="INWARE s.r.o., Radovan Bosý, inware@inware.sk">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="https://www.sered.sk/pictures/favicon.ico">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://www.sered.sk/style/styles.css?v=1.1">
+	<link rel="stylesheet" href="https://www.sered.sk/style/clanky.css?v=1.1">
+	<link rel="stylesheet" href="https://www.sered.sk/style/escScheduler.css?v=1" />
+	<link rel="stylesheet" href="https://www.sered.sk/style/menu.css?v=1" />
+	<link rel="stylesheet" href="https://www.sered.sk/style/lightbox.css?v=1" />
+	<script type="text/javascript" src="https://www.sered.sk/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="https://www.sered.sk/js/jquery.easing.1.3.js"></script>	
+	<script type="text/javascript" src="https://www.sered.sk/js/escScheduler.js"></script>
+	<script type="text/javascript" src="https://www.sered.sk/js/lightbox.min.js"></script>
+
+  <script>
+  		$(document).ready(function() {
+			escScheduler.init({
+				elementId: "scheduler1", // id of a div
+				jsonFile: "scheduler.json", // name of a json file
+				beggingDate: "2019-07-21", // integer or a specific date (examples: -3, 0, 3, 2017-03-12)
+				numDates: "40", // positive integer
+				width: "100%", // number in pixels or percentage (examples: 120px, 150px, 50%, 70%, auto, 120px - auto, 50% - auto)
+				alignment: "center", // 'left', 'center' and 'right'
+				enableArrows: true, // true/false
+				colors: {
+					overlay: "red", // 'black', 'green', 'blue', 'red', 'cyan', 'pink', 'purple' and 'orange'
+					arrows: "blacks", // 'black', 'green', 'blue', 'red', 'cyan', 'pink', 'purple' and 'orange'
+					defaultEventLine: "#CCCCCC" // any color in css format (name or hex value)
+				},
+				dateType: "both", // 'days', 'months' and 'both'
+				flashSpaceInterval: "5", // positive integer
+				localization: "sk-SK", // country ISO code
+				differDateWithEvents: true, // true/false
+				loadMousewheelPlugin: false // true/false
+			});
+		});
+  
+  
+	$(document).ready(function(){  
+		/*
+		$(".mobile_menu1").click(function(e) {
+			$(".mobile_menu1").toggleClass('change');
+			$("#mobile_menu").toggleClass("show");
+			e.preventDefault();
+		}); 
+*/		
+		
+
+		$(".zobraz_odpovede").click(function(e) {
+			var co_zobrazit=$(this).attr("rel");
+			$("#"+co_zobrazit+"").toggleClass("disp_none");
+				if($("#"+co_zobrazit+"").hasClass("disp_none")){
+					$(this).children("span").text("+ Zobraziť");
+				}else{
+					$(this).children("span").text("- Skryť");
+				}		
+			e.preventDefault();
+		});
+		
+	}); 
+  </script>
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body class="pos_rel">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/cs_CZ/sdk.js#xfbml=1&version=v3.1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<header class="back_red shadow width100">
+<nav class="cf marg0_auto page_width pos_rel">
+
+
+
+    <div id="menu1" class="menu_container red full_width cf">
+        <a href="https://www.sered.sk" class="fl disp_block" title="Úvodná stránka"><img src="https://www.sered.sk/pictures/sered_erb_maly1.png" class=" height100"></a>
+		<label for="hidden_menu_collapser" class="mobile_collapser">Menu</label> <!-- Mobile menu title -->
+        <input id="hidden_menu_collapser" type="checkbox">
+		<ul>
+			<li><a href="https://www.sered.sk" title="Úvodná stránka"><i class="fas fa-home pos_rel menu_uvod" style="margin-top: 4px;"></i></a></li><li><a href="https://www.sered.sk/s2_oznamy" title="Oznamy">Oznamy</a><div class="menu_dropdown_block">
+							<ul class="menu_submenu_block"><li class="has-submenu"><a href="https://www.sered.sk/s8_oznamy" title="Oznamy">Oznamy</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s43_vsetky-aktualne-oznamy" title="Všetky aktuálne oznamy">Všetky aktuálne oznamy</a></li><li><a href="https://www.sered.sk/s44_samosprava" title="Samospráva">Samospráva</a></li><li><a href="https://www.sered.sk/s45_mestsky-urad" title="Mestský úrad">Mestský úrad</a></li><li><a href="https://www.sered.sk/s46_uradna-tabula" title="Úradná tabuľa">Úradná tabuľa</a></li><li><a href="https://www.sered.sk/s47_verejne-obstaravanie" title="Verejné obstarávanie">Verejné obstarávanie</a></li><li><a href="https://www.sered.sk/s282_krizove-riadenie" title="">Krízové riadenie</a></li><li><a href="https://www.sered.sk/s48_zivotne-prostredie" title="Životné prostredie">Životné prostredie</a></li><li><a href="https://www.sered.sk/s49_informacie-pre-obcanov" title="Informácie pre občanov">Informácie pre občanov</a></li><li><a href="https://www.sered.sk/s50_kultura-a-sport" title="Kultúra">Kultúra a šport</a></li><li><a href="https://www.sered.sk/s54_vzdelavanie" title="Vzdelávanie">Vzdelávanie</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s9_archiv-oznamov" title="Archív oznamov">Archív oznamov</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s58_archiv" title="Archív">Archív</a></li><li><a href="https://www.sered.sk/s243_samosprava" title="Samospráva">Samospráva</a></li><li><a href="https://www.sered.sk/s244_mestsky-urad" title="Mestský úrad">Mestský úrad</a></li><li><a href="https://www.sered.sk/s245_uradna-tabula" title="Úradná tabuľa">Úradná tabuľa</a></li><li><a href="https://www.sered.sk/s246_verejne-obstaravanie" title="Verejné obstarávanie">Verejné obstarávanie</a></li><li><a href="https://www.sered.sk/s283_krizove-riadenie" title="">Krízové riadenie</a></li><li><a href="https://www.sered.sk/s247_zivotne-prostredie" title="Životné prostredie">Životné prostredie</a></li><li><a href="https://www.sered.sk/s248_informacie-pre-obcanov" title="Informácie pre občanov">Informácie pre občanov</a></li><li><a href="https://www.sered.sk/s249_kultura-a-sport" title="Kultúra">Kultúra a šport</a></li><li><a href="https://www.sered.sk/s253_vzdelavanie" title="Vzdelávanie">Vzdelávanie</a></li></ul></li></ul></div></li><li><a href="https://www.sered.sk/s3_mesto-sered" title="Mesto Sereď">Mesto Sereď</a><div class="menu_dropdown_block">
+							<ul class="menu_submenu_block"><li class="has-submenu"><a href="https://www.sered.sk/s10_zakladne-informacie" title="Základné informácie">Základné informácie</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s59_historia-mesta" title="História mesta">História mesta</a></li><li><a href="https://www.sered.sk/s61_zoznam-ulic" title="Zoznam ulíc">Zoznam ulíc</a></li><li><a href="https://www.sered.sk/s62_informacie-o-meste" title="Informácie o meste">Informácie o meste</a></li><li><a href="http://www.hospodarenieobci.sk/profily/?ID=2160" title="Finančné zdravie">Finančné zdravie</a></li><li><a href="https://www.sered.sk/s64_geografia" title="Geografia">Geografia</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s11_vzdelavanie" title="Vzdelávanie">Vzdelávanie</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s69_materska-skola-dionyza-stura" title="Materská škola Dionýza Štúra">Materská škola Dionýza Štúra</a></li><li><a href="https://www.sered.sk/s70_materska-skola-komenskeho" title="Materská škola Komenského">Materská škola Komenského</a></li><li><a href="https://www.sered.sk/s71_zakladna-skola-juraja-fandlyho" title="Základná škola Juraja Fándlyho">Základná škola Juraja Fándlyho</a></li><li><a href="https://www.sered.sk/s72_zakladna-skola-j-a-komenskeho" title="Základná škola J.A.Komenského">Základná škola J.A.Komenského</a></li><li><a href="https://www.sered.sk/s73_cirkevna-zakladna-skola" title="Cirkevná základná škola">Cirkevná základná škola</a></li><li><a href="https://www.sered.sk/s74_specialna-zakladna-skola" title="Špeciálna základná škola">Špeciálna základná škola</a></li><li><a href="https://www.sered.sk/s75_zakladna-umelecka-skola" title="Základná umelecká škola">Základná umelecká škola</a></li><li><a href="https://www.sered.sk/s76_gymnazium-vojtecha-mihalika" title="Gymnázium Vojtecha Mihálika Sereď">Gymnázium</a></li><li><a href="https://www.sered.sk/s77_obchodna-akademia" title="Obchodná akadémia">Obchodná akadémia</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s12_kultura" title="Kultúra">Kultúra</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s80_dom-kultury" title="Dom kultúry">Dom kultúry</a></li><li><a href="https://www.sered.sk/s81_kino-nova" title="Kino NOVA">Kino Nova</a></li><li><a href="https://www.sered.sk/s151_program-kina" title="Program kina NOVA">Program kina</a></li><li><a href="https://www.sered.sk/s82_mestske-muzeum" title="Mestské múzeum">Mestské múzeum</a></li><li><a href="https://www.sered.sk/s83_mestska-kniznica" title="Mestská knižnica">Mestská knižnica</a></li><li><a href="https://www.sered.sk/s242_kulturny-program" title="Aktuálne v kultúre">Kultúrny program</a></li><li><a href="https://www.sered.sk/s241_muzeum-holokaustu" title="Múzeum holokaustu">Múzeum holokaustu</a></li><li><a href="https://www.sered.sk/s84_seredsky-hodovy-jarmok" title="Seredský hodový jarmok">Seredský hodový jarmok</a></li><li><a href="https://www.sered.sk/s85_sered-dejiny-mesta-publikacia" title="Sereď dejiny mesta - publikácia">Sereď dejiny mesta - publikácia</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s13_sport" title="Šport">Šport</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s101_sport-aktualne" title="Plánované športové akcie">Šport aktuálne</a></li><li><a href="https://www.sered.sk/s86_basketbal" title="Basketbal">Basketbal</a></li><li><a href="https://www.sered.sk/s87_bojove-umenia" title="Bojové umenia">Bojové umenia</a></li><li><a href="https://www.sered.sk/s88_cyklistika" title="Cyklistika">Cyklistika</a></li><li><a href="https://www.sered.sk/s89_hadzana" title="Hádzaná">Hádzaná</a></li><li><a href="https://www.sered.sk/s91_florbal" title="Florbal">Florbal</a></li><li><a href="https://www.sered.sk/s92_futbal" title="Futbal">Futbal</a></li><li><a href="https://www.sered.sk/s93_futbal-seredska-interliga" title="Futbal - Seredská Interliga">Futbal - Seredská Interliga</a></li><li><a href="https://www.sered.sk/s94_stolny-tenis" title="Stolný tenis">Stolný tenis</a></li><li><a href="https://www.sered.sk/s95_sach" title="Šach">Šach</a></li><li><a href="https://www.sered.sk/s96_volejbal" title="Volejbal">Volejbal</a></li><li><a href="https://www.sered.sk/s97_tenis" title="Tenis">Tenis</a></li><li><a href="https://www.sered.sk/s303_beh-mesta-sered" title="Beh mesta Sereď">Beh mesta Sereď</a></li><li><a href="https://www.sered.sk/s100_sportova-hala-relax" title="Športová hala RELAX">Športová hala Relax</a></li><li><a href="https://www.sered.sk/s99_ihrisko-pri-zs-j-a-komenskeho" title="Ihrisko pri ZŠ J.A.Komenského">Ihrisko pri ZŠ J.A.Komenského</a></li><li><a href="https://www.sered.sk/s275_rybari" title="Rybári">Rybári</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s297_obcianske-zdruzenia" title="Občianske združenia">Občianske združenia</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s298_zvaz-chovatelov" title="Základná organizácia Slovenského zväzu chovateľov Sereď1    ">Zväz chovateľov</a></li><li><a href="https://www.sered.sk/s98_t-j-rozkvet" title="T.J. ROZKVET">T.J. Rozkvet</a></li><li><a href="https://www.sered.sk/s240_kynologia" title="Kynológia">Kynológia</a></li><li><a href="https://www.sered.sk/s299_regionalny-slovensky-vcelarsky-spolok" title="R SVS Seredský spolok Juraja Fándlyho Sereď">Regionálny Slovenský včelársky spolok</a></li><li><a href="https://www.sered.sk/s300_oz-goel" title="OZ GOEL">OZ GOEL</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s17_seredske-novinky" title="Seredské novinky">Seredské novinky</a><ul class="menu_submenu_block"><li><a href="http://novinky.sered.sk/" title="Online spravodajstvo z mesta Sereď">Seredské novinky online</a></li><li><a href="https://www.sered.sk/s109_seredske-novinky-archiv" title="Archív tlačených Seredských novín">Seredské novinky archív</a></li></ul></li></ul></div></li><li><a href="https://www.sered.sk/s4_samosprava" title="Samospráva">Samospráva</a><div class="menu_dropdown_block">
+							<ul class="menu_submenu_block"><li class="has-submenu"><a href="https://www.sered.sk/s18_mestsky-urad-sered" title="Mestský úrad Sereď">Mestský úrad Sereď</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s110_zakladne-informacie" title="Základné informácie">Základné informácie</a></li><li><a href="https://www.sered.sk/s111_uradne-hodiny" title="Úradné hodiny">Úradné hodiny</a></li><li><a href="https://www.sered.sk/s112_organizacna-struktura-msu" title="Organizačná štruktúra MsÚ">Organizačná štruktúra MsÚ</a></li><li><a href="s226_mestsky-urad" title="Kontakty mestský úrad">Kontakty mestský úrad</a></li><li><a href="https://www.sered.sk/s114_tlaciva-ziadosti" title="Tlačivá, žiadosti">Tlačivá, žiadosti</a></li><li><a href="/s44_samosprava" title="Oznamy">Oznamy</a></li><li><a href="s44_samosprava" title="Úradná tabuľa">Úradná tabuľa</a></li><li><a href="https://www.sered.sk/s293_kompetencie-samospravy-mesta-sered" title="Prehľad kompetencií MsÚ SEREĎ">Prehľad kompetencií miestnej samosprávy</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s19_volene-organy-mesta" title="Volené orgány mesta">Volené orgány mesta</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s117_primator-mesta" title="Primátor mesta">Primátor mesta</a></li><li><a href="https://www.sered.sk/s118_zastupca-primatora" title="Zástupca primátora">Zástupca primátora</a></li><li><a href="https://www.sered.sk/s119_mestske-zastupitelstvo" title="Mestské zastupiteľstvo">Mestské zastupiteľstvo</a></li><li><a href="https://www.sered.sk/s284_zastupitelstva" title="Zoznam zastupiteľstiev, materiály, uznesenie, zápinice">Zastupiteľstvá</a></li><li><a href="https://www.sered.sk/s167_ucast-poslancov-na-zasadnuti" title="Účasť poslancov na zasadnutí MSZ">Účasť poslancov na zasadnutí</a></li><li><a href="https://www.sered.sk/s292_historia-mestskych-zastupitelstiev" title="História mestských zastupiteľstiev v Seredi">História</a></li><li><a href="https://www.sered.sk/s126_hlavny-kontrolor-mesta" title="Hlavný kontrolór mesta">Hlavný kontrolór mesta</a></li><li><a href="https://www.sered.sk/s291_komunalne-volby-2018" title="Komunálne voľby 2018">Komunálne voľby 2018</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s31_komisie-pri-mz" title="Komisie pri MZ">Komisie pri MZ</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s124_komisie-msz" title="Komisie MsZ">Komisie MsZ</a></li><li><a href="https://www.sered.sk/s285_legislativno-pravna-komisia" title="Legislatívno – právna komisia">Legislatívno – právna komisia</a></li><li><a href="https://www.sered.sk/s286_komisia-financna-a-majetkova" title="Komisia finančná a majetková">Komisia finančná a majetková</a></li><li><a href="https://www.sered.sk/s287_komisia-pre-rozvoj-mesta-a-zivotne-prostredie" title="Komisia pre rozvoj mesta a životné prostredie">Komisia pre rozvoj mesta a životné prostredie</a></li><li><a href="https://www.sered.sk/s288_komisia-socialna-zdravotna-kultury-a-bytova" title="Komisia sociálna, zdravotná, kultúry a bytová">Komisia sociálna a kultúrna</a></li><li><a href="https://www.sered.sk/s289_komisia-skolska-sportova-a-bytova" title="Komisia školská, športová a bytová">Komisia školská, športová a bytová</a></li><li><a href="https://www.sered.sk/s290_komisia-na-ochranu-verejneho-zaujmu-pri-vykone-funkcii-verejnych-funkcionarov" title="Komisia na ochranu verejného záujmu pri výkone funkcií verejných funkcionárov">Komisia na ochranu verejného záujmu pri výkone funkcií verejných funkcionárov</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s20_samosprava" title="Samospráva">Samospráva</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s128_statut-mesta" title="Štatút mesta">Štatút mesta</a></li><li><a href="https://www.sered.sk/s130_strategicke-dokumenty" title="Strategické dokumenty">Strategické dokumenty</a></li><li><a href="https://www.sered.sk/s178_projekty" title="Projekty">Projekty</a></li><li><a href="https://www.sered.sk/s131_rozpocty" title="Rozpočty a záverečné účty">Rozpočty a záverečné účty</a></li><li><a href="https://www.sered.sk/s132_smernice" title="Smernice">Smernice</a></li><li><a href="https://www.sered.sk/s133_vseobecne-zavazne-nariadenia" title="Všeobecne záväzné nariadenia">Všeobecne záväzné nariadenia</a></li><li><a href="https://www.sered.sk/s134_vysledky-volieb" title="Výsledky volieb">Výsledky volieb</a></li><li><a href="https://www.sered.sk/s269_akcie-a-investicie" title="Investície a akcie v meste">Akcie a investície</a></li><li><a href="https://www.sered.sk/s270_zrealizovane-investicie" title="Zrealizované investície v meste">Zrealizované investície</a></li><li><a href="/s218_uzemny-plan-mesta" title="Územný plán mesta">Územný plán mesta</a></li><li><a href="/s219_obstaravanie-upd-a-upp" title="Obstarávanie územnoplánovacej dokumentácie a územnoplánovacích podkladov">Obstarávanie ÚPD a ÚPP</a></li><li><a href="/s268_uzemnoplanovacie-podklady" title="Územnoplánovacia dokumentácia a územnoplánovacie podklady">Územnoplánovacie podklady</a></li><li><a href="https://www.sered.sk/s294_volby-prezidenta-slovenskej-republiky-2019" title="Voľby prezidenta Slovenskej republiky 2019">Voľby prezidenta Slovenskej republiky 2019 </a></li><li><a href="https://www.sered.sk/s301_volby-do-europskeho-parlamentu-2019" title="Voľby do Európskeho parlamentu 2019">Voľby do Európskeho parlamentu 2019</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s21_mestske-organizacie" title="Organizácie a firmy mesta">Mestské organizácie</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s137_mestska-policia" title="Mestská polícia">Mestská polícia</a></li><li><a href="https://www.sered.sk/s138_mestsky-bytovy-podnik" title="Mestský bytový podnik">Mestský bytový podnik</a></li><li><a href="https://www.sered.sk/s139_nasa-domova-sprava" title="Naša domová správa">Naša domová správa</a></li><li><a href="https://www.sered.sk/s140_sprava-majetku-sered" title="Správa majetku Sereď">Správa majetku Sereď</a></li></ul></li></ul></div></li><li><a href="https://www.sered.sk/s5_sluzby" title="Služby">Služby</a><div class="menu_dropdown_block">
+							<ul class="menu_submenu_block"><li class="has-submenu"><a href="https://www.sered.sk/s33_sluzby-rozne" title="Služby rôzne">Služby rôzne</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s176_kancelaria-prveho-kontaktu" title="Kancelária prvého kontaktu">Kancelária prvého kontaktu</a></li><li><a href="https://www.sered.sk/s177_matricny-urad" title="Matričný úrad">Matričný úrad</a></li><li><a href="https://www.sered.sk/s179_svadby-na-mestskom-urade" title="Svadby na mestskom úrade">Svadby na mestskom úrade</a></li><li><a href="https://www.sered.sk/s180_mestsky-rozhlas" title="Mestský rozhlas">Mestský rozhlas</a></li><li><a href="https://www.sered.sk/s181_mestsky-cintorin" title="Mestský cintorín">Mestský cintorín</a></li><li><a href="https://www.sered.sk/s182_bezplatne-wifi-zony" title="Bezplatné WiFi zóny">Bezplatné WiFi zóny</a></li><li><a href="https://www.sered.sk/s183_pravne-poradenstvo" title="Právne poradenstvo">Právne poradenstvo</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s34_evidencia-obyvatelstva" title="Evidencia obyvateľstva">Evidencia obyvateľstva</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s186_prihlasenie-na-trvaly-pobyt" title="Prihlásenie na trvalý pobyt">Prihlásenie na trvalý pobyt</a></li><li><a href="https://www.sered.sk/s187_prihlasenie-na-prechodny-pobyt" title="Prihlásenie na prechodný pobyt">Prihlásenie na prechodný pobyt</a></li><li><a href="https://www.sered.sk/s189_zrusenie-pobytu" title="Zrušenie pobytu">Zrušenie pobytu</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s35_socialne-sluzby" title="Sociálne služby">Sociálne služby</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s191_opatrovatelska-sluzba" title="Opatrovateľská služba">Opatrovateľská služba</a></li><li><a href="https://www.sered.sk/s192_prispevok-pri-narodeni-dietata" title="Príspevok pri narodení dieťaťa">Príspevok pri narodení dieťaťa</a></li><li><a href="https://www.sered.sk/s193_jednorazove-socialne-davky" title="Jednorazové sociálne dávky">Jednorazové sociálne dávky</a></li><li><a href="https://www.sered.sk/s194_stravovanie-seniorov" title="Stravovanie seniorov">Stravovanie seniorov</a></li><li><a href="https://www.sered.sk/s195_denne-centrum-pre-seniorov" title="Denné centrum pre seniorov">Denné centrum pre seniorov</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s36_byvanie" title="Bývanie">Bývanie</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s196_najomne-byty" title="Nájomné byty">Nájomné byty</a></li><li><a href="https://www.sered.sk/s198_prevod-nehnutelnosti" title="Prevod nehnuteľností">Prevod nehnuteľností</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s37_zivotne-prostredie" title="Životné prostredie">Životné prostredie</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s199_deratizacia" title="Deratizácia">Deratizácia</a></li><li><a href="https://www.sered.sk/s200_zdroje-znecistovania-ovzdusia" title="Zdroje znečisťovania ovzdušia">Zdroje znečisťovania ovzdušia</a></li><li><a href="https://www.sered.sk/s201_poplatok-za-mzzo" title="Poplatok za MZZO">Poplatok za MZZO</a></li><li><a href="https://www.sered.sk/s202_udrzba-verejnej-zelene" title="Údržba verejnej zelene">Údržba verejnej zelene</a></li><li><a href="https://www.sered.sk/s203_vyruby-drevin" title="Výruby drevín">Výruby drevín</a></li><li><a href="https://www.sered.sk/s204_podnet-na-vyrub-verejnej-zelene" title="Podnet na výrub verejnej zelene">Podnet na výrub verejnej zelene</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s38_odpadove-hospodarstvo" title="Odpadové hospodárstvo">Odpadové hospodárstvo</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s205_zber-komunalnych-odpadov" title="Zber komunálnych odpadov">Zber komunálnych odpadov</a></li><li><a href="https://www.sered.sk/s206_zber-triedenych-odpadov" title="Zber triedených odpadov">Zber triedených odpadov</a></li><li><a href="https://www.sered.sk/s207_zber-bioodpadov" title="Zber bioodpadov">Zber bioodpadov</a></li><li><a href="https://www.sered.sk/s208_kalendarovy-zber-odpadov" title="Kalendárový zber odpadov v meste Sereď">Kalendárový zber odpadov</a></li><li><a href="https://www.sered.sk/s209_zberne-nadoby-pre-psy" title="Zberné nádoby pre psy">Zberné nádoby pre psy</a></li><li><a href="https://www.sered.sk/s210_zberny-dvor-mesta-sered" title="Zberný dvor mesta Sereď">Zberný dvor mesta Sereď</a></li><li><a href="https://www.sered.sk/s211_statistiky-odpadov" title="Štatistiky odpadov">Štatistiky odpadov</a></li><li><a href="https://www.sered.sk/subory/2019_prehlasenie_mesta.pdf" title="Prehlásenie mesta pre určenie úrovne vytriedenia komunálneho odpadu a platenia poplatku za komu">Prehlásenie mesta</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s39_komunikacie-doprava" title="Komunikácie - doprava">Komunikácie - doprava</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s213_vyhradene-parkovanie" title="Vyhradené parkovanie">Vyhradené parkovanie</a></li><li><a href="https://www.sered.sk/s214_zimna-udrzba" title="Zimná údržba">Zimná údržba</a></li><li><a href="http://www.sadds.sk/sk/mhd-sered" title="Cestovný poriadok MHD Sereď">Cestovný poriadok MHD Sereď</a></li><li><a href="subory/2017_passport_komunikacii.pdf" title="Passport miestnych komunikácií">Passport miestnych komunikácií</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s40_stavebny-urad" title="Stavebný úrad">Stavebný úrad</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s216_stavebny-urad" title="Stavebný úrad">Stavebný úrad</a></li><li><a href="https://www.sered.sk/s217_uzemne-planovanie" title="Územné plánovanie">Územné plánovanie</a></li><li><a href="https://www.sered.sk/s218_uzemny-plan-mesta" title="Územný plán mesta">Územný plán mesta</a></li><li><a href="https://www.sered.sk/s219_obstaravanie-upd-a-upp" title="Obstarávanie územnoplánovacej dokumentácie a územnoplánovacích podkladov">Obstarávanie ÚPD a ÚPP</a></li><li><a href="subory/sered_industrial.pdf" title="Priemyselný park Juh">Priemyselný park Juh</a></li><li><a href="https://www.sered.sk/s268_uzemnoplanovacie-podklady" title="Územnoplánovacia dokumentácia a územnoplánovacie podklady">Územnoplánovacie podklady</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s41_ekonomika" title="Ekonomika">Ekonomika</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s221_pokladna-mestskeho-uradu" title="Pokladňa mestského úradu">Pokladňa mestského úradu</a></li><li><a href="https://www.sered.sk/s222_miestne-dane" title="Miestne dane">Miestne dane</a></li><li><a href="https://www.sered.sk/s223_poplatok-za-komunalny-odpad" title="Poplatok za komunálny odpad">Poplatok za komunálny odpad</a></li><li><a href="https://www.sered.sk/s224_dotacie-z-rozpoctu-mesta" title="Dotácie z rozpočtu mesta">Dotácie z rozpočtu mesta</a></li></ul></li></ul></div></li><li><a href="https://www.sered.sk/s6_zverejnovanie" title="Zverejňovanie">Zverejňovanie</a><div class="menu_dropdown_block">
+							<ul class="menu_submenu_block right-align"><li class="has-submenu"><a href="https://www.sered.sk/s29_zverejnovanie-informacii" title="Poskytovanie a zverejňovanie informácií podľa zákona 211/2000 Zb. z.">Zverejňovanie informácií</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s154_poskytovanie-informacii" title="Povinné zverejňovanie poďla zákona 211/2000 z. z.">Poskytovanie informácií</a></li><li><a href="https://www.sered.sk/s273_ziadosti-o-informacie" title="Žiadosti o informácie s odpoveďami">Žiadosti o informácie</a></li><li><a href="http://egov.sered.sk/default.aspx?NavigationState=781:0:" title="Objednávky mesta eGov">Objednávky mesta eGov</a></li><li><a href="http://egov.sered.sk/default.aspx?NavigationState=779:0:" title="Faktúry mesta eGov">Faktúry mesta eGov</a></li><li><a href="http://transparentne.sered.sk/zmluvy,2014" title="Zmluvy mesta">Zmluvy mesta</a></li><li><a href="https://www.sered.sk/s158_profil-verejneho-obstaravatela" title="Profil verejného obstarávateľa do 27.2.2014">Profil verejného obstarávateľa</a></li><li><a href="subory/spravne_poplatky.pdf" title="Sadzobník správnych poplatkov">Sadzobník správnych poplatkov</a></li><li><a href="subory/mestsky_rozhlas.pdf" title="Sadzobník mestského rozhlasu">Sadzobník mestského rozhlasu</a></li><li><a href="https://www.sered.sk/s161_zoznam-danovych-dlznikov" title="Zoznam daňových dlžníkov">Zoznam daňových dlžníkov</a></li><li><a href="https://www.sered.sk/s225_prevody-majetku" title="Prevody majetku">Prevody majetku</a></li><li><a href="https://www.sered.sk/s271_prenajmy-majetku" title="Prenájmy majetku">Prenájmy majetku</a></li><li><a href="https://www.sered.sk/s272_prenajom-bytov" title="Prenájom bytov">Prenájom bytov</a></li></ul></li></ul></div></li><li><a href="https://www.sered.sk/s7_kontakty" title="Kontakty">Kontakty</a><div class="menu_dropdown_block">
+							<ul class="menu_submenu_block right-align"><li class="has-submenu"><a href="https://www.sered.sk/s42_kontakty" title="Kontakty">Kontakty</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s226_mestsky-urad" title="Mestský úrad">Mestský úrad</a></li><li><a href="https://www.sered.sk/s173_kompletny-zoznam-kontaktov" title="Adresár zamestnancov mestkého úradu">Kompletný zoznam kontaktov</a></li><li><a href="https://www.sered.sk/s227_kancelaria-primatora-mesta" title="Kancelária primátora mesta">Kancelária primátora mesta</a></li><li><a href="https://www.sered.sk/s228_kancelaria-kontrolora-mesta" title="Kancelária kontrolóra mesta">Kancelária kontrolóra mesta</a></li><li><a href="https://www.sered.sk/s229_kancelaria-prednostu-msu" title="Kancelária prednostu MsÚ">Kancelária prednostu MsÚ</a></li><li><a href="https://www.sered.sk/s230_organizacne-oddelenie" title="Organizačné oddelenie">Organizačné oddelenie</a></li><li><a href="https://www.sered.sk/s231_financne-oddelenie" title="Finančné oddelenie">Finančné oddelenie</a></li><li><a href="https://www.sered.sk/s232_oddelenie-rozvoja-mesta" title="Oddelenie rozvoja mesta">Oddelenie rozvoja mesta</a></li><li><a href="https://www.sered.sk/s233_oddelenie-upasp" title="Oddelenie Územného plánovania a stavebného poriadku">Oddelenie ÚPaSP</a></li><li><a href="https://www.sered.sk/s234_oddelenie-srkas" title="Oddelenie školstva, rodiny, kultúry a športu">Oddelenie ŠRKaŠ</a></li><li><a href="https://www.sered.sk/s295_oddelenie-zivotneho-prostredia" title="Oddelenie životného prostredia">Oddelenie životného prostredia</a></li><li><a href="https://www.sered.sk/s304_udrzba-mesta" title="Letná a zimná údržba mesta Sereď">Údržba mesta</a></li><li><a href="https://www.sered.sk/s235_mestske-zastupitelstvo" title="Mestské zastupiteľstvo">Mestské zastupiteľstvo</a></li><li><a href="https://www.sered.sk/s236_zdravotnictvo" title="Zdravotníctvo">Zdravotníctvo</a></li><li><a href="https://www.sered.sk/s237_tiesnove-volania" title="Tiesňové volania">Tiesňové volania</a></li><li><a href="https://www.sered.sk/s238_poruchy" title="Poruchy">Poruchy</a></li><li><a href="https://www.sered.sk/s239_ine" title="Iné">Iné</a></li></ul></li><li class="has-submenu"><a href="https://www.sered.sk/s277_diskusia" title="">Diskusia</a><ul class="menu_submenu_block"><li><a href="https://www.sered.sk/s278_registracia" title="">Registrácia</a></li><li><a href="s277_diskusia/15/" title="">Príspevky</a></li><li><a href="https://www.sered.sk/s280_zmena-hesla" title="Zmena hesla v diskusii">Zmena hesla</a></li></ul></li></ul></div></li><li><a href="https://www.sered.sk/vyhladavanie" title="Vyhľadávanie" style="border-right:none;box-shadow:none;"><i class="fas fa-search pos_rel menu_vyhladavanie" style="margin-top: 4px;"></i></a></li>
+        </ul>
+    </div><!-- /menu --> 
+
+
+
+</nav>
+</header>
+
+<div class="top_img width100">
+</div>
+<div class="marg0_auto page_width pad5 box_size_border">
+<div class="disp_flex" style="justify-content:space-between;">
+	<nav class="desktop_left_menu" style="background-color:#f7f6f5;">
+	<h1 class="disp_block back_red f18 w pad5 text_dec_none">Samospráva</h1><div style="padding-bottom: 20px;"><h2 style="border: 0;margin: 0;line-height: 23px;padding-left:0px;"><a href="https://www.sered.sk/s18_mestsky-urad-sered" title="Mestský úrad Sereď" class="r disp_block f16 pad5 left_menu1 text_dec_none">Mestský úrad Sereď</a></h2><a href="https://www.sered.sk/s110_zakladne-informacie" title="Základné informácie" class="b left_menu2 disp_block padl10 f15 text_dec_none">Základné informácie</a><a href="https://www.sered.sk/s111_uradne-hodiny" title="Úradné hodiny" class="b left_menu2 disp_block padl10 f15 text_dec_none">Úradné hodiny</a><a href="https://www.sered.sk/s112_organizacna-struktura-msu" title="Organizačná štruktúra MsÚ" class="b left_menu2 disp_block padl10 f15 text_dec_none">Organizačná štruktúra MsÚ</a><a href="s226_mestsky-urad" target="_blank" title="Kontakty mestský úrad" class="b left_menu2 disp_block padl10 f15 text_dec_none">Kontakty mestský úrad</a><a href="https://www.sered.sk/s114_tlaciva-ziadosti" title="Tlačivá, žiadosti" class="b left_menu2 disp_block padl10 f15 text_dec_none">Tlačivá, žiadosti</a><a href="/s44_samosprava" target="_blank" title="Oznamy" class="b left_menu2 disp_block padl10 f15 text_dec_none">Oznamy</a><a href="s44_samosprava" target="_blank" title="Úradná tabuľa" class="b left_menu2 disp_block padl10 f15 text_dec_none">Úradná tabuľa</a><a href="https://www.sered.sk/s293_kompetencie-samospravy-mesta-sered" title="Prehľad kompetencií miestnej samosprávy" class="b left_menu2 disp_block padl10 f15 text_dec_none">Prehľad kompetencií miestnej samosprávy</a><h2 style="border: 0;margin: 0;line-height: 23px;padding-left:0px;"><a href="https://www.sered.sk/s19_volene-organy-mesta" title="Volené orgány mesta" class="r disp_block f16 pad5 left_menu1 text_dec_none">Volené orgány mesta</a></h2><a href="https://www.sered.sk/s117_primator-mesta" title="Primátor mesta" class="b left_menu2 disp_block padl10 f15 text_dec_none">Primátor mesta</a><a href="https://www.sered.sk/s118_zastupca-primatora" title="Zástupca primátora" class="b left_menu2 disp_block padl10 f15 text_dec_none">Zástupca primátora</a><a href="https://www.sered.sk/s119_mestske-zastupitelstvo" title="Mestské zastupiteľstvo" class="b left_menu2 disp_block padl10 f15 text_dec_none">Mestské zastupiteľstvo</a><a href="https://www.sered.sk/s284_zastupitelstva" title="Zastupiteľstvá" class="b left_menu2 disp_block padl15 f15 text_dec_none">Zastupiteľstvá</a><a href="https://www.sered.sk/s167_ucast-poslancov-na-zasadnuti" title="Účasť poslancov na zasadnutí" class="b left_menu2 disp_block padl15 f15 text_dec_none">Účasť poslancov na zasadnutí</a><a href="https://www.sered.sk/s292_historia-mestskych-zastupitelstiev" title="História" class="b left_menu2 disp_block padl15 f15 text_dec_none">História</a><a href="https://www.sered.sk/s126_hlavny-kontrolor-mesta" title="Hlavný kontrolór mesta" class="b left_menu2 disp_block padl10 f15 text_dec_none">Hlavný kontrolór mesta</a><a href="https://www.sered.sk/s291_komunalne-volby-2018" title="Komunálne voľby 2018" class="b left_menu2 disp_block padl10 f15 text_dec_none active">Komunálne voľby 2018</a><h2 style="border: 0;margin: 0;line-height: 23px;padding-left:0px;"><a href="https://www.sered.sk/s31_komisie-pri-mz" title="Komisie pri MZ" class="r disp_block f16 pad5 left_menu1 text_dec_none">Komisie pri MZ</a></h2><a href="https://www.sered.sk/s124_komisie-msz" title="Komisie MsZ" class="b left_menu2 disp_block padl10 f15 text_dec_none">Komisie MsZ</a><a href="https://www.sered.sk/s285_legislativno-pravna-komisia" title="Legislatívno – právna komisia" class="b left_menu2 disp_block padl15 f15 text_dec_none">Legislatívno – právna komisia</a><a href="https://www.sered.sk/s286_komisia-financna-a-majetkova" title="Komisia finančná a majetková" class="b left_menu2 disp_block padl15 f15 text_dec_none">Komisia finančná a majetková</a><a href="https://www.sered.sk/s287_komisia-pre-rozvoj-mesta-a-zivotne-prostredie" title="Komisia pre rozvoj mesta a životné prostredie" class="b left_menu2 disp_block padl15 f15 text_dec_none">Komisia pre rozvoj mesta a životné prostredie</a><a href="https://www.sered.sk/s288_komisia-socialna-zdravotna-kultury-a-bytova" title="Komisia sociálna a kultúrna" class="b left_menu2 disp_block padl15 f15 text_dec_none">Komisia sociálna a kultúrna</a><a href="https://www.sered.sk/s289_komisia-skolska-sportova-a-bytova" title="Komisia školská, športová a bytová" class="b left_menu2 disp_block padl15 f15 text_dec_none">Komisia školská, športová a bytová</a><a href="https://www.sered.sk/s290_komisia-na-ochranu-verejneho-zaujmu-pri-vykone-funkcii-verejnych-funkcionarov" title="Komisia na ochranu verejného záujmu pri výkone funkcií verejných funkcionárov" class="b left_menu2 disp_block padl15 f15 text_dec_none">Komisia na ochranu verejného záujmu pri výkone funkcií verejných funkcionárov</a><h2 style="border: 0;margin: 0;line-height: 23px;padding-left:0px;"><a href="https://www.sered.sk/s20_samosprava" title="Samospráva" class="r disp_block f16 pad5 left_menu1 text_dec_none">Samospráva</a></h2><a href="https://www.sered.sk/s128_statut-mesta" title="Štatút mesta" class="b left_menu2 disp_block padl10 f15 text_dec_none">Štatút mesta</a><a href="https://www.sered.sk/s130_strategicke-dokumenty" title="Strategické dokumenty" class="b left_menu2 disp_block padl10 f15 text_dec_none">Strategické dokumenty</a><a href="https://www.sered.sk/s178_projekty" title="Projekty" class="b left_menu2 disp_block padl10 f15 text_dec_none">Projekty</a><a href="https://www.sered.sk/s131_rozpocty" title="Rozpočty a záverečné účty" class="b left_menu2 disp_block padl10 f15 text_dec_none">Rozpočty a záverečné účty</a><a href="https://www.sered.sk/s132_smernice" title="Smernice" class="b left_menu2 disp_block padl10 f15 text_dec_none">Smernice</a><a href="https://www.sered.sk/s133_vseobecne-zavazne-nariadenia" title="Všeobecne záväzné nariadenia" class="b left_menu2 disp_block padl10 f15 text_dec_none">Všeobecne záväzné nariadenia</a><a href="https://www.sered.sk/s134_vysledky-volieb" title="Výsledky volieb" class="b left_menu2 disp_block padl10 f15 text_dec_none">Výsledky volieb</a><a href="https://www.sered.sk/s269_akcie-a-investicie" title="Akcie a investície" class="b left_menu2 disp_block padl10 f15 text_dec_none">Akcie a investície</a><a href="https://www.sered.sk/s270_zrealizovane-investicie" title="Zrealizované investície" class="b left_menu2 disp_block padl10 f15 text_dec_none">Zrealizované investície</a><a href="/s218_uzemny-plan-mesta" target="_blank" title="Územný plán mesta" class="b left_menu2 disp_block padl10 f15 text_dec_none">Územný plán mesta</a><a href="/s219_obstaravanie-upd-a-upp" target="_blank" title="Obstarávanie ÚPD a ÚPP" class="b left_menu2 disp_block padl10 f15 text_dec_none">Obstarávanie ÚPD a ÚPP</a><a href="/s268_uzemnoplanovacie-podklady" target="_blank" title="Územnoplánovacie podklady" class="b left_menu2 disp_block padl10 f15 text_dec_none">Územnoplánovacie podklady</a><a href="https://www.sered.sk/s294_volby-prezidenta-slovenskej-republiky-2019" title="Voľby prezidenta Slovenskej republiky 2019 " class="b left_menu2 disp_block padl10 f15 text_dec_none">Voľby prezidenta Slovenskej republiky 2019 </a><a href="https://www.sered.sk/s301_volby-do-europskeho-parlamentu-2019" title="Voľby do Európskeho parlamentu 2019" class="b left_menu2 disp_block padl10 f15 text_dec_none">Voľby do Európskeho parlamentu 2019</a><h2 style="border: 0;margin: 0;line-height: 23px;padding-left:0px;"><a href="https://www.sered.sk/s21_mestske-organizacie" title="Mestské organizácie" class="r disp_block f16 pad5 left_menu1 text_dec_none">Mestské organizácie</a></h2><a href="https://www.sered.sk/s137_mestska-policia" title="Mestská polícia" class="b left_menu2 disp_block padl10 f15 text_dec_none">Mestská polícia</a><a href="https://www.sered.sk/s138_mestsky-bytovy-podnik" title="Mestský bytový podnik" class="b left_menu2 disp_block padl10 f15 text_dec_none">Mestský bytový podnik</a><a href="https://www.sered.sk/s139_nasa-domova-sprava" title="Naša domová správa" class="b left_menu2 disp_block padl10 f15 text_dec_none">Naša domová správa</a><a href="https://www.sered.sk/s140_sprava-majetku-sered" title="Správa majetku Sereď" class="b left_menu2 disp_block padl10 f15 text_dec_none">Správa majetku Sereď</a></div>	</nav>
+<div class="desktop_content box_size_border">
+<div class="f20 gray"><a href="https://www.sered.sk" title="Titulka" class="b f14 text_dec_none">Titulka</a>  » <a href="https://www.sered.sk/s4_samosprava" title="Samospráva" class="b f14 text_dec_none">Samospráva</a> » <a href="https://www.sered.sk/s19_volene-organy-mesta" title="Volené orgány mesta" class="b f14 text_dec_none">Volené orgány mesta</a> » <a href="https://www.sered.sk/s291_komunalne-volby-2018" title="Komunálne voľby 2018" class="r f16 text_dec_none">Komunálne voľby 2018</a></div>
+	<h1 class="borderl1 f24 line_h40 margb4 padl5 margt10">Voľby do orgánov samosprávy obcí 2018</h1>
+	<div class="pad10">
+	<div>Predseda NR SR rozhodnutím č. 203/2018 zo dňa 6. júla 2018 vyhlásil voľby do obecných (mestských) zastupiteľstiev a voľby starostov (primátorov) obcí a určil deň ich konania na sobotu 10.novembra 2018.</div>
+
+<div>&nbsp;
+<div>Mestské zastupiteľstvo v Seredi uznesením č. 126/2018 zo dňa 14.6.2018 určilo, že pre volebné obdobie 2018 &ndash; 2022 bude mať Mestské zastupiteľstvo v Seredi 19 poslancov, ktorí budú volení v 3 volebných obvodoch. Pre voľbu primátora mesta je v zmysle &sect; 166 ods. 5 zákona č. 180/2014 Z.z. o podmienkach výkonu volebného práva a o zmene a doplnení niektorých zákonov jeden jednomandátový volebný obvod.</div>
+&nbsp;
+
+<div><div class="margt20"><h2 class="borderl0 f18 line_h26 margb4 padl5 text_left r">Komunálne voľby 2018</h2><ul class="subory"><li class="text_left cf f15">Uznesenie Mestského zastupiteľstva v Seredi 126/2018 <a href="https://www.sered.sk/subory/153/20180927223809_uznesenie-mestskeho-zastupitelstva-v-seredi-126-2018_5bad3fb1790a98.08316429.pdf" target="_blank" title="Uznesenie Mestského zastupiteľstva v Seredi 126/2018 [215 KB]" class="back_red corner3 f14 w fr pad0_10 margr2"><i class="fas fa-download"></i> PDF&nbsp;[215 KB]</a></li><li class="text_left cf f15">Rozhodnutie predsedu Národnej rady Slovenskej republiky č. 203/2018 Z.z. o vyhlásení volieb do orgánov samosprávy obcí <a href="https://www.sered.sk/subory/153/20180819183735_rozhodnutie-predsedu-narodnej-rady-slovenskej-republiky-c-203-2018-z-z-o-vyhlaseni-volieb-do-organov-samospravy-obci_5b799ccfd00214.82813600.pdf" target="_blank" title="Rozhodnutie predsedu Národnej rady Slovenskej republiky č. 203/2018 Z.z. o vyhlásení volieb do orgánov samosprávy obcí [127 KB]" class="back_red corner3 f14 w fr pad0_10 margr2"><i class="fas fa-download"></i> PDF&nbsp;[127 KB]</a></li><li class="text_left cf f15">Informácie pre voliča <a href="https://www.sered.sk/subory/153/20180819183744_informacie-pre-volica_5b799cd8407225.35781787.pdf" target="_blank" title="Informácie pre voliča [216 KB]" class="back_red corner3 f14 w fr pad0_10 margr2"><i class="fas fa-download"></i> PDF&nbsp;[216 KB]</a></li><li class="text_left cf f15">Počet obyvateľov mesta Sereď <a href="https://www.sered.sk/subory/153/20180819183750_pocet-obyvatelov-mesta-sered_5b799cde9a8e74.52570618.pdf" target="_blank" title="Počet obyvateľov mesta Sereď [201 KB]" class="back_red corner3 f14 w fr pad0_10 margr2"><i class="fas fa-download"></i> PDF&nbsp;[201 KB]</a></li><li class="text_left cf f15">Oznámenie o určení počtu poslancov a o utvorení volebných obvodov <a href="https://www.sered.sk/subory/153/20180819183758_oznamenie-o-urceni-poctu-poslancov-a-o-utvoreni-volebnych-obvodov_5b799ce696f4c3.45323488.pdf" target="_blank" title="Oznámenie o určení počtu poslancov a o utvorení volebných obvodov [210 KB]" class="back_red corner3 f14 w fr pad0_10 margr2"><i class="fas fa-download"></i> PDF&nbsp;[210 KB]</a></li><li class="text_left cf f15">Volebné okrsky <a href="https://www.sered.sk/subory/153/20180822234245_volebne-okrsky_5b7dd8d50a83c7.29900848.pdf" target="_blank" title="Volebné okrsky [358 KB]" class="back_red corner3 f14 w fr pad0_10 margr2"><i class="fas fa-download"></i> PDF&nbsp;[358 KB]</a></li><li class="text_left cf f15">Zoznam registrovaných kandidátov pre voľby do Mestského zastupiteľstva v Seredi
+ <a href="https://www.sered.sk/subory/153/20181006011145_zoznam-registrovanych-kandidatov-pre-volby-do-mestskeho-zastupitelstva-v-seredi_5bb7efb163fb47.53495906.pdf" target="_blank" title="Zoznam registrovaných kandidátov pre voľby do Mestského zastupiteľstva v Seredi
+ [230 KB]" class="back_red corner3 f14 w fr pad0_10 margr2"><i class="fas fa-download"></i> PDF&nbsp;[230 KB]</a></li><li class="text_left cf f15">Zoznam registrovaných kandidátov pre voľby primátora mesta SEREĎ
+ <a href="https://www.sered.sk/subory/153/20181006011155_zoznam-registrovanych-kandidatov-pre-volby-primatora-mesta-sered_5bb7efbb807038.76487435.pdf" target="_blank" title="Zoznam registrovaných kandidátov pre voľby primátora mesta SEREĎ
+ [189 KB]" class="back_red corner3 f14 w fr pad0_10 margr2"><i class="fas fa-download"></i> PDF&nbsp;[189 KB]</a></li><li class="text_left cf f15">Umiestňovanie volebných plagátov <a href="https://www.sered.sk/subory/153/20181006011120_umiestnovanie-volebnych-plagatov_5bb7ef98768bc8.41544942.pdf" target="_blank" title="Umiestňovanie volebných plagátov [337 KB]" class="back_red corner3 f14 w fr pad0_10 margr2"><i class="fas fa-download"></i> PDF&nbsp;[337 KB]</a></li><li class="text_left cf f15">Oznámenie pre občanov s trvalým pobytom Sereď <a href="https://www.sered.sk/subory/153/20181102210149_oznamenie-pre-obcanov-s-trvalym-pobytom-sered_5bdcad2d226a15.72030959.pdf" target="_blank" title="Oznámenie pre občanov s trvalým pobytom Sereď [295 KB]" class="back_red corner3 f14 w fr pad0_10 margr2"><i class="fas fa-download"></i> PDF&nbsp;[295 KB]</a></li><li class="text_left cf f15">Výsledky volieb do orgánov samosprávy obcí 2018 v meste Sereď <a href="https://www.sered.sk/subory/153/20181111031613_vysledky-volieb-do-organov-samospravy-obci-2018-v-meste-sered_5be790ed887bf9.48612247.PDF" target="_blank" title="Výsledky volieb do orgánov samosprávy obcí 2018 v meste Sereď [54 KB]" class="back_red corner3 f14 w fr pad0_10 margr2"><i class="fas fa-download"></i> PDF&nbsp;[54 KB]</a></li></ul></div></div>
+&nbsp;
+
+<div>Voľby do obecných (mestských) zastupiteľstiev a voľby starostov (primátorov) obcí sa konajú v sobotu 10. novembra 2018 v čase od 7,00 hod. do 22,00 hod.</div>
+
+<div>&nbsp;</div>
+
+<div><a href="http://www.minv.sk/?volby-oso2018">Informácie k voľbám na stránke Ministerstva vnútra Slovenskej republiky</a></div>
+
+<div>&nbsp;</div>
+
+<div>
+<h2>Delegovanie členov a&nbsp;náhradníkov do mestskej volebnej komisie a&nbsp;okrskových volebných komisií</h2>
+
+<div>&nbsp;</div>
+
+<div>Oznámenia o&nbsp;delegovaní člena a&nbsp;náhradníka do mestskej volebnej komisie a&nbsp;do okrskových volebných komisií je možné doručiť:</div>
+
+<div>
+<div>osobne do podateľne Mestského úradu v&nbsp;Seredi, Námestie republiky 1176/10, Sereď &ndash; v&nbsp;úradných hodinách MsÚ</div>
+
+<div>písomne na adresu: Primátor mesta Sereď, Námestie republiky 1176/10, 926 01 Sereď</div>
+
+<div>emailom na adresu: silvia.adamcikova@sered.sk</div>
+</div>
+</div>
+
+<div>&nbsp;</div>
+
+<p>&nbsp;</p>
+
+<h2>Organizácia volieb</h2>
+
+<div><br />
+<br />
+Organizačné zabezpečenie volieb a zapisovateľka mestskej volebnej komisie:&nbsp;&nbsp;</div>
+
+<div>Adamčíková Silvia, PhDr.<br>tel. č. 031/7892094, klapka 254<br>tel. č. 0905 556 879<br>e-mail: <a href="mailto:silvia.adamcikova@sered.sk" class="r" title="silvia.adamcikova@sered.sk">silvia.adamcikova@sered.sk</a><br>Kancelária č. 9<br></div>
+
+<div>&nbsp;</div>
+
+<div>&nbsp;</div>
+
+<div>Sídlo : Mestský úrad, Námestie republiky 1176/10. Sereď</div>
+
+<div>&nbsp;</div>
+
+<div>
+<div>Úradné hodiny:&nbsp;</div>
+
+<div><br />
+Pondelok&nbsp;<br />
+8,00 &ndash; 12,00 13,00 &ndash; 15,00<br />
+Utorok&nbsp;<br />
+8,00 &ndash; 12,00 13,00 &ndash; 15,00<br />
+Streda&nbsp;<br />
+8,00 &ndash; 12,00 13,00 &ndash; 17,00<br />
+Štvrtok&nbsp;<br />
+8,00 &ndash; 12,00 13,00 &ndash; 15,00<br />
+Piatok&nbsp;<br />
+8,00 &ndash; 12,00</div>
+</div>
+
+<div>&nbsp;</div>
+
+<h2>Volebné obvody</h2>
+<br />
+<strong>Volebný obvod 1</strong> &ndash; Ulice:&nbsp;Amazonská, Bratislavská, Cukrovarská, Dolnostredská, D.Štúra, Fándlyho, Garbiarska, Južná, Kasárenská, Kostolná, Kukučínova, Letná, Malý háj, Mládežnícka, Mlynárska, Námestie slobody, Niklová, Novomestská, Nový majer, Parková, Pažitná, Poľná, Považský breh, Pribinova, Priemyselná, Starý most, Šintavská, Školská, Trnavská cesta, Vonkajší rad<br />
+<br />
+<strong>Volebný obvod 2 </strong>&ndash; Ulice:&nbsp;A. Hlinku, Čepeňská, Dolnomajerská, Hornomajerská, Hviezdoslavova, Fraňa Kráľa, Jesenského, Jilemnického, Komenského, Krásna, Kúpeľné ná-mestie, Legionárska, M.R.Štefánika, Námestie republiky, Nová, Orechová, Pekárska, Poštová, Priečna, Rovná, Slnečná, Slnečná II, SNP, Spádová, Šulekovská, Vinárska, Vysoká, Záhradná, Železničná<br />
+<br />
+<strong>Volebný obvod 3</strong> &ndash; Ulice:&nbsp;8. mája, Dlhá, Dolnočepeňská, Družstevná, Hornočepeňská, Hrnčiarska, Ivana Krasku, Jasná, Jelšová, Krátka, Krížna, Kuzmányho, Lipová, Lúčna, Ľ. Podjavorinskej, Malá ulička, Matičná, Mierová, Murgašova, Obežná, Pionierska, Pivovarská, Pod hrádzou, Podzámska, Severná, Sládkovičova, Strednočepeňská, Stromová, Sväto-plukova, Športová, Štefana Moyzesa, Tehelná, Topoľová, Vážska, Veterná, Vojanská</div>
+<div class="f14 gray text_right marg20_0"><a href="https://www.sered.sk/tlac.php?action=s291_komunalne-volby-2018" target="_blank" title="Tlač stránky" class="r"><i class="fas fa-print"></i> Tlač stránky</a> | <i class="far fa-clock"></i>Posledná aktualizácia: <span class="b1">2018-08-30</span></div>	</div>
+</div></div>
+</div>
+
+
+
+
+
+<footer>
+<div class="marg0_auto page_width ">
+<div class="pad20">
+<div class="disp_flex width100" style="flex-wrap:wrap;justify-content: space-evenly;">
+	<div class="col3 marg5-0 pad10 box_size_border w">
+	<span class="f20 margb10 w">KDE NÁS NÁJDETE ?</span><br><br>
+
+Mesto Sereď<br>
+Námestie republiky č. 1176/10<br>
+926 01 Sereď<br><br>
+
+<i class="fas fa-map-marked"></i> <a href="https://www.google.com/maps/dir//Mestsk%C3%BD+%C3%9Arad,+N%C3%A1m.+republiky+1176%2F13,+926+01+Sere%C4%8F/@48.2857329,17.7353199,17.25z/data=!4m8!4m7!1m0!1m5!1m1!1s0x476b67bfab0cd427:0xa46139ea0094f908!2m2!1d17.7376478!2d48.2866609" class="w" title="Naplánovať trasu" target="_blank">Naplánovať trasu</a><br><br>
+
+<span class="f_bold">Tel:</span> 0 31/7892094<br>
+<span class="f_bold">Fax:</span> 0 31/7892447<br>
+<span class="f_bold">Mail:</span> <a href="mailto:mu@sered.sk" title="mu@sered.sk" class="w">mu@sered.sk</a><br><br>
+
+<i class="fab fa-facebook"></i> <a href="https://www.facebook.com/MestoSered/" title="Facebook" class="w" target="_blank">Facebook </a><br>
+<i class="fab fa-youtube"></i></i> <a href="https://www.youtube.com/channel/UCQUHJahphrRn942v5BxN3Pg" title="Youtube" class="w" target="_blank">Youtube </a><br><br>
+	
+	</div>
+	<div class="col3 marg5-0 pad10 box_size_border">
+	<h3 class="f20 margb10 w">ÚRADNÉ HODINY</h3>
+	<table class="w">
+		<tr>
+			<td>Pondelok:</td>
+			<td>08:00-12:00&nbsp; 13:00-15:00</td>
+		</tr>
+		<tr>
+			<td>Utorok:</td>
+			<td>08:00-12:00&nbsp; 13:00-15:00</td>
+		</tr>
+		<tr>
+			<td>Streda:</td>
+			<td>08:00-12:00&nbsp; 13:00-17:00</td>
+		</tr>
+		<tr>
+			<td>Štvrtok:</td>
+			<td>08:00-12:00&nbsp; 13:00-15:00</td>
+		</tr>
+		<tr>
+			<td>Piatok:</td>
+			<td>08:00-12:00</td>
+		</tr>
+		<tr>
+			<td colspan=2><br><strong>Oddelenie územného plánovania a stavebného poriadku</strong> má v <strong>piatok nestránkový deň</strong>.</td>
+		</tr>
+	</table>
+	</div>	
+	<div class="col3 marg5-0 pad10 box_size_border">
+	<h3 class="f20 margb10 w">INFORMÁCIE</h3>
+	<ul>
+		<li><a href="https://www.sered.sk/webmaster-sered-sk" title="Technický prevádzkovateľ a správca obsahu" class="w">Technický prevádzkovateľ a správca obsahu</a></li>
+		<li><a href="https://gdpr.somi.sk/index.php?id=95" title="Ochrana osobných údajov" class="w">Ochrana osobných údajov</a></li>
+		<li><a href="https://www.sered.sk/web-prava" title="Autorské práva" class="w">Autorské práva</a></li>
+		<li><a href="https://www.sered.sk/web-podmienky" title="Podmienky použitia" class="w">Podmienky použitia</a></li>
+		<li><a href="https://www.sered.sk/vyhlasenie-o-pristupnosti" title="Vyhlásenie o prístupnosti" class="w">Vyhlásenie o prístupnosti</a></li>
+		<li><a href="https://www.sered.sk/mapa-stranky" title="Mapa stránky" class="w">Mapa stránky</a></li>
+		<li><a href="https://www.sered.sk/rss.php" title="RSS" target="_blank" class="w">RSS</a></li>
+		<li class="margt10">
+		<a title="Informations en francais" target="_blank" href="http://translate.googleusercontent.com/translate_c?depth=1&rurl=translate.google.com&sl=sk&tl=fr&u=https://www.sered.sk/titulka&usg=ALkJrhhWKNxjxsk1bzF4cLiZuBUTSTYEog"><img src="/pictures/fra_flag.png" alt="Informations en francais"></a>
+		<a title="Information in English" target="_blank"  href="http://translate.googleusercontent.com/translate_c?depth=1&rurl=translate.google.com&sl=sk&tl=en&u=https://www.sered.sk/titulka&usg=ALkJrhhho0hkLfYMooBfaQWkZfhRwEupyQ"><img src="/pictures/eng_flag.png" alt="Information in English"></a>
+		<a title="Informationen in Deutch" target="_blank" href="http://translate.googleusercontent.com/translate_c?depth=2&rurl=translate.google.com&sl=sk&tl=de&u=https://www.sered.sk/titulka&usg=ALkJrhjscORuIjq3Wg1Zo6aCs44LWV0AFQ" ><img src="/pictures/ger_flag.png" alt="Informationen in Deutch"></a></div>
+		</li>
+	</ul>
+	</div>
+
+</div>
+</div>
+
+</div>
+</footer>
+<div class="page_width marg0_auto">
+	<div class="uradna_tabula borderb2 pad20_0">
+		<div>
+			<div class="pad10">
+			<a href="https://www.sered.sk/subory/msds2017.pdf" title="Rozšírenie MŠ D. Štúra v Seredi" class="disp_block"><img src="https://www.sered.sk/pictures/bannery_top/banner_msds2017.jpg" class="width100" alt="Rozšírenie MŠ D. Štúra v Seredi"></a>	
+			</div>
+			
+		</div>
+		<div>
+			<div class="pad10">
+			<a href="https://www.sered.sk/subory/msk2017.pdf" title="Európsky fond regionálneho rozvoja" class="disp_block"><img src="https://www.sered.sk/pictures/bannery_top/banner_msk2017.jpg" class="width100" alt="Európsky fond regionálneho rozvoja"></a>	
+			</div>
+			
+		</div>
+		<div>
+			<div class="pad10">
+			<a href="https://www.sered.sk/subory/podpora_opatrovatelskej_sluzby.pdf" title="Európsky sociálny fond" class="disp_block"><img src="https://www.sered.sk/pictures/bannery_top/banner_opatrovatelky2019.jpg" class="width100" alt="Európsky sociálny fond"></a>	
+			</div>
+			
+		</div>
+
+		<div>
+			<div class="pad10">
+			<a href="http://www.nds.sk/galeria-projektov/projekty/nadacny-fond-deti-v-bezpeci/" title="" class="disp_block"><img src="https://www.sered.sk/pictures/bannery_top/banner_msp201801.jpg" class="width100" alt=""></a>	
+			</div>	
+		</div>
+	</div>
+</div>
+<script type="text/javascript" id="cookieinfo" src="https://www.sered.sk/js/cookieinfo.js" data-message="Táto stránka využíva v rámci poskytovania služieb cookies. Pokračovaním v návšteve stránky súhlasíte s ich používaním. Viac informácií vrátane informácií o ich odstránení a vypnutí nájdete " data-linkmsg="Viac informácií" data-moreinfo="https://www.sered.sk/ochrana-osobnych-udajov#cookies" data-bg="#e8e6e1" data-fg="#000"></script>
+</body>
+</html>
+
+

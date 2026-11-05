@@ -1,0 +1,229 @@
+# Okrsky of Bratislava-Podunajské Biskupice, transcribed by an AI agent in job okrsok-rules-1038 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dvojkrížna, Hviezdna, Jókaiho, Madáchova, Máchova, Nezvalova, Orenburská, Petöfiho, Výtvarná
+#   okrsok 2: Devätinova, Družobná, Hviezdoslavova, Hydinárska, Odeská, Parcelná, Perličková, Pri hrádzi, Staromlynská, Sĺňavská, Ul. 8. mája, Vinohradnícka, Žiacka
+#   okrsok 3: Achátová, Akvamarínová, Ametystová, Borágová, Citrínová, Farmárska, Granátová, Janka Kráľa, Jastrabinová, Jonatánová, Kapsičková, Korálová, Ligurčeková, Lopárska, Malachitová, Monardová, Murárska, Parenicová, Pri trati (vrátane DOS Gérium), Špaldová, Učiteľská, Ul. akad. mal. Jozefa Nagya, Vratičová, obyvatelia bez domova
+#   okrsok 4: Borekova, Komárovská, Kovová, Oblúková, Ovčiarska, Popradská, Vrakunská, Závodná
+#   okrsok 5: Biskupická, Hlbinná, Jégenešská, Krajinská (vrátane nemocnice), Kvetinárska, Lieskovec, Linzbothova, Nákovná, Nákupná, Pasienková, Prípojná, Pšeničná, Ulica svornosti, Šikmá
+#   okrsok 6: Amurská, Beidl, Dneperská, Gajc, Hájovňa, Ketelec, Lieskovská cesta, Mramorová, Orechová, Padlých hrdinov, Požiarnická, Trojičné námestie, Vetvárska, Šamorínska
+#   okrsok 7: Hronská 3, Kazanská, Latorická 1 – 45 (nepárne)
+#   okrsok 8: Hronská 2 – 30 (párne), Ipeľská 9 – 15 (nepárne), Latorická 2 – 8 (párne)
+#   okrsok 9: Bodrocká 1 – 25 (nepárne), Bodrocká 2 – 26 (párne), Latorická 10 – 18 (párne)
+#   okrsok 10: Hornádska 2 – 30 (párne), Hornádska 2A, 2B, Ipeľská 1 – 7 (nepárne)
+#   okrsok 11: Dudvážska 4 – 24 (párne), Dudvážska 7 – 39 (nepárne)
+#   okrsok 12: Bodrocká 28 – 44 (párne), Podzáhradná 11 – 15 (nepárne), Podzáhradná 19, Podzáhradná 10 – 106 (párne)
+#   okrsok 13: Korytnická 10-22 (párne), Korytnická 9 – 37 (nepárne), Baltská
+#   okrsok 14: Korytnická 1 – 8 (párne a nepárne)
+#   okrsok 15: Uzbecká, Podzáhradná 1 – 5 (nepárne), Podzáhradná 39, Podzáhradná 43 – 45 (nepárne), Podzáhradná 49, Podzáhradná 51, Podzáhradná 2, 2A, 4, 4A
+#   okrsok 16: Estónska 1 – 7, 1/A (nepárne), Estónska 2 – 14 (párne), Estónska 32 – 50 (párne), Podunajská
+#   okrsok 17: Estónska 16 – 30 (párne), Estónska 52 – 60 (párne), Geologická, Lotyšská 2 – 4 (párne)
+#   okrsok 18: Bieloruská 1 - 35 (nepárne), Bieloruská 34 – 66 (párne)
+#   okrsok 19: Bieloruská 2 - 32 (párne), Priekopnícka
+#   okrsok 20: Lotyšská 6 – 52 (párne)
+obec = "529311"
+name = "Bratislava-Podunajské Biskupice"
+okrsky_date = 2019-01-28
+okrsky_fill = "nearest"
+okrsky_note = "The document is a scan, read from its page images. Podzáhradná 2A, 4A are covered by the single numbers 2 and 4. The register's Akvamarínová and Ulica akad. mal. Jozefa Nagya are absent from the register (left out); 'obyvatelia bez domova' (okrsok 3) are addressless voters. Streets the document leaves out (Slovnaftská, Osada pri tehelni, Štátne lesy), house numbers outside the listed ranges (e.g. odd Hornádska, Dudvážska 2 and odd numbers below 7, other Podzáhradná numbers, Hronská odd except 3) and the addresses without a street name are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20190828205955/http://www.biskupice.sk:80/files/documents/miestny-urad/volprezid19/urcenieokrskov.pdf"
+sha256 = "45fda9539b5690c5f396e92661835d1beb05af5f5cba45d58d85461ff4a9b504"
+title = "Rozhodnutie č. 2 starostu Mestskej časti Bratislava – Podunajské Biskupice k zabezpečeniu volieb prezidenta SR 16. marca 2019, zo dňa 28.01.2019"
+
+[okrsok.1]
+rules = [
+  {street = "Dvojkrížna"},
+  {street = "Hviezdna"},
+  {street = "Jókaiho"},
+  {street = "Madáchova"},
+  {street = "Máchova"},
+  {street = "Nezvalova"},
+  {street = "Orenburská"},
+  {street = "Petőfiho", written = "Petöfiho", note = "The document writes Petöfiho (ö); the register's Petőfiho (ő), the same street."},
+  {street = "Výtvarná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Devätinová", written = "Devätinova", note = "The document writes Devätinova (short a); the register's Devätinová, the same street."},
+  {street = "Družobná"},
+  {street = "Hviezdoslavova"},
+  {street = "Hydinárska"},
+  {street = "Odeská"},
+  {street = "Parcelná"},
+  {street = "Perličková"},
+  {street = "Pri hrádzi"},
+  {street = "Staromlynská"},
+  {street = "Sĺňavská"},
+  {street = "Ul. 8.mája", written = "Ul. 8. mája"},
+  {street = "Vinohradnícka"},
+  {street = "Žiacka"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Achátová"},
+  {street = "Ametystová"},
+  {street = "Borágová"},
+  {street = "Citrínová"},
+  {street = "Farmárska"},
+  {street = "Granátová"},
+  {street = "Janka Kráľa"},
+  {street = "Jastrabinová"},
+  {street = "Jonatánová"},
+  {street = "Kapsičková"},
+  {street = "Korálová"},
+  {street = "Ligurčeková"},
+  {street = "Lopárska"},
+  {street = "Malachitová"},
+  {street = "Monardová"},
+  {street = "Murárska"},
+  {street = "Parenicová"},
+  {street = "Pri trati"},
+  {street = "Špaldová"},
+  {street = "Učiteľská"},
+  {street = "Vratičová"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Borekova"},
+  {street = "Komárovská"},
+  {street = "Kovová"},
+  {street = "Oblúková"},
+  {street = "Ovčiarska"},
+  {street = "Popradská"},
+  {street = "Vrakunská"},
+  {street = "Závodná"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Biskupická"},
+  {street = "Hlbinná"},
+  {street = "Jegenešská", written = "Jégenešská", note = "The document writes Jégenešská with an accent on the first e; the register's Jegenešská, the same street."},
+  {street = "Krajinská"},
+  {street = "Kvetinárska"},
+  {street = "Lieskovec"},
+  {street = "Linzbothova"},
+  {street = "Nákovná"},
+  {street = "Nákupná"},
+  {street = "Pasienková"},
+  {street = "Prípojná"},
+  {street = "Pšeničná"},
+  {street = "Ulica svornosti"},
+  {street = "Šikmá"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Amurská"},
+  {street = "Beidl"},
+  {street = "Dneperská"},
+  {street = "Gajc"},
+  {street = "Hájovňa"},
+  {street = "Ketelec"},
+  {street = "Lieskovská cesta"},
+  {street = "Mramorová"},
+  {street = "Orechová"},
+  {street = "Padlých hrdinov"},
+  {street = "Požiarnická"},
+  {street = "Trojičné nám.", written = "Trojičné námestie"},
+  {street = "Vetvárska"},
+  {street = "Šamorínska"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Hronská", numbers = "3"},
+  {street = "Kazanská"},
+  {street = "Latorická", numbers = "1-45", parity = "odd"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Hronská", numbers = "2-30", parity = "even"},
+  {street = "Ipeľská", numbers = "9-15", parity = "odd"},
+  {street = "Latorická", numbers = "2-8", parity = "even"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Bodrocká", numbers = "1-25", parity = "odd"},
+  {street = "Bodrocká", numbers = "2-26", parity = "even"},
+  {street = "Latorická", numbers = "10-18", parity = "even"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Hornádska", numbers = "2-30", parity = "even"},
+  {street = "Hornádska", numbers = "2A, 2B"},
+  {street = "Ipeľská", numbers = "1-7", parity = "odd"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Dudvážska", numbers = "4-24", parity = "even"},
+  {street = "Dudvážska", numbers = "7-39", parity = "odd"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Bodrocká", numbers = "28-44", parity = "even"},
+  {street = "Podzáhradná", numbers = "11-15", parity = "odd"},
+  {street = "Podzáhradná", numbers = "19"},
+  {street = "Podzáhradná", numbers = "10-106", parity = "even"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Korytnická", numbers = "10-22", parity = "even"},
+  {street = "Korytnická", numbers = "9-37", parity = "odd"},
+  {street = "Baltská"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Korytnická", numbers = "1-8"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Uzbecká"},
+  {street = "Podzáhradná", numbers = "1-5, 43-45", parity = "odd"},
+  {street = "Podzáhradná", numbers = "39, 49, 51, 2, 4"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Estónska", numbers = "1-7", parity = "odd"},
+  {street = "Estónska", numbers = "1A"},
+  {street = "Estónska", numbers = "2-14, 32-50", parity = "even"},
+  {street = "Podunajská"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Estónska", numbers = "16-30, 52-60", parity = "even"},
+  {street = "Geologická"},
+  {street = "Lotyšská", numbers = "2-4", parity = "even"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Bieloruská", numbers = "1-35", parity = "odd"},
+  {street = "Bieloruská", numbers = "34-66", parity = "even"},
+]
+
+[okrsok.19]
+rules = [
+  {street = "Bieloruská", numbers = "2-32", parity = "even"},
+  {street = "Priekopnícka"},
+]
+
+[okrsok.20]
+rules = [
+  {street = "Lotyšská", numbers = "6-52", parity = "even"},
+]

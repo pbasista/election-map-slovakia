@@ -1,0 +1,28 @@
+# Okrsky of Pruské, transcribed by an AI agent in job okrsok-rules-4360 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: voliči s trvalým pobytom v obci Pruské, miestna časť Pruské súp. č. 1 až 335 a voliči, ktorých miestom trvalého pobytu je obec Pruské
+#   okrsok 2: voliči s trvalým pobytom v obci Pruské, miestna časť Pruské súp. č. 336 až 900; Pruské, miestna časť Podvažie súp. č. 1 až 140, a Pruské, miestna časť Savčina súp. č. 1 až 140
+obec = "513598"
+name = "Pruské"
+okrsky_note = "The obec's elections page (archived) states the okrsky by part and súpisné číslo; 'voliči, ktorých miestom trvalého pobytu je obec Pruské' are voters without an address (okrsok 1). The live site answered HTTP 429, so the Internet Archive copy is used."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2024-03-14
+okrsky_date_basis = "the Internet Archive captured the elections page with this text on 2024-03-14, before the vote of 23.3.2024; the text names the vote and states no decision date (https://web.archive.org/web/20240314112413/https://www.obecpruske.sk/volby-prezidenta-sr-2024.phtml?id3=161042)"
+
+[[document]]
+url = "https://web.archive.org/web/20240314112413/https://www.obecpruske.sk/volby-prezidenta-sr-2024.phtml?id3=161042"
+sha256 = "a4a2168314dbdf7d5d28cc278bd580c5129e9699201f1425f4c776218b770746"
+title = "Voľby prezidenta SR 2024 – Volebné okrsky a volebné miestnosti (stránka obce)"
+
+[okrsok.1]
+rules = [
+  {part = "Pruské", numbers = "1-335"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Pruské", numbers = "336-900"},
+  {part = "Podvažie"},
+  {part = "Savčina"},
+]

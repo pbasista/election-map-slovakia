@@ -1,0 +1,37 @@
+# Okrsky of Fiľakovské Kováče, transcribed by an AI agent in job okrsok-rules-3953 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volebný okrsok č. 1 – kultúrny dom vo Fiľakovských Kováčoch
+#   okrsok 2: volebný okrsok č. 2 – reštaurácia Hamilton v Kurtáni
+#   okrsok 3: volebný okrsok č. 3 – klub mládeže vo Fiľakovských Kľačanoch
+obec = "511404"
+name = "Fiľakovské Kováče"
+okrsky_note = "Scanned announcement read from the image. It names only the polling station of each of the 3 okrsky; the municipality has 3 parts and each station lies in another part, so each okrsok is given the part of its station (inferred). The announcements of 2024 state the same split by parts explicitly."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-06-28
+okrsky_date_basis = "The document is undated; the municipality's page linking it says it was posted (\"Zverejnené / Vyvesené na úradnej tabuli\") on 2023-06-28, before the vote; its heading names this vote. (https://filakovskekovace.sk/dokument/oznamenie-k-volbam-do-nr-sr-2023-volebne-okrsky-a-miesto-dorucenia-delegovania-clena-a-nahradnika-do-ovk/)"
+
+[[document]]
+url = "https://filakovskekovace.sk/wp-content/uploads/dokumenty/parlamentne-volby/oznamenie-k-volbam-do-nr-sr-2023-d6ztp2.pdf"
+sha256 = "a148a12cd1a54a90cc5c0ac093064643a6f33a70610429d05ac0dea20750d28a"
+title = "Oznámenie k voľbám do Národnej rady Slovenskej republiky 30.09.2023"
+
+[[document]]
+url = "https://filakovskekovace.sk/dokument/oznamenie-k-volbam-do-nr-sr-2023-volebne-okrsky-a-miesto-dorucenia-delegovania-clena-a-nahradnika-do-ovk/"
+sha256 = "ece8cb61740b6b8637698fd56a5e08c0df4291192d72a74349114e39b4a757e5"
+title = "Page of the document (zverejnené 2023-06-28)"
+
+[okrsok.1]
+rules = [
+  {part = "Fiľakovské Kováče", note = "the document gives okrsok 1 only its polling station, which lies in part Fiľakovské Kováče; the 3 okrsky are as many as the parts, each station in another part", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kurtáň", note = "the document gives okrsok 2 only its polling station, which lies in part Kurtáň; the 3 okrsky are as many as the parts, each station in another part", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Fiľakovské Kľačany", note = "the document gives okrsok 3 only its polling station, which lies in part Fiľakovské Kľačany; the 3 okrsky are as many as the parts, each station in another part", inferred = true},
+]

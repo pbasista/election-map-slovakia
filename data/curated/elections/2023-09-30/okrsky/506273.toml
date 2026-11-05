@@ -1,0 +1,38 @@
+# Okrsky of Motešice, transcribed by an AI agent in job okrsok-rules-3932 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Horné Motešice, kultúrny dom s.č. 83
+#   okrsok 2: Dolné Motešice, budova novej školy s.č. 67
+#   okrsok 3: Peťovka, bývalá požiarna zbrojnica s.č. 43
+obec = "506273"
+name = "Motešice"
+okrsky_note = "No document of this vote found: the NR SR 2023 page (archived 2023-08-05) links \"Volebné okrsky a miestnosti\" (uploads/2023/06), but that PDF is not archived and is gone live. Used the referendum's document (3 okrsky, same polling stations)."
+okrsky_referendum = 2023-01-21
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-11-30
+okrsky_date_basis = "The Internet Archive captured the referendum 2023 page linking the undated okrsky document on 2022-11-30; the document names the referendum 2023. (https://web.archive.org/web/20221130150112/https://www.motesice.sk/referendum/)"
+
+[[document]]
+url = "https://web.archive.org/web/20231004225321/https://www.motesice.sk/wp-content/uploads/2022/11/Utvorenie-volebny%CC%81ch-okrskov.pdf"
+sha256 = "cb7522089d6aba6907fe07f4a0c5b231c7109573d2ce508fbbc5be4593110e51"
+title = "Utvorenie volebných okrskov (referendum 2023)"
+
+[[document]]
+url = "https://web.archive.org/web/20221130150112/https://www.motesice.sk/referendum/"
+sha256 = "9237bdcc454d37749a10ede4aed60eb5464c0cc103acdf6e15efad717d4fc302"
+title = "Referendum (page linking the document)"
+
+[okrsok.1]
+rules = [
+  {part = "Horné Motešice", note = "The document names only each okrsok's polling station; the three okrsky match the three parts of the municipality and each station lies in another part, so each okrsok is given the part of its station.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dolné Motešice", note = "The document names only each okrsok's polling station; the three okrsky match the three parts of the municipality and each station lies in another part, so each okrsok is given the part of its station.", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Peťovka", note = "The document names only each okrsok's polling station; the three okrsky match the three parts of the municipality and each station lies in another part, so each okrsok is given the part of its station.", inferred = true},
+]

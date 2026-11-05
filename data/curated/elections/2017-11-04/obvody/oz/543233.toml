@@ -1,0 +1,40 @@
+# The okrsky of Kluknava of the vote of 2018-11-10, data/curated/elections/2018-11-10/obvody/oz/543233.toml, standing in, by `ems job reuse`. Its header there:
+#   Council obvody of Kluknava (543233), Gelnica.
+#   Transcribed by an AI agent in job obvod-rules-166 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: volebný obvod v Kluknave; 7 vo volebnom obvode v Kluknave
+#     obvod 2: volebný obvod v miestnej časti Štefanská Huta; 2 vo volebnom obvode v miestnej časti Štefanská Huta
+#   Okrsky added by an AI agent in job okrsok-rules-5902 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: volebný okrsok č. 1 v Kluknave (Volebný obvod/okrsok č. 1 - Kluknava)
+#     okrsok 2: volebný okrsok č. 2 v miestnej časti Štefanská Huta (Volebný obvod/okrsok č. 2 – Štefanská Huta)
+obec = "543233"
+name = "Kluknava"
+date = 2018-06-28
+note = "The council obvody of the vote of 2018-11-10: they only place the okrsky."
+reused = 2018-11-10
+okrsky_date = 2018-06-28
+okrsky_note = "The council's resolution 373-28/6-2018 of 28.06.2018 (in the notice of 03.08.2018) created two okrsky, identical with the two obvody (the notice: 'Volebný obvod/okrsok č. 1 - Kluknava, č. 2 – Štefanská Huta'); each okrsok is the whole of its obvod."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-452): The website's page for the 2017 vote (volby-2017) is empty: no documents. Internet Archive (CDX API) refused connections / 503 on retries, so archived pages could not be checked. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2018-11-10: 1: 1,137 → 1,139, 2: 160 → 157."
+
+[[document]]
+url = "https://www.kluknava.sk/e_download.php?file=data/editor/153sk_4.pdf&original=OBEC%20KLUKNAVA%20OZN%C3%81MENIE.pdf"
+sha256 = "e9117c60f8f013c2a733b66fc56ca2db335b271246a50b393cbb8a84b54ab6b9"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov, okrskov a miestností pre voľby do orgánov samosprávy obcí 10. novembra 2018 (uznesenia č. 371–373-28/6-2018)"
+
+[obvod.1]
+seats = 7
+okrsky = [1]
+rules = [
+  {rest = true},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Kluknava", numbers = "589-593, 595-622, 627-643, 645-652, 654-668, 682, 692, 696-700, 716-717, 729, 731, 737, 743, 1017, 1023-1024, 1028, 1032, 1034, 1037-1038", by = "supisne"},
+]

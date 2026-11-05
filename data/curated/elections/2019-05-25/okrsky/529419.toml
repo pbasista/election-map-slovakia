@@ -1,0 +1,77 @@
+# Okrsky of Bratislava-Lamač, transcribed by an AI agent in job okrsok-rules-1868 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Bakošova 1 - 36, Na barine
+#   okrsok 2: Ulice: Borinská, Cesta na Klanec, Malokarpatské námestie, Podháj, Segnáre, Stanekova, Vrančovičova
+#   okrsok 3: Ulice: Havelkova, Heyrovského, Podlesná
+#   okrsok 4: Ulice: Furmanská, Hodonínska, Kunerádska, Lediny, Pod násypom, Povoznícka, Skerličova, Studenohorská 1-24, Zlatohorská
+#   okrsok 5: Ulice: Studenohorská 25-71
+#   okrsok 6: Ulice: Bakošova 38-46, Lamačská cesta, Pod Zečákom, Rácova, Rajtákova, Rozálska, Studenohorská 72-91, Vysokohorská, Záhrady, Zelenohorská, Zhorínska, Zidiny
+obec = "529419"
+name = "Bratislava-Lamač"
+okrsky_date = 2019-02-22
+okrsky_fill = "nearest"
+okrsky_note = "Register streets the document does not name, placed by fill_nearest: Hany Ponickej, Pridánky, Ulica Milana Šimečku, Vysoká Hora; likewise house numbers outside the listed ranges and the addresses without a street."
+
+[[document]]
+url = "https://www.lamac.sk/files/documents/zverejnovanie/volby/eu/eu-volby-2019.zip"
+sha256 = "c5b5a499f3cd139c70b2f88f5bd81530c81bb48d07f9132aa10c46692bcc387a"
+title = "EU voľby 2019 (ZIP): určenie volebných okrskov 2019 - EP.pdf – Určenie volebných okrskov, času a miesta konania volieb do Európskeho parlamentu v roku 2019"
+
+[okrsok.1]
+rules = [
+  {street = "Bakošova", numbers = "1-36"},
+  {street = "Na barine"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Borinská"},
+  {street = "Cesta na Klanec"},
+  {street = "Malokarpatské námestie"},
+  {street = "Podháj"},
+  {street = "Segnáre"},
+  {street = "Stanekova"},
+  {street = "Vrančovičova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Havelkova"},
+  {street = "Heyrovského"},
+  {street = "Podlesná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Furmanská"},
+  {street = "Hodonínska"},
+  {street = "Kuneradská", written = "Kunerádska", note = "the document writes Kunerádska with a misplaced accent; the register street Kuneradská (written so in the later documents)"},
+  {street = "Lediny"},
+  {street = "Pod násypom"},
+  {street = "Povoznícka"},
+  {street = "Skerličova"},
+  {street = "Studenohorská", numbers = "1-24"},
+  {street = "Zlatohorská"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Studenohorská", numbers = "25-71"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bakošova", numbers = "38-46"},
+  {street = "Lamačská cesta"},
+  {street = "Pod Zečákom"},
+  {street = "Rácova"},
+  {street = "Rajtákova"},
+  {street = "Rozálska"},
+  {street = "Studenohorská", numbers = "72-91"},
+  {street = "Vysokohorská"},
+  {street = "Záhrady"},
+  {street = "Zelenohorská"},
+  {street = "Zhorínska"},
+  {street = "Zidiny"},
+]

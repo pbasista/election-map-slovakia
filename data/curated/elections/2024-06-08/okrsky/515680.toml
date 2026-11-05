@@ -1,0 +1,79 @@
+# Okrsky of Tisovec, transcribed by an AI agent in job okrsok-rules-4799 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bánovo, Hviezdoslavova, Kľak, Kozí Chrbát, Ľadovo, Ľavkovo, Partizánska č. 105 – 138, Podhradová, Rejkovo, Roveň, Sládkovičova, Zbojská
+#   okrsok 2: Bakulínyho, Francisciho, Jozeffyho, Nám. Dr. V. Clementisa, bez ulice
+#   okrsok 3: Dielik, Jesenského, Malinovského, Muránska, P. Šífrika, Partizánska č. 94 – 104, 139 – 169, 1618, Šťavica, Štefánikova
+#   okrsok 4: Daxnerova, Markovo, Ľ. Štúra, Suché Doly
+#   okrsok 5: Dlhá, Dolná, Družstevná, Hlavná, Hrb, Vansovej, Železničná
+obec = "515680"
+name = "Tisovec"
+okrsky_date = 2024-02-29
+okrsky_fill = "nearest"
+okrsky_note = "'bez ulice' (okrsok 2) means voters registered without an address. 'Suché Doly' (okrsok 4) is not in the register. Not named by the document: Košianovo, Polianky, Stratená and the houses without a street in part Tisovec, and Partizánska súpisné numbers outside the listed ranges; placed by fill_nearest."
+
+[[document]]
+url = "https://www.tisovec.com/evt_file.php?file=32559"
+sha256 = "fd3818000737737df69998144a20be6c053388bc2f0b3e02eb4f92de75103417"
+title = "Rozhodnutie primátora mesta Tisovec o utvorení volebných okrskov a volebných miestností pre voľby do Európskeho parlamentu, V Tisovci 29.02.2024"
+
+[[document]]
+url = "https://www.tisovec.com/sk/mesto/volby/volby-do-eu/2024/rozhodnutie-primatora-utvorenie-okrskov-vol-miestnosti-6523sk.html"
+sha256 = "b7d1ce6ae69c74951a27a9359851b4f169edf6e0b82b9aba3f63301817e93bf8"
+title = "ROZHODNUTIE PRIMÁTORA - utvorenie okrskov, vol. miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Bánovo"},
+  {street = "Hviezdoslavova"},
+  {street = "Kľak"},
+  {street = "Kozí Chrbát"},
+  {street = "Ľadovo"},
+  {street = "Ľavkovo"},
+  {street = "Podhradová"},
+  {street = "Rejkovo"},
+  {street = "Roveň"},
+  {street = "Sládkovičova"},
+  {street = "Zbojská"},
+  {street = "Partizánska", numbers = "105-138", by = "supisne", note = "the document's numbers of Partizánska are súpisné (the register's orientačné reach only 98)"},
+  {street = "Pod Hradom", note = "not in the document; one address next to Podhradová (okrsok 1)", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bakulínyho"},
+  {street = "Francisciho"},
+  {street = "Jozeffyho"},
+  {street = "Nám. Dr. V. Clementisa"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Dielik"},
+  {street = "Jesenského"},
+  {street = "Malinovského"},
+  {street = "Muránska"},
+  {street = "P. Šífrika"},
+  {street = "Šťavica"},
+  {street = "Štefánikova"},
+  {street = "Partizánska", numbers = "94-104, 139-169, 1618", by = "supisne", note = "the document's numbers of Partizánska are súpisné (the register's orientačné reach only 98)"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Daxnerova"},
+  {street = "Markovo"},
+  {street = "Ľ. Štúra"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Dlhá"},
+  {street = "Dolná"},
+  {street = "Družstevná"},
+  {street = "Hlavná"},
+  {street = "Hrb"},
+  {street = "Vansovej"},
+  {street = "Železničná"},
+  {part = "Rimavská Píla", note = "addresses without a street in Rimavská Píla: the part's streets are all in okrsok 5", inferred = true},
+]

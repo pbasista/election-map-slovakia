@@ -1,0 +1,27 @@
+# The okrsky of Nacina Ves of the vote of 2026-07-04, data/curated/elections/2026-07-04/okrsky/522805.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Nacina Ves, transcribed by an AI agent in job okrsok-rules-5761 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Okrsok č. 1 – Kultúrny dom Nacina Ves - časť Nacina Ves, SČ 229
+#     okrsok 2: Okrsok č. 2 - Kultúrny dom Nacina Ves – časť Vybúchanec, SČ 1057
+obec = "522805"
+name = "Nacina Ves"
+okrsky_date = 2026-05-06
+okrsky_note = "The document gives each okrsok only its polling station (Kultúrny dom s.č. 229 in part Nacina Ves; Kultúrny dom s.č. 1057 in part Vybúchanec); two okrsky, two parts, each station in another part: each okrsok is given the part of its station (inferred)."
+okrsky_adopted = 2026-07-04
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-610): The 2026 elections page has no notice on the okrsky (the 'utvorení ... okrskov' file is only the obvod/councillors notice). A referendum (4 July 2026) notice on the number of okrsky exists, but no 2026 election document says the okrsky stay the same. These are the okrsky of the vote of 2026-07-04 (2026-referendum), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2026-07-04: 1: 1,328 → 1,308, 2: 124 → 125."
+
+[[document]]
+url = "https://www.nacinaves.sk/files/2026-05-07-084856-Ozn__menie_o_po__te_vytvoren__ch_okrskov.pdf"
+sha256 = "6bf7f3e5bf27860049cf066524ec3b0241e976d206ee6665842b0c1c4c7b0de6"
+title = "Oznámenie o počte utvorených okrskov (referendum 4. júla 2026), 6. 5. 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Nacina Ves", note = "The document gives each okrsok only its polling station; two okrsky, two parts (Nacina Ves, Vybúchanec), each station in another part: the okrsok is given the part of its station", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vybúchanec", note = "The document gives each okrsok only its polling station; two okrsky, two parts (Nacina Ves, Vybúchanec), each station in another part: the okrsok is given the part of its station", inferred = true},
+]

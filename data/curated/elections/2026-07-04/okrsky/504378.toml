@@ -1,0 +1,95 @@
+# Okrsky of Holíč, transcribed by an AI agent in job okrsok-rules-5317 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bottova, Fučíkova, Jednoradová, Jesenského, Kátovská , kpt. Nálepku, Kukučínova, M.R. Štefánika, Mlynská, Partizánska, Potočná, Sasinkova, D. Rapanta, Hodonínska, Hollého, Lesná, Ružová, Staničná, Lúčky
+#   okrsok 2: M. Nešpora, Moyzesova, 29. augusta, Budovateľská, Duklianska, Gagarinova, Lidická, Palárikova, Pri štadióne, Priateľstva, Priečna, Rodinné domky, Sibírska, Športová, Štúrova, Veterná, Vrádištská, Vysoká, Schiffelova, Ulica A. Dubčeka, Hviezdoslavova
+#   okrsok 3: SNP 9 - 47, Kollárova, Pod hrebeňom, Betlehém, Kopčanská, Pod sýpkou, Pri kaštieli, Svätojánska.
+#   okrsok 4: Bažantnica, Bratislavská, J.J. Boora , SNP 1-8, Ulica Márie Terézie, J. Čabelku, Bernolákova, Nám. mieru, Nám. sv. Martina, Školská, Zámocká. Hurbanova, Sv. Anny
+obec = "504378"
+name = "Holíč"
+okrsky_fill = "nearest"
+okrsky_note = "Placed by fill_nearest: addresses without a street (súpisné only) and SNP 48 and up (the document lists SNP 1-8 and 9-47 only). The document states no decision date (signed by the mayor, undated)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document is undated; its heading names the referendum of 4 July 2026 (\"na referendum konané dňa 4.7.2026\")."
+
+[[document]]
+url = "https://www.holic.sk/e_download.php?file=/data/uredni_deska/obsah3_2.pdf&original=Volebn%C3%A9%20%20okrsky%20a%20volebn%C3%A9%20miestnosti.pdf"
+sha256 = "507d70476f613609e19c5338783729722a551516b115ec87ffd6f906d0dba824"
+title = "Volebné okrsky a volebné miestnosti v meste Holíč na referendum konané dňa 4.7.2026"
+
+[okrsok.1]
+rules = [
+  {street = "Bottova"},
+  {street = "Fučíkova"},
+  {street = "Jednoradová"},
+  {street = "Jesenského"},
+  {street = "Kátovská"},
+  {street = "Kpt. Nálepku", written = "kpt. Nálepku"},
+  {street = "Kukučínova"},
+  {street = "M. R. Štefánika", written = "M.R. Štefánika"},
+  {street = "Mlynská"},
+  {street = "Partizánska"},
+  {street = "Potočná"},
+  {street = "Sasinkova"},
+  {street = "D. Rapanta"},
+  {street = "Hodonínska"},
+  {street = "Hollého"},
+  {street = "Lesná"},
+  {street = "Ružová"},
+  {street = "Staničná"},
+  {street = "Lúčky"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "M. Nešpora"},
+  {street = "Moyzesova"},
+  {street = "29. augusta"},
+  {street = "Budovateľská"},
+  {street = "Duklianska"},
+  {street = "Gagarinova"},
+  {street = "Lidická"},
+  {street = "Palárikova"},
+  {street = "Pri štadióne"},
+  {street = "Priateľstva"},
+  {street = "Priečna"},
+  {street = "Rodinné domky"},
+  {street = "Sibírska"},
+  {street = "Športová"},
+  {street = "Štúrova"},
+  {street = "Veterná"},
+  {street = "Vrádištská"},
+  {street = "Vysoká"},
+  {street = "Schiffelova"},
+  {street = "Ulica A. Dubčeka"},
+  {street = "Hviezdoslavova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "SNP", numbers = "9-47"},
+  {street = "Kollárova"},
+  {street = "Pod hrebeňom"},
+  {street = "Betlehém"},
+  {street = "Kopčanská"},
+  {street = "Pod sýpkou"},
+  {street = "Pri kaštieli"},
+  {street = "Svätojánska"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bažantnica"},
+  {street = "Bratislavská"},
+  {street = "J. J. Boora", written = "J.J. Boora"},
+  {street = "SNP", numbers = "1-8"},
+  {street = "Ulica Márie Terézie"},
+  {street = "J. Čabelku"},
+  {street = "Bernolákova"},
+  {street = "Námestie mieru", written = "Nám. mieru"},
+  {street = "Námestie sv. Martina", written = "Nám. sv. Martina"},
+  {street = "Školská"},
+  {street = "Zámocká"},
+  {street = "Hurbanova"},
+  {street = "Sv. Anny"},
+]

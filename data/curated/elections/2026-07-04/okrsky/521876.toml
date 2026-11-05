@@ -1,0 +1,35 @@
+# Okrsky of Perín-Chym, transcribed by an AI agent in job okrsok-rules-5724 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: okrsok č.1 – salónik vo viacúčelovej budove v Períne č. 180
+#   okrsok 2: okrsok č.2 – salónik v budove kultúrneho domu v Chyme č. 51
+#   okrsok 3: okrsok č.3 – salónik v budove kultúrneho domu vo Vyšnom Lánci č. 28
+obec = "521876"
+name = "Perín-Chym"
+okrsky_date = 2026-04-22
+okrsky_note = "The document names only each okrsok's polling station (Perín 180, Chym 51, Vyšný Lánec 28); the municipality has three parts and three okrsky, one station in each part, so each okrsok is given the part of its station (inferred). Read from the image."
+
+[[document]]
+url = "https://www.perin-chym.sk/files/2026-04-23-083723-ozn__menie_o_utvoren___volebn__ch_okrskov.jpg"
+sha256 = "9b6b7dde52cc4b624e8414312ac399078102a95a71069e51ce81612af722b0cf"
+title = "Oznámenie o utvorení volebných okrskov a o určení volebných miestností pre hlasovanie v referende 4. júla 2026"
+
+[[document]]
+url = "https://www.perin-chym.sk/referendum-2026-a73-985"
+sha256 = "0166af5e9449009a80379532b81b13c96d78f540ec9284e4028f18753ef0b3ca"
+title = "page of the vote linking the document"
+
+[okrsok.1]
+rules = [
+  {part = "Perín", note = "the document gives only the polling station, which lies in part Perín; the okrsky are as many as the parts", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Chym", note = "the document gives only the polling station, which lies in part Chym; the okrsky are as many as the parts", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Vyšný Lánec", note = "the document gives only the polling station, which lies in part Vyšný Lánec; the okrsky are as many as the parts", inferred = true},
+]

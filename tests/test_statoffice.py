@@ -3,6 +3,7 @@ import zipfile
 from pathlib import Path
 
 import pytest
+from test_candidates import write_xlsx
 
 from election_map_slovakia import candidates, results, statoffice
 from election_map_slovakia.candidates import Admin, Obec
@@ -397,4 +398,123 @@ def test_regional_results(packages: tuple[Package, Package]):
 def test_results_keep_the_contract(tmp_path: Path, packages: tuple[Package, Package]):
     final = statoffice.read_results(*packages, log=lambda _: None)
     now = dt.datetime(2022, 10, 30, 12, tzinfo=results.TIMEZONE)
-    assert results.write(tmp_path / "out", final.live, now, checked=True)
+    divisions = results.Divisions({}, {}, frozenset())
+    expect = results.Expect(frozenset({"oso", "osk"}), {}, {}, divisions)
+    assert results.write(tmp_path / "out", final.live, divisions, now, expect=expect)
+
+
+# The regional package of 2017: XLSX tables of full column names, the
+# turnout's header in two rows. Kraj 1 of two obvody: Staré Mesto (two
+# okrsky, obvod 1) and Devín (one, obvod 2).
+REGIONAL_2017 = {
+    "tab0ca": [
+        ["Číslo politickej strany", "Názov politickej strany", "Skratka politickej strany"],
+        ["128", "Sloboda a Solidarita", "SaS"],
+        ["147", "Team Bratislava", "Team"],
+    ],
+    "tab0ab": [
+        ["Kód kraja", "Kraj", "Poradie na hlasovacom lístku", "Meno", "Priezvisko", "Titul", "Vek", "Zamestnanie", "Obec", "Politický subjekt", "Poznámka"],
+        ["1", "Bratislavský kraj", "1", "Juraj", "Droba", "Mgr., MBA", "46", "manažér", "Bratislava - Ružinov", "SaS", ""],
+        ["1", "Bratislavský kraj", "2", "Ján", "Novák", "", "50", "úradník", "Pezinok", "NEKA", "X"],
+    ],
+    "tab0bc": [
+        ["Kód kraja", "Kraj", "Kód volebného obvodu", "Volebný obvod", "Poradie na hlasovacom lístku", "Meno", "Priezvisko", "Titul", "Vek", "Zamestnanie", "Obec", "Politický subjekt", "Poznámka"],
+        ["1", "Bratislavský kraj", "101", "Volebný obvod č. 1", "1", "Zuzana", "Aufrichtová", "Ing. arch.", "42", "urbanistka", "Bratislava - Staré Mesto", "SaS, Team", ""],
+        ["1", "Bratislavský kraj", "101", "Volebný obvod č. 1", "2", "Pavol", "Baxa", "", "59", "manažér", "Bratislava - Staré Mesto", "NEKA", ""],
+        ["1", "Bratislavský kraj", "102", "Volebný obvod č. 2", "1", "Eva", "Malá", "", "40", "lekárka", "Bratislava - Devín", "Team", ""],
+    ],
+    "tab0db": [
+        ["Kód kraja", "Kraj", "Kód volebného obvodu", "Názov volebného obvodu", "Počet okrskov", "Počet volených poslancov"],
+        ["1", "Bratislavský kraj", "101", "Volebný obvod č. 1", "2", "1"],
+        ["1", "Bratislavský kraj", "102", "Volebný obvod č. 2", "1", "1"],
+    ],
+    "tab0dc": [
+        ["Kód kraja", "Kraj", "Kód volebného obvodu", "Volebný obvod", "Kód obce", "Názov obce", "Počet okrskov"],
+        ["1", "Bratislavský kraj", "101", "Volebný obvod č. 1", "528595", "Bratislava - Staré Mesto", "2"],
+        ["1", "Bratislavský kraj", "102", "Volebný obvod č. 2", "529401", "Bratislava - Devín", "1"],
+    ],
+    "tab02d": [
+        ["Kód samosprávneho kraja", "Samosprávny kraj", "Kód volebného obvodu", "Volebný obvod", "Kód obce", "Obec", "Okrsok", "Počet voličov zapísaných v zoznamoch voličov", "Počet voličov, ktorí sa zúčastnili na hlasovaní", "Počet platných hlasovacích lístkov odovzdaných pre voľby", ""],
+        ["", "", "", "", "", "", "", "", "", "predsedu", "do zastupiteľstva"],
+        [],
+        ["1", "BK", "101", "VO 1", "528595", "Bratislava - Staré Mesto", "Bratislava - Staré Mesto 1", "1000", "400", "390", "380"],
+        ["1", "BK", "101", "VO 1", "528595", "Bratislava - Staré Mesto", "Bratislava - Staré Mesto 2", "800", "300", "290", "285"],
+        ["1", "BK", "102", "VO 2", "529401", "Bratislava - Devín", "Bratislava - Devín 1", "500", "200", "195", "190"],
+    ],
+    "tab06e": [
+        ["Kód samosprávneho kraja", "Samosprávny kraj", "Kód volebného obvodu", "Volebný obvod", "Kód obce", "Obec", "Okrsok", "Poradie na hlasovacom lístku", "Meno a priezvisko kandidáta", "Politický subjekt", "Počet platných hlasov", "Podiel platných hlasov v %", "Poznámka"],
+        ["1", "BK", "101", "VO 1", "528595", "Bratislava - Staré Mesto", "Bratislava - Staré Mesto 1", "1", "Juraj Droba", "SaS", "300", "76.92", "2"],
+        ["1", "BK", "101", "VO 1", "528595", "Bratislava - Staré Mesto", "Bratislava - Staré Mesto 1", "2", "Ján Novák", "NEKA", "90", "23.07", "0"],
+        ["1", "BK", "101", "VO 1", "528595", "Bratislava - Staré Mesto", "Bratislava - Staré Mesto 2", "1", "Juraj Droba", "SaS", "200", "68.96", "2"],
+        ["1", "BK", "101", "VO 1", "528595", "Bratislava - Staré Mesto", "Bratislava - Staré Mesto 2", "2", "Ján Novák", "NEKA", "90", "31.03", "0"],
+        ["1", "BK", "102", "VO 2", "529401", "Bratislava - Devín", "Bratislava - Devín 1", "1", "Juraj Droba", "SaS", "150", "76.92", "2"],
+        ["1", "BK", "102", "VO 2", "529401", "Bratislava - Devín", "Bratislava - Devín 1", "2", "Ján Novák", "NEKA", "45", "23.07", "0"],
+    ],
+    "tab09e": [
+        ["Kód samosprávneho kraja", "Samosprávny kraj", "Kód volebného obvodu", "Volebný obvod", "Kód obce", "Obec", "Okrsok", "Poradie na hlasovacom lístku", "Meno a priezvisko kandidáta", "Politický subjekt", "Počet platných hlasov", "Podiel platných hlasov v %", "Poznámka"],
+        ["1", "BK", "101", "VO 1", "528595", "Bratislava - Staré Mesto", "Bratislava - Staré Mesto 1", "1", "Zuzana Aufrichtová", "SaS, Team", "250", "65.78", "2"],
+        ["1", "BK", "101", "VO 1", "528595", "Bratislava - Staré Mesto", "Bratislava - Staré Mesto 1", "2", "Pavol Baxa", "NEKA", "130", "34.21", "1"],
+        ["1", "BK", "101", "VO 1", "528595", "Bratislava - Staré Mesto", "Bratislava - Staré Mesto 2", "1", "Zuzana Aufrichtová", "SaS, Team", "200", "70.17", "2"],
+        ["1", "BK", "101", "VO 1", "528595", "Bratislava - Staré Mesto", "Bratislava - Staré Mesto 2", "2", "Pavol Baxa", "NEKA", "85", "29.82", "1"],
+        ["1", "BK", "102", "VO 2", "529401", "Bratislava - Devín", "Bratislava - Devín 1", "1", "Eva Malá", "Team", "190", "100", "2"],
+    ],
+}  # fmt: skip
+
+
+def regional_2017(tmp_path: Path) -> Path:
+    """Write the regional package of 2017 (:data:`REGIONAL_2017`), a title above each table."""
+    path = tmp_path / "OSK_2017_xlsx.zip"
+    with zipfile.ZipFile(path, "w") as z:
+        for table, rows in REGIONAL_2017.items():
+            name = f"OSK_2017_{table}.xlsx"
+            z.write(write_xlsx(tmp_path / name, [["Tabuľka"], [], *rows]), name)
+    return path
+
+
+def test_regional_lists_of_2017(tmp_path: Path):
+    lists = statoffice.read_lists({"osk": regional_2017(tmp_path)})
+    by_name = {e.surname: e for e in lists.entries}
+    droba = by_name["Droba"]
+    assert (droba.kind, droba.area, droba.region, droba.residence) == (
+        "predseda",
+        "1",
+        "Bratislavský samosprávny kraj",
+        "Bratislava - Ružinov",
+    )
+    assert (droba.title_before, droba.title_after, droba.age) == ("Mgr.", "MBA", 46)
+    aufrichtova = by_name["Aufrichtová"]
+    assert (aufrichtova.kind, aufrichtova.obvod) == ("zsk", 1)
+    assert aufrichtova.parties == ["Sloboda a Solidarita", "Team Bratislava"]
+    assert by_name["Baxa"].independent
+    assert lists.withdrawn == {"predseda:1#2"}
+    assert lists.seats == {"zsk:1/1": 1, "zsk:1/2": 1}
+    assert lists.zsk == {"528595": 1, "529401": 2}
+
+
+def test_regional_results_of_2017(tmp_path: Path):
+    final = statoffice.read_final({"osk": regional_2017(tmp_path)}, log=lambda _: None)
+    president = final.live.files["kraj/1"]["predseda:1"]
+    assert (president.eligible, president.voters, president.valid) == (2300, 900, 875)
+    # Poznámka 2 elected, 0 withdrawn (votes counted), 1 neither.
+    assert sorted(president.candidates) == [(1, 650, 1), (2, 225, results.WITHDRAWN)]
+    council = final.live.files["kraj/1"]["zsk:1/1"]
+    assert (council.seats, council.filled, council.valid) == (1, 1, 665)
+    assert sorted(council.candidates) == [(1, 450, 1), (2, 215, 0)]
+    assert set(final.live.okrsky["kraj/1"]["zsk:1/1"]) == {"528595/1", "528595/2"}
+    assert final.live.source["osk"]["counted"] == [3, 3]
+    now = dt.datetime(2017, 11, 6, 12, tzinfo=results.TIMEZONE)
+    divisions = results.Divisions({}, {}, frozenset())
+    expect = results.Expect(frozenset({"osk"}), {}, {}, divisions)
+    assert results.write(tmp_path / "out", final.live, divisions, now, expect=expect)
+
+
+def test_xlsx_package_must_be_of_its_election(tmp_path: Path):
+    path = regional_2017(tmp_path)
+    with pytest.raises(StatOfficeError, match="not a table of the oso package"):
+        statoffice.read_lists({"oso": path})
+
+
+def test_packages_of_2022_are_both(tmp_path: Path):
+    package(tmp_path, "oso", OSO)
+    with pytest.raises(StatOfficeError, match="two, oso and osk"):
+        statoffice.read_lists({"oso": tmp_path / "OSO2022_SK_csv.zip"})

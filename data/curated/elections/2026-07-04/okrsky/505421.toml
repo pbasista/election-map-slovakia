@@ -1,0 +1,38 @@
+# Okrsky of Radošina, transcribed by an AI agent in job okrsok-rules-5616 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Družstevná, Kamenná, Mierová, Nádražná, Nitrianska Hečkova, kpt. J. Nálepku, Piešťanská, Školská, bezdomovci
+#   okrsok 2: Volebná miestnosť : Kultúrny dom Bzince 30
+obec = "505421"
+name = "Radošina"
+okrsky_date = 2026-04-21
+okrsky_fill = "nearest"
+okrsky_note = "Two okrsky: okrsok 1 all streets of Radošina (the former okrsky 1 and 2), okrsok 2 the polling station in Bzince only. 'bezdomovci' are not a rule. The register's addresses of part Radošina without a street take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.radosina.sk/download_file_f.php?id=2395918"
+sha256 = "2afc905f87cce21adede4085b19a4b29309acaff6581f59c3fa782a89d65a4ea"
+title = "Utvorenie volebných okrskov a určenie volebných miestností na konanie referenda 4.7.2026 (21.4.2026)"
+
+[[document]]
+url = "https://www.radosina.sk/referendum-2026-oznam/mid/506316/.html"
+sha256 = "557b80927e41d04dec343e7ad116b3865b2a17d775364e15fe3a632bc1c362e9"
+title = "Referendum 2026 (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {street = "Družstevná"},
+  {street = "Kamenná"},
+  {street = "Mierová"},
+  {street = "Nádražná"},
+  {street = "Nitrianska"},
+  {street = "Hečkova"},
+  {street = "kpt. J. Nálepku"},
+  {street = "Piešťanská"},
+  {street = "Školská"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Bzince", note = "the document gives okrsok 2 only its polling station, the cultural house in Bzince (Bzince 30); okrsok 2 is the part Bzince, the only part not covered by the streets of okrsok 1", inferred = true},
+]

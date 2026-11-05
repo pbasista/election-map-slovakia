@@ -1,0 +1,27 @@
+# Okrsky of Diviaky nad Nitricou, transcribed by an AI agent in job okrsok-rules-3781 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č.1 pre územie obce Diviaky nad Nitricou, časť obce Mačov a časť obce Somorova Ves
+#   okrsok 2: Okrsok č.2 pre územie častí obce Ješkova Ves a časť obce Banky
+obec = "513962"
+name = "Diviaky nad Nitricou"
+okrsky_date = 2023-06-27
+okrsky_note = "Mayor's notice (archived from the old website), scanned, read from the rendered page. 'Ješkova Ves' is the register part Ješkova Ves nad Nitricou."
+
+[[document]]
+url = "https://web.archive.org/web/20230928041142/https://www.diviaky.sk/e_download.php?file=data/editor/161sk_4.pdf&original=Utvorenie%20volebn%C3%A9ho%20okrsku%20a%20ur%C4%8Denie%20volebnej%20miestnosti.pdf%2027.pdf"
+sha256 = "d806f6dc145380e8daf901f9c0ee92ed401c04639a4eb4951ccd87cf7accd025"
+title = "Utvorenie volebného okrsku a určenie volebnej miestnosti"
+
+[okrsok.1]
+rules = [
+  {part = "Diviaky nad Nitricou"},
+  {part = "Mačov"},
+  {part = "Somorova Ves"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Ješkova Ves nad Nitricou"},
+  {part = "Banky"},
+]

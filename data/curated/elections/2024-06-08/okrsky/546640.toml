@@ -1,0 +1,29 @@
+# Okrsky of Dolný Lieskov, transcribed by an AI agent in job okrsok-rules-5181 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: miestna časť Dolný Lieskov
+#   okrsok 2: miestna časť Tŕstie
+obec = "546640"
+name = "Dolný Lieskov"
+okrsky_date = 2024-03-01
+okrsky_note = "Each okrsok is a whole part of the municipality. Scanned document, read from the page image."
+
+[[document]]
+url = "https://obec.dobraobec.sk/files/7/dokumenty/e249e_Xerox%20Scan_01032024081537.PDF"
+sha256 = "77deab13b1a66b89a342cdc6f14ca9b739a5de16749b52f449b3818827afb996"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu 8. júna 2024"
+
+[[document]]
+url = "https://dolnylieskov.sk/dokumenty?kat=486&strana=2"
+sha256 = "25c6a80d75a7681c79000d352f231fa5019e638078dd4c079f402fadc4b1f6e8"
+title = "Dokumenty – Voľby (page linking the file)"
+
+[okrsok.1]
+rules = [
+  {part = "Dolný Lieskov"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Tŕstie"},
+]

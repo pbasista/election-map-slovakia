@@ -1,0 +1,72 @@
+# Okrsky of Tisovec, transcribed by an AI agent in job okrsok-rules-190 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bánovo, Hviezdoslavova, Kľak, Ľavkovo, Partizánska č. 105 – 138, Podhradová, Sládkovičova, Zbojská
+#   okrsok 2: Bakulínyho, Nám. Dr. V. Clementisa, Francisciho, Jozeffyho
+#   okrsok 3: Dielik, Jesenského, Malinovského, Muránska, P. Šífrika, Partizánska č. 94 – 104, 139 – 167, Štefánikova, Šťavica
+#   okrsok 4: Daxnerova, Markovo, Ľ. Štúra, Suché Doly
+#   okrsok 5: Cigánska osada, Dlhá, Družstevná, Hlavná, Partizánska, Vansovej, Železničná
+obec = "515680"
+name = "Tisovec"
+okrsky_date = 2017-08-16
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky approved by the council (uznesenie 522/2017 of 16 August 2017). 'Suché Doly' (okrsok 4), 'Cigánska osada' and the bare 'Partizánska' of okrsok 5 (Rimavská Píla's former street names) are not in the register; the register's Partizánska lies in part Tisovec, numbered here by súpisné čísla. Not named by the document: Kozí Chrbát, Ľadovo, Rejkovo, Roveň, Pod Hradom, Košianovo, Polianky, Stratená, houses without a street in part Tisovec and Partizánska súpisné numbers outside the listed ranges (fill_nearest); Rimavská Píla's other streets (Dolná, Hrb) go with okrsok 5 by the part."
+
+[[document]]
+url = "https://www.tisovec.com/e_download.php?file=data/uredni_deska/obsah232_3.pdf&original=Volebn%C3%A9%20okrsky%20v%20Tisovci%20a%20m.%20%C4%8D.%20R%20P%C3%ADla%20-%20inform%C3%A1cia.pdf"
+sha256 = "1ec6efc4843f02253c32600155c779d78f8f0a32860e570826cc34672df5d99d"
+title = "Volebné okrsky v Tisovci a m. č. Rimavská Píla pre voľby do orgánov samosprávnych krajov 2017 (uznesenie MsZ č. 522/2017 zo dňa 16. augusta 2017)"
+
+[[document]]
+url = "https://www.tisovec.com/sk/samosprava/povinne-zverejnovanie-mesta/uradna-tabula-mesta/volby-do-samospravnych-organov-2017-234.html"
+sha256 = "665202a7fb8f2ac4bf39a8a9c23ff3003a31af773bb8470572f31c18c67d45f2"
+title = "Úradná tabuľa: Voľby do samosprávnych orgánov 2017 (vyvesené 26. 9. 2017)"
+
+[okrsok.1]
+rules = [
+  {street = "Bánovo"},
+  {street = "Hviezdoslavova"},
+  {street = "Kľak"},
+  {street = "Ľavkovo"},
+  {street = "Podhradová"},
+  {street = "Sládkovičova"},
+  {street = "Zbojská"},
+  {street = "Partizánska", numbers = "105-138", by = "supisne", note = "the document's numbers of Partizánska are súpisné (the register's orientačné reach only 98)"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bakulínyho"},
+  {street = "Nám. Dr. V. Clementisa"},
+  {street = "Francisciho"},
+  {street = "Jozeffyho"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Dielik"},
+  {street = "Jesenského"},
+  {street = "Malinovského"},
+  {street = "Muránska"},
+  {street = "P. Šífrika"},
+  {street = "Štefánikova"},
+  {street = "Šťavica"},
+  {street = "Partizánska", numbers = "94-104, 139-167", by = "supisne", note = "the document's numbers of Partizánska are súpisné (the register's orientačné reach only 98)"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Daxnerova"},
+  {street = "Markovo"},
+  {street = "Ľ. Štúra"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Dlhá"},
+  {street = "Družstevná"},
+  {street = "Hlavná"},
+  {street = "Vansovej"},
+  {street = "Železničná"},
+  {part = "Rimavská Píla", note = "Rimavská Píla addresses on streets the document does not name (e.g. Dolná, Hrb) and without a street: the whole part votes in okrsok 5", inferred = true},
+]

@@ -1,0 +1,59 @@
+# The okrsky of Trenčianske Teplice of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/506613.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Trenčianske Teplice, transcribed by an AI agent in job okrsok-rules-1872 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Gen. M.R. Štefánika, Teheľňa, Ľ. Podjavorinskej, Sady pod Dedovcom, Gogolova Štvrť SNP bloky č.: 7, 8, 16, 17, 18, 19, 20, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89.
+#     okrsok 2: Šrobárova, Nádražná, Štvrť SNP bloky č.: 1, 2, 3, 4, 5, 9, 10, 11, 12, 13, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32.
+#     okrsok 3: Štvrť SNP bloky č.: 14, 34, 35, 36, 37, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 70, 100. Samota Skalica.
+#     okrsok 4: Baračka, Hurbanova, Bagarova, Pod Klepáčom, Partizánska, Červené Kopanice, 17. novembra, T.G. Masaryka, Kúpeľná, Hviezdoslavova, občania prihlásení na Mesto Trenčianske Teplice, kúpeľní hostia
+obec = "506613"
+name = "Trenčianske Teplice"
+okrsky_fill = "nearest"
+okrsky_note = "The city's election page lists the streets per okrsok, Štvrť SNP split by block numbers (taken as its house numbers). 'občania prihlásení na Mesto Trenčianske Teplice' and 'kúpeľní hostia' are voters without an address / spa guests; Štvrť SNP numbers not listed, register streets not named (Kaňová, Samota Arpád) and addresses without a street are placed by fill_nearest."
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2461): The city's election pages give the okrsky for 2018, 2019, 2024 and 2026, but the 2017 regional elections page (archived 30.8.2017) and the NR SR 2023 page (live and archived 29.6.2023) list no okrsky, and no NR SR 2020 page is archived. These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2019-05-25: 1: 1,044 → 1,027, 2: 834 → 815, 3: 769 → 789, 4: 1,213 → 958."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2019-02-05
+okrsky_date_basis = "The archived election page states it was published (Zverejnené) on 2019-02-05; the okrsky text itself is undated. (https://web.archive.org/web/20190818093958/https://www.teplice.sk/volby-do-europskeho-parlamentu-2019.html)"
+
+[[document]]
+url = "https://web.archive.org/web/20190818093958/https://www.teplice.sk/volby-do-europskeho-parlamentu-2019.html"
+sha256 = "b9818f38da92ce9cc6c997951e703c6e9ea5e7d31c36bf8d17a1bc1fb3d68671"
+title = "Election page with the okrsky (Internet Archive)"
+
+[okrsok.1]
+rules = [
+  {street = "Teheľňa"},
+  {street = "Sady Pod Dedovcom", written = "Sady pod Dedovcom"},
+  {street = "Gogolova"},
+  {street = "Štvrť SNP", numbers = "7-8, 16-20, 77-89"},
+  {street = "Ľ. Podjavorinskej"},
+  {street = "Gen. M. R. Štefánika", written = "Gen. M.R. Štefánika"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Šrobárova"},
+  {street = "Nádražná"},
+  {street = "Štvrť SNP", numbers = "1-5, 9-13, 21-32"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Samota Skalica"},
+  {street = "Štvrť SNP", numbers = "14, 34-37, 39-62, 70, 100"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Baračka"},
+  {street = "Hurbanova"},
+  {street = "Bagarova"},
+  {street = "Pod Klepáčom"},
+  {street = "Partizánska"},
+  {street = "Červené Kopanice"},
+  {street = "17.novembra", written = "17. novembra"},
+  {street = "Kúpeľná"},
+  {street = "Hviezdoslavova"},
+  {street = "T. G. Masaryka", written = "T.G. Masaryka"},
+]

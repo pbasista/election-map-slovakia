@@ -1,0 +1,61 @@
+# Okrsky of Marianka, transcribed by an AI agent in job okrsok-rules-719 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Agátová ulica, Borinská ulica, Bystrická ulica, Budovateľská ulica, Čerešňová ulica, Družstevná ulica, Javorová ulica, Kamenná ulica, Karpatská ulica, Krátka ulica, Lesná ulica, Lipová ulica
+#   okrsok 2: Jelšová ulica, Na Kracinách, Na Ovsisku, Na Tálkoch, Na Vinohradoch, Nad Bednárovým, Nám. 4. apríla, Partizánska ulica, Pod Mlynom, Podhájska ulica, Poľná ulica, Potočná ulica, Púpavová ulica, Sedmokrásková ulica, Slnečná ulica, Stromová ulica, Stupavská ulica, Školská ulica, Športová ulica, Štúrova ulica, Topoľová ulica, Višňová ulica, Vŕbová ulica, Záhradná ulica, Obyvatelia s trvalým pobytom na Obci Marianka
+obec = "508080"
+name = "Marianka"
+okrsky_fill = "nearest"
+okrsky_note = "The document does not list Lúčna and Veterná (and the 37 register addresses without a street, súpisné only); these are placed by fill_nearest. 'Obyvatelia s trvalým pobytom na Obci Marianka' (residents registered without an address) are in okrsok 2."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2018-10-19
+okrsky_date_basis = "The municipality's page 'VOLEBNÉ OKRSKY' (as archived on 2019-08-18) states 'Posledná úprava: 19.10.2018': its content was last changed on 19 October 2018, before the elections of 10 November 2018, so it is the okrsky list published for them; the page itself states no decision date. No capture before the vote exists. (https://web.archive.org/web/20190818085541/https://www.marianka.sk/som-obcan/aktuality/volebne-okrsky.html)"
+
+[[document]]
+url = "https://web.archive.org/web/20190818085541/https://www.marianka.sk/som-obcan/aktuality/volebne-okrsky.html"
+sha256 = "46535fb8e14e8cc625c53d207d34cbd17c6f0617e2bcdb142ab67cea37771d81"
+title = "VOLEBNÉ OKRSKY"
+
+[okrsok.1]
+rules = [
+  {street = "Agátová"},
+  {street = "Borinská"},
+  {street = "Bystrická"},
+  {street = "Budovateľská"},
+  {street = "Čerešňová"},
+  {street = "Družstevná"},
+  {street = "Javorová"},
+  {street = "Kamenná"},
+  {street = "Karpatská"},
+  {street = "Krátka"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Jelšová"},
+  {street = "Na Kracinách"},
+  {street = "Na Ovsisku"},
+  {street = "Na Tálkoch"},
+  {street = "Na Vinohradoch"},
+  {street = "Nad Bednárovým"},
+  {street = "Námestie 4.apríla", written = "Nám. 4. apríla"},
+  {street = "Partizánska"},
+  {street = "Pod Mlynom"},
+  {street = "Podhájska"},
+  {street = "Poľná"},
+  {street = "Potočná"},
+  {street = "Púpavová"},
+  {street = "Sedmokrásková"},
+  {street = "Slnečná"},
+  {street = "Stromová"},
+  {street = "Stupavská"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Štúrova"},
+  {street = "Topoľová"},
+  {street = "Višňová"},
+  {street = "Vŕbová"},
+  {street = "Záhradná"},
+]

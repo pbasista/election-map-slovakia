@@ -4,6 +4,169 @@ Notable changes, newest first. The version is set in
 `src/election_map_slovakia/__init__.py`; tagging `vX.Y.Z` builds and deploys
 it (see [docs/deploy.md](docs/deploy.md)).
 
+## 0.9.0 — 2026-11-05
+
+Every Slovak election since 2017 instead of the municipal and regional
+elections of 2022 and 2026 alone: 25 elections of seven kinds, with their
+candidates, final results down to the polling district and, for the
+presidential and parliamentary ones, candidate research. The results
+arrive in the browser with every total precomputed; election night's
+live results have a project of their own apart from the final ones; the
+base maps are shared between elections.
+
+### Elections and data
+
+- **Seven kinds of election.** Besides the regular municipal and regional
+  elections, `config/elections.toml` may hold presidential elections
+  (two rounds), referendums, municipal by-elections (held in some places
+  only) and elections to the National Council or the European Parliament
+  (party lists with preference votes).
+  [docs/elections.md](docs/elections.md) tells how to add one.
+- **23 elections added** beside 2022 and 2026: the municipal elections of
+  2018 and the regional ones of 2017 (held apart until 2022), the
+  presidential elections of 2019 and 2024, the referendums of 2023 and
+  2026, the National Council elections of 2020 and 2023, the European
+  Parliament elections of 2019 and 2024, and the 13 municipal
+  by-election days since 2019, each from ŠÚ SR's packages, drawn on the
+  2026 boundaries over a base map of its year. Candidates the older
+  packages give without age or occupation are shown without them and
+  linked to no other election.
+- **Each vote's council constituencies and polling districts:** from its
+  own documents where they survive (2,331 of 6,131 found and
+  transcribed), else copied from a regular election where provably the
+  same (a by-election from its own term's), else stand-ins from the vote
+  nearest in time whose rules fit. The ballots and the map name the
+  source vote, and About lists the stand-ins.
+- **By-elections cover only what voted:** one in a single constituency of
+  a split municipality (Divina 2026, Veľké Držkovce, Ludanice, Stratená
+  and six more) shows that constituency on the map, in the address
+  lookup and in the turnout, the rest as without a vote.
+- **Contests nobody stood in are shown** as such ("No candidate is
+  registered."; a by-election's "Called, but not held"), with their
+  source.
+- **Party logos:** 219 of 450 party × election pairs have the logo in use
+  before that election, from freely licensed copies only. A party's short
+  form follows its name, its tooltip naming it the short name and giving
+  the full one.
+- **Election names** are the short, widely used forms in every language,
+  without abbreviations ("Prezidentské voľby", "Parlamentné voľby").
+- **Each contest compares with the election before of its own kind:**
+  2022's regional contests with 2017, its municipal ones with 2018.
+
+### Results
+
+- **Every total precomputed:** the results files carry the kraj, okres,
+  regional and council constituency totals, a party list's preference
+  votes and the previous election's figures per unit with how each was
+  found (`units`, `preferences`, `past.units`), and a new `turnout.json`
+  holds the map's turnout totals; `results.check` verifies them all. The
+  polling-district files grow by about 25 %.
+- **Live results apart from the final results:** election night's go to
+  `dist/live/` and the Pages project `ems-live` at `live.volebnamapa.sk`
+  (`live_project`, `live_url`), deployed only by `ems results poll
+  --deploy` and `ems results deploy`. `ems-results` holds only final
+  results, built by `ems make` from the pinned definitive packages and
+  deployed only by releases.
+- **The app reads the final results first**, else within the live window
+  the live ones, every minute, so an open page switches to the final
+  results without a reload.
+- **Removed:** `ems results final`; `ems results fake` writes only live
+  results.
+- New research no longer redeploys the results.
+
+### Map and app
+
+- **Ballots of a country-wide election** open for the whole country,
+  narrowed to a kraj, okres, municipality or polling district (a
+  regional president's also to a regional council constituency):
+  presidential rounds, referendum questions with their quorum, parties
+  with their seats and lists with preference votes. A voter may circle a
+  party and as many of its candidates as the law allows.
+- **The level follows through:** choosing a level outlines its unit, dims
+  the rest and fits the view; the results on the map, the vote counts and
+  the previous election's turnout follow it.
+- **Party lists** put the candidates elected by preference votes first,
+  at every level; a party without seats is greyed with a "no seats"
+  badge; the rules (threshold, coalitions, preference votes, validity)
+  fold under "Rules".
+- **Badges are icons and filters:** preference votes, substitutes and
+  the research marks filter the lists; a party row sums its candidates'
+  research marks.
+- **An overview of the ballots that are the same everywhere:** a
+  party-list election's parties as tiles and a party's whole list in
+  columns, its header with the research marks and the no-seats badge; a
+  referendum's questions side by side.
+- **The map of a country-wide election** shows the strongest candidate,
+  party or answer, a share, a turnout or preference votes, by okres,
+  municipality and polling district as one zooms in. Only the layers an
+  election holds are offered. The legend folds into a chip.
+- **A candidate's polling districts link to the map**, Back returning to
+  the card; country-wide candidates list their polling districts too.
+- **Referendums** mark the 50 % validity threshold and the previous
+  referendum's turnout.
+- **Title bar:** the site's name over the election's name and date in
+  12 px, on one line even on a 390 px phone, between the map pin and the
+  search button; the pin opens the list of elections, a timeline by
+  default or groups by kind.
+- **The home election** is the newest that is no by-election.
+- **About** is a short list of what the election's page offers, each
+  line with its icon, and links to its sections.
+- **Constituencies and polling districts drawn by street blocks** instead
+  of the Voronoi cells of the address points: 2 and 38 addresses outside
+  their unit over all 25 elections, against 20,319 and 244,174 before.
+
+### Research
+
+- **Candidate research** for the presidential candidates of 2019 and 2024
+  and the first ten on the lists of the parties that won seats in the
+  National Council elections of 2020 and 2023: 156 persons, 162 career
+  facts, 25 affairs, 128 disputes, from pages published before the
+  election's last round. An election not researched itself shows its
+  linked persons' findings published before its day.
+
+### Pipeline and deployment
+
+- **One base map per OpenStreetMap extract** in one project, `ems-base`:
+  10 base maps (31,690 files, 0.95 GB) for 25 elections instead of a copy
+  in each map part (79,150 files, 2.39 GB); the browser reuses them
+  between elections.
+- **The output record, `data/outputs.toml`:** `ems make` skips a step
+  whose inputs and output are those recorded; `ems record check` (CI)
+  and `ems record compare` (release) check it.
+- **Faster builds:** shared work is done once; a full `ems make` of all
+  25 elections takes about 25–30 minutes, a warm one about 37 s.
+- **Inputs** are named by their data's year (the 2026 ones renamed);
+  `ems inputs publish --prune` deletes store assets no build or version
+  tag needs.
+- **`ems data projects`** lists the Pages projects the site lacks,
+  `--create` creates them and `--prune` deletes those of elections no
+  release has.
+- **The release runs in parallel jobs** that fit their timeouts.
+- **Python 3.15** supported; uv 0.13.6 or newer required.
+
+### Fixes of 0.8.6 behaviour
+
+- **Results show on the first click** of a place whose okres or kraj
+  file was not loaded yet.
+- **Previous-election totals** that summed short now count every
+  district or are left out (15 city contests).
+- **Touchpad pinch zooms out** as fast as in, in Firefox.
+- **Back and forward swipes work over the panes.**
+- Veľké Kapušany's and Lendak's 2022 borders are corrected.
+
+### Operator actions
+
+- Install uv 0.13.6 or newer.
+- Before tagging, `ems inputs publish`: the input store lacks 35 of the
+  76 pinned inputs; `--prune` then removes those no build needs.
+- Before the release, `ems data projects --create` for the new
+  elections' projects, `ems-base` and `ems-live`; set the custom domain
+  `live.volebnamapa.sk` on `ems-live` before the first night with
+  `live = true` (docs/deploy.md). The first release deploys every data
+  part whose key is new, base maps included.
+- After an election night, pin the definitive packages with `ems inputs
+  update` and release: `ems results final` is gone.
+
 ## 0.8.6 — 2026-10-30
 
 - **A release without data to deploy is a GitHub release as well.**

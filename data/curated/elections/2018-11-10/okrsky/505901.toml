@@ -1,0 +1,63 @@
+# Okrsky of Čachtice, transcribed by an AI agent in job okrsok-rules-692 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 /volebná miestnosť je vľavo od hl. vchodu/ Železničná J. Urbanovského Niva Medzihorská Na doline Kúria Revolučná Podzámska Pionierska Slnečná Ul. 1. mája Malinovského od č. 243 – 323
+#   okrsok 2: Okrsok č. 2 /volebná miestnosť je v knižnici/ Malinovského od č. domu 419 – 773 Malinovského od č. 1260 – 1261 L. Novomeského Duklianska Mierová Miloša Uhra Záhradná Družstevná Lysiná Špitálska Múkovská
+#   okrsok 3: Okrsok č. 3 /volebná miestnosť – zasadačka/ Malinovského od č. 798 – 1259 Malinovského od č. 1262 – 1275 Zemiansky Kút Hviezdoslavova Komárno Želovany Ľ. Podjavorinskej Kamence Fraňa Kráľa Teplica Osloboditeľov
+obec = "505901"
+name = "Čachtice"
+okrsky_fill = "nearest"
+okrsky_note = "Malinovského is numbered by súpisné číslo in the document (243–1275; its orientačné čísla go only to 131). Malinovského houses with súpisné čísla outside the listed ranges and the 3 addresses without a street are placed by fill_nearest."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2018-11-09
+okrsky_date_basis = "The Internet Archive captured the municipality's post \"Zoznamy ulíc podľa volebných okrskov\" (dated 6 November 2018 on the page) on 2018-11-09, the day before the municipal elections of 10 November 2018; it states no decision date. (https://web.archive.org/web/20181109213623/http://www.cachtice.sk:80/2018/11/zoznamy-ulic-podla-volebnych-okrskov)"
+
+[[document]]
+url = "https://web.archive.org/web/20181109213623/http://www.cachtice.sk:80/2018/11/zoznamy-ulic-podla-volebnych-okrskov"
+sha256 = "5394a3209808b1c75b86ce7c873c20fdbd8d3fd67ea6d3982518c883f0809fce"
+title = "Zoznamy ulíc podľa volebných okrskov (6. 11. 2018)"
+
+[okrsok.1]
+rules = [
+  {street = "Železničná"},
+  {street = "J. Urbanovského"},
+  {street = "Niva"},
+  {street = "Medzihorská"},
+  {street = "Na doline"},
+  {street = "Kúria"},
+  {street = "Revolučná"},
+  {street = "Podzámska"},
+  {street = "Pionierska"},
+  {street = "Slnečná"},
+  {street = "Ul. 1.mája", written = "Ul. 1. mája"},
+  {street = "Malinovského", numbers = "243-323", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Malinovského", numbers = "419-773, 1260-1261", by = "supisne"},
+  {street = "L. Novomeského"},
+  {street = "Duklianska"},
+  {street = "Mierová"},
+  {street = "Miloša Uhra"},
+  {street = "Záhradná"},
+  {street = "Družstevná"},
+  {street = "Lysiná"},
+  {street = "Špitálska"},
+  {street = "Múkovská"},
+  {street = "M. Uhra", written = "Miloša Uhra", note = "The register keeps one house of Miloša Uhra under the abbreviated name 'M. Uhra' (initial of the first name); same street."},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Malinovského", numbers = "798-1259, 1262-1275", by = "supisne"},
+  {street = "Zemiansky Kút"},
+  {street = "Hviezdoslavova"},
+  {street = "Komárno"},
+  {street = "Želovany"},
+  {street = "Ľ. Podjavorinskej"},
+  {street = "Kamence"},
+  {street = "Fraňa Kráľa"},
+  {street = "Teplica"},
+  {street = "Osloboditeľov"},
+]

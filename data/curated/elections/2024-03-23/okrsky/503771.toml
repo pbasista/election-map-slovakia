@@ -1,0 +1,32 @@
+# Okrsky of Horné Saliby, transcribed by an AI agent in job okrsok-rules-4221 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: V tomto okrsku môžu hlasovať občania s trvalým pobytom pod nasledovnými súpisnými číslami: 1 - 545, 1151 – 1201, 1212, 1214 - 1216, 1225, 1229, 1256, 1259-1260, 1264-1265, 1269, 1271-1272, 1275-1278, 1280-1283, 1308,1311-1315, 1318, 1321, 1324, 1328, 1330-1331, 1336-1337, 1363
+#   okrsok 2: V tomto okrsku môžu hlasovať občania s trvalým pobytom pod nasledovnými súpisnými číslami: 546 – 1100, 1202 – 1211, 1213, 1223-1224, 1242 – 1244, 1246 – 1247, 1250 – 1255, 1257 – 1258, 1266-1267, 1279, 1284-1307, 1309-1310, 1316-1317, 1325-1327, 1342-1345, 1350, 1356-1357, 1361-1362, 1101 - 1150 (Hrušov)
+obec = "503771"
+name = "Horné Saliby"
+okrsky_fill = "nearest"
+okrsky_note = "The village has no streets: the document assigns okrsky by súpisné čísla, written as number rules on the part Horné Saliby. Hrušov (s.č. 1101-1150) is a settlement the register keeps in part Horné Saliby; covered by its number range. Súpisné čísla the document does not list take the okrsok of the nearest address (fill_nearest)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-25
+okrsky_date_basis = "The document is undated; the municipality's page linking it states \"Dátum vloženia\" 2024-01-25, before the vote; the document's heading names this vote. (https://www.hornesaliby.sk/samosprava/volby/volby-prezidenta-slovenskej-republiky-2024/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-hornych-salibach-pre-volby-prezidenta-slovenskej-republiky-275sk.html)"
+
+[[document]]
+url = "https://www.hornesaliby.sk/evt_file.php?file=1171"
+sha256 = "2974d8b16a184be2e0a4e5f8dd90a2a3a8bdb0547d4c89a70470076cd57e4cd1"
+title = "Utvorenie volebných okrskov a určenie volebných miestností na voľby prezidenta SR"
+
+[[document]]
+url = "https://www.hornesaliby.sk/samosprava/volby/volby-prezidenta-slovenskej-republiky-2024/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-hornych-salibach-pre-volby-prezidenta-slovenskej-republiky-275sk.html"
+sha256 = "a09b908482d203c8e62512e25b1d468903796c6a110cabfdd59993b02f308fb5"
+title = "Page of the document (Dátum vloženia 2024-01-25)"
+
+[okrsok.1]
+rules = [
+  {part = "Horné Saliby", numbers = "1-545, 1151-1201, 1212, 1214-1216, 1225, 1229, 1256, 1259-1260, 1264-1265, 1269, 1271-1272, 1275-1278, 1280-1283, 1308, 1311-1315, 1318, 1321, 1324, 1328, 1330-1331, 1336-1337, 1363"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Horné Saliby", numbers = "546-1100, 1202-1211, 1213, 1223-1224, 1242-1244, 1246-1247, 1250-1255, 1257-1258, 1266-1267, 1279, 1284-1307, 1309-1310, 1316-1317, 1325-1327, 1342-1345, 1350, 1356-1357, 1361-1362, 1101-1150"},
+]

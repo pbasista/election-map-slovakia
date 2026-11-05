@@ -1,0 +1,47 @@
+# Okrsky of Pohorelá, transcribed by an AI agent in job okrsok-rules-3127 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulica Kpt. Nálepku, po súpisné číslo 259 • ulica Hviezdoslavova (celá ulica), • ulica Jesenského (celá ulica), • ulica Za Vŕšok (celá ulica), • ulica Clementisova (celá ulica), • ulica Za Hronom (celá ulica)
+#   okrsok 2: ulica Kpt. Nálepku, od súpisného čísla 260, • ulica Nová (celá ulica), • ulica Školská (celá ulica), • ulica Športová (celá ulica), • ulica Jánošíkova (celá ulica), • ulica Pod Brezinou (celá ulica), • ulica Partizánska (celá ulica), • ulica Orlová (celá ulica), • ulica M. R. Štefánika (celá ulica), • ulica Za potokom (celá ulica)
+#   okrsok 3: miestna časť Pohorelská Maša
+obec = "508870"
+name = "Pohorelá"
+okrsky_fill = "nearest"
+okrsky_note = "Kpt. Nálepku is split by súpisné číslo. The street 1.mája lies in part Pohorelská Maša (okrsok 3). Addresses without a street in part Pohorelá are not named in the document; they take the nearest okrsok (fill_nearest)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-08
+okrsky_date_basis = "The obec's notice listing the okrsky for the referendum of 21 January 2023 states \"Vyvesené: 8. 11. 2022\"; it gives no date of decision. (https://www.pohorela.sk/samosprava/volby-a-referenda/referendum-21-januara-2023-437.html)"
+
+[[document]]
+url = "https://www.pohorela.sk/samosprava/volby-a-referenda/referendum-21-januara-2023-437.html"
+sha256 = "3c8c12372676fa3571a243ba43fd9882cead6fb79cfca995c406966b4d76bd5e"
+title = "Referendum 21. januára 2023 - zoznam volebných okrskov a utvorenie volebných miestností, vyvesené 8. 11. 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Kpt. Nálepku", numbers = "1-259", by = "supisne"},
+  {street = "Hviezdoslavova"},
+  {street = "Jesenského"},
+  {street = "Za Vŕšok"},
+  {street = "Clementisova"},
+  {street = "Za Hronom"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kpt. Nálepku", numbers = "260-", by = "supisne"},
+  {street = "Nová"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Jánošíkova"},
+  {street = "Pod Brezinou"},
+  {street = "Partizánska"},
+  {street = "Orlová"},
+  {street = "M. R. Štefánika"},
+  {street = "Za Potokom", written = "Za potokom"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Pohorelská Maša"},
+]

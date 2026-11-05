@@ -1,0 +1,25 @@
+# Okrsky of Gemerské Teplice, transcribed by an AI agent in job okrsok-rules-3342 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1: sála OcÚ v Jelšavskej Teplici č. 56
+#   okrsok 2: Volebný okrsok č. 2: sála OcÚ v Gemerskom Milhosti č. 46
+obec = "525677"
+name = "Gemerské Teplice"
+okrsky_note = "The okrsky are the two parts of the municipality."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names the referendum of 21.01.2023; no decision date is stated."
+
+[[document]]
+url = "https://www.gemerske-teplice.sk/e_download.php?file=/data/uredni_deska/obsah13_4.pdf&original=Pr%C3%ADloha%20%E2%80%93%20Okrsky.pdf"
+sha256 = "2c7a6c3d06b79be2d73bdae097d4575088e47f69afa5eea420f5bb0bd4344ce1"
+title = "Zoznam okrskov pre Referendum 2023 (dátum konania 21.01.2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Jelšavská Teplica", note = "The document gives only the polling station, which lies in part Jelšavská Teplica; two okrsky, two parts, each station in another part.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Gemerský Milhosť", note = "The document gives only the polling station, which lies in part Gemerský Milhosť; two okrsky, two parts, each station in another part.", inferred = true},
+]

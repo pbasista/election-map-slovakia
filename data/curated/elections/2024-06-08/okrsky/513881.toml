@@ -1,0 +1,482 @@
+# Okrsky of Prievidza, transcribed by an AI agent in job okrsok-rules-4618 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Astrová, Fialková, Hornonitrianska cesta, Klinčeková, Konvalinková, Na stráňach, Na záhumní, Narcisová, Nezábudková, Pod horou, Poľná, Slnečná, Snežienková, Tulipánová, Zelená
+#   okrsok 2: Kútovská, Necpalská, Veľkonecpalská
+#   okrsok 3: Gazdovská, Urbárska
+#   okrsok 4: Dúbravská, Majerská, Malonecpalská
+#   okrsok 5: Lúčna ul. párne: 6A, 6B, 6C, 2A, 14 – 28, nepárne: 33 - 47; Nedožerská cesta, Staničná, Športová 40, Traťová
+#   okrsok 6: Hviezdoslavova, Krátka, Kvetná, Lúčna 1, 3, 5, 7, 8, 9, 10, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31; Nová, Športová 1, 1A, 2 - 22, 24, 26 - 31, 33, 35, 41, 43, 45, 47, 49, 51, 51A, 53, 55; A. Hlinku, Ul. stavbárov, T. Vansovej, Zdravotnícka, Železničiarska
+#   okrsok 7: TP mesto Prievidza, Námestie slobody, Pribinovo námestie, Šumperská ul., Ul. M. Hodžu
+#   okrsok 8: Bakalárska, Ciglianska cesta, Košovská cesta, Nábr. J. Kalinčiaka, Nábr. sv. Metoda, Púšť, Rastislavova, Sebedražská cesta, Ul.G.Švéniho, Ul. J. Hollého, Ul. M. Mišíka, Ul.na Kamenici, Ul. Š. Moyzesa
+#   okrsok 9: Dlhá, Ul. M. slovenskej, Záhradnícka
+#   okrsok 10: Cesta pod skalou, Nábr. sv. Cyrila 18 - 27, 29 - 46, Severná ulica, Vinohradnícka
+#   okrsok 11: Cesta pod Banskou, Cesta poľnohospodárov, Kukučínova ul., Lehotská cesta, Malolehotská ul., Nábr. A. Kmeťa, Nábr. sv. Cyrila 1 - 17, Sitnianskeho ul., Ul. A. Škarvana, Ľ. Podjavorinskej, Vajanského, Vápenická, Veľkolehotská cesta, Vrchy, Východná ul., Staré mesto 2387
+#   okrsok 12: Duklianska, Malá, Mierové nám., Súbežná, Tichá, Ul. A. H. Gavloviča, A. Sládkoviča, Ľ. Štúra
+#   okrsok 13: Svätoplukova ul., Ul.M. R. Štefánika, Vnútorná ul.
+#   okrsok 14: Ul.A. Stodolu, Ul.J. Murgaša, Ul.Š.Baniča
+#   okrsok 15: Gorazdovo nábr., Okružná cesta, Priama ulica, Sklenárska ulica, Ul.A. Rudnaya
+#   okrsok 16: Ul.B. Björnsona, Ul.J. Palkoviča, Ul.J. Siváka
+#   okrsok 17: Garbiarska, Golfová, Klampiarska, Letisková, Malookružná, Mlynská, Obuvnícka, Priechodná, Riečna, Stredná, Súkennícka, Tkáčska, J. Kráľa, J. Žirku, Úzka, Zadná
+#   okrsok 18: Banícka ul., Ul. S. Chalupku
+#   okrsok 19: Ul.D. Krmana, Ul.Š. Králika
+#   okrsok 20: Bojnická cesta 1, 2, 4, 6, 8, 9, 10, 11, 12, 13, 14, 17, 18, 19, 22, 22A, 22B, 23, 25, 27, 28, 29, 32, 33, 34, 35, 37, 39, 45C, 47, 49, 51, 53, Krajná ul., Nám. J. C. Hronského, Trhová, Ul. D. Kubíka, F. Madvu, J. Pauleho, J. Škopca
+#   okrsok 21: Átriová, Bojnická cesta 24, 24 C, 26, Májová, Nábrežná, Tenisová, Ul. A. Mišúta, Ul. I. Krasku, Ul. J. Červeňa, Ul. J. G. Tajovského, J. Kollára, M. Falešníka, Ul.olympionikov, R. Jašíka, Š. Závodníka, T. Milkina, Ul.za depom
+#   okrsok 22: Ul.A. Bednára, Ul. E.M.Šoltésovej, Ul. J. Bendíka, Ul.J. Francisciho, P. Dobšinského
+#   okrsok 23: Ul. A. Žarnova, J.I. Bajzu, J. M. Hurbana,
+#   okrsok 24: Mliekarenská, Rad L.N. Tolstého, Ľ. Ondrejova
+#   okrsok 25: Ul.I.Bukovčana,.J.Fándlyho,, J. Matúšku
+#   okrsok 26: Ul. M. Rázusa
+#   okrsok 27: Ul. P.J. Šafárika, Urbánkova ulica 1-13, 17-31
+#   okrsok 28: Jégeho ulica, Šulekova ulica
+#   okrsok 29: Ul.J.Okáľa, J.Palárika, J.Roháča, L.Stančeka, Urbánkova ulica
+#   okrsok 30: Ul. energetikov 1A, 2, 4, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29 C, 30, 32, 34, 36, 38, 40, 42, 44, 45, 46
+#   okrsok 31: Koceľova ulica, Prírodná ulica, Ulica energetikov 31,33,35,37,48,50,52, Ul. I. Vysočana, V. Benedikta 3- 21, Včelárska ulica
+#   okrsok 32: A. Bernoláka, M. Gorkého párne 2 – 18, V. Benedikta 14, 16, 18, 20, 22, 23, 26, 28, 30, 32
+#   okrsok 33: M. Gorkého 3A,7, 9, 11, 13, 15, 17, 19, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 35, 37, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 50, 52, 54
+#   okrsok 34: Cesta Vl. Clementisa
+#   okrsok 35: Agátová, Bazová, Bôrová, Buková, Dubová, Hrabová, Jaseňová, Jedľová, Lipová, Na karasiny 14, 16, 20, 22, 28, 30, 34, 36, 52, 54, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 69, 71 A, 71 B, 73, 73A, 73B, 73C, 75, Rakytová, Smreková
+#   okrsok 36: Na karasiny 3, 5, 7, 9, 11, 13, 17, 18, 19, 21, 23, 25, 26, 27, 31, 33, 35, 37, 39, 41, 45, 47, 49, 51, 53, 55
+#   okrsok 37: Makovického, Nad terasami, Ul.K. Novackého
+#   okrsok 38: Bottova ul., Jánošíkova ul., Koncová, Mojmírova, Rovná, Skrytá, J. Alexyho, J. Gramantíka, J. Záborského, K. Kuzmányho, M. Benku, M. Medveckej, Ul.odbojárov, Ul.S. Mečiara
+#   okrsok 39: Hrnčiarska, Mariánska, Medzibriežková, Partizánska, Povstalecká, Puškinova, B. Slančíkovej, C. Majerníka, J. Jesenského, Veterná
+#   okrsok 40: Hlboká, Hradecká, Mlynárska, Mrazničná, Na lúčky, Podhorská, Remeselnícka, Roľnícka, Strmá, Školská, Uhlištná, J. L. Bellu, Viničná, Vrchárska
+#   okrsok 41: Krížna, Na lánoch, Na vŕšku, Pod poliankou, Ružová, Spojovacia ul., Ul.družby, F. Hečku
+#   okrsok 42: Družstevná, Južná, K potoku, Lesná, Na stanište, Na záhrade, Parková, Pavlovská, Pekná, Pod hájik, Pod hôrku, Pod hrádkom, Richtárska, Súhradská, Ul. 1. mája
+obec = "513881"
+name = "Prievidza"
+okrsky_fill = "nearest"
+okrsky_note = "Names the document gives that the register lacks are left out (Staré mesto; TP mesto Prievidza; \"TP mesto Prievidza\" are the voters registered only at the town). Streets the document does not list (Garážová ulica, Hasičská ulica, Inžinierska ulica, Kláštorná ulica, Max Brose, Montážna ulica, Moštenická ulica, Nadjazdová ulica, Námestie piaristov, Podjazdová ulica, Priemyselná ulica, Sadová ulica, Skladová ulica, Strojárska ulica, Teplárenská ulica, Ulica na nádvorí, Ulica P. Benického, Západná ulica) and addresses without a street take the okrsok of the nearest address (fill_nearest)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document states no decision date; it names the vote (voľby do EP 2024) and was uploaded to the city's website on 2024-03-05."
+
+[[document]]
+url = "https://prievidza.sk/wp-content/uploads/2024/03/Utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-do-Europskeho-parlamentu-2024.pdf"
+sha256 = "cd58906e3f42e2ee7da949e9e2e2b5cc4b611baeb3b0291524367f50f65a42cb"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Astrová ulica", written = "Astrová", note = "the document writes \"Astrová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Astrová ulica\"; the same street"},
+  {street = "Fialková ulica", written = "Fialková", note = "the document writes \"Fialková\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Fialková ulica\"; the same street"},
+  {street = "Hornonitrianska cesta"},
+  {street = "Klinčeková ulica", written = "Klinčeková", note = "the document writes \"Klinčeková\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Klinčeková ulica\"; the same street"},
+  {street = "Konvalinková ulica", written = "Konvalinková", note = "the document writes \"Konvalinková\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Konvalinková ulica\"; the same street"},
+  {street = "Na stráňach"},
+  {street = "Na záhumní"},
+  {street = "Narcisová ulica", written = "Narcisová", note = "the document writes \"Narcisová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Narcisová ulica\"; the same street"},
+  {street = "Nezábudková ulica", written = "Nezábudková", note = "the document writes \"Nezábudková\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Nezábudková ulica\"; the same street"},
+  {street = "Pod horou"},
+  {street = "Poľná ulica", written = "Poľná", note = "the document writes \"Poľná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Poľná ulica\"; the same street"},
+  {street = "Slnečná ulica", written = "Slnečná", note = "the document writes \"Slnečná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Slnečná ulica\"; the same street"},
+  {street = "Snežienková ulica", written = "Snežienková", note = "the document writes \"Snežienková\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Snežienková ulica\"; the same street"},
+  {street = "Tulipánová ulica", written = "Tulipánová", note = "the document writes \"Tulipánová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Tulipánová ulica\"; the same street"},
+  {street = "Zelená ulica", written = "Zelená", note = "the document writes \"Zelená\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Zelená ulica\"; the same street"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kútovská ulica", written = "Kútovská", note = "the document writes \"Kútovská\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Kútovská ulica\"; the same street"},
+  {street = "Necpalská cesta", written = "Necpalská", note = "the document writes \"Necpalská\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Necpalská cesta\"; the same street"},
+  {street = "Veľkonecpalská ulica", written = "Veľkonecpalská", note = "the document writes \"Veľkonecpalská\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Veľkonecpalská ulica\"; the same street"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Gazdovská ulica", written = "Gazdovská", note = "the document writes \"Gazdovská\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Gazdovská ulica\"; the same street"},
+  {street = "Urbárska ulica", written = "Urbárska", note = "the document writes \"Urbárska\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Urbárska ulica\"; the same street"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Dúbravská ulica", written = "Dúbravská", note = "the document writes \"Dúbravská\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Dúbravská ulica\"; the same street"},
+  {street = "Majerská ulica", written = "Majerská", note = "the document writes \"Majerská\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Majerská ulica\"; the same street"},
+  {street = "Malonecpalská ulica", written = "Malonecpalská", note = "the document writes \"Malonecpalská\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Malonecpalská ulica\"; the same street"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Lúčna ulica", numbers = "6A, 6B, 6C, 2A, 14-28", parity = "even", written = "Lúčna ul.", note = "the document writes \"Lúčna ul.\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Lúčna ulica\"; the same street"},
+  {street = "Lúčna ulica", numbers = "33-47", parity = "odd", written = "Lúčna ul.", note = "the document writes \"Lúčna ul.\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Lúčna ulica\"; the same street"},
+  {street = "Nedožerská cesta"},
+  {street = "Staničná ulica", written = "Staničná", note = "the document writes \"Staničná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Staničná ulica\"; the same street"},
+  {street = "Športová ulica", numbers = "40", written = "Športová", note = "the document writes \"Športová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Športová ulica\"; the same street"},
+  {street = "Traťová ulica", written = "Traťová", note = "the document writes \"Traťová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Traťová ulica\"; the same street"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Hviezdoslavova ulica", written = "Hviezdoslavova", note = "the document writes \"Hviezdoslavova\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Hviezdoslavova ulica\"; the same street"},
+  {street = "Krátka ulica", written = "Krátka", note = "the document writes \"Krátka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Krátka ulica\"; the same street"},
+  {street = "Kvetná ulica", written = "Kvetná", note = "the document writes \"Kvetná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Kvetná ulica\"; the same street"},
+  {street = "Lúčna ulica", numbers = "1, 3, 5, 7, 8, 9, 10, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31", written = "Lúčna", note = "the document writes \"Lúčna\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Lúčna ulica\"; the same street"},
+  {street = "Nová ulica", written = "Nová", note = "the document writes \"Nová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Nová ulica\"; the same street"},
+  {street = "Športová ulica", numbers = "1, 1A, 2-22, 24, 26-31, 33, 35, 41, 43, 45, 47, 49, 51, 51A, 53, 55", written = "Športová", note = "the document writes \"Športová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Športová ulica\"; the same street"},
+  {street = "Ulica A. Hlinku", written = "A. Hlinku", note = "the document writes \"A. Hlinku\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica A. Hlinku\"; the same street"},
+  {street = "Ulica stavbárov", written = "Ul.stavbárov", note = "the document writes \"Ul.stavbárov\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica stavbárov\"; the same street"},
+  {street = "Ulica T. Vansovej", written = "T. Vansovej", note = "the document writes \"T. Vansovej\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica T. Vansovej\"; the same street"},
+  {street = "Zdravotnícka ulica", written = "Zdravotnícka", note = "the document writes \"Zdravotnícka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Zdravotnícka ulica\"; the same street"},
+  {street = "Železničiarska ulica", written = "Železničiarska", note = "the document writes \"Železničiarska\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Železničiarska ulica\"; the same street"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Námestie slobody"},
+  {street = "Pribinovo námestie"},
+  {street = "Šumperská ulica", written = "Šumperská ul.", note = "the document writes \"Šumperská ul.\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Šumperská ulica\"; the same street"},
+  {street = "Ulica M. Hodžu", written = "Ul.M. Hodžu", note = "the document writes \"Ul.M. Hodžu\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica M. Hodžu\"; the same street"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Bakalárska ulica", written = "Bakalárska", note = "the document writes \"Bakalárska\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Bakalárska ulica\"; the same street"},
+  {street = "Ciglianska cesta"},
+  {street = "Košovská cesta"},
+  {street = "Nábrežie J. Kalinčiaka", written = "Nábr. J. Kalinčiaka", note = "the document writes \"Nábr. J. Kalinčiaka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Nábrežie J. Kalinčiaka\"; the same street"},
+  {street = "Nábrežie sv. Metoda", written = "Nábr. sv. Metoda", note = "the document writes \"Nábr. sv. Metoda\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Nábrežie sv. Metoda\"; the same street"},
+  {street = "Púšť"},
+  {street = "Rastislavova ulica", written = "Rastislavova", note = "the document writes \"Rastislavova\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Rastislavova ulica\"; the same street"},
+  {street = "Sebedražská cesta"},
+  {street = "Ulica G. Švéniho", written = "Ul.G.Švéniho", note = "the document writes \"Ul.G.Švéniho\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica G. Švéniho\"; the same street"},
+  {street = "Ulica J. Hollého", written = "Ul.J. Hollého", note = "the document writes \"Ul.J. Hollého\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Hollého\"; the same street"},
+  {street = "Ulica M. Mišíka", written = "Ul.M. Mišíka", note = "the document writes \"Ul.M. Mišíka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica M. Mišíka\"; the same street"},
+  {street = "Ulica na Kamenici", written = "Ul.na Kamenici", note = "the document writes \"Ul.na Kamenici\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica na Kamenici\"; the same street"},
+  {street = "Ulica Š. Moyzesa", written = "Ul.Š. Moyzesa", note = "the document writes \"Ul.Š. Moyzesa\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica Š. Moyzesa\"; the same street"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Dlhá ulica", written = "Dlhá", note = "the document writes \"Dlhá\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Dlhá ulica\"; the same street"},
+  {street = "Ulica Matice slovenskej", written = "Ul.M. slovenskej", note = "the document writes \"Ul.M. slovenskej\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica Matice slovenskej\"; the same street"},
+  {street = "Záhradnícka ulica", written = "Záhradnícka", note = "the document writes \"Záhradnícka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Záhradnícka ulica\"; the same street"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Cesta pod skalou"},
+  {street = "Nábrežie sv. Cyrila", numbers = "18-27, 29-46", written = "Nábr. sv. Cyrila", note = "the document writes \"Nábr. sv. Cyrila\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Nábrežie sv. Cyrila\"; the same street"},
+  {street = "Severná ulica"},
+  {street = "Vinohradnícka ulica", written = "Vinohradnícka", note = "the document writes \"Vinohradnícka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Vinohradnícka ulica\"; the same street"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Cesta pod Banskou"},
+  {street = "Cesta poľnohospodárov"},
+  {street = "Kukučínova ulica", written = "Kukučínova ul.", note = "the document writes \"Kukučínova ul.\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Kukučínova ulica\"; the same street"},
+  {street = "Lehotská cesta"},
+  {street = "Malolehotská ulica", written = "Malolehotská ul.", note = "the document writes \"Malolehotská ul.\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Malolehotská ulica\"; the same street"},
+  {street = "Nábrežie A. Kmeťa", written = "Nábr. A. Kmeťa", note = "the document writes \"Nábr. A. Kmeťa\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Nábrežie A. Kmeťa\"; the same street"},
+  {street = "Nábrežie sv. Cyrila", numbers = "1-17", written = "Nábr. sv. Cyrila", note = "the document writes \"Nábr. sv. Cyrila\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Nábrežie sv. Cyrila\"; the same street"},
+  {street = "Sitnianskeho ulica", written = "Sitnianskeho ul.", note = "the document writes \"Sitnianskeho ul.\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Sitnianskeho ulica\"; the same street"},
+  {street = "Ulica A. Škarvana", written = "Ul.A. Škarvana", note = "the document writes \"Ul.A. Škarvana\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica A. Škarvana\"; the same street"},
+  {street = "Ulica Ľ. Podjavorinskej", written = "Ľ. Podjavorinskej", note = "the document writes \"Ľ. Podjavorinskej\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica Ľ. Podjavorinskej\"; the same street"},
+  {street = "Vajanského ulica", written = "Vajanského", note = "the document writes \"Vajanského\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Vajanského ulica\"; the same street"},
+  {street = "Vápenická ulica", written = "Vápenická", note = "the document writes \"Vápenická\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Vápenická ulica\"; the same street"},
+  {street = "Veľkolehotská cesta"},
+  {street = "Vrchy"},
+  {street = "Východná ulica", written = "Východná ul.", note = "the document writes \"Východná ul.\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Východná ulica\"; the same street"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Duklianska ulica", written = "Duklianska", note = "the document writes \"Duklianska\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Duklianska ulica\"; the same street"},
+  {street = "Malá ulica", written = "Malá", note = "the document writes \"Malá\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Malá ulica\"; the same street"},
+  {street = "Mierové námestie", written = "Mierové nám.", note = "the document writes \"Mierové nám.\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Mierové námestie\"; the same street"},
+  {street = "Súbežná ulica", written = "Súbežná", note = "the document writes \"Súbežná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Súbežná ulica\"; the same street"},
+  {street = "Tichá ulica", written = "Tichá", note = "the document writes \"Tichá\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Tichá ulica\"; the same street"},
+  {street = "Ulica A. H. Gavloviča", written = "Ul.A. H. Gavloviča", note = "the document writes \"Ul.A. H. Gavloviča\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica A. H. Gavloviča\"; the same street"},
+  {street = "Ulica A. Sládkoviča", written = "A. Sládkoviča", note = "the document writes \"A. Sládkoviča\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica A. Sládkoviča\"; the same street"},
+  {street = "Ulica Ľ. Štúra", written = "Ľ. Štúra", note = "the document writes \"Ľ. Štúra\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica Ľ. Štúra\"; the same street"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Svätoplukova ulica", written = "Svätoplukova ul.", note = "the document writes \"Svätoplukova ul.\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Svätoplukova ulica\"; the same street"},
+  {street = "Ulica M. R. Štefánika", written = "Ul.M. R. Štefánika", note = "the document writes \"Ul.M. R. Štefánika\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica M. R. Štefánika\"; the same street"},
+  {street = "Vnútorná ulica", written = "Vnútorná ul.", note = "the document writes \"Vnútorná ul.\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Vnútorná ulica\"; the same street"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Ulica A. Stodolu", written = "Ul.A. Stodolu", note = "the document writes \"Ul.A. Stodolu\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica A. Stodolu\"; the same street"},
+  {street = "Ulica J. Murgaša", written = "Ul.J. Murgaša", note = "the document writes \"Ul.J. Murgaša\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Murgaša\"; the same street"},
+  {street = "Ulica Š. Baniča", written = "Ul.Š.Baniča", note = "the document writes \"Ul.Š.Baniča\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica Š. Baniča\"; the same street"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Gorazdovo nábrežie", written = "Gorazdovo nábr.", note = "the document writes \"Gorazdovo nábr.\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Gorazdovo nábrežie\"; the same street"},
+  {street = "Okružná cesta"},
+  {street = "Priama ulica"},
+  {street = "Sklenárska ulica"},
+  {street = "Ulica A. Rudnaya", written = "Ul.A. Rudnaya", note = "the document writes \"Ul.A. Rudnaya\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica A. Rudnaya\"; the same street"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Ulica B. Bjőrnsona", written = "Ul.B. Bjőrnsona", note = "the document writes \"Ul.B. Bjőrnsona\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica B. Bjőrnsona\"; the same street"},
+  {street = "Ulica J. Palkoviča", written = "Ul.J. Palkoviča", note = "the document writes \"Ul.J. Palkoviča\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Palkoviča\"; the same street"},
+  {street = "Ulica J. Siváka", written = "Ul.J. Siváka", note = "the document writes \"Ul.J. Siváka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Siváka\"; the same street"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Garbiarska ulica", written = "Garbiarska", note = "the document writes \"Garbiarska\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Garbiarska ulica\"; the same street"},
+  {street = "Golfová ulica", written = "Golfová", note = "the document writes \"Golfová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Golfová ulica\"; the same street"},
+  {street = "Klampiarska ulica", written = "Klampiarska", note = "the document writes \"Klampiarska\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Klampiarska ulica\"; the same street"},
+  {street = "Letisková ulica", written = "Letisková", note = "the document writes \"Letisková\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Letisková ulica\"; the same street"},
+  {street = "Malookružná ulica", written = "Malookružná", note = "the document writes \"Malookružná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Malookružná ulica\"; the same street"},
+  {street = "Mlynská ulica", written = "Mlynská", note = "the document writes \"Mlynská\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Mlynská ulica\"; the same street"},
+  {street = "Obuvnícka ulica", written = "Obuvnícka", note = "the document writes \"Obuvnícka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Obuvnícka ulica\"; the same street"},
+  {street = "Priechodná ulica", written = "Priechodná", note = "the document writes \"Priechodná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Priechodná ulica\"; the same street"},
+  {street = "Riečna ulica", written = "Riečna", note = "the document writes \"Riečna\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Riečna ulica\"; the same street"},
+  {street = "Stredná ulica", written = "Stredná", note = "the document writes \"Stredná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Stredná ulica\"; the same street"},
+  {street = "Súkennícka ulica", written = "Súkennícka", note = "the document writes \"Súkennícka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Súkennícka ulica\"; the same street"},
+  {street = "Tkáčska ulica", written = "Tkáčska", note = "the document writes \"Tkáčska\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Tkáčska ulica\"; the same street"},
+  {street = "Ulica J. Kráľa", written = "J. Kráľa", note = "the document writes \"J. Kráľa\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Kráľa\"; the same street"},
+  {street = "Ulica J. Žirku", written = "J. Žirku", note = "the document writes \"J. Žirku\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Žirku\"; the same street"},
+  {street = "Úzka ulica", written = "Úzka", note = "the document writes \"Úzka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Úzka ulica\"; the same street"},
+  {street = "Zadná ulica", written = "Zadná", note = "the document writes \"Zadná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Zadná ulica\"; the same street"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Banícka ulica", written = "Banícka ul.", note = "the document writes \"Banícka ul.\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Banícka ulica\"; the same street"},
+  {street = "Ulica S. Chalupku", written = "Ul.S. Chalupku", note = "the document writes \"Ul.S. Chalupku\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica S. Chalupku\"; the same street"},
+]
+
+[okrsok.19]
+rules = [
+  {street = "Ulica D. Krmana", written = "Ul.D. Krmana", note = "the document writes \"Ul.D. Krmana\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica D. Krmana\"; the same street"},
+  {street = "Ulica Š. Králika", written = "Ul.Š. Králika", note = "the document writes \"Ul.Š. Králika\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica Š. Králika\"; the same street"},
+]
+
+[okrsok.20]
+rules = [
+  {street = "Bojnická cesta", numbers = "1, 2, 4, 6, 8, 9, 10, 11, 12, 13, 14, 17, 18, 19, 22, 22A, 22B, 23, 25, 27, 28, 29, 32, 33, 34, 35, 37, 39, 45C, 47, 49, 51, 53"},
+  {street = "Krajná ulica", written = "Krajná ul.", note = "the document writes \"Krajná ul.\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Krajná ulica\"; the same street"},
+  {street = "Námestie J. C. Hronského", written = "Nám. J. C. Hronského", note = "the document writes \"Nám. J. C. Hronského\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Námestie J. C. Hronského\"; the same street"},
+  {street = "Trhová ulica", written = "Trhová", note = "the document writes \"Trhová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Trhová ulica\"; the same street"},
+  {street = "Ulica D. Kubíka", written = "Ul.D. Kubíka", note = "the document writes \"Ul.D. Kubíka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica D. Kubíka\"; the same street"},
+  {street = "Ulica F. Madvu", written = "F. Madvu", note = "the document writes \"F. Madvu\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica F. Madvu\"; the same street"},
+  {street = "Ulica J. Pauleho", written = "J. Pauleho", note = "the document writes \"J. Pauleho\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Pauleho\"; the same street"},
+  {street = "Ulica J. Škopca", written = "J. Škopca", note = "the document writes \"J. Škopca\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Škopca\"; the same street"},
+]
+
+[okrsok.21]
+rules = [
+  {street = "Átriová ulica", written = "Átriová", note = "the document writes \"Átriová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Átriová ulica\"; the same street"},
+  {street = "Bojnická cesta", numbers = "24, 24C, 26"},
+  {street = "Májová ulica", written = "Májová", note = "the document writes \"Májová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Májová ulica\"; the same street"},
+  {street = "Nábrežná ulica", written = "Nábrežná", note = "the document writes \"Nábrežná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Nábrežná ulica\"; the same street"},
+  {street = "Tenisová ulica", written = "Tenisová", note = "the document writes \"Tenisová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Tenisová ulica\"; the same street"},
+  {street = "Ulica A. Mišúta", written = "Ul.A. Mišúta", note = "the document writes \"Ul.A. Mišúta\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica A. Mišúta\"; the same street"},
+  {street = "Ulica I. Krasku", written = "Ul.I. Krasku", note = "the document writes \"Ul.I. Krasku\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica I. Krasku\"; the same street"},
+  {street = "Ulica J. Červeňa", written = "Ul.J. Červeňa", note = "the document writes \"Ul.J. Červeňa\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Červeňa\"; the same street"},
+  {street = "Ulica J. G. Tajovského", written = "Ul.J. G. Tajovského", note = "the document writes \"Ul.J. G. Tajovského\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. G. Tajovského\"; the same street"},
+  {street = "Ulica J. Kollára", written = "J. Kollára", note = "the document writes \"J. Kollára\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Kollára\"; the same street"},
+  {street = "Ulica M. Falešníka", written = "M. Falešníka", note = "the document writes \"M. Falešníka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica M. Falešníka\"; the same street"},
+  {street = "Ulica olympionikov", written = "Ul.olympionikov", note = "the document writes \"Ul.olympionikov\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica olympionikov\"; the same street"},
+  {street = "Ulica R. Jašíka", written = "R. Jašíka", note = "the document writes \"R. Jašíka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica R. Jašíka\"; the same street"},
+  {street = "Ulica Š. Závodníka", written = "Š. Závodníka", note = "the document writes \"Š. Závodníka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica Š. Závodníka\"; the same street"},
+  {street = "Ulica T. Milkina", written = "T. Milkina", note = "the document writes \"T. Milkina\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica T. Milkina\"; the same street"},
+  {street = "Ulica za depom", written = "Ul.za depom", note = "the document writes \"Ul.za depom\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica za depom\"; the same street"},
+]
+
+[okrsok.22]
+rules = [
+  {street = "Ulica A. Bednára", written = "Ul.A. Bednára", note = "the document writes \"Ul.A. Bednára\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica A. Bednára\"; the same street"},
+  {street = "Ulica E. M. Šoltésovej", written = "Ul.E.M.Šoltésovej", note = "the document writes \"Ul.E.M.Šoltésovej\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica E. M. Šoltésovej\"; the same street"},
+  {street = "Ulica J. Bendíka", written = "Ul.J. Bendíka", note = "the document writes \"Ul.J. Bendíka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Bendíka\"; the same street"},
+  {street = "Ulica J. Francisciho", written = "Ul.J. Francisciho", note = "the document writes \"Ul.J. Francisciho\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Francisciho\"; the same street"},
+  {street = "Ulica P. Dobšinského", written = "P. Dobšinského", note = "the document writes \"P. Dobšinského\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica P. Dobšinského\"; the same street"},
+]
+
+[okrsok.23]
+rules = [
+  {street = "Ulica A. Žarnova", written = "Ul.A. Žarnova", note = "the document writes \"Ul.A. Žarnova\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica A. Žarnova\"; the same street"},
+  {street = "Ulica J. I. Bajzu", written = "J.I. Bajzu", note = "the document writes \"J.I. Bajzu\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. I. Bajzu\"; the same street"},
+  {street = "Ulica J. M. Hurbana", written = "J. M. Hurbana", note = "the document writes \"J. M. Hurbana\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. M. Hurbana\"; the same street"},
+]
+
+[okrsok.24]
+rules = [
+  {street = "Mliekarenská ulica", written = "Mliekarenská", note = "the document writes \"Mliekarenská\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Mliekarenská ulica\"; the same street"},
+  {street = "Rad L. N. Tolstého"},
+  {street = "Ulica Ľ. Ondrejova", written = "Ľ. Ondrejova", note = "the document writes \"Ľ. Ondrejova\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica Ľ. Ondrejova\"; the same street"},
+]
+
+[okrsok.25]
+rules = [
+  {street = "Ulica I. Bukovčana", written = "Ul.I.Bukovčana", note = "the document writes \"Ul.I.Bukovčana\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica I. Bukovčana\"; the same street"},
+  {street = "Ulica J. Fándlyho", written = ".J.Fándlyho", note = "the document writes \".J.Fándlyho\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Fándlyho\"; the same street"},
+  {street = "Ulica J. Matúšku", written = "J. Matúšku", note = "the document writes \"J. Matúšku\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Matúšku\"; the same street"},
+]
+
+[okrsok.26]
+rules = [
+  {street = "Ulica M. Rázusa", written = "Ul.M. Rázusa", note = "the document writes \"Ul.M. Rázusa\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica M. Rázusa\"; the same street"},
+]
+
+[okrsok.27]
+rules = [
+  {street = "Ulica P. J. Šafárika", written = "Ul.P.J. Šafárika", note = "the document writes \"Ul.P.J. Šafárika\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica P. J. Šafárika\"; the same street"},
+  {street = "Urbánkova ulica", numbers = "1-13, 17-31"},
+]
+
+[okrsok.28]
+rules = [
+  {street = "Jégého ulica", written = "Jégeho ulica", note = "the document writes \"Jégeho ulica\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Jégého ulica\"; the same street"},
+  {street = "Šulekova ulica"},
+]
+
+[okrsok.29]
+rules = [
+  {street = "Ulica J. Okáľa", written = "Ul.J.Okáľa", note = "the document writes \"Ul.J.Okáľa\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Okáľa\"; the same street"},
+  {street = "Ulica J. Palárika", written = "J.Palárika", note = "the document writes \"J.Palárika\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Palárika\"; the same street"},
+  {street = "Ulica J. Roháča", written = "J.Roháča", note = "the document writes \"J.Roháča\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Roháča\"; the same street"},
+  {street = "Ulica L. Stančeka", written = "L.Stančeka", note = "the document writes \"L.Stančeka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica L. Stančeka\"; the same street"},
+  {street = "Urbánkova ulica"},
+]
+
+[okrsok.30]
+rules = [
+  {street = "Ulica energetikov", numbers = "1A, 2, 4, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29C, 30, 32, 34, 36, 38, 40, 42, 44, 45, 46", written = "Ul.energetikov", note = "the document writes \"Ul.energetikov\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica energetikov\"; the same street"},
+]
+
+[okrsok.31]
+rules = [
+  {street = "Koceľova ulica"},
+  {street = "Prírodná ulica"},
+  {street = "Ulica energetikov", numbers = "31, 33, 35, 37, 48, 50, 52"},
+  {street = "Ulica I. Vysočana", written = "Ul.I. Vysočana", note = "the document writes \"Ul.I. Vysočana\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica I. Vysočana\"; the same street"},
+  {street = "Ulica V. Benedikta", numbers = "3-21", except = "14, 16, 18, 20", written = "V. Benedikta", note = "the document writes \"V. Benedikta\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica V. Benedikta\"; the same street"},
+  {street = "Včelárska ulica"},
+]
+
+[okrsok.32]
+rules = [
+  {street = "Ulica A. Bernoláka", written = "A. Bernoláka", note = "the document writes \"A. Bernoláka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica A. Bernoláka\"; the same street"},
+  {street = "Ulica M. Gorkého", numbers = "2-18", parity = "even", written = "M. Gorkého", note = "the document writes \"M. Gorkého\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica M. Gorkého\"; the same street"},
+  {street = "Ulica V. Benedikta", numbers = "14, 16, 18, 20, 22, 23, 26, 28, 30, 32", written = "V. Benedikta", note = "the document writes \"V. Benedikta\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica V. Benedikta\"; the same street"},
+]
+
+[okrsok.33]
+rules = [
+  {street = "Ulica M. Gorkého", numbers = "3A, 7, 9, 11, 13, 15, 17, 19, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 35, 37, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 50, 52, 54", written = "M. Gorkého", note = "the document writes \"M. Gorkého\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica M. Gorkého\"; the same street"},
+]
+
+[okrsok.34]
+rules = [
+  {street = "Cesta Vl. Clementisa"},
+]
+
+[okrsok.35]
+rules = [
+  {street = "Agátová ulica", written = "Agátová", note = "the document writes \"Agátová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Agátová ulica\"; the same street"},
+  {street = "Bazová ulica", written = "Bazová", note = "the document writes \"Bazová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Bazová ulica\"; the same street"},
+  {street = "Bôrová ulica", written = "Bôrová", note = "the document writes \"Bôrová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Bôrová ulica\"; the same street"},
+  {street = "Buková ulica", written = "Buková", note = "the document writes \"Buková\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Buková ulica\"; the same street"},
+  {street = "Dubová ulica", written = "Dubová", note = "the document writes \"Dubová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Dubová ulica\"; the same street"},
+  {street = "Hrabová ulica", written = "Hrabová", note = "the document writes \"Hrabová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Hrabová ulica\"; the same street"},
+  {street = "Jaseňová ulica", written = "Jaseňová", note = "the document writes \"Jaseňová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Jaseňová ulica\"; the same street"},
+  {street = "Jedľová ulica", written = "Jedľová", note = "the document writes \"Jedľová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Jedľová ulica\"; the same street"},
+  {street = "Lipová ulica", written = "Lipová", note = "the document writes \"Lipová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Lipová ulica\"; the same street"},
+  {street = "Na karasiny", numbers = "14, 16, 20, 22, 28, 30, 34, 36, 52, 54, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 69, 71A, 71B, 73, 73A, 73B, 73C, 75"},
+  {street = "Rakytová ulica", written = "Rakytová", note = "the document writes \"Rakytová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Rakytová ulica\"; the same street"},
+  {street = "Smreková ulica", written = "Smreková", note = "the document writes \"Smreková\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Smreková ulica\"; the same street"},
+]
+
+[okrsok.36]
+rules = [
+  {street = "Na karasiny", numbers = "3, 5, 7, 9, 11, 13, 17, 18, 19, 21, 23, 25, 26, 27, 31, 33, 35, 37, 39, 41, 45, 47, 49, 51, 53, 55"},
+]
+
+[okrsok.37]
+rules = [
+  {street = "Makovického ulica", written = "Makovického", note = "the document writes \"Makovického\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Makovického ulica\"; the same street"},
+  {street = "Nad terasami"},
+  {street = "Ulica K. Novackého", written = "Ul.K. Novackého", note = "the document writes \"Ul.K. Novackého\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica K. Novackého\"; the same street"},
+]
+
+[okrsok.38]
+rules = [
+  {street = "Bottova ulica", written = "Bottova ul.", note = "the document writes \"Bottova ul.\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Bottova ulica\"; the same street"},
+  {street = "Jánošíkova ulica", written = "Jánošíkova ul.", note = "the document writes \"Jánošíkova ul.\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Jánošíkova ulica\"; the same street"},
+  {street = "Koncová ulica", written = "Koncová", note = "the document writes \"Koncová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Koncová ulica\"; the same street"},
+  {street = "Mojmírova ulica", written = "Mojmírova", note = "the document writes \"Mojmírova\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Mojmírova ulica\"; the same street"},
+  {street = "Rovná ulica", written = "Rovná", note = "the document writes \"Rovná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Rovná ulica\"; the same street"},
+  {street = "Skrytá ulica", written = "Skrytá", note = "the document writes \"Skrytá\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Skrytá ulica\"; the same street"},
+  {street = "Ulica J. Alexyho", written = "J. Alexyho", note = "the document writes \"J. Alexyho\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Alexyho\"; the same street"},
+  {street = "Ulica J. Gramantíka", written = "J. Gramantíka", note = "the document writes \"J. Gramantíka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Gramantíka\"; the same street"},
+  {street = "Ulica J. Záborského", written = "J. Záborského", note = "the document writes \"J. Záborského\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Záborského\"; the same street"},
+  {street = "Ulica K. Kuzmányho", written = "K. Kuzmányho", note = "the document writes \"K. Kuzmányho\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica K. Kuzmányho\"; the same street"},
+  {street = "Ulica M. Benku", written = "M. Benku", note = "the document writes \"M. Benku\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica M. Benku\"; the same street"},
+  {street = "Ulica M. Medveckej", written = "M. Medveckej", note = "the document writes \"M. Medveckej\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica M. Medveckej\"; the same street"},
+  {street = "Ulica odbojárov", written = "Ul.odbojárov", note = "the document writes \"Ul.odbojárov\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica odbojárov\"; the same street"},
+  {street = "Ulica S. Mečiara", written = "Ul.S. Mečiara", note = "the document writes \"Ul.S. Mečiara\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica S. Mečiara\"; the same street"},
+]
+
+[okrsok.39]
+rules = [
+  {street = "Hrnčiarska ulica", written = "Hrnčiarska", note = "the document writes \"Hrnčiarska\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Hrnčiarska ulica\"; the same street"},
+  {street = "Mariánska ulica", written = "Mariánska", note = "the document writes \"Mariánska\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Mariánska ulica\"; the same street"},
+  {street = "Medzibriežková ulica", written = "Medzibriežková", note = "the document writes \"Medzibriežková\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Medzibriežková ulica\"; the same street"},
+  {street = "Partizánska ulica", written = "Partizánska", note = "the document writes \"Partizánska\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Partizánska ulica\"; the same street"},
+  {street = "Povstalecká ulica", written = "Povstalecká", note = "the document writes \"Povstalecká\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Povstalecká ulica\"; the same street"},
+  {street = "Puškinova ulica", written = "Puškinova", note = "the document writes \"Puškinova\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Puškinova ulica\"; the same street"},
+  {street = "Ulica B. Slančíkovej", written = "B. Slančíkovej", note = "the document writes \"B. Slančíkovej\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica B. Slančíkovej\"; the same street"},
+  {street = "Ulica C. Majerníka", written = "C. Majerníka", note = "the document writes \"C. Majerníka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica C. Majerníka\"; the same street"},
+  {street = "Ulica J. Jesenského", written = "J. Jesenského", note = "the document writes \"J. Jesenského\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. Jesenského\"; the same street"},
+  {street = "Veterná ulica", written = "Veterná", note = "the document writes \"Veterná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Veterná ulica\"; the same street"},
+]
+
+[okrsok.40]
+rules = [
+  {street = "Hlboká ulica", written = "Hlboká", note = "the document writes \"Hlboká\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Hlboká ulica\"; the same street"},
+  {street = "Hradecká ulica", written = "Hradecká", note = "the document writes \"Hradecká\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Hradecká ulica\"; the same street"},
+  {street = "Mlynárska ulica", written = "Mlynárska", note = "the document writes \"Mlynárska\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Mlynárska ulica\"; the same street"},
+  {street = "Mrazničná ulica", written = "Mrazničná", note = "the document writes \"Mrazničná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Mrazničná ulica\"; the same street"},
+  {street = "Na lúčky"},
+  {street = "Podhorská ulica", written = "Podhorská", note = "the document writes \"Podhorská\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Podhorská ulica\"; the same street"},
+  {street = "Remeselnícka ulica", written = "Remeselnícka", note = "the document writes \"Remeselnícka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Remeselnícka ulica\"; the same street"},
+  {street = "Roľnícka ulica", written = "Roľnícka", note = "the document writes \"Roľnícka\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Roľnícka ulica\"; the same street"},
+  {street = "Strmá ulica", written = "Strmá", note = "the document writes \"Strmá\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Strmá ulica\"; the same street"},
+  {street = "Školská ulica", written = "Školská", note = "the document writes \"Školská\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Školská ulica\"; the same street"},
+  {street = "Uhlištná ulica", written = "Uhlištná", note = "the document writes \"Uhlištná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Uhlištná ulica\"; the same street"},
+  {street = "Ulica J. L. Bellu", written = "J. L. Bellu", note = "the document writes \"J. L. Bellu\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica J. L. Bellu\"; the same street"},
+  {street = "Viničná ulica", written = "Viničná", note = "the document writes \"Viničná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Viničná ulica\"; the same street"},
+  {street = "Vrchárska ulica", written = "Vrchárska", note = "the document writes \"Vrchárska\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Vrchárska ulica\"; the same street"},
+]
+
+[okrsok.41]
+rules = [
+  {street = "Krížna ulica", written = "Krížna", note = "the document writes \"Krížna\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Krížna ulica\"; the same street"},
+  {street = "Na lánoch"},
+  {street = "Na vŕšku"},
+  {street = "Pod poliankou"},
+  {street = "Ružová ulica", written = "Ružová", note = "the document writes \"Ružová\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ružová ulica\"; the same street"},
+  {street = "Spojovacia ulica", written = "Spojovacia ul.", note = "the document writes \"Spojovacia ul.\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Spojovacia ulica\"; the same street"},
+  {street = "Ulica družby", written = "Ul.družby", note = "the document writes \"Ul.družby\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica družby\"; the same street"},
+  {street = "Ulica F. Hečku", written = "F. Hečku", note = "the document writes \"F. Hečku\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica F. Hečku\"; the same street"},
+]
+
+[okrsok.42]
+rules = [
+  {street = "Družstevná ulica", written = "Družstevná", note = "the document writes \"Družstevná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Družstevná ulica\"; the same street"},
+  {street = "Južná ulica", written = "Južná", note = "the document writes \"Južná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Južná ulica\"; the same street"},
+  {street = "K potoku"},
+  {street = "Lesná ulica", written = "Lesná", note = "the document writes \"Lesná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Lesná ulica\"; the same street"},
+  {street = "Na stanište"},
+  {street = "Na záhrade"},
+  {street = "Parková ulica", written = "Parková", note = "the document writes \"Parková\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Parková ulica\"; the same street"},
+  {street = "Pavlovská ulica", written = "Pavlovská", note = "the document writes \"Pavlovská\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Pavlovská ulica\"; the same street"},
+  {street = "Pekná ulica", written = "Pekná", note = "the document writes \"Pekná\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Pekná ulica\"; the same street"},
+  {street = "Pod hájik"},
+  {street = "Pod hôrku"},
+  {street = "Pod hrádkom"},
+  {street = "Richtárska ulica", written = "Richtárska", note = "the document writes \"Richtárska\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Richtárska ulica\"; the same street"},
+  {street = "Súhradská ulica", written = "Súhradská", note = "the document writes \"Súhradská\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Súhradská ulica\"; the same street"},
+  {street = "Ulica 1. mája", written = "Ul.1. mája", note = "the document writes \"Ul.1. mája\" (shortened, without the word ulica/cesta or with an abbreviated first name), the register \"Ulica 1. mája\"; the same street"},
+]

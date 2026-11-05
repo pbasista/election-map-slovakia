@@ -1,0 +1,122 @@
+# Okrsky of Bojnice, transcribed by an AI agent in job okrsok-rules-1131 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cintorínska, Zámok a okolie, Podzámocká, Hurbanovo námestie, Sládkovičova, Hviezdoslavova, Bernolákova, Záhradná, Športová, Kvetová, Okrajová, Rybníčky, Prievidzská, Rekreačná
+#   okrsok 2: Školská (od križovatky ulíc Školská-Rekreačná-Prievidzská po križovatku Školská - Jánošíkova {párne orientačné čísla 2-62; nepárne orientačné čísla 1-43}), Janka Kráľa, Krátka, Mierová, Dukelská, Nemocničná, A. Hlinku, Jesenského, Pribinova, Hornoulická, Svätoplukova, Sama Chalupku, Mojmírova, Jánošíkova, Stráne
+#   okrsok 3: SNP, Lúčky
+#   okrsok 4: Školská (od križovatky ulíc Školská - Jánošíkova po križovatku ulíc Školská - 1. mája {párne orientačné čísla 64-76; nepárne orientačné čísla 45 – 99}), Martina Rázusa, Komenského, Štúrova, Kukučínova, Banícka, Lesná a obývané chaty v priľahlej chatovej oblasti, Tále, 1.mája, Hečkova (párne orientačné čísla 50,52 a 54 a nepárne orientačné čísla 23 a 27)
+#   okrsok 5: Školská (od križovatky ulíc Školská – 1. mája {párne orientačné čísla od 78; nepárne orientačné čísla od 101}), Velvarská, Tehelná, J. Hollého, Hečkova (párne orientačné čísla 2-48; nepárne orientačné čísla 1-47 okrem čísiel 23 a 27), Tatarkova, Bajzova, Lány, Bottova, Tajovského, Dubnická, Moyzesova, Kpt. Nálepku, Samoty, Kúty, Sadová, Slnečná, Ulica kanianska
+#   okrsok 6: Kúpele, Kúpeľná, Hlboké a obývané chaty v priľahlej chatovej oblasti, Na Chmeľnici, Opatovská cesta
+obec = "513903"
+name = "Bojnice"
+okrsky_date = 2019-01-24
+okrsky_fill = "nearest"
+okrsky_note = "The streets document is dated '24.01. 2018' (a typo: its reference SO/00122-6/2019 and the companion decision SO/00122-4/2019 are of 24.01.2019); 'Vyhlásenie volebných okrskov a určenie ulíc' (id 1082993) is the identical file. The change of okrsok 6's polling station (11.03.2019) keeps its streets. New sixth okrsok (Kúpele area) split from okrsok 1 compared with 2018; Hečkova and 1.mája moved partly to okrsok 4. Parková and Ulica Podskalné (register streets) are not named in the document; they, the lettered Školská numbers (7A, 38A, 38B, 47A, 125A) and the addresses without a street take the nearest placed address (fill_nearest). Citizens with trvalý pobyt without an address vote in okrsok 1 (separate decision)."
+
+[[document]]
+url = "https://www.bojnice.sk/download_file_f.php?id=1079735"
+sha256 = "553e9fedb5950fe104bc970e343502f28b08b7a400fc03b6d1e3f4d94ec7e5e7"
+title = "Voľby prezidenta Slovenskej republiky I. kolo 16. marca 2019; II. kolo 30. marca 2019 - Volebné okrsky (vrátane príslušných ulíc) v meste Bojnice pre vykonanie volieb"
+
+[[document]]
+url = "https://www.bojnice.sk/download_file_f.php?id=1079172"
+sha256 = "e39e86354800883f71ee7edcf0becb4ecd2bd1fcc570064493870f5438d51890"
+title = "Volebné okrsky a volebné miestnosti mesta Bojnice pre voľby prezidenta Slovenskej republiky, I. kolo 16. marca 2019; II. kolo 30. marca 2019"
+
+[[document]]
+url = "https://www.bojnice.sk/download_file_f.php?id=1103098"
+sha256 = "2a692a7a3be8c05348e3109ad3fc1fa0f10996ad5229d05af1baa29b339c17a4"
+title = "Voľby prezidenta Slovenskej republiky 2019 - zmena sídla Volebného okrsku č. 6"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Zámok a Okolie", written = "Zámok a okolie", note = "differs only in capitalization"},
+  {street = "Podzámocká"},
+  {street = "Hurbanovo Námestie", written = "Hurbanovo námestie", note = "differs only in capitalization"},
+  {street = "Sládkovičova"},
+  {street = "Hviezdoslavova"},
+  {street = "Bernolákova"},
+  {street = "Záhradná"},
+  {street = "Športová"},
+  {street = "Kvetová"},
+  {street = "Okrajová"},
+  {street = "Rybníčky"},
+  {street = "Prievidzská"},
+  {street = "Rekreačná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Školská", numbers = "2-62", parity = "even"},
+  {street = "Školská", numbers = "1-43", parity = "odd"},
+  {street = "Janka Kráľa"},
+  {street = "Krátka"},
+  {street = "Mierová"},
+  {street = "Dukelská"},
+  {street = "Nemocničná"},
+  {street = "A. Hlinku"},
+  {street = "Jesenského"},
+  {street = "Pribinova"},
+  {street = "Hornoulická"},
+  {street = "Svätoplukova"},
+  {street = "Sama Chalupku"},
+  {street = "Mojmírova"},
+  {street = "Jánošíkova"},
+  {street = "Stráne"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "SNP"},
+  {street = "Lúčky"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Školská", numbers = "64-76", parity = "even"},
+  {street = "Školská", numbers = "45-99", parity = "odd"},
+  {street = "Martina Rázusa"},
+  {street = "Komenského"},
+  {street = "Štúrova"},
+  {street = "Kukučínova"},
+  {street = "Banícka"},
+  {street = "Lesná"},
+  {street = "Tále"},
+  {street = "1.mája"},
+  {street = "Hečkova", numbers = "50, 52, 54", parity = "even"},
+  {street = "Hečkova", numbers = "23, 27", parity = "odd"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Školská", numbers = "78-", parity = "even"},
+  {street = "Školská", numbers = "101-", parity = "odd"},
+  {street = "Velvarská"},
+  {street = "Tehelná"},
+  {street = "J. Hollého"},
+  {street = "Hečkova", numbers = "2-48", parity = "even"},
+  {street = "Hečkova", numbers = "1-47", parity = "odd", except = "23, 27"},
+  {street = "Tatarkova"},
+  {street = "Bajzova"},
+  {street = "Lány"},
+  {street = "Bottova"},
+  {street = "Tajovského"},
+  {street = "Dubnická"},
+  {street = "Moyzesova"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Samoty"},
+  {street = "Kúty"},
+  {street = "Sadová"},
+  {street = "Slnečná"},
+  {street = "Ulica kanianska"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Kúpele"},
+  {street = "Kúpeľná"},
+  {street = "Hlboké"},
+  {street = "Na Chmeľnici"},
+  {street = "Opatovská cesta"},
+]

@@ -1,0 +1,24 @@
+# Okrsky of Kvetoslavov, transcribed by an AI agent in job okrsok-rules-4271 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Súpisné čísla od 1 do 400
+#   okrsok 2: Súpisné čísla od 401 do 1500
+obec = "501727"
+name = "Kvetoslavov"
+okrsky_date = 2024-01-10
+okrsky_note = "The document splits the obec by súpisné číslo only (both okrsky vote in the same room)."
+
+[[document]]
+url = "https://www.obeckvetoslavov.sk/data/news_files/kvetoslavov.sk/78665/rozhodnutie-o-utvoreni-volebnych-okrskov-a-miestnosti.pdf"
+sha256 = "1632c44680aeb61be4c54ce48fa6ebae7e6c7e56e16002a24407eb421bc5eee6"
+title = "Rozhodnutie starostu obce z 10. januára 2024 o utvorení volebných okrskov a určení volebných miestností pre voľby prezidenta SR 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Kvetoslavov", numbers = "1-400"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kvetoslavov", numbers = "401-1500"},
+]

@@ -1,0 +1,32 @@
+# The okrsky of Slavec of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/526266.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Slavec, transcribed by an AI agent in job okrsok-rules-979 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Obcania bývajúci v obci Slavec, v časti obce Gombasek a v časti obce Hamor
+#     okrsok 2: Obcania bývajúci v časti obce Vidová
+obec = "526266"
+name = "Slavec"
+okrsky_date = 2018-08-30
+okrsky_note = "The document is a scan, read by OCR without diacritics and checked against the page image."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-574): The municipality's elections pages begin with the 2018 municipal elections; no page or document of the regional elections of 2017 is on the website. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://www.slavec.sk/e_download.php?file=data/editor/71sk_4.pdf&original=urcenie_volebnych_okrskov.pdf"
+sha256 = "798a312a270e8ab28c457468116ade559fa7aceca1f8732faeb376ed9329c918"
+title = "Určenie volebných okrskov a volebných miestností (voľby do orgánov samosprávy obcí 10. novembra 2018)"
+
+[[document]]
+url = "https://www.slavec.sk/samosprava/volby-a-referenda/volby-do-organov-samospravy-obci-na-obd-2018-2022/"
+sha256 = "5c97d7a09b9730c712a63f295df820ba7695e489d7f8b71a03b956162543a8b6"
+title = "Stránka volieb obce Slavec"
+
+[okrsok.1]
+rules = [
+  {part = "Slavec", note = "Gombasek and Hamor are settlements within the part Slavec in the register"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vidová"},
+]

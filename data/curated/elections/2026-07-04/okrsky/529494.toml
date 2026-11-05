@@ -1,0 +1,73 @@
+# Okrsky of Bratislava-Rusovce, transcribed by an AI agent in job okrsok-rules-5426 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Antická, Attidova, Auréliova, Dolichénska, Domiciánová, Firmova, Fláviovska, Hadriánova, Kananefatská, Keltská, Longobardská, Mínešská, Pri gaštanovej aleji, Pri Pieskovom hone, Pri Rusovskom ramene, Pri žrebčíne, Septimiova, Severovcov, Starorímska, Svébska, Švajčiareň, Tibériova, Trajánova, Valentiniánova, Balkánska, Bronzová, Druidská, Ilýrska, Laténska, Pri vodnej veži
+#   okrsok 2: Kovácsova, Lónyaiova, Pohraničníkov, Ágosta Sotéra, Aladára Radnótiho, Colnícka, Gerulatská, Hájenka, Hájová, Irkutská, Jana Dekana, Laury Henckel, Lesnícka, Ľudmily Kraskovskej, Maďarská, Radoslava Hošeka, Vojtecha Ondroucha, Vývojová, Zdravotnícka + občania prihlásení na obec Bratislava-Rusovce
+obec = "529494"
+name = "Bratislava-Rusovce"
+okrsky_date = 2026-05-14
+okrsky_fill = "nearest"
+okrsky_note = "Streets Auréliova, Kananefatská, Pri žrebčíne and Hájenka named by the document are not in the register and are left out. \"Občania prihlásení na obec\" are voters registered without an address. Addresses without a street (súpisné only) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.bratislava-rusovce.sk/media/files/volby/referendum_2026/referendum_okrsky.pdf"
+sha256 = "e0b3e3fb54e0a2f17c5dadc7a646c1cc5bf0c85a1f5f9dcb36a7be1e2eae45df"
+title = "Referendum 04.07.2026 – Okrsky v mestskej časti Bratislava-Rusovce"
+
+[[document]]
+url = "https://www.bratislava-rusovce.sk/media/files/volby/referendum_2026/urcenie_volebnych_okrskov.pdf"
+sha256 = "58981f8597005b1844e8f9eb7cb79f8c934fb9f1633cf81ab289b41bcf64f8bf"
+title = "Určenie volebných okrskov (2) pre referendum 4. júla 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Antická"},
+  {street = "Attidova"},
+  {street = "Dolichénska"},
+  {street = "Domiciánova", written = "Domiciánová", note = "accent typo of Domiciánova"},
+  {street = "Firmova"},
+  {street = "Fláviovska"},
+  {street = "Hadriánova"},
+  {street = "Keltská"},
+  {street = "Longobardská"},
+  {street = "Mínešská"},
+  {street = "Pri gaštanovej aleji"},
+  {street = "Pri pieskovom hone", written = "Pri Pieskovom hone"},
+  {street = "Pri Rusovskom ramene"},
+  {street = "Septimiova"},
+  {street = "Severovcov"},
+  {street = "Starorímska"},
+  {street = "Svébska"},
+  {street = "Švajčiareň"},
+  {street = "Tibériova"},
+  {street = "Trajánova"},
+  {street = "Valentiniánova"},
+  {street = "Balkánska"},
+  {street = "Bronzová"},
+  {street = "Druidská"},
+  {street = "Ilýrska"},
+  {street = "Laténska"},
+  {street = "Pri vodnej veži"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kovácsova"},
+  {street = "Lónyaiová", written = "Lónyaiova", note = "Lónyaiova without the final accent: the register's Lónyaiová"},
+  {street = "Pohraničníkov"},
+  {street = "Ágosta Sötéra", written = "Ágosta Sotéra", note = "umlaut lost: the register's Ágosta Sötéra"},
+  {street = "Aladára Radnótiho"},
+  {street = "Colnícka"},
+  {street = "Gerulatská"},
+  {street = "Hájová"},
+  {street = "Irkutská"},
+  {street = "Jána Dekana", written = "Jana Dekana", note = "missing accent: the register's Jána Dekana"},
+  {street = "Laury Henckelovej", written = "Laury Henckel", note = "shortened name of Laury Henckelovej (the only such street)"},
+  {street = "Lesnícka"},
+  {street = "Ľudmily Kraskovskej"},
+  {street = "Maďarská"},
+  {street = "Radoslava Hošeka"},
+  {street = "Vojtecha Ondroucha"},
+  {street = "Vývojová"},
+  {street = "Zdravotnícka"},
+]

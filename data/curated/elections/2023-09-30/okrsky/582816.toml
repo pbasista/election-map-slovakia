@@ -1,0 +1,29 @@
+# Okrsky of Žitavany, transcribed by an AI agent in job okrsok-rules-3794 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1: Kultúrno – spoločenské zariadenie, Opatovecká ulica č. 847/32, Žitavany
+#   okrsok 2: Volebný okrsok č. 2: Športová hala Žitavany, Športová ulica č. 791/26, Žitavany
+obec = "582816"
+name = "Žitavany"
+okrsky_date = 2023-06-22
+okrsky_note = "The document gives each okrsok only its polling station, no streets: okrsok 1 in the Kultúrno-spoločenské zariadenie, Opatovecká 847/32 (k.ú. Opatovce), okrsok 2 in the Športová hala, Športová 791/26 (k.ú. Kňažice). Žitavany has one part but two k.ú., the former villages Opatovce and Kňažice, each holding one station, so each okrsok is given the k.ú. of its station (inferred, by analogy with one part per station), as for the 2022 elections and the 2023 referendum in this repository. The scanned document is dated and signed 22.06.2023."
+
+[[document]]
+url = "https://www.zitavany.sk/modules/file_storage/download.php?file=65ed2046%7C868&inline=1"
+sha256 = "a4d4e5fd8447d5c83216fcaf273c5c673f1e32708ea9f8600854ad0bd8b90540"
+title = "Vytvorenie volebného okrsku a určenie volebnej miestnosti pre voľby do Národnej rady Slovenskej republiky, konané dňa 30. septembra 2023"
+
+[[document]]
+url = "https://www.zitavany.sk/zverejnovanie/volby-referendum-1/volby-do-nr-sr-2023/"
+sha256 = "477665bef3608f19d2fdd0ddc4a786392ac5dc40a1919e0cf07de99bccbce0c4"
+title = "Voľby do NR SR 2023"
+
+[okrsok.1]
+rules = [
+  {ku = "Opatovce", note = "k.ú. of the polling station Opatovecká 847/32", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {ku = "Kňažice", note = "k.ú. of the polling station Športová 791/26", inferred = true},
+]

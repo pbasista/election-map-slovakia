@@ -1,0 +1,46 @@
+# Okrsky of Jelšava, transcribed by an AI agent in job okrsok-rules-2056 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Muránska ulica, Námestie republiky, Námestie SNP, Tomášikova ulica, Mníšanská ulica, Jesenského, Teplá Voda, Medzník
+#   okrsok 2: Ševcovská, Štefánikova, Kúpeľná, Teplická, Pri štadióne, Železničná, Armádna, 9. mája, Kejďák
+obec = "525791"
+name = "Jelšava"
+okrsky_fill = "nearest"
+okrsky_note = "The list of okrsky and streets for the European Parliament election of 25 May 2019, linked on the city's page for that election. Hrádok (3 addresses) is not named in the document: placed by fill_nearest, as are the houses without a street. The Internet Archive stayed offline throughout (web.archive.org refused connections or answered 'Temporarily Offline' on repeated tries with pauses), so no archived capture was checked."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document is undated; its heading names the European Parliament election of 25. 05. 2019."
+
+[[document]]
+url = "https://www.jelsava.sk/download_file_f.php?id=1110689"
+sha256 = "54598ef2c256ba4c68e337ea4cbac71a7ad7dd7020cb99475d191013d478d62c"
+title = "Počet vytvorených volebných okrskov a zoznam ulíc pre voľby do Európskeho parlamentu dňa 25. 05. 2019"
+
+[[document]]
+url = "https://www.jelsava.sk/oznamy/volby-do-europskeho-parlamentu-2019.html"
+sha256 = "6f691371afdcca8639d0b77f88cb54e663ce56bacfe7c5156c67cc92c94e52c6"
+title = "Voľby do Európskeho parlamentu 2019"
+
+[okrsok.1]
+rules = [
+  {street = "Muránska"},
+  {street = "Námestie Republiky", written = "Námestie republiky"},
+  {street = "Námestie SNP"},
+  {street = "Tomášikova"},
+  {street = "Mníšanská"},
+  {street = "Jesenského"},
+  {street = "Teplá Voda"},
+  {street = "Medzník"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ševcovská"},
+  {street = "Štefánikova"},
+  {street = "Kúpelná", written = "Kúpeľná", note = "Kúpeľná with soft l in the document; the register's Kúpelná, the same street"},
+  {street = "Teplická"},
+  {street = "Pri Štadióne", written = "Pri štadióne"},
+  {street = "Železničná"},
+  {street = "Armádna"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Kejďák"},
+]

@@ -1,0 +1,19 @@
+# Okrsky of Richnava, transcribed by an AI agent in job okrsok-rules-2760 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Súpisné čísla domov 1 - 384
+#   okrsok 2: Bez súpisného čísla
+obec = "543501"
+name = "Richnava"
+okrsky_date = 2019-11-29
+okrsky_note = "Okrsok 1: houses with súpisné čísla 1-384 (every address of the register); okrsok 2: \"Bez súpisného čísla\", residents without a house number, held as addressless. Same as the copied 2022 okrsky."
+
+[[document]]
+url = "https://www.richnava.sk/e_download.php?file=data/editor/116sk_1.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a.pdf"
+sha256 = "daacbbd386a38f86403616f8c2f03fc2f82c2fc6f832a5c3cd1c2142e9a309d0"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do NR SR v roku 2020 (29.11.2019)"
+
+[okrsok.1]
+
+[okrsok.2]
+addressless = true

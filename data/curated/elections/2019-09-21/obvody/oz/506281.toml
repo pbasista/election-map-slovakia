@@ -1,0 +1,138 @@
+# The council obvody of Nemšová of the vote of 2018-11-10, data/curated/elections/2018-11-10/obvody/oz/506281.toml, standing in, by `ems job reuse`. Its header there:
+#   Council obvody of Nemšová (506281), Trenčín.
+#   Transcribed by an AI agent in job obvod-rules-116 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: Volebný obvod č. 1 Nemšová č. Nemšová 7 poslancov
+#     obvod 2: Volebný obvod č. 2 Nemšová č. Ľuborča 3 poslancov
+#     obvod 3: Volebný obvod č. 3 Nemšová č. Kľúčové 2 poslancov
+#     obvod 4: Volebný obvod č. 4 Nemšová č. Trenčianska Závada 1 poslanec
+#   Okrsky added by an AI agent in job okrsok-rules-5881 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Janka Palu, Sklárska, Odbojárov 181/1, Nemšová
+#     okrsok 2: Agátová, Bernolákova, Brezová, Hornov, Jaseňová, Javorová, Jesenského, Kamenec, Lipová, Mierové námestie, Mlynská, Moravská, Nová Nemšová, Odbojárov, Ohrádky, osloboditeľov, Pionierska, Rybárska, Sládkovičova, SNP, Šidlíkové, Školská, Šmidkeho, Štúrova, Topoľová, Vlárska
+#     okrsok 3: 9. mája, A. Kropáčiho, Duklianska, Fraňa Madvu, Jozefa Hanku, Karpatská, Mládežnícka, Obrancov mieru, Pavla Kyrmezera, Považská, Púchovská, Revolučná, Slovenskej armády, Športovcov, Urbárska, Vážska, Za Soľnou, Záhumnie, Železničná
+#     okrsok 4: Antonstál, Bottova, Čerešňová, Družstevná, Dvorecká, Fučíkova, Hradná, J. Borovského, J. Lacu, Kukučínova, Ľuborčianska, M. Gorkého, Višňová, Závadská
+#     okrsok 5: Holubyho, Sadová, Slnečná, Stromová, Trenčianska, Záhradná
+#     okrsok 6: Kúty, Podhorská, Potôčky
+obec = "506281"
+name = "Nemšová"
+date = 2018-06-20
+note = "The resolution names each obvod by the part of the town ('Nemšová č. X' = časť X); the okrsky document of 2018 confirms obvod 1 = Nemšová, 2 = Ľuborča, 3 = Kľúčové, 4 = Trenčianska Závada."
+adopted = 2018-11-10
+adopted_basis = "No document of 2019-09-21 placing the addresses in obvody is known. These are the council obvody of the vote of 2018-11-10 (2018), the nearest in time with a rule set of its own of the obvody that voted, of the council elected then. The voters on the roll per obvod are not known for both votes, so whether the layout changed is not known either."
+okrsky_fill = "nearest"
+okrsky_note = "Okrsok 1's 'Odbojárov 181/1' is the house with súpisné 181 and orientačné 1 (rule: Odbojárov 1); the rest of Odbojárov is listed in okrsok 2. The trailing 'Nemšová' of okrsok 1 refers to voters registered without a street address (no rule). Záhradná lies in parts Kľúčové and Nemšová in the register; the document lists it only in okrsok 5 (Kľúčové, obvod 3), so its addresses in part Nemšová (obvod 1) and the addresses without a street in obvod 1 are placed by fill_nearest. Okrsky 4–6 are each a whole obvod."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "The okrsky of the same rule set: 6 okrsky, those ŠÚ SR counted in each obvod. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "Both documents are undated; their headings name the elections to the organs of municipal self-government of 10 November 2018 (the Internet Archive keeps no 2018 capture of them)."
+
+[[document]]
+url = "https://www.nemsova.sk/content/11/vypis-uznesenie-volby.pdf"
+sha256 = "ba0db943ab9283075ae6df8b166ec61c1955f2c28afef48acb98e39880dcb833"
+title = "Uznesenie č. 416 z 37. zasadnutia Mestského zastupiteľstva Nemšová zo dňa 20. júna 2018"
+
+[[document]]
+url = "https://www.nemsova.sk/content/37/volebne-obvody-okrsky-2018.pdf"
+sha256 = "8d88787330b749c03229deadc5a79f9a8258eeec1ef7471c69e1173ad3bfebf5"
+title = "Volebné okrsky a volebné miestnosti pre voľby do orgánov samosprávy obcí, ktoré sa uskutočnia dňa 10. novembra 2018 (volebné obvody a okrsky)"
+
+[[document]]
+url = "https://www.nemsova.sk/content/56/urcenie-volebnych-okrskov-2018.pdf"
+sha256 = "bf69b5128205feaa780f436e5369cef0a9001e33ea0d1486e838c967935e78aa"
+title = "Určenie volebných okrskov v meste Nemšová (voľby do orgánov samosprávy obcí 10. novembra 2018)"
+
+[[document]]
+url = "https://www.nemsova.sk/samosprava/volby/volby-do-organov-samospravy-obci-spojene-volby/2018/"
+sha256 = "47a86d0742e55aab8218b99ed5b8fd83eba1f0d5118f30eb229f0537089e2261"
+title = "Voľby do orgánov samosprávy obcí - SPOJENÉ VOĽBY - 2018"
+
+[obvod.1]
+seats = 7
+okrsky = [1, 2, 3]
+rules = [
+  {part = "Nemšová"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [4]
+rules = [
+  {part = "Ľuborča"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [5]
+rules = [
+  {part = "Kľúčové"},
+]
+
+[obvod.4]
+seats = 1
+okrsky = [6]
+rules = [
+  {part = "Trenčianska Závada"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Janka Palu"},
+  {street = "Sklárska"},
+  {street = "Odbojárov", numbers = "1"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Bernolákova"},
+  {street = "Brezová"},
+  {street = "Hornov"},
+  {street = "Jaseňová"},
+  {street = "Javorová"},
+  {street = "Jesenského"},
+  {street = "Kamenec"},
+  {street = "Lipová"},
+  {street = "Mierové námestie"},
+  {street = "Mlynská"},
+  {street = "Moravská"},
+  {street = "Nová Nemšová"},
+  {street = "Odbojárov"},
+  {street = "Ohrádky"},
+  {street = "Osloboditeľov", written = "osloboditeľov"},
+  {street = "Pionierska"},
+  {street = "Rybárska"},
+  {street = "Sládkovičova"},
+  {street = "SNP"},
+  {street = "Šidlíkové"},
+  {street = "Školská"},
+  {street = "Šmidkeho"},
+  {street = "Štúrova"},
+  {street = "Topoľová"},
+  {street = "Vlárska"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "9.mája", written = "9. mája"},
+  {street = "Antona Kropáčiho", written = "A. Kropáčiho"},
+  {street = "Duklianska"},
+  {street = "Fraňa Madvu"},
+  {street = "Jozefa Hanku"},
+  {street = "Karpatská"},
+  {street = "Mládežnícka"},
+  {street = "Obrancov Mieru", written = "Obrancov mieru"},
+  {street = "Pavla Kyrmezera"},
+  {street = "Považská"},
+  {street = "Púchovská"},
+  {street = "Revolučná"},
+  {street = "Slovenskej armády"},
+  {street = "Športovcov"},
+  {street = "Urbárska"},
+  {street = "Vážska"},
+  {street = "Za Soľnou"},
+  {street = "Záhumnie"},
+  {street = "Železničná"},
+]

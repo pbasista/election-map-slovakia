@@ -47,6 +47,20 @@
   /* The ballpoint blue of a voter's pen: the circles around the numbers of
      the candidates circled (.num .ink). */
   --ink: #1f4fc4;
+  /* The kinds of election (js/kinds.js `kindStyle`): the marks of the
+     switcher's timeline and headings and the badge on the title's pin,
+     each kind in a muted colour of its own, readable on the card. The
+     municipal and regional elections in the councils' orange, the
+     by-elections in a slate, held in a few places between the regular
+     ones; the president in the regions' purple, a referendum in the
+     cities' teal, the National Council in the okrsky's blue, the European
+     Parliament in the gold of its stars. */
+  --kind-municipal-regional: #b4441c;
+  --kind-by-election: #5f6f88;
+  --kind-presidential: #6a3d9a;
+  --kind-referendum: #0b7a6c;
+  --kind-parliament: #2f64b5;
+  --kind-european: #8f6b0e;
   --shadow: 0 1px 2px rgb(16 24 40 / 0.08), 0 6px 20px rgb(16 24 40 / 0.12);
   --shadow-lg: 0 2px 6px rgb(16 24 40 / 0.1), 0 18px 48px rgb(16 24 40 / 0.22);
   --scrim: rgb(16 24 40 / 0.4);
@@ -64,6 +78,16 @@
      thinner, as the finest units. */
   --map-okrsok: #2f64b5;
   --map-accent: var(--accent);
+  /* A country-wide contest's turnout (mapmode.js `toneOf`): the only one
+     its election has, in an indigo between the okrsky's blue and the
+     regions' violet, redder than the water's sky blue; not a grey, which
+     the map keeps for what is muted or missing. */
+  --map-turnout: #3f4fb0;
+  /* The unit of the ballots' level (draw.js `drawScope`): outlined in ink,
+     the rest of the map under a light grey veil, which mutes its colours
+     without hiding them and greys the bare land a little. */
+  --map-level: #1d2229;
+  --map-level-veil: rgb(206 210 216 / 0.5);
   --map-pin: #ffffff;
   --map-house: #6b7280;
   --map-text: #1d2229;
@@ -134,6 +158,12 @@
   --office: #81c784;
   --result: #4fd1a1;
   --ink: #8fb0ff;
+  --kind-municipal-regional: #f08a5d;
+  --kind-by-election: #9fb0c9;
+  --kind-presidential: #b49cf5;
+  --kind-referendum: #3fcab5;
+  --kind-parliament: #7ea6ea;
+  --kind-european: #dcc062;
   --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px rgb(0 0 0 / 0.45);
   --shadow-lg: 0 2px 6px rgb(0 0 0 / 0.4), 0 18px 48px rgb(0 0 0 / 0.6);
   --scrim: rgb(0 0 0 / 0.6);
@@ -148,6 +178,9 @@
   --map-city: #3fcab5;
   --map-council: #f08a5d;
   --map-okrsok: #7ea6ea;
+  --map-turnout: #a3adf2;
+  --map-level: #e3e9f1;
+  --map-level-veil: rgb(11 15 20 / 0.5);
   --map-pin: #f4f6f9;
   --map-house: #8e9aab;
   --map-text: #e3e9f1;
@@ -489,28 +522,73 @@ h3 {
   pointer-events: auto;
 }
 
-/* Over the pane, which the search results drop over. The title and the
-   search box take turns in it, both 42px high (unless the tagline wraps on a
-   narrow phone), so the pane under it stays put; the list of elections takes
-   its turn too, as high as it is long. */
+/* Over the pane, which the search results drop over. The title, the search
+   box and the list of elections take turns in one cell of its grid: the
+   title, hidden, keeps its place, so that the card is as high and as wide
+   with the search box (a row, `--finder-row`) as with the title, and the
+   pane under it stays put; the list, as high as it is long, but no higher
+   than the screen. What follows the three (the notes, the results' state)
+   takes the rows under them. Only the title's width counts towards the
+   card's (`contain: inline-size` on the rest), which may be wider than
+   the pane where the screen has room (below). */
 .finder {
-  --finder-pad: 10px;
+  --finder-pad: 7px;
+  --finder-row: 40px;
   position: relative;
   z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   flex: none;
   padding: var(--finder-pad);
   border-radius: var(--radius);
 }
 
-.title {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 42px;
+.finder > :not(.title) {
+  contain: inline-size;
 }
 
-.title[hidden],
+.title,
+.search,
+.elections {
+  grid-area: 1 / 1;
+}
+
+/* Beside the map, the card is as wide as the tagline needs, from the
+   pane's width up to the buttons on the right; as wide as the pane where
+   Favourites stand beside it. On a phone it is the screen's width, and
+   the tagline's type shrinks instead (search.js `fitTagline`). */
+@media (min-width: 641px) {
+  .finder {
+    width: max-content;
+    min-width: var(--pane-width);
+    max-width: calc(
+      100vw - 2 * var(--edge) - var(--fab) - 10px - env(safe-area-inset-left) - env(safe-area-inset-right)
+    );
+  }
+
+  .app:has(> .pane.beside) .finder {
+    max-width: var(--pane-width);
+  }
+}
+
+/* One row, everything centred on it: the logo, a map pin, the site's name
+   over the tagline, and the search button, the pin and the button as
+   large as each other. Its own stacking context, so that the buttons'
+   covers (`::after`) lie under its content, which lets the clicks through
+   (`.brand`), and over the card. */
+.title {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--finder-row);
+}
+
+.title[hidden] {
+  visibility: hidden;
+}
+
 .search[hidden],
 .elections[hidden] {
   display: none;
@@ -528,8 +606,12 @@ h3 {
   }
 }
 
+/* The box centred in the card's cell, which a title of two lines makes
+   higher than the box. */
 .search {
   position: relative;
+  display: flex;
+  align-items: center;
   animation-name: finder-search-in;
 }
 
@@ -543,10 +625,23 @@ h3 {
 
 .elections {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(
+    100dvh - 2 * var(--edge) - 2 * var(--finder-pad) - env(safe-area-inset-top) - env(safe-area-inset-bottom)
+  );
   animation-name: finder-elections-in;
 }
 
-/* The list grows out of the logo at the left end of the title. */
+/* What does not fit scrolls, under the close button, as a pane's content
+   does under its own. */
+.elections-scroll {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* The list grows out of the pin at the left end of the title. */
 @keyframes finder-elections-in {
   from {
     opacity: 0;
@@ -554,35 +649,84 @@ h3 {
   }
 }
 
+/* The site's name over the tagline naming the page's election: one
+   heading. The tagline is the election's name and date, no abbreviations,
+   on one line: the card grows to fit it where it can (`.finder`), else its
+   type shrinks (search.js `fitTagline`, from 12 px down to 10 px); what
+   does not fit even then takes two lines of 10 px, balanced, rather than
+   lose its end. Clicks go through it to the cover under it, the election
+   button's or the search button's. */
 .brand {
-  flex: 1 1 auto;
   display: flex;
-  align-items: center;
+  flex: 1 1 auto;
+  flex-direction: column;
   min-width: 0;
   margin: 0;
   font: inherit;
+  pointer-events: none;
 }
 
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
+.brand-name,
+.brand-tagline {
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .brand-name {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   font-weight: 650;
   letter-spacing: -0.01em;
-  line-height: 1.25;
+  line-height: 19px;
+  text-overflow: ellipsis;
 }
 
-/* Wraps on narrow phones rather than cut off the date. */
+/* A size under the site's name (15 px), so that the two lines read as
+   title and subtitle. */
 .brand-tagline {
   font-size: var(--fs-xs);
+  color: var(--text-dim);
+  line-height: 16px;
+}
+
+.brand-tagline.wraps {
+  line-height: 13px;
+  white-space: normal;
+  text-wrap: balance;
+}
+
+/* The name and the date without punctuation between them (search.js
+   `electionParts`, in the language's order), in three steps under the
+   site's name in the text's colour: the election's name in the tagline's
+   dimmer colour, a little bolder (8.8:1 on the card light, 9.4:1 dark),
+   the date fainter still (5.8:1, 6.9:1), a little apart. */
+.tagline-name {
+  font-weight: 500;
+}
+
+.tagline-date {
   color: var(--text-faint);
-  line-height: 1.3;
+}
+
+.tagline-name:not(:first-child) {
+  margin-inline-start: 0.2em;
+}
+
+.tagline-name:not(:last-child) {
+  margin-inline-end: 0.2em;
+}
+
+/* A kind of election's mark: its icon (icons.js `KIND_ICON`) in the kind's
+   colour, `--kind`, which kinds.js `kindStyle` sets on the element it is
+   on (a link of the list, a heading); 16 px, in a line of text. */
+.kind-mark {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  color: var(--kind);
+}
+
+.kind-mark .ico {
+  width: 16px;
+  height: 16px;
 }
 
 .search-open,
@@ -597,16 +741,23 @@ h3 {
 
 .search-open {
   flex: none;
-  width: 38px;
-  height: 38px;
+  width: var(--finder-row);
+  height: var(--finder-row);
   background: var(--surface-2);
   color: var(--text-dim);
 }
 
-/* The whole title is the button's to click. */
+.search-open .ico {
+  width: 20px;
+  height: 20px;
+}
+
+/* The whole card is the button's to click, but for the part the election
+   button covers where there is one (`.election-open`). */
 .search-open::after {
   content: "";
   position: absolute;
+  z-index: -2;
   inset: calc(-1 * var(--finder-pad));
   border-radius: calc(var(--radius) - 1px);
 }
@@ -618,17 +769,13 @@ h3 {
 }
 
 .search-open:focus-visible {
-  outline: none;
-}
-
-.search-open:focus-visible::after {
   outline: 2px solid var(--primary);
-  outline-offset: -2px;
+  outline-offset: 2px;
 }
 
 .logo {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   flex: none;
   fill: var(--accent);
 }
@@ -641,63 +788,263 @@ h3 {
   stroke-linejoin: round;
 }
 
-/* 9px from the name, like the logo's own button below. */
+/* With one election, the pin is just the logo, centred where the button
+   would be. */
 .title > .logo {
-  margin: 0 1px 0 4px;
+  margin: 0 6px;
 }
 
-/* The logo where it opens the list of elections: above the search button's
-   cover of the whole title, with the logo where it would be without it. */
+/* The pin, where the site has several elections: the button that opens
+   their list, round as the search button at the other end, the page's
+   election's kind's icon (kinds.js `kindStyle`) in a badge at its
+   corner, its colour behind it. Its cover takes the card from its left
+   edge up to the search button, the name included, over the search
+   button's cover of the whole card: two targets side by side, each the
+   card's full height. The pin itself is not positioned: the covers are
+   the title's. */
 .election-open {
-  position: relative;
-  z-index: 1;
-  flex: none;
   display: grid;
-  place-items: center;
-  margin: -4px -3px -4px 0;
-  padding: 4px;
+  flex: none;
+  width: var(--finder-row);
+  height: var(--finder-row);
+  padding: 0;
   border: 0;
-  border-radius: 8px;
-  background: none;
+  border-radius: 50%;
+  background: var(--surface-2);
   cursor: pointer;
 }
 
-.election-open:hover {
-  background: var(--surface-2);
+.election-open > .logo,
+.election-badge {
+  grid-area: 1 / 1;
+}
+
+.election-open > .logo {
+  place-self: center;
+}
+
+.election-open::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: calc(-1 * var(--finder-pad)) calc(var(--finder-row) + 5px) calc(-1 * var(--finder-pad))
+    calc(-1 * var(--finder-pad));
+}
+
+.election-badge {
+  place-self: end;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  margin: 0 -1px -1px 0;
+  border: 2px solid var(--surface);
+  border-radius: 50%;
+  background: var(--kind);
+  color: var(--surface);
+}
+
+.election-badge .ico {
+  width: 11px;
+  height: 11px;
+  stroke-width: 2.4;
+}
+
+.election-open:hover,
+.election-open:focus-visible {
+  background: var(--surface-3);
 }
 
 .election-open:focus-visible {
   outline: 2px solid var(--primary);
-  outline-offset: 0;
+  outline-offset: 2px;
 }
 
-/* The list of elections (search.js), in groups by kind of election, each
-   under its heading; the first heading level with the close button, which
-   stays at the top as the search box's does, every later one set off by a
-   rule, so that another kind of election reads as another group. Each
-   election is one short line, its year large and its day beside it, the
-   one shown tinted and ticked. A heading keeps clear of the button and,
-   where long (Hungarian on a phone), takes a second line rather than lose
-   its end. */
-.elections-kind {
+/* The list of elections (search.js): under its header, its title set like
+   the site's name in the title, the two views' buttons, a segmented pair
+   with the one shown pressed, and the close button; what does not fit
+   scrolls under them. */
+.elections-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 42px;
+  padding-left: 8px;
+}
+
+.elections-title {
+  flex: 1 1 auto;
   margin: 0;
-  padding: 12px 44px 12px 12px;
-  font-size: var(--fs-xs);
+  font: inherit;
   font-weight: 650;
-  line-height: 18px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-dim);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.elections-head .search-close {
+  position: static;
+}
+
+.elections-views {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 8px;
+  background: var(--surface-2);
+}
+
+.elections-views button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-faint);
+  cursor: pointer;
+}
+
+.elections-views button:hover {
+  color: var(--text);
+}
+
+.elections-views button[aria-pressed="true"] {
+  background: var(--surface-3);
+  color: var(--text);
+}
+
+.elections-views button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+/* The timeline: every election, newest first, each a point on a line down
+   the left, the kind's icon in a ring in its colour, beside it the date
+   and, under the date, the election's name. The page's own election is
+   tinted and ticked, its ring filled. The line runs over the rows, above
+   the tints, the rings above it. */
+.elections-timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.elections-timeline li {
+  position: relative;
+}
+
+.elections-timeline li::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 19px;
+  border-left: 2px solid var(--line);
+  pointer-events: none;
+}
+
+.elections-timeline li:first-child::before {
+  top: 50%;
+}
+
+.elections-timeline li:last-child::before {
+  bottom: 50%;
+}
+
+.elections-timeline a {
+  gap: 10px;
+}
+
+.elections-timeline .kind-mark {
+  position: relative;
+  z-index: 2;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--kind);
+  border-radius: 50%;
+  background: var(--surface);
+}
+
+.elections-timeline .kind-mark .ico {
+  width: 14px;
+  height: 14px;
+}
+
+.elections-timeline a[aria-current] .kind-mark {
+  background: var(--kind);
+  color: var(--surface);
+}
+
+/* The groups by kind of election, each under its heading set like the
+   site's name in the title, with the kind's mark, every later one set off
+   by a rule, so that another kind of election reads as another group. A
+   heading is the button that folds and unfolds its group, its chevron
+   turned up while unfolded; a folded group still shows the page's own
+   election. Each election is its date written out, as the title writes
+   it, the half of a regular election before 2022 under it; as many to a
+   line as fit, so that the whole list fits most screens. The one shown is
+   tinted and ticked. A long heading (Hungarian on a phone) takes a second
+   line rather than lose its end. */
+.elections-kind {
+  margin: 4px 0 0;
+  font: inherit;
 }
 
 .elections ul + .elections-kind {
-  margin-top: 8px;
-  padding-right: 12px;
+  margin: 6px 0 0;
+  padding-top: 6px;
   border-top: 1px solid var(--line);
+}
+
+.elections-kind button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 34px;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  text-align: start;
+  cursor: pointer;
+}
+
+.elections-kind button:hover {
+  background: var(--surface-2);
+}
+
+.elections-kind button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+.elections-kind button > .ico {
+  width: 16px;
+  height: 16px;
+  color: var(--text-faint);
+  transition: transform 0.12s ease;
+}
+
+.elections-kind [aria-expanded="true"] > .ico {
+  transform: rotate(180deg);
+}
+
+.elections ul[hidden] {
+  display: none;
 }
 
 .elections ul {
   display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 2px;
   margin: 0;
   padding: 0;
@@ -706,46 +1053,53 @@ h3 {
 
 .elections a {
   display: flex;
-  align-items: baseline;
-  gap: 12px;
-  min-height: 44px;
-  padding: 10px 12px;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 5px 8px;
   border-radius: var(--radius-sm);
-  color: var(--text);
+  color: var(--text-dim);
   text-decoration: none;
-  white-space: nowrap;
 }
 
-.election-year {
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  font-variant-numeric: tabular-nums;
-  line-height: 1.2;
+.election-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .election-day {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
   font-size: var(--fs-sm);
-  color: var(--text-dim);
+  line-height: 1.3;
+  white-space: nowrap;
 }
 
-.elections a .ico {
-  align-self: center;
-  width: 18px;
-  height: 18px;
+.election-part,
+.elections .election-name {
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+/* The tick of the page's own election. */
+.elections a > .ico {
+  flex: none;
+  width: 16px;
+  height: 16px;
   color: var(--primary);
 }
 
 .elections a[aria-current] {
   background: var(--surface-2);
+  color: var(--text);
+  font-weight: 600;
 }
 
 .elections a:hover {
   background: var(--surface-2);
+  color: var(--text);
 }
 
 .elections a[aria-current]:hover {
@@ -763,7 +1117,7 @@ h3 {
   color: var(--text-dim);
 }
 
-/* The state of the 2026 results under the site's name (live.js
+/* The state of the 2026 results under the title (live.js
    `LiveStatus`): a pulsing dot while counting goes on, still once final. */
 .live-status {
   display: flex;
@@ -822,17 +1176,18 @@ h3 {
 
 /* ---------- search ---------- */
 
+/* A row high, centred in the card's cell (`.finder`), its icons too. */
 .search > .ico {
   position: absolute;
   left: 11px;
-  top: 11px;
+  top: calc(50% - 10px);
   color: var(--text-faint);
   pointer-events: none;
 }
 
 .search input {
   width: 100%;
-  height: 42px;
+  height: var(--finder-row);
   padding: 0 44px 0 39px;
   font-size: 16px; /* below 16px, iOS zooms the page on focus */
   background: var(--surface);
@@ -847,7 +1202,7 @@ h3 {
 
 .search-close {
   position: absolute;
-  top: 4px;
+  top: calc(50% - 17px);
   right: 4px;
   width: 34px;
   height: 34px;
@@ -1211,8 +1566,7 @@ h3 {
 }
 
 /* A turnout layer's icon, its overlay's, in the colour the layer shades the
-   map in (mapmode.js `toneOf`); "None" keeps an icon's room, so that the
-   labels line up. */
+   map in (mapmode.js `toneOf`). */
 .option.turnout-municipal .ico {
   color: var(--map-accent);
 }
@@ -1223,6 +1577,16 @@ h3 {
 
 .option.turnout-regional .ico {
   color: var(--map-zsk);
+}
+
+.option.turnout-country .ico {
+  color: var(--map-turnout);
+}
+
+/* The turnouts under the overview in the ballot-box menu (controls.js
+   LayerMenus): a group of their own, its legend a title as the menu's. */
+.pop-group {
+  margin-top: 12px;
 }
 
 /* The constituencies menu's fold-out (controls.js LayerMenus): when each
@@ -1391,7 +1755,10 @@ h3 {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
-  overscroll-behavior: contain;
+  /* Its scroll stops at its ends rather than going on to the page, but only
+     upright: a sideways touchpad swipe over it goes on to the browser's
+     back and forward, which `contain` both ways would stop too. */
+  overscroll-behavior-y: contain;
   padding-bottom: 12px;
   border-radius: inherit;
 }
@@ -1612,20 +1979,15 @@ h3 {
 }
 
 /* Narrower, Favourites are in the pane, which then takes the page's width
-   left of the buttons; the search card keeps its width. On a phone the
-   sheet is the screen's width anyway. Either way, the contests are in as
-   many columns as fit. */
+   left of the buttons; the search card keeps its own width (`.finder`).
+   On a phone the sheet is the screen's width anyway. Either way, the
+   contests are in as many columns as fit. */
 @media (min-width: 641px) {
   .wide .side {
     width: min(
       1200px,
       calc(100vw - 3 * var(--edge) - var(--fab) - env(safe-area-inset-left) - env(safe-area-inset-right))
     );
-  }
-
-  .wide .finder {
-    width: var(--pane-width);
-    max-width: 100%;
   }
 
   /* Lines no longer than read well. */
@@ -1741,14 +2103,72 @@ button.contest-head {
   white-space: nowrap;
 }
 
-/* More circled than are elected (ballots.js `ContestFacts`): the number of
-   seats and of the circled, in the warning colour with its sign. */
-.contest-meta .over {
+/* The button that unfolds a contest's rules (`contestRules`), a quiet
+   link in the facts' line, its chevron turned while they show; they
+   follow under the line, a sentence each. */
+.rules-toggle,
+.question-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--text-dim);
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.rules-toggle:hover,
+.rules-toggle:focus-visible,
+.question-toggle:hover,
+.question-toggle:focus-visible {
+  color: var(--text);
+}
+
+.rules-toggle .ico,
+.question-toggle .ico {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.12s ease;
+}
+
+.rules-toggle[aria-expanded="true"] .ico,
+.question-toggle[aria-expanded="true"] .ico {
+  transform: rotate(180deg);
+}
+
+.contest-rules {
+  display: block;
+  margin: 4px 0 2px;
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+  cursor: auto;
+}
+
+.contest-rules[hidden] {
+  display: none;
+}
+
+.contest-rules > span {
+  display: block;
+}
+
+/* More circled than are elected (ballots.js `ContestFacts`), or than a
+   party's list takes preference votes (its row's meta, `PartyRow`): the
+   number of seats and of the circled, in the warning colour with its
+   sign. */
+.contest-meta .over,
+.party-row .meta .over {
   color: var(--warning);
   font-weight: 650;
 }
 
-.contest-meta .over .ico {
+.contest-meta .over .ico,
+.party-row .meta .over .ico {
   width: 14px;
   height: 14px;
   margin-right: 2px;
@@ -1766,11 +2186,13 @@ button.contest-head {
    turnout, the meter in the button beside the ballot box of the turnout's
    menu, in the colour the area is drawn in on the map (--tone: a
    municipality's red, a council obvod's orange, the cities' green, a
-   regional contest's violet). Outlined, so that they read as buttons
-   beside the facts; while the map shows theirs, tinted and edged in their
-   colour. */
+   regional contest's violet, a country-wide contest's indigo). Outlined,
+   so that they read as buttons beside the facts; while the map shows
+   theirs, tinted and edged in their colour. Never shrunk by a long name
+   beside them (flex: none). */
 .map-chip {
   display: flex;
+  flex: none;
   align-items: center;
   gap: 5px;
   min-height: 36px;
@@ -1794,48 +2216,45 @@ button.contest-head {
   box-shadow: inset 0 0 0 1px var(--chip);
 }
 
+/* The buttons that are an icon alone, who got the most votes where and a
+   candidate's or a party's votes (`MapButton`, a ballot box: a value per
+   area, where the winner map's folded map is a breakdown): squares of one
+   size, --square, centred on their row rather than stretched to its
+   height; the header's the toolbar's 36 px, a row's smaller (.cand). */
+.winner-map,
+.votes-map {
+  --square: 36px;
+  align-self: center;
+  justify-content: center;
+  width: var(--square);
+  height: var(--square);
+  min-height: 0;
+  padding: 0;
+}
+
 .winner-map {
   --chip: var(--result);
-  justify-content: center;
-  width: 36px;
-  padding: 0;
 }
 
 .turnout-map {
   --chip: var(--tone, var(--primary));
 }
 
-/* At the end of a counted candidate's row, the button that shows their
-   votes (`MapButton`), with the winner map's icon: round and small, in the
-   results' green, filled while the map shows them. */
+/* At the end of a counted candidate's or party's row, in the results'
+   green, after a party's winner map. */
 .votes-map {
-  display: grid;
-  flex: none;
-  place-items: center;
-  align-self: center;
-  width: 24px;
-  height: 24px;
-  margin: 0 -1px 0 auto;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: none;
-  color: var(--result);
-  cursor: pointer;
+  --chip: var(--result);
+  margin: 0 0 0 auto;
 }
 
+.cand :is(.winner-map, .votes-map) {
+  --square: 26px;
+}
+
+.winner-map .ico,
 .votes-map .ico {
   width: 16px;
   height: 16px;
-}
-
-.votes-map:hover {
-  background: color-mix(in srgb, var(--result) 14%, transparent);
-}
-
-.votes-map[aria-pressed="true"] {
-  background: var(--result);
-  color: var(--surface);
 }
 
 /* The turnout in the header (ballots.js `Turnout`): a short track like the
@@ -1895,11 +2314,14 @@ button.contest-head {
   background: var(--text-dim);
 }
 
+/* Edged in the background's colour, so that it stands out on the fill as
+   on the track. */
 .gauge-tick {
   position: absolute;
   top: -2px;
   bottom: -2px;
   margin-left: -1px;
+  box-shadow: 0 0 0 1px var(--surface);
 }
 
 .gauge-line.past > span::before {
@@ -1917,6 +2339,22 @@ button.contest-head {
 
 .gauge.live .gauge-fill {
   background: var(--result);
+}
+
+/* A referendum's quorum on its turnout (ballots.js `Turnout`): a dashed
+   line across the track at half, in the text's colour, which the turnout
+   has to pass for the referendum to be valid; taller than the last
+   referendum's solid tick, and told from it by its dashes, not by colour
+   alone. Its gaps and edge in the background's colour keep the dashes
+   clear on the fill as on the track. */
+.gauge-quorum {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  margin-left: -1px;
+  background: repeating-linear-gradient(var(--text) 0 2px, var(--surface) 2px 3.5px);
+  box-shadow: 0 0 0 1px var(--surface);
 }
 
 /* How far the 2026 count of the contest has got (ballots.js `ResultsLine`). */
@@ -2060,6 +2498,18 @@ button.contest-head {
 .cand.dimmed:is(:hover, :focus-within) > :not(.num),
 .cand.dimmed:not(.crossed):is(:hover, :focus-within) > .num {
   opacity: 0.8;
+}
+
+/* A party that won no seats, once the result is final (ballots.js
+   `PartyRow`, `NoSeats`): greyed, less than the filter mutes, so that it
+   still reads among those that did. */
+.cand.unseated > :not(.num) {
+  opacity: 0.65;
+  filter: grayscale(1);
+}
+
+.cand.unseated:is(:hover, :focus-within) > :not(.num) {
+  opacity: 0.9;
 }
 
 .cand.crossed > .num {
@@ -2291,11 +2741,15 @@ li:has(> .cand.seats-end) + li > .cand {
 
 /* A candidate's 2026 votes (ballots.js `Votes`): the share on a bar in the
    results' green, then the number, a line of their own under the name. The
-   bars are all as wide, so that the rows compare at a glance. */
+   bars are all as wide, so that the rows compare at a glance. Its pieces
+   each stay whole and wrap onto a next line where the row is too narrow
+   (a party's list, set in; a phone), rather than run under the map
+   button. */
 .votes {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
+  gap: 2px 6px;
   margin: 2px 0 1px;
   color: var(--text-dim);
   font-size: var(--fs-xs);
@@ -2353,6 +2807,399 @@ li:has(> .cand.seats-end) + li > .cand {
   border-radius: 999px;
   color: var(--text-dim);
   cursor: help;
+}
+
+/* What the results say beyond the medal (ballots.js `ResultTags`): an
+   icon in a capsule after the name, its words in the tooltip; through to
+   a presidential round 2 or elected by preference votes, outlined in the
+   results' green; a list's substitute, quiet, grey and dashed. The last
+   two are filter buttons (below, with the research's). */
+.result-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  min-width: 18px;
+  margin: 0 3px 0 0;
+  padding: 0 4px;
+  border: 1px dashed var(--line-strong);
+  border-radius: 999px;
+  background: none;
+  color: var(--text-dim);
+  vertical-align: middle;
+  cursor: help;
+}
+
+.result-tag:is(.advanced, .preferred) {
+  border-style: solid;
+  border-color: var(--result);
+  color: var(--result);
+}
+
+.result-tag .ico {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.5;
+}
+
+/* No mark to show (a country-wide candidate, whom research does not
+   cover): no empty capsule. */
+.marks:empty {
+  display: none;
+}
+
+/* A party on a party-list ballot (ballots.js `PartyRow`): its logo before
+   its name, both the button that opens its list; once counted, the seats
+   it won in a green badge, a person and their number (`SeatsWon`), solid
+   as the medal is, only winning earns it. */
+.party-row .cand-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.party-row .cand-open .party-logo {
+  margin: 0;
+}
+
+.seats-won {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: 18px;
+  margin: 0 3px 0 0;
+  padding: 0 7px 0 5px;
+  border-radius: 999px;
+  background: var(--result);
+  color: var(--surface);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  cursor: help;
+}
+
+.seats-won .ico {
+  width: 12px;
+  height: 12px;
+}
+
+/* No seats once final (`NoSeats`): the seats badge's shape, outlined and
+   grey, the seats' person struck through. */
+.no-seats {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  margin: 0 3px 0 0;
+  padding: 0 5px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--text-dim);
+  vertical-align: middle;
+  cursor: help;
+}
+
+.no-seats .ico {
+  width: 12px;
+  height: 12px;
+}
+
+/* A party's list, open under its row (ballots.js `PartyList`; its facts
+   are the row's tooltip): set in by a rule at its side, its persons' rows
+   as on any ballot, then the button that shows them all. */
+.party-list {
+  margin: 0 0 6px 20px;
+  border-left: 2px solid var(--line-strong);
+}
+
+/* At the end of a party's row, who got the most preference votes on its
+   list where, before its votes' button (`PartyRow`): the row's square
+   (.winner-map), pushed to the end as the votes' is alone. */
+.party-row .winner-map {
+  margin-left: auto;
+}
+
+.party-row .winner-map + .votes-map {
+  margin-left: 0;
+}
+
+.party-list.muted,
+.party-list.error {
+  padding: 6px 12px;
+  font-size: var(--fs-sm);
+}
+
+.party-list > .cands {
+  padding: 0;
+}
+
+/* The buttons under a party's list (ballots.js `PartyList`): show them
+   all, and open it in the overview of the lists. */
+.list-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 4px 0 8px 12px;
+  gap: 6px;
+}
+
+.list-more,
+.overview-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: none;
+  color: var(--text-dim);
+  font: inherit;
+  font-size: var(--fs-sm);
+  cursor: pointer;
+}
+
+.list-more:hover,
+.overview-open:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.list-more .ico,
+.overview-open .ico {
+  width: 16px;
+  height: 16px;
+}
+
+/* The button that opens the overview (overview.js), before the contests:
+   the way to a wider view of the ballots, in the primary colour; pressed
+   while the overview shows, as the ballot-box menu's box is ticked, and a
+   press closes it again. */
+.overview-open {
+  margin: 6px 10px 10px;
+  padding: 6px 12px;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.overview-open:hover {
+  color: var(--primary);
+}
+
+.overview-open[aria-pressed="true"] {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--surface);
+}
+
+.overview-open[aria-pressed="true"]:hover {
+  background: var(--primary);
+  color: var(--surface);
+  opacity: 0.9;
+}
+
+/* The overview of a party-list election (overview.js): the parties as many
+   to a line as fit, each a tile with its number to circle, its logo and
+   short form (the button that shows its list), its seats and votes; the
+   one shown edged in the primary colour. Under them its list in full, its
+   persons in as many columns as fit, ruled apart, each row whole in its
+   column. */
+.overview-facts {
+  margin: 2px 0 6px;
+}
+
+.overview-parties {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+  gap: 6px;
+  margin: 10px 10px 0;
+  padding: 0;
+}
+
+.overview-parties .party-row {
+  height: 100%;
+  padding: 6px 8px 6px 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.overview-parties .party-row.selected {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+  background: var(--surface-2);
+}
+
+/* Two to a line on a phone, so that the list is not 25 tiles down; the
+   size of each list is the length of the one shown, so only too many
+   circled on a list still says so. */
+@media (max-width: 640px) {
+  .overview-parties {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .overview-parties .meta:not(:has(.over)) {
+    display: none;
+  }
+}
+
+.overview-list {
+  margin: 14px 10px 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  scroll-margin-top: 10px;
+}
+
+.overview-party {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  padding: 10px 12px 6px;
+}
+
+.overview-party h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+
+.overview-party .party-logo {
+  height: 26px;
+  margin: 0;
+}
+
+.overview-party .votes {
+  flex-basis: 100%;
+}
+
+.overview .party-list {
+  margin: 0;
+  border-left: 0;
+}
+
+.overview .party-list > .cands {
+  columns: 300px;
+  column-gap: 0;
+  column-rule: 1px solid var(--line);
+}
+
+.overview .party-list > .cands > li {
+  break-inside: avoid;
+}
+
+/* The overview of a referendum: its questions side by side. */
+.overview-questions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+  align-items: start;
+  margin-top: 10px;
+}
+
+/* An answer to a referendum question (ballots.js `AnswerRow`): no number
+   to circle, nor a card to open. */
+.cand.answer {
+  padding-left: 12px;
+  cursor: default;
+}
+
+/* Under a contest's header: a referendum question's wording, quoted;
+   whether a referendum is valid, in the results' green where an answer
+   won. */
+.question {
+  padding: 8px 14px 9px;
+  border-top: 1px solid var(--line);
+}
+
+.question-text {
+  margin: 0;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* A long question cut to its first lines (ballots.js `Question`). */
+.question-text.clamped {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+}
+
+/* Its button, a quiet link like the rules' (.rules-toggle), on a line
+   of its own under it. */
+.question-toggle {
+  margin-top: 2px;
+  font-size: var(--fs-sm);
+}
+
+.verdict {
+  margin: 0;
+  padding: 6px 12px 7px;
+  border-top: 1px solid var(--line);
+  color: var(--text-dim);
+  font-size: var(--fs-sm);
+  line-height: 1.35;
+}
+
+.verdict {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.verdict.valid {
+  color: var(--result);
+}
+
+/* Where a by-election is held (ballots.js `HeldPlaces`): one box like a
+   contest's, each municipality a row that selects it, as a candidate's
+   row opens the card. */
+.held {
+  list-style: none;
+  margin: 0 10px 10px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.held > li + li {
+  border-top: 1px solid var(--line);
+}
+
+.held-place,
+.held-kraj {
+  display: grid;
+  gap: 1px;
+  width: 100%;
+  padding: 7px 12px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  line-height: 1.3;
+  text-align: start;
+}
+
+.held-place {
+  cursor: pointer;
+}
+
+.held-place:hover,
+.held-place:focus-visible {
+  background: var(--surface-2);
+}
+
+.held-name {
+  font-weight: 600;
+}
+
+.held-contests {
+  color: var(--text-dim);
+  font-size: var(--fs-sm);
+}
+
+.held-where {
+  color: var(--text-faint);
+  font-size: var(--fs-sm);
 }
 
 .party.independent {
@@ -2528,12 +3375,15 @@ li:has(> .cand.seats-end) + li > .cand {
 
 /* The badges as buttons in a ballots row (each adds itself to the
    filter, or takes itself out, ballots.js `useRowActions`); a party's is a
-   button around its tag or logo. */
+   button around its tag or logo. Every badge that toggles the filter has
+   the pointer of a button; one that only explains itself, in its tooltip,
+   the help cursor (.result-tag, .seats-won, .no-seats). */
 button.affairs,
 button.disputes,
 button.in-office,
 button.researched,
-button.elected {
+button.elected,
+button.result-tag {
   cursor: pointer;
 }
 
@@ -2558,7 +3408,8 @@ button.affairs:hover,
 button.disputes:hover,
 button.in-office:hover,
 button.researched:hover,
-button.elected:hover {
+button.elected:hover,
+button.result-tag:hover {
   outline: 2px solid color-mix(in srgb, var(--primary) 45%, transparent);
   outline-offset: 1px;
 }
@@ -2572,7 +3423,8 @@ button.affairs.active,
 button.disputes.active,
 button.in-office.active,
 button.researched.active,
-button.elected.active {
+button.elected.active,
+button.result-tag.active {
   outline: 2px solid var(--primary);
   outline-offset: 1px;
 }
@@ -2583,7 +3435,7 @@ button.active.excluded {
 }
 
 .shift
-  :is(.party-button, button.affairs, button.disputes, button.in-office, button.researched, button.elected):hover {
+  :is(.party-button, button.affairs, button.disputes, button.in-office, button.researched, button.elected, button.result-tag):hover {
   outline: 2px dashed color-mix(in srgb, var(--text-dim) 45%, transparent);
   outline-offset: 1px;
 }
@@ -2680,8 +3532,13 @@ button.active.excluded {
   color: var(--office);
 }
 
-.elected-chip > .ico {
+.elected-chip > .ico,
+.preferred-chip > .ico {
   color: var(--result);
+}
+
+.substitute-chip > .ico {
+  color: var(--text-dim);
 }
 
 /* The candidates crossed out: the red cross of their numbers, the count
@@ -2881,6 +3738,11 @@ button.active.excluded {
   margin: 0;
 }
 
+/* A list person's party (candidate.js `CandidateCard`): its logo leads. */
+.facts dd > .party-logo {
+  margin-right: 6px;
+}
+
 /* The offices held, with their results charted: the pane's full width. */
 .facts .wide {
   grid-column: 1 / -1;
@@ -2904,6 +3766,16 @@ button.active.excluded {
 .notice.danger .notice-summary {
   color: var(--text);
   font-weight: 650;
+}
+
+/* Its jump to the controversies in their red, not the primary blue, which
+   would read as a good outcome on the red box. */
+.notice-jump.danger .notice-jump-button {
+  color: var(--danger);
+}
+
+.notice-jump.danger .notice-jump-button:hover {
+  background: color-mix(in srgb, var(--danger) 16%, transparent);
 }
 
 /* Research findings: each a box like the candidacies. What one reads first
@@ -3048,7 +3920,8 @@ button.active.excluded {
   color: var(--text);
   box-shadow: var(--shadow-lg);
   overflow-y: auto;
-  overscroll-behavior: contain;
+  /* Upright only, as for a pane's body. */
+  overscroll-behavior-y: contain;
 }
 
 .qr-dialog::backdrop,
@@ -3106,10 +3979,38 @@ button.active.excluded {
   color: var(--text-dim);
 }
 
-/* The main page's sections: one row each, title over a line of what is in
-   it, the whole row the link. */
+/* The main page: the site in a sentence, then what the page's election
+   offers, a line each beside the icon the app gives it elsewhere. */
+.about-lead {
+  margin-bottom: 0;
+}
+
+.about-features {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.4;
+}
+
+.about-features .ico {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  color: var(--text-faint);
+}
+
+/* The main page's sections: one row each, its title, the whole row the
+   link. */
 .about-sections {
-  margin: 16px 0;
+  margin: 20px 0 16px;
   padding: 0;
   list-style: none;
   border-top: 1px solid var(--line);
@@ -3119,9 +4020,10 @@ button.active.excluded {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 4px;
+  padding: 9px 4px;
   border-bottom: 1px solid var(--line);
-  color: inherit;
+  color: var(--primary);
+  font-weight: 650;
   text-decoration: none;
 }
 
@@ -3129,21 +4031,10 @@ button.active.excluded {
   background: var(--surface-2);
 }
 
-.about-sections strong {
-  display: block;
-  color: var(--primary);
-}
-
-.about-sections a span span {
-  font-size: var(--fs-sm);
-  color: var(--text-dim);
-}
-
 .about-sections .ico {
   width: 16px;
   height: 16px;
   margin-left: auto;
-  color: var(--primary);
 }
 
 /* The license line: last, quiet, one line, the flag beside it the cue for
@@ -3229,10 +4120,6 @@ button.active.excluded {
     right: calc(var(--edge) + env(safe-area-inset-right));
     bottom: auto;
     width: auto;
-  }
-
-  .finder {
-    --finder-pad: 8px;
   }
 
   /* Under the search card; app.js measures it. */
@@ -3425,6 +4312,7 @@ button.active.excluded {
   .live-dot,
   .title,
   .search,
+  .elections,
   .pane,
   .popover,
   .about-dialog[open],
@@ -3435,7 +4323,9 @@ button.active.excluded {
   .pane,
   .pane-open .leaflet-bottom,
   .fab,
-  .pop-more summary .ico {
+  .pop-more summary .ico,
+  .rules-toggle .ico,
+  .elections-kind .ico {
     transition: none;
   }
 }
@@ -3564,8 +4454,79 @@ button.active.excluded {
   height: 16px;
 }
 
-.map-legend-fold[aria-expanded="true"] .ico {
+/* At the foot of the map the legend folds down into a pill and unfolds
+   upwards: the chevron points the way it goes. */
+.map-legend-unfold .ico {
   transform: rotate(180deg);
+}
+
+/* Folded: a pill with the title and the figure of all counted, the whole
+   of it the button that unfolds the legend; a divider sets the button
+   that takes the results off the map apart from it. */
+.map-legend.pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  padding: 3px 3px 3px 10px;
+  border-radius: 18px;
+}
+
+.map-legend-unfold {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: 28px;
+  padding: 0 6px 0 0;
+  border: 0;
+  border-right: 1px solid var(--line);
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.map-legend-unfold strong {
+  overflow: hidden;
+  font-size: var(--fs-sm);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.map-legend-unfold .ico {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  color: var(--text-dim);
+}
+
+.map-legend-unfold:hover .ico {
+  color: var(--text);
+}
+
+.map-legend.pill .map-legend-close {
+  margin-top: 0;
+}
+
+.map-legend-scale.mini {
+  flex: none;
+  width: 36px;
+  height: 9px;
+  margin: 0;
+}
+
+.map-legend-key {
+  flex: none;
+  color: var(--result);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.map-legend.toned .map-legend-key {
+  color: var(--tone);
 }
 
 .map-legend-scale {
@@ -3721,6 +4682,17 @@ button.active.excluded {
   white-space: normal;
 }
 
+/* Where a by-election is held (mapmode.js `HeldKey`): the places and,
+   lighter, the okresy they are in, mixed as the map mixes them (draw.js
+   `TONE_STEPS`, mapmode.js `HELD_STEP`, `HELD_OKRES_STEP`). */
+.map-legend-swatch.tint-held {
+  background: color-mix(in srgb, var(--tone) 32%, var(--map-land));
+}
+
+.map-legend-swatch.tint-held-okres {
+  background: color-mix(in srgb, var(--tone) 15%, var(--map-land));
+}
+
 .map-legend-past {
   margin-top: 6px;
 }
@@ -3826,7 +4798,9 @@ button.active.excluded {
   font-size: var(--fs-sm);
 }
 
+/* Beside a small heading: a row's square. */
 .origins-head .votes-map {
+  --square: 26px;
   margin: 0;
 }
 
@@ -3870,9 +4844,9 @@ button.active.excluded {
 }
 
 /* On a phone the foot of the map is the sheet's: the legend goes under the
-   search card, left of the buttons, folded to a pill with the figure of
-   all counted, which unfolds it (mapmode.js); with the sheet open, it is a
-   bar at the top of the sheet. */
+   search card, left of the buttons, folded to the pill unless the visitor
+   has unfolded it (mapmode.js); with the sheet open, it is a bar at the
+   top of the sheet. */
 @media (max-width: 640px) {
   .map-legend {
     top: calc(var(--edge) + env(safe-area-inset-top) + var(--finder-height, 60px) + 10px);
@@ -3884,40 +4858,13 @@ button.active.excluded {
     padding: 6px 4px 6px 10px;
   }
 
-  .map-legend.pill {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    padding: 3px 3px 3px 10px;
-    border-radius: 18px;
+  /* Under the search card the legend unfolds downwards and folds up. */
+  .map-legend-fold[aria-expanded="true"] .ico {
+    transform: rotate(180deg);
   }
 
-  .map-legend-unfold {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    min-width: 0;
-    min-height: 28px;
-    padding: 0;
-    border: 0;
-    background: none;
-    color: inherit;
-    font: inherit;
-    cursor: pointer;
-  }
-
-  .map-legend-unfold strong {
-    overflow: hidden;
-    font-size: var(--fs-sm);
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .map-legend-scale.mini {
-    flex: none;
-    width: 36px;
-    height: 9px;
-    margin: 0;
+  .map-legend-unfold .ico {
+    transform: none;
   }
 
   /* In the sheet (pane.js `.pane-top`), between the grip and the content. */
@@ -3941,22 +4888,9 @@ button.active.excluded {
     white-space: nowrap;
   }
 
-  .map-legend.pill .map-legend-close,
   .map-legend.bar .map-legend-close,
   .map-legend.bar .map-legend-fold {
     margin-top: 0;
-  }
-
-  .map-legend-key {
-    flex: none;
-    color: var(--result);
-    font-size: var(--fs-sm);
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .map-legend.toned .map-legend-key {
-    color: var(--tone);
   }
 
   .map-legend-sub {

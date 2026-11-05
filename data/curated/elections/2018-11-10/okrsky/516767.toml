@@ -1,0 +1,55 @@
+# The okrsky of Hliník nad Hronom of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/516767.toml, reused by `ems job reuse`.
+obec = "516767"
+name = "Hliník nad Hronom"
+okrsky_date = 2026-07-30
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2018-11-10 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2018 (each okrsok's voters on the roll within 10%). Okrsok 2 also holds residents 'bez adresy'. 'Na záhradky' (okrsok 2) is not in the register and is left out. Addresses without a street are placed by fill_nearest."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.hliniknadhronom.sk/download_file_f.php?id=2450767"
+sha256 = "3b1656a63417a10f74d5ef5af6121ce71526fb7d61506d376697ecac68b37305"
+title = "Určenie volebných okrskov a volebných miestností"
+
+[[document]]
+url = "https://www.hliniknadhronom.sk/komunalne-volby-24-10-2026-clanok/mid/582887/.html"
+sha256 = "b6aee1b7fec855a8969ab24b7ea3a1d21da54592d65d806b493d0656c6126e52"
+title = "Komunálne voľby 24.10.2026"
+
+[okrsok.1]
+rules = [
+  {street = "Československej Armády"},
+  {street = "Jána Švermu"},
+  {street = "Kamenárska"},
+  {street = "Kopaničná"},
+  {street = "Lesná"},
+  {street = "Mlynská"},
+  {street = "Námestie SNP"},
+  {street = "Pekárenská"},
+  {street = "Pivovarská"},
+  {street = "Potočná"},
+  {street = "Priehradka"},
+  {street = "Priemyselná"},
+  {street = "Sovietskej Armády"},
+  {street = "Tehelná"},
+  {street = "Železničná"},
+  {street = "Slnečná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Dukelských Hrdinov"},
+  {street = "Kapitána Nálepku", written = "Kpt. Nálepku", note = "Kpt. is the standard abbreviation of Kapitána."},
+  {street = "Ladislava Majerského"},
+  {street = "Lúčna"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Mierová"},
+  {street = "Opatovská"},
+  {street = "Partizánska"},
+  {street = "Pionierov"},
+  {street = "Poľná"},
+  {street = "Strojárska"},
+  {street = "Školská"},
+]

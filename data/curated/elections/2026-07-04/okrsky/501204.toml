@@ -1,0 +1,165 @@
+# Okrsky of Kolárovo, transcribed by an AI agent in job okrsok-rules-5287 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Veľký Ostrov
+#   okrsok 2: Pačérok, Veľká Gúta
+#   okrsok 3: Bratislavská, Částa 1-55, Horný rad, Horná, Jánošíkova, Jes. nábrežie, Jókaiho, Krátka, Lipová, Ľ. Podjavorinskej, Malinová, Malodunajská, Poľovnícka, Rad Puruk, Sládkovičova, Agátová
+#   okrsok 4: Kostolné nám., Mlynská, Vrbová, Studená strana, Práce, Hlboká, Hlavná, Harcsová, Poľná, Dlhá
+#   okrsok 5: Štúrova, Víťazstva, Remeselnícka, Pražské nám., Petőfiho rad, Partizánska, Obrancov mieru, Mostová
+#   okrsok 6: Staničná, Budovateľská, Částa 56-90, I. Madácha, Kossúthova, Kráľka, Os. Reviczkého, Priem. areál, Rábska Športová, Železničný rad, Sv. Anny, Trávnická, V.Palkovicha, Slovenská,
+#   okrsok 7: Bočná, Brnenské nám., Nová, Školská, Tržná, obyvatelia bez adresy
+#   okrsok 8: Krajná, Sláviková, Rybárska, Ružová, Podhájska, Okt. námestie, Mierová, Lesná, Jazerná, Gy. Klapku, A. Bernoláka, M. R. Štefánika,
+#   okrsok 9: Orechová, Kollárova, Záhradnícka, Slobody, Šafárikova, Radnótiho, Kvetná, Komárňanská, Česká, Dolná, L. Novomeského, Krížna, Žitnoostrovská, Orgovánová,
+#   okrsok 10: Jilemnického, Trnavská, Topoľová, Švermova, Slnková, Rovná, Roľnícka, Považská, Osada Dankó P., Mládežnícka, Hviezdoslavova, Dunajská, Banícka, Východná, Novozámocká
+obec = "501204"
+name = "Kolárovo"
+okrsky_date = 2026-05-05
+okrsky_fill = "nearest"
+okrsky_note = "Each okrsok is defined by streets and, outside the town, by miestne časti (Veľký Ostrov, Pačérok + Veľká Gúta, Kráľka) taken as part rules; \"Částa 1-55\" / \"Částa 56-90\" read as súpisné numbers of part Částa. \"Rábska Športová\" = the streets Rábska and Športová. \"obyvatelia bez adresy\" (okrsok 7) = voters without an address, not mapped. Houses without a street in part Kolárovo are placed by fill_nearest. Same okrsky as the 2022 rule set. New in 2026: Žitnoostrovská in okrsok 9; Orgovánová, also listed there, has no addresses in the register and is left out. Částa now 56-90."
+
+[[document]]
+url = "https://www.kolarovo.sk/e_download.php?file=/data/uredni_deska/obsah2085_1.pdf&original=ur%C4%8Denie%20%20vol%20%20obvody%20okrsky.pdf"
+sha256 = "973f3b462effc54bf46c5840dea10e38cf8b5bd6dcdf448b6468d4261a07992d"
+title = "Informácia o utvorení volebných okrskov a určení volebných miestností pre referendum 4. júla 2026 (5.5.2026)"
+
+[[document]]
+url = "https://www.kolarovo.sk/samosprava/volby-referendum/informacia-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-referendum-4-jul-2026-2191.html"
+sha256 = "411e320c8dfa04e13743d523679a54f7cc75104beefa258607500f429a6360e5"
+title = "Informácia o utvorení volebných okrskov a určení volebných miestností - Referendum 4. Júl 2026 (vyvesené 6. 5. 2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Veľký Ostrov"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Pačérok"},
+  {part = "Veľká Gúta"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bratislavská"},
+  {part = "Částa", numbers = "1-55"},
+  {street = "Horný rad"},
+  {street = "Horná"},
+  {street = "Jánošíkova"},
+  {street = "Jesenského nábrežie", written = "Jes. nábrežie"},
+  {street = "Jókaiho"},
+  {street = "Krátka"},
+  {street = "Lipová"},
+  {street = "Ľ. Podjavorinskej"},
+  {street = "Malinová"},
+  {street = "Malodunajská"},
+  {street = "Poľovnícka"},
+  {street = "Rad Puruk"},
+  {street = "Sládkovičova"},
+  {street = "Agátová"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Kostolné nám."},
+  {street = "Mlynská"},
+  {street = "Vrbová"},
+  {street = "Studená strana"},
+  {street = "Práce"},
+  {street = "Hlboká"},
+  {street = "Hlavná"},
+  {street = "Harcsová"},
+  {street = "Poľná"},
+  {street = "Dlhá"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Štúrova"},
+  {street = "Víťazstva"},
+  {street = "Remeselnícka"},
+  {street = "Pražské námestie", written = "Pražské nám."},
+  {street = "Petőfiho rad"},
+  {street = "Partizánska"},
+  {street = "Obrancov mieru"},
+  {street = "Mostová"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Staničná"},
+  {street = "Budovateľská"},
+  {part = "Částa", numbers = "56-90"},
+  {street = "Imricha Madácha", written = "I. Madácha"},
+  {street = "Kossúthova"},
+  {part = "Kráľka"},
+  {street = "Osada Reviczkého", written = "Os. Reviczkého"},
+  {street = "Priemyselný areál", written = "Priem. areál", note = "Priem. areál = Priemyselný areál (abbreviation)"},
+  {street = "Rábska"},
+  {street = "Športová"},
+  {street = "Železničný rad"},
+  {street = "Sv. Anny"},
+  {street = "Trávnická"},
+  {street = "Viktora Palkovicha", written = "V.Palkovicha"},
+  {street = "Slovenská"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Bočná"},
+  {street = "Brnenské námestie", written = "Brnenské nám."},
+  {street = "Nová"},
+  {street = "Školská"},
+  {street = "Tržná"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Krajná"},
+  {street = "Sláviková"},
+  {street = "Rybárska"},
+  {street = "Ružová"},
+  {street = "Podhájska"},
+  {street = "Októbrové námestie", written = "Okt. námestie", note = "Okt. = Októbrové"},
+  {street = "Mierová"},
+  {street = "Lesná"},
+  {street = "Jazerná"},
+  {street = "Györgya Klapku", written = "Gy. Klapku"},
+  {street = "Antona Bernoláka", written = "A. Bernoláka"},
+  {street = "Štefánikova", written = "M. R. Štefánika", note = "M. R. Štefánika: the register has only Štefánikova, no other Štefánik street"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Orechová"},
+  {street = "Kollárova"},
+  {street = "Záhradnícka"},
+  {street = "Slobody"},
+  {street = "Šafárikova"},
+  {street = "Radnótiho"},
+  {street = "Kvetná"},
+  {street = "Komárňanská"},
+  {street = "Česká"},
+  {street = "Dolná"},
+  {street = "Laca Novomeského", written = "L. Novomeského"},
+  {street = "Krížna"},
+  {street = "Žitnoostrovská"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Jilemnického"},
+  {street = "Trnavská"},
+  {street = "Topoľová"},
+  {street = "Švermova"},
+  {street = "Slnková"},
+  {street = "Rovná"},
+  {street = "Roľnícka"},
+  {street = "Považská"},
+  {street = "Osada Dankó Pistu", written = "Osada Dankó P."},
+  {street = "Mládežnícka"},
+  {street = "Hviezdoslavova"},
+  {street = "Dunajská"},
+  {street = "Banícka"},
+  {street = "Východná"},
+  {street = "Novozámocká"},
+]

@@ -1,0 +1,47 @@
+# Okrsky of Badín, transcribed by an AI agent in job okrsok-rules-3799 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: SNP, Hliny, L. Svobodu, Laurínska, Pod vŕškom, Pod Hrádkom, Na Dielnici
+#   okrsok 2: ulice: Krčméryho, Banská, Borovicová ulica, Družstevná, Kriedovnica, Nová, Osloboditeľov, Sládkovičova, Tajovského, Záhradná, Lipová, súp.č. 373, bezdomovci
+obec = "508454"
+name = "Badín"
+okrsky_date = 2023-06-23
+okrsky_fill = "nearest"
+okrsky_note = "The other addresses without a street (by súpisné číslo) are not in the document; fill_nearest places them. 'bezdomovci' (homeless) in okrsok 2 selects no address."
+
+[[document]]
+url = "https://www.obecbadin.sk/download_file_f.php?id=1878998"
+sha256 = "5d4f747c952c3c553bbe6e84f3ad957a3708dbd9bf1584cb81fb3106129dd9d5"
+title = "Starosta obce Badín určuje 2 volebné okrsky pre Voľby do NR SR 30. septembra 2023 (Urcenie-okrskov.pdf)"
+
+[[document]]
+url = "https://www.obecbadin.sk/volby-do-nr-sr-v-roku-2023.html"
+sha256 = "ad38002f2ed2a5631c18129a68df7e68150682f259cf97b04f33517d5b71053f"
+title = "Election page of obec Badín linking the document"
+
+[okrsok.1]
+rules = [
+  {street = "SNP"},
+  {street = "Hliny"},
+  {street = "L. Svobodu"},
+  {street = "Laurínska"},
+  {street = "Pod vŕškom"},
+  {street = "Pod Hrádkom"},
+  {street = "Na Dielnici"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krčméryho"},
+  {street = "Banská"},
+  {street = "Borovicová ulica"},
+  {street = "Družstevná"},
+  {street = "Kriedovnica"},
+  {street = "Nová"},
+  {street = "Osloboditeľov"},
+  {street = "Sládkovičova"},
+  {street = "Tajovského"},
+  {street = "Záhradná"},
+  {street = "Lipová ulica", written = "Lipová"},
+  {part = "Badín", numbers = "373", note = "'súp.č. 373': the address with súpisné číslo 373 without a street"},
+]

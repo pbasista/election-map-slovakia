@@ -1,0 +1,1367 @@
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns:fb="http://ogp.me/ns/fb#" xml:lang="sk" lang="sk">
+   <head>
+   	
+     
+		<meta http-equiv="Content-type" content="text/html;charset=utf-8" />
+		<meta http-equiv="Content-language" content="sk" />
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
+		
+		
+		
+		
+			<title>VOLEBNÉ OKRSKY</title>
+			<meta name="Title" content="VOLEBNÉ OKRSKY" />
+		
+		      
+		
+		
+		<meta name="Generator" content="WebJET Cloud - www.webjet.eu" />   
+		
+		
+		<link rel="shortcut icon" href="/images/template/temp69/my/favicon.png" type="image/png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0" />
+		
+		<!-- OG TAGS -->
+		
+		<meta property="og:title" content="VOLEBNÉ OKRSKY" />
+		
+		
+		<meta property="og:image" content="http://www.marianka.sk/images/logo-og.png" />
+			<meta property="og:site_name" content="www.marianka.sk" />
+		<meta property="og:url" content="https://www.marianka.sk/som-obcan/aktuality/volebne-okrsky.html" /> 
+		<meta property="og:type" content="website" />
+		
+		<!-- CSS -->
+		<link href="/css/singlepage_bootstrap/bootstrap.min.css" rel="stylesheet" />
+    	<link href="/css/singlepage_bootstrap/page.css" rel="stylesheet" />
+    	<link rel="stylesheet" href="/css/menu.css" type="text/css" />
+    	<link rel="stylesheet" href="/css/news.css" type="text/css" />
+		<link rel="stylesheet" href="/css/basket.css" type="text/css" />
+		<link rel="stylesheet" href="/css/animate.css" />
+		    	
+    	<link rel="stylesheet" href="/css/template69.css" type="text/css" />
+		
+		
+		      
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script type="text/javascript" src="/components/_common/javascript/page_functions.js.jsp?language=sk"></script>
+		<!-- <script type="text/javascript" src="/jscripts/jquery.cloudmenu.js"></script> -->
+		<script type="text/javascript" src="/components/_common/javascript/jquery.cookie.js"></script>
+		<script src="/jscripts/image-change.js" type="text/javascript"></script>      
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	   <!--[if lt IE 9]>
+	      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	   <![endif]-->
+		        
+	  <link href="https://fonts.googleapis.com/css?family=Capriola|EB+Garamond|Lora" rel="stylesheet">
+<style>
+.aktualiy-obcan .aktuality p { display: none; }
+.aktuality h3 { margin: 20px 0px 20px 0px !important; }
+.sl-slider h2 {
+top: 130px;
+    font-size: 50px !important;
+    padding-left: 0;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+font-family: 'Capriola', sans-serif !important;
+}
+
+.inquiryAnswer a{
+text-decoration: none;
+}
+
+.bar_fill{
+background-color: #e01d1d !important;
+border: 1px solid  #e01d1d !important;
+}
+
+#content .uradna-tabula ul li a {color: #5e0306;}
+#content .uradna-tabula ul li a:hover {color: #b22222;}
+#content .side .uradna-tabula ul li a {color: #ffffff;}
+#content .side .uradna-tabula ul li a:hover {text-decoration: underline;}
+.uradna-tabula a.btn-primary {
+text-decoration: none;
+}
+
+#content > .first > .container:first-of-type, .container.c {
+    margin-top: 20px;
+}
+.divider {border-top: 1px solid #d3d3d3; height: 1px; }
+
+.subpage #slider{
+height:168px !important;
+background-color:#eee;
+background-image: url(/images/slider3.jpg);
+
+}
+.subpage .sl-slider{
+display:none;
+}
+</style>
+	  <!-- GA authorize meta -->
+	  <meta name="google-site-verification" content="google13d661cf1e7e22b9.html" />
+	  <!-- GA authorize meta END -->
+	  
+	  <script type="text/javascript">
+		var textVersion = false;
+
+		var menuVisible = false;
+
+$( document ).ready(function() {
+
+	$("#menu").prepend("<li class='menu-close'><i class='fa fa-times'></i></li>");
+
+
+	$("body").click(function(e){
+
+		if(e.target.id == "mobMenu") {
+			setTimeout(function(){
+				if($("#menu").is(":visible")){
+					menuVisible = true;
+				} else{
+					menuVisible = false;
+				}
+			}, 200);
+		}
+		
+	})
+
+	$("body").click(function(e){
+		if(menuVisible && !$(".megamenu").find(e.target).length > 0 && e.target.id != "mobMenu"){
+			e.preventDefault();
+			$("#menu").toggle();
+			menuVisible = false;
+		}
+	});
+
+
+	zvacsiFont();
+		//bocne menu - vytorenie accordionu
+		/*$(".open").addClass("active").removeClass("open");*/
+	var panel = 1;
+	$( "#accordion1 li" ).has( "ul" ).each(function(){
+		$( this ).addClass( "panel");
+		$( this ).find('a').first().attr("data-parent","accordion1").attr("href","#link"+panel).attr("data-toggle","collapse");
+		$( this ).find('ul').attr("id","link"+panel).addClass("collapse");
+		$( this ).find('.open').parent().addClass("in");
+		panel++;
+	});
+
+	$('#content .content').first().addClass('first')
+	/*var slider = $('#slider');
+	$('#content').before(slider);
+*/
+	
+	
+	
+	if($.cookie("textOnly")=="true"){
+		textovaVerzia();
+	}
+
+	//nastavenie vysky boxov v paticke
+	var max =  0;
+		
+		$('.ul-box-wrapper .container .row > div').each(function(){
+		if($(this).height()>max){
+			
+			max = $(this).height();
+		}
+	});
+	    
+		$('.ul-box-wrapper .container .row > div > div').attr("style","height:"+max+"px");
+	//
+    
+    
+  $('#menu >li > ul > li > a').addClass("mega");
+$('#header .mega').parent().parent().parent().addClass('menu-large');
+$('#header .mega').parent().parent().addClass('megamenu');
+$('#header .mega').parent().addClass('col-sm-3');
+$('#header .megamenu li').unbind('moseover mouseleave');
+//$('#header .mega').removeAttr('href').attr('style','height: 60px !important;');
+$('#header .menu-large > a').removeAttr('href').css('cursor','pointer');
+$('#header .megamenu .col-sm-3').addClass('dropdown-header');
+});
+
+
+// function scaleFont(param){
+	
+// 	if(param==0){
+// 		$.cookie("vacsiFont", "false", {path: "/"});
+// 		location.reload();
+// 	}
+
+// 	if(param==undefined){
+
+// 		if($.cookie("vacsiFont")=="true"){
+
+// 		param=1;
+
+// 		} else{
+// 			return;
+// 		}
+// 	}
+// 	if(param==1){
+// 		$('#content p,#content span,#content div, #content a, #content td, #content th').css('font-size', 19);
+
+// 		$('#content h1').css('font-size', 35);
+// 		$('#content h2,#content h3,#content h4 ').css('font-size', 30);
+// 		$('.inlineComponentButton').css('font-size', 12);
+
+// 		if($.cookie("vacsiFont")!="true"){
+// 			$.cookie("vacsiFont", "true", {path: "/"});
+// 		}
+
+// 		if(param==undefined){
+// 			if($.cookie("vacsiFont")=="true"){
+// 				param=1;
+// 			}else{
+// 				return;
+// 			}
+// 		}
+// 	}
+// }
+
+
+function zvacsiFont(param){
+	if(param == undefined){
+		if($.cookie("vacsiFont")=="true"){
+			param = 1
+		} else{
+			return;
+		}
+	}
+
+	if(param == 1){
+		$('#content p,#content span,#content div, #content a, #content td, #content th').css('font-size', 19);
+		$('#content h1').css('font-size', 35);
+		$('#content h2,#content h3,#content h4 ').css('font-size', 30);
+		$('.inlineComponentButton').css('font-size', 12);
+
+		if($.cookie("vacsiFont") != "true"){
+			$.cookie("vacsiFont", "true", {path: "/"});
+		}
+	}
+
+	if(param == 0){
+		$('#content p,#content span,#content div, #content a, #content td, #content th').css('font-size', 14);
+		$('#content h1').css('font-size', 25);
+		$('#content h2').css("font-size", 20);
+		$('#content h3, #content h4').css("font-size", 18);
+		$('.inlineComponentButton').css('font-size', 12);
+
+		if($.cookie("vacsiFont") != "false"){
+			$.cookie("vacsiFont", "false", {path: "/"});
+		}
+	}
+
+
+}
+
+function textovaVerzia(param){
+	textVersion = true;
+	if($.cookie("textOnly")!="true"){
+		$.cookie("textOnly", "true", {path: "/"});
+	}
+	var fullVersion=   $('.onlyMobile a');
+	var fullVersionH=   fullVersion.attr('href');
+	
+	fullVersion.removeAttr('href').removeAttr('style','').click(function(){
+		$.cookie("textOnly","false", {path: "/"}); 
+		textVersion = false;
+		window.location=fullVersionH;
+		// window.location=fullVersionH+"?forceBrowserDetector=pc";
+		location.reload();
+	});
+
+	if(param=="all"){
+		// odpazi vsetky csska
+		$('link[rel="stylesheet"]').remove();
+	}
+    $('span.arrow').hide();
+
+  $('link[rel=stylesheet]').remove();
+/*
+  $('link[rel=stylesheet][href~="/css/singlepage_bootstrap/page.css"]').remove();
+  $('link[rel=stylesheet][href~="/css/singlepage_bootstrap/bootstrap.min.css"]').remove();
+  $('link[rel=stylesheet][href~="/css/template69.css"]').remove();
+  $('link[rel=stylesheet][href~="/images/style.css"]').remove();
+  $('link[rel=stylesheet][href~="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"]').remove();
+  */
+
+  $('*[style]').attr('style', ''); 
+  $('style').remove(); 
+  $('.basketSmallBox').remove(); 
+  $('.backButton').remove(); 
+
+  $('#slider, .navbar-brand, .navbar-toggle, #accordion1').hide();
+  $('img').remove();
+  $('.fa').remove();
+  $('.breadcrumbs ').remove();
+  $('.bottom_pannel').remove();
+  $('.header-links').remove();
+  $('#menu').css("text-align","left");
+  $('#menu li').css("background-color","#fff");
+  $('.menu-large').addClass('active');
+  $('div').css('background-color','');
+  $('div a, div span, h1,h2,h3,h4').css('color','black');
+  $('div a, div span').css('border-color','white');
+  $('th').css('background-color','');
+
+  $('.blindOnly .onlyMobile a').attr('href','#').attr('style','').css('color', 'blue;');
+
+$('ul ul ul ul').each(function() {
+    $(this).remove();
+});
+$('.calendar_table').removeClass("calendar_table");
+  var menu = $('#menu');
+  menu.removeAttr('class');
+  menu.attr('id','menuBlind')
+
+  $('#header').removeAttr('style');
+  $('#header').removeAttr('id');
+
+}
+
+function zmensiMesiac(aktualitaMesiac){
+	if($( window ).width()<=1200){
+				var mesiac = $.trim($('.aktuality .aktualita .mesiac').html());
+				$('.aktuality .aktualita .mesiac').html(mesiac.substring(0,3)+".");
+			}else{
+				$('.aktuality .aktualita .mesiac').html(aktualitaMesiac);
+			}	
+}
+
+		$(document).ready(function(){
+		var aktualitaMesiac = $('.aktuality .aktualita .mesiac').html();
+		zmensiMesiac(aktualitaMesiac);
+		$(window).resize(function () {
+			zmensiMesiac(aktualitaMesiac)
+		});
+			// ovrapovanie tabuliek
+		$('.documentTable, .tabulkaStandard').wrap('<div class="table-responsive"></div>');
+
+			
+		});
+	
+</script>
+       
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+   </head>
+   <!--[if IE 7 ]> <body class="null ie7 webjetcloud subpage"> <![endif]-->
+   <!--[if IE 8 ]> <body class="null ie8 webjetcloud subpage"> <![endif]-->
+   <!--[if gt IE 8]> <body class="null  webjetcloud subpage"> <!--<![endif]-->
+   <!--[if !IE]>--> <body class="null webjetcloud subpage"> <!--<![endif]-->
+   <style>
+   div.basketBox{
+   width:100%;
+   }
+   
+   .container.c > div > .content > .container{
+    width:100% !important;
+   }
+   </style>
+   <div class="toolbar-fix"></div>
+
+		<div class="position-relative">
+		<!-- Header - START -->
+      
+
+         <div class="blindOnly" style="display: none">
+         <br />
+ 		 <strong>Oficiálna stránka obce Marianka</strong>
+		  <p>[Zobrazuje sa alternatívna textová, blind friendly verzia stránky] <span class="onlyMobile"> <a href="#">Prejsť na graficú verziu</a></span>
+		  </p>
+		  <hr />
+		  <br />
+		  <h2>Titulok: VOLEBNÉ OKRSKY</h2>
+		  <p><a href="#content">Pokračuj v čítaní</a> alebo <a href="#menuBlind">preskoč na hlavné menu</a>.</p>
+		  
+		  <br />
+		  <hr />
+      </div>
+
+		<div id="header" style="height:163px;  background-repeat: repeat;
+    			background-position: center top; background-attachment: scroll;" class="type-C">
+		  <div class="header-wrapper">					
+		    <div class="navbar-wrapper nav-B navSetColor-wrapperNo navSetColor-navNo navSetColor-brandNo navSetColor-barNo navSetBrand-imageYes navSetBrand-claimYes">
+                <div class="container"> 
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="navbar-header">
+       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+         <span class="sr-only">Toggle navigation</span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+       </button>              
+       <div id="contactTable" class="headInfo right " >
+
+         <div  id="contactNumberTd"><span id="contactPhoneNumber">+421 902 905 764</span></div>
+         <div  id="contactEmailTd"><span id="contactEmailAddress"><a href="javascript:decodeEmail('ks!aknairam~atsorats')" ><script type='text/javascript'>writeEmailToPage("ks!aknairam~atsorats");</script></a></span></div>
+      </div>
+
+
+	       <a class="navbar-brand" href="/">
+	       	<img src=/images/template/temp69/my/logo.png?v=1561364663000 alt=""style="width:302px ;margin-top:-11px ;margin-right:-24px ;"/>
+	       </a>
+       
+   </div>
+	
+	
+
+<script type="text/javascript">
+$(document).ready(function(){
+	
+		$('#header').css("background-color","#ffffff");
+	
+});
+</script>
+<div style="position:relative; top:0px; float:right;" class="header-links-wrapper">
+<div class="header-links"> <a href="https://www.facebook.com/obecmarianka/" onclick="window.open(this.href,'_blank');event.returnValue = false;return false"> <span aria-hidden="true" class="fa fa-facebook-square">&nbsp;</span>Facebook </a> <a onClick="textovaVerzia()" style="cursor:pointer"> <span class="fa fa-eye" aria-hidden="true">&nbsp;</span> Textová verzia </a> <a href="/som-obcan/obecny-urad/kontakty/"> <span class="fa fa-envelope" aria-hidden="true"> &nbsp;</span> Kontakty </a> <a href="/som-obcan/obecny-urad/kontakty/#contact-form"> <span class="fa fa-comment" aria-hidden="true"> &nbsp;</span> Napíšte nám </a> <a onclick="window.open(this.href,'_blank');event.returnValue = false;return false" href="http://old.marianka.sk/web/" style="cursor:pointer"><span class="fa fa-globe">&nbsp;</span> Stará webstránka </a> <a style="font-size:14px; margin:0px;margin-right:-5px; cursor:pointer" onclick="zvacsiFont(0)"> <span aria-hidden="true" class="fa fa-font">&nbsp;</span> </a> <a style="font-size:20px; margin:0px; cursor:pointer" onclick="zvacsiFont(1)"> <span aria-hidden="true" class="fa fa-font">&nbsp;</span> </a> <span style="display:none;"> 
+
+
+<form class='webjetObfuscateForm' action='/components/form/spamprotectiondisable.jsp?backurl=%2Fsom-obcan%2Faktuality%2Fvolebne-okrsky.html' method='post'><script type="text/javascript">/* <![CDATA[ */var wjFrmJSTag="";wjFrmJSTag="rm\">"+wjFrmJSTag;wjFrmJSTag="hFo"+wjFrmJSTag;wjFrmJSTag="arc"+wjFrmJSTag;wjFrmJSTag="rSe"+wjFrmJSTag;wjFrmJSTag="ade"+wjFrmJSTag;wjFrmJSTag="\"he"+wjFrmJSTag;wjFrmJSTag="me="+wjFrmJSTag;wjFrmJSTag=" na"+wjFrmJSTag;wjFrmJSTag="rm\""+wjFrmJSTag;wjFrmJSTag="hFo"+wjFrmJSTag;wjFrmJSTag="arc"+wjFrmJSTag;wjFrmJSTag="rSe"+wjFrmJSTag;wjFrmJSTag="ade"+wjFrmJSTag;wjFrmJSTag="\"he"+wjFrmJSTag;wjFrmJSTag="id="+wjFrmJSTag;wjFrmJSTag="/\" "+wjFrmJSTag;wjFrmJSTag="nia"+wjFrmJSTag;wjFrmJSTag="ava"+wjFrmJSTag;wjFrmJSTag="lad"+wjFrmJSTag;wjFrmJSTag="vyh"+wjFrmJSTag;wjFrmJSTag="ky-"+wjFrmJSTag;wjFrmJSTag="led"+wjFrmJSTag;wjFrmJSTag="vys"+wjFrmJSTag;wjFrmJSTag="=\"/"+wjFrmJSTag;wjFrmJSTag="ion"+wjFrmJSTag;wjFrmJSTag="act"+wjFrmJSTag;wjFrmJSTag="rm "+wjFrmJSTag;wjFrmJSTag="<fo"+wjFrmJSTag;wjFrmJSTag="m>"+wjFrmJSTag;wjFrmJSTag="<\/for"+wjFrmJSTag;document.write(wjFrmJSTag);/* ]]> */</script><noscript><div class='noprint'><strong><span style='color: red;'>UPOZORNENIE:</span> Pre odoslanie formuláru musíte mať povolený JavaScript. Ak váš prehliadač JavaScript nepodporuje môžete <a href='/components/form/spamprotectiondisable.jsp?backurl=%2Fsom-obcan%2Faktuality%2Fvolebne-okrsky.html'>deaktivovať ochranu formulárov</a>.</strong></div></noscript>
+    <div class="headerSearchFormDiv">
+		<input type="text" value="Vyhľadávanie" name="words"  id="headerSearchWords" class="headerSearchText" />
+		<input type="submit" value="Hľadať" class="headerSearchSubmit" />
+    </div>
+</form>
+
+
+
+<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function(){
+	var inputText = 'Vyhľadávanie'
+	var defaultInputText = 'Vyhľadávanie'
+		
+    $("#headerSearchWords").focus(function () {
+        var text = $(this).val();
+        if(text == defaultInputText){
+            $(this).val("");
+        }else{
+            $(this).val(text);
+        }
+    });
+    $("#headerSearchWords").blur(function () {
+        var text = $(this).val();
+        if(text == ""){
+            $(this).val(defaultInputText);
+        }else{
+            $(this).val(text);
+        }
+    });
+});
+//]]>
+</script> </span> <span style="">         
+
+
+
+
+<script>
+
+if(includeCustomSearchScript !='no'){
+
+var includeCustomSearchScript = 'no';
+  (function() {
+    var cx = '009911415693897528948:2m89kuz8efm';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+		gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();}
+</script>
+<style>
+.gsib_a {
+    padding-top: 0;
+}
+input.gsc-search-button, input.gsc-search-button:hover, input.gsc-search-button:focus {
+background-image: inherit;
+box-sizing: content-box;
+}
+</style>
+<gcse:searchbox-only resultsUrl="//www.marianka.sk/vysledky-vyhladavania/vysledky-vyhladavania.html"></gcse:searchbox-only>
+
+ </span> </div>
+</div>
+<div class="row"> 
+
+
+
+   <ul id="menu" class="menu03d">
+      <li class="open"><a href="/som-obcan/">Občan</a>
+      <ul>
+         <li><a href="javascript:void(0)"  class="mega">Obecný úrad</a>
+         <ul>
+            <li><a href="/som-obcan/obecny-urad/kontakty/">Kontakty</a></li>
+            <li><a href="/som-obcan/obecny-urad/sluzby/">Služby</a></li>
+            <li><a href="/som-obcan/obecny-urad/organizacny-poriadok/">Organizačný poriadok</a></li>
+         </ul>
+         </li>
+         <li><a href="javascript:void(0)"  class="mega">Samospráva</a>
+         <ul>
+            <li><a href="/som-obcan/samosprava/starosta-obce/">Starosta obce</a></li>
+            <li><a href="/som-obcan/volby-2018/">VOĽBY 2018</a></li>
+            <li><a href="/som-obcan/samosprava/poslanci-oz/">Poslanci OZ</a></li>
+            <li><a href="/som-obcan/samosprava/zasadnutia-oz/">Zasadnutia OZ</a></li>
+            <li><a href="/som-obcan/samosprava/komisie-pri-oz/">Komisie pri OZ</a></li>
+         </ul>
+         </li>
+         <li><a href="javascript:void(0)"  class="mega">Úradná tabuľa</a>
+         <ul>
+            <li><a href="/som-obcan/uradna-tabula/elektronicka-uradna-tabula/">Elektronická úradná tabuľa</a></li>
+            <li><a href="/som-obcan/uradna-tabula/vzn/">Všeobecne záväzné nariadenia</a></li>
+            <li><a href="/som-obcan/uradna-tabula/verejne-obstaravanie/">Verejné obstarávanie</a></li>
+            <li><a href="/pracovne-ponuky/">Pracovné ponuky</a></li>
+            <li><a href="/som-obcan/uradna-tabula/">Zmluvy, faktúry a objednávky</a></li>
+         </ul>
+         </li>
+         <li><a href="javascript:void(0)"  class="mega">Ako vybaviť</a>
+         <ul>
+            <li><a href="/som-obcan/ako-vybavit/matrika/">Matrika</a></li>
+            <li><a href="/som-obcan/ako-vybavit/ohlasovna-pobytu/">Ohlasovňa pobytu</a></li>
+            <li><a href="/som-obcan/ako-vybavit/komunalne-odpady/">Separovaný a komunálny odpad</a></li>
+            <li><a href="/som-obcan/ako-vybavit/evidencia-budov/">Evidencia budov</a></li>
+            <li><a href="/som-obcan/ako-vybavit/dane-poplatky/">Dane a poplatky</a></li>
+            <li><a href="/som-obcan/ako-vybavit/ostatne/">Hrobové miesta</a></li>
+            <li><a href="/som-obcan/ako-vybavit/pohrebna-sluzba/">Pohrebná služba</a></li>
+         </ul>
+         </li>
+         <li><a href="javascript:void(0)"  class="mega">Život v obci</a>
+         <ul>
+            <li><a href="/som-obcan/zivot-obci/skola/">Škola</a></li>
+            <li><a href="/som-obcan/zivot-obci/kniznica/">Miestna ľudová knižnica</a></li>
+            <li><a href="/som-obcan/zivot-obci/cintorin/">Cintorín</a></li>
+            <li><a href="/som-obcan/zivot-obci/farnost/">Farnosť</a></li>
+            <li><a href="/som-obcan/zivot-obci/">Fotogaléria</a></li>
+            <li><a href="/som-obcan/zivot-obci/spolocenska-sala.html">Spoločenská sála</a></li>
+         </ul>
+         </li>
+         <li class="open"><a href="/som-obcan/aktuality/">Aktuality</a></li>
+      </ul>
+      </li>
+      <li><a href="/som-turista/">Turista</a>
+      <ul>
+         <li><a href="javascript:void(0)"  class="mega">Pamiatky v obci</a>
+         <ul>
+            <li><a href="/som-turista/pamiatky-obci/o-obci/">O obci</a></li>
+            <li><a href="/som-turista/pamiatky-obci/narodne-kulturne-pamiatky/">Národné kultúrne pamiatky</a></li>
+            <li><a href="/som-turista/pamiatky-obci/pamatihodnosti/">Pamätihodnosti obce</a></li>
+            <li><a href="/som-turista/pamiatky-obci/test-lon/">Test LON</a></li>
+         </ul>
+         </li>
+         <li><a href="#nopage">Ubytovanie a reštaurácie</a>
+         <ul>
+            <li><a href="/som-turista/ubytovanie/restaurant-apartments-villa-ivica/">Restaurant - Apartments VILLA IVICA</a></li>
+            <li><a href="/som-turista/ubytovanie/restauracia-penzion-putnicky-mlyn/">Reštaurácia a penzión Pútnický mlyn</a></li>
+            <li><a href="/som-turista/ubytovanie/hostinec-penzion-zeleneho-stromu/">Hostinec a penzión U zeleného stromu</a></li>
+            <li><a href="/som-turista/ubytovanie/penzion-restauracia-villa-ivica/">Kaviareň MariaLand</a></li>
+         </ul>
+         </li>
+         <li><a href="/som-turista/kultura/">Kultúra</a></li>
+      </ul>
+      </li>
+      <li><a href="/staviam/-kupujem/">Staviam-Kupujem</a>
+      <ul>
+         <li><a href="/kupca-nehnutelosti/upozornenie/">Upozornenie</a>
+         <ul>
+            <li><a href="/kupca-nehnutelosti/upozornenie/kontrola-vydanych-povoleni/">Kontrola vydaných povolení prokuratúrou</a></li>
+         </ul>
+         </li>
+         <li><a href="/kupca-nehnutelosti/uzemny-plan/">Územný plán</a>
+         <ul>
+            <li><a href="/kupca-nehnutelosti/regulativy-kocke/">Regulatívy v kocke</a></li>
+            <li><a href="/kupca-nehnutelosti/uzemny-plan/schama-zavaznych-casti-2006/">Schéma záväzných častí 2006</a></li>
+            <li><a href="/kupca-nehnutelosti/uzemny-plan/platny-uzemny-plan/">Platný územný plán</a></li>
+         </ul>
+         </li>
+         <li><a href="/som-obcan/ako-vybavit/stavebny-urad/">Stavebný úrad</a></li>
+      </ul>
+      </li>
+   </ul>
+
+ </div>
+</div>
+		    </div>
+		  </div><!-- /.header-wrapper -->
+		</div> <!-- /#header -->
+		</div> <!-- /.position-relative -->
+
+
+
+<link
+	href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300,300italic'
+	rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css"
+	href="/components/cloud/app-slit_slider/css/style.css" />
+	<link rel="stylesheet" type="text/css"
+	href="/components/cloud/app-slit_slider/css/style2.css" />
+
+<style type="text/css">
+	
+		
+			
+		
+	
+	
+.sl-slider h2 {
+padding: 0px;
+margin-bottom:0px;
+}
+.sl-slider blockquote {
+    padding-top: 0px;
+}
+</style>
+	<script type="text/javascript"
+	src="/components/cloud/app-slit_slider/js/modernizr.custom.79639.js"></script>
+<script type="text/javascript"
+	src="/components/cloud/app-slit_slider/js/jquery.ba-cond.min.js"></script>
+
+<script type="text/javascript"
+	src="/components/cloud/app-slit_slider/js/jquery.slitslider.js"></script>
+
+
+	  <div id="slider" class="sl-slider-wrapper" style="height: 439px;">
+	  				<div class="sl-slider">
+	  					
+		
+			
+			
+			<div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="1" data-slice2-scale="2">
+						<div class="sl-slide-inner">
+																							
+							<div class="bg-img" style="background-image: url(/thumb/images/template/slider/marianka_1.png?w=1920&ip=1); background-color: !important;"></div>							
+							
+							<h2 style="padding-bottom:0px !important; color:!important; &quot;text-align: center;font-style:normal;font-weight:normal;font-size:36px; margin-top: px; font-family:Arial">Najstaršie <br> pútnické miesto <br> na Slovensku</h2>
+							
+							<blockquote style="width:100%;">
+							
+								<p  style=" color:!important; &quot;&quot;">
+						</blockquote>
+					
+					
+						</p>
+						
+						</div>
+					</div>
+					
+					
+		
+			
+	
+			
+					
+					
+		          <nav id="nav-dots" class="nav-dots">
+		          	
+			
+					<span class="nav-dot-current"></span>
+						
+				</nav>
+	</div>
+	</div>
+
+
+<script type="text/javascript">
+	$(function() {
+		nacitajSlider();
+	});
+</script>
+			<div id="content">
+		<div class="breadcrumbs container" style="display:none; padding-right:15px !important; padding-left:15px !important;">
+			
+			<span><a href='/ing-mgr-paulik-dovolenka.html' class='navbar'></a> <img src="/images/template/temp63/separator.png"> <a href='/som-obcan/' class='navbar'>Občan</a> <img src="/images/template/temp63/separator.png"> <a href='/som-obcan/aktuality/' class='navbar'>Aktuality</a> <img src="/images/template/temp63/separator.png"> VOLEBNÉ OKRSKY</span>
+		</div>
+		
+			<div class="container c">
+	<div class="blindOnly" style="display: none"><hr /></div>
+		<div class="side col-lg-4 col-md-4 col-sm-12 side left">
+		            
+
+
+
+   <ul id="accordion1" class="menu01a">
+      <li class="open"><a href="/som-obcan/">Občan</a>
+      <ul>
+         <li><a href="javascript:void(0)"  class="mega">Obecný úrad</a>
+         <ul>
+            <li><a href="/som-obcan/obecny-urad/kontakty/">Kontakty</a></li>
+            <li><a href="/som-obcan/obecny-urad/sluzby/">Služby</a></li>
+            <li><a href="/som-obcan/obecny-urad/organizacny-poriadok/">Organizačný poriadok</a></li>
+         </ul>
+         </li>
+         <li><a href="javascript:void(0)"  class="mega">Samospráva</a>
+         <ul>
+            <li><a href="/som-obcan/samosprava/starosta-obce/">Starosta obce</a></li>
+            <li><a href="/som-obcan/volby-2018/">VOĽBY 2018</a></li>
+            <li><a href="/som-obcan/samosprava/poslanci-oz/">Poslanci OZ</a></li>
+            <li><a href="/som-obcan/samosprava/zasadnutia-oz/">Zasadnutia OZ</a></li>
+            <li><a href="/som-obcan/samosprava/komisie-pri-oz/">Komisie pri OZ</a></li>
+         </ul>
+         </li>
+         <li><a href="javascript:void(0)"  class="mega">Úradná tabuľa</a>
+         <ul>
+            <li><a href="/som-obcan/uradna-tabula/elektronicka-uradna-tabula/">Elektronická úradná tabuľa</a></li>
+            <li><a href="/som-obcan/uradna-tabula/vzn/">Všeobecne záväzné nariadenia</a></li>
+            <li><a href="/som-obcan/uradna-tabula/verejne-obstaravanie/">Verejné obstarávanie</a></li>
+            <li><a href="/pracovne-ponuky/">Pracovné ponuky</a></li>
+            <li><a href="/som-obcan/uradna-tabula/">Zmluvy, faktúry a objednávky</a></li>
+         </ul>
+         </li>
+         <li><a href="javascript:void(0)"  class="mega">Ako vybaviť</a>
+         <ul>
+            <li><a href="/som-obcan/ako-vybavit/matrika/">Matrika</a></li>
+            <li><a href="/som-obcan/ako-vybavit/ohlasovna-pobytu/">Ohlasovňa pobytu</a></li>
+            <li><a href="/som-obcan/ako-vybavit/komunalne-odpady/">Separovaný a komunálny odpad</a></li>
+            <li><a href="/som-obcan/ako-vybavit/evidencia-budov/">Evidencia budov</a></li>
+            <li><a href="/som-obcan/ako-vybavit/dane-poplatky/">Dane a poplatky</a></li>
+            <li><a href="/som-obcan/ako-vybavit/ostatne/">Hrobové miesta</a></li>
+            <li><a href="/som-obcan/ako-vybavit/pohrebna-sluzba/">Pohrebná služba</a></li>
+         </ul>
+         </li>
+         <li><a href="javascript:void(0)"  class="mega">Život v obci</a>
+         <ul>
+            <li><a href="/som-obcan/zivot-obci/skola/">Škola</a></li>
+            <li><a href="/som-obcan/zivot-obci/kniznica/">Miestna ľudová knižnica</a></li>
+            <li><a href="/som-obcan/zivot-obci/cintorin/">Cintorín</a></li>
+            <li><a href="/som-obcan/zivot-obci/farnost/">Farnosť</a></li>
+            <li><a href="/som-obcan/zivot-obci/">Fotogaléria</a></li>
+            <li><a href="/som-obcan/zivot-obci/spolocenska-sala.html">Spoločenská sála</a></li>
+         </ul>
+         </li>
+         <li class="open"><a href="/som-obcan/aktuality/">Aktuality</a></li>
+      </ul>
+      </li>
+      <li><a href="/som-turista/">Turista</a>
+      <ul>
+         <li><a href="javascript:void(0)"  class="mega">Pamiatky v obci</a>
+         <ul>
+            <li><a href="/som-turista/pamiatky-obci/o-obci/">O obci</a></li>
+            <li><a href="/som-turista/pamiatky-obci/narodne-kulturne-pamiatky/">Národné kultúrne pamiatky</a></li>
+            <li><a href="/som-turista/pamiatky-obci/pamatihodnosti/">Pamätihodnosti obce</a></li>
+            <li><a href="/som-turista/pamiatky-obci/test-lon/">Test LON</a></li>
+         </ul>
+         </li>
+         <li><a href="#nopage">Ubytovanie a reštaurácie</a>
+         <ul>
+            <li><a href="/som-turista/ubytovanie/restaurant-apartments-villa-ivica/">Restaurant - Apartments VILLA IVICA</a></li>
+            <li><a href="/som-turista/ubytovanie/restauracia-penzion-putnicky-mlyn/">Reštaurácia a penzión Pútnický mlyn</a></li>
+            <li><a href="/som-turista/ubytovanie/hostinec-penzion-zeleneho-stromu/">Hostinec a penzión U zeleného stromu</a></li>
+            <li><a href="/som-turista/ubytovanie/penzion-restauracia-villa-ivica/">Kaviareň MariaLand</a></li>
+         </ul>
+         </li>
+         <li><a href="/som-turista/kultura/">Kultúra</a></li>
+      </ul>
+      </li>
+      <li><a href="/staviam/-kupujem/">Staviam-Kupujem</a>
+      <ul>
+         <li><a href="/kupca-nehnutelosti/upozornenie/">Upozornenie</a>
+         <ul>
+            <li><a href="/kupca-nehnutelosti/upozornenie/kontrola-vydanych-povoleni/">Kontrola vydaných povolení prokuratúrou</a></li>
+         </ul>
+         </li>
+         <li><a href="/kupca-nehnutelosti/uzemny-plan/">Územný plán</a>
+         <ul>
+            <li><a href="/kupca-nehnutelosti/regulativy-kocke/">Regulatívy v kocke</a></li>
+            <li><a href="/kupca-nehnutelosti/uzemny-plan/schama-zavaznych-casti-2006/">Schéma záväzných častí 2006</a></li>
+            <li><a href="/kupca-nehnutelosti/uzemny-plan/platny-uzemny-plan/">Platný územný plán</a></li>
+         </ul>
+         </li>
+         <li><a href="/som-obcan/ako-vybavit/stavebny-urad/">Stavebný úrad</a></li>
+      </ul>
+      </li>
+   </ul>
+
+
+<p>&nbsp;</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+<style>
+/*=================================
+  URADNA TABULA
+=================================*/
+
+.uradna-tabula h3 {
+
+    color: #fff;
+
+}
+
+
+.uradna-tabula ul li span.date {
+
+  color: #fff;
+    position: absolute;
+    left: 30px;
+    top: 5px;
+    z-index: 0;
+}
+.uradna-tabula ul li a {
+  
+    color: #fff;
+   	display: block;
+    padding: 6px 20px;
+    padding-left: 100px;
+    border: 1px solid transparent;
+    border-bottom: 1px solid;
+     /*margin-top:-27px;*/
+}
+
+.uradna-tabula ul {
+    margin: 0;
+    padding: 0;
+    
+}
+.uradna-tabula ul li {
+    list-style: none;
+    padding: 0 20px;
+    margin: 0;
+    position: relative;
+   
+}
+
+.uradna-tabula li::before{
+content:none;
+}
+
+</style>
+  
+  <div class="uradna-tabula" style="    background-color: #9c060b; text-align:left;  border-top-color:#e52f49;">
+ <img style="margin:10px 10px;float:left;" src="/components/cloud/app-uradna_tabula/icon_tabula.png" /><h3 style="font-size:20px; font-weight: bold; padding: 20px 10px; margin: 0px 10px; text-align: left;">Úradná tabuľa</h3>
+<ul style=" font-size:14px;">
+    
+  
+  
+  
+  
+  
+            
+
+	
+			
+           
+			
+    <li ><span  class="date">16.08.2019</span>
+			
+				<a style="border-bottom-color:#9d1229;" href="/som-obcan/uradna-tabula/pozvanka-5-zasadnutie-oz-marianke.html">
+				Pozvánka na 5. zasadnutie OZ v Marianke</a></li>
+
+			
+	
+			
+           
+			
+    <li ><span  class="date">12.08.2019</span>
+			
+				<a style="border-bottom-color:#9d1229;" href="/som-obcan/uradna-tabula/zacatie-konania-zmene-stavby-pred-jej-dokoncenim.html">
+				Začatie konania o zmene stavby pred jej dokončením</a></li>
+
+			
+	
+			
+           
+			
+    <li ><span  class="date">02.08.2019</span>
+			
+				<a style="border-bottom-color:#9d1229;" href="/som-obcan/uradna-tabula/oznamenie-zacati-uzemneho-konania.html">
+				Oznámenie o začatí územného konania</a></li>
+
+			
+	
+			
+           
+			
+    <li ><span  class="date">02.08.2019</span>
+			
+				<a style="border-bottom-color:#9d1229;" href="/som-obcan/uradna-tabula/rozhodnutie-oprava-bystrickej-ul.html">
+				Rozhodnutie - oprava Bystrickej ul.</a></li>
+
+			
+	
+			
+           
+			
+    <li ><span  class="date">14.06.2019</span>
+			
+				<a style="border-bottom-color:#9d1229;" href="/som-obcan/aktuality/pozvanka-4-zasadnutie-oz-marianke.html">
+				Pozvánka na 4. zasadnutie OZ v Marianke</a></li>
+
+			
+	
+</ul>
+ 
+<div class="text-center">
+  
+<a style="color: #a31327" href="/som-obcan/uradna-tabula/elektronicka-uradna-tabula/" class="btnVsetky btn btn-primary">Všetky oznamy</a>
+   
+</div>
+	
+</div>
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+		</div>
+ 	 
+
+
+	
+<div class="blindOnly" style="display: none"><hr /></div>
+
+	
+					<div class="col-lg-8 col-md-8 col-sm-12">
+ 	 
+
+			   
+
+
+    <span class="doc_title" style="display:none"><p><span class="backButton"><a onclick="javascript:history.back();"><span class="fa fa-arrow-circle-o-left" aria-hidden="true"> </span>  Späť</a></span></p>
+<h1>VOLEBNÉ OKRSKY</h1></span>
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="basketSmallBox" style="display: none;">
+    <span class='basketSmallItems'>            
+      <span>0</span>
+    </span>
+    
+    <span class='basketSmallPrice'>              
+      <span>
+        0,00&nbsp;€
+      </span>
+    </span>
+    
+    <a href="javascript:void(0)" class="showBasket">Show basket</a>
+</div>
+
+			
+					<style>
+div.basketBox{
+width: 90% !important;
+     left: 0 !important;
+  right: 0 !important;
+  margin: 0 auto !important;
+    background-image: none !important;
+}
+.basketBox td{
+background-color: #fff !important;
+color: #000 !important;
+}
+
+.basketBox a{
+color:#000;
+}
+
+div.basketBox table.basketListTable td {
+    border: 0 none !important;
+    font-size: 14px !important;
+    padding: 5px !important;
+    text-align: left;
+}
+
+div.basketSmallBox span.basketSmallPrice span {
+	
+	background-image: none;
+	
+}
+
+a.addToBasket{
+padding: 5px !important;
+    background-color: #000 !important;
+}
+
+div.basketBox table.basketListTable input.basketQty {
+    width: 30px !important;
+}
+</style>
+<div class="content">
+	<div class="container"><p><strong>Volebný okrsok č. 1. – Spoločenská sála v&nbsp;budove polyfunkčného objektu, Štúrova 1050/9, Marianka</strong><br />
+<br />
+Agátová ulica<br />
+Borinská ulica<br />
+Bystrická ulica<br />
+Budovateľská ulica<br />
+Čerešňová ulica<br />
+Družstevná ulica<br />
+Javorová ulica<br />
+Kamenná ulica<br />
+Karpatská ulica<br />
+Krátka ulica<br />
+Lesná ulica<br />
+Lipová ulica</p>
+<p><strong>Volebný okrsok č. 2. – Sobášna miestnosť v&nbsp;budove obecného úradu, Školská 363/32, Marianka</strong><br />
+<br />
+Jelšová ulica<br />
+Na Kracinách<br />
+Na Ovsisku<br />
+Na Tálkoch<br />
+Na Vinohradoch<br />
+Nad Bednárovým<br />
+Nám. 4. apríla<br />
+Partizánska ulica<br />
+Pod Mlynom<br />
+Podhájska ulica<br />
+Poľná ulica<br />
+Potočná ulica<br />
+Púpavová ulica<br />
+Sedmokrásková ulica<br />
+Slnečná ulica<br />
+Stromová ulica<br />
+Stupavská ulica<br />
+Školská ulica<br />
+Športová ulica<br />
+Štúrova ulica<br />
+Topoľová ulica<br />
+Višňová ulica<br />
+Vŕbová ulica<br />
+Záhradná ulica<br />
+Obyvatelia s&nbsp;trvalým pobytom na&nbsp;Obci Marianka</p>
+<p>&nbsp;</p>	</div>
+</div>
+
+		
+          <div class="last_mod">
+	Posledná úprava: 19.10.2018
+</div>
+	<div class="blindOnly" style="display: none"><hr /></div>			
+
+
+	
+
+
+		            <div id="fb-root"></div>
+		<script type="text/javascript">
+			//<![CDATA[
+		
+			
+			(function(d, s, id) {
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id))
+					return;
+				js = d.createElement(s);
+				js.id = id;
+				js.src = "//connect.facebook.net/sk_SK/sdk.js#xfbml=1&version=v2.0";
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+			
+			//]]>
+		</script>
+		
+<style>
+
+.bottom_pannel{
+    border: 1px solid #d3d3d3;
+    width: 100%;
+    height: auto;
+    padding: 20px 20px 20px 20px;
+    background-color: rgba(255,255,255,0.5);
+    text-align: right;
+}
+
+.bottom_pannel span{
+    color: #000;
+    font-size: 15px;
+    cursor: pointer;
+}
+.bottom_pannel span .fa{
+    color: #da251d;
+        font-size: 22px;
+        top: 2px;
+        position: relative;
+        margin-right: 8px;
+
+}
+
+.bottom_pannel td:first-of-type{
+
+text-align: left;
+
+}
+
+@media (max-width: 500px) {
+   .bottom_pannel tr.odd span:nth-of-type(2){display:none}
+}
+@media (max-width: 400px) {
+   .bottom_pannel td:nth-of-type(2){display:none}
+   
+}
+</style>	
+	
+<div class="bottom_pannel" style="margin-top:20px; margin-bottom:20px; border-color:#d3d3d3; background-color:rgba(255,255,255,0.5)">
+<table style="width: 100%; height: auto;">
+    <tbody>
+        <tr class="odd">
+            <td>
+            	<div class="fb-like" data-href="https://www.marianka.sk/som-obcan/aktuality/volebne-okrsky.html"
+			data-width="200" data-layout="button_count"
+			data-action="like" data-show-faces="true"
+	data-share="true"></div>
+          </td>
+            <td><span style="color:#000"> <a style="text-decoration:none; color:#000" href="/som-obcan/obecny-urad/kontakty/">
+            <span style="color:#da251d" class="fa fa-comment-o" aria-hidden="true"> </span>
+             Kontaktujte nás</a>&nbsp; &nbsp;&nbsp;</span>  <span style="color:#000" onclick="window.print()">
+            <span style="color:#db241b" class="fa fa-print" aria-hidden="true"> </span>  Vytlačiť stránku</span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+	  
+		  
+	
+					</div>	</div> 
+ 	 
+<!-- SIDE -->
+
+
+		
+		  
+
+			<div class="footerWrapper">
+				<!-- Footer - START -->
+				   
+			   <div class="content">
+	<div class="container"><div style="text-align: center;">
+<p>&nbsp;</p>
+<p class="footer-links"><a href="https://www.facebook.com/obecmarianka" onclick="window.open(this.href,'_blank');event.returnValue = false;return false"> Facebook</a>   <a href="/mapa-stranok"> Mapa stránok</a>   <a href="/som-obcan/obecny-urad/kontakty/"> Kontakty</a>   <a onclick="textovaVerzia()" style="cursor:pointer">  Textová verzia</a>   <a href="/newsletter/">Odber newslettera</a></p>
+</div>
+
+
+
+<script type="text/javascript" src="/components/_common/javascript/jquery.cookie.js"></script>
+<script type="text/javascript">
+	function cookiesOKclicked(){
+		$.cookie("userUnderstandsOurCookiePolicy","accepted", { expires: 30, path: '/' });
+		$('#cookiebar-1').fadeOut();
+	}
+	$( document ).ready(function() {
+		var cookieValue = $.cookie("userUnderstandsOurCookiePolicy");
+		if(!(cookieValue==="accepted")){
+			$('#cookiebar-1').fadeIn();
+		}
+	});
+</script>
+<style>
+	.editPeviewWindow #cookiebar-1 {
+		display:block !important;
+	}
+	#cookiebar-1 {
+		display:none;
+		width: 100%;
+		height: auto;
+		padding: 15px 0px 15px;
+		background-color: #e8e8e8;
+		position: fixed;
+		
+			bottom:0;
+			border-top: 3px solid #9d0910;
+		
+		
+		left:0;
+		right:0;
+		z-index:99998;
+	}
+	
+	#cookiebar-1 p {
+		vertical-align:middle;
+		color:#111;
+		letter-spacing: 1px;
+		font-family: Arial, Helvetica, sans-serif;
+	}
+	#cookiebar-1 button.cookie-btn { 
+		background-color:#9d0910;;
+		color:#fff;
+		min-width: 150px;
+		min-height: 50px;
+		float: right;
+		border: none;
+		letter-spacing: 2px;
+		text-transform:uppercase;
+		font-family: Arial, Helvetica, sans-serif;
+    	position: absolute;
+		top:50%;
+    	transform: translateY(-50%);
+	}
+</style>
+<div id="cookiebar-1">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10 col-xs-12 col-sm-9">
+				
+				<p>Tieto stránky využívajú cookies. Ich ďalším používaním súhlasíte s využívaním cookies. Prečítajte si informácie o tom, ako sú cookies používané a ako ich používanie môžete odmietnuť nastavením svojho internetového prehliadača.</p>
+			</div>
+			<div class="col-md-2 col-xs-12 col-sm-3">
+					<button onclick="cookiesOKclicked()" class="cookie-btn">Rozumiem</button>	
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<div class="side-button"> <a href="https://mobec.sk/marianka#base" onclick="window.open(this.href,'_blank');event.returnValue = false;return false"><i class="fa fa-map-signs" aria-hidden="true"></i><span class="text">Mapové vrstvy</span></a> </div>
+<div class="copy">
+
+
+
+
+
+
+
+
+ 
+<p>
+  Vytvorte si vlastnú <a href="http://cloud.webjet.eu/sk/" onclick="window.open(this.href,'_blank');event.returnValue = false;return false" title="Vlastná webstránka len za pár minút">webstránku zadarmo</a> s&nbsp;redakčným systémom <a href="http://cloud.webjet.eu/sk/" onclick="window.open(this.href,'_blank');event.returnValue = false;return false" title="Redakčný systém WebJET Cloud">WebJET Cloud</a>.
+</p></div><p class='onlyMobile'><a href='/som-obcan/aktuality/volebne-okrsky.html?responsive=no' rel='noindex nofollow' style='text-decoration:underline'>Zobraziť plnú verziu stránky</a></p>
+	</div>
+</div>
+			</div>
+		</div>
+		   
+   
+    <!-- GA JS  -->
+        <script type="text/javascript">
+ var _gaq = _gaq || [];
+ _gaq.push(['_setAccount', 'UA-83942726-1']);
+ _gaq.push(['_trackPageview']);
+ (function() {
+   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+ })();
+</script>
+    <!-- GA JS END -->
+	<script src="/jscripts/singlepage_bootstrap/common-marianka.js"></script>
+    <script src="/jscripts/singlepage_bootstrap/bootstrap.min.js"></script>	
+    
+	    <script src="/jscripts/wow.min.js"></script>
+	    <script>
+	        new WOW().init();
+	    </script>	
+    
+	
+    <script type="text/javascript">
+        $('.footerWrapper #menu, .siteMap #menu').attr('id','');
+        $('.subpage .col-md-push-4').removeClass('col-md-push-4');
+        $('.subpage .col-md-pull-8').removeClass('col-md-pull-8');
+
+				function getCookie(cname) {
+					var name = cname + "=";
+					var decodedCookie = decodeURIComponent(document.cookie);
+					var ca = decodedCookie.split(';');
+					for(var i = 0; i <ca.length; i++) {
+						var c = ca[i];
+						while (c.charAt(0) == ' ') {
+							c = c.substring(1);
+						}
+						if (c.indexOf(name) == 0) {
+							return c.substring(name.length, c.length);
+						}
+					}
+					return "";
+				}
+
+
+				function setCookie(cname, cvalue, exdays) {
+					var d = new Date();
+					d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+					var expires = "expires="+d.toUTCString();
+					document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+				}
+
+				if(getCookie("newsletterReset") != "true"){
+					setCookie("newsletterReset", "true", 10);
+					setCookie("newsletter", "", -1);
+				}
+
+				if(getCookie("newsletter") == "hidden"){
+					$(".newsletter-popup").hide();
+				} else{
+					$(".newsletter-popup").show();
+				}
+
+				function closeNewsletter(){
+					$(".newsletter-popup").hide();
+					setCookie("newsletter", "hidden", 1);
+				}
+
+
+
+    </script>
+	
+   </body>
+
+</html>

@@ -1,0 +1,84 @@
+# Okrsky of Palárikovo, transcribed by an AI agent in job okrsok-rules-2901 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Slovenská, Jánošíkova, Budovateľská, Hlavná, Poštová, Mierová, Pod lipami, Hlboká, Námestie Padlých hrdinov, 1. mája, Mirka Nešpora, Partizánska, Andreja Bagara, Mederská, Orechová, Námestie Slobody, Krížna, Školská a Terézie Vansovej
+#   okrsok 2: Štefánikova ulica (od Cergáta po Konopnice), Lesná, Bažantnica, Žofia, Petra Jilemnického, Jána Amosa Komenského, Mládežnícka, Pavla Jozefa Šafárika, Jána Palárika, Dukelská, Československej armády, Jána Kalinčiaka, Cergátova, Slnečná, Zápoveď, Remeselnícka
+#   okrsok 3: Štefánikova (od železničnej stanice po Cergát), Železničná, Čiky, Pivničná, Sládkovičova, Hviezdoslavova, Záhradnícka, 29. augusta, kpt. Jána Nálepku, Janka Kráľa, Janka Matušku, Kukučínova, Štúrova, Bernolákova, 9. mája, Obrancov mieru, Boženy Nemcovej, Jur, Šopy
+obec = "503452"
+name = "Palárikovo"
+okrsky_date = 2022-11-07
+okrsky_fill = "nearest"
+okrsky_note = "Štefánikova is split between okrsok 2 ('od Cergáta po Konopnice') and okrsok 3 ('od železničnej stanice po Cergát') without house numbers, so it has no rule; its addresses, Osada Pikova (not named) and the addresses without street in part Palárikovo take the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.obecpalarikovo.sk/e_download.php?file=data/editor/435sk_1.pdf&original=ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20miestnost%C3%AD.pdf"
+sha256 = "3a5ae0c2f1b3709ab681a284a0eb0a0700796df10ee7bed4a7b6121a527c9498"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Palárikovo"
+
+[okrsok.1]
+rules = [
+  {street = "Slovenská"},
+  {street = "Jánošíkova"},
+  {street = "Budovateľská"},
+  {street = "Hlavná"},
+  {street = "Poštová"},
+  {street = "Mierová"},
+  {street = "Pod lipami"},
+  {street = "Hlboká"},
+  {street = "Námestie Padlých hrdinov"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "Mirka Nešporu", written = "Mirka Nešpora", note = "the register's Mirka Nešporu; the document writes the name with another ending, same street"},
+  {street = "Partizánska"},
+  {street = "Andreja Bagara"},
+  {street = "Mederská"},
+  {street = "Orechová"},
+  {street = "Námestie Slobody"},
+  {street = "Krížna"},
+  {street = "Školská"},
+  {street = "Terézie Vansovej"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Lesná"},
+  {street = "Bažantnica"},
+  {street = "Žofia"},
+  {street = "Osada Žofia", written = "Žofia", note = "the register keeps the settlement Žofia both as street Žofia and as Osada Žofia"},
+  {street = "Petra Jilemnického"},
+  {street = "Jána Amosa Komenského"},
+  {street = "Mládežnícka"},
+  {street = "Pavla Jozefa Šafárika"},
+  {street = "Jána Palárika"},
+  {street = "Dukelská"},
+  {street = "Československej armády"},
+  {street = "Jána Kalinčiaka"},
+  {street = "Cergátova"},
+  {street = "Slnečná"},
+  {street = "Zápoveď"},
+  {street = "Remeselnícka"},
+  {street = "Konopnice", note = "not listed; okrsok 2's section of Štefánikova runs 'po Konopnice', so this one address is placed in okrsok 2", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Železničná"},
+  {street = "Osada Čiky", written = "Čiky"},
+  {part = "Čiky"},
+  {street = "Pivničná"},
+  {street = "Sládkovičova"},
+  {street = "Hviezdoslavova"},
+  {street = "Záhradnícka"},
+  {street = "29.augusta", written = "29. augusta"},
+  {street = "Kpt. Jána Nálepku", written = "kpt. Jána Nálepku"},
+  {street = "Janka Kráľa"},
+  {street = "Janka Matušku"},
+  {street = "Kukučínova"},
+  {street = "Štúrova"},
+  {street = "Bernolákova"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Obrancov mieru"},
+  {street = "Boženy Nemcovej"},
+  {street = "Osada Jur", written = "Jur"},
+  {street = "Osada Šopy", written = "Šopy"},
+  {part = "Ľudovítov", note = "part Ľudovítov's streets (9. mája, Boženy Nemcovej, Obrancov mieru, Jur, Šopy) are all in okrsok 3; its addresses without street placed there too", inferred = true},
+]

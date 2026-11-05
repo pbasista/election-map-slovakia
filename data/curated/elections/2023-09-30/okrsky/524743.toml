@@ -1,0 +1,32 @@
+# Okrsky of Lemešany, transcribed by an AI agent in job okrsok-rules-3894 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: v tomto okrsku budú hlasovať občania z domov súp. čísla od 0 do 300
+#   okrsok 2: v tomto okrsku budú hlasovať občania z domov súp. čísla 301 - 620
+obec = "524743"
+name = "Lemešany"
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision for the National Council election of 30 September 2023: okrsky by súpisné čísla 0–300 and 301–620 (both vote in Denný stacionár, Lemešany 80). Addresses numbered above 620 are placed by fill_nearest."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-06-20
+okrsky_date_basis = "The mayor's decision (an image on the page) states no date; the page gives 'Dátum vloženia: 20. 6. 2023'. (https://www.lemesany.sk/obec-1/volby-1/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-359sk.html)"
+
+[[document]]
+url = "https://www.lemesany.sk/evt_image.php?img=3470"
+sha256 = "d16542942976d3fe0a6d500f2f9dd121f42300019f19e4259a991370c359399d"
+title = "Utvorenie volebných okrskov a určenie volebných miestností"
+
+[[document]]
+url = "https://www.lemesany.sk/obec-1/volby-1/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-359sk.html"
+sha256 = "e76102fecde67165a0e8770623a47a1a1a71760e7e57f10ddbfef498d93d20d1"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (page)"
+
+[okrsok.1]
+rules = [
+  {part = "Lemešany", numbers = "0-300"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lemešany", numbers = "301-620"},
+]

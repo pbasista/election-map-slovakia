@@ -1,0 +1,109 @@
+# Okrsky of Sabinov, transcribed by an AI agent in job okrsok-rules-2258 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre oprávnených voličov bývajúcich v miestnej časti Orkucany
+#   okrsok 2: Ul. Komenského, Ul. Kukučínova, Ul. Medzi vodami
+#   okrsok 3: Ul. 9. mája, Ul. Hviezdoslavova, Ul. Mieru, Ul. Prešovská, Ul. Štúrova
+#   okrsok 4: Ul. Hliník, Ul. Janka Borodáča, Ul. Jilemnického, Ul. Levočská, Ul. Matice slovenskej, Ul. Mlynská, Ul. Šancová, Ul. Švermova
+#   okrsok 5: Ul. Ružová, Námestie Slobody, bezdomovci obyvatelia s trvalým pobytom „Sabinov – 0“
+#   okrsok 6: Ul. 17.novemra č. 1-77
+#   okrsok 7: Ul. 17. novembra č. 78-83, Ul. Jakubovanská, Ul. Puškinova
+#   okrsok 8: ul. Jolany Cirbusovej, Ul. Nezabudova, Ul. Pavla Gojdiča, Ul. Severná, Ul. Sládkovičova, Ul. SNP
+#   okrsok 9: Ul. Fraňa Kráľa, Ul. Janka Jesenského, Ul. Moyzesova, Ul. Novomeského
+#   okrsok 10: Ul. Záhradná, Ul. Čergovská, Ul. Gen. Svobodu, Ul. Hollého, Ul. Karpatská, Ul. Kpt. Nálepku, Ul. Murgašova, Ul. Ovocinárska, Ul. Pod Švabľovkou, Priemyselná štvrť, Ul. Samuela Fábryho, Ul. Sadová, Ul. Tehelná
+obec = "525146"
+name = "Sabinov"
+okrsky_date = 2019-11-19
+okrsky_fill = "nearest"
+okrsky_note = "'Medzi vodami' (a garden area) is not in the register; left out. The register street Lazy is not named; it, house numbers on 17. novembra outside the ranges, and houses without a street take the okrsok of the nearest address (fill_nearest). 'Sabinov 0' / 'bezdomovci' are voters registered only on the town, not places. The register keeps Janka Jesenského also as 'J. Jesenského': both are given."
+
+[[document]]
+url = "https://web.archive.org/web/20220301211751/https://sabinov.sk/attachments/article/393/Vytvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "9b839d14e8d88f6f7ed62bad3cb92c98964723866894657e0b1f135d1a4d0bbb"
+title = "Vytvorenie volebných okrskov ... pre voľby do NR SR 29. februára 2020 (19. novembra 2019, opravené 25.2.2020)"
+
+[okrsok.1]
+rules = [
+  {part = "Orkucany"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Komenského"},
+  {street = "Kukučínova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "9.mája", written = "9. mája"},
+  {street = "Hviezdoslavova"},
+  {street = "Mieru"},
+  {street = "Prešovská"},
+  {street = "Štúrova"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Hliník"},
+  {street = "Janka Borodáča"},
+  {street = "Jilemnického"},
+  {street = "Levočská"},
+  {street = "Matice Slovenskej", written = "Matice slovenskej"},
+  {street = "Mlynská"},
+  {street = "Šancová"},
+  {street = "Švermova"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Ružová"},
+  {street = "Námestie Slobody"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "17.novembra", numbers = "1-77", written = "17. novembra"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "17.novembra", numbers = "78-83", written = "17. novembra"},
+  {street = "Jakubovanská"},
+  {street = "Puškinova"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "J. Cirbusovej", written = "Jolany Cirbusovej"},
+  {street = "Nezabudova"},
+  {street = "Pavla Gojdiča"},
+  {street = "Severná"},
+  {street = "Sládkovičova"},
+  {street = "SNP"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Fraňa Kráľa"},
+  {street = "Janka Jesenského"},
+  {street = "J. Jesenského", written = "Janka Jesenského", note = "the register keeps the same street under both 'J. Jesenského' and 'Janka Jesenského'"},
+  {street = "Moyzesova"},
+  {street = "Novomeského"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Záhradná"},
+  {street = "Čergovská"},
+  {street = "Gen. Svobodu"},
+  {street = "Hollého"},
+  {street = "Karpatská"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Murgašova"},
+  {street = "Ovocinárska"},
+  {street = "Pod Švabľovkou"},
+  {street = "Priemyselná Štvrť", written = "Priemyselná štvrť"},
+  {street = "S. Fábryho", written = "Samuela Fábryho"},
+  {street = "Sadová"},
+  {street = "Tehelná"},
+]

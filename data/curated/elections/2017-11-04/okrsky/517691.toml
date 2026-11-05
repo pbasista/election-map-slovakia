@@ -1,0 +1,32 @@
+# Okrsky of Kotešová, transcribed by an AI agent in job okrsok-rules-356 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dolná časť obce Kotešová + miestna časť Oblazov
+#   okrsok 2: Horná časť obce Kotešová + miestna časť Buková
+obec = "517691"
+name = "Kotešová"
+okrsky_fill = "nearest"
+okrsky_note = "The document gives okrsok 1 as 'Dolná časť obce Kotešová + miestna časť Oblazov' and okrsok 2 as 'Horná časť obce Kotešová + miestna časť Buková', without saying where the lower part of Kotešová ends. The parts Oblazov and Buková are taken whole; the split of the part Kotešová is supplemented from the next document (2019). Kotešová's súpisné čísla outside its ranges (911–999, 1115–1150) take the nearest placed address."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2017-08-24
+okrsky_date_basis = "The page 'Voľby do orgánov samosprávnych krajov v roku 2017' of the obec's website lists the PDF ('Určenie volebných okrskov, miestností a vymenovanie zapisovateliek.pdf') with 'Dátum zverejnenia 24. 8. 2017'; the PDF itself is undated and names the elections to the orgány samosprávnych krajov of 2017. (https://www.kotesova.info/pages/volby-do-organov-samospravnych-krajov-v-roku-2017)"
+okrsky_supplemented = 2019-03-16
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The 2017 document names only 'dolná' and 'horná časť obce Kotešová' without bounds. The rule set of 2019-03-16 (the obec's document for the presidential election 2019, same two okrsky, same polling rooms: 'miestna časť Oblazov + dolná Kotešová 1 - 369, 1000 - 1114' and 'horná Kotešová + miestna časť Buková 370 - 910') gives the split by súpisné čísla; its two rules on the part Kotešová are copied."
+
+[[document]]
+url = "https://www.kotesova.info/pages/attachments/vxCNNct3dhUXxANqSSVUtR.pdf"
+sha256 = "d60a8593ccdc265c80b40100dce2be749bece7cfff41fee2d23b2de225becb0c"
+title = "Utvorenie volebných okrskov, určenie volebných miestností a vymenovanie zapisovateliek okrskových volebných komisií"
+
+[okrsok.1]
+rules = [
+  {part = "Oblazov"},
+  {part = "Kotešová", numbers = "1-369, 1000-1114", supplemented = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kotešová", numbers = "370-910", supplemented = true},
+  {part = "Buková"},
+]

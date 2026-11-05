@@ -1,0 +1,201 @@
+# Council obvody of Svidník (527106), Svidník.
+# Transcribed by an AI agent in job obvod-rules-091 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Centrálna 18-40, D. Millyho, Dlhá, Gen. Svobodu, Karpatská, Komenského (309-314, 317, 444,445, 816, 837), Kpt. Pavlíka, Kukorelliho, Kutuzovova 443, Partizánska, SNP, Stropkovská 42-76,90, V. Nejedlého, Záhradná
+#   obvod 2: 8. mája (490), Bardejovská, Centrálna 5, Čsl. Armády, Dr. Goldbergera, Duchnovičova, Festivalová, Komenského (461), Kutuzovova (319 a 434), Ľ. Štúra, Mládeže, Nábrežná, MUDr. Pribulu, Pavlovičova, Pionierska, Polyvkova, Poštová, Sov. hrdinov (106, 131, 163, 165, 166, 229, 230, 240, 241, 355, 356, 372-374, 430, 436, 437, 452-454, 456, 680, 825, 843), Stropkovská 375, občania prihlásení k trvalému pobytu na Mesto Svidník (bezdomovci)
+#   obvod 3: 1. mája, 8. mája (491, 492-494, 634, 635, 637, 638), Budovateľská, Čat. Nebiljaka, Duklianska, Hrabová, J. Gagarina, Lipová, Makovická, Mierová, Part. Kmiťa, Pod Lesom, Sov. hrdinov (331-334, 628), T.H. Ševčenka
+# Okrsky added by an AI agent in job okrsok-rules-5864 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Centrálna ( 18 - 40), D. Millyho, Dlhá, Kpt. Pavlíka, Kukorelliho, Partizánska, SNP, Stropkovská (42 - 90), V. Nejedlého, Záhradná.
+#   okrsok 2: Gen. Svobodu (683, 684), Karpatská (743, 754, 804, 838, 784, 450).
+#   okrsok 3: Gen. Svobodu (681, 682, 691, 692, 698, 699, 700 ), Komenského (309 – 317, 444, 445, 816), Kutuzovova 443.
+#   okrsok 4: Dr. Goldbergera (248, 376 , rodinné domy ), Kutuzovova (319, 434 ), Nábrežná (371, 498, rodinné domy), Poštová, Sov. hrdinov (106, 166, 240, 241, 372, 373, 374, 432, 436, 437, 453, 454, 626), Stropkovská 375, Centrálna 584, Sov. hrdinov (131, 229, 230, 430, 452, 680, 843, rodinné domy), bezdomovci.
+#   okrsok 5: Bardejovská (55/43, 358, 359, 360), Čsl. armády (362, 363, 364), Duchnovičova (168, 252, 431), Festivalová, MUDr. Pribulu, Pavlovičova, Pionierska (130, 357), Polyvkova, Sov. hrdinov (163, 165, 355, 356, 456, 825).
+#   okrsok 6: Komenského 461, Ľ. Štúra (438, 441, 442, 462, 489), Mládeže 495, 8. mája 490.
+#   okrsok 7: 8. mája (491, 492, 493, 494, 634, 635, 637, 2253).
+#   okrsok 8: 8. mája (638, 1416), Duklianska (641, 642, 648, 650).
+#   okrsok 9: Duklianska 644, 1. mája, Budovateľská, Čat. Nebiljaka, Hrabová, J. Gagarina, Lipová, Makovická, Mierová, Part. Kmiťa, Pod lesom, T. H. Ševčenka , Sov. hrdinov (331, 332, 333, 334, 628, 629).
+obec = "527106"
+name = "Svidník"
+date = 2018-06-06
+fill = "nearest"
+note = "Streets split among obvody are written by the súpisné čísla the announcement gives in parentheses (Komenského, Kutuzovova, Sov. hrdinov, 8. mája, Stropkovská 375) and by orientačné numbers where it gives ranges (Centrálna 18-40 and 5, Stropkovská 42-76, 90). Their other houses and the addresses without a street go by fill_nearest; \"bezdomovci\" are voters without an address, not a rule."
+okrsky_fill = "nearest"
+okrsky_note = "Several streets are split among the okrsky of one obvod by the súpisné čísla of their blocks (Gen. Svobodu in okrsky 2/3, Sov. Hrdinov in 4/5, 8. mája in 7/8, Duklianska in 8/9), written as súpisné numbers; their other houses and the addresses without a street go by fill_nearest. A street wholly in one okrsok of its obvod is a whole-street rule (the rules see only the obvod's addresses), even where the document lists its blocks or numbers (e.g. Komenského in okrsok 3 also covers 837, which the obvod resolution puts in obvod 1 but the okrsky list omits; Centrálna 584 is the obvod's Centrálna 5). 'bezdomovci' in okrsok 4 are voters without an address, not a rule. The document writes Festivalová for the register's Festivalova."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2018-09-19
+okrsky_date_basis = "The city's 2018 elections page lists 'Volebné okrsky v meste Svidník' as 'Zverejnené 19.9.2018' (and 'Volebné miestnosti pre jednotlivé okrsky' as 'Zverejnené 6.9.2018'); the PDF itself is undated, its heading names the municipal elections of 2018. (https://www.svidnik.sk/volby-do-organov-samospravy-obci-0.html)"
+
+[[document]]
+url = "https://www.svidnik.sk/download_file_f.php?id=1015092"
+sha256 = "1fe3bd4e0431e614e6934ed52b76a76feb5ea4948da5fd4551bb22e1b28f8886"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 10. novembra 2018 (uznesenie MsZ č. 509/2018 zo dňa 6. júna 2018)"
+
+[[document]]
+url = "https://www.svidnik.sk/download_file_f.php?id=1021030"
+sha256 = "371e70c7c937c8421bab84209b37d72f2147b75a055d793b8c4a7cb281a6392c"
+title = "Volebné okrsky v meste Svidník pre voľby do orgánov samosprávy obcí v roku 2018"
+
+[[document]]
+url = "https://www.svidnik.sk/download_file_f.php?id=1014285"
+sha256 = "bdd594d89f6b8b8a5023396286e7f52fde432be227fdc5d34fdc17faa07158ad"
+title = "Zoznam okrskov v meste Svidník pre voľby primátora a poslancov vo Svidníku 2018 (okrsky obvodov, volebné miestnosti)"
+
+[[document]]
+url = "https://www.svidnik.sk/volby-do-organov-samospravy-obci-0.html"
+sha256 = "395fb24bc4b69a9f2028757c12ff732877fe70b469151670248b34074e2a1e5e"
+title = "Voľby do orgánov samosprávy obcí (2018) – stránka mesta so zoznamom dokumentov"
+
+[obvod.1]
+seats = 5
+okrsky = [1, 2, 3]
+rules = [
+  {street = "Centrálna", numbers = "18-40"},
+  {street = "D. Millyho"},
+  {street = "Dlhá"},
+  {street = "Gen. Svobodu"},
+  {street = "Karpatská"},
+  {street = "Komenského", numbers = "309-314, 317, 444, 445, 816, 837", by = "supisne"},
+  {street = "Kpt. Pavlíka"},
+  {street = "Kukorelliho"},
+  {street = "Kutuzovova", numbers = "443", by = "supisne"},
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Stropkovská", numbers = "42-76, 90"},
+  {street = "V. Nejedlého"},
+  {street = "Záhradná"},
+]
+
+[obvod.2]
+seats = 5
+okrsky = [4, 5, 6]
+rules = [
+  {street = "8.mája", numbers = "490", by = "supisne"},
+  {street = "Bardejovská"},
+  {street = "Centrálna", numbers = "5"},
+  {street = "Čsl. Armády"},
+  {street = "Dr. Goldbergera"},
+  {street = "Duchnovičova"},
+  {street = "Festivalova", written = "Festivalová", note = "The document writes Festivalová for the register's Festivalova."},
+  {street = "Komenského", numbers = "461", by = "supisne"},
+  {street = "Kutuzovova", numbers = "319, 434", by = "supisne"},
+  {street = "Ľ. Štúra"},
+  {street = "Mládeže"},
+  {street = "Nábrežná"},
+  {street = "MUDr.Pribulu", written = "MUDr. Pribulu"},
+  {street = "Pavlovičova"},
+  {street = "Pionierska"},
+  {street = "Polyvkova"},
+  {street = "Poštová"},
+  {street = "Sov. Hrdinov", numbers = "106, 131, 163, 165, 166, 229, 230, 240, 241, 355, 356, 372-374, 430, 436, 437, 452-454, 456, 680, 825, 843", by = "supisne"},
+  {street = "Stropkovská", numbers = "375", by = "supisne"},
+]
+
+[obvod.3]
+seats = 5
+okrsky = [7, 8, 9]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "8.mája", numbers = "491-494, 634, 635, 637, 638", by = "supisne"},
+  {street = "Budovateľská"},
+  {street = "Čat. Nebiljaka"},
+  {street = "Duklianska"},
+  {street = "Hrabová"},
+  {street = "J. Gagarina"},
+  {street = "Lipová"},
+  {street = "Makovická"},
+  {street = "Mierová"},
+  {street = "Part. Kmiťa"},
+  {street = "Pod Lesom"},
+  {street = "Sov. Hrdinov", numbers = "331-334, 628", by = "supisne"},
+  {street = "T. H. Ševčenka", written = "T.H. Ševčenka"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Centrálna"},
+  {street = "D. Millyho"},
+  {street = "Dlhá"},
+  {street = "Kpt. Pavlíka"},
+  {street = "Kukorelliho"},
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Stropkovská"},
+  {street = "V. Nejedlého"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Gen. Svobodu", numbers = "683, 684", by = "supisne"},
+  {street = "Karpatská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Gen. Svobodu", numbers = "681, 682, 691, 692, 698, 699, 700", by = "supisne"},
+  {street = "Komenského"},
+  {street = "Kutuzovova"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Dr. Goldbergera"},
+  {street = "Kutuzovova"},
+  {street = "Nábrežná"},
+  {street = "Poštová"},
+  {street = "Sov. Hrdinov", numbers = "106, 131, 166, 229, 230, 240, 241, 372, 373, 374, 430, 432, 436, 437, 452, 453, 454, 626, 680, 843", by = "supisne", written = "Sov. hrdinov"},
+  {street = "Stropkovská"},
+  {street = "Centrálna"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Bardejovská"},
+  {street = "Čsl. Armády", written = "Čsl. armády"},
+  {street = "Duchnovičova"},
+  {street = "Festivalova", written = "Festivalová", note = "The document writes Festivalová for the register's Festivalova."},
+  {street = "MUDr.Pribulu", written = "MUDr. Pribulu"},
+  {street = "Pavlovičova"},
+  {street = "Pionierska"},
+  {street = "Polyvkova"},
+  {street = "Sov. Hrdinov", numbers = "163, 165, 355, 356, 456, 825", by = "supisne", written = "Sov. hrdinov"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Komenského"},
+  {street = "Ľ. Štúra"},
+  {street = "Mládeže"},
+  {street = "8.mája", written = "8. mája"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "8.mája", numbers = "491, 492, 493, 494, 634, 635, 637, 2253", by = "supisne", written = "8. mája"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "8.mája", numbers = "638, 1416", by = "supisne", written = "8. mája"},
+  {street = "Duklianska", numbers = "641, 642, 648, 650", by = "supisne"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Duklianska", numbers = "644", by = "supisne"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "Budovateľská"},
+  {street = "Čat. Nebiljaka"},
+  {street = "Hrabová"},
+  {street = "J. Gagarina"},
+  {street = "Lipová"},
+  {street = "Makovická"},
+  {street = "Mierová"},
+  {street = "Part. Kmiťa"},
+  {street = "Pod Lesom", written = "Pod lesom"},
+  {street = "T. H. Ševčenka"},
+  {street = "Sov. Hrdinov", written = "Sov. hrdinov"},
+]

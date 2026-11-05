@@ -195,6 +195,37 @@ def test_single_title_column_classified_per_title(
 
 
 @pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        # As ŠÚ SR's elected councillors of 2019–2022 are written.
+        ("Tibor Nagy", ("", "Tibor", "Nagy", "")),
+        ("Ing. Anton Bajzík", ("Ing.", "Anton", "Bajzík", "")),
+        ("Ivana Káňavová, Bc", ("Bc", "Ivana", "Káňavová", "")),
+        ("Bc.Norbert Jurčaga", ("Bc.", "Norbert", "Jurčaga", "")),
+        ("Vladimíra Číková, JUDr. Ing.", ("JUDr. Ing.", "Vladimíra", "Číková", "")),
+        ("Mgr. Jana Nová, PhD.", ("Mgr.", "Jana", "Nová", "PhD.")),
+        ("Dominika Plačková Uhrinová", ("", "Dominika", "Plačková Uhrinová", "")),
+        # Surname first: taken for the first name, there being no telling.
+        ("Horňák Ján Ing.", ("Ing.", "Horňák", "Ján", "")),
+    ],
+)
+def test_split_name(text: str, expected: tuple[str, str, str, str]):
+    assert cand.split_name(text) == expected
+
+
+@pytest.mark.parametrize("text", ["Novák", "Ing. Novák", ""])
+def test_split_name_needs_two_words(text: str):
+    with pytest.raises(cand.CandidatesError, match="no first name and surname"):
+        cand.split_name(text)
+
+
+def test_name_words_ignore_titles_order_case_and_diacritics():
+    assert cand.name_words("Horňák Ján Ing.") == cand.name_words("Ján Horňák")
+    assert cand.name_words("JUDr. Eva TÓTHOVÁ") == cand.name_words("Eva Tothová")
+    assert cand.name_words("Eva Tóthová") != cand.name_words("Eva Tóthová Nagyová")
+
+
+@pytest.mark.parametrize(
     ("a", "b"),
     [
         ("Bratislava - Staré Mesto", "Bratislava-Staré Mesto"),
@@ -310,6 +341,24 @@ def test_merge_across_contests_and_city_districts():
     assert merged.obec == "BA"
 
 
+def test_unknown_ages_merge_alike():
+    # A by-election's package of 2019–2022 gives no age: one name in one
+    # obec is one person, unless it repeats within a body.
+    cs = [
+        candidacy("starosta:508063", 1, "508063", age=None),
+        candidacy("oz:508063/1", 4, "508063", age=None),
+        candidacy("oz:508063/1", 2, "508063", first="Eva", age=None),
+        candidacy("oz:508063/2", 2, "508063", first="Eva", age=None),
+    ]
+    _, unmerged = cand.merge_persons(cs, ADMIN, overrides())
+    assert unmerged == 2
+    assert people(cs) == {
+        frozenset({"starosta:508063#1", "oz:508063/1#4"}),
+        frozenset({"oz:508063/1#2"}),
+        frozenset({"oz:508063/2#2"}),
+    }
+
+
 def test_namesakes_in_one_body_stay_apart():
     cs = [
         candidacy("oz:508063/1", 1, "508063"),
@@ -320,6 +369,22 @@ def test_namesakes_in_one_body_stay_apart():
     assert unmerged == 3
     assert len(persons) == 3
     assert len({p.id for p in persons}) == 3
+
+
+def test_presidential_rounds_merge_but_namesakes_in_a_round_do_not():
+    cs = [
+        candidacy("prezident:SK/1", 1, "508063"),
+        candidacy("prezident:SK/2", 2, "508063"),
+        candidacy("prezident:SK/1", 3, "", first="Eva"),
+        candidacy("prezident:SK/1", 4, "", first="Eva"),
+    ]
+    _, unmerged = cand.merge_persons(cs, ADMIN, overrides())
+    assert unmerged == 2
+    assert people(cs) == {
+        frozenset({"prezident:SK/1#1", "prezident:SK/2#2"}),
+        frozenset({"prezident:SK/1#3"}),
+        frozenset({"prezident:SK/1#4"}),
+    }
 
 
 def test_overrides_merge_and_split():

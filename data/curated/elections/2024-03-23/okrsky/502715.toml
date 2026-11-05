@@ -1,0 +1,24 @@
+# Okrsky of Santovka, transcribed by an AI agent in job okrsok-rules-4535 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1: Obecný úrad Santovka, ul. Parková č. 2, 935 87 Santovka – zasadacia miestnosť obecného úradu
+#   okrsok 2: Volebný okrsok č. 2: Dobrý domov Santovka, ul. Maďarovská č. 73, 935 87 Santovka – spoločenská miestnosť
+obec = "502715"
+name = "Santovka"
+okrsky_date = 2024-01-24
+okrsky_note = "The mayor's decision of 2024-01-24 gives each of the two okrsky only its polling station, no streets: okrsok 1 at the Obecný úrad, Parková 2 (part Santovka), okrsok 2 at Maďarovská 73 (the seniors' home, part Malinovec). The obec has two okrsky and two parts, each station in another part, so each okrsok is the part of its station. This is the same split as the copied rule set (Maďarovská 1–3 lie in part Santovka, 4–79 in part Malinovec)."
+
+[[document]]
+url = "https://www.santovka.sk/download_file_f.php?id=1986599"
+sha256 = "29d18ab8782a7ee1627f339cf8089842079e9e9c5134b32cf4bb6033e9183260"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v Obci Santovka pre voľby prezidenta v roku 2024 (24.1.2024), Santovka_Volebne-okrsky.pdf"
+
+[okrsok.1]
+rules = [
+  {part = "Santovka", note = "The document names only the polling station, Parková 2, which lies in part Santovka; the other okrsok's station lies in part Malinovec.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Malinovec", note = "The document names only the polling station, Maďarovská 73, which the register keeps in part Malinovec; the other okrsok's station lies in part Santovka.", inferred = true},
+]

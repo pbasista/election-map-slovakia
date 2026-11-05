@@ -3,11 +3,17 @@
  * app.js keeps them in the URL hash (`k`), so that a link carries them:
  * per contest its id and the numbers circled, joined by dots; the contests
  * joined by commas, in the order the first of each was circled
- * (`oz:528595/3.7.12,starosta:528595.2`). */
+ * (`oz:528595/3.7.12,starosta:528595.2`; a party and preferences on its
+ * list: `nrsr:SK.12,nrsr:SK/12.3.7`). */
 
-// A contest id (data.js `parseContest`): kind, area, and the obvod if any.
-const CONTEST = /^(oz|starosta|zsk|predseda):[0-9A-Z]+(\/[1-9]\d*)?$/;
+import { KINDS } from './kinds.js';
+
+// A contest id (kinds.js `parseContest`): kind, area, and its sub (the
+// obvod, round, question or list) if any.
+const CONTEST = /^([a-z]+):[0-9A-Z]+(?:\/[1-9]\d*)?$/;
 const NUMBER = /^[1-9]\d*$/;
+
+const isContest = (text) => Object.hasOwn(KINDS, CONTEST.exec(text)?.[1] ?? '');
 
 /* Contest id → the numbers circled in it, in ballot order; the contests in
  * the order the first of each was circled. */
@@ -32,7 +38,7 @@ export function parsePicks(text) {
   const picks = new Set();
   for (const group of (text ?? '').split(',')) {
     const [contest, ...numbers] = group.split('.');
-    if (!CONTEST.test(contest)) continue;
+    if (!isContest(contest)) continue;
     for (const n of numbers) if (NUMBER.test(n)) picks.add(`${contest}#${n}`);
   }
   return [...picks];

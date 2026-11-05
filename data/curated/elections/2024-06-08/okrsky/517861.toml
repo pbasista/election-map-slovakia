@@ -1,0 +1,27 @@
+# Okrsky of Petrovice, transcribed by an AI agent in job okrsok-rules-5112 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Petrovice, Pláne, Magale
+#   okrsok 2: Setechov
+obec = "517861"
+name = "Petrovice"
+okrsky_date = 2024-03-04
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision for this vote. The register has no streets; every okrsok is whole parts of the municipality. Houses not in the named parts, if any, take the nearest okrsok (fill_nearest)."
+
+[[document]]
+url = "https://www.obecpetrovice.sk/blocks/files/0193bb67-c6f1-75dc-832c-2bf4e630e92a.pdf"
+sha256 = "4e83d93f418975b58a1837a3e63c07afcd579b869979c929d5ae88acd7a65190"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Petrovice"},
+  {part = "Pláne"},
+  {part = "Magale"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Setechov"},
+]

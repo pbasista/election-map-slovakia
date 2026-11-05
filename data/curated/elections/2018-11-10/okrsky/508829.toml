@@ -1,0 +1,49 @@
+# The okrsky of Nemecká of the vote of 2020-02-29, data/curated/elections/2020-02-29/okrsky/508829.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Nemecká, transcribed by an AI agent in job okrsok-rules-2622 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: ulice: Andreja Sládkoviča, Hronská, Jána Švermu, Janka Kráľa (od č.1 po číslo 44), Jozefa Gregora Tajovského, Mládežnícka, Partizánska, Pod Hrbkom, Podskalie, Sama Chalupku, Slovenského nár. povstania, Školská, Tehelná, Zábrežná
+#     okrsok 2: ulice: 1. mája, Krátka, Odbojárov, Sviniarka, Štvrť Kapitána Nálepku, Za Štadiónom, Zámostského, Janka Kráľa (od č. 45)
+obec = "508829"
+name = "Nemecká"
+okrsky_fill = "nearest"
+okrsky_note = "\"Sviniarka\" (okrsok 2) is not a street of the address register and is left out. Addresses without a street (súpisné čísla only, in parts Dubová, Nemecká, Zámostie) take the okrsok of the nearest address (fill_nearest). No decision date is stated on the page."
+okrsky_adopted = 2020-02-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-864): The obec's 2018 municipal-elections notice-board page (vyvesené 11.7.2018) has no okrsky document (only the obvod, population, e-mail address, candidates' information). The site's full-text search finds no other okrsky document of 2018 (the earliest street list is of the 2020 elections); the Internet Archive has no capture of the 2018 notice-board pages. These are the okrsky of the vote of 2020-02-29 (2020-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2019-11-25
+okrsky_date_basis = "The notice-board page of the 2020 National Council elections has the section \"Utvorenie volebných okrskov a určenie volebných miestností\" (for the elections of 2020), marked \"Zverejnené 25.11.2019\"; the decision itself is undated. (https://www.nemecka.info/zverejnovanie-1/uradna-tabula/volby-do-narodnej-rady-sr-2020-250.html)"
+
+[[document]]
+url = "https://www.nemecka.info/zverejnovanie-1/uradna-tabula/volby-do-narodnej-rady-sr-2020-250.html"
+sha256 = "4d0d5ae09400f1cfef12d79b21cdf2dd1793043320bc16613351283e6c195284"
+title = "Voľby do Národnej rady SR 2020 – Utvorenie volebných okrskov a určenie volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Andreja Sládkoviča"},
+  {street = "Hronská"},
+  {street = "Jána Švermu"},
+  {street = "Janka Kráľa", numbers = "1-44"},
+  {street = "Jozefa Gregora Tajovského"},
+  {street = "Mládežnícka"},
+  {street = "Partizánska"},
+  {street = "Pod Hrbkom"},
+  {street = "Podskalie"},
+  {street = "Sama Chalupku"},
+  {street = "Slovenského Nár. Povstania", written = "Slovenského nár. povstania"},
+  {street = "Školská"},
+  {street = "Tehelná"},
+  {street = "Zábrežná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Krátka"},
+  {street = "Odbojárov"},
+  {street = "Štvrť Kapitána Nálepku"},
+  {street = "Za Štadiónom"},
+  {street = "Zámostského"},
+  {street = "Janka Kráľa", numbers = "45-"},
+]

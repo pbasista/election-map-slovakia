@@ -1,0 +1,24 @@
+# Okrsky of Oborín, transcribed by an AI agent in job okrsok-rules-5209 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kultúrny dom Oborín 125
+#   okrsok 2: Obecný dom Kucany 26
+obec = "528633"
+name = "Oborín"
+okrsky_date = 2024-03-04
+okrsky_note = "The document gives each okrsok only its polling station: 1. Kultúrny dom Oborín 125, 2. Obecný dom Kucany 26; the obec has 2 parts, each okrsok is given the part of its station (as in the council obvody: obvod 1 Oborín, obvod 2 Kucany)."
+
+[[document]]
+url = "https://www.oborin.sk/files/2024-03-04-102142-EP_2024_-_Ozn__menie_o_ur__en___volebnej_miestnosti.pdf"
+sha256 = "9871825058c9327ceabeab41e87b27f2dd3f4e9590b0810984cd0a7369fdf3f5"
+title = "Oznámenie o utvorení volebného okrsku a o určení volebnej miestnosti pre voľby do Európskeho parlamentu 2024 (04.03.2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Oborín", note = "the okrsok's polling station, Kultúrny dom Oborín 125, lies in part Oborín; the obec has 2 okrsky and 2 parts", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kucany", note = "the okrsok's polling station, Obecný dom Kucany 26, lies in part Kucany", inferred = true},
+]

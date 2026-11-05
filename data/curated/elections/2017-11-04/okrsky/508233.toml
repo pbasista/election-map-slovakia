@@ -1,0 +1,191 @@
+# Okrsky of Stupava, transcribed by an AI agent in job okrsok-rules-037 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov bývajúcich v uliciach: Bitúnková, Borovicová, Brezová, Domov dôchodcov, Družstevná, Dubová, Duklianska, F. Kostku, Hrabova, Jána Ondruša, Jedľová, Jelenia, Jilemnického, Kalinčiakova, Lesná, Liesková, Líščia, Ľ. Kraskovskej, Malacká, Mateja Bela, Medzipotočná, Na Kopcoch, Nám. Slovenského povstania, Nová, Nad potokom, Obora, Osiková, Pajštúnska, Pažitná, Platanová, Pod vŕškom, Poľná, Pri artézskej studni, Pri majeri, Pri potoku, Prof. Ondroucha, Rímska, Ruda Morica, SNP, U Kozánka, Václava Honzu, Vincenta Šikulu
+#   okrsok 2: pre voličov bývajúcich v uliciach: Bazová, Cintorínska, Čakanková, Debnáreň, Hlavná č. d. 1 - 57 a 2 - 46, Gaštanová, Hroznová, Jaseňová, Javorová, Kalvárska, Karpatská, Konvalinková, Kvetná, Lúčna, Marcheggská, Muštová, Na vyhliadke, Nevädzová, Nám. M. R. Štefánika, Nám. sv. Trojice, Orechová, Park, Pod Kremenicou, Pri borníku, Pri Greftoch, Révová, Slovenská, Viničná, Vinohradská, Žabárňa
+#   okrsok 3: pre voličov bývajúcich v uliciach: Bezručova, Budovateľská, J. Kráľa, Keltská, Krížna, Kukučínova, Mlynská, Továrenská, Záhradná, Zemanská
+#   okrsok 4: pre voličov bývajúcich v uliciach: Agátová, Bernolákova, Bočná, Cementárenská, Dlhá, Fándlyho, Kúpeľná, Lipová, Mierová, Na aleji, Robotnícka, Sama Tomášika, Sládkovičova, Vajanského, Veterná, Wolkerova
+#   okrsok 5: pre voličov bývajúcich v uliciach: Kosatcová, Krátka, Ľanová, M. Benku, Malý Háj, Marianska, Na Dieloch, Na Pekárkach, Na stráni, Na Vrchnú horu, Okružná, Pri kríži, Púpavová, Ružová, Sadová, Slnečná, Stromová, Školská, Veternicová, Zvončeková
+#   okrsok 6: pre voličov bývajúcich v uliciach: Hlavná 59 až 99, Hlavná 48 - 96, Krajná, Rovná, Sama Chalupku, Stredná, Zadná, Zdravotnícka, Železničná
+#   okrsok 7: pre voličov bývajúcich v uliciach: Bajzova, Bottova, Devínska cesta , Dolná, Hodžova, Hollého, Hurbanova, Hviezdoslavova, Juračkova, Kolakovičova, Matuškova, Moyzesova, Pri Polankach, Štúrova, Záhumenská
+obec = "508233"
+name = "Stupava"
+okrsky_date = 2017-07-26
+okrsky_fill = "nearest"
+okrsky_note = "'Hlavná č. d. 1 - 57 a 2 - 46' (okrsok 2) and 'Hlavná 59 až 99, Hlavná 48 - 96' (okrsok 6) are read as the odd and even sides. Named but not in the register (left out): Domov dôchodcov, Obora, Ruda Morica, Čakanková, Malý Háj, Na Vrchnú horu, Púpavová, Pri Polankach. Not named (newer streets): Džbankárska, Obuvnícka, Pastierska, Piesková, Pod Kopcami, Spojná, Šípková, plus houses without a street: fill_nearest."
+
+[[document]]
+url = "https://www.stupava.sk/e_download.php?file=data/uredni_deska/obsah1329_1.doc&original=Volby-do-VUC_2017.doc"
+sha256 = "76ee85733ead123751c14142445c88e34b2a4615197966283ee4673de84e09a0"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do VÚC dňa 04. novembra 2017 (V Stupave 26.07.2017)"
+
+[[document]]
+url = "https://www.stupava.sk/sk/samosprava/volby-referendum/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-do-vuc-dna-04-novembra-2017-1367.html"
+sha256 = "7cc9fa3c7b1681635484b3b7fb618a4452990010137699f3db007b395d84a3ed"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do VÚC dňa 04. novembra 2017 (notice board item)"
+
+[okrsok.1]
+rules = [
+  {street = "Bitúnková"},
+  {street = "Borovicová"},
+  {street = "Brezová"},
+  {street = "Družstevná"},
+  {street = "Dubová"},
+  {street = "Duklianska"},
+  {street = "Ferdiša Kostku", written = "F. Kostku"},
+  {street = "Hrabová", written = "Hrabova"},
+  {street = "Jána Ondruša"},
+  {street = "Jedľová"},
+  {street = "Jelenia"},
+  {street = "Jilemnického"},
+  {street = "Kalinčiakova"},
+  {street = "Lesná"},
+  {street = "Liesková"},
+  {street = "Líščia"},
+  {street = "Ľ. Kraskovskej"},
+  {street = "Malacká"},
+  {street = "Mateja Bela"},
+  {street = "Medzipotočná"},
+  {street = "Na Kopcoch"},
+  {street = "Námestie Slovenského povstania", written = "Nám. Slovenského povstania"},
+  {street = "Nová"},
+  {street = "Nad potokom"},
+  {street = "Osiková"},
+  {street = "Pajštúnska"},
+  {street = "Pažitná"},
+  {street = "Platanová"},
+  {street = "Pod vŕškom"},
+  {street = "Poľná"},
+  {street = "Pri artézskej studni"},
+  {street = "Pri majeri"},
+  {street = "Pri potoku"},
+  {street = "Prof. Ondroucha"},
+  {street = "Rímska"},
+  {street = "SNP"},
+  {street = "U Kozánka"},
+  {street = "Václava Honzu"},
+  {street = "Vincenta Šikulu"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bazová"},
+  {street = "Cintorínska"},
+  {street = "Debnáreň"},
+  {street = "Hlavná", numbers = "1-57", parity = "odd"},
+  {street = "Hlavná", numbers = "2-46", parity = "even"},
+  {street = "Gaštanová"},
+  {street = "Hroznová"},
+  {street = "Jaseňová"},
+  {street = "Javorová"},
+  {street = "Kalvárska"},
+  {street = "Karpatská"},
+  {street = "Konvalinková"},
+  {street = "Kvetná"},
+  {street = "Lúčna"},
+  {street = "Marcheggská"},
+  {street = "Muštová"},
+  {street = "Na vyhliadke"},
+  {street = "Nevädzová"},
+  {street = "Nám. M. R. Štefánika"},
+  {street = "Nám. sv. Trojice"},
+  {street = "Orechová"},
+  {street = "Park"},
+  {street = "Pod Kremenicou"},
+  {street = "Pri Borníku", written = "Pri borníku"},
+  {street = "Pri Greftoch"},
+  {street = "Révová"},
+  {street = "Slovenská"},
+  {street = "Viničná"},
+  {street = "Vinohradská"},
+  {street = "Žabárňa"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bezručova"},
+  {street = "Budovateľská"},
+  {street = "J. Kráľa"},
+  {street = "Keltská"},
+  {street = "Krížna"},
+  {street = "Kukučínova"},
+  {street = "Mlynská"},
+  {street = "Továrenská"},
+  {street = "Záhradná"},
+  {street = "Zemanská"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Agátová"},
+  {street = "Bernolákova"},
+  {street = "Bočná"},
+  {street = "Cementárenská"},
+  {street = "Dlhá"},
+  {street = "Fándlyho"},
+  {street = "Kúpeľná"},
+  {street = "Lipová"},
+  {street = "Mierová"},
+  {street = "Na aleji"},
+  {street = "Robotnícka"},
+  {street = "Sama Tomášika"},
+  {street = "Sládkovičova"},
+  {street = "Vajanského"},
+  {street = "Veterná"},
+  {street = "Wolkerova"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Kosatcová"},
+  {street = "Krátka"},
+  {street = "Ľanová"},
+  {street = "M. Benku"},
+  {street = "Marianska"},
+  {street = "Na Dieloch"},
+  {street = "Na Pekárkach"},
+  {street = "Na stráni"},
+  {street = "Na Vrchnú horu"},
+  {street = "Okružná"},
+  {street = "Pri kríži"},
+  {street = "Ružová"},
+  {street = "Sadová"},
+  {street = "Slnečná"},
+  {street = "Stromová"},
+  {street = "Školská"},
+  {street = "Veternicová"},
+  {street = "Zvončeková"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Hlavná", numbers = "59-99", parity = "odd"},
+  {street = "Hlavná", numbers = "48-96", parity = "even"},
+  {street = "Hlavná", numbers = "59-99", parity = "odd"},
+  {street = "Hlavná", numbers = "48-96", parity = "even"},
+  {street = "Krajná"},
+  {street = "Rovná"},
+  {street = "Sama Chalupku"},
+  {street = "Stredná"},
+  {street = "Zadná"},
+  {street = "Zdravotnícka"},
+  {street = "Železničná"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Bajzova"},
+  {street = "Bottova"},
+  {street = "Devínska cesta"},
+  {street = "Dolná"},
+  {street = "Hodžova"},
+  {street = "Hollého"},
+  {street = "Hurbanova"},
+  {street = "Hviezdoslavova"},
+  {street = "Juračkova"},
+  {street = "Kolakovičova"},
+  {street = "Matuškova"},
+  {street = "Moyzesova"},
+  {street = "Štúrova"},
+  {street = "Záhumenská"},
+]

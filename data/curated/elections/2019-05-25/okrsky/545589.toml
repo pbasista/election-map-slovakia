@@ -1,0 +1,49 @@
+# The okrsky of Cabaj-Čápor of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/545589.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Cabaj-Čápor, transcribed by an AI agent in job okrsok-rules-632 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: časť obce Cabaj; čísla domov: 1-418; 748-751; 754; 761; 766; 769; 772-774; 778-781; 785-786; 789;792-793; 795; 1530; 1538; 1560-1561; 1564-1567; 1569; 1571; 1575-1576; 1580-1581; 1584; 1587-1588
+#     okrsok 2: časť obce Cabaj, Nový Cabaj, Fízeš; čísla domov: 419 -744; 752; 757-760; 764-765; 767; 775-777; 782-783; 787-788; 790; 794-798; 1445; 1501-1529; 1530-1537; 1557-1558; 1563; 1568; 1572; 1574; 1577; 1582-1584; 1585 -1586; 920-929; 930-959; 4001-4165
+#     okrsok 3: osady: Pereš, Riegler; čísla domov: 799; 801-919; 1594-1597; 1600-1610
+#     okrsok 4: časť obce Čápor, osada Hrúšťov; čísla domov: 961 – 1498; 1540-1556; 1559; 1562; 1570; 1573; 3020
+obec = "545589"
+name = "Cabaj-Čápor"
+okrsky_date = 2018-07-10
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document, read from the page image. The okrsky are set by súpisné číslo (čísla domov), numbered obec-wide across both parts, so each okrsok gets the same number list in part Cabaj and part Čápor. The osady named (Nový Cabaj, Fízeš, Pereš, Riegler, Hrúšťov) are not parts in the register and are covered by the house numbers. About 190 addresses have súpisné čísla beyond the document's lists (mostly houses numbered after 2018); they take the okrsok of the nearest placed address (fill_nearest), as do addresses without a street."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1753): The archived page of the 2019 EP elections (captured 2019-05-27) links \"Utvorenie volebných okrskov EP 2019.pdf\" (download_file_f.php?id=1090651), but the file is gone from the website (404) and the Internet Archive never captured it. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 4 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://web.archive.org/web/20190719133051/https://www.cabajcapor.sk/download_file_f.php?id=1002692"
+sha256 = "60e125d1a289db51ee6679fbd8bcb02adec7fd868eb715a1ed0e96a625978d7e"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí, konané dňa 10. novembra 2018"
+
+[[document]]
+url = "https://web.archive.org/web/20190921140958/https://www.cabajcapor.sk/komunalne-volby-2018/mid/301943/md0/10/md1/2019/.html"
+sha256 = "e0a97e0e312e477b708defeed88a06646dd04b9821c249628f6845978592d338"
+title = "Komunálne voľby 2018 (archived page linking the document)"
+
+[okrsok.1]
+rules = [
+  {part = "Cabaj", numbers = "1-418, 748-751, 754, 761, 766, 769, 772-774, 778-781, 785-786, 789, 792-793, 795, 1530, 1538, 1560-1561, 1564-1567, 1569, 1571, 1575-1576, 1580-1581, 1584, 1587-1588"},
+  {part = "Čápor", numbers = "1-418, 748-751, 754, 761, 766, 769, 772-774, 778-781, 785-786, 789, 792-793, 795, 1530, 1538, 1560-1561, 1564-1567, 1569, 1571, 1575-1576, 1580-1581, 1584, 1587-1588"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Cabaj", numbers = "419-744, 752, 757-760, 764-765, 767, 775-777, 782-783, 787-788, 790, 794-798, 1445, 1501-1537, 1557-1558, 1563, 1568, 1572, 1574, 1577, 1582-1586, 920-959, 4001-4165", except = "795, 1530, 1584", note = "The document lists the súpisné číslo singly in one okrsok and also inside a range of another (795, 1530, 1584 singly in okrsok 1 and in ranges of okrsok 2; 1445 singly in okrsok 2 and in 961–1498 of okrsok 4); each is taken with its single listing."},
+  {part = "Čápor", numbers = "419-744, 752, 757-760, 764-765, 767, 775-777, 782-783, 787-788, 790, 794-798, 1445, 1501-1537, 1557-1558, 1563, 1568, 1572, 1574, 1577, 1582-1586, 920-959, 4001-4165", except = "795, 1530, 1584", note = "The document lists the súpisné číslo singly in one okrsok and also inside a range of another (795, 1530, 1584 singly in okrsok 1 and in ranges of okrsok 2; 1445 singly in okrsok 2 and in 961–1498 of okrsok 4); each is taken with its single listing."},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Cabaj", numbers = "799, 801-919, 1594-1597, 1600-1610"},
+  {part = "Čápor", numbers = "799, 801-919, 1594-1597, 1600-1610"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Cabaj", numbers = "961-1498, 1540-1556, 1559, 1562, 1570, 1573, 3020", except = "1445", note = "The document lists the súpisné číslo singly in one okrsok and also inside a range of another (795, 1530, 1584 singly in okrsok 1 and in ranges of okrsok 2; 1445 singly in okrsok 2 and in 961–1498 of okrsok 4); each is taken with its single listing."},
+  {part = "Čápor", numbers = "961-1498, 1540-1556, 1559, 1562, 1570, 1573, 3020", except = "1445", note = "The document lists the súpisné číslo singly in one okrsok and also inside a range of another (795, 1530, 1584 singly in okrsok 1 and in ranges of okrsok 2; 1445 singly in okrsok 2 and in 961–1498 of okrsok 4); each is taken with its single listing."},
+]

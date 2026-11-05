@@ -1,0 +1,71 @@
+# The okrsky of Slovenská Ľupča of the vote of 2023-01-21, data/curated/elections/2023-01-21/okrsky/509001.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Slovenská Ľupča, transcribed by an AI agent in job okrsok-rules-3057 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Cintorínska, Czambelova, 1.mája, Mierová, Námestie SNP, Peniažky, Podkonická, Švarca, občan na TP obce/ Slovenská Ľupča
+#     okrsok 2: Dolná, Ľupčianska, Mlynská, Oslobodenia, Partizánska, Príboj, Školská, Športová, Za Ďaňacou, Za nožiarňou, Na Zábreží
+#     okrsok 3: Františka Mazúra, Hronská, Jabloňová, Juraja Majera, Krížna, Lesnícka, Lichardova, Lúčna, Murgašova, Orechová, Pod Zámkom, Pod Hôrkou, Sadová, Tehelná, Záhradná, Železničná
+obec = "509001"
+name = "Slovenská Ľupča"
+okrsky_date = 2022-11-09
+okrsky_fill = "nearest"
+okrsky_note = "All 35 register streets are named. The 345 addresses without a street (numbered by súpisné číslo in the single part Slovenská Ľupča) take the okrsok of the nearest placed address (fill_nearest); 'občania s pobytom na obci' (residents registered only to the municipality) are in okrsok 1. The streets are from the mayor's announcement on the Referendum 2023 page; the linked signed PDF of 09.11.2022 (the date) lists the okrsky and stations without streets."
+okrsky_adopted = 2023-01-21
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-262): The live website (WordPress, posts back to 2019) has okrsky only for the 2023 referendum, NR SR 2023, president 2024 and EP 2024; none for this vote. The Internet Archive was unreachable (connection refused) on repeated retries over ~15 minutes, so archived pages could not be checked. These are the okrsky of the vote of 2023-01-21 (2023-referendum), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2023-01-21: 1: 890 → 861, 2: 929 → 902, 3: 924 → 932."
+
+[[document]]
+url = "https://slovenskalupca.sk/referendum-2023-4/"
+sha256 = "8883f93677b7890b72c17fcbc8daf009ca387c29249a67bb202035a2f47c44cb"
+title = "Referendum 2023 – Určenie okrskov a miestností"
+
+[[document]]
+url = "https://data.slovenskalupca.sk/_titulka.php?s=s/2022/11/1668331090||Referendum_2023-urcene_okrsky-9.11.22.pdf"
+sha256 = "3cf24d485a0fc0b49d54e3ee51611b174795988a802d88c7c2eea5f331cc0683"
+title = "Referendum 2023 – utvorenie volebných okrskov, určenie volebných miestností (09.11.2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Czambelova"},
+  {street = "1.mája"},
+  {street = "Mierová"},
+  {street = "Námestie SNP"},
+  {street = "Peniažky"},
+  {street = "Podkonická"},
+  {street = "Švarca"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dolná"},
+  {street = "Ľupčianska"},
+  {street = "Mlynská"},
+  {street = "Oslobodenia"},
+  {street = "Partizánska"},
+  {street = "Príboj"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Za Ďaňacou"},
+  {street = "Za nožiarňou"},
+  {street = "Na Zábreži", written = "Na Zábreží", note = "Na Zábreží is the register's Na Zábreži with another ending; the only such street."},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Františka Mazúra"},
+  {street = "Hronská"},
+  {street = "Jabloňová"},
+  {street = "Juraja Majera"},
+  {street = "Krížna"},
+  {street = "Lesnícka"},
+  {street = "Lichardova"},
+  {street = "Lúčna"},
+  {street = "Murgašova"},
+  {street = "Orechová"},
+  {street = "Pod zámkom", written = "Pod Zámkom"},
+  {street = "Pod Hôrkou"},
+  {street = "Sadová"},
+  {street = "Tehelná"},
+  {street = "Záhradná"},
+  {street = "Železničná"},
+]

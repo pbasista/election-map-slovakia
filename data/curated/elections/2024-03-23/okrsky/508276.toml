@@ -1,0 +1,67 @@
+# Okrsky of Tomášov, transcribed by an AI agent in job okrsok-rules-4199 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: tvoria ulice obce: Alžbetinská, Bratislavská, Cintorínska, Fialková, Madaras, Majorháza, Malinovská, Mierová, Mlynská, Na majeri, Pestovateľská, Pri kaštieli, Rastická, Školská, Štvrtocká, Veterná a občania ktorí majú TP Obec Tomášov.
+#   okrsok 2: tvoria ulice obce: Agátová, Dolná, Dubová, Dunajská, Hlavná, Krátka, Kvetná, Lesná, Lipová, Nová, 1. mája, Okružná ulica, Podzáhradná, Robotnícka, Senecká, Svätej Trojice, Športová, Tehelná, Topoľová, Záhradnícka a Vŕbová.
+obec = "508276"
+name = "Tomášov"
+okrsky_fill = "nearest"
+okrsky_note = "Text layer of the PDF. 'občania ktorí majú TP Obec Tomášov' (okrsok 1) are voters registered without an address, not mapped. The register's addresses without a street (súpisné only, incl. parts Doma and Malý Madaras) are placed by fill_nearest. The document states no date; dated as naming the vote."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated document names the vote in its text (voľby prezidenta SR 23. marca 2024)."
+
+[[document]]
+url = "https://www.tomasov.sk/modules/file_storage/download.php?file=a12e96b8%7C1139"
+sha256 = "c70b6ae63fd1b44ab64c0f62f104af42a043aba136c2a41db12a6052917d7ada"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta SR 23. marca 2024"
+
+[[document]]
+url = "https://www.tomasov.sk/urad-9/volby/"
+sha256 = "c7cdbf103e6ff8184537948b5c5e0dc2460f91890f5cbf34178fadb3d65eed19"
+title = "Voľby (page linking the file)"
+
+[okrsok.1]
+rules = [
+  {street = "Alžbetinská"},
+  {street = "Bratislavská"},
+  {street = "Cintorínska"},
+  {street = "Fialková"},
+  {street = "Madaras"},
+  {street = "Majorháza"},
+  {street = "Malinovská"},
+  {street = "Mierová"},
+  {street = "Mlynská"},
+  {street = "Na Majeri", written = "Na majeri"},
+  {street = "Pestovateľská"},
+  {street = "Pri kaštieli"},
+  {street = "Rastická"},
+  {street = "Školská"},
+  {street = "Štvrtocká"},
+  {street = "Veterná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Dolná"},
+  {street = "Dubová"},
+  {street = "Dunajská"},
+  {street = "Hlavná"},
+  {street = "Krátka"},
+  {street = "Kvetná"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+  {street = "Nová"},
+  {street = "1. mája"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "Okružná ulica"},
+  {street = "Podzáhradná"},
+  {street = "Robotnícka"},
+  {street = "Senecká"},
+  {street = "Svätej Trojice"},
+  {street = "Športová"},
+  {street = "Tehelná"},
+  {street = "Topoľová"},
+  {street = "Záhradnícka"},
+  {street = "Vŕbová"},
+]

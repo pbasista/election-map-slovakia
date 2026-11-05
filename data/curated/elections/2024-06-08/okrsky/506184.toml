@@ -1,0 +1,26 @@
+# Okrsky of Lubina, transcribed by an AI agent in job okrsok-rules-4970 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: obec a Hrabové
+#   okrsok 2: Hrnčiarové a Miškech Dedinka
+obec = "506184"
+name = "Lubina"
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-03-08
+okrsky_date_basis = "The document is undated; the municipality's elections page lists it as 'Vytvorenie-okrskov-pre-volby-do-europskeho-parlamentu-2024.pdf', 'Zverejnené 8.3.2024'. Its text names the European Parliament election of 2024. (https://www.obeclubina.sk/volby.html)"
+
+[[document]]
+url = "https://www.obeclubina.sk/download_file_f.php?id=2012272"
+sha256 = "d4bf5d9c0841aa50cce1b4d62d9e46f22888b204d7914ce273c88a0226cb2ecf"
+title = "Vytvorenie okrskov pre voľby do Európskeho parlamentu 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Lubina", note = "'obec a Hrabové': the village Lubina; Hrabové is a settlement the register keeps in part Lubina"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Hrnčiarové"},
+  {part = "Miškech Dedinka"},
+]

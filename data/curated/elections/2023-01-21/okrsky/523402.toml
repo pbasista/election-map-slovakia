@@ -1,0 +1,45 @@
+# Okrsky of Batizovce, transcribed by an AI agent in job okrsok-rules-3232 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: obec Batizovce a ulice Družstevná, Horská, Hviezdoslavova, Jurkovičova, K potoku, Kvetná, Lesná, Osloboditeľov, Školská, Športová, Štúrova, Tatranská, Záhradná
+#   okrsok 2: ulice Cintorínska, Komenského, Krátka, Kukučínova, Lúčna, Nálepkova, Partizánska, Poľná, Sládkovičova
+obec = "523402"
+name = "Batizovce"
+okrsky_date = 2022-11-07
+okrsky_fill = "nearest"
+okrsky_note = "'obec Batizovce' in okrsok 1 means voters registered only on the obec, not a place; houses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.obecbatizovce.sk/modules/file_storage/download.php?file=9d55d6f3%7C468"
+sha256 = "20af89139eaa60d2e8f089977c0eabaabf2f6d040ee42f3be1331fce68690410"
+title = "Referendum vyhlásené na deň 21.01.2023 – oznámenie údajov (volebné okrsky), Bt/490/2022-001"
+
+[okrsok.1]
+rules = [
+  {street = "Družstevná"},
+  {street = "Horská"},
+  {street = "Hviezdoslavova"},
+  {street = "Jurkovičova"},
+  {street = "K potoku"},
+  {street = "Kvetná"},
+  {street = "Lesná"},
+  {street = "Osloboditeľov"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Štúrova"},
+  {street = "Tatranská"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Komenského"},
+  {street = "Krátka"},
+  {street = "Kukučínova"},
+  {street = "Lúčna"},
+  {street = "Nálepkova"},
+  {street = "Partizánska"},
+  {street = "Poľná"},
+  {street = "Sládkovičova"},
+]

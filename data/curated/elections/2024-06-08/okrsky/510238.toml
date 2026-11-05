@@ -1,0 +1,28 @@
+# The okrsky of Zuberec of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/510238.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Zuberec, transcribed by an AI agent in job okrsok-rules-4401 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: obyvatelia obce od súpisného čísla 1 – 300
+#     okrsok 2: obyvatelia obce od súpisného čísla 301
+obec = "510238"
+name = "Zuberec"
+okrsky_note = "The document splits the single-part village by súpisné číslo: okrsok 1 numbers 1–300, okrsok 2 from 301."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2024-06-08 setting the okrsky was found (okrsok-rules-5023): The EP 2024 page (live, archived 2024-06-18) lists only e-mail notices, voter information and the announcement; no okrsky document for this vote. The presidential 2024 document (1–300 / 301– by súpisné číslo) is another vote's. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-06-08 → 2024-03-23: 1: 792 → 847, 2: 905 → 959."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names the presidential election of 2024 (1st round 23 March 2024, 2nd round 6 April 2024); it is undated."
+
+[[document]]
+url = "https://www.zuberec.sk/modules/file_storage/download.php?file=1b6a57bf%7C825"
+sha256 = "bd593c855613352ca450999e8b281aad1fdf4d5dec0dc931e0a23a76873d6afd"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta Slovenskej republiky 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Zuberec", numbers = "1-300"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

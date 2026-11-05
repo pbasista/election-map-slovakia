@@ -1,0 +1,59 @@
+# Okrsky of Topoľčianky, transcribed by an AI agent in job okrsok-rules-4861 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Obec Topoľčianky bez ulice, Cintorínska 1-50, Dlhovského 42-148, Hlavná 24-289, Holešovská 1-34, Hostianska 1-68, Hrádza 2-24, Lipová 53-124, Machulinská 1-31, Parková 5-130, Pažiťská 3-36, Pod Hájom 1-24, Športová 1-54, Tekovská 16-22, Vígľašská 1-22, Záhradnícka 1-16
+#   okrsok 2: Hlavná 1-123, Kopaničky 1-37, Lipová 1-52, Litoměřická 1-77, Mlynská 1-71, Moravecká 1-35, Partizánska 4-80, SNP 1-20, Železničná 1-6, Žikavecká 1-1, Žitavanská 1-53
+obec = "500828"
+name = "Topoľčianky"
+okrsky_date = 2024-03-01
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's determination of two okrsky and polling stations for the European Parliament elections of 8 June 2024 (dated 01.03.2024) with the table 'Volebné okrsky, názvy ulíc a orientačné čísla podľa domov' (dated 03.03.2024). The ranges of streets wholly in one okrsok are the street's house numbers, so those streets are taken whole. 'Obec Topoľčianky' in okrsok 1 means voters registered only on the municipality (no address). Houses without a street (súpisné only) take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.topolcianky.sk/obec-1/volby-a-referenda/volby-2024-3/volby-do-europskeho-parlamentu-2024/"
+sha256 = "5c0920aae2792a4c4955ebd46da302b1aef6703e5d6bf213ebf283220516e5ec"
+title = "Voľby do Európskeho parlamentu 2024"
+
+[[document]]
+url = "https://www.topolcianky.sk/e_download.php?file=data/editor/577sk_4.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti.pdf"
+sha256 = "a496a1977567e8771431994c68ebd380c53cd40b95d694b029ebc4d176f20ef7"
+title = "Volebné okrsky a volebné miestnosti"
+
+[[document]]
+url = "https://www.topolcianky.sk/e_download.php?file=data/editor/577sk_5.pdf&original=Okrsky%2C%20ulice%2C%20S%C4%8C.pdf"
+sha256 = "caa74268743151d4433dadf72d3e206941da9c607107bd0e8a0faad7d24a8550"
+title = "Okrsky, ulice, SČ"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Dlhovského"},
+  {street = "Holešovská"},
+  {street = "Hostianska"},
+  {street = "Hrádza"},
+  {street = "Machulinská"},
+  {street = "Parková"},
+  {street = "Pažiťská"},
+  {street = "Pod Hájom"},
+  {street = "Športová"},
+  {street = "Tekovská"},
+  {street = "Vígľašská"},
+  {street = "Záhradnícka"},
+  {street = "Hlavná", numbers = "124-289", note = "The document writes 'Hlavná 24-289' for okrsok 1 while giving Hlavná 1-123 to okrsok 2; read as 124-289 (the overlap 24-123 is a typo; the earlier documents of 2022/2023 say 'od 124 – 289')."},
+  {street = "Lipová", numbers = "53-124"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná", numbers = "1-123"},
+  {street = "Lipová", numbers = "1-52"},
+  {street = "Kopaničky"},
+  {street = "Litoměřická"},
+  {street = "Mlynská"},
+  {street = "Moravecká"},
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Železničná"},
+  {street = "Žikavecká"},
+  {street = "Žitavanská"},
+]

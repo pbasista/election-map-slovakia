@@ -1,0 +1,189 @@
+# Okrsky of Bánovce nad Bebravou, transcribed by an AI agent in job okrsok-rules-2908 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 9. mája, Bernolákova, Družstevná, F. Urbánka, Farská, J. Bottu, J. Kačku, K štadiónu, Ľ. Podjavorinskej, Sasinkova, Vajanského nábrežie, Za Valy + občania, ktorí majú trvalý pobyt „Bánovce nad Bebravou“ bez uvedenia ulice alebo súpisného čísla
+#   okrsok 2: A.Kmeťa, Hviezdoslavova, J. Jesenského, J. Kráľa, Mila Urbana, Mlynská, Moyzesova, Murgašova, Nám. Ľ. Štúra, Palkovičova, Radlinského, Rokošská, SNP, Trenčianska cesta, Záfortňa
+#   okrsok 3: A.Hlinku, Clementisova, Partizánska, Pribinova, Rumunská
+#   okrsok 4: J. G. Tajovského, K zornici, Na vŕštek, Textilná, Vystrkov
+#   okrsok 5: Hollého, Sládkovičova
+#   okrsok 6: J. Matušku, M. R. Štefánika, Strážovská, Školská
+#   okrsok 7: K nemocnici, K priehrade, Pažiť, Vodná nádrž
+#   okrsok 8: 5. apríla, Cibislávska
+#   okrsok 9: Cyrila a Metoda, Gorazdova
+#   okrsok 10: Husitská
+#   okrsok 11: Lúčna, Rastislavova, Slatinská, Žitná
+#   okrsok 12: J. A. Komenského, Mojmírova
+#   okrsok 13: Kukučínova, Matice slovenskej, Svätoplukova
+#   okrsok 14: Alexandra Dubčeka, J. C. Hronského, Novomeského
+#   okrsok 15: Biskupice
+#   okrsok 16: Hečkova, Hrežďovská, I. Krasku, Jahodová, Lipová, Malé Chlievany, Radová, Topoľová
+#   okrsok 17: Hrežďovská, Inovecká, K cintorínu, Kpt. Jaroša, Ku splavu, Ozorovská hlavná, Ozorovská nová, Potočná, Za kaštielom
+#   okrsok 18: Horné Ozorovce
+#   okrsok 19: (not in the document)
+obec = "542652"
+name = "Bánovce nad Bebravou"
+okrsky_fill = "nearest"
+okrsky_note = "The document has okrsky 1-18; the Statistical Office counts a 19th okrsok with 2 voters which it does not define, given here as an okrsok without addresses. Hrežďovská (register part Dolné Ozorovce) is listed in both okrsok 16 and okrsok 17 without saying which houses belong where; it has no rule and each house takes the okrsok of its nearest neighbours (fill_nearest). Also by fill_nearest: Duklianska (1 address, named in no okrsok) and addresses without a street. 'Vodná nádrž' (okrsok 7) is not in the register. Okrsok 1 also takes the residents registered at 'Bánovce nad Bebravou' without a street or number (no rule)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-10
+okrsky_date_basis = "The city's referendum 2023 page shows the document as 'Zverejnené 10.11.2022'; the document names the referendum of 21 January 2023 but states no decision date. (https://www.banovce.sk/referendum-2023-vysledky-0.html)"
+
+[[document]]
+url = "https://www.banovce.sk/download_file_f.php?id=1763180"
+sha256 = "332bcc832464702e02141e38ce0b7b1b9db1c09fd0b6a0eed4f334ae55dc8abc"
+title = "Volebné okrsky a volebné miestnosti pre referendum, ktoré sa bude konať v sobotu 21. januára 2023"
+
+[okrsok.1]
+rules = [
+  {street = "9. mája"},
+  {street = "Bernolákova"},
+  {street = "Družstevná"},
+  {street = "Ferka Urbánka", written = "F. Urbánka"},
+  {street = "Farská"},
+  {street = "Jána Bottu", written = "J. Bottu"},
+  {street = "J. Kačku"},
+  {street = "K štadiónu"},
+  {street = "Ľudmily Podjavorinskej", written = "Ľ. Podjavorinskej"},
+  {street = "Sasinkova"},
+  {street = "Vajanského nábr.", written = "Vajanského nábrežie", note = "the register abbreviates nábrežie as nábr."},
+  {street = "Za Valy"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "A.Kmeťa"},
+  {street = "Hviezdoslavova"},
+  {street = "Janka Jesenského", written = "J. Jesenského"},
+  {street = "Janka Kráľa", written = "J. Kráľa"},
+  {street = "Mila Urbana"},
+  {street = "Mlynská"},
+  {street = "Moyzesova"},
+  {street = "Murgašova"},
+  {street = "Nám. Ľ. Štúra"},
+  {street = "Palkovičova"},
+  {street = "Radlinského"},
+  {street = "Rokošská"},
+  {street = "SNP"},
+  {street = "Trenčianska cesta"},
+  {street = "Záfortňa"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "A. Hlinku", written = "A.Hlinku"},
+  {street = "Clementisova"},
+  {street = "Partizánska"},
+  {street = "Pribinova"},
+  {street = "Rumunská"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "J. G. Tajovského"},
+  {street = "K Zornici", written = "K zornici"},
+  {street = "Na Vrštek", written = "Na vŕštek", note = "the register spells it Na Vrštek, without the long ŕ"},
+  {street = "Textilná"},
+  {street = "Vystrkov"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Hollého"},
+  {street = "Sládkovičova"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "J. Matušku"},
+  {street = "M. R. Štefánika"},
+  {street = "Strážovská"},
+  {street = "Školská"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "K nemocnici"},
+  {street = "K priehrade"},
+  {street = "Pažiť"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "5. apríla"},
+  {street = "Cibislávska"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Cyrila a Metoda"},
+  {street = "Gorazdova"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Husitská"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Lúčna"},
+  {street = "Rastislavova"},
+  {street = "Slatinská"},
+  {street = "Žitná"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Komenského", written = "J. A. Komenského", note = "the register names the street Komenského without the initials J. A."},
+  {street = "Mojmírova"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Kukučínova"},
+  {street = "Matice  slovenskej", written = "Matice slovenskej", note = "the register has a double space in the name"},
+  {street = "Svätoplukova"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Alexandra Dubčeka"},
+  {street = "J. C. Hronského"},
+  {street = "Novomeského"},
+]
+
+[okrsok.15]
+rules = [
+  {part = "Biskupice"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Hečkova"},
+  {street = "I. Krasku"},
+  {street = "Jahodová"},
+  {street = "Lipová"},
+  {part = "Malé Chlievany"},
+  {street = "Radová"},
+  {street = "Topoľová"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Inovecká"},
+  {street = "K cintorínu"},
+  {street = "Kpt. Jaroša"},
+  {street = "Ku splavu"},
+  {street = "Ozorovská hlavná"},
+  {street = "Ozorovská nová"},
+  {street = "Potočná"},
+  {street = "Za kaštieľom", written = "Za kaštielom", note = "the document writes kaštiel without the soft ľ"},
+]
+
+[okrsok.18]
+rules = [
+  {part = "Horné Ozorovce"},
+]
+
+[okrsok.19]
+addressless = true

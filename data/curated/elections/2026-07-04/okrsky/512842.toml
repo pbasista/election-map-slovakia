@@ -1,0 +1,277 @@
+# Okrsky of Považská Bystrica, transcribed by an AI agent in job okrsok-rules-5261 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 8. mája, Krížna, Mierová, Mládežnícka, Robotnícka, Športovcov, Tatranská
+#   okrsok 2: Družstevná, Gorkého, I. Krasku, Jesenského, M. Kukučína, Odborov, Školská, Chodnické, Krekáčov laz, M. R. Štefánika 149, M. R. Štefánika 154-155, M. R. Štefánika 159, M. R. Štefánika 178-179
+#   okrsok 3: Hliníky, kpt. Nálepku, Mošteníkova, Sládkovičova 570-603, Sládkovičova 636-663, Sládkovičova 2724, 5133, 5221, Šoltésovej 347-379, Šoltésovej 422-472, Šoltésovej 1718, M. R. Štefánika 138, 140, 158, M. R. Štefánika 173-177
+#   okrsok 4: Galanovec, Kúnovec, Rybárikov laz, Sládkovičova 607-630, Sládkovičova 664-687, Sládkovičova 695, 1719, 1720, 2740, 4499, 4570, Šoltésovej 380-419, Šoltésovej 473-503, Šoltésovej 1654-1736, Šoltésovej 2692-2729, Šoltésovej 4853-4868
+#   okrsok 5: Hviezdoslavova, Komenského, Nová, Železničná, Stred 56-73, Štúrova 40-43
+#   okrsok 6: Stred 45, Stred 54-55, Stred 2202-2204, Štúrova 34, Považská Bystrica (Centrum 2/3)
+#   okrsok 7: Stred 44, Stred 48-50, Centrum 10-12, Centrum 2304
+#   okrsok 8: Moyzesova, Lúčky, Žilinská, Mesto 2555, 2573, 2632, 2947, 3867, 4044, 4256, 4985, Kuzmányho, Lánska 925-928
+#   okrsok 9: Pribinova, Lánska 932-934, Lánska 949, Lánska 953, Lánska 2205
+#   okrsok 10: 1. mája, Dukelská, Lánska 935-940, Lánska 954-960, Lánska 972, Lánska 2414
+#   okrsok 11: Dedovec, Lánska 943-948, Lánska 961-962, Lánska 1741, Lánska 2487, Lánska 2975
+#   okrsok 12: Nemocničná, Pionierska, Nábrežná, Partizánska
+#   okrsok 13: Rozkvet 2029-2039, Rozkvet 4897, Rozkvet 5040
+#   okrsok 14: Rozkvet 2041-2045, Rozkvet 2081-2084, Rozkvet 4480-4481, Rozkvet 5080-5081
+#   okrsok 15: Rozkvet 2048-2060, Rozkvet 5082
+#   okrsok 16: Rozkvet 2015-2018, Rozkvet 2025-2026, Rozkvet 2061-2069
+#   okrsok 17: Rozkvet 2000-2002, Rozkvet 2072-2079
+#   okrsok 18: Rozkvet 2003-2012, Rozkvet 2019-2023, Rozkvet 4485-4486, Rozkvet 5085
+#   okrsok 19: SNP 1452-1468
+#   okrsok 20: SNP 1413, SNP 1424-1443, SNP 1449, SNP 1949, SNP 4576, SNP 4887
+#   okrsok 21: SNP 1469-1486, SNP 1914-1927, SNP 4483, SNP 4507, SNP 4546, SNP 4550, SNP 4980, SNP 4994, SNP 5086, Mesto 4541
+#   okrsok 22: Zakvášov, Mesto 4682, 4827
+#   okrsok 23: SNP 1445-1448, Hliny 1418-1422
+#   okrsok 24: Hliny 1178-1414, Hliny 1943-1958, Hliny 2422-2425, Hliny 2492-2493, Hliny 2546-2566, Hliny 2600-2601, Hliny 2624, 2640, 2667, 4528, 4588, 5039, 5124, 5125, 5132, 5170, Podhlinie, Čiernohájska, Mesto 4515, 4518, 4556, 4916
+#   okrsok 25: Zemiansky Kvášov
+#   okrsok 26: Horný Moštenec
+#   okrsok 27: Dolný Moštenec
+#   okrsok 28: Milochov
+#   okrsok 29: Orlové
+#   okrsok 30: Považské Podhradie
+#   okrsok 31: Šebešťanová
+#   okrsok 32: Podvažie
+#   okrsok 33: Považská Teplá
+#   okrsok 34: Podmanín
+#   okrsok 35: Praznov
+obec = "512842"
+name = "Považská Bystrica"
+okrsky_date = 2026-05-05
+okrsky_fill = "nearest"
+okrsky_note = "The decision's table lists the parts of each okrsok; numbers are súpisné čísla (split streets carry by=supisne). 'Mesto NNNN' = houses of the part Považská Bystrica without a street, by súpisné číslo. 'Považská Bystrica (Centrum 2/3)' (okrsok 6) is the town-office address of residents registered without an address; no rule. Village okrsky 25-35 are the register parts. Numbers of split streets the table does not list, the street Zámostie and houses without a street not listed are placed by fill_nearest."
+
+[[document]]
+url = "https://www.povazska-bystrica.sk/download_file_f.php?id=2402900"
+sha256 = "7e1230653513354ec61cd3e7994872cd6e5f2dbb578b5d4805f57ae17b307c75"
+title = "Určenie volebných okrskov a volebných miestností na referendum – 4. júl 2026 – vymedzenie častí patriacich do okrsku"
+
+[[document]]
+url = "https://www.povazska-bystrica.sk/download_file_f.php?id=2402901"
+sha256 = "0874a82cf4ed6a0e2d94edf0afa0df869ac03b4937fafff89c94cc7850af306a"
+title = "Určenie volebných okrskov a miestností – referendum (rozhodnutie primátora)"
+
+[okrsok.1]
+rules = [
+  {street = "8.mája", written = "8. mája"},
+  {street = "Krížna"},
+  {street = "Mierová"},
+  {street = "Mládežnícka"},
+  {street = "Robotnícka"},
+  {street = "Športovcov"},
+  {street = "Tatranská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Gorkého"},
+  {street = "I. Krasku"},
+  {street = "Jesenského"},
+  {street = "M. Kukučína"},
+  {street = "Odborov"},
+  {street = "Školská"},
+  {street = "Chodnické"},
+  {street = "Krekáčov Laz", written = "Krekáčov laz"},
+  {street = "M. R. Štefánika", numbers = "149, 154-155, 159, 178-179", by = "supisne"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hliníky"},
+  {street = "Kpt.Nálepku", written = "kpt. Nálepku"},
+  {street = "Mošteníkova"},
+  {street = "Sládkovičova", numbers = "570-603, 636-663, 2724, 5133, 5221", by = "supisne"},
+  {street = "Šoltésovej", numbers = "347-379, 422-472, 1718", by = "supisne"},
+  {street = "M. R. Štefánika", numbers = "138, 140, 158, 173-177", by = "supisne"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Galanovec"},
+  {street = "Kúnovec"},
+  {street = "Rybárikov Laz", written = "Rybárikov laz"},
+  {street = "Sládkovičova", numbers = "607-630, 664-687, 695, 1719, 1720, 2740, 4499, 4570", by = "supisne"},
+  {street = "Šoltésovej", numbers = "380-419, 473-503, 1654-1736, 2692-2729, 4853-4868", except = "1718", by = "supisne", note = "the document lists 1718 in another okrsok; left out here"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "Komenského"},
+  {street = "Nová"},
+  {street = "Železničná"},
+  {street = "Stred", numbers = "56-73", by = "supisne"},
+  {street = "Štúrova", numbers = "40-43", by = "supisne"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Stred", numbers = "45, 54-55, 2202-2204", by = "supisne"},
+  {street = "Štúrova", numbers = "34", by = "supisne"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Stred", numbers = "44, 48-50", by = "supisne"},
+  {street = "Centrum", numbers = "10-12, 2304", by = "supisne"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Moyzesova"},
+  {street = "Lúčky"},
+  {street = "Žilinská"},
+  {part = "Považská Bystrica", numbers = "2555, 2573, 2632, 2947, 3867, 4044, 4256, 4985"},
+  {street = "Kuzmányho"},
+  {street = "Lánska", numbers = "925-928", by = "supisne"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Pribinova"},
+  {street = "Lánska", numbers = "932-934, 949, 953, 2205", by = "supisne"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Dukelská"},
+  {street = "Lánska", numbers = "935-940, 954-960, 972, 2414", by = "supisne"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Dedovec"},
+  {street = "Lánska", numbers = "943-948, 961-962, 1741, 2487, 2975", by = "supisne"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Nemocničná"},
+  {street = "Pionierska"},
+  {street = "Nábrežná"},
+  {street = "Partizánska"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Rozkvet", numbers = "2029-2039, 4897, 5040", by = "supisne"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Rozkvet", numbers = "2041-2045, 2081-2084, 4480-4481, 5080-5081", by = "supisne"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Rozkvet", numbers = "2048-2060, 5082", by = "supisne"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Rozkvet", numbers = "2015-2018, 2025-2026, 2061-2069", by = "supisne"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Rozkvet", numbers = "2000-2002, 2072-2079", by = "supisne"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Rozkvet", numbers = "2003-2012, 2019-2023, 4485-4486, 5085", by = "supisne"},
+]
+
+[okrsok.19]
+rules = [
+  {street = "SNP", numbers = "1452-1468", by = "supisne"},
+]
+
+[okrsok.20]
+rules = [
+  {street = "SNP", numbers = "1413, 1424-1443, 1449, 1949, 4576, 4887", by = "supisne"},
+]
+
+[okrsok.21]
+rules = [
+  {street = "SNP", numbers = "1469-1486, 1914-1927, 4483, 4507, 4546, 4550, 4980, 4994, 5086", by = "supisne"},
+  {part = "Považská Bystrica", numbers = "4541"},
+]
+
+[okrsok.22]
+rules = [
+  {street = "Zakvášov"},
+  {part = "Považská Bystrica", numbers = "4682, 4827"},
+]
+
+[okrsok.23]
+rules = [
+  {street = "SNP", numbers = "1445-1448", by = "supisne"},
+  {street = "Hliny", numbers = "1418-1422", by = "supisne"},
+]
+
+[okrsok.24]
+rules = [
+  {street = "Hliny", numbers = "1178-1414, 1943-1958, 2422-2425, 2492-2493, 2546-2566, 2600-2601, 2624, 2640, 2667, 4528, 4588, 5039, 5124, 5125, 5132, 5170", by = "supisne"},
+  {street = "Podhlinie"},
+  {street = "Čiernohájska"},
+  {part = "Považská Bystrica", numbers = "4515, 4518, 4556, 4916"},
+]
+
+[okrsok.25]
+rules = [
+  {part = "Zemiansky Kvašov", note = "the document writes Zemiansky Kvášov, the register's part Zemiansky Kvašov"},
+]
+
+[okrsok.26]
+rules = [
+  {part = "Horný Moštenec"},
+]
+
+[okrsok.27]
+rules = [
+  {part = "Dolný Moštenec"},
+]
+
+[okrsok.28]
+rules = [
+  {part = "Milochov"},
+]
+
+[okrsok.29]
+rules = [
+  {part = "Orlové"},
+]
+
+[okrsok.30]
+rules = [
+  {part = "Považské Podhradie"},
+]
+
+[okrsok.31]
+rules = [
+  {part = "Šebešťanová"},
+]
+
+[okrsok.32]
+rules = [
+  {part = "Podvažie"},
+]
+
+[okrsok.33]
+rules = [
+  {part = "Považská Teplá"},
+]
+
+[okrsok.34]
+rules = [
+  {part = "Podmanín"},
+]
+
+[okrsok.35]
+rules = [
+  {part = "Praznov"},
+]

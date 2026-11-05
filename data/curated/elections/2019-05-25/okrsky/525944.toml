@@ -1,0 +1,25 @@
+# Okrsky of Magnezitovce, transcribed by an AI agent in job okrsok-rules-2166 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Mníšany – okrsok č. 1
+#   okrsok 2: Kopráš – okrsok č. 2
+obec = "525944"
+name = "Magnezitovce"
+okrsky_note = "No 'utvorenie volebných okrskov' decision of this vote is on the website; the municipality's notice for this vote (address for delegating members of the okrsok commissions) states the okrsky: Mníšany – okrsok č. 1, Kopráš – okrsok č. 2. The okrsky are the two parts."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The municipality's notice names the European Parliament election of 25 May 2019; it is undated (its file name on the website carries 2019-03-21)."
+
+[[document]]
+url = "https://www.magnezitovce.sk/files/2019-03-21-142227-Elektronicka_adresa_EP_2019_delegovanie.PDF"
+sha256 = "2194971be497ae8a4755b6cc676eab2dff4c178b91d69d4c079fe7979d8d93c9"
+title = "Oznámenie – elektronická adresa na doručenie oznámenia o delegovaní člena a náhradníka do okrskovej volebnej komisie (Mníšany – okrsok č. 1, Kopráš – okrsok č. 2)"
+
+[okrsok.1]
+rules = [
+  {part = "Mníšany"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kopráš"},
+]

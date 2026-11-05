@@ -1,0 +1,28 @@
+# The okrsky of Nová Ľubovňa of the vote of 2023-01-21, data/curated/elections/2023-01-21/okrsky/526924.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Nová Ľubovňa, transcribed by an AI agent in job okrsok-rules-3173 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: OKRSOK č. 1: Čísla domov 1 - 400 + voliči bez súpisného čísla
+#     okrsok 2: OKRSOK č. 2: Čísla domov 401 - 1005
+obec = "526924"
+name = "Nová Ľubovňa"
+okrsky_date = 2022-11-08
+okrsky_fill = "nearest"
+okrsky_note = "The document assigns voters by súpisné (house) number ranges. Voters without a súpisné číslo (okrsok 1) and foreign voters are not register addresses. Súpisné numbers outside the listed ranges, if any, take the okrsok of the nearest placed address (fill_nearest). Scanned document, read from the rendered page."
+okrsky_adopted = 2023-01-21
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1980): No okrsky document of this vote on the website or in the Internet Archive (the archive keeps only commission delegation notices and voter information of 2017–2020). These are the okrsky of the vote of 2023-01-21 (2023-referendum), the nearest in time with okrsky of its own that fit: 2 okrsky (nearer, not taken: 2022-10-29: okrsky 1–3, then 1, 2). Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2023-01-21: 1: 1,137 → 1,171, 2: 1,174 → 1,181."
+
+[[document]]
+url = "https://www.novalubovna.sk/resources/File/oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-pre-konanie-referenda-2023.pdf"
+sha256 = "985ae628e089788bca9fc96185ca34dee2ec0a0723e482d1f67f72b4ee736abf"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre konanie referenda 21.01.2023 (08.11.2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Nová Ľubovňa", numbers = "1-400"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Nová Ľubovňa", numbers = "401-1005"},
+]

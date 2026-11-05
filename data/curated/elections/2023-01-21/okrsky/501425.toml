@@ -1,0 +1,29 @@
+# The okrsky of Zlatná na Ostrove of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/501425.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Zlatná na Ostrove, transcribed by an AI agent in job okrsok-rules-3643 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Volebný okrsok č. 1 – Spoločenský dom, 946 12 Zlatná na Ostrove 217 (od súp. č. 0 – do súp. č. 436 a osada Veľký Lél)
+#     okrsok 2: Volebný okrsok č. 2 – Obecný úrad, 946 12 Zlatná na Ostrove 184 (od súp. č. 437 – do súp. č. 992 a osada Horná Zlatná)
+obec = "501425"
+name = "Zlatná na Ostrove"
+okrsky_date = 2023-06-15
+okrsky_note = "The village has no street names; okrsky are given by súpisné čísla of the part Zlatná na Ostrove and the settlements Veľký Lél and Horná Zlatná (register parts)."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2023-01-21 setting the okrsky was found (okrsok-rules-3080): The website (elections section, full-text search) has no okrsky document of the referendum 2023 (its page has only voter information); the Internet Archive was offline. Later announcements (2018, 2023, 2024) use súp. č. 0-436 + Veľký Lél / 437-992 + Horná Zlatná. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-01-21 → 2023-09-30: 1: 1,097 → 1,123, 2: 898 → 922."
+
+[[document]]
+url = "https://www.obeczlatna.sk/e_download.php?file=data/uredni_deska/obsah76_1.pdf&original=okrsky%20a%20miestnosti.pdf"
+sha256 = "da853fb8428c07a31882fcfdc734658d53a50ddfceff115600b2dabb20c6a709"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do NR SR dňa 30.09.2023"
+
+[okrsok.1]
+rules = [
+  {part = "Zlatná na Ostrove", numbers = "1-436", by = "supisne"},
+  {part = "Veľký Lél"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Zlatná na Ostrove", numbers = "437-", by = "supisne", note = "the document says up to súp. č. 992, the highest number; written open so later houses are included"},
+  {part = "Horná Zlatná"},
+]

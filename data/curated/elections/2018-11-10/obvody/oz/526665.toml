@@ -1,0 +1,199 @@
+# Council obvody of Stará Ľubovňa (526665), Stará Ľubovňa.
+# Transcribed by an AI agent in job obvod-rules-075 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: ul. Bernolákova, Komenského, Letná, Lipová, Mierová, Okružná, Štúrova, Tatranská, Tehelná, Vansovej, Vsetínska, Zimná
+#   obvod 2: ul. 1.mája, 17.novembra, Budovateľská, Duklianskych hrdinov, Farbiarska, Garbiarska, Hviezdoslavova, Janka Kráľa, Jarmočná, Levočská, Mýtna, Nám. gen. Štefánika, Nám. sv. Mikuláša, Obrancov mieru, Podsadek, Poľská, Popradská, Prešovská, Sládkovičova, SNP, Stará Ľubovňa – bez ulice, Továrenská, Za vodou, Zamoyského, Zámocká
+# Okrsky added by an AI agent in job okrsok-rules-5852 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1. mája, Hviezdoslavova, Farbiarska, Garbiarska, Nám. sv. Mikuláša, Levočská, Popradská 2, 4, Stará Ľubovňa - bez ulice
+#   okrsok 2: SNP, Janka Kráľa, Prešovská, Duklianskych hrdinov, Za vodou 1, Jarmočná
+#   okrsok 3: Za vodou 2 - 31
+#   okrsok 4: Popradská - okrem č. 2 a 4, Mýtna, Poľská, Zámocká, Zamoyského, Továrenská
+#   okrsok 5: Podsadek
+#   okrsok 6: Zimná, Vsetínska, Bernolákova, Tehelná, Štúrova
+#   okrsok 7: Okružná 1 - 23 /nepárne čísla/, Okružná 2 - 34 /párne čísla/, Mierová 1 - 6, Letná 1 - 5, Vansovej
+#   okrsok 8: Okružná 25 - 127 /nepárne čísla/, Komenského, Tatranská
+#   okrsok 9: Letná 7, Letná 8 - 38 /párne čísla/
+#   okrsok 10: Mierová 7 - 91 /nepárne čísla/, Letná 11 - 23 /nepárne čísla/
+#   okrsok 11: Okružná 36 - 76 /párne čísla/, Letná 25 - 33 /nepárne čísla/
+#   okrsok 12: Mierová 14 - 54 /párne čísla/, Lipová
+#   okrsok 13: Nám. gen. Štefánika, 17. novembra, Sládkovičova, Budovateľská, Obrancov mieru
+#   okrsok 14: Mierová 8 - 12 /párne čísla/, Mierová 56 - 88 /párne čísla/
+obec = "526665"
+name = "Stará Ľubovňa"
+date = 2018-07-26
+fill = "nearest"
+note = "'Stará Ľubovňa – bez ulice' means voters registered without an address: no rule. 'Podsadek' is the part Podsadek. Obchodná, Mariánska/Michalská/Rastislavova/Ľubomírska ulica and the addresses without a street are not named: they take the obvod of the nearest address (fill_nearest). The announcement is a scan; transcribed from the page image."
+okrsky_date = 2018-09-06
+okrsky_fill = "nearest"
+okrsky_note = "'Stará Ľubovňa - bez ulice' (okrsok 1) means voters registered without an address, so it has no rule. Obchodná is not named in the document; it, Michalská, Rastislavova and Ľubomírska ulica (newer streets not named), the addresses without a street, and the house numbers the ranges leave out (e.g. Okružná even numbers above 76) take the okrsok of the nearest address (fill_nearest). The whole part Podsadek is okrsok 5 ('Podsadek'). The PDF is a scan; transcribed from the page images. The document groups the okrsky by obvod: obvod 2 = okrsky 1-5 and 13, obvod 1 = okrsky 6-12 and 14."
+
+[[document]]
+url = "https://www.staralubovna.sk/resources/File/oznamenie-o-urceni-poctu-poslancov-a-utvoreni-volebnych-obvodov.pdf"
+sha256 = "5e949df3b177d0b673db29ea225b369a1ef18f03757a19ed31889a3b4fef63d9"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 10. novembra 2018 (uznesenie MsZ č. 877 z 26.07.2018)"
+
+[[document]]
+url = "https://www.staralubovna.sk/item/volby-do-organov-samospravy-2018/"
+sha256 = "3cf0a80de8d24fba9f6d27dd6167698e6f143e9ec5febe1a6993763919116887"
+title = "Voľby do orgánov samosprávy obcí 2018 – stránka mesta"
+
+[[document]]
+url = "https://www.staralubovna.sk/resources/File/urcenie-volebnych-okrskov-a-volebnych-miestnosti.pdf"
+sha256 = "f8c13ce45720fff0d17987e5f8e66991df4b2e987470964e3b1d569f9545b652"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do orgánov samosprávy obcí dňa 10.11.2018 (06. 09. 2018)"
+
+[obvod.1]
+seats = 10
+okrsky = [6, 7, 8, 9, 10, 11, 12, 14]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Komenského"},
+  {street = "Letná"},
+  {street = "Lipová"},
+  {street = "Mierová"},
+  {street = "Okružná"},
+  {street = "Štúrova"},
+  {street = "Tatranská"},
+  {street = "Tehelná"},
+  {street = "Vansovej"},
+  {street = "Vsetínska"},
+  {street = "Zimná"},
+]
+
+[obvod.2]
+seats = 9
+okrsky = [1, 2, 3, 4, 5, 13]
+rules = [
+  {street = "1.mája"},
+  {street = "17.novembra"},
+  {street = "Budovateľská"},
+  {street = "Duklianskych hrdinov"},
+  {street = "Farbiarska"},
+  {street = "Garbiarska"},
+  {street = "Hviezdoslavova"},
+  {street = "Janka Kráľa"},
+  {street = "Jarmočná"},
+  {street = "Levočská"},
+  {street = "Mýtna"},
+  {street = "Nám. gen. Štefánika"},
+  {street = "Nám. sv. Mikuláša"},
+  {street = "Obrancov mieru"},
+  {part = "Podsadek"},
+  {street = "Poľská"},
+  {street = "Popradská"},
+  {street = "Prešovská"},
+  {street = "Sládkovičova"},
+  {street = "SNP"},
+  {street = "Továrenská"},
+  {street = "Za vodou"},
+  {street = "Zamoyského"},
+  {street = "Zámocká"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Hviezdoslavova"},
+  {street = "Farbiarska"},
+  {street = "Garbiarska"},
+  {street = "Nám. sv. Mikuláša"},
+  {street = "Levočská"},
+  {street = "Popradská", numbers = "2, 4"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "SNP"},
+  {street = "Janka Kráľa"},
+  {street = "Prešovská"},
+  {street = "Duklianskych hrdinov"},
+  {street = "Za vodou", numbers = "1"},
+  {street = "Jarmočná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Za vodou", numbers = "2-31"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Popradská", except = "2, 4"},
+  {street = "Mýtna"},
+  {street = "Poľská"},
+  {street = "Zámocká"},
+  {street = "Zamoyského"},
+  {street = "Továrenská"},
+]
+
+[okrsok.5]
+rules = [
+  {part = "Podsadek"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Zimná"},
+  {street = "Vsetínska"},
+  {street = "Bernolákova"},
+  {street = "Tehelná"},
+  {street = "Štúrova"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Okružná", numbers = "1-23", parity = "odd"},
+  {street = "Okružná", numbers = "2-34", parity = "even"},
+  {street = "Mierová", numbers = "1-6"},
+  {street = "Letná", numbers = "1-5"},
+  {street = "Vansovej"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Okružná", numbers = "25-127", parity = "odd"},
+  {street = "Komenského"},
+  {street = "Tatranská"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Letná", numbers = "7"},
+  {street = "Letná", numbers = "8-38", parity = "even"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Mierová", numbers = "7-91", parity = "odd"},
+  {street = "Letná", numbers = "11-23", parity = "odd"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Okružná", numbers = "36-76", parity = "even"},
+  {street = "Letná", numbers = "25-33", parity = "odd"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Mierová", numbers = "14-54", parity = "even"},
+  {street = "Lipová"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Nám. gen. Štefánika"},
+  {street = "17.novembra", written = "17. novembra"},
+  {street = "Sládkovičova"},
+  {street = "Budovateľská"},
+  {street = "Obrancov mieru"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Mierová", numbers = "8-12", parity = "even"},
+  {street = "Mierová", numbers = "56-88", parity = "even"},
+]

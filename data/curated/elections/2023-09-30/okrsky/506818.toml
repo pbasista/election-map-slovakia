@@ -1,0 +1,31 @@
+# Okrsky of Boleráz, transcribed by an AI agent in job okrsok-rules-3753 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: č.d. 1- 400 a občania s trvalým pobytom prihlásení na obec
+#   okrsok 2: Od č.d. 401
+obec = "506818"
+name = "Boleráz"
+okrsky_date = 2023-06-20
+okrsky_note = "Scanned document. The obec is split by súpisné číslo (č.d.): okrsok 1 č.d. 1-400 and residents registered only at the obec, okrsok 2 from č.d. 401. The súpisné čísla run through both parts, so the ranges are applied to both parts Boleráz and Klčovany."
+
+[[document]]
+url = "https://www.boleraz.sk/e_download.php?file=data/uredni_deska/obsah5718_4.pdf&original=Ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "6fabbb5f084a123106d4caff235a884a2aa044943ae12593b1ccea1607afea3a"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do Národnej rady Slovenskej republiky"
+
+[[document]]
+url = "https://www.boleraz.sk/zverejnovanie/uradna-tabula-1/urcenie-volebnych-okrskov-a-volebnych-miestnosti-pre-volby-do-nr-sr-5751.html"
+sha256 = "afed938e74a2df347eae705f78f0d4f6aeb619f0f83365946dd21361ab41fd19"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do NR SR (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {part = "Boleráz", numbers = "1-400"},
+  {part = "Klčovany", numbers = "1-400"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Boleráz", numbers = "401-"},
+  {part = "Klčovany", numbers = "401-"},
+]

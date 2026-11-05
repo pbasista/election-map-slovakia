@@ -2,28 +2,36 @@
 
 The site is deployed in parts, each a Cloudflare Pages project of its own
 (docs/deploy.md): the app, a map bundle and a data bundle per election,
-the cached copies of the pages research cites (sources) and the results.
-Every part but the app has a key, a digest of everything in the
-repository its content depends on, computed without building anything: a
-part whose key is deployed already is neither built nor deployed again,
-and the app names each election's bundles by the deployments that carry
-their keys.
+the base map of each OpenStreetMap extract, the cached copies of the
+pages research cites (sources) and the final results. Every part but the app
+has a key, a digest of everything in the repository its content depends
+on, computed without building anything: a part whose key is deployed
+already is neither built nor deployed again, and the app names each
+election's bundles and base map by the deployments that carry their keys.
 
-An election's map (``geo/``, ``base/``, ``addr/``: :func:`map_key`)
-depends on that election alone:
+An election's map (``geo/``, ``addr/``: :func:`map_key`) depends on that
+election alone, and a by-election's also on the map key of its term (the
+regular election before it, whose council contests say which obce elect
+their council in several obvody: ``addresses``):
 
-- the inputs its steps read (``candidates``, ``geo``, ``basemap`` and
-  ``addresses``; the contests and candidacies of ``candidates.json`` shape
-  the map) as configured, their pins included: its candidate lists and
-  the results its office holders come from, its boundaries, the countries
-  around, its address register, territorial division and base map
-  extract;
+- the inputs its steps read (``candidates``, ``geo`` and ``addresses``;
+  the contests and candidacies of ``candidates.json`` shape the map) as
+  configured, their pins included: its candidate lists and the results
+  its office holders come from, its boundaries, the countries around, its
+  address register, territorial division and the OpenStreetMap extract
+  whose roads, railways and rivers ``geo`` reads;
 - what those steps read of its table of ``config/elections.toml`` and of
   ``config/overrides.toml``;
 - its curated data (``data/curated/elections/<day>/``: an earlier
   election's rule sets reused from a later one are copies there);
 - the code of those steps (:data:`MAP_MODULES` and what they import, and
   their part of the CLI, :data:`MAP_GLUE`) and the libraries it runs on.
+
+A base map (:func:`base_key`) depends on its extract and the ZBGIS okresy
+and obce it is cut by (:class:`config.Base`), their pins included, the
+code of ``basemap`` (:data:`BASE_MODULES` and what it imports, and
+:data:`BASE_GLUE`) and the libraries: not on any election, so the
+elections on one extract share it, deployed once.
 
 An election's data (candidates, research, occupations, About) and the
 results depend on every election (:func:`keys`): each election's persons
@@ -34,12 +42,17 @@ addresses and results of the election before. So their keys share all of
 it: every input but the base map extracts and the records of sources (an
 election's records count for its own data only), what the steps read of
 ``config/elections.toml``, the other files of ``config/`` but
-``site.toml``, all curated data, research and the translations of
-occupations and research texts, and the code that makes the data
-(:data:`DATA_MODULES` and what they import, and the CLI). A new research
-finding, a corrected link or a new translation thus changes every data
-key and no map key. The cached sources depend only on which pages the
-research cites, the stylesheet they link and their response headers.
+``site.toml``, the curated elections, and the code that makes the data
+(:data:`DATA_MODULES` and what they import, and the CLI). The data keys
+also share the research and the translations of occupations and research
+texts, which the results never read: a new research finding, a corrected
+link or a new translation thus changes every data key, but neither the
+results key, so that a release of it does not deploy the same results
+again, nor any map key. The cached sources depend only on
+which pages the research cites, the stylesheet they link and their
+response headers. The live results of an election night have no key: they
+are no output of the repository, and ``ems results deploy`` deploys them
+outside releases.
 
 Code counts by its source text (:func:`code_digest`), comments included,
 so that its key is the same whichever Python computes it.
@@ -54,18 +67,16 @@ from __future__ import annotations
 
 import ast
 import dataclasses
-import datetime as dt
 import functools
 import hashlib
 import json
-import re
 import tomllib
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from election_map_slovakia import bundle, geo, research, stamp, translate
+from election_map_slovakia import bundle, config, geo, research, stamp, translate
 from election_map_slovakia.config import Config, Election
 
 LOCK_FILE = Path("data") / "published.toml"
@@ -75,6 +86,7 @@ KEY_DIGITS = 16
 by chance is not a concern."""
 DATA_MODULES = (
     "candidates",
+    "lists",
     "links",
     "addresses",
     "geo",
@@ -84,45 +96,73 @@ DATA_MODULES = (
 )
 """The modules that make the data: the steps of ``ems make`` before
 ``build``, and the bundles' own (:mod:`election_map_slovakia.bundle`)."""
-MAP_MODULES = ("candidates", "statoffice", "geo", "basemap", "addresses", "okrsokrules")
+MAP_MODULES = (
+    "candidates",
+    "lists",
+    "geo",
+    "basemap",
+    "addresses",
+    "okrsokrules",
+)
 """The modules of the steps an election's map comes from: ``candidates``
-(with ŠÚ SR's packages, :mod:`statoffice`), ``geo``, ``basemap`` and
-``addresses`` (with the okrsok counts of :mod:`okrsokrules`). What they
-import counts too, which reaches further than the map needs (statoffice
-imports the results' code, okrsokrules the jobs'): a change of that code
-rebuilds the maps as well."""
+(with the lists of every format, :mod:`lists`, ŠÚ SR's packages among
+them), ``geo`` (with the barriers of :mod:`basemap` it reads of the
+extract) and ``addresses`` (with the okrsok counts of
+:mod:`okrsokrules`). What they import counts too, which reaches further
+than the map needs (statoffice imports the results' code, okrsokrules the
+jobs'): a change of that code rebuilds the maps as well."""
 MAP_GLUE = (
     "_candidates",
     "_input",
+    "_pin",
     "_extract_gpkg",
     "_built_candidates",
     "_okrsky_files",
     "_geo",
-    "_basemap",
     "_addresses",
 )
 """The functions of the CLI that run those steps: what inputs each gets."""
+BASE_MODULES = ("basemap",)
+"""The module of the base map, with what it imports (:mod:`geo`'s levels
+of detail of the shards among it)."""
+BASE_GLUE = ("_input", "_pin", "_extract_gpkg", "_basemap")
+"""The functions of the CLI that make a base map."""
 # The fields of an election's table of elections.toml those steps read.
-_MAP_FIELDS = ("day", "candidates", "incumbents", "units", "addresses", "zbgis", "osm")
+_MAP_FIELDS = (
+    "day",
+    "kind",
+    "candidates",
+    "incumbents",
+    "units",
+    "addresses",
+    "zbgis",
+    "osm",
+    "second_round",
+    "questions",
+    "seats",
+    "threshold",
+    "coalition_thresholds",
+    "preferences",
+    "preference_quota",
+)
 WEB = Path("web")
 NOT_FOUND = WEB / "part-404.html"
 """What the parts but the app answer a missing path with."""
 PART_FILES = {
     "map": (WEB / "_headers-data", NOT_FOUND),
     "data": (WEB / "_headers-data", NOT_FOUND),
+    "base": (WEB / "_headers-data", NOT_FOUND),
     "results": (WEB / "_headers-results", NOT_FOUND),
     "sources": (WEB / "cache.css", WEB / "_headers-sources", NOT_FOUND),
 }
 """Part → the files of web/ it is made of besides its data: its response
-headers (the same for both bundles of an election) and the page of a
-missing path; the stylesheet the cached copies link."""
+headers (the same for an election's bundles and the base maps) and the
+page of a missing path; the stylesheet the cached copies link."""
 # The configuration files whose parsed content is hashed instead, without
 # what only the app reads; site.toml is the app's alone.
 _PARSED = frozenset({"site.toml", "elections.toml", "inputs.toml"})
 # Read by the app only.
 _APP_ONLY = frozenset({"polls_open", "polls_close", "live", "live_window"})
-# Of the project in uv.lock, whose dependencies are the libraries.
-_PROJECT = "election-map-slovakia"
 
 
 class LockError(Exception):
@@ -137,6 +177,8 @@ class Keys:
     """Election slug → the key of its map bundle."""
     data: dict[str, str]
     """Election slug → the key of its data bundle."""
+    bases: dict[str, str]
+    """Extract → the key of its base map (:attr:`config.Config.bases`)."""
     sources: str
     results: str
 
@@ -152,21 +194,27 @@ def keys(cfg: Config) -> Keys:
     own = {e.slug: {e.osm, *e.records} for e in cfg.elections}
     owned = set().union(*own.values())
     inputs = {inp.name: inp for inp in cfg.inputs.inputs}
-    libs = libraries(cfg.root / "uv.lock")
+    libs = stamp.libraries(cfg.root / "uv.lock")
+    made = {
+        "code": code_digest(DATA_MODULES),
+        "libraries": libs,
+        "elections": [_election(e) for e in cfg.elections],
+        "inputs": [
+            stamp.canonical(inp) for name, inp in inputs.items() if name not in owned
+        ],
+        "config": _files(
+            p
+            for p in sorted((cfg.root / "config").iterdir())
+            if p.is_file() and p.name not in _PARSED
+        ),
+        "elections curated": stamp.tree_digest(cfg.curated_dir / "elections"),
+    }
+    # The results never read the research nor its translations: left out of
+    # their key, a release of new research does not deploy them again.
+    results = _key("results", _digest(made), _part_files(cfg, "results"))
     common = _digest(
-        {
-            "code": code_digest(DATA_MODULES),
-            "libraries": libs,
-            "elections": [_election(e) for e in cfg.elections],
-            "inputs": [
-                _canonical(inp) for name, inp in inputs.items() if name not in owned
-            ],
-            "config": _files(
-                p
-                for p in sorted((cfg.root / "config").iterdir())
-                if p.is_file() and p.name not in _PARSED
-            ),
-            "elections curated": stamp.tree_digest(cfg.curated_dir / "elections"),
+        made
+        | {
             "research": stamp.tree_digest(cfg.curated_dir / research.CURATED_DIR),
             "translations": _translations(cfg),
         }
@@ -177,26 +225,25 @@ def keys(cfg: Config) -> Keys:
             "data",
             e.slug,
             common,
-            [_canonical(inputs[name]) for name in sorted(set(e.records))],
+            [stamp.canonical(inputs[name]) for name in sorted(set(e.records))],
             _part_files(cfg, "data"),
         )
         for e in cfg.elections
     }
     sources = _key("sources", sorted(bundle.cited(cfg)), _part_files(cfg, "sources"))
-    return Keys(
-        maps, data, sources, _key("results", common, _part_files(cfg, "results"))
-    )
+    bases = {osm: base_key(cfg, base, libs) for osm, base in cfg.bases.items()}
+    return Keys(maps, data, bases, sources, results)
 
 
 def map_inputs(e: Election) -> set[str]:
     """Return the names of the inputs election *e*'s map comes from."""
     return {
-        *e.candidates.inputs.values(),
+        *(e.candidates.inputs.values() if e.candidates else ()),
         *(e.incumbents.inputs if e.incumbents else ()),
         *e.zbgis,
         geo.NEIGHBOURS_INPUT,
         e.addresses,
-        e.units.input,
+        *((e.units.input,) if e.units else ()),
         e.osm,
     }
 
@@ -204,22 +251,45 @@ def map_inputs(e: Election) -> set[str]:
 def map_key(cfg: Config, e: Election, libs: Mapping[str, str]) -> str:
     """Return the key of election *e*'s map bundle; see the module doc.
 
-    *libs* are the libraries' versions (:func:`libraries`).
+    *libs* are the libraries' versions (:func:`stamp.libraries`).
     """
     inputs = {inp.name: inp for inp in cfg.inputs.inputs}
     curated = cfg.election_dir(e)
+    term = cfg.term(e)
     return _key(
         "map",
         e.slug,
         {
             "code": code_digest(MAP_MODULES, MAP_GLUE),
             "libraries": libs,
-            "election": {f: _canonical(getattr(e, f)) for f in _MAP_FIELDS},
-            "inputs": [_canonical(inputs[name]) for name in sorted(map_inputs(e))],
-            "overrides": _canonical(cfg.overrides[e.slug]),
+            "election": {f: stamp.canonical(getattr(e, f)) for f in _MAP_FIELDS},
+            "inputs": [stamp.canonical(inputs[name]) for name in sorted(map_inputs(e))],
+            "overrides": stamp.canonical(cfg.overrides[e.slug]),
             "curated": stamp.tree_digest(curated) if curated.is_dir() else None,
+            "term": map_key(cfg, term, libs) if term else None,
         },
         _part_files(cfg, "map"),
+    )
+
+
+def base_key(cfg: Config, base: config.Base, libs: Mapping[str, str]) -> str:
+    """Return the key of the base map *base*; see the module doc.
+
+    *libs* are the libraries' versions (:func:`stamp.libraries`).
+    """
+    inputs = {inp.name: inp for inp in cfg.inputs.inputs}
+    return _key(
+        "base",
+        base.osm,
+        {
+            "code": code_digest(BASE_MODULES, BASE_GLUE),
+            "libraries": libs,
+            "inputs": [
+                stamp.canonical(inputs[name])
+                for name in (base.osm, base.okresy, base.obce)
+            ],
+        },
+        _part_files(cfg, "base"),
     )
 
 
@@ -237,7 +307,7 @@ def code_digest(modules: Sequence[str], glue: Sequence[str] | None = None) -> st
     comment as much as code; nothing that differs between machines.
     Not the package version, which every release
     changes, nor the versions of Python and the libraries, which differ
-    between machines (:func:`libraries` names those of ``uv.lock``).
+    between machines (:func:`stamp.libraries` names those of ``uv.lock``).
     """
     names = set().union(*(stamp.modules(m) for m in modules)) - {"cli"}
     code = {name: _code(name) for name in sorted(names)}
@@ -262,29 +332,14 @@ def _code(module: str, functions: Sequence[str] | None = None) -> str:
         if isinstance(node, ast.FunctionDef)
     }
     if missing := [name for name in functions if name not in defined]:
-        raise LockError(f"{module}.py: no function {missing[0]} (lock.MAP_GLUE)")
+        raise LockError(
+            f"{module}.py: no function {missing[0]} (lock.MAP_GLUE, lock.BASE_GLUE)"
+        )
     lines = text.splitlines(keepends=True)
     return "".join(
         "".join(lines[min(n.lineno for n in [f, *f.decorator_list]) - 1 : f.end_lineno])
         for f in (defined[name] for name in functions)
     )
-
-
-def libraries(lock: Path) -> dict[str, str]:
-    """Return name → version of the libraries the project runs on (``uv.lock``)."""
-    try:
-        packages = {p["name"]: p for p in tomllib.loads(lock.read_text())["package"]}
-    except (OSError, tomllib.TOMLDecodeError, KeyError) as e:
-        raise LockError(f"{lock}: cannot read the packages: {e}") from e
-    versions: dict[str, str] = {}
-    todo = [d["name"] for d in packages[_PROJECT].get("dependencies", [])]
-    while todo:
-        name = todo.pop()
-        if name in versions:
-            continue
-        versions[name] = packages[name]["version"]
-        todo += [d["name"] for d in packages[name].get("dependencies", [])]
-    return dict(sorted(versions.items()))
 
 
 def render(k: Keys) -> str:
@@ -303,6 +358,9 @@ def render(k: Keys) -> str:
         "",
         "[data]",
         *(f'{slug} = "{key}"' for slug, key in k.data.items()),
+        "",
+        "[base]",
+        *(f'{osm} = "{key}"' for osm, key in k.bases.items()),
     ]
     return "\n".join(lines) + "\n"
 
@@ -314,6 +372,7 @@ def read(path: Path) -> Keys | None:
         return Keys(
             {str(slug): key for slug, key in content["map"].items()},
             {str(slug): key for slug, key in content["data"].items()},
+            {str(osm): key for osm, key in content["base"].items()},
             content["sources"],
             content["results"],
         )
@@ -326,7 +385,7 @@ def read(path: Path) -> Keys | None:
 def _election(e: Election) -> dict[str, Any]:
     """Return what the steps read of election *e*'s configuration."""
     return {
-        f.name: _canonical(getattr(e, f.name))
+        f.name: stamp.canonical(getattr(e, f.name))
         for f in dataclasses.fields(e)
         if f.name not in _APP_ONLY
     }
@@ -350,31 +409,6 @@ def _files(paths: Iterable[Path]) -> str:
     for path in paths:
         digest.update(f"{path.name}\0{stamp.file_digest(path)}\n".encode())
     return digest.hexdigest()
-
-
-def _canonical(value: object) -> Any:
-    """Return *value* (configuration) as plain JSON values, the same everywhere.
-
-    Unlike ``repr``, which may change with the Python version.
-    """
-    if dataclasses.is_dataclass(value) and not isinstance(value, type):
-        return {
-            f.name: _canonical(getattr(value, f.name))
-            for f in dataclasses.fields(value)
-        }
-    if isinstance(value, Mapping):
-        return {str(k): _canonical(v) for k, v in sorted(value.items())}
-    if isinstance(value, (set, frozenset)):
-        return sorted(_canonical(v) for v in value)
-    if isinstance(value, (list, tuple)):
-        return [_canonical(v) for v in value]
-    if isinstance(value, (dt.date, dt.time)):
-        return value.isoformat()
-    if isinstance(value, re.Pattern):
-        return _canonical(value.pattern)
-    if isinstance(value, bytes):
-        return value.decode()
-    return value
 
 
 def _digest(value: object) -> str:

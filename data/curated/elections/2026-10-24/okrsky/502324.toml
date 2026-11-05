@@ -1,0 +1,39 @@
+# The okrsky of Hronovce of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/502324.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Hronovce, transcribed by an AI agent in job okrsok-rules-3856 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Vozokany nad Hronom – Fučíková 60/14
+#     okrsok 2: Domaša – Levická cesta 326/4
+#     okrsok 3: Čajakovo - Dr. Jána Zelenyáka 557/60
+obec = "502324"
+name = "Hronovce"
+okrsky_note = "The announcement gives each okrsok only its polling station ('Adresa volebného okrsku a volebnej miestnosti'), one in each of the three parts; each okrsok is given the part of its station (inferred)."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-556): The 2026 elections page on the úradná tabuľa has the election announcement, the volebné obvody notice, the MVK zapisovateľ, delegation and candidate lists, but no decision on okrsky or polling stations; nothing on the referendum page or in the news. (3 okrsky = 3 parts Domaša, Vozokany nad Hronom, Čajakovo would fit a per-part split, but no document states it.). These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2023-09-30: 1: 407 → 379, 2: 409 → 414, 3: 402 → 375."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The scanned announcement's heading names the elections to the NR SR of 30.09.2023; it states no decision date."
+
+[[document]]
+url = "https://www.hronovce.sk/e_download.php?file=data/editor/95sk_5.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "0a967a8d1425c224d9df2e4ea6c0989034920a79441c263850cfb1fe38a3fc47"
+title = "Oznámenie o utvorenom volebnom okrsku a určenej volebnej miestnosti pre VOĽBY DO NR SR /30.09.2023"
+
+[[document]]
+url = "https://www.hronovce.sk/zverejnovanie/uradna-tabula/volby-do-narodnej-rady-slovenskej-republiky/"
+sha256 = "5c8958d9f05b7e411047158637b5cef07116cf78f263732104f8418ed39bcaf4"
+title = "Voľby do Národnej rady Slovenskej republiky"
+
+[okrsok.1]
+rules = [
+  {part = "Vozokany nad Hronom", note = "The document gives okrsok 1 only its polling station, which lies in part Vozokany nad Hronom; the municipality has three parts and three okrsky, one station in each.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Domaša", note = "The document gives okrsok 2 only its polling station, which lies in part Domaša; the municipality has three parts and three okrsky, one station in each.", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Čajakovo", note = "The document gives okrsok 3 only its polling station, which lies in part Čajakovo; the municipality has three parts and three okrsky, one station in each.", inferred = true},
+]

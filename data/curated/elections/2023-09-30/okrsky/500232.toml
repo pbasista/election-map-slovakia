@@ -1,0 +1,25 @@
+# Okrsky of Golianovo, transcribed by an AI agent in job okrsok-rules-3814 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od súpisného čísla 2 po súpisné číslo 359
+#   okrsok 2: od súpisného čísla 360 po súpisné číslo 803
+obec = "500232"
+name = "Golianovo"
+okrsky_date = 2023-06-26
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document, read from the rendered page. Okrsky by súpisné číslo ranges over the whole village. 20 addresses whose súpisné čísla lie outside 2–803 (e.g. newer houses) are not in the document's ranges and take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.golianovo.sk/data/urcenie_volebnych_okrskov_Golianovo.pdf"
+sha256 = "0002f5ffb0ef8e5779d7ab66b5871b214f568b1259af8d63f72d407181b4cc2c"
+title = "Určenie volebných okrskov a určenie volebných miestností v obci Golianovo pre Voľby do Národnej rady Slovenskej republiky, ktoré sa konajú dňa 30.9.2023"
+
+[okrsok.1]
+rules = [
+  {part = "Golianovo", numbers = "2-359"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Golianovo", numbers = "360-803"},
+]

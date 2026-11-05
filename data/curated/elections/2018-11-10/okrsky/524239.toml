@@ -1,0 +1,32 @@
+# The okrsky of Brezovica of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/524239.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Brezovica, transcribed by an AI agent in job okrsok-rules-2085 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Volebný okrsok č. 1 - do súp. č. 320
+#     okrsok 2: Volebný okrsok č. 2 – od súp. č. 321
+obec = "524239"
+name = "Brezovica"
+okrsky_date = 2019-02-22
+okrsky_note = "The mayor's decision of 22-02-2019 for the European Parliament election 2019 (scan): okrsok 1 up to súpisné č. 320, okrsok 2 from 321."
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-922): No page or document of the municipal elections of 2018 is on the live website (relaunched 2023) or in the Internet Archive's list of the old site (CDX 2017–2023 lists election pages of 2017, 2019 EP, 2020, 2022, 2023 only). The Archive was intermittently offline during the search. These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://web.archive.org/web/20220308150718/http://brezovicanadtorysou.sk/images/dokumenty/aktuality/vytvorenie_vo.pdf"
+sha256 = "ad731f05f5562033b1f26f8686b356697916da955aad9da57ac2812d4d80eb9c"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu v roku 2019"
+
+[[document]]
+url = "https://web.archive.org/web/20190822024724/http://www.brezovicanadtorysou.sk:80/index.php/91-zakladna-stranka/204-volby-do-eu-parlamentu"
+sha256 = "ada1efca39916444dc7dd464dfe04cd16a0abcabf42fa4c5aa711ac271a31b6d"
+title = "Voľby do EÚ parlamentu (elections page linking the PDF)"
+
+[okrsok.1]
+rules = [
+  {part = "Brezovica", numbers = "1-320"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Brezovica", numbers = "321-"},
+]

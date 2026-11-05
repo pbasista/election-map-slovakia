@@ -1,0 +1,95 @@
+# Council obvody of Štrba (523933), Poprad.
+# Transcribed by an AI agent in job obvod-rules-128 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode č. 1 – Štrba, ktorý zahŕňa ulice 1. mája, 29. januára, A. Sládkoviča, Brezová, Čsl. Armády, Dr. Markušovského, Družstevná, Hlavná, Hviezdoslavova, J. Gejdoša, J. Kráľa, Jurkovičova, Krátka, Krôn, Liptovská, M. Benku, M. Janošku, Mlynská, P.Z. Vrbického, Poľná, Raštub, SNP, Strmá, Školská, Štefánikova, Štepánkovická, Tatranská sa volí 6 poslancov.
+#   obvod 2: Vo volebnom obvode č. 2 Tatranská Štrba, Štrbské Pleso, ktorý zahŕňa ulice Bellova, Horská, Lesná, Lúčna, Partizánska, Popradská, Rekreačná, Štefánikova, Štúrova, Železničná, K vodopádom, Kúpeľná, Limbová, Maše Haľamovej, Móryho, Poštová, Pri jazere, Szentiványho, Športová sa volia 3 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-5887 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný obvod č. 1 – Obec Štrba (dedina) – Okrsok č. 1: Hlavná, Družstevná, SNP, 29. januára, Raštub, J. Kráľa, Hviezdoslavova, Školská, P.Z. Vrbického, Štepánkovická, Mlynská, Strmá, Krátka
+#   okrsok 2: Okrsok č. 2: Čsl. armády, Tatranská, Brezová, Poľná, Liptovská, J. Gejdoša, A. Sládkoviča, M. Janošku, 1. mája, Štefánikova, M. Benku, Dr. Markušovského, Jurkovičova, Krôn
+#   okrsok 3: Volebný obvod č. 2 – časti obce Tatranská Štrba a Štrbské Pleso – Okrsok č. 3: časť Tatranská Štrba – Bellova, Horská, Lesná, Lúčna, Partizánska, Popradská, Rekreačná, Štefánikova, Štúrova, Železničná
+#   okrsok 4: Okrsok č. 4: časť Štrbské Pleso – K vodopádom, Kúpeľná, Limbová, Maše Haľamovej, Móryho, Poštová, Pri jazere, Szentiványiho, Športová
+obec = "523933"
+name = "Štrba"
+date = 2018-06-25
+note = "Scanned PDF read from the image. Obvod 1 is named as the part Štrba, obvod 2 as the parts Tatranská Štrba and Štrbské Pleso, and the street lists match the register's parts, so the rules are by part (addresses without a street follow their part). Krátka is not in the register; Štefánikova, listed in both obvody, lies wholly in part Štrba in the register (obvod 1), its listing in obvod 2 apparently an error."
+okrsky_fill = "nearest"
+okrsky_note = "No mayor's okrsky decision of 2018 survives on the website or in the Internet Archive (the 2018 elections page, archived 2018-07-28 and 2018-09-27, links only the obvody notice and other papers). The municipality's own monthly Štrbské noviny (October 2018, publisher Obec Štrba, on strba.sk) prints the okrsky with their streets for the elections of 10 November 2018; that page is used. Okrsky 3 and 4 are named as the parts Tatranská Štrba and Štrbské Pleso, so they are part rules (their houses without a street follow them; Pullmanova, not in the 2018 list, lies in Tatranská Štrba). Krátka (okrsok 1) is not in the address register and is left out. Štefánikova, listed in okrsky 2 and 3, lies wholly in part Štrba (obvod 1) in the register, so it is a rule of okrsok 2 only; its listing in okrsok 3 contradicts the obvody. Szentiványiho is the register's Szentiványho (covered by the part rule). Houses without a street in part Štrba are placed by fill_nearest."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The page 'Informácie pre voličov o komunálnych voľbách' in the October 2018 issue of the municipality's monthly names the elections of Saturday 10 November 2018; it states no decision date."
+
+[[document]]
+url = "https://www.strba.sk/download_file_f.php?id=2449310"
+sha256 = "3273fe46b1669b58332ebab3d3604bb7d58d8d3b170b2f3fb005f1372772beb7"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 10. novembra 2018 (uznesenie č. 65/2018 zo dňa 25. júna 2018)"
+
+[[document]]
+url = "https://www.strba.sk/volby-do-organov-samospravy-obci-2018-oznam/mid/583856/.html"
+sha256 = "719e24cfaef42e03659bf7c433bba0569bc27b9a6114041f118de2c5ef6d661b"
+title = "Voľby do orgánov samosprávy obcí 2018 (page)"
+
+[[document]]
+url = "https://web.archive.org/web/20211229004848/https://www.strba.sk/wp-content/uploads/2018/10/Strba_noviny_10_2018_web.pdf"
+sha256 = "12a4f157ffb7ed503e7b5113243915562b8660d619644359f394da81a3540099"
+title = "Štrbské noviny, október 2018 (vydavateľ Obec Štrba), s. 3: Informácie pre voličov o komunálnych voľbách – volebné obvody a okrsky"
+
+[obvod.1]
+seats = 6
+okrsky = [1, 2]
+rules = [
+  {part = "Štrba"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [3, 4]
+rules = [
+  {part = "Tatranská Štrba"},
+  {part = "Štrbské Pleso"},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná"},
+  {street = "Družstevná"},
+  {street = "SNP"},
+  {street = "29. januára"},
+  {street = "Raštub"},
+  {street = "J. Kráľa"},
+  {street = "Hviezdoslavova"},
+  {street = "Školská"},
+  {street = "P. Z. Vrbického", written = "P.Z. Vrbického"},
+  {street = "Štepánkovická"},
+  {street = "Mlynská"},
+  {street = "Strmá"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Čsl. Armády", written = "Čsl. armády"},
+  {street = "Tatranská"},
+  {street = "Brezová"},
+  {street = "Poľná"},
+  {street = "Liptovská"},
+  {street = "J. Gejdoša"},
+  {street = "A. Sládkoviča"},
+  {street = "M. Janošku"},
+  {street = "1. mája"},
+  {street = "Štefánikova"},
+  {street = "M. Benku"},
+  {street = "Dr. Markušovského"},
+  {street = "Jurkovičova"},
+  {street = "Krôn"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Tatranská Štrba"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Štrbské Pleso"},
+]

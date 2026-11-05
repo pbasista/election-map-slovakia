@@ -1,0 +1,33 @@
+# The okrsky of Vavrečka of the vote of 2026-07-04, data/curated/elections/2026-07-04/okrsky/510157.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Vavrečka, transcribed by an AI agent in job okrsok-rules-5742 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Súpisné čísla 0 - 260
+#     okrsok 2: Súpisné čísla 261 - 612
+obec = "510157"
+name = "Vavrečka"
+okrsky_date = 2026-04-28
+okrsky_fill = "nearest"
+okrsky_note = "The village has no streets; okrsky are split by súpisné číslo. Any house number outside 0–612 takes the nearest okrsok (fill_nearest)."
+okrsky_adopted = 2026-07-04
+okrsky_adopted_basis = "No document of 2024-06-08 setting the okrsky was found (okrsok-rules-5155): The current website (vavrecka.sk) keeps elections pages only for 2026 (referendum 2026, municipal/VÚC 2026); site search finds no 2024 okrsky notice. The Internet Archive (CDX API and Wayback) stayed offline ('Temporarily Offline', HTTP 503/timeouts) through repeated retries over more than 15 minutes, so archived pages could not be checked. These are the okrsky of the vote of 2026-07-04 (2026-referendum), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-06-08 → 2026-07-04: 1: 660 → 607, 2: 594 → 637."
+
+[[document]]
+url = "https://www.vavrecka.sk/evt_file.php?file=2421"
+sha256 = "2a66bedbd733115af5e5af8fa9b8c725770befed0beb612c459dadeb1be0a544"
+title = "Oznámenie o určení volebných okrskov a volebných miestností pre REFERENDUM 2026"
+
+[[document]]
+url = "https://www.vavrecka.sk/zverejnovanie/volby/referendum-2026-1/oznamenie-o-urceni-volebnych-okrskov-a-volebnych-miestnosti-pre-referendum-2026-1032sk.html"
+sha256 = "1eeb39b493de4c376531a8d8de1e1d87011cb2aecd36fab5b3e684dfdde556cc"
+title = "Oznámenie o určení volebných okrskov a volebných miestností pre REFERENDUM 2026 (stránka)"
+
+[okrsok.1]
+rules = [
+  {part = "Vavrečka", numbers = "1-260"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vavrečka", numbers = "261-612"},
+]

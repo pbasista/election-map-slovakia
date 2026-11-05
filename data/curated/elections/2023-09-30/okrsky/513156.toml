@@ -1,0 +1,73 @@
+# Okrsky of Ilava, transcribed by an AI agent in job okrsok-rules-3460 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Mierové námestie, ulice Ružová, Farská, Moyzesova, Košecká, SNP, Záhumenská, Kukučínova, občania s trvalým pobytom Ilava
+#   okrsok 2: ulice Medňanská, Skala, Jesenského, Kalinčiakova, Hollého, Slnečná a Lašteky I
+#   okrsok 3: ulice Pivovarská, Ľ. Štúra, Hviezdoslavova, Sládkovičova, Štefánikova
+#   okrsok 4: ulice Kpt. Nálepku, Sihoť, Záhradnícka, J. L .Bellu, Nádražná, Hurbanova, Mládežnícka, Za kanálom
+#   okrsok 5: mestská časť Klobušice
+#   okrsok 6: mestská časť lliavka, Iliavčanská dolina a Záštepy
+obec = "513156"
+name = "Ilava"
+okrsky_date = 2023-06-14
+okrsky_fill = "nearest"
+okrsky_note = "Lašteky I (okrsok 2), Mládežnícka and Za kanálom (okrsok 4) are not in the register and are left out; 'občania s trvalým pobytom Ilava' (okrsok 1) are the voters registered without an address. Addresses of part Ilava without a street (súpisné only) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.ilava.sk/e_download.php?file=data/editor/596sk_1.pdf&original=Mesto%20Ilava%20-%20utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "ee24c236973c07f87b57ac3fc83b0b4eac65ca80d320bd66795bbedad2ad93fd"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby do NR SR konané dňa 30.9.2023"
+
+[okrsok.1]
+rules = [
+  {street = "Mierové námestie"},
+  {street = "Ružová"},
+  {street = "Farská"},
+  {street = "Moyzesova"},
+  {street = "Košecká"},
+  {street = "SNP"},
+  {street = "Záhumenská"},
+  {street = "Kukučínova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Medňanská"},
+  {street = "Skala"},
+  {street = "Jesenského"},
+  {street = "Kalinčiakova"},
+  {street = "Hollého"},
+  {street = "Slnečná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Pivovarská"},
+  {street = "Ľ. Štúra"},
+  {street = "Hviezdoslavova"},
+  {street = "Sládkovičova"},
+  {street = "Štefánikova"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Kpt. Nálepku"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku", note = "The register has the street twice, as 'Kpt. Nálepku' and 'Kpt.Nálepku'; both are the document's Kpt. Nálepku."},
+  {street = "Sihoť"},
+  {street = "Záhradnícka"},
+  {street = "J. L. Bellu", written = "J. L .Bellu"},
+  {street = "Nádražná"},
+  {street = "Hurbanova"},
+]
+
+[okrsok.5]
+rules = [
+  {part = "Klobušice"},
+]
+
+[okrsok.6]
+rules = [
+  {part = "Iliavka"},
+  {street = "Iliavčanská dolina"},
+  {street = "Záštepy"},
+]

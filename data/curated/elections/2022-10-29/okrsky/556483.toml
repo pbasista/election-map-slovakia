@@ -1,0 +1,33 @@
+# The okrsky of Križovany nad Dudváhom of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/556483.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Križovany nad Dudváhom, transcribed by an AI agent in job okrsok-rules-4485 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: (s. č. 3-235, 300, 392, 535, 555-558, 561, 563-568, 571, 588, 604, 605, 608, 620, 622, 626, 635, 643-647, 649, 652, 653, 655, 657, 658, 661, 663, 666, 671-675, 677, 678, 681, 682, 704)
+#     okrsok 2: (s. č. 237-299, 303-391, 393-534, 536-554, 559, 560, 562, 584, 596, 599, 600, 606, 607, 611, 624, 625, 630-632, 637, 638, 641, 703, 705, 731)
+obec = "556483"
+name = "Križovany nad Dudváhom"
+okrsky_date = 2024-01-10
+okrsky_fill = "nearest"
+okrsky_note = "The village has no streets; okrsky are given by súpisné čísla. Houses with numbers the document does not list take the okrsok of the nearest listed house (fill_nearest)."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2022-10-29 setting the okrsky was found (okrsok-rules-985): The 2022 announcement (Oznámenie o utvorení volebných okrskov a určení volebných miestností, 03.08.2022) only gives the two polling stations (okrsok 1: Kultúrny dom, s.č. 178; okrsok 2: Základná škola s materskou školou, s.č. 250); no streets or house numbers, and the village has one part, so the okrsky cannot be drawn. The January 2023 referendum used a single okrsok. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2022-10-29 → 2024-03-23: 1: 680 → 690, 2: 787 → 756."
+
+[[document]]
+url = "https://www.krizovany.sk/download_file_f.php?id=1978035"
+sha256 = "70e38c29ccf7b578452872c2115b57072560872308ea33057ea37f0443c530c9"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby prezidenta Slovenskej republiky"
+
+[[document]]
+url = "https://www.krizovany.sk/volby-prezidenta.html"
+sha256 = "e76fedb41913a79dd6c39fc7c901161b1b49b6c50e08a0a61a5a694ceb097b52"
+title = "Voľby prezidenta (page linking Utvorenie_volebnych_okrskov.pdf)"
+
+[okrsok.1]
+rules = [
+  {part = "Križovany nad Dudváhom", numbers = "3-235, 300, 392, 535, 555-558, 561, 563-568, 571, 588, 604, 605, 608, 620, 622, 626, 635, 643-647, 649, 652, 653, 655, 657, 658, 661, 663, 666, 671-675, 677, 678, 681, 682, 704"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Križovany nad Dudváhom", numbers = "237-299, 303-391, 393-534, 536-554, 559, 560, 562, 584, 596, 599, 600, 606, 607, 611, 624, 625, 630-632, 637, 638, 641, 703, 705, 731"},
+]

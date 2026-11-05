@@ -1,0 +1,35 @@
+# Okrsky of Košice-Ťahanovce, transcribed by an AI agent in job okrsok-rules-3136 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Brusnicová Jazvečia Na hájiku Ťahanovská občania s trvalým pobytom v MČ bez adresy
+#   okrsok 2: Madridská Magnezitárska Na sihoti Pri Hrušove Repná Želiarska
+obec = "598127"
+name = "Košice-Ťahanovce"
+okrsky_fill = "nearest"
+okrsky_note = "'občania s TP v MČ bez adresy' / 'bez adresy' (okrsok 1) are voters registered without an address. The register's street Pri hati (one address) is not named by the document; it and the houses without a street are placed by fill_nearest."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-14
+okrsky_date_basis = "The referendum page states the announcement was posted (Zverejnené) on 14.11.2022; the announcement itself states no date. (https://web.archive.org/web/20240113213245/https://www.tahanovce.eu/referendum-2023.html)"
+
+[[document]]
+url = "https://web.archive.org/web/20240113213245/https://www.tahanovce.eu/referendum-2023.html"
+sha256 = "e5e08e363e56e6cd2ce9d9e242af098a50ca9e9b8b786c5aee47e8d7edfbd63f"
+title = "Referendum 2023: OZNÁMENIE o určení volebných okrskov a volebných miestnosti pre referendum 21. januára 2023 (Zverejnené 14.11.2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Brusnicová"},
+  {street = "Jazvečia"},
+  {street = "Na Hájiku", written = "Na hájiku"},
+  {street = "Ťahanovská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Madridská"},
+  {street = "Magnezitárska"},
+  {street = "Na Sihoti", written = "Na sihoti"},
+  {street = "Pri Hrušove"},
+  {street = "Repná"},
+  {street = "Želiarska"},
+]

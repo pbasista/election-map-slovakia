@@ -1,0 +1,24 @@
+# Okrsky of Súľov-Hradná, transcribed by an AI agent in job okrsok-rules-3287 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 Súľov
+#   okrsok 2: Okrsok č. 2 Hradná
+obec = "517992"
+name = "Súľov-Hradná"
+okrsky_date = 2022-11-09
+okrsky_note = "The document names each okrsok by its part (Súľov, Hradná)."
+
+[[document]]
+url = "https://web.archive.org/web/20221227065713/https://sulov-hradna.sk/wp-content/uploads/2022/11/ref2023_1.pdf"
+sha256 = "69f9921b871efae5ae6144e1c3474197c317836bf5c324b9fd5c4cdf2f4a6338"
+title = "Oznámenie o utvorení volebných okrskov a o určení volebných miestností pre referendum 21. januára 2023 (9. 11. 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Súľov"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Hradná"},
+]

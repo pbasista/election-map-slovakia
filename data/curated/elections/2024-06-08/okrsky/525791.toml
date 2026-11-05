@@ -1,0 +1,46 @@
+# Okrsky of Jelšava, transcribed by an AI agent in job okrsok-rules-5098 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Námestie republiky, Námestie SNP, Muránska, Mníšanská, Tomášikova, Jesenského, Teplá Voda, Medzník, Obyvatelia bez adresy
+#   okrsok 2: Štefánikova, Armádna, 9. mája, Teplická, Železničná, Pri štadióne, Ševcovská, Kúpelná, Kejďák
+obec = "525791"
+name = "Jelšava"
+okrsky_fill = "nearest"
+okrsky_note = "The list of streets per okrsok for the European Parliament election of 8 June 2024, linked on the city's page for that election. 'Obyvatelia bez adresy' (okrsok 1) are voters registered without an address, not the register's houses without a street. Hrádok (3 addresses) is not named in the document: placed by fill_nearest, as are the houses without a street. The Internet Archive stayed offline throughout (web.archive.org refused connections or answered 'Temporarily Offline' on repeated tries with pauses), so no archived capture was checked."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document is undated; its heading names the European Parliament election of 08. 06. 2024."
+
+[[document]]
+url = "https://www.jelsava.sk/download_file_f.php?id=2013889"
+sha256 = "90defaa4832d5ccead9239100f9077c385f25b4f36a85eb4c4f9d6e99c05277c"
+title = "Rozdelenie ulíc do okrskov (Voľby do Európskeho parlamentu 08. 06. 2024)"
+
+[[document]]
+url = "https://www.jelsava.sk/oznamy/rozhodnutie-predsedu-narodnej-rady-slovenskej-republiky-z-9--februara-2024-o-vyhlaseni-volieb-do-europskeho-parlamentu.html"
+sha256 = "f489f9ecb4055354c68e20ec8180c0a4beda02b9f40686d730ccab6ea8cf2dc4"
+title = "ROZHODNUTIE PREDSEDU NÁRODNEJ RADY SLOVENSKEJ REPUBLIKY z 9. februára 2024 o vyhlásení volieb do Európskeho parlamentu"
+
+[okrsok.1]
+rules = [
+  {street = "Muránska"},
+  {street = "Námestie Republiky", written = "Námestie republiky"},
+  {street = "Námestie SNP"},
+  {street = "Tomášikova"},
+  {street = "Mníšanská"},
+  {street = "Jesenského"},
+  {street = "Teplá Voda"},
+  {street = "Medzník"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ševcovská"},
+  {street = "Štefánikova"},
+  {street = "Kúpelná"},
+  {street = "Teplická"},
+  {street = "Pri Štadióne", written = "Pri štadióne"},
+  {street = "Železničná"},
+  {street = "Armádna"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Kejďák"},
+]

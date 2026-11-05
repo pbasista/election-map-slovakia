@@ -1,0 +1,198 @@
+# The okrsky of Hnúšťa of the vote of 2018-11-10, data/curated/elections/2018-11-10/obvody/oz/514829.toml, standing in, by `ems job reuse`. Its header there:
+#   Council obvody of Hnúšťa (514829), Rimavská Sobota.
+#   Transcribed by an AI agent in job obvod-rules-109 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: Hnúšťa – ulice: Banícka, Brandzová, Brezina, Budovateľov, Francisciho, Fučíkova, Hlavná, Hrebendova, Hurbanova, Iváčka, Jilemnického, Klokočova , Kotlišská, Kotlište, Kraskova, Križanova, Maša, 1.mája, M.R.Štefánika, Mierová, Mládeže, Mútnik, Nám. Janka Francisciho, Nábrežie Rimavy, Partizánska, Poľná, Pokroku, Rad, Rumunskej armády, Sinecká, Skalica, SNP, Športová, Š.M.Daxnera, Vansovej, Troska, Ždiar, Železničná, Hnúšťa - mestská časť Hačava, Hnúšťa - mestská časť Polom, Hnúšťa - mestská časť Brádno
+#     obvod 2: Hnúšťa časť Likier - Kolónia - ulice: Bakulíniho, Bottova, Jesenského, J.Kráľa, Kpt.Nálepku, Sládkovičova, Školská, Švermova, Štúrova Vl.Clementisa, Zápotockého, Hnúšťa - mestská časť Likier : ul. Horná a ul. Dolná
+#   Okrsky added by an AI agent in job okrsok-rules-5877 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Hnúšťa – mestská časť Hačava
+#     okrsok 2: Hnúšťa - SNP 438, 439, 440, 441, M.R.Štefánika 443, Hlavná 12-43, 437, 935, Železničná, Ždiar, Troska, Brandzová, Brezina, Križanova, Mútnik, Hnúšťa mestská časť Polom, Hnúšťa mestská časť Brádno
+#     okrsok 3: Hnúšťa – Maša, Kotlištská, Kotlište, 1.mája 523-551, 620-623, 727, 728, Jilemnického, Francisciho, Rad, Skalica, Kraskova, Fučíkova, Iváčka, Partizánska, Hrebendova, Rumunskej armády, Námestie Janka Francisciho
+#     okrsok 4: Hnúšťa - Budovateľov, Sinecká, Mládeže, Š.M.Daxnera, Vansovej, Mierová, Banícka, Poľná, Pokroku, Hlavná 374-386, 405-428, 431-434, 1.mája 907-909, 513-520, 624-645
+#     okrsok 5: Hnúšťa – sídlisko Nábrežie Rimavy, M.R.Štefánika 444, 445, Hlavná 435,436, Športová
+#     okrsok 6: Hnúšťa – sídlisko Klokočova
+#     okrsok 7: Hnúšťa - Švermova, Vl.Clementisa, Bottova, J.Kráľa, Sládkovičova, Zápotockého, Školská, Bakulíniho, Kpt. Nálepku, Jesenského, Štúrova
+#     okrsok 8: Hnúšťa – mestská časť Likier /obec – ul. Dolná, Horná/
+obec = "514829"
+name = "Hnúšťa"
+date = 2018-08-13
+note = "The council obvody of the vote of 2018-11-10: they only place the okrsky. Troska and Brezina (obvod 1) are settlements, not streets of the register; they lie in the part Hnúšťa. Kotlištská (written Kotlišská) is one street. Skálie lies in the part Hačava (obvod 1 by part)."
+reused = 2018-11-10
+okrsky_fill = "nearest"
+okrsky_note = "All house numbers in the notice are súpisné čísla (by: supisne). Kotlištská is written as in the register. Addresses of SNP, M. R. Štefánika, Hlavná and 1.mája whose súpisné číslo the notice does not list, Záhrada 1.mája, Skálie (part Hačava, okrsok 1 by part) and the houses without a street (incl. the settlements Troska and Brezina, not streets of the register, and the houses without a street in part Likier) are placed by fill_nearest."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-150): No okrsky document of the regional elections 2017: the old website (mesto.hnusta.sk, Drupal, archived 2017) shows no 2017 elections page or file, and the current site's elections section starts with 2018. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 8 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The notice's heading names the elections to the organs of municipal self-government of 10.11.2018; it states no decision date, nor does the page linking it."
+
+[[document]]
+url = "https://mesto.hnusta.sk/e_download.php?file=data/editor/271sk_4.pdf&original=Ozn%C3%A1menie%20o%20ur%C4%8Den%C3%AD%20po%C4%8Dtu%20poslancov%20a%20utvoren%C3%AD%20volebn%C3%BDch%20obvodov.pdf"
+sha256 = "498b5122bddb40b8421ae8aafc7a25fa4658cbd3b508daa70835619975309912"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 10. novembra 2018 (uznesenie MsZ č. 48/624/2018 z 13. 8. 2018)"
+
+[[document]]
+url = "https://mesto.hnusta.sk/samosprava/volby-a-referenda/komunalne-volby-2018/"
+sha256 = "6b90e52f8733256f0331544421a2968f96e3bb1edfc540a54fb9330502064220"
+title = "Komunálne voľby 2018"
+
+[[document]]
+url = "https://mesto.hnusta.sk/e_download.php?file=data/editor/271sk_7.pdf&original=Ozn%C3%A1menie%20o%20ur%C4%8Den%C3%AD%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "8634ed7465d213998c009600700933edb95c09b2e9267816646c625df00e125b"
+title = "Oznámenie: Primátor mesta Hnúšťa určil volebné okrsky pre Voľby do orgánov samosprávy obcí 10.11.2018"
+
+[obvod.1]
+seats = 10
+okrsky = [1, 2, 3, 4, 5, 6]
+rules = [
+  {street = "Banícka"},
+  {street = "Brandzová"},
+  {street = "Budovateľov"},
+  {street = "Francisciho"},
+  {street = "Fučíkova"},
+  {street = "Hlavná"},
+  {street = "Hrebendova"},
+  {street = "Hurbanova"},
+  {street = "Iváčka"},
+  {street = "Jilemnického"},
+  {street = "Klokočova"},
+  {street = "Kotlište"},
+  {street = "Kraskova"},
+  {street = "Križanova"},
+  {street = "Maša"},
+  {street = "1.mája"},
+  {street = "Mierová"},
+  {street = "Mládeže"},
+  {street = "Mútnik"},
+  {street = "Nábrežie Rimavy"},
+  {street = "Partizánska"},
+  {street = "Poľná"},
+  {street = "Pokroku"},
+  {street = "Rad"},
+  {street = "Rumunskej armády"},
+  {street = "Sinecká"},
+  {street = "Skalica"},
+  {street = "SNP"},
+  {street = "Športová"},
+  {street = "Vansovej"},
+  {street = "Ždiar"},
+  {street = "Železničná"},
+  {street = "Kotlištská", written = "Kotlišská", note = "a letter left out; the same street (Kotlište/Kotlištská)"},
+  {street = "Milana Rastislava Štefánika", written = "M.R.Štefánika"},
+  {street = "Námestie Janka Francisciho", written = "Nám. Janka Francisciho"},
+  {street = "Štefana Marka Daxnera", written = "Š.M.Daxnera"},
+  {part = "Hnúšťa", note = "'Hnúšťa – ulice: …': the town proper (part Hnúšťa), so its houses without a street and the street Záhrada 1.mája, which the document does not name, are in obvod 1"},
+  {part = "Hačava"},
+  {part = "Polom"},
+  {part = "Brádno"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [7, 8]
+rules = [
+  {street = "Bakulíniho"},
+  {street = "Bottova"},
+  {street = "Jesenského"},
+  {street = "Janka Kráľa", written = "J.Kráľa"},
+  {street = "Kpt.Nálepku"},
+  {street = "Sládkovičova"},
+  {street = "Školská"},
+  {street = "Švermova"},
+  {street = "Štúrova"},
+  {street = "Vladimíra Clementisa", written = "Vl.Clementisa"},
+  {street = "Zápotockého"},
+  {street = "Horná"},
+  {street = "Dolná"},
+  {part = "Likier"},
+]
+
+[okrsok.1]
+rules = [
+  {part = "Hačava"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "SNP", numbers = "438, 439, 440, 441", by = "supisne"},
+  {street = "Milana Rastislava Štefánika", numbers = "443", by = "supisne", written = "M.R.Štefánika"},
+  {street = "Hlavná", numbers = "12-43, 437, 935", by = "supisne"},
+  {street = "Železničná"},
+  {street = "Ždiar"},
+  {street = "Brandzová"},
+  {street = "Križanova"},
+  {street = "Mútnik"},
+  {part = "Polom"},
+  {part = "Brádno"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Maša"},
+  {street = "Kotlištská"},
+  {street = "Kotlište"},
+  {street = "1.mája", numbers = "523-551, 620-623, 727, 728", by = "supisne"},
+  {street = "Jilemnického"},
+  {street = "Francisciho"},
+  {street = "Rad"},
+  {street = "Skalica"},
+  {street = "Kraskova"},
+  {street = "Fučíkova"},
+  {street = "Iváčka"},
+  {street = "Partizánska"},
+  {street = "Hrebendova"},
+  {street = "Rumunskej armády"},
+  {street = "Námestie Janka Francisciho"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Budovateľov"},
+  {street = "Sinecká"},
+  {street = "Mládeže"},
+  {street = "Štefana Marka Daxnera", written = "Š.M.Daxnera"},
+  {street = "Vansovej"},
+  {street = "Mierová"},
+  {street = "Banícka"},
+  {street = "Poľná"},
+  {street = "Pokroku"},
+  {street = "Hlavná", numbers = "374-386, 405-428, 431-434", by = "supisne"},
+  {street = "1.mája", numbers = "907-909, 513-520, 624-645", by = "supisne"},
+  {street = "Hurbanova", note = "Not named by the 2018 notice (4 addresses; obvod 1 per the obvody); the mayor's okrsky document of 2019 (presidential election) lists it in okrsok 4 among the same streets, as the rule set of 2019-03-16 has it."},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Nábrežie Rimavy"},
+  {street = "Hlavná", numbers = "435, 436", by = "supisne"},
+  {street = "Milana Rastislava Štefánika", numbers = "444, 445", by = "supisne", written = "M.R.Štefánika"},
+  {street = "Športová"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Klokočova"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Švermova"},
+  {street = "Vladimíra Clementisa", written = "Vl.Clementisa"},
+  {street = "Bottova"},
+  {street = "Janka Kráľa", written = "J.Kráľa"},
+  {street = "Sládkovičova"},
+  {street = "Zápotockého"},
+  {street = "Školská"},
+  {street = "Bakulíniho"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku"},
+  {street = "Jesenského"},
+  {street = "Štúrova"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Dolná"},
+  {street = "Horná"},
+]

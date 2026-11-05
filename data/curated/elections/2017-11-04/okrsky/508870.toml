@@ -1,0 +1,50 @@
+# The okrsky of Pohorelá of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/508870.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Pohorelá, transcribed by an AI agent in job okrsok-rules-782 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: ulica Kpt.Nálepku, súpisné číslo 1 až súpisné číslo 259 ulica Hviezdoslavova, ulica Jesenského, ulica Za Vŕšok, ulica Clementisova, ulica Za Hronom
+#     okrsok 2: ulica Kpt.Nálepku, od súpisného čísla 260 ulica Nová, ulica Školská, ulica Športová, ulica Jánošíkova, ulica Pod Brezinou, ulica Partizánska, ulica Orlová, ulica M.R.Štefánika, ulica Za potokom
+#     okrsok 3: miestna časť Pohorelská Maša
+obec = "508870"
+name = "Pohorelá"
+okrsky_fill = "nearest"
+okrsky_note = "Kpt. Nálepku is split by súpisné číslo. The street 1.mája lies in part Pohorelská Maša (okrsok 3). Addresses without a street in part Pohorelá are not named in the document; they take the nearest okrsok (fill_nearest)."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-337): No okrsky notice for the regional elections of 4 November 2017 on the obec's elections page (Voľby a referendá, all years), its search or notice board; the earliest notice there is that of the 2018 municipal elections. The Internet Archive (CDX API) stayed unreachable for about 15 minutes of retries, so archived copies could not be checked. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2018-11-10: 1: 865 → 867, 2: 805 → 799, 3: 256 → 242."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2018-09-06
+okrsky_date_basis = "The obec's notice of the okrsky for the municipal elections of 10 November 2018 states \"Vyvesené: 6. 9. 2018\"; it gives no date of decision. (https://www.pohorela.sk/samosprava/volby-a-referenda/oznamenie-o-vytvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-229.html)"
+
+[[document]]
+url = "https://www.pohorela.sk/samosprava/volby-a-referenda/oznamenie-o-vytvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-229.html"
+sha256 = "a2658cc011c0fb01d883d244c9a724bd1d077986def34af6b2e2e9a3d9d97f88"
+title = "Oznámenie o vytvorení volebných okrskov a určení volebných miestností (voľby do orgánov samosprávy obcí 10. 11. 2018), vyvesené 6. 9. 2018"
+
+[okrsok.1]
+rules = [
+  {street = "Kpt. Nálepku", numbers = "1-259", by = "supisne"},
+  {street = "Hviezdoslavova"},
+  {street = "Jesenského"},
+  {street = "Za Vŕšok"},
+  {street = "Clementisova"},
+  {street = "Za Hronom"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kpt. Nálepku", numbers = "260-", by = "supisne"},
+  {street = "Nová"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Jánošíkova"},
+  {street = "Pod Brezinou"},
+  {street = "Partizánska"},
+  {street = "Orlová"},
+  {street = "M. R. Štefánika"},
+  {street = "Za Potokom", written = "Za potokom"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Pohorelská Maša"},
+]

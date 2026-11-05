@@ -10,22 +10,27 @@ repository = "https://github.com/pbasista/election-map-slovakia"
 # (docs/deploy.md).
 pages_project = "election-map-slovakia"
 # The projects of the data parts (src/election_map_slovakia/bundle.py):
-# each election's map (geometry, base map, addresses) and its data
-# (candidates, research, occupations, About) in projects of their own,
-# {slug} its slug; the cached copies of the pages research cites; the
-# results, which `ems results deploy` updates on an election night
-# (docs/results.md). A release deploys a data part only when its key
-# (data/published.toml) is not deployed yet.
+# each election's map (geometry, addresses) and its data (candidates,
+# research, occupations, About) in projects of their own, {slug} its slug;
+# the base map of each OpenStreetMap extract, which every election on it
+# shows, all in one project; the cached copies of the pages research
+# cites; the final results. A release deploys a data part only when its key
+# (data/published.toml) is not deployed yet. The live results of an
+# election night have a project of their own, which only `ems results
+# deploy` deploys, never a release (docs/results.md).
 map_project = "ems-map-{slug}"
 data_project = "ems-data-{slug}"
+base_project = "ems-base"
 sources_project = "ems-sources"
 results_project = "ems-results"
-# The own domains of the sources and results projects: the app links the
-# cached copies there and fetches the results from there. A bundle is
-# known by the address of the deployment that carries its key instead
-# (docs/deploy.md).
+live_project = "ems-live"
+# The own domains of the sources, results and live projects: the app links
+# the cached copies there and fetches the final and the live results from
+# there. A bundle is known by the address of the deployment that carries
+# its key instead (docs/deploy.md).
 sources_url = "https://sources.volebnamapa.sk"
 results_url = "https://results.volebnamapa.sk"
+live_url = "https://live.volebnamapa.sk"
 # Cloudflare Pages allows 20,000 files per deployment on the Free plan
 # (https://developers.cloudflare.com/pages/platform/limits/, checked
 # 2026-10-18); `check` fails above this, leaving headroom for files added

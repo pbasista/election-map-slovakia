@@ -34,6 +34,7 @@ import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
+import zlib
 from collections.abc import Callable
 from dataclasses import dataclass
 from html.parser import HTMLParser
@@ -179,9 +180,35 @@ def download(cfg: Config, url: str, limit: int) -> Response:
         raise CacheError(f"cannot fetch {url}: {e}") from None
     if len(data) > limit:
         raise CacheError(f"{url}: larger than {limit >> 20} MiB")
+    data = _gunzip(url, data, limit)
     if not data:
         raise CacheError(f"{url}: empty ({content_type})")
     return Response(data, content_type, charset, final)
+
+
+# How many gzip layers a body may come in: the Internet Archive's raw
+# snapshot (id_) of a page its site served gzipped is the stored gzip,
+# sent gzipped once more.
+_GZIP_LAYERS = 2
+
+
+def _gunzip(url: str, data: bytes, limit: int) -> bytes:
+    """Return *data* without its gzip layers, at most *limit* bytes.
+
+    Not by the Content-Encoding header, which an archive's raw snapshot
+    does not repeat for the layer it stored: by the gzip magic number.
+    """
+    for _ in range(_GZIP_LAYERS):
+        if not data.startswith(b"\x1f\x8b"):
+            break
+        inflater = zlib.decompressobj(zlib.MAX_WBITS | 16)
+        try:
+            data = inflater.decompress(data, limit + 1)
+        except zlib.error as e:
+            raise CacheError(f"{url}: broken gzip ({e})") from None
+        if len(data) > limit:
+            raise CacheError(f"{url}: larger than {limit >> 20} MiB")
+    return data
 
 
 def _uri(url: str) -> str:

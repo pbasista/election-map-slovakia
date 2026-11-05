@@ -1,0 +1,37 @@
+# Council obvody of Stankovany (511030), Ružomberok.
+# Transcribed by an AI agent in job obvod-rules-185 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: viacmandátový volebný obvod č. 1 pre voľby poslancov v obci Stankovany miestna časť Stankovany – bude sa voliť 7 poslancov
+#   obvod 2: viacmandátový volebný obvod č. 2 pre voľby poslancov v obci Stankovany miestna časť Rojkov – budú sa voliť 2 poslanci
+# Okrsky added by an AI agent in job okrsok-rules-5913 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volebný obvod č. 1 - Stankovany
+#   okrsok 2: volebný obvod č. 2 – Stankovany miestna časť Rojkov
+obec = "511030"
+name = "Stankovany"
+date = 2018-05-29
+note = "The municipality's 2018 elections page states the council's resolutions of 29.05.2018 (č. 61/2018/05 a 62/2018/05) setting two obvody by miestna časť."
+okrsky_note = "The 2018 elections page: 'Obecné zastupiteľstvo v Stankovanoch určilo volebné miestnosti nasledovne: volebný obvod č. 1 - Stankovany a určuje volebnú miestnosť: spoločenská miestnosť prístavby budovy OcÚ, ... súp. číslo 133; volebný obvod č. 2 – Stankovany miestna časť Rojkov a určuje volebnú miestnosť: bývalá budova MŠ, súp. číslo 459'. One polling station, hence one okrsok, per obvod: okrsok 1 the part Stankovany (obvod 1), okrsok 2 the part Rojkov (obvod 2). The Internet Archive was temporarily offline (HTTP 503), so no capture could date the page."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The municipality's page for the elections of 10 November 2018 states the polling stations per obvod; it dates the council's resolutions on the obvody (29.05.2018) but not the decision on the polling stations."
+
+[[document]]
+url = "https://www.stankovany.sk/urad/volby/volby-do-organov-samospravy-2018/"
+sha256 = "df1023c9467a12c2999f08691723f7a90c257282ff5a353f79a728749c30f7ff"
+title = "Voľby do orgánov samosprávy 2018 (uznesenia OZ č. 61/2018/05 a 62/2018/05 zo dňa 29.05.2018)"
+
+[obvod.1]
+seats = 7
+okrsky = [1]
+rules = [
+  {part = "Stankovany"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Rojkov"},
+]

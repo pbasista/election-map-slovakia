@@ -1,0 +1,26 @@
+# Okrsky of Drženice, transcribed by an AI agent in job okrsok-rules-3966 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Adresa volebného okrsku a volebnej miestnosti č. 1 je: KD Drženice, Drženice č. 82, 93503 Drženice
+#   okrsok 2: Adresa volebného okrsku a volebnej miestnosti č. 2 je: Viacúčelová budova Kmeťovce č. 34, 935 03 Drženice
+obec = "502219"
+name = "Drženice"
+okrsky_note = "The document names only the polling stations; 2 okrsky and 2 parts, each station in another part, so each okrsok takes the part of its station."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2023-06-27
+okrsky_date_basis = "The document states no date; the Internet Archive captured it on 2023-06-27, before the election of 30 September 2023; its heading names that election. (https://web.archive.org/web/20230627103941/http://www.drzenice.sk/download_file_f.php?id=1880783)"
+
+[[document]]
+url = "https://web.archive.org/web/20230627103941/http://www.drzenice.sk/download_file_f.php?id=1880783"
+sha256 = "2b47b1ea882098d4216e62a593fb7239ba48f619d36773ec5139bf6434a17295"
+title = "Oznámenie o utvorenom volebnom okrsku a určenej volebnej miestnosti pre voľby do NR SR 30.09.2023 (docx)"
+
+[okrsok.1]
+rules = [
+  {part = "Drženice", note = "Polling station KD Drženice č. 82 lies in part Drženice.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kmeťovce", note = "Polling station Viacúčelová budova Kmeťovce č. 34 lies in part Kmeťovce.", inferred = true},
+]

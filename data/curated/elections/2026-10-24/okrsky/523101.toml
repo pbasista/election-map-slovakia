@@ -1,0 +1,71 @@
+# The okrsky of Strážske of the vote of 2023-01-21, data/curated/elections/2023-01-21/okrsky/523101.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Strážske, transcribed by an AI agent in job okrsok-rules-2997 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Tento okrsok je určený pre občanov mesta s adresou trvalého pobytu Strážske (hlásený pobyt bezdomovca) ulice: Fraňa Kráľa, Jahodná, Kollárová, Ľudovíta Štúra, Mládeže, Námestie Alexandra Dubčeka, Osloboditeľov, Pavla Horova, Sama Chalupku, Družstevná 503 - 504, Mierová 628, Komenského.
+#     okrsok 2: ulice: Mierová 2-9, Laborecká 306-609, Mierová 33, Okružná 446-499, Pod hradom, Pri parku, Vihorlatská, Laborecká 619-620, Družstevná 481-482, Družstevná 488-489, Družstevná 495-596
+#     okrsok 3: ulice: 1. mája, Agátová, Brezová, Gaštanová, Lipová, Nová, Obchodná 252-253, Pláne, Staničná, Za záhradami, Zámočnícka, Mierová 10, Mierová 87-106, Mierová 41, Mierová 629-630, Kasárenská 733-738, Kasárenská 230-235, Mierová 85, Mierová 139-142, Mierová 144-145, Mierová 187-198, Mierová 226-229, Mierová 236-245, Obchodná 440, Mierová 279-285, Obchodná 436,
+#     okrsok 4: ulice: Krivošťanská, Laborecká 280-281
+obec = "523101"
+name = "Strážske"
+okrsky_fill = "nearest"
+okrsky_note = "The page's house numbers are súpisné čísla (as on the 2022 page: Okružná 446-499, Laborecká 306-, the blocks of Mierová). Ranges transcribed as written (Laborecká 306-609, Družstevná 495-596, where the 2022 page had 306-315 and 495-496). Streets and houses the page leaves out (Čemernianska, Priemyselná, the rest of Laborecká, Družstevná, Okružná, Obchodná, Kasárenská and Mierová, and addresses without a street) take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2023-01-21
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-289): The 2026 document (and the referendum one) gives each of the 4 okrsky only its polling station, no streets. The town has 3 parts (Strážske, Krivošťany, Pláne) for 4 okrsky and okrsky 1-3 all sit in Strážske, so the parts cannot be inferred. The street list on strazske.sk/volby-2022/ is for 2022 only. These are the okrsky of the vote of 2023-01-21 (2023-referendum), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2023-01-21: 1: 1,285 → 1,315, 2: 871 → 896, 3: 1,147 → 1,080, 4: 205 → 200."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The okrsky are a section ('Okrsky v meste Strážske', Okrsok č. 1-4) of the city's page 'Referendum 2023', headed '21. január 2023' and naming the referendum called by decision 362/2022 Z. z. for 21 January 2023; the page states no decision or posting date and the only Internet Archive capture is of 2023-02-07."
+
+[[document]]
+url = "https://web.archive.org/web/20230207072142/https://strazske.sk/referendum-2023/"
+sha256 = "fc9c58b006b0f62cfbe07bcbf023f45c4c5823477c44ed518318841534c11f1f"
+title = "Referendum 2023 – Okrsky v meste Strážske (city page, archived 2023-02-07)"
+
+[okrsok.1]
+rules = [
+  {street = "Fraňa Kráľa"},
+  {street = "Jahodná"},
+  {street = "Kollárova", written = "Kollárová", note = "the page's spelling (vowel length)"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Mládeže"},
+  {street = "Námestie Alexandra Dubčeka"},
+  {street = "Osloboditeľov"},
+  {street = "Pavla Horova"},
+  {street = "Sama Chalupku"},
+  {street = "Družstevná", numbers = "503-504", by = "supisne"},
+  {street = "Mierová", numbers = "628", by = "supisne"},
+  {street = "Komenského"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mierová", numbers = "2-9, 33", by = "supisne"},
+  {street = "Laborecká", numbers = "306-609, 619-620", by = "supisne", note = "as the page writes it; the 2022 page had 306-315"},
+  {street = "Okružná", numbers = "446-499", by = "supisne"},
+  {street = "Pod hradom"},
+  {street = "Pri parku"},
+  {street = "Vihorlatská"},
+  {street = "Družstevná", numbers = "481-482, 488-489, 495-496", by = "supisne", note = "the page writes 495-596, a typo for 495-496: the 2022 page has 495-496, and 503-504 within 495-596 are in okrsok 1 by the same page"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "1. mája"},
+  {street = "Agátová"},
+  {street = "Brezová"},
+  {street = "Gaštanová"},
+  {street = "Lipová"},
+  {street = "Nová"},
+  {street = "Obchodná", numbers = "252-253, 436, 440", by = "supisne"},
+  {part = "Pláne"},
+  {street = "Staničná"},
+  {street = "Za záhradami"},
+  {street = "Zámočnícka"},
+  {street = "Mierová", numbers = "10, 41, 85, 87-106, 139-142, 144-145, 187-198, 226-229, 236-245, 279-285, 629-630", by = "supisne"},
+  {street = "Kasárenská", numbers = "230-235, 733-738", by = "supisne"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Krivošťanská"},
+  {street = "Laborecká", numbers = "280-281", by = "supisne"},
+]

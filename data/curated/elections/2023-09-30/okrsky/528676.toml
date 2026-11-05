@@ -1,0 +1,34 @@
+# Okrsky of Parchovany, transcribed by an AI agent in job okrsok-rules-3877 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Sobášna miestnosť v kultúrnom dome - Hlavná 470/22 (pre voličov od súpisného čísla 1 po súpisné číslo 291)
+#   okrsok 2: Malá sála v kultúrnom dome - Hlavná 470/22 (pre voličov od súpisného čísla 292 po súpisné číslo 569)
+#   okrsok 3: Budova obecného úradu v Božčiciach (pre voličov v miestnej časti Božčice)
+obec = "528676"
+name = "Parchovany"
+okrsky_fill = "nearest"
+okrsky_note = "No document of this vote found (the obec's 2023 election items are only the voter-pass notice and the results); the referendum's document. Its three okrsky match the Statistical Office's count and voters (okrsok 3 = Božčice). Okrsky 1 and 2 are split by súpisné číslo within Parchovany (1–291, 292–569); higher súpisné numbers take the okrsok of the nearest address (fill_nearest)."
+okrsky_referendum = 2023-01-21
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-14
+okrsky_date_basis = "The notice-board item states 'Vyvesené: 14.11.2022'; the text itself is undated. (https://www.parchovany.sk/novinka/44486/volebne-okrsky-a-volebne-miestnosti)"
+
+[[document]]
+url = "https://www.parchovany.sk/novinka/44486/volebne-okrsky-a-volebne-miestnosti"
+sha256 = "5f7799b56f5be83d1bf4d37dee0cde33c64736d1b25250f259b6c95a872c0a53"
+title = "Volebné okrsky a volebné miestnosti v Obci Parchovany pre vykonanie referenda dňa 21.01.2023 (vyvesené 14.11.2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Parchovany", numbers = "1-291"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Parchovany", numbers = "292-569"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Božčice"},
+]

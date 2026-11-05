@@ -1,0 +1,39 @@
+# Okrsky of Košice-Pereš, transcribed by an AI agent in job okrsok-rules-5602 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bystrická (párne), Krásnohorská, Krompašská, Perešská, Revúcka, Svidnícka, Chatky, prihlásení na MČ
+#   okrsok 2: Betliarska, Bystrická (nepárne), Gelnická, Haburská, Jasovská, Jelšavská, Medzevská, Na Košarisku, Sabinovská, Vranovská
+obec = "598208"
+name = "Košice-Pereš"
+okrsky_date = 2026-05-18
+okrsky_note = "Okrsok 1 also lists 'Chatky' (the garden cottages, numbered by súpisné číslo without a street: the register's addresses without a street), given to okrsok 1 as its rest, and 'prihlásení na MČ' (residents registered at the city district without an address, not an address). Same okrsky as the copied 2026-10-24 document, which leaves Chatky out and uses fill_nearest; here 'Chatky' is read as the addresses without a street, as in the 2022 transcription."
+
+[[document]]
+url = "https://www.mcperes.sk/download_file_f.php?id=2409904"
+sha256 = "f341da2a576eb8573279bf767047c90db95bd3970140a5debcb0ce7171497f7a"
+title = "Určenie volebných okrskov a volebných miestností pre Referendum 2026 konaného dňa 04.07.2026, na území Mestskej časti Košice - Pereš"
+
+[okrsok.1]
+rules = [
+  {street = "Bystrická", parity = "even"},
+  {street = "Krásnohorská"},
+  {street = "Krompašská"},
+  {street = "Perešská"},
+  {street = "Revúcka"},
+  {street = "Svidnícka"},
+  {rest = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Betliarska"},
+  {street = "Bystrická", parity = "odd"},
+  {street = "Gelnická"},
+  {street = "Haburská"},
+  {street = "Jasovská"},
+  {street = "Jelšavská"},
+  {street = "Medzevská"},
+  {street = "Na Košarisku"},
+  {street = "Sabinovská"},
+  {street = "Vranovská"},
+]

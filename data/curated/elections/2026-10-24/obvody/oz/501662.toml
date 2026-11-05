@@ -4,9 +4,14 @@
 # text per obvod, verbatim:
 #   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa: Horné Janíky Búštelek sa volí 4 poslancov.
 #   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa: Dolné Janíky sa volí 3 poslancov.
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/501662.toml, standing in.
 obec = "501662"
 name = "Janíky"
 date = 2026-07-07
+okrsky_date = 2022-06-14
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-157): The 2026 elections pages of janiky.sk publish the obvody announcement but no document creating the okrsky (utvorenie volebných okrskov) for 24 Oct 2026 or for the 2026 referendum; site search and web search found none. Which part votes in okrsok 1 vs 2 is not stated anywhere found. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky, those ŠÚ SR counted in each council obvod (nearer, not taken: 2023-09-30: okrsky of the whole obec, the council then elected in several obvody). Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2022-10-29: 1: 474 → 438, 2: 325 → 331."
 
 [[document]]
 url = "https://www.janiky.sk/sk/urad/volby-a-referenda/volby-do-organov-samospravy-obci-2026/utvoreni-volebnych-obvodov-a-o-urceni-poctu-poslancov-pre-volby-do-organov-samospravy-obci-24-oktobra-2026-839sk.html"
@@ -20,6 +25,7 @@ title = "Utvorenie volebných obvodov a určenie počtu poslancov (OSO26_V510.do
 
 [obvod.1]
 seats = 4
+okrsky = [1]
 rules = [
   {part = "Horné Janíky"},
   {part = "Búštelek"},
@@ -27,6 +33,7 @@ rules = [
 
 [obvod.2]
 seats = 3
+okrsky = [2]
 rules = [
   {part = "Dolné Janíky"},
 ]

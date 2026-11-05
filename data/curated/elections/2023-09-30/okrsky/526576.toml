@@ -1,0 +1,31 @@
+# Okrsky of Hnilčík, transcribed by an AI agent in job okrsok-rules-3929 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok zahŕňa voličov od súp. čísla 92, miestnu časť Zimná dolina, Cechy, Štolvek, Grétla.
+#   okrsok 2: Volebný okrsok zahŕňa voličov Dolnej časti obce, miestnu časť Ráztoky, Bindt a voličov, ktorí majú trvalý pobyt hlásený len na obci.
+obec = "526576"
+name = "Hnilčík"
+okrsky_date = 2023-06-27
+okrsky_note = "The mayor's letter of 27 June 2023, posted on the municipality's NR SR elections page, sets 2 okrsky; it repeats the okrsky of the 2022 document (only okrsok 1's polling station moved to Hnilčík 105). Voters registered only on the municipality (okrsok 2) have no address."
+
+[[document]]
+url = "https://www.obechnilcik.sk/files/dokumenty/volby/volby-do-nrsr/2023-06-27-101057-utvorenie_volebn__ch_okrskov_a_ur__enie_volebn__ch_miestnost__.pdf"
+sha256 = "7d75d3bff6d2039f934f286d3bf51b0d68f5afb7f4cb2f62120ee81e80ee69dc"
+title = "Utvorenie volebných okrskov a určenie volebných miestností - odpoveď (Ocú-158/2023-Ocú/288, 27. 6. 2023)"
+
+[[document]]
+url = "https://www.obechnilcik.sk/samosprava/volby-v-obci/volby-do-nrsr"
+sha256 = "2a2316952a55d94971d03370445a79f6ae08eeeffd5c8f51297265b04b01c140"
+title = "Voľby v obci - Voľby do NRSR"
+
+[okrsok.1]
+rules = [
+  {part = "Hnilčík", numbers = "92-", note = "'od súp. čísla 92' read as súpisné čísla 92 and up in part Hnilčík; the settlements Zimná dolina, Cechy, Štolvek, Grétla are neither parts nor streets in the register (they lie in part Hnilčík) and are taken to be within these numbers"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Hnilčík", numbers = "1-91", note = "'Dolná časť obce' taken as the súpisné čísla below 92 in part Hnilčík (okrsok 1 holds 92 and up)", inferred = true},
+  {part = "Ráztoky"},
+  {part = "Bindt"},
+]

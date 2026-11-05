@@ -1,0 +1,83 @@
+# Okrsky of Krompachy, transcribed by an AI agent in job okrsok-rules-2931 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Banícka štvrť, Banská ulica, Cintorínska ulica, Dolina, Horská ulica, Ulica Júliusa Barča Ivana, Kúpeľná ulica, Lesnícka ulica, Ulica Mikuláša Šprinca, Námestie slobody, Partizánska ulica, Sadová ulica, Turistická ulica, Zemanská ulica, Krompachy bez udania ulice
+#   okrsok 2: Mlynská ulica, Slovinská ulica
+#   okrsok 3: Lorencova ulica
+#   okrsok 4: Hlavná ulica, Stará Maša, Štúrova ulica, Trangusova ulica
+#   okrsok 5: Maurerova ulica, Poštová ulica, Robotnícka ulica, Veterná ulica
+#   okrsok 6: Ulica 29. augusta, Družstevná ulica, Hornádska ulica, Ulica Janka Jesenského, Ulica kpt. Nálepku, Rázusova ulica, Ulica SNP, Stará cesta
+obec = "543268"
+name = "Krompachy"
+okrsky_date = 2022-11-09
+okrsky_note = "Okrsok 1 ends with 'Krompachy bez udania ulice': every address of Krompachy without a street (súpisné číslo only, spread over the town) belongs to okrsok 1, hence the part rule there; the street rules of the other okrsky take precedence. The register streets Podskalka and RO Plejsy are not in the document and are placed by their nearest streets (inferred). Decision of the mayor of 9 November 2022, č. 17031/2022, for the referendum of 21 January 2023 (the document misprints the day as 21 januára 2022); the article is deactivated on the live site, its archived copy links the PDF, which is still live."
+
+[[document]]
+url = "https://www.krompachy.sk/files/00006666/1668086950.pdf"
+sha256 = "d9ac2817cd76bc7f66cf82b0156d32081242f393fbddc99a9a50e8048e0a90bb"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre referendum v roku 2023"
+
+[[document]]
+url = "https://web.archive.org/web/20221110170805/http://www.krompachy.sk/clanok/6666/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-referendum-v-roku-2023.html"
+sha256 = "48045e669f272415aa569b0e7944ab6c1f668ede75d8a679e8e89eda3620bddb"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre referendum v roku 2023 (10.11.2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Banícka Štvrť", written = "Banícka štvrť", note = "only the capital letter differs from the register's name"},
+  {street = "Banská ulica"},
+  {street = "Cintorínska ulica"},
+  {street = "Dolina"},
+  {street = "Horská ulica"},
+  {street = "Ulica Júliusa Barča Ivana"},
+  {street = "Kúpeľná ulica"},
+  {street = "Lesnícka ulica"},
+  {street = "Ulica Mikuláša Šprinca"},
+  {street = "Námestie Slobody", written = "Námestie slobody", note = "only the capital letter differs from the register's name"},
+  {street = "Partizánska ulica"},
+  {street = "Sadová ulica"},
+  {street = "Turistická ulica"},
+  {street = "Zemanská ulica"},
+  {street = "RO Plejsy", note = "The register street RO Plejsy (the Plejsy recreation area, 3 addresses) is not in the document; placed by its nearest streets, Cintorínska ulica and Sadová ulica, both in okrsok 1.", inferred = true},
+  {part = "Krompachy", note = "'Krompachy bez udania ulice': the addresses of Krompachy without a street (súpisné číslo only)."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mlynská ulica"},
+  {street = "Slovinská ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Lorencova ulica"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Hlavná ulica"},
+  {street = "Stará Maša"},
+  {street = "Štúrova ulica"},
+  {street = "Trangusova ulica"},
+  {street = "Podskalka", note = "The register street Podskalka (1 address) is not in the document; placed by its nearest streets, Trangusova ulica and Hlavná ulica, both in okrsok 4.", inferred = true},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Maurerova ulica"},
+  {street = "Poštová ulica"},
+  {street = "Robotnícka ulica"},
+  {street = "Veterná ulica"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Ulica 29. augusta"},
+  {street = "Družstevná ulica"},
+  {street = "Hornádska ulica"},
+  {street = "Ulica Janka Jesenského"},
+  {street = "Ulica kpt. Nálepku"},
+  {street = "Rázusova ulica"},
+  {street = "Ulica SNP"},
+  {street = "Stará cesta"},
+]

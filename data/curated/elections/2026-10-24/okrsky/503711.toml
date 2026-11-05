@@ -1,0 +1,35 @@
+# The okrsky of Diakovce of the vote of 2026-07-04, data/curated/elections/2026-07-04/okrsky/503711.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Diakovce, transcribed by an AI agent in job okrsok-rules-5538 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: voliči od č. domu 1 po č. domu 483 a veľké súpisné čísla spadajúce do tohto okrsku
+#     okrsok 2: voliči od č. domu 484 po č. domu 980 a veľké súpisné čísla spadajúce do tohto okrsku
+obec = "503711"
+name = "Diakovce"
+okrsky_fill = "nearest"
+okrsky_note = "The obec has one part and no streets; okrsky by house (súpisné) number 1-483 and 484-980. The 'large súpisné numbers' falling into each okrsok (above 980) are not listed, so they take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2026-07-04
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-367): The 2026 documents only state that the municipality has 1 volebný obvod with two volebné okrsky; none defines the okrsky's territory or polling stations. The register has no streets (one part), so the okrsky cannot be inferred. These are the okrsky of the vote of 2026-07-04 (2026-referendum), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2026-07-04: 1: 1,049 → 1,039, 2: 955 → 939."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2026-05-27
+okrsky_date_basis = "The municipality's referendum page item carrying the notice is dated 'Dátum: 27. 5. 2026'; the notice itself is undated. (https://www.diakovce.sk/urad/volby/referendum-2026/informacia-o-podmienkach-prava-hlasovat-v-referende-oznam-kozlemeny-742sk.html)"
+
+[[document]]
+url = "https://www.diakovce.sk/evt_file.php?file=10792&original=Referendum%20072026.pdf"
+sha256 = "1cce0d557c1962b7ce4de45b17cb361deaf04e50e12d85f963b852129e8cf32b"
+title = "Oznam - Közlemény: Referendum 4. 7. 2026 (volebné okrsky a volebné miestnosti)"
+
+[[document]]
+url = "https://www.diakovce.sk/urad/volby/referendum-2026/informacia-o-podmienkach-prava-hlasovat-v-referende-oznam-kozlemeny-742sk.html"
+sha256 = "5d811624a2e724f186e22908b71cdf55334926388cbd58e8fb287e671c57925a"
+title = "Informácia o podmienkach práva hlasovať v referende - Oznam - Közlemény (Dátum: 27. 5. 2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Diakovce", numbers = "1-483"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Diakovce", numbers = "484-980"},
+]

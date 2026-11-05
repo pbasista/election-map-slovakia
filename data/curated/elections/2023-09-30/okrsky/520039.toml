@@ -1,0 +1,42 @@
+# Okrsky of Belá nad Cirochou, transcribed by an AI agent in job okrsok-rules-3673 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ul. Cintorínska, ul. Riečna, ul. Komenského, ul. Štúrova, ul. Partizánska, ul. SNP, ul. Švermova, ul. Vihorlatská od súpisného čísla 167-204, 251-318, 445-471, 925, 927, 948 974, 1029, 1042, 1044, 1046, 1047, 1065, 1075
+#   okrsok 2: ul. Mlynská, ul. Osloboditeľov, ul. Kukučínova, ul. Budovateľská, ul. Brusná, ul. Tajch, ul. Sládkovičova, ul. Staničná, ul. Drieňová, ul. Hviezdoslavova, ul. Vihorlatská od súpisného čísla 472-515 a súpisné číslo 930.
+obec = "520039"
+name = "Belá nad Cirochou"
+okrsky_date = 2023-06-14
+okrsky_fill = "nearest"
+okrsky_note = "fill_nearest places the register's addresses without a street and the Vihorlatská houses whose súpisné číslo the document lists in neither okrsok."
+
+[[document]]
+url = "https://www.belanadcirochou.sk/files/obsahy-stranok/volby/2023-06-14-122731-Utvorenie_volebn__ch_okrskov_NR_SR.pdf"
+sha256 = "b580a749eac8a3c2ad219375b8ab4d9f8dcb97101a9f053e3ac0a0b8e13d89ea"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Národnej rady Slovenskej republiky konané 30. septembra 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Riečna"},
+  {street = "Komenského"},
+  {street = "Štúrova"},
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Švermova"},
+  {street = "Vihorlatská", numbers = "167-204, 251-318, 445-471, 925, 927, 948, 974, 1029, 1042, 1044, 1046, 1047, 1065, 1075", by = "supisne", note = "The document writes '948 974' without a separator; read as the two numbers 948 and 974."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mlynská"},
+  {street = "Osloboditeľov"},
+  {street = "Kukučínova"},
+  {street = "Budovateľská"},
+  {street = "Brusná"},
+  {street = "Tajch"},
+  {street = "Sládkovičova"},
+  {street = "Staničná"},
+  {street = "Drieňová"},
+  {street = "Hviezdoslavova"},
+  {street = "Vihorlatská", numbers = "472-515, 930", by = "supisne"},
+]

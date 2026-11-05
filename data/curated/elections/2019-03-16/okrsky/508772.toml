@@ -1,0 +1,30 @@
+# Okrsky of Michalová, transcribed by an AI agent in job okrsok-rules-1527 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Trosky, Hrable, Horný rad, Dolný rad
+#   okrsok 2: Hrádza, Potočná, Ulička
+obec = "508772"
+name = "Michalová"
+okrsky_date = 2019-01-28
+okrsky_fill = "nearest"
+okrsky_note = "The 24 addresses without a street are not placed by the document; fill_nearest places them by the nearest address."
+
+[[document]]
+url = "https://www.michalova.sk/e_download.php?file=data/editor/177skabove_4.pdf&original=Volebn%C3%A9%20okrsky.pdf"
+sha256 = "e1e0b61fc6821317cbafa92b8d8eede508136cd04f448f79aeff5143cfef7d10"
+title = "Volebné okrsky, voľba prezidenta SR 16. 3. 2019"
+
+[okrsok.1]
+rules = [
+  {street = "Trosky"},
+  {street = "Hrable"},
+  {street = "Horný rad"},
+  {street = "Dolný rad"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hrádza"},
+  {street = "Potočná"},
+  {street = "Ulička"},
+]

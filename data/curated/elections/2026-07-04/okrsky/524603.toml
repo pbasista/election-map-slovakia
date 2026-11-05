@@ -1,0 +1,40 @@
+# Okrsky of Jarovnice, transcribed by an AI agent in job okrsok-rules-5741 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre oprávnených voličov bývajúcich na súpisných číslach: 0 - 325
+#   okrsok 2: pre oprávnených voličov bývajúcich na súpisných číslach: 326 – 425
+#   okrsok 3: pre oprávnených voličov bývajúcich na súpisných číslach: 426 - 630
+obec = "524603"
+name = "Jarovnice"
+okrsky_note = "Okrsky are súpisné-číslo ranges for the whole obec; the document does not name the parts, so each range is applied in both parts (Jarovnice, Močidľany), the súpisné čísla being numbered across the obec. The last okrsok is open-ended so that higher numbers also fall there."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2026-05-18
+okrsky_date_basis = "The elections page states the document was posted (vyvesené) on 18. 5. 2026; the document itself is undated. (https://www.jarovnice.sk/samosprava/volby/vytvorenie-volebnych-okrskov-8739.html)"
+
+[[document]]
+url = "https://www.jarovnice.sk/e_download.php?file=/data/uredni_deska/obsah8711_1.pdf&original=Vytvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD%20v%20obci%20Jarovnice.pdf"
+sha256 = "ef35194a13e28ff4ff146eada3ce4bc538f442d5806aff994a2e2d79df8e55ca"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností v obci Jarovnice (referendum 4. júla 2026)"
+
+[[document]]
+url = "https://www.jarovnice.sk/samosprava/volby/vytvorenie-volebnych-okrskov-8739.html"
+sha256 = "81310fe6016df9904e639c2e54a9f337c2e67c7425e55a13a582d755006b62c3"
+title = "Election page posting the document"
+
+[okrsok.1]
+rules = [
+  {part = "Jarovnice", numbers = "0-325"},
+  {part = "Močidľany", numbers = "0-325"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Jarovnice", numbers = "326-425"},
+  {part = "Močidľany", numbers = "326-425"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Jarovnice", numbers = "426-"},
+  {part = "Močidľany", numbers = "426-"},
+]

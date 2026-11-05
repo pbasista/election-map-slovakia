@@ -1,0 +1,65 @@
+# The okrsky of Lužianky of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/580899.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Lužianky, transcribed by an AI agent in job okrsok-rules-4822 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Okrsok I. Ulice: Bazová ulica, Egrešová ulica, Horákova, Jahodová ulica, Jaseňová ulica, Kaplanova, Malinová ulica, Mesačná, Obežná, Pri trati, Rastislavova, Smreková ulica, Topoľová ulica, Lužianky 0
+#     okrsok 2: Okrsok II Ulice: Ciolkovského, Dunajského, Edisonova, Gaštanová ulica, Hlohovecká, Hronského, Kajsa, Kajsa II., Korytovská, Na Holotke, Na ihrisko, Nejedlého, Počašie, Pod Hliníkom, Prúdova, Radošinská, Ríbezľová ulica, Sasinkova, Slivková ulica, Športová, Švantnerova, Tatranská, Teslova, Urbanova, Venušina, Vinárska, Višňová ulica, Vodárenská, Závodníkova
+obec = "580899"
+name = "Lužianky"
+okrsky_fill = "nearest"
+okrsky_note = "'Lužianky 0' in okrsok I are the voters registered without a street address (no rule). The document names Bazová ulica and Jaseňová ulica (okrsok I), Gaštanová ulica and Ríbezľová ulica (okrsok II), which this vote's address register lacks: left out. It leaves out Čerešňová ulica, Cez panské, Dolné Hony, Golfová, Lipová ulica and the addresses without a street: fill_nearest places them."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-256): The mayor's 'Utvorenie volebných okrskov a určenie volebnej miestnosti' (2026) and the notice 141372 name only the two polling stations (okrsok 1: prístavba v kultúrnom dome; okrsok 2: zasadacia miestnosť na obecnom úrade), with no streets. The obec has a single part, so the okrsky cannot be inferred from the stations. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2024-06-08: 1: 1,440 → 1,378, 2: 1,435 → 1,299."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document is headed 'VOLBY DO EURÓPSKEHO PARLAMENTU 8. jún 2024' and lists the streets of Okrsok I. and Okrsok II; it states no decision date (the PDF's metadata says it was created on 2024-02-23)."
+
+[[document]]
+url = "https://www.luzianky.sk/data/news_files/luzianky.sk/133228/okrsky.pdf"
+sha256 = "a572d53f3a11c707819bd5e24491e4cca467482b27e76b93d3204e09e6f1aa50"
+title = "Voľby do Európskeho parlamentu 8. jún 2024 – volebné miestnosti, Okrsok I. a Okrsok II – ulice"
+
+[okrsok.1]
+rules = [
+  {street = "Egrešová ulica"},
+  {street = "Horákova"},
+  {street = "Jahodová ulica"},
+  {street = "Kaplanova"},
+  {street = "Malinová ulica"},
+  {street = "Mesačná"},
+  {street = "Obežná"},
+  {street = "Pri trati"},
+  {street = "Rastislavova"},
+  {street = "Smreková ulica"},
+  {street = "Topoľová ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ciolkovského"},
+  {street = "Dunajského"},
+  {street = "Edisonova"},
+  {street = "Hlohovecká"},
+  {street = "Hronského"},
+  {street = "Kajsa"},
+  {street = "Kajsa II", written = "Kajsa II."},
+  {street = "Korytovská"},
+  {street = "Na Holotke"},
+  {street = "Na Ihrisko", written = "Na ihrisko"},
+  {street = "Nejedlého"},
+  {street = "Počašie"},
+  {street = "Pod Hliníkom"},
+  {street = "Prúdová", written = "Prúdova", note = "the document writes Prúdová with a short final vowel"},
+  {street = "Radošinská"},
+  {street = "Sasinkova"},
+  {street = "Slivková ulica"},
+  {street = "Športová"},
+  {street = "Švantnerova"},
+  {street = "Tatranská"},
+  {street = "Teslova"},
+  {street = "Urbanova"},
+  {street = "Venušina"},
+  {street = "Vinárska"},
+  {street = "Vodárenská"},
+  {street = "Závodníkova"},
+  {street = "Višňová ulica"},
+]

@@ -1,0 +1,192 @@
+# Okrsky of Púchov, transcribed by an AI agent in job okrsok-rules-052 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Pod Lachovcom, J.Kráľa, Sládkovičova, Podjavorinskej, Kuzmányho, Vodárska, Hoštínska, Za cintorínom, Komenského s.č. 637, 638, 643, 646, 647, 648, 649, 650, 652, 653, 655, 657, 658, 659, 660, 661, 662, 663, 664, 665, 666, 669, 670, 671, 672, 673, 1294, 1114, 1651, 1652, 1961
+#   okrsok 2: Chmelinec s.č. 1413, 1416, 1417, 1418, Okružná s.č. 1419, 1420, 1421, 1422, 1423, 1424, 1425, 1426, 1923
+#   okrsok 3: Okružná s.č. 1427, 1428, 1429, 1441, 1442, 1443, Mládežnícka s.č. 1430, 1431, 1434, 1435, Samoty s.č. 1229, 1230, 1062, 1952, Dvory, Nimnická cesta, Zábreh, Pod Zábrehom, Potôčky
+#   okrsok 4: Nám.Slobody s.č. 1403, 1404, 1407, 1408, 1621, 1622, 1624, 1656, 1875, 1900, Komenského s.č. 1625, 1626, 1627
+#   okrsok 5: Nám.Slobody s.č. 562, 563, 1405, 1406, 1657, Moyzesova s.č. 1744, 1866, 1867, 1909, Mudroňova s.č. 542, 552, 556, 1666, 1667
+#   okrsok 6: F.Urbánka, Nábrežie slobody, Hollého, Royova s.č. 770, 771, 772, 773, 774, 775, 776, 777, 778, 780, 781, 782, 796, 1905, Štefánikova s.č. 812, 816, Moravská s.č. 684, 1631, 1632, 1634, 1635, 1636, 1668, 1864, 1866, 1877, 1878, 1879, 1880, 1881, 1882, 1883, 1884, Požiarna s.č. 1637
+#   okrsok 7: Royova s.č. 783, 785, 786, 787, 788, 789, 790, 791, 792, 1075, 1319, Moravská s.č. 1628, 1629, Komenského s.č. 651, 1630, 1642, 1643, Štefánikova s.č. 1638, 1641, 828, Požiarna s.č. 784, 794, 1048, 1245, 1638, 1640, 1644
+#   okrsok 8: Komenského s.č. 827, Štefánikova s.č. 810, 813, 818, 821, 822, 827, 870, 1. mája s.č. 870, 871, 873, 876, 877, 878, Obr.mieru s.č. 877, 1150, 1151, 1152, 1157, Požiarna s.č. 824, 825, Púchov – voliči bez adresy
+#   okrsok 9: Obr.mieru s.č. 1085, 1086, 1092, 1093, 1094, 1095, 1096, 1154, 1155, 1156, Pribinova s.č. 1639, Rastislavova s.č. 1165
+#   okrsok 10: Mojmírova s.č. 1162, 1163, Rastislavova s.č. 1164, 1166, 1167, Pribinova s.č. 1169, 1170, 1171, 1172, 1173, Gorazdova
+#   okrsok 11: 1. mája s.č. 880, 883, 885, 886, 887, 888, 889, 894, 898, 899, 901, 903, 937, 939, 1159, 1160, 1264, 1888, Mojmírova s.č. 1161, Vsetínska s.č. 1217, 1218, 1219, 1332, Svätoplukova, Športovcov, Streženická cesta, miestna časť Hrabovka
+#   okrsok 12: Železničná, Spojová, Továrenská, Vajanského, T.Vansovej, Štúrova, Kukučínova, Jesenského, F.Hečku, Jilemnického, Slovanská, Lichardova, Školská, Hurbanova
+#   okrsok 13: Trenčianska, Vŕšok, kpt.Jaroša, J.Smreka, I.Krasku
+#   okrsok 14: Novonosická, Sadová, Ružová, Záskalie, Záhradná, Astrová, Tulipánová, Kvetinová
+#   okrsok 15: miestna časť Nosice
+#   okrsok 16: Vsetínska s.č. 697, 701, 1026, 1027, 1030, 1098, 1333, 1335, 1354, 1355, Samoty s.č. 1028, 1029, miestna časť Vieska-Bezdedov
+#   okrsok 17: miestna časť Ihrište
+#   okrsok 18: miestna časť Hoština
+obec = "513610"
+name = "Púchov"
+okrsky_fill = "nearest"
+okrsky_note = "Numbers after 's.č.' are súpisné čísla. A street listed by súpisné čísla in only one okrsok is taken whole there; streets split between okrsky take only the listed súpisné čísla. fill_nearest covers streets the list does not name (Dlhé lúky, Hoenningovo námestie, Poštová, Sedlišťská, Župné námestie), unlisted súpisné čísla of split streets and the addresses without a street in parts Púchov and Horné Kočkovce. 'Púchov – voliči bez adresy' (okrsok 8) are residents without an address. Hrabovská and Riečna lie in part Hrabovka (okrsok 11)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The list is headed for the elections to the samosprávne kraje of 04.11.2017; it states no decision date."
+
+[[document]]
+url = "https://www.puchov.sk/download_file_f.php?id=873733"
+sha256 = "376e28991505f2534aabbb2b923ce16187975df598071be14509a1001a9656f9"
+title = "Zoznam volebných okrskov a miestností pre voľby do orgánov samosprávnych krajov v meste Púchov – 04.11.2017"
+
+[okrsok.1]
+rules = [
+  {street = "Pod Lachovcom"},
+  {street = "J. Kráľa", written = "J.Kráľa"},
+  {street = "Sládkovičova"},
+  {street = "Podjavorinskej"},
+  {street = "Kuzmányho"},
+  {street = "Vodárska"},
+  {street = "Hoštínska"},
+  {street = "Za cintorínom"},
+  {street = "Komenského", numbers = "637, 638, 643, 646, 647, 648, 649, 650, 652, 653, 655, 657, 658, 659, 660, 661, 662, 663, 664, 665, 666, 669, 670, 671, 672, 673, 1294, 1114, 1651, 1652, 1961", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Chmelinec", note = "The document lists only súpisné čísla of this street, all in this obvod; the whole street is taken."},
+  {street = "Okružná", numbers = "1419, 1420, 1421, 1422, 1423, 1424, 1425, 1426, 1923", by = "supisne"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Okružná", numbers = "1427, 1428, 1429, 1441, 1442, 1443", by = "supisne"},
+  {street = "Mládežnícka", note = "The document lists only súpisné čísla of this street, all in this obvod; the whole street is taken."},
+  {street = "Samoty", numbers = "1229, 1230, 1062, 1952", by = "supisne"},
+  {street = "Dvory"},
+  {street = "Nimnická cesta"},
+  {street = "Zábreh"},
+  {street = "Pod Zábrehom"},
+  {street = "Potôčky"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Námestie slobody", numbers = "1403, 1404, 1407, 1408, 1621, 1622, 1624, 1656, 1875, 1900", by = "supisne", written = "Nám.Slobody"},
+  {street = "Komenského", numbers = "1625, 1626, 1627", by = "supisne"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Námestie slobody", numbers = "562, 563, 1405, 1406, 1657", by = "supisne", written = "Nám.Slobody"},
+  {street = "Moyzesova", note = "The document lists only súpisné čísla of this street, all in this obvod; the whole street is taken."},
+  {street = "Mudroňova", note = "The document lists only súpisné čísla of this street, all in this obvod; the whole street is taken."},
+]
+
+[okrsok.6]
+rules = [
+  {street = "F. Urbánka", written = "F.Urbánka"},
+  {street = "Nábrežie slobody"},
+  {street = "Hollého"},
+  {street = "Royova", numbers = "770, 771, 772, 773, 774, 775, 776, 777, 778, 780, 781, 782, 796, 1905", by = "supisne"},
+  {street = "Štefánikova", numbers = "812, 816", by = "supisne"},
+  {street = "Moravská", numbers = "684, 1631, 1632, 1634, 1635, 1636, 1668, 1864, 1866, 1877, 1878, 1879, 1880, 1881, 1882, 1883, 1884", by = "supisne"},
+  {street = "Požiarna", numbers = "1637", by = "supisne"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Royova", numbers = "783, 785, 786, 787, 788, 789, 790, 791, 792, 1075, 1319", by = "supisne"},
+  {street = "Moravská", numbers = "1628, 1629", by = "supisne"},
+  {street = "Komenského", numbers = "651, 1630, 1642, 1643", by = "supisne"},
+  {street = "Štefánikova", numbers = "1638, 1641, 828", by = "supisne"},
+  {street = "Požiarna", numbers = "784, 794, 1048, 1245, 1638, 1640, 1644", by = "supisne"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Komenského", numbers = "827", by = "supisne"},
+  {street = "Štefánikova", numbers = "810, 813, 818, 821, 822, 827, 870", by = "supisne"},
+  {street = "1.mája", numbers = "870, 871, 873, 876, 877, 878", by = "supisne", written = "1. mája"},
+  {street = "Obrancov mieru", numbers = "877, 1150, 1151, 1152, 1157", by = "supisne", written = "Obr.mieru"},
+  {street = "Požiarna", numbers = "824, 825", by = "supisne"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Obrancov mieru", numbers = "1085, 1086, 1092, 1093, 1094, 1095, 1096, 1154, 1155, 1156", by = "supisne", written = "Obr.mieru"},
+  {street = "Pribinova", numbers = "1639", by = "supisne"},
+  {street = "Rastislavova", numbers = "1165", by = "supisne"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Mojmírova", numbers = "1162, 1163", by = "supisne"},
+  {street = "Rastislavova", numbers = "1164, 1166, 1167", by = "supisne"},
+  {street = "Pribinova", numbers = "1169, 1170, 1171, 1172, 1173", by = "supisne"},
+  {street = "Gorazdova"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "1.mája", numbers = "880, 883, 885, 886, 887, 888, 889, 894, 898, 899, 901, 903, 937, 939, 1159, 1160, 1264, 1888", by = "supisne", written = "1. mája"},
+  {street = "Mojmírova", numbers = "1161", by = "supisne"},
+  {street = "Vsetínska", numbers = "1217, 1218, 1219, 1332", by = "supisne"},
+  {street = "Svätoplukova"},
+  {street = "Športovcov"},
+  {street = "Streženická cesta"},
+  {part = "Hrabovka"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Železničná"},
+  {street = "Spojová"},
+  {street = "Továrenská"},
+  {street = "Vajanského"},
+  {street = "T. Vansovej", written = "T.Vansovej"},
+  {street = "Štúrova"},
+  {street = "Kukučínova"},
+  {street = "Jesenského"},
+  {street = "F. Hečku", written = "F.Hečku"},
+  {street = "Jilemnického"},
+  {street = "Slovanská"},
+  {street = "Lichardova"},
+  {street = "Školská"},
+  {street = "Hurbanova"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Trenčianska"},
+  {street = "Vŕšok"},
+  {street = "kpt. Jaroša", written = "kpt.Jaroša"},
+  {street = "J. Smreka", written = "J.Smreka"},
+  {street = "I. Krasku", written = "I.Krasku"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Novonosická"},
+  {street = "Sadová"},
+  {street = "Ružová"},
+  {street = "Záskalie"},
+  {street = "Záhradná"},
+  {street = "Astrová"},
+  {street = "Tulipánová"},
+  {street = "Kvetinová"},
+]
+
+[okrsok.15]
+rules = [
+  {part = "Nosice"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Vsetínska", numbers = "697, 701, 1026, 1027, 1030, 1098, 1333, 1335, 1354, 1355", by = "supisne"},
+  {street = "Samoty", numbers = "1028, 1029", by = "supisne"},
+  {part = "Vieska-Bezdedov"},
+]
+
+[okrsok.17]
+rules = [
+  {part = "Ihrište"},
+]
+
+[okrsok.18]
+rules = [
+  {part = "Hoštiná", note = "The document writes 'miestna časť Hoština'."},
+]

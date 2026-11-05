@@ -1,0 +1,47 @@
+# Okrsky of Badín, transcribed by an AI agent in job okrsok-rules-4428 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: SNP, Hliny, L. Svobodu, Laurínska, Pod vŕškom, Pod Hrádkom, Na Dielnici
+#   okrsok 2: ulice: Krčméryho, Banská, Borovicová ulica, Družstevná, Kriedovnica, Nová, Osloboditeľov, Sládkovičova, Tajovského, Záhradná, Lipová ulica, súp.č. 373, bezdomovci
+obec = "508454"
+name = "Badín"
+okrsky_date = 2024-01-25
+okrsky_fill = "nearest"
+okrsky_note = "The other addresses without a street (by súpisné číslo) are not in the document; fill_nearest places them. 'bezdomovci' (homeless) in okrsok 2 selects no address."
+
+[[document]]
+url = "https://www.obecbadin.sk/download_file_f.php?id=1987534"
+sha256 = "21346c901139ca4df5a103ba2f72b61ac4a854a0cf4dc3c4c4b9fbaf60968dbe"
+title = "Starosta obce Badín určuje 2 volebné okrsky pre Voľby prezidenta SR v roku 2024 (Urcenie-okrskov.pdf)"
+
+[[document]]
+url = "https://www.obecbadin.sk/volby-prezidenta-sr-2024.html"
+sha256 = "c0624cd5218a3544e9dd3624638dbf6b8053129f008ce74df306b0d0b269cc7c"
+title = "Election page of obec Badín linking the document"
+
+[okrsok.1]
+rules = [
+  {street = "SNP"},
+  {street = "Hliny"},
+  {street = "L. Svobodu"},
+  {street = "Laurínska"},
+  {street = "Pod vŕškom"},
+  {street = "Pod Hrádkom"},
+  {street = "Na Dielnici"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krčméryho"},
+  {street = "Banská"},
+  {street = "Borovicová ulica"},
+  {street = "Družstevná"},
+  {street = "Kriedovnica"},
+  {street = "Nová"},
+  {street = "Osloboditeľov"},
+  {street = "Sládkovičova"},
+  {street = "Tajovského"},
+  {street = "Záhradná"},
+  {street = "Lipová ulica"},
+  {part = "Badín", numbers = "373", note = "'súp.č. 373': the address with súpisné číslo 373 without a street"},
+]

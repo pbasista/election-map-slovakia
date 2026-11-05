@@ -1,0 +1,106 @@
+# Okrsky of Rovinka, transcribed by an AI agent in job okrsok-rules-1081 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hlavná, Okružná, Školská, Vojenská, Rovinka so súpisným číslom a Rovinka bez súpisného čísla
+#   okrsok 2: Agátová, Astrová, Belasá, Brezová, Bronzová, Cínová, Čerešňová, Dúhová, Dunajská, Farebná, Jabloňová, Krajná, Krásna, Kvetná, Lúčna, Medená, Orechová, Poľná, Rovná, Slivková, Športová, Úzka, Višňová, Zelená
+#   okrsok 3: Družstevná, Gazdovská, Hrádzna, Jarná, Jasná, Jazdecká, Jazerná, Krátka, Lekárenská, Majerská, Narcisová, Nová Obilná, Orgovánová, Pasienková, Pivonková, Pluhová, Potočná, Púpavová, Repková, Riečna, Sadová, Slnečná, Súmračná, Veterná, Za hrádzou, Záhradná, Železničná
+obec = "508209"
+name = "Rovinka"
+okrsky_note = "The document's 'Rovinka' (earlier documents: 'Rovinka so súpisným číslom a Rovinka bez súpisného čísla') means the houses without a street name, numbered only by súpisné číslo, and residents registered without an address: a part rule for Rovinka in okrsok 1 selects exactly the addresses no street rule selects."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2019-03-01
+okrsky_date_basis = "The municipality's page (as archived) carries the posting date 1. marca 2019; it lists the okrsky in its text and states no decision date. (https://web.archive.org/web/20190821115810/https://obecrovinka.sk/volby-prezidenta-slovenskej-republiky-2019-okrsky/)"
+okrsky_supplemented = 2022-11-16
+okrsky_supplemented_from = "document"
+okrsky_supplement_basis = "The document does not name the streets Broskyňová ulica, Lipová ulica, Maková ulica, Nechtíková ulica, Platanová ulica, Podbeľová ulica, Pšeničná ulica, Rozmarínová ulica, Slnečnicová ulica, Topoľová ulica, Ľanová ulica, Žitná ulica (new streets, in the register now); the municipality's later okrsky document (for the referendum of 21 January 2023, posted 16. novembra 2022) (3 okrsky, the same polling stations) names every street, and each of these is placed in the okrsok it gives. (https://web.archive.org/web/20221126090009/https://obecrovinka.sk/referendum-2023-rozdelenie-do-okrskov/)"
+
+[[document]]
+url = "https://web.archive.org/web/20190821115810/https://obecrovinka.sk/volby-prezidenta-slovenskej-republiky-2019-okrsky/"
+sha256 = "ab2688d70fad3ac454ec33d0065ff0c0372a414eeb33bd635a77b30f5f33f07c"
+title = "Voľby prezidenta Slovenskej republiky 2019 – okrsky (obecrovinka.sk, archived)"
+
+[[document]]
+url = "https://web.archive.org/web/20221126090009/https://obecrovinka.sk/referendum-2023-rozdelenie-do-okrskov/"
+sha256 = "64698a5784b6789ada876d92ba38fc1a64516bdc7df5bdbc08b2a83caee20a3f"
+title = "Referendum 2023 – rozdelenie do okrskov (obecrovinka.sk, archived)"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná"},
+  {street = "Okružná"},
+  {street = "Školská"},
+  {street = "Vojenská"},
+  {part = "Rovinka", note = "houses without a street name (súpisné číslo only) and residents without an address: 'Rovinka' in the document"},
+  {street = "Platanová ulica", supplemented = true},
+  {street = "Topoľová ulica", supplemented = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Astrová"},
+  {street = "Belasá"},
+  {street = "Brezová"},
+  {street = "Bronzová"},
+  {street = "Cínová ulica", written = "Cínová"},
+  {street = "Čerešňová"},
+  {street = "Dúhová"},
+  {street = "Dunajská"},
+  {street = "Farebná"},
+  {street = "Jabloňová"},
+  {street = "Krajná"},
+  {street = "Krásna"},
+  {street = "Kvetná"},
+  {street = "Lúčna"},
+  {street = "Medená"},
+  {street = "Orechová"},
+  {street = "Poľná"},
+  {street = "Rovná"},
+  {street = "Slivková"},
+  {street = "Športová"},
+  {street = "Úzka"},
+  {street = "Višňová"},
+  {street = "Zelená"},
+  {street = "Slnečnicová ulica", supplemented = true},
+  {street = "Ľanová ulica", supplemented = true},
+  {street = "Broskyňová ulica", supplemented = true},
+  {street = "Žitná ulica", supplemented = true},
+  {street = "Pšeničná ulica", supplemented = true},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Družstevná"},
+  {street = "Gazdovská"},
+  {street = "Hrádzna"},
+  {street = "Jarná"},
+  {street = "Jasná"},
+  {street = "Jazdecká"},
+  {street = "Jazerná"},
+  {street = "Krátka"},
+  {street = "Lekárenská"},
+  {street = "Majerská"},
+  {street = "Narcisová"},
+  {street = "Nová"},
+  {street = "Obilná"},
+  {street = "Orgovánová"},
+  {street = "Pasienková"},
+  {street = "Pivonková"},
+  {street = "Pluhová"},
+  {street = "Potočná"},
+  {street = "Púpavová"},
+  {street = "Repková"},
+  {street = "Riečna"},
+  {street = "Sadová"},
+  {street = "Slnečná"},
+  {street = "Súmračná"},
+  {street = "Veterná"},
+  {street = "Za hrádzou"},
+  {street = "Záhradná"},
+  {street = "Železničná"},
+  {street = "Nechtíková ulica", supplemented = true},
+  {street = "Podbeľová ulica", supplemented = true},
+  {street = "Maková ulica", supplemented = true},
+  {street = "Lipová ulica", supplemented = true},
+  {street = "Rozmarínová ulica", supplemented = true},
+]

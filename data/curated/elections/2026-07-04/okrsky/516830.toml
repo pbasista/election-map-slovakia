@@ -1,0 +1,24 @@
+# Okrsky of Hronský Beňadik, transcribed by an AI agent in job okrsok-rules-5593 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 - volebná miestnosť: Dom kultúry, Mýtne námestie 445/26, 966 53 Hronský Beňadik
+#   okrsok 2: Volebný okrsok č. 2 - volebná miestnosť: Stará škola, Krivínska 3/10, časť Psiare
+obec = "516830"
+name = "Hronský Beňadik"
+okrsky_date = 2026-05-07
+okrsky_note = "The decision names each okrsok's polling room only; each okrsok is given the part of its polling room (2 okrsky, 2 parts), as the later obvody (obvod 1 = okrsok 1 = Hronský Beňadik, obvod 2 = okrsok 2 = Psiare) confirm."
+
+[[document]]
+url = "https://www.hronskybenadik.sk/download_file_f.php?id=2407043"
+sha256 = "97a91d4f61dc6eb96b1e035446f47a9c64ac3549d37392fd3fc8f1e680dab917"
+title = "Utvorenie volebných okrskov a určenie volebných miestností na Referendum 04.07.2026 (07.05.2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Hronský Beňadik", note = "The document gives only the polling room; there are as many okrsky as parts and okrsok 1 votes in the cultural house of part Hronský Beňadik.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Psiare", note = "The document gives only the polling room, in part Psiare (Stará škola, Krivínska 3/10, časť Psiare).", inferred = true},
+]

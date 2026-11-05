@@ -72,3 +72,212 @@ address_skip = ["Kežmarok/Javorina"]
 # Michal Rusko, Selce: BBSK obvod 1, okres Banská Bystrica; the others are
 # in okresy Krupina (obvod 5) and Poltár (obvod 7).
 "zsk:6/1#64" = "508985"
+
+# The presidential elections use the register of 09/2022, as 2022 does.
+[election.2024-prezident]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2024-prezident.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+# Ivan Korčok turned 60 between the rounds: 59 on round 1's list, 60 on
+# round 2's.
+[[election.2024-prezident.person.merge]]
+candidacies = ["prezident:SK/1#5", "prezident:SK/2#1"]
+
+[election.2019-prezident]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2019-prezident.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+# The referendums and by-elections since 2023 (elections.toml): the military
+# districts as for every election; those on the register of 09/2022 skip
+# Javorina, as 2022 does.
+
+[election.2023-referendum]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2023-referendum.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+[election.2023-03]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2023-03.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+[election.2023-09]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2023-09.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+[election.2024-02]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2024-02.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+[election.2024-10]
+
+[election.2024-10.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+[election.2025-03]
+
+[election.2025-03.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+[election.2025-09]
+
+[election.2025-09.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+[election.2026-03]
+
+[election.2026-03.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+[election.2026-referendum]
+
+[election.2026-referendum.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+# The by-elections of 2019–2022, on the register of 09/2022.
+
+[election.2019-04]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2019-04.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+[election.2019-09]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2019-09.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+[election.2020-10]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2020-10.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+[election.2021-05]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2021-05.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+[election.2021-10]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2021-10.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+[election.2022-03]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2022-03.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+# The elections to the European Parliament and the National Council, on
+# the register of 09/2022.
+
+[election.2019-ep]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2019-ep.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+[election.2020-nrsr]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2020-nrsr.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+[election.2023-nrsr]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2023-nrsr.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+[election.2024-ep]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2024-ep.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+# The regular elections of 2018 and 2017, on the register of 09/2022.
+
+[election.2018]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2018.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+[election.2017]
+address_skip = ["Kežmarok/Javorina"]
+
+[election.2017.address]
+"Malacky/Záhorie" = "500267"
+"Humenné/Valaškovce" = "518638"
+
+# The 2017 regional candidates' residences of a name several obce bear: the
+# one in the candidate's own obvod (data/curated/elections/2017-11-04/
+# obvody/zsk-<kraj>.toml), the others outside it.
+[election.2017.residence]
+# Miroslav Gajdoš, Brestov: PSK obvod 2 is okres Humenné; the other Brestov
+# is in okres Prešov (obvod 7).
+"zsk:7/2#16" = "520063"
+# Roman Pleša, Chvojnica: TSK obvod 3 is okres Myjava; the other is in
+# okres Prievidza (obvod 7).
+"zsk:3/3#11" = "504408"
+# Matej Baňas, Dúbrava: PSK obvod 4, okres Levoča; the others are in okresy
+# Snina (obvod 9) and Liptovský Mikuláš (ŽSK).
+"zsk:7/4#2" = "526495"
+# Ján Hroboň, Gerlachov: PSK obvod 6, okres Poprad; the other is in okres
+# Bardejov (obvod 1).
+"zsk:7/6#25" = "523445"
+# Romana Porochnavá, Kochanovce: PSK obvod 2, okres Humenné; the other is
+# in okres Bardejov (obvod 1).
+"zsk:7/2#37" = "520373"
+# Marcel Tkáč, Lúčka: PSK obvod 12, okres Svidník; the others are in okresy
+# Sabinov (obvod 8), Levoča (obvod 4) and Rožňava (KSK).
+"zsk:7/12#16" = "519537"
+# Mária Mizeráková, Lúčka: PSK obvod 8, okres Sabinov; the others are in
+# okresy Svidník (obvod 12), Levoča (obvod 4) and Rožňava (KSK).
+"zsk:7/8#22" = "524816"
+# Zoltán Biró, Riečka: BBSK obvod 9, okres Rimavská Sobota; the other is in
+# okres Banská Bystrica (obvod 1).
+"zsk:6/9#7" = "557765"
+# Vladimír Túry and Mário Vidák, Selce: BBSK obvod 1, okres Banská
+# Bystrica; the others are in okresy Poltár (obvod 7) and Krupina (obvod 5).
+"zsk:6/1#73" = "508985"
+"zsk:6/1#78" = "508985"
+# Ján Mičuda, Tomášovce: BBSK obvod 6, okres Lučenec; the other is in okres
+# Rimavská Sobota (obvod 9).
+"zsk:6/6#30" = "511919"

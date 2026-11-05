@@ -1,0 +1,104 @@
+# Okrsky of Košice-Krásna, transcribed by an AI agent in job okrsok-rules-4746 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: okrsok č. 1 tvoria ulice: 1. mája, Adamova, Benkova, Bernatovská, Bogoľ, Čechovova, Feketeova pažiť, Goetheho, Goldírova, Golianova, Horná, Keldišová, Kertésová, Krajná, Križinova, K Hutke, K majeru, Ku štrkovisku, Kladenská, Lackova, Minská, Na banisegu, Na Polianku, Na prednom záhumní, Na zadnom záhumní, Nábrežná, Nová, Opátska, Ortoviská, Prašná, Pri Hornáde, Pri Krásnej, Pri sídlisku, Pri studničke, Rehoľná, Rešov Majer, Rybárska, Sajkov, Smutná, sv. Gorazda, Šuhajova, Traťová, Valalická, Východná, Vyšný dvor, Za mostom, Zelená, Žiacka
+#   okrsok 2: okrsok č. 2 tvoria ulice: Alexandra Dubčeka, Baničova, Benediktínska, Beniakova, Bezručova, Edisonova, Harčarova, Harmincova, K lesu, Konopná, Malokarpatská, Meškova, Modranská, Mozartova, Na brehu, Na močidlách, Na pažiti, Nad Belogradom, Orná, Pasienková, Pezinská, Piesočná, Polesná, Pollova, Pri Teleku, Račianska, Rulandská, Skalická, Staroslovanská, Svätovavrinecká, Štrková, Tatarkova, Tibavská, Tokajská, Tramínová, Ukrajinská, Urbárska, Vínna, obč. s TP v MČ Košice- Krásna v zmysle § 5 zák. č. 253/1998 Z. z.
+obec = "599794"
+name = "Košice-Krásna"
+okrsky_date = 2024-02-26
+okrsky_fill = "nearest"
+okrsky_note = "Text layer of the PDF. 'obč. s TP v MČ Košice-Krásna v zmysle § 5 zák. č. 253/1998 Z. z.' = residents registered without an address, not mapped. The register's addresses without a street are placed by fill_nearest. Streets the document names that the register lacks (left out): Alexandra Dubčeka, K Hutke, Na banisegu, Pri Krásnej, Sajkov."
+
+[[document]]
+url = "https://www.kosicekrasna.sk/files/2024-03-07-130301-EP_2024okrsky_a_vol._miestnosti.pdf"
+sha256 = "da6e9c4e55d78b43109a752cb9bf5c5a8cf16f57a65f79c7dfd1e811085e420a"
+title = "Oznámenie o určení času a miesta konania volieb do Európskeho parlamentu v MČ Košice-Krásna dňa 8. júna 2024"
+
+[okrsok.1]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Adamova"},
+  {street = "Benkova"},
+  {street = "Bernatovská"},
+  {street = "Bogoľ"},
+  {street = "Čechovova"},
+  {street = "Feketeova Pažiť", written = "Feketeova pažiť"},
+  {street = "Goetheho"},
+  {street = "Goldírova"},
+  {street = "Golianova"},
+  {street = "Horná"},
+  {street = "Keldišova", written = "Keldišová", note = "the document writes \"-ová\"; the register street ending \"-ova\" is the same street"},
+  {street = "Kertésova", written = "Kertésová", note = "the document writes \"-ová\"; the register street ending \"-ova\" is the same street"},
+  {street = "Krajná"},
+  {street = "Križinova"},
+  {street = "K Majeru", written = "K majeru"},
+  {street = "Ku štrkovisku"},
+  {street = "Kladenská"},
+  {street = "Lackova"},
+  {street = "Minská"},
+  {street = "Ulica na Polianku", written = "Na Polianku", note = "the register names it \"Ulica na Polianku\"; a left-out \"Ulica\" and capitalisation only"},
+  {street = "Ulica na prednom Záhumní", written = "Na prednom záhumní", note = "the register names it \"Ulica na prednom Záhumní\"; a left-out \"Ulica\" and capitalisation only"},
+  {street = "Ulica na zadnom Záhumní", written = "Na zadnom záhumní", note = "the register names it \"Ulica na zadnom Záhumní\"; a left-out \"Ulica\" and capitalisation only"},
+  {street = "Nábrežná"},
+  {street = "Nová"},
+  {street = "Opátska"},
+  {street = "Ortoviská"},
+  {street = "Prašná"},
+  {street = "Pri Hornáde"},
+  {street = "Pri Sídlisku", written = "Pri sídlisku"},
+  {street = "Ulica pri Studničke", written = "Pri studničke", note = "the register names it \"Ulica pri Studničke\"; a left-out \"Ulica\" and capitalisation only"},
+  {street = "Rehoľná"},
+  {street = "Rešov Majer"},
+  {street = "Rybárska"},
+  {street = "Smutná"},
+  {street = "Sv. Gorazda", written = "sv. Gorazda"},
+  {street = "Šuhajova"},
+  {street = "Traťová"},
+  {street = "Valalická"},
+  {street = "Východná"},
+  {street = "Vyšný Dvor", written = "Vyšný dvor"},
+  {street = "Za Mostom", written = "Za mostom"},
+  {street = "Zelená"},
+  {street = "Žiacka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Baničova"},
+  {street = "Benediktínska"},
+  {street = "Beniakova"},
+  {street = "Bezručova"},
+  {street = "Edisonova"},
+  {street = "Harčarova"},
+  {street = "Harmincova"},
+  {street = "K lesu"},
+  {street = "Konopná"},
+  {street = "Malokarpatská"},
+  {street = "Meškova"},
+  {street = "Modranská"},
+  {street = "Mozartova"},
+  {street = "Na Brehu", written = "Na brehu"},
+  {street = "Na močidlách"},
+  {street = "Na Pažiti", written = "Na pažiti"},
+  {street = "Nad Belogradom"},
+  {street = "Orná"},
+  {street = "Pasienková"},
+  {street = "Pezinská"},
+  {street = "Piesočná"},
+  {street = "Polesná"},
+  {street = "Pollova"},
+  {street = "Pri Teleku"},
+  {street = "Račianska"},
+  {street = "Rulandská"},
+  {street = "Skalická"},
+  {street = "Staroslovanská"},
+  {street = "Svätovavrinecká"},
+  {street = "Štrková"},
+  {street = "Tatarkova"},
+  {street = "Tibavská"},
+  {street = "Tokajská"},
+  {street = "Tramínová"},
+  {street = "Ukrajinská"},
+  {street = "Urbárska"},
+  {street = "Vínna"},
+]

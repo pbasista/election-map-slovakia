@@ -1,0 +1,39 @@
+# The okrsky of Prečín of the elections of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/513563.toml, copied by `ems job reuse` (reused). Its header there:
+#   Council obvody of Prečín (513563), Považská Bystrica.
+#   Transcribed by an AI agent in job obvod-rules-364 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: PREČÍN
+#     obvod 2: miestnu časť ZEMIANSKU ZÁVADU
+#   Okrsky added by an AI agent in job okrsok-rules-1226 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: PREČÍN
+#     okrsok 2: miestnu časť ZEMIANSKU ZÁVADU
+obec = "513563"
+name = "Prečín"
+date = 2022-07-18
+note = "The council obvody of the elections of 2022-10-29. Scanned announcement, read visually. Obvod 1 'PREČÍN' taken as the part Prečín, obvod 2 the part Zemianska Závada."
+reused = 2022-10-29
+okrsky_date = 2022-07-18
+okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2024-06-08 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2024-06-08 was searched for. Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+okrsky_reused = 2022-10-29
+
+[[document]]
+url = "https://web.archive.org/web/20220809071808/https://www.precin.eu/wp-content/uploads/Oznamenie-volby.pdf"
+sha256 = "3d4150dd9e8ba8909f406b64b45e503a644b60de4732c5cacaa71a4bc56fc65c"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie č. 56/2022 zo dňa 18.7.2022), zo dňa 19.7.2022"
+
+[obvod.1]
+seats = 7
+okrsky = [1]
+rules = [
+  {part = "Prečín"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Zemianska Závada"},
+]

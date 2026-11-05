@@ -1,0 +1,29 @@
+# The okrsky of Košice-Luník IX of the vote of 2022-10-29, data/curated/elections/2022-10-29/okrsky/599972.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Košice-Luník IX, transcribed by an AI agent in job okrsok-rules-1069 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Hrebendova 2A Hrebendova č. 1-3 Hrebendova 10 – 12; Voliči s trvalým pobytom Košice-Luník IX
+#     okrsok 2: Krčméryho č. 1 – 15 Podjavorinskej 3 - 13
+obec = "599972"
+name = "Košice-Luník IX"
+okrsky_date = 2022-08-03
+okrsky_fill = "nearest"
+okrsky_note = "Each street lies wholly in one okrsok, so whole-street rules are used for the house numbers the document lists. 'Voliči s trvalým pobytom Košice-Luník IX' (okrsok 1) are voters registered without an address; the register's 2 addresses without a street are placed by fill_nearest."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-986): The live website www.mclunik9.sk refused connections on 2026-10-31. In the Internet Archive, the old site's notice board (uradna_elektronicka_tabula, captured 2019-07-16, listing every item from 2015 to 26.3.2019) and the WordPress board that replaced it in 2020 (oznamenia, captured 2020-10-28; elections page dokumenty/volby empty) list no 'utvorenie volebných okrskov' for any vote before 2022: for the municipal elections of 2018 they post only the obvod and council size notice (16.08.2018), the population count, the commission e-mail address, the registrar, the candidate lists and the results (volby_2018.pdf, a results zápisnica). The archive's list of the domain's PDFs has no okrsky document before the 2022 one (Utvorenie-volebnych-okrskov-a-urcenie-volebnej-miestnosti-v-MC-KE-LIX.pdf, dated 3.8.2022), which may not be used for this vote. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2018-11-10 → 2022-10-29: 1: 2,416 → 2,617, 2: 2,018 → 2,308."
+
+[[document]]
+url = "https://web.archive.org/web/20221021234732/https://mclunik9.sk/wp-content/uploads/dokumenty/volby/Utvorenie-volebnych-okrskov-a-urcenie-volebnej-miestnosti-v-MC-KE-LIX.pdf"
+sha256 = "1a08e739d8359ba5ad4c6c7d7f7911de42adcce8c32f28104d4f7565c6f02dd8"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov, konaných dňa 29.10.2022, na území mestskej časti Košice-Luník IX"
+
+[okrsok.1]
+rules = [
+  {street = "Hrebendova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krčméryho"},
+  {street = "Podjavorinskej"},
+]

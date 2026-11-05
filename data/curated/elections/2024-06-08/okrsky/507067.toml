@@ -1,0 +1,29 @@
+# Okrsky of Horné Orešany, transcribed by an AI agent in job okrsok-rules-4994 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od s. č. 0 – 450
+#   okrsok 2: od s. č. 451 –
+obec = "507067"
+name = "Horné Orešany"
+okrsky_date = 2024-03-05
+okrsky_note = "Okrsky by súpisné číslo for the whole village: okrsok 1 '0 – 450', okrsok 2 'od s. č. 451 –' (everything else, rest)."
+
+[[document]]
+url = "https://www.horneoresany.sk/sub/volby-do-eu-miestnosti.pdf"
+sha256 = "06b1a583fe171d6af386c6195b9202d389ad15f972ec8afae6e7e6c2c5acff7c"
+title = "Určenie volebných okrskov a volebných miestností pre Voľby do Európskeho parlamentu 2024"
+
+[[document]]
+url = "https://www.horneoresany.sk/volby-do-europskeho-parlamentu-2024"
+sha256 = "929a59146530579c19ac99cd563ed0adf1634d5fd992ae1ef2ec95a816a23129"
+title = "elections page"
+
+[okrsok.1]
+rules = [
+  {part = "Horné Orešany", numbers = "0-450"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

@@ -1,0 +1,31 @@
+# Okrsky of Trenčianske Stankovce, transcribed by an AI agent in job okrsok-rules-3083 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: časť obce Sedličná
+#   okrsok 2: časť obce Malé Stankovce a Rozvadze
+#   okrsok 3: časť obce Veľké Stankovce
+obec = "545741"
+name = "Trenčianske Stankovce"
+okrsky_date = 2022-11-10
+okrsky_note = "Scanned PDF (Internet Archive capture of 2022-11-27); read from the rendered page."
+
+[[document]]
+url = "https://web.archive.org/web/20221127015250/https://www.trencianskestankovce.sk/e_download.php?file=data/multipage/editor/editor-1-61-sk_3.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Den%C3%AD%20volebn%C3%BDch%20miestnost%C3%AD%20pre%20referendum%20vyhl%C3%A1sen%C3%A9%20na%2021.janu%C3%A1ra2023.pdf"
+sha256 = "a39db13b1b5fe8f47a70fdfbb2b4f41f1f33ce7727b3ee91c97569463898ae1d"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre referendum vyhlásené na 21. januára 2023 (Dňa 10.11.2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Sedličná"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Malé Stankovce"},
+  {part = "Rozvadze"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Veľké Stankovce"},
+]

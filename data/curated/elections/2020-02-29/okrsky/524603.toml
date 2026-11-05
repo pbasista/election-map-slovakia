@@ -1,0 +1,38 @@
+# Okrsky of Jarovnice, transcribed by an AI agent in job okrsok-rules-2713 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súpisné čísla: 0 - 309
+#   okrsok 2: súpisné čísla: 310 – 419
+#   okrsok 3: súpisné čísla: 420 - 600
+obec = "524603"
+name = "Jarovnice"
+okrsky_date = 2019-11-19
+okrsky_note = "Okrsky are súpisné-číslo ranges for the whole obec; the document does not name the parts, so each range is applied in both parts (Jarovnice, Močidľany), the súpisné čísla being numbered across the obec. The last okrsok is open-ended so that higher numbers also fall there."
+
+[[document]]
+url = "https://web.archive.org/web/20220125105725/https://www.jarovnice.sk/files/2019-11-19-093208-1576868302vytvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-obci-jarovnice.pdf"
+sha256 = "c571c59f5aa1388efe6f3c1004b7cc7a1a2338d5f182864c852a9a0e4a97a414"
+title = "Vytvorenie volebných okrskov (voľby do NR SR 29. februára 2020), 19. novembra 2019"
+
+[[document]]
+url = "https://web.archive.org/web/20200924062405/https://jarovnice.sk/obsah/volby-do-nr-sr-2020"
+sha256 = "230103c6511f450c3261ea9d6a325b34272115f8037eb0c8297d9ab1935d9ca8"
+title = "Election page posting the document"
+
+[okrsok.1]
+rules = [
+  {part = "Jarovnice", numbers = "0-309"},
+  {part = "Močidľany", numbers = "0-309"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Jarovnice", numbers = "310-419"},
+  {part = "Močidľany", numbers = "310-419"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Jarovnice", numbers = "420-"},
+  {part = "Močidľany", numbers = "420-"},
+]

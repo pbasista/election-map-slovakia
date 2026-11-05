@@ -1,0 +1,30 @@
+# Okrsky of Somotor, transcribed by an AI agent in job okrsok-rules-2088 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kultúrny dom Somotor, Obchodná ulica 39/7
+#   okrsok 2: Obecný dom Véč, Somotor-Véč, Lipová ulica 306/19
+#   okrsok 3: Obecný dom Nová Vieska pri Bodrogu, Somotor – Nová Vieska pri Bodrogu, Novoviešťanská ulica 423/76
+obec = "543772"
+name = "Somotor"
+okrsky_date = 2019-02-19
+okrsky_note = "The decision names only the three polling stations, one in each of the three parts; each okrsok is given the part of its station, as the municipality's later decisions (2022-2026) state explicitly."
+
+[[document]]
+url = "https://obecsomotor.sk/dokumenty?kat=1841"
+sha256 = "b44586206d10a805d8ae88ca1643ec91ae5d15604ce829979b0d631b3e1ecaa0"
+title = "Určenie volebných okrskov a určenie volebných miestností – voľby do Európskeho parlamentu 25.5.2019 (Č.j. 56/2019-007, 19.2.2019)"
+
+[okrsok.1]
+rules = [
+  {part = "Somotor", note = "Part of the polling station; the later decisions name this part for this okrsok.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Véč", note = "Part of the polling station; the later decisions name this part for this okrsok.", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Nová Vieska pri Bodrogu", note = "Part of the polling station; the later decisions name this part for this okrsok.", inferred = true},
+]

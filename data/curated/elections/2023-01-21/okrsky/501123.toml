@@ -1,0 +1,42 @@
+# Okrsky of Dulovce, transcribed by an AI agent in job okrsok-rules-3181 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cintorínska, Družstevná, Dvorská, Hlavná, Hurbanovská, Mierová, Mudroňovská, Nová, Robotnícka, Záhradná; obyvatelia s trvalým pobytom na adrese Obec Dulovce (bez udania súpisného a orientačného čísla)
+#   okrsok 2: Kamenica, Krivá, Novozámocká, Podháj, Poľná, Podbrežná, Rovná, Starohorská, Urbárska, Úzka
+obec = "501123"
+name = "Dulovce"
+okrsky_fill = "nearest"
+okrsky_note = "Kamenica and Podháj (okrsok 2) are settlements the address register has no street or part for; their houses, like the other addresses without a street, are placed by fill_nearest. Residents registered only on the obec vote in okrsok 1; they have no register address."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the document names the referendum of 21 January 2023"
+
+[[document]]
+url = "https://www.dulovce.sk/download_file_f.php?id=1764824"
+sha256 = "5f61d0ff9612fa296990c3c496966dec7c0374c13d6e662018475b6a70b07443"
+title = "Vytvorenie volebných okrskov (referendum 21. januára 2023)"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Družstevná"},
+  {street = "Dvorská"},
+  {street = "Hlavná"},
+  {street = "Hurbanovská"},
+  {street = "Mierová"},
+  {street = "Mudroňovská"},
+  {street = "Nová"},
+  {street = "Robotnícka"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krivá"},
+  {street = "Novozámocká"},
+  {street = "Poľná"},
+  {street = "Podbrežná"},
+  {street = "Rovná"},
+  {street = "Starohorská"},
+  {street = "Urbárska"},
+  {street = "Úzka"},
+]

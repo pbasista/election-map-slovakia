@@ -1,0 +1,105 @@
+# The okrsky of Dvory nad Žitavou of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/503177.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Dvory nad Žitavou, transcribed by an AI agent in job okrsok-rules-595 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Ulice: Agátová, J.Aranya, Branovská cesta, cesta Družby, J.Dózsu, nám.J.Dózsu, Fajková, Hlavná ulica, Janka Kráľa, P.Jilemnického, Jókaiho, J.A.Komenského, Kováčska, Krivá, Krížna, Lastovičia, Malá komárňanská, Mostná, Spojová cesta, Pekárska, Za pekárňou
+#     okrsok 2: Ulice: Bešeňovská cesta, Bešeňovská ulica, Furmanská, Hviezdoslavova, Jána Szabóa, Krajná, Krivánska, Kukučínova, Ľ.Štúra, Malá, Okružná, Pod záhradami, Sklenný vrch, Sládkovičova, Slávičia, Sokolská, Stará, Železničná stanica, Žitavská
+#     okrsok 3: Ulice: Družstevná, Hlavné námestie, Hlboká cesta, Krátka, K.Mikszátha, Mlynské námestie, Skautov, Športová, Štadionová, Tabaková, Trstená, Tyršová, Veľká komárňanská, Záhradná, Žombék
+#     okrsok 4: Ulice: Attilu Józsefa, Brezová, Dubová cesta, J.G.Tajovského, Kolťanská cesta, I.Nový svet, II.Nový svet, Petőfiho, Ružová, a ďalší občania s trvalým pobytom v obci Dvory nad Žitavou bez adresy
+obec = "503177"
+name = "Dvory nad Žitavou"
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by streets. 'Železničná stanica' (okrsok 2) is not a street of the register and is left out. Nám. Sv. Vendelína (1 address), which the document does not name, and the addresses without a street take the okrsok of the nearest placed address (fill_nearest). Residents without an address are listed with okrsok 4."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-093): No okrsky document of this vote on dvory.sk: the notice board archive's pages for the 2019 and 2020 votes carry only the announcements and voter information, and has no 2017 items. The Internet Archive (web.archive.org) refused connections for over 15 minutes during this search (CDX and snapshots, retried with pauses), so archived pages could not be checked. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2018-11-10: 1: 1,023 → 1,038, 2: 1,123 → 1,122, 3: 1,067 → 1,058, 4: 993 → 1,008."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names the Voľby do orgánov samosprávy obcí – 10.11.2018; it states no decision date."
+
+[[document]]
+url = "https://www.dvory.sk/e_download.php?file=data/uredni_deska/obsah90_7.pdf&original=Inform%C3%A1cia%20o%20vytvoren%C3%AD%20volebnych%20okrskov%20a%20ur%C4%8Den%C3%AD%20volebnych%20miestnost%C3%AD.pdf"
+sha256 = "05929d904a2181da4321dd53efbba3af9375b49c30a3f13fd38f3681fb424a3d"
+title = "Informácia o vytvorení volebných okrskov a určení volebných miestností (Voľby do orgánov samosprávy obcí – 10.11.2018)"
+
+[[document]]
+url = "https://www.dvory.sk/obecny-urad/uradna-tabula/volby-do-organov-samospravy-obci-91.html"
+sha256 = "4d5aaeead8ef16ee11d1288a80765fbf851a47a7f32c77302521c6d1ac70469b"
+title = "Voľby do orgánov samosprávy obcí (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {street = "Agátová"},
+  {street = "J. Aranya", written = "J.Aranya"},
+  {street = "Branovská cesta"},
+  {street = "Cesta družby", written = "cesta Družby"},
+  {street = "J. Dózsu", written = "J.Dózsu"},
+  {street = "Nám. J. Dózsu", written = "nám.J.Dózsu"},
+  {street = "Fajková"},
+  {street = "Hlavná", written = "Hlavná ulica"},
+  {street = "J. Kráľa", written = "Janka Kráľa", note = "Janka is the first name abbreviated J. in the register."},
+  {street = "P. Jilemnického", written = "P.Jilemnického"},
+  {street = "Jókaiho"},
+  {street = "J. A. Komenského", written = "J.A.Komenského"},
+  {street = "Kováčska"},
+  {street = "Krivá"},
+  {street = "Krížna"},
+  {street = "Lastovičia"},
+  {street = "Malá komárňanská"},
+  {street = "Mostná"},
+  {street = "Spojová cesta"},
+  {street = "Pekárska"},
+  {street = "Za pekárňou"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bešeňovská cesta"},
+  {street = "Bešeňovská", written = "Bešeňovská ulica", note = "Bešeňovská ulica, distinguished in the document from Bešeňovská cesta, is the register's Bešeňovská."},
+  {street = "Furmanská"},
+  {street = "Hviezdoslavova"},
+  {street = "Jána Szabóa"},
+  {street = "Krajná"},
+  {street = "Krivánska"},
+  {street = "Kukučínova"},
+  {street = "Ľ. Štúra", written = "Ľ.Štúra"},
+  {street = "Malá"},
+  {street = "Okružná"},
+  {street = "Pod záhradami"},
+  {street = "Sklenný vrch"},
+  {street = "Sládkovičova"},
+  {street = "Slávičia"},
+  {street = "Sokolská"},
+  {street = "Stará"},
+  {street = "Žitavská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Družstevná"},
+  {street = "Hlavné námestie"},
+  {street = "Hlboká cesta"},
+  {street = "Krátka"},
+  {street = "K. Mikszátha", written = "K.Mikszátha"},
+  {street = "Mlynské Nám.", written = "Mlynské námestie"},
+  {street = "Skautov"},
+  {street = "Športová"},
+  {street = "Štadiónová", written = "Štadionová", note = "Štadionová is a spelling variant of Štadiónová."},
+  {street = "Tabaková"},
+  {street = "Trstená"},
+  {street = "Tyršova", written = "Tyršová", note = "Tyršová is a spelling variant (long á) of Tyršova."},
+  {street = "Veľká komárňanská"},
+  {street = "Záhradná"},
+  {street = "Žombék"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Attilu Józsefa"},
+  {street = "Brezová"},
+  {street = "Dubová cesta"},
+  {street = "J. G. Tajovského", written = "J.G.Tajovského"},
+  {street = "Kolťanská cesta"},
+  {street = "1. Nový svet", written = "I.Nový svet", note = "I. is the Roman numeral of 1."},
+  {street = "2. Nový svet", written = "II.Nový svet", note = "II. is the Roman numeral of 2."},
+  {street = "Petőfiho"},
+  {street = "Ružová"},
+]

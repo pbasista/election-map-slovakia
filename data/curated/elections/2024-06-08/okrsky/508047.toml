@@ -1,0 +1,57 @@
+# Okrsky of Limbach, transcribed by an AI agent in job okrsok-rules-4971 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Cintorínska, Černicová, Družstevná, Gaštanová, Krátka, Limbašská dolina, Limbová, Malokarpatská, Mlynské pole, Pod dúblami, Podlesná, Potočná, Pri kockách, Priečna, Raková, Silvánska, SNP, Suchý vrch, Záhradná
+#   okrsok 2: 1. Mája, Iršajská, Sadová, Slnečná, Školská, Športová, Vavrinecká, Vinohradnícka
+obec = "508047"
+name = "Limbach"
+okrsky_fill = "nearest"
+okrsky_note = "The register's addresses without a street are placed by fill_nearest."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-03-04
+okrsky_date_basis = "The notice names the Voľby do Európskeho parlamentu v roku 2024 but states no date; the official notice board archive lists it with 'Dátum vyvesenia: 04.03.2024'. (https://www.limbach.sk/uradna-tabula-archiv)"
+
+[[document]]
+url = "https://www.limbach.sk/files/dokumenty/uradna-tabula---archiv/2024-03-04-103326-Ozn__menie-o-utvoren__-okrskov1.pdf"
+sha256 = "3f77a7dbf594b940b385f9b85d397307cd653c2f9dda6d63579edb2116c2fd1c"
+title = "Oznámenie o vytvorení okrskov a určení volebných miestností pre Voľby do Európskeho parlamentu v roku 2024"
+
+[[document]]
+url = "https://www.limbach.sk/uradna-tabula-archiv"
+sha256 = "08498571293c66c5b1275bbc0b15845104f6955d2002bd41a3e79ccf88766620"
+title = "Úradná tabuľa - archív (dátum vyvesenia 04.03.2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Černicová"},
+  {street = "Družstevná"},
+  {street = "Gaštanová"},
+  {street = "Krátka ulica", written = "Krátka"},
+  {street = "Limbašská dolina"},
+  {street = "Limbová"},
+  {street = "Malokarpatská"},
+  {street = "Mlynské Pole", written = "Mlynské pole"},
+  {street = "Pod Dúblami", written = "Pod dúblami"},
+  {street = "Podlesná"},
+  {street = "Potočná"},
+  {street = "Pri Kockách", written = "Pri kockách"},
+  {street = "Priečna ulica", written = "Priečna"},
+  {street = "Raková"},
+  {street = "Silvánska"},
+  {street = "SNP"},
+  {street = "Suchý vrch"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája", written = "1. Mája"},
+  {street = "Iršajská"},
+  {street = "Sadová"},
+  {street = "Slnečná"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Vavrinecká"},
+  {street = "Vinohradnícka"},
+]

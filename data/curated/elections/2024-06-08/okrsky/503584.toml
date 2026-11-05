@@ -1,0 +1,144 @@
+# The okrsky of Štúrovo of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/503584.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Štúrovo, transcribed by an AI agent in job okrsok-rules-4053 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Baraoltská, Bruntálska, Dunajská, Hasičská, Hlavná, Jesenského - nepárne čísla 11-71,75-83, 117, 125, 139 a párne čísla od 14 – 64, Kamenická cesta, Kostolná, Sobieskeho, Námestie Sv. Imricha, Námestie slobody (aj obyvatelia s trvalým pobytom Štúrovo, bez ďalšej adresy, súp. č. 3169, 3348, 3461, 3575), Nánanská cesta, Pri colnici, Pri starej pošte, Pri Vadaši, Széchenyiho, Továrenská cesta, Jozefa Bema, Svätého Štefana - stará časť (1 - 17 a 2, 10, 12, 14)
+#     okrsok 2: Agátová, Bocskaiho rad, Dolná, Javorová, Kasárenská, Komenského, Orechová, Orgovánová, Novocintorínska, Pri majeri, Ružová, Svätoplukova, Kozmonautov, Mateja Bela, Želiarsky svah (len rodinné domy)
+#     okrsok 3: Adyho, Balassiho, Krátka, Kossuthova, Mierová, Petőfiho stará časť (rodinné domy 1-65 a 2-90), Športová, Trhovnícka, Svätého Štefana (18 - 44 a 48 párne čísla), Jána Husa, M. Zrínskeho, Vajanského, Vörösmartyho (len rodinné domy)
+#     okrsok 4: Gaštanová (1,3,5 - sídlisko "Papagáj"), Jesenského (76,78,80,82 - sídlisko „Papagáj“), Petőfiho (staré sídlisko 67 - 113), Petőfiho (92 - 108 - sídlisko „Papagáj“), Svätého Štefana (19 – 33 nepárne čísla), Záhradnícka celá (31, 33)
+#     okrsok 5: Družstevný rad (39 a 41), Družstevný rad (33, 35, 37), Gaštanová (2 - 10 čínsky múr), Jesenského č.87 - služobný byt Polikliniky, Lipová, Svätého Štefana (35 - 75 nepárne čísla)
+#     okrsok 6: Jesenského (66, 68, 70, 72, 74), Družstevný rad (1-31 a 6-22)
+#     okrsok 7: Bartókova (celá), Smetanova (celá)
+#     okrsok 8: Jesenského (len č. 73), Na vyhliadke, Nárcisová, Nová, F. Rákócziho celá ulica (35 - 41 a 58 - 80), Želiarsky svah (len činžový dom 27 a 29)
+#     okrsok 9: Štefánikova ulica celá (12 - 48 a 13 - 23), Vörösmartyho ulica - len činžový dom č. 2, 4, 6
+#     okrsok 10: Dubčekova, J. Kráľa, Sládkovičova (štúrovská časť), Tehliarska cesta, Železničný rad
+obec = "503584"
+name = "Štúrovo"
+okrsky_date = 2024-01-30
+okrsky_fill = "nearest"
+okrsky_note = "Kostolná, which the document names, is not in the register; it is left out. Streets and house numbers the document does not list (Ostrihomská cesta, Slnečná, Svätého Štefana 77–83, Jesenského numbers outside its lists) and addresses without a street take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2024-06-08 setting the okrsky was found (okrsok-rules-4678): The city publishes an \"Informácia pre voličov o určení volebných okrskov a miestností\" per vote; the live elections pages keep it for the NR SR election 2023, the presidential election 2024 and the referendum 2026 only. The pages of this vote (live or as archived in the Internet Archive) link no such document (the 2019 page only the decision calling the election and the voter information; the EP 2024 page only results). These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 10 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-06-08 → 2024-03-23: 1: 1,068 → 1,028, 2: 985 → 961, 3: 765 → 774, 4: 919 → 911, 5: 801 → 797, 6: 802 → 798, 7: 744 → 739, 8: 818 → 818, 9: 863 → 854, 10: 357 → 358."
+
+[[document]]
+url = "https://www.sturovo.sk/download_file_f.php?id=1989822"
+sha256 = "d180b646f29c73816e0ecb55dec8c9d1e02b8f5f278feb58249ea6147eeeb3ce"
+title = "Informácia pre voličov o určení volebných okrskov a miestností (voľby prezidenta SR 2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Baraoltská"},
+  {street = "Bruntálska"},
+  {street = "Dunajská"},
+  {street = "Hasičská"},
+  {street = "Hlavná"},
+  {street = "Jesenského", numbers = "11-71, 75-83, 117, 125, 139", parity = "odd"},
+  {street = "Jesenského", numbers = "14-64", parity = "even"},
+  {street = "Kamenická cesta"},
+  {street = "Sobieskeho"},
+  {street = "Nám. Sv. Imricha", written = "Námestie Sv. Imricha"},
+  {street = "Námestie slobody"},
+  {street = "Nánanská cesta"},
+  {street = "Pri colnici"},
+  {street = "Pri starej pošte"},
+  {street = "Pri Vadaši"},
+  {street = "Széchenyiho"},
+  {street = "Továrenská cesta"},
+  {street = "Jozefa Bema"},
+  {street = "Svätého Štefana", numbers = "1-17", parity = "odd"},
+  {street = "Svätého Štefana", numbers = "2, 10, 12, 14"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Bocskaiho rad"},
+  {street = "Dolná"},
+  {street = "Javorová"},
+  {street = "Kasárenská"},
+  {street = "Komenského"},
+  {street = "Orechová"},
+  {street = "Orgovánová"},
+  {street = "Novocintorínska"},
+  {street = "Pri majeri"},
+  {street = "Ružová"},
+  {street = "Svätoplukova"},
+  {street = "Kozmonautov"},
+  {street = "Mateja Bela"},
+  {street = "Želiarsky svah"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Adyho"},
+  {street = "Balassiho"},
+  {street = "Krátka"},
+  {street = "Kossuthova"},
+  {street = "Mierova", written = "Mierová", note = "the document writes Mierová, the register Mierova; the same street"},
+  {street = "Petőfiho", numbers = "1-65", parity = "odd"},
+  {street = "Petőfiho", numbers = "2-90", parity = "even"},
+  {street = "Športová"},
+  {street = "Trhovnícka"},
+  {street = "Svätého Štefana", numbers = "18-44, 48", parity = "even"},
+  {street = "Jána Husa"},
+  {street = "M. Zrínskeho"},
+  {street = "Vajanského"},
+  {street = "Vörösmartyho"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Gaštanová", numbers = "1, 3, 5"},
+  {street = "Jesenského", numbers = "76, 78, 80, 82"},
+  {street = "Petőfiho", numbers = "67-113", parity = "odd", note = "\"staré sídlisko 67 - 113\": the odd numbers, as okrsok 3 has the even numbers 2-90 and okrsok 4 the even 92-108"},
+  {street = "Petőfiho", numbers = "92-108", parity = "even"},
+  {street = "Svätého Štefana", numbers = "19-33", parity = "odd"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Družstevný rad", numbers = "33, 35, 37, 39, 41"},
+  {street = "Gaštanová", numbers = "2-10", parity = "even"},
+  {street = "Jesenského", numbers = "87"},
+  {street = "Lipová"},
+  {street = "Svätého Štefana", numbers = "35-75", parity = "odd"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Jesenského", numbers = "66, 68, 70, 72, 74"},
+  {street = "Družstevný rad", numbers = "1-31", parity = "odd"},
+  {street = "Družstevný rad", numbers = "6-22", parity = "even"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Bartókova"},
+  {street = "Smetanova"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Jesenského", numbers = "73"},
+  {street = "Na výhliadke", written = "Na vyhliadke"},
+  {street = "Narcisova", written = "Nárcisová", note = "the document writes Nárcisová, the register Narcisova; the same street"},
+  {street = "Nová ulica", written = "Nová"},
+  {street = "F. Rákócziho"},
+  {street = "Želiarsky svah", numbers = "27, 29"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Štefánikova"},
+  {street = "Vörösmartyho", numbers = "2, 4, 6"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Dubčekova"},
+  {street = "J. Kráľa"},
+  {street = "Sládkovičova"},
+  {street = "Tehliarska cesta"},
+  {street = "Železničný rad"},
+]

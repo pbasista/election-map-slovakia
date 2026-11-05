@@ -1,0 +1,38 @@
+# The okrsky of Košecké Podhradie of the vote of 2022-10-29, data/curated/elections/2022-10-29/okrsky/513351.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Košecké Podhradie, transcribed by an AI agent in job okrsok-rules-995 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: budova Kultúrneho domu, Veľké Košecké Podhradie 359
+#     okrsok 2: budova Kultúrneho domu, Malé Košecké Podhradie 116
+#     okrsok 3: budova Kultúrneho domu, Kopec 37
+obec = "513351"
+name = "Košecké Podhradie"
+okrsky_date = 2022-08-05
+okrsky_note = "The scanned document gives each okrsok only its polling station (Kultúrny dom in Veľké Košecké Podhradie 359, Malé Košecké Podhradie 116, Kopec 37); 3 okrsky = 3 parts, each station in another part, so each okrsok gets the part of its station (inferred)."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-482): The current website's election articles begin with the 2022 elections (the NR SR article a73-22 has no files); no okrsky document of the regional elections of 4 November 2017 found. The Internet Archive refused connections (offline for us), so the older site could not be checked. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2022-10-29: 1: 556 → 560, 2: 226 → 230, 3: 71 → 57."
+
+[[document]]
+url = "https://koseckepodhradie.sk/files/2022-08-11-133354-DOC110822-11082022091857.pdf"
+sha256 = "f3df0537c0f062783b089bf844461124828e5139f6dcbb920f5d146a63a07489"
+title = "Utvorenie volebných okrskov pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov"
+
+[[document]]
+url = "https://koseckepodhradie.sk/volby-do-organov-samospravy-obci-a-do-organov-samospravnych-krajov-2022-a73-76"
+sha256 = "10f7d10d71c2ae609b2f6b20f494d2d6b1b02bf9899e071848ed809f52a0ee23"
+title = "Voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov 2022"
+
+[okrsok.1]
+rules = [
+  {part = "Veľké Košecké Podhradie", note = "the document gives only the polling station; the okrsok is the part of its station", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Malé Košecké Podhradie", note = "the document gives only the polling station; the okrsok is the part of its station", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Kopec", note = "the document gives only the polling station; the okrsok is the part of its station", inferred = true},
+]

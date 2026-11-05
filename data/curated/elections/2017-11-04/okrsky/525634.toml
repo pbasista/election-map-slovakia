@@ -1,0 +1,53 @@
+# Okrsky of Dobšiná, transcribed by an AI agent in job okrsok-rules-236 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Rybárska, Turecká, Cintorínska, Zimná, Železničná, Mlynská, Jarková, Námestie baníkov, Hronská, Slnečná, Záhradná, Partizánska
+#   okrsok 2: SNP, Banská, P. J. Šafárika, Nová, Tri ruže, Skalná, Hnilecká, Budovateľská, Vlčia dolina, Kúpeľná, Vyše mesta, Niže mesta, Severná, Mierová, Lesná, Lányiho Huta, Cigánska osada, bez adresy
+obec = "525634"
+name = "Dobšiná"
+okrsky_fill = "nearest"
+okrsky_note = "Streets per okrsok as the document lists them. 'bez adresy' / 'bez názvu ulice' means voters registered without an address and gets no rule. fill_nearest covers the register's addresses without a street. 'Cigánska osada' (okrsok 2) is not a register street and is left out."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document names the elections to the self-governing regions of 4. 11. 2017; its own date reads 28. 8. 2018, evidently a typo, so it is not used."
+
+[[document]]
+url = "https://www.dobsina.sk/download_file_f.php?id=868160"
+sha256 = "ec4cc4610fb11cb450c86e830cea206da8366fa3d24dfb45c21a57865839ac2a"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do orgánov samosprávnych krajov 4. 11. 2017"
+
+[okrsok.1]
+rules = [
+  {street = "Rybárska"},
+  {street = "Turecká"},
+  {street = "Cintorínska"},
+  {street = "Zimná"},
+  {street = "Železničná"},
+  {street = "Mlynská"},
+  {street = "Jarková"},
+  {street = "Námestie Baníkov", written = "Námestie baníkov"},
+  {street = "Hronská"},
+  {street = "Slnečná"},
+  {street = "Záhradná"},
+  {street = "Partizánska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "SNP"},
+  {street = "Banská"},
+  {street = "P. J. Šafárika"},
+  {street = "Nová"},
+  {street = "Tri Ruže", written = "Tri ruže"},
+  {street = "Skalná"},
+  {street = "Hnilecká"},
+  {street = "Budovateľská"},
+  {street = "Vlčia Dolina", written = "Vlčia dolina"},
+  {street = "Kúpeľná"},
+  {street = "Vyše Mesta", written = "Vyše mesta"},
+  {street = "Niže Mesta", written = "Niže mesta"},
+  {street = "Severná"},
+  {street = "Mierová"},
+  {street = "Lesná"},
+  {street = "Lányi Huta", written = "Lányiho Huta", note = "The register has both Lányi Huta and Lányiho Huta for the settlement the document calls Lányiho Huta."},
+  {street = "Lányiho Huta"},
+]

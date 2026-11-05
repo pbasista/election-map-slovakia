@@ -1,0 +1,28 @@
+# Okrsky of Trnovec nad Váhom, transcribed by an AI agent in job okrsok-rules-3096 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: občania prihlásení na trvalý pobyt na číslach 1 - 512, 918, 974, 976, 977, 980, 981, 896, 987, 990 – 992, 998, 999, 1011 - 1013, 1017 – 1021, 1027 – 1043, 1047, 1053 a občania prihlásení na trvalý pobyt v časti obce Horný Jatov, Kľučiareň a Nový Dvor
+#   okrsok 2: občania prihlásení na obec a občania prihlásení na trvalý pobyt na číslach 515 – 850, 906, 907, 910 – 917, 919 – 964, 966 – 973, 982, 985, 988, 989, 993 – 997, 1000 – 1009, 1010, 1015, 1022, 1026, 1044, 1048 –1052, 1054
+obec = "504092"
+name = "Trnovec nad Váhom"
+okrsky_date = 2022-11-09
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky 1 and 2 are lists of súpisné čísla in the part Trnovec nad Váhom; numbers in neither list take the nearest okrsok via fill_nearest. '896' in okrsok 1's list is kept as written. Voters registered only to the obec ('prihlásení na obec') vote in okrsok 2. For the referendum the two okrsky merge the usual okrsok 3 (Horný Jatov, Kľučiareň) into okrsok 1."
+
+[[document]]
+url = "https://web.archive.org/web/20221201070037/https://www.trnovecnadvahom.sk/15870/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti"
+sha256 = "b0d6b992205e069788590e4e18446291371e3d388f6a05caa6c6a32722012b6e"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre referendum 21. januára 2023 (Trnovec nad Váhom, 9. novembra 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Trnovec nad Váhom", numbers = "1-512, 896, 918, 974, 976, 977, 980, 981, 987, 990-992, 998, 999, 1011-1013, 1017-1021, 1027-1043, 1047, 1053"},
+  {part = "Horný Jatov"},
+  {part = "Kľučiareň"},
+  {part = "Nový Dvor"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Trnovec nad Váhom", numbers = "515-850, 906, 907, 910-917, 919-964, 966-973, 982, 985, 988, 989, 993-997, 1000-1010, 1015, 1022, 1026, 1044, 1048-1052, 1054"},
+]

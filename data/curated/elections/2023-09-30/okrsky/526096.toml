@@ -1,0 +1,44 @@
+# Okrsky of Plešivec, transcribed by an AI agent in job okrsok-rules-3854 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulica Čsl. armády, Domická ulica, Gemerská ulica, Ulica 1.mája, Letná ulica, Ulica Gyula Rudnayho, Vinohradná ulica
+#   okrsok 2: Daxnerova ulica, Hradná ulica, Ulica obrancov mieru, Okružná ulica, Osada, Ulica pokroku, Štítnická ulica, Slnečná ulica, Železničná ulica
+obec = "526096"
+name = "Plešivec"
+okrsky_date = 2023-06-13
+okrsky_fill = "nearest"
+okrsky_note = "Both okrsky have the same polling station. Addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.obecplesivec.sk/download_file_f.php?id=1874797"
+sha256 = "24913a6980f3d10793d935d8f4b6397efa21cc2df286add3c8add41c31ba73af"
+title = "Volebné okrsky a volebné miestnosti v obci Plešivec, Voľby do Národnej rady Slovenskej republiky 30. september 2023"
+
+[[document]]
+url = "https://www.obecplesivec.sk/volby-do-nr-sr-2023-0.html"
+sha256 = "0d077e0fa10f24624e12467c272a06386e2264c33d90a74080c9d53b44229661"
+title = "page of the vote"
+
+[okrsok.1]
+rules = [
+  {street = "Ulica Československej armády", written = "Ulica Čsl. armády"},
+  {street = "Domická ulica"},
+  {street = "Gemerská ulica"},
+  {street = "Ulica 1. mája", written = "Ulica 1.mája"},
+  {street = "Letná ulica"},
+  {street = "Ulica Gyula Rudnayho"},
+  {street = "Vinohradná ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Daxnerova ulica"},
+  {street = "Hradná ulica"},
+  {street = "Ulica obrancov mieru"},
+  {street = "Okružná ulica"},
+  {street = "Osada"},
+  {street = "Ulica pokroku"},
+  {street = "Štítnická ulica"},
+  {street = "Slnečná ulica"},
+  {street = "Železničná ulica"},
+]

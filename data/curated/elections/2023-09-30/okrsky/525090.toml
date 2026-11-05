@@ -1,0 +1,50 @@
+# Okrsky of Ražňany, transcribed by an AI agent in job okrsok-rules-3928 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Pečovec, Hlavná ulica č. 135/1 – 235/62, K ihrisku, Pod Haluškovcom, Nová ulica, Čerešňová ulica, K osade a Ku krížu
+#   okrsok 2: Sabinovská ulica, Šalgovská ulica, Konopná ulica, Družstevná ulica, Úzka, Sadová, Surdok, Hlavná č. 242/64 – 267/106, Cintorínska ulica, Rybník, K letisku, Ulica Štefana Onderča
+obec = "525090"
+name = "Ražňany"
+okrsky_fill = "nearest"
+okrsky_note = "Hlavná is split as the document gives it, súpisné/orientačné 135/1 – 235/62 to okrsok 1 and 242/64 – 267/106 to okrsok 2, written here by orientačné číslo; houses with only a súpisné číslo take the okrsok of the nearest address (fill_nearest). Scanned document, read from the page image; no longer on the live website."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2023-09-21
+okrsky_date_basis = "The Internet Archive captured the obec's 'Voľby do NR SR 2023' page linking the PDF (/uploads/kniznica/1687785880utvorenie-volebnych-okrskov.pdf) on 2023-09-21; the PDF itself is undated (captured 2024-03-31) and its heading names the elections of 30 September 2023. (https://web.archive.org/web/20230921145005/https://raznany.sk/obsah/volby-do-nr-sr-2023)"
+
+[[document]]
+url = "https://web.archive.org/web/20240331113709/https://raznany.sk/uploads/kniznica/1687785880utvorenie-volebnych-okrskov.pdf"
+sha256 = "289b76d7747ea8d5a690b362f36cc14ff65e200c2ad7f4e3c4b5cbe85a64cedb"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Národnej rady SR – 30. septembra 2023"
+
+[[document]]
+url = "https://web.archive.org/web/20230921145005/https://raznany.sk/obsah/volby-do-nr-sr-2023"
+sha256 = "713d5d8954cc7686d30da6fd1ac88d0751cb77fbfab521bfa7a5a75349e2809b"
+title = "Voľby do NR SR 2023 (obec's page linking the document)"
+
+[okrsok.1]
+rules = [
+  {street = "Pečovec"},
+  {street = "Hlavná", numbers = "1-62, 8A, 39A", note = "135/1 – 235/62 read by orientačné číslo 1–62 (with 8A, 39A), as in the register"},
+  {street = "K ihrisku"},
+  {street = "Pod Haluškovcom"},
+  {street = "Nová"},
+  {street = "Čerešňová"},
+  {street = "K osade"},
+  {street = "Ku krížu"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Sabinovská"},
+  {street = "Šalgovská"},
+  {street = "Konopná"},
+  {street = "Družstevná"},
+  {street = "Úzka"},
+  {street = "Sadová"},
+  {street = "Surdok"},
+  {street = "Hlavná", numbers = "64-106, 100A", note = "242/64 – 267/106 read by orientačné číslo 64–106 (with 100A)"},
+  {street = "Cintorínska"},
+  {street = "Rybník"},
+  {street = "K letisku"},
+  {street = "Ul. Štefana Onderča", written = "Ulica Štefana Onderča"},
+]

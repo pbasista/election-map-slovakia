@@ -1,0 +1,111 @@
+# Okrsky of Hnúšťa, transcribed by an AI agent in job okrsok-rules-1738 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hnúšťa - mestská časť Hačava
+#   okrsok 2: SNP 438,439,440,441, M.R.Štefánika 443, Hlavná l2-43,437, Železničná, Ždiar, Troska, Brandzová, Brezina, Križanova, Mútnik, mestská časť Polom, mestská časť Brádno
+#   okrsok 3: Hnúšťa-Maša, Kotlišská, Kotlište, l.mája 523-55l, 620-623, 727,728, Jilemnického, Francisciho, Rad, Skalica, Kraskova, Fučíkova, Iváčka, Partizánska, Hrebendova, Rum.armády, Nám. Janka Francisciho
+#   okrsok 4: IBV - Budovateľov, Sinecká, Hurbanova, Mládeže, Š.M.Daxnera, Vansovej, Mierová, Banícka, Poľná, Pokroku, Hlavná 374-386, 405-428, 43l-434, 1.mája 907-908-909, 5l3-520,624-645
+#   okrsok 5: Sídlisko - Nábrežie Rimavy, Hlavná 435, 436, M.R.Štefánika 444, 445, ul. Športová
+#   okrsok 6: Celá ul. Klokočova - sídlisko
+#   okrsok 7: Hnúšťa č. Likier Kolónia - ul. Švermova, Vl.Clementisa, Bottova, J.Kráľa, Sládkovičova, Zápotockého, Školská, Bakulíniho, Kpt.Nálepku, Jesenského, Štúrova
+#   okrsok 8: Hnúšťa – mestská časť Likier – ul. Dolná a Horná
+obec = "514829"
+name = "Hnúšťa"
+okrsky_fill = "nearest"
+okrsky_note = "All house numbers in the document are súpisné (by: supisne). Addresses of SNP, M. R. Štefánika, Hlavná and 1. mája whose súpisné číslo the document does not list, Záhrada 1.mája, Skálie (part Hačava, okrsok 1 by part) and the houses without a street (incl. the settlements Troska and Brezina, not streets of the register) are placed by fill_nearest, as in the rule set of 2022."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2019-03-12
+okrsky_date_basis = "The city's page with the okrsky of the EP elections 2019 states 'Dátum vloženia: 12. 3. 2019'; the list itself is undated. (https://mesto.hnusta.sk/samosprava/volby-a-referenda/volby-do-europskeho-parlamentu-2019/zverejnenie-elektronickej-adresy-a-urcenie-okrskov-pre-volby-ep-992sk.html)"
+
+[[document]]
+url = "https://mesto.hnusta.sk/samosprava/volby-a-referenda/volby-do-europskeho-parlamentu-2019/zverejnenie-elektronickej-adresy-a-urcenie-okrskov-pre-volby-ep-992sk.html"
+sha256 = "5fc5d2ef095f98932045e07d14f11c8205b7677a47421948fdad308b0b0b3c77"
+title = "Zverejnenie elektronickej adresy a určenie okrskov pre voľby EP (2019)"
+
+[okrsok.1]
+rules = [
+  {part = "Hačava"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "SNP", numbers = "438-441", by = "supisne"},
+  {street = "Milana Rastislava Štefánika", numbers = "443", by = "supisne", written = "M.R.Štefánika"},
+  {street = "Hlavná", numbers = "12-43, 437", by = "supisne"},
+  {street = "Železničná"},
+  {street = "Ždiar"},
+  {street = "Brandzová"},
+  {street = "Križanova"},
+  {street = "Mútnik"},
+  {part = "Polom"},
+  {part = "Brádno"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Maša", written = "Hnúšťa-Maša"},
+  {street = "Kotlištská", written = "Kotlišská", note = "a letter left out; the same street"},
+  {street = "Kotlište"},
+  {street = "1.mája", numbers = "523-551, 620-623, 727, 728", by = "supisne", written = "l.mája", note = "\"l\" for \"1\" in the document"},
+  {street = "Jilemnického"},
+  {street = "Francisciho"},
+  {street = "Rad"},
+  {street = "Skalica"},
+  {street = "Kraskova"},
+  {street = "Fučíkova"},
+  {street = "Iváčka"},
+  {street = "Partizánska"},
+  {street = "Hrebendova"},
+  {street = "Rumunskej armády", written = "Rum.armády"},
+  {street = "Námestie Janka Francisciho", written = "Nám. Janka Francisciho"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Budovateľov"},
+  {street = "Sinecká"},
+  {street = "Hurbanova"},
+  {street = "Mládeže"},
+  {street = "Štefana Marka Daxnera", written = "Š.M.Daxnera"},
+  {street = "Vansovej"},
+  {street = "Mierová"},
+  {street = "Banícka"},
+  {street = "Poľná"},
+  {street = "Pokroku"},
+  {street = "Hlavná", numbers = "374-386, 405-428, 431-434", by = "supisne"},
+  {street = "1.mája", numbers = "907-909, 513-520, 624-645", by = "supisne", written = "l.mája", note = "\"l\" for \"1\" in the document"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Nábrežie Rimavy"},
+  {street = "Hlavná", numbers = "435, 436", by = "supisne"},
+  {street = "Milana Rastislava Štefánika", numbers = "444, 445", by = "supisne", written = "M.R.Štefánika"},
+  {street = "Športová"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Klokočova"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Švermova"},
+  {street = "Vladimíra Clementisa", written = "Vl.Clementisa"},
+  {street = "Bottova"},
+  {street = "Janka Kráľa", written = "J.Kráľa"},
+  {street = "Sládkovičova"},
+  {street = "Zápotockého"},
+  {street = "Školská"},
+  {street = "Bakulíniho"},
+  {street = "Kpt.Nálepku"},
+  {street = "Jesenského"},
+  {street = "Štúrova"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Dolná"},
+  {street = "Horná"},
+]

@@ -1,0 +1,51 @@
+# The okrsky of Oslany of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/514292.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Oslany, transcribed by an AI agent in job okrsok-rules-4311 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: ulice: Družstevná, Hviezdoslavova, Jarmočná, Mierová, Mlynská, Námestie slobody, Potočná, Športová, Ulička, Záhradná, miestna časť Ľubianka, občania s trvalým pobytom obec Oslany
+#     okrsok 2: ulice: A.Bernoláka, Obuvnícka, Pekárenská, Slnečná, SNP, Staničná, Školská, Východná, Žarnovská
+obec = "514292"
+name = "Oslany"
+okrsky_date = 2024-01-18
+okrsky_fill = "nearest"
+okrsky_note = "\"Občania s trvalým pobytom obec Oslany\" (residents registered only to the obec) are voters without an address. The houses without a street in part Oslany are placed by fill_nearest."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1912): The archived 2019 elections page (2019-06-29) lists the European Parliament election's documents (commission minutes, voting certificates, delegation address) but no okrsky document. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2024-03-23: 1: 981 → 989, 2: 943 → 926."
+
+[[document]]
+url = "https://www.oslany.sk/download_file_f.php?id=1991543"
+sha256 = "0b177f2f2a95ee96313db9163c056b39fb89c68a3e559ba50c8eb8e741ef39eb"
+title = "Volebné okrsky – Starosta obce utvára v obci Oslany pre voľby prezidenta SR 23. marca 2024 dva volebné okrsky (Č.j 1/2024-PR)"
+
+[[document]]
+url = "https://www.oslany.sk/volby-prezidenta-sr-2024.html"
+sha256 = "bc1bc437cc5f1955658d2d913cee051d5e0c72ca17cfb56c55717c65f9c76dab"
+title = "page of the vote"
+
+[okrsok.1]
+rules = [
+  {street = "Družstevná"},
+  {street = "Hviezdoslavova"},
+  {street = "Jarmočná"},
+  {street = "Mierová"},
+  {street = "Mlynská"},
+  {street = "Námestie Slobody", written = "Námestie slobody"},
+  {street = "Potočná"},
+  {street = "Športová"},
+  {street = "Ulička"},
+  {street = "Záhradná"},
+  {part = "Ľubianka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "A. Bernoláka", written = "A.Bernoláka"},
+  {street = "Obuvnícka"},
+  {street = "Pekárenská"},
+  {street = "Slnečná"},
+  {street = "SNP"},
+  {street = "Staničná"},
+  {street = "Školská"},
+  {street = "Východná"},
+  {street = "Žarnovská"},
+]

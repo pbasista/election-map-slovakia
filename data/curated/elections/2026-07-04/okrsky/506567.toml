@@ -1,0 +1,38 @@
+# Okrsky of Trenčianska Turná, transcribed by an AI agent in job okrsok-rules-5464 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Súpisné čísla domov 1-170, 237, 800-842, 860-870, 878-879, 1011, 1400-1477, 2015, 2087-2092, 2161, 2178
+#   okrsok 2: Súpisné čísla domov 236, 405-699, 881-882, 884, 871-877, 1350-1351, 2002, 2006, 2010, 2018, 2039, 2051, 2068, 2093, 2131, 2138, 2159, 2188, 2218, 3000-3058
+#   okrsok 3: Súpisné čísla domov 171-402, 700-798, 844-859, 880, 883, 1100-1174, 1258, 1300-1349, 2045, 2115-2127, 2200, 2247
+#   okrsok 4: Súpisné čísla domov 885-992, 2012, 2134, 2203, 2206, 2233, 2245, 4000-4057
+obec = "506567"
+name = "Trenčianska Turná"
+okrsky_date = 2026-04-24
+okrsky_fill = "nearest"
+okrsky_note = "The document lists the okrsky by súpisné čísla only (no streets; the municipality has none), without naming parts. Its numbers are applied in the part Trenčianska Turná; the part Hámre goes to okrsok 4 (inferred, see its rule). Addresses of Trenčianska Turná whose súpisné číslo the document lists in no okrsok (e.g. 404, 999-1043, many numbers above 2000) take the okrsok of the nearest placed address (fill_nearest). Same okrsky as the document of the elections of 24 October 2026 copied so far (okrsok 1 1400-1477; okrsok 2 adds 2188, 2218; okrsok 3 adds 2200, 2247; okrsok 4 adds 2203, 2206, 2233, 2245). The document cites the referendum decision as no. 362/2022 Z. z. (the 2023 referendum's), but names the referendum of 4 July 2026 and is dated 24.04.2026."
+
+[[document]]
+url = "https://www.trencianskaturna.sk/e_download.php?file=/data/editor/214sk_4.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20volebn%C3%BDch%20miestnost%C3%AD%20pre%20referendum.pdf"
+sha256 = "a8bf3ee1e2cf774988cc668738be849a2b38fd55dcffedb3baec74c3b4a74ef5"
+title = "Utvorenie volebných okrskov a volebných miestností pre referendum (určenie volebných okrskov a volebných miestností pre referendum konané dňa 04. júla 2026)"
+
+[okrsok.1]
+rules = [
+  {part = "Trenčianska Turná", numbers = "1-170, 237, 800-842, 860-870, 878-879, 1011, 1400-1477, 2015, 2087-2092, 2161, 2178"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Trenčianska Turná", numbers = "236, 405-699, 881-882, 884, 871-877, 1350-1351, 2002, 2006, 2010, 2018, 2039, 2051, 2068, 2093, 2131, 2138, 2159, 2188, 2218, 3000-3058"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Trenčianska Turná", numbers = "171-402, 700-798, 844-859, 880, 883, 1100-1174, 1258, 1300-1349, 2045, 2115-2127, 2200, 2247", except = "236, 237", note = "the document lists 236 in okrsok 2 and 237 in okrsok 1 although both fall in this okrsok's range 171-402; the single listings are taken as exceptions"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Trenčianska Turná", numbers = "885-992, 2012, 2134, 2203, 2206, 2233, 2245, 4000-4057"},
+  {part = "Hámre", note = "Hámre is the part of okrsok 4's polling station (Kultúrny dom Hámre); every Hámre súpisné číslo the document lists is in okrsok 4 and none in another okrsok, so the whole part is given to okrsok 4, including its houses whose numbers the document leaves out", inferred = true},
+]

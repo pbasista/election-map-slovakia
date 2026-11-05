@@ -1,0 +1,256 @@
+# Okrsky of Košice-Staré Mesto, transcribed by an AI agent in job okrsok-rules-4649 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bocatiova, Czambelova párne 8 - 18, nepárne 7 - 9, Garbiarska okrem č. 4, Gorkého, Hviezdoslavova, Komenského 3-33 nepárne, Námestie Maratónu mieru, Slovenskej jednoty 2-14A párne, Strojárenská, Továrenská, Železničná
+#   okrsok 2: Alvinczyho, Haviarska, Hutnícka, Tyršovo nábrežie
+#   okrsok 3: Jakobyho, Rampová nepárne, Slovenskej jednoty 16-48 párne
+#   okrsok 4: Bellova, Mestský park, Bencúrova, Jesenského, Jiskrova, Kmeťova, Lermontovova, Löfflerova, Lomená, Masarykova, Rumanova, Stromová, Svätoplukova, Thurzova
+#   okrsok 5: Biela, Františkánska, Hlavná 41-119 nepárne, Hlavná 74-116 párne, Hlavné námestie, Hrnčiarska, Kasárenské námestie, Kováčska, Pri Miklušovej väznici, Štefánikova, Univerzitná, Vodná
+#   okrsok 6: Bajzova, Bosákova, Bottova, Čajkovského, Drevný trh, Krmanova, Mlynská, Námestie osloboditeľov, Orlia, Palackého 2-14 párne, Podtatranského, Prešovská cesta 2-4 párne, Pri plynárni, Priemyselná, Protifašistických bojovníkov, Puškinova, Rooseveltova, Senný trh, Staničné námestie, Stará baštová, Stará prešovská, Zvonárska, Ulica pri plavárni
+#   okrsok 7: Alžbetina, Bočná, Dominikánske námestie, Dr. Kostlivého, Prof. Jána Kňazovického, Grešákova, Hlavná 1-39 nepárne, Hlavná 2-72 párne, Hradbová, Kuzmányho 2-8 párne, Mäsiarska 1-31 nepárne, Mäsiarska 2-38 párne, Mojmírova, Moyzesova 17,19, Moyzesova 30-68 párne, Murgašova, Pribinova, Šrobárova, Štúrova 1-25 nepárne, Tajovského, Timonova, Uršulínska, Vrátna, Zámočnícka
+#   okrsok 8: Bačíkova, Baštová, Kuzmányho 1-33 nepárne, Mäsiarska 33-65 nepárne, Mäsiarska 40-74 párne, Moyzesova 2-24 párne, Moyzesova 3-11 nepárne, Poštová, Pri jazdiarni, Zbrojničná
+#   okrsok 9: Jarná 21-25 nepárne, Jilemnického 14-20 párne, Komenského 2-38 párne, Park Angelinum
+#   okrsok 10: Jarná 11-19 nepárne, Jarná 8-18 párne, Jesenná, Jilemnického 2-12 párne, Jilemnického nepárne, Letná 2-30 párne, Zimná 17-23 nepárne
+#   okrsok 11: Festivalové námestie, Jarná 1-9 nepárne, Jarná 2-6 párne, Letná 32-42 párne, Pajorova, Zimná 1-15 nepárne, Zimná párne
+#   okrsok 12: Československej armády, Kpt. Nálepku 1-7 nepárne
+#   okrsok 13: Kpt. Nálepku 9-21 nepárne, Magurská 2-8 párne, Námestie L. Novomeského
+#   okrsok 14: Branisková
+#   okrsok 15: Štítová, Tatranská
+#   okrsok 16: Belanská, Dargovská 5-11 nepárne, Dargovská 6-12 párne, Karpatská, Magurská 1-15 nepárne, Malá, Muránska, Zádielska
+#   okrsok 17: Dargovská 1,2,3, Vojenská
+#   okrsok 18: Čajakova, Floriánska, Husárska, Kuzmányho 35-55 nepárne, Škultétyho, Štúrova 27-33 nepárne, Žriedlová
+#   okrsok 19: Garbiarska 4, Občania s trvalým pobytom v MČ Košice-Staré mesto
+obec = "598186"
+name = "Košice-Staré Mesto"
+okrsky_date = 2024-02-13
+okrsky_fill = "nearest"
+okrsky_note = "The document's table lists the territory of okrsky 1–19 (same as in 2022). Okrsok 19 takes Garbiarska 4 and the citizens registered only in the MČ (no address); okrsok 1 takes Garbiarska except 4. Streets split between okrsky (Hlavná, Komenského, Štúrova, Kpt. Nálepku and others) take the listed numbers; a street named in one okrsok only with a number range (Czambelova, Rampová, Palackého, Prešovská cesta, Kuzmányho 35-55 in okrsok 18) is kept whole there. Not in the register, left out: Bosákova, Prof. Jána Kňazovického. House numbers outside the listed ranges and addresses without a street take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.kosice-city.sk/download_file_f.php?id=2024712"
+sha256 = "7eb8f4baea54a02d87a316ec3fa7e93b7ec706d639cf54741fcd582690041a64"
+title = "Informácia o čase a mieste konania volieb do Európskeho parlamentu v roku 2024, vytvorení volebných okrskov a určení volebných miestností"
+
+[[document]]
+url = "https://www.kosice-city.sk/informacia-o-case-a-mieste-konania-volieb-do-europskeho-parlamentu-v-roku-2024-oznam/mid/534044/.html"
+sha256 = "b15671a2156bc9e20197172a257592c934750931ddbac774fd34bba7920bebf7"
+title = "Informácia o čase a mieste konania volieb do Európskeho parlamentu v roku 2024, vytvorení volebných okrskov a určení volebných miestností (oznam)"
+
+[okrsok.1]
+rules = [
+  {street = "Bocatiova"},
+  {street = "Czambelova"},
+  {street = "Garbiarska", except = "4"},
+  {street = "Gorkého"},
+  {street = "Hviezdoslavova"},
+  {street = "Komenského", numbers = "3-33", parity = "odd"},
+  {street = "Námestie Maratónu mieru"},
+  {street = "Slovenskej jednoty", numbers = "2-14, 14A", parity = "even"},
+  {street = "Strojárenská"},
+  {street = "Továrenská"},
+  {street = "Železničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Alvinczyho"},
+  {street = "Haviarska"},
+  {street = "Hutnícka"},
+  {street = "Tyršovo nábrežie"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Jakobyho"},
+  {street = "Rampová"},
+  {street = "Slovenskej jednoty", numbers = "16-48", parity = "even"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bellova"},
+  {street = "Mestský park"},
+  {street = "Bencúrova"},
+  {street = "Jesenského"},
+  {street = "Jiskrova"},
+  {street = "Kmeťova"},
+  {street = "Lermontovova"},
+  {street = "Löfflerova"},
+  {street = "Lomená"},
+  {street = "Masarykova"},
+  {street = "Rumanova"},
+  {street = "Stromová"},
+  {street = "Svätoplukova"},
+  {street = "Thurzova"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Biela"},
+  {street = "Františkánska"},
+  {street = "Hlavná", numbers = "41-119", parity = "odd"},
+  {street = "Hlavná", numbers = "74-116", parity = "even"},
+  {street = "Hlavné námestie"},
+  {street = "Hrnčiarska"},
+  {street = "Kasárenské námestie"},
+  {street = "Kováčska"},
+  {street = "Pri Miklušovej väznici"},
+  {street = "Štefánikova"},
+  {street = "Univerzitná"},
+  {street = "Vodná"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bajzova"},
+  {street = "Bottova"},
+  {street = "Čajkovského"},
+  {street = "Drevný trh"},
+  {street = "Krmanova"},
+  {street = "Mlynská"},
+  {street = "Námestie osloboditeľov"},
+  {street = "Orlia"},
+  {street = "Palackého"},
+  {street = "Podtatranského"},
+  {street = "Prešovská cesta"},
+  {street = "Pri plynárni"},
+  {street = "Priemyselná"},
+  {street = "Protifašistických bojovníkov"},
+  {street = "Puškinova"},
+  {street = "Rooseveltova"},
+  {street = "Senný trh"},
+  {street = "Staničné námestie"},
+  {street = "Stará baštová"},
+  {street = "Stará prešovská"},
+  {street = "Zvonárska"},
+  {street = "Ulica pri plavárni"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Alžbetina"},
+  {street = "Bočná"},
+  {street = "Dominikánske námestie"},
+  {street = "Dr. Kostlivého"},
+  {street = "Grešákova"},
+  {street = "Hlavná", numbers = "1-39", parity = "odd"},
+  {street = "Hlavná", numbers = "2-72", parity = "even"},
+  {street = "Hradbová"},
+  {street = "Kuzmányho", numbers = "2-8", parity = "even"},
+  {street = "Mäsiarska", numbers = "1-31", parity = "odd"},
+  {street = "Mäsiarska", numbers = "2-38", parity = "even"},
+  {street = "Mojmírova"},
+  {street = "Moyzesova", numbers = "17, 19"},
+  {street = "Moyzesova", numbers = "30-68", parity = "even"},
+  {street = "Murgašova"},
+  {street = "Pribinova"},
+  {street = "Šrobárova"},
+  {street = "Štúrova", numbers = "1-25", parity = "odd"},
+  {street = "Tajovského"},
+  {street = "Timonova"},
+  {street = "Uršulínska"},
+  {street = "Vrátna"},
+  {street = "Zámočnícka"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Bačíkova"},
+  {street = "Baštová"},
+  {street = "Kuzmányho", numbers = "1-33", parity = "odd"},
+  {street = "Mäsiarska", numbers = "33-65", parity = "odd"},
+  {street = "Mäsiarska", numbers = "40-74", parity = "even"},
+  {street = "Moyzesova", numbers = "2-24", parity = "even"},
+  {street = "Moyzesova", numbers = "3-11", parity = "odd"},
+  {street = "Poštová"},
+  {street = "Pri Jazdiarni"},
+  {street = "Zbrojničná"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Jarná", numbers = "21-25", parity = "odd"},
+  {street = "Jilemnického", numbers = "14-20", parity = "even"},
+  {street = "Komenského", numbers = "2-38", parity = "even"},
+  {street = "Park Angelinum"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Jarná", numbers = "11-19", parity = "odd"},
+  {street = "Jarná", numbers = "8-18", parity = "even"},
+  {street = "Jesenná"},
+  {street = "Jilemnického", numbers = "2-12", parity = "even"},
+  {street = "Jilemnického", parity = "odd"},
+  {street = "Letná", numbers = "2-30", parity = "even"},
+  {street = "Zimná", numbers = "17-23", parity = "odd"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Festivalové námestie"},
+  {street = "Jarná", numbers = "1-9", parity = "odd"},
+  {street = "Jarná", numbers = "2-6", parity = "even"},
+  {street = "Letná", numbers = "32-42", parity = "even"},
+  {street = "Pajorova"},
+  {street = "Zimná", numbers = "1-15", parity = "odd"},
+  {street = "Zimná", parity = "even"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Československej armády"},
+  {street = "Kpt. Nálepku", numbers = "1-7", parity = "odd"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Kpt. Nálepku", numbers = "9-21", parity = "odd"},
+  {street = "Magurská", numbers = "2-8", parity = "even"},
+  {street = "Námestie L. Novomeského"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Branisková"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Štítová"},
+  {street = "Tatranská"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Belanská"},
+  {street = "Dargovská", numbers = "5-11", parity = "odd"},
+  {street = "Dargovská", numbers = "6-12", parity = "even"},
+  {street = "Karpatská"},
+  {street = "Magurská", numbers = "1-15", parity = "odd"},
+  {street = "Malá"},
+  {street = "Muránska"},
+  {street = "Zádielska"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Dargovská", numbers = "1, 2, 3"},
+  {street = "Vojenská"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Čajakova"},
+  {street = "Floriánska"},
+  {street = "Husárska"},
+  {street = "Kuzmányho"},
+  {street = "Škultétyho"},
+  {street = "Štúrova", numbers = "27-33", parity = "odd"},
+  {street = "Žriedlová"},
+]
+
+[okrsok.19]
+rules = [
+  {street = "Garbiarska", numbers = "4"},
+]

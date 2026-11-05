@@ -1,0 +1,25 @@
+# Okrsky of Pata, transcribed by an AI agent in job okrsok-rules-5511 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Do volebného okrsku č. 1 patria domy od s. č 1 - po s. č. 650 a občania s trvalým pobytom „Obec Pata“ (bez adresy)
+#   okrsok 2: Do volebného okrsku č. 2 patria domy od s. č. 651 – po s. č. 1255.
+obec = "503959"
+name = "Pata"
+okrsky_note = "The obec is split by súpisné číslo: okrsok 1 s. č. 1–650 and residents registered only to 'Obec Pata' (bez adresy), okrsok 2 s. č. 651–1255; the rule for okrsok 2 is open-ended so later houses fall in it."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The notice on the referendum page is undated but is headed for the referendum of 4 July 2026."
+
+[[document]]
+url = "https://www.obecpata.sk/referendum-2026.html"
+sha256 = "879d9c39179816cb96bf15c4948c99244753d109a43d8f365ce75fa7f1ccbb1c"
+title = "Referendum 2026 – Oznámenie o vytvorení volebných okrskov a určenie volebných miestností pre Referendum, ktoré sa uskutoční v sobotu 4. júla 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Pata", numbers = "1-650"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Pata", numbers = "651-"},
+]

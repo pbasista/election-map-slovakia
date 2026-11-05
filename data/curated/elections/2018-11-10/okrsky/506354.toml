@@ -1,0 +1,30 @@
+# Okrsky of Omšenie, transcribed by an AI agent in job okrsok-rules-818 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: V okrsku 01 volia voliči s trvalým pobytom č.d. 0 - 330
+#   okrsok 2: V okrsku 02 volia voliči s trvalým pobytom č.d. 331 - 999
+obec = "506354"
+name = "Omšenie"
+okrsky_note = "The okrsky split the one part Omšenie by house (súpisné) number: okrsok 1 up to 330, okrsok 2 from 331 (open-ended)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The notice is headed with the municipal elections of 10 November 2018; it states no decision date."
+
+[[document]]
+url = "https://www.omsenie.sk/modules/file_storage/download.php?file=9328ac8b%7C359&inline=1"
+sha256 = "6e3e2bf30561331aa75da321ac3c597a2975d8b30c1099abea2c4310f1d5cc0a"
+title = "Oznámenie o čase a mieste konania volieb – Voľby do orgánov samosprávy obcí 10. novembra 2018"
+
+[[document]]
+url = "https://www.omsenie.sk/zverejnovanie/volby/volby-do-organov-samospravy-obci/"
+sha256 = "1c1cd594a38c9bca2ec20c85c799a06804184e27e3f0ca3e234f1b38ed8aa268"
+title = "Voľby – page linking the notice"
+
+[okrsok.1]
+rules = [
+  {part = "Omšenie", numbers = "0-330"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Omšenie", numbers = "331-"},
+]

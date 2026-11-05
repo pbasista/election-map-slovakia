@@ -1,0 +1,25 @@
+# Okrsky of Zbehy, transcribed by an AI agent in job okrsok-rules-3128 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č.1 /Zbehy/
+#   okrsok 2: Volebný okrsok č.2 /Andač/
+obec = "500950"
+name = "Zbehy"
+okrsky_date = 2022-11-09
+okrsky_note = "Okrsok 1 '/Zbehy/' and okrsok 2 '/Andač/' are the register parts Zbehy and Andač; the part Holotka, contiguous with Zbehy, is placed in okrsok 1 (inferred), as in the council obvody."
+
+[[document]]
+url = "https://www.zbehy.sk/data/page/zbehy.sk/15866/urcenie-volebnych-okrskov-referendum-2023.pdf"
+sha256 = "04459f7469bc25f246fb34a67088ee5ccde15a9e798725ee942b862f0c6fc596"
+title = "Určenie volebných okrskov - referendum 2023 (9.11.2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Zbehy"},
+  {part = "Holotka", note = "Holotka is the southern part of the built-up area of Zbehy, in k.ú. Zbehy, contiguous with Zbehy; the document names only Zbehy and Andač", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Andač"},
+]

@@ -1,0 +1,42 @@
+# The okrsky of Pohronská Polhora of the vote of 2020-02-29, data/curated/elections/2020-02-29/okrsky/508888.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Pohronská Polhora, transcribed by an AI agent in job okrsok-rules-2681 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: HLAVNÁ, HRAŠKUĽA, KÚT, PÍLA, ROHOZNÁ, STANIČNÁ, ŠPORTOVÁ, ZBOJSKÁ, POHRONSKÁ POLHORA
+#     okrsok 2: BÁNY, BÁNIKY, LIPIANKA, NAD IHRISKOM, POD POĽANOU, VARGUĽA, ŽELEZNIČNÁ
+obec = "508888"
+name = "Pohronská Polhora"
+okrsky_fill = "nearest"
+okrsky_note = "'ZBOJSKÁ' is not in the register and is left out; 'POHRONSKÁ POLHORA' means voters registered only on the obec. Predkopačno and houses without a street are placed by fill_nearest."
+okrsky_adopted = 2020-02-29
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-478): The website's elections section has pages only from NR SR 2020 on; no page or document for the 2017 vote. Internet Archive (CDX API) refused connections / 503 on retries, so archived pages could not be checked. These are the okrsky of the vote of 2020-02-29 (2020-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2020-02-29: 1: 654 → 636, 2: 696 → 695."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2019-11-05
+okrsky_date_basis = "The elections page shows the okrsky section 'Zverejnené 11.2.2016, Aktualizované 5.11.2019'; its text names the NR SR elections 2020; no decision date stated. (https://www.ppolhora.sk/volby-do-nrsr-2020.html)"
+
+[[document]]
+url = "https://www.ppolhora.sk/volby-do-nrsr-2020.html"
+sha256 = "709a650cd6e14d9e7f40d4d7815e8291d60ad270dcae5de9d6c519e876b5af78"
+title = "Voľby do NRSR 2020 – Volebné okrsky (Starosta obce určil pre uskutočnenie volieb do NR SR 2020 dva volebné okrsky)"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná", written = "HLAVNÁ"},
+  {street = "Hraškuľa", written = "HRAŠKUĽA"},
+  {street = "Kút", written = "KÚT"},
+  {street = "Píla", written = "PÍLA"},
+  {street = "Rohozná", written = "ROHOZNÁ"},
+  {street = "Staničná", written = "STANIČNÁ"},
+  {street = "Športová", written = "ŠPORTOVÁ"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bány", written = "BÁNY"},
+  {street = "Bániky", written = "BÁNIKY"},
+  {street = "Lipianka", written = "LIPIANKA"},
+  {street = "Nad Ihriskom", written = "NAD IHRISKOM"},
+  {street = "Pod Poľanou", written = "POD POĽANOU"},
+  {street = "Varguľa", written = "VARGUĽA"},
+  {street = "Železničná", written = "ŽELEZNIČNÁ"},
+]

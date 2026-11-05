@@ -1,0 +1,150 @@
+# Okrsky of Kežmarok, transcribed by an AI agent in job okrsok-rules-5309 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Biela voda, Hradská cesta, Michalská, Nad traťou, Pod traťou, Poľná, Pradiareň, Pri zastávke, Strelnica, Tehelňa, Továrenská
+#   okrsok 2: Hradný vrch, Pod lesom, Severná
+#   okrsok 3: Garbiarska, Možiarska, Nižná brána
+#   okrsok 4: Fraňa Kráľa, Hradné námestie, Jakuba Kraya, Kostolné námestie, Nová, Priekopa, Slavkovská, Starý trh, Trhovište
+#   okrsok 5: Baštová, Dr. Alexandra, Hlavné námestie, Hviezdoslavova, Kušnierska brána, Mesto Kežmarok, Toporcerova, Tvarožnianska
+#   okrsok 6: Dávida Frölicha, J. Jesenského, J. Záborského, Kamenná baňa, Kláštorná, Komenského, Kukučínova, Ľubická cesta, P.J. Šafárika, Rázusova, S. Tomášika, Štúrova, Zochova
+#   okrsok 7: Cintorínska, Huncovská, Martina Lányiho, Nábrežná, Sihoť, Vyšný mlyn, Záhradná
+#   okrsok 8: Agátová, Brezová, Dr. Daniela Fischera, Dubová, Gaštanová, Gen. Štefánika, Jána Chalupku, Javorová, Krvavé pole, Lipová, Mučeníkov, Platanová, Tatranská, Topoľová
+#   okrsok 9: Košická, Weilburská, obyvatelia s trvalým pobytom v meste Kežmarok na adresách - 1715/10, 1716/6, 1716/8, 1717/2, 1717/4, 1718/9, 1719/5, 1719/7, 1720/1, 1720/3 (Bardejovská), - 1764/1, 1765/3, 1765/5, 1766/7, 1767/2, 1767/4, 1768/6, 1768/8, 1769/10, 1769/12, 1770/14 (Levočská)
+#   okrsok 10: Lanškrounská
+#   okrsok 11: Ivana Stodolu, Karola Kuzmányho, Obrancov mieru, Suchá hora
+#   okrsok 12: Južná, Petržalská
+obec = "523585"
+name = "Kežmarok"
+okrsky_date = 2026-04-29
+okrsky_fill = "nearest"
+okrsky_note = "\"Mesto Kežmarok\" in okrsok 5 means voters registered only to the town, not a rule. Weinova (register street the document does not name) and register addresses without a street are placed by fill_nearest. P.J. Šafárika covers both register spellings (\"P. J. Šafárika\", \"P.J.Šafárika\"). The document's Agátová and Platanová (okrsok 8) are not in the register and are left out; its Brezová, Dubová, Javorová, Lipová, Topoľová are the register's \"Ulica …\" streets. Okrsky 9 and 12 changed polling stations against 2024; okrsok 8 gained the new streets."
+
+[[document]]
+url = "https://www.kezmarok.sk/wp-content/uploads/2026/10/Oznamenie-o-vytvoreni-okrskov-a-urceni-volebnych-miestnosti-Referendum-2026.pdf"
+sha256 = "1ed6c66d0fc32c4b328f306343c4f447eb3553149966dda9308e0ba644ff5961"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre referendum 2026"
+
+[okrsok.1]
+rules = [
+  {street = "Biela voda"},
+  {street = "Hradská cesta"},
+  {street = "Michalská"},
+  {street = "Nad traťou"},
+  {street = "Pod traťou"},
+  {street = "Poľná"},
+  {street = "Pri zastávke"},
+  {street = "Tehelňa"},
+  {street = "Továrenská"},
+  {street = "Pradiareň"},
+  {street = "Strelnica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Pod lesom"},
+  {street = "Severná"},
+  {street = "Hradný vrch"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Garbiarska"},
+  {street = "Možiarska"},
+  {street = "Nižná brána"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Jakuba Kraya"},
+  {street = "Priekopa"},
+  {street = "Trhovište"},
+  {street = "Fraňa Kráľa"},
+  {street = "Kostolné námestie"},
+  {street = "Nová"},
+  {street = "Slavkovská"},
+  {street = "Starý trh"},
+  {street = "Hradné námestie"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Baštová"},
+  {street = "Dr. Alexandra"},
+  {street = "Hlavné námestie"},
+  {street = "Hviezdoslavova"},
+  {street = "Toporcerova"},
+  {street = "Kušnierska brána"},
+  {street = "Tvarožnianska"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "J.Jesenského", written = "J. Jesenského"},
+  {street = "S.Tomášika", written = "S. Tomášika"},
+  {street = "P. J. Šafárika", written = "P.J. Šafárika"},
+  {street = "P.J.Šafárika", written = "P.J. Šafárika"},
+  {street = "J. Záborského"},
+  {street = "Kamenná baňa"},
+  {street = "Kláštorná"},
+  {street = "Komenského"},
+  {street = "Dávida Frölicha"},
+  {street = "Kukučínova"},
+  {street = "Rázusova"},
+  {street = "Štúrova"},
+  {street = "Ľubická cesta"},
+  {street = "Zochova"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Martina Lányiho"},
+  {street = "Nábrežná"},
+  {street = "Sihoť"},
+  {street = "Vyšný mlyn"},
+  {street = "Záhradná"},
+  {street = "Cintorínska"},
+  {street = "Huncovská"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Dr.Daniela Fischera", written = "Dr. Daniela Fischera"},
+  {street = "Ul. Mučeníkov", written = "Mučeníkov"},
+  {street = "Jána Chalupku"},
+  {street = "Gen. Štefánika"},
+  {street = "Krvavé pole"},
+  {street = "Tatranská"},
+  {street = "Gaštanová"},
+  {street = "Ulica Brezová", written = "Brezová"},
+  {street = "Ulica Dubová", written = "Dubová"},
+  {street = "Ulica Javorová", written = "Javorová"},
+  {street = "Ulica Lipová", written = "Lipová"},
+  {street = "Ulica Topoľová", written = "Topoľová"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Košická"},
+  {street = "Weilburská"},
+  {street = "Bardejovská", numbers = "1-10", note = "the document lists the addresses 1715/10 … 1720/3 (Bardejovská), orientačné 1-10: every address of the street in the register"},
+  {street = "Levočská", numbers = "1-14", note = "the document lists the addresses 1764/1 … 1770/14 (Levočská), orientačné 1-14: every address of the street in the register"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Lanškrounská"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Karola Kuzmányho"},
+  {street = "Obrancov mieru"},
+  {street = "Suchá hora"},
+  {street = "Ivana Stodolu"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Petržalská"},
+  {street = "Južná"},
+]

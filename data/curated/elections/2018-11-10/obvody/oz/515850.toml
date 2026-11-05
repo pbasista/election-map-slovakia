@@ -1,0 +1,88 @@
+# Council obvody of Veľký Krtíš (515850), Veľký Krtíš.
+# Transcribed by an AI agent in job obvod-rules-084 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: A. H. Škultétyho or. č. 115 - nepárne čísla; A. H. Škultétyho or. č. 113 - nepárne čísla; A. H. Škultétyho or. č. 1-15 - nepárne čísla; A. H. Škultétyho or. č. 16-101; A. H. Škultétyho or. č. 102; A. H. Škultétyho or. č. 103, 112; J.Kráľa; Št.Tučeka; Vinohradnícka; Boženy Němcovej or. č. 1-29 - nepárne čísla; Boženy Némcovej or. č. 2-34 - párne čísla; Boženy Němcovej or. č. 31-67 - nepárne čísla; Lučenská or. č. 1-42; Lučenská or. č. 84; Lučenská or. č. 86; Poľná; Za Parkom
+#   obvod 2: P.O.Hviezdoslava or.č. 1-49 - nepárne čísla; Ľ.Štúra or.č. 1-15 - nepárne čísla; P.O.Hviezdoslava or. č. 2-16 - párne čísla; Lučenská or.č. 79-91 - nepárne čísla; Novohradská; Červenej Armády; Družobná; Dúbravská cesta; Duklianska; Ľ.Štúra or.č. 2-14 - párne čísla; Ľ.Štúra or.č. 16-200 - párne čísla; Lučenská or.č. 96; Lučenská or.č. 98; Lučenská or.č. 75; Lučenská or.č. 46-48 - párne čísla; Lučenská or.č. 60-66 - párne čísla; Lučenská or.č. 72-82 - párne čísla; Lučenská or.č. 92; Mládežnícka; Pionierska; Záhradná
+#   obvod 3: Venevská; Lučenská or.č. 43-71 - nepárne čísla; Banícka; I.Madácha; Školská; Železničná; J.A.Komenského; M.R.Štefánika; Mierová; Nám.A.H.Škultétyho; Nemocničná; Okružná; SNP; Za Poštou; A.H.Škultétyho or.č. 2-14 - párne čísla; Mikszáthova; Osloboditeľov; Písecká
+obec = "515850"
+name = "Veľký Krtíš"
+date = 2018-06-14
+fill = "nearest"
+note = "Resolution 331/2018 of 14 June 2018. The PDF's text layer prints ž as ţ (Boţeny, Druţobná, Mládeţnícka, Ţelezničná, Okruţná); corrected in text. Items joined with '; ' (the resolution lists one per line). fill_nearest places the 1308 addresses without a street (súpisné only) and the numbers the lists miss: A.H.Škultétyho 104-111, Lučenská 44, 50-58, 68, 73, 77, 88, 90, 94, 100, Ľ.Štúra odd numbers above 15, P.O.Hviezdoslava 18 and above even, 51, 53. The announcement (download id 995060, archived page of 2018-08-01) is no longer served by the website."
+
+[[document]]
+url = "https://www.velky-krtis.sk/download_file_f.php?id=980613"
+sha256 = "1f2a4492d3f18c59655b860db6d9e8fcb0abfc8e633f80090abc17e7251084d3"
+title = "Uznesenia z 38. zasadnutia MsZ vo Veľkom Krtíši 14. júna 2018 (č. 321-333/2018), uznesenie č. 331/2018"
+
+[obvod.1]
+seats = 4
+rules = [
+  {street = "A.H.Škultétyho", numbers = "115", parity = "odd", written = "A. H. Škultétyho"},
+  {street = "A.H.Škultétyho", numbers = "113", parity = "odd", written = "A. H. Škultétyho"},
+  {street = "A.H.Škultétyho", numbers = "1-15", parity = "odd", written = "A. H. Škultétyho"},
+  {street = "A.H.Škultétyho", numbers = "16-101", written = "A. H. Škultétyho"},
+  {street = "A.H.Škultétyho", numbers = "102", written = "A. H. Škultétyho"},
+  {street = "A.H.Škultétyho", numbers = "103, 112", written = "A. H. Škultétyho", note = "the resolution writes \"103, 112\" (two numbers, not a range); 104-111 are left to fill_nearest"},
+  {street = "J.Kráľa"},
+  {street = "Št.Tučeka"},
+  {street = "Vinohradnícka"},
+  {street = "Boženy Němcovej", numbers = "1-29", parity = "odd"},
+  {street = "Boženy Němcovej", numbers = "2-34", parity = "even", written = "Boženy Némcovej", note = "a typo (é for ě) for Boženy Němcovej, which the same list names twice"},
+  {street = "Boženy Němcovej", numbers = "31-67", parity = "odd"},
+  {street = "Lučenská", numbers = "1-42"},
+  {street = "Lučenská", numbers = "84"},
+  {street = "Lučenská", numbers = "86"},
+  {street = "Poľná"},
+  {street = "Za Parkom"},
+]
+
+[obvod.2]
+seats = 5
+rules = [
+  {street = "P.O.Hviezdoslava", numbers = "1-49", parity = "odd"},
+  {street = "Ľ.Štúra", numbers = "1-15", parity = "odd"},
+  {street = "P.O.Hviezdoslava", numbers = "2-16", parity = "even"},
+  {street = "Lučenská", numbers = "79-91", parity = "odd"},
+  {street = "Novohradská"},
+  {street = "Červenej Armády"},
+  {street = "Družobná"},
+  {street = "Dúbravská cesta"},
+  {street = "Duklianska"},
+  {street = "Ľ.Štúra", numbers = "2-14", parity = "even"},
+  {street = "Ľ.Štúra", numbers = "16-200", parity = "even"},
+  {street = "Lučenská", numbers = "96"},
+  {street = "Lučenská", numbers = "98"},
+  {street = "Lučenská", numbers = "75"},
+  {street = "Lučenská", numbers = "46-48", parity = "even"},
+  {street = "Lučenská", numbers = "60-66", parity = "even"},
+  {street = "Lučenská", numbers = "72-82", parity = "even"},
+  {street = "Lučenská", numbers = "92"},
+  {street = "Mládežnícka"},
+  {street = "Pionierska"},
+  {street = "Záhradná"},
+]
+
+[obvod.3]
+seats = 6
+rules = [
+  {street = "Venevská"},
+  {street = "Lučenská", numbers = "43-71", parity = "odd"},
+  {street = "Banícka"},
+  {street = "I.Madácha"},
+  {street = "Školská"},
+  {street = "Železničná"},
+  {street = "J.A.Komenského"},
+  {street = "M.R.Štefánika"},
+  {street = "Mierová"},
+  {street = "Nám.A.H.Škultétyho"},
+  {street = "Nemocničná"},
+  {street = "Okružná"},
+  {street = "SNP"},
+  {street = "Za Poštou"},
+  {street = "A.H.Škultétyho", numbers = "2-14", parity = "even"},
+  {street = "Mikszáthova"},
+  {street = "Osloboditeľov"},
+  {street = "Písecká"},
+]

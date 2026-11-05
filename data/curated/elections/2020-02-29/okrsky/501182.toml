@@ -1,0 +1,31 @@
+# Okrsky of Kameničná, transcribed by an AI agent in job okrsok-rules-2585 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kameničná, od súp. číslo 1 - do súp.číslo 400
+#   okrsok 2: Kameničná a časť Balvany, od súp. číslo 401 - do - a bez súpisného čísla / Kameničná /
+obec = "501182"
+name = "Kameničná"
+okrsky_note = "Scanned notice; okrsky by súpisné číslo within part Kameničná, part Balvany in okrsok 2. Residents without a súpisné číslo (okrsok 2) are not register addresses."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The scanned notice of the mayor is undated; its heading names the vote (Voľby do NR SR v roku 2020)."
+
+[[document]]
+url = "https://sk.kamenicna.eu/wp-content/uploads/2019/11/Informácia-o-vytv.-vol.okrskov-Értesítés.pdf"
+sha256 = "a555d52af87b1c99909485a43fae8f13a76c2101c43f66b6eb2eed43cc8684f7"
+title = "Informácia o vytvorení volebných okrskov a určení volebných miestností v obci Kameničná na zabezpečenie volieb – Voľby do NR SR v roku 2020"
+
+[[document]]
+url = "https://sk.kamenicna.eu/volby-do-nr-sr-2020/"
+sha256 = "c4aa802426ded57ac9fb1fa07bc56c1aabc17a0f72e51efe6fe16abd25f07b2e"
+title = "elections page"
+
+[okrsok.1]
+rules = [
+  {part = "Kameničná", numbers = "1-400"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kameničná", numbers = "401-"},
+  {part = "Balvany"},
+]

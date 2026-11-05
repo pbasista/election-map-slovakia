@@ -1,0 +1,42 @@
+# Council obvody of Poniky (508918), Banská Bystrica.
+# Transcribed by an AI agent in job obvod-rules-159 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: viacmandátový volebný obvod č. 1 pre voľby poslancov v časti obce Poniky, v ktorom sa budú voliť 5 (piati) poslanci
+#   obvod 2: viacmandátový volebný obvod č. 2 pre voľby poslancov v časti obce Ponická Lehôtka, v ktorom sa budú voliť 2 (dvaja) poslanci
+#   obvod 3: viacmandátový volebný obvod č. 3 pre voľby poslancov v časti obce Ponická Huta, v ktorom sa budú voliť 2 (dvaja) poslanci
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/508918.toml, standing in.
+obec = "508918"
+name = "Poniky"
+date = 2018-07-26
+note = "Scanned resolution read by OCR (text written with diacritics restored). Uznesenie č. 312/2018 of 26. 7. 2018."
+okrsky_date = 2022-06-02
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office okrsky per obvod), so each okrsok is its whole obvod; the obvody document is the source and date is that resolution's date (no separate okrsky announcement used). Snapshot of 12 Aug 2022; resolution 262/2022 of 2 June 2022."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-5900): No okrsky document of the municipal elections of 10 November 2018 found. The live website keeps no 2018 elections page (its notice-board archive for 2018 has no election item; site search finds only 2022-2026 election pages). The Internet Archive has no capture of poniky.sk between May 2018 and July 2019 of any elections page or e_download.php file; the only 2018 election document known is the council's resolution on the obvody (uznesenie č. 312/2018 of 26. 7. 2018), which does not set the okrsky. Later documents (2023-2024) show 3 okrsky by part (Poniky, Ponická Lehôtka, Ponická Huta), one per obvod. The Internet Archive was intermittently offline during the search; retried several times. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 3 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://web.archive.org/web/20220302142452/https://www.poniky.sk/e_download.php?file=data/uredni_deska/obsah58_3.pdf&original=Uznesenia%2025.pdf"
+sha256 = "26c1bd54f0effe5b0b17905a29d8d864cc742c97c351ab396bc72892d18e17a8"
+title = "Uznesenia z 25. zasadnutia Obecného zastupiteľstva v Ponikách konaného dňa 26. júla 2018 (uznesenie č. 312/2018)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Poniky"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Ponická Lehôtka"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Ponická Huta"},
+]

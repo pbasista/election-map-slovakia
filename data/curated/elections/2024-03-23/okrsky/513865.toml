@@ -1,0 +1,32 @@
+# The okrsky of Zliechov of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/513865.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Zliechov, transcribed by an AI agent in job okrsok-rules-3890 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Okrsok č. 1: pre obec Zliechov
+#     okrsok 2: Okrsok č. 2: pre miestnu časť Košecké Rovné
+obec = "513865"
+name = "Zliechov"
+okrsky_date = 2023-06-13
+okrsky_note = "Scanned letter of the mayor to the Okresný úrad dated 13.06.2023, published under \"Voľby do NRSR\" (posted 26.06.2023 - 01.10.2023). Its text says \"pre konanie referenda v roku 2023\" (a wording left over from the January referendum); by its date and its category it is the okrsky notice for the NR SR election of 30.09.2023. Okrsok 1 is the village Zliechov, okrsok 2 the local part Košecké Rovné; each a part rule. Read from the scan."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2024-03-23 setting the okrsky was found (okrsok-rules-4515): Zliechov's elections documents (zliechov.sk/dokumenty/volby/, all categories: archív, komunálne, parlamentné, referendum, europarlament, VÚC, prezident) hold okrsky notices only for 2022 (Okrsky.pdf) and the NR SR election 2023; none for this vote. The Internet Archive refused connections (offline) during the search. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-03-23 → 2023-09-30: 1: 391 → 407, 2: 106 → 103."
+
+[[document]]
+url = "https://zliechov.sk/wp-content/uploads/dokumenty/parlamentne-volby/oznamenie-o-sidle-ovk-b3hufn.pdf"
+sha256 = "cf9e2fa5b4f32d50c75758098e47798c47c98c9659dc93c731df7119c41ab631"
+title = "Oznámenie o sídle volebných okrskových komisií (13.06.2023)"
+
+[[document]]
+url = "https://zliechov.sk/dokument/oznamenie-o-utvoreni-okrskov-a-sidle-volebnych-miestnosti/"
+sha256 = "430afec271580ee3b8a6a7e6218c0eef39ee57d03562f11cf4257d61c030a65d"
+title = "Oznámenie o utvorení okrskov a sídle volebných miestností (Voľby do NRSR, vyvesené 26.06.2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Zliechov"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Košecké Rovné"},
+]

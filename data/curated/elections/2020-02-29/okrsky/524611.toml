@@ -1,0 +1,25 @@
+# Okrsky of Kamenica, transcribed by an AI agent in job okrsok-rules-2679 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súpisné čísla 1 – 350; Voliči s pobytom: Kamenica
+#   okrsok 2: súpisné čísla 351 - 695
+obec = "524611"
+name = "Kamenica"
+okrsky_date = 2019-11-28
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document, read from the page image; linked from the live (no longer in the menu) page https://kamenica.sk/sk/content/volby-nrsr-2020. The okrsky are súpisné číslo ranges: 1–350 and 351–695; okrsok 1 also holds the voters registered only in 'Kamenica' (without an address). Any address above 695 takes the okrsok of the nearest placed address (fill_nearest). Differs from the copied 2022/2026 okrsky (1–380 / 381–722) in the split point."
+
+[[document]]
+url = "https://kamenica.sk/clients/kamenica.sk/uploads/kniznica/1574926898utvorenie-okrskov-volby-do-nr-sr.pdf"
+sha256 = "7c54d4c0ea7701cdbee41e3b4172d93fcf0f81fdb1f17042c345fc3f78f6b886"
+title = "Rozhodnutie starostu obce Kamenica o utvorení volebných okrskov a určení volebných miestností v obci Kamenica pre voľby do NR SR, ktoré sa budú konať dňa 29. februára 2020"
+
+[okrsok.1]
+rules = [
+  {part = "Kamenica", numbers = "1-350"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kamenica", numbers = "351-695"},
+]

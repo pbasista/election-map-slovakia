@@ -1,0 +1,40 @@
+# Council obvody of Veľké Rovné (518085), Bytča.
+# Transcribed by an AI agent in job obvod-rules-112 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa volebné okrsky č. 1 a 2 - časti obce Rimanovice, ústredie, sídlisko a Horevsie bude zvolených 7 poslancov.
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa volebný okrsok č. 3 - časti obce Potoky, Žarnov, Soľné, Madzín, Dolinky a Ráztoky budú zvolení 4 poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-5879 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+obec = "518085"
+name = "Veľké Rovné"
+date = 2018-07-18
+note = "Obvod 1 (okrsky 1 and 2: časti obce Rimanovice, ústredie, sídlisko a Horevsie) are the local names of the register's part Veľké Rovné; obvod 2 is the parts Potoky, Žarnov, Soľné, Madzín, Dolinky and Ráztoky."
+okrsky_note = "The 2018 obvody notice says obvod 1 comprises okrsky 1 and 2 (parts Rimanovice, ústredie, sídlisko, Horevsie) and obvod 2 okrsok 3. The website's 2018 election documents (vk2018_1 … vk2018_13) contain no mayor's okrsky decision listing streets or parts per okrsok, so the split of obvod 1 between okrsky 1 and 2 is not given. Internet Archive was offline during the search."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The notice (dated 13.08.2018) names the elections of 10 November 2018 and states which okrsky make up each obvod; the mayor's okrsky decision itself is not published and its date is unknown."
+
+[[document]]
+url = "https://www.velkerovne.sk/wp-content/uploads/docs/vk2018_3.pdf"
+sha256 = "ead79871299cbd516090cb947b41be82fe40109fa4992b5673412f3c8e9d7260"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 10. novembra 2018 (uznesenie č. 254/M/7 zo dňa 18.07.2018)"
+
+[obvod.1]
+seats = 7
+okrsky = [1, 2]
+rules = [
+  {part = "Veľké Rovné", note = "Rimanovice, ústredie, sídlisko a Horevsie are areas of the village proper (register part Veľké Rovné)"},
+]
+
+[obvod.2]
+seats = 4
+okrsky = [3]
+rules = [
+  {part = "Potoky"},
+  {part = "Žarnov"},
+  {part = "Soľné"},
+  {part = "Madzín"},
+  {part = "Dolinky"},
+  {part = "Ráztoky"},
+]

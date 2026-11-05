@@ -1,0 +1,25 @@
+# The okrsky of Hromoš of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/526746.toml, copied by `ems job reuse` (reused). Its header there:
+#   Okrsky of Hromoš, transcribed by an AI agent in job okrsok-rules-634 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: okrsok č. 1 Hromoš
+#     okrsok 2: okrsok č. 2 Kozelec
+obec = "526746"
+name = "Hromoš"
+okrsky_note = "These are the okrsky of the elections of 2026-10-24: in 2026-07-04 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2026-07-04 was searched for. The notice (web page, undated) names okrsok 1 \"Hromoš\" (station Hromoš 114) and okrsok 2 \"Kozelec\" (station Kozelec 164); read as the two parts of the obec."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.hromos.sk/item/urcenie-okrskov-a-volebnych-miestnosti-pre-volby-do-organov-samospravy-obci-a-volieb-do-organov-samospravnych-krajov/"
+sha256 = "0fd730afd64f5eff4662d2433e5197ef27a7f5e87d0e9183d57a3487ea2a7b45"
+title = "Určenie okrskov a volebných miestností pre voľby do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {part = "Hromoš"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kozelec"},
+]

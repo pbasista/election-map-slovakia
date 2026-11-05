@@ -1,0 +1,30 @@
+# Okrsky of Sirk, transcribed by an AI agent in job okrsok-rules-3945 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre občanov Sirka a časti Červeňany
+#   okrsok 2: pre občanov časti Železník a osady Šrobárka
+obec = "526258"
+name = "Sirk"
+okrsky_date = 2023-06-26
+okrsky_note = "Osada Šrobárka (okrsok 2) is not a part in the register; its houses are numbered within the part Sirk and cannot be told apart, so they stay in okrsok 1 with the part Sirk."
+
+[[document]]
+url = "https://obecsirk.sk/wp-content/uploads/dokumenty/parlamentne-volby/okrsky-ihv4x0.pdf"
+sha256 = "a09a55605b676dc120d46bc245266609c66d329c4a162ccc9f2085fad20d2f73"
+title = "Utvorenie volebných okrskov a volebných miestností v obci Sirk (voľby do NR SR 30.09.2023)"
+
+[[document]]
+url = "https://obecsirk.sk/dokument/volebne-okrsky-a-volebne-miestnosti/"
+sha256 = "84b401d4928e0039ab05f3c85a7a770524cb168e395c73d2f28e7cce27f8a3cf"
+title = "Utvorenie volebných okrskov a volebných miestností v obci Sirk (voľby do NR SR 30.09.2023) (page)"
+
+[okrsok.1]
+rules = [
+  {part = "Sirk"},
+  {part = "Červeňany"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Železník"},
+]

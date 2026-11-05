@@ -1,0 +1,37 @@
+# Okrsky of Fiľakovské Kováče, transcribed by an AI agent in job okrsok-rules-4578 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volebný obvod č. 1 v časti obce Fiľakovské Kováče
+#   okrsok 2: volebný obvod č. 2 v časti obce Kurtáň
+#   okrsok 3: volebný obvod č. 3 v časti obce Fiľakovské Kľačany
+obec = "511404"
+name = "Fiľakovské Kováče"
+okrsky_note = "The announcement calls the okrsky \"volebné obvody\" (it also announces the 3 okrskové volebné komisie); each is a part of the municipality. Text of the DOCX."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-25
+okrsky_date_basis = "The document is undated; the municipality's page linking it says it was posted (\"Zverejnené / Vyvesené na úradnej tabuli\") on 2024-01-25, before the vote; its heading names this vote. (https://filakovskekovace.sk/dokument/oznamenie-udajov-obce-k-volbam-prezidenta-sr-23-3-2024/)"
+
+[[document]]
+url = "https://filakovskekovace.sk/wp-content/uploads/dokumenty/volby-prezidenta/oznamenie-k-volbam-prezidenta-sr-90yk52.docx"
+sha256 = "00376e4187564f7be4c1a12704b239769509f67f3ee4e6aaf59aa7123277b86b"
+title = "Oznámenie k voľbám prezidenta SR 23.03.2024"
+
+[[document]]
+url = "https://filakovskekovace.sk/dokument/oznamenie-udajov-obce-k-volbam-prezidenta-sr-23-3-2024/"
+sha256 = "1e5defaa8770aebe3669f71c89312da196e24464e1d730c67e0300a7adf6c09e"
+title = "Page of the document (zverejnené 2024-01-25)"
+
+[okrsok.1]
+rules = [
+  {part = "Fiľakovské Kováče"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kurtáň"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Fiľakovské Kľačany"},
+]

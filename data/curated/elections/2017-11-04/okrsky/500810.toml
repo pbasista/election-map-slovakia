@@ -1,0 +1,25 @@
+# Okrsky of Tesárske Mlyňany, transcribed by an AI agent in job okrsok-rules-465 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: okrsok č. 1 pre časť Tesáre nad Žitavou
+#   okrsok 2: okrsok č. 2 pre časť Mlyňany
+obec = "500810"
+name = "Tesárske Mlyňany"
+okrsky_note = "The municipality's former website, kept at archiv.tesarskemlynany.sk."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The notice names the elections to the self-governing regions of 4.11.2017; it states no decision date (posted in September 2017 per its archive path)."
+
+[[document]]
+url = "http://archiv.tesarskemlynany.sk/2017/09/informacia-o-volebnych-okrskoch-v-obci-tesarske-mlynany/index.html"
+sha256 = "2791ceae1500a3b35cb14c939598421959de419de56cbd5dd1da00603d17fc88"
+title = "Informácia o volebných okrskoch v obci Tesárske Mlyňany"
+
+[okrsok.1]
+rules = [
+  {part = "Tesáre nad Žitavou"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Mlyňany"},
+]

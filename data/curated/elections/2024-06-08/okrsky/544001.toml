@@ -1,0 +1,23 @@
+# Okrsky of Zemplínska Nová Ves, transcribed by an AI agent in job okrsok-rules-5197 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 v Zemplínskej Novej Vsi – časť obce Úpor
+#   okrsok 2: Okrsok č. 2 v Zemplínskej Novej Vsi – časť obce Zemplínsky Klečenov
+obec = "544001"
+name = "Zemplínska Nová Ves"
+okrsky_date = 2024-02-22
+
+[[document]]
+url = "https://www.znves.sk/files/2024-02-23-094134-1.Ur__enie_volebn__ch_okrskov_a_volebn__ch_miestnost__.pdf"
+sha256 = "b835cad7df59e9f007845b405d0a84fd266ffa7a1777161e251a394b3d5100d7"
+title = "Určenie volebných okrskov a volebných miestností (voľby do Európskeho parlamentu 2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Úpor"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Zemplínsky Klečenov"},
+]

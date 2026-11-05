@@ -1,0 +1,105 @@
+# Okrsky of Dunajská Lužná, transcribed by an AI agent in job okrsok-rules-2886 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dunajská, Fialková, Jánošíkovská, Mariánska, Narcisová, Okružná, Orechová, Poľná, Pri hrádzi, Pri jame, Rekreačná, Smreková, Športová, Tichá
+#   okrsok 2: Brezová, Čerešňová, Hlavná, Holubia, Jabloňová, Javorová, Lipová Malinová, Mandľová, Pekárenská, Podnikateľská, Slnečná, Tehelná, Višňová, Vodárenská, Zdravotnícka, Zelená
+#   okrsok 3: Agátová, Astrová, Azalková, Bazová, Dlhá, Horná, Jarná, Jasná, Kvetná, Kvetoslavovská, Letná, Lipnická, Lúčna, Miloslavovská, Morušová, Pri Kniežacích mohylách, Sadová, Spojná, Stromová, Studená, Svoradova, Šalviová, Záhradná
+#   okrsok 4: Košariská, Kováčska, Krajná, Krátka, Krížna, Nám. sv. Martina, Nová, Pekná, rekreačná oblasť Malá voda - Nové Košariská, rekreačná oblasť – Za hrádzou, Školská, Štefánikov park, Úzka, Veterná, Zámočnícka
+obec = "545333"
+name = "Dunajská Lužná"
+okrsky_date = 2022-11-09
+okrsky_fill = "nearest"
+okrsky_note = "The document also names \"rekreačná oblasť Malá voda - Nové Košariská\", \"rekreačná oblasť – Za hrádzou\", not a street in the register; its houses are among the addresses without a street, placed by fill_nearest. Addresses without a street (numbered by súpisné číslo within the parts, largely the recreational areas and new houses) are placed by fill_nearest. The later 'oprava miesta volebných okrskov č. 3 a 4' (10.1.2023) only changes the rooms of okrsky 3 and 4 and repeats their streets unchanged."
+
+[[document]]
+url = "https://www.dunajskaluzna.sk/e_download.php?file=data/uredni_deska/obsah2957_8.pdf&original=utvor.voleb.%20okrs.%20a%20miest_.pdf"
+sha256 = "06c436077ffd2c0c0c77975c8dd4839b04623b17604e0218e11b20d47fca34ec"
+title = "Informácia o utvorení volebných okrskov a určenie volebných miestností v obci Dunajská Lužná k vyhlásenému referendu 21.01.2023"
+
+[[document]]
+url = "https://www.dunajskaluzna.sk/zverejnovanie/uradna-tabula/referendum-2023-3017.html"
+sha256 = "127659448dd741baa019769817eb610f7a82bbf1c2ec85339afce120b6a719eb"
+title = "Referendum 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Dunajská"},
+  {street = "Fialková"},
+  {street = "Jánošíkovská"},
+  {street = "Mariánska"},
+  {street = "Narcisová"},
+  {street = "Okružná"},
+  {street = "Orechová"},
+  {street = "Poľná"},
+  {street = "Pri hrádzi"},
+  {street = "Pri jame"},
+  {street = "Rekreačná"},
+  {street = "Smreková"},
+  {street = "Športová"},
+  {street = "Tichá"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Brezová"},
+  {street = "Čerešňová"},
+  {street = "Hlavná"},
+  {street = "Holubia"},
+  {street = "Jabloňová"},
+  {street = "Javorová"},
+  {street = "Lipová"},
+  {street = "Malinová"},
+  {street = "Mandľová"},
+  {street = "Pekárenská"},
+  {street = "Podnikateľská"},
+  {street = "Slnečná"},
+  {street = "Tehelná"},
+  {street = "Višňová"},
+  {street = "Vodárenská"},
+  {street = "Zdravotnícka"},
+  {street = "Zelená"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová"},
+  {street = "Astrová"},
+  {street = "Azalková"},
+  {street = "Bazová"},
+  {street = "Dlhá"},
+  {street = "Horná"},
+  {street = "Jarná"},
+  {street = "Jasná"},
+  {street = "Kvetná"},
+  {street = "Kvetoslavovská"},
+  {street = "Letná"},
+  {street = "Lipnická"},
+  {street = "Lúčna"},
+  {street = "Miloslavovská"},
+  {street = "Morušová"},
+  {street = "Pri kniežacích mohylách", written = "Pri Kniežacích mohylách", note = "The document capitalizes 'Kniežacích'; same street as the register's Pri kniežacích mohylách."},
+  {street = "Sadová"},
+  {street = "Spojná"},
+  {street = "Stromová"},
+  {street = "Studená"},
+  {street = "Svoradova"},
+  {street = "Šalviová"},
+  {street = "Záhradná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Košariská"},
+  {street = "Kováčska"},
+  {street = "Krajná"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Námestie svätého Martina", written = "Nám. sv. Martina"},
+  {street = "Nová"},
+  {street = "Pekná"},
+  {street = "Školská"},
+  {street = "Štefánikov Park", written = "Štefánikov park", note = "Only the capitalization of 'park' differs from the register's Štefánikov Park."},
+  {street = "Úzka"},
+  {street = "Veterná"},
+  {street = "Zámočnícka"},
+]

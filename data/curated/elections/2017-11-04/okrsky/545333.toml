@@ -1,0 +1,113 @@
+# Okrsky of Dunajská Lužná, transcribed by an AI agent in job okrsok-rules-080 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Brezová, Jánošíkovská, Krížna, Mariánska, Okružná, Orechová Pekná, Poľná, Pri hrádzi, Rekreačná, Smreková, Školská, Tichá, Zdravotnícka, Zelená
+#   okrsok 2: Čerešňová, Dunajská, Holubia, Jabloňová, Javorová, Kováčska, Lipová, Mandľová, Pekárenská, Podnikateľská, Pri jame, Pri kniežacích mohylách, Slnečná, Športová, Tehelná, Višňová, Vodárenská, Zámočnícka
+#   okrsok 3: Agátová, Astrová, Azalková, Bazová, Fialková, Kvetná, Kvetoslavovská, Letná, Lipnická, Lúčna, Malinová, Miloslavovská, Morušová, Sadová, Spojná, Stromová, Svoradova, Šalviová, Záhradná
+#   okrsok 4: Dlhá, Hlavná, Horná, Jarná, Košariská, Krajná, Krátka, Námestie sv. Martina, Narcisová, Nová, rekreačná oblasť Nové Košariská, Studená, Štefánikov park, Úzka, Veterná
+obec = "545333"
+name = "Dunajská Lužná"
+okrsky_date = 2017-08-22
+okrsky_fill = "nearest"
+okrsky_note = "The document also names \"rekreačná oblasť Nové Košariská\", not a street in the register; its houses are among the addresses without a street, placed by fill_nearest. Scanned document read from its rendered page images (scale 3), with diacritics. Addresses without a street (numbered by súpisné číslo within the parts, largely the recreational areas and new houses) are placed by fill_nearest. The 2017 document lists no Jasná; it is supplemented from the 2019 document (see supplement)."
+okrsky_supplemented = 2019-01-23
+okrsky_supplemented_from = "document"
+okrsky_supplement_basis = "The 2017 document leaves out the street Jasná (Nové Košariská, 69 addresses). The mayor's okrsky document of 2019-01-23 puts Jasná in one okrsok with Dlhá, Horná, Jarná, Košariská, Studená, Veterná, Hlavná and Narcisová, which in 2017 all form okrsok 4; so Jasná is placed in okrsok 4. (https://www.dunajskaluzna.sk/e_download.php?file=data/editor/750sk_4.pdf&original=volebne_okrsky_miestnosti.pdf)"
+
+[[document]]
+url = "https://www.dunajskaluzna.sk/e_download.php?file=data/uredni_deska/obsah1026_1.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "580fa15fb19a3b43e6e7d2089f7ec5ab092e89a6148a85cbe7d2421ce297f0f0"
+title = "Informácia o utvorení volebných okrskov a určenie volebných miestností v obci Dunajská Lužná k voľbám do orgánov samosprávnych krajov 4.11.2017"
+
+[[document]]
+url = "https://www.dunajskaluzna.sk/zverejnovanie/uradna-tabula/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-1058.html"
+sha256 = "86ac41a34d3482c0ae41d68235b4643af906a7a4d2b02d212a018572d6c9d936"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (úradná tabuľa, vyvesené 25. 8. 2017)"
+
+[[document]]
+url = "https://www.dunajskaluzna.sk/e_download.php?file=data/editor/750sk_4.pdf&original=volebne_okrsky_miestnosti.pdf"
+sha256 = "eb687f9f5477c7c04ca6ce2314bc36f00f93bccb8439f1b99611cdb86fa7f78a"
+title = "Informácia o utvorení volebných okrskov a určenie volebných miestností (voľba prezidenta SR 16.03.2019), source of the Jasná supplement"
+
+[okrsok.1]
+rules = [
+  {street = "Brezová"},
+  {street = "Jánošíkovská"},
+  {street = "Krížna"},
+  {street = "Mariánska"},
+  {street = "Okružná"},
+  {street = "Orechová"},
+  {street = "Pekná"},
+  {street = "Poľná"},
+  {street = "Pri hrádzi"},
+  {street = "Rekreačná"},
+  {street = "Smreková"},
+  {street = "Školská"},
+  {street = "Tichá"},
+  {street = "Zdravotnícka"},
+  {street = "Zelená"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Čerešňová"},
+  {street = "Dunajská"},
+  {street = "Holubia"},
+  {street = "Jabloňová"},
+  {street = "Javorová"},
+  {street = "Kováčska"},
+  {street = "Lipová"},
+  {street = "Mandľová"},
+  {street = "Pekárenská"},
+  {street = "Podnikateľská"},
+  {street = "Pri jame"},
+  {street = "Pri kniežacích mohylách"},
+  {street = "Slnečná"},
+  {street = "Športová"},
+  {street = "Tehelná"},
+  {street = "Višňová"},
+  {street = "Vodárenská"},
+  {street = "Zámočnícka"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová"},
+  {street = "Astrová"},
+  {street = "Azalková"},
+  {street = "Bazová"},
+  {street = "Fialková"},
+  {street = "Kvetná"},
+  {street = "Kvetoslavovská"},
+  {street = "Letná"},
+  {street = "Lipnická"},
+  {street = "Lúčna"},
+  {street = "Malinová"},
+  {street = "Miloslavovská"},
+  {street = "Morušová"},
+  {street = "Sadová"},
+  {street = "Spojná"},
+  {street = "Stromová"},
+  {street = "Svoradova"},
+  {street = "Šalviová"},
+  {street = "Záhradná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Dlhá"},
+  {street = "Hlavná"},
+  {street = "Horná"},
+  {street = "Jarná"},
+  {street = "Košariská"},
+  {street = "Krajná"},
+  {street = "Krátka"},
+  {street = "Námestie svätého Martina", written = "Námestie sv. Martina"},
+  {street = "Narcisová"},
+  {street = "Nová"},
+  {street = "Studená"},
+  {street = "Štefánikov Park", written = "Štefánikov park", note = "Only the capitalization of 'park' differs from the register's Štefánikov Park."},
+  {street = "Úzka"},
+  {street = "Veterná"},
+  {street = "Jasná", note = "The document does not name Jasná (a street of Nové Košariská); placed as the okrsky document of 2019-01-23 places it, with Dlhá, Horná, Jarná, Košariská, Studená and Veterná.", supplemented = true},
+]

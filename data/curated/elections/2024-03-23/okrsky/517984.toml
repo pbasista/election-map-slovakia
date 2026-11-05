@@ -1,0 +1,50 @@
+# Okrsky of Strečno, transcribed by an AI agent in job okrsok-rules-4363 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: 1. mája, 28. októbra, Hradná, Kamenná, Kováčska, Lesná, Partizánska, SNP, Za záhradami, Lipová, M. Ilovského, 26. apríla, Cintorínska, Francúzskych Partizánov, Zlatné
+#   okrsok 2: ulice: Mládeže, Sokolská, Záhradná, Čsl. Brigády, Školská, Športová, Nábrežná
+obec = "517984"
+name = "Strečno"
+okrsky_date = 2024-02-27
+okrsky_fill = "nearest"
+okrsky_note = "The municipality's page of the presidential election 2024 lists \"Informácia o utvorení volebných okrskov a určení volebných miestností\" (posted 8 Mar 2024); the linked PDF, dated 27 Feb 2024, is byte-identical to the EP 2024 one and its heading names the European Parliament election of 8 June 2024, but the municipality published it as the okrsky of the presidential election, before its day; same okrsky as the documents of 2023 and 2026. The register's 15 addresses without a street (part Strečno, by súpisné číslo) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.strecno.sk/blocks/files/019223de-88fc-7648-9cfc-36deecd3837b.pdf"
+sha256 = "ec025c5f0a3fc6f05e0e3267fbeb3936927423c64a59453997a6ec02a4491205"
+title = "Informácia o utvorení volebných okrskov a určení volebných miestností"
+
+[[document]]
+url = "https://www.strecno.sk/pages/prezidentske-volby-2024"
+sha256 = "e467d2ed4f0a9a2a9ce5085810be3a6bb0f455500adad688a2856bc6c301d392"
+title = "Prezidentské voľby 2024"
+
+[okrsok.1]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "28.októbra", written = "28. októbra"},
+  {street = "Hradná"},
+  {street = "Kamenná"},
+  {street = "Kováčska"},
+  {street = "Lesná"},
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Za záhradami"},
+  {street = "Lipová"},
+  {street = "M.Ilovského", written = "M. Ilovského"},
+  {street = "26.apríla", written = "26. apríla"},
+  {street = "Cintorínska"},
+  {street = "Francúzskych Partizánov"},
+  {street = "Zlatné"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mládeže"},
+  {street = "Sokolská"},
+  {street = "Záhradná"},
+  {street = "Čsl. Brigády"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Nábrežná"},
+]

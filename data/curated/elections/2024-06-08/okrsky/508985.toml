@@ -1,0 +1,46 @@
+# Okrsky of Selce, transcribed by an AI agent in job okrsok-rules-4992 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice patriace do okrsku č. 1: Dolná, Družstevná, Horná, Husádok, Ku strelnici, Selčianska cesta, Školská, Vyšovec
+#   okrsok 2: Ulice patriace do okrsku č. 2: Mlynská, Nemčianska, Nová, Partizánska, Poľná, Potočná, Športová
+obec = "508985"
+name = "Selce"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF, read from the rendered image. Streets written without 'ulica'. The register's 214 addresses without a street are placed by fill_nearest (the document names streets only). The Internet Archive was offline (CDX returned 'Temporarily Offline' after retries)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-02-20
+okrsky_date_basis = "The notice-board page 'Voľby do EP - volebné okrsky' linking the PDF states 'Vyvesené: 20. 2. 2024'; the PDF (Volebné okrsky v obci Selce pre voľby v roku 2024) is undated. (https://www.selce.sk/zverejnovanie/uradna-tabula/volby-do-ep-volebne-okrsky-661.html)"
+
+[[document]]
+url = "https://www.selce.sk/e_download.php?file=data/uredni_deska/obsah579_6.pdf&original=vo%C4%BEby%20EP%20volebn%C3%A9%20okrsky.pdf"
+sha256 = "8a3ba09383981d115fef2fd73c38e7e2bc6a079e0a413cc04c5e8ae2268e82dd"
+title = "Volebné okrsky v obci Selce pre voľby v roku 2024"
+
+[[document]]
+url = "https://www.selce.sk/zverejnovanie/uradna-tabula/volby-do-ep-volebne-okrsky-661.html"
+sha256 = "c7ed11463bd167ca84f2c24f1b313be1f19b668e3b3dd6fcaa3ea82410f36b5e"
+title = "Úradná tabuľa: Voľby do EP - volebné okrsky (vyvesené 20. 2. 2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Dolná ulica", written = "Dolná"},
+  {street = "Družstevná ulica", written = "Družstevná"},
+  {street = "Horná ulica", written = "Horná"},
+  {street = "Husádok"},
+  {street = "Ku Strelnici", written = "Ku strelnici", note = "Same street; only the capitalisation differs."},
+  {street = "Selčianska cesta"},
+  {street = "Školská ulica", written = "Školská"},
+  {street = "Vyšovec"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mlynská ulica", written = "Mlynská"},
+  {street = "Nemčianska ulica", written = "Nemčianska"},
+  {street = "Nová", note = "The document's 'Nová' covers both register streets 'Nová' and 'Nová ulica'."},
+  {street = "Nová ulica", written = "Nová"},
+  {street = "Partizánska ulica", written = "Partizánska"},
+  {street = "Poľná ulica", written = "Poľná"},
+  {street = "Potočná ulica", written = "Potočná"},
+  {street = "Športová ulica", written = "Športová"},
+]

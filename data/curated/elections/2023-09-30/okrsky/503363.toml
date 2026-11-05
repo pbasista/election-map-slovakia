@@ -1,0 +1,61 @@
+# Okrsky of Maňa, transcribed by an AI agent in job okrsok-rules-3660 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Vo volebnom okrsku č. 1 sú zapísaní voliči z časti obce Veľká Maňa, z ulíc: A.Bernoláka, A.Hlinku, Dlhá, Dolinská, F.Jurigu, Hliník, J.Kováča, Ľ.Podjavorinskej, Nám.M.R.Štefánika, Pri parku, Školská, T.Vansovej, Ulička, Zakostolská, Železničná.
+#   okrsok 2: Vo volebnom okrsku č. 2 sú zapísaní voliči z časti obce Veľká Maňa, z ulíc: A.Sládkoviča, Dolná Gedra, Domovina, Hamarka, I.Ďungela, Ľ.Štúra, Legionárska, M.Kukučína, Mlynská, P.O.Hviezdoslava, V.J.Gajdoša, Žitavská.
+#   okrsok 3: Vo volebnom okrsku č. 3 sú zapísaní voliči z časti obce Malá Maňa.
+obec = "503363"
+name = "Maňa"
+okrsky_date = 2023-06-22
+okrsky_fill = "nearest"
+okrsky_note = "Scanned notice of the mayor (no text layer), transcribed from the rendered page. Addresses without a street in Veľká Maňa are placed by fill_nearest."
+
+[[document]]
+url = "https://obecmana.sk/wp-content/uploads/dokumenty/volby-do-nrsr/Urcenie-volebnych-okrskov-a-miestnosti.pdf"
+sha256 = "ee1a96bbd3a7506cc4d8446ef2f43259de202ebf2a951417554929b5af297814"
+title = "Určenie volebných okrskov a miestností (voľby do NR SR 30. septembra 2023)"
+
+[[document]]
+url = "https://obecmana.sk/dokument/urcenie-volebnych-okrskov-a-miestnosti-2/"
+sha256 = "b361039f3e74178a745413ba3f0d7f09dc019b63d1def6daf6e9cc9388229c74"
+title = "document page"
+
+[okrsok.1]
+rules = [
+  {street = "A. Bernoláka", written = "A.Bernoláka"},
+  {street = "A. Hlinku", written = "A.Hlinku"},
+  {street = "Dlhá"},
+  {street = "Dolinská"},
+  {street = "F. Jurigu", written = "F.Jurigu"},
+  {street = "Hliník"},
+  {street = "J. Kováča", written = "J.Kováča"},
+  {street = "Ľ. Podjavorinskej", written = "Ľ.Podjavorinskej"},
+  {street = "Nám. M. R. Štefánika", written = "Nám.M.R.Štefánika"},
+  {street = "Pri parku"},
+  {street = "Školská"},
+  {street = "T. Vansovej", written = "T.Vansovej"},
+  {street = "Ulička"},
+  {street = "Zakostolská"},
+  {street = "Železničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "A. Sládkoviča", written = "A.Sládkoviča"},
+  {street = "Dolná Gedra"},
+  {street = "Domovina"},
+  {street = "Hamarka"},
+  {street = "I. Ďungela", written = "I.Ďungela"},
+  {street = "Ľ. Štúra", written = "Ľ.Štúra"},
+  {street = "Legionárska"},
+  {street = "M. Kukučína", written = "M.Kukučína"},
+  {street = "Mlynská"},
+  {street = "P. O. Hviezdoslava", written = "P.O.Hviezdoslava"},
+  {street = "V. J. Gajdoša", written = "V.J.Gajdoša"},
+  {street = "Žitavská"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Malá Maňa"},
+]

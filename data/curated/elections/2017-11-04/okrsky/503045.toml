@@ -1,0 +1,74 @@
+# The okrsky of Bánov of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/503045.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Bánov, transcribed by an AI agent in job okrsok-rules-665 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Bernolákova, Gen. Svobodu, Hviezdoslavova, J. G. Tajovského, J. Jesenského, Janka Kráľa, Kukučínova, Novozámocká, Školská, Štefánikova, Štúrova, Cintorínska
+#     okrsok 2: 1. mája, 9. mája, Červenej armády, Čsľ. Armády, Malinovského, Mlynská, Obrancov mieru, Pod hájom, Poľná, Pri kaštieli, Slovenská, Slov. Nár. Povstania, Šurianska
+#     okrsok 3: B. Němcovej, Bottova, Dolinská, Hlavná, Jastrabia, Jozefa Hralu, J. Fučíka, J.Palárika, Kpt. Nálepku, Nová, Pod Remízkou, Rázusova, Richtárska, Sládkovičova, Tichá, T. Vansovej, Viničná
+obec = "503045"
+name = "Bánov"
+okrsky_fill = "nearest"
+okrsky_note = "The heading reads \"na voľby do orgánov samosprávnych krajov, konaných dňa 10. novembra 2018\", i.e. the municipal elections day. The document also names Dolinská, which the address register lacks; left out. fill_nearest covers the 81 addresses without a street (numbered by súpisné číslo only), which the document does not place. The live copy (evt_file.php?file=5684) is gone (404)."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-203): The 2017 elections page (\"Voľby do orgánov samosprávnych krajov\", archived 2017-09-20) links only the call of the elections, information for voters and the regional obvody (evt_file 2719, 2720, 3272); no okrsky document on it or on the archived notice board (vývesná tabuľa, 2017). The site moved to a new CMS in 2020; the election attachments of the old site (evt_file.php IDs up to about 16000) are gone live (checked the live file IDs 2600–17300: only 14282/14546, notices of e-mail addresses, remain), and the Internet Archive (slow, intermittently refusing connections, but reachable) holds no okrsky document of this vote. The 2018 document \"Volebné okrsky 2018\" and the 2023 one list the same 3 okrsky (streets) as the Statistical Office counts here. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 3 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2018-10-02
+okrsky_date_basis = "The Internet Archive captured the PDF \"Volebné okrsky 2018\" on the municipality website on 2018-10-02; the document itself is undated (its heading names the elections of 10 November 2018, though it calls them elections to the self-governing regions). (https://web.archive.org/web/20181002194457/http://www.banov.sk:80/evt_file.php?file=5684&original=Volebn%C3%A9+okrsky+2018.pdf)"
+
+[[document]]
+url = "https://web.archive.org/web/20181002194457/http://www.banov.sk:80/evt_file.php?file=5684&original=Volebn%C3%A9+okrsky+2018.pdf"
+sha256 = "032ab3d9eaed7ebbf75f19902fbdfe8e9f7fdbc31c391ebfc6057a25690d6f36"
+title = "Volebné okrsky na voľby do orgánov samosprávnych krajov, konaných dňa 10. novembra 2018 v Bánove (Volebné okrsky 2018.pdf)"
+
+[okrsok.1]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Gen. Svobodu"},
+  {street = "Hviezdoslavova"},
+  {street = "J. G. Tajovského"},
+  {street = "J. Jesenského"},
+  {street = "Janka Kráľa"},
+  {street = "Kukučínova"},
+  {street = "Novozámocká"},
+  {street = "Školská"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Cintorínska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája", written = "1. mája", note = "the document writes a space after \"1.\"; same street"},
+  {street = "9.mája", written = "9. mája", note = "the document writes a space after \"9.\"; same street"},
+  {street = "Červenej armády"},
+  {street = "Čsľ. armády", written = "Čsľ. Armády"},
+  {street = "Malinovského"},
+  {street = "Mlynská"},
+  {street = "Obrancov mieru"},
+  {street = "Pod hájom"},
+  {street = "Poľná"},
+  {street = "Pri kaštieli"},
+  {street = "Slovenská"},
+  {street = "Slov. Nár. Povstania"},
+  {street = "Šurianska"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "B. Němcovej"},
+  {street = "Bottova"},
+  {street = "Hlavná"},
+  {street = "Jastrabia"},
+  {street = "Jozefa Hralu"},
+  {street = "J. Fučíka"},
+  {street = "Jána Palárika", written = "J.Palárika"},
+  {street = "Kpt.Nálepku", written = "Kpt. Nálepku", note = "the document writes a space after the abbreviation \"Kpt.\"; same street"},
+  {street = "Nová ulica", written = "Nová"},
+  {street = "Pod Remízkou"},
+  {street = "Rázusova"},
+  {street = "Richtárska"},
+  {street = "Sládkovičova"},
+  {street = "Tichá"},
+  {street = "T. Vansovej"},
+  {street = "Viničná"},
+]

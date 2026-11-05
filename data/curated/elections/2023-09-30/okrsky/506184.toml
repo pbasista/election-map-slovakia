@@ -1,0 +1,27 @@
+# Okrsky of Lubina, transcribed by an AI agent in job okrsok-rules-3717 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre obec a Hrabové
+#   okrsok 2: pre miestne časti Hrnčiarové a Miškech Dedinku
+obec = "506184"
+name = "Lubina"
+okrsky_note = "Scanned document, read from the rendered page."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-06-28
+okrsky_date_basis = "The scanned document is undated; the municipality's elections page lists it as 'Vytvorenie-okrskov-pre-volby-do-NR-SR-2023.pdf', 'Zverejnené 28.6.2023'. Its text names the National Council election of 2023. (https://www.obeclubina.sk/volby.html)"
+
+[[document]]
+url = "https://www.obeclubina.sk/download_file_f.php?id=1881498"
+sha256 = "f9b984079fb801f954ed1227e27aa8b265fb1282e3435040ea66c9371cb6ae48"
+title = "Vytvorenie okrskov pre voľby do NR SR 2023"
+
+[okrsok.1]
+rules = [
+  {part = "Lubina", note = "'obec a Hrabové': the village Lubina; Hrabové is a settlement the register keeps in part Lubina"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Hrnčiarové"},
+  {part = "Miškech Dedinka"},
+]

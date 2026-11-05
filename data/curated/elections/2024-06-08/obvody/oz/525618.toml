@@ -1,0 +1,52 @@
+# The okrsky of Dedinky of the vote of 2018-11-10, data/curated/elections/2018-11-10/obvody/oz/525618.toml, standing in, by `ems job reuse`. Its header there:
+#   Council obvody of Dedinky (525618), Rožňava.
+#   Transcribed by an AI agent in job obvod-rules-200 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: Volebný obvod č. 1 – Dedinky; Volebný obvod 1 – 3 poslanci
+#     obvod 2: Volebný obvod č. 2 – Dobšinská Maša; Volebný obvod 2 – 2 poslanci
+#   Okrsky added by an AI agent in job okrsok-rules-5918 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Volebný obvod 1 – Volebný okrsok 1
+#     okrsok 2: Volebný obvod 2 – Volebný okrsok 2 – Dobšinská maša
+obec = "525618"
+name = "Dedinky"
+date = 2018-08-10
+note = "The council obvody of the vote of 2018-11-10: they only place the okrsky. The council's minutes of 10.08.2018: 'obec Dedinky určuje 2 volebné obvody: Volebný obvod č. 1 – Dedinky, Volebný obvod č. 2 – Dobšinská Maša'; seats 'Volebný obvod 1 – 3 poslanci, Volebný obvod 2 – 2 poslanci'. The obvody are the two parts of the municipality."
+reused = 2018-11-10
+okrsky_note = "The notice board page of the 2018 municipal elections states 'Volebný obvod 1 – Volebný okrsok 1 – Volebná miestnosť: Dedinky 79' and 'Volebný obvod 2 – Volebný okrsok 2 – Dobšinská maša – Volebná miestnosť: Dobšinská Maša 14': one okrsok per obvod (obvod 1 the part Dedinky, obvod 2 the part Dobšinská Maša)."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2024-06-08 setting the okrsky was found (okrsok-rules-5201): No okrsky document for this vote: the website keeps only current notices and the council archive, and the Internet Archive's captures of dedinky.eu have election notices only for the referendum of 2023 and the 2022 elections (an archived 2019 'Oznámenie o čase konania volieb' page has no text or file). These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky (nearer, not taken: 2023-01-21: okrsok 2: 63 voters then, 43 in 2023-01-21; 2022-10-29: okrsok 2: 63 voters then, 41 in 2022-10-29; 2026-10-24: okrsok 2: 63 voters then, 41 in 2026-10-24). The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2018-09-11
+okrsky_date_basis = "The notice board entry for the 2018 municipal elections gives the section 'Utvorenie volebných okrskov a určenie volebných miestnosti' the date 11.09.2018; the mayor's decision itself is not published as a separate document. (https://www.dedinky.eu/urad/uradna-tabula/volby-do-organov-samospravy-obci-2018-50.html)"
+
+[[document]]
+url = "https://www.dedinky.eu/e_download.php?file=data/editor/121sk_48.pdf&original=Zapisnica%20-%2020.%20zasadanie%20OZ%2010.08.2018.pdf"
+sha256 = "0d6714986d2ce3b09c3ca10a6d36fc292e8437fec135bd4fa5d88199335705dc"
+title = "Zápisnica z 20. zasadania OZ Dedinky 10.08.2018 (body 4 a 5: volebné obvody a počet poslancov)"
+
+[[document]]
+url = "https://www.dedinky.eu/urad/samosprava/dokumenty-oz/archiv-do-roku-2018/"
+sha256 = "345fde39c21c83ef9fb18e664d522e399838e0d39954785334e94dce7bfa0a52"
+title = "Dokumenty OZ – Archív do roku 2018 (page linking the minutes)"
+
+[[document]]
+url = "https://www.dedinky.eu/urad/uradna-tabula/volby-do-organov-samospravy-obci-2018-50.html"
+sha256 = "44227a8b0366224778e43e09964af32809e5529a286c68634bed030014127c5c"
+title = "Úradná tabuľa: Voľby do orgánov samosprávy obcí 2018 (Utvorenie volebných okrskov a určenie volebných miestností 11.09.2018)"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {part = "Dedinky"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Dobšinská Maša"},
+]

@@ -1,0 +1,56 @@
+# Okrsky of Selice, transcribed by an AI agent in job okrsok-rules-3131 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Jilemnického, Poľná, A.Moyzesea, Pionierska, G.Steinera, Poľovnícka, J.A. Komenského, Družstevná, Vážska, Orechová, Budovateľská, 9. mája, Hviezdoslavova, časť Čsl.armády.
+#   okrsok 2: ulice: Školská, Mlynská, Hollého, Agátová, Perjés, Revolučná, Malá, Záhradnícka, Mierová, Športová, Jatovská, Jazerná, Kováčska, Sov. Armády, časť Čsl.armády.
+obec = "503991"
+name = "Selice"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF, read from the rendered image. Both okrsky list 'časť Čsl.armády' without saying which part, so Čsl. Armády has no rule: its addresses and the few without a street take the okrsok of the nearest placed address (fill_nearest)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document names the referendum of 21 January 2023; it states no decision date."
+
+[[document]]
+url = "http://www.selice.eu/ZV22/referendum%2004.pdf"
+sha256 = "7da61d98e84a5dd6b41e370e4fe44f8d18c22c62c998f0c84462fd574af753eb"
+title = "Obec Selice určuje pre hlasovanie v referende 21. januára 2023 volebné okrsky a volebné miestnosti"
+
+[[document]]
+url = "http://www.selice.eu/"
+sha256 = "2a43e30a01df1e679ac30ee19ab1354998b950bffc5f30b3146e071fdb55dbc6"
+title = "Obec Selice – úvodná stránka (former website) linking the document"
+
+[okrsok.1]
+rules = [
+  {street = "Jilemnického"},
+  {street = "Poľná"},
+  {street = "A. Moyzesa", written = "A.Moyzesea", note = "'Moyzesea' is a typo for Moyzesa"},
+  {street = "Pionierska"},
+  {street = "G. Steinera", written = "G.Steinera"},
+  {street = "Poľovnícka"},
+  {street = "J. A. Komenského", written = "J.A. Komenského"},
+  {street = "Družstevná"},
+  {street = "Vážska"},
+  {street = "Orechová"},
+  {street = "Budovateľská"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Hviezdoslavova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Školská"},
+  {street = "Mlynská"},
+  {street = "Hollého"},
+  {street = "Agátová"},
+  {street = "Perjéš", written = "Perjés", note = "é vs š in the ending: same street, the only Perjéš in the register"},
+  {street = "Revolučná"},
+  {street = "Malá"},
+  {street = "Záhradnícka"},
+  {street = "Mierová"},
+  {street = "Športová"},
+  {street = "Jatovská"},
+  {street = "Jazerná"},
+  {street = "Kováčska"},
+  {street = "Sovietskej Armády", written = "Sov. Armády", note = "abbreviation of Sovietskej"},
+]

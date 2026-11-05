@@ -1,0 +1,29 @@
+# Okrsky of Kotešová, transcribed by an AI agent in job okrsok-rules-4351 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: miestna časť Oblazov + dolná Kotešová 1 - 369, 813, 975 - 1150
+#   okrsok 2: horná Kotešová + miestna časť Buková 370 – 800, 866 - 974
+obec = "517691"
+name = "Kotešová"
+okrsky_fill = "nearest"
+okrsky_note = "The document gives each okrsok by named parts and súpisné čísla: okrsok 1 Oblazov + dolná Kotešová (1–369, 813, 975–1150), okrsok 2 horná Kotešová + Buková (370–800, 866–974). The parts Oblazov and Buková are taken whole; the ranges apply within the part Kotešová. Kotešová's súpisné čísla outside them (811–860 except 813, 28 addresses) take the nearest placed address."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-23
+okrsky_date_basis = "The presidential election 2024 page of the obec's website lists the PDF with 'Dátum zverejnenia' 23. 1. 2024; the PDF itself is undated. (https://www.kotesova.info/pages/volby-prezidenta-slovenskej-republiky-2024)"
+
+[[document]]
+url = "https://www.kotesova.info/pages/attachments/AuzgfsePyyK7wUg48Mk66Q.pdf"
+sha256 = "221e0fff33edf43a7f43bb7f1fdf111794867e7d13f692d801f19ffd4ea4532e"
+title = "Utvorenie volebných okrskov, určenie volebných miestností a vymenovanie zapisovateliek okrskových volebných komisií"
+
+[okrsok.1]
+rules = [
+  {part = "Oblazov"},
+  {part = "Kotešová", numbers = "1-369, 813, 975-1150"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kotešová", numbers = "370-800, 866-974"},
+  {part = "Buková"},
+]

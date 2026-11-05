@@ -1,0 +1,47 @@
+# Okrsky of Jelšava, transcribed by an AI agent in job okrsok-rules-3244 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Muránska ulica, Námestie republiky, Námestie SNP, Tomášikova ulica, Mníšanská ulica, Jesenského, Teplá Voda, Medzník, Obyvatelia bez adresy
+#   okrsok 2: Ševcovská, Štefánikova, Kúpeľná, Teplická, Pri štadióne, Železničná, Armádna, 9. mája, Kejďák
+obec = "525791"
+name = "Jelšava"
+okrsky_fill = "nearest"
+okrsky_note = "The undated file 'Okrsky' is linked on the city's page 'Referendum 2023' (the referendum of 21 January 2023), between the president's decision of 4 November 2022 calling the referendum and the notices on postal voting and the delegation to the okrsková komisia. It repeats word for word the okrsky of the 2022 municipal elections. 'Obyvatelia bez adresy' (okrsok 1) are voters registered without an address, not the register's houses without a street. Hrádok (3 addresses) is not named in the document: placed by fill_nearest, as are the houses without a street. The Internet Archive stayed offline throughout (web.archive.org refused connections or answered 'Temporarily Offline' on repeated tries with pauses), so no archived capture was checked."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-08
+okrsky_date_basis = "The page 'Referendum 2023' linking the file states 'Zverejnené 8.11.2022' (Aktualizované 27.1.2023, after the vote); the PDF itself is undated (its metadata: created 2022-11-09), so it was added to the page shortly after the page was posted, well before 21 January 2023. (https://www.jelsava.sk/oznamy/referendum-2023.html)"
+
+[[document]]
+url = "https://www.jelsava.sk/download_file_f.php?id=1762652"
+sha256 = "e93c28b3ad0f0d63e13170739ddce61bbbf98f5567b6471373ec15ebc6312fa2"
+title = "Okrsky (Volebný okrsok č. 1 a č. 2)"
+
+[[document]]
+url = "https://www.jelsava.sk/oznamy/referendum-2023.html"
+sha256 = "07688b1493f65fb974fb4a75490cbc8735c1d057a6831d23ebd2606fd136745a"
+title = "Referendum 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Muránska"},
+  {street = "Námestie Republiky", written = "Námestie republiky"},
+  {street = "Námestie SNP"},
+  {street = "Tomášikova"},
+  {street = "Mníšanská"},
+  {street = "Jesenského"},
+  {street = "Teplá Voda"},
+  {street = "Medzník"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ševcovská"},
+  {street = "Štefánikova"},
+  {street = "Kúpelná", written = "Kúpeľná", note = "Kúpeľná with soft l in the document; the register's Kúpelná, the same street"},
+  {street = "Teplická"},
+  {street = "Pri Štadióne", written = "Pri štadióne"},
+  {street = "Železničná"},
+  {street = "Armádna"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Kejďák"},
+]

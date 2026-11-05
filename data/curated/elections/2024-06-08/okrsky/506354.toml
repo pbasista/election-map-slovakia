@@ -1,0 +1,30 @@
+# Okrsky of Omšenie, transcribed by an AI agent in job okrsok-rules-5001 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: V okrsku 01 volia voliči s trvalým pobytom č.d. 0 - 330
+#   okrsok 2: V okrsku 02 volia voliči s trvalým pobytom č.d. 331 - 999
+obec = "506354"
+name = "Omšenie"
+okrsky_note = "The okrsky split the one part Omšenie by house (súpisné) number: okrsok 1 up to 330, okrsok 2 from 331 (open-ended)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The notice is headed with the elections to the European Parliament of 08. 06. 2024; it states no decision date."
+
+[[document]]
+url = "https://www.omsenie.sk/modules/file_storage/download.php?file=a25dade9%7C282&inline=1"
+sha256 = "9a206557e6015ee64d7e39ee4460b1840168ae388300e0301d66ae7379ec2ca4"
+title = "Oznámenie o čase a mieste konania volieb do Európskeho parlamentu 2024"
+
+[[document]]
+url = "https://www.omsenie.sk/zverejnovanie/volby/volby-do-europskeho-parlamentu/"
+sha256 = "f32ed62bb0613e683b8b70e31a6c983345f02fe4375bb1111f89b6689a629124"
+title = "Voľby – page linking the notice"
+
+[okrsok.1]
+rules = [
+  {part = "Omšenie", numbers = "0-330"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Omšenie", numbers = "331-"},
+]

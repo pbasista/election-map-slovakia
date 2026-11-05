@@ -1,0 +1,48 @@
+# Okrsky of Kamenica nad Cirochou, transcribed by an AI agent in job okrsok-rules-3762 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Humenská, Partizánska, Lesná, Železničná, Sládkovičova, Čsl. Armády, Ružová, Krátka, Sadová, Jarná, Slepá, Juraja Macáka
+#   okrsok 2: Osloboditeľov, Vihorlatská, Gaštanová, Mierová, Záhradná, Štúrova, Veterná, Kpt. Nálepku, Kamenná, Pod Žbirom, Pod Drieňovou
+obec = "520331"
+name = "Kamenica nad Cirochou"
+okrsky_fill = "nearest"
+okrsky_note = "The municipality's notice to voters lists the streets of each okrsok; the mayor's decision itself is not published. Addresses without a street name go by fill_nearest."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-09-29
+okrsky_date_basis = "The notice states 'Zverejnené 29.9.2023', the day before the vote. (https://www.obeckamenicanadcirochou.sk/oznamy/oznam-pre-volicov-volby-do-narodnej-rady-slovenskej-republiky-2023.html)"
+
+[[document]]
+url = "https://www.obeckamenicanadcirochou.sk/oznamy/oznam-pre-volicov-volby-do-narodnej-rady-slovenskej-republiky-2023.html"
+sha256 = "28dbe36c375deb6fa5e3b0b90231bf756ba7bac3ba14e7cfd1c5b5117bee747f"
+title = "Oznam pre voličov - Voľby do Národnej rady Slovenskej republiky 2023 (zverejnené 29.9.2023)"
+
+[okrsok.1]
+rules = [
+  {street = "Humenská"},
+  {street = "Partizánska"},
+  {street = "Lesná"},
+  {street = "Železničná"},
+  {street = "Sládkovičova"},
+  {street = "Čsl.armády", written = "Čsl. Armády"},
+  {street = "Ružová"},
+  {street = "Krátka"},
+  {street = "Sadová"},
+  {street = "Jarná"},
+  {street = "Slepá"},
+  {street = "Juraja Macáka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Osloboditeľov"},
+  {street = "Vihorlatská"},
+  {street = "Gaštanová"},
+  {street = "Mierová"},
+  {street = "Záhradná"},
+  {street = "Štúrova"},
+  {street = "Veterná"},
+  {street = "Kpt. Nálepku"},
+  {street = "Kamenná"},
+  {street = "Pod Žbirom"},
+  {street = "Pod Drieňovou"},
+]

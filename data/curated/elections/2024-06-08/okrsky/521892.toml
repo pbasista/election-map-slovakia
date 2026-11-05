@@ -1,0 +1,49 @@
+# Okrsky of Poproč, transcribed by an AI agent in job okrsok-rules-4915 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Banícka, Brezová, Horská, Jarná, Lesná, Letná, Mieru, Oľšavská, Poľná, Slnečná, Športová, Východná, Záhradná, Partizánska
+#   okrsok 2: Družstevná, Kostolná, Krátka, Kultúrna, Lipová, Nová, Obchodná, Potočná, Požiarna, Sadová, Školská, Západná
+obec = "521892"
+name = "Poproč"
+okrsky_date = 2024-03-05
+okrsky_fill = "nearest"
+okrsky_note = "Every register street is listed; the addresses without a street go by fill_nearest."
+
+[[document]]
+url = "https://poproc.sk/wp-content/uploads/dokumenty/volby-do-europarlamentu/2024-03-05_ep_2024_oznamenie_okrsky_miestnosti_web-t6mt3p.pdf"
+sha256 = "341b64cc2501a1f0580331b72224e5729196a0061896e5bda24b8e017be90c56"
+title = "Informácia o utvorení volebných okrskov a určení volebných miestností pre voľby do Európskeho parlamentu v roku 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Banícka"},
+  {street = "Brezová"},
+  {street = "Horská"},
+  {street = "Jarná"},
+  {street = "Lesná"},
+  {street = "Letná"},
+  {street = "Mieru"},
+  {street = "Oľšavská"},
+  {street = "Poľná"},
+  {street = "Slnečná"},
+  {street = "Športová"},
+  {street = "Východná"},
+  {street = "Záhradná"},
+  {street = "Partizánska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Kostolná"},
+  {street = "Krátka"},
+  {street = "Kultúrna"},
+  {street = "Lipová"},
+  {street = "Nová"},
+  {street = "Obchodná"},
+  {street = "Potočná"},
+  {street = "Požiarna"},
+  {street = "Sadová"},
+  {street = "Školská"},
+  {street = "Západná"},
+]

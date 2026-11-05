@@ -1,0 +1,30 @@
+# Okrsky of Poniky, transcribed by an AI agent in job okrsok-rules-5660 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 Poniky
+#   okrsok 2: Volebný okrsok č. 2 Ponická Lehôtka
+#   okrsok 3: Volebný okrsok č. 3 Ponická Huta
+obec = "508918"
+name = "Poniky"
+okrsky_date = 2026-04-23
+okrsky_note = "Scanned document read by rendering/OCR; it names each okrsok by the part of the municipality (Poniky, Ponická Lehôtka, Ponická Huta), each with its polling station in that part. Signed 23. 04. 2026."
+
+[[document]]
+url = "https://www.poniky.sk/e_download.php?file=/data/editor/281sk_5.pdf&original=Nahl%C3%A1senie%20okrskov%20a%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "4283623a49e87bac7a59c8b8dbde8b359fe7ffb7a3b62e6fd6f7d250eb093373"
+title = "Zoznam volebných okrskov a určených volebných miestností v obci Poniky pre potreby Referenda dňa 04. júla 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Poniky"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Ponická Lehôtka"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Ponická Huta"},
+]

@@ -1,0 +1,123 @@
+# Okrsky of Nová Baňa, transcribed by an AI agent in job okrsok-rules-5310 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Andrea Kmeťa, Bernolákova, Borošova cesta, Cintorínska, Dodekova, Hviezdoslavova, Kalvárska, Kollárova, Krátka, Nemocničná, Osvety, Spojná, Šibeničný vrch, Švantnerova, Záhrbská
+#   okrsok 2: ulice: Námestie slobody, Štúrova, Banícka, Brezová, Čierny Lúh, Hájles, Hájska, Kamenárska, Májová, Marianska, Moyzesova, Nálepkova, Odbojárska, Partizánska, Pod Gupňou, Pod Zvoničkou, Sládkovičova, Švermova, Vodárenská, Vršky
+#   okrsok 3: ulice: Dlhá lúka, Pod sekvojou, Starohutská, Bôrina, Horná, Hornozemská cesta, Hrádza, Kútovská cesta, Laznícka cesta, Legionárska, M.R.Štefánika, Mieru, Nad Hrádzou, Pod Hrádzou, Podhorská, Poľná cesta, Robotnícka, Sedlova cesta, Slnečná, Spodná, Štefankova cesta, Viničná cesta, Záhradná
+#   okrsok 4: ulice: Nábrežná, Školská, Železničný rad
+#   okrsok 5: ulice: Bukovina, Chotár, Stará Huta
+#   okrsok 6: ulice: Bačova cesta, Bexápel, Feriancov rígeľ, Hrabcova cesta, Kolibská cesta, Kozákova dolina, Letajova cesta, Matiašova cesta, Pelúchová cesta, Poliačikova cesta, Potočná cesta, Prírodná, Rekreačná cesta, Sadovnícka cesta, Slameníkova cesta, Tajch
+obec = "517097"
+name = "Nová Baňa"
+okrsky_date = 2026-05-06
+okrsky_fill = "nearest"
+okrsky_note = "Streets per okrsok as listed; Bukovina, Chotár and Stará Huta are register parts. Register streets not listed (Banícke námestie, Námestie sv. Alžbety) and addresses without a street go by fill_nearest. The file Okrsky.pdf is reused by the town for each vote; its present content is the 2026 referendum decision."
+
+[[document]]
+url = "https://www.novabana.sk/storage/app/media/uploaded-files/Okrsky.pdf"
+sha256 = "eb945ac225359688d3d74ede5f9981aeb16c07657c755c930cf17ab6e50028fe"
+title = "Volebné okrsky a volebné miestnosti v meste Nová Baňa pre hlasovanie v referende 4. júla 2026 (06.05.2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Andreja Kmeťa", written = "Andrea Kmeťa", note = "typo for Andreja Kmeťa"},
+  {street = "Bernolákova"},
+  {street = "Borošova", written = "Borošova cesta", note = "the register names the street Borošova (dropped \"cesta\")"},
+  {street = "Cintorínska"},
+  {street = "Dodekova"},
+  {street = "Hviezdoslavova"},
+  {street = "Kalvárska"},
+  {street = "Kollárova"},
+  {street = "Krátka"},
+  {street = "Nemocničná"},
+  {street = "Osvety"},
+  {street = "Spojná"},
+  {street = "Šibeničný vrch"},
+  {street = "Švantnerova"},
+  {street = "Záhrbská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Námestie slobody"},
+  {street = "Štúrova"},
+  {street = "Banícka"},
+  {street = "Brezová"},
+  {street = "Čierny lúh", written = "Čierny Lúh"},
+  {street = "Hájles"},
+  {street = "Hájska"},
+  {street = "Kamenárska"},
+  {street = "Májová"},
+  {street = "Mariánska", written = "Marianska", note = "Mariánska without the accent"},
+  {street = "Moyzesova"},
+  {street = "Nálepkova"},
+  {street = "Odbojárska"},
+  {street = "Partizánska"},
+  {street = "Pod Gupňou"},
+  {street = "Pod Zvoničkou"},
+  {street = "Sládkovičova"},
+  {street = "Švermova"},
+  {street = "Vodárenská"},
+  {street = "Vršky"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Dlhá lúka"},
+  {street = "Pod sekvojou"},
+  {street = "Starohutská"},
+  {street = "Bôrina"},
+  {street = "Horná"},
+  {street = "Hornozemská cesta"},
+  {street = "Hrádza"},
+  {street = "Kútovská cesta"},
+  {street = "Laznícka cesta"},
+  {street = "Legionárska"},
+  {street = "M.R.Štefánika"},
+  {street = "Mieru"},
+  {street = "Nad Hrádzou"},
+  {street = "Pod Hrádzou"},
+  {street = "Podhorská"},
+  {street = "Poľná cesta"},
+  {street = "Robotnícka"},
+  {street = "Sedlová cesta", written = "Sedlova cesta"},
+  {street = "Slnečná"},
+  {street = "Spodná"},
+  {street = "Štefankova cesta"},
+  {street = "Viničná cesta"},
+  {street = "Záhradná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Nábrežná"},
+  {street = "Školská"},
+  {street = "Železničný rad"},
+]
+
+[okrsok.5]
+rules = [
+  {part = "Bukovina"},
+  {part = "Chotár"},
+  {part = "Stará Huta"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bačova cesta"},
+  {street = "Bexápel"},
+  {street = "Feriancov rígeľ"},
+  {street = "Hrabcova cesta"},
+  {street = "Kolibská cesta"},
+  {street = "Kozákova dolina"},
+  {street = "Lietajova cesta", written = "Letajova cesta", note = "typo for Lietajova cesta"},
+  {street = "Matiašova cesta"},
+  {street = "Pelúchova cesta", written = "Pelúchová cesta", note = "spelling of Pelúchova cesta"},
+  {street = "Poliačikova cesta"},
+  {street = "Potočná cesta"},
+  {street = "Prírodná"},
+  {street = "Rekreačná cesta"},
+  {street = "Sadovnícka cesta"},
+  {street = "Slameníkova cesta"},
+  {street = "Tajch"},
+]

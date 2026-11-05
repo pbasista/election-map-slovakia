@@ -1,0 +1,64 @@
+# Okrsky of Očová, transcribed by an AI agent in job okrsok-rules-4129 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: SNP, ČSA, J. R. Poničana, Mieru, Bugárovo, Breziny, Kalinovec, Trnavy, Očová - bez ulice a čísla domu
+#   okrsok 2: 1. mája, Budovateľská, Červeného kríža, Dolná, Družstevná, Dvoriská, Februárového víťazstva, Gagarinova, Jána Palárika, Jána Ťavodu, Komenského, Lesná, Letecká, Mateja Bela Funtíka, Medzinárodného dňa detí, Medzinárodného dňa žien, Nábrežná, Partizánska, Pri vleku, Sadovnícka, Slnečná, Športová, Štefana Pilárika, Vodárenská
+#   okrsok 3: Holcov Majer, Obchoditá
+obec = "518662"
+name = "Očová"
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-26
+okrsky_date_basis = "The elections page lists \"Volebne okrsky, Zverejnené 26.1.2024\"; the document names the presidential election. (https://www.ocova.sk/volby-prezidenta-2024.html)"
+
+[[document]]
+url = "https://www.ocova.sk/download_file_f.php?id=1988068"
+sha256 = "0ff72036da147c2b2093dd4b7fa42e8d6db14f86c0695666de1d5924b0c5e117"
+title = "Vytvorenie volebných okrskov, určenie volebných miestností pre voľby prezidenta SR (Volebne okrsky)"
+
+[[document]]
+url = "https://www.ocova.sk/volebne-okrsky-oznam-1/mid/526139/.html"
+sha256 = "1993920c1a515e2bf169ca1e824256fa048b8de264c5aef56b34e1c3362b7d8c"
+title = "Volebné okrsky – oznam, Voľby prezidenta 2024"
+
+[okrsok.1]
+rules = [
+  {street = "SNP"},
+  {street = "ČSA"},
+  {street = "J. R. Poničana"},
+  {street = "Mieru"},
+  {rest = true, note = "Bugárovo, Breziny, Kalinovec, Trnavy (settlements not in the register as streets or parts) and 'Očová - bez ulice a čísla domu' take the rest."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Letecká"},
+  {street = "Medzinárodného dňa detí"},
+  {street = "Mateja Bela Funtíka"},
+  {street = "Sadovnícka"},
+  {street = "Partizánska"},
+  {street = "Lesná"},
+  {street = "Pri vleku"},
+  {street = "Dvoriská"},
+  {street = "Vodárenská"},
+  {street = "Športová"},
+  {street = "Jána Palárika"},
+  {street = "Budovateľská"},
+  {street = "Červeného kríža"},
+  {street = "Medzinárodného dňa žien"},
+  {street = "Februárového víťazstva"},
+  {street = "Jána Ťavodu"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "Gagarinova"},
+  {street = "Slnečná"},
+  {street = "Nábrežná"},
+  {street = "Dolná"},
+  {street = "Komenského"},
+  {street = "Družstevná"},
+  {street = "Štefana Pilárika"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Holcov Majer"},
+  {street = "Obchoditá"},
+]

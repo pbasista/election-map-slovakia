@@ -1,0 +1,51 @@
+# The boundaries the 2024 presidential election is drawn on, and how they
+# differ from its own. The site draws it on the ZBGIS boundaries of 2026
+# (inputs zbgis-*-2026): the boundaries of January 2024 survive only as
+# full-detail shapefiles (input zbgis-2024, a record), with the same 8 kraje,
+# 79 okresy and 2,927 obce, codes and names as 2026. ŠÚ SR's territorial
+# division of the election (tab0b) lists the same obce, codes and names,
+# less the military district Valaškovce, where no one votes. Compared obec
+# by obec (symmetric difference over the 2026 area), 2,920 obce differ by at
+# most 0.1 % of their area, by redrawing at the scale of centimetres to
+# metres; the changes below are the larger ones, all land moved between
+# neighbours. They are those of 2022 less the swap of Chotín and Svätý
+# Peter and the state border, both redrawn by January 2024. No okres or
+# kraj moved more than 0.1 %.
+#
+# The address register is matched to obce by name, so an address of 2022
+# keeps its obec on the 2026 boundaries, only nearer its edge.
+#
+#   [[change]]
+#   obce       the obce whose land moved, ŠÚ SR codes; `area` the land moved
+#              (ha, each way for a swap), `addresses` the 2022 address
+#              points in it, `note` what happened
+#
+# The app states on the ballots of these obce, in the map's credits and in
+# About that the 2026 boundaries are drawn (build.py `boundary_changes`).
+
+compared = 2024-01-25  # the data date (DOW) of the 2024 shapefiles
+used = "zbgis-0-2026"
+
+[[change]]
+obce = ["523585", "523682"]  # Kežmarok 1.36 %, Ľubica 0.44 %
+area = 17
+addresses = 80
+note = "land swapped between the two"
+
+[[change]]
+obce = ["527858", "527238"]  # Svidnička 1.64 %, Dlhoňa 1.03 %
+area = 9.2
+addresses = 0
+note = "from Svidnička to Dlhoňa"
+
+[[change]]
+obce = ["518921", "518794"]  # Vígľaš 0.21 %, Slatinské Lazy 0.90 %
+area = 6.6
+addresses = 7
+note = "from Vígľaš to Slatinské Lazy"
+
+[[change]]
+obce = ["518468", "508730"]  # Hriňová 0.03 %, Lom nad Rimavicou 0.21 %
+area = 3.7
+addresses = 9
+note = "from Hriňová to Lom nad Rimavicou"

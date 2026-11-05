@@ -1,0 +1,63 @@
+# The okrsky of Valaská of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/509086.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Valaská, transcribed by an AI agent in job okrsok-rules-4875 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Valaská, sídlisko – východ, ulice: bez ulice, Budovateľská, Chalupkova, Kpt. Jána Nálepku, Kukučínova, Námestie 1. mája, Októbrová, Partizánska cesta, Pod Hrbom, Štúrova, Trieda Dukelských hrdinov 455, 456, 457, 458, 462, 463, 464, Tehelná, Pod Lipovou
+#     okrsok 2: Valaská – sídlisko – západ, ulice: Hronská, Švermova, Trieda Dukelských hrdinov 439, 440, 441, 442, 443, 444, 445, 453, 454, Školská
+#     okrsok 3: Valaská – materská časť obce, ulice: Cesta Osloboditeľov, Javorová, Na Studničke, Potôčky, Tatranská, Vladislava Valacha, Záhradná
+#     okrsok 4: Valaská, časť Piesok, ulice: Mierová, Pod Dielom, Robotnícka, Strojárenská
+obec = "509086"
+name = "Valaská"
+okrsky_date = 2024-02-12
+okrsky_fill = "nearest"
+okrsky_note = "Trieda Dukelských Hrdinov is split by the document's (súpisné) block numbers; its other numbers, the street Hnusno (not named in the document) and the addresses without a street take the nearest placed address (fill_nearest). Okrsok 1's 'bez ulice' is read as residents registered without an address."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1264): The live 'Voľby prezidenta SR 2019' page lists only the candidates; no okrsky document. The Internet Archive was unreachable (connection refused) throughout, so archived pages could not be checked. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 4 okrsky (nearer, not taken: 2019-05-25: okrsok 4: 201 voters then, 272 in 2019-05-25; 2020-02-29: okrsok 4: 201 voters then, 280 in 2020-02-29; 2022-10-29: okrsok 4: 201 voters then, 266 in 2022-10-29; 2023-01-21: okrsok 4: 201 voters then, 257 in 2023-01-21; 2023-09-30: okrsok 4: 201 voters then, 252 in 2023-09-30; 2024-03-23: okrsok 4: 201 voters then, 254 in 2024-03-23). Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2024-06-08: 1: 1,206 → 1,181, 2: 1,099 → 1,002, 3: 432 → 457, 4: 201 → 251."
+
+[[document]]
+url = "https://www.valaska.sk/download_file_f.php?id=2212832"
+sha256 = "977a6a857704f6c47f8a7432b7c7c95cea0575986269a85b37090fc4bb1fcf2d"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do Európskeho parlamentu"
+
+[okrsok.1]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Chalupkova"},
+  {street = "Kpt. Jána Nálepku"},
+  {street = "Kukučínova"},
+  {street = "Októbrová"},
+  {street = "Partizánska cesta"},
+  {street = "Pod Hrbom"},
+  {street = "Štúrova"},
+  {street = "Tehelná"},
+  {street = "Pod Lipovou"},
+  {street = "Námestie 1.mája", written = "Námestie 1. mája"},
+  {street = "Trieda Dukelských Hrdinov", numbers = "455-458, 462-464", by = "supisne", written = "Trieda Dukelských hrdinov"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hronská"},
+  {street = "Švermova"},
+  {street = "Školská"},
+  {street = "Trieda Dukelských Hrdinov", numbers = "439-445, 453, 454", by = "supisne", written = "Trieda Dukelských hrdinov"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Cesta Osloboditeľov"},
+  {street = "Javorová"},
+  {street = "Na Studničke"},
+  {street = "Potôčky"},
+  {street = "Tatranská"},
+  {street = "Vladislava Valacha"},
+  {street = "Záhradná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Mierová"},
+  {street = "Pod Dielom"},
+  {street = "Robotnícka"},
+  {street = "Strojárenská"},
+]

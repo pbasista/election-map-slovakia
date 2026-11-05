@@ -1,0 +1,199 @@
+# Okrsky of Šamorín, transcribed by an AI agent in job okrsok-rules-5286 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: celé sídlisko Gazdovský rad
+#   okrsok 2: Astrová 2 -6, 1 -5, Bratislavská, Brezová, Buková, Nová, Kúpeľná, Malá, Nezábudková, Orechová, Podlesná
+#   okrsok 3: Poľovnícka, Pomlejská, Požiarnícka, Priemyselná, Senecká, Šípková, Športová, Ulica Vicenzy, Dlhá, Poľná
+#   okrsok 4: Krížna, Obilná, Škovránková, Vinohradská, Gútorská, obyvatelia s trvalým pobytom mesto Šamorín
+#   okrsok 5: Agátový rad, Astrová od č.7 vyššie, Bazová ulica, Becskedská ulica, Gančházska ulica, Jazdecká, Pažitná, Rybárska, Strelecká, Ul.Antala Khína, Ulica Károlya Kunszta, Úzorská ulica, Vrbová
+#   okrsok 6: Hlavná 2-48, 1-35, Kasárenská, Parková
+#   okrsok 7: Školská, Pod záhradami, Kláštorná
+#   okrsok 8: Javorová, Mestský majer, Morušová, Sídlisko Platan, Záhradnícka
+#   okrsok 9: celé sídlisko Dunajská ulica
+#   okrsok 10: Labutia, Lipová, Ulica pri hrádzi, Šamorínska, Úzka, Cintorínska, Hlavná 50-74, 41-49
+#   okrsok 11: Čilistovská 2-14, Kováčska, Nám Sv.Štefana, Veterná, Priechodná, Hrnčiarska
+#   okrsok 12: Čilistovská 18-26, 1-27,27A, Dubová, Dúhová, Hlboká, Hviezdna, Jabloňová
+#   okrsok 13: Jasná, Krátka, Mliečňanská, Ružová, Slnečná, Tichá, Topoľová, Ulica Márie, Vodárenská, Zelená
+#   okrsok 14: Bučuháza, Kráľovianky, Bažantia ulica, Bociania ulica, Dolná, Horná, Hrušovská, Hubová, Krajinská, Krajná, Šámot
+#   okrsok 15: Krivá, Pácerová, Pešia, Pokojná, Prvá, Slnečnicová, Spojná, Stará, Stredná, Vnútorná, Vydria, Brečtanová
+obec = "501905"
+name = "Šamorín"
+okrsky_date = 2026-05-19
+okrsky_fill = "nearest"
+okrsky_note = "15 okrsky. Not named: Gančháza, Hlavná 37 and 39, the parts Čilistov and Mliečno outside their named streets, addresses without a street; these go by fill_nearest. \"obyvatelia s trvalým pobytom mesto Šamorín\" (okrsok 4) are voters without an address, not transcribed."
+
+[[document]]
+url = "https://www.samorin.sk/e_download.php?file=/data/uredni_deska/obsah17756_2.pdf&original=utvorenie%20miestnost%C3%AD.docx%20akt.pdf"
+sha256 = "62cc57ac25027b20db2e119672312f06e6165f9c0bde7cfb0e3acb694981faeb"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre Referendum ktoré sa bude konať 4.7.2026 (19.5.2026)"
+
+[[document]]
+url = "https://www.samorin.sk/samosprava/referendum-2026/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-17771.html?show=1&kshow=11"
+sha256 = "2b2daa43ab7a271e62abd5ddf652bb80d2ddfbbb34fd86d2b315151359b73ec9"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (úradná tabuľa, vyvesené 19. 5. 2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Gazdovský rad"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Astrová", numbers = "1-6"},
+  {street = "Bratislavská"},
+  {street = "Brezová ulica", written = "Brezová"},
+  {street = "Buková ulica", written = "Buková"},
+  {street = "Nová"},
+  {street = "Kúpeľná ulica", written = "Kúpeľná"},
+  {street = "Malá"},
+  {street = "Nezábudková ulica", written = "Nezábudková"},
+  {street = "Orechová ulica", written = "Orechová"},
+  {street = "Podlesná ulica", written = "Podlesná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Poľovnícka"},
+  {street = "Pomlejská cesta", written = "Pomlejská", note = "\"cesta\" left out"},
+  {street = "Požiarnická", written = "Požiarnícka", note = "the document drops/misplaces the accent of Požiarnická"},
+  {street = "Priemyselná ulica", written = "Priemyselná"},
+  {street = "Senecká cesta", written = "Senecká", note = "\"cesta\" left out"},
+  {street = "Šípková ulica", written = "Šípková"},
+  {street = "Športová ulica", written = "Športová"},
+  {street = "Ulica Vicenzy"},
+  {street = "Dlhá"},
+  {street = "Poľná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Krížna"},
+  {street = "Obilná"},
+  {street = "Škovránková"},
+  {street = "Vinohradská ulica", written = "Vinohradská"},
+  {street = "Gútorská cesta", written = "Gútorská", note = "\"cesta\" left out"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Agátový Rad", written = "Agátový rad"},
+  {street = "Astrová", numbers = "7-", note = "\"od č.7 vyššie\""},
+  {street = "Bazová ulica"},
+  {street = "Becskedská ulica"},
+  {street = "Gančházska ulica"},
+  {street = "Jazdecká"},
+  {street = "Pažitná"},
+  {street = "Rybárska"},
+  {street = "Strelecká"},
+  {street = "Ulica Antala Khina", written = "Ul.Antala Khína", note = "same street, the document writes Khína with an accent"},
+  {street = "Ulica Károlya Kunszta"},
+  {street = "Úzorská ulica"},
+  {street = "Vrbová"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Hlavná", numbers = "2-48", parity = "even"},
+  {street = "Hlavná", numbers = "1-35", parity = "odd"},
+  {street = "Kasárenská"},
+  {street = "Parkova", written = "Parková", note = "the register spells it \"Parkova\""},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Školská"},
+  {street = "Pod záhradami"},
+  {street = "Kláštorná"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Javorová ulica", written = "Javorová"},
+  {street = "Mestský Majer", written = "Mestský majer"},
+  {street = "Morušová ulica", written = "Morušová"},
+  {street = "Sídlisko Platan"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Dunajská"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Labutia ulica", written = "Labutia"},
+  {street = "Lipová ulica", written = "Lipová"},
+  {street = "Ulica Pri hrádzi", written = "Ulica pri hrádzi"},
+  {street = "Šamorínska ulica", written = "Šamorínska"},
+  {street = "Úzka ulica", written = "Úzka"},
+  {street = "Cintorínska"},
+  {street = "Hlavná", numbers = "50-74", parity = "even"},
+  {street = "Hlavná", numbers = "41-49", parity = "odd"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Čilistovská", numbers = "2-14", parity = "even"},
+  {street = "Kováčska"},
+  {street = "NÁMESTIE SVÄTÉHO ŠTEFANA", written = "Nám Sv.Štefana"},
+  {street = "Veterná"},
+  {street = "Priechodná ulica", written = "Priechodná"},
+  {street = "Hrnčiarska"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Čilistovská", numbers = "18-26", parity = "even"},
+  {street = "Čilistovská", numbers = "1-27", parity = "odd"},
+  {street = "Dubová Ulica", written = "Dubová"},
+  {street = "Dúhová"},
+  {street = "Hlboká cesta", written = "Hlboká", note = "\"cesta\" left out"},
+  {street = "Hviezdna"},
+  {street = "Jabloňová"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Jasná"},
+  {street = "Krátka"},
+  {street = "Mliečňanská"},
+  {street = "Ružová"},
+  {street = "Slnečná"},
+  {street = "Tichá"},
+  {street = "Topoľová ulica", written = "Topoľová"},
+  {street = "Ulica Márie"},
+  {street = "Vodárenská"},
+  {street = "Zelená"},
+]
+
+[okrsok.14]
+rules = [
+  {part = "Bučuháza"},
+  {part = "Kráľovianky"},
+  {street = "Bažantia ulica"},
+  {street = "Bociania ulica"},
+  {street = "Dolná ulica", written = "Dolná"},
+  {street = "Horná ulica", written = "Horná"},
+  {street = "Hrušovská ulica", written = "Hrušovská"},
+  {street = "Hubová ulica", written = "Hubová"},
+  {street = "Krajinská cesta", written = "Krajinská", note = "\"cesta\" left out"},
+  {street = "Krajná ulica", written = "Krajná"},
+  {street = "Šámot"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Krivá ulica", written = "Krivá"},
+  {street = "Pácerová cesta", written = "Pácerová", note = "\"cesta\" left out"},
+  {street = "Pešia cesta", written = "Pešia", note = "\"cesta\" left out"},
+  {street = "Pokojná ulica", written = "Pokojná"},
+  {street = "Prvá ulica", written = "Prvá"},
+  {street = "Slnečnicová ulica", written = "Slnečnicová"},
+  {street = "Spojná ulica", written = "Spojná"},
+  {street = "Stará cesta", written = "Stará", note = "\"cesta\" left out"},
+  {street = "Stredná ulica", written = "Stredná"},
+  {street = "Vnútorná ulica", written = "Vnútorná"},
+  {street = "Vydria ulica", written = "Vydria"},
+  {street = "Brečtanová ulica", written = "Brečtanová"},
+]

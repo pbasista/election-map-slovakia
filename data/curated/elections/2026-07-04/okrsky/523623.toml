@@ -1,0 +1,77 @@
+# Okrsky of Lendak, transcribed by an AI agent in job okrsok-rules-5485 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kostolná, Na Kosorku, Partizánska, Revolučná, Jána Pavla II, Potočná, Riečna, Biela, Krátka, Lesná, Goralská, Nižná, Obec
+#   okrsok 2: Hlavná, Zadná, Poľná, Sv. Rodiny, Školská, Farské lúky, Záhradná, Jána Stilla
+#   okrsok 3: Jarná, Letná, Slnečná, Nová, Mlynská, Jesenná
+#   okrsok 4: Jána Vojtaššáka, Lemeje, Na úbočí, Pod Kicorou, Rovinky, Sv. Mikuláša, Športová, Vysoká hora, Tatranská, Zadná hora, Jána Krstiteľa, Lesná
+obec = "523623"
+name = "Lendak"
+okrsky_fill = "nearest"
+okrsky_note = "Lesná is listed in both okrsok 1 and okrsok 4; it is put in okrsok 1, where it is listed first. 'Obec' (residents registered only to the obec) belongs to okrsok 1 and gets no rule. Addresses without a street take the nearest okrsok (fill_nearest)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2026-05-12
+okrsky_date_basis = "The notice board page states the PDF was posted (vyvesené) on 12. 5. 2026; the PDF names the referendum of 4 July 2026 but states no decision date. (https://www.lendak.sk/zverejnovanie/volby/referendum/volebne-okrsky-1047.html)"
+
+[[document]]
+url = "https://www.lendak.sk/zverejnovanie/volby/referendum/volebne-okrsky-1047.html"
+sha256 = "b382f4ee84262f0c4a1b0ea4a214ddaa95e45deee01b0ee5d41604d2a02e7437"
+title = "Volebné okrsky (Referendum 2026), vyvesené 12. 5. 2026"
+
+[[document]]
+url = "https://www.lendak.sk/e_download.php?file=/data/uredni_deska/obsah1005_1.pdf&original=Okrsky_2026.pdf"
+sha256 = "a2a5d29ee6c5a05572d14f30034e0c7259ce5e403134016d3fa67141b080fce0"
+title = "Okrsky_2026.pdf – Referendum 2026, 4. júl 2026: Obec Lendak vytvorila 4 volebné okrsky"
+
+[okrsok.1]
+rules = [
+  {street = "Kostolná"},
+  {street = "Na Kosorku"},
+  {street = "Partizánska"},
+  {street = "Revolučná"},
+  {street = "Jána Pavla II.", written = "Jána Pavla II"},
+  {street = "Potočná"},
+  {street = "Riečna"},
+  {street = "Biela"},
+  {street = "Krátka"},
+  {street = "Lesná"},
+  {street = "Goralská"},
+  {street = "Nižná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná"},
+  {street = "Zadná"},
+  {street = "Poľná"},
+  {street = "Sv. Rodiny"},
+  {street = "Školská"},
+  {street = "Farské lúky"},
+  {street = "Záhradná"},
+  {street = "Jána Stilla"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Jarná"},
+  {street = "Letná"},
+  {street = "Slnečná"},
+  {street = "Nová"},
+  {street = "Mlynská"},
+  {street = "Jesenná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Jána Vojtaššáka"},
+  {street = "Lemeje"},
+  {street = "Na úbočí"},
+  {street = "Pod Kicorou"},
+  {street = "Rovinky"},
+  {street = "Sv. Mikuláša"},
+  {street = "Športová"},
+  {street = "Vysoká hora"},
+  {street = "Tatranská"},
+  {street = "Zadná hora"},
+  {street = "Jána Krstiteľa"},
+]

@@ -1,0 +1,29 @@
+# Okrsky of Ozdín, transcribed by an AI agent in job okrsok-rules-4598 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kultúrna miestnosť Ozdín
+#   okrsok 2: Kultúrny dom Bystrička
+obec = "511684"
+name = "Ozdín"
+okrsky_date = 2024-01-29
+okrsky_note = "The list 'Zoznam volebných okrskov pre voľby prezidenta SR v roku 2024' (dated 'V Ozdíne dňa 29.01.2024', approved by the mayor; an image on the notice-board page posted 29.01.2024) gives each okrsok only its polling station: no. 1 Kultúrna miestnosť Ozdín, Ozdín 52; no. 2 Kultúrny dom Bystrička, Bystrička 1. Each okrsok is given the part of its station (inferred). Same okrsky as the 2022 elections' list."
+
+[[document]]
+url = "https://www.ozdin.sk/samosprava/uradna-tabula-archiv/volebne-okrsky-a-miestnosti-volby-prezidenta-sr-2024-a402-953"
+sha256 = "ab7cd1b5e9187228bee5a070939a2b7467d9bc4b86d4a7f65f433ede1cd65e74"
+title = "Volebné okrsky a miestnosti Voľby prezidenta SR 2024 (Zoznam volebných okrskov pre voľby prezidenta SR v roku 2024)"
+
+[[document]]
+url = "https://www.ozdin.sk/imgcache/e-img-3088.jpg"
+sha256 = "a14ed749fbd9169deb5d882f9fad0f188ff5e80676a6953eb67fca429dd489f1"
+title = "Zoznam volebných okrskov pre voľby prezidenta SR v roku 2024 (scan, image on the notice-board page)"
+
+[okrsok.1]
+rules = [
+  {part = "Ozdín", note = "the list names only the polling station, the Kultúrna miestnosť in Ozdín; the okrsky are as many as the parts and each station lies in another part", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Bystrička", note = "the list names only the polling station, the Kultúrny dom in Bystrička; the okrsky are as many as the parts and each station lies in another part", inferred = true},
+]

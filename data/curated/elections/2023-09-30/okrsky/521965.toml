@@ -1,0 +1,24 @@
+# Okrsky of Sady nad Torysou, transcribed by an AI agent in job okrsok-rules-3896 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 Byster
+#   okrsok 2: Okrsok č. 2 Zdoba
+obec = "521965"
+name = "Sady nad Torysou"
+okrsky_date = 2023-06-19
+okrsky_note = "The document names each okrsok by its part of the municipality (okrsok č. 1 Byster, polling station in Byster 189; okrsok č. 2 Zdoba, polling station in Zdoba), so each okrsok is that whole part. Same okrsky as the copied 2022 rules."
+
+[[document]]
+url = "https://www.sadynadtorysou.sk/modules/file_storage/download.php?file=565c45e9%7C248&inline=1"
+sha256 = "1afe6c2fbaeee7c2674cfbec51fdb2efb39f62d06e9de2723bd2ef413288b613"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Sady nad Torysou pre voľby do Národnej rady Slovenskej republiky v roku 2023 (19.06.2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Byster"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Zdoba"},
+]

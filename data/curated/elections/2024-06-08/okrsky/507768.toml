@@ -1,0 +1,47 @@
+# Okrsky of Zavar, transcribed by an AI agent in job okrsok-rules-5029 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Blavská, Budovateľská, Diaľničná, Hlinícka, Košárska, Majerská, Mlynská, Muškátová, Pažitná, Vetrová, Viktorínova, Záhrady, Záhumenská, Zdravotnícka,
+#   okrsok 2: Ulice: Hlavná, Krátka, Poronda, Športová, Tichá, Na vŕšku, Vinohradská, Výhon, Prílohy
+obec = "507768"
+name = "Zavar"
+okrsky_fill = "nearest"
+okrsky_note = "The announcement repeats the phrase \"v 1 volebnom obvode pre voľby prezidenta Slovenskej republiky\" from the presidential announcement; its heading and decision are those of the 2024 European Parliament election. The register streets Logistická, which the document does not name, are placed by fill_nearest."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated announcement names the elections to the European Parliament 2024 (called by the Speaker's decision No. 12/2024 of 9 February 2024)."
+
+[[document]]
+url = "https://www.zavar.sk/data/page/zavar.sk/24731/volebne_-okrsky_volby_do_europskeho_parlamentu.pdf"
+sha256 = "83d7e2cf24ca159c7049d761c9faced0214ea44a8b388bbd3a8fcf86fc8a5697"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby do Európskeho parlamentu 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Blavská"},
+  {street = "Budovateľská"},
+  {street = "Diaľničná"},
+  {street = "Hlinícka"},
+  {street = "Košárska"},
+  {street = "Majerská"},
+  {street = "Mlynská"},
+  {street = "Muškátová"},
+  {street = "Pažitná"},
+  {street = "Vetrová"},
+  {street = "Viktorínova"},
+  {street = "Záhrady"},
+  {street = "Záhumenská"},
+  {street = "Zdravotnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná"},
+  {street = "Krátka"},
+  {street = "Poronda"},
+  {street = "Športová"},
+  {street = "Tichá"},
+  {street = "Ulica Na vŕšku", written = "Na vŕšku"},
+  {street = "Vinohradská"},
+  {street = "Výhon"},
+  {street = "Prílohy"},
+]

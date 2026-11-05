@@ -1,0 +1,63 @@
+# The okrsky of Poniky of the elections of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/508918.toml, copied by `ems job reuse` (reused). Its header there:
+#   Council obvody of Poniky (508918), Banská Bystrica.
+#   Transcribed by an AI agent in job obvod-rules-346 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: Viacmandátový volebný obvod č. 1 pre voľby poslancov v časti obce Poniky, v ktorom sa budú voliť 5 (piati) poslanci
+#     obvod 2: Viacmandátový volebný obvod č. 2 pre voľby poslancov v časti obce Ponická Lehôtka, v ktorom sa budú voliť 2 (dvaja) poslanci
+#     obvod 3: Viacmandátový volebný obvod č. 3 pre voľby poslancov v časti obce Ponická Huta, v ktorom sa budú voliť 2 (dvaja) poslanci.
+#   Okrsky added by an AI agent in job okrsok-rules-1213 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Viacmandátový volebný obvod č. 1 pre voľby poslancov v časti obce Poniky, v ktorom sa budú voliť 5 (piati) poslanci
+#     okrsok 2: Viacmandátový volebný obvod č. 2 pre voľby poslancov v časti obce Ponická Lehôtka, v ktorom sa budú voliť 2 (dvaja) poslanci
+#     okrsok 3: Viacmandátový volebný obvod č. 3 pre voľby poslancov v časti obce Ponická Huta, v ktorom sa budú voliť 2 (dvaja) poslanci.
+# Okrsky added by an AI agent in job okrsok-rules-3345 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 Poniky
+#   okrsok 2: (no by-election in obvod 2; okrsok not listed)
+#   okrsok 3: Volebný okrsok č. 3 Ponická Huta
+obec = "508918"
+name = "Poniky"
+date = 2022-06-02
+note = "The council obvody of the elections of 2022-10-29. The live file at the same URL now holds a 2026 notice; the 2022 resolution is taken from the Internet Archive snapshot of 12 Aug 2022. Each obvod is a whole part of the municipality."
+reused = 2022-10-29
+okrsky_date = 2022-12-14
+okrsky_note = "By-elections held only in obvod 1 (časť obce Poniky) and obvod 3 (časť obce Ponická Huta); the document lists okrsok č. 1 Poniky and okrsok č. 3 Ponická Huta, each alone in its obvod. Okrsok 2 (Ponická Lehôtka, obvod 2) did not vote and is not in the document; listed only to keep numbering 1..3."
+
+[[document]]
+url = "https://web.archive.org/web/20220812060807/https://www.poniky.sk/e_download.php?file=data/editor/224sk_1.pdf&original=Ur%C4%8Denie%20volebn%C3%BDch%20obvodov%20Poniky.pdf"
+sha256 = "96a2b1cd44e5d231ed13192f2c9b89468860b3910f1ad87b8718e7b55d5952fe"
+title = "Určenie volebných obvodov, počtu poslancov… (uznesenie OZ Poniky č. 262/2022 zo dňa 2. júna 2022), snapshot 12.08.2022"
+
+[[document]]
+url = "https://www.poniky.sk/e_download.php?file=data/editor/275sk_8.pdf&original=06_vytvorenie%20okrskov%20a%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "f5f9a1972d9c6b9dad21f619fe57efca206d6336296f2a423d579fe439f95b10"
+title = "Zoznam vytvorených volebných okrskov a určených volebných miestností v obci Poniky pre potreby doplňujúcich volieb do orgánov samosprávy obcí v roku 2023"
+
+[[document]]
+url = "https://www.poniky.sk/e_download.php?file=data/editor/275sk_6.pdf&original=04_Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20obvodov.pdf"
+sha256 = "79ba8f884dbd7666c1d10a7e6ab99870f4ed116ccf43fc8612d8a1302e9836fd"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov (doplňujúce voľby 25. 3. 2023)"
+
+[obvod.1]
+seats = 5
+okrsky = [1]
+rules = [
+  {part = "Poniky"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Ponická Lehôtka"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Ponická Huta"},
+]

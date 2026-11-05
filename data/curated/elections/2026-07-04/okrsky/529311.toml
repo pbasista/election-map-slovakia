@@ -1,0 +1,150 @@
+# Okrsky of Bratislava-Podunajské Biskupice, transcribed by an AI agent in job okrsok-rules-5281 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Amurská, Beidl, Devätinová, Dneperská, Družobná, Dvojkrížna, Gajc, Hájovňa, Hviezdna, Hydinárska, Jókaiho, Ketelec, Lieskovec, Lieskovská cesta, Madáchova, Máchova, Nezvalova, Orenburská, Petöfiho, Popradská, Požiarnická, Pšeničná, Šamorínska, Trojičné námestie, Vinohradnícka, Výtvarná
+#   okrsok 2: Achátová, Akvamarínová, Ametystová, Biskupická, Borágová, Borekova, Citrínová, Farmárska, Granátová, Hlbinná, Hviezdoslavova, Janka Kráľa, Jastrabinová, Jegenešská, Jonatánová, Kapsičková, Korálová, Mramorová, Odeská, Orechová, Padlých hrdinov, Parcelná, Pri hrádzi, Pri trati (vrátane DOS Gerium), Sĺňavská, Staromlynská, Vetvárska, Vratičová
+#   okrsok 3: Komárovská, Kovová, Krajinská (vrátane nemocnice), Kvetinárska, Ligurčeková, Linzbothova, Lopárska, Malachitová, Monardová, Murárska, Nákovná, Nákupná, Oblúková, Ovčiarska, Parenicová, Pasienková, Perličková, Prípojná, Ruženínová, Šikmá, Ul. akad. mal. Jozefa Nagya, Ul. 8 mája, Ulica svornosti, Učiteľská, Závodná, Žiacka
+#   okrsok 4: Bodrocká, Ipeľská, Latorická, obyvatelia bez domova
+#   okrsok 5: Dudvážska, Hronská, Hornádska, Korytnická
+#   okrsok 6: Baltská, Kazanská, Podzáhradná, Uzbecká
+#   okrsok 7: Estónska, Geologická, Podunajská, Priekopnícka, Špaldová, Vrakunská
+#   okrsok 8: Bieloruská, Lotyšská
+obec = "529311"
+name = "Bratislava-Podunajské Biskupice"
+okrsky_date = 2026-05-07
+okrsky_fill = "nearest"
+okrsky_note = "The decision is dated 07.05.2026 in its text (the file name says 20250507, a typo). Akvamarínová and Ul. akad. mal. Jozefa Nagya are not in the address register (left out); 'obyvatelia bez domova' (okrsok 4) are addressless voters. Streets the document leaves out (Slovnaftská, Osada pri tehelni, Štátne lesy) and the addresses without a street name are placed by fill_nearest."
+
+[[document]]
+url = "https://www.biskupice.sk/evt_file.php?file=15221&original=20250507_Rozhodnutie_2_VolebneOkrsky_Sidla_PocetClenov_Referendum.pdf"
+sha256 = "81a7ced3a994890e185e0a200accc2e7a00101b04e0b55abbf22402323faa132"
+title = "Rozhodnutie č. 2 starostu Mestskej časti Bratislava-Podunajské Biskupice k zabezpečeniu Referenda 2026 (4. júla 2026), zo dňa 07.05.2026"
+
+[okrsok.1]
+rules = [
+  {street = "Amurská"},
+  {street = "Beidl"},
+  {street = "Devätinová"},
+  {street = "Dneperská"},
+  {street = "Družobná"},
+  {street = "Dvojkrížna"},
+  {street = "Gajc"},
+  {street = "Hájovňa"},
+  {street = "Hviezdna"},
+  {street = "Hydinárska"},
+  {street = "Jókaiho"},
+  {street = "Ketelec"},
+  {street = "Lieskovec"},
+  {street = "Lieskovská cesta"},
+  {street = "Madáchova"},
+  {street = "Máchova"},
+  {street = "Nezvalova"},
+  {street = "Orenburská"},
+  {street = "Petőfiho", written = "Petöfiho", note = "The document writes Petöfiho (ö); the register's Petőfiho (ő), the same street."},
+  {street = "Popradská"},
+  {street = "Požiarnická"},
+  {street = "Pšeničná"},
+  {street = "Šamorínska"},
+  {street = "Trojičné nám.", written = "Trojičné námestie"},
+  {street = "Vinohradnícka"},
+  {street = "Výtvarná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Achátová"},
+  {street = "Ametystová"},
+  {street = "Biskupická"},
+  {street = "Borágová"},
+  {street = "Borekova"},
+  {street = "Citrínová"},
+  {street = "Farmárska"},
+  {street = "Granátová"},
+  {street = "Hlbinná"},
+  {street = "Hviezdoslavova"},
+  {street = "Janka Kráľa"},
+  {street = "Jastrabinová"},
+  {street = "Jegenešská"},
+  {street = "Jonatánová"},
+  {street = "Kapsičková"},
+  {street = "Korálová"},
+  {street = "Mramorová"},
+  {street = "Odeská"},
+  {street = "Orechová"},
+  {street = "Padlých hrdinov"},
+  {street = "Parcelná"},
+  {street = "Pri hrádzi"},
+  {street = "Pri trati"},
+  {street = "Sĺňavská"},
+  {street = "Staromlynská"},
+  {street = "Vetvárska"},
+  {street = "Vratičová"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Komárovská"},
+  {street = "Kovová"},
+  {street = "Krajinská"},
+  {street = "Kvetinárska"},
+  {street = "Ligurčeková"},
+  {street = "Linzbothova"},
+  {street = "Lopárska"},
+  {street = "Malachitová"},
+  {street = "Monardová"},
+  {street = "Murárska"},
+  {street = "Nákovná"},
+  {street = "Nákupná"},
+  {street = "Oblúková"},
+  {street = "Ovčiarska"},
+  {street = "Parenicová"},
+  {street = "Pasienková"},
+  {street = "Perličková"},
+  {street = "Prípojná"},
+  {street = "Ruženínová"},
+  {street = "Šikmá"},
+  {street = "Ul. 8.mája", written = "Ul. 8 mája", note = "The document writes 'Ul. 8 mája' without the dot after 8; the register's Ul. 8.mája."},
+  {street = "Ulica svornosti"},
+  {street = "Učiteľská"},
+  {street = "Závodná"},
+  {street = "Žiacka"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bodrocká"},
+  {street = "Ipeľská"},
+  {street = "Latorická"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Dudvážska"},
+  {street = "Hronská"},
+  {street = "Hornádska"},
+  {street = "Korytnická"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Baltská"},
+  {street = "Kazanská"},
+  {street = "Podzáhradná"},
+  {street = "Uzbecká"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Estónska"},
+  {street = "Geologická"},
+  {street = "Podunajská"},
+  {street = "Priekopnícka"},
+  {street = "Špaldová"},
+  {street = "Vrakunská"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Bieloruská"},
+  {street = "Lotyšská"},
+]

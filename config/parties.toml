@@ -13,6 +13,12 @@
 #   name          official name as in the Ministry of Interior's register,
 #                 https://rez.vs.minv.sk/PolitickeStrany/Vyber?full=1 (checked
 #                 2026-10-19), spelled exactly as registered
+#   members       (a coalition standing as one ballot subject of a
+#                 parliamentary or European election) its member parties,
+#                 two or more keys of this file that are no coalitions
+#                 themselves; its threshold is the election's coalition
+#                 threshold for as many parties (elections.toml
+#                 coalition_thresholds)
 #
 # and, in a table [party."…".logo.<slug>] per election (its slug in
 # elections.toml), the party's logo as it was at that election, which its
@@ -51,6 +57,43 @@ file = "demokrati.svg"
 source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Democrats_(Slovakia).svg"
 license = "public domain (PD-textlogo on Commons); cropped to the symbol"
 
+# The same DEM_logo.svg in every capture of smedemokrati.sk from 2023-05-29 to
+# 2025-09-12 (Wayback).
+[party."Demokrati".logo.2023-09]
+file = "demokrati.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Democrats_(Slovakia).svg"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."Demokrati".logo.2023-nrsr]
+file = "demokrati.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Democrats_(Slovakia).svg"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."Demokrati".logo.2024-02]
+file = "demokrati.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Democrats_(Slovakia).svg"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."Demokrati".logo.2024-ep]
+file = "demokrati.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Democrats_(Slovakia).svg"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."Demokrati".logo.2024-10]
+file = "demokrati.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Democrats_(Slovakia).svg"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."Demokrati".logo.2025-03]
+file = "demokrati.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Democrats_(Slovakia).svg"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."Demokrati".logo.2025-09]
+file = "demokrati.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Democrats_(Slovakia).svg"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
 [party."Demokrati Slovenska"]
 short = "Demokrati Slovenska"
 name = "Demokrati Slovenska"
@@ -72,6 +115,22 @@ short = "Hlas-SD"
 name = "HLAS - sociálna demokracia"
 
 [party."Hlas - sociálna demokracia".logo.2026]
+file = "hlas.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Voice_–_Social_Democracy.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+# The logo of strana-hlas.sk from 2020-12 on (Wayback).
+[party."Hlas - sociálna demokracia".logo.2021-05]
+file = "hlas.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Voice_–_Social_Democracy.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Hlas - sociálna demokracia".logo.2021-10]
+file = "hlas.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Voice_–_Social_Democracy.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Hlas - sociálna demokracia".logo.2022-03]
 file = "hlas.svg"
 source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Voice_–_Social_Democracy.svg"
 license = "public domain (PD-textlogo on Commons)"
@@ -109,6 +168,29 @@ file = "kss.svg"
 source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Communist_Party_of_Slovakia.svg"
 license = "public domain (PD-textlogo on Commons)"
 
+# The "KSS 1992" circle on kss.sk from September 2018 on (Wayback 2018-10-23,
+# 2020-09-28, 2023-09-02, 2024-04-03); in 2017 an earlier logo without a free
+# copy.
+[party."Komunistická strana Slovenska".logo.2018]
+file = "kss.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Communist_Party_of_Slovakia.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Komunistická strana Slovenska".logo.2020-10]
+file = "kss.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Communist_Party_of_Slovakia.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Komunistická strana Slovenska".logo.2023-nrsr]
+file = "kss.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Communist_Party_of_Slovakia.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Komunistická strana Slovenska".logo.2024-ep]
+file = "kss.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Communist_Party_of_Slovakia.svg"
+license = "public domain (PD-textlogo on Commons)"
+
 [party."Konzervatívci - kresťanská únia"]
 short = "Konzervatívci"
 name = "Konzervatívci - Kresťanská únia"
@@ -135,14 +217,75 @@ name = "Košická strana"
 short = "Krajina"
 name = "KRAJINA"
 
+# As ŠÚ SR's by-election packages since 2023 write it.
+[party."KDH - Kresťanskodemokratické hnutie"]
+short = "KDH"
+name = "KDH - Kresťanskodemokratické hnutie"
+
+# The italic "KDH" of kdh.sk, there 2024-05-30 to 2026-03-20 (Wayback).
+[party."KDH - Kresťanskodemokratické hnutie".logo.2024-10]
+file = "kdh.svg"
+source = "https://commons.wikimedia.org/wiki/File:KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."KDH - Kresťanskodemokratické hnutie".logo.2025-03]
+file = "kdh.svg"
+source = "https://commons.wikimedia.org/wiki/File:KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."KDH - Kresťanskodemokratické hnutie".logo.2025-09]
+file = "kdh.svg"
+source = "https://commons.wikimedia.org/wiki/File:KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."KDH - Kresťanskodemokratické hnutie".logo.2026-03]
+file = "kdh.svg"
+source = "https://commons.wikimedia.org/wiki/File:KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Magyar Szövetség - Maďarská aliancia"]
+short = "Maďarská aliancia"
+name = "Magyar Szövetség - Maďarská aliancia"
+
+# The 3D knot in the header of szovetseg.sk to 2025 (Wayback 2024-01-04,
+# 2025-01-25); from 2025-11-29 on a flat redrawing of it (logo.svg?v=2,
+# Wayback; with the EPP's logo beside it from 2026-02-05, ?v=3, still on
+# 2026-09-11).
+[party."Magyar Szövetség - Maďarská aliancia".logo.2024-ep]
+file = "madarska-aliancia-2022.svg"
+source = "https://commons.wikimedia.org/wiki/File:Magyar_Szövetség_logo.svg"
+license = "CC BY-SA 4.0, Magyar Szövetség; cropped to the symbol"
+
+[party."Magyar Szövetség - Maďarská aliancia".logo.2024-10]
+file = "madarska-aliancia-2022.svg"
+source = "https://commons.wikimedia.org/wiki/File:Magyar_Szövetség_logo.svg"
+license = "CC BY-SA 4.0, Magyar Szövetség; cropped to the symbol"
+
+[party."Magyar Szövetség - Maďarská aliancia".logo.2025-03]
+file = "madarska-aliancia-2022.svg"
+source = "https://commons.wikimedia.org/wiki/File:Magyar_Szövetség_logo.svg"
+license = "CC BY-SA 4.0, Magyar Szövetség; cropped to the symbol"
+
+[party."Magyar Szövetség - Maďarská aliancia".logo.2025-09]
+file = "madarska-aliancia-2022.svg"
+source = "https://commons.wikimedia.org/wiki/File:Magyar_Szövetség_logo.svg"
+license = "CC BY-SA 4.0, Magyar Szövetség; cropped to the symbol"
+
+[party."Magyar Szövetség - Maďarská aliancia".logo.2026-03]
+file = "madarska-aliancia.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_party.svg"
+license = "CC BY 4.0, Magyar Szövetség; cropped to the symbol"
+
 [party."Magyar szövetség - maďarská aliancia"]
 short = "Maďarská aliancia"
 name = "Magyar Szövetség - Maďarská aliancia"
 
+# The flat knot of szovetseg.sk from 2025-11-29 on, still there on
+# 2026-09-11 (Wayback).
 [party."Magyar szövetség - maďarská aliancia".logo.2026]
 file = "madarska-aliancia.svg"
-source = "https://commons.wikimedia.org/wiki/File:Magyar_Szövetség_logo.svg"
-license = "CC BY-SA 4.0, Magyar Szövetség; cropped to the symbol"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_party.svg"
+license = "CC BY 4.0, Magyar Szövetség; cropped to the symbol"
 
 [party."Maďarské fórum"]
 short = "Maďarské fórum"
@@ -161,6 +304,12 @@ name = "MySlovensko"
 short = "NOVA"
 name = "NOVA"
 
+# The red and blue "nova" of 2014, still on nova.sk on 2026-10-17 (Wayback).
+[party."Nova".logo.2026]
+file = "nova.webp"
+source = "https://commons.wikimedia.org/wiki/File:Nová_väčšina_Logo.png"
+license = "public domain (PD-textlogo on Commons)"
+
 [party."Občianska konzervatívna strana"]
 short = "OKS"
 name = "Občianska konzervatívna strana"
@@ -175,11 +324,45 @@ file = "oks.webp"
 source = "https://commons.wikimedia.org/wiki/File:Civic_Conservative_Party_logo.png"
 license = "copyrighted free use (Commons); cropped to the symbol"
 
+# The same oks-logo.png on oks.sk (Wayback 2017-09-05, 2018-10-09, 2020-09-28,
+# 2023-07-05).
+[party."Občianska konzervatívna strana".logo.2017]
+file = "oks.webp"
+source = "https://commons.wikimedia.org/wiki/File:Civic_Conservative_Party_logo.png"
+license = "copyrighted free use (Commons); cropped to the symbol"
+
+[party."Občianska konzervatívna strana".logo.2018]
+file = "oks.webp"
+source = "https://commons.wikimedia.org/wiki/File:Civic_Conservative_Party_logo.png"
+license = "copyrighted free use (Commons); cropped to the symbol"
+
+[party."Občianska konzervatívna strana".logo.2020-10]
+file = "oks.webp"
+source = "https://commons.wikimedia.org/wiki/File:Civic_Conservative_Party_logo.png"
+license = "copyrighted free use (Commons); cropped to the symbol"
+
+[party."Občianska konzervatívna strana".logo.2023-09]
+file = "oks.webp"
+source = "https://commons.wikimedia.org/wiki/File:Civic_Conservative_Party_logo.png"
+license = "copyrighted free use (Commons); cropped to the symbol"
+
 [party."Pirátska strana - Slovensko"]
 short = "Pirátska strana"
 name = "Pirátska strana - Slovensko"
 
 [party."Pirátska strana - Slovensko".logo.2026]
+file = "piratska-strana.webp"
+source = "https://commons.wikimedia.org/wiki/File:PSS_logo_nove.jpg"
+license = "CC BY-SA 4.0, Rudolf Molnár; cropped to the symbol"
+
+# The plain P flag of slovenskipirati.sk from April 2023 (Wayback 2023-08-30,
+# 2024-05-23).
+[party."Pirátska strana - Slovensko".logo.2023-nrsr]
+file = "piratska-strana.webp"
+source = "https://commons.wikimedia.org/wiki/File:PSS_logo_nove.jpg"
+license = "CC BY-SA 4.0, Rudolf Molnár; cropped to the symbol"
+
+[party."Pirátska strana - Slovensko".logo.2024-ep]
 file = "piratska-strana.webp"
 source = "https://commons.wikimedia.org/wiki/File:PSS_logo_nove.jpg"
 license = "CC BY-SA 4.0, Rudolf Molnár; cropped to the symbol"
@@ -194,6 +377,29 @@ source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Progressive_Slovak
 license = "public domain (PD-textlogo on Commons)"
 
 [party."Progresívne Slovensko".logo.2022]
+file = "ps.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Progressive_Slovakia_(2021).svg"
+license = "public domain (PD-textlogo on Commons)"
+
+# The red P and blue S of progresivne.sk in 2018 (Wayback 2018-06-19,
+# 2018-08-31); the blue square of 2021 on in 2023 to 2025 (Wayback 2023-09-01,
+# 2024-05-30, 2025-03-12).
+[party."Progresívne Slovensko".logo.2018]
+file = "ps-2018.webp"
+source = "https://commons.wikimedia.org/wiki/File:Progresivne_slovensko_logo.png"
+license = "public domain (PD-textlogo on Commons); cropped to the letters PS"
+
+[party."Progresívne Slovensko".logo.2023-nrsr]
+file = "ps.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Progressive_Slovakia_(2021).svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Progresívne Slovensko".logo.2024-ep]
+file = "ps.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Progressive_Slovakia_(2021).svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Progresívne Slovensko".logo.2025-03]
 file = "ps.svg"
 source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Progressive_Slovakia_(2021).svg"
 license = "public domain (PD-textlogo on Commons)"
@@ -277,6 +483,22 @@ file = "socialisti.svg"
 source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Socialists.sk.svg"
 license = "public domain (PD-textlogo on Commons); cropped to the symbol"
 
+# The heart on socialisti.sk (Wayback 2020-02-28, 2023-03-18, 2024-05-31).
+[party."Socialisti.sk".logo.2020-nrsr]
+file = "socialisti.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Socialists.sk.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."Socialisti.sk".logo.2023-03]
+file = "socialisti.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Socialists.sk.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."Socialisti.sk".logo.2024-ep]
+file = "socialisti.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Socialists.sk.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
 [party."Som Slovensko - strana obcí a miest"]
 short = "Som Slovensko"
 name = "SOM SLOVENSKO - Strana obcí a miest"
@@ -284,6 +506,12 @@ name = "SOM SLOVENSKO - Strana obcí a miest"
 [party."Spoločne občania Slovenska"]
 short = "Spoločne občania"
 name = "SPOLOČNE OBČANIA SLOVENSKA"
+
+# As above: the same logo on sosstrana.sk on 2026-06-17 (Wayback).
+[party."Spoločne občania Slovenska".logo.2026]
+file = "spolocne-obcania.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo-obcan-4.svg"
+license = "CC BY-SA 4.0, Fediak22; cropped to the letters SOS"
 
 [party."Spoločný cieľ"]
 short = "Spoločný cieľ"
@@ -346,6 +574,13 @@ file = "volt.svg"
 source = "https://commons.wikimedia.org/wiki/File:Logo_of_Volt.svg"
 license = "public domain (PD-textlogo on Commons)"
 
+# The Volt wordmark in the header of voltslovensko.org on 2024-06-04
+# (Wayback).
+[party."Volt Slovensko".logo.2024-ep]
+file = "volt.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_Volt.svg"
+license = "public domain (PD-textlogo on Commons)"
+
 [party."Za ľudí"]
 short = "Za ľudí"
 name = "ZA ĽUDÍ"
@@ -397,13 +632,20 @@ name = "Demokratická strana"
 short = "Dobrá voľba"
 name = "DOBRÁ VOĽBA a Umiernení"
 
-# The plain red square: dobravolba.sk showed it unchanged from 2021 to 2023
-# (Wayback); Commons replaced it in March 2023 with the variant naming
-# "Umiernení".
+# The plain red square: dobravolba.sk showed it unchanged from 2021 to
+# December 2022 (Wayback); in 2023 it added "UMIERNENÍ" below, as Commons'
+# version of March 2023 did.
 [party."DOBRÁ VOĽBA a Umiernení".logo.2022]
 file = "dobra-volba-2022.webp"
 source = "https://upload.wikimedia.org/wikipedia/commons/archive/e/e2/20230308073737%21Dobr%C3%A1_vo%C4%BEba.png"
 license = "public domain (PD-textlogo on Commons; its version of 2021-02-02)"
+
+# In 2023 the square over "UMIERNENÍ" (dobravolba.sk, Wayback 2023-02-06,
+# 2023-04-01), Commons' version of 2023-03-08; its square is that of 2021.
+[party."DOBRÁ VOĽBA a Umiernení".logo.2023-03]
+file = "dobra-volba-2022.webp"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/e/e2/20230812070033%21Dobr%C3%A1_vo%C4%BEba.png"
+license = "public domain (PD-textlogo on Commons; its version of 2023-03-08); cropped to the square"
 
 [party."DOMOV národná strana"]
 short = "Domov"
@@ -414,6 +656,53 @@ short = "Hlas-SD"
 name = "HLAS - sociálna demokracia"
 
 [party."HLAS - sociálna demokracia".logo.2022]
+file = "hlas.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Voice_–_Social_Democracy.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+# The same logo on strana-hlas.sk from 2020-12 to 2026 (Wayback); Commons'
+# versions of 2022 and 2024 differ only in their margins.
+[party."HLAS - sociálna demokracia".logo.2023-03]
+file = "hlas.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Voice_–_Social_Democracy.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."HLAS - sociálna demokracia".logo.2023-09]
+file = "hlas.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Voice_–_Social_Democracy.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."HLAS - sociálna demokracia".logo.2023-nrsr]
+file = "hlas.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Voice_–_Social_Democracy.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."HLAS - sociálna demokracia".logo.2024-02]
+file = "hlas.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Voice_–_Social_Democracy.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."HLAS - sociálna demokracia".logo.2024-ep]
+file = "hlas.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Voice_–_Social_Democracy.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."HLAS - sociálna demokracia".logo.2024-10]
+file = "hlas.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Voice_–_Social_Democracy.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."HLAS - sociálna demokracia".logo.2025-03]
+file = "hlas.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Voice_–_Social_Democracy.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."HLAS - sociálna demokracia".logo.2025-09]
+file = "hlas.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Voice_–_Social_Democracy.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."HLAS - sociálna demokracia".logo.2026-03]
 file = "hlas.svg"
 source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Voice_–_Social_Democracy.svg"
 license = "public domain (PD-textlogo on Commons)"
@@ -431,12 +720,127 @@ file = "lsns.webp"
 source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Kotlebists_–_People's_Party_Our_Slovakia.svg"
 license = "CC BY-SA 4.0, Ivan Ch RU"
 
+# The ring reading "KOTLEBA" beside "Kotlebovci" on naseslovensko.net from
+# 2019-11 on (Wayback).
+[party."Kotlebovci - Ľudová strana Naše Slovensko".logo.2020-nrsr]
+file = "lsns.webp"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Kotlebists_–_People's_Party_Our_Slovakia.svg"
+license = "CC BY-SA 4.0, Ivan Ch RU"
+
+[party."Kotlebovci - Ľudová strana Naše Slovensko".logo.2020-10]
+file = "lsns.webp"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Kotlebists_–_People's_Party_Our_Slovakia.svg"
+license = "CC BY-SA 4.0, Ivan Ch RU"
+
+[party."Kotlebovci - Ľudová strana Naše Slovensko".logo.2023-09]
+file = "lsns.webp"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Kotlebists_–_People's_Party_Our_Slovakia.svg"
+license = "CC BY-SA 4.0, Ivan Ch RU"
+
+[party."Kotlebovci - Ľudová strana Naše Slovensko".logo.2023-nrsr]
+file = "lsns.webp"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Kotlebists_–_People's_Party_Our_Slovakia.svg"
+license = "CC BY-SA 4.0, Ivan Ch RU"
+
+[party."Kotlebovci - Ľudová strana Naše Slovensko".logo.2024-02]
+file = "lsns.webp"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Kotlebists_–_People's_Party_Our_Slovakia.svg"
+license = "CC BY-SA 4.0, Ivan Ch RU"
+
+[party."Kotlebovci - Ľudová strana Naše Slovensko".logo.2024-ep]
+file = "lsns.webp"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Kotlebists_–_People's_Party_Our_Slovakia.svg"
+license = "CC BY-SA 4.0, Ivan Ch RU"
+
+[party."Kotlebovci - Ľudová strana Naše Slovensko".logo.2026-03]
+file = "lsns.webp"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Kotlebists_–_People's_Party_Our_Slovakia.svg"
+license = "CC BY-SA 4.0, Ivan Ch RU"
+
 [party."Kresťanskodemokratické hnutie"]
 short = "KDH"
 name = "Kresťanskodemokratické hnutie"
 
 # The logo of 2021 on, on kdh.sk in October 2022 (Wayback).
 [party."Kresťanskodemokratické hnutie".logo.2022]
+file = "kdh.svg"
+source = "https://commons.wikimedia.org/wiki/File:KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+# The circled cross before "KDH" on kdh.sk to 2020-09-29 (Wayback), Commons'
+# version of 2014-08-15 of its logo; the italic "KDH" from 2021-05 on (kdh-
+# logo.svg, Wayback 2021-05-07).
+[party."Kresťanskodemokratické hnutie".logo.2017]
+file = "kdh-2017.svg"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/3/34/20210412085918%21KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons; its version of 2014-08-15); cropped to the symbol"
+
+[party."Kresťanskodemokratické hnutie".logo.2018]
+file = "kdh-2017.svg"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/3/34/20210412085918%21KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons; its version of 2014-08-15); cropped to the symbol"
+
+[party."Kresťanskodemokratické hnutie".logo.2019-04]
+file = "kdh-2017.svg"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/3/34/20210412085918%21KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons; its version of 2014-08-15); cropped to the symbol"
+
+[party."Kresťanskodemokratické hnutie".logo.2019-ep]
+file = "kdh-2017.svg"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/3/34/20210412085918%21KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons; its version of 2014-08-15); cropped to the symbol"
+
+[party."Kresťanskodemokratické hnutie".logo.2019-09]
+file = "kdh-2017.svg"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/3/34/20210412085918%21KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons; its version of 2014-08-15); cropped to the symbol"
+
+[party."Kresťanskodemokratické hnutie".logo.2020-nrsr]
+file = "kdh-2017.svg"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/3/34/20210412085918%21KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons; its version of 2014-08-15); cropped to the symbol"
+
+[party."Kresťanskodemokratické hnutie".logo.2020-10]
+file = "kdh-2017.svg"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/3/34/20210412085918%21KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons; its version of 2014-08-15); cropped to the symbol"
+
+[party."Kresťanskodemokratické hnutie".logo.2021-05]
+file = "kdh.svg"
+source = "https://commons.wikimedia.org/wiki/File:KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Kresťanskodemokratické hnutie".logo.2021-10]
+file = "kdh.svg"
+source = "https://commons.wikimedia.org/wiki/File:KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Kresťanskodemokratické hnutie".logo.2022-03]
+file = "kdh.svg"
+source = "https://commons.wikimedia.org/wiki/File:KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Kresťanskodemokratické hnutie".logo.2023-03]
+file = "kdh.svg"
+source = "https://commons.wikimedia.org/wiki/File:KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Kresťanskodemokratické hnutie".logo.2023-09]
+file = "kdh.svg"
+source = "https://commons.wikimedia.org/wiki/File:KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Kresťanskodemokratické hnutie".logo.2023-nrsr]
+file = "kdh.svg"
+source = "https://commons.wikimedia.org/wiki/File:KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Kresťanskodemokratické hnutie".logo.2024-02]
+file = "kdh.svg"
+source = "https://commons.wikimedia.org/wiki/File:KDH_Logo.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Kresťanskodemokratické hnutie".logo.2024-ep]
 file = "kdh.svg"
 source = "https://commons.wikimedia.org/wiki/File:KDH_Logo.svg"
 license = "public domain (PD-textlogo on Commons)"
@@ -449,6 +853,18 @@ name = "Kresťanská únia"
 # was renamed Konzervatívci - Kresťanská únia, with a new logo, on
 # 26 February 2026 (sme.sk), and stands in 2026 under that entry above.
 [party."Kresťanská únia".logo.2022]
+file = "krestanska-unia-2022.webp"
+source = "https://commons.wikimedia.org/wiki/File:KÚ_logo.png"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+# The same blue "U" on krestanskaunia.sk on 2019-05-22 and 2024-06-06
+# (Wayback).
+[party."Kresťanská únia".logo.2019-ep]
+file = "krestanska-unia-2022.webp"
+source = "https://commons.wikimedia.org/wiki/File:KÚ_logo.png"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."Kresťanská únia".logo.2024-ep]
 file = "krestanska-unia-2022.webp"
 source = "https://commons.wikimedia.org/wiki/File:KÚ_logo.png"
 license = "public domain (PD-textlogo on Commons); cropped to the symbol"
@@ -470,7 +886,24 @@ name = "NOVA"
 
 # Of the party's site in January 2022, its nearest capture (Wayback).
 [party."NOVA".logo.2022]
-file = "nova-2022.webp"
+file = "nova.webp"
+source = "https://commons.wikimedia.org/wiki/File:Nová_väčšina_Logo.png"
+license = "public domain (PD-textlogo on Commons)"
+
+# The red and blue "nova" of nova.sk (Wayback 2017-10-16, 2018-10-10,
+# 2021-09-17).
+[party."NOVA".logo.2017]
+file = "nova.webp"
+source = "https://commons.wikimedia.org/wiki/File:Nová_väčšina_Logo.png"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."NOVA".logo.2018]
+file = "nova.webp"
+source = "https://commons.wikimedia.org/wiki/File:Nová_väčšina_Logo.png"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."NOVA".logo.2021-10]
+file = "nova.webp"
 source = "https://commons.wikimedia.org/wiki/File:Nová_väčšina_Logo.png"
 license = "public domain (PD-textlogo on Commons)"
 
@@ -489,6 +922,24 @@ name = "NÁRODNÁ KOALÍCIA / NEZÁVISLÍ KANDIDÁTI"
 [party."NÁRODNÁ KOALÍCIA / NEZÁVISLÍ KANDIDÁTI".logo.2022]
 file = "narodna-koalicia-2022.webp"
 source = "https://commons.wikimedia.org/wiki/File:Narodna_Koalicia_Logo.png"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+# Its circle beside both names on narodnakoalicia.sk (Wayback 2023-03-13,
+# 2023-07-20); by 2025-09-05 the site showed the logo of Strana vidieka, its
+# later name.
+[party."NÁRODNÁ KOALÍCIA / NEZÁVISLÍ KANDIDÁTI".logo.2023-03]
+file = "narodna-koalicia-2022.webp"
+source = "https://commons.wikimedia.org/wiki/File:Narodna_Koalicia_Logo.png"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."NÁRODNÁ KOALÍCIA / NEZÁVISLÍ KANDIDÁTI".logo.2023-09]
+file = "narodna-koalicia-2022.webp"
+source = "https://commons.wikimedia.org/wiki/File:Narodna_Koalicia_Logo.png"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."NÁRODNÁ KOALÍCIA / NEZÁVISLÍ KANDIDÁTI".logo.2025-09]
+file = "strana-vidieka.webp"
+source = "https://commons.wikimedia.org/wiki/File:Strana_Vidieka_Logo.png"
 license = "public domain (PD-textlogo on Commons); cropped to the symbol"
 
 [party."OBYČAJNÍ ĽUDIA a nezávislé osobnosti (OĽANO), NOVA, Kresťanská únia (KÚ), ZMENA ZDOLA"]
@@ -511,11 +962,64 @@ file = "princip-2022.webp"
 source = "https://commons.wikimedia.org/wiki/File:Politická-strana-PRINCÍP.png"
 license = "CC BY-SA 4.0, Politickastranaprincip; cropped to the symbol"
 
+# The same clover on stranaprincip.sk on 2023-02-05 and 2023-09-22 (Wayback).
+[party."PRINCÍP".logo.2023-03]
+file = "princip-2022.webp"
+source = "https://commons.wikimedia.org/wiki/File:Politická-strana-PRINCÍP.png"
+license = "CC BY-SA 4.0, Politickastranaprincip; cropped to the symbol"
+
+[party."PRINCÍP".logo.2023-nrsr]
+file = "princip-2022.webp"
+source = "https://commons.wikimedia.org/wiki/File:Politická-strana-PRINCÍP.png"
+license = "CC BY-SA 4.0, Politickastranaprincip; cropped to the symbol"
+
 [party."REPUBLIKA"]
 short = "Republika"
 name = "REPUBLIKA"
 
 [party."REPUBLIKA".logo.2022]
+file = "republika.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Republic_(Slovakia).svg"
+license = "public domain (PD-textlogo on Commons)"
+
+# The same Republika_logo_web.png on hnutie-republika.sk from 2021-03 to
+# 2025-12 (Wayback).
+[party."REPUBLIKA".logo.2023-03]
+file = "republika.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Republic_(Slovakia).svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."REPUBLIKA".logo.2023-nrsr]
+file = "republika.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Republic_(Slovakia).svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."REPUBLIKA".logo.2024-02]
+file = "republika.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Republic_(Slovakia).svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."REPUBLIKA".logo.2024-ep]
+file = "republika.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Republic_(Slovakia).svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."REPUBLIKA".logo.2024-10]
+file = "republika.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Republic_(Slovakia).svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."REPUBLIKA".logo.2025-03]
+file = "republika.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Republic_(Slovakia).svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."REPUBLIKA".logo.2025-09]
+file = "republika.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Republic_(Slovakia).svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."REPUBLIKA".logo.2026-03]
 file = "republika.svg"
 source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Republic_(Slovakia).svg"
 license = "public domain (PD-textlogo on Commons)"
@@ -528,12 +1032,77 @@ name = "Skúsme to inak"
 short = "SaS"
 name = "Sloboda a Solidarita"
 
-# The green and blue letters of sas.sk on 2022-09-29 (Wayback); the red
-# "SASKA" logo came in April 2023, the navy one of 2026 in 2024.
+# The green and blue letters of sas.sk on 2022-09-29 (Wayback); the lime box
+# came in August 2023, the navy logo of 2026 in 2024.
 [party."Sloboda a Solidarita".logo.2022]
 file = "sas-2022.svg"
 source = "https://commons.wikimedia.org/wiki/File:Freiheit_und_Solidarität_(SaS)_Logo.svg"
 license = "public domain (PD-textlogo on Commons); cropped to the letters SaS"
+
+# Its letters were the same from 2017 to April 2023, first beside "Sloboda
+# Solidarita" on one line (sas.sk 2017-10 to 2021, Wayback; Commons' version
+# of 2014-08-14), then over two lines. From 2023-08-22 to July 2024 sas.sk
+# showed "SLOBODA A SOLIDARITA" in a lime box, which has no free copy (no logo
+# for 2023-09 to 2024-ep); the navy logo from 2024-10-01 on.
+[party."Sloboda a Solidarita".logo.2017]
+file = "sas-2022.svg"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/7/71/20210329164009%21Freiheit_und_Solidarit%C3%A4t_%28SaS%29_Logo.svg"
+license = "public domain (PD-textlogo on Commons; its version of 2014-08-14); cropped to the letters SaS"
+
+[party."Sloboda a Solidarita".logo.2018]
+file = "sas-2022.svg"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/7/71/20210329164009%21Freiheit_und_Solidarit%C3%A4t_%28SaS%29_Logo.svg"
+license = "public domain (PD-textlogo on Commons; its version of 2014-08-14); cropped to the letters SaS"
+
+[party."Sloboda a Solidarita".logo.2019-ep]
+file = "sas-2022.svg"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/7/71/20210329164009%21Freiheit_und_Solidarit%C3%A4t_%28SaS%29_Logo.svg"
+license = "public domain (PD-textlogo on Commons; its version of 2014-08-14); cropped to the letters SaS"
+
+[party."Sloboda a Solidarita".logo.2019-09]
+file = "sas-2022.svg"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/7/71/20210329164009%21Freiheit_und_Solidarit%C3%A4t_%28SaS%29_Logo.svg"
+license = "public domain (PD-textlogo on Commons; its version of 2014-08-14); cropped to the letters SaS"
+
+[party."Sloboda a Solidarita".logo.2020-nrsr]
+file = "sas-2022.svg"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/7/71/20210329164009%21Freiheit_und_Solidarit%C3%A4t_%28SaS%29_Logo.svg"
+license = "public domain (PD-textlogo on Commons; its version of 2014-08-14); cropped to the letters SaS"
+
+[party."Sloboda a Solidarita".logo.2020-10]
+file = "sas-2022.svg"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/7/71/20210329164009%21Freiheit_und_Solidarit%C3%A4t_%28SaS%29_Logo.svg"
+license = "public domain (PD-textlogo on Commons; its version of 2014-08-14); cropped to the letters SaS"
+
+[party."Sloboda a Solidarita".logo.2021-05]
+file = "sas-2022.svg"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/7/71/20210329164009%21Freiheit_und_Solidarit%C3%A4t_%28SaS%29_Logo.svg"
+license = "public domain (PD-textlogo on Commons; its version of 2014-08-14); cropped to the letters SaS"
+
+[party."Sloboda a Solidarita".logo.2021-10]
+file = "sas-2022.svg"
+source = "https://commons.wikimedia.org/wiki/File:Freiheit_und_Solidarität_(SaS)_Logo.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the letters SaS"
+
+[party."Sloboda a Solidarita".logo.2022-03]
+file = "sas-2022.svg"
+source = "https://commons.wikimedia.org/wiki/File:Freiheit_und_Solidarität_(SaS)_Logo.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the letters SaS"
+
+[party."Sloboda a Solidarita".logo.2023-03]
+file = "sas-2022.svg"
+source = "https://commons.wikimedia.org/wiki/File:Freiheit_und_Solidarität_(SaS)_Logo.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the letters SaS"
+
+[party."Sloboda a Solidarita".logo.2024-10]
+file = "sas.webp"
+source = "https://commons.wikimedia.org/wiki/File:Sas_logo.png"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Sloboda a Solidarita".logo.2025-09]
+file = "sas.webp"
+source = "https://commons.wikimedia.org/wiki/File:Sas_logo.png"
+license = "public domain (PD-textlogo on Commons)"
 
 [party."SLOVENSKÁ INICIATÍVA MENŠÍN"]
 short = "Slovenská iniciatíva"
@@ -568,6 +1137,106 @@ file = "smer.svg"
 source = "https://commons.wikimedia.org/wiki/File:SMER-SD_Logo_2021.svg"
 license = "public domain (PD-textlogo on Commons); cropped to the rose"
 
+# Its logos on strana-smer.sk (Wayback): the rose with the arrow over "smer"
+# to 2019-09-24; the arrow S of "nový SMER", the 2020 campaign's logo
+# (logo_large.png from 2019-12-11 to 2020-03-31), of which Commons kept an
+# upload of 2020-02-22 as an old version; the arrow S over "SMER sociálna
+# demokracia" from 2020-05-13 to 2021-04-26; the rose from 2021-05-20 on.
+[party."SMER - sociálna demokracia".logo.2017]
+file = "smer-2017.svg"
+source = "https://commons.wikimedia.org/wiki/File:SMER_–_socialna_demokracia_Logo.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rose"
+
+[party."SMER - sociálna demokracia".logo.2018]
+file = "smer-2017.svg"
+source = "https://commons.wikimedia.org/wiki/File:SMER_–_socialna_demokracia_Logo.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rose"
+
+[party."SMER - sociálna demokracia".logo.2019-04]
+file = "smer-2017.svg"
+source = "https://commons.wikimedia.org/wiki/File:SMER_–_socialna_demokracia_Logo.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rose"
+
+[party."SMER - sociálna demokracia".logo.2019-ep]
+file = "smer-2017.svg"
+source = "https://commons.wikimedia.org/wiki/File:SMER_–_socialna_demokracia_Logo.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rose"
+
+[party."SMER - sociálna demokracia".logo.2019-09]
+file = "smer-2017.svg"
+source = "https://commons.wikimedia.org/wiki/File:SMER_–_socialna_demokracia_Logo.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rose"
+
+[party."SMER - sociálna demokracia".logo.2020-nrsr]
+file = "smer-2020-nrsr.webp"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/5/50/20200222173249%21SMER_%E2%80%93_socialna_demokracia_Logo.svg"
+license = "public domain (PD-textlogo on Commons; its version of 2020-02-22); cropped to the symbol"
+
+[party."SMER - sociálna demokracia".logo.2020-10]
+file = "smer-2020-10.webp"
+source = "https://commons.wikimedia.org/wiki/File:SMER-SD_logo_2020.png"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."SMER - sociálna demokracia".logo.2021-05]
+file = "smer-2020-10.webp"
+source = "https://commons.wikimedia.org/wiki/File:SMER-SD_logo_2020.png"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."SMER - sociálna demokracia".logo.2021-10]
+file = "smer.svg"
+source = "https://commons.wikimedia.org/wiki/File:SMER-SD_Logo_2021.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rose"
+
+[party."SMER - sociálna demokracia".logo.2022-03]
+file = "smer.svg"
+source = "https://commons.wikimedia.org/wiki/File:SMER-SD_Logo_2021.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rose"
+
+[party."SMER - sociálna demokracia".logo.2023-03]
+file = "smer.svg"
+source = "https://commons.wikimedia.org/wiki/File:SMER-SD_Logo_2021.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rose"
+
+[party."SMER - sociálna demokracia".logo.2023-09]
+file = "smer.svg"
+source = "https://commons.wikimedia.org/wiki/File:SMER-SD_Logo_2021.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rose"
+
+[party."SMER - sociálna demokracia".logo.2023-nrsr]
+file = "smer.svg"
+source = "https://commons.wikimedia.org/wiki/File:SMER-SD_Logo_2021.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rose"
+
+[party."SMER - sociálna demokracia".logo.2024-02]
+file = "smer.svg"
+source = "https://commons.wikimedia.org/wiki/File:SMER-SD_Logo_2021.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rose"
+
+[party."SMER - sociálna demokracia".logo.2024-ep]
+file = "smer.svg"
+source = "https://commons.wikimedia.org/wiki/File:SMER-SD_Logo_2021.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rose"
+
+[party."SMER - sociálna demokracia".logo.2024-10]
+file = "smer.svg"
+source = "https://commons.wikimedia.org/wiki/File:SMER-SD_Logo_2021.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rose"
+
+[party."SMER - sociálna demokracia".logo.2025-03]
+file = "smer.svg"
+source = "https://commons.wikimedia.org/wiki/File:SMER-SD_Logo_2021.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rose"
+
+[party."SMER - sociálna demokracia".logo.2025-09]
+file = "smer.svg"
+source = "https://commons.wikimedia.org/wiki/File:SMER-SD_Logo_2021.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rose"
+
+[party."SMER - sociálna demokracia".logo.2026-03]
+file = "smer.svg"
+source = "https://commons.wikimedia.org/wiki/File:SMER-SD_Logo_2021.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rose"
+
 [party."SOLIDARITA - Hnutie pracujúcej chudoby"]
 short = "Solidarita"
 name = "SOLIDARITA - Hnutie pracujúcej chudoby"
@@ -579,6 +1248,29 @@ name = "SPOLU - občianska demokracia"
 # The yellow, green and blue symbol of its site in October 2022 (Wayback),
 # before it merged into Demokrati.
 [party."SPOLU - občianska demokracia".logo.2022]
+file = "spolu-2022.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_—_Strana_SPOLU.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+# Its red and blue rings on stranaspolu.sk in 2018 and 2019 (Wayback
+# 2018-08-25, 2019-03-31, 2019-09-15); the yellow, green and blue symbol by
+# 2020-09-23.
+[party."SPOLU - občianska demokracia".logo.2018]
+file = "spolu-2018.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_„SPOLU_–_občianska_demokracia“.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rings"
+
+[party."SPOLU - občianska demokracia".logo.2019-04]
+file = "spolu-2018.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_„SPOLU_–_občianska_demokracia“.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rings"
+
+[party."SPOLU - občianska demokracia".logo.2019-09]
+file = "spolu-2018.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_„SPOLU_–_občianska_demokracia“.svg"
+license = "public domain (PD-textlogo on Commons); cropped to the rings"
+
+[party."SPOLU - občianska demokracia".logo.2020-10]
 file = "spolu-2022.svg"
 source = "https://commons.wikimedia.org/wiki/File:Logo_—_Strana_SPOLU.svg"
 license = "public domain (PD-textlogo on Commons); cropped to the symbol"
@@ -611,7 +1303,29 @@ name = "SZÖVETSÉG - Magyarok. Nemzetiségek. Regiók. | ALIANCIA - Maďari. N�
 # The knot, which the 2023 rename to Magyar Szövetség kept (the 2021
 # Szovetseg-Aliancia.png on Commons, the party's site in October 2022).
 [party."SZÖVETSÉG - Magyarok. Nemzetiségek. Regiók. | ALIANCIA - Maďari. Národnosti. Regióny".logo.2022]
-file = "madarska-aliancia.svg"
+file = "madarska-aliancia-2022.svg"
+source = "https://commons.wikimedia.org/wiki/File:Magyar_Szövetség_logo.svg"
+license = "CC BY-SA 4.0, Magyar Szövetség; cropped to the symbol"
+
+# The same knot in the header of szovetseg.sk from 2022-11-02 to 2025
+# (Wayback).
+[party."SZÖVETSÉG - Magyarok. Nemzetiségek. Regiók. | ALIANCIA - Maďari. Národnosti. Regióny".logo.2023-03]
+file = "madarska-aliancia-2022.svg"
+source = "https://commons.wikimedia.org/wiki/File:Magyar_Szövetség_logo.svg"
+license = "CC BY-SA 4.0, Magyar Szövetség; cropped to the symbol"
+
+[party."SZÖVETSÉG - Magyarok. Nemzetiségek. Regiók. | ALIANCIA - Maďari. Národnosti. Regióny".logo.2023-09]
+file = "madarska-aliancia-2022.svg"
+source = "https://commons.wikimedia.org/wiki/File:Magyar_Szövetség_logo.svg"
+license = "CC BY-SA 4.0, Magyar Szövetség; cropped to the symbol"
+
+[party."SZÖVETSÉG - Magyarok. Nemzetiségek. Regiók. | ALIANCIA - Maďari. Národnosti. Regióny".logo.2023-nrsr]
+file = "madarska-aliancia-2022.svg"
+source = "https://commons.wikimedia.org/wiki/File:Magyar_Szövetség_logo.svg"
+license = "CC BY-SA 4.0, Magyar Szövetség; cropped to the symbol"
+
+[party."SZÖVETSÉG - Magyarok. Nemzetiségek. Regiók. | ALIANCIA - Maďari. Národnosti. Regióny".logo.2024-02]
+file = "madarska-aliancia-2022.svg"
 source = "https://commons.wikimedia.org/wiki/File:Magyar_Szövetség_logo.svg"
 license = "CC BY-SA 4.0, Magyar Szövetség; cropped to the symbol"
 
@@ -632,11 +1346,41 @@ file = "za-ludi.svg"
 source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_For_the_People_(political_party).svg"
 license = "public domain (PD-textlogo on Commons)"
 
+# The same logo.svg on za-ludi.sk from 2019-06-17 to 2022-02-20 (Wayback); the
+# site was parked from 2024, and the logo before it (2022) and after it (2026)
+# is this one.
+[party."ZA ĽUDÍ".logo.2020-nrsr]
+file = "za-ludi.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_For_the_People_(political_party).svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."ZA ĽUDÍ".logo.2021-05]
+file = "za-ludi.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_For_the_People_(political_party).svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."ZA ĽUDÍ".logo.2025-09]
+file = "za-ludi.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_For_the_People_(political_party).svg"
+license = "public domain (PD-textlogo on Commons)"
+
 [party."Zmena zdola, Demokratická únia Slovenska"]
 short = "Zmena zdola"
 name = "Zmena zdola, Demokratická únia Slovenska"
 
 [party."Zmena zdola, Demokratická únia Slovenska".logo.2022]
+file = "zmena-zdola.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Zmena_zdola.svg"
+license = "CC BY-SA 4.0, Ivan Ch RU"
+
+# The blue slanted box of zmenazdola.sk, toplogo.png (Wayback 2017-09-28,
+# 2018-10-26).
+[party."Zmena zdola, Demokratická únia Slovenska".logo.2017]
+file = "zmena-zdola.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Zmena_zdola.svg"
+license = "CC BY-SA 4.0, Ivan Ch RU"
+
+[party."Zmena zdola, Demokratická únia Slovenska".logo.2018]
 file = "zmena-zdola.svg"
 source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Zmena_zdola.svg"
 license = "CC BY-SA 4.0, Ivan Ch RU"
@@ -657,3 +1401,527 @@ name = "ŽIVOT - národná strana"
 file = "zivot.svg"
 source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Život_–_National_Party.svg"
 license = "public domain (PD-textlogo on Commons)"
+
+# The double cross between bars on strana-zivot.sk (Wayback 2023-01-30,
+# 2024-05-21).
+[party."ŽIVOT - národná strana".logo.2023-03]
+file = "zivot.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Život_–_National_Party.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."ŽIVOT - národná strana".logo.2024-10]
+file = "zivot.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Život_–_National_Party.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+# As ŠÚ SR's packages of the by-elections since 2019 write them (the 2018–2022
+# term's under their names of then).
+
+[party."DOBRÁ VOĽBA"]
+short = "Dobrá voľba"
+name = "DOBRÁ VOĽBA"
+
+# The plain red square, dobravolba.png on dobravolba2020.sk (Wayback
+# 2020-02-11, 2021-02-07) and dobravolba.sk (2022-01-13, 2022-03-27).
+[party."DOBRÁ VOĽBA".logo.2020-nrsr]
+file = "dobra-volba-2022.webp"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/e/e2/20230308073737%21Dobr%C3%A1_vo%C4%BEba.png"
+license = "public domain (PD-textlogo on Commons; its version of 2021-02-02)"
+
+[party."DOBRÁ VOĽBA".logo.2021-05]
+file = "dobra-volba-2022.webp"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/e/e2/20230308073737%21Dobr%C3%A1_vo%C4%BEba.png"
+license = "public domain (PD-textlogo on Commons; its version of 2021-02-02)"
+
+[party."DOBRÁ VOĽBA".logo.2022-03]
+file = "dobra-volba-2022.webp"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/e/e2/20230308073737%21Dobr%C3%A1_vo%C4%BEba.png"
+license = "public domain (PD-textlogo on Commons; its version of 2021-02-02)"
+
+[party."DOMA DOBRE"]
+short = "Doma dobre"
+name = "DOMA DOBRE"
+
+[party."Hlas pravice"]
+short = "Hlas pravice"
+name = "Hlas pravice"
+
+[party."Kotleba - Ľudová strana Naše Slovensko"]
+short = "ĽSNS"
+name = "Kotleba - Ľudová strana Naše Slovensko"
+
+# The ring with the double cross: reading "ĽUDOVÁ STRANA NAŠE SLOVENSKO" in
+# the header of naseslovensko.net in October 2017, "KOTLEBA" from 2018-06-25
+# on (Wayback).
+[party."Kotleba - Ľudová strana Naše Slovensko".logo.2017]
+file = "lsns-2017.svg"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/7/75/20170404162252%21Logo_-_%C4%BDudov%C3%A1_strana_Na%C5%A1e_Slovensko_-_People%27s_Party_Our_Slovakia.svg"
+license = "public domain (PD-textlogo on Commons; its version of 2016-03-06)"
+
+[party."Kotleba - Ľudová strana Naše Slovensko".logo.2018]
+file = "lsns.webp"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Kotlebists_–_People's_Party_Our_Slovakia.svg"
+license = "CC BY-SA 4.0, Ivan Ch RU"
+
+[party."Kotleba - Ľudová strana Naše Slovensko".logo.2019-ep]
+file = "lsns.webp"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Kotlebists_–_People's_Party_Our_Slovakia.svg"
+license = "CC BY-SA 4.0, Ivan Ch RU"
+
+[party."Kotleba - Ľudová strana Naše Slovensko".logo.2019-09]
+file = "lsns.webp"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Kotlebists_–_People's_Party_Our_Slovakia.svg"
+license = "CC BY-SA 4.0, Ivan Ch RU"
+
+[party."MOST - HÍD"]
+short = "Most-Híd"
+name = "MOST - HÍD"
+
+# Maďarské fórum's name of 2023, under which it stood for the NR SR with
+# the other four parties' candidates: a party, as MV SR registered 24
+# parties and one coalition, OĽANO's (TASR, hnonline.sk, 3 July 2023); it
+# is Maďarské fórum again in the register.
+[party."Maďarské fórum, Občianski demokrati Slovenska, Za regióny, Rómska koalícia, Demokratická strana"]
+short = "Maďarské fórum"
+name = "Maďarské fórum, Občianski demokrati Slovenska, Za regióny, Rómska koalícia, Demokratická strana"
+
+# The ringed "M" of madarskeforum.sk (Wayback 2023-08-16, 2023-09-25,
+# 2024-02-09).
+[party."Maďarské fórum, Občianski demokrati Slovenska, Za regióny, Rómska koalícia, Demokratická strana".logo.2023-09]
+file = "madarske-forum.webp"
+source = "https://commons.wikimedia.org/wiki/File:Maďarské_fórum_Logo.png"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."Maďarské fórum, Občianski demokrati Slovenska, Za regióny, Rómska koalícia, Demokratická strana".logo.2023-nrsr]
+file = "madarske-forum.webp"
+source = "https://commons.wikimedia.org/wiki/File:Maďarské_fórum_Logo.png"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."Maďarské fórum, Občianski demokrati Slovenska, Za regióny, Rómska koalícia, Demokratická strana".logo.2024-02]
+file = "madarske-forum.webp"
+source = "https://commons.wikimedia.org/wiki/File:Maďarské_fórum_Logo.png"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."Modrí, Most - Híd"]
+short = "Modrí – Most-Híd"
+name = "Modrí, Most - Híd"
+
+# MODRÍ over MOST HÍD on modri.sk from 2023-08-11 to 2023-10 (Wayback); in
+# January 2024 the site showed MODRÍ alone (Wayback 2024-01-24).
+[party."Modrí, Most - Híd".logo.2023-nrsr]
+file = "modri-most-hid-2023-nrsr.webp"
+source = "https://commons.wikimedia.org/wiki/File:Modrí_Most–Híd.png"
+license = "public domain (PD-textlogo on Commons); cropped to the MODRÍ square"
+
+[party."Modrí, Most - Híd".logo.2024-02]
+file = "modri-2024-02.webp"
+source = "https://commons.wikimedia.org/wiki/File:MODRÍ_–_Európske_Slovensko_logo.png"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."NÁRODNÁ KOALÍCIA"]
+short = "Národná koalícia"
+name = "NÁRODNÁ KOALÍCIA"
+
+# The circle with the double cross on narodnakoalicia.sk from 2018-08-30 to
+# 2020-09-19 (Wayback); no capture shows its logo before 2017-11-04.
+[party."NÁRODNÁ KOALÍCIA".logo.2018]
+file = "narodna-koalicia-2022.webp"
+source = "https://commons.wikimedia.org/wiki/File:Narodna_Koalicia_Logo.png"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."NÁRODNÁ KOALÍCIA".logo.2019-04]
+file = "narodna-koalicia-2022.webp"
+source = "https://commons.wikimedia.org/wiki/File:Narodna_Koalicia_Logo.png"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."NÁRODNÁ KOALÍCIA".logo.2019-ep]
+file = "narodna-koalicia-2022.webp"
+source = "https://commons.wikimedia.org/wiki/File:Narodna_Koalicia_Logo.png"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."NÁRODNÁ KOALÍCIA".logo.2019-09]
+file = "narodna-koalicia-2022.webp"
+source = "https://commons.wikimedia.org/wiki/File:Narodna_Koalicia_Logo.png"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."NÁRODNÁ KOALÍCIA".logo.2020-10]
+file = "narodna-koalicia-2022.webp"
+source = "https://commons.wikimedia.org/wiki/File:Narodna_Koalicia_Logo.png"
+license = "public domain (PD-textlogo on Commons); cropped to the symbol"
+
+[party."OBYČAJNÍ ĽUDIA a nezávislé osobnosti (OĽANO)"]
+short = "OĽANO"
+name = "OBYČAJNÍ ĽUDIA a nezávislé osobnosti (OĽANO)"
+
+# The lime square of obycajniludia.sk, the same logo1.png from 2017-10-21 to
+# 2019-07-10 (Wayback).
+[party."OBYČAJNÍ ĽUDIA a nezávislé osobnosti (OĽANO)".logo.2017]
+file = "olano-2017.webp"
+source = "https://commons.wikimedia.org/wiki/File:Звичайні_люди_та_незалежні_особистості.png"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."OBYČAJNÍ ĽUDIA a nezávislé osobnosti (OĽANO)".logo.2018]
+file = "olano-2017.webp"
+source = "https://commons.wikimedia.org/wiki/File:Звичайні_люди_та_незалежні_особистості.png"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."OBYČAJNÍ ĽUDIA a nezávislé osobnosti (OĽANO)".logo.2019-ep]
+file = "olano-2017.webp"
+source = "https://commons.wikimedia.org/wiki/File:Звичайні_люди_та_незалежні_особистості.png"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."OBYČAJNÍ ĽUDIA a nezávislé osobnosti (OĽANO)".logo.2019-09]
+file = "olano-2017.webp"
+source = "https://commons.wikimedia.org/wiki/File:Звичайні_люди_та_незалежні_особистості.png"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Rómska iniciatíva Slovenska"]
+short = "Rómska iniciatíva"
+name = "Rómska iniciatíva Slovenska"
+
+[party."SLOVENSKO"]
+short = "Slovensko"
+name = "SLOVENSKO"
+
+# The black wordmark of obycajniludia.sk on 2024-10-03 (Wayback), Commons'
+# version of 2024-03-29; the red one followed.
+[party."SLOVENSKO".logo.2024-10]
+file = "slovensko-2024-10.svg"
+source = "https://upload.wikimedia.org/wikipedia/commons/archive/3/3a/20240712094312%21Slovakia_%28political_party%29_logo.svg"
+license = "public domain (PD-textlogo on Commons; its version of 2024-03-29)"
+
+[party."SME RODINA - Boris Kollár"]
+short = "Sme rodina"
+name = "SME RODINA - Boris Kollár"
+
+[party."Strana maďarskej komunity - Magyar Közösség Pártja"]
+short = "SMK"
+name = "Strana maďarskej komunity - Magyar Közösség Pártja"
+
+# The red "MK" disc, the same logo-hu.svg on mkp.sk from 2017-10-17 to
+# 2021-10-20 (Wayback).
+[party."Strana maďarskej komunity - Magyar Közösség Pártja".logo.2017]
+file = "smk-2017.webp"
+source = "https://commons.wikimedia.org/wiki/File:Strana_maďarskej_komunity_Logo.jpg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Strana maďarskej komunity - Magyar Közösség Pártja".logo.2018]
+file = "smk-2017.webp"
+source = "https://commons.wikimedia.org/wiki/File:Strana_maďarskej_komunity_Logo.jpg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Strana maďarskej komunity - Magyar Közösség Pártja".logo.2019-04]
+file = "smk-2017.webp"
+source = "https://commons.wikimedia.org/wiki/File:Strana_maďarskej_komunity_Logo.jpg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Strana maďarskej komunity - Magyar Közösség Pártja".logo.2019-ep]
+file = "smk-2017.webp"
+source = "https://commons.wikimedia.org/wiki/File:Strana_maďarskej_komunity_Logo.jpg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Strana maďarskej komunity - Magyar Közösség Pártja".logo.2019-09]
+file = "smk-2017.webp"
+source = "https://commons.wikimedia.org/wiki/File:Strana_maďarskej_komunity_Logo.jpg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Strana maďarskej komunity - Magyar Közösség Pártja".logo.2020-10]
+file = "smk-2017.webp"
+source = "https://commons.wikimedia.org/wiki/File:Strana_maďarskej_komunity_Logo.jpg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Strana maďarskej komunity - Magyar Közösség Pártja".logo.2021-10]
+file = "smk-2017.webp"
+source = "https://commons.wikimedia.org/wiki/File:Strana_maďarskej_komunity_Logo.jpg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Strana tolerancie a spolunažívania"]
+short = "Strana tolerancie"
+name = "Strana tolerancie a spolunažívania"
+
+[party."Strana zelených Slovenska"]
+short = "SZS"
+name = "Strana zelených Slovenska"
+
+# The ballot subjects of the elections to the National Council (2020, 2023)
+# and the European Parliament (2019, 2024) not above, keyed as ŠÚ SR's
+# tables of subjects (tab0a) name them: `name` that name, as registered
+# then; `short` the official short form of the table where it is a usable
+# one (else the form media use). A coalition is a subject of several parties
+# under the law (Act No. 180/2014 Coll., § 66), as MV SR registered it:
+# "Koalícia" in its name (2019, 2020), the one coalition among the 25
+# subjects of 2023 (TASR, hnonline.sk, 3 July 2023), "Názov koalície" on
+# the list of its candidates (EP 2024, minv.sk EP24_ZZK22.pdf). Parties
+# that put other parties' members on their list (OĽANO in 2020, Maďarské
+# fórum in 2023) stood as one party, under a name that says so.
+
+[party."DOPRAVA"]
+short = "Doprava"
+name = "DOPRAVA"
+
+[party."EURÓPSKA DEMOKRATICKÁ STRANA"]
+short = "EDS"
+name = "EURÓPSKA DEMOKRATICKÁ STRANA"
+
+[party."HLAS ĽUDU"]
+short = "Hlas ľudu"
+name = "HLAS ĽUDU"
+
+[party."KARMA"]
+short = "Karma"
+name = "KARMA"
+
+[party."KOREKTÚRA - Andrej Hryc"]
+short = "Korektúra"
+name = "KOREKTÚRA - Andrej Hryc"
+
+[party."Koalícia Komunistická strana Slovenska, VZDOR - strana práce"]
+short = "KSS-VZDOR"
+name = "Koalícia Komunistická strana Slovenska, VZDOR - strana práce"
+members = ["Komunistická strana Slovenska", "VZDOR - strana práce"]
+
+[party."Koalícia Progresívne Slovensko a SPOLU - občianska demokracia"]
+short = "Koalícia PS a SPOLU"
+name = "Koalícia Progresívne Slovensko a SPOLU - občianska demokracia"
+members = ["Progresívne Slovensko", "SPOLU - občianska demokracia"]
+
+[party."Kresťanská demokracia - Život a prosperita"]
+short = "KDŽP"
+name = "Kresťanská demokracia - Život a prosperita"
+
+[party."Magyar Közösségi Összefogás - Maďarská komunitná spolupatričnosť"]
+short = "MKÖ-MKS"
+name = "Magyar Közösségi Összefogás - Maďarská komunitná spolupatričnosť"
+
+[party."Maďarská kresťanskodemokratická aliancia - Magyar Kereszténydemokrata Szövetség"]
+short = "MKDA-MKDSZ"
+name = "Maďarská kresťanskodemokratická aliancia - Magyar Kereszténydemokrata Szövetség"
+
+[party."MÁME TOHO DOSŤ !"]
+short = "Máme toho dosť!"
+name = "MÁME TOHO DOSŤ !"
+
+[party."MySlovensko"]
+short = "MySlovensko"
+name = "MySlovensko"
+
+[party."NAJ - Nezávislosť a Jednota"]
+short = "NAJ"
+name = "NAJ - Nezávislosť a Jednota"
+
+# OĽaNO's name of 2023, a member of the coalition below.
+[party."OĽANO A PRIATELIA: OBYČAJNÍ ĽUDIA (OĽANO), NEZÁVISLÍ KANDIDÁTI (NEKA), NOVA, SLOBODNÍ A ZODPOVEDNÍ, PAČIVALE ROMA, MAGYAR SZÍVEK"]
+short = "OĽANO"
+name = "OĽANO A PRIATELIA: OBYČAJNÍ ĽUDIA (OĽANO), NEZÁVISLÍ KANDIDÁTI (NEKA), NOVA, SLOBODNÍ A ZODPOVEDNÍ, PAČIVALE ROMA, MAGYAR SZÍVEK"
+
+[party."OĽANO A PRIATELIA: OBYČAJNÍ ĽUDIA (OĽANO), NEZÁVISLÍ KANDIDÁTI (NEKA), NOVA, SLOBODNÍ A ZODPOVEDNÍ, PAČIVALE ROMA, MAGYAR SZÍVEK a Kresťanská únia a ZA ĽUDÍ"]
+short = "OĽANO a priatelia"
+name = "OĽANO A PRIATELIA: OBYČAJNÍ ĽUDIA (OĽANO), NEZÁVISLÍ KANDIDÁTI (NEKA), NOVA, SLOBODNÍ A ZODPOVEDNÍ, PAČIVALE ROMA, MAGYAR SZÍVEK a Kresťanská únia a ZA ĽUDÍ"
+members = [
+    "OĽANO A PRIATELIA: OBYČAJNÍ ĽUDIA (OĽANO), NEZÁVISLÍ KANDIDÁTI (NEKA), NOVA, SLOBODNÍ A ZODPOVEDNÍ, PAČIVALE ROMA, MAGYAR SZÍVEK",
+    "Kresťanská únia",
+    "ZA ĽUDÍ",
+]
+
+# The coalition's own wordmark, LOGO-OLANO23.svg on obycajniludia.sk on
+# 2023-09-24 (Wayback).
+[party."OĽANO A PRIATELIA: OBYČAJNÍ ĽUDIA (OĽANO), NEZÁVISLÍ KANDIDÁTI (NEKA), NOVA, SLOBODNÍ A ZODPOVEDNÍ, PAČIVALE ROMA, MAGYAR SZÍVEK a Kresťanská únia a ZA ĽUDÍ".logo.2023-nrsr]
+file = "olano-a-priatelia-2023-nrsr.svg"
+source = "https://commons.wikimedia.org/wiki/File:OĽaNO_a_priatelia_logo.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."PRIAMA DEMOKRACIA"]
+short = "Priama demokracia"
+name = "PRIAMA DEMOKRACIA"
+
+[party."SDKÚ - DS - Slovenská demokratická a kresťanská únia - Demokratická strana"]
+short = "SDKÚ-DS"
+name = "SDKÚ - DS - Slovenská demokratická a kresťanská únia - Demokratická strana"
+
+# The blue SDKÚ square of sdku-ds.sk (Wayback 2017-10-06, 2018-03-12) and
+# sdkuds.sk (2023-09-24, 2024-05-20).
+[party."SDKÚ - DS - Slovenská demokratická a kresťanská únia - Demokratická strana".logo.2017]
+file = "sdku-ds.svg"
+source = "https://commons.wikimedia.org/wiki/File:SDKU-DS_Logo.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."SDKÚ - DS - Slovenská demokratická a kresťanská únia - Demokratická strana".logo.2018]
+file = "sdku-ds.svg"
+source = "https://commons.wikimedia.org/wiki/File:SDKU-DS_Logo.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."SDKÚ - DS - Slovenská demokratická a kresťanská únia - Demokratická strana".logo.2023-nrsr]
+file = "sdku-ds.svg"
+source = "https://commons.wikimedia.org/wiki/File:SDKU-DS_Logo.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."SDKÚ - DS - Slovenská demokratická a kresťanská únia - Demokratická strana".logo.2024-ep]
+file = "sdku-ds.svg"
+source = "https://commons.wikimedia.org/wiki/File:SDKU-DS_Logo.svg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."SLOVENSKÁ KONZERVATÍVNA STRANA"]
+short = "SKS"
+name = "SLOVENSKÁ KONZERVATÍVNA STRANA"
+
+# The name in white on blue, logo.png of eskas.sk (Wayback 2018-11-02,
+# 2019-05-22).
+[party."SLOVENSKÁ KONZERVATÍVNA STRANA".logo.2018]
+file = "sks-2018.webp"
+source = "https://commons.wikimedia.org/wiki/File:Slovenská_konzervatívna_strana_Logo.jpg"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."SLOVENSKÁ KONZERVATÍVNA STRANA".logo.2019-ep]
+file = "sks-2018.webp"
+source = "https://commons.wikimedia.org/wiki/File:Slovenská_konzervatívna_strana_Logo.jpg"
+license = "public domain (PD-textlogo on Commons)"
+
+# Later SRDCE - SLOVENSKÁ NÁRODNÁ JEDNOTA - strana vlastencov (above).
+[party."SLOVENSKÁ NÁRODNÁ JEDNOTA - strana vlastencov"]
+short = "SNJ-sv"
+name = "SLOVENSKÁ NÁRODNÁ JEDNOTA - strana vlastencov"
+
+[party."SLOVENSKO, ZA ĽUDÍ"]
+short = "Slovensko-Za ľudí"
+name = "SLOVENSKO, ZA ĽUDÍ"
+members = ["SLOVENSKO", "ZA ĽUDÍ"]
+
+[party."SPOLOČNE OBČANIA SLOVENSKA"]
+short = "Spoločne občania"
+name = "SPOLOČNE OBČANIA SLOVENSKA"
+
+# The SOS letters with a tick of sosstrana.sk, logo-obcan-4.svg there on
+# 2023-09-27 and the same logo on 2024-06-01 and 2026-06-17 (Wayback).
+[party."SPOLOČNE OBČANIA SLOVENSKA".logo.2023-nrsr]
+file = "spolocne-obcania.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo-obcan-4.svg"
+license = "CC BY-SA 4.0, Fediak22; cropped to the letters SOS"
+
+[party."SPOLOČNE OBČANIA SLOVENSKA".logo.2024-ep]
+file = "spolocne-obcania.svg"
+source = "https://commons.wikimedia.org/wiki/File:Logo-obcan-4.svg"
+license = "CC BY-SA 4.0, Fediak22; cropped to the letters SOS"
+
+[party."SPRAVODLIVOSŤ"]
+short = "Spravodlivosť"
+name = "SPRAVODLIVOSŤ"
+
+[party."SRDCE vlastenci a dôchodcovia - SLOVENSKÁ NÁRODNÁ JEDNOTA"]
+short = "Srdce"
+name = "SRDCE vlastenci a dôchodcovia - SLOVENSKÁ NÁRODNÁ JEDNOTA"
+
+[party."Slovenská liga"]
+short = "Slovenská liga"
+name = "Slovenská liga"
+
+[party."Spájame Občanov Slovenska - SOSK"]
+short = "SOSK"
+name = "Spájame Občanov Slovenska - SOSK"
+
+[party."Strana práce"]
+short = "Strana práce"
+name = "Strana práce"
+
+[party."VLASŤ"]
+short = "Vlasť"
+name = "VLASŤ"
+
+[party."VZDOR - strana práce"]
+short = "Vzdor"
+name = "VZDOR - strana práce"
+
+[party."ZDRAVÝ ROZUM"]
+short = "Zdravý rozum"
+name = "ZDRAVÝ ROZUM"
+
+# As ŠÚ SR's packages of the municipal elections of 2018 and the regional
+# ones of 2017 write them (tab0b, tab0ca); `short` the packages' own short
+# form where Slovak media use it, else the first words.
+
+[party."Hnutie za demokraciu"]
+short = "HZD"
+name = "Hnutie za demokraciu"
+
+# The red and blue "D", the only mark of hnutiezademokraciu.sk: its icons
+# (Wayback 2017-10-09, 2018-09-01).
+[party."Hnutie za demokraciu".logo.2017]
+file = "hzd-2017.webp"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Movement_for_Democracy_(Slovakia).png"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."Hnutie za demokraciu".logo.2018]
+file = "hzd-2017.webp"
+source = "https://commons.wikimedia.org/wiki/File:Logo_of_the_Movement_for_Democracy_(Slovakia).png"
+license = "public domain (PD-textlogo on Commons)"
+
+[party."JEDNOTA - ľavicová strana Slovenska"]
+short = "Jednota-ĽSS"
+name = "JEDNOTA - ľavicová strana Slovenska"
+
+[party."MLADÁ PETRŽALKA - lokálna strana"]
+short = "Mladá Petržalka"
+name = "MLADÁ PETRŽALKA - lokálna strana"
+
+[party."Nezávislé fórum"]
+short = "Nezávislé fórum"
+name = "Nezávislé fórum"
+
+[party."SLOVENSKO DO TOHO !"]
+short = "Slovensko do toho"
+name = "SLOVENSKO DO TOHO !"
+
+[party."Strana mladých ľudí"]
+short = "Mladí ľudia"
+name = "Strana mladých ľudí"
+
+[party."Strana občianskej ľavice"]
+short = "SOĽ"
+name = "Strana občianskej ľavice"
+
+[party."Strana zelených"]
+short = "Strana zelených"
+name = "Strana zelených"
+
+[party."TREBIŠOV NAHLAS"]
+short = "Trebišov nahlas"
+name = "TREBIŠOV NAHLAS"
+
+[party."VÁŠ KRAJ"]
+short = "Váš kraj"
+name = "VÁŠ KRAJ"
+
+[party."Ľudová strana Pevnosť Slovensko"]
+short = "Pevnosť Slovensko"
+name = "Ľudová strana Pevnosť Slovensko"
+
+[party."Šport do Košíc a na Východ"]
+short = "ŠKV"
+name = "Šport do Košíc a na Východ"
+
+[party."#SIEŤ"]
+short = "Sieť"
+name = "#SIEŤ"
+
+[party."DEMOKRATICKÁ OBČIANSKA STRANA"]
+short = "DOST"
+name = "DEMOKRATICKÁ OBČIANSKA STRANA"
+
+[party."MLADÁ BRATISLAVA"]
+short = "Mladá Bratislava"
+name = "MLADÁ BRATISLAVA"
+
+[party."NOVÝ PARLAMENT"]
+short = "Nový parlament"
+name = "NOVÝ PARLAMENT"
+
+[party."Nezávislosť a Jednota"]
+short = "NAJ"
+name = "Nezávislosť a Jednota"
+
+[party."SKOK - Európski liberálni demokrati"]
+short = "Skok"
+name = "SKOK - Európski liberálni demokrati"
+
+[party."Strana zdravotne a sociálne znevýhodnených občanov"]
+short = "SZSZO"
+name = "Strana zdravotne a sociálne znevýhodnených občanov"

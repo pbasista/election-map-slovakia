@@ -1,0 +1,29 @@
+# Okrsky of Bešeňov, transcribed by an AI agent in job okrsok-rules-3793 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: od č.d. 1 do č.d. 320
+#   okrsok 2: od č.d. 321 do č.d. 637
+obec = "503070"
+name = "Bešeňov"
+okrsky_date = 2023-06-27
+okrsky_note = "Okrsky by súpisné číslo (č.d.): 1–320 and 321–637; okrsok 2 is given as 321- so newer houses above 637 also fall there."
+
+[[document]]
+url = "https://besenov.sk/wp-content/uploads/dokumenty/volby-do-nrsr/Volebne-okrsky-a-urcene-volebne-miestnosti-pre-volby-do-Narodnej-rady-Slovenskej-republiky-v-roku-2023-na-uzemi-obce-Besenov.pdf"
+sha256 = "2008efb2de510021667f1102e207db4e44769848c6839d9a5fe764009724bcaa"
+title = "Volebné okrsky a určené volebné miestnosti pre voľby do NR SR v roku 2023 na území obce Bešeňov"
+
+[[document]]
+url = "https://besenov.sk/dokument/volebne-okrsky-a-urcene-volebne-miestnosti-pre-volby-do-narodnej-rady-slovenskej-republiky-v-roku-2023-na-uzemi-obce-besenov/"
+sha256 = "47ae70be4a8c95a1c71e4099f5ee056fe687d54a1acf84a2ee55b9327c29985c"
+title = "Document page"
+
+[okrsok.1]
+rules = [
+  {part = "Bešeňov", numbers = "1-320"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Bešeňov", numbers = "321-"},
+]

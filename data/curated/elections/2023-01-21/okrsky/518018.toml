@@ -1,0 +1,58 @@
+# Okrsky of Štiavnik, transcribed by an AI agent in job okrsok-rules-3002 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Vymedzenie územného obvodu: súpisné číslo 1-87, 920-1055 a novostavby v tom obvode
+#   okrsok 2: Vymedzenie územného obvodu: súpisné číslo 88-165, 853-919 a novostavby v tom obvode
+#   okrsok 3: Vymedzenie územného obvodu: súpisné číslo 166-232, 792-852 a novostavby v tom obvode
+#   okrsok 4: Vymedzenie územného obvodu: súpisné číslo 233-424, 660-791 a novostavby v tom obvode
+#   okrsok 5: Vymedzenie územného obvodu: súpisné číslo 425-659 a novostavby v tom obvode
+obec = "518018"
+name = "Štiavnik"
+okrsky_date = 2022-11-09
+okrsky_fill = "nearest"
+okrsky_note = "Each okrsok is given by súpisné čísla, one numbering across all parts of the obec, so each range is applied in every part. 'A novostavby v tom obvode' (new houses, súpisné above 1055) are placed by fill_nearest."
+
+[[document]]
+url = "https://www.stiavnik.sk/data/page/stiavnik.sk/15884/volebne-okrsky-a-volebne-miestnosti-v-obci-013-55-stiavnik.pdf"
+sha256 = "b495ba1215bd5cb7533044902ad51c52447b5897300316ca5989bfaefe2f23f5"
+title = "Volebné okrsky a volebné miestnosti v obci 013 55 Štiavnik pre referendum 21.01.2023 (Štiavnik, 09.11.2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Štiavnik", numbers = "1-87, 920-1055"},
+  {part = "Višňové", numbers = "1-87, 920-1055"},
+  {part = "Predjastrabie", numbers = "1-87, 920-1055"},
+  {part = "Čierne", numbers = "1-87, 920-1055"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Štiavnik", numbers = "88-165, 853-919"},
+  {part = "Višňové", numbers = "88-165, 853-919"},
+  {part = "Predjastrabie", numbers = "88-165, 853-919"},
+  {part = "Čierne", numbers = "88-165, 853-919"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Štiavnik", numbers = "166-232, 792-852"},
+  {part = "Višňové", numbers = "166-232, 792-852"},
+  {part = "Predjastrabie", numbers = "166-232, 792-852"},
+  {part = "Čierne", numbers = "166-232, 792-852"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Štiavnik", numbers = "233-424, 660-791"},
+  {part = "Višňové", numbers = "233-424, 660-791"},
+  {part = "Predjastrabie", numbers = "233-424, 660-791"},
+  {part = "Čierne", numbers = "233-424, 660-791"},
+]
+
+[okrsok.5]
+rules = [
+  {part = "Štiavnik", numbers = "425-659"},
+  {part = "Višňové", numbers = "425-659"},
+  {part = "Predjastrabie", numbers = "425-659"},
+  {part = "Čierne", numbers = "425-659"},
+]

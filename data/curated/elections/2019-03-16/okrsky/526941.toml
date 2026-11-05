@@ -1,0 +1,23 @@
+# Okrsky of Orlov, transcribed by an AI agent in job okrsok-rules-1557 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: volebná miestnosť: Obecný úrad Orlov, zasadačka, Orlov 119 - pre obyvateľov obce Orlov
+#   okrsok 2: volebná miestnosť: Orlov – Andrejovka 325, spoločenská miestnosť - pre obyvateľov obce Orlov, miestnej časti Andrejovka
+obec = "526941"
+name = "Orlov"
+okrsky_date = 2019-01-28
+
+[[document]]
+url = "https://www.obecorlov.sk/resources/File/utvorenie-volebnych-okrskov.pdf"
+sha256 = "9cbb2df4e0c91fc1191145e3a9387324958229c0cb1f3a14c7e72c6f4f14f344"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta SR 2019 (28.01.2019)"
+
+[okrsok.1]
+rules = [
+  {part = "Orlov", note = "'obyvatelia obce Orlov' beside okrsok 2 for the part Andrejovka: the part Orlov"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Andrejovka"},
+]

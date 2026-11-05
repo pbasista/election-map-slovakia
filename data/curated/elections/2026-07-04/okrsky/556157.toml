@@ -1,0 +1,46 @@
+# Okrsky of Jacovce, transcribed by an AI agent in job okrsok-rules-5693 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hlboká, Májová, Pekárenská, Potočná, Školská, Záhradkárska, Zemianská, Obec Jacovce
+#   okrsok 2: Bedzianská, Bočná, Brezová, Farská, Javorová, Jarabina, Kuzmická, Mlynská, Pod Hôrkou, Poľná, Pri Majeri, Slobody, Záplotie
+obec = "556157"
+name = "Jacovce"
+okrsky_date = 2026-05-07
+okrsky_fill = "nearest"
+okrsky_note = "'Obec Jacovce' in okrsok 1 means residents registered only on the obec, not the register's addresses without a street. Jarabina and Mlynská (okrsok 2) are not in the address register (no addresses), left out. The register's 26 addresses without a street take the nearest okrsok (fill_nearest). The live file (download_file_f.php?id=2411788) now answers 404; the Internet Archive capture of 2026-05-24 is used."
+
+[[document]]
+url = "https://web.archive.org/web/20260524232338/https://www.obecjacovce.sk/download_file_f.php?id=2411788"
+sha256 = "c03a13cec287355083dd78e2c822911964f8eb5d07e6070d56bb44dd9551cd59"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností na konanie referenda 2026 (V Jacovciach, 07. 05. 2026)"
+
+[[document]]
+url = "https://web.archive.org/web/20260628174807/https://www.obecjacovce.sk/oznamy/referendum-jul-2026.html"
+sha256 = "7661909f38e0c9beaecb5f9037171b18f444856f2be0acd4aae76aeafbc2af02"
+title = "Referendum JÚL 2026 (page linking the document)"
+
+[okrsok.1]
+rules = [
+  {street = "Hlboká"},
+  {street = "Májová"},
+  {street = "Pekárenská"},
+  {street = "Potočná"},
+  {street = "Školská"},
+  {street = "Záhradkárska"},
+  {street = "Zemianská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bedzianska", written = "Bedzianská", note = "Same street; the document writes the ending with a long á (register: Bedzianska); no other similar street."},
+  {street = "Bočná"},
+  {street = "Brezová"},
+  {street = "Farská"},
+  {street = "Javorová"},
+  {street = "Kuzmická"},
+  {street = "Pod Hôrkou"},
+  {street = "Poľná"},
+  {street = "Pri Majeri"},
+  {street = "Slobody"},
+  {street = "Záplotie"},
+]

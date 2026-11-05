@@ -1,0 +1,46 @@
+# Council obvody of Veľká Ida (522147), Košice - okolie.
+# Transcribed by an AI agent in job obvod-rules-155 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Volebný obvod I. Veľká Ida - 8 poslancov
+#   obvod 2: Volebný obvod II. Gomboš – 1 poslanec
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/522147.toml, standing in.
+obec = "522147"
+name = "Veľká Ida"
+date = 2018-06-14
+note = "The announcement 'Volebné obvody a počet poslancov' (files/2018-08-24-102018-...) linked from the archived 2018 elections page is gone live and not in the Internet Archive; used the council's resolution 44/18 of 14.6.2018 as published in the voting record of that session. Obvod I is the rest of the municipality (časť Veľká Ida), obvod II the part Gomboš."
+okrsky_note = "Undated announcement on the 2022 elections page, given as the Internet Archive snapshot of 24.9.2022 (the same text is still live on the a73-808 page). House numbers are súpisné (no streets in the register). Okrsok 2 (320–788) is the rest of obvod 1. \"všetci občania prihlásení na obec\" (residents without an address) of okrsok 1 are not a rule."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-5897): No 2018 okrsky document found. The 2018 elections page (archived 2018-10-01) lists the notices on population, obvody and seats, the MVK recorder, candidate forms, e-mail address, campaign and candidates, but no 'utvorenie volebných okrskov' notice; the Archive's 2018 PDFs of velkaida.sk (volby.pdf = the MVK recorder's appointment, OZNAM.doc = a link to the ministry) hold none. The live website's elections section starts with 2020. Okrsky 1 and 2 split the part Veľká Ida (addresses without streets), which no 2018 document describes. A file 'Informacia_volebne_okrsky.pdf' of 2019-01-25 belongs to a later vote. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 3 okrsky, those ŠÚ SR counted in each council obvod (nearer, not taken: 2019-03-16: okrsky of the whole obec, the council then elected in several obvody; 2020-02-29: okrsky of the whole obec, the council then elected in several obvody). Voters on the roll per okrsok (ŠÚ SR), 2018-11-10 → 2022-10-29: 1: 990 → 1,042, 2: 1,161 → 1,265, 3: 209 → 206."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2022-09-24
+okrsky_date_basis = "The okrsky announcement states no date; the Internet Archive captured the 2022 elections page with it on 2022-09-24 (https://web.archive.org/web/20220924224100/https://www.velkaida.sk/volby-do-organov-samospravy-obci)."
+
+[[document]]
+url = "https://www.velkaida.sk/files/2018-07-13-114827-Hlasovanie_poslancov_na_zasadnuti_OZ_vo_Ve__kej_Ide_-_14.6.2018.pdf"
+sha256 = "1312316335a8572f12e9f4773fe3e55056d1a4178bea3d01e503fd5282076a97"
+title = "Hlasovanie poslancov na zasadnutí OZ vo Veľkej Ide konaného dňa 14.6.2018 (uznesenie 44/18 OZ)"
+
+[obvod.1]
+seats = 8
+okrsky = [1, 2]
+rules = [
+  {part = "Veľká Ida"},
+]
+
+[obvod.2]
+seats = 1
+okrsky = [3]
+rules = [
+  {part = "Gomboš"},
+]
+
+[okrsok.1]
+rules = [
+  {part = "Veľká Ida", numbers = "1-319"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

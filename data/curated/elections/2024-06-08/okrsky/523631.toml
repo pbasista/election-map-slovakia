@@ -1,0 +1,41 @@
+# Okrsky of Liptovská Teplička, transcribed by an AI agent in job okrsok-rules-5077 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kufajka, Pilisko, Ráztocka, Teplická, Záhrady, Horárne, Zaglinka, č.d. 732, 733
+#   okrsok 2: Bory, Uhlárová, Drevárska, Koliesko, Kobyliarky, Ul. Š. Nahalku, Pod Úbočou, Na Jarku, Potočná, Úzka, Ul. Š. Garaja, č. d. 535, 683, 689, 725, 726, 730, 734, 735
+obec = "523631"
+name = "Liptovská Teplička"
+okrsky_date = 2024-03-04
+okrsky_fill = "nearest"
+okrsky_note = "Horárne and Zaglinka (okrsok 1) are not streets in the address register (settlements/houses without a street) and are left out; house numbers the document lists (\"č.\", \"č. d.\") are súpisné numbers of houses without a street, given as numbers in the part. Other addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://www.liptovskateplicka.sk/e_download.php?file=data/uredni_deska/obsah825_1.pdf&original=Vo%C4%BEby%20E%C3%9A%202024%20-%20Voleb.okrsky%20a%20vol.miestnosti.pdf"
+sha256 = "38362380fcd17c00c1d0f5ba440e494a3797c29f72a5dfe79c4ea9f68b204cac"
+title = "Oznámenie o určení volebných okrskov a volebných miestností pre voľby do Európskeho parlamentu"
+
+[okrsok.1]
+rules = [
+  {street = "Kufajka"},
+  {street = "Pilisko"},
+  {street = "Ráztocka"},
+  {street = "Teplická"},
+  {street = "Záhrady"},
+  {part = "Liptovská Teplička", numbers = "732, 733"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bory"},
+  {street = "Uhlárová"},
+  {street = "Drevárska"},
+  {street = "Koliesko"},
+  {street = "Kobyliarky"},
+  {street = "Ul. Štefana Nahalku", written = "Ul. Š. Nahalku"},
+  {street = "Pod úbočou", written = "Pod Úbočou", note = "the document capitalises the second word; same street"},
+  {street = "Na jarku", written = "Na Jarku", note = "the document capitalises the second word; same street"},
+  {street = "Potočná"},
+  {street = "Úzka"},
+  {street = "Ul. Štefana Garaja", written = "Ul. Š. Garaja"},
+  {part = "Liptovská Teplička", numbers = "535, 683, 689, 725, 726, 730, 734, 735"},
+]

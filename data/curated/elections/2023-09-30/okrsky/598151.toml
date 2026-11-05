@@ -1,0 +1,228 @@
+# Okrsky of Košice-Sever, transcribed by an AI agent in job okrsok-rules-3378 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Alešovo nábrežie, Cimborkova, Česká, Heydukova, Moravská, Rampová 2-6 (párne), Slovenská, Slovenskej jednoty 17-53 (nepárne), Svornosti, Ťahanovské riadky, Záborského
+#   okrsok 2: Čárskeho, Hlinkova 32-38 (párne) Odborárska, Študentská
+#   okrsok 3: Kustrova, Národné námestie, Národná trieda 2-54 (párne), Skautská, Strakova, Tomášikova
+#   okrsok 4: Družstevná, Kisdyho, Národná trieda 1-39 (nepárne), Palkovičova, Tolstého
+#   okrsok 5: Czambelova 1-6, Chalupkova, Komenského 35-73 (nepárne), Komenského 44-60 (párne), Komenského park, Park duklianskych obetí, Park obrancov mieru, Slovenskej jednoty 1-15 (nepárne)
+#   okrsok 6: Hlinkova 2-30 (párne), Obrancov mieru
+#   okrsok 7: Němcovej
+#   okrsok 8: Hroncova, Letná (nepárne), Szakkayho, Vysokoškolská
+#   okrsok 9: Banícka, Detvianska, Kostolná, Krupinská, Magdalénska, Na Kalvárii, Na šajbe, Nitrianska, Račí potok, Stará spišská cesta, Terchovská, Vencová, Za amfiteátrom, MČ Košice - Sever
+#   okrsok 10: Bankov, Cyprusová, Fakľová, Liptovská, Olivová, Oravská, Palmová, Rozálska, Sládkovičova, Trenčianska, Watsonova, Zvolenská
+#   okrsok 11: Dobšinského, Gogoľova, Hrbová, Hurbanova, Jahodová, Jedľová, Junácka, Lesná, Malinová, Mánesova, Pod kaštieľom, Potočná, Slovenského, Tŕňová, Urbánkova, Višňová Vnútorný Červený breh, Vonkajší Červený breh, Záhradná, Žľaby
+#   okrsok 12: Atletická, Bežecká, Čermeľská cesta, Čermeľské prielohy, Čermeľské údolie, Havlíčkova, Horolezecká, Jazdecká, Letecká, Pod vlekom, Suchodolinská, Športová, Turistická Za štadiónom
+#   okrsok 13: Hlinkova 1-39 (nepárne), Vodárenská
+#   okrsok 14: Národná trieda 56-86 (párne), Park mládeže, Pod šiancom
+#   okrsok 15: Národná trieda 41-81 (nepárne), Chrastie, Kostolianska cesta, Májová
+#   okrsok 16: Cesta pod Hradovou, Lomnická, Zoborská
+#   okrsok 17: Gerlachovská, Polianska, Slavkovská, Štrbská
+#   okrsok 18: Cyklistická, Ďumbierska, Huncovská, Kavečianska cesta, Končistá, Mengusovská, Na stráni, Vihorlatská
+obec = "598151"
+name = "Košice-Sever"
+okrsky_date = 2023-06-21
+okrsky_fill = "nearest"
+okrsky_note = "'MČ Košice - Sever' in okrsok 9 means voters registered only at the district (no address); no rule. Placed by fill_nearest: Námestie Jána Mathého (not named), the even numbers of Letná, Komenského numbers outside 35-73 odd / 44-60 even, Hlinkova, Národná trieda, Slovenskej jednoty, Rampová and Czambelova numbers outside the listed ranges, and addresses without a street. The text keeps the PDF line breaks where commas are missing (Višňová / Vnútorný Červený breh; Turistická / Za štadiónom)."
+
+[[document]]
+url = "https://web.archive.org/web/20231207143308/https://www.kosicesever.sk/sites/default/files/attachments/oznamenie_o_urceni_volebnych_okrskov_a_volebnych_miestnosti_0.pdf"
+sha256 = "be3c5304280deb107af9652b18ba408dce9d9cc1f79a394c8f115b6fd3696305"
+title = "Oznámenie o určení volebných okrskov a volebných miestností pre voľby do NR SR 30. septembra 2023, starosta MČ Košice – Sever, 21. 06. 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Alešovo nábrežie"},
+  {street = "Cimborkova"},
+  {street = "Česká"},
+  {street = "Heydukova"},
+  {street = "Moravská"},
+  {street = "Rampová", numbers = "2-6", parity = "even"},
+  {street = "Slovenská"},
+  {street = "Slovenskej jednoty", numbers = "17-53", parity = "odd"},
+  {street = "Svornosti"},
+  {street = "Ťahanovské riadky"},
+  {street = "Záborského"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Čárskeho"},
+  {street = "Hlinkova", numbers = "32-38", parity = "even"},
+  {street = "Odborárska"},
+  {street = "Študentská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Kustrova"},
+  {street = "Národné námestie"},
+  {street = "Národná trieda", numbers = "2-54", parity = "even"},
+  {street = "Skautská"},
+  {street = "Strakova"},
+  {street = "Tomášikova"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Družstevná"},
+  {street = "Kisdyho"},
+  {street = "Národná trieda", numbers = "1-39", parity = "odd"},
+  {street = "Palkovičova"},
+  {street = "Tolstého"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Czambelova", numbers = "1-6"},
+  {street = "Chalupkova"},
+  {street = "Komenského", numbers = "35-73", parity = "odd"},
+  {street = "Komenského", numbers = "44-60", parity = "even"},
+  {street = "Komenského park"},
+  {street = "Park duklianskych obetí"},
+  {street = "Park obrancov mieru"},
+  {street = "Slovenskej jednoty", numbers = "1-15", parity = "odd"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Hlinkova", numbers = "2-30", parity = "even"},
+  {street = "Obrancov mieru"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Němcovej"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Hroncova"},
+  {street = "Letná", parity = "odd"},
+  {street = "Szakkayho"},
+  {street = "Vysokoškolská"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Banícka"},
+  {street = "Detvianska"},
+  {street = "Kostolná"},
+  {street = "Krupinská"},
+  {street = "Magdalénska"},
+  {street = "Na Kalvárii"},
+  {street = "Na šajbe"},
+  {street = "Nitrianska"},
+  {street = "Račí potok"},
+  {street = "Stará spišská cesta"},
+  {street = "Terchovská"},
+  {street = "Vencová"},
+  {street = "Za amfiteátrom"},
+  {street = "Festivalové námestie", note = "Not named in the document; its only address, Festivalové námestie 2, is the amfiteáter, this okrsok's polling station (MÚ MČ Košice – Sever), next to Za amfiteátrom.", inferred = true},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Bankov"},
+  {street = "Cyprusová"},
+  {street = "Fakľová"},
+  {street = "Liptovská"},
+  {street = "Olivová"},
+  {street = "Oravská"},
+  {street = "Palmová"},
+  {street = "Rozálska"},
+  {street = "Sládkovičova"},
+  {street = "Trenčianska"},
+  {street = "Watsonova"},
+  {street = "Zvolenská"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Dobšinského"},
+  {street = "Gogoľova"},
+  {street = "Hrbová"},
+  {street = "Hurbanova"},
+  {street = "Jahodová"},
+  {street = "Jedľová"},
+  {street = "Junácka"},
+  {street = "Lesná"},
+  {street = "Malinová"},
+  {street = "Mánesova"},
+  {street = "Pod kaštieľom"},
+  {street = "Potočná"},
+  {street = "Slovenského"},
+  {street = "Tŕňová"},
+  {street = "Urbánkova"},
+  {street = "Višňová"},
+  {street = "Vnútorný Červený breh"},
+  {street = "Vonkajší Červený breh"},
+  {street = "Záhradná"},
+  {street = "Žľaby"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Atletická"},
+  {street = "Bežecká"},
+  {street = "Čermeľská cesta"},
+  {street = "Čermeľské prielohy"},
+  {street = "Čermeľské údolie"},
+  {street = "Havlíčkova"},
+  {street = "Horolezecká"},
+  {street = "Jazdecká"},
+  {street = "Letecká"},
+  {street = "Pod vlekom"},
+  {street = "Suchodolinská"},
+  {street = "Športová"},
+  {street = "Turistická"},
+  {street = "Za štadiónom"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Hlinkova", numbers = "1-39", parity = "odd"},
+  {street = "Vodárenská"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Národná trieda", numbers = "56-86", parity = "even"},
+  {street = "Park mládeže"},
+  {street = "Pod šiancom"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Národná trieda", numbers = "41-81", parity = "odd"},
+  {street = "Chrastie"},
+  {street = "Kostolianska cesta"},
+  {street = "Májová"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Cesta pod Hradovou"},
+  {street = "Lomnická"},
+  {street = "Zoborská"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Gerlachovská"},
+  {street = "Polianska"},
+  {street = "Slavkovská"},
+  {street = "Štrbská"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Cyklistická"},
+  {street = "Ďumbierska"},
+  {street = "Huncovská"},
+  {street = "Kavečianska cesta"},
+  {street = "Končistá"},
+  {street = "Mengusovská"},
+  {street = "Na stráni"},
+  {street = "Vihorlatská"},
+]

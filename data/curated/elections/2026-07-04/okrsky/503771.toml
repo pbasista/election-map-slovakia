@@ -1,0 +1,32 @@
+# Okrsky of Horné Saliby, transcribed by an AI agent in job okrsok-rules-5477 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: V tomto okrsku môžu hlasovať občania s trvalým pobytom pod nasledovnými súpisnými číslami: 1-545, 1151-1201, 1212, 1214-1216, 1225, 1229, 1256, 1259-1260, 1264-1265, 1269, 1271-1272, 1275-1278, 1280-1283, 1308, 1311-1315, 1318, 1321, 1324, 1328, 1330-1331, 1336-1339, 1346, 1362, 1363, 1373-1374, 1387, 1392, 1396-139
+#   okrsok 2: V tomto okrsku môžu hlasovať občania s trvalým pobytom pod nasledovnými súpisnými číslami: 546-1100, 1202-1211, 1213, 1223-1224, 1242-1244, 1246-1247, 1250-1255, 1257-1258, 1266-1267, 1279, 1284-1307, 1309-1310, 1316-1317, 1325-1327, 1334, 1342-1345, 1347-1348, 1350-1351, 1353, 1356-1357, 1361-1362, 1364, 1368-1369, 1371, 1395, 1399, 1101-1150 (Hrušov)
+obec = "503771"
+name = "Horné Saliby"
+okrsky_fill = "nearest"
+okrsky_note = "The village has no streets: the document assigns okrsky by súpisné čísla, written as number rules on the part Horné Saliby. Hrušov (s.č. 1101-1150) is a settlement the register keeps in part Horné Saliby; covered by its number range. Súpisné čísla the document does not list take the okrsok of the nearest address (fill_nearest). The last range of okrsok 1 is truncated \"1396-139\"; read as 1396-1398 (1395 and 1399 are in okrsok 2). 1362 is listed in both okrsky (singly in okrsok 1, in 1361-1362 in okrsok 2); kept in okrsok 1."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2026-05-11
+okrsky_date_basis = "The document is undated; the municipality's page linking it states \"Dátum vloženia\" 2026-05-11, before the vote; the document's heading names this vote. (https://www.hornesaliby.sk/samosprava/volby/referendum-2026/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-580sk.html)"
+
+[[document]]
+url = "https://www.hornesaliby.sk/evt_file.php?file=1569"
+sha256 = "70f3cc682c776e4730640e51d4f557e84a1abe5a63e4fcfee77e24a9e61da5b9"
+title = "Utvorenie volebných okrskov a určenie volebných miestností na Referendum, ktorý sa koná dňa 04. júla 2026"
+
+[[document]]
+url = "https://www.hornesaliby.sk/samosprava/volby/referendum-2026/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-580sk.html"
+sha256 = "6314b538feb1efdc2e5f7d3b4bb68ac82e5c779b84328c39482e39b8d5cb883d"
+title = "Page of the document (Dátum vloženia 2026-05-11)"
+
+[okrsok.1]
+rules = [
+  {part = "Horné Saliby", numbers = "1-545, 1151-1201, 1212, 1214-1216, 1225, 1229, 1256, 1259-1260, 1264-1265, 1269, 1271-1272, 1275-1278, 1280-1283, 1308, 1311-1315, 1318, 1321, 1324, 1328, 1330-1331, 1336-1339, 1346, 1362, 1363, 1373-1374, 1387, 1392, 1396-1398"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Horné Saliby", numbers = "546-1100, 1202-1211, 1213, 1223-1224, 1242-1244, 1246-1247, 1250-1255, 1257-1258, 1266-1267, 1279, 1284-1307, 1309-1310, 1316-1317, 1325-1327, 1334, 1342-1345, 1347-1348, 1350-1351, 1353, 1356-1357, 1361, 1364, 1368-1369, 1371, 1395, 1399, 1101-1150"},
+]

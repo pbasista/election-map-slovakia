@@ -1,0 +1,76 @@
+# Council obvody of Ladce (513296), Ilava.
+# Transcribed by an AI agent in job obvod-rules-142 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Ladce
+#   obvod 2: Ladce časť Tunežice
+#   obvod 3: Ladce (Horné Ladce)
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/513296.toml, standing in.
+obec = "513296"
+name = "Ladce"
+date = 2018-07-19
+fill = "nearest"
+note = "Uznesenie 53/2018 names the obvody only by area: 1 – Ladce (5 poslancov), 2 – Ladce časť Tunežice (2), 3 – Ladce (Horné Ladce) (2). Horné Ladce is not a part in the register; its streets are taken from the 2022 obvod 3. Addresses without a street in the part Ladce go by their part (obvod 1)."
+supplemented = 2022-10-29
+supplemented_from = "election"
+supplement_basis = "The 2018 resolution names obvod 3 only as \"Ladce (Horné Ladce)\", a settlement the register keeps in the part Ladce; its streets are those of obvod 3 (Horné Ladce) in the rule set of the elections of 29 October 2022 (Ulica Janka Kráľa, Podhorská ulica, Pod Skalkou, Pod hájom, Lúčkovská ulica, Pod rotbánom, Kopanice)."
+okrsky_date = 2022-07-14
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky document is undated (its title names the elections of 29.10.2022) and the elections page gives no posting date; date is the file's upload date on the official server (HTTP Last-Modified 14 Jul 2022 08:11 GMT; the PDF's creation date is 2022-07-14). The Internet Archive has the elections page only on 30.6.2022 (before the document) and 5.12.2022. 'Obec Ladce' in okrsok 1 means voters registered without an address and is not a rule. Hviezdoslavova ulica: okrsok 2 takes it in part Ladce, okrsok 3 ('Hviezdoslavova ulica Tunežice') in part Tunežice. The register's addresses without a street (súpisné only) are placed by fill_nearest in obvod 1."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-5891): No 2018 okrsky document found. The live 2018 elections pages are gone (the CMS returns an error) and 'Komunálne voľby 2018' shows only results. The Internet Archive's capture of 'Dokumenty pre voľby do orgánov samosprávy obcí 2018' of 2018-11-04 links 'Deň a miesto konania volieb' (PDF, page/2183) and an image den_volieb.JPG, which may have listed the okrsky, but neither is archived (404) nor still on the live site. The council's resolution 53/2018 and its minutes of 19 July 2018 name only the three obvody by area (Ladce, časť Tunežice, Horné Ladce), not the four okrsky. The Internet Archive was intermittently offline (HTTP 503 / no connection) for much of the search, so captures of other pages (úradné oznamy of autumn 2018) could not be fully checked. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 4 okrsky, those ŠÚ SR counted in each council obvod (nearer, not taken: 2020-02-29: okrsky of the whole obec, the council then elected in several obvody). Voters on the roll per okrsok (ŠÚ SR), 2018-11-10 → 2022-10-29: 1: 699 → 652, 2: 810 → 779, 3: 371 → 360, 4: 250 → 250."
+
+[[document]]
+url = "https://www.ladce.sk/_public/files/uznesenie_ObZ_19.7.pdf"
+sha256 = "70bb27d5ab394cd493220b0dc60c8f01a42286875dee24402f1572c6060b1ee1"
+title = "Uznesenia OZ Ladce z 19.7.2018 (uznesenie č. 53/2018: volebné obvody a počet poslancov)"
+
+[[document]]
+url = "https://www.ladce.sk/zapisnice-a-uznesenia-oz-ladce-2018/"
+sha256 = "265d103af2cf6f607670ab208b2ebb52d077b0eba153705bd9ca979f0ce7111b"
+title = "Zápisnice a uznesenia OZ Ladce 2018"
+
+[obvod.1]
+seats = 5
+okrsky = [1, 2]
+rules = [
+  {part = "Ladce"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [3]
+rules = [
+  {part = "Tunežice"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [4]
+rules = [
+  {street = "Ulica Janka Kráľa", supplemented = true},
+  {street = "Podhorská ulica", supplemented = true},
+  {street = "Pod Skalkou", supplemented = true},
+  {street = "Pod hájom", supplemented = true},
+  {street = "Lúčkovská ulica", supplemented = true},
+  {street = "Pod rotbánom", supplemented = true},
+  {street = "Kopanice", supplemented = true},
+]
+
+[okrsok.1]
+rules = [
+  {street = "Cementárska ulica"},
+  {street = "Záhradná ulica"},
+  {street = "Farská ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hviezdoslavova ulica"},
+  {street = "Ulica Ľudovíta Štúra"},
+  {street = "Za kaštieľom", written = "Za Kaštieľom"},
+  {street = "Ulica Pavla Koyša"},
+  {street = "Ulica Jána Kollára"},
+  {street = "Kukučínova ulica"},
+  {street = "Vážska ulica"},
+]

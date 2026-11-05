@@ -4,10 +4,15 @@
 # text per obvod, verbatim:
 #   obvod 1: obvod č.1 Prečín kde sa bude voliť 7 poslancov obecného zastupiteľstva
 #   obvod 2: obvod č.2 Zemianska Závada kde sa budú voliť 2 poslanci obecného zastupiteľstva
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/513563.toml, standing in.
 obec = "513563"
 name = "Prečín"
 date = 2026-06-11
 note = "The municipality's announcement (web page) states the two obvody by part of the municipality; the resolution text itself is not published. The date is that of the council meeting of 11 June 2026, whose published agenda (pozvánka, item 8) included 'určenie počtu poslancov a volebných obvodov na volebné obdobie 2026-2030'; it is the only council meeting between the agenda and the announcement (10 July 2026)."
+okrsky_date = 2022-07-18
+okrsky_note = "Every obvod has exactly one okrsok (okrsok n = obvod n, per the Statistical Office); the okrsok is the whole obvod as the 2022 obvody document sets it, so no separate okrsky list is needed for the rules. Text = the document's words on the obvod. Date = the resolution that set the obvody/okrsky split."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-158): No document setting the okrsky for 24.10.2026 is published on precin.eu (all 2026 posts and media checked) nor found on cuet.slovensko.sk. The referendum (4.7.2026) OVK minutes show okrsok 1 = Prečín, but no document says the okrsky stay the same. With 2 okrsky and 2 obvody (Prečín, Zemianska Závada) each obvod very likely is one okrsok, but the numbering is not documented. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky, those ŠÚ SR counted in each council obvod (nearer, not taken: 2023-09-30: okrsky of the whole obec, the council then elected in several obvody). Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2022-10-29: 1: 1,116 → 1,097, 2: 133 → 128."
 
 [[document]]
 url = "https://www.precin.eu/blog/volby-do-organov-samospravy-obci-oznam"
@@ -16,12 +21,14 @@ title = "Voľby do orgánov samosprávy obcí – OZNAM (Obec Prečín, publikov
 
 [obvod.1]
 seats = 7
+okrsky = [1]
 rules = [
   {part = "Prečín"},
 ]
 
 [obvod.2]
 seats = 2
+okrsky = [2]
 rules = [
   {part = "Zemianska Závada"},
 ]

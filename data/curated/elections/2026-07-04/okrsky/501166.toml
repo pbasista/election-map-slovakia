@@ -1,0 +1,25 @@
+# The okrsky of Imeľ of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/501166.toml, copied by `ems job reuse` (reused). Its header there:
+#   Okrsky of Imeľ, transcribed by an AI agent in job okrsok-rules-378 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Čísla domov od : 1 – 450
+#     okrsok 2: Čísla domov od: 451 - 960
+obec = "501166"
+name = "Imeľ"
+okrsky_note = "These are the okrsky of the elections of 2026-10-24: in 2026-07-04 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2026-07-04 was searched for. The okrsky are set by house (súpisné) number across the village; okrsok 2 (451-960) is taken open-ended."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.obecimel.sk/e_download.php?file=/data/multipage/editor/editor-17-83-sk_5.pdf&original=Volebn%C3%A9%20okrsky%20v%20obci%20Ime%C4%BE.pdf"
+sha256 = "ab457c629e16aad7f54233f1d3f704a5b01bb8724f92186555eb026dd9e24e8d"
+title = "Volebné okrsky v obci Imeľ"
+
+[okrsok.1]
+rules = [
+  {part = "Imeľ", numbers = "1-450"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Imeľ", numbers = "451-"},
+]

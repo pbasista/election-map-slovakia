@@ -1,0 +1,65 @@
+# The okrsky of Limbach of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/508047.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Limbach, transcribed by an AI agent in job okrsok-rules-1353 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Cintorínska, Černicová, Družstevná, Gaštanová, Limbašská dolina, Limbová, Malokarpatská, Mlynské pole, Podlesná, Pod dúblami, Potočná, Pri kockách, Priečna, Raková, Silvánska, SNP, Suchý vrch, Záhradná
+#     okrsok 2: 1.mája, Iršajská, Sadová, Slnečná, Školská, Športová, Vavrinecká, Vinohradnícka
+obec = "508047"
+name = "Limbach"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDFs, read from the rendered pages. The 2019 lists do not name Krátka ulica (2 addresses in today's register, likely built later); it is taken from the rule set of 2022-10-29 (supplemented). The register's addresses without a street are placed by fill_nearest."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1942): No okrsky document for the European Parliament election of 2019: the old website's elections page section 'Voľby do Európskeho parlamentu 2019' and the notice board list only the announcement, voter information, e-mail addresses and results. The only 2019 okrsky lists ('Volebné okrsky – ulice' 28.1.2019 and 'Kontakty na volebné okrsky' 4.3.2019) are filed under 'Prezidentské voľby – 2019' and name no vote, so they are the presidential election's. No Internet Archive capture of limbach.sk exists from 2016–2023. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2019-03-16: 1: 837 → 846, 2: 845 → 821."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2019-01-28
+okrsky_date_basis = "'Volebné okrsky – ulice' states no date and does not name the vote; the official notice board archive lists it with 'Dátum vyvesenia: 28.1.2019' (four days after the posting of the presidential election's announcement, 24.1.2019), and the old website's elections page lists it, with 'Kontakty na volebné okrsky' (posted 4.3.2019, same okrsky), under 'Prezidentské voľby – 2019'. (https://www.limbach.sk/uradna-tabula-archiv)"
+
+[[document]]
+url = "https://www.limbach.sk/files/dokumenty/uradna-tabula---archiv/2019-1-28-112612-Volebn___okrsky_____ulice.pdf"
+sha256 = "8d0271f5acfd310ae0f5d62d3a6595e20f93328fb10138770780f736ec739f7c"
+title = "Volebné okrsky – ulice"
+
+[[document]]
+url = "https://www.limbach.sk/files/dokumenty/uradna-tabula---archiv/2019-3-4-112637-Kontakty_na_volebn___okrsky.pdf"
+sha256 = "e0f02188a900e2846e6a98ae311eea00c8a030337da08e16f107e08367211b94"
+title = "Kontakty na volebné okrsky"
+
+[[document]]
+url = "https://www.limbach.sk/uradna-tabula-archiv"
+sha256 = "4b29ee5c333484cbd25d370979b1737b3cc227aec66e40a23949e18125dca9ac"
+title = "Úradná tabuľa - archív (dátum vyvesenia 28.1.2019 and 4.3.2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Černicová"},
+  {street = "Družstevná"},
+  {street = "Gaštanová"},
+  {street = "Krátka ulica"},
+  {street = "Limbašská dolina"},
+  {street = "Limbová"},
+  {street = "Malokarpatská"},
+  {street = "Mlynské Pole", written = "Mlynské pole"},
+  {street = "Pod Dúblami", written = "Pod dúblami"},
+  {street = "Podlesná"},
+  {street = "Potočná"},
+  {street = "Pri Kockách", written = "Pri kockách"},
+  {street = "Priečna ulica", written = "Priečna"},
+  {street = "Raková"},
+  {street = "Silvánska"},
+  {street = "SNP"},
+  {street = "Suchý vrch"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája"},
+  {street = "Iršajská"},
+  {street = "Sadová"},
+  {street = "Slnečná"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Vavrinecká"},
+  {street = "Vinohradnícka"},
+]

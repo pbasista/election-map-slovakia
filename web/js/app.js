@@ -1,12 +1,17 @@
-/* Election Map Slovakia: a map of the 2026 Slovak municipal and regional
- * elections, with the candidates on every ballot.
+/* Election Map Slovakia: a map of Slovak elections, with the candidates
+ * on every ballot.
  *
  * The page is the map. Floating on it: the site name with the search, the
  * language, boundaries, theme and Favourites buttons, zoom and help, and
  * while the map shows 2026 results, their legend (mapmode.js). A pane
- * (pane.js) shows a place's ballots or a candidate card. Favourites (the
- * circled candidates) open in a second pane beside it where the screen is
- * wide enough, else in the pane.
+ * (pane.js) shows a place's ballots or a candidate card; with no place
+ * chosen, it opens by itself on the country's ballots of a country-wide
+ * election and on where a by-election is held, until it is closed.
+ * Favourites (the circled candidates), or the overview of an election
+ * whose ballots are the same everywhere (the parties' lists, a
+ * referendum's questions; from the pane's button or the ballot-box menu,
+ * controls.js `LayerMenus`), open in a second pane beside it where the
+ * screen is wide enough, else in the pane.
  *
  * The selection lives in the URL hash, so a link can be shared and Back and
  * Forward work:
@@ -20,6 +25,7 @@
  *   s, p  the street or part of the obec chosen in the search (highlighted)
  *   c     an open candidacy
  *   f=1   Favourites shown (favourites.js)
+ *   ov    the overview shown (overview.js), `ov=12` with party 12's list
  *   v     `about` the About dialog, `about-<section>` one of its sections
  *         (about.js)
  *
@@ -37,16 +43,18 @@
 
 import { html, render, useEffect, useRef, useState } from '../vendor/preact-htm.module.js';
 import { aboutSection, aboutView } from './about.js';
-import { Ballots, filterParams, NO_FILTER, parseFilter } from './ballots.js';
+import { Ballots, filterParams, HeldPlaces, NO_FILTER, parseFilter } from './ballots.js';
 import { CandidateCard } from './candidate.js';
 import { FavouritesButton, HelpMenu, LanguageMenu, LayerMenus, ThemeMenu, ZoomButtons } from './controls.js';
-import { dataIndex } from './data.js';
+import { dataIndex, useLoaded } from './data.js';
 import { Favourites } from './favourites.js';
-import { election, formatDate, loadStrings, t, translationPending } from './i18n.js';
+import { loadStrings, t, translationPending } from './i18n.js';
 import { MoreIcon } from './icons.js';
+import { electionLabel, isByElection, isNational, overviewKind } from './kinds.js';
 import { LiveStatus } from './live.js';
-import { createMap } from './map.js';
-import { formatMode, MapResults, parseMode, setMapMode, useMapMode } from './mapmode.js';
+import { CONSTITUENCIES, createMap, overlaysHere } from './map.js';
+import { followLevel, formatMode, MapResults, parseMode, setMapMode, useMapMode } from './mapmode.js';
+import { Overview } from './overview.js';
 import { AboutDialog, Pane, PHONE, WIDE } from './pane.js';
 import { formatPicks, parsePicks } from './picks.js';
 import { Search } from './search.js';
@@ -85,6 +93,7 @@ function readHash() {
     candidate: p.get('c'),
     view: p.get('v'),
     favourites: p.get('f') === '1',
+    overview: overviewKind && p.has('ov') ? Number.parseInt(p.get('ov'), 10) || 0 : null,
   };
 }
 
@@ -118,7 +127,8 @@ function readDisplay() {
 
 /* The hash of selection *s* with the circled candidates *picks*, the
  * filter's hash values *filter* ([key, value] pairs) and what the map shows
- * *display* (as `readDisplay` gives it). */
+ * *display* (as `readDisplay` gives it, with `here` the constituency
+ * overlays the election has, map.js `overlaysHere`, once known). */
 function hashOf(s, picks, filter, display) {
   const p = new URLSearchParams();
   if (s.view) p.set('v', s.view);
@@ -133,11 +143,14 @@ function hashOf(s, picks, filter, display) {
   }
   if (s.candidate) p.set('c', s.candidate);
   if (s.favourites) p.set('f', '1');
+  // Open with its party, or empty with none chosen (overview.js).
+  if (Number.isInteger(s.overview)) p.set('ov', s.overview ? String(s.overview) : '');
   if (picks.length) p.set('k', formatPicks(picks));
   for (const [key, value] of filter) p.set(key, value);
-  const { view, overlays, mode } = display;
+  const { view, overlays, here, mode } = display;
   if (view) p.set('m', `${view.zoom.toFixed(2)}/${view.lat.toFixed(5)}/${view.lon.toFixed(5)}`);
-  const hidden = LAYERS.filter((name) => !overlays[name]);
+  // Only the overlays the election has: one it has not is no choice.
+  const hidden = LAYERS.filter((name) => !overlays[name] && (!CONSTITUENCIES.includes(name) || here?.has(name)));
   if (hidden.length) p.set('h', hidden.join(','));
   if (mode) p.set('mr', mode);
   // Characters a fragment may hold as they are (RFC 3986) read better in a
@@ -181,18 +194,26 @@ function App() {
   const pendingView = useRef(state.obec && !opened.view ? 'place' : null);
   // Counts requests to move the map, which may name the same place again.
   const [moves, setMoves] = useState(0);
+  // The level ({level, contest}) to show the next selection's ballots at,
+  // and fit the view to its unit, once the map has selected it: a selection
+  // stops a fit begun before it (map.js `fitUnit`).
+  const pendingLevel = useRef(null);
   const ownHash = useRef(location.hash);
-  // The candidacy whose card the Back button just left, and whether it was
-  // opened from Favourites ({id, favourites}): its row takes the focus.
+  // The candidacy whose card the Back button just left, and where it was
+  // opened from ({id, from}: 'favourites', 'overview', or null for the
+  // pane's ballots): its row takes the focus.
   const [cardLeft, setCardLeft] = useState(null);
-  // Whether the candidate last opened was chosen in Favourites.
-  const openedFrom = useRef(false);
+  // Where the candidate last opened was chosen (`cardLeft` *from*).
+  const openedFrom = useRef(null);
   const besidePane = useRef(null);
-  // Whether the screen has room for Favourites beside the pane (WIDE), and
-  // whether it is a phone's, where the pane is a sheet (PHONE).
+  // Whether the screen has room for a second pane beside the pane (WIDE),
+  // and whether it is a phone's, where the pane is a sheet (PHONE).
   const [wide, setWide] = useState(WIDE.matches);
   const [phone, setPhone] = useState(PHONE.matches);
-  const beside = wide && state.favourites;
+  // What the second pane shows: the overview or Favourites, one at a time
+  // (of a link that names both, the overview).
+  const second = Number.isInteger(state.overview) ? 'overview' : state.favourites ? 'favourites' : null;
+  const beside = wide && second !== null;
   // The sheet's height (pane.js SNAPS) and the place it is of: a place
   // opened, or another one picked, opens at `half`.
   const [sheet, setSheet] = useState({ place: null, snap: 'half' });
@@ -215,7 +236,9 @@ function App() {
   const [linked, setLinked] = useState(() => readWork().linked);
   const filterHash = linked ? Object.entries(linked).filter(([, value]) => value) : filterParams(filter);
   // What the map shows but its view, which `mapView` holds.
-  const display = { overlays, mode: linkedMode ?? formatMode(mode) };
+  // The constituency overlays the election has (map.js `overlaysHere`).
+  const [here] = useLoaded(overlaysHere, []);
+  const display = { overlays, here, mode: linkedMode ?? formatMode(mode) };
   const hashWith = (s, w) => hashOf(s, w.picks, w.filterHash, { ...w.display, view: mapView.current });
   const link = (s) => hashWith(s, { picks, filterHash, display });
   // The same for the history listener and the map, which are set up once.
@@ -235,10 +258,12 @@ function App() {
   };
 
   function navigate(next, view = null) {
-    // Beside the pane, Favourites stay open whatever the pane goes to (a map
-    // click, a card) unless *next* says: closed with their button, or for a
-    // place found by the search, which they would hide.
-    const hash = link(beside && !('favourites' in next) ? { ...next, favourites: true } : next);
+    // Beside the pane, Favourites or the overview stay open whatever the
+    // pane goes to (a map click, a card) unless *next* says: closed with
+    // their button, or for a place found by the search, which they would
+    // hide.
+    const keep = beside && !('favourites' in next) && !('overview' in next);
+    const hash = link(keep ? { ...next, favourites: state.favourites, overview: state.overview } : next);
     pendingView.current = view;
     setCardLeft(null);
     if (view) setMoves((n) => n + 1);
@@ -357,7 +382,7 @@ function App() {
   // place.
   useEffect(() => {
     replaceHash(link(state));
-  }, [picks, filter, linked, overlays, mode, linkedMode]);
+  }, [picks, filter, linked, overlays, here, mode, linkedMode]);
 
   useEffect(() => {
     // The view changes the address once the map has stood still a moment,
@@ -387,6 +412,9 @@ function App() {
     const view = pendingView.current;
     pendingView.current = null;
     map.select(state.obec ? state : null, view);
+    const at = pendingLevel.current;
+    pendingLevel.current = null;
+    if (at) followLevel(at.level, state, at.contest);
   }, [map, moves, state.obec, state.lat, state.lon, state.street, state.part, state.obvod, state.okrsok]);
 
   useEffect(() => {
@@ -397,7 +425,8 @@ function App() {
   const label = state.label ?? state.street ?? state.part;
 
   useEffect(() => {
-    document.title = label ? `${label} · ${t('app.title')}` : t('app.title');
+    const title = t(`app.title.${electionLabel}`);
+    document.title = label ? `${label} · ${title}` : title;
   }, [label]);
 
   // On phones the buttons sit under the search card, whose height varies.
@@ -421,11 +450,16 @@ function App() {
     };
   }, []);
 
-  // Favourites in a pane of their own beside the left column; on narrower
-  // screens they are what the pane shows, unless a card goes over them.
-  const inPane = state.favourites && !beside;
-  const favouritesShown = beside || (inPane && !state.candidate);
-  const paneOpen = Boolean(state.obec || state.candidate || inPane);
+  // Favourites or the overview in a pane of their own beside the left
+  // column; on narrower screens they are what the pane shows, unless a card
+  // goes over them.
+  const inPane = second !== null && !beside;
+  const favouritesShown = second === 'favourites' && (beside || !state.candidate);
+  const overviewShown = second === 'overview' && (beside || !state.candidate);
+  // With no place, the pane of a country-wide election or a by-election
+  // has something of its own to show: open until the visitor closes it.
+  const [ownPane, setOwnPane] = useState(isNational || isByElection);
+  const paneOpen = Boolean(state.obec || state.candidate || inPane || ownPane);
   const about = aboutSection(state.view);
   // Focus inside a pane would be lost with it; the map is where it was.
   const releaseFocus = (container) => {
@@ -433,13 +467,38 @@ function App() {
   };
   const closePane = () => {
     releaseFocus(pane);
+    setOwnPane(false);
     navigate({});
   };
-  // In the pane: back to the place's ballots, or with no place, it closes.
-  const closeFavourites = () => {
+  // In the pane: back to the place's ballots (or the pane's own), or with
+  // neither, it closes.
+  const closeSecond = () => {
     releaseFocus(besidePane);
-    if (inPane && !state.obec) closePane();
-    else navigate({ ...state, favourites: false });
+    if (inPane && !state.obec && !ownPane) closePane();
+    else navigate({ ...state, favourites: false, overview: null });
+  };
+  // Place *p* selected: a second pane beside the pane would hide it.
+  const placeState = (p) => ({ ...p, candidate: null, view: null, favourites: false, overview: null });
+  const selectPlace = (p, view) => navigate(placeState(p), view);
+  // A unit of the card's origins of the votes (candidate.js `VoteOrigins`):
+  // its ballots at *level* for contest *contest*, as a press of that level
+  // on them would choose it (mapmode.js `followLevel`). The selection runs
+  // again even for the place already selected, which the card was opened
+  // from, so that the view is fitted to the unit.
+  const unitHash = (p) => link(placeState(p));
+  const openUnit = (p, level, contest) => {
+    pendingLevel.current = { level, contest };
+    selectPlace(p);
+    setMoves((n) => n + 1);
+  };
+  const openOverview = (party) =>
+    navigate({ ...state, overview: party, favourites: false, candidate: wide ? state.candidate : null, view: null });
+  // Another party's list: in place of the entry, as Back goes to the page
+  // before the overview rather than through the parties looked at.
+  const showParty = (party) => {
+    const next = { ...state, overview: party };
+    replaceHash(link(next));
+    setState(next);
   };
 
   const placeKey = paneOpen
@@ -458,7 +517,10 @@ function App() {
   useEffect(() => {
     map?.redraw();
   }, [snap]);
-  useEffect(() => setMore(false), [paneOpen]);
+  // A pane that opens puts the buttons away (on a phone), unless it opens
+  // from a menu still open among them (the overview from the ballot-box
+  // menu), which then stays out with its box ticked.
+  useEffect(() => setMore(paneOpen && menu !== null), [paneOpen]);
   // The buttons put away go back on a click elsewhere.
   useEffect(() => {
     if (!more) return undefined;
@@ -473,7 +535,9 @@ function App() {
     const onKey = (e) => {
       // A popover, the dialog and the search box handle their own Esc.
       if (e.key !== 'Escape' || e.defaultPrevented || about !== null || e.target.closest?.('.search')) return;
-      if (besidePane.current?.contains(e.target)) closeFavourites();
+      // The overview or Favourites, opened from the pane, go first, wherever
+      // the focus is: in the pane, back to what it showed before.
+      if (beside || (inPane && !state.candidate)) closeSecond();
       else if (paneOpen) closePane();
     };
     document.addEventListener('keydown', onKey);
@@ -481,21 +545,40 @@ function App() {
   });
 
   const toggle = (name) => (open) => setMenu(open ? name : null);
-  const openCandidate = (id, fromFavourites = false) => {
-    openedFrom.current = fromFavourites;
+  const openCandidate = (id, from = null) => {
+    openedFrom.current = from;
     navigate({ ...state, candidate: id, view: null });
   };
 
-  const favourites = html`<${Favourites}
-    picks=${picks}
-    onPicks=${setPicks}
-    filter=${filter}
-    onFilter=${changeFilter}
-    focus=${cardLeft?.favourites ? cardLeft.id : null}
-    onCandidate=${(id) => openCandidate(id, true)}
-    onBack=${beside ? null : closeFavourites}
-    link=${`${location.origin}${location.pathname}${link({ favourites: true })}`}
-  />`;
+  const secondContent =
+    second === 'overview'
+      ? html`<${Overview}
+          party=${state.overview}
+          onParty=${showParty}
+          picks=${picks}
+          onPicks=${setPicks}
+          filter=${filter}
+          onFilter=${changeFilter}
+          focus=${cardLeft?.from === 'overview' ? cardLeft.id : null}
+          onCandidate=${(id) => openCandidate(id, 'overview')}
+          onBack=${beside ? null : closeSecond}
+        />`
+      : html`<${Favourites}
+          picks=${picks}
+          onPicks=${setPicks}
+          filter=${filter}
+          onFilter=${changeFilter}
+          focus=${cardLeft?.from === 'favourites' ? cardLeft.id : null}
+          onCandidate=${(id) => openCandidate(id, 'favourites')}
+          onBack=${beside ? null : closeSecond}
+          link=${`${location.origin}${location.pathname}${link({ favourites: true })}`}
+        />`;
+  const onOverview = overviewKind ? openOverview : null;
+  // One toggle for the button before the ballots and the ballot-box menu's
+  // box (controls.js), so that both say the same.
+  const overview = overviewKind
+    ? { open: overviewShown, onToggle: () => (overviewShown ? closeSecond() : openOverview(0)) }
+    : null;
 
   let content = null;
   if (state.candidate) {
@@ -506,15 +589,17 @@ function App() {
       onFilter=${changeFilter}
       picks=${picks}
       onPicks=${setPicks}
+      placeHash=${unitHash}
+      onUnit=${openUnit}
       onClose=${() => {
-        const left = { id: state.candidate, favourites: openedFrom.current };
-        if (!state.obec && !inPane) closePane();
+        const left = { id: state.candidate, from: openedFrom.current };
+        if (!state.obec && !inPane && !ownPane) closePane();
         else navigate({ ...state, candidate: null });
         setCardLeft(left);
       }}
     />`;
   } else if (inPane) {
-    content = favourites;
+    content = secondContent;
   } else if (state.obec) {
     content = html`<${Ballots}
       code=${state.obec}
@@ -523,13 +608,30 @@ function App() {
       approximate=${state.approximate}
       okrsok=${state.okrsok}
       okrsokApproximate=${state.okrsokApproximate}
-      focus=${cardLeft && !cardLeft.favourites ? cardLeft.id : null}
+      focus=${cardLeft && !cardLeft.from ? cardLeft.id : null}
       onCandidate=${openCandidate}
       filter=${filter}
       onFilter=${changeFilter}
       picks=${picks}
       onPicks=${setPicks}
+      onPlace=${selectPlace}
+      onOverview=${onOverview}
+      overview=${overview}
     />`;
+  } else if (isNational) {
+    content = html`<${Ballots}
+      code=${null}
+      focus=${cardLeft && !cardLeft.from ? cardLeft.id : null}
+      onCandidate=${openCandidate}
+      filter=${filter}
+      onFilter=${changeFilter}
+      picks=${picks}
+      onPicks=${setPicks}
+      onOverview=${onOverview}
+      overview=${overview}
+    />`;
+  } else if (isByElection) {
+    content = html`<${HeldPlaces} heading onPlace=${selectPlace} />`;
   }
 
   const classes = ['app', paneOpen && 'pane-open', inPane && !state.candidate && 'wide'];
@@ -540,17 +642,7 @@ function App() {
     <div class=${classes.filter(Boolean).join(' ')}>
       <div class="side">
         <header class="finder float" ref=${finder}>
-          <${Search}
-            onPlace=${(p, view) =>
-              // Favourites beside the pane would hide the place found.
-              navigate({ ...p, candidate: null, view: null, favourites: false }, view)}
-            onCandidate=${openCandidate}
-          >
-            <span class="brand-text">
-              <span class="brand-name">${t('app.name')}</span>
-              <span class="brand-tagline">${t('app.tagline', { date: formatDate(election) })}</span>
-            </span>
-          <//>
+          <${Search} onPlace=${selectPlace} onCandidate=${openCandidate} />
           ${translationPending() ? html`<p class="translation-pending" role="note">${t('translation.pending')}</p>` : null}
           <${LiveStatus} />
         </header>
@@ -564,8 +656,13 @@ function App() {
       </div>
       ${
         beside
-          ? html`<${Pane} paneRef=${besidePane} beside label=${t('favourites.title')} onClose=${closeFavourites}>
-              ${favourites}
+          ? html`<${Pane}
+              paneRef=${besidePane}
+              beside
+              label=${t(second === 'overview' ? `overview.title.${overviewKind}` : 'favourites.title')}
+              onClose=${closeSecond}
+            >
+              ${secondContent}
             <//>`
           : null
       }
@@ -593,15 +690,21 @@ function App() {
         </button>
         <div class="controls-stack" id="km-more">
           <${LanguageMenu} open=${menu === 'language'} onToggle=${toggle('language')} hash=${link(state)} />
-          <${LayerMenus} menu=${menu} toggle=${toggle} overlays=${overlays} onOverlays=${setOverlays} />
+          <${LayerMenus}
+            menu=${menu}
+            toggle=${toggle}
+            overlays=${overlays}
+            onOverlays=${setOverlays}
+            overview=${overview}
+          />
           <${ThemeMenu} open=${menu === 'theme'} onToggle=${toggle('theme')} />
           <${FavouritesButton}
             count=${picks.length}
             open=${favouritesShown}
             onPress=${() =>
               favouritesShown
-                ? closeFavourites()
-                : navigate({ ...state, favourites: true, candidate: wide ? state.candidate : null, view: null })}
+                ? closeSecond()
+                : navigate({ ...state, favourites: true, overview: null, candidate: wide ? state.candidate : null, view: null })}
           />
         </div>
       </div>

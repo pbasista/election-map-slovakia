@@ -1,0 +1,34 @@
+# The okrsky of Kameničná of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/501182.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Kameničná, transcribed by an AI agent in job okrsok-rules-3768 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Kameničná, od súp. číslo 1 - do súp.číslo 400
+#     okrsok 2: Kameničná a časť Balvany, od súp. číslo 401 - do - a bez súpisného čísla / Kameničná /
+obec = "501182"
+name = "Kameničná"
+okrsky_note = "Scanned notice; okrsky by súpisné číslo within part Kameničná, part Balvany in okrsok 2. Residents without a súpisné číslo (okrsok 2) are not register addresses."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2024-06-08 setting the okrsky was found (okrsok-rules-5020): The EP 2024 page lists decision, voter info, delegation, minutes; no okrsky document. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-06-08 → 2023-09-30: 1: 735 → 723, 2: 830 → 825."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The scanned notice of the mayor is undated; its heading names the vote (Voľby do NR SR v roku 2023)."
+
+[[document]]
+url = "https://sk.kamenicna.eu/wp-content/uploads/2023/06/Informácia-o-vytv.volebných-okrskov-Volľby-do-NRSR2023.pdf"
+sha256 = "120e11fd0f666cba6bdb4a89ab45641c8d22d4ad79e5562a684b9153f8923180"
+title = "Informácia o vytvorení volebných okrskov a určení volebných miestností v obci Kameničná na zabezpečenie volieb – Voľby do NR SR v roku 2023"
+
+[[document]]
+url = "https://sk.kamenicna.eu/volby-do-nr-sr-2023/"
+sha256 = "ea89a53433f924c2cd6f7cc81e6db37a2f386d5bd0bb5543af0995f6b93875d8"
+title = "elections page"
+
+[okrsok.1]
+rules = [
+  {part = "Kameničná", numbers = "1-400"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kameničná", numbers = "401-"},
+  {part = "Balvany"},
+]

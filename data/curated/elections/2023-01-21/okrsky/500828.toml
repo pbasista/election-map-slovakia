@@ -1,0 +1,64 @@
+# Okrsky of Topoľčianky, transcribed by an AI agent in job okrsok-rules-3047 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Obec Topoľčianky, Cintorínska, Dlhovského, Hlavná od 124 – 289, Holešovská, Hostianska, Hrádza, Lipová od 53-124, Machulinská, Parková, Pažiťská, Pod Hájom, Športová, Tekovská, Vígľašská, Záhradnícka
+#   okrsok 2: Hlavná od 1-123, Kopaničky, Lipová od 1-52, Litoměřická, Mlynská, Moravecká, Partizánska, SNP, Železničná, Žikavecká, Žitavanská
+obec = "500828"
+name = "Topoľčianky"
+okrsky_date = 2022-11-08
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's 'Určenie volebných okrskov' for the referendum of 21 January 2023 (scan, dated 08.11.2022) sets two okrsky; the street lists per okrsok are the two DOC files linked with it on the referendum page and on the notice board (item posted 16.11.2022). 'Obec Topoľčianky' in okrsok 1 means voters registered only on the municipality (no address). Houses without a street (súpisné only) take the okrsok of the nearest placed address (fill_nearest). Same okrsky as the 2022 municipal elections."
+
+[[document]]
+url = "https://www.topolcianky.sk/obec-1/volby-a-referenda/referendum-2023/"
+sha256 = "208313d063fe6782f2c77b03bc83c17816efa02375adf97db10ffdeffc20017d"
+title = "Referendum 2023"
+
+[[document]]
+url = "https://www.topolcianky.sk/e_download.php?file=data/editor/545sk_1.pdf&original=Ur%C4%8Denie%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "1ecc59b0ea87333ade9361308981f65935ad7ce3bf290433a0475ce85a6d5efb"
+title = "Určenie volebných okrskov"
+
+[[document]]
+url = "https://www.topolcianky.sk/e_download.php?file=data/editor/545sk_1.doc&original=Zoznam%20ul%C3%ADc%20pod%C4%BEa%20okrskov%2C%20okrsok%20%C4%8D.%201.doc"
+sha256 = "5f05f526f081484ba2093c96fd36cc31335fdf3728a916cfce9bf1e31056b2fe"
+title = "Zoznam ulíc podľa okrskov, okrsok č. 1"
+
+[[document]]
+url = "https://www.topolcianky.sk/e_download.php?file=data/editor/545sk_2.doc&original=Zoznam%20ul%C3%ADc%20pod%C4%BEa%20okrskov%2C%20okrsok%20%C4%8D.%202.doc"
+sha256 = "3fdbecaeddd7f79012cfac098677e03b131920ca03959c905cf198ec3119a978"
+title = "Zoznam ulíc podľa okrskov, okrsok č. 2"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Dlhovského"},
+  {street = "Holešovská"},
+  {street = "Hostianska"},
+  {street = "Hrádza"},
+  {street = "Machulinská"},
+  {street = "Parková"},
+  {street = "Pažiťská"},
+  {street = "Pod Hájom"},
+  {street = "Športová"},
+  {street = "Tekovská"},
+  {street = "Vígľašská"},
+  {street = "Záhradnícka"},
+  {street = "Hlavná", numbers = "124-289"},
+  {street = "Lipová", numbers = "53-124"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavná", numbers = "1-123"},
+  {street = "Lipová", numbers = "1-52"},
+  {street = "Kopaničky"},
+  {street = "Litoměřická"},
+  {street = "Mlynská"},
+  {street = "Moravecká"},
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Železničná"},
+  {street = "Žikavecká"},
+  {street = "Žitavanská"},
+]

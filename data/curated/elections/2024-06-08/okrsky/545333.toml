@@ -1,0 +1,110 @@
+# Okrsky of Dunajská Lužná, transcribed by an AI agent in job okrsok-rules-4688 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dunajská, Jánošíkovská, Mariánska, Okružná, Orechová, Poľná, Pri hrádzi, Pri jame, Rekreačná, Smreková, Športová Tichá
+#   okrsok 2: Brezová, Čerešňová, Holubia, Jabloňová, Javorová, Lipová Mandľová, Pekárenská, Podnikateľská, Slivková, Slnečná, Tehelná, Višňová, Vodárenská, Zdravotnícka, Zelená
+#   okrsok 3: Agátová, Astrová, Azalková, Bazová, Kvetná, Kvetoslavovská, Letná, Lipnická, Lúčna, Malinová, Miloslavovská, Morušová, Sadová, Spojná, Stromová, Svoradova, Šalviová, Záhradná
+#   okrsok 4: Krajná, Krížna, Nám. sv. Martina, Nová, Pekná, rekreačná oblasť Malá voda - Nové Košariská, rekreačná oblasť – Za hrádzou, Školská, Štefánikov park, Úzka, Zámočnícka
+#   okrsok 5: Dlhá, Fialková, Hlavná, Horná, Jarná, Jasná, Košariská, Kováčska, Krátka, Narcisová, Pri kniežacích mohylách, Studená, Veterná
+obec = "545333"
+name = "Dunajská Lužná"
+okrsky_date = 2024-03-01
+okrsky_fill = "nearest"
+okrsky_note = "The document also names \"rekreačná oblasť Malá voda - Nové Košariská\", \"rekreačná oblasť – Za hrádzou\", not a street in the register; its houses are among the addresses without a street, placed by fill_nearest. Addresses without a street (numbered by súpisné číslo within the parts, largely the recreational areas and new houses) are placed by fill_nearest. Okrsok 2 also names Slivková, a street the register of this vote lacks; left out. The copied 2022 okrsky differ: this document puts Malinová in okrsok 3 (2022: okrsok 5) and adds Slivková to okrsok 2."
+
+[[document]]
+url = "https://www.dunajskaluzna.sk/e_download.php?file=data/editor/1013sk_3.pdf&original=Vo%C4%BEby_Eur%C3%B3psky_parlament_volebn%C3%A9_okrsky.pdf"
+sha256 = "c0502ee6047180d9c1cc6e1d833a3897be7dd973d35dc509c288f0de8a997ff9"
+title = "Informácia o utvorení volebných okrskov a určenie volebných miestností v obci Dunajská Lužná k voľbám do Európskeho parlamentu 08.06.2024"
+
+[[document]]
+url = "https://www.dunajskaluzna.sk/zverejnovanie/uradna-tabula/volby-2024/volby-do-europskeho-parlamentu-na-uzemi-sr/"
+sha256 = "3508bfe830c7a0d940cff21577e30cce06fe2f845e73a5afe4399057f3d49960"
+title = "Voľby do Európskeho parlamentu na území SR"
+
+[okrsok.1]
+rules = [
+  {street = "Dunajská"},
+  {street = "Jánošíkovská"},
+  {street = "Mariánska"},
+  {street = "Okružná"},
+  {street = "Orechová"},
+  {street = "Poľná"},
+  {street = "Pri hrádzi"},
+  {street = "Pri jame"},
+  {street = "Rekreačná"},
+  {street = "Smreková"},
+  {street = "Športová"},
+  {street = "Tichá"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Brezová"},
+  {street = "Čerešňová"},
+  {street = "Holubia"},
+  {street = "Jabloňová"},
+  {street = "Javorová"},
+  {street = "Lipová"},
+  {street = "Mandľová"},
+  {street = "Pekárenská"},
+  {street = "Podnikateľská"},
+  {street = "Slnečná"},
+  {street = "Tehelná"},
+  {street = "Višňová"},
+  {street = "Vodárenská"},
+  {street = "Zdravotnícka"},
+  {street = "Zelená"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová"},
+  {street = "Astrová"},
+  {street = "Azalková"},
+  {street = "Bazová"},
+  {street = "Kvetná"},
+  {street = "Kvetoslavovská"},
+  {street = "Letná"},
+  {street = "Lipnická"},
+  {street = "Lúčna"},
+  {street = "Malinová"},
+  {street = "Miloslavovská"},
+  {street = "Morušová"},
+  {street = "Sadová"},
+  {street = "Spojná"},
+  {street = "Stromová"},
+  {street = "Svoradova"},
+  {street = "Šalviová"},
+  {street = "Záhradná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Krajná"},
+  {street = "Krížna"},
+  {street = "Námestie svätého Martina", written = "Nám. sv. Martina"},
+  {street = "Nová"},
+  {street = "Pekná"},
+  {street = "Školská"},
+  {street = "Štefánikov Park", written = "Štefánikov park", note = "Only the capitalization of 'park' differs from the register's Štefánikov Park."},
+  {street = "Úzka"},
+  {street = "Zámočnícka"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Dlhá"},
+  {street = "Fialková"},
+  {street = "Hlavná"},
+  {street = "Horná"},
+  {street = "Jarná"},
+  {street = "Jasná"},
+  {street = "Košariská"},
+  {street = "Kováčska"},
+  {street = "Krátka"},
+  {street = "Narcisová"},
+  {street = "Pri kniežacích mohylách"},
+  {street = "Studená"},
+  {street = "Veterná"},
+]

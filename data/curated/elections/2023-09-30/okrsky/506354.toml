@@ -1,0 +1,30 @@
+# Okrsky of Omšenie, transcribed by an AI agent in job okrsok-rules-3749 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: V okrsku 01 volia voliči s trvalým pobytom č.d. 0 - 330
+#   okrsok 2: V okrsku 02 volia voliči s trvalým pobytom č.d. 331 - 999
+obec = "506354"
+name = "Omšenie"
+okrsky_note = "The okrsky split the one part Omšenie by house (súpisné) number: okrsok 1 up to 330, okrsok 2 from 331 (open-ended)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The notice is headed with the elections to the NR SR of 30. 09. 2023; it states no decision date."
+
+[[document]]
+url = "https://www.omsenie.sk/modules/file_storage/download.php?file=7fdfb4ff%7C317&inline=1"
+sha256 = "d83c9629eecd321ee1baeda87664e06e1d09057e9b8e02d7aa7d0cc11603a342"
+title = "Oznámenie o čase a mieste konania volieb do NR SR 2023 – volebné okrsky"
+
+[[document]]
+url = "https://www.omsenie.sk/zverejnovanie/volby/volby-do-narodnej-rady-slovenskej-republiky/"
+sha256 = "ff997b4f6851b90af4f09656588485305524f9057d5f83cd1f950c943b810270"
+title = "Voľby – page linking the notice"
+
+[okrsok.1]
+rules = [
+  {part = "Omšenie", numbers = "0-330"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Omšenie", numbers = "331-"},
+]

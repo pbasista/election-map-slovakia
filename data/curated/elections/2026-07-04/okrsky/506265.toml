@@ -1,0 +1,25 @@
+# Okrsky of Moravské Lieskové, transcribed by an AI agent in job okrsok-rules-5467 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov časť obce Moravské Lieskové
+#   okrsok 2: pre voličov časť obce Brestové, Bučkovec, Šance
+obec = "506265"
+name = "Moravské Lieskové"
+okrsky_date = 2026-04-27
+
+[[document]]
+url = "https://moravskelieskove.sk/wp-content/uploads/dokumenty/referendum/oznamenie-o-utvoreni-okrskov-a-volebnych-miestnosti-4ivh8p.pdf"
+sha256 = "8ab55ae1636968f2b0727a39378853eb2c992ce85b2849f019a00793d394a362"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre Referendum 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Moravské Lieskové"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Brestové"},
+  {part = "Bučkovec"},
+  {part = "Šance"},
+]

@@ -1,0 +1,47 @@
+# Okrsky of Častá, transcribed by an AI agent in job okrsok-rules-3720 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Andreja Hlinku, Družstevná, Fándlyho, Hlavná, Karpatská, Mesačná, Mraznická, Pastierska, Podzámocká, Záhradnícka, Zámocká
+#   okrsok 2: ulice: Cintorínska, Červený Kameň, Kíperská, Na vŕšku, Nová, Píla-rázcestie, Podhorská, Poľná, Ružová, Slnečná, Sokolská, Štefanovská, Veterná
+obec = "507857"
+name = "Častá"
+okrsky_date = 2023-06-23
+okrsky_fill = "nearest"
+okrsky_note = "Scanned document, read from the rendered page. Same okrsky as the referendum document of 9.11.2022. Houses without a street are placed by the nearest address (fill_nearest); Červený Kameň is a part."
+
+[[document]]
+url = "https://www.casta.sk/www/wp-content/uploads/2023/06/Urcenie-vol.miestnosti.pdf"
+sha256 = "57fb7d566dd9f11c5c0cfb80107cf85d7a920cd9779bf7614dc562a93b9ffdc8"
+title = "Voľby do Národnej rady Slovenskej republiky 30. septembra 2023 – určenie volebných okrskov a volebných miestností"
+
+[okrsok.1]
+rules = [
+  {street = "Andreja Hlinku"},
+  {street = "Družstevná"},
+  {street = "Fándlyho"},
+  {street = "Hlavná"},
+  {street = "Karpatská"},
+  {street = "Mesačná"},
+  {street = "Mraznická"},
+  {street = "Pastierska"},
+  {street = "Podzámocká"},
+  {street = "Záhradnícka"},
+  {street = "Zámocká"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {part = "Červený Kameň"},
+  {street = "Kíperská"},
+  {street = "Na vŕšku"},
+  {street = "Nová"},
+  {street = "Píla-rázcestie"},
+  {street = "Podhorská"},
+  {street = "Poľná"},
+  {street = "Ružová"},
+  {street = "Slnečná"},
+  {street = "Sokolská"},
+  {street = "Štefanovská"},
+  {street = "Veterná"},
+]

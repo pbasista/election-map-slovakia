@@ -1,0 +1,57 @@
+# The okrsky of Poproč of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/521892.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Poproč, transcribed by an AI agent in job okrsok-rules-748 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: pre voličov bývajúcich vo východnej časti obce + Partizánska ul.
+#     okrsok 2: pre voličov bývajúcich v západnej časti obce.
+obec = "521892"
+name = "Poproč"
+okrsky_date = 2018-08-09
+okrsky_fill = "nearest"
+okrsky_note = "Partizánska is from the 2018 notice; all other streets are from the 2019 notice, which repeats the 2018 definition word for word and names its streets. Addresses without a street go by fill_nearest. Internet Archive copies are used (the old website's files are gone)."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-301): Of the 2017 VÚC elections the archive keeps only the voter information and the commissions e-mail notice; no okrsky document of 2017 was found on the website or in the Internet Archive. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://web.archive.org/web/20211228220733/https://www.poproc.sk/files/2018-08-09-092141-okrsky_miestnsti.pdf"
+sha256 = "4ad2b4f240943ed1c163c258f8fca2fe8ab12eb24190cd2cd13de3b4c8e33d88"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby do orgánov samosprávy obcí v roku 2018 (9.8.2018)"
+
+[[document]]
+url = "https://web.archive.org/web/20211228220726/https://www.poproc.sk/files/2019-01-25-075719-prezident_okrsky.pdf"
+sha256 = "523d98602f57bbe28688e018ea7e06d59b148f68b72072a423f402cf058d7334"
+title = "Informácia o utvorení volebných okrskov ... volieb prezidenta SR v roku 2019 (25.1.2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Banícka"},
+  {street = "Brezová"},
+  {street = "Horská"},
+  {street = "Jarná"},
+  {street = "Lesná"},
+  {street = "Letná"},
+  {street = "Mieru"},
+  {street = "Oľšavská"},
+  {street = "Poľná"},
+  {street = "Slnečná"},
+  {street = "Športová"},
+  {street = "Východná"},
+  {street = "Záhradná"},
+  {street = "Partizánska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Kostolná"},
+  {street = "Krátka"},
+  {street = "Kultúrna"},
+  {street = "Lipová"},
+  {street = "Nová"},
+  {street = "Obchodná"},
+  {street = "Potočná"},
+  {street = "Požiarna"},
+  {street = "Sadová"},
+  {street = "Školská"},
+  {street = "Západná"},
+]

@@ -1,0 +1,23 @@
+# Okrsky of Lovinobaňa, transcribed by an AI agent in job okrsok-rules-3834 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: okrsok č.1 Kultúrny dom Lovinobaňa - zasadačka Štefánikova 434/53, 985 54 Lovinobaňa
+#   okrsok 2: okrsok č.2 Kultúrny dom Uderiná, Uderiná 108, 985 54 Lovinobaňa
+obec = "511552"
+name = "Lovinobaňa"
+okrsky_date = 2023-06-26
+
+[[document]]
+url = "https://www.lovinobana.sk/files/2023-06-26-083201-Vytvoren___okrsky_a_ur__en___volebn___miestnosti.pdf"
+sha256 = "7805f2665c2545a14ef1cddfc8529005288ba6a6b61735cdca69cf14d633a065"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností pre voľby do NR SR dňa 30. 09. 2023 (OcU-272/2023-1423, 26. 06. 2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Lovinobaňa", note = "The document gives only the polling station; 2 okrsky for 2 parts, the station of okrsok 1 in part Lovinobaňa", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Uderiná", note = "The document gives only the polling station; the station of okrsok 2 in part Uderiná", inferred = true},
+]

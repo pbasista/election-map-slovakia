@@ -1,0 +1,40 @@
+# Okrsky of Vikartovce, transcribed by an AI agent in job okrsok-rules-3914 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Hlavná, Májová, bezdomovci - občania s trvalým pobytom na obci Vikartovce
+#   okrsok 2: Ulice: Hornádska, Konečná, Krížna, Lesná, Lúčna, Majerská, Nižná, Nová, Okružná, Riečna, Rovná, Severná, Slnečná, Školská, Vikartovský mlyn, Záhradná
+obec = "524034"
+name = "Vikartovce"
+okrsky_date = 2023-06-12
+okrsky_fill = "nearest"
+okrsky_note = "Okrsok 1 also holds the voters without an address ('bezdomovci'). 'Vikartovský mlyn' (okrsok 2) is not a street in the register and is left out. The register's addresses without a street go by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20230614021528/https://www.vikartovce.sk/e_download.php?file=data/uredni_deska/obsah449_3.pdf&original=Urcenie_okrskov_volby_NRSR_2023.pdf"
+sha256 = "f53f5aeb9f0e40fb827ffd905d6e5df4a72d6c210c246f07cdf49865a3b27518"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby do NR SR 30. septembra 2023 (12. 06. 2023)"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná"},
+  {street = "Májová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hornádska"},
+  {street = "Konečná"},
+  {street = "Krížna"},
+  {street = "Lesná"},
+  {street = "Lúčna"},
+  {street = "Majerská"},
+  {street = "Nižná"},
+  {street = "Nová"},
+  {street = "Okružná"},
+  {street = "Riečna"},
+  {street = "Rovná"},
+  {street = "Severná"},
+  {street = "Slnečná"},
+  {street = "Školská"},
+  {street = "Záhradná"},
+]

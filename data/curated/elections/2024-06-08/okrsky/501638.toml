@@ -1,0 +1,31 @@
+# Okrsky of Hviezdoslavov, transcribed by an AI agent in job okrsok-rules-4777 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Súpisné čísla 1 – 650
+#   okrsok 2: Súpisné čísla 651 - 1100
+#   okrsok 3: Súpisné čísla nad 1101
+obec = "501638"
+name = "Hviezdoslavov"
+okrsky_note = "The document splits the village by súpisné čísla (the obec has a single part), written as part rules with súpisné number ranges."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The mayor's document names the vote (Voľby do Európskeho Parlamentu v roku 2024 (08.06.2024)); it bears no date of its own."
+
+[[document]]
+url = "https://www.hviezdoslavov.sk/data/page/hviezdoslavov.sk/24818/utvorenie-volebnych-okrskov-europarlament-2024.pdf"
+sha256 = "4a9979c515c0d0886bb31bcf8fc543871d5a24db54f6ee204d328297c27f720d"
+title = "Utvorenie volebných okrskov Europarlament 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Hviezdoslavov", numbers = "1-650"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Hviezdoslavov", numbers = "651-1100"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Hviezdoslavov", numbers = "1101-"},
+]

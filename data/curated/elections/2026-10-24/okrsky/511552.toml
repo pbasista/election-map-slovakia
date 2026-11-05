@@ -1,0 +1,68 @@
+# The okrsky of Lovinobaňa of the vote of 2022-10-29, data/curated/elections/2022-10-29/okrsky/511552.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Lovinobaňa, transcribed by an AI agent in job okrsok-rules-964 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Cintorínska, Dolné Fafáky, Farská, Hviezdoslavova, Janka Kráľa, Janka Slobodu, Komenského, Mlynská, Partizánska, Podhájska, Poľná, SNP, Štefánikova, Štúrova, Továrenská, Včelárska, Záhradkárska, Železničná
+#     okrsok 2: B.Nemcovej, B.S.Timravy, Fučíkova, Hôrna, Mierova, Sadova, Školská, Štvrť 1. mája
+#     okrsok 3: Uderiná
+obec = "511552"
+name = "Lovinobaňa"
+okrsky_date = 2022-07-04
+okrsky_fill = "nearest"
+okrsky_note = "The decision of 4.7.2022 names the stations; the companion table (same posting 7.7.2022) lists the streets. The register's Malinovského (1 address) is not in the table, and the Lovinobaňa addresses without a street (súpisné only) are placed by fill_nearest; the part Uderiná is okrsok 3."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-525): The decision of 13.07.2026 creates 3 okrsky and names only their polling stations (Kultúrny dom Lovinobaňa, Štefánikova 434/53; ZŠ Lovinobaňa, Školská 79/9; Kultúrny dom Uderiná 108). Okrsok 3 is evidently the part Uderiná, but nothing says how okrsky 1 and 2 split the part Lovinobaňa (3 okrsky vs 2 parts), so no rules. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 3 okrsky (nearer, not taken: 2026-07-04: okrsky 1, 2, then 1–3; 2024-06-08: okrsky 1, 2, then 1–3; 2024-03-23: okrsky 1, 2, then 1–3; 2023-09-30: okrsky 1, 2, then 1–3; 2023-01-21: okrsky 1, 2, then 1–3). Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2022-10-29: 1: 753 → 735, 2: 625 → 669, 3: 149 → 146."
+
+[[document]]
+url = "https://www.lovinobana.sk/files/2022-07-07-093927-Okrsky_pod__a_ul__c.pdf"
+sha256 = "69527a969c18b45ecfc4232ab84e91442cbd3de4237d9198684fbb9c318dbc92"
+title = "Volebné okrsky - podľa začlenených ulíc"
+
+[[document]]
+url = "https://www.lovinobana.sk/files/2022-07-07-084538-Volebn___okrsky_a_miestnosti.pdf"
+sha256 = "fbd83adb3abb50c6f66ea2d5a6d78a6edfe1a7ff361ee239b10125c42564f9ff"
+title = "Vytvorené volebné okrsky a určené volebné miestnosti"
+
+[[document]]
+url = "https://www.lovinobana.sk/volby-2022-a73-747"
+sha256 = "caa143a958a655d7e717e989a1e102d07371d63378867efc3e72242dcf4aa73d"
+title = "VOĽBY 2022"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Dolné Fafáky"},
+  {street = "Farská"},
+  {street = "Hviezdoslavova"},
+  {street = "Janka Kráľa"},
+  {street = "Janka Slobodu"},
+  {street = "Komenského"},
+  {street = "Mlynská"},
+  {street = "Partizánska"},
+  {street = "Podhájska"},
+  {street = "Poľná"},
+  {street = "SNP"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Továrenska", written = "Továrenská", note = "the register misspells the ending; same street"},
+  {street = "Záhradkárska"},
+  {street = "Železničná"},
+  {street = "Včelárska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "B. Nemcovej", written = "B.Nemcovej"},
+  {street = "B. S. Timravy", written = "B.S.Timravy"},
+  {street = "Fučíkova"},
+  {street = "Hôrna"},
+  {street = "Mierova"},
+  {street = "Sadova"},
+  {street = "Školská"},
+  {street = "Štvrť 1.mája", written = "Štvrť 1. mája"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Uderiná"},
+]

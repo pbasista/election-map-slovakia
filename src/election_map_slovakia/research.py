@@ -12,23 +12,30 @@ disputed or lesser one (``dispute``), and what in the source ties it to
 the candidate. A person with no finding is reported with an empty list:
 "researched, nothing found" is a result too.
 
-Research is of the latest election's candidates only (its
-``candidates.json``): its findings are kept by person in one store, of
-which an earlier election gets those of its persons linked to researched
-ones, published before its day, never researched anew
-(``reused_research`` of :mod:`election_map_slovakia.bundle`). It runs per
+Research is of one election's candidates (its ``candidates.json``; ``ems
+job make research --election``, by default the latest's): its findings are
+kept by person in one store, each record naming the election researched.
+An election not researched in its own right gets the findings of its
+persons linked to the latest election's researched ones, published before
+its last round's day (``reused_research`` of
+:mod:`election_map_slovakia.bundle`). An election other than the latest is
+researched as its voters could know the candidates: only pages published
+before its last round's day count (:func:`cutoff`; the prompt says so, and
+the check rejects a finding without such a date). It runs per
 language and constituency: ``--only`` takes research
 languages (``sk``, ``hu``, …; none: all) and places, which select every
 candidate a resident of the place can vote for: ``okres:<code>``,
 ``kraj:<code>``, an obec code, or a contest id (``oz:522279/2``,
-``zsk:8/7``, ``predseda:8``) for that contest alone. ``person:<id>``
-selects one person; the persons named so come after those the places
-select, in the order given. A person already researched in all of a
-language's categories, or in a pending job of that language, is left out,
-unless ``again`` is among them: then only pending jobs keep a person out,
-so that research done under older rules can be done again (its findings
-are replaced on ingest). The one priority, ``office``, puts regional
-presidents first, then mayors of the largest municipalities (by council
+``zsk:8/7``, ``predseda:8``, ``prezident:SK/1``) for that contest alone;
+a country-wide election's candidates stand everywhere, so only its
+contests select among them. ``person:<id>`` selects one person; the
+persons named so come after those the places select, in the order given.
+A person already researched in all of a language's categories, or in a
+pending job of that language, is left out, unless ``again`` is among
+them: then only pending jobs keep a person out, so that research done
+under older rules can be done again (its findings are replaced on ingest).
+The one priority, ``office``, puts the country-wide candidates first, then
+regional presidents, mayors of the largest municipalities (by council
 candidates, a proxy of size), regional councillors and the rest.
 
 ``check`` (run by ``ems job ingest`` and ``ems research submit``) accepts an
@@ -40,13 +47,17 @@ item only if every finding
 - quotes the page verbatim (:func:`cache.normalize`; an ellipsis may join
   parts that appear in that order);
 - is on a page that names the person (first name and surname, allowing for
-  Slovak inflection: :func:`name_stem`).
+  Slovak inflection: :func:`name_stem`);
+- for an election other than the latest, was published before its last
+  round's day (:func:`cutoff`; the finding's ``published``, else the
+  page's).
 
-``accept`` records, per person, the date and job of each category
-researched, and replaces that category's findings with the new ones, in
+``accept`` records, per person, the election researched (its ISO day),
+the date and job of each category researched, and replaces that category's
+findings with the new ones, in
 ``data/curated/research/<id[:2]>/<id>.json``::
 
-    {"name": "...", "researched": {category: {date, job}},
+    {"name": "...", "election": "YYYY-MM-DD", "researched": {category: {date, job}},
      "findings": [{category, url, title, published, language, cache,
                    fetched, via, kind, claim: {en, sk}, quote, identity,
                    job}]}
@@ -68,7 +79,7 @@ from collections.abc import Generator, Iterable, Iterator, Mapping, Sequence
 from pathlib import Path
 from typing import Any
 
-from election_map_slovakia import cache, candidates, jobs, sources
+from election_map_slovakia import cache, candidates, contests as kinds, jobs, sources
 from election_map_slovakia.config import OBEC_CODE, OKRES_CODE, Config, Election
 
 NAME = "research"
@@ -87,12 +98,21 @@ _MAX_PASSAGES = 8
 _MIN_STEM = 3
 _ELLIPSIS = re.compile(r"\s*(?:\.\.\.|…|\[\.\.\.\]|\[…\])\s*")
 _CONTEST = re.compile(r"(starosta|oz|predseda|zsk):([0-9A-Z]+)(?:/(\d+))?")
+_COUNTRY = re.compile(r"(prezident|nrsr|ep):SK(?:/(\d+))?")
 _KRAJ = re.compile(r"kraj:(\d)")
 AGAIN = "again"
 """The ``--only`` token that makes research of persons researched already."""
 PERSON = "person:"
 """The prefix of an ``--only`` token that selects one person by id."""
-_RANK = {"predseda": 0, "starosta": 1, "zsk": 2, "oz": 3}
+_RANK = {
+    "prezident": 0,
+    "nrsr": 0,
+    "ep": 0,
+    "predseda": 1,
+    "starosta": 2,
+    "zsk": 3,
+    "oz": 4,
+}
 LANGUAGE_NAMES = {
     "sk": "Slovak",
     "hu": "Hungarian",
@@ -174,16 +194,38 @@ def ballots(
     return out
 
 
+def _contests_only(
+    election: Election, known: set[str], places: Sequence[str]
+) -> set[str]:
+    """Return the contests *places* name, of country-wide *election*; fail on others.
+
+    Its candidates stand everywhere: an obec, okres or kraj selects them all.
+    """
+    wrong = sorted(set(places) - known)
+    if wrong:
+        raise jobs.JobError(
+            f"{NAME}: {wrong[0]!r} is no contest of the {election.slug} election,"
+            " whose candidates stand everywhere"
+        )
+    return set(places)
+
+
 def _places(
     cfg: Config,
     election: Election,
     data: Mapping[str, Any],
     places: Sequence[str],
 ) -> set[str]:
-    """Return the contest ids *places* select (all contests for none)."""
+    """Return the contest ids *places* select (all contests for none).
+
+    Places select a country-wide election's contests by id only: every
+    candidate stands everywhere.
+    """
     known = {c["id"] for c in data["contests"]}
     if not places:
         return known
+    if election.kind in kinds.NATIONAL:
+        return _contests_only(election, known, places)
     from election_map_slovakia import bundle, geo  # bundle imports this module
 
     props = bundle.obec_props(cfg.election_build_dir(election) / geo.OUTPUT_DIR)
@@ -266,10 +308,13 @@ def _kind_area(contest: str) -> tuple[str, str]:
     return kind, rest.split("/", 1)[0]
 
 
-def researched(cfg: Config, person: str) -> dict[str, Any]:
-    """Return the curated research of *person* (empty if none)."""
+def researched(cfg: Config, person: str, election: Election) -> dict[str, Any]:
+    """Return the curated research of *person*, a candidate of *election* (empty if none)."""
     path = curated_path(cfg, person)
-    return json.loads(path.read_bytes()) if path.is_file() else {}
+    if not path.is_file():
+        return {}
+    record = json.loads(path.read_bytes())
+    return record if record["election"] == election.day.isoformat() else {}
 
 
 def curated_path(cfg: Config, person: str) -> Path:
@@ -290,6 +335,13 @@ def contest_label(
     contest: str, names: Mapping[str, str], kraje: Mapping[str, str]
 ) -> str:
     """Return how a Slovak reader names *contest* (a contest id or a body)."""
+    if m := _COUNTRY.fullmatch(contest):
+        kind, sub = m.groups()
+        if kind == "prezident":
+            return "prezident Slovenskej republiky" + (f" ({sub}. kolo)" if sub else "")
+        if kind == "nrsr":
+            return "poslanec Národnej rady Slovenskej republiky"
+        return "poslanec Európskeho parlamentu"
     m = _CONTEST.fullmatch(contest)
     if not m:
         return contest
@@ -353,7 +405,10 @@ def person_items(
                     {
                         "contest": contest_label(c["contest"], names, kraje),
                         "number": c["number"],
-                        "parties": c["parties"] or ["nezávislý kandidát"],
+                        # A presidential candidate stands for no party,
+                        # nor as an independent of a party-list contest.
+                        "parties": c["parties"]
+                        or (["nezávislý kandidát"] if c["independent"] else []),
                     }
                     for c in cs
                 ],
@@ -366,10 +421,14 @@ def person_items(
 
 def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
     """Return the research jobs still to do; see the module doc."""
+    election = options.election
     languages, places = split_only(cfg, options.only)
     again = AGAIN in options.only
-    data = candidate_data(cfg, cfg.latest)
-    persons = selected_persons(cfg, cfg.latest, data, places)
+    data = candidate_data(cfg, election)
+    persons = selected_persons(cfg, election, data, places)
+    # A referendum has no candidates.
+    if not persons:
+        return []
     batches = []
     for lang in languages:
         categories = cfg.sources.research[lang]
@@ -382,7 +441,8 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
         todo = [
             p
             for p in persons
-            if p not in pending and (again or not done(researched(cfg, p), categories))
+            if p not in pending
+            and (again or not done(researched(cfg, p, election), categories))
         ]
         language = LANGUAGE_NAMES.get(lang, lang)
         context = {
@@ -390,7 +450,7 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
             "categories": list(categories),
             "hosts": sources.hosts(cfg.sources, categories),
         }
-        prompt = _prompt(cfg.latest, language, categories)
+        prompt = _prompt(cfg, election, language, categories)
         for start in range(0, len(todo), options.size):
             chunk = person_items(cfg, data, todo[start : start + options.size])
             title = (
@@ -401,12 +461,41 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
     return batches
 
 
-def _prompt(election: Election, language: str, categories: Sequence[str]) -> str:
+_ELECTIONS = {
+    "municipal-regional": "the Slovak municipal and regional elections",
+    "municipal": "the Slovak municipal elections",
+    "regional": "the Slovak regional elections",
+    "by-election": "the Slovak municipal by-elections",
+    "presidential": "the election of the President of the Slovak Republic",
+    "parliament": "the election to the National Council of the Slovak Republic",
+    "european": "the election to the European Parliament in Slovakia",
+}
+"""How the prompt names an election with candidates, by its label
+(:attr:`config.Election.label`)."""
+
+
+def cutoff(cfg: Config, election: Election) -> dt.date | None:
+    """Return the day before which an election's findings must be published.
+
+    That of an election other than the latest, researched as its voters
+    could know the candidates: its last round's (a presidential election's
+    second round, whose voters had the campaign between the rounds); None
+    for the latest.
+    """
+    return None if election == cfg.latest else election.last_day
+
+
+def _prompt(
+    cfg: Config, election: Election, language: str, categories: Sequence[str]
+) -> str:
+    before = cutoff(cfg, election)
     return PROMPT.format(
+        election=_ELECTIONS[election.label],
         day=jobs.long_date(election.day),
         language=language,
         categories=", ".join(categories),
         official=_OFFICIAL if sources.OFFICIAL in categories else "",
+        past=_PAST.format(day=jobs.long_date(before)) if before else "",
         min_quote=MIN_QUOTE,
         max_quote=MAX_QUOTE,
         max_claim=MAX_CLAIM,
@@ -542,7 +631,7 @@ def finding_problems(
     ):
         return [f"published {f['published']!r} is no past date"]
     try:
-        _, text = keep(cfg, job, f["url"])
+        doc, text = keep(cfg, job, f["url"])
     except cache.CacheError as e:
         return [str(e)]
     normalized = cache.normalize(text)
@@ -552,6 +641,15 @@ def finding_problems(
     if not names_person(normalized, item["first_name"], item["surname"]):
         problems.append(
             f"the page does not name {item['first_name']} {item['surname']}"
+        )
+    election = jobs.election(cfg, job)
+    before = cutoff(cfg, election)
+    published = f.get("published") or doc["published"]
+    if before and not (published and published < before.isoformat()):
+        problems.append(
+            f"published {published or 'when, not known'}: the election of"
+            f" {election.day} counts only pages published before {before},"
+            " the day of its last round"
         )
     return problems
 
@@ -575,8 +673,15 @@ def accept(cfg: Config, job: jobs.Job, accepted: list[jobs.Accepted]) -> list[st
     cached = cfg.curated_dir / CACHE_DIR
     cached.mkdir(parents=True, exist_ok=True)
     lines = []
+    election = jobs.election(cfg, job)
     for item, out in accepted:
-        record = researched(cfg, item["id"])
+        path = curated_path(cfg, item["id"])
+        record = researched(cfg, item["id"], election)
+        if path.is_file() and not record:
+            raise jobs.JobError(
+                f"{path}: research of a person of another election, whose id"
+                f" {item['id']} is the same"
+            )
         kept = [
             f for f in record.get("findings", []) if f["category"] not in categories
         ]
@@ -590,6 +695,7 @@ def accept(cfg: Config, job: jobs.Job, accepted: list[jobs.Accepted]) -> list[st
         done_now = {c: {"date": today, "job": job.name} for c in categories}
         content = {
             "name": item["name"],
+            "election": election.day.isoformat(),
             "researched": dict(
                 sorted((record.get("researched", {}) | done_now).items())
             ),
@@ -597,7 +703,6 @@ def accept(cfg: Config, job: jobs.Job, accepted: list[jobs.Accepted]) -> list[st
                 kept + new, key=lambda f: (f["category"], f["url"], f["quote"])
             ),
         }
-        path = curated_path(cfg, item["id"])
         path.parent.mkdir(parents=True, exist_ok=True)
         jobs.write_json(path, content)
         found = f"findings: {len(new)}" if new else "nothing found"
@@ -713,18 +818,19 @@ def submit(cfg: Config, job: jobs.Job, out: dict[str, Any]) -> list[str]:
     return []
 
 
-def coverage(cfg: Config, only: Iterable[str]) -> Iterator[str]:
+def coverage(cfg: Config, election: Election, only: Iterable[str]) -> Iterator[str]:
     """Yield, per research language, the coverage of the selected persons.
 
-    Of the latest election: researched, with findings, in pending jobs, to do.
+    Of *election*: researched, with findings, in pending jobs, to do.
     """
     languages, places = split_only(cfg, only)
-    data = candidate_data(cfg, cfg.latest)
-    persons = selected_persons(cfg, cfg.latest, data, places)
-    records = {p: researched(cfg, p) for p in persons}
+    data = candidate_data(cfg, election)
+    persons = selected_persons(cfg, election, data, places)
+    records = {p: researched(cfg, p, election) for p in persons}
     pending: dict[str, set[str]] = defaultdict(set)
+    day = election.day.isoformat()
     for job in jobs.existing(cfg, jobs.kinds()[NAME]):
-        if job.pending:
+        if job.pending and job.context.get(jobs.ELECTION) == day:
             pending[job.context["language"]] |= {i["id"] for i in job.items}
     yield f"{len(persons)} candidates selected"
     for lang in languages:
@@ -748,15 +854,27 @@ _OFFICIAL = (
 )
 """The part of :data:`PROMPT` for jobs that search the official sites."""
 
+_PAST = """
+
+## As of election day
+
+The election (its last round) was held on {day}; the site shows each
+candidate as voters could know them then. Only pages published before
+{day} count: give `published` for every finding (a page that shows no date
+cannot be cited), and report what was known by that day, not what
+happened later."""
+"""The part of :data:`PROMPT` for an election other than the latest (:func:`cutoff`)."""
+
 PROMPT = """\
 # Candidate research in {language} sources
 
-Each item of `input.json` is one candidate of the Slovak municipal and
-regional elections of {day}: name with academic titles, first
-name, surname, age, stated occupation, municipality of residence, every
-candidacy (contest, ballot number, nominating parties) and every office the
-person holds now. Your task: find what the allowlisted sites say about this
-person, and report each relevant fact with a verbatim quote.
+Each item of `input.json` is one candidate of {election} of {day}: name
+with academic titles, first name, surname, age and stated occupation (null
+and empty where the candidate lists do not give them), municipality of
+residence, every candidacy (contest, ballot number, nominating parties) and
+every office the person holds now. Your task: find what the allowlisted
+sites say about this person, and report each relevant fact with a verbatim
+quote.{past}
 
 ## Where to search
 
@@ -767,6 +885,21 @@ Only pages on these hosts and their subdomains count (`hosts` in
   site:pravda.sk)`; try the name with the municipality or the office too.
   Slovak names decline (Novák → Nováka, Novákovi; Nováková → Novákovej):
   search engines match the base form, pages may use another.
+- Search for controversies by name too, not only for the person: the name
+  with words such as kauza, obvinenie, obžaloba, súd, polícia, NAKA,
+  vyšetrovanie, podozrenie, úplatok, korupcia, konflikt záujmov,
+  dezinformácie, klamstvo, hoax, fact-check (in the language of the
+  sources).
+- A prominent person (a candidate for president, a party leader or one of
+  the first names on a party's list, a minister or former minister, a
+  member of parliament) has affairs that are widely known: before you
+  finish, write down every scandal, investigation, allegation and
+  documented falsehood you know of about them, and search for each one by
+  its own words: the surname with the case's name, the other people
+  involved or what it was about. Report each one an allowlisted page
+  supports; say in `note` which you looked for and could not support.
+  Missing a famous affair is a worse error than missing a minor career
+  fact.
 - Pages under a `blog` host or path are user content and never count.
 - Only HTML web pages can be cited, no PDFs.
 
@@ -787,7 +920,8 @@ finding:
 - `cv`: achievements and roles that set the person apart: a notable career,
   expertise, a business or organisation they built or run, initiatives or
   decisions they led and their results, awards, public activity beyond the
-  routine.
+  routine. For a prominent person, only the main roles (offices held, the
+  posts that defined their career), not every step.
 - `affair`: a serious controversy, established with certainty: criminal
   proceedings against the candidate (charges, an indictment, detention, an
   investigation stated to be about their own conduct), a court decision
@@ -797,30 +931,48 @@ finding:
   a conflict of interest, an audit finding serious breaches they were
   responsible for, removal from office for misconduct, a confirmed offence
   such as drunk driving).
-- `dispute`: any other controversy: allegations the candidate denies or no
-  authority has confirmed (often brought by political opponents to make
-  the news), a criminal complaint with no charges, an investigation of a
-  matter that names no charge against the candidate, a case that ended in
-  their favour (acquittal, charges dropped), political quarrels, minor
-  fines, or anything whose wrongness is unclear. When in doubt between
-  the two, `dispute`.
+- `dispute`: a suspicion or accusation of wrongdoing by the candidate that
+  is not established: allegations of corruption, bribery, abuse of office,
+  conflicts of interest, unexplained wealth, plagiarism or the like that
+  the candidate denies or no authority has confirmed (a witness's
+  testimony, a journalists' investigation, a criminal complaint with no
+  charges, an investigation that names no charge against them, a case that
+  ended in their favour: acquittal, charges dropped); statements of theirs
+  that fact-checkers or the media documented as false or as
+  disinformation, smears of opponents, hate speech; serious breaches of
+  ethics or of the rules reported by the media; minor fines. When in doubt
+  between the two, `dispute`.
+
+Both are about the candidate's own conduct. Not a controversy, and so not
+a finding at all:
+
+- the candidate criticising someone, taking a political position, voting
+  or disagreeing in an ordinary political way, or being criticised for
+  their opinions: that is politics, not wrongdoing;
+- what someone else did (a relative, a colleague, their party, a
+  government they sat in, someone they appointed), unless the source ties
+  the candidate's own act to it (they are accused, they knew and covered
+  it up, they personally decided it).
 
 For both, report what the source says, attributed ("according to the
-police…"), never more, and note acquittals or outcomes if the source gives
-them.
+police…", "according to the testimony of …"), never more, and note
+acquittals, denials or outcomes if the source gives them.
 
 Not:
 
 - elections: results, votes, list positions, being elected or re-elected,
   candidacies, nominations, announcing a run, campaign events. The site
   shows the candidacies, who holds the office now and the results already;
+  what a candidate said or did in a campaign counts only as a `dispute` as
+  above (a documented falsehood or smear);
 - holding a current office as such, or its routine (attending a ceremony,
   opening a renovated road, a council's agenda);
 - private life without public relevance, opinions about the person
   without facts, bare candidate lists or memberships.
 
 When in doubt whether a fact is noteworthy, leave it out: no finding beats
-a filler finding, and "nothing found" is a valid result.
+a filler finding, and "nothing found" is a valid result. Order matters
+too: the most serious and widely reported matters first.
 
 For each finding:
 
@@ -868,4 +1020,5 @@ KIND = jobs.Kind(
     check=check,
     accept=accept,
     priorities=(PRIORITY,),
+    per_election=True,
 )

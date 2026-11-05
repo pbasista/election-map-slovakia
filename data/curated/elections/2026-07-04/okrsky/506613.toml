@@ -1,0 +1,44 @@
+# Okrsky of Trenčianske Teplice, transcribed by an AI agent in job okrsok-rules-5525 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Teheľňa, Podjavorinskej, Sady pod Dedovcom, Gogolova, Šrobárova, Samota Skalica, Kaňová Štvrť SNP č.: 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,34, 35, 36, 37, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 70, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 100.
+#   okrsok 2: Gen.M.R.Štefánika, Nádražná, Baračka, Hurbanova, Bagarova, Pod Klepáčom, Partizánska, Červené Kopanice, 17. novembra, T.G. Masaryka, Kúpeľná, Hviezdoslavova, občania prihlásení na Mesto Trenčianske Teplice, kúpeľní hostia
+obec = "506613"
+name = "Trenčianske Teplice"
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky on the city's referendum 2026 page. Štvrť SNP is named only in okrsok 1 (with house numbers), so the whole street is placed there. 'občania prihlásení na Mesto Trenčianske Teplice' and 'kúpeľní hostia' are voters without an address / spa guests; register streets not named (Samota Arpád) and addresses without a street are placed by fill_nearest."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The page section is titled 'Volebné okrsky a volebné miestnosti pre referendum 2026'; no decision date is stated."
+
+[[document]]
+url = "https://www.teplice.sk/referendum-2026.html"
+sha256 = "0970612684a31f7494b1f0e29317786344a24953a6ade95304a8b624e400d69c"
+title = "Volebné okrsky a volebné miestnosti pre referendum 2026 (election page)"
+
+[okrsok.1]
+rules = [
+  {street = "Teheľňa"},
+  {street = "Ľ. Podjavorinskej", written = "Podjavorinskej", note = "The document leaves out the initial Ľ. of Ľudmila Podjavorinská."},
+  {street = "Sady Pod Dedovcom", written = "Sady pod Dedovcom"},
+  {street = "Gogolova"},
+  {street = "Šrobárova"},
+  {street = "Samota Skalica"},
+  {street = "Kaňová"},
+  {street = "Štvrť SNP"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Gen. M. R. Štefánika", written = "Gen.M.R.Štefánika"},
+  {street = "Nádražná"},
+  {street = "Baračka"},
+  {street = "Hurbanova"},
+  {street = "Bagarova"},
+  {street = "Pod Klepáčom"},
+  {street = "Partizánska"},
+  {street = "Červené Kopanice"},
+  {street = "17.novembra", written = "17. novembra"},
+  {street = "Kúpeľná"},
+  {street = "Hviezdoslavova"},
+  {street = "T. G. Masaryka", written = "T.G. Masaryka"},
+]

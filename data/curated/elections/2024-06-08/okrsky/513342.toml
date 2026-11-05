@@ -1,0 +1,28 @@
+# Okrsky of Lysá pod Makytou, transcribed by an AI agent in job okrsok-rules-4939 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Zahŕňa súpisné čísla: 1 - 427
+#   okrsok 2: Zahŕňa súpisné čísla: 428 - 1600
+obec = "513342"
+name = "Lysá pod Makytou"
+okrsky_date = 2024-03-04
+okrsky_fill = "nearest"
+okrsky_note = "The document splits the municipality (one k.ú., parts Lysá pod Makytou, Strelenka, Dešná, no streets) by súpisné čísla only, municipality-wide (1-427, 428-1600); written as the same súpisné ranges in each part (Dešná has no number up to 427). fill_nearest places the 2 addresses in Strelenka whose súpisné číslo lies outside 1-1600."
+
+[[document]]
+url = "https://www.lysapodmakytou.sk/download_file_f.php?id=2011882"
+sha256 = "2d2c37effa13a5c0aa86a07e4113e4fe924569536c84572b1e3ee054b9abc15e"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre konanie volieb do Európskeho parlamentu, dňa 8. júna 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Lysá pod Makytou", numbers = "1-427"},
+  {part = "Strelenka", numbers = "1-427"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Lysá pod Makytou", numbers = "428-1600"},
+  {part = "Strelenka", numbers = "428-1600"},
+  {part = "Dešná", numbers = "428-1600"},
+]

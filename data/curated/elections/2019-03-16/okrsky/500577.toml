@@ -1,0 +1,66 @@
+# The okrsky of Mojmírovce of the vote of 2017-11-04, data/curated/elections/2017-11-04/okrsky/500577.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Mojmírovce, transcribed by an AI agent in job okrsok-rules-280 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Ulice: Kúrie, Na rybníku, Pri hliníku, Pri mlyne, Šalgovská ulica, Štvrtý rad, Tretí rad, Ulica za parkom, Za tabuľami
+#     okrsok 2: Ulice: Občania prihlásení na Obec, Búdy, Gábrišová ulica, Hasičská ulica, Hlavná ulica, Ivanská ulica, Kesovský rad, Ku krížu, Na Pažiti, Na vŕšku, Námestie. sv. Ladislava, Pod vinohradmi, Sedliacka ulica, Slamkova ulica
+#     okrsok 3: Ulice: Cintorínska ulica, Dolinská ulica, Na Foláši, Poľná ulica, Poľnokesovská ulica, Prenosilova ulica, Školská ulica, Štefánikova ulica, Štúrova ulica, Taráňska ulica, Ulica Andreja Hlinku, Ulica pri kolese
+obec = "500577"
+name = "Mojmírovce"
+okrsky_note = "The obec's notice on the time and place of the 2017 regional elections lists the streets of each of the 3 okrsky (all at Základná škola, Školská ulica 897/8). 'Občania prihlásení na Obec' (residents registered only to the municipality) vote in okrsok 2."
+okrsky_adopted = 2017-11-04
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1279): The municipality's current website (new CMS, notice board from 2025) holds only 2026 election documents; the old website (WEBY GROUP CMS) is gone and only partly in the Internet Archive, which has no capture of the notice board or elections page from the weeks before this vote (the presidential election 2019), and no okrsky document for it (the 'Voľby a referendá' page captured 2018–2024 lists only old results). Only the 2017 (Voľby 2017 page) and 2026 (referendum) okrsky documents were found. These are the okrsky of the vote of 2017-11-04 (2017), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2017-11-04: 1: 782 → 769, 2: 816 → 827, 3: 762 → 777."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2017-10-11
+okrsky_date_basis = "the Internet Archive captured the municipality's 'Voľby 2017' page with the okrsky on 2017-10-11 (the page says the notice was published 27.9.2017); the notice names the elections of 4 November 2017 but states no decision date (https://web.archive.org/web/20171011224840/http://www.mojmirovce.sk/volby-2017.html)"
+
+[[document]]
+url = "https://web.archive.org/web/20171011224840/http://www.mojmirovce.sk/volby-2017.html"
+sha256 = "229656d75869395257992b1b0a96e79ddbacaebcabb6db45bdf1c1f1b8a278fd"
+title = "Voľby 2017 – Informácia o čase a mieste konania volieb do orgánov samosprávnych krajov (volebné okrsky a miestnosti, zverejnené 27.9.2017)"
+
+[okrsok.1]
+rules = [
+  {street = "Kúrie"},
+  {street = "Na rybníku"},
+  {street = "Pri hliníku"},
+  {street = "Pri mlyne"},
+  {street = "Šalgovská ulica"},
+  {street = "Štvrtý rad"},
+  {street = "Tretí rad"},
+  {street = "Ulica za parkom"},
+  {street = "Za tabuľami"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Búdy"},
+  {street = "Gábrišova ulica", written = "Gábrišová ulica", note = "the document writes Gábrišová with a long á; the register's Gábrišova ulica, the only similar street"},
+  {street = "Hasičská ulica"},
+  {street = "Hlavná ulica"},
+  {street = "Ivanská ulica"},
+  {street = "Kesovský rad"},
+  {street = "Ku krížu"},
+  {street = "Na Pažiti"},
+  {street = "Na vŕšku"},
+  {street = "Námestie Sv. Ladislava", written = "Námestie. sv. Ladislava"},
+  {street = "Pod vinohradmi"},
+  {street = "Sedliacka ulica"},
+  {street = "Slamkova ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Cintorínska ulica"},
+  {street = "Dolinská ulica"},
+  {street = "Na Foláši"},
+  {street = "Poľná ulica"},
+  {street = "Poľnokesovská ulica"},
+  {street = "Prenosilova ulica"},
+  {street = "Školská ulica"},
+  {street = "Štefánikova ulica"},
+  {street = "Štúrova ulica"},
+  {street = "Taráňska ulica"},
+  {street = "Ulica Andreja Hlinku"},
+  {street = "Ulica pri kolese"},
+]

@@ -1,0 +1,31 @@
+# Okrsky of Valaliky, transcribed by an AI agent in job okrsok-rules-1225 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Buzice
+#   okrsok 2: Bernátovce
+#   okrsok 3: Všechsvätých, Košťany
+obec = "522139"
+name = "Valaliky"
+okrsky_date = 2019-01-22
+okrsky_note = "Document of the old website (Joomla, before 2022), kept in the Internet Archive; the decision's date is stated in the document."
+
+[[document]]
+url = "https://web.archive.org/web/20211228222609/http://www.valaliky.sk/images/uradna_tabula/VO%C4%BDBY_/utvorenie_volebnych_okrskov_a_urcenie_volebnych_miestnosti.pdf"
+sha256 = "b9511a269da060c7c646ad3ab2edbcdfa5194c066916282939032064f5cad602"
+title = "Oznam o utvorení volebných okrskov a určení volebných miestností pre voľby prezidenta SR 16. marca 2019 (starosta, p.č. 145/202/2019/OU, 22. január 2019)"
+
+[okrsok.1]
+rules = [
+  {part = "Buzice"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Bernátovce"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Všechsvätých"},
+  {part = "Košťany"},
+]

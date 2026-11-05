@@ -1,0 +1,125 @@
+# Okrsky of Košice-Dargovských hrdinov, transcribed by an AI agent in job okrsok-rules-3045 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Kalinovská 2, 4, 6, 8, 10, 12, 14, 16, 18; Kurská 20, 22, 24, 25, 27, 29, 31, 33, 35; Kurská 1-19, 21, 23; Kalinovská 3, 5, 7
+#   okrsok 2: Tokajícka; Lidické nám. 2, 4, 6, 8; Lidické nám. 1, 3, 5, 7, 9-12, 14, 15, 16
+#   okrsok 3: Bašťovanského; Benadova; Vo výmoli 1, 3, 5, 5A, 7, 9; Prešovská cesta (nepárne); Prešovská cesta 57A
+#   okrsok 4: Jaltská; Bielocerkevská 1; Bielocerkevská 2-5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27
+#   okrsok 5: Kpt. Jaroša; Postupimská 33, 35, 37; Slivník; Postupimská 1-7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31
+#   okrsok 6: PČL 5, 7-10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36; Vyšná úvrať 14, 16, 16A, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52; PČĽ 2, 4, 6; Maurerova 1, 2, 3; Clementisova
+#   okrsok 7: Maurerova 4; Dvorkinova; Orechová; Maurerova 5-21; Drieňová; Sečovská cesta (nepárne); Na hore
+#   okrsok 8: Buzulucká 18, 20, 21, 22, 23, 25; Charkovská; Buzulucká 2-17, 19
+#   okrsok 9: Krosnianska 1, 3, 5, 7, 9, 11, 13; Zupkova 1-4, 6, 8, 10, 12; Zupkova 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35
+#   okrsok 10: Ovručská; Lupkovská 1, 2; Krosnianska 2, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47
+#   okrsok 11: Krosnianska 4, 49, 51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73, 75, 77, 79, 81, 83, 85, 87, 89, 91, 93, 95; Exnárova 2; Sv. rodiny
+#   okrsok 12: Exnárova 1, 3-7, 9, 10, 11, 13, 15, 17, 19, 21, 23; Fábryho 1, 2, 3, 4, 6; Fábryho 8-10, 12-16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42; Fábryho 5, 7; Adlerova
+#   okrsok 13: (not in the announcement: special okrsok counted by the Statistical Office with 3 voters, for postal voting)
+obec = "598682"
+name = "Košice-Dargovských hrdinov"
+okrsky_date = 2022-11-10
+okrsky_fill = "nearest"
+okrsky_note = "The announcement lists streets and house numbers per okrsok in a table whose okrsok number stands on the middle line of each cell; streets printed just above a number belong to that okrsok (as later announcements, which merge okrsky, confirm: e.g. Kpt. Jaroša goes with Postupimská 33-37). PČL/PČĽ = Povstania českého ľudu, Sv. rodiny = Svätej rodiny. The entry \"mestská časť KE-DH, <office address>\" means voters registered at the office without an address and is no rule. Addresses not listed (e.g. Jegorovovo Nám., Magnezitárska, Maršala Koneva, Pod Furčou, Trieda arm. gen. Svobodu, unlisted numbers, addresses without a street) go by fill_nearest. Okrsok 13 is not in the announcement; the Statistical Office counts it with 3 voters (special okrsok for postal voting), so it is addressless."
+
+[[document]]
+url = "https://www.kosice-dh.sk/files/2022-11-10-124519-VOLEBNE_OKRSKY_REFERENDUM_2023.pdf"
+sha256 = "dbcc545f5fcc7b9b20e5ae5ca6f0a56a72bce402d15296d4fa80882b50857425"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre referendum v roku 2023 (10. 11. 2022)"
+
+[okrsok.1]
+rules = [
+  {street = "Kalinovská", numbers = "2, 4, 6, 8, 10, 12, 14, 16, 18"},
+  {street = "Kurská", numbers = "20, 22, 24, 25, 27, 29, 31, 33, 35"},
+  {street = "Kurská", numbers = "1-19, 21, 23"},
+  {street = "Kalinovská", numbers = "3, 5, 7"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Tokajícka"},
+  {street = "Lidické Námestie", numbers = "2, 4, 6, 8", written = "Lidické nám."},
+  {street = "Lidické Námestie", numbers = "1, 3, 5, 7, 9-12, 14, 15, 16", written = "Lidické nám."},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bašťovanského"},
+  {street = "Benadova"},
+  {street = "Vo Výmoli", numbers = "1, 3, 5, 5A, 7, 9"},
+  {street = "Prešovská cesta", parity = "odd"},
+  {street = "Prešovská cesta", numbers = "57A"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Jaltská"},
+  {street = "Bielocerkevská", numbers = "1"},
+  {street = "Bielocerkevská", numbers = "2-5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Kpt. Jaroša"},
+  {street = "Postupimská", numbers = "33, 35, 37"},
+  {street = "Slivník"},
+  {street = "Postupimská", numbers = "1-7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Povstania českého ľudu", numbers = "5, 7-10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36", written = "PČL", note = "abbreviation of Povstania českého ľudu"},
+  {street = "Vyšná Úvrať", numbers = "14, 16, 16A, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52"},
+  {street = "Povstania českého ľudu", numbers = "2, 4, 6", written = "PČĽ", note = "abbreviation of Povstania českého ľudu"},
+  {street = "Maurerova", numbers = "1, 2, 3"},
+  {street = "Clementisova"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Maurerova", numbers = "4"},
+  {street = "Dvorkinova"},
+  {street = "Orechová"},
+  {street = "Maurerova", numbers = "5-21"},
+  {street = "Drieňová"},
+  {street = "Sečovská cesta", parity = "odd"},
+  {street = "Na hore"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Buzulucká", numbers = "18, 20, 21, 22, 23, 25"},
+  {street = "Charkovská"},
+  {street = "Buzulucká", numbers = "2-17, 19"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Krosnianska", numbers = "1, 3, 5, 7, 9, 11, 13"},
+  {street = "Zupkova", numbers = "1-4, 6, 8, 10, 12"},
+  {street = "Zupkova", numbers = "5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Ovručská"},
+  {street = "Lupkovská", numbers = "1, 2"},
+  {street = "Krosnianska", numbers = "2, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Krosnianska", numbers = "4, 49, 51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73, 75, 77, 79, 81, 83, 85, 87, 89, 91, 93, 95"},
+  {street = "Exnárova", numbers = "2"},
+  {street = "Svätej rodiny", written = "Sv. rodiny", note = "Sv. rodiny = Svätej rodiny"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Exnárova", numbers = "1, 3-7, 9, 10, 11, 13, 15, 17, 19, 21, 23"},
+  {street = "Fábryho", numbers = "1, 2, 3, 4, 6"},
+  {street = "Fábryho", numbers = "8-10, 12-16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42"},
+  {street = "Fábryho", numbers = "5, 7"},
+  {street = "Adlerova"},
+]
+
+[okrsok.13]
+addressless = true

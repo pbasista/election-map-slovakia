@@ -1,0 +1,27 @@
+# The okrsky of Sady nad Torysou of the vote of 2020-02-29, data/curated/elections/2020-02-29/okrsky/521965.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Sady nad Torysou, transcribed by an AI agent in job okrsok-rules-2705 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Okrsok č. 1 Byster
+#     okrsok 2: Okrsok č. 2 Zdoba
+obec = "521965"
+name = "Sady nad Torysou"
+okrsky_date = 2019-11-15
+okrsky_note = "The document names each okrsok by its part of the municipality (okrsok č. 1 Byster, polling station in Byster 189; okrsok č. 2 Zdoba, polling station in Zdoba), so each okrsok is that whole part. Same okrsky as the copied 2022 rules."
+okrsky_adopted = 2020-02-29
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-501): The current website (since 2020) has elections pages only from the National Council election of 2020 on; the old Drupal site's pages are gone (e.g. /volby-2018 answers 404). The Internet Archive keeps nothing of the domain before June 2018, and its complete URL list for 2016-2020 (collapse=urlkey) holds no okrsky document and no elections page of this vote: the only archived old-site PDFs are nariadenie.pdf, obecna_zapisnica_pre_volby_do_oso.pdf, sms_spravodaj_0.pdf, web_ovk.pdf, napln_prace.pdf. The council's archive (Zasadnutia OZ archív do r. 2020) has only resolutions and minutes, not the mayor's okrsky decision. The Archive was intermittently offline (connection refused / \"Temporarily Offline\") during the search; archived notice-board pages fetched: none of 2017 (the earliest capture is 2018-09). Every later document (2020-2026) names okrsok č. 1 Byster and okrsok č. 2 Zdoba. These are the okrsky of the vote of 2020-02-29 (2020-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2020-02-29: 1: 784 → 805, 2: 736 → 726."
+
+[[document]]
+url = "https://www.sadynadtorysou.sk/modules/file_storage/download.php?file=021ef087%7C38"
+sha256 = "2e154be8f346cef34316f50f1097a51c5c8572a5f35eac24f8c097099e397c43"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Sady nad Torysou pre voľby do Národnej rady Slovenskej republiky v roku 2020 (15.11.2019)"
+
+[okrsok.1]
+rules = [
+  {part = "Byster"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Zdoba"},
+]

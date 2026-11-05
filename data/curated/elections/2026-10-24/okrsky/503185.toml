@@ -1,0 +1,64 @@
+# The okrsky of Gbelce of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/503185.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Gbelce, transcribed by an AI agent in job okrsok-rules-4853 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Okrsok zahŕňa ulice: Búčska cesta, Čapáš, Dúhová, J. Stampayho, Jedličková, Kostolná, Nový rad, Pod brezami, Pod záhradami, Ružová, Slávičia, Starý vrch, Svodínska cesta, Školská, Športová, Vinohradnícka
+#     okrsok 2: Okrsok zahŕňa ulice: Agátová, Jarná, Kolónia, Krátka, Krížna, Kvetná, Novozámocká cesta, Pekná, Slnečná, Tabánska, Tichá, Trstinová, Materskej školy, Vŕbová, Železničná
+obec = "503185"
+name = "Gbelce"
+okrsky_fill = "nearest"
+okrsky_note = "Houses without a street are placed by fill_nearest."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-320): The obec's website and úradná tabuľa publish for 2026 only the volebný obvod notice, candidate lists and a delivery notice; no document on utvorenie volebných okrskov for 2026 was found (the elections page with older 'Volebné okrsky.pdf' returns 404). Web search found nothing either. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2024-06-08: 1: 918 → 906, 2: 846 → 832."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-04-17
+okrsky_date_basis = "The notice board item 'Voľby do Európskeho parlamentu – 2024' linking the document says 'Zverejnené 17.4.2024'; the document is undated. (https://www.gbelce.sk/volby-do-europskeho-parlamentu-2024--europai-parlamenti-valasztasok-2024-oznam/mid/585660/.html)"
+
+[[document]]
+url = "https://www.gbelce.sk/download_file_f.php?id=2035605"
+sha256 = "a395bebbbaf6954b66c6ce7b1928d5e28316369c00b09e2add5603594290d27c"
+title = "Volebné okrsky a volebné miestnosti (Volebne-okrsky.docx)"
+
+[[document]]
+url = "https://www.gbelce.sk/volby-do-europskeho-parlamentu-2024--europai-parlamenti-valasztasok-2024-oznam/mid/585660/.html"
+sha256 = "ebbb8312319dc436e321861b8a4655c2c62d2843ec8d4222496dba63bd6ea6b3"
+title = "Voľby do Európskeho parlamentu – 2024 (notice board item, zverejnené 17.4.2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Búčska cesta"},
+  {street = "Čapáš"},
+  {street = "Dúhová"},
+  {street = "J. Stampayho"},
+  {street = "Jedličková"},
+  {street = "Kostolná"},
+  {street = "Nový rad"},
+  {street = "Pod brezami"},
+  {street = "Pod záhradami"},
+  {street = "Ružová"},
+  {street = "Slávičia"},
+  {street = "Starý vrch"},
+  {street = "Svodínska cesta"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Vinohradnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Jarná"},
+  {street = "Kolónia"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Kvetná"},
+  {street = "Novozámocká cesta"},
+  {street = "Pekná"},
+  {street = "Slnečná"},
+  {street = "Tabánska"},
+  {street = "Tichá"},
+  {street = "Trstinová"},
+  {street = "Materskej školy"},
+  {street = "Vŕbová"},
+  {street = "Železničná"},
+]

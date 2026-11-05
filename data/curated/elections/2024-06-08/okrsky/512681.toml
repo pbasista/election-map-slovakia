@@ -1,0 +1,83 @@
+# Okrsky of Turany, transcribed by an AI agent in job okrsok-rules-4795 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ul. Vaňovská, Družstevná, M.R.Štefánika, Bazovského, Moyzesova, Černík, Fatranská, Chrenovo, Hlboká cesta, Jánošíkova, Osloboditeľov, Partizánska, Priehrada, Trusalová, Zábrehy, Jesenského, Brodzany
+#   okrsok 2: ul. Krížna, Riečna, Mierová, Sládkovičova, Mohylka, Janka Kráľa, 1.Mája, Cintorínska, Hviezdoslavova, Kollárova, Komenského, Malý riadok, Polík, Železničná, Školská, Štúrova, Na Dubovú
+#   okrsok 3: ul. Budovateľská, Robotnícka, Sadová, Červenej armády
+#   okrsok 4: ul. SNP, Mládeže, Obchodná, Rybárska, Generála Fraňu, Petra Mendela, Generála Nosáka, Krpelianska, Doliny, Slnečná
+obec = "512681"
+name = "Turany"
+okrsky_fill = "nearest"
+okrsky_note = "The town's announcement of the okrsky for the EP election of 2024 (notice page, Internet Archive copy). The register's addresses without a street (súpisné čísla only) take the okrsok of the nearest address (fill_nearest)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-03-07
+okrsky_date_basis = "The notice page states 'Zverejnené 7.3.2024'; the announcement itself is undated. (https://web.archive.org/web/20240307235253/https://www.turany.sk/volebne-okrsky-pre-volby-do-europskeho-parlamentu-v-roku-2024-oznam/mid/469749/.html)"
+
+[[document]]
+url = "https://web.archive.org/web/20240307235253/https://www.turany.sk/volebne-okrsky-pre-volby-do-europskeho-parlamentu-v-roku-2024-oznam/mid/469749/.html"
+sha256 = "99b9a33498d08287ed7367d4858fab87769ec6e22dcf5a2ec0cb6d704f6d4ea2"
+title = "Volebné okrsky pre voľby do Európskeho parlamentu v roku 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Vaňovská"},
+  {street = "Družstevná"},
+  {street = "M. R. Štefánika", written = "M.R.Štefánika"},
+  {street = "Bazovského"},
+  {street = "Moyzesova"},
+  {street = "Černík"},
+  {street = "Fatranská"},
+  {street = "Chrenovo"},
+  {street = "Hlboká cesta"},
+  {street = "Jánošíkova"},
+  {street = "Osloboditeľov"},
+  {street = "Partizánska"},
+  {street = "Priehrada"},
+  {street = "Trusalová"},
+  {street = "Zábrehy"},
+  {street = "Jesenského"},
+  {street = "Brodzany"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krížna"},
+  {street = "Riečna"},
+  {street = "Mierová"},
+  {street = "Sládkovičova"},
+  {street = "Mohylka"},
+  {street = "J. Kráľa", written = "Janka Kráľa"},
+  {street = "1.mája", written = "1.Mája"},
+  {street = "Cintorínska"},
+  {street = "Hviezdoslavova"},
+  {street = "Kollárova"},
+  {street = "Komenského"},
+  {street = "Malý riadok"},
+  {street = "Polík"},
+  {street = "Železničná"},
+  {street = "Školská"},
+  {street = "Štúrova"},
+  {street = "Na Dubovú"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Robotnícka"},
+  {street = "Sadová"},
+  {street = "Červenej armády"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "SNP"},
+  {street = "Mládeže"},
+  {street = "Obchodná"},
+  {street = "Rybárska"},
+  {street = "Generála Fraňu"},
+  {street = "Petra Mendela"},
+  {street = "Gen. Nosáka", written = "Generála Nosáka"},
+  {street = "Krpelianska"},
+  {street = "Doliny"},
+  {street = "Slnečná"},
+]

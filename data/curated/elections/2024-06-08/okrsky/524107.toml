@@ -1,0 +1,24 @@
+# Okrsky of Šuňava, transcribed by an AI agent in job okrsok-rules-5113 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: miestna časť Nižná Šuňava; Ulice: SNP, Družstevná, Záhradná, Jagrova, Mieru, Š. Šmálika, Športová, Hŕbky, Tatranská, Tichá
+#   okrsok 2: miestna časť Vyšná Šuňava; Ulice: SNP, Lúčna, Cintorínska, Pod vodojemom, Poľnohospodárska, Štrbská, Liptovská, Krátka, Podhorská, Okružná, Š. Šmálika
+obec = "524107"
+name = "Šuňava"
+okrsky_date = 2024-03-04
+okrsky_note = "Each okrsok is a whole part of the municipality (miestna časť); SNP and Š. Šmálika, listed in both okrsky, are split by part. Trojičné námestie (in Vyšná Šuňava) is not listed but lies in that part."
+
+[[document]]
+url = "https://www.sunava.sk/e_download.php?file=data/uredni_deska/obsah487_1.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "c690624a29aaee20daefc480ee53fd5afacc0dd1c295da374729f0b48e1ad10e"
+title = "Oznámenie o utvorení volebných okrskov pre voľby do Európskeho parlamentu 8. júna 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Nižná Šuňava"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vyšná Šuňava"},
+]

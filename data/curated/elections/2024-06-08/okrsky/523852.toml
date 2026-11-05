@@ -1,0 +1,43 @@
+# Okrsky of Spišské Bystré, transcribed by an AI agent in job okrsok-rules-5024 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Partizánska, SNP, Hornádska, Michalská, Jána Lačeka, Vodárenska, Pod lesom
+#   okrsok 2: Cintorínska, Hviezdoslavova, Kukučínova, Školská, Slnečná, Krátka, Kamenec, Družstevná
+obec = "523852"
+name = "Spišské Bystré"
+okrsky_date = 2024-03-05
+okrsky_fill = "nearest"
+okrsky_note = "The 51 register addresses without a street are placed by fill_nearest. Same okrsky as the 2022 copy."
+
+[[document]]
+url = "https://www.spisskebystre.sk/e_download.php?file=data/editor/404sk_3.pdf&original=ozn%C3%A1menie%20o%20ur%C4%8Den%C3%AD%20volebn%C3%BDch%20okrskov%20a%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "db7d1ff1a9fc1ff3810128ac02213036103813aa69d361c61857e9037c2d9117"
+title = "Oznámenie o určení volebných okrskov a volebných miestností (5.3.2024)"
+
+[[document]]
+url = "https://www.spisskebystre.sk/urad/volby-referendum/volby-referendum-archiv/volby-do-europskeho-parlamentu-862024-1/"
+sha256 = "48c9156ff499079a8e0f4470218161d7c7e65c7596f7dcf352395db3ccbc87f3"
+title = "Voľby do Európskeho parlamentu 8.6.2024"
+
+[okrsok.1]
+rules = [
+  {street = "Partizánska"},
+  {street = "SNP"},
+  {street = "Hornádska"},
+  {street = "Michalská"},
+  {street = "Jána Lačeka"},
+  {street = "Vodárenska"},
+  {street = "Pod lesom"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Hviezdoslavova"},
+  {street = "Kukučínova"},
+  {street = "Školská"},
+  {street = "Slnečná"},
+  {street = "Krátka"},
+  {street = "Kamenec"},
+  {street = "Družstevná"},
+]

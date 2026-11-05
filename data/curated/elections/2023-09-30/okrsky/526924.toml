@@ -1,0 +1,31 @@
+# Okrsky of Nová Ľubovňa, transcribed by an AI agent in job okrsok-rules-3759 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1: 1-269 + voliči – TP bez súpisného čísla
+#   okrsok 2: Okrsok č. 2: 270 – 515
+#   okrsok 3: Okrsok č. 3: 516 – 1014
+obec = "526924"
+name = "Nová Ľubovňa"
+okrsky_date = 2023-06-15
+okrsky_fill = "nearest"
+okrsky_note = "The document assigns voters by súpisné (house) number ranges. Voters without a súpisné číslo (okrsok 1) and foreign voters are not register addresses. Súpisné numbers outside the listed ranges, if any, take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.novalubovna.sk/resources/File/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-obci-nova-lubov-a-pre-konanie-volieb-do-nr-sr-2023.pdf"
+sha256 = "19aeccf5acae8f6dab8c153af4eb33426471fe9e0fdfa79c9195e856c041a700"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností v obci Nová Ľubovňa pre konanie Volieb do NR SR 2023 (15.06.2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Nová Ľubovňa", numbers = "1-269"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Nová Ľubovňa", numbers = "270-515"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Nová Ľubovňa", numbers = "516-1014"},
+]

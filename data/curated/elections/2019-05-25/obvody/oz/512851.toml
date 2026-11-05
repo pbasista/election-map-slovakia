@@ -1,0 +1,128 @@
+# The okrsky of Beluša of the elections of 2018-11-10, data/curated/elections/2018-11-10/obvody/oz/512851.toml, copied by `ems job reuse` (reused). Its header there:
+#   Council obvody of Beluša (512851), Púchov.
+#   Transcribed by an AI agent in job obvod-rules-086 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per obvod, verbatim:
+#     obvod 1: I. volebný obvod - sa volia 2 poslanci: 1 1 Ľ. Štúra 7, 8, 9, 10, 16, 1883, 1884, 1895, 2452, 2453, 2454 RD 1678,1679, 1683, 2 1 Ľ. Štúra 11, 12, 14, 15
+#     obvod 2: II. volebný obvod - sa volia 2 poslanci: 3 2 Trenčianska 4 2 Továrenská Kpt. Nálepku Mlynská P. O. Hviezdoslava Staničná
+#     obvod 3: III. volebný obvod - sa volia 2 poslanci: 5 3 Farská Partizánska Žilinská Dr. Clementisa M. R. Štefánika J. Kráľa 6 3 J. A. Komenského Krížna Dr. Adámyho Rybníky
+#     obvod 4: IV. volebný obvod - sa volia 2 poslanci: 7 4 A. Sládkoviča 8 4 M. Kukučína
+#     obvod 5: V. volebný obvod - sa volia 2 poslanci: 9 5 Slatinská 20-44, 186-224, 2491, 2492 Ľ. Štúra 17 10 6 Belušské Slatiny Pod Malenicou Slatinská 47-85, 140-183, 1600-2488, 2702-2764
+#     obvod 6: VI. volebný obvod - sa volia 3 poslanci: 11 7 J. Kollára časť Hloža 1163-1310 12 7 časť Hloža 1311-1391-1570-1579, 2074-2079, 2091-2099, 2511, 2528, 2656 13 8 časť Podhorie
+#   Okrsky added by an AI agent in job okrsok-rules-5862 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Ľ. Štúra 7, 8, 9, 10, 16, 1883, 1884, 1895, 2452, 2453, 2454 RD 1678,1679, 1683, Ľ. Štúra 11, 12, 14, 15
+#     okrsok 2: Trenčianska, Továrenská, Kpt. Nálepku, Mlynská, P. O. Hviezdoslava, Staničná
+#     okrsok 3: Farská, Partizánska, Žilinská, Dr. Clementisa, M. R. Štefánika, J. Kráľa, J. A. Komenského, Krížna, Dr. Adámyho, Rybníky
+#     okrsok 4: A. Sládkoviča, M. Kukučína
+#     okrsok 5: Slatinská 20-44, 186-224, 2491, 2492, Ľ. Štúra 17
+#     okrsok 6: Belušské Slatiny, Pod Malenicou, Slatinská 47-85, 140-183, 1600-2488, 2702-2764
+#     okrsok 7: J. Kollára, časť Hloža 1163-1310, časť Hloža 1311-1391-1570-1579, 2074-2079, 2091-2099, 2511, 2528, 2656
+#     okrsok 8: časť Podhorie
+obec = "512851"
+name = "Beluša"
+date = 2018-07-30
+fill = "nearest"
+note = "The council obvody of the elections of 2018-11-10. The council's resolution 104/18.8 of 30.07.2018 lists per obvod (and poslanecký obvod/okrsok) the streets; numbers are súpisné. fill_nearest places the Ľ. Štúra houses it does not list and the addresses without a street in part Beluša."
+reused = 2018-11-10
+okrsky_date = 2018-07-30
+okrsky_fill = "nearest"
+okrsky_note = "These are the okrsky of the elections of 2018-11-10: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was found (okrsky/not-found.json). The council's resolution 104/18.8 of 30.07.2018 tabulates per volebný obvod the poslanecké obvody, the volebný okrsok (I-VIII) and their streets; the mayor's page 'Utvorenie volebných okrskov … 10. 11. 2018' (posted 31.7.2018) gives okrsky I-VIII with their polling stations only. Numbers are súpisné. Slatinská houses outside the listed súpisné ranges and the addresses without a street in part Beluša take the okrsok of the nearest address (fill_nearest)."
+okrsky_reused = 2018-11-10
+
+[[document]]
+url = "https://www.belusa.sk/samosprava/volby/volebne-obvody-a-pocet-poslancov-pre-komunalne-volby-2018-1907.html"
+sha256 = "9affa48bce23d298d63ab85e43214670496e2b0f8bc44b6308c7326c382a6f3c"
+title = "Volebné obvody a počet poslancov pre komunálne voľby 2018 (uznesenie č. 104/18.8 zo dňa 30. 07. 2018)"
+
+[[document]]
+url = "https://www.belusa.sk/samosprava/volby/volebne-okrsky-a-volebne-miestnosti-pre-komunalne-volby-2018-1908.html"
+sha256 = "6bc629cf50ea7dcc68266a5b36952388ef88ec32d243e77672d4ed50eb33bd31"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí konaných dňa 10. 11. 2018 (vyvesené 31. 7. 2018)"
+
+[obvod.1]
+seats = 2
+okrsky = [1]
+rules = [
+  {street = "Ľ. Štúra", numbers = "7, 8, 9, 10, 16, 1883, 1884, 1895, 2452, 2453, 2454, 1678, 1679, 1683, 11, 12, 14, 15", by = "supisne", note = "the numbers are súpisné ('RD 1678, 1679, 1683' = family houses)"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {street = "Trenčianska"},
+  {street = "Továrenská"},
+  {street = "Kpt. Nálepku"},
+  {street = "Mlynská"},
+  {street = "P. O. Hviezdoslava"},
+  {street = "Staničná"},
+]
+
+[obvod.3]
+seats = 2
+okrsky = [3]
+rules = [
+  {street = "Farská"},
+  {street = "Partizánska"},
+  {street = "Žilinská"},
+  {street = "Dr. Clementisa"},
+  {street = "M. R. Štefánika"},
+  {street = "J. Kráľa"},
+  {street = "J. A. Komenského"},
+  {street = "Krížna"},
+  {street = "Dr. Adámyho"},
+  {street = "Rybníky"},
+]
+
+[obvod.4]
+seats = 2
+okrsky = [4]
+rules = [
+  {street = "A. Sládkoviča"},
+  {street = "M. Kukučína"},
+]
+
+[obvod.5]
+seats = 2
+okrsky = [5, 6]
+rules = [
+  {street = "Slatinská", note = "the document lists Slatinská by súpisné ranges, all in obvod V: the whole street"},
+  {street = "Ľ. Štúra", numbers = "17", by = "supisne"},
+  {street = "Belušské Slatiny"},
+  {street = "Podmalenica", written = "Pod Malenicou", note = "the register writes the street as one word, Podmalenica; same street"},
+]
+
+[obvod.6]
+seats = 3
+okrsky = [7, 8]
+rules = [
+  {street = "J. Kollára"},
+  {part = "Hloža", note = "the document gives časť Hloža by súpisné ranges, all in obvod VI: the whole part"},
+  {part = "Podhorie"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Slatinská", numbers = "20-44, 186-224, 2491, 2492", by = "supisne"},
+  {street = "Ľ. Štúra", numbers = "17", by = "supisne"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Belušské Slatiny"},
+  {street = "Podmalenica", written = "Pod Malenicou", note = "the register writes the street as one word, Podmalenica; same street"},
+  {street = "Slatinská", numbers = "47-85, 140-183, 1600-2488, 2702-2764", by = "supisne"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "J. Kollára"},
+  {part = "Hloža", note = "the document gives časť Hloža by súpisné ranges, all in okrsok 7: the whole part"},
+]
+
+[okrsok.8]
+rules = [
+  {part = "Podhorie"},
+]

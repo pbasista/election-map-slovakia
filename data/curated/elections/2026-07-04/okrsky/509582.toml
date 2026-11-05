@@ -1,0 +1,68 @@
+# Okrsky of Bobrov, transcribed by an AI agent in job okrsok-rules-5690 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Nižný koniec, Pri kostole, Záhumenská, Za kalváriou, Za školou, Záhradnícka, Krivý kút, Zápotok, Vyšný koniec, Poľná, Družstevná, Priemyselná, Kvetná ulica, Lúčna ulica, Trnková ulica
+#   okrsok 2: Ulice: Hraničná, Nadbor, Zábobrovec I., Zábobrovec, Lesná, Slanická, Veterná, Okružná, Krátka, Obchodná, Slnečná, Plátenícka, Športová, Lánová I., Lánová, Šípková, Brezová, Pod Grúňom, Pasienky, Nová cesta, Jaseňová ulica, Ružová ulica
+obec = "509582"
+name = "Bobrov"
+okrsky_fill = "nearest"
+okrsky_note = "Námestie sv. Jakuba is not listed; inferred to okrsok 1 (as in 2024, when okrsok 1 voted there). Addresses without a street take the okrsok of the nearest address."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2026-05-26
+okrsky_date_basis = "the notice-board page states \"Vyvesené: 26. 5. 2026\"; the mayor's document is undated (https://www.obecbobrov.sk/zverejnovanie/volby/referendum-rozdelenie-ulic-do-volebnych-okrskov-1401.html)"
+
+[[document]]
+url = "https://www.obecbobrov.sk/data/uredni_deska/obsah284_1.pdf"
+sha256 = "709a5f3c804cbd0a2b2fa619344204b4739bac07db73953b3c2274e1caf9d6d9"
+title = "Určenie volebných okrskov a volebných miestností pre Referendum konané 4. júla 2026"
+
+[[document]]
+url = "https://www.obecbobrov.sk/zverejnovanie/volby/referendum-rozdelenie-ulic-do-volebnych-okrskov-1401.html"
+sha256 = "2c0ac08c07d12f067a56af3a64a2661928134b75200a4b1acb02c910c0831315"
+title = "Referendum - rozdelenie ulíc do volebných okrskov (vyvesené 26. 5. 2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Nižný koniec"},
+  {street = "Pri kostole"},
+  {street = "Záhumenská"},
+  {street = "Za kalváriou"},
+  {street = "Za školou"},
+  {street = "Záhradnícka"},
+  {street = "Krivý kút"},
+  {street = "Zápotok"},
+  {street = "Vyšný koniec"},
+  {street = "Poľná"},
+  {street = "Družstevná"},
+  {street = "Priemyselná"},
+  {street = "Kvetná ulica"},
+  {street = "Lúčna ulica"},
+  {street = "Trnková ulica"},
+  {street = "Námestie sv. Jakuba", note = "not listed; the square of okrsok 1's polling station (Kultúrny dom, Námestie sv. Jakuba 173/3), between Pri kostole and Nižný koniec", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hraničná"},
+  {street = "Nadbor"},
+  {street = "Zábobrovec I."},
+  {street = "Zábobrovec"},
+  {street = "Lesná"},
+  {street = "Slanická"},
+  {street = "Veterná"},
+  {street = "Okružná"},
+  {street = "Krátka"},
+  {street = "Obchodná"},
+  {street = "Slnečná"},
+  {street = "Plátenícka"},
+  {street = "Športová"},
+  {street = "Lánová I."},
+  {street = "Lánová"},
+  {street = "Šípková"},
+  {street = "Brezová"},
+  {street = "Pod Grúňom"},
+  {street = "Pasienky"},
+  {street = "Nová cesta"},
+  {street = "Jaseňová ulica"},
+  {street = "Ružová ulica"},
+]

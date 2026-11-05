@@ -1,0 +1,47 @@
+# Okrsky of Badín, transcribed by an AI agent in job okrsok-rules-5049 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: SNP, Hliny, L. Svobodu, Laurínska, Pod vŕškom, Pod Hrádkom, Na Dielnici
+#   okrsok 2: ulice: Krčméryho, Banská, Borovicová ulica, Družstevná, Kriedovnica, Nová, Osloboditeľov, Sládkovičova, Tajovského, Záhradná, Lipová ulica, súp.č. 373, bezdomovci
+obec = "508454"
+name = "Badín"
+okrsky_date = 2024-02-21
+okrsky_fill = "nearest"
+okrsky_note = "The other addresses without a street (by súpisné číslo) are not in the document; fill_nearest places them. 'bezdomovci' (homeless) in okrsok 2 selects no address."
+
+[[document]]
+url = "https://www.obecbadin.sk/download_file_f.php?id=2002119"
+sha256 = "9595d2d6d87443e1e92f638bfab6a6cfa8db03d0eff5096526ce4628f1a10f73"
+title = "Starosta obce Badín určuje 2 volebné okrsky pre Voľby do Európskeho parlamentu 08.06.2024 (Urcenie-okrskov.pdf)"
+
+[[document]]
+url = "https://www.obecbadin.sk/volby-do-europskeho-parlamentu-v-roku-2024.html"
+sha256 = "3ac027604d714ed37684efa2474d88ead2a0b61f8e6652a6f8b13b99059d312b"
+title = "Election page of obec Badín linking the document"
+
+[okrsok.1]
+rules = [
+  {street = "SNP"},
+  {street = "Hliny"},
+  {street = "L. Svobodu"},
+  {street = "Laurínska"},
+  {street = "Pod vŕškom"},
+  {street = "Pod Hrádkom"},
+  {street = "Na Dielnici"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krčméryho"},
+  {street = "Banská"},
+  {street = "Borovicová ulica"},
+  {street = "Družstevná"},
+  {street = "Kriedovnica"},
+  {street = "Nová"},
+  {street = "Osloboditeľov"},
+  {street = "Sládkovičova"},
+  {street = "Tajovského"},
+  {street = "Záhradná"},
+  {street = "Lipová ulica"},
+  {part = "Badín", numbers = "373", note = "'súp.č. 373': the address with súpisné číslo 373 without a street"},
+]

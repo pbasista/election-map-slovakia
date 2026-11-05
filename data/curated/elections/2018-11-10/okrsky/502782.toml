@@ -1,0 +1,116 @@
+# Okrsky of Šahy, transcribed by an AI agent in job okrsok-rules-589 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hontianska cesta, Bitúnková, I. Madácha, L. Pongrácza, Nemocničná, Kuzmányho, Sipossa, Záhradnícka, Lesná, Bernecká, Železničná
+#   okrsok 2: Hlavné námestie, Tabánska, J. Kráľa, Mlynská, Ružová, Sládkovičová, J. Jesenského, Petöfiho, 1. mája
+#   okrsok 3: Tešmacká cesta, Hviezdoslavova, SNP, Kapitulská, Školská, F. Rákócziho II., Podzámocká, E. B. Lukáča, J. Rotaridesa, kpt. Nálepku, Kalvarenská, Parková, Námestie B. Bartóka, Priemyselná, Námestie kráľa svätého Štefana.
+#   okrsok 4: Gyürkyho, gr. I. Széchenyiho, Gy. Szondyho, J. Thuróczyho (č. 25,27,29,31,33), K. Mikszátha (1-14)
+#   okrsok 5: Námestie M. R. Štefánika, K. Mikszátha (č. 15 a 16), Ľ. Štúra, Severná, Mládežnícka, Cintorínska, Obrancov mieru, Zs. Móricza
+#   okrsok 6: M. M. Hodžu, Fegyvernekiho, J. Smreka, Vinárska, Hangyás, Vajanského, Agátová, A. Kmeťa, A. Szokolyiho, Pivničná, Olvárska cesta, J. Thuróczyho (okrem 25,27,29,31,33), B.Němcovej, Gy. Thúryho
+#   okrsok 7: Šahy časť Tešmák
+#   okrsok 8: Šahy časť Preseľany
+obec = "502782"
+name = "Šahy"
+okrsky_date = 2018-09-06
+okrsky_fill = "nearest"
+okrsky_note = "Olvárska cesta (okrsok 6) is not in the register; left out. K. Mikszátha 17 is not listed (the document puts 1-14 in okrsok 4 and 15, 16 in okrsok 5); it and the addresses without a street in part Šahy take the nearest okrsok (fill_nearest). Okrsky 7 and 8 are the parts Tešmák and Preseľany nad Ipľom (the document writes 'Šahy časť Preseľany')."
+
+[[document]]
+url = "https://web.archive.org/web/20190921114104/https://www.sahy.sk/download_file_f.php?id=1015836"
+sha256 = "84ef3e4e5350f900ae0c49464e73ad3e9fd65799e0f0e2702e342a8a78332f3b"
+title = "OZNÁMENIE o utvorení volebných okrskov a určení volebných miestností pre voľby do orgánov samosprávy mesta Šahy dňa 10. novembra 2018"
+
+[okrsok.1]
+rules = [
+  {street = "Hontianska cesta"},
+  {street = "Bitúnková"},
+  {street = "I. Madácha"},
+  {street = "L. Pongrácza"},
+  {street = "Nemocničná"},
+  {street = "Kuzmányho"},
+  {street = "A. Sipossa", written = "Sipossa", note = "The document leaves out the initial A.; the only Sipossa street in the register."},
+  {street = "Záhradnícka"},
+  {street = "Lesná"},
+  {street = "Bernecká"},
+  {street = "Železničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlavné námestie"},
+  {street = "Tabánska"},
+  {street = "J. Kráľa"},
+  {street = "Mlynská"},
+  {street = "Ružová"},
+  {street = "Sládkovičova", written = "Sládkovičová", note = "Different ending in the document; the register's Sládkovičova, the only street of that name."},
+  {street = "J. Jesenského"},
+  {street = "Petőfiho", written = "Petöfiho", note = "ö for ő; the same street."},
+  {street = "1. mája"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Tešmácka cesta", written = "Tešmacká cesta", note = "Missing accent in the document; the same street."},
+  {street = "Hviezdoslavova"},
+  {street = "SNP"},
+  {street = "Kapitulská"},
+  {street = "Školská"},
+  {street = "F. Rákócziho II."},
+  {street = "Podzámocká"},
+  {street = "E. B. Lukáča"},
+  {street = "J. Rotaridesa"},
+  {street = "Kpt. Nálepku", written = "kpt. Nálepku"},
+  {street = "Kalvárenská", written = "Kalvarenská", note = "Missing accent in the document; the same street."},
+  {street = "Parková"},
+  {street = "Námestie B. Bartóka"},
+  {street = "Priemyselná"},
+  {street = "Námestie kráľa svätého Štefana"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "A. Gyürkyho", written = "Gyürkyho", note = "The document leaves out the initial A.; the only Gyürkyho street in the register."},
+  {street = "Gr. I. Széchenyiho", written = "gr. I. Széchenyiho"},
+  {street = "Gy. Szondyho"},
+  {street = "J. Thuróczyho", numbers = "25, 27, 29, 31, 33"},
+  {street = "K. Mikszátha", numbers = "1-14"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Námestie M. R. Štefánika"},
+  {street = "K. Mikszátha", numbers = "15, 16"},
+  {street = "Ľ. Štúra"},
+  {street = "Severná"},
+  {street = "Mládežnícka"},
+  {street = "Cintorínska"},
+  {street = "Obrancov mieru"},
+  {street = "Zs. Móricza"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "M. M. Hodžu"},
+  {street = "F. Fegyvernekiho", written = "Fegyvernekiho", note = "The document leaves out the initial F.; the only Fegyvernekiho street in the register."},
+  {street = "J. Smreka"},
+  {street = "Vinárska"},
+  {street = "Hangyás"},
+  {street = "Vajanského"},
+  {street = "Agátová"},
+  {street = "A. Kmeťa"},
+  {street = "A. Szokolyiho"},
+  {street = "Pivničná"},
+  {street = "J. Thuróczyho"},
+  {street = "B. Němcovej", written = "B.Němcovej"},
+  {street = "Gy. Thúryho"},
+]
+
+[okrsok.7]
+rules = [
+  {part = "Tešmák"},
+]
+
+[okrsok.8]
+rules = [
+  {part = "Preseľany nad Ipľom"},
+]

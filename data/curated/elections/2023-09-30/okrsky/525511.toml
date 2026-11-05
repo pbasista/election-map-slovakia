@@ -1,0 +1,24 @@
+# Okrsky of Župčany, transcribed by an AI agent in job okrsok-rules-3863 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1 od súp. čísla 0 - do súp. č. 285
+#   okrsok 2: Volebný okrsok č. 2 od súp. č. 286 do neurčito
+obec = "525511"
+name = "Župčany"
+okrsky_date = 2023-06-22
+okrsky_note = "The obec has one part and no streets; the document splits it by súpisné číslo, written as part rules with súpisné number ranges."
+
+[[document]]
+url = "https://zupcany.sk/wp-content/uploads/dokumenty/parlamentne-volby/utvorenie-vo-a-urcenie-vm-eazm44.pdf"
+sha256 = "b32491c24692acf747bd051ac7564c77bb657de980ecc351db817bc1f17ba1d0"
+title = "Utvorenie volebných okrskov a určenie volebných miestnosti pre voľby do NR SR v roku 2023"
+
+[okrsok.1]
+rules = [
+  {part = "Župčany", numbers = "1-285"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Župčany", numbers = "286-"},
+]

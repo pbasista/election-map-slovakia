@@ -1,0 +1,69 @@
+# Okrsky of Bošany, transcribed by an AI agent in job okrsok-rules-3652 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Sládkovičova Staničná Jesenského Jilemnického Družstevná Komenského Janka Kráľa 928, 1300, 1301, 1302 Nábr. Ľ. Štúra Park Garbiarov SNP Športovcov ČSA 551 – 623, 1367, 1438
+#   okrsok 2: Janka Kráľa 635 – 663, 915, 916, 921, 922, 926, 1353, 1420, 1478 Malobošianska Mlynská Vajanského Bernolákova Záhradná Školská Slnečná ČSA 624 – 1472
+#   okrsok 3: M. R. Štefánika Dukelská Moyzesova Pribinova Fándlyho B. Němcovej Krátka Hviezdoslavova Remenárska Podjavorinskej Škultétyho Továrenská Mládeže Jána Bottu Garbiarska Partizánska Časť BAŠTÍN ČSA 343 – 550, 1181, 1412, 1427
+obec = "542733"
+name = "Bošany"
+okrsky_fill = "nearest"
+okrsky_note = "House numbers on ČSA and Janka Kráľa are súpisné čísla (the register's orientačné run only to 124 / 55). 'Časť BAŠTÍN' is the part Baštín. ČSA súp. č. 1181, 1367, 1412, 1427, 1438 are named for okrsky 1 and 3, so they are excepted from okrsok 2's range. Addresses not selected (other house numbers on Janka Kráľa, houses without a street) take the okrsok of the nearest address (fill_nearest)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-06-28
+okrsky_date_basis = "The municipality's page states 'Zverejnené 28.6.2023' for the announcement, which names the vote but is undated. (https://www.bosany.sk/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-do-narodnej-rady-slovenskej-republiky--konane-dna-30-09-2023-oznam/mid/554141/.html)"
+
+[[document]]
+url = "https://www.bosany.sk/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-do-narodnej-rady-slovenskej-republiky--konane-dna-30-09-2023-oznam/mid/554141/.html"
+sha256 = "8405007e3362ec368773d6b53124f2c6fcb7a2365af9ed06c85ca7cc7e323c99"
+title = "Utvorenie volebných okrskov a určenie volebných miestnosti pre voľby do Národnej rady Slovenskej republiky, konané dňa 30.09.2023 Utvorenie volebných "
+
+[okrsok.1]
+rules = [
+  {street = "Sládkovičova"},
+  {street = "Staničná"},
+  {street = "Jesenského"},
+  {street = "Jilemnického"},
+  {street = "Družstevná"},
+  {street = "Komenského"},
+  {street = "Nábr. Ľ. Štúra"},
+  {street = "Park garbiarov", written = "Park Garbiarov"},
+  {street = "SNP"},
+  {street = "Športovcov"},
+  {street = "Janka Kráľa", numbers = "928, 1300, 1301, 1302", by = "supisne"},
+  {street = "ČSA", numbers = "551-623, 1367, 1438", by = "supisne"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Malobošianska"},
+  {street = "Mlynská"},
+  {street = "Vajanského"},
+  {street = "Bernolákova"},
+  {street = "Záhradná"},
+  {street = "Školská"},
+  {street = "Slnečná"},
+  {street = "Janka Kráľa", numbers = "635-663, 915, 916, 921, 922, 926, 1353, 1420, 1478", by = "supisne"},
+  {street = "ČSA", numbers = "624-1472", except = "1181, 1367, 1412, 1427, 1438", by = "supisne"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "M. R. Štefánika"},
+  {street = "Dukelská"},
+  {street = "Moyzesova"},
+  {street = "Pribinova"},
+  {street = "Fándlyho"},
+  {street = "B. Němcovej"},
+  {street = "Krátka"},
+  {street = "Hviezdoslavova"},
+  {street = "Remenárska"},
+  {street = "Podjavorinskej"},
+  {street = "Škultétyho"},
+  {street = "Továrenská"},
+  {street = "Mládeže"},
+  {street = "Jána Bottu"},
+  {street = "Garbiarska"},
+  {street = "Partizánska"},
+  {part = "Baštín"},
+  {street = "ČSA", numbers = "343-550, 1181, 1412, 1427", by = "supisne"},
+]

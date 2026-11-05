@@ -1,0 +1,25 @@
+# Okrsky of Stráňavy, transcribed by an AI agent in job okrsok-rules-5133 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Čísla domov od 1 do 300
+#   okrsok 2: Čísla domov od 301 do 600
+obec = "517950"
+name = "Stráňavy"
+okrsky_date = 2024-02-20
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 20 February 2024 is given as the text of the section 'Volebné okrsky' on the village's page of the 2024 European Parliament election. The village has no streets; the house numbers are súpisné čísla in the part Stráňavy. Any address outside 1–600 takes the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.stranavy.sk/obec/volby/2024-volby-do-europskeho-parlamentu/"
+sha256 = "4e4531b5b9154d56e9b76157829842aee5bf1851881e1cb0d4139317103e685d"
+title = "Volebné okrsky"
+
+[okrsok.1]
+rules = [
+  {part = "Stráňavy", numbers = "1-300"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Stráňavy", numbers = "301-600"},
+]

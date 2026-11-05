@@ -1,0 +1,34 @@
+# The okrsky of Prakovce of the vote of 2022-10-29, data/curated/elections/2022-10-29/okrsky/543497.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Prakovce, transcribed by an AI agent in job okrsok-rules-965 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: časť územia obce od súpisného čísla 1 po súpisné číslo 272
+#     okrsok 2: časť územia obce od súpisného čísla 273 po súpisné číslo 297
+#     okrsok 3: časť územia obce od súpisného čísla 298 po súpisné číslo 1000, súpisné číslo 0
+obec = "543497"
+name = "Prakovce"
+okrsky_date = 2022-07-20
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by súpisné číslo. 'súpisné číslo 0' (okrsok 3) means residents registered without a house number, not register addresses. Súpisné numbers above 1000, if any, take the okrsok of the nearest address (fill_nearest). The document was found through the site search; the page that listed it in 2022 is no longer online."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2024-03-23 setting the okrsky was found (okrsok-rules-4462): The site search for 'okrskov', 'okrsky', 'okrsok', 'miestností', 'volieb' lists okrsky documents only for 2017 (id=876391), 2018 (id=1011032), 2022 (id=1717407) and 2026 (id=2398726, now 404); none for this vote. The elections pages of this vote are not on the live site; the Internet Archive CDX was offline/timing out. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-03-23 → 2022-10-29: 1: 927 → 973, 2: 769 → 764, 3: 794 → 889."
+
+[[document]]
+url = "https://www.prakovce.sk/download_file_f.php?id=1717407"
+sha256 = "5d0b93fd7aa343c52f9320c82203c0e664b35d18f0fd5dd98ee1a3ffe78249e8"
+title = "Oznámenie o určení volebných okrskov a určení volebných miestností (voľby 29. októbra 2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Prakovce", numbers = "1-272"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Prakovce", numbers = "273-297"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Prakovce", numbers = "298-1000"},
+]

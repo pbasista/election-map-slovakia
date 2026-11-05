@@ -1,0 +1,33 @@
+# Okrsky of Cinobaňa, transcribed by an AI agent in job okrsok-rules-3822 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 CINOBAŇA – pre občanov s trvalým pobytom v Cinobani
+#   okrsok 2: Okrsok č. 2 KATARÍNSKA HUTA – pre občanov s trvalým pobytom v časti Maša, Katarínska Huta, Hrnčiarky a Žihľava
+#   okrsok 3: Okrsok č. 3 TURIČKY – pre občanov s trvalým pobytom v časti Turičky
+obec = "511315"
+name = "Cinobaňa"
+okrsky_date = 2023-06-23
+okrsky_note = "The okrsky are defined by parts of the municipality."
+
+[[document]]
+url = "https://web.archive.org/web/20250519193940/https://www.cinobana.sk/download_file_f.php?id=1879169"
+sha256 = "96ff92a578053f1a9655f071c25397437db7a4a0df773534b368fb4969b5a632"
+title = "Okrsky a miestnosti pre voľby do NR SR 2023"
+
+[okrsok.1]
+rules = [
+  {part = "Cinobaňa"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Maša"},
+  {part = "Katarínska Huta"},
+  {part = "Hrnčiarky"},
+  {part = "Žihľava"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Turíčky", note = "The document writes \"Turičky\" for the register's part Turíčky (missing accent)."},
+]

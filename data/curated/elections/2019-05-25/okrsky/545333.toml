@@ -1,0 +1,113 @@
+# The okrsky of Dunajská Lužná of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/545333.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Dunajská Lužná, transcribed by an AI agent in job okrsok-rules-1078 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Dunajská, Jánošíkovská, Mariánska, Okružná, Orechová, Poľná, Pri hrádzi, Pri jame, Rekreačná, Smreková, Športová Tichá, Vodárenská, Zdravotnícka, Zelená
+#     okrsok 2: Brezová, Čerešňová, Holubia, Jabloňová, Javorová, Lipová Mandľová, Pekárenská, Podnikateľská, Slnečná, Tehelná, Višňová
+#     okrsok 3: Agátová, Astrová, Azalková, Bazová, Kvetná, Kvetoslavovská, Letná, Lipnická, Lúčna, Miloslavovská, Morušová, Sadová Spojná, Stromová, Svoradova, Šalviová, Záhradná
+#     okrsok 4: Krajná, Krátka, Krížna, Nám. sv. Martina, Nová, Pekná, rekreačná oblasť Malá voda - Nové Košariská, Školská, Štefánikov park, Zámočnícka
+#     okrsok 5: Dlhá, Fialková, Hlavná, Horná, Jasná, Jarná, Košariská, Kováčska, Malinová, Narcisová, Pri kniežacích mohylách, Studená, Úzka, Veterná
+obec = "545333"
+name = "Dunajská Lužná"
+okrsky_date = 2019-01-23
+okrsky_fill = "nearest"
+okrsky_note = "The document also names \"rekreačná oblasť Malá voda - Nové Košariská\", not a street in the register; its houses are among the addresses without a street, placed by fill_nearest. Scanned document read from its rendered page images (scale 3), with diacritics. Addresses without a street (numbered by súpisné číslo within the parts, largely the recreational areas and new houses) are placed by fill_nearest."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1668): The municipality's page for the European Parliament election of 2019 links 'Informácia o utvorení volebných okrskov a určenie volebných miestností', but the file behind it (755sk_3.pdf, original name 'Vyhlásenie volieb do Európskeho parlamentu.pdf') is the Speaker's decision announcing the election (Zb. 28/2019), not an okrsky document; the Internet Archive capture of the page of 2019-04-11 links the same file. No other okrsky document for 25 May 2019 was found on the website or in the Internet Archive. The documents of 16 March 2019 and 29 February 2020 list identical okrsky. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 5 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2019-03-16: 1: 1,045 → 1,008, 2: 1,027 → 1,024, 3: 958 → 975, 4: 1,027 → 1,013, 5: 1,052 → 1,065."
+
+[[document]]
+url = "https://www.dunajskaluzna.sk/e_download.php?file=data/editor/750sk_4.pdf&original=volebne_okrsky_miestnosti.pdf"
+sha256 = "eb687f9f5477c7c04ca6ce2314bc36f00f93bccb8439f1b99611cdb86fa7f78a"
+title = "Informácia o utvorení volebných okrskov a určenie volebných miestností v obci Dunajská Lužná k voľbám prezidenta Slovenskej republiky 16.03.2019"
+
+[[document]]
+url = "https://www.dunajskaluzna.sk/zverejnovanie/uradna-tabula/volby-2024/volby-prezidenta-slovenskej-republiky-2019/"
+sha256 = "d25b30c10a1889f5cc203df587c59c34226b0a75a98c2a65e8c4d9417982f7f0"
+title = "Voľby prezidenta Slovenskej republiky 2019"
+
+[okrsok.1]
+rules = [
+  {street = "Dunajská"},
+  {street = "Jánošíkovská"},
+  {street = "Mariánska"},
+  {street = "Okružná"},
+  {street = "Orechová"},
+  {street = "Poľná"},
+  {street = "Pri hrádzi"},
+  {street = "Pri jame"},
+  {street = "Rekreačná"},
+  {street = "Smreková"},
+  {street = "Športová"},
+  {street = "Tichá"},
+  {street = "Vodárenská"},
+  {street = "Zdravotnícka"},
+  {street = "Zelená"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Brezová"},
+  {street = "Čerešňová"},
+  {street = "Holubia"},
+  {street = "Jabloňová"},
+  {street = "Javorová"},
+  {street = "Lipová"},
+  {street = "Mandľová"},
+  {street = "Pekárenská"},
+  {street = "Podnikateľská"},
+  {street = "Slnečná"},
+  {street = "Tehelná"},
+  {street = "Višňová"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová"},
+  {street = "Astrová"},
+  {street = "Azalková"},
+  {street = "Bazová"},
+  {street = "Kvetná"},
+  {street = "Kvetoslavovská"},
+  {street = "Letná"},
+  {street = "Lipnická"},
+  {street = "Lúčna"},
+  {street = "Miloslavovská"},
+  {street = "Morušová"},
+  {street = "Sadová"},
+  {street = "Spojná"},
+  {street = "Stromová"},
+  {street = "Svoradova"},
+  {street = "Šalviová"},
+  {street = "Záhradná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Krajná"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Námestie svätého Martina", written = "Nám. sv. Martina"},
+  {street = "Nová"},
+  {street = "Pekná"},
+  {street = "Školská"},
+  {street = "Štefánikov Park", written = "Štefánikov park", note = "Only the capitalization of 'park' differs from the register's Štefánikov Park."},
+  {street = "Zámočnícka"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Dlhá"},
+  {street = "Fialková"},
+  {street = "Hlavná"},
+  {street = "Horná"},
+  {street = "Jasná"},
+  {street = "Jarná"},
+  {street = "Košariská"},
+  {street = "Kováčska"},
+  {street = "Malinová"},
+  {street = "Narcisová"},
+  {street = "Pri kniežacích mohylách"},
+  {street = "Studená"},
+  {street = "Úzka"},
+  {street = "Veterná"},
+]

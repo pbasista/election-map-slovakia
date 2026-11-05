@@ -1,0 +1,25 @@
+# The okrsky of Kútniky of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/501719.toml, reused by `ems job reuse`.
+obec = "501719"
+name = "Kútniky"
+okrsky_date = 2026-07-20
+okrsky_fill = "nearest"
+okrsky_note = "No document of the elections of 2018-11-10 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2018 (each okrsok's voters on the roll within 10%). Scanned PDF, read from the image. Töböréte is split by súpisné čísla; its numbers the document does not list (e.g. below 222, 234, 236 …) take the okrsok of the nearest placed address (fill_nearest)."
+okrsky_reused = 2026-10-24
+
+[[document]]
+url = "https://www.kutniky.sk/images/files/pdf/oznamy-2026/volby2026/VUC/Informacia_o_utvoreni_volebnch_okrskov.pdf"
+sha256 = "3859c124284f4c4b53663f9a9778c6417ee5f6143c07e4b5fb955b597ff1c4c6"
+title = "Informácia o utvorení volebných okrskov s vymedzením ich územného obvodu a o určení volebných miestností pre Spojené voľby v roku 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Blažov"},
+  {part = "Kolónia"},
+  {part = "Töböréte", numbers = "222-233, 235, 237, 239, 241, 243, 245, 247, 249, 251, 252-260, 264"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Heďbeneéte"},
+  {part = "Töböréte", numbers = "261-263, 265-1110"},
+]

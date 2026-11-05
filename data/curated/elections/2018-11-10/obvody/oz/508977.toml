@@ -1,0 +1,35 @@
+# Council obvody of Sebedín-Bečov (508977), Banská Bystrica.
+# Transcribed by an AI agent in job obvod-rules-207 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: pre volebný obvod Sebedín 3 poslanci
+#   obvod 2: pre volebný obvod Bečov 2 poslanci
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/508977.toml, standing in.
+obec = "508977"
+name = "Sebedín-Bečov"
+date_approximate = "named"
+date_basis = "The document's heading names the elections to the municipal bodies 2018-2022 and the 2018–2022 term; it states no date of the council's resolution."
+note = "The document gives no resolution number or date; obvody are named by part (volebný obvod Sebedín, volebný obvod Bečov), numbered 1 and 2 as on the elections page (Volebný obvod č.1 (Sebedín)) and the candidate lists. Internet Archive was unavailable (504)."
+okrsky_date = 2022-06-23
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-5923): No okrsky document of the municipal elections of 10 November 2018 found. The notice board's 2018 item 'Voľby do orgánov samosprávy obcí v roku 2018' holds only the zapisovateľ notice, the obvody/poslanci document (id 1002085), the population count, candidate lists, a generic 'Informácie pre voliča' (id 991462, no okrsky) and the results; it names the obvody (č.1 Sebedín, č.2 Bečov) but publishes no utvorenie volebných okrskov. All 12 notice-board pages (130 items) have no other 2018 election item. The Internet Archive keeps no 2018 capture of an elections page or election file of sebedinbecov.sk. Later documents (2022-2024) form 2 okrsky by part (Sebedín, Bečov). These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://www.sebedinbecov.sk/download_file_f.php?id=1002085"
+sha256 = "a51efe94e005462f612cf0d7478cbd2f3db600df0e3102e72ac4ade5ef8ace09"
+title = "Zverejnenie informácií k voľbám do orgánov samosprávy obcí 2018-2022 (Rozsah úväzku starostu, volebné obvody, počet poslancov, zapisovateľ MVK)"
+
+[obvod.1]
+seats = 3
+okrsky = [1]
+rules = [
+  {part = "Sebedín"},
+]
+
+[obvod.2]
+seats = 2
+okrsky = [2]
+rules = [
+  {part = "Bečov"},
+]

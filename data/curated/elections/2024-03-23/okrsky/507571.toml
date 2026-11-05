@@ -1,0 +1,26 @@
+# Okrsky of Suchá nad Parnou, transcribed by an AI agent in job okrsok-rules-4342 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 - je určený pre voličov s číslom domu 0 - 500
+#   okrsok 2: Okrsok č. 2 - je určený pre voličov s číslom domu 501 - 1300
+obec = "507571"
+name = "Suchá nad Parnou"
+okrsky_note = "House numbers are súpisné (the municipality has no streets); applied in both parts (Suchá nad Parnou, Ružová Dolina)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The page names the presidential election of 23 March 2024 (and 6 April 2024) and its okrsky."
+
+[[document]]
+url = "https://www.suchanadparnou.sk/samosprava/volby/prezidentske-volby-2024/"
+sha256 = "d634302ec0175f9c203414827ae5ad3e8b8999da9f32284d2d143499946ef9c7"
+title = "Prezidentské voľby 2024 (elections page)"
+
+[okrsok.1]
+rules = [
+  {part = "Suchá nad Parnou", numbers = "0-500"},
+  {part = "Ružová Dolina", numbers = "0-500"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

@@ -1,0 +1,108 @@
+# The okrsky of Sučany of the elections of 2018-11-10, data/curated/elections/2018-11-10/okrsky/512648.toml, copied by `ems job reuse` (reused). Its header there:
+#   Okrsky of Sučany, transcribed by an AI agent in job okrsok-rules-659 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Pri Váhu, Stará hradská, 29.augusta, Podskala, Námestie SNP, Jánošíkova, Kollárova, Hviezdoslavova, Hurbanova, Fučíkova, Čsl. armády, Dukelských hrdinov a Kpt. Nálepku.
+#     okrsok 2: Fr. Kráľa, Kalinčiakova, Mierová, Osloboditeľov, Partizánska, Pod Brezinou, Stromová, Podhradská cesta, Stará Teheleň, Štiavnická cesta, Moyzesova, Kuzmányho, Horčičkova.
+#     okrsok 3: 1. mája, Ď. Langsfelda, Gen. Svobodu, Hlavná, Hodžova, Ing. Kožucha, J. Kostru, Jilemnického, Pionierska, J. A. Komenského, Malý diel, Sládkovičova, Sokolská, Sološenkova, Štúrova, Vrútocká cesta, Železničná, Stará Prefa a Družstevná.
+#     okrsok 4: Budovateľská, Fatranská cesta, Hrabinská, Kráľova, Krivánska, Meškalská, Turianska, Vážska, Pod Kečkou, Hradiská, Brezová a Hubová.
+obec = "512648"
+name = "Sučany"
+okrsky_fill = "nearest"
+okrsky_note = "These are the okrsky of the elections of 2018-11-10: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was found (okrsky/not-found.json). The register streets SNP (4 addresses, distinct from Námestie SNP) and Ulica priemyselná (1) are named by no document: placed by fill_nearest, as are the addresses without a street. Kpt. Nálepku in okrsok 1."
+okrsky_reused = 2018-11-10
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2018-10-18
+okrsky_date_basis = "The notice itself is undated but names the municipal elections of 10 November 2018 (rozhodnutie č. 203/2018 Z. z.); the municipality's elections page, as the Internet Archive captured it on 2019-08-18, lists \"Oznam ku komunálnym voľbám - okrsky\" as inserted on 18.10.2018. (https://web.archive.org/web/20190818212215/https://www.sucany.sk/obec-2/volby-a-referenda/)"
+
+[[document]]
+url = "https://www.sucany.sk/modules/file_storage/download.php?file=6a5de08a%7C175&inline=1"
+sha256 = "ccfd8dbdf7feade9d6cfbe979a15f699ba04574cfe5d7bd99a5d6f686762623b"
+title = "Oznam ku komunálnym voľbám - okrsky (Volebné okrsky_Sučany_ 2018.pdf)"
+
+[[document]]
+url = "https://www.sucany.sk/obec/volby-a-referenda/"
+sha256 = "7151a5faeb041c3531d843f9f51b5c330da33b37573141c203c48da433268c09"
+title = "Voľby a referendá"
+
+[okrsok.1]
+rules = [
+  {street = "Pri Váhu"},
+  {street = "Stará Hradská", written = "Stará hradská", note = "only the capital letter differs"},
+  {street = "29.augusta"},
+  {street = "Podskala"},
+  {street = "Námestie SNP"},
+  {street = "Jánošíkova"},
+  {street = "Kollárova"},
+  {street = "Hviezdoslavova"},
+  {street = "Hurbanova"},
+  {street = "Fučíkova"},
+  {street = "Československej armády", written = "Čsl. armády"},
+  {street = "Dukelských hrdinov"},
+  {street = "Kapitána Nálepku", written = "Kpt. Nálepku", note = "Kpt. is the standard abbreviation of Kapitána"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Fraňa Kráľa", written = "Fr. Kráľa"},
+  {street = "Kalinčiakova"},
+  {street = "Mierová"},
+  {street = "Osloboditeľov"},
+  {street = "Partizánska"},
+  {street = "Pod Brezinou"},
+  {street = "Stromová"},
+  {street = "Podhradská cesta"},
+  {street = "Stará Teheleň"},
+  {street = "Štiavnická cesta"},
+  {street = "Moyzesova"},
+  {street = "Kuzmányho"},
+  {street = "Horčičkova"},
+  {street = "Tehelná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Ďurka Langsfelda", written = "Ď. Langsfelda"},
+  {street = "Gen.Svobodu", written = "Gen. Svobodu"},
+  {street = "Hlavná"},
+  {street = "Hodžova"},
+  {street = "Ing. Kožucha"},
+  {street = "Jána Kostru", written = "J. Kostru"},
+  {street = "Jilemnického"},
+  {street = "Pionierska"},
+  {street = "J.A.Komenského", written = "J. A. Komenského"},
+  {street = "Malý Diel", written = "Malý diel", note = "only the capital letter differs"},
+  {street = "Sládkovičova"},
+  {street = "Sokolská"},
+  {street = "Sološenkova"},
+  {street = "Štúrova"},
+  {street = "Vrútocká cesta"},
+  {street = "Železničná"},
+  {street = "Stará Prefa"},
+  {street = "Družstevná"},
+  {street = "Pod Bukovinou"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Fatranská cesta"},
+  {street = "Hrabinská"},
+  {street = "Kráľova"},
+  {street = "Krivánska"},
+  {street = "Meškalská"},
+  {street = "Turianska"},
+  {street = "Vážska"},
+  {street = "Pod Kečkou"},
+  {street = "Hradiská"},
+  {street = "Brezová"},
+  {street = "Hubová"},
+  {street = "Smreková"},
+  {street = "Pod strelnicou"},
+  {street = "Pod Stratencom"},
+  {street = "Pri spádoch"},
+  {street = "Borovicová"},
+  {street = "Jedľová"},
+  {street = "Brestová"},
+]

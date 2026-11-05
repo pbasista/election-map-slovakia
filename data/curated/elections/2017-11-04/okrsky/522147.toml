@@ -1,0 +1,39 @@
+# The okrsky of Veľká Ida of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/522147.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Veľká Ida, transcribed by an AI agent in job okrsok-rules-1414 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: č.d. od 1-319 Veľká Ida + občania prihlásení na obec Veľká Ida
+#     okrsok 2: č.d. od 320-777 Veľká Ida
+#     okrsok 3: miestna časť Gomboš
+obec = "522147"
+name = "Veľká Ida"
+okrsky_date = 2019-01-25
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF (the Archive's capture is cut at 1 MiB, but page 1 with the whole list is complete), read by OCR. No streets in the register: house numbers are súpisné within the part. \"všetci občania prihlásení na obec\" (residents without an address) are not a rule. Addresses whose numbers the document leaves out (above its highest number) take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-412): The old website as archived on 29.8.2017 lists only the voters' information for the regional elections 2017 (oznamy_ocu/Volby_do_organov_samospravnych_krajov_Informacia_pre_volica.pdf), no okrsky document; the Archive has no capture of the site between September and November 2017 and the current website's elections pages start with 2020. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2019-03-16: 1: 1,027 → 986, 2: 1,124 → 1,164, 3: 207 → 207."
+
+[[document]]
+url = "https://web.archive.org/web/20190918091519/http://www.velkaida.sk/files/2019-01-25-110511-Informacia_volebne_okrsky.pdf"
+sha256 = "430cfd5d1c8263cfad93c90ce81c9b99a985210670df0c313903e34b06583bdc"
+title = "Informácia o vytvorení volebných okrskov a určení volebných miestností v obci Veľká Ida pre voľby prezidenta SR v roku 2019 (25.01.2019)"
+
+[[document]]
+url = "https://web.archive.org/web/20190201135339/http://www.velkaida.sk:80/-volby"
+sha256 = "1f2b3ddec1771dd23095d1b6591afafa7839a596eb659c37125c2abeb8d8b807"
+title = "Voľby (snapshot 1.2.2019) – Oznámenie o vytvorení volebných okrskov a adresa na doručovanie"
+
+[okrsok.1]
+rules = [
+  {part = "Veľká Ida", numbers = "1-319"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Veľká Ida", numbers = "320-777"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Gomboš"},
+]

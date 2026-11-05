@@ -1,0 +1,92 @@
+# Okrsky of Rajec, transcribed by an AI agent in job okrsok-rules-5444 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Lipová, Hollého (č. 1 - 49), Javorová, Smreková, Ružová, Jabloňová, Orgovánová, Rajec 5042,5177
+#   okrsok 2: 1. mája, Fučíkova, Hurbanova (č. 1 – 4, 6 – 12), Jánošíkova, Krivín, Moyzesova, Nádražná (č. 25 – 37, 64), Obr. mieru, S. Chalupku, Záhradnícka
+#   okrsok 3: Bystrická, Dubová ulica, Hollého (rod. domy č. 60 – 117, 117A), Hurbanova (č. 5), Kmeťova, Kollárova, Komenského, Kostolná, M. R. Štefánika, Nádražná (č. 1 – 23, 38 – 63, 65), Nám. A. Škrábika, Nám. SNP, Partizánska (č. 1 – 10, 134 – 143), Sládkovičova, Vojtová, Zakamenica, Šafárikova, Športová, Švermova, Lúčna, Bielisko, Hviezdoslavova, Štúrova a mestskú časť Rajec-Charubina
+#   okrsok 4: Alexyho, Benkova, Frivaldského, Fullova, Haškova, Janka Kráľa, Jilemnického, Mudrochova, Nerudova, Partizánska (č.d. 11 – 133, 144 - 147), Plávkova, Pri Rajčanke, Slottova
+obec = "517917"
+name = "Rajec"
+okrsky_date = 2026-05-04
+okrsky_fill = "nearest"
+okrsky_note = "Hollého 50-59 and 118-122, Nádražná 24 and Kukučínova are named by no okrsok: inferred rules (see rule notes). Other addresses without a street (part Rajec) than 5042 and 5177 are not placed by the document; fill_nearest gives them the okrsok of the nearest placed address. Dubová ulica is in okrsok 3 per this document (the obvody announcement of the October 2026 elections puts it in obvod 1)."
+
+[[document]]
+url = "https://www.rajec.sk/blocks/files/019e0185-976b-7a4b-ae57-30fa59d3ddd3.pdf"
+sha256 = "91f320026b19309ba5214cf02a34db588fdb65db2a3a154cd8167157b83f5e60"
+title = "Určenie volebných okrskov 2026 (primátor, 4. mája 2026; referendum 4. júla 2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Lipová"},
+  {street = "Hollého", numbers = "1-49"},
+  {street = "Javorová"},
+  {street = "Smreková"},
+  {street = "Ružová"},
+  {street = "Jabloňová"},
+  {street = "Orgovánová"},
+  {street = "Hollého", numbers = "50-59", note = "Hollého 50-59 is named by no okrsok (okrsok 1 has 1-49, okrsok 3 the family houses from 60); placed with 1-49 by numeric continuity; most of these houses lie nearest to okrsok 1 addresses", inferred = true},
+  {part = "Rajec", numbers = "5042, 5177", note = "'Rajec 5042,5177': the addresses without a street with súpisné čísla 5042 and 5177"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Fučíkova"},
+  {street = "Hurbanova", numbers = "1-4, 6-12"},
+  {street = "Jánošíkova"},
+  {street = "Krivín"},
+  {street = "Moyzesova"},
+  {street = "Nádražná", numbers = "25-37, 64"},
+  {street = "Obrancov Mieru", written = "Obr. mieru", note = "'Obr. mieru' abbreviates Obrancov mieru (register: Obrancov Mieru), the same street"},
+  {street = "S. Chalupku"},
+  {street = "Záhradnícka"},
+  {street = "Nádražná", numbers = "24", note = "Nádražná 24 is named by no okrsok (okrsok 3 has 1-23, okrsok 2 has 25-37); placed with its neighbour Nádražná 25 in okrsok 2", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bystrická"},
+  {street = "Dubová ulica"},
+  {street = "Hollého", numbers = "60-117, 117A"},
+  {street = "Hurbanova", numbers = "5"},
+  {street = "Kmeťova"},
+  {street = "M. R. Štefánika"},
+  {street = "Kollárova"},
+  {street = "Komenského"},
+  {street = "Kostolná"},
+  {street = "Nádražná", numbers = "1-23, 38-63, 65"},
+  {street = "Námestie Andreja Škrábika", written = "Nám. A. Škrábika"},
+  {street = "Námestie SNP", written = "Nám. SNP"},
+  {street = "Partizánska", numbers = "1-10, 134-143"},
+  {street = "Sládkovičova"},
+  {street = "Vojtova", written = "Vojtová", note = "'Vojtová' with a long á is the street Vojtova (the only such street in Rajec)"},
+  {street = "Zakamenica"},
+  {street = "Šafárikova"},
+  {street = "Športová"},
+  {street = "Švermova"},
+  {street = "Lúčna"},
+  {street = "Bielisko"},
+  {street = "Hviezdoslavova"},
+  {street = "Štúrova"},
+  {part = "Charubina", note = "'mestskú časť Rajec-Charubina' is the part Charubina"},
+  {street = "Hollého", numbers = "118-", note = "Hollého 118 and up is named by no okrsok (okrsok 3 has the family houses 60-117); placed with them in okrsok 3 by numeric continuity, as the houses lie nearest to okrsok 3 addresses", inferred = true},
+  {street = "Kukučínova", note = "Kukučínova (1 address) is not named by the document; its nearest addresses are all in okrsok 3", inferred = true},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Alexyho"},
+  {street = "Benkova"},
+  {street = "Frívaldského", written = "Frivaldského", note = "'Frivaldského' without the accent is the street Frívaldského"},
+  {street = "Fullova"},
+  {street = "Haškova"},
+  {street = "Janka Kráľa"},
+  {street = "Jilemnického"},
+  {street = "Mudrochova"},
+  {street = "Nerudova"},
+  {street = "Partizánska", numbers = "11-133, 144-147"},
+  {street = "Plávkova"},
+  {street = "Pri Rajčanke"},
+  {street = "Slottova"},
+]

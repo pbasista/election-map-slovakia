@@ -1,0 +1,34 @@
+# Council obvody of Žehra (526657), Spišská Nová Ves.
+# Transcribed by an AI agent in job obvod-rules-206 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Žehra od s. č. 1 až s. č. 113, Žehra časť Hodkovce od s. č. 1 až s. č. 27
+#   obvod 2: Žehra od s. č. 114 až s. č. 180
+obec = "526657"
+name = "Žehra"
+date = 2018-08-06
+fill = "nearest"
+note = "Houses numbered outside the ranges the document gives and addresses it does not place take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.obeczehra.sk/e_download.php?file=data/editor/81sk_3.pdf&original=Oznamenie.pdf"
+sha256 = "0acb2b6341871cdd24fc3d6485410c044575d7a5ceed4bb4e1106d4be22f9567"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 10. novembra 2018"
+
+[[document]]
+url = "https://www.obeczehra.sk/zverejnovanie/volby-a-referendum/do-organov-samospravy-obci-2018/"
+sha256 = "5f0958e2262db7e5124497b0aec34b683fa6b8d127a616f63f69eece382ff53c"
+title = "Do orgánov samosprávy obcí 2018"
+
+[obvod.1]
+seats = 2
+rules = [
+  {part = "Žehra", numbers = "1-113", by = "supisne"},
+  {part = "Hodkovce", numbers = "1-27", by = "supisne"},
+]
+
+[obvod.2]
+seats = 7
+rules = [
+  {part = "Žehra", numbers = "114-180", by = "supisne"},
+]

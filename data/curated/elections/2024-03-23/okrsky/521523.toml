@@ -1,0 +1,27 @@
+# The okrsky of Kecerovce of the vote of 2026-10-24, data/curated/elections/2026-10-24/okrsky/521523.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Kecerovce, transcribed by an AI agent in job okrsok-rules-616 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Kecerovské Pekľany
+#     okrsok 2: Kecerovské Kostoľany
+obec = "521523"
+name = "Kecerovce"
+okrsky_date = 2026-07-10
+okrsky_note = "Scanned decision (page 2 of the PDF). Its text says '1 volebný okrsok' but the table lists 2 okrsky by časť obce; the table is used."
+okrsky_adopted = 2026-10-24
+okrsky_adopted_basis = "No document of 2024-03-23 setting the okrsky was found (okrsok-rules-4564): All notice-board articles of the website (ids 900-1350, incl. the ones migrated from the old site) were checked: for this vote there are only information for voters, the decree calling it, delegation notices or results; no \"utvorenie volebných okrskov\" document. The only okrsky document is that of the elections of 24.10.2026. CUET has none. These are the okrsky of the vote of 2026-10-24 (2026), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-03-23 → 2026-10-24: 1: 1,434 → 1,523, 2: 899 → 1,004."
+
+[[document]]
+url = "https://www.obeckecerovce.sk/files/2026-07-21-223803-kecerovce_oznam_22_2026.pdf"
+sha256 = "cc37cedec35d42d9013e3b8206eb1fb4538eacbe9a46eafe5b1b72bb52386bc1"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 24. októbra 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Kecerovské Pekľany"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kecerovské Kostoľany"},
+]

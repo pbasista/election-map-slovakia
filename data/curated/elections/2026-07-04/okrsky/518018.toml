@@ -1,0 +1,73 @@
+# Okrsky of Štiavnik, transcribed by an AI agent in job okrsok-rules-5443 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný obvod číslo 1, okrsok č. 1 (Súpisné číslo 1 - 87, 920 - 1055 a novostavby v tom obvode)
+#   okrsok 2: Volebný obvod číslo 2, okrsok č. 2 (Súpisné číslo 88 - 165, 853 - 919 a novostavby v tom obvode)
+#   okrsok 3: Volebný obvod číslo 3, okrsok č. 3 (Súpisné číslo 0, 166 - 232, 792 - 852 a novostavby v tom obvode)
+#   okrsok 4: Volebný obvod číslo 4, okrsok č. 4 (Súpisné číslo 233 - 424, 660 - 791 a novostavby v tom obvode)
+#   okrsok 5: Volebný obvod číslo 5, okrsok č. 5 (Súpisné číslo 425 - 659 a novostavby v tom obvode)
+obec = "518018"
+name = "Štiavnik"
+okrsky_date = 2026-05-06
+okrsky_fill = "nearest"
+okrsky_note = "The announcement gives one okrsok per council obvod ('Volebný obvod číslo n – okrsok č. n'); the obvody of the council term 2022–2026 are defined by súpisné čísla across all parts (council resolution 615/616/2022), so okrsok n is obvod n. 'Novostavby v tom obvode' (new houses, súpisné above 1055) are placed by fill_nearest; 'súpisné číslo 0' means voters without a house number, no register address."
+
+[[document]]
+url = "https://www.stiavnik.sk/data/page/stiavnik.sk/31032/oznamenie-o-utovreni-volebnych-okrskov-a-urceni-volebnych-miestnosti.pdf"
+sha256 = "b1ec7132becace35fd456656079dda861a38c9e3ca375dbcc774d5207d9199bb"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre referendum vyhlásené na 04.07.2026 (Štiavnik, 06.05.2026)"
+
+[[document]]
+url = "https://www.stiavnik.sk/data/page/stiavnik.sk/14872/volebne-obvody-a-pocet-poslancov-1.pdf"
+sha256 = "09571de834f4dbcffd10a610e49440f2e267f28d27fd49fa5d7da0fd396cdf8d"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie č. 615 a 616/2022 zo dňa 29.06.2022), s. 1"
+
+[[document]]
+url = "https://www.stiavnik.sk/data/page/stiavnik.sk/14872/volebne-obvody-a-pocet-poslancov-stiavnik-2.pdf"
+sha256 = "27920282067ec95b8141987ec3abeeb070ec1cbc3d4b368c842d719b00063caf"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov, s. 2"
+
+[[document]]
+url = "https://www.stiavnik.sk/31032/referendum-2026"
+sha256 = "1527001f6332202733a817fe7679f1802d68bc398b296e92fd2baebb225275ad"
+title = "Referendum 2026 (page linking the document)"
+
+[okrsok.1]
+rules = [
+  {part = "Štiavnik", numbers = "1-87, 920-1055"},
+  {part = "Višňové", numbers = "1-87, 920-1055"},
+  {part = "Predjastrabie", numbers = "1-87, 920-1055"},
+  {part = "Čierne", numbers = "1-87, 920-1055"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Štiavnik", numbers = "88-165, 853-919"},
+  {part = "Višňové", numbers = "88-165, 853-919"},
+  {part = "Predjastrabie", numbers = "88-165, 853-919"},
+  {part = "Čierne", numbers = "88-165, 853-919"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Štiavnik", numbers = "166-232, 792-852"},
+  {part = "Višňové", numbers = "166-232, 792-852"},
+  {part = "Predjastrabie", numbers = "166-232, 792-852"},
+  {part = "Čierne", numbers = "166-232, 792-852"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Štiavnik", numbers = "233-424, 660-791"},
+  {part = "Višňové", numbers = "233-424, 660-791"},
+  {part = "Predjastrabie", numbers = "233-424, 660-791"},
+  {part = "Čierne", numbers = "233-424, 660-791"},
+]
+
+[okrsok.5]
+rules = [
+  {part = "Štiavnik", numbers = "425-659"},
+  {part = "Višňové", numbers = "425-659"},
+  {part = "Predjastrabie", numbers = "425-659"},
+  {part = "Čierne", numbers = "425-659"},
+]

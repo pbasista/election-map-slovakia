@@ -36,9 +36,16 @@ found none.
   dating is approximate (:func:`date_problems`; the prompt then adds
   :data:`EARLIER`);
 - the rules are well formed, name only streets, parts and k.ú. the obec
-  has, have the candidate lists' number of obvody, with ŠÚ SR's seats
-  where the candidate data has them, and place every address of the obec
-  in exactly one obvod, each obvod with addresses;
+  has, have the candidate lists' number of obvody (a by-election's: at
+  least the obvody of its item, see :func:`make`; the prompt then adds
+  :data:`TERM`), with ŠÚ SR's seats where the candidate data has them,
+  and place every address of the obec in exactly one obvod, each obvod
+  with addresses;
+- an obvod the decision lists but the candidate lists lack, no candidate
+  having stood in it, is ``uncontested``, with the document (one of the
+  documents) that lists it, and the decision's ``council_seats`` are the
+  obvody's seats summed; none is a by-election's own
+  (:func:`uncontested_problems`);
 - for an earlier election, rules taken from a later source where its
   documents do not place every address (``supplement``, marked
   ``supplemented``) are those of the later election's rule set, or of a
@@ -53,7 +60,9 @@ directory: its obvody drawn as ``geo`` will draw them, coloured, with every
 address point and the rules. ``accept`` copies the documents to
 ``data/curated/cache/<sha256>.<ext>`` and writes the rule set to
 ``obvody/oz/<obec>.toml`` in the data of the job's election
-(:meth:`election_map_slovakia.config.Config.election_dir`); an obec
+(:meth:`election_map_slovakia.config.Config.election_dir`), its uncontested
+obvody to ``uncontested.toml`` there (:func:`record_uncontested`; the
+``candidates`` step makes them contests); an obec
 reported not found goes to ``obvody/oz-not-found.json`` there with the URLs
 tried, and ``make`` leaves it out unless named with ``--only``.
 """
@@ -64,8 +73,10 @@ import datetime as dt
 import functools
 import hashlib
 import html
+import itertools
 import json
 import re
+import string
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -79,15 +90,18 @@ import shapely
 
 from election_map_slovakia import (
     addresses,
+    basemap,
     candidates,
+    config,
     fetch,
     geo,
     jobs,
+    lists,
     obvody,
     statoffice,
 )
 from election_map_slovakia.candidates import search_key
-from election_map_slovakia.config import Config, Election
+from election_map_slovakia.config import BY_ELECTION, Config, Election, Units
 
 NAME = "obvod-rules"
 PRIORITY = "addresses"
@@ -282,6 +296,11 @@ ITEM_SCHEMA: dict[str, Any] = {
         **SUPPLEMENT_SCHEMA,
         "fill_nearest": {"type": "boolean"},
         "note": {"type": "string", "minLength": 1},
+        "council_seats": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "the council's seats, as the decision states them",
+        },
         "obvody": {
             "type": "array",
             "minItems": 2,
@@ -292,6 +311,17 @@ ITEM_SCHEMA: dict[str, Any] = {
                 "properties": {
                     "number": {"type": "integer", "minimum": 1},
                     "seats": {"type": "integer", "minimum": 1, "maximum": 12},
+                    "uncontested": {
+                        "const": True,
+                        "description": "an obvod the decision lists that no"
+                        " candidate stood in: not among the input's obvody",
+                    },
+                    "document": {
+                        "type": "string",
+                        "pattern": "^https?://",
+                        "description": "an uncontested obvod's: the URL of"
+                        " the document (of documents) that lists it",
+                    },
                     "text": {
                         "type": "string",
                         "minLength": 1,
@@ -353,15 +383,29 @@ def official_okrsky(cfg: Config, election: Election) -> Okrsky:
     results`` built (:mod:`election_map_slovakia.results`); empty where
     neither has them. Read once per process.
     """
-    if election.units.format == "susr":
+    if units_of(election).format == "susr":
         return _package_okrsky(units_path(cfg, election))
     return _results_okrsky(cfg.results_dir(election) / "okrsky")
 
 
+def units_of(election: Election) -> Units:
+    """Return where *election*'s territorial division comes from.
+
+    Every regular election, which the jobs are of, has one; fail for an
+    election without (a country-wide one may have none).
+    """
+    if election.units is None:
+        raise jobs.JobError(
+            f"the {election.slug} election has no territorial division (units)"
+        )
+    return election.units
+
+
 def units_path(cfg: Config, election: Election) -> Path:
     """Return the file of *election*'s territorial division (its ``units`` input)."""
+    name = units_of(election).input
     # The configuration checks that the election's inputs exist.
-    inp = next(i for i in cfg.inputs.inputs if i.name == election.units.input)
+    inp = next(i for i in cfg.inputs.inputs if i.name == name)
     path = cfg.raw_dir / inp.name / inp.file
     if not path.is_file():
         raise jobs.JobError(f"{path} missing; run `ems fetch` first")
@@ -407,8 +451,16 @@ def _results_okrsky(directory: Path) -> Okrsky:
 
 
 def prompt(cfg: Config, election: Election, template: str, earlier: str) -> str:
-    """Return the prompt *template* for *election*, with *earlier* if not the latest."""
-    if election.day != cfg.latest.day:
+    """Return the prompt *template* for *election*, with *earlier* if not the latest.
+
+    A by-election's adds :data:`TERM` on its term instead.
+    """
+    term = cfg.term(election)
+    if term:
+        template += string.Template(TERM).safe_substitute(
+            term_day=jobs.long_date(term.day), term_year=term.day.year
+        )
+    elif election.day != cfg.latest.day:
         template += earlier
     return jobs.election_prompt(template, election)
 
@@ -419,7 +471,9 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
     ``--only`` takes obec codes or names; it also brings back obce whose
     document was not found before, and those whose rule set is another
     election's (``reused``, ``adopted``), which a document of their own then
-    replaces.
+    replaces. A by-election's obce are those of its council contests whose
+    council its term elected in several obvody, with the obvody of both
+    and the term's seats (a by-election's are those vacant).
     """
     election = options.election
     data = candidate_data(cfg, election)
@@ -430,6 +484,13 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
     seats = contest_seats(data)
     units = official_okrsky(cfg, election)
     council = addresses.council_obvody(data["contests"])
+    if term := cfg.term(election):
+        # Its council was elected in the term's obvody, of which the term's
+        # lists name those with candidates then.
+        then = candidate_data(cfg, term)
+        before = addresses.council_obvody(then["contests"])
+        council = {c: sorted({*n, *before.get(c, ())}) for c, n in council.items()}
+        seats = contest_seats(then)
     directory = places_dir(cfg, election)
     if not directory.is_dir():
         raise jobs.JobError(f"{directory} missing; run `ems addresses` first")
@@ -462,7 +523,7 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
             candidacies_by_contest,
             p,
             data["obce"],
-            election.day.year,
+            (term or election).day.year,
         )
         for o in item["obvody"]:
             contest = f"oz:{code}/{o['number']}"
@@ -1132,7 +1193,11 @@ def check(
         return [f"status found needs {', '.join(missing)}"]
     election = jobs.election(cfg, job)
     try:
-        problems = date_problems(cfg, election, out) + seat_problems(item, out)
+        problems = (
+            date_problems(cfg, election, out)
+            + seat_problems(item, out)
+            + uncontested_problems(item, out, by_election=election.kind == BY_ELECTION)
+        )
     except obvody.ObvodyError as e:
         return [str(e)]
     if problems:
@@ -1146,11 +1211,16 @@ def check(
         return [str(e)]
     p = obvody.load_places(places_dir(cfg, election) / f"{item['id']}.json")
     a = obvody.assign(rules, p.places, p.kus, p.planar())
-    numbers = [o["number"] for o in item["obvody"]]
+    numbers = sorted(
+        {o["number"] for o in item["obvody"]}
+        | {o["number"] for o in out["obvody"] if o.get("uncontested")}
+    )
     problems = (
         supplement_problems(cfg, election, out, rules, obvody.OBVOD)
         + place_name_problems(rules, p)
-        + addresses.check_assignment(rules, numbers, p, a)
+        + addresses.check_assignment(
+            rules, numbers, p, a, part=election.kind == BY_ELECTION
+        )
     )
     units = official_okrsky(cfg, election).get(item["id"], {})
     notes = date_notes(out, election.day) + plausibility(
@@ -1160,6 +1230,54 @@ def check(
     )
     write_notes(job, item["id"], notes)
     write_review(cfg, job, rules, p, a, out, problems, notes)
+    return problems
+
+
+def uncontested_problems(
+    item: Mapping[str, Any], out: Mapping[str, Any], *, by_election: bool = False
+) -> list[str]:
+    """Return why the obvody of *out* beyond the candidate lists' may not stand.
+
+    An obvod of the decision without candidates (not one of the input
+    *item*'s obvody) must say so (``uncontested``), with the ``document``
+    among the documents that lists it; with one, the decision's
+    ``council_seats`` are required, and they must be the obvody's seats
+    summed wherever given. A *by_election*'s rules may have more obvody
+    than its item, each of its term's council; none is its own uncontested
+    one (the term's job records that).
+    """
+    listed = {o["number"] for o in item["obvody"]}
+    urls = {d["url"] for d in out["documents"]}
+    problems = []
+    for o in out["obvody"]:
+        n = o["number"]
+        if o.get("uncontested") and by_election:
+            problems.append(
+                f"obvod {n}: a by-election's obvody are its term's; an uncontested"
+                " one is the term's"
+            )
+        elif o.get("uncontested"):
+            if n in listed:
+                problems.append(
+                    f"obvod {n}: uncontested, yet the candidate lists have it"
+                )
+            if o.get("document") not in urls:
+                problems.append(
+                    f"obvod {n}: uncontested needs its document, one of documents"
+                )
+        elif n not in listed and not by_election:
+            problems.append(
+                f"obvod {n}: not one of the candidate lists' obvody; one the decision"
+                " lists without candidates is uncontested, with its document"
+            )
+        elif "document" in o:
+            problems.append(f"obvod {n}: document is only for an uncontested obvod")
+    council = out.get("council_seats")
+    if council is None and any(o.get("uncontested") for o in out["obvody"]):
+        problems.append("an uncontested obvod needs the decision's council_seats")
+    total = sum(o["seats"] for o in out["obvody"])
+    if council is not None and council != total:
+        problems.append(f"council_seats {council}, the obvody's seats summed {total}")
     return problems
 
 
@@ -1177,6 +1295,25 @@ def obce_and_kus(gpkg: Path) -> tuple[dict[str, Any], dict[str, list[geo.Ku]]]:
     """Return the obce and their k.ú. of a ZBGIS level, EPSG:5514."""
     obce = {c: g for c, (_, g) in geo.read_layer(gpkg, "obec", "IDN4", "NM4").items()}
     return obce, geo.read_kus(gpkg)
+
+
+def barriers(cfg: Config) -> geo.Barriers:
+    """Return the lines ``geo`` cuts street blocks by, of the newest extract.
+
+    That of the latest regular election, which the review sheets draw;
+    read as ``ems geo`` reads it, and kept with its own
+    (:func:`election_map_slovakia.basemap.barriers`).
+    """
+    name = cfg.latest.osm
+    inp = next(i for i in cfg.inputs.inputs if i.name == name)
+    return _barriers(fetch.member_path(cfg.raw_dir, inp), cfg.build_dir)
+
+
+@functools.cache
+def _barriers(path: Path, build_dir: Path) -> geo.Barriers:
+    return basemap.barriers(
+        path, build_dir, build_dir / "shared" / basemap.BARRIERS_DIR
+    )
 
 
 def write_review(
@@ -1198,14 +1335,20 @@ def write_review(
     if gpkg.is_file() and not assignment.unassigned and not assignment.conflicts:
         obce, kus = obce_and_kus(gpkg)
         to_wgs84 = geo.transformer()
-        split = geo.council_split(
-            rules, places, assignment.units, kus.get(rules.obec, []), to_wgs84
+        mine = kus.get(rules.obec, [])
+        split, _ = geo.council_split(
+            rules,
+            places,
+            assignment.units,
+            mine,
+            barriers(cfg).of(mine),
+            to_wgs84,
         )
         obec = geo.to_grid(obce[rules.obec], to_wgs84, 10**geo.DECIMALS)
         pieces: list[tuple[int, Any]] = []
         try:
             pieces = geo.council_geometry(
-                rules.obec, obce[rules.obec], split, kus.get(rules.obec, []), to_wgs84
+                rules.obec, obce[rules.obec], split, mine, to_wgs84
             )
         except geo.GeoError as e:
             problems = [*problems, f"(review) {e}"]
@@ -1427,10 +1570,57 @@ def accept(cfg: Config, job: jobs.Job, accepted: list[jobs.Accepted]) -> list[st
         ]
         path.write_text(obvody.dump(rules, header), encoding="utf-8")
         lines.append(f"{item['name']} ({code}): {path.relative_to(cfg.root)}")
+        lines += record_uncontested(cfg, election, item, out)
         lines += [f"  {n}" for n in read_notes(job, code)]
     if not_found or not_found_path(cfg, election).is_file():
         jobs.write_json(not_found_path(cfg, election), dict(sorted(not_found.items())))
     return lines
+
+
+UNCONTESTED_HEADER = (
+    "Contests called but held nowhere, no candidate having registered, that the",
+    "inputs do not tell (src/election_map_slovakia/config.py load_uncontested).",
+)
+"""The comment heading an ``uncontested.toml`` that ``accept`` starts."""
+
+
+def record_uncontested(
+    cfg: Config,
+    election: Election,
+    item: Mapping[str, Any],
+    out: Mapping[str, Any],
+) -> list[str]:
+    """Write the uncontested obvody of *out* to the election's ``uncontested.toml``.
+
+    In place of what it had of the obec; each with its seats, its document
+    and its words in it. Returns the lines of the ingest report.
+    """
+    path = cfg.election_dir(election) / lists.UNCONTESTED_FILE
+    prefix = f"oz:{item['id']}/"
+    old = config.load_uncontested(path, election) if path.is_file() else ()
+    kept = [u for u in old if not u.id.startswith(prefix)]
+    titles = {d["url"]: d["title"] for d in out["documents"]}
+    added = [
+        config.CuratedUncontested(
+            f"{prefix}{o['number']}",
+            o["seats"],
+            o["document"],
+            f"{titles[o['document']]}: obvod {o['number']}, {' '.join(o['text'].split())}",
+        )
+        for o in out["obvody"]
+        if o.get("uncontested")
+    ]
+    if not added and len(kept) == len(old):
+        return []
+    # The comment heading the file stays.
+    text = path.read_text(encoding="utf-8") if path.is_file() else ""
+    header = [
+        line.removeprefix("#").strip()
+        for line in itertools.takewhile(lambda x: x.startswith("#"), text.splitlines())
+    ] or list(UNCONTESTED_HEADER)
+    entries = sorted([*kept, *added], key=lambda u: u.id)
+    path.write_text(config.dump_uncontested(entries, header), encoding="utf-8")
+    return [f"  uncontested {u.id}: {path.relative_to(cfg.root)}" for u in added]
 
 
 def record_not_found(
@@ -1494,10 +1684,11 @@ Each item has:
   district of Bratislava or Košice: the document is the district's, not the
   city's).
 - `obvody`: the obvod numbers the candidate lists have, with their number of
-  candidates. Your rules must have exactly these obvody. Where known, also
-  `seats`, the seats ŠÚ SR's results give (yours must be the same), and
-  `okrsky`, the numbers of the okrsky (polling districts) it counted in
-  the obvod: a resolution may define the obvody by okrsky.
+  candidates. Your rules must have these obvody, and only these but for
+  an obvod the decision lists that no candidate stood in (below). Where
+  known, also `seats`, the seats ŠÚ SR's results give (yours must be the
+  same), and `okrsky`, the numbers of the okrsky (polling districts) it
+  counted in the obvod: a resolution may define the obvody by okrsky.
 - `streets`: every street of the municipality in the official address
   register: `[name, addresses, [parts], [lowest, highest orientačné číslo]]`.
   Use these names in your rules.
@@ -1598,6 +1789,13 @@ the date of the council's decision (YYYY-MM-DD). Only if no published
 document states it (look at the resolution, the announcement and the
 council's minutes), leave `date` out and say so in `note`; never guess it.
 
+Where the decision sets an obvod that `obvody` lacks (no candidate stood
+in it, its seats stayed vacant), transcribe it all the same, with
+`"uncontested": true` and `"document"` the URL (one of `documents`) that
+lists it, and give the decision's total, `council_seats` ("bude mať 13
+poslancov"): the obvody's seats must add up to it. Never add an obvod the
+decision does not list.
+
 ## Output
 
 Write `output.json` as `README.md` says, one object per item:
@@ -1664,21 +1862,21 @@ of these, which the map then shows as uncertain:
 - `"date_approximate": "posted"`: the official page (live or archived)
   states when the document was posted ("vyvesené", "zverejnené dňa"),
   before $day. `date_source` is that page, `date_seen` the posting day.
-- `"date_approximate": "named"`: the document itself names these
-  elections ("voľby do orgánov samosprávy obcí … $year", the day $day);
-  no `date_seen` or `date_source`. Only this kind may rest on evidence
-  from after $day: a capture or posting after the vote alone may be of a
-  later vote's document, so it is no evidence; report such a find
-  not_found.
+- `"date_approximate": "named"`: the document itself names the vote
+  ("$named", the day $day); no `date_seen` or `date_source`. Only this
+  kind may rest on evidence from after $day: a capture or posting after
+  the vote alone may be of a later vote's document, so it is no evidence;
+  report such a find not_found.
 
 With each, `date_basis` says in words what dates the documents ("the
 Internet Archive captured the elections page linking the PDF on
 2022-09-28; the PDF itself is undated"; "the document's heading names the
 elections of 29 October 2022"). The document may still be older than the
-elections (a decision kept from an earlier term): use it all the same, it
-is the best source; the map says its dating is approximate.
+vote (a decision kept from an earlier vote or term): use it all the same,
+it is the best source; the map says its dating is approximate.
 """
-"""How an earlier election's prompts find its documents (``$day``, ``$year``)."""
+"""How an earlier election's prompts find its documents (``$day``, ``$year``,
+``$named``: :func:`election_map_slovakia.jobs.election_prompt`)."""
 
 SUPPLEMENT = """
 Where the documents of $year do not place every address and a later
@@ -1727,6 +1925,27 @@ If you find no document of $year, report not_found; the maintainer then
 checks whether a later election's rules provably fit.
 {SUPPLEMENT}"""
 """Added to :data:`PROMPT` for an election other than the latest."""
+
+TERM = f"""
+## A by-election
+
+The by-elections of $day fill seats of the council elected on $term_day,
+in the obvody the council set for those elections: `obvody` lists those
+of the candidate lists of $term_year and of $day (one without candidates
+in $term_year, whose seats then stayed vacant, is missing from that
+election's lists but not from its decision). Your rules must have every
+obvod of that decision, these among them; `seats` are an obvod's seats
+of $term_year, where ŠÚ SR's results give them. Use only the council's
+decision on the obvody and their seats of mid-$term_year, for the
+elections of $term_day; never a later election's, however alike they
+look, except to fill them in (below).
+{ARCHIVE.replace("$year", "$term_year")}
+If you find no document of $term_year, report not_found.
+{SUPPLEMENT.replace("$year", "$term_year")}"""
+"""Added to :data:`PROMPT` for a by-election, with its term's day
+(``$term_day``) and year (``$term_year``): its council's obvody are the
+term's."""
+
 
 KIND = jobs.Kind(
     name=NAME,

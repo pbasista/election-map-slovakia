@@ -1,0 +1,244 @@
+# Council obvody of Spišská Nová Ves (526355), Spišská Nová Ves.
+# Transcribed by an AI agent in job obvod-rules-017 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: Vo volebnom obvode číslo 1, ktorý zahŕňa ulice: A. Mickiewicza, Agátová, Bezručova, Borodáčova, Borovského, Brezová, Bronzová, Čergovská, Detvianska, Dubová, Dúhová, Dunajská, E. M. Šoltésovej, Elektrárenská 6-8, F. Hečku, F. Urbánka, Gaštanová, Gemerská, Hájik, Hnilecká cesta, Horská, Hurbanova, I. Stodolu, Inovecká, J. Bottu, J. Čajaka, J. Fándlyho, J. Kostru, J. Matušku, J. Wolkera, Jasná, Javorová, Jedľová, Kalinčiaka, Kamenný obrázok, Karpatská, Komenského, Krčméryho, Kukučínova, Kvetná, Kysucká, Laborecká, Lesná, Letecká, Limbová, Lipová, Liptovská, Lúčna, M. Gorkého, Magurská, Malá, Medená, Muráňska, Nitrianska, Novoveská cesta, Obrancov mieru, Oravská, P. Jilemnického, Palárikova, Pieninská, Pod Tepličkou, Podskala, Podunajská, Pohronská, Poľná, Potočná, Považská, Predná Huta, R. Jašíka, Rajecká, Rudná, Rybničná, S. Chalupku, S. Tomášika, Sadová, Sadrovcová, Slnečná, Slobody, Snežná, Spišská, Stojan, Stražanská, Šarišská, Šestnástka, Štúrovo nábrežie, T. Vansovej, Tajovského, Tatranská, Tehelná, Tepličská cesta, Tichá, Topoľová, Trenčianska, Trieda 1. mája, Trnavská, Turčianska, V. Nezvala, Vyšný Hámor, Z. Nejedlého, Za Hornádom, Za Šestnástkou, Záborského, Záhradná, Zemplínska, Železná,
+#   obvod 2: Vo volebnom obvode číslo 2, ktorý zahŕňa ulice: Astrová, B. Němcovej, Banícka, Bernolákova, Brusník, Česká, Čsl. armády, Drevárska, Duklianska, Elektrárenská 1 – 5, Filinského cesta, Fraňa Kráľa, Gorazdova, Harichovský chodník, Hrnčiarska, Hutnícka, Hviezdoslavova, Chrapčiakova, I. Krasku, Ing. O. Kožucha, Ing. Rojkoviča, Ing. Straku, J. C. Hronského, J. Fabiniho, J. Hanulu, J. Hollého, J. I. Bajzu, Jána Jánskeho, Jesenského, Kamenárska, Kmeťova, Koceľova, Kolárska, Kollárova, Konrádova, Kováčska, Krížová, Kuzmányho, Ľaliová, Letná, Levočská, Markušovská cesta, Medza, Mišíkova, Mlynská, Moravská, Mudroňova, Nábrežie Hornádu, Nad Medzou, Námestie Iglovia, Námestie SNP, Narcisová, Nezábudková, Odborárov, Orlia, Pri Vyšnej Hati, Púpavová, Puškinova, Radlinského, Radničné námestie a „Spišská Nová Ves“, Rastislavova, Rázusova, Rybárska, Sládkovičova, Slnečné nábrežie, Slovenská, Stará cesta, Starosaská, Stolárska, Strojnícka, Svätoplukova, Školská, Škultétyho, Štefánikovo námestie, Tkáčska, Tolstého, Vajanského, Zábojského, Zámočnícka, Zimná, Zvonárska, Železničná,
+# Okrsky added by an AI agent in job okrsok-rules-5820 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+obec = "526355"
+name = "Spišská Nová Ves"
+date = 2018-07-19
+fill = "nearest"
+note = "Scanned announcement, read from the page images. Kysucká, named in obvod 1, has no addresses in the register and is left out. The voters registered only to the town (\"Spišská Nová Ves\" in obvod 2) are not register addresses and get no rule. Odorínska cesta and Šafárikovo námestie, named neither here nor in the 2022 rules, are placed by fill_nearest."
+supplemented = 2022-10-29
+supplemented_from = "election"
+supplement_basis = "The 2018 announcement does not name the register streets Červená, Gerlachovská ulica, Jarková, Jazdecká cesta, Košiarna, Smreková (newer streets in the south) and Kasárenská ulica; they are placed as in the 2022 rule set (data/curated/elections/2022-10-29/obvody/oz/526355.toml): the first six in obvod 1, Kasárenská ulica in obvod 2."
+okrsky_date = 2018-09-10
+okrsky_note = "The mayor's announcement of 10. 09. 2018 (scan, read from the page images) lists okrsky 1-17 under 'Volebný obvod č. 1' and 18-29 under 'Volebný obvod č. 2' with their polling stations only; it names no streets. The 2018 elections page (archived 2018-10-23) links no other okrsky document (no list of streets per okrsok, unlike 2017); the only other okrsok-specific document is the notice for voters registered only to the town ('Spišská Nová Ves, 0/0'), who vote in okrsok 21 (obvod 2). So obvody are given without okrsky rules."
+
+[[document]]
+url = "https://www.spisskanovaves.eu/fileadmin/snv/user_upload/editor/editor1/dokumenty/Volby_2018/Scan_urcenie_poctu_poslancov_a_volebnych_obvodov.pdf"
+sha256 = "7558706cbf3e77bad4ea6dbd1ebc06fcea564919c23c2a1ee2386fd376aff0b1"
+title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov pre voľby do orgánov samosprávy obcí 10. novembra 2018 (uznesenie MsZ č. 474/2018 z 19. 7. 2018; 8. 8. 2018)"
+
+[[document]]
+url = "https://www.spisskanovaves.eu/fileadmin/snv/user_upload/editor/editor1/dokumenty/Volby_2018/Oznamenie_o_utvoreni_volebnych_okrskov.pdf"
+sha256 = "3aaf8bb6aede4d838efbdb14d53980f093d76d7f996704a7e61c86aba98772db"
+title = "Oznámenie o utvorení volebných okrskov pre voľby do orgánov samosprávy obcí 2018 (č. 1976/2018/OP, 10. 09. 2018)"
+
+[[document]]
+url = "https://web.archive.org/web/20181023051452/http://www.spisskanovaves.eu:80/nocache/volby-2018/index.html?tx_newloginbox_pi1[forgot]=1"
+sha256 = "04a599c34284acc36ec861f34e6b2a6fe85853b220843e02ccc645875ab3a70d"
+title = "Voľby 2018 – stránka mesta (archived 23. 10. 2018)"
+
+[[document]]
+url = "https://www.spisskanovaves.eu/fileadmin/snv/user_upload/editor/editor1/dokumenty/Volby_2018/Oznamenie_o_case_a_mieste_konania_volieb_volici_s_trvalym_pobytom_mesto_Spisska_Nova_Ves.pdf"
+sha256 = "b6542ffc9f15d37e2ed1d62e8bf061a4916bef1e0627a2bb321d95a63976d2b2"
+title = "Oznámenie o čase a mieste konania volieb – voliči s trvalým pobytom mesto Spišská Nová Ves (okrsok 21, 04. 10. 2018)"
+
+[obvod.1]
+seats = 11
+okrsky = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+rules = [
+  {street = "A. Mickiewicza"},
+  {street = "Agátová"},
+  {street = "Bezručova"},
+  {street = "Borodáčova"},
+  {street = "Borovského"},
+  {street = "Brezová"},
+  {street = "Bronzová"},
+  {street = "Čergovská"},
+  {street = "Detvianska"},
+  {street = "Dubová"},
+  {street = "Dúhová"},
+  {street = "Dunajská"},
+  {street = "E. M. Šoltésovej"},
+  {street = "Elektrárenská", numbers = "6-8"},
+  {street = "F. Hečku"},
+  {street = "F. Urbánka"},
+  {street = "Gaštanová"},
+  {street = "Gemerská"},
+  {street = "Hájik"},
+  {street = "Hnilecká cesta"},
+  {street = "Horská"},
+  {street = "Hurbanova"},
+  {street = "I. Stodolu"},
+  {street = "Inovecká"},
+  {street = "J. Bottu"},
+  {street = "J. Čajaka"},
+  {street = "J. Fándlyho"},
+  {street = "J. Kostru"},
+  {street = "J. Matušku"},
+  {street = "J. Wolkera"},
+  {street = "Jasná"},
+  {street = "Javorová"},
+  {street = "Jedľová"},
+  {street = "Kalinčiaka"},
+  {street = "Kamenný obrázok"},
+  {street = "Karpatská"},
+  {street = "Komenského"},
+  {street = "Krčméryho"},
+  {street = "Kukučinova", written = "Kukučínova", note = "the document's spelling with í; the register writes Kukučinova, the same street"},
+  {street = "Kvetná"},
+  {street = "Laborecká"},
+  {street = "Lesná"},
+  {street = "Letecká"},
+  {street = "Limbová"},
+  {street = "Lipová"},
+  {street = "Liptovská"},
+  {street = "Lúčna"},
+  {street = "M. Gorkého"},
+  {street = "Magurská"},
+  {street = "Malá"},
+  {street = "Medená"},
+  {street = "Muráňska"},
+  {street = "Nitrianska"},
+  {street = "Novoveská cesta"},
+  {street = "Obrancov mieru"},
+  {street = "Oravská"},
+  {street = "P. Jilemnického"},
+  {street = "Palárikova"},
+  {street = "Pieninská"},
+  {street = "Pod Tepličkou"},
+  {street = "Podskala"},
+  {street = "Podunajská"},
+  {street = "Pohronská"},
+  {street = "Poľná"},
+  {street = "Potočná"},
+  {street = "Považská"},
+  {street = "Predná Huta"},
+  {street = "R. Jašíka"},
+  {street = "Rajecká"},
+  {street = "Rudná"},
+  {street = "Rybničná"},
+  {street = "S. Chalupku"},
+  {street = "S. Tomášika"},
+  {street = "Sadová"},
+  {street = "Sadrovcová"},
+  {street = "Slnečná"},
+  {street = "Slobody"},
+  {street = "Snežná"},
+  {street = "Spišská"},
+  {street = "Stojan"},
+  {street = "Stražanská"},
+  {street = "Šarišská"},
+  {street = "Šestnástka"},
+  {street = "Štúrovo nábrežie"},
+  {street = "T. Vansovej"},
+  {street = "Tajovského"},
+  {street = "Tatranská"},
+  {street = "Tehelná"},
+  {street = "Tepličská cesta"},
+  {street = "Tichá"},
+  {street = "Topoľová"},
+  {street = "Trenčianska"},
+  {street = "Trieda 1. mája"},
+  {street = "Trnavská"},
+  {street = "Turčianska"},
+  {street = "V. Nezvala"},
+  {street = "Vyšný Hámor"},
+  {street = "Zd. Nejedlého", written = "Z. Nejedlého", note = "register name Zd. Nejedlého (Zdeněk Nejedlý); the document abbreviates the first name to Z."},
+  {street = "Za Hornádom"},
+  {street = "Za Šestnástkou"},
+  {street = "Záborského"},
+  {street = "Záhradná"},
+  {street = "Zemplínska"},
+  {street = "Železná"},
+  {street = "Červená", supplemented = true},
+  {street = "Gerlachovská ulica", supplemented = true},
+  {street = "Jarková", supplemented = true},
+  {street = "Jazdecká cesta", supplemented = true},
+  {street = "Košiarna", supplemented = true},
+  {street = "Smreková", supplemented = true},
+]
+
+[obvod.2]
+seats = 8
+okrsky = [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]
+rules = [
+  {street = "Astrová"},
+  {street = "B. Němcovej"},
+  {street = "Banícka"},
+  {street = "Bernolákova"},
+  {street = "Brusník"},
+  {street = "Česká"},
+  {street = "Čsl. armády"},
+  {street = "Drevárska"},
+  {street = "Duklianska"},
+  {street = "Elektrárenská", numbers = "1-5"},
+  {street = "Filinského cesta"},
+  {street = "Fraňa Kráľa"},
+  {street = "Gorazdova"},
+  {street = "Harichovský chodník"},
+  {street = "Hrnčiarska"},
+  {street = "Hutnícka"},
+  {street = "Hviezdoslavova"},
+  {street = "Chrapčiakova"},
+  {street = "I. Krasku"},
+  {street = "Ing. O. Kožucha"},
+  {street = "Ing. Rojkoviča"},
+  {street = "Ing. Straku"},
+  {street = "J. C. Hronského"},
+  {street = "J. Fabiniho"},
+  {street = "J. Hanulu"},
+  {street = "J. Hollého"},
+  {street = "J. I. Bajzu"},
+  {street = "Jána Jánskeho"},
+  {street = "Jesenského"},
+  {street = "Kamenárska"},
+  {street = "Kmeťova"},
+  {street = "Koceľova"},
+  {street = "Kolárska"},
+  {street = "Kollárova"},
+  {street = "Konrádova"},
+  {street = "Kováčska"},
+  {street = "Krížová"},
+  {street = "Kuzmányho"},
+  {street = "Ľaliová"},
+  {street = "Letná"},
+  {street = "Levočská"},
+  {street = "Markušovská cesta"},
+  {street = "Medza"},
+  {street = "Mišíkova"},
+  {street = "Mlynská"},
+  {street = "Moravská"},
+  {street = "Mudroňova"},
+  {street = "Nábrežie Hornádu"},
+  {street = "Nad Medzou"},
+  {street = "Námestie Iglovia"},
+  {street = "Námestie SNP"},
+  {street = "Narcisová"},
+  {street = "Nezábudková"},
+  {street = "Odborárov"},
+  {street = "Orlia"},
+  {street = "Pri Vyšnej Hati"},
+  {street = "Púpavová"},
+  {street = "Puškinova"},
+  {street = "Radlinského"},
+  {street = "Radničné námestie"},
+  {street = "Rastislavova"},
+  {street = "Rázusova"},
+  {street = "Rybárska"},
+  {street = "Sládkovičova"},
+  {street = "Slnečné nábrežie"},
+  {street = "Slovenská"},
+  {street = "Stará cesta"},
+  {street = "Starosaská"},
+  {street = "Stolárska"},
+  {street = "Strojnícka"},
+  {street = "Svätoplukova"},
+  {street = "Školská"},
+  {street = "Škultétyho"},
+  {street = "Štefánikovo námestie"},
+  {street = "Tkáčska"},
+  {street = "Tolstého"},
+  {street = "Vajanského"},
+  {street = "Zábojského"},
+  {street = "Zámočnícka"},
+  {street = "Zimná"},
+  {street = "Zvonárska"},
+  {street = "Železničná"},
+  {street = "Kasárenská ulica", supplemented = true},
+]

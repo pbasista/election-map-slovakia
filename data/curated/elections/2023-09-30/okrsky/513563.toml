@@ -1,0 +1,25 @@
+# Okrsky of Prečín, transcribed by an AI agent in job okrsok-rules-3882 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č.1 PREČÍN
+#   okrsok 2: Volebný okrsok č.2 Zemianska Závada
+obec = "513563"
+name = "Prečín"
+okrsky_note = "Two versions were uploaded the same day, differing only in the school's house number (105/106); the later one is used. Each okrsok is a part of the municipality."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The DOCX is undated; its heading names the NR SR elections of 30.9.2023 (uploaded to the website on 27.06.2023 per its media library)."
+
+[[document]]
+url = "https://www.precin.eu/wp-content/uploads/volebne-miestnosti-1.docx"
+sha256 = "089ad4cd4d04ffc3c05e970fe2346b9f33c8f0a449c8d829d45b906a9c967ba8"
+title = "Voľby do NR SR konané 30.9.2023 – volebné okrsky a volebné miestnosti"
+
+[okrsok.1]
+rules = [
+  {part = "Prečín"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Zemianska Závada"},
+]

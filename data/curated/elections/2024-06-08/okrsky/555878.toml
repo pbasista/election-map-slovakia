@@ -1,0 +1,45 @@
+# Okrsky of Horná Kráľová, transcribed by an AI agent in job okrsok-rules-5067 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice : Hlavná, Cintorínska, Športová, Pod Tópartom, Pri potoku, Topoľová, Malá Kráľová, Nad potokom, Domoviny, časť ulíc Sereďská a Nad Humnami.
+#   okrsok 2: ulice : Hlohovecká, Sliváš I., Sliváš II., Školská, Školská II., Vinohradnícka, časť ulíc Sereďská a Nad Humnami.
+obec = "555878"
+name = "Horná Kráľová"
+okrsky_date = 2024-03-04
+okrsky_fill = "nearest"
+okrsky_note = "Lackov dvor (not named in the document) and súpisné čísla of Sereďská/Nad Humnami outside the listed ranges are placed by fill_nearest."
+okrsky_supplemented = 2026-10-24
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The document names Sereďská and Nad Humnami only as 'časť ulíc' in both okrsky without house numbers; the split of these two streets by súpisné čísla is copied from the rule set of the elections of 2026-10-24 (Sereďská s.č. 421-424, 507, 510, 751, 752 and Nad Humnami s.č. 425, 426, 532-697 in okrsok 1; Sereďská s.č. 546-569, 630-674, 775 and Nad Humnami s.č. 400-424, 427-453, 750 in okrsok 2), which the municipality's documents of 2023 and 2026 state in the same words for the same two okrsky."
+
+[[document]]
+url = "https://www.hornakralova.sk/wp-content/uploads/2024/03/informacia_o_vytvoreni_okrskov_SK.pdf"
+sha256 = "48d6680c53c43dabc828777ec8511415645333a533100e312f5f28f6767d7abe"
+title = "Informácia o utvorení volebných okrskov a určení volebných miestností – Voľby do Európskeho parlamentu, Horná Kráľová 04. 03. 2024"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná"},
+  {street = "Cintorínska"},
+  {street = "Športová"},
+  {street = "Pod Tópartom"},
+  {street = "Pri potoku"},
+  {street = "Topoľová"},
+  {street = "Malá Kráľová"},
+  {street = "Nad Potokom", written = "Nad potokom"},
+  {street = "Domoviny"},
+  {street = "Sereďská", numbers = "421-424, 507, 510, 751, 752", by = "supisne", supplemented = true},
+  {street = "Nad Humnami", numbers = "425, 426, 532-697", by = "supisne", supplemented = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Hlohovecká"},
+  {street = "Sliváš I."},
+  {street = "Sliváš II."},
+  {street = "Školská"},
+  {street = "Školská II."},
+  {street = "Vinohradnícka"},
+  {street = "Sereďská", numbers = "546-569, 630-674, 775", by = "supisne", supplemented = true},
+  {street = "Nad Humnami", numbers = "400-424, 427-453, 750", by = "supisne", supplemented = true},
+]

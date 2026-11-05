@@ -1,0 +1,33 @@
+# Okrsky of Jánovce, transcribed by an AI agent in job okrsok-rules-3956 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre voličov s trvalým pobytom v obci od súpisného čísla 0 – 205
+#   okrsok 2: pre voličov s trvalým pobytom v obci od súpisného čísla 206 – 403
+obec = "523542"
+name = "Jánovce"
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by súpisné číslo for the whole obec (one súpisné series), applied to both parts Jánovce and Machalovce. Houses with súpisné čísla above 403 are placed by fill_nearest."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The mayor's notice is undated; its heading names the vote (voľby do Národnej rady Slovenskej republiky v roku 2023)."
+
+[[document]]
+url = "https://obec-janovce.sk/wp-content/uploads/dokumenty/volby-do-nrsr/Urcenie-volebnych-okrskov-a-volebnych-miestnosti-pre-Volby-do-NR-SR-2023.pdf"
+sha256 = "feab1f85967e0f5cbce6e2474735645c3f06280eddc39455c6379c2c4f57238e"
+title = "Volebné okrsky a volebné miestnosti pre voľby do Národnej rady Slovenskej republiky v roku 2023"
+
+[[document]]
+url = "https://obec-janovce.sk/dokument/urcenie-volebnych-okrskov-a-volebnych-miestnosti-pre-volby-do-nr-sr-2023/"
+sha256 = "4706980dc7adc85789529410a1e699f422bc197e2b26b8a1a20e53f57602d806"
+title = "document page"
+
+[okrsok.1]
+rules = [
+  {part = "Jánovce", numbers = "0-205"},
+  {part = "Machalovce", numbers = "0-205"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Jánovce", numbers = "206-403"},
+  {part = "Machalovce", numbers = "206-403"},
+]

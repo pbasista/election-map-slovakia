@@ -1,0 +1,25 @@
+# Okrsky of Zuberec, transcribed by an AI agent in job okrsok-rules-4401 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: obyvatelia obce od súpisného čísla 1 – 300
+#   okrsok 2: obyvatelia obce od súpisného čísla 301
+obec = "510238"
+name = "Zuberec"
+okrsky_note = "The document splits the single-part village by súpisné číslo: okrsok 1 numbers 1–300, okrsok 2 from 301."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's heading names the presidential election of 2024 (1st round 23 March 2024, 2nd round 6 April 2024); it is undated."
+
+[[document]]
+url = "https://www.zuberec.sk/modules/file_storage/download.php?file=1b6a57bf%7C825"
+sha256 = "bd593c855613352ca450999e8b281aad1fdf4d5dec0dc931e0a23a76873d6afd"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta Slovenskej republiky 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Zuberec", numbers = "1-300"},
+]
+
+[okrsok.2]
+rules = [
+  {rest = true},
+]

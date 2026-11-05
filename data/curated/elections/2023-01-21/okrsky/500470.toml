@@ -1,0 +1,30 @@
+# Okrsky of Lúčnica nad Žitavou, transcribed by an AI agent in job okrsok-rules-3278 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1. okrsok – Obecný úrad Lúčnica nad Žitavou, zasadačka
+#   okrsok 2: 2. okrsok – Obecný dom Martinová
+obec = "500470"
+name = "Lúčnica nad Žitavou"
+okrsky_note = "The document gives each okrsok only its polling station; the municipality has two parts (Vajka nad Žitavou, where the municipal office is, and Martinová) and two okrsky, the stations in different parts, so each okrsok is given the part of its station (inferred); same split as the 2022 document."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document is headed 'Utvorenie volebných okrskov – referendum 2023'; it is undated."
+
+[[document]]
+url = "https://www.obeclucnica.sk/e_download.php?file=data/editor/110sk_2.docx&original=Utvorenie%20volebn%C3%BDch%20okrskov.docx"
+sha256 = "61f4f90e69b31d21f155f48e1f15a78699ddc40327912a8e5f3c38cb0f419e80"
+title = "Utvorenie volebných okrskov – referendum 2023"
+
+[[document]]
+url = "https://www.obeclucnica.sk/referendum-2023/"
+sha256 = "c83be6f8e5473f4b31b2081fe34a2b3a2fe176a3a9b20487bdfc6cbdeee70dbb"
+title = "Referendum 2023"
+
+[okrsok.1]
+rules = [
+  {part = "Vajka nad Žitavou", note = "polling station in the municipal office (Lúčnica nad Žitavou 230) in Vajka nad Žitavou; okrsky as many as parts, each station in another part", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Martinová", note = "polling station in the obecný dom Martinová 374; okrsky as many as parts, each station in another part", inferred = true},
+]

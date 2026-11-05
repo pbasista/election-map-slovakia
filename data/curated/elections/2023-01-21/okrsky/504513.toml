@@ -1,0 +1,53 @@
+# Okrsky of Kúty, transcribed by an AI agent in job okrsok-rules-2996 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bratislavská, Konečná, Hollého, Športová, Na Hliníku, Za zbrojnicou, Štúrova, Brnenská, Hlboká cesta, Hurbanova
+#   okrsok 2: Za školou, Školská, Kozia, Sasinkova, Dr. Š. Heska, Gorazdova, Kollárova, Továrenská, Na cihlách, Zelnická
+#   okrsok 3: Nám. Radlinského + voliči prihlásení k trvalému pobytu na Obec Kúty, Štefánikova, Nová, Železničiarska, Textilná
+obec = "504513"
+name = "Kúty"
+okrsky_date = 2022-11-09
+okrsky_fill = "nearest"
+okrsky_note = "The document lists streets only; street Štátny Les (one address, no. 219) and the addresses without a street are not named and go by fill_nearest. 'Nám. Radlinského' is the register's Radlinského Námestie (word order only); voters registered only to the municipality are listed with okrsok 3."
+
+[[document]]
+url = "https://web.archive.org/web/20221109110207/https://www.kuty.sk/e_download.php?file=data/uredni_deska/obsah145_17.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti.pdf"
+sha256 = "9515372be028c2d52ef366c9500e9bac04d4ad2a0a4ee8f7cd0d3c9801138c0b"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (referendum 21. januára 2023), Č.j. 167/2022-2"
+
+[okrsok.1]
+rules = [
+  {street = "Bratislavská"},
+  {street = "Konečná"},
+  {street = "Hollého"},
+  {street = "Športová"},
+  {street = "Na Hliníku"},
+  {street = "Za zbrojnicou"},
+  {street = "Štúrova"},
+  {street = "Brnenská"},
+  {street = "Hlboká cesta"},
+  {street = "Hurbanova"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Za školou"},
+  {street = "Školská"},
+  {street = "Kozia"},
+  {street = "Sasinkova"},
+  {street = "Dr. Štefana Heska", written = "Dr. Š. Heska"},
+  {street = "Gorazdova"},
+  {street = "Kollárova"},
+  {street = "Továrenská"},
+  {street = "Na Cihlách", written = "Na cihlách"},
+  {street = "Zelnická"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Radlinského Námestie", written = "Nám. Radlinského", note = "'Nám. Radlinského' is the register's Radlinského Námestie, the only square of Kúty; only the word order differs."},
+  {street = "Štefánikova"},
+  {street = "Nová"},
+  {street = "Železničiarska"},
+  {street = "Textilná"},
+]

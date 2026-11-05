@@ -1,0 +1,29 @@
+# Okrsky of Ploské, transcribed by an AI agent in job okrsok-rules-3947 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 Ploské
+#   okrsok 2: Okrsok č. 2 Ploské - Ortáše
+obec = "521884"
+name = "Ploské"
+okrsky_date = 2023-06-12
+okrsky_note = "The okrsky are named after the parts: okrsok 1 Ploské (part Ploské), okrsok 2 Ploské - Ortáše (part Ortáše). The document gives only the names and polling stations; each okrsok is the part it is named after."
+
+[[document]]
+url = "https://www.ploske.sk/e_download.php?file=data/uredni_deska/obsah627_5.pdf&original=2023-06-22-104628-volebn___okrsky_a_miestnosti.pdf"
+sha256 = "62c72ea44f2b2410566dbc86226b54aeb671f94123668618bf624c0b5a06e3b4"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Ploské pre voľby do NR SR 30. septembra 2023"
+
+[[document]]
+url = "https://www.ploske.sk/zverejnovanie/volby/volby-do-nr-sr-2023-627.html"
+sha256 = "279905b22aa3ca750dc069161b818cd651cbe3eb2b016a6342671d1b2e1ad05c"
+title = "Ploské – Voľby: notice board entry of the vote"
+
+[okrsok.1]
+rules = [
+  {part = "Ploské"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Ortáše"},
+]

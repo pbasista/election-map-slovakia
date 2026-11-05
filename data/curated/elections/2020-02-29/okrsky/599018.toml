@@ -1,0 +1,40 @@
+# Okrsky of Košice-Košická Nová Ves, transcribed by an AI agent in job okrsok-rules-2415 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Pre občanov s trvalým pobytom na uliciach: Agátová, Brestová, Buková, Mliečna, Na Doline, Poľná, Sv. Ladislava, Vínová a občania s trvalým pobytom na obci bez konkrétnej adresy a občania s trvalým pobytom v záhradkárskych lokalitách
+#   okrsok 2: Pre občanov s trvalým pobytom na uliciach: Čerešňová, Furčianska, Herlianska, Jaseňová, Ortvaňová, Trnková, Vyšná Úvrať, Ulica Zelená stráň
+obec = "599018"
+name = "Košice-Košická Nová Ves"
+okrsky_date = 2019-11-28
+okrsky_note = "Okrsok 1's 'občania s trvalým pobytom v záhradkárskych lokalitách' are the register's houses without a street (garden localities, numbered by súpisné číslo only): the whole part goes to okrsok 1 as a part rule, below every street rule. Arm. Gen. Ľ. Svobodu (not named) is placed in okrsok 2 (inferred)."
+
+[[document]]
+url = "https://web.archive.org/web/20191209033353/https://www.kosickanovaves.sk/volby-do-nr-sr-2020---oznamenie.c463.html"
+sha256 = "b128bd737341ee574578da638ae06822643244bac62df45e6c76dd578d944bfd"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby do Národnej rady Slovenskej republiky 2020 (Košice, 28. 11. 2019)"
+
+[okrsok.1]
+rules = [
+  {part = "Košice-Košická Nová Ves", note = "'občania s trvalým pobytom v záhradkárskych lokalitách': the garden localities' houses, which the register numbers without a street; as a whole-part rule it takes only addresses no street rule selects"},
+  {street = "Agátová"},
+  {street = "Brestová"},
+  {street = "Buková"},
+  {street = "Mliečna"},
+  {street = "Na Doline"},
+  {street = "Poľná"},
+  {street = "Sv.Ladislava", written = "Sv. Ladislava"},
+  {street = "Vínová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Čerešňová"},
+  {street = "Furčianska"},
+  {street = "Herlianska"},
+  {street = "Jaseňová"},
+  {street = "Ortvaňová"},
+  {street = "Trnková"},
+  {street = "Vyšná Úvrať"},
+  {street = "Ulica Zelená stráň"},
+  {street = "Arm. Gen. Ľ. Svobodu", note = "not named in the document (2 addresses); placed with Furčianska, the street it adjoins at the Furča edge of the district", inferred = true},
+]

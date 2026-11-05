@@ -1,0 +1,51 @@
+# The okrsky of Kamenica nad Cirochou of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/520331.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Kamenica nad Cirochou, transcribed by an AI agent in job okrsok-rules-5014 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Humenská, Partizánska, Lesná, Železničná, Sládkovičova, Čsl. Armády, Ružová, Krátka, Sadová, Jarná, Slepá, Juraja Macáka
+#     okrsok 2: Osloboditeľov, Vihorlatská, Gaštanová, Mierová, Záhradná, Štúrova, Veterná, Kpt. Nálepku, Kamenná, Pod Žbirom, Pod Drieňovou
+obec = "520331"
+name = "Kamenica nad Cirochou"
+okrsky_fill = "nearest"
+okrsky_note = "The municipality's notice to voters lists the streets of each okrsok; the mayor's decision itself is not published. Addresses without a street name go by fill_nearest."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-468): The obec's 'Utvorenie volebných okrskov a určenie volebných miestností' (13.07.2026) only names okrsky 1 and 2 with their rooms (both in the Kultúrny dom, Humenská 555/6); it does not say which streets belong to which okrsok. No other document on the elections or referendum pages defines them. (www.kamenicanadcirochou.sk subpages redirect in a loop; the official site is www.obeckamenicanadcirochou.sk.). These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2024-06-08: 1: 917 → 928, 2: 998 → 971."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-06-03
+okrsky_date_basis = "The notice states 'Zverejnené 3.6.2024'. (https://www.obeckamenicanadcirochou.sk/oznamy/oznam-pre-volicov-volby-do-europskeho-parlamentu-8-6-2024.html)"
+
+[[document]]
+url = "https://www.obeckamenicanadcirochou.sk/oznamy/oznam-pre-volicov-volby-do-europskeho-parlamentu-8-6-2024.html"
+sha256 = "00afddee10fca10caad5d61569d51f8381064593d925ad154d55802624b60161"
+title = "Oznam pre voličov - Voľby do Európskeho parlamentu - 8.6.2024 (zverejnené 3.6.2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Humenská"},
+  {street = "Partizánska"},
+  {street = "Lesná"},
+  {street = "Železničná"},
+  {street = "Sládkovičova"},
+  {street = "Čsl.armády", written = "Čsl. Armády"},
+  {street = "Ružová"},
+  {street = "Krátka"},
+  {street = "Sadová"},
+  {street = "Jarná"},
+  {street = "Slepá"},
+  {street = "Juraja Macáka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Osloboditeľov"},
+  {street = "Vihorlatská"},
+  {street = "Gaštanová"},
+  {street = "Mierová"},
+  {street = "Záhradná"},
+  {street = "Štúrova"},
+  {street = "Veterná"},
+  {street = "Kpt. Nálepku"},
+  {street = "Kamenná"},
+  {street = "Pod Žbirom"},
+  {street = "Pod Drieňovou"},
+]

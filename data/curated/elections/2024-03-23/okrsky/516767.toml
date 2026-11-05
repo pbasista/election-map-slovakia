@@ -1,0 +1,54 @@
+# Okrsky of Hliník nad Hronom, transcribed by an AI agent in job okrsok-rules-4316 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Československej armády, Jána Švermu, Kamenárska, Kopaničná, Lesná, Mlynská, Námestie SNP, Pekárenská, Pivovarská, Potočná, Priehradka, Priemyselná, Sovietskej armády, Tehelná, Železničná
+#   okrsok 2: ulice: 1. mája, 9. mája, Dukelských hrdinov, Kpt. Nálepku, Ladislava Majerského, Lúčna, Ľudovíta Štúra, Mierová, Na záhradky, Opatovská, Partizánska, Pionierov, Poľná, Strojárska, Školská; občania, ktorým bol zrušený trvalý pobyt (bez adresy)
+obec = "516767"
+name = "Hliník nad Hronom"
+okrsky_fill = "nearest"
+okrsky_note = "Streets the document names but the register lacks, left out: Na záhradky. The 240 addresses without a street (súpisné čísla only) take the okrsok of the nearest address (fill_nearest). Okrsok 2 also holds voters without an address (bez adresy)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-29
+okrsky_date_basis = "the decision on the elections page names the presidential election of 23 March 2024 and is marked \"Zverejnené 29.1.2024\"; it states no date of its own (https://www.hliniknadhronom.sk/2024-volby-prezidenta-sr.html)"
+
+[[document]]
+url = "https://www.hliniknadhronom.sk/2024-volby-prezidenta-sr.html"
+sha256 = "f491cb29951587e9f29811d872c651f761c6520b75757085f4f8a3178097bfa9"
+title = "Určenie okrskov a volebných miestností (voľby prezidenta SR 23. marca 2024), on the elections page"
+
+[okrsok.1]
+rules = [
+  {street = "Československej Armády", written = "Československej armády", note = "the same name; the register capitalises the second word"},
+  {street = "Jána Švermu"},
+  {street = "Kamenárska"},
+  {street = "Kopaničná"},
+  {street = "Lesná"},
+  {street = "Mlynská"},
+  {street = "Námestie SNP"},
+  {street = "Pekárenská"},
+  {street = "Pivovarská"},
+  {street = "Potočná"},
+  {street = "Priehradka"},
+  {street = "Priemyselná"},
+  {street = "Sovietskej Armády", written = "Sovietskej armády", note = "the same name; the register capitalises the second word"},
+  {street = "Tehelná"},
+  {street = "Železničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Dukelských Hrdinov", written = "Dukelských hrdinov", note = "the same name; the register capitalises the second word"},
+  {street = "Kapitána Nálepku", written = "Kpt. Nálepku", note = "Kpt. is the abbreviation of Kapitána (captain)"},
+  {street = "Ladislava Majerského"},
+  {street = "Lúčna"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Mierová"},
+  {street = "Opatovská"},
+  {street = "Partizánska"},
+  {street = "Pionierov"},
+  {street = "Poľná"},
+  {street = "Strojárska"},
+  {street = "Školská"},
+]

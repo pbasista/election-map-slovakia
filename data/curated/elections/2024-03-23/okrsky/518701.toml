@@ -1,0 +1,31 @@
+# Okrsky of Rykynčice, transcribed by an AI agent in job okrsok-rules-4547 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: okrsok č. 1 – Horné Rykynčice
+#   okrsok 2: okrsok č. 2 – Dolné Rykynčice
+obec = "518701"
+name = "Rykynčice"
+okrsky_note = "Each okrsok is the part it is named after: okrsok 1 Horné Rykynčice, okrsok 2 Dolné Rykynčice."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-25
+okrsky_date_basis = "The page of the presidential election 2024 lists the notice 'Oznámenie' as posted on 25.01.2024; the notice names the presidential election but states no date. (https://www.rykyncice.sk/volby-prezidenta-sr-2024-a73-414)"
+
+[[document]]
+url = "https://www.rykyncice.sk/files/2024-01-25-132823-Oznam_-_VO.pdf"
+sha256 = "ddcfc8e82514e7e84ea50461279aba1f3a88fb969971fa6efdbc555d34ca469d"
+title = "Oznam pre občanov k voľbám prezidenta SR – V obci Rykynčice sú vytvorené dva volebné okrsky"
+
+[[document]]
+url = "https://www.rykyncice.sk/volby-prezidenta-sr-2024-a73-414"
+sha256 = "3e46890ad79fe013e25115c5f51601e8facc58ac4150154caa75902fb61ed123"
+title = "Rykynčice – Voľby: Oznam pre občanov k voľbám prezidenta SR"
+
+[okrsok.1]
+rules = [
+  {part = "Horné Rykynčice"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dolné Rykynčice"},
+]

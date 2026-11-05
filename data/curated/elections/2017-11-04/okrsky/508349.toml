@@ -1,0 +1,58 @@
+# The okrsky of Vysoká pri Morave of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/508349.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Vysoká pri Morave, transcribed by an AI agent in job okrsok-rules-3680 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: pre voličov, ktorí majú trvalý pobyt na uliciach: Bazová, Družstevná, Dúbrava, Hlavná, Hraničiarska, Krátka, Krížna, Kvetná, Lúčna, Mládežnícka, Námestie A. Kadnára, Námestie Oslobodenia, Nandin Dvor, Nová, Orechová, Pod Vŕškom, Poľná, Riečna, Zemianské I., Zemianské II., Zemianské III.
+#     okrsok 2: pre voličov, ktorí majú trvalý pobyt na uliciach: Robotnícka, Rybárska, Slnečná, Spojná, Staničná, Stromová, Športová, Tichá, Továrenská, Veterná, Záhradná
+obec = "508349"
+name = "Vysoká pri Morave"
+okrsky_date = 2023-06-22
+okrsky_fill = "nearest"
+okrsky_note = "Addresses without a street take the nearest placed address (fill_nearest)."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-320): The website's elections page holds documents from 2022 on only; no okrsky document of this vote. The Internet Archive was unreachable (connection refused) throughout. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2023-09-30: 1: 1,039 → 956, 2: 862 → 835."
+
+[[document]]
+url = "https://www.vysokaprimorave.sk/images/Vysoka_pri_Morave_Urcenie_volebnych_okrskov_1.pdf"
+sha256 = "8c3eee3d32aa0d28de4d508d92efe52f0f383f74610364479883c59d962a1fdf"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do NR SR 30. septembra 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Bazová"},
+  {street = "Družstevná"},
+  {street = "Dúbrava"},
+  {street = "Hlavná"},
+  {street = "Hraničiarska"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Kvetná"},
+  {street = "Lúčna"},
+  {street = "Mládežnícka"},
+  {street = "Námestie Antona Kadnára", written = "Námestie A. Kadnára"},
+  {street = "Námestie Oslobodenia"},
+  {street = "Nandin Dvor"},
+  {street = "Nová"},
+  {street = "Orechová"},
+  {street = "Pod Vŕškom"},
+  {street = "Poľná"},
+  {street = "Riečna"},
+  {street = "Zemianske I.", written = "Zemianské I.", note = "Document misspells Zemianske as Zemianské; same street."},
+  {street = "Zemianske II.", written = "Zemianské II.", note = "Document misspells Zemianske as Zemianské; same street."},
+  {street = "Zemianske III.", written = "Zemianské III.", note = "Document misspells Zemianske as Zemianské; same street."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Robotnícka"},
+  {street = "Rybárska"},
+  {street = "Slnečná"},
+  {street = "Spojná"},
+  {street = "Staničná"},
+  {street = "Stromová"},
+  {street = "Športová"},
+  {street = "Tichá"},
+  {street = "Továrenská"},
+  {street = "Veterná"},
+  {street = "Záhradná"},
+]

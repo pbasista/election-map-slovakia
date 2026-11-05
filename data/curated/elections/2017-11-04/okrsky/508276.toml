@@ -1,0 +1,70 @@
+# The okrsky of Tomášov of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/508276.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Tomášov, transcribed by an AI agent in job okrsok-rules-3569 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: tvoria ulice obce: Alžbetinská, Bratislavská, Cintorínska, Fialková, Madaras, Majorháza, Malinovská, Mierová, Mlynská, Na majeri, Pestovateľská, Pri kaštieli, Rastická, Školská, Štvrtocká, Veterná a občania ktorí majú TP Obec Tomášov.
+#     okrsok 2: tvoria ulice obce: Agátová, Dolná, Dubová, Dunajská, Hlavná, Krátka, Kvetná, Lesná, Lipová, Nová, 1. mája, Okružná ulica, Podzáhradná, Robotnícka, Senecká, Svätej Trojice, Športová, Tehelná, Topoľová, Záhradnícka a Vŕbová.
+obec = "508276"
+name = "Tomášov"
+okrsky_fill = "nearest"
+okrsky_note = "Text layer of the PDF. 'občania ktorí majú TP Obec Tomášov' (okrsok 1) are voters registered without an address, not mapped. The register's addresses without a street (súpisné only, incl. parts Doma and Malý Madaras) are placed by fill_nearest. The document states no date; dated as naming the vote."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-215): No okrsky document of the regional elections of 2017 on the elections page; the Internet Archive refused connections (offline for us). These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2017-11-04 → 2023-09-30: 1: 1,061 → 1,121, 2: 1,036 → 1,088."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated document names the vote in its text (voľby do NR SR 30. septembra 2023)."
+
+[[document]]
+url = "https://www.tomasov.sk/modules/file_storage/download.php?file=7c4285a5%7C1073"
+sha256 = "91d5b2a093153a066477f510cb6e283ec80171b63d80c9303961bb2946c1fad0"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do NR SR 30. septembra 2023"
+
+[[document]]
+url = "https://www.tomasov.sk/urad-9/volby/"
+sha256 = "496f395da93d98fec542578e300fc40195aeb3343b53ee5a6993f53a9f9f6604"
+title = "Voľby (page linking the file)"
+
+[okrsok.1]
+rules = [
+  {street = "Alžbetinská"},
+  {street = "Bratislavská"},
+  {street = "Cintorínska"},
+  {street = "Fialková"},
+  {street = "Madaras"},
+  {street = "Majorháza"},
+  {street = "Malinovská"},
+  {street = "Mierová"},
+  {street = "Mlynská"},
+  {street = "Na Majeri", written = "Na majeri"},
+  {street = "Pestovateľská"},
+  {street = "Pri kaštieli"},
+  {street = "Rastická"},
+  {street = "Školská"},
+  {street = "Štvrtocká"},
+  {street = "Veterná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Dolná"},
+  {street = "Dubová"},
+  {street = "Dunajská"},
+  {street = "Hlavná"},
+  {street = "Krátka"},
+  {street = "Kvetná"},
+  {street = "Lesná"},
+  {street = "Lipová"},
+  {street = "Nová"},
+  {street = "1. mája"},
+  {street = "1.mája", written = "1. mája"},
+  {street = "Okružná ulica"},
+  {street = "Podzáhradná"},
+  {street = "Robotnícka"},
+  {street = "Senecká"},
+  {street = "Svätej Trojice"},
+  {street = "Športová"},
+  {street = "Tehelná"},
+  {street = "Topoľová"},
+  {street = "Záhradnícka"},
+  {street = "Vŕbová"},
+]

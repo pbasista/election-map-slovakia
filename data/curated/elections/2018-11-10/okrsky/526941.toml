@@ -1,0 +1,26 @@
+# The okrsky of Orlov of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/526941.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Orlov, transcribed by an AI agent in job okrsok-rules-1557 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: volebná miestnosť: Obecný úrad Orlov, zasadačka, Orlov 119 - pre obyvateľov obce Orlov
+#     okrsok 2: volebná miestnosť: Orlov – Andrejovka 325, spoločenská miestnosť - pre obyvateľov obce Orlov, miestnej časti Andrejovka
+obec = "526941"
+name = "Orlov"
+okrsky_date = 2019-01-28
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-966): The 2018 elections page no longer lists documents; the 2018 article on the okrsky now carries the 2022 decision (its PDF is the 2022 one), so the 2018 document is not available. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2018-11-10 → 2019-03-16: 1: 447 → 434, 2: 66 → 69."
+
+[[document]]
+url = "https://www.obecorlov.sk/resources/File/utvorenie-volebnych-okrskov.pdf"
+sha256 = "9cbb2df4e0c91fc1191145e3a9387324958229c0cb1f3a14c7e72c6f4f14f344"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta SR 2019 (28.01.2019)"
+
+[okrsok.1]
+rules = [
+  {part = "Orlov", note = "'obyvatelia obce Orlov' beside okrsok 2 for the part Andrejovka: the part Orlov"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Andrejovka"},
+]

@@ -1,0 +1,25 @@
+# Okrsky of Maťovské Vojkovce, transcribed by an AI agent in job okrsok-rules-5793 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č.1, Volebná miestnosť: Kultúrny dom - Maťovce č.155
+#   okrsok 2: Volebný okrsok č.2, Volebná miestnosť: Kultúrny dom – Kapušianske Vojkovce č.6
+obec = "528579"
+name = "Maťovské Vojkovce"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2026-06-08
+okrsky_date_basis = "The decision is undated; the Internet Archive captured the PDF on 2026-06-08, and it names the referendum of 4 July 2026. (https://web.archive.org/web/20260608210742/https://www.matovskevojkovce.sk/data/6a06bf37f3691_utvorenie_volebnych_okrskov.pdf)"
+
+[[document]]
+url = "https://www.matovskevojkovce.sk/data/6a06bf37f3691_utvorenie_volebnych_okrskov.pdf"
+sha256 = "4329a3e6ba42eb7440c8efe6f67b126ce4be57980ef56bd4e925b30e5fbb1868"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre konanie referenda 4. júla 2026"
+
+[okrsok.1]
+rules = [
+  {part = "Maťovce", note = "The document gives only the polling station, the cultural house of Maťovce (Maťovce č. 155); the municipality has two parts and two okrsky, each station in another part.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kapušianske Vojkovce", note = "The document gives only the polling station, the cultural house of Kapušianske Vojkovce (č. 6); the municipality has two parts and two okrsky, each station in another part.", inferred = true},
+]

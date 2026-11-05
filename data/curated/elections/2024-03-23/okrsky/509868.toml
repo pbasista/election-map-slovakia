@@ -1,0 +1,115 @@
+# The okrsky of Námestovo of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/509868.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Námestovo, transcribed by an AI agent in job okrsok-rules-3472 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Ulica: Bernolákova, Cyrila a Metoda, Československej armády, Hattalova, Hlinisko, Kliňanská cesta, Lesnícka, Mieru, Michalov, Slanická Osada, Nábrežie, Námestie Antona Bernoláka, Nová slanická, Vojenské a Vodárenská.
+#     okrsok 2: Ulica: Štefánikova.
+#     okrsok 3: Ulica: Červeného kríža, Hviezdoslavova, Hviezdoslavovo námestie, Mila Urbana, Mláka a Mlynská.
+#     okrsok 4: Ulica: 1. Mája, Komenského, Mirka Nešpora, Ružová, Sama Chalupku, Slanická a Slobody.
+#     okrsok 5: Ulica: 9. Mája, Antona Kršáka, Borinova, Brezová, Florinova, Kamenická, Kukučínova, Kvetná, Lazová, Lesná, Miklošicova, Okružná, Orlovova, Plátennícka, Poľanová, Rázusova, SNP, Strojárenská, Šípová.
+#     okrsok 6: Ulica: Bottova, Hamuljakova, Ľudovíta Štúra, Severná, Sládkovičova.
+#     okrsok 7: Ulica: Janka Kráľa, Slnečná 162, Veterná, Lúčna.
+#     okrsok 8: Ulica: Slnečná 161, 163, 164, 165 a 166.
+obec = "509868"
+name = "Námestovo"
+okrsky_fill = "nearest"
+okrsky_note = "Scanned decision of the mayor, read by OCR without diacritics; the text is given with the diacritics restored. Slanická Osada is a part of the town (part rule). Slnečná 161-166 are read as súpisné čísla (blocks of flats). Not named: Slnečná's other houses, Miestneho priemyslu, Priehradná, Vojtaššákova, Za vodou and addresses without a street: placed by fill_nearest. The city's website now refuses direct downloads (HTTP 466), so the Internet Archive copy is listed."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2024-03-23 setting the okrsky was found (okrsok-rules-4102): No okrsky decision for this vote on namestovo.sk or in the Internet Archive (the archive keeps the city's okrsky decisions of 2018, 2019, 2020, 2022, the 2023 referendum and NR SR 2023 only; the live site refuses downloads with HTTP 466). Another vote's decision is not this vote's. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 8 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-03-23 → 2023-09-30: 1: 666 → 668, 2: 760 → 798, 3: 651 → 680, 4: 724 → 731, 5: 846 → 822, 6: 757 → 739, 7: 661 → 658, 8: 655 → 647."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The mayor's undated decision sets the okrsky for the NR SR elections of 30 September 2023."
+
+[[document]]
+url = "https://web.archive.org/web/20231201101043/https://www.namestovo.sk/uploads/fck/file/volby/Vo%C4%BEby%20do%20NR%20SR%202023/Volebn%C3%A9%20okrsky%20a%20miestnosti.pdf"
+sha256 = "93fe419678b0b2828d1ad8411004c50b0370b706310a39c70fce880318ee2f14"
+title = "Volebné okrsky a miestnosti (voľby do NR SR 30. septembra 2023)"
+
+[okrsok.1]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Cyrila a Metoda"},
+  {street = "Československej armády"},
+  {street = "Hattalova"},
+  {street = "Hlinisko"},
+  {street = "Kliňanská cesta"},
+  {street = "Lesnícka"},
+  {street = "Mieru"},
+  {street = "Michalov"},
+  {part = "Slanická Osada"},
+  {street = "Nábrežie"},
+  {street = "Námestie Antona Bernoláka"},
+  {street = "Nová slanická"},
+  {street = "Vojenské"},
+  {street = "Vodárenská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Štefánikova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Červeného kríža"},
+  {street = "Hviezdoslavova"},
+  {street = "Hviezdoslavovo námestie"},
+  {street = "Mila Urbana"},
+  {street = "Mláka"},
+  {street = "Mlynská"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "1.mája", written = "1. Mája"},
+  {street = "Komenského"},
+  {street = "Mirka Nešpora"},
+  {street = "Ružová"},
+  {street = "Sama Chalupku"},
+  {street = "Slanická"},
+  {street = "Slobody"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "9.mája", written = "9. Mája"},
+  {street = "Antona Kršáka"},
+  {street = "Borinova"},
+  {street = "Brezová"},
+  {street = "Florinova"},
+  {street = "Kamenická"},
+  {street = "Kukučínova"},
+  {street = "Kvetná"},
+  {street = "Lazová"},
+  {street = "Lesná"},
+  {street = "Miklošicova"},
+  {street = "Okružná"},
+  {street = "Orlovova"},
+  {street = "Plátennícka"},
+  {street = "Poľanová"},
+  {street = "Rázusova"},
+  {street = "SNP"},
+  {street = "Strojárenská"},
+  {street = "Šípová"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bottova"},
+  {street = "Hamuljakova"},
+  {street = "Ľudovíta Štúra"},
+  {street = "Severná"},
+  {street = "Sládkovičova"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Janka Kráľa"},
+  {street = "Slnečná", numbers = "162", by = "supisne"},
+  {street = "Veterná"},
+  {street = "Lúčna"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Slnečná", numbers = "161, 163-166", by = "supisne"},
+]

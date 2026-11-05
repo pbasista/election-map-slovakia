@@ -1,0 +1,24 @@
+# Okrsky of Hromoš, transcribed by an AI agent in job okrsok-rules-3970 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 Hromoš: Hromoš 114, 065 45 Plavnica
+#   okrsok 2: Okrsok č. 2 Kozelec: Hromoš – Kozelec 164, 065 45 Plavnica
+obec = "526746"
+name = "Hromoš"
+okrsky_date = 2023-06-22
+okrsky_note = "The okrsky are named by the parts: 'Okrsok č. 1 Hromoš' (station Hromoš 114) and 'Okrsok č. 2 Kozelec' (station Hromoš – Kozelec 164); each okrsok is that whole part."
+
+[[document]]
+url = "https://www.hromos.sk/resources/File/volebne-okrsky-a-volebne-miestnosti.pdf"
+sha256 = "2b8d50a204bce0f0b344e6ce68794c3dde9130d87b360b338f05747897e56d62"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby do NR SR 2023"
+
+[okrsok.1]
+rules = [
+  {part = "Hromoš"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kozelec"},
+]

@@ -1,0 +1,60 @@
+# Okrsky of Jaslovské Bohunice, transcribed by an AI agent in job okrsok-rules-3798 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice- Blavská ulica, Cintorínska ulica, Jaslovská ulica, Námestie sv. Michala, Záhradná ulica, Záhumenická ulica, Šidúnky, Trnavská ulica, Krížna ulica, Lipová ulica, Krátka ulica, Pri mlyne, občania s trvalým pobytom na obec Jaslovské Bohunice
+#   okrsok 2: ulice Agátova ulica, Čerešňová ulica, Dubová ulica, Gaštanová ulica, Jabloňová ulica, Javorová ulica, Sídlisko, Školská ulica, Športová
+#   okrsok 3: ulice Bohunická ulica, Nová ulica, Orechová ulica, Pri rybníku, Paderovská ulica, Lúčna ulica a Poľná ulica
+obec = "507156"
+name = "Jaslovské Bohunice"
+okrsky_date = 2023-06-12
+okrsky_fill = "nearest"
+okrsky_note = "The document uses the street names of 2023 (Jaslovská, Bohunická, Paderovská, Pri mlyne, Pri rybníku), which this address register still has as Hlavná Jaslovce, Hlavná Bohunice, Hlavná Paderovce, Na Mlyne, Na rybníku (see the rule notes). \"Športová\" is not in the address register, left out. \"občania s trvalým pobytom (na obec) Jaslovské Bohunice\" are residents without an address, not a rule; the register's addresses without a street go by fill_nearest. Differs from the okrsky of 2022: Šidúnky, Trnavská, Krížna, Lipová, Krátka move to okrsok 1; Bohunická (Hlavná Bohunice), Nová, Orechová and Pri rybníku join Paderovce in okrsok 3."
+
+[[document]]
+url = "https://www.jaslovske-bohunice.sk/obec-2/volby/narodna-rada-sr/volby-do-nr-sr-2023/vytvorenie-okrskov-1654sk.html"
+sha256 = "0308f17466126aa6139cfbb3c9b07538b3838a291eb0e35f1ae1a815fefcafa7"
+title = "Vytvorenie okrskov (voľby do NR SR 2023)"
+
+[[document]]
+url = "https://www.jaslovske-bohunice.sk/evt_file.php?file=31804"
+sha256 = "467574b72459a994abc52d512c8d4725a2cc0d6b75c36221942f4d63eaf341df"
+title = "Vytvorenie volebných okrskov, OcÚ/1137/2023/3575, 12.06.2023 (Okrsky2023.pdf)"
+
+[okrsok.1]
+rules = [
+  {street = "Blavská", written = "Blavská ulica"},
+  {street = "Cintorínska", written = "Cintorínska ulica"},
+  {street = "Hlavná Jaslovce", written = "Jaslovská ulica", note = "\"Jaslovská ulica\" is the renamed Hlavná Jaslovce (main street of part Jaslovce): the register of 2026 has \"Jaslovská ulica\" (Jaslovce, numbers 1-127) where this register has \"Hlavná Jaslovce\" (Jaslovce, 1-127)."},
+  {street = "Námestie sv. Michala"},
+  {street = "Záhradná", written = "Záhradná ulica"},
+  {street = "Záhumenická", written = "Záhumenická ulica"},
+  {street = "Šidúnky"},
+  {street = "Trnavská", written = "Trnavská ulica"},
+  {street = "Krížna", written = "Krížna ulica"},
+  {street = "Lipová", written = "Lipová ulica"},
+  {street = "Krátka", written = "Krátka ulica"},
+  {street = "Na Mlyne", written = "Pri mlyne", note = "\"Pri mlyne\" is the renamed Na Mlyne: earlier documents name \"Na mlyne\" in this okrsok, and the register of 2026 has \"Pri mlyne\" (Jaslovce, no. 1) where this register has \"Na Mlyne\" (Jaslovce, no. 1)."},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová", written = "Agátova ulica", note = "\"Agátova\" is the register's Agátová (accent typo)."},
+  {street = "Čerešňová", written = "Čerešňová ulica"},
+  {street = "Dubová", written = "Dubová ulica"},
+  {street = "Gaštanová", written = "Gaštanová ulica"},
+  {street = "Jabloňová", written = "Jabloňová ulica"},
+  {street = "Javorová", written = "Javorová ulica"},
+  {street = "Sídlisko"},
+  {street = "Školská", written = "Školská ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hlavná Bohunice", written = "Bohunická ulica", note = "\"Bohunická ulica\" is the renamed Hlavná Bohunice: the January 2023 referendum page places the polling station at \"Hlavná Bohunice 364/70A\", this document at \"Bohunická ulica 364/70A\"; the register of 2026 has \"Bohunická ulica\" (Bohunice, 1-83)."},
+  {street = "Nová", written = "Nová ulica"},
+  {street = "Orechová", written = "Orechová ulica"},
+  {street = "Na rybníku", written = "Pri rybníku", note = "\"Pri rybníku\" is the renamed Na rybníku: the register of 2026 has \"Pri rybníku\" (Bohunice, 1-3, 11 addresses) where this register has \"Na rybníku\" (Bohunice, 1-3, 11 addresses)."},
+  {street = "Hlavná Paderovce", written = "Paderovská ulica", note = "\"Paderovská ulica\" is the renamed Hlavná Paderovce (main street of part Paderovce): the register of 2026 has \"Paderovská ulica\" (Paderovce, 1-104) where this register has \"Hlavná Paderovce\" (Paderovce, 1-104)."},
+  {street = "Lúčna", written = "Lúčna ulica"},
+  {street = "Poľná", written = "Poľná ulica"},
+]

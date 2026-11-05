@@ -1,0 +1,26 @@
+# Okrsky of Raslavice, transcribed by an AI agent in job okrsok-rules-2636 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Voliči s trvalým pobytom v časti obce Vyšné Raslavice a na ul. Sekčovskej
+#   okrsok 2: Voliči s trvalým pobytom v časti obce Nižné Raslavice / okrem voličov s trvalým pobytom na Sekčovskej ul. /
+obec = "519936"
+name = "Raslavice"
+okrsky_date = 2019-11-11
+okrsky_fill = "nearest"
+okrsky_note = "Archived copy of the municipality's PDF (e_download.php on raslavice.sk). Part 'Raslavice' (1 address) is not named in the document; placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20220302052331/https://www.raslavice.sk/e_download.php?file=data/editor/225sk_5.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti%202020.pdf"
+sha256 = "36d38ecbd7ab659e2d321f0c1a02c6b0acd62953104f0d0c562d2146aa0aa74c"
+title = "Oznámenie o čase a mieste konania volieb do Národnej rady Slovenskej republiky a o utvorení volebných okrskov a určení volebných miestností"
+
+[okrsok.1]
+rules = [
+  {part = "Vyšné Raslavice"},
+  {street = "Sekčovská"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Nižné Raslavice"},
+]

@@ -1,0 +1,34 @@
+# Council obvody of Horný Bar (501603), Dunajská Streda.
+# Transcribed by an AI agent in job obvod-rules-150 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per obvod, verbatim:
+#   obvod 1: g.) schvaľuje - 7 poslancov na funkčné obdobie 2019-2022, ktorí budú zvolení v 2 volebných obvodoch. Vo volebnom obvode 1, ktorý zahŕňa obec Horný Bar bude zvolených 4 poslancov a vo volebnom obvode 2, ktorý zahŕňa obec Šuľany budú zvolení 3 poslanci.
+#   obvod 2: g.) schvaľuje - 7 poslancov na funkčné obdobie 2019-2022, ktorí budú zvolení v 2 volebných obvodoch. Vo volebnom obvode 1, ktorý zahŕňa obec Horný Bar bude zvolených 4 poslancov a vo volebnom obvode 2, ktorý zahŕňa obec Šuľany budú zvolení 3 poslanci.
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/501603.toml, standing in.
+obec = "501603"
+name = "Horný Bar"
+date = 2018-06-14
+note = "Scanned council minutes read from the rendered pages. Resolution 55/2018 g) of 14 June 2018: obvod 1 = obec Horný Bar (4 seats), obvod 2 = obec Šuľany (3 seats); the register has Horný Bar and Šuľany as parts of the municipality. No separate announcement of the obvody is on the notice board."
+okrsky_date = 2022-06-16
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office okrsky per obvod), so each okrsok is its whole obvod; the obvody document is the source and date is that resolution's date (no separate okrsky announcement used)."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-5894): No okrsky document for the municipal elections of 10 November 2018 found. The current website's notice board and its full-text search hold election items only from 2019 on (the okrsky notices found are of 2022-2026 votes, e.g. that of 24.10.2026); its archive section has files of 2011-2015 only. The Internet Archive's 2018 captures of hornybar.sk end in May 2018 (notice board with items up to no. 9), none from June-November 2018. The council minutes of 14 June 2018 (resolution 55/2018 g) set only the obvody (obvod 1 Horný Bar, obvod 2 Šuľany), not the okrsky. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://www.hornybar.sk/modules/file_storage/download.php?file=af86272a%7C162"
+sha256 = "265da9f3aa4b57fd7bfb5ac812ccbb4982c4bd92e2796eda9db7506fcd960dae"
+title = "Zápisnica z XVII. zasadnutia Obecného zastupiteľstva Horný Bar dňa 14. júna 2018 (uznesenie č. 55/2018, bod g: 2 volebné obvody)"
+
+[obvod.1]
+seats = 4
+okrsky = [1]
+rules = [
+  {part = "Horný Bar"},
+]
+
+[obvod.2]
+seats = 3
+okrsky = [2]
+rules = [
+  {part = "Šuľany"},
+]

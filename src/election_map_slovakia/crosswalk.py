@@ -35,12 +35,18 @@ okrsky (:func:`map_obvody`); their figures are their okrsky's added up
 With the crosswalk, :func:`past` gives the later results' ``past``
 (:class:`results.Past`): the earlier figures of every okrsok of known
 method and of every obec wholly in a contest's area, each contest with
-the earlier contest of the same body (``<kind>:<area>``, the same codes
-in every election) and the votes of the candidates linked to someone who
-stood for that body then (``candidacies`` of
+its earlier counterpart (:func:`contests.counterpart`: the same contest, a
+council obvod's body, the same codes in every election; a party's list
+has none) and the votes of the candidates linked to someone who stood
+for that body then (``candidacies`` of
 :mod:`election_map_slovakia.links`), by their ballot numbers now; and
-of a contest of a whole body (a mayor's, a president's), the same
-contest's own figures then.
+of a contest that is its own counterpart (a mayor's, a president's, a
+round, a question, a party contest), the same contest's own figures then.
+The earlier election is the newest before of the same kind; a regular
+election's halves are each compared with the newest before that held
+theirs (2022's municipal contests with 2018's, its regional ones with
+2017's, held apart then), each earlier election a crosswalk of the
+later contests compared with it alone (``cli._compare``).
 
 Output (:func:`to_json`), ``data/build/<day>/crosswalk/<earlier slug>.json``
 beside the later election's results::
@@ -63,15 +69,16 @@ obvod, and the address pairs made.
 from __future__ import annotations
 
 import datetime as dt
-import json
 from collections import Counter, defaultdict
-from collections.abc import Collection, Iterable, Mapping, Sequence
+from collections.abc import Callable, Collection, Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, NamedTuple
 
-from election_map_slovakia import addresses, progress
-from election_map_slovakia.candidates import Admin
+import orjson
+
+from election_map_slovakia import addresses, contests as kinds, progress
+from election_map_slovakia.addresses import HouseKey
 from election_map_slovakia.results import (
     APPROXIMATE,
     IDENTITY,
@@ -106,8 +113,6 @@ WHOLE, ADDRESSES, BY_NUMBER, NONE = "whole", "addresses", "identity", "unknown"
 
 Sources = dict[int, float]
 """Earlier okrsok → its weight in a later one."""
-HouseKey = tuple[str, str, str]
-"""An address by ``streets`` or ``parts``, its name and its house number."""
 
 
 @dataclass(frozen=True)
@@ -245,12 +250,10 @@ def make(
 
 
 class Register(NamedTuple):
-    """An election's address register, read as its ``addresses`` step did."""
+    """An election's address register, as its ``addresses`` step read it."""
 
-    path: Path
-    admin: Admin
-    overrides: Mapping[str, str]
-    skip: Collection[str]
+    houses: Callable[[Collection[str]], Mapping[str, Mapping[str, HouseKey]]]
+    """Obce → their address ids → their keys (:meth:`addresses.Register.houses`)."""
     addr: Path
     """Its ``addr/`` output (:mod:`election_map_slovakia.addresses`)."""
 
@@ -265,7 +268,7 @@ def okrsok_lookup(path: Path) -> dict[HouseKey, int] | None:
     None where the file places no address in an okrsok, or is missing.
     """
     try:
-        content = json.loads(path.read_bytes())
+        content = orjson.loads(path.read_bytes())
     except FileNotFoundError:
         return None
     out: dict[HouseKey, int] = {}
@@ -354,16 +357,14 @@ def _houses(
     register: Register, found: Mapping[str, Lookup | None]
 ) -> dict[str, dict[str, tuple[HouseKey, int]]]:
     """Return obec → address id → its key and okrsok (0: not placed), of *found*."""
-    out: dict[str, dict[str, tuple[HouseKey, int]]] = defaultdict(dict)
-    for row in addresses.register_rows(
-        register.path, register.admin, register.overrides, register.skip
-    ):
-        lookup = found.get(row.obec)
-        if lookup is None:
-            continue
-        key = (*row.group, addresses.house_number(row.supisne, row.orientacne))
-        out[row.obec][row.identifikator] = (key, lookup.get(key, 0) if lookup else 1)
-    return out
+    return {
+        obec: {
+            ident: (key, lookup.get(key, 0) if lookup else 1)
+            for ident, key in ids.items()
+        }
+        for obec, ids in register.houses(found).items()
+        if (lookup := found[obec]) is not None
+    }
 
 
 def _by_key(
@@ -380,18 +381,13 @@ def _by_key(
 # --- obvody --------------------------------------------------------------------
 
 
-def body(contest: str) -> str:
-    """Return the body of *contest*: its id without the obvod (``oz:528595``)."""
-    return contest.partition("/")[0]
-
-
 def contest_okrsky(live: Live, kind: str) -> dict[str, list[str]]:
     """Return contest of *kind* → its okrsok keys, of *live*'s okrsok files."""
     return {
         contest: list(areas)
         for contests in live.okrsky.values()
         for contest, areas in contests.items()
-        if contest.startswith(f"{kind}:")
+        if kinds.parse(contest).kind.name == kind
     }
 
 
@@ -444,14 +440,12 @@ def past(
     persons for the same body (``candidacies`` of the links). Every okrsok
     of an obec of several then or now gets its method; every okrsok of a
     known one and every obec all of whose okrsky are in a contest get the
-    contest body's earlier figures there, rounded estimates where weighed;
-    every contest of a whole body its own figures then (``totals``).
+    earlier figures of its counterpart (:func:`contests.counterpart`: the
+    contest itself, a council obvod's body; a party's list has none) there,
+    rounded estimates where weighed; every contest that is its own
+    counterpart its own figures then (``totals``).
     """
-    then: dict[str, dict[str, tuple[str, Area]]] = defaultdict(dict)
-    for contests in earlier.okrsky.values():
-        for contest, areas in contests.items():
-            for key, area in areas.items():
-                then[key][body(contest)] = (contest, area)
+    then = _earlier_okrsky(earlier)
     ballots: dict[str, dict[int, dict[str, int]]] = defaultdict(
         lambda: defaultdict(dict)
     )
@@ -470,13 +464,17 @@ def past(
     records = earlier.records()
     for contests in later.okrsky.values():
         for contest, areas in contests.items():
+            same = kinds.counterpart(contest)
+            if same is None:
+                continue
             mine = ballots.get(contest, {})
-            estimate = _Estimate(then, body(contest), mine)
+            estimate = _Estimate(then, same, mine)
             units = _units(walk, methods, now, areas, estimate)
+            # A country-wide contest's okrsky are in a file per kraj.
             if units:
-                out.contests[contest] = units
+                out.contests.setdefault(contest, {}).update(units)
             record = records.get(contest)
-            if contest == body(contest) and record is not None:
+            if contest == same and record is not None:
                 votes = {c[0]: c[1] for c in record.candidates}
                 out.totals[contest] = (
                     record.eligible,
@@ -489,6 +487,19 @@ def past(
                     },
                 )
     return out
+
+
+def _earlier_okrsky(earlier: Live) -> dict[str, dict[str, tuple[str, Area]]]:
+    """Return earlier okrsok → counterpart → (earlier contest, its figures)."""
+    then: dict[str, dict[str, tuple[str, Area]]] = defaultdict(dict)
+    for contests in earlier.okrsky.values():
+        for contest, areas in contests.items():
+            same = kinds.counterpart(contest)
+            if same is None:
+                continue
+            for key, area in areas.items():
+                then[key][same] = (contest, area)
+    return then
 
 
 def _units(

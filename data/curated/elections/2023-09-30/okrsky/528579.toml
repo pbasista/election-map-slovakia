@@ -1,0 +1,25 @@
+# Okrsky of Maťovské Vojkovce, transcribed by an AI agent in job okrsok-rules-3969 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: v časti obce Maťovce utváram volebný okrsok č. 1
+#   okrsok 2: v časti obce Vojkovce utváram volebný okrsok č. 2
+obec = "528579"
+name = "Maťovské Vojkovce"
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2023-09-26
+okrsky_date_basis = "The decision is undated; the Internet Archive captured the PDF on 2023-09-26, and its heading names the National Council election of 30 September 2023. (https://web.archive.org/web/20230926212927/https://www.matovskevojkovce.sk/data/64befe8993cf0_utvorenie_volebnych_okrskov_000024.pdf)"
+
+[[document]]
+url = "https://www.matovskevojkovce.sk/data/64befe8993cf0_utvorenie_volebnych_okrskov_000024.pdf"
+sha256 = "b14265f245df1be9de0ff0101b27ccc315521a6769f313054621c2066ec901e5"
+title = "Utvorenie volebných okrskov do NR SR 2023 v obci Maťovské Vojkovce"
+
+[okrsok.1]
+rules = [
+  {part = "Maťovce"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kapušianske Vojkovce", note = "The document calls the part Kapušianske Vojkovce simply \"Vojkovce\"; the municipality has only the two parts Maťovce and Kapušianske Vojkovce."},
+]

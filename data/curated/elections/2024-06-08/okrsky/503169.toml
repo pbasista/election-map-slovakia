@@ -1,0 +1,30 @@
+# Okrsky of Dubník, transcribed by an AI agent in job okrsok-rules-5010 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1 - Dubník tvoria ulice obce Dubník
+#   okrsok 2: Okrsok č. 2 - Dvor Mikuláš tvorí miestna časť obce Dvor Mikuláš
+obec = "503169"
+name = "Dubník"
+okrsky_date = 2024-03-01
+okrsky_fill = "nearest"
+okrsky_note = "Addresses without a rule (if any) take the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://www.obec-dubnik.sk/e_download.php?file=data/editor/175sk_4.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Den%C3%AD%20volebn%C3%BDch%20miestnost%C3%AD%20%20-%20vo%C4%BEby%20do%20EP%202024.pdf"
+sha256 = "3e7753f9cc1e899e94ee41d75bb267e61bcf7f0146c886e7eb201e6336725e45"
+title = "Oznámenie o určení volebných okrskov a volebných miestností (voľby do EP 2024)"
+
+[[document]]
+url = "https://www.obec-dubnik.sk/obecny-urad/volby-referendum/volby-do-europskeho-parlamentu-2024/"
+sha256 = "98f89a6d4f826dc2edb32ffa718a48742616fcd7f93c6f89ee4486529afcd632"
+title = "page linking the document"
+
+[okrsok.1]
+rules = [
+  {part = "Dubník"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dvor Mikuláš"},
+]

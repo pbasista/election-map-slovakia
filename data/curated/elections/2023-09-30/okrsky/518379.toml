@@ -1,0 +1,32 @@
+# Okrsky of Dúbravy, transcribed by an AI agent in job okrsok-rules-3898 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Dúbravy
+#   okrsok 2: Hradná, Želobudza
+#   okrsok 3: Iviny
+obec = "518379"
+name = "Dúbravy"
+okrsky_date = 2022-11-08
+okrsky_note = "No okrsky document of this vote found: its page (vyvesené 15.6.2023) gives only the three polling stations (Dúbravy 196, Dúbravy 232, Iviny 259), the same as the referendum's; the referendum's document, which names per okrsok the parts: 1 Dúbravy, 2 Hradná, Želobudza, 3 Iviny. Hradná is a hamlet the register keeps in part Dúbravy; its houses are placed by location (inferred rule)."
+okrsky_referendum = 2023-01-21
+
+[[document]]
+url = "https://www.dubravy.sk/e_download.php?file=data/uredni_deska/obsah3541_1.pdf&original=Ozn%C3%A1menie%20o%20vytvoren%C3%AD%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "764c562d5f0984d9938b32f488dc8fbc6e4f99a495f372cbcb424f31c959304e"
+title = "Oznámenie o vytvorení volebných okrskov (referendum 21. januára 2023), 08.11.2022"
+
+[okrsok.1]
+rules = [
+  {part = "Dúbravy"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dúbravy", numbers = "202-232, 361, 375, 397-398, 419-420, 485-487, 493, 500, 568, 573", by = "supisne", note = "Hradná: a hamlet the register keeps in part Dúbravy; the document gives no house numbers, so its houses are taken by location: all part-Dúbravy houses of the cluster at the OSM hamlet Hradná (48.583-48.587 N, 19.331-19.337 E), as in the rule set of 2022", inferred = true},
+  {part = "Želobudza"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Iviny"},
+]

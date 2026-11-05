@@ -1,0 +1,41 @@
+# Okrsky of Hranovnica, transcribed by an AI agent in job okrsok-rules-278 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Volebný okrsok č. 1, pre ulice: SNP, Sládkovičova, Štúrova, Rovná
+#   okrsok 2: Volebný okrsok č. 2, pre ulice: Budovateľská, Družstevná, Dubina, Hranovnické Pleso, Hviezdoslavova, Mlynská, Lúčna, Školská, M. R. Štefánika, Víťazstva, Slnečná, Lipová, Topoľová, Občania s trvalým pobytom – Obec
+obec = "523518"
+name = "Hranovnica"
+okrsky_fill = "nearest"
+okrsky_note = "The document lists streets only; the addresses without a street and Pod Babkou (not named in the document) take the okrsok of the nearest placed address (fill_nearest). 'Občania s trvalým pobytom – Obec' (residents registered on the obec without an address) vote in okrsok 2, which also has addresses. Unlike 2019–2023, Lúčna and Školská are in okrsok 2."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated document begins 'Pre voľby do orgánov samosprávnych krajov 2017 sú v obci vytvorené dva volebné okrsky'; it was uploaded to the old site under wp-content/uploads/2017/10/volebne_okrsky_17.pdf (archived 2019-12-09) and is kept in the site's document archive."
+
+[[document]]
+url = "https://www.hranovnica.sk/modules/file_storage/download.php?file=4212e5a7%7C2539"
+sha256 = "067957b894d40ac4ab4d94eb06cb50d636a4c4613f83cc5daa8d00aaeb657583"
+title = "Volebné okrsky v obci Hranovnica pre voľby do orgánov samosprávnych krajov"
+
+[okrsok.1]
+rules = [
+  {street = "SNP"},
+  {street = "Sládkovičova"},
+  {street = "Štúrova"},
+  {street = "Rovná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Družstevná"},
+  {street = "Dubina"},
+  {street = "Hranovnické Pleso"},
+  {street = "Hviezdoslavova"},
+  {street = "Mlynská"},
+  {street = "Lúčna"},
+  {street = "Školská"},
+  {street = "M. R. Štefánika"},
+  {street = "Víťazstva"},
+  {street = "Slnečná"},
+  {street = "Lipová"},
+  {street = "Topoľová"},
+]

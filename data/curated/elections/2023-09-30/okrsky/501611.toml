@@ -1,0 +1,49 @@
+# Okrsky of Dolný Štál, transcribed by an AI agent in job okrsok-rules-3597 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Gárdonyská ulica Hasičská ulica Hlavná ulica Kengyelská ulica Lesná ulica Lycejná ulica Mostová ulica Pri škôlke Smotanová ulica Stará ulica Záhradnícka ulica
+#   okrsok 2: Ulice: Ul.Mateja Korvína Hornoštálska ulica K vinohradom Komárňanská ulica Krátka ulica Ku kamennému stľpu Marhuľová ulica Orechová ulica Pri jazere Slnečná ulica Tichá ulica Topoľnianska ulica Tôňska ulica Vŕbová ulica Zelená ulica
+obec = "501611"
+name = "Dolný Štál"
+okrsky_date = 2023-06-22
+okrsky_fill = "nearest"
+okrsky_note = "The document lists the streets of each okrsok; it leaves out Cintorínska and Okočská cesta and the register's 466 houses without a street name, which are placed by the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://dolnystal.eu/wp-content/uploads/2023/06/Urcenie-volebnych-okrskov-pre-volby-do-NR-SR-2023sk.pdf"
+sha256 = "80a85a5f6c6948c39fa895462954a0bf1198d834b58e0fa46627483f0b6c3494"
+title = "Určenie volebných okrskov pre voľby do NR SR 2023 (V Dolnom Štále, dňa 22.06.2023)"
+
+[okrsok.1]
+rules = [
+  {street = "Gárdonyská"},
+  {street = "Hasičská"},
+  {street = "Hlavná"},
+  {street = "Kengyelská"},
+  {street = "Lesná"},
+  {street = "Lycejná"},
+  {street = "Mostová"},
+  {street = "Pri škôlke"},
+  {street = "Smotanová"},
+  {street = "Stará"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Mateja Korvína", written = "Ul.Mateja Korvína"},
+  {street = "Hornoštálska cesta", written = "Hornoštálska ulica", note = "The document writes 'Hornoštálska ulica'; the register's only street of that name is 'Hornoštálska cesta' (the road to that place), the same street."},
+  {street = "K vinohradom"},
+  {street = "Komárňanská cesta", written = "Komárňanská ulica", note = "The document writes 'Komárňanská ulica'; the register's only street of that name is 'Komárňanská cesta' (the road to that place), the same street."},
+  {street = "Krátka"},
+  {street = "Ku kamennému stľpu"},
+  {street = "Marhuľová"},
+  {street = "Orechová"},
+  {street = "Pri jazere"},
+  {street = "Slnečná"},
+  {street = "Tichá"},
+  {street = "Topoľnianska cesta", written = "Topoľnianska ulica", note = "The document writes 'Topoľnianska ulica'; the register's only street of that name is 'Topoľnianska cesta' (the road to that place), the same street."},
+  {street = "Tôňska cesta", written = "Tôňska ulica", note = "The document writes 'Tôňska ulica'; the register's only street of that name is 'Tôňska cesta' (the road to that place), the same street."},
+  {street = "Vŕbová"},
+  {street = "Zelená"},
+]

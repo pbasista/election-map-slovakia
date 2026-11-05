@@ -1,0 +1,40 @@
+# Okrsky of Trenčianska Turná, transcribed by an AI agent in job okrsok-rules-4216 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: súp. číslo 1-170, 237, 800-842, 860-870, 878-879, 1011, 1400-1474, 2015, 2087-2092, 2161, 2178
+#   okrsok 2: súp. číslo 405-699, 881-882, 884, 871-877, 1350-1351, 2002, 2006, 2010, 2018, 2039, 2051, 2068, 2093, 2131, 2138, 2159, 2188, 3000-3058
+#   okrsok 3: súp. číslo 171-402, 700-798, 844-859, 880, 883, 1100-1174, 1258, 1300-1349, 2045, 2115-2127, 2200
+#   okrsok 4: súp. číslo 885-992, 2012, 2134, 4000-4057
+obec = "506567"
+name = "Trenčianska Turná"
+okrsky_fill = "nearest"
+okrsky_note = "The document lists the okrsky by súpisné čísla only (no streets; the municipality has none), without naming parts. Its numbers are applied in the part Trenčianska Turná; the part Hámre goes to okrsok 4 (inferred, see its rule). Addresses of Trenčianska Turná whose súpisné číslo the document lists in no okrsok (e.g. 404, 999-1043, many numbers above 2000) take the okrsok of the nearest placed address (fill_nearest). Compared with the 2022 document copied so far: okrsok 1 runs 1400-1474 (2022: 1400-1462); okrsok 2 lists 405-699 (2022: 406-699) and 2188 but no longer 236 (which thus falls in okrsok 3's range 171-402); okrsok 3 adds 2200 (its row names the polling station Kultúrny dom – veľká sála č. 1, the other okrsok 3 rows veľká sála č. 2; it is numbered okrsok 3 and so placed there); okrsok 4 lists 885-992 as one range."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2024-02-26
+okrsky_date_basis = "The document states no date (its heading names the presidential election of 23 March 2024 (round 2 on 6 April 2024)); the Internet Archive captured the municipality's elections page linking it on 2024-02-26 (https://web.archive.org/web/20240226144452/https://www.trencianskaturna.sk/zverejnovanie/volby/volby-prezidenta-sr-2024/). (https://web.archive.org/web/20240226144452/https://www.trencianskaturna.sk/zverejnovanie/volby/volby-prezidenta-sr-2024/)"
+
+[[document]]
+url = "https://www.trencianskaturna.sk/e_download.php?file=data/editor/172sk_2.pdf&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A9%20miestnosti%20pre%20vo%C4%BEby%20prezidenta%20SR.pdf"
+sha256 = "d365ebd2f1bf0748d426509101f337344ee783f6176b1db37ac2518624e46e00"
+title = "Volebné okrsky a volebné miestnosti pre Voľby prezidenta Slovenskej republiky, ktoré sa uskutočnia dňa 23. marca 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Trenčianska Turná", numbers = "1-170, 237, 800-842, 860-870, 878-879, 1011, 1400-1474, 2015, 2087-2092, 2161, 2178"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Trenčianska Turná", numbers = "405-699, 881-882, 884, 871-877, 1350-1351, 2002, 2006, 2010, 2018, 2039, 2051, 2068, 2093, 2131, 2138, 2159, 2188, 3000-3058"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Trenčianska Turná", numbers = "171-402, 700-798, 844-859, 880, 883, 1100-1174, 1258, 1300-1349, 2045, 2115-2127, 2200", except = "237", note = "the document lists 237 in okrsok 1 although it falls in this okrsok's range 171-402; the single listing is taken as an exception"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Trenčianska Turná", numbers = "885-992, 2012, 2134, 4000-4057"},
+  {part = "Hámre", note = "Hámre is the part of okrsok 4's polling station (Kultúrny dom Hámre); every Hámre súpisné číslo the document lists is in okrsok 4 and none in another okrsok, so the whole part is given to okrsok 4, including its houses whose numbers the document leaves out", inferred = true},
+]

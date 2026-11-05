@@ -1,0 +1,95 @@
+# Okrsky of Tvrdošín, transcribed by an AI agent in job okrsok-rules-2927 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: mesto Tvrdošín I., kde patria ulice: Farská, A. Škarvana, Múčna, Hviezdoslavova, Radničná, Oravské nábrežie, Trojičné námestie, Nové Hrádky, Kukučínova, Bernolákova, A. Hlinku, Cintorínska, SNP, Vojtaššákova, Spiežová, Hlísno
+#   okrsok 2: mesto Tvrdošín II., kde patria ulice: Vladina, Školská, Ústianska, Pod Žiarcom
+#   okrsok 3: sídlisko Medvedzie I., kde patria bytovky číslo: 127/2, 130/3, 129/4, 128/5, 126/7, 125/8, 124/9, 141/19, 140/20, 143/23, 137/59, 254/126, 264/53, CSS Orava 136, SPŠ 133/17
+#   okrsok 4: sídlisko Medvedzie II., kde patria bytovky číslo: 123/10, 122/13, 168/38, 158/40, 159/41, 161/43, 163/45, 165/48, 166/49, 164/46, 162/44, 160/42, 167/37,155 – byt v ZŠ, 256/50, 262/52.
+#   okrsok 5: sídlisko Medvedzie III., kde patria bytovky číslo: 145/21, 142/24, 144/26, 146/27, 147/28, 148/29, 149/30, 150/32, 151/33, 154/34, 152/35, 153/36, 259/51.
+#   okrsok 6: mestská časť Krásna Hôrka, kde patria ulice: M.R.Štefánika, Staničná, Hrdinov, Zvoničná, J. Matušku, Železničná, Nová, Breziny.
+#   okrsok 7: mestská časť Medvedzie, kde patria ulice: Pod Velingom, Konopná, Družstevná, Hríbiky.
+#   okrsok 8: Špeciálna okrsková volebná komisia v Tvrdošíne (špeciálne hlasovanie z dôvodu ochrany verejného zdravia pred ochorením COVID-19)
+obec = "510114"
+name = "Tvrdošín"
+okrsky_date = 2022-11-09
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 09.11.2022 (a scan, read from the image) forms 7 okrsky for the referendum; the Statistical Office counts an 8th with 3 voters, the special okrsok of the Špeciálna okrsková volebná komisia in Tvrdošín (special voting for voters in COVID-19 isolation, named on the referendum page), which has no addresses: okrsok 8 is addressless. Bytovky are matched by their orientačné numbers on the register's street Sídlisko (the document writes súpisné/orientačné); 254/126 is the only address of Michalské námestie; CSS Orava 136 is súpisné 136; SPŠ 133/17 is orientačné 17 of Sídlisko; 155 – byt v ZŠ is súpisné 155. Addresses without a street (in all three parts) and Sídlisko addresses not among the listed bytovky are placed by fill_nearest."
+
+[[document]]
+url = "https://www.tvrdosin.sk/e_download.php?file=data/editor/401sk_1.pdf&original=Volebn%C3%A9%20okrsky.pdf"
+sha256 = "21565f1464d52cbb5b23bab9c919ade8c4dbddc9c9a1a692e00d84cab5dbd667"
+title = "Volebné okrsky (primátor mesta Tvrdošín, referendum 21. januára 2023, 09.11.2022)"
+
+[[document]]
+url = "https://www.tvrdosin.sk/referendum-2023/"
+sha256 = "1c74998c3d8392624a13e2e5d5a4bec4c53321ab543a3ded5e9e9e842a2e0c22"
+title = "Referendum 2023 (page linking the document and naming the Špeciálna okrsková volebná komisia)"
+
+[okrsok.1]
+rules = [
+  {street = "Farská"},
+  {street = "A. Škarvana"},
+  {street = "Múčna"},
+  {street = "Hviezdoslavova"},
+  {street = "Radničná"},
+  {street = "Oravské Nábrežie", written = "Oravské nábrežie"},
+  {street = "Trojičné námestie"},
+  {street = "Nové Hrádky"},
+  {street = "Kukučínova"},
+  {street = "Bernolákova"},
+  {street = "A. Hlinku"},
+  {street = "Cintorínska"},
+  {street = "SNP"},
+  {street = "Vojtaššákova"},
+  {street = "Spiežová"},
+  {street = "Hlísno"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Vladina"},
+  {street = "Školská"},
+  {street = "Ústianská", written = "Ústianska", note = "the register spells Ústianská with a long á, the document Ústianska: the same street"},
+  {street = "Pod Žiarcom"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Sídlisko", numbers = "2, 3, 4, 5, 7, 8, 9, 17, 19, 20, 23, 53, 59", note = "bytovky listed as súpisné/orientačné; orientačné numbers of street Sídlisko (17 is SPŠ 133/17)"},
+  {street = "Michalské námestie", note = "bytovka 254/126: orientačné 126 is the only address of Michalské námestie"},
+  {street = "Sídlisko", numbers = "136", by = "supisne", note = "CSS Orava 136 (súpisné)"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Sídlisko", numbers = "10, 13, 37, 38, 40, 41, 42, 43, 44, 45, 46, 48, 49, 50, 52", note = "bytovky listed as súpisné/orientačné; orientačné numbers used"},
+  {street = "Sídlisko", numbers = "155", by = "supisne", note = "155 – byt v ZŠ (súpisné)"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Sídlisko", numbers = "21, 24, 26, 27, 28, 29, 30, 32, 33, 34, 35, 36, 51", note = "bytovky listed as súpisné/orientačné; orientačné numbers of street Sídlisko used"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "M. R. Štefánika", written = "M.R.Štefánika"},
+  {street = "Staničná"},
+  {street = "Hrdinov"},
+  {street = "Zvoničná"},
+  {street = "J.Matušku", written = "J. Matušku"},
+  {street = "Železničná"},
+  {street = "Nová"},
+  {street = "Breziny"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Pod Velingom"},
+  {street = "Konopná"},
+  {street = "Družstevná"},
+  {street = "Hríbiky"},
+]
+
+[okrsok.8]
+addressless = true

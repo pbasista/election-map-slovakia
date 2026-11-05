@@ -1,0 +1,52 @@
+# Okrsky of Turzovka, transcribed by an AI agent in job okrsok-rules-4108 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: pre občanov mestskej časti Stred bytové domy blok č. súp. 392 396, 398, 405, 406, 410, 411, 311,312,313,314,315,316, 317 a občanov mestskej časti Závodie
+#   okrsok 2: pre občanov mestskej časti Stred – bytové domy - blok č. súp. 420, 421, 422, 423, 424, 425, 426, 373, 374, 375, 471, 472, 487, 196 a rodinné domy súp. č. 181,203 a 209
+#   okrsok 3: pre občanov mestskej časti Stred rodinné domy a bytové domy – blok č. súp. 13 , 43, 303, 540 , 566, 157,158,159 a občanov mestskej časti Turkov – u Valčuhov
+#   okrsok 4: pre občanov mestskej časti Vyšný koniec a Turkov
+#   okrsok 5: pre občanov mestskej časti Predmier
+#   okrsok 6: pre občanov mestskej časti Hlinené
+obec = "509507"
+name = "Turzovka"
+okrsky_note = "The document puts \"Turkov – u Valčuhov\" in okrsok 3 and \"Turkov\" in okrsok 4; the register has no part or street U Valčuhov, so its houses cannot be identified and all of part Turkov is in okrsok 4. Stred is split by súpisné čísla: okrsky 1 and 2 take their listed blocks/houses, okrsok 3 (rodinné domy and the other blocks) the rest of part Turzovka-Stred."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-17
+okrsky_date_basis = "The town's elections page lists the document \"Určenie volebných okrskov\" as posted (Vložené) on 2024-01-17; the document itself is undated. (https://www.turzovka.sk/mesto/volby-a-referenda/?page=all)"
+
+[[document]]
+url = "https://www.turzovka.sk/modules/file_storage/download.php?file=bed9cd04%7C2305"
+sha256 = "c9e9047032c06548aebe66090540f112fd4b40704e8e25eeef00002a883d2d07"
+title = "Určenie volebných okrskov v meste Turzovka pre voľby prezidenta SR 23. marca 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Turzovka-Stred", numbers = "311-317, 392, 396, 398, 405, 406, 410, 411"},
+  {part = "Závodie"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Turzovka-Stred", numbers = "373-375, 420-426, 471, 472, 487, 196, 181, 203, 209"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Turzovka-Stred"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Vyšný Koniec"},
+  {part = "Turkov", note = "Includes Turkov – u Valčuhov, which the document assigns to okrsok 3 but which cannot be told apart in the register."},
+]
+
+[okrsok.5]
+rules = [
+  {part = "Predmier"},
+]
+
+[okrsok.6]
+rules = [
+  {part = "Hlinené"},
+]

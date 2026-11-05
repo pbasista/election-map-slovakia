@@ -1,0 +1,49 @@
+# The okrsky of Liptovská Teplička of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/523631.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Liptovská Teplička, transcribed by an AI agent in job okrsok-rules-881 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Teplická, Pilisko, Ráztocka, Kufajka, Záhrady, Horárne, Zaglinka.
+#     okrsok 2: Pod úbočou, Potočná, Na jarku, Bory, Úzka, Ul.Š.Garaja, Kobyliarky, Ul.Š.Nahalku, Uhlárová, Drevárska, Koliesko, č. 535, 683, 689,
+obec = "523631"
+name = "Liptovská Teplička"
+okrsky_fill = "nearest"
+okrsky_note = "Horárne and Zaglinka (okrsok 1) are not streets in the address register (settlements/houses without a street) and are left out; house numbers the document lists (\"č.\", \"č. d.\") are súpisné numbers of houses without a street, given as numbers in the part. Other addresses without a street are placed by fill_nearest."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-443): No document of the 2017 regional elections: the live notice board (úradná tabuľa, incl. archived records) starts in 2018, and the Internet Archive has no capture of the notice board or any elections page or file between March 2017 and November 2017 (only the notice board of 2017-03-13, before the vote was called). These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated notice signed by starosta Mgr. Slavomír Kopáč names the elections of 10 November 2018."
+
+[[document]]
+url = "https://www.liptovskateplicka.sk/e_download.php?file=data/uredni_deska/obsah207_1.pdf&original=miesto%20a%20%C4%8Das.pdf"
+sha256 = "4c4d42ac8b3cb7de6589cdaf701bc1f7e6bd3c1513de0254c1704ab887dcbb59"
+title = "Oznámenie o čase a mieste konania volieb do orgánov samosprávny obcí (10. novembra 2018)"
+
+[[document]]
+url = "https://www.liptovskateplicka.sk/obecny-urad-1/zverejnovanie/uradna-tabula/volby-2018-275.html"
+sha256 = "cfb5ae8063367ab73b70290717b2e742121a854fcf45aab46784793fe9b2024e"
+title = "Voľby 2018 (úradná tabuľa)"
+
+[okrsok.1]
+rules = [
+  {street = "Teplická"},
+  {street = "Pilisko"},
+  {street = "Ráztocka"},
+  {street = "Kufajka"},
+  {street = "Záhrady"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Pod úbočou"},
+  {street = "Potočná"},
+  {street = "Na jarku"},
+  {street = "Bory"},
+  {street = "Úzka"},
+  {street = "Ul. Štefana Garaja", written = "Ul.Š.Garaja"},
+  {street = "Kobyliarky"},
+  {street = "Ul. Štefana Nahalku", written = "Ul.Š.Nahalku"},
+  {street = "Uhlárová"},
+  {street = "Drevárska"},
+  {street = "Koliesko"},
+  {part = "Liptovská Teplička", numbers = "535, 683, 689"},
+]

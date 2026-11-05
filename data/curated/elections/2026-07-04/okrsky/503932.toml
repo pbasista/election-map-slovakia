@@ -1,0 +1,36 @@
+# Okrsky of Neded, transcribed by an AI agent in job okrsok-rules-5513 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: v tomto okrsku budú hlasovať občania prihlásení na trvalý pobyt na číslach: 1-352, 1274,1279,1289-1291,1296-1300,1303,1314-1317,1319,1325-1328,1341-1346,1501,1502 a občania bez adresy.
+#   okrsok 2: v tomto okrsku budú hlasovať občania prihlásení na trvalý pobyt na číslach:353-843, 1281,1301,1322,1334,1337
+#   okrsok 3: v tomto okrsku budú hlasovať občania prihlásení na trvalý pobyt na číslach:844-1273,1275-1278,1280,1282-1288,1292-1295,1302,1304-1312,1318,1324,1330-1333,1336,1340,1492,1521.
+obec = "503932"
+name = "Neded"
+okrsky_date = 2026-05-06
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by súpisné číslo of the single part Neded. Numbers not listed take the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://www.neded.sk/modules/file_storage/download.php?file=e816337f%7C963&inline=1"
+sha256 = "1f480b06a69b04ca1360cc0b35fc4acc3d24f27a65f85a4c35989503bc3acbdc"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (referendum 4. júla 2026)"
+
+[[document]]
+url = "https://www.neded.sk/obecny-urad/volby/"
+sha256 = "1bf1020da7c85403a8c91d228dbfc0ab48bef1244ba43e082f0f6bff9b9950fc"
+title = "Voľby (elections page)"
+
+[okrsok.1]
+rules = [
+  {part = "Neded", numbers = "1-352, 1274, 1279, 1289-1291, 1296-1300, 1303, 1314-1317, 1319, 1325-1328, 1341-1346, 1501, 1502"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Neded", numbers = "353-843, 1281, 1301, 1322, 1334, 1337"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Neded", numbers = "844-1273, 1275-1278, 1280, 1282-1288, 1292-1295, 1302, 1304-1312, 1318, 1324, 1330-1333, 1336, 1340, 1492, 1521"},
+]

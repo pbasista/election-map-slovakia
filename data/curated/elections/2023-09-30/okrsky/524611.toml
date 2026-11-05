@@ -1,0 +1,24 @@
+# Okrsky of Kamenica, transcribed by an AI agent in job okrsok-rules-3869 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: do súpisného čísla 375
+#   okrsok 2: od súpisného čísla 376
+obec = "524611"
+name = "Kamenica"
+okrsky_date = 2023-06-20
+okrsky_note = "Scanned document (letter KA-2023/132-OcÚ-005 of 20.06.2023), read from the page image; linked from https://kamenica.sk/sk/content/volby-do-nr-sr-2023. Okrsok 1: up to súpisné číslo 375; okrsok 2: from súpisné číslo 376. Differs from the copied 2022/2026 okrsky (1–380 / 381–722) in the split point."
+
+[[document]]
+url = "https://kamenica.sk/clients/kamenica.sk/uploads/kniznica/1688480581utvorenie-volebnych-okrskov-a-urcenie-vol-miestnosti.pdf"
+sha256 = "bb5dc38ebd53c93d6c955e4a7dd14c8ddfff6339b32dda13628d1ef4552ba588"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre Voľby do NR SR v roku 2023"
+
+[okrsok.1]
+rules = [
+  {part = "Kamenica", numbers = "1-375"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kamenica", numbers = "376-"},
+]

@@ -1,0 +1,48 @@
+# Okrsky of Kamenica nad Cirochou, transcribed by an AI agent in job okrsok-rules-5014 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Humenská, Partizánska, Lesná, Železničná, Sládkovičova, Čsl. Armády, Ružová, Krátka, Sadová, Jarná, Slepá, Juraja Macáka
+#   okrsok 2: Osloboditeľov, Vihorlatská, Gaštanová, Mierová, Záhradná, Štúrova, Veterná, Kpt. Nálepku, Kamenná, Pod Žbirom, Pod Drieňovou
+obec = "520331"
+name = "Kamenica nad Cirochou"
+okrsky_fill = "nearest"
+okrsky_note = "The municipality's notice to voters lists the streets of each okrsok; the mayor's decision itself is not published. Addresses without a street name go by fill_nearest."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-06-03
+okrsky_date_basis = "The notice states 'Zverejnené 3.6.2024'. (https://www.obeckamenicanadcirochou.sk/oznamy/oznam-pre-volicov-volby-do-europskeho-parlamentu-8-6-2024.html)"
+
+[[document]]
+url = "https://www.obeckamenicanadcirochou.sk/oznamy/oznam-pre-volicov-volby-do-europskeho-parlamentu-8-6-2024.html"
+sha256 = "00afddee10fca10caad5d61569d51f8381064593d925ad154d55802624b60161"
+title = "Oznam pre voličov - Voľby do Európskeho parlamentu - 8.6.2024 (zverejnené 3.6.2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Humenská"},
+  {street = "Partizánska"},
+  {street = "Lesná"},
+  {street = "Železničná"},
+  {street = "Sládkovičova"},
+  {street = "Čsl.armády", written = "Čsl. Armády"},
+  {street = "Ružová"},
+  {street = "Krátka"},
+  {street = "Sadová"},
+  {street = "Jarná"},
+  {street = "Slepá"},
+  {street = "Juraja Macáka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Osloboditeľov"},
+  {street = "Vihorlatská"},
+  {street = "Gaštanová"},
+  {street = "Mierová"},
+  {street = "Záhradná"},
+  {street = "Štúrova"},
+  {street = "Veterná"},
+  {street = "Kpt. Nálepku"},
+  {street = "Kamenná"},
+  {street = "Pod Žbirom"},
+  {street = "Pod Drieňovou"},
+]

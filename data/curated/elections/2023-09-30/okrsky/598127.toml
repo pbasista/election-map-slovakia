@@ -1,0 +1,35 @@
+# Okrsky of Košice-Ťahanovce, transcribed by an AI agent in job okrsok-rules-3712 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Brusnicová Jazvečia Na hájiku Ťahanovská občania s TP v MČ bez adresy
+#   okrsok 2: Madridská Magnezitárska Na sihoti Pri Hrušove Repná Želiarska
+obec = "598127"
+name = "Košice-Ťahanovce"
+okrsky_fill = "nearest"
+okrsky_note = "'občania s TP v MČ bez adresy' / 'bez adresy' (okrsok 1) are voters registered without an address. The register's street Pri hati (one address) is not named by the document; it and the houses without a street are placed by fill_nearest."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-06-26
+okrsky_date_basis = "The notice-board entry states it was posted (Zverejnené) on 26.6.2023; the announcement itself states no date. (https://www.tahanovce.eu/okrsky-zriadene-pre-volby-do-nr-sr-2023-oznam/mid/505680/.html)"
+
+[[document]]
+url = "https://www.tahanovce.eu/okrsky-zriadene-pre-volby-do-nr-sr-2023-oznam/mid/505680/.html"
+sha256 = "e735250de34508d71e72fd6256c6eeaba0a07fad6d9684e35121a3aefb3e9776"
+title = "Okrsky zriadené pre voľby do NR SR 2023: OZNÁMENIE o určení volebných okrskov a volebných miestnosti pre voľby do NR SR v roku 2023 (Zverejnené 26.6.2023)"
+
+[okrsok.1]
+rules = [
+  {street = "Brusnicová"},
+  {street = "Jazvečia"},
+  {street = "Na Hájiku", written = "Na hájiku"},
+  {street = "Ťahanovská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Madridská"},
+  {street = "Magnezitárska"},
+  {street = "Na Sihoti", written = "Na sihoti"},
+  {street = "Pri Hrušove"},
+  {street = "Repná"},
+  {street = "Želiarska"},
+]

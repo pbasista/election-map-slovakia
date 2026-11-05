@@ -1,0 +1,31 @@
+# Okrsky of Prakovce, transcribed by an AI agent in job okrsok-rules-448 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: časť územia obce od súpisného čísla 1 po súpisné číslo 270
+#   okrsok 2: časť územia obce od súpisného čísla 271 po súpisné číslo 297
+#   okrsok 3: časť územia obce od súpisného čísla 298 po súpisné číslo 932
+obec = "543497"
+name = "Prakovce"
+okrsky_date = 2017-08-21
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky by súpisné číslo of the one part Prakovce; numbers above 932, if any, take the okrsok of the nearest address (fill_nearest). Found through the site search (určenie okrskov)."
+
+[[document]]
+url = "https://www.prakovce.sk/download_file_f.php?id=876391"
+sha256 = "9b1f44877ca095a45f903be27c46b79836138a09b211561a7a4ff1ff814c8a58"
+title = "Oznámenie o určení volebných okrskov a určení volebných miestností (voľby 4. novembra 2017)"
+
+[okrsok.1]
+rules = [
+  {part = "Prakovce", numbers = "1-270"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Prakovce", numbers = "271-297"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Prakovce", numbers = "298-932"},
+]

@@ -1,0 +1,96 @@
+# Okrsky of Teplička nad Váhom, transcribed by an AI agent in job okrsok-rules-5453 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: bez ulice, A. Hlinku, A. Sládkoviča, Alojza Mrázika, Fatranská, J. Kráľa, Jána Kalinku, Jána Stražana, Jozefa Kostelného, Ľ. Štúra, Ľudovíta Fullu, M.A. Bazovského, Márie Medveckej, Martina Benku, Mikuláša Galandu, Na Kúty, Na Nivy, Na Prosnisko, Na Sihoti, Na Španicu, Nám. M. R. Štefánika, P.M. Bohúňa, Pod Horou, Vincenta Hložníka, Záhradkárska
+#   okrsok 2: Cintorínska, Cyrila Talapku, Donátova, Dr. Karola Kmeťku, Františka Vešeléniho, Juraja Poljaka, Kostolná, Na jame, Na Močiar, Na Straník, Na Trojak, P.O. Hviezdoslava, Pri Kríži, Pribinova, Sv. Cyrila a Metoda, Sv. Gorazda, Školská, Štefana Kúseka, Za Jarkom, Za Kanálom, Zámostie, Ž. Bošniakovej, Železničná
+#   okrsok 3: bez ulice, Bystrina, Do Ulice, Južná, Na Papánke, Na Rybník, Na Skotňu, Na Záhumní, Nám. sv. Floriána, Na Majer, Placová, Pod Kozínom, Pod Vršky, Poľnohospodárska, Pri bráne, Sklárska, Stará Cesta, Štipce, Turáková, Za Kaštieľom
+obec = "518034"
+name = "Teplička nad Váhom"
+okrsky_date = 2026-04-30
+okrsky_fill = "nearest"
+okrsky_note = "The document lists \"bez ulice\" (voters registered without an address) in both okrsok 1 and okrsok 3 without a split, so the register's addresses without a street are placed by fill_nearest; so is Sv.Jána Nepomuckého (1 address), which no document names. Same okrsky as the 2026-10-24 rules used for the copy."
+
+[[document]]
+url = "https://www.teplickanadvahom.sk/evt_file.php?file=26899&original=Volebn%C3%A9%20okrsky%20a%20volebn%C3%A1%20miestnos%C5%A5.pdf"
+sha256 = "14c18b1ac09112972bc05d7c51646e92d9942c672d78fbfa8e9d766272fbaa38"
+title = "Volebné okrsky a volebná miestnosť (referendum 04.07.2026)"
+
+[okrsok.1]
+rules = [
+  {street = "A. Hlinku"},
+  {street = "A. Sladkoviča", written = "A. Sládkoviča", note = "same street; the document writes it with other spacing/diacritics"},
+  {street = "Andreja Sládkoviča", written = "A. Sládkoviča", note = "the register has both \"A. Sladkoviča\" and \"Andreja Sládkoviča\" next to each other; the document's A. Sládkoviča (initial of the first name) covers both"},
+  {street = "Alojza Mrázika"},
+  {street = "Fatranská"},
+  {street = "J. Kráľa"},
+  {street = "Jána Kalinku"},
+  {street = "Ulica Jána Kalinku", written = "Jána Kalinku", note = "register duplicate of Jána Kalinku with \"Ulica\" prefixed"},
+  {street = "Jána Stražana"},
+  {street = "Jozefa Kostelného"},
+  {street = "Ľ. Štúra"},
+  {street = "Ľudovíta Fullu"},
+  {street = "M.A.Bazovského", written = "M.A. Bazovského", note = "same street; the document writes it with other spacing/diacritics"},
+  {street = "Márie Medveckej"},
+  {street = "Martina Benku"},
+  {street = "Mikuláša Galandu"},
+  {street = "Na Kúty"},
+  {street = "Na Nivy"},
+  {street = "Na Prosnisko"},
+  {street = "Na Sihoti"},
+  {street = "Na Španicu"},
+  {street = "Nám. M. R. Štefánika"},
+  {street = "P.M.Bohúňa", written = "P.M. Bohúňa", note = "same street; the document writes it with other spacing/diacritics"},
+  {street = "Pod Horou"},
+  {street = "Vincenta Hložníka"},
+  {street = "Záhradkárska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Cyrila Talapku"},
+  {street = "Donátová", written = "Donátova", note = "same street; the register writes Donátová, the document Donátova (ending's length)"},
+  {street = "Dr. Karola Kmeťku"},
+  {street = "Františka Vešeléniho"},
+  {street = "Juraja Poljaka"},
+  {street = "Kostolná"},
+  {street = "Na jame"},
+  {street = "Na Močiar"},
+  {street = "Na Straník"},
+  {street = "Na Trojak"},
+  {street = "P. O. Hviezdoslava", written = "P.O. Hviezdoslava", note = "same street; the document writes it with other spacing/diacritics"},
+  {street = "Pri Kríži"},
+  {street = "Pribinova"},
+  {street = "Sv. Cyrila a Metoda"},
+  {street = "Sv. Gorazda"},
+  {street = "Školská"},
+  {street = "Štefana Kúseka"},
+  {street = "Za Jarkom"},
+  {street = "Za Kanálom"},
+  {street = "Zámostie"},
+  {street = "Ž. Bošniakovej"},
+  {street = "Železničná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bystrina"},
+  {street = "Do Ulice"},
+  {street = "Južná"},
+  {street = "Na Papánke"},
+  {street = "Na Rybník"},
+  {street = "Na Skotňu"},
+  {street = "Na Záhumní"},
+  {street = "Nám. Sv. Floriána", written = "Nám. sv. Floriána"},
+  {street = "Na Majer"},
+  {street = "Placová"},
+  {street = "Pod Kozínom"},
+  {street = "Pod Vršky"},
+  {street = "Poľnohospodárska"},
+  {street = "Pri bráne"},
+  {street = "Sklárska"},
+  {street = "Stará cesta", written = "Stará Cesta"},
+  {street = "Štipce"},
+  {street = "Turáková"},
+  {street = "Za Kaštieľom"},
+]

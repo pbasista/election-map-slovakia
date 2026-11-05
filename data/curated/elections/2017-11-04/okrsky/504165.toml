@@ -1,0 +1,34 @@
+# The okrsky of Vlčany of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/504165.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Vlčany, transcribed by an AI agent in job okrsok-rules-664 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: č.d.: 5-399, 1450-1452,1454-1457,1470-1500,1502-1534,1536,1540-1541,1544-1547,1552, 1564-1565,1567-1569,1575-1576,1581,1585,1587,1589,1593-1594,1600-1604,1619-1623,1627, 1633-1634,1637,1638,1641,1644,1646,1651,1652,1653,1660.
+#     okrsok 2: č.d.: 401-904,1458-1466,1535,1537,1538,1542,1548,1549,1563,1566,1574,1579,1582,1586, 1591,1592,1596,1626,1647-1649,1655, 1661.
+#     okrsok 3: č.d.:906-1412,1427,1432,1467-1469,1539,1543,1568,1570-1573,1577,1578,1580,1584,1590, 1597,1598,1605-1608,1613,1617,1628,1630-1632,1635,1640,1645,1658.
+obec = "504165"
+name = "Vlčany"
+okrsky_date = 2018-09-10
+okrsky_fill = "nearest"
+okrsky_note = "Vlčany has no streets in the register; the document assigns houses by súpisné (popisné) čísla ('č.d.'), so each okrsok is a set of súpisné numbers within part Vlčany. The document lists 1568 both in okrsok 1 (range 1567-1569) and explicitly in okrsok 3; given to okrsok 3 (the explicit mention). Unlike the documents of 2022 and later it does not list 1662-1663, 1664-1665, 1666, 1667-1668 (houses numbered later); these, like the other numbers it does not list (e.g. 1-4, 400, 905, 1413-1449 except 1427 and 1432, 1453, 1501, 1550-1562 except 1552), are placed by fill_nearest. The document is a scan without a text layer; its text was read from the rendered page. The page and document are gone from the current website and were found in the Internet Archive."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2017-11-04 setting the okrsky was found (okrsok-rules-202): No document of the 2017 regional elections found. The current website (obecvlcany.sk, Zverejňovanie) has election pages only from 2022 on; the archived notice board (uradna-tabula, Joomla site captured from August 2018) has categories for the elections of 2018, 2019 and 2020 but none for 2017; the Internet Archive holds no capture of the website's content from 2017 (its 2017 captures of the home page are revisits of a 2016 capture), and the old site (/old/, archived 2021) ends with news of April 2016. The 2018 document (10 September 2018) has the same three okrsky by súpisné čísla, but it is another vote's. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 3 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+
+[[document]]
+url = "https://web.archive.org/web/20200927111928/http://www.obecvlcany.sk/uradna-tabula/category/14-volby-do-organov-samospravy-obci-2018?download=569:utvorenie-volbenych-okrskov-a-urcenie-volebnych-miestnosti-v-obci-vlcany-pre-volby-do-organov-samospravy-obci-v-roku-2018"
+sha256 = "50b81156ed38c78f3abccc782093b8676bc6078dd659b6c19fe3e1030c6cba63"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Vlčany pre voľby do orgánov samosprávy obcí v roku 2018"
+
+[okrsok.1]
+rules = [
+  {part = "Vlčany", numbers = "5-399, 1450-1452, 1454-1457, 1470-1500, 1502-1534, 1536, 1540-1541, 1544-1547, 1552, 1564-1565, 1567, 1569, 1575-1576, 1581, 1585, 1587, 1589, 1593-1594, 1600-1604, 1619-1623, 1627, 1633-1634, 1637, 1638, 1641, 1644, 1646, 1651, 1652, 1653, 1660"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vlčany", numbers = "401-904, 1458-1466, 1535, 1537, 1538, 1542, 1548, 1549, 1563, 1566, 1574, 1579, 1582, 1586, 1591, 1592, 1596, 1626, 1647-1649, 1655, 1661"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Vlčany", numbers = "906-1412, 1427, 1432, 1467-1469, 1539, 1543, 1568, 1570-1573, 1577, 1578, 1580, 1584, 1590, 1597, 1598, 1605-1608, 1613, 1617, 1628, 1630-1632, 1635, 1640, 1645, 1658"},
+]

@@ -1,0 +1,26 @@
+# Okrsky of Nacina Ves, transcribed by an AI agent in job okrsok-rules-5171 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1 volebný okrsok v Obci Nacina Ves, Kultúrny dom SČ 229
+#   okrsok 2: 2 volebný okrsok v Obci Nacina Ves, časť Vybúchanec, Kultúrny dom SČ 1057
+obec = "522805"
+name = "Nacina Ves"
+okrsky_note = "The document gives each okrsok only its polling station (Kultúrny dom s.č. 229 in part Nacina Ves; Kultúrny dom s.č. 1057 in part Vybúchanec); two okrsky, two parts, each station in another part: each okrsok is given the part of its station (inferred)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-03-05
+okrsky_date_basis = "The document is undated; the municipality's page of the vote says it was posted (Dátum vyvesenia) on 05.03.2024. (https://www.nacinaves.sk/volby-do-europskeho-parlamentu-2024-a73-915)"
+
+[[document]]
+url = "https://www.nacinaves.sk/files/2024-03-05-083035-Utvorenie_volebn__ch_okrskov_a_ur__enie_volebn__ch_miestnosti.pdf"
+sha256 = "ea8310bcbcc29f9d617b4d4be607c8db4d84eb341848762a986cf59909cab03d"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu 2024"
+
+[okrsok.1]
+rules = [
+  {part = "Nacina Ves", note = "The document gives each okrsok only its polling station; two okrsky, two parts (Nacina Ves, Vybúchanec), each station in another part: the okrsok is given the part of its station", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Vybúchanec", note = "The document gives each okrsok only its polling station; two okrsky, two parts (Nacina Ves, Vybúchanec), each station in another part: the okrsok is given the part of its station", inferred = true},
+]

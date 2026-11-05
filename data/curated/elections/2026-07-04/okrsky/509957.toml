@@ -1,0 +1,30 @@
+# Okrsky of Oravský Podzámok, transcribed by an AI agent in job okrsok-rules-5720 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: v tomto okrsku budú hlasovať občania v katastrálnom území Oravský Podzámok s týmito súpisnými číslami: 1 až 288, 363 až 395 a 616, 691, 692, 737, 738, 740, 742, 752, 770 a 810
+#   okrsok 2: v tomto okrsku budú hlasovať občania v katastrálnom území Dolná Lehota s týmito súpisnými číslami: 290 až 358, 402, 686, 687 až 712
+obec = "509957"
+name = "Oravský Podzámok"
+okrsky_date = 2026-05-08
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF read from the rendered image. Each okrsok is one k.ú. with the súpisné čísla listed; rules take the whole k.ú.; register addresses outside both k.ú. rules are placed by fill_nearest."
+
+[[document]]
+url = "https://www.oravskypodzamok.sk/e_download.php?file=/data/editor/182sk_3.pdf&original=Utvorenie%20volebnych%20okrskov%20a%20urcenie%20volebnych%20miestnosti%20v%20obci%20Oravsky%20Podzamok%20pre%20referendum%202026.pdf"
+sha256 = "e2cf850c0fb3d24e90c497cdf1329533a3cd684acc7f7201eecbf66a9aa75715"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Oravský Podzámok pre referendum 2026"
+
+[[document]]
+url = "https://www.oravskypodzamok.sk/obecny-urad/volby-2026/referendum-2026/"
+sha256 = "32fcbbf63ed81d2d9bdcaf8ae7b0719081eaa93501660c277d0cdff7ed00c614"
+title = "Referendum 2026"
+
+[okrsok.1]
+rules = [
+  {ku = "Oravský Podzámok"},
+]
+
+[okrsok.2]
+rules = [
+  {ku = "Dolná Lehota"},
+]

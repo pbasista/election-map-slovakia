@@ -1,0 +1,41 @@
+# Okrsky of Čierny Balog, transcribed by an AI agent in job okrsok-rules-1715 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č. 1: Čierny Balog
+#   okrsok 2: Okrsok č. 2: Jánošovka, Komov, Fajtov
+#   okrsok 3: Okrsok č. 3: Pusté, Dobroč
+#   okrsok 4: Okrsok č. 4: Krám, Medveďov
+obec = "508527"
+name = "Čierny Balog"
+okrsky_note = "The document names the miestne časti of each okrsok (no streets); part rules. Same okrsky as the copied 2026 set."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The page section \"URČENIE VOLEBNÝCH OKRSKOV PRE VOĽBY DO EURÓPSKEHO PARLAMENTU\" says the mayor set these okrsky for the EP elections in 2019; captured 2019-09-18 only, text undated."
+
+[[document]]
+url = "https://web.archive.org/web/20190918152455/https://www.ciernybalog.sk/catalog/0/volby-do-europskeho-parlamentu-2019.phtml?id3=145140"
+sha256 = "110b8781285cbdf8fb602b36af107f1663ed61edc97c65bc1aa0b0a25438915c"
+title = "Voľby do Európskeho parlamentu 2019 (archived page): Určenie volebných okrskov"
+
+[okrsok.1]
+rules = [
+  {part = "Čierny Balog"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Jánošovka"},
+  {part = "Komov"},
+  {part = "Fajtov"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Pusté"},
+  {part = "Dobroč"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Krám"},
+  {part = "Medveďov"},
+]

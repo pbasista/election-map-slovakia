@@ -1,0 +1,58 @@
+# Okrsky of Heľpa, transcribed by an AI agent in job okrsok-rules-5564 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ulice: Alexyho, Furmanská, Hlavná, Hronská, J. C. Hronského, Jánošíkova, Krátka, Krížna, Mierová, Mládežnícka, Mlynská, Murgašova, Plickova, Pod Pustinou, Pri štadióne, Studničná, Tichá
+#   okrsok 2: ulice: Burkovaná, Cintorínska, Čaneckého, Farská, Furtačka, Hurbanova, Hviezdoslavova, Partizánska, Poľná, Potočná, Rovná, Sama Chalúpku, Strmá, Školská, Štúrova, Za školou, Záhradná
+obec = "508608"
+name = "Heľpa"
+okrsky_fill = "nearest"
+okrsky_note = "The document lists streets only; the 83 addresses without a street (by súpisné číslo) take the okrsok of the nearest address (fill_nearest)."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The page 'Referendum 2026 – Informácie o referende' states that decision No. 1/2026 of the mayor created 2 okrsky for the referendum; the decision's day is not stated."
+
+[[document]]
+url = "https://www.helpa.sk/zverejnovanie/volby-a-statistika/referendum-2026/informacie-o-referende/"
+sha256 = "49d8c526fad0845f7c8ee1f7583d624a7ca435354beea857a5920788c9c88fe0"
+title = "Referendum 2026 – Informácie o referende (rozhodnutie starostu č. 1/2026)"
+
+[okrsok.1]
+rules = [
+  {street = "Alexyho"},
+  {street = "Furmanská"},
+  {street = "Hlavná"},
+  {street = "Hronská"},
+  {street = "J. C. Hronského"},
+  {street = "Jánošíkova"},
+  {street = "Krátka"},
+  {street = "Krížna"},
+  {street = "Mierová"},
+  {street = "Mládežnícka"},
+  {street = "Mlynská"},
+  {street = "Murgašova"},
+  {street = "Plickova"},
+  {street = "Pod Pustinou"},
+  {street = "Pri štadióne"},
+  {street = "Studničná"},
+  {street = "Tichá"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Burkovaná"},
+  {street = "Cintorínska"},
+  {street = "Čaneckého"},
+  {street = "Farská"},
+  {street = "Furtačka"},
+  {street = "Hurbanova"},
+  {street = "Hviezdoslavova"},
+  {street = "Partizánska"},
+  {street = "Poľná"},
+  {street = "Potočná"},
+  {street = "Rovná"},
+  {street = "Sama Chalúpku"},
+  {street = "Strmá"},
+  {street = "Školská"},
+  {street = "Štúrova"},
+  {street = "Za školou"},
+  {street = "Záhradná"},
+]

@@ -1,0 +1,40 @@
+# Okrsky of Jelšava, transcribed by an AI agent in job okrsok-rules-896 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Muránska, Námestie republiky, Námestie SNP, Tomášikova, Mníšanská, Jesenského, Teplá Voda a Medzník,
+#   okrsok 2: Ševcovská, Štefánikova, Kúpeľná, Teplická, Pri štadióne, Železničná, Armádna, 9. mája a Kejďák
+obec = "525791"
+name = "Jelšava"
+okrsky_date = 2018-09-10
+okrsky_fill = "nearest"
+okrsky_note = "Scanned, signed announcement of the mayor dated 'V Jelšave 10. 09. 2018' on the okrsky and polling stations for the municipal elections of 10 November 2018 (found with the city's site search). Hrádok (3 addresses) is not named in the document: placed by fill_nearest, as are the houses without a street. The Internet Archive stayed offline throughout (web.archive.org refused connections or answered 'Temporarily Offline' on repeated tries with pauses), so no archived capture was checked."
+
+[[document]]
+url = "https://www.jelsava.sk/download_file_f.php?id=1019483"
+sha256 = "b1ca527f299ad33f199566c6f7180ccf69773d725f3b456c839a30e0a7fab642"
+title = "Oznámenie o volebných okrskoch a volebných miestnostiach vytvorených počas volieb do orgánov miestnej samosprávy dňa 10. novembra 2018"
+
+[okrsok.1]
+rules = [
+  {street = "Muránska"},
+  {street = "Námestie Republiky", written = "Námestie republiky"},
+  {street = "Námestie SNP"},
+  {street = "Tomášikova"},
+  {street = "Mníšanská"},
+  {street = "Jesenského"},
+  {street = "Teplá Voda"},
+  {street = "Medzník"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ševcovská"},
+  {street = "Štefánikova"},
+  {street = "Kúpelná", written = "Kúpeľná", note = "Kúpeľná with soft l in the document; the register's Kúpelná, the same street"},
+  {street = "Teplická"},
+  {street = "Pri Štadióne", written = "Pri štadióne"},
+  {street = "Železničná"},
+  {street = "Armádna"},
+  {street = "9.mája", written = "9. mája"},
+  {street = "Kejďák"},
+]

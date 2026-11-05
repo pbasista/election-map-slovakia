@@ -8,15 +8,16 @@ the exit code.
 from __future__ import annotations
 
 import argparse
+import contextlib
 import datetime as dt
 import json
 import os
 import sys
 import time
 from collections import Counter
-from collections.abc import Callable, Iterable, Sequence
+from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
 from pathlib import Path
-from typing import NamedTuple
+from typing import Any, NamedTuple
 
 from election_map_slovakia import (
     __version__,
@@ -27,6 +28,7 @@ from election_map_slovakia import (
     candidates,
     check,
     config,
+    contests,
     crosswalk,
     fetch,
     geo,
@@ -34,12 +36,15 @@ from election_map_slovakia import (
     incumbents,
     jobs,
     links,
+    lists,
     lock,
+    national,
     obvody,
     okrsokrules,
     output,
     pages,
     progress,
+    record,
     research,
     results,
     reuse,
@@ -52,7 +57,8 @@ from election_map_slovakia.config import ConfigError
 
 _SKIPPED = (
     " Does nothing when its inputs, configuration and code are unchanged since"
-    " it last succeeded and its output is in place."
+    " it last succeeded and its output is in place, or when they are those"
+    " data/outputs.toml records and its output is the one recorded there."
 )
 
 
@@ -159,7 +165,10 @@ def build_parser() -> argparse.ArgumentParser:
             f" day>/{geo.OUTPUT_DIR}/. Obvod membership comes from"
             " data/curated/elections/<election day>/obvody/ and is checked"
             f" against the election's {candidates.OUTPUT_FILE} (run `ems"
-            " candidates` first). Fails if neighbouring areas do not share"
+            " candidates` first). Council obvody and okrsky not made of"
+            " cadastral areas are drawn from the addresses' points (run `ems"
+            " addresses` first) by the street blocks of the election's"
+            " OpenStreetMap extract. Fails if neighbouring areas do not share"
             " their borders, or the countries around leave a gap at Slovakia's."
             + _SKIPPED
         ),
@@ -167,8 +176,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument(
         "--preview",
         metavar="OKRES",
-        help="also write SVG previews (country, Bratislava, this okres at full"
-        f" detail) to data/build/<election day>/{geo.PREVIEW_DIR}/; implies --force",
+        help="also write SVG previews (country, Bratislava, this okres and"
+        " each obec in it cut by its address points, at full detail) to"
+        f" data/build/<election day>/{geo.PREVIEW_DIR}/; implies --force",
     )
     _add_force(p)
     _add_election(p)
@@ -205,12 +215,17 @@ def build_parser() -> argparse.ArgumentParser:
             " the obce shards and clipped to each okres (ZBGIS level 1), plus"
             " a coarse file of the motorways, major rivers and lakes for the"
             " country view, and the buildings of each obec (ZBGIS level 0), to"
-            f" data/build/<election day>/{basemap.OUTPUT_DIR}/. The layout is"
+            f" data/build/{config.BASE_DIR}/<extract>/{basemap.OUTPUT_DIR}/: once"
+            " per extract, which every election on it shares. The layout is"
             " described in src/election_map_slovakia/basemap.py." + _SKIPPED
         ),
     )
     _add_force(p)
-    _add_election(p)
+    _add_election(
+        p,
+        "run for the extract of this election only (its day or slug; default:"
+        " every election's)",
+    )
     p.set_defaults(run=_run_basemap)
 
     p = commands.add_parser(
@@ -221,12 +236,14 @@ def build_parser() -> argparse.ArgumentParser:
             " projects of their own: the app (dist/app/: the shells per"
             " language and election, the language picker, web/ assets, UI"
             " strings), each election's map bundle (dist/map/<slug>/: the"
-            " geometry and address files, the base map) and data bundle"
+            " geometry and address files) and data bundle"
             " (dist/data/<slug>/: the candidates split per okres, city and"
             " kraj, a name search index, research, the"
-            " occupations), the cached sources (dist/sources/) and the"
-            " results (dist/results/). Needs the output of `candidates`,"
-            " `links`, `geo`, `basemap` and `addresses` of every election in"
+            " occupations), the base map of each extract"
+            f" (dist/{bundle.BASE_PART}/<extract>/), the cached sources"
+            " (dist/sources/) and the results (dist/results/). Needs the"
+            " output of `candidates`, `links`, `geo` and `addresses` of every"
+            " election and of `basemap` of every extract in"
             " data/build/. With --deployed, the app alone, for the data"
             f" parts deployed with the keys of {lock.LOCK_FILE}, and nothing"
             " of data/build/. The layout is described in"
@@ -271,11 +288,14 @@ def build_parser() -> argparse.ArgumentParser:
             " data or web/; then `ems serve` shows the result. The steps up"
             " to results run for every election of config/elections.toml, or"
             " with --election for that one; those whose inputs have not"
-            " changed since they last succeeded are skipped; build and check"
-            " always run, for the whole site. `results` writes an election's"
-            " final results from its `results` inputs where"
-            " config/elections.toml names them, and otherwise leaves the"
-            " results as `ems results` left them."
+            " changed since they last succeeded are skipped, as are those"
+            f" whose inputs and output are those {record.RECORD_FILE} records"
+            " (a step that runs writes its entry there where its inputs are"
+            " new); build and check always run, for the whole site."
+            " `results` writes an election's final results from its"
+            " `results` inputs where config/elections.toml names them;"
+            " without, the election has none (`ems results` writes only"
+            " live results, apart)."
         ),
     )
     _add_force(p)
@@ -289,10 +309,10 @@ def build_parser() -> argparse.ArgumentParser:
         description=(
             "Serve the parts in dist/ (run `ems build` first) as one site"
             " until interrupted: the app at the root, each election's bundles"
-            " at /map/<slug>/ and /data/<slug>/, the results at /results/, the"
-            " cached sources"
-            " at /cache/; each with the response headers of its _headers, as"
-            " on Cloudflare Pages."
+            " at /map/<slug>/ and /data/<slug>/, the final results at"
+            " /results/, the live results at /live/, the cached sources at"
+            " /cache/; each with the response headers of its _headers, as on"
+            " Cloudflare Pages."
         ),
     )
     p.add_argument("--host", default="127.0.0.1", help="address to bind")
@@ -304,6 +324,7 @@ def build_parser() -> argparse.ArgumentParser:
     _add_results_parser(commands)
     _add_inputs_parser(commands)
     _add_data_parser(commands)
+    _add_record_parser(commands)
     return parser
 
 
@@ -355,7 +376,9 @@ def _add_data_parser(commands: argparse._SubParsersAction) -> None:
             " own, each when its key (src/election_map_slovakia/lock.py) is"
             f" not deployed yet. Their keys are locked in {lock.LOCK_FILE}"
             " (lock), compared with the deployments (status) and the parts"
-            " built in dist/ deployed where not (deploy). See docs/deploy.md."
+            " built in dist/ deployed where not (deploy), to projects, the"
+            " app's among them, created once beforehand (projects). See"
+            " docs/deploy.md."
         ),
     )
     sub = p.add_subparsers(title="data commands", metavar="COMMAND", required=True)
@@ -389,8 +412,11 @@ def _add_data_parser(commands: argparse._SubParsersAction) -> None:
     status.add_argument(
         "--github-output",
         action="store_true",
-        help="also write stale=true or stale=false to the file $GITHUB_OUTPUT"
-        " names (a GitHub Actions step's outputs)",
+        help="also write to the file $GITHUB_OUTPUT names (a GitHub Actions"
+        " step's outputs) stale=true or stale=false, elections=, a JSON"
+        " array of the days of every election, whose steps a build of the data"
+        " parts needs, and extracts=, a JSON array of the extracts whose base"
+        " maps it needs",
     )
     status.set_defaults(run=_run_data_status)
     deploy = sub.add_parser(
@@ -404,6 +430,43 @@ def _add_data_parser(commands: argparse._SubParsersAction) -> None:
         ),
     )
     deploy.set_defaults(run=_run_data_deploy)
+    projects = sub.add_parser(
+        "projects",
+        help="list the Pages projects the site needs, creating the missing"
+        " with --create and deleting those no release needs with --prune",
+        description=(
+            "List the Pages projects the site needs (config/site.toml: the"
+            " app's, each election's map and data, the base maps', the"
+            " sources', the results', the live results') and which of them"
+            " the account lacks, reading the"
+            " Pages API as `ems data status` does, changing nothing. With"
+            " --create, create those it lacks with Wrangler, for direct"
+            f" uploads with the production branch {pages.PRODUCTION_BRANCH};"
+            " existing ones are left as they are. The custom domains the app,"
+            " the sources, the results and the live results need, and a"
+            " production branch other"
+            f" than {pages.PRODUCTION_BRANCH}, are listed to be set by hand"
+            " (docs/deploy.md). It lists too the projects of elections"
+            f" config/{config.ELECTIONS_FILE} no longer has, those a version"
+            " tag still lists kept (a rollback to that release needs them);"
+            " with --prune, delete the others with their deployments. The"
+            " app's project, the base maps', the sources', the results' and"
+            " the live results' are"
+            " never deleted, nor any project not named like an election's"
+            " bundle."
+        ),
+    )
+    projects.add_argument(
+        "--create",
+        action="store_true",
+        help="create the projects the account lacks",
+    )
+    projects.add_argument(
+        "--prune",
+        action="store_true",
+        help="delete the projects of elections no release has any more",
+    )
+    projects.set_defaults(run=_run_data_projects)
 
 
 def _run_data_lock(args: argparse.Namespace) -> int:
@@ -448,8 +511,8 @@ def _parts(cfg: config.Config) -> list[_Part]:
     if keys is None:
         raise ConfigError(f"{lock.LOCK_FILE} missing; run `ems data lock`")
     parts = [
-        _Part(f"{part}/{slug}", project, key, pages.find(project, key))
-        for part, slug, project, key in pages.bundles(cfg, keys)
+        _Part(f"{part}/{name}", project, key, pages.find(project, key))
+        for part, name, project, key in pages.bundles(cfg, keys)
     ]
     for directory, project, key in (
         (bundle.SOURCES_PART, cfg.site.sources_project, keys.sources),
@@ -481,8 +544,11 @@ def _run_data_status(args: argparse.Namespace) -> int:
     )
     stale = any(p.deployed is None for p in parts)
     if args.github_output:
+        days = [e.day.isoformat() for e in cfg.elections]
         with Path(os.environ["GITHUB_OUTPUT"]).open("a", encoding="utf-8") as f:
             f.write(f"stale={'true' if stale else 'false'}\n")
+            f.write(f"elections={json.dumps(days)}\n")
+            f.write(f"extracts={json.dumps(list(cfg.bases))}\n")
     return 0
 
 
@@ -512,6 +578,226 @@ def _run_data_deploy(_args: argparse.Namespace) -> int:
         if code:
             _error(f"ems data deploy: Wrangler failed with exit code {code}")
             return code
+    return 0
+
+
+def _run_data_projects(args: argparse.Namespace) -> int:
+    cfg = config.load()
+    need = pages.needed(cfg)
+    try:
+        have = pages.projects()
+        prunable, kept = pages.unneeded(cfg, have)
+    except pages.PagesError as e:
+        _error(f"ems data projects: {e}")
+        return 1
+    states = {
+        **{name: "exists" if name in have else "missing" for name in need},
+        **dict.fromkeys(kept, "kept (an earlier release has it)"),
+        **dict.fromkeys(prunable, "unneeded"),
+    }
+    width = max(map(len, states))
+    _print(f"{name:<{width}}  {state}" for name, state in states.items())
+    missing = [name for name in need if name not in have]
+    for names, wanted, option, act, verb, state in (
+        (missing, args.create, "--create", pages.create, "creating", "missing"),
+        (prunable, args.prune, "--prune", pages.delete, "deleting", "unneeded"),
+    ):
+        if names and not wanted:
+            _print([f"{len(names)} {state}; `ems data projects {option}` for them"])
+            continue
+        for name in names:
+            _print([f"{name}: {verb}"])
+            if code := act(name):
+                _error(f"ems data projects: Wrangler failed with exit code {code}")
+                return code
+    # Wrangler deploys every part as the production branch: elsewhere it
+    # would be a preview, which neither the app nor the domains serve.
+    manual = [
+        f"{name}: production branch {project.production_branch}, not"
+        f" {pages.PRODUCTION_BRANCH}"
+        for name in need
+        if (project := have.get(name))
+        and project.production_branch != pages.PRODUCTION_BRANCH
+    ]
+    # The Pages token may not edit DNS, and a domain must not be attached
+    # before its zone is on Cloudflare: domains stay a step by hand.
+    manual += [
+        f"{name}: custom domain {domain}"
+        for name, domains in need.items()
+        for domain in domains
+        if name not in have or domain not in have[name].domains
+    ]
+    if manual:
+        _print(["by hand (docs/deploy.md):", *(f"  {step}" for step in manual)])
+    return 0
+
+
+def _add_record_parser(commands: argparse._SubParsersAction) -> None:
+    p = commands.add_parser(
+        "record",
+        help=f"check {record.RECORD_FILE} against the commit, or the outputs"
+        " against it",
+        description=(
+            f"{record.RECORD_FILE} records, for each step of `ems make` before"
+            " build and each election (of basemap each extract), the digest of"
+            " its inputs and of the output it made of them: `ems make` skips a"
+            " step whose inputs and output are those recorded. The steps write"
+            " it (docs/pipeline.md)."
+        ),
+    )
+    sub = p.add_subparsers(title="record commands", metavar="COMMAND", required=True)
+    checking = sub.add_parser(
+        "check",
+        help=f"fail if {record.RECORD_FILE} does not have the inputs of the commit",
+        description=(
+            "Compute the inputs of every step from the repository alone (the"
+            " code, uv.lock, .python-version, the pins of config/inputs.toml,"
+            " the configuration, the curated data, and the output of each"
+            " upstream step as the record has it), without data/raw/ or"
+            " data/build/, and fail naming each step, election and part of"
+            " the inputs that is not as recorded: run `ems make` and commit"
+            " the record. CI runs it."
+        ),
+    )
+    checking.set_defaults(run=_run_record_check)
+    comparing = sub.add_parser(
+        "compare",
+        help="say which outputs in data/build/ are not those"
+        f" {record.RECORD_FILE} records",
+        description=(
+            "Compute the digest of each step's output in data/build/ and say"
+            " where it is not the one recorded, and whether the step's inputs"
+            " here are the recorded ones; succeed all the same. A release runs"
+            " it after building every step (docs/deploy.md)."
+        ),
+    )
+    comparing.add_argument(
+        "--github",
+        action="store_true",
+        help="where any output differs, also write a GitHub Actions warning"
+        " annotation and a job summary (to the file $GITHUB_STEP_SUMMARY names)",
+    )
+    comparing.set_defaults(run=_run_record_compare)
+
+
+def _declarations(cfg: config.Config) -> Iterator[tuple[str, str, _Declared]]:
+    """Yield each step of the record, its election's day (or extract), its declaration.
+
+    In the order of `make`: an upstream step before the steps that read it.
+    """
+    for step, declare in (
+        ("candidates", _candidates_declared),
+        ("links", _links_declared),
+        ("addresses", _addresses_declared),
+        ("geo", _geo_declared),
+    ):
+        # A by-election's candidates read its term's (`_term_councils`).
+        order = reversed(cfg.elections) if step == "candidates" else cfg.elections
+        for e in order:
+            yield step, e.day.isoformat(), declare(cfg, e)
+    for osm, base in cfg.bases.items():
+        yield "basemap", osm, _basemap_declared(cfg, base)
+    for e in reversed(cfg.elections):
+        declared = _results_declared(cfg, e)
+        if declared is not None:
+            yield "results", e.day.isoformat(), declared
+
+
+def _run_record_check(_args: argparse.Namespace) -> int:
+    cfg = config.load()
+    recorded = record.read(cfg.root / record.RECORD_FILE)
+    problems: list[str] = []
+    checked = 0
+    for step, key, declared in _declarations(cfg):
+        checked += 1
+        old = recorded.get((step, key))
+        if old is None:
+            problems.append(f"{step} {key}: no entry")
+            continue
+        try:
+            now = record.entry(_inputs_of(cfg, step, declared, recorded), old.outputs)
+        except record.RecordError as e:
+            problems.append(f"{step} {key}: {e}")
+            continue
+        if now.inputs != old.inputs:
+            differ = record.differing(old, now) or ["the inputs"]
+            problems.append(f"{step} {key}: not as recorded: {', '.join(differ)}")
+    if problems:
+        _error(
+            f"ems record check: {record.RECORD_FILE} does not have the inputs of"
+            " these steps at this commit; run `ems make` and commit it:"
+        )
+        for problem in problems:
+            _error(f"  {problem}")
+        return 1
+    _print([f"{record.RECORD_FILE} has the inputs of all {checked} steps"])
+    stale = sorted(recorded.keys() - _record_keys(cfg))
+    if stale:
+        progress.note(
+            "entries of no step, which the next step that runs drops: "
+            + ", ".join(f"{step} {key}" for step, key in stale)
+        )
+    return 0
+
+
+def _run_record_compare(args: argparse.Namespace) -> int:
+    cfg = config.load()
+    recorded = record.read(cfg.root / record.RECORD_FILE)
+    differ: list[tuple[str, str, str]] = []
+    count = 0
+    for step, key, declared in _declarations(cfg):
+        count += 1
+        old = recorded.get((step, key))
+        missing = [p.name for p in declared.outputs if not p.exists()]
+        if old is None:
+            differ.append((step, key, "no entry"))
+        elif missing:
+            differ.append((step, key, f"{', '.join(missing)} missing"))
+        else:
+            with progress.stage(f"{step} {key}"):
+                outputs = _on_disk(cfg, step, key)
+                if outputs == old.outputs:
+                    continue
+                here = record.entry(_inputs_of(cfg, step, declared), outputs)
+                parts = record.differing(old, here)
+            inputs = (
+                f"its inputs too ({', '.join(parts)})" if parts else "not its inputs"
+            )
+            differ.append((step, key, f"the output differs, {inputs}"))
+    _print(f"{step} {key}: {what}" for step, key, what in differ)
+    _print([f"{count - len(differ)} of {count} outputs are those recorded"])
+    if args.github and differ:
+        # Not a failure: the release builds on x86-64, the record is written
+        # where `ems make` ran, mostly aarch64, and output alike byte for
+        # byte on both is not verified; the deployed parts are keyed by the
+        # repository (lock.py), not by this record. A difference only means
+        # the record does not let a machine like this one skip the step.
+        _print(
+            [
+                f"::warning title={record.RECORD_FILE}::{len(differ)} of {count}"
+                " step outputs built here are not those recorded (see the job"
+                " summary)"
+            ]
+        )
+        summary = os.environ.get("GITHUB_STEP_SUMMARY")
+        if summary:
+            rows = [f"| {step} | {key} | {what} |" for step, key, what in differ]
+            text = [
+                f"## Outputs not as `{record.RECORD_FILE}` records",
+                "",
+                f"{len(differ)} of {count} step outputs built here are not those"
+                " recorded. Not a failure: the deployed parts are keyed by the"
+                " repository, and output alike byte for byte on this runner and"
+                " where the record was written is not verified; a difference"
+                " only means the record does not let a machine like this one"
+                " skip the step.",
+                "",
+                "| Step | Election or extract | Difference |",
+                "|---|---|---|",
+                *rows,
+            ]
+            with Path(summary).open("a", encoding="utf-8") as f:
+                f.write("\n".join(text) + "\n")
     return 0
 
 
@@ -558,6 +844,18 @@ def _add_inputs_parser(commands: argparse._SubParsersAction) -> None:
             " not exist yet, it is created first, as a pre-release."
         ),
     )
+    publish.add_argument(
+        "--prune",
+        action="store_true",
+        help="then delete the assets no build needs any more: those that"
+        " config/inputs.toml pins neither now nor at HEAD nor at any version"
+        " tag (v*)",
+    )
+    publish.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="list what would be uploaded (and with --prune deleted), changing nothing",
+    )
     publish.set_defaults(run=_run_inputs_publish)
 
 
@@ -603,68 +901,61 @@ def _run_inputs_update(args: argparse.Namespace) -> int:
     return 0
 
 
-def _run_inputs_publish(_args: argparse.Namespace) -> int:
+def _run_inputs_publish(args: argparse.Namespace) -> int:
     cfg = config.load()
-    uploaded = 0
+    would = "would upload" if args.dry_run else "uploaded"
+    uploaded = deleted = 0
     try:
-        for inp in store.publish(cfg.inputs, cfg.raw_dir):
-            _print([f"uploaded {store.Store.asset(inp)}"])
+        for inp in store.publish(cfg.inputs, cfg.raw_dir, args.dry_run):
+            _print([f"{would} {store.Store.asset(inp)}"])
             uploaded += 1
+        if args.prune:
+            keep = store.kept(cfg.root, cfg.inputs)
+            for name in store.prune(cfg.inputs, keep, args.dry_run):
+                _print([f"{'would delete' if args.dry_run else 'deleted'} {name}"])
+                deleted += 1
     except store.StoreError as e:
         _error(f"ems inputs publish: {e}")
         return 1
-    _print([f"{uploaded} file(s) uploaded" if uploaded else "the store has them all"])
+    lines = [f"{uploaded} file(s) {would}" if uploaded else "the store has them all"]
+    if args.prune:
+        verb = "would be deleted" if args.dry_run else "deleted"
+        lines.append(f"{deleted} asset(s) {verb}" if deleted else "none to delete")
+    _print(lines)
     return 0
 
 
 def _run_candidates(args: argparse.Namespace) -> int:
-    return _per_election(args, _candidates)
+    # A by-election reads its term's candidates (`_term_councils`).
+    return _per_election(args, _candidates, oldest_first=True)
 
 
 def _candidates(
     cfg: config.Config, election: config.Election, args: argparse.Namespace
 ) -> int:
-    lists = {name: _input(cfg, inp) for name, inp in election.candidates.inputs.items()}
+    declared = _candidates_declared(cfg, election)
+    run = _stamp(cfg, "candidates", election.day.isoformat(), args.force, declared)
+    if run is None:
+        return 0
+    named = election.candidates.inputs if election.candidates else {}
+    lists_in = {name: _input(cfg, inp) for name, inp in named.items()}
     source = election.incumbents
     results = {name: _input(cfg, name) for name in source.inputs} if source else {}
     zbgis = _input(cfg, election.zbgis[0])
-    out = cfg.election_build_dir(election) / candidates.OUTPUT_FILE
-    overrides = cfg.overrides[election.slug]
-    record = _stamp(
-        cfg,
-        election,
-        "candidates",
-        args.force,
-        [out],
-        inputs=[*lists.values(), *results.values(), zbgis],
-        values={
-            "overrides": overrides,
-            "election": election.day,
-            "candidates": election.candidates,
-            "incumbents": source,
-            # The lists of ŠÚ SR's packages are read by code of its own.
-            **(
-                {"code statoffice": stamp.code_digest("statoffice")}
-                if election.candidates.format == "susr"
-                else {}
-            ),
-        },
-    )
-    if record is None:
-        return 0
+    [out] = declared.outputs
     try:
-        if election.candidates.format == "susr":
-            with progress.stage("reading the candidates of ŠÚ SR's packages"):
-                read = statoffice.read_candidates(
-                    statoffice.open_package(lists["oso"].path),
-                    statoffice.open_package(lists["osk"].path),
-                )
-        else:
-            read = candidates.read_lists({k: raw.path for k, raw in lists.items()})
+        with progress.stage("reading the candidate lists"):
+            read = lists.read(
+                election,
+                {k: raw.path for k, raw in lists_in.items()},
+                cfg.election_dir(election),
+                urls={k: raw.inp.url for k, raw in lists_in.items()},
+                councils=_term_councils(cfg, election),
+            )
         result = candidates.build(
             read,
             _extract_gpkg(cfg, zbgis),
-            overrides,
+            cfg.overrides[election.slug],
             (source, {name: raw.path for name, raw in results.items()})
             if source
             else None,
@@ -681,10 +972,81 @@ def _candidates(
         return 1
     with progress.stage(f"writing {out.name}"):
         size = candidates.write(result, out)
-    record.record()
+    _done(run)
     _print(candidates.report(result))
     _print([f"wrote {out.relative_to(cfg.root)} ({output.format_size(size)})"])
     return 0
+
+
+def _candidates_declared(cfg: config.Config, election: config.Election) -> _Declared:
+    """Return what `candidates` reads and writes of *election*.
+
+    Of a by-election also its term's candidates (:func:`_term_councils`).
+    """
+    named = election.candidates.inputs if election.candidates else {}
+    source = election.incumbents
+    curated = cfg.election_dir(election) / lists.CURATED_FILE
+    files: list[Path] = []
+    if election.candidates and election.candidates.format == "curated":
+        if not curated.is_file():
+            raise ConfigError(f"{curated} missing: the election's lists are curated")
+        files.append(curated)
+    elif (
+        election.candidates
+        and election.candidates.format == "susr-by"
+        and curated.is_file()
+    ):
+        # A by-election's package of 2019–2022 may have a supplement.
+        files.append(curated)
+    uncontested = cfg.election_dir(election) / lists.UNCONTESTED_FILE
+    if uncontested.is_file():
+        files.append(uncontested)
+    term = cfg.term(election)
+    return _Declared(
+        *_outputs(cfg, "candidates", election.day.isoformat()),
+        pins=[
+            _pin(cfg, name)
+            for name in (
+                *named.values(),
+                *(source.inputs if source else ()),
+                election.zbgis[0],
+            )
+        ],
+        curated=files,
+        values={
+            "overrides": cfg.overrides[election.slug],
+            "election": election.day,
+            "kind": election.kind,
+            "candidates": election.candidates,
+            "incumbents": source,
+            # What the configuration says of the contests (lists.read).
+            "contests": [
+                election.second_round,
+                election.questions,
+                election.seats,
+                election.threshold,
+                election.coalition_thresholds,
+                election.preferences,
+                election.preference_quota,
+            ],
+        },
+        upstream=(("candidates", term.day.isoformat()),) if term else (),
+    )
+
+
+def _term_councils(
+    cfg: config.Config, election: config.Election
+) -> dict[str, list[int]] | None:
+    """Return obec → the council obvody of a by-election's term's candidates.
+
+    The council whose seats the by-election fills was elected in them (its
+    lists name where the seats called lie); None of any other election.
+    """
+    term = cfg.term(election)
+    if term is None:
+        return None
+    data = json.loads(_built_candidates(cfg, term).read_bytes())
+    return addresses.council_obvody(data["contests"])
 
 
 def _run_links(args: argparse.Namespace) -> int:
@@ -696,36 +1058,21 @@ def _links(
 ) -> int:
     """Link *election*'s persons to those of every election before it."""
     earlier = [e for e in cfg.elections if e.day < election.day]
-    out = cfg.election_build_dir(election) / bundle.LINKS_DIR
-    path = cfg.root / "config" / links.LINKS_FILE
-    overrides = links.load_overrides(path, {e.slug: e.day for e in cfg.elections})
     built = {e.slug: _built_candidates(cfg, e) for e in [election, *earlier]}
-    record = _stamp(
-        cfg,
-        election,
-        "links",
-        args.force,
-        [out],
-        files=list(built.values()),
-        values={
-            "earlier": [e.slug for e in earlier],
-            "overrides": {
-                e.slug: overrides.get((election.slug, e.slug)) for e in earlier
-            },
-        },
-    )
-    if record is None:
+    declared = _links_declared(cfg, election)
+    run = _stamp(cfg, "links", election.day.isoformat(), args.force, declared)
+    if run is None:
         return 0
-    later = links.Candidates(
-        election.day, json.loads(built[election.slug].read_bytes())
-    )
+    [out] = declared.outputs
+    overrides = _links_overrides(cfg)
+    later = links.read(built[election.slug], election.day)
     files: dict[str, bytes] = {}
     for e in earlier:
         with progress.stage(f"linking to the persons of {e.day}"):
             try:
                 linked = links.match(
                     later,
-                    links.Candidates(e.day, json.loads(built[e.slug].read_bytes())),
+                    links.read(built[e.slug], e.day),
                     overrides.get((election.slug, e.slug)),
                 )
             except links.LinksError as err:
@@ -736,9 +1083,39 @@ def _links(
     with output.replacing(out) as tmp:
         for name, blob in files.items():
             (tmp / name).write_bytes(blob)
-    record.record()
+    _done(run)
     _print([f"wrote {out.relative_to(cfg.root)}/ ({len(files)} files)"])
     return 0
+
+
+def _links_declared(cfg: config.Config, election: config.Election) -> _Declared:
+    """Return what `links` reads and writes of *election*.
+
+    The candidates of the election and of every one before it.
+    """
+    earlier = [e for e in cfg.elections if e.day < election.day]
+    overrides = _links_overrides(cfg)
+    return _Declared(
+        *_outputs(cfg, "links", election.day.isoformat()),
+        pins=[],
+        curated=[],
+        values={
+            "earlier": [e.slug for e in earlier],
+            "overrides": {
+                e.slug: overrides.get((election.slug, e.slug)) for e in earlier
+            },
+        },
+        upstream=tuple(("candidates", e.day.isoformat()) for e in [election, *earlier]),
+    )
+
+
+def _links_overrides(
+    cfg: config.Config,
+) -> dict[tuple[str, str], links.Overrides]:
+    """Return the corrections of config/links.toml, by later and earlier slug."""
+    return links.load_overrides(
+        cfg.root / "config" / links.LINKS_FILE, {e.slug: e.day for e in cfg.elections}
+    )
 
 
 def _per_election(
@@ -770,7 +1147,8 @@ class _Raw(NamedTuple):
     inp: config.Input
 
 
-def _input(cfg: config.Config, name: str) -> _Raw:
+def _pin(cfg: config.Config, name: str) -> config.Input:
+    """Return the entry of config/inputs.toml of input *name*, which a step reads."""
     inp = next((i for i in cfg.inputs.inputs if i.name == name), None)
     if inp is None:
         raise ConfigError(f"config/{config.INPUTS_FILE}: input {name!r} missing")
@@ -780,6 +1158,11 @@ def _input(cfg: config.Config, name: str) -> _Raw:
             f"config/{config.INPUTS_FILE}: input {name!r} is optional, so no"
             " step may read it"
         )
+    return inp
+
+
+def _input(cfg: config.Config, name: str) -> _Raw:
+    inp = _pin(cfg, name)
     path = fetch.member_path(cfg.raw_dir, inp)
     if not path.is_file():
         raise ConfigError(f"{path} missing; run `ems fetch` first")
@@ -794,47 +1177,230 @@ def _extract_gpkg(cfg: config.Config, raw: _Raw) -> Path:
     return gpkg.extract(raw.path, raw.inp.members[0], cfg.build_dir)
 
 
-def _stamp(
-    cfg: config.Config,
-    election: config.Election,
-    step: str,
-    force: bool,
-    outputs: list[Path],
-    *,
-    inputs: Iterable[_Raw] = (),
-    files: Iterable[Path] = (),
-    trees: Iterable[Path] = (),
-    values: dict[str, object] | None = None,
-) -> stamp.Stamp | None:
-    """Return the stamp *step* of *election* records once done, or None if up to date.
+def _shared_dir(build_dir: Path, name: str) -> Path:
+    """Return the directory of cache *name*, shared by the elections and runs.
 
-    *inputs* are downloads (file and configuration), *files* and *trees*
-    other files and directories it reads, *values* configuration it gets.
+    data/build/shared/<name>/ (*build_dir* is data/build/): what several
+    elections compute alike, made once (keyed on all it depends on).
     """
-    inputs = list(inputs)
-    values = (values or {}) | {
-        f"config input {raw.inp.name}": raw.inp for raw in inputs
+    return build_dir / "shared" / name
+
+
+class _Declared(NamedTuple):
+    """What a step reads and writes of one election, or of one extract.
+
+    Declared from the configuration alone, without data/raw/ or
+    data/build/, so that `ems record check` computes the inputs of every
+    step from a commit (:func:`_inputs_of`). A step reads nothing else:
+    an upstream output it reads and does not declare would leave it
+    skipped where that output changed.
+    """
+
+    directory: Path
+    """The build directory of the election or extract: its stamp's."""
+    outputs: list[Path]
+    """What it writes (:func:`_outputs`)."""
+    pins: list[config.Input]
+    """The downloads it reads, which enter by their pin."""
+    curated: list[Path]
+    """The curated files and directories it reads."""
+    values: dict[str, object]
+    """The configuration it gets, by name."""
+    upstream: tuple[record.Key, ...] = ()
+    """The steps whose output it reads, each with the election's day."""
+
+
+# The outputs of the steps below the build directory of an election: files
+# each run writes whole, and directories each run replaces whole
+# (output.replacing), so that nothing of a run before stays in them.
+_OUTPUTS = {
+    "candidates": (candidates.OUTPUT_FILE,),
+    "links": (bundle.LINKS_DIR,),
+    "addresses": (addresses.OUTPUT_DIR, addresses.OUTSIDE_FILE, addresses.OBVOD_DIR),
+    "geo": (geo.OUTPUT_DIR,),
+}
+
+
+def _outputs(cfg: config.Config, step: str, key: str) -> tuple[Path, list[Path]]:
+    """Return the directory of the stamp of *step* for *key*, and its outputs.
+
+    *key* is an election's day, of ``basemap`` an extract. The outputs are
+    what the output record digests: what a run makes of its inputs alone,
+    not the gzip sizes it measured (gzip-sizes/, a memo), `geo`'s previews
+    nor the caches of data/build/shared/. `results` writes its directory
+    whole (results.write) and the crosswalk to each election before beside
+    it, a file each.
+    """
+    if step == "basemap":
+        directory = cfg.base_build_dir(key)
+        return directory, [directory / basemap.OUTPUT_DIR]
+    election = cfg.election(key)
+    directory = cfg.election_build_dir(election)
+    if step != "results":
+        return directory, [directory / name for name in _OUTPUTS[step]]
+    walk = [_crosswalk_file(cfg, election, e) for e, _ in _earlier(cfg, election)]
+    return directory, [cfg.results_dir(election), *walk]
+
+
+def _inputs_of(
+    cfg: config.Config,
+    step: str,
+    declared: _Declared,
+    recorded: Mapping[record.Key, record.Entry] | None = None,
+) -> dict[str, object]:
+    """Return the inputs of *step* as *declared*, by part (:data:`stamp.PARTS`).
+
+    As they are here (*recorded* None): the running Python, an upstream
+    output as it is on disk, an input not pinned by its file. Else as a
+    commit has them, for `ems record check`: the Python of .python-version
+    and an upstream output as *recorded*; every input pinned.
+    """
+    if recorded is None:
+        python = stamp.PYTHON
+        upstream = {f"{s} {k}": _on_disk(cfg, s, k) for s, k in declared.upstream}
+    else:
+        python = stamp.pinned_python(cfg.root)
+        upstream = {}
+        for s, k in declared.upstream:
+            if (s, k) not in recorded:
+                raise record.RecordError(f"{s} {k}, whose output it reads, has none")
+            upstream[f"{s} {k}"] = recorded[s, k].outputs
+    curated: dict[str, str | None] = {}
+    for p in declared.curated:
+        name = p.relative_to(cfg.root).as_posix()
+        # A directory by its files alone, and one with none as if missing (an
+        # election may have no rule sets, obvody/, at all): git keeps no
+        # empty directory, so one left here would make inputs no commit has.
+        if p.is_dir() and any(f.is_file() for f in p.rglob("*")):
+            curated[f"{name}/"] = stamp.tree_digest(p)
+        else:
+            curated[name] = stamp.file_digest(p) if p.is_file() else None
+    return {
+        "code": stamp.code_digest(step),
+        "python": python,
+        "libraries": stamp.json_digest(stamp.libraries(cfg.root / "uv.lock")),
+        "pins": {
+            inp.name: _pin_digest(cfg, inp, here=recorded is None)
+            for inp in declared.pins
+        },
+        "curated": curated,
+        "config": {name: stamp.json_digest(v) for name, v in declared.values.items()},
+        "upstream": upstream,
     }
+
+
+def _pin_digest(cfg: config.Config, inp: config.Input, *, here: bool) -> str:
+    """Return the digest of input *inp* as a step's inputs have it.
+
+    Its entry of config/inputs.toml with its pin: `ems fetch` makes the
+    file the one pinned. An input not pinned yet is known *here* by its
+    file too, and not at all from a commit.
+    """
+    if inp.sha256:
+        return stamp.json_digest(inp)
+    if not here:
+        raise record.RecordError(f"input {inp.name} is not pinned")
+    return stamp.json_digest([inp, stamp.file_digest(_input(cfg, inp.name).path)])
+
+
+def _on_disk(cfg: config.Config, step: str, key: str) -> str:
+    """Return the digest of the output of *step* for *key* as it is on disk.
+
+    Read again only where its files are not those its stamp has
+    (:func:`stamp.on_disk`).
+    """
+    directory, outputs = _outputs(cfg, step, key)
+    recorded = stamp.recorded_outputs(_stamp_path(directory, step))
+    return stamp.on_disk(directory, outputs, recorded)[0]
+
+
+class _Run(NamedTuple):
+    """A step about to run for an election or extract, and what it records then."""
+
+    cfg: config.Config
+    step: str
+    key: str
+    local: stamp.Stamp
+    entry: record.Entry | None
+    """The record's entry when the step was found to need running."""
+
+
+def _stamp(
+    cfg: config.Config, step: str, key: str, force: bool, declared: _Declared
+) -> _Run | None:
+    """Return the run of *step* for *key*, or None if its output is up to date.
+
+    *key* is the election's day, or the extract of a base map. Up to date
+    as its stamp has it (the inputs of its last run here, and the output
+    it wrote then), or as the output record has it: its inputs recorded
+    there and its output on disk the one recorded, the stamp then taking
+    the inputs (after a pull of a change that left its output as it was).
+    """
     with progress.stage("comparing the inputs with the last successful run"):
-        record = stamp.Stamp(
-            _stamp_path(cfg, election, step),
-            stamp.inputs(
-                cfg.root, step, [*(raw.path for raw in inputs), *files], trees, values
-            ),
-            outputs,
+        local = stamp.Stamp(
+            _stamp_path(declared.directory, step),
+            _inputs_of(cfg, step, declared),
+            declared.directory,
+            declared.outputs,
         )
-        changes = record.changes()
-    if not (changes or force):
-        progress.note(f"up to date, skipped (`ems {step} --force` runs it anyway)")
-        return None
+        changes = local.changes()
+        entry = record.read(cfg.root / record.RECORD_FILE).get((step, key))
+        if not (changes or force):
+            progress.note(f"up to date, skipped (`ems {step} --force` runs it anyway)")
+            return None
+        if (
+            not force
+            and entry is not None
+            and entry.inputs == local.digest
+            and not local.missing()
+            and local.outputs_digest() == entry.outputs
+        ):
+            local.record()
+            progress.note(
+                f"up to date per {record.RECORD_FILE}, skipped (`ems {step}"
+                " --force` runs it anyway)"
+            )
+            return None
     progress.note("running: " + ("--force" if force else "; ".join(changes)))
-    record.forget()
-    return record
+    local.forget()
+    return _Run(cfg, step, key, local, entry)
 
 
-def _stamp_path(cfg: config.Config, election: config.Election, step: str) -> Path:
-    """Return where *step* records its last successful run for *election*."""
-    return cfg.election_build_dir(election) / f"{step}.stamp.json"
+def _done(run: _Run) -> None:
+    """Record what *run* made: in its stamp, and in the record if its inputs are new.
+
+    Where the record has its inputs already with another output, the step
+    made something else of the same inputs: its output varies from run to
+    run or from machine to machine, or the entry is wrong. A warning says
+    so and the entry stays.
+    """
+    new = record.entry(run.local.inputs, run.local.record())
+    old = run.entry
+    if old is None or old.inputs != new.inputs:
+        path = run.cfg.root / record.RECORD_FILE
+        record.update(path, (run.step, run.key), new, _record_keys(run.cfg))
+    elif old.outputs != new.outputs:
+        _error(
+            f"warning: ems {run.step} {run.key}: the output is not the one"
+            f" {record.RECORD_FILE} records for the same inputs, which it keeps:"
+            " the step's output varies, or the entry is wrong (remove it and run"
+            " the step again to record this output)"
+        )
+
+
+def _record_keys(cfg: config.Config) -> set[record.Key]:
+    """Return the steps and elections (or extracts) of the output record."""
+    days = [e.day.isoformat() for e in cfg.elections]
+    return {
+        *((step, day) for step in _OUTPUTS for day in days),
+        *(("basemap", osm) for osm in cfg.bases),
+        *(("results", e.day.isoformat()) for e in cfg.elections if e.results.inputs),
+    }
+
+
+def _stamp_path(directory: Path, step: str) -> Path:
+    """Return where *step* records its last successful run in *directory*."""
+    return directory / f"{step}.stamp.json"
 
 
 def _run_geo(args: argparse.Namespace) -> int:
@@ -844,33 +1410,54 @@ def _run_geo(args: argparse.Namespace) -> int:
 def _geo(
     cfg: config.Config, election: config.Election, args: argparse.Namespace
 ) -> int:
-    zbgis = {level: _input(cfg, name) for level, name in enumerate(election.zbgis)}
-    countries = _input(cfg, geo.NEIGHBOURS_INPUT)
     built = _built_candidates(cfg, election)
     directory = cfg.election_build_dir(election)
-    curated = cfg.election_dir(election)
-    out = directory / geo.OUTPUT_DIR
     places = directory / addresses.OBVOD_DIR
     if not places.is_dir():
         raise ConfigError(f"{places} missing; run `ems addresses` first")
-    record = _stamp(
-        cfg,
-        election,
-        "geo",
-        args.force or bool(args.preview),
-        [out],
-        inputs=[*zbgis.values(), countries],
-        files=[built, *_okrsky_files(cfg, election)],
-        trees=[curated / obvody.DIRECTORY, places],
-    )
-    if record is None:
+    declared = _geo_declared(cfg, election)
+    force = args.force or bool(args.preview)
+    run = _stamp(cfg, "geo", election.day.isoformat(), force, declared)
+    if run is None:
         return 0
+    zbgis = {level: _input(cfg, name) for level, name in enumerate(election.zbgis)}
+    countries = _input(cfg, geo.NEIGHBOURS_INPUT)
+    osm = _input(cfg, election.osm)
+    curated = cfg.election_dir(election)
+    [out] = declared.outputs
     data = json.loads(built.read_bytes())
     counts = Counter(c["contest"] for c in data["candidacies"])
+    # What the shared results of every election depend on: the code with
+    # Python and the libraries, and the inputs they are made of, as the
+    # stamp has them.
+    inputs = run.local.inputs
+    cache = geo.Cache(
+        _shared_dir(cfg.build_dir, "geo"),
+        stamp.json_digest([inputs["code"], inputs["python"], inputs["libraries"]]),
+        stamp.json_digest(
+            [
+                _pin_digest(cfg, raw.inp, here=True)
+                for raw in (*zbgis.values(), countries)
+            ]
+        ),
+    )
     try:
         paths = {level: _extract_gpkg(cfg, raw) for level, raw in zbgis.items()}
+        # As the review sheets read them (obvodrules.barriers); the stamp
+        # has the extract's pin already.
+        lines = basemap.barriers(
+            osm.path, cfg.build_dir, _shared_dir(cfg.build_dir, basemap.BARRIERS_DIR)
+        )
         result = geo.build(
-            paths, countries.path, curated, places, data["contests"], counts
+            paths,
+            countries.path,
+            curated,
+            places,
+            data["contests"],
+            counts,
+            lines,
+            partial=election.kind == config.BY_ELECTION,
+            cache=cache,
         )
         previews = []
         if args.preview:
@@ -878,53 +1465,97 @@ def _geo(
                 previews = geo.preview(
                     result, args.preview, directory / geo.PREVIEW_DIR
                 )
-    except (geo.GeoError, gpkg.GpkgError, obvody.ObvodyError) as e:
+    except (
+        basemap.BaseMapError,
+        geo.GeoError,
+        gpkg.GpkgError,
+        obvody.ObvodyError,
+    ) as e:
         _error(f"ems geo: {e}")
         return 1
     sizes = geo.write(result, out)
-    record.record()
+    _done(run)
     _print(geo.report(result, sizes))
     _print([f"wrote {out.relative_to(cfg.root)}/ ({len(sizes)} files)"])
     _print(f"wrote {path.relative_to(cfg.root)}" for path in previews)
     return 0
 
 
-def _run_basemap(args: argparse.Namespace) -> int:
-    return _per_election(args, _basemap)
+def _geo_declared(cfg: config.Config, election: config.Election) -> _Declared:
+    """Return what `geo` reads and writes of *election*.
 
-
-def _basemap(
-    cfg: config.Config, election: config.Election, args: argparse.Namespace
-) -> int:
-    osm = _input(cfg, election.osm)
-    okresy = _input(cfg, election.zbgis[1])
-    obce = _input(cfg, election.zbgis[0])
-    directory = cfg.election_build_dir(election)
-    out = directory / basemap.OUTPUT_DIR
-    record = _stamp(
-        cfg,
-        election,
-        "basemap",
-        args.force,
-        [out],
-        inputs=[osm, okresy, obce],
-        # libosmium assembles the water areas and multipolygon buildings.
-        values={"osmium": basemap.LIBRARY},
+    The contests of its candidates and the addresses of the obce whose
+    obvody or okrsky are drawn from them (obvod-addresses/).
+    """
+    day = election.day.isoformat()
+    return _Declared(
+        *_outputs(cfg, "geo", day),
+        pins=[
+            *(_pin(cfg, name) for name in election.zbgis),
+            _pin(cfg, geo.NEIGHBOURS_INPUT),
+            _pin(cfg, election.osm),
+        ],
+        curated=[
+            *_okrsky_files(cfg, election),
+            cfg.election_dir(election) / obvody.DIRECTORY,
+        ],
+        values={"partial": election.kind == config.BY_ELECTION},
+        upstream=(("candidates", day), ("addresses", day)),
     )
-    if record is None:
+
+
+def _run_basemap(args: argparse.Namespace) -> int:
+    """Make the base map of each extract, or of ``--election``'s, once each."""
+    cfg = config.load()
+    chosen = [cfg.election(args.election)] if args.election else cfg.elections
+    for osm in dict.fromkeys(e.osm for e in chosen):
+        with progress.stage(f"extract {osm}") as stage:
+            code = _basemap(cfg, cfg.bases[osm], args)
+            stage.failed = code != 0
+        if code:
+            return code
+    return 0
+
+
+def _basemap(cfg: config.Config, base: config.Base, args: argparse.Namespace) -> int:
+    declared = _basemap_declared(cfg, base)
+    run = _stamp(cfg, "basemap", base.osm, args.force, declared)
+    if run is None:
         return 0
+    osm = _input(cfg, base.osm)
+    okresy = _input(cfg, base.okresy)
+    obce = _input(cfg, base.obce)
+    [out] = declared.outputs
     try:
         files = basemap.build(
-            osm.path, _extract_gpkg(cfg, okresy), _extract_gpkg(cfg, obce)
+            osm.path,
+            _extract_gpkg(cfg, okresy),
+            _extract_gpkg(cfg, obce),
+            cfg.build_dir,
         )
     except (basemap.BaseMapError, geo.GeoError, gpkg.GpkgError) as e:
         _error(f"ems basemap: {e}")
         return 1
-    sizes = basemap.write(files, out, _gzip_memo(directory, "basemap"))
-    record.record()
+    data = {path: file.data for path, file in files.items()}
+    sizes = basemap.write(data, out, _gzip_memo(declared.directory, "basemap"))
+    _done(run)
     _print(basemap.report(files, sizes))
     _print([f"wrote {out.relative_to(cfg.root)}/ ({len(sizes)} files)"])
     return 0
+
+
+def _basemap_declared(cfg: config.Config, base: config.Base) -> _Declared:
+    """Return what `basemap` reads and writes of extract *base*.
+
+    libosmium, which assembles the water areas and multipolygon buildings,
+    comes with pyosmium's wheel: a library of uv.lock like the others.
+    """
+    return _Declared(
+        *_outputs(cfg, "basemap", base.osm),
+        pins=[_pin(cfg, name) for name in (base.osm, base.okresy, base.obce)],
+        curated=[],
+        values={},
+    )
 
 
 def _run_addresses(args: argparse.Namespace) -> int:
@@ -934,44 +1565,23 @@ def _run_addresses(args: argparse.Namespace) -> int:
 def _addresses(
     cfg: config.Config, election: config.Election, args: argparse.Namespace
 ) -> int:
-    register = _input(cfg, election.addresses)
-    overrides = cfg.overrides[election.slug]
-    zbgis = _input(cfg, election.zbgis[0])
-    units = _input(cfg, election.units.input)
     built = _built_candidates(cfg, election)
-    directory = cfg.election_build_dir(election)
-    curated = cfg.election_dir(election)
-    out = directory / addresses.OUTPUT_DIR
-    outside = directory / addresses.OUTSIDE_FILE
-    places = directory / addresses.OBVOD_DIR
-    record = _stamp(
-        cfg,
-        election,
-        "addresses",
-        args.force,
-        [out, outside, places],
-        inputs=[register, zbgis, units],
-        files=[built, *_okrsky_files(cfg, election)],
-        trees=[curated / obvody.DIRECTORY],
-        values={
-            "overrides address": overrides.address,
-            "overrides address_skip": sorted(overrides.address_skip),
-            # The okrsky of each obec, from the units input.
-            "code okrsokrules": stamp.code_digest("okrsokrules"),
-        },
-    )
-    if record is None:
+    declared = _addresses_declared(cfg, election)
+    run = _stamp(cfg, "addresses", election.day.isoformat(), args.force, declared)
+    if run is None:
         return 0
+    # Without a territorial division no okrsky are counted.
+    units = _input(cfg, election.units.input) if election.units else None
+    out, outside, places = declared.outputs
     contests = json.loads(built.read_bytes())["contests"]
     try:
         result = addresses.build(
-            register.path,
-            _extract_gpkg(cfg, zbgis),
-            curated,
+            _register(cfg, election),
+            cfg.election_dir(election),
             contests,
-            overrides.address,
-            overrides.address_skip,
-            okrsokrules.okrsok_counts(cfg, election),
+            okrsokrules.okrsok_counts(cfg, election) if units else {},
+            partial=election.kind == config.BY_ELECTION,
+            parts=addresses.council_parts(cfg, election, contests),
         )
     except (
         addresses.AddressesError,
@@ -981,13 +1591,73 @@ def _addresses(
     ) as e:
         _error(f"ems addresses: {e}")
         return 1
-    sizes = addresses.write(result, out, _gzip_memo(directory, "addresses"))
+    sizes = addresses.write(result, out, _gzip_memo(declared.directory, "addresses"))
     addresses.write_outside(result, outside)
     obvody.write_places(result.places, places)
-    record.record()
+    _done(run)
     _print(addresses.report(result, sizes))
     _print([f"wrote {out.relative_to(cfg.root)}/ ({len(sizes):,} files)"])
     return 0
+
+
+def _addresses_declared(cfg: config.Config, election: config.Election) -> _Declared:
+    """Return what `addresses` reads and writes of *election*.
+
+    The contests of its candidates, and of a by-election those of its term
+    (whose council obvody it fills seats of); the okrsky of each obec come
+    from the units input.
+    """
+    day = election.day.isoformat()
+    overrides = cfg.overrides[election.slug]
+    units = [_pin(cfg, election.units.input)] if election.units else []
+    term = cfg.term(election)
+    return _Declared(
+        *_outputs(cfg, "addresses", day),
+        pins=[_pin(cfg, election.addresses), _pin(cfg, election.zbgis[0]), *units],
+        curated=[
+            *_okrsky_files(cfg, election),
+            cfg.election_dir(election) / obvody.DIRECTORY,
+        ],
+        values={
+            "overrides address": overrides.address,
+            "overrides address_skip": sorted(overrides.address_skip),
+            "partial": election.kind == config.BY_ELECTION,
+        },
+        upstream=(
+            ("candidates", day),
+            *((("candidates", term.day.isoformat()),) if term else ()),
+        ),
+    )
+
+
+def _register(cfg: config.Config, election: config.Election) -> addresses.Register:
+    """Return what ``addresses`` makes of *election*'s address register alone.
+
+    With ZBGIS level 0 and the election's overrides of the register, the
+    same for every election that reads them: cached in
+    data/build/shared/addresses/<register input>/, keyed on all of them and
+    the code (:func:`addresses.register`).
+    """
+    raw = _input(cfg, election.addresses)
+    zbgis = _input(cfg, election.zbgis[0])
+    overrides = cfg.overrides[election.slug]
+    key = stamp.json_digest(
+        {
+            "code": stamp.code_digest("addresses"),
+            "runtime": stamp.RUNTIME,
+            "inputs": [_pin_digest(cfg, r.inp, here=True) for r in (raw, zbgis)],
+            "overrides address": overrides.address,
+            "overrides address_skip": sorted(overrides.address_skip),
+        }
+    )
+    return addresses.register(
+        _shared_dir(cfg.build_dir, "addresses") / raw.inp.name,
+        key,
+        raw.path,
+        _extract_gpkg(cfg, zbgis),
+        overrides.address,
+        overrides.address_skip,
+    )
 
 
 def _run_results(args: argparse.Namespace) -> int:
@@ -1001,43 +1671,67 @@ def _run_results(args: argparse.Namespace) -> int:
 def _results(
     cfg: config.Config, election: config.Election, args: argparse.Namespace
 ) -> int:
-    out = cfg.results_dir(election)
-    if not election.results.inputs:
+    declared = _results_declared(cfg, election)
+    if declared is None:
         progress.note(
             f"config/{config.ELECTIONS_FILE} names no final results of the"
-            " election: they stay as `ems results` left them"
+            " election: it has none yet"
         )
+        return 0
+    _built_candidates(cfg, election)
+    run = _stamp(cfg, "results", election.day.isoformat(), args.force, declared)
+    if run is None:
         return 0
     packages = [_input(cfg, name) for name in election.results.inputs]
-    curated = cfg.election_dir(election)
-    compare = _compare(cfg, election)
-    record = _stamp(
-        cfg,
-        election,
-        "results",
-        args.force,
-        [out, *([compare.out] if compare else [])],
-        inputs=[*packages, *(compare.inputs if compare else [])],
-        files=[_built_candidates(cfg, election), *([compare.links] if compare else [])],
-        trees=[
-            cfg.election_build_dir(election) / geo.OUTPUT_DIR,
-            curated / obvody.DIRECTORY,
-            *(compare.trees if compare else []),
-        ],
-        values={"results": election.results} | (compare.values if compare else {}),
-    )
-    if record is None:
-        return 0
+    out = cfg.results_dir(election)
     try:
-        written = _write_final(
-            cfg, election, [raw.path for raw in packages], out, merge=False
-        )
+        written = _write_final(cfg, election, [raw.path for raw in packages], out)
     except (results.ResultsError, OSError, KeyError, ValueError) as e:
         _error(f"ems results: {e}")
         return 1
-    record.record()
+    _done(run)
     _report_written(out, written)
     return 0
+
+
+def _results_declared(
+    cfg: config.Config, election: config.Election
+) -> _Declared | None:
+    """Return what `results` reads and writes of *election*; None if it has none.
+
+    Its candidates and geometry (:func:`_reference`), a by-election's term's
+    candidates (:func:`_council_parts`), and what its results are compared
+    with (:func:`_compare`).
+    """
+    if not election.results.inputs:
+        return None
+    day = election.day.isoformat()
+    compare = _compare(cfg, election)
+    term = cfg.term(election)
+    return _Declared(
+        *_outputs(cfg, "results", day),
+        pins=[
+            *(_pin(cfg, name) for name in election.results.inputs),
+            *(pin for c in compare for pin in c.pins),
+        ],
+        curated=[cfg.election_dir(election) / obvody.DIRECTORY],
+        values={
+            "results": election.results,
+            "kind": election.kind,
+            # The names of ŠÚ SR's packages of 2022 and before (_write_final).
+            "candidates": sorted(election.candidates.inputs)
+            if election.candidates
+            else [],
+            "members": _members(cfg),
+            **{k: v for c in compare for k, v in c.values.items()},
+        },
+        upstream=(
+            ("candidates", day),
+            ("geo", day),
+            *((("candidates", term.day.isoformat()),) if term else ()),
+            *(key for c in compare for key in c.upstream),
+        ),
+    )
 
 
 def _okrsky_files(cfg: config.Config, election: config.Election) -> list[Path]:
@@ -1062,7 +1756,10 @@ def _run_build(args: argparse.Namespace) -> int:
             site = build.assemble_deployed(cfg, pages.locations(cfg, lock.keys(cfg)))
         else:
             site = build.assemble(cfg, _keys(cfg))
-        sizes = build.write(site, out, _gzip_memo(cfg.build_dir, "build"))
+        # data/build/ holds every step's output: the bundles link to it.
+        sizes = build.write(
+            site, out, _gzip_memo(cfg.build_dir, "build"), link_below=cfg.build_dir
+        )
     except (bundle.BuildError, lock.LockError, pages.PagesError) as e:
         _error(f"ems build: {e}")
         return 1
@@ -1095,16 +1792,27 @@ def _run_check(_args: argparse.Namespace) -> int:
     out = cfg.root / build.OUTPUT_DIR
     if not out.is_dir():
         raise ConfigError(f"{out} missing; run `ems build` first")
-    # The contests of the elections built here; a deployed bundle passed
-    # its checks where it was built.
-    contests = {
-        election.slug: [c["id"] for c in json.loads(built.read_bytes())["contests"]]
+    # Of the candidates.json of the elections built here, the contests their
+    # bundles and results are checked against and the obce their results
+    # are summed by, with those whose council contests are part of more
+    # (their council obvody) and the elections before their results are
+    # compared with; a deployed bundle passed its checks where it was built.
+    candidates_of = {
+        election.slug: {k: data[k] for k in ("contests", "obce")}
+        | {
+            "parts": sorted(_council_parts(cfg, election, data)),
+            "past": _past_days(
+                cfg, election, results.sources_of(c["id"] for c in data["contests"])
+            ),
+        }
         for election in cfg.elections
         if (
             built := cfg.election_build_dir(election) / candidates.OUTPUT_FILE
         ).is_file()
+        and (data := json.loads(built.read_bytes()))
     }
-    checks = check.run(out, cfg, contests)
+    memo = _shared_dir(cfg.build_dir, "check") / check.MEMO_FILE
+    checks = check.run(out, cfg, candidates_of, memo)
     _print(check.report(checks))
     return 1 if any(c.problems for c in checks) else 0
 
@@ -1112,8 +1820,8 @@ def _run_check(_args: argparse.Namespace) -> int:
 def _gzip_memo(directory: Path, step: str) -> Path:
     """Return where *step* keeps the gzip sizes it measured last.
 
-    *directory* is the election's build directory, or for the site's own
-    (``build``) data/build/.
+    *directory* is the build directory of the election or extract it runs
+    for, or for the site's own (``build``) data/build/.
     """
     return directory / output.GZIP_MEMO_DIR / f"{step}.json"
 
@@ -1219,9 +1927,8 @@ def _add_job_parser(commands: argparse._SubParsersAction) -> None:
     )
     _add_election(
         make,
-        "for kinds that read an election's data (obvod-rules, okrsok-rules):"
-        " that election, its day or slug (default: the latest); research is"
-        " of the latest only",
+        "for kinds that read an election's data (obvod-rules, okrsok-rules,"
+        " research): that election, its day or slug (default: the latest)",
     )
     make.set_defaults(run=_run_job_make)
     ingest = sub.add_parser(
@@ -1239,18 +1946,24 @@ def _add_job_parser(commands: argparse._SubParsersAction) -> None:
     ingest.set_defaults(run=_run_job_ingest)
     reuse_parser = sub.add_parser(
         "reuse",
-        help="give an earlier election the latest's obvod and okrsok rules where they fit",
+        help="give an election another vote's obvod and okrsok rules where it has none",
         description=(
             "Where the obvod-rules and okrsok-rules jobs of an earlier"
             " election found no document, copy the latest election's rules"
             " into its data/curated/ if the obvody, seats and okrsky provably"
-            " match, marked reused; for the obce listed in its adopt.toml,"
-            " whose documents place no address, draw the units with them"
-            " where their numbers and seats are the earlier election's,"
-            " marked adopted (see src/election_map_slovakia/reuse.py)."
+            " match, marked reused. A country-wide election or a by-election"
+            " gets the okrsky (and a by-election the council obvody that"
+            " voted) of the regular election nearest in time that proves"
+            " them by their numbers and voters, marked reused, where it has"
+            " none. Then, for any election, the latest too, the units still"
+            " unknown are drawn with those of the vote nearest in time,"
+            " either way, that has its own of the same structure (obvod"
+            " numbers and seats; okrsky per obvod) with voters within 25 %"
+            " where known, marked adopted: a stand-in, indicative only"
+            " (see src/election_map_slovakia/reuse.py)."
         ),
     )
-    _add_election(reuse_parser, "the earlier election, its day or slug")
+    _add_election(reuse_parser, "the election, its day or slug")
     reuse_parser.set_defaults(run=_run_job_reuse)
 
 
@@ -1260,14 +1973,7 @@ def _run_job_make(args: argparse.Namespace) -> int:
         raise ConfigError("--size must be at least 1")
     kind = jobs.kinds()[args.kind]
     if args.election and not kind.per_election:
-        raise ConfigError(
-            f"--election: {kind.name} jobs are of the latest election only"
-            + (
-                "; an earlier one reuses its findings dated before its day"
-                if kind.name == research.NAME
-                else ""
-            )
-        )
+        raise ConfigError(f"--election: {kind.name} jobs serve every election at once")
     try:
         made = jobs.make(
             cfg,
@@ -1353,15 +2059,16 @@ def _add_research_parser(commands: argparse._SubParsersAction) -> None:
         "status",
         help="how many candidates of a place are researched, per language",
         description=(
-            "Count the latest election's candidates --only selects (places,"
-            " research languages; as for `ems job make research`) researched"
-            " with the current allowlist, with findings, in pending jobs and"
-            " still to do."
+            "Count the candidates of an election (the latest, or --election)"
+            " --only selects (places, research languages; as for `ems job make"
+            " research`) researched with the current allowlist, with findings,"
+            " in pending jobs and still to do."
         ),
     )
     status.add_argument(
         "--only", nargs="+", action="extend", default=[], metavar="NAME"
     )
+    _add_election(status, "the election, its day or slug (default: the latest)")
     status.set_defaults(run=_run_research_status)
 
 
@@ -1408,7 +2115,7 @@ def _run_research_submit(args: argparse.Namespace) -> int:
 def _run_research_status(args: argparse.Namespace) -> int:
     cfg = config.load()
     try:
-        _print(research.coverage(cfg, args.only))
+        _print(research.coverage(cfg, cfg.election(args.election), args.only))
     except jobs.JobError as e:
         _error(f"ems research status: {e}")
         return 1
@@ -1418,34 +2125,36 @@ def _run_research_status(args: argparse.Namespace) -> int:
 def _add_results_parser(commands: argparse._SubParsersAction) -> None:
     p = commands.add_parser(
         "results",
-        help="election results: poll, final, fake, deploy",
+        help="live results of an election night: poll, fake, deploy",
         description=(
-            "Write an election's results, data/build/<election day>/results/"
-            " (which `ems build` copies into the site), from volbysr.sk"
-            " (poll), the definitive CSV tables (final) or dummy data (fake);"
-            " deploy the results on an election night (deploy). See"
-            " docs/results.md and src/election_map_slovakia/results.py."
+            "Write an election's live results, data/build/<election day>/live/"
+            " (which `ems build` copies into the site beside the final"
+            " results), from volbysr.sk (poll) or dummy data (fake), and"
+            " deploy them on an election night (deploy). The final results"
+            " come only from the election's pinned results inputs, through"
+            " `ems make` and a release. See docs/results.md and"
+            " src/election_map_slovakia/results.py."
         ),
     )
     sub = p.add_subparsers(title="results commands", metavar="COMMAND", required=True)
 
     def directory(parser: argparse.ArgumentParser) -> None:
-        _add_election(parser, "whose results to write (default: the latest)")
+        _add_election(parser, "whose live results to write (default: the latest)")
         parser.add_argument(
             "--dir",
             type=Path,
             default=None,
-            help="the results directory (default: data/build/<election day>/results/)",
+            help="the directory to write (default: data/build/<election day>/live/)",
         )
 
     poll = sub.add_parser(
         "poll",
-        help="poll volbysr.sk and rewrite the results whenever the counting moves on",
+        help="poll volbysr.sk and rewrite the live results as the counting moves on",
         description=(
             "Fetch the progress files of volbysr.sk every INTERVAL seconds"
             " (conditional requests), and when one changed the per-unit"
             " files; keep every file fetched under data/raw/results/<UTC"
-            " time>/ and rewrite the results when their content changed."
+            " time>/ and rewrite the live results when their content changed."
         ),
     )
     poll.add_argument(
@@ -1458,43 +2167,19 @@ def _add_results_parser(commands: argparse._SubParsersAction) -> None:
     poll.add_argument(
         "--deploy",
         action="store_true",
-        help="deploy the results after every change (as `results deploy --yes`)",
+        help="deploy the live results after every change (as `results deploy --yes`)",
     )
     directory(poll)
     poll.set_defaults(run=_run_results_poll)
-    final = sub.add_parser(
-        "final",
-        help="write the definitive results (CSV zips of volbysr.sk)",
-        description=(
-            "Read the definitive results, the zips of CSV tables of the"
-            " municipal and the regional election: the zips or directories"
-            " of them given; else the election's `results` inputs where"
-            " config/elections.toml names them (`ems"
-            " fetch` downloads them); else downloaded from"
-            " https://volbysr.sk/oso/files/OSO<year>_SK_csv.zip and"
-            " osk/files/OSK<year>_SK_csv.zip and kept under"
-            " data/raw/results/<UTC time>/. They replace the contests they"
-            " have in the results; with both elections the phase becomes"
-            " final."
-        ),
-    )
-    final.add_argument(
-        "packages",
-        nargs="*",
-        type=Path,
-        metavar="ZIP_OR_DIR",
-        help="read these instead of the inputs or the downloaded packages",
-    )
-    directory(final)
-    final.set_defaults(run=_run_results_final)
     fake = sub.add_parser(
         "fake",
-        help="write dummy results for testing the app",
+        help="write dummy live results for testing the app",
         description=(
             "Write deterministic dummy results of the counting at STAGE"
             " (none, early, mid, late, final) from the election's"
-            " data/build/<election day>/; the counts"
-            " only grow from stage to stage for the same --seed."
+            " data/build/<election day>/ as its live results; the counts only"
+            " grow from stage to stage for the same --seed. The app reads them"
+            " only where the election has no final results."
         ),
     )
     fake.add_argument("stage", choices=list(results.STAGES), metavar="STAGE")
@@ -1503,52 +2188,69 @@ def _add_results_parser(commands: argparse._SubParsersAction) -> None:
     fake.set_defaults(run=_run_results_fake)
     deploy = sub.add_parser(
         "deploy",
-        help="deploy the results of every election to their Pages project",
+        help="deploy the live results of every election to their Pages project",
         description=(
-            "Show what the election's results hold and check them, write the"
-            " results part of the site (dist/results/: every election's) and"
-            " deploy it with Wrangler to the Pages project results_project"
-            " of config/site.toml as a production deployment, after asking"
-            " unless --yes. The deployment carries the results key of"
-            f" {lock.LOCK_FILE} marked live, so that a release of that key"
-            " leaves it in place; the app and the bundles stay as they are."
+            "Write the live part of the site (dist/live/: the live results of"
+            " every election that has some), show what each election's hold"
+            " and check them, and deploy the part with Wrangler to the Pages"
+            " project live_project of config/site.toml as a production"
+            " deployment, after asking unless --yes. The final results, the"
+            " app and the bundles stay as they are: only a release deploys"
+            " them."
         ),
     )
     deploy.add_argument("--yes", action="store_true", help="do not ask")
-    _add_election(deploy, "whose results to show and check (default: the latest)")
     deploy.set_defaults(run=_run_results_deploy)
 
 
-def _results_dir(
+def _live_dir(
     cfg: config.Config, election: config.Election, args: argparse.Namespace
 ) -> Path:
-    """Return the directory a results command writes; see :func:`_written`."""
-    return args.dir if args.dir is not None else cfg.results_dir(election)
+    """Return the directory a results command writes: the live results'.
 
-
-def _written(
-    cfg: config.Config, election: config.Election, directory: Path, written: dict | None
-) -> None:
-    """Note that a results command wrote *directory*, unless *written* is None.
-
-    The results step of `make` would take the election's results directory
-    for its own output, up to date, and keep what poll, fake or final wrote
-    there instead of the results of the inputs: its stamp goes.
+    Never the final results' (``Config.results_dir``), which only the
+    results step of `make` writes.
     """
-    if (
-        written is not None
-        and directory.resolve() == cfg.results_dir(election).resolve()
-    ):
-        _stamp_path(cfg, election, "results").unlink(missing_ok=True)
+    return args.dir if args.dir is not None else cfg.live_dir(election)
 
 
 def _reference(cfg: config.Config, election: config.Election) -> results.Reference:
     try:
         return results.load_reference(
-            cfg.election_build_dir(election), cfg.election_dir(election)
+            cfg.election_build_dir(election),
+            cfg.election_dir(election),
+            _members(cfg),
+            _council_parts(cfg, election),
         )
     except results.ResultsError as e:
         raise ConfigError(str(e)) from e
+
+
+def _expect(cfg: config.Config, election: config.Election) -> results.Expect:
+    """Return what *election*'s results are held to, from its built candidates."""
+    data = json.loads(_built_candidates(cfg, election).read_bytes())
+    sources = results.sources_of(c["id"] for c in data["contests"])
+    return results.Expect.of(
+        data, _council_parts(cfg, election, data), _past_days(cfg, election, sources)
+    )
+
+
+def _council_parts(
+    cfg: config.Config, election: config.Election, data: Any = None
+) -> set[str]:
+    """Return :func:`addresses.council_parts` of *election*'s built candidates.
+
+    *data*, where read already; the results' council obvody follow it as
+    the app's do.
+    """
+    if data is None:
+        data = json.loads(_built_candidates(cfg, election).read_bytes())
+    return addresses.council_parts(cfg, election, data["contests"])
+
+
+def _members(cfg: config.Config) -> dict[str, int]:
+    """Return party → its number of member parties (config/parties.toml)."""
+    return {name: len(party.members) for name, party in cfg.parties.items()}
 
 
 def _report_written(directory: Path, written: dict | None) -> None:
@@ -1573,149 +2275,217 @@ def _write_final(
     election: config.Election,
     packages: Sequence[Path],
     out: Path,
-    *,
-    merge: bool,
 ) -> dict | None:
     """Write the definitive results of *packages* to *out*; return the status.
 
-    With *merge*, into the results there, replacing the contests the
-    packages have; else in their place. Written as of the packages' newest
-    data, so that the same packages give the same files, and only if they
-    keep the contract (``results.check``): a unit whose votes do not add up
-    stops it. ŠÚ SR's packages of 2022 (format ``susr``) hold every contest,
-    so they always replace what is there. The okrsky get the figures of the
-    election before, if any (:func:`_past`).
+    In place of what is there, as of the packages' newest data, so that the
+    same packages give the same files, and only if they keep the contract
+    (``results.check``): a unit whose votes do not add up stops it. ŠÚ SR's
+    packages of 2022, 2018 and 2017 (format ``susr``) hold every contest. A
+    national election's packages are its tables (:mod:`national`), a
+    by-election's its package (``susr-by``). The okrsky get the figures of
+    the election before, if any (:func:`_past`).
     """
     if election.results.format == "susr":
-        if len(packages) != len(config.RESULT_FORMATS["susr"] or ()):
-            raise results.ResultsError("the 2022 results are two packages, oso, osk")
+        # The configuration has them be the packages the candidates name.
+        named = list(election.candidates.inputs) if election.candidates else []
+        if len(packages) != len(named):
+            raise results.ResultsError(
+                f"the {election.slug} results are the packages {', '.join(named)}"
+            )
         try:
-            oso, osk = (statoffice.open_package(Path(p)) for p in packages)
-            final = statoffice.read_results(oso, osk)
+            final = statoffice.read_final(dict(zip(named, packages, strict=True)))
         except statoffice.StatOfficeError as e:
             raise results.ResultsError(str(e)) from e
         merged = final.live
     else:
         ref = _reference(cfg, election)
-        live, elections = results.read_final(packages, ref.contests)
-        old = results.read_live(out) if merge else None
-        merged = results.merge(old, live, elections)
+        if election.kind in contests.NATIONAL:
+            live, done = national.read_final(packages, ref)
+        elif election.results.format == "susr-by":
+            live, done = results.read_by_election(packages, ref)
+        else:
+            live, done = results.read_final(packages, ref.contests)
+        merged = results.finalize(live, done, ref.sources)
     merged.past = _past(cfg, election, merged)
-    return results.write(out, merged, results.data_time(merged), checked=True)
+    expect = _expect(cfg, election)
+    return results.write(
+        out, merged, expect.divisions, results.data_time(merged), expect=expect
+    )
 
 
 class _Compare(NamedTuple):
-    """The election before one, which its results are compared with.
+    """An election before one, which (some of) its results are compared with.
 
     And what the comparison reads (:mod:`crosswalk`) and writes (*out*).
     """
 
     earlier: config.Election
-    registers: tuple[_Raw, _Raw]
-    """The address registers of the earlier election and of this one."""
-    zbgis: tuple[_Raw, _Raw]
-    """Their boundaries, level 0, which name the obce of the registers."""
-    links: Path
-    trees: list[Path]
-    """Both elections' addr/ output and the earlier one's results."""
+    halves: tuple[str, ...]
+    """The halves of a regular election compared with it (keys of
+    :data:`config.HALVES`, its contests' sources); () for every contest of
+    an election of another kind."""
+    pins: list[config.Input]
+    """The address registers of both elections and their boundaries, level
+    0, which name the obce of the registers."""
+    upstream: tuple[record.Key, ...]
+    """The links of this election, the addresses (addr/) of both and the
+    results of the earlier one."""
     values: dict[str, object]
+    links: Path
     out: Path
 
-    @property
-    def inputs(self) -> list[_Raw]:
-        """Return the downloads read."""
-        return [*self.registers, *self.zbgis]
+    def sources(self, of: Iterable[str]) -> tuple[str, ...]:
+        """Return the sources compared with it of those *of* the election."""
+        return tuple(s for s in of if not self.halves or s in self.halves)
 
 
-def _compare(cfg: config.Config, election: config.Election) -> _Compare | None:
-    """Return what *election*'s results are compared with; None if nothing."""
-    earlier = next((e for e in cfg.elections if e.day < election.day), None)
-    if earlier is None:
-        return None
-    both = (earlier, election)
-    built = cfg.election_build_dir(election)
-    return _Compare(
-        earlier,
-        (_input(cfg, earlier.addresses), _input(cfg, election.addresses)),
-        (_input(cfg, earlier.zbgis[0]), _input(cfg, election.zbgis[0])),
-        built / bundle.LINKS_DIR / f"{earlier.slug}.json",
-        [
-            *(cfg.election_build_dir(e) / addresses.OUTPUT_DIR for e in both),
-            cfg.results_dir(earlier),
-        ],
-        {
-            "crosswalk code": stamp.code_digest("crosswalk"),
-            **{
-                f"overrides {e.slug} address": (
-                    cfg.overrides[e.slug].address,
-                    sorted(cfg.overrides[e.slug].address_skip),
-                )
-                for e in both
-            },
-        },
-        built / crosswalk.OUTPUT_DIR / f"{earlier.slug}.json",
+def _compare(cfg: config.Config, election: config.Election) -> list[_Compare]:
+    """Return what *election*'s results are compared with, oldest first."""
+    out = []
+    for earlier, halves in _earlier(cfg, election):
+        both = (earlier, election)
+        day, before = election.day.isoformat(), earlier.day.isoformat()
+        links = cfg.election_build_dir(election) / bundle.LINKS_DIR
+        out.append(
+            _Compare(
+                earlier,
+                halves,
+                [
+                    *(_pin(cfg, e.addresses) for e in both),
+                    *(_pin(cfg, e.zbgis[0]) for e in both),
+                ],
+                (
+                    ("links", day),
+                    ("addresses", before),
+                    ("addresses", day),
+                    ("results", before),
+                ),
+                {
+                    f"compared {earlier.slug}": list(halves),
+                    **{
+                        f"overrides {e.slug} address": (
+                            cfg.overrides[e.slug].address,
+                            sorted(cfg.overrides[e.slug].address_skip),
+                        )
+                        for e in both
+                    },
+                },
+                links / f"{earlier.slug}.json",
+                _crosswalk_file(cfg, election, earlier),
+            )
+        )
+    return out
+
+
+def _earlier(
+    cfg: config.Config, election: config.Election
+) -> list[tuple[config.Election, tuple[str, ...]]]:
+    """Return the elections *election*'s results are compared with, oldest first.
+
+    Each with the halves compared with it (:attr:`_Compare.halves`): the
+    newest earlier election of its kind, of a regular one for each half the
+    newest that held it (before 2022 the municipal and the regional
+    elections were held apart: 2022's municipal contests are compared with
+    2018's, its regional ones with 2017's); none of a by-election, whose
+    contests are in other places each time.
+    """
+    if election.kind == "by-election":
+        return []
+    before = [
+        e for e in cfg.elections if e.day < election.day and e.kind == election.kind
+    ]
+    if not election.halves:
+        return [(before[0], ())] if before else []
+    nearest = {
+        half: next((e.slug for e in before if half in e.halves), None)
+        for half in election.halves
+    }
+    return [
+        (e, halves)
+        for e in reversed(before)
+        if (halves := tuple(h for h in election.halves if nearest[h] == e.slug))
+    ]
+
+
+def _past_days(
+    cfg: config.Config, election: config.Election, sources: Iterable[str]
+) -> dict[str, str]:
+    """Return source → day of the election before it is compared with.
+
+    Of *sources*, those of *election*'s contests (:attr:`results.Expect.past`).
+    """
+    of = tuple(sources)
+    return {
+        s: c.earlier.day.isoformat()
+        for c in _compare(cfg, election)
+        for s in c.sources(of)
+    }
+
+
+def _crosswalk_file(
+    cfg: config.Config, election: config.Election, earlier: config.Election
+) -> Path:
+    """Return the crosswalk from *earlier*'s okrsky to *election*'s, beside its results."""
+    return (
+        cfg.election_build_dir(election) / crosswalk.OUTPUT_DIR / f"{earlier.slug}.json"
     )
 
 
 def _past(
     cfg: config.Config, election: config.Election, live: results.Live
-) -> results.Past:
-    """Return the ``past`` of *election*'s results *live*: the election before's.
+) -> dict[str, results.Past]:
+    """Return the ``past`` of *election*'s results *live*: the elections before's.
 
-    Mapped onto its okrsky by the crosswalk, which is written beside them.
+    By source (:attr:`results.Live.past`): the contests compared with each
+    election before (:func:`_compare`) mapped onto its okrsky by a
+    crosswalk of their own, which is written beside the results.
     """
-    compare = _compare(cfg, election)
-    if compare is None:
-        return results.Past()
-    earlier = compare.earlier
-    before = results.read_live(cfg.results_dir(earlier))
-    if before is None:
-        raise ConfigError(
-            f"{cfg.results_dir(earlier)} has no results; run `ems make"
-            f" --election {earlier.slug}` first"
-        )
-    if not compare.links.is_file():
-        raise ConfigError(f"{compare.links} missing; run `ems links` first")
-    admins: dict[Path, candidates.Admin] = {}
-    registers = []
-    for e, register, zbgis in zip(
-        (earlier, election), compare.registers, compare.zbgis, strict=True
-    ):
-        gpkg = _extract_gpkg(cfg, zbgis)
-        if gpkg not in admins:
-            admins[gpkg] = candidates.load_admin(gpkg)
-        overrides = cfg.overrides[e.slug]
-        registers.append(
+    out: dict[str, results.Past] = {}
+    for compare in _compare(cfg, election):
+        earlier = compare.earlier
+        before = results.read_live(cfg.results_dir(earlier))
+        if before is None:
+            raise ConfigError(
+                f"{cfg.results_dir(earlier)} has no results; run `ems make"
+                f" --election {earlier.slug}` first"
+            )
+        if not compare.links.is_file():
+            raise ConfigError(f"{compare.links} missing; run `ems links` first")
+        registers = [
             crosswalk.Register(
-                register.path,
-                admins[gpkg],
-                overrides.address,
-                overrides.address_skip,
+                _register(cfg, e).houses,
                 cfg.election_build_dir(e) / addresses.OUTPUT_DIR,
             )
-        )
-    walk = crosswalk.make(live, before, registers, earlier.day)
-    linked = json.loads(compare.links.read_bytes())["candidacies"]
-    past = crosswalk.past(live, before, walk, linked)
-    output.write_file(compare.out, output.to_json(crosswalk.to_json(walk)) + b"\n")
-    _print(crosswalk.report(walk, past))
-    _print([f"wrote {compare.out.relative_to(cfg.root)}"])
-    return past
+            for e in (earlier, election)
+        ]
+        sources = compare.sources(live.source)
+        compared = live.part(sources)
+        walk = crosswalk.make(compared, before, registers, earlier.day)
+        linked = json.loads(compare.links.read_bytes())["candidacies"]
+        past = crosswalk.past(compared, before, walk, linked)
+        out |= dict.fromkeys(sources, past)
+        output.write_file(compare.out, output.to_json(crosswalk.to_json(walk)) + b"\n")
+        _print(crosswalk.report(walk, past))
+        _print([f"wrote {compare.out.relative_to(cfg.root)}"])
+    return out
 
 
 def _run_results_poll(args: argparse.Namespace) -> int:
     cfg = config.load()
     election = cfg.election(args.election)
-    if election.results.format != "volbysr":
+    # The night's files of the other kinds differ; their results come final.
+    if election.kind != "municipal-regional" or election.results.format != "volbysr":
         raise ConfigError(
-            f"results poll: the {election.slug} election's results are not"
-            f" on volbysr.sk ({election.results.format}): its final results"
-            " come from its inputs (`ems make`)"
+            f"results poll: only the night of a municipal and regional election"
+            f" on volbysr.sk is polled; the {election.slug} election"
+            f" ({election.kind}, {election.results.format}) gets its results"
+            " from its inputs (`ems make`)"
         )
-    out = _results_dir(cfg, election, args)
+    out = _live_dir(cfg, election, args)
     client = _client(cfg)
     poller = results.Poller(client, _reference(cfg, election), out, _log)
-    project = cfg.site.results_project
+    project = cfg.site.live_project
     try:
         while True:
             started = time.monotonic()
@@ -1724,9 +2494,8 @@ def _run_results_poll(args: argparse.Namespace) -> int:
             except OSError as e:
                 _log(f"poll failed: {e}")
                 written = None
-            _written(cfg, election, out, written)
             if written is not None and args.deploy:
-                code = _deploy_results(cfg, ask=False)
+                code = _deploy_live(cfg, ask=False)
                 _log(
                     f"deploy to {project}: " + ("done" if code == 0 else f"exit {code}")
                 )
@@ -1741,80 +2510,64 @@ def _log(message: str) -> None:
     _error(f"{dt.datetime.now(results.TIMEZONE):%H:%M:%S} {message}")
 
 
-def _run_results_final(args: argparse.Namespace) -> int:
-    cfg = config.load()
-    election = cfg.election(args.election)
-    out = _results_dir(cfg, election, args)
-    try:
-        packages = (
-            args.packages
-            or [_input(cfg, name).path for name in election.results.inputs]
-            or results.fetch_final(_client(cfg), election.day.year)
-        )
-        _print([f"reading {p}" for p in packages])
-        written = _write_final(cfg, election, packages, out, merge=True)
-    except (results.ResultsError, OSError, KeyError, ValueError) as e:
-        _error(f"ems results final: {e}")
-        return 1
-    _written(cfg, election, out, written)
-    _report_written(out, written)
-    return 0
-
-
 def _run_results_fake(args: argparse.Namespace) -> int:
     cfg = config.load()
     election = cfg.election(args.election)
-    if election != cfg.latest:
-        raise ConfigError(
-            f"results fake: only the latest election ({cfg.latest.slug})"
-            f" has results to fake; the {election.slug} election's are final"
-        )
-    out = _results_dir(cfg, election, args)
+    out = _live_dir(cfg, election, args)
+    ref = _reference(cfg, election)
     try:
-        counts = okrsokrules.okrsok_counts(cfg, election)
-        rule_sets = obvody.okrsok_rule_sets(cfg.election_dir(election))
+        counts = okrsokrules.okrsok_counts(cfg, election) if election.units else {}
+        if election.kind in contests.NATIONAL:
+            live = national.fake(ref, args.stage, election.day, args.seed, counts)
+        else:
+            rule_sets = obvody.okrsok_rule_sets(cfg.election_dir(election))
+            live = results.fake(
+                ref,
+                args.stage,
+                args.seed,
+                counts,
+                {obec: rules.okrsky for obec, rules in rule_sets.items()},
+                _past_days(cfg, election, ref.sources),
+            )
     except (jobs.JobError, obvody.ObvodyError) as e:
         _error(f"ems results fake: {e}")
         return 1
-    live = results.fake(
-        _reference(cfg, election),
-        args.stage,
-        args.seed,
-        counts,
-        {obec: rules.okrsky for obec, rules in rule_sets.items()},
-    )
-    written = results.write(out, live)
-    _written(cfg, election, out, written)
+    written = results.write(out, live, ref.divisions)
     _report_written(out, written)
     return 0
 
 
 def _run_results_deploy(args: argparse.Namespace) -> int:
-    cfg = config.load()
-    out = cfg.results_dir(cfg.election(args.election))
-    _print(results.describe(out))
-    problems = results.check(out)
+    return _deploy_live(config.load(), ask=not args.yes)
+
+
+def _deploy_live(cfg: config.Config, *, ask: bool) -> int:
+    """Write the live part, check it and deploy it, asking first if *ask*.
+
+    Only if every election's live results in it keep the contract
+    (``results.check``), each against its built candidates; the commit
+    message of the deployment names their versions (the part's manifest).
+    """
+    part = bundle.live_part(cfg)
+    if not part.copies:
+        _error("ems results deploy: no election has live results; nothing deployed")
+        return 1
+    out = cfg.root / build.OUTPUT_DIR / bundle.LIVE_PART
+    build.write(build.Site(part.files, part.copies, []), out)
+    by_day = {e.day.isoformat(): e for e in cfg.elections}
+    problems = []
+    for day in part.copies:
+        election = by_day[day]
+        _print([f"{election.slug} ({day}):", *results.describe(out / day)])
+        expect = _expect(cfg, election)
+        problems += [f"{day}/{p}" for p in results.check(out / day, expect)]
     if problems:
         _print([f"  {p}" for p in problems])
         _error(f"ems results deploy: {out} breaks the contract; not deployed")
         return 1
-    return _deploy_results(cfg, ask=not args.yes)
-
-
-def _deploy_results(cfg: config.Config, *, ask: bool) -> int:
-    """Write the results part and deploy it, asking first if *ask*.
-
-    Its deployment carries the results key of the committed lock, marked
-    live (``pages.LIVE``): a release of that key leaves it in place.
-    """
-    keys = lock.read(cfg.root / lock.LOCK_FILE)
-    if keys is None:
-        raise ConfigError(f"{lock.LOCK_FILE} missing; run `ems data lock`")
-    part = bundle.results_part(cfg, keys.results)
-    out = cfg.root / build.OUTPUT_DIR / bundle.RESULTS_PART
-    build.write(build.Site(part.files, part.copies, []), out)
-    project = cfg.site.results_project
-    message = f"{keys.results} {pages.LIVE}"
+    versions = json.loads(part.files[bundle.MANIFEST])["versions"]
+    message = " ".join(["live", *(f"{day}@{v}" for day, v in versions.items())])
+    project = cfg.site.live_project
     _print([" ".join(pages.deploy_command(out, project, message))])
     if ask and input(f"deploy to {project}? [y/N] ").strip().lower() != "y":
         _print(["not deployed"])
@@ -1856,15 +2609,29 @@ def main(argv: Sequence[str] | None = None) -> int:
         parser.print_help()
         return 2
     try:
-        if run in _UNSTAGED:
-            return run(args)
-        with progress.stage(args.command) as stage:
-            code = run(args)
-            stage.failed = code != 0
-        return code
+        with _scans_kept():
+            if run in _UNSTAGED:
+                return run(args)
+            with progress.stage(args.command) as stage:
+                code = run(args)
+                stage.failed = code != 0
+            return code
     except ConfigError as e:
         _error(f"ems: {e}")
         return 1
+
+
+def _scans_kept() -> contextlib.AbstractContextManager[None]:
+    """Keep the imports of the code digests in data/build/shared/stamp/.
+
+    For the commands that digest code (:func:`stamp.scans_kept`); nothing
+    outside a project, which a command that needs one reports.
+    """
+    try:
+        root = config.find_config_dir().parent
+    except ConfigError:
+        return contextlib.nullcontext()
+    return stamp.scans_kept(_shared_dir(config.build_dir_of(root), "stamp"))
 
 
 if __name__ == "__main__":

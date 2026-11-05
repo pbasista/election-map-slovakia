@@ -1,0 +1,32 @@
+# Okrsky of Detvianska Huta, transcribed by an AI agent in job okrsok-rules-905 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Detvianska Huta, Vrchdobroč
+#   okrsok 2: Komárno, Ľuľovka, Brnovka
+#   okrsok 3: Žabica, Bratkovica, Blažková Jama
+obec = "518271"
+name = "Detvianska Huta"
+okrsky_date = 2018-07-27
+okrsky_note = "Ľuľovka, Brnovka (okrsok 2) and Blažková Jama (okrsok 3) are settlements, not parts in the register; the five parts are placed by part rules as the document names them."
+
+[[document]]
+url = "https://www.detvianskahuta.eu/data/uredni_deska/obsah100_3.pdf"
+sha256 = "fb24b86470405ede8e8edb4d8106dba8e4e83bfbed9b8e29b7515bf1d4305cd3"
+title = "Oznam: Uznesením OZ č. 242/OZ/2018 zo dňa 27.07.2018 boli pre voľby do orgánov samosprávy obcí určené okrsky"
+
+[okrsok.1]
+rules = [
+  {part = "Detvianska Huta"},
+  {part = "Vrchdobroč"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Komárno"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Žabica"},
+  {part = "Bratkovica"},
+]

@@ -1,0 +1,259 @@
+# Okrsky of Pezinok, transcribed by an AI agent in job okrsok-rules-4644 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bratislavská 1-91 a 2-102, Drevárska, Farská, Fortna, Holubyho, Jesenského, Mladoboleslavská, Mýtna, Potočná, Radničné námestie, Svätojurská ulica, Št. Polkorába, Za koníčkom, vrátane občanov, ktorí majú trvalý pobyt mesto Pezinok
+#   okrsok 2: Záhradná, M. R. Štefánika, Kollárova
+#   okrsok 3: Hollého, Kalinčiakova, Lesnícka, Meisslova, Mahulanka, Moyzesova, Pod lipou, Sama Chalupku, Senecká, Šancová, Talihov dvor, Tehelná, Za dráhou, Viničnianska cesta
+#   okrsok 4: Muškátová, Silvánová
+#   okrsok 5: Dobšinského, Hroznová, Panholec, Rulandská, Sládkovičova, Slnečná, Šenkvická cesta, Veltlínska
+#   okrsok 6: F.P. Drobiševa, gen. Pekníka, gen. Svobodu, Gogoľova, Jilemnického, Jiráskova, kpt. Jaroša, Markušova, Nálepkova, Šafárikova, Švermova, Trnavská, Ulica gen. Goliana, Ulica gen. Viesta
+#   okrsok 7: Baba, Banícka, Bottova, Cajlanská, dona Sandtnera 1, 2, 5, 7, Dr. Bokesa, Dr. Stohla, Javorová, Kučišdorfská dolina, Malacká cesta, Pod kalváriou, Rybníček, Stupy, Topoľová, ulica Alfonza Šilhára, Záhumenice
+#   okrsok 8: dona Sandtnera 9-45, dona Sandtnera 16-26, Jamnických, Krížna, Kutuzovova, L. Novomeského 36-66, Najmarova, Richarda Rétiho, Schaubmarova, Šteberlova, Sasinkova ulica, Zumberská, Žarnovických
+#   okrsok 9: Fajgalská cesta, Hasičská, Kamenice, Kukučínova, Kupeckého, Kuzmányho, Leitne, Malokarpatská, Na bielenisku, Panský chodník, Podhorská, Rázusova, Reisinger, Rozálka, Slnečné údolie, Svätoplukova 3, 4, 5, Vincúrska, Vinohradnícka cesta, Zámocká, Zigmundíkova
+#   okrsok 10: Suvorovova, Svätoplukova 1, 2
+#   okrsok 11: Svätoplukova 6-51
+#   okrsok 12: L. Novomeského 1 - 27, 2 – 34
+#   okrsok 13: Bernolákova, Fraňa Kráľa, Hviezdoslavova, SNP, Vajanského
+#   okrsok 14: Hrnčiarska, Za hradbami, SOŠ PZ
+#   okrsok 15: 1. mája, Fándlyho, Mierová, Obrancov mieru
+#   okrsok 16: Eugena Suchoňa, Gorkého, Kataríny Franklovej, Komenského, Ľudovíta Rajtera, Majakovského, Nerudova, Obchodná, Okružná, Puškinova, Saulaková, Tolstého
+#   okrsok 17: Bystrická, Bratislavská 108-130
+#   okrsok 18: Cintorínska, Černicová, D. Virgoviča, Družstevná, Glejovka, Grobská cesta, Hečkova, Hurbanova, Jána Raka, Krkavec, Liesková, Limbašská cesta, Matúškova, Mlynárska, Myslenická, Nezábudková, Nová, Orešie, Podkarpatská, Pri mlyne, Púpavová, Ružová, Štúrova, Trnková, Vinice, Za panskou záhradou, Železničná
+obec = "508179"
+name = "Pezinok"
+okrsky_date = 2024-02-15
+okrsky_fill = "nearest"
+okrsky_note = "Streets per okrsok as the document lists them; house-number ranges whose ends are both odd or both even are read as odd or even numbers. Streets the document names but the register lacks (Fortna, SOŠ PZ, Sasinkova ulica, Panský chodník, Vinohradnícka cesta, Ulica gen. Goliana) are left out; 'vrátane občanov, ktorí majú trvalý pobyt mesto Pezinok' (okrsok 1) means voters registered without an address. fill_nearest covers the register's addresses without a street, streets the document does not name and numbers of split streets it does not list."
+
+[[document]]
+url = "https://www.pezinok.sk/content/files/Urcenie_volebnych_okrskov_a_miestnosti_volieb_do_EP_2024.pdf"
+sha256 = "b02ed976f5bc94a9a13ea650ff4cbd2ad792b7d51271eafb75201d2651f95003"
+title = "Informácia o utvorení volebných okrskov … pre voľby do Európskeho parlamentu 2024 (V Pezinku, dňa 15.02.2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Bratislavská", numbers = "1-91", parity = "odd"},
+  {street = "Bratislavská", numbers = "2-102", parity = "even"},
+  {street = "Drevárska"},
+  {street = "Farská"},
+  {street = "Holubyho"},
+  {street = "Jesenského"},
+  {street = "Mladoboleslavská"},
+  {street = "Mýtna"},
+  {street = "Potočná"},
+  {street = "Radničné námestie"},
+  {street = "Svätojurská ulica"},
+  {street = "Št. Polkorába"},
+  {street = "Za koníčkom"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Záhradná"},
+  {street = "M. R. Štefánika"},
+  {street = "Kollárova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hollého"},
+  {street = "Kalinčiakova"},
+  {street = "Lesnícka"},
+  {street = "Meisslova"},
+  {street = "Mahulanka"},
+  {street = "Moyzesova"},
+  {street = "Pod lipou"},
+  {street = "Sama Chalupku"},
+  {street = "Senecká"},
+  {street = "Šancová"},
+  {street = "Talihov dvor"},
+  {street = "Tehelná"},
+  {street = "Za dráhou"},
+  {street = "Viničnianska cesta"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Muškátová"},
+  {street = "Silvánová"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Dobšinského"},
+  {street = "Hroznová"},
+  {street = "Panholec"},
+  {street = "Rulandská"},
+  {street = "Sládkovičova"},
+  {street = "Slnečná"},
+  {street = "Šenkvická cesta"},
+  {street = "Veltlínska"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "F. P. Drobiševa", written = "F.P. Drobiševa"},
+  {street = "gen. Pekníka"},
+  {street = "gen. Svobodu"},
+  {street = "Gogoľova"},
+  {street = "Jilemnického"},
+  {street = "Jiráskova"},
+  {street = "kpt. Jaroša"},
+  {street = "Markušova"},
+  {street = "Nálepkova"},
+  {street = "Šafárikova"},
+  {street = "Švermova"},
+  {street = "Trnavská"},
+  {street = "Ulica gen. Viesta"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Baba"},
+  {street = "Banícka"},
+  {street = "Bottova"},
+  {street = "Cajlanská"},
+  {street = "dona Sandtnera", numbers = "1, 2, 5, 7"},
+  {street = "Dr. Bokesa"},
+  {street = "Dr. Štohla", written = "Dr. Stohla"},
+  {street = "Javorová"},
+  {street = "Kučišdorfská dolina"},
+  {street = "Malacká cesta"},
+  {street = "Pod kalváriou"},
+  {street = "Rybníček"},
+  {street = "Stupy"},
+  {street = "Topoľová"},
+  {street = "Ulica Alfonza Šilhára", written = "ulica Alfonza Šilhára"},
+  {street = "Záhumenice"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "dona Sandtnera", numbers = "9-45", parity = "odd"},
+  {street = "dona Sandtnera", numbers = "16-26", parity = "even"},
+  {street = "Jamnických"},
+  {street = "Krížna"},
+  {street = "Kutuzovova"},
+  {street = "L. Novomeského", numbers = "36-66", parity = "even"},
+  {street = "Najmarova"},
+  {street = "Richarda Rétiho"},
+  {street = "Schaubmarova"},
+  {street = "Šteberlova"},
+  {street = "Zumberská"},
+  {street = "Žarnovických"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Fajgalská cesta"},
+  {street = "Hasičská"},
+  {street = "Kamenice"},
+  {street = "Kukučínova"},
+  {street = "Kupeckého"},
+  {street = "Kuzmányho"},
+  {street = "Leitne"},
+  {street = "Malokarpatská"},
+  {street = "Na bielenisku"},
+  {street = "Podhorská"},
+  {street = "Rázusova"},
+  {street = "Reisinger"},
+  {street = "Rozálka"},
+  {street = "Slnečné údolie"},
+  {street = "Svätoplukova", numbers = "3, 4, 5"},
+  {street = "Vincúrska"},
+  {street = "Zámocká"},
+  {street = "Zigmundíkova"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Suvorovova"},
+  {street = "Svätoplukova", numbers = "1, 2"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Svätoplukova", numbers = "6-51"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "L. Novomeského", numbers = "1-27", parity = "odd"},
+  {street = "L. Novomeského", numbers = "2-34", parity = "even"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Fraňa Kráľa"},
+  {street = "Hviezdoslavova"},
+  {street = "SNP"},
+  {street = "Vajanského"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Hrnčiarska"},
+  {street = "Za hradbami"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "Fándlyho"},
+  {street = "Mierová"},
+  {street = "Obrancov mieru"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Eugena Suchoňa"},
+  {street = "Gorkého"},
+  {street = "Kataríny Franklovej"},
+  {street = "Komenského"},
+  {street = "Ľudovíta Rajtera"},
+  {street = "Majakovského"},
+  {street = "Nerudova"},
+  {street = "Obchodná"},
+  {street = "Okružná ulica", written = "Okružná"},
+  {street = "Puškinova"},
+  {street = "Saulaková"},
+  {street = "Tolstého"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Bystrická"},
+  {street = "Bratislavská", numbers = "108-130", parity = "even"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Černicová"},
+  {street = "D. Virgoviča"},
+  {street = "Družstevná"},
+  {street = "Glejovka"},
+  {street = "Grobská cesta"},
+  {street = "Hečkova"},
+  {street = "Hurbanova"},
+  {street = "Jána Raka"},
+  {street = "Krkavec"},
+  {street = "Liesková"},
+  {street = "Limbašská cesta"},
+  {street = "Matúškova"},
+  {street = "Mlynárska"},
+  {street = "Myslenická"},
+  {street = "Nezábudková"},
+  {street = "Nová"},
+  {street = "Orešie"},
+  {street = "Podkarpatská"},
+  {street = "Pri mlyne"},
+  {street = "Púpavová"},
+  {street = "Ružová"},
+  {street = "Štúrova"},
+  {street = "Trnková"},
+  {street = "Vinice"},
+  {street = "Za panskou záhradou"},
+  {street = "Železničná"},
+]

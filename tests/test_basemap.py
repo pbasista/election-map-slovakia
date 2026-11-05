@@ -1,5 +1,9 @@
+import json
+
 import numpy as np
+import osmium
 import shapely
+from osmium.osm import mutable
 
 from election_map_slovakia import basemap, geo
 
@@ -94,7 +98,17 @@ def test_building_files_encode_holes_and_orientation():
     buildings, kept = basemap._on_grid(lonlat, ring, np.array([2, 1, 1]))
     assert kept.tolist() == [True, True, False]
     owner = np.array([1, 0])
-    files = basemap.building_files(buildings, buildings.points(), owner, ["7", "8"])
+    order = basemap.building_order(buildings.points(), owner)
+    assert order.tolist() == [1, 0]
+    ordered, owner = buildings.take(order), owner[order]
+    files = basemap.building_files(ordered, owner, ["7", "8"])
+    # Encoded by the workers, with the counts of the report.
+    encoded = basemap._obec_files(ordered, owner, ["7", "8"])
+    assert {p: json.loads(f.data) for p, f in encoded.items()} == files
+    assert [(f.vertices, f.buildings, f.holes) for f in encoded.values()] == [
+        (3, 1, 0),
+        (8, 1, 1),
+    ]
     assert sorted(files) == ["obec/7.json", "obec/8.json"]
     assert files["obec/7.json"] == {
         "scale": basemap.BUILDINGS_SCALE,
@@ -114,6 +128,78 @@ def test_building_files_encode_holes_and_orientation():
     assert basemap.verify("obec/8.json", content | {"xy": content["xy"][:-2]}) == [
         "14 coordinates for rings of 8 vertices"
     ]
+
+
+def test_outlines_on_the_grid_by_chunks_as_all_at_once():
+    s = 1 / basemap.BUILDINGS_SCALE
+    rings = [
+        [(1000, 2000), (1000, 2010), (1010, 2010), (1010, 2000)],  # clockwise
+        [(1030, 2000), (1031, 2000), (1032, 2000.1)],  # rounds to a line
+        [(1020, 2000), (1024, 2000), (1024.2, 2000), (1024, 2003)],
+        [(1040, 2000), (1040, 2000.2), (1040.1, 2000.1)],  # rounds to a point
+        [(1050, 2000), (1054, 2000), (1054, 2004)],
+    ]
+    # As libosmium writes them: hex WKB of the closed outlines in WGS84.
+    wkb = [
+        shapely.to_wkb(
+            shapely.LineString([(x * s, y * s) for x, y in [*r, r[0]]])
+        ).hex()
+        for r in rings
+    ]
+    ids = list(range(10, 10 + len(rings)))
+    whole, whole_ids = basemap._chunk_on_grid(wkb, ids)
+    chunks = [basemap._chunk_on_grid(wkb[a:b], ids[a:b]) for a, b in ((0, 2), (2, 5))]
+    joined = basemap._concat([buildings for buildings, _ in chunks])
+    assert whole_ids.tolist() == [10, 12, 14]
+    assert np.concatenate([i for _, i in chunks]).tolist() == whole_ids.tolist()
+    assert joined.xy.tolist() == whole.xy.tolist()
+    assert joined.counts.tolist() == whole.counts.tolist() == [4, 3, 3]
+    assert joined.rings.tolist() == whole.rings.tolist()
+
+
+def test_ways_read_in_blocks_as_in_one(tmp_path):
+    extract = tmp_path / "extract.osm.pbf"
+    writer = osmium.SimpleWriter(str(extract))
+    houses = 20_000  # several PBF blocks of ways, of 8,000 each
+    for h in range(houses):
+        x, y = 17 + h * 1e-4, 48 + (h % 7) * 1e-4
+        corners = [(x, y), (x + 5e-5, y), (x + 5e-5, y + 4e-5), (x, y + 4e-5)]
+        for c, (lon, lat) in enumerate(corners):
+            writer.add_node(mutable.Node(id=4 * h + c + 1, location=(lon, lat)))
+    for h in range(houses):
+        refs = [4 * h + c + 1 for c in (0, 1, 2, 3, 0)]
+        writer.add_way(mutable.Way(id=h + 1, nodes=refs, tags={"building": "yes"}))
+    road = [4 * h + 1 for h in range(0, houses, 50)]
+    tags = {"highway": "primary", "name": "A"}
+    writer.add_way(mutable.Way(id=houses + 1, nodes=road, tags=tags))
+    writer.close()
+    located = tmp_path / "ways.osm.pbf"
+    basemap.locate_ways(extract, located)
+    whole = basemap.way_blocks(located, 1)
+    blocks = basemap.way_blocks(located, 4)
+    assert len(whole) == 1 and len(blocks) > 1
+    one, one_ids = basemap.read_building_ways(located, whole[0])
+    parts = [basemap.read_building_ways(located, b) for b in blocks]
+    assert one_ids.tolist() == list(range(1, houses + 1))
+    assert np.concatenate([i for _, i in parts]).tolist() == one_ids.tolist()
+    assert basemap._concat([b for b, _ in parts]).xy.tolist() == one.xy.tolist()
+    lines = [basemap.read_lines(located, b) for b in blocks]
+    assert sum(len(r.kind) for r in lines) == 1
+    start = basemap._to_metres(np.array([17.0]), np.array([48.0]))[0]
+    assert np.concatenate([r.xy for r in lines])[0].tolist() == start.tolist()
+
+
+def test_shares_of_the_buildings_files_hold_whole_obce():
+    owner = np.array([0, 0, 0, 1, 2, 2, 5, 5, 5, 5, 5, 7])
+    for n in (1, 2, 3, 4, 20):
+        shares = basemap._shares(owner, n)
+        assert shares[0][0] == 0 and shares[-1][1] == len(owner)
+        assert all(a < b for a, b in shares)
+        assert [b for _, b in shares[:-1]] == [a for a, _ in shares[1:]]
+        # No obec is cut between two shares.
+        assert all(owner[a - 1] != owner[a] for a, _ in shares[1:])
+        assert len(shares) <= n
+    assert basemap._shares(np.array([], dtype=np.int64), 4) == []
 
 
 def test_requested():

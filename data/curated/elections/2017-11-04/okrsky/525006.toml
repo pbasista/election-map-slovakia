@@ -1,0 +1,48 @@
+# Okrsky of Pečovská Nová Ves, transcribed by an AI agent in job okrsok-rules-391 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: - ulice po pravej strane cesty I. triedy v smere Sabinov – Lipany
+#   okrsok 2: - ulice po ľavej strane cesty I. triedy v smere Sabinov – Lipany
+obec = "525006"
+name = "Pečovská Nová Ves"
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky are split by the main road I/68 (ulica Hlavná): right side heading Sabinov→Lipany (north-east) okrsok 1, left side okrsok 2. Streets placed by their OpenStreetMap position relative to Hlavná (all inferred). Left to fill_nearest (nearest address): Hlavná and the addresses without a street. The document states no decision date; it is known from the Internet Archive's capture of the old WordPress site."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2017-10-19
+okrsky_date_basis = "The Internet Archive captured the elections page linking the PDF on 2017-10-19; the PDF itself (which names the elections of 4 November 2017) is undated. (https://web.archive.org/web/20171019081912/http://pecovska.sk/obecny-urad/volby-a-referenda/)"
+
+[[document]]
+url = "https://web.archive.org/web/20211229074938/http://pecovska.sk/wp-content/uploads/2015/05/utvorenie_volebnych_okrskov.pdf"
+sha256 = "366e0220bf00abb60f6f841c913d7bfa2052da73531597c6c28de9c1ce32460d"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v Obci Pečovská Nová Ves pre voľby do orgánov samosprávnych krajov v roku 2017"
+
+[[document]]
+url = "https://web.archive.org/web/20171019081912/http://pecovska.sk/obecny-urad/volby-a-referenda/"
+sha256 = "cd3f7162abab709ba7ac100b14946a818e26df387623ccadc2f5c9e48993146a"
+title = "Voľby a referendá (archived 2017-10-19), linking the document"
+
+[okrsok.1]
+rules = [
+  {street = "Kvetná", note = "The document only says the okrsok is the right side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Ľutinská", note = "The document only says the okrsok is the right side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Na Hliník", note = "The document only says the okrsok is the right side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Na Pečovec", note = "The document only says the okrsok is the right side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Rómska", note = "The document only says the okrsok is the right side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Za Majerom", note = "The document only says the okrsok is the right side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Záhradná", note = "The document only says the okrsok is the right side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Jabloňová", note = "The document only says the okrsok is the left side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Južná", note = "The document only says the okrsok is the left side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Kostolná", note = "The document only says the okrsok is the left side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Mlynská", note = "The document only says the okrsok is the left side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Na Dujave", note = "The document only says the okrsok is the left side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Na Rybníkoch", note = "The document only says the okrsok is the left side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Na Trubalovec", note = "The document only says the okrsok is the left side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Orgovánova", note = "The document only says the okrsok is the left side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Poľský Dvor", note = "The document only says the okrsok is the left side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Školská", note = "The document only says the okrsok is the left side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+  {street = "Za Ľutinkou", note = "The document only says the okrsok is the left side of the main road I/68 (Hlavná) heading from Sabinov to Lipany; this street lies on that side by its map position (OpenStreetMap).", inferred = true},
+]

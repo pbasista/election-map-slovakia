@@ -1,0 +1,26 @@
+# The okrsky of Orlov of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/526941.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Orlov, transcribed by an AI agent in job okrsok-rules-5191 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: volebná miestnosť: Obecný úrad Orlov, zasadačka, Orlov 119 - pre obyvateľov obce Orlov
+#     okrsok 2: volebná miestnosť: Orlov – Andrejovka 325, spoločenská miestnosť - pre obyvateľov obce Orlov, miestnej časti Andrejovka
+obec = "526941"
+name = "Orlov"
+okrsky_date = 2024-02-16
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2026-10-24 setting the okrsky was found (okrsok-rules-622): The 2026 elections page lists \"Utvorenie volebných okrskov a určenie volebných miestností…\" but that link points to the same file as the recorder appointment (1_zapisovatel-miestnej-volebnej-komisie-zverejnenie.pdf), which does not mention okrsky. No other document on the site or notice board describes the okrsky or their stations (2 okrsky, parts Orlov and Andrejovka, but no station information to infer from). These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-10-24 → 2024-06-08: 1: 448 → 441, 2: 72 → 81."
+
+[[document]]
+url = "https://www.obecorlov.sk/resources/File/utvorenie-volebny-ch-okrskov-a-urc-enie-volebny-ch-miestnosti-pre-konanie-volieb-do-euro-pskeho-parlamentu-2024.pdf"
+sha256 = "8147a7a37e0eec72b70bf604747d24997e6f23f5b5ce0542430957b1d0a4817f"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do EP 2024 (16.02.2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Orlov", note = "'obyvatelia obce Orlov' beside okrsok 2 for the part Andrejovka: the part Orlov"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Andrejovka"},
+]

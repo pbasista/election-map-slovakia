@@ -1,0 +1,27 @@
+# Okrsky of Závod, transcribed by an AI agent in job okrsok-rules-720 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Súp. č. 0 – 580
+#   okrsok 2: Súp. č. 581 – 1156
+obec = "504980"
+name = "Závod"
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's notice of the time and place of the 2018 municipal elections defines both okrsky by súpisné číslo. Okrsky by súpisné čísla (Závod has no streets in the register); any súpisné číslo outside the ranges takes the okrsok of the nearest address (fill_nearest)."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2018-10-15
+okrsky_date_basis = "The archived notice page states 'Pridané: 15:19, 15. októbra 2018'; the notice itself states no decision date. (https://web.archive.org/web/20220625104236/https://www.obeczavod.sk/24041/kv-oznamenie-o-case-a-mieste-konania-volieb/)"
+
+[[document]]
+url = "https://web.archive.org/web/20220625104236/https://www.obeczavod.sk/24041/kv-oznamenie-o-case-a-mieste-konania-volieb/"
+sha256 = "01f89a26ee7905080ea28cb7f3b9c45dafb65f47cb1d29f05b45f9b151899b89"
+title = "KV – Oznámenie o čase a mieste konania volieb (voľby do orgánov samosprávy obcí 10. 11. 2018)"
+
+[okrsok.1]
+rules = [
+  {part = "Závod", numbers = "0-580"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Závod", numbers = "581-1156"},
+]

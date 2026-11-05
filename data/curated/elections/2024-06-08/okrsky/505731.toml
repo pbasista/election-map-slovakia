@@ -1,0 +1,31 @@
+# Okrsky of Veľký Klíž, transcribed by an AI agent in job okrsok-rules-5162 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Klíž
+#   okrsok 2: Klížske Hradište
+obec = "505731"
+name = "Veľký Klíž"
+okrsky_note = "Scanned notice read from the rendered page: okrsok č. 1 – Klíž, okrsok č. 2 – Klížske Hradište (the two parts of the municipality); polling stations Klíž č. 156 and Klížske Hradište č. 1 (Klub hasičov, súčasť KD). No decision date is stated."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-03-04
+okrsky_date_basis = "The scanned notice names the European Parliament election of 8 June 2024 but states no decision date; the municipality's elections page entry linking it says it was posted (vyvesené) on 4. 3. 2024. (https://www.velky-kliz.sk/samosprava/volby-europskeho-parlamentu-2024/utvorenie-okrskov-a-volenbych-miestnosti-294.html?kshow=14)"
+
+[[document]]
+url = "https://www.velky-kliz.sk/e_download.php?file=data/uredni_deska/obsah232_4.pdf&original=20240304162935.pdf"
+sha256 = "f26a23dcfa3c261c3fb586a423fd31b6302410e53a7f74c38372fc710c4b06b7"
+title = "Zverejnenie utvorených volebných okrskov a určení volebných miestností (voľby do Európskeho parlamentu 2024)"
+
+[[document]]
+url = "https://www.velky-kliz.sk/samosprava/volby-europskeho-parlamentu-2024/utvorenie-okrskov-a-volenbych-miestnosti-294.html?kshow=14"
+sha256 = "46fc2be55444e456c45c194f5a7c96ec5cb84ca069108e2b06b90f123fffa788"
+title = "Voľby Európskeho parlamentu 2024: Utvorenie okrskov a volenbých miestností (vyvesené 4. 3. 2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Klíž"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Klížske Hradište"},
+]

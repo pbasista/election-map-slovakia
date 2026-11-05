@@ -1,0 +1,42 @@
+# Okrsky of Bzince pod Javorinou, transcribed by an AI agent in job okrsok-rules-3667 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Okrsok č.1 Bzince
+#   okrsok 2: Okrsok č.2 Hrušové
+#   okrsok 3: Okrsok č.3 Cetuna
+#   okrsok 4: Okrsok č.4 Hrubá Strana
+obec = "505897"
+name = "Bzince pod Javorinou"
+okrsky_date = 2023-06-26
+okrsky_note = "Scanned letter of the mayor (26.6.2023) read from the image. Each okrsok is named by its part (Bzince = part Bzince pod Javorinou); the hamlet Vrzavka is not named and is placed in okrsok 3 with Cetuna (inferred)."
+
+[[document]]
+url = "https://obecbzince.sk/wp-content/uploads/dokumenty/parlamentne-volby/4367_001.pdf"
+sha256 = "6c07c68115abfbdbd18663ea94876e82f4870abea30e1b588ebc5783fdf29991"
+title = "Nahlásenie volebných okrskov a volebných miestností – Voľby do NR SR 30.9.2023 (26.6.2023)"
+
+[[document]]
+url = "https://obecbzince.sk/dokument/volby-do-nr-sr-30-09-2023-volebne-okrsky-a-volebne-miestnosti/"
+sha256 = "4044bf0b08cb6c2dd8f7d218bc2098ba373dc3d36f72f80095ed4d65215dfee8"
+title = "Voľby do NR SR 30.09.2023 – volebné okrsky a volebné miestnosti"
+
+[okrsok.1]
+rules = [
+  {part = "Bzince pod Javorinou", note = "the document writes 'Bzince': the part Bzince pod Javorinou"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Hrušové"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Cetuna"},
+  {part = "Vrzavka", note = "the hamlet Vrzavka is not named; it lies by Cetuna and the obvody of 2022 put Cetuna and Vrzávka together in obvod 2, whose only okrsok is č. 3", inferred = true},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Hrubá Strana"},
+]
