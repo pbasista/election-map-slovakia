@@ -1,4 +1,4 @@
-# The okrsky of Šamorín of the elections of 2018-11-10, data/curated/elections/2018-11-10/obvody/oz/501905.toml, copied by `ems job reuse` (reused). Its header there:
+# The okrsky of Šamorín of the vote of 2018-11-10, data/curated/elections/2018-11-10/obvody/oz/501905.toml, standing in, by `ems job reuse`. Its header there:
 #   Council obvody of Šamorín (501905), Dunajská Streda.
 #   Transcribed by an AI agent in job obvod-rules-050 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
@@ -28,11 +28,12 @@ obec = "501905"
 name = "Šamorín"
 date = 2018-08-14
 fill = "nearest"
-note = "The council obvody of the elections of 2018-11-10. Uznesenie MsZ č. 34/2018/III of 14.08.2018: 19 poslancov in 9 obvodov (obvod 8: 3, the others 2), each one okrsok. Šamorín-part addresses without a street (the document lists some by súpisné číslo, which are not transcribed) and house numbers outside the listed ranges go by fill_nearest. Hlavná 39 is named in obvody 3 and 7; kept in 3."
+note = "The council obvody of the vote of 2018-11-10: they only place the okrsky. Uznesenie MsZ č. 34/2018/III of 14.08.2018: 19 poslancov in 9 obvodov (obvod 8: 3, the others 2), each one okrsok. Šamorín-part addresses without a street (the document lists some by súpisné číslo, which are not transcribed) and house numbers outside the listed ranges go by fill_nearest. Hlavná 39 is named in obvody 3 and 7; kept in 3."
 reused = 2018-11-10
 okrsky_date = 2018-08-14
-okrsky_note = "These are the okrsky of the elections of 2018-11-10: in 2020-02-29 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2020-02-29 was found (okrsky/not-found.json). Council resolution 34/2018/III of 14.08.2018 set 9 obvody and stated ('konštatovalo') that they are identical with the volebné okrsky; so okrsok n = obvod n, each alone in its obvod. The streets per okrsok are those of the obvody notice of 15.08.2018 and the city's list of 9.11.2018 (which names each obvod's polling station). No separate mayor's okrsky decision was found on the website; the Internet Archive did not answer."
-okrsky_reused = 2018-11-10
+okrsky_note = "Council resolution 34/2018/III of 14.08.2018 set 9 obvody and stated ('konštatovalo') that they are identical with the volebné okrsky; so okrsok n = obvod n, each alone in its obvod. The streets per okrsok are those of the obvody notice of 15.08.2018 and the city's list of 9.11.2018 (which names each obvod's polling station). No separate mayor's okrsky decision was found on the website; the Internet Archive did not answer."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2224): For the National Council election of 2020 the city published only the list of polling stations of its 9 okrsky (Volebne_miestnosti_Samorin_NRSR.docx), without streets. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 9 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2018-11-10: 1: 1,005 → 1,013, 2: 1,140 → 1,159, 3: 1,512 → 1,524, 4: 990 → 1,027, 5: 1,121 → 1,151, 6: 936 → 998, 7: 1,209 → 1,249, 8: 1,526 → 1,547, 9: 1,465 → 1,444."
 
 [[document]]
 url = "https://old.samorin.sk/wp-content/uploads/2018/08/Volby_volebne_obvody_2018.pdf"

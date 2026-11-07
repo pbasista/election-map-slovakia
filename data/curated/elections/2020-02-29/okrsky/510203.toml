@@ -1,22 +1,30 @@
-# The okrsky of Zákamenné of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/510203.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Zákamenné, transcribed by an AI agent in job okrsok-rules-720 from the documents below;
+# The okrsky of Zákamenné of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/510203.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Zákamenné, transcribed by an AI agent in job okrsok-rules-1779 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: pre voličov oprávnených voliť s trvalým pobytom na uliciach: Kamenná ulica, Klampiarska ulica, Námestie J. Vojtaššáka, Slnečná ulica, Školská ulica, Športová ulica, Ulica Dolinka, Ulica Jána Vojtaššáka, Ulica Nižný koniec, Ulica pod Kalváriou, Ulica Podkamenné, Ulica Špitál, Včelárska ulica, Veterná ulica, Západná ulica.
-#     okrsok 2: pre voličov oprávnených voliť s trvalým pobytom na uliciach: Hlavná ulica, Lesnícka ulica, Lúčna ulica, Obecná ulica, Oravická ulica, Ulica na Polianku, Ulica Oravice, Ulica pri Bielej Orave, Ulica pri potoku, Ulica Vrchná Mrzačka, Vrchová ulica.
-#     okrsok 3: pre voličov oprávnených voliť s trvalým pobytom na uliciach: Mariánska ulica, Ulica Farský Briežok, Ulica Grúnik, Ulica M. Medveckej, Ulica Maršalkov grúň, Ulica Spodná Mrzačka, Ulica Vyšný koniec.
-#     okrsok 4: pre voličov oprávnených voliť s trvalým pobytom na uliciach: Goralská ulica, Kviatková ulica, Ulica Babinec, Ulica Grúň, Ulica Kocandy, Ulica pod Kýčerou, Ulica Poriečie, Záhradnícka ulica.
+#     okrsok 1: Ulice: Kamenná ulica, Klampiarska ulica, Námestie J. Vojtaššáka, Slnečná ulica, Školská ulica, Športová ulica, Ulica Dolinka, Ulica Jána Vojtaššáka, Ulica Nižný koniec, Ulica pod Kalváriou, Ulica Podkamenné, Ulica Špitál, Včelárska ulica, Veterná ulica, Západná ulica
+#     okrsok 2: Ulice: Hlavná ulica, Lesnícka ulica, Lúčna ulica, Obecná ulica, Oravická ulica, Ulica na Polianku, Ulica Oravice, Ulica pri Bielej Orave, Ulica pri potoku, Ulica Vrchná Mrzačka, Vrchová ulica
+#     okrsok 3: Ulice: Mariánska ulica, Ulica Farský Briežok, Ulica Grúnik, Ulica M. Medveckej, Ulica Maršalkov grúň, Ulica Spodná Mrzačka, Ulica Vyšný Koniec
+#     okrsok 4: Ulice: Goralská ulica, Kviatková ulica, Ulica Babinec, Ulica Grúň, Ulica Kocandy, Ulica pod Kýčerou, Ulica Poriečie, Záhradnícka ulica
 obec = "510203"
 name = "Zákamenné"
-okrsky_date = 2022-08-09
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2020-02-29 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2020-02-29 was searched for. The 2022 page is gone from the live website; the snapshot of 9 Aug 2022 is used. The announcement states no decision date; date is its posting date on the official page ('Vyvesené: 9. 8. 2022'). The register's one address without a street is placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "Okrsky by streets; every street of the register is named. The one address without a street takes the okrsok of the nearest placed address (fill_nearest)."
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2366): No okrsky document of this vote on zakamenne.sk: its elections section holds documents only from 2019 on (presidential and EP 2019, NR SR 2023, 2024, 2026), none for this vote. The Internet Archive (web.archive.org) refused connections for over 15 minutes during this search (CDX and snapshots, retried with pauses), so archived pages could not be checked. These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2019-05-25: 1: 1,052 → 1,068, 2: 972 → 989, 3: 1,027 → 1,038, 4: 888 → 882."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2019-03-25
+okrsky_date_basis = "The page of the elections section linking the document states it was posted (vyvesené) on 25. 3. 2019; the document is undated and names the European Parliament election of 25.05.2019. (https://www.zakamenne.sk/zverejnovanie/volby/volebne-miestnosti-a-volebne-okrsky-300.html)"
 
 [[document]]
-url = "https://web.archive.org/web/20220809144525/https://www.zakamenne.sk/zverejnovanie/volby/volebne-miestnosti-volebne-okrsky-volby-2022-375.html"
-sha256 = "b0d9f090000e9d61c3176660af185626f1bc0978ea45f959a62fbabad2bb356a"
-title = "Volebné miestnosti - Volebné okrsky voľby 2022 (vyvesené 9. 8. 2022)"
+url = "https://www.zakamenne.sk/e_download.php?file=data/uredni_deska/obsah300_3.pdf&original=zoznam%20okrsky%20miestnosti%202019%20-%20vo%C4%BEby%20do%20EU%20parlamentu.pdf"
+sha256 = "0c4605b3aac40a178bbf57ee7a941341dd48ef78bf5c297d66933c5e3f4cd53b"
+title = "Volebné miestnosti - volebné okrsky (voľby do Európskeho parlamentu 25.05.2019)"
+
+[[document]]
+url = "https://www.zakamenne.sk/zverejnovanie/volby/volebne-miestnosti-a-volebne-okrsky-300.html"
+sha256 = "72faa5b2fbb304eee3833895252f246cee8284dfecbe8f19bb21ec8a2f5c4ce9"
+title = "Volebné miestnosti a volebné okrsky (úradná tabuľa – Voľby, vyvesené 25. 3. 2019)"
 
 [okrsok.1]
 rules = [
@@ -55,12 +63,12 @@ rules = [
 [okrsok.3]
 rules = [
   {street = "Mariánska ulica"},
-  {street = "Ulica Farský briežok", written = "Ulica Farský Briežok", note = "only the capital B differs"},
+  {street = "Ulica Farský briežok", written = "Ulica Farský Briežok", note = "Differs from the register's name only in capitalisation."},
   {street = "Ulica Grúnik"},
   {street = "Ulica M. Medveckej"},
   {street = "Ulica Maršalkov grúň"},
   {street = "Ulica Spodná Mrzačka"},
-  {street = "Ulica Vyšný koniec"},
+  {street = "Ulica Vyšný koniec", written = "Ulica Vyšný Koniec", note = "Differs from the register's name only in capitalisation."},
 ]
 
 [okrsok.4]

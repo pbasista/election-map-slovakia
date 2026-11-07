@@ -1,19 +1,23 @@
-# The okrsky of Hanušovce nad Topľou of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/544213.toml, reused by `ems job reuse`.
+# The okrsky of Hanušovce nad Topľou of the vote of 2020-02-29, data/curated/elections/2020-02-29/okrsky/544213.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Hanušovce nad Topľou, transcribed by an AI agent in job okrsok-rules-2633 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: ulice Bukovské, Dukelská, Garbiarska, Jarmočná, Kláštorná, Komenského, Kukorelliho, Počekanec, Pod Šibenou, Prešovská, Slovenská, Šarišská, Štúrova od č. 342 – 343, Zámocká, Železničiarska
+#     okrsok 2: ulice Budovateľská, Mierová, Sadová, SNP, Širiava, Štúrova od č. 335 – 340, Tehelná, Záhradná
 obec = "544213"
 name = "Hanušovce nad Topľou"
 okrsky_fill = "nearest"
-okrsky_note = "No document of the elections of 2018-11-10 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2018 (each okrsok's voters on the roll within 10%). The decision is undated. Addresses without a street are placed by fill_nearest."
-okrsky_reused = 2026-10-24
+okrsky_note = "The decision is published as the text of the notice-board page (no file). Štúrova is split by súpisné číslo (342–343 okrsok 1, 335–340 okrsok 2); other Štúrova houses (e.g. the school 341) and the address without a street take the nearest placed address (fill_nearest)."
+okrsky_adopted = 2020-02-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-872): The city's current website lists election sections only from the 2020 National Council election on; no okrsky document of this vote is on the live website. The Internet Archive stayed offline ('Temporarily Offline' / no answer) across repeated retries over more than 15 minutes, so the city's former website (e_download.php files) could not be checked in the archive. These are the okrsky of the vote of 2020-02-29 (2020-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2018-11-10 → 2020-02-29: 1: 1,473 → 1,456, 2: 1,402 → 1,320."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2019-11-27
+okrsky_date_basis = "The city's notice-board item 'Utvorenie volebných okrskov' in the section of the National Council election 2020 states 'Dátum vloženia: 27. 11. 2019'; the mayor's decision, given as the page's text, is undated. (https://www.hanusovce.sk/zverejnovanie/uradna-tabula/volby/volby-do-narodnej-rady-sr-2020/utvorenie-volebnych-okrskov-551sk.html)"
 
 [[document]]
-url = "https://www.hanusovce.sk/modules/file_storage/download.php?file=54b06748%7C122&inline=1"
-sha256 = "2e4a47156e01a64fc18a2dcabe69795508176848a45c70717619f3e75116ef12"
+url = "https://www.hanusovce.sk/zverejnovanie/uradna-tabula/volby/volby-do-narodnej-rady-sr-2020/utvorenie-volebnych-okrskov-551sk.html"
+sha256 = "0c5565993cdc3c16cd8d8340c0427203f77d28a050c453720f2e8189ff499618"
 title = "Utvorenie volebných okrskov"
-
-[[document]]
-url = "https://www.hanusovce.sk/zverejnovanie/uradna-tabula/volby/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-2026/"
-sha256 = "83070d54d8c368f7eab21aa9823679e31d7e7c98f7defc1d5b582070a50e132c"
-title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 2026"
 
 [okrsok.1]
 rules = [
@@ -31,6 +35,7 @@ rules = [
   {street = "Šarišská"},
   {street = "Zámocká"},
   {street = "Železničiarska"},
+  {street = "Štúrova", numbers = "342-343", by = "supisne"},
 ]
 
 [okrsok.2]
@@ -40,7 +45,7 @@ rules = [
   {street = "Sadová"},
   {street = "SNP"},
   {street = "Širiava"},
-  {street = "Štúrova", written = "Štúrová", note = "A typo for Štúrova (the same document gives the school's address as Štúrova 341/5)."},
   {street = "Tehelná"},
   {street = "Záhradná"},
+  {street = "Štúrova", numbers = "335-340", by = "supisne"},
 ]

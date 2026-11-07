@@ -1,15 +1,25 @@
-# The okrsky of Vlkanová of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/557293.toml, copied by `ems job reuse` (reused). Its header there:
-#   The okrsky of Vlkanová of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/557293.toml, reused by `ems job reuse`.
+# The okrsky of Vlkanová of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/557293.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Vlkanová, transcribed by an AI agent in job okrsok-rules-5151 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Okrsok č.1 zahŕňa územie ulíc Ľaliová a Továrenská
+#     okrsok 2: Okrsok č. 2 zahŕňa územie ulíc Matuškova, Peťovská, Vlkanovská a obec Vlkanová
 obec = "557293"
 name = "Vlkanová"
-okrsky_date = 2026-07-28
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was searched for. No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Okrsok 2's 'a obec Vlkanová' (addresses not on a street) is written as a part rule; the streets of okrsok 1 are more specific and win."
-okrsky_reused = 2022-10-29
+okrsky_date = 2024-03-05
+okrsky_note = "'a obec Vlkanová' in okrsok 2 (addresses without a street) is written as a part rule; okrsok 1's street rules are more specific and win. Same okrsky as the 2026 document."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-2103): The archived EP 2019 page has no documents; no okrsky document found. Old site gone. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2024-06-08: 1: 506 → 500, 2: 580 → 572."
 
 [[document]]
-url = "https://www.vlkanova.sk/e_download.php?file=/data/uredni_deska/obsah7900_1.pdf&original=OSO%20a%20OSK%202026%20-%20ur%C4%8Denie%20okrsku%20a%20vol.%20miestnosti%20-%20Zverejnenie.pdf"
-sha256 = "f37c765f14d6b6f18edce261db1e4a66ab9f3c9ff4cfa28ad23c3a9bdc21fb84"
-title = "Určenie okrskov a volebných miestností"
+url = "https://web.archive.org/web/20240605164620/https://www.vlkanova.sk/download_file_f.php?id=2010456"
+sha256 = "f3c307d7735e35b027827d357ae76007debbb48e5f37404c172673408fb80766"
+title = "Voľby do Európskeho parlamentu 2024-určenie okrsku a vol. miestnosti"
+
+[[document]]
+url = "https://web.archive.org/web/20240605104844/http://www.vlkanova.sk/volby-do-europskeho-parlamentu-08-06-2024-oznam/mid/473362/.html"
+sha256 = "317d30062a76b7a3539583f5e6cfb7080c78ef8d5a0467a0b45beed0fe35c530"
+title = "Voľby do Európskeho parlamentu 08.06.2024 - oznam"
 
 [okrsok.1]
 rules = [

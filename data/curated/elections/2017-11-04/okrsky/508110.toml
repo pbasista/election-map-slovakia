@@ -1,0 +1,103 @@
+# Okrsky of Most pri Bratislave, transcribed by an AI agent in job okrsok-rules-043 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ul. Bratislavská, ul. Žihľavová, ul. Tomášovská, ul. Smaragdová, ul. Nálepkova, ul. Pažítková, ul. Konvalinková, ul. Rubínová, ul. Nové polia, ul. Feniklová, ul. Šalviová, ul. Škoricová, ul. Nezábudková, ul. Levanduľová, ul. Klinčeková, ul. Oreganová, ul. Fialková, ul. Kamilková, ul. Rascová, ul. Snežienková, ul. Mätová, ul. Anízová, ul. Jazmínová, ul. Majoránová, ul. Repíková, ul. Opálová, ul. Rozmarínová, ul. Medovková, ul. Jantárová, ul. Tymianová, ul. Bazalková, ul. Achátová
+#   okrsok 2: ul. Krátka, ul. Tichá, ul. Pri Tureckom kopci, ul. Veterná, ul. Budovateľská, ul. Dunajská, ul. Poľná, ul. Športová, ul. 29. augusta, ul. Školská, ul. Družstevná, ul. Záhradná, ul. M. R. Štefánika, ul. M. Kukučína, P. O. Hviezdoslava, ul. Orgovánová, ul. Limbová, ul. Jedľová, ul. Smreková, ul. Borovicová I., ul. Borovicová II., ul. Javorová, ul. Marhuľová, ul. Slivková, ul. Hrušková, ul. Čerešňová, ul. Broskyňová, ul. Lipová, ul. Agátová, ul. Brezová, ul. Jelšová, ul. Javorová
+obec = "508110"
+name = "Most pri Bratislave"
+okrsky_date = 2017-08-31
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision lists streets only (no house numbers); Javorová appears twice in okrsok 2's list. Technická (1 address) and houses without a street, which neither the 2017 nor the 2022 document names, take the nearest placed address (fill_nearest)."
+okrsky_supplemented = 2022-10-29
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The 2017 decision does not name Buková, Dubová, Ľ. Kukorelliho, Mesačná, Sekvojová, Slnečná, Súmračná, Višňová and Zadné záhrady (streets in the north-west part of Most, among okrsok 2's streets); the rule set of the 2022 elections (okrsky/508110.toml) puts each of them, as whole streets, in okrsok 2, and they are taken from there."
+
+[[document]]
+url = "https://www.mostpribratislave.sk/data/news_files/mostpribratislave/2244/urcenie-volebnych-okrskov.docx"
+sha256 = "10ea6f00cb64fa6fa0d3bad945eb08d6911b68af3ceadda8fed3a1a266ffe0e6"
+title = "Určenie volebných okrskov (č. 2163/2017, 31. 8. 2017) – Voľby do orgánov samosprávnych krajov 2017"
+
+[[document]]
+url = "https://www.mostpribratislave.sk/novinka/2244/urcenie-volebnych-okrskov"
+sha256 = "94062db1468fb58bfd5472c647563590b5c900f3f6893f5bdb22c5947105c2e6"
+title = "Novinky v obci – Určenie volebných okrskov (1.9.2017)"
+
+[okrsok.1]
+rules = [
+  {street = "Bratislavská"},
+  {street = "Žihľavová"},
+  {street = "Tomášovská"},
+  {street = "Smaragdová"},
+  {street = "Nálepkova"},
+  {street = "Pažítková"},
+  {street = "Konvalinková"},
+  {street = "Rubínová"},
+  {street = "Nové polia"},
+  {street = "Feniklová"},
+  {street = "Šalviová"},
+  {street = "Škoricová"},
+  {street = "Nezábudková"},
+  {street = "Levanduľová"},
+  {street = "Klinčeková"},
+  {street = "Oreganová"},
+  {street = "Fialková"},
+  {street = "Kamilková"},
+  {street = "Rascová"},
+  {street = "Snežienková"},
+  {street = "Mätová"},
+  {street = "Anízová"},
+  {street = "Jazmínová"},
+  {street = "Majoránová"},
+  {street = "Repíková"},
+  {street = "Opálová"},
+  {street = "Rozmarínová"},
+  {street = "Medovková"},
+  {street = "Jantárová"},
+  {street = "Tymianová"},
+  {street = "Bazalková"},
+  {street = "Achátová"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krátka"},
+  {street = "Tichá"},
+  {street = "Pri tureckom kopci", written = "Pri Tureckom kopci", note = "Only the capital T differs from the register's name."},
+  {street = "Veterná"},
+  {street = "Budovateľská"},
+  {street = "Dunajská"},
+  {street = "Poľná"},
+  {street = "Športová"},
+  {street = "29. augusta"},
+  {street = "Školská"},
+  {street = "Družstevná"},
+  {street = "Záhradná"},
+  {street = "M. R. Štefánika"},
+  {street = "M. Kukučína"},
+  {street = "P. O. Hviezdoslava"},
+  {street = "Orgovánová"},
+  {street = "Limbová"},
+  {street = "Jedľová"},
+  {street = "Smreková"},
+  {street = "Borovicová I."},
+  {street = "Borovicová II."},
+  {street = "Javorová"},
+  {street = "Marhuľová"},
+  {street = "Slivková"},
+  {street = "Hrušková"},
+  {street = "Čerešňová"},
+  {street = "Broskyňová"},
+  {street = "Lipová"},
+  {street = "Agátová"},
+  {street = "Brezová"},
+  {street = "Jelšová"},
+  {street = "Buková", supplemented = true},
+  {street = "Dubová", supplemented = true},
+  {street = "Ľ. Kukorelliho", supplemented = true},
+  {street = "Mesačná", supplemented = true},
+  {street = "Sekvojová", supplemented = true},
+  {street = "Slnečná", supplemented = true},
+  {street = "Súmračná", supplemented = true},
+  {street = "Višňová", supplemented = true},
+  {street = "Zadné záhrady", supplemented = true},
+]

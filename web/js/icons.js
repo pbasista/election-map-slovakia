@@ -388,3 +388,15 @@ export const ListIcon = () =>
     <circle class="fill" cx="4.8" cy="18" r="1.4" />
     <path d="M9.5 6H20M9.5 12H20M9.5 18H20" />
   `);
+
+/* The okrsky without territory (ballots.js `UnmappedOkrsky`): a window
+ * behind bars, a prison's; a virus, a COVID-19 special okrsok's. */
+export const PrisonIcon = () =>
+  icon(html`<rect x="4" y="3.5" width="16" height="17" rx="1.5" /><path d="M9.3 3.5v17M14.7 3.5v17M4 12h16" />`);
+
+export const CovidIcon = () =>
+  icon(html`
+    <circle cx="12" cy="12" r="5" />
+    <path d="M12 7V3.5M12 17v3.5M7 12H3.5M17 12h3.5M8.5 8.5 6 6M15.5 15.5 18 18M15.5 8.5 18 6M8.5 15.5 6 18" />
+    <path d="M10.5 3.5h3M10.5 20.5h3M3.5 10.5v3M20.5 10.5v3" />
+  `);

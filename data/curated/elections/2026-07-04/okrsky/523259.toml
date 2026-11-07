@@ -1,24 +1,26 @@
-# The okrsky of Vinné of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/523259.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Vinné, transcribed by an AI agent in job okrsok-rules-713 from the documents below;
+# The okrsky of Vinné of the vote of 2026-10-24, data/curated/elections/2026-10-24/okrsky/523259.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Vinné, transcribed by an AI agent in job okrsok-rules-265 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
 #     okrsok 1: od č. domu 1 až po č. domu 377
 #     okrsok 2: od č. domu 378 až po č. domu 9 149
 obec = "523259"
 name = "Vinné"
-okrsky_date = 2022-08-02
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2026-07-04 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2026-07-04 was searched for. The document splits the village by house numbers (súpisné čísla): 1–377 and 378–9149; okrsok 2 also takes the 2 register addresses numbered above 9149."
-okrsky_reused = 2022-10-29
+okrsky_date = 2026-07-22
+okrsky_fill = "nearest"
+okrsky_note = "Okrsky are split by house number (č. domu, read as súpisné číslo); date is the date of the announcement. Two register addresses fall outside 1–9149 and take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2026-10-24
+okrsky_adopted_basis = "No document of 2026-07-04 setting the okrsky was found (okrsok-rules-5422): No okrsky notice for this vote on vinne.sk, live or archived: the archive keeps the old Joomla/WordPress sites of 2017–2020 without any okrsky notice (only one 2019 NR SR file, not captured), and the 2026 referendum page publishes only the e-mail address and minutes. Another vote's notice is not this vote's. These are the okrsky of the vote of 2026-10-24 (2026), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-07-04 → 2026-10-24: 1: 853 → 938, 2: 887 → 981."
 
 [[document]]
-url = "https://www.vinne.sk/download_file_f.php?id=1721757"
-sha256 = "1e93869ca1b2255fd18dc74ff3becf10cbc7b6681792e2be50c164143f35511a"
-title = "Oznámenie o utvorení volebných okrskov"
+url = "https://www.vinne.sk/download_file_f.php?id=2447455"
+sha256 = "bdb7b265ee2e28f2111a8d26433ff2628a313213d9e3fabe9dac4a3032de9ab9"
+title = "Oznámenie o utvorení volebných okrskov a určenie volebnej miestnosti"
 
 [[document]]
-url = "https://www.vinne.sk/volby-2022.html"
-sha256 = "9dda3b848453df2c70aa68427e4c9618b33e832d79a8cba3bb7d1ea40e90c6ee"
-title = "Voľby 2022"
+url = "https://www.vinne.sk/volby-oso-a-vuc-2026.html"
+sha256 = "6179a32865df6f927285c48c75fff4a4ecf87d6ffd667dfc3f9d4f031707d1fc"
+title = "Voľby OSO a VÚC 2026"
 
 [okrsok.1]
 rules = [
@@ -27,5 +29,5 @@ rules = [
 
 [okrsok.2]
 rules = [
-  {part = "Vinné", numbers = "378-"},
+  {part = "Vinné", numbers = "378-9149"},
 ]

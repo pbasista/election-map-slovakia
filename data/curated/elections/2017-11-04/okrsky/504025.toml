@@ -1,0 +1,215 @@
+# Okrsky of Šaľa, transcribed by an AI agent in job okrsok-rules-124 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: 1. mája, 8. mája, Hurbanova, Hviezdoslavova, M. R. Štefánika, Mostová, Nábrežná
+#   okrsok 2: Čsl. armády, Horná, SNP
+#   okrsok 3: Hlboká, Kvetná, Nešporova, Partizánska, Štúrova
+#   okrsok 4: Bottova, J. Kollára, Okružná, Robotnícka, Váhová, Vajanského
+#   okrsok 5: Agátová, Bilická, Jánošíkova, Kpt. Jaroša, Kráľovská (rodinné domy), Murgašova, Nádražná, Sládkovičova, Smetanova, Švermova
+#   okrsok 6: Jarmočná, Jesenského, Krátka, Kúpeľná, Tulipánová, V. Šrobára, Vlčanská
+#   okrsok 7: Diakovská, Hlavná (súpisné čísla 2112, 2113, 2114, 2115), Jazerná, Lesná, Letná, Malá, Nezábudková, Pažitná, Sadová, Staničná
+#   okrsok 8: bez ulice, Kráľovská (súpisné čísla 828, 829), L. Novomeského, Námestie Sv. Juraja, Námestie Sv. Trojice
+#   okrsok 9: B. Nemcovej, Brezová, Gagarinova, J. Palárika, Kalinčiakova, Markovičova, Orechová, P. J. Šafárika, Ružová, Železničná
+#   okrsok 10: Broskyňová, Dolná, Drieňová, Družstevná, Dubová, Gaštanová, Hrabová, Jaseňová, Javorová, Jelšová, Liesková, Lipová, Pionierska, Školská, Topoľová, Vinohradnícka, Záhradnícka
+#   okrsok 11: Budovateľská, Hetméň, Hlavná (súpisné čísla 3, 4, 11, 12, 13, 18, 20, 25, 27, 29, 30, 31, 1960, 2156, 2190, 2191, 2255), J. Feketeházyho, Kilič, M. M. Hodžu, Nemocničná
+#   okrsok 12: Krížna, Kukučínova, P. Pázmaňa
+#   okrsok 13: Bernolákova, Dózsova, Gorkého, Hliník, Hospodárska, Komenského, Lužná, Nitrianska, Nová, Pribinovo námestie, Priečna, Trnovecká, Úzka
+#   okrsok 14: Cintorínska, Dlhoveská, Gen. L. Svobodu, Jilemnického
+#   okrsok 15: Hollého (súpisné čísla 1842-1846, 1925, 1999), Nivy
+#   okrsok 16: Fr. Kráľa, Germánska, Hollého (súpisné číslo 1847), Lúčna, Slnečná
+#   okrsok 17: Narcisová, Rímska
+obec = "504025"
+name = "Šaľa"
+okrsky_fill = "nearest"
+okrsky_note = "The decision is the article text (no PDF). \"bez ulice\" (okrsok 8) = voters registered without an address, given no rule. Pribinovo námestie (okrsok 13) is not in the register (left out). Hetméň (okrsok 11) taken as the part Hetméň. Hlavná and Hollého are split by the listed súpisné čísla; their other houses, the register's streets the 2017 decision does not name (Dostihová ulica, Parkúrová ulica, Voltížna ulica, Ulica Likavka, Ulica Sama Chalupku: later developments) and the addresses without a street are placed by fill_nearest."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2017-09-06
+okrsky_date_basis = "The mayor's decision, published as the article itself, states no date; the article's page on sala.sk (Internet Archive capture of 2017-09-09) says \"publikované: 06.09.2017\", and the decision names the regional elections of 4 November 2017. (https://web.archive.org/web/20170909183212/http://sala.sk:80/clanok/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti)"
+
+[[document]]
+url = "https://web.archive.org/web/20170909183212/http://sala.sk:80/clanok/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti"
+sha256 = "475b4fc7dec06b9e58e4b88b54fd4bf4903f02431f2f829573980a4ec6b54093"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (voľby do orgánov samosprávnych krajov 4. novembra 2017; článok, publikované 06.09.2017)"
+
+[okrsok.1]
+rules = [
+  {street = "1.mája", written = "1. mája"},
+  {street = "8.mája", written = "8. mája"},
+  {street = "Hurbanova"},
+  {street = "Hviezdoslavova"},
+  {street = "M. R. Štefánika"},
+  {street = "Mostová"},
+  {street = "Nábrežná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Čsl. armády"},
+  {street = "Horná"},
+  {street = "SNP"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hlboká"},
+  {street = "Kvetná"},
+  {street = "Nešporova"},
+  {street = "Partizánska"},
+  {street = "Štúrova"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bottova"},
+  {street = "J. Kollára"},
+  {street = "Okružná"},
+  {street = "Robotnícka"},
+  {street = "Váhová"},
+  {street = "Vajanského"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Agátová"},
+  {street = "Bilická"},
+  {street = "Jánošíkova"},
+  {street = "Kpt. Jaroša"},
+  {street = "Kráľovská", written = "Kráľovská (rodinné domy)", note = "The document puts the street's family houses here and its súpisné čísla 828, 829 in okrsok 8, and places no other Kráľovská house; the street's other houses (blocks of flats) are taken as this okrsok's."},
+  {street = "Murgašova"},
+  {street = "Nádražná"},
+  {street = "Sládkovičova"},
+  {street = "Smetanova"},
+  {street = "Švermova"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Jarmočná"},
+  {street = "Jesenského"},
+  {street = "Krátka"},
+  {street = "Kúpeľná"},
+  {street = "Tulipánová"},
+  {street = "V. Šrobára"},
+  {street = "Vlčanská"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Diakovská"},
+  {street = "Hlavná", numbers = "2112, 2113, 2114, 2115", by = "supisne"},
+  {street = "Jazerná"},
+  {street = "Lesná"},
+  {street = "Letná"},
+  {street = "Malá"},
+  {street = "Nezábudková"},
+  {street = "Pažitná"},
+  {street = "Sadová"},
+  {street = "Staničná"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Kráľovská", numbers = "828, 829", by = "supisne"},
+  {street = "L. Novomeského"},
+  {street = "Námestie Sv. Juraja"},
+  {street = "Námestie Sv. Trojice"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "B. Nemcovej"},
+  {street = "Brezová"},
+  {street = "Gagarinova"},
+  {street = "J. Palárika"},
+  {street = "Kalinčiakova"},
+  {street = "Markovičova"},
+  {street = "Orechová"},
+  {street = "P. J. Šafárika"},
+  {street = "Ružová"},
+  {street = "Železničná"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Broskyňová"},
+  {street = "Dolná"},
+  {street = "Drieňová"},
+  {street = "Družstevná"},
+  {street = "Dubová"},
+  {street = "Gaštanová"},
+  {street = "Hrabová"},
+  {street = "Jaseňová"},
+  {street = "Javorová"},
+  {street = "Jelšová"},
+  {street = "Liesková"},
+  {street = "Lipová"},
+  {street = "Pionierska"},
+  {street = "Školská"},
+  {street = "Topoľová"},
+  {street = "Vinohradnícka"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Budovateľská"},
+  {part = "Hetméň"},
+  {street = "Hlavná", numbers = "3, 4, 11, 12, 13, 18, 20, 25, 27, 29, 30, 31, 1960, 2156, 2190, 2191, 2255", by = "supisne"},
+  {street = "Ulica J. Feketeházyho", written = "J. Feketeházyho", note = "the register prefixes the name with \"Ulica\""},
+  {street = "Kilič"},
+  {street = "M. M. Hodžu"},
+  {street = "M.M.Hodžu", written = "M. M. Hodžu", note = "the register has the street twice, with and without spaces"},
+  {street = "Nemocničná"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Krížna"},
+  {street = "Kukučínova"},
+  {street = "P. Pázmaňa"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Dózsova"},
+  {street = "Gorkého"},
+  {street = "Hliník"},
+  {street = "Hospodárska"},
+  {street = "Komenského"},
+  {street = "Lužná"},
+  {street = "Nitrianska"},
+  {street = "Nová"},
+  {street = "Priečna"},
+  {street = "Trnovecká"},
+  {street = "Úzka"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Dlhoveská"},
+  {street = "Gen. L. Svobodu"},
+  {street = "Jilemnického"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Hollého", numbers = "1842-1846, 1925, 1999", by = "supisne"},
+  {street = "Nivy"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Fr. Kráľa"},
+  {street = "Ulica Germánska", written = "Germánska", note = "the register prefixes the name with \"Ulica\""},
+  {street = "Hollého", numbers = "1847", by = "supisne"},
+  {street = "Lúčna"},
+  {street = "Slnečná"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Narcisová"},
+  {street = "Ulica Rímska", written = "Rímska", note = "the register prefixes the name with \"Ulica\""},
+]

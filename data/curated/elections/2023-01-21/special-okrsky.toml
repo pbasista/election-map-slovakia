@@ -1,0 +1,90 @@
+# The special okrsky of the referendum of 21 January 2023, besides what ŠÚ
+# SR's package declares (tab0c, "Špeciálne volebné okrsky": each okres and
+# whether its special okrsok voted; src/election_map_slovakia/special.py).
+#
+# Act No. 395/2022 Coll. set up one special okrsok per okres for the voters
+# in COVID-19 quarantine (§ 3(1): "Územným obvodom špeciálneho volebného
+# okrsku je okres";
+# https://static.slov-lex.sk/static/SK/ZZ/2022/395/20221129.html). § 3(2)
+# counts it as an okrsok of the okres seat, in Bratislava and Košice of the
+# city district the head of the district office chose. The package tells
+# the seat where an obec of the okres has its name or is its only one; the
+# seats below are those of the other okresy, each counted as its city
+# district's highest-numbered okrsok.
+
+[covid]
+url = "https://volby.statistics.sk/ref/ref2023/sk/specialne_volebne_okrsky.html"
+title = "Špeciálne volebné okrsky – Referendum 2023 (ŠÚ SR)"
+
+[[covid.seat]]
+okres = "102"
+obec = "529320"
+url = "https://www.ruzinov.sk/data/MediaLibrary/2/28090/urcenie-volebnych-okrskov-pre-referendum-2023.pdf"
+title = "Určenie volebných okrskov, referendum 21. 1. 2023"
+basis = "The district's určenie is headed \"70 volebných okrskov\" and lists a 71st, \"Osobitný volebný okrsok, Drieňová 22\", whose footnote speaks of postal voting from abroad; but those voters are counted under Zahraničie (599999), and ŠÚ SR counts 71 okrsky in Ružinov, the 71st with 3 voters on its roll, all of whom voted (tab02e): okres Bratislava II's special okrsok."
+
+[[covid.seat]]
+okres = "103"
+obec = "529346"
+url = "https://volby.statistics.sk/ref/ref2023/files/REF2023_SK_xlsx.zip"
+title = "ŠÚ SR, Referendum 2023: tab0b (Územné členenie), tab02e (účasť za okrsky)"
+basis = "No okrsky document of the district for the referendum is known (okrsky/not-found.json). Inferred from ŠÚ SR's tables: Nové Mesto has 46 okrsky in this vote and 45 in those of 29 October 2022 and 30 September 2023, and its okrsok 46 had 6 voters on its roll, all of whom voted; no other okrsok of okres Bratislava III had fewer than 400."
+
+[[covid.seat]]
+okres = "104"
+obec = "529389"
+url = "https://www.dubravka.sk/files/documents/samosprava/referendum/2022-01-21/referendum-2023-rozhodnutie-starostu_a.pdf"
+title = "Rozhodnutie starostu o utvorení volebných okrskov a určení volebných miestností pre referendum (08.11.2022)"
+basis = "The mayor's decision sets 31 okrsky; ŠÚ SR counts 32 in Dúbravka, the 32nd with 2 voters on its roll, both of whom voted (tab02e): okres Bratislava IV's special okrsok."
+
+[[covid.seat]]
+okres = "105"
+obec = "529460"
+url = "https://www.petrzalka.sk/wp-content/uploads/2022/11/Referendum-okrsky-2023-1.pdf"
+title = "Zoznam volebných okrskov a volebných miestností pre hlasovanie v referende 21.1.2023"
+basis = "The list sets okrsky 1-56; ŠÚ SR counts 57 in Petržalka, the 57th with 4 voters on its roll, all of whom voted (tab02e). The district's notice on the special way of voting (https://www.petrzalka.sk/wp-content/uploads/2023/01/zapisovatel_covid-1.pdf) gives the contact \"pre okres Bratislava V\": okres Bratislava V's special okrsok."
+
+[[covid.seat]]
+okres = "802"
+obec = "598151"
+url = "https://web.archive.org/web/20221206000020/https://www.kosicesever.sk/sites/default/files/images/oznamenie_o_urceni_volebnych_okrskov_a_volebnych_miestnosti_v_referende.pdf"
+title = "Oznámenie o určení volebných okrskov a volebných miestností pre referendum 21. januára 2023, starosta MČ Košice – Sever, 9. 11. 2022"
+basis = "The mayor's notice sets 14 okrsky; ŠÚ SR counts 16 in Košice-Sever, okrsky 15 and 16 with 4 and 3 voters on their roll, all of whom voted (tab02e): the special okrsky of okres Košice I and of okres Košice-okolie, whose seat is Košice, which of the two is whose not being told."
+
+[[covid.seat]]
+okres = "803"
+obec = "598224"
+url = "https://web.archive.org/web/20221127030402/https://www.kosicezapad.sk/article-item-sk/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-konanie-referenda/"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre konanie referenda dňa 21.01.2023"
+basis = "The notice sets 16 okrsky; ŠÚ SR counts 17 in Košice-Západ, the 17th with 4 voters on its roll, all of whom voted (tab02e): okres Košice II's special okrsok."
+
+[[covid.seat]]
+okres = "804"
+obec = "598682"
+url = "https://www.kosice-dh.sk/files/2022-11-10-124519-VOLEBNE_OKRSKY_REFERENDUM_2023.pdf"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre referendum v roku 2023 (10. 11. 2022)"
+basis = "The notice sets 12 okrsky; ŠÚ SR counts 13 in Košice-Dargovských hrdinov, the 13th with 3 voters on its roll, all of whom voted (tab02e): okres Košice III's special okrsok."
+
+[[covid.seat]]
+okres = "805"
+obec = "599824"
+url = "https://volby.statistics.sk/ref/ref2023/files/REF2023_SK_xlsx.zip"
+title = "ŠÚ SR, Referendum 2023: tab0b (Územné členenie), tab02e (účasť za okrsky)"
+basis = "The district's okrsky documents are gone from its website and the Internet Archive kept none (okrsky/not-found.json). Inferred from ŠÚ SR's tables: Košice-Juh's okrsok 21, its highest, had 2 voters on its roll, both of whom voted; no other okrsok of okres Košice IV had fewer than 500."
+
+[[covid.seat]]
+okres = "806"
+obec = "598151"
+url = "https://web.archive.org/web/20221206000020/https://www.kosicesever.sk/sites/default/files/images/oznamenie_o_urceni_volebnych_okrskov_a_volebnych_miestnosti_v_referende.pdf"
+title = "Oznámenie o určení volebných okrskov a volebných miestností pre referendum 21. januára 2023, starosta MČ Košice – Sever, 9. 11. 2022"
+basis = "Okres Košice-okolie has no obec of its seat, Košice, whose districts are in okresy Košice I-IV. The mayor's notice sets 14 okrsky in Košice-Sever; ŠÚ SR counts 16, okrsky 15 and 16 with 4 and 3 voters on their roll (tab02e), while each other okres of Košice has its own in another district (Západ, Dargovských hrdinov, Juh): Košice-Sever holds the special okrsky of okresy Košice I and Košice-okolie."
+
+# A prison's okrsok holds only its inmates, who vote with voting
+# certificates (§ 11c of Act No. 180/2014 Coll.); the municipality's
+# document names the facility as the okrsok.
+[[prison]]
+obec = "507253"
+okrsok = 4
+facility = "ÚVTOS a ÚVV Leopoldov"
+url = "https://www.leopoldov.sk/files/documents/volby/2022/referendum/utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD%20pre%20referendum.pdf"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre referendum"

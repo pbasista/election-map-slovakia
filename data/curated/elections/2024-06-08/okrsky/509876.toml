@@ -1,0 +1,76 @@
+# The okrsky of Nižná of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/509876.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Nižná, transcribed by an AI agent in job okrsok-rules-3612 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: ulice Družstevná, Gen. Štefánika, Jána Hollého, Jesenského, Kollárova, Na Ostrvke, Na Skalke, Orličie, Podjavorinskej, Pri rybníkoch, Sama Chalupku, Sihoť, Svrčková, Šoltésovej, Tajovského, Uhliská, Vansovej, Za mostom, Za Vŕškom, Záhradnícka
+#     okrsok 2: ulice Bernolákova, Hamuljakova, Hviezdoslavova, Kukučínova, Kolejákova, Mieru, Mila Urbana, Partizánska, Radlinského, Štúrova, Vintiška, Tomanoczyho, Železničná
+#     okrsok 3: ulice Farkašovského, Hattalova, Lesná, Matúškova, Nová doba, Závodná
+#     okrsok 4: č. 4 Úrad obce v Zemianskej Dedine, Zemianska Dedina 12
+obec = "509876"
+name = "Nižná"
+okrsky_date = 2023-06-26
+okrsky_fill = "nearest"
+okrsky_note = "Whole streets per okrsok; the register streets the document does not name (Samota Hldočín, Samota-mlyn) and houses without a street are placed by fill_nearest. Okrsok 4 (Úrad obce v Zemianskej Dedine) is the part Zemianská Dedina."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2024-06-08 setting the okrsky was found (okrsok-rules-4867): The mayor's decision gives only the 4 okrsky's polling stations (MŠ Orličie, Dom kultúry, Základná škola, Úrad obce Zemianska Dedina), not their streets; 3 of the okrsky share the part Nižná, so they cannot be drawn from it. (Decision of 29. februára 2024 for the EP election.). These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-06-08 → 2023-09-30: 1: 954 → 914, 2: 1,042 → 1,018, 3: 1,026 → 978, 4: 189 → 197."
+
+[[document]]
+url = "https://web.archive.org/web/20231201073712/https://www.nizna.sk/e_download.php?file=data/editor/222sk_2.pdf&original=Oznamenie_utvorenie_volebnych_okrskov.pdf"
+sha256 = "e49f005fe63bd27e7ef1cfa8ee51e53423d462a865e68f8490f67b92775efdb1"
+title = "Oznámenie o utvorení volebných okrskov a určenie volebných miestností pre voľby do NR SR 30. septembra 2023 (26.06.2023)"
+
+[okrsok.1]
+rules = [
+  {street = "Družstevná"},
+  {street = "Gen. Štefánika"},
+  {street = "Jána Hollého"},
+  {street = "Jesenského"},
+  {street = "Kollárova"},
+  {street = "Na Ostrvke"},
+  {street = "Na Skalke"},
+  {street = "Orličie"},
+  {street = "Podjavorinskej"},
+  {street = "Pri rybníkoch"},
+  {street = "Sama Chalupku"},
+  {street = "Sihoť"},
+  {street = "Svrčkova", written = "Svrčková"},
+  {street = "Šoltesovej", written = "Šoltésovej"},
+  {street = "Tajovského"},
+  {street = "Uhliská"},
+  {street = "Vansovej"},
+  {street = "Za Mostom", written = "Za mostom"},
+  {street = "Za Vrškom", written = "Za Vŕškom"},
+  {street = "Záhradnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Hamuliakova", written = "Hamuljakova", note = "the same street, the register spells it Hamuliakova"},
+  {street = "Hviezdoslavova"},
+  {street = "Kukučínova"},
+  {street = "Kolejákova"},
+  {street = "Mieru"},
+  {street = "Mila Urbana"},
+  {street = "Partizánska"},
+  {street = "Radlinského"},
+  {street = "Štúrova"},
+  {street = "Vintiška"},
+  {street = "Tomanoczyho"},
+  {street = "Železničná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Farkašovského"},
+  {street = "Hattalova"},
+  {street = "Lesná"},
+  {street = "Matúškova"},
+  {street = "Nová Doba", written = "Nová doba"},
+  {street = "Závodná"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Zemianská Dedina", note = "'Kultúrny dom Zemianska Dedina': the okrsok of the part Zemianská Dedina"},
+]

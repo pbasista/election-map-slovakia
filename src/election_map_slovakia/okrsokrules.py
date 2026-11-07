@@ -39,10 +39,13 @@ ingest``) accepts an item only if
   where a referendum's document stands in (``referendum``,
   :func:`referenda`), before that referendum or the vote, the later, with
   a note;
-- it numbers the okrsky 1..N for the N okrsky of the territorial division,
-  giving every obvod of the rule set its okrsky, each in one obvod, those
-  ŠÚ SR's results count in it where known (:func:`grouping_problems`; a
-  by-election's results count only the obvody that voted);
+- it numbers the okrsky 1..N for the N okrsky of the territorial division
+  that have territory (:func:`territorial_counts`: the special okrsky,
+  :mod:`election_map_slovakia.special`, are counted after them and never
+  transcribed; the item names them, ``special``), giving every obvod of
+  the rule set its okrsky, each in one obvod, those ŠÚ SR's results count
+  in it where known (:func:`grouping_problems`; a by-election's results
+  count only the obvody that voted);
 - its okrsok rules are well formed, name only streets, parts and k.ú. the
   obec has, place every address of each obvod with several okrsky (of the
   obec, without obvody) in exactly one of them, give each such okrsok
@@ -86,11 +89,13 @@ import numpy as np
 
 from election_map_slovakia import (
     addresses,
+    config,
     contests,
     geo,
     jobs,
     obvodrules,
     obvody,
+    special,
     statoffice,
     tables,
     xlsx,
@@ -234,6 +239,37 @@ def okrsok_counts(cfg: Config, election: Election) -> dict[str, int]:
         raise jobs.JobError(f"{path}: {e}") from None
 
 
+def special_okrsky(cfg: Config, election: Election) -> special.Specials:
+    """Return *election*'s special okrsky (:mod:`election_map_slovakia.special`).
+
+    Empty without a territorial division, which counts no okrsky, and
+    where neither its package nor ``special-okrsky.toml`` declares any (the
+    division is then not read).
+    """
+    path = cfg.election_dir(election) / special.FILE
+    if election.units is None or (not election.units.special and not path.is_file()):
+        return {}
+    return special.read(
+        obvodrules.units_path(cfg, election),
+        election.units,
+        config.load_special(path) if path.is_file() else None,
+        okrsok_counts(cfg, election),
+        str(path.relative_to(cfg.root)),
+    )
+
+
+def territorial_counts(cfg: Config, election: Election) -> dict[str, int]:
+    """Return obec → its okrsky with territory in *election*.
+
+    Those of the territorial division (:func:`okrsok_counts`) less its
+    special okrsky (:func:`special_okrsky`): a document numbers its own
+    okrsky 1..N, the special ones counted after them.
+    """
+    return special.territorial(
+        okrsok_counts(cfg, election), special_okrsky(cfg, election)
+    )
+
+
 def not_found_path(cfg: Config, election: Election) -> Path:
     """Return the file of the obce whose okrsky document was not found."""
     return cfg.election_dir(election) / obvody.OKRSKY_DIRECTORY / NOT_FOUND_FILE
@@ -313,7 +349,8 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
     names = {o["code"]: o for o in data["obce"]}
     okresy = {o["code"]: o["name"] for o in data["okresy"]}
     kraje = {k["code"]: k["name"] for k in data["kraje"]}
-    counts = okrsok_counts(cfg, election)
+    specials = special_okrsky(cfg, election)
+    counts = special.territorial(okrsok_counts(cfg, election), specials)
     directory = obvodrules.places_dir(cfg, election)
     not_found = load_not_found(cfg, election)
     pending = {i["id"] for j in options.pending for i in j.items}
@@ -357,7 +394,13 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
         if regular:
             _add_units(item, units.get(item["id"], {}))
         elif voters.get(item["id"]):
-            item["voters"] = {str(k): v for k, v in voters[item["id"]].items()}
+            item["voters"] = {
+                str(k): v
+                for k, v in voters[item["id"]].items()
+                if k not in specials.get(item["id"], {})
+            }
+    for item in split + whole:
+        item |= _special_field(specials.get(item["id"], {}))
     return obvodrules.batches(
         split, _prompt(cfg, election, PROMPT), options.size, "okrsky"
     ) + obvodrules.batches(
@@ -410,6 +453,23 @@ def _whole_candidates(
         and (voting is None or code in voting)
         and (directory / f"{code}.json").is_file()
     ]
+
+
+def _special_field(okrsky: Mapping[int, special.Special]) -> dict[str, Any]:
+    """Return the ``special`` field of an item: its special okrsky, if any.
+
+    Each with its number and what it is (:mod:`election_map_slovakia.special`),
+    so that the agent knows the document leaves them out or names them
+    apart: ``okrsky`` counts the others alone.
+    """
+    if not okrsky:
+        return {}
+    return {
+        "special": [
+            {"number": n, "kind": s.kind, "what": special.describe(s)}
+            for n, s in okrsky.items()
+        ]
+    }
 
 
 def _add_units(item: dict[str, Any], units: Mapping[int, Mapping[int, int]]) -> None:
@@ -648,6 +708,7 @@ def rule_set(
         "okrsky_reused",
         "okrsky_adopted",
         "okrsky_adopted_basis",
+        "okrsky_adopted_outliers",
         "okrsky_referendum",
         "okrsky_date_approximate",
         "okrsky_date_seen",
@@ -773,8 +834,10 @@ def _count_problems(
 ) -> tuple[dict[int, dict[int, int]], list[str]]:
     """Return ŠÚ SR's okrsky of the obec of *item* by obvod, and how *rules* differ.
 
-    *rules*, numbered 1..N by their form, must have the N okrsky of the
-    territorial division (*item*'s ``okrsky``), each obvod those ŠÚ SR's
+    *rules*, numbered 1..N by their form, must have the N territorial
+    okrsky of the territorial division (*item*'s ``okrsky``,
+    :func:`territorial_counts`: its ``special`` okrsky, without territory
+    and the highest-numbered, are left out), each obvod those ŠÚ SR's
     results count in it (:func:`grouping_problems`). For an item without
     obvody in a vote other than a regular election, ŠÚ SR's okrsky are
     those of the whole obec, with the voters of those that voted where its
@@ -782,8 +845,16 @@ def _count_problems(
     """
     count = sum(map(len, rules.okrsky.values()))
     if count != item["okrsky"]:
+        specials = item.get("special", [])
+        besides = (
+            " besides its special okrsky "
+            + "; ".join(f"{s['number']}, {s['what']}" for s in specials)
+            if specials
+            else ""
+        )
         return {}, [
-            f"{count} okrsky given, the territorial division has {item['okrsky']}"
+            f"{count} okrsky given, the territorial division has"
+            f" {item['okrsky']}{besides}"
         ]
     regular = election.kind == REGULAR
     if "obvody" not in item and not regular:
@@ -1186,6 +1257,13 @@ Each item has:
 - `vote`: the vote whose okrsky are wanted, with its day.
 - `okrsky`: how many okrsky the municipality has in this vote, per the
   Statistical Office. Number them 1..`okrsky` as the document does.
+- `special` (where any): okrsky the Statistical Office counts beyond
+  `okrsky`, numbered after them, which have no territory: `number`,
+  `kind` and `what` they are (`covid`: the COVID-19 special okrsok of the
+  okres, set up by the district office for the voters in quarantine
+  anywhere in it, which the mayor's document leaves out; `prison`: an
+  okrsok of a prison's inmates). Give them no okrsok of yours, whether
+  the document names them or not; say in `note` if it does.
 - `voters` (where known): okrsok → the voters on its roll in the
   Statistical Office's results; an okrsok's addresses are roughly in
   proportion (more per house in blocks of flats).

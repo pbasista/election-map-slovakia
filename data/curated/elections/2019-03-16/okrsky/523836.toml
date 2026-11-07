@@ -1,25 +1,21 @@
-# The okrsky of Spišská Stará Ves of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/523836.toml, reused by `ems job reuse`. Its header there:
-#   Okrsky of Spišská Stará Ves, transcribed by an AI agent in job okrsok-rules-958 from the documents below;
+# The okrsky of Spišská Stará Ves of the vote of 2020-02-29, data/curated/elections/2020-02-29/okrsky/523836.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Spišská Stará Ves, transcribed by an AI agent in job okrsok-rules-2639 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
 #     okrsok 1: pre časť územia mesta Spišská Stará Ves, ulica Štúrova
-#     okrsok 2: pre časť územia mesta Spišská Stará Ves, ulice: Slov. nár. povstania, Mlynská, Kukučínova, Tatranská, Jesenského, 1. mája, Športová, Za Riekou a miestnu časť Lysá nad Dunajcom
+#     okrsok 2: pre časť územia mesta Spišská Stará Ves, ulice: Jesenského, Kukučínova, Mlynská, Slov. nár. povstania, Športová, Tatranská, Za Riekou, 1. mája a miestnu časť Lysá nad Dunajcom
 obec = "523836"
 name = "Spišská Stará Ves"
-okrsky_date = 2022-07-11
+okrsky_date = 2019-11-11
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-03-16 the obec had as many, each with voters on the roll within 10% of its count then. No document of 2019-03-16 was searched for. Scanned document. Register houses without a street in Spišská Stará Ves placed by nearest address (fill_nearest); Lysá nad Dunajcom as a part in okrsok 2."
-okrsky_reused = 2022-10-29
+okrsky_note = "Scanned document, read via OCR without diacritics; text given with diacritics restored. Addresses of Spišská Stará Ves without a street (numbered by súpisné číslo), which the document does not name, take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2020-02-29
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1446): No okrsky document for this vote on spisskastaraves.sk: the vote's elections page (live and as archived) lists no určenie volebných okrskov, probing filename variants gave 404, and the Internet Archive CDX of the domain shows no okrsky document for this vote. Other votes' documents (2017, 2019-11-11, 2022-11-09, 2023, 2024 EP, 2026) list identical okrsky but may not be used for this vote. These are the okrsky of the vote of 2020-02-29 (2020-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2020-02-29: 1: 918 → 877, 2: 830 → 820."
 
 [[document]]
-url = "https://www.spisskastaraves.sk/resources/File/0_urcenie-volebnych-okrskov.pdf"
-sha256 = "82f2795f449e266fa5de71efcae93a0ed6865f417dfe3396a874823e538a6ec9"
-title = "Určenie volebných okrskov"
-
-[[document]]
-url = "https://www.spisskastaraves.sk/volby-2022/"
-sha256 = "0ef6787e38162843a8bb58ed7bc71d5c24a1b48508d573ffd113719346cffd85"
-title = "Voľby 2022"
+url = "https://www.spisskastaraves.sk/resources/File/urcenie-volebnych-okrskov.pdf"
+sha256 = "a1a423059b3bf2517a74052cfc03535e11dd5d6e9dcefc6c1d7db962aa75a80f"
+title = "Určenie volebných okrskov (voľby do NR SR 2020)"
 
 [okrsok.1]
 rules = [

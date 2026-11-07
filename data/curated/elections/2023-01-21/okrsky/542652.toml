@@ -19,11 +19,10 @@
 #   okrsok 16: Hečkova, Hrežďovská, I. Krasku, Jahodová, Lipová, Malé Chlievany, Radová, Topoľová
 #   okrsok 17: Hrežďovská, Inovecká, K cintorínu, Kpt. Jaroša, Ku splavu, Ozorovská hlavná, Ozorovská nová, Potočná, Za kaštielom
 #   okrsok 18: Horné Ozorovce
-#   okrsok 19: (not in the document)
 obec = "542652"
 name = "Bánovce nad Bebravou"
 okrsky_fill = "nearest"
-okrsky_note = "The document has okrsky 1-18; the Statistical Office counts a 19th okrsok with 2 voters which it does not define, given here as an okrsok without addresses. Hrežďovská (register part Dolné Ozorovce) is listed in both okrsok 16 and okrsok 17 without saying which houses belong where; it has no rule and each house takes the okrsok of its nearest neighbours (fill_nearest). Also by fill_nearest: Duklianska (1 address, named in no okrsok) and addresses without a street. 'Vodná nádrž' (okrsok 7) is not in the register. Okrsok 1 also takes the residents registered at 'Bánovce nad Bebravou' without a street or number (no rule)."
+okrsky_note = "The document has okrsky 1-18; the Statistical Office counts a 19th okrsok with 2 voters which it does not name: the COVID-19 special okrsok of okres Bánovce nad Bebravou (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml). Hrežďovská (register part Dolné Ozorovce) is listed in both okrsok 16 and okrsok 17 without saying which houses belong where; it has no rule and each house takes the okrsok of its nearest neighbours (fill_nearest). Also by fill_nearest: Duklianska (1 address, named in no okrsok) and addresses without a street. 'Vodná nádrž' (okrsok 7) is not in the register. Okrsok 1 also takes the residents registered at 'Bánovce nad Bebravou' without a street or number (no rule)."
 okrsky_date_approximate = "posted"
 okrsky_date_seen = 2022-11-10
 okrsky_date_basis = "The city's referendum 2023 page shows the document as 'Zverejnené 10.11.2022'; the document names the referendum of 21 January 2023 but states no decision date. (https://www.banovce.sk/referendum-2023-vysledky-0.html)"
@@ -184,6 +183,3 @@ rules = [
 rules = [
   {part = "Horné Ozorovce"},
 ]
-
-[okrsok.19]
-addressless = true

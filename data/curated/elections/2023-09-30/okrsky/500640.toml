@@ -1,0 +1,28 @@
+# The okrsky of Nové Sady of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/500640.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Nové Sady, transcribed by an AI agent in job okrsok-rules-5124 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: okrsok č. 1 je vytvorený pre občanov z Nových Sadov, Kotrbála a Cerovín.
+#     okrsok 2: okrsok č. 2 je vytvorený pre občanov zo Sily.
+obec = "500640"
+name = "Nové Sady"
+okrsky_date = 2024-02-29
+okrsky_note = "Scanned, read from the page image."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3880): The municipality's page for this vote (live, or as archived) lists only the announcement of the vote, voter information, e-mail addresses and results; no okrsky document. Okrsky documents exist only for the referendum 2023, EP 2024 and referendum 2026 (okrsok 1 Nové Sady, Kotrbál, Ceroviny; okrsok 2 Sila). These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2024-06-08: 1: 800 → 791, 2: 265 → 273."
+
+[[document]]
+url = "https://web.archive.org/web/20240303090152/https://www.novesady.sk/data/page/novesady.sk/24717/volebne-okrsky-eurovolby.pdf"
+sha256 = "cff9bbdc5afc08fd7ef8e2085d78ab1b82eecade5bcf3694731b643c10be0540"
+title = "Oznámenie o utvorení volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu v roku 2024 (29.02.2024)"
+
+[okrsok.1]
+rules = [
+  {part = "Nové Sady", note = "Kotrbál is a settlement the register keeps in part Nové Sady"},
+  {part = "Ceroviny"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Sila"},
+]

@@ -1,0 +1,145 @@
+# Okrsky of Kežmarok, transcribed by an AI agent in job okrsok-rules-016 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Biela voda, Hradská cesta, Michalská, Nad traťou, Pod traťou, Poľná, Pri zastávke, Tehelňa, Továrenská, Pradiareň, Strelnica
+#   okrsok 2: Pod lesom, Severná, Hradný vrch
+#   okrsok 3: Garbiarska, Možiarska, Nižná brána
+#   okrsok 4: J. Kraya, Priekopa, Trhovište, Fraňa Kráľa, Kostolné námestie, Nová, Slavkovská, Starý trh, Hradné námestie
+#   okrsok 5: Baštová, Dr. Alexandra, Hlavné námestie, Hviezdoslavova, Toporcerova, Kušnierska brána Mesto Kežmarok, Tvarožnianska
+#   okrsok 6: J. Jesenského, J. Záborského, Kamenná baňa, Kláštorná, Komenského, Dávida Frölicha, Kukučínova, P.J. Šafárika, Rázusova, S. Tomášika, Štúrova, Ľubická cesta, Zochova
+#   okrsok 7: M. Lányiho, Nábrežná, Sihoť, Vyšný mlyn, Záhradná, Cintorínska, Huncovská
+#   okrsok 8: Gen. Štefánika, Dr. D. Fischera, Krvavé pole, Mučeníkov, Tatranská, Gaštanová, J. Chalupku,
+#   okrsok 9: Bardejovská, Košická, Levočská, Weilburská
+#   okrsok 10: Lanškrounská
+#   okrsok 11: Karola Kuzmányho, Obrancov mieru, Suchá hora, Ivana Stodolu
+#   okrsok 12: Petržalská, Južná
+obec = "523585"
+name = "Kežmarok"
+okrsky_date = 2022-11-07
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF read from the rendered page image. 'Mesto Kežmarok' in okrsok 5 means voters registered only to the town, not a rule. Weinova (register street the document does not name) and register addresses without a street are placed by fill_nearest. P.J. Šafárika covers both register spellings ('P. J. Šafárika', 'P.J.Šafárika'). The document does not name the COVID-19 special okrsok 13."
+
+[[document]]
+url = "https://www.kezmarok.sk/wp-content/uploads/2022/11/Oznamenie-o-utvoreni-okrskov-a-urceni-miestnostina-vykonanie-referenda-2023.pdf"
+sha256 = "a001f9c50a9cb9896a81a8071bf8e5e0f0295e06277200d824ff6e7c5cc3aa46"
+title = "Oznámenie o utvorení okrskov a určení miestností na vykonanie referenda 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Biela voda"},
+  {street = "Hradská cesta"},
+  {street = "Michalská"},
+  {street = "Nad traťou"},
+  {street = "Pod traťou"},
+  {street = "Poľná"},
+  {street = "Pri zastávke"},
+  {street = "Tehelňa"},
+  {street = "Továrenská"},
+  {street = "Pradiareň"},
+  {street = "Strelnica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Pod lesom"},
+  {street = "Severná"},
+  {street = "Hradný vrch"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Garbiarska"},
+  {street = "Možiarska"},
+  {street = "Nižná brána"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Jakuba Kraya", written = "J. Kraya"},
+  {street = "Priekopa"},
+  {street = "Trhovište"},
+  {street = "Fraňa Kráľa"},
+  {street = "Kostolné námestie"},
+  {street = "Nová"},
+  {street = "Slavkovská"},
+  {street = "Starý trh"},
+  {street = "Hradné námestie"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Baštová"},
+  {street = "Dr. Alexandra"},
+  {street = "Hlavné námestie"},
+  {street = "Hviezdoslavova"},
+  {street = "Toporcerova"},
+  {street = "Kušnierska brána"},
+  {street = "Tvarožnianska"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "J.Jesenského", written = "J. Jesenského"},
+  {street = "S.Tomášika", written = "S. Tomášika"},
+  {street = "P. J. Šafárika", written = "P.J. Šafárika"},
+  {street = "P.J.Šafárika", written = "P.J. Šafárika"},
+  {street = "J. Záborského"},
+  {street = "Kamenná baňa"},
+  {street = "Kláštorná"},
+  {street = "Komenského"},
+  {street = "Dávida Frölicha"},
+  {street = "Kukučínova"},
+  {street = "Rázusova"},
+  {street = "Štúrova"},
+  {street = "Ľubická cesta"},
+  {street = "Zochova"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Martina Lányiho", written = "M. Lányiho"},
+  {street = "Nábrežná"},
+  {street = "Sihoť"},
+  {street = "Vyšný mlyn"},
+  {street = "Záhradná"},
+  {street = "Cintorínska"},
+  {street = "Huncovská"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Dr.Daniela Fischera", written = "Dr. D. Fischera"},
+  {street = "Ul. Mučeníkov", written = "Mučeníkov"},
+  {street = "Jána Chalupku", written = "J. Chalupku"},
+  {street = "Gen. Štefánika"},
+  {street = "Krvavé pole"},
+  {street = "Tatranská"},
+  {street = "Gaštanová"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Bardejovská"},
+  {street = "Košická"},
+  {street = "Levočská"},
+  {street = "Weilburská"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Lanškrounská"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Karola Kuzmányho"},
+  {street = "Obrancov mieru"},
+  {street = "Suchá hora"},
+  {street = "Ivana Stodolu"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Petržalská"},
+  {street = "Južná"},
+]

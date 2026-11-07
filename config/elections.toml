@@ -100,7 +100,12 @@
 #                  no okrsky are counted or drawn: the map stops at the
 #                  obce. A country-wide election's okrsky are those of the
 #                  regular elections where they provably match (`ems job
-#                  reuse`, src/election_map_slovakia/reuse.py).
+#                  reuse`, src/election_map_slovakia/reuse.py). `special`
+#                  ("volbysr", optional): the package's table declaring
+#                  special okrsky without territory, okres by okres
+#                  (tab0c of the 2023 referendum, the COVID-19 special
+#                  okrsky; src/election_map_slovakia/special.py, with
+#                  data/curated/elections/<day>/special-okrsky.toml).
 #   results        (optional) the definitive results: `inputs`, read as
 #                  `format` says, none (or no `results`) until they are
 #                  published (the results step of `ems make` reads them;
@@ -263,7 +268,9 @@ addresses = "addresses-2022"
 zbgis = ["zbgis-0-2026", "zbgis-1-2026", "zbgis-2-2026"]
 osm = "osm-slovakia-2023"
 records = ["zbgis-2022"]
-units = { format = "volbysr", input = "results-ref2023", table = "tab0b" }
+# tab0c declares the COVID-19 special okrsky (Act No. 395/2022 Coll.;
+# src/election_map_slovakia/special.py).
+units = { format = "volbysr", input = "results-ref2023", table = "tab0b", special = "tab0c" }
 results = { format = "volbysr", inputs = ["results-ref2023"] }
 # As tab0a of the package words them.
 questions = [
@@ -291,10 +298,11 @@ questions = [
     "Súhlasíte s tým, aby boli obnovené Úrad špeciálnej prokuratúry a Národná kriminálna agentúra?",
 ]
 
-# The municipal by-elections ("nové voľby") of the 2022–2026 term, each day
-# ŠÚ SR's package (results-oso<yyyymm> in inputs.toml, which the 2026
-# election reads for its office holders too), listed with the Speaker's
-# decisions at https://volby.statistics.sk/oso/doplnkove2022/sk/index.html.
+# The municipal by-elections (doplňujúce and nové voľby) of the 2022–2026
+# term, each day ŠÚ SR's package (results-oso<yyyymm> in inputs.toml, which
+# the 2026 election reads for its office holders too), listed with the
+# Speaker's decisions at
+# https://volby.statistics.sk/oso/doplnkove2022/sk/index.html.
 
 [election.2023-03]
 day = 2023-03-25

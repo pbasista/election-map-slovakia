@@ -1,30 +1,44 @@
-# The okrsky of Čachtice of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/505901.toml, reused by `ems job reuse`. Its header there:
-#   The okrsky of Čachtice of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/505901.toml, reused by `ems job reuse`.
+# The okrsky of Čachtice of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/505901.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Čachtice, transcribed by an AI agent in job okrsok-rules-3595 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Železničná, J.Urbanovského, Niva, Medzihorská, Na doline, Kúria, Revolučná, Podzámska, Pionierska, Slnečná, Ul.1.mája, Malinovského od č.domu 243 – 323
+#     okrsok 2: Malinovského od č.domu 419 – 773, Malinovského od č.domu 1260– 1261, L.Novomeského, Duklianska, Mierová, Miloša Uhra, Záhradná, Družstevná, Lysiná, Špitálska, Múkovská
+#     okrsok 3: Malinovského od č.domu 798 – 1259, Malinovského od č.domu 1262– 1275, Zemiansky Kút, Hviezdoslavova, Komárno, Želovany, Ľ.Podjavorinskej, Kamence, Fraňa Kráľa, Teplica, Osloboditeľov
 obec = "505901"
 name = "Čachtice"
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2024-03-23 the obec had as many, each with voters on the roll within 10% of its count then. No document of 2024-03-23 was searched for. No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). fill_nearest places the 2 addresses without street and any Malinovského súpisné numbers outside the listed ranges."
-okrsky_reused = 2022-10-29
+okrsky_note = "Malinovského is numbered by súpisné číslo in the document (243–1275; its orientačné čísla go only to 131). Malinovského houses with súpisné čísla outside the listed ranges and the 3 addresses without a street are placed by fill_nearest."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2024-03-23 setting the okrsky was found (okrsok-rules-4225): The 2024 presidential document (Zoznam volebných okrskov, posted 26. 1. 2024) lists okrsky 1-3 only with their common polling station (Dom služieb – Svadobka, Malinovského 426/54), no streets; Čachtice has one part, so the okrsky cannot be drawn from it. The street lists of 2018 and 2023 (and 2026) give the same three okrsky. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-03-23 → 2023-09-30: 1: 965 → 965, 2: 988 → 969, 3: 960 → 961."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-06-30
+okrsky_date_basis = "The municipality's Voľby a referendá page of the street list states \"Vyvesené: 30. 6. 2023\" (taken down 1. 10. 2023); the list itself names the National Council election 2023 but is undated. (https://www.cachtice.sk/samosprava/volby-a-referenda/rozpis-ulic-podla-okrskov-1086.html)"
 
 [[document]]
-url = "https://www.cachtice.sk/e_download.php?file=/data/uredni_deska/obsah641_1.docx&original=Rozpis%20ul%C3%ADc%20pod%C4%BEa%20okrskov.docx"
-sha256 = "d5876fa39609c2dfa9f67c693524878d8643841be86de0384d451ebee125e399"
-title = "Zoznam ulíc patriacich do volebných okrskov pre voľby do samosprávnych krajov a volieb do samosprávy obce, dňa 24.10.2026"
+url = "https://www.cachtice.sk/e_download.php?file=data/uredni_deska/obsah1069_1.docx&original=Rozpis%20ul%C3%ADc%20pod%C4%BEa%20okrskov.docx"
+sha256 = "63f2507dc7259213f541d875f4bb111e2aab00d9b68f4a34211d6148e874ddda"
+title = "Voľby do Národnej rady SR rok 2023: Zoznam ulíc, ktoré patria do okrsku č. 1–3 (Rozpis ulíc podľa okrskov)"
 
 [[document]]
-url = "https://www.cachtice.sk/e_download.php?file=/data/uredni_deska/obsah632_1.docx&original=Zoznam%20volebn%C3%BDch%20okrskov.docx"
-sha256 = "ae83cdb364178bf6b398720de1e2ffb568dde1029332d274b2c854c1e63c727d"
-title = "Zoznam volebných okrskov pre konanie volieb do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov v obci Čachtice v roku 2026"
+url = "https://www.cachtice.sk/samosprava/volby-a-referenda/rozpis-ulic-podla-okrskov-1086.html"
+sha256 = "30e28461eaa725ef9b9c29e88aefbf2eac312f75ac2b5b762544d03df32864a3"
+title = "Rozpis ulíc podľa okrskov (Voľby a referendá, vyvesené 30. 6. 2023)"
 
 [[document]]
-url = "https://www.cachtice.sk/samosprava/volby-a-referenda/zoznam-ulic-patriacich-do-volebnych-okrskov-pre-volby-do-samospravnych-krajov-a-volieb-do-samospravy-obce-dna-24102026-1524.html"
-sha256 = "a43b843535c51e9c5519f885d514fc4932774f1fc25e78f3b673a68a34dea29f"
-title = "Zoznam ulíc patriacich do volebných okrskov (stránka)"
+url = "https://www.cachtice.sk/e_download.php?file=data/uredni_deska/obsah1068_1.rtf&original=Vo%C4%BEby-ur%C4%8Denie%20volebn%C3%BDch%20okrskov.rtf"
+sha256 = "02ab730ee44f7dfde318bf1a286492b325e40a026a05097c345aacd8d72cdd98"
+title = "Určenie volebných okrskov a volebných miestností (voľby do NR SR 2023)"
+
+[[document]]
+url = "https://www.cachtice.sk/samosprava/volby-a-referenda/urcenie-volebnych-okrskov-a-volebnych-miestnosti-1085.html"
+sha256 = "0735ae4a4723e52676f06c3ff5e82d828883412dacf74652013986e4ff7f83c1"
+title = "Určenie volebných okrskov a volebných miestností (Voľby a referendá, vyvesené 30. 6. 2023)"
 
 [okrsok.1]
 rules = [
   {street = "Železničná"},
-  {street = "J. Urbanovského"},
+  {street = "J. Urbanovského", written = "J.Urbanovského"},
   {street = "Niva"},
   {street = "Medzihorská"},
   {street = "Na doline"},
@@ -39,7 +53,7 @@ rules = [
 
 [okrsok.2]
 rules = [
-  {street = "Malinovského", numbers = "419-773, 1260-1261, 1276-1330, 1338-1340, 1360", by = "supisne", note = "The document's range 1260–1330 overlaps okrsok 3's 1262–1275; the explicit okrsok 3 range is taken as an exception, so okrsok 2 gets 1260–1261 and 1276–1330. Malinovského numbers (243–1360) are súpisné (orientačné go only to 131)."},
+  {street = "Malinovského", numbers = "419-773, 1260-1261", by = "supisne"},
   {street = "L. Novomeského", written = "L.Novomeského"},
   {street = "Duklianska"},
   {street = "Mierová"},
@@ -49,18 +63,17 @@ rules = [
   {street = "Lysiná"},
   {street = "Špitálska"},
   {street = "Múkovská"},
-  {street = "Záhumenská"},
-  {street = "M. Uhra", written = "Miloša Uhra", note = "Register lists the same street also as 'M. Uhra' (initial of first name)."},
+  {street = "M. Uhra", written = "Miloša Uhra", note = "The register keeps one house of Miloša Uhra under the abbreviated name 'M. Uhra' (initial of the first name); same street."},
 ]
 
 [okrsok.3]
 rules = [
-  {street = "Malinovského", numbers = "798-1257, 1262-1275, 1331", by = "supisne"},
+  {street = "Malinovského", numbers = "798-1259, 1262-1275", by = "supisne"},
   {street = "Zemiansky Kút"},
   {street = "Hviezdoslavova"},
   {street = "Komárno"},
   {street = "Želovany"},
-  {street = "Ľ. Podjavorinskej"},
+  {street = "Ľ. Podjavorinskej", written = "Ľ.Podjavorinskej"},
   {street = "Kamence"},
   {street = "Fraňa Kráľa"},
   {street = "Teplica"},

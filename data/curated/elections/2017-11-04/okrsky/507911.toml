@@ -1,0 +1,108 @@
+# Okrsky of Chorvátsky Grob, transcribed by an AI agent in job okrsok-rules-125 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulice: Antona Bernoláka, Antona Václavíka, Dlhá, Hlboká cesta, Hoštáky, Chorvátska, Južná, Karpatská, Krátka, Lúčna, Malé Vinice, Mila Urbana, Na Kŕčoch, Námestie Josipa Andriča, Pod vinicami, Poľná, Severná, Svätoplukova, Školská, Športová, Výhon, Záhradná
+#   okrsok 2: Ulice: Brezová, Drozdia, Hájska, Hornodvorská, Hrudky, Jastrabia, Jantárová, Javorová alej, Konopná, Ľanová, Monarská alej, Na Pasienku, Nevädzová, Pálffyho, Púpavová, Rubínová, Slávičia, Slnečná, Smaragdová, Šúrska, Topoľová, Zafírová, Žilinská, Žitná
+#   okrsok 3: Ulice: Agátová, Bazová, Blahútova, Borovicová, Bottova, Brusnicová, Buková, Čerešňová, Černicová, Dubová, Golfová, Hlavný dvor, Hlohová, Hrušková, Hviezdoslavova, Chalupkova, Janka Kráľa, Jarabinová, Jaseňová, Jazdecká, Jazmínová, Jedľová, Jelšová, Kukučínova, Osiková, Platanová, Pezinská, Suché Miesto, Šalviová, Šípková, Štúrova, Triblavinská, Vajnorská, Vavrínová
+obec = "507911"
+name = "Chorvátsky Grob"
+okrsky_date = 2017-08-31
+okrsky_fill = "nearest"
+okrsky_note = "The decision (download_file_f.php?id=868136, linked from the 2017 elections page) is gone live and the Internet Archive never captured it; the Common Crawl captured it on 2017-10-19 (crawl CC-MAIN-2017-43). Its annex lists the streets of each okrsok. Streets of the register it does not name (Kolibríková, Sokolia, Toskánska: later developments) and the addresses without a street are placed by fill_nearest."
+
+[[document]]
+url = "https://index.commoncrawl.org/CC-MAIN-2017-43-index?url=http://www.chorvatskygrob.sk/download_file_f.php%3Fid%3D868136&from=20171019141751&to=20171019141751&output=json"
+sha256 = "3110cc85f4feebdd4a3ab31b0301553acfeb702443020295fcb39489ed9da476"
+title = "Rozhodnutie starostu obce Chorvátsky Grob o utvorení volebných okrskov a určení volebných miestností pre voľby do orgánov samosprávnych krajov 4. novembra 2017 (31.08.2017), s prílohou (Common Crawl, október 2017)"
+
+[okrsok.1]
+rules = [
+  {street = "Antona Bernoláka"},
+  {street = "Antona Václavíka"},
+  {street = "Dlhá"},
+  {street = "Hlboká cesta"},
+  {street = "Hoštáky"},
+  {street = "Chorvátska"},
+  {street = "Južná"},
+  {street = "Karpatská"},
+  {street = "Krátka"},
+  {street = "Lúčna"},
+  {street = "Malé Vinice"},
+  {street = "Mila Urbana"},
+  {street = "Na Kŕčoch"},
+  {street = "Námestie Josipa Andriča"},
+  {street = "Pod vinicami"},
+  {street = "Poľná"},
+  {street = "Severná"},
+  {street = "Svätoplukova"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Výhon"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Brezová"},
+  {street = "Drozdia"},
+  {street = "Hájska"},
+  {street = "Hornodvorská"},
+  {street = "Hrudky"},
+  {street = "Jastrabia"},
+  {street = "Jantárová"},
+  {street = "Javorová alej"},
+  {street = "Konopná"},
+  {street = "Ľanová"},
+  {street = "Monarská alej"},
+  {street = "Na Pasienku"},
+  {street = "Nevädzová"},
+  {street = "Pálffyho"},
+  {street = "Púpavová"},
+  {street = "Rubínová"},
+  {street = "Slávičia"},
+  {street = "Slnečná"},
+  {street = "Smaragdová"},
+  {street = "Šúrska"},
+  {street = "Topoľová"},
+  {street = "Zafírová"},
+  {street = "Žilinská"},
+  {street = "Žitná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová"},
+  {street = "Bazová"},
+  {street = "Blahútova"},
+  {street = "Borovicová"},
+  {street = "Bottova"},
+  {street = "Brusnicová"},
+  {street = "Buková"},
+  {street = "Čerešňová"},
+  {street = "Černicová"},
+  {street = "Dubová"},
+  {street = "Golfová"},
+  {street = "Hlavný Dvor", written = "Hlavný dvor"},
+  {street = "Hlohová"},
+  {street = "Hrušková"},
+  {street = "Hviezdoslavova"},
+  {street = "Chalupkova"},
+  {street = "Janka Kráľa"},
+  {street = "Jarabinová"},
+  {street = "Jaseňová"},
+  {street = "Jazdecká"},
+  {street = "Jazmínová"},
+  {street = "Jedľová"},
+  {street = "Jelšová"},
+  {street = "Kukučínova"},
+  {street = "Osiková"},
+  {street = "Platanová"},
+  {street = "Pezinská"},
+  {street = "Suché Miesto"},
+  {street = "Šalviová"},
+  {street = "Šípková"},
+  {street = "Štúrova"},
+  {street = "Triblavinská"},
+  {street = "Vajnorská"},
+  {street = "Vavrínová"},
+]

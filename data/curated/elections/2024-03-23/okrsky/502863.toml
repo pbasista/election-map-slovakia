@@ -1,0 +1,67 @@
+# The okrsky of Tlmače of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/502863.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Tlmače, transcribed by an AI agent in job okrsok-rules-4999 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Lipová ulica, Kotlárska ulica, Mládežnícka ulica, Ulica Na Festúnku, Záhradná ulica
+#     okrsok 2: Dlhá ulica, Námestie odborárov, Kozmálovská cesta, Francúzska ulica, Viničná ulica
+#     okrsok 3: Námestie 1. mája, Topoľová ulica, Slovanská ulica, Školská ulica, Ružová ulica, ulica Československej Armády
+#     okrsok 4: Cintorínska ulica, Cintorínska, Krátka ulica, Levická cesta, Mlynská ulica, Mlynská, Nám. Slov. Národného Povstania, Nová ulica, Potočná ulica, Stará ulica, Stará, Tekovská cesta, Tekovská ulica, Továrenská cesta, Továrenská ulica
+obec = "502863"
+name = "Tlmače"
+okrsky_date = 2024-03-01
+okrsky_fill = "nearest"
+okrsky_note = "Same okrsky as 2022. The register's addresses without a street (súpisné only) are placed by fill_nearest."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2024-03-23 setting the okrsky was found (okrsok-rules-4375): The presidential election 2024 page links no okrsky document (only results, minutes, forms); the site's full-text search finds okrsky documents of 2022, 2023 (NR SR), the European Parliament 2024 (8 June 2024, file 635) and the 2026 votes, but none for the presidential election. The Internet Archive has no 2023-2024 captures of mestotlmace.sk. The EP 2024 document (same four okrsky as 2022) is another vote's and is not used. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-03-23 → 2024-06-08: 1: 791 → 799, 2: 873 → 856, 3: 837 → 826, 4: 489 → 488."
+
+[[document]]
+url = "https://www.mestotlmace.sk/modules/file_storage/download.php?file=98e40d46%7C635&inline=1"
+sha256 = "9eb327a905cf75942c25ec0b19edcf62e762b300ff3be2e6811e5220eddaf22c"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností (voľby do Európskeho parlamentu 2024)"
+
+[okrsok.1]
+rules = [
+  {street = "Lipová ulica"},
+  {street = "Kotlárska ulica"},
+  {street = "Mládežnícka", written = "Mládežnícka ulica"},
+  {street = "Ulica Na Festunku", written = "Ulica Na Festúnku", note = "a misplaced accent; the register's only street of this name"},
+  {street = "Záhradná ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dlhá ulica"},
+  {street = "Námestie Odborárov", written = "Námestie odborárov"},
+  {street = "Kozmálovská cesta"},
+  {street = "Francúzska", written = "Francúzska ulica"},
+  {street = "Viničná ulica"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Námestie 1.mája", written = "Námestie 1. mája"},
+  {street = "Topoľová ulica"},
+  {street = "Slovanská ulica"},
+  {street = "Školská ulica"},
+  {street = "Ružová ulica"},
+  {street = "Československej Armády", written = "ulica Československej Armády"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Cintorínska ulica"},
+  {street = "Cintorínska"},
+  {street = "Krátka ulica"},
+  {street = "Levická cesta"},
+  {street = "Mlynská ulica"},
+  {street = "Mlynská"},
+  {street = "Nám. Slov. Národného Povstania"},
+  {street = "Nová ulica"},
+  {street = "Potočná ulica"},
+  {street = "Stará ulica"},
+  {street = "Stará"},
+  {street = "Tekovská cesta"},
+  {street = "Tekovská ulica"},
+  {street = "Továrenská cesta"},
+  {street = "Továrenská ulica"},
+]

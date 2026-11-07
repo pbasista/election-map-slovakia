@@ -1,22 +1,28 @@
-# The okrsky of Ivanka pri Dunaji of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/507938.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Ivanka pri Dunaji, transcribed by an AI agent in job okrsok-rules-655 from the documents below;
+# The okrsky of Ivanka pri Dunaji of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/507938.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Ivanka pri Dunaji, transcribed by an AI agent in job okrsok-rules-1087 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: ulice Farnianska, Hlboká, Hollého, Hurbanova, Muškátová, Nová, Partizánska, Pekná, Pluhová, Pri pálenici, Slnečná, Štefánikova, Štúrova, Veterná, Zelená
-#     okrsok 2: ulice Dobšinského, Dlhá, Družstevná, Hlinkova, Hviezdoslavova, Jesenského, Komenského, Kvetná, Lesná, Malinová, Marhuľová, Pri jazere, Rázusova, SNP, Školská, Šúrska, Višňová, Záhradnícka, Za školou
-#     okrsok 3: ulice Bernolákovská, Bobuľová, Gaštanová, Grasalkovičova, Hroznová, Jabloňová, Matičná, Moyzesova, Muštová, Na vŕšku, Nádražná, Nám. sv. Rozálie, Nám. padlých hrdinov, Olšinová, Orechová, Pod záhradami, Poľovnícka, Pri trati, Pri vrbine, Révová, Stromová, Šustová, Trenčianska, Vajnorská, Vinohradská, Za kostolom, Železničiarska
-#     okrsok 4: ulice Agátová, Cintorínska, Dunajská, Jahodová, Kalinčiakova, Kmeťova, Lipová, Na výslní, Okružná, Palárikova, Poľná, Potocká, Puškinova, Ružová, Sadová, Sládkovičova, Sovia, Škultétyho, Záleská, Želiarska
+#     okrsok 1: ulica Farnianska, Hlboká, Hollého, Hurbanova, Muškátová, Nová, Partizánska, Pekná, Pluhová, Pri pálenici, Slnečná, Štefánikova, Štúrova, Veterná, Zelená
+#     okrsok 2: ulica Dobšinského, Dlhá, Družstevná, Hlinkova, Hviezdoslavova, Jesenského, Komenského, Kvetná, Lesná, Malinová, Marhuľová, Pri jazere, Rázusova, SNP, Školská, Višňová, Záhradnícka, Za školou
+#     okrsok 3: ulica Bernolákovská, Bobuľová, Gaštanová, Grasalkovičova, Hroznová, Jabloňová, Matičná, Moyzesova, Muštová, Na vŕšku, Nádražná, Nám. sv. Rozálie, Nám. padlých hrdinov, Olšinová, Orechová, Pod záhradami, Poľovnícka, Pri trati, Pri vrbine, Révová, Stromová, Šustová, Trenčianska, Vajnorská, Vinohradská, Za kostolom, Železničiarska
+#     okrsok 4: ulica Agátová, Cintorínska, Dunajská, Jahodová, Kalinčiakova, Kmeťova, Lipová, Na výslní, Okružná, Palárikova, Poľná, Potocká, Puškinova, Ružová, Sadová, Sládkovičova, Sovia, Škultétyho, Záleská, Želiarska
 obec = "507938"
 name = "Ivanka pri Dunaji"
-okrsky_date = 2022-08-01
+okrsky_date = 2019-01-29
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was searched for. The document omits Senecká cesta (5 addresses) and the register's houses without a street (súpisné only); these take the okrsok of the nearest placed address (fill_nearest)."
-okrsky_reused = 2022-10-29
+okrsky_note = "Decision of the mayor of 29.01.2019 for the presidential election of 16 (30) March 2019, linked from the Voľby page (posted 29.1.2019). Same okrsky as the copied 2022 rule set except that Šúrska is not listed. The live website answered HTTP 429 (rate limit), so the Internet Archive copies are listed. The register's addresses without a street (súpisné čísla only) are in no list of the document; they take the okrsok of the nearest placed address (fill_nearest)."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1677): The municipality's Voľby page (live: HTTP 429 rate limit; Internet Archive captures of 2019-08-23, 2019-10-14, 2022-03-19, 2022-12-04 and 2025-01-15) lists for the European Parliament election of 25 May 2019 only its announcement, the e-mail address for voting-pass requests and the results; it links no okrsky decision, unlike every other vote of 2017–2024. All 59 files (download_file_f.php ids 1085350–1124741, posted February–April 2019) that the Internet Archive captured were opened: none is an okrsky decision. The decision of 29.01.2019 for the presidential election is that vote's only, so no document of this vote was found and the copy stays. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2019-03-16: 1: 1,293 → 1,301, 2: 1,279 → 1,279, 3: 1,305 → 1,319, 4: 1,405 → 1,409."
 
 [[document]]
-url = "https://www.ivankapridunaji.sk/download_file_f.php?id=1720362"
-sha256 = "0876a5a9087baf51bc1c896e39569d7fd7a9de4f3f172ae9f544ea60109ccbcf"
-title = "Informácia o utvorení volebných okrskov s vymedzením ich územného obvodu a informácia o určení volebných miestností"
+url = "https://web.archive.org/web/20221220230844/https://www.ivankapridunaji.sk/download_file_f.php?id=1081781"
+sha256 = "26f9e03dd0938284729f1148bd0f42b9ecfe80aa7005e9f0488d9826d39c6b7a"
+title = "Rozhodnutie starostu obce Ivanka pri Dunaji - Volebné okrsky na odovzdávanie hlasovacích lístkov a na sčítanie hlasov (voľba prezidenta SR 16. marca 2019)"
+
+[[document]]
+url = "https://web.archive.org/web/20250529013302/https://www.ivankapridunaji.sk/download_file_f.php?id=1880454"
+sha256 = "45ab0c9b6581cddaf096594080f2e0b3bac56bb395dec6e0d4e73453e3437c10"
+title = "Rozhodnutie starostu obce Ivanka pri Dunaji - vytvorenie volebných okrskov pre voľby do NRSR (30. septembra 2023)"
 
 [okrsok.1]
 rules = [
@@ -54,10 +60,10 @@ rules = [
   {street = "Rázusova"},
   {street = "SNP"},
   {street = "Školská"},
-  {street = "Šúrska ulica", written = "Šúrska"},
   {street = "Višňová"},
   {street = "Záhradnícka"},
   {street = "Za školou"},
+  {street = "Šúrska ulica"},
 ]
 
 [okrsok.3]
@@ -89,6 +95,7 @@ rules = [
   {street = "Vinohradská"},
   {street = "Za kostolom"},
   {street = "Železničiarska"},
+  {street = "Senecká cesta"},
 ]
 
 [okrsok.4]

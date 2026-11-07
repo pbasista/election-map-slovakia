@@ -21001,6 +21001,10 @@
    "src": "{name}: {share} · {votes} of {valid}",
    "text": "{name}: {share} · {votes} з {valid}"
   },
+  "mapmode.tip_special": {
+   "src": "Not drawn, without territory: polling district {n}",
+   "text": "Незакресленый, без теріторії: окрсок ч. {n}"
+  },
   "mapmode.tip_tie": {
    "src": "Tied for the most votes: {names}, {share} each",
    "text": "Рівно найбільше голосів: {names}, по {share}"
@@ -21181,6 +21185,10 @@
    "src": "The polling districts are drawn from a document of {name} that states no date.",
    "text": "Волебны окрскы суть зазначены подля документу обцї {name}, котрый не уводить датум."
   },
+  "notice.okrsky_outlier": {
+   "src": "Polling district No. {n} had {voters} voters on the roll in {year} but {other} in {source}, more than a quarter apart: its borders there most likely differ.",
+   "text": "Волебный окрсок ч. {n} мав в роцї {year} в зознамі {voters} волічів, в часї {source} але {other}, о веце як четвертину інакше: його граніцї ся там найскорше одлишують."
+  },
   "notice.okrsky_referendum": {
    "src": "The polling districts of {name} are drawn from the municipality's document for the referendum of {date}: either it says they stayed as they were at these elections, or no document of these elections was found.",
    "text": "Волебны окрскы обцї {name} суть зазначены подля документу обцї про референдум {date}: або уводить, же окрскы зістали такы самы як на тых вольбах, або ся документ з тых вольб не нашов."
@@ -21196,6 +21204,22 @@
   "notice.okrsky_unknown": {
    "src": "{name} voted in several polling districts, but which addresses belonged to which is not known here, so they are not drawn: its results by polling district can't be placed on the map.",
    "text": "В обцї {name} ся вольбило в веце волебных окрсках, але котры адресы належали до котрого, ту не знаме, зато окрскы не суть зазначены: выслідкы подля окрсків ся на мапі не дадуть умістити."
+  },
+  "notice.special_covid": {
+   "src": "Polling district No. {n} of {name} is the COVID-19 special polling district of okres {okres} (Act No. 395/2022 Coll.), for the voters in quarantine anywhere in the okres, who voted where they stayed, into a mobile ballot box (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "Волебный окрсок ч. {n} в обци {name} є шпеціалный волебный окрсок окресу {okres} (закон ч. 395/2022 Z. z.) про волічів у карантені про COVID-19 де-небудь в окресі, котры голосовали там, де ся здержовали, до шпеціалной переносной скринькы (записаных волічів: {voters}). Не мать властну теріторію, тому не є закресленый; його голосы ся зарахують до резултатів обцї {name} і вышшых целків так, як їх рахує Штатістічный уряд."
+  },
+  "notice.special_covid_several": {
+   "src": "Polling district No. {n} of {name} is one of the COVID-19 special polling districts of okresy {okresy} (Act No. 395/2022 Coll.), for the voters in quarantine anywhere in the okres, who voted where they stayed, into a mobile ballot box (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "Волебный окрсок ч. {n} в обци {name} є єден зо шпеціалных волебных окрсків окресів {okresy} (закон ч. 395/2022 Z. z.) про волічів у карантені про COVID-19 де-небудь в окресі, котры голосовали там, де ся здержовали, до шпеціалной переносной скринькы (записаных волічів: {voters}). Не мать властну теріторію, тому не є закресленый; його голосы ся зарахують до резултатів обцї {name} і вышшых целків так, як їх рахує Штатістічный уряд."
+  },
+  "notice.special_prison": {
+   "src": "Polling district No. {n} of {name} is a prison, {facility}: its voters are inmates, who vote there with voting certificates, so its turnout is near 100 % (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "Волебный окрсок ч. {n} в обци {name} є вязниця, {facility}: голосують в нїм вязнены особы з голосовачім преуказом, тому участь є близко 100 % (записаных волічів: {voters}). Не мать властну теріторію, тому не є закресленый; його голосы ся зарахують до резултатів обцї {name} і вышшых целків так, як їх рахує Штатістічный уряд."
+  },
+  "notice.special_source": {
+   "src": "Source:",
+   "text": "Жрідло:"
   },
   "notice.summary_boundary": {
    "src": "Map: the {on} boundary, slightly different",
@@ -21225,6 +21249,10 @@
    "src": "Polling districts not on the map",
    "text": "Окрскы не суть на мапі"
   },
+  "notice.summary_special": {
+   "src": "Polling district No. {n} not on the map",
+   "text": "Окрсок ч. {n} не є на мапі"
+  },
   "notice.supplemented_document": {
    "src": "Those addresses are placed as in a later document of the municipality (of {later}), so the {year} borders may have differed there.",
    "text": "Тоты адресы суть зараджены подля пізнїшого документу обцї (з {later}), так же в роцї {year} могли быти граніцї там іншы."
@@ -21252,6 +21280,26 @@
   "office.regional_council": {
    "src": "member of the regional council ({kraj} kraj)",
    "text": "посланець заступительства самосправного краю ({kraj} край)"
+  },
+  "okrsky.special_covid": {
+   "src": "Polling district No. {n}: COVID-19 special polling district",
+   "text": "Окрсок ч. {n}: шпеціалный окрсок про волічів у карантені про COVID-19"
+  },
+  "okrsky.special_prison": {
+   "src": "Polling district No. {n}: a prison, {facility}",
+   "text": "Окрсок ч. {n}: вязниця, {facility}"
+  },
+  "okrsky.unmapped": {
+   "src": "Polling districts not on the map",
+   "text": "Окрскы мімо мапы"
+  },
+  "okrsky.unmapped_back": {
+   "src": "Back to {name} as a whole",
+   "text": "Назад на цілок: {name}"
+  },
+  "okrsky.unmapped_hint": {
+   "src": "Their results are known, but the map has no place for them: a button shows one's results.",
+   "text": "Їх выслідкы суть знамы, але на мапі не мають місце: кнопка укаже выслідкы окрску."
   },
   "overview.intro.parties": {
    "src": "Choose a party to see its whole candidate list. Circle, cross out and filter parties and candidates as on the ballots. The results are the whole country's.",

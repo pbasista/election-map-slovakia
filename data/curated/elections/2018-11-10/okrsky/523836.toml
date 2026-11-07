@@ -1,15 +1,21 @@
-# The okrsky of Spišská Stará Ves of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/523836.toml, reused by `ems job reuse`.
+# The okrsky of Spišská Stará Ves of the vote of 2017-11-04, data/curated/elections/2017-11-04/okrsky/523836.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Spišská Stará Ves, transcribed by an AI agent in job okrsok-rules-441 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: pre časť územia mesta Spišská Stará Ves, ulica Štúrova
+#     okrsok 2: pre časť územia mesta Spišská Stará Ves, ulice: Slov. nár. povstania, Mlynská, Kukučínova, Tatranská, Jesenského, 1. mája, Športová, Za Riekou a miestnu časť Lysá nad Dunajcom
 obec = "523836"
 name = "Spišská Stará Ves"
-okrsky_date = 2026-07-08
+okrsky_date = 2017-08-08
 okrsky_fill = "nearest"
-okrsky_note = "No document of the elections of 2018-11-10 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2018 (each okrsok's voters on the roll within 10%). The 177 addresses of Spišská Stará Ves without a street, which the document does not name, take the okrsok of the nearest address."
-okrsky_reused = 2026-10-24
+okrsky_note = "Addresses of Spišská Stará Ves without a street (numbered by súpisné číslo), which the document does not name, take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2017-11-04
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-879): No okrsky document for this vote on spisskastaraves.sk: the vote's elections page (live and as archived) lists no určenie volebných okrskov, probing filename variants gave 404, and the Internet Archive CDX of the domain shows no okrsky document for this vote. Other votes' documents (2017, 2019-11-11, 2022-11-09, 2023, 2024 EP, 2026) list identical okrsky but may not be used for this vote. These are the okrsky of the vote of 2017-11-04 (2017), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2018-11-10 → 2017-11-04: 1: 944 → 965, 2: 857 → 867."
 
 [[document]]
-url = "https://www.spisskastaraves.sk/resources/File/0_okrsky.pdf"
-sha256 = "5e5086c70d7c65563bc5886e2dda8d8464ac836c3ecc20233386378137a75e97"
-title = "Určenie volebných okrskov a volebných miestností pre voľby 24. októbra 2026 (primátor, 8.7.2026)"
+url = "https://www.spisskastaraves.sk/resources/File/okrsky.pdf"
+sha256 = "9f9c6f9cafc8ec4fbc35e07d0b7d2489f2b8b7c86499cbb456b44a8a79ca7de5"
+title = "Určenie volebných okrskov pre voľby do orgánov samosprávnych krajov 2017"
 
 [okrsok.1]
 rules = [

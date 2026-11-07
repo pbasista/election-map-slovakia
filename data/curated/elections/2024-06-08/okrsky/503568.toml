@@ -1,10 +1,15 @@
-# The okrsky of Svodín of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/503568.toml, copied by `ems job reuse` (reused). Its header there:
-#   The okrsky of Svodín of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/503568.toml, reused by `ems job reuse`.
+# The okrsky of Svodín of the vote of 2026-10-24, data/curated/elections/2026-10-24/okrsky/503568.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Svodín, transcribed by an AI agent in job okrsok-rules-261 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Maďarskosvodínska cesta, Dolná mlynská ulica, Horná mlynská, Krížna, Malokostolná, Morušová, Novovieska, Školská, Bieleho kríža, Pála Pathóa, sv.Floriána, svätého Urbána, Veľkolesná, Hlavnosecká, Krátka
+#     okrsok 2: Nemeckosvodínska cesta, Dlhý rad, Dolná jablčná, Dolný koniec, Horná jablčná, Kamenárska, Kopcová, Kostolná, Lipová, Malá škovránková, Škovránková, kopca Tenkesa, Veterná, Hlavná
 obec = "503568"
 name = "Svodín"
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2024-06-08 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2024-06-08 was searched for. No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). The document is undated (published on the obec's Voľby 2026 page with the 2026 election documents). \"Novovieska\" is the register's Novovieska cesta (the only street of that name). Hlavné námestie and Krivá cesta, which the document does not name, and the addresses without a street take the okrsok of the nearest placed address."
-okrsky_reused = 2022-10-29
+okrsky_note = "The document is undated (published on the obec's Voľby 2026 page with the 2026 election documents). \"Novovieska\" is the register's Novovieska cesta (the only street of that name). Hlavné námestie and Krivá cesta, which the document does not name, and the addresses without a street take the okrsok of the nearest placed address."
+okrsky_adopted = 2026-10-24
+okrsky_adopted_basis = "No document of 2024-06-08 setting the okrsky was found (okrsok-rules-4797): No okrsky document found for this vote. The live elections page has only the 2026 municipal documents (with the 2026 okrsky list); the 2026 referendum notice has only the commission records; the site search for 'okrsk' finds nothing older. The Internet Archive's captures of the old (WordPress) and new site's election pages and notices (2017, 2018, 2019, referendum 2023, NR SR 2023) list voters' information, postal vote, e-mail and council-size notices, but no okrsky document, and its CDX of svodin.sk has no okrsky file. These are the okrsky of the vote of 2026-10-24 (2026), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-06-08 → 2026-10-24: 1: 951 → 977, 2: 1,043 → 1,068."
 
 [[document]]
 url = "https://www.svodin.sk/e_download.php?file=/data/multipage/editor/editor-82-310-sk_7.pdf&original=Tla%C4%8Divo%20Volebn%C3%A9%20okrsky_miestnosti_s%C3%ADdlo.pdf"

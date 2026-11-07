@@ -763,6 +763,17 @@ def test_adopted_keys_round_trip_and_stand_alone():
     )
     rules = obvody.okrsky_set(whole, "test")
     assert obvody.okrsky_origin(rules) == {"okrsky_adopted": "2026-10-24"}
+    # The okrsky standing in though their voters differ, read and written back.
+    outlying = obvody.okrsky_set(
+        whole | {"okrsky_adopted_outliers": [[2, 806, 1125]]}, "test"
+    )
+    assert outlying.okrsky_adoption is not None
+    assert outlying.okrsky_adoption.outliers == ((2, 806, 1125),)
+    assert obvody.okrsky_origin(outlying)["okrsky_outliers"] == [[2, 806, 1125]]
+    dumped = tomllib.loads(obvody.dump(outlying))
+    assert obvody.okrsky_set(dumped, "test") == outlying
+    with pytest.raises(obvody.ObvodyError, match="okrsky_adopted_outliers"):
+        obvody.okrsky_set(whole | {"okrsky_adopted_outliers": [[2, 806]]}, "test")
 
 
 @pytest.mark.parametrize(
@@ -1125,6 +1136,21 @@ def test_by_election_prompt_asks_for_its_term_s_decision():
     assert "fill seats of the council elected on 10 November 2018" in text
     assert "decision on the obvody and their seats of mid-2018" in text
     assert "web.archive.org/web/2018*" in text
+
+
+def test_new_election_prompt_asks_for_its_own_decision():
+    """A council elected anew on a by-election day may have new obvody:
+    the prompt asks for the decision for that vote, not the term's."""
+    text = obvodrules.prompt(
+        _CFG,
+        _CFG.election("2023-09"),
+        obvodrules.PROMPT,
+        obvodrules.EARLIER,
+        new=True,
+    )
+    assert "## A new election" in text and "## A by-election" not in text
+    assert "for the elections of 9 September 2023" in " ".join(text.split())
+    assert "web.archive.org/web/2023*" in text
 
 
 def test_ingest_takes_an_uncontested_obvod_of_the_decision_only():

@@ -440,7 +440,8 @@ without candidacies:
 a referendum's questions, a party-list election's party contest
 and each party's list.
 It runs oldest first: a by-election reads its term's `candidates.json`
-(which council obvody its seats lie in).
+(which council obvody its seats lie in, and each council's seats in all,
+`council_seats` of a regular election's municipalities).
 Its schema is described in `src/election_map_slovakia/candidates.py`,
 the incumbent rules in `src/election_map_slovakia/incumbents.py`.
 
@@ -465,6 +466,35 @@ the incumbent rules in `src/election_map_slovakia/incumbents.py`.
 - **Only the elected.**
   The same packages list a council's elected only:
   its contest is marked `elected_only`, which the app says.
+- **New election or by-election.**
+  A by-election day holds two kinds of vote:
+  by-elections proper (doplňujúce voľby: vacant seats, or seats never
+  filled for want of candidates, of the council its term elected,
+  in that council's obvody)
+  and new elections (nové voľby: a mayor, or a whole council,
+  elected anew, after a court annulled the election or where it was
+  never held; a council's obvody may be drawn anew).
+  ŠÚ SR's packages do not tell them apart
+  (`Typ volieb` only names the offices held: "Starosta a zastupiteľstvo",
+  "Len zastupiteľstvo", "Len starosta", "Nekonajú sa"),
+  nor do the Speaker's decisions
+  (each cites § 181 ods. 3 písm. a)–d) of Act No. 180/2014 Coll.
+  for all its municipalities at once),
+  so each contest's `vote` says it by the seats:
+  a mayor's is `"new"`;
+  a council's is `"new"` where the seats called are as many
+  as its council's in all in the term (`council_seats`) or more,
+  no councillor of the term being left, else `"by"`
+  (`src/election_map_slovakia/lists.py` `_new_councils`).
+  Councils elected anew, by day:
+  2019-04 4 (and Ondavka, held nowhere), 2019-09 2 (and Ondavka),
+  2020-10 1, 2021-05 to 2022-03 none, 2023-03 6, 2023-09 4,
+  2024-02 1, 2024-10 and 2025-03 none, 2025-09 1, 2026-03 1,
+  each of one obvod;
+  the others, 16 to 40 contests a day, are by-elections proper.
+  Only a by-election proper takes its term's obvody
+  (the not-held placement below, `addresses`' council parts,
+  `ems job reuse` and the `councils` check of `ems check`).
 - **Uncontested.**
   A contest called but held nowhere, no candidate having registered,
   is a contest without candidacies marked `uncontested`
@@ -477,9 +507,12 @@ the incumbent rules in `src/election_map_slovakia/incumbents.py`.
     5 in 2022, 3 in 2026) and "Len zastupiteľstvo"
     (no mayor: 6, 7 and 3);
   - a by-election's package: "Nekonajú sa" with the seats called
-    (none: the mayor), its council's in the one obvod of its term's
-    (of several the obvod is not known: the summary names it,
-    Divinka 2022-03-19);
+    (none: the mayor), of a by-election proper its council's in the one
+    obvod of its term's (of several the obvod is not known: the summary
+    names it, Divinka 2022-03-19), of a council elected anew in its own
+    one obvod as the package of 2023 on counts them
+    (the packages before count none: Ondavka 2019-04 and 2019-09
+    are named in the summary);
   - the election's `uncontested.toml`: what the inputs do not tell,
     with the document saying so: a council obvod the municipality's
     decision sets but no candidate stood in
@@ -578,7 +611,8 @@ It writes to `data/build/<day>/addr/`:
     and no rule set yet,
     or a by-election elects part of its council
     (an obvod above 1, obvod 1 without its `seats`,
-    or obvod 1 of a council its term elected in several obvody)
+    or obvod 1 of a council its term elected in several obvody,
+    not of a council elected anew)
     and there is no rule set;
   - `none`, without a council election
     (every obec of a country-wide election,
@@ -999,14 +1033,18 @@ and in `data/`
   say of an obec whose units are not the election's own:
   council obvody drawn with another election's rules (`reused`),
   or with another vote's standing in, earlier or later, though the layout
-  is not proven to match (`adopted`, `okrsky_adopted`; `ems job reuse`),
+  is not proven to match (`adopted`, `okrsky_adopted`; `ems job reuse`;
+  `okrsky_outliers` the okrsky standing in all the same though their
+  voters on the roll differ by more than 25 %, with both counts),
   not drawn for want of a document (`not_found`),
   okrsky of another election or a referendum,
   obvody or okrsky from a document dated only approximately
   (`date_approximate`, `okrsky_date_approximate`),
   or partly from a later source where the document does not place
   every address (`supplemented`, `okrsky_supplemented`),
-  okrsky not drawn though it voted in several (`okrsky_unknown`),
+  okrsky not drawn though it voted in several (`okrsky_unknown`,
+  counted in the contests that cover a municipality whole: the mayor's,
+  the regional president's, the country-wide ones),
   and a boundary that moved since (`boundaries`, from `boundaries.toml`).
   The shells of an election drawn on a later election's boundaries
   (not the newest of its `zbgis` inputs)
@@ -1108,7 +1146,8 @@ The checks are described in `src/election_map_slovakia/check.py`:
 - **Contests:** every contest of every election
   in exactly the area file the frontend looks in
   (`contests.area_name`, kinds.js `areaName`).
-- **Councils:** every council contest of a by-election
+- **Councils:** every council contest of a by-election proper
+  (not a new election, `vote` `"new"`)
   in a municipality whose council its term
   (the regular election before it) elected in several obvody
   has the municipality's addresses placed in them by a rule set
@@ -1248,6 +1287,28 @@ Hand-curated inputs, committed:
     by address, transcribed by an `okrsok-rules` job;
     `okrsky/not-found.json` lists the municipalities
     whose okrsky document was not found.
+  - `special-okrsky.toml`: the okrsky without territory
+    (`src/election_map_slovakia/special.py`),
+    which no okrsky file lists:
+    `[covid]`, what explains the COVID-19 special okrsky
+    that the package of the 2023 referendum declares
+    (`units.special`, `tab0c`: each okres, `Áno` / `Nie`),
+    with a `[[covid.seat]]` for each okres
+    whose seat the package does not tell
+    (Bratislava II–V, Košice I–IV, Košice-okolie),
+    each with its source and `basis`;
+    `[[prison]]`, an okrsok of a prison in a national vote
+    (Leopoldov 4, "ÚVTOS a ÚVV Leopoldov"),
+    each with the municipal document naming the facility.
+    A municipality's special okrsky are its highest-numbered:
+    the job checks and `ems job reuse` count only the others,
+    the crosswalk never matches them,
+    and the app names them without drawing them,
+    their figures staying in the totals.
+    For 2023-01-21 the package declares 79,
+    66 that voted and 13 that did not
+    (still counted by `tab0b`, without results);
+    Košice-Sever holds two, 15 and 16.
   - `candidates.toml`: the candidate lists transcribed by hand,
     for an election whose `candidates` format is `curated`
     ([elections.md](elections.md#the-curated-format)).

@@ -1,14 +1,21 @@
-# The okrsky of Lisková of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/510785.toml, reused by `ems job reuse`.
+# The okrsky of Lisková of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/510785.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Lisková, transcribed by an AI agent in job okrsok-rules-3716 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: pre súpisné čísla: 0-112, 368-432, 590-817, 906-908, 1024-1025.
+#     okrsok 2: pre súpisné čísla: 114-364, 433-587, 818-893, 900-902, 904, 910-940, 1002-1023, 1027-1029.
 obec = "510785"
 name = "Lisková"
+okrsky_date = 2023-06-26
 okrsky_fill = "nearest"
-okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Okrsky by súpisné číslo; numbers the document omits (113, 365-367, 588-589, 894-899, 903, 905, 909, 941-1001, 1026, above 1029) take the okrsok of the nearest address (fill_nearest). No decision date stated."
-okrsky_reused = 2026-10-24
+okrsky_note = "The okrsky are split by súpisné číslo within the one part Lisková; súpisné čísla in neither list (e.g. 113, 365-367, 588-589, 894-899, 941-1001, 1026, above 1029) take the nearest okrsok (fill_nearest)."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2022-10-29 setting the okrsky was found (okrsok-rules-862): The 2022 document (10.08.2022) only states 2 okrsky with both polling stations in the ZŠ s MŠ, Ulica pod Chočom 550; no territory of the okrsky. One part only. web.archive.org was unreachable (connection refused) during the search, so no 2022 snapshots could be checked. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2022-10-29 → 2023-09-30: 1: 816 → 804, 2: 859 → 834."
 
 [[document]]
-url = "https://www.liskova.sk/download_file_f.php?id=2449866"
-sha256 = "25aa7d846ce126dd5f606c9067734a9bcabf6895bbde6031475315604ebc835d"
-title = "Utvorenie volebných okrskov a určenie volebných miestností"
+url = "https://www.liskova.sk/download_file_f.php?id=1880821"
+sha256 = "4dbd7b831b001c4561ed377dec26ab7a0266a4639839b40f5af9753b40a355f5"
+title = "Volebné okrsky a volebné miestnosti v obci Lisková pre voľby do NR SR (30. septembra 2023), 26.06.2023"
 
 [okrsok.1]
 rules = [

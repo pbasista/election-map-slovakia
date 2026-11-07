@@ -27,6 +27,12 @@ data allow, per obec (a Bratislava or Košice district counts as one):
   same number's then (:data:`results.IDENTITY`, weight 1);
 - else :data:`results.UNKNOWN`: the okrsky changed and nothing tells how.
 
+A special okrsok (:mod:`election_map_slovakia.special`: a COVID-19 one,
+a prison's), which has no territory, is matched with no okrsok, nor any
+with it, on either side: it is :data:`results.UNKNOWN`, and the methods
+above apply to the okrsky with territory alone (its number may be an
+ordinary okrsok's in the other election).
+
 Council obvody are counted by how their okrsky were mapped: ``whole``
 where they make up whole obce, else by the least certain method of their
 okrsky (:func:`map_obvody`); their figures are their okrsky's added up
@@ -213,37 +219,65 @@ def build(
     earlier: Mapping[str, Mapping[int, int]],
     pairs: Mapping[str, Mapping[tuple[int, int], int]],
     day: dt.date,
+    special: Mapping[str, Collection[int]] | None = None,
 ) -> Crosswalk:
     """Return the crosswalk of every obec of *later* (:func:`walk_obec`).
 
     *later* and *earlier* map obec → okrsok → registered voters
-    (:func:`okrsky_of`); *pairs* the obce placed by address in both.
+    (:func:`okrsky_of`), of the okrsky with territory; *pairs* the obce
+    placed by address in both; *special* obec → the special okrsky of
+    *later* (:mod:`election_map_slovakia.special`), each unknown.
     """
+    special = special or {}
+    obce = {}
+    for obec in sorted(later.keys() | special.keys()):
+        walk = walk_obec(later.get(obec, {}), earlier.get(obec), pairs.get(obec))
+        unknown = dict.fromkeys(sorted(special.get(obec, ())), (UNKNOWN, {}))
+        obce[obec] = ObecWalk(walk.how, walk.okrsky | unknown)
     return Crosswalk(
-        day,
-        {
-            obec: walk_obec(okrsky, earlier.get(obec), pairs.get(obec))
-            for obec, okrsky in sorted(later.items())
-        },
-        {obec: dict(okrsky) for obec, okrsky in earlier.items()},
+        day, obce, {obec: dict(okrsky) for obec, okrsky in earlier.items()}
     )
 
 
 def make(
-    later: Live, earlier: Live, registers: Sequence[Register], day: dt.date
+    later: Live,
+    earlier: Live,
+    registers: Sequence[Register],
+    day: dt.date,
+    special: tuple[Collection[str], Collection[str]] = ((), ()),
 ) -> Crosswalk:
     """Return the crosswalk of *later*'s okrsky onto *earlier*'s (of *day*).
 
     By address where both *registers* (earlier, later) place them, with
-    the council obvody mapped (:func:`map_obvody`).
+    the council obvody mapped (:func:`map_obvody`). *special* are the
+    special okrsky of *later* and *earlier* (``<obec>/<n>``,
+    :func:`election_map_slovakia.special.keys`): without territory, they
+    are matched with no okrsok, nor any with them, an okrsok number being
+    reused across votes.
     """
     now, then = okrsky_of(later), okrsky_of(earlier)
+    now_special: dict[str, list[int]] = defaultdict(list)
+    for key in special[0]:
+        obec, _, n = key.partition("/")
+        if int(n) in now.get(obec, {}):
+            now_special[obec].append(int(n))
+    now, then = _territorial(now, special[0]), _territorial(then, special[1])
     with progress.stage("pairing the addresses of both elections"):
         pairs, paired = address_pairs(registers, (then, now))
-    walk = build(now, then, pairs, day)
+    walk = build(now, then, pairs, day, now_special)
     walk.paired = paired
     walk.obvody = map_obvody(walk, contest_okrsky(later, "oz"))
     return walk
+
+
+def _territorial(
+    okrsky: Mapping[str, Mapping[int, int]], special: Collection[str]
+) -> dict[str, dict[int, int]]:
+    """Return *okrsky* (obec → okrsok → voters) without the *special* ones."""
+    return {
+        obec: {n: v for n, v in ks.items() if f"{obec}/{n}" not in special}
+        for obec, ks in okrsky.items()
+    }
 
 
 # --- addresses -----------------------------------------------------------------

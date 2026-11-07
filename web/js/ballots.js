@@ -34,6 +34,7 @@ import {
   ChairIcon,
   CloseIcon,
   ColumnsIcon,
+  CovidIcon,
   CrossOutIcon,
   DisputeIcon,
   ExpandIcon,
@@ -43,11 +44,13 @@ import {
   HistoryIcon,
   InkCircle,
   InkCross,
+  LAYER_ICON,
   MedalIcon,
   MedalOutlineIcon,
   NoSeatsIcon,
   PersonIcon,
   PreferredIcon,
+  PrisonIcon,
   SearchIcon,
   SubstituteIcon,
   WarningIcon,
@@ -69,6 +72,7 @@ import {
 import {
   decodeResults,
   NOT_COUNTED,
+  obecOkrsky,
   okrskyLoading,
   PAST,
   pastLabel,
@@ -79,7 +83,7 @@ import {
   unitWithin,
   useLive,
 } from './live.js';
-import { followLevel, MapButton, TurnoutMapButton, useLevel, WinnerMapButton } from './mapmode.js';
+import { followLevel, MapButton, TurnoutMapButton, useDrawnOkrsky, useLevel, WinnerMapButton } from './mapmode.js';
 import { Notice } from './pane.js';
 import { formatPicks, parsePicks, togglePick } from './picks.js';
 
@@ -2124,6 +2128,62 @@ export function FilterBar({ filter, onFilter, actions }) {
   `;
 }
 
+/* The okrsky of obec *obec* (as data.js `ballots` gives it) that have
+ * figures of their own but are not on the map (live.js `obecOkrsky`, of
+ * the ballots' contests *ids*): all of an obec whose okrsky are not drawn,
+ * one without an area (addressless) of an obec whose others are, and the
+ * okrsky without territory (*special*, data/index.json `special`), never
+ * drawn. An obec of one okrsok with territory is drawn as that okrsok, so
+ * only its special ones are listed. Each a button that picks the okrsok, with
+ * its council obvod where the obec has several (that whose council counted
+ * it), as a click on the map picks a drawn one, and shows the ballots at
+ * its level (`onUnit(place, level, contest)`, app.js `openUnit`, as the
+ * candidate card's units: the map has no shape of it to show, so its
+ * municipality is outlined); the one picked (*okrsok*) is pressed, and a
+ * press goes back to the whole obec (`onPlace`). Nothing before the final
+ * results, which alone have figures by okrsok, or while they load. */
+function UnmappedOkrsky({ obec, ids, special, okrsok, onUnit, onPlace }) {
+  useLive();
+  const drawn = useDrawnOkrsky();
+  const titleId = useOwnId('unmapped');
+  const okrsky = obecOkrsky(ids, obec.code);
+  if (!drawn || !okrsky) return null;
+  const several = [...okrsky.keys()].filter((n) => !special?.[n]).length > 1;
+  const unmapped = [...okrsky].filter(([n]) => special?.[n] || (several && !drawn.keys.has(`${obec.code}/${n}`)));
+  if (!unmapped.length) return null;
+  const obvodOf = (counted) =>
+    obec.councils > 1
+      ? (counted.map((id) => parseContest(id)).find((c) => c.kind === 'oz' && c.area === obec.code)?.sub ?? null)
+      : null;
+  return html`<div class="unmapped">
+    <p class="unmapped-title" id=${titleId}><${LAYER_ICON.okrsky} />${t('okrsky.unmapped')}</p>
+    <p class="unmapped-hint">${t('okrsky.unmapped_hint')}</p>
+    <div class="unmapped-list" role="group" aria-labelledby=${titleId}>
+      ${unmapped.map(([n, counted]) => {
+        const s = special?.[n];
+        const name = t('scope.okrsok', { n });
+        const what = s
+          ? t(s.kind === 'prison' ? 'okrsky.special_prison' : 'okrsky.special_covid', { n, facility: s.facility })
+          : name;
+        const picked = n === okrsok;
+        return html`<button
+          type="button"
+          key=${n}
+          aria-pressed=${picked ? 'true' : 'false'}
+          aria-label=${what}
+          title=${picked ? t('okrsky.unmapped_back', { name: obec.name }) : what}
+          onClick=${() =>
+            picked
+              ? onPlace({ obec: obec.code })
+              : onUnit({ obec: obec.code, obvod: obvodOf(counted), okrsok: n }, 'okrsok', counted[0])}
+        >
+          ${n}${s ? (s.kind === 'prison' ? html`<${PrisonIcon} />` : html`<${CovidIcon} />`) : null}
+        </button>`;
+      })}
+    </div>
+  </div>`;
+}
+
 /* The ballots of obec *code*; null for the country's ballots of a
  * country-wide election, before a place is chosen.
  * - label: names the address, street or part chosen in it, if any.
@@ -2139,7 +2199,10 @@ export function FilterBar({ filter, onFilter, actions }) {
  * - filter (see NO_FILTER) and `onFilter(next)`: the candidate filter;
  *   picks and `onPicks(next)`: the circled candidates (picks.js).
  * - onPlace(place, view): selects a place (as app.js `navigate`), from the
- *   list of where a by-election is held (`HeldPlaces`).
+ *   list of where a by-election is held (`HeldPlaces`), or the whole obec
+ *   again from an okrsok not on the map (`UnmappedOkrsky`).
+ * - onUnit(place, level, contest): selects an okrsok not on the map and
+ *   shows the ballots at its level (`UnmappedOkrsky`, app.js `openUnit`).
  * - onOverview(number): opens the overview of the election (overview.js),
  *   at party *number* where it is of parties' lists (0: the first), from
  *   each party's list (`PartyList`); overview {open, onToggle()}: the
@@ -2166,6 +2229,7 @@ export function Ballots({
   picks,
   onPicks,
   onPlace,
+  onUnit,
   onOverview,
   overview = null,
 }) {
@@ -2302,9 +2366,20 @@ export function Ballots({
       t('notice.summary_okrsky_reused', { other: okrskyFrom.slice(0, 4) }),
       t(isNational ? 'notice.okrsky_copied' : 'notice.okrsky_reused', { name, other: okrskyFrom.slice(0, 4) }),
     ],
+    // An okrsok whose voters differ too much to share the borders is named.
     origin.okrskyAdopted && [
       t('notice.summary_okrsky_adopted', { source: standInSource(origin.okrskyAdopted) }),
-      t('notice.okrsky_adopted', { name, source: standInSource(origin.okrskyAdopted) }),
+      [
+        t('notice.okrsky_adopted', { name, source: standInSource(origin.okrskyAdopted) }),
+        ...(origin.okrskyOutliers ?? []).map(([n, voters, other]) =>
+          t('notice.okrsky_outlier', {
+            n,
+            voters: formatNumber(voters),
+            other: formatNumber(other),
+            source: standInSource(origin.okrskyAdopted),
+          }),
+        ),
+      ].join(' '),
     ],
     origin.okrskyReferendum && [
       t('notice.summary_okrsky_referendum', { date: formatDate(okrskyFrom) }),
@@ -2320,6 +2395,32 @@ export function Ballots({
     ],
     origin.okrskyUnknown && [t('notice.summary_okrsky_unknown'), t('notice.okrsky_unknown', { name })],
   ].filter(Boolean);
+  // The okrsky without territory (special.py: a COVID-19 one, a prison's):
+  // the map draws none of them, so each is named, with what tells of it.
+  const specialNotes = Object.entries(origin.special ?? {}).map(([n, s]) => {
+    const vars = { n, name, voters: formatNumber(s.voters) };
+    const text =
+      s.kind === 'prison'
+        ? t('notice.special_prison', { ...vars, facility: s.facility })
+        : s.okresy.length > 1
+          ? t('notice.special_covid_several', { ...vars, okresy: formatList(s.okresy) })
+          : t('notice.special_covid', { ...vars, okres: s.okresy[0] });
+    return html`
+      <${Notice} key=${`special-${n}`} summary=${t('notice.summary_special', { n })}>${text}<//>
+      <p key=${`special-source-${n}`} class="sources">
+        ${t('notice.special_source')}
+        <a href=${s.url} title=${s.title} rel="noopener noreferrer" target="_blank">${s.title}</a>
+      </p>
+    `;
+  });
+  const unmapped = html`<${UnmappedOkrsky}
+    obec=${obec}
+    ids=${contests.map((c) => c.id)}
+    special=${origin.special}
+    okrsok=${okrsok}
+    onUnit=${onUnit}
+    onPlace=${onPlace}
+  />`;
   const place = {
     obec: obec.code,
     name: obec.name,
@@ -2360,6 +2461,8 @@ export function Ballots({
         ${head}
         <p class="panel-body intro">${t('ballots.intro_country')}</p>
         ${placeNotes.map(([summary, text]) => html`<${Notice} summary=${summary}>${text}<//>`)}
+        ${specialNotes}
+        ${unmapped}
         ${overviewButton}
         ${contests.map((c) => html`<${BallotContest} key=${c.id} contest=${c} place=${place} ...${contestProps} />`)}
       </section>
@@ -2375,14 +2478,19 @@ export function Ballots({
       </section>
     `;
   }
-  const titled = (title, list, children) =>
-    isByElection && !list.length ? null : html`<h3 class="group">${title}</h3>${children}`;
+  // A group with no contest is a half of the elections not voted on here:
+  // of a by-election, one not held in this place; of an election of one
+  // half (kinds.js `holds`), the other, held on a day of its own. Neither
+  // is headed, nor is a council said to be missing where none was elected.
+  const titled = (title, list, children) => (list.length ? html`<h3 class="group">${title}</h3>${children}` : null);
   return html`
     <section class="ballots" aria-labelledby="km-place" ref=${section}>
       ${head}
       ${previous ? null : html`<p class="panel-body intro">${t('ballots.no_incumbents')}</p>`}
       <p class="panel-body intro">${t('ballots.intro')}</p>
       ${placeNotes.map(([summary, text]) => html`<${Notice} summary=${summary}>${text}<//>`)}
+      ${specialNotes}
+      ${unmapped}
       ${titled(
         t('ballots.municipal'),
         municipal,

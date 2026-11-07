@@ -173,9 +173,11 @@ Ingest accepts a rule set only if:
 
 For a by-election (`--election 2019-04`),
 the municipalities are those of its council contests
-whose council its term (the regular election before it)
-elected in several obvody:
-the council whose seats it fills was elected in the term's obvody,
+whose council has several obvody.
+A by-election proper (`vote` `"by"` of the contests,
+[pipeline.md](pipeline.md#candidates))
+fills seats of the council its term (the regular election before it)
+elected in the term's obvody,
 so the item lists the obvody of both candidate lists
 (and of the term's contests held nowhere, uncontested)
 with the term's seats,
@@ -183,6 +185,16 @@ and the prompt asks for the term's decision;
 the rules must have at least those obvody,
 and none is a by-election's own uncontested one
 (the term's job records it).
+A new election of the whole council (`vote` `"new"`)
+may come with obvody drawn anew,
+so its item (`new_election`) lists its own obvody and seats,
+its job's prompt asks for the decision for that vote,
+and ingest checks the rules as a regular election's:
+the item's obvody, and one the decision lists without candidates
+only as uncontested.
+None of the by-election days of 2019–2026
+elected a council of several obvody anew
+(the councils elected anew had one obvod each).
 
 Ingest also notes, without rejecting,
 an obvod whose share of the addresses is more than three times
@@ -260,9 +272,18 @@ Ingest accepts the okrsky only if:
 
 - their documents are official and dated as for `obvod-rules`;
 - they are numbered 1..N
-  for the N okrsky the Statistical Office lists for the municipality,
-  each in one obvod,
-  and each obvod has the okrsky the results count in it, where known;
+  for the N okrsky the Statistical Office lists for the municipality
+  with territory, each in one obvod,
+  and each obvod has the okrsky the results count in it, where known.
+  Its special okrsky (`special-okrsky.toml`,
+  [pipeline.md](pipeline.md#curated-data): the 2023 referendum's
+  COVID-19 special okrsok of the okres seat, a prison's) are counted
+  after them and never transcribed: the item names them (`special`,
+  with what each is), a document that leaves them out is accepted,
+  and one that lacks a territorial okrsok is not.
+  `ems job reuse` likewise counts and compares only the okrsky with
+  territory. A prison named in a document is recorded by hand in
+  `special-okrsky.toml`, with that document;
 - every address of an obvod with several okrsky
   (of the municipality, without obvody)
   lands in exactly one of them,
@@ -304,7 +325,7 @@ okrsky by now, so the prompts add a section on that election:
 - only documents valid for it count
   (for 2022: the council's decision on the obvody and seats of mid-2022,
   the okrsky set for the 2022 elections),
-  live or in the Internet Archive,
+  live or archived (below),
   never a later election's;
 - the items carry what the Statistical Office counted:
   each obvod's `seats` and `okrsky`, and each okrsok's `voters`;
@@ -324,15 +345,39 @@ and notes okrsky whose share of their obvod's addresses
 is far off their share of its voters,
 as for the obvody.
 
+**Archives,** in this order:
+the website itself;
+the Internet Archive (`web.archive.org`: its CDX lists a website's captures,
+a document is listed by its snapshot URL);
+then the Common Crawl, for files the Internet Archive never captured
+or cut off at 1 MB.
+Its crawls (every month or two) hold the pages and files of many municipal
+websites: Chorvátsky Grob's okrsky decision of 2017 is only there.
+`ems job captures <domain> --years 2017-2018 [--match REGEX]` lists a
+website's captures, each with the URL that cites it
+(the index server's query for that one capture:
+`https://index.commoncrawl.org/CC-MAIN-2017-43-index?url=…&from=<timestamp>&to=<timestamp>&output=json`),
+and `ems job captures '<that URL>' --out FILE` writes the document it holds.
+Both read the crawls' own index files on `data.commoncrawl.org`
+rather than the index server, which is often overloaded
+(`src/election_map_slovakia/commoncrawl.py`); the ingest fetches a capture
+the same way, and refuses one the crawler cut short.
+Tried without result for 2017 and 2018 (November 2026):
+Arquivo.pt (its captures of Slovak municipal websites are of June 2017, before
+the okrsky were set), archive.today (unreachable from here),
+the Memento aggregator (gone), and the Slovak web archive of the University
+Library in Bratislava (`webdepozit.sk`; municipal websites are open only in
+its reading room).
+
 **Approximate dating.**
 An undated document may still be the best source,
 so the output may date it approximately instead of by `date`:
 `date_approximate` says how, `date_basis` says it in words,
 and the ingest checks that it ties the document to the election:
 
-- `archived`: the Internet Archive captured the document,
-  or the official page linking it, before the vote;
-  `date_source` is that snapshot, `date_seen` its day;
+- `archived`: the Internet Archive (or the Common Crawl) captured the
+  document, or the official page linking it, before the vote;
+  `date_source` is that snapshot (or capture), `date_seen` its day;
 - `posted`: the official page (live or archived), `date_source`,
   says it was posted ("vyvesené", "zverejnené") on `date_seen`,
   before the vote;
@@ -397,17 +442,31 @@ but only where the layout provably stayed the same
   (the earlier results against the latest rule set's okrsky),
   each okrsok's voters on the roll within 10 % of the earlier count
   (the earlier election's results against the latest's);
-  the okrsky come along;
-- okrsky alone (a municipality with one obvod in both elections,
-  or whose earlier obvody were transcribed):
-  the same okrsky per obvod, the voters within 10 %;
+- okrsky only where the Statistical Office counted one okrsok
+  in each council obvod (numbered 1..N for the N obvody):
+  each okrsok is then its obvod,
+  proven as far as the obvody are
+  (along with copied obvody, or added to the earlier election's own);
 - and the copy must pass the jobs' checks on the earlier addresses:
   every address in one obvod and okrsok, each with addresses,
   the okrsky drawable.
 
+Voters on the roll per okrsok prove no okrsky,
+however near the counts:
+a street moved from one okrsok to the next,
+or a few years' drift, stays within any tolerance that real votes pass.
+The address register gives no okrsok,
+so its addresses per okrsok would be those of the copied rules themselves,
+and neither the Statistical Office nor the municipalities
+publish okrsky by address beyond the documents the jobs transcribe.
+So other okrsky are never copied as the same:
+they stand in, marked indicative (below).
+
 The copy is marked `reused` (the council rule set)
 or `okrsky_reused` with the latest election's day and a note;
 the municipality stays in the not-found list, which records the search.
+A copy is decided anew on each run
+and withdrawn where no longer proven.
 
 **Stand-ins.**
 Reuse claims that the layout is the same;
@@ -428,7 +487,8 @@ where that one does not fit, the next nearest:
 
 - council obvody, where the election elects the council in several:
   a regular election's rule set with the same obvod numbers and seats;
-  a by-election's only from the regular election of its term,
+  a by-election proper's (`vote` `"by"`)
+  only from the regular election of its term,
   the obvody that voted among them
   (a later council's obvody are another council's),
   even where that rule set is another vote's itself
@@ -439,6 +499,10 @@ where that one does not fit, the next nearest:
   a lone obvod 1 with its seats counts too,
   where the term elected the council in several obvody
   (Divina, 2026-03-21: obvod 1 of 3);
+  a council elected anew (`vote` `"new"`) inherits nothing of its term:
+  as a regular election's, the nearest regular election's own rule set
+  with the same obvod numbers and seats stands in
+  until its own decision is transcribed;
   the okrsky come along where they fit as below,
   else each obvod gets the okrsky the Statistical Office counted in it
   without rules (drawn where it has one, the okrsok then being the obvod);
@@ -450,7 +514,13 @@ where that one does not fit, the next nearest:
   (the 2024 EP election's for the 2024 presidential one,
   before the 2022 municipal elections');
 - where the voters on the roll of each unit are known for both votes,
-  within 25 % (farther apart, the layout clearly changed);
+  within 25 % (farther apart, the layout clearly changed),
+  but in a municipality of 10 okrsky or more one okrsok
+  (or 5 % of them, where that is more) may be farther apart,
+  named with both counts in the basis
+  (`reuse.OUTLIERS_FROM`, `reuse.OUTLIERS_SHARE`),
+  only where no source has every okrsok within 25 %
+  (such a source wins, however much further in time);
   where they are not known, the units stand in all the same;
 - and the copy must pass the jobs' checks on the election's addresses.
 
@@ -591,52 +661,47 @@ uv run ems make
 Before (or besides) the jobs,
 `ems job reuse --election 2024-prezident` (or `2023-referendum`,
 `2023-03`, …), run after the election's results are built,
-copies okrsky from the regular elections, nearest in time first
-(a by-election's only from those before it:
+tries the regular elections, nearest in time first
+(a by-election's only those before it:
 it fills seats of the council elected then, in that council's obvody),
-for each municipality that voted in several (the election's `units`;
+for each municipality that voted in several okrsky (the election's `units`;
 a by-election's with a contest)
-and has neither okrsky nor a rule set yet (or only a stand-in):
+and has neither okrsky nor a rule set of its own
+(none, a stand-in, or a copy, decided anew),
+and copies only what is proven
+([why voters prove no okrsky](#an-earlier-election)):
 
-- the okrsky of a municipality with one council obvod there
-  (`okrsky/<obec>.toml`) as they are;
-- a council rule set with its obvody (`obvody/oz/<obec>.toml`),
-  which, where the vote elects no council, only place the okrsky:
-  `ems geo` draws them within the whole municipality;
-  in a by-election with a council contest they draw its obvody too;
-- only where the source's okrsky are its own or reused (never a stand-in),
-  place every address, are numbered 1..N for the N okrsky of the
-  election, give each council obvod that voted (a by-election's)
-  the okrsky that voted in it,
-  each okrsok that voted with voters on the roll
-  (`okrsokrules.okrsok_voters`)
-  within 10 % of its count in the source,
-  and fit the election's addresses.
-  Without voters per okrsok
-  (before the results, the by-elections of 2018–2022)
-  nothing is proven and nothing copied.
+- okrsky the source transcribed from the document of the vote itself
+  (the 2022 elections' marked `okrsky_referendum = 2023-01-21`)
+  are that referendum's own:
+  copied without `okrsky_reused`, with their documents, date and dating,
+  once their numbers are those of its territorial division,
+  and noted as the referendum's own;
+- of a by-election proper (`vote` `"by"`),
+  the council rule set of its term's regular election
+  draws the council obvody that voted,
+  each one of it with voters on the roll within 10 % of its count
+  in the source, marked `reused`;
+  its okrsky come along, marked `okrsky_reused`,
+  only where every obvod voted
+  and the Statistical Office counted one okrsok in each.
 
-The copy is marked `okrsky_reused` (the rule set also `reused`)
-with the source election's day and a note saying so,
-and whether a document of the election was searched for and not found;
-rules a later source supplemented in the source lose that mark,
-the header keeping the source file's.
-Okrsky the source transcribed from the document of the vote itself
-(the 2022 elections' marked `okrsky_referendum = 2023-01-21`)
-are that referendum's own:
-copied without `okrsky_reused`, with their documents, date and dating,
-once their numbers are those of its territorial division,
-and noted as the referendum's own.
-Where a by-election's okrsky are not proven,
-the council rule set of the regular election
-still draws the council obvody that voted,
-each with voters on the roll within 10 % of its count in the source:
-it is copied without its okrsky, marked `reused`.
-The report lists every municipality with the reason each source was refused.
+A council rule set copied where the vote elects no council
+only places the okrsky: `ems geo` draws them within the whole municipality.
+Rules a later source supplemented in the source lose that mark,
+the header keeping the source file's;
+the note says whether a document of the election
+was searched for and not found.
+Nothing else is copied:
+the okrsky of a country-wide election, of the by-elections of 2018–2022
+and of a council elected anew are never proven by their voters,
+and a copy proven before by voters alone (`okrsky_reused`)
+is withdrawn.
+The report lists every municipality with the reason the sources were refused.
 Those still without okrsky (or council obvody) then get a stand-in
 as any election does ([stand-ins](#an-earlier-election)):
 the nearest vote's own, unproven, marked `okrsky_adopted` (`adopted`),
-else they stay drawn whole.
+which the map shows as indicative, else they stay drawn whole.
 
 ```sh
 uv run ems make --election 2024-prezident     # its results first

@@ -1,0 +1,27 @@
+# The okrsky of Santovka of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/502715.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Santovka, transcribed by an AI agent in job okrsok-rules-3910 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Adresa volebného okrsku a volebnej miestnosti č. 1: Obecný úrad Santovka, ul. Parková č. 2, 935 87 Santovka – zasadacia miestnosť obecného úradu
+#     okrsok 2: Adresa volebného okrsku a volebnej miestnosti č. 2: Dobrý domov, ul. Maďarovská č. 73, 935 87 Santovka, spoločenská miestnosť
+obec = "502715"
+name = "Santovka"
+okrsky_date = 2023-06-23
+okrsky_note = "The announcement of 2023-06-23 gives each of the two okrsky only its polling station, no streets: okrsok 1 at the Obecný úrad, Parková 2 (part Santovka), okrsok 2 at Maďarovská 73 (the seniors' home, part Malinovec). The obec has two okrsky and two parts, each station in another part, so each okrsok is the part of its station. This is the same split as the copied rule set (Maďarovská 1–3 lie in part Santovka, 4–79 in part Malinovec)."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2023-01-21 setting the okrsky was found (okrsok-rules-3284): The elections page archived on 2023-06-26 links a 'Referendum 2023' page, but that page already redirected to the site's 404 page when archived on 2023-06-26 and is 404 live; no capture of it with content exists, and no referendum document is among the archived PDFs. The notice board capture of 2023-06-26 could not be fetched (Internet Archive answered HTTP 429). These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-01-21 → 2023-09-30: 1: 350 → 347, 2: 210 → 232."
+
+[[document]]
+url = "https://www.santovka.sk/download_file_f.php?id=1878887"
+sha256 = "eafdfe205d9004641a63173d4c2a17de0027e326c2bd67eecb29b8a754f4dccb"
+title = "Oznámenie o utvorenom volebnom okrsku a určenej volebnej miestnosti pre VOĽBY DO NR SR /30.09.2023 (23.6.2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Santovka", note = "The document names only the polling station, Parková 2, which lies in part Santovka; the other okrsok's station lies in part Malinovec.", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Malinovec", note = "The document names only the polling station, Maďarovská 73, which the register keeps in part Malinovec; the other okrsok's station lies in part Santovka.", inferred = true},
+]

@@ -1,40 +1,48 @@
-# The okrsky of Vrbové of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/507750.toml, copied by `ems job reuse` (reused). Its header there:
-#   The okrsky of Vrbové of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/507750.toml, reused by `ems job reuse`.
+# The okrsky of Vrbové of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/507750.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Vrbové, transcribed by an AI agent in job okrsok-rules-3502 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: (Rekreačná oblasť Čerenec), súp.č. (1317-1384), Barcíkova ulica, Hrabinská ulica, celá ulica, Mikulášska ulica, celá ulica, Nám. sv. Cyrila a Metoda, celá ulica, Priehradná ulica, celá ulica, Rekreačná ulica, celá ulica, Sadová ulica, celá ulica, Sadová ulica II., celá ulica, Sasinkova ulica, celá ulica, Sietna ulica, celá ulica, Slnečná ulica, celá ulica, Školská ulica, celá ulica, Ulica 1. mája, celá ulica, Ulica Gen. M. R. Štefánika, celá ulica, Ulica Kopaničky, celá ulica, Ulica oslobodenia, celá ulica
+#     okrsok 2: Bočná ulica, celá ulica, Cintorínska ulica, celá ulica, Hollého ulica, celá ulica, Hviezdoslavova ulica, celá ulica, Námestie slobody, celá ulica, Pribinova ulica, celá ulica, Súkenícka ulica, celá ulica, Športová ulica, celá ulica, Šteruská cesta, celá ulica, Ulica Hoštáky, celá ulica, Ulica Jána Zigmundíka, celá ulica, Ulica SNP, celá ulica, Ulica Šípkovec, celá ulica, Vinohradnícka ulica, celá ulica
+#     okrsok 3: Komenského ulica, celá ulica, Krátka ulica, celá ulica, Krížna ulica, celá ulica, Nám. J. Emanuela, celá ulica, Ulica 6. apríla, celá ulica, Ulica 8. marca, celá ulica, Ulica Fraňa Kráľa, celá ulica, Ulica mieru, celá ulica, Ulica Pavla Jantauscha, celá ulica
+#     okrsok 4: Bernolákova ulica, celá ulica, Družstevná ulica, celá ulica, Novoutvorená ulica, celá ulica, Piešťanská cesta, celá ulica, Poľná ulica, celá ulica, Semenárska ulica, celá ulica, Sídlisko 9. mája, celá ulica, Slovanská ulica, celá ulica, Strážovská ulica, celá ulica, Ulica M. A. Beňovského, celá ulica, Záhradná ulica, celá ulica
 obec = "507750"
 name = "Vrbové"
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2020-02-29 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2020-02-29 was searched for. No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Scanned street list (printed 7.10.2026) read from page images. Okrsok 1 also lists addresses without a street with súpisné čísla 1317-1384; the other addresses without a street (706 in the register) are not covered by the document and take the okrsok of the nearest placed address (fill_nearest). No decision date stated (the 21.7.2026 notice only lists polling stations)."
-okrsky_reused = 2022-10-29
+okrsky_note = "Okrsok 1 also takes the recreation area Čerenec, súpisné čísla 1317-1384 (addresses without a street). Named but not in the register (left out): Barcíkova ulica. the other addresses without a street take the nearest okrsok (fill_nearest)."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2323): The town's okrsky decisions before 2023 (Určenie volebných okrskov for 10 Nov 2018 and for the presidential election 2019; the 'hlásenie okrskov' for the 2023 referendum) give only each okrsok's polling station, no streets; the town has one part, so the okrsky cannot be drawn from them. The street lists start with the NR SR elections 2023, after which the okrsky were reorganised ('bola vykonaná reorganizácia okrskov'), so they do not show the earlier okrsky. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2023-09-30: 1: 1,278 → 1,165, 2: 1,239 → 1,107, 3: 1,116 → 1,121, 4: 1,154 → 1,170."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The street list is headed 'Voľby do Národnej rady Slovenskej republiky 30.09.2023'; it states no decision date."
 
 [[document]]
-url = "https://www.vrbove.sk/wp-content/uploads/2026/10/Okrsky-ulice.pdf"
-sha256 = "22891e1b5f4399a272920172ace5c9ed3bf3c3532261246571602d4ff8cfda9f"
-title = "Voľby do orgánov samosprávy obcí 2026 – Obvod, Okrsok, Ulica (Komunálne voľby spojené s voľbami do orgánov samosprávy TTSK: volebné okrsky-ulice)"
+url = "https://www.vrbove.sk/wp-content/uploads/2023/08/Volebne-okrsky.pdf"
+sha256 = "f9441b7793f30f4e3870d885d7af369445a8028da7c15974f8ef916a457cbc89"
+title = "Voľby do NR SR 30.09.2023 – volebné okrsky a ulice"
 
 [[document]]
-url = "https://www.vrbove.sk/wp-content/uploads/2026/07/zverejnenie-okrskov.pdf"
-sha256 = "3c20046a2b31989cd5f1ecbdc04aa3273b228dd98de36b9d7cf5dee951820b04"
-title = "Hlásenie obvodu a okrskov do volieb do orgánov územnej samosprávy 2026"
+url = "https://www.vrbove.sk/volby/"
+sha256 = "fe85ddf2f989eed7eaa99abb836ecf269c65b8533e27263debab4c74b239a40d"
+title = "Voľby (page linking the list)"
 
 [okrsok.1]
 rules = [
-  {part = "Vrbové", numbers = "1317-1384"},
-  {street = "Barcíkova ulica"},
+  {part = "Vrbové", numbers = "1317-1384", note = "(Rekreačná oblasť Čerenec), súp.č. (1317-1384): the recreation area's houses without a street, by súpisné číslo."},
   {street = "Hrabinská ulica"},
   {street = "Mikulášska ulica"},
-  {street = "Námestie sv. Cyrila a Metoda"},
+  {street = "Námestie sv. Cyrila a Metoda", written = "Nám. sv. Cyrila a Metoda"},
   {street = "Priehradná ulica"},
   {street = "Rekreačná ulica"},
   {street = "Sadová ulica"},
+  {street = "Sadová ulica II."},
   {street = "Sasinkova ulica"},
   {street = "Sietna ulica"},
   {street = "Slnečná ulica"},
   {street = "Školská ulica"},
   {street = "Ulica 1. mája"},
-  {street = "Ulica gen. M. R. Štefánika", written = "Ulica Gen. M. R. Štefánika"},
+  {street = "Ulica Gen. M. R. Štefánika"},
   {street = "Ulica Kopaničky"},
   {street = "Ulica oslobodenia"},
-  {street = "Ulica Záhumenice"},
 ]
 
 [okrsok.2]
@@ -45,12 +53,12 @@ rules = [
   {street = "Hviezdoslavova ulica"},
   {street = "Námestie slobody"},
   {street = "Pribinova ulica"},
-  {street = "Sídlisko SNP"},
-  {street = "Súkennícka ulica"},
+  {street = "Súkenícka ulica"},
   {street = "Športová ulica"},
   {street = "Šteruská cesta"},
   {street = "Ulica Hoštáky"},
   {street = "Ulica Jána Zigmundíka"},
+  {street = "Ulica SNP"},
   {street = "Ulica Šípkovec"},
   {street = "Vinohradnícka ulica"},
 ]
@@ -60,8 +68,8 @@ rules = [
   {street = "Komenského ulica"},
   {street = "Krátka ulica"},
   {street = "Krížna ulica"},
-  {street = "Námestie Jozefa Emanuela"},
-  {street = "Sídlisko 6. apríla"},
+  {street = "Nám. Jozefa Emanuela", written = "Nám. J. Emanuela"},
+  {street = "Ulica 6. apríla"},
   {street = "Ulica 8. marca"},
   {street = "Ulica Fraňa Kráľa"},
   {street = "Ulica mieru"},

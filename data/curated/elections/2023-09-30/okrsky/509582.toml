@@ -1,19 +1,21 @@
-# The okrsky of Bobrov of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/509582.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Bobrov, transcribed by an AI agent in job okrsok-rules-537 from the documents below;
+# The okrsky of Bobrov of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/509582.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Bobrov, transcribed by an AI agent in job okrsok-rules-4491 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Ulice: Nižný koniec, Pri kostole, Záhumenská, Za kalváriou, Za školou, Záhradnícka, Krivý kút, Zápotok, Vyšný koniec, Poľná, Družstevná, Priemyselná, Kvetná ulica, Lúčna ulica, Trnková ulica
-#     okrsok 2: Ulice: Hraničná, Nadbor, Zábobrovec I., Zábobrovec, Lesná, Slanická, Veterná, Okružná, Krátka, Obchodná, Slnečná, Plátenícka, Športová, Lánová I., Lánová, Šípková, Brezová, Pod Grúňom, Pasienky, Nová cesta, Jaseňová ulica, Ružová ulica
+#     okrsok 1: Ulice: Nižný koniec, Pri kostole, Záhumenská, Za kalváriou, Za školou, Záhradnícka, Krivý kút, Zápotok, Vyšný koniec, Poľná, Družstevná, Priemyselná
+#     okrsok 2: Ulice: Hraničná, Nadbor, Zábobrovec I., Zábobrovec, Lesná, Slanická, Veterná, Okružná, Krátka, Obchodná, Slnečná, Plátenícka, Športová, Lánová I., Lánová, Šípková, Brezová, Pod Grúňom, Pasienky, Nová cesta
 obec = "509582"
 name = "Bobrov"
+okrsky_date = 2024-01-26
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2026-10-24: in 2023-09-30 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2023-09-30 was searched for. The decision is undated. Námestie sv. Jakuba is not listed and is inferred to okrsok 1 (its polling station is there). The 55 addresses without a street take the okrsok of the nearest address."
-okrsky_reused = 2026-10-24
+okrsky_note = "Námestie sv. Jakuba is not listed; inferred to okrsok 1 (its polling station is there). Šípková, Pasienky (okrsok 2) are not in the address register of this vote and are left out. Addresses without a street take the okrsok of the nearest address."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3865): All files of the notice board (data/uredni_deska/obsah1..284) were checked: for the National Council election of 2023 only the decree and the voter information (obsah5_1, obsah6_1) are there, no okrsky document; CUET has none. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2024-03-23: 1: 737 → 734, 2: 734 → 733."
 
 [[document]]
-url = "https://cuet.slovensko.sk/sk/priloha/zobraz/44c514b6-4b5d-42a2-beb9-1b2bc84cef00"
-sha256 = "e0bc73239144adcadc225f41be1cb3893c2a7a7d9cba05b66edf271c91059e88"
-title = "Určenie volebných okrskov a volebných miestností pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov 24. októbra 2026 (starosta obce Bobrov)"
+url = "https://www.obecbobrov.sk/data/uredni_deska/obsah51_3.pdf"
+sha256 = "24a0f024ae9e8772060d608147545ff41b5fa0bae593c7feaed760c741fd20a6"
+title = "Určenie volebných okrskov a volebných miestností pre voľby prezidenta Slovenskej republiky v roku 2024 (26. 1. 2024)"
 
 [okrsok.1]
 rules = [
@@ -29,9 +31,6 @@ rules = [
   {street = "Poľná"},
   {street = "Družstevná"},
   {street = "Priemyselná"},
-  {street = "Kvetná ulica"},
-  {street = "Lúčna ulica"},
-  {street = "Trnková ulica"},
   {street = "Námestie sv. Jakuba", note = "not listed; the square of okrsok 1's polling station (Kultúrny dom, Námestie sv. Jakuba 173/3), between Pri kostole and Nižný koniec", inferred = true},
 ]
 
@@ -52,11 +51,7 @@ rules = [
   {street = "Športová"},
   {street = "Lánová I."},
   {street = "Lánová"},
-  {street = "Šípková"},
   {street = "Brezová"},
   {street = "Pod Grúňom"},
-  {street = "Pasienky"},
   {street = "Nová cesta"},
-  {street = "Jaseňová ulica"},
-  {street = "Ružová ulica"},
 ]

@@ -1,5 +1,5 @@
-# The okrsky of Veľká Lomnica of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/524000.toml, reused by `ems job reuse`. Its header there:
-#   Okrsky of Veľká Lomnica, transcribed by an AI agent in job okrsok-rules-271 from the documents below;
+# The okrsky of Veľká Lomnica of the vote of 2026-07-04, data/curated/elections/2026-07-04/okrsky/524000.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Veľká Lomnica, transcribed by an AI agent in job okrsok-rules-5429 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
 #     okrsok 1: Nový Dvor
@@ -7,20 +7,21 @@
 #     okrsok 3: Agátová, Borovicová, Brezová, Buková, Cintorínska, Dubová, Gaštanová, Javorová, Jilemnického, Lesná, Lipová, Poľná, Popradská, Skalnatá, Smreková, Studený Potok, Topoľová, Záhradná
 obec = "524000"
 name = "Veľká Lomnica"
-okrsky_date = 2026-07-30
+okrsky_date = 2026-05-07
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2026-10-24: in 2024-03-23 the obec had as many, each with voters on the roll within 10% of its count then. No document of 2024-03-23 was searched for. Okrsok 2 also holds citizens registered only at \"Veľká Lomnica\" (no street); addresses without a street (súpisné only) take the nearest okrsok (fill_nearest)."
-okrsky_reused = 2026-10-24
+okrsky_note = "Okrsok 2 also holds citizens registered only at 'Veľká Lomnica' (no street); addresses without a street (súpisné only) take the nearest okrsok (fill_nearest)."
+okrsky_adopted = 2026-07-04
+okrsky_adopted_basis = "No document of 2024-03-23 setting the okrsky was found (okrsok-rules-4201): The current website has pages only for the 2026 votes. The 2017 okrsky PDF (Volebneokrskyavolebnemiestnostizv.28.8.2017.pdf) linked from the archived 2017 elections page is gone live (404) and not in the Internet Archive; the archived 2019 'okrsky podľa ulíc' pages keep no text or attachment (the EP 2019 file download_file_f.php?id=1088171 is 404 live and not archived); no okrsky document for 2018, 2020, 2023 or 2024 was found live or archived. The Internet Archive was intermittently unreachable (retried). These are the okrsky of the vote of 2026-07-04 (2026-referendum), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-03-23 → 2026-07-04: 1: 1,190 → 1,267, 2: 1,116 → 1,153, 3: 1,106 → 1,126."
 
 [[document]]
-url = "https://www.velkalomnica.sk/download_file_f.php?id=2450757"
-sha256 = "e749292c16819823b768255060daedf7dfbd29b093617d9d25eb3e3e2aa8e6f5"
-title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností VOĽBY 2026"
+url = "https://www.velkalomnica.sk/download_file_f.php?id=2404563"
+sha256 = "0174764c1875ef3da06655b9cbdbeb19026f9db644644b0823b56f38399939db"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností - REFERENDUM 2026"
 
 [[document]]
-url = "https://www.velkalomnica.sk/volby-do-organov-samospravy-obci-2026.html"
-sha256 = "9424e944e9ff739290ff821947b32b2047ff96d44024faf23550dda1b7feb4e2"
-title = "Voľby do orgánov samosprávy obcí 2026"
+url = "https://www.velkalomnica.sk/referendum-2026.html"
+sha256 = "3a89b573a790be86f360df6ec232c5d6bf4cd7e5d61228fc0c4d39669d5f9a5a"
+title = "Referendum 2026"
 
 [okrsok.1]
 rules = [

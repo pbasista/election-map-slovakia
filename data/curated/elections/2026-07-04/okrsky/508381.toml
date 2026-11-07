@@ -1,35 +1,34 @@
-# The okrsky of Zohor of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/508381.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Zohor, transcribed by an AI agent in job okrsok-rules-763 from the documents below;
+# The okrsky of Zohor of the vote of 2026-10-24, data/curated/elections/2026-10-24/okrsky/508381.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Zohor, transcribed by an AI agent in job okrsok-rules-304 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: pre voličov s trvalým pobytom na uliciach (všetky súpisné a orientačné čísla) Bratislavská ulica Cintorínska ulica Dolná ulica Konvalinková ulica Kostolná ulica Košiarska ulica Muškátová ulica Na riadkoch Na trávnikoch Na záhumní Nad potokom Námestie 1. mája Nevädzová ulica Nový rad Stupavská ulica Tichá ulica Ulica Alberta Hubeka
-#     okrsok 2: pre voličov s trvalým pobytom na uliciach (všetky súpisné a orientačné čísla) Borovicová ulica Brezová ulica Gaštanová ulica Domkárska ulica Jedľová ulica Jelšová ulica Kováčska ulica Krátka ulica Krivá ulica Lábska ulica Lipová ulica Mlynská ulica Na Pasienkoch Námestie mládeže Obchodná ulica Orechová ulica Poľná ulica Požiarnická ulica Struhárova ulica Smreková ulica Školská ulica Štúrova ulica
-#     okrsok 3: pre voličov s trvalým pobytom na uliciach (všetky súpisné a orientačné čísla) Hviezdoslavova ulica Kvetná ulica Lozornianska ulica Na Dieloch Sadová ulica Staničná ulica Záhradná ulica Železničiarska ulica
+#     okrsok 1: Bratislavská ulica, Borinská ulica, Cintorínska ulica, Dolná ulica, Fialková ulica, Konvalinková ulica, Kostolná ulica, Košiarska ulica, Marianska ulica, Muškátová ulica, Na riadkoch, Na trávnikoch, Na záhumní, Nad potokom, Námestie 1. mája, Nevädzová ulica, Nový rad, Stupavská ulica, Tulipánová ulica
+#     okrsok 2: Bazová ulica, Brezová ulica, Borovicová ulica, Buková ulica, Domkárska ulica, Dubová ulica, Gaštanová ulica, Javorová ulica, Jedľová ulica, Jelšová ulica, Kováčska ulica, Krátka ulica, Krivá ulica, Lábska ulica, Lipová ulica, Na Pasienkoch, Námestie mládeže, Obchodná ulica, Orechová ulica, Platanová ulica, Požiarnická ulica, Struhárova ulica, Smreková ulica, Školská ulica, Štúrova ulica, Topoľová ulica
+#     okrsok 3: Hviezdoslavova ulica, Kvetná ulica, Lozornianska ulica, Mlynská ulica, Na Dieloch, Poľná ulica, Priemyselná ulica, Sadová ulica, Staničná ulica, Ulica Alberta Hubeka, Tichá ulica, Záhradná ulica, Železničiarska ulica
 obec = "508381"
 name = "Zohor"
-okrsky_date = 2022-08-02
+okrsky_date = 2026-07-15
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2026-07-04 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2026-07-04 was searched for. The document does not name the register's Borinská ulica (12 addresses), Dubová ulica (2), Fialková ulica (12) and Marianska ulica (9), nor the 3 addresses without a street; these are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "Javorová ulica (okrsok 2) is not in the address register and is left out. The 6 addresses without a street take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2026-10-24
+okrsky_adopted_basis = "No document of 2026-07-04 setting the okrsky was found (okrsok-rules-5469): The elections page of this vote (https://www.obeczohor.sk/30928/referendum-2026) has no okrsky document (empty or only minutes/results). The Internet Archive was not reachable reliably. These are the okrsky of the vote of 2026-10-24 (2026), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-07-04 → 2026-10-24: 1: 1,089 → 1,049, 2: 1,042 → 1,026, 3: 868 → 1,010."
 
 [[document]]
-url = "https://data.moderneobce.sk/data/uploads/obeczohor.sk/URENIE-VOLEBNCH-OKRSKOV-A.pdf"
-sha256 = "44351b3bb4f8348001859cd3ad32775283901daacb3827d1395d866aed2ae779"
-title = "Určenie volebných okrskov a volebných miestností podľa ulíc"
-
-[[document]]
-url = "https://www.obeczohor.sk/21438/volby-do-organov-samospravy-obci-2022"
-sha256 = "033ab77884778ea3f53abc2151ae5f6d95ec92c354e0ec727ae2a67b29e2f338"
-title = "Voľby do orgánov samosprávy obcí 2022 (page linking the document)"
+url = "https://data.moderneobce.sk/data/uploads/obeczohor.sk/UR%C4%8CENIE_VOLEBN%C3%9DCH_OKRSKOV.pdf"
+sha256 = "73714cf27429a49e651021a4927d39e542f0f17f6916ee490963cf4747fb954f"
+title = "Určenie volebných okrskov a volebných miestností"
 
 [okrsok.1]
 rules = [
   {street = "Bratislavská ulica"},
+  {street = "Borinská ulica"},
   {street = "Cintorínska ulica"},
   {street = "Dolná ulica"},
+  {street = "Fialková ulica"},
   {street = "Konvalinková ulica"},
   {street = "Kostolná ulica"},
   {street = "Košiarska ulica"},
+  {street = "Marianska ulica"},
   {street = "Muškátová ulica"},
   {street = "Na riadkoch"},
   {street = "Na trávnikoch"},
@@ -39,16 +38,18 @@ rules = [
   {street = "Nevädzová ulica"},
   {street = "Nový rad"},
   {street = "Stupavská ulica"},
-  {street = "Tichá ulica"},
-  {street = "Ulica Alberta Hubeka"},
+  {street = "Tulipánová ulica"},
 ]
 
 [okrsok.2]
 rules = [
-  {street = "Borovicová ulica"},
+  {street = "Bazová ulica"},
   {street = "Brezová ulica"},
-  {street = "Gaštanová ulica"},
+  {street = "Borovicová ulica"},
+  {street = "Buková ulica"},
   {street = "Domkárska ulica"},
+  {street = "Dubová ulica"},
+  {street = "Gaštanová ulica"},
   {street = "Jedľová ulica"},
   {street = "Jelšová ulica"},
   {street = "Kováčska ulica"},
@@ -56,17 +57,17 @@ rules = [
   {street = "Krivá ulica"},
   {street = "Lábska ulica"},
   {street = "Lipová ulica"},
-  {street = "Mlynská ulica"},
   {street = "Na Pasienkoch"},
   {street = "Námestie mládeže"},
   {street = "Obchodná ulica"},
   {street = "Orechová ulica"},
-  {street = "Poľná ulica"},
+  {street = "Platanová ulica"},
   {street = "Požiarnická ulica"},
   {street = "Struhárova ulica"},
   {street = "Smreková ulica"},
   {street = "Školská ulica"},
   {street = "Štúrova ulica"},
+  {street = "Topoľová ulica"},
 ]
 
 [okrsok.3]
@@ -74,9 +75,14 @@ rules = [
   {street = "Hviezdoslavova ulica"},
   {street = "Kvetná ulica"},
   {street = "Lozornianska ulica"},
+  {street = "Mlynská ulica"},
   {street = "Na Dieloch"},
+  {street = "Poľná ulica"},
+  {street = "Priemyselná ulica"},
   {street = "Sadová ulica"},
   {street = "Staničná ulica"},
+  {street = "Ulica Alberta Hubeka"},
+  {street = "Tichá ulica"},
   {street = "Záhradná ulica"},
   {street = "Železničiarska ulica"},
 ]

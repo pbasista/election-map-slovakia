@@ -35,7 +35,7 @@
 import { html, useEffect, useLayoutEffect, useState } from '../vendor/preact-htm.module.js';
 import { dataIndex } from './data.js';
 import { formatNumber, formatPercent, livePath, liveWindow, polls, resultsPath, rounds, t } from './i18n.js';
-import { areaName, isCity, isCountry, isRegional, isSingle, parseContest } from './kinds.js';
+import { areaName, isCity, isCountry, isList, isRegional, isSingle, parseContest } from './kinds.js';
 
 const POLL_MS = 60_000;
 // setTimeout's longest delay (2^31 − 1 ms, about 24.8 days): a longer wait
@@ -437,6 +437,50 @@ function unitsOf(id, entry, place, file) {
 export function okrskyLoading(id, obec) {
   const name = okrsokFile(id, obec);
   return live.hasOkrsky(name) && live.okrsky(name) === undefined;
+}
+
+// Okrsok file → contest id → obec → the numbers of its okrsky with figures
+// there, made once per file and contest (`obecOkrsky`): a kraj's file has
+// thousands, of which the ballots want one obec's on every render.
+const okrskyByObec = new WeakMap();
+
+function okrskyIn(file, id, obec) {
+  let byContest = okrskyByObec.get(file);
+  if (!byContest) {
+    byContest = new Map();
+    okrskyByObec.set(file, byContest);
+  }
+  let byObec = byContest.get(id);
+  if (!byObec) {
+    byObec = new Map();
+    for (const key of Object.keys(file.contests[id] ?? {})) {
+      const [code, n] = key.split('/');
+      if (!byObec.has(code)) byObec.set(code, []);
+      byObec.get(code).push(Number(n));
+    }
+    byContest.set(id, byObec);
+  }
+  return byObec.get(obec) ?? [];
+}
+
+/* The okrsky of obec *obec* with figures of their own in the okrsok files
+ * of the counted contests of *ids* (`live.okrsky`, which loads them):
+ * number → the ids with figures there, in order of numbers; undefined
+ * while a file loads; empty without such files (before the final results).
+ * A party's list has the okrsky of its party, in a file per party: those
+ * are left out, not fetched for nothing. */
+export function obecOkrsky(ids, obec) {
+  const out = new Map();
+  for (const id of ids) {
+    const entry = isList(id) ? null : live.of(id);
+    if (!entry || entry === NOT_COUNTED) continue;
+    const name = okrsokFile(id, obec);
+    if (!live.hasOkrsky(name)) continue;
+    const file = live.okrsky(name);
+    if (file === undefined) return undefined;
+    for (const n of okrskyIn(file, id, obec)) out.set(n, [...(out.get(n) ?? []), id]);
+  }
+  return new Map([...out].sort(([a], [b]) => a - b));
 }
 
 /* How much the registered voters may have grown since the contest's last

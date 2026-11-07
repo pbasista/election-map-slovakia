@@ -1,19 +1,27 @@
-# The okrsky of Suchá nad Parnou of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/507571.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Suchá nad Parnou, transcribed by an AI agent in job okrsok-rules-859 from the documents below;
+# The okrsky of Suchá nad Parnou of the vote of 2023-01-21, data/curated/elections/2023-01-21/okrsky/507571.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Suchá nad Parnou, transcribed by an AI agent in job okrsok-rules-3137 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: občania Suchej nad Parnou, ktorí bývajú na čísle domu: 0-380
-#     okrsok 2: 382 a vyššie
+#     okrsok 1: Okrsok č. 1: od č. domu 0 – 380
+#     okrsok 2: Okrsok č. 2: od č. domu 382 a vyššie
 obec = "507571"
 name = "Suchá nad Parnou"
-okrsky_date = 2022-10-26
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2023-09-30 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2023-09-30 was searched for. No mayor's decision found (2022 elections pages gone, not archived). The municipality's notice-board page for the 29.10.2022 elections (posted 'Vyvesené: 26. 10. 2022', date used) says voters living at house numbers (súpisné) 0–380 vote in okrsok 1, 382 and higher in okrsok 2. Applied to both parts (Suchá nad Parnou, Ružová Dolina) by súpisné číslo; number 381, not mentioned, falls to okrsok 2 (rest)."
-okrsky_reused = 2022-10-29
+okrsky_note = "House numbers are súpisné (the municipality has no streets); applied in both parts (Suchá nad Parnou, Ružová Dolina). Number 381, not mentioned, falls to okrsok 2 (rest)."
+okrsky_adopted = 2023-01-21
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3713): No document assigning house numbers to okrsky for this vote: the notice board (suchanadparnou.sk/samosprava/uradna-tabula, live and in the Internet Archive) has for the EP elections 2019 only the mayor's decision naming two rooms in the cultural house (no split), and for the regional elections 2017, the NRSR elections 2023 and the referendum 2026 no okrsky notice or decision; the elections section keeps pages only for 2024. These are the okrsky of the vote of 2023-01-21 (2023-referendum), the nearest in time with okrsky of its own that fit: 2 okrsky (nearer, not taken: 2024-03-23: okrsok 1: 812 voters then, 1,031 in 2024-03-23; 2024-06-08: okrsok 1: 812 voters then, 1,036 in 2024-06-08). Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2023-01-21: 1: 812 → 824, 2: 997 → 988."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-09
+okrsky_date_basis = "The notice-board page says Vyvesené: 9. 11. 2022; the decision names the referendum of 21 January 2023. (https://www.suchanadparnou.sk/samosprava/uradna-tabula/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-referendum-2023-v-obci-sucha-nad-parnou-1172.html)"
 
 [[document]]
-url = "https://www.suchanadparnou.sk/samosprava/uradna-tabula/ako-budeme-volit-v-spojenych-volbach-29102022-v-skratke-1155.html"
-sha256 = "b1056b7cbb712e697275db9c426d3cfd49a1dea073606347aef7c3665ba13b6a"
-title = "Ako budeme voliť v spojených voľbách 29.10.2022 v skratke (úradná tabuľa, vyvesené 26. 10. 2022)"
+url = "https://www.suchanadparnou.sk/e_download.php?file=data/uredni_deska/obsah1101_6.pdf&original=Utvorenie%20okrskov.pdf"
+sha256 = "e952a0e82b0be9d9d33227da873279fa0fae4fa25b95f13c18e883fa80ba90db"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre referendum 21. januára 2023"
+
+[[document]]
+url = "https://www.suchanadparnou.sk/samosprava/uradna-tabula/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-referendum-2023-v-obci-sucha-nad-parnou-1172.html"
+sha256 = "483c5817ee08eea458ca820c0b10c3e532a4b3193b8183a1369b089ba22f2255"
+title = "úradná tabuľa, vyvesené 9. 11. 2022"
 
 [okrsok.1]
 rules = [

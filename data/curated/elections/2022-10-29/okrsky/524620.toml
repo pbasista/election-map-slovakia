@@ -1,15 +1,21 @@
-# The okrsky of Kapušany of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/524620.toml, reused by `ems job reuse`.
+# The okrsky of Kapušany of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/524620.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Kapušany, transcribed by an AI agent in job okrsok-rules-3828 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: ulice: Ardova, Kováčska, Kráľovská, Krátka, Nám. sv. Martina, Na rínku, Požiarnická, Prešovská, Sadová, Slánska, Slovenská, Tehelná, Vranovská, Záhradná
+#     okrsok 2: ulice: Bardejovská, Cintorínska, Dubová, Gabriela Kapyho, Hlavná, Lesná, Mlynská, Nová štvrť, Pod hradom, Poštová, Puchovská, Sekčovská, Severná, Topoľová, Urbárska, Železničná, súpisné číslo 686, súpisné číslo 749, súpisné číslo 762, adresa: Obec Kapušany
 obec = "524620"
 name = "Kapušany"
-okrsky_date = 2026-07-21
+okrsky_date = 2023-06-12
 okrsky_fill = "nearest"
-okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Addresses without a street other than súpisné čísla 686, 749 and 762 (okrsok 1) are not named; fill_nearest places them. Okrsok 2 also takes voters registered at 'adresa: Obec Kapušany'."
-okrsky_reused = 2026-10-24
+okrsky_note = "Addresses without a street other than súpisné čísla 686, 749 and 762 (okrsok 2) are not named; fill_nearest places them. Okrsok 2 also takes voters registered at 'adresa: Obec Kapušany'. Differs from the copied okrsky of 2026-10-24 only in placing súpisné čísla 686, 749 and 762 in okrsok 2 (2026: okrsok 1). The same PDF is also linked from https://archiv.kapusany.sk/volby/volby-do-narodnej-rady-slovenskej-republiky-2023/utvorenie-volebnych-okrskov-a-urcenie-volebnych-."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2022-10-29 setting the okrsky was found (okrsok-rules-959): The archived 2022 elections page (snapshot 21.10.2022) links 'Utvorenie volebných okrskov a určenie volebných miestností v obci Kapušany pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov' (files/files/49/53/40/df30617d….pdf), but the file is gone from the new website (404) and the Internet Archive never captured it. The January 2023 referendum's decision (10.11.2022) forms one okrsok for the whole obec, which does not match the 2 okrsky of 2022. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2022-10-29 → 2023-09-30: 1: 844 → 808, 2: 854 → 825."
 
 [[document]]
-url = "https://www.kapusany.sk/files/2026-07-23-093147-zverejnenie_-_Rozhodnutie_starostu_o_utvoren___volebn__ch_okrskov.pdf"
-sha256 = "79f9020265072793a370ac132e29c6c7ea09a63edb1d6f6532ada91d211f8651"
-title = "Rozhodnutie starostu obce Kapušany o utvorení volebných okrskov a určení volebných miestností"
+url = "https://archiv.kapusany.sk/files/files/66/19/78/56f10a3939c44349b656084e15aa03cb/56f10a3939c44349b656084e15aa03cb.pdf"
+sha256 = "9024c4858280526efdefb1388fd8990ff051d8a19ceac5ec0b5e748aa7d9d3fe"
+title = "Rozhodnutie starostu obce Kapušany o utvorení volebných okrskov a určení volebných miestností v obci Kapušany pre voľby do Národnej rady Slovenskej republiky dňa 30. septembra 2023"
 
 [okrsok.1]
 rules = [
@@ -27,7 +33,6 @@ rules = [
   {street = "Tehelná"},
   {street = "Vranovská"},
   {street = "Záhradná"},
-  {part = "Kapušany", numbers = "686, 749, 762"},
 ]
 
 [okrsok.2]
@@ -48,5 +53,6 @@ rules = [
   {street = "Topoľová"},
   {street = "Urbárska"},
   {street = "Železničná"},
-  {street = "Pri trati", note = "not in the document; a small street by the railway, placed with Železničná", inferred = true},
+  {part = "Kapušany", numbers = "686, 749, 762"},
+  {street = "Pri trati", note = "not in the document; a short street by the railway between Hlavná and Gabriela Kapyho (okrsok 2), placed with them", inferred = true},
 ]

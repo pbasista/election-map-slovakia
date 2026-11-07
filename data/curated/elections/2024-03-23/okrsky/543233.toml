@@ -1,0 +1,27 @@
+# The okrsky of Kluknava of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/543233.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Kluknava, transcribed by an AI agent in job okrsok-rules-5087 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: volebný okrsok č. 1 - Kluknava
+#     okrsok 2: volebný okrsok č. 2 - Štefanská Huta
+obec = "543233"
+name = "Kluknava"
+okrsky_date = 2024-03-04
+okrsky_note = "Scanned PDF read by OCR (no diacritics); text restored with diacritics."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2024-03-23 setting the okrsky was found (okrsok-rules-4467): The elections section has no page for the presidential election 2024; no okrsky document found. Internet Archive (CDX API) refused connections / 503 on retries, so archived pages could not be checked. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-03-23 → 2024-06-08: 1: 1,064 → 1,090, 2: 162 → 166."
+
+[[document]]
+url = "https://www.kluknava.sk/e_download.php?file=data/editor/272sk_4.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD%20pre%20vo%C4%BEby%20do%20EP%202024.pdf"
+sha256 = "5fb2cf744b63afbde5683c85199dcbc529deda945a05f923713c415d829417cc"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do EP 2024"
+
+[okrsok.1]
+rules = [
+  {rest = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kluknava", numbers = "589-593, 595-622, 627-643, 645-652, 654-668, 682, 692, 696-700, 716-717, 729, 731, 737, 743, 1017, 1023-1024, 1028, 1032, 1034, 1037-1038", by = "supisne", note = "Štefanská Huta is a settlement inside the register's single part Kluknava; its houses are the cluster around s.č. 599 (the okrsok's polling room), as the municipality's 2026 obvody rules list them.", inferred = true},
+]

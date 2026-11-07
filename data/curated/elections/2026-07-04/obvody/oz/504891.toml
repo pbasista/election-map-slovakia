@@ -1,47 +1,42 @@
-# The okrsky of Šaštín-Stráže of the elections of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/504891.toml, copied by `ems job reuse` (reused). Its header there:
+# The okrsky of Šaštín-Stráže of the vote of 2026-10-24, data/curated/elections/2026-10-24/obvody/oz/504891.toml, standing in, by `ems job reuse`. Its header there:
 #   Council obvody of Šaštín-Stráže (504891), Senica.
-#   Transcribed by an AI agent in job obvod-rules-298 from the documents below;
+#   Transcribed by an AI agent in job obvod-rules-101 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per obvod, verbatim:
-#     obvod 1: Vo volebnom obvode č. 1, ktorý zahŕňa k. ú. časti mesta Stráže, sa volia štyria poslanci.
-#     obvod 2: Vo volebnom obvode č. 2, ktorý zahŕňa ul. Alej, Do Gazárky, RO Gazárka, J. Kollára, Jesenského, Kláštorné námestie, M. Nešpora, Nádražná, Pri bitúnku, Pri Kadúbku, Pri rybníku, Slnečná, Štúrova, Železničiarska a Lúčna sa volia štyria poslanci.
-#     obvod 3: Vo volebnom obvode č. 3, ktorý zahŕňa ul. Borová, J. Hollého, Komenského, Metodova, Na pažiti, Námestie Slobody, Novoveská, Piesočná, U Vulgana, Zákostolie, Zápotočná, Záhumenice sa volia traja poslanci.
-#   Okrsky added by an AI agent in job okrsok-rules-1173 from the documents below;
+#     obvod 1: Vo volebnom obvode č. 1, ktorý zahŕňa katastrálne územie časti mesta Stráže sa volia 4 poslanci.
+#     obvod 2: Vo volebnom obvode č. 2, ktorý zahŕňa ulice: Alej, Do Gazárky, RO Gazárka, J. Kollára, Jesenského, Kláštorné nám., M. Nešpora, Nádražná, Pri bitúnku, Pri Kadúbku, Pri rybníku, Slnečná, Štúrova, Železničiarska a Lúčna sa volia 4 poslanci.
+#     obvod 3: Vo volebnom obvode č. 3, ktorý zahŕňa ulice: Borová, J. Hollého, Komenského, Metodova, Nám. Slobody, Na pažiti, Novoveská, Piesočná, U Vulgana, Zákostolie, Zápotočná, Záhumenice sa volia 3 poslanci.
+#   Okrsky added by an AI agent in job okrsok-rules-100 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Volebný okrsok č. 1 - Šaštín-Stráže, Hviezdoslavova 1462/40, Základná škola elokované pracovisko
-#     okrsok 2: Volebný okrsok č. 2 – Šaštín-Stráže, Alej 549/36, Mestský úrad, prízemie, sobášna sieň
-#     okrsok 3: Volebný okrsok č. 3 – Šaštín-Stráže, Alej 549/36, Mestský úrad, prvé poschodie, zasadacia miestnosť
+#     okrsok 1: Volebný obvod č. 1: Volebný okrsok č. 1
+#     okrsok 2: Volebný obvod č. 2: Volebný okrsok č. 2
+#     okrsok 3: Volebný obvod č. 3: Volebný okrsok č. 3
 obec = "504891"
 name = "Šaštín-Stráže"
-date = 2022-07-21
+date = 2026-06-17
 fill = "nearest"
-note = "The council obvody of the elections of 2022-10-29. The obvody and seats were set by the prednosta of Okresný úrad Senica (§ 166 with § 38(2) of Act 180/2014), not by the council; the decision is published on the city's notice board. Scanned PDF read by OCR. Obvod 1 is the k.ú. (časť mesta) Stráže; obvody 2 and 3 list all 27 streets of Šaštín. The 17 addresses without a street in the part Šaštín are placed by fill_nearest."
-reused = 2022-10-29
-okrsky_date = 2022-07-08
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2026-07-04 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2026-07-04 was searched for. The okrsky document names only the polling stations (no streets); each obvod has exactly one okrsok (obvod n = okrsok n per the Statistical Office), so each okrsok is its whole obvod (station 1 in Stráže for obvod 1 = k.ú. Stráže). The document is undated; date = its posting on the notice board ('Vyvesené: 8. 7. 2022') as the archived elections page of 10 Aug 2022 states."
-okrsky_reused = 2022-10-29
+note = "The council obvody of the vote of 2026-10-24: they only place the okrsky. Source is the mayor's announcement of 15 July 2026 citing resolution No. 685/2026 of 17 June 2026 (11 councillors, 3 obvody). Obvod 1 is defined as the cadastral area of the town part Stráže; obvody 2 and 3 list the streets of Šaštín. The document does not place the addresses without a street in the part Šaštín (súpisné čísla such as 550, 559, 623, 686, 1026, 1482, 1508, 1727); fill_nearest assigns them to the obvod of the nearest address. Šaštín 548 (no street, part Šaštín) is located in k.ú. Stráže nad Myjavou, so the k.ú. rule places it in obvod 1."
+reused = 2026-10-24
+okrsky_note = "The okrsky document assigns one okrsok to each obvod (okrsok n in obvod n) and gives only the polling stations; each okrsok is its whole obvod. The document is undated."
+okrsky_adopted = 2026-10-24
+okrsky_adopted_basis = "No document of 2026-07-04 setting the okrsky was found (okrsok-rules-5400): Šaštín-Stráže publishes for each vote only the addresses of the polling stations (e.g. \"Adresy volebných okrskov pre Referendum v r. 2026\": okrsok 1 ZŠ Hviezdoslavova 1462 in Stráže, okrsky 2 and 3 both in the Mestský úrad, Alej 549, Šaštín); no document says which streets of Šaštín belong to okrsok 2 or 3, so no rules can be written. Older votes' pages are gone from the new website, and the Internet Archive stayed unreachable (CDX timeouts / connection refused) during the search. These are the okrsky of the vote of 2026-10-24 (2026), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-07-04 → 2026-10-24: 1: 1,463 → 1,478, 2: 1,234 → 1,430, 3: 1,329 → 1,172."
 
 [[document]]
-url = "https://www.mestosastinstraze.sk/e_download.php?file=data/uredni_deska/obsah11826_4.pdf&original=Rozhodnutie-volby%20do%20OSO_u%C4%8Drenie%20po%C4%8Dtu%20poslancov%20mestsk%C3%A9ho%20zastupite%C4%BEsva%20a%20volobn%C3%BDch%20obvodov%20v%20meste%20%C5%A0a%C5%A1t%C3%ADn-Str%C3%A1%C5%BEe.sk.pdf"
-sha256 = "7b4c5997a71cf4dc6323e979221c1e702a1e432997e0656da70e008cb4885c5b"
-title = "Rozhodnutie prednostu Okresného úradu Senica č. OU-SE-OO-2022/010505-002 zo dňa 21. júla 2022 o určení počtu poslancov a o utvorení volebných obvodov"
+url = "https://www.mestosastinstraze.sk/e_download.php?file=/data/uredni_deska/obsah12272_6.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20obvodov%20a%20o%20ur%C4%8Den%C3%AD%20po%C4%8Dtu%20poslancov%20pre%20vo%C4%BEby%20do%20org%C3%A1nov%20%20samospr%C3%A1vy%20obc%C3%AD%2024.%20okt%C3%B3bra%202026.pdf"
+sha256 = "05ddef9f959b4c4ef11fbc6efb3bd004f23d51d3366657091ef1668dd58bcd27"
+title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov pre voľby do orgánov samosprávy obcí 24. októbra 2026 (uznesenie MsZ č. 685/2026 zo dňa 17.06.2026)"
 
 [[document]]
-url = "https://www.mestosastinstraze.sk/e_download.php?file=data/uredni_deska/obsah11826_7.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20volebn%C3%BDch%20miestnost%C3%AD%20pre%20vo%C4%BEby%20do%20samospr%C3%A1vy%20obc%C3%AD%20a%20krajov%202022.pdf"
-sha256 = "c82307c61df436ce6e5d56d7ea5f89b8f37be162b92b1151f84a2307fd86ae99"
-title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov 29. 10. 2022 v meste Šaštín-Stráže"
-
-[[document]]
-url = "https://web.archive.org/web/20220810060359/https://www.mestosastinstraze.sk/mestsky-urad/volby/komunalne-volby-2022-11861.html?kshow=2"
-sha256 = "11b0784918c953f2d52594fdd354445bb34eb5b538b109b7d249b50f955ee86e"
-title = "Komunálne voľby 2022 (elections page listing the okrsky document, vyvesené 8. 7. 2022)"
+url = "https://www.mestosastinstraze.sk/e_download.php?file=/data/uredni_deska/obsah12272_8.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD%20pre%20vo%C4%BEby%20do%20samospr%C3%A1vy%20obc%C3%AD%20a%20do%20org%C3%A1nov%20samospr%C3%A1vnych%20krajov%20v%20r.%202026.pdf"
+sha256 = "abc46f8c8bb7ddc676807ec2b5ebb447d5f3dd34ac923dbae275efaacc8635d2"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do samosprávy obcí a do orgánov samosprávnych krajov v r. 2026"
 
 [obvod.1]
 seats = 4
 okrsky = [1]
 rules = [
-  {ku = "Stráže nad Myjavou", note = "'k. ú. časti mesta Stráže' is the k.ú. Stráže nad Myjavou"},
+  {ku = "Stráže nad Myjavou", note = "'katastrálne územie časti mesta Stráže' is the k.ú. Stráže nad Myjavou."},
 ]
 
 [obvod.2]
@@ -50,15 +45,15 @@ okrsky = [2]
 rules = [
   {street = "Alej"},
   {street = "Do Gazárky"},
-  {street = "Ro Gazárka"},
+  {street = "Ro Gazárka", written = "RO Gazárka", note = "The document writes 'RO Gazárka' with different capitalisation; same street as the register's 'Ro Gazárka'."},
   {street = "J. Kollára"},
   {street = "Jesenského"},
-  {street = "Kláštorné nám.", written = "Kláštorné námestie", note = "the register abbreviates námestie"},
+  {street = "Kláštorné nám."},
   {street = "M. Nešpora"},
   {street = "Nádražná"},
-  {street = "Pri Bitúnku"},
+  {street = "Pri Bitúnku", written = "Pri bitúnku", note = "The document writes 'Pri bitúnku' with different capitalisation; same street as the register's 'Pri Bitúnku'."},
   {street = "Pri Kadúbku"},
-  {street = "Pri Rybníku"},
+  {street = "Pri Rybníku", written = "Pri rybníku", note = "The document writes 'Pri rybníku' with different capitalisation; same street as the register's 'Pri Rybníku'."},
   {street = "Slnečná"},
   {street = "Štúrova"},
   {street = "Železničiarska"},
@@ -73,8 +68,8 @@ rules = [
   {street = "J. Hollého"},
   {street = "Komenského"},
   {street = "Metodova"},
+  {street = "Nám. Slobody"},
   {street = "Na pažiti"},
-  {street = "Nám. Slobody", written = "Námestie Slobody", note = "the register abbreviates námestie"},
   {street = "Novoveská"},
   {street = "Piesočná"},
   {street = "U Vulgana"},

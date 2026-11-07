@@ -1,32 +1,35 @@
-# The okrsky of Horné Saliby of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/503771.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Horné Saliby, transcribed by an AI agent in job okrsok-rules-754 from the documents below;
+# The okrsky of Horné Saliby of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/503771.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Horné Saliby, transcribed by an AI agent in job okrsok-rules-4221 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: s.č. 1 - 545; s.č. 1151 – 1201, 1212, 1214 - 1216, 1225, 1256, 1260 - 1318, 1321, 1324, 1330, 1331, 1336
-#     okrsok 2: s.č. 546 – 1100; s.č. 1202 – 1211, 1213, 1242 – 1244, 1246 – 1247, 1250 – 1255, 1257 – 1258, 1325-1327, 1342-1345, 1353, 1361; s.č. 1101 - 1150 (Hrušov)
+#     okrsok 1: V tomto okrsku môžu hlasovať občania s trvalým pobytom pod nasledovnými súpisnými číslami: 1 - 545, 1151 – 1201, 1212, 1214 - 1216, 1225, 1229, 1256, 1259-1260, 1264-1265, 1269, 1271-1272, 1275-1278, 1280-1283, 1308,1311-1315, 1318, 1321, 1324, 1328, 1330-1331, 1336-1337, 1363
+#     okrsok 2: V tomto okrsku môžu hlasovať občania s trvalým pobytom pod nasledovnými súpisnými číslami: 546 – 1100, 1202 – 1211, 1213, 1223-1224, 1242 – 1244, 1246 – 1247, 1250 – 1255, 1257 – 1258, 1266-1267, 1279, 1284-1307, 1309-1310, 1316-1317, 1325-1327, 1342-1345, 1350, 1356-1357, 1361-1362, 1101 - 1150 (Hrušov)
 obec = "503771"
 name = "Horné Saliby"
-okrsky_date = 2022-08-08
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2023-09-30 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2023-09-30 was searched for. The document assigns okrsky by súpisné čísla (the village has no streets). '1225,1 256' in the text layer read as 1225, 1256. Súpisné čísla the document does not list (e.g. 1217-1241 except those named, 1319-1320, 1322-1323, 1328-1329, 1332-1335, 1337-1341, 1346-1352, 1354-1360, 1362-) take the okrsok of the nearest address (fill_nearest). Hrušov (s.č. 1101-1150) is a settlement not in the register's parts; it is covered by the number range."
-okrsky_reused = 2022-10-29
+okrsky_note = "The village has no streets: the document assigns okrsky by súpisné čísla, written as number rules on the part Horné Saliby. Hrušov (s.č. 1101-1150) is a settlement the register keeps in part Horné Saliby; covered by its number range. Súpisné čísla the document does not list take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3591): Horné Saliby publishes a decision on okrsky per vote on its elections pages (hornesaliby.sk/samosprava/volby/), but the pages kept are those of 2022 (archive), the presidential and EP elections of 2024 and the referendum 2026; the pages of this vote (where they exist, e.g. NR SR 2023, referendum 2023) link no okrsky document. The Internet Archive refused connections (offline) during the search. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2024-03-23: 1: 1,311 → 1,331, 2: 1,279 → 1,305."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-25
+okrsky_date_basis = "The document is undated; the municipality's page linking it states \"Dátum vloženia\" 2024-01-25, before the vote; the document's heading names this vote. (https://www.hornesaliby.sk/samosprava/volby/volby-prezidenta-slovenskej-republiky-2024/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-hornych-salibach-pre-volby-prezidenta-slovenskej-republiky-275sk.html)"
 
 [[document]]
-url = "https://www.hornesaliby.sk/e_download.php?file=data/uredni_deska/obsah5_1.pdf&original=Utvorenie-volebn%C3%BDch-okrskov-a-ur%C4%8Denie-volebn%C3%BDch-miestnost%C3%AD.pdf"
-sha256 = "ecafadf4d9583c05f946efdd7fd1cdeec21c0199a494fc1ad3cc54321ac000f8"
-title = "Utvorenie volebných okrskov a určenie volebných miestností pre Voľby do orgánov samosprávy obcí a pre Voľby do orgánov samosprávnych krajov, konané dňa 29.10.2022"
+url = "https://www.hornesaliby.sk/evt_file.php?file=1171"
+sha256 = "2974d8b16a184be2e0a4e5f8dd90a2a3a8bdb0547d4c89a70470076cd57e4cd1"
+title = "Utvorenie volebných okrskov a určenie volebných miestností na voľby prezidenta SR"
 
 [[document]]
-url = "https://www.hornesaliby.sk/samosprava/volby/volby-archiv/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-5.html"
-sha256 = "2de96e6d675e7958fab79c17476740eacdb00b036adda099b35648547ed33456"
-title = "Voľby archív: Utvorenie volebných okrskov a určenie volebných miestností"
+url = "https://www.hornesaliby.sk/samosprava/volby/volby-prezidenta-slovenskej-republiky-2024/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-hornych-salibach-pre-volby-prezidenta-slovenskej-republiky-275sk.html"
+sha256 = "a09b908482d203c8e62512e25b1d468903796c6a110cabfdd59993b02f308fb5"
+title = "Page of the document (Dátum vloženia 2024-01-25)"
 
 [okrsok.1]
 rules = [
-  {part = "Horné Saliby", numbers = "1-545, 1151-1201, 1212, 1214-1216, 1225, 1256, 1260-1318, 1321, 1324, 1330, 1331, 1336"},
+  {part = "Horné Saliby", numbers = "1-545, 1151-1201, 1212, 1214-1216, 1225, 1229, 1256, 1259-1260, 1264-1265, 1269, 1271-1272, 1275-1278, 1280-1283, 1308, 1311-1315, 1318, 1321, 1324, 1328, 1330-1331, 1336-1337, 1363"},
 ]
 
 [okrsok.2]
 rules = [
-  {part = "Horné Saliby", numbers = "546-1150, 1202-1211, 1213, 1242-1244, 1246-1247, 1250-1255, 1257-1258, 1325-1327, 1342-1345, 1353, 1361"},
+  {part = "Horné Saliby", numbers = "546-1100, 1202-1211, 1213, 1223-1224, 1242-1244, 1246-1247, 1250-1255, 1257-1258, 1266-1267, 1279, 1284-1307, 1309-1310, 1316-1317, 1325-1327, 1342-1345, 1350, 1356-1357, 1361-1362, 1101-1150"},
 ]

@@ -1,0 +1,92 @@
+# The okrsky of Gelnica of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/526509.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Gelnica, transcribed by an AI agent in job okrsok-rules-1134 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Staré mesto (časť územia mesta: ul. Banícka, Banícke námestie, Cintorínska, Háj, Hlavná, Krížna, Lutherovo námestie, Požiarnicka, Slovenská, Slovenské Cechy, Turzovská, Zámková)
+#     okrsok 2: Legy (časť územia mesta: ul. Agátová, Dubová, Hnilecká, Jarná, Javorová, Jesenná, Lesná, Letná, Lipová, Lyžiarska, Partizánska, Plynárenská, Potočná, Vodárenská, Zimná)
+#     okrsok 3: sídl. SNP (časť územia mesta: ul. Hviezdoslavova, Kukučínova, Slovenského národného povstania, Vajanského, Nemocničná)
+#     okrsok 4: Športová (časť územia mesta: ul. Športová)
+#     okrsok 5: Nové sídlisko (časť územia mesta: ul. Tehelná, Záhradná)
+#     okrsok 6: Mária Huta (časť územia mesta: ul. Banská, Geologická, Hutná, Kováčska, Medená, Perlová, Pod brehom, Poľná, Strojárenská, Žakarovská, Železničná)
+obec = "526509"
+name = "Gelnica"
+okrsky_date = 2019-01-24
+okrsky_fill = "nearest"
+okrsky_note = "The register street \"Febr. Víť.\" (7 addresses, old name, nos. 52-147) is not named in the document, nor are the addresses without a street (numbered by súpisné číslo); fill_nearest places these by the nearest address."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2310): No okrsky document of the 2020 NR SR election found. The old site's elections page (komunalne-volby-2018.phtml?id5=31524, reused for every vote) was captured by the Internet Archive only on 2019-07-22, when it showed the 2019 presidential election; the e-board (elektronicka-uradna-tabula.phtml) only in Dec 2021; the PDFs captured from 2017-2021 carry no titles and none is linked from a captured page of this vote. The live site (rebuilt 2022) has no pages for votes before 2022 and its later elections pages are gone (404). These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 6 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2019-03-16: 1: 957 → 971, 2: 527 → 547, 3: 653 → 679, 4: 996 → 1,044, 5: 1,231 → 1,272, 6: 483 → 477."
+
+[[document]]
+url = "https://web.archive.org/web/20190722040448/https://www.gelnica.sk/komunalne-volby-2018.phtml?id5=31524"
+sha256 = "61b1ff3e2e3a57ec2ebcc0eed265fba0c45e75542b2622185ad6e2cc37c2998b"
+title = "Voľby prezidenta SR 2019: utváram volebné okrsky a určujem volebné miestnosti (primátor, 24. januára 2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Banícka"},
+  {street = "Banícke námestie"},
+  {street = "Cintorínska"},
+  {street = "Háj"},
+  {street = "Hlavná"},
+  {street = "Krížna"},
+  {street = "Lutherovo Námestie", written = "Lutherovo námestie"},
+  {street = "Požiarnická", written = "Požiarnicka", note = "The document writes \"Požiarnicka\" without the long á; the register's Požiarnická is the same street in the old town."},
+  {street = "Slovenská"},
+  {street = "Slovenské Cechy"},
+  {street = "Turzovská"},
+  {street = "Zámková"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Agátová"},
+  {street = "Dubová"},
+  {street = "Hnilecká"},
+  {street = "Jarná"},
+  {street = "Javorová"},
+  {street = "Jesenná"},
+  {street = "Lesná"},
+  {street = "Letná"},
+  {street = "Lipová"},
+  {street = "Lyžiarska"},
+  {street = "Partizánska"},
+  {street = "Plynárenská"},
+  {street = "Potočná"},
+  {street = "Vodárenská"},
+  {street = "Zimná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "Kukučínova"},
+  {street = "Sídlisko SNP", written = "Slovenského národného povstania", note = "\"Slovenského národného povstania\" is the register's Sídlisko SNP; the okrsok is titled \"sídl. SNP\"."},
+  {street = "Vajanského"},
+  {street = "Nemocničná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Športová"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Tehelná"},
+  {street = "Záhradná"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Banská"},
+  {street = "Geologická"},
+  {street = "Hutná"},
+  {street = "Kováčska"},
+  {street = "Medená"},
+  {street = "Perlová"},
+  {street = "Pod Brehom", written = "Pod brehom"},
+  {street = "Poľná"},
+  {street = "Strojárenská"},
+  {street = "Žakarovská"},
+  {street = "Železničná"},
+]

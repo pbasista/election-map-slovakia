@@ -1,14 +1,22 @@
-# The okrsky of Radošovce of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/504742.toml, copied by `ems job reuse` (reused). Its header there:
-#   The okrsky of Radošovce of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/504742.toml, reused by `ems job reuse`.
+# The okrsky of Radošovce of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/504742.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Radošovce, transcribed by an AI agent in job okrsok-rules-3792 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: pre občanov bývajúcich v Radošovciach na súp. č. 1 - 316
+#     okrsok 2: pre občanov bývajúcich v časti Vieska od súp. č. 1 - 202 a občanov Radošoviec od súp. č. 317 – 475
 obec = "504742"
 name = "Radošovce"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2020-02-29 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2020-02-29 was searched for. No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Vieska taken whole (document: súp. č. 1–202, i.e. all of it); Radošovce súp. č. 317–475 given as open range 317- so newer higher numbers also fall into okrsok 2."
-okrsky_reused = 2022-10-29
+okrsky_note = "Vieska taken whole (document: súp. č. 1–202, i.e. all of it); Radošovce súp. č. 317–475 given as open range 317- so newer higher numbers also fall into okrsok 2."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2607): No okrsky document of the National Council election of 29 February 2020 is available: the current website keeps only documents from 2023 on, the old-site mirror radosovce.obecnyarchiv.sk has no 2020 election page, and the Internet Archive has no capture of the old elections page (www.radosovce.sk/obec/dokumenty/vzn/o-obci-2/volby/) after 2019-06-05 nor any 2020 okrsky PDF of the domain (only the 2020-03-20 homepage, which links the elections page and a results page). These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2023-09-30: 1: 726 → 659, 2: 758 → 728."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2023-06-28
+okrsky_date_basis = "The municipality's document page https://radosovce.sk/dokument/utvorenie-volebnych-okrskov/ states 'Zverejnené 28. júna 2023', before the vote; the document itself names the National Council election of 30 September 2023 but states no decision date. (https://radosovce.sk/dokument/utvorenie-volebnych-okrskov/)"
 
 [[document]]
-url = "https://radosovce.sk/wp-content/uploads/dokumenty/komunalne-volby/volebne-okrsky-vytvorenie-b1ra31.pdf"
-sha256 = "c7b7fe7dddeb8d54e548deed42344d8160ecddd5b64acb91f1e3d2b7e0003cb6"
-title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obce a pre voľby do orgánov samosprávnych krajov"
+url = "https://radosovce.sk/wp-content/uploads/dokumenty/parlamentne-volby/utvorenie-volebnych-okrskov-7slvp3.pdf"
+sha256 = "0539f43f65173cfe05c68fdd6f1be91563cd8d8bc1719863dbd9684798afe8df"
+title = "Utvorenie volebných okrskov a určenie volebných miestností na konanie volieb do Národnej rady Slovenskej republiky"
 
 [okrsok.1]
 rules = [

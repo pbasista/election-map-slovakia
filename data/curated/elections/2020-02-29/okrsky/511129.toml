@@ -1,19 +1,25 @@
-# The okrsky of Važec of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/511129.toml, copied by `ems job reuse` (reused). Its header there:
-#   The okrsky of Važec of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/511129.toml, reused by `ems job reuse`.
+# The okrsky of Važec of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/511129.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Važec, transcribed by an AI agent in job okrsok-rules-779 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: od s.č. 1 do s.č. 595 ( vrátane )
+#     okrsok 2: od s.č. 596
 obec = "511129"
 name = "Važec"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2020-02-29 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2020-02-29 was searched for. No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Okrsky split by súpisné číslo over the whole obec: 1-595 and 596 and higher (plus residents whose permanent address was cancelled, in okrsok 2). No decision date stated (published 2026-07-21)."
-okrsky_reused = 2022-10-29
+okrsky_date = 2018-09-06
+okrsky_note = "Scanned PDF read from the rendered page. The okrsky split the whole obec by súpisné číslo: okrsok 1 s.č. 1-595 (inclusive), okrsok 2 from s.č. 596."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2516): The old site's page 'Voľby do Národnej rady SR' (archived 2019-12-01 to 2020-03-04) lists only the vyhlásenie volieb and the information for voters; no okrsky document was published there or found elsewhere. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
 
 [[document]]
-url = "https://www.obecvazec.sk/modules/file_storage/download.php?file=648904a5%7C346&inline=1"
-sha256 = "23702f89e3e5bb08bf57a7db8e6ca93e97eb0d5d317e6460b657ede4ca54d0c0"
-title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí"
+url = "https://web.archive.org/web/20180915132931/http://www.obecvazec.sk:80/download_file_f.php?id=1013917"
+sha256 = "620edb9bb19520dc461dc163cf81ff3d8c2a44eb05c2ad32540990611927abf2"
+title = "Určenie volebných okrskov a volebných miestností pre voľby do orgánov samosprávy obcí 10.11.2018 (volebné okrsky.PDF)"
 
 [[document]]
-url = "https://www.obecvazec.sk/samosprava/spojene-volby-2026/"
-sha256 = "f8b1392034d1ff0110004af2587a0c28606f0eddd8593b8649df869ec9a77189"
-title = "Spojené voľby 2026"
+url = "https://web.archive.org/web/20181015010656/http://www.obecvazec.sk/volby-do-organov-samospravy-obci.html"
+sha256 = "6b341253d83c3b78789d7be475ebda28e27bc8b5f2705ddd4bc339a837cd147f"
+title = "Voľby do orgánov samosprávy obcí (page linking the document)"
 
 [okrsok.1]
 rules = [

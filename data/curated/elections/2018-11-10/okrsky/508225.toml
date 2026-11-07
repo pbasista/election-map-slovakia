@@ -1,0 +1,77 @@
+# Okrsky of Slovenský Grob, transcribed by an AI agent in job okrsok-rules-136 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Hlavná Chorvátska Lipová Lúčna Nová Pezinská Poľná Poštová Školská Športová Vajnorská cesta Viničná Vinohradnícka Záhradná Záhumenná
+#   okrsok 2: Bočná Okružná C.Majerníka Orechová Diamantová Pažitná Dlhá Pri jazere Družstevná Pri parku Dúhová Pri štadióne Hlinícka Rastislavova Ihrisková Rubínová J.Alexyho Ružová Južná Severná Koceľova Slavomírova Krajná Slnečná Ľ.Fullu Smaragdová M.A.Bazovského Stredná M.Benku Stromová M.Galandu Svätoplukova Mlynská Štepnice Mojmírova Tichá Nábrežná Topásová Obchodná
+obec = "508225"
+name = "Slovenský Grob"
+okrsky_date = 2018-09-04
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 4 September 2018 (download/Volby/voľby_2018/volebne_okrsky.pdf, captured by the Common Crawl on 2019-01-18) names the 2018 municipal elections and lists the streets of each okrsok. The addresses without a street take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://index.commoncrawl.org/CC-MAIN-2019-04-index?url=https://slovensky-grob.sk/download/Volby/vo%25C4%25BEby_2018/volebne_okrsky.pdf&from=20190118194601&to=20190118194601&output=json"
+sha256 = "1395b46873a5d3fbd582ce343ad37189510cb185cf52bf2fc16a095ad9d578c3"
+title = "Obec Slovenský Grob: volebné okrsky a volebné miestnosti v zmysle harmonogramu organizačno-technického zabezpečenia volieb do orgánov samosprávy obcí 2018 (starosta, 04.09.2018; Common Crawl capture of 2019-01-18)"
+
+[okrsok.1]
+rules = [
+  {street = "Hlavná"},
+  {street = "Chorvátska"},
+  {street = "Lipová"},
+  {street = "Lúčna"},
+  {street = "Nová"},
+  {street = "Pezinská"},
+  {street = "Poľná"},
+  {street = "Poštová"},
+  {street = "Školská"},
+  {street = "Športová"},
+  {street = "Vajnorská cesta"},
+  {street = "Viničná"},
+  {street = "Vinohradnícka"},
+  {street = "Záhradná"},
+  {street = "Záhumenná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bočná"},
+  {street = "Okružná"},
+  {street = "C. Majerníka", written = "C.Majerníka"},
+  {street = "Orechová"},
+  {street = "Diamantová"},
+  {street = "Pažitná"},
+  {street = "Dlhá"},
+  {street = "Pri jazere"},
+  {street = "Družstevná"},
+  {street = "Pri parku"},
+  {street = "Dúhová"},
+  {street = "Pri štadióne"},
+  {street = "Hlinícka"},
+  {street = "Rastislavova"},
+  {street = "Ihrisková"},
+  {street = "Rubínová"},
+  {street = "J. Alexyho", written = "J.Alexyho"},
+  {street = "Ružová"},
+  {street = "Južná"},
+  {street = "Severná"},
+  {street = "Koceľova"},
+  {street = "Slavomírova"},
+  {street = "Krajná"},
+  {street = "Slnečná"},
+  {street = "Ľ. Fullu", written = "Ľ.Fullu"},
+  {street = "Smaragdová"},
+  {street = "M. A. Bazovského", written = "M.A.Bazovského"},
+  {street = "Stredná"},
+  {street = "M. Benku", written = "M.Benku"},
+  {street = "Stromová"},
+  {street = "M. Galandu", written = "M.Galandu"},
+  {street = "Svätoplukova"},
+  {street = "Mlynská"},
+  {street = "Štepnice"},
+  {street = "Mojmírova"},
+  {street = "Tichá"},
+  {street = "Nábrežná"},
+  {street = "Topásová"},
+  {street = "Obchodná"},
+]

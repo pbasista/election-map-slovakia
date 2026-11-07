@@ -1,28 +1,29 @@
-# The okrsky of Dunajská Lužná of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/545333.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Dunajská Lužná, transcribed by an AI agent in job okrsok-rules-650 from the documents below;
+# The okrsky of Dunajská Lužná of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/545333.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Dunajská Lužná, transcribed by an AI agent in job okrsok-rules-4063 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
 #     okrsok 1: Dunajská, Jánošíkovská, Mariánska, Okružná, Orechová, Poľná, Pri hrádzi, Pri jame, Rekreačná, Smreková, Športová Tichá
 #     okrsok 2: Brezová, Čerešňová, Holubia, Jabloňová, Javorová, Lipová Mandľová, Pekárenská, Podnikateľská, Slnečná, Tehelná, Višňová, Vodárenská, Zdravotnícka, Zelená
-#     okrsok 3: Agátová, Astrová, Azalková, Bazová, Kvetná, Kvetoslavovská, Letná, Lipnická, Lúčna, Miloslavovská, Morušová, Sadová Spojná, Stromová, Svoradova, Šalviová, Záhradná
+#     okrsok 3: Agátová, Astrová, Azalková, Bazová, Kvetná, Kvetoslavovská, Letná, Lipnická, Lúčna, Malinová, Miloslavovská, Morušová, Sadová, Spojná, Stromová, Svoradova, Šalviová, Záhradná
 #     okrsok 4: Krajná, Krížna, Nám. sv. Martina, Nová, Pekná, rekreačná oblasť Malá voda - Nové Košariská, rekreačná oblasť – Za hrádzou, Školská, Štefánikov park, Úzka, Zámočnícka
-#     okrsok 5: Dlhá, Fialková, Hlavná, Horná, Jarná, Jasná, Košariská, Kováčska, Krátka, Malinová, Narcisová, Pri kniežacích mohylách, Studená, Veterná
+#     okrsok 5: Dlhá, Fialková, Hlavná, Horná, Jarná, Jasná, Košariská, Kováčska, Krátka, Narcisová, Pri kniežacích mohylách, Studená, Veterná
 obec = "545333"
 name = "Dunajská Lužná"
-okrsky_date = 2022-07-28
+okrsky_date = 2024-01-25
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2023-09-30 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2023-09-30 was searched for. Scanned document read from rendered images. Okrsok 4 also names the recreational areas \"Malá voda - Nové Košariská\" and \"Za hrádzou\", which are not streets in the register; the register's 774 addresses without a street (numbered by súpisné číslo, largely those recreational areas and new houses) are placed by fill_nearest. No addressless okrsok."
-okrsky_reused = 2022-10-29
+okrsky_note = "The document also names \"rekreačná oblasť Malá voda - Nové Košariská\", \"rekreačná oblasť – Za hrádzou\", not a street in the register; its houses are among the addresses without a street, placed by fill_nearest. Addresses without a street (numbered by súpisné číslo within the parts, largely the recreational areas and new houses) are placed by fill_nearest. The copied 2022 okrsky differ: this document puts Malinová in okrsok 3 (2022: okrsok 5)."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3433): The municipality's website keeps pages for every vote from 2018 to 2026 under Úradná tabuľa / Voľby except the National Council election of 30 September 2023; the site search finds no okrsky document for it, and the Internet Archive lists no capture of such a page or file (CDX of the domain 2019–2024). The Internet Archive's capture of the elections index (Voľby 2024, 2024-08-10) lists only the 2024 votes. The Internet Archive was intermittently offline during the search; the queries succeeded on retry. The documents of 21 January 2023 (4 okrsky) and 25 January 2024 (5 okrsky) differ, so neither can stand in. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 5 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2024-03-23: 1: 1,170 → 1,198, 2: 1,160 → 1,205, 3: 1,072 → 1,119, 4: 1,164 → 1,188, 5: 1,068 → 1,096."
 
 [[document]]
-url = "https://www.dunajskaluzna.sk/e_download.php?file=data/editor/859sk_8.pdf&original=220728110241_0001.pdf"
-sha256 = "2ad61fddacf4f9baf54905a2b98ff779572532dd777da377700bb7be83ef6eeb"
-title = "Informácia o utvorení volebných okrskov a určenie volebných miestností v obci Dunajská Lužná (voľby 29.10.2022)"
+url = "https://www.dunajskaluzna.sk/e_download.php?file=data/editor/1012sk_3.pdf&original=Inform%C3%A1cia%20k%20utvoreniu%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20volebn%C3%BDch%20miestnost%C3%AD.pdf"
+sha256 = "d1229f400bc99c84ed55183756097d89ad23002c66f081b6e49b8a7947af425b"
+title = "Informácia o utvorení volebných okrskov a určenie volebných miestností v obci Dunajská Lužná k voľbám prezidenta Slovenskej republiky 23.03.2024"
 
 [[document]]
-url = "https://www.dunajskaluzna.sk/uradna-tabula/volby/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-2022/"
-sha256 = "cd46349e32179cb4e748945e3355c9f93d12fc4f9a86df2757c9c3957ba1c284"
-title = "Voľby do orgánov samosprávy obcí a VÚC 2022"
+url = "https://www.dunajskaluzna.sk/zverejnovanie/uradna-tabula/volby-2024/volby-prezidenta-sr-2024/"
+sha256 = "e37ae1776e0968a7d2971e21e4dfc10665cf9eb915b9b053020d9d01fe08095f"
+title = "Voľby prezidenta SR 2024"
 
 [okrsok.1]
 rules = [
@@ -70,6 +71,7 @@ rules = [
   {street = "Letná"},
   {street = "Lipnická"},
   {street = "Lúčna"},
+  {street = "Malinová"},
   {street = "Miloslavovská"},
   {street = "Morušová"},
   {street = "Sadová"},
@@ -88,7 +90,7 @@ rules = [
   {street = "Nová"},
   {street = "Pekná"},
   {street = "Školská"},
-  {street = "Štefánikov Park", written = "Štefánikov park"},
+  {street = "Štefánikov Park", written = "Štefánikov park", note = "Only the capitalization of 'park' differs from the register's Štefánikov Park."},
   {street = "Úzka"},
   {street = "Zámočnícka"},
 ]
@@ -104,7 +106,6 @@ rules = [
   {street = "Košariská"},
   {street = "Kováčska"},
   {street = "Krátka"},
-  {street = "Malinová"},
   {street = "Narcisová"},
   {street = "Pri kniežacích mohylách"},
   {street = "Studená"},

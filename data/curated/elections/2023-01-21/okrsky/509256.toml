@@ -14,12 +14,11 @@
 #   okrsok 11: Hurbanova, Dubská cesta, Neslušská cesta, Dubie, Športová, Štefánikova štvrť, Ulica Jánska
 #   okrsok 12: Budatínska Lehota
 #   okrsok 13: Oškerda
-#   okrsok 14: (not in the document)
 obec = "509256"
 name = "Kysucké Nové Mesto"
 okrsky_date = 2022-11-08
 okrsky_fill = "nearest"
-okrsky_note = "Štúrova and ČSA are split by the súpisné čísla of the blocks of flats the document lists (okrsky 3, 4, 5); their other houses (\"rodinné domy\") are okrsok 5. Budatínska Lehota, Dubie and Oškerda are parts. \"+ občania KNM bez bližšie určenej adresy\" (okrsok 6) are voters without an address, not a rule. Register streets the document does not list, placed by fill_nearest: Dr.G.Schaefflera, Škorčie; also the addresses without a street. The Statistical Office counts 14 okrsky; the document lists 13; okrsok 14 (a special okrsok without addresses) is given as addressless."
+okrsky_note = "Štúrova and ČSA are split by the súpisné čísla of the blocks of flats the document lists (okrsky 3, 4, 5); their other houses (\"rodinné domy\") are okrsok 5. Budatínska Lehota, Dubie and Oškerda are parts. \"+ občania KNM bez bližšie určenej adresy\" (okrsok 6) are voters without an address, not a rule. Register streets the document does not list, placed by fill_nearest: Dr.G.Schaefflera, Škorčie; also the addresses without a street. The document lists 13 okrsky; the Statistical Office counts a 14th okrsok that the document does not name: the COVID-19 special okrsok of okres Kysucké Nové Mesto (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml)."
 
 [[document]]
 url = "https://www.kysuckenovemesto.sk/download_file_f.php?id=1761829"
@@ -130,6 +129,3 @@ rules = [
 rules = [
   {part = "Oškerda"},
 ]
-
-[okrsok.14]
-addressless = true

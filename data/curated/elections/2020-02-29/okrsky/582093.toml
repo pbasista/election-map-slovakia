@@ -1,27 +1,29 @@
-# The okrsky of Vyšný Medzev of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/582093.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Vyšný Medzev, transcribed by an AI agent in job okrsok-rules-617 from the documents below;
+# The okrsky of Vyšný Medzev of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/582093.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Vyšný Medzev, transcribed by an AI agent in job okrsok-rules-958 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Banícka ulica
-#     okrsok 2: Ulica Hrdinov SNP
+#     okrsok 1: Banícka
+#     okrsok 2: Hrdinov SNP
 obec = "582093"
 name = "Vyšný Medzev"
-okrsky_date = 2026-07-16
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2026-10-24: in 2020-02-29 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2020-02-29 was searched for. Scanned PDF, read from the image. The 42 addresses without a street take the okrsok of the nearest placed address (fill_nearest)."
-okrsky_reused = 2026-10-24
+okrsky_note = "The addresses without a street take the okrsok of the nearest placed address (fill_nearest)."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2746): The live NR SR 2020 page lists no okrsky document (only voting-by-post, voter information, delegation and results files); none is archived. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated decision names the elections to the organs of municipal self-government of 10 November 2018."
 
 [[document]]
-url = "https://www.vysnymedzev.sk/files/2026-07-16-102713-Utvorenie_VO_a_ur__enie_volebn__ch_miestnost__.pdf"
-sha256 = "3fcfc1d11080bf38a960a772e48f13a4a9c5aa3e594090cee144311c6c948300"
-title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov"
+url = "https://www.vysnymedzev.sk/files/2018-11-05-110313-UTVORENIE_OKRSKOV_A_UR__ENIE_VOLEBN__CH_MIESTNOST___PRE_VO__BY_DO_ORG__NOV_SAMOSPR__VY_OBC___2018.pdf"
+sha256 = "b9e6c1c84dfcc5254620cab99126de7ecd9c16e1f7d746b336965124a02be908"
+title = "Utvorenie okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí 2018"
 
 [okrsok.1]
 rules = [
-  {street = "Banícka", written = "Banícka ulica"},
+  {street = "Banícka", written = "Banícka"},
 ]
 
 [okrsok.2]
 rules = [
-  {street = "Hrdinov SNP", written = "Ulica Hrdinov SNP"},
+  {street = "Hrdinov SNP", written = "Hrdinov SNP"},
 ]

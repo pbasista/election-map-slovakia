@@ -1,30 +1,32 @@
-# The okrsky of Majcichov of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/507296.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Majcichov, transcribed by an AI agent in job okrsok-rules-496 from the documents below;
+# The okrsky of Majcichov of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/507296.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Majcichov, transcribed by an AI agent in job okrsok-rules-4421 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: pre voličov rodinných domov od súp. č. 1 - 432
-#     okrsok 2: pre voličov rodinných domov od súp. č. 433 - 880; voliči, ktorí majú trvalý pobyt na obci
+#     okrsok 1: súpisné číslo 1 - 415
+#     okrsok 2: súpisné číslo 416 - 880
 obec = "507296"
 name = "Majcichov"
-okrsky_note = "These are the okrsky of the elections of 2026-10-24: in 2023-09-30 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2023-09-30 was searched for. Split by súpisné číslo (1–432 / 433–880). Voters with trvalý pobyt only 'na obci' belong to okrsok 2 (text only). The notice states no date."
-okrsky_reused = 2026-10-24
+okrsky_date = 2024-01-22
+okrsky_note = "Scanned notice of the mayor dated 22.01.2024 (read from the rendered scan), linked as 'volebny okrsok.pdf' from the presidential election page as archived on 2024-03-03. Both okrsky vote in the Kultúrny dom, Majcichov 606 (doors 1 and 2). The split differs from the copied 2026 document (súp. č. 1–432 / 433–880): in 2024 it was 1–415 / 416–880."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3791): This vote's document was found (archived 2023-06-28): 'Oznámenie o utvorení volebných okrskov a určenie volebných miestností pre voľby do NR SR', dated 26.06.2023. It creates 2 okrsky but gives each only its polling station (both in the Kultúrny dom, Majcichov 606, doors 1 and 2), with no split of the addresses; the municipality has a single part, so the station-per-part inference does not apply. No other 2023 document on the page (captures of 2023-06-28, 2023-08-30, 2023-09-27). The referendum of 21 January 2023 had 1 okrsok only (notice of 10.11.2022), so it cannot stand in. The presidential notice of 22.01.2024 splits by súpisné číslo 1–415 / 416–880, but it is a later vote's document. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2024-03-23: 1: 822 → 810, 2: 872 → 879."
 
 [[document]]
-url = "https://www.majcichov.sk/e_download.php?file=/data/editor/180sk_7.pdf&original=volebn%C3%A9%20okrsky%20volby%202026.pdf"
-sha256 = "a59ef3b2c124f1bc7216c35f63e43488e4c1212859491eee81e463d83c37c44b"
-title = "Oznámenie k voľbám do orgánov samosprávy obcí a voľbám do orgánov samosprávnych krajov - Volebné okrsky"
+url = "https://web.archive.org/web/20250516205444/https://www.majcichov.sk/e_download.php?file=data/editor/180sk_2.pdf&original=volebny%20okrsok.pdf"
+sha256 = "1c297937aa7300f173d15dd4dd3b9a8a2948d355ea676e4173b2189112230996"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby prezidenta Slovenskej republiky"
 
 [[document]]
-url = "https://www.majcichov.sk/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov/"
-sha256 = "166db90a8ecbac039819bffc22d44ee6f7349ffd72e5e3c784c3dca480b2cb96"
-title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov"
+url = "https://web.archive.org/web/20240303165553/https://www.majcichov.sk/volby-prezidenta-slovenskej-republiky/"
+sha256 = "e05b842b9847959bb36e9446e05a37e21a756e315aa77828a7a6c695685a2f33"
+title = "Voľby prezidenta Slovenskej republiky (page linking 'volebny okrsok.pdf')"
 
 [okrsok.1]
 rules = [
-  {part = "Majcichov", numbers = "1-432"},
+  {part = "Majcichov", numbers = "1-415"},
 ]
 
 [okrsok.2]
 rules = [
-  {part = "Majcichov", numbers = "433-880"},
+  {part = "Majcichov", numbers = "416-880"},
 ]

@@ -1,0 +1,32 @@
+# The okrsky of Dolný Lieskov of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/546640.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Dolný Lieskov, transcribed by an AI agent in job okrsok-rules-5181 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: miestna časť Dolný Lieskov
+#     okrsok 2: miestna časť Tŕstie
+obec = "546640"
+name = "Dolný Lieskov"
+okrsky_date = 2024-03-01
+okrsky_note = "Each okrsok is a whole part of the municipality. Scanned document, read from the page image."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2024-03-23 setting the okrsky was found (okrsok-rules-4563): The website's elections documents (Dokumenty – Voľby) hold okrsky documents for the NR SR 2023, EP 2024 and 2026 votes only; none for the presidential election of 2024. The Internet Archive refused connections (offline for us). These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-03-23 → 2024-06-08: 1: 461 → 462, 2: 205 → 205."
+
+[[document]]
+url = "https://obec.dobraobec.sk/files/7/dokumenty/e249e_Xerox%20Scan_01032024081537.PDF"
+sha256 = "77deab13b1a66b89a342cdc6f14ca9b739a5de16749b52f449b3818827afb996"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu 8. júna 2024"
+
+[[document]]
+url = "https://dolnylieskov.sk/dokumenty?kat=486&strana=2"
+sha256 = "25c6a80d75a7681c79000d352f231fa5019e638078dd4c079f402fadc4b1f6e8"
+title = "Dokumenty – Voľby (page linking the file)"
+
+[okrsok.1]
+rules = [
+  {part = "Dolný Lieskov"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Tŕstie"},
+]

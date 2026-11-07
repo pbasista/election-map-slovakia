@@ -1,25 +1,27 @@
-# The okrsky of Šarišské Michaľany of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/525235.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Šarišské Michaľany, transcribed by an AI agent in job okrsok-rules-989 from the documents below;
+# The okrsky of Šarišské Michaľany of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/525235.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Šarišské Michaľany, transcribed by an AI agent in job okrsok-rules-1479 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
 #     okrsok 1: ulice: Čerešňová, Hviezdoslavova, Jarková, Komenského, Kpt. Nálepku, Melichara Zeleného, Mlynská, Požiarnická, Ružová, Sabinovská, SNP, Štúrova, Záhradná, Železničiarska
-#     okrsok 2: ulice: Družstevná, Michalská, M.R. Štefánika, Pod lesíkom, Prešovská
+#     okrsok 2: ulice: Družstevná, Michalská, M.R.Štefánika, Pod lesíkom, Prešovská
 obec = "525235"
 name = "Šarišské Michaľany"
-okrsky_date = 2022-08-03
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was searched for. The document is undated; date is its publication on the official page (\"Dátum vloženia: 3. 8. 2022\"). Register houses without a street placed by nearest address (fill_nearest)."
-okrsky_reused = 2022-10-29
+okrsky_note = "Register houses without a street are placed by the nearest address (fill_nearest)."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-2066): The 'Voľby od 2015 - 2020' section's EP 2019 category has no okrsky document (only the other votes'). The Internet Archive was unreachable (connection refused) throughout. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2019-03-16: 1: 1,142 → 1,137, 2: 1,099 → 1,084."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated PDF names the presidential election of 16 March 2019 (second round 30 March 2019)."
 
 [[document]]
-url = "https://www.sarisskemichalany.sk/evt_file.php?file=1532"
-sha256 = "4fd2e08150acb571cfa28c4d518521be2c375471511fa363606787796b827469"
-title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Šarišské Michaľany pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov v roku 2022"
+url = "https://www.sarisskemichalany.sk/obec-2/volby/volby-od-2015-2020/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-9.html"
+sha256 = "220387088cbe48efd43132332f95b3b6841a5e3d3c5399e73e75b6736caf9a4b"
+title = "Utvorenie volebných okrskov a určenie volebných miestnosti (úradná tabuľa)"
 
 [[document]]
-url = "https://www.sarisskemichalany.sk/obec-2/volby/volby-2022/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-obci-sarisske-michalany-pre-volby-do-organov-samospravy-obci-a-do-organov-samospravnych-krajov-395sk.html"
-sha256 = "d4440e84f9618d704cd8548b4d95f7e019882192985d898a5256ec8167e093b2"
-title = "Utvorenie volebných okrskov a určenie volebných miestnosti (Voľby 2022, dátum vloženia 3. 8. 2022)"
+url = "https://www.sarisskemichalany.sk/e_download.php?file=data/uredni_deska/obsah9_1.pdf&original=utvorenie_volebnych_okrskov.pdf"
+sha256 = "f0ba18436e2a7e3f360b4484580d298c38ffba8a1485fe2c197dd18aa63fb419"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta SR (16. marca 2019)"
 
 [okrsok.1]
 rules = [
@@ -43,7 +45,7 @@ rules = [
 rules = [
   {street = "Družstevná"},
   {street = "Michalská"},
-  {street = "M. R. Štefánika", written = "M.R. Štefánika"},
+  {street = "M. R. Štefánika", written = "M.R.Štefánika"},
   {street = "Pod Lesíkom", written = "Pod lesíkom"},
   {street = "Prešovská"},
 ]

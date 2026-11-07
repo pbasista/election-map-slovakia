@@ -13,12 +13,11 @@
 #   okrsok 10: 1. mája, Jozefa Kubinu, časť obce Malacky 4402, 4411, 4424, 4427, 4465, 4491, 4493, 4521, 4543, 4621, 4624, 4626, 4633, 4635, 4636, 4637, 4638, 4639, 4640, 4641, 4643, 4645, 4646, 4649, 4650, 4652, 4663, 4665, 4666, 4667, Martina Rázusa, Sasinkova, Vajanského
 #   okrsok 11: Agátová, Brezová, Dielenská, Dubovského, Gaštanová, Javorová, Jelšová, Jesenského, Lipová, časť obce Malacky 4008, 4021, 4026, 4060, 4622, 4625, 4627, 4655, 4657, 4658, 4661, Ota Kožucha, Partizánska, Pezinská, Priemyselná 2, Sadová, Stromová, Továrenská, Záhradná, Zámocká
 #   okrsok 12: Boženy Nemcovej, Duklianskych hrdinov, Džbankáreň, Hlboká, Hodžova, Hurbanova, Janka Kráľa, Krátka ulica, Lesná, časť obce Malacky 4630, Na majeri, Oslobodenia 8, Písniky, Priemyselná 14, 16, Rakárenská, Rudolfa Dilonga, Táborisko, Tichá, Vysoká
-#   okrsok 13: (not in the document; the Statistical Office counts okrsok 13 with 4 voters)
 obec = "508063"
 name = "Malacky"
 okrsky_date = 2022-11-08
 okrsky_fill = "nearest"
-okrsky_note = "The mayor's decision of 8.11.2022 sets 12 okrsky and polling stations for the referendum of 21.1.2023; the street list (scanned PDF with a text layer, checked against the page images) gives the streets per okrsok. The street list gives each okrsok its streets; a street split among okrsky lists its orientačné numbers, and addresses without a street are listed by súpisné číslo as 'časť obce Malacky'. House numbers of split streets the lists leave out and the addresses without a street they do not number (mostly gardens and non-residential buildings) are placed by fill_nearest. 'bez ulice' lists nothing (voters registered without an address) and has no rule. Ferdiša Kostku is split between okrsky 4 (1) and 6; Oslobodenia between 9 and 12 (8); Priemyselná between 11 (2) and 12 (14, 16). The Statistical Office counts a 13th okrsok with 4 voters, which the decision does not define: it is given as an okrsok without addresses (addressless). The Internet Archive was offline (CDX and Wayback returned 'Temporarily Offline' on several tries); it was not needed for the documents used."
+okrsky_note = "The mayor's decision of 8.11.2022 sets 12 okrsky and polling stations for the referendum of 21.1.2023; the street list (scanned PDF with a text layer, checked against the page images) gives the streets per okrsok. The street list gives each okrsok its streets; a street split among okrsky lists its orientačné numbers, and addresses without a street are listed by súpisné číslo as 'časť obce Malacky'. House numbers of split streets the lists leave out and the addresses without a street they do not number (mostly gardens and non-residential buildings) are placed by fill_nearest. 'bez ulice' lists nothing (voters registered without an address) and has no rule. Ferdiša Kostku is split between okrsky 4 (1) and 6; Oslobodenia between 9 and 12 (8); Priemyselná between 11 (2) and 12 (14, 16). The Statistical Office counts a 13th okrsok with 4 voters, which the decision does not name: the COVID-19 special okrsok of okres Malacky (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml). The Internet Archive was offline (CDX and Wayback returned 'Temporarily Offline' on several tries); it was not needed for the documents used."
 
 [[document]]
 url = "https://malacky.sk/wp-content/uploads/2023/01/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-referendum-2023.pdf"
@@ -202,6 +201,3 @@ rules = [
   {street = "Tichá"},
   {street = "Vysoká"},
 ]
-
-[okrsok.13]
-addressless = true

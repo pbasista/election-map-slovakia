@@ -21001,6 +21001,10 @@
    "src": "{name}: {share} · {votes} of {valid}",
    "text": "{name}: {share} · {votes} з {valid}"
   },
+  "mapmode.tip_special": {
+   "src": "Not drawn, without territory: polling district {n}",
+   "text": "Не позначена, без території: дільниця № {n}"
+  },
   "mapmode.tip_tie": {
    "src": "Tied for the most votes: {names}, {share} each",
    "text": "Порівну найбільше голосів: {names}, по {share}"
@@ -21181,6 +21185,10 @@
    "src": "The polling districts are drawn from a document of {name} that states no date.",
    "text": "Виборчі дільниці накреслено за документом громади {name}, у якому не зазначено дати."
   },
+  "notice.okrsky_outlier": {
+   "src": "Polling district No. {n} had {voters} voters on the roll in {year} but {other} in {source}, more than a quarter apart: its borders there most likely differ.",
+   "text": "Виборча дільниця № {n} мала у {year} році {voters} виборців у списку, а під час {source} — {other}, тобто більш ніж на чверть інакше: її межі там, найімовірніше, відрізняються."
+  },
   "notice.okrsky_referendum": {
    "src": "The polling districts of {name} are drawn from the municipality's document for the referendum of {date}: either it says they stayed as they were at these elections, or no document of these elections was found.",
    "text": "Виборчі дільниці громади {name} накреслено за документом громади для референдуму {date}: або в ньому сказано, що дільниці лишилися такими, як на цих виборах, або документ цих виборів не знайдено."
@@ -21196,6 +21204,22 @@
   "notice.okrsky_unknown": {
    "src": "{name} voted in several polling districts, but which addresses belonged to which is not known here, so they are not drawn: its results by polling district can't be placed on the map.",
    "text": "{name} голосувала в кількох виборчих дільницях, але які адреси належали до якої, тут невідомо, тому дільниці не накреслено: результати за дільницями неможливо розмістити на мапі."
+  },
+  "notice.special_covid": {
+   "src": "Polling district No. {n} of {name} is the COVID-19 special polling district of okres {okres} (Act No. 395/2022 Coll.), for the voters in quarantine anywhere in the okres, who voted where they stayed, into a mobile ballot box (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "Виборча дільниця № {n} у громаді {name} — це спеціальна виборча дільниця округу {okres} (закон № 395/2022 Z. z.) для виборців на карантині через COVID-19 будь-де в окрузі, які голосували там, де перебували, у спеціальну переносну скриньку (зареєстрованих виборців: {voters}). Вона не має власної території, тому не позначена на мапі; її голоси враховуються в результатах громади {name} і вищих одиниць так, як їх рахує Статистичне управління."
+  },
+  "notice.special_covid_several": {
+   "src": "Polling district No. {n} of {name} is one of the COVID-19 special polling districts of okresy {okresy} (Act No. 395/2022 Coll.), for the voters in quarantine anywhere in the okres, who voted where they stayed, into a mobile ballot box (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "Виборча дільниця № {n} у громаді {name} — одна зі спеціальних виборчих дільниць округів {okresy} (закон № 395/2022 Z. z.) для виборців на карантині через COVID-19 будь-де в окрузі, які голосували там, де перебували, у спеціальну переносну скриньку (зареєстрованих виборців: {voters}). Вона не має власної території, тому не позначена на мапі; її голоси враховуються в результатах громади {name} і вищих одиниць так, як їх рахує Статистичне управління."
+  },
+  "notice.special_prison": {
+   "src": "Polling district No. {n} of {name} is a prison, {facility}: its voters are inmates, who vote there with voting certificates, so its turnout is near 100 % (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "Виборча дільниця № {n} у громаді {name} — це в'язниця, {facility}: у ній голосують ув'язнені з посвідченням на право голосу, тому явка близька до 100 % (зареєстрованих виборців: {voters}). Вона не має власної території, тому не позначена на мапі; її голоси враховуються в результатах громади {name} і вищих одиниць так, як їх рахує Статистичне управління."
+  },
+  "notice.special_source": {
+   "src": "Source:",
+   "text": "Джерело:"
   },
   "notice.summary_boundary": {
    "src": "Map: the {on} boundary, slightly different",
@@ -21225,6 +21249,10 @@
    "src": "Polling districts not on the map",
    "text": "Дільниць немає на мапі"
   },
+  "notice.summary_special": {
+   "src": "Polling district No. {n} not on the map",
+   "text": "Дільниці № {n} немає на мапі"
+  },
   "notice.supplemented_document": {
    "src": "Those addresses are placed as in a later document of the municipality (of {later}), so the {year} borders may have differed there.",
    "text": "Ці адреси віднесено так, як у пізнішому документі громади ({later}), тож у {year} році межі там могли бути іншими."
@@ -21252,6 +21280,26 @@
   "office.regional_council": {
    "src": "member of the regional council ({kraj} kraj)",
    "text": "депутат ради самоврядного краю ({kraj} край)"
+  },
+  "okrsky.special_covid": {
+   "src": "Polling district No. {n}: COVID-19 special polling district",
+   "text": "Дільниця № {n}: спеціальна дільниця для виборців на карантині через COVID-19"
+  },
+  "okrsky.special_prison": {
+   "src": "Polling district No. {n}: a prison, {facility}",
+   "text": "Дільниця № {n}: в'язниця, {facility}"
+  },
+  "okrsky.unmapped": {
+   "src": "Polling districts not on the map",
+   "text": "Виборчі дільниці поза мапою"
+  },
+  "okrsky.unmapped_back": {
+   "src": "Back to {name} as a whole",
+   "text": "Назад до цілого: {name}"
+  },
+  "okrsky.unmapped_hint": {
+   "src": "Their results are known, but the map has no place for them: a button shows one's results.",
+   "text": "Їхні результати відомі, але на мапі для них немає місця: кнопка покаже результати дільниці."
   },
   "overview.intro.parties": {
    "src": "Choose a party to see its whole candidate list. Circle, cross out and filter parties and candidates as on the ballots. The results are the whole country's.",

@@ -64,15 +64,30 @@ def latest_rules(c: reuse._Context) -> obvody.RuleSet:
 
 
 def test_obvody_reused_where_obvody_seats_okrsky_and_voters_match(context):
+    """The obvody proven, their okrsky not: two okrsky in obvod 1, whose
+    voters do not show which addresses each has."""
     rules = latest_rules(context)
     report = reuse._obvody(context, "500001", {"500001": rules})
     path = obvody.rules_path(context.curated, "500001")
     assert report == f"reused, {path.relative_to(context.cfg.root)}"
     copy = obvody.load_rule_sets(context.curated)["500001"]
-    assert copy.reused == copy.okrsky_reused == context.latest.day
-    assert copy.okrsky == rules.okrsky
+    assert copy.reused == context.latest.day
+    assert not copy.okrsky and copy.okrsky_reused is None and not copy.okrsok_rules
     assert "No document of the elections of 2022-10-29" in (copy.note or "")
     assert "the 2026 header" in path.read_text(encoding="utf-8")
+
+
+def test_obvody_reused_with_okrsky_each_its_obvod(context):
+    """ŠÚ SR counted one okrsok in each obvod: the okrsky are the obvody."""
+    rules = council(dt.date(2026, 6, 1), {"1": [1], "2": [2]})
+    write_rules(obvody.rules_path(context.later, "500001"), rules)
+    units = {"500001": {1: {1: 1500}, 2: {2: 800}}}
+    one_each = dataclasses.replace(context, units=units, later_units=units)
+    reuse._obvody(one_each, "500001", {"500001": rules})
+    copy = obvody.load_rule_sets(context.curated)["500001"]
+    assert copy.okrsky == {1: (1,), 2: (2,)}
+    assert copy.reused == copy.okrsky_reused == context.latest.day
+    assert "each okrsok is its obvod" in (copy.okrsky_note or "")
 
 
 def test_obvody_not_reused_where_the_seats_or_voters_differ(context):
@@ -94,19 +109,28 @@ def test_obvody_not_reused_where_the_seats_or_voters_differ(context):
     assert not obvody.rules_path(context.curated, "500001").exists()
 
 
-def test_okrsky_added_to_the_earlier_obvody_where_they_match(context):
+def test_okrsky_added_to_the_earlier_obvody_only_where_each_is_its_obvod(context):
+    """Voters alone prove no okrsky: two in obvod 1 are not copied; one in
+    each obvod is the obvod, so 2026's are 2022's."""
     rules = latest_rules(context)
     own = council(dt.date(2022, 6, 1))
     path = obvody.rules_path(context.curated, "500001")
     path.parent.mkdir(parents=True)
     path.write_text(obvody.dump(own, ["the 2022 header"]), encoding="utf-8")
     assert reuse._okrsky(context, "500001", own, rules) == (
+        f"not reused: {reuse._UNPROVEN}"
+    )
+    units = {"500001": {1: {1: 1500}, 2: {2: 800}}}
+    one_each = dataclasses.replace(context, units=units, later_units=units)
+    later = council(dt.date(2026, 6, 1), {"1": [1], "2": [2]})
+    assert reuse._okrsky(one_each, "500001", own, later) == (
         f"reused, {path.relative_to(context.cfg.root)}"
     )
     copy = obvody.load_rule_sets(context.curated)["500001"]
-    # The obvody stay 2022's, with the okrsky of 2026.
+    # The obvody stay 2022's, each its okrsok.
     assert copy.date == dt.date(2022, 6, 1) and copy.reused is None
-    assert copy.okrsky == rules.okrsky and copy.okrsky_reused == context.latest.day
+    assert copy.okrsky == {1: (1,), 2: (2,)}
+    assert copy.okrsky_reused == context.latest.day
     assert path.read_text(encoding="utf-8").startswith("# the 2022 header")
 
 
@@ -140,51 +164,51 @@ def with_okrsok_rules(rules: obvody.RuleSet) -> obvody.RuleSet:
 
 
 def voted(
-    voters: dict[int, int], grouped: dict[int, dict[int, int]] | None = None
+    grouped: dict[int, dict[int, int]] | None = None,
+    *,
+    count: int = 3,
+    term: bool = False,
 ) -> reuse._Voted:
-    """Return obec 500001 of three okrsky, as it voted in another vote."""
-    return reuse._Voted("500001", 3, voters, grouped or {}, searched=False)
+    """Return obec 500001 of *count* okrsky, as it voted in another vote.
+
+    *grouped*: a by-election's council obvody that voted; *term*: a
+    by-election proper of seats of its term's council.
+    """
+    return reuse._Voted("500001", count, grouped or {}, searched=False, term=term)
 
 
-def test_national_election_takes_okrsky_only_of_the_same_layout():
-    """A country-wide election borrows a regular election's okrsky only
-    where they are the same okrsky: the same numbers, each of about the same
-    voters (within 10 %), proven rather than adopted."""
+def test_voters_alone_prove_no_okrsky(project):
+    """A country-wide election's okrsky of the same numbers, each with
+    about the same voters, are not proven the 2022 elections': nothing
+    copied, a stand-in may take their place."""
+    cfg = project
+    election, source = cfg.election("2024-prezident"), cfg.election("2022")
     rules = with_okrsok_rules(council(dt.date(2022, 6, 1), {"1": [1, 2], "2": [3]}))
-    source = config.load(REPO / "config").election("2022")
-    then = {1: 1000, 2: 500, 3: 800}
-    later = {1: 1090, 2: 460, 3: 800}
-    assert reuse._okrsky_problem(rules, voted(then), later, source) is None
-    four = dataclasses.replace(voted(then), count=4)
-    assert reuse._okrsky_problem(rules, four, later, source) == ("okrsky 1–3, then 1–4")
-    assert reuse._okrsky_problem(rules, voted(then), later | {1: 1110}, source) == (
-        "okrsok 1: 1,000 voters then, 1,110 in 2022"
-    )
+    write_rules(obvody.rules_path(cfg.election_dir(source), "500001"), rules)
+    write_places(cfg, election)
+    later = {1: {1: 1000, 2: 500}, 2: {3: 800}}
+    done, said = reuse._copy_from(cfg, election, voted(), source, rules, later)
+    assert not done and said == f"okrsky: {reuse._UNPROVEN}"
+    assert obvody.load_obec(cfg.election_dir(election), "500001") is None
+    # Nor those a by-election's obvod voted in, by their voters.
+    by_election = cfg.election("2023-03")
+    write_places(cfg, by_election)
+    obvod_1 = voted({1: {1: 1000, 2: 500}})
+    done, said = reuse._copy_from(cfg, by_election, obvod_1, source, rules, later)
+    assert not done and said == f"okrsky: {reuse._UNPROVEN}"
+
+
+def test_the_vote_s_own_okrsky_need_their_shape_only():
+    rules = with_okrsok_rules(council(dt.date(2022, 6, 1), {"1": [1, 2], "2": [3]}))
+    assert reuse._okrsky_problem(rules, voted()) is None
+    assert reuse._okrsky_problem(rules, voted(count=4)) == "okrsky 1–3, then 1–4"
+    regrouped = voted({1: {1: 1000, 3: 800}})
+    assert reuse._okrsky_problem(rules, regrouped) == "obvod 1: okrsky 1, 2, then 1, 3"
     adoption = obvody.Adoption(dt.date(2026, 10, 24), "no 2022 document")
     adopted = dataclasses.replace(rules, okrsky_adoption=adoption)
-    assert reuse._okrsky_problem(adopted, voted(then), later, source) == (
+    assert reuse._okrsky_problem(adopted, voted()) == (
         "its okrsky are a stand-in, not proven to match"
     )
-
-
-def test_by_election_okrsky_proven_by_those_that_voted():
-    """A by-election in one council obvod has voters only of its okrsky:
-    those prove the copy, with the okrsky of each obvod that voted; without
-    voters per okrsok (the by-elections of 2018–2022) nothing is proven."""
-    rules = with_okrsok_rules(council(dt.date(2022, 6, 1), {"1": [1, 2], "2": [3]}))
-    source = config.load(REPO / "config").election("2022")
-    later = {1: 1090, 2: 460, 3: 800}
-    obvod_1 = voted({1: 1000, 2: 500}, {1: {1: 1000, 2: 500}})
-    assert reuse._okrsky_problem(rules, obvod_1, later, source) is None
-    regrouped = voted({1: 1000, 3: 800}, {1: {1: 1000, 3: 800}})
-    assert reuse._okrsky_problem(rules, regrouped, later, source) == (
-        "obvod 1: okrsky 1, 2, then 1, 3"
-    )
-    assert reuse._okrsky_problem(rules, voted({}), later, source) == (
-        "the voters per okrsok unknown (no results per okrsok): not proven"
-    )
-    # The vote's own okrsky, from its document, need no voters.
-    assert reuse._okrsky_problem(rules, voted({}), later, source, own=True) is None
 
 
 def test_by_election_obvody_proven_by_their_voters():
@@ -252,7 +276,7 @@ def test_referendum_okrsky_of_its_own_document_are_its_own(project):
     write_rules(obvody.rules_path(cfg.election_dir(source), "500001"), rules)
     write_places(cfg, referendum)
     done, said = reuse._copy_from(
-        cfg, referendum, voted({}), source, rules, {1: {1: 1, 2: 1}, 2: {3: 1}}
+        cfg, referendum, voted(), source, rules, {1: {1: 1, 2: 1}, 2: {3: 1}}
     )
     assert done and said.startswith("its own, from the referendum's document")
     copy = obvody.load_obec(cfg.election_dir(referendum), "500001")
@@ -265,34 +289,44 @@ def test_referendum_okrsky_of_its_own_document_are_its_own(project):
 
 
 def test_by_election_council_obvody_copied_without_unproven_okrsky(project):
-    """A council by-election in obvod 2: where the okrsky's voters are off,
-    the obvod's own voters may still prove the council rule set, copied
-    without okrsky and marked reused."""
+    """A by-election proper in obvod 2: the obvod's voters prove the
+    council rule set of its term, copied without okrsky (obvod 1, which
+    did not vote, has two) and marked reused; a council elected anew takes
+    nothing of the term."""
     cfg = project
     by_election, source = cfg.election("2023-03"), cfg.election("2022")
     rules = with_okrsok_rules(council(dt.date(2022, 6, 1), {"1": [1, 2], "2": [3]}))
     write_rules(obvody.rules_path(cfg.election_dir(source), "500001"), rules)
     write_places(cfg, by_election)
-    obvod_2 = voted({3: 850}, {2: {3: 850}})
+    obvod_2 = voted({2: {3: 850}}, term=True)
     later = {1: {1: 1000, 2: 500}, 2: {3: 800}}
     done, said = reuse._copy_from(
         cfg, by_election, obvod_2, source, rules, later | {2: {3: 700}}
     )
-    assert not done and said == (
-        "okrsok 3: 850 voters then, 700 in 2022; obvody: obvod 2: 850 voters"
-        " then, 700 in 2022"
-    )
-    done, said = reuse._copy_from(
-        cfg, by_election, voted({3: 850}), source, rules, later
-    )
-    assert done and said.startswith("reused")
-    path = obvody.rules_path(cfg.election_dir(by_election), "500001")
-    path.unlink()
-    regrouped = voted({3: 850}, {2: {2: 850}})
-    done, said = reuse._copy_from(cfg, by_election, regrouped, source, rules, later)
-    assert done and said.startswith("council obvody reused, without okrsky")
+    assert not done and said == "obvody: obvod 2: 850 voters then, 700 in 2022"
+    done, said = reuse._copy_from(cfg, by_election, obvod_2, source, rules, later)
+    assert done and said.startswith("council obvody reused, data/")
     copy = obvody.load_obec(cfg.election_dir(by_election), "500001")
     assert copy is not None and copy.reused == source.day and not copy.okrsky
+    new = voted({2: {3: 850}})
+    done, said = reuse._copy_from(cfg, by_election, new, source, rules, later)
+    assert not done and said == f"okrsky: {reuse._UNPROVEN}"
+
+
+def test_by_election_okrsky_each_their_obvod(project):
+    """Both obvody voted, ŠÚ SR counting one okrsok in each: the copy's
+    okrsky are its obvody, proven as they are."""
+    cfg = project
+    by_election, source = cfg.election("2023-03"), cfg.election("2022")
+    rules = council(dt.date(2022, 6, 1), {"1": [1], "2": [2]})
+    write_rules(obvody.rules_path(cfg.election_dir(source), "500001"), rules)
+    write_places(cfg, by_election)
+    both = voted({1: {1: 1500}, 2: {2: 820}}, count=2, term=True)
+    later = {1: {1: 1480}, 2: {2: 800}}
+    done, _ = reuse._copy_from(cfg, by_election, both, source, rules, later)
+    copy = obvody.load_obec(cfg.election_dir(by_election), "500001")
+    assert done and copy is not None
+    assert copy.okrsky == {1: (1,), 2: (2,)} and copy.okrsky_reused == source.day
 
 
 def all_votes(
@@ -433,6 +467,90 @@ def test_stand_in_refused_where_the_voters_differ_too_much(project, presidential
     assert obvody.load_obec(project.election_dir(election), "500001") is None
 
 
+def ten(voters: int = 1000, **off: int) -> dict[int, int]:
+    """Return okrsok → voters of ten okrsky, those named ``k<n>`` *off*."""
+    return {k: off.get(f"k{k}", voters) for k in range(1, 11)}
+
+
+def write_ten(cfg: config.Config, slug: str) -> None:
+    """Write ten okrsky of obec 500001 in vote *slug*, each with a street."""
+    e = cfg.election(slug)
+    data = tomllib.loads(
+        obvody.dump(council(e.day, {"1": list(range(1, 10)), "2": [10]}))
+    )
+    streets = ["Hlavná", "Krátka", *(f"Ulica {k}" for k in range(3, 10))]
+    data["okrsok"] = {
+        str(k): {"rules": [{"street": s}]} for k, s in enumerate(streets, 1)
+    }
+    path = obvody.rules_path(cfg.election_dir(e), "500001")
+    write_rules(path, obvody.rule_set(data, "test"))
+
+
+def test_stand_in_allows_one_okrsok_beyond_plausible_of_ten(project, presidential):
+    """Of ten okrsky one may differ by more than 25 %, named in the basis
+    with both counts; two may not."""
+    election, votes = presidential
+    votes[election.day].counts = {"500001": 10}
+    write_ten(project, "2024-ep")
+    votes[election.day].voters = {"500001": ten()}
+    votes[dt.date(2024, 6, 8)].voters = {"500001": ten(k4=1400)}
+    reuse.stand_in(project, election, votes)
+    copy = stood_in(project, election)
+    basis = copy.okrsky_adoption.basis
+    assert "Of these, okrsok 4 (1,000 → 1,400) differs by more than 25%" in basis
+    assert "in an obec of 10 okrsky" in basis
+    # Recorded for the map to name, and read back from the file as written.
+    assert copy.okrsky_adoption.outliers == ((4, 1000, 1400),)
+    assert obvody.okrsky_origin(copy)["okrsky_outliers"] == [[4, 1000, 1400]]
+    votes[dt.date(2024, 6, 8)].voters = {"500001": ten(k4=1400, k7=600)}
+    lines = reuse.stand_in(project, election, votes)
+    assert lines[0].startswith(
+        "Alfa (500001), okrsky: unknown: the voters differ too much from every"
+        " fitting source's (2024-06-08: okrsok 4: 1,000 voters then, 1,400 in"
+    )
+
+
+def test_stand_in_prefers_a_clean_source_to_a_nearer_outlier(project, presidential):
+    """The EP election, nearer, has one okrsok beyond 25 %; the parliamentary
+    one, farther, none: it stands in. Without it, the EP election's does."""
+    election, votes = presidential
+    votes[election.day].counts = {"500001": 10}
+    write_ten(project, "2024-ep")
+    write_ten(project, "2023-nrsr")
+    votes[election.day].voters = {"500001": ten()}
+    votes[dt.date(2024, 6, 8)].voters = {"500001": ten(k4=1400)}
+    votes[dt.date(2023, 9, 30)].voters = {"500001": ten(k4=1100)}
+    reuse.stand_in(project, election, votes)
+    copy = stood_in(project, election)
+    assert copy.okrsky_adoption.day == dt.date(2023, 9, 30)
+    assert copy.okrsky_adoption.outliers == ()
+    obvody.rules_path(
+        project.election_dir(project.election("2023-nrsr")), "500001"
+    ).unlink()
+    reuse.stand_in(project, election, votes)
+    copy = stood_in(project, election)
+    assert copy.okrsky_adoption.day == dt.date(2024, 6, 8)
+    assert copy.okrsky_adoption.outliers == ((4, 1000, 1400),)
+
+
+def test_okrsky_beyond_plausible_allowed_by_size(project):
+    """One okrsok of ten or more, two only of forty or more (5 %), none of nine."""
+    e, s = project.election("2024-prezident"), project.election("2024-ep")
+    then = {1: 1000, 2: 1000}
+    one, two = {1: 1400, 2: 1000}, {1: 1400, 2: 600}
+    assert reuse._okrsky_off(then, one, 9, e, s, lenient=True)[0] == (
+        "okrsok 1: 1,000 voters then, 1,400 in 2024-06-08"
+    )
+    off, said, outliers = reuse._okrsky_off(then, one, 10, e, s, lenient=True)
+    assert off is None and "okrsok 1 (1,000 → 1,400) differs" in said
+    assert outliers == ((1, 1000, 1400),)
+    assert reuse._okrsky_off(then, one, 10, e, s, lenient=False)[0]
+    assert reuse._okrsky_off(then, two, 39, e, s, lenient=True)[0]
+    off, said, _ = reuse._okrsky_off(then, two, 40, e, s, lenient=True)
+    assert off is None and "okrsky 1 (1,000 → 1,400), 2 (1,000 → 600) differ" in said
+    assert reuse._okrsky_off(then, then, 3, e, s, lenient=True) == (None, "", ())
+
+
 def test_by_election_council_obvody_stand_in_only_from_its_term(project, monkeypatch):
     """A by-election in obvod 2 fills a seat of the council elected in 2022:
     the obvody of 2026 are another council's, however its rule set fits."""
@@ -487,6 +605,33 @@ def test_by_election_of_obvod_1_takes_its_term_s_stand_in(project, monkeypatch):
     assert reuse.stand_in(project, regular, regular_votes)[0] == (
         "Alfa (500001), obvody: unknown: no other vote has them of its own"
     )
+
+
+def test_council_elected_anew_inherits_no_term_obvody(project, monkeypatch):
+    """A new election of the whole council (``vote`` ``"new"``) is not its
+    term's: the term's rule set, 2026's standing in, does not draw it as a
+    by-election proper's; the nearest regular election's own stands in,
+    indicative, all its obvody those of the contests."""
+    monkeypatch.setattr(reuse, "_okrsok_fit", lambda *_: [])
+    by_election = project.election("2023-03")
+    anew = [{**contest(1, 3), "vote": "new"}, {**contest(2, 2), "vote": "new"}]
+    votes = all_votes(
+        project, {"2023-03": anew, "2022": [contest(1, 3), contest(2, 2)]}
+    )
+    write_places(project, by_election)
+    adoption = obvody.Adoption(dt.date(2026, 10, 24), "No 2022 document.")
+    write_okrsky(project, "2022", {}, adoption=adoption)
+    lines = reuse.stand_in(project, by_election, votes)
+    assert lines[0] == (
+        "Alfa (500001), obvody: unknown: no other vote has them of its own"
+    )
+    write_okrsky(project, "2026", {})
+    lines = reuse.stand_in(project, by_election, votes)
+    assert lines[0].startswith("Alfa (500001), obvody: from 2026-10-24 (2026)")
+    copy = obvody.load_obec(project.election_dir(by_election), "500001")
+    assert copy is not None and copy.adoption is not None
+    assert copy.adoption.day == dt.date(2026, 10, 24)
+    assert "the same obvody and seats" in copy.adoption.basis
 
 
 def test_by_election_without_a_council_there_takes_okrsky_files_only(

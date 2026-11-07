@@ -356,6 +356,12 @@ def by_election_package(tmp_path: Path) -> Path:
 
 
 PACKAGE_URL = "https://volby.example.sk/p.zip"
+TERM = lists.Term(
+    {"502341": [1], "517488": [1, 2, 3], "517755": [1, 2], "517001": [1]},
+    {"502341": 7, "517488": 9, "517755": 9, "517001": 5},
+)
+"""What the term's candidates say of the councils of the packages below:
+each by-election fills some seats (a by-election proper, ``vote`` ``"by"``)."""
 
 
 def not_held(table: str) -> dict[str, str]:
@@ -366,7 +372,9 @@ def not_held(table: str) -> dict[str, str]:
 def test_by_election_package(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     e = election("by-election", CandidateLists("susr-by", {"package": "p"}))
     package = by_election_package(tmp_path)
-    read = lists.read(e, {"package": package}, tmp_path, urls={"package": PACKAGE_URL})
+    read = lists.read(
+        e, {"package": package}, tmp_path, urls={"package": PACKAGE_URL}, term=TERM
+    )
     assert read.partial
     assert read.withdrawn == {"starosta:502341#2"}
     # Seats only where the obec's candidates stand in one obvod; Lehota's
@@ -376,15 +384,20 @@ def test_by_election_package(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     assert adriana.parties == ["Zmena zdola, Demokratická únia Slovenska", "Demokrati"]
     assert not adriana.independent
     data = candidates_json(monkeypatch, read)
-    # Contests only where held; Divina's obvod 3 of 3 alone.
+    # Contests only where held; Divina's obvod 3 of 3 alone. A mayor is
+    # elected anew; the councils' seats are some of their term's.
     assert data["contests"] == [
-        {"id": "starosta:502341", "kind": "starosta", "area": "502341"},
-        {"id": "oz:502341/1", "kind": "oz", "area": "502341", "obvod": 1, "seats": 1},
+        {"id": "starosta:502341", "kind": "starosta", "area": "502341", "vote": "new"},
+        {"id": "oz:502341/1", "kind": "oz", "area": "502341", "obvod": 1, "seats": 1,
+         "vote": "by"},
         {"id": "oz:517001/1", "kind": "oz", "area": "517001", "obvod": 1, "seats": 1,
-         "uncontested": not_held("OSO202603_SK_tab0dd.xlsx")},
-        {"id": "oz:517488/3", "kind": "oz", "area": "517488", "obvod": 3, "seats": 1},
-        {"id": "oz:517755/1", "kind": "oz", "area": "517755", "obvod": 1},
-        {"id": "oz:517755/2", "kind": "oz", "area": "517755", "obvod": 2},
+         "uncontested": not_held("OSO202603_SK_tab0dd.xlsx"), "vote": "by"},
+        {"id": "oz:517488/3", "kind": "oz", "area": "517488", "obvod": 3, "seats": 1,
+         "vote": "by"},
+        {"id": "oz:517755/1", "kind": "oz", "area": "517755", "obvod": 1,
+         "vote": "by"},
+        {"id": "oz:517755/2", "kind": "oz", "area": "517755", "obvod": 2,
+         "vote": "by"},
     ]  # fmt: skip
     # Without its source, a contest held nowhere is refused.
     with pytest.raises(
@@ -467,7 +480,8 @@ BY_PACKAGE = CandidateLists("susr-by", {"package": "p"})
 def test_older_by_election_package(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     e = election("by-election", BY_PACKAGE)
     package = older_by_election_package(tmp_path)
-    read = lists.read(e, {"package": package}, tmp_path, urls={"package": PACKAGE_URL})
+    urls = {"package": PACKAGE_URL}
+    read = lists.read(e, {"package": package}, tmp_path, urls=urls, term=TERM)
     assert read.partial
     assert read.withdrawn == {"starosta:502341#2"}
     # Seats where the obec's councillors are of one obvod; Lehota's, held
@@ -475,23 +489,33 @@ def test_older_by_election_package(tmp_path: Path, monkeypatch: pytest.MonkeyPat
     assert read.seats == {"oz:502341/1": 2, "oz:517001/1": 1}
     data = candidates_json(monkeypatch, read)
     assert data["contests"] == [
-        {"id": "starosta:502341", "kind": "starosta", "area": "502341"},
+        {"id": "starosta:502341", "kind": "starosta", "area": "502341", "vote": "new"},
         {"id": "oz:502341/1", "kind": "oz", "area": "502341", "obvod": 1,
-         "seats": 2, "elected_only": True},
+         "seats": 2, "elected_only": True, "vote": "by"},
         {"id": "oz:517001/1", "kind": "oz", "area": "517001", "obvod": 1,
-         "seats": 1, "uncontested": not_held("OSO_201904_tab0c.xlsx")},
+         "seats": 1, "uncontested": not_held("OSO_201904_tab0c.xlsx"), "vote": "by"},
         {"id": "oz:517755/1", "kind": "oz", "area": "517755", "obvod": 1,
-         "elected_only": True},
+         "elected_only": True, "vote": "by"},
         {"id": "oz:517755/2", "kind": "oz", "area": "517755", "obvod": 2,
-         "elected_only": True},
+         "elected_only": True, "vote": "by"},
     ]  # fmt: skip
     # Of a council its term elected in two obvody, the seat's is not known.
     split = lists.read(
-        e, {"package": package}, tmp_path, urls={"package": PACKAGE_URL},
-        councils={"517001": [1, 2]},
+        e, {"package": package}, tmp_path, urls=urls,
+        term=lists.Term({"517001": [1, 2]}, {"517001": 5}),
     )  # fmt: skip
     assert "oz:517001/1" not in split.contests
-    assert split.unplaced == ["517001: 1 seat(s) in one of its 2 council obvody"]
+    assert split.unplaced == ["517001: 1 seat(s) in one of the term council's 2 obvody"]
+    # A council elected anew is not its term's: the packages of 2019–2022
+    # do not count its obvody, so its seat is not placed.
+    anew = lists.read(
+        e, {"package": package}, tmp_path, urls=urls,
+        term=lists.Term({"517001": [1]}, {"517001": 1}),
+    )  # fmt: skip
+    assert "oz:517001/1" not in anew.contests
+    assert anew.unplaced == [
+        "517001: 1 seat(s) of a new council, its obvody not counted"
+    ]
     by_id = {c["id"]: c for c in data["candidacies"]}
     horvath = by_id["starosta:502341#1"]
     assert (horvath["age"], horvath["occupation"], horvath["title_before"]) == (
@@ -511,6 +535,118 @@ def test_older_by_election_package(tmp_path: Path, monkeypatch: pytest.MonkeyPat
     assert by_id["oz:517755/2#2"]["title_before"] == "Ing."
     # A mayoral candidate elected to the council is one person.
     assert by_id["oz:502341/1#1"]["person"] == horvath["person"]
+
+
+def write_package(
+    tmp_path: Path, prefix: str, tables: dict[str, list[list[str]]]
+) -> Path:
+    """Return a zip of ŠÚ SR's XLSX tables *tables*, named ``<prefix>_<id>``."""
+    path = tmp_path / f"{prefix}_xlsx.zip"
+    with zipfile.ZipFile(path, "w") as z:
+        for name, rows in tables.items():
+            table = write_xlsx(
+                tmp_path / f"{prefix}_{name}.xlsx", [*TITLE, *rows, [], ["Vysvetlivky"]]
+            )
+            z.write(table, table.name)
+    return path
+
+
+TOPOLCANY = ["4", "Nitriansky kraj", "406", "Topoľčany", "406", "Topoľčany"]
+ZVOLEN = ["6", "Banskobystrický kraj", "606", "Zvolen", "611", "Zvolen"]
+R_SOBOTA = [
+    "6",
+    "Banskobystrický kraj",
+    "604",
+    "Rimavská Sobota",
+    "609",
+    "Rimavská Sobota",
+]
+BARDEJOV = ["7", "Prešovský kraj", "701", "Bardejov", "701", "Bardejov"]
+
+
+def test_by_election_votes_of_real_packages(tmp_path: Path):
+    """``Typ volieb`` names only the offices held, so a council elected anew
+    is told by its seats: those of OSO202303 against the 2022 territorial
+    division's (``council_seats``), of OSO_201904 against 2018's."""
+    e = election("by-election", BY_PACKAGE)
+    krusovce = [*TOPOLCANY, "556149", "Krušovce"]
+    svinna = [*ZILINA, "517755", "Lietavská Svinná - Babkov"]
+    package = write_package(tmp_path, "OSO202303_SK", {
+        "tab0c": [BY_PARTIES, ["101", "Demokrati", "Demokrati"]],
+        "tab0dd": [
+            BY_UNITS,
+            [*krusovce, "1", "1", "7", "Starosta a zastupiteľstvo"],
+            [*svinna, "2", "2", "6", "Len zastupiteľstvo"],
+            [*ZVOLEN, "518654", "Michalková", "1", "1", "3", "Nekonajú sa"],
+        ],
+        "tab0ad": [
+            BY_MAYORS,
+            [*krusovce, "1", "Ján", "Kováč", "", "50", "murár", "NEKA", ""],
+        ],
+        "tab0bd": [
+            BY_MEMBERS,
+            [*krusovce, "1", "1", "Eva", "Malá", "", "52", "účtovníčka", "NEKA", ""],
+            [*svinna, "1", "2", "Kamil", "Barčiak", "", "42", "vodič", "NEKA", ""],
+            [*svinna, "2", "1", "Ján", "Chobot", "Ing.", "40", "riaditeľ", "NEKA", ""],
+        ],
+    })  # fmt: skip
+    # 2022: Krušovce 7 seats (all elected again in 2023), Lietavská
+    # Svinná-Babkov 9 in two obvody (3 filled, the other 6 in 2023),
+    # Michalková 3 (held nowhere, again in 2023).
+    term = lists.Term(
+        {"556149": [1], "517755": [1, 2], "518654": [1]},
+        {"556149": 7, "517755": 9, "518654": 3},
+    )
+    urls = {"package": PACKAGE_URL}
+    read = lists.read(e, {"package": package}, tmp_path, urls=urls, term=term)
+    votes = {c: f.get("vote") for c, f in read.contests.items()}
+    assert votes == {
+        "starosta:556149": "new",
+        "oz:556149/1": "new",
+        "oz:517755/1": "by",
+        "oz:517755/2": "by",
+        # Its own one obvod, as the territorial division of 2023 counts it.
+        "oz:518654/1": "new",
+    }
+    assert read.seats["oz:518654/1"] == 3
+    hob = [*TOPOLCANY, "542938", "Horné Obdokovce"]
+    older = write_package(tmp_path, "OSO_201904", {
+        "tab0b": [BY_PARTIES, ["101", "Demokrati", "Demokrati"]],
+        "tab0c": [
+            OLDER_UNITS,
+            [*hob, "2", "len zastupiteľstvo"],
+            [*R_SOBOTA, "514683", "Dubno", "5", "starosta a zastupiteľstvo"],
+            [*BARDEJOV, "519685", "Ondavka", "3", "nekonajú sa"],
+        ],
+        "tab0a": [
+            OLDER_MAYORS,
+            [*R_SOBOTA, "514683", "Dubno", "1", "Anton", "Horváth", "NEKA", ""],
+        ],
+        "tab06": [
+            OLDER_ELECTED,
+            [*hob, "1", "1", "Ivan Svoboda", "NEKA", "66"],
+            [*hob, "2", "2", "Marián Kováčik", "NEKA", "22"],
+            [*R_SOBOTA, "514683", "Dubno", "1", "1", "Peter Novák", "NEKA", "40"],
+        ],
+    })  # fmt: skip
+    # 2018: Horné Obdokovce 9 seats in two obvody (7 filled, the other 2 in
+    # 2019), Dubno and Ondavka 5 and 3, held nowhere.
+    term = lists.Term(
+        {"542938": [1, 2], "514683": [1], "519685": [1]},
+        {"542938": 9, "514683": 5, "519685": 3},
+    )
+    read = lists.read(e, {"package": older}, tmp_path, urls=urls, term=term)
+    votes = {c: f.get("vote") for c, f in read.contests.items()}
+    assert votes == {
+        "oz:542938/1": "by",
+        "oz:542938/2": "by",
+        "starosta:514683": "new",
+        "oz:514683/1": "new",
+    }
+    # Ondavka's new council: the package does not count its obvody.
+    assert read.unplaced == [
+        "519685: 3 seat(s) of a new council, its obvody not counted"
+    ]
 
 
 SUPPLEMENT = """
@@ -568,11 +704,11 @@ def test_older_by_election_supplement(tmp_path: Path, monkeypatch: pytest.Monkey
     (tmp_path / lists.CURATED_FILE).write_text(SUPPLEMENT, encoding="utf-8")
     e = election("by-election", BY_PACKAGE)
     package = {"package": older_by_election_package(tmp_path)}
-    read = lists.read(e, package, tmp_path, urls={"package": PACKAGE_URL})
+    read = lists.read(e, package, tmp_path, urls={"package": PACKAGE_URL}, term=TERM)
     # The package's withdrawal stays; the replaced council is listed whole.
     assert read.withdrawn == {"starosta:502341#2"}
-    assert "oz:502341/1" not in read.contests
-    assert read.contests["oz:517755/1"] == {"elected_only": True}
+    assert "elected_only" not in read.contests["oz:502341/1"]
+    assert read.contests["oz:517755/1"] == {"elected_only": True, "vote": "by"}
     data = candidates_json(monkeypatch, read)
     by_id = {c["id"]: c for c in data["candidacies"]}
     assert [c for c in by_id if c.startswith("oz:502341/1")] == [
@@ -826,8 +962,9 @@ def test_regular_election_contests_held_nowhere():
         "oz:500011/1": why,
         "oz:500011/2": why,
     }
-    # Seats per obvod only where there is one.
+    # Seats per obvod only where there is one; each council's in all.
     assert out.seats == {"oz:514683/1": 5}
+    assert out.council_seats == {"514683": 5, "505277": 7, "518654": 3, "500011": 9}
 
 
 UNCONTESTED = """\

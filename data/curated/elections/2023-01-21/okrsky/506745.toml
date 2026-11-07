@@ -1,0 +1,470 @@
+# Okrsky of Trnava, transcribed by an AI agent in job okrsok-rules-004 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Múzejné námestie, Horné bašty, Námestie Slov. nár. povstania, Námestie sv. Mikuláša, Trojičné námestie, Ulica Divadelná, Ulica Františkánska, Ulica Halenárska, Ulica Haulíkova, Ulica Hlavná, Ulica Hornopotočná, Ulica Hviezdoslavova,Ulica Invalidská, Ulica Jána Hollého, Ulica Jerichova, Ulica Jeruzalemská, Ulica Kapitulská,Ulica M.Schneidra-Trnavského, Ulica Michalská,Ulica Pekárska, Ulica Radlinského, Ulica Rázusova, Ulica Rybníkova, Ulica Strelecká, Ulica Štefánikova, Ulica Trhová, Ulica Vajanského, Ulica Veselá, Zámočnícka, Námestie kráľovnej Konštancie, Zelený kríčok
+#   okrsok 2: bez ulice,Dolné bašty,Mesačná, ulica Novosadská, Univerzitné námestie, Ulica Andreja Žarnova, Ulica B.S.Timravy, Ulica Dolnopotočná, Ulica Klempova, Ulica Kollárova,Ulica Orolská, Ulica Ľudmily Podjavorinskej, Ulica Paulínska, Ulica Sladovnícka od č. 4 do č. 19, Ulica Športová,
+#   okrsok 3: Ulica A. Sládkoviča, Ulica Andreja Hlinku,,Ulica B. Němcovej, Ulica Bradlanská, Ulica E.M. Šoltésovej, Ulica Ferka Urbánka, Ulica Františka Veselovského, Ulica Hodžova, Ulica Hospodárska od č. 4 do č. 36, Ulica Jána Bottu od č. 2 do č. 94 párne,Ulica Komenského, Ulica Parková, Ulica Petra Pázmaňa,Ulica Štefana C. Parráka,Ulica Študentská,Ulica Tomášikova, Ulica Vladimíra Roya
+#   okrsok 4: Agátová ulica, Ulica Juraja Fándlyho, Ulica Jána Sambucusa, Ulica Kalinčiakova, Ulica Kvetná, Ulica Hospodárska od č. 37 do č. 96, Ulica Matuškova, Ulica Sadová, Ulica Štúrova
+#   okrsok 5: Ulica Bedřicha Smetanu, Ulica Gejzu Dusíka od č. 1 do č. 50, Ulica J. G. Tajovského, Ulica Jána Bottu č. 1 a č. 3, Ulica Lomonosovova, Ulica Staničná
+#   okrsok 6: Ulica Čajkovského, Ulica Gejzu Dusíka od č. 51 do č. 64, Ulica Kornela Mahra, Ulica Mozartova od č. 4 do č. 10, Ulica Ovocná, Ulica Zelená
+#   okrsok 7: Ulica Botanická, Ulica Ludvika van Beethovena, Ulica Mozartova č. 11 a č. 12
+#   okrsok 8: Bežecká ulica, Čerešňová ulica, Domčeková ulica, Hudobná ulica, Jazdecká ulica, Kočišské, Krátka ulica, Medziháj, Okružné námestie, Roľnícka ulica, Rybárska ulica,Traťová ulica, Višňová ulica, Záhradná ulica, Ulica Adama Štrekára, Ulica Alfréda Wetzlera, Ulica Evy Kostolányiovej, Ulica Hadriána Radvániho, Ulica Hurbanova, Ulica Jána Bottu od č. 21 do č. 53 nepárne, Ulica Johna Dopyeru, Ulica Júliusa Gábriša, Ulica Kuzmányho, Ulica Martina Gregora, Ulica Oskára Čepana, Ulica Rudolfa Vrbu, Ulica Šafárikova, Ulica Tibora Kružliaka, Ulica Wiliama Schiffera, Ulica Karola Elberta, Ulica Richarda Vandru
+#   okrsok 9: Cukrová ulica, Kamenná cesta, Kamenný mlyn, Koceľova ulica, Orešianska ulica, Slovenská ulica, Ulica Andreja Kubinu, Ulica Gavlovičova, Ulica Chovateľská, Ulica Leoša Janáčka, Ulica Mierová, Ulica Modranská, Ulica Osvaldova, Ulica Poľná, Ulica Rekreačná, Ulica Ružindolská, Ulica Suchovská, Ulica sv. Cyrila a Metoda, Šrobárova ulica, Ulica Štefana Moyzesa, Ulica Terézie Vansovej, Trstínska cesta, Ulica Západná
+#   okrsok 10: Legionárska ulica, Na hlinách 1A,1B,1C,1D, Námestie Jozefa Herdu, Pri kalvárii, Špačinská cesta od č. 1 do č. 49 nepárne a od č. 32 do č. 78D párne,Ulica Jána Hajdóczyho, Ulica Jánošíkova, Ulica Jozefa Adamca, Ulica Kukučínova, Ulica Lichardova, Ulica Lovecká, Ulica Mórica Beňovského, Ulica Murgašova, Ulica Pažitná, Ulica Sama Chalupku, Ulica Skladová, Ulica Školská
+#   okrsok 11: Na hlinách od č. 2 do č. 64
+#   okrsok 12: Na hlinách od č. 26 do č. 36, Okružná ulica, Špačinská cesta od č. 2 do č. 30 párne, Ulica Atómová, Ulica Bučianska č. 1,2,3,4, Ulica Jaderná, Ulica Oblúková, Ulica Piešťanská, Ulica Veterná od č. 1 do č. 17
+#   okrsok 13: Dobšinského ulica, Dúhová ulica, Kopánková ulica, Krupská ulica, Levaduľová ulica, Malženická cesta, Mliečna ulica, Námestie Slov. učeného tovarišstva, Pekná ulica, Schumerova ulica, Špačinská cesta od č. 51 do č. 145 nepárne a od č. 80 do č. 104 párne, Štrky, Ulica Átriová, Ulica Francisciho, Ulica Jána Hlubíka, Ulica Jesenského, Ulica Karpatská, Ulica Krajná, Ulica Krížová,Ulica Malá, Ulica Martina Benku, Ulica Maximiliána Hella, Ulica Mikuláša Koperníka, Ulica Pavla Hlbinu, Ulica Pavla Mudroňa, Ulica Petra Bohúňa, Ulica Robotnícka, Ulica Rudolfa Dilonga, Ulica Suchá, Ulica Štefana Baniča, Ulica Štefana Fidlíka, Ulica Tatranská, Ulica Tich. Milkina, Ulica Titusa Zemana, Ulica Ustianska, Ulica Zdenky Schelingovej
+#   okrsok 14: Ulica Hviezdna, Ulica Ľudová, Ulica Slnečná, Olympijská ulica, Poštová ulica, Saleziánska ulica Strmá ulica, Špačinská cesta od č. 106 do č. 156 párne, Viktoríniho námestie
+#   okrsok 15: Farárske, Novomestská ulica, Priečna ulica, Rovná ulica, Spojná ulica, ŠM Dolina, ŠM Veľký Dvor, Východná ulica, Ulica Andreja Kmeťa, Ulica Letecká, Ulica parašutistov, Ulica Radarová, Ulica Severná, Ulica Sibírska, Ulica Stavebná, Ulica Veterná od č. 18 do č. 48, Zimná ulica
+#   okrsok 16: Bazová ulica, Prašná ulica, Ulica Bernolákova, Ulica Daxnerova, Ulica Denisova, Ulica Hattalova, Ulica Jačmenná,Ulica Jozefa Adamoviča, Ulica Koniarekova, Ulica Konštantína Čulena, Ulica Nobelova, Ulica Palárikova, Ulica Samuela Jurkoviča, Ulica Sasinkova, Ulica Sladovnícka od č. 20 do č. 32, Ulica Spartakovská od č. 11 do č. 19, Ulica V. Paulínyho Tótha, Ulica Vančurova, Včelárska ulica, Ulica Zavarská, Ulica Železná, Ulica Žitná
+#   okrsok 17: Ulica Hlboká, Ulica Juraja Slottu
+#   okrsok 18: Ulica Spartakovská od č. 1 do č. 9 a od č. 20 do č. 47, Ulica Teodora Tekela č. 3 a č.4 a od č. 19 do č. 27, Ulica Vladimíra Clementisa od č. 1 do č. 24
+#   okrsok 19: Ulica Tehelná, Ulica Vladimíra Clementisa od č. 49 do č. 83
+#   okrsok 20: Oravné, Starohájska ulica, Ulica Bučianska od č. 4A do č. 15, Ulica Teodora Tekela od č. 5 do č. 18, ulica Vladimíra Clementisa od č. 25 do č. 48, V jame
+#   okrsok 21: Bratislavská ulica, Coburgova ulica, Stromová ulica, Tulipánová ulica, Ulica 9. Mája, Ulica Dohnányho, Ulica Gábora Steinera, Ulica Ľaliová, Ulica Markovičova, Ulica Mýtna, Ulica Nevädzová, Ulica Odbojárska, Ulica Orgovánová, Ulica Petzvalova, Ulica Ružová, Ulica Strojárenská, Zelenečská ulica od č. 1 do č. 53, Zlievarenská ulica
+#   okrsok 22: Automobilová ulica, Belgická ulica, Bulharská ulica, Jabloňová ulica, Logistická ulica, Lúčna ulica, Malinová ulica, Narcisová ulica, Priemyselná ulica, Šípová ulica, Ulica Fraňa Kráľa, Ulica Hraničná 21A a 21B, Ulica Jasná, Ulica Kozácka, Ulica Letná, Ulica Maxima Gorkého, Ulica Mikovíniho, Ulica Nitrianska, Ulica Nová, Ulica Stredná, Ulica Tamaškovičova, Ulica Vlárska, Vajslova ulica, Železničná ulica, Zelenečská ulica od č. 55 do č. 113
+#   okrsok 23: Ulica Astrová, Ulica Bočná, Ulica gen. Goliána od č. 1 do č. 51, Ulica Konvalinková, Ulica Limbová,Ulica Nezábudková, Ulica Osadná, Ulica Ostravská, Ulica Púpavová, Ulica Slovanská
+#   okrsok 24: Ulica gen. Goliána od č. 52 do č. 69, Ulica Jiráskova, Ulica Nerudova
+#   okrsok 25: Dedinská ulica, Chrenová ulica, ulica, Orechová ulica, Pásová ulica, Pri potoku, Pútnická ulica, Rajčurská ulica, Tichá ulica, Ulica Bosniacka, Ulica Diaľničná, Ulica Hraničná okrem č. 21A a 21B, Ulica Ivana Krasku, Ulica Jarná, Ulica Javorová, Ulica Karola Ježíka, Ulica Lipová, Ulica Olivová, Ulica Pobrežná,Ulica Seredská, Ulica Topoľová, Ulica Vodná
+obec = "506745"
+name = "Trnava"
+okrsky_date = 2022-11-08
+okrsky_fill = "nearest"
+okrsky_note = "Scanned PDF of the primátor's decision of 8 November 2022, read from its page images. Streets split between okrsky follow the listed numbers ('od č. X do č. Y' as X-Y, 'párne'/'nepárne' as parity; '78D' as 78 and 78D); 'okrem č. 21A a 21B' (Hraničná, okrsok 25) as an exception. Na hlinách: okrsok 11 'od č. 2 do č. 64' and okrsok 12 'od č. 26 do č. 36' overlap; 26-36 is given to okrsok 12 and cut out of okrsok 11. 'bez ulice' (okrsok 2) are voters registered without an address. Not in the address register, left out: Námestie kráľovnej Konštancie (1), Ulica Jozefa Adamca, Ulica Mórica Beňovského, Ulica Sama Chalupku (10), Bazová ulica, Prašná ulica, Ulica Jozefa Adamoviča, Včelárska ulica (16), Rybárska ulica (8), Priečna ulica, Zimná ulica (15). 'Saleziánska ulica Strmá ulica' (14) lacks a comma: two streets. In okrsok 25 a street name is missing ('Chrenová ulica, ulica, Orechová ulica'); nothing is placed for it. Streets the document does not name (Pažitný mlyn, Prechodná ulica, ŠM Farský mlyn), numbers the lists leave out and about 1400 addresses without a street are placed by fill_nearest. The document does not name the COVID-19 special okrsok 26."
+
+[[document]]
+url = "https://www.trnava.sk/userfiles/file/Volebn%C3%A9%20okrsky%20a%20miestnosti(3).pdf"
+sha256 = "98ee99f6b9201531c17c2f7175080f980e085c8bc2e772796ca25d4c43927ade"
+title = "Utvorenie volebných okrskov a určenie volebných miestností na hlasovanie v referende 21. januára 2023 (OOaVS-42793-114244/22/Lcá)"
+
+[okrsok.1]
+rules = [
+  {street = "Múzejné námestie"},
+  {street = "Horné bašty"},
+  {street = "Námestie Slov. národ. povstania", written = "Námestie Slov. nár. povstania"},
+  {street = "Námestie sv. Mikuláša"},
+  {street = "Trojičné námestie"},
+  {street = "Ulica Divadelná"},
+  {street = "Ulica Františkánska"},
+  {street = "Ulica Halenárska"},
+  {street = "Ulica Haulíkova"},
+  {street = "Ulica Hlavná"},
+  {street = "Ulica Hornopotočná"},
+  {street = "Ulica Hviezdoslavova"},
+  {street = "Ulica Invalidská"},
+  {street = "Ulica Jána Hollého"},
+  {street = "Ulica Jerichova"},
+  {street = "Ulica Jeruzalemská"},
+  {street = "Ulica Kapitulská"},
+  {street = "Ulica M. Schneidra Trnavského", written = "Ulica M.Schneidra-Trnavského", note = "the document hyphenates the name 'Schneidra-Trnavského'; the register writes 'M. Schneidra Trnavského', the same street (Mikuláš Schneider-Trnavský)"},
+  {street = "Ulica Michalská"},
+  {street = "Ulica Pekárska"},
+  {street = "Ulica Radlinského"},
+  {street = "Ulica Rázusova"},
+  {street = "Ulica Rybníková", written = "Ulica Rybníkova", note = "the document writes 'Rybníkova' (short a); the register's Ulica Rybníková, the only such street"},
+  {street = "Ulica Strelecká"},
+  {street = "Ulica Štefánikova"},
+  {street = "Ulica Trhová"},
+  {street = "Ulica Vajanského"},
+  {street = "Ulica Veselá"},
+  {street = "Zámočnícka"},
+  {street = "Zelený kríčok"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Dolné bašty"},
+  {street = "Mesačná"},
+  {street = "Ulica Novosadská", written = "ulica Novosadská"},
+  {street = "Univerzitné námestie"},
+  {street = "Ulica Andreja Žarnova"},
+  {street = "Ulica B. S. Timravy", written = "Ulica B.S.Timravy"},
+  {street = "Ulica Dolnopotočná"},
+  {street = "Ulica Klempova"},
+  {street = "Ulica Kollárova"},
+  {street = "Ulica Orolská"},
+  {street = "Ulica Ľudmily Podjavorinskej"},
+  {street = "Ulica Paulínska"},
+  {street = "Ulica Sladovnícka", numbers = "4-19"},
+  {street = "Ulica Športová"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Ulica A. Sládkoviča"},
+  {street = "Ulica Andreja Hlinku"},
+  {street = "Ulica B. Němcovej"},
+  {street = "Ulica Bradlanská"},
+  {street = "Ulica E. M. Šoltésovej", written = "Ulica E.M. Šoltésovej"},
+  {street = "Ulica Ferka Urbánka"},
+  {street = "Ulica Františka Veselovského"},
+  {street = "Ulica Hodžova"},
+  {street = "Ulica Hospodárska", numbers = "4-36"},
+  {street = "Ulica Jána Bottu", numbers = "2-94", parity = "even"},
+  {street = "Ulica Komenského"},
+  {street = "Ulica Parková"},
+  {street = "Ulica Petra Pázmaňa"},
+  {street = "Ulica Štefana C. Parráka"},
+  {street = "Ulica Študentská"},
+  {street = "Ulica Tomášikova"},
+  {street = "Ulica Vladimíra Roya"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Agátová ulica"},
+  {street = "Ulica Juraja Fándlyho"},
+  {street = "Ulica Jána Sambucusa"},
+  {street = "Ulica Kalinčiakova"},
+  {street = "Ulica Kvetná"},
+  {street = "Ulica Hospodárska", numbers = "37-96"},
+  {street = "Ulica Matuškova"},
+  {street = "Ulica Sadová"},
+  {street = "Ulica Štúrova"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Ulica Bedřicha Smetanu"},
+  {street = "Ulica Gejzu Dusíka", numbers = "1-50"},
+  {street = "Ulica J. G. Tajovského"},
+  {street = "Ulica Jána Bottu", numbers = "1, 3"},
+  {street = "Ulica Lomonosovova"},
+  {street = "Ulica Staničná"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Ulica Čajkovského"},
+  {street = "Ulica Gejzu Dusíka", numbers = "51-64"},
+  {street = "Ulica Kornela Mahra"},
+  {street = "Ulica Mozartova", numbers = "4-10"},
+  {street = "Ulica Ovocná"},
+  {street = "Ulica Zelená"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Ulica Botanická"},
+  {street = "Ulica Ludvika van Beethovena"},
+  {street = "Ulica Mozartova", numbers = "11, 12"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Bežecká ulica"},
+  {street = "Čerešňová ulica"},
+  {street = "Domčeková ulica"},
+  {street = "Hudobná ulica"},
+  {street = "Jazdecká ulica"},
+  {street = "Kočišské"},
+  {street = "Krátka ulica"},
+  {street = "Medziháj"},
+  {street = "Okružné námestie"},
+  {street = "Roľnícka ulica"},
+  {street = "Traťová ulica"},
+  {street = "Višňová ulica"},
+  {street = "Záhradná ulica"},
+  {street = "Ulica Adama Štrekára"},
+  {street = "Ulica Alfréda Wetzlera"},
+  {street = "Ulica Evy Kostolányiovej"},
+  {street = "Ulica Hadriána Radvániho"},
+  {street = "Ulica Hurbanova"},
+  {street = "Ulica Jána Bottu", numbers = "21-53", parity = "odd"},
+  {street = "Ulica Johna Dopyeru"},
+  {street = "Ulica Júliusa Gábriša"},
+  {street = "Ulica Kuzmányho"},
+  {street = "Ulica Martina Gregora"},
+  {street = "Ulica Oskára Čepana"},
+  {street = "Ulica Rudolfa Vrbu"},
+  {street = "Ulica Šafárikova"},
+  {street = "Ulica Tibora Kružliaka"},
+  {street = "Ulica Williama Schiffera", written = "Ulica Wiliama Schiffera", note = "the document writes 'Wiliama' with one l; the register's Ulica Williama Schiffera"},
+  {street = "Ulica Karola Elberta"},
+  {street = "Ulica Richarda Vandru"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Cukrová ulica"},
+  {street = "Kamenná cesta"},
+  {street = "Kamenný mlyn"},
+  {street = "Koceľova ulica"},
+  {street = "Orešianska ulica"},
+  {street = "Slovenská ulica"},
+  {street = "Ulica Andreja Kubinu"},
+  {street = "Ulica Gavlovičova"},
+  {street = "Ulica Chovateľská"},
+  {street = "Ulica Leoša Janáčka"},
+  {street = "Ulica Mierová"},
+  {street = "Ulica Modranská"},
+  {street = "Ulica Osvaldova"},
+  {street = "Ulica Poľná"},
+  {street = "Ulica Rekreačná"},
+  {street = "Ulica Ružindolská"},
+  {street = "Ulica Suchovská"},
+  {street = "Ulica sv. Cyrila a Metoda"},
+  {street = "Šrobárova ulica"},
+  {street = "Ulica Štefana Moyzesa"},
+  {street = "Ulica Terézie Vansovej"},
+  {street = "Trstínska cesta"},
+  {street = "Ulica Západná"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Legionárska ulica"},
+  {street = "Na hlinách", numbers = "1A, 1B, 1C, 1D"},
+  {street = "Námestie Jozefa Herdu"},
+  {street = "Pri kalvárii"},
+  {street = "Špačinská cesta", numbers = "1-49", parity = "odd"},
+  {street = "Špačinská cesta", numbers = "32-78, 78D", parity = "even"},
+  {street = "Ulica Jána Hajdóczyho"},
+  {street = "Ulica Jánošíkova"},
+  {street = "Ulica Kukučínova"},
+  {street = "Ulica Lichardova"},
+  {street = "Ulica Lovecká"},
+  {street = "Ulica Murgašova"},
+  {street = "Ulica Pažitná"},
+  {street = "Ulica Skladová"},
+  {street = "Ulica Školská"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Na hlinách", numbers = "2-64", except = "26-36", note = "the document gives okrsok 11 'od č. 2 do č. 64' and okrsok 12 'od č. 26 do č. 36'; the narrower range of okrsok 12 is read as cut out of okrsok 11's"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Na hlinách", numbers = "26-36"},
+  {street = "Okružná ulica"},
+  {street = "Špačinská cesta", numbers = "2-30", parity = "even"},
+  {street = "Ulica Atómová"},
+  {street = "Ulica Bučianska", numbers = "1, 2, 3, 4"},
+  {street = "Ulica Jaderná"},
+  {street = "Ulica Oblúková"},
+  {street = "Ulica Piešťanská"},
+  {street = "Ulica Veterná", numbers = "1-17"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Dobšinského ulica"},
+  {street = "Dúhová ulica"},
+  {street = "Kopánková ulica"},
+  {street = "Krupská ulica"},
+  {street = "Levanduľová ulica", written = "Levaduľová ulica", note = "the document's 'Levaduľová' is a typo for Levanduľová ulica, the register's only such street"},
+  {street = "Malženická cesta"},
+  {street = "Mliečna ulica"},
+  {street = "Námestie Slov. učeného tovarišstva"},
+  {street = "Pekná ulica"},
+  {street = "Schumerova ulica"},
+  {street = "Špačinská cesta", numbers = "51-145", parity = "odd"},
+  {street = "Špačinská cesta", numbers = "80-104", parity = "even"},
+  {street = "Štrky"},
+  {street = "Ulica Átriová"},
+  {street = "Ulica Francisciho"},
+  {street = "Ulica Jána Hlubíka"},
+  {street = "Ulica Jesenského"},
+  {street = "Ulica Karpatská"},
+  {street = "Ulica Krajná"},
+  {street = "Ulica Krížová"},
+  {street = "Ulica Malá"},
+  {street = "Ulica Martina Benku"},
+  {street = "Ulica Maximiliána Hella"},
+  {street = "Ulica Mikuláša Koperníka"},
+  {street = "Ulica Pavla Hlbinu"},
+  {street = "Ulica Pavla Mudroňa"},
+  {street = "Ulica Petra Bohúňa"},
+  {street = "Ulica Robotnícka"},
+  {street = "Ulica Rudolfa Dilonga"},
+  {street = "Ulica Suchá"},
+  {street = "Ulica Štefana Baniča"},
+  {street = "Ulica Štefana Fidlíka"},
+  {street = "Ulica Tatranská"},
+  {street = "Ulica Tich. Milkina"},
+  {street = "Ulica Titusa Zemana"},
+  {street = "Ulica Ustianska"},
+  {street = "Ulica Zdenky Schelingovej"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Ulica Hviezdna"},
+  {street = "Ulica Ľudová"},
+  {street = "Ulica Slnečná"},
+  {street = "Olympijská ulica"},
+  {street = "Poštová ulica"},
+  {street = "Saleziánska ulica"},
+  {street = "Strmá ulica"},
+  {street = "Špačinská cesta", numbers = "106-156", parity = "even"},
+  {street = "Viktoríniho námestie"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Farárske"},
+  {street = "Novomestská ulica"},
+  {street = "Rovná ulica"},
+  {street = "Spojná ulica"},
+  {street = "ŠM Dolina"},
+  {street = "ŠM Veľký dvor", written = "ŠM Veľký Dvor", note = "only the capitalisation of 'Dvor' differs"},
+  {street = "Východná ulica"},
+  {street = "Ulica Andreja Kmeťa"},
+  {street = "Ulica Letecká"},
+  {street = "Ulica parašutistov"},
+  {street = "Ulica Radarová"},
+  {street = "Ulica Severná"},
+  {street = "Ulica Sibírska"},
+  {street = "Ulica Stavebná"},
+  {street = "Ulica Veterná", numbers = "18-48"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Ulica Bernolákova"},
+  {street = "Ulica Daxnerova"},
+  {street = "Ulica Denisova"},
+  {street = "Ulica Hattalova"},
+  {street = "Ulica Jačmenná"},
+  {street = "Ulica Koniarekova"},
+  {street = "Ulica Konštantína Čulena"},
+  {street = "Ulica Nobelova"},
+  {street = "Ulica Palárikova"},
+  {street = "Ulica Samuela Jurkoviča"},
+  {street = "Ulica Sasinkova"},
+  {street = "Ulica Sladovnícka", numbers = "20-32"},
+  {street = "Ulica Spartakovská", numbers = "11-19"},
+  {street = "Ulica V. Paulínyho Tótha"},
+  {street = "Ulica Vančurova"},
+  {street = "Ulica Zavarská"},
+  {street = "Ulica Železná"},
+  {street = "Ulica Žitná"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Ulica Hlboká"},
+  {street = "Ulica Juraja Slottu"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Ulica Spartakovská", numbers = "1-9, 20-47"},
+  {street = "Ulica Teodora Tekela", numbers = "3, 4, 19-27"},
+  {street = "Ulica Vladimíra Clementisa", numbers = "1-24"},
+]
+
+[okrsok.19]
+rules = [
+  {street = "Ulica Tehelná"},
+  {street = "Ulica Vladimíra Clementisa", numbers = "49-83"},
+]
+
+[okrsok.20]
+rules = [
+  {street = "Oravné"},
+  {street = "Starohájska ulica"},
+  {street = "Ulica Bučianska", numbers = "4A, 5-15"},
+  {street = "Ulica Teodora Tekela", numbers = "5-18"},
+  {street = "Ulica Vladimíra Clementisa", numbers = "25-48", written = "ulica Vladimíra Clementisa"},
+  {street = "V jame"},
+]
+
+[okrsok.21]
+rules = [
+  {street = "Bratislavská ulica"},
+  {street = "Coburgova ulica"},
+  {street = "Stromová ulica"},
+  {street = "Tulipánová ulica"},
+  {street = "Ulica 9. mája", written = "Ulica 9. Mája", note = "only the capitalisation of 'mája' differs"},
+  {street = "Ulica Dohnányho"},
+  {street = "Ulica Gábora Steinera"},
+  {street = "Ulica Ľaliová"},
+  {street = "Ulica Markovičova"},
+  {street = "Ulica Mýtna"},
+  {street = "Ulica Nevädzová"},
+  {street = "Ulica Odbojárska"},
+  {street = "Ulica Orgovánová"},
+  {street = "Ulica Petzvalova"},
+  {street = "Ulica Ružová"},
+  {street = "Ulica Strojárenská"},
+  {street = "Zelenečská ulica", numbers = "1-53"},
+  {street = "Zlievarenská ulica"},
+]
+
+[okrsok.22]
+rules = [
+  {street = "Automobilová ulica"},
+  {street = "Belgická ulica"},
+  {street = "Bulharská ulica"},
+  {street = "Jabloňová ulica"},
+  {street = "Logistická ulica"},
+  {street = "Lúčna ulica"},
+  {street = "Malinová ulica"},
+  {street = "Narcisová ulica"},
+  {street = "Priemyselná ulica"},
+  {street = "Šípová ulica"},
+  {street = "Fraňa Kráľa", written = "Ulica Fraňa Kráľa"},
+  {street = "Ulica Hraničná", numbers = "21A, 21B"},
+  {street = "Ulica Jasná"},
+  {street = "Ulica Kozácka"},
+  {street = "Ulica Letná"},
+  {street = "Ulica Maxima Gorkého"},
+  {street = "Ulica Mikovíniho"},
+  {street = "Ulica Nitrianska"},
+  {street = "Ulica Nová"},
+  {street = "Ulica Stredná"},
+  {street = "Ulica Tamaškovičova"},
+  {street = "Ulica Vlárska"},
+  {street = "Vajslova ulica"},
+  {street = "Železničná ulica"},
+  {street = "Zelenečská ulica", numbers = "55-113"},
+]
+
+[okrsok.23]
+rules = [
+  {street = "Ulica Astrová"},
+  {street = "Ulica Bočná"},
+  {street = "Ulica gen. Goliána", numbers = "1-51"},
+  {street = "Ulica Konvalinková"},
+  {street = "Ulica Limbová"},
+  {street = "Ulica Nezábudková"},
+  {street = "Ulica Osadná"},
+  {street = "Ulica Ostravská"},
+  {street = "Ulica Púpavová"},
+  {street = "Ulica Slovanská"},
+]
+
+[okrsok.24]
+rules = [
+  {street = "Ulica gen. Goliána", numbers = "52-69"},
+  {street = "Ulica Jiráskova"},
+  {street = "Ulica Nerudova"},
+]
+
+[okrsok.25]
+rules = [
+  {street = "Dedinská ulica"},
+  {street = "Chrenová ulica"},
+  {street = "Orechová ulica"},
+  {street = "Pásová ulica"},
+  {street = "Pri potoku"},
+  {street = "Pútnická ulica"},
+  {street = "Rajčurská ulica"},
+  {street = "Tichá ulica"},
+  {street = "Ulica Bosniacka"},
+  {street = "Ulica Diaľničná"},
+  {street = "Ulica Hraničná", except = "21A, 21B"},
+  {street = "Ulica Ivana Krasku"},
+  {street = "Ulica Jarná"},
+  {street = "Ulica Javorová"},
+  {street = "Ulica Karola Ježíka"},
+  {street = "Ulica Lipová"},
+  {street = "Ulica Olivová"},
+  {street = "Ulica Pobrežná"},
+  {street = "Ulica Seredská"},
+  {street = "Ulica Topoľová"},
+  {street = "Ulica Vodná"},
+]

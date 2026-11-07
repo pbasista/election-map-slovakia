@@ -1,23 +1,24 @@
-# The okrsky of Močenok of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/500739.toml, reused by `ems job reuse`. Its header there:
-#   Okrsky of Močenok, transcribed by an AI agent in job okrsok-rules-697 from the documents below;
+# The okrsky of Močenok of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/500739.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Močenok, transcribed by an AI agent in job okrsok-rules-1756 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Biskupa Klucha, Dekana Dubravického, Dekana Sčasného, Chalupy, Mlynská, Párovce, Pod kalváriou, Rokošova I., Rokošova II., Rokošova III., Sv. Gorazda súp. č. (512 – 572).
-#     okrsok 2: Borzagoš, Cintorínska, Čingov, Gorazdov, Hájska, Kakava, Lipová, Lúčky, Malá Kakava, Pri kamennom moste, Pri kúpalisku, Sv. Cyrila a Metoda, Sv. Gorazda, súp. č. (573 – 696, 1894, 1912), Úzka a občania, ktorým bol zrušený trvalý pobyt.
-#     okrsok 3: Andreja Hlinku, Balajka, Biskupa Majera, Družstevná, Krátka, Ľudovíta Štúra, M. R. Štefánika, Nad ihriskom, Nitrianska, Pribinova, Školská, Športová, Švábska, Topoľová, Vinohradská.
+#     okrsok 1: občania z ulíc: Biskupa Klucha, Dekana Dubravického, Dekana Sčasného, Chalupy, Mlynská, Párovce, Pod kalváriou, Rokošova I., Rokošova II., Rokošova III., Sv. Gorazda súp. č. (512 – 572).
+#     okrsok 2: občania z ulíc: Borzagoš, Cintorínska, Čingov, Gorazdov, Hájska, Kakava, Lipová, Lúčky, Malá Kakava, Pri kamennom moste, Pri kúpalisku, Sv. Cyrila a Metoda, Sv. Gorazda, súp. č. (573 – 696, 1894, 1912), Úzka a občania, ktorým bol zrušený trvalý pobyt.
+#     okrsok 3: občania z ulíc: Andreja Hlinku, Balajka, Biskupa Majera, Družstevná, Krátka, Ľudovíta Štúra, M. R. Štefánika, Nad ihriskom, Nitrianska, Pribinova, Školská, Športová, Švábska, Topoľová, Vinohradská.
 obec = "500739"
 name = "Močenok"
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-03-16 the obec had as many, each with voters on the roll within 10% of its count then. No document of 2019-03-16 was searched for. Article published 26.07.2022 (undated decision; snapshot 2022-08-02). Duslianska (28 addresses) is not named in the document; it takes the okrsok of the nearest placed addresses (fill_nearest). 'Občania, ktorým bol zrušený trvalý pobyt' vote in okrsok 2."
-okrsky_reused = 2022-10-29
+okrsky_note = "Duslianska (not named in the document) and any address not named take the okrsok of the nearest placed address (fill_nearest). 'Občania, ktorým bol zrušený trvalý pobyt' vote in okrsok 2 (no address)."
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1166): The website's notice board and news (searched page by page) have okrsky announcements for 2018, EP 2019, NR SR 2020, the local referendum of 24.06.2023, NR SR 2023, 2024 and 2026, but none for this vote (for 2017 only a notice of a changed polling room, without streets). The Internet Archive was unreachable (connection refused) throughout. These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2019-05-25: 1: 1,099 → 1,099, 2: 1,246 → 1,245, 3: 1,277 → 1,278."
 okrsky_date_approximate = "posted"
-okrsky_date_seen = 2022-07-26
-okrsky_date_basis = "The decision states no date; the municipality's article with it says it was published on 26 July 2022, as the Internet Archive captured it on 2022-08-02 (https://web.archive.org/web/20220802173752/https://mocenok.sk/clanok/5145-utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti)."
+okrsky_date_seen = 2019-02-14
+okrsky_date_basis = "The mayor's announcement (undated) is listed on the official notice board (page 46) with the date 14.02.2019; it names the EP election of 25 May 2019. (https://mocenok.sk/esam/uradna-tabula?paginator-page=46)"
 
 [[document]]
-url = "https://web.archive.org/web/20220802173752/https://mocenok.sk/clanok/5145-utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti"
-sha256 = "84917717e085f6bbd629998519137438b7aa61126aa48ff8d21cea75497fbda2"
-title = "Utvorenie volebných okrskov a určenie volebných miestností (voľby 29. októbra 2022)"
+url = "https://mocenok.sk/clanok/volebne-okrsky-a-volebne-miestnosti-pre-volby-do-europskeho-parlamentu"
+sha256 = "31f7c1d15dec308f71fc12adb1d5209280c6fe87b1b5eaa9b1dd654380a2800f"
+title = "Volebné okrsky a volebné miestnosti pre voľby do Európskeho parlamentu (25. mája 2019)"
 
 [okrsok.1]
 rules = [
@@ -27,7 +28,7 @@ rules = [
   {street = "Chalupy"},
   {street = "Mlynská"},
   {street = "Párovce"},
-  {street = "Pod Kalváriou"},
+  {street = "Pod Kalváriou", written = "Pod kalváriou"},
   {street = "Rokošova I."},
   {street = "Rokošova II."},
   {street = "Rokošova III."},
@@ -61,7 +62,7 @@ rules = [
   {street = "Krátka"},
   {street = "Ľudovíta Štúra"},
   {street = "M.R.Štefánika", written = "M. R. Štefánika"},
-  {street = "Nad Ihriskom"},
+  {street = "Nad Ihriskom", written = "Nad ihriskom"},
   {street = "Nitrianska"},
   {street = "Pribinova"},
   {street = "Školská"},

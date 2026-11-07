@@ -1,0 +1,77 @@
+# The okrsky of Spišská Belá of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/523828.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Spišská Belá, transcribed by an AI agent in job okrsok-rules-4109 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: 1.mája, Agátová, Greisigerova, Kallsteinova, Krátka, Kúpeľná, Lipová, Moskovská, Nová, Okružná, SNP, Športová, Vojtasova, Weberova, Záhradná
+#     okrsok 2: Ladislava Novomeského, Letná, Osloboditeľov, Štefánikova, Tatranská, Továrenská
+#     okrsok 3: Hviezdoslavova, Mierová, Partizánska, Petzvalova, Slnečná
+#     okrsok 4: Družstevná, Generála Ludvíka Svobodu, Kpt. Jána Nálepku, Šarpanec, Zimná
+#     okrsok 5: Ladislava Medňanského, Margity Czobleovej, Nad kaštieľom, Popradská
+obec = "523828"
+name = "Spišská Belá"
+okrsky_date = 2024-01-30
+okrsky_fill = "nearest"
+okrsky_note = "Mayor's decision of 30.1.2024 (scanned, read from the page images), posted on the notice board 30.1.2024. Same okrsky as the 2022 copy. Register spellings: Kallsteinova = Kaltsteinova, SNP = Slov. Nár. Povstania; Generála Ludvíka Svobodu is in the register under both Generála Ludvíka Svobodu and Gen. Ludvíka Svobodu. Margity Czobleovej (okrsok 5) is not in the register and is left out. The register's addresses without a street in part Spišská Belá (súpisné numbers only) take the okrsok of the nearest address (fill_nearest); those in part Strážky go to okrsok 5 by an inferred part rule."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2024-06-08 setting the okrsky was found (okrsok-rules-4734): The town published its okrsky decision for every other vote 2017-2026, but none for the European Parliament elections of 8 June 2024: the EP 2024 elections page (live and archived 23.4.2024) lists only the delegation address, the voting-pass notice and the okrsok commissions' minutes; the WordPress media library and the Internet Archive's 2024 captures hold no okrsky file for this vote. The presidential election's document of 30.1.2024 is for that vote only. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 5 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-06-08 → 2024-03-23: 1: 1,360 → 1,302, 2: 1,017 → 980, 3: 1,350 → 1,320, 4: 1,088 → 1,074, 5: 442 → 432."
+
+[[document]]
+url = "https://spisskabela.sk/wp-content/uploads/2024/01/Volebne-okrsky-a-volebne-miestnosti-Spisska-Bela.pdf"
+sha256 = "97aef0ca8c6fdd38ab8aa6e7d670d81b70bc81af2dbc08e5a7ea9a36cee2512c"
+title = "Utváram volebné okrsky a určujem volebné miestnosti pre voľby prezidenta Slovenskej republiky v roku 2024, ktoré budú dňa 23.03.2024 (primátor, Spišská Belá 30.1.2024)"
+
+[okrsok.1]
+rules = [
+  {street = "1.mája"},
+  {street = "Agátová"},
+  {street = "Greisigerova"},
+  {street = "Kaltsteinova", written = "Kallsteinova", note = "one letter differs (ll/lt); the register's only similar street, in okrsok 1's area"},
+  {street = "Krátka"},
+  {street = "Kúpeľná"},
+  {street = "Lipová"},
+  {street = "Moskovská"},
+  {street = "Nová"},
+  {street = "Okružná"},
+  {street = "Slov. Nár. Povstania", written = "SNP", note = "SNP = Slovenského národného povstania; the register writes Slov. Nár. Povstania"},
+  {street = "Športová"},
+  {street = "Vojtasova"},
+  {street = "Weberova"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Ladislava Novomeského"},
+  {street = "Letná"},
+  {street = "Osloboditeľov"},
+  {street = "Štefánikova"},
+  {street = "Tatranská"},
+  {street = "Továrenská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Hviezdoslavova"},
+  {street = "Mierová"},
+  {street = "Partizánska"},
+  {street = "Petzvalova"},
+  {street = "Slnečná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Družstevná"},
+  {street = "Generála Ludvíka Svobodu"},
+  {street = "Gen. Ludvíka Svobodu", written = "Generála Ludvíka Svobodu"},
+  {street = "Kpt. Jána Nálepku"},
+  {street = "Šarpanec"},
+  {street = "Zimná"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Ladislava Medňanského"},
+  {street = "Nad kaštieľom"},
+  {street = "Popradská"},
+  {part = "Strážky", note = "the addresses without a street in part Strážky: the document lists Strážky's streets in okrsok 5, and the council's obvod 2 (whole mestská časť Strážky) is this okrsok alone", inferred = true},
+]

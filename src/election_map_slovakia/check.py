@@ -147,6 +147,7 @@ from election_map_slovakia import (
     stamp,
     translate,
 )
+from election_map_slovakia.candidates import NEW
 from election_map_slovakia.output import format_size
 
 APP = f"{build.APP_PART}/"
@@ -874,15 +875,16 @@ def check_councils(
 ) -> Check:
     """Return the check that a by-election draws the council obvody of its term.
 
-    Each council contest of a by-election (of *loaded*, the elections built
-    here, with their ``candidates.json`` in *candidates*) in an obec whose
-    council its term elected in several obvody fills seats of one of them,
-    so a rule set must place the addresses in them (``by_address`` of its
-    data index), as ``ems job reuse`` copies from the term; without, the
-    map draws the whole obec and the address lookup offers the ballot
-    everywhere. One numbered above its term's council contests (those
-    held nowhere among them, ``uncontested``) must be an obvod of the
-    term's rule set: the term's decision set it.
+    Each council contest of a by-election proper (of *loaded*, the
+    elections built here, with their ``candidates.json`` in *candidates*;
+    not a new election, ``vote`` ``"new"``, whose obvody are its own) in an
+    obec whose council its term elected in several obvody fills seats of
+    one of them, so a rule set must place the addresses in them
+    (``by_address`` of its data index), as ``ems job reuse`` copies from
+    the term; without, the map draws the whole obec and the address lookup
+    offers the ballot everywhere. One numbered above its term's council
+    contests (those held nowhere among them, ``uncontested``) must be an
+    obvod of the term's rule set: the term's decision set it.
     """
     result = Check("councils")
     for e in loaded:
@@ -895,7 +897,7 @@ def check_councils(
         drawn = set(e.data["by_address"])
         for c in held["contests"]:
             code = str(c["area"])
-            if c["kind"] != "oz":
+            if c["kind"] != "oz" or c.get("vote") == NEW:
                 continue
             if c["obvod"] > max(numbers.get(code, [1])):
                 result.checked += 1

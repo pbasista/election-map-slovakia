@@ -4,6 +4,77 @@ Notable changes, newest first. The version is set in
 `src/election_map_slovakia/__init__.py`; tagging `vX.Y.Z` builds and deploys
 it (see [docs/deploy.md](docs/deploy.md)).
 
+## 0.9.1 — 2026-11-07
+
+- **The release builds again:** 0.9.0's failed because a by-election's
+  job built its candidates alone, though they read its term's. A new
+  `candidates` job builds every election's once, before the per-election
+  jobs, which download them; a test fails CI when a per-election job
+  would read another election's output that no earlier job makes.
+- **New elections apart from by-elections:** a council vote that elects
+  at least as many seats as the council was elected with at the regular
+  election is a new election. It takes no constituencies from that
+  election, only its own decision, or else an indicative stand-in. A
+  by-election that fills vacant seats keeps the regular election's
+  constituencies. A mayor is always elected anew.
+- **Copied polling districts need proof of their borders:** only the
+  vote's own document, or one polling district per council constituency.
+  Matching voter counts no longer suffice, so about 1,480 sets, most of
+  the country-wide elections', are now shown as indicative stand-ins.
+- Horné Obdokovce (2019-04) and Lietavská Svinná-Babkov (2023-03) have
+  their own constituencies from their documents: by-elections proper,
+  borders unchanged.
+- **Polling districts without territory:** the 79 COVID-19 special
+  polling districts of the 2023 referendum (Act No. 395/2022: one per
+  okres, counted as the okres seat's highest-numbered district; 66 held
+  a vote, 13 did not), read from the Statistical Office's table of them,
+  and prison polling districts confirmed by the municipality's document
+  (Leopoldov in national votes, `special-okrsky.toml`) are not drawn and
+  never matched to the election before. The ballots name each one with
+  its source; its votes stay in the totals.
+- **Counts of polling districts leave them out:** a document listing a
+  town's own districts is no longer rejected for lacking the special one.
+  The 28 towns rejected so for the 2023 referendum, Michalovce among
+  them, now have their polling districts from their own notices.
+- **Polling districts not on the map can be browsed:** a municipality's
+  ballots list, as buttons, its polling districts that have results but
+  no shape (borders unknown, no addresses, or a prison's or COVID-19
+  special district, marked by an icon). A button shows that district's
+  results as a map click would, outlines the municipality and goes into
+  the link; pressing it again returns to the whole municipality. A
+  polling district without a shape outlines its municipality on the map;
+  it outlined nothing before.
+- **No empty election headings:** a place's ballots show the municipal or
+  regional heading only where the election holds such contests, so a
+  regional-only election (2017) no longer says there is no council
+  election in every municipality, nor a municipal-only one (2018) shows
+  an empty regional heading.
+- **Polling districts not drawn are said in every kind of election:** a
+  regional-only election counted none, so its undrawn places had no
+  notice and About no counts.
+- **More polling districts and constituencies from their own documents**
+  in 2017 and 2018. Searches that had found the Internet Archive or the
+  site unreachable were redone in 90 municipalities, and Common Crawl's
+  2017–2019 crawls and municipal sites searched too: Prešov, Šaľa,
+  Chorvátsky Grob, Senica, Topoľčany, Námestovo, Most pri Bratislave and
+  Kysak 2017; Kežmarok, Topoľčany, Štúrovo, Fiľakovo, Košice-Západ,
+  Vrakuňa, Šurany and Senec 2018 (their council constituencies too),
+  Partizánske, Svätý Jur, Slovenský Grob, Ivanka pri Nitre, Chorvátsky
+  Grob and Leles 2018; Čenkovce 2023. The searches that found nothing
+  say what was tried.
+- **One outlier allowed in a stand-in where nothing else fits:** in a
+  municipality of 10 or more polling districts, one district (at most
+  5 %) may differ in voters by more than 25 %, named with both counts in
+  the notice; a source without any outlier always wins. Nitra, Čadca,
+  Žilina and Bratislava-Podunajské Biskupice gain stand-ins in 2017.
+  Municipalities whose polling districts are not drawn: 143 → 128 in
+  2017, 150 → 136 in 2018; 2018 council constituencies unknown: 18 → 10.
+- **Common Crawl as a source:** a capture is cited by its index query and
+  fetched from Common Crawl's own files; `ems job captures SITE` lists a
+  site's captures. The transcription jobs try it after the Internet
+  Archive. A council material may be up to 40 MiB (was 20), as one
+  bundles a whole meeting's papers.
+
 ## 0.9.0 — 2026-11-05
 
 Every Slovak election since 2017 instead of the municipal and regional

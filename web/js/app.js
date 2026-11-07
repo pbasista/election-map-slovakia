@@ -21,7 +21,8 @@
  *   n     council obvod, where the obec has several (`n=3~`: taken from the
  *         approximate boundary at a clicked point)
  *   d     okrsok (polling district), where the obec's are drawn (`d=3~`
- *         likewise)
+ *         likewise), or one the map does not draw, picked on the ballots
+ *         (ballots.js `UnmappedOkrsky`)
  *   s, p  the street or part of the obec chosen in the search (highlighted)
  *   c     an open candidacy
  *   f=1   Favourites shown (favourites.js)
@@ -480,9 +481,10 @@ function App() {
   // Place *p* selected: a second pane beside the pane would hide it.
   const placeState = (p) => ({ ...p, candidate: null, view: null, favourites: false, overview: null });
   const selectPlace = (p, view) => navigate(placeState(p), view);
-  // A unit of the card's origins of the votes (candidate.js `VoteOrigins`):
-  // its ballots at *level* for contest *contest*, as a press of that level
-  // on them would choose it (mapmode.js `followLevel`). The selection runs
+  // A unit of the card's origins of the votes (candidate.js `VoteOrigins`),
+  // or an okrsok the map does not draw (ballots.js `UnmappedOkrsky`): its
+  // ballots at *level* for contest *contest*, as a press of that level on
+  // them would choose it (mapmode.js `followLevel`). The selection runs
   // again even for the place already selected, which the card was opened
   // from, so that the view is fitted to the unit.
   const unitHash = (p) => link(placeState(p));
@@ -615,6 +617,7 @@ function App() {
       picks=${picks}
       onPicks=${setPicks}
       onPlace=${selectPlace}
+      onUnit=${openUnit}
       onOverview=${onOverview}
       overview=${overview}
     />`;

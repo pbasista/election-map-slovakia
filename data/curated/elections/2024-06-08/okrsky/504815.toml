@@ -1,0 +1,194 @@
+# The okrsky of Skalica of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/504815.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Skalica, transcribed by an AI agent in job okrsok-rules-4016 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Bajanova, Dr. Valacha, Duklianska, Obrancov mieru, SNP, Tehelňa
+#     okrsok 2: Boorova, Hollého, Hurbanova, Koreszkova, Nešporova, Pod záhradkami, Vinohradnícka, Pivovarská, Potočná, Sasinkova
+#     okrsok 3: Pod Hájkom 3, 4, 5, 6-14, 15, 16, 17, 18-26, 27-30, 31-34, 35, 40, Psíky, Pod Hájkom 36 (Zariadenie pre seniorov Skalica), Pod Hájkom 36A (JESÉNIA SKALICA zariadenie pre seniorov)
+#     okrsok 4: Lúčky, L. Svobodu, Samoty, Starohorská, Vajanského, Skalica súpisné číslo
+#     okrsok 5: Dr. Clementisa 1-11, 13-27, 29-39, 41-51, 53, 55, 57, 63-67 (nepárne čísla), Mallého 1-7, 11-21, 23-29, 31-41, 43-51 (nepárne čísla)
+#     okrsok 6: Dr. Clementisa 4-18, 20-30, 32-42, 44, 46, 48 (párne čísla), Hviezdoslavova, Mazúrova, Športová, mesto Skalica (občania s trvalým pobytom na adrese: mesto Skalica), Karvašova
+#     okrsok 7: Bernolákova, Čulenova, D. Jurkoviča, Hodonínska, Mallého 2, 4-6, 10, 12, 16, 18, 20-26, 28-34, 36-70 (párne čísla), Školská, Štúrova, Šrobárova, Janšákova, Antona Srholca, Cubínkova, Teslíkova, Úprkova
+#     okrsok 8: Agátová, Dr. F. Buchtu, Dr. J. Ďuroviča, Dr. J. Šátka, Dr. Ľ. Nováka, Dr. Ľ. Okánika, F. K. Veselého, Jabloňová, K Baťáku, Malé trávniky, Na skale, P. Bunčáka, Prachová, Pribinova, Rastislavova, Salajka, Strážnická, Suchý riadok, Svätoplukova, Vrchovského, Zápotočná, Železničná
+#     okrsok 9: Blahova, Družstevná, Gorkého, Jatočná, Kollárova, Komenského, Kráľovská, Krížna, Lichardova, Madvova, Nádražná, Námestie slobody, Pod Kalváriou, Podhradie, Pplk. Pľjušťa, Ružová, Škarniclovská, Štefánikova, Vally, Malinová, Meňhartka, Doležalova, Karmelitská, K vodárni, Mierová, Bulharská, Priečna, Pri potoku, Široká
+#     okrsok 10: Pelíškova, Záhradná
+#     okrsok 11: Horská, Horská cesta, Jednoradová, Mýtna, Nad Predmestím, Partizánska, Petrovská, Predmestie, Pri pálenici, Rohatecká, Slnečná, Stračinská, Sudoměřická, Šebestova, Veľké trávniky, Veľkomoravská, Veterná, Zlatnícka, Zlatnícka dolina
+obec = "504815"
+name = "Skalica"
+okrsky_fill = "nearest"
+okrsky_note = "Same okrsky as the National Council election 2023. Cubínkova, Teslíkova and Úprkova (okrsok 7) are not in the address register and are left out. 'mesto Skalica (občania s trvalým pobytom na adrese: mesto Skalica)' (okrsok 6) are voters registered without an address, not a rule. 'Skalica súpisné číslo' (okrsok 4) is a whole-part rule that takes only the addresses no street rule selects (the houses without a street). Pod Hájkom, Dr. Clementisa and Mallého are split by the listed numbers; numbers the lists leave out follow the rest of the street (Pod Hájkom) or their side of the street (inferred). Streets the document leaves out: Dr. G. Schaefflera, Marešova, Priemyselná, Rybničná are inferred into okrsok 7 by their neighbours; Pod mestskou zďou and Pod sklepami (2 addresses each, old town) take the nearest okrsok (fill_nearest)."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2024-06-08 setting the okrsky was found (okrsok-rules-4641): The European Parliament 2024 page is empty live and as archived (1.10.2024); no okrsky document for this vote found live or in the Internet Archive. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 11 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-06-08 → 2024-03-23: 1: 1,098 → 990, 2: 1,085 → 1,105, 3: 1,162 → 1,307, 4: 1,228 → 1,219, 5: 849 → 874, 6: 1,556 → 1,578, 7: 1,061 → 1,092, 8: 1,018 → 994, 9: 1,211 → 1,219, 10: 1,176 → 1,186, 11: 1,115 → 1,120."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the page belongs to the town's section 'Voľby prezidenta 2024' (title of the page); the text is undated and first archived on 2024-05-01, after the vote"
+
+[[document]]
+url = "https://www.skalica.sk/volby-prezidenta-2024/volebne-okrsky-volebne-miestnosti/"
+sha256 = "4d1b09ab4ebd6e817b63fb4b18fc64c9d09e1ca9584dd05e0ea603813974d943"
+title = "Voľby prezidenta 2024 – Volebné okrsky, volebné miestnosti"
+
+[okrsok.1]
+rules = [
+  {street = "Bajanova"},
+  {street = "Dr. Valacha"},
+  {street = "Duklianska"},
+  {street = "Obrancov mieru"},
+  {street = "SNP"},
+  {street = "Tehelňa"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Boorova"},
+  {street = "Hollého"},
+  {street = "Hurbanova"},
+  {street = "Koreszkova"},
+  {street = "Nešporova"},
+  {street = "Pod záhradkami"},
+  {street = "Vinohradnícka"},
+  {street = "Pivovarská"},
+  {street = "Potočná"},
+  {street = "Sasinkova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Pod Hájkom", numbers = "3, 4, 5, 6-14, 15, 16, 17, 18-26, 27-30, 31-34, 35, 40, 36, 36A"},
+  {street = "Psíky"},
+  {street = "Pod Hájkom", note = "numbers the document does not list (1, 2, 37-39, 41) follow the rest of the street", inferred = true},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Lúčky"},
+  {street = "L. Svobodu"},
+  {street = "Samoty"},
+  {street = "Starohorská"},
+  {street = "Vajanského"},
+  {part = "Skalica", note = "'Skalica súpisné číslo': the town's houses numbered by súpisné číslo only, without a street; as a whole-part rule it takes only the addresses no street rule selects"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Dr. Clementisa", numbers = "1-11, 13-27, 29-39, 41-51, 53, 55, 57, 63-67", parity = "odd"},
+  {street = "Mallého", numbers = "1-7, 11-21, 23-29, 31-41, 43-51", parity = "odd"},
+  {street = "Dr. Clementisa", parity = "odd", note = "odd numbers the document leaves out (59, 61, 69) follow their side of the street", inferred = true},
+  {street = "Mallého", parity = "odd", note = "odd numbers the document leaves out (9, 53-59) follow their side of the street", inferred = true},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Dr. Clementisa", numbers = "4-18, 20-30, 32-42, 44, 46, 48", parity = "even"},
+  {street = "Hviezdoslavova"},
+  {street = "Mazúrova"},
+  {street = "Športová"},
+  {street = "Karvašova"},
+  {street = "Dr. Clementisa", parity = "even", note = "even numbers the document leaves out (2, 50-56) follow their side of the street", inferred = true},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Čulenova"},
+  {street = "D. Jurkoviča"},
+  {street = "Hodonínska"},
+  {street = "Mallého", numbers = "2, 4-6, 10, 12, 16, 18, 20-26, 28-34, 36-70", parity = "even"},
+  {street = "Školská"},
+  {street = "Štúrova"},
+  {street = "Šrobárova"},
+  {street = "Janšákova"},
+  {street = "Antona Srholca"},
+  {street = "Mallého", parity = "even", note = "even numbers the document leaves out (8, 14, 72) follow their side of the street", inferred = true},
+  {street = "Dr. G. Schaefflera", note = "not named; lies by D. Jurkoviča (okrsok 7)", inferred = true},
+  {street = "Marešova", note = "not named; new street by Antona Srholca, Janšákova and Bernolákova at the western edge, next to okrsok 7 streets", inferred = true},
+  {street = "Priemyselná", note = "not named; next to D. Jurkoviča, Bernolákova, Hodonínska (okrsok 7)", inferred = true},
+  {street = "Rybničná", note = "not named; next to Čulenova (okrsok 7) and Mallého", inferred = true},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Agátová"},
+  {street = "Dr. F. Buchtu"},
+  {street = "Dr. J. Ďuroviča"},
+  {street = "Dr. J. Šátka"},
+  {street = "Dr. Ľ. Nováka"},
+  {street = "Dr. Ľ. Okánika"},
+  {street = "F. K. Veselého"},
+  {street = "Jabloňová"},
+  {street = "K Baťáku"},
+  {street = "Malé trávniky"},
+  {street = "Na skale"},
+  {street = "P. Bunčáka"},
+  {street = "Prachová"},
+  {street = "Pribinova"},
+  {street = "Rastislavova"},
+  {street = "Salajka"},
+  {street = "Strážnická"},
+  {street = "Suchý riadok"},
+  {street = "Svätoplukova"},
+  {street = "Vrchovského"},
+  {street = "Zápotočná"},
+  {street = "Železničná"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Blahova"},
+  {street = "Družstevná"},
+  {street = "Gorkého"},
+  {street = "Jatočná"},
+  {street = "Kollárova"},
+  {street = "Komenského"},
+  {street = "Kráľovská"},
+  {street = "Krížna"},
+  {street = "Lichardova"},
+  {street = "Madvova"},
+  {street = "Nádražná"},
+  {street = "Námestie slobody"},
+  {street = "Pod Kalváriou"},
+  {street = "Podhradie"},
+  {street = "Pplk. Pľjušťa"},
+  {street = "Ružová"},
+  {street = "Škarniclovská"},
+  {street = "Štefánikova"},
+  {street = "Vally"},
+  {street = "Malinová"},
+  {street = "Meňhartka"},
+  {street = "Doležalova"},
+  {street = "Karmelitská"},
+  {street = "K vodárni"},
+  {street = "Mierová"},
+  {street = "Bulharská"},
+  {street = "Priečna"},
+  {street = "Pri potoku"},
+  {street = "Široká"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Pelíškova"},
+  {street = "Záhradná"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Horská"},
+  {street = "Horská cesta"},
+  {street = "Jednoradová"},
+  {street = "Mýtna"},
+  {street = "Nad Predmestím"},
+  {street = "Partizánska"},
+  {street = "Petrovská"},
+  {street = "Predmestie"},
+  {street = "Rohatecká"},
+  {street = "Slnečná"},
+  {street = "Stračinská"},
+  {street = "Sudoměřická"},
+  {street = "Šebestova"},
+  {street = "Veľké trávniky"},
+  {street = "Veľkomoravská"},
+  {street = "Veterná"},
+  {street = "Zlatnícka"},
+  {street = "Zlatnícka dolina"},
+  {street = "Pri pálenici"},
+]

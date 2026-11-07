@@ -1,26 +1,22 @@
-# The okrsky of Heľpa of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/508608.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Heľpa, transcribed by an AI agent in job okrsok-rules-831 from the documents below;
+# The okrsky of Heľpa of the vote of 2020-02-29, data/curated/elections/2020-02-29/okrsky/508608.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Heľpa, transcribed by an AI agent in job okrsok-rules-2499 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Furtačka, Hlavná, Hronská, Mládežnícka, Poľná, Potočná, Rovná, Sama Chalúpku, Strmá, Tichá, Záhradná
-#     okrsok 2: Cintorínska, Farská, Krížna, Mlynská, Partizánska, Školská, Štúrova, Za školou
-#     okrsok 3: Alexyho, Burkovaná, Čaneckého, Furmanská, Hurbanova, Hviezdoslavova, J.C. Hronského, Jánošíkova, Krátka, Mierová, Murgašova, Plickova, Pod Pustinou, Pri štadióne, Studničná
+#     okrsok 1: ulice: Furtačka, Hlavná, Hronská, Mládežnícka, Poľná, Potočná, Rovná, Sama Chalúpku, Strmá, Tichá, Záhradná
+#     okrsok 2: ulice: Cintorínska, Farská, Krížna, Mlynská, Partizánska, Školská, Štúrova, Za školou
+#     okrsok 3: ulice: Alexyho, Burkovaná, Čaneckého, Furmanská, Hurbanova, Hviezdoslavova, J.C. Hronského, Jánošíkova, Krátka, Mierová, Murgašova, Plickova, Pod Pustinou, Pri štadióne, Studničná
 obec = "508608"
 name = "Heľpa"
-okrsky_date = 2022-08-10
+okrsky_date = 2019-11-27
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was searched for. Rozhodnutie starostu č. 6 zo dňa 10.8.2022. The register's addresses without a street (súpisné only) are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "The document lists streets only; the 83 addresses without a street (by súpisné číslo) take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2020-02-29
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1910): The EP 2019 pages of helpa.sk hold voter information and the call of the elections only; no okrsky decision for 2019 live or in the Internet Archive (CDX of helpa.sk 2017–2019 searched; archive briefly offline, then reachable). These are the okrsky of the vote of 2020-02-29 (2020-nrsr), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2020-02-29: 1: 703 → 682, 2: 755 → 755, 3: 732 → 728."
 
 [[document]]
-url = "https://www.helpa.sk/e_download.php?file=data/editor/358sk_2.docx&original=volebn%C3%A9%20okrsky.docx"
-sha256 = "28e87dccbb9741b5234c0faf3840ab96f5f27623d17278d39b5c391b5aa8a5ce"
-title = "Oznámenie o vytvorení volebných okrskov a určení volebných miestností"
-
-[[document]]
-url = "https://www.helpa.sk/zverejnovanie/volby-a-statistika/volby-do-organov-samospravy-obci-2022/"
-sha256 = "e8f8468259be665d717fa1e239cbe5b31a6b799a69b4d7cd6f978c13d5ac4c9f"
-title = "Voľby do orgánov samosprávy obcí 2022"
+url = "https://www.helpa.sk/zverejnovanie/volby-a-statistika/volby-do-nr-sr-2020/"
+sha256 = "4215d369a846d4c65cb341b353366e178e23bacc3bdc6bfbdf5f5181f7eef843"
+title = "Voľby do NR SR 2020 – volebné okrsky (rozhodnutie starostu č. 9/2019 zo dňa 27.11.2019)"
 
 [okrsok.1]
 rules = [

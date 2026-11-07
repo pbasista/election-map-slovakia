@@ -1,20 +1,22 @@
-# The okrsky of Zavar of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/507768.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Zavar, transcribed by an AI agent in job okrsok-rules-918 from the documents below;
+# The okrsky of Zavar of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/507768.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Zavar, transcribed by an AI agent in job okrsok-rules-4407 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
 #     okrsok 1: Ulice: Blavská, Budovateľská, Diaľničná, Hlinícka, Košárska, Majerská, Mlynská, Muškátová, Pažitná, Vetrová, Viktorínova, Záhrady, Záhumenská, Zdravotnícka,
 #     okrsok 2: Ulice: Hlavná, Krátka, Poronda, Športová, Tichá, Na vŕšku, Vinohradská, Výhon, Prílohy
 obec = "507768"
 name = "Zavar"
-okrsky_date = 2022-07-28
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2023-09-30 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2023-09-30 was searched for. The register's 2 addresses without a street (súpisné only) are placed by fill_nearest; the document names streets only."
-okrsky_reused = 2022-10-29
+okrsky_note = "The register streets Logistická, which the document does not name, are placed by fill_nearest."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3777): The 2023 National Council election page (archived 2023-09-23) links 'Oznámenie o utvorení volebných okrskov a určení volebných miestností' (wp-content/uploads/2023/06/...), but the file is gone from the website and the Internet Archive's only capture of it (2024-08-04) is a 404 page. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2024-03-23: 1: 871 → 878, 2: 865 → 894."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated announcement names the election of the President of the Slovak Republic called by the Speaker's decision No. 1/2024 of 8 January 2024 (the 2024 presidential election)."
 
 [[document]]
-url = "https://web.archive.org/web/20220930201932/https://www.zavar.sk/wp-content/uploads/2022/07/Utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti.pdf"
-sha256 = "0efc96e1c93b7319108d46f37da614280e60c62f7bb5717880d6a47a028e8342"
-title = "Rozhodnutie starostu Obce Zavar zo dňa 28. júla 2022 o utvorení volebných okrskov a určení volebných miestností"
+url = "https://www.zavar.sk/data/page/zavar.sk/24228/volebne-okrsky-a-volebne-miestnosti.pdf"
+sha256 = "d0fc9715f0f01889900ca673fa7d02b9cc079e3cfebd81dfcfdd260dd0b89b3e"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby prezidenta Slovenskej republiky"
 
 [okrsok.1]
 rules = [
@@ -32,7 +34,6 @@ rules = [
   {street = "Záhrady"},
   {street = "Záhumenská"},
   {street = "Zdravotnícka"},
-  {street = "Logistická", note = "Logistická (industrial zone by the motorway, 2 addresses) not named in the document; placed with the adjoining Diaľničná.", inferred = true},
 ]
 
 [okrsok.2]

@@ -1,26 +1,27 @@
-# The okrsky of Suchá nad Parnou of the elections of 2018-11-10, data/curated/elections/2018-11-10/okrsky/507571.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Suchá nad Parnou, transcribed by an AI agent in job okrsok-rules-789 from the documents below;
+# The okrsky of Suchá nad Parnou of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/507571.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Suchá nad Parnou, transcribed by an AI agent in job okrsok-rules-1348 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
 #     okrsok 1: Okrsok č. l – je pre voličov od č. 0 – 380 v sále kultúrneho domu
-#     okrsok 2: Okrsok č.2 – je pre voličov od č. 382 – 1300 v zasadačke obecného úradu v kultúrnom dome.
+#     okrsok 2: Okrsok č. 2 – je pre voličov od č. 382 – 1300 v zasadačke obecného úradu v kultúrnom dome.
 obec = "507571"
 name = "Suchá nad Parnou"
-okrsky_note = "These are the okrsky of the elections of 2018-11-10: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was found (okrsky/not-found.json). House numbers are súpisné (the municipality has no streets); applied in both parts (Suchá nad Parnou, Ružová Dolina). Number 381, not mentioned, falls to okrsok 2 (rest)."
-okrsky_reused = 2018-11-10
+okrsky_note = "House numbers are súpisné (the municipality has no streets); applied in both parts (Suchá nad Parnou, Ružová Dolina). Number 381, not mentioned, falls to okrsok 2 (rest)."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1937): No document assigning house numbers to okrsky for this vote: the notice board (suchanadparnou.sk/samosprava/uradna-tabula, live and in the Internet Archive) has for the EP elections 2019 only the mayor's decision naming two rooms in the cultural house (no split), and for the regional elections 2017, the NRSR elections 2023 and the referendum 2026 no okrsky notice or decision; the elections section keeps pages only for 2024. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2019-03-16: 1: 860 → 867, 2: 862 → 868."
 okrsky_date_approximate = "posted"
-okrsky_date_seen = 2018-11-06
-okrsky_date_basis = "The notice-board page says Vyvesené: 6. 11. 2018; the notice names the elections of 10 November 2018. (https://www.suchanadparnou.sk/samosprava/uradna-tabula/oznam-ku-komunalnym-volbam-do-samospravy-obci-v-roku-2018-232.html)"
+okrsky_date_seen = 2019-02-21
+okrsky_date_basis = "The notice-board page says Vyvesené: 21. 2. 2019; the notice names the presidential election of 16 March 2019. (https://www.suchanadparnou.sk/samosprava/uradna-tabula/oznam-k-volbam-prezidenta-sr-v-r-2019-276.html)"
 
 [[document]]
-url = "https://www.suchanadparnou.sk/e_download.php?file=data/uredni_deska/obsah220_9.pdf&original=2018_Oznam%20%20k%20vo%C4%BEb%C3%A1m%20r.%202018.pdf"
-sha256 = "8ad84ef1befab574ce7a62023de36e87b692d30c3e9ecd849de0f1dacd186081"
-title = "Oznam ku komunálnym voľbám do samosprávy obcí v roku 2018"
+url = "https://www.suchanadparnou.sk/e_download.php?file=data/uredni_deska/obsah264_1.pdf&original=2019_Oznam_k-vo%C4%BEb%C3%A1m%20prezidenta%20SR%20r-2019.pdf"
+sha256 = "89821d2dae1130a006a0cc08dbd272ed9c1b165d92b2953ea1c7580268975c76"
+title = "Oznam k voľbám prezidenta Slovenskej republiky v roku 2019"
 
 [[document]]
-url = "https://www.suchanadparnou.sk/samosprava/uradna-tabula/oznam-ku-komunalnym-volbam-do-samospravy-obci-v-roku-2018-232.html"
-sha256 = "4506ec5ea942a22e947761627cc23ee6128be7982d5a8c78cd0cd467ea3f9ee1"
-title = "úradná tabuľa, vyvesené 6. 11. 2018"
+url = "https://www.suchanadparnou.sk/samosprava/uradna-tabula/oznam-k-volbam-prezidenta-sr-v-r-2019-276.html"
+sha256 = "8545a5cc4e1f58ea3f5a0f7da0505345e954210bc20c4d3b77bb8b2911598a55"
+title = "úradná tabuľa, vyvesené 21. 2. 2019"
 
 [okrsok.1]
 rules = [

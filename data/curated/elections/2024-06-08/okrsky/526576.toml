@@ -1,33 +1,34 @@
-# The okrsky of Hnilčík of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/526576.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Hnilčík, transcribed by an AI agent in job okrsok-rules-1037 from the documents below;
+# The okrsky of Hnilčík of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/526576.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Hnilčík, transcribed by an AI agent in job okrsok-rules-4554 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
 #     okrsok 1: Volebný okrsok zahŕňa voličov od súp. čísla 92, miestnu časť Zimná dolina, Cechy, Štolvek, Grétla.
-#     okrsok 2: Volebný okrsok zahŕňa voličov Dolnej časti obce, miestnu časť Ráztoky, Bindt a voličov, ktorí majú trvalý pobyt hlásený len na obci.
+#     okrsok 2: Volebný okrsok zahŕňa voličov Dolnej časti obce, miestnu časť Ráztoky, Bindt a voličov, ktorí majú miesto trvalého bydliska Obec Hnilčík.
 obec = "526576"
 name = "Hnilčík"
-okrsky_date = 2022-11-09
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2024-06-08 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2024-06-08 was searched for. No document of the elections found; the referendum's document (the municipality's 2022 elections page keeps only candidate and results files; the notice board archive has no okrsky document; web.archive.org was offline when tried). 'Od súp. čísla 92' is read as súpisné čísla 92 and up in the part Hnilčík, the 'Dolná časť obce' as the lower numbers; the settlements Zimná dolina, Cechy, Štolvek, Grétla are not parts or streets in the register and are taken to lie within those numbers. Voters registered only on the municipality (okrsok 2) have no address."
-okrsky_reused = 2022-10-29
+okrsky_date = 2024-01-29
+okrsky_note = "The mayor's letter of 29 January 2024, posted on the municipality's presidential elections page with the 2024 election's other documents, sets 2 okrsky, as in 2022 and 2023. Voters with only the municipality as their permanent residence (okrsok 2) have no address."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2024-06-08 setting the okrsky was found (okrsok-rules-5173): No okrsky document of the 2024 European Parliament election found: the EP page and the notice-board archive entry for the 2024 EP election hold only the decision calling it, the voters' information and the okrsky's result protocols (posted 11 Jun 2024). The presidential election's document of 29 Jan 2024 is another vote's. The Internet Archive was reachable. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-06-08 → 2024-03-23: 1: 232 → 232, 2: 242 → 236."
 
 [[document]]
-url = "https://www.obechnilcik.sk/files/2022-11-29-101348-Utvorenie_volebn__ch_okrskov_a_ur__enie_volebn__ch_miestnost__.pdf"
-sha256 = "86ce0ad52667525174a8081c60e6235a7ff07dc4fa5478b0ffb839d8f38e7982"
-title = "Utvorenie volebných okrskov a určenie volebných miestností (referendum 2023), 9. 11. 2022"
+url = "https://www.obechnilcik.sk/files/2024-02-05-102557-Utvorenie_volebn__ch_okrskov_a_ur__enie_volebn__ch_miestnost__.pdf"
+sha256 = "a46ce4e6177c167cb89201706f8b137bd1361366eff35c405733f380f0cd721a"
+title = "Utvorenie volebných okrskov a určenie volebných miestností - odpoveď (Ocú-16/2024-Ocú, 29. 1. 2024)"
 
 [[document]]
-url = "https://www.obechnilcik.sk/samosprava/volby-v-obci/referendum-2023"
-sha256 = "b35a1edbce09c192bb8147252e3860da20c11b3f1b7d9945ec8f3d8c921a9f93"
-title = "Voľby v obci - Referendum 2023"
+url = "https://www.obechnilcik.sk/samosprava/volby-v-obci/volby-prezidenta"
+sha256 = "01964baa725fce841b02e6c5f748cc68eb40b70c2f1a4795bd08e10ef5346ace"
+title = "Voľby v obci - Voľby prezidenta"
 
 [okrsok.1]
 rules = [
-  {part = "Hnilčík", numbers = "92-"},
+  {part = "Hnilčík", numbers = "92-", note = "'od súp. čísla 92' read as súpisné čísla 92 and up in part Hnilčík; the settlements Zimná dolina, Cechy, Štolvek, Grétla are neither parts nor streets in the register (they lie in part Hnilčík) and are taken to be within these numbers"},
 ]
 
 [okrsok.2]
 rules = [
-  {part = "Hnilčík", numbers = "1-91"},
+  {part = "Hnilčík", numbers = "1-91", note = "'Dolná časť obce' taken as the súpisné čísla below 92 in part Hnilčík (okrsok 1 holds 92 and up)", inferred = true},
   {part = "Ráztoky"},
   {part = "Bindt"},
 ]

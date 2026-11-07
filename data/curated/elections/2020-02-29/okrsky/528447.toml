@@ -1,38 +1,40 @@
-# The okrsky of Kráľovský Chlmec of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/528447.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Kráľovský Chlmec, transcribed by an AI agent in job okrsok-rules-673 from the documents below;
+# The okrsky of Kráľovský Chlmec of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/528447.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Kráľovský Chlmec, transcribed by an AI agent in job okrsok-rules-1709 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Boľská Hlavná 2-114, 1-43 Hlboká Hviezdoslavová Kapušanská Kollárova Kostolný rad Kvetná M. Leczu Rázusova Svätušská Trhovisko Záhradná Prameňová
-#     okrsok 2: Bez ulice Hlavná 140 – 142, 156, 162,63-65, 73- 77, 178-184 J.A. Komenského L. Kossutha 60–116, 71 – 119,133, L. Mécsa Podhradská Pri Štadióne 2 -82, 1– 43, Štefánikova Z. Lórántffyovej
+#     okrsok 1: Boľská, Hlavná 2-112, 1-43, Hlboká, Hviezdoslavová, Kapušanská, Kollárova, Kostolný rad, Kvetná, M. Leczu, Rázusova, Svätušská, Trhovisko, Záhradná, Prameňová
+#     okrsok 2: Bez ulice, Hlavná 140 – 142, 156, 162, 63-65, 73-77, 85, 97, 178-184, J.A. Komenského, L. Kossutha 60–116, 71 – 119, 133, L. Mécsa, Podhradská, Pri Štadióne 2 -82, 1– 45, Štefánikova, Z. Lórántffyovej
 #     okrsok 3: FEJSÉŠ
-#     okrsok 4: Ibrányiho 1 - 55 Z. Fábryho
-#     okrsok 5: F. Rákócziho Hlavná 109 – 127, 186 – 208 J. Majlátha L. Kossutha 63 – 69 M. Hunyadiho Nemocničná S. Chalupku
-#     okrsok 6: Dobránska E. Adyho Hlavná 147 – 175, 212 - 262 Horešská Ibrányiho 18 – 28 M. Bela Pribenícka S. Petőfiho Újhelyská
-#     okrsok 7: Cyrila a Metóda Józsefa Attilu Kazinczyho L. Kossutha 1 – 61A, 2 – 54 Ľ. Štúra M. Helmecziho Mierova Pri Štadióne 45 – 77, 86 – 110
+#     okrsok 4: Ibrányiho 1 - 55, Z. Fábryho
+#     okrsok 5: F. Rákócziho, Hlavná 109 – 127, 186 – 208, J. Majlátha, L. Kossutha 63 – 69, M. Hunyadiho, Nemocničná, S. Chalupku
+#     okrsok 6: Dobránska, E. Adyho, Hlavná 147 – 175, 212 - 262, Horešská, Ibrányiho 18 – 28, M. Bela, Pribenícka, S. Petőfiho, Újhelyská
+#     okrsok 7: Cyrila a Metóda, Józsefa Attilu, Kazinczyho, L. Kossutha 1 – 61, 2 – 56, Ľ. Štúra, M. Helmecziho, Mierova, Pri Štadióne 47 – 77, 86 – 110
 obec = "528447"
 name = "Kráľovský Chlmec"
-okrsky_date = 2022-11-08
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2020-02-29 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2020-02-29 was searched for. No document of the 2022 elections found (the live elections page holds the 2026 decision; the 2022 posts of the old website are not archived with it); the referendum's document, dated 08.11.2022. Its \"Bez ulice\" in okrsok 2 means voters registered without an address. Register houses without a street outside part Fejséš, and the numbers of Hlavná, L. Kossutha, Pri Štadióne, Ibrányiho the ranges leave out, go to the nearest placed address (fill_nearest). Ranges read with the parity of their ends (e.g. Hlavná 2-114 even, 1-43 odd); Ibrányiho 18-28 (okrsok 6) taken out of 1-55 (okrsok 4)."
-okrsky_reused = 2022-10-29
+okrsky_note = "Paired ranges of one street (e.g. Hlavná 2-114, 1-43) are read as its even and odd sides. Ibrányiho 1-55 (okrsok 4) overlaps Ibrányiho 18-28 (okrsok 6): 18-28 go to okrsok 6. \"Bez ulice\" in okrsok 2 is the voters registered without an address, given no rule; the register's houses without a street in part Kráľovský Chlmec and the numbers the ranges leave out (gaps in Hlavná, L. Kossutha, Pri Štadióne, Ibrányiho 56-57) take the okrsok of the nearest placed address (fill_nearest). FEJSÉŠ (okrsok 3) is both the street Fejséš and the part Fejséš. \"Pri Štadióne 47 – 77\" (okrsok 7) next to \"1– 45\" (okrsok 2); \"L. Kossutha 2 – 56\" in okrsok 7. The okrsky differ slightly from the 2022 document used for the copy (Hlavná 2-112 in okrsok 1; Hlavná 85, 97 in okrsok 2; Pri Štadióne 1-45 in okrsok 2)."
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2295): No okrsky document of the 2020 NR SR election: the notice-board item 'Voľby do Národnej rady SR 2020' (posted 5.11.2019) holds only the announcement, voter information, postal-vote and delegation forms; the old site's election posts of January–February 2020 archived in the Internet Archive contain no okrsky document. These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 7 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2019-05-25: 1: 1,135 → 1,160, 2: 1,091 → 1,093, 3: 175 → 184, 4: 1,016 → 1,040, 5: 764 → 814, 6: 901 → 929, 7: 886 → 893."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The primátor's announcement (by § 8 of Act 180/2014) of the 7 okrsky and their polling stations names the European Parliament election of 25 May 2019; it states no date of the decision."
 
 [[document]]
-url = "https://www.kralovskychlmec.org/modules/file_storage/download.php?file=c7d88378%7C1472&inline=1"
-sha256 = "07a9685f5349bb136b81a8836647d6face27b1964eec6ec43372032a8a2a4836"
-title = "Informácia o vytvorení volebných okrskov a určení volebných miestností v meste Kráľovský Chlmec pre referendum 2023"
+url = "https://www.kralovskychlmec.org/e_download.php?file=data/uredni_deska/obsah9_2.pdf&original=Ozn%C3%A1menie-o-%C4%8Dase-a-mieste-konania-volieb-do-Eur%C3%B3pskeho-parlamentu.pdf"
+sha256 = "42a5c3f5892a3af178238d045b94c055acb712972c734dd75225acf11ae38e07"
+title = "Oznámenie o čase a mieste konania volieb do Európskeho parlamentu (primátor mesta Kráľovský Chlmec)"
 
 [[document]]
-url = "https://www.kralovskychlmec.org/urad/referendum/"
-sha256 = "b8be444b44eacef0f0f7a2ce31e2775e24489b333d556bcce6b7fe57c74b5283"
-title = "Referendum"
+url = "https://www.kralovskychlmec.org/urad/uradna-tabula/volby-do-europskeho-parlamentu-2019-elections-to-the-european-parliament-2019-10.html"
+sha256 = "374ffcc6e9cf9a10f5f6a1c71046c020895539af4d49c4d7df81058f84828167"
+title = "Úradná tabuľa: Voľby do Európskeho parlamentu 2019"
 
 [okrsok.1]
 rules = [
   {street = "Boľská"},
-  {street = "Hlavná", numbers = "2-114", parity = "even"},
+  {street = "Hlavná", numbers = "2-112", parity = "even"},
   {street = "Hlavná", numbers = "1-43", parity = "odd"},
   {street = "Hlboká"},
-  {street = "Hviezdoslavova", written = "Hviezdoslavová", note = "misspelt ending of Hviezdoslavova"},
+  {street = "Hviezdoslavova", written = "Hviezdoslavová", note = "the document writes the ending with an accent (Hviezdoslavová); the register's Hviezdoslavova"},
   {street = "Kapušanská"},
   {street = "Kollárova"},
   {street = "Kostolný rad"},
@@ -48,27 +50,27 @@ rules = [
 [okrsok.2]
 rules = [
   {street = "Hlavná", numbers = "140-142, 156, 162, 178-184", parity = "even"},
-  {street = "Hlavná", numbers = "63-65, 73-77", parity = "odd"},
+  {street = "Hlavná", numbers = "63-65, 73-77, 85, 97", parity = "odd"},
   {street = "J. A. Komenského", written = "J.A. Komenského"},
   {street = "L. Kossutha", numbers = "60-116", parity = "even"},
   {street = "L. Kossutha", numbers = "71-119, 133", parity = "odd"},
   {street = "L. Mécsa"},
   {street = "Podhradská"},
   {street = "Pri Štadióne", numbers = "2-82", parity = "even"},
-  {street = "Pri Štadióne", numbers = "1-43", parity = "odd"},
+  {street = "Pri Štadióne", numbers = "1-45", parity = "odd"},
   {street = "Štefánikova"},
-  {street = "Z. Lorántffyovej", written = "Z. Lórántffyovej", note = "accent on o differs; the only street of the name"},
+  {street = "Z. Lorántffyovej", written = "Z. Lórántffyovej", note = "the document writes Lórántffyovej with an accent on the o; the only street of the name"},
 ]
 
 [okrsok.3]
 rules = [
-  {street = "Fejséš", written = "FEJSÉŠ"},
   {part = "Fejséš"},
+  {street = "Fejséš", written = "FEJSÉŠ"},
 ]
 
 [okrsok.4]
 rules = [
-  {street = "Ibrányiho", numbers = "1-55", except = "18, 20, 22, 24, 26, 28"},
+  {street = "Ibrányiho", numbers = "1-55", except = "18-28"},
   {street = "Z. Fábryho"},
 ]
 
@@ -91,7 +93,7 @@ rules = [
   {street = "Hlavná", numbers = "147-175", parity = "odd"},
   {street = "Hlavná", numbers = "212-262", parity = "even"},
   {street = "Horešská"},
-  {street = "Ibrányiho", numbers = "18-28", parity = "even"},
+  {street = "Ibrányiho", numbers = "18-28"},
   {street = "M. Bela"},
   {street = "Pribenícka"},
   {street = "S. Petőfiho"},
@@ -100,14 +102,14 @@ rules = [
 
 [okrsok.7]
 rules = [
-  {street = "Cyrila a Metoda", written = "Cyrila a Metóda", note = "accent differs"},
-  {street = "József Attila", written = "Józsefa Attilu", note = "Slovak declined form of the same name"},
+  {street = "Cyrila a Metoda", written = "Cyrila a Metóda", note = "the document writes Metóda, the register Metoda: the same street"},
+  {street = "József Attila", written = "Józsefa Attilu", note = "the document declines the name (Józsefa Attilu); the register writes József Attila"},
   {street = "Kazinczyho"},
-  {street = "L. Kossutha", numbers = "1-61, 61A", parity = "odd"},
-  {street = "L. Kossutha", numbers = "2-54", parity = "even"},
+  {street = "L. Kossutha", numbers = "1-61", parity = "odd"},
+  {street = "L. Kossutha", numbers = "2-56", parity = "even"},
   {street = "Ľ. Štúra"},
   {street = "M. Helmecziho"},
   {street = "Mierova"},
-  {street = "Pri Štadióne", numbers = "45-77", parity = "odd"},
+  {street = "Pri Štadióne", numbers = "47-77", parity = "odd"},
   {street = "Pri Štadióne", numbers = "86-110", parity = "even"},
 ]

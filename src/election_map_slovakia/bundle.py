@@ -208,11 +208,15 @@ out for having no date of publication.
                       supplemented: {obec: {from, day}},
                       okrsky_reused: {obec: day},
                       okrsky_adopted: {obec: day},
+                      okrsky_outliers: {obec: [[okrsok, voters, voters in
+                                                okrsky_adopted's], ...]},
                       okrsky_referendum: {obec: day},
                       okrsky_date_approximate: {obec: {by, (seen)}},
                       okrsky_supplemented: {obec: {from, day}},
                       not_found: [obec, ...],
                       okrsky_unknown: [obec, ...],
+                      special: {obec: {okrsok: {kind, voters, title, url,
+                                                (okresy | facility)}}},
                       boundaries: {day, on, obce: {obec: [obec, ...]}} | null,
                       names: {prefix: persons},
                       parties: {party: [short, name, (logo)]},
@@ -254,14 +258,21 @@ referendum's or another later document; ``day``: that vote's day or the
 document's date; :class:`election_map_slovakia.obvody.Supplement`).
 ``okrsky_reused``, ``okrsky_adopted`` and ``okrsky_referendum`` give the
 obce whose okrsky are another vote's (proven to match, or standing in), or
-from a referendum's document, with its day, and
+from a referendum's document, with its day, ``okrsky_outliers`` those
+okrsky standing in whose voters on the roll differ beyond what the layout
+allows elsewhere (:attr:`election_map_slovakia.obvody.Adoption.outliers`:
+the voters in this election and in the vote standing in), and
 ``okrsky_date_approximate`` and ``okrsky_supplemented`` those whose okrsky
 document is dated so, or filled in so
 (:func:`election_map_slovakia.obvody.okrsky_origin`), of the obce whose
 okrsky are drawn; ``not_found`` the
 obce of several council obvody without a rule set whose document was
 searched for and not found; ``okrsky_unknown`` the obce that voted in
-several okrsky none of which is drawn (:func:`place_facts`);
+several okrsky none of which is drawn (:func:`place_facts`); ``special``
+the okrsky without territory that voted, which the map never draws and the
+ballots name (:func:`special_okrsky`, :mod:`election_map_slovakia.special`:
+``covid`` with the ``okresy`` it serves, ``prison`` with its ``facility``;
+``voters`` on its roll, ``title`` and ``url`` the source);
 ``boundaries``, for an election drawn on a later one's boundaries (``on``,
 its slug), the obce whose land moved since ``day``
 (:func:`boundary_changes`);
@@ -315,6 +326,7 @@ from election_map_slovakia import (
     parallel,
     progress,
     research,
+    special,
     translate,
 )
 from election_map_slovakia.config import Config
@@ -364,6 +376,7 @@ ORIGINS = (
     "supplemented",
     "okrsky_reused",
     "okrsky_adopted",
+    "okrsky_outliers",
     "okrsky_referendum",
     "okrsky_date_approximate",
     "okrsky_supplemented",
@@ -1219,6 +1232,7 @@ def site_index(
             c for c in places["not_found"] if "oz" not in props.get(c, {})
         ),
         "okrsky_unknown": places["okrsky_unknown"],
+        "special": places["special"],
         "boundaries": places["boundaries"],
         "names": {prefix: len(rows) for prefix, rows in shards.items()},
         "parties": {
@@ -1333,21 +1347,25 @@ def boundary_changes(election_dir: Path) -> dict[str, Any] | None:
     return {"day": str(table["compared"]), "obce": dict(sorted(obce.items()))}
 
 
-def several_okrsky(live: Live | None) -> set[str]:
+def several_okrsky(live: Live | None, without: Collection[str] = ()) -> set[str]:
     """Return the obce that voted in several okrsky, by the final results.
 
     *live* is those results (:func:`final_okrsky`), None before them (then
-    none is known), by the okrsky of the contests that cover an obec whole:
-    its mayor's, or the country-wide ones.
+    none is known), by the okrsky of the contests that cover an obec whole,
+    those not split into obvody: its mayor's, its kraj's president's (a
+    kraj is made of whole obce; a regional-only election has nothing
+    else), or the country-wide ones; of the okrsky with territory, those
+    not in *without* (the special okrsky, ``<obec>/<n>``,
+    :mod:`election_map_slovakia.special`), which the map never draws.
     """
     numbers: dict[str, set[str]] = defaultdict(set)
     for files in live.okrsky.values() if live else ():
         for contest, areas in files.items():
-            kind = contests.parse(contest).kind
-            if kind.name == "starosta" or kind.scope == "country":
+            if contests.parse(contest).kind.sub != "obvod":
                 for key in areas:
-                    obec, _, n = key.partition("/")
-                    numbers[obec].add(n)
+                    if key not in without:
+                        obec, _, n = key.partition("/")
+                        numbers[obec].add(n)
     return {obec for obec, ns in numbers.items() if len(ns) > 1}
 
 
@@ -1356,6 +1374,8 @@ def place_facts(
     election: config.Election,
     several: Collection[str],
     drawn: Collection[str],
+    specials: special.Specials,
+    live: Live | None,
 ) -> dict[str, Any]:
     """Return what the ballots of an obec say of its data besides the rules.
 
@@ -1365,7 +1385,9 @@ def place_facts(
     (:func:`several_okrsky`), those whose okrsky the map does not draw
     (*drawn*, ``geo`` index ``okrsky.drawn``); ``boundaries``
     (:func:`boundary_changes`) with ``on``, the slug of the election whose
-    boundaries are drawn (:func:`drawn_on`).
+    boundaries are drawn (:func:`drawn_on`); ``special``, its special
+    okrsky *specials* that voted, by the final results *live*
+    (:func:`special_okrsky`).
     """
     from election_map_slovakia import obvodrules  # it imports what imports this
 
@@ -1374,7 +1396,61 @@ def place_facts(
         "not_found": sorted(obvodrules.load_not_found(cfg, election)),
         "okrsky_unknown": sorted(set(several) - set(drawn)),
         "boundaries": changes and {**changes, "on": drawn_on(cfg, election).slug},
+        "special": special_okrsky(specials, live),
     }
+
+
+def special_okrsky(
+    specials: special.Specials, live: Live | None
+) -> dict[str, dict[str, dict[str, Any]]]:
+    """Return ``special`` of ``data/index.json``: obec → okrsok → what it is.
+
+    Of *specials* (:mod:`election_map_slovakia.special`), those the final
+    results *live* have (none before them): ``kind``, ``voters`` on the
+    roll, ``title`` and ``url`` of what explains it, and of a COVID-19
+    special okrsok its ``okresy`` (the okresy whose special okrsky the obec
+    holds), of a prison's the ``facility``. A COVID-19 special okrsok voted
+    only where a voter asked for one (ŠÚ SR's ``Áno``): the obec's special
+    okrsky with results must be as many as voted, a prison's must have
+    them, else the package, the curated facts and the results disagree.
+    """
+    if live is None:
+        return {}
+    voters: dict[str, int] = {}
+    for files in live.okrsky.values():
+        for areas in files.values():
+            for key, (eligible, *_) in areas.items():
+                if eligible is not None:
+                    voters.setdefault(key, eligible)
+    out: dict[str, dict[str, dict[str, Any]]] = {}
+    for obec, okrsky in specials.items():
+        found = {n: s for n, s in okrsky.items() if f"{obec}/{n}" in voters}
+        # The obec's COVID-19 special okrsky share their okresy, which of
+        # them is whose not being told.
+        covid = next((s for s in okrsky.values() if s.kind == special.COVID), None)
+        voted = sum(s.kind == special.PRISON for s in okrsky.values()) + (
+            sum(v for _, v in covid.okresy) if covid else 0
+        )
+        if len(found) != voted:
+            raise BuildError(
+                f"obec {obec}: special okrsky {sorted(okrsky)}, of which the results"
+                f" have {sorted(found)}, but {voted} voted"
+            )
+        out[obec] = {
+            str(n): {
+                "kind": s.kind,
+                "voters": voters[f"{obec}/{n}"],
+                "title": s.title,
+                "url": s.url,
+                **(
+                    {"facility": s.facility}
+                    if s.kind == special.PRISON
+                    else {"okresy": [name for name, _ in s.okresy]}
+                ),
+            }
+            for n, s in found.items()
+        }
+    return {obec: k for obec, k in out.items() if k}
 
 
 def election_inputs(election: config.Election) -> set[str]:
@@ -1773,7 +1849,11 @@ def _election_files(
     )
     shards = name_shards(data)
     content |= {f"{DATA_DIR}/names/{p}.json": rows for p, rows in shards.items()}
-    several = several_okrsky(live)
+    from election_map_slovakia import okrsokrules  # it imports what imports this
+
+    # Only the final results tell which special okrsky voted.
+    specials = okrsokrules.special_okrsky(cfg, election) if live else {}
+    several = several_okrsky(live, special.keys(specials))
     drawn = orjson.loads((geo_dir / "index.json").read_bytes())["okrsky"]["drawn"]
     index = site_index(
         data,
@@ -1783,7 +1863,7 @@ def _election_files(
         election.slug,
         rule_sets,
         obvody.okrsok_rule_sets(curated, loaded),
-        place_facts(cfg, election, several, drawn),
+        place_facts(cfg, election, several, drawn, specials, live),
         part,
     )
     if election.kind == config.BY_ELECTION:

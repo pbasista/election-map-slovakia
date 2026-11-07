@@ -1,21 +1,22 @@
-# The okrsky of Lužianky of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/580899.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Lužianky, transcribed by an AI agent in job okrsok-rules-1018 from the documents below;
+# The okrsky of Lužianky of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/580899.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Lužianky, transcribed by an AI agent in job okrsok-rules-4822 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Okrsok I. tvoria Egrešová ulica, Horákova, Jahodová ulica, Kaplanova, Malinová ulica, Mesačná, Obežná, Pri trati,, Rastislavova, Smreková ulica, Topoľová ulica a občania s pobytom len obec Lužianky.
-#     okrsok 2: Okrsok II tvoria ulice: Ciolkovského, Dunajského, Edisonova, Hlohovecká, Hronského, Kajsa, Kajsa II., Korytovská, Na Holotke, Na ihrisko, Nejedlého, Počašie, Pod Hliníkom, Prúdova, Radošinská, Sasinkova, Slivková ulica, Športová, Švantnerova, Tatranská, Teslova, Urbanova, Venušina, Vinárska, Vodárenská a Závodníkova.
+#     okrsok 1: Okrsok I. Ulice: Bazová ulica, Egrešová ulica, Horákova, Jahodová ulica, Jaseňová ulica, Kaplanova, Malinová ulica, Mesačná, Obežná, Pri trati, Rastislavova, Smreková ulica, Topoľová ulica, Lužianky 0
+#     okrsok 2: Okrsok II Ulice: Ciolkovského, Dunajského, Edisonova, Gaštanová ulica, Hlohovecká, Hronského, Kajsa, Kajsa II., Korytovská, Na Holotke, Na ihrisko, Nejedlého, Počašie, Pod Hliníkom, Prúdova, Radošinská, Ríbezľová ulica, Sasinkova, Slivková ulica, Športová, Švantnerova, Tatranská, Teslova, Urbanova, Venušina, Vinárska, Višňová ulica, Vodárenská, Závodníkova
 obec = "580899"
 name = "Lužianky"
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2026-07-04 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2026-07-04 was searched for. The mayor's 2022 announcement is not published; the okrsky come from the obec's newsletter (read from the rendered page, the text layer mixes the columns). 'občania s pobytom len obec Lužianky' (okrsok I) are voters registered without an address, no rule. The newsletter leaves out Čerešňová ulica, Cez panské, Dolné Hony, Golfová, Lipová ulica, Višňová ulica (new streets) and the addresses without a street: fill_nearest places them."
-okrsky_reused = 2022-10-29
+okrsky_note = "'Lužianky 0' in okrsok I are the voters registered without a street address (no rule). The document names Bazová ulica and Jaseňová ulica (okrsok I), Gaštanová ulica and Ríbezľová ulica (okrsok II), which this vote's address register lacks: left out. It leaves out Čerešňová ulica, Cez panské, Dolné Hony, Golfová, Lipová ulica and the addresses without a street: fill_nearest places them."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2026-07-04 setting the okrsky was found (okrsok-rules-5411): The page 'Referendum 2026' holds only the president's decision (60/2026 Z. z.), the voter information (sk/hu) and the results; no okrsky document of this referendum on it, the notice board or the news. The 'Vytvorenie volebných okrskov a určenie vol. miestností' on the page 'Komunálne voľby 2026' (22.7.2026) is for the municipal and regional elections of autumn 2026, after the referendum, so it is not this vote's. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-07-04 → 2024-06-08: 1: 1,434 → 1,378, 2: 1,370 → 1,299."
 okrsky_date_approximate = "named"
-okrsky_date_basis = "The okrsky are in the article 'Voľby do orgánov samosprávneho kraja a do orgánov samosprávy obce' of the obec's newsletter Lužianske novinky 2-3/2022 (October 2022), which says 'Voľby sa budú konať 29. 10. 2022 … V obci máme vytvorené dva okrsky' and lists the 2022 candidates. No decision date; the newsletter's page states no publication date of this issue and the earliest Internet Archive capture of the PDF is 2024-02-09 (after the vote)."
+okrsky_date_basis = "The document is headed 'VOLBY DO EURÓPSKEHO PARLAMENTU 8. jún 2024' and lists the streets of Okrsok I. and Okrsok II; it states no decision date (the PDF's metadata says it was created on 2024-02-23)."
 
 [[document]]
-url = "https://www.luzianky.sk/data/advertisement/luzianky.sk/167302/90515_luzianske-novinky-2-3-2022.pdf"
-sha256 = "5bb0ccad1c655ebb50b8380117afe4e052cc42e0cc153c699e9aa2e7b1c23011"
-title = "Lužianske novinky, ročník XXV, číslo 2-3, október 2022 – Voľby do orgánov samosprávneho kraja a do orgánov samosprávy obce (s. 3)"
+url = "https://www.luzianky.sk/data/news_files/luzianky.sk/133228/okrsky.pdf"
+sha256 = "a572d53f3a11c707819bd5e24491e4cca467482b27e76b93d3204e09e6f1aa50"
+title = "Voľby do Európskeho parlamentu 8. jún 2024 – volebné miestnosti, Okrsok I. a Okrsok II – ulice"
 
 [okrsok.1]
 rules = [
@@ -47,7 +48,7 @@ rules = [
   {street = "Nejedlého"},
   {street = "Počašie"},
   {street = "Pod Hliníkom"},
-  {street = "Prúdová", written = "Prúdova", note = "the newsletter's spelling (vowel length)"},
+  {street = "Prúdová", written = "Prúdova", note = "the document writes Prúdová with a short final vowel"},
   {street = "Radošinská"},
   {street = "Sasinkova"},
   {street = "Slivková ulica"},
@@ -60,4 +61,5 @@ rules = [
   {street = "Vinárska"},
   {street = "Vodárenská"},
   {street = "Závodníkova"},
+  {street = "Višňová ulica"},
 ]

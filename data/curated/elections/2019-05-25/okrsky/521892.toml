@@ -1,25 +1,21 @@
-# The okrsky of Poproč of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/521892.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Poproč, transcribed by an AI agent in job okrsok-rules-815 from the documents below;
+# The okrsky of Poproč of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/521892.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Poproč, transcribed by an AI agent in job okrsok-rules-1302 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: pre voličov bývajúcich vo východnej časti obce + Partizánska ul. - ulice Banícka, Brezová, Horská, Jarná, Lesná, Letná, Mieru, Oľšavská, Poľná, Slnečná, Športová, Východná, Záhradná, Partizánska
-#     okrsok 2: pre voličov bývajúcich v západnej časti obce - ulice Družstevná, Kostolná, Krátka, Kultúrna, Lipová, Nová, Obchodná, Potočná, Požiarna, Sadová, Školská, Západná
+#     okrsok 1: Banícka, Brezová, Horská, Jarná, Lesná, Letná, Mieru, Oľšavská, Poľná, Slnečná, Športová, Východná, Záhradná, Partizánska
+#     okrsok 2: Družstevná, Kostolná, Krátka, Kultúrna, Lipová, Nová, Obchodná, Potočná, Požiarna, Sadová, Školská, Západná
 obec = "521892"
 name = "Poproč"
-okrsky_date = 2022-11-09
+okrsky_date = 2019-01-25
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was searched for. No document of the elections found (the 2022 file 2022_07_11_oznamenie_okrsky.pdf linked from the archived elections page is neither live nor archived; the migrated 'volby-do-samosprav' copy is the 2018 one); the referendum's document of 09.11.2022, whose okrsky (east part + Partizánska / west part) are those described in the 2018 document and match the ŠÚ SR count and voters. Register addresses without a street (82) are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "Every register street is listed; the addresses without a street go by fill_nearest. The old website's file is gone; the Internet Archive copy is used."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1892): The 2019 EP files kept (EP_2019.pdf = voter information, HP e-mail notice, results) contain no okrsky document; none found on the website or in the Internet Archive. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2019-03-16: 1: 1,172 → 1,170, 2: 1,071 → 1,079."
 
 [[document]]
-url = "https://poproc.sk/wp-content/uploads/dokumenty/referendum/Oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti.pdf"
-sha256 = "1f479471533b0e195268d131b045663e1520a89fc2eed5c1b73491981b271dba"
-title = "Oznámenie o utvorení volebných okrskov a určenie volebných miestností pre hlasovanie v referende vyhláseného na 21. januára 2023"
-
-[[document]]
-url = "https://poproc.sk/dokument/oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti/"
-sha256 = "303d056cb2ef924aead2e65c4cd2795f8fc4dda37d78610a417da88b40b50210"
-title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností"
+url = "https://web.archive.org/web/20211228220726/https://www.poproc.sk/files/2019-01-25-075719-prezident_okrsky.pdf"
+sha256 = "523d98602f57bbe28688e018ea7e06d59b148f68b72072a423f402cf058d7334"
+title = "Informácia o utvorení volebných okrskov, určení volebných miestností a čase konania volieb prezidenta Slovenskej republiky v roku 2019"
 
 [okrsok.1]
 rules = [

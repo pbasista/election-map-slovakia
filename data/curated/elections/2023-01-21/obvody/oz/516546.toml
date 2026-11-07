@@ -1,38 +1,29 @@
-# The okrsky of Záhorce of the elections of 2026-10-24, data/curated/elections/2026-10-24/obvody/oz/516546.toml, copied by `ems job reuse` (reused). Its header there:
+# The okrsky of Záhorce of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/516546.toml, standing in, by `ems job reuse`. Its header there:
 #   Council obvody of Záhorce (516546), Veľký Krtíš.
-#   Transcribed by an AI agent in job obvod-rules-171 from the documents below;
+#   Transcribed by an AI agent in job obvod-rules-376 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per obvod, verbatim:
-#     obvod 1: viacmandátový volebný obvod č. 1 pre voľby poslancov v časti obce Záhorce, v ktorom sa budú voliť piati poslanci,
-#     obvod 2: viacmandátový volebný obvod č. 2 pre voľby poslancov v časti obce Selešťany, v ktorom sa budú voliť dvaja poslanci,
-#   Okrsky added by an AI agent in job okrsok-rules-170 from the documents below;
+#     obvod 1: viacmandátový volebný obvod č. 1 pre voľby poslancov v časti obce Záhorce, v ktorom sa budú voliť piati poslanci
+#     obvod 2: viacmandátový volebný obvod č. 2 pre voľby poslancov v časti obce Selešťany, v ktorom sa budú voliť dvaja poslanci
+#   Okrsky added by an AI agent in job okrsok-rules-1237 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Záhorce
-#     okrsok 2: Selešťany
+#     okrsok 1: viacmandátový volebný obvod č. 1 pre voľby poslancov v časti obce Záhorce, v ktorom sa budú voliť piati poslanci
+#     okrsok 2: viacmandátový volebný obvod č. 2 pre voľby poslancov v časti obce Selešťany, v ktorom sa budú voliť dvaja poslanci
 obec = "516546"
 name = "Záhorce"
-date = 2026-06-29
-note = "The council obvody of the elections of 2026-10-24."
-reused = 2026-10-24
-okrsky_date = 2026-07-23
-okrsky_note = "These are the okrsky of the elections of 2026-10-24: in 2023-01-21 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2023-01-21 was searched for."
-okrsky_reused = 2026-10-24
+date = 2022-06-27
+note = "The council obvody of the vote of 2022-10-29: they only place the okrsky."
+reused = 2022-10-29
+okrsky_date = 2022-06-27
+okrsky_note = "Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2023-01-21 setting the okrsky was found (okrsok-rules-3303): The current elections pages start with 2024; the Internet Archive keeps the notice-board posts for the 2023 referendum and NR SR 2023 (call, e-mail addresses) without an okrsky decision (one NR SR 2023 post could not be retrieved), the NR SR 2020 post only as a server error, and nothing for 2017–2019. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-01-21 → 2022-10-29: 1: 450 → 466, 2: 88 → 102."
 
 [[document]]
-url = "https://www.zahorce.sk/e_download.php?file=/data/uredni_deska/obsah365_4.pdf&original=Uznesenie%20UZN%2029.6.2026%20-%20final%20-%20opraven%C3%BD.pdf"
-sha256 = "702f7d89e2b5fcddd6440ba661596a1a504633be2ac4e47d5522f9e243e6b9f6"
-title = "Uznesenie OZ č. 3/2026 zo zasadnutia 29. júna 2026 (uznesenie č. 08-03/2026)"
-
-[[document]]
-url = "https://www.zahorce.sk/e_download.php?file=/data/multipage/editor/editor-11-39-sk_1.pdf&original=Ozn%C3%A1menie%20-%20web%202026.pdf"
-sha256 = "044940e4e679dc276d57c520d59900ccef0851a765ae0e6b4a2989225379d2a9"
-title = "Oznámenie o určení počtu poslancov a o utvorení volebných okrskov pre voľby do orgánov samosprávy obcí 24. októbra 2026"
-
-[[document]]
-url = "https://www.zahorce.sk/e_download.php?file=/data/multipage/editor/editor-11-39-sk_3.pdf&original=Ur%C5%A1enie%20obvodov%20-%20OSO.pdf"
-sha256 = "a14726239f7438db4007e8eab5edf7826599d90a5c8f399d4722f40b002cf385"
-title = "Určenie volebných okrskov a volebných miestností (23.7.2026)"
+url = "https://www.zahorce.sk/e_download.php?file=data/uredni_deska/obsah210_4.pdf&original=Uznesenie%20UZN%2027.6.2022_final.pdf"
+sha256 = "7c298ed76dc12cbbd085890b6a1fe473ccb7a72d3a526300396ee371e13930bc"
+title = "Uznesenia OZ Záhorce z 27.6.2022, uznesenie č. 07-02/2022"
 
 [obvod.1]
 seats = 5

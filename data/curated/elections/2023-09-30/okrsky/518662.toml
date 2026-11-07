@@ -1,28 +1,35 @@
-# The okrsky of Očová of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/518662.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Očová, transcribed by an AI agent in job okrsok-rules-685 from the documents below;
+# The okrsky of Očová of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/518662.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Očová, transcribed by an AI agent in job okrsok-rules-4129 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: občania bývajúci na uliciach: SNP, ČSA, J.R.Poničana, Mieru, Kalinovce, Bugárovo, Trnavy, Breziny, bez označenia ulíc
-#     okrsok 2: občania bývajúci na uliciach: Letecká, Medzinárodného dňa detí, Mateja Bela Funtíka, Sadovnícka, Partizánska, Lesná, Pri vleku, Dvoriská, Vodárenská, Športová, Jána Palárika, Budovateľská, Červeného kríža, Medzinárodného dňa žien, Februárového víťazstva, Jána Ťavodu, 1.mája, Gagarinova, Slnečná, Nábrežná, Dolná, Komenského, Družstevná, Štefana Pilárika
-#     okrsok 3: občania bývajúci na Holcovom Majeri a Obchoditej
+#     okrsok 1: SNP, ČSA, J. R. Poničana, Mieru, Bugárovo, Breziny, Kalinovec, Trnavy, Očová - bez ulice a čísla domu
+#     okrsok 2: 1. mája, Budovateľská, Červeného kríža, Dolná, Družstevná, Dvoriská, Februárového víťazstva, Gagarinova, Jána Palárika, Jána Ťavodu, Komenského, Lesná, Letecká, Mateja Bela Funtíka, Medzinárodného dňa detí, Medzinárodného dňa žien, Nábrežná, Partizánska, Pri vleku, Sadovnícka, Slnečná, Športová, Štefana Pilárika, Vodárenská
+#     okrsok 3: Holcov Majer, Obchoditá
 obec = "518662"
 name = "Očová"
-okrsky_date = 2022-11-11
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2023-09-30 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2023-09-30 was searched for. No usable document of the elections found: the 2022 elections page (komunalne-volby-2022.html, 5.8.2022) gives only the three polling stations; the referendum's document (on the referendum 2023 page, published 11.11.2022, updated 6.12.2022) lists the streets. Okrsok 3 (Holcov Majer, Obchoditá) fits its 124 voters. Okrsok 1 includes 'Kalinovce, Bugárovo, Trnavy, Breziny' (settlements, not streets in the register) and 'bez označenia ulíc' (houses without street): the register's addresses without a street are given to okrsok 1 by its rest rule, as the document places these unnamed-street settlements there."
-okrsky_reused = 2022-10-29
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3499): No document assigning streets to okrsky for this vote: ocova.sk's elections pages (Voľby a referendum: 2018, EP 2019, NRSR 2020, NRSR 2023, local 2025, referendum 2026) and the Internet Archive's captures (2019 elections pages and files) hold only general voter information, e-mail addresses, results and, for 2025 and the referendum 2026, decisions naming the three polling stations without streets; there is no page for the 2017 regional, 2019 presidential or 2024 EP elections. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2024-03-23: 1: 916 → 923, 2: 938 → 946, 3: 123 → 124."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-26
+okrsky_date_basis = "The elections page lists \"Volebne okrsky, Zverejnené 26.1.2024\"; the document names the presidential election. (https://www.ocova.sk/volby-prezidenta-2024.html)"
 
 [[document]]
-url = "https://www.ocova.sk/referendum-2023.html"
-sha256 = "1d284671298218d46b3e07d62467eaa348ce4adbf29367465e9375e2e93f6c2c"
-title = "Referendum 2023 – Vytvorenie volebných okrskov, určenie volebných miestností pre referendum"
+url = "https://www.ocova.sk/download_file_f.php?id=1988068"
+sha256 = "0ff72036da147c2b2093dd4b7fa42e8d6db14f86c0695666de1d5924b0c5e117"
+title = "Vytvorenie volebných okrskov, určenie volebných miestností pre voľby prezidenta SR (Volebne okrsky)"
+
+[[document]]
+url = "https://www.ocova.sk/volebne-okrsky-oznam-1/mid/526139/.html"
+sha256 = "1993920c1a515e2bf169ca1e824256fa048b8de264c5aef56b34e1c3362b7d8c"
+title = "Volebné okrsky – oznam, Voľby prezidenta 2024"
 
 [okrsok.1]
 rules = [
-  {rest = true},
   {street = "SNP"},
   {street = "ČSA"},
-  {street = "J. R. Poničana", written = "J.R.Poničana"},
+  {street = "J. R. Poničana"},
   {street = "Mieru"},
+  {rest = true, note = "Bugárovo, Breziny, Kalinovec, Trnavy (settlements not in the register as streets or parts) and 'Očová - bez ulice a čísla domu' take the rest."},
 ]
 
 [okrsok.2]
@@ -43,7 +50,7 @@ rules = [
   {street = "Medzinárodného dňa žien"},
   {street = "Februárového víťazstva"},
   {street = "Jána Ťavodu"},
-  {street = "1.mája"},
+  {street = "1.mája", written = "1. mája"},
   {street = "Gagarinova"},
   {street = "Slnečná"},
   {street = "Nábrežná"},
@@ -55,6 +62,6 @@ rules = [
 
 [okrsok.3]
 rules = [
-  {street = "Holcov Majer", written = "Holcovom Majeri", note = "Locative case of Holcov Majer."},
-  {street = "Obchoditá", written = "Obchoditej", note = "Locative case of Obchoditá."},
+  {street = "Holcov Majer"},
+  {street = "Obchoditá"},
 ]

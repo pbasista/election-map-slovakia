@@ -8,12 +8,11 @@
 #   okrsok 5: sídlisko Medvedzie III., kde patria bytovky číslo: 145/21, 142/24, 144/26, 146/27, 147/28, 148/29, 149/30, 150/32, 151/33, 154/34, 152/35, 153/36, 259/51.
 #   okrsok 6: mestská časť Krásna Hôrka, kde patria ulice: M.R.Štefánika, Staničná, Hrdinov, Zvoničná, J. Matušku, Železničná, Nová, Breziny.
 #   okrsok 7: mestská časť Medvedzie, kde patria ulice: Pod Velingom, Konopná, Družstevná, Hríbiky.
-#   okrsok 8: Špeciálna okrsková volebná komisia v Tvrdošíne (špeciálne hlasovanie z dôvodu ochrany verejného zdravia pred ochorením COVID-19)
 obec = "510114"
 name = "Tvrdošín"
 okrsky_date = 2022-11-09
 okrsky_fill = "nearest"
-okrsky_note = "The mayor's decision of 09.11.2022 (a scan, read from the image) forms 7 okrsky for the referendum; the Statistical Office counts an 8th with 3 voters, the special okrsok of the Špeciálna okrsková volebná komisia in Tvrdošín (special voting for voters in COVID-19 isolation, named on the referendum page), which has no addresses: okrsok 8 is addressless. Bytovky are matched by their orientačné numbers on the register's street Sídlisko (the document writes súpisné/orientačné); 254/126 is the only address of Michalské námestie; CSS Orava 136 is súpisné 136; SPŠ 133/17 is orientačné 17 of Sídlisko; 155 – byt v ZŠ is súpisné 155. Addresses without a street (in all three parts) and Sídlisko addresses not among the listed bytovky are placed by fill_nearest."
+okrsky_note = "The mayor's decision of 09.11.2022 (a scan, read from the image) forms 7 okrsky for the referendum; the Statistical Office counts an 8th okrsok with 3 voters, which the referendum page names as the special okrsok of the Špeciálna okrsková volebná komisia in Tvrdošín (special voting for voters in COVID-19 isolation): the COVID-19 special okrsok of okres Tvrdošín (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml), kept out of these okrsky. Bytovky are matched by their orientačné numbers on the register's street Sídlisko (the document writes súpisné/orientačné); 254/126 is the only address of Michalské námestie; CSS Orava 136 is súpisné 136; SPŠ 133/17 is orientačné 17 of Sídlisko; 155 – byt v ZŠ is súpisné 155. Addresses without a street (in all three parts) and Sídlisko addresses not among the listed bytovky are placed by fill_nearest."
 
 [[document]]
 url = "https://www.tvrdosin.sk/e_download.php?file=data/editor/401sk_1.pdf&original=Volebn%C3%A9%20okrsky.pdf"
@@ -90,6 +89,3 @@ rules = [
   {street = "Družstevná"},
   {street = "Hríbiky"},
 ]
-
-[okrsok.8]
-addressless = true

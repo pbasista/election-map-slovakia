@@ -1,26 +1,29 @@
-# The okrsky of Kokava nad Rimavicou of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/511498.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Kokava nad Rimavicou, transcribed by an AI agent in job okrsok-rules-694 from the documents below;
+# The okrsky of Kokava nad Rimavicou of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/511498.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Kokava nad Rimavicou, transcribed by an AI agent in job okrsok-rules-630 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: zahŕňa ulice: Chorepa, Huta, Hámor, I.Krasku, Nám. Požiarnikov, Nám. 1. mája, Požarina, Sinec, Červenej armády, Bakulíniho, Mateja Hrebendu, Kyseľovo Sládkovičova ,F.S.Figuliho. Línia
-#     okrsok 2: zahŕňa ulice: Hviezdoslavova, J.Kráľa, Štúrova, Komenského, Kotoška , SNP, Partizánska, Kukučínova, Ďurovka, Vyšná Chorepa, Diel, Kokavka, Čertove Potočky, Farkaška, Lipovo, Močiar, Háj, Belá , Potočky, Liešnica, Vlkovo, Záklično
-#     okrsok 3: zahŕňa ulice: Dobšinského, Jánošíkova, Daxnerova, Francisciho, Sídlisko Rovienka, Lúčna, Riečna, Rovienka
+#     okrsok 1: zahŕňa ulice: Chorepa, Huta, Hámor, I.Krasku, Nám. Požiarnikov, Nám. 1. mája, Požarina, Sinec, Červenej armády, Bakulíniho, Mateja Hrebendu, Kyseľovo Sládkovičova ,F.S.Figuliho.
+#     okrsok 2: zahŕňa ulice: Hviezdoslavova, J.Kráľa, Štúrova, Komenského, Kotoška , SNP, Partizánska, Kukučínova, Ďurovka, Vyšná Chorepa, Diel, Kokavka, Čertove Potočky, Farkaška, Lipovo, Močiar, Háj, Belá , Potočky, Liešnica, Vlkovo
+#     okrsok 3: zahŕňa ulice: Dobšinského, Jánošíkova, Daxnerova, Francisciho, Rovienka, Lúčna, Riečna
 obec = "511498"
 name = "Kokava nad Rimavicou"
-okrsky_date = 2022-07-14
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was searched for. The mayor's list of okrsky and streets for the elections of 29.10.2022, published on the elections page on 14.7.2022 (the document states no date of its own: `date` is the publication date the elections page gives, 'Zverejnené 14.7.2022'; its voter counts 758/808/701 fit the Statistical Office's). Slopovo (not in the document) and the houses without a street (súpisné only, 480) are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "The mayor's list of okrsky and streets for the municipal elections of 10 November 2018. It does not name Línia, Záklično, Sídlisko Rovienka or Slopovo, nor the houses without a street; these are placed by fill_nearest."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1749): The mayor's decision for the European Parliament election 2019 (KNR-107/2019 of 15.02.2019) on the municipality's elections page (https://www.kokava.sk/download_file_f.php?id=1092201) gives only the three okrsky with their polling stations (Kultúrny dom Nám. 1. mája 10; Obecný úrad Nám. 1. mája 1; Materská škola Dobšinského 29), no streets. The municipality has one part, so okrsky cannot be assigned by part; no street list valid for this vote was found on the website (live). Later votes' street lists (2018, 2022 onward) exist but are not this vote's. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 3 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2018-09-11
+okrsky_date_basis = "The document states no date; the elections page lists it as 'Zverejnené 11.9.2018'. (https://www.kokava.sk/volby-do-organov-samospravy-obci-2018.html)"
 
 [[document]]
-url = "https://www.kokava.sk/download_file_f.php?id=1710918"
-sha256 = "5adad577568b6ffbc39c7b7766373ae25f9ca70a6de3c96c934fd2a6113a720c"
-title = "Zoznam okrskov a ulíc"
+url = "https://www.kokava.sk/download_file_f.php?id=1016033"
+sha256 = "79b01d77ada8d4eea6b392d6a9689a440489b9752eb45d29fbcb254dda57dddc"
+title = "Informácia o počte okrskov"
 
 [[document]]
-url = "https://www.kokava.sk/volby-do-organov-samospravy-obci.html"
-sha256 = "cc60e0a961bf2cebc89e171a1e27f9e8971f7848c75f160c97ff1614f184bd94"
-title = "Voľby do orgánov samosprávy obcí (2022)"
+url = "https://www.kokava.sk/volby-do-organov-samospravy-obci-2018.html"
+sha256 = "0762242d5967076a2cb7c6d6a730d4a86105055864a2371fac37a65ffafd3e7e"
+title = "Elections page"
 
 [okrsok.1]
 rules = [
@@ -38,7 +41,6 @@ rules = [
   {street = "Kyseľovo"},
   {street = "Sládkovičova"},
   {street = "F.S.Figuliho"},
-  {street = "Línia"},
 ]
 
 [okrsok.2]
@@ -64,7 +66,6 @@ rules = [
   {street = "Potočky"},
   {street = "Liešnica"},
   {street = "Vlkovo"},
-  {street = "Záklično"},
 ]
 
 [okrsok.3]
@@ -73,8 +74,7 @@ rules = [
   {street = "Jánošíkova"},
   {street = "Daxnerova"},
   {street = "Francisciho"},
-  {street = "Sídlisko Rovienka"},
+  {street = "Rovienka"},
   {street = "Lúčna"},
   {street = "Riečna"},
-  {street = "Rovienka"},
 ]

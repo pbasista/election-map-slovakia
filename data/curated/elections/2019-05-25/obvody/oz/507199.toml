@@ -1,28 +1,31 @@
-# The okrsky of Kočín-Lančár of the elections of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/507199.toml, copied by `ems job reuse` (reused). Its header there:
+# The okrsky of Kočín-Lančár of the vote of 2018-11-10, data/curated/elections/2018-11-10/obvody/oz/507199.toml, standing in, by `ems job reuse`. Its header there:
 #   Council obvody of Kočín-Lančár (507199), Piešťany.
-#   Transcribed by an AI agent in job obvod-rules-390 from the documents below;
+#   Transcribed by an AI agent in job obvod-rules-203 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per obvod, verbatim:
-#     obvod 1: Vo volebnom obvode číslo 1 Kočín, ktorý zahŕňa 1 okrsok – okrsok č. 1 Kočín budú zvolení 3 poslanci.
-#     obvod 2: Vo volebnom obvode číslo 2 Lančár, ktorý zahŕňa 1 okrsok – okrsok č. 2 Lančár budú zvolení 3 poslanci.
-#   Okrsky added by an AI agent in job okrsok-rules-1250 from the documents below;
+#     obvod 1: Obvod č. 1 – Kočín; Okrsok č. 1 – Kočín : 3 poslanci
+#     obvod 2: Obvod č. 2 – Lančár; Okrsok č. 2 – Lančár : 3 poslanci
+#   Okrsky added by an AI agent in job okrsok-rules-5919 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Vo volebnom obvode číslo 1 Kočín, ktorý zahŕňa 1 okrsok – okrsok č. 1 Kočín budú zvolení 3 poslanci.
-#     okrsok 2: Vo volebnom obvode číslo 2 Lančár, ktorý zahŕňa 1 okrsok – okrsok č. 2 Lančár budú zvolení 3 poslanci.
+#     okrsok 1: Okrsok č. 1 – Kočín
+#     okrsok 2: Okrsok č. 2 – Lančár
 obec = "507199"
 name = "Kočín-Lančár"
-date = 2022-07-06
-note = "The council obvody of the elections of 2022-10-29. Scanned one-page announcement, read visually. Obvod 1 Kočín and obvod 2 Lančár are the register parts of the same names."
-reused = 2022-10-29
-okrsky_date = 2022-07-06
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was searched for. Each obvod has exactly one okrsok (Statistical Office counts), so each okrsok is its whole obvod and needs no rules. No separate okrsky announcement was sought; the 2022 obvody decision (listed document) defines the okrsky's extent, and date is that decision's date. Text is the obvod document's words."
-okrsky_reused = 2022-10-29
+date_approximate = "named"
+date_basis = "the document's heading names the vote ('pre voľby do orgánov samosprávy obcí konané dňa 10.11.2018'); it states no date of the council's decision"
+note = "The council obvody of the vote of 2018-11-10: they only place the okrsky. Scanned notice: Obvod č. 1 – Kočín, Obvod č. 2 – Lančár; 3 seats each (as okrsok 1 Kočín, okrsok 2 Lančár). The obvody are the register parts."
+reused = 2018-11-10
+okrsky_note = "The 2018 elections page has no separate okrsky notice; the scanned notice on obvody names Okrsok č. 1 – Kočín and Okrsok č. 2 – Lančár (obvod 1 Kočín, obvod 2 Lančár), so each okrsok is its whole obvod."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-2157): No document on the okrsky of this vote: the page has only the MV SR voter information. (The okrsky are presumably Kočín and Lančár as in the council obvody, but no document of this vote says so.). These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2018-11-10: 1: 221 → 227, 2: 209 → 211."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the scanned notice's heading names the vote ('pre voľby do orgánov samosprávy obcí konané dňa 10.11.2018'); it states no date of the decision"
 
 [[document]]
-url = "https://www.kocinlancar.sk/e_download.php?file=data/editor/213sk_2.pdf&original=Volebn%C3%A9%20obvody.pdf"
-sha256 = "0debed088fedc8f962f816f6c16a2d12131f48aa3f4033eefd479b3ef96b95e2"
-title = "Oznámenie o utvorení volebných obvodov a o určení počtu poslancov (uznesenie č. 19.2.2. z 06.07.2022), 11.07.2022"
+url = "https://www.kocinlancar.sk/e_download.php?file=data/editor/55sk_7.pdf&original=SCN_0065.pdf"
+sha256 = "c65e3611557c00b71f189d3504cdb4bc50e2ab5841dd0d5512cd15250779dcbd"
+title = "Obec Kočín - Lančár zverejňuje pre voľby do orgánov samosprávy obcí konané dňa 10.11.2018: počet volebných obvodov a poslancov (scan)"
 
 [obvod.1]
 seats = 3

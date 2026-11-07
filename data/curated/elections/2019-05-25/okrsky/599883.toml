@@ -1,0 +1,149 @@
+# The okrsky of Košice-Sídlisko KVP of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/599883.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Košice-Sídlisko KVP, transcribed by an AI agent in job okrsok-rules-1420 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Stierova 1-27 nepárne, Drábova 2-20 párne, Dénešova 2
+#     okrsok 2: Wurmova 1-7 všetky, Wurmova 9-19 nepárne, Dénešova 4
+#     okrsok 3: Dénešova 1-51 nepárne
+#     okrsok 4: Dénešova 6, Dénešova 55-87 nepárne
+#     okrsok 5: Jasuschova 2-26 párne, Bauerova 9-21 nepárne, Trieda KVP 1, 1C
+#     okrsok 6: Bauerova 3, 5, 7, Bauerova 2-44 párne
+#     okrsok 7: Čordákova 1-23 nepárne, Čordákova 6-24 párne
+#     okrsok 8: Čordákova 25-41 nepárne, Čordákova 26-46 párne
+#     okrsok 9: Klimkovičova 2-40 párne, Klimkovičova 27-35 nepárne
+#     okrsok 10: Zombova 5-39 nepárne, Zombova 43, 45
+#     okrsok 11: Janigova 1-21 nepárne, Hemerkova 29, 31-35 všetky
+#     okrsok 12: Húskova 1, 3, 47, Húskova 69-87 nepárne
+#     okrsok 13: Húskova 5-37 nepárne, Húskova 49-67 nepárne
+#     okrsok 14: Hemerkova 1-28 všetky, Jána Pavla II. 7, Klimkovičova 1, 11-17
+#     okrsok 15: Cottbuská 1-12 všetky, Cottbuská 14-32 párne, Trieda KVP 6, Wuppertálska 1, 2, 3, 4A
+#     okrsok 16: Wuppertálska 5-51 nepárne
+#     okrsok 17: Starozagorská 2, 4, 6, Starozagorská 11-43 nepárne
+#     okrsok 18: Starozagorská 5, 7, 9, Titogradská 1-17 nepárne, Titogradská 2-18 párne, Wuppertálska 53-63 nepárne
+obec = "599883"
+name = "Košice-Sídlisko KVP"
+okrsky_date = 2019-01-28
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 28.01.2019 for the presidential election (Internet Archive copy of the old website's PDF). Differences from 2022: Bauerova 9-21 is in okrsok 5, Klimkovičova 27-35 in okrsok 9, Klimkovičova 1, 11-17 in okrsok 14, Titogradská split by parity and Wuppertálska 53-63 in okrsok 18. Voters with permanent residence only in Košice-Sídlisko KVP (no address) are in okrsok 5 per the document's note (no rule). Addresses the document does not name (e.g. Drocarov park, Moskovská trieda, numbers outside the listed ranges) and the addresses without a street take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-2009): The old website's page for the EP election of 2019 ('Určenie volebných okrskov a volebných miestností', archived) links the mayor's PDF, but the PDF is gone live (404), was not captured by the Internet Archive, and the page itself has no text of the okrsky. The website's archive (archiv.mckvp.sk) answers 503. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 18 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2019-03-16: 1: 1,005 → 1,002, 2: 949 → 949, 3: 1,040 → 1,035, 4: 982 → 989, 5: 1,423 → 1,406, 6: 891 → 898, 7: 1,018 → 985, 8: 901 → 902, 9: 1,185 → 1,183, 10: 1,045 → 1,032, 11: 1,112 → 1,091, 12: 826 → 821, 13: 1,060 → 1,058, 14: 1,217 → 1,210, 15: 1,237 → 1,222, 16: 1,038 → 1,029, 17: 1,131 → 1,126, 18: 1,135 → 1,124."
+
+[[document]]
+url = "https://web.archive.org/web/20240318135929/http://www.mckvp.sk/public/media/1000089/Volebn%C3%A9%20okrsky.pdf"
+sha256 = "1c3df46f1bf4976dbbbdf81ed8f8576be4531a8e8707af11a8f4d3361199fb75"
+title = "Určenie volebných okrskov a volebných miestností – voľba prezidenta SR 16. 3. 2019 (starosta, 28. 01. 2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Stierova", numbers = "1-27", parity = "odd"},
+  {street = "Drábova", numbers = "2-20", parity = "even"},
+  {street = "Dénešova", numbers = "2"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Wurmova", numbers = "1-7"},
+  {street = "Wurmova", numbers = "9-19", parity = "odd"},
+  {street = "Dénešova", numbers = "4"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Dénešova", numbers = "1-51", parity = "odd"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Dénešova", numbers = "6"},
+  {street = "Dénešova", numbers = "55-87", parity = "odd"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Jasuschova", numbers = "2-26", parity = "even"},
+  {street = "Bauerova", numbers = "9-21", parity = "odd"},
+  {street = "Trieda KVP", numbers = "1, 1C"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Bauerova", numbers = "3, 5, 7"},
+  {street = "Bauerova", numbers = "2-44", parity = "even"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Čordákova", numbers = "1-23", parity = "odd"},
+  {street = "Čordákova", numbers = "6-24", parity = "even"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Čordákova", numbers = "25-41", parity = "odd"},
+  {street = "Čordákova", numbers = "26-46", parity = "even"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Klimkovičova", numbers = "2-40", parity = "even"},
+  {street = "Klimkovičova", numbers = "27-35", parity = "odd"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Zombova", numbers = "5-39", parity = "odd"},
+  {street = "Zombova", numbers = "43, 45"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Janigova", numbers = "1-21", parity = "odd"},
+  {street = "Hemerkova", numbers = "29, 31-35"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Húskova", numbers = "1, 3, 47"},
+  {street = "Húskova", numbers = "69-87", parity = "odd"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Húskova", numbers = "5-37", parity = "odd"},
+  {street = "Húskova", numbers = "49-67", parity = "odd"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Hemerkova", numbers = "1-28"},
+  {street = "Jána Pavla II.", numbers = "7"},
+  {street = "Klimkovičova", numbers = "1"},
+  {street = "Klimkovičova", numbers = "11-17", parity = "odd", note = "The document writes 'Klimkovičova 1, 11-17'; the even numbers 12-16 are in okrsok 9 ('Klimkovičova 2-40 párne'), so only the odd ones are here."},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Cottbuská", numbers = "1-12"},
+  {street = "Cottbuská", numbers = "14-32", parity = "even"},
+  {street = "Trieda KVP", numbers = "6"},
+  {street = "Wuppertálska", numbers = "1, 2, 3, 4A"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Wuppertálska", numbers = "5-51", parity = "odd"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Starozagorská", numbers = "2, 4, 6"},
+  {street = "Starozagorská", numbers = "11-43", parity = "odd"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Starozagorská", numbers = "5, 7, 9"},
+  {street = "Titogradská", numbers = "1-17", parity = "odd"},
+  {street = "Titogradská", numbers = "2-18", parity = "even"},
+  {street = "Wuppertálska", numbers = "53-63", parity = "odd"},
+]

@@ -234,16 +234,6 @@
    "http://web.archive.org/cdx/search/cdx?url=obeczlatna.sk/* (Internet Archive offline)"
   ]
  },
- "501433": {
-  "job": "okrsok-rules-2823",
-  "name": "Dunajská Streda",
-  "note": "The referendum 2023 document (mayor's decision of 08.11.2022, utvorenie_volebnych_okrskov_a_urcenie_volebnych_miestnosti_10.pdf) creates 12 okrsky, while the Statistical Office's division for this vote has 13 (its voters list 12 okrsky 1–12); the ingest rejects 12 okrsky, so the document cannot be turned into valid rules for 13.",
-  "tried": [
-   "https://dunstreda.sk/sitemap.xml",
-   "https://dunstreda.sk/referendum",
-   "https://dunstreda.sk/files/utvorenie_volebnych_okrskov_a_urcenie_volebnych_miestnosti_10.pdf"
-  ]
- },
  "501522": {
   "job": "okrsok-rules-2855",
   "name": "Veľký Meder",
@@ -1078,19 +1068,6 @@
    "https://web.archive.org/web/20230804191349/https://www.rohoznik.sk/oznamy/volby.html"
   ]
  },
- "504815": {
-  "job": "okrsok-rules-2840",
-  "name": "Skalica",
-  "note": "The town's 'REFERENDUM 2023 – určenie volebných okrskov a volebných miestností' (9.11.2022) lists 11 okrsky (the 2022 ones), but the Statistical Office counts 12 for this referendum (okrsok 12 with 3 voters); the document does not define okrsok 12, so its okrsky cannot be numbered 1..12 without guessing.",
-  "tried": [
-   "https://www.skalica.sk/",
-   "https://www.skalica.sk/oznamy/volby-do-organov-samospravnych-krajov-2026-5215sk.html",
-   "https://www.skalica.sk/hladaj/okrsk?lang=sk&stranka=all",
-   "http://web.archive.org/cdx/search/cdx?url=skalica.sk/*&from=2017&to=2026&fl=timestamp,original,mimetype&collapse=urlkey",
-   "https://www.skalica.sk/referendum/",
-   "https://www.skalica.sk/e_download.php?file=data/multipage/editor/editor-73-1030-sk_4.pdf&original=REFERENDUM%202023%20-%20volebne%20okrsky.pdf"
-  ]
- },
  "504891": {
   "job": "okrsok-rules-2954",
   "name": "Šaštín-Stráže",
@@ -1139,17 +1116,6 @@
    "https://web.archive.org/web/20240302131704/https://www.obecludanice.sk/novinka/76340/volby-prezidenta-slovenskej-republiky-2024",
    "https://www.obecludanice.sk/data/news_files/obecludanice.sk/76340/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-www-a-tabula.pdf",
    "https://www.obecludanice.sk/novinka/136480/vysledky-referenda-ktore-sa-konalo-04072026"
-  ]
- },
- "505315": {
-  "job": "okrsok-rules-2875",
-  "name": "Partizánske",
-  "note": "The referendum 2023 document (č. spisu 8946/2022, 10. 11. 2022) forms 22 okrsky, but the Statistical Office counts 23 okrsky for this vote, so the document cannot be numbered 1..23 as required; reported not_found for the maintainer to check (the 22 okrsky are those already used for 2022).",
-  "tried": [
-   "https://www.partizanske.sk/volby.html",
-   "http://web.archive.org/cdx/search/cdx?url=partizanske.sk/*&from=2017&to=2026&fl=timestamp,original,mimetype&collapse=urlkey",
-   "https://web.archive.org/web/20221110232659/https://www.partizanske.sk/referendum-2023.phtml?id3=178746",
-   "https://web.archive.org/web/20221110232751/https://www.partizanske.sk/download_file_f.php?id=1763650"
   ]
  },
  "505374": {
@@ -1377,14 +1343,6 @@
    "https://www.trencianskatepla.sk/samosprava/referendum/referendum-2026/",
    "https://www.trencianskatepla.sk/?hledej=volebn%C3%BDch+okrskov&lang=sk",
    "https://www.trencianskatepla.sk/sk/zverejnovanie/uradna-tabula/"
-  ]
- },
- "506745": {
-  "job": "okrsok-rules-2815",
-  "name": "Trnava",
-  "note": "The referendum's okrsky document (8 November 2022, OOaVS-42793-114244/22/Lcá, archived) creates 25 okrsky, but the Statistical Office counts 26 okrsky in this referendum, so its okrsky cannot be matched.",
-  "tried": [
-   "https://web.archive.org/web/20230116234853/https://www.trnava.sk/userfiles/file/Volebn%C3%A9%20okrsky%20a%20miestnosti(3).pdf"
   ]
  },
  "506842": {
@@ -1757,30 +1715,6 @@
    "https://www.vysokaprimorave.sk/volby",
    "https://www.vysokaprimorave.sk/uradna-tabula",
    "https://www.vysokaprimorave.sk/images/Utvorenie_volebnych_okrskov_a_urcenie_volebnych_miestnosti_pre_referendum_2023.pdf"
-  ]
- },
- "508438": {
-  "job": "okrsok-rules-2810",
-  "name": "Banská Bystrica",
-  "note": "The referendum's own document exists and is readable: 'Utváram volebné okrsky a určujem volebné miestnosti pre hlasovanie v referende 21. januára 2023' of 10 Nov 2022 (https://cdn.banskabystrica.sk/2022/11/Okrsky-pre-referendum-na-uzemi-mesta-Banska-Bystrica.pdf), but it forms 78 okrsky, while the territorial division (ŠÚ SR) has 79 for this vote (ŠÚ's results count 79 okrsky with 78 processed: tab02d of REF2023). The ingest rejects 78 okrsky ('78 okrsky given, the territorial division has 79'), and the document gives no 79th okrsok, so none can be written without inventing it. Its 78 okrsky are those of the NR SR 2023 document (same streets) except that it names Cesta olympionikov in okrsok 12 and lacks súpisné 13936 (okrsok 8), 15504 (okrsok 15), Podbeľová ulica (58) and 10163 (64).",
-  "tried": [
-   "https://www.banskabystrica.sk/",
-   "https://www.banskabystrica.sk/wp-json/wp/v2/pages?search=volby",
-   "https://www.banskabystrica.sk/samosprava/referendum-2023/",
-   "https://cdn.banskabystrica.sk/2022/11/Okrsky-pre-referendum-na-uzemi-mesta-Banska-Bystrica.pdf"
-  ]
- },
- "508497": {
-  "job": "okrsok-rules-2854",
-  "name": "Brezno",
-  "note": "The town's list \"Zoznam ulíc a okrskov, Referendum 2023\" (FileID=2610, dated 10.11.2022) defines only 10 okrsky, while the Statistical Office counts 11 (okrsok 11 with 4 voters); the document does not say what the 11th okrsok is, so its okrsky cannot be numbered 1..11 without guessing.",
-  "tried": [
-   "https://www.brezno.sk/",
-   "https://www.brezno.sk/search.php?work=results&q=okrsk",
-   "https://www.brezno.sk/search.php?work=results&q=volebn%C3%BDch+okrskov",
-   "https://www.brezno.sk/search.php?work=results&q=referendum",
-   "http://web.archive.org/cdx/search/cdx?url=brezno.sk/*&from=2017&to=2026&fl=timestamp,original&filter=mimetype:application/pdf&collapse=urlkey",
-   "https://www.brezno.sk/download.php?action=download&FileID=2610"
   ]
  },
  "508519": {
@@ -2158,16 +2092,6 @@
    "https://web.archive.org/web/20221127123148/https://www.mutne.sk/samosprava/referendum-2023/"
   ]
  },
- "509868": {
-  "job": "okrsok-rules-2923",
-  "name": "Námestovo",
-  "note": "The mayor's decision for the referendum of 21 January 2023 (archived https://web.archive.org/web/20230602181822/https://www.namestovo.sk/uploads/fck/file/volby/Referendum%202023/Ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20miestnost%C3%AD%20pre%20referendum%202023.pdf) lists 8 okrsky, but the Statistical Office counted 9 for this vote; the ninth is not in the document, so the okrsky cannot be numbered 1..9 from it.",
-  "tried": [
-   "https://www.namestovo.sk/",
-   "http://web.archive.org/cdx/search/cdx?url=namestovo.sk/uploads/fck/file/volby/&matchType=prefix&from=2017",
-   "https://web.archive.org/web/20230602181822/https://www.namestovo.sk/uploads/fck/file/volby/Referendum%202023/Ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20miestnost%C3%AD%20pre%20referendum%202023.pdf"
-  ]
- },
  "509876": {
   "job": "okrsok-rules-3053",
   "name": "Nižná",
@@ -2291,18 +2215,6 @@
    "http://web.archive.org/cdx/search/cdx?url=zakamenne.sk/*&from=2017&to=2024&fl=timestamp,original,mimetype&collapse=urlkey"
   ]
  },
- "510262": {
-  "job": "okrsok-rules-2821",
-  "name": "Liptovský Mikuláš",
-  "note": "The mayor's decision of 10.11.2022 for the referendum of 21 January 2023 (https://www.mikulas.sk/filesII/mesto/samosprava/referendum23/okrsky%20miestnosti%202023.pdf) defines 32 okrsky, but the Statistical Office counts 33 for this vote (okrsok 33 with 2 voters), which the document does not name; its rules cannot be numbered 1..33 without guessing okrsok 33.",
-  "tried": [
-   "https://www.mikulas.sk/",
-   "https://www.mikulas.sk/samosprava/",
-   "http://web.archive.org/cdx/search/cdx?url=mikulas.sk/*&from=2017&to=2026&fl=timestamp,original,mimetype&collapse=urlkey",
-   "https://web.archive.org/web/20221205165952/https://www.mikulas.sk/samosprava/referendum_2023/",
-   "https://www.mikulas.sk/filesII/mesto/samosprava/referendum23/okrsky%20miestnosti%202023.pdf"
-  ]
- },
  "510327": {
   "job": "okrsok-rules-3183",
   "name": "Bobrovec",
@@ -2408,15 +2320,6 @@
    "https://www.obecvazec.sk/?hledej=referendum"
   ]
  },
- "511218": {
-  "job": "okrsok-rules-2827",
-  "name": "Lučenec",
-  "note": "The city's document for the referendum of 21 January 2023 (https://www.lucenec.sk/download_file_f.php?id=1763931, 'Volebné okrsky utvorené pre referendum 2023') sets 13 okrsky, but the Statistical Office counts 14 okrsky for this vote; the document does not name a 14th, so its okrsky cannot be numbered 1..14 without guessing.",
-  "tried": [
-   "https://www.lucenec.sk/referendum-0.html",
-   "https://www.lucenec.sk/download_file_f.php?id=1763931"
-  ]
- },
  "511358": {
   "job": "okrsok-rules-3125",
   "name": "Divín",
@@ -2502,16 +2405,6 @@
    "https://web.archive.org/web/20190819165108/http://www.obecpodkrivan.sk/-volby-do-organov-samospravy-obci"
   ]
  },
- "511765": {
-  "job": "okrsok-rules-2944",
-  "name": "Poltár",
-  "note": "The referendum 2023 document (evt_file 28949, 'Volebné obvody, okrsky a volebné miestnosti mesta Poltár') lists 7 okrsky, the same as 2022, but the Statistical Office counts 8 okrsky for this vote (okrsok 8 with 2 voters); the document does not define an 8th okrsok, so valid rules with 8 okrsky cannot be written from it.",
-  "tried": [
-   "https://www.poltar.sk/pre-obcanov/volby/referendum-2023/",
-   "https://www.poltar.sk/pre-obcanov/volby/referendum-2023/referendum-2695sk.html",
-   "https://www.poltar.sk/evt_file.php?file=28949"
-  ]
- },
  "511927": {
   "job": "okrsok-rules-3301",
   "name": "Trebeľovce",
@@ -2547,17 +2440,6 @@
    "https://www.turany.sk/",
    "http://web.archive.org/cdx/search/cdx?url=turany.sk/*&from=2017&to=2026&fl=timestamp,original,mimetype,statuscode&collapse=urlkey",
    "https://web.archive.org/web/20221215060318/https://www.turany.sk/referendum-2023.html"
-  ]
- },
- "512729": {
-  "job": "okrsok-rules-2956",
-  "name": "Turčianske Teplice",
-  "note": "The mayor's \"Utvorenie volebných okrskov\" for the referendum of 21.1.2023 on the city's Voľby page lists 7 okrsky (the same as 2023-2026), but the Statistical Office counts 8 okrsky for this vote, so the document cannot be matched to the okrsky numbered 1..8.",
-  "tried": [
-   "https://www.turciansketeplice.sk/",
-   "https://www.turciansketeplice.sk/volby.html",
-   "https://www.turciansketeplice.sk/download_file_f.php?id=1003397",
-   "https://www.turciansketeplice.sk/download_file_f.php?id=2450278"
   ]
  },
  "512842": {
@@ -2600,15 +2482,6 @@
    "https://www.dolnamarikova.sk/samosprava/volby/volby-do-europskeho-parlamentu-2024-26.html",
    "https://www.dolnamarikova.sk/samosprava/volby/volby-do-narodnej-rady-slovenskej-republiky-2023-2515.html",
    "https://www.dolnamarikova.sk/e_download.php?file=/data/uredni_deska/obsah2731_2.pdf"
-  ]
- },
- "513156": {
-  "job": "okrsok-rules-2911",
-  "name": "Ilava",
-  "note": "The mayor's Oznámenie o utvorení volebných okrskov a určení volebných miestností pre referendum 21.1.2023 (dated 7.11.2022, https://www.ilava.sk/e_download.php?file=data/editor/536skabove_2.pdf&original=volebn%C3%A9%20okrsky%20a%20miestnosti%20utvorenie%20_GDPR.pdf) lists 6 okrsky (1: Mierové námestie, Ružová, Farská, Moyzesova, Košecká, SNP, Záhumenská, Kukučínova; 2: Medňanská, Skala, Jesenského, Kalinčiakova, Hollého, Slnečná, Lašteky I; 3: Pivovarská, Ľ. Štúra, Hviezdoslavova, Sládkovičova, Štefánikova; 4: Kpt. Nálepku, Sihoť, Záhradnícka, J. L. Bellu, Nádražná, Hurbanova, Mládežnícka, Za kanálom; 5: Klobušice; 6: Iliavka, Iliavčanská dolina, Záštepy), but the Statistical Office counts 7 okrsky for this vote (okrsok 7 with 2 voters), which no published document defines.",
-  "tried": [
-   "https://www.ilava.sk/referendum-2023/",
-   "https://www.ilava.sk/e_download.php?file=data/editor/536skabove_2.pdf&original=volebn%C3%A9%20okrsky%20a%20miestnosti%20utvorenie%20_GDPR.pdf"
   ]
  },
  "513253": {
@@ -2745,19 +2618,6 @@
    "http://web.archive.org/cdx/search/cdx?url=zliechov.sk/*"
   ]
  },
- "513881": {
-  "job": "okrsok-rules-2817",
-  "name": "Prievidza",
-  "note": "The city's okrsky document for the referendum of 21 January 2023 (https://prievidza.sk/wp-content/uploads/2022/11/Urcenie-volebnych-okrskov-a-miestnosti-pre-Referendum-2023.pdf) lists 28 okrsky, while the Statistical Office counts 29 okrsky for this vote; the 29th okrsok is not in the document, so its okrsky cannot be numbered 1..29 from it.",
-  "tried": [
-   "https://prievidza.sk/",
-   "https://prievidza.sk/samosprava/volby-2/",
-   "https://prievidza.sk/samosprava/volby-2/referendum-2023/",
-   "https://prievidza.sk/wp-json/wp/v2/media?search=okrsk",
-   "http://web.archive.org/cdx/search/cdx?url=prievidza.sk/*",
-   "https://prievidza.sk/wp-content/uploads/2022/11/Urcenie-volebnych-okrskov-a-miestnosti-pre-Referendum-2023.pdf"
-  ]
- },
  "514136": {
   "job": "okrsok-rules-3028",
   "name": "Lehota pod Vtáčnikom",
@@ -2823,16 +2683,6 @@
    "https://www.valaskabela.sk/referendum-2023",
    "https://www.valaskabela.sk/referendum-2026",
    "https://www.valaskabela.sk/volby-do-organov-samospravy-obci-a-organov-samospravnych-krajov-2026"
-  ]
- },
- "514462": {
-  "job": "okrsok-rules-2830",
-  "name": "Rimavská Sobota",
-  "note": "The city's own document for this referendum exists: 'Zoznam ulíc a okrskov pre Referendum 2023' (https://www.rimavskasobota.sk/download_file_f.php?id=1767108, dated 08.11.2022, signed by the mayor), linked from https://www.rimavskasobota.sk/referendum-2023.html. It lists 27 okrsky, the same as the later lists (2023-2026: okrsok 26 Dúžava, 27 Mojín, Kľačany in okrsok 20). The Statistical Office's territorial division for this vote has 28 okrsky (its results list only okrsky 1-27), so the document cannot be turned into a valid rule set for 28 okrsky; the ingest rejected the 27-okrsok transcription ('27 okrsky given, the territorial division has 28'). Reported not_found for that reason; the 27 okrsky of the document are those of the accepted 2023-09-30 job (okrsok-rules-3376).",
-  "tried": [
-   "https://www.rimavskasobota.sk/",
-   "https://www.rimavskasobota.sk/referendum-2023.html",
-   "https://www.rimavskasobota.sk/download_file_f.php?id=1767108"
   ]
  },
  "514829": {
@@ -2968,20 +2818,6 @@
    "https://web.archive.org/web/20260423095507/https://velketeriakovce.sk/referendum/"
   ]
  },
- "515850": {
-  "job": "okrsok-rules-2904",
-  "name": "Veľký Krtíš",
-  "note": "The mayor's decision of 25.11.2022 for this referendum (https://web.archive.org/web/20221221002021/https://www.velky-krtis.sk/download_file_f.php?id=1763244, linked from the archived referendum-2023 page) defines 10 okrsky (voters without an address in okrsok 10), but the Statistical Office's division for this vote has 11 (okrsok 11 with 3 voters), which the document does not name; ingest rejected the 10 okrsky ('10 okrsky given, the territorial division has 11'). Its 10 okrsky are those already curated as the referendum supplement of the 2022 obvody, so the rules exist if the maintainer accepts the extra okrsok 11 as addressless.",
-  "tried": [
-   "https://www.velky-krtis.sk/volby-0.html",
-   "https://www.velky-krtis.sk/vyhladavanie.html?search_string=okrskov+a+volebn%C3%BDch+miestnost%C3%AD",
-   "https://www.velky-krtis.sk/uradne-oznamy.html",
-   "http://web.archive.org/cdx/search/cdx?url=velky-krtis.sk/*&from=2017&to=2026&fl=timestamp,original,mimetype,statuscode&collapse=urlkey",
-   "https://www.velky-krtis.sk/volby-0.html",
-   "https://web.archive.org/web/20221221025119/https://www.velky-krtis.sk/referendum-2023.phtml?id5=38459",
-   "https://web.archive.org/web/20221221002021/https://www.velky-krtis.sk/download_file_f.php?id=1763244"
-  ]
- },
  "516295": {
   "job": "okrsok-rules-3304",
   "name": "Pôtor",
@@ -3103,21 +2939,6 @@
    "https://web.archive.org/web/20221207073226/https://www.bela.sk/referendum-2023-oznam/mid/497247/.html"
   ]
  },
- "517461": {
-  "job": "okrsok-rules-2874",
-  "name": "Bytča",
-  "note": "The mayor's decision for this referendum (č.s. 2022/347 of 10.11.2022, https://web.archive.org/web/20221111021659/http://www.bytca.sk/materials/files/ts/Volebne_okrsky_a_volebne_miestnosti_pre_referendum_2023.pdf, archived 11.11.2022) forms 11 okrsky, the same streets and parts as the 2022 municipal elections' document (okrsok 1–6 streets of Veľká Bytča, 7 Hliník nad Váhom, 8 Hrabové, 9 Pšurnovice, 10 Malá Bytča, 11 Mikšová, Beňov), and ŠÚ SR's results have voters for okrsky 1–11 only, but the territorial division counts 12 okrsky for Bytča in this vote, so the ingest rejects the 11 okrsky ('11 okrsky given, the territorial division has 12'). No 12th okrsok appears in the document; it cannot be transcribed without inventing one.",
-  "tried": [
-   "https://www.bytca.sk/",
-   "https://www.bytca.sk/?s=okrsk",
-   "https://www.bytca.sk/wp-sitemap.xml",
-   "https://www.bytca.sk/uradna-tabula/",
-   "http://web.archive.org/cdx/search/cdx?url=bytca.sk/*&from=2017&to=2026&fl=timestamp,original,mimetype,statuscode&filter=mimetype:application/pdf&collapse=urlkey",
-   "http://web.archive.org/cdx/search/cdx?url=bytca.sk/*&from=2017&to=2023&fl=timestamp,original,mimetype,statuscode&collapse=urlkey",
-   "https://web.archive.org/web/20230121021338/http://www.bytca.sk/titulka/c-121323/oznam-referendum-2023/",
-   "https://web.archive.org/web/20221111021659/http://www.bytca.sk/materials/files/ts/Volebne_okrsky_a_volebne_miestnosti_pre_referendum_2023.pdf"
-  ]
- },
  "517488": {
   "job": "okrsok-rules-3197",
   "name": "Divina",
@@ -3234,15 +3055,6 @@
    "https://www.visnove.sk/sk/zverejnovanie/uradna-tabula/urcenie-volebnych-okrskov-a-miestnosti-pre-referendum-718.html"
   ]
  },
- "518263": {
-  "job": "okrsok-rules-2853",
-  "name": "Detva",
-  "note": "The town's 'Oznam o utvorení volebných okrskov…' for the referendum of 21 January 2023 (download_file_f.php?id=1764145, dated 10.11.2022) forms 15 okrsky, but the Statistical Office counts 16 (okrsok 16 with 3 voters, not in the document); the document cannot be numbered 1..16, so reported not_found.",
-  "tried": [
-   "https://www.detva.sk/referendum-2023.html",
-   "https://www.detva.sk/download_file_f.php?id=1764145"
-  ]
- },
  "518271": {
   "job": "okrsok-rules-3250",
   "name": "Detvianska Huta",
@@ -3285,16 +3097,6 @@
    "https://www.obeckrivan.sk/zverejnovanie/uradna-tabula/",
    "https://www.obeckrivan.sk/e_download.php?file=/data/uredni_deska/obsah353_7.pdf&original=Inform%C3%A1cia%20o%20vytvoren%C3%BDch%20okrskoch%20a%20obvodoch.pdf",
    "http://web.archive.org/cdx/search/cdx?url=obeckrivan.sk/*"
-  ]
- },
- "518557": {
-  "job": "okrsok-rules-2879",
-  "name": "Krupina",
-  "note": "The city's document for the referendum of 21 January 2023 (https://krupina.sk/data/web_files/2022/11/9380.pdf, dated 2022-11-09) sets 6 okrsky (the same streets as 2023-09-30), but the Statistical Office counts 7 okrsky for this vote (okrsok 7 with 6 voters, probably a special okrsok the document does not name); its okrsky cannot be numbered 1..7 from the document without guessing.",
-  "tried": [
-   "https://krupina.sk/volby-v-meste-krupina",
-   "https://krupina.sk/referendum-2023",
-   "https://krupina.sk/data/web_files/2022/11/9380.pdf"
   ]
  },
  "518590": {
@@ -3374,28 +3176,6 @@
    "https://web.archive.org/web/20221109115818/https://www.obeckamenicanadcirochou.sk/referendum-2023.html",
    "https://web.archive.org/web/20211228223145/https://www.obeckamenicanadcirochou.sk/volby-do-narodnej-rady-slovenskej-republiky-2020.html",
    "http://web.archive.org/cdx/search/cdx?url=obeckamenicanadcirochou.sk/*&from=2017&to=2026&collapse=urlkey"
-  ]
- },
- "520471": {
-  "job": "okrsok-rules-2952",
-  "name": "Medzilaborce",
-  "note": "The referendum's documents (8.11.2022 decision and the street list) create 7 okrsky, but the Statistical Office counts 8 okrsky in this referendum (the 8th with 1 voter, not in the city's documents), so the okrsky count cannot match.",
-  "tried": [
-   "https://www.medzilaborce-urad.sk/referendum-2023.html",
-   "https://www.medzilaborce-urad.sk/download_file_f.php?id=1762789",
-   "https://www.medzilaborce-urad.sk/download_file_f.php?id=1762786"
-  ]
- },
- "520802": {
-  "job": "okrsok-rules-2877",
-  "name": "Snina",
-  "note": "The town's document for the referendum of 21 January 2023 (Číslo reg. 12470/05163/2022 of 9 Nov 2022, https://www.snina.sk/e_download.php?file=data/uredni_deska/obsah1531_76.pdf&original=Ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20miestnost%C3%AD%20na%20hlasovanie%20v%20referende.pdf) sets 13 okrsky (the same as for 2022-2026), but the Statistical Office counts 14 okrsky for this vote (okrsok 14 with 2 voters). The document says nothing of a 14th okrsok, so its 13 okrsky cannot be numbered 1..14 without inventing one; reported not_found.",
-  "tried": [
-   "https://www.snina.sk/",
-   "https://www.snina.sk/otvorena-samosprava/volby-referenda-a-scitanie-obyvatelstva/",
-   "https://www.snina.sk/otvorena-samosprava/uradna-tabula-2/",
-   "https://www.snina.sk/otvorena-samosprava/uradna-tabula-2/urcenie-volebnych-okrskov-a-miestnosti-na-hlasovanie-v-referende-11013.html",
-   "https://www.snina.sk/e_download.php?file=data/uredni_deska/obsah1531_76.pdf&original=Ur%C4%8Denie%20volebn%C3%BDch%20okrskov%20a%20miestnost%C3%AD%20na%20hlasovanie%20v%20referende.pdf"
   ]
  },
  "520829": {
@@ -3568,15 +3348,6 @@
    "https://obecsena.sk/wp-content/uploads/dokumenty/referendum-2026/urcenie_okrskov-1konqk.pdf"
   ]
  },
- "522279": {
-  "job": "okrsok-rules-2829",
-  "name": "Michalovce",
-  "note": "The town's notice for the referendum of 21 January 2023 lists 32 okrsky, but the Statistical Office counts 33; the document cannot be numbered 1..33, so reported not_found.",
-  "tried": [
-   "https://www.michalovce.sk/sk/clanok/volby",
-   "https://www.michalovce.sk/userfiles/file/Vo%C4%BEby/2023/OZN%C3%81MENIE%20o%20%C4%8Dase%20a%20mieste%20konania%20referenda.pdf"
-  ]
- },
  "522376": {
   "job": "okrsok-rules-3296",
   "name": "Budkovce",
@@ -3604,16 +3375,6 @@
    "http://web.archive.org/cdx/search/cdx?url=pavlovce.sk/*"
   ]
  },
- "523089": {
-  "job": "okrsok-rules-3015",
-  "name": "Sobrance",
-  "note": "The referendum's document (Informácia o volebných okrskoch a volebných miestnostiach, primátor 10.11.2022, https://www.sobrance.sk/download_file_f.php?id=1764463) forms 5 okrsky (the same as 2022), but the Statistical Office counts 6 okrsky for this vote (the 6th with 2 voters); the document defines no 6th okrsok, so its rules cannot match this vote's okrsky.",
-  "tried": [
-   "https://www.sobrance.sk/referendum.html",
-   "https://www.sobrance.sk/download_file_f.php?id=1764463",
-   "https://web.archive.org/web/20251126191435/https://www.sobrance.sk/download_file_f.php?id=1764463"
-  ]
- },
  "523488": {
   "job": "okrsok-rules-3251",
   "name": "Hôrka",
@@ -3625,17 +3386,6 @@
    "https://www.obechorka.sk/?mapa-webu=1&lang=sk",
    "https://www.obechorka.sk/?hledej=okrskov&lang=sk",
    "https://www.obechorka.sk/?hledej=referendum&lang=sk"
-  ]
- },
- "523585": {
-  "job": "okrsok-rules-2872",
-  "name": "Kežmarok",
-  "note": "The referendum's document (Oznámenie o utvorení okrskov a určení miestností na vykonanie referenda 2023, 07.11.2022, image scan) forms 12 okrsky (the same streets as in 2022-2024), but the Statistical Office counts 13 okrsky for this referendum (okrsok 13 with 1 voter); the document says nothing of a 13th okrsok, so its okrsky cannot be numbered 1..13 without inventing one.",
-  "tried": [
-   "https://www.kezmarok.sk/",
-   "https://www.kezmarok.sk/?s=okrskov",
-   "https://www.kezmarok.sk/oznamenie-o-utvoreni-okrskov-a-urceni-miestnosti-na-vykonanie-referenda-2023/",
-   "https://www.kezmarok.sk/wp-content/uploads/2022/11/Oznamenie-o-utvoreni-okrskov-a-urceni-miestnostina-vykonanie-referenda-2023.pdf"
   ]
  },
  "523623": {
@@ -3715,16 +3465,6 @@
    "https://web.archive.org/web/20220308154015/https://www.velkalomnica.sk/volby.html?usfd=-1"
   ]
  },
- "524140": {
-  "job": "okrsok-rules-2809",
-  "name": "Prešov",
-  "note": "The city's announcement for the 2023 referendum lists 66 okrsky with their streets, but the Statistical Office's division for this vote has 67 okrsky, so the document cannot be turned into valid rules for 67.",
-  "tried": [
-   "https://www.presov.sk/",
-   "https://web.archive.org/web/20230117232732/https://www.presov.sk/oznamenie-mesta-presov-o-case-a-mieste-konania-referenda-v-roku-2023-a-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-na-uzemi-mesta-pres/mid/496304/.html",
-   "https://web.archive.org/web/20230117232539/https://www.presov.sk/download_file_f.php?id=1800587"
-  ]
- },
  "524603": {
   "job": "okrsok-rules-3280",
   "name": "Jarovnice",
@@ -3737,18 +3477,6 @@
    "https://web.archive.org/web/20190430111257/https://www.jarovnice.sk/obsah/volby-do-europskeho-parlamentu",
    "https://web.archive.org/web/20190430111554/https://www.jarovnice.sk/obsah/volby-prezidenta-sr",
    "https://web.archive.org/web/20210226191811/https://www.jarovnice.sk/referendum-a73-17"
-  ]
- },
- "525146": {
-  "job": "okrsok-rules-2890",
-  "name": "Sabinov",
-  "note": "The town's referendum 2023 notice (10. novembra 2022, archived) forms 10 okrsky with their streets, but the Statistical Office counts 11 okrsky for this vote (okrsok 11 without voters in the results); the document cannot be matched to 11 okrsky without guessing.",
-  "tried": [
-   "https://www.sabinov.sk/",
-   "https://www.sabinov.sk/navstevnik/uradna-tabula",
-   "https://www.sabinov.sk/component/finder/search?q=okrsok",
-   "http://web.archive.org/cdx/search/cdx?url=sabinov.sk/*",
-   "https://web.archive.org/web/20230530202317/https://sabinov.sk/component/phocadownload/category/16-pr%EF%BF%BD%EF%BF%BDlohy-k-%EF%BF%BD%EF%BF%BDl%EF%BF%BD%EF%BF%BDnkom/18-referendum-2023?download=177:inform%EF%BF%BD%EF%BF%BDcie-o-vytvoren%EF%BF%BD%EF%BF%BD-okrskov&Itemid=101"
   ]
  },
  "525413": {
@@ -3766,18 +3494,6 @@
    "https://web.archive.org/web/20190718122122/https://www.obecvitaz.sk/informacia-pre-volica-volba-prezidenta/",
    "https://www.obecvitaz.sk/samosprava/uradna-tabula-archiv/referenduminformaciavolebne-okrsky-a-volebne-miestnosti-a441-1755",
    "https://www.obecvitaz.sk/files/2025-12-08-095211-OBEC_V____AZ_Inform__cia_utvorenie_volebn__ch_okrskov_a_ur__enie_volebnej_miestnosti.pdf"
-  ]
- },
- "525529": {
-  "job": "okrsok-rules-2871",
-  "name": "Rožňava",
-  "note": "The city's document for the referendum of 21 January 2023 (č. MsÚ/RV-5160/2022-52115-SPRÁVA of 07.11.2022, files/2022-11-10-094232-referendum_-_ur__enie_okrskov.pdf) sets 18 okrsky with streets (same as 2023 NR SR), but the Statistical Office counts 19 okrsky for this vote (okrsok 19 with 5 voters, presumably a special okrsok not in the document); the document gives no 19th okrsok, so valid rules for 19 okrsky cannot be written.",
-  "tried": [
-   "https://www.roznava.sk/",
-   "https://www.roznava.sk/volby",
-   "https://www.roznava.sk/referendum-2023---vysledky-a640-11914",
-   "https://web.archive.org/cdx/search/cdx?url=roznava.sk/files/2022-1*&fl=timestamp,original&collapse=urlkey",
-   "https://www.roznava.sk/files/2022-11-10-094232-referendum_-_ur__enie_okrskov.pdf"
   ]
  },
  "525634": {
@@ -3838,16 +3554,6 @@
    "http://web.archive.org/ (Internet Archive offline)"
   ]
  },
- "526142": {
-  "job": "okrsok-rules-2880",
-  "name": "Revúca",
-  "note": "The city's own document for this referendum exists: 'Zoznam ulíc a okrskov, Referendum 2023, Dátum konania: 21.01.2023' (Dátum: 08.11.2022), https://www.revuca.sk/download_file_f.php?id=1761682, linked from https://www.revuca.sk/referendum-2023.html. It lists 11 okrsky (1-11, the same as the 2022 list except house 2677 of part Revúca added to okrsok 7), and ŠÚ SR's results have voters for okrsky 1-11 only (11 of 12 processed), but the territorial division counts 12 okrsky for Revúca, so the ingest rejects 11 okrsky ('11 okrsky given, the territorial division has 12'). No 12th okrsok appears in any document of the city; it cannot be transcribed without inventing one. The transcription of the 11 okrsky matches the National Council election of 30 September 2023's list.",
-  "tried": [
-   "https://www.revuca.sk/",
-   "https://www.revuca.sk/referendum-2023.html",
-   "https://www.revuca.sk/download_file_f.php?id=1761682"
-  ]
- },
  "526282": {
   "job": "okrsok-rules-3272",
   "name": "Slavošovce",
@@ -3876,17 +3582,6 @@
    "https://www.obecstratena.sk/samosprava/zverejnovanie/referendum/",
    "https://www.obecstratena.sk/data/uredni_deska/ (obsah1..360 probed)",
    "http://web.archive.org/cdx/search/cdx?url=obecstratena.sk&matchType=domain&from=2017&to=2020"
-  ]
- },
- "526355": {
-  "job": "okrsok-rules-2824",
-  "name": "Spišská Nová Ves",
-  "note": "The Oznámenie o utvorení volebných okrskov a určení volebných miestností pre referendum v roku 2023 (09.11.2022, scan) lists 27 okrsky with their streets (the same as for the 2022 elections), but the Statistical Office counts 28 okrsky for this referendum (okrsok 28 with 2 voters), which the document does not name; its okrsky cannot be numbered 1..28 without inventing the 28th.",
-  "tried": [
-   "https://www.spisskanovaves.eu/",
-   "http://web.archive.org/cdx/search/cdx?url=spisskanovaves.eu/*&from=2017&to=2026&fl=timestamp,original,mimetype&collapse=urlkey",
-   "https://web.archive.org/web/20230128105039/https://www.spisskanovaves.eu/index.php/hladam-info/referendum-2023",
-   "https://www.spisskanovaves.eu/storage/app/media/Vo%C4%BEby/Referendum%202023/oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti.pdf"
   ]
  },
  "526509": {

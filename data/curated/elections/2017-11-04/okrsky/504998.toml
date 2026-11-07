@@ -1,0 +1,295 @@
+# Okrsky of Topoľčany, transcribed by an AI agent in job okrsok-rules-033 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Do okrsku patria ulice: Clementisova 1981,1997,2005,2006 B. Němcovej 1905,1906,1907 Podjavorinskej 1942,1961,2004,2120 Krušovská 1922,1950,1557,1556, 1527,1555,2091 Sladovnícka
+#   okrsok 2: Do okrsku patria ulice: Krušovská 1394, 1261,1472,1481,1436 Gogoľova 1888,1883,1882,1899,2143 Podjavorinskej 1973 V. Beniaka 1441,1458,1463 Gorkého
+#   okrsok 3: Do okrsku patria ulice: Bernolákova 2046,2070,2037,2082,2036,2112,1515
+#   okrsok 4: Do okrsku patria ulice: Bernolákova 1499,1500 Krušovská 2050,2058 J. Bottu, Janka Kráľa, Kukučínova, Moyzesova, 17. novembra, Nám. Ľ. Štúra, Obchodná, Škultétyho, Štúrova, M. Rázusa, Palárikova, kpt. Jaroša, J. Hollého
+#   okrsok 5: Do okrsku patria ulice: Palkovičova, Šafárikova Bernolákova 1504,1511,1614,2309
+#   okrsok 6: Do okrsku patria ulice: Tribečská 2275,1620,1542,1554,1653,1540,1549,2136,4453 J. Matušku 2178
+#   okrsok 7: Do okrsku patria ulice: J. Matušku 2250,2139,2148 P.O. Hviezdoslava 2270
+#   okrsok 8: Do okrsku patria ulice: P. O. Hviezdoslava 2266,2262,2165,2169,2159,2773 Práznovská cesta
+#   okrsok 9: Do okrsku patria ulice: P. O. Hviezdoslava 2324,2330,2328,2306,2331,2332 J. Matušku 2234,2800
+#   okrsok 10: Do okrsku patria ulice: Krušovská 2301,2302,2285 Pivovarnícka 2278 Gagarinova 2311 P. O. Hviezdoslava 2618,2619 J. Jesenského 2316,2321,2691
+#   okrsok 11: Do okrsku patria ulice: Gagarinova 1573,1569,1578,2490 K. Kuzmányho 1608,1603,1582,1596,1593 J. Jesenského 2296 J. Matušku 2220
+#   okrsok 12: Do okrsku patria ulice: Dr. P. Adámiho, Fraňa Kráľa, Jána Kollára, Mieru, Športovcov, Záhradnícka, Železničiarska, Krátka, Stummerova všetky nepárne or. čísla a párne or. č. po 112, a or. č. 142,148,168,170,172, Timravy, Pavlovova, Streďanská 1790,2731,2013,4689, Čsl. armády párne or. čísla
+#   okrsok 13: Do okrsku patria ulice: Krušovská 1645,1636,1631,1626,1831,1859, J. Wolkra 1840, Nám. M. R. Štefánika, Sv. Cyrila a sv. Metoda, Čsl. armády nepárne or. čísla, Pribinova, P. Mudroňa, T. Vansovej, Sama Chalupku
+#   okrsok 14: Do okrsku patria ulice: M. Benku 2341,2430,2423,2462,4659,4660,4661,4926 Streďanská 2617
+#   okrsok 15: Do okrsku patria ulice: Streďanská 2661,2778,2536,1526,1221,1764,1796, 1763,1530,1531,1537
+#   okrsok 16: Do okrsku patria ulice: D. Jurkoviča 2419,2362,4698,4699,2744 M. A. Bazovského 2355,2342,2345,2348,2351,2360,2696
+#   okrsok 17: Do okrsku patria ulice: D. Jurkoviča 2366,2399,2404,2407,2489,4697,4844 Ľ. Fullu 2517, Nemocnica
+#   okrsok 18: Do okrsku patria ulice: Ľ. Fullu 2495,2526,2566,2699,2805 J. Alexyho 2700,2704,2677,2688
+#   okrsok 19: Do okrsku patria ulice: Cintorínska, Pod kalváriou, Dopravná, Stummerova všetky párne or. č. od 114-140, 144-146, 150-166, 174-200
+#   okrsok 20: Do okrsku patria ulice: A. Grznára, Komenského, Cukrovarnícka, Inovecká, Vajanského, Jaselská, Hurbanova, M. Závodného, Odbojárov, Slov. partizánov, Topoľová
+#   okrsok 21: Do okrsku patria ulice: Družby, Kalinčiakova, Pionierska, Puškinova, Budovateľská, Tovarnícka všetky nepárne or. čísla
+#   okrsok 22: Do okrsku patria ulice: Agátová, Astrová, Brezová, Ľaliová, Malinová, Margarétová, Muškátová, Orgovánová, Ružová, Snežienková, Šípová, Nezábudková, Narcisová, Javorová
+#   okrsok 23: Do okrsku patria ulice: Fialková, Sedmikrásková, Sládkovičova, Slnečná, Tulipánová, Andreja Hlinku, Jahodová, Rastislavova, Hrebíčková
+#   okrsok 24: Do okrsku patria ulice: Skýcovská, kpt. Žalmana, Ladislava Dorušáka, Mojmírova, P. Jilemnického, Pílska, Radlinského, Slobody, Povstania, Svätoplukova, Václavská, Lipová, Tovarnícka všetky párne or. čísla
+#   okrsok 25: Do okrsku patria ulice: Hlavná, Záhradkárska, Záhumnie
+#   okrsok 26: Do okrsku patria ulice: Broskyňová, Čerešňová, Gaštanová, Chmeľová, Orechová, Ovocná, Vinohradnícka, Jabloňová
+obec = "504998"
+name = "Topoľčany"
+okrsky_date = 2017-08-14
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 14.8.2017 (for the regional elections of 4 November 2017; posted on the city's page 'Voľby do orgánov samosprávnych krajov 2017' on 25.9.2017; gone live, kept by the Internet Archive) lists for each okrsok its streets, many of them split by súpisné čísla (rules with by: supisne). Houses with a súpisné číslo it does not list on such split streets, the hospital it names ('Nemocnica', in okrsok 17) and the addresses without a street take the okrsok of the nearest placed address (fill_nearest)."
+
+[[document]]
+url = "https://web.archive.org/web/20190918143011/https://www.topolcany.sk/download_file_f.php?id=875579"
+sha256 = "8d24fb967a63ae3fd1f73c62980164548a88a1a737caf7192c7f0c1ddd4369bc"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností"
+
+[[document]]
+url = "https://web.archive.org/web/20190825234212/https://www.topolcany.sk/volby-do-organov-samospravnych-krajov-2017.phtml?id3=127286"
+sha256 = "00fb178442a1266ee2764a1b2c4b3303c5f74f89ab2578a5843a3729b531c009"
+title = "Voľby do orgánov samosprávnych krajov 2017"
+
+[okrsok.1]
+rules = [
+  {street = "Clementisova", numbers = "1981, 1997, 2005, 2006", by = "supisne"},
+  {street = "B. Němcovej", numbers = "1905, 1906, 1907", by = "supisne"},
+  {street = "Podjavorinskej", numbers = "1942, 1961, 2004, 2120", by = "supisne"},
+  {street = "Krušovská", numbers = "1922, 1950, 1557, 1556, 1527, 1555, 2091", by = "supisne"},
+  {street = "Sladovnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krušovská", numbers = "1394, 1261, 1472, 1481, 1436", by = "supisne"},
+  {street = "Gogoľova", numbers = "1888, 1883, 1882, 1899, 2143", by = "supisne"},
+  {street = "Podjavorinskej", numbers = "1973", by = "supisne"},
+  {street = "V. Beniaka", numbers = "1441, 1458, 1463", by = "supisne"},
+  {street = "Gorkého"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bernolákova", numbers = "2046, 2070, 2037, 2082, 2036, 2112, 1515", by = "supisne"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bernolákova", numbers = "1499, 1500", by = "supisne"},
+  {street = "Krušovská", numbers = "2050, 2058", by = "supisne"},
+  {street = "J. Bottu"},
+  {street = "Janka Kráľa"},
+  {street = "Kukučínova"},
+  {street = "Moyzesova"},
+  {street = "17.novembra", written = "17. novembra"},
+  {street = "Nám. Ľ. Štúra"},
+  {street = "Obchodná"},
+  {street = "Škultétyho"},
+  {street = "Štúrova"},
+  {street = "M. Rázusa"},
+  {street = "Palárikova"},
+  {street = "kpt. Jaroša"},
+  {street = "J. Hollého"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Palkovičova"},
+  {street = "Šafárikova"},
+  {street = "Bernolákova", numbers = "1504, 1511, 1614, 2309", by = "supisne"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Tribečská", numbers = "2275, 1620, 1542, 1554, 1653, 1540, 1549, 2136, 4453", by = "supisne"},
+  {street = "J. Matušku", numbers = "2178", by = "supisne"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "J. Matušku", numbers = "2250, 2139, 2148", by = "supisne"},
+  {street = "P. O. Hviezdoslava", numbers = "2270", by = "supisne"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "P. O. Hviezdoslava", numbers = "2266, 2262, 2165, 2169, 2159, 2773", by = "supisne"},
+  {street = "Práznovská cesta"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "P. O. Hviezdoslava", numbers = "2324, 2330, 2328, 2306, 2331, 2332", by = "supisne"},
+  {street = "J. Matušku", numbers = "2234, 2800", by = "supisne"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Krušovská", numbers = "2301, 2302, 2285", by = "supisne"},
+  {street = "Pivovarnícka", numbers = "2278", by = "supisne"},
+  {street = "Gagarinova", numbers = "2311", by = "supisne"},
+  {street = "P. O. Hviezdoslava", numbers = "2618, 2619", by = "supisne"},
+  {street = "J. Jesenského", numbers = "2316, 2321, 2691", by = "supisne"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Gagarinova", numbers = "1573, 1569, 1578, 2490", by = "supisne"},
+  {street = "K. Kuzmányho", numbers = "1608, 1603, 1582, 1596, 1593", by = "supisne"},
+  {street = "J. Jesenského", numbers = "2296", by = "supisne"},
+  {street = "J. Matušku", numbers = "2220", by = "supisne"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Dr. P. Adámiho"},
+  {street = "Fraňa Kráľa"},
+  {street = "Jána Kollára"},
+  {street = "Mieru"},
+  {street = "Športovcov"},
+  {street = "Záhradnícka"},
+  {street = "Železničiarska"},
+  {street = "Krátka"},
+  {street = "Stummerova", parity = "odd"},
+  {street = "Stummerova", numbers = "1-112", parity = "even"},
+  {street = "Stummerova", numbers = "142, 148, 168, 170, 172"},
+  {street = "Timravy"},
+  {street = "Pavlovova"},
+  {street = "Streďanská", numbers = "1790, 2731, 2013, 4689", by = "supisne"},
+  {street = "Čsl. armády", parity = "even"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Krušovská", numbers = "1645, 1636, 1631, 1626, 1831, 1859", by = "supisne"},
+  {street = "J. Wolkra", numbers = "1840", by = "supisne"},
+  {street = "Nám. M. R. Štefánika"},
+  {street = "sv. Cyrila a sv. Metoda", written = "Sv. Cyrila a sv. Metoda"},
+  {street = "Čsl. armády", parity = "odd"},
+  {street = "Pribinova"},
+  {street = "P. Mudroňa"},
+  {street = "T. Vansovej"},
+  {street = "Sama Chalupku"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "M. Benku", numbers = "2341, 2430, 2423, 2462, 4659, 4660, 4661, 4926", by = "supisne"},
+  {street = "Streďanská", numbers = "2617", by = "supisne"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Streďanská", numbers = "2661, 2778, 2536, 1526, 1221, 1764, 1796, 1763, 1530, 1531, 1537", by = "supisne"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "D. Jurkoviča", numbers = "2419, 2362, 4698, 4699, 2744", by = "supisne"},
+  {street = "M. A. Bazovského", numbers = "2355, 2342, 2345, 2348, 2351, 2360, 2696", by = "supisne"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "D. Jurkoviča", numbers = "2366, 2399, 2404, 2407, 2489, 4697, 4844", by = "supisne"},
+  {street = "Ľ. Fullu", numbers = "2517", by = "supisne"},
+]
+
+[okrsok.18]
+rules = [
+  {street = "Ľ. Fullu", numbers = "2495, 2526, 2566, 2699, 2805", by = "supisne"},
+  {street = "J. Alexyho", numbers = "2700, 2704, 2677, 2688", by = "supisne"},
+]
+
+[okrsok.19]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Pod kalváriou"},
+  {street = "Dopravná"},
+  {street = "Stummerova", numbers = "114-140, 144-146, 150-166, 174-200", parity = "even"},
+]
+
+[okrsok.20]
+rules = [
+  {street = "A. Grznára"},
+  {street = "Komenského"},
+  {street = "Cukrovarnícka"},
+  {street = "Inovecká"},
+  {street = "Vajanského"},
+  {street = "Jaselská"},
+  {street = "Hurbanova"},
+  {street = "M. Závodného"},
+  {street = "Odbojárov"},
+  {street = "Slov. partizánov"},
+  {street = "Topoľová"},
+]
+
+[okrsok.21]
+rules = [
+  {street = "Družby"},
+  {street = "Kalinčiakova"},
+  {street = "Pionierska"},
+  {street = "Puškinova"},
+  {street = "Budovateľská"},
+  {street = "Tovarnícka", parity = "odd"},
+]
+
+[okrsok.22]
+rules = [
+  {street = "Agátová"},
+  {street = "Astrová"},
+  {street = "Brezová"},
+  {street = "Ľaliová"},
+  {street = "Malinová"},
+  {street = "Margarétová"},
+  {street = "Muškátová"},
+  {street = "Orgovánová"},
+  {street = "Ružová"},
+  {street = "Snežienková"},
+  {street = "Šípová"},
+  {street = "Nezábudková"},
+  {street = "Narcisová"},
+  {street = "Javorová"},
+]
+
+[okrsok.23]
+rules = [
+  {street = "Fialková"},
+  {street = "Sedmikrásková"},
+  {street = "Sládkovičova"},
+  {street = "Slnečná"},
+  {street = "Tulipánová"},
+  {street = "Andreja Hlinku"},
+  {street = "Jahodová"},
+  {street = "Rastislavova"},
+  {street = "Hrebíčková"},
+]
+
+[okrsok.24]
+rules = [
+  {street = "Skýcovská"},
+  {street = "kpt. Žalmana"},
+  {street = "Ladislava Dorušáka"},
+  {street = "Mojmírova"},
+  {street = "P. Jilemnického"},
+  {street = "Pílska"},
+  {street = "Radlinského"},
+  {street = "Slobody"},
+  {street = "Povstania"},
+  {street = "Svätoplukova"},
+  {street = "Václavská"},
+  {street = "Lipová"},
+  {street = "Tovarnícka", parity = "even"},
+]
+
+[okrsok.25]
+rules = [
+  {street = "Hlavná"},
+  {street = "Záhradkárska"},
+  {street = "Záhumnie"},
+]
+
+[okrsok.26]
+rules = [
+  {street = "Broskyňová"},
+  {street = "Čerešňová"},
+  {street = "Gaštanová"},
+  {street = "Chmeľová"},
+  {street = "Orechová"},
+  {street = "Ovocná"},
+  {street = "Vinohradnícka"},
+  {street = "Jabloňová"},
+]

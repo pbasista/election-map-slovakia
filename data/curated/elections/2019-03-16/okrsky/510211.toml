@@ -1,24 +1,27 @@
-# The okrsky of Zázrivá of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/510211.toml, reused by `ems job reuse`. Its header there:
-#   Okrsky of Zázrivá, transcribed by an AI agent in job okrsok-rules-722 from the documents below;
+# The okrsky of Zázrivá of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/510211.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Zázrivá, transcribed by an AI agent in job okrsok-rules-1781 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
 #     okrsok 1: Zázrivá-Stred, Biela
 #     okrsok 2: Petrová, Demkovská, Dolina, Ráztoky, Grúne, Končitá, Havrania, Kozinská, Plešivá
 obec = "510211"
 name = "Zázrivá"
-okrsky_date = 2022-06-30
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-03-16 the obec had as many, each with voters on the roll within 10% of its count then. No document of 2019-03-16 was searched for."
-okrsky_reused = 2022-10-29
+okrsky_note = "The document is the mayor's decision as published in full text on the municipality's notice-board post (no PDF); it states no date of the decision."
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1191): The municipality's presidential election 2019 page lists the announcement, e-mail addresses, candidates and results but no okrsky document; neither the site's sitemaps nor the Internet Archive (captures of zazriva.com 2017–2019, home pages of 25 January and 1 March 2019) show one. The mayor's okrsky decision posted on 27 February 2019 is for the European Parliament elections of 25 May 2019 only (same two okrsky: Zázrivá-Stred, Biela / the other nine parts). These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2019-05-25: 1: 1,147 → 1,116, 2: 1,030 → 1,032."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2019-03-01
+okrsky_date_basis = "The Internet Archive captured the municipality's home page on 2019-03-01 listing the post 'Utvorenie volebných okrskov a určenie volebných miestností v obci Zázrivá' (for the elections to the European Parliament of 25 May 2019) with its opening text; the decision itself states no date. (https://web.archive.org/web/20190301091833/http://zazriva.com/)"
 
 [[document]]
-url = "https://zazriva.com/wp-content/uploads/2022/06/Utvorenie-okrskov-a-volebnych-miestnostiar.pdf"
-sha256 = "654dc57595eb04dc664ef7a4f42ba389e4e1d19196afa9adb506dfb49cdebcc3"
-title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Zázrivá"
+url = "https://zazriva.com/podujatie/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-v-obci-zazriva/"
+sha256 = "8be1b93c0b150f33ef695ecc4a1c681e15cb1b9a1239df5232a63322f1743b1b"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Zázrivá (voľby do Európskeho parlamentu 25. 5. 2019)"
 
 [[document]]
-url = "https://zazriva.com/podujatie/komunalne-volby-2022/"
-sha256 = "9c8f8f527f1037d6504c9828e98c8fde89796226885bf3b9b50e45d05bb339b6"
-title = "Komunálne voľby 2022"
+url = "https://zazriva.com/podujatie/volby-do-europskeho-parlamentu-2019/"
+sha256 = "954d2e78a5d6aecb3f084eb8da571bb12a0d90dd38007cf488e48ce4747048a0"
+title = "Voľby do Európskeho parlamentu 2019"
 
 [okrsok.1]
 rules = [

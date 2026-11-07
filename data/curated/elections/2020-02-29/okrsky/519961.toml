@@ -1,5 +1,5 @@
-# The okrsky of Zborov of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/519961.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Zborov, transcribed by an AI agent in job okrsok-rules-1024 from the documents below;
+# The okrsky of Zborov of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/519961.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Zborov, transcribed by an AI agent in job okrsok-rules-868 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
 #     okrsok 1: Budovateľská, Duklianska, Mlynská, Na Stebníčku, Nám. Čsl. Armády, Obrancov mieru, Osloboditeľov, Pod 100 lipami, SNP, Sokolovská, Šarišská, Štúrova, Úzka, Zákutie od č. 1 – 42
@@ -7,15 +7,16 @@
 obec = "519961"
 name = "Zborov"
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2020-02-29 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2020-02-29 was searched for. Zákutie is split by orientačné čísla (1–42 / 43–100). The 29 houses with only a súpisné číslo take the okrsok of the nearest address (fill_nearest)."
-okrsky_reused = 2022-10-29
+okrsky_note = "The mayor's announcement for the municipal elections of 10 November 2018, archived from the old website. Zákutie is split by orientačné čísla (1–42 / 43–100). The 29 houses with only a súpisné číslo take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2626): No okrsky document for the National Council election of 29 February 2020 found. The live elections page (/urad/volby/, all pages; files migrated from the old site with placeholder dates) and the old website's elections page 'Voľby a referendá' (/samosprava/volby-nr-sr-2016.html, archived 2020-08-14 and 2021-01-24, listing every election file of 2016–2020) carry no 'utvorenie volebných okrskov' for this vote: its 2020 entries are the announcement of the election, the voters' information in Slovak and Romani and the e-mail address for delegating commission members and for voting-card requests. The only okrsky document of 2016–2020 is that of the municipal elections of 10 November 2018. The Internet Archive's CDX of zborov.sk (2016–2021) has no other okrsky file; the notice board captures list no election documents. Web search found nothing. The Internet Archive was intermittently refusing connections but answered in the end. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
 okrsky_date_approximate = "named"
-okrsky_date_basis = "The document's heading names these elections: 'Utvorenie volebných okrskov … počas konania volieb do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov dňa 29. októbra 2022'. It states no date of its own; the website lists it under the placeholder date 1. 1. 2022, and the Internet Archive holds no 2022 capture of it or of its page."
+okrsky_date_basis = "The document's heading names this vote: 'Utvorenie volebných okrskov a určenie volebných miestností v obci ZBOROV počas konania volieb do orgánov samosprávy obcí dňa 10. novembra 2018'. It states no date of its own (signed 'Ján Lukáč, starosta obce v.r.', undated). The Internet Archive's earliest capture of the PDF (from the old website's /dokumenty/ folder, no longer live) is of 2021-03-05. The old elections page ('Voľby a referendá', /samosprava/volby-nr-sr-2016.html) links it in its first capture after 2018-01-25, of 2020-08-14; the notice board captures of 2018-09-05 and 2018-10-09 do not list it, so no capture before the vote shows it."
 
 [[document]]
-url = "https://www.zborov.sk/modules/file_storage/download.php?file=5d05067d%7C127&inline=1"
-sha256 = "99be6c1599a7e7ccc6a088cf4c2cad1eea06e4cb30a61826870f68790798930b"
-title = "Utvorenie volebných okrskov a určenie volebných miestností v obci Zborov počas konania volieb do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov dňa 29. októbra 2022"
+url = "https://web.archive.org/web/20210305003816/https://www.zborov.sk/dokumenty/Utvorenie_volebn%C3%BDch_okrskov_a_ur%C4%8Denie_volebn%C3%BDch_miestnost%C3%AD.pdf"
+sha256 = "5ce6a88ec39ba78e0d7a810749e22768595baf0b92f475f57ae53a7b1828466d"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v obci ZBOROV počas konania volieb do orgánov samosprávy obcí dňa 10. novembra 2018"
 
 [okrsok.1]
 rules = [

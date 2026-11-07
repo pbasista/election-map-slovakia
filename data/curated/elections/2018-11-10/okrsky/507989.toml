@@ -1,38 +1,59 @@
-# The okrsky of Svätý Jur of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/507989.toml, reused by `ems job reuse`.
+# Okrsky of Svätý Jur, transcribed by an AI agent in job okrsok-rules-137 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Biely kríž, Dlhé, Gaštanová, Hamrovská cesta, Horné predmestie, Hradištná, Jozefkovo údolie, Konečné, Malokarpatská, Mariánska cesta, Peredzké, Pitvory, Podhradie, Pri hornej skalke, Pri peci, Prostredná, Prostredné, Zámočnica
+#   okrsok 2: Dr. Kautza, Bratislavská, Cibická cesta, Družstevná, Hájniky, Hanzlíčkova, Letohradská, Mikovíniho, Pezinská, Pezinské záhumenice, Staromlynská, Vinohradnícka
+#   okrsok 3: 1. mája, Krajinská cesta, Muškátová, Nová Pezinská, Olšavská, Pálavová, Pannónska, Rulandská, Silvánska, Šúrska, Tramínová, Veltlínska
+#   okrsok 4: Alexandra Dubčeka, Bernolákova, Dukelská, Fraňa Kráľa, Háj, Hrúšťová, Jelenie, Kollárova, Kúpeľné, Martina Kukučína, Mierová, Na pažiti, Osúchy, P.O.Hviezdoslava, Panciere, Partizánska, Polkoráby, Pri ČOV, Pri kaplnke, Sasinkova, Slnečná, SNP, Staničná, Strapáky, Svätojánska, Športová, Zuby, Žabky
+#   okrsok 5: Bratislavské záhumenice, Felcánova, Hergotttova, Kozmonautov, Pri štadióne, Štúrova, Ulica J. Cubínka
 obec = "507989"
 name = "Svätý Jur"
-okrsky_date = 2026-07-21
 okrsky_fill = "nearest"
-okrsky_note = "No document of the elections of 2018-11-10 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2018 (each okrsok's voters on the roll within 10%). Olšavská and Pálavová (okrsok 3) are not in the address register; left out. Register streets the document does not name (Bujačky, Hajná Hora, Kukly, Malý Javorník, Nové Hory, Tri Bresty, Ulica Priemyselná, Veľký Javorník, Žebráky) and addresses without a street take the okrsok of the nearest placed address."
-okrsky_reused = 2026-10-24
+okrsky_note = "The .doc and the PDF list the same streets per okrsok. Streets the document names but the register lacks: Olšavská, Pálavová (okrsok 3); left out. Register streets the document does not name and no later rule set places (Bujačky, Hajná Hora, Kukly, Malý Javorník, Nové Hory, Trenčianka, Tri Bresty, Ulica Priemyselná, Veľký Javorník, Žebráky) and the 246 addresses without a street are placed by fill_nearest."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2018-10-21
+okrsky_date_basis = "The Common Crawl captured the town's page 'Komunálne voľby 10.11.2018' on 2018-10-21, linking the .doc 'volebné okrsky podľa ulíc 2018' ('Určenie počtu volebných okrskov a volebných miestností: TU aj so zoznamom ulíc'); the .doc (captured 2018-12-11) and the identical PDF (captured 2018-11-13) state no date and do not name the vote. (https://index.commoncrawl.org/CC-MAIN-2018-43-index?url=http://www.svatyjur.sk/content/komunalne-volby-10-11-2018%3Fsessid2801f49fdc902321a0ef1f5e3fae3bff%3D62f435c1b961339bfeadc2dd0a36204e&from=20181021211037&to=20181021211037&output=json)"
+okrsky_supplemented = 2022-10-29
+okrsky_supplemented_from = "election"
+okrsky_supplement_basis = "The 2018 document leaves out the streets Rebrá and Ulica Sauberg; the rule set of 2022-10-29 has them in okrsok 1 (the Podhradie, Prostredná … Zámočnica okrsok, the same street list otherwise); copied unchanged."
 
 [[document]]
-url = "https://www.svatyjur.sk/data/news_files/svatyjur.sk/135693/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti.pdf"
-sha256 = "4bd2283ae690b928693a8633494e6cebfaf70ce6a31557d0bf3b1c3e20e3f9ac"
-title = "Utvorenie volebných okrskov a určenie volebných miestností"
+url = "https://index.commoncrawl.org/CC-MAIN-2018-43-index?url=http://www.svatyjur.sk/content/komunalne-volby-10-11-2018%3Fsessid2801f49fdc902321a0ef1f5e3fae3bff%3D62f435c1b961339bfeadc2dd0a36204e&from=20181021211037&to=20181021211037&output=json"
+sha256 = "277f7b8e303b10b3a7545038084c346fe9799c1cadfb16cc3d29f19cfc756dca"
+title = "Komunálne voľby 10.11.2018 (elections page of the town, Common Crawl capture of 2018-10-21), linking 'Určenie počtu volebných okrskov a volebných miestností: TU aj so zoznamom ulíc'"
+
+[[document]]
+url = "https://index.commoncrawl.org/CC-MAIN-2018-51-index?url=http://www.svatyjur.sk/data/MediaLibrary/4189/volebn%25C3%25A9%2520okrsky%2520pod%25C4%25BEa%2520ul%25C3%25ADc%25202018.doc&from=20181211230413&to=20181211230413&output=json"
+sha256 = "78dd671299e6419a5776227fa2a89796b90b31227659a887f6b9e61212bdf271"
+title = "Volebné okrsky a volebné miestnosti (volebné okrsky podľa ulíc 2018.doc, Common Crawl capture of 2018-12-11)"
+
+[[document]]
+url = "https://index.commoncrawl.org/CC-MAIN-2018-47-index?url=http://www.svatyjur.sk/data/MediaLibrary/4318/Def%2520volebn%25C3%25A9%2520okrsky%2520pod%25C4%25BEa%2520ul%25C3%25ADc%25202018%2520%283%29.pdf&from=20181113025402&to=20181113025402&output=json"
+sha256 = "38d99ab59badd5010e597d6af8b86070e93902303e77fb8f077e7be53e729655"
+title = "A. Volebné okrsky a volebné miestnosti (Def volebné okrsky podľa ulíc 2018 (3).pdf, Common Crawl capture of 2018-11-13)"
 
 [okrsok.1]
 rules = [
-  {street = "Biely Kríž", written = "Biely kríž"},
+  {street = "Biely Kríž", written = "Biely kríž", note = "Capitalisation only; same street."},
   {street = "Dlhé"},
   {street = "Gaštanová"},
   {street = "Hamrovská cesta"},
-  {street = "Horné Predmestie", written = "Horné predmestie"},
+  {street = "Horné Predmestie", written = "Horné predmestie", note = "Capitalisation only; same street."},
   {street = "Hradištná"},
-  {street = "Jozefkovo Údolie", written = "Jozefkovo údolie"},
+  {street = "Jozefkovo Údolie", written = "Jozefkovo údolie", note = "Capitalisation only; same street."},
   {street = "Konečné"},
   {street = "Malokarpatská"},
   {street = "Mariánska cesta"},
   {street = "Peredzké"},
   {street = "Pitvory"},
   {street = "Podhradie"},
-  {street = "Pri Hornej Skalke", written = "Pri hornej skalke"},
-  {street = "Pri Peci"},
+  {street = "Pri Hornej Skalke", written = "Pri hornej skalke", note = "Capitalisation only; same street."},
+  {street = "Pri Peci", written = "Pri peci", note = "Capitalisation only; same street."},
   {street = "Prostredná"},
   {street = "Prostredné"},
-  {street = "Rebrá"},
   {street = "Zámočnica"},
-  {street = "Ulica Sauberg"},
+  {street = "Rebrá", note = "not in the 2018 document; in okrsok 1 in the 2022 rule set", supplemented = true},
+  {street = "Ulica Sauberg", note = "not in the 2018 document; in okrsok 1 in the 2022 rule set", supplemented = true},
 ]
 
 [okrsok.2]
@@ -46,23 +67,22 @@ rules = [
   {street = "Letohradská"},
   {street = "Mikovíniho"},
   {street = "Pezinská"},
-  {street = "Pezinské Záhumenice", written = "Pezinské záhumenice"},
+  {street = "Pezinské Záhumenice", written = "Pezinské záhumenice", note = "Capitalisation only; same street."},
   {street = "Staromlynská"},
   {street = "Vinohradnícka"},
 ]
 
 [okrsok.3]
 rules = [
-  {street = "1.mája", written = "1. Mája"},
+  {street = "1.mája", written = "1. mája"},
   {street = "Krajinská cesta"},
   {street = "Muškátová"},
-  {street = "Nová pezinská", written = "Nová Pezinská"},
+  {street = "Nová pezinská", written = "Nová Pezinská", note = "Capitalisation only; same street."},
   {street = "Pannónska"},
   {street = "Rulandská"},
   {street = "Silvánska"},
   {street = "Šúrska"},
   {street = "Tramínová"},
-  {street = "Trenčianka"},
   {street = "Veltlínska"},
 ]
 
@@ -79,14 +99,14 @@ rules = [
   {street = "Kúpeľné"},
   {street = "Martina Kukučína"},
   {street = "Mierová"},
-  {street = "Na Pažiti"},
+  {street = "Na Pažiti", written = "Na pažiti", note = "Capitalisation only; same street."},
   {street = "Osúchy"},
-  {street = "Panciere"},
   {street = "P. O. Hviezdoslava", written = "P.O.Hviezdoslava"},
+  {street = "Panciere"},
   {street = "Partizánska"},
   {street = "Polkoráby"},
   {street = "Pri ČOV"},
-  {street = "Pri Kaplnke", written = "Pri kaplnke"},
+  {street = "Pri Kaplnke", written = "Pri kaplnke", note = "Capitalisation only; same street."},
   {street = "Sasinkova"},
   {street = "Slnečná"},
   {street = "SNP"},
@@ -100,17 +120,11 @@ rules = [
 
 [okrsok.5]
 rules = [
-  {street = "Ulica Bratislavské Záhumenice", written = "Bratislavské záhumenice"},
-  {street = "Černicová ulica"},
+  {street = "Bratislavské Záhumenice", written = "Bratislavské záhumenice", note = "Capitalisation only; same street."},
   {street = "Felcánova"},
-  {street = "Hergottova"},
-  {street = "Ulica Karola Drexlera"},
-  {street = "Ulica J.Cubínka", written = "Ulica J. Cubínka"},
+  {street = "Hergottova", written = "Hergotttova", note = "A typo (triple t) for the register's Hergottova; same street."},
   {street = "Kozmonautov"},
-  {street = "Ulica Mateja Bela"},
-  {street = "Ulica Michala Dočolomanského"},
-  {street = "Ulica Mórica Beňovského"},
-  {street = "Pri Štadióne", written = "Pri štadióne"},
+  {street = "Pri Štadióne", written = "Pri štadióne", note = "Capitalisation only; same street."},
   {street = "Štúrova"},
-  {street = "Ulica Za Družstvom", written = "Ulica za družstvom"},
+  {street = "Ulica J.Cubínka", written = "Ulica J. Cubínka"},
 ]

@@ -1,19 +1,21 @@
-# The okrsky of Láb of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/508039.toml, reused by `ems job reuse`. Its header there:
-#   Okrsky of Láb, transcribed by an AI agent in job okrsok-rules-383 from the documents below;
+# The okrsky of Láb of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/508039.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Láb, transcribed by an AI agent in job okrsok-rules-4937 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: ulice: Drahy, Grínava, Hlavná ulica, Hviezdna ulica, Krátka ulica, Lúčka, Mesačná ulica, Na kúte, Okružná ulica, Rádek, Slnečná ulica, Školská ulica, Štvrtecká ulica, Ulica Antona Milatu, Ulica Ignáca Juračku, Veterná ulica, Vŕšok, Zohorská ulica
+#     okrsok 1: ulice: Drahy, Grínava, Hlavná ulica, Hviezdna ulica, Lúčka, Mesačná ulica, Na kúte, Okružná ulica, Rádek, Slnečná ulica, Školská ulica, Ulica Antona Milatu, Ulica Ignáca Juračku, Veterná ulica, Vŕšok, Zohorská ulica
 #     okrsok 2: ulice: Ambrov mlyn, Cintorínska ulica, Jazerná ulica, Leknová ulica, Lipová ulica, Malý Chríb, Na bahnách, Pri štadióne, Stránky, Topoľová ulica, Trstinová ulica, Ulica Benjamína Záhradníka, Ulica Karola Salixa, Ulica M.Kišoňovej-Hubovej, Veľký Chríb, Vrbovec, Výhony, bez ulice
 obec = "508039"
 name = "Láb"
-okrsky_date = 2026-07-14
-okrsky_note = "These are the okrsky of the elections of 2026-10-24: in 2024-03-23 the obec had as many, each with voters on the roll within 10% of its count then. No document of 2024-03-23 was searched for. Both okrsky vote at the Obecný úrad. \"bez ulice\" (addresses without a street) is in okrsok 2, given as its rest rule."
-okrsky_reused = 2026-10-24
+okrsky_date = 2024-03-05
+okrsky_fill = "nearest"
+okrsky_note = "Both okrsky vote at the Obecný úrad. 'bez ulice' in okrsok 2 means voters registered without an address; register houses without a street are placed by fill_nearest."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2024-03-23 setting the okrsky was found (okrsok-rules-4313): The elections page's 'Voľby prezidenta SR 2024' table lists only the candidates and results; no okrsky decision for the presidential election. The okrsky document of 5 March 2024 (OL-2024/70/2) is expressly for the European Parliament election only. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-03-23 → 2024-06-08: 1: 825 → 825, 2: 866 → 845."
 
 [[document]]
-url = "https://www.obeclab.sk/wp-content/uploads/2026/07/urcenie-volebnych-okrskov-a-miestnosti.doc"
-sha256 = "9027dca59ee289f7685ae13a7319761fcb2450821808d14c6eb1157c589fbce4"
-title = "Utvorenie volebných okrskov a určenie volebných miestností (OL-2026/182)"
+url = "https://www.obeclab.sk/wp-content/uploads/2024/03/urcenie-volebnych-okrskov-a-miestnosti.pdf"
+sha256 = "17e2ea7c14f1c845ae42a15326f5672043f76c28e906d22742fe6183659f5d61"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu 2024 v obci Láb (OL-2024/70/2)"
 
 [okrsok.1]
 rules = [
@@ -21,7 +23,6 @@ rules = [
   {street = "Grínava"},
   {street = "Hlavná ulica"},
   {street = "Hviezdna ulica"},
-  {street = "Krátka ulica"},
   {street = "Lúčka"},
   {street = "Mesačná ulica"},
   {street = "Na kúte"},
@@ -29,7 +30,6 @@ rules = [
   {street = "Rádek"},
   {street = "Slnečná ulica"},
   {street = "Školská ulica"},
-  {street = "Štvrtecká ulica"},
   {street = "Ulica Antona Milatu"},
   {street = "Ulica Ignáca Juračku"},
   {street = "Veterná ulica"},
@@ -52,9 +52,8 @@ rules = [
   {street = "Trstinová ulica"},
   {street = "Ulica Benjamína Záhradníka"},
   {street = "Ulica Karola Salixa"},
+  {street = "Ulica Márie Kišoňovej-Hubovej", written = "Ulica M.Kišoňovej-Hubovej"},
   {street = "Veľký Chríb"},
   {street = "Vrbovec"},
   {street = "Výhony"},
-  {street = "Ulica Márie Kišoňovej-Hubovej", written = "Ulica M.Kišoňovej-Hubovej"},
-  {rest = true},
 ]

@@ -34,12 +34,11 @@
 #   okrsok 31: Komárno Beöthyho ul. Celá ulica; Komárno Ižianska cesta Celá ulica; Komárno Komenského ul. 2 4 Párne čísla; Komárno Komenského ul. 5 12 Všetky čísla; Komárno Komenského ul. 14 46 Párne čísla; Komárno Mederčská ul. 19 21 Nepárne čísla; Komárno Nám. sv. Rozálie Celá ulica; Komárno Veľká jarková ul. Celá ulica; Komárno Vodná ul. 2 12 Párne čísla; Malá Iža Celá časť obce; Veľký Harčáš Celá časť obce
 #   okrsok 32: Kava Celá časť obce; Lándor Celá časť obce
 #   okrsok 33: Ďulov Dvor Celá časť obce; Komárno Novozámocká cesta Celá ulica
-#   okrsok 34: Špeciálny spôsob hlasovania: právo hlasovať do špeciálnej prenosnej volebnej schránky budú mať oprávnení voliči, ktorí požiadajú o špeciálny spôsob hlasovania zapisovateľa špeciálnej komisie
 obec = "501026"
 name = "Komárno"
 okrsky_date = 2022-11-08
 okrsky_fill = "nearest"
-okrsky_note = "The mayor's Informácia of 8 November 2022 sets 33 okrsky (1–33, transcribed from its address list). The Statistical Office counts a 34th okrsok with 2 voters: the special commission for voters in COVID-19 isolation/quarantine (špeciálny spôsob hlasovania, announced on the city's referendum page), which has no addresses; it is written as okrsok 34 without rules. Rules transcribe the annex 'Zoznam adries začlenených v jednotlivých okrskoch' (časť obce, ulica, orientačné čísla od–do, párne/nepárne/všetky/jedno číslo). A street the list puts in one okrsok only is a whole-street rule; streets split between okrsky carry the list's numbers (a range ending in a lettered number, e.g. 16–18A, read as 16-18 plus 18A; 12A–12J as the single lettered houses). Numbers listed in časť Komárno without a street (4007, 4428) are súpisné čísla of addresses without a street. 'Piesočný hon' (listed) has no register addresses and is left out. Register spelling variants (Slobody, Ul.biskupa Királya, Ul.roľníckej školy, Ul.práce, K. Harmoša, Nová) follow their main street (inferred). The row 'občania s trvalým pobytom Komárno' (residents registered only to the city) has no rule. fill_nearest places addresses the list does not name: addresses without a street outside the whole parts listed, register streets not in the list (e.g. Hadovská cesta, Park pri Pevnosti - Anglia, Tržničné nám., Druhá priečna ul.) and unlisted numbers of split streets."
+okrsky_note = "The mayor's Informácia of 8 November 2022 sets 33 okrsky (1–33, transcribed from its address list). The Statistical Office counts a 34th okrsok with 2 voters: the special commission for voters in COVID-19 isolation/quarantine (špeciálny spôsob hlasovania, announced on the city's referendum page), which the document names as the special okrsok: the COVID-19 special okrsok of okres Komárno (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml), kept out of these okrsky. Rules transcribe the annex 'Zoznam adries začlenených v jednotlivých okrskoch' (časť obce, ulica, orientačné čísla od–do, párne/nepárne/všetky/jedno číslo). A street the list puts in one okrsok only is a whole-street rule; streets split between okrsky carry the list's numbers (a range ending in a lettered number, e.g. 16–18A, read as 16-18 plus 18A; 12A–12J as the single lettered houses). Numbers listed in časť Komárno without a street (4007, 4428) are súpisné čísla of addresses without a street. 'Piesočný hon' (listed) has no register addresses and is left out. Register spelling variants (Slobody, Ul.biskupa Királya, Ul.roľníckej školy, Ul.práce, K. Harmoša, Nová) follow their main street (inferred). The row 'občania s trvalým pobytom Komárno' (residents registered only to the city) has no rule. fill_nearest places addresses the list does not name: addresses without a street outside the whole parts listed, register streets not in the list (e.g. Hadovská cesta, Park pri Pevnosti - Anglia, Tržničné nám., Druhá priečna ul.) and unlisted numbers of split streets."
 
 [[document]]
 url = "https://komarno.sk/wp-content/uploads/2022/11/5-Zoznam-adries-zaclenenych-v-jednotlivych-okrskoch.pdf"
@@ -543,6 +542,3 @@ rules = [
   {part = "Ďulov Dvor"},
   {street = "Novozámocká cesta"},
 ]
-
-[okrsok.34]
-addressless = true

@@ -1,28 +1,28 @@
-# The okrsky of Sučany of the elections of 2018-11-10, data/curated/elections/2018-11-10/okrsky/512648.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Sučany, transcribed by an AI agent in job okrsok-rules-659 from the documents below;
+# The okrsky of Sučany of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/512648.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Sučany, transcribed by an AI agent in job okrsok-rules-1194 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
 #     okrsok 1: Pri Váhu, Stará hradská, 29.augusta, Podskala, Námestie SNP, Jánošíkova, Kollárova, Hviezdoslavova, Hurbanova, Fučíkova, Čsl. armády, Dukelských hrdinov a Kpt. Nálepku.
 #     okrsok 2: Fr. Kráľa, Kalinčiakova, Mierová, Osloboditeľov, Partizánska, Pod Brezinou, Stromová, Podhradská cesta, Stará Teheleň, Štiavnická cesta, Moyzesova, Kuzmányho, Horčičkova.
 #     okrsok 3: 1. mája, Ď. Langsfelda, Gen. Svobodu, Hlavná, Hodžova, Ing. Kožucha, J. Kostru, Jilemnického, Pionierska, J. A. Komenského, Malý diel, Sládkovičova, Sokolská, Sološenkova, Štúrova, Vrútocká cesta, Železničná, Stará Prefa a Družstevná.
-#     okrsok 4: Budovateľská, Fatranská cesta, Hrabinská, Kráľova, Krivánska, Meškalská, Turianska, Vážska, Pod Kečkou, Hradiská, Brezová a Hubová.
+#     okrsok 4: Budovateľská, Fatranská cesta, Hrabinská, Kráľova, Krivánska, Meškalská, Turianska, Vážska, Pod Kečkou, Hradiská, Brezová a Hubová, Ústav na výkon trestu odňatia slobody pre mladistvých.
 obec = "512648"
 name = "Sučany"
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2018-11-10: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was found (okrsky/not-found.json). The register streets SNP (4 addresses, distinct from Námestie SNP) and Ulica priemyselná (1) are named by no document: placed by fill_nearest, as are the addresses without a street. Kpt. Nálepku in okrsok 1."
-okrsky_reused = 2018-11-10
-okrsky_date_approximate = "posted"
-okrsky_date_seen = 2018-10-18
-okrsky_date_basis = "The notice itself is undated but names the municipal elections of 10 November 2018 (rozhodnutie č. 203/2018 Z. z.); the municipality's elections page, as the Internet Archive captured it on 2019-08-18, lists \"Oznam ku komunálnym voľbám - okrsky\" as inserted on 18.10.2018. (https://web.archive.org/web/20190818212215/https://www.sucany.sk/obec-2/volby-a-referenda/)"
+okrsky_note = "The register streets SNP (4 addresses, distinct from Námestie SNP) and Ulica priemyselná (1) are named by no document: placed by fill_nearest, as are the addresses without a street. Same okrsky as the 2022 copy except that this document does not yet name the streets supplemented; the youth prison (okrsok 4) is an institution, not a street."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1784): The elections page (live, and as archived 2019-08-18) has a section \"Voľby do Európskeho parlamentu 2019\" with the results, the e-mail notice, the decision calling the election and the voter information, but no okrsky notice; the archived news of spring 2019 and the site search have none either. The presidential-election notice of 2019 (same 4 okrsky) is another vote's. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2019-03-16: 1: 1,153 → 1,151, 2: 1,022 → 1,031, 3: 1,135 → 1,123, 4: 566 → 631."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated notice names the presidential election of 16 March 2019 (round 2 on 30 March 2019) and gives the streets of each okrsok."
 
 [[document]]
-url = "https://www.sucany.sk/modules/file_storage/download.php?file=6a5de08a%7C175&inline=1"
-sha256 = "ccfd8dbdf7feade9d6cfbe979a15f699ba04574cfe5d7bd99a5d6f686762623b"
-title = "Oznam ku komunálnym voľbám - okrsky (Volebné okrsky_Sučany_ 2018.pdf)"
+url = "https://www.sucany.sk/e_download.php?file=data/editor/144sk_8.pdf&original=Ozn%C3%A1menie%20o%20%C4%8Dase%20konania%20prezidentsk%C3%BDch%20volieb_Su%C4%8Dany_%202019.pdf"
+sha256 = "82d30e3421122640cfea89d5d57617ad92e057894500f780f6ebab0e656f88c8"
+title = "Oznámenie o čase konania prezidentských volieb_Sučany_ 2019"
 
 [[document]]
 url = "https://www.sucany.sk/obec/volby-a-referenda/"
-sha256 = "7151a5faeb041c3531d843f9f51b5c330da33b37573141c203c48da433268c09"
+sha256 = "319b5dcdb8531b594f0165d1c78ee9310e4952020fa2dfbc3e9bf30d53c9aee9"
 title = "Voľby a referendá"
 
 [okrsok.1]

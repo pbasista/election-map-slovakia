@@ -1,30 +1,26 @@
-# The okrsky of Detvianska Huta of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/518271.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Detvianska Huta, transcribed by an AI agent in job okrsok-rules-987 from the documents below;
+# The okrsky of Detvianska Huta of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/518271.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Detvianska Huta, transcribed by an AI agent in job okrsok-rules-905 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Detvianska Huta
+#     okrsok 1: Detvianska Huta, Vrchdobroč
 #     okrsok 2: Komárno, Ľuľovka, Brnovka
 #     okrsok 3: Žabica, Bratkovica, Blažková Jama
 obec = "518271"
 name = "Detvianska Huta"
-okrsky_date = 2022-08-03
-okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was searched for. The notice (03.08.2022) names settlements: okrsok 2 'Komárno, Ľuľovka, Brnovka', okrsok 3 'Žabica, Bratkovica, Blažková Jama'. Ľuľovka, Brnovka and Blažková Jama are not parts in the register (settlements inside the parts); the parts Detvianska Huta, Komárno, Žabica and Bratkovica are placed by part rules. The part Vrchdobroč is not named by the document; its addresses are placed by fill_nearest (nearest placed address). All addresses lack a street (súpisné only)."
-okrsky_reused = 2022-10-29
+okrsky_date = 2018-07-27
+okrsky_note = "Ľuľovka, Brnovka (okrsok 2) and Blažková Jama (okrsok 3) are settlements, not parts in the register; the five parts are placed by part rules as the document names them."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-2064): Every file of the notice board (data/uredni_deska/obsah1..460, all 442 present, scans OCR-read) was checked: okrsky documents exist only for 2018 (OZ resolution 242/OZ/2018), 2022 and the referendum of 2026; the 2017 file (obsah88_3.doc, \"Zoznam okrskov\") and the 2026 notice give only the 3 polling stations, and the municipality has 5 parts, so they cannot be turned into rules. Nothing for this vote. web.archive.org refused connections. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 3 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
 
 [[document]]
-url = "https://www.detvianskahuta.eu/samosprava/uradna-tabula/komunalne-volby-a-volby-do-organov-samospravnych-krajov2022-249.html"
-sha256 = "cdade3449748523bc42899b4b8b32912b78507ce55925ae71a0f3c4cce2bd7d1"
-title = "Komunálne voľby a voľby do orgánov samosprávnych krajov 2022 (úradná tabuľa, vyvesené 3. 8. 2022)"
-
-[[document]]
-url = "https://www.detvianskahuta.eu/e_download.php?file=data/uredni_deska/obsah239_2.odt&original=Volebn%C3%A9%20okrsky%20a%20miestnosti.odt"
-sha256 = "f5d26b9adf3f48a4682dbf79214996bb6a2fa30d966e9780a73d1ff588713429"
-title = "Volebné okrsky a miestnosti (Oznámenie, 03.08.2022)"
+url = "https://www.detvianskahuta.eu/data/uredni_deska/obsah100_3.pdf"
+sha256 = "fb24b86470405ede8e8edb4d8106dba8e4e83bfbed9b8e29b7515bf1d4305cd3"
+title = "Oznam: Uznesením OZ č. 242/OZ/2018 zo dňa 27.07.2018 boli pre voľby do orgánov samosprávy obcí určené okrsky"
 
 [okrsok.1]
 rules = [
   {part = "Detvianska Huta"},
+  {part = "Vrchdobroč"},
 ]
 
 [okrsok.2]

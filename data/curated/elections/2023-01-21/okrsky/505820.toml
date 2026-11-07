@@ -52,11 +52,10 @@
 #   okrsok 49: Hlavná, Hroznová, Jána Prháčka , Na Kamenci, Na Vinohrady, Na záhrade, Okružná, Slivková, Šafránová, Tramínová, Vladimíra Predmerského, Rizlingová, Rulandská, Muškátová
 #   okrsok 50: Detská, Hanzlíkovská, J. Psotného, Jarná, , K mlyniskám Kňažské, Na dolinách, Malozáblatská Poľovnícka Severná
 #   okrsok 51: Dolné Pažite, Ku kyselke, Zuzany Jarábkovej , Pri parku, Poľnohospodárska, Rybáre, Sigôtky, Bratislavská párne č. 52 - 116, Záblatská, Cez ohrady, Na pažiti, Lúčky Pavla Ondráška, Pod privádzačom
-#   okrsok 52: (not in the document)
 obec = "505820"
 name = "Trenčín"
 okrsky_fill = "nearest"
-okrsky_note = "The list \"Volebné okrsky a volebné miestnosti pre referendum\" on the referendum page (no mayor's decision published with it). It lists okrsky 1-51; the Statistical Office counts a 52nd okrsok with 7 voters, which the document does not name (a special okrsok without addresses); it is given as addressless. Named in the document but without addresses in the register, left out: Jaselská, Ku štvrtiam, Lúčky, Muškátová, Zuzany Jarábkovej, Šťastná. Addresses without a street (about 490, in every part) and house numbers outside every range the document gives for a split street are placed by fill_nearest."
+okrsky_note = "The list \"Volebné okrsky a volebné miestnosti pre referendum\" on the referendum page (no mayor's decision published with it). It lists okrsky 1-51; the Statistical Office counts a 52nd okrsok with 7 voters, which the document does not name: the COVID-19 special okrsok of okres Trenčín (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml). Named in the document but without addresses in the register, left out: Jaselská, Ku štvrtiam, Lúčky, Muškátová, Zuzany Jarábkovej, Šťastná. Addresses without a street (about 490, in every part) and house numbers outside every range the document gives for a split street are placed by fill_nearest."
 okrsky_date_approximate = "archived"
 okrsky_date_seen = 2022-11-27
 okrsky_date_basis = "The document states no date; the Internet Archive captured the referendum page of trencin.sk linking it on 2022-11-27, before the referendum of 21 January 2023 (the heading also names that referendum). (https://web.archive.org/web/20221127021537/https://trencin.sk/samosprava/volby/referendum-2023/)"
@@ -577,6 +576,3 @@ rules = [
   {street = "Pavla Ondráška"},
   {street = "Pod privádzačom"},
 ]
-
-[okrsok.52]
-addressless = true

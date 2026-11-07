@@ -1,0 +1,185 @@
+# The okrsky of Dolný Kubín of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/509540.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Dolný Kubín, transcribed by an AI agent in job okrsok-rules-1639 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Kocmál, Kubínska, Mokraďská, Nábrežie Oravy (súp.č. 3441, 499, 533, 610, 613, 626), Priemyselná
+#     okrsok 2: 9. mája, 28. októbra, Vodárenská, Pod Dúbravou, Nábrežie Oravy (súp.č. 220 - 252, , 3396, 3433), J. A. Komenského, Na Záhumní, Jelšavská, Kalinova, Kpt. Jaroša, Kňažská, Mládežnícka, Pod Čereňou, Podzámocká, 1. mája, Kpt. Nálepku
+#     okrsok 3: Andreja Halašu, 29. augusta, Jilemnického, Pltisko, Rybárska, Severná, Timravina, Záskalická, Na lánoch, Hôrky
+#     okrsok 4: M. R. Štefánika, Československej armády, Staničná, Železničiarov, Bernolákova, Aleja Slobody, J. Ťatliaka, A. Sládkoviča, Obrancov mieru, Radlinského
+#     okrsok 5: Samuela Nováka, Gäceľská cesta, Hviezdoslavovo námestie, Kohútov Sad, Jána Hollého, Matúškova, Jánoškova, voliči bez adresy trvalého pobytu
+#     okrsok 6: Medzihradská, E. Hroboňovej, Martina Hamuljaka, Šmidkeho, Jána Bottu, Mila Urbana, Na Kopanici, Partizánska cesta (Srňacie)
+#     okrsok 7: Chočská, Slnečná
+#     okrsok 8: Nemocničná, Námestie Jána Vojtaššáka Nemocnica s poliklinikou
+#     okrsok 9: Ľudovíta Štúra, Dukelských hrdinov, Na Ožnici Martina Hattalu
+#     okrsok 10: Odbojárov, Mierová, Tulská, J. Gagarina, Družby, M. Gaceka
+#     okrsok 11: Na Sihoti
+#     okrsok 12: Bysterecká, Lucenkova, Nad brehmi
+#     okrsok 13: Športovcov, Pelhřimovská Hurbanova, SNP, Námestie Slobody
+#     okrsok 14: Okružná
+#     okrsok 15: Zochova, Bohúňova, MDD, MDŽ, Generála Svobodu, Fučíkova, Miloša Uhra, Lopušná
+#     okrsok 16: Beňovolehotská
+obec = "509540"
+name = "Dolný Kubín"
+okrsky_date = 2019-02-22
+okrsky_fill = "nearest"
+okrsky_note = "Text is the document's list of streets per okrsok. \"Voliči/občania bez adresy trvalého pobytu\" (okrsok 5) and institutions named beside the streets (Nemocnica s poliklinikou, Zariadenie pre seniorov, Centrum sociálnych služieb) are not rules. Nábrežie Oravy is split by the súpisné čísla the document gives; its other houses go by fill_nearest. Podzámocká is not in the register; left out. Register streets the document does not list, placed by fill_nearest: M. M. Hodžu, P. Jilemnického, Veterná; also the addresses without a street."
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1049): The archived 2019 presidential election page (2019-03-19) links \"Utvorenie volebných okrskov a určenie volebných miestností v Meste Dolný Kubín pre voľby prezidenta Slovenskej republiky\" (download_file_f.php?id=1082617), but the file is gone from the website (returns an HTML page) and the Internet Archive has no capture of it (404). These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 16 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2019-05-25: 1: 214 → 214, 2: 793 → 799, 3: 675 → 689, 4: 940 → 950, 5: 1,226 → 1,228, 6: 663 → 653, 7: 887 → 886, 8: 1,198 → 1,196, 9: 2,009 → 2,006, 10: 1,129 → 1,146, 11: 1,043 → 1,049, 12: 871 → 864, 13: 1,431 → 1,449, 14: 871 → 864, 15: 683 → 680, 16: 228 → 153. Of these, okrsok 16 (228 → 153) differs by more than 25% (2019-03-16 → 2019-05-25), allowed in an obec of 16 okrsky: of 10 or more, one okrsok, or 5% of them, may differ while the layout holds."
+okrsky_adopted_outliers = [[16, 228, 153]]
+
+[[document]]
+url = "https://www.dolnykubin.sk/download_file_f.php?id=1095214"
+sha256 = "2461bab3478f30945cd67e476adfda2759938264f17f321d4469049ba0a56be8"
+title = "Utvorenie volebných okrskov a určenie volebných miestností v Meste Dolný Kubín pre voľby do Európskeho parlamentu na území Slovenskej republiky"
+
+[okrsok.1]
+rules = [
+  {street = "Kocmál"},
+  {street = "Kubínska"},
+  {street = "Mokraďská"},
+  {street = "Nábrežie Oravy", numbers = "3441, 499, 533, 610, 613, 626", by = "supisne"},
+  {street = "Priemyselná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "9.mája"},
+  {street = "28.októbra"},
+  {street = "Vodárenská"},
+  {street = "Pod Dúbravou"},
+  {street = "Nábrežie Oravy", numbers = "220-252, 3396, 3433", by = "supisne"},
+  {street = "J. A. Komenského"},
+  {street = "Na Záhumní"},
+  {street = "Jelšavská"},
+  {street = "Kalinova"},
+  {street = "Kpt. Jaroša"},
+  {street = "Kňažská"},
+  {street = "Mládežnícka"},
+  {street = "Pod Čereňou"},
+  {street = "1.mája"},
+  {street = "Kpt.Nálepku"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Andreja Halašu"},
+  {street = "29.augusta"},
+  {street = "Jilemnického"},
+  {street = "Pltisko"},
+  {street = "Rybárska"},
+  {street = "Severná"},
+  {street = "Timravina"},
+  {street = "Záskalická"},
+  {street = "Na Lánoch"},
+  {street = "Hôrky"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "M. R. Štefánika"},
+  {street = "Československej armády"},
+  {street = "Staničná"},
+  {street = "Železničiarov"},
+  {street = "Bernolákova"},
+  {street = "Aleja Slobody"},
+  {street = "J. Ťatliaka"},
+  {street = "A. Sládkoviča"},
+  {street = "Obrancov mieru"},
+  {street = "Radlinského"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Samuela Nováka"},
+  {street = "Gäceľská cesta"},
+  {street = "Hviezdoslavovo Námestie"},
+  {street = "Kohútov Sad"},
+  {street = "Jána Hollého"},
+  {street = "Matúškova"},
+  {street = "Jánoškova"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Medzihradská"},
+  {street = "E. Hroboňovej"},
+  {street = "Martina Hamuljaka"},
+  {street = "Šmidkeho"},
+  {street = "Jána Bottu"},
+  {street = "Mila Urbana"},
+  {street = "Na Kopanici"},
+  {street = "Partizánska cesta"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Chočská"},
+  {street = "Slnečná"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Nemocničná"},
+  {street = "Námestie Jána Vojtaššáka"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Ľudovíta Štúra"},
+  {street = "Dukelských hrdinov"},
+  {street = "Martina Hattalu"},
+  {street = "Na Ožnici"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Odbojárov"},
+  {street = "Mierová"},
+  {street = "Tulská"},
+  {street = "J. Gagarina"},
+  {street = "Družby"},
+  {street = "M. Gaceka"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Na Sihoti"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Bysterecká"},
+  {street = "Lucenkova"},
+  {street = "Nad brehmi"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Športovcov"},
+  {street = "Pelhřimovská"},
+  {street = "Hurbanova"},
+  {street = "SNP"},
+  {street = "Námestie Slobody"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Okružná"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Zochova"},
+  {street = "Bohúňova"},
+  {street = "MDD"},
+  {street = "MDŽ"},
+  {street = "Generála Svobodu"},
+  {street = "Fučíkova"},
+  {street = "Miloša Uhra"},
+  {street = "Lopušná"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Beňovolehotská"},
+]

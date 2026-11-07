@@ -1,10 +1,16 @@
-# The okrsky of Hrnčiarovce nad Parnou of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/581020.toml, reused by `ems job reuse`.
+# The okrsky of Hrnčiarovce nad Parnou of the vote of 2026-10-24, data/curated/elections/2026-10-24/okrsky/581020.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Hrnčiarovce nad Parnou, transcribed by an AI agent in job okrsok-rules-475 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Ulice: Alejová, Bajkalská, Brodná, Cíferská, Fr. Hečku, Hliníky, Sv. Martina, Športová, Vinohradnícka, Voderadská, Východná
+#     okrsok 2: Ulice: Alexyho, Cintorínska, Drobná, Facková, Farská, Hrnčiarska, Kostolná, Krátka, Lávková, Mlynárska, Mostová, Nová, Obec Hrnčiarovce nad Parnou, Poľná
 obec = "581020"
 name = "Hrnčiarovce nad Parnou"
 okrsky_date = 2026-07-16
 okrsky_fill = "nearest"
-okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Dlhé Lúky (8 addresses) is not in the document and the 4 addresses without a street are placed by the nearest address (fill_nearest). 'Obec Hrnčiarovce nad Parnou' in okrsok 2 means residents registered only to the obec (no register street)."
-okrsky_reused = 2026-10-24
+okrsky_note = "Dlhé Lúky (8 addresses) is not in the document and the 4 addresses without a street are placed by the nearest address (fill_nearest). 'Obec Hrnčiarovce nad Parnou' in okrsok 2 means residents registered only to the obec (no register street)."
+okrsky_adopted = 2026-10-24
+okrsky_adopted_basis = "No document of 2022-10-29 setting the okrsky was found (okrsok-rules-906): The 2022 document 'Utvorenie volebného okrsku a určenie volebnej miestnosti' creates 2 okrsky but only names their polling room (both in the Kultúrny dom, Farská 37); no streets per okrsok. No other 2022 list found on the website;. These are the okrsky of the vote of 2026-10-24 (2026), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2022-10-29 → 2026-10-24: 1: 925 → 924, 2: 919 → 895."
 
 [[document]]
 url = "https://www.hrnciarovce.sk/e_download.php?file=/data/multipage/editor/editor-12-103-sk_4.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20docx.pdf"

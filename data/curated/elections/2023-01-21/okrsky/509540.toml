@@ -14,12 +14,11 @@
 #   okrsok 11: Hurbanova, SNP, Námestie Slobody ulice: Športovcov, Pelhřimovská
 #   okrsok 12: Zochova, Bohúňova, MDD, MDŽ, Generála Svobodu, Fučíkova, Miloša Uhra, Lopušná, Veterná ulica: Okružná
 #   okrsok 13: Beňovolehotská
-#   okrsok 14: (not in the document)
 obec = "509540"
 name = "Dolný Kubín"
 okrsky_date = 2022-11-09
 okrsky_fill = "nearest"
-okrsky_note = "Text is the document's list of streets per okrsok. \"Voliči/občania bez adresy trvalého pobytu\" (okrsok 5) and institutions named beside the streets (Nemocnica s poliklinikou, Zariadenie pre seniorov, Centrum sociálnych služieb) are not rules. Nábrežie Oravy is split by the súpisné čísla the document gives; its other houses go by fill_nearest. Podzámocká is not in the register; left out. Register streets the document does not list, placed by fill_nearest: P. Jilemnického; also the addresses without a street. The document lists fewer okrsky than the Statistical Office counts (14); the extra last okrsok has only a few voters (a special okrsok without addresses, not in the document): given as addressless."
+okrsky_note = "Text is the document's list of streets per okrsok. \"Voliči/občania bez adresy trvalého pobytu\" (okrsok 5) and institutions named beside the streets (Nemocnica s poliklinikou, Zariadenie pre seniorov, Centrum sociálnych služieb) are not rules. Nábrežie Oravy is split by the súpisné čísla the document gives; its other houses go by fill_nearest. Podzámocká is not in the register; left out. Register streets the document does not list, placed by fill_nearest: P. Jilemnického; also the addresses without a street. The Statistical Office counts a 14th okrsok with only a few voters that the document does not name: the COVID-19 special okrsok of okres Dolný Kubín (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml)."
 
 [[document]]
 url = "https://www.dolnykubin.sk/download_file_f.php?id=1763815"
@@ -167,6 +166,3 @@ rules = [
 rules = [
   {street = "Beňovolehotská"},
 ]
-
-[okrsok.14]
-addressless = true

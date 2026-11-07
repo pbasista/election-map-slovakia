@@ -1,23 +1,24 @@
-# The okrsky of Pohorelá of the elections of 2018-11-10, data/curated/elections/2018-11-10/okrsky/508870.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Pohorelá, transcribed by an AI agent in job okrsok-rules-782 from the documents below;
+# The okrsky of Pohorelá of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/508870.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Pohorelá, transcribed by an AI agent in job okrsok-rules-1339 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: ulica Kpt.Nálepku, súpisné číslo 1 až súpisné číslo 259 ulica Hviezdoslavova, ulica Jesenského, ulica Za Vŕšok, ulica Clementisova, ulica Za Hronom
-#     okrsok 2: ulica Kpt.Nálepku, od súpisného čísla 260 ulica Nová, ulica Školská, ulica Športová, ulica Jánošíkova, ulica Pod Brezinou, ulica Partizánska, ulica Orlová, ulica M.R.Štefánika, ulica Za potokom
+#     okrsok 1: ulica Kpt. Nálepku, súpisné číslo 1 až súpisné číslo 259 ulica Hviezdoslavova, ulica Jesenského, ulica Za Vŕšok, ulica Clementisova, ulica Za Hronom
+#     okrsok 2: ulica Kpt. Nálepku, od súpisného čísla 260 ulica Nová, ulica Školská, ulica Športová, ulica Jánošíkova, ulica Pod Brezinou, ulica Partizánska, ulica Orlová, ulica M. R. Štefánika, ulica Za potokom
 #     okrsok 3: miestna časť Pohorelská Maša
 obec = "508870"
 name = "Pohorelá"
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2018-11-10: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was found (okrsky/not-found.json). Kpt. Nálepku is split by súpisné číslo. The street 1.mája lies in part Pohorelská Maša (okrsok 3). Addresses without a street in part Pohorelá are not named in the document; they take the nearest okrsok (fill_nearest)."
-okrsky_reused = 2018-11-10
+okrsky_note = "Kpt. Nálepku is split by súpisné číslo. The street 1.mája lies in part Pohorelská Maša (okrsok 3). Addresses without a street in part Pohorelá are not named in the document; they take the nearest okrsok (fill_nearest)."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1928): No okrsky notice for the European Parliament election of 25 May 2019 on the obec's elections page, its search or notice board (the presidential 2019 notice is another vote's and does not name this one). The Internet Archive (CDX API) stayed unreachable for about 15 minutes of retries, so archived copies could not be checked. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2019-03-16: 1: 861 → 855, 2: 786 → 800, 3: 244 → 237."
 okrsky_date_approximate = "posted"
-okrsky_date_seen = 2018-09-06
-okrsky_date_basis = "The obec's notice of the okrsky for the municipal elections of 10 November 2018 states \"Vyvesené: 6. 9. 2018\"; it gives no date of decision. (https://www.pohorela.sk/samosprava/volby-a-referenda/oznamenie-o-vytvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-229.html)"
+okrsky_date_seen = 2019-01-23
+okrsky_date_basis = "The mayor's notice forming the okrsky for the presidential election of 16 March 2019 states \"Vyvesené: 23. 1. 2019\"; it gives no date of decision. (https://www.pohorela.sk/samosprava/volby-a-referenda/oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-pre-volby-prezidenta-sr-265.html)"
 
 [[document]]
-url = "https://www.pohorela.sk/samosprava/volby-a-referenda/oznamenie-o-vytvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-229.html"
-sha256 = "a2658cc011c0fb01d883d244c9a724bd1d077986def34af6b2e2e9a3d9d97f88"
-title = "Oznámenie o vytvorení volebných okrskov a určení volebných miestností (voľby do orgánov samosprávy obcí 10. 11. 2018), vyvesené 6. 9. 2018"
+url = "https://www.pohorela.sk/samosprava/volby-a-referenda/oznamenie-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-pre-volby-prezidenta-sr-265.html"
+sha256 = "432777040aac9da92fbee2b2ca4fb4cd9981df490e342d6b39ef5662fa109012"
+title = "Oznámenie o utvorení volebných okrskov a určení volebných miestností pre voľby prezidenta SR (16. 3. 2019), vyvesené 23. 1. 2019"
 
 [okrsok.1]
 rules = [

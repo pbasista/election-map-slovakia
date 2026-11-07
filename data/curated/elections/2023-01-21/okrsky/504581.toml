@@ -10,12 +10,11 @@
 #   okrsok 7: Bednárova, Gromovova, generála Svobodu, Duklianska, Čsl. armády, Zory Lackovej, Gegeľovská, Zuzky Zgurišky, Hoštáky, Hurbanova č. 1, 2, 2/A, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 18, 20, 20/A Moravská, profesora Varsíka
 #   okrsok 8: mestská časť Turá Lúka, súp. č. 1 - 450 + mestská časť Turá Lúka „U Vankov“, súp. č. 751 – 882, Malejov“ a „Junasovia“, súp. č. 621 – 750 (z volebného obvodu č. 10)
 #   okrsok 9: mestská časť Turá Lúka „U Belanských“, súp. č. 451 - 620
-#   okrsok 10: Ruší sa volebný obvod č. 10, ktorý prechádza do volebného obvodu č. 8.
 obec = "504581"
 name = "Myjava"
 okrsky_date = 2022-10-07
 okrsky_fill = "nearest"
-okrsky_note = "fill_nearest places the addresses the document does not name: the register's streets it leaves out (Bočná, Dolná, Priemyselná, Prostredná), the Hurbanova and Partizánska numbers not listed in any okrsok, Turá Lúka súpisné čísla outside the document's ranges, and the register's addresses without a street in part Myjava (scattered hamlets/kopanice). Turá Lúka has no street names: its okrsky are given by súpisné ranges (part rules with numbers). The document ('Počet volebných obvodov: 9') abolishes okrsok 10 and moves its houses (Turá Lúka U Vankov 751-882, Malejov and Junasovia 621-750) into okrsok 8, so okrsky 1-9 hold every address. The Statistical Office still counts an okrsok 10 with 6 voters (okrsok 8 has 1087, about the former 8 and 10 together): okrsok 10 is given no addresses (addressless), as the document assigns it none."
+okrsky_note = "fill_nearest places the addresses the document does not name: the register's streets it leaves out (Bočná, Dolná, Priemyselná, Prostredná), the Hurbanova and Partizánska numbers not listed in any okrsok, Turá Lúka súpisné čísla outside the document's ranges, and the register's addresses without a street in part Myjava (scattered hamlets/kopanice). Turá Lúka has no street names: its okrsky are given by súpisné ranges (part rules with numbers). The document ('Počet volebných obvodov: 9') abolishes okrsok 10 and moves its houses (Turá Lúka U Vankov 751-882, Malejov and Junasovia 621-750) into okrsok 8, so okrsky 1-9 hold every address. The Statistical Office counts an okrsok 10 with 6 voters (okrsok 8 has 1087, about the former 8 and 10 together) that the document does not name as one of its okrsky: the COVID-19 special okrsok of okres Myjava (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml)."
 
 [[document]]
 url = "https://www.myjava.sk/urad-pre-ludi/uradna-tabula/oznamenie-o-utvoreni-volebnych-obvodov-k-referendu-ktore-sa-bude-konat-dna-21-januara-2023-148.html"
@@ -129,6 +128,3 @@ rules = [
 rules = [
   {part = "Turá Lúka", numbers = "451-620"},
 ]
-
-[okrsok.10]
-addressless = true

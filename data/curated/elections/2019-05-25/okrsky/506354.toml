@@ -1,24 +1,26 @@
-# The okrsky of Omšenie of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/506354.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Omšenie, transcribed by an AI agent in job okrsok-rules-892 from the documents below;
+# The okrsky of Omšenie of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/506354.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Omšenie, transcribed by an AI agent in job okrsok-rules-1381 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Voliči s trvalým pobytom v domoch so súp.č. 1 – 330
-#     okrsok 2: Voliči s trvalým pobytom v domoch so súp.č. 331 - 999
+#     okrsok 1: Okrsok č. 1 Voliči s trvalým pobytom v domoch so súp.č. 1 – 330
+#     okrsok 2: Okrsok č. 2 Voliči s trvalým pobytom v domoch so súp.č. 331 - 999
 obec = "506354"
 name = "Omšenie"
-okrsky_date = 2022-07-12
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was searched for. The document splits the village by súpisné čísla (1–330, 331–999)."
-okrsky_reused = 2022-10-29
+okrsky_note = "The okrsky split the one part Omšenie by house (súpisné) number: okrsok 1 up to 330, okrsok 2 from 331 (open-ended)."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1970): The page of the EP elections keeps for 2019 only the e-mail address notice ('V obci sú utvorené dva okrsky', without saying which houses belong where), the harmonogram and the results; no okrsky notice of this vote was found. Another vote's notice is not this vote's. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2019-03-16: 1: 747 → 715, 2: 842 → 848."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The notice is headed with the presidential election of 16 March 2019 (second round 30 March 2019); it states no decision date."
 
 [[document]]
-url = "https://www.omsenie.sk/modules/file_storage/download.php?file=b300da18%7C350&inline=1"
-sha256 = "90e4f44bfbb01a7788cd9f0fba453fb6d7e5c75d5c575b64a33eae7d81c6b9f5"
-title = "Hlásenie o utvorení a počte volebných okrskov (2022-03 Určenie a nahlásenie volebných okrskov)"
+url = "https://www.omsenie.sk/modules/file_storage/download.php?file=fc56eb18%7C307&inline=1"
+sha256 = "2d40395f386f1631fe32913ab4180760d55a8340ac0af54ee900699bfe2d2639"
+title = "Oznámenie o voľbe prezidenta 2019 – volebné okrsky"
 
 [[document]]
-url = "https://www.omsenie.sk/zverejnovanie/volby/volby-do-organov-samospravy-obci/"
-sha256 = "c42368e2874787656f1719eadeb9e9e53b484162f926fcd298397d8eb9e6e8fe"
-title = "Voľby do orgánov samosprávy obcí (2022)"
+url = "https://www.omsenie.sk/zverejnovanie/volby/volby-prezidenta-slovenskej-republiky/"
+sha256 = "9583cae52dcc3f07e7200d9e6121d53d87f6dbdb1f53ed7e982d8af4d10e7096"
+title = "Voľby – page linking the notice"
 
 [okrsok.1]
 rules = [
@@ -27,5 +29,5 @@ rules = [
 
 [okrsok.2]
 rules = [
-  {part = "Omšenie", numbers = "331-999"},
+  {part = "Omšenie", numbers = "331-"},
 ]

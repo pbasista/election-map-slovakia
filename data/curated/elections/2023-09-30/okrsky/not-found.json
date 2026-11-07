@@ -2559,31 +2559,25 @@
   ]
  },
  "516520": {
-  "job": "okrsok-rules-3530",
+  "job": "okrsok-rules-120",
   "name": "Vinica",
-  "note": "The website vinica.sk (live) has elections pages from 2024 on and the notice board archive to 2019, none with an okrsky document (only results, candidate lists, voter information). The Internet Archive (CDX of vinica.sk, 2017-2026) holds no okrsky document: its 2017-2018 captures are of the old site (May/August 2017) without elections material; the only okrsky item found is the 2023 NRSR page 'Zoznam ulíc a okrskov pre voľby do NR SR' whose DOCX (210sk_1.docx) is gone live (404) and was never archived; the referendum 2023 and 2022 pages' PDFs are gone live and not archived. No document of this vote's okrsky was found.",
+  "note": "2026-11-07: retried with the Internet Archive answering. The NR SR 2023 page 'Zoznam ulíc a okrskov pre voľby do Národnej rady Slovenskej republiky' (only capture 27.9.2023) links e_download.php?file=data/editor/210sk_1.docx; the archive holds no copy under any URL form (CDX of vinica.sk/e_download.php* and vinica.sk/data/* list no 210sk/210hu file; availability API and id_ snapshots: none), and live it answers 400/404 (also .doc/.pdf, 210hu_1, 210sk_2, data/editor/ direct). The archive's other NR SR 2023 subpages (Informácie pre voliča, Rozhodnutie, delegation address, Zápisnica) carry no okrsky list; the archived 'Oznámenie o konaní volieb_2023.pdf' is an unrelated notice of the municipal social enterprise. Earlier findings still valid: the live site has elections pages from 2024 on with no okrsky document, the referendum 2023 and 2022 PDFs are gone and not archived. No document of this vote's okrsky was found.",
   "tried": [
    "https://www.vinica.sk/",
    "https://www.vinica.sk/zverejnovanie/volby/",
-   "https://www.vinica.sk/zverejnovanie/volby/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov/",
-   "https://www.vinica.sk/zverejnovanie/volby/volba-prezidenta-sr/",
-   "https://www.vinica.sk/zverejnovanie/volby/volby-do-europskeho-parlamentu/",
-   "https://www.vinica.sk/zverejnovanie/volby/referendum-2026/",
-   "https://www.vinica.sk/zverejnovanie/uradna-tabula/",
-   "https://www.vinica.sk/zverejnovanie/uradna-tabula/uradna-tabula-archiv-do-r-2019/",
-   "http://web.archive.org/cdx/search/cdx?url=vinica.sk/*&from=2017&to=2026&fl=timestamp,original,mimetype&collapse=urlkey",
+   "https://www.vinica.sk/zverejnovanie/volby/volby-do-narodnej-rady-slovenskej-republiky-valasztasok-a-szlovak-koztarsasag-nemzeti-tanacsaba/zoznam-ulic-a-okrskov-pre-volby-do-narodnej-rady-slovenskej-republiky/",
    "https://web.archive.org/web/20230927044209/https://www.vinica.sk/zverejnovanie/volby/volby-do-narodnej-rady-slovenskej-republiky-valasztasok-a-szlovak-koztarsasag-nemzeti-tanacsaba/zoznam-ulic-a-okrskov-pre-volby-do-narodnej-rady-slovenskej-republiky/",
-   "https://www.vinica.sk/e_download.php?file=data/editor/210sk_1.docx&original=Zoznam%20ul%C3%ADc%20a%20okrskov%20pre%20vo%C4%BEby%20do%20N%C3%A1rodnej%20rady%20Slovenskej%20republiky.docx",
-   "https://web.archive.org/web/20190719084917/https://www.vinica.sk/udalosti-v-obci/aktuality/volby-prezidenta-slovenskej-republiky-a-szlovak-koztarsasag-elnokenek-valasztasa-128sk.html",
-   "https://www.vinica.sk/evt_file.php?file=3574&original=Vo%C4%BEby.docx",
-   "https://web.archive.org/web/20230607020803/https://www.vinica.sk/zverejnovanie/volby/referendum-2023/",
-   "https://www.vinica.sk/e_download.php?file=data/editor/193sk_3.pdf&original=Ozn%C3%A1menie.pdf",
-   "https://www.vinica.sk/e_download.php?file=data/editor/193sk_7.pdf&original=Dokument.pdf",
-   "https://web.archive.org/web/20220818074033/https://www.vinica.sk/zverejnovanie/volby-2022-valasztasok-2022/volby-do-organov-samospravy-obci-onkormanyzati-valasztasok/",
-   "https://web.archive.org/web/20240221124038/https://www.vinica.sk/zverejnovanie/volby/volba-prezidenta-sr/",
-   "https://web.archive.org/web/20240417175524/https://www.vinica.sk/zverejnovanie/volby/volby-do-europskeho-parlamentu/",
-   "https://web.archive.org/web/20260422080609/https://www.vinica.sk/zverejnovanie/volby/referendum/",
-   "https://www.vinica.sk/e_download.php?file=/data/multipage/editor/editor-33-142-sk_5.pdf&original=Ozn%C3%A1menie.pdf"
+   "https://www.marcelova.sk/m/samosprava/volby-referendum/volby-do-organov-samospravy-obci-2018/modules/file_storage/download.php?file=e2acad1d%7C476",
+   "https://web.archive.org/web/2023/https://www.marcelova.sk/m/samosprava/volby-referendum/volby-do-organov-samospravy-obci-2018/modules/file_storage/download.php?file=e2acad1d%7C476",
+   "https://archive.org/wayback/available?url=https%3A%2F%2Fwww.marcelova.sk%2Fm%2Fsamosprava%2Fvolby-referendum%2Fvolby-do-organov-samospravy-obci-2018%2Fmodules%2Ffile_storage%2Fdownload.php%3Ffile%3De2acad1d%257C476",
+   "https://web.archive.org/cdx/search/cdx?url=vinica.sk/e_download.php*&fl=timestamp,original,mimetype,statuscode&collapse=urlkey",
+   "https://web.archive.org/cdx/search/cdx?url=vinica.sk/data/*&fl=timestamp,original,mimetype,statuscode&collapse=urlkey",
+   "https://web.archive.org/cdx/search/cdx?url=vinica.sk/zverejnovanie/volby/*&fl=timestamp,original,statuscode&collapse=digest",
+   "https://www.vinica.sk/e_download.php?file=data/editor/210sk_1.docx",
+   "https://www.vinica.sk/data/editor/210sk_1.docx",
+   "https://www.vinica.sk/e_download.php?file=data/editor/210hu_1.docx",
+   "https://www.vinica.sk/e_download.php?file=data/editor/210sk_2.docx",
+   "https://web.archive.org/web/20251112223450/https://www.vinica.sk/e_download.php?file=/data/multipage/editor/editor-16-103-sk_6.pdf&original=Ozn%C3%A1menie%20o%20konan%C3%AD%20volieb_2023.pdf"
   ]
  },
  "516546": {
@@ -4047,18 +4041,6 @@
    "https://www.vysoketatry.sk/mid/413600/ma0/all/.html",
    "https://www.vysoketatry.sk/mid/456738/ma0/all/.html",
    "http://web.archive.org/cdx/search/cdx?url=vysoketatry.sk/* (Internet Archive temporarily offline)"
-  ]
- },
- "580554": {
-  "job": "okrsok-rules-3909",
-  "name": "Čenkovce",
-  "note": "The website's elections page lists only the 2026 referendum article, whose files (results, information for voters, decision on the referendum) include no okrsky document; older votes are not on the current site. The site then refused our connections (blocked) and the Internet Archive refused connections too, so the notice board and older captures could not be checked; the maintainer may retry.",
-  "tried": [
-   "https://www.cenkovce.sk/",
-   "https://www.cenkovce.sk/volby-a-referenda",
-   "https://www.cenkovce.sk/referendum-2026-nepszavazas-2026-a22-913",
-   "https://www.cenkovce.sk/uradna-tabula",
-   "https://web.archive.org/web/timemap/json?url=cenkovce.sk/&matchType=prefix"
   ]
  },
  "581020": {

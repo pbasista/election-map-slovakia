@@ -1,20 +1,23 @@
-# The okrsky of Pribeta of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/501328.toml, reused by `ems job reuse`. Its header there:
-#   Okrsky of Pribeta, transcribed by an AI agent in job okrsok-rules-719 from the documents below;
+# The okrsky of Pribeta of the vote of 2020-02-29, data/curated/elections/2020-02-29/okrsky/501328.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Pribeta, transcribed by an AI agent in job okrsok-rules-2364 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Nádražná ulica, Novozámocká ulica, Nový rad, Revolučná ulica, Dlhá ulica, Rúbaňská ulica, Mierová ulica, Hlavná ulica, Krátka ulica, Pri stanici, Pribeta.
-#     okrsok 2: Vojnická ulica, Družstevná ulica, Modranská ulica, Ružová ulica, Robotnícka ulica, Kvetná ulica, Školská ulica, Obchodná ulica, Komárňanská ulica, Jarková ulica, Lúčna ulica, Jarmočná ulica, Športová ulica, Cintorínska ulica, Mládežnícka ulica, Podzáhradná ulica, Námestie Jána Kalvína.
+#     okrsok 1: Nádražná ulica, Novozámocká ulica, Nový rad, Revolučná ulica, Dlhá ulica, Rúbaňská ulica, Mierová ulica, Hlavná ulica, Krátka ulica, Pri stanici, Pribeta
+#     okrsok 2: Vojnická ulica, Družstevná ulica, Modranská ulica, Ružová ulica, Robotnícka ulica, Kvetná ulica, Školská ulica, Obchodná ulica, Komárňanská ulica, Jarková ulica, Lúčna ulica, Jarmočná ulica, Športová ulica, Cintorínska ulica, Mládežnícka ulica, Podzáhradná ulica, Námestie Jána Kalvína
 obec = "501328"
 name = "Pribeta"
-okrsky_date = 2022-08-10
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-03-16 the obec had as many, each with voters on the roll within 10% of its count then. No document of 2019-03-16 was searched for. Undated mayor's announcement; date is its publication date on the official page (10.08.2022). The bare 'Pribeta' in okrsok 1 means voters registered without an address (no rule). The register's houses without a street (súpisné only) are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "The mayor's announcement for this vote (from the archived news page). The bare 'Pribeta' in okrsok 1 means voters registered without an address (no rule). The register's houses without a street (súpisné číslo only) take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2020-02-29
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1187): No okrsky document for the presidential election of 2019. The website's elections pages (Voľby: NR SR, EP, prezident, VÚC, obce, referendum) are empty; the news articles with the okrsky exist only from late 2019 on (live or in the Internet Archive); the Archive's captures of the older pribeta.sk (2016–2019) hold registers of contracts and invoices but no election notice. These are the okrsky of the vote of 2020-02-29 (2020-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2020-02-29: 1: 1,198 → 1,187, 2: 1,187 → 1,184."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2019-10-22
+okrsky_date_basis = "The mayor's announcement on the website's news page, dated there 22.10.2019; it states no decision date of its own. The page is gone live; the Internet Archive's capture of 2020-08-06 keeps it. (https://web.archive.org/web/20200806125253/https://www.pribeta.sk/volby-do-nr-sr---2922020-a22-43)"
 
 [[document]]
-url = "https://web.archive.org/web/20221002063757/https://www.pribeta.sk/urcenie-volebnych-okrskov-a-elektronicka-adresa-k-volbam-do-oso-a-osk-a22-157"
-sha256 = "b7db3c2442f05c58151707ebdb2c5615f9c0d305a319e837e2719e8881b0661b"
-title = "Určenie volebných okrskov a elektronická adresa k voľbám do OSO a OSK"
+url = "https://web.archive.org/web/20200806125253/https://www.pribeta.sk/volby-do-nr-sr---2922020-a22-43"
+sha256 = "65f37f4d8bfbba261a9586672a54b9a629ab17e3111ddd59bd24fdd74e91c7f0"
+title = "Voľby do NR SR - 29.2.2020: Vytvorenie volebných okrskov pre voľby do Národnej rady Slovenskej republiky dňa 29.2.2020"
 
 [okrsok.1]
 rules = [

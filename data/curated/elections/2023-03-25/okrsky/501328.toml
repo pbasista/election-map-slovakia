@@ -1,20 +1,23 @@
-# The okrsky of Pribeta of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/501328.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Pribeta, transcribed by an AI agent in job okrsok-rules-719 from the documents below;
+# The okrsky of Pribeta of the vote of 2023-01-21, data/curated/elections/2023-01-21/okrsky/501328.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Pribeta, transcribed by an AI agent in job okrsok-rules-2989 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Nádražná ulica, Novozámocká ulica, Nový rad, Revolučná ulica, Dlhá ulica, Rúbaňská ulica, Mierová ulica, Hlavná ulica, Krátka ulica, Pri stanici, Pribeta.
-#     okrsok 2: Vojnická ulica, Družstevná ulica, Modranská ulica, Ružová ulica, Robotnícka ulica, Kvetná ulica, Školská ulica, Obchodná ulica, Komárňanská ulica, Jarková ulica, Lúčna ulica, Jarmočná ulica, Športová ulica, Cintorínska ulica, Mládežnícka ulica, Podzáhradná ulica, Námestie Jána Kalvína.
+#     okrsok 1: Nádražná ulica, Novozámocká ulica, Nový rad, Revolučná ulica, Dlhá ulica, Rúbaňská ulica, Mierová ulica, Hlavná ulica, Krátka ulica, Pri stanici, Pribeta
+#     okrsok 2: Vojnická ulica, Družstevná ulica, Modranská ulica, Ružová ulica, Robotnícka ulica, Kvetná ulica, Školská ulica, Obchodná ulica, Komárňanská ulica, Jarková ulica, Lúčna ulica, Jarmočná ulica, Športová ulica, Cintorínska ulica, Mládežnícka ulica, Podzáhradná ulica, Námestie Jána Kalvína
 obec = "501328"
 name = "Pribeta"
-okrsky_date = 2022-08-10
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2023-03-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2023-03-25 was searched for. Undated mayor's announcement; date is its publication date on the official page (10.08.2022). The bare 'Pribeta' in okrsok 1 means voters registered without an address (no rule). The register's houses without a street (súpisné only) are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "The mayor's announcement for the referendum (archived news page). The bare 'Pribeta' in okrsok 1 means voters registered without an address (no rule). The register's houses without a street (súpisné číslo only) take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2023-01-21
+okrsky_adopted_basis = "No document of 2023-03-25 setting the okrsky was found (okrsok-rules-3348): No okrsky document for the new mayoral election of 25 March 2023: its news page (archived 2023-01-30) has only the population count, the voters' information and the decision calling the election. These are the okrsky of the vote of 2023-01-21 (2023-referendum), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-03-25 → 2023-01-21: 1: 1,169 → 1,157, 2: 1,140 → 1,137."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-10
+okrsky_date_basis = "The mayor's announcement on the website's news page 'Referendum', dated there 10.11.2022; it states no decision date of its own. The page is gone live; the Internet Archive's capture of 2022-12-07 keeps it. (https://web.archive.org/web/20221207123959/https://www.pribeta.sk/referendum-a22-177)"
 
 [[document]]
-url = "https://web.archive.org/web/20221002063757/https://www.pribeta.sk/urcenie-volebnych-okrskov-a-elektronicka-adresa-k-volbam-do-oso-a-osk-a22-157"
-sha256 = "b7db3c2442f05c58151707ebdb2c5615f9c0d305a319e837e2719e8881b0661b"
-title = "Určenie volebných okrskov a elektronická adresa k voľbám do OSO a OSK"
+url = "https://web.archive.org/web/20221207123959/https://www.pribeta.sk/referendum-a22-177"
+sha256 = "eeb76439aa941622623d064468fd16f59545d669be283b02b926b352065865e7"
+title = "Referendum: Vytvorenie volebných okrskov pre referendum vyhlásené na 21.1.2023"
 
 [okrsok.1]
 rules = [

@@ -1,4 +1,4 @@
-# The okrsky of Nižná of the elections of 2026-10-24, data/curated/elections/2026-10-24/obvody/oz/509876.toml, copied by `ems job reuse` (reused). Its header there:
+# The okrsky of Nižná of the vote of 2026-10-24, data/curated/elections/2026-10-24/obvody/oz/509876.toml, standing in, by `ems job reuse`. Its header there:
 #   Council obvody of Nižná (509876), Tvrdošín.
 #   Transcribed by an AI agent in job obvod-rules-122 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
@@ -18,11 +18,12 @@ obec = "509876"
 name = "Nižná"
 date = 2026-06-16
 fill = "nearest"
-note = "The council obvody of the elections of 2026-10-24. Uznesenie č. 55/2026 of 16 June 2026 (adopted, 10 votes for). Obvody 1–3 are defined by street lists, obvod 4 by the miestna časť Zemianska Dedina. Obvod 2 also lists \"Lazy\" (scattered hill settlements), which is not a street in the register and is left out. The 351 addresses of part Nižná without a street (súpisné čísla only, scattered across the village and its outskirts) are not assigned by the document by number, so fill_nearest places them with the obvod of the nearest street address; this concerns all street-less addresses in part Nižná (some remote ones may be the document's \"Lazy\" of obvod 2)."
+note = "The council obvody of the vote of 2026-10-24: they only place the okrsky. Uznesenie č. 55/2026 of 16 June 2026 (adopted, 10 votes for). Obvody 1–3 are defined by street lists, obvod 4 by the miestna časť Zemianska Dedina. Obvod 2 also lists \"Lazy\" (scattered hill settlements), which is not a street in the register and is left out. The 351 addresses of part Nižná without a street (súpisné čísla only, scattered across the village and its outskirts) are not assigned by the document by number, so fill_nearest places them with the obvod of the nearest street address; this concerns all street-less addresses in part Nižná (some remote ones may be the document's \"Lazy\" of obvod 2)."
 reused = 2026-10-24
 okrsky_date = 2026-07-07
-okrsky_note = "These are the okrsky of the elections of 2026-10-24: in 2026-07-04 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2026-07-04 was searched for. Mayor's announcement of 07.07.2026 is a table pairing volebný obvod č. N with volebný okrsok č. N (N = 1..4), each with its own polling station; so each okrsok is the whole obvod of the same number. No streets listed (none needed)."
-okrsky_reused = 2026-10-24
+okrsky_note = "Mayor's announcement of 07.07.2026 is a table pairing volebný obvod č. N with volebný okrsok č. N (N = 1..4), each with its own polling station; so each okrsok is the whole obvod of the same number. No streets listed (none needed)."
+okrsky_adopted = 2026-10-24
+okrsky_adopted_basis = "No document of 2026-07-04 setting the okrsky was found (okrsok-rules-5489): The referendum 2026 page lists no document on the okrsky. These are the okrsky of the vote of 2026-10-24 (2026), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-07-04 → 2026-10-24: 1: 959 → 971, 2: 1,057 → 1,071, 3: 1,010 → 1,029, 4: 188 → 190."
 
 [[document]]
 url = "https://www.nizna.sk/e_download.php?file=/data/uredni_deska/obsah1442_2.pdf&original=02%20kone%C4%8Dn%C3%A9%20Uznesenia%20OcZ-16.06.2026.pdf"

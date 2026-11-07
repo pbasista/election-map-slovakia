@@ -20969,6 +20969,10 @@
    "src": "{name}: {share} · {votes} of {valid}",
    "text": "{name}: {share} · {votes} z {valid}"
   },
+  "mapmode.tip_special": {
+   "src": "Not drawn, without territory: polling district {n}",
+   "text": "Niezaznaczony, bez terytorium: obwód nr {n}"
+  },
   "mapmode.tip_tie": {
    "src": "Tied for the most votes: {names}, {share} each",
    "text": "Ex aequo najwięcej głosów: {names}, po {share}"
@@ -21149,6 +21153,10 @@
    "src": "The polling districts are drawn from a document of {name} that states no date.",
    "text": "Obwody głosowania wyrysowano według dokumentu gminy {name}, który nie podaje daty."
   },
+  "notice.okrsky_outlier": {
+   "src": "Polling district No. {n} had {voters} voters on the roll in {year} but {other} in {source}, more than a quarter apart: its borders there most likely differ.",
+   "text": "Obwód głosowania nr {n} miał w {year} roku w spisie {voters} wyborców, w czasie {source} zaś {other}, o ponad jedną czwartą inaczej: jego granice najpewniej się tam różnią."
+  },
   "notice.okrsky_referendum": {
    "src": "The polling districts of {name} are drawn from the municipality's document for the referendum of {date}: either it says they stayed as they were at these elections, or no document of these elections was found.",
    "text": "Obwody głosowania gminy {name} wyrysowano według dokumentu gminy dotyczącego referendum z {date}: albo stwierdza on, że obwody pozostały takie jak w tych wyborach, albo nie odnaleziono dokumentu z tych wyborów."
@@ -21164,6 +21172,22 @@
   "notice.okrsky_unknown": {
    "src": "{name} voted in several polling districts, but which addresses belonged to which is not known here, so they are not drawn: its results by polling district can't be placed on the map.",
    "text": "W gminie {name} głosowano w kilku obwodach głosowania, ale nie wiadomo tu, które adresy należały do którego, dlatego obwodów nie wyrysowano: wyników według obwodów głosowania nie można umieścić na mapie."
+  },
+  "notice.special_covid": {
+   "src": "Polling district No. {n} of {name} is the COVID-19 special polling district of okres {okres} (Act No. 395/2022 Coll.), for the voters in quarantine anywhere in the okres, who voted where they stayed, into a mobile ballot box (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "Obwód głosowania nr {n} w gminie {name} to specjalny obwód głosowania powiatu {okres} (ustawa nr 395/2022 Z. z.) dla wyborców na kwarantannie z powodu COVID-19 w dowolnym miejscu powiatu, którzy głosowali tam, gdzie przebywali, do specjalnej urny przenośnej (uprawnionych wyborców: {voters}). Nie ma własnego terytorium, dlatego nie jest zaznaczony; jego głosy wliczają się do wyników gminy {name} i wyższych jednostek tak, jak liczy je Urząd Statystyczny."
+  },
+  "notice.special_covid_several": {
+   "src": "Polling district No. {n} of {name} is one of the COVID-19 special polling districts of okresy {okresy} (Act No. 395/2022 Coll.), for the voters in quarantine anywhere in the okres, who voted where they stayed, into a mobile ballot box (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "Obwód głosowania nr {n} w gminie {name} to jeden ze specjalnych obwodów głosowania powiatów {okresy} (ustawa nr 395/2022 Z. z.) dla wyborców na kwarantannie z powodu COVID-19 w dowolnym miejscu powiatu, którzy głosowali tam, gdzie przebywali, do specjalnej urny przenośnej (uprawnionych wyborców: {voters}). Nie ma własnego terytorium, dlatego nie jest zaznaczony; jego głosy wliczają się do wyników gminy {name} i wyższych jednostek tak, jak liczy je Urząd Statystyczny."
+  },
+  "notice.special_prison": {
+   "src": "Polling district No. {n} of {name} is a prison, {facility}: its voters are inmates, who vote there with voting certificates, so its turnout is near 100 % (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "Obwód głosowania nr {n} w gminie {name} to zakład karny, {facility}: głosują w nim osadzeni z zaświadczeniem o prawie do głosowania, dlatego frekwencja wynosi blisko 100 % (uprawnionych wyborców: {voters}). Nie ma własnego terytorium, dlatego nie jest zaznaczony; jego głosy wliczają się do wyników gminy {name} i wyższych jednostek tak, jak liczy je Urząd Statystyczny."
+  },
+  "notice.special_source": {
+   "src": "Source:",
+   "text": "Źródło:"
   },
   "notice.summary_boundary": {
    "src": "Map: the {on} boundary, slightly different",
@@ -21193,6 +21217,10 @@
    "src": "Polling districts not on the map",
    "text": "Obwodów głosowania nie ma na mapie"
   },
+  "notice.summary_special": {
+   "src": "Polling district No. {n} not on the map",
+   "text": "Obwód nr {n} nie jest na mapie"
+  },
   "notice.supplemented_document": {
    "src": "Those addresses are placed as in a later document of the municipality (of {later}), so the {year} borders may have differed there.",
    "text": "Te adresy przypisano tak jak w późniejszym dokumencie gminy (z {later}), więc w {year} r. granice mogły tam przebiegać inaczej."
@@ -21220,6 +21248,26 @@
   "office.regional_council": {
    "src": "member of the regional council ({kraj} kraj)",
    "text": "radny sejmiku kraju samorządowego ({kraj} kraj)"
+  },
+  "okrsky.special_covid": {
+   "src": "Polling district No. {n}: COVID-19 special polling district",
+   "text": "Obwód nr {n}: specjalny obwód głosowania dla osób na kwarantannie z powodu COVID-19"
+  },
+  "okrsky.special_prison": {
+   "src": "Polling district No. {n}: a prison, {facility}",
+   "text": "Obwód nr {n}: zakład karny, {facility}"
+  },
+  "okrsky.unmapped": {
+   "src": "Polling districts not on the map",
+   "text": "Obwody głosowania spoza mapy"
+  },
+  "okrsky.unmapped_back": {
+   "src": "Back to {name} as a whole",
+   "text": "Z powrotem do całości: {name}"
+  },
+  "okrsky.unmapped_hint": {
+   "src": "Their results are known, but the map has no place for them: a button shows one's results.",
+   "text": "Ich wyniki są znane, ale nie mają miejsca na mapie: przycisk pokazuje wyniki obwodu."
   },
   "overview.intro.parties": {
    "src": "Choose a party to see its whole candidate list. Circle, cross out and filter parties and candidates as on the ballots. The results are the whole country's.",

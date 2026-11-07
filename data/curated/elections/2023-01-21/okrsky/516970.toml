@@ -1,5 +1,5 @@
-# The okrsky of Kremnica of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/516970.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Kremnica, transcribed by an AI agent in job okrsok-rules-363 from the documents below;
+# The okrsky of Kremnica of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/516970.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Kremnica, transcribed by an AI agent in job okrsok-rules-3645 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
 #     okrsok 1: Ul. J. Kollára, Zámocké námestie, Zlatá ulica, Továrenská ulica, Langsfeldova ulica, Štúrova ulica, Rumunskej armády, Kutnohorská ulica, Banská cesta, Nová dolina, Ul. J. Horvátha (čísla domov 860, 861, 862, 863, 865, 871, 872, 878, 887, 888, 892, 893, 894, 896, 897, 898, 899, 900, 901, 912, 913, 916, 917, 918, 919, 920 a 922), Revolta, Mesto Kremnica (bez určenia ulice a čísla domu)
@@ -8,35 +8,41 @@
 #     okrsok 4: Ul. J. Horvátha, Galandov majer, Veternícka ulica
 obec = "516970"
 name = "Kremnica"
-okrsky_date = 2026-07-20
+okrsky_date = 2023-06-26
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2026-10-24: in 2023-01-21 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2023-01-21 was searched for. Ulica Jula Horvátha is split by súpisné čísla: the listed house numbers in okrsok 1, the rest of the street in okrsok 4. 'Mesto Kremnica (bez určenia ulice a čísla domu)' in okrsok 1 are voters registered without an address; the addresses without a street take the nearest placed address."
-okrsky_reused = 2026-10-24
+okrsky_note = "\"Čísla domov\" of Ul. J. Horvátha in okrsok 1 are read as súpisné čísla (they are four-digit house numbers). Addresses without a street take the okrsok of the nearest address (fill_nearest); \"Mesto Kremnica (bez určenia ulice a čísla domu)\" are voters registered only at the town."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2023-01-21 setting the okrsky was found (okrsok-rules-3082): The city's elections page keeps okrsky decisions from the NR SR election 2023 on; no okrsky document of this vote is on the website, and the Internet Archive CDX returned nothing for the domain. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 4 okrsky (nearer, not taken: 2022-10-29: okrsky 1–5, then 1–4). Voters on the roll per okrsok (ŠÚ SR), 2023-01-21 → 2023-09-30: 1: 1,109 → 1,086, 2: 1,034 → 1,034, 3: 980 → 940, 4: 978 → 904."
 
 [[document]]
-url = "https://www.kremnica.sk/download_file_f.php?id=2446514"
-sha256 = "02000bb7745ee90275fd1e367fd37b9e855a39e8dc8033c226d2d1acebae8568"
-title = "Určenie okrskov (primátor mesta Kremnica, 20. júla 2026)"
+url = "https://www.kremnica.sk/download_file_f.php?id=1880321"
+sha256 = "c4a6c7b28f2f04b68e44a539789bdd53e115a973c68c7e939a26669a3d2cdf9d"
+title = "Určenie volebných okrskov pre voľby do NR SR 2023"
+
+[[document]]
+url = "https://www.kremnica.sk/spojene-volby-2026.html"
+sha256 = "10b784b4dd41553e916c7d55177c11e477c3e14505a6589090dff13766d8fe93"
+title = "Voľby (stránka mesta Kremnica)"
 
 [okrsok.1]
 rules = [
-  {street = "Ulica Jána Kollára"},
+  {street = "Ulica Jána Kollára", written = "Ul. J. Kollára"},
   {street = "Zámocké námestie"},
   {street = "Zlatá ulica"},
   {street = "Továrenská ulica"},
+  {street = "Ulica Jurka Langsfelda", written = "Langsfeldova ulica", note = "the document uses the adjective form \"Langsfeldova ulica\" for Ulica Jurka Langsfelda; the same street"},
+  {street = "Ulica Ľudovíta Štúra", written = "Štúrova ulica", note = "the document uses the adjective form \"Štúrova ulica\" for Ulica Ľudovíta Štúra; the same street"},
+  {street = "Ulica Rumunskej armády", written = "Rumunskej armády"},
   {street = "Kutnohorská ulica"},
   {street = "Banská cesta"},
   {street = "Nová dolina"},
-  {street = "Revolta"},
-  {street = "Ulica Jurka Langsfelda", written = "Langsfeldova ulica", note = "the register names the street after Jurko Langsfeld; the document uses the adjective form"},
-  {street = "Ulica Ľudovíta Štúra", written = "Štúrova ulica", note = "the register names the street after Ľudovít Štúr; the document uses the adjective form"},
-  {street = "Ulica Rumunskej armády", written = "Rumunskej armády"},
   {street = "Ulica Jula Horvátha", numbers = "860, 861, 862, 863, 865, 871, 872, 878, 887, 888, 892, 893, 894, 896, 897, 898, 899, 900, 901, 912, 913, 916, 917, 918, 919, 920, 922", by = "supisne", written = "Ul. J. Horvátha"},
+  {street = "Revolta"},
 ]
 
 [okrsok.2]
 rules = [
-  {street = "Ulica Československej armády", written = "Ul. ČSA", note = "ČSA is the usual abbreviation of Československej armády"},
+  {street = "Ulica Československej armády", written = "Ul. ČSA", note = "ČSA is the usual initialism of Československej armády"},
   {street = "Dolná ulica"},
 ]
 
@@ -47,10 +53,10 @@ rules = [
   {street = "Angyalova ulica"},
   {street = "Bystrická ulica"},
   {street = "Partizánska dolina"},
-  {street = "Ulica Pavla Križku"},
+  {street = "Ulica Pavla Križku", written = "Ul. P. Križku"},
   {street = "Matunákova ulica"},
   {street = "Zechenterova ulica"},
-  {street = "Ulica Sama Chalupku"},
+  {street = "Ulica Sama Chalupku", written = "Ul. Sama Chalupku"},
 ]
 
 [okrsok.4]

@@ -2996,6 +2996,86 @@ li:has(> .cand.seats-end) + li > .cand {
   opacity: 0.9;
 }
 
+/* The okrsky not on the map (ballots.js `UnmappedOkrsky`): a title and a
+   line of explanation over a button per okrsok, its number, with the icon
+   of an okrsok without territory; the one picked pressed in the primary
+   colour, as the overview's button is. As wide as the ballot cards. */
+.unmapped {
+  margin: 0 10px 8px;
+  padding: 8px 12px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+}
+
+.unmapped-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.unmapped-title .ico {
+  width: 18px;
+  height: 18px;
+  color: var(--text-dim);
+}
+
+.unmapped-hint {
+  margin: 2px 0 8px;
+  color: var(--text-dim);
+  font-size: var(--fs-xs);
+}
+
+.unmapped-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.unmapped-list button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-width: 36px;
+  min-height: 32px;
+  padding: 2px 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.unmapped-list button:hover {
+  background: var(--surface-2);
+}
+
+.unmapped-list button .ico {
+  width: 14px;
+  height: 14px;
+  color: var(--text-dim);
+}
+
+.unmapped-list button[aria-pressed="true"] {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--surface);
+}
+
+.unmapped-list button[aria-pressed="true"] .ico {
+  color: inherit;
+}
+
+.unmapped-list button[aria-pressed="true"]:hover {
+  opacity: 0.9;
+}
+
 /* The overview of a party-list election (overview.js): the parties as many
    to a line as fit, each a tile with its number to circle, its logo and
    short form (the button that shows its list), its seats and votes; the

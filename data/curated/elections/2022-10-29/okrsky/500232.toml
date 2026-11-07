@@ -1,22 +1,28 @@
-# The okrsky of Golianovo of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/500232.toml, reused by `ems job reuse`.
+# The okrsky of Golianovo of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/500232.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Golianovo, transcribed by an AI agent in job okrsok-rules-3814 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: od súpisného čísla 2 po súpisné číslo 359
+#     okrsok 2: od súpisného čísla 360 po súpisné číslo 803
 obec = "500232"
 name = "Golianovo"
-okrsky_date = 2026-07-29
+okrsky_date = 2023-06-26
 okrsky_fill = "nearest"
-okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). The okrsky are given by súpisné číslo ranges (2–376 and 377–867). Any address outside them (e.g. č. 1 or above 867) takes the okrsok of the nearest placed address (fill_nearest)."
-okrsky_reused = 2026-10-24
+okrsky_note = "Scanned document, read from the rendered page. Okrsky by súpisné číslo ranges over the whole village. 20 addresses whose súpisné čísla lie outside 2–803 (e.g. newer houses) are not in the document's ranges and take the okrsok of the nearest placed address (fill_nearest)."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2022-10-29 setting the okrsky was found (okrsok-rules-947): The website's Voľby page has only the 2022 results and later votes; the notice board (incl. tag volby/referenda) goes back only to 2026; the articles of July–November 2022 (ids a73-1050…1175 probed) include no okrsky notice. The Internet Archive has no capture of the site's pages for 2022 (only the home page of 2022-01-01). Golianovo has no streets (726 addresses by súpisné číslo), so nothing can be inferred. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2022-10-29 → 2023-09-30: 1: 765 → 758, 2: 724 → 749."
 
 [[document]]
-url = "https://www.golianovo.sk/files/2026-07-29-140951-Ozn__menie_o___ase_a_mieste_konania_volieb.pdf"
-sha256 = "b344b98328ea3e2245c902ce366b6ed7a47a50371fe261f952b1d0e229442418"
-title = "Vytvorenie volebných okrskov a určenie volebných miestností"
+url = "https://www.golianovo.sk/data/urcenie_volebnych_okrskov_Golianovo.pdf"
+sha256 = "0002f5ffb0ef8e5779d7ab66b5871b214f568b1259af8d63f72d407181b4cc2c"
+title = "Určenie volebných okrskov a určenie volebných miestností v obci Golianovo pre Voľby do Národnej rady Slovenskej republiky, ktoré sa konajú dňa 30.9.2023"
 
 [okrsok.1]
 rules = [
-  {part = "Golianovo", numbers = "2-376"},
+  {part = "Golianovo", numbers = "2-359"},
 ]
 
 [okrsok.2]
 rules = [
-  {part = "Golianovo", numbers = "377-867"},
+  {part = "Golianovo", numbers = "360-803"},
 ]

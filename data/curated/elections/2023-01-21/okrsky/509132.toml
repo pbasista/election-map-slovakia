@@ -13,12 +13,11 @@
 #   okrsok 10: Okružná 103/31, 103/33, 103/35, 103/37, 104/39, 104/41, 104/43, 104/45, 105/47, 105/49, 105/51, 106/53, 106/55, 106/57, 106/59, 106/61, 106/63, 109/67, 109/69, 109/71, 109/73, 110/75, 110/77, 110/79, 110/81, 111/8, 111/10, 111/12, 111/14, 112/16, 112/18, 112/20, 112/22, 150/24, 150/26, 150/28, 150/30, 150/32, 151/34, 151/36, 151/38, 151/40, 151/42, 152/44, 152/46, 152/48, 152/50, 153/52, 153/54, 153/56, 153/58, 154/60, 154/62, 154/64, 720/70, 722/80, 779/86, 780/78, 783/82, 795/72, 797/88, 807/74, 825/76, 836/68, 837/66, 1796/2, 1861/90, 1983/84, 2834/4, 3105/82A, 3162/90A
 #   okrsok 11: Hurbanova, Mierová, U Kyzka
 #   okrsok 12: Bajzova, Dukelských hrdinov, Gočárova, J. Bottu, J. Francisciho, Jána Kollára, Kyčerka, Ľudovíta Janotu, Palárikova 972/50, 1111/75A, 1130/61, 1359/45, 1393/75, 1394/63, 1546/47, 1606/71, 1659/51, 1685/69, 1814/73, 1847/49, 1870/37, 1963/59, 2025/79, 2038/67, 2310/55, 2379/77, 2463/65, 3187/47A, 3189/47B, Rázusova, Školská
-#   okrsok 13: (not in the town's list)
 obec = "509132"
 name = "Čadca"
 okrsky_date = 2022-11-07
 okrsky_fill = "nearest"
-okrsky_note = "The mayor set 12 okrsky for the referendum. The Statistical Office counts a 13th okrsok with 2 voters, which the town's determination does not list; it is given as addressless (no addresses). fill_nearest places the houses without a street that the list names only as localities and that no part rule covers: those of parts Čadca (Bukov, Blažkova, Čerchle, Lazy, Meľa, U Burdy, U Janšča, U Murča, U Sýkory …) and U Hluška (Kyčerka, U Buty, U Kyzka), and the streets Slobody and Športovcov, which the list does not name. Na Brehu s. č. lists: those of okrsok 1 lie in part Horelica (covered by its part rule). 'bez ulice' (okrsok 5) are voters registered without an address. Street house numbers are given as súpisné/orientačné; rules use the orientačné numbers."
+okrsky_note = "The mayor set 12 okrsky for the referendum. The Statistical Office counts a 13th okrsok with 2 voters, which the town's determination does not list: the COVID-19 special okrsok of okres Čadca (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml). fill_nearest places the houses without a street that the list names only as localities and that no part rule covers: those of parts Čadca (Bukov, Blažkova, Čerchle, Lazy, Meľa, U Burdy, U Janšča, U Murča, U Sýkory …) and U Hluška (Kyčerka, U Buty, U Kyzka), and the streets Slobody and Športovcov, which the list does not name. Na Brehu s. č. lists: those of okrsok 1 lie in part Horelica (covered by its part rule). 'bez ulice' (okrsok 5) are voters registered without an address. Street house numbers are given as súpisné/orientačné; rules use the orientačné numbers."
 
 [[document]]
 url = "https://www.mestocadca.sk/files/attachments/referendum-2023-zoznam-okrskov.pdf"
@@ -139,6 +138,3 @@ rules = [
   {street = "Školská"},
   {street = "Palárikova", part = "U Hluška", note = "Palárikova is split by listed house numbers between okrsky 5 and 12; its houses the list leaves out go by the register's part (Čadca: okrsok 5, U Hluška: okrsok 12), as the obvody documents put Palárikova of Čadca in obvod 3 and of U Hluška in obvod 4", inferred = true},
 ]
-
-[okrsok.13]
-addressless = true

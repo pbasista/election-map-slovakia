@@ -13,13 +13,24 @@ same (``ems job reuse --election DAY``):
   the earlier election, each with voters on the roll within
   :data:`TOLERANCE` of the earlier count
   (:func:`election_map_slovakia.obvodrules.official_okrsky` of both); the
-  copy brings the okrsky along;
+  okrsky come along only where each is its obvod (below);
 - the okrsky of an obec whose earlier council obvody have a rule set of
-  their own: the latest rule set's okrsky per obvod are those ŠÚ SR
-  counted, for the same obvod numbers, the voters within the tolerance;
-- the okrsky of an obec with one council obvod in both elections
-  (``okrsky/<obec>.toml``): as many okrsky, the voters within the
-  tolerance.
+  their own: likewise, only where each is its obvod.
+
+What proves okrsky the same is stricter than what proves council obvody.
+Voters on the roll per okrsok, however near, do not show which addresses
+an okrsok has: a street moved from one to another, or a few years' drift,
+stays within any tolerance that lets real votes through. The address
+register gives no okrsok, so the addresses per okrsok it gives are those
+of the copied rules themselves, no evidence of the vote's own; neither ŠÚ
+SR nor the municipalities publish okrsky by address beside the documents
+the ``okrsok-rules`` job transcribes. So another vote's okrsky are the
+vote's only where its own document says so (a referendum's, below) or
+where ŠÚ SR counted one okrsok in each council obvod of the vote, the
+okrsky numbered 1..N for the N obvody (:func:`_by_obvod`): each okrsok
+then has its obvod's addresses, proven as far as the obvody are. Any
+other okrsky, of an earlier regular election or another vote, stand in
+(below), marked indicative, never copied as the same.
 
 The copy must also fit the earlier election's addresses as the jobs'
 checks demand: every address in exactly one obvod and okrsok, each with
@@ -27,36 +38,36 @@ addresses, the okrsky drawable. It is marked ``reused`` (the council rule
 set) or ``okrsky_reused`` with the latest election's day and a note saying
 why (:mod:`election_map_slovakia.obvody`); the obec stays in the not-found
 list, which records the search. Rules naming streets the earlier register
-lacks are kept as they are: they select nothing there.
+lacks are kept as they are: they select nothing there. A copy is decided
+anew on every run, and withdrawn where no longer proven.
 
 Any other vote (a country-wide one, a by-election) elects no council, or
-a by-election some of one: the okrsky of each obec that voted in several
-(its ``units``; of a by-election only the obce with a contest) are copied,
-where it has neither okrsky nor a rule set yet, from the regular election
-nearest in time that proves them the same, else from the next nearest (a
-by-election only from the regular elections before it, newest first: it
-fills seats of the council elected then, in that council's obvody):
-numbered 1..N for the N okrsky of its territorial division, the okrsky of
-each council obvod that voted (a by-election's) those of the source's
-obvod, and each okrsok that voted with voters on the roll (its okrsok
-files: :func:`election_map_slovakia.okrsokrules.okrsok_voters`) within
-:data:`TOLERANCE` of its count in that election; and they must fit its
-addresses. Without voters per okrsok (before the results, or a
-by-election of 2018–2022, whose packages have none) nothing is proven,
-so nothing is copied. An okrsky file is copied as such; a council rule set
-with its obvody, which where the vote elects no council only place the
-okrsky (``ems geo`` draws them within the whole obec). The copy is marked
-``okrsky_reused`` (and the rule set ``reused``) with the source election's
-day and a note saying so and whether the vote's own document was searched
-for; supplements of the source lose their marks, the header keeping the
-source file's. Okrsky the source transcribed from the document of the
-vote itself (``okrsky_referendum`` of the 2022 elections' rule sets: the
-2023 referendum's) are the vote's own: copied without ``okrsky_reused``,
-with their documents and dating, only numbered as the territorial
-division numbers them. Where a by-election's okrsky are not proven the
-same, a council rule set still draws the council obvody that voted, each
-with voters on the roll within :data:`TOLERANCE` of its count in the
-source, copied without its okrsky.
+a by-election some of one. For each obec that voted in several okrsky
+(its ``units``; of a by-election only the obce with a contest) without
+okrsky or a rule set of its own (none, a copy, or a stand-in), the
+regular elections nearest in time are tried, nearest first (a
+by-election only those before it, newest first: it fills seats of the
+council elected then, in that council's obvody), for what they prove:
+
+- okrsky the source transcribed from the document of the vote itself
+  (``okrsky_referendum`` of the 2022 elections' rule sets: the 2023
+  referendum's) are the vote's own: copied without ``okrsky_reused``,
+  with their documents and dating, numbered 1..N for the N territorial
+  okrsky of its territorial division, each council obvod that voted with
+  its okrsky;
+- a by-election proper (``vote`` ``"by"`` of its council contests, not a
+  council elected anew: :func:`election_map_slovakia.candidates.new_councils`)
+  takes the council rule set, each obvod that voted being one of it with
+  voters on the roll within :data:`TOLERANCE` of its count in the source,
+  marked ``reused``; its okrsky come along, ``okrsky_reused``, only where
+  every obvod voted with one okrsok each (:func:`_by_obvod`).
+
+Nothing else is copied. A council rule set comes along with the okrsky
+as a whole, which where the vote elects no council only place them
+(``ems geo`` draws them within the whole obec); supplements of the source
+lose their marks, the header keeping the source file's, and the note says
+whether the vote's own document was searched for. A copy no source
+proves any more (``okrsky_reused`` of the rules before) is withdrawn.
 
 Where units stay unknown after that, every vote, the latest regular
 election too, takes those of another vote all the same, unproven: a
@@ -70,17 +81,22 @@ later of two as near; failing that the next nearest:
 - council obvody, of an obec whose council the vote elects in several
   obvody (a regular election; a by-election with a council contest in an
   obec whose council has several): a regular election's rule set with
-  the same obvod numbers and seats (a by-election's: the obvody that voted
-  among them, and only from the regular election of its term, before it:
-  a later council's obvody are another council's). A by-election takes
+  the same obvod numbers and seats. A by-election proper's: the obvody
+  that voted among them, and only from the regular election of its term,
+  before it (a later council's obvody are another council's); it takes
   its term's rule set even where that is another vote's itself (reused,
   or a stand-in there): the council whose seats it fills was elected in
   those obvody, however the term draws them; the copy names the vote
-  whose borders they are. Its okrsky come along
+  whose borders they are. A council elected anew (new elections, ``vote``
+  ``"new"``) inherits nothing of its term: its obvody are its own
+  document's, whose ``obvod-rules`` job asks for them, and until then
+  stand in as a regular election's do. Its okrsky come along
   where they fit as below, else each obvod gets those ŠÚ SR counted in it
   without rules (drawn where it has one, which is then the obvod);
 - okrsky, of an obec that voted in several: as many as the vote's
-  territorial division counts, and where the vote elects the council in
+  territorial division counts with territory (its special okrsky, which
+  have none, left out: :mod:`election_map_slovakia.special`), and where
+  the vote elects the council in
   several obvody those ŠÚ SR counted in each, into its council rule set
   from one with the same obvod numbers; where it elects the council in
   one obvod, or councils elsewhere but none there, an okrsky file; a vote
@@ -89,11 +105,18 @@ later of two as near; failing that the next nearest:
   the okrsky). They must place every address.
 
 Where the voters on the roll of a unit are known for both votes (ŠÚ SR's
-territorial division or the okrsok files), they must be within
+territorial division or the okrsok files; never of a special okrsok, whose
+number may be an ordinary okrsok's in the other vote), they must be within
 :data:`PLAUSIBLE` of the vote's count: farther apart, the layout clearly
-changed; where they are not known, the units stand in all the same. The
-copy must fit the vote's addresses as a reused one must. It is marked
-``adopted`` (and ``okrsky_adopted`` where its okrsky are drawn) or
+changed. Of an obec of :data:`OUTLIERS_FROM` okrsky or more, one okrsok
+(or :data:`OUTLIERS_SHARE` of them, where that is more) may be farther
+apart all the same, named with both counts in the basis: in a town one
+okrsok's roll changes while the layout holds. That is only where no
+source fits with every okrsok within: a source that does wins, however
+much further in time. Where the voters are not
+known, the units stand in all the same. The copy must fit the vote's
+addresses as a reused one must. It is marked ``adopted`` (and
+``okrsky_adopted`` where its okrsky are drawn) or
 ``okrsky_adopted`` with the source's day and a basis: why the vote has no
 units of its own (the note of the not-found list, where the obec is in
 it), which vote stands in and why that one (the nearer ones not taken,
@@ -121,6 +144,7 @@ from election_map_slovakia import (
     obvodrules,
     obvody,
     okrsokrules,
+    special,
 )
 from election_map_slovakia.config import BY_ELECTION, REGULAR, Config, Election
 
@@ -130,6 +154,14 @@ of the earlier count."""
 PLAUSIBLE = 0.25
 """How far the voters of an obvod or okrsok that stands in may differ,
 likewise: farther apart, the layout clearly changed."""
+OUTLIERS_FROM = 10
+"""Okrsky an obec must have for some of the okrsky that stand in to be
+beyond :data:`PLAUSIBLE`: in a town, one okrsok's roll may change (a new
+estate, a hall of residence moved) while the layout holds; in a village
+of a few, one changed is the layout changing."""
+OUTLIERS_SHARE = 0.05
+"""How many of its okrsky may then be beyond :data:`PLAUSIBLE`: one, or
+this share of them where that is more."""
 OBVODY, OKRSKY = "obvody", "okrsky"
 """The kinds of unit that stand in, and two of what :func:`_copy_of` copies."""
 _SEVERAL = 2
@@ -197,7 +229,8 @@ def run(cfg: Config, election: Election) -> list[str]:
 def _run_regular(cfg: Config, election: Election) -> list[str]:
     """Copy the latest election's rules where they provably fit *election*'s.
 
-    A stand-in gives way to them (:func:`_obvody`, :func:`_okrsky`).
+    A stand-in gives way to them, and an earlier copy is decided anew,
+    withdrawn where no longer proven (:func:`_obvody`, :func:`_okrsky`).
     """
     latest = cfg.latest
     data = obvodrules.candidate_data(cfg, election)
@@ -213,22 +246,39 @@ def _run_regular(cfg: Config, election: Election) -> list[str]:
     current = obvody.load_rule_sets(c.curated)
     later = obvody.load_rule_sets(c.later)
     for code, entry in obvodrules.load_not_found(cfg, election).items():
-        if code not in current or current[code].adoption:
-            lines.append(f"{entry['name']} ({code}), obvody: {_obvody(c, code, later)}")
+        rules = current.get(code)
+        if rules is None or rules.adoption or rules.reused:
+            said = _obvody(c, code, later)
+            if rules is not None and rules.reused and not said.startswith(_REUSED):
+                said += _withdraw_copy(cfg, election, rules)
+            lines.append(f"{entry['name']} ({code}), obvody: {said}")
     current = obvody.load_rule_sets(c.curated)
     later_okrsky = obvody.okrsok_rule_sets(c.later)
     for code, entry in okrsokrules.load_not_found(cfg, election).items():
         rules = current.get(code)
-        if rules is None or not rules.okrsky or rules.okrsky_adoption:
-            lines.append(
-                f"{entry['name']} ({code}), okrsky:"
-                f" {_okrsky(c, code, rules, later_okrsky.get(code))}"
-            )
+        if (
+            rules is None
+            or not rules.okrsky
+            or rules.okrsky_adoption
+            or rules.okrsky_reused
+        ):
+            said = _okrsky(c, code, rules, later_okrsky.get(code))
+            copied = obvody.load_obec(c.curated, code)
+            if copied and copied.okrsky_reused and not said.startswith(_REUSED):
+                said += _withdraw_copy(cfg, election, copied, keep_obvody=True)
+            lines.append(f"{entry['name']} ({code}), okrsky: {said}")
     return lines
 
 
+_REUSED = "reused"
+"""How the report of a copy written begins."""
+
+
 def _obvody(c: _Context, code: str, later: Mapping[str, obvody.RuleSet]) -> str:
-    """Copy the latest council rule set of obec *code* if it fits; say what was done."""
+    """Copy the latest council rule set of obec *code* if it fits; say what was done.
+
+    Its okrsky come along only where each is its obvod (:func:`_by_obvod`).
+    """
     rules = later.get(code)
     if rules is None:
         return f"not reused: no rule set of {c.latest.day}"
@@ -255,14 +305,21 @@ def _obvody(c: _Context, code: str, later: Mapping[str, obvody.RuleSet]) -> str:
         f"this is the rule set of the elections of {c.latest.day}, whose obvody,"
         f" seats and okrsky are those of {c.election.day.year}",
     )
-    copy = dataclasses.replace(
-        rules,
-        reused=c.latest.day,
-        note=" ".join(filter(None, (note, rules.note))),
-        okrsky_reused=c.latest.day,
-        okrsky_referendum=None,
-        okrsky_note=" ".join(filter(None, (note, rules.okrsky_note))),
+    copy = _without_okrsky(
+        dataclasses.replace(
+            rules,
+            reused=c.latest.day,
+            note=" ".join(filter(None, (note, rules.note))),
+        )
     )
+    okrsky = _by_obvod(list(rules.seats), c.units.get(code, {}))
+    if okrsky is not None:
+        copy = dataclasses.replace(
+            copy,
+            okrsky=okrsky,
+            okrsky_reused=c.latest.day,
+            okrsky_note=f"{note} {_BY_OBVOD.format(year=c.election.day.year)}",
+        )
     return _write_rule_set(c, code, copy)
 
 
@@ -272,25 +329,31 @@ def _okrsky(
     current: obvody.RuleSet | None,
     rules: obvody.RuleSet | None,
 ) -> str:
-    """Copy the latest okrsky of obec *code*, *rules*, if they fit; say what was done.
+    """Give obec *code* the latest okrsky, *rules*, if proven; say what was done.
 
     *current* is its council rule set in the earlier election, None if it
     elected its council in one obvod (or has no rule set yet); *rules* the
-    latest election's rule set that gives the okrsky, if one.
+    latest election's rule set that gives the okrsky, if one. Proven only
+    where each okrsok is its council obvod (:func:`_by_obvod`).
     """
     if current is None and len(c.units.get(code, {})) > 1:
         return "not reused: several council obvody but no rule set for them"
-    if current is not None and current.adoption:
+    if current is None:
+        return f"not reused: {_UNPROVEN}"
+    if current.adoption:
         return "not reused: its council obvody are a stand-in"
-    if rules is None or rules.whole != (current is None):
+    if rules is None or rules.whole:
         return f"not reused: no okrsky of {c.latest.day} of the same kind"
     if rules.okrsky_adoption:
         return f"not reused: the okrsky of {c.latest.day} are a stand-in themselves"
-    if current is not None and list(rules.seats) != list(current.seats):
+    if list(rules.seats) != list(current.seats):
         return "not reused: other obvody"
     why = _layout_problem(c, code, rules)
     if why:
         return f"not reused: {why}"
+    okrsky = _by_obvod(list(current.seats), c.units.get(code, {}))
+    if okrsky is None:
+        return f"not reused: {_UNPROVEN}"
     note = _note(
         c,
         f"these are the okrsky of the elections of {c.latest.day}, the same"
@@ -298,9 +361,82 @@ def _okrsky(
     )
     marks = {
         "okrsky_reused": c.latest.day,
-        "okrsky_note": " ".join(filter(None, (note, rules.okrsky_note))),
+        "okrsky_note": f"{note} {_BY_OBVOD.format(year=c.election.day.year)}",
     }
-    return _copy_okrsky(c, code, current, rules, marks)
+    proven = dataclasses.replace(_without_okrsky(rules), okrsky=okrsky)
+    return _copy_okrsky(c, code, current, proven, marks)
+
+
+_UNPROVEN = (
+    "no document of the vote and not each okrsok a council obvod: voters on"
+    " the roll per okrsok do not show which addresses each has"
+)
+"""Why another vote's okrsky are not proven the vote's (the module doc)."""
+_BY_OBVOD = (
+    "ŠÚ SR counted one okrsok in each council obvod in {year}, so each okrsok"
+    " is its obvod."
+)
+"""The note on okrsky proven so (:func:`_by_obvod`)."""
+
+
+def _by_obvod(
+    numbers: Sequence[int], units: Mapping[int, Mapping[int, int]], count: int = 0
+) -> dict[int, tuple[int, ...]] | None:
+    """Return the okrsky of the council obvody *numbers* where each is its obvod.
+
+    *units* are ŠÚ SR's okrsky by obvod of the vote (obvod → okrsok →
+    voters), which must give each obvod one okrsok, numbered 1..N for the
+    vote's N okrsky (*count*, else as many as *units* has): each okrsok
+    then has its obvod's addresses, whose borders prove it as much as the
+    obvody are proven. None otherwise.
+    """
+    okrsky = {n: tuple(units.get(n, {})) for n in numbers}
+    flat = sorted(k for ks in okrsky.values() for k in ks)
+    count = count or len(_flat(units))
+    if any(len(ks) != 1 for ks in okrsky.values()) or flat != list(range(1, count + 1)):
+        return None
+    return okrsky
+
+
+def _without_okrsky(rules: obvody.RuleSet) -> obvody.RuleSet:
+    """Return the council rule set *rules* without its okrsky."""
+    return dataclasses.replace(
+        rules,
+        okrsky={},
+        okrsok_rules=(),
+        okrsky_fill=False,
+        okrsky_date=None,
+        okrsky_note=None,
+        okrsky_reused=None,
+        okrsky_adoption=None,
+        okrsky_referendum=None,
+        okrsky_dating=None,
+        okrsky_supplement=None,
+        addressless=(),
+    )
+
+
+def _withdraw_copy(
+    cfg: Config, election: Election, rules: obvody.RuleSet, *, keep_obvody: bool = False
+) -> str:
+    """Remove the copy *rules* of *election* that no source proves any more; say so.
+
+    A copied file goes, but a council rule set whose obvody are of the
+    vote's own or still proven (*keep_obvody*) only loses its okrsky. A
+    stand-in may then take their place.
+    """
+    curated = cfg.election_dir(election)
+    path = (obvody.okrsky_path if rules.whole else obvody.rules_path)(
+        curated, rules.obec
+    )
+    if rules.whole or (rules.reused and not keep_obvody):
+        path.unlink()
+    else:
+        bare = _without_okrsky(rules)
+        path.write_text(
+            obvody.dump(bare, okrsokrules.obvod_header(path)), encoding="utf-8"
+        )
+    return f"; the copy before, {path.relative_to(cfg.root)}, withdrawn"
 
 
 def _write_rule_set(c: _Context, code: str, copy: obvody.RuleSet) -> str:
@@ -431,9 +567,6 @@ class _Voted:
     code: str
     count: int
     """Its okrsky in the vote's territorial division."""
-    voters: Mapping[int, int]
-    """Okrsok → voters on the roll, of those that voted, where the results
-    have them (:func:`election_map_slovakia.okrsokrules.okrsok_voters`)."""
     grouped: Mapping[int, Mapping[int, int]]
     """A by-election's council contests: obvod → okrsok → voters, of the
     obvody that voted (:func:`election_map_slovakia.obvodrules.official_okrsky`)."""
@@ -443,10 +576,13 @@ class _Voted:
     """Whether only okrsky of the whole obec fit: a by-election electing
     councils elsewhere but none here, so that a council rule set would be
     taken for its council's (``ems addresses`` checks it against the contests)."""
+    term: bool = False
+    """Whether it is a by-election proper of seats of its term's council,
+    whose obvody are the term's (not a council elected anew)."""
 
 
 def sources(cfg: Config, election: Election) -> list[Election]:
-    """Return the regular elections *election* may copy okrsky from, in order.
+    """Return the regular elections *election* may copy from, in order.
 
     Nearest in time first; for a by-election only those before it: it fills
     seats of the council elected then, and a later one's obvody are another
@@ -464,45 +600,48 @@ def sources(cfg: Config, election: Election) -> list[Election]:
 
 
 def _run_other(cfg: Config, election: Election) -> list[str]:
-    """Copy the okrsky of the regular elections where *election*, of another kind, has none.
+    """Copy what the regular elections prove where *election*, of another kind, has nothing.
 
     For each obec it voted in, in several okrsky (its ``units``), without
-    okrsky or a rule set yet, or with a stand-in, the okrsky of the first of
-    :func:`sources` that proves them the same (:func:`_okrsky_problem`), or
-    else of the next; in a by-election, failing that, the council obvody
-    alone (:func:`_obvody_problem`). See the module doc.
+    okrsky or a rule set of its own (none, a stand-in, or a copy, decided
+    anew), the first of :func:`sources` that proves something
+    (:func:`_copy_from`), else the next; a copy no source proves any more is
+    withdrawn, for a stand-in to take its place. See the module doc.
     """
     regular = sources(cfg, election)
     curated = cfg.election_dir(election)
     data = obvodrules.candidate_data(cfg, election)
     names = {o["code"]: o["name"] for o in data["obce"]}
     voting = okrsokrules.held(election, data)
-    voters = okrsokrules.okrsok_voters(cfg, election)
     grouped = obvodrules.official_okrsky(cfg, election)
     not_found = okrsokrules.load_not_found(cfg, election)
     councils = {str(c["area"]) for c in data["contests"] if c["kind"] == "oz"}
+    new = candidates.new_councils(data["contests"])
     units = {s.day: obvodrules.official_okrsky(cfg, s) for s in regular}
     lines = []
-    for code, count in sorted(okrsokrules.okrsok_counts(cfg, election).items()):
+    for code, count in sorted(okrsokrules.territorial_counts(cfg, election).items()):
         current = obvody.load_obec(curated, code)
         if (
             count < _SEVERAL
             or (voting is not None and code not in voting)
             or (
                 current is not None
-                and not (current.adoption or current.okrsky_adoption)
+                and not (
+                    current.adoption or current.okrsky_adoption or current.okrsky_reused
+                )
             )
         ):
             continue
         voted = _Voted(
             code,
             count,
-            voters.get(code, {}),
             grouped.get(code, {}),
             code in not_found,
             whole_only=bool(councils) and code not in councils,
+            term=election.kind == BY_ELECTION and code in councils - new,
         )
-        tried = []
+        refused: dict[str, list[str]] = {}
+        said = ""
         for s in regular:
             done, said = _copy_from(
                 cfg,
@@ -512,12 +651,18 @@ def _run_other(cfg: Config, election: Election) -> list[str]:
                 obvody.load_obec(cfg.election_dir(s), code),
                 units[s.day].get(code, {}),
             )
-            tried.append(said if done else f"{s.day}: {said}")
             if done:
                 break
+            refused.setdefault(said, []).append(str(s.day))
         else:
-            tried.insert(0, "not reused")
-        lines.append(f"{names.get(code, code)} ({code}), okrsky: {'; '.join(tried)}")
+            said = "not reused"
+            if current is not None and current.okrsky_reused:
+                said += _withdraw_copy(cfg, election, current)
+        # The sources refused for the same reason, said once.
+        tried = [f"{', '.join(days)}: {why}" for why, days in refused.items()]
+        lines.append(
+            f"{names.get(code, code)} ({code}), okrsky: {'; '.join([said, *tried])}"
+        )
     return lines
 
 
@@ -529,30 +674,35 @@ def _copy_from(
     rules: obvody.RuleSet | None,
     later: Mapping[int, Mapping[int, int]],
 ) -> tuple[bool, str]:
-    """Copy *source*'s rules of an obec, *rules*, where they fit; say what was done.
+    """Copy what *source*'s rules of an obec, *rules*, prove; say what was done.
 
-    *later* is ŠÚ SR's okrsky of the obec in *source* by obvod, with their
-    voters. Returns whether they were copied, and the report: what was
-    written, or why not.
+    The okrsky only where they are the vote's own, from its document
+    (:data:`OWN`): voters on the roll per okrsok do not show which addresses
+    each has. Of a by-election proper, the council obvody that voted, each
+    with voters on the roll within :data:`TOLERANCE` of its count in
+    *source* (:func:`_obvody_problem`; *later* is ŠÚ SR's okrsky of the obec
+    in *source* by obvod, with their voters), with their okrsky where each
+    is its obvod (:data:`OBVODY`). Returns whether they were copied, and the
+    report: what was written, or why not.
     """
     if rules is None:
-        return False, "no okrsky"
+        return False, "no rule set"
     if voted.whole_only and not rules.whole:
         return False, "okrsky by council obvod, the vote electing no council there"
     # Okrsky transcribed, for the regular election, from this referendum's
     # own document are its own.
-    own = rules.okrsky_referendum == election.day
-    why = _okrsky_problem(rules, voted, _flat(later), source, own=own)
-    if why is None:
-        how = OWN if own else OKRSKY
-    elif voted.grouped and not rules.whole:
-        # A council by-election draws its obvody, okrsky or not.
-        obvody_why = _obvody_problem(rules, voted.grouped, later, source)
-        if obvody_why is not None:
-            return False, f"{why}; obvody: {obvody_why}"
+    if rules.okrsky_referendum == election.day:
+        why = _okrsky_problem(rules, voted)
+        if why is not None:
+            return False, why
+        how = OWN
+    elif voted.term and voted.grouped and not rules.whole:
+        why = _obvody_problem(rules, voted.grouped, later, source)
+        if why is not None:
+            return False, f"obvody: {why}"
         how = OBVODY
     else:
-        return False, why
+        return False, f"okrsky: {_UNPROVEN}"
     copy, problem = _copy_of(cfg, election, voted, source, rules, how)
     if problem is not None:
         return False, problem
@@ -560,42 +710,27 @@ def _copy_from(
 
 
 OWN = "own"
-"""What :func:`_copy_of` copies, besides :data:`OBVODY` and :data:`OKRSKY`:
-okrsky of the vote's own document, transcribed for another election."""
+"""What :func:`_copy_of` copies, besides :data:`OBVODY`: okrsky of the
+vote's own document, transcribed for another election."""
 _COPIED = {
-    OKRSKY: "reused",
     OWN: "its own, from the referendum's document",
-    OBVODY: "council obvody reused, without okrsky",
+    OBVODY: "council obvody reused",
 }
 """How the report says what :func:`_copy_of` copied."""
 
 
-def _okrsky_problem(
-    rules: obvody.RuleSet,
-    voted: _Voted,
-    later: Mapping[int, int],
-    source: Election,
-    *,
-    own: bool = False,
-) -> str | None:
-    """Return why *source*'s okrsky *rules* may not stand for those *voted* in.
+def _okrsky_problem(rules: obvody.RuleSet, voted: _Voted) -> str | None:
+    """Return why the vote's own okrsky *rules* may not stand for those *voted* in.
 
-    *later* is each okrsok's voters in *source*. They must place every
-    address, be numbered 1..N for the N okrsky of the territorial
-    division, give each council obvod that voted (a by-election's) the
-    okrsky that voted in it, and each okrsok that voted must have voters
-    on the roll within :data:`TOLERANCE` of its count in *source*; unless
-    they are the vote's *own*, from its document, whose voters prove
-    nothing more.
+    They must place every address, be numbered 1..N for the N okrsky of
+    the territorial division, and give each council obvod that voted (a
+    by-election's) the okrsky that voted in it.
     """
     if rules.adoption or rules.okrsky_adoption:
         return "its okrsky are a stand-in, not proven to match"
     if not rules.okrsok_areas:
         return "its okrsky do not place the addresses"
-    shape = _shape_problem(rules, voted.count, voted.grouped)
-    if shape or own:
-        return shape
-    return _okrsok_voters_problem(voted.voters, later, source)
+    return _shape_problem(rules, voted.count, voted.grouped)
 
 
 def _shape_problem(
@@ -615,24 +750,6 @@ def _shape_problem(
         mine = sorted(rules.okrsky.get(n, ()))
         if mine != sorted(ks):
             return f"obvod {n}: okrsky {_numbers(mine)}, then {_numbers(sorted(ks))}"
-    return None
-
-
-def _okrsok_voters_problem(
-    then: Mapping[int, int], later: Mapping[int, int], source: Election
-) -> str | None:
-    """Return the first okrsok voted in whose voters *then* are off *later*'s.
-
-    *later* are the okrsky's voters in *source*; within :data:`TOLERANCE`.
-    """
-    if not then:
-        return "the voters per okrsok unknown (no results per okrsok): not proven"
-    for k, before in then.items():
-        after = later.get(k)
-        if after is None:
-            return f"okrsok {k}: voters unknown"
-        if abs(after - before) > TOLERANCE * before:
-            return f"okrsok {k}: {before:,} voters then, {after:,} in {source.day.year}"
     return None
 
 
@@ -672,12 +789,12 @@ def _copy_of(
 ) -> tuple[Path, str | None]:
     """Write *how* much of *source*'s *rules* of an obec for *election*.
 
-    :data:`OKRSKY`, the okrsky marked ``okrsky_reused``; :data:`OWN`, the
-    okrsky as the vote's own; :data:`OBVODY`, the council obvody alone. A
-    council rule set comes along marked ``reused``, its rules having lost
-    their supplement marks (the header keeping the source file's). Returns
-    the file, and why it could not be written: the copy does not fit the
-    election's addresses.
+    :data:`OWN`, the okrsky as the vote's own; :data:`OBVODY`, the council
+    obvody, with their okrsky marked ``okrsky_reused`` where each is its
+    obvod (:func:`_by_obvod`), else none. A council rule set comes along
+    marked ``reused``, its rules having lost their supplement marks (the
+    header keeping the source file's). Returns the file, and why it could
+    not be written: the copy does not fit the election's addresses.
     """
     code = voted.code
     searched = (
@@ -685,54 +802,32 @@ def _copy_of(
         if voted.searched
         else f"No document of {election.day} was searched for."
     )
-    within = f"voters on the roll within {TOLERANCE:.0%} of its count then"
-    if how == OBVODY:
-        proof = (
-            f"the council obvody of the elections of {source.day}: in"
-            f" {election.day} each obvod that voted had {within}"
-        )
-    else:
-        proof = (
-            f"the okrsky of the elections of {source.day}: in {election.day}"
-            f" the obec had as many okrsky, each that voted with {within}"
-        )
-    note = f"These are {proof}. {searched}"
     if how == OWN:
         note = (
             f"These okrsky were transcribed for the elections of {source.day}"
             f" from the municipality's document for the referendum of"
             f" {election.day}: they are the referendum's own."
         )
-        copy = dataclasses.replace(rules, okrsky_referendum=None)
-    elif how == OKRSKY:
-        # A copy is another vote's okrsky as a whole: what of them came from a
-        # later source there is said in the source file, whose header it keeps.
         copy = dataclasses.replace(
             rules,
-            okrsky_reused=source.day,
             okrsky_referendum=None,
-            okrsky_supplement=None,
-            okrsok_rules=_unmarked(rules.okrsok_rules),
+            okrsky_note=" ".join(filter(None, (note, rules.okrsky_note))),
         )
     else:
-        copy = dataclasses.replace(
-            rules,
-            okrsky={},
-            okrsok_rules=(),
-            okrsky_fill=False,
-            okrsky_date=None,
-            okrsky_note=None,
-            okrsky_reused=None,
-            okrsky_adoption=None,
-            okrsky_referendum=None,
-            okrsky_dating=None,
-            okrsky_supplement=None,
-            addressless=(),
+        note = (
+            f"These are the council obvody of the elections of {source.day}: in"
+            f" {election.day} each obvod that voted had voters on the roll within"
+            f" {TOLERANCE:.0%} of its count then. {searched}"
         )
-    if how != OBVODY:
-        copy = dataclasses.replace(
-            copy, okrsky_note=" ".join(filter(None, (note, rules.okrsky_note)))
-        )
+        copy = _without_okrsky(rules)
+        okrsky = _by_obvod(list(rules.seats), voted.grouped, voted.count)
+        if okrsky is not None:
+            copy = dataclasses.replace(
+                copy,
+                okrsky=okrsky,
+                okrsky_reused=source.day,
+                okrsky_note=_BY_OBVOD.format(year=election.day),
+            )
     if not rules.whole:
         # The council obvody only place the okrsky where the vote elects
         # none of the council; a by-election's council contest needs them.
@@ -784,9 +879,16 @@ class Vote:
         return obvodrules.candidate_data(self.cfg, self.election)
 
     @functools.cached_property
+    def specials(self) -> special.Specials:
+        """Return its special okrsky, without territory (:mod:`election_map_slovakia.special`)."""
+        return okrsokrules.special_okrsky(self.cfg, self.election)
+
+    @functools.cached_property
     def counts(self) -> dict[str, int]:
-        """Return obec → its okrsky in the territorial division."""
-        return okrsokrules.okrsok_counts(self.cfg, self.election)
+        """Return obec → its territorial okrsky in the territorial division."""
+        return special.territorial(
+            okrsokrules.okrsok_counts(self.cfg, self.election), self.specials
+        )
 
     @functools.cached_property
     def council(self) -> dict[str, dict[int, int | None]]:
@@ -801,6 +903,11 @@ class Vote:
         return {obec: dict(sorted(s.items())) for obec, s in out.items()}
 
     @functools.cached_property
+    def new(self) -> set[str]:
+        """Return the obce whose council a by-election elects anew (``vote`` ``"new"``)."""
+        return candidates.new_councils(self.data["contests"])
+
+    @functools.cached_property
     def grouped(self) -> obvodrules.Okrsky:
         """Return obec → council obvod → okrsok → voters on the roll."""
         return obvodrules.official_okrsky(self.cfg, self.election)
@@ -811,8 +918,13 @@ class Vote:
         return okrsokrules.okrsok_voters(self.cfg, self.election)
 
     def okrsok_voters(self, code: str) -> dict[int, int]:
-        """Return okrsok → voters on the roll of obec *code*, where known."""
-        return _flat(self.grouped.get(code, {})) | self.voters.get(code, {})
+        """Return okrsok → voters on the roll of obec *code*, where known.
+
+        Of its territorial okrsky: a special okrsok's number may be an
+        ordinary okrsok's in another vote, and its voters say nothing of it.
+        """
+        voters = _flat(self.grouped.get(code, {})) | self.voters.get(code, {})
+        return {k: v for k, v in voters.items() if k not in self.specials.get(code, {})}
 
     def obvod_voters(self, code: str) -> dict[int, int]:
         """Return council obvod → voters on the roll of obec *code*, where known."""
@@ -832,6 +944,9 @@ class _Target:
     where the vote elects none of its council."""
     several: bool
     """Whether the council it elects has several obvody (a council rule set)."""
+    term: bool
+    """Whether that council is its term's (a by-election proper's): not
+    elected anew, its obvody are the term's."""
     whole_only: bool
     """Whether, without *several*, only okrsky of the whole obec (an okrsky
     file) fit: the vote elects its council in one obvod, or elects councils
@@ -886,11 +1001,10 @@ def stand_in(
     voting = okrsokrules.held(election, vote.data)
     by_obvody = obvodrules.load_not_found(cfg, election)
     by_okrsky = okrsokrules.load_not_found(cfg, election)
-    if election.kind == BY_ELECTION:
-        obvod_sources = [votes[term.day]] if term else []
-    else:
-        regular = [e for e in cfg.elections if e.kind == REGULAR and e != election]
-        obvod_sources = [votes[e.day] for e in _nearest(election, regular)]
+    # A by-election proper's council obvody are its term's alone; a new
+    # election's, as any other vote's, the nearest regular election's.
+    regular = [e for e in cfg.elections if e.kind == REGULAR and e != election]
+    nearest = [votes[e.day] for e in _nearest(election, regular)]
     others = [e for e in cfg.elections if e != election]
     okrsok_sources = [votes[e.day] for e in _nearest(election, others)]
     lines = []
@@ -908,7 +1022,7 @@ def stand_in(
                 cfg,
                 election,
                 t,
-                obvod_sources,
+                [term_vote] if t.term and term_vote else nearest,
                 _missing(election, OBVODY, by_obvody.get(code), None),
             )
             if source is None and current is not None:
@@ -950,8 +1064,10 @@ def _nearest(election: Election, others: Sequence[Election]) -> list[Election]:
 def _target(vote: Vote, term: Vote | None, code: str, name: str) -> _Target:
     """Return obec *code* of *vote* as a target; *term*: a by-election's regular election."""
     council = vote.council.get(code, {})
-    # A by-election fills seats of the council elected in its term's obvody.
-    obvody_of = term.council.get(code, {}) if term else council
+    # A by-election proper fills seats of the council elected in its term's
+    # obvody; a council elected anew has obvody of its own.
+    of_term = term is not None and bool(council) and code not in vote.new
+    obvody_of = term.council.get(code, {}) if term and of_term else council
     several = bool(council) and len(obvody_of) >= _SEVERAL
     return _Target(
         code,
@@ -959,6 +1075,7 @@ def _target(vote: Vote, term: Vote | None, code: str, name: str) -> _Target:
         vote.counts.get(code, 0),
         council,
         several,
+        of_term,
         not several and bool(council or vote.council),
         vote.grouped.get(code, {}) if several else {},
         vote.okrsok_voters(code),
@@ -1014,11 +1131,12 @@ def _stand_in_obvody(
 
     *missing* says why there is none of its own. Its okrsky come along
     where they fit too, else each obvod gets ŠÚ SR's okrsky without rules.
-    A by-election's one source, its term, may give a rule set that is
+    A by-election proper's one source, its term, may give a rule set that is
     another vote's itself: it fills seats of the council elected in those
-    obvody, however that election draws them.
+    obvody, however that election draws them. A council elected anew takes
+    the nearest regular election's own, as any other vote's.
     """
-    by_election = election.kind == BY_ELECTION
+    by_election = t.term
 
     def attempt(s: Vote, nearer: Sequence[str]) -> _Tried:
         source = s.election
@@ -1132,18 +1250,30 @@ def _okrsky_along(
     """
     source = s.election
     voters = s.okrsok_voters(t.code)
+    # Strict: where they fail, the okrsky are searched for on their own
+    # (:func:`_stand_in_okrsky`), a clean source first.
+    off, allowed, outliers = _okrsky_off(
+        t.voters, voters, t.count, election, source, lenient=False
+    )
     if (
         own
         and not _shape_problem(copy, t.count, t.grouped)
-        and not _off("okrsok", t.voters, voters, source)
+        and not off
         and not _okrsok_fit(cfg, copy, p, a)
     ):
-        basis = (
-            f"The okrsky of the same rule set: {t.count} okrsky, those ŠÚ SR counted"
-            f" in each obvod. {_voters_said('okrsok', t.voters, voters, election, source)}"
+        basis = " ".join(
+            filter(
+                None,
+                (
+                    f"The okrsky of the same rule set: {t.count} okrsky, those ŠÚ SR"
+                    " counted in each obvod.",
+                    _voters_said("okrsok", t.voters, voters, election, source),
+                    allowed,
+                ),
+            )
         )
         return dataclasses.replace(
-            copy, okrsky_adoption=obvody.Adoption(source.day, basis)
+            copy, okrsky_adoption=obvody.Adoption(source.day, basis, outliers)
         )
     numbers = {n: tuple(ks) for n, ks in t.grouped.items()}
     complete = list(numbers) == list(copy.seats) and sorted(
@@ -1184,10 +1314,14 @@ def _stand_in_okrsky(
     Where the vote elects its council in several obvody, *into* its
     council rule set, from one with the same obvody; in one obvod, an
     okrsky file; else either (a rule set's obvody then only place them).
-    *missing* says why there are none of its own.
+    *missing* says why there are none of its own. A source whose okrsky
+    all have voters within :data:`PLAUSIBLE` wins, the nearest in time;
+    only where none has, the nearest with some farther apart, as an obec
+    of its size allows (:func:`_okrsky_off`): the allowance gives a
+    stand-in where there would be none, never a nearer one with outliers.
     """
 
-    def attempt(s: Vote, nearer: Sequence[str]) -> _Tried:
+    def attempt(s: Vote, nearer: Sequence[str], *, lenient: bool) -> _Tried:
         source = s.election
         rules = obvody.load_obec(s.curated, t.code)
         if rules is None or not okrsokrules.own(rules) or not rules.okrsok_areas:
@@ -1198,22 +1332,29 @@ def _stand_in_okrsky(
         if shape:
             return _Tried(_SHAPE, shape)
         voters = s.okrsok_voters(t.code)
-        off = _off("okrsok", t.voters, voters, source)
+        off, allowed, outliers = _okrsky_off(
+            t.voters, voters, t.count, election, source, lenient=lenient
+        )
         if off:
             return _Tried(_VOTERS, off)
         fit = f"{t.count} okrsky" + (
             ", those ŠÚ SR counted in each council obvod" if t.grouped else ""
         )
         basis = " ".join(
-            (
-                missing,
-                f"These are the okrsky of the vote of {source.day} ({source.slug}),"
-                f" the nearest in time with okrsky of its own that fit: {fit}"
-                f"{_not_taken(nearer)}.",
-                _voters_said("okrsok", t.voters, voters, election, source),
+            filter(
+                None,
+                (
+                    missing,
+                    f"These are the okrsky of the vote of {source.day} ({source.slug}),"
+                    f" the nearest in time with okrsky of its own that fit: {fit}"
+                    f"{_not_taken(nearer)}.",
+                    _voters_said("okrsok", t.voters, voters, election, source),
+                    allowed,
+                ),
             )
         )
-        copy = _okrsky_copy(rules, into, source, obvody.Adoption(source.day, basis))
+        adoption = obvody.Adoption(source.day, basis, outliers)
+        copy = _okrsky_copy(rules, into, source, adoption)
         p = _places(cfg, election, t.code)
         a = obvody.assign(copy, p.places, p.kus, p.planar())
         problems = a.problems(p.places) or _okrsok_fit(cfg, copy, p, a)
@@ -1226,7 +1367,10 @@ def _stand_in_okrsky(
             _DONE, f"from {source.day} ({source.slug}), {path.relative_to(cfg.root)}"
         )
 
-    return _search(sources, attempt)
+    found = _search(sources, functools.partial(attempt, lenient=False))
+    if found[0] is None:
+        found = _search(sources, functools.partial(attempt, lenient=True))
+    return found
 
 
 def _kind_problem(
@@ -1393,6 +1537,17 @@ def _places(cfg: Config, election: Election, code: str) -> obvody.ObecPlaces:
     return obvody.load_places(path)
 
 
+def _beyond(
+    then: Mapping[int, int], later: Mapping[int, int]
+) -> list[tuple[int, int, int]]:
+    """Return (unit, voters *then*, *later*'s) beyond :data:`PLAUSIBLE`, known in both."""
+    return [
+        (k, then[k], later[k])
+        for k in sorted(then.keys() & later.keys())
+        if abs(later[k] - then[k]) > PLAUSIBLE * then[k]
+    ]
+
+
 def _off(
     unit: str, then: Mapping[int, int], later: Mapping[int, int], source: Election
 ) -> str | None:
@@ -1400,11 +1555,48 @@ def _off(
 
     Beyond :data:`PLAUSIBLE`, of those known in both votes.
     """
-    for k in sorted(then.keys() & later.keys()):
-        before, after = then[k], later[k]
-        if abs(after - before) > PLAUSIBLE * before:
-            return f"{unit} {k}: {before:,} voters then, {after:,} in {source.day}"
-    return None
+    beyond = _beyond(then, later)
+    if not beyond:
+        return None
+    k, before, after = beyond[0]
+    return f"{unit} {k}: {before:,} voters then, {after:,} in {source.day}"
+
+
+def _outliers_allowed(count: int) -> int:
+    """Return how many of *count* okrsky that stand in may be beyond :data:`PLAUSIBLE`."""
+    return max(1, int(OUTLIERS_SHARE * count)) if count >= OUTLIERS_FROM else 0
+
+
+def _okrsky_off(
+    then: Mapping[int, int],
+    later: Mapping[int, int],
+    count: int,
+    election: Election,
+    source: Election,
+    *,
+    lenient: bool,
+) -> tuple[str | None, str, tuple[tuple[int, int, int], ...]]:
+    """Return why okrsky of *source* may not stand in by their voters, if so.
+
+    Else None, the sentence naming those beyond :data:`PLAUSIBLE` all the
+    same, where *lenient*, as an obec of *count* okrsky allows
+    (:func:`_outliers_allowed`), and those okrsky, (okrsok, voters *then*,
+    *later*'s): empty where none is.
+    """
+    beyond = _beyond(then, later)
+    if not beyond:
+        return None, "", ()
+    if len(beyond) > (_outliers_allowed(count) if lenient else 0):
+        return _off("okrsok", then, later, source), "", ()
+    each = ", ".join(f"{k} ({b:,} → {a:,})" for k, b, a in beyond)
+    which = f"okrsok {each} differs" if len(beyond) == 1 else f"okrsky {each} differ"
+    said = (
+        f"Of these, {which} by more than {PLAUSIBLE:.0%} ({election.day} →"
+        f" {source.day}), allowed in an obec of {count} okrsky: of"
+        f" {OUTLIERS_FROM} or more, one okrsok, or {OUTLIERS_SHARE:.0%} of"
+        " them, may differ while the layout holds."
+    )
+    return None, said, tuple(beyond)
 
 
 def _voters_said(

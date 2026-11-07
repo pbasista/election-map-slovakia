@@ -14,12 +14,11 @@
 #   okrsok 11: Mierová 7 - 91 /nepárne čísla/, Letná 11 - 23 /nepárne čísla/, Mierová 8 - 12 /párne čísla/
 #   okrsok 12: Okružná 36 - 86 /párne čísla/, Letná 25 - 33 /nepárne čísla/
 #   okrsok 13: Mierová 14 - 54 /párne čísla/, Lipová
-#   okrsok 14: (okrsok č. 14 is not in the document)
 obec = "526665"
 name = "Stará Ľubovňa"
 okrsky_date = 2022-11-10
 okrsky_fill = "nearest"
-okrsky_note = "'Stará Ľubovňa - bez ulice' (okrsok 1) means voters registered without an address, so it has no rule. Obchodná is not named in the document; it and the addresses without a street and the house numbers the ranges leave out take the okrsok of the nearest address (fill_nearest). The whole part Podsadek is okrsok 'Podsadek'. Named but not in the register (left out): Mariánska ulica. The document sets 13 okrsky; the Statistical Office counts a 14th with 3 voters, which the document does not name: it is written as an okrsok without addresses (addressless)."
+okrsky_note = "'Stará Ľubovňa - bez ulice' (okrsok 1) means voters registered without an address, so it has no rule. Obchodná is not named in the document; it and the addresses without a street and the house numbers the ranges leave out take the okrsok of the nearest address (fill_nearest). The whole part Podsadek is okrsok 'Podsadek'. Named but not in the register (left out): Mariánska ulica. The document sets 13 okrsky; the Statistical Office counts a 14th okrsok with 3 voters, which the document does not name: the COVID-19 special okrsok of okres Stará Ľubovňa (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml)."
 
 [[document]]
 url = "https://www.staralubovna.sk/resources/File/1_urcenie-volebnych-okrskov-a-volebnych-miestnosti.pdf"
@@ -131,6 +130,3 @@ rules = [
   {street = "Mierová", numbers = "14-54", parity = "even"},
   {street = "Lipová"},
 ]
-
-[okrsok.14]
-addressless = true

@@ -1,15 +1,23 @@
-# The okrsky of Borský Mikuláš of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/504238.toml, copied by `ems job reuse` (reused). Its header there:
-#   The okrsky of Borský Mikuláš of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/504238.toml, reused by `ems job reuse`.
+# The okrsky of Borský Mikuláš of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/504238.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Borský Mikuláš, transcribed by an AI agent in job okrsok-rules-4747 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: 1. mája, Borová, Detvianska, Dr.V.Cintulu, Hurbanova, Chodecká, M.R.Štefánika, Na hliníkoch, Na humnisku, Na vŕšku, Na dereši, Sadová, Sládkovičova, Záhorácka, Zemanská a voliči, ktorých miestom trvalého pobytu je obec
+#     okrsok 2: Družstevná, Kollárová, Kostolná, Kováčska, Lesná, Na barine, Na rybníčkoch, Na záhradách, Peterská, Pri Struhe, Štúrova
+#     okrsok 3: Bratislavská, Cintorínska, Habánska, Habány, J.Hollého, Komenského, L. Svobodu, Na doline, Na výhone, Ságelská, Šaštínska, Školská, U sv. Jána, Urbárska, V ohrade, Za mostom, Smuha
 obec = "504238"
 name = "Borský Mikuláš"
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2023-09-30 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2023-09-30 was searched for. No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Notice of the starosta's okrsky for 24 Oct 2026 (no decision date given). Okrsok 1 also holds voters registered only to the obec. The 3 addresses without a street take the nearest okrsok."
-okrsky_reused = 2022-10-29
+okrsky_note = "'voliči, ktorých miestom trvalého pobytu je obec' (okrsok 1) are voters without an address. Addresses without a street take the nearest okrsok (fill_nearest)."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3492): No notice of the 2023 NR SR election okrsky found on the website or in the Internet Archive (the obec's host also rate-limits us). These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2024-06-08: 1: 1,120 → 1,093, 2: 1,100 → 1,114, 3: 1,058 → 1,087."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the notice names the vote ('Volebné miestnosti budú otvorené v sobotu 8. júna 2024'); it states no decision date (posted 2024-06-04)"
 
 [[document]]
-url = "https://www.borskymikulas.sk/oznamy/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-.html"
-sha256 = "fdd428dd059571b7889e0ab3c4e800212ad80ef35acdd9f31bdddf066fd07a4c"
-title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov"
+url = "https://www.borskymikulas.sk/oznamy/volby-do-europskeho-parlamentu-.html"
+sha256 = "15df34d612e3d99fcfc365a132ee09f9d9157a4ce6745b6022cc29874255d72c"
+title = "Oznam obce: Starosta obce určil tri okrsky (vote of 8. júna 2024)"
 
 [okrsok.1]
 rules = [

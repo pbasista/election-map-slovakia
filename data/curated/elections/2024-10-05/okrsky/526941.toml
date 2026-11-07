@@ -1,23 +1,23 @@
-# The okrsky of Orlov of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/526941.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Orlov, transcribed by an AI agent in job okrsok-rules-1049 from the documents below;
+# The okrsky of Orlov of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/526941.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Orlov, transcribed by an AI agent in job okrsok-rules-5191 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: pre obyvateľov obce Orlov
-#     okrsok 2: pre obyvateľov obce Orlov, miestnej časti Andrejovka
+#     okrsok 1: volebná miestnosť: Obecný úrad Orlov, zasadačka, Orlov 119 - pre obyvateľov obce Orlov
+#     okrsok 2: volebná miestnosť: Orlov – Andrejovka 325, spoločenská miestnosť - pre obyvateľov obce Orlov, miestnej časti Andrejovka
 obec = "526941"
 name = "Orlov"
-okrsky_date = 2022-07-20
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2024-10-05 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2024-10-05 was searched for."
-okrsky_reused = 2022-10-29
+okrsky_date = 2024-02-16
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2024-10-05 setting the okrsky was found (okrsok-rules-5228): No document of the okrsky for the by-elections of 5 October 2024 found (only the commission's minutes); the 2022 decision says it is valid for the 2022 elections only. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-10-05 → 2024-06-08: 1: 447 → 441, 2: 70 → 81."
 
 [[document]]
-url = "https://www.obecorlov.sk/resources/File/utvorenie-volebny-ch-okrskov-a-urc-enie-volebny-ch-miestnosti-pre-vol-by-do-orga-nov-samospra-vy-obci-ktore-platia-aj-pre-vol-by-do-orga-nov-samospra-vnych-krajov.pdf"
-sha256 = "99e0eaca516a27c45d7cd2fa3a9b12540f37f32dbb2cd4550043fa0a098c6427"
-title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí, ktoré platia aj pre voľby do orgánov samosprávnych krajov konaných dňa 29. októbra 2022"
+url = "https://www.obecorlov.sk/resources/File/utvorenie-volebny-ch-okrskov-a-urc-enie-volebny-ch-miestnosti-pre-konanie-volieb-do-euro-pskeho-parlamentu-2024.pdf"
+sha256 = "8147a7a37e0eec72b70bf604747d24997e6f23f5b5ce0542430957b1d0a4817f"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do EP 2024 (16.02.2024)"
 
 [okrsok.1]
 rules = [
-  {part = "Orlov"},
+  {part = "Orlov", note = "'obyvatelia obce Orlov' beside okrsok 2 for the part Andrejovka: the part Orlov"},
 ]
 
 [okrsok.2]

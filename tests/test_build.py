@@ -225,6 +225,7 @@ def test_origin_flags_are_of_the_units_drawn():
         "supplemented": {"508063": {"from": "election", "day": "2026-10-24"}},
         "okrsky_reused": {},
         "okrsky_adopted": {},
+        "okrsky_outliers": {},
         "okrsky_referendum": {"508063": "2023-01-21"},
         "okrsky_date_approximate": {"508063": {"by": "named"}},
         "okrsky_supplemented": {"508063": {"from": "document", "day": "2026-10-24"}},

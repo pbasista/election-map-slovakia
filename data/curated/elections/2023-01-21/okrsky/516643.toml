@@ -9,12 +9,11 @@
 #   okrsok 6: Bratská, Drieňová, Energetikov, Kysihýbelská, Okrajová, Ovocná, Pátrovská, Poľovnícka, Roľnícka, SNP č. 22 - 44 a Učiteľská
 #   okrsok 7: Antolská, Brezová, Budovateľská, Cintorínska, Ferka Urbánka, G. Z .Laskomerského, Horná Huta, Hutnícka, Jána Amosa Komenského, Kremenisko, Ladislava Exnára, Lintich, Na Mária šachtu, Obchodná, Povrazník, Rakytová, Špitálska a s. č. 1908, 1909
 #   okrsok 8: 29. augusta, Boženy Slančíkovej - Timravy, Boženy Němcovej, Ilijská, Janka Jesenského, Jozefa Cígera Hronského, Jozefa Gregora Tajovského, Jozefa Ignáca Bajzu, Jozefa Kollára, Jozefa Škultétyho, Kríková, Krížna, Na Matej štôlňu, Na Maximilián šachtu, Námestie padlých hrdinov, Obrancov mieru, Partizánska, Podhájska, Potočná, Požiarnická, Rudolfa Debnárika, Sama Chalupku, Srnčia, Stratená, Školská, Štefana Krčméryho, Štefana Moyzesa a Úzka
-#   okrsok 9: (not in the document)
 obec = "516643"
 name = "Banská Štiavnica"
 okrsky_date = 2022-11-09
 okrsky_fill = "nearest"
-okrsky_note = "Scanned document; text read from the page images (OCR plus reading). Okrsok 1 also holds the voters with trvalý pobyt only on the town (registered without an address), not the register's houses without a street. 'SNP č. 1 - 21/B' is read as SNP 1-21, 21A, 21B; 's. č. 2675' (okrsok 2) and 's. č. 1908, 1909' (okrsok 7) as súpisné numbers in part Banská Štiavnica. Houses without a street (súpisné only, incl. parts Banky, Sitnianska, Štefultov) take the nearest placed address (fill_nearest). The document sets 8 okrsky (a/-h/); the Statistical Office counts a 9th okrsok with only 3 voters, which the document does not name: written as an okrsok without addresses."
+okrsky_note = "Scanned document; text read from the page images (OCR plus reading). Okrsok 1 also holds the voters with trvalý pobyt only on the town (registered without an address), not the register's houses without a street. 'SNP č. 1 - 21/B' is read as SNP 1-21, 21A, 21B; 's. č. 2675' (okrsok 2) and 's. č. 1908, 1909' (okrsok 7) as súpisné numbers in part Banská Štiavnica. Houses without a street (súpisné only, incl. parts Banky, Sitnianska, Štefultov) take the nearest placed address (fill_nearest). The document sets 8 okrsky (a/-h/); the Statistical Office counts a 9th okrsok with only 3 voters, which the document does not name: the COVID-19 special okrsok of okres Banská Štiavnica (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml)."
 
 [[document]]
 url = "https://www.banskastiavnica.sk/wp-content/uploads/2022/11/20221109_Oznamenie-o-case-a-mieste-konania-referenda.pdf"
@@ -225,6 +224,3 @@ rules = [
   {street = "Štefana Moyzesa"},
   {street = "Úzka"},
 ]
-
-[okrsok.9]
-addressless = true

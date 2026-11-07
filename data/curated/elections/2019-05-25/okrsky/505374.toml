@@ -1,37 +1,47 @@
-# The okrsky of Prašice of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/505374.toml, copied by `ems job reuse` (reused). Its header there:
-#   The okrsky of Prašice of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/505374.toml, reused by `ems job reuse`.
+# The okrsky of Prašice of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/505374.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Prašice, transcribed by an AI agent in job okrsok-rules-3565 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Ulice: 1.mája, Nemečkovská cesta, Cintorínska, Partizánska, Krátka, Lipová, Okšovská, Pri majeri, Duchonka, Obec Prašice
+#     okrsok 2: Ulice: Slnečná, Družstevná, Mládežnícka, Mlynská, Budovateľská, Studničná, Žalmanova, Novosvetská
 obec = "505374"
 name = "Prašice"
-okrsky_date = 2026-07-31
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was searched for. No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). \"Obec Prašice\" (addresses without a street) is listed in okrsok 1, encoded as part Prašice under the street rules."
-okrsky_reused = 2022-10-29
+okrsky_date = 2023-06-22
+okrsky_note = "The document is on archiv.prasice.sk, the municipality's archive of its former website (linked from the footer of www.prasice.sk). Same okrsky as the copied 2026 document; this one also names Duchonka (recreational area without streets) in okrsok 1."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1799): The municipality's page 'Voľby do Európskeho parlamentu 2019' (archived 21 Jul 2019, after the vote) links only the announcement, voter information, delegation to the okrsok commissions and the e-mail address for voting certificates; no okrsky document. None found elsewhere. The Internet Archive was intermittently offline during the search; it was retried until it answered. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2023-09-30: 1: 844 → 892, 2: 889 → 849."
 
 [[document]]
-url = "https://www.prasice.sk/download_file_f.php?id=2453148"
-sha256 = "9c9784498ae2d04c8d467e9669e665209d6eea3a2579a164e71d4675ce50a8d7"
-title = "Oznámenie o určení volebných okrskov a volebných miestností"
+url = "http://archiv.prasice.sk/web/pdf/040d.pdf"
+sha256 = "a9eb855fcc0e562001f73b0944393dcb4e42d0d677f2b7bcd7ab2696daeb4510"
+title = "Utvorenie volebných okrskov a určenie volebnej miestnosti pre Voľby do Národnej rady Slovenskej republiky, ktoré sa budú konať dňa 30. septembra 2023"
+
+[[document]]
+url = "http://archiv.prasice.sk/web/html/895-volby-do-narodnej-rady-slovenskej-republiky-2023.html"
+sha256 = "62960025bab231d7057abe1bfaee7b8fd002cf71a0d62efce67bb8a7a6db4624"
+title = "Voľby do Národnej rady Slovenskej republiky 2023 (page of the municipality's former website, kept at archiv.prasice.sk, linking the document)"
 
 [okrsok.1]
 rules = [
-  {street = "Okšovská"},
   {street = "1.mája"},
-  {street = "Partizánska"},
   {street = "Nemečkovská cesta"},
-  {street = "Lipová"},
-  {street = "Pri Majeri", written = "Pri majeri"},
-  {street = "Krátka"},
   {street = "Cintorínska"},
-  {part = "Prašice"},
+  {street = "Partizánska"},
+  {street = "Krátka"},
+  {street = "Lipová"},
+  {street = "Okšovská"},
+  {street = "Pri Majeri", written = "Pri majeri"},
+  {part = "Prašice", note = "\"Obec Prašice\" and \"Duchonka\" (the recreational area) are the addresses without a street, all numbered by súpisné číslo within part Prašice; the part rule gives okrsok 1 every address the street rules do not."},
 ]
 
 [okrsok.2]
 rules = [
   {street = "Slnečná"},
-  {street = "Novosvetská"},
-  {street = "Budovateľská"},
+  {street = "Družstevná"},
   {street = "Mládežnícka"},
   {street = "Mlynská"},
-  {street = "Družstevná"},
-  {street = "Žalmanová"},
+  {street = "Budovateľská"},
   {street = "Studničná"},
+  {street = "Žalmanová", written = "Žalmanova", note = "The document writes Žalmanova without the long á of the register's Žalmanová; the same street, Prašice has no other like it."},
+  {street = "Novosvetská"},
 ]

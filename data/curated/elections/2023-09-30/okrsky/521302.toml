@@ -1,20 +1,28 @@
-# The okrsky of Čečejovce of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/521302.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Čečejovce, transcribed by an AI agent in job okrsok-rules-945 from the documents below;
+# The okrsky of Čečejovce of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/521302.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Čečejovce, transcribed by an AI agent in job okrsok-rules-4439 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
 #     okrsok 1: voliči s trvalým pobytom na uliciach: Mlynská, Košická, Paňovská, Krátka, Severná, Majerská, Hlavná, Južná, Buzická, Staničná, Školská, Východná, Kvetná
 #     okrsok 2: voliči s trvalým pobytom na uliciach: Kostolná, Pešia, Západná, Úzka, Dúhová, Agátová, Slnečná, Muškátová, Orgovánová, Letná, Časť SELEŠKA, Družstevná, Jarková, Viničná, Záhradná, Lúčna
 obec = "521302"
 name = "Čečejovce"
-okrsky_date = 2022-08-17
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2023-09-30 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2023-09-30 was searched for. The notice board page is undated beyond its posting date ('Vyvesené: 17. 8. 2022'), used as date. Okrsok 2 also has 'Časť SELEŠKA' (part rule). Addresses without a street in the part Čečejovce are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "Addresses without a street in the part Čečejovce are placed by fill_nearest."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3812): The notice board (items 1–645 checked) has no okrsky item for the NR SR election 2023 (only the results/minutes item); item 430 of mid-2023 no longer exists. Internet Archive (CDX API) refused connections / 503 on retries, so archived pages could not be checked. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2024-03-23: 1: 996 → 1,000, 2: 673 → 683."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2024-01-10
+okrsky_date_basis = "The notice board item linking the PDF states 'Vyvesené: 2024-01-10'; the document names the vote but bears no date. (https://www.cecejovce.sk/uradna-tabula-1/volby-prezidenta-slovenskej-republiky-a-szlovak-koztarsasag-elnokenek-valasztasa-458.html)"
 
 [[document]]
-url = "https://www.cecejovce.sk/uradna-tabula-1/volby-do-organov-samospravy-obci-volebne-okrsky-382.html"
-sha256 = "d8fae88f24cb92bed3e80df8175932f0f67c7139c8b6318ebae8bccb6a4d1217"
-title = "Voľby do orgánov samosprávy obcí - volebné okrsky (vyvesené 17. 8. 2022)"
+url = "https://www.cecejovce.sk/e_download.php?file=data/uredni_deska/obsah392_3.pdf&original=Ozn%C3%A1menie%20-%20volebn%C3%A1%20miestnos%C5%A5%2C%20okrsky.pdf"
+sha256 = "8f798f6b20a6d32e19595947cee40fe5370ed4b6a265d2f2098cc6d8e6ea35ba"
+title = "Volebné okrsky (Voľby prezidenta SR 2024)"
+
+[[document]]
+url = "https://www.cecejovce.sk/uradna-tabula-1/volby-prezidenta-slovenskej-republiky-a-szlovak-koztarsasag-elnokenek-valasztasa-458.html"
+sha256 = "7a3c87d44f74010bc3b41a4d2e61ebcb03f360272fb6aacd6e9d523c6dc0d6d2"
+title = "Voľby prezidenta Slovenskej republiky - A Szlovák Köztársaság elnökének választása"
 
 [okrsok.1]
 rules = [
@@ -45,10 +53,10 @@ rules = [
   {street = "Muškátová"},
   {street = "Orgovánová"},
   {street = "Letná"},
-  {part = "Seleška"},
   {street = "Družstevná"},
   {street = "Jarková"},
   {street = "Viničná"},
   {street = "Záhradná"},
   {street = "Lúčna"},
+  {part = "Seleška"},
 ]

@@ -1538,10 +1538,11 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
 
   /* The level of the unit outlined for level *s* (one of live.js SCOPES)
    * of place *p* ({info, obvod, okrsok}): an okrsok or a council obvod the
-   * place has none of (not known, or its obec's okrsky not drawn) falls
-   * back to the next coarser it has. */
+   * place has none of (not known, or not drawn: its obec's okrsky are not,
+   * or it has no area, or no territory) falls back to the next coarser it
+   * has. */
   function scopeOf(s, p) {
-    if (s === 'okrsok' && (p.okrsok == null || !okrsokObce.has(p.info.code))) return scopeOf('obvod', p);
+    if (s === 'okrsok' && !geoIndex.okrsky.drawn[p.info.code]?.includes(p.okrsok)) return scopeOf('obvod', p);
     if (s === 'obvod' && p.obvod == null) return 'obec';
     return s;
   }

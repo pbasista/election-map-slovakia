@@ -1,0 +1,158 @@
+# Okrsky of Brezno, transcribed by an AI agent in job okrsok-rules-014 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: bez ulice; Cintorínska; Československej armády 6, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64A; Hradby; Chalupkova; Kozmonautov; Moyzesova; Nám. gen. M. R. Štefánika; Sekurisova; Stromová; Školská; Vránskeho; Záhradná
+#   okrsok 2: Baštova; Glianska; Hlavina; Jarmočisko; Lesná; Okružná; Padličkovo; Predné Halny; Slovenského národ. povstania; Tehelňa; Vagnárska; Zadné Halny
+#   okrsok 3: Boženy Němcovej; Černákova; Československej armády 7, 13A, 17, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51; Laskomerského; Malinovského
+#   okrsok 4: Bottova; Eleny Maróthy Šoltésovej; Fučíkova; Hronská; Hviezdoslavova; Jesenského; Jilemnického; Nálepkova; Pionierska; Sládkovičova; Švermova
+#   okrsok 5: Dr. Clementisa; Krčulova; Ladislava Sáru
+#   okrsok 6: Brezenská; Dvoriská; Hliník; Kiepka; Klepuš; Kozlovo; Kôšikovo; Kriváň; Kubická; Kukučínova; Kuzmányho; Lichardova; Nábrežie Dukelských hrdinov; Nábrežie Jána Čipku; Pod Hôrkou; Podkoreňová; Rázusova; Rohozná; Slnečná ulica; Staničná; Šrámkova; Štúrova; Tisovská cesta; Zúbrik; Židlovo
+#   okrsok 7: Banisko; Fraňa Kráľa; Štvrť Ladislava Novomeského; Železničná
+#   okrsok 8: Budovateľská; Cesta osloboditeľov; Dolná; Hlboká; Horná; Jelšová; Krátka; Lúčky; Lúčna; Martina Benku; Mládežnícka; Mliekárenská; Mostárenská; Nová; Pestovateľská; Poľná; Potočná; Rovne; Šiašovo; Vrbová
+#   okrsok 9: 9. mája
+#   okrsok 10: Máj. povstania českého ľudu
+obec = "508497"
+name = "Brezno"
+okrsky_date = 2022-11-10
+okrsky_fill = "nearest"
+okrsky_note = "The town's 'Zoznam ulíc a okrskov, Referendum 2023' (dated 10.11.2022) lists streets per okrsok. 'bez ulice' (okrsok 1) = voters registered without an address, not mapped. Hamlets Predné Halny and Zadné Halny taken as their parts; part Bujakovo inferred with its streets (Okružná, Padličkovo, Slovenského národ. povstania, okrsok 2). Československej armády is split by the listed house numbers; unlisted numbers, street Za Brezinkou (not listed) and houses without a street in parts Brezno and Mazorníkovo placed by fill_nearest. The document does not name the COVID-19 special okrsok 11."
+
+[[document]]
+url = "https://www.brezno.sk/download.php?action=download&FileID=2610"
+sha256 = "4aec999ee26508a6bd88199c708a09f898f6e110a011b9e7077a6f06db2a79d2"
+title = "Zoznam ulíc a okrskov, Referendum 2023"
+
+[okrsok.1]
+rules = [
+  {street = "Cintorínska"},
+  {street = "Československej armády", numbers = "6, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64A"},
+  {street = "Hradby"},
+  {street = "Chalupkova"},
+  {street = "Kozmonautov"},
+  {street = "Moyzesova"},
+  {street = "Námestie gen. M.R.Štefánika", written = "Nám. gen. M. R. Štefánika", note = "the document abbreviates \"Námestie\" and spaces the initials"},
+  {street = "Sekurisova"},
+  {street = "Stromová"},
+  {street = "Školská"},
+  {street = "Vránskeho"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Baštova"},
+  {street = "Glianska"},
+  {street = "Hlavina"},
+  {street = "Jarmočisko"},
+  {street = "Lesná"},
+  {street = "Okružná"},
+  {street = "Padličkovo"},
+  {part = "Predné Halny", note = "the document lists \"Predné Halny\", the hamlet that is the part Predné Halny of the register; the whole part (incl. its houses without a street) taken"},
+  {street = "Slovenského národného povstania", written = "Slovenského národ. povstania", note = "the document abbreviates \"národného\" as \"národ.\""},
+  {street = "Tehelňa"},
+  {street = "Vagnárska"},
+  {part = "Zadné Halny", note = "the document lists \"Zadné Halny\", the hamlet that is the part Zadné Halny of the register; the whole part (incl. its houses without a street) taken"},
+  {part = "Bujakovo", note = "the document lists the streets of part Bujakovo (Okružná, Padličkovo, Slovenského národ. povstania) here; the houses of Bujakovo without a street go with them", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Boženy Němcovej"},
+  {street = "Černákova"},
+  {street = "Československej armády", numbers = "7, 13A, 17, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51"},
+  {street = "Laskomerského"},
+  {street = "Malinovského"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bottova"},
+  {street = "Eleny Maróthy Šoltésovej"},
+  {street = "Fučíkova"},
+  {street = "Hronská"},
+  {street = "Hviezdoslavova"},
+  {street = "Jesenského"},
+  {street = "Jilemnického"},
+  {street = "Nálepkova"},
+  {street = "Pionierska"},
+  {street = "Sládkovičova"},
+  {street = "Švermova"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Dr. Clementisa"},
+  {street = "Krčulova"},
+  {street = "Ladislava Sáru"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Brezenská"},
+  {street = "Dvoriská"},
+  {street = "Hliník"},
+  {street = "Kiepka"},
+  {street = "Klepuš"},
+  {street = "Kozlovo"},
+  {street = "Kôšikovo"},
+  {street = "Kriváň"},
+  {street = "Kubická"},
+  {street = "Kukučínova"},
+  {street = "Kuzmányho"},
+  {street = "Lichardova"},
+  {street = "Nábrežie Dukelských hrdinov"},
+  {street = "Nábrežie Jána Čipku"},
+  {street = "Pod Hôrkou"},
+  {street = "Podkoreňová"},
+  {street = "Rázusova"},
+  {street = "Rohozná"},
+  {street = "Slnečná ulica"},
+  {street = "Staničná"},
+  {street = "Šrámkova"},
+  {street = "Štúrova"},
+  {street = "Tisovská cesta"},
+  {street = "Zúbrik"},
+  {street = "Židlovo"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Banisko"},
+  {street = "Fraňa Kráľa"},
+  {street = "Štvrť Ladislava Novomeského"},
+  {street = "Železničná"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Budovateľská"},
+  {street = "Cesta osloboditeľov"},
+  {street = "Dolná"},
+  {street = "Hlboká"},
+  {street = "Horná"},
+  {street = "Jelšová"},
+  {street = "Krátka"},
+  {street = "Lúčky"},
+  {street = "Lúčna"},
+  {street = "Martina Benku"},
+  {street = "Mládežnícka"},
+  {street = "Mliekárenská"},
+  {street = "Mostárenská"},
+  {street = "Nová"},
+  {street = "Pestovateľská"},
+  {street = "Poľná"},
+  {street = "Potočná"},
+  {street = "Rovne"},
+  {street = "Šiašovo"},
+  {street = "Vrbová"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "9.mája", written = "9. mája", note = "the register writes \"9.mája\" without the space"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Májového povstania českého ľudu", written = "Máj. povstania českého ľudu", note = "the document abbreviates \"Májového\" as \"Máj.\""},
+]

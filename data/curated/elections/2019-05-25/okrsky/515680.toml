@@ -1,0 +1,79 @@
+# The okrsky of Tisovec of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/515680.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Tisovec, transcribed by an AI agent in job okrsok-rules-1188 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Bánovo, Hviezdoslavova, Kľak, Kozí Chrbát, Ľadovo, Ľavkovo, Partizánska č. 105 – 138, Podhradová, Roveň, Sládkovičova, Zbojská
+#     okrsok 2: Bakulínyho, Francisciho, Jozeffyho, Nám. Dr. V. Clementisa, bez ulice
+#     okrsok 3: Dielik, Jesenského, Malinovského, Muránska, P. Šífrika, Partizánska č. 42, 94 – 104, 139 – 169, 195, Šťavica, Štefánikova
+#     okrsok 4: Daxnerova, Markovo, Ľ. Štúra, Suché Doly
+#     okrsok 5: Cigánska osada, Dlhá, Družstevná, Hlavná, Partizánska, Vansovej, Železničná
+obec = "515680"
+name = "Tisovec"
+okrsky_date = 2019-01-30
+okrsky_fill = "nearest"
+okrsky_note = "'bez ulice' (okrsok 2) means voters registered without an address. 'Suché Doly' (okrsok 4), 'Cigánska osada' and the bare 'Partizánska' of okrsok 5 (Rimavská Píla's former names) are not in the register; the register's Partizánska lies in part Tisovec, numbered by súpisné čísla. Not named: Rejkovo, Košianovo, Polianky, Stratená, houses without a street in part Tisovec, Partizánska súpisné numbers outside the listed ranges (fill_nearest); Rimavská Píla's Dolná and Hrb go with okrsok 5 by the part."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1778): The city's European Parliament 2019 page lists only voter information, delegation e-mail, voter-pass and results items; no okrsky announcement for this vote. The 2019 presidential announcement (30.01.2019) names only the presidential election. The notice board (item ids 236–460 scanned) and the Internet Archive's captures of tisovec.com have no okrsky document for this vote. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 5 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2019-03-16: 1: 469 → 458, 2: 786 → 794, 3: 789 → 791, 4: 728 → 720, 5: 386 → 385."
+
+[[document]]
+url = "https://www.tisovec.com/evt_file.php?file=22497"
+sha256 = "93590785ca299d68d142643f2bb8baf6904bb2c9f8c0c6c33d4ca4742cb69c06"
+title = "Oznámenie o utvorení volebných okrskov a volebných miestností pre voľby prezidenta SR, V Tisovci 30.01.2019"
+
+[[document]]
+url = "https://www.tisovec.com/sk/mesto/volby/volby-prezidenta-sr/2019/oznamenie-o-utvoreni-volebnych-okrskov-a-volebnych-miestnosti-pre-volby-3972sk.html"
+sha256 = "4b9e42275f9dce2fc9350085d7bfc4ca0d95528c6e152a9e917b3384e876b638"
+title = "Oznámenie o utvorení volebných okrskov a volebných miestnosti pre voľby (dátum vloženia 4. 2. 2019)"
+
+[okrsok.1]
+rules = [
+  {street = "Bánovo"},
+  {street = "Hviezdoslavova"},
+  {street = "Kľak"},
+  {street = "Kozí Chrbát"},
+  {street = "Ľadovo"},
+  {street = "Ľavkovo"},
+  {street = "Podhradová"},
+  {street = "Roveň"},
+  {street = "Sládkovičova"},
+  {street = "Zbojská"},
+  {street = "Partizánska", numbers = "105-138", by = "supisne", note = "the document's numbers of Partizánska are súpisné (the register's orientačné reach only 98)"},
+  {street = "Pod Hradom", note = "not in the document; one address next to Podhradová (okrsok 1)", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Bakulínyho"},
+  {street = "Francisciho"},
+  {street = "Jozeffyho"},
+  {street = "Nám. Dr. V. Clementisa"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Dielik"},
+  {street = "Jesenského"},
+  {street = "Malinovského"},
+  {street = "Muránska"},
+  {street = "P. Šífrika"},
+  {street = "Šťavica"},
+  {street = "Štefánikova"},
+  {street = "Partizánska", numbers = "42, 94-104, 139-169, 195", by = "supisne", note = "the document's numbers of Partizánska are súpisné (the register's orientačné reach only 98)"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Daxnerova"},
+  {street = "Markovo"},
+  {street = "Ľ. Štúra"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Dlhá"},
+  {street = "Družstevná"},
+  {street = "Hlavná"},
+  {street = "Vansovej"},
+  {street = "Železničná"},
+  {part = "Rimavská Píla", note = "Rimavská Píla addresses on streets the document does not name (e.g. Dolná, Hrb) and without a street: the whole part votes in okrsok 5", inferred = true},
+]

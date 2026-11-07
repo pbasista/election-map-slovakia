@@ -1,20 +1,31 @@
-# The okrsky of Strekov of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/503550.toml, reused by `ems job reuse`. Its header there:
-#   The okrsky of Strekov of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/503550.toml, reused by `ems job reuse`.
+# The okrsky of Strekov of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/503550.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Strekov, transcribed by an AI agent in job okrsok-rules-4860 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Ulica pod vinicami 215 - 253, 925-927, 930, 970 Stará cinotírnska ulica: 327, 535-584, 912-913 Rúbaňská cesta: 107-150, 958, 960-963, 977, 1087, 1095 Býčia medza: 394-398, 938, 956-957, 977 Nová cintorínska ulica: 514-531, 587-599, 954, 964, 976 Hlavná ulica: 47-100, 300-302,356-393,401-424, 1333 Veľká krivá ulica: 1-184, 282-299, 928 Malá krivá ulica: 304-312, 331-354 Ciglédska ulica: 265-281, 917-324, 953 Csillagova ulica: 190-209, 968 Jarmočné námestie: 211-213,260,914-924,955,982 Lesná cesta: 189 Ružová ulica: 1011-1017,1019,1030 Brezová ulica: 1000-1010,1022-1024,1031,1150,1250 Ploché námestie: 185-186,971,980,1138 Orgovánová ulica: 973,1073 Nová ulica: 1018,1283, 1412, 1422
+#     okrsok 2: Krivá ulica: 484-505,1399 Topoľová ulica: 683-732 Orechový rad: 659-682 Dolná ulica: 1-38,429-454,1300 Zabratá ulica: 602-624,937,966-967, 969 ,981, 983, 985, 989-998,1028-1029,1044,1284,1335 Školská ulica: 818-851,909-910, 952 ,959, 979, 988, 999,1295 Lipová ulica: 778-816, 984 Železničný rad: 852-885 Obchodná ulica: 733-777,939-940 Úzka ulica: 455-47, 965,1020 Blatná ulica: 107,1036,1276 Cesta slobody: 978 Hlavná ulica II: 625-657, 941-951,1388,1406
 obec = "503550"
 name = "Strekov"
+okrsky_date = 2024-02-28
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-03-16 the obec had as many, each with voters on the roll within 10% of its count then. No document of 2019-03-16 was searched for. No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). XLSX table listing streets with súpisné čísla per okrsok. Every street except Hlavná ulica lies wholly in one okrsok, so whole-street rules; Hlavná ulica is split by the súpisné numbers given (okrsok 2 as 'Hlavná ulica II'), its other numbers take the nearest placed address. 'Stará cinotírnska' is a typo for Stará cintorínska ulica; 'Topoľova' = Topoľová ulica. Ulica za potokom (1 address) is not named; it and addresses without a street take the nearest placed address (fill_nearest). No decision date stated."
-okrsky_reused = 2022-10-29
+okrsky_note = "Table listing each okrsok's streets with súpisné čísla. Every street except Hlavná ulica lies wholly in one okrsok, so whole-street rules; Hlavná ulica is split by the súpisné numbers given (okrsok 2 as 'Hlavná ulica II'), its other numbers take the nearest placed address. 'Stará cinotírnska' is a typo for Stará cintorínska ulica; 'Topoľova' = Topoľová ulica. Ulica za potokom (1 address) is not named; it and addresses without a street take the nearest placed address (fill_nearest). Same okrsky as the copied 2022/2026 rule set. The mayor's decision (dated 28.02.2024, heading names the EP election of 8 June 2024) lists only the two polling stations; the territorial table published beside it on the EP 2024 page gives the streets."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1249): The 2017 elections article on the municipality's old website (oldpage.strekov.sk, archived) links the election documents only as a Google Drive folder, which asks for sign-in and is not on the municipality's website. The new website's elections page (archived July/Sept 2019 and Nov 2020) lists only 2014 documents; the notice board as archived in Sept 2019 has no election items; the Internet Archive holds no other capture of the website from 2017-2020 with an okrsky document. The live website's elections pages start with 2022. No page of the 2019 presidential election was found, live or archived. Internet Archive was intermittently offline but answered after retries. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2024-06-08: 1: 858 → 782, 2: 791 → 813."
 
 [[document]]
-url = "https://www.strekov.sk/e_download.php?file=/data/editor/208sk_1.xlsx&original=Tla%C4%8Divo%20Volebn%C3%A9%20okrsky_miestnosti_s%C3%ADdlo_%20vyplnen%C3%A9.xlsx"
-sha256 = "9063166d2929faa1e987f5ebbaaa1012fb903ab609ea5548f398883db544805a"
-title = "Informácia o utvorení volebných okrskov s vymedzením ich územného obvodu"
+url = "https://www.strekov.sk/e_download.php?file=data/editor/179sk_5.pdf&original=V%20y%20t%20v%20o%20r%20e%20n%20i%20e%20volebn%C3%BDch%20okrskov.pdf"
+sha256 = "2dade642b9f988051ca65a0742e0a4cf910dfd59b9334348eb2f548b3797a5f4"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností pre konanie volieb do Európskeho parlamentu v roku 2024"
 
 [[document]]
-url = "https://www.strekov.sk/zverejnovanie/volby/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-2026/"
-sha256 = "7696bcc53e241e12fa1cc5cfa963985943d26c9360fec60f46518982cbf79933"
-title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 2026"
+url = "https://www.strekov.sk/e_download.php?file=data/editor/179sk_6.pdf&original=Volebn%C3%A9%20miestnosti_s%C3%ADdlo_%20zapisovate%C4%BE.pdf"
+sha256 = "0319e5aae49d493779fdff3caf6bfba85b4558899161c2bd53d665cc2121d219"
+title = "Volebné miestnosti, sídlo, územný obvod okrsku, zapisovateľ"
+
+[[document]]
+url = "https://www.strekov.sk/zverejnovanie/volby/volby-do-europskeho-parlamentu-2024/"
+sha256 = "6186dd8e434c8cf1e65405a49b00232e9f965143929e329746473b0e1b88e633"
+title = "Voľby do Európskeho parlamentu 2024"
 
 [okrsok.1]
 rules = [
@@ -34,7 +45,7 @@ rules = [
   {street = "Ploché námestie"},
   {street = "Orgovánová ulica"},
   {street = "Nová ulica"},
-  {street = "Hlavná ulica", numbers = "47-100, 300-302, 356-393, 401-424, 1333", by = "supisne"},
+  {street = "Hlavná ulica", numbers = "47-100, 300-302, 356-393, 401-424, 1333", by = "supisne", note = "the document numbers Hlavná ulica by súpisné čísla, split between the two okrsky; its other numbers take the nearest placed address"},
 ]
 
 [okrsok.2]

@@ -1,0 +1,27 @@
+# The okrsky of Čenkovce of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/580554.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Čenkovce, transcribed by an AI agent in job okrsok-rules-122 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: MČ Čenkovce, Kultúrny dom, Čenkovce – Čenkovce 2
+#     okrsok 2: MČ Maslovce, Kultúrny dom, Čenkovce – Maslovce 876
+obec = "580554"
+name = "Čenkovce"
+okrsky_date = 2023-06-12
+okrsky_note = "The mayor's decision of 12.06.2023 for the National Council election of 30 September 2023 names each okrsok by its part (MČ = miestna časť) and its polling station; its preamble says \"3 volebné miestnosti\" but lists only the two okrsky."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2022-10-29 setting the okrsky was found (okrsok-rules-121): Re-searched 2026-11-07; the Internet Archive answered this time (CDX and snapshots, with retries on intermittent HTTP 503). The 'October 2022 scan' the earlier note found truncated (cenkovce.sk/files/2022-10-18-112551-SKM_C284e22101809190.pdf) exists in the archive only as a Common Crawl record cut at 1 MiB (both captures, 2022-12-06 and 2024-06-26, serve the same 1,048,576 bytes; range requests fail); its first pages, extracted from the truncated file, show it is the 'Záverečný účet Obce Čenkovce za rok 2021' (published on the website 18.10.2022), not an okrsky document. The other archived files of summer/autumn 2022 are the notice on the number of councillors and the single obvod (12.07.2022), the MVK recorder (12.07.2022), the number of inhabitants (04.08.2022), a building permit (14.07.2022), the candidate lists, the notice on special voting and the results; none sets the okrsky. The referendum 2023 files (announcement, voter information, delegation notice of 14.11.2022) have no okrsky either, so the referendum cannot stand in. A later vote's document places the okrsky by parts: 'Určenie volebných okrskov' for the NR SR elections of 30.9.2023 (12.06.2023): okrsok 1 MČ Čenkovce, okrsok 2 MČ Maslovce (matching the voters 686/223) — another vote's document, left to the maintainer. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2022-10-29 → 2023-09-30: 1: 686 → 678, 2: 223 → 230."
+
+[[document]]
+url = "https://www.cenkovce.sk/files/2023-07-19-110041-UR__ENIE_VOLEBN__CH_OKRSKOV.pdf"
+sha256 = "595b0326c537daaf330115f5da0e66848df71f2d609326f8e76d4b09cec70da5"
+title = "Určenie volebných okrskov (voľby do NR SR 30. septembra 2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Čenkovce"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Maslovce"},
+]

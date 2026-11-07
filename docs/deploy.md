@@ -144,12 +144,26 @@ to projects `ems data projects` creates beforehand
    ([GitHub](https://docs.github.com/en/actions/reference/workflows-and-actions/dependency-caching#restrictions-for-accessing-a-cache)):
    it carries the inputs to the jobs below and to re-runs of the release,
    and the next release downloads them again.
-4. **steps**, one job per election, at most 10 at a time:
+4. **candidates**:
    takes the inputs from the cache,
-   runs the steps that read nothing of another election
-   (`ems candidates`, `addresses` and `geo` with `--election`)
-   and keeps their output with its stamps as an artifact for a day
-   (a zstd tar of `data/build/<day>/`).
+   runs `ems candidates` for every election, oldest first,
+   and keeps each `candidates.json` with its stamp
+   as one artifact for a day (a zstd tar).
+   Once for all the steps jobs, which wait for it:
+   a by-election's candidates and addresses read
+   the candidates of its term (the regular election
+   whose council's seats it fills),
+   and many by-elections share a term.
+   `tests/test_release.py` fails where a step of the steps job
+   reads an output that no job before it makes.
+5. **steps**, one job per election, at most 10 at a time:
+   takes the inputs from the cache
+   and the candidates of every election from the candidates job,
+   runs the steps that read no other election's output but those
+   (`ems addresses` and `geo` with `--election`)
+   and keeps the election's output with its stamps
+   as an artifact for a day
+   (a zstd tar of `data/build/<day>/`, its candidates among it).
    Every election, not only those of the parts not deployed:
    each data bundle reads every election's candidates and results
    and its own election's `geo`,
@@ -157,13 +171,13 @@ to projects `ems data projects` creates beforehand
    ([above](#keys-and-the-lock)).
    Each job makes again what one build shares between elections
    (`data/build/shared/`), costing CPU time but no wall time.
-5. **basemaps**, one job per extract, beside the steps jobs:
+6. **basemaps**, one job per extract, beside the candidates and steps jobs:
    takes the inputs from the cache,
    makes the extract's base map once for every election on it
    (`ems basemap --election` of the first election on it)
    and keeps it with its stamp as an artifact for a day
    (a zstd tar of `data/build/base/<extract>/`).
-6. **site**:
+7. **site**:
    takes the inputs from the cache
    and unpacks the output of every steps and basemaps job;
    `ems make` finds those steps up to date,
@@ -185,7 +199,7 @@ to projects `ems data projects` creates beforehand
    so a difference only means that the record does not let
    a machine like the runner skip the step
    ([pipeline.md](pipeline.md#the-output-record)).
-7. **app**, after the site job or, where no data part changed, without it:
+8. **app**, after the site job or, where no data part changed, without it:
    - builds the app for the deployed data parts
      (`ems build --deployed`):
      each election's bundles and base map are the deployments that carry
@@ -193,11 +207,12 @@ to projects `ems data projects` creates beforehand
    - checks it, against those files (`ems check`);
    - deploys `dist/app/` to `pages_project`
      as a production deployment of the branch `main`.
-8. **github-release**: creates the GitHub release of the tag
+9. **github-release**: creates the GitHub release of the tag
    with generated notes and the app's files attached
    (`election-map-slovakia-X.Y.Z.tar.gz`).
 
-A release that changes no data skips inputs, steps, basemaps and site
+A release that changes no data
+skips inputs, candidates, steps, basemaps and site
 and takes a few minutes.
 A failed job can be re-run from the run's page:
 a re-run of the site job deploys only the parts
@@ -218,6 +233,7 @@ when every data part is stale:
 | ci, test (each Python) | 60 | well under that |
 | plan | 10 | 1–2 |
 | inputs | 30 | 5–10 |
+| candidates | 15 | 2–4 |
 | steps (each election) | 45 | 8–15 |
 | basemaps (each extract) | 30 | 3–6 |
 | site | 120 | 30–60 |
@@ -234,6 +250,8 @@ by 2 to 2.5 for `ubuntu-latest`,
   `check` 1½), 65–80 on a runner;
   one job doing it all, with the downloads and uploads,
   would take some 85–130 minutes.
+- `ems candidates` of the 25 elections from nothing took 11 seconds;
+  the candidates job mostly restores the inputs from the cache.
 - One election's steps from nothing took 3¼ minutes for the largest,
   the municipal and regional elections of 2026
   (`geo` 2¾ min, `addresses` 30 s), and the base map of its extract 46 s;

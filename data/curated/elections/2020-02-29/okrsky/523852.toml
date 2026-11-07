@@ -1,32 +1,32 @@
-# The okrsky of Spišské Bystré of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/523852.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Spišské Bystré, transcribed by an AI agent in job okrsok-rules-913 from the documents below;
+# The okrsky of Spišské Bystré of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/523852.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Spišské Bystré, transcribed by an AI agent in job okrsok-rules-1403 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Partizánska, SNP, Hornádska, Michalská, Jána Lačeka, Vodárenska, Pod lesom
-#     okrsok 2: Cintorínska, Hviezdoslavova, Kukučínova, Školská, Slnečná, Krátka, Kamenec, Družstevná
+#     okrsok 1: Partizánska, SNP, Hornádska, Jána Lačeka, Vodárenska, Pod lesom
+#     okrsok 2: Cintorínska, Hviezdoslavova, Kukučínova, Školská, Slnečná, Krátka, Kamenec, Družstevná, Michalská
 obec = "523852"
 name = "Spišské Bystré"
-okrsky_date = 2022-07-21
+okrsky_date = 2019-01-23
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2020-02-29 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2020-02-29 was searched for. The 51 register addresses without a street are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "The 51 register addresses without a street are placed by fill_nearest. The document is a scan; its text is transcribed from the page image. Unlike the 2022 copy, Michalská is in okrsok 2."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2589): The municipality's elections page for the National Council election of 29 February 2020 (live, and as archived on 2020-09-25 at /m/volby/) and its 2019 announcement (archived 2019-11-14) list only the voter information, the decision calling the election, the results and turnout; no okrsky document. The site search and the notice board (live and archived) show no okrsky notice for this vote. The Internet Archive was intermittently offline (connection refused) but answered after retries. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2019-03-16: 1: 988 → 976, 2: 960 → 960."
 
 [[document]]
-url = "https://www.spisskebystre.sk/evt_file.php?file=9430&original=Okrsky.pdf"
-sha256 = "e59e4a1abb67f6025eda068376555fbb55600ba7fa409ef49dc079a9ee161fd2"
-title = "Oznámenie o určení volebných okrskov a volebných miestností (21.7.2022)"
+url = "https://www.spisskebystre.sk/e_download.php?file=data/editor/361sk_1.PDF&original=Xerox%20Scan_24012019124720.PDF"
+sha256 = "ee3cb9c5148693ba8074bf588638283922a84cd36ccc775d2fa4101ff0f17328"
+title = "Oznámenie o určení volebných okrskov a volebných miestností (23.1.2019)"
 
 [[document]]
-url = "https://www.spisskebystre.sk/urad/volby-referendum/volby-referendum-archiv/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-29102022/"
-sha256 = "c93ff7a71a14485419bdcdd2d1423fc0f8270802cc7a26da5789de98174dd960"
-title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov - 29.10.2022"
+url = "https://www.spisskebystre.sk/urad/volby-referendum/volby-referendum-archiv/volby-prezidenta-sr-1632019-a-3032019/"
+sha256 = "7d1ac27afcc2429523b7621c12f9f4efdf024538a0cd24094287d052761051cb"
+title = "Voľby prezidenta SR - 16.3.2019 a 30.3.2019"
 
 [okrsok.1]
 rules = [
   {street = "Partizánska"},
   {street = "SNP"},
   {street = "Hornádska"},
-  {street = "Michalská"},
   {street = "Jána Lačeka"},
   {street = "Vodárenska"},
   {street = "Pod lesom"},
@@ -42,4 +42,5 @@ rules = [
   {street = "Krátka"},
   {street = "Kamenec"},
   {street = "Družstevná"},
+  {street = "Michalská"},
 ]

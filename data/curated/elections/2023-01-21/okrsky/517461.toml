@@ -1,0 +1,137 @@
+# Okrsky of Bytča, transcribed by an AI agent in job okrsok-rules-017 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: ul. Bottova, Kukučínova, Dukelská, Sládkovičova, Miksova, E.Lániho, Hurbanova, Lombardiniho, Hviezdoslavova, Škorvánkova, Štúrova, Hlavná, Sidónie Sakalovej, Zámocká, Zámok, 1.Mája, Hollého, Kilianova, Mičurova, Radlinského, Štefánikova
+#   okrsok 2: ul.Hlinícka, Na Sahare, Švecova, Červeňanského, Hlinkova, Kollárova, S.Bíroša, Kolárovská, Moyzesova, Janka Kráľa od č. domu 1-9, Na Tehelňu, Pod Hájom
+#   okrsok 3: ul. Rázusova, Komenského, Popoliška, Fr.Kráľa, Kvetná, Dostojevského, SNP, Družstevná, Pšurnovická, Na Salaš, J.Kráľa od č. domu 11-17, Záhradná
+#   okrsok 4: ul. Mieru, Thurzova, E.Geromettu, Treskoňova, Námestie SR, Krag.Martýrov
+#   okrsok 5: ul. Brezová, Gaštanová, Slivková, Morušová, Višňová, Čerešňová, Jabloňová, Broskyňová, Marhuľová
+#   okrsok 6: ul. Okružná, Lúčna, Javorová, Malobytčianska
+#   okrsok 7: Hliník nad Váhom
+#   okrsok 8: Hrabové
+#   okrsok 9: Pšurnovice
+#   okrsok 10: Malá Bytča
+#   okrsok 11: Mikšová, Beňov
+obec = "517461"
+name = "Bytča"
+okrsky_date = 2022-11-10
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 10.11.2022 forms 11 okrsky (the COVID-19 special okrsok 12 is not in it); the old website is gone, so the Internet Archive's copy is listed. Written differently from the register: Dukelská = Dukelska, Hlinícka = Hlinická, Kvetná = Kvetna (spelling variants of the same street); E.Lániho, S.Bíroša, Fr.Kráľa, J.Kráľa, E.Geromettu, Krag.Martýrov (Kragujevackých Martýrov), Námestie SR (Nám. Slovenskej Republiky) are abbreviations; Broskyňová, Čerešňová, Jabloňová, Marhuľová, Morušová, Višňová are the register's '… ulica'. \"Slivková\" (okrsok 5) is not in the register, left out. Janka Kráľa numbers outside 1–9 and 11–17 (e.g. 10) and the register's addresses without a street in part Veľká Bytča are placed by fill_nearest."
+
+[[document]]
+url = "https://web.archive.org/web/20221111021659/http://www.bytca.sk/materials/files/ts/Volebne_okrsky_a_volebne_miestnosti_pre_referendum_2023.pdf"
+sha256 = "2e064dc6dc3779dc4c2f86e12cb832b974cc6a986cb6a59a541501c2b7b4b1ce"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre referendum vyhlásené na 21. januára 2023 (č.s. 2022/347, 10.11.2022)"
+
+[okrsok.1]
+rules = [
+  {street = "1.mája", written = "1.Mája"},
+  {street = "Bottova"},
+  {street = "Dukelska", written = "Dukelská", note = "\"Dukelská\" is the register's Dukelska (the register drops the accent); the only such street in Bytča."},
+  {street = "Eliáša Lániho", written = "E.Lániho"},
+  {street = "Hlavná"},
+  {street = "Hollého"},
+  {street = "Hurbanova"},
+  {street = "Hviezdoslavova"},
+  {street = "Kilianova"},
+  {street = "Kukučínova"},
+  {street = "Lombardiniho"},
+  {street = "Mičurova"},
+  {street = "Miksova"},
+  {street = "Radlinského"},
+  {street = "Sidónie Sakalovej"},
+  {street = "Sládkovičova"},
+  {street = "Škorvánkova"},
+  {street = "Štefánikova"},
+  {street = "Štúrova"},
+  {street = "Zámocká"},
+  {street = "Zámok"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Červeňanského"},
+  {street = "Hlinická", written = "Hlinícka", note = "\"Hlinícka\" is the register's Hlinická (spelling variant of the same street toward Hliník nad Váhom)."},
+  {street = "Hlinkova"},
+  {street = "Janka Kráľa", numbers = "1-9"},
+  {street = "Kolárovská"},
+  {street = "Kollárova"},
+  {street = "Moyzesova"},
+  {street = "Na Sahare"},
+  {street = "Na Tehelňu"},
+  {street = "Pod Hájom"},
+  {street = "Stanislava Bíroša", written = "S.Bíroša"},
+  {street = "Švecova"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Dostojevského"},
+  {street = "Družstevná"},
+  {street = "Fraňa Kráľa", written = "Fr.Kráľa"},
+  {street = "Janka Kráľa", numbers = "11-17", written = "J.Kráľa"},
+  {street = "Komenského"},
+  {street = "Kvetna", written = "Kvetná", note = "\"Kvetná\" is the register's Kvetna (the register drops the accent)."},
+  {street = "Na Salaš"},
+  {street = "Popoliška"},
+  {street = "Pšurnovická"},
+  {street = "Rázusova"},
+  {street = "SNP"},
+  {street = "Záhradná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Eugena Geromettu", written = "E.Geromettu"},
+  {street = "Kragujevackých Martýrov", written = "Krag.Martýrov", note = "\"Krag. Martýrov\" abbreviates Kragujevackých Martýrov, the register's only such street."},
+  {street = "Mieru"},
+  {street = "Nám. Slovenskej Republiky", written = "Námestie SR", note = "\"Námestie SR\" abbreviates Námestie Slovenskej republiky, the register's Nám. Slovenskej Republiky (the only square of the name in Bytča)."},
+  {street = "Thurzova"},
+  {street = "Treskoňova"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Brezová"},
+  {street = "Broskyňová ulica", written = "Broskyňová"},
+  {street = "Čerešňová ulica", written = "Čerešňová"},
+  {street = "Gaštanová"},
+  {street = "Jabloňová ulica", written = "Jabloňová"},
+  {street = "Marhuľová ulica", written = "Marhuľová"},
+  {street = "Morušová ulica", written = "Morušová"},
+  {street = "Višňová ulica", written = "Višňová"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Javorová"},
+  {street = "Lúčna"},
+  {street = "Malobytčianska"},
+  {street = "Okružná"},
+]
+
+[okrsok.7]
+rules = [
+  {part = "Hliník nad Váhom"},
+]
+
+[okrsok.8]
+rules = [
+  {part = "Hrabové"},
+]
+
+[okrsok.9]
+rules = [
+  {part = "Pšurnovice"},
+]
+
+[okrsok.10]
+rules = [
+  {part = "Malá Bytča"},
+]
+
+[okrsok.11]
+rules = [
+  {part = "Mikšová"},
+  {part = "Beňov"},
+]

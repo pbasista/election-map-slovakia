@@ -1,25 +1,33 @@
-# The okrsky of Limbach of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/508047.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Limbach, transcribed by an AI agent in job okrsok-rules-863 from the documents below;
+# The okrsky of Limbach of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/508047.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Limbach, transcribed by an AI agent in job okrsok-rules-1353 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Cintorínska, Černicová, Družstevná, Gaštanová, Krátka, Limbašská dolina, Limbová, Malokarpatská, Mlynské pole, Podlesná, Pod dúblami, Potočná, Pri kockách, Priečna, Raková, Silvánska, SNP, Suchý vrch, Záhradná
+#     okrsok 1: Cintorínska, Černicová, Družstevná, Gaštanová, Limbašská dolina, Limbová, Malokarpatská, Mlynské pole, Podlesná, Pod dúblami, Potočná, Pri kockách, Priečna, Raková, Silvánska, SNP, Suchý vrch, Záhradná
 #     okrsok 2: 1.mája, Iršajská, Sadová, Slnečná, Školská, Športová, Vavrinecká, Vinohradnícka
 obec = "508047"
 name = "Limbach"
-okrsky_date = 2022-08-06
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2020-02-29 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2020-02-29 was searched for. The notice is undated; date is its posting date on the official notice board archive ('Dátum vyvesenia: 6.8.2022'). The council set 2 okrsky on 15.6.2022 (D/4/OZ/2022/15-6). The register's addresses without a street are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "Scanned PDFs, read from the rendered pages. The 2019 lists do not name Krátka ulica (2 addresses in today's register, likely built later); it is taken from the rule set of 2022-10-29 (supplemented). The register's addresses without a street are placed by fill_nearest."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2535): The documents exist but cannot be fetched by the ingest: the old website's post 'Rozdelenie volebných okrskov' (https://old.limbach.sk/aktuality/rozdelenie-volebnych-okrskov/, dated Feb 27, 2020, before the vote; listed under 'Voľby do NR SR 2020' on https://old.limbach.sk/volby/) links 'VOLEBNÝ OKRSOK 1 – ulice' and 'VOLEBNÝ OKRSOK 2 – ulice' (okrsok 1: Cintorínska, Černicová, Družstevná, Gaštanová, Limbová, Malokarpatská, Mlynské pole, Pod Dúblami, Podlesná, Potočná, Priečna, Pri kockách, Raková, Silvánska, SNP, Suchý vrch, Záhradná; okrsok 2: 1. mája, Iršajská, Sadová, Slnečná, Školská, Športová, Vavrinecká, Vinohradnícka; Krátka and Limbašská dolina not named), the same okrsky as the copied ones of 2022. old.limbach.sk serves a TLS certificate for another host name (the ingest's fetch fails with 'certificate verify failed'; http redirects to https), and the Internet Archive has no capture of these URLs made before the vote (no capture of limbach.sk at all from 2016–2023). Maintainer may retry with these URLs. These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2019-03-16: 1: 884 → 846, 2: 852 → 821."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2019-01-28
+okrsky_date_basis = "'Volebné okrsky – ulice' states no date and does not name the vote; the official notice board archive lists it with 'Dátum vyvesenia: 28.1.2019' (four days after the posting of the presidential election's announcement, 24.1.2019), and the old website's elections page lists it, with 'Kontakty na volebné okrsky' (posted 4.3.2019, same okrsky), under 'Prezidentské voľby – 2019'. (https://www.limbach.sk/uradna-tabula-archiv)"
 
 [[document]]
-url = "https://www.limbach.sk/files/dokumenty/uradna-tabula---archiv/2022-8-6-113859-Ozn__menie_o_vytvoren_____okrskov_pre_vo__by_do_org__nov_samospr__vy_obc_____a_pre_vo__by_do_org__nov_samospr__vnych_krajov.pdf"
-sha256 = "edb469ce09655cb40a444d134895ba5721ff9f67db65df4346268cc95010ac1e"
-title = "Oznámenie o vytvorení okrskov a určení volebných miestností pre Voľby do orgánov samosprávy obcí a pre Voľby do orgánov samosprávnych krajov v obci Limbach"
+url = "https://www.limbach.sk/files/dokumenty/uradna-tabula---archiv/2019-1-28-112612-Volebn___okrsky_____ulice.pdf"
+sha256 = "8d0271f5acfd310ae0f5d62d3a6595e20f93328fb10138770780f736ec739f7c"
+title = "Volebné okrsky – ulice"
+
+[[document]]
+url = "https://www.limbach.sk/files/dokumenty/uradna-tabula---archiv/2019-3-4-112637-Kontakty_na_volebn___okrsky.pdf"
+sha256 = "e0f02188a900e2846e6a98ae311eea00c8a030337da08e16f107e08367211b94"
+title = "Kontakty na volebné okrsky"
 
 [[document]]
 url = "https://www.limbach.sk/uradna-tabula-archiv"
-sha256 = "0d6e5929dee2df712dbac30cf631f426a875a18815761c8063ef3cfbdf2a3203"
-title = "Úradná tabuľa - archív (dátum vyvesenia 6.8.2022)"
+sha256 = "4b29ee5c333484cbd25d370979b1737b3cc227aec66e40a23949e18125dca9ac"
+title = "Úradná tabuľa - archív (dátum vyvesenia 28.1.2019 and 4.3.2019)"
 
 [okrsok.1]
 rules = [
@@ -27,13 +35,13 @@ rules = [
   {street = "Černicová"},
   {street = "Družstevná"},
   {street = "Gaštanová"},
-  {street = "Krátka ulica", written = "Krátka"},
+  {street = "Krátka ulica"},
   {street = "Limbašská dolina"},
   {street = "Limbová"},
   {street = "Malokarpatská"},
   {street = "Mlynské Pole", written = "Mlynské pole"},
-  {street = "Podlesná"},
   {street = "Pod Dúblami", written = "Pod dúblami"},
+  {street = "Podlesná"},
   {street = "Potočná"},
   {street = "Pri Kockách", written = "Pri kockách"},
   {street = "Priečna ulica", written = "Priečna"},

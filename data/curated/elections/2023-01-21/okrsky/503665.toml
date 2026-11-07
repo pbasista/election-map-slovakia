@@ -19,12 +19,11 @@
 #   okrsok 16: MČ JAVORINKA
 #   okrsok 17: MČ NEBOJSA
 #   okrsok 18: Kolónia, Orechová, Lipová, Javorová, Agátová, Gaštanová, Fialková, Topoľová, Poľná, Narcisová Marhuľová, Konvalinková, Vřbová, Hrabová, Egrešová, Dubová, Brezová, Čerešňová, Liesková, Rezedová, Višňová Ulica Richtárske pole, Dvor Garažd, Terezov,Bíbic
-#   okrsok 19: not in the decision; the Statistical Office counts okrsok 19 with 3 voters
 obec = "503665"
 name = "Galanta"
 okrsky_date = 2022-11-09
 okrsky_fill = "nearest"
-okrsky_note = "Numbers are súpisné čísla (blocks of flats). A street named whole in one okrsok and by numbers in another is whole in the first, the numbers being more specific. Unlisted numbers of split streets (Mierová, Hlavná, Clementisove sady, Poštová, Vajanského, Zornička, Revolučná štvrť, Štvrť SNP, Z. Kodálya, Nová Doba, Parková, Mierové námestie, Štúrova, Stavbárska, Sídl. Jas), the register streets the document does not name (Šaľská, Obrancov Mieru) and addresses without a street are placed by fill_nearest. '+ obyvatelia s trvalým pobytom mesto Galanta' (okrsok 6) means voters registered without an address. MČ Hody, Javorinka, Nebojsa are register parts. Streets the register writes twice (29. augusta / 29.augusta, Mierové Nám. / Mierové námestie, Šafarikova / Šafárikova, Škovránkova / Škovránková, Esterházyovcov / ulica Esterházyovcov) are given under both names. The decision lists 18 okrsky; the Statistical Office counts a 19th with 3 voters, not in the decision: given as an okrsok without addresses."
+okrsky_note = "Numbers are súpisné čísla (blocks of flats). A street named whole in one okrsok and by numbers in another is whole in the first, the numbers being more specific. Unlisted numbers of split streets (Mierová, Hlavná, Clementisove sady, Poštová, Vajanského, Zornička, Revolučná štvrť, Štvrť SNP, Z. Kodálya, Nová Doba, Parková, Mierové námestie, Štúrova, Stavbárska, Sídl. Jas), the register streets the document does not name (Šaľská, Obrancov Mieru) and addresses without a street are placed by fill_nearest. '+ obyvatelia s trvalým pobytom mesto Galanta' (okrsok 6) means voters registered without an address. MČ Hody, Javorinka, Nebojsa are register parts. Streets the register writes twice (29. augusta / 29.augusta, Mierové Nám. / Mierové námestie, Šafarikova / Šafárikova, Škovránkova / Škovránková, Esterházyovcov / ulica Esterházyovcov) are given under both names. The decision lists 18 okrsky; the Statistical Office counts a 19th okrsok (3 voters) that the decision does not name: the COVID-19 special okrsok of okres Galanta (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml)."
 
 [[document]]
 url = "https://www.galanta.sk/evt_file.php?file=7497"
@@ -231,6 +230,3 @@ rules = [
   {street = "Dvor Terezov", written = "Terezov", note = "the same street under another spelling in the register"},
   {street = "Dvor Bibic", written = "Bíbic", note = "the same street under another spelling in the register"},
 ]
-
-[okrsok.19]
-addressless = true

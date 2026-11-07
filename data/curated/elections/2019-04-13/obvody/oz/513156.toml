@@ -8,6 +8,7 @@
 #   obvod 4: kpt. Nálepku, Sihoť, Záhradnícka, J.L. Bellu, Nádražná, Hurbanova, Mládežnícka, Za kanálom
 #   obvod 5: celé Klobušice
 #   obvod 6: celá Iliavka
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/513156.toml, standing in.
 obec = "513156"
 name = "Ilava"
 date = 2018-08-14
@@ -16,6 +17,10 @@ note = "The 2018 decision (uznesenie č. 5/2018 of 14.8.2018, announced 17.8.201
 supplemented = 2022-10-29
 supplemented_from = "election"
 supplement_basis = "The 2018 document gives obvod 6 as 'celá Iliavka' and names no obvod for Iliavčanská dolina (131 addresses), the valley road towards Iliavka that the register keeps under part Ilava. The rule set of 2022 (the same six obvody with the same seats, obvod 6 'mestská časť Iliavka a Iliavčanská dolina a Záštepy') puts it in obvod 6 with Iliavka; it is taken from there."
+okrsky_date = 2022-08-03
+okrsky_note = "Mayor's okrsky notice of 3.8.2022: each of the 6 obvody is one okrsok with the same territory (okrsok n = obvod n), so no rules are needed."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2019-04-13 setting the okrsky was found (okrsok-rules-988): The by-election page 'Voľby na poslanca za mestskú časť Iliavka dňa 13. apríla 2019' (aktualita of 15.01.2019) and its PDF akt_iliavka-poslanec.pdf were never captured before the vote (PDF 404 in 2024); nothing on the live site. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 6 okrsky (nearer, not taken: 2019-05-25: okrsky of the whole obec, the council then elected in several obvody). The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
 
 [[document]]
 url = "https://www.ilava.sk/e_download.php?file=data/uredni_deska/obsah496_1.pdf&original=tab_volebny1a2.pdf"
@@ -34,6 +39,7 @@ title = "Oznámenie o určení počtu poslancov a o utvorení volebných obvodov
 
 [obvod.1]
 seats = 3
+okrsky = [1]
 rules = [
   {street = "Mierové námestie"},
   {street = "Ružová"},
@@ -47,6 +53,7 @@ rules = [
 
 [obvod.2]
 seats = 3
+okrsky = [2]
 rules = [
   {street = "Medňanská"},
   {street = "Skala"},
@@ -58,6 +65,7 @@ rules = [
 
 [obvod.3]
 seats = 2
+okrsky = [3]
 rules = [
   {street = "Pivovarská"},
   {street = "Ľ. Štúra"},
@@ -68,6 +76,7 @@ rules = [
 
 [obvod.4]
 seats = 2
+okrsky = [4]
 rules = [
   {street = "Kpt. Nálepku", written = "kpt. Nálepku"},
   {street = "Kpt.Nálepku", written = "kpt. Nálepku", note = "The register has the same street twice, as 'Kpt. Nálepku' and 'Kpt.Nálepku' (without space); both are the document's kpt. Nálepku."},
@@ -80,12 +89,14 @@ rules = [
 
 [obvod.5]
 seats = 2
+okrsky = [5]
 rules = [
   {part = "Klobušice"},
 ]
 
 [obvod.6]
 seats = 1
+okrsky = [6]
 rules = [
   {part = "Iliavka"},
   {street = "Iliavčanská dolina", supplemented = true},

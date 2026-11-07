@@ -1,0 +1,29 @@
+# The okrsky of Kysak of the vote of 2017-11-04, data/curated/elections/2017-11-04/okrsky/521639.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Kysak, transcribed by an AI agent in job okrsok-rules-067 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Volebný okrsok č.1 – volebná miestnosť: Zasadačka Obecného úradu Kysak - vchod od požiarnej zbrojnice, súpisné čísla od 0 do 143, 323, od 350 do 395, 403, 404, 406, 411, 413, 414, 417, 419, 421, 424, 426,429 a chatové oblasti od 500
+#     okrsok 2: Volebný okrsok č. 2 – volebná miestnosť: Jedáleň Základnej školy Kysak, súpisné čísla od 149 do 348 okrem 323, 400, 407, 415, 416, 418, 420, 423, 422, 428, 430
+obec = "521639"
+name = "Kysak"
+okrsky_fill = "nearest"
+okrsky_note = "The okrsky are given by súpisné čísla of the single part Kysak. 'Od 0' is read as from 1 (0 is no house number); 'chatové oblasti od 500' as súpisné čísla 500 and up. Numbers neither okrsok lists (144-148, 349, 396-399, 401, 402, 405, 408-410, 412, 425, 427, 431-499) take the nearest placed address (fill_nearest)."
+okrsky_adopted = 2017-11-04
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1457): Kysak's okrsky documents (určenie volebných okrskov of 29.7.2022, 19.6.2023, 23.1.2024; the other votes' pages in the Internet Archive list none) only create okrsok 1 and 2 with their rooms and say 'Voliči budú zaradení do volebných okrskov podľa súpisného čísla' without giving which súpisné numbers go where, so no rules can be written. The only split found is the 2017 voter rolls per okrsok (Okrsok_1/2_KSK2017.pdf, names with súpisné numbers), captured only in 2025 and not naming the vote, so not datable as the 2017 document. The website itself refuses connections from here. These are the okrsky of the vote of 2017-11-04 (2017), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2017-11-04: 1: 573 → 565, 2: 657 → 657."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The page's text says 'pre voľby orgánov samosprávneho kraja v roku 2017 sú vytvorené dva volebné okrsky v obci Kysak' and names the vote of 4 November 2017; it states no decision date (its voter lists per okrsok were posted 18.09.2017)."
+
+[[document]]
+url = "https://www.kysak.sk/volby-do-organov-samospravnych-krajov--a433-1346"
+sha256 = "7b7e653341330711f93ff7620cb3e525b068d8dbfd55a7636f6bee3117b951bf"
+title = "Voľby do orgánov samosprávnych krajov (04.11.2017) – Informácia pre voliča: volebné okrsky v obci Kysak"
+
+[okrsok.1]
+rules = [
+  {part = "Kysak", numbers = "1-143, 323, 350-395, 403, 404, 406, 411, 413, 414, 417, 419, 421, 424, 426, 429, 500-"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Kysak", numbers = "149-348, 400, 407, 415, 416, 418, 420, 422, 423, 428, 430", except = "323"},
+]

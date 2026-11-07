@@ -1,24 +1,23 @@
-# The okrsky of Kriváň of the elections of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/518549.toml, copied by `ems job reuse` (reused). Its header there:
-#   The rule set of the elections of 2026-10-24, data/curated/elections/2026-10-24/obvody/oz/518549.toml, reused by `ems job reuse`. Its header
-#   there:
-#     Council obvody of Kriváň (518549), Detva.
-#     Estimated by hand: the documents below give the obvody's names and seats
-#     but not which addresses are in which (see the note).
-#       obvod 1: Časť obce „Pod traťou“
-#       obvod 2: Časť obce „Nad traťou“
-#     Okrsky added by an AI agent in job okrsok-rules-147 from the documents below;
-#     checked by `ems job ingest` against the address register. The document's
-#     text per okrsok, verbatim:
-#       okrsok 1: č. 1 - "Pod traťou"
-#       okrsok 2: č. 2 - "Nad traťou"
+# The okrsky of Kriváň of the vote of 2026-10-24, data/curated/elections/2026-10-24/obvody/oz/518549.toml, standing in, by `ems job reuse`. Its header there:
+#   Council obvody of Kriváň (518549), Detva.
+#   Estimated by hand: the documents below give the obvody's names and seats
+#   but not which addresses are in which (see the note).
+#     obvod 1: Časť obce „Pod traťou“
+#     obvod 2: Časť obce „Nad traťou“
+#   Okrsky added by an AI agent in job okrsok-rules-147 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: č. 1 - "Pod traťou"
+#     okrsok 2: č. 2 - "Nad traťou"
 obec = "518549"
 name = "Kriváň"
 date = 2026-07-08
-note = "The council obvody of the elections of 2022-10-29. No document of the elections of 2022-10-29 was found; this is the rule set of the elections of 2026-10-24, whose obvody, seats and okrsky are those of 2022 (each okrsok's voters on the roll within 10%). Estimated: uznesenie č. 18/6 and the Oznámenie name obvod 1 'Časť obce Pod traťou' (5 seats) and obvod 2 'Časť obce Nad traťou' (4) without listing houses. The railway (OpenStreetMap) crosses Kriváň west to east and turns south-east; the side north of it, along the main road, lies lower, towards the Slatina (391–405 m against 429–503 m south of it), so it is taken as 'pod traťou'. Pairs of points 250 m either side of the track, every 500 m along it, put each house on its side of the railway: 419 and 323 addresses, close to the 5:4 seats."
+note = "The council obvody of the vote of 2026-10-24: they only place the okrsky. Estimated: uznesenie č. 18/6 and the Oznámenie name obvod 1 'Časť obce Pod traťou' (5 seats) and obvod 2 'Časť obce Nad traťou' (4) without listing houses. The railway (OpenStreetMap) crosses Kriváň west to east and turns south-east; the side north of it, along the main road, lies lower, towards the Slatina (391–405 m against 429–503 m south of it), so it is taken as 'pod traťou'. Pairs of points 250 m either side of the track, every 500 m along it, put each house on its side of the railway: 419 and 323 addresses, close to the 5:4 seats."
 estimated = true
-reused = 2022-10-29
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2020-02-29 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2020-02-29 was searched for. No document of the elections of 2022-10-29 was found; this is the rule set of the elections of 2026-10-24, whose obvody, seats and okrsky are those of 2022 (each okrsok's voters on the roll within 10%). The information of 22.07.2026 lists 2 okrsky: okrsok 1 for obvod č. 1 \"Pod traťou\" and okrsok 2 for obvod č. 2 \"Nad traťou\"; each okrsok is a whole obvod. The date of the mayor's decision is not stated."
-okrsky_reused = 2022-10-29
+reused = 2026-10-24
+okrsky_note = "The information of 22.07.2026 lists 2 okrsky: okrsok 1 for obvod č. 1 \"Pod traťou\" and okrsok 2 for obvod č. 2 \"Nad traťou\"; each okrsok is a whole obvod. The date of the mayor's decision is not stated."
+okrsky_adopted = 2026-10-24
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2632): Kriváň has no streets (all 717 addresses by súpisné číslo). The website (obeckrivan.sk, Voľby a referendum) keeps only the 2026 pages; its documents (2026) define the two obvody/okrsky only as 'Pod traťou' and 'Nad traťou' without listing houses, which cannot be written as street/part/number rules. No document of this vote was found live; the Internet Archive refused connections (offline) during the search. These are the okrsky of the vote of 2026-10-24 (2026), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2026-10-24: 1: 829 → 860, 2: 619 → 605."
 
 [[document]]
 url = "https://www.obeckrivan.sk/e_download.php?file=/data/uredni_deska/obsah353_2.pdf&original=OSO_ozn%C3%A1menie_po%C4%8Det%20poslancov_vol.obvody_2026.pdf"

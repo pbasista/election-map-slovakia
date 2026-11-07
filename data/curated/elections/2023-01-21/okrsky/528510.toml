@@ -1,0 +1,36 @@
+# The okrsky of Leles of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/528510.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Leles, transcribed by an AI agent in job okrsok-rules-111 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Prvý volebný okrsok je vytvorený v Reštaurácii Latorica, kde svoje hlasi môžu odovzdať voliči od s.č. 1 do s.č. 235 a voliči od s.č. 456 do s.č. 472.
+#     okrsok 2: Druhý volebný okrsok je vytvorený na obecnom úrade, kde svoje hlasi môžu odovzdať voliči od s.č. 236 do s.č. 455 a voliči od s.č. 473 do s.č. 510.
+#     okrsok 3: Tretí volebný okrsok je vytvorený v kultúrnom dome v časti obce Kapoňa, kde svoje hlasi môžu odovzdať voliči časti obce Kapoňa.
+obec = "528510"
+name = "Leles"
+okrsky_fill = "nearest"
+okrsky_note = "The notice gives okrsky 1 and 2 by súpisné čísla (s.č.), read as within the part Leles, and okrsok 3 as the part Kapoňa. Súpisné čísla of Leles above 510, which neither okrsok lists, take the nearest placed address (fill_nearest)."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2023-01-21 setting the okrsky was found (okrsok-rules-3277): The website's elections pages (2018: obvod, population, candidate notices; EP 2019: delegation notice; 2026) and its notice board (only current items, incl. Referendum 2026: delegation only) contain no okrsky document for 2017-2026 votes; the Internet Archive was offline ('Temporarily Offline') during the search, so archived copies could not be checked. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 3 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2018-11-07
+okrsky_date_basis = "The municipality's notice 'Volebné oznámenie' is dated 07.11.2018 on its page and names the elections of 10 November 2018; it states no decision date. (https://www.obecleles.sk/volebne-oznamenie-a22-785)"
+
+[[document]]
+url = "https://www.obecleles.sk/volebne-oznamenie-a22-785"
+sha256 = "968e9e8a8e506486f02177faa8a65be20da4c44d9de85f32ad9cd07dad106c97"
+title = "Volebné oznámenie (07.11.2018) – voľby do orgánov samosprávy obcí 10. novembra 2018"
+
+[okrsok.1]
+rules = [
+  {part = "Leles", numbers = "1-235, 456-472"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Leles", numbers = "236-455, 473-510"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Kapoňa"},
+]

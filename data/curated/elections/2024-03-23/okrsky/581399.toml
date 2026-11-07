@@ -1,25 +1,28 @@
-# The okrsky of Banka of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/581399.toml, reused by `ems job reuse`. Its header there:
-#   Okrsky of Banka, transcribed by an AI agent in job okrsok-rules-868 from the documents below;
+# The okrsky of Banka of the vote of 2023-01-21, data/curated/elections/2023-01-21/okrsky/581399.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Banka, transcribed by an AI agent in job okrsok-rules-3145 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
 #     okrsok 1: Arménska ulica, Bananská, Bazovského, Červená veža, Dominova cesta, Hudobná, Inovecká, Karpatská, Moravanská ulica, Pokojná, Spojovacia, Športová, Žiacka
 #     okrsok 2: Banka, Cesta Janka Alexyho, Horný majer, Kamenná, Krátka, Lesná, Lyžiarska, Námestie Martina Benku, Odborárska, Podhorská, Poľná, Ratnovská ulica, Tehelná, Topoľčianska
 obec = "581399"
 name = "Banka"
-okrsky_date = 2022-09-11
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2024-03-23 the obec had as many, each with voters on the roll within 10% of its count then. No document of 2024-03-23 was searched for. The document (scan) is undated; date is the notice-board posting date of the 2022 elections item that links it ('Vyvesené: 11. 9. 2022'). Okrsok 2's bare 'Banka' is the voters registered without a street address (only on the obec), not the register's houses without a street; those (súpisné only) are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "Scanned document, read from the page image. Okrsok 2's bare 'Banka' is the voters registered without a street address, not the register's houses without a street; those are placed by fill_nearest."
+okrsky_adopted = 2023-01-21
+okrsky_adopted_basis = "No document of 2024-03-23 setting the okrsky was found (okrsok-rules-4352): The notice board (current and archive) and the site search find okrsky documents only for the 2022 elections and the 2023 referendum; no okrsky document of the presidential election of 2024 found. The Internet Archive refused connections (offline for us). These are the okrsky of the vote of 2023-01-21 (2023-referendum), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-03-23 → 2023-01-21: 1: 865 → 866, 2: 965 → 941."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-08
+okrsky_date_basis = "The notice-board item 'Referendum 2023' linking the undated scan states 'Vyvesené: 8. 11. 2022'. (https://www.obecbanka.sk/samosprava/uradna-tabula/referendum-2023-146.html)"
 
 [[document]]
-url = "https://www.obecbanka.sk/e_download.php?file=data/uredni_deska/obsah135_9.pdf&original=Informacia-o-utvoreni-volebnych-okrskov-v-obci-Banka.pdf"
-sha256 = "689004670a097bf4a92f08bb5d4de0a4ec8eb2a0d70ef2a2aad7fbdf7bc30e0c"
-title = "Informácia o utvorení volebných okrskov pre voľby do orgánov samosprávy obcí, ktoré platia aj pre voľby do orgánov samosprávnych krajov"
+url = "https://www.obecbanka.sk/e_download.php?file=data/uredni_deska/obsah145_4.pdf&original=Inform%C3%A1cia%20o%20utvoren%C3%AD%20volebn%C3%BDch%20okrskov%20v%20referende%20.pdf"
+sha256 = "707c78ae2225654f6403866ca726f2446088a164b436bc33dc88083344c7f542"
+title = "Informácia o utvorení volebných okrskov – referendum 2023"
 
 [[document]]
-url = "https://www.obecbanka.sk/samosprava/uradna-tabula/volby-do-samospravy-miest-a-obci-2022-volby-do-samospravy-vyssich-uzemnych-celkov-2022-135.html"
-sha256 = "bda8f2ca92f8e19b97347b5b38816e08c65eb8a8018635ada1837ff88fa51f71"
-title = "Voľby do samosprávy miest a obcí 2022 (úradná tabuľa)"
+url = "https://www.obecbanka.sk/samosprava/uradna-tabula/referendum-2023-146.html"
+sha256 = "22ddd89131f4c7ad5a16a24b3fa9cbfb8ace708207d4ef8807ca887ca0d926b1"
+title = "Referendum 2023 (úradná tabuľa)"
 
 [okrsok.1]
 rules = [

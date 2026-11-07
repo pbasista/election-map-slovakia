@@ -1,0 +1,34 @@
+# The okrsky of Dohňany of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/512940.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Dohňany, transcribed by an AI agent in job okrsok-rules-4324 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Volebný okrsok č. 1 – Pamätná izba Dohňany, Dohňany 74
+#     okrsok 2: Volebný okrsok č. 2 – Kultúrny dom Mostište, Mostište 91
+#     okrsok 3: Volebný okrsok č. 3 – Kultúrny dom Zbora, Zbora 14
+obec = "512940"
+name = "Dohňany"
+okrsky_note = "The document gives each okrsok only its polling station; each okrsok is given the part of its station (Dohňany, Mostište, Zbora)."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2024-06-08 setting the okrsky was found (okrsok-rules-4948): No document on the okrsky of this vote: the EP 2024 page (live and archived 2024-02-14) lists only the announcement, voter information and the commissions' minutes. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-06-08 → 2024-03-23: 1: 1,124 → 1,117, 2: 158 → 157, 3: 248 → 245."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the document's heading names the vote ('Utvorenie volebných okrskov a určenie volebných miestností pre Voľby prezidenta SR konané dňa 23.3.2024 a 6.4.2024'); it states no date"
+
+[[document]]
+url = "https://www.dohnany.sk/download_file_f.php?id=1986139"
+sha256 = "1ec8126858a4cfd5ff0560a7290670bef50aa8f2896954435f8edfaf56ab6c22"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre Voľby prezidenta SR konané dňa 23.3.2024 a 6.4.2024"
+
+[okrsok.1]
+rules = [
+  {part = "Dohňany", note = "the okrsok's polling station lies in part Dohňany; 3 okrsky, 3 parts, each station in another part", inferred = true},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Mostište", note = "the okrsok's polling station lies in part Mostište; 3 okrsky, 3 parts, each station in another part", inferred = true},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Zbora", note = "the okrsok's polling station lies in part Zbora; 3 okrsky, 3 parts, each station in another part", inferred = true},
+]

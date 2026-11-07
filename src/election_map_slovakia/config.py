@@ -232,6 +232,11 @@ class Units:
     input: str
     table: str | None = None
     """The table's id in the input, of the ``volbysr`` format only."""
+    special: str | None = None
+    """Of the ``volbysr`` format, the table of the package that declares
+    special okrsky (ŠÚ SR's ``Špeciálne volebné okrsky``: each okres with
+    whether its special okrsok voted, ``Áno`` / ``Nie``), where it has one:
+    :mod:`election_map_slovakia.special`."""
 
 
 @dataclass(frozen=True)
@@ -247,7 +252,7 @@ class Results:
 
 @dataclass(frozen=True)
 class ByElection:
-    """A municipal by-election ("nové voľby") between two regular ones."""
+    """A day of municipal by-elections (doplňujúce and nové voľby) between two regular ones."""
 
     input: str
     day: dt.date
@@ -615,6 +620,45 @@ class CuratedUncontested:
     obvody."""
     title: str
     """What in it says so."""
+
+
+@dataclass(frozen=True)
+class Seat:
+    """Where an okres's special okrsok is counted, as ``special-okrsky.toml`` gives it."""
+
+    okres: str
+    """The okres code."""
+    obec: str
+    """The obec (a city district) whose okrsok it is counted as."""
+    url: str
+    title: str
+    """The source that shows it, and what in it."""
+    basis: str
+    """Why that source shows it."""
+
+
+@dataclass(frozen=True)
+class Prison:
+    """An okrsok of a prison, as ``special-okrsky.toml`` gives it."""
+
+    obec: str
+    okrsok: int
+    facility: str
+    """The facility as the source names it."""
+    url: str
+    title: str
+    """The municipality's document that names the facility as the okrsok."""
+
+
+@dataclass(frozen=True)
+class CuratedSpecial:
+    """``special-okrsky.toml`` of an election (:func:`load_special`)."""
+
+    covid: tuple[str, str] | None
+    """The URL and title of what explains the COVID-19 special okrsky its
+    package declares (:attr:`Units.special`); None where it declares none."""
+    seats: tuple[Seat, ...]
+    prisons: tuple[Prison, ...]
 
 
 @dataclass(frozen=True)
@@ -1004,7 +1048,12 @@ def _load_election(
         ut = et.table("units")
         unit_format = _one_of(ut, "format", UNIT_FORMATS)
         table = ut.nonempty("table") if unit_format == "volbysr" else None
-        units = Units(unit_format, name(ut, "input"), table)
+        special = (
+            ut.nonempty("special")
+            if unit_format == "volbysr" and "special" in ut.data
+            else None
+        )
+        units = Units(unit_format, name(ut, "input"), table, special)
         ut.reject_unknown()
     else:
         units = None
@@ -1693,6 +1742,76 @@ def dump_uncontested(
             f"title = {_toml_string(u.title)}",
         ]
     return "\n".join(lines) + "\n"
+
+
+def load_special(path: Path) -> CuratedSpecial:
+    """Load ``special-okrsky.toml``: what an election's special okrsky need besides its package.
+
+    Okrsky without territory (:mod:`election_map_slovakia.special`):
+    ``[covid]`` (where the package declares COVID-19 special okrsky,
+    :attr:`Units.special`) gives the ``url`` and ``title`` of what explains
+    them, and a ``[[covid.seat]]`` each okres whose seat the package does
+    not tell (no obec of the okres is named as it, nor is it the okres's
+    only one: the okresy of Bratislava and Košice, whose special okrsok
+    counts in the city district the head of the district office chose),
+    with the source that shows it and the ``basis``; a ``[[prison]]`` each
+    okrsok of a prison, with the municipality's document naming the
+    facility::
+
+        [covid]
+        url = "https://volby.statistics.sk/ref/ref2023/sk/specialne_volebne_okrsky.html"
+        title = "Špeciálne volebné okrsky (ŠÚ SR)"
+
+        [[covid.seat]]
+        okres = "102"
+        obec = "529320"
+        url = "https://www.ruzinov.sk/…"
+        title = "Určenie volebných okrskov, referendum 21. 1. 2023"
+        basis = "It sets 70 okrsky and names okrsok 71 a special one."
+
+        [[prison]]
+        obec = "507253"
+        okrsok = 4
+        facility = "ÚVTOS a ÚVV Leopoldov"
+        url = "https://www.leopoldov.sk/…"
+        title = "Utvorenie volebných okrskov a určenie volebných miestností"
+    """
+    t = _Table(path, _read_toml(path))
+    covid: tuple[str, str] | None = None
+    seats: list[Seat] = []
+    if "covid" in t.data:
+        ct = t.table("covid")
+        covid = (ct.http_url("url"), ct.nonempty("title"))
+        for i, entry in enumerate(ct.optional("seat", list, [])):
+            st = ct.entry(f"seat[{i}]", entry)
+            seat = Seat(
+                st.nonempty("okres"),
+                st.nonempty("obec"),
+                st.http_url("url"),
+                st.nonempty("title"),
+                st.nonempty("basis"),
+            )
+            if any(s.okres == seat.okres for s in seats):
+                raise st.error("okres", f"{seat.okres} is listed twice")
+            seats.append(seat)
+            st.reject_unknown()
+        ct.reject_unknown()
+    prisons: list[Prison] = []
+    for i, entry in enumerate(t.optional("prison", list, [])):
+        pt = t.entry(f"prison[{i}]", entry)
+        prison = Prison(
+            pt.nonempty("obec"),
+            pt.positive_int("okrsok"),
+            pt.nonempty("facility"),
+            pt.http_url("url"),
+            pt.nonempty("title"),
+        )
+        if any((p.obec, p.okrsok) == (prison.obec, prison.okrsok) for p in prisons):
+            raise pt.error("okrsok", f"{prison.obec}/{prison.okrsok} is listed twice")
+        prisons.append(prison)
+        pt.reject_unknown()
+    t.reject_unknown()
+    return CuratedSpecial(covid, tuple(seats), tuple(prisons))
 
 
 def _toml_string(text: str) -> str:

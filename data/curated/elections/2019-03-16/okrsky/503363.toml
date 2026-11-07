@@ -1,0 +1,64 @@
+# The okrsky of Maňa of the vote of 2023-01-21, data/curated/elections/2023-01-21/okrsky/503363.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Maňa, transcribed by an AI agent in job okrsok-rules-3094 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Vo volebnom okrsku č. 1 sú zapísaní voliči z časti obce Veľká Maňa, z ulíc: A.Bernoláka, A.Hlinku, Dlhá, Dolinská, F.Jurigu, Hliník, J.Kováča, Ľ.Podjavorinskej, Nám.M.R.Štefánika, Pri parku, Školská, T.Vansovej, Ulička, Zakostolská, Železničná.
+#     okrsok 2: Vo volebnom okrsku č. 2 sú zapísaní voliči z časti obce Veľká Maňa, z ulíc: A.Sládkoviča, Dolná Gedra, Domovina, Hamarka, I.Ďungela, Ľ.Štúra, Legionárska, M.Kukučína, Mlynská, P.O.Hviezdoslava, V.J.Gajdoša, Žitavská.
+#     okrsok 3: Vo volebnom okrsku č. 3 sú zapísaní voliči z časti obce Malá Maňa.
+obec = "503363"
+name = "Maňa"
+okrsky_date = 2022-11-09
+okrsky_fill = "nearest"
+okrsky_note = "Scanned notice of the mayor (no text layer), transcribed from the rendered page. Addresses without a street in Veľká Maňa are placed by fill_nearest."
+okrsky_adopted = 2023-01-21
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1301): The archived presidential 2019 notice-board section has no okrsky document; the current site keeps only 2022+ documents. These are the okrsky of the vote of 2023-01-21 (2023-referendum), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2023-01-21: 1: 713 → 681, 2: 786 → 758, 3: 207 → 196."
+
+[[document]]
+url = "https://obecmana.sk/wp-content/uploads/dokumenty/referendum/Volebne-okrsky-a-miestnosti.pdf"
+sha256 = "ad2ab5468dbdd79f3dfdf7be022d465832df03173fa8106c0978db246835ab25"
+title = "Volebné okrsky a miestnosti (referendum 21. januára 2023)"
+
+[[document]]
+url = "https://obecmana.sk/dokument/volebne-okrsky-a-miestnosti/"
+sha256 = "6da26ea84e44ef980e875cb9fe4d553de55e8228beb81a890b3a24747bb5b48f"
+title = "document page"
+
+[okrsok.1]
+rules = [
+  {street = "A. Bernoláka", written = "A.Bernoláka"},
+  {street = "A. Hlinku", written = "A.Hlinku"},
+  {street = "Dlhá"},
+  {street = "Dolinská"},
+  {street = "F. Jurigu", written = "F.Jurigu"},
+  {street = "Hliník"},
+  {street = "J. Kováča", written = "J.Kováča"},
+  {street = "Ľ. Podjavorinskej", written = "Ľ.Podjavorinskej"},
+  {street = "Nám. M. R. Štefánika", written = "Nám.M.R.Štefánika"},
+  {street = "Pri parku"},
+  {street = "Školská"},
+  {street = "T. Vansovej", written = "T.Vansovej"},
+  {street = "Ulička"},
+  {street = "Zakostolská"},
+  {street = "Železničná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "A. Sládkoviča", written = "A.Sládkoviča"},
+  {street = "Dolná Gedra"},
+  {street = "Domovina"},
+  {street = "Hamarka"},
+  {street = "I. Ďungela", written = "I.Ďungela"},
+  {street = "Ľ. Štúra", written = "Ľ.Štúra"},
+  {street = "Legionárska"},
+  {street = "M. Kukučína", written = "M.Kukučína"},
+  {street = "Mlynská"},
+  {street = "P. O. Hviezdoslava", written = "P.O.Hviezdoslava"},
+  {street = "V. J. Gajdoša", written = "V.J.Gajdoša"},
+  {street = "Žitavská"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Malá Maňa"},
+]

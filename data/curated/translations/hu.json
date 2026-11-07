@@ -20969,6 +20969,10 @@
    "src": "{name}: {share} · {votes} of {valid}",
    "text": "{name}: {share} · {valid} szavazatból {votes}"
   },
+  "mapmode.tip_special": {
+   "src": "Not drawn, without territory: polling district {n}",
+   "text": "Nincs berajzolva, terület nélkül: {n}. szavazókör"
+  },
   "mapmode.tip_tie": {
    "src": "Tied for the most votes: {names}, {share} each",
    "text": "Holtversenyben a legtöbb szavazat: {names}, egyenként {share}"
@@ -21149,6 +21153,10 @@
    "src": "The polling districts are drawn from a document of {name} that states no date.",
    "text": "A szavazókörök {name} egy olyan dokumentuma alapján vannak megrajzolva, amely nem tünteti fel a dátumát."
   },
+  "notice.okrsky_outlier": {
+   "src": "Polling district No. {n} had {voters} voters on the roll in {year} but {other} in {source}, more than a quarter apart: its borders there most likely differ.",
+   "text": "A(z) {n}. szavazókör névjegyzékében a {year}. évben {voters} választópolgár szerepelt, {source} idején viszont {other}, több mint negyedével eltérően: határai ott valószínűleg eltérnek."
+  },
   "notice.okrsky_referendum": {
    "src": "The polling districts of {name} are drawn from the municipality's document for the referendum of {date}: either it says they stayed as they were at these elections, or no document of these elections was found.",
    "text": "{name} szavazókörei a település dokumentuma alapján vannak megrajzolva, amely a {date} napján tartott népszavazásra készült: vagy kimondja, hogy a szavazókörök ugyanazok maradtak, mint e választáson, vagy e választás dokumentuma nem került elő."
@@ -21164,6 +21172,22 @@
   "notice.okrsky_unknown": {
    "src": "{name} voted in several polling districts, but which addresses belonged to which is not known here, so they are not drawn: its results by polling district can't be placed on the map.",
    "text": "{name} több szavazókörben szavazott, de hogy melyik cím melyikhez tartozott, itt nem ismert, ezért a szavazókörök nincsenek megrajzolva: a szavazókörönkénti eredmények nem helyezhetők el a térképen."
+  },
+  "notice.special_covid": {
+   "src": "Polling district No. {n} of {name} is the COVID-19 special polling district of okres {okres} (Act No. 395/2022 Coll.), for the voters in quarantine anywhere in the okres, who voted where they stayed, into a mobile ballot box (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "{name} {n}. szavazóköre a(z) {okres} járás COVID-19 miatti különleges szavazóköre (395/2022 Z. z. törvény) a járásban bárhol karanténban lévő választók számára, akik ott szavaztak, ahol tartózkodtak, különleges hordozható urnába (névjegyzékben szereplő választók: {voters}). Nincs saját területe, ezért nincs berajzolva; szavazatai {name} és a magasabb egységek eredményeibe számítanak bele, ahogy a Statisztikai Hivatal számolja őket."
+  },
+  "notice.special_covid_several": {
+   "src": "Polling district No. {n} of {name} is one of the COVID-19 special polling districts of okresy {okresy} (Act No. 395/2022 Coll.), for the voters in quarantine anywhere in the okres, who voted where they stayed, into a mobile ballot box (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "{name} {n}. szavazóköre a(z) {okresy} járások COVID-19 miatti különleges szavazóköreinek egyike (395/2022 Z. z. törvény) a járásban bárhol karanténban lévő választók számára, akik ott szavaztak, ahol tartózkodtak, különleges hordozható urnába (névjegyzékben szereplő választók: {voters}). Nincs saját területe, ezért nincs berajzolva; szavazatai {name} és a magasabb egységek eredményeibe számítanak bele, ahogy a Statisztikai Hivatal számolja őket."
+  },
+  "notice.special_prison": {
+   "src": "Polling district No. {n} of {name} is a prison, {facility}: its voters are inmates, who vote there with voting certificates, so its turnout is near 100 % (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "{name} {n}. szavazóköre egy börtön, {facility}: a fogvatartottak szavaznak benne választói igazolással, ezért a részvétel közel 100 % (névjegyzékben szereplő választók: {voters}). Nincs saját területe, ezért nincs berajzolva; szavazatai {name} és a magasabb egységek eredményeibe számítanak bele, ahogy a Statisztikai Hivatal számolja őket."
+  },
+  "notice.special_source": {
+   "src": "Source:",
+   "text": "Forrás:"
   },
   "notice.summary_boundary": {
    "src": "Map: the {on} boundary, slightly different",
@@ -21193,6 +21217,10 @@
    "src": "Polling districts not on the map",
    "text": "A szavazókörök nincsenek a térképen"
   },
+  "notice.summary_special": {
+   "src": "Polling district No. {n} not on the map",
+   "text": "A(z) {n}. szavazókör nincs a térképen"
+  },
   "notice.supplemented_document": {
    "src": "Those addresses are placed as in a later document of the municipality (of {later}), so the {year} borders may have differed there.",
    "text": "Ezek a címek a település egy későbbi dokumentuma ({later}) szerint vannak besorolva, így a {year}. évi határok ott eltérhettek."
@@ -21220,6 +21248,26 @@
   "office.regional_council": {
    "src": "member of the regional council ({kraj} kraj)",
    "text": "a megyei közgyűlés tagja ({kraj} kraj)"
+  },
+  "okrsky.special_covid": {
+   "src": "Polling district No. {n}: COVID-19 special polling district",
+   "text": "{n}. szavazókör: COVID-19 miatti különleges szavazókör"
+  },
+  "okrsky.special_prison": {
+   "src": "Polling district No. {n}: a prison, {facility}",
+   "text": "{n}. szavazókör: börtön, {facility}"
+  },
+  "okrsky.unmapped": {
+   "src": "Polling districts not on the map",
+   "text": "A térképen nem szereplő szavazókörök"
+  },
+  "okrsky.unmapped_back": {
+   "src": "Back to {name} as a whole",
+   "text": "Vissza: {name} egésze"
+  },
+  "okrsky.unmapped_hint": {
+   "src": "Their results are known, but the map has no place for them: a button shows one's results.",
+   "text": "Eredményeik ismertek, de a térképen nincs helyük: egy gomb megmutatja a szavazókör eredményeit."
   },
   "overview.intro.parties": {
    "src": "Choose a party to see its whole candidate list. Circle, cross out and filter parties and candidates as on the ballots. The results are the whole country's.",

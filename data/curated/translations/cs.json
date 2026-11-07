@@ -20969,6 +20969,10 @@
    "src": "{name}: {share} · {votes} of {valid}",
    "text": "{name}: {share} · {votes} z {valid}"
   },
+  "mapmode.tip_special": {
+   "src": "Not drawn, without territory: polling district {n}",
+   "text": "Nezakreslen, bez území: okrsek č. {n}"
+  },
   "mapmode.tip_tie": {
    "src": "Tied for the most votes: {names}, {share} each",
    "text": "Shodně nejvíce hlasů: {names}, každý {share}"
@@ -21149,6 +21153,10 @@
    "src": "The polling districts are drawn from a document of {name} that states no date.",
    "text": "Volební okrsky jsou zakresleny podle dokumentu obce {name}, který neuvádí datum."
   },
+  "notice.okrsky_outlier": {
+   "src": "Polling district No. {n} had {voters} voters on the roll in {year} but {other} in {source}, more than a quarter apart: its borders there most likely differ.",
+   "text": "Volební okrsek č. {n} měl v roce {year} v seznamu {voters} voličů, v době {source} však {other}, o více než čtvrtinu jinak: jeho hranice se tam nejspíš liší."
+  },
   "notice.okrsky_referendum": {
    "src": "The polling districts of {name} are drawn from the municipality's document for the referendum of {date}: either it says they stayed as they were at these elections, or no document of these elections was found.",
    "text": "Volební okrsky obce {name} jsou zakresleny podle dokumentu obce k referendu dne {date}: buď v něm stojí, že zůstaly stejné jako v těchto volbách, nebo nebyl nalezen žádný dokument k těmto volbám."
@@ -21164,6 +21172,22 @@
   "notice.okrsky_unknown": {
    "src": "{name} voted in several polling districts, but which addresses belonged to which is not known here, so they are not drawn: its results by polling district can't be placed on the map.",
    "text": "Obec {name} volila v několika volebních okrscích, ale které adresy patřily do kterého, zde není známo, proto nejsou zakresleny: výsledky podle okrsků proto nelze umístit na mapu."
+  },
+  "notice.special_covid": {
+   "src": "Polling district No. {n} of {name} is the COVID-19 special polling district of okres {okres} (Act No. 395/2022 Coll.), for the voters in quarantine anywhere in the okres, who voted where they stayed, into a mobile ballot box (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "Volební okrsek č. {n} v obci {name} je zvláštní volební okrsek okresu {okres} (zákon č. 395/2022 Z. z.) pro voliče v karanténě kvůli COVID-19 kdekoli v okrese, kteří hlasovali tam, kde se zdržovali, do zvláštní přenosné volební schránky (zapsaných voličů: {voters}). Nemá vlastní území, proto není zakreslen; jeho hlasy se započítávají do výsledků obce {name} a vyšších celků tak, jak je počítá Statistický úřad."
+  },
+  "notice.special_covid_several": {
+   "src": "Polling district No. {n} of {name} is one of the COVID-19 special polling districts of okresy {okresy} (Act No. 395/2022 Coll.), for the voters in quarantine anywhere in the okres, who voted where they stayed, into a mobile ballot box (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "Volební okrsek č. {n} v obci {name} je jedním ze zvláštních volebních okrsků okresů {okresy} (zákon č. 395/2022 Z. z.) pro voliče v karanténě kvůli COVID-19 kdekoli v okrese, kteří hlasovali tam, kde se zdržovali, do zvláštní přenosné volební schránky (zapsaných voličů: {voters}). Nemá vlastní území, proto není zakreslen; jeho hlasy se započítávají do výsledků obce {name} a vyšších celků tak, jak je počítá Statistický úřad."
+  },
+  "notice.special_prison": {
+   "src": "Polling district No. {n} of {name} is a prison, {facility}: its voters are inmates, who vote there with voting certificates, so its turnout is near 100 % (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "Volební okrsek č. {n} v obci {name} je věznice, {facility}: hlasují v něm vězněné osoby s voličským průkazem, proto je účast blízko 100 % (zapsaných voličů: {voters}). Nemá vlastní území, proto není zakreslen; jeho hlasy se započítávají do výsledků obce {name} a vyšších celků tak, jak je počítá Statistický úřad."
+  },
+  "notice.special_source": {
+   "src": "Source:",
+   "text": "Zdroj:"
   },
   "notice.summary_boundary": {
    "src": "Map: the {on} boundary, slightly different",
@@ -21193,6 +21217,10 @@
    "src": "Polling districts not on the map",
    "text": "Volební okrsky nejsou na mapě"
   },
+  "notice.summary_special": {
+   "src": "Polling district No. {n} not on the map",
+   "text": "Okrsek č. {n} není na mapě"
+  },
   "notice.supplemented_document": {
    "src": "Those addresses are placed as in a later document of the municipality (of {later}), so the {year} borders may have differed there.",
    "text": "Tyto adresy jsou zařazeny podle pozdějšího dokumentu obce (z {later}), takže v roce {year} tam hranice mohly vést jinak."
@@ -21220,6 +21248,26 @@
   "office.regional_council": {
    "src": "member of the regional council ({kraj} kraj)",
    "text": "člen zastupitelstva samosprávného kraje ({kraj} kraj)"
+  },
+  "okrsky.special_covid": {
+   "src": "Polling district No. {n}: COVID-19 special polling district",
+   "text": "Okrsek č. {n}: zvláštní volební okrsek pro voliče v karanténě kvůli COVID-19"
+  },
+  "okrsky.special_prison": {
+   "src": "Polling district No. {n}: a prison, {facility}",
+   "text": "Okrsek č. {n}: věznice, {facility}"
+  },
+  "okrsky.unmapped": {
+   "src": "Polling districts not on the map",
+   "text": "Volební okrsky mimo mapu"
+  },
+  "okrsky.unmapped_back": {
+   "src": "Back to {name} as a whole",
+   "text": "Zpět na celek: {name}"
+  },
+  "okrsky.unmapped_hint": {
+   "src": "Their results are known, but the map has no place for them: a button shows one's results.",
+   "text": "Jejich výsledky jsou známy, ale na mapě nemají místo: tlačítko zobrazí výsledky okrsku."
   },
   "overview.intro.parties": {
    "src": "Choose a party to see its whole candidate list. Circle, cross out and filter parties and candidates as on the ballots. The results are the whole country's.",

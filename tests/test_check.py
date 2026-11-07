@@ -754,6 +754,9 @@ def test_by_election_of_a_split_council_needs_its_rule_set():
         " 2026-03`)"
     ]
     assert councils(["517488"]).problems == []
+    # Elected anew, the council has obvody of its own, not the term's.
+    held[0]["vote"] = "new"
+    assert councils([]).problems == []
 
 
 def test_a_by_election_obvod_above_its_term_s_is_the_term_s_decision(tmp_path: Path):

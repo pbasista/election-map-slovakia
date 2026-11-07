@@ -1,20 +1,23 @@
-# The okrsky of Nemecká of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/508829.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Nemecká, transcribed by an AI agent in job okrsok-rules-941 from the documents below;
+# The okrsky of Nemecká of the vote of 2020-02-29, data/curated/elections/2020-02-29/okrsky/508829.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Nemecká, transcribed by an AI agent in job okrsok-rules-2622 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
 #     okrsok 1: ulice: Andreja Sládkoviča, Hronská, Jána Švermu, Janka Kráľa (od č.1 po číslo 44), Jozefa Gregora Tajovského, Mládežnícka, Partizánska, Pod Hrbkom, Podskalie, Sama Chalupku, Slovenského nár. povstania, Školská, Tehelná, Zábrežná
-#     okrsok 2: ulice: 1. mája, Krátka, Odbojárov, Sviniarka, Štvrť Kapitána Nálepku, Za Štadiónom, Zámostského, Janka Kráľa - od č. 45
+#     okrsok 2: ulice: 1. mája, Krátka, Odbojárov, Sviniarka, Štvrť Kapitána Nálepku, Za Štadiónom, Zámostského, Janka Kráľa (od č. 45)
 obec = "508829"
 name = "Nemecká"
-okrsky_date = 2022-08-03
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was searched for. The okrsky are given as text on the notice-board page (archived 2022-10-22), section \"Utvorenie volebných okrskov a určenie volebných miestností\", zverejnené 3.8.2022; no decision date is stated, so date is that publication date. \"Sviniarka\" (okrsok 2) is not a street of the register and is left out. Houses without a street (súpisné only, in parts Dubová, Nemecká, Zámostie) are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "\"Sviniarka\" (okrsok 2) is not a street of the address register and is left out. Addresses without a street (súpisné čísla only, in parts Dubová, Nemecká, Zámostie) take the okrsok of the nearest address (fill_nearest). No decision date is stated on the page."
+okrsky_adopted = 2020-02-29
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-2019): The obec's notice-board page of the European Parliament election 2019 only says \"V obci Nemecká sú utvorené 2 volebné okrsky\"; it gives neither streets nor polling stations. The site's full-text search (okrskov, Sviniarka, Dolnej školy) finds no okrsky document of 2019 (the earliest street list is of the 2020 elections, posted 25.11.2019); the Internet Archive has no capture of the 2019 notice-board pages. These are the okrsky of the vote of 2020-02-29 (2020-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2020-02-29: 1: 780 → 777, 2: 671 → 678."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2019-11-25
+okrsky_date_basis = "The notice-board page of the 2020 National Council elections has the section \"Utvorenie volebných okrskov a určenie volebných miestností\" (for the elections of 2020), marked \"Zverejnené 25.11.2019\"; the decision itself is undated. (https://www.nemecka.info/zverejnovanie-1/uradna-tabula/volby-do-narodnej-rady-sr-2020-250.html)"
 
 [[document]]
-url = "https://web.archive.org/web/20221022000015/https://www.nemecka.info/zverejnovanie-1/uradna-tabula/volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-2022-395.html"
-sha256 = "c7ab781c972cb456e880915a4931701d4803d87900e3077abe7c65b8a3e6dc07"
-title = "Voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov 2022 – Utvorenie volebných okrskov a určenie volebných miestností (zverejnené 3.8.2022)"
+url = "https://www.nemecka.info/zverejnovanie-1/uradna-tabula/volby-do-narodnej-rady-sr-2020-250.html"
+sha256 = "4d0d5ae09400f1cfef12d79b21cdf2dd1793043320bc16613351283e6c195284"
+title = "Voľby do Národnej rady SR 2020 – Utvorenie volebných okrskov a určenie volebných miestností"
 
 [okrsok.1]
 rules = [

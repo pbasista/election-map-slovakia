@@ -363,7 +363,13 @@ latest round first, a referendum's questions in order,
 a party's list after its party contest).
 A by-election's place has only the contests held there
 (data/index.json `held`);
-a country-wide election's ballots are the country's, everyone's.
+a regular election of one half (before 2022) only that half's
+(kinds.js `holds`).
+The municipal and the regional contests stand under headings of their own,
+each only where it has contests:
+a half not voted on there is neither headed nor said to be missing
+(no "no council election" in a regional election).
+A country-wide election's ballots are the country's, everyone's.
 
 A note above the council contests
 (that all its constituencies are listed,
@@ -395,7 +401,10 @@ or a referendum's documents (`notice.okrsky_reused`,
 for a country-wide election, which searches no documents of its own,
 `notice.okrsky_copied`; `notice.okrsky_referendum`),
 or with another vote's borders standing in without proof that they match,
-so only indicative (`notice.okrsky_adopted`, the vote named the same way),
+so only indicative (`notice.okrsky_adopted`, the vote named the same way;
+each okrsok standing in though its voters on the roll differ by more than
+a quarter named with both counts, `notice.okrsky_outlier`,
+from `okrsky_outliers`),
 or from a document that states no date (`notice.okrsky_dated`),
 each such document with what dates it approximately:
 an Internet Archive capture or a posting on that day,
@@ -902,7 +911,8 @@ is the map's level too, with results on the map or without:
   inside a larger unit (a kraj, an okres)
   the selected municipality keeps its accent outline.
   An okrsok or council obvod the place has none of known
-  (or whose municipality's okrsky are not drawn)
+  (or an okrsok not drawn: its municipality's okrsky are not,
+  or it has no area or no territory, draw.js `scopeOf`)
   falls back to the next coarser unit it has.
 - **Choosing a level** fits the view to that unit, zooming in or out
   (map.js `fitUnit`, draw.js `unitBox`),
@@ -1157,6 +1167,32 @@ numbered from zoom 14.
   else with the numbers of its polling districts,
   and likewise its council constituency or constituencies
   (data.js `ballots` `group`).
+- Polling districts with results of their own that the map does not draw
+  are buttons on the ballots of their municipality, after its notices
+  (ballots.js `UnmappedOkrsky`, "Polling districts not on the map",
+  each its number):
+  all of a municipality that voted in several but whose are not drawn
+  (`okrsky_unknown`, Michalovce in 2017),
+  one without an area (addressless) of a municipality whose others are,
+  and the special ones without territory
+  (`data/index.json` `special`; an icon badge for a prison's
+  or a COVID-19 special one, with what it is in the tooltip).
+  A municipality of one polling district with territory is drawn as that one,
+  so only its special ones are listed.
+  The numbers are those the final results' okrsok files of the ballots'
+  contests have for the municipality (live.js `obecOkrsky`,
+  the files the ballots load anyway; a party's list's left out),
+  less those drawn (`geo/index.json` `okrsky.drawn`),
+  so none show before the final results, nor while those files load.
+  A press picks the polling district as a click on the map picks a drawn one
+  (`d` in the hash, with `n`, the council constituency whose council
+  counted it, where the municipality has several)
+  and shows the ballots at its level, as a polling district opened from
+  the candidate card does (app.js `openUnit`);
+  having no shape, it outlines and fits its municipality
+  (draw.js `scopeOf`).
+  The button of the one shown is pressed; a press goes back to the whole
+  municipality, as does Back.
 
 ### Results on the map
 
@@ -1260,7 +1296,18 @@ each as fine as its figures go:
   `okrsky/country/<kraj>.json`, of a party's list
   `okrsky/list/<p>/<kraj>.json`, of the kraje with okrsky drawn;
   fetched only while something shows them);
-  an okrsok without an area (addressless) is not one.
+  an okrsok without an area (addressless) is not one,
+  nor is a special okrsok without territory
+  (`data/index.json` `special`: a COVID-19 special okrsok of the 2023
+  referendum, a prison's): never drawn, it neither shades the map
+  nor widens a turnout scale (its 100 % would),
+  its figures staying in its municipality's.
+  The ballots name each in a notice (summary "Polling district No. 33
+  not on the map": its kind, okres or facility and registered voters,
+  with the source linked) and have a button that shows its results
+  ([Polling districts](#polling-districts)), and the tooltips of the
+  municipality and its polling districts list the numbers not drawn
+  (`mapmode.tip_special`).
 - A municipality without finer figures keeps its own at every zoom,
   and a council constituency's own contest colours its constituency
   at every zoom, the municipality having no figure of it;

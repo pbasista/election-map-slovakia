@@ -1,20 +1,21 @@
-# The okrsky of Biely Kostol of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/580473.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Biely Kostol, transcribed by an AI agent in job okrsok-rules-851 from the documents below;
+# The okrsky of Biely Kostol of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/580473.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Biely Kostol, transcribed by an AI agent in job okrsok-rules-3703 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: OKRSOK č.1 Ulice: Cintorínska Ľadová Lomená Pionierske námestie Poľná Poľovnícka Rekreačná Rybná Stromová Viničná Vysoká
-#     okrsok 2: OKRSOK č.2 Ulice: Hlavná Jabloňová Krátka Malá Okružná Potočná Sadová Slnečná Stredná Športová Záhradná Atletická
+#     okrsok 1: Ulice: Cintorínska Ľadová Lomená Pionierske námestie Poľná Poľovnícka Rekreačná Rybná Stromová Viničná Vysoká
+#     okrsok 2: Ulice: Hlavná Jabloňová Krátka Malá Okružná Potočná Sadová Slnečná Stredná Športová Záhradná Atletická
 obec = "580473"
 name = "Biely Kostol"
-okrsky_date = 2022-10-21
+okrsky_date = 2023-06-27
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2024-06-08 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2024-06-08 was searched for. The municipality's announcement of the 2022 okrsky (the decision itself is no longer on the website; its 2022 elections page now shows the 2026 elections). No decision date stated; date is the page's stated publication date ('Dátum vloženia: 21. 10. 2022'). The 107 register addresses without a street are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "The municipality's information on the okrsky for 30 September 2023 (archived 27.6.2023, still live). The 107 register addresses without a street take the okrsok of the nearest placed address (fill_nearest)."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2024-06-08 setting the okrsky was found (okrsok-rules-4956): The notice for the European Parliament election 2024 states only 2 okrsky and one polling station (ZŠ Bronzová 1); no list of streets per okrsok found live or archived. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-06-08 → 2023-09-30: 1: 983 → 964, 2: 980 → 935."
 
 [[document]]
-url = "https://www.bielykostol.sk/zivot-v-obci/aktuality/volby-29102022-v-kulturnom-dome-od-700-2000-hod-926sk.html"
-sha256 = "dc108d502b9f158c1e501115c4e159d105f1deea1f024fefcf38706d6a031d53"
-title = "Voľby 29.10.2022 - v KULTÚRNOM DOME od 7:00 - 20:00 hod (rozdelenie ulíc do okrskov)"
+url = "https://www.bielykostol.sk/e_download.php?file=data/uredni_deska/obsah411_7.pdf&original=Inform%C3%A1cia%20o%20volebn%C3%BDch%20okrskoch..pdf"
+sha256 = "b5d5f8e48c3d7e4d49db87ff9b1aaf0f6d2dcbccd159306de15c2281256568db"
+title = "Informácia o utvorení volebných okrskov a určení volebnej miestnosti pre voľby do Národnej rady Slovenskej republiky (27.6.2023)"
 
 [okrsok.1]
 rules = [
@@ -33,6 +34,7 @@ rules = [
 
 [okrsok.2]
 rules = [
+  {street = "Atletická"},
   {street = "Hlavná"},
   {street = "Jabloňová"},
   {street = "Krátka"},
@@ -44,5 +46,4 @@ rules = [
   {street = "Stredná"},
   {street = "Športová"},
   {street = "Záhradná"},
-  {street = "Atletická"},
 ]

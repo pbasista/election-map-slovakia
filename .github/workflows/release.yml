@@ -10,20 +10,22 @@
 # sure data/published.toml holds the keys of the data parts of this
 # commit). Then:
 #
-#   plan     asks the Pages API which data parts are not deployed with
-#            their key;
-#   inputs   only if any: downloads the pinned inputs (from the input
-#            store) into the Actions cache, once for the jobs below;
-#   steps    one job per election, side by side: the steps that make it
-#            alone (candidates, addresses, geo);
-#   basemaps one job per extract, beside them: its base map, which every
-#            election on it shares (basemap);
-#   site     the steps that read every election (links, results), builds
-#            and checks the whole site, warns where an output is not the
-#            one data/outputs.toml records, and deploys the data parts not
-#            deployed yet, each carrying its key;
-#   app      builds the app for the deployed data parts, checks it against
-#            their manifests and deploys it;
+#   plan       asks the Pages API which data parts are not deployed with
+#              their key;
+#   inputs     only if any: downloads the pinned inputs (from the input
+#              store) into the Actions cache, once for the jobs below;
+#   candidates the candidates of every election (candidates), once for the
+#              steps jobs: a by-election's steps read its term's as well;
+#   steps      one job per election, side by side: the other steps that
+#              make it alone (addresses, geo), from those candidates;
+#   basemaps   one job per extract, beside them: its base map, which every
+#              election on it shares (basemap);
+#   site       the steps that read every election (links, results),
+#              builds and checks the whole site, warns where an output is
+#              not the one data/outputs.toml records, and deploys the data
+#              parts not deployed yet, each carrying its key;
+#   app        builds the app for the deployed data parts, checks it
+#              against their manifests and deploys it;
 #
 # and the app's files are attached to a GitHub release. A release that
 # changes no data builds and deploys the app alone, in a few minutes.
@@ -143,15 +145,59 @@ jobs:
           path: data/raw/
           key: raw-${{ hashFiles('config/inputs.toml') }}
 
+  # The candidates of every election, oldest first as `ems make` makes
+  # them, once for all the steps jobs: a by-election's candidates and
+  # addresses read those of its term (whose council's seats it fills), and
+  # many by-elections share a term. About 10 seconds of work on 8 CPUs
+  # (docs/deploy.md), which the steps jobs wait for.
+  candidates:
+    needs: inputs
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/data/curated/cache/
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.13.6"
+          python-version: "3.15"
+          enable-cache: true
+      - run: uv sync --locked
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: data/raw/
+          key: raw-${{ hashFiles('config/inputs.toml') }}
+          fail-on-cache-miss: true
+
+      - run: uv run ems candidates
+      # With their stamps, which the steps jobs pass on to the site job,
+      # whose `make` finds the candidates up to date.
+      - name: Pack the candidates of every election
+        working-directory: data/build
+        run: tar --zstd -cf ../../candidates.tar.zst */candidates.json */candidates.stamp.json
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: candidates
+          path: candidates.tar.zst
+          if-no-files-found: error
+          # Already compressed.
+          compression-level: 0
+          retention-days: 1
+
   # What a cold `ems make` spends most of its time on, geo above all, one
-  # job per election instead of all in one. Each starts from nothing: the
-  # caches the elections share in one build (data/build/shared/: blocks
-  # cut by streets, barriers and register per input) are made again in
-  # each, which costs CPU time but no wall time. max-parallel leaves half of
-  # the 20 jobs a Free plan runs at once to other workflows.
+  # job per election instead of all in one. Each starts from the
+  # candidates alone: the caches the elections share in one build
+  # (data/build/shared/: blocks cut by streets, barriers and register per
+  # input) are made again in each, which costs CPU time but no wall time.
+  # max-parallel leaves half of the 20 jobs a Free plan runs at once to
+  # other workflows.
   steps:
     name: steps ${{ matrix.election }}
-    needs: [plan, inputs]
+    needs: [plan, candidates]
     runs-on: ubuntu-latest
     timeout-minutes: 45
     strategy:
@@ -179,17 +225,23 @@ jobs:
           key: raw-${{ hashFiles('config/inputs.toml') }}
           fail-on-cache-miss: true
 
-      # The steps of `ems make` that read nothing of another election, in
-      # its order; links and results read the others' and run in the site
-      # job.
-      - run: uv run ems candidates --election "$ELECTION"
+      # Every election's candidates, its own and of a by-election its
+      # term's among them.
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: candidates
+      - run: mkdir -p data/build && tar --zstd -xf candidates.tar.zst -C data/build
+
+      # The steps of `ems make` after candidates that read no other
+      # election's output but those candidates, in its order; links and
+      # results read the others' and run in the site job.
       - run: uv run ems addresses --election "$ELECTION"
       - run: uv run ems geo --election "$ELECTION"
-      # Their output with their stamps, which tell the site job's `make`
-      # that it is up to date. A tar keeps the empty directories an artifact
-      # would drop (an election without council obvody has an empty
-      # obvod-addresses/), whose absence would run a step again; zstd makes
-      # it about a quarter.
+      # The election's output, its candidates among it, with their stamps,
+      # which tell the site job's `make` that it is up to date. A tar keeps
+      # the empty directories an artifact would drop (an election without
+      # council obvody has an empty obvod-addresses/), whose absence would
+      # run a step again; zstd makes it about a quarter.
       - run: tar --zstd -cf "build-$ELECTION.tar.zst" -C data/build "$ELECTION"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:

@@ -416,9 +416,11 @@ def not_held(
     *rows* are ŠÚ SR's territorial division, table *table* of the input
     *part* (the municipal package, ``oso``, or the table itself): each
     obec's code, kind of election (``Typ volieb``,
-    :data:`candidates.NOT_HELD_TYPES`), obvody and seats.
+    :data:`candidates.NOT_HELD_TYPES`), obvody and seats, which also give
+    each obec's council seats (:attr:`candidates.Lists.council_seats`).
     """
     for obec, kind, obvody, seats in rows:
+        out.council_seats[_area(obec)] = int(seats)
         kinds = candidates.NOT_HELD_TYPES.get(kind.casefold())
         if kinds:
             why = candidates.Uncontested(

@@ -1,0 +1,58 @@
+# The okrsky of Ivanka pri Nitre of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/558320.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Ivanka pri Nitre, transcribed by an AI agent in job okrsok-rules-138 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Ábelova ulica, Horná ulica, Hornocintorínska ulica, Konopárenská, Ulica Mateja Tučku, Myrtina, Na Pílu, Na Stanicu, Ulica Južná, Ulica Východná, Ulica Západná, Urbárska ulica
+#     okrsok 2: Krakovská ulica, Mojmírovská ulica, Novozámocká ulica, Ulica Pri Parku
+#     okrsok 3: Bárdyho ulica, Beňadikova ulica, Gergelova ulica, Konečná ulica, Ulica Luk, Na Štrkovisko, Nosákova ulica, Orolská ulica, Ulica Pri Tehelni, Vinohradská ulica
+obec = "558320"
+name = "Ivanka pri Nitre"
+okrsky_fill = "nearest"
+okrsky_note = "The municipality's notice on the 2018 okrsky and the time and place of the vote lists the streets of each of its 3 okrsky. Not named: Agátová, Brezová, Buková, Dubová, Jaseňová, Javorová and Vŕbová ulica (a newer residential area) and the addresses without a street; these take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1267): No 2019 presidential document: the website (WordPress since 2019) and the Archive hold none. The only okrsky documents on ivankaprinitre.sk are of 2022-11 (referendum 2023), 2023-06 (NR SR 2023), 2024-01 (president 2024), 2024-03 (EP 2024), giving only the three polling stations (all in the Kultúrny dom), and 2026-07 (municipal/regional 2026-10-24, with streets). Internet Archive was reachable. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2018-11-10: 1: 704 → 714, 2: 849 → 876, 3: 742 → 747."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document's second page, 'Informácia o čase a mieste konania volieb do orgánov samosprávy obcí', names the vote of 10 November 2018 (its first point miswrites it as 'voľby do orgánov samosprávnych krajov ... 10. novembra 2018'); it states no date of the decision, and the Common Crawl captured it only on 2019-01-21."
+
+[[document]]
+url = "https://index.commoncrawl.org/CC-MAIN-2019-04-index?url=http://ivankaprinitre.sk/www/files/documents/681/Sidla%2520volebnych%2520okrskov%2520a%2520informacie%2520o%2520case%2520a%2520mieste%2520konania%2520volieb.pdf&from=20190121082316&to=20190121082316&output=json"
+sha256 = "61311b574aedf41fb5d57ec9e42070e5b4dbf9d0e02f1418a69271ddf228545d"
+title = "Sídla volebných okrskov v obci Ivanka pri Nitre; Informácia o čase a mieste konania volieb do orgánov samosprávy obcí (10. novembra 2018), with the streets of each okrsok (Common Crawl capture of 2019-01-21)"
+
+[okrsok.1]
+rules = [
+  {street = "Ábelova", written = "Ábelova ulica"},
+  {street = "Horná", written = "Horná ulica"},
+  {street = "Hornocintorínska", written = "Hornocintorínska ulica"},
+  {street = "Konopárenská"},
+  {street = "Mateja Tučku", written = "Ulica Mateja Tučku"},
+  {street = "Myrtina"},
+  {street = "Na Pílu"},
+  {street = "Na Stanicu"},
+  {street = "Ulica Južná"},
+  {street = "Ulica Východná"},
+  {street = "Ulica Západná"},
+  {street = "Urbárska", written = "Urbárska ulica"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Krakovská", written = "Krakovská ulica"},
+  {street = "Mojmírovská", written = "Mojmírovská ulica"},
+  {street = "Novozámocká", written = "Novozámocká ulica"},
+  {street = "Pri Parku", written = "Ulica Pri Parku"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Bárdyho", written = "Bárdyho ulica"},
+  {street = "Beňadikova", written = "Beňadikova ulica"},
+  {street = "Gergelova", written = "Gergelova ulica"},
+  {street = "Konečná", written = "Konečná ulica"},
+  {street = "Luk", written = "Ulica Luk"},
+  {street = "Na Štrkovisko"},
+  {street = "Nosákova", written = "Nosákova ulica"},
+  {street = "Orolská", written = "Orolská ulica"},
+  {street = "Pri Tehelni", written = "Ulica Pri Tehelni"},
+  {street = "Vinohradská", written = "Vinohradská ulica"},
+]

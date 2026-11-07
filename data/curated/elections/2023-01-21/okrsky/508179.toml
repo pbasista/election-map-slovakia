@@ -19,12 +19,11 @@
 #   okrsok 16: Eugena Suchoňa, Gorkého, Kataríny Franklovej, Komenského, Ľudovíta Rajtera, Majakovského, Nerudova, Obchodná, Okružná, Puškinova, Saulaková, Tolstého
 #   okrsok 17: Bystrická, Bratislavská 108-130
 #   okrsok 18: Cintorínska, Černicová, D. Virgoviča, Družstevná, Glejovka, Grobská cesta, Hečkova, Hurbanova, Jána Raka, Krkavec, Liesková, Limbašská cesta, Matúškova, Mlynárska, Myslenická, Nezábudková, Nová, Orešie, Podkarpatská, Pri mlyne, Púpavova, Ružová, Štúrova, Trnková, Vinice, Za panskou záhradou, Železničná
-#   okrsok 19: (not in the document)
 obec = "508179"
 name = "Pezinok"
 okrsky_date = 2022-11-09
 okrsky_fill = "nearest"
-okrsky_note = "Streets per okrsok as the document lists them; house-number ranges whose ends are both odd or both even are read as odd or even numbers. Streets the document names but the register lacks (Fortna, SOŠ PZ, Sasinkova ulica, Panský chodník, Vinohradnícka cesta, Ulica gen. Goliana) are left out; 'vrátane občanov, ktorí majú trvalý pobyt mesto Pezinok' (okrsok 1) means voters registered without an address. fill_nearest covers the register's addresses without a street, streets the document does not name and numbers of split streets it does not list. The Statistical Office counts a 19th okrsok that the document does not name; it gets no addresses (addressless)."
+okrsky_note = "Streets per okrsok as the document lists them; house-number ranges whose ends are both odd or both even are read as odd or even numbers. Streets the document names but the register lacks (Fortna, SOŠ PZ, Sasinkova ulica, Panský chodník, Vinohradnícka cesta, Ulica gen. Goliana) are left out; 'vrátane občanov, ktorí majú trvalý pobyt mesto Pezinok' (okrsok 1) means voters registered without an address. fill_nearest covers the register's addresses without a street, streets the document does not name and numbers of split streets it does not list. The Statistical Office counts a 19th okrsok that the document does not name: the COVID-19 special okrsok of okres Pezinok (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml)."
 
 [[document]]
 url = "https://stary.pezinok.sk/uploadfiles/File/subcontent/referendum-2023-oznamenie_o_voleb_okrskoch_a_miestnostiach.pdf"
@@ -258,6 +257,3 @@ rules = [
   {street = "Za panskou záhradou"},
   {street = "Železničná"},
 ]
-
-[okrsok.19]
-addressless = true

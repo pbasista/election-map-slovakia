@@ -1,25 +1,27 @@
-# The okrsky of Liptovská Teplička of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/523631.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Liptovská Teplička, transcribed by an AI agent in job okrsok-rules-960 from the documents below;
+# The okrsky of Liptovská Teplička of the vote of 2019-03-16, data/curated/elections/2019-03-16/okrsky/523631.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Liptovská Teplička, transcribed by an AI agent in job okrsok-rules-1448 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Teplická, Pilisko, Ráztocka, Kufajka, Záhrady, Horárne, Zaglinka
-#     okrsok 2: Pod úbočou, Potočná, Na jarku, Bory, Úzka, Ul.Š.Garaja, Kobyliarky, Ul.Š.Nahalku, Uhlárová, Drevárska, Koliesko, č. 535, 683, 689, 725, 730
+#     okrsok 1: Teplická, Pilisko, Ráztocka, Kufajka, Záhrady, Horárne, Zaglinka.
+#     okrsok 2: Pod úbočou, Potočná, Na jarku, Bory, Úzka, Ul.Š.Garaja, Kobyliarky, Ul.Š.Nahalku, Uhlárová, Drevárska, Koliesko, č. 535, 683, 689,
 obec = "523631"
 name = "Liptovská Teplička"
-okrsky_date = 2022-08-03
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was searched for. Undated notice by starosta Mgr. Slavomír Kopáč; date is its posting date on the notice board (Vyvesené: 3. 8. 2022). Horárne and Zaglinka (okrsok 1) are not streets in the register and are left out. Okrsok 2's houses č. 535, 683, 689, 725, 730 are given as súpisné numbers in the part. Other addresses without a street are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "Horárne and Zaglinka (okrsok 1) are not streets in the address register (settlements/houses without a street) and are left out; house numbers the document lists (\"č.\", \"č. d.\") are súpisné numbers of houses without a street, given as numbers in the part. Other addresses without a street are placed by fill_nearest."
+okrsky_adopted = 2019-03-16
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-2037): The notice-board entry for the 2019 European Parliament elections (vyvesené 5. 2. 2019) holds only the decision calling the elections and the voter information; no okrsky document was found live or in the Internet Archive (no notice-board captures before 2021). These are the okrsky of the vote of 2019-03-16 (2019-prezident), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2019-03-16: 1: 913 → 914, 2: 867 → 854."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The undated scanned notice signed by starosta Mgr. Slavomír Kopáč names the presidential elections of 16 and 30 March 2019."
 
 [[document]]
-url = "https://www.liptovskateplicka.sk/e_download.php?file=data/uredni_deska/obsah626_1.pdf&original=Vo%C4%BEby%202022%20-%20ozn%C3%A1menie.pdf"
-sha256 = "8beba6069b73fdb42239b833c146077861075cb2928c2d8dcd636d06e302e54f"
-title = "Oznámenie o čase a mieste konania volieb do orgánov samosprávy obcí a orgánov samosprávnych krajov"
+url = "https://www.liptovskateplicka.sk/e_download.php?file=data/uredni_deska/obsah250_1.jpg&original=SKMBT_C22419030515581_0001.jpg"
+sha256 = "76a05db672126077ad3f9e914fffd4477f34a04beb6b5fce1dda3ffeaebe509c"
+title = "Oznámenie o čase a mieste konania volieb prezidenta Slovenskej republiky (16. a 30. marca 2019)"
 
 [[document]]
-url = "https://www.liptovskateplicka.sk/obecny-urad-1/zverejnovanie/uradna-tabula/volby-do-organov-samospravy-obci-2022-734.html"
-sha256 = "a994ab0a4c11d18b6fd8c802d7d7dfe06c92bde8a052c8ec94865ea23cb6a34c"
-title = "Voľby do orgánov samosprávy obcí 2022 (úradná tabuľa, vyvesené 3. 8. 2022)"
+url = "https://www.liptovskateplicka.sk/obecny-urad-1/zverejnovanie/uradna-tabula/volby-prezidenta-slovenskej-republiky-320.html"
+sha256 = "a4118a73635f5b62fa99457cf8147ad0e73c3bee8768fbd55d0aecae6d4aa3df"
+title = "Voľby prezidenta Slovenskej republiky (úradná tabuľa)"
 
 [okrsok.1]
 rules = [
@@ -43,5 +45,5 @@ rules = [
   {street = "Uhlárová"},
   {street = "Drevárska"},
   {street = "Koliesko"},
-  {part = "Liptovská Teplička", numbers = "535, 683, 689, 725, 730"},
+  {part = "Liptovská Teplička", numbers = "535, 683, 689"},
 ]

@@ -1,0 +1,84 @@
+# Okrsky of Medzilaborce, transcribed by an AI agent in job okrsok-rules-027 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Ulica, Ševčenkova, Dobrianskeho, Čsl. armády, Zámočnícka, Komenského /s.č. 122 – 127, 134, 151/, Ulica gen. Svobodu /s.č. 128 – 130/ a Cintorínska
+#   okrsok 2: Ulica gen. Svobodu /s.č. 131 – 132/, Májová, Komenského /s.č. 659 – 672/ a Ulica poľná
+#   okrsok 3: Ulica A. Warhola, Laborecká, Švermova, Dukelských hrdinov, Fučíkova, Popradova, Kukorelliho, Mierová a Václavského.
+#   okrsok 4: Ulica Duchnovičova /b.j. – s.č.: 473 – 478, 530 - 533/, Gorkého, Tolstého a kpt. Nálepku /rodinné domy – s. č. 367 – 392, b.j. – s.č. 436 – 442 a 662/.
+#   okrsok 5: Ulica Duchnovičova /s. č . 479, rodinné domy s. č. 480 – 748, 818/, kpt. Nálepku /rodinné domy s. č. 393 – 756, 830, 871, 925, 931,933/, pod Úbočou , Ulica SNP
+#   okrsok 6: Ulica Danová a miestna časť Vydraň
+#   okrsok 7: miestna časť Borov
+obec = "520471"
+name = "Medzilaborce"
+okrsky_date = 2022-11-08
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 8.11.2022 sets 7 okrsky (the COVID-19 special okrsok 8 is not in it). Split streets: the listed súpisné numbers of Komenského and gen. Svobodu go to okrsok 1, the rest of each street to okrsok 2; the listed numbers of Duchnovičova and kpt. Nálepku in okrsok 4 go there, the rest of each street to okrsok 5 (okrsok 5's ranges overlap okrsok 4's). Addresses without a street in part Medzilaborce go by fill_nearest."
+
+[[document]]
+url = "https://www.medzilaborce-urad.sk/download_file_f.php?id=1762786"
+sha256 = "a9b75f64aa87e2a2bc4894bd1e87186dc3c191b5cb88bb3cbd8073b7e467e4d2"
+title = "Určenie volebných okrskov a volebných miestností pre REFERENDUM 2023"
+
+[[document]]
+url = "https://www.medzilaborce-urad.sk/download_file_f.php?id=1762789"
+sha256 = "2cb4e7fff7ee44852dca6a4a0fbf9f566186b67e45e87c712a9182b2a0d81ab6"
+title = "Volebné okrsky podľa ulíc (príloha)"
+
+[okrsok.1]
+rules = [
+  {street = "Ševčenkova"},
+  {street = "Dobrianskeho"},
+  {street = "Čsl.armády", written = "Čsl. armády"},
+  {street = "Zámočnícka"},
+  {street = "Komenského", numbers = "122-127, 134, 151", by = "supisne"},
+  {street = "Generála Svobodu", numbers = "128-130", by = "supisne", written = "gen. Svobodu"},
+  {street = "Cintorínska"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Generála Svobodu", written = "gen. Svobodu"},
+  {street = "Májová"},
+  {street = "Komenského"},
+  {street = "Poľná", written = "poľná", note = "\"Ulica poľná\": the register's Poľná, lower-case in the document"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Andy Warhola", written = "A. Warhola"},
+  {street = "Laborecká"},
+  {street = "Švermova"},
+  {street = "Dukelských hrdinov"},
+  {street = "Fučíkova"},
+  {street = "Popradova"},
+  {street = "Kukorelliho"},
+  {street = "Mierová"},
+  {street = "Václavského"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Duchnovičova", numbers = "473-478, 530-533", by = "supisne"},
+  {street = "Gorkého"},
+  {street = "Tolstého"},
+  {street = "Kpt.Nálepku", numbers = "367-392, 436-442, 662", by = "supisne", written = "kpt. Nálepku"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Duchnovičova"},
+  {street = "Kpt.Nálepku", written = "kpt. Nálepku"},
+  {street = "Pod Úbočou", written = "pod Úbočou", note = "the register's Pod Úbočou, lower-case in the document"},
+  {street = "SNP"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Danová"},
+  {part = "Vydraň"},
+]
+
+[okrsok.7]
+rules = [
+  {part = "Borov"},
+]

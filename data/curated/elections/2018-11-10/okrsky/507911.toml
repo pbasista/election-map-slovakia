@@ -1,0 +1,118 @@
+# Okrsky of Chorvátsky Grob, transcribed by an AI agent in job okrsok-rules-135 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Antona Bernoláka, Hlboká cesta, Hoštáky, Chorvátska, Južná, Lúčna, Námestie Josipa Andriča, Poľná, Športová, Výhon, Záhradná.
+#   okrsok 2: Antona Václavíka, Dlhá, Karpatská, Krátka, Malé Vinice, Mila Urbana, Na Kŕčoch, Pod vinicami, Severná, Svätoplukova, Školská
+#   okrsok 3: Agátová, Bazová, Blahútova, Borovicová, Brusnicová, Buková, Černicová, Dubová, Golfová, Hlavný dvor, Hlohová, Hrušková, Jarabinová, Jaseňová, Jazdecká, Jazmínová, Jedľová, Jelšová, Osiková, Platanová, Suché Miesto, Šalviová, Šípková, Vajnorská, Vavrínová
+#   okrsok 4: Bottova, Čerešňová, Hviezdoslavova, Chalupkova, Janka Kráľa, Javorová alej Kukučínova, Na Pasienku, Nevädzová, Pezinská (okrem č. 20, 24, 28), Púpavová, Štúrová, Triblavinská
+#   okrsok 5: Brezová, Drozdia, Hájska, Hornodvorská, Hrudky, Jantárová, Konopná, Ľanová, Monarská alej, Pálffyho, Pezinská (iba č. 20, 24, 28), Rubínová, Slávičia, Slnečná, Smaragdová, Šúrska, Topoľová, Zafírová, Žilinská, Žitná.
+obec = "507911"
+name = "Chorvátsky Grob"
+okrsky_date = 2018-09-10
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 10 September 2018 for the elections called by decision 203/2018 Z. z. (the municipal elections of 10 November 2018) was posted as a notice on the municipality's website, captured by the Common Crawl on 2018-09-21; its annex lists the streets of the 5 okrsky. Pezinská is in okrsok 4 except 20, 24, 28 (okrsok 5). The document writes 'Javorová alej Kukučínova' without a comma (two streets) and 'Štúrová' for Štúrova. Not named: Jastrabia, Kolibríková, Sokolia, Toskánska and the addresses without a street; these take the okrsok of the nearest address (fill_nearest)."
+
+[[document]]
+url = "https://index.commoncrawl.org/CC-MAIN-2018-39-index?url=http://www.chorvatskygrob.sk/oznamy/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti.html&from=20180921005131&to=20180921005131&output=json"
+sha256 = "a06350dcfbaab5b03bdd78876d9cbeb489898f976a46e8af014fd98309a65ee1"
+title = "Utvorenie volebných okrskov a určenie volebných miestností (starosta obce, 10.09.2018, podľa Rozhodnutia predsedu NR SR č. 203/2018 Z. z. o vyhlásení volieb do orgánov samosprávy obcí), with its annex listing the streets of each okrsok (Common Crawl capture of 2018-09-21)"
+
+[okrsok.1]
+rules = [
+  {street = "Antona Bernoláka"},
+  {street = "Hlboká cesta"},
+  {street = "Hoštáky"},
+  {street = "Chorvátska"},
+  {street = "Južná"},
+  {street = "Lúčna"},
+  {street = "Námestie Josipa Andriča"},
+  {street = "Poľná"},
+  {street = "Športová"},
+  {street = "Výhon"},
+  {street = "Záhradná"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Antona Václavíka"},
+  {street = "Dlhá"},
+  {street = "Karpatská"},
+  {street = "Krátka"},
+  {street = "Malé Vinice"},
+  {street = "Mila Urbana"},
+  {street = "Na Kŕčoch"},
+  {street = "Pod vinicami"},
+  {street = "Severná"},
+  {street = "Svätoplukova"},
+  {street = "Školská"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Agátová"},
+  {street = "Bazová"},
+  {street = "Blahútova"},
+  {street = "Borovicová"},
+  {street = "Brusnicová"},
+  {street = "Buková"},
+  {street = "Černicová"},
+  {street = "Dubová"},
+  {street = "Golfová"},
+  {street = "Hlavný Dvor", written = "Hlavný dvor"},
+  {street = "Hlohová"},
+  {street = "Hrušková"},
+  {street = "Jarabinová"},
+  {street = "Jaseňová"},
+  {street = "Jazdecká"},
+  {street = "Jazmínová"},
+  {street = "Jedľová"},
+  {street = "Jelšová"},
+  {street = "Osiková"},
+  {street = "Platanová"},
+  {street = "Suché Miesto"},
+  {street = "Šalviová"},
+  {street = "Šípková"},
+  {street = "Vajnorská"},
+  {street = "Vavrínová"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Bottova"},
+  {street = "Čerešňová"},
+  {street = "Hviezdoslavova"},
+  {street = "Chalupkova"},
+  {street = "Janka Kráľa"},
+  {street = "Javorová alej"},
+  {street = "Kukučínova"},
+  {street = "Na Pasienku"},
+  {street = "Nevädzová"},
+  {street = "Púpavová"},
+  {street = "Štúrova", written = "Štúrová", note = "'Štúrová' is a misspelling of Štúrova, the only such street."},
+  {street = "Triblavinská"},
+  {street = "Pezinská"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Brezová"},
+  {street = "Drozdia"},
+  {street = "Hájska"},
+  {street = "Hornodvorská"},
+  {street = "Hrudky"},
+  {street = "Jantárová"},
+  {street = "Konopná"},
+  {street = "Ľanová"},
+  {street = "Monarská alej"},
+  {street = "Pálffyho"},
+  {street = "Rubínová"},
+  {street = "Slávičia"},
+  {street = "Slnečná"},
+  {street = "Smaragdová"},
+  {street = "Šúrska"},
+  {street = "Topoľová"},
+  {street = "Zafírová"},
+  {street = "Žilinská"},
+  {street = "Žitná"},
+  {street = "Pezinská", numbers = "20, 24, 28"},
+]

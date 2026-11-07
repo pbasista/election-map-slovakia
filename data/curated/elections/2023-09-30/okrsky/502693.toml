@@ -1,15 +1,17 @@
-# The okrsky of Pukanec of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/502693.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Pukanec, transcribed by an AI agent in job okrsok-rules-772 from the documents below;
-#   checked by `ems job ingest` against the address register. The document's
-#   text per okrsok, verbatim:
-#     okrsok 1: pre obyvateľov bývajúcich na ulici: Nová, Pažiť, Štiavnická cesta, Za Školou, Záhradná, pre obyvateľov časti Majere a Obec Pukanec
-#     okrsok 2: pre obyvateľov bývajúcich na ulici: Breznická cesta, Červená cesta, Čierne Blato, Dlhá, Hrnčiarska, Krátka, Krížna, Kúty, Námestie Mieru, Na Žliabku, Partizánska cesta, Pod Hradbami, Potočná cesta, Prieložná cesta, Sľúkova Brána, SNP, Viničná cesta, Vodná, Za Múrom, Závoz.
+# The okrsky of Pukanec of the vote of 2023-01-21, data/curated/elections/2023-01-21/okrsky/502693.toml, standing in, by `ems job reuse`. Its header there:
+#   The okrsky of Pukanec of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/502693.toml, copied by `ems job reuse` (its own, from the referendum's document). Its header there:
+#     Okrsky of Pukanec, transcribed by an AI agent in job okrsok-rules-772 from the documents below;
+#     checked by `ems job ingest` against the address register. The document's
+#     text per okrsok, verbatim:
+#       okrsok 1: pre obyvateľov bývajúcich na ulici: Nová, Pažiť, Štiavnická cesta, Za Školou, Záhradná, pre obyvateľov časti Majere a Obec Pukanec
+#       okrsok 2: pre obyvateľov bývajúcich na ulici: Breznická cesta, Červená cesta, Čierne Blato, Dlhá, Hrnčiarska, Krátka, Krížna, Kúty, Námestie Mieru, Na Žliabku, Partizánska cesta, Pod Hradbami, Potočná cesta, Prieložná cesta, Sľúkova Brána, SNP, Viničná cesta, Vodná, Za Múrom, Závoz.
 obec = "502693"
 name = "Pukanec"
 okrsky_date = 2022-11-09
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2023-09-30 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2023-09-30 was searched for. No document of the elections found: the 2022 elections page (archived 2022-09-04) links \"Oznamenie_o_utvoreni_voblebnych_okrskov_a_urceni_volebnych_miestnosti.pdf\" (id=1720116), which is not live nor archived; the referendum's document (9.11.2022). \"Obec Pukanec\" in okrsok 1 means voters registered only to the obec, not the register's houses without a street, which are placed by nearest address (fill_nearest); part Majere in okrsok 1."
-okrsky_reused = 2022-10-29
+okrsky_note = "These okrsky were transcribed for the elections of 2022-10-29 from the municipality's document for the referendum of 2023-01-21: they are the referendum's own. No document of the elections found: the 2022 elections page (archived 2022-09-04) links \"Oznamenie_o_utvoreni_voblebnych_okrskov_a_urceni_volebnych_miestnosti.pdf\" (id=1720116), which is not live nor archived; the referendum's document (9.11.2022). \"Obec Pukanec\" in okrsok 1 means voters registered only to the obec, not the register's houses without a street, which are placed by nearest address (fill_nearest); part Majere in okrsok 1."
+okrsky_adopted = 2023-01-21
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3614): The website has no elections section; the notice board lists only current items, the per-vote pages found (presidential 2024, referendum 2026) are gone (404) and the referendum 2023 page no longer links documents. The host also rate-limits (HTTP 429). Internet Archive (CDX API) refused connections / 503 on retries, so archived pages could not be checked. These are the okrsky of the vote of 2023-01-21 (2023-referendum), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2023-01-21: 1: 801 → 785, 2: 733 → 762."
 
 [[document]]
 url = "https://web.archive.org/web/20221220070336/https://www.pukanec.sk/download_file_f.php?id=1763564"

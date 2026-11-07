@@ -1,24 +1,21 @@
-# The okrsky of Lozorno of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/508055.toml, reused by `ems job reuse`. Its header there:
-#   Okrsky of Lozorno, transcribed by an AI agent in job okrsok-rules-755 from the documents below;
+# The okrsky of Lozorno of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/508055.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Lozorno, transcribed by an AI agent in job okrsok-rules-690 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: súpisné č. 1 – 600
-#     okrsok 2: súpisné č. 601 – 1345
+#     okrsok 1: Pre oprávnených občanov bývajúcich v obci Lozorno so súp. č. 1 – 600
+#     okrsok 2: Pre oprávnených občanov bývajúcich v obci Lozorno so súp. č. 601 – vyššie
 obec = "508055"
 name = "Lozorno"
-okrsky_date = 2022-08-09
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-03-16 the obec had as many, each with voters on the roll within 10% of its count then. No document of 2019-03-16 was searched for. Okrsky split by súpisné číslo of the house: 1–600 and 601–1345 (scanned PDF, read from image). Okrsok 2 takes every súpisné číslo above 600 (rest)."
-okrsky_reused = 2022-10-29
+okrsky_note = "The document, a notice for the elections of 10 November 2018, gives okrsok 1 súp. č. 1-600 and okrsok 2 súp. č. 601 and higher; the rules apply these ranges to every address of the part Lozorno. No separate mayor's decision on the okrsky of 2018 is archived."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1237): No okrsky document for the presidential election 2019 (old Voľby page sub42 lists the decree, information for voters, delegation, candidates, e-mail notice; no okrsky document). The Internet Archive was reachable (after a short outage). Other votes' documents split the obec by súpisné číslo (2018: 1-600 / 601-; 2022-2026: 1-700 / 701-). These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The document (the municipality's notice of the municipal elections, linked from its old Voľby page) names the elections of 10 November 2018 and their okrsky; it states no decision date."
 
 [[document]]
-url = "https://www.lozorno.sk/e_download.php?file=data/uredni_deska/obsah5661_24.pdf&original=Utvorenie%20volebn%C3%BDch%20okrskov%20a%20ur%C4%8Denie%20vol.%20miestn..pdf"
-sha256 = "0ca587e8239b4101d5079dc248be7f565d89b8e6c28a107a78a1a09f507e0d07"
-title = "Utvorenie volebných okrskov a určenie volebnej miestnosti pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov 2022 v obci Lozorno"
-
-[[document]]
-url = "https://www.lozorno.sk/seniori/samosprava/volby/utvorenie-volebnych-okrskov-a-urcenie-volebnejmiestnostipre-volby-do-organov-samospravy-obci-a-pre-volby-do-organov-samospravnych-krajov-2022-v-obci-lozorno-5886.html?kshow=78"
-sha256 = "570abbe6388a6851a62872a290ae1a2da50dc564be29583967a1d8bf8f0f58d9"
-title = "Utvorenie volebných okrskov ... 2022 v obci Lozorno (notice board page, vyvesené 10. 8. 2022)"
+url = "https://web.archive.org/web/20190915074631/http://www.lozorno.sk/documents/dokumenty32/sub41/Volby2018.pdf"
+sha256 = "9651e79cf4bad75ade6e5160ff8ca18ab2448aa32a7682d622d93d8e26cdf699"
+title = "Voľby do orgánov samosprávy obce 10. novembra 2018 (oznam s okrskami)"
 
 [okrsok.1]
 rules = [
@@ -27,5 +24,5 @@ rules = [
 
 [okrsok.2]
 rules = [
-  {rest = true},
+  {part = "Lozorno", numbers = "601-"},
 ]

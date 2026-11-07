@@ -12,8 +12,10 @@ import contextlib
 import datetime as dt
 import json
 import os
+import re
 import sys
 import time
+import urllib.error
 from collections import Counter
 from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
 from pathlib import Path
@@ -27,6 +29,7 @@ from election_map_slovakia import (
     bundle,
     candidates,
     check,
+    commoncrawl,
     config,
     contests,
     crosswalk,
@@ -39,6 +42,7 @@ from election_map_slovakia import (
     lists,
     lock,
     national,
+    obvodrules,
     obvody,
     okrsokrules,
     output,
@@ -48,6 +52,7 @@ from election_map_slovakia import (
     research,
     results,
     reuse,
+    special,
     stamp,
     statoffice,
     store,
@@ -950,7 +955,7 @@ def _candidates(
                 {k: raw.path for k, raw in lists_in.items()},
                 cfg.election_dir(election),
                 urls={k: raw.inp.url for k, raw in lists_in.items()},
-                councils=_term_councils(cfg, election),
+                term=_term_councils(cfg, election),
             )
         result = candidates.build(
             read,
@@ -1034,19 +1039,21 @@ def _candidates_declared(cfg: config.Config, election: config.Election) -> _Decl
     )
 
 
-def _term_councils(
-    cfg: config.Config, election: config.Election
-) -> dict[str, list[int]] | None:
-    """Return obec → the council obvody of a by-election's term's candidates.
+def _term_councils(cfg: config.Config, election: config.Election) -> lists.Term | None:
+    """Return what a by-election's term's candidates say of its councils.
 
-    The council whose seats the by-election fills was elected in them (its
-    lists name where the seats called lie); None of any other election.
+    Their obvody (the council whose seats a by-election proper fills was
+    elected in them: its lists name where the seats called lie) and seats
+    in all, which tell a council elected anew; None of any other election.
     """
     term = cfg.term(election)
     if term is None:
         return None
     data = json.loads(_built_candidates(cfg, term).read_bytes())
-    return addresses.council_obvody(data["contests"])
+    return lists.Term(
+        addresses.council_obvody(data["contests"]),
+        {o["code"]: o["council_seats"] for o in data["obce"] if "council_seats" in o},
+    )
 
 
 def _run_links(args: argparse.Namespace) -> int:
@@ -1701,20 +1708,24 @@ def _results_declared(
 
     Its candidates and geometry (:func:`_reference`), a by-election's term's
     candidates (:func:`_council_parts`), and what its results are compared
-    with (:func:`_compare`).
+    with (:func:`_compare`), with the special okrsky of both elections
+    (:func:`_special_declared`).
     """
     if not election.results.inputs:
         return None
     day = election.day.isoformat()
     compare = _compare(cfg, election)
     term = cfg.term(election)
+    walked = [election, *(c.earlier for c in compare)] if compare else []
+    special_pins, special_files = _special_declared(cfg, walked)
     return _Declared(
         *_outputs(cfg, "results", day),
         pins=[
             *(_pin(cfg, name) for name in election.results.inputs),
             *(pin for c in compare for pin in c.pins),
+            *special_pins,
         ],
-        curated=[cfg.election_dir(election) / obvody.DIRECTORY],
+        curated=[cfg.election_dir(election) / obvody.DIRECTORY, *special_files],
         values={
             "results": election.results,
             "kind": election.kind,
@@ -1724,6 +1735,7 @@ def _results_declared(
             else [],
             "members": _members(cfg),
             **{k: v for c in compare for k, v in c.values.items()},
+            "units": [e.units for e in walked],
         },
         upstream=(
             ("candidates", day),
@@ -1732,6 +1744,19 @@ def _results_declared(
             *(key for c in compare for key in c.upstream),
         ),
     )
+
+
+def _special_declared(
+    cfg: config.Config, elections: Sequence[config.Election]
+) -> tuple[list[config.Input], list[Path]]:
+    """Return the pins and curated files the special okrsky of *elections* come from.
+
+    Their territorial divisions and ``special-okrsky.toml`` where they have
+    one (:func:`okrsokrules.special_okrsky`).
+    """
+    pins = [_pin(cfg, e.units.input) for e in elections if e.units]
+    files = [cfg.election_dir(e) / special.FILE for e in elections]
+    return list({p.name: p for p in pins}.values()), [f for f in files if f.is_file()]
 
 
 def _okrsky_files(cfg: config.Config, election: config.Election) -> list[Path]:
@@ -1965,6 +1990,33 @@ def _add_job_parser(commands: argparse._SubParsersAction) -> None:
     )
     _add_election(reuse_parser, "the election, its day or slug")
     reuse_parser.set_defaults(run=_run_job_reuse)
+    captures_parser = sub.add_parser(
+        "captures",
+        help="list a website's captures in the Common Crawl, or read one",
+        description=(
+            "For the obvod-rules and okrsok-rules jobs: list the captures of"
+            " SITE (a host such as obec.sk, or a URL) in the Common Crawl's"
+            " crawls of the given years, one line each: time, HTTP status, type"
+            " and the URL that cites the capture as a document. Given such a"
+            " URL instead, write the document it holds to --out. Reads the"
+            " crawls' own index files, not the often overloaded index server"
+            " (see src/election_map_slovakia/commoncrawl.py)."
+        ),
+    )
+    captures_parser.add_argument("site", metavar="SITE")
+    captures_parser.add_argument(
+        "--years",
+        default="",
+        metavar="YYYY[-YYYY]",
+        help="the crawls of these years (required for a listing)",
+    )
+    captures_parser.add_argument(
+        "--match", default="", metavar="REGEX", help="only the URLs it finds in"
+    )
+    captures_parser.add_argument(
+        "--out", type=Path, metavar="FILE", help="where to write a capture's document"
+    )
+    captures_parser.set_defaults(run=_run_job_captures)
 
 
 def _run_job_make(args: argparse.Namespace) -> int:
@@ -2017,6 +2069,42 @@ def _run_job_reuse(args: argparse.Namespace) -> int:
         _error(f"ems job reuse: {e}")
         return 1
     _print(lines)
+    return 0
+
+
+def _run_job_captures(args: argparse.Namespace) -> int:
+    cfg = config.load()
+    ranges = commoncrawl.http_ranges(
+        fetch.user_agent(cfg.inputs.contact),
+        fetch.ssl_context(cfg.inputs.ca_certificates),
+        obvodrules.TIMEOUT,
+    )
+    try:
+        if commoncrawl.capture(args.site):
+            if args.out is None:
+                raise ConfigError("--out: where to write the capture's document")
+            data = commoncrawl.fetch(ranges, args.site, obvodrules.MAX_DOCUMENT)
+            args.out.write_bytes(data)
+            _print([f"{args.out}: {len(data):,} bytes"])
+            return 0
+        m = re.fullmatch(r"(\d{4})(?:-(\d{4}))?", args.years)
+        if m is None:
+            raise ConfigError("--years: a year or a range of years, e.g. 2017-2018")
+        years = range(int(m.group(1)), int(m.group(2) or m.group(1)) + 1)
+        match = re.compile(args.match) if args.match else None
+        for crawl in commoncrawl.crawls(ranges, years):
+            _print(
+                f"{stamp} {fields.get('status', '-')} {fields.get('mime', '-')}"
+                f" {commoncrawl.capture_url(crawl, fields['url'], stamp)}"
+                for stamp, fields in commoncrawl.captures(ranges, crawl, args.site)
+                if match is None or match.search(fields["url"])
+            )
+    except commoncrawl.CommonCrawlError as e:
+        _error(f"ems job captures: {e}")
+        return 1
+    except (urllib.error.URLError, OSError) as e:
+        _error(f"ems job captures: {e}")
+        return 1
     return 0
 
 
@@ -2461,7 +2549,16 @@ def _past(
         ]
         sources = compare.sources(live.source)
         compared = live.part(sources)
-        walk = crosswalk.make(compared, before, registers, earlier.day)
+        walk = crosswalk.make(
+            compared,
+            before,
+            registers,
+            earlier.day,
+            (
+                special.keys(okrsokrules.special_okrsky(cfg, election)),
+                special.keys(okrsokrules.special_okrsky(cfg, earlier)),
+            ),
+        )
         linked = json.loads(compare.links.read_bytes())["candidacies"]
         past = crosswalk.past(compared, before, walk, linked)
         out |= dict.fromkeys(sources, past)

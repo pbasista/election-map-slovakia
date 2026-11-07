@@ -15,13 +15,11 @@
 #   okrsok 12: Národná trieda 41-81 (nepárne), Národná trieda 56-86 (párne),Chrastie, Kostolianska cesta, Májová
 #   okrsok 13: Cesta pod Hradovou, Cyklistická, Ďumbierska, Lomnická, Polianska, Slavkovská, Štrbská, Zoborská
 #   okrsok 14: Gerlachovská, Huncovská, Kavečianska cesta, Končistá, Mengusovská, Na stráni, Vihorlatská
-#   okrsok 15: (not in the document)
-#   okrsok 16: (not in the document)
 obec = "598151"
 name = "Košice-Sever"
 okrsky_date = 2022-11-09
 okrsky_fill = "nearest"
-okrsky_note = "'MČ Košice - Sever' in okrsok 8 means voters registered only at the district (no address); no rule. Placed by fill_nearest: Námestie Jána Mathého (not named), the even numbers of Letná, Komenského numbers outside 35-73 odd / 44-60 even, Hlinkova, Národná trieda, Slovenskej jednoty, Rampová and Czambelova numbers outside the listed ranges, and addresses without a street. The document defines 14 okrsky only; the Statistical Office counts 16, okrsky 15 and 16 with 4 and 3 voters, which the document does not mention: they are given no addresses (addressless), every address being in okrsky 1-14 per the document."
+okrsky_note = "'MČ Košice - Sever' in okrsok 8 means voters registered only at the district (no address); no rule. Placed by fill_nearest: Námestie Jána Mathého (not named), the even numbers of Letná, Komenského numbers outside 35-73 odd / 44-60 even, Hlinkova, Národná trieda, Slovenskej jednoty, Rampová and Czambelova numbers outside the listed ranges, and addresses without a street. The document defines 14 okrsky only; the Statistical Office counts 16, okrsky 15 and 16 with 4 and 3 voters, which the document does not mention: they are the COVID-19 special okrsky of okresy Košice I and Košice-okolie (which is which is not told; Act No. 395/2022 Coll.), which have no territory (special-okrsky.toml); every address is in okrsky 1-14 per the document."
 
 [[document]]
 url = "https://web.archive.org/web/20221206000020/https://www.kosicesever.sk/sites/default/files/images/oznamenie_o_urceni_volebnych_okrskov_a_volebnych_miestnosti_v_referende.pdf"
@@ -208,9 +206,3 @@ rules = [
   {street = "Na stráni"},
   {street = "Vihorlatská"},
 ]
-
-[okrsok.15]
-addressless = true
-
-[okrsok.16]
-addressless = true

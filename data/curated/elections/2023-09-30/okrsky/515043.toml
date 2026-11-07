@@ -1,20 +1,23 @@
-# The okrsky of Klenovec of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/515043.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Klenovec, transcribed by an AI agent in job okrsok-rules-771 from the documents below;
+# The okrsky of Klenovec of the vote of 2023-01-21, data/curated/elections/2023-01-21/okrsky/515043.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Klenovec, transcribed by an AI agent in job okrsok-rules-3054 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: č. domov od 1 – 224
-#     okrsok 2: č. domov 225 – 600
-#     okrsok 3: č. domov nad 600
+#     okrsok 1: Okrsok č. 1 – Klub dôchodcov pre č. domov 1 - 224
+#     okrsok 2: Okrsok č. 2 – Obecný úrad - prípravka na prízemí pre č. domov 225 – 600
+#     okrsok 3: Okrsok č. 3 – Základná škola – pre č. domov nad 600
 obec = "515043"
 name = "Klenovec"
-okrsky_date = 2022-10-04
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2023-09-30 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2023-09-30 was searched for. The notice (no decision date; posted on the notice board 'Vyvesené: 4. 10. 2022', used as date) assigns the okrsky by house number (číslo domu = súpisné číslo): 1–224, 225–600, over 600."
-okrsky_reused = 2022-10-29
+okrsky_note = "Okrsky by číslo domu (súpisné číslo) of the single part Klenovec: 1-224, 225-600, over 600, as in 2022."
+okrsky_adopted = 2023-01-21
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3613): The NRSR 2023 notice-board posts give the decision calling the vote, voter information, postal vote and delegation; none states the okrsky. These are the okrsky of the vote of 2023-01-21 (2023-referendum), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2023-01-21: 1: 731 → 740, 2: 775 → 784, 3: 864 → 848."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2022-11-15
+okrsky_date_basis = "The notice-board page states 'Vyvesené: 15. 11. 2022'; the notice itself is undated. (https://www.klenovec.sk/samosprava/zverejnovanie/uradna-tabula/referendum-2023-722.html)"
 
 [[document]]
-url = "https://www.klenovec.sk/samosprava/zverejnovanie/uradna-tabula/volby-2022-715.html"
-sha256 = "83f1f30739bdb1061fe3bc6ef20fc06c83417a4ec4fc26e71ea0b361cb5fe593"
-title = "Voľby 2022 – Oznámenie o čase a mieste konania volieb do orgánov samosprávnych krajov a volieb do orgánov samosprávy obcí 2022"
+url = "https://www.klenovec.sk/samosprava/zverejnovanie/uradna-tabula/referendum-2023-722.html"
+sha256 = "152c53015c9adc22ed0abcf4089d49aa2a8cd38c09e439815c5bbe5bb482761d"
+title = "Referendum 2023 – Oznámenie o určení volebnej miestnosti a volebného okrsku pre referendum 2023 v obci Klenovec"
 
 [okrsok.1]
 rules = [

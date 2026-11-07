@@ -16,8 +16,6 @@ fill = "nearest"
 note = "No document of the elections of 2022-10-29 was found; this is the rule set of the elections of 2026-10-24, whose obvody, seats and okrsky are those of 2022 (each okrsok's voters on the roll within 10%). Estimated: uznesenie č. 59/2026 sets obvod 1 (6 seats) and obvod 2 (7); the elections page makes obvod 1 the volebné okrsky 1 and 2 (polling station ZŠ s MŠ Kudlov 781) and obvod 2 the okrsky 3 and 4. The 2023 NRSR page lists the okrsky only by hamlet names: the eastern hamlets (Kudlov, Chajsovka, U Varmuza, U Serafína, ... U Svedov, U Migasa) form okrsky 1 and 2, the western part with Ústredie, Bory, Poľana, Tridsiatok, Sihly and Rieky okrsky 3 and 4. Each address goes to the nearest of these hamlets (OpenStreetMap), those bordering the dividing line and a few in each core: 741 and 907 addresses with a point, close to the 6:7 seats. Addresses without a point take the obvod most of their part got."
 estimated = true
 reused = 2026-10-24
-okrsky_note = "No document of the elections of 2022-10-29 was found; this is the rule set of the elections of 2026-10-24, whose obvody, seats and okrsky are those of 2022 (each okrsok's voters on the roll within 10%). The 2026 elections page gives obvod 1 = okrsky 1, 2 (ZŠ s MŠ Kudlov 781) and obvod 2 = okrsky 3, 4 (ZpS Goral 1710/1720) but no territory per okrsok. The 2023 NRSR page lists okrsky by hamlet names, but the register has no streets (all addresses by súpisné číslo in one part), so no rules can be written; and 2023 is another election."
-okrsky_reused = 2026-10-24
 
 [[document]]
 url = "https://www.skalite.sk/modules/file_storage/download.php?file=1aad0a87%7C1294&inline=1"
@@ -36,7 +34,6 @@ title = "Voľby do NRSR 2023 (volebné okrsky by hamlet names)"
 
 [obvod.1]
 seats = 6
-okrsky = [1, 2]
 rules = [
   {near = [18.94338, 49.49792], note = "Chajsovka"},
   {near = [18.94158, 49.5012], note = "U Jargaša"},
@@ -52,7 +49,6 @@ rules = [
 
 [obvod.2]
 seats = 7
-okrsky = [3, 4]
 rules = [
   {near = [18.89781, 49.49354], note = "Bory"},
   {near = [18.90553, 49.49305], note = "Pod Ruckami"},

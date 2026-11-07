@@ -817,6 +817,17 @@ with weights, obec by obec, the first that applies:
    with registered voters within 10 % of then.
 4. Otherwise **unknown**.
 
+A special okrsok, which has no territory
+(a COVID-19 special okrsok of the 2023 referendum, a prison's;
+`special-okrsky.toml`, [pipeline.md](pipeline.md#curated-data)),
+is matched with no okrsok, nor any with it, on either side:
+it is unknown, and the rules above apply to the other okrsky alone,
+as an okrsok number is reused from vote to vote.
+Its figures stay in the okrsok files and in its obec's,
+as ŠÚ SR counts them;
+`data/index.json` `special` names those that voted
+(kind, registered voters, source), which the map never draws.
+
 A council obvod is counted by how its okrsky were mapped:
 whole (of whole obce), or the least certain method of its okrsky;
 the area files' contest `past` of an obvod of a council of several

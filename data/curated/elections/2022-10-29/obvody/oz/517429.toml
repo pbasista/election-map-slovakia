@@ -14,14 +14,16 @@
 #     okrsok 2: Brehy, Cintorínska, Nigrob, SNP, U Čajkov, U Čepelov
 #     okrsok 3: Kubíková
 #     okrsok 4: Nižné Kamence, Vyšné Kamence
+# Okrsky added by `ems job reuse`: those of the vote of 2026-10-24, data/curated/elections/2026-10-24/obvody/oz/517429.toml, standing in.
 obec = "517429"
 name = "Belá"
 date = 2026-07-17
 note = "No document of the elections of 2022-10-29 was found; this is the rule set of the elections of 2026-10-24, whose obvody, seats and okrsky are those of 2022 (each okrsok's voters on the roll within 10%). The announcement is a scanned image (clearly legible, read visually). Obvod 3 is defined by the settlements Nižné Kamence and Vyšné Kamence, which are not parts of the obec in the address register (they lie in part Belá and have no streets). Their houses were identified from the register's address points: the dense settlement around Nižné/Vyšné Kamence (incl. the cluster on road 583 just SW of it, súpisné 855-865, 1037) holds exactly the street-less súpisné numbers 837-1043 of part Belá (a contiguous block, no other Belá address in it; ZUŠ Nižné Kamence 891 is in it) plus scattered recreational houses 2041-2180 within the settlement. 1004 has no point and was included by its number. All other street-less houses of part Belá (Bránica, Zlieň 819-836, recreational 2000+ numbers elsewhere) go to obvod 1. The resolution 81/2026 itself is not in the published list of resolutions of 17.07.2026."
 reused = 2026-10-24
 okrsky_fill = "nearest"
-okrsky_note = "No document of the elections of 2022-10-29 was found; this is the rule set of the elections of 2026-10-24, whose obvody, seats and okrsky are those of 2022 (each okrsok's voters on the roll within 10%). The okrsky announcement is undated. Bránica and Zlieň (okrsok 1) are not in the address register and are left out. Street-less addresses of part Belá in obvod 1 (outside Kamence) are placed by fill_nearest."
-okrsky_reused = 2026-10-24
+okrsky_note = "The okrsky announcement is undated. Bránica and Zlieň (okrsok 1) are not in the address register and are left out. Street-less addresses of part Belá in obvod 1 (outside Kamence) are placed by fill_nearest."
+okrsky_adopted = 2026-10-24
+okrsky_adopted_basis = "No document of 2022-10-29 placing the addresses in okrsky is known. These are the okrsky of the vote of 2026-10-24 (2026), the nearest in time with okrsky of its own that fit: 4 okrsky, those ŠÚ SR counted in each council obvod (nearer, not taken: 2024-03-23: okrsky of the whole obec, the council then elected in several obvody; 2024-06-08: okrsky of the whole obec, the council then elected in several obvody; 2026-07-04: okrsky of the whole obec, the council then elected in several obvody). Voters on the roll per okrsok (ŠÚ SR), 2022-10-29 → 2026-10-24: 1: 1,053 → 1,010, 2: 998 → 998, 3: 186 → 188, 4: 432 → 448."
 
 [[document]]
 url = "https://www.bela.sk/e_download.php?file=/data/uredni_deska/obsah566_4.pdf&original=Ozn%C3%A1menie%20o%20utvoren%C3%AD%20volebn%C3%BDch%20obvodov%20a%20o%20ur%C4%8Den%C3%AD%20po%C4%8Dtu%20poslancov%20-%20Vo%C4%BEby%20do%20org%C3%A1nov%20samopr%C3%A1vy%20obc%C3%AD%2024.10.2026.pdf"

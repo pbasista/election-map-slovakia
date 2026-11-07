@@ -9,12 +9,11 @@
 #   okrsok 6: Do kratín, Dolné vinice, Do remanancií, Hájová, Martinský breh, M. Benku, Obrancov mieru, Pod hájom, Priemyselná, Rovňanova, Staničná, Šafranická, Tehelná, Viničná
 #   okrsok 7: Baničova, Bottova, B. S.Timravy, Družstevná, Hurbanova, Chyzerovecká, Janka Matúšku, Karola Kuzmányho, Kraskova, M. M. Hodžu, M. Pružinského, Palárikova
 #   okrsok 8: Čierna dolina, Hlavná, Horný majer, Nová, Obecná, Parková
-#   okrsok 9: (not in the document)
 obec = "500968"
 name = "Zlaté Moravce"
 okrsky_date = 2022-11-10
 okrsky_fill = "nearest"
-okrsky_note = "The document sets 8 okrsky (merged from the usual 11: old 2+3, 5+6, 7+8). The Statistical Office counts a 9th okrsok with 1 voter, which the document does not name; it is given as addressless (no addresses). Krížna and Poštová are named but not in the register, left out. Voters registered at 'Mesto Zlaté Moravce' vote in okrsok 2. Hviezdoslavova 2-30 / 32-86D and 1. mája are split as written; their other numbers and houses without a street in part Zlaté Moravce are placed by fill_nearest."
+okrsky_note = "The document sets 8 okrsky (merged from the usual 11: old 2+3, 5+6, 7+8). The Statistical Office counts a 9th okrsok with 1 voter that the document does not name: the COVID-19 special okrsok of okres Zlaté Moravce (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml). Krížna and Poštová are named but not in the register, left out. Voters registered at 'Mesto Zlaté Moravce' vote in okrsok 2. Hviezdoslavova 2-30 / 32-86D and 1. mája are split as written; their other numbers and houses without a street in part Zlaté Moravce are placed by fill_nearest."
 
 [[document]]
 url = "https://www.zlatemoravce.eu/download_file_f.php?id=1770420"
@@ -162,6 +161,3 @@ rules = [
   {street = "Parková"},
   {part = "Prílepy", note = "the okrsok's polling station is the Kultúrny dom in Prílepy and its streets are those of part Prílepy; the part rule places its houses without a street", inferred = true},
 ]
-
-[okrsok.9]
-addressless = true

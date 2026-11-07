@@ -1,36 +1,31 @@
-# The okrsky of Lysá pod Makytou of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/513342.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Lysá pod Makytou, transcribed by an AI agent in job okrsok-rules-836 from the documents below;
+# The okrsky of Lysá pod Makytou of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/513342.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Lysá pod Makytou, transcribed by an AI agent in job okrsok-rules-4939 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: súpisné čísla 1 - 427
-#     okrsok 2: súpisné čísla 428 - 1400
+#     okrsok 1: Zahŕňa súpisné čísla: 1 - 427
+#     okrsok 2: Zahŕňa súpisné čísla: 428 - 1600
 obec = "513342"
 name = "Lysá pod Makytou"
-okrsky_date = 2022-08-05
+okrsky_date = 2024-03-04
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2026-07-04 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2026-07-04 was searched for. The okrsky are set by súpisné čísla numbered across the whole municipality (one k.ú.): 1–427 and 428–1400; given as part rules for each of the three parts. Addresses with súpisné above 1400 (if any) are placed by fill_nearest. The page's second attachment (id=1722931) is the same decision without the number ranges."
-okrsky_reused = 2022-10-29
+okrsky_note = "The document splits the municipality (one k.ú., parts Lysá pod Makytou, Strelenka, Dešná, no streets) by súpisné čísla only, municipality-wide (1-427, 428-1600); written as the same súpisné ranges in each part (Dešná has no number up to 427). fill_nearest places the 2 addresses in Strelenka whose súpisné číslo lies outside 1-1600."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2026-07-04 setting the okrsky was found (okrsok-rules-5565): No okrsky document of this vote found. The live site's election pages hold okrsky documents only for NRSR 2023, prezident 2024 and EP 2024 (súpisné 1-427 / 428-1600); the referendum pages (2023, 2026) list none. Archived 2019 pages (volby, EP 2019) hold only results and the vyhlásenie; the archived prezident 2019 and referendum 2023 pages could not be fetched (Internet Archive intermittently offline). These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-07-04 → 2024-06-08: 1: 901 → 959, 2: 638 → 670."
 
 [[document]]
-url = "https://www.lysapodmakytou.sk/download_file_f.php?id=1722919"
-sha256 = "6ad607a0f41ef68b8a8db28ae5f153747fa284d591c1350a92ea9b1e8276b4b9"
-title = "Utvorenie volebných okrskov a určenie volebných miestností pre Voľby do orgánov samosprávy obcí a Voľby do orgánov samosprávnych krajov, konané 29.októbra 2022"
-
-[[document]]
-url = "https://www.lysapodmakytou.sk/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-konane-29-okt/mid/535876/.html"
-sha256 = "38eb4d2a6de5b12e5aaed4561b9449ee5fe8d4e5cfda963f8fa42a304634bcb3"
-title = "Utvorenie volebných okrskov a určenie volebných miestností (oznam, zverejnené 9.8.2022)"
+url = "https://www.lysapodmakytou.sk/download_file_f.php?id=2011882"
+sha256 = "2d2c37effa13a5c0aa86a07e4113e4fe924569536c84572b1e3ee054b9abc15e"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre konanie volieb do Európskeho parlamentu, dňa 8. júna 2024"
 
 [okrsok.1]
 rules = [
-  {part = "Dešná", numbers = "1-427"},
   {part = "Lysá pod Makytou", numbers = "1-427"},
   {part = "Strelenka", numbers = "1-427"},
 ]
 
 [okrsok.2]
 rules = [
-  {part = "Dešná", numbers = "428-1400"},
-  {part = "Lysá pod Makytou", numbers = "428-1400"},
-  {part = "Strelenka", numbers = "428-1400"},
+  {part = "Lysá pod Makytou", numbers = "428-1600"},
+  {part = "Strelenka", numbers = "428-1600"},
+  {part = "Dešná", numbers = "428-1600"},
 ]

@@ -1,4 +1,4 @@
-# The okrsky of Sereď of the elections of 2026-10-24, data/curated/elections/2026-10-24/obvody/oz/504009.toml, copied by `ems job reuse` (reused). Its header there:
+# The okrsky of Sereď of the vote of 2026-10-24, data/curated/elections/2026-10-24/obvody/oz/504009.toml, standing in, by `ems job reuse`. Its header there:
 #   Council obvody of Sereď (504009), Galanta.
 #   Transcribed by an AI agent in job obvod-rules-050 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
@@ -25,11 +25,12 @@ obec = "504009"
 name = "Sereď"
 date = 2026-06-18
 fill = "nearest"
-note = "The council obvody of the elections of 2026-10-24. Resolution 156/2026 sets 2 obvody (10 + 9 seats); the attached PDF lists volebné okrsky by street and states obvod 1 = okrsky 1-6, obvod 2 = okrsky 7-13. Rules transcribed from the okrsok street lists. 'Južná' (okrsok 4) is not in the address register and is omitted. Okrsok 6 also has 'občania mesta, ktorí majú trvalý pobyt mesto Sereď bez určenia ulice': citizens registered only at the town (no house), who are not in the address register; the document places no addresses without a street, so fill_nearest does."
+note = "The council obvody of the vote of 2026-10-24: they only place the okrsky. Resolution 156/2026 sets 2 obvody (10 + 9 seats); the attached PDF lists volebné okrsky by street and states obvod 1 = okrsky 1-6, obvod 2 = okrsky 7-13. Rules transcribed from the okrsok street lists. 'Južná' (okrsok 4) is not in the address register and is omitted. Okrsok 6 also has 'občania mesta, ktorí majú trvalý pobyt mesto Sereď bez určenia ulice': citizens registered only at the town (no house), who are not in the address register; the document places no addresses without a street, so fill_nearest does."
 reused = 2026-10-24
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2026-10-24: in 2026-07-04 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2026-07-04 was searched for. Okrsky document (attached to resolution 156/2026 PDF) is undated, so no date. 'Južná' (okrsok 4) not in register, omitted. Čepeňská: súpisné 1211-1214 in okrsok 7, rest (rodinné domy and 3047, 3081, 3735, 4305) in okrsok 9. Addresses without street (and 'bez určenia ulice' in okrsok 6 refers to residents with no address) are left to fill_nearest."
-okrsky_reused = 2026-10-24
+okrsky_note = "Okrsky document (attached to resolution 156/2026 PDF) is undated, so no date. 'Južná' (okrsok 4) not in register, omitted. Čepeňská: súpisné 1211-1214 in okrsok 7, rest (rodinné domy and 3047, 3081, 3735, 4305) in okrsok 9. Addresses without street (and 'bez určenia ulice' in okrsok 6 refers to residents with no address) are left to fill_nearest."
+okrsky_adopted = 2026-10-24
+okrsky_adopted_basis = "No document of 2026-07-04 setting the okrsky was found (okrsok-rules-5290): The referendum 2026 notices say only that 13 okrsky are formed; no document listing their streets was found on the website (elections page, notices, notice board) or in the Internet Archive. These are the okrsky of the vote of 2026-10-24 (2026), the nearest in time with okrsky of its own that fit: 13 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-07-04 → 2026-10-24: 1: 1,006 → 1,029, 2: 1,116 → 1,182, 3: 1,036 → 1,062, 4: 1,045 → 1,079, 5: 1,036 → 1,086, 6: 1,254 → 1,313, 7: 1,027 → 1,075, 8: 856 → 902, 9: 1,060 → 1,092, 10: 1,111 → 1,142, 11: 894 → 908, 12: 644 → 646, 13: 498 → 527."
 
 [[document]]
 url = "https://www.sered.sk/modules/file_storage/download.php?file=2200e017%7C2791&inline=1"

@@ -1,31 +1,38 @@
-# The okrsky of Trstice of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/504106.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Trstice, transcribed by an AI agent in job okrsok-rules-293 from the documents below;
+# The okrsky of Trstice of the vote of 2022-10-29, data/curated/elections/2022-10-29/okrsky/504106.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Trstice, transcribed by an AI agent in job okrsok-rules-738 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: obyvatelia s číslami domov od 1 do 500
-#     okrsok 2: obyvatelia s číslami domov od 501 do 1000
-#     okrsok 3: obyvatelia s číslami domov od 1001
+#     okrsok 1: Okrsok č. 1 - Obecný úrad, pre voličov s trvalým pobytom od súp. č. 1 – 450
+#     okrsok 2: Okrsok č. 2 - Kultúrny dom, pre voličov s trvalým pobytom od súp. č. 451 – 900. Do tohto okrsku boli zaradení i občania, ktorým boli zrušené trvalé pobyty.
+#     okrsok 3: Okrsok č. 3 - Základná škola, pre voličov s trvalým pobytom od súp. č. 901 – 1500
 obec = "504106"
 name = "Trstice"
-okrsky_note = "These are the okrsky of the elections of 2026-10-24: in 2024-06-08 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2024-06-08 was searched for. Only document found is the obec announcement of 22.10.2026 giving okrsky by house numbers (súpisné, no streets in Trstice); no date of the mayor's decision stated."
-okrsky_reused = 2026-10-24
+okrsky_date = 2022-10-06
+okrsky_note = "Scanned, undated announcement; date = its posting date on the official notice board ('Vyvesené: 6. 10. 2022', also shown as 06.okt 2022 in the archived 2022 notice-board page, snapshot 20221024203507). The okrsky are ranges of súpisné čísla (1-450, 451-900, 901-1500). Okrsok 2 also holds the citizens whose permanent residence was cancelled (registered only to the obec), which has no address of its own."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2024-06-08 setting the okrsky was found (okrsok-rules-4823): The mayor's 'Oznámenie o utvorení volebných okrskov v obci Trstice pre voľby do Európskeho parlamentu dňa 8.6.2024' (notice-board item 276, dated 5.3.2024, https://www.trstice.sk/e_download.php?file=/data/uredni_deska/obsah276_1.pdf) lists only the 3 okrsky with their polling stations (Okrsok č. 1 Obecný úrad č. 667, č. 2 Komunitný dom č. 1322, č. 3 Základná škola č. 647), no house numbers or territory. Trstice has a single part and no streets (all addresses are súpisné čísla), so a list of polling stations alone cannot be turned into rules (3 okrsky, 1 part). The voters per okrsok shifted markedly from March to June 2024, so the split likely changed (the 2026 announcement gives 1–500, 501–1000, 1001–), but no document of this vote states it. Every item of the official notice board (úradná tabuľa, items 1–444, 2016–2026, incl. the items migrated from the old Joomla site) was listed by id and every election item opened; the Internet Archive (CDX of trstice.sk, old site trstice.sk/sk/aktuality/…) was searched for election pages and radio announcements (hlásenie miestneho rozhlasu) around the vote; the IA was slow and often refused connections, but the pages listed in tried were retrieved. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-06-08 → 2022-10-29: 1: 1,079 → 1,014, 2: 1,116 → 1,030, 3: 999 → 1,203."
 
 [[document]]
-url = "https://www.trstice.sk/udalosti/hlasenie-miestneho-rozhlasu/informacie-o-volbach-177sk.html"
-sha256 = "61915f32f5328cf982056e0631a9e8ee1b31b435b96c222df3611afee8f43daa"
-title = "Informácie o voľbách (hlásenie miestneho rozhlasu, 22.10.2026)"
+url = "https://www.trstice.sk/e_download.php?file=/data/uredni_deska/obsah222_1.pdf&original=Utvorenie+volebn%C3%BDch+okrskor.pdf"
+sha256 = "1af59ad442e5b9224978e6447bc2125ba5d7dae15f8ab16f5e74e03f00a454f4"
+title = "Utvorenie volebných okrskov v Trsticiach pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov dňa 29.10.2022"
+
+[[document]]
+url = "https://www.trstice.sk/urad/uradna-tabula-2/utvorenie-volebnych-okrskov-v-trsticiach-pre-volby-do-organov-samospravy-obci-a-do-organov-sampravnych-krajov-29102022-222.html"
+sha256 = "30fff5563b8d15bae6711d8cbc798ffef7c24635cc92e3bc41afb2dea41334a4"
+title = "Úradná tabuľa: Utvorenie volebných okrskov v Trsticiach … 29.10.2022 (vyvesené 6. 10. 2022)"
 
 [okrsok.1]
 rules = [
-  {part = "Trstice", numbers = "1-500"},
+  {part = "Trstice", numbers = "1-450"},
 ]
 
 [okrsok.2]
 rules = [
-  {part = "Trstice", numbers = "501-1000"},
+  {part = "Trstice", numbers = "451-900"},
 ]
 
 [okrsok.3]
 rules = [
-  {part = "Trstice", numbers = "1001-"},
+  {part = "Trstice", numbers = "901-1500"},
 ]

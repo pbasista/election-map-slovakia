@@ -111,6 +111,7 @@ from election_map_slovakia.candidates import (
     load_admin,
     municipal_index,
     name_key,
+    new_councils,
     search_key,
 )
 from election_map_slovakia.contests import SELF_GOVERNMENT, parse
@@ -427,15 +428,21 @@ def part_councils(
     how many obvody a council has, so only obvod 1 with its ``seats`` given
     is taken for a whole council of one obvod, unless the council the
     by-election fills seats of, elected in its term, had several obvody
-    (*split*, :func:`split_councils` of the term's contests); an obvod
-    above 1, or one without ``seats`` (candidates in several obvody), is
-    part of a larger council, its other obvody electing no one.
+    (*split*, :func:`split_councils` of the term's contests; not of a
+    council elected anew, ``vote`` ``"new"``, whose obvody are its own); an
+    obvod above 1, or one without ``seats`` (candidates in several obvody),
+    is part of a larger council, its other obvody electing no one.
     """
+    new = new_councils(contests)
     return {
         str(c["area"])
         for c in contests
         if c["kind"] == "oz"
-        and ("seats" not in c or int(c["obvod"]) > 1 or str(c["area"]) in split)
+        and (
+            "seats" not in c
+            or int(c["obvod"]) > 1
+            or (str(c["area"]) in split and str(c["area"]) not in new)
+        )
     }
 
 

@@ -1,64 +1,49 @@
-# The okrsky of Marianka of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/508080.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Marianka, transcribed by an AI agent in job okrsok-rules-784 from the documents below;
+# The okrsky of Marianka of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/508080.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Marianka, transcribed by an AI agent in job okrsok-rules-719 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: obec Marianka, Agátová, Borinská, Budovateľská, Bystrická, Čerešňová, Javorová, Jelšová, Kamenná, Krátka, Lesná, Lipová, Lúčna, Stromová, Stupavská, Štúrova, Topoľová, Višňová, Vŕbová, Záhradná
-#     okrsok 2: Družstevná, Karpatská, Na Kracinách, Na Ovsisku, Na Tálkoch, Na Vinohradoch, Bad Bednárovým, Námestie 4.apríla, Partizánska, Pod Mlynom, Podhájska, Poľná, Potočná, Púpavová, Sedmokrásková, Slnečná, Školská, Športová, Veterná
+#     okrsok 1: Agátová ulica, Borinská ulica, Bystrická ulica, Budovateľská ulica, Čerešňová ulica, Družstevná ulica, Javorová ulica, Kamenná ulica, Karpatská ulica, Krátka ulica, Lesná ulica, Lipová ulica
+#     okrsok 2: Jelšová ulica, Na Kracinách, Na Ovsisku, Na Tálkoch, Na Vinohradoch, Nad Bednárovým, Nám. 4. apríla, Partizánska ulica, Pod Mlynom, Podhájska ulica, Poľná ulica, Potočná ulica, Púpavová ulica, Sedmokrásková ulica, Slnečná ulica, Stromová ulica, Stupavská ulica, Školská ulica, Športová ulica, Štúrova ulica, Topoľová ulica, Višňová ulica, Vŕbová ulica, Záhradná ulica, Obyvatelia s trvalým pobytom na Obci Marianka
 obec = "508080"
 name = "Marianka"
-okrsky_date = 2022-10-19
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2020-02-29 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2020-02-29 was searched for. The documents are undated; date is the posting date ('Vyvesené: 19. 10. 2022') stated on the municipality's 2022 elections page that lists them. 'obec Marianka' in okrsok 1 = voters registered without an address. Register addresses without a street (súpisné only, 37) are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "The document does not list Lúčna and Veterná (and the 37 register addresses without a street, súpisné only); these are placed by fill_nearest. 'Obyvatelia s trvalým pobytom na Obci Marianka' (residents registered without an address) are in okrsok 2."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2448): The live site lists elections only from 2022; the Internet Archive (CDX of marianka.sk 2017-2026) holds no page or file of the National Council election of 29 February 2020 (no capture of the site between late 2019 and August 2020 of any elections page). The 2018 and 2021 documents differ from each other, so neither can be assumed for 2020. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 2 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2018-10-19
+okrsky_date_basis = "The municipality's page 'VOLEBNÉ OKRSKY' (as archived on 2019-08-18) states 'Posledná úprava: 19.10.2018': its content was last changed on 19 October 2018, before the elections of 10 November 2018, so it is the okrsky list published for them; the page itself states no decision date. No capture before the vote exists. (https://web.archive.org/web/20190818085541/https://www.marianka.sk/som-obcan/aktuality/volebne-okrsky.html)"
 
 [[document]]
-url = "https://www.marianka.sk/e_download.php?file=/data/uredni_deska/obsah534_4.pdf&original=rozdelenie-okrskov.pdf"
-sha256 = "b9903c95eda9d806ae2769ba0a49b19ab955256369b27e5967f0ad31c2562254"
-title = "Rozdelenie okrskov"
-
-[[document]]
-url = "https://www.marianka.sk/e_download.php?file=/data/uredni_deska/obsah534_8.pdf&original=volebne-okrsky.pdf"
-sha256 = "b2d4515c6860b250c23ba6cf6ea1472ea72567608ca4749a7cc5dee21763a195"
-title = "Volebné okrsky"
-
-[[document]]
-url = "https://www.marianka.sk/sk/zverejnovanie/volby/volby-do-organov-samospravy-obci-2022-535.html"
-sha256 = "0e4c91c50f2b2b5391b420ff34076677c811480260e15da0ce463782663030ec"
-title = "Voľby do orgánov samosprávy obcí 2022"
+url = "https://web.archive.org/web/20190818085541/https://www.marianka.sk/som-obcan/aktuality/volebne-okrsky.html"
+sha256 = "46535fb8e14e8cc625c53d207d34cbd17c6f0617e2bcdb142ab67cea37771d81"
+title = "VOLEBNÉ OKRSKY"
 
 [okrsok.1]
 rules = [
   {street = "Agátová"},
   {street = "Borinská"},
-  {street = "Budovateľská"},
   {street = "Bystrická"},
+  {street = "Budovateľská"},
   {street = "Čerešňová"},
+  {street = "Družstevná"},
   {street = "Javorová"},
-  {street = "Jelšová"},
   {street = "Kamenná"},
+  {street = "Karpatská"},
   {street = "Krátka"},
   {street = "Lesná"},
   {street = "Lipová"},
-  {street = "Lúčna"},
-  {street = "Stromová"},
-  {street = "Stupavská"},
-  {street = "Štúrova"},
-  {street = "Topoľová"},
-  {street = "Višňová"},
-  {street = "Vŕbová"},
-  {street = "Záhradná"},
 ]
 
 [okrsok.2]
 rules = [
-  {street = "Družstevná"},
-  {street = "Karpatská"},
+  {street = "Jelšová"},
   {street = "Na Kracinách"},
   {street = "Na Ovsisku"},
   {street = "Na Tálkoch"},
   {street = "Na Vinohradoch"},
-  {street = "Nad Bednárovým", written = "Bad Bednárovým", note = "typo in the document: 'Bad' for 'Nad'"},
-  {street = "Námestie 4.apríla"},
+  {street = "Nad Bednárovým"},
+  {street = "Námestie 4.apríla", written = "Nám. 4. apríla"},
   {street = "Partizánska"},
   {street = "Pod Mlynom"},
   {street = "Podhájska"},
@@ -67,7 +52,13 @@ rules = [
   {street = "Púpavová"},
   {street = "Sedmokrásková"},
   {street = "Slnečná"},
+  {street = "Stromová"},
+  {street = "Stupavská"},
   {street = "Školská"},
   {street = "Športová"},
-  {street = "Veterná"},
+  {street = "Štúrova"},
+  {street = "Topoľová"},
+  {street = "Višňová"},
+  {street = "Vŕbová"},
+  {street = "Záhradná"},
 ]

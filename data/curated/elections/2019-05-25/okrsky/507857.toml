@@ -1,54 +1,54 @@
-# The okrsky of Častá of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/507857.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Častá, transcribed by an AI agent in job okrsok-rules-865 from the documents below;
+# The okrsky of Častá of the vote of 2017-11-04, data/curated/elections/2017-11-04/okrsky/507857.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Častá, transcribed by an AI agent in job okrsok-rules-354 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: ulice: Andreja Hlinku, Družstevná, Fándlyho, Hlavná, Karpatská, Mesačná, Mraznická, Pastierska, Podzámocká, Záhradnícka, Zámocká, bez ulice, len Častá
-#     okrsok 2: ulice: Cintorínska, Červený Kameň, Kíperská, Na vŕšku, Nová, Píla–rázcestie, Podhorská, Poľná, Ružová, Slnečná, Sokolská, Štefanovská, Veterná
+#     okrsok 1: ulice: Družstevná, Fándlyho, Hlavná, Mraznická, Podzámocká, Slnečná, Zámocká
+#     okrsok 2: ulice: Andreja Hlinku, Cintorínska, Červený Kameň, Kiperská, Na vŕšku, Nová, Píla – rázcestie, Podhorská, Poľná, Ružová, Sokolská, Štefanovská, Veterná, Záhradnícka
 obec = "507857"
 name = "Častá"
-okrsky_date = 2022-11-09
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was searched for. No document of the elections found (neither the website's 2022 posts nor the Internet Archive's 2022 captures hold one); the referendum's document (9.11.2022). Its okrsky: 2, as the Statistical Office counts. \"bez ulice, len Častá\" means voters registered without an address (in okrsok 1); the register's houses without a street are placed by nearest address (fill_nearest), Červený Kameň as a part in okrsok 2."
-okrsky_reused = 2022-10-29
+okrsky_note = "Scanned document, read from the rendered page. The register streets Karpatská, Mesačná and Pastierska (new streets) are not named in the 2017 decision; later documents place them inconsistently (2022/2023: okrsok 1; 2024: Karpatská and Mesačná in okrsok 2), so they and the houses without a street are placed by the nearest address (fill_nearest). Červený Kameň is a part of the obec."
+okrsky_adopted = 2017-11-04
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1944): All the WordPress posts and the ~60 unnamed scanned PDFs of the media library from the weeks before this vote were checked (OCR of first pages); none is the okrsky decision. The Internet Archive (web.archive.org, incl. the CDX API) refused connections throughout (about 45 minutes, retried with pauses), so archived pages could not be checked. These are the okrsky of the vote of 2017-11-04 (2017), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2017-11-04: 1: 961 → 923, 2: 943 → 969."
+okrsky_date_approximate = "posted"
+okrsky_date_seen = 2017-07-14
+okrsky_date_basis = "The mayor's decision (scan) names the elections of 4 November 2017 but states no date; the notice-board post linking it, \"Voľby 2017- Určenie okrskov\", shows 14.07.2017; the same decision was posted again on 20.09.2017. (https://www.casta.sk/volby-2017-urcenie-okrskov/)"
 
 [[document]]
-url = "https://www.casta.sk/www/wp-content/uploads/2022/11/Urcenie-okrskov-a-miesta-konania-referenda-1.pdf"
-sha256 = "9a21ea61bae01c441996e81aeb02202c25567b6158626ff66335a8c8b2ef78c9"
-title = "Referendum 21. január 2023 – určenie volebných okrskov a volebných miestností"
+url = "https://www.casta.sk/www/wp-content/uploads/2017/07/20170714093424599.pdf"
+sha256 = "debfef61acbb1dd7947214dbb6c24d99f078dc11cdd485ef6e7c990f222ddf2c"
+title = "Voľby do orgánov samosprávnych krajov 04. novembra 2017 – určenie volebných okrskov a volebných miestností"
 
 [[document]]
-url = "https://www.casta.sk/urcenie-volebnych-okrskov-a-volebnej-miestnosti/"
-sha256 = "912643a5e78fa831194b374bdcbe4358cf2bf21f74d633953e0cee3dea487f65"
-title = "Určenie volebných okrskov a volebnej miestnosti (2022-11-10)"
+url = "https://www.casta.sk/www/wp-content/uploads/2017/09/20170920094103372.pdf"
+sha256 = "963e6b906b5fcf3cddc5869234289c837dd2470cdccb8ee75cc1a0b07cfa1720"
+title = "VOLEBNÉ OKRSKY – Voľby do orgánov samosprávnych krajov 4.11.2017"
 
 [okrsok.1]
 rules = [
-  {street = "Andreja Hlinku"},
   {street = "Družstevná"},
   {street = "Fándlyho"},
   {street = "Hlavná"},
-  {street = "Karpatská"},
-  {street = "Mesačná"},
   {street = "Mraznická"},
-  {street = "Pastierska"},
   {street = "Podzámocká"},
-  {street = "Záhradnícka"},
+  {street = "Slnečná"},
   {street = "Zámocká"},
 ]
 
 [okrsok.2]
 rules = [
-  {part = "Červený Kameň"},
+  {street = "Andreja Hlinku"},
   {street = "Cintorínska"},
-  {street = "Kíperská"},
+  {part = "Červený Kameň"},
+  {street = "Kíperská", written = "Kiperská"},
   {street = "Na vŕšku"},
   {street = "Nová"},
-  {street = "Píla-rázcestie", written = "Píla–rázcestie"},
+  {street = "Píla-rázcestie", written = "Píla – rázcestie"},
   {street = "Podhorská"},
   {street = "Poľná"},
   {street = "Ružová"},
-  {street = "Slnečná"},
   {street = "Sokolská"},
   {street = "Štefanovská"},
   {street = "Veterná"},
+  {street = "Záhradnícka"},
 ]

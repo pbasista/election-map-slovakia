@@ -17,11 +17,10 @@
 #   okrsok 14: Humenská 6-20 párne, Humenská 1-41 nepárne, Rožňavská, Šafárikova tr. 4-10 párne
 #   okrsok 15: Hellova, Jedlíkova, Mikovíniho, Petzvalova, Stodolova
 #   okrsok 16: Bratislavská, Brnenská, Československého odboja, Čičky-majer, Diamantová, Hodonínska, Jantárové námestie, Jihlavská, Karlovarská, Kremnická, Lučenecká, Martinská, Opálová, Piešťanská, Plzenská, Popradská 2-90 párne, Rubínová, Sliačska, Smaragdová, Stropkovská, Štiavnická, Topásová, Trnavská, Žilinská, Chatová lokalita
-#   okrsok 17: (not in the document)
 obec = "598224"
 name = "Košice-Západ"
 okrsky_fill = "nearest"
-okrsky_note = "The district's text lists streets with house-number ranges and parity (párne/nepárne); 'párne, nepárne' means all numbers in the range. Streets the document names but the register lacks (Tvrdošínska, Fiľakovská, Prievidzská, Žarnovická, Chatová lokalita) are left out. fill_nearest covers the register's addresses without a street, streets the document does not name and numbers outside the listed ranges. The notice: voters with permanent residence in Košice-Západ without an address are in okrsok 2. The Statistical Office counts a 17th okrsok that the notice does not name; it gets no addresses (addressless)."
+okrsky_note = "The district's text lists streets with house-number ranges and parity (párne/nepárne); 'párne, nepárne' means all numbers in the range. Streets the document names but the register lacks (Tvrdošínska, Fiľakovská, Prievidzská, Žarnovická, Chatová lokalita) are left out. fill_nearest covers the register's addresses without a street, streets the document does not name and numbers outside the listed ranges. The notice: voters with permanent residence in Košice-Západ without an address are in okrsok 2. The Statistical Office counts a 17th okrsok that the notice does not name: the COVID-19 special okrsok of okres Košice II (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml)."
 okrsky_date_approximate = "archived"
 okrsky_date_seen = 2022-11-27
 okrsky_date_basis = "The Internet Archive captured the district's page with the okrsky notice on 2022-11-27; the notice states no date. (https://web.archive.org/web/20221127030402/https://www.kosicezapad.sk/article-item-sk/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-konanie-referenda/)"
@@ -221,6 +220,3 @@ rules = [
   {street = "Trnavská"},
   {street = "Žilinská"},
 ]
-
-[okrsok.17]
-addressless = true

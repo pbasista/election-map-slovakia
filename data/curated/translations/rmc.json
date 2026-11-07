@@ -20969,6 +20969,10 @@
    "src": "{name}: {share} · {votes} of {valid}",
    "text": "{name}: {share} · {votes} andal {valid}"
   },
+  "mapmode.tip_special": {
+   "src": "Not drawn, without territory: polling district {n}",
+   "text": "Na zakreslimen, bi phuvako: okrskos num. {n}"
+  },
   "mapmode.tip_tie": {
    "src": "Tied for the most votes: {names}, {share} each",
    "text": "Jekhetanes o jekhbuter hlasi: {names}, sako {share}"
@@ -21149,6 +21153,10 @@
    "src": "The polling districts are drawn from a document of {name} that states no date.",
    "text": "O volebna okrski hine kreslime pal o dokumentos le gaveskero {name}, savo na phenel datum."
   },
+  "notice.okrsky_outlier": {
+   "src": "Polling district No. {n} had {voters} voters on the roll in {year} but {other} in {source}, more than a quarter apart: its borders there most likely differ.",
+   "text": "Andro volebno okrskos num. {n} sas andro berš {year} {voters} zapisimen voliči, ale andro časos {source} {other}, buter sar štvartina aver: leskere hraňici adaj nekbuteder aver."
+  },
   "notice.okrsky_referendum": {
    "src": "The polling districts of {name} are drawn from the municipality's document for the referendum of {date}: either it says they stayed as they were at these elections, or no document of these elections was found.",
    "text": "O volebna okrski le gaveskere {name} hine kreslime pal o dokumentos le gaveskero vaš o referendum {date}: abo phenel, hoj o okrski ačhile ajse sar pro kala voľbi, abo o dokumentos andal kala voľbi na arakhľam."
@@ -21164,6 +21172,22 @@
   "notice.okrsky_unknown": {
    "src": "{name} voted in several polling districts, but which addresses belonged to which is not known here, so they are not drawn: its results by polling district can't be placed on the map.",
    "text": "Andro gav {name} pes voľinehas andro buter volebna okrski, ale save adresi preperenas andro savo okrskos, adaj na džanas, vašoda nane kreslime: leskere rezultatos pal o okrski na šaj čhivas pre mapa."
+  },
+  "notice.special_covid": {
+   "src": "Polling district No. {n} of {name} is the COVID-19 special polling district of okres {okres} (Act No. 395/2022 Coll.), for the voters in quarantine anywhere in the okres, who voted where they stayed, into a mobile ballot box (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "Volebno okrskos num. {n} andro gav {name} hino špeciálno volebno okrskos le okresoskero {okres} (zákon č. 395/2022 Z. z.) vaš o voliči andre karanténa vaš o COVID-19 kaj te avel andro okres, save hlasinenas odoj, kaj ačhenas, andre špeciálno prenosno schránka (zapisimen voliči: {voters}). Nane les peskeri phuv, vašoda nane zakreslimen; leskere hlasi pes ginen andro rezultati le gaveskere {name} the le bareder celkengere avka, sar len ginel o Štatistikakero urados."
+  },
+  "notice.special_covid_several": {
+   "src": "Polling district No. {n} of {name} is one of the COVID-19 special polling districts of okresy {okresy} (Act No. 395/2022 Coll.), for the voters in quarantine anywhere in the okres, who voted where they stayed, into a mobile ballot box (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "Volebno okrskos num. {n} andro gav {name} hino jekh andal o špeciálna volebna okrski le okresengere {okresy} (zákon č. 395/2022 Z. z.) vaš o voliči andre karanténa vaš o COVID-19 kaj te avel andro okres, save hlasinenas odoj, kaj ačhenas, andre špeciálno prenosno schránka (zapisimen voliči: {voters}). Nane les peskeri phuv, vašoda nane zakreslimen; leskere hlasi pes ginen andro rezultati le gaveskere {name} the le bareder celkengere avka, sar len ginel o Štatistikakero urados."
+  },
+  "notice.special_prison": {
+   "src": "Polling district No. {n} of {name} is a prison, {facility}: its voters are inmates, who vote there with voting certificates, so its turnout is near 100 % (registered voters: {voters}). It has no territory of its own, so it is not drawn; its votes count in the totals of {name} and above, as the Statistical Office counts them.",
+   "text": "Volebno okrskos num. {n} andro gav {name} hino bertena, {facility}: hlasinen andre leste o phandle manuša le hlasovaciu preukazoha, vašoda e účasťis hiňi paš o 100 % (zapisimen voliči: {voters}). Nane les peskeri phuv, vašoda nane zakreslimen; leskere hlasi pes ginen andro rezultati le gaveskere {name} the le bareder celkengere avka, sar len ginel o Štatistikakero urados."
+  },
+  "notice.special_source": {
+   "src": "Source:",
+   "text": "Zdroj:"
   },
   "notice.summary_boundary": {
    "src": "Map: the {on} boundary, slightly different",
@@ -21193,6 +21217,10 @@
    "src": "Polling districts not on the map",
    "text": "O okrski nane pre mapa"
   },
+  "notice.summary_special": {
+   "src": "Polling district No. {n} not on the map",
+   "text": "Okrskos num. {n} nane pre mapa"
+  },
   "notice.supplemented_document": {
    "src": "Those addresses are placed as in a later document of the municipality (of {later}), so the {year} borders may have differed there.",
    "text": "Kala adresi hine thode pal jekh neskoršo dokumentos le gaveskero (andal {later}), vaš oda andro berš {year} šaj sas o hraňici odoj aver."
@@ -21220,6 +21248,26 @@
   "office.regional_council": {
    "src": "member of the regional council ({kraj} kraj)",
    "text": "poslancos andro zastupiteľstvo le samosprávno krajoskero ({kraj} krajis)"
+  },
+  "okrsky.special_covid": {
+   "src": "Polling district No. {n}: COVID-19 special polling district",
+   "text": "Okrskos num. {n}: špeciálno okrskos vaš o voliči andre karanténa vaš o COVID-19"
+  },
+  "okrsky.special_prison": {
+   "src": "Polling district No. {n}: a prison, {facility}",
+   "text": "Okrskos num. {n}: bertena, {facility}"
+  },
+  "okrsky.unmapped": {
+   "src": "Polling districts not on the map",
+   "text": "Okrski avri la mapatar"
+  },
+  "okrsky.unmapped_back": {
+   "src": "Back to {name} as a whole",
+   "text": "Pale pro calo: {name}"
+  },
+  "okrsky.unmapped_hint": {
+   "src": "Their results are known, but the map has no place for them: a button shows one's results.",
+   "text": "Lengere rezultatos džanas, ale pre mapa nane len than: o tlačidlos sikavel o rezultatos le okrskoskere."
   },
   "overview.intro.parties": {
    "src": "Choose a party to see its whole candidate list. Circle, cross out and filter parties and candidates as on the ballots. The results are the whole country's.",

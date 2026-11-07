@@ -1,0 +1,112 @@
+# The okrsky of Veľký Krtíš of the vote of 2023-01-21, data/curated/elections/2023-01-21/okrsky/515850.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Veľký Krtíš, transcribed by an AI agent in job okrsok-rules-023 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: A.H.Škultétyho 1-15 nepárne, 16-112, 113, 115, J.Kráľa, Št.Tučeka, Vinohradnícka
+#     okrsok 2: Boženy Němcovej 1-29 nepárne, Boženy Němcovej 2-34 párne
+#     okrsok 3: Boženy Němcovej 31-67 nepárne, Lučenská 1-42, 84, 86, Poľná, Za Parkom
+#     okrsok 4: P.O.Hviezdoslava 1-49 nepárne
+#     okrsok 5: Ľ.Štúra 1-15 nepárne, Lučenská 79-91 nepárne, P.O.Hviezdoslava 2-16 párne
+#     okrsok 6: Červenej Armády, Družobná, Dúbravská cesta, Duklianska, Ľ.Štúra 2-14 párne, Ľ.Štúra 16-200, Lučenská 46-48 párne, Lučenská 60-66 párne, Lučenská 72-82 párne, 96, 98, Mládežnícka, Novohradská, Pionierska, Záhradná
+#     okrsok 7: Okružná, Venevská
+#     okrsok 8: Lučenská 43-71 nepárne, Mikszáthova, Nám.A.H.Škultétyho, Nemocničná, SNP, Za Poštou
+#     okrsok 9: Banícka, I.Madácha, Mierová, Školská, Železničná
+#     okrsok 10: A.H.Škutétyho 2-14 párne, M.R.Štefánika, Osloboditeľov, Písecká, Veľký Krtíš
+obec = "515850"
+name = "Veľký Krtíš"
+okrsky_date = 2022-11-25
+okrsky_fill = "nearest"
+okrsky_note = "The mayor's decision of 25.11.2022 sets 10 okrsky (the COVID-19 special okrsok 11 is not in it). 'Veľký Krtíš' in okrsok 10 means voters registered without an address (not placed). fill_nearest places the houses without a street (súpisné only), the numbers the document's ranges miss (e.g. Lučenská 44, 50–58, 68, 88–94, 100, P.O.Hviezdoslava 18, 51, 53) and J.A.Komenského, which no okrsok names."
+okrsky_adopted = 2023-01-21
+okrsky_adopted_basis = "No document of 2024-03-23 setting the okrsky was found (okrsok-rules-4083): No document of the presidential election 2024 found. The Internet Archive captured the city's page only on 2024-01-10 (announcement and voter information only); PDFs captured in January-February 2024 are other notices. The city's Voľby page now shows only the 2026 votes (for the referendum of 2026 only the commissions' zápisnice); the old per-vote pages are gone (404) and the site search finds no okrsky document. The 2017 decision (12 okrsky, 30.08.2017) and the 2022 referendum decision exist but are other votes' documents. These are the okrsky of the vote of 2023-01-21 (2023-referendum), the nearest in time with okrsky of its own that fit: 10 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-03-23 → 2023-01-21: 1: 568 → 605, 2: 865 → 917, 3: 823 → 862, 4: 1,005 → 769, 5: 779 → 796, 6: 806 → 1,153, 7: 884 → 913, 8: 837 → 890, 9: 842 → 902, 10: 1,204 → 1,207. Of these, okrsok 6 (806 → 1,153) differs by more than 25% (2024-03-23 → 2023-01-21), allowed in an obec of 10 okrsky: of 10 or more, one okrsok, or 5% of them, may differ while the layout holds."
+okrsky_adopted_outliers = [[6, 806, 1153]]
+
+[[document]]
+url = "https://www.velky-krtis.sk/download_file_f.php?id=1763244"
+sha256 = "fbe341e5bf7ce47ea9fa70162650ba4c542c98a2c9efb6bc89b59de802b37645"
+title = "Určenie volebných okrskov a volebných miestností pre referendum 21.01.2023 (primátor, 25.11.2022)"
+
+[okrsok.1]
+rules = [
+  {street = "A.H.Škultétyho", note = "\"1-15 nepárne, 16-112, 113, 115\": every number but the even 2-14, which okrsok 10 has"},
+  {street = "J.Kráľa"},
+  {street = "Št.Tučeka"},
+  {street = "Vinohradnícka"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Boženy Němcovej", numbers = "1-29", parity = "odd"},
+  {street = "Boženy Němcovej", numbers = "2-34", parity = "even"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Boženy Němcovej", numbers = "31-67", parity = "odd"},
+  {street = "Lučenská", numbers = "1-42, 84, 86"},
+  {street = "Poľná"},
+  {street = "Za Parkom"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "P.O.Hviezdoslava", numbers = "1-49", parity = "odd"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Ľ.Štúra", numbers = "1-15", parity = "odd"},
+  {street = "Lučenská", numbers = "79-91", parity = "odd"},
+  {street = "P.O.Hviezdoslava", numbers = "2-16", parity = "even"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Červenej Armády"},
+  {street = "Družobná"},
+  {street = "Dúbravská cesta"},
+  {street = "Duklianska"},
+  {street = "Ľ.Štúra", numbers = "2-14", parity = "even"},
+  {street = "Ľ.Štúra", numbers = "16-200"},
+  {street = "Lučenská", numbers = "46-48", parity = "even"},
+  {street = "Lučenská", numbers = "60-66", parity = "even"},
+  {street = "Lučenská", numbers = "72-82", parity = "even"},
+  {street = "Lučenská", numbers = "96, 98"},
+  {street = "Mládežnícka"},
+  {street = "Novohradská"},
+  {street = "Pionierska"},
+  {street = "Záhradná"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Okružná"},
+  {street = "Venevská"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Lučenská", numbers = "43-71", parity = "odd"},
+  {street = "Mikszáthova"},
+  {street = "Nám.A.H.Škultétyho"},
+  {street = "Nemocničná"},
+  {street = "SNP"},
+  {street = "Za Poštou"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "Banícka"},
+  {street = "I.Madácha"},
+  {street = "Mierová"},
+  {street = "Školská"},
+  {street = "Železničná"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "A.H.Škultétyho", numbers = "2-14", parity = "even", written = "A.H.Škutétyho", note = "a typo for A.H.Škultétyho (the obvod resolution: A.H.Škultétyho or.č. (2-14) párne čísla)"},
+  {street = "M.R.Štefánika"},
+  {street = "Osloboditeľov"},
+  {street = "Písecká"},
+]

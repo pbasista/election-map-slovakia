@@ -1,0 +1,202 @@
+# Okrsky of Senica, transcribed by an AI agent in job okrsok-rules-034 from the documents below;
+# checked by `ems job ingest` against the address register. The document's
+# text per okrsok, verbatim:
+#   okrsok 1: Bahenská, Beňovského, Cintorínska, Cyrila Gallaya, Čáčovská cesta, Dr. Milana Hodžu, K veterine, Kruhy, Ľudmily Križanovej, Martina Bartoňa, Miloslava Bibzu, Pri garážach, Škodáčkova, Športová, V uličke
+#   okrsok 2: Kalinčiakova, Železničná
+#   okrsok 3: Kasárenská, Palárikova, Tehelná
+#   okrsok 4: Agátová, Astrová, Dlhá, Hlbocká cesta, Jabloňová, Jasmínová, Kalinová, Kaplinská, Krátka, Kvetná, Lipová, Muškátová, Olivová, Orgovánová, Priemyselná, Smreková, Stromová, Školská, Topoľová, Záhradná
+#   okrsok 5: Bernolákova, Bottova, Dolné Suroviny, Horné Suroviny, Jablonická cesta, Košútovec, Ružová, Sládkovičova, Štúrova, V. Paulínyho-Tótha, Vajanského, Senica
+#   okrsok 6: Robotnícka
+#   okrsok 7: Hviezdoslavova
+#   okrsok 8: Hurbanova, Kolónia, Nám. oslobodenia, Továrenská
+#   okrsok 9: J. Mudrocha, Sotinská 1345/23, 1345/25, 1345/27, 1421/31, 1421/33, 1474/9, 1474/11, 1474/13, 1592/27A, Sv. Cyrila a Metoda 2870/2, 2871/4
+#   okrsok 10: Gen. L. Svobodu, Sadová, Sv. Gorazda, L. Novomeského 1349/102, 1349/104, 1349/106, 1350/108, 1350/110, 1350/112, 1350/114, Sotinská 1373/5, 1373/7, 1475/15, 1475/17, 1475/19, 1589/21, 1590/3, 1591/29A, Sv. Cyrila a Metoda 2872/1, 2872/3, 2873/5, 2873/7
+#   okrsok 11: Hájska, Lúčna, Mesačná, Mlynská, Poľná, Potočná, S. Jurkoviča, Slnečná, Teplická, Veterná, L. Novomeského 1217/84, 1217/86, 1217/88, Sotinská 692/6, 693/4, 694/2
+#   okrsok 12: Jána Bežu, Jána Náhlika, Jozefa Závodského, Juraja Fándlyho, Rovenská, Štefana Pilárika, L. Novomeského 1210/64, 1211/66, 1212/68, 1213/70, 1214/72, 1215/74, 1216/76, 1216/78, 1216/80, 1216/82
+#   okrsok 13: Štefánikova 696/3, 701/13, 702/15, 703/17, 704/19, 704/21, 704/23, 704/25, 704/27, 704/29, 704/31, 704/33, 704/35, 725/8, 725/10, 725/12, 725/14, 725/16, 725/18, 726/2, 726/4, 726/6, 1377/77, 1598/11B
+#   okrsok 14: Hollého, Komenského, Štefánikova 712/71, 723/22, 724/20, 1317/69, 1435/74, 1441/79, 1559/52B
+#   okrsok 15: Brezová, Čerešňová, Jána Jonáša, Ľudovíta Vaníčka, Martina Braxatorisa, Štefánikova 707/41, 707/43, 707/45, 707/47, 707/49, 707/51, 707/53, 709/57, 709/59, 709/61, 709/63, 709/65, 719/38, 719/40, 719/42, 720/28, 720/30, 720/32, 720/34, 720/36, 721/26, 722/24, 3013/65B
+#   okrsok 16: Dr. I. Horvátha, Fajnorova, J. Kráľa, M. Nešpora, Moyzesova, Okružná, SNP
+#   okrsok 17: Brestové, Kunov
+obec = "504203"
+name = "Senica"
+okrsky_date = 2017-07-31
+okrsky_fill = "nearest"
+okrsky_note = "Found via the 2017 regional-elections article archived on 2017-10-18, which links 'Zoznam a popis volebných okrskov pre Voľby do orgánov samosprávnych krajov v meste Senica' (f540.docx); the file is still live on senica.sk. House numbers are given as súpisné/orientačné; the rules use the orientačné číslo (after the slash). Štefánikova, Sotinská, Sv. Cyrila a Metoda and L. Novomeského are split between okrsky by these numbers; their unlisted numbers, the streets the list does not name (Družstevná, Gaštanová, Kaplinské pole, Obchodná, Orechová) and the addresses without a street (parts Sotina, Čáčov, Senica) take the nearest okrsok (fill_nearest). 'Senica' in okrsok 5 means residents registered without an address; 'Kunov' in okrsok 17 is the part Kunov. 'L. Novomeského' and 'S. Jurkoviča' are the register's 'L.Novomeského' and 'S.Jurkoviča' (spacing only)."
+
+[[document]]
+url = "https://senica.sk/data/component_file/100/3854/f540.docx"
+sha256 = "cb30b6292299c9bb2dc579d8e2471d086d7c144cc0f81396ed171cfc448c0050"
+title = "Zoznam a popis volebných okrskov pre Voľby do orgánov samosprávnych krajov v meste Senica 2017 (31.7.2017)"
+
+[okrsok.1]
+rules = [
+  {street = "Bahenská"},
+  {street = "Beňovského"},
+  {street = "Cintorínska"},
+  {street = "Cyrila Gallaya"},
+  {street = "Čáčovská cesta"},
+  {street = "Dr. Milana Hodžu"},
+  {street = "K veterine"},
+  {street = "Kruhy"},
+  {street = "Ľudmily Križanovej"},
+  {street = "Martina Bartoňa"},
+  {street = "Miloslava Bibzu"},
+  {street = "Pri garážach"},
+  {street = "Škodáčkova"},
+  {street = "Športová"},
+  {street = "V uličke"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Kalinčiakova"},
+  {street = "Železničná"},
+]
+
+[okrsok.3]
+rules = [
+  {street = "Kasárenská"},
+  {street = "Palárikova"},
+  {street = "Tehelná"},
+]
+
+[okrsok.4]
+rules = [
+  {street = "Agátová"},
+  {street = "Astrová"},
+  {street = "Dlhá"},
+  {street = "Hlbocká cesta"},
+  {street = "Jabloňová"},
+  {street = "Jasmínová"},
+  {street = "Kalinová"},
+  {street = "Kaplinská"},
+  {street = "Krátka"},
+  {street = "Kvetná"},
+  {street = "Lipová"},
+  {street = "Muškátová"},
+  {street = "Olivová"},
+  {street = "Orgovánová"},
+  {street = "Priemyselná"},
+  {street = "Smreková"},
+  {street = "Stromová"},
+  {street = "Školská"},
+  {street = "Topoľová"},
+  {street = "Záhradná"},
+]
+
+[okrsok.5]
+rules = [
+  {street = "Bernolákova"},
+  {street = "Bottova"},
+  {street = "Dolné Suroviny"},
+  {street = "Horné Suroviny"},
+  {street = "Jablonická cesta"},
+  {street = "Košútovec"},
+  {street = "Ružová"},
+  {street = "Sládkovičova"},
+  {street = "Štúrova"},
+  {street = "V. Paulínyho-Tótha"},
+  {street = "Vajanského"},
+]
+
+[okrsok.6]
+rules = [
+  {street = "Robotnícka"},
+]
+
+[okrsok.7]
+rules = [
+  {street = "Hviezdoslavova"},
+]
+
+[okrsok.8]
+rules = [
+  {street = "Hurbanova"},
+  {street = "Kolónia"},
+  {street = "Nám. oslobodenia"},
+  {street = "Továrenská"},
+]
+
+[okrsok.9]
+rules = [
+  {street = "J. Mudrocha"},
+  {street = "Sotinská", numbers = "23, 25, 27, 31, 33, 9, 11, 13, 27A"},
+  {street = "Sv. Cyrila a Metoda", numbers = "2, 4"},
+]
+
+[okrsok.10]
+rules = [
+  {street = "Gen. L. Svobodu"},
+  {street = "Sadová"},
+  {street = "Sv. Gorazda"},
+  {street = "L.Novomeského", numbers = "102, 104, 106, 108, 110, 112, 114", written = "L. Novomeského"},
+  {street = "Sotinská", numbers = "5, 7, 15, 17, 19, 21, 3, 29A"},
+  {street = "Sv. Cyrila a Metoda", numbers = "1, 3, 5, 7"},
+]
+
+[okrsok.11]
+rules = [
+  {street = "Hájska"},
+  {street = "Lúčna"},
+  {street = "Mesačná"},
+  {street = "Mlynská"},
+  {street = "Poľná"},
+  {street = "Potočná"},
+  {street = "S.Jurkoviča", written = "S. Jurkoviča"},
+  {street = "Slnečná"},
+  {street = "Teplická"},
+  {street = "Veterná"},
+  {street = "L.Novomeského", numbers = "84, 86, 88", written = "L. Novomeského"},
+  {street = "Sotinská", numbers = "6, 4, 2"},
+]
+
+[okrsok.12]
+rules = [
+  {street = "Jána Bežu"},
+  {street = "Jána Náhlika"},
+  {street = "Jozefa Závodského"},
+  {street = "Juraja Fándlyho"},
+  {street = "Rovenská"},
+  {street = "Štefana Pilárika"},
+  {street = "L.Novomeského", numbers = "64, 66, 68, 70, 72, 74, 76, 78, 80, 82", written = "L. Novomeského"},
+]
+
+[okrsok.13]
+rules = [
+  {street = "Štefánikova", numbers = "3, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 8, 10, 12, 14, 16, 18, 2, 4, 6, 77, 11B"},
+]
+
+[okrsok.14]
+rules = [
+  {street = "Hollého"},
+  {street = "Komenského"},
+  {street = "Štefánikova", numbers = "71, 22, 20, 69, 74, 79, 52B"},
+]
+
+[okrsok.15]
+rules = [
+  {street = "Brezová"},
+  {street = "Čerešňová"},
+  {street = "Jána Jonáša"},
+  {street = "Ľudovíta Vaníčka"},
+  {street = "Martina Braxatorisa"},
+  {street = "Štefánikova", numbers = "41, 43, 45, 47, 49, 51, 53, 57, 59, 61, 63, 65, 38, 40, 42, 28, 30, 32, 34, 36, 26, 24, 65B"},
+]
+
+[okrsok.16]
+rules = [
+  {street = "Dr. I. Horvátha"},
+  {street = "Fajnorova"},
+  {street = "J. Kráľa"},
+  {street = "M. Nešpora"},
+  {street = "Moyzesova"},
+  {street = "Okružná"},
+  {street = "SNP"},
+]
+
+[okrsok.17]
+rules = [
+  {street = "Brestové"},
+  {part = "Kunov"},
+]

@@ -1,15 +1,22 @@
-# The okrsky of Horná Kráľová of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/555878.toml, copied by `ems job reuse` (reused). Its header there:
-#   The okrsky of Horná Kráľová of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/555878.toml, reused by `ems job reuse`.
+# The okrsky of Horná Kráľová of the vote of 2023-01-21, data/curated/elections/2023-01-21/okrsky/555878.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Horná Kráľová, transcribed by an AI agent in job okrsok-rules-3216 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: ulice : Hlavná, Cintorínska, Športová, Pod Tópartom, Pri potoku, Topoľová, Malá Kráľová, Nad potokom, Domoviny, časť ulíc Sereďská a Nad Humnami.
+#     okrsok 2: ulice : Hlohovecká, Sliváš I., Sliváš II., Školská, Školská II., Nad Humnami, Sereďská a Vinohradnícka.
 obec = "555878"
 name = "Horná Kráľová"
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was searched for. No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Sereďská and Nad Humnami split by súpisné čísla as the document lists them. The document puts Nad Humnami s.č. 425 and 426 in okrsok 1 and also within the range 400-453 of okrsok 2; they are kept in okrsok 1 (listed individually) and cut from the okrsok 2 range. Lackov dvor (not named) and súpisné čísla of Sereďská/Nad Humnami outside the listed ranges placed by fill_nearest. No decision date on the document."
-okrsky_reused = 2022-10-29
+okrsky_note = "The page lists Sereďská and Nad Humnami as 'časť ulíc' in okrsok 1 and as whole streets in okrsok 2, with no house numbers. Lackov dvor (not named in the document) and súpisné čísla of Sereďská/Nad Humnami outside the listed ranges are placed by fill_nearest."
+okrsky_adopted = 2023-01-21
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-2027): No page or document of the EP 2019 election with okrsky on hornakralova.sk (media library, posts 2019) nor in the Internet Archive. These are the okrsky of the vote of 2023-01-21 (2023-referendum), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-05-25 → 2023-01-21: 1: 785 → 794, 2: 767 → 756."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The municipality's elections page gives the okrsky under the heading of the referendum to be held on Saturday 21 January 2023; no decision date is stated."
 
 [[document]]
-url = "https://www.hornakralova.sk/wp-content/uploads/2026/07/Volby-do-samospravy-obci-a-samospravy-krajov-utvorenie-volebnych-okrskov.pdf"
-sha256 = "69e7682a69ba8d110d5f61fc60b5c3b5b013562e42ad70dce7a6e2765dfcbfe9"
-title = "Utvorenie volebných okrskov a určenie volebných miestností"
+url = "https://www.hornakralova.sk/volby/"
+sha256 = "3e0d71c45c627a54b1f5caa66be93acfe979b0c89a4e7b1e67e8747e7a5a24fc"
+title = "Voľby – Referendum 2023 (okrsky a volebné miestnosti na stránke obce)"
 
 [okrsok.1]
 rules = [

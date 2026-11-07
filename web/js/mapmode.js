@@ -689,7 +689,9 @@ class Records {
   /* The okrsky of contest *id* in okrsok file *file*: each drawn one a
    * unit of its own, with the election before there, and its obec's; and
    * the file's units of them (`units`). (An okrsok without an area,
-   * addressless, is not drawn.) */
+   * addressless, is not drawn, nor is a special one without territory,
+   * data/index.json `special`: neither shades the map or widens its scale,
+   * their figures staying in their obec's.) */
   addOkrsky(file, id) {
     const day = file.past?.day;
     const obce = day ? (file.past.contests[id] ?? {}) : {};
@@ -1330,7 +1332,8 @@ function HeldKey({ counts: [obce, okresy] }) {
  * election's without proof that they match, either from documents dated
  * only approximately or filled in from a later source, an obec whose
  * okrsky are not drawn (its figures by okrsok cannot be placed), or whose
- * boundary then differed. */
+ * boundary then differed; and, on an obec or its okrsky, its okrsky
+ * without territory (`special`), which are never drawn. */
 function originLines({ kind, key }, index) {
   const code = key.split('/')[0];
   if (kind === 'zsk' || kind === 'okresy') return [];
@@ -1351,6 +1354,10 @@ function originLines({ kind, key }, index) {
   if (kind === 'councils' && index.date_approximate[code]) lines.push(t('council.summary_dated'));
   if (kind === 'councils' && index.supplemented[code]) lines.push(t('council.summary_supplemented'));
   if (kind === 'obce' && index.okrsky_unknown.includes(code)) lines.push(t('mapmode.tip_okrsky_unknown'));
+  const special = index.special[code];
+  if ((kind === 'obce' || kind === 'okrsky') && special) {
+    lines.push(t('mapmode.tip_special', { n: Object.keys(special).join(', ') }));
+  }
   if (index.boundaries?.obce[code]) lines.push(t('mapmode.tip_boundary', { on: index.boundaries.on }));
   return lines;
 }

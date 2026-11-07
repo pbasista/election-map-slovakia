@@ -23,12 +23,12 @@ strings; keys in parentheses are omitted where they do not apply)::
     kraje:       [{code, name}]                         code "1".."8" (ZBGIS IDN2)
     okresy:      [{code, name, kraj}]                   code "101".."813" (IDN3)
     obce:        [{code, name, (okres), kraj, (city),   city: BA/KE for districts
-                   (zsk), (past)}]
+                   (zsk), (council_seats), (past)}]
     contests:    [{id, kind, area, (obvod), (seats),
                    (day), (question), (subjects),
                    (threshold), (coalition_thresholds),
                    (preferences), (quota), (party),
-                   (elected_only), (uncontested),
+                   (elected_only), (uncontested), (vote),
                    (incumbent), (seats_2022), (past)}]  id "oz:528595/2"
     candidacies: [{id, contest, number, person, title_before, title_after,
                    first_name, surname, age, occupation, parties, independent,
@@ -65,7 +65,17 @@ number of its regional obvod within its kraj. A council contest's
 ``elected_only`` is true where its candidacies are the councillors elected
 only, the others not published (a by-election's package of 2019–2022
 without a curated list in its place: :mod:`election_map_slovakia.lists`);
-their ballot numbers are then the order they were elected in.
+their ballot numbers are then the order they were elected in. An obec's
+``council_seats``, of a regular election, are its council's seats in all
+as ŠÚ SR's territorial division gives them (also where they were not all
+filled, or the council was held nowhere).
+
+A by-election's contests say which vote each is (``vote``,
+:func:`election_map_slovakia.lists.read_by_election`): ``"new"``, a new
+election (nové voľby) of the whole office, a mayor or a council elected
+anew, whose council obvody are its own; ``"by"``, a by-election proper
+(doplňujúce voľby) of seats of the council its term elected, in that
+council's obvody.
 
 A contest called but held nowhere, no candidate having registered for it,
 is ``uncontested``: ``{source, title}``, the URL of what says so and what
@@ -147,6 +157,7 @@ _CONTEST_FIELDS = (
     "party",
     "elected_only",
     "uncontested",
+    "vote",
 )
 """The fields of a contest besides its candidacies, in output order (the
 module doc); :attr:`Lists.contests` holds them but ``subjects``."""
@@ -666,6 +677,13 @@ class Lists:
     """Council and regional council contest id → seats, where they say."""
     zsk: dict[str, int] = field(default_factory=dict)
     """Obec → its regional obvod's number within its kraj, where they say."""
+    council_seats: dict[str, int] = field(default_factory=dict)
+    """Obec → its council's seats in all, of a regular election's
+    territorial division (``council_seats`` of the output)."""
+    new_councils: set[str] | None = None
+    """Of a by-election: the obce whose council it elects anew (``vote``
+    ``"new"``), the others' seats of their term's council (``"by"``);
+    None of any other election."""
     subjects: dict[str, list[Subject]] = field(default_factory=dict)
     """Party contest id → its ballot subjects, by number."""
     contests: dict[str, dict[str, object]] = field(default_factory=dict)
@@ -697,6 +715,18 @@ class Uncontested:
     title: str
     source: str = ""
     part: str = ""
+
+
+NEW, BY = "new", "by"
+"""A by-election's contest's ``vote``: a new election of the whole office,
+a by-election proper of seats of its term's council (the module doc)."""
+
+
+def new_councils(contests: Iterable[Mapping[str, Any]]) -> set[str]:
+    """Return the obce whose council contests of *contests* elect it anew (``vote`` ``"new"``)."""
+    return {
+        str(c["area"]) for c in contests if c["kind"] == "oz" and c.get("vote") == NEW
+    }
 
 
 NOT_HELD_TYPES = {
@@ -1213,6 +1243,8 @@ def _obec_json(o: Obec, result: Result) -> dict[str, object]:
         item["city"] = o.city
     if o.code in result.lists.zsk:
         item["zsk"] = result.lists.zsk[o.code]
+    if o.code in result.lists.council_seats:
+        item["council_seats"] = result.lists.council_seats[o.code]
     held = result.incumbency
     if held is None:
         return item

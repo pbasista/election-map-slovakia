@@ -1,27 +1,28 @@
-# The okrsky of Nesvady of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/501280.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Nesvady, transcribed by an AI agent in job okrsok-rules-659 from the documents below;
+# The okrsky of Nesvady of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/501280.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Nesvady, transcribed by an AI agent in job okrsok-rules-4702 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Bajčská, Brezová, Gaštanový rad, Hviezdoslavova, Jánošíkova, Lipová, Máchova, Obchodná, Orechový rad, Petőfiho, Piesková 17-49, Puškinova, Ružová, Parková, Piesková 1-16, Slnečná, Športová, Tulipánová, Turecká, Úzka, Vápenná, Vinohradnícka, Potočná, Sady, Sládkovičova, Studená, Taránska, Vodná, Záhradná, Tatranská
-#     okrsok 2: Bélu Bartóka, Družstevná, Farské pole, Fraňa Kráľa, Jarková, Jarmočná, Jazmínová, Jókaiho, Komenského, Mlynská, Na kopci, Nám. Slobody, Novozámocká cesta 48-75, Kvetná, Lúčna, Malá, nám. 1. mája, Nitriansky rad, Palárikova, Pekárenská, Pettemská, Poľná
-#     okrsok 3: Aňalské záhrady, Blatná, Dlhá, Gútska cesta, Hodžova, Hollého, Horná, Hradná, Hurbanova, Jazerná, Kalinčiakova, Konopné pole, Krátka
+#     okrsok 1: Bajčská, Brezová, Gaštanový rad, Hviezdoslavova, Jánošíkova, Lipová, Máchova, Obchodná, Orechový rad, Petőfiho, Piesková 17-49, Puškinova, Ružová, Bez TP
+#     okrsok 2: Bélu Bartóka, Družstevná, Farské pole, Fraňa Kráľa, Jarková, Jarmočná, Jazmínová, Jókaiho, Komenského, Mlynská, Na kopci, Nám. Slobody, Novozámocká cesta 48-75, Parková, Piesková 1-16, Slnečná, Športová, Tulipánová, Turecká, Úzka, Vápenná, Vinohradnícka
+#     okrsok 3: Aňalské záhrady, Blatná, Dlhá, Gútska cesta, Hodžova, Hollého, Horná, Hradná, Hurbanova, Jazerná, Kalinčiakova, Konopné pole, Konvalinková ulica, Krátka, Kvetná, Lúčna, Malá, nám. 1. mája, Nitriansky rad, Palárikova, Pekárenská, Pettemská, Poľná, Potočná, Sady, Sládkovičova, Studená, Taránska, Tatranská, Vodná, Záhradná
 #     okrsok 4: Agátová, Aňala, Budovateľská, Komárňanská, Mierová, Nová, Novozámocká 1-47, Opletalova, Rozmarínová, Timoňská
 obec = "501280"
 name = "Nesvady"
-okrsky_date = 2022-08-08
+okrsky_date = 2024-02-23
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2026-07-04 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2026-07-04 was searched for. The primátor's decision of 8. 8. 2022 sets the 4 okrsky; the attached table gives their streets. Aňala, Aňalské záhrady and Sady are parts of the town (part rules). Novozámocká cesta 76-91 and the register streets the table lacks (Fialková, Konvalinková, Nezábudková, Orgovánová, Kúpeľná, Priemyselná ulica) and the addresses without a street in the part Nesvady are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "The primátor's decision of 23. 2. 2024 sets the 4 okrsky and polling stations for the voľby do Európskeho parlamentu of 8 June 2024; the attached table 'Volebné okrsky s vymedzením ich územného obvodu' lists the streets per okrsok (as in 2023, plus Konvalinková ulica in okrsok 3). Aňala, Aňalské záhrady and Sady are parts of the town (part rules). Novozámocká cesta 76-91 and the register streets the table does not name (Fialková ulica, Kúpeľná, Nezábudková ulica, Orgovánová ulica, Priemyselná ulica), as well as the addresses without a street in the part Nesvady, are placed by fill_nearest. 'Bez TP' (voters without a permanent address) in okrsok 1 holds no addresses and is left out. The okrsky copied here from 2022 (rule set of 2022-10-29, job okrsok-rules-659) misread the 2022 table's columns (it put Parková, Piesková 1-16, Slnečná, Športová, Tulipánová, Turecká, Úzka, Vápenná, Vinohradnícka and Potočná, Sady, Sládkovičova, Studená, Taránska, Tatranská, Vodná, Záhradná in okrsok 1, and Kvetná, Lúčna, Malá, nám. 1. mája, Nitriansky rad, Palárikova, Pekárenská, Pettemská, Poľná in okrsok 2); this vote's table, read from the rendered page, has them in okrsky 2 and 3 as given here (the 2022 table, file 302sk_7, has the same columns)."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2026-07-04 setting the okrsky was found (okrsok-rules-5331): The primátor's decision of 5. 5. 2026 'Utvorenie volebných okrskov a určenie volebných miestností pre Referendum 2026' gives each okrsok only its polling station, all four in the part Nesvady (Obchodná 21, Obchodná 23, Novozámocká cesta 21 / Komenského 21, Športová), and names no streets or parts; the town has 4 parts (Aňala, Aňalské Záhrady, Nesvady, Sady) but the stations are not one per part, so no part can be inferred. No street list ('Volebné okrsky s vymedzením ich územného obvodu', as published in 2022-2024) is on the 2026 pages or the notice board; the later decision of 15. 7. 2026 for the elections of 24 October 2026 likewise lists only the polling stations. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-07-04 → 2024-06-08: 1: 965 → 1,008, 2: 1,024 → 994, 3: 978 → 994, 4: 994 → 1,009."
 
 [[document]]
-url = "https://www.nesvady.sk/e_download.php?file=data/editor/302sk_6.pdf&original=Urcenie%20volebnych%20okrskov%20a%20vol%20miestnosti%202022.pdf"
-sha256 = "1f5fd8a9219aa396d7fb9ac42fe88b2873014b9505121db38c12a6e896584bfc"
-title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí"
+url = "https://www.nesvady.sk/e_download.php?file=data/editor/337sk_4.pdf&original=Urcenie%20volebnych%20okrskov%20a%20vol%20miestnosti%202024.pdf"
+sha256 = "8aa432b8a56d163ad7a71514ce6913c064ea634e4750284d6fda4358d751042b"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu"
 
 [[document]]
-url = "https://www.nesvady.sk/e_download.php?file=data/editor/302sk_7.pdf&original=K%C3%B3pia%20-%20Volebn%C3%A9%20okrsky%20-%20%C3%BAzemn%C3%BD%20obvod%202022%20FIN.pdf"
-sha256 = "3e52f60bae866835b2026636e8a1d690116f883beb7ebf6cd1c36d2bf602df1f"
-title = "Volebné okrsky s vymedzením ich územného obvodu (Mesto Nesvady - Voľby 2022)"
+url = "https://www.nesvady.sk/e_download.php?file=data/editor/337sk_6.pdf&original=Prerozdelenie%20okrskov%20-%20%C3%BAzemn%C3%BD%20obvod%202024.pdf"
+sha256 = "88ed244512b3f611dfb0fd8e8f98d20bb38adb2cde5da21b5f976f8f9874e509"
+title = "Volebné okrsky s vymedzením ich územného obvodu (Mesto Nesvady - Voľby do EP)"
 
 [okrsok.1]
 rules = [
@@ -36,24 +37,8 @@ rules = [
   {street = "Orechový rad"},
   {street = "Puškinova"},
   {street = "Ružová"},
-  {street = "Parková"},
-  {street = "Slnečná"},
-  {street = "Športová"},
-  {street = "Tulipánová"},
-  {street = "Turecká"},
-  {street = "Úzka"},
-  {street = "Vápenná"},
-  {street = "Vinohradnícka"},
-  {street = "Potočná"},
-  {street = "Sládkovičova"},
-  {street = "Studená"},
-  {street = "Taránska"},
-  {street = "Vodná"},
-  {street = "Záhradná"},
-  {street = "Tatranská"},
-  {street = "Petöfiho", written = "Petőfiho"},
-  {street = "Piesková", note = "the document lists Piesková 1-16 and 17-49, both in okrsok 1: the whole street"},
-  {part = "Sady"},
+  {street = "Petöfiho", written = "Petőfiho", note = "the register writes Petöfiho with ö, the document Petőfiho with the Hungarian ő: the same street (Petőfi)"},
+  {street = "Piesková", numbers = "17-49"},
 ]
 
 [okrsok.2]
@@ -68,22 +53,24 @@ rules = [
   {street = "Komenského"},
   {street = "Mlynská"},
   {street = "Na kopci"},
-  {street = "Nám. slobody", written = "Nám. Slobody"},
-  {street = "Kvetná"},
-  {street = "Lúčna"},
-  {street = "Malá"},
-  {street = "Nám. 1. mája", written = "nám. 1. mája"},
-  {street = "Nitriansky rad"},
-  {street = "Palárikova"},
-  {street = "Pekárenská"},
-  {street = "Pettemská"},
-  {street = "Poľná"},
+  {street = "Parková"},
+  {street = "Slnečná"},
+  {street = "Športová"},
+  {street = "Tulipánová"},
+  {street = "Turecká"},
+  {street = "Úzka"},
+  {street = "Vápenná"},
+  {street = "Vinohradnícka"},
   {street = "F. Kráľa", written = "Fraňa Kráľa"},
+  {street = "Nám. slobody", written = "Nám. Slobody"},
   {street = "Novozámocká cesta", numbers = "48-75"},
+  {street = "Piesková", numbers = "1-16"},
 ]
 
 [okrsok.3]
 rules = [
+  {part = "Aňalské Záhrady"},
+  {part = "Sady"},
   {street = "Blatná"},
   {street = "Dlhá"},
   {street = "Gútska cesta"},
@@ -96,11 +83,28 @@ rules = [
   {street = "Kalinčiakova"},
   {street = "Konopné pole"},
   {street = "Krátka"},
-  {part = "Aňalské Záhrady"},
+  {street = "Kvetná"},
+  {street = "Lúčna"},
+  {street = "Malá"},
+  {street = "Nitriansky rad"},
+  {street = "Palárikova"},
+  {street = "Pekárenská"},
+  {street = "Pettemská"},
+  {street = "Poľná"},
+  {street = "Potočná"},
+  {street = "Sládkovičova"},
+  {street = "Studená"},
+  {street = "Taránska"},
+  {street = "Tatranská"},
+  {street = "Vodná"},
+  {street = "Záhradná"},
+  {street = "Nám. 1. mája", written = "nám. 1. mája"},
+  {street = "Konvalinková ulica"},
 ]
 
 [okrsok.4]
 rules = [
+  {part = "Aňala"},
   {street = "Agátová"},
   {street = "Budovateľská"},
   {street = "Komárňanská"},
@@ -109,6 +113,5 @@ rules = [
   {street = "Opletalova"},
   {street = "Rozmarínová ulica", written = "Rozmarínová"},
   {street = "Timoňská ulica", written = "Timoňská"},
-  {part = "Aňala"},
-  {street = "Novozámocká cesta", numbers = "1-47", written = "Novozámocká", note = "\"Novozámocká 1-47\" is Novozámocká cesta, whose 48-75 the document puts in okrsok 2"},
+  {street = "Novozámocká cesta", numbers = "1-47", written = "Novozámocká", note = "\"Novozámocká 1-47\" is Novozámocká cesta (the only such street in the register), whose 48-75 the document puts in okrsok 2"},
 ]

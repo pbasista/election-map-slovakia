@@ -1,0 +1,42 @@
+# The okrsky of Radošina of the vote of 2020-02-29, data/curated/elections/2020-02-29/okrsky/505421.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Radošina, transcribed by an AI agent in job okrsok-rules-2563 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Ulice: Hečkova, kpt. J. Nálepku, Piešťanská, Školská
+#     okrsok 2: Ulice: Družstevná, Kamenná, Mierová, Nádražná, Nitrianska
+#     okrsok 3: Volebná miestnosť: Kultúrny dom Bzince 30
+obec = "505421"
+name = "Radošina"
+okrsky_fill = "nearest"
+okrsky_note = "'bezdomovci' (homeless, no address) in okrsok 1 are not a rule. The register's addresses of part Radošina without a street (súpisné only) take the nearest okrsok (fill_nearest)."
+okrsky_adopted = 2020-02-29
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1379): The archived 2019 presidential election notices link only voter information and a notice for parties; no okrsky document found. These are the okrsky of the vote of 2020-02-29 (2020-nrsr), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2020-02-29: 1: 761 → 757, 2: 696 → 695, 3: 186 → 185."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "the document's heading names the National Council election of 29.2.2020; it is undated and archived only on 2020-12-05"
+
+[[document]]
+url = "https://web.archive.org/web/20201205234757/https://www.radosina.sk/fileadmin/user_upload/Oznam_pre_volby_do_NR_SR.pdf"
+sha256 = "e94aa01d1eedc2ed990d26118d620024af914a456bdf59a916bb6d92f61f7304"
+title = "OZNAM pre voľby do Národnej rady Slovenskej republiky 29.2.2020 – okrsky obce Radošina"
+
+[okrsok.1]
+rules = [
+  {street = "Hečkova"},
+  {street = "kpt. J. Nálepku"},
+  {street = "Piešťanská"},
+  {street = "Školská"},
+]
+
+[okrsok.2]
+rules = [
+  {street = "Družstevná"},
+  {street = "Kamenná"},
+  {street = "Mierová"},
+  {street = "Nádražná"},
+  {street = "Nitrianska"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Bzince", note = "the document gives okrsok 3 only its polling station, the cultural house in Bzince (Bzince 30); okrsok 3 is the part Bzince, the only part not covered by the streets of okrsky 1 and 2", inferred = true},
+]

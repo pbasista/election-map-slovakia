@@ -1,32 +1,33 @@
-# The okrsky of Cabaj-Čápor of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/545589.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Cabaj-Čápor, transcribed by an AI agent in job okrsok-rules-696 from the documents below;
+# The okrsky of Cabaj-Čápor of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/545589.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Cabaj-Čápor, transcribed by an AI agent in job okrsok-rules-4148 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Brezová ulica; Cedrónska ulica; Dolinská ulica; Družstevná ulica; Nová ulica; Školská ulica; Ulica Dolný Talag; Ulica Domovina; Ulica Horný Talag; Wágnerova ulica; Ulica pri sýpke; Ulica nad školou
+#     okrsok 1: Brezová ulica; Cedronská ulica; Dolinská ulica; Družstevná ulica; Nová ulica; Školská ulica; Ulica Dolný Talag; Ulica Domovina; Ulica Horný Talag; Wágnerova ulica; Ulica pri sýpke; Ulica nad školou
 #     okrsok 2: Agátova ulica; Cintorínska ulica; Čingovská ulica; Dubová ulica; Ďurinkova ulica; Hlavná ulica; Hrabová ulica; Klzová ulica; Kostolná ulica; Námestie sv. Urbana; Podhájska ulica; Smreková ulica; Sudovského ulica; Trojičné námestie; Ulica sv. Trojice; Ulica pri parku; Vinohradnícka ulica; Vŕbová ulica; Záhradná ulica
-#     okrsok 3: Ulica k potoku; Nitrianska ulica; Slivková ulica; Slnečná ulica; Ulica Jána Domastu; Ulica pod lipkami; Ulica pri lávke; Ulica za ihriskom; Novocabajská ulica; Fialkova ulica; Muškátova ulica; Narcisová ulica; Púpavová ulica; Ružová ulica; Šalianska ulica; Močenská ulica; Trnovecká ulica; Ulica k majeru; Ulica na Hrúšťov; Ulica na Fízeš
+#     okrsok 3: Ulica k potoku; Nitrianska ulica; Slivková ulica; Slnečná ulica; Ulica Jána Domastu; Ulica pod lipkami; Ulica pri lávke; Ulica za ihriskom; Novocabajská ulica; Fialkova ulica; Muškátová ulica; Narcisová ulica; Púpavová ulica; Ružová ulica; Šalianska ulica; Močenská ulica; Trnovecká ulica; Ulica k majeru; Ulica na Hrúšťov; Ulica na Fízeš
 #     okrsok 4: Čerešňová ulica; Farská ulica; Fraštacká ulica; Hviezdoslavova ulica; Krátka ulica; Námestie sv. Michala; Ulica Funduše; Poľná ulica; Ulica na hoferské humná; Štepnická ulica; Trhové námestie; Ulica za farskou záhradou; Ulica Sádová; Ulica za humnami
 obec = "545589"
 name = "Cabaj-Čápor"
-okrsky_date = 2022-07-13
+okrsky_date = 2024-01-19
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2023-09-30 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2023-09-30 was searched for. Scanned document, read from page images. Trojičné námestie (okrsok 2), Poľná ulica and Trhové námestie (okrsok 4) are not in the register and are left out. The few houses without a street take the nearest placed address (fill_nearest)."
-okrsky_reused = 2022-10-29
+okrsky_note = "Streets named in the document but not in the address register, left out: Trojičné námestie (okrsok 2), Poľná ulica (okrsok 4), Trhové námestie (okrsok 4). Addresses without a street take the nearest placed address (fill_nearest)."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3518): The website's \"Voľby a referendum\" page holds only the OVK minutes of the 2023 NR SR elections; no okrsky document of this vote found live or in the Internet Archive. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2024-03-23: 1: 916 → 898, 2: 906 → 926, 3: 754 → 781, 4: 790 → 787."
 
 [[document]]
-url = "https://www.cabajcapor.sk/download_file_f.php?id=1712043"
-sha256 = "8efe78626c9139bfdbb8f72fbd5df18843b8cffa310a3ec129ce66293c76541d"
-title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a do orgánov samosprávnych krajov, konané dňa 29. októbra 2022"
+url = "https://www.cabajcapor.sk/download_file_f.php?id=1983257"
+sha256 = "f9ccf5e09cbc0a230673cf0fdbe5ad595ab39219aba6b8ad1b59d58ab640e392"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta Slovenskej republiky"
 
 [[document]]
-url = "https://www.cabajcapor.sk/volby-2022.html"
-sha256 = "a6d862622caf519d7341f533861ca21fedc8613a4ef43e45b60b8012aa8a2ddd"
-title = "Voľby 2022"
+url = "https://www.cabajcapor.sk/volby-prezidenta-slovenskej-republiky-2024.html"
+sha256 = "465a1b612a85e79f1364ce69cca532b14d71b1f47fefe86accbd09fc71d1755c"
+title = "Voľby prezidenta Slovenskej republiky 2024 (page linking the document)"
 
 [okrsok.1]
 rules = [
   {street = "Brezová ulica"},
-  {street = "Cedronská ulica", written = "Cedrónska ulica", note = "the document's vowel length differs; the same street"},
+  {street = "Cedronská ulica"},
   {street = "Dolinská ulica"},
   {street = "Družstevná ulica"},
   {street = "Nová ulica"},
@@ -41,7 +42,7 @@ rules = [
 
 [okrsok.2]
 rules = [
-  {street = "Agátová ulica", written = "Agátova ulica", note = "the document's vowel length differs; the same street"},
+  {street = "Agátová ulica", written = "Agátova ulica", note = "the document drops/changes the accent; the same street"},
   {street = "Cintorínska ulica"},
   {street = "Čingovská ulica"},
   {street = "Dubová ulica"},
@@ -72,8 +73,8 @@ rules = [
   {street = "Ulica pri lávke"},
   {street = "Ulica za ihriskom"},
   {street = "Novocabajská ulica"},
-  {street = "Fialková ulica", written = "Fialkova ulica", note = "the document's vowel length differs; the same street"},
-  {street = "Muškátová ulica", written = "Muškátova ulica", note = "the document's vowel length differs; the same street"},
+  {street = "Fialková ulica", written = "Fialkova ulica", note = "the document drops/changes the accent; the same street"},
+  {street = "Muškátová ulica"},
   {street = "Narcisová ulica"},
   {street = "Púpavová ulica"},
   {street = "Ružová ulica"},

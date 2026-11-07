@@ -355,6 +355,10 @@ def test_by_election_council_of_part_of_an_obec():
     assert split == {"521001"}
     everywhere = {"521001", "529362", "528595"}
     assert addr.part_councils(contests, split) == everywhere
+    # Elected anew, its council's obvody are not its term's: obvod 1 with
+    # seats is the whole council.
+    anew = [{**c, "vote": "new"} if c["area"] == "521001" else c for c in contests]
+    assert addr.part_councils(anew, split) == {"529362", "528595"}
     council = addr.council_obvody(contests)
     house = House("1/1", (1, "", 1, ""), (1, 2))
     groups = {(STREETS, "Hlavná"): [house]}

@@ -12,12 +12,11 @@
 #   okrsok 9: Jána Francisciho č. 39 - 48, Jozefa Czauczika, Viktora Greschika, Ulica Štefana Zamkovského
 #   okrsok 10: Levočské Lúky
 #   okrsok 11: Kováčova vila, Levočské kúpele, Levočská Dolina, Závada, Levoča s. č. 2024, Levoča s. č. 2026, Levoča s. č. 2045
-#   okrsok 12: špeciálny volebný okrsok v Levoči (územný obvod okresu Levoča) pre voličov s nariadenou karanténou alebo izoláciou (COVID-19)
 obec = "543292"
 name = "Levoča"
 okrsky_date = 2022-11-09
 okrsky_fill = "nearest"
-okrsky_note = "Register names carry \"ulica\"/\"Ulica\", which the document leaves out. \"Za sedriou\" = register \"Za sédriou\" (accent left out); \"M. R. Štefánika\" = Ulica Milana Rastislava Štefánika. \"Levoča s. č. …\" are houses without a street in part Levoča, by súpisné číslo. The other addresses of part Levoča without a street (houses numbered only by súpisné číslo, which the document does not list) are placed by fill_nearest. \"Ulica za Bergerovcom\" (okrsok 1) is not in the register (no addresses) and is left out. The text layer is OCR of a scan; text checked against the page images. Okrsok 12 of the Statistical Office (2 voters) is not one of the mayor's okrsky: it is the special okrsok (špeciálny volebný okrsok v Levoči) of the district office for voters in COVID-19 quarantine or isolation, announced on the city's referendum page; it has no addresses."
+okrsky_note = "Register names carry \"ulica\"/\"Ulica\", which the document leaves out. \"Za sedriou\" = register \"Za sédriou\" (accent left out); \"M. R. Štefánika\" = Ulica Milana Rastislava Štefánika. \"Levoča s. č. …\" are houses without a street in part Levoča, by súpisné číslo. The other addresses of part Levoča without a street (houses numbered only by súpisné číslo, which the document does not list) are placed by fill_nearest. \"Ulica za Bergerovcom\" (okrsok 1) is not in the register (no addresses) and is left out. The text layer is OCR of a scan; text checked against the page images. Okrsok 12 of the Statistical Office (2 voters) is not one of the mayor's okrsky: it is the special okrsok (špeciálny volebný okrsok v Levoči) of the district office for voters in COVID-19 quarantine or isolation, which the document names as the special okrsok: the COVID-19 special okrsok of okres Levoča (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml), kept out of these okrsky."
 
 [[document]]
 url = "https://www.levoca.sk/wp-content/uploads/2022/11/Referendum-2023-utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-09.11.2022.pdf"
@@ -151,6 +150,3 @@ rules = [
   {part = "Závada"},
   {part = "Levoča", numbers = "2024, 2026, 2045", note = "\"Levoča s. č. 2024, s. č. 2026, s. č. 2045\": houses in part Levoča numbered by súpisné číslo without a street"},
 ]
-
-[okrsok.12]
-addressless = true

@@ -1,20 +1,21 @@
-# The okrsky of Belá nad Cirochou of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/520039.toml, reused by `ems job reuse`. Its header there:
-#   Okrsky of Belá nad Cirochou, transcribed by an AI agent in job okrsok-rules-825 from the documents below;
+# The okrsky of Belá nad Cirochou of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/520039.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Belá nad Cirochou, transcribed by an AI agent in job okrsok-rules-4927 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: ul. Cintorínska, ul. Riečna, ul. Komenského, ul. Štúrova, ul. Partizánska, ul. SNP, ul. Švermova, ul. Vihorlatská od súpisného čísla 167-204, 251-318, 445-471, 925, 927, 948 974, 1029, 1042, 1044, 1046, 1047, 1065, 1075
-#     okrsok 2: ul. Mlynská, ul. Osloboditeľov, ul. Kukučínova, ul. Budovateľská, ul. Brusná, ul. Tajch, ul. Sládkovičova, ul. Staničná, ul. Drieňova, ul. Hviezdoslavova, ul. Vihorlatská od súpisného čísla 472-515 a súpisné číslo 930.
+#     okrsok 1: ul. Cintorínska, ul. Riečna, ul. Komenského, ul. Štúrova, ul. Partizánska, ul. SNP, ul. Švermova, ul. Vihorlatská od súpisného čísla 167 po súpisné číslo 204, od súpisného čísla 251 po súpisné číslo 318 a nové rodinné domy na ul. Vihorlatská nachádzajúce sa vo vymedzenom úseku súpisných čísel.
+#     okrsok 2: ul. Mlynská, ul. Osloboditeľov, ul. Kukučínova, ul. Budovateľská, ul. Brusná, ul. Tajch, ul. Sládkovičova, ul. Staničná, ul. Drieňová, ul. Hviezdoslavova, ul. Vihorlatská od súpisného čísla 472 po súpisné číslo 515 a nové rodinné domy na ul. Vihorlatská nachádzajúce sa vo vymedzenom úseku súpisných čísel.
 obec = "520039"
 name = "Belá nad Cirochou"
-okrsky_date = 2022-08-04
+okrsky_date = 2024-03-05
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2024-03-23 the obec had as many, each with voters on the roll within 10% of its count then. No document of 2024-03-23 was searched for. Vihorlatská is split by súpisné čísla; its houses whose súpisné číslo the document lists in neither okrsok, and the register's addresses without a street (súpisné only), are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "fill_nearest places the register's addresses without a street and the Vihorlatská houses whose súpisné číslo lies outside the listed ranges (the document places 'new family houses' by the section of súpisné čísla they lie in; it lists no range 445-471, which the 2022 and 2023 documents put in okrsok 1). Scanned PDF, read from the rendered page."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2024-03-23 setting the okrsky was found (okrsok-rules-4303): The elections page lists for the 2024 presidential election only the call, voter information, OVK delegation and results; no okrsky document. The next okrsky document (č.j. 150-01/2024, 5 March 2024) is expressly for the European Parliament election 2024, and this vote's prompt allows no other vote's document as a stand-in. These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-03-23 → 2024-06-08: 1: 1,377 → 1,377, 2: 1,302 → 1,311."
 
 [[document]]
-url = "https://www.belanadcirochou.sk/files/obsahy-stranok/volby/2022-08-04-121918-Ozn__menie_o_utvoren___volebn__ch_okrskov_a_ur__enie_volebn__ch_miestnost__.pdf"
-sha256 = "b8d4fae810afeb829d959c97632aa8fd993526068c2833305632ac036ed05483"
-title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov, ktoré sa uskutočnia 29.10.2022"
+url = "https://www.belanadcirochou.sk/files/obsahy-stranok/volby/2024-03-05-122945-Vytvorenie_volebn__ch_okrskov.pdf"
+sha256 = "6b11466ee45c2ea3825e4350c5f6245baa79136c76207fef6b5781cb96c1e816"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu 2024"
 
 [okrsok.1]
 rules = [
@@ -25,7 +26,7 @@ rules = [
   {street = "Partizánska"},
   {street = "SNP"},
   {street = "Švermova"},
-  {street = "Vihorlatská", numbers = "167-204, 251-318, 445-471, 925, 927, 948, 974, 1029, 1042, 1044, 1046, 1047, 1065, 1075", by = "supisne", note = "The document writes '948 974' without a separator; read as the two numbers 948 and 974."},
+  {street = "Vihorlatská", numbers = "167-204, 251-318", by = "supisne"},
 ]
 
 [okrsok.2]
@@ -38,7 +39,7 @@ rules = [
   {street = "Tajch"},
   {street = "Sládkovičova"},
   {street = "Staničná"},
-  {street = "Drieňová", written = "Drieňova", note = "Missing accent on the ending; the register's Drieňová."},
+  {street = "Drieňová"},
   {street = "Hviezdoslavova"},
-  {street = "Vihorlatská", numbers = "472-515, 930", by = "supisne"},
+  {street = "Vihorlatská", numbers = "472-515", by = "supisne"},
 ]

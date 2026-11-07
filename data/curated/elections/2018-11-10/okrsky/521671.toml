@@ -1,31 +1,31 @@
-# The okrsky of Medzev of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/521671.toml, reused by `ems job reuse`.
+# The okrsky of Medzev of the vote of 2022-10-29, data/curated/elections/2022-10-29/okrsky/521671.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Medzev, transcribed by an AI agent in job okrsok-rules-762 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Mariánske námestie, Mierová, Miroslavská, Prochotská, Robotnícka, Sídlisko Mladosť
+#     okrsok 2: Aljašská, Hámornícka, Grunt, Jarná, Partizánska, Štóska
+#     okrsok 3: Kováčska, Revolučná, Šugovská dolina
 obec = "521671"
 name = "Medzev"
-okrsky_date = 2026-07-29
+okrsky_date = 2022-07-18
 okrsky_fill = "nearest"
-okrsky_note = "No document of the elections of 2018-11-10 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2018 (each okrsok's voters on the roll within 10%). Scanned document read from the rendered page. Addresses without a street (334) are placed by the nearest address (fill_nearest)."
-okrsky_reused = 2026-10-24
+okrsky_note = "The 2022 page is gone from the live site (which shows only the 2026 referendum's okrsky); the archived page of 16.08.2022 (posted 18.7.2022) is used; a second copy (item 4148, archived 07.10.2022) has the same text. The register's houses without a street are placed by fill_nearest."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-697): Medzev's live website (medzev.sk, Voľby a referendá and úradná tabuľa, all pages) now shows only the documents of the elections of October 2026; the okrsky documents of earlier votes are gone. The Internet Archive, where they might be kept, refused connections (offline) during the search. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2018-11-10 → 2022-10-29: 1: 945 → 876, 2: 1,018 → 1,012, 3: 1,072 → 1,188."
 
 [[document]]
-url = "https://www.medzev.sk/e_download.php?file=/data/uredni_deska/obsah4125_5.pdf&original=Utvorenie%20okrskov%20pre%20vo%C4%BEby%20do%20org%C3%A1nov%20samospr%C3%A1vy%20obc%C3%AD%20a%20org%C3%A1nov%20samospr%C3%A1vnych%20krajov.pdf"
-sha256 = "f12aa940f21112c95989db6fcdfff434eeea4fc88c9c38d2d077ea1bc4c9fdec"
-title = "Utvorenie volebných okrskov a určenie volebných miestností na zabezpečenie volieb do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov dňa 24.10.2026"
-
-[[document]]
-url = "https://www.medzev.sk/mesto/povinne-zverejnovanie/uradna-tabula/volby-do-organov-samospravy-4627.html"
-sha256 = "3b438bf1fd62a9246fd078c23f59ff86f30e8c3eae5c0d8ee7beaa0e329a9db1"
-title = "Voľby do orgánov samosprávy"
+url = "https://web.archive.org/web/20220816221034/https://www.medzev.sk/obcan/volby-a-referenda/utvorenie-volebnych-okrskov-a-urcenie-volebnych-miestnosti-pre-volby-do-organov-samospravy-obci-a-volby-do-organov-samospravnych-krajov-4147.html"
+sha256 = "b8322be2c8f9ba585fa71fd1d77e6155fe1f3283a80f1a027a3d29e2a4e97a19"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov (č. sp. ME/2022/001224)"
 
 [okrsok.1]
 rules = [
   {street = "Mariánske Námestie", written = "Mariánske námestie"},
-  {street = "Prochotská"},
-  {street = "Robotnícka"},
-  {street = "Revolučná"},
-  {street = "Šugovská Dolina", written = "Šugovská dolina"},
-  {street = "Sídlisko Mladosť"},
   {street = "Mierová"},
   {street = "Miroslavská"},
+  {street = "Prochotská"},
+  {street = "Robotnícka"},
+  {street = "Sídlisko Mladosť"},
 ]
 
 [okrsok.2]
@@ -41,4 +41,6 @@ rules = [
 [okrsok.3]
 rules = [
   {street = "Kováčska"},
+  {street = "Revolučná"},
+  {street = "Šugovská Dolina", written = "Šugovská dolina"},
 ]

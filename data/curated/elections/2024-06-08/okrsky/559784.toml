@@ -1,63 +1,64 @@
-# The okrsky of Turňa nad Bodvou of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/559784.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Turňa nad Bodvou, transcribed by an AI agent in job okrsok-rules-510 from the documents below;
+# The okrsky of Turňa nad Bodvou of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/559784.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Turňa nad Bodvou, transcribed by an AI agent in job okrsok-rules-4434 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
 #     okrsok 1: Moldavská cesta – súp.č. 1 – 13, 55 – 58, 107 – 116, 419, 420, 423 – 437, 502 – 508, 693 Tokajská ulica, Malá ulica, Kvetná ulica, Gazdovská ulica, Župná cesta, Vodná ulica, Hlavná ulica
-#     okrsok 2: Pustá ulica, Dolná Kostolná ulica, Horná Kostolná ulica, Kaštieľska ulica, Žarnovská ulica, Nová ulica, Hradná ulica, Hájska cesta, Hájska ulica, Ulica Čiga, Muškátová ulica, Potočná ulica, Ulica Gyűr, Školská ulica, Moldavská cesta – súp.č. 231 – 234, 278 - 281, 704
-#     okrsok 3: Sídlisko Cementár, Severná ulica, Slepá ulica, Staničná ulica, Moldavská cesta – súp.č. 310-314, 343-352, 512, 544-554
+#     okrsok 2: Žarnovská ulica, Nová ulica, Hradná ulica, Hájska cesta, Hájska ulica, Ulica Čiga, Muškátová ulica, Potočná ulica, Ulica Gyűr, Školská ulica, Dolná Kostolná ulica, Horná Kostolná ulica, Moldavská cesta – súp.č. 231 – 234, 278 - 281, 704, Kaštieľska ulica, Pustá ulica
+#     okrsok 3: Sídlisko Cementár, Severná ulica, Slepá ulica, Moldavská cesta 310 - 314, 343 - 352, 512, 544 – 554, Staničná ulica
 obec = "559784"
 name = "Turňa nad Bodvou"
-okrsky_date = 2026-07-23
+okrsky_date = 2024-01-24
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2026-10-24: in 2024-06-08 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2024-06-08 was searched for. Moldavská cesta is split by súpisné čísla. Addresses without a street and Moldavská cesta numbers not listed in the document take the okrsok of the nearest address (fill_nearest)."
-okrsky_reused = 2026-10-24
+okrsky_note = "Scanned PDF read from the page images. Moldavská cesta is split by the súpisné čísla listed; its other houses and the addresses without a street are placed by fill_nearest."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2024-06-08 setting the okrsky was found (okrsok-rules-5055): No okrsky decision for this vote on the website's notice board (which keeps the 2022, 2022-11 referendum, 2024 presidential and 2026 decisions) or in the Internet Archive: the archived 2018–2020 election pages list only voter information and candidate lists (their 2018 'oznam' PDFs are 404 and not archived), and no decision for 2017, 2019, 2023-09, 2024-06 or the 2026 referendum is published. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-06-08 → 2024-03-23: 1: 880 → 865, 2: 889 → 899, 3: 1,015 → 1,029."
 
 [[document]]
-url = "https://www.uradne.sk/user/tablenews/file/1586598"
-sha256 = "ffc7c246702c16d3fc624b7cb8f9c7aa838fb48ef5de79233630dbb4bfbf1401"
-title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a voľby do orgánov samosprávnych krajov"
+url = "https://www.uradne.sk/user/tablenews/file/645596"
+sha256 = "ef0eada1699d9189ae7d2887820dd6ab5372f77a71a3b437e0dc3dec98c1f338"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby prezidenta Slovenskej republiky (24.01.2024)"
 
 [[document]]
-url = "https://www.turnanadbodvou.sk/samosprava/uradna-tabula?p=1&detail=74961&count=10&tagSelect=volby%2Freferenda&subcategory="
-sha256 = "05c891b281cda57fb5496061a7485e75675ec1f9a06e1e75f159ea664e42bf19"
-title = "Úradná tabuľa: Utvorenie volebných okrskov a určenie volebných miestností (links the PDF)"
+url = "https://www.turnanadbodvou.sk/samosprava/uradna-tabula?p=1&detail=9045&count=10&tagSelect=volby%2Freferenda&subcategory="
+sha256 = "8c81fa2bb3a692be34c340b5902950512da791cca8b5d04eeb464db7fb42069f"
+title = "Úradná tabuľa: Utvorenie volebných okrskov (links the PDF)"
 
 [okrsok.1]
 rules = [
+  {street = "Gazdovská ulica"},
+  {street = "Hlavná ulica"},
+  {street = "Kvetná ulica"},
+  {street = "Malá ulica"},
   {street = "Moldavská cesta", numbers = "1-13, 55-58, 107-116, 419, 420, 423-437, 502-508, 693", by = "supisne"},
   {street = "Tokajská ulica"},
-  {street = "Malá ulica"},
-  {street = "Kvetná ulica"},
-  {street = "Gazdovská ulica"},
-  {street = "Župná cesta"},
   {street = "Vodná ulica"},
-  {street = "Hlavná ulica"},
+  {street = "Župná cesta"},
 ]
 
 [okrsok.2]
 rules = [
-  {street = "Pustá ulica"},
   {street = "Dolná Kostolná ulica"},
-  {street = "Horná Kostolná ulica"},
-  {street = "Kaštieľska ulica"},
-  {street = "Žarnovská ulica"},
-  {street = "Nová ulica"},
-  {street = "Hradná ulica"},
   {street = "Hájska cesta"},
   {street = "Hájska ulica"},
-  {street = "Ulica Čiga"},
-  {street = "Muškátová ulica"},
-  {street = "Potočná ulica"},
-  {street = "Ulica Gyűr"},
-  {street = "Školská ulica"},
+  {street = "Horná Kostolná ulica"},
+  {street = "Hradná ulica"},
+  {street = "Kaštieľska ulica"},
   {street = "Moldavská cesta", numbers = "231-234, 278-281, 704", by = "supisne"},
+  {street = "Muškátová ulica"},
+  {street = "Nová ulica"},
+  {street = "Potočná ulica"},
+  {street = "Pustá ulica"},
+  {street = "Školská ulica"},
+  {street = "Ulica Čiga"},
+  {street = "Ulica Gyűr"},
+  {street = "Žarnovská ulica"},
 ]
 
 [okrsok.3]
 rules = [
-  {street = "Sídlisko Cementár"},
+  {street = "Moldavská cesta", numbers = "310-314, 343-352, 512, 544-554", by = "supisne"},
   {street = "Severná ulica"},
+  {street = "Sídlisko Cementár"},
   {street = "Slepá ulica"},
   {street = "Staničná ulica"},
-  {street = "Moldavská cesta", numbers = "310-314, 343-352, 512, 544-554", by = "supisne"},
 ]

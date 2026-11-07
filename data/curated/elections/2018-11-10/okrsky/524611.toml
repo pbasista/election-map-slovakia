@@ -1,22 +1,28 @@
-# The okrsky of Kamenica of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/524611.toml, reused by `ems job reuse`.
+# The okrsky of Kamenica of the vote of 2020-02-29, data/curated/elections/2020-02-29/okrsky/524611.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Kamenica, transcribed by an AI agent in job okrsok-rules-2679 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: súpisné čísla 1 – 350; Voliči s pobytom: Kamenica
+#     okrsok 2: súpisné čísla 351 - 695
 obec = "524611"
 name = "Kamenica"
-okrsky_date = 2026-07-14
+okrsky_date = 2019-11-28
 okrsky_fill = "nearest"
-okrsky_note = "No document of the elections of 2018-11-10 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2018 (each okrsok's voters on the roll within 10%). A scanned document, read from the page image. The okrsky are given by súpisné číslo ranges (1–380 and 381–722). Any address above 722 takes the okrsok of the nearest placed address (fill_nearest)."
-okrsky_reused = 2026-10-24
+okrsky_note = "Scanned document, read from the page image; linked from the live (no longer in the menu) page https://kamenica.sk/sk/content/volby-nrsr-2020. The okrsky are súpisné číslo ranges: 1–350 and 351–695; okrsok 1 also holds the voters registered only in 'Kamenica' (without an address). Any address above 695 takes the okrsok of the nearest placed address (fill_nearest). Differs from the copied 2022/2026 okrsky (1–380 / 381–722) in the split point."
+okrsky_adopted = 2020-02-29
+okrsky_adopted_basis = "No document of 2018-11-10 setting the okrsky was found (okrsok-rules-908): The live (unlinked) page 'Voľby do orgánov samosprávy obcí 2018' (kamenica.sk/sk/content/volby-samosprava-2018) lists 11 documents of the 2018 municipal elections (announcement of the vote, population, obvod/seat announcement of 13.8.2018 – one obvod, 9 seats, registrar, e-mail addresses, candidate lists, results), but no document creating the okrsky. The notice-board files (uploads/oznamy) of June–November 2018 and the Internet Archive's captures of kamenica.sk (CDX) hold no okrsky document either; the results sheet only says there were 2 okrsky. The next okrsky decision found is of 29.1.2019 (presidential election, 1 okrsok), then 28.11.2019 (NR SR 2020: súp. č. 1–350 / 351–695). The Internet Archive was slow and often unreachable; the CDX listing was obtained after retries. These are the okrsky of the vote of 2020-02-29 (2020-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2018-11-10 → 2020-02-29: 1: 702 → 705, 2: 711 → 684."
 
 [[document]]
-url = "https://kamenica.sk/clients/kamenica.sk/uploads/kniznica/1784121591utvor-voleb-okrskov-a-urcenie-vol-miestnosti-kom-volby-2026.pdf"
-sha256 = "a6623a445b5878cbf7b40a1dfb5c9826e9e8e8ecb58fe724a1f78d23a7fb45b0"
-title = "Utvorenie volebných okrskov a určenie volebných miestností - Kom. voľby 2026"
+url = "https://kamenica.sk/clients/kamenica.sk/uploads/kniznica/1574926898utvorenie-okrskov-volby-do-nr-sr.pdf"
+sha256 = "7c54d4c0ea7701cdbee41e3b4172d93fcf0f81fdb1f17042c345fc3f78f6b886"
+title = "Rozhodnutie starostu obce Kamenica o utvorení volebných okrskov a určení volebných miestností v obci Kamenica pre voľby do NR SR, ktoré sa budú konať dňa 29. februára 2020"
 
 [okrsok.1]
 rules = [
-  {part = "Kamenica", numbers = "1-380"},
+  {part = "Kamenica", numbers = "1-350"},
 ]
 
 [okrsok.2]
 rules = [
-  {part = "Kamenica", numbers = "381-722"},
+  {part = "Kamenica", numbers = "351-695"},
 ]

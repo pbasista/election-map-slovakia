@@ -1,0 +1,28 @@
+# The okrsky of Prečín of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/513563.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Prečín, transcribed by an AI agent in job okrsok-rules-3882 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Volebný okrsok č.1 PREČÍN
+#     okrsok 2: Volebný okrsok č.2 Zemianska Závada
+obec = "513563"
+name = "Prečín"
+okrsky_note = "Two versions were uploaded the same day, differing only in the school's house number (105/106); the later one is used. Each okrsok is a part of the municipality."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2026-07-04 setting the okrsky was found (okrsok-rules-5721): Prečín's website (precin.eu, WordPress media library searched for volby/okrsky/oznámenie) holds okrsky documents only for 2022 (Oznamenie-volby.pdf) and the NR SR election 2023; for this vote only notices of e-mail addresses. The Internet Archive refused connections (offline) during the search. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-07-04 → 2023-09-30: 1: 1,102 → 1,082, 2: 125 → 128."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The DOCX is undated; its heading names the NR SR elections of 30.9.2023 (uploaded to the website on 27.06.2023 per its media library)."
+
+[[document]]
+url = "https://www.precin.eu/wp-content/uploads/volebne-miestnosti-1.docx"
+sha256 = "089ad4cd4d04ffc3c05e970fe2346b9f33c8f0a449c8d829d45b906a9c967ba8"
+title = "Voľby do NR SR konané 30.9.2023 – volebné okrsky a volebné miestnosti"
+
+[okrsok.1]
+rules = [
+  {part = "Prečín"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Zemianska Závada"},
+]

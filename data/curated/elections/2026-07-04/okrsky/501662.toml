@@ -1,0 +1,33 @@
+# The okrsky of Janíky of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/501662.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Janíky, transcribed by an AI agent in job okrsok-rules-3908 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Felsöjányoki faluházban a Felsöjanyoki és Busteleki lakosok (Obecný dom, Horné Janíky č. 406)
+#     okrsok 2: alsojanyoki kulturházban a Alsojanyoki lakosok (Kultúrny dom)
+obec = "501662"
+name = "Janíky"
+okrsky_date = 2023-06-12
+okrsky_note = "The mayor's document (12.06.2023) gives 2 okrsky with their polling stations only: č.01 Obecný dom, Horné Janíky 406; č.02 Kultúrny dom (address written as Horné Janíky č. 43). The municipality's notice for this election (in Hungarian) says the residents of Felsőjányok (Horné Janíky) and Búštelek vote in the Felsőjányok faluház (Obecný dom) and the residents of Alsójányok (Dolné Janíky) in the Alsójányok kultúrház (Kultúrny dom); hence okrsok 1 = Horné Janíky + Búštelek, okrsok 2 = Dolné Janíky, matching the voters (440/321) and the obvody (okrsok 1 in obvod 1 Horné Janíky + Búštelek, okrsok 2 in obvod 2 Dolné Janíky)."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2026-07-04 setting the okrsky was found (okrsok-rules-5719): Okrsky documents on janiky.sk exist only for the National Council election of 2023 (evt_file 3473 + notice 576sk); the sections for this vote (live and archived) hold no okrsky document, and a 2023 document is not valid for this vote. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2026-07-04 → 2023-09-30: 1: 472 → 440, 2: 319 → 321."
+
+[[document]]
+url = "https://www.janiky.sk/evt_file.php?file=3473"
+sha256 = "392419b2548dbb29ae245052001b66e405e2638f0c77b357065e1f44c39b9b97"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností pre voľby do NR SR v roku 2023 (12.06.2023)"
+
+[[document]]
+url = "https://www.janiky.sk/sk/urad/volby-a-referenda/volby-nr-sr-2023/ertesites-oznamenie-576sk.html"
+sha256 = "9914160d73cf51a8d23047cabeab61294d2b819c3a7acba281daf95d7aae5ca9"
+title = "Értesítés - Oznámenie (voľby do NR SR 30.9.2023)"
+
+[okrsok.1]
+rules = [
+  {part = "Horné Janíky"},
+  {part = "Búštelek"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Dolné Janíky"},
+]

@@ -2,12 +2,13 @@
 
 The holders are rebuilt from the final results published by ŠÚ SR: the
 winners of the municipal and regional elections of 29 October 2022, then
-every by-election ("nové voľby") of mayors and councils since, in date order.
-A by-election of a mayor replaces the mayor (or leaves the office vacant when
-nobody was elected); council by-election winners join the council, or replace
-it when as many seats were elected as the council had in 2022 (a repeated or
-fresh election of the whole council). A councillor elected mayor of the same
-municipality leaves the council, the two offices being incompatible.
+every by-election (doplňujúce and nové voľby) of mayors and councils since,
+in date order. A by-election of a mayor replaces the mayor (or leaves the
+office vacant when nobody was elected); council by-election winners join
+the council, or replace it when as many seats were elected as the council
+had in 2022 (a repeated or fresh election of the whole council). A
+councillor elected mayor of the same municipality leaves the council, the
+two offices being incompatible.
 Councils are held per body, not per obvod: the 2026 obvody differ from 2022.
 
 Not covered, because no central dataset has them: substitutes (náhradníci)

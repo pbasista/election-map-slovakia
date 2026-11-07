@@ -22,14 +22,14 @@ found none.
   linked from one of its documents that is, an HTML page
   (:func:`fetch_official`: a file store such as Google Drive);
 - the document can be fetched; it is kept, by sha256, for ``accept``. A
-  snapshot of the Internet Archive (:func:`snapshot`) stands for the page
-  it copies, fetched as archived;
+  snapshot of the Internet Archive or a capture of the Common Crawl
+  (:func:`snapshot`) stands for the page it copies, fetched as archived;
 - the decision's ``date``, where given, is before the election day (one
   more than two years before only gets a note); for an election other
   than the latest, whose website may show a later election's documents by
   now, it is required, unless no document states it and the output dates
   them approximately instead (``date_approximate``, :func:`dating_problems`):
-  by an Internet Archive capture of the document or of the official page
+  by an archive's capture of the document or of the official page
   linking it, or a posting date on that page, either before the vote (a
   later one may be of a later vote's document), or by the document naming
   the election; the rule set is then marked so, and the ballots say its
@@ -81,7 +81,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from collections import Counter
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Collection, Iterable, Mapping, Sequence
 from pathlib import Path
 from typing import Any, NamedTuple
 
@@ -92,6 +92,7 @@ from election_map_slovakia import (
     addresses,
     basemap,
     candidates,
+    commoncrawl,
     config,
     fetch,
     geo,
@@ -115,8 +116,13 @@ DOCUMENTS_DIR = "documents"
 REVIEW_DIR = "review"
 REVIEW_LEVEL = 1
 """ZBGIS level the review sheets draw."""
-MAX_DOCUMENT = 20 << 20
-"""Bytes a document may have."""
+MAX_DOCUMENT = 40 << 20
+"""Bytes a document may have.
+
+Council materials bundle a whole meeting's papers: Vrakuňa's 2018 material
+with the obvody's streets is 27 MB. Accepted documents are copied into the
+committed cache, so the bound stays.
+"""
 TIMEOUT = 60
 SHARED_HOSTS = {
     # Centrálna úradná elektronická tabuľa: every obec publishes there.
@@ -450,13 +456,18 @@ def _results_okrsky(directory: Path) -> Okrsky:
     }
 
 
-def prompt(cfg: Config, election: Election, template: str, earlier: str) -> str:
+def prompt(
+    cfg: Config, election: Election, template: str, earlier: str, *, new: bool = False
+) -> str:
     """Return the prompt *template* for *election*, with *earlier* if not the latest.
 
-    A by-election's adds :data:`TERM` on its term instead.
+    A by-election's adds :data:`TERM` on its term instead; of its *new*
+    elections of whole councils, :data:`NEW_ELECTION`.
     """
     term = cfg.term(election)
-    if term:
+    if term and new:
+        template += NEW_ELECTION
+    elif term:
         template += string.Template(TERM).safe_substitute(
             term_day=jobs.long_date(term.day), term_year=term.day.year
         )
@@ -472,8 +483,11 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
     document was not found before, and those whose rule set is another
     election's (``reused``, ``adopted``), which a document of their own then
     replaces. A by-election's obce are those of its council contests whose
-    council its term elected in several obvody, with the obvody of both
-    and the term's seats (a by-election's are those vacant).
+    council has several obvody: of a by-election proper those its term
+    elected it in, with the obvody of both and the term's seats (a
+    by-election's are those vacant), asking for the term's decision; of a
+    new election (``vote`` ``"new"``) its own, with its seats, asking for
+    its own decision (``new_election`` of the item).
     """
     election = options.election
     data = candidate_data(cfg, election)
@@ -481,16 +495,10 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
     okresy = {o["code"]: o["name"] for o in data["okresy"]}
     kraje = {k["code"]: k["name"] for k in data["kraje"]}
     candidacies_by_contest = Counter(c["contest"] for c in data["candidacies"])
-    seats = contest_seats(data)
     units = official_okrsky(cfg, election)
-    council = addresses.council_obvody(data["contests"])
-    if term := cfg.term(election):
-        # Its council was elected in the term's obvody, of which the term's
-        # lists name those with candidates then.
-        then = candidate_data(cfg, term)
-        before = addresses.council_obvody(then["contests"])
-        council = {c: sorted({*n, *before.get(c, ())}) for c, n in council.items()}
-        seats = contest_seats(then)
+    new = candidates.new_councils(data["contests"])
+    council, seats = _councils(cfg, election, data, new)
+    term = cfg.term(election)
     directory = places_dir(cfg, election)
     if not directory.is_dir():
         raise jobs.JobError(f"{directory} missing; run `ems addresses` first")
@@ -504,10 +512,10 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
     not_found = load_not_found(cfg, election)
     pending = {i["id"] for j in options.pending for i in j.items}
     only = {search_key(x) for x in options.only}
-    items = []
+    items: dict[bool, list[dict[str, Any]]] = {False: [], True: []}
     for code, numbers in council.items():
         path = directory / f"{code}.json"
-        if len(numbers) < 2 or not path.is_file():  # noqa: PLR2004 - several obvody
+        if max(numbers) < 2 or not path.is_file():  # noqa: PLR2004 - several obvody
             continue
         obec = names[code]
         if only and not ({code, search_key(obec["name"])} & only):
@@ -515,6 +523,7 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
         if code in curated or code in pending or (code in not_found and not only):
             continue
         p = obvody.load_places(path)
+        own = code in new
         item = _item(
             obec,
             okresy,
@@ -523,7 +532,7 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
             candidacies_by_contest,
             p,
             data["obce"],
-            (term or election).day.year,
+            (election if own or term is None else term).day.year,
         )
         for o in item["obvody"]:
             contest = f"oz:{code}/{o['number']}"
@@ -531,9 +540,49 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
                 o["seats"] = seats[contest]
             if code in units:
                 o["okrsky"] = list(units[code].get(o["number"], {}))
-        items.append(item)
-    text = prompt(cfg, election, PROMPT, EARLIER)
-    return batches(items, text, options.size, "council obvod rules")
+        if own:
+            item["new_election"] = True
+        items[own].append(item)
+    return [
+        job
+        for own, found in items.items()
+        for job in batches(
+            found,
+            prompt(cfg, election, PROMPT, EARLIER, new=own),
+            options.size,
+            "council obvod rules",
+        )
+    ]
+
+
+def _councils(
+    cfg: Config, election: Election, data: Mapping[str, Any], new: Collection[str]
+) -> tuple[dict[str, list[int]], dict[str, int]]:
+    """Return obec → the council obvody to transcribe, and contest → seats.
+
+    Those of *election*'s candidates *data*; of a by-election proper those
+    of its term too, with the term's seats: it fills seats of the council
+    elected in the term's obvody, of which the term's lists name those with
+    candidates then. A new election's (of the obce *new*) are its own.
+    """
+    council = addresses.council_obvody(data["contests"])
+    seats = contest_seats(data)
+    term = cfg.term(election)
+    if term is None:
+        return council, seats
+    then = candidate_data(cfg, term)
+    before = addresses.council_obvody(then["contests"])
+    merged = {
+        c: n if c in new else sorted({*n, *before.get(c, ())})
+        for c, n in council.items()
+    }
+
+    def of_term(contest: str) -> bool:
+        return contest.partition(":")[2].partition("/")[0] not in new
+
+    return merged, {c: n for c, n in contest_seats(then).items() if of_term(c)} | {
+        c: n for c, n in seats.items() if not of_term(c)
+    }
 
 
 def batches(
@@ -631,7 +680,7 @@ def address_fields(
 
 
 class Snapshot(NamedTuple):
-    """An Internet Archive snapshot URL taken apart."""
+    """An archive capture's URL taken apart (Internet Archive, Common Crawl)."""
 
     day: dt.date
     stamp: str
@@ -641,7 +690,17 @@ class Snapshot(NamedTuple):
 
 
 def snapshot(url: str) -> Snapshot | None:
-    """Return Internet Archive snapshot *url* taken apart, or None if not one."""
+    """Return archive capture *url* taken apart, or None if not one.
+
+    An Internet Archive snapshot URL, or a Common Crawl capture's
+    (:func:`election_map_slovakia.commoncrawl.capture`).
+    """
+    if c := commoncrawl.capture(url):
+        try:
+            day = dt.datetime.strptime(c.stamp[:8], "%Y%m%d").date()
+        except ValueError:
+            return None
+        return Snapshot(day, c.stamp, c.original)
     m = SNAPSHOT.fullmatch(url)
     if m is None:
         return None
@@ -659,7 +718,7 @@ def snapshot(url: str) -> Snapshot | None:
 
 
 def original_url(url: str) -> str:
-    """Return *url*, or the original URL of an Internet Archive snapshot."""
+    """Return *url*, or the original URL of an archive capture (:func:`snapshot`)."""
     s = snapshot(url)
     return s.original if s else url
 
@@ -716,8 +775,11 @@ def _download(cfg: Config, url: str) -> bytes:
     """Return the content at *url*; raise JobError if it cannot be had.
 
     A snapshot of the Internet Archive is fetched as archived (``id_``),
-    and must be of the day its URL names, not one the archive substitutes.
+    and must be of the day its URL names, not one the archive substitutes;
+    a Common Crawl capture from the crawl's files (:func:`_from_common_crawl`).
     """
+    if commoncrawl.capture(url):
+        return _from_common_crawl(cfg, url)
     s = snapshot(url)
     target = (
         url if s is None else f"https://web.archive.org/web/{s.stamp}id_/{s.original}"
@@ -748,6 +810,24 @@ def _download(cfg: Config, url: str) -> bytes:
     return data
 
 
+def _from_common_crawl(cfg: Config, url: str) -> bytes:
+    """Return the document Common Crawl capture *url* holds; raise JobError if none."""
+    ranges = commoncrawl.http_ranges(
+        fetch.user_agent(cfg.inputs.contact),
+        fetch.ssl_context(cfg.inputs.ca_certificates),
+        TIMEOUT,
+    )
+    try:
+        data = commoncrawl.fetch(ranges, url, MAX_DOCUMENT)
+    except commoncrawl.CommonCrawlError as e:
+        raise jobs.JobError(f"{url}: {e}") from None
+    except (urllib.error.URLError, OSError, ValueError) as e:
+        raise jobs.JobError(f"cannot fetch {url}: {e}") from None
+    if not data:
+        raise jobs.JobError(f"{url}: empty")
+    return data
+
+
 def _extension(url: str, data: bytes) -> str:
     """Return the file extension of document *data*, by its content first."""
     if data.startswith(b"%PDF-"):
@@ -774,7 +854,7 @@ def keep(cfg: Config, job: jobs.Job, url: str) -> str:
     if url in index and (job.path / DOCUMENTS_DIR / index[url]).is_file():
         return index[url]
     data = _download(cfg, url)
-    name = f"{hashlib.sha256(data).hexdigest()}.{_extension(url, data)}"
+    name = f"{hashlib.sha256(data).hexdigest()}.{_extension(original_url(url), data)}"
     (job.path / DOCUMENTS_DIR).mkdir(parents=True, exist_ok=True)
     (job.path / DOCUMENTS_DIR / name).write_bytes(data)
     jobs.write_json(job.path / DOCUMENTS_DIR / "index.json", index | {url: name})
@@ -1026,7 +1106,7 @@ def dating_problems(
     if by == "archived" and (s is None or s.day != day):
         return [
             f"date_source {out['date_source']!r} is not an Internet Archive"
-            f" snapshot taken on date_seen {day}"
+            f" snapshot or Common Crawl capture taken on date_seen {day}"
         ]
     return []
 
@@ -1185,18 +1265,24 @@ def read_notes(job: jobs.Job, obec: str) -> list[str]:
 def check(
     cfg: Config, job: jobs.Job, item: dict[str, Any], out: dict[str, Any]
 ) -> list[str]:
-    """Return the problems of output item *out* for input *item*."""
+    """Return the problems of output item *out* for input *item*.
+
+    A by-election proper's rules may have more obvody than its item (its
+    term's council's); a new election's (``new_election``) are its own,
+    as a regular election's.
+    """
     if out["status"] == "not_found":
         return [] if out["tried"] else ["not_found needs the URLs tried"]
     missing = [k for k in ("website", "documents", "obvody") if k not in out]
     if missing:
         return [f"status found needs {', '.join(missing)}"]
     election = jobs.election(cfg, job)
+    part = election.kind == BY_ELECTION and not item.get("new_election")
     try:
         problems = (
             date_problems(cfg, election, out)
             + seat_problems(item, out)
-            + uncontested_problems(item, out, by_election=election.kind == BY_ELECTION)
+            + uncontested_problems(item, out, by_election=part)
         )
     except obvody.ObvodyError as e:
         return [str(e)]
@@ -1218,9 +1304,7 @@ def check(
     problems = (
         supplement_problems(cfg, election, out, rules, obvody.OBVOD)
         + place_name_problems(rules, p)
-        + addresses.check_assignment(
-            rules, numbers, p, a, part=election.kind == BY_ELECTION
-        )
+        + addresses.check_assignment(rules, numbers, p, a, part=part)
     )
     units = official_okrsky(cfg, election).get(item["id"], {})
     notes = date_notes(out, election.day) + plausibility(
@@ -1849,16 +1933,29 @@ Internet Archive:
   original URL must be on the municipality's website, which you name as
   `website` as for a live document.
 
+Where the Internet Archive has no copy (a file it never captured, or one
+cut off at 1 MB), try the Common Crawl, whose crawls of 2017-2019 hold the
+election pages and files of many municipal websites:
+
+- `uv run ems job captures <domain> --years $year --match '<regex>'`
+  lists the captures of a website in the crawls of $year (and the next
+  year: documents stay online), each with the URL that cites it as a
+  document (`https://index.commoncrawl.org/CC-MAIN-…-index?url=…&from=<timestamp>&to=<timestamp>&output=json`);
+- `uv run ems job captures '<that URL>' --out <file>` writes the document
+  the capture holds, to read. List the document by that URL, like a
+  snapshot (the original URL must be on the municipality's website); a
+  capture the crawler cut short is no document.
+
 Every document must be valid for $day. Set `date` to the decision's date
 as the document states it (it must be before $day). Where no document
 states a date (look at the resolution, the announcement, the minutes),
 leave `date` out and date them approximately instead, by the strongest
 of these, which the map then shows as uncertain:
 
-- `"date_approximate": "archived"`: the Internet Archive captured the
-  document, or the official page linking it, before $day. `date_source`
-  is that snapshot URL (on the municipality's website), `date_seen` its
-  day.
+- `"date_approximate": "archived"`: the Internet Archive (or the Common
+  Crawl) captured the document, or the official page linking it, before
+  $day. `date_source` is that snapshot (or capture) URL (on the
+  municipality's website), `date_seen` its day.
 - `"date_approximate": "posted"`: the official page (live or archived)
   states when the document was posted ("vyvesené", "zverejnené dňa"),
   before $day. `date_source` is that page, `date_seen` the posting day.
@@ -1945,6 +2042,27 @@ If you find no document of $term_year, report not_found.
 """Added to :data:`PROMPT` for a by-election, with its term's day
 (``$term_day``) and year (``$term_year``): its council's obvody are the
 term's."""
+
+NEW_ELECTION = f"""
+## A new election
+
+The elections of $day in these municipalities are new elections of the
+whole council (nové voľby: every seat is elected again, after the regular
+election's was annulled, or where it was never held or filled), not
+by-elections of single seats. Their obvody are those the council (or the
+mayor, where the municipality had no council) set for these elections,
+which may differ from the regular election's: `obvody` and `seats` are
+those of $day. Use only the decision on the obvody and their seats for
+the elections of $day ("určenie volebných obvodov a počtu poslancov" for
+the new elections, published before them); never the regular election's
+or a later one's, however alike they look, except to fill them in
+(below).
+{ARCHIVE}
+If you find no document of $day, report not_found: the map then shows
+another election's obvody as indicative only.
+{SUPPLEMENT}"""
+"""Added to :data:`PROMPT` for the new elections of whole councils on a
+by-election day: their obvody are their own (:func:`make`)."""
 
 
 KIND = jobs.Kind(

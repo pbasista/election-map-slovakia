@@ -1,26 +1,22 @@
-# The okrsky of Drahovce of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/506991.toml, copied by `ems job reuse` (reused). Its header there:
-#   The okrsky of Drahovce of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/506991.toml, reused by `ems job reuse`.
+# The okrsky of Drahovce of the vote of 2024-06-08, data/curated/elections/2024-06-08/okrsky/506991.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Drahovce, transcribed by an AI agent in job okrsok-rules-4873 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Hlavná, Poštová, Bratislavská, Šálkova, Južná, Tichá, Dedinská, Važina, Lazy, Záhradná ulica
+#     okrsok 2: Majer, Staničná, Pod Bystercom, Štefánikova, Kostolná, Kalvária, Lipová, Hviezdoslavova, Cintorínska, Vážska, Školská, A. Hlinku, Riadok, Voderady
 obec = "506991"
 name = "Drahovce"
-okrsky_date = 2026-06-16
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2023-01-21 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2023-01-21 was searched for. No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Read from a scan. Date: council resolution 123/2026 of 16.6.2026 created okrsky 1 and 2 (the street list is in the notice of 28.7.2026). \"Voderady\" is the part Voderady. Addresses without a street in the part Drahovce are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "The page lists each okrsok's streets; 'Voderady' is the part Voderady. Addresses without a street in part Drahovce are placed by fill_nearest."
+okrsky_adopted = 2024-06-08
+okrsky_adopted_basis = "No document of 2023-01-21 setting the okrsky was found (okrsok-rules-3059): No page or document of the referendum of 2023 on the okrsky found (the old website archived only the referendum decision). These are the okrsky of the vote of 2024-06-08 (2024-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-01-21 → 2024-06-08: 1: 1,040 → 1,045, 2: 1,121 → 1,111."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The page states the okrsky under the heading 'Voľby do Európskeho parlamentu sa uskutočnia 8. júna 2024'; it is dated (Vyvesené) 8. 6. 2024, the day of the vote, and states no decision date."
 
 [[document]]
-url = "https://www.obecdrahovce.sk/obecny-urad/uradna-tabula/oznamenie-pre-volby-do-organov-uzemnej-samospravy-9465.html"
-sha256 = "45cfff5bf0abc864c6e2ba1f14cf5e86bc1be4ac6984e58541de618b93b8708e"
-title = "Oznámenie pre voľby do orgánov územnej samosprávy (Informácia o vytvorených okrskoch)"
-
-[[document]]
-url = "https://www.obecdrahovce.sk/e_download.php?file=/data/uredni_deska/obsah9457_1.pdf&original=Oznamenie.pdf"
-sha256 = "6fdfebc002b89e289e0c7e9a8cb31246143d0b60217737047539d858a1db8a53"
-title = "Oznámenie – vytvorené volebné okrsky (scan)"
-
-[[document]]
-url = "https://www.obecdrahovce.sk/e_download.php?file=/data/uredni_deska/obsah9455_1.pdf&original=Uznesenie.pdf"
-sha256 = "cd6a7931ffe8d9dfffa472b473bace41bee28a0b55463ae1a7f816e952c73605"
-title = "Výpis uznesení OZ 16.6.2026 (uznesenie 123/2026)"
+url = "https://www.obecdrahovce.sk/samosprava/volby-a-referendum/volby-do-europskeho-parlamentu-sa-uskutocnia-8-juna-2024-550.html"
+sha256 = "d1521d20bf6f4d019b7f9f2d61beef39f41597bc031355af3334a98d2c6a63ab"
+title = "Voľby do Európskeho parlamentu sa uskutočnia 8. júna 2024 (Volebné okrsky a určenie volebných miestností)"
 
 [okrsok.1]
 rules = [
@@ -44,12 +40,12 @@ rules = [
   {street = "Štefánikova"},
   {street = "Kostolná"},
   {street = "Kalvária"},
+  {street = "Lipová"},
   {street = "Hviezdoslavova"},
   {street = "Cintorínska"},
   {street = "Vážska"},
   {street = "Školská"},
+  {street = "A.Hlinku", written = "A. Hlinku"},
   {street = "Riadok"},
-  {street = "Lipová"},
-  {street = "A.Hlinku", written = "Andreja Hlinku"},
-  {part = "Voderady"},
+  {part = "Voderady", note = "'Voderady' is the part Voderady"},
 ]

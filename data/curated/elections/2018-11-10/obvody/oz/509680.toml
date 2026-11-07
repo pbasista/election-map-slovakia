@@ -12,14 +12,17 @@
 #     okrsok 1: Hruštín: Ulice: Lán, Radzovka, Včielok, Kút, Hrnčiarka, Výhon, Kultúrna, Potok, Črchľa, Zavoda
 #     okrsok 2: Hruštín: Ulice: Dielnice, Dedina, Kutina, Pod brehom, Školská, Hlavná, Zamost, Pod Príslopom, Baraniarky, Ku pekárni, Slnečná, Veterná, Pod Uhliskom, Ulica Dlhá, Ulica Krátka, Ulica Lúčna, Ulica Poľná
 #     okrsok 3: Vaňovka: Ulice: Dolný koniec, Horný koniec, Klinok, Kostolná, Kúty, Podsádok, Hredy, Šípová, Pod Grúňom, Okružná, Záhradisko
+# Okrsky added by `ems job reuse`: those of the vote of 2022-10-29, data/curated/elections/2022-10-29/obvody/oz/509680.toml, standing in.
 obec = "509680"
 name = "Hruštín"
 date = 2026-06-19
 note = "No document of the elections of 2018-11-10 was found; this is the rule set of the elections of 2026-10-24, whose obvody, seats and okrsky are those of 2018 (each okrsok's voters on the roll within 10%). Document is a scanned PDF, read from the rendered image. Obvod 2 also lists Šípová, Pod Grúňom, Okružná, Záhradisko, which are not in the address register and are left out."
 reused = 2026-10-24
+okrsky_date = 2022-07-15
 okrsky_fill = "nearest"
-okrsky_note = "No document of the elections of 2018-11-10 was found; this is the rule set of the elections of 2026-10-24, whose obvody, seats and okrsky are those of 2018 (each okrsok's voters on the roll within 10%). The obvody announcement lists the streets of each okrsok of obvod 1. The 98 street-less addresses of part Hruštín (obvod 1) take the okrsok of the nearest address (fill_nearest). No date of the okrsky decision stated."
-okrsky_reused = 2026-10-24
+okrsky_note = "Scanned announcement (read visually) of the council's resolution 43/2022 of 15.07.2022, which names the okrsky of each obvod with their streets. Addresses without a street in obvod 1 (part Hruštín) are placed by fill_nearest."
+okrsky_adopted = 2022-10-29
+okrsky_adopted_basis = "No document of 2018-11-10 placing the addresses in okrsky is known. These are the okrsky of the vote of 2022-10-29 (2022), the nearest in time with okrsky of its own that fit: 3 okrsky, those ŠÚ SR counted in each council obvod. Voters on the roll per okrsok (ŠÚ SR), 2018-11-10 → 2022-10-29: 1: 1,165 → 1,145, 2: 1,040 → 1,050, 3: 304 → 312."
 
 [[document]]
 url = "https://www.hrustin.sk/files/2026-07-14-083310-Ozn__menie_o_utvoren___volebn__ch_obvodov_a_o_ur__en___po__tu_poslancov_pre_vo__by_do_org__nov_samospr__vy_obc___24._okt__bra_2026.pdf"

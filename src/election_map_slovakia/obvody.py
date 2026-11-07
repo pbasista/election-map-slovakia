@@ -148,6 +148,7 @@ only (:func:`assign_okrsky`; added by an ``okrsok-rules`` job, see
     okrsky_referendum = 2023-01-21   # optional, see below
     okrsky_adopted = 2026-10-24      # optional, see below, with
     okrsky_adopted_basis = "…"       # okrsky_adopted_basis
+    okrsky_adopted_outliers = [[51, 806, 1125]]  # optional, with them
     okrsky_date_approximate = "named"  # optional, see below, with
     okrsky_date_basis = "…"            # okrsky_date_seen where it needs one
     okrsky_supplemented = 2026-10-24   # optional, see below, with
@@ -188,6 +189,10 @@ approximately, as ``date_approximate`` and its keys do the rule set's;
 ``okrsky_adopted_basis`` mark okrsky that are those of another vote of
 that day as they stand, as ``adopted`` and its key do a rule set; they
 go with neither ``okrsky_reused``, ``okrsky_referendum`` nor a supplement.
+``okrsky_adopted_outliers`` lists the okrsky standing in all the same
+though their voters on the roll differ more than the layout allows
+elsewhere (``reuse.OUTLIERS_FROM``), each ``[okrsok, voters in the
+election, voters in that vote]``: the map names them.
 
 An obec that elects its council in one obvod but votes in several okrsky
 has no rule set; its okrsky are in ``okrsky/<obec>.toml`` in the
@@ -203,6 +208,7 @@ election's data (:func:`okrsky_path`; written by ``ems job ingest`` from an
     okrsky_referendum = 2023-01-21   # optional, as above
     okrsky_adopted = 2026-10-24      # optional, as above, with
     okrsky_adopted_basis = "…"       # okrsky_adopted_basis
+    okrsky_adopted_outliers = […]    # optional, as above
     okrsky_date_approximate = "…"    # optional, as above, with
     okrsky_date_seen = 2022-09-28    # okrsky_date_seen and
     okrsky_date_basis = "…"          # okrsky_date_basis
@@ -425,6 +431,10 @@ class Adoption:
     basis: str
     """Why the election has no rules of its own, why that vote, and what is
     known to differ."""
+    outliers: tuple[tuple[int, int, int], ...] = ()
+    """Of okrsky standing in, those whose voters on the roll differ beyond
+    what the layout allows elsewhere: (okrsok, voters in the election,
+    voters in that vote)."""
 
 
 @dataclass(frozen=True)
@@ -666,7 +676,8 @@ def okrsky_origin(rules: RuleSet) -> dict[str, Any]:
 
     ``okrsky_reused`` (another election's okrsky), ``okrsky_adopted``
     (another vote's, standing in unproven) or ``okrsky_referendum`` (a referendum's
-    document), each the ISO day of that vote, ``okrsky_date_approximate``,
+    document), each the ISO day of that vote, ``okrsky_outliers``, the
+    :attr:`Adoption.outliers` of okrsky standing in, ``okrsky_date_approximate``,
     the :meth:`Dating.flag` of documents dated approximately, and
     ``okrsky_supplemented``, the :meth:`Supplement.flag` of okrsok rules
     from a later source; ``data/index.json`` carries them.
@@ -676,6 +687,8 @@ def okrsky_origin(rules: RuleSet) -> dict[str, Any]:
         out["okrsky_reused"] = rules.okrsky_reused.isoformat()
     if rules.okrsky_adoption:
         out["okrsky_adopted"] = rules.okrsky_adoption.day.isoformat()
+        if rules.okrsky_adoption.outliers:
+            out["okrsky_outliers"] = [list(o) for o in rules.okrsky_adoption.outliers]
     if rules.okrsky_referendum:
         out["okrsky_referendum"] = rules.okrsky_referendum.isoformat()
     if rules.okrsky_dating:
@@ -921,19 +934,36 @@ def _supplement(t: _Fields, prefix: str) -> Supplement | None:
 
 
 def _adoption(t: _Fields, prefix: str) -> Adoption | None:
-    """Return the ``<prefix>adopted`` of *t* and its basis, if given."""
+    """Return the ``<prefix>adopted`` of *t*, its basis and outliers, if given."""
     key = f"{prefix}adopted"
     day = _date(t, key)
     basis = t.text(f"{prefix}adopted_basis")
+    outliers = _outliers(t, f"{prefix}adopted_outliers") if prefix else ()
     if day is None:
-        if basis:
+        if basis or outliers:
             raise t.error(key, f"missing: {prefix}adopted_basis needs it")
         return None
     if basis is None:
         raise t.error(
             f"{prefix}adopted_basis", "missing: why no rules of its own, what differs"
         )
-    return Adoption(day, basis)
+    return Adoption(day, basis, outliers)
+
+
+def _outliers(t: _Fields, key: str) -> tuple[tuple[int, int, int], ...]:
+    """Return the okrsky of ``<key>``: [okrsok, voters then, voters in the source], ..."""
+    out = []
+    for o in t.get(key, list) or []:
+        match o:
+            case [int(k), int(a), int(b)] if all(
+                not isinstance(x, bool) and x > 0 for x in (k, a, b)
+            ):
+                out.append((k, a, b))
+            case _:
+                raise t.error(
+                    key, "expected [okrsok, voters, voters in the source], ..."
+                )
+    return tuple(out)
 
 
 def _nearest_fill(t: _Fields, key: str) -> bool:
@@ -1873,10 +1903,14 @@ def _toml_adoption(prefix: str, adoption: Adoption | None) -> list[tuple[str, st
     """Return the ``<prefix>adopted`` keys of *adoption*, if one."""
     if adoption is None:
         return []
-    return [
+    out = [
         (f"{prefix}adopted", adoption.day.isoformat()),
         (f"{prefix}adopted_basis", _toml_string(adoption.basis)),
     ]
+    if adoption.outliers:
+        each = ", ".join(f"[{k}, {a}, {b}]" for k, a, b in adoption.outliers)
+        out.append((f"{prefix}adopted_outliers", f"[{each}]"))
+    return out
 
 
 def dump(rules: RuleSet, header: Sequence[str] = ()) -> str:

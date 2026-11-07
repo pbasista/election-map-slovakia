@@ -1,16 +1,21 @@
-# The okrsky of Vysoká pri Morave of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/508349.toml, reused by `ems job reuse`. Its header there:
-#   The okrsky of Vysoká pri Morave of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/508349.toml, reused by `ems job reuse`.
+# The okrsky of Vysoká pri Morave of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/508349.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Vysoká pri Morave, transcribed by an AI agent in job okrsok-rules-3680 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: pre voličov, ktorí majú trvalý pobyt na uliciach: Bazová, Družstevná, Dúbrava, Hlavná, Hraničiarska, Krátka, Krížna, Kvetná, Lúčna, Mládežnícka, Námestie A. Kadnára, Námestie Oslobodenia, Nandin Dvor, Nová, Orechová, Pod Vŕškom, Poľná, Riečna, Zemianské I., Zemianské II., Zemianské III.
+#     okrsok 2: pre voličov, ktorí majú trvalý pobyt na uliciach: Robotnícka, Rybárska, Slnečná, Spojná, Staničná, Stromová, Športová, Tichá, Továrenská, Veterná, Záhradná
 obec = "508349"
 name = "Vysoká pri Morave"
-okrsky_date = 2026-07-10
+okrsky_date = 2023-06-22
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-03-16 the obec had as many, each with voters on the roll within 10% of its count then. No document of 2019-03-16 was searched for. No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Addresses without a street take the nearest placed address."
-okrsky_reused = 2022-10-29
+okrsky_note = "Addresses without a street take the nearest placed address (fill_nearest)."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1321): The website's elections page holds documents from 2022 on only; no okrsky document of this vote. The Internet Archive was unreachable (connection refused) throughout. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2023-09-30: 1: 959 → 956, 2: 881 → 835."
 
 [[document]]
-url = "https://www.vysokaprimorave.sk/images/Utvorenie_volebnych_okrskov_a_urcenie_volebnych_miestnosti_pre_volby_do_organov_samospravy_obci_a_pre_volby_do_organov_samospravnych_krajov_1.pdf"
-sha256 = "49119076402bf7dd730442d911b2f3ed571e127f53b58dcb4f282caa9d7d2263"
-title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do orgánov samosprávy obcí a pre voľby do orgánov samosprávnych krajov dňa 24. októbra 2026"
+url = "https://www.vysokaprimorave.sk/images/Vysoka_pri_Morave_Urcenie_volebnych_okrskov_1.pdf"
+sha256 = "8c3eee3d32aa0d28de4d508d92efe52f0f383f74610364479883c59d962a1fdf"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre voľby do NR SR 30. septembra 2023"
 
 [okrsok.1]
 rules = [
@@ -48,7 +53,6 @@ rules = [
   {street = "Športová"},
   {street = "Tichá"},
   {street = "Továrenská"},
-  {street = "Ulica kasárne"},
   {street = "Veterná"},
   {street = "Záhradná"},
 ]

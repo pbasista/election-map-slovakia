@@ -2471,19 +2471,23 @@
   ]
  },
  "580554": {
-  "job": "okrsok-rules-1019",
+  "job": "okrsok-rules-121",
   "name": "Čenkovce",
-  "note": "The live site lists no 2022 elections documents (the old elections page returns 404). The Internet Archive's only snapshot of the 2022 elections page (2022-06-25) predates the okrsky announcement and holds only the June documents; the archived Referendum 2023 page holds the announcement, voter information and a delegation notice (14.11.2022) without okrsky. The October 2022 scan is truncated in the archive. Web searches found nothing.",
+  "note": "Re-searched 2026-11-07; the Internet Archive answered this time (CDX and snapshots, with retries on intermittent HTTP 503). The 'October 2022 scan' the earlier note found truncated (cenkovce.sk/files/2022-10-18-112551-SKM_C284e22101809190.pdf) exists in the archive only as a Common Crawl record cut at 1 MiB (both captures, 2022-12-06 and 2024-06-26, serve the same 1,048,576 bytes; range requests fail); its first pages, extracted from the truncated file, show it is the 'Záverečný účet Obce Čenkovce za rok 2021' (published on the website 18.10.2022), not an okrsky document. The other archived files of summer/autumn 2022 are the notice on the number of councillors and the single obvod (12.07.2022), the MVK recorder (12.07.2022), the number of inhabitants (04.08.2022), a building permit (14.07.2022), the candidate lists, the notice on special voting and the results; none sets the okrsky. The referendum 2023 files (announcement, voter information, delegation notice of 14.11.2022) have no okrsky either, so the referendum cannot stand in. A later vote's document places the okrsky by parts: 'Určenie volebných okrskov' for the NR SR elections of 30.9.2023 (12.06.2023): okrsok 1 MČ Čenkovce, okrsok 2 MČ Maslovce (matching the voters 686/223) — another vote's document, left to the maintainer.",
   "tried": [
-   "https://www.cenkovce.sk/",
-   "https://www.cenkovce.sk/uradna-tabula?tagSelect=volby/referenda",
-   "https://www.cenkovce.sk/volby-a-referenda",
-   "https://www.cenkovce.sk/--23-80-spojene-volby---volby-do-organov-samospravy-obci---volby-do-organov-samospravnych-krajov",
-   "http://web.archive.org/cdx/search/cdx?url=cenkovce.sk/*&from=2022&to=2023",
-   "https://web.archive.org/web/20220625035346/https://www.cenkovce.sk/--23-80-spojene-volby---volby-do-organov-samospravy-obci---volby-do-organov-samospravnych-krajov",
-   "https://web.archive.org/web/20221206220000/https://www.cenkovce.sk/--23-84-referendum-2023",
-   "https://web.archive.org/web/20221206202535/https://www.cenkovce.sk/files/2022-11-16-115509-Ozn__menie.pdf",
-   "https://web.archive.org/web/20221206211718/https://www.cenkovce.sk/files/2022-10-18-112551-SKM_C284e22101809190.pdf"
+   "https://web.archive.org/cdx/search/cdx?url=cenkovce.sk/files/2022-10-18-112551-SKM_C284e22101809190.pdf&fl=timestamp,original,mimetype,statuscode,length,digest",
+   "https://www.cenkovce.sk/files/2022-10-18-112551-SKM_C284e22101809190.pdf",
+   "https://web.archive.org/web/20240626133559id_/https://www.cenkovce.sk/files/2022-10-18-112551-SKM_C284e22101809190.pdf",
+   "https://web.archive.org/web/20240626133559/https://www.cenkovce.sk/files/2022-10-18-112551-SKM_C284e22101809190.pdf",
+   "https://web.archive.org/web/20221206211718id_/https://www.cenkovce.sk/files/2022-10-18-112551-SKM_C284e22101809190.pdf",
+   "https://web.archive.org/cdx/search/cdx?url=cenkovce.sk/files/&matchType=prefix&fl=timestamp,original,mimetype,statuscode,length&collapse=urlkey&from=2022&to=2026",
+   "https://web.archive.org/web/20230322232501id_/https://www.cenkovce.sk/files/2022-07-14-092811-SKM_C284e22071410030.pdf",
+   "https://web.archive.org/web/20230322222347id_/https://www.cenkovce.sk/files/2022-08-05-082217-SKM_C284e22080508560.pdf",
+   "https://web.archive.org/web/20230322231247id_/https://www.cenkovce.sk/files/2022-07-12-113241-KMBT_211_000101000253.pdf",
+   "https://web.archive.org/web/20230322214722id_/https://www.cenkovce.sk/files/2022-07-14-153041-SKM_C284e22071416040.pdf",
+   "https://web.archive.org/web/20221206213950id_/https://www.cenkovce.sk/files/2022-11-21-155246-Ozn__menie_D__.pdf",
+   "https://web.archive.org/web/20221206202535id_/https://www.cenkovce.sk/files/2022-11-16-115509-Ozn__menie.pdf",
+   "https://web.archive.org/web/20230923044118id_/https://www.cenkovce.sk/files/2023-07-19-110041-UR__ENIE_VOLEBN__CH_OKRSKOV.pdf"
   ]
  },
  "581020": {

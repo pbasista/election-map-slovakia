@@ -358,7 +358,16 @@ which document every field used below.
   fill that in: transcribed into the election's `candidates.toml`
   ([a supplement](#a-supplement-to-a-by-elections-package)),
   each contest there replaces the package's.
-- A council by-election in one obvod of a council of several
+- **New elections and by-elections proper.**
+  One day holds both: by-elections proper (doplňujúce voľby) of seats
+  of the council elected at the regular election of the term,
+  in its obvody, and new elections (nové voľby) of a mayor or a whole
+  council, whose obvody may be drawn anew.
+  `candidates` tells them apart by the seats
+  and marks each contest's `vote`
+  ([pipeline.md](pipeline.md#candidates)):
+  only a by-election proper takes anything of its term's council.
+- A council by-election proper in one obvod of a council of several
   draws that obvod where the election's curated data have the council's
   rule set (`obvody/oz/<obec>.toml`):
   after its results are built,
@@ -368,12 +377,18 @@ which document every field used below.
   then `uv run ems make` again;
   without it the ballots name the obvod
   without placing addresses in it.
+  A council elected anew in several obvody
+  has them from its own decision (the `obvod-rules` job asks for it,
+  [agent-jobs.md](agent-jobs.md#obvod-rules));
+  until then another election's stand in, shown as indicative.
 - **Called but not held.**
   Where nobody stood, the package marks the municipality
   "Nekonajú sa" with the council seats called (none: the mayor):
   `candidates` makes those contests uncontested
   ([pipeline.md](pipeline.md#candidates)),
-  the council's in the one obvod of the term's council.
+  the council's in the one obvod of the term's council
+  (of a council elected anew, in its own one obvod where the package
+  counts it).
   The package does not tell a mayor called beside council seats:
   annex 1 of the Speaker's decision calling the by-election
   (slov-lex, "Zoznam obcí, v ktorých sa vyhlasujú voľby…") lists it;

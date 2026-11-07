@@ -1,19 +1,25 @@
-# The okrsky of Brezovica of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/524239.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Brezovica, transcribed by an AI agent in job okrsok-rules-1003 from the documents below;
+# The okrsky of Brezovica of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/524239.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Brezovica, transcribed by an AI agent in job okrsok-rules-2085 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: do súp. č. 320
-#     okrsok 2: od súp. č. 321
+#     okrsok 1: Volebný okrsok č. 1 - do súp. č. 320
+#     okrsok 2: Volebný okrsok č. 2 – od súp. č. 321
 obec = "524239"
 name = "Brezovica"
-okrsky_date = 2022-07-28
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2020-02-29 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2020-02-29 was searched for. Scanned PDF (archived 2022-08-03) read from image. Okrsky split by súpisné číslo: 1 = up to 320, 2 = from 321."
-okrsky_reused = 2022-10-29
+okrsky_date = 2019-02-22
+okrsky_note = "The mayor's decision of 22-02-2019 for the European Parliament election 2019 (scan): okrsok 1 up to súpisné č. 320, okrsok 2 from 321."
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2697): The old site's archived 2020 elections page (captured 2019-12-14 and 2020-08-10) links 'urcenie_zamestnanca_vol_okrsky_zapisovatelky.pdf', probably the okrsky decision, but the Internet Archive did not capture that PDF (404 once the Archive was back online; it was offline for part of the search), and the live site (relaunched 2023) no longer has it. These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2019-05-25: 1: 662 → 663, 2: 663 → 677."
 
 [[document]]
-url = "https://web.archive.org/web/20220803234047/http://brezovicanadtorysou.sk/images/dokumenty/aktuality/vol_okrsky_vol_miestnosti.pdf"
-sha256 = "535aec69ab78f2d151cfa78300c8271bea481f46ff8a059ce6f5794a61ad8bde"
-title = "Utvorenie volebných okrskov a určenie volebných miestností pre spojené voľby do orgánov samosprávy obcí a orgánov samosprávnych krajov – 29. októbra 2022"
+url = "https://web.archive.org/web/20220308150718/http://brezovicanadtorysou.sk/images/dokumenty/aktuality/vytvorenie_vo.pdf"
+sha256 = "ad731f05f5562033b1f26f8686b356697916da955aad9da57ac2812d4d80eb9c"
+title = "Vytvorenie volebných okrskov a určenie volebných miestností pre voľby do Európskeho parlamentu v roku 2019"
+
+[[document]]
+url = "https://web.archive.org/web/20190822024724/http://www.brezovicanadtorysou.sk:80/index.php/91-zakladna-stranka/204-volby-do-eu-parlamentu"
+sha256 = "ada1efca39916444dc7dd464dfe04cd16a0abcabf42fa4c5aa711ac271a31b6d"
+title = "Voľby do EÚ parlamentu (elections page linking the PDF)"
 
 [okrsok.1]
 rules = [

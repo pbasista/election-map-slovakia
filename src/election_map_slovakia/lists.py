@@ -20,7 +20,9 @@ others:
   ``NEKA`` an independent. Seats are given per obec only, so a council
   contest has them where the obec's candidates stand in one obvod. An
   obec "Nekonajú sa" has its contests called uncontested
-  (:func:`_by_election_not_held`).
+  (:func:`_by_election_not_held`). Each contest is a new election of the
+  whole office or a by-election proper of some council seats
+  (:func:`_new_councils`, ``vote`` of the contests).
   The packages of 2019–2022 (the term elected in 2018,
   :func:`election_map_slovakia.results.older_by_election`) are laid out
   otherwise: ``tab0c`` the obce, ``tab0b`` the parties, ``tab0a`` the
@@ -134,19 +136,20 @@ def read(
     curated_dir: Path,
     *,
     urls: Mapping[str, str] | None = None,
-    councils: Mapping[str, Sequence[int]] | None = None,
+    term: Term | None = None,
 ) -> Lists:
     """Return the candidate lists of *election*, with its configured contests.
 
     *paths* are the files of the inputs its ``candidates`` names, by key,
     *urls* their sources (where none is, a contest held nowhere that one of
     them tells fails); *curated_dir* is its curated data
-    (:meth:`config.Config.election_dir`); *councils*, of a by-election, obec
-    → the council obvody of its term's candidate lists. A referendum has no
+    (:meth:`config.Config.election_dir`); *term*, of a by-election, what its
+    term's candidates say of the councils. A referendum has no
     lists: its contests are its questions. The contests called but held
     nowhere (:attr:`candidates.Lists.not_held`, and those of
     ``uncontested.toml``) become ``uncontested`` contests
-    (:func:`_uncontested`).
+    (:func:`_uncontested`); a by-election's contests say which vote each is
+    (:func:`_votes`).
     """
     lists = election.candidates
     try:
@@ -163,7 +166,7 @@ def read(
                 if path.is_file()
                 else None
             )
-            out = read_by_election(_package(paths["package"]), supplement, councils)
+            out = read_by_election(_package(paths["package"]), supplement, term)
         elif lists.format == "curated":
             out = read_curated(
                 config.load_candidates(curated_dir / CURATED_FILE, election), election
@@ -189,7 +192,37 @@ def read(
     if path.is_file():
         _curated_not_held(config.load_uncontested(path, election), out)
     _uncontested(out, urls or {})
+    _votes(out)
     return out
+
+
+@dataclass(frozen=True)
+class Term:
+    """What a by-election's term, the regular election before it, says of its councils."""
+
+    obvody: Mapping[str, Sequence[int]]
+    """Obec → the council obvody of the term's candidate lists."""
+    seats: Mapping[str, int]
+    """Obec → its council's seats in all (``council_seats`` of the term's
+    candidates)."""
+
+
+def _votes(lists: Lists) -> None:
+    """Say of each contest of a by-election's *lists* which vote it is (``vote``).
+
+    A mayor's is always a new election of the office; a council's is one
+    where the by-election elects the whole council anew
+    (:attr:`candidates.Lists.new_councils`), else a by-election proper of
+    seats of its term's council. Nothing of another election.
+    """
+    if lists.new_councils is None:
+        return
+    for cid in {_contest_of(e) for e in lists.entries} | lists.not_held.keys():
+        kind, _, area = cid.partition(":")
+        new = kind == "starosta" or area.partition("/")[0] in lists.new_councils
+        lists.contests.setdefault(cid, {})["vote"] = (
+            candidates.NEW if new else candidates.BY
+        )
 
 
 def _mvsr(paths: Mapping[str, Path]) -> Lists:
@@ -370,19 +403,17 @@ def read_party_lists(kind: str, subjects: tables.Table, lists: tables.Table) -> 
 def read_by_election(
     package: tables.Package,
     supplement: Lists | None = None,
-    councils: Mapping[str, Sequence[int]] | None = None,
+    term: Term | None = None,
 ) -> Lists:
     """Return the candidates of a municipal by-election's package.
 
     Its contests only where something is elected; see the module doc.
     *supplement* is the election's curated lists (``candidates.toml``), which
-    only a package of 2019–2022 may have (:func:`_supplement`). The obce
-    where it was held nowhere, no candidate having registered (``Typ
-    volieb`` ``Nekonajú sa``), have their contests called: of the mayor
-    where no seat was (the package does not tell whether the mayor was
-    called beside seats: ``uncontested.toml`` does), else of the council,
-    in its one obvod of the term (*councils*: obec → the council obvody of
-    the term's candidate lists); one of several is not known.
+    only a package of 2019–2022 may have (:func:`_supplement`); *term* what
+    its term's candidates say of the councils, which tells a council
+    elected anew (:func:`_new_councils`). The obce where it was held
+    nowhere, no candidate having registered (``Typ volieb`` ``Nekonajú
+    sa``), have their contests called (:func:`_by_election_not_held`).
     """
     older = results.older_by_election(package)
     layout = _OLDER_BY_LAYOUT if older else _BY_LAYOUT
@@ -394,7 +425,7 @@ def read_by_election(
     units = package.table(layout.units)
     code, number = units.column(*_OBEC), units.column(*_SEATS)
     seats = {r[code]: r[number] for r in units.rows}
-    out = Lists([], partial=True)
+    out = Lists([], partial=True, new_councils=_new_councils(units, term))
     obvody: dict[str, set[int]] = defaultdict(set)
     for table_id, kind in ((layout.mayors, "starosta"), (layout.councils, "oz")):
         table = package.table(table_id)
@@ -418,7 +449,7 @@ def read_by_election(
         for code, numbers in obvody.items()
         if len(numbers) == 1 and seats.get(code, "").isdigit()
     }
-    _by_election_not_held(units, councils or {}, out)
+    _by_election_not_held(units, term.obvody if term else {}, out)
     if supplement is not None:
         if not older:
             raise CandidatesError(
@@ -429,15 +460,47 @@ def read_by_election(
     return out
 
 
+def _new_councils(units: tables.Table, term: Term | None) -> set[str]:
+    """Return the obce whose council a by-election elects anew (nové voľby).
+
+    *units* is its package's territorial division. The seats called there
+    are as many as the council's in all in the term (*term*), or more: no
+    councillor elected then is left, so the whole council is elected again,
+    in obvody the council may have set anew (after a court annulled the
+    election over them, say). Fewer are seats of the term's council (left
+    vacant, or never filled for want of candidates), elected in its obvody
+    (doplňujúce voľby). The packages say neither (``Typ volieb`` only names
+    the offices: mayor, council, both, none held; the Speaker's decisions
+    cite § 181 ods. 3 of Act No. 180/2014 Coll. for all their obce at
+    once). An obec whose term seats are not known counts as new: nothing
+    ties it to the term's council.
+    """
+    code, number = units.column(*_OBEC), units.column(*_SEATS)
+    seats = term.seats if term else {}
+    new = set()
+    for r in units.rows:
+        obec, called = results.CITY_OBCE.get(r[code], r[code]), int(r[number] or 0)
+        if called and called >= seats.get(obec, 0):
+            new.add(obec)
+    return new
+
+
 def _by_election_not_held(
     units: tables.Table, councils: Mapping[str, Sequence[int]], out: Lists
 ) -> None:
     """Add to *out* the contests a by-election held nowhere (:func:`read_by_election`).
 
     *units* is its package's territorial division; *councils* obec → the
-    council obvody of its term's candidate lists.
+    council obvody of its term's candidate lists. The mayor's where no seat
+    was called (the package does not tell whether the mayor was called
+    beside seats: ``uncontested.toml`` does); else the council's, in its
+    one obvod: of a by-election proper the term's, of several not known; of
+    a new election (:attr:`candidates.Lists.new_councils`) its own, which
+    the territorial division counts since 2023 (``Počet volebných
+    obvodov``), the packages before not.
     """
     code, number, kind_of = (units.column(*c) for c in (_OBEC, _SEATS, _TYPE))
+    own = units.optional(*_OBVODY)
     why = candidates.Uncontested(
         f"ŠÚ SR, {units.name}: Typ volieb „nekonajú sa“", part="package"
     )
@@ -445,14 +508,24 @@ def _by_election_not_held(
         if r[kind_of].casefold() != _NOT_HELD:
             continue
         obec, called = results.CITY_OBCE.get(r[code], r[code]), int(r[number])
-        term = len(councils.get(obec, ())) or 1
         if not called:
             candidates.not_held(out, obec, ("starosta",), 1, None, why)
-        elif term == 1:
+            continue
+        if obec in (out.new_councils or ()):
+            obvody = int(r[own]) if own is not None else 0
+            whose = "the new council's"
+        else:
+            obvody = len(councils.get(obec, ())) or 1
+            whose = "the term council's"
+        if obvody == 1:
             candidates.not_held(out, obec, ("oz",), 1, called, why)
+        elif obvody:
+            out.unplaced.append(
+                f"{obec}: {called} seat(s) in one of {whose} {obvody} obvody"
+            )
         else:
             out.unplaced.append(
-                f"{obec}: {called} seat(s) in one of its {term} council obvody"
+                f"{obec}: {called} seat(s) of a new council, its obvody not counted"
             )
 
 

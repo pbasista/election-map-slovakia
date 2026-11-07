@@ -1,20 +1,20 @@
-# The okrsky of Viničné of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/508306.toml, copied by `ems job reuse` (reused). Its header there:
-#   The okrsky of Viničné of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/508306.toml, reused by `ems job reuse`.
+# The okrsky of Viničné of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/508306.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Viničné, transcribed by an AI agent in job okrsok-rules-1899 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Agátová, Brezová, Cerová, Cintorínska, Dubová, Hlavná, Hlboká, Javorová, Kozia, Lipová, Šípková a Obec Viničné
+#     okrsok 2: Družstevná, Grobská, Hájska, Kvetná, Lúčna, Nová, Orechová, Pod lesom, Poľná, Pri mlyne, Slnečná, Športová, Tichá, Vinohradnícka, Vojenská a Záhradná
 obec = "508306"
 name = "Viničné"
-okrsky_date = 2026-07-20
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2020-02-29 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2020-02-29 was searched for. No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Scanned PDF, read from the image. \"Obec Viničné\" in okrsok 1 (residents registered only to the obec / addresses without a street) is given as the rest rule."
-okrsky_reused = 2022-10-29
+okrsky_date = 2019-02-12
+okrsky_note = "Scanned PDF, read from the image. The old website archiv.vinicne.sk (subdomain of vinicne.sk) keeps it."
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2020-02-29 setting the okrsky was found (okrsok-rules-2488): The old website (archiv.vinicne.sk) ends in June 2019; the new website's elections page shows only the current vote, and its Internet Archive capture of 2021-12-28 lists only the 2020 results. No okrsky document of 2020 found live or archived. These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2020-02-29 → 2019-05-25: 1: 1,027 → 1,012, 2: 1,010 → 1,021."
 
 [[document]]
-url = "https://www.vinicne.sk/download_file_f.php?id=2445735"
-sha256 = "93e65c48c71515efb4d72af673a1c5fc930a0c61c3c8f0c527126127ca7a494a"
-title = "určenie volebných okrskoch a miestností"
-
-[[document]]
-url = "https://www.vinicne.sk/urcenie-volebnych-miestnosti-a-volebnych-okrskov-1-2--oznam/mid/405782/.html"
-sha256 = "113bbf638eb9000ddb4a84a284adaff4fbe16a87099c712f683d6012847ebcd3"
-title = "určenie volebných miestností a volebných okrskov 1,2."
+url = "http://archiv.vinicne.sk/wp-content/uploads/2019/02/určenie-okrskov-a-miestnosti.pdf"
+sha256 = "0c4262e88e52b772f15547c40c67b5fc8469a568e9136f8ca6412119e3c9e25d"
+title = "utváram a určujem volebné okrsky a volebné miestnosti, Voľby do Európskeho parlamentu 25. mája 2019"
 
 [okrsok.1]
 rules = [
@@ -29,7 +29,7 @@ rules = [
   {street = "Kozia"},
   {street = "Lipová"},
   {street = "Šípková"},
-  {rest = true},
+  {rest = true, note = "\"Obec Viničné\": residents registered only to the obec / addresses without a street"},
 ]
 
 [okrsok.2]

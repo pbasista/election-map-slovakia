@@ -1,0 +1,61 @@
+# The okrsky of Štiavnik of the vote of 2023-01-21, data/curated/elections/2023-01-21/okrsky/518018.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Štiavnik, transcribed by an AI agent in job okrsok-rules-3002 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Vymedzenie územného obvodu: súpisné číslo 1-87, 920-1055 a novostavby v tom obvode
+#     okrsok 2: Vymedzenie územného obvodu: súpisné číslo 88-165, 853-919 a novostavby v tom obvode
+#     okrsok 3: Vymedzenie územného obvodu: súpisné číslo 166-232, 792-852 a novostavby v tom obvode
+#     okrsok 4: Vymedzenie územného obvodu: súpisné číslo 233-424, 660-791 a novostavby v tom obvode
+#     okrsok 5: Vymedzenie územného obvodu: súpisné číslo 425-659 a novostavby v tom obvode
+obec = "518018"
+name = "Štiavnik"
+okrsky_date = 2022-11-09
+okrsky_fill = "nearest"
+okrsky_note = "Each okrsok is given by súpisné čísla, one numbering across all parts of the obec, so each range is applied in every part. 'A novostavby v tom obvode' (new houses, súpisné above 1055) are placed by fill_nearest."
+okrsky_adopted = 2023-01-21
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3558): The NR SR 2023 page (www.stiavnik.sk/21367/volby-2023) is gone (404); its archived files (2023-09/2024-05) are signature sheets and commission minutes only, no okrsky document found. The Internet Archive answered mostly HTTP 429 (rate limit) over more than an hour of paced retries; archive.today, Arquivo.pt, Memento TimeTravel and Common Crawl have no copies of the old site's notice board. These are the okrsky of the vote of 2023-01-21 (2023-referendum), the nearest in time with okrsky of its own that fit: 5 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2023-01-21: 1: 735 → 724, 2: 590 → 595, 3: 469 → 472, 4: 955 → 976, 5: 416 → 411."
+
+[[document]]
+url = "https://www.stiavnik.sk/data/page/stiavnik.sk/15884/volebne-okrsky-a-volebne-miestnosti-v-obci-013-55-stiavnik.pdf"
+sha256 = "b495ba1215bd5cb7533044902ad51c52447b5897300316ca5989bfaefe2f23f5"
+title = "Volebné okrsky a volebné miestnosti v obci 013 55 Štiavnik pre referendum 21.01.2023 (Štiavnik, 09.11.2022)"
+
+[okrsok.1]
+rules = [
+  {part = "Štiavnik", numbers = "1-87, 920-1055"},
+  {part = "Višňové", numbers = "1-87, 920-1055"},
+  {part = "Predjastrabie", numbers = "1-87, 920-1055"},
+  {part = "Čierne", numbers = "1-87, 920-1055"},
+]
+
+[okrsok.2]
+rules = [
+  {part = "Štiavnik", numbers = "88-165, 853-919"},
+  {part = "Višňové", numbers = "88-165, 853-919"},
+  {part = "Predjastrabie", numbers = "88-165, 853-919"},
+  {part = "Čierne", numbers = "88-165, 853-919"},
+]
+
+[okrsok.3]
+rules = [
+  {part = "Štiavnik", numbers = "166-232, 792-852"},
+  {part = "Višňové", numbers = "166-232, 792-852"},
+  {part = "Predjastrabie", numbers = "166-232, 792-852"},
+  {part = "Čierne", numbers = "166-232, 792-852"},
+]
+
+[okrsok.4]
+rules = [
+  {part = "Štiavnik", numbers = "233-424, 660-791"},
+  {part = "Višňové", numbers = "233-424, 660-791"},
+  {part = "Predjastrabie", numbers = "233-424, 660-791"},
+  {part = "Čierne", numbers = "233-424, 660-791"},
+]
+
+[okrsok.5]
+rules = [
+  {part = "Štiavnik", numbers = "425-659"},
+  {part = "Višňové", numbers = "425-659"},
+  {part = "Predjastrabie", numbers = "425-659"},
+  {part = "Čierne", numbers = "425-659"},
+]

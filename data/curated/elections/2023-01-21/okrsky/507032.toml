@@ -19,12 +19,11 @@
 #   okrsok 16: Čulenova, Dukelská, Hošták, Kruhová, Pánska niva, Poniklecová, Rovná, Slnečná, Svätopeterská, Šoltésova, Timravy, Vážska, lokalita Ivarnoky (súp.č. 3859) a lokalita Štrkovka (súp.č. 3867)
 #   okrsok 17: D. Jurkoviča, Mlynská, Okrúhla, Pltnícka, Priemyselná, Školská, Šulekova, Za Váhom, Záhradnícka
 #   okrsok 18: Hájska, Holubyho, Janka Kráľa, L. Novomeského, Ľ. Podjavorinskej, Osloboditeľov, Rybárska, Seredská, Terezov
-#   okrsok 19: (not in the document)
 obec = "507032"
 name = "Hlohovec"
 okrsky_date = 2022-11-09
 okrsky_fill = "nearest"
-okrsky_note = "'Mesto Hlohovec' in okrsok 1 means voters whose permanent residence was cancelled (registered without an address), not register houses. The lokality given by súpisné číslo and the other register addresses without a street (parts Hlohovec, Šulekovo), and the numbers of split streets the document lists in no okrsok (e.g. Vinohradská 5, 7, 12; Nábrežie A. Hlinku even numbers above 12), are placed by fill_nearest, since a part+súpisné rule would also catch street houses with the same súpisné číslo. Named in the document but not in the address register (left out): Vajanského. The document lists 18 okrsky; the Statistical Office counts a 19th okrsok with 1 voter, not in the document: given as an okrsok without addresses (a special okrsok)."
+okrsky_note = "'Mesto Hlohovec' in okrsok 1 means voters whose permanent residence was cancelled (registered without an address), not register houses. The lokality given by súpisné číslo and the other register addresses without a street (parts Hlohovec, Šulekovo), and the numbers of split streets the document lists in no okrsok (e.g. Vinohradská 5, 7, 12; Nábrežie A. Hlinku even numbers above 12), are placed by fill_nearest, since a part+súpisné rule would also catch street houses with the same súpisné číslo. Named in the document but not in the address register (left out): Vajanského. The document lists 18 okrsky; the Statistical Office counts a 19th okrsok (1 voter) that the document does not name: the COVID-19 special okrsok of okres Hlohovec (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml)."
 
 [[document]]
 url = "https://www.hlohovec.sk/download_file_f.php?id=1762902"
@@ -229,6 +228,3 @@ rules = [
   {street = "Seredská"},
   {street = "Terezov"},
 ]
-
-[okrsok.19]
-addressless = true

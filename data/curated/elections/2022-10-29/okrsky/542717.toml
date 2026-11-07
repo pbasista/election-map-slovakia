@@ -1,9 +1,15 @@
-# The okrsky of Bojná of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/542717.toml, reused by `ems job reuse`.
+# The okrsky of Bojná of the vote of 2026-10-24, data/curated/elections/2026-10-24/okrsky/542717.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Bojná, transcribed by an AI agent in job okrsok-rules-487 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Zaradenie od súpisného čísla: 1 - 394; 804-813; 848; 854; 865;886; 895; 918-921; 945; 100-1025;
+#     okrsok 2: Zaradenie od súpisného čísla: 395-777;785-799; 832-847; 852-890; 900-951;
 obec = "542717"
 name = "Bojná"
 okrsky_fill = "nearest"
-okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Scanned PDF read from the rendered image; okrsky defined by súpisné čísla. Okrsok 1's '100-1025' read as 1000-1025 (100-394 is already in 1-394 and would swallow okrsok 2). Okrsok 1's single numbers 854, 865, 886, 918-921, 945 lie inside okrsok 2's ranges and are excepted there. Numbers in no range (778-784, 800-803, 814-831, 849-851, 891-899, 952-999, 1501-1527) take the nearest placed address (fill_nearest). Both parts (Bojná, Malé Dvorany) share one súpisné numbering, so the ranges apply in both."
-okrsky_reused = 2026-10-24
+okrsky_note = "Scanned PDF read from the rendered image; okrsky defined by súpisné čísla. Okrsok 1's '100-1025' read as 1000-1025 (100-394 is already in 1-394 and would swallow okrsok 2). Okrsok 1's single numbers 854, 865, 886, 918-921, 945 lie inside okrsok 2's ranges and are excepted there. Numbers in no range (778-784, 800-803, 814-831, 849-851, 891-899, 952-999, 1501-1527) take the nearest placed address (fill_nearest). Both parts (Bojná, Malé Dvorany) share one súpisné numbering, so the ranges apply in both."
+okrsky_adopted = 2026-10-24
+okrsky_adopted_basis = "No document of 2022-10-29 setting the okrsky was found (okrsok-rules-928): No okrsky document of 2022 or of the January 2023 referendum: the live elections pages hold for 2022 only the e-mail address for delegating committee members (2.8.2022) and for the referendum only voter information; the notice board shows only current items; the Internet Archive has no Bojná election pages or files of 2022; two web searches found nothing. These are the okrsky of the vote of 2026-10-24 (2026), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2022-10-29 → 2026-10-24: 1: 766 → 819, 2: 895 → 820."
 
 [[document]]
 url = "https://www.bojna.sk/download_file_f.php?id=2455192"

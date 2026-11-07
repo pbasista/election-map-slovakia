@@ -798,6 +798,16 @@ _NOTES = (
         " {date} a date, {others} names of municipalities",
     ),
     (
+        "okrsky.",
+        "the row of buttons on a municipality's ballots, one per polling"
+        " district whose results are known but which the map does not draw"
+        " (its addresses are not known, or it has no territory: a prison's, a"
+        " COVID-19 special one); a button's label is the number alone, these"
+        " are its title, accessible name, the row's title and one line of"
+        " explanation; {n} is a number, {name} a municipality, {facility} a"
+        " prison's name",
+    ),
+    (
         "candidate.occupation_sk",
         "tooltip of a translated occupation, and a line on the candidate card;"
         " {text} is the occupation as written in Slovak",

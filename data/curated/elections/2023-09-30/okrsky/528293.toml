@@ -1,23 +1,27 @@
-# The okrsky of Čierna nad Tisou of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/528293.toml, copied by `ems job reuse` (reused). Its header there:
-#   Okrsky of Čierna nad Tisou, transcribed by an AI agent in job okrsok-rules-972 from the documents below;
+# The okrsky of Čierna nad Tisou of the vote of 2024-03-23, data/curated/elections/2024-03-23/okrsky/528293.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Čierna nad Tisou, transcribed by an AI agent in job okrsok-rules-4472 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: ul. Zimná, ul. Záhradná, ul. Hlavná 109/36,38; 195/29; ul. Jesenná 187/1,3,5,7; ul. Jarná 185/1,3,5,7
-#     okrsok 2: ul. Radova ul. 1. Mája ul. Slov. Nár. Povstania ul. Trakanská - celá ulica ul. Školská 171/16,18; 172/12,14; 173/6,8,10; 160/7; 161/9,11; 162/13,15; 163/17,19; 164/21,23; 165/25,27,29,31,33,35; 169/24; 188/26,28; 174/2,4 ul. Dukelských hrdinov 104/3,5,7,9; 138/1; 139/11,13,15; 141/19,23; 142/25,29; 143/16,18,20; 147/4 ul. Obrancov mieru 177/12,14; 178/8,10 ul. Hlavná 10/4; 12/2 ul. Železničná 114/5,7,9; 115/11,13,15; 116/17
-#     okrsok 3: ul. Hlavná 103/1,3,5,7; 108/25,27; 111/24,26,28,30; 113/6; 110/32,34 Letná 183/2,4 Námestie pionierov ul. Obrancov mieru 180/2,4 ul. Dukelských hrdinov 148/2 ul. Jesenského ul. Jilemnického ul. Jarná 184/9,11 ul. Jesenná 186/9,11 Bez ulice (bez tvalého pobytu)
+#     okrsok 1: Zimná, Záhradná, Hlavná 109/36,38; 195/29; Jesenná 187/1,3,5,7; Jarná 185/1,3,5,7
+#     okrsok 2: Radova, 1. Mája, Slov. Nár. Povstania, Trakanská - celá ulica, Školská 171/16,18; 172/12,14; 173/6,8,10; 160/7; 161/9,11; 162/13,15; 163/17,19; 164/21,23; 165/25,27,29,31,33,35; 169/24; 188/26,28; 174/2,4, Dukelských hrdinov 104/3,5,7,9; 138/1; 139/11,13,15; 141/19,23; 142/25,29; 143/16,18,20; 147/4, Obrancov mieru 177/12,14; 178/8,10, Hlavná 10/4; 12/2, Železničná 114/5,7,9; 115/11,13,15; 116/17
+#     okrsok 3: Hlavná 103/1,3,5,7; 108/25,27; 111/24,26,28,30; 113/6; 110/32,34, Letná 183/2,4, Námestie pionierov, Obrancov mieru 180/2,4, Dukelských hrdinov 148/2, Jesenského, Jilemnického, Jarná 184/9,11, Jesenná 186/9,11, Bez ulice
 obec = "528293"
 name = "Čierna nad Tisou"
+okrsky_date = 2024-01-22
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2023-09-30 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2023-09-30 was searched for. No document of the elections found (the live site has only 2024+ items; the archived 2022 election pages carry no okrsky); the referendum's document (page archived 2022-11-26), 3 okrsky as the Statistical Office counts. Houses are given as súpisné/orientačné (e.g. \"Hlavná 109/36,38\"); the rules use the orientačné numbers. Numbers of these streets that the document does not list, and houses without a street (súpisné only), are placed by fill_nearest. \"Bez ulice (bez trvalého pobytu)\" in okrsok 3 = voters registered without an address, not houses without a street."
-okrsky_reused = 2022-10-29
-okrsky_date_approximate = "archived"
-okrsky_date_seen = 2022-11-26
-okrsky_date_basis = "The referendum's okrsky state no date; the Internet Archive captured the page with them on 2022-11-26, before the referendum (https://web.archive.org/web/20221126192117/https://www.ciernanadtisou.sk/index.php/strarie-spravy/779-urenie-okrskov-pre-referndum-2112023)."
+okrsky_note = "The document gives split streets by súpisné/orientačné pairs (e.g. Hlavná 109/36,38); the rules use the orientačné numbers after the slash. Numbers of split streets it does not list and addresses without a street (\"Bez ulice\" is in okrsok 3) take the okrsok of the nearest address (fill_nearest)."
+okrsky_adopted = 2024-03-23
+okrsky_adopted_basis = "No document of 2023-09-30 setting the okrsky was found (okrsok-rules-3845): The city's elections section has an okrsky notice only for the presidential election 2024 and the municipal elections of October 2026; the EP 2024 page links no document, and nothing older is on the website or found in the Internet Archive. These are the okrsky of the vote of 2024-03-23 (2024-prezident), the nearest in time with okrsky of its own that fit: 3 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2023-09-30 → 2024-03-23: 1: 925 → 921, 2: 845 → 840, 3: 988 → 989."
 
 [[document]]
-url = "https://web.archive.org/web/20221126192117/https://www.ciernanadtisou.sk/index.php/strarie-spravy/779-urenie-okrskov-pre-referndum-2112023"
-sha256 = "8c822569a79eaa09a175952896be1804709049051f17540b4f0f49f6cbb73667"
-title = "Určenie okrskov pre Referndum 21.1.2023"
+url = "https://ciernanadtisou.sk/zverejnovanie/vp_okrsky_2024.pdf"
+sha256 = "907a29fe1e8a92fbc2fc16297d59caa6e1a2711afe8219c38cb52a413131c302"
+title = "Informácia o utvorení volebných okrskov a určení volebných miestností v meste Čierna nad Tisou pre voľby prezidenta SR v roku 2024"
+
+[[document]]
+url = "https://www.ciernanadtisou.sk/informacia-o-utvoreni-volebnych-okrskov-a-urceni-volebnych-miestnosti-volby-prezidenta-2024-a73-788"
+sha256 = "5738acf03b9aa743d5001162d4520f593da8072a211bd2898923c59e6781d775"
+title = "Informácia o utvorení volebných okrskov – voľby prezidenta 2024"
 
 [okrsok.1]
 rules = [
@@ -30,21 +34,21 @@ rules = [
 
 [okrsok.2]
 rules = [
-  {street = "Radová", written = "Radova", note = "\"ul. Radova\" in the document: the register's Radová, the only similar street"},
+  {street = "Radová", written = "Radova"},
   {street = "1. Mája"},
   {street = "Slov. Nár. Povstania"},
   {street = "Trakanská"},
-  {street = "Školská", numbers = "2, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 31, 33, 35"},
-  {street = "Dukelských hrdinov", numbers = "1, 3, 4, 5, 7, 9, 11, 13, 15, 16, 18, 19, 20, 23, 25, 29"},
+  {street = "Školská"},
+  {street = "Dukelských hrdinov"},
   {street = "Obrancov mieru", numbers = "8, 10, 12, 14"},
   {street = "Hlavná", numbers = "2, 4"},
-  {street = "Železničná", numbers = "5, 7, 9, 11, 13, 15, 17"},
+  {street = "Železničná"},
 ]
 
 [okrsok.3]
 rules = [
   {street = "Hlavná", numbers = "1, 3, 5, 6, 7, 24, 25, 26, 27, 28, 30, 32, 34"},
-  {street = "Letná", numbers = "2, 4"},
+  {street = "Letná"},
   {street = "Námestie pionierov"},
   {street = "Obrancov mieru", numbers = "2, 4"},
   {street = "Dukelských hrdinov", numbers = "2"},

@@ -1,21 +1,26 @@
-# The okrsky of Jakubany of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/526762.toml, reused by `ems job reuse`. Its header there:
-#   The okrsky of Jakubany of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/526762.toml, reused by `ems job reuse`.
+# The okrsky of Jakubany of the vote of 2026-07-04, data/curated/elections/2026-07-04/okrsky/526762.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Jakubany, transcribed by an AI agent in job okrsok-rules-5710 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: okrsok č.1 1 - 495
+#     okrsok 2: okrsok č.2 pobyt na obci, 496 - 730
 obec = "526762"
 name = "Jakubany"
-okrsky_date = 2026-07-20
+okrsky_date = 2026-05-04
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2024-03-23 the obec had as many, each with voters on the roll within 10% of its count then. No document of 2024-03-23 was searched for. No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Split by súpisné číslo: okrsok 1 1–495, okrsok 2 496–730 plus voters with 'pobyt na obci' (text only). The PDF is hosted by the obec's úradná tabuľa provider uradne.sk, linked from the obec's notice-board page. Two register addresses have súpisné čísla outside 1–730; they are placed by fill_nearest."
-okrsky_reused = 2022-10-29
+okrsky_note = "The okrsky are split by súpisné číslo: okrsok 1 1–495, okrsok 2 496–730 plus voters with \"pobyt na obci\" (no address). The PDF is hosted by the municipality's notice-board provider uradne.sk and linked from the municipality's notice-board page. Register addresses with súpisné čísla outside 1–730 go by fill_nearest."
+okrsky_adopted = 2026-07-04
+okrsky_adopted_basis = "No document of 2024-03-23 setting the okrsky was found (okrsok-rules-4484): The notice board on jakubany.sk (all ~580 entries, 2020-2026) has okrsky notices only for the referendum and the elections of 2026; for this vote nothing. These are the okrsky of the vote of 2026-07-04 (2026-referendum), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2024-03-23 → 2026-07-04: 1: 904 → 924, 2: 1,139 → 1,182."
 
 [[document]]
-url = "https://www.uradne.sk/user/tablenews/file/1590943"
-sha256 = "b6e49f27f58e4d01a60d727eba0d4bde716e0c91735b51e52630f7f03dd0e5a4"
-title = "Oznámenie o utvorení volebných okrskov a určenie volebných miestností v obci Jakubany"
+url = "https://www.uradne.sk/user/tablenews/file/1565029"
+sha256 = "6cef108ec41e2926b4ca426cc4f36ab348095511a1ceba010d0a1f414deb06b1"
+title = "Oznámenie o utvorení volebných okrskov a určenie volebných miestností v obci Jakubany pre konanie referenda 04. júla 2026 (04. 05. 2026)"
 
 [[document]]
-url = "https://www.jakubany.sk/samosprava/uradna-tabula?p=1&detail=74484&count=10&tagSelect=&subcategory="
-sha256 = "48d537ada30411144eef9e02318d8851b37c52b41385914b2c33ff360ade913a"
-title = "Úradná tabuľa: Spojené voľby 2026 - Oznámenie o utvorení volebných okrskov a určenie volebných miestností"
+url = "https://www.jakubany.sk/samosprava/uradna-tabula?p=1&detail=67103&count=10&tagSelect=&subcategory="
+sha256 = "0775ebb6cc9fa1eba10da780aceabb051a9b4f77d0e597d3052e51eb095dffb2"
+title = "Úradná tabuľa: Referendum 2026 - Utvorenie okrskov a určenie volebnej miestnosti (zverejnené 07.05.2026)"
 
 [okrsok.1]
 rules = [

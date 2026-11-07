@@ -1,25 +1,24 @@
-# The okrsky of Čachtice of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/505901.toml, copied by `ems job reuse` (reused). Its header there:
-#   The okrsky of Čachtice of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/505901.toml, reused by `ems job reuse`.
+# The okrsky of Čachtice of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/505901.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Čachtice, transcribed by an AI agent in job okrsok-rules-692 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: Okrsok č. 1 /volebná miestnosť je vľavo od hl. vchodu/ Železničná J. Urbanovského Niva Medzihorská Na doline Kúria Revolučná Podzámska Pionierska Slnečná Ul. 1. mája Malinovského od č. 243 – 323
+#     okrsok 2: Okrsok č. 2 /volebná miestnosť je v knižnici/ Malinovského od č. domu 419 – 773 Malinovského od č. 1260 – 1261 L. Novomeského Duklianska Mierová Miloša Uhra Záhradná Družstevná Lysiná Špitálska Múkovská
+#     okrsok 3: Okrsok č. 3 /volebná miestnosť – zasadačka/ Malinovského od č. 798 – 1259 Malinovského od č. 1262 – 1275 Zemiansky Kút Hviezdoslavova Komárno Želovany Ľ. Podjavorinskej Kamence Fraňa Kráľa Teplica Osloboditeľov
 obec = "505901"
 name = "Čachtice"
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-05-25 the obec had as many okrsky, each that voted with voters on the roll within 10% of its count then. No document of 2019-05-25 was searched for. No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). fill_nearest places the 2 addresses without street and any Malinovského súpisné numbers outside the listed ranges."
-okrsky_reused = 2022-10-29
+okrsky_note = "Malinovského is numbered by súpisné číslo in the document (243–1275; its orientačné čísla go only to 131). Malinovského houses with súpisné čísla outside the listed ranges and the 3 addresses without a street are placed by fill_nearest."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2019-05-25 setting the okrsky was found (okrsok-rules-1829): The archived 2019 EP page gives only voter information. The street lists of 2018 and 2023 (and 2026) give the same three okrsky. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 3 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
+okrsky_date_approximate = "archived"
+okrsky_date_seen = 2018-11-09
+okrsky_date_basis = "The Internet Archive captured the municipality's post \"Zoznamy ulíc podľa volebných okrskov\" (dated 6 November 2018 on the page) on 2018-11-09, the day before the municipal elections of 10 November 2018; it states no decision date. (https://web.archive.org/web/20181109213623/http://www.cachtice.sk:80/2018/11/zoznamy-ulic-podla-volebnych-okrskov)"
 
 [[document]]
-url = "https://www.cachtice.sk/e_download.php?file=/data/uredni_deska/obsah641_1.docx&original=Rozpis%20ul%C3%ADc%20pod%C4%BEa%20okrskov.docx"
-sha256 = "d5876fa39609c2dfa9f67c693524878d8643841be86de0384d451ebee125e399"
-title = "Zoznam ulíc patriacich do volebných okrskov pre voľby do samosprávnych krajov a volieb do samosprávy obce, dňa 24.10.2026"
-
-[[document]]
-url = "https://www.cachtice.sk/e_download.php?file=/data/uredni_deska/obsah632_1.docx&original=Zoznam%20volebn%C3%BDch%20okrskov.docx"
-sha256 = "ae83cdb364178bf6b398720de1e2ffb568dde1029332d274b2c854c1e63c727d"
-title = "Zoznam volebných okrskov pre konanie volieb do orgánov samosprávy obcí a volieb do orgánov samosprávnych krajov v obci Čachtice v roku 2026"
-
-[[document]]
-url = "https://www.cachtice.sk/samosprava/volby-a-referenda/zoznam-ulic-patriacich-do-volebnych-okrskov-pre-volby-do-samospravnych-krajov-a-volieb-do-samospravy-obce-dna-24102026-1524.html"
-sha256 = "a43b843535c51e9c5519f885d514fc4932774f1fc25e78f3b673a68a34dea29f"
-title = "Zoznam ulíc patriacich do volebných okrskov (stránka)"
+url = "https://web.archive.org/web/20181109213623/http://www.cachtice.sk:80/2018/11/zoznamy-ulic-podla-volebnych-okrskov"
+sha256 = "5394a3209808b1c75b86ce7c873c20fdbd8d3fd67ea6d3982518c883f0809fce"
+title = "Zoznamy ulíc podľa volebných okrskov (6. 11. 2018)"
 
 [okrsok.1]
 rules = [
@@ -33,14 +32,14 @@ rules = [
   {street = "Podzámska"},
   {street = "Pionierska"},
   {street = "Slnečná"},
-  {street = "Ul. 1.mája", written = "Ul.1.mája"},
+  {street = "Ul. 1.mája", written = "Ul. 1. mája"},
   {street = "Malinovského", numbers = "243-323", by = "supisne"},
 ]
 
 [okrsok.2]
 rules = [
-  {street = "Malinovského", numbers = "419-773, 1260-1261, 1276-1330, 1338-1340, 1360", by = "supisne", note = "The document's range 1260–1330 overlaps okrsok 3's 1262–1275; the explicit okrsok 3 range is taken as an exception, so okrsok 2 gets 1260–1261 and 1276–1330. Malinovského numbers (243–1360) are súpisné (orientačné go only to 131)."},
-  {street = "L. Novomeského", written = "L.Novomeského"},
+  {street = "Malinovského", numbers = "419-773, 1260-1261", by = "supisne"},
+  {street = "L. Novomeského"},
   {street = "Duklianska"},
   {street = "Mierová"},
   {street = "Miloša Uhra"},
@@ -49,13 +48,12 @@ rules = [
   {street = "Lysiná"},
   {street = "Špitálska"},
   {street = "Múkovská"},
-  {street = "Záhumenská"},
-  {street = "M. Uhra", written = "Miloša Uhra", note = "Register lists the same street also as 'M. Uhra' (initial of first name)."},
+  {street = "M. Uhra", written = "Miloša Uhra", note = "The register keeps one house of Miloša Uhra under the abbreviated name 'M. Uhra' (initial of the first name); same street."},
 ]
 
 [okrsok.3]
 rules = [
-  {street = "Malinovského", numbers = "798-1257, 1262-1275, 1331", by = "supisne"},
+  {street = "Malinovského", numbers = "798-1259, 1262-1275", by = "supisne"},
   {street = "Zemiansky Kút"},
   {street = "Hviezdoslavova"},
   {street = "Komárno"},

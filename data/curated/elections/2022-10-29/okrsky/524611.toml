@@ -1,22 +1,27 @@
-# The okrsky of Kamenica of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/524611.toml, reused by `ems job reuse`.
+# The okrsky of Kamenica of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/524611.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Kamenica, transcribed by an AI agent in job okrsok-rules-3869 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: do súpisného čísla 375
+#     okrsok 2: od súpisného čísla 376
 obec = "524611"
 name = "Kamenica"
-okrsky_date = 2026-07-14
-okrsky_fill = "nearest"
-okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). A scanned document, read from the page image. The okrsky are given by súpisné číslo ranges (1–380 and 381–722). Any address above 722 takes the okrsok of the nearest placed address (fill_nearest)."
-okrsky_reused = 2026-10-24
+okrsky_date = 2023-06-20
+okrsky_note = "Scanned document (letter KA-2023/132-OcÚ-005 of 20.06.2023), read from the page image; linked from https://kamenica.sk/sk/content/volby-do-nr-sr-2023. Okrsok 1: up to súpisné číslo 375; okrsok 2: from súpisné číslo 376. Differs from the copied 2022/2026 okrsky (1–380 / 381–722) in the split point."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2022-10-29 setting the okrsky was found (okrsok-rules-990): No 2022 elections okrsky document found: the live elections page now holds the 2026 documents, the notices (oznam) of 2022 include candidate lists and results but no okrsky notice, and the Internet Archive keeps no such file. The January 2023 referendum's notice (9.11.2022) forms only 1 okrsok (Klub dôchodcov, Kamenica 401), which does not match the 2 okrsky of 2022. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2022-10-29 → 2023-09-30: 1: 701 → 688, 2: 698 → 680."
 
 [[document]]
-url = "https://kamenica.sk/clients/kamenica.sk/uploads/kniznica/1784121591utvor-voleb-okrskov-a-urcenie-vol-miestnosti-kom-volby-2026.pdf"
-sha256 = "a6623a445b5878cbf7b40a1dfb5c9826e9e8e8ecb58fe724a1f78d23a7fb45b0"
-title = "Utvorenie volebných okrskov a určenie volebných miestností - Kom. voľby 2026"
+url = "https://kamenica.sk/clients/kamenica.sk/uploads/kniznica/1688480581utvorenie-volebnych-okrskov-a-urcenie-vol-miestnosti.pdf"
+sha256 = "bb5dc38ebd53c93d6c955e4a7dd14c8ddfff6339b32dda13628d1ef4552ba588"
+title = "Utvorenie volebných okrskov a určenie volebných miestností pre Voľby do NR SR v roku 2023"
 
 [okrsok.1]
 rules = [
-  {part = "Kamenica", numbers = "1-380"},
+  {part = "Kamenica", numbers = "1-375"},
 ]
 
 [okrsok.2]
 rules = [
-  {part = "Kamenica", numbers = "381-722"},
+  {part = "Kamenica", numbers = "376-"},
 ]

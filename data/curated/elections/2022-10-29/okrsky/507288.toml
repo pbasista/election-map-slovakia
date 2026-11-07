@@ -1,9 +1,15 @@
-# The okrsky of Madunice of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/507288.toml, reused by `ems job reuse`.
+# The okrsky of Madunice of the vote of 2026-10-24, data/curated/elections/2026-10-24/okrsky/507288.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Madunice, transcribed by an AI agent in job okrsok-rules-495 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: A. Dubčeka, A. S. Puškina, Cintorínska, Karola Kabáta, Ľudovíta Štúra, M. R. Štefánika, Michala Bubniča, Mlynárska, Osloboditeľov, SNP, Školská, Záhradná, Železničná
+#     okrsok 2: Družstevná, Elektrárenská, Jána Hollého, Janka Kráľa, Malá Ulička, Malý Kút, P. O. Hviezdoslava, Slnečná, Vážska, Veľká Ulička, Výhon, Záhajné, Nová ulica, Veterná ulica a Severná ulica
 obec = "507288"
 name = "Madunice"
 okrsky_fill = "nearest"
-okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Kostolánska (4 addresses, not named) and addresses without a street are placed by fill_nearest. Veterná ulica (okrsok 2) is not in the register and is left out. No decision date stated."
-okrsky_reused = 2026-10-24
+okrsky_note = "Kostolánska (4 addresses, not named) and addresses without a street are placed by fill_nearest. Veterná ulica (okrsok 2) is not in the register and is left out. No decision date stated."
+okrsky_adopted = 2026-10-24
+okrsky_adopted_basis = "No document of 2022-10-29 setting the okrsky was found (okrsok-rules-935): The obec's elections page keeps the 2022 documents on the volebný obvod, počet obyvateľov and candidates, but no okrsky document of 2022; the referendum 2023 entries have none either. The Internet Archive holds only the home page of madunice.sk for 2022. Web search shows only the two polling stations (ZŠ Jána Hollého, Železničná 102/9; Obecný úrad, P. O. Hviezdoslava 368/8) without territory, and the obec has a single part, so no part-per-station inference is possible. These are the okrsky of the vote of 2026-10-24 (2026), the nearest in time with okrsky of its own that fit: 2 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2022-10-29 → 2026-10-24: 1: 923 → 908, 2: 946 → 1,014."
 
 [[document]]
 url = "https://www.madunice.sk/spojene-volby-2026-oznam/mid/562175/.html"

@@ -1,30 +1,31 @@
-# The okrsky of Prakovce of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/543497.toml, reused by `ems job reuse`. Its header there:
-#   Okrsky of Prakovce, transcribed by an AI agent in job okrsok-rules-965 from the documents below;
+# The okrsky of Prakovce of the vote of 2018-11-10, data/curated/elections/2018-11-10/okrsky/543497.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Prakovce, transcribed by an AI agent in job okrsok-rules-885 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: časť územia obce od súpisného čísla 1 po súpisné číslo 272
-#     okrsok 2: časť územia obce od súpisného čísla 273 po súpisné číslo 297
-#     okrsok 3: časť územia obce od súpisného čísla 298 po súpisné číslo 1000, súpisné číslo 0
+#     okrsok 1: časť územia obce od súpisného čísla 1 po súpisné číslo 270
+#     okrsok 2: časť územia obce od súpisného čísla 271 po súpisné číslo 297
+#     okrsok 3: časť územia obce od súpisného čísla 298 po súpisné číslo 1000
 obec = "543497"
 name = "Prakovce"
-okrsky_date = 2022-07-20
+okrsky_date = 2018-08-30
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-03-16 the obec had as many, each with voters on the roll within 10% of its count then. No document of 2019-03-16 was searched for. Okrsky by súpisné číslo. 'súpisné číslo 0' (okrsok 3) means residents registered without a house number, not register addresses. Súpisné numbers above 1000, if any, take the okrsok of the nearest address (fill_nearest). The document was found through the site search; the page that listed it in 2022 is no longer online."
-okrsky_reused = 2022-10-29
+okrsky_note = "Okrsky by súpisné číslo of the one part Prakovce; numbers above 1000, if any, take the okrsok of the nearest address (fill_nearest). Found through the site search (určenie okrskov)."
+okrsky_adopted = 2018-11-10
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1452): The site search for 'okrskov', 'okrsky', 'okrsok', 'miestností', 'volieb' lists okrsky documents only for 2017 (id=876391), 2018 (id=1011032), 2022 (id=1717407) and 2026 (id=2398726, now 404); none for this vote. The elections pages of this vote are not on the live site; the Internet Archive CDX was offline/timing out. These are the okrsky of the vote of 2018-11-10 (2018), the nearest in time with okrsky of its own that fit: 3 okrsky. The voters on the roll per okrsok are not known for both votes, so whether the layout changed is not known either."
 
 [[document]]
-url = "https://www.prakovce.sk/download_file_f.php?id=1717407"
-sha256 = "5d0b93fd7aa343c52f9320c82203c0e664b35d18f0fd5dd98ee1a3ffe78249e8"
-title = "Oznámenie o určení volebných okrskov a určení volebných miestností (voľby 29. októbra 2022)"
+url = "https://www.prakovce.sk/download_file_f.php?id=1011032"
+sha256 = "f4c191081ef7d249efa1ad96b59058ad16e67c6cb0a09f98974d079413e3a80d"
+title = "Oznámenie o určení volebných okrskov a určení volebných miestností (voľby do orgánov samosprávy obcí 2018)"
 
 [okrsok.1]
 rules = [
-  {part = "Prakovce", numbers = "1-272"},
+  {part = "Prakovce", numbers = "1-270"},
 ]
 
 [okrsok.2]
 rules = [
-  {part = "Prakovce", numbers = "273-297"},
+  {part = "Prakovce", numbers = "271-297"},
 ]
 
 [okrsok.3]

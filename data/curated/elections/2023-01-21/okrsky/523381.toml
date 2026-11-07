@@ -41,12 +41,11 @@
 #   okrsok 38: Letná, Rastislavova 2, 4, 6, 8, 10, 12, 14, 16, 18
 #   okrsok 39: Tolstého 1, 2, 4, 6, 8, 10, 11, 12, Uherova
 #   okrsok 40: Dubová, Jedľová, Kvetnica
-#   okrsok 41: (not in the document)
 obec = "523381"
 name = "Poprad"
 okrsky_date = 2022-11-09
 okrsky_fill = "nearest"
-okrsky_note = "The city's scanned \"Zoznam ulíc a okrskov pre Referendum 2023\", dated 09.11.2022 and signed by the mayor (OCR text layer checked against a fresh OCR of the page images). It lists okrsky 1-40 (house numbers by orientačné číslo); the Statistical Office counts a 41st okrsok with 2 voters, which the document does not name (a special okrsok without addresses); it is given as addressless. The list gives each okrsok its streets, with the houses (súpisné/orientačné číslo) where a street is split between okrsky; rules use the orientačné číslo after the slash; Rázusova \"súp. č. 3824\" is a súpisné rule. \"bez ulice\" in okrsok 1 means voters registered only to the town: no rule. fill_nearest places the streets the list does not name (Halatova, Priemyselná ulica, Richarda Bekessa, Scholtzova, Športová, Svitská cesta, Teplická cesta), house numbers of split streets the list does not name (houses without voters), and addresses without a street."
+okrsky_note = "The city's scanned \"Zoznam ulíc a okrskov pre Referendum 2023\", dated 09.11.2022 and signed by the mayor (OCR text layer checked against a fresh OCR of the page images). It lists okrsky 1-40 (house numbers by orientačné číslo); the Statistical Office counts a 41st okrsok with 2 voters, which the document does not name: the COVID-19 special okrsok of okres Poprad (Act No. 395/2022 Coll.), which has no territory (special-okrsky.toml). The list gives each okrsok its streets, with the houses (súpisné/orientačné číslo) where a street is split between okrsky; rules use the orientačné číslo after the slash; Rázusova \"súp. č. 3824\" is a súpisné rule. \"bez ulice\" in okrsok 1 means voters registered only to the town: no rule. fill_nearest places the streets the list does not name (Halatova, Priemyselná ulica, Richarda Bekessa, Scholtzova, Športová, Svitská cesta, Teplická cesta), house numbers of split streets the list does not name (houses without voters), and addresses without a street."
 
 [[document]]
 url = "https://www.poprad.sk/download.dat?id=21CFE0F179D4489EBFB2D856B4AA639D-DCF7416821E12F7A7878FB00A3C0122A"
@@ -437,6 +436,3 @@ rules = [
   {street = "Jedľová"},
   {street = "Kvetnica"},
 ]
-
-[okrsok.41]
-addressless = true

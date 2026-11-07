@@ -1,37 +1,37 @@
-# The okrsky of Ľubica of the elections of 2022-10-29, data/curated/elections/2022-10-29/okrsky/523682.toml, reused by `ems job reuse`. Its header there:
-#   Okrsky of Ľubica, transcribed by an AI agent in job okrsok-rules-693 from the documents below;
+# The okrsky of Ľubica of the vote of 2019-05-25, data/curated/elections/2019-05-25/okrsky/523682.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Ľubica, transcribed by an AI agent in job okrsok-rules-1747 from the documents below;
 #   checked by `ems job ingest` against the address register. The document's
 #   text per okrsok, verbatim:
-#     okrsok 1: Bernolákova, Gen. Svobodu, Hraničná ulica, Jesenského, Na vŕšku, Povstalecká, Úzka, voliči s trvalým pobytom Obec Ľubica
+#     okrsok 1: Bernolákova, Gen. Svobodu, Jesenského, Povstalecká, Úzka, voliči s trvalým pobytom Obec Ľubica
 #     okrsok 2: Pod lesom, Poľná, Športová, Vrbovská
-#     okrsok 3: 8. mája, Hlboká, Chrenová ulica, Jarná, Kruhová, Mierová, Remeselnícka
+#     okrsok 3: 8. mája, Hlboká, Jarná, Kruhová, Mierová, Na vŕšku, Remeselnícka
 #     okrsok 4: Budovateľská, Jánošíkova, Karola Kuzmányho, Podtatranská, Slnečná, Svätej Alžbety, Školská
 obec = "523682"
 name = "Ľubica"
-okrsky_date = 2022-08-09
+okrsky_date = 2019-02-19
 okrsky_fill = "nearest"
-okrsky_note = "These are the okrsky of the elections of 2022-10-29: in 2019-03-16 the obec had as many, each with voters on the roll within 10% of its count then. No document of 2019-03-16 was searched for. \"voliči s trvalým pobytom Obec Ľubica\" (okrsok 1) are voters registered without an address, not the register's houses without a street; those (súpisné only, incl. Ľubické Kúpele) go to the nearest placed address (fill_nearest)."
-okrsky_reused = 2022-10-29
+okrsky_note = "\"voliči s trvalým pobytom Obec Ľubica\" (okrsok 1) are voters registered without an address, not the register's houses without a street; those (súpisné only, incl. Ľubické Kúpele) go to the nearest placed address (fill_nearest)."
+okrsky_adopted = 2019-05-25
+okrsky_adopted_basis = "No document of 2019-03-16 setting the okrsky was found (okrsok-rules-1157): No okrsky document for the presidential election of 16 March 2019 found. The site's page 'Voľby prezidenta SR 2019' (volby-prezidenta-sr-2019.phtml?id3=144373) is empty in its only Internet Archive capture (2021-12-31) and gone live; the site search lists okrsky documents of 2017, 2018, EP 2019 (dated 19.02.2019, for the EP election only), 2020 and later, but none for the 2019 presidential election; the Archive has no capture of the site between Nov 2018 and Mar 2019. The okrsky of 2018 (06.09.2018) and EP 2019 (19.02.2019) documents are identical, so the copy very likely fits, but no document of this vote states it. These are the okrsky of the vote of 2019-05-25 (2019-ep), the nearest in time with okrsky of its own that fit: 4 okrsky. Voters on the roll per okrsok (ŠÚ SR), 2019-03-16 → 2019-05-25: 1: 784 → 794, 2: 859 → 848, 3: 814 → 821, 4: 790 → 794."
 
 [[document]]
-url = "https://www.obeclubica.sk/download_file_f.php?id=1722347"
-sha256 = "5619d6e5375a206dd7409a2ef64093b1b07e3a483f24752c6c538d3d836f4b73"
-title = "Určenie volebných okrskov"
+url = "https://www.obeclubica.sk/download_file_f.php?id=1094960"
+sha256 = "5d08aef540cb282f2b2de1c044ad48eec1c42e058970c8ae0a5c61a86ca59aa5"
+title = "Urcenie_okrskov_2019.pdf (utvorenie volebných okrskov pre voľby do Európskeho parlamentu 2019)"
 
 [[document]]
-url = "https://www.obeclubica.sk/komunalne-volby-2022.html"
-sha256 = "4e88c6dc92d9943faff6d411bc3863f5b94648d39a862596d238a140e8801ca5"
-title = "Komunálne voľby 2022"
+url = "https://www.obeclubica.sk/volby-do-europskeho-parlamentu-2019.html"
+sha256 = "8081779f3e8a1ca7918ec3aa2cd281bf73befec2c15c300518d9bca3e37395fa"
+title = "Voľby do Európskeho parlamentu 2019"
 
 [okrsok.1]
 rules = [
   {street = "Bernolákova"},
   {street = "Gen. Svobodu"},
-  {street = "Hraničná ulica"},
   {street = "Jesenského"},
-  {street = "Na vŕšku"},
   {street = "Povstalecká"},
   {street = "Úzka"},
+  {street = "Hraničná ulica"},
 ]
 
 [okrsok.2]
@@ -46,11 +46,12 @@ rules = [
 rules = [
   {street = "8.mája", written = "8. mája"},
   {street = "Hlboká"},
-  {street = "Chrenová ulica"},
   {street = "Jarná"},
   {street = "Kruhová"},
   {street = "Mierová"},
+  {street = "Na vŕšku"},
   {street = "Remeselnícka"},
+  {street = "Chrenová ulica"},
 ]
 
 [okrsok.4]

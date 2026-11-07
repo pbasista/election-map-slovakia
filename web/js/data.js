@@ -613,10 +613,13 @@ function councilContests(obec, obvod, byAddress) {
  *   election or referendum whose okrsky are drawn, `okrskyDating` and
  *   `okrskySupplemented` as `dating` and `supplemented` of the okrsky's
  *   document, `okrskyUnknown`
- *   whether it voted in several okrsky that are not drawn, `boundary`
- *   {day, on, obce} where its boundary on `day` differed from that of the
- *   election `on` drawn (`obce` the names of the neighbours the land moved
- *   between, none for the state border), each null or false where not;
+ *   whether it voted in several okrsky that are not drawn, `special` its
+ *   okrsky without territory that voted (data/index.json `special`: okrsok
+ *   → {kind, voters, title, url, okresy | facility}, never drawn),
+ *   `boundary` {day, on, obce} where its boundary on `day` differed from
+ *   that of the election `on` drawn (`obce` the names of the neighbours
+ *   the land moved between, none for the state border), each null or
+ *   false where not;
  * - `group`: the council obvody and okrsky of the houses of the street or
  *   part chosen (`groupUnits`). */
 export async function ballots(code, where = {}) {
@@ -652,10 +655,12 @@ export async function ballots(code, where = {}) {
     notFound: index.not_found.includes(obec.code),
     okrskyReused: index.okrsky_reused[obec.code] ?? null,
     okrskyAdopted: index.okrsky_adopted[obec.code] ?? null,
+    okrskyOutliers: index.okrsky_outliers[obec.code] ?? null,
     okrskyReferendum: index.okrsky_referendum[obec.code] ?? null,
     okrskyDating: index.okrsky_date_approximate[obec.code] ?? null,
     okrskySupplemented: index.okrsky_supplemented[obec.code] ?? null,
     okrskyUnknown: index.okrsky_unknown.includes(obec.code),
+    special: index.special[obec.code] ?? null,
     boundary: own
       ? { day: index.boundaries.day, on: index.boundaries.on, obce: own.map((c) => index.obce[c][0]) }
       : null,

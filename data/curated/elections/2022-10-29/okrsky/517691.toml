@@ -1,17 +1,27 @@
-# The okrsky of Kotešová of the elections of 2026-10-24, data/curated/elections/2026-10-24/okrsky/517691.toml, reused by `ems job reuse`.
+# The okrsky of Kotešová of the vote of 2023-09-30, data/curated/elections/2023-09-30/okrsky/517691.toml, standing in, by `ems job reuse`. Its header there:
+#   Okrsky of Kotešová, transcribed by an AI agent in job okrsok-rules-3722 from the documents below;
+#   checked by `ems job ingest` against the address register. The document's
+#   text per okrsok, verbatim:
+#     okrsok 1: 1 - 100
+#     okrsok 2: 101 - 369, 813, 975 - 1150
+#     okrsok 3: 370 – 812, 860 - 974
 obec = "517691"
 name = "Kotešová"
 okrsky_fill = "nearest"
-okrsky_note = "No document of the elections of 2022-10-29 was found; these are the okrsky of the elections of 2026-10-24, the same as in 2022 (each okrsok's voters on the roll within 10%). Scanned table read from the image. Okrsky are given by súpisné čísla: Oblazov (1–100), dolná Kotešová (101–369, 813, 975–1150), horná Kotešová + Buková (370–800, 866–974). The parts Oblazov and Buková are taken whole; within the part Kotešová the ranges are applied; súpisné čísla outside them (801–865 except 813, over 1150) take the nearest placed address. The document states no decision date (published 29. 7. 2026)."
-okrsky_reused = 2026-10-24
+okrsky_note = "The okrsky are given in the text of the elections page only by súpisné čísla (od – do): 1. 1 - 100 (Požiarna zbrojnica Kotešová, Oblazov 75), 2. 101 - 369, 813, 975 - 1150, 3. 370 – 812, 860 - 974. Súpisné čísla are unique in the obec: Oblazov has 2–100 (and 714–850), Kotešová 101–1150, Buková 624–810. The ranges are applied within the parts Kotešová and Buková. Kotešová's súpisné čísla 814–859 (no okrsok) take the nearest placed address. This vote's own document is used, not the referendum's (which has 2 okrsky). It differs from the copied rule set of 2022-10-29 (the document of 2026: okrsok 3 370–800, 866–974) in okrsok 3's ranges 370–812, 860–974."
+okrsky_adopted = 2023-09-30
+okrsky_adopted_basis = "No document of 2022-10-29 setting the okrsky was found (okrsok-rules-867): No 2022 elections okrsky document found live or in the archive (archived 2022 election pages carry only general information). The referendum's document (8.11.2022) sets only 2 okrsky by súpisné čísla (1–369, 975–1150 / 370–952), while the elections had 3 okrsky, so it cannot stand in. These are the okrsky of the vote of 2023-09-30 (2023-nrsr), the nearest in time with okrsky of its own that fit: 3 okrsky (nearer, not taken: 2023-01-21: okrsky 1, 2, then 1–3). Voters on the roll per okrsok (ŠÚ SR), 2022-10-29 → 2023-09-30: 1: 136 → 142, 2: 756 → 769, 3: 862 → 868."
+okrsky_date_approximate = "named"
+okrsky_date_basis = "The text on the elections page states that the obec formed 3 volebné okrsky 'pre voľby do Národnej rady Slovenskej republiky', on the page of the elections of 30 September 2023; it states no date."
 
 [[document]]
-url = "https://www.kotesova.info/pages/attachments/fm3f6UgYreSbDGAutdVDoJ.pdf"
-sha256 = "07fa68d262a3c0bba2a371057539ba5b66f1932cb00498d23c3ca7780c6f1f3c"
-title = "Utvorenie volebných okrskov, určenie volebných miestností a vymenovanie zapisovateliek okrskových volebných komisií"
+url = "https://www.kotesova.info/pages/volby-do-narodnej-rady-slovenskej-republiky-2023"
+sha256 = "cf7ba3bd9c7bed4ad236a39b094dc3e44166c4d9f5e4bf2cfe740357ef970425"
+title = "Voľby do Národnej rady Slovenskej republiky 2023 – Utvorenie volebných okrskov, určenie volebných miestností a vymenovanie zapisovateliek okrskových volebných komisií"
 
 [okrsok.1]
 rules = [
+  {part = "Oblazov", numbers = "1-100"},
   {part = "Oblazov"},
 ]
 
@@ -22,6 +32,6 @@ rules = [
 
 [okrsok.3]
 rules = [
-  {part = "Kotešová", numbers = "370-800, 866-974"},
-  {part = "Buková"},
+  {part = "Kotešová", numbers = "370-812, 860-974"},
+  {part = "Buková", numbers = "370-812, 860-974"},
 ]
