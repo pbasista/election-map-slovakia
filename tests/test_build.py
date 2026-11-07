@@ -8,7 +8,15 @@ from pathlib import Path
 
 import pytest
 
-from election_map_slovakia import addresses, build, bundle, config, obvody, results
+from election_map_slovakia import (
+    addresses,
+    build,
+    bundle,
+    check,
+    config,
+    obvody,
+    results,
+)
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -504,9 +512,6 @@ def test_name_shards_find_a_person_by_each_name_word():
     assert all(prefix.isascii() for prefix in shards)
 
 
-LOCAL = build.Locations({}, {}, {}, "/results", "/live", "")
-
-
 @pytest.mark.parametrize(
     ("base_url", "noindexed"),
     [
@@ -522,7 +527,7 @@ def test_pages_dev_is_noindexed_only_beside_an_own_domain(
     cfg = dataclasses.replace(
         cfg, site=dataclasses.replace(cfg.site, base_url=base_url)
     )
-    rules = build.header_rules(build.headers(cfg, tmp_path / "web", LOCAL).decode())
+    rules = build.header_rules(build.headers(cfg, tmp_path / "web").decode())
     for url in (
         "https://election-map-slovakia.pages.dev/sk/",
         "https://0a1b2c3d.election-map-slovakia.pages.dev/sk/",
@@ -654,6 +659,24 @@ def app_config(site: build.Site, page: str = "sk/index.html") -> dict:
     return json.loads(html.unescape(match[1]))
 
 
+def page_policy(site: build.Site, page: str) -> str:
+    """The Content-Security-Policy of the <meta> of app page *page*, which
+    comes before anything that loads, as it covers only what follows it."""
+    text = site.files[f"app/{page}"].decode()
+    match = re.search(
+        r'<meta http-equiv="Content-Security-Policy" content="([^"]*)"', text
+    )
+    assert match is not None
+    assert not re.search(r"<(script|link|style)\b", text[: match.start()])
+    return html.unescape(match[1])
+
+
+def policy(*origins: str) -> str:
+    """The <meta> policy of a page that fetches from its own and *origins*."""
+    connect = " ".join(["'self'", *origins])
+    return f"default-src 'self'; connect-src {connect}; img-src 'self' data:"
+
+
 def versions(site: build.Site) -> dict[str, str]:
     """The code, vendor, image, map, data and base versions of *site*, and its paths."""
     shell = site.files["app/sk/index.html"].decode()
@@ -766,10 +789,15 @@ def test_versions_and_results(tmp_path: Path):
     app_js = site.files[f"app/assets/{code}/js/app.js"].decode()
     assert f"from '/assets/vendor/{vendor}/preact-htm.module.js'" in app_js
     assert "../vendor/" not in app_js
+    # The data parts are served from the app's origin: every page fetches
+    # from its own alone.
+    for page in ("sk/index.html", "sk/2022/index.html", "index.html", "404.html"):
+        assert page_policy(site, page) == policy()
+    # What a <meta> cannot carry is a header of every response.
     rules = build.header_rules(site.files[f"app/{bundle.HEADERS}"].decode())
-    csp = build.response_headers(rules, "/sk/")["Content-Security-Policy"]
-    # The data parts are served from the app's origin.
-    assert "; connect-src 'self';" in csp
+    assert build.response_headers(rules, "/sk/")["Content-Security-Policy"] == (
+        "object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
+    )
     immutable = "public, max-age=31536000, immutable"
     day = "public, max-age=86400"
     assert {
@@ -959,8 +987,6 @@ def test_the_app_for_deployed_data(tmp_path: Path):
         "https://2022abcd.ems-base.pages.dev",
     ):
         assert f'<link rel="preconnect" href="{url}"' in shell
-    rules = build.header_rules(site.files[f"app/{bundle.HEADERS}"].decode())
-    csp = build.response_headers(rules, "/sk/")["Content-Security-Policy"]
     origins = sorted(
         [
             *(
@@ -971,9 +997,12 @@ def test_the_app_for_deployed_data(tmp_path: Path):
             *(based(osm).url for osm in cfg.bases),
         ]
     )
-    assert (
-        f"; connect-src 'self' {' '.join(origins)} https://results.example.sk;"
-    ) in csp
+    # Every shell may fetch from every election's data parts; the picker
+    # and the 404 page from their own origin alone.
+    for page in ("sk/2022/index.html", "en/index.html"):
+        assert page_policy(site, page) == policy(*origins, "https://results.example.sk")
+    assert page_policy(site, "index.html") == policy()
+    assert page_policy(site, "404.html") == policy()
     # An election with `live` reads the live results too, which the CSP lets
     # it fetch.
     live = dataclasses.replace(
@@ -987,12 +1016,41 @@ def test_the_app_for_deployed_data(tmp_path: Path):
         "https://live.example.sk/2022-10-29"
     )
     assert app_config(site, "sk/2026/index.html")["live"] is None
-    rules = build.header_rules(site.files[f"app/{bundle.HEADERS}"].decode())
-    csp = build.response_headers(rules, "/sk/")["Content-Security-Policy"]
-    assert (
-        f"; connect-src 'self' {' '.join(origins)} https://live.example.sk"
-        " https://results.example.sk;"
-    ) in csp
+    assert page_policy(site, "sk/2026/index.html") == policy(
+        *origins, "https://live.example.sk", "https://results.example.sk"
+    )
+
+
+def test_a_release_s_many_origins_stay_out_of_the_headers(tmp_path: Path):
+    """A release names each bundle by its deployment's origin, dozens of
+    them: they are in each shell's <meta>, and the app's _headers stays
+    within the Pages limits (2,000 characters a line)."""
+    cfg = project(tmp_path / "project")
+    manifest = {"version": "0a1b2c3d", "occupations": {}}
+    # The project's elections and 30 more, as many as a release has.
+    slugs = [e.slug for e in cfg.elections] + [f"{n:02}" for n in range(30)]
+
+    def located(part: str, name: str) -> build.Located:
+        return build.Located(f"https://0a1b2c3d.ems-{part}-{name}.pages.dev", manifest)
+
+    locations = build.Locations(
+        {slug: located("map", slug) for slug in slugs},
+        {slug: located("data", slug) for slug in slugs},
+        {osm: located("base", osm) for osm in [*cfg.bases, *map(str, range(10))]},
+        "https://results.example.sk",
+        "https://live.example.sk",
+        "https://sources.example.sk",
+    )
+    site = build.assemble_deployed(cfg, locations)
+    dist = tmp_path / "dist"
+    (dist / build.APP_PART).mkdir(parents=True)
+    (dist / build.APP_PART / bundle.HEADERS).write_bytes(
+        site.files[f"app/{bundle.HEADERS}"]
+    )
+    assert check._headers_problems(dist, build.APP_PART) == []
+    origins = locations.origins(live=False)
+    assert len(origins) == 2 * len(slugs) + len(cfg.bases) + 10 + 1
+    assert page_policy(site, "sk/2026/index.html") == policy(*origins)
 
 
 def common(zbgis: tuple[str, ...], osm: str) -> str:

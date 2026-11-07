@@ -513,15 +513,38 @@ def test_third_party_resource(site):
 
 def test_connect_src_only_the_data_parts(site):
     dist, cfg = site
-    headers = dist / "app" / bundle.HEADERS
-    headers.write_text(
-        headers.read_text().replace(
-            "connect-src 'self';", "connect-src 'self' https://live.example.sk;"
+    shell = dist / "app/sk/2026/index.html"
+    shell.write_text(
+        shell.read_text().replace(
+            "connect-src &#x27;self&#x27;;",
+            "connect-src &#x27;self&#x27; https://live.example.sk;",
         )
     )
+    # The picker fetches from its own origin alone.
+    picker = dist / "app/index.html"
+    picker.write_text(
+        picker.read_text().replace("connect-src &#x27;self&#x27;;", "connect-src *;")
+    )
+    # A policy covers only what follows it.
+    not_found = dist / "app/404.html"
+    not_found.write_text(
+        not_found.read_text().replace(
+            "<head>", '<head><link rel="icon" href="data:," />'
+        )
+    )
+    # A header default-src would close what the pages' own open.
+    headers = dist / "app" / bundle.HEADERS
+    headers.write_text(
+        headers.read_text().replace("object-src", "default-src 'self'; object-src")
+    )
+    # The other origin is one the app's HTML refers to as well.
     assert problems(dist, cfg)["origins"] == [
-        "app/_headers: CSP connect-src is 'self' https://live.example.sk,"
-        " expected 'self'"
+        "app/404.html: Content-Security-Policy <meta> after what it covers",
+        "app/index.html: CSP connect-src is *, expected 'self'",
+        "app/sk/2026/index.html:5: https://live.example.sk;",
+        "app/sk/2026/index.html: CSP connect-src is 'self' https://live.example.sk,"
+        " expected 'self'",
+        "app/_headers: CSP has default-src, which narrows the pages' own",
     ]
 
 

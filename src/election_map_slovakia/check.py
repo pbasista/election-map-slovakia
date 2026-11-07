@@ -56,10 +56,13 @@ origins    no HTML, JS or CSS of the app refers to another origin than
            the data parts' its shells name (km-config ``map``, ``data``,
            ``base``, ``results``, ``live``, ``sources``), except as the
            target of a link (``href``, not on ``<link>``), as an XML
-           namespace or in a comment; the CSP's connect-src in the app's
-           ``_headers`` is ``'self'`` and the origins of the bundles, the
-           base maps, the results and, where an election reads them, the
-           live results
+           namespace or in a comment; every HTML page of the app has a
+           Content-Security-Policy ``<meta>`` before anything that loads,
+           whose connect-src is, in a shell, ``'self'`` and the origins of
+           the bundles, the base maps, the results and, where an election
+           reads them, the live results, and ``'self'`` alone in the
+           picker and the 404 page; the CSP of the app's ``_headers`` has
+           no default-src or connect-src, which would narrow them
 results    every directory of ``results/`` (the final results) and of
            ``live/`` (the live results) is an election day's and holds
            results that keep the contract of docs/results.md
@@ -935,16 +938,55 @@ def _allowed(text: str, start: int, url: str, comments: list[tuple[int, int]]) -
     return tag is not None and tag.group(1).lower() not in _RESOURCE_TAGS
 
 
-def _connect_sources(dist: Path) -> list[str] | None:
-    """Return the sources the CSP of the app pages lets them fetch from.
+_PAGE_POLICY = re.compile(
+    r'<meta http-equiv="Content-Security-Policy" content="([^"]*)"'
+)
+# What a page's <meta> policy must come before: what loads or runs.
+_LOADING = re.compile(r"<(?:script|link|style|base|img)\b", re.IGNORECASE)
+_KM_CONFIG = re.compile(r'<meta name="km-config" content="([^"]*)"')
 
-    None if ``_headers`` is missing or broken (``check_headers`` says so).
+
+def _directives(policy: str) -> dict[str, list[str]]:
+    """Return directive → sources of a Content-Security-Policy, the first of each."""
+    directives: dict[str, list[str]] = {}
+    for directive in policy.split(";"):
+        name, *sources = directive.split() or [""]
+        directives.setdefault(name.lower(), sources)
+    return directives
+
+
+def _page_policy_problems(rel: str, text: str, expected: list[str]) -> list[str]:
+    """Return the problems of the ``<meta>`` policy of app page *rel*.
+
+    It must come before anything that loads or runs, as it covers only
+    what follows it, and let the page fetch from *expected* alone.
+    """
+    match = _PAGE_POLICY.search(text)
+    if match is None:
+        return [f"{rel}: no Content-Security-Policy <meta>"]
+    if _LOADING.search(text, 0, match.start()):
+        return [f"{rel}: Content-Security-Policy <meta> after what it covers"]
+    directives = _directives(html.unescape(match.group(1)))
+    connect = directives.get("connect-src", directives.get("default-src", ["*"]))
+    if connect == expected:
+        return []
+    return [
+        f"{rel}: CSP connect-src is {' '.join(connect)}, expected {' '.join(expected)}"
+    ]
+
+
+def _header_policy_problems(dist: Path) -> list[str]:
+    """Return the problems of the CSP of the app's ``_headers``.
+
+    A browser enforces it besides each page's own, so a fetch directive
+    there would narrow what the pages may fetch from. None if
+    ``_headers`` is missing or broken (``check_headers`` says so).
     """
     try:
         text = (dist / APP / bundle.HEADERS).read_text(encoding="utf-8")
         rules = build.header_rules(text)
     except (OSError, bundle.BuildError):
-        return None
+        return []
     policy = next(
         (
             value
@@ -953,14 +995,11 @@ def _connect_sources(dist: Path) -> list[str] | None:
         ),
         "",
     )
-    directives: dict[str, list[str]] = {}
-    for directive in policy.split(";"):
-        name, *sources = directive.split() or [""]
-        directives.setdefault(name.lower(), sources)
-    return directives.get("connect-src", directives.get("default-src", ["*"]))
-
-
-_KM_CONFIG = re.compile(r'<meta name="km-config" content="([^"]*)"')
+    return [
+        f"{APP}{bundle.HEADERS}: CSP has {name}, which narrows the pages' own"
+        for name in ("default-src", "connect-src")
+        if name in _directives(policy)
+    ]
 
 
 def app_configs(dist: Path, code: str, slugs: Iterable[str]) -> dict[str, Any]:
@@ -988,7 +1027,9 @@ def check_origins(
     """Return the check that no code of the app refers to another origin.
 
     Than those of the data parts the shells name (*configs*,
-    :func:`app_configs`), which the CSP must let the app fetch from.
+    :func:`app_configs`), which the shells' CSP must let them fetch from,
+    and only those; every other page of the app fetches from its own origin
+    alone.
     """
     result = Check("origins")
     fetched = {
@@ -1005,12 +1046,14 @@ def check_origins(
         "|".join(re.escape(o) + r"(?![\w.-])" for o in sorted(fetched | linked))
         or r"(?!)"
     )
+    expected = ["'self'", *sorted(fetched)]
     for rel in sorted(rels):
         if not rel.startswith(APP) or not rel.endswith(_CODE):
             continue
         result.checked += 1
         text = (dist / rel).read_text(encoding="utf-8")
-        comments = _comment_spans(text) if not rel.endswith(".html") else []
+        page = rel.endswith(".html")
+        comments = _comment_spans(text) if not page else []
         for m in _URL.finditer(text):
             url = m.group()
             if _netloc(url) == own or data_parts.match(url):
@@ -1021,13 +1064,14 @@ def check_origins(
             if not _allowed(text, m.start(), url, comments):
                 line = text.count("\n", 0, m.start()) + 1
                 result.problems.append(f"{rel}:{line}: {url}")
-    connect = _connect_sources(dist)
-    expected = ["'self'", *sorted(fetched)]
-    if connect is not None and connect != expected:
-        result.problems.append(
-            f"{APP}{bundle.HEADERS}: CSP connect-src is {' '.join(connect)},"
-            f" expected {' '.join(expected)}"
-        )
+        if page:
+            # The shells are in the languages' directories; the picker and
+            # the 404 page at the root.
+            shell = "/" in rel.removeprefix(APP)
+            result.problems += _page_policy_problems(
+                rel, text, expected if shell else ["'self'"]
+            )
+    result.problems += _header_policy_problems(dist)
     return result
 
 

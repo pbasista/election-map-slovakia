@@ -7,13 +7,18 @@
 # not overlap).
 
 # The app runs no inline script and fetches from its own origin and from
-# the data parts only: the build fills in connect-src with 'self' and their
-# origins (the deployments of the elections' bundles and the results,
-# docs/deploy.md; none when they are served from the app's origin, as by
-# `ems serve`). The policy makes the browser enforce that. data: images are
-# the favicons written inline in the HTML.
+# the data parts only, which the browser enforces by the
+# Content-Security-Policy. Each page carries in a <meta> what it may load
+# and fetch from (build.py page_policy): a shell names the data parts'
+# origins there, the deployments of the elections' bundles and the results
+# (docs/deploy.md), dozens of them, too long for a line here (none when
+# they are served from the app's origin, as by `ems serve`). Here is the
+# rest, the same for every page: frame-ancestors, which a <meta> cannot
+# carry, and what closes plugins, <base> and forms. A browser enforces both
+# policies, so this one has no default-src, which would close what the
+# <meta> opens.
 /*
-  Content-Security-Policy: default-src 'self'; connect-src {{connect_src}}; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'
+  Content-Security-Policy: object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer
 

@@ -1545,12 +1545,21 @@ what asked for it listens from the commit of its first render
 (`useLive`, a layout effect),
 so one that comes quickly (a small one, or one the browser has kept)
 is not missed.
-The app's `_headers`, from `web/_headers`,
-sets a Content-Security-Policy whose connect-src is `'self'`
+Every page of the app carries a Content-Security-Policy `<meta>`,
+the first thing of its `<head>` that loads anything
+(build.py `page_policy`):
+a shell's connect-src is `'self'`
 and the origins of the deployed bundles, base maps and results alone,
-the live results' where an election reads them
-(build.py `headers`),
-so the browser enforces this.
+the live results' where an election reads them,
+so the browser enforces this;
+the picker's and the 404 page's is `'self'` alone.
+The app's `_headers`, from `web/_headers`,
+adds what is the same for every page,
+`frame-ancestors` among it, which a `<meta>` cannot carry,
+and no default-src or connect-src, since a browser enforces both policies.
+The origins are not in the header itself:
+a deployed app names dozens,
+more than a `_headers` line may hold (2,000 characters).
 `ems serve` serves the parts as one site:
 the app at `/`, the bundles at `/map/<slug>/` and `/data/<slug>/`,
 the base maps at `/base/<extract>/`,

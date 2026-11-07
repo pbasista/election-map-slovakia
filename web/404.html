@@ -6,6 +6,8 @@
 <html lang="sk">
   <head>
     <meta charset="utf-8" />
+    <!-- What the page may load: its own origin (build.py page_policy). -->
+    <meta http-equiv="Content-Security-Policy" content="{{csp}}" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="referrer" content="no-referrer" />
     <title>404 · {{title}}</title>

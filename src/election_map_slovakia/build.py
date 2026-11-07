@@ -47,11 +47,9 @@ included) is also the one ``/<lang>/``, the site's front page, shows::
     <lang>/index.html        the home election's, whose canonical URL it
                              is (:func:`shells`)
     _headers                 Cloudflare Pages response headers, from
-                             web/_headers (see :func:`header_rules`) with
-                             the data parts' origins the app fetches from,
-                             plus a noindex rule for the pages.dev hosts
-                             once the site has a domain of its own
-                             (:func:`headers`)
+                             web/_headers (see :func:`header_rules`), plus a
+                             noindex rule for the pages.dev hosts once the
+                             site has a domain of its own (:func:`headers`)
     sitemap.xml              the root page and every language's app shells,
                              absolute under ``base_url``; none without it
                              (:func:`sitemap`)
@@ -106,6 +104,18 @@ election with ``live``, of its live results (``live``), of the cached
 sources (``sources``) and of the party logos (``logos``). A shell whose
 map bundle or base map is on another origin preconnects to it, as their
 files are what it fetches first.
+
+Content-Security-Policy. A browser enforces every policy a page has, so
+the app's is in two: what a page may load and fetch from is in a
+``<meta>`` of the page (:func:`page_policy`), the first thing of its
+``<head>`` that a policy covers, as a ``<meta>`` policy covers only what
+follows it; the shells may fetch from the data parts' origins, the picker
+and the 404 page from their own alone. A deployed app names each bundle by
+its deployment's origin, dozens of them, which in a header would make a
+line longer than Pages allows (2,000 characters). web/_headers keeps the
+directives that are the same for every page, ``frame-ancestors`` among
+them, which a ``<meta>`` cannot carry; it has no ``default-src``, which
+would close what the ``<meta>`` opens.
 """
 
 from __future__ import annotations
@@ -119,7 +129,7 @@ import re
 import shutil
 import urllib.parse
 from collections import defaultdict
-from collections.abc import Callable, Iterator, Mapping
+from collections.abc import Callable, Iterable, Iterator, Mapping
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from http import HTTPStatus
@@ -422,22 +432,26 @@ def _attribute_json(content: object) -> str:
     return html.escape(encode(content).decode())
 
 
-def headers(cfg: Config, web: Path, locations: Locations) -> bytes:
-    """Return the app's ``_headers``: web/_headers for these *locations*.
+def page_policy(origins: Iterable[str]) -> str:
+    """Return the Content-Security-Policy of the ``<meta>`` of an app page.
 
-    Its CSP lets the app fetch from its own origin and the other origins of
-    the data parts (:meth:`Locations.origins`), the live part's where an
-    election reads it (``live``). A noindex rule for
-    pages.dev is added once the site has a domain of its own
-    (``base_url``): Pages keeps serving every deployment at
+    It loads code, styles and images from its own origin alone (and the
+    favicons written inline, ``data:``) and fetches from it and *origins*.
+    The rest of the policy is in web/_headers (module doc).
+    """
+    connect = " ".join(["'self'", *origins])
+    return f"default-src 'self'; connect-src {connect}; img-src 'self' data:"
+
+
+def headers(cfg: Config, web: Path) -> bytes:
+    """Return the app's ``_headers``: web/_headers, for pages.dev noindexed.
+
+    A noindex rule for pages.dev is added once the site has a domain of its
+    own (``base_url``): Pages keeps serving every deployment at
     <project>.pages.dev and at <hash>.<project>.pages.dev, and a search
     engine should know the site only by its domain.
     """
-    live = any(e.live for e in cfg.elections)
-    connect = " ".join(["'self'", *locations.origins(live=live)])
-    text = _fill(
-        (web / HEADERS).read_text(encoding="utf-8"), {"connect_src": connect}, HEADERS
-    )
+    text = (web / HEADERS).read_text(encoding="utf-8")
     base = cfg.site.base_url
     pages = f"{cfg.site.pages_project}.pages.dev"
     if not base or urllib.parse.urlsplit(base).hostname == pages:
@@ -517,11 +531,17 @@ def shells(
     bundle in *locations*, with ``?v=`` its version. Its title is that of
     the election's kind (``app.title.<label>``,
     :attr:`config.Election.label`), its description and ``<noscript>``
-    paragraphs are :func:`_texts`.
+    paragraphs are :func:`_texts`. Each lets the page fetch from the data
+    parts' origins in *locations* (:func:`page_policy`), those of every
+    election and the live part's where an election reads it (``live``);
+    the picker and the 404 page fetch from their own origin alone.
     """
     langs = cfg.languages
     site_names = _site_names(langs)
     base = cfg.site.base_url or ""
+    live = any(e.live for e in cfg.elections)
+    shell_policy = html.escape(page_policy(locations.origins(live=live)))
+    own_policy = html.escape(page_policy(()))
 
     def alternates(election: config.Election) -> str:
         return "\n".join(
@@ -555,6 +575,7 @@ def shells(
             s = strings[lang.code]
             description, features = _texts(cfg, s, election)
             values = {
+                "csp": shell_policy,
                 "lang": lang.code,
                 "dir": lang.direction,
                 "title": html.escape(_year(s[f"app.title.{election.label}"], election)),
@@ -604,11 +625,14 @@ def shells(
         "config": _attribute_json(picker_config),
         "links": links,
         "assets": assets.code,
+        "csp": own_policy,
     }
     picker = (web / PICKER).read_text(encoding="utf-8")
     out["index.html"] = _fill(picker, values, PICKER).encode()
     not_found = (web / NOT_FOUND).read_text(encoding="utf-8")
-    out[NOT_FOUND] = _fill(not_found, {"title": values["title"]}, NOT_FOUND).encode()
+    out[NOT_FOUND] = _fill(
+        not_found, {"csp": own_policy, "title": values["title"]}, NOT_FOUND
+    ).encode()
     return out
 
 
@@ -786,7 +810,7 @@ def app(cfg: Config, locations: Locations) -> tuple[Part, list[str]]:
     )
     files |= shells(cfg, web, strings.ui, assets, locations)
     files |= {f"{assets.code[1:]}/{path}": blob for path, blob in code.items()}
-    files[HEADERS] = headers(cfg, web, locations)
+    files[HEADERS] = headers(cfg, web)
     site_map = sitemap(cfg)
     if site_map is not None:
         files[SITEMAP] = site_map
@@ -1304,7 +1328,7 @@ def serve(dist: Path, host: str, port: int) -> None:
 
     Where :func:`mounts` puts them; each part's responses carry the headers
     of its ``_headers``, so local tests see the same Content-Security-Policy
-    and caching as the deployed site.
+    (that and the pages' own ``<meta>``) and caching as the deployed site.
     """
     parts = mounts(dist)
     rules = [

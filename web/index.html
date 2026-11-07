@@ -6,6 +6,10 @@
 <html lang="{{lang}}" dir="{{dir}}">
   <head>
     <meta charset="utf-8" />
+    <!-- What the page may load and fetch from: its own origin and the data
+         parts' (build.py page_policy). A <meta> policy covers only what
+         follows it, so it comes before anything that loads. -->
+    <meta http-equiv="Content-Security-Policy" content="{{csp}}" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
     <meta name="referrer" content="no-referrer" />

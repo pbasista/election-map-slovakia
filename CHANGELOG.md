@@ -4,6 +4,17 @@ Notable changes, newest first. The version is set in
 `src/election_map_slovakia/__init__.py`; tagging `vX.Y.Z` builds and deploys
 it (see [docs/deploy.md](docs/deploy.md)).
 
+## 0.9.2 — 2026-11-07
+
+- **The release's app passes its checks again:** its Content-Security-
+  Policy listed in `_headers` every data deployment the app fetches from,
+  61 origins for 25 elections, and outgrew Cloudflare Pages' limit of
+  2,000 characters per line. The pages now carry that policy in a
+  `<meta>` of their own, without a length limit; `_headers` keeps only
+  what a `<meta>` cannot set (`frame-ancestors` and the like). `ems
+  check` reads the policy from the pages, and a test builds the app for
+  a release's many origins.
+
 ## 0.9.1 — 2026-11-07
 
 - **The release builds again:** 0.9.0's failed because a by-election's

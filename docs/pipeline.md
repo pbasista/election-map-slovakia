@@ -982,9 +982,11 @@ where the election's bundles, base map, results, live results (with
 the deployed origins with `--deployed`;
 a shell whose map bundle or base map is on another origin preconnects to
 it.
-The app's CSP lets it fetch from its own origin
+The app's CSP, a `<meta>` of each page,
+lets a shell fetch from its own origin
 and those of the bundles, base maps and results,
-and of the live results where an election reads them.
+and of the live results where an election reads them;
+the app's `_headers` adds the directives a `<meta>` cannot carry.
 
 An election's files are split in two bundles by what they depend on
 ([Keys](#keys)):
@@ -1160,9 +1162,12 @@ The checks are described in `src/election_map_slovakia/check.py`:
   is an obvod of the term's rule set
   (its decision; one without candidates is uncontested there).
 - **Origin:** no HTML, JS or CSS of the app refers to another origin
-  except as a link target or the data parts' origins its shells name,
-  and the CSP's connect-src is `'self'`
-  and the origins of the bundles, base maps and results.
+  except as a link target or the data parts' origins its shells name;
+  every page has a CSP `<meta>` before anything that loads,
+  whose connect-src is, in a shell, `'self'`
+  and the origins of the bundles, base maps and results,
+  in the picker and the 404 page `'self'` alone,
+  and the CSP of the app's `_headers` has no default-src or connect-src.
 - **Results:** the results of every election day in `results/`
   keep their format, have the sources of exactly
   that election's contests
