@@ -94,6 +94,7 @@ from election_map_slovakia import (
     candidates,
     commoncrawl,
     config,
+    division,
     fetch,
     geo,
     jobs,
@@ -102,7 +103,7 @@ from election_map_slovakia import (
     statoffice,
 )
 from election_map_slovakia.candidates import search_key
-from election_map_slovakia.config import BY_ELECTION, Config, Election, Units
+from election_map_slovakia.config import BY_ELECTION, Config, Election
 
 NAME = "obvod-rules"
 PRIORITY = "addresses"
@@ -389,49 +390,16 @@ def official_okrsky(cfg: Config, election: Election) -> Okrsky:
     results`` built (:mod:`election_map_slovakia.results`); empty where
     neither has them. Read once per process.
     """
-    if units_of(election).format == "susr":
-        return _package_okrsky(units_path(cfg, election))
+    if division.units_of(election).format == "susr":
+        return _package_okrsky(division.units_path(cfg, election))
     return _results_okrsky(cfg.results_dir(election) / "okrsky")
-
-
-def units_of(election: Election) -> Units:
-    """Return where *election*'s territorial division comes from.
-
-    Every regular election, which the jobs are of, has one; fail for an
-    election without (a country-wide one may have none).
-    """
-    if election.units is None:
-        raise jobs.JobError(
-            f"the {election.slug} election has no territorial division (units)"
-        )
-    return election.units
-
-
-def units_path(cfg: Config, election: Election) -> Path:
-    """Return the file of *election*'s territorial division (its ``units`` input)."""
-    name = units_of(election).input
-    # The configuration checks that the election's inputs exist.
-    inp = next(i for i in cfg.inputs.inputs if i.name == name)
-    path = cfg.raw_dir / inp.name / inp.file
-    if not path.is_file():
-        raise jobs.JobError(f"{path} missing; run `ems fetch` first")
-    return path
-
-
-@functools.cache
-def units_package(path: Path) -> statoffice.Package:
-    """Return the 2022 package at *path* (:func:`units_path`), read once per process."""
-    try:
-        return statoffice.open_package(path)
-    except statoffice.StatOfficeError as e:
-        raise jobs.JobError(str(e)) from None
 
 
 @functools.cache
 def _package_okrsky(path: Path) -> Okrsky:
     """Return the okrsky of the 2022 package at *path*."""
     try:
-        return statoffice.okrsky(units_package(path))
+        return statoffice.okrsky(division.units_package(path))
     except (statoffice.StatOfficeError, ValueError) as e:
         raise jobs.JobError(f"{path}: {e}") from None
 

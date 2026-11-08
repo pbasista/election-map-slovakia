@@ -231,6 +231,14 @@ with no dependency beyond a Chromium-family browser:
 `python3 scripts/screenshot.py` after `uv run ems build`
 (`--browser PATH` where none is on `PATH`;
 arguments after `--` go to the browser).
+It sets the page's clock to noon of the day after the app stops polling
+for the latest elections' results (`live_days` after the polls close),
+so it shows the final results the same way whenever it is taken:
+Banská Bystrica's council constituency No. 1 with its ballots and results,
+the map's "most votes" mode with its legend.
+It captures once the legend counts the districts and the map's canvas
+stays the same, and fails on any error the page reports;
+the final results must be in `dist/`.
 
 ## Afterwards
 

@@ -20330,8 +20330,8 @@
    "text": "Bővebben a projektről"
   },
   "disclaimer.short": {
-   "src": "An indicative aid to decision-making: it may contain errors and is not exhaustive. The officially published data are authoritative.",
-   "text": "Tájékoztató jellegű döntéstámogató eszköz: tartalmazhat hibákat, és nem teljes körű. A hivatalosan közzétett adatok az irányadók."
+   "src": "An indicative aid: it may contain errors and is not exhaustive. Official data prevail.",
+   "text": "Tájékoztató segédeszköz: hibákat tartalmazhat, és nem teljes. A hivatalos adatok az irányadók."
   },
   "disclaimer.translation": {
    "src": "The interface in languages other than Slovak and English, and the candidates' occupations in every language but Slovak, are machine translations by artificial intelligence that no one has checked. The candidate card also gives the occupation in the original Slovak.",
@@ -20446,12 +20446,12 @@
    "text": "Link vágólapra másolva"
   },
   "favourites.copy": {
-   "src": "Copy a link to these favourites and the filter, without the place shown on the map, to share them or keep them for later",
-   "text": "Link másolása ezekhez a kedvencekhez és a szűrőhöz, a térképen látható hely nélkül, hogy megoszthassa vagy később is elérhesse őket"
+   "src": "Copy the link to these favourites and the filter",
+   "text": "Hivatkozás másolása ezekre a kedvencekre és a szűrőre"
   },
   "favourites.copy_failed": {
-   "src": "Copy this link:",
-   "text": "Másolja ki ezt a linket:"
+   "src": "Link to copy:",
+   "text": "Másolandó hivatkozás:"
   },
   "favourites.count": {
    "src": "circled: {n}",
@@ -20462,24 +20462,56 @@
    "text": "megválasztott: {n}"
   },
   "favourites.empty": {
-   "src": "No candidate is circled yet. Click a candidate's number on any ballot to circle it, as you would on the ballot itself: the candidate then appears here, with everyone else you circle.",
-   "text": "Még senkit sem karikázott be. Kattintson egy jelölt számára bármelyik szavazólapon, hogy bekarikázza, ahogyan a valódi szavazólapon tenné: a jelölt ezután itt jelenik meg, mindenki mással együtt, akit bekarikáz."
+   "src": "Nothing circled yet.",
+   "text": "Még nincs semmi bekarikázva."
+  },
+  "favourites.how_circle": {
+   "src": "Click a number on any ballot",
+   "text": "Kattintson egy számra bármely szavazólapon"
+  },
+  "favourites.how_circle_result": {
+   "src": "the candidate is listed here",
+   "text": "a jelölt itt jelenik meg"
+  },
+  "favourites.how_header": {
+   "src": "Click a contest's header",
+   "text": "Kattintson egy választás fejlécére"
+  },
+  "favourites.how_header_result": {
+   "src": "its other candidates too",
+   "text": "a többi jelöltje is"
+  },
+  "favourites.how_link": {
+   "src": "Copy the link",
+   "text": "Másolja ki a hivatkozást"
+  },
+  "favourites.how_link_result": {
+   "src": "the circles and the filter, to keep or share",
+   "text": "a karikák és a szűrő, megőrzésre vagy megosztásra"
+  },
+  "favourites.how_qr": {
+   "src": "Show the QR code",
+   "text": "Jelenítse meg a QR-kódot"
+  },
+  "favourites.how_qr_result": {
+   "src": "the same link, for another device's camera",
+   "text": "ugyanaz a hivatkozás egy másik eszköz kamerájának"
   },
   "favourites.intro": {
-   "src": "The candidates you have circled, from every ballot. A contest's header opens it to its other candidates. The page's address holds your circles and the filter; the link button by the title copies a link to them, to keep or to share, and the QR code button shows the link as a code for another device's camera.",
-   "text": "Az Ön által bekarikázott jelöltek az összes szavazólapról. Egy választás fejléce annak többi jelöltjét is megmutatja. Az oldal webcíme tartalmazza a karikáit és a szűrőt; a cím melletti link gomb linket másol hozzájuk, hogy megőrizze vagy megossza őket, a QR-kód gomb pedig kódként mutatja meg a linket egy másik eszköz kamerája számára."
+   "src": "The circled candidates, from every ballot.",
+   "text": "A bekarikázott jelöltek, minden szavazólapról."
   },
   "favourites.open": {
    "src": "Favourites (circled: {n})",
    "text": "Kedvencek (bekarikázva: {n})"
   },
   "favourites.qr": {
-   "src": "Show a QR code of the link to these favourites and the filter, to open them on another device by pointing its camera at it",
-   "text": "QR-kód megjelenítése az ezekhez a kedvencekhez és a szűrőhöz vezető linkről, hogy egy másik eszközön is megnyithassa őket, ha a kamerájával a kódra irányít"
+   "src": "QR code of the link, for another device",
+   "text": "A hivatkozás QR-kódja egy másik eszközhöz"
   },
   "favourites.qr_caption": {
-   "src": "Point another device's camera at the code to open these favourites and the filter there. The code follows every change you make.",
-   "text": "Irányítsa egy másik eszköz kameráját a kódra, és azon megnyílnak ezek a kedvencek a szűrővel együtt. A kód minden módosításával együtt változik."
+   "src": "Another device's camera opens these favourites and the filter from the code, which follows every change.",
+   "text": "Egy másik eszköz kamerája a kódból megnyitja ezeket a kedvenceket a szűrővel együtt. A kód minden változást követ."
   },
   "favourites.qr_label": {
    "src": "QR code of the link to these favourites and the filter",
@@ -20490,8 +20522,8 @@
    "text": "Ezeknek a kedvenceknek a QR-kódja"
   },
   "favourites.qr_too_long": {
-   "src": "The link is too long for a QR code. Copy it with the link button instead.",
-   "text": "A link túl hosszú egy QR-kódhoz. Másolja ki inkább a link gombbal."
+   "src": "The link is too long for a QR code; the link button copies it.",
+   "text": "A hivatkozás túl hosszú egy QR-kódhoz; a hivatkozás gombja kimásolja."
   },
   "favourites.title": {
    "src": "Favourites",
@@ -20613,13 +20645,77 @@
    "src": "Substitutes",
    "text": "Póttagok"
   },
+  "help.circle": {
+   "src": "Click a number",
+   "text": "Kattintson egy számra"
+  },
+  "help.circle_result": {
+   "src": "circle the candidate into Favourites, to keep or share",
+   "text": "bekarikázza a jelöltet a Kedvencek közé, megőrzésre vagy megosztásra"
+  },
+  "help.cross": {
+   "src": "{shift}+click or double tap",
+   "text": "{shift}+kattintás vagy dupla koppintás"
+  },
+  "help.cross_result": {
+   "src": "cross the candidate out",
+   "text": "áthúzza a jelöltet"
+  },
+  "help.elections": {
+   "src": "Click the logo",
+   "text": "Kattintson a logóra"
+  },
+  "help.elections_result": {
+   "src": "another election",
+   "text": "egy másik választás"
+  },
+  "help.filter": {
+   "src": "Click a party or a mark",
+   "text": "Kattintson egy pártra vagy jelölésre"
+  },
+  "help.filter_marks": {
+   "src": "Click a mark",
+   "text": "Kattintson egy jelölésre"
+  },
+  "help.filter_result": {
+   "src": "only those shown; {shift}+click or double tap hides them",
+   "text": "csak ezek látszanak; {shift}+kattintás vagy dupla koppintás elrejti őket"
+  },
   "help.how": {
    "src": "Click a place on the map or search for an address, a municipality or a candidate. You will see every contest voted on there, with the candidates in ballot order. Click a candidate's number to circle it, as on the ballot: Favourites lists everyone you circle, to keep or to share. Shift+click the number, or double-tap it, to cross the candidate out instead: the list then mutes them, as the filter does. A party's tag or a mark adds it to the filter the same way: a click shows only those candidates, Shift+click or a double tap hides them.",
    "text": "Kattintson egy helyre a térképen, vagy keressen címet, települést vagy jelöltet. Megjelenik minden ott tartott választás, a jelöltekkel a szavazólapon szereplő sorrendben. Egy jelölt számára kattintva bekarikázhatja azt, ahogyan a szavazólapon: a Kedvencek listán mindenki megjelenik, akit bekarikáz, hogy megőrizhesse vagy megoszthassa. Ha Shift+kattintással kattint a számra, vagy duplán koppint rá, a jelöltet ehelyett áthúzza: a lista ekkor elhalványítja, ahogyan a szűrő is. Egy párt címkéjét vagy egy jelölést ugyanígy adhat hozzá a szűrőhöz: kattintással csak ezek a jelöltek láthatók, Shift+kattintással vagy dupla koppintással elrejti őket."
   },
+  "help.layers": {
+   "src": "Layers",
+   "text": "Rétegek"
+  },
+  "help.layers_result": {
+   "src": "constituency boundaries on the map",
+   "text": "a választókerületek határai a térképen"
+  },
+  "help.lead": {
+   "src": "Slovakia's elections since {since} on one map: candidates, constituencies and results.",
+   "text": "Szlovákia választásai {since} óta egy térképen: jelöltek, választókerületek és eredmények."
+  },
   "help.open": {
    "src": "Help and disclaimer",
    "text": "Súgó és jogi nyilatkozat"
+  },
+  "help.overview.parties": {
+   "src": "every list side by side",
+   "text": "minden lista egymás mellett"
+  },
+  "help.overview.referendum": {
+   "src": "every question with its results",
+   "text": "minden kérdés az eredményeivel"
+  },
+  "help.place": {
+   "src": "Click the map or search",
+   "text": "Kattintson a térképre, vagy keressen"
+  },
+  "help.place_result": {
+   "src": "a place's ballots and results",
+   "text": "egy hely szavazólapjai és eredményei"
   },
   "layers.auto": {
    "src": "Those switched on appear by zoom: the regional ones on the whole map, those of Bratislava and Košice as you zoom in on the cities, those of municipal councils as you zoom in on a municipality, and polling districts as you zoom in further.",

@@ -33,6 +33,7 @@ from election_map_slovakia import (
     config,
     contests,
     crosswalk,
+    division,
     fetch,
     geo,
     gpkg,
@@ -44,7 +45,6 @@ from election_map_slovakia import (
     national,
     obvodrules,
     obvody,
-    okrsokrules,
     output,
     pages,
     progress,
@@ -1586,7 +1586,7 @@ def _addresses(
             _register(cfg, election),
             cfg.election_dir(election),
             contests,
-            okrsokrules.okrsok_counts(cfg, election) if units else {},
+            division.okrsok_counts(cfg, election) if units else {},
             partial=election.kind == config.BY_ELECTION,
             parts=addresses.council_parts(cfg, election, contests),
         )
@@ -1594,7 +1594,7 @@ def _addresses(
         addresses.AddressesError,
         gpkg.GpkgError,
         obvody.ObvodyError,
-        jobs.JobError,
+        division.DivisionError,
     ) as e:
         _error(f"ems addresses: {e}")
         return 1
@@ -1752,7 +1752,7 @@ def _special_declared(
     """Return the pins and curated files the special okrsky of *elections* come from.
 
     Their territorial divisions and ``special-okrsky.toml`` where they have
-    one (:func:`okrsokrules.special_okrsky`).
+    one (:func:`division.special_okrsky`).
     """
     pins = [_pin(cfg, e.units.input) for e in elections if e.units]
     files = [cfg.election_dir(e) / special.FILE for e in elections]
@@ -2036,7 +2036,7 @@ def _run_job_make(args: argparse.Namespace) -> int:
             only=args.only,
             limit=args.limit,
         )
-    except jobs.JobError as e:
+    except (jobs.JobError, division.DivisionError) as e:
         _error(f"ems job make: {e}")
         return 1
     _print(
@@ -2052,7 +2052,7 @@ def _run_job_ingest(args: argparse.Namespace) -> int:
     for directory in args.dirs:
         try:
             report = jobs.ingest(cfg, directory)
-        except jobs.JobError as e:
+        except (jobs.JobError, division.DivisionError) as e:
             _error(f"ems job ingest: {directory}: {e}")
             failed = True
             continue
@@ -2065,7 +2065,7 @@ def _run_job_reuse(args: argparse.Namespace) -> int:
     cfg = config.load()
     try:
         lines = reuse.run(cfg, cfg.election(args.election))
-    except jobs.JobError as e:
+    except (jobs.JobError, division.DivisionError) as e:
         _error(f"ems job reuse: {e}")
         return 1
     _print(lines)
@@ -2555,8 +2555,8 @@ def _past(
             registers,
             earlier.day,
             (
-                special.keys(okrsokrules.special_okrsky(cfg, election)),
-                special.keys(okrsokrules.special_okrsky(cfg, earlier)),
+                special.keys(division.special_okrsky(cfg, election)),
+                special.keys(division.special_okrsky(cfg, earlier)),
             ),
         )
         linked = json.loads(compare.links.read_bytes())["candidacies"]
@@ -2613,7 +2613,7 @@ def _run_results_fake(args: argparse.Namespace) -> int:
     out = _live_dir(cfg, election, args)
     ref = _reference(cfg, election)
     try:
-        counts = okrsokrules.okrsok_counts(cfg, election) if election.units else {}
+        counts = division.okrsok_counts(cfg, election) if election.units else {}
         if election.kind in contests.NATIONAL:
             live = national.fake(ref, args.stage, election.day, args.seed, counts)
         else:
@@ -2626,7 +2626,7 @@ def _run_results_fake(args: argparse.Namespace) -> int:
                 {obec: rules.okrsky for obec, rules in rule_sets.items()},
                 _past_days(cfg, election, ref.sources),
             )
-    except (jobs.JobError, obvody.ObvodyError) as e:
+    except (division.DivisionError, obvody.ObvodyError) as e:
         _error(f"ems results fake: {e}")
         return 1
     written = results.write(out, live, ref.divisions)

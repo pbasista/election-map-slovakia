@@ -105,7 +105,8 @@ The shell's config (the `km-config` meta) gives
   so switching between them keeps the base map's files too;
 - `sources`, the address of the cached copies of the pages research cites
   (empty under `ems serve`: the site's own origin);
-  a card links a copy as `<sources>/cache/<sha256>.html`
+  a card links a copy, `cache/<sha256>.html`, as `<sources>/cache/<sha256>`,
+  the URL Pages serves it at (it redirects the `.html` one there)
   (`js/i18n.js` `sourcesBase`);
 - `logos`, the directory of the party logos,
   which data/index.json names by file (`js/i18n.js` `logoUrl`);
@@ -286,6 +287,9 @@ and Favourites, zoom, and help
   and moves up beside its button as far as it would otherwise run
   off the bottom of the screen
   (in the lower column, down off the top).
+  A chosen option is marked by its background and its own checkbox,
+  radio or icon, in the same weight as the others,
+  so that toggling one never resizes the menu.
 - **Map layers.**
   Three buttons in one pill, a group named "Map layers"
   (`LayerMenus`), each with its own short menu:
@@ -347,6 +351,24 @@ and Favourites, zoom, and help
   The theme follows the device unless chosen in the theme menu
   (kept in localStorage);
   `js/theme.js` applies it before the first paint.
+- **Help.**
+  The ? button at the bottom opens a short guide
+  (`js/controls.js` `HelpMenu`), only on a press:
+  under the site's name, a line on what the site is;
+  then a list of what the page offers (`js/pane.js` `Guide`),
+  a row each with the icon of its control
+  (or a circled or crossed-out number), the action in bold
+  and what it gives,
+  only the rows the election has:
+  a place by the map or the search, always;
+  circling a number, crossing one out (Shift+click or double tap)
+  and the filter by a party tag or a mark (a mark alone where the
+  election is country-wide), but for a referendum;
+  the overview, where the election has one (`overviewKind`);
+  the constituency boundaries, where it has councils' constituencies
+  (`overlaysHere`);
+  the other elections from the logo, where there are others.
+  Then the disclaimer in one notice and the link to the About dialog.
 
 ## Ballots
 
@@ -948,6 +970,9 @@ with the list open,
 or show that link as a large QR code in a dialog of its own,
 for another device's camera
 (the encoder, `vendor/qrcode-generator.module.js`, loads on first use).
+Above the contests, a line and a short guide (`js/pane.js` `Guide`)
+to the contest headers, the link and the QR code;
+empty, a line and how to circle a number.
 
 It opens only with its button:
 
@@ -1030,6 +1055,22 @@ and swaps in each finished drawing.
   with dashed borders and their names where most of each shows.
   They cannot be clicked,
   and the lowest zoom keeps every view within them.
+- **Labels** are drawn only whole in the part of the map
+  no pane or control covers (draw.js `labelling`):
+  an area's name at its own spot,
+  else, where that spot is panned away or under a pane,
+  where the part of the area in view leaves the name the most room,
+  if it fits whole inside it, else not at all;
+  a pan moves a name only once an edge reaches it.
+  The names of the kraje, below zoom 8 (the okresy's from there),
+  may cross their kraj's border, as they do at the whole country,
+  where a kraj is narrower than its name.
+  One with no such room slides in from the edge of the map or the pane
+  (`slide`, a phone's narrow map): from its spot by the edge,
+  still covering that spot,
+  from a spot out of view only to where it lies across its kraj
+  (its middle and both ends in it),
+  never to stand at the edge over another kraj or outside the country.
 - **Borders.**
   Areas are only filled;
   every border is stroked once from the topology,
@@ -1043,10 +1084,13 @@ and swaps in each finished drawing.
 - **Zoom** is continuous (`js/zoom.js`):
   wheel, trackpad, pinch, buttons and double-click
   scale the canvas every frame.
-  While a pan or zoom goes on,
+  While a zoom goes on,
   the view is drawn again at a lower resolution
   whenever the last drawing no longer covers it,
   and sharp once the gesture settles;
+  a pan is drawn again as it goes,
+  sharp where that is quick, else at the lower resolution too
+  ([What is drawn when](#what-is-drawn-when));
   what has not loaded yet is added as it comes.
   A view asked for again unchanged (the end of a pan after its last move,
   a resize told twice) is not drawn again (`js/map.js` `request`).
@@ -1070,6 +1114,129 @@ and swaps in each finished drawing.
   Over the panes and the About dialog it is:
   their scrolling is contained only upright (`overscroll-behavior-y`),
   since `contain` both ways ends a sideways swipe there too.
+
+### What is drawn when
+
+The page's thread and the compositor have little to do per frame;
+the cost is in the renderer's drawings and in handing each one over.
+
+- **A drawing** (draw.js `flush`) is the whole canvas:
+  the view and a quarter of it on every side (`PAD`),
+  at the screen's pixel ratio up to 2 (`MAX_PIXEL_RATIO`),
+  so 2.25 times the map's pixels:
+  a 2560 × 1440 map at a ratio of 2 is 33 million pixels, 133 MB.
+  A narrower margin would save pixels
+  (0.15 of the view: a quarter of them)
+  but shows the edge of the canvas in a brisk fling (3000 px/s),
+  which outruns the drawings: at 1920 × 1080 and 2560 × 1440 at 2 a pixel
+  on an M1, part of the map was left uncovered
+  in 1 of 24 such flings with a quarter (under 1 %),
+  in 7 with 0.2 (up to 6 %) and in 16 with 0.15 (up to 10 %).
+  One is made when the view changes
+  (as a pan goes on, each once the one before has come back
+  and the frame that shows it has begun;
+  as a zoom goes on, a draft at one pixel per CSS pixel
+  whenever the last no longer serves; sharp where either ends),
+  when a file the view needs arrives,
+  and when what the map shows changes
+  (selection, overlays, results, level, theme).
+  Never for the pointer.
+  A pan is drawn as it goes in drafts too
+  where a sharp drawing costs more than 60 ms (map.js `PAN_DRAFT_MS`,
+  smoothed): the worker's time from its start to its bitmap,
+  and in Firefox the page's to copy it in (`show`),
+  which on the owner's i7-7700K with HD Graphics 630
+  (3840 × 2160 at 2 a pixel) took 47–120 ms a sharp drawing,
+  a blit on the CPU that held up the frame it fell in.
+  Uploading the drawing to the GPU (up to 65 ms there)
+  nothing on the page can time.
+  A draft costs half as much or less,
+  so the edges and labels keep up with the pan,
+  and the view is sharp again where the pan ends.
+  On an M1 the country with results takes 43–48 ms
+  in a map up to 1440 × 900 at 2 a pixel (sharp pans),
+  65 ms in a 1920 × 1080 one and a city 100–150 ms (drafts).
+- **Rasterizing it.**
+  Chromium draws the renderer's canvases with the CPU, in the worker
+  (`willReadFrequently`; map.js `RASTER_ON_CPU`, draw.js `cpuRaster`),
+  on phones too: their map is a few million pixels, cheap for the CPU,
+  and the wait before the next view and the drafts of slow pans rely on
+  a drawing being done when the worker says so.
+  Left to the GPU, Chromium records a worker's drawing
+  and rasterizes it later in the GPU process,
+  and the drawing counts as done before that.
+  In a profile of a pan on an i7-7700K with HD Graphics 630
+  (3840 × 2160 at 2 a pixel; Chromium rasterizes paths there
+  without multisampling, as on every Intel GPU before Ice Lake),
+  the GPU process spent 190–320 ms on each drawing
+  that had taken the worker 9–103 ms;
+  the drawings queued, 2 s behind by the end,
+  and held up the compositing of every frame: 4–5 frames a second.
+  The same happens with Chromium's GPU process on a software GL
+  (llvmpipe, no multisampling): a pan of 1920 × 1080 at 2 a pixel
+  went from 1–2 frames a second, still catching up 2 s after it,
+  to 23–38 with the worker rasterizing, and to 31–56 with drafts.
+  Firefox pans well on the same machine without it.
+  Waiting, before the next view, for the frame that shows a drawing
+  to begin (map.js `presenting`) is the only sign
+  of the compositor's progress to be had cheaply:
+  whether a GPU has finished a canvas only a readback would tell.
+- **Handing it over.**
+  The worker posts the drawing as an ImageBitmap, without a copy.
+  Chromium shows it from a `bitmaprenderer` canvas without one either;
+  copied into a 2D canvas it costs about 65 ms of the page's thread
+  at 33 million pixels.
+  Firefox (142) hands a `bitmaprenderer` canvas's bitmap to its compositor
+  again at every paint of the page,
+  a copy of the whole of it each frame a tooltip moves or the map pans
+  (in a profile, 80 % of the page's thread was memcpy while hovering),
+  so there the drawing is copied once into a 2D canvas instead,
+  whose bitmap Firefox hands over only when it changes
+  (map.js `COPY_DRAWINGS`, the one thing done by engine).
+  The bigger the screen, the more that copy cost:
+  it was why pointing and panning lagged in Firefox on large screens.
+- **Pan and zoom** move and scale the canvas by CSS transform.
+  Leaflet moves its panes from the pointer's events on the page's thread,
+  so whatever holds that thread (taking a drawing in) shows as a stutter.
+- **The pointer.**
+  A move over the map with results shown asks the worker
+  which unit is under it (draw.js `unitAt`:
+  each drawn feature's box, then its polygon; well under a millisecond),
+  one question at a time, the latest position each.
+  The tooltip (mapmode.js `HoverTip`) is an element over the map,
+  rendered only when the unit changes,
+  and moved by its style at every move
+  with the unit answered last (map.js `hoverTooltip`).
+  A tooltip that waited for the answer to the very latest position
+  stood still for as long as the pointer moved
+  whenever the worker answered more slowly than the pointer moved:
+  up to 1.5 s while it drew the view after a zoom.
+- **CSS.** Nothing over the map blurs what is under it
+  (no `backdrop-filter`) or asks for a layer of its own (`will-change`);
+  the panels' and the tooltip's shadows are static;
+  the only endless animation, the live results' dot, is of opacity,
+  which compositors run alone.
+
+A slow machine can be checked in Firefox's `about:support`:
+under Graphics, *Compositing* (`WebRender` uses the GPU,
+`WebRender (Software)` does not),
+the GPU's *Description* and *Driver Version*,
+and in its *Decision Log* `HW_COMPOSITING`, `WEBRENDER`
+and `ACCELERATED_CANVAS2D` (available, or blocked and why).
+A profile shows where the time goes:
+[profiler.firefox.com](https://profiler.firefox.com) → *Enable Firefox Profiler Menu Button*,
+its preset *Graphics* (it records the compositor's threads too),
+start recording, point over the map and pan for ten seconds,
+*Capture* (Ctrl + Shift + 2), then *Upload* and share the link
+(or save the file).
+
+In Chromium, `chrome://gpu` tells
+whether *Canvas*, *Compositing* and *Rasterization* are hardware accelerated
+and lists the GPU's known problems and workarounds.
+A profile: DevTools (F12) → *Performance* → record,
+pan for ten seconds, stop, then *Save profile*.
+Its *GPU* track should show no tasks of hundreds of milliseconds
+while the worker's track draws (`flush`).
 
 ### Base map
 

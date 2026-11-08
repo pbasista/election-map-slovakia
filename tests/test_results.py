@@ -2309,7 +2309,7 @@ def results_project(tmp_path: Path, ref, monkeypatch) -> config.Config:
     monkeypatch.setattr(cli, "_earlier", lambda *_: [])
     monkeypatch.setattr(cli, "_client", lambda _cfg: FakeClient(night_files(ref)))
     # Without the okrsky of units-oso2026 and the rule sets: fakes of none.
-    monkeypatch.setattr(cli.okrsokrules, "okrsok_counts", lambda *_: {})
+    monkeypatch.setattr(cli.division, "okrsok_counts", lambda *_: {})
     monkeypatch.setattr(cli.obvody, "okrsok_rule_sets", lambda *_: {})
     monkeypatch.chdir(root)
     return config.load()

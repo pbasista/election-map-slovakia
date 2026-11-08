@@ -1239,7 +1239,9 @@ def locate(parts: list[tuple[str, Path]], path: str) -> tuple[int, str] | None:
 
     The first part whose prefix it starts with and which has the file; a
     part of its own prefix has it or nothing does; at the root, the first
-    part (the app) where none has it. None if no prefix matches.
+    part (the app) where none has it. As on Pages, a path without
+    extension is also the file of that name with ``.html`` (the cached
+    copies are linked so: ``/cache/<sha256>``). None if no prefix matches.
     """
     first = None
     for i, (prefix, directory) in enumerate(parts):
@@ -1250,6 +1252,10 @@ def locate(parts: list[tuple[str, Path]], path: str) -> tuple[int, str] | None:
         target = directory / sub.lstrip("/")
         if sub.endswith("/"):
             target /= "index.html"
+        elif not target.is_file():
+            page = target.with_name(f"{target.name}.html")
+            if page.is_file():
+                sub, target = f"{sub}.html", page
         # Pages reads _headers but does not serve it.
         if (sub != f"/{HEADERS}" and target.is_file()) or prefix != "/":
             return i, sub

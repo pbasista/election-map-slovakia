@@ -13,6 +13,7 @@ import pytest
 from election_map_slovakia import (
     candidates,
     config,
+    division,
     jobs,
     obvodrules,
     obvody,
@@ -34,7 +35,7 @@ def cfg(tmp_path: Path) -> config.Config:
 
 def write_units(cfg: config.Config, e: config.Election, counts: dict[str, int]) -> None:
     """Write *e*'s territorial division: obec → okrsky."""
-    units = obvodrules.units_of(e)
+    units = division.units_of(e)
     inp = next(i for i in cfg.inputs.inputs if i.name == units.input)
     path = cfg.raw_dir / inp.name / inp.file
     path.parent.mkdir(parents=True)

@@ -5,18 +5,22 @@
  * worker (render.js): every file it fetches and decodes and every pixel it
  * draws is off this thread, so input is handled and frames are composited
  * however long a drawing takes. A finished drawing comes as an ImageBitmap
- * and is shown by handing it to the canvas, at the transform that puts it
- * where its view is. Meanwhile the canvas follows a move or zoom by CSS
+ * and is shown by handing it to the canvas (copying it in, in Firefox:
+ * `COPY_DRAWINGS`), at the transform that puts it where its view is.
+ * Nothing else is drawn on the page: a tooltip is an element over the map
+ * (`hoverTooltip`). Meanwhile the canvas follows a move or zoom by CSS
  * transform, as Leaflet's own canvases do, which the compositor applies
  * (with the GPU where there is one) without a redraw.
  *
- * A drawing covers the view and PAD of it on every side. While a move or
- * zoom goes on, the view of the moment is drawn as a draft (DRAFT_RATIO
- * canvas pixels per CSS pixel: a quarter of the pixels on a sharp screen)
- * whenever the one asked for last no longer serves (`stale`): less than half
- * its margin is left on a side, or the zoom has gone ZOOM_SLACK from its
- * own or to another level. A view goes to the renderer only once the one
- * before has come back drawn, so it never falls behind with views nobody
+ * A drawing covers the view and PAD of it on every side. While a zoom goes
+ * on, the view of the moment is drawn as a draft (DRAFT_RATIO canvas pixels
+ * per CSS pixel: a quarter of the pixels on a sharp screen) whenever the
+ * one asked for last no longer serves (`stale`): less than half its margin
+ * is left on a side, or the zoom has gone ZOOM_SLACK from its own or to
+ * another level. A pan is drawn again as it goes, sharp, or as a draft
+ * where sharp drawings are slow (`PAN_DRAFT_MS`). A view goes to the
+ * renderer only once the one before has come back drawn and the frame
+ * that shows it has begun, so it never falls behind with views nobody
  * will see. Where the move or zoom ends, the view is drawn at full
  * sharpness. Nothing is drawn while Leaflet animates a zoom by CSS
  * transition (fitBounds, setView): the canvas is in the middle of that, and
@@ -61,13 +65,31 @@ const SLOVAKIA = [
 // `limitZoomOut`).
 const MIN_ZOOM = 6;
 // Share of the view added around it when loading shards and drawing, so a
-// pan shows the map around until it is drawn again.
+// pan shows the map around until it is drawn again. Less would save
+// pixels to draw, copy and upload (0.15: a quarter of them), but a brisk
+// fling (3000 px/s) outruns the drawings: measured at 1920 × 1080 and
+// 2560 × 1440 at 2 a pixel on an M1, the canvas left part of the map
+// uncovered in 1 of 24 such flings at 0.25 (under 1 %), in 7 at 0.2 (up to
+// 6 %) and in 16 at 0.15 (up to 10 %).
 const PAD = 0.25;
 // The canvas is drawn at most at this many pixels per CSS pixel: sharper
 // is not visibly so on a phone, and a canvas costs its pixels squared.
 const MAX_PIXEL_RATIO = 2;
-// Pixels per CSS pixel of the drafts drawn while the view zooms.
+// Pixels per CSS pixel of the drafts drawn while the view zooms, and while
+// it pans where sharp drawings are slow (`PAN_DRAFT_MS`).
 const DRAFT_RATIO = 1;
+// A pan is drawn again as it goes sharp while a sharp drawing costs at most
+// this long (smoothed, `onFrame`: the worker's time, and in Firefox the
+// page's to copy it in), else as a draft (`follow`), which costs half as
+// much or less and so keeps the edges and labels twice as close behind the
+// pan. Drawn by the CPU (Chromium) on an M1, the country with results
+// takes 43–48 ms in a map up to 1440 × 900 at 2 a pixel, which pans sharp;
+// 65 ms in a 1920 × 1080 one and a city 100–150 ms, which pan in drafts,
+// as does about everything on slower machines and larger screens.
+const PAN_DRAFT_MS = 60;
+// The weight of each sharp drawing's time in the smoothed one: the last
+// few count, as the view and what it shows change.
+const COST_SMOOTHING = 0.5;
 // How far a zoom may go from that of the drawing asked for last before the
 // view is drawn again: scaled up by CSS that much more, a drawing blurs.
 const ZOOM_SLACK = 0.25;
@@ -141,6 +163,36 @@ function readColors() {
   return Object.fromEntries(COLORS.map((name) => [name, style.getPropertyValue(`--map-${name}`).trim()]));
 }
 
+/* How the canvas takes a drawing (an ImageBitmap). Chromium shows it
+ * without a copy from a 'bitmaprenderer' context, and copies it into a 2D
+ * one: about 65 ms of the page's thread for a drawing of 33 million pixels
+ * (2560 × 1440 CSS pixels at 2 a pixel, padded: `viewAt`). Firefox (142
+ * measured) hands a 'bitmaprenderer' canvas's bitmap to its compositor
+ * again at every paint of the page, a copy of the whole of it each frame
+ * that a tooltip moves or the map pans: profiled at that size, a pointer
+ * moved over the map for 4 s kept the page's thread busy for 3.5 s, 80 %
+ * of it in memcpy, and for 0.5 s with the drawing copied once into a 2D
+ * canvas, whose bitmap Firefox hands over only when it changes. Nothing
+ * tells the two apart but the engine. */
+const COPY_DRAWINGS = L.Browser.gecko;
+
+/* Whether the renderer draws its canvases with the CPU, in the worker
+ * (draw.js `cpuRaster`). Chromium otherwise records what a worker draws
+ * on a canvas and rasterizes it later in its GPU process, and a drawing
+ * counts as done (`onFrame`) before it is rasterized. In a profile of
+ * panning on the owner's i7-7700K with HD Graphics 630 (3840 × 2160 at 2
+ * a pixel; Chromium rasterizes paths there without multisampling, as on
+ * every Intel GPU before Ice Lake), the GPU process's main thread spent
+ * 190–320 ms on each drawing that took the worker 9–103 ms: they queued,
+ * 2 s behind by the end, and held up the compositing of every frame, so
+ * the map panned at 4–5 frames a second. Rasterized in the worker, a
+ * drawing reaches the GPU process finished, and done means done, which
+ * the wait before the next view and the drafts of a slow pan
+ * (`PAN_DRAFT_MS`) rely on. On phones too: their map is a few million
+ * pixels, cheap for the CPU, and on the owner's Android phone the two
+ * felt the same. Firefox pans well on the same machine without it. */
+const RASTER_ON_CPU = L.Browser.chrome;
+
 /* The map's canvas, in the overlay pane, showing the latest drawing (`show`)
  * where its view is; while a zoom runs it is scaled by CSS transform, as
  * Leaflet's own canvases and image overlays are (with the same internal,
@@ -163,7 +215,7 @@ const MapCanvas = L.Layer.extend({
 
   onAdd(map) {
     this._canvas = L.DomUtil.create('canvas', 'km-canvas leaflet-zoom-animated', map.getPane('overlayPane'));
-    this._bitmaps = this._canvas.getContext('bitmaprenderer');
+    this._context = this._canvas.getContext(COPY_DRAWINGS ? '2d' : 'bitmaprenderer');
   },
 
   onRemove() {
@@ -188,8 +240,11 @@ const MapCanvas = L.Layer.extend({
   },
 
   /* Shows *bitmap*, a drawing of *view* (`viewAt`), instead of the one
-   * shown. */
+   * shown. Returns the milliseconds the page's thread spent copying it in
+   * (COPY_DRAWINGS, a new size's allocation included; else 0, a hand-over
+   * without a copy). */
   show(bitmap, view) {
+    const started = performance.now();
     const canvas = this._canvas;
     if (canvas.width !== bitmap.width || canvas.height !== bitmap.height) {
       canvas.width = bitmap.width;
@@ -197,17 +252,27 @@ const MapCanvas = L.Layer.extend({
     }
     canvas.style.width = `${view.w}px`;
     canvas.style.height = `${view.h}px`;
-    this._bitmaps.transferFromImageBitmap(bitmap);
+    if (COPY_DRAWINGS) {
+      // Each drawing replaces the last, its transparent parts too (a
+      // resize resets the context's state).
+      this._context.globalCompositeOperation = 'copy';
+      this._context.drawImage(bitmap, 0, 0);
+      bitmap.close();
+    } else {
+      this._context.transferFromImageBitmap(bitmap);
+    }
     this._view = view;
     this._onZoom();
+    return COPY_DRAWINGS ? performance.now() - started : 0;
   },
 });
 
 /* Starts the renderer with *options* (draw.js `createRenderer`): in a worker
  * where the browser can draw in one, else on the page. Its drawings go to
- * *onFrame(bitmap, view, seq)*, and *onFail(error)* is called if it cannot
- * start. Resolves to {send(method, ...args)}, a call of a method of the
- * renderer, and {call(method, ...args)}, one whose result is wanted. */
+ * *onFrame(bitmap, view, seq, ms)* (*ms* the time each took to draw), and
+ * *onFail(error)* is called if it cannot start. Resolves to {send(method,
+ * ...args)}, a call of a method of the renderer, and {call(method,
+ * ...args)}, one whose result is wanted. */
 async function startRenderer(options, onFrame, onFail) {
   if (typeof OffscreenCanvas === 'function') {
     const worker = new Worker(new URL('./render.js', import.meta.url), { type: 'module' });
@@ -215,7 +280,7 @@ async function startRenderer(options, onFrame, onFail) {
     let ids = 0;
     worker.addEventListener('message', ({ data }) => {
       if (data.frame) {
-        onFrame(data.frame, data.view, data.seq);
+        onFrame(data.frame, data.view, data.seq, data.ms);
       } else if (data.failed) {
         onFail(new Error(data.failed));
       } else {
@@ -247,8 +312,8 @@ async function startRenderer(options, onFrame, onFail) {
       canvas.height = h;
       return canvas;
     },
-    present(canvas, view, seq) {
-      createImageBitmap(canvas).then((bitmap) => onFrame(bitmap, view, seq));
+    present(canvas, view, seq, started) {
+      createImageBitmap(canvas).then((bitmap) => onFrame(bitmap, view, seq, performance.now() - started));
     },
   });
   renderer.catch(onFail);
@@ -346,37 +411,58 @@ const sameView = (a, b) =>
 /* The tooltip of what the pointer is over on *map*, where there is a
  * pointer that hovers: while a handler is set, asked of *renderer* one
  * question at a time, the latest position each, and not while the map
- * moves. Returns the setter of the handler (`setHover`; null for none). */
+ * moves. Returns the setter of the handler (`setHover`; null for none).
+ *
+ * The handler follows the pointer at every move with the unit answered
+ * last, and gets the answer for a newer position as it comes. An answer is
+ * never held back for a pointer that has moved on: a mouse sends a move a
+ * frame, more often than the worker answers when it is busy drawing, and a
+ * tooltip that waited for an answer to the very latest position would stand
+ * still for as long as the pointer moves. So the unit shown may be that of
+ * a position one answer old, a pixel or few away. */
 function hoverTooltip(map, renderer) {
   let onHover = null;
-  // The pointer's last position on the map (a mousemove event), null once
-  // it left, and the one not asked about yet.
-  let latest = null;
+  // The pointer's latest position on the map (a mousemove event), null
+  // while it is off the map or the map moves; whether it has been asked
+  // about; the unit answered last, for an earlier position perhaps; and a
+  // count of the pointer's leaving and the map's moves, which outdate the
+  // answers asked for before.
   let pointer = null;
+  let asked = true;
+  let unit = null;
+  let gone = 0;
   let asking = false;
   let moving = false;
   const hovers = window.matchMedia('(hover: hover)');
+  const report = () => onHover?.(unit && { unit, x: pointer.containerPoint.x, y: pointer.containerPoint.y });
   async function ask() {
     asking = true;
-    while (pointer && onHover) {
-      const e = pointer;
-      pointer = null;
-      const unit = await renderer.call('hover', e.latlng.lng, e.latlng.lat);
-      // Gone meanwhile: the pointer left the map, or it started to move.
-      if (e !== latest || moving) continue;
-      onHover?.(unit && { unit, x: e.containerPoint.x, y: e.containerPoint.y });
+    while (pointer && !asked && onHover) {
+      asked = true;
+      const { latlng } = pointer;
+      const since = gone;
+      const answer = await renderer.call('hover', latlng.lng, latlng.lat);
+      if (since !== gone || !pointer) continue;
+      unit = answer;
+      report();
     }
     asking = false;
   }
+  const leave = () => {
+    gone++;
+    pointer = null;
+    unit = null;
+  };
   map.on('mousemove', (e) => {
     if (!onHover || moving || !hovers.matches) return;
     pointer = e;
-    latest = e;
+    asked = false;
+    if (unit) report();
     if (!asking) ask();
   });
   map.on('mouseout movestart', (e) => {
     if (e.type === 'movestart') moving = true;
-    latest = null;
+    leave();
     onHover?.(null);
   });
   map.on('moveend', () => {
@@ -384,7 +470,7 @@ function hoverTooltip(map, renderer) {
   });
   return (handler) => {
     onHover = handler;
-    latest = null;
+    leave();
   };
 }
 
@@ -581,18 +667,42 @@ export async function createMap(element, { onPick, insets, onZoom, view, onView 
   let drawn = 0;
   // A move went on while the renderer was drawing: `follow` once it is done.
   let owed = false;
+  // A drawing just shown, until the frame that puts it on screen begins:
+  // the next view waits for it, so that drawings never queue up to the
+  // compositor faster than it takes them in. That is the only sign of it
+  // to be had cheaply; whether a GPU has rasterized a canvas (Firefox's
+  // accelerated ones) only a readback would tell.
+  let presenting = false;
+  // The time a sharp drawing costs, smoothed, from the second one on: the
+  // first, on an M1 half as long again as the next, pays for compiling the
+  // code and making the paths. Null before then. The worker's time to draw
+  // it (`onFrame`'s *ms*) and, in Firefox, the page's to copy it in
+  // (`show`): in a profile of panning on the owner's i7-7700K with HD
+  // Graphics 630 (3840 × 2160 at 2 a pixel), each copy was a blit on the
+  // CPU of 47–120 ms, which held up the frame it fell in; the same machine
+  // also spent up to 65 ms uploading a drawing to the GPU, which nothing
+  // on the page can time.
+  let sharpCost = null;
+  let sharpDrawings = 0;
 
-  function onFrame(bitmap, view, s) {
+  function onFrame(bitmap, view, s, ms) {
     drawn = Math.max(drawn, s);
     if (map._animatingZoom) {
       bitmap.close();
       // Asked for again, should the zoom end where it began.
       if (s === seq) sentFree = null;
-    } else {
-      canvas.show(bitmap, view);
-      shown.resolve();
+      return;
     }
-    if (owed) follow();
+    const cost = ms + canvas.show(bitmap, view);
+    shown.resolve();
+    if (view.ratio > DRAFT_RATIO && ++sharpDrawings > 1) {
+      sharpCost = sharpCost === null ? cost : sharpCost + (cost - sharpCost) * COST_SMOOTHING;
+    }
+    presenting = true;
+    requestAnimationFrame(() => {
+      presenting = false;
+      if (owed) follow();
+    });
   }
 
   function onFail(e) {
@@ -611,6 +721,7 @@ export async function createMap(element, { onPick, insets, onZoom, view, onView 
         okrsok: t('map.okrsok', { n: '{n}' }),
         countries: stringsUnder('country.'),
       },
+      cpuRaster: RASTER_ON_CPU,
     },
     onFrame,
     onFail,
@@ -630,7 +741,8 @@ export async function createMap(element, { onPick, insets, onZoom, view, onView 
     seq++;
     renderer.send('show', sent, free, seq);
   }
-  const sharp = () => request(Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO));
+  const sharpRatio = () => Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO);
+  const sharp = () => request(sharpRatio());
 
   /* Whether the drawing asked for last no longer serves the view: less than
    * half its margin is left on a side, or the zoom has gone ZOOM_SLACK from
@@ -655,16 +767,17 @@ export async function createMap(element, { onPick, insets, onZoom, view, onView 
     return Math.abs(min.x - sent.visible[0] - sent.x) >= 1 || Math.abs(min.y - sent.visible[1] - sent.y) >= 1;
   }
 
-  // While the view moves, once the last drawing has come back: a pan, a
-  // drag's inertia included, is drawn again as it goes, so the labels at
-  // the edges of the map keep in view (draw.js `spot`) rather than jumping
-  // once it stops; a zoom gets a draft when the last drawing no longer
-  // serves.
+  // While the view moves, once the last drawing has come back and been
+  // put on screen: a pan, a drag's inertia included, is drawn again as it
+  // goes, so the labels at the edges of the map keep in view (draw.js
+  // `spot`) rather than jumping once it stops, sharp where a sharp drawing
+  // takes at most PAN_DRAFT_MS, else as a draft; a zoom gets a draft when
+  // the last drawing no longer serves.
   function follow() {
     owed = false;
     if (map._animatingZoom || !sent) return;
-    if (drawn < seq) owed = true;
-    else if (panned()) sharp();
+    if (drawn < seq || presenting) owed = true;
+    else if (panned()) request(sharpCost > PAN_DRAFT_MS ? DRAFT_RATIO : sharpRatio());
     else if (stale()) request(DRAFT_RATIO);
   }
 

@@ -203,7 +203,6 @@ from zoneinfo import ZoneInfo
 import orjson
 
 from election_map_slovakia import (
-    bundle,
     candidates,
     contests as kinds,
     fetch,
@@ -212,6 +211,7 @@ from election_map_slovakia import (
     progress,
     tables,
 )
+from election_map_slovakia.obvody import RuleSet, load_rule_sets
 
 RAW_DIR = "results"
 """Below ``data/raw/``: every file ``poll`` fetched, per poll."""
@@ -571,6 +571,48 @@ def sources_of(ids: Iterable[str]) -> frozenset[str]:
     return frozenset(kinds.source_of(c) for c in ids)
 
 
+def obec_props(geo_dir: Path) -> dict[str, dict[str, Any]]:
+    """Return obec → its properties in the coarsest ``geo`` shard."""
+    coarsest = geo.SHARD_LODS[0].level
+    props = {}
+    for path in sorted((geo_dir / "okres").glob(f"*/{coarsest}.json")):
+        for feature in orjson.loads(path.read_bytes())["features"]:
+            props[feature["properties"]["id"]] = feature["properties"]
+    return props
+
+
+def regional_past(
+    data: Mapping[str, Any], props: Mapping[str, Mapping[str, Any]]
+) -> dict[str, dict[str, Any]]:
+    """Return regional council contest → its ``past``, as in ``candidates.json``.
+
+    The obce's 2022 figures (``candidates.json``) summed over the 2026 obvod
+    each is in (*props*, :func:`obec_props`): the 2022 obvody were different.
+    """
+    out: dict[str, dict[str, Any]] = {}
+    for o in data["obce"]:
+        if "past" in o:
+            past = o["past"]
+            contest = f"zsk:{o['kraj']}/{props[o['code']]['zsk']}"
+            total = out.setdefault(contest, {**past, "eligible": 0, "voters": 0})
+            total["eligible"] += past["eligible"]
+            total["voters"] += past["voters"]
+    return out
+
+
+def obvod_seats(geo_dir: Path, rule_sets: Mapping[str, RuleSet]) -> dict[str, int]:
+    """Return obvod contest → seats, where known.
+
+    Regional and city council obvody from ``geo``; the council obvody of the
+    obce with a rule set from it (*rule_sets*, :func:`obvody.load_rule_sets`).
+    """
+    coarse = orjson.loads((geo_dir / geo.COARSE_FILE).read_bytes())
+    seats = {o["id"]: o["seats"] for o in coarse["obvody"]}
+    for code, rules in rule_sets.items():
+        seats |= {f"oz:{code}/{n}": s for n, s in rules.seats.items()}
+    return seats
+
+
 def reference(
     data: Mapping[str, Any],
     props: Mapping[str, Mapping[str, Any]],
@@ -581,18 +623,18 @@ def reference(
 ) -> Reference:
     """Return the :class:`Reference` of ``candidates.json`` *data*.
 
-    *props* are the municipalities' :func:`bundle.obec_props`, *seats* the
-    known seats per obvod contest (:func:`bundle.obvod_seats`), else those
+    *props* are the municipalities' :func:`obec_props`, *seats* the
+    known seats per obvod contest (:func:`obvod_seats`), else those
     of the contest in *data* (a by-election's council); *members* the
     member parties' count of each coalition by its party key
     (``config/parties.toml``), which sets its threshold; *parts* as
     :meth:`Divisions.of` takes them.
     """
     okres_of = {o["code"]: o.get("okres", "") for o in data["obce"]}
-    regional_past = bundle.regional_past(data, props)
+    regional_past_of = regional_past(data, props)
     found = {}
     for c in data["contests"]:
-        past = c.get("past") or regional_past.get(c["id"])
+        past = c.get("past") or regional_past_of.get(c["id"])
         single = kinds.parse(c["id"]).single
         known = seats.get(c["id"], c.get("seats", 1 if single else None))
         found[c["id"]] = Contest(
@@ -694,8 +736,8 @@ def load_reference(
             raise ResultsError(f"{path} missing; run `ems make` first")
     return reference(
         orjson.loads(data_path.read_bytes()),
-        bundle.obec_props(geo_dir),
-        bundle.obvod_seats(geo_dir, election_dir),
+        obec_props(geo_dir),
+        obvod_seats(geo_dir, load_rule_sets(election_dir)),
         members,
         parts=parts,
     )
@@ -1001,13 +1043,14 @@ def render(live: Live, divisions: Divisions) -> dict[str, bytes]:
     )
     spread = contest_okrsky(live.okrsky)
     out = {
-        path: bundle.encode(
+        path: output.to_json(
             {
                 "contests": {
                     c: _record_json(c, r, divisions, obvody[path], spread.get(c))
                     for c, r in contests.items()
                 }
-            }
+            },
+            sort_keys=True,
         )
         for path, contests in sorted(live.files.items())
         if contests
@@ -1035,7 +1078,7 @@ def render(live: Live, divisions: Divisions) -> dict[str, bytes]:
             for c in contests
         }
         units = okrsok_units(contests, with_areas, councils)
-        out[f"{OKRSKY_DIR}/{path}"] = bundle.encode(
+        out[f"{OKRSKY_DIR}/{path}"] = output.to_json(
             {
                 "contests": {
                     c: {k: area_json(a, preferences=_is_list(c)) for k, a in o.items()}
@@ -1043,11 +1086,12 @@ def render(live: Live, divisions: Divisions) -> dict[str, bytes]:
                 },
                 "units": {c: _units_json(c, u) for c, u in units.items()},
                 "past": past,
-            }
+            },
+            sort_keys=True,
         )
     figures = turnout(live.files, divisions, regional_units(obvody))
     if figures:
-        out[TURNOUT_FILE] = bundle.encode(figures)
+        out[TURNOUT_FILE] = output.to_json(figures, sort_keys=True)
     return out
 
 
@@ -1759,7 +1803,9 @@ def status(
     ) == (live.phase, live.source, files)
     if same:
         return None
-    fingerprint = _digest(bundle.encode([live.phase, live.source, files]))
+    fingerprint = _digest(
+        output.to_json([live.phase, live.source, files], sort_keys=True)
+    )
     return {
         "version": f"{now:%Y%m%dT%H%M%S}-{fingerprint[:_VERSION_HASH]}",
         "updated": now.isoformat(timespec="seconds"),
@@ -1804,7 +1850,7 @@ def write(
             out = tmp / f"{path}.json"
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_bytes(data)
-        (tmp / STATUS_FILE).write_bytes(bundle.encode(new))
+        (tmp / STATUS_FILE).write_bytes(output.to_json(new, sort_keys=True))
         problems = check(tmp, expect) if expect else []
         if problems:
             raise ResultsError(

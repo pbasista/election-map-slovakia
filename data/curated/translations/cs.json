@@ -20330,8 +20330,8 @@
    "text": "Více o projektu"
   },
   "disclaimer.short": {
-   "src": "An indicative aid to decision-making: it may contain errors and is not exhaustive. The officially published data are authoritative.",
-   "text": "Orientační pomůcka pro rozhodování: může obsahovat chyby a není úplná. Rozhodující jsou oficiálně zveřejněné údaje."
+   "src": "An indicative aid: it may contain errors and is not exhaustive. Official data prevail.",
+   "text": "Orientační pomůcka: může obsahovat chyby a není úplná. Závazné jsou oficiální údaje."
   },
   "disclaimer.translation": {
    "src": "The interface in languages other than Slovak and English, and the candidates' occupations in every language but Slovak, are machine translations by artificial intelligence that no one has checked. The candidate card also gives the occupation in the original Slovak.",
@@ -20446,12 +20446,12 @@
    "text": "Odkaz je zkopírován"
   },
   "favourites.copy": {
-   "src": "Copy a link to these favourites and the filter, without the place shown on the map, to share them or keep them for later",
-   "text": "Zkopírovat odkaz na tyto oblíbené i s filtrem, bez místa zobrazeného na mapě, abyste je mohli poslat nebo si je uschovat na později"
+   "src": "Copy the link to these favourites and the filter",
+   "text": "Zkopírovat odkaz na tyto oblíbené i s filtrem"
   },
   "favourites.copy_failed": {
-   "src": "Copy this link:",
-   "text": "Zkopírujte tento odkaz:"
+   "src": "Link to copy:",
+   "text": "Odkaz ke zkopírování:"
   },
   "favourites.count": {
    "src": "circled: {n}",
@@ -20462,24 +20462,56 @@
    "text": "zvolených: {n}"
   },
   "favourites.empty": {
-   "src": "No candidate is circled yet. Click a candidate's number on any ballot to circle it, as you would on the ballot itself: the candidate then appears here, with everyone else you circle.",
-   "text": "Zatím není zakroužkován žádný kandidát. Klikněte na číslo kandidáta na kterémkoli hlasovacím lístku a zakroužkujte ho, jako byste to udělali na skutečném lístku: kandidát se pak objeví zde spolu se všemi, které zakroužkujete."
+   "src": "Nothing circled yet.",
+   "text": "Zatím není nic zakroužkováno."
+  },
+  "favourites.how_circle": {
+   "src": "Click a number on any ballot",
+   "text": "Klikněte na číslo na libovolném lístku"
+  },
+  "favourites.how_circle_result": {
+   "src": "the candidate is listed here",
+   "text": "kandidát přibude sem"
+  },
+  "favourites.how_header": {
+   "src": "Click a contest's header",
+   "text": "Klikněte na záhlaví volby"
+  },
+  "favourites.how_header_result": {
+   "src": "its other candidates too",
+   "text": "i její ostatní kandidáti"
+  },
+  "favourites.how_link": {
+   "src": "Copy the link",
+   "text": "Zkopírujte odkaz"
+  },
+  "favourites.how_link_result": {
+   "src": "the circles and the filter, to keep or share",
+   "text": "kroužky i filtr, k uložení či sdílení"
+  },
+  "favourites.how_qr": {
+   "src": "Show the QR code",
+   "text": "Zobrazte QR kód"
+  },
+  "favourites.how_qr_result": {
+   "src": "the same link, for another device's camera",
+   "text": "tentýž odkaz pro fotoaparát jiného zařízení"
   },
   "favourites.intro": {
-   "src": "The candidates you have circled, from every ballot. A contest's header opens it to its other candidates. The page's address holds your circles and the filter; the link button by the title copies a link to them, to keep or to share, and the QR code button shows the link as a code for another device's camera.",
-   "text": "Kandidáti, které jste zakroužkovali, ze všech hlasovacích lístků. Záhlaví voleb ukáže i jejich ostatní kandidáty. Adresa stránky obsahuje vaše kroužky i filtr; tlačítko s odkazem u nadpisu na ně zkopíruje odkaz, abyste si je uložili nebo je poslali dál, a tlačítko QR kódu ukáže odkaz jako kód pro fotoaparát jiného zařízení."
+   "src": "The circled candidates, from every ballot.",
+   "text": "Zakroužkovaní kandidáti ze všech hlasovacích lístků."
   },
   "favourites.open": {
    "src": "Favourites (circled: {n})",
    "text": "Oblíbení (zakroužkovaných: {n})"
   },
   "favourites.qr": {
-   "src": "Show a QR code of the link to these favourites and the filter, to open them on another device by pointing its camera at it",
-   "text": "Zobrazit QR kód odkazu na tyto oblíbené i s filtrem, abyste je otevřeli na jiném zařízení, když na něj namíříte jeho fotoaparát"
+   "src": "QR code of the link, for another device",
+   "text": "QR kód odkazu pro jiné zařízení"
   },
   "favourites.qr_caption": {
-   "src": "Point another device's camera at the code to open these favourites and the filter there. The code follows every change you make.",
-   "text": "Namiřte na kód fotoaparát jiného zařízení a otevřou se na něm tito oblíbení i s filtrem. Kód se mění s každou vaší změnou."
+   "src": "Another device's camera opens these favourites and the filter from the code, which follows every change.",
+   "text": "Fotoaparát jiného zařízení z kódu otevře tyto oblíbené i s filtrem. Kód sleduje každou změnu."
   },
   "favourites.qr_label": {
    "src": "QR code of the link to these favourites and the filter",
@@ -20490,8 +20522,8 @@
    "text": "QR kód těchto oblíbených"
   },
   "favourites.qr_too_long": {
-   "src": "The link is too long for a QR code. Copy it with the link button instead.",
-   "text": "Odkaz je pro QR kód příliš dlouhý. Zkopírujte ho raději tlačítkem s odkazem."
+   "src": "The link is too long for a QR code; the link button copies it.",
+   "text": "Odkaz je na QR kód příliš dlouhý; zkopíruje ho tlačítko s odkazem."
   },
   "favourites.title": {
    "src": "Favourites",
@@ -20613,13 +20645,77 @@
    "src": "Substitutes",
    "text": "Náhradníci"
   },
+  "help.circle": {
+   "src": "Click a number",
+   "text": "Klikněte na číslo"
+  },
+  "help.circle_result": {
+   "src": "circle the candidate into Favourites, to keep or share",
+   "text": "kandidáta zakroužkujete do Oblíbených, k uložení či sdílení"
+  },
+  "help.cross": {
+   "src": "{shift}+click or double tap",
+   "text": "{shift}+klik nebo dvojité ťuknutí"
+  },
+  "help.cross_result": {
+   "src": "cross the candidate out",
+   "text": "kandidáta přeškrtnete"
+  },
+  "help.elections": {
+   "src": "Click the logo",
+   "text": "Klikněte na logo"
+  },
+  "help.elections_result": {
+   "src": "another election",
+   "text": "jiné volby"
+  },
+  "help.filter": {
+   "src": "Click a party or a mark",
+   "text": "Klikněte na stranu nebo značku"
+  },
+  "help.filter_marks": {
+   "src": "Click a mark",
+   "text": "Klikněte na značku"
+  },
+  "help.filter_result": {
+   "src": "only those shown; {shift}+click or double tap hides them",
+   "text": "zobrazí se jen tito; {shift}+klik nebo dvojité ťuknutí je skryje"
+  },
   "help.how": {
    "src": "Click a place on the map or search for an address, a municipality or a candidate. You will see every contest voted on there, with the candidates in ballot order. Click a candidate's number to circle it, as on the ballot: Favourites lists everyone you circle, to keep or to share. Shift+click the number, or double-tap it, to cross the candidate out instead: the list then mutes them, as the filter does. A party's tag or a mark adds it to the filter the same way: a click shows only those candidates, Shift+click or a double tap hides them.",
    "text": "Klikněte na místo na mapě nebo vyhledejte adresu, obec či kandidáta. Uvidíte všechny volby, které se tam konají, s kandidáty v pořadí na hlasovacím lístku. Kliknutím na číslo kandidáta ho zakroužkujete jako na hlasovacím lístku: Oblíbení ukážou všechny, které zakroužkujete, abyste si je uložili nebo poslali dál. Když na číslo kliknete se Shiftem nebo na něj dvakrát ťuknete, kandidáta místo toho přeškrtnete: seznam ho pak potlačí jako filtr. Značku strany nebo jinou značku přidáte do filtru stejně: kliknutím zobrazíte jen tyto kandidáty, se Shiftem nebo dvojitým ťuknutím je skryjete."
   },
+  "help.layers": {
+   "src": "Layers",
+   "text": "Vrstvy"
+  },
+  "help.layers_result": {
+   "src": "constituency boundaries on the map",
+   "text": "hranice volebních obvodů na mapě"
+  },
+  "help.lead": {
+   "src": "Slovakia's elections since {since} on one map: candidates, constituencies and results.",
+   "text": "Volby na Slovensku od roku {since} na jedné mapě: kandidáti, volební obvody a výsledky."
+  },
   "help.open": {
    "src": "Help and disclaimer",
    "text": "Nápověda a upozornění"
+  },
+  "help.overview.parties": {
+   "src": "every list side by side",
+   "text": "všechny listiny vedle sebe"
+  },
+  "help.overview.referendum": {
+   "src": "every question with its results",
+   "text": "všechny otázky s výsledky"
+  },
+  "help.place": {
+   "src": "Click the map or search",
+   "text": "Klikněte do mapy nebo vyhledejte"
+  },
+  "help.place_result": {
+   "src": "a place's ballots and results",
+   "text": "hlasovací lístky a výsledky místa"
   },
   "layers.auto": {
    "src": "Those switched on appear by zoom: the regional ones on the whole map, those of Bratislava and Košice as you zoom in on the cities, those of municipal councils as you zoom in on a municipality, and polling districts as you zoom in further.",

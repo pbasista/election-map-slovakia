@@ -116,8 +116,10 @@ To see a change in a browser, see [docs/testing.md](docs/testing.md).
 
 The screenshot above is taken from the built site
 by `python3 scripts/screenshot.py` (after `uv run ems build`):
-the page as on the day before the elections,
-without the voting line and the results.
+the page as some days after the latest elections,
+with their final results:
+a place's ballots with the votes and the elected,
+and the map coloured by who got the most votes where.
 It needs only a Chromium-family browser,
 found on `PATH` or passed with `--browser`.
 

@@ -1523,10 +1523,12 @@ h3 {
   background: var(--surface-2);
 }
 
+/* Selected by its background and its own checkbox, radio or icon, in the
+   same weight: bold would widen the label and resize the popover as it is
+   toggled. */
 .option:has(:checked),
 .option[aria-current="true"] {
   background: var(--primary-deep);
-  font-weight: 600;
 }
 
 .option input {
@@ -1723,6 +1725,126 @@ h3 {
 .more .ico {
   width: 16px;
   height: 16px;
+}
+
+/* What a few controls do (pane.js Guide), in the help popover and
+   Favourites: a row each, the control's icon in a column of its own so
+   that the actions line up, the action in bold, what it gives dimmed. */
+.guide {
+  display: grid;
+  gap: 7px;
+  margin: 0 0 10px;
+  padding: 0;
+  list-style: none;
+  line-height: 1.4;
+}
+
+.guide li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--text-dim);
+}
+
+.guide strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.guide-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 24px;
+  height: 1lh;
+  color: var(--text-dim);
+}
+
+.guide-icon .ico {
+  width: 18px;
+  height: 18px;
+}
+
+kbd {
+  padding: 0 4px;
+  border: 1px solid var(--line-strong);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--surface-2);
+  font: 600 0.9em var(--sans);
+}
+
+/* A ballot number circled or crossed out, drawn as on a candidate's row
+   (`.cand .num`). */
+.sample-num {
+  position: relative;
+  color: var(--ink);
+  display: inline-block;
+  /* As wide as a row's number (`.cand .num`), so the loop is as round. */
+  min-width: 1.6em;
+  font-weight: 700;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.sample-num.crossed {
+  color: var(--text-faint);
+}
+
+.sample-num svg {
+  position: absolute;
+  left: -5px;
+  top: -3px;
+  width: calc(100% + 10px);
+  height: calc(100% + 6px);
+  overflow: visible;
+}
+
+.sample-num path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.sample-num.crossed path {
+  stroke: var(--danger);
+}
+
+/* The title bar's button of the list of elections, small: the logo and its
+   badge (`.election-open`). */
+.election-sample {
+  display: grid;
+  width: 22px;
+  height: 22px;
+}
+
+.election-sample > .logo {
+  grid-area: 1 / 1;
+  place-self: center;
+  width: 20px;
+  height: 20px;
+}
+
+.election-sample .election-badge {
+  width: 12px;
+  height: 12px;
+  margin: 0 -3px -2px 0;
+  border-width: 1px;
+}
+
+.election-sample .election-badge .ico {
+  width: 8px;
+  height: 8px;
+}
+
+.intro > p {
+  margin: 0 0 8px;
+}
+
+.intro > .guide {
+  margin: 0;
 }
 
 /* ---------- the pane ---------- */
@@ -2416,10 +2538,11 @@ button.contest-head {
   background: var(--surface-2);
 }
 
+/* Pressed by its background and colour, in the same weight: bold would
+   widen the pressed button and shift the others. */
 .contest-scope button[aria-pressed="true"] {
   background: var(--surface-3);
   color: var(--text);
-  font-weight: 600;
 }
 
 /* A number beside a heading: the findings of a kind on the candidate card. */

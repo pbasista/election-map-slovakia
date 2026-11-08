@@ -1,0 +1,617 @@
+# What the translation jobs tell of the UI strings (web/i18n/en.json) besides
+# their text, read by translate.ui_item alone: the `note` of a string's item
+# (where it appears, what its placeholders are) and, for a string in a tight
+# place, its `max_length`, which ingest holds the translation to. Kept out of
+# the Python source because the keys of the published parts count that source
+# (lock.py): no part shows them, so a new or reworded one deploys nothing.
+#
+# A UI string's note is the `text` of the first entry, in the order of this
+# file, one of whose `keys` is the string's key or, ending in "." or "_", a
+# prefix of it; its maximum length that of the first such key of
+# [max_length] (never below the English text's own length).
+
+[max_length]
+"map.obvod" = 12
+"card.back" = 16
+"panel.close" = 16
+"candidate.age" = 16
+"nav.language" = 20
+"theme.light" = 20
+"theme.dark" = 20
+"map.zoom" = 24
+"theme.title" = 24
+"layers.title" = 24
+"search.type." = 24
+"favourites.title" = 20
+"country." = 28
+"theme.system" = 30
+"search.placeholder" = 34
+"disclaimer.more" = 34
+"elections.name." = 40
+"council.summary_" = 52
+"notice.summary_" = 52
+# What fits a 360 px phone in Latin script: the first in bold, beside the
+# button that jumps to the controversies.
+"research.affairs_summary" = 33
+"research.notice_summary" = 42
+
+[[note]]
+keys = ["app.title."]
+text = """\
+  browser tab title of the page of an election of the kind the key ends in; \
+  {year} is the election's year"""
+
+[[note]]
+keys = ["app.description."]
+text = """\
+  page description for search engines of an election of the kind the key ends \
+  in, at most 160 characters; {year} is the election's year"""
+
+[[note]]
+keys = ["app.features."]
+text = """\
+  paragraph for search engines and visitors without JavaScript: what the site \
+  offers on the page of an election of the kind the key ends in; {year} is the \
+  election's year"""
+
+[[note]]
+keys = ["app.noscript"]
+text = "shown when JavaScript is off"
+
+[[note]]
+keys = ["site.description"]
+text = """\
+  page description for search engines of the site's front page: the site as a \
+  whole, followed there by the description of the election the front page \
+  shows; {since} is the year of the oldest election the site shows"""
+
+[[note]]
+keys = ["site.features"]
+text = """\
+  paragraph for search engines and visitors without JavaScript on the site's \
+  front page: the site as a whole, followed there by what it offers on the \
+  page of the election the front page shows; {since} is the year of the oldest \
+  election the site shows"""
+
+[[note]]
+keys = ["elections.item"]
+text = """\
+  an election named with its date: {name} is its name (the elections.name.* \
+  strings), {date} its date, already formatted; the header's subtitle, \
+  tooltips, screen readers and sentences use it; no comma or other punctuation \
+  between the two (the header sets the date apart by style), the order as the \
+  language puts them"""
+
+[[note]]
+keys = ["elections.name."]
+text = """\
+  the name of an election of the kind the key ends in, without its date: the \
+  header's subtitle before the date and the name under the date in the list of \
+  elections; the short, widely accepted form (parliament: the parliamentary \
+  election, to the National Council of the Slovak Republic), no abbreviations"""
+
+[[note]]
+keys = ["elections.kind."]
+text = """\
+  heading of a group in the list of elections, the kind the key ends in \
+  (municipal-regional: the regular municipal and regional elections; \
+  municipal, regional: the municipal or the regional ones of a year they were \
+  held apart, named so to screen readers; by-election: municipal by-elections \
+  and new elections in some places; parliament: the parliamentary elections, \
+  to the National Council of the Slovak Republic); also a heading in \
+  Favourites; the short, widely accepted form, no abbreviations"""
+
+[[note]]
+keys = ["elections.part."]
+text = """\
+  beside the date of an election in the list of elections, under the heading \
+  of the municipal and regional elections: which of the two it was, in a year \
+  they were held apart (an adjective agreeing with 'elections')"""
+
+[[note]]
+keys = ["date.short"]
+text = """\
+  a date in numbers, for browsers without the language's calendar; {month} is \
+  the month's number"""
+
+[[note]]
+keys = ["nav.language"]
+text = "heading of the language menu"
+
+[[note]]
+keys = ["nav.switch"]
+text = """\
+  tooltip and accessible label of the language button; {current} and {next} \
+  are language names"""
+
+[[note]]
+keys = ["help.lead"]
+text = """\
+  first line of the help popover, under the site's name: what the site is, one \
+  short line; {since} is the year of the oldest election the site shows"""
+
+[[note]]
+keys = ["help.overview."]
+text = """\
+  a row of the help popover after the bold name of the overview (the \
+  overview.open.* string): what it shows, a few words in lower case"""
+
+[[note]]
+keys = ["help."]
+text = """\
+  help button and its popover; a row of the popover is an action in bold \
+  (help.<x>) and, after a dash, what it gives (help.<x>_result, lower case), \
+  beside the icon of the control: short; the action in the formal \
+  second-person address where the language has one (Slovak vykanie, German \
+  Sie, French vous), as in the rest of the UI, in the form its other strings \
+  address the reader in otherwise; {shift} is the Shift key, keep it"""
+
+[[note]]
+keys = ["theme.button"]
+text = """\
+  tooltip of the appearance button; {mode} is one of the option names \
+  (theme.system, theme.light, theme.dark)"""
+
+[[note]]
+keys = ["theme."]
+text = "appearance menu (light or dark colours)"
+
+[[note]]
+keys = ["disclaimer.short"]
+text = "short disclaimer in the help popover"
+
+[[note]]
+keys = ["disclaimer.more"]
+text = "link from the help popover to the About dialog"
+
+[[note]]
+keys = ["disclaimer."]
+text = "item of the Disclaimers list in the About dialog"
+
+[[note]]
+keys = ["translation.pending"]
+text = "notice on the pages of a language whose translation is incomplete"
+
+[[note]]
+keys = ["layers.group"]
+text = """\
+  accessible name of the group of the three map buttons: constituency \
+  boundaries, turnout on the map, base map"""
+
+[[note]]
+keys = ["layers.button"]
+text = "tooltip of the constituency boundaries button, which opens their menu"
+
+[[note]]
+keys = ["layers.oz_"]
+text = "entry of the map legend"
+
+[[note]]
+keys = ["layers.legend"]
+text = """\
+  fold-out in the boundaries menu that opens the note on when each overlay \
+  appears and the legend of the lines and colours; short"""
+
+[[note]]
+keys = ["layers.auto"]
+text = "note in the fold-out of the boundaries menu"
+
+[[note]]
+keys = ["layers.auto_"]
+text = """\
+  note in the fold-out of the boundaries menu, one sentence per overlay where \
+  an election has only some of them (layers.auto otherwise)"""
+
+[[note]]
+keys = ["layers.base_title"]
+text = "title of the base map menu, also its button's tooltip"
+
+[[note]]
+keys = ["layers.base", "layers.buildings"]
+text = "base map menu: a layer it switches on and off"
+
+[[note]]
+keys = ["layers."]
+text = """\
+  boundaries menu: its title and the names of the constituency overlays it \
+  switches on and off"""
+
+[[note]]
+keys = ["mapmode.button"]
+text = """\
+  tooltip of the turnout button, which opens the menu of the turnout layers; \
+  {layer} is the layer shown (mapmode.off when none is, or one of the \
+  mapmode.turnout_…_option)"""
+
+[[note]]
+keys = ["mapmode.menu."]
+text = """\
+  title of the ballot-box menu of a party-list election or a referendum, also \
+  its button's tooltip: it opens the overview of the candidate lists or of the \
+  referendum's questions and puts the turnout on the map"""
+
+[[note]]
+keys = ["mapmode.level_"]
+text = """\
+  a kind of unit the map's results go by, as {units} in mapmode.levels and \
+  mapmode.levels_one ("By …"); okresy are the 79 districts"""
+
+[[note]]
+keys = ["mapmode.tip_okres"]
+text = "first line of the map's tooltip over a district (okres); {name} is its name"
+
+[[note]]
+keys = ["mapmode.winner_of_"]
+text = """\
+  legend subtitle of the map of who got the most votes where, after the \
+  contest's name: what leads in each area (a candidate, a party, a \
+  referendum's answer, a person on a party's list by preference votes)"""
+
+[[note]]
+keys = ["mapmode.share_"]
+text = """\
+  legend subtitle of a candidate's map, after the contest's name: what the \
+  percentages are of"""
+
+[[note]]
+keys = ["mapmode.preferences"]
+text = """\
+  legend of the map of a person on a party's list: how many preference votes \
+  they got in all, after their share"""
+
+[[note]]
+keys = ["mapmode.held_"]
+text = """\
+  map of a by-election, held in a few places only: its legend (title 'where \
+  elections are held', the colour of the municipalities voting and, lighter, \
+  of the districts they are in when zoomed out), its close button, and the \
+  tooltip of a district ({places} their names, {n} how many)"""
+
+[[note]]
+keys = ["map.attribution"]
+text = """\
+  attribution line at the bottom of the map; keep the names, © and licence \
+  identifiers"""
+
+[[note]]
+keys = ["map.attribution_past"]
+text = """\
+  attribution line at the bottom of the map of an earlier election; \
+  {boundaries} is map.credit_boundaries_other or the plain ZBGIS credit, {osm} \
+  a date (the state of the base map), {addresses} a month (MM/YYYY); keep the \
+  names, © and licence identifiers"""
+
+[[note]]
+keys = ["map.credit_"]
+text = """\
+  the boundaries' part of map.attribution_past; {on} is the year of the \
+  boundaries drawn, {n} how many municipalities differed in {year}; keep the \
+  names, © and licence identifiers"""
+
+[[note]]
+keys = ["map.obvod"]
+text = "label on the map of the constituency number {n}; very short"
+
+[[note]]
+keys = ["map."]
+text = "map: accessible label and zoom buttons"
+
+[[note]]
+keys = ["country."]
+text = "name of a country, a label on the map: the usual short name"
+
+[[note]]
+keys = ["panel."]
+text = "side panel with the ballots"
+
+[[note]]
+keys = ["error."]
+text = "error message"
+
+[[note]]
+keys = ["search.type."]
+text = "short tag after a search result saying what it is"
+
+[[note]]
+keys = ["search.okres"]
+text = """\
+  subtitle of a search result: the okres (district) a place is in; {name} is \
+  the okres name, e.g. Malacky"""
+
+[[note]]
+keys = ["search.person"]
+text = "a candidate in search results: {name}, {age} in years"
+
+[[note]]
+keys = ["search."]
+text = "search box and its results"
+
+[[note]]
+keys = ["place.kraj"]
+text = """\
+  subtitle of a place; {name} is the Slovak adjective naming the kraj \
+  (region), e.g. Bratislavský"""
+
+[[note]]
+keys = ["place."]
+text = "subtitle or message of the place shown in the panel"
+
+[[note]]
+keys = ["ballots.country"]
+text = """\
+  subtitle of the panel of a country-wide election before a place is chosen, \
+  under the heading 'Slovakia'"""
+
+[[note]]
+keys = ["ballots."]
+text = "the ballots of a place"
+
+[[note]]
+keys = ["scope."]
+text = """\
+  button of the choice of the unit a ballot's results are of: the whole \
+  contest, Slovakia, a region ({name} is the Slovak adjective of the kraj), a \
+  district (okres, {name} its name), a constituency or polling district ({n} \
+  its number)"""
+
+[[note]]
+keys = ["contest.president_round"]
+text = """\
+  heading of the ballot of one round of the election of the President of the \
+  Slovak Republic; {round} is 1 or 2, {date} its day, short"""
+
+[[note]]
+keys = ["contest.question"]
+text = "heading of one question of a referendum; {n} its number"
+
+[[note]]
+keys = ["contest.parties."]
+text = """\
+  heading of the ballot of a party-list election, of the body the key ends in: \
+  nrsr the National Council of the Slovak Republic, ep the European Parliament"""
+
+[[note]]
+keys = ["contest.list"]
+text = """\
+  heading of a party's candidate list; {party} is the party's name, {n} its \
+  ballot number"""
+
+[[note]]
+keys = ["contest.rules"]
+text = """\
+  a link-like button in a contest's facts line that unfolds the rules of the \
+  contest (threshold, coalitions, preference votes, what makes a referendum \
+  valid, what decides a presidential round)"""
+
+[[note]]
+keys = ["contest.rules_coalitions_"]
+text = """\
+  an item of contest.rules_coalitions' {list}: what a coalition of {from} (to \
+  {to}) parties needs for seats, {share} a percentage"""
+
+[[note]]
+keys = ["contest.rules_"]
+text = """\
+  a sentence of the rules unfolded under a party-list ballot's facts: the \
+  share of the valid votes a party needs for seats ({share}), what coalitions \
+  need ({list} joins items of contest.rules_coalitions_*), how many candidates \
+  of the chosen party's list a voter may circle ({n}, preference votes)"""
+
+[[note]]
+keys = ["contest.preferences"]
+text = """\
+  a line of the tooltip of a party's row on a party-list ballot: how many \
+  candidates of its list a voter may circle (preference votes)"""
+
+[[note]]
+keys = ["contest.too_many_"]
+text = """\
+  warning where the visitor has circled more parties than one, or more \
+  candidates of a list than the preference votes allowed ({n}); {picked} is \
+  how many are circled"""
+
+[[note]]
+keys = ["party."]
+text = """\
+  a party on a party-list ballot (National Council or European Parliament \
+  election) and its candidate list, which opens under it; {share} is a \
+  threshold in %, {seats} and {n} numbers; preference votes are the circles \
+  voters give candidates on the party's list"""
+
+[[note]]
+keys = ["referendum."]
+text = """\
+  a referendum question: its answers (yes, no), its wording ({text}, in the \
+  quotation marks of the language), whether the referendum is valid (more than \
+  half of the registered voters must take part)"""
+
+[[note]]
+keys = ["president."]
+text = """\
+  a round of the election of the President of the Slovak Republic: the rule of \
+  who is elected, and a candidate's result"""
+
+[[note]]
+keys = ["byelection."]
+text = """\
+  the list of the places where municipal by-elections and new elections are \
+  held (a municipality or region), and what each elects; {n} is a number"""
+
+[[note]]
+keys = ["results.status_"]
+text = """\
+  part of the one-line status of the count under the site name; {share} is a \
+  percentage counted, {round} 1 or 2 (presidential round)"""
+
+[[note]]
+keys = ["results.units_"]
+text = """\
+  item of the list {list} in results.status_units: the units counted so far, \
+  {n} as 'counted/all'; {round} 1 or 2 (presidential round)"""
+
+[[note]]
+keys = ["contest."]
+text = """\
+  heading or details of one contest (ballot); {name} is a municipality or city \
+  name, {kraj} the Slovak adjective of the region, {n} a number"""
+
+[[note]]
+keys = ["council.summary_"]
+text = """\
+  one-line summary of a notice above the council ballots, whose whole text is \
+  its tooltip; cut short where the line is too narrow, so short"""
+
+[[note]]
+keys = ["council."]
+text = "notice above the council ballots of a municipality"
+
+[[note]]
+keys = ["notice.summary_"]
+text = """\
+  one-line summary of a notice at the top of a municipality's ballots, whose \
+  whole text unfolds under it; cut short where the line is too narrow, so \
+  short"""
+
+[[note]]
+keys = ["notice."]
+text = """\
+  notice at the top of a municipality's ballots on what the map draws there \
+  that is not the election's own: {on} and {other} are years, {date} a date, \
+  {others} names of municipalities"""
+
+[[note]]
+keys = ["okrsky."]
+text = """\
+  the row of buttons on a municipality's ballots, one per polling district \
+  whose results are known but which the map does not draw (its addresses are \
+  not known, or it has no territory: a prison's, a COVID-19 special one); a \
+  button's label is the number alone, these are its title, accessible name, \
+  the row's title and one line of explanation; {n} is a number, {name} a \
+  municipality, {facility} a prison's name"""
+
+[[note]]
+keys = ["candidate.occupation_sk"]
+text = """\
+  tooltip of a translated occupation, and a line on the candidate card; {text} \
+  is the occupation as written in Slovak"""
+
+[[note]]
+keys = ["candidate."]
+text = "line of a candidate on a ballot"
+
+[[note]]
+keys = ["pick."]
+text = """\
+  the button on a candidate's ballot number: pressing it circles the number, \
+  as Slovak voters circle the numbers of their candidates on the ballot, and \
+  adds the candidate to Favourites; {n} is the number"""
+
+[[note]]
+keys = ["favourites.title"]
+text = """\
+  name of the list of every candidate the visitor has circled, a heading and a \
+  button's name: one word, the usual word for favourites in apps, nothing that \
+  says 'my' (a link shares the list)"""
+
+[[note]]
+keys = ["favourites.how_"]
+text = """\
+  a row of the short guide in Favourites: an action in bold \
+  (favourites.how_<x>) and, after a dash, what it gives (…_result, lower \
+  case), beside the icon of the control (the link button, the QR code button, \
+  a contest's header, a circled ballot number): short; the action in the \
+  formal second-person address where the language has one (Slovak vykanie, \
+  German Sie, French vous), as in the rest of the UI, in the form its other \
+  strings address the reader in otherwise"""
+
+[[note]]
+keys = ["favourites."]
+text = """\
+  Favourites: the list of every candidate the visitor has circled, which a \
+  link shares; its button, text and the button that copies the link (an icon \
+  whose tooltip this is); impersonal, never addressing the reader"""
+
+[[note]]
+keys = ["card.list_position"]
+text = """\
+  candidate card of a person on a party's candidate list: {party} the party's \
+  name, {n} the person's place on the list"""
+
+[[note]]
+keys = ["card."]
+text = "candidate card"
+
+[[note]]
+keys = ["research.kind.cv"]
+text = "candidate card, research section"
+
+# The note of the two kinds of controversy (the entry below), then what this
+# string is: keep the two alike.
+[[note]]
+keys = ["research.affairs_summary"]
+text = """\
+  research findings come in two kinds of controversy: serious ones ('affairs': \
+  charges, court decisions against the candidate, matters an authority \
+  established), marked in red, and 'allegations and disputes' (unproven or \
+  denied claims, cases that ended in the candidate's favour, lesser matters), \
+  marked in amber; keep the two names the same wherever they appear; name the \
+  first with the plain word for controversies (Slovak: 'Závažné \
+  kontroverzie'), not one that suggests a case on its way to court (as Slovak \
+  and Czech 'kauza'), as not all of them are; and never name the second with \
+  the word for criminal charges (as Slovak 'obvinenie'), which belong to the \
+  first (Slovak: 'Podozrenia a spory'). This one is the one-line summary, in \
+  red at the top of the candidate card, of the notice research.affairs_alert, \
+  which unfolds under it; cut short where the line is too narrow, so short"""
+
+# The two kinds of controversy research reports, named alike in every string
+# that mentions them.
+[[note]]
+keys = [
+  "research.kind.",
+  "research.affairs_",
+  "research.disputes_",
+  "filter.affairs",
+  "filter.disputes",
+]
+text = """\
+  research findings come in two kinds of controversy: serious ones ('affairs': \
+  charges, court decisions against the candidate, matters an authority \
+  established), marked in red, and 'allegations and disputes' (unproven or \
+  denied claims, cases that ended in the candidate's favour, lesser matters), \
+  marked in amber; keep the two names the same wherever they appear; name the \
+  first with the plain word for controversies (Slovak: 'Závažné \
+  kontroverzie'), not one that suggests a case on its way to court (as Slovak \
+  and Czech 'kauza'), as not all of them are; and never name the second with \
+  the word for criminal charges (as Slovak 'obvinenie'), which belong to the \
+  first (Slovak: 'Podozrenia a spory')"""
+
+[[note]]
+keys = ["research.notice_summary"]
+text = """\
+  one-line summary of the notice research.notice, which unfolds under it in \
+  the candidate card's research section; cut short where the line is too \
+  narrow, so short"""
+
+[[note]]
+keys = ["research."]
+text = "candidate card, research section"
+
+[[note]]
+keys = ["about.category."]
+text = "name of a group of news sources in the About dialog"
+
+[[note]]
+keys = ["about.lead"]
+text = """\
+  first sentence of the About dialog: the site as a whole; {since} is the year \
+  of the oldest election the site shows"""
+
+[[note]]
+keys = ["about.feature."]
+text = """\
+  an item of the bulleted list in the About dialog of what the page of an \
+  election offers, under its name: short, plain, one sentence"""
+
+[[note]]
+keys = ["about."]
+text = "About dialog"

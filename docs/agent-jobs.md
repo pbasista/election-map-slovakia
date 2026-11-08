@@ -99,7 +99,14 @@ what is committed is `data/curated/`
 Translates:
 
 - the UI strings, from English with the Slovak for reference,
-  one job per language;
+  one job per language,
+  each string with a note on where it appears and what its placeholders are
+  and, in a tight place, a maximum length
+  (`src/election_map_slovakia/translation-notes.toml`:
+  the first entry whose `keys` name the string's key or a prefix of it
+  ending in `.` or `_`, and so for `[max_length]`;
+  data, not code, so that a new note or length changes no key
+  of the published data, [pipeline.md](pipeline.md#keys));
 - the candidates' occupations of every election, from Slovak,
   most frequent first, about 900 per job,
   into every enabled language but Slovak;
@@ -109,7 +116,7 @@ Translates:
 **Checks.**
 Ingest rejects a translation that is empty,
 loses or adds a `{placeholder}` or markup,
-is far shorter or longer than its source,
+is far shorter or longer than its source or longer than its `max_length`,
 is in the wrong script,
 or is an unmarked copy of its source.
 

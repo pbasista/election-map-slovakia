@@ -55,7 +55,11 @@ are no output of the repository, and ``ems results deploy`` deploys them
 outside releases.
 
 Code counts by its source text (:func:`code_digest`), comments included,
-so that its key is the same whichever Python computes it.
+so that its key is the same whichever Python computes it: the package's
+Python modules alone. The map steps import none of the jobs' code (see
+:data:`MAP_MODULES`); the data's do, through the bundles. The notes and
+maximum lengths of the UI strings for translators
+(:data:`translate.NOTES_FILE`) are data no part shows, and count for no key.
 
 ``ems data lock`` writes the keys to :data:`LOCK_FILE`, committed like
 ``uv.lock``; CI fails when the lock is not that of the commit
@@ -102,15 +106,18 @@ MAP_MODULES = (
     "geo",
     "basemap",
     "addresses",
-    "okrsokrules",
+    "division",
 )
 """The modules of the steps an election's map comes from: ``candidates``
 (with the lists of every format, :mod:`lists`, ŠÚ SR's packages among
 them), ``geo`` (with the barriers of :mod:`basemap` it reads of the
-extract) and ``addresses`` (with the okrsok counts of
-:mod:`okrsokrules`). What they import counts too, which reaches further
-than the map needs (statoffice imports the results' code, okrsokrules the
-jobs'): a change of that code rebuilds the maps as well."""
+extract) and ``addresses`` (with the okrsok counts of :mod:`division`).
+What they import counts too, which reaches further than the map needs
+(:mod:`statoffice` and :mod:`lists` import the results' code): a change of
+that code rebuilds the maps as well. None of them imports the code of the
+jobs (:mod:`jobs` and its kinds) nor of the bundles (:mod:`bundle`), which
+would else rebuild the maps on every change of a job's prompt or of the
+data bundles."""
 MAP_GLUE = (
     "_candidates",
     "_input",

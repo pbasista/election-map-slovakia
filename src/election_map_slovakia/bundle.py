@@ -166,7 +166,7 @@ those on the roll, in the unit it was won in, the municipality, kraj or
 ``results-`` (``oso2022``, ``osk2022``, ``oso202303``, …), its ISO day, the
 voters on the roll and those who took part, in the whole municipality,
 city or kraj, or for a regional council contest in the obce that make up
-its 2026 obvod (:func:`regional_past`); see
+its 2026 obvod (:func:`results.regional_past`); see
 :mod:`election_map_slovakia.candidates` for which election. A council of
 several obvody in 2026 has ``scope``: the 2022 obvody were drawn
 otherwise, so either ``1``, the figures being of the whole municipality or
@@ -310,7 +310,7 @@ from collections.abc import Collection, Iterable, Iterator, Mapping
 from concurrent.futures import Future, ThreadPoolExecutor
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, NamedTuple
+from typing import Any, NamedTuple
 
 import orjson
 
@@ -320,19 +320,19 @@ from election_map_slovakia import (
     candidates,
     config,
     contests,
+    division,
     geo,
     obvody,
     output,
     parallel,
     progress,
     research,
+    results,
     special,
     translate,
 )
 from election_map_slovakia.config import Config
-
-if TYPE_CHECKING:
-    from election_map_slovakia.results import Live
+from election_map_slovakia.results import Live
 
 # Hex digits of the bundles' and the app's asset versions: 40 bits, so two
 # releases sharing a version by chance is not a concern.
@@ -685,7 +685,7 @@ def area_files(
     *data* is ``candidates.json``; *seats* maps obvod contests to their seat
     count where known; *sources* is :func:`obvod_sources`; *researched* maps
     persons to their research summary (:func:`research_summary`); *pasts*
-    maps contests to the ``past`` made here (:func:`regional_past`,
+    maps contests to the ``past`` made here (:func:`results.regional_past`,
     :func:`council_past`), which replaces theirs; *no_result* names the
     contests the final results have none of (:func:`no_result`); *other*
     maps persons to their candidacies in other elections (:func:`elsewhere`).
@@ -997,35 +997,6 @@ def research_records(cfg: Config) -> dict[str, dict[str, Any]]:
     return dict(out)
 
 
-def obec_props(geo_dir: Path) -> dict[str, dict[str, Any]]:
-    """Return obec → its properties in the coarsest ``geo`` shard."""
-    coarsest = geo.SHARD_LODS[0].level
-    props = {}
-    for path in sorted((geo_dir / "okres").glob(f"*/{coarsest}.json")):
-        for feature in orjson.loads(path.read_bytes())["features"]:
-            props[feature["properties"]["id"]] = feature["properties"]
-    return props
-
-
-def regional_past(
-    data: Mapping[str, Any], props: Mapping[str, Mapping[str, Any]]
-) -> dict[str, dict[str, Any]]:
-    """Return regional council contest → its ``past``, as in ``candidates.json``.
-
-    The obce's 2022 figures (``candidates.json``) summed over the 2026 obvod
-    each is in (*props*, :func:`obec_props`): the 2022 obvody were different.
-    """
-    out: dict[str, dict[str, Any]] = {}
-    for o in data["obce"]:
-        if "past" in o:
-            past = o["past"]
-            contest = f"zsk:{o['kraj']}/{props[o['code']]['zsk']}"
-            total = out.setdefault(contest, {**past, "eligible": 0, "voters": 0})
-            total["eligible"] += past["eligible"]
-            total["voters"] += past["voters"]
-    return out
-
-
 def council_past(
     data: Mapping[str, Any], live: Live | None
 ) -> dict[str, dict[str, Any]]:
@@ -1040,8 +1011,6 @@ def council_past(
     (``results.PAST_DOUBT``). Otherwise its ``past`` stays that of the
     whole municipality or city.
     """
-    from election_map_slovakia import results  # results imports this module
-
     if live is None:
         return {}
     keys_of = {c: areas for files in live.okrsky.values() for c, areas in files.items()}
@@ -1088,31 +1057,10 @@ def final_okrsky(results_dir: Path) -> Live | None:
 
     None before the results are final (or without any).
     """
-    from election_map_slovakia import results  # results imports this module
-
     st = results.read_status(results_dir) if results_dir.is_dir() else None
     if st is None or st.get("phase") != "final":
         return None
     return results.read_live(results_dir)
-
-
-def obvod_seats(geo_dir: Path, election_dir: Path) -> dict[str, int]:
-    """Return obvod contest → seats, where known.
-
-    Regional and city council obvody from ``geo``; the council obvody of the
-    obce with a rule set from it (in *election_dir*, :meth:`Config.election_dir`).
-    """
-    return _obvod_seats(geo_dir, obvody.load_rule_sets(election_dir))
-
-
-def _obvod_seats(
-    geo_dir: Path, rule_sets: Mapping[str, obvody.RuleSet]
-) -> dict[str, int]:
-    coarse = orjson.loads((geo_dir / geo.COARSE_FILE).read_bytes())
-    seats = {o["id"]: o["seats"] for o in coarse["obvody"]}
-    for code, rules in rule_sets.items():
-        seats |= {f"oz:{code}/{n}": s for n, s in rules.seats.items()}
-    return seats
 
 
 def _sources_key(contest: Mapping[str, Any]) -> str:
@@ -1822,7 +1770,7 @@ def _election_files(
     councils = any(c["kind"] == "oz" for c in data["contests"])
     loaded = obvody.load_rule_sets(curated)
     rule_sets = loaded if councils else {}
-    props = obec_props(geo_dir)
+    props = results.obec_props(geo_dir)
     records = shared.records
     latest = cfg.latest
     live = final_okrsky(cfg.results_dir(election))
@@ -1831,10 +1779,10 @@ def _election_files(
     part = addresses.council_parts(cfg, election, data["contests"])
     content |= area_files(
         data,
-        _obvod_seats(geo_dir, rule_sets),
+        results.obvod_seats(geo_dir, rule_sets),
         obvod_sources(curated, rule_sets),
         research_summary(cfg, records),
-        regional_past(data, props) | council_past(data, live),
+        results.regional_past(data, props) | council_past(data, live),
         no_result(final, data),
         shared.other,
         day=election.day.isoformat(),
@@ -1849,10 +1797,8 @@ def _election_files(
     )
     shards = name_shards(data)
     content |= {f"{DATA_DIR}/names/{p}.json": rows for p, rows in shards.items()}
-    from election_map_slovakia import okrsokrules  # it imports what imports this
-
     # Only the final results tell which special okrsky voted.
-    specials = okrsokrules.special_okrsky(cfg, election) if live else {}
+    specials = division.special_okrsky(cfg, election) if live else {}
     several = several_okrsky(live, special.keys(specials))
     drawn = orjson.loads((geo_dir / "index.json").read_bytes())["okrsky"]["drawn"]
     index = site_index(
@@ -1921,8 +1867,6 @@ def final_contests(results_dir: Path) -> dict[str, dict[str, Any]] | None:
 
     None before the results are final (or without any); see docs/results.md.
     """
-    from election_map_slovakia import results  # results imports this module
-
     st = results.read_status(results_dir) if results_dir.is_dir() else None
     if st is None or st.get("phase") != "final":
         return None
@@ -2118,8 +2062,6 @@ def results_part(cfg: Config, key: str | None) -> Part:
 
 def live_part(cfg: Config) -> Part:
     """Return the live part; see the module doc."""
-    from election_map_slovakia import results  # results imports this module
-
     copies = {
         e.day.isoformat(): cfg.live_dir(e)
         for e in cfg.elections

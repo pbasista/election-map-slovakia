@@ -57,7 +57,7 @@ function Finding({ finding: f }) {
         }
         <p class="evidence-links">
           ${f.title ? html`<span class="page-title">${f.title}</span> · ` : null}<a
-            href=${`${sourcesBase}/cache/${f.cache}.html`}
+            href=${`${sourcesBase}/cache/${f.cache}`}
             title=${t('research.cached_note')}
             rel="noopener noreferrer"
             target="_blank"

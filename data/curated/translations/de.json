@@ -20326,8 +20326,8 @@
    "text": "Mehr über das Projekt"
   },
   "disclaimer.short": {
-   "src": "An indicative aid to decision-making: it may contain errors and is not exhaustive. The officially published data are authoritative.",
-   "text": "Eine Orientierungshilfe für die Entscheidung: Sie kann Fehler enthalten und ist nicht vollständig. Maßgeblich sind die amtlich veröffentlichten Daten."
+   "src": "An indicative aid: it may contain errors and is not exhaustive. Official data prevail.",
+   "text": "Eine Orientierungshilfe: Sie kann Fehler enthalten und ist nicht vollständig. Maßgeblich sind die amtlichen Daten."
   },
   "disclaimer.translation": {
    "src": "The interface in languages other than Slovak and English, and the candidates' occupations in every language but Slovak, are machine translations by artificial intelligence that no one has checked. The candidate card also gives the occupation in the original Slovak.",
@@ -20442,12 +20442,12 @@
    "text": "Link kopiert"
   },
   "favourites.copy": {
-   "src": "Copy a link to these favourites and the filter, without the place shown on the map, to share them or keep them for later",
-   "text": "Einen Link zu diesen Favoriten samt Filter kopieren, ohne den auf der Karte angezeigten Ort, um sie weiterzugeben oder für später aufzubewahren"
+   "src": "Copy the link to these favourites and the filter",
+   "text": "Link zu diesen Favoriten samt Filter kopieren"
   },
   "favourites.copy_failed": {
-   "src": "Copy this link:",
-   "text": "Kopieren Sie diesen Link:"
+   "src": "Link to copy:",
+   "text": "Link zum Kopieren:"
   },
   "favourites.count": {
    "src": "circled: {n}",
@@ -20458,24 +20458,56 @@
    "text": "gewählt: {n}"
   },
   "favourites.empty": {
-   "src": "No candidate is circled yet. Click a candidate's number on any ballot to circle it, as you would on the ballot itself: the candidate then appears here, with everyone else you circle.",
-   "text": "Noch ist kein Kandidat eingekreist. Klicken Sie auf einem beliebigen Stimmzettel auf die Nummer eines Kandidaten, um sie einzukreisen, wie Sie es auf dem echten Stimmzettel tun würden: Der Kandidat erscheint dann hier, zusammen mit allen anderen, die Sie einkreisen."
+   "src": "Nothing circled yet.",
+   "text": "Noch nichts eingekreist."
+  },
+  "favourites.how_circle": {
+   "src": "Click a number on any ballot",
+   "text": "Klicken Sie auf eine Nummer auf einem Stimmzettel"
+  },
+  "favourites.how_circle_result": {
+   "src": "the candidate is listed here",
+   "text": "der Kandidat erscheint hier"
+  },
+  "favourites.how_header": {
+   "src": "Click a contest's header",
+   "text": "Klicken Sie auf den Kopf einer Wahl"
+  },
+  "favourites.how_header_result": {
+   "src": "its other candidates too",
+   "text": "auch ihre übrigen Kandidaten"
+  },
+  "favourites.how_link": {
+   "src": "Copy the link",
+   "text": "Kopieren Sie den Link"
+  },
+  "favourites.how_link_result": {
+   "src": "the circles and the filter, to keep or share",
+   "text": "die Kreise und der Filter, zum Aufbewahren oder Teilen"
+  },
+  "favourites.how_qr": {
+   "src": "Show the QR code",
+   "text": "Zeigen Sie den QR-Code an"
+  },
+  "favourites.how_qr_result": {
+   "src": "the same link, for another device's camera",
+   "text": "derselbe Link für die Kamera eines anderen Geräts"
   },
   "favourites.intro": {
-   "src": "The candidates you have circled, from every ballot. A contest's header opens it to its other candidates. The page's address holds your circles and the filter; the link button by the title copies a link to them, to keep or to share, and the QR code button shows the link as a code for another device's camera.",
-   "text": "Die Kandidaten, die Sie eingekreist haben, von allen Stimmzetteln. Die Kopfzeile einer Wahl zeigt auch deren übrige Kandidaten. Die Adresse der Seite enthält Ihre Kreise und den Filter; die Link-Schaltfläche neben dem Titel kopiert einen Link dazu, damit Sie sie speichern oder weitergeben können, und die QR-Code-Schaltfläche zeigt den Link als Code für die Kamera eines anderen Geräts."
+   "src": "The circled candidates, from every ballot.",
+   "text": "Die eingekreisten Kandidaten aller Stimmzettel."
   },
   "favourites.open": {
    "src": "Favourites (circled: {n})",
    "text": "Favoriten (eingekreist: {n})"
   },
   "favourites.qr": {
-   "src": "Show a QR code of the link to these favourites and the filter, to open them on another device by pointing its camera at it",
-   "text": "Einen QR-Code des Links zu diesen Favoriten samt Filter anzeigen, um sie auf einem anderen Gerät zu öffnen, indem Sie dessen Kamera darauf richten"
+   "src": "QR code of the link, for another device",
+   "text": "QR-Code des Links für ein anderes Gerät"
   },
   "favourites.qr_caption": {
-   "src": "Point another device's camera at the code to open these favourites and the filter there. The code follows every change you make.",
-   "text": "Richten Sie die Kamera eines anderen Geräts auf den Code, um diese Favoriten samt Filter dort zu öffnen. Der Code folgt jeder Ihrer Änderungen."
+   "src": "Another device's camera opens these favourites and the filter from the code, which follows every change.",
+   "text": "Die Kamera eines anderen Geräts öffnet über den Code diese Favoriten samt Filter. Der Code folgt jeder Änderung."
   },
   "favourites.qr_label": {
    "src": "QR code of the link to these favourites and the filter",
@@ -20486,8 +20518,8 @@
    "text": "QR-Code dieser Favoriten"
   },
   "favourites.qr_too_long": {
-   "src": "The link is too long for a QR code. Copy it with the link button instead.",
-   "text": "Der Link ist für einen QR-Code zu lang. Kopieren Sie ihn stattdessen mit der Link-Schaltfläche."
+   "src": "The link is too long for a QR code; the link button copies it.",
+   "text": "Der Link ist für einen QR-Code zu lang; die Link-Schaltfläche kopiert ihn."
   },
   "favourites.title": {
    "src": "Favourites",
@@ -20609,13 +20641,77 @@
    "src": "Substitutes",
    "text": "Ersatzkandidaten"
   },
+  "help.circle": {
+   "src": "Click a number",
+   "text": "Klicken Sie auf eine Nummer"
+  },
+  "help.circle_result": {
+   "src": "circle the candidate into Favourites, to keep or share",
+   "text": "Sie kreisen den Kandidaten in die Favoriten ein, zum Aufbewahren oder Teilen"
+  },
+  "help.cross": {
+   "src": "{shift}+click or double tap",
+   "text": "{shift}+Klick oder Doppeltippen"
+  },
+  "help.cross_result": {
+   "src": "cross the candidate out",
+   "text": "Sie streichen den Kandidaten durch"
+  },
+  "help.elections": {
+   "src": "Click the logo",
+   "text": "Klicken Sie auf das Logo"
+  },
+  "help.elections_result": {
+   "src": "another election",
+   "text": "eine andere Wahl"
+  },
+  "help.filter": {
+   "src": "Click a party or a mark",
+   "text": "Klicken Sie auf eine Partei oder Markierung"
+  },
+  "help.filter_marks": {
+   "src": "Click a mark",
+   "text": "Klicken Sie auf eine Markierung"
+  },
+  "help.filter_result": {
+   "src": "only those shown; {shift}+click or double tap hides them",
+   "text": "nur diese werden angezeigt; {shift}+Klick oder Doppeltippen blendet sie aus"
+  },
   "help.how": {
    "src": "Click a place on the map or search for an address, a municipality or a candidate. You will see every contest voted on there, with the candidates in ballot order. Click a candidate's number to circle it, as on the ballot: Favourites lists everyone you circle, to keep or to share. Shift+click the number, or double-tap it, to cross the candidate out instead: the list then mutes them, as the filter does. A party's tag or a mark adds it to the filter the same way: a click shows only those candidates, Shift+click or a double tap hides them.",
    "text": "Klicken Sie auf einen Ort auf der Karte oder suchen Sie nach einer Adresse, einer Gemeinde oder einem Kandidaten. Sie sehen alle Wahlen, die dort stattfinden, mit den Kandidaten in der Reihenfolge des Stimmzettels. Klicken Sie auf die Nummer eines Kandidaten, um sie wie auf dem Stimmzettel einzukreisen: „Favoriten“ zeigt alle, die Sie einkreisen, damit Sie sie speichern oder weitergeben können. Mit Shift+Klick oder Doppeltippen auf die Nummer streichen Sie den Kandidaten stattdessen durch: Die Liste blendet ihn dann ab, wie es der Filter tut. Das Kürzel einer Partei oder eine Markierung fügen Sie auf dieselbe Weise zum Filter hinzu: Ein Klick zeigt nur diese Kandidaten an, Shift+Klick oder Doppeltippen blendet sie aus."
   },
+  "help.layers": {
+   "src": "Layers",
+   "text": "Ebenen"
+  },
+  "help.layers_result": {
+   "src": "constituency boundaries on the map",
+   "text": "Wahlkreisgrenzen auf der Karte"
+  },
+  "help.lead": {
+   "src": "Slovakia's elections since {since} on one map: candidates, constituencies and results.",
+   "text": "Die Wahlen in der Slowakei seit {since} auf einer Karte: Kandidaten, Wahlkreise und Ergebnisse."
+  },
   "help.open": {
    "src": "Help and disclaimer",
    "text": "Hilfe und Haftungsausschluss"
+  },
+  "help.overview.parties": {
+   "src": "every list side by side",
+   "text": "alle Listen nebeneinander"
+  },
+  "help.overview.referendum": {
+   "src": "every question with its results",
+   "text": "alle Fragen mit ihren Ergebnissen"
+  },
+  "help.place": {
+   "src": "Click the map or search",
+   "text": "Klicken Sie auf die Karte oder suchen Sie"
+  },
+  "help.place_result": {
+   "src": "a place's ballots and results",
+   "text": "Stimmzettel und Ergebnisse eines Ortes"
   },
   "layers.auto": {
    "src": "Those switched on appear by zoom: the regional ones on the whole map, those of Bratislava and Košice as you zoom in on the cities, those of municipal councils as you zoom in on a municipality, and polling districts as you zoom in further.",

@@ -920,14 +920,21 @@ function spanningTree(points) {
  * geo/coarse.json, *dataSource* the page's (files.js
  * `setDataSource`), *colors* the theme's (`COLOR`), *strings* the labels'
  * {obvod: 'No. {n}', countries: {AT: 'Austria', …}} in the page's language,
- * *surface(w, h)* makes a canvas and *present(canvas, view, seq)* hands a
- * drawing of *view* over (the page's latest view: its *seq*). The methods
- * are what render.js passes the page's messages to. */
-export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colors, strings, surface, present }) {
+ * *surface(w, h)* makes a canvas and *present(canvas, view, seq, started)*
+ * hands a drawing of *view* over (the page's latest view: its *seq*), begun
+ * at *started* (performance.now()). With *cpuRaster* every canvas is drawn
+ * by the CPU, where it is made (map.js `RASTER_ON_CPU`). The methods are
+ * what render.js passes the page's messages to. */
+export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colors, strings, cpuRaster, surface, present }) {
   // In a worker this module has its own files.js, which the page's config
   // did not reach.
   setDataSource(dataSource);
   Object.assign(COLOR, colors);
+  // A canvas's context: asked to be read back often, a browser keeps the
+  // canvas in memory and draws it there rather than on the GPU. Every
+  // canvas alike, so that none is drawn from another's GPU texture.
+  const contextOptions = cpuRaster ? { willReadFrequently: true } : undefined;
+  const canvasOf = (w, h) => surface(w, h).getContext('2d', contextOptions);
   const coarse = decode(JSON.parse(new TextDecoder().decode(bytes)), Infinity);
   // The regional obvody that hold a part of Bratislava or Košice.
   const cityZsk = new Set(
@@ -1196,7 +1203,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
     const w = Math.max(1, Math.round(STRIPE * ratio));
     const n = names.length;
     const size = w * n;
-    const t = surface(size, size).getContext('2d');
+    const t = canvasOf(size, size);
     // The first colour under all, so that no seam of two stripes lets the
     // land through.
     t.fillStyle = COLOR[names[0]];
@@ -1720,23 +1727,23 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
   function redraw() {
     if (!pending) pending = setTimeout(flush, 0);
   }
-  // The canvas drawn on, made again when the size changes.
-  let canvas = null;
+  // The context drawn on, its canvas made again when the size changes.
+  let target = null;
   function flush() {
     pending = 0;
     if (!current) return;
+    const started = performance.now();
     const { view, free, seq } = current;
     const cw = Math.round(view.w * view.ratio);
     const ch = Math.round(view.h * view.ratio);
     // A map with no size (not laid out yet) has nothing to draw.
     if (!cw || !ch) return;
-    if (canvas?.width !== cw || canvas.height !== ch) canvas = surface(cw, ch);
-    const ctx = canvas.getContext('2d');
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.clearRect(0, 0, cw, ch);
-    drawShapes(ctx, view);
-    drawLabels(ctx, view, free);
-    present(canvas, view, seq);
+    if (target?.canvas.width !== cw || target.canvas.height !== ch) target = canvasOf(cw, ch);
+    target.setTransform(1, 0, 0, 1, 0, 0);
+    target.clearRect(0, 0, cw, ch);
+    drawShapes(target, view);
+    drawLabels(target, view, free);
+    present(target.canvas, view, seq, started);
   }
 
   /* Lets go of the files of *drawnFiles* (okres → {lod, file}) whose okres
@@ -1922,6 +1929,11 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
     }
   }
 
+  // The canvas `streetBand` makes the band on, kept for the next drawing
+  // (on the GPU a canvas is a texture to allocate) and made larger as
+  // needed.
+  let bandCtx = null;
+
   /* The band around the houses of the highlighted street (`streetShape`) at
    * *pixels*: one stroke, so it is no darker where its parts overlap, hollowed
    * out by a narrower one to a light fill inside an outline. Hollowing erases
@@ -1951,7 +1963,16 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
     const x1 = Math.min(Math.ceil((Math.max(...xs) + reach) * ratio), Math.round(view.w * ratio));
     const y1 = Math.min(Math.ceil((Math.max(...ys) + reach) * ratio), Math.round(view.h * ratio));
     if (x1 <= x0 || y1 <= y0) return;
-    const band = surface(x1 - x0, y1 - y0).getContext('2d');
+    const w = x1 - x0;
+    const h = y1 - y0;
+    if (!bandCtx || bandCtx.canvas.width < w || bandCtx.canvas.height < h) {
+      bandCtx = canvasOf(Math.max(w, bandCtx?.canvas.width ?? 0), Math.max(h, bandCtx?.canvas.height ?? 0));
+    }
+    const band = bandCtx;
+    band.setTransform(1, 0, 0, 1, 0, 0);
+    band.globalCompositeOperation = 'source-over';
+    band.globalAlpha = 1;
+    band.clearRect(0, 0, w, h);
     band.setTransform(ratio, 0, 0, ratio, -x0, -y0);
     band.lineCap = 'round';
     band.lineJoin = 'round';
@@ -1963,7 +1984,7 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
     band.lineWidth = 2 * r;
     band.stroke(path);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.drawImage(band.canvas, x0, y0);
+    ctx.drawImage(band.canvas, 0, 0, w, h, x0, y0, w, h);
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
   }
 
@@ -2062,24 +2083,41 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
         return found.at;
       },
 
-      /* Draws the name *text* at *p* (`spot`), out from under the pin, and
-       * with *keepInside* slid into the free part; none where *p* is null.
-       * Returns as `drawText`. */
-      label(text, p, font, size, color, { kind, area, keepInside = false, gap = 0 }) {
+      /* The label *text* of *area* at its own spot *p* slid inwards just so
+       * far that it is whole in the free part, for a label that may cross
+       * its area's border (where `spot` finds no room for it whole inside),
+       * or null. From a spot in the free part, cut off there by the edge of
+       * the map or a pane, it still covers that spot, so names the area as
+       * it would there. From one out of view only where it lies across the
+       * area, its middle and both ends inside: it would else be pulled
+       * across the view to stand at its edge, over other areas. */
+      slide(area, p, text, font, size) {
+        if (!area) return null;
+        const half = textWidth(ctx, font, text) / 2 + 2;
+        const h = size / 2 + 1;
+        const q = {
+          x: Math.min(Math.max(p.x, free[0] + half), free[2] - half),
+          y: Math.min(Math.max(p.y, free[1] + h), free[3] - h),
+        };
+        if (!fits(q, 2 * half, 2 * h)) return null;
+        if (p.x >= free[0] && p.x <= free[2] && p.y >= free[1] && p.y <= free[3]) return q;
+        const y = (q.y + view.y) / view.k;
+        const inArea = (px) => {
+          const x = (px + view.x) / view.k;
+          return area.features.some((f) => boxContains(f.box, x, y) && contains(area.file, f, x, y));
+        };
+        return inArea(q.x) && inArea(q.x - half + 2) && inArea(q.x + half - 2) ? q : null;
+      },
+
+      /* Draws the name *text* at *p* (`spot`), out from under the pin; none
+       * where *p* is null. Returns as `drawText`. */
+      label(text, p, font, size, color, { kind, area, gap = 0 }) {
         if (!p) return null;
         let { x, y } = p;
         if (pin) {
           const half = textWidth(ctx, font, text) / 2 + 2;
           const hits = Math.abs(p.x - pin.x) < half + PIN && Math.abs(p.y - pin.y) < size / 2 + PIN;
           if (hits) y = pin.y + PIN + size / 2 + 2;
-        }
-        if (keepInside) {
-          // Kraj names label the whole country view; one at the edge of a
-          // narrow (phone) map or by the pane, with no room in the part of
-          // its kraj in view, would be cut off, so it slides inwards.
-          const half = textWidth(ctx, font, text) / 2 + 4;
-          x = Math.min(Math.max(x, free[0] + half), free[2] - half);
-          y = Math.min(Math.max(y, free[1] + size / 2), free[3] - size / 2);
         }
         return drawText(ctx, placer, text, x, y, font, size, color, { gap, kind, area, bounds: free });
       },
@@ -2217,9 +2255,13 @@ export async function createRenderer({ geoIndex, coarse: bytes, dataSource, colo
   function drawKrajNames(l) {
     for (const k of coarse.kraje) {
       const area = coarseAreas.get(`kraj:${k.id}`);
-      // Where no whole spot is free, at its own, slid inwards.
-      const p = l.spot(area, l.at(k.label), k.name, KRAJ_FONT, 14) ?? l.at(k.label);
-      l.label(k.name, p, KRAJ_FONT, 14, COLOR.kraj, { kind: 'kraj', area, keepInside: true });
+      const at = l.at(k.label);
+      // The kraje label the whole country, where a kraj is narrower than
+      // its name: where it has no room for it whole in view, its name is
+      // slid in from the edge of a narrow (phone) map or the pane, but
+      // from a spot out of view only into the kraj (`slide`), or not drawn.
+      const p = l.spot(area, at, k.name, KRAJ_FONT, 14) ?? l.slide(area, at, k.name, KRAJ_FONT, 14);
+      l.label(k.name, p, KRAJ_FONT, 14, COLOR.kraj, { kind: 'kraj', area });
     }
     for (const k of coarse.kraje) {
       const area = coarseAreas.get(`kraj:${k.id}`);

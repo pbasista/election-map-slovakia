@@ -2,8 +2,10 @@
 
 A cited page is fetched once (the project's User-Agent, a timeout, a size
 cap), sanitized and kept as ``data/curated/cache/<sha256>.html``; ``build``
-publishes it as ``cache/<sha256>.html`` next to the link to the original, so
-a claim stays checkable when the original changes or disappears.
+publishes it as ``cache/<sha256>.html``, which the app links as
+``cache/<sha256>`` (Pages serves it there and redirects the ``.html`` URL)
+next to the link to the original, so a claim stays checkable when the
+original changes or disappears.
 
 Sanitizing keeps what a reader needs to check a quote, the text, headings,
 lists, tables, links and images, and drops everything active or remote:

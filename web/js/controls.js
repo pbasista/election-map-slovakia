@@ -1,7 +1,8 @@
 /* The round buttons floating on the map: those with a small popover
  * (language; the map's layers: constituency boundaries, the ballots' (the
- * overview and the 2026 turnout) and the base map; theme, zoom, and help
- * with the disclaimer) and Favourites, which shows the candidates circled.
+ * overview and the 2026 turnout) and the base map; theme, zoom, and help:
+ * a short guide with the disclaimer) and Favourites, which shows the
+ * candidates circled.
  *
  * A popover is a non-modal dialog next to its button: opening it moves focus
  * into it; Esc, a click elsewhere or focus leaving it closes it. Only one is
@@ -12,7 +13,7 @@
 
 import { html, useEffect, useRef, useState } from '../vendor/preact-htm.module.js';
 import { useLoaded } from './data.js';
-import { formatNumber, lang, languagePage, languages, polls, switchLanguage, t } from './i18n.js';
+import { elections, formatNumber, lang, languagePage, languages, polls, switchLanguage, t } from './i18n.js';
 import {
   ArrowIcon,
   BaseMapIcon,
@@ -20,23 +21,26 @@ import {
   ColumnsIcon,
   CountryIcon,
   ExpandIcon,
+  EyeIcon,
   GlobeIcon,
   HeartIcon,
   HelpIcon,
   LAYER_ICON,
   LayersIcon,
+  Logo,
   MinusIcon,
   MoonIcon,
   PlusIcon,
+  SearchIcon,
   SunIcon,
   SystemIcon,
   TurnoutIcon,
 } from './icons.js';
-import { overviewKind } from './kinds.js';
+import { electionKind, electionLabel, isNational, kindIcon, kindStyle, overviewKind } from './kinds.js';
 import { useLive } from './live.js';
 import { CONSTITUENCIES, overlaysHere } from './map.js';
 import { setMapMode, useMapMode, useTurnoutChoices } from './mapmode.js';
-import { Notice } from './pane.js';
+import { CrossedNumber, Guide, Notice, SampleNumber } from './pane.js';
 
 // The legend of an overlay switched on: [swatch class (app.css), string].
 const OVERLAY_KEYS = {
@@ -479,11 +483,41 @@ export function ThemeMenu({ open, onToggle }) {
   `;
 }
 
+// The year of the oldest election the site shows (as about.js says it).
+const SINCE = elections.at(-1).day.slice(0, 4);
+
+/* The title bar's button that opens the list of elections (search.js): the
+ * logo with the badge of the page's election's kind. */
+const ElectionSample = () => {
+  const KindIcon = kindIcon(electionLabel);
+  return html`<span class="election-sample" style=${kindStyle(electionLabel)}>
+    <${Logo} /><span class="election-badge"><${KindIcon} /></span>
+  </span>`;
+};
+
+/* What the page offers, a row each (Guide), only those the election has.
+ * A referendum's answers are not circled or filtered (ballots.js
+ * `AnswerRow`); a country-wide election's candidates carry no party tags
+ * (`CandidateRow`). The boundaries row stands for the councils'
+ * constituencies: the polling districts alone are a detail. The
+ * disclaimer, then the link to the About dialog. */
 export function HelpMenu({ open, onToggle, aboutHash, onAbout }) {
+  const [here] = useLoaded(overlaysHere, []);
+  const candidates = electionKind !== 'referendum';
+  const rows = [
+    [SearchIcon, t('help.place'), t('help.place_result')],
+    candidates && [SampleNumber, t('help.circle'), t('help.circle_result')],
+    candidates && [CrossedNumber, t('help.cross'), t('help.cross_result')],
+    candidates && [EyeIcon, t(isNational ? 'help.filter_marks' : 'help.filter'), t('help.filter_result')],
+    overviewKind && [ColumnsIcon, t(`overview.open.${overviewKind}`), t(`help.overview.${overviewKind}`)],
+    ['zsk', 'city', 'oz'].some((k) => here?.has(k)) && [LayersIcon, t('help.layers'), t('help.layers_result')],
+    elections.length > 1 && [ElectionSample, t('help.elections'), t('help.elections_result')],
+  ].filter(Boolean);
   return html`
     <${Popover} name="help" label=${t('help.open')} icon=${HelpIcon} open=${open} onToggle=${onToggle}>
       <${Title} name="help">${t('app.name')}<//>
-      <p>${t('help.how')}</p>
+      <p>${t('help.lead', { since: SINCE })}</p>
+      <${Guide} rows=${rows} />
       <${Notice}>${t('disclaimer.short')}<//>
       <a
         class="more"

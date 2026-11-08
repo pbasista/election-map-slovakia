@@ -40,9 +40,10 @@ ingest``) accepts an item only if
   :func:`referenda`), before that referendum or the vote, the later, with
   a note;
 - it numbers the okrsky 1..N for the N okrsky of the territorial division
-  that have territory (:func:`territorial_counts`: the special okrsky,
-  :mod:`election_map_slovakia.special`, are counted after them and never
-  transcribed; the item names them, ``special``), giving every obvod of
+  that have territory
+  (:func:`election_map_slovakia.division.territorial_counts`: the special
+  okrsky, :mod:`election_map_slovakia.special`, are counted after them and
+  never transcribed; the item names them, ``special``), giving every obvod of
   the rule set its okrsky, each in one obvod, those ŠÚ SR's results count
   in it where known (:func:`grouping_problems`; a by-election's results
   count only the obvody that voted);
@@ -89,16 +90,13 @@ import numpy as np
 
 from election_map_slovakia import (
     addresses,
-    config,
     contests,
+    division,
     geo,
     jobs,
     obvodrules,
     obvody,
     special,
-    statoffice,
-    tables,
-    xlsx,
 )
 from election_map_slovakia.candidates import search_key
 from election_map_slovakia.config import BY_ELECTION, REGULAR, Config, Election
@@ -213,63 +211,6 @@ ITEM_SCHEMA: dict[str, Any] = {
 # --- make ------------------------------------------------------------------------
 
 
-def okrsok_counts(cfg: Config, election: Election) -> dict[str, int]:
-    """Return obec → its number of okrsky in *election* (its ``units`` input)."""
-    path = obvodrules.units_path(cfg, election)
-    units = obvodrules.units_of(election)
-    if units.format == "susr":
-        try:
-            return statoffice.okrsok_counts(obvodrules.units_package(path))
-        except (statoffice.StatOfficeError, ValueError) as e:
-            raise jobs.JobError(f"{path}: {e}") from None
-    if units.format == "volbysr":
-        try:
-            package = tables.open_package([path], dt.UTC)
-            t = package.table(units.table or "")
-            code = t.column("Kód obce")
-            count = t.column("Počet volebných okrskov", "Počet okrskov")
-            return {r[code]: int(r[count]) for r in t.rows}
-        except (tables.TableError, ValueError) as e:
-            raise jobs.JobError(f"{path}: {e}") from None
-    try:
-        header, rows = xlsx.find_header(xlsx.read_rows(path), "Kód kraja")
-        code, count = header.index("Kód obce"), header.index("Počet okrskov")
-        return {r[code]: int(r[count]) for r in rows}
-    except (xlsx.XlsxError, ValueError, IndexError) as e:
-        raise jobs.JobError(f"{path}: {e}") from None
-
-
-def special_okrsky(cfg: Config, election: Election) -> special.Specials:
-    """Return *election*'s special okrsky (:mod:`election_map_slovakia.special`).
-
-    Empty without a territorial division, which counts no okrsky, and
-    where neither its package nor ``special-okrsky.toml`` declares any (the
-    division is then not read).
-    """
-    path = cfg.election_dir(election) / special.FILE
-    if election.units is None or (not election.units.special and not path.is_file()):
-        return {}
-    return special.read(
-        obvodrules.units_path(cfg, election),
-        election.units,
-        config.load_special(path) if path.is_file() else None,
-        okrsok_counts(cfg, election),
-        str(path.relative_to(cfg.root)),
-    )
-
-
-def territorial_counts(cfg: Config, election: Election) -> dict[str, int]:
-    """Return obec → its okrsky with territory in *election*.
-
-    Those of the territorial division (:func:`okrsok_counts`) less its
-    special okrsky (:func:`special_okrsky`): a document numbers its own
-    okrsky 1..N, the special ones counted after them.
-    """
-    return special.territorial(
-        okrsok_counts(cfg, election), special_okrsky(cfg, election)
-    )
-
-
 def not_found_path(cfg: Config, election: Election) -> Path:
     """Return the file of the obce whose okrsky document was not found."""
     return cfg.election_dir(election) / obvody.OKRSKY_DIRECTORY / NOT_FOUND_FILE
@@ -349,8 +290,8 @@ def make(cfg: Config, options: jobs.MakeOptions) -> list[jobs.Batch]:
     names = {o["code"]: o for o in data["obce"]}
     okresy = {o["code"]: o["name"] for o in data["okresy"]}
     kraje = {k["code"]: k["name"] for k in data["kraje"]}
-    specials = special_okrsky(cfg, election)
-    counts = special.territorial(okrsok_counts(cfg, election), specials)
+    specials = division.special_okrsky(cfg, election)
+    counts = special.territorial(division.okrsok_counts(cfg, election), specials)
     directory = obvodrules.places_dir(cfg, election)
     not_found = load_not_found(cfg, election)
     pending = {i["id"] for j in options.pending for i in j.items}
@@ -836,8 +777,9 @@ def _count_problems(
 
     *rules*, numbered 1..N by their form, must have the N territorial
     okrsky of the territorial division (*item*'s ``okrsky``,
-    :func:`territorial_counts`: its ``special`` okrsky, without territory
-    and the highest-numbered, are left out), each obvod those ŠÚ SR's
+    :func:`election_map_slovakia.division.territorial_counts`: its
+    ``special`` okrsky, without territory and the highest-numbered, are left
+    out), each obvod those ŠÚ SR's
     results count in it (:func:`grouping_problems`). For an item without
     obvody in a vote other than a regular election, ŠÚ SR's okrsky are
     those of the whole obec, with the voters of those that voted where its

@@ -9,7 +9,7 @@ per target language:
 - ``ui``: one job per language with every UI string not translated yet, from
   the English text (more reliable for machine translation than Slovak), with
   the Slovak one for reference, a note where the string appears and, for
-  strings in tight places, a maximum length.
+  strings in tight places, a maximum length (both :data:`NOTES_FILE`).
 - ``occupations``: the occupations of every election's ``candidates.json``
   not translated yet, from Slovak, most frequent first, in jobs of about
   ``--size`` items (evenly split).
@@ -47,9 +47,11 @@ of the source (or, for UI strings, of the Slovak reference) unless marked
 
 from __future__ import annotations
 
+import functools
 import hashlib
 import math
 import re
+import tomllib
 import unicodedata
 from collections import Counter
 from collections.abc import Iterable, Iterator, Mapping
@@ -66,6 +68,10 @@ NAME = "translation"
 UI_DIR = Path("web") / "i18n"
 """The hand-written UI strings, relative to the project root."""
 CURATED_DIR = "translations"
+NOTES_FILE = Path(__file__).with_name("translation-notes.toml")
+"""The notes and maximum lengths of the UI strings for translators
+(:func:`ui_item`). Data, not code: the keys of the published parts count the
+package's code (:mod:`lock`), and no part shows them."""
 SOURCE = "en"
 """The language UI strings are translated from."""
 REFERENCE = "sk"
@@ -458,444 +464,6 @@ def text_id(text: str) -> str:
 
 # --- make ---------------------------------------------------------------------
 
-# The two kinds of controversy research reports, named alike in every
-# string that mentions them.
-_CONTROVERSIES = (
-    "research findings come in two kinds of controversy: serious ones"
-    " ('affairs': charges, court decisions against the candidate, matters an"
-    " authority established), marked in red, and 'allegations and disputes'"
-    " (unproven or denied claims, cases that ended in the candidate's"
-    " favour, lesser matters), marked in amber; keep the two names the same"
-    " wherever they appear; name the first with the plain word for"
-    " controversies (Slovak: 'Závažné kontroverzie'), not one that suggests a"
-    " case on its way to court (as Slovak and Czech 'kauza'), as not all of"
-    " them are; and never name the second with the word for criminal charges"
-    " (as Slovak 'obvinenie'), which belong to the first (Slovak: 'Podozrenia"
-    " a spory')"
-)
-
-_NOTES = (
-    (
-        "app.title.",
-        "browser tab title of the page of an election of the kind the key"
-        " ends in; {year} is the election's year",
-    ),
-    (
-        "app.description.",
-        "page description for search engines of an election of the kind the"
-        " key ends in, at most 160 characters; {year} is the election's year",
-    ),
-    (
-        "app.features.",
-        "paragraph for search engines and visitors without JavaScript: what"
-        " the site offers on the page of an election of the kind the key ends"
-        " in; {year} is the election's year",
-    ),
-    ("app.noscript", "shown when JavaScript is off"),
-    (
-        "site.description",
-        "page description for search engines of the site's front page: the"
-        " site as a whole, followed there by the description of the election"
-        " the front page shows; {since} is the year of the oldest election"
-        " the site shows",
-    ),
-    (
-        "site.features",
-        "paragraph for search engines and visitors without JavaScript on the"
-        " site's front page: the site as a whole, followed there by what it"
-        " offers on the page of the election the front page shows; {since} is"
-        " the year of the oldest election the site shows",
-    ),
-    (
-        "elections.item",
-        "an election named with its date: {name} is its name (the"
-        " elections.name.* strings), {date} its date, already formatted; the"
-        " header's subtitle, tooltips, screen readers and sentences use it;"
-        " no comma or other punctuation between the two (the header sets the"
-        " date apart by style), the order as the language puts them",
-    ),
-    (
-        "elections.name.",
-        "the name of an election of the kind the key ends in, without its"
-        " date: the header's subtitle before the date and the name under the"
-        " date in the list of elections; the short, widely accepted form"
-        " (parliament: the parliamentary election, to the National Council"
-        " of the Slovak Republic), no abbreviations",
-    ),
-    (
-        "elections.kind.",
-        "heading of a group in the list of elections, the kind the key ends"
-        " in (municipal-regional: the regular municipal and regional"
-        " elections; municipal, regional: the municipal or the regional"
-        " ones of a year they were held apart, named so to screen readers;"
-        " by-election: municipal by-elections and new elections in some"
-        " places; parliament: the parliamentary elections, to the National"
-        " Council of the Slovak Republic); also a heading in Favourites; the"
-        " short, widely accepted form, no abbreviations",
-    ),
-    (
-        "elections.part.",
-        "beside the date of an election in the list of elections, under the"
-        " heading of the municipal and regional elections: which of the two"
-        " it was, in a year they were held apart (an adjective agreeing with"
-        " 'elections')",
-    ),
-    (
-        "date.short",
-        "a date in numbers, for browsers without the language's calendar;"
-        " {month} is the month's number",
-    ),
-    ("nav.language", "heading of the language menu"),
-    (
-        "nav.switch",
-        "tooltip and accessible label of the language button; {current} and"
-        " {next} are language names",
-    ),
-    ("help.", "help button and its popover"),
-    (
-        "theme.button",
-        "tooltip of the appearance button; {mode} is one of the option names"
-        " (theme.system, theme.light, theme.dark)",
-    ),
-    ("theme.", "appearance menu (light or dark colours)"),
-    ("disclaimer.short", "short disclaimer in the help popover"),
-    ("disclaimer.more", "link from the help popover to the About dialog"),
-    ("disclaimer.", "item of the Disclaimers list in the About dialog"),
-    (
-        "translation.pending",
-        "notice on the pages of a language whose translation is incomplete",
-    ),
-    (
-        "layers.group",
-        "accessible name of the group of the three map buttons: constituency"
-        " boundaries, turnout on the map, base map",
-    ),
-    (
-        "layers.button",
-        "tooltip of the constituency boundaries button, which opens their menu",
-    ),
-    ("layers.oz_", "entry of the map legend"),
-    (
-        "layers.legend",
-        "fold-out in the boundaries menu that opens the note on when each"
-        " overlay appears and the legend of the lines and colours; short",
-    ),
-    ("layers.auto", "note in the fold-out of the boundaries menu"),
-    (
-        "layers.auto_",
-        "note in the fold-out of the boundaries menu, one sentence per overlay"
-        " where an election has only some of them (layers.auto otherwise)",
-    ),
-    (
-        "layers.base_title",
-        "title of the base map menu, also its button's tooltip",
-    ),
-    ("layers.base", "base map menu: a layer it switches on and off"),
-    ("layers.buildings", "base map menu: a layer it switches on and off"),
-    (
-        "layers.",
-        "boundaries menu: its title and the names of the constituency"
-        " overlays it switches on and off",
-    ),
-    (
-        "mapmode.button",
-        "tooltip of the turnout button, which opens the menu of the turnout"
-        " layers; {layer} is the layer shown (mapmode.off when none is, or one"
-        " of the mapmode.turnout_…_option)",
-    ),
-    (
-        "mapmode.menu.",
-        "title of the ballot-box menu of a party-list election or a"
-        " referendum, also its button's tooltip: it opens the overview of the"
-        " candidate lists or of the referendum's questions and puts the"
-        " turnout on the map",
-    ),
-    (
-        "mapmode.level_",
-        "a kind of unit the map's results go by, as {units} in mapmode.levels"
-        ' and mapmode.levels_one ("By …"); okresy are the 79 districts',
-    ),
-    (
-        "mapmode.tip_okres",
-        "first line of the map's tooltip over a district (okres); {name} is its name",
-    ),
-    (
-        "mapmode.winner_of_",
-        "legend subtitle of the map of who got the most votes where, after the"
-        " contest's name: what leads in each area (a candidate, a party, a"
-        " referendum's answer, a person on a party's list by preference votes)",
-    ),
-    (
-        "mapmode.share_",
-        "legend subtitle of a candidate's map, after the contest's name: what"
-        " the percentages are of",
-    ),
-    (
-        "mapmode.preferences",
-        "legend of the map of a person on a party's list: how many preference"
-        " votes they got in all, after their share",
-    ),
-    (
-        "mapmode.held_",
-        "map of a by-election, held in a few places only: its legend (title"
-        " 'where elections are held', the colour of the municipalities voting"
-        " and, lighter, of the districts they are in when zoomed out), its"
-        " close button, and the tooltip of a district ({places} their names,"
-        " {n} how many)",
-    ),
-    (
-        "map.attribution",
-        "attribution line at the bottom of the map; keep the names, © and"
-        " licence identifiers",
-    ),
-    (
-        "map.attribution_past",
-        "attribution line at the bottom of the map of an earlier election;"
-        " {boundaries} is map.credit_boundaries_other or the plain ZBGIS credit,"
-        " {osm} a date (the state of the base map), {addresses} a month"
-        " (MM/YYYY); keep the names, © and licence identifiers",
-    ),
-    (
-        "map.credit_",
-        "the boundaries' part of map.attribution_past; {on} is the year of the"
-        " boundaries drawn, {n} how many municipalities differed in {year};"
-        " keep the names, © and licence identifiers",
-    ),
-    ("map.obvod", "label on the map of the constituency number {n}; very short"),
-    ("map.", "map: accessible label and zoom buttons"),
-    ("country.", "name of a country, a label on the map: the usual short name"),
-    ("panel.", "side panel with the ballots"),
-    ("error.", "error message"),
-    ("search.type.", "short tag after a search result saying what it is"),
-    (
-        "search.okres",
-        "subtitle of a search result: the okres (district) a place is in;"
-        " {name} is the okres name, e.g. Malacky",
-    ),
-    ("search.person", "a candidate in search results: {name}, {age} in years"),
-    ("search.", "search box and its results"),
-    (
-        "place.kraj",
-        "subtitle of a place; {name} is the Slovak adjective naming the kraj"
-        " (region), e.g. Bratislavský",
-    ),
-    ("place.", "subtitle or message of the place shown in the panel"),
-    (
-        "ballots.country",
-        "subtitle of the panel of a country-wide election before a place is"
-        " chosen, under the heading 'Slovakia'",
-    ),
-    ("ballots.", "the ballots of a place"),
-    (
-        "scope.",
-        "button of the choice of the unit a ballot's results are of: the"
-        " whole contest, Slovakia, a region ({name} is the Slovak adjective of"
-        " the kraj), a district (okres, {name} its name), a constituency or"
-        " polling district ({n} its number)",
-    ),
-    (
-        "contest.president_round",
-        "heading of the ballot of one round of the election of the President"
-        " of the Slovak Republic; {round} is 1 or 2, {date} its day, short",
-    ),
-    ("contest.question", "heading of one question of a referendum; {n} its number"),
-    (
-        "contest.parties.",
-        "heading of the ballot of a party-list election, of the body the key"
-        " ends in: nrsr the National Council of the Slovak Republic, ep the"
-        " European Parliament",
-    ),
-    (
-        "contest.list",
-        "heading of a party's candidate list; {party} is the party's name,"
-        " {n} its ballot number",
-    ),
-    (
-        "contest.rules",
-        "a link-like button in a contest's facts line that unfolds the rules"
-        " of the contest (threshold, coalitions, preference votes, what makes"
-        " a referendum valid, what decides a presidential round)",
-    ),
-    (
-        "contest.rules_coalitions_",
-        "an item of contest.rules_coalitions' {list}: what a coalition of"
-        " {from} (to {to}) parties needs for seats, {share} a percentage",
-    ),
-    (
-        "contest.rules_",
-        "a sentence of the rules unfolded under a party-list ballot's facts:"
-        " the share of the valid votes a party needs for seats ({share}), what"
-        " coalitions need ({list} joins items of contest.rules_coalitions_*),"
-        " how many candidates of the chosen party's list a voter may circle"
-        " ({n}, preference votes)",
-    ),
-    (
-        "contest.preferences",
-        "a line of the tooltip of a party's row on a party-list ballot: how"
-        " many candidates of its list a voter may circle (preference votes)",
-    ),
-    (
-        "contest.too_many_",
-        "warning where the visitor has circled more parties than one, or more"
-        " candidates of a list than the preference votes allowed ({n}); {picked}"
-        " is how many are circled",
-    ),
-    (
-        "party.",
-        "a party on a party-list ballot (National Council or European"
-        " Parliament election) and its candidate list, which opens under it;"
-        " {share} is a threshold in %, {seats} and {n} numbers; preference"
-        " votes are the circles voters give candidates on the party's list",
-    ),
-    (
-        "referendum.",
-        "a referendum question: its answers (yes, no), its wording ({text},"
-        " in the quotation marks of the language), whether the referendum is"
-        " valid (more than half of the registered voters must take part)",
-    ),
-    (
-        "president.",
-        "a round of the election of the President of the Slovak Republic: the"
-        " rule of who is elected, and a candidate's result",
-    ),
-    (
-        "byelection.",
-        "the list of the places where municipal by-elections and new elections"
-        " are held (a municipality or region), and what each elects; {n} is a"
-        " number",
-    ),
-    (
-        "results.status_",
-        "part of the one-line status of the count under the site name;"
-        " {share} is a percentage counted, {round} 1 or 2 (presidential round)",
-    ),
-    (
-        "results.units_",
-        "item of the list {list} in results.status_units: the units counted"
-        " so far, {n} as 'counted/all'; {round} 1 or 2 (presidential round)",
-    ),
-    (
-        "contest.",
-        "heading or details of one contest (ballot); {name} is a municipality"
-        " or city name, {kraj} the Slovak adjective of the region, {n} a number",
-    ),
-    (
-        "council.summary_",
-        "one-line summary of a notice above the council ballots, whose whole"
-        " text is its tooltip; cut short where the line is too narrow, so short",
-    ),
-    ("council.", "notice above the council ballots of a municipality"),
-    (
-        "notice.summary_",
-        "one-line summary of a notice at the top of a municipality's ballots,"
-        " whose whole text unfolds under it; cut short where the line is too"
-        " narrow, so short",
-    ),
-    (
-        "notice.",
-        "notice at the top of a municipality's ballots on what the map draws"
-        " there that is not the election's own: {on} and {other} are years,"
-        " {date} a date, {others} names of municipalities",
-    ),
-    (
-        "okrsky.",
-        "the row of buttons on a municipality's ballots, one per polling"
-        " district whose results are known but which the map does not draw"
-        " (its addresses are not known, or it has no territory: a prison's, a"
-        " COVID-19 special one); a button's label is the number alone, these"
-        " are its title, accessible name, the row's title and one line of"
-        " explanation; {n} is a number, {name} a municipality, {facility} a"
-        " prison's name",
-    ),
-    (
-        "candidate.occupation_sk",
-        "tooltip of a translated occupation, and a line on the candidate card;"
-        " {text} is the occupation as written in Slovak",
-    ),
-    ("candidate.", "line of a candidate on a ballot"),
-    (
-        "pick.",
-        "the button on a candidate's ballot number: pressing it circles the"
-        " number, as Slovak voters circle the numbers of their candidates on"
-        " the ballot, and adds the candidate to Favourites; {n} is the"
-        " number",
-    ),
-    (
-        "favourites.title",
-        "name of the list of every candidate the visitor has circled, a"
-        " heading and a button's name: one word, the usual word for"
-        " favourites in apps, nothing that says 'my' (a link shares the list)",
-    ),
-    (
-        "favourites.",
-        "Favourites: the list of every candidate the visitor has circled,"
-        " which a link shares; its button, text and the button that copies"
-        " the link (an icon whose tooltip this is)",
-    ),
-    (
-        "card.list_position",
-        "candidate card of a person on a party's candidate list: {party} the"
-        " party's name, {n} the person's place on the list",
-    ),
-    ("card.", "candidate card"),
-    ("research.kind.cv", "candidate card, research section"),
-    ("research.kind.", _CONTROVERSIES),
-    (
-        "research.affairs_summary",
-        f"{_CONTROVERSIES}. This one is the one-line summary, in red at the top"
-        " of the candidate card, of the notice research.affairs_alert, which"
-        " unfolds under it; cut short where the line is too narrow, so short",
-    ),
-    ("research.affairs_", _CONTROVERSIES),
-    ("research.disputes_", _CONTROVERSIES),
-    ("filter.affairs", _CONTROVERSIES),
-    ("filter.disputes", _CONTROVERSIES),
-    (
-        "research.notice_summary",
-        "one-line summary of the notice research.notice, which unfolds under it"
-        " in the candidate card's research section; cut short where the line is"
-        " too narrow, so short",
-    ),
-    ("research.", "candidate card, research section"),
-    ("about.category.", "name of a group of news sources in the About dialog"),
-    (
-        "about.lead",
-        "first sentence of the About dialog: the site as a whole; {since} is"
-        " the year of the oldest election the site shows",
-    ),
-    (
-        "about.feature.",
-        "an item of the bulleted list in the About dialog of what the page of"
-        " an election offers, under its name: short, plain, one sentence",
-    ),
-    ("about.", "About dialog"),
-)
-_LIMITS = (
-    ("map.obvod", 12),
-    ("card.back", 16),
-    ("panel.close", 16),
-    ("candidate.age", 16),
-    ("nav.language", 20),
-    ("theme.light", 20),
-    ("theme.dark", 20),
-    ("map.zoom", 24),
-    ("theme.title", 24),
-    ("layers.title", 24),
-    ("search.type.", 24),
-    ("favourites.title", 20),
-    ("country.", 28),
-    ("theme.system", 30),
-    ("search.placeholder", 34),
-    ("disclaimer.more", 34),
-    ("elections.name.", 40),
-    ("council.summary_", 52),
-    ("notice.summary_", 52),
-    # What fits a 360 px phone in Latin script: the first in bold, beside the
-    # button that jumps to the controversies.
-    ("research.affairs_summary", 33),
-    ("research.notice_summary", 42),
-)
-
 
 def _by_prefix(key: str, table: Iterable[tuple[str, Any]]) -> Any:
     """Return the value of the first entry whose key or prefix *key* matches."""
@@ -909,13 +477,32 @@ def _by_prefix(key: str, table: Iterable[tuple[str, Any]]) -> Any:
     )
 
 
+@functools.cache
+def _hints() -> dict[str, Any]:
+    """Return the content of :data:`NOTES_FILE`, read once per process."""
+    return tomllib.loads(NOTES_FILE.read_text(encoding="utf-8"))
+
+
+@functools.cache
+def _notes() -> tuple[tuple[str, str], ...]:
+    """Return the (key or prefix, note) of :data:`NOTES_FILE`, in its order."""
+    entries = _hints()["note"]
+    return tuple((key, entry["text"]) for entry in entries for key in entry["keys"])
+
+
+@functools.cache
+def _limits() -> tuple[tuple[str, int], ...]:
+    """Return the (key or prefix, maximum length) of :data:`NOTES_FILE`, in its order."""
+    return tuple(_hints()["max_length"].items())
+
+
 def ui_item(key: str, source: str, reference: str) -> dict[str, Any]:
     """Return the job item of UI string *key*."""
     item: dict[str, Any] = {"id": key, "source": source, "sk": reference}
-    note = _by_prefix(key, _NOTES)
+    note = _by_prefix(key, _notes())
     if note:
         item["note"] = note
-    limit = _by_prefix(key, _LIMITS)
+    limit = _by_prefix(key, _limits())
     if limit:
         item["max_length"] = max(limit, len(source))
     return item

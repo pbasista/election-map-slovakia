@@ -13,11 +13,15 @@ browser as they are (e.g. `-- --no-sandbox` where its sandbox cannot run).
 
 The scene: the English page in the dark theme, 1280×800 at twice the pixel
 density, Banská Bystrica clicked in its council constituency No. 1, so the
-pane lists the ballots there beside the map. Whenever it is taken, it shows
-the day before the elections: the page's clock is set to noon that day, so
-there is no voting line, and the results (/results/, /live/) are blocked, so
-there are none even in a build that reads them at any time
-(EMS_RESULTS_ANYTIME).
+pane lists the ballots there beside the map with the final results: the
+council's turnout, the candidates by votes with their shares and the
+elected marked; the map shows who got the most votes in each polling
+district of the constituency, with its legend. Whenever it is taken, it
+shows the same moment after the latest elections: the page's clock is set
+to noon of the day after the app stops polling for results (live_days after
+the polls close), so the app reads the final results and shows no voting
+or counting line. It waits for the results to be drawn and fails on any
+error the page reports.
 """
 
 import argparse
@@ -44,17 +48,36 @@ ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
 OUT = ROOT / "docs/img/main.png"
 ELECTIONS = ROOT / "config/elections.toml"
-# The files of the final and of the live results, as the shells' config
-# names them (build.py).
-RESULTS = ("*/results/*", "*/live/*")
 WIDTH, HEIGHT, SCALE = 1280, 800, 2
 # Banská Bystrica (obec 508438), a point in its council constituency No. 1;
-# `~`: the constituency of a clicked point, as the map marks it.
-HASH = "#o=508438&ll=48.73850,19.14650&n=1~"
+# `~`: the constituency of a clicked point, as the map marks it. `mr`: the
+# map shows who got the most votes in each polling district of that
+# council contest (`winner:<contest>`), with its legend; `m`: zoomed to the
+# constituency, as its "most votes" button fits it, a little south so that
+# the legend leaves the coloured districts in view (a link's view is kept,
+# where the mode alone would fit the whole obec).
+HASH = (
+    "#o=508438&ll=48.73850,19.14650&n=1~"
+    "&m=13.62/48.73900/19.13530&mr=winner:oz:508438/1"
+)
 # The pane has loaded the ballots of the point when it shows this.
 READY = "Municipal council of Banská Bystrica, constituency 1"
-# After the pane is ready: time for the map to fit the constituency and draw.
-SETTLE = 3.0
+# Null until the pane is READY and the legend counts the districts each
+# leader won, which it does once the results are in and on the map; then
+# a digest of the map's canvas after the next frames, to tell when the
+# map has stopped moving and drawing.
+DRAWN = """(async () => {
+  if (!document.body.innerText.includes(%s)) return null;
+  if (!document.querySelector('.map-legend .map-legend-count')) return null;
+  await new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)));
+  const png = new TextEncoder().encode(document.querySelector('canvas.km-canvas').toDataURL());
+  const digest = await crypto.subtle.digest('SHA-256', png);
+  return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('');
+})()""" % json.dumps(READY)
+# The map counts as drawn once its canvas is unchanged this many times in a
+# row, CHECK_EVERY seconds apart.
+STILL = 4
+CHECK_EVERY = 0.25
 # Shifts the page's clock (Date) to the time filled in (ms since the epoch),
 # running on from there. Injected over DevTools (which needs the Page
 # domain enabled for it), it runs before the page's own scripts and outside
@@ -112,6 +135,25 @@ class DevTools:
         if b" 101 " not in head.split(b"\r\n", 1)[0]:
             raise RuntimeError(f"DevTools refused the WebSocket: {head[:200]!r}")
         self.next_id = 0
+        # The page's errors told meanwhile (with the Runtime and Log domains
+        # enabled): uncaught exceptions, console.error, failed loads.
+        self.errors: list[str] = []
+
+    def _note(self, message: dict) -> None:
+        """Keep *message*, an event, in `errors` if it tells of one."""
+        params = message.get("params", {})
+        match message.get("method"):
+            case "Runtime.exceptionThrown":
+                details = params["exceptionDetails"]
+                exception = details.get("exception", {})
+                self.errors.append(exception.get("description") or details["text"])
+            case "Runtime.consoleAPICalled" if params["type"] == "error":
+                args = params["args"]
+                texts = (str(a.get("value", a.get("description", ""))) for a in args)
+                self.errors.append(f"console.error: {' '.join(texts)}")
+            case "Log.entryAdded" if params["entry"]["level"] == "error":
+                entry = params["entry"]
+                self.errors.append(f"{entry['text']} {entry.get('url', '')}".strip())
 
     def _read(self, n: int) -> bytes:
         while len(self.buffer) < n:
@@ -136,7 +178,7 @@ class DevTools:
                 return json.loads(payload)
 
     def call(self, method: str, **params) -> dict:
-        """Send a command and return its result, skipping events meanwhile."""
+        """Send a command and return its result, noting events meanwhile."""
         self.next_id += 1
         request = {"id": self.next_id, "method": method, "params": params}
         body = json.dumps(request).encode()
@@ -152,10 +194,12 @@ class DevTools:
         self.sock.sendall(header + mask + masked)
         while True:
             message = self._message()
-            if message.get("id") == self.next_id:
-                if "error" in message:
-                    raise RuntimeError(f"{method}: {message['error']}")
-                return message["result"]
+            if message.get("id") != self.next_id:
+                self._note(message)
+                continue
+            if "error" in message:
+                raise RuntimeError(f"{method}: {message['error']}")
+            return message["result"]
 
 
 class _QuietHandler(http.server.SimpleHTTPRequestHandler):
@@ -175,7 +219,7 @@ class _QuietHandler(http.server.SimpleHTTPRequestHandler):
         sources = DIST / "sources" / rel
         return str(app if app.exists() or not sources.exists() else sources)
 
-    def log_message(self, *_args) -> None:
+    def log_message(self, format: str, *args: object) -> None:
         """Log nothing: the base class logs every request to stderr."""
 
 
@@ -212,26 +256,41 @@ def page_socket(browser: subprocess.Popen, profile: Path, deadline: float) -> st
     sys.exit("screenshot: the browser did not start its DevTools")
 
 
-def wait_until_ready(tools: DevTools, deadline: float) -> None:
-    """Wait until the pane shows the ballots of the point (READY)."""
-    check = f"document.body.innerText.includes({json.dumps(READY)})"
+def wait_until_drawn(tools: DevTools, deadline: float) -> None:
+    """Wait until the results are in the pane and still on the map (DRAWN)."""
+    last, still = None, 0
     while time.monotonic() < deadline:
-        if tools.call("Runtime.evaluate", expression=check)["result"].get("value"):
+        result = tools.call("Runtime.evaluate", expression=DRAWN, awaitPromise=True)
+        drawn = result["result"].get("value")
+        still = still + 1 if drawn and drawn == last else 0
+        if still == STILL:
             return
-        time.sleep(0.2)
-    sys.exit(f"screenshot: the pane did not show {READY!r} in {TIMEOUT:.0f} s")
+        last = drawn
+        time.sleep(CHECK_EVERY)
+    sys.exit(
+        f"screenshot: no results drawn in {TIMEOUT:.0f} s (pane {READY!r}, the "
+        "legend's counts, a still map); does dist/ have the final results?"
+    )
 
 
-def day_before() -> int:
-    """Return noon of the day before the latest elections, in ms since the epoch.
+def after_results() -> int:
+    """Return noon once the home election's results are final, in ms (epoch).
 
-    The latest election is the one /en/ shows.
+    The home election is the newest one that is not a by-election, the one
+    /en/ shows (config.py `Config.home`). The noon is that of the day after
+    the app's polling window (the polls' closing plus live_days): past it the
+    app reads the final results once per page load and shows no voting or
+    counting line, whatever the build's `live`. Unlike the real time, it
+    keeps the screenshot the same whenever it is taken.
     """
     elections = tomllib.loads(ELECTIONS.read_text())["election"].values()
+    home = max(
+        (e for e in elections if e["kind"] != "by-election"), key=lambda e: e["day"]
+    )
+    close = dt.datetime.combine(home["day"], home["polls_close"])
+    last = (close + dt.timedelta(days=home["live_days"])).date()
     noon = dt.datetime.combine(
-        max(e["day"] for e in elections) - dt.timedelta(days=1),
-        dt.time(12),
-        ZoneInfo("Europe/Bratislava"),
+        last + dt.timedelta(days=1), dt.time(12), ZoneInfo("Europe/Bratislava")
     )
     return int(noon.timestamp() * 1000)
 
@@ -245,7 +304,7 @@ def main() -> None:
     if not (DIST / "app/en/index.html").exists():
         sys.exit("screenshot: no dist/app/en/index.html; run `uv run ems build` first")
     server = serve()
-    noon = day_before()
+    noon = after_results()
     url = f"http://127.0.0.1:{server.server_port}/en/{HASH}"
     deadline = time.monotonic() + TIMEOUT
     # The browser's helpers may still be writing to the profile as it goes;
@@ -285,17 +344,18 @@ def main() -> None:
                 features=[{"name": "prefers-color-scheme", "value": "dark"}],
             )
             tools.call("Page.enable")
+            tools.call("Runtime.enable")
+            tools.call("Log.enable")
             tools.call("Page.addScriptToEvaluateOnNewDocument", source=CLOCK % noon)
-            tools.call("Network.enable")
-            tools.call("Network.setBlockedURLs", urls=list(RESULTS))
             tools.call("Page.navigate", url=url)
-            wait_until_ready(tools, deadline)
-            time.sleep(SETTLE)
+            wait_until_drawn(tools, deadline)
             shot = tools.call("Page.captureScreenshot", format="png")
         finally:
             browser.terminate()
             browser.wait()
             server.shutdown()
+    if tools.errors:
+        sys.exit("screenshot: the page had errors:\n" + "\n".join(tools.errors))
     OUT.write_bytes(base64.b64decode(shot["data"]))
     print(f"wrote {OUT.relative_to(ROOT)}")
 

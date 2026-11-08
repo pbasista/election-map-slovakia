@@ -642,7 +642,9 @@ def _research_requests(
 ) -> list[tuple[str, str]]:
     """Return (``dist/`` path, why) for the cached pages research cites.
 
-    The research of the election whose data bundle is below *root*.
+    The research of the election whose data bundle is below *root*. The
+    app links a copy as ``cache/<sha256>``, which Pages (and ``serve``)
+    answers with the file ``cache/<sha256>.html``.
     """
     return [
         (f"{SOURCES}{bundle.CACHE_DIR}/{f[7]}.html", rel)

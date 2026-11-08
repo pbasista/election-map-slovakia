@@ -79,7 +79,15 @@ from collections.abc import Generator, Iterable, Iterator, Mapping, Sequence
 from pathlib import Path
 from typing import Any
 
-from election_map_slovakia import cache, candidates, contests as kinds, jobs, sources
+from election_map_slovakia import (
+    cache,
+    candidates,
+    contests as kinds,
+    geo,
+    jobs,
+    results,
+    sources,
+)
 from election_map_slovakia.config import OBEC_CODE, OKRES_CODE, Config, Election
 
 NAME = "research"
@@ -174,7 +182,7 @@ def ballots(
     Every council obvod of the obec counts: who lives where within it is the
     address's business.
 
-    *props* is :func:`bundle.obec_props` (regional and city council obvod).
+    *props* is :func:`results.obec_props` (regional and city council obvod).
     """
     contests: dict[str, list[str]] = defaultdict(list)
     for c in data["contests"]:
@@ -226,9 +234,7 @@ def _places(
         return known
     if election.kind in kinds.NATIONAL:
         return _contests_only(election, known, places)
-    from election_map_slovakia import bundle, geo  # bundle imports this module
-
-    props = bundle.obec_props(cfg.election_build_dir(election) / geo.OUTPUT_DIR)
+    props = results.obec_props(cfg.election_build_dir(election) / geo.OUTPUT_DIR)
     by_obec = ballots(data, props)
     selected: set[str] = set()
     for place in places:

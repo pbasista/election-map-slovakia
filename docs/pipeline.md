@@ -1111,6 +1111,8 @@ the live results at `/live/`,
 and the cached copies at the root, where the app has no such path.
 Each part's responses carry the headers of its own `_headers`,
 read once at startup,
+a path without extension is also the file of that name with `.html`
+(the cached copies are linked as `/cache/<sha256>`),
 and a missing path is answered with the part's `404.html`
 and status 404,
 as Cloudflare Pages does
@@ -1224,7 +1226,16 @@ so that a release of them does not deploy the same results again,
 and a new pin of an extract changes the keys of its base map and of the
 maps of the elections on it alone.
 Code counts by its source text, comments included,
-so that every Python computes the same keys.
+so that every Python computes the same keys:
+that of the package's Python modules the steps import, directly or not.
+The map steps import none of the agent jobs' code
+(`division.py` counts an election's okrsky apart from the `okrsok-rules` job),
+so a job's new prompt or check changes no map key;
+the data's code does (the bundles read curated data with it),
+so such a change changes every data key and the results key.
+The notes and maximum lengths for translators of the UI strings
+(`src/election_map_slovakia/translation-notes.toml`)
+are data no part shows: they change no key.
 Changes to the app alone (`web/`, UI strings, `site.toml`)
 change no key.
 

@@ -16,9 +16,10 @@ import { html, useEffect, useRef, useState } from '../vendor/preact-htm.module.j
 import { Contest, FilterBar, useRowActions } from './ballots.js';
 import { contests, useLoaded } from './data.js';
 import { formatNumber, t } from './i18n.js';
-import { BackIcon, CheckIcon, CloseIcon, LinkIcon, QrIcon } from './icons.js';
+import { BackIcon, CheckIcon, CloseIcon, ExpandIcon, LinkIcon, QrIcon } from './icons.js';
 import { electionKind, isCountry, isMunicipal, isRegional } from './kinds.js';
 import { decodeResults, NOT_COUNTED, useLive } from './live.js';
+import { Guide, SampleNumber } from './pane.js';
 import { byContest } from './picks.js';
 
 // How long the button says that it has copied the link.
@@ -281,8 +282,12 @@ export function Favourites({ picks, onPicks, filter, onFilter, onCandidate, onBa
   </header>`;
 
   let body;
-  if (!ids.length) body = html`<p class="panel-body intro">${t('favourites.empty')}</p>`;
-  else if (failed) body = html`<p class="panel-body error">${t('error.load')}</p>`;
+  if (!ids.length) {
+    body = html`<div class="panel-body intro">
+      <p>${t('favourites.empty')}</p>
+      <${Guide} rows=${[[SampleNumber, t('favourites.how_circle'), t('favourites.how_circle_result')]]} />
+    </div>`;
+  } else if (failed) body = html`<p class="panel-body error">${t('error.load')}</p>`;
   else if (!result) body = html`<p class="panel-body muted loading">${t('panel.loading')}</p>`;
   else {
     const byId = new Map(list.map((c) => [c.id, c]));
@@ -305,7 +310,16 @@ export function Favourites({ picks, onPicks, filter, onFilter, onCandidate, onBa
         : null;
     body = html`
       <${FilterBar} filter=${filter} onFilter=${onFilter} actions=${actions} />
-      <p class="panel-body intro">${t('favourites.intro')}</p>
+      <div class="panel-body intro">
+        <p>${t('favourites.intro')}</p>
+        <${Guide}
+          rows=${[
+            [ExpandIcon, t('favourites.how_header'), t('favourites.how_header_result')],
+            [LinkIcon, t('favourites.how_link'), t('favourites.how_link_result')],
+            [QrIcon, t('favourites.how_qr'), t('favourites.how_qr_result')],
+          ]}
+        />
+      </div>
       ${group(
         t('ballots.municipal'),
         shown.filter((c) => isMunicipal(c.id)),

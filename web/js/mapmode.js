@@ -1646,14 +1646,56 @@ function TapCard({ lines, at, insets, onClose }) {
   </div>`;
 }
 
-/* Where the tooltip of the pointer at *tip* {x, y} goes: below and right
- * of it, or left of it near the right edge of the page, where it would
- * not fit. */
-const tipStyle = ({ x, y }) => ({
-  left: `${x}px`,
-  top: `${y}px`,
-  transform: x > innerWidth - 300 ? 'translate(calc(-100% - 14px), 14px)' : 'translate(14px, 14px)',
-});
+/* Puts the tooltip *el* by the pointer at *at* {x, y}: below and right of
+ * it, or left of it near the right edge of the page, where it would not
+ * fit. */
+function placeTip(el, { x, y }) {
+  el.style.left = `${x}px`;
+  el.style.top = `${y}px`;
+  el.style.transform = x > innerWidth - 300 ? 'translate(calc(-100% - 14px), 14px)' : 'translate(14px, 14px)';
+}
+
+/* Whether *a* and *b* are the same unit (draw.js `unitAt`). */
+const sameUnit = (a, b) => a.kind === b.kind && a.key === b.key && a.unvoted === b.unvoted;
+
+/* The tooltip of the unit under the pointer (map.js `setHover`) on *map*,
+ * with its figures *figs* (`figures`) of mode *m*. It is rendered only when
+ * the unit changes: the pointer moved within one only moves it, by its
+ * style, so that following the pointer costs no render. */
+function HoverTip({ map, figs, m, index }) {
+  const [unit, setUnit] = useState(null);
+  const tip = useRef(null);
+  // The pointer's latest position, and the unit rendered.
+  const at = useRef(null);
+  const shownUnit = useRef(null);
+
+  useEffect(() => {
+    map.setHover((hit) => {
+      at.current = hit;
+      const next = hit?.unit ?? null;
+      const now = shownUnit.current;
+      if (next && now ? sameUnit(next, now) : next === now) {
+        if (hit && tip.current) placeTip(tip.current, hit);
+        return;
+      }
+      shownUnit.current = next;
+      setUnit(next);
+    });
+    return () => {
+      map.setHover(null);
+      at.current = null;
+      shownUnit.current = null;
+      setUnit(null);
+    };
+  }, [map, m]);
+
+  useLayoutEffect(() => {
+    if (tip.current && at.current) placeTip(tip.current, at.current);
+  });
+
+  const lines = unit ? tipLines(unit, figs, m, index) : null;
+  return lines ? html`<div class="map-tip" role="tooltip" ref=${tip}>${tipContent(lines)}</div>` : null;
+}
 
 /* The okrsky the map draws (geo/index.json `okrsky.drawn`, obec → the
  * numbers of its okrsky that have an area), for a component: {keys: Set of
@@ -1713,7 +1755,6 @@ export function MapResults({ map, legendRef, phone, sheet, insets }) {
   const mode = useMapMode();
   const live = useLive();
   const [index] = useLoaded(dataIndex, []);
-  const [tip, setTip] = useState(null);
   // The unit tapped (map.js `setInspect`), and the visitor's choice of the
   // legend folded or not.
   const [tapped, setTapped] = useState(null);
@@ -1775,7 +1816,6 @@ export function MapResults({ map, legendRef, phone, sheet, insets }) {
 
   useEffect(() => {
     if (!map || !m) return undefined;
-    map.setHover(setTip);
     // A tap on a unit with figures shows them; one beside the card closes
     // it; elsewhere the tap picks the place.
     map.setInspect((hit) => {
@@ -1785,9 +1825,7 @@ export function MapResults({ map, legendRef, phone, sheet, insets }) {
       return Boolean(lines || now.tapped);
     });
     return () => {
-      map.setHover(null);
       map.setInspect(null);
-      setTip(null);
       setTapped(null);
     };
   }, [map, m]);
@@ -1842,7 +1880,6 @@ export function MapResults({ map, legendRef, phone, sheet, insets }) {
   const years = result?.figs.ran ? html`<${YearChoice} m=${m} then=${then} />` : null;
   const classes = ['map-legend', tone && tone !== 'result' && 'toned', m.kind === 'winner' && 'winner'];
   const style = tone ? { '--tone': `var(--map-${tone})` } : undefined;
-  const lines = tip && shown && index ? tipLines(tip.unit, result.figs, m, index) : null;
   const tappedLines = tapped && shown && index ? tipLines(tapped.unit, result.figs, m, index) : null;
   // Where a by-election is held, its subtitle says by which units.
   const levels = shown && !held ? levelsOf(result.figs) : [];
@@ -1941,7 +1978,7 @@ export function MapResults({ map, legendRef, phone, sheet, insets }) {
   }
   return html`
     ${legend}
-    ${lines ? html`<div class="map-tip" role="tooltip" style=${tipStyle(tip)}>${tipContent(lines)}</div>` : null}
+    ${map && shown && index ? html`<${HoverTip} map=${map} figs=${result.figs} m=${m} index=${index} />` : null}
     ${tappedLines ? html`<${TapCard} lines=${tappedLines} at=${tapped} insets=${insets} onClose=${() => setTapped(null)} />` : null}
   `;
 }

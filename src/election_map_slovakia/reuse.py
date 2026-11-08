@@ -140,6 +140,7 @@ from typing import Any
 from election_map_slovakia import (
     addresses,
     candidates,
+    division,
     jobs,
     obvodrules,
     obvody,
@@ -619,7 +620,7 @@ def _run_other(cfg: Config, election: Election) -> list[str]:
     new = candidates.new_councils(data["contests"])
     units = {s.day: obvodrules.official_okrsky(cfg, s) for s in regular}
     lines = []
-    for code, count in sorted(okrsokrules.territorial_counts(cfg, election).items()):
+    for code, count in sorted(division.territorial_counts(cfg, election).items()):
         current = obvody.load_obec(curated, code)
         if (
             count < _SEVERAL
@@ -881,13 +882,13 @@ class Vote:
     @functools.cached_property
     def specials(self) -> special.Specials:
         """Return its special okrsky, without territory (:mod:`election_map_slovakia.special`)."""
-        return okrsokrules.special_okrsky(self.cfg, self.election)
+        return division.special_okrsky(self.cfg, self.election)
 
     @functools.cached_property
     def counts(self) -> dict[str, int]:
         """Return obec → its territorial okrsky in the territorial division."""
         return special.territorial(
-            okrsokrules.okrsok_counts(self.cfg, self.election), self.specials
+            division.okrsok_counts(self.cfg, self.election), self.specials
         )
 
     @functools.cached_property

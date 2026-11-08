@@ -4,6 +4,71 @@ Notable changes, newest first. The version is set in
 `src/election_map_slovakia/__init__.py`; tagging `vX.Y.Z` builds and deploys
 it (see [docs/deploy.md](docs/deploy.md)).
 
+## 0.9.3 — 2026-11-08
+
+- **Smoother panning in Chromium on older GPUs:** Chromium drew the map's
+  shapes in its GPU process, 200–300 ms a drawing on an Intel HD 630
+  (no multisampling there), and the drawings queued up and blocked its
+  frames, so a pan ran at a few frames a second and caught up seconds
+  late. Chromium, on phones too, now draws the map on the CPU in the
+  map's worker, and a view is asked for only once the last drawing is on
+  screen.
+- **Smoother hovering and panning in Firefox:** Firefox copied the whole
+  map image (up to 133 MB at 2560×1440, twice the pixels) to its
+  compositor on every repaint, so each tooltip move or pan frame cost
+  that copy. There the map is drawn into a 2D canvas, copied once per
+  drawing; Chromium keeps the cheaper path it had.
+- **Drafts while panning where drawing is slow:** when a sharp drawing
+  takes over 60 ms (large hi-DPI screens, slower machines), counting
+  Firefox's copy of it to the page, a pan is redrawn at a quarter of the
+  pixels as it goes and sharp where it ends; elsewhere pans stay sharp.
+- **The tooltip follows the pointer while the map draws:** it waited for
+  the unit under the newest pointer position and froze, up to 1.5 s
+  after a zoom; it now shows the last unit found while asking about the
+  newest position. A tooltip move re-renders only the tooltip, no longer
+  the results legend.
+- **Kraj names stay in their kraje:** where a kraj's label point was out
+  of view, its name was pulled to the edge of the visible map, over
+  another kraj or outside Slovakia, so every kraj was named in every view
+  below zoom 8; most visible on phones, whose screen shows part of the
+  country under the bottom sheet. A name now slides inwards only while
+  its label point is in view, and otherwise appears only where it fits
+  wholly inside its own kraj.
+- **A help box readable at a glance:** the "?" box has a one-line lead
+  and a short list, each row the icon of its control, the action and
+  what it gives (search, circle, cross out, filter, overview, layers,
+  other elections), only the rows that apply to the election shown; the
+  disclaimer is one line.
+- **Favourites explained in a few rows:** a short lead and the actions
+  (a contest's header, the link, the QR code) with their icons; the
+  tooltips and captions are shorter.
+- **The help box and Favourites address the reader formally** where the
+  language has a formal address, as the rest of the interface does
+  (Slovak "Kliknite na mapu", Czech "Klikněte", German "Klicken Sie",
+  Hungarian "Kattintson"); English is impersonal.
+- **Toggling an option no longer resizes its menu:** a chosen option in
+  the layers, theme and language menus, and the chosen scope of a
+  contest's results, keep their weight; the background marks them.
+- **A cached copy opens without a redirect:** its link has no `.html`,
+  which Cloudflare Pages redirected away; `ems serve` serves such paths
+  as Pages does.
+- **Fewer needless redeploys of the data:** a data part's key counts the
+  source of every module its code imports, so editing translator notes
+  or job code changed every key, and a release deployed identical data
+  again. The translator notes and the maximum lengths of translations
+  are now a data file of their own, `translation-notes.toml`, which no
+  key counts. What the maps need of the territorial division
+  (polling-district counts, the units of a vote) is in a module of its
+  own, `division.py`, and the results' code no longer imports the
+  bundles', so the maps' keys no longer follow the agent jobs,
+  translations, research or bundles. The data and results keys still
+  do. A test guards both.
+- **The README's screenshot shows the results:** `scripts/screenshot.py`
+  shows the page some days after the latest elections, a council
+  constituency with its final results and the map coloured by who led
+  each polling district, and waits until the map is drawn; it fails on
+  any page error.
+
 ## 0.9.2 — 2026-11-07
 
 - **The release's app passes its checks again:** its Content-Security-

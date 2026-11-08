@@ -403,7 +403,7 @@ def test_regional_past_sums_the_obce_of_each_2026_obvod():
         ]
     }
     props = {"528595": {"zsk": 1}, "508063": {"zsk": 2}, "508071": {"zsk": 2}}
-    assert bundle.regional_past(data, props) == {
+    assert results.regional_past(data, props) == {
         "zsk:1/1": past("osk2022", 100, 30),
         "zsk:1/2": past("osk2022", 500, 110),
     }
@@ -808,7 +808,7 @@ def test_versions_and_results(tmp_path: Path):
             ("app", f"/assets/img/{first['images']}/parties/demokrati.svg"),
             ("app", "/i18n/sk.json"),
             ("sources", "/assets/cache.css"),
-            ("sources", "/cache/0a.html"),
+            ("sources", "/cache/0a"),
             ("map/2026", "/geo/x.json"),
             ("data/2026", "/data/index.json"),
             ("base/osm-slovakia-2026", "/okres/101/0.json"),
@@ -822,7 +822,7 @@ def test_versions_and_results(tmp_path: Path):
         ("app", f"/assets/img/{first['images']}/parties/demokrati.svg"): immutable,
         ("app", "/i18n/sk.json"): day,
         ("sources", "/assets/cache.css"): day,
-        ("sources", "/cache/0a.html"): day,
+        ("sources", "/cache/0a"): day,
         # A deployment's address always serves the same bundle.
         ("map/2026", "/geo/x.json"): immutable,
         ("data/2026", "/data/index.json"): immutable,
@@ -1446,6 +1446,22 @@ def test_by_election_council_part_of_a_larger_one():
     assert bundle.council_count([3], None, part=True) == 3
     assert bundle.council_count([1], None, part=True) == 2
     assert bundle.council_count([1], None, part=False) == 1
+
+
+def test_serve_locates_a_path_without_html_as_pages_does(tmp_path: Path):
+    """A cached copy, cache/<sha256>.html, is linked as /cache/<sha256>;
+    the root parts are searched in turn, the app's first."""
+    app, sources = tmp_path / "app", tmp_path / "sources"
+    (app / "sk").mkdir(parents=True)
+    (app / "sk" / "index.html").write_text("")
+    (sources / "cache").mkdir(parents=True)
+    (sources / "cache" / "0a.html").write_text("")
+    parts = [("/", app), ("/", sources)]
+    assert build.locate(parts, "/cache/0a") == (1, "/cache/0a.html")
+    assert build.locate(parts, "/cache/0a.html") == (1, "/cache/0a.html")
+    assert build.locate(parts, "/sk/") == (0, "/sk/")
+    # Missing: the app answers, with its 404.html.
+    assert build.locate(parts, "/cache/0b") == (0, "/cache/0b")
 
 
 def test_an_uncontested_contest_is_listed_but_not_held():

@@ -6,8 +6,9 @@
  * Messages from the page (map.js): first {method: 'init', args: [options]}
  * (see `createRenderer`), then {method, args, id?}, a call of the
  * renderer's method; with an id, the result comes back as {id, value} or
- * {id, error}. Drawings go to the page as {frame: bitmap, view, seq}, and
- * {failed: message} if the renderer cannot start.
+ * {id, error}. Drawings go to the page as {frame: bitmap, view, seq, ms},
+ * *ms* the time from the drawing's start to the bitmap, and {failed:
+ * message} if the renderer cannot start.
  */
 
 import { createRenderer } from './draw.js';
@@ -19,9 +20,11 @@ addEventListener('message', async ({ data: { method, args, id } }) => {
     renderer = createRenderer({
       ...args[0],
       surface: (w, h) => new OffscreenCanvas(w, h),
-      present(canvas, view, seq) {
+      present(canvas, view, seq, started) {
+        // On the CPU (map.js `RASTER_ON_CPU`) the canvas is rasterized here,
+        // by the time the bitmap is ready; on the GPU, later, elsewhere.
         const frame = canvas.transferToImageBitmap();
-        postMessage({ frame, view, seq }, [frame]);
+        postMessage({ frame, view, seq, ms: performance.now() - started }, [frame]);
       },
     });
     // The page is told when it fails to start: it has no map then.

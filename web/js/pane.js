@@ -1,5 +1,6 @@
 /* The pane with a place's ballots or a candidate card, the About dialog, and
- * the warning notices shown in the pane and the help popover.
+ * the warning notices and how-to lists (Guide) shown in the pane and the
+ * help popover.
  *
  * The pane floats beside the map on wide screens and is a bottom sheet on
  * phones (app.css) at one of three heights (SNAPS): `peek`, its grip, the
@@ -14,7 +15,7 @@
 import { html, useCallback, useEffect, useLayoutEffect, useRef } from '../vendor/preact-htm.module.js';
 import { About } from './about.js';
 import { t } from './i18n.js';
-import { CloseIcon, ExpandIcon, JumpIcon, WarningIcon } from './icons.js';
+import { CloseIcon, ExpandIcon, InkCircle, InkCross, JumpIcon, WarningIcon } from './icons.js';
 
 /* Something the visitor should heed before relying on what follows. With
  * *summary*, that one line stands for it, so that what follows starts
@@ -40,6 +41,29 @@ export const Notice = ({ summary, children, jump = null, danger = false }) => {
     </button>
   </div>`;
 };
+
+/* *text* with each `{shift}` the Shift key, as a keyboard shows it. */
+const withKeys = (text) =>
+  text.split('{shift}').flatMap((part, i) => (i ? [html`<kbd>Shift</kbd>`, part] : [part]));
+
+/* A ballot number as a candidate's row shows it once circled, or with
+ * *crossed* crossed out (app.css `.cand .num`): what a press on one does. */
+export const SampleNumber = ({ crossed = false }) =>
+  html`<span class=${crossed ? 'sample-num crossed' : 'sample-num'}>7${crossed ? html`<${InkCross} />` : html`<${InkCircle} />`}</span>`;
+
+export const CrossedNumber = () => html`<${SampleNumber} crossed />`;
+
+/* What a few controls do, scannable at a glance: *rows* [Icon, action,
+ * result], each the control's own icon (or what it does to a number), the
+ * action in bold and what it gives; `{shift}` in either is the key. */
+export const Guide = ({ rows }) => html`<ul class="guide">
+  ${rows.map(
+    ([Icon, action, result]) => html`<li>
+      <span class="guide-icon" aria-hidden="true"><${Icon} /></span>
+      <span><strong>${withKeys(action)}</strong> – ${withKeys(result)}</span>
+    </li>`,
+  )}
+</ul>`;
 
 export const PHONE = matchMedia('(max-width: 640px)');
 /* Wide enough for a second pane beside the first (Favourites, app.js), as

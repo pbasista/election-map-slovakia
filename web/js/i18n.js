@@ -59,7 +59,8 @@ export const credits = config.credits;
 // any.
 export const resultsPath = config.results;
 // Where the cached copies of the pages research cites are, below cache/
-// (empty: this site's own origin).
+// (empty: this site's own origin). A copy, cache/<sha256>.html, is linked
+// as cache/<sha256>: Pages answers the .html URL with a redirect to that.
 export const sourcesBase = config.sources;
 // The URL of a party logo, which data/index.json names by file.
 export const logoUrl = (file) => `${config.logos}/${file}`;

@@ -8,7 +8,14 @@ from typing import Any
 import numpy as np
 import pytest
 
-from election_map_slovakia import config, obvodrules, obvody, okrsokrules, reuse
+from election_map_slovakia import (
+    config,
+    division,
+    obvodrules,
+    obvody,
+    okrsokrules,
+    reuse,
+)
 from election_map_slovakia.candidates import Obec
 from election_map_slovakia.config import Obvod, ObvodList
 
@@ -1113,7 +1120,7 @@ def test_okrsok_counts_of_a_national_package(tmp_path: Path):
     territorial division table (tab0b of 2024), the count column as worded
     there."""
     election = _CFG.election("2024-prezident")
-    units = obvodrules.units_of(election)
+    units = division.units_of(election)
     inp = next(i for i in _CFG.inputs.inputs if i.name == units.input)
     cfg = dataclasses.replace(_CFG, root=tmp_path)
     path = cfg.raw_dir / inp.name / inp.file
@@ -1123,7 +1130,7 @@ def test_okrsok_counts_of_a_national_package(tmp_path: Path):
     with zipfile.ZipFile(path, "w") as z:
         z.writestr(f"PREZ2024_kolo1_SK_{units.table}.csv", table.encode("cp1250"))
         z.writestr("PREZ2024_kolo1_SK_tab01.csv", "A;B\n1;2\n")
-    assert okrsokrules.okrsok_counts(cfg, election) == {"528595": 24, "500011": 64}
+    assert division.okrsok_counts(cfg, election) == {"528595": 24, "500011": 64}
 
 
 def test_by_election_prompt_asks_for_its_term_s_decision():

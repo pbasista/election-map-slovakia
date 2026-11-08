@@ -196,6 +196,41 @@ def test_code_reaches_the_keys_of_what_it_makes(
         lock.code_digest.cache_clear()
 
 
+def test_the_jobs_and_their_notes_reach_no_map_key(
+    root: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+):
+    package = tmp_path / stamp.PACKAGE.name
+    shutil.copytree(
+        stamp.PACKAGE, package, ignore=shutil.ignore_patterns("__pycache__")
+    )
+    monkeypatch.setattr(stamp, "PACKAGE", package)
+
+    def fresh() -> lock.Keys:
+        lock.code_digest.cache_clear()
+        return keys(root)
+
+    def reword(path: Path) -> None:
+        text = path.read_text(encoding="utf-8")
+        path.write_text(text + "# Reworded.\n", encoding="utf-8")
+
+    try:
+        before = fresh()
+        # The notes and maximum lengths of the UI strings for translators: no
+        # part shows them.
+        reword(package / "translation-notes.toml")
+        assert fresh() == before
+        # The code of the jobs and of the bundles, which the map steps do not
+        # import: a new prompt or check rebuilds no map.
+        jobs = ("jobs", "translate", "research", "cache", "obvodrules", "okrsokrules")
+        for module in (*jobs, "bundle"):
+            reword(package / f"{module}.py")
+            after = fresh()
+            assert after.maps == before.maps
+            assert after.bases == before.bases
+    finally:
+        lock.code_digest.cache_clear()
+
+
 def test_an_input_not_pinned_has_no_key(root: Path):
     edit(
         root / "config/inputs.toml",
